@@ -1,19 +1,21 @@
 let papers = {};
 const currentBlocks = [];
 
-export function paper(paperName, m) {
-  m.hot.dispose(() => {
+module.exports.paper = function paper(paperName, m) {
+  m.hot.dispose(function() {
     delete papers[paperName];
   });
+
   papers[paperName] = {};
+
   function block(name, fn) {
     papers[paperName][name] = fn;
-    return {block};
+    return {block: block};
   }
 
-  return {block};
+  return {block: block};
 }
 
-export function getPapers() {
+module.exports.getPapers = function getPapers() {
   return papers;
 }
