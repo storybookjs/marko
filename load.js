@@ -71,14 +71,3 @@ export const renderError = (e) => {
   data.error = e;
   renderArea();
 };
-
-export function getRoot() {
-  return rootEl;
-}
-
-export function renderContent(comp) {
-  ReactDOM.render(
-    comp,
-    rootEl
-  )
-}
