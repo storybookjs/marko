@@ -1,6 +1,6 @@
 {
   "name": "@storybook/node-logger",
-  "version": "3.3.9",
+  "version": "3.3.10",
   "description": "",
   "license": "MIT",
   "main": "dist/index.js",
