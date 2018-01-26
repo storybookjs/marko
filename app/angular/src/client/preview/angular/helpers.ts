@@ -74,7 +74,13 @@ const getComponentMetadata = ({
     (<any>propsMetadata)[key] = (<any>propsMeta)[key];
   });
 
-  const { imports = [], schemas = [], declarations = [], providers = [], entryComponents = [] } = moduleMetadata;
+  const {
+    imports = [],
+    schemas = [],
+    declarations = [],
+    providers = [],
+    entryComponents = [],
+  } = moduleMetadata;
 
   return {
     component,
@@ -140,7 +146,7 @@ const getModule = (
 const initModule = (
   currentStory: IGetStoryWithContext,
   context: IContext,
-  reRender: boolean
+  reRender: boolean = false
 ): IModule => {
   const { component, componentMeta, props, propsMeta, params, moduleMeta } = getComponentMetadata(
     currentStory(context)
@@ -195,7 +201,7 @@ export const renderNgError = debounce((error: Error) => {
   const errorData = {
     message: error.message,
     stack: error.stack,
-  };
+  } as NgProvidedData;
 
   const Module = getModule([ErrorComponent], [], [ErrorComponent], errorData);
 
