@@ -20,7 +20,7 @@ export default function(context) {
       selectedKind,
       selectedStory,
     });
-    window.history.pushState({}, '', `?${queryString}`);
+    window.history.replaceState({}, '', `?${queryString}`);
   });
 
   // Handle keyEvents and pass them to the parent.
