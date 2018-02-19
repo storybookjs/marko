@@ -80,6 +80,9 @@ class MainLinks extends React.Component {
                 <li>
                   <Link to="/basics/writing-stories/">Writing stories</Link>
                 </li>
+                <li>
+                  <Link to="/basics/live-examples/">Live Examples</Link>
+                </li>
               </ul>
             </div>
 
