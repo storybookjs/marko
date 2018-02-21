@@ -1,3 +1,16 @@
+# 3.3.14
+
+2018-February-21
+
+#### Bug Fixes
+
+-   RN: Add error handler on WS to fix crashing on page reload [#3002](https://github.com/storybooks/storybook/pull/3002)
+-   Added safety net preventing storybook Jest addon from throwing. [#3023](https://github.com/storybooks/storybook/pull/3023)
+-   Added "key" prop to list items inside test failure message. [#2867](https://github.com/storybooks/storybook/pull/2867)
+-   Add type check to PropType on OneOf [#2653](https://github.com/storybooks/storybook/pull/2653)
+-   Fix examples thumbnails display [#2974](https://github.com/storybooks/storybook/pull/2974)
+-   Use @storybook/podda to fix npm engine version in podda [#3033](https://github.com/storybooks/storybook/pull/3033)
+
 # 3.3.13
 
 2018-February-11
