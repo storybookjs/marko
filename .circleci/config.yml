@@ -284,6 +284,8 @@ jobs:
           name: "Deploy"
           command: |
             cd docs
+            git config --global user.email "gh-pages@localhost"
+            git config --global user.name "npm gh-pages"
             yarn deploy:ci
 workflows:
   version: 2
