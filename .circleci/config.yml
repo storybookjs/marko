@@ -281,6 +281,7 @@ jobs:
           name: "Deploy"
           command: |
             cd docs
+            echo $GH_TOKEN
             yarn deploy:ci
 workflows:
   version: 2
