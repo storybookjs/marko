@@ -277,6 +277,9 @@ jobs:
           name: "Restore built docs"
           keys:
             - built-docs-{{ .Revision }}
+      - add_ssh_keys:
+          fingerprints:
+            - "35:aa:b9:c3:b8:1c:27:1f:02:0a:73:1a:ac:58:77:df"
       - run:
           name: "Deploy"
           command: |

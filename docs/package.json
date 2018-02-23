@@ -11,7 +11,7 @@
   "scripts": {
     "build": "gatsby build && cp static/**/* .travis.yml ./public",
     "build-storybook": "build-storybook",
-    "deploy:ci": "gh-pages -t -r https://${GH_TOKEN}@github.com/storybooks/storybook.git -d public -o origin -b gh-pages",
+    "deploy:ci": "gh-pages -t -r https://github.com/storybooks/storybook.git -d public -o origin -b gh-pages",
     "deploy:manual": "gh-pages -t -r git@github.com:storybooks/storybook.git -d public -o origin -b gh-pages",
     "dev": "gatsby develop",
     "serve": "gatsby serve",
