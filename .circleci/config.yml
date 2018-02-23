@@ -270,6 +270,10 @@ jobs:
     steps:
       - checkout
       - restore_cache:
+          name: "Restore docs dependencies cache"
+          keys:
+            - docs-dependencies-{{ checksum "docs/yarn.lock" }}
+      - restore_cache:
           name: "Restore built docs"
           keys:
             - built-docs-{{ .Revision }}
