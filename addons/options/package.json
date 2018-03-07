@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-options",
-  "version": "3.3.14",
+  "version": "3.3.15",
   "description": "Options addon for storybook",
   "keywords": [
     "storybook"
