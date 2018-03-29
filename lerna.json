@@ -3,9 +3,9 @@
   "useWorkspaces": true,
   "commands": {
     "publish": {
-      "allowBranch": "master"
+      "allowBranch": "release/3.4"
     }
   },
   "concurrency": 1,
-  "version": "3.4.0-rc.3"
+  "version": "3.4.0-rc.4"
 }
