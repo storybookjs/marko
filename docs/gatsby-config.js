@@ -22,6 +22,7 @@ module.exports = {
         '/configurations/default-config/',
         '/configurations/custom-webpack-config/',
         '/configurations/custom-babel-config/',
+        '/configurations/typescript-config/',
         '/configurations/add-custom-head-tags/',
         '/configurations/serving-static-files/',
         '/configurations/env-vars/',
