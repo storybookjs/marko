@@ -72,18 +72,6 @@ object OpenSourceProjects_Storybook_Examples : BuildType({
             dockerImage = "node:latest"
         }
         script {
-            name = "mithril-kitchen-sink"
-            scriptContent = """
-                #!/bin/sh
-                
-                set -e -x
-                
-                cd examples/mithril-kitchen-sink
-                yarn build-storybook
-            """.trimIndent()
-            dockerImage = "node:latest"
-        }
-        script {
             name = "vue-kitchen-sink"
             scriptContent = """
                 #!/bin/sh

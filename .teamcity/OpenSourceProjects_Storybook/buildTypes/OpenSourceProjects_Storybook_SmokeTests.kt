@@ -60,18 +60,6 @@ object OpenSourceProjects_Storybook_SmokeTests : BuildType({
             dockerImage = "node:latest"
         }
         script {
-            name = "mithril-kitchen-sink"
-            scriptContent = """
-                #!/bin/sh
-                
-                set -e -x
-                
-                cd examples/mithril-kitchen-sink
-                yarn storybook --smoke-test
-            """.trimIndent()
-            dockerImage = "node:latest"
-        }
-        script {
             name = "vue-kitchen-sink"
             scriptContent = """
                 #!/bin/sh
