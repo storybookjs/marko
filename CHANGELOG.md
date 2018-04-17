@@ -1,3 +1,20 @@
+# 3.4.2
+
+2018-April-17
+
+#### Features
+
+-   Bind window access if `window` is defined; add `addons channel` access too [#3243](https://github.com/storybooks/storybook/pull/3243)
+
+#### Bug Fixes
+
+-   Serialize boolean type only for non-nullable values [#3432](https://github.com/storybooks/storybook/pull/3432)
+-   Addon actions: fix slow logging [#3133](https://github.com/storybooks/storybook/pull/3133)
+
+#### Documentation
+
+-   Fix storyshots readme for image snapshotting [#3397](https://github.com/storybooks/storybook/pull/3397)
+
 # 3.4.1
 
 2018-April-10
