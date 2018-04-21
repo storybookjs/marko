@@ -43,7 +43,7 @@
     "url-loader": "^0.6.2",
     "webpack": "^3.11.0",
     "webpack-dev-middleware": "^1.12.2",
-    "webpack-hot-middleware": "^2.21.2"
+    "webpack-hot-middleware": "^2.22.1"
   },
   "peerDependencies": {
     "react": ">=15.0.0",
