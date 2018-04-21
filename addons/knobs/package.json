@@ -29,14 +29,10 @@
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
-    "@storybook/react": "3.4.3",
-    "raw-loader": "^0.5.1",
-    "style-loader": "^0.20.3",
     "vue": "^2.5.16"
   },
   "peerDependencies": {
     "@storybook/addons": "^3.3.0",
-    "react": "*",
-    "react-dom": "*"
+    "react": "*"
   }
 }
