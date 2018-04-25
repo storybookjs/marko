@@ -12,7 +12,7 @@ import babelLoaderConfig from './babel';
 import { getPreviewHeadHtml, getManagerHeadHtml } from '../utils';
 import { version } from '../../../package.json';
 
-export default function(configDir) {
+export default function(configDir, quiet) {
   const config = {
     devtool: 'cheap-module-source-map',
     entry: {
@@ -51,9 +51,9 @@ export default function(configDir) {
       new webpack.HotModuleReplacementPlugin(),
       new CaseSensitivePathsPlugin(),
       new WatchMissingNodeModulesPlugin(nodeModulesPaths),
-      new webpack.ProgressPlugin(),
+      quiet ? null : new webpack.ProgressPlugin(),
       new Dotenv({ silent: true }),
-    ],
+    ].filter(Boolean),
     module: {
       rules: [
         {
