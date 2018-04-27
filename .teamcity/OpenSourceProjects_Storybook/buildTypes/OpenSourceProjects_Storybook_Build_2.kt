@@ -4,7 +4,10 @@ import jetbrains.buildServer.configs.kotlin.v2017_2.*
 import jetbrains.buildServer.configs.kotlin.v2017_2.buildFeatures.commitStatusPublisher
 import jetbrains.buildServer.configs.kotlin.v2017_2.failureConditions.BuildFailureOnMetric
 import jetbrains.buildServer.configs.kotlin.v2017_2.failureConditions.failOnMetricChange
+import jetbrains.buildServer.configs.kotlin.v2017_2.triggers.VcsTrigger
 import jetbrains.buildServer.configs.kotlin.v2017_2.triggers.vcs
+import jetbrains.buildServer.configs.kotlin.v2017_2.buildFeatures.merge
+import jetbrains.buildServer.configs.kotlin.v2017_2.ui.*
 
 object OpenSourceProjects_Storybook_Build_2 : BuildType({
     uuid = "2b9c73e2-0a6e-47ca-95ae-729cac42be2b"
@@ -22,6 +25,8 @@ object OpenSourceProjects_Storybook_Build_2 : BuildType({
 
     triggers {
         vcs {
+            quietPeriodMode = VcsTrigger.QuietPeriodMode.USE_DEFAULT
+            triggerRules = "-:comment=^TeamCity change:**"
         }
     }
 
@@ -47,49 +52,47 @@ object OpenSourceProjects_Storybook_Build_2 : BuildType({
             }
             param("github_oauth_user", "Hypnosphi")
         }
+        merge {
+            branchFilter = "+:dependencies.io-*"
+            destinationBranch = "<default>"
+            commitMessage = "Merge branch '%teamcity.build.branch%'"
+        }
     }
 
     dependencies {
-        dependency(OpenSourceProjects_Storybook.buildTypes.OpenSourceProjects_Storybook_CliTest) {
-            snapshot {
-                onDependencyFailure = FailureAction.IGNORE
-                onDependencyCancel = FailureAction.IGNORE
-            }
-        }
-        dependency(OpenSourceProjects_Storybook.buildTypes.OpenSourceProjects_Storybook_CliTestLatestCra) {
-            snapshot {
-                onDependencyFailure = FailureAction.IGNORE
-                onDependencyCancel = FailureAction.IGNORE
-            }
-        }
         dependency(OpenSourceProjects_Storybook.buildTypes.OpenSourceProjects_Storybook_Docs) {
             snapshot {
-                onDependencyCancel = FailureAction.CANCEL
+                onDependencyCancel = FailureAction.ADD_PROBLEM
             }
         }
         dependency(OpenSourceProjects_Storybook.buildTypes.OpenSourceProjects_Storybook_Examples) {
             snapshot {
-                onDependencyCancel = FailureAction.CANCEL
+                onDependencyCancel = FailureAction.ADD_PROBLEM
             }
         }
         dependency(OpenSourceProjects_Storybook.buildTypes.OpenSourceProjects_Storybook_Lint) {
             snapshot {
-                onDependencyCancel = FailureAction.CANCEL
+                onDependencyCancel = FailureAction.ADD_PROBLEM
             }
         }
         dependency(OpenSourceProjects_Storybook.buildTypes.OpenSourceProjects_Storybook_ReactNative) {
             snapshot {
-                onDependencyCancel = FailureAction.CANCEL
+                onDependencyCancel = FailureAction.ADD_PROBLEM
             }
         }
         dependency(OpenSourceProjects_Storybook.buildTypes.OpenSourceProjects_Storybook_SmokeTests) {
             snapshot {
-                onDependencyCancel = FailureAction.CANCEL
+                onDependencyCancel = FailureAction.ADD_PROBLEM
             }
         }
         dependency(OpenSourceProjects_Storybook.buildTypes.OpenSourceProjects_Storybook_Test) {
             snapshot {
-                onDependencyCancel = FailureAction.CANCEL
+                onDependencyCancel = FailureAction.ADD_PROBLEM
+            }
+        }
+        dependency(OpenSourceProjects_Storybook.buildTypes.OpenSourceProjects_Storybook_Chromatic) {
+            snapshot {
+                onDependencyCancel = FailureAction.ADD_PROBLEM
             }
         }
     }

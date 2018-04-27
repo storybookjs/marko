@@ -3,14 +3,17 @@ package OpenSourceProjects_Storybook.buildTypes
 import jetbrains.buildServer.configs.kotlin.v2017_2.*
 import jetbrains.buildServer.configs.kotlin.v2017_2.buildFeatures.commitStatusPublisher
 import jetbrains.buildServer.configs.kotlin.v2017_2.buildSteps.script
-import jetbrains.buildServer.configs.kotlin.v2017_2.triggers.vcs
+import jetbrains.buildServer.configs.kotlin.v2017_2.failureConditions.BuildFailureOnMetric
+import jetbrains.buildServer.configs.kotlin.v2017_2.failureConditions.failOnMetricChange
 
-object OpenSourceProjects_Storybook_Test : BuildType({
-    uuid = "9f9177e7-9ec9-4e2e-aabb-d304fd667711"
-    id = "OpenSourceProjects_Storybook_Test"
-    name = "Test"
+object OpenSourceProjects_Storybook_Chromatic : BuildType({
+    uuid = "8cc5f747-4ca7-4f0d-940d-b0c422f501a6-chromatic"
+    id = "OpenSourceProjects_Storybook_Chromatic"
+    name = "Chromatic"
 
-    artifactRules = "coverage/lcov-report => coverage.zip"
+    params {
+        param("env.CI_BRANCH", "%teamcity.build.branch%")
+    }
 
     vcs {
         root(OpenSourceProjects_Storybook.vcsRoots.OpenSourceProjects_Storybook_HttpsGithubComStorybooksStorybookRefsHeadsMaster)
@@ -27,18 +30,9 @@ object OpenSourceProjects_Storybook_Test : BuildType({
             dockerImage = "node:latest"
         }
         script {
-            name = "Test"
-            scriptContent = """
-                yarn test --core --coverage --runInBand --teamcity
-                yarn coverage
-            """.trimIndent()
+            name = "Chromatic"
+            scriptContent = "yarn chromatic"
             dockerImage = "node:latest"
-        }
-    }
-
-    triggers {
-        vcs {
-            enabled = false
         }
     }
 
@@ -54,11 +48,22 @@ object OpenSourceProjects_Storybook_Test : BuildType({
         }
     }
 
-    requirements {
-        doesNotContain("env.OS", "Windows")
+    dependencies {
+        allApps {
+            dependency(config) {
+                snapshot {}
+
+                if (merged) {
+                    artifacts {
+                        cleanDestination = true
+                        artifactRules = "$lowerName.zip!** => examples/$exampleDir/storybook-static"
+                    }
+                }
+            }
+        }
     }
 
-    cleanup {
-        artifacts(days = 1)
+    requirements {
+        doesNotContain("env.OS", "Windows")
     }
 })

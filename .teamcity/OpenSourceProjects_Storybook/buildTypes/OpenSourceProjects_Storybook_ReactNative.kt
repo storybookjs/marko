@@ -9,7 +9,7 @@ object OpenSourceProjects_Storybook_ReactNative : BuildType({
     id = "OpenSourceProjects_Storybook_ReactNative"
     name = "React Native"
 
-    artifactRules = "coverage/lcov-report => coverage.zip"
+    artifactRules = "examples/react-native-vanilla/coverage/lcov-report => coverage.zip"
 
     params {
         param("env.PUPPETEER_SKIP_CHROMIUM_DOWNLOAD", "true")
@@ -18,6 +18,7 @@ object OpenSourceProjects_Storybook_ReactNative : BuildType({
     vcs {
         root(OpenSourceProjects_Storybook.vcsRoots.OpenSourceProjects_Storybook_HttpsGithubComStorybooksStorybookRefsHeadsMaster)
 
+        cleanCheckout = true
     }
 
     steps {

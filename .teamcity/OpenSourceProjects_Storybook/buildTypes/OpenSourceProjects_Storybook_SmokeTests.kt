@@ -27,9 +27,9 @@ object OpenSourceProjects_Storybook_SmokeTests : BuildType({
             name = "angular-cli"
             scriptContent = """
                 #!/bin/sh
-                
+
                 set -e -x
-                
+
                 cd examples/angular-cli
                 yarn storybook --smoke-test
             """.trimIndent()
@@ -39,9 +39,9 @@ object OpenSourceProjects_Storybook_SmokeTests : BuildType({
             name = "polymer-cli"
             scriptContent = """
                 #!/bin/sh
-                
+
                 set -e -x
-                
+
                 cd examples/polymer-cli
                 yarn storybook --smoke-test
             """.trimIndent()
@@ -51,10 +51,22 @@ object OpenSourceProjects_Storybook_SmokeTests : BuildType({
             name = "cra-kitchen-sink"
             scriptContent = """
                 #!/bin/sh
-                
+
                 set -e -x
-                
+
                 cd examples/cra-kitchen-sink
+                yarn storybook --smoke-test
+            """.trimIndent()
+            dockerImage = "node:latest"
+        }
+        script {
+            name = "mithril-kitchen-sink"
+            scriptContent = """
+                #!/bin/sh
+
+                set -e -x
+
+                cd examples/mithril-kitchen-sink
                 yarn storybook --smoke-test
             """.trimIndent()
             dockerImage = "node:latest"
@@ -63,9 +75,9 @@ object OpenSourceProjects_Storybook_SmokeTests : BuildType({
             name = "vue-kitchen-sink"
             scriptContent = """
                 #!/bin/sh
-                
+
                 set -e -x
-                
+
                 cd examples/vue-kitchen-sink
                 yarn storybook --smoke-test
             """.trimIndent()
@@ -75,9 +87,9 @@ object OpenSourceProjects_Storybook_SmokeTests : BuildType({
             name = "official-storybook"
             scriptContent = """
                 #!/bin/sh
-                
+
                 set -e -x
-                
+
                 cd examples/official-storybook
                 yarn storybook --smoke-test
             """.trimIndent()

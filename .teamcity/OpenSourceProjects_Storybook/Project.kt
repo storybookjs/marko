@@ -13,13 +13,13 @@ object Project : Project({
     id = "OpenSourceProjects_Storybook"
     parentId = "OpenSourceProjects"
     name = "Storybook"
+    description = "https://storybook.js.org/"
 
     vcsRoot(OpenSourceProjects_Storybook_HttpsGithubComStorybooksStorybookRefsHeadsMaster1)
     vcsRoot(OpenSourceProjects_Storybook_HttpsGithubComStorybooksStorybookRefsHeadsMaster)
 
     buildType(OpenSourceProjects_Storybook_CliTestLatestCra)
     buildType(OpenSourceProjects_Storybook_Examples)
-    buildType(OpenSourceProjects_Storybook_SmokeTests)
     buildType(OpenSourceProjects_Storybook_Danger)
     buildType(OpenSourceProjects_Storybook_ReactNative)
     buildType(OpenSourceProjects_Storybook_Docs)
@@ -27,6 +27,12 @@ object Project : Project({
     buildType(OpenSourceProjects_Storybook_CliTest)
     buildType(OpenSourceProjects_Storybook_Test)
     buildType(OpenSourceProjects_Storybook_Lint)
+    buildType(OpenSourceProjects_Storybook_SmokeTests)
+    buildType(OpenSourceProjects_Storybook_Chromatic)
+
+    allApps {
+        buildType(config)
+    }
 
     features {
         versionedSettings {
@@ -37,6 +43,24 @@ object Project : Project({
             showChanges = true
             settingsFormat = VersionedSettings.Format.KOTLIN
             storeSecureParamsOutsideOfVcs = true
+        }
+        feature {
+            type = "buildtype-graphs"
+            id = "PROJECT_EXT_132"
+            param("series", """
+                    [
+                      {
+                        "type": "valueType",
+                        "title": "Build Duration (all stages)",
+                        "key": "BuildDuration"
+                      }
+                    ]
+                """.trimIndent())
+            param("format", "duration")
+            param("hideFilters", "")
+            param("title", "Build Duration")
+            param("defaultFilters", "")
+            param("seriesTitle", "Serie")
         }
         feature {
             id = "PROJECT_EXT_259"
@@ -50,26 +74,14 @@ object Project : Project({
             param("secure:accessToken", "")
             param("username", "")
         }
-        feature {
-            id = "PROJECT_EXT_264"
-            type = "ReportTab"
-            param("startPage", "cra.zip!index.html")
-            param("title", "CRA")
-            param("type", "BuildReportTab")
-        }
-        feature {
-            id = "PROJECT_EXT_265"
-            type = "ReportTab"
-            param("startPage", "angular.zip!index.html")
-            param("title", "Angular")
-            param("type", "BuildReportTab")
-        }
-        feature {
-            id = "PROJECT_EXT_266"
-            type = "ReportTab"
-            param("startPage", "mithril.zip!index.html")
-            param("title", "Mithril")
-            param("type", "BuildReportTab")
+        allApps {
+            feature {
+                id = "PROJECT_EXT_264_$lowerName"
+                type = "ReportTab"
+                param("startPage", "$lowerName.zip!index.html")
+                param("title", appName)
+                param("type", "BuildReportTab")
+            }
         }
         feature {
             id = "PROJECT_EXT_267"
@@ -79,17 +91,17 @@ object Project : Project({
             param("type", "BuildReportTab")
         }
         feature {
-            id = "PROJECT_EXT_268"
             type = "ReportTab"
-            param("startPage", "polymer.zip!index.html")
-            param("title", "Polymer")
+            id = "PROJECT_EXT_272"
+            param("startPage", "docs.zip!index.html")
+            param("title", "Docs")
             param("type", "BuildReportTab")
         }
         feature {
-            id = "PROJECT_EXT_269"
             type = "ReportTab"
-            param("startPage", "vue.zip!index.html")
-            param("title", "Vue")
+            id = "PROJECT_EXT_274"
+            param("startPage", "demo.zip!index.html")
+            param("title", "Demo")
             param("type", "BuildReportTab")
         }
     }

@@ -12,14 +12,10 @@ object OpenSourceProjects_Storybook_Examples : BuildType({
     name = "Examples"
 
     artifactRules = """
-        examples/official-storybook/storybook-static => official.zip
-        examples/angular-cli/storybook-static => angular.zip
-        examples/polymer-cli/storybook-static => polymer.zip
-        examples/cra-kitchen-sink/storybook-static => cra.zip
-        examples/mithril-kitchen-sink/storybook-static => mithril.zip
-        examples/vue-kitchen-sink/storybook-static => vue.zip
-        examples/official-storybook/image-snapshots/__image_snapshots__ => image-snapshots
-    """.trimIndent()
+${StorybookApp.values().map { it.artifactPath }.joinToString("\n")}
+examples/official-storybook/storybook-static => official.zip
+examples/official-storybook/image-snapshots/__image_snapshots__ => image-snapshots
+""".trimIndent()
 
     vcs {
         root(OpenSourceProjects_Storybook.vcsRoots.OpenSourceProjects_Storybook_HttpsGithubComStorybooksStorybookRefsHeadsMaster)
@@ -36,54 +32,6 @@ object OpenSourceProjects_Storybook_Examples : BuildType({
             dockerImage = "node:latest"
         }
         script {
-            name = "angular-cli"
-            scriptContent = """
-                #!/bin/sh
-                
-                set -e -x
-                
-                cd examples/angular-cli
-                yarn build-storybook
-            """.trimIndent()
-            dockerImage = "node:latest"
-        }
-        script {
-            name = "polymer-cli"
-            scriptContent = """
-                #!/bin/sh
-                
-                set -e -x
-                
-                cd examples/polymer-cli
-                yarn build-storybook
-            """.trimIndent()
-            dockerImage = "node:latest"
-        }
-        script {
-            name = "cra-kitchen-sink"
-            scriptContent = """
-                #!/bin/sh
-                
-                set -e -x
-                
-                cd examples/cra-kitchen-sink
-                yarn build-storybook
-            """.trimIndent()
-            dockerImage = "node:latest"
-        }
-        script {
-            name = "vue-kitchen-sink"
-            scriptContent = """
-                #!/bin/sh
-                
-                set -e -x
-                
-                cd examples/vue-kitchen-sink
-                yarn build-storybook
-            """.trimIndent()
-            dockerImage = "node:latest"
-        }
-        script {
             name = "official-storybook"
             scriptContent = """
                 #!/bin/sh
@@ -91,13 +39,9 @@ object OpenSourceProjects_Storybook_Examples : BuildType({
                 set -e -x
                 
                 cd examples/official-storybook
+                rm -rf storybook-static
                 yarn build-storybook
             """.trimIndent()
-            dockerImage = "node:latest"
-        }
-        script {
-            name = "Chromatic"
-            scriptContent = "yarn chromatic"
             dockerImage = "node:latest"
         }
         script {
@@ -142,6 +86,21 @@ object OpenSourceProjects_Storybook_Examples : BuildType({
                 }
             }
             param("github_oauth_user", "Hypnosphi")
+        }
+    }
+
+    dependencies {
+        allApps {
+            dependency(config) {
+                snapshot {}
+
+                if (merged) {
+                    artifacts {
+                        cleanDestination = true
+                        artifactRules = "$lowerName.zip!** => examples/$exampleDir/storybook-static"
+                    }
+                }
+            }
         }
     }
 
