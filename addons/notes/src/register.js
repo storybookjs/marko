@@ -52,7 +52,7 @@ export class Notes extends React.Component {
     const textAfterFormatted = text ? text.trim().replace(/\n/g, '<br />') : '';
 
     return (
-      <div style={styles.notesPanel}>
+      <div className="addon-notes-container" style={styles.notesPanel}>
         <div dangerouslySetInnerHTML={{ __html: textAfterFormatted }} />
       </div>
     );
