@@ -1,3 +1,11 @@
+# 3.4.6
+
+2018-May-26
+
+#### Features
+
+-   Addon-notes: Add classname to the container component to target with styles. [#3617](https://github.com/storybooks/storybook/pull/3617)
+
 # 3.4.5
 
 2018-May-17
