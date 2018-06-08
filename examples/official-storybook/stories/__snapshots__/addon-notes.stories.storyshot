@@ -6,6 +6,12 @@ exports[`Storyshots Addons|Notes using deprecated API 1`] = `
 </button>
 `;
 
+exports[`Storyshots Addons|Notes with a markdown table 1`] = `
+<button>
+  Button with notes - check the notes panel for details
+</button>
+`;
+
 exports[`Storyshots Addons|Notes withNotes 1`] = `
 <button>
   Button with notes - check the notes panel for details
