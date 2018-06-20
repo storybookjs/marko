@@ -236,7 +236,7 @@ exports[`Storyshots Addons|Info.Decorator Use Info as story decorator 1`] = `
                     <span
                       style="color:#170"
                     >
-                      onClick()
+                      onClick
                     </span>
                   </td>
                   <td
@@ -567,7 +567,7 @@ exports[`Storyshots Addons|Info.Markdown Displays Markdown in description 1`] = 
                         <span
                           style="color:#170"
                         >
-                          clicked()
+                          clicked
                         </span>
                         }
                       </span>
@@ -739,7 +739,7 @@ exports[`Storyshots Addons|Info.Markdown Displays Markdown in description 1`] = 
                     <span
                       style="color:#170"
                     >
-                      onClick()
+                      onClick
                     </span>
                   </td>
                   <td
@@ -1194,7 +1194,7 @@ exports[`Storyshots Addons|Info.Options.header Shows or hides Info Addon header 
                     <span
                       style="color:#170"
                     >
-                      onClick()
+                      onClick
                     </span>
                   </td>
                   <td
@@ -1465,7 +1465,7 @@ exports[`Storyshots Addons|Info.Options.inline Inlines component inside story 1`
                   <span
                     style="color:#170"
                   >
-                    onClick()
+                    onClick
                   </span>
                 </td>
                 <td
@@ -2435,7 +2435,7 @@ exports[`Storyshots Addons|Info.Options.maxPropsIntoLine Object and array props 
                   <span
                     style="color:#170"
                   >
-                    onClick()
+                    onClick
                   </span>
                 </td>
                 <td
@@ -2716,7 +2716,7 @@ exports[`Storyshots Addons|Info.Options.propTables Shows additional component pr
                     <span
                       style="color:#170"
                     >
-                      onClick()
+                      onClick
                     </span>
                   </td>
                   <td
@@ -2849,7 +2849,7 @@ exports[`Storyshots Addons|Info.Options.propTables Shows additional component pr
                     <span
                       style="color:#170"
                     >
-                      onClick()
+                      onClick
                     </span>
                   </td>
                   <td
@@ -3168,7 +3168,7 @@ exports[`Storyshots Addons|Info.Options.propTablesExclude Exclude component from
                     <span
                       style="color:#170"
                     >
-                      onClick()
+                      onClick
                     </span>
                   </td>
                   <td
@@ -3386,7 +3386,7 @@ exports[`Storyshots Addons|Info.Options.source Shows or hides Info Addon source 
                     <span
                       style="color:#170"
                     >
-                      onClick()
+                      onClick
                     </span>
                   </td>
                   <td
@@ -3659,7 +3659,7 @@ exports[`Storyshots Addons|Info.Options.styles Extend info styles with an object
                     <span
                       style="color:#170"
                     >
-                      onClick()
+                      onClick
                     </span>
                   </td>
                   <td
@@ -3932,7 +3932,7 @@ exports[`Storyshots Addons|Info.Options.styles Full control over styles using a 
                     <span
                       style="color:#170"
                     >
-                      onClick()
+                      onClick
                     </span>
                   </td>
                   <td
@@ -4060,7 +4060,7 @@ exports[`Storyshots Addons|Info.React Docgen Comments from Flow declarations 1`]
                         <span
                           style="color:#170"
                         >
-                          clicked()
+                          clicked
                         </span>
                         }
                       </span>
@@ -4211,7 +4211,7 @@ exports[`Storyshots Addons|Info.React Docgen Comments from Flow declarations 1`]
                     <span
                       style="color:#170"
                     >
-                      onClick()
+                      onClick
                     </span>
                   </td>
                   <td
@@ -4313,7 +4313,7 @@ exports[`Storyshots Addons|Info.React Docgen Comments from PropType declarations
                         <span
                           style="color:#170"
                         >
-                          clicked()
+                          clicked
                         </span>
                         }
                       </span>
@@ -4683,7 +4683,7 @@ exports[`Storyshots Addons|Info.React Docgen Comments from PropType declarations
                     <span
                       style="color:#170"
                     >
-                      onClick()
+                      onClick
                     </span>
                   </td>
                   <td
@@ -4793,7 +4793,7 @@ exports[`Storyshots Addons|Info.React Docgen Comments from PropType declarations
                         <span
                           style="color:#170"
                         >
-                          func()
+                          func
                         </span>
                         ,
                         <span>
@@ -4917,7 +4917,7 @@ exports[`Storyshots Addons|Info.React Docgen Comments from PropType declarations
                       <span
                         style="color:#170"
                       >
-                        func()
+                        func
                       </span>
                       ,
                       <span>
@@ -5246,7 +5246,7 @@ exports[`Storyshots Addons|Info.React Docgen Comments from component declaration
                         <span
                           style="color:#170"
                         >
-                          clicked()
+                          clicked
                         </span>
                         }
                       </span>
@@ -5418,7 +5418,7 @@ exports[`Storyshots Addons|Info.React Docgen Comments from component declaration
                     <span
                       style="color:#170"
                     >
-                      onClick()
+                      onClick
                     </span>
                   </td>
                   <td
