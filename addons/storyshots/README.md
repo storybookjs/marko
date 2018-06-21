@@ -27,16 +27,16 @@ npm install --save-dev @storybook/addon-storyshots
 
 ## Configure your app for Jest
 
-Usually, you might already have completed this step. If not, here are some resources for you.
+In many cases, for example Create React App, it's already configured for Jest. You just need to create a filename with the extension `.test.js`.
 
-If you are using Create React App, it's already configured for Jest. You just need to create a filename with the extension `.test.js`.
-
-Otherwise check these links:
+If you still need to configure jest you can use the resources mentioned below:
 
 -   [Egghead lesson](https://egghead.io/lessons/javascript-test-javascript-with-jest). ***paid content***
 -   [Official Docs](https://facebook.github.io/jest/docs/en/getting-started.html) 
 
 > Note: If you use React 16, you'll need to follow [these additional instructions](https://github.com/facebook/react/issues/9102#issuecomment-283873039).
+
+> Note: Make sure you have added the ```json``` extention to ```moduleFileExtensions``` in ```jest.config.json```. If this is missing it leads to the [following error](https://github.com/storybooks/storybook/issues/3728): ```Cannot find module 'spdx-license-ids' from 'scan.js'```.
 
 ### Configure Jest for React
 StoryShots addon for React is dependent on [react-test-renderer](https://github.com/facebook/react/tree/master/packages/react-test-renderer), but 
