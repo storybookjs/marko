@@ -1,3 +1,12 @@
+# 3.4.8
+
+2018-June-21
+
+#### Bug Fixes
+
+-   Fix centered addon for IE11 [#3735](https://github.com/storybooks/storybook/pull/3735)
+-   Display functions as variables not invocations [#3761](https://github.com/storybooks/storybook/pull/3761)
+
 # 3.4.7
 
 2018-June-10
