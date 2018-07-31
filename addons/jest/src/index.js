@@ -1,7 +1,7 @@
 import addons from '@storybook/addons';
 
 const findTestResults = (testFiles, jestTestResults, jestTestFilesExt) =>
-  testFiles.map(name => {
+  Object.values(testFiles).map(name => {
     if (jestTestResults && jestTestResults.testResults) {
       return {
         name,
