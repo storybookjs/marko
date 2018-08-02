@@ -98,7 +98,7 @@ exports[`Storyshots Addons|Info.Decorator Use Info as story decorator 1`] = `
               </div>
             </div>
             <button
-              class="css-gydez8"
+              class="css-py33tc"
             >
               <div
                 class="css-kv47nt"
@@ -404,7 +404,7 @@ exports[`Storyshots Addons|Info.GitHub issues #1814 1`] = `
               </div>
             </div>
             <button
-              class="css-gydez8"
+              class="css-py33tc"
             >
               <div
                 class="css-kv47nt"
@@ -601,7 +601,7 @@ exports[`Storyshots Addons|Info.Markdown Displays Markdown in description 1`] = 
               </div>
             </div>
             <button
-              class="css-gydez8"
+              class="css-py33tc"
             >
               <div
                 class="css-kv47nt"
@@ -874,7 +874,7 @@ exports[`Storyshots Addons|Info.Options.TableComponent Use a custom component fo
               </div>
             </div>
             <button
-              class="css-gydez8"
+              class="css-py33tc"
             >
               <div
                 class="css-kv47nt"
@@ -1056,7 +1056,7 @@ exports[`Storyshots Addons|Info.Options.header Shows or hides Info Addon header 
               </div>
             </div>
             <button
-              class="css-gydez8"
+              class="css-py33tc"
             >
               <div
                 class="css-kv47nt"
@@ -1327,7 +1327,7 @@ exports[`Storyshots Addons|Info.Options.inline Inlines component inside story 1`
             </div>
           </div>
           <button
-            class="css-gydez8"
+            class="css-py33tc"
           >
             <div
               class="css-kv47nt"
@@ -2297,7 +2297,7 @@ exports[`Storyshots Addons|Info.Options.maxPropsIntoLine Object and array props 
             </div>
           </div>
           <button
-            class="css-gydez8"
+            class="css-py33tc"
           >
             <div
               class="css-kv47nt"
@@ -2578,7 +2578,7 @@ exports[`Storyshots Addons|Info.Options.propTables Shows additional component pr
               </div>
             </div>
             <button
-              class="css-gydez8"
+              class="css-py33tc"
             >
               <div
                 class="css-kv47nt"
@@ -3030,7 +3030,7 @@ exports[`Storyshots Addons|Info.Options.propTablesExclude Exclude component from
               </div>
             </div>
             <button
-              class="css-gydez8"
+              class="css-py33tc"
             >
               <div
                 class="css-kv47nt"
@@ -3521,7 +3521,7 @@ exports[`Storyshots Addons|Info.Options.styles Extend info styles with an object
               </div>
             </div>
             <button
-              class="css-gydez8"
+              class="css-py33tc"
             >
               <div
                 class="css-kv47nt"
@@ -3794,7 +3794,7 @@ exports[`Storyshots Addons|Info.Options.styles Full control over styles using a 
               </div>
             </div>
             <button
-              class="css-gydez8"
+              class="css-py33tc"
             >
               <div
                 class="css-kv47nt"
@@ -4094,7 +4094,7 @@ exports[`Storyshots Addons|Info.React Docgen Comments from Flow declarations 1`]
               </div>
             </div>
             <button
-              class="css-gydez8"
+              class="css-py33tc"
             >
               <div
                 class="css-kv47nt"
@@ -4545,7 +4545,7 @@ exports[`Storyshots Addons|Info.React Docgen Comments from PropType declarations
               </div>
             </div>
             <button
-              class="css-gydez8"
+              class="css-py33tc"
             >
               <div
                 class="css-kv47nt"
@@ -5280,7 +5280,7 @@ exports[`Storyshots Addons|Info.React Docgen Comments from component declaration
               </div>
             </div>
             <button
-              class="css-gydez8"
+              class="css-py33tc"
             >
               <div
                 class="css-kv47nt"

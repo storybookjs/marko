@@ -2017,7 +2017,7 @@ containing **bold**, *cursive* text, \`code\` and [a link](https://github.com)"
                               styles={Object {}}
                             >
                               <button
-                                className="css-gydez8"
+                                className="css-py33tc"
                                 onClick={[Function]}
                               >
                                 <glamorous(div)
