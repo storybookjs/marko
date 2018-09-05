@@ -42,7 +42,7 @@ import Footer from '../Footer';
 
 const Homepage = ({ users }) => (
   <div className="container">
-    <Helmet title="Storybook - UI dev environment you'll love to use" />
+    <Helmet title="Storybook - UI development environment you'll love to use" />
     {/* <Header currentSection="home" /> */}
     <Heading />
     <Demo />
