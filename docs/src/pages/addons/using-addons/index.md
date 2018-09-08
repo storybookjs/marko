@@ -37,8 +37,10 @@ import { withNotes } from '@storybook/addon-notes';
 import Button from './Button';
 
 storiesOf('Button', module)
-  .add('with some emoji', () => (
-     withNotes('A very simple component')(() => <Button onClick={action('clicked')}><span role="img" aria-label="so cool">😀 😎 👍 💯</span></Button>));
+  .add('with some emoji', withNotes('A very simple component')(() =>
+    <Button onClick={action('clicked')}>
+      <span role="img" aria-label="so cool">😀 😎 👍 💯</span>
+    </Button>
   ));
 ```
 
