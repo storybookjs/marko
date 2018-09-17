@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-actions",
-  "version": "3.4.10",
+  "version": "3.4.11",
   "description": "Action Logger addon for storybook",
   "keywords": [
     "storybook"
@@ -20,7 +20,7 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/components": "3.4.10",
+    "@storybook/components": "3.4.11",
     "babel-runtime": "^6.26.0",
     "deep-equal": "^1.0.1",
     "glamor": "^2.20.40",
