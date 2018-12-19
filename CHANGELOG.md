@@ -1,3 +1,10 @@
+## 4.1.4 (December 25, 2018)
+
+### Bug Fixes
+
+* Core: Load Symbol polyfill before any other code ([#5082](https://github.com/storybooks/storybook/pull/5082))
+* React: Fix error with new CRA Webpack config ([#5074](https://github.com/storybooks/storybook/pull/5074))
+
 ## 4.1.3 (December 20, 2018)
 
 ### Bug Fixes
