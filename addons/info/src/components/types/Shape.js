@@ -1,13 +1,25 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { HighlightButton } from '@storybook/components';
 import PrettyPropType from './PrettyPropType';
 import PropertyLabel from './PropertyLabel';
 
 import { TypeInfo, getPropTypes } from './proptypes';
 
 const MARGIN_SIZE = 15;
+
+const HighlightButton = props => (
+  <button
+    type="button"
+    {...props}
+    style={{
+      display: 'inline-block',
+      background: 'none',
+      border: '0 none',
+      color: 'gray',
+    }}
+  />
+);
 
 class Shape extends React.Component {
   constructor(props) {

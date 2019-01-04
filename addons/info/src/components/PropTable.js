@@ -1,9 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { Table, Td, Th } from '@storybook/components';
 import PropVal from './PropVal';
 import PrettyPropType from './types/PrettyPropType';
+
+const Table = props => <table style={{}} {...props} />;
+const Td = props => <td style={{ paddingRight: 10, verticalAlign: 'top' }} {...props} />;
+const Tr = props => <tr style={{}} {...props} />;
+const Th = props => <th style={{ textAlign: 'left', verticalAlign: 'top' }} {...props} />;
+const Tbody = props => <tbody style={{}} {...props} />;
+const Thead = props => <thead style={{}} {...props} />;
 
 export const multiLineText = input => {
   if (!input) {
@@ -60,18 +66,18 @@ export default function PropTable(props) {
 
   return (
     <Table>
-      <thead>
-        <tr>
+      <Thead>
+        <Tr>
           <Th bordered>property</Th>
           <Th bordered>propType</Th>
           <Th bordered>required</Th>
           <Th bordered>default</Th>
           <Th bordered>description</Th>
-        </tr>
-      </thead>
-      <tbody>
+        </Tr>
+      </Thead>
+      <Tbody>
         {includedPropDefinitions.map(row => (
-          <tr key={row.property}>
+          <Tr key={row.property}>
             <Td bordered code>
               {row.property}
             </Td>
@@ -87,9 +93,9 @@ export default function PropTable(props) {
               )}
             </Td>
             <Td bordered>{multiLineText(row.description)}</Td>
-          </tr>
+          </Tr>
         ))}
-      </tbody>
+      </Tbody>
     </Table>
   );
 }
