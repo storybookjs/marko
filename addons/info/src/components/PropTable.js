@@ -68,31 +68,29 @@ export default function PropTable(props) {
     <Table>
       <Thead>
         <Tr>
-          <Th bordered>property</Th>
-          <Th bordered>propType</Th>
-          <Th bordered>required</Th>
-          <Th bordered>default</Th>
-          <Th bordered>description</Th>
+          <Th>property</Th>
+          <Th>propType</Th>
+          <Th>required</Th>
+          <Th>default</Th>
+          <Th>description</Th>
         </Tr>
       </Thead>
       <Tbody>
         {includedPropDefinitions.map(row => (
           <Tr key={row.property}>
-            <Td bordered code>
-              {row.property}
-            </Td>
-            <Td bordered code>
+            <Td>{row.property}</Td>
+            <Td>
               <PrettyPropType propType={row.propType} />
             </Td>
-            <Td bordered>{row.required ? 'yes' : '-'}</Td>
-            <Td bordered>
+            <Td>{row.required ? 'yes' : '-'}</Td>
+            <Td>
               {row.defaultValue === undefined ? (
                 '-'
               ) : (
                 <PropVal val={row.defaultValue} {...propValProps} />
               )}
             </Td>
-            <Td bordered>{multiLineText(row.description)}</Td>
+            <Td>{multiLineText(row.description)}</Td>
           </Tr>
         ))}
       </Tbody>
