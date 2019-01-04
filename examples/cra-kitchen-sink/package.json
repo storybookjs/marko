@@ -13,8 +13,8 @@
   "dependencies": {
     "global": "^4.3.2",
     "prop-types": "^15.6.2",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
     "react-lifecycles-compat": "^3.0.4"
   },
   "devDependencies": {
