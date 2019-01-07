@@ -89,8 +89,8 @@
   },
   "peerDependencies": {
     "babel-loader": "^7.0.0 || ^8.0.0",
-    "react": ">=16.3.0",
-    "react-dom": ">=16.3.0"
+    "react": "*",
+    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"
