@@ -4,12 +4,12 @@ import React from 'react';
 import PropVal from './PropVal';
 import PrettyPropType from './types/PrettyPropType';
 
-const Table = props => <table style={{}} {...props} />;
+const Table = props => <table {...props} />;
 const Td = props => <td style={{ paddingRight: 10, verticalAlign: 'top' }} {...props} />;
-const Tr = props => <tr style={{}} {...props} />;
+const Tr = props => <tr {...props} />;
 const Th = props => <th style={{ textAlign: 'left', verticalAlign: 'top' }} {...props} />;
-const Tbody = props => <tbody style={{}} {...props} />;
-const Thead = props => <thead style={{}} {...props} />;
+const Tbody = props => <tbody {...props} />;
+const Thead = props => <thead {...props} />;
 
 export const multiLineText = input => {
   if (!input) {
