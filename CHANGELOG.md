@@ -1,3 +1,11 @@
+## 4.1.8 (January 23, 2019)
+
+Note that `4.1.7` contained a bad merge that missed an important change. This release fixes that:
+
+### Bug Fixes
+
+* Core: Add missing polyfills to manager to support IE  ([#5238](https://github.com/storybooks/storybook/pull/5238))
+
 ## 4.1.7 (January 17, 2019)
 
 ### Bug Fixes
