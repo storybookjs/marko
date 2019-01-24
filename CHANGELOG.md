@@ -1,3 +1,10 @@
+## 4.1.10 (January 24, 2019)
+
+### Bug Fixes
+
+* React-native: Fixed isUIHidden param ([#5067](https://github.com/storybooks/storybook/pull/5067))
+* React-native: Disabling warning if story is not set in async storage ([#5068](https://github.com/storybooks/storybook/pull/5068))
+
 ## 4.1.9 (January 23, 2019)
 
 Note that `4.1.7` contained a bad merge that missed an important change. This release fixes that:
