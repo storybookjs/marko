@@ -20,7 +20,7 @@ Add this line to your `addons.js` file (create this file inside your storybook c
 import '@storybook/addon-options/register';
 ```
 
-###Set options globally
+### Set options globally
 
 Import and use the `withOptions` decorator in your `config.js` file.
 
