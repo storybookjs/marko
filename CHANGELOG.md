@@ -1,3 +1,13 @@
+## 4.1.12 (February 18, 2019)
+
+### Bug Fixes
+
+* Addon-google-analytics: Add missing `register.js` file ([#5379](https://github.com/storybooks/storybook/pull/5379))
+
+### Dependency Upgrades
+
+* Update modal manager for rn 0.58 support ([#5581](https://github.com/storybooks/storybook/pull/5581))
+
 ## 4.1.11 (January 24, 2019)
 
 ### Bug Fixes
