@@ -1,4 +1,49 @@
+## 5.0.0-rc.4 (February 21, 2019)
+
+### Features
+
+* Handle prerelease versions in version check ([#5641](https://github.com/storybooks/storybook/pull/5641))
+
+### Bug Fixes
+
+* UI: Fix scrollbar persistence ([#5689](https://github.com/storybooks/storybook/pull/5689))
+* UI: Fix keyboard shortcuts of toggleNav & togglePanel ([#5677](https://github.com/storybooks/storybook/pull/5677))
+* Core: Fix singleton module issue for manager & theme ([#5679](https://github.com/storybooks/storybook/pull/5679))
+* Addon-storysource: Fix source not updating ([#5672](https://github.com/storybooks/storybook/pull/5672))
+* Core: Fix broken error reporting ([#5678](https://github.com/storybooks/storybook/pull/5678))
+* Compare component name to story name, not story fn ([#5649](https://github.com/storybooks/storybook/pull/5649))
+
+### Maintenance
+
+* CLI: Cleanup version notice ([#5699](https://github.com/storybooks/storybook/pull/5699))
+* Core: Fix story fn consistency ([#5669](https://github.com/storybooks/storybook/pull/5669))
+
 ## 4.1.13 (February 21, 2019)
+
+### Maintenance
+
+* CLI: Cleanup version notice ([#5699](https://github.com/storybooks/storybook/pull/5699))
+* Docs: Use static versions.json file instead of hacking one in ([#5675](https://github.com/storybooks/storybook/pull/5675))
+
+## 5.0.0-rc.3 (February 19, 2019)
+
+### Bug Fixes
+
+* UI: Styling bug fixes, story updates, and more QA ([#5650](https://github.com/storybooks/storybook/pull/5650))
+* UI: V5 style refinements ([#5562](https://github.com/storybooks/storybook/pull/5562))
+
+## 5.0.0-rc.2 (February 19, 2019)
+
+### Features
+
+* UI: Allow collapsing active story and use separate expansion for filtered ([#5625](https://github.com/storybooks/storybook/pull/5625))
+* UI: Handle prerelease versions in version check ([#5641](https://github.com/storybooks/storybook/pull/5641))
+
+### Bug Fixes
+
+* Addon-a11y: Fix tab highlighting  ([#5646](https://github.com/storybooks/storybook/pull/5646))
+* Addon-jest: Fix event subscription ([#5644](https://github.com/storybooks/storybook/pull/5644))
+* UI: Handle old versions in version check ([#5638](https://github.com/storybooks/storybook/pull/5638))
 
 ### Maintenance
 
