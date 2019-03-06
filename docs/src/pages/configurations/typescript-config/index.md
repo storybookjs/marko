@@ -25,7 +25,7 @@ We first have to use the [custom Webpack config in full control mode, extending 
 
 ```js
 const path = require('path');
-module.exports = (baseConfig, env, config) => {
+module.exports = ({ config }) => {
   config.module.rules.push({
     test: /\.(ts|tsx)$/,
     use: [{
@@ -90,7 +90,7 @@ yarn add -D @types/storybook__react # typings
 We first have to use the [custom Webpack config in full control mode, extending default configs](/configurations/custom-webpack-config/#full-control-mode--default) by creating a `webpack.config.js` file in our Storybook configuration directory (by default, it’s `.storybook`):
 
 ```js
-module.exports = (baseConfig, env, config) => {
+module.exports = ({ config }) => {
   config.module.rules.push({
     test: /\.(ts|tsx)$/,
     loader: require.resolve('babel-loader'),
