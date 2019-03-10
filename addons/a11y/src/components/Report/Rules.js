@@ -40,6 +40,10 @@ const Status = styled.div(({ passes, impact }) => ({
   textAlign: 'center',
   flex: '0 0 16px',
   color: passes ? impactColors.success : impactColors[impact],
+  '& > svg': {
+    height: '16px',
+    width: '16px',
+  },
 }));
 
 const Rule = ({ rule, passes }) => (
