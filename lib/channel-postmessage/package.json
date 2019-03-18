@@ -1,6 +1,6 @@
 {
   "name": "@storybook/channel-postmessage",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "",
   "keywords": [
     "storybook"
@@ -20,8 +20,8 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/channels": "5.0.2",
-    "@storybook/client-logger": "5.0.2",
+    "@storybook/channels": "5.0.3",
+    "@storybook/client-logger": "5.0.3",
     "core-js": "^2.6.5",
     "global": "^4.3.2",
     "telejson": "^2.1.0"
