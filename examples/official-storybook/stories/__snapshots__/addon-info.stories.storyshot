@@ -20,7 +20,7 @@ exports[`Storyshots Addons|Info/Decorator Use Info as story decorator 1`] = `
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -31,7 +31,7 @@ exports[`Storyshots Addons|Info/Decorator Use Info as story decorator 1`] = `
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -297,7 +297,7 @@ exports[`Storyshots Addons|Info/ForwardRef Displays forwarded ref components cor
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -308,7 +308,7 @@ exports[`Storyshots Addons|Info/ForwardRef Displays forwarded ref components cor
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -647,7 +647,7 @@ exports[`Storyshots Addons|Info/GitHub issues #1814 1`] = `
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -658,7 +658,7 @@ exports[`Storyshots Addons|Info/GitHub issues #1814 1`] = `
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -811,7 +811,7 @@ exports[`Storyshots Addons|Info/JSX Displays JSX in description 1`] = `
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -822,7 +822,7 @@ exports[`Storyshots Addons|Info/JSX Displays JSX in description 1`] = `
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -1122,7 +1122,7 @@ exports[`Storyshots Addons|Info/Markdown Displays Markdown in description 1`] = 
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -1133,7 +1133,7 @@ exports[`Storyshots Addons|Info/Markdown Displays Markdown in description 1`] = 
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -1437,7 +1437,7 @@ exports[`Storyshots Addons|Info/Markdown From external Markdown file 1`] = `
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -1448,7 +1448,7 @@ exports[`Storyshots Addons|Info/Markdown From external Markdown file 1`] = `
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -1732,7 +1732,7 @@ exports[`Storyshots Addons|Info/Markdown From internal Markdown file 1`] = `
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -1743,7 +1743,7 @@ exports[`Storyshots Addons|Info/Markdown From internal Markdown file 1`] = `
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -2039,7 +2039,7 @@ exports[`Storyshots Addons|Info/Options.TableComponent Use a custom component fo
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -2050,7 +2050,7 @@ exports[`Storyshots Addons|Info/Options.TableComponent Use a custom component fo
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -2221,7 +2221,7 @@ exports[`Storyshots Addons|Info/Options.excludedPropTypes Excludes propTypes tha
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -2232,7 +2232,7 @@ exports[`Storyshots Addons|Info/Options.excludedPropTypes Excludes propTypes tha
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -2471,7 +2471,7 @@ exports[`Storyshots Addons|Info/Options.header Shows or hides Info Addon header 
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -2482,7 +2482,7 @@ exports[`Storyshots Addons|Info/Options.header Shows or hides Info Addon header 
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="margin-bottom:0"
@@ -2718,7 +2718,7 @@ exports[`Storyshots Addons|Info/Options.inline Inlines component inside story 1`
 <div>
   <div>
     <div
-      style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+      style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
     >
       <div
         style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -2747,7 +2747,7 @@ exports[`Storyshots Addons|Info/Options.inline Inlines component inside story 1`
   </div>
   <div>
     <div
-      style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+      style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
     >
       <div
         style="margin-bottom:0"
@@ -2998,7 +2998,7 @@ exports[`Storyshots Addons|Info/Options.propTables Shows additional component pr
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -3009,7 +3009,7 @@ exports[`Storyshots Addons|Info/Options.propTables Shows additional component pr
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -3380,7 +3380,7 @@ exports[`Storyshots Addons|Info/Options.propTablesExclude Exclude component from
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -3391,7 +3391,7 @@ exports[`Storyshots Addons|Info/Options.propTablesExclude Exclude component from
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -3718,7 +3718,7 @@ exports[`Storyshots Addons|Info/Options.source Shows or hides Info Addon source 
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -3729,7 +3729,7 @@ exports[`Storyshots Addons|Info/Options.source Shows or hides Info Addon source 
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -3941,7 +3941,7 @@ exports[`Storyshots Addons|Info/Options.styles Extend info styles with an object
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -3952,7 +3952,7 @@ exports[`Storyshots Addons|Info/Options.styles Extend info styles with an object
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -4209,7 +4209,7 @@ exports[`Storyshots Addons|Info/Options.styles Full control over styles using a 
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -4220,7 +4220,7 @@ exports[`Storyshots Addons|Info/Options.styles Full control over styles using a 
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -4485,7 +4485,7 @@ exports[`Storyshots Addons|Info/Parameters Overwrite the parameters with markdow
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -4496,7 +4496,7 @@ exports[`Storyshots Addons|Info/Parameters Overwrite the parameters with markdow
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -4784,7 +4784,7 @@ exports[`Storyshots Addons|Info/Parameters Overwrite the text parameter with mar
 <div>
   <div>
     <div
-      style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+      style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
     >
       <div
         style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -4813,7 +4813,7 @@ exports[`Storyshots Addons|Info/Parameters Overwrite the text parameter with mar
   </div>
   <div>
     <div
-      style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+      style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
     >
       <div
         style="margin-bottom:0"
@@ -5066,7 +5066,7 @@ exports[`Storyshots Addons|Info/Parameters Overwriting and extending the paramet
 <div>
   <div>
     <div
-      style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+      style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
     >
       <div
         style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -5095,7 +5095,7 @@ exports[`Storyshots Addons|Info/Parameters Overwriting and extending the paramet
   </div>
   <div>
     <div
-      style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+      style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
     >
       <div
         style="margin-bottom:0"
@@ -5303,7 +5303,7 @@ exports[`Storyshots Addons|Info/Parameters Using paramaters across all stories 1
 <div>
   <div>
     <div
-      style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+      style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
     >
       <div
         style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -5332,7 +5332,7 @@ exports[`Storyshots Addons|Info/Parameters Using paramaters across all stories 1
   </div>
   <div>
     <div
-      style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+      style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
     >
       <div
         style="margin-bottom:0"
@@ -5583,7 +5583,7 @@ exports[`Storyshots Addons|Info/React Docgen Comments from Flow declarations 1`]
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -5594,7 +5594,7 @@ exports[`Storyshots Addons|Info/React Docgen Comments from Flow declarations 1`]
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -5822,7 +5822,7 @@ exports[`Storyshots Addons|Info/React Docgen Comments from PropType declarations
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -5833,7 +5833,7 @@ exports[`Storyshots Addons|Info/React Docgen Comments from PropType declarations
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -6711,7 +6711,7 @@ exports[`Storyshots Addons|Info/React Docgen Comments from component declaration
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -6722,7 +6722,7 @@ exports[`Storyshots Addons|Info/React Docgen Comments from component declaration
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -7006,7 +7006,7 @@ exports[`Storyshots Addons|Info/React Docgen Comments from named export componen
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -7017,7 +7017,7 @@ exports[`Storyshots Addons|Info/React Docgen Comments from named export componen
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -7376,7 +7376,7 @@ exports[`Storyshots Addons|Info/Story Source Array prop 1`] = `
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -7387,7 +7387,7 @@ exports[`Storyshots Addons|Info/Story Source Array prop 1`] = `
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -7852,7 +7852,7 @@ exports[`Storyshots Addons|Info/Story Source Children 1`] = `
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -7863,7 +7863,7 @@ exports[`Storyshots Addons|Info/Story Source Children 1`] = `
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -8200,7 +8200,7 @@ exports[`Storyshots Addons|Info/Story Source Many props 1`] = `
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -8211,7 +8211,7 @@ exports[`Storyshots Addons|Info/Story Source Many props 1`] = `
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -8493,7 +8493,7 @@ exports[`Storyshots Addons|Info/Story Source Object prop 1`] = `
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -8504,7 +8504,7 @@ exports[`Storyshots Addons|Info/Story Source Object prop 1`] = `
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -8845,7 +8845,7 @@ exports[`Storyshots Addons|Info/Story Source One prop 1`] = `
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -8856,7 +8856,7 @@ exports[`Storyshots Addons|Info/Story Source One prop 1`] = `
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
@@ -9113,7 +9113,7 @@ exports[`Storyshots Addons|Info/deprecated Displays Markdown in description 1`] 
   </button>
   <div
     class="info__overlay"
-    style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
+    style="position:fixed;background:white;top:0;bottom:0;left:0;right:0;padding:0 40px;overflow:auto;z-index:99999;display:none"
   >
     <button
       class="info__close-button"
@@ -9124,7 +9124,7 @@ exports[`Storyshots Addons|Info/deprecated Displays Markdown in description 1`] 
     </button>
     <div>
       <div
-        style="font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
+        style="font-family:Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif;color:black;font-weight:300;line-height:1.45;font-size:15px;border:1px solid #eee;padding:20px 40px 40px;border-radius:2px;background-color:#fff;margin-top:20px;margin-bottom:20px"
       >
         <div
           style="border-bottom:1px solid #eee;padding-top:10px;margin-bottom:10px"
