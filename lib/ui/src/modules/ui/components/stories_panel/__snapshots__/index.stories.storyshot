@@ -538,83 +538,78 @@ exports[`Storyshots UI|stories/StoriesPanel with storiesHierarchies prop 1`] = `
       <li
         class="emotion-8"
       >
-        <div>
-          <ul
-            class="emotion-17"
+        <ul
+          class="emotion-17"
+        >
+          <li
+            class="emotion-8"
           >
-            <li
-              class="emotion-8"
+            <div
+              data-name="kk"
+              role="menuitem"
+              style="cursor:pointer;position:relative;overflow:hidden;padding:0px 5px;display:block;z-index:1"
+              tabindex="0"
             >
-              <div
-                data-name="kk"
-                role="menuitem"
-                style="cursor:pointer;position:relative;overflow:hidden;padding:0px 5px;display:block;z-index:1"
-                tabindex="0"
-              >
-                <div>
+              <div>
+                <div
+                  style="position:relative;display:inline-block;vertical-align:top;margin-left:-5px;height:24px;width:24px;transform-origin:50% 11px"
+                >
                   <div
-                    style="position:relative;display:inline-block;vertical-align:top;margin-left:-5px;height:24px;width:24px;transform-origin:50% 11px"
+                    style="position:absolute;top:50%;left:50%;margin:-6px 0 0 -5px"
                   >
-                    <div
-                      style="position:absolute;top:50%;left:50%;margin:-6px 0 0 -5px"
+                    <svg
+                      fill="currentColor"
+                      height="10"
+                      preserveAspectRatio="xMidYMid meet"
+                      style="vertical-align:top;fill:currentColor"
+                      viewBox="0 0 40 40"
+                      width="10"
                     >
-                      <svg
-                        fill="currentColor"
-                        height="10"
-                        preserveAspectRatio="xMidYMid meet"
-                        style="vertical-align:top;fill:currentColor"
-                        viewBox="0 0 40 40"
-                        width="10"
-                      >
-                        <g>
-                          <path
-                            d="m23.3 20l-13.1-13.6c-0.3-0.3-0.3-0.9 0-1.2l2.4-2.4c0.3-0.3 0.9-0.4 1.2-0.1l16 16.7c0.1 0.1 0.2 0.4 0.2 0.6s-0.1 0.5-0.2 0.6l-16 16.7c-0.3 0.3-0.9 0.3-1.2 0l-2.4-2.5c-0.3-0.3-0.3-0.9 0-1.2z"
-                          />
-                        </g>
-                      </svg>
-                    </div>
+                      <g>
+                        <path
+                          d="m23.3 20l-13.1-13.6c-0.3-0.3-0.3-0.9 0-1.2l2.4-2.4c0.3-0.3 0.9-0.4 1.2-0.1l16 16.7c0.1 0.1 0.2 0.4 0.2 0.6s-0.1 0.5-0.2 0.6l-16 16.7c-0.3 0.3-0.9 0.3-1.2 0l-2.4-2.5c-0.3-0.3-0.3-0.9 0-1.2z"
+                        />
+                      </g>
+                    </svg>
                   </div>
+                </div>
+                <div
+                  class="emotion-11"
+                >
                   <div
-                    class="emotion-11"
+                    class="emotion-10"
                   >
-                    <div
-                      class="emotion-10"
-                    >
-                      kk
-                    </div>
+                    kk
                   </div>
                 </div>
               </div>
-              <div>
-                <ul
-                  class="emotion-17"
+            </div>
+            <ul
+              class="emotion-17"
+            >
+              <li
+                class="emotion-8"
+              >
+                <a
+                  class="emotion-14 emotion-15"
+                  href="?selectedKind=kk&selectedStory=bb&full=NaN&addons=NaN&stories=NaN&panelRight=NaN"
                 >
-                  <li
-                    class="emotion-8"
-                  >
-                    <a
-                      class="emotion-14 emotion-15"
-                      href="?selectedKind=kk&selectedStory=bb&full=NaN&addons=NaN&stories=NaN&panelRight=NaN"
+                  <div>
+                    <div
+                      class="emotion-11"
                     >
-                      <div>
-                        <div
-                          class="emotion-11"
-                        >
-                          <div
-                            class="emotion-12"
-                          >
-                            bb
-                          </div>
-                        </div>
+                      <div
+                        class="emotion-12"
+                      >
+                        bb
                       </div>
-                    </a>
-                    <div />
-                  </li>
-                </ul>
-              </div>
-            </li>
-          </ul>
-        </div>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
       </li>
     </ul>
   </div>

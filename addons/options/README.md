@@ -93,7 +93,7 @@ addDecorator(
      * sidebar tree animations
      * @type {Boolean}
      */
-    sidebarAnimations: true,
+    sidebarAnimations: false,
     /**
      * id to select an addon panel
      * @type {String}
