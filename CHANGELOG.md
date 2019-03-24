@@ -1,3 +1,9 @@
+## 4.1.15 (March 24, 2019)
+
+### Bug Fixes
+
+* UI: Workaround broken treebeard animations ([#6249](https://github.com/storybooks/storybook/pull/6249))
+
 ## 4.1.14 (March 8, 2019)
 
 ### Dependency Upgrades
