@@ -1,6 +1,6 @@
 {
   "name": "@storybook/channel-websocket",
-  "version": "4.1.15",
+  "version": "4.1.16",
   "description": "",
   "keywords": [
     "storybook"
@@ -20,7 +20,7 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/channels": "4.1.15",
+    "@storybook/channels": "4.1.16",
     "global": "^4.3.2"
   },
   "publishConfig": {
