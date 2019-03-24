@@ -1,6 +1,6 @@
 {
   "name": "@storybook/angular",
-  "version": "3.4.11",
+  "version": "3.4.12",
   "description": "Storybook for Angular: Develop Angular Components in isolation with Hot Reloading.",
   "homepage": "https://github.com/storybooks/storybook/tree/master/apps/angular",
   "bugs": {
@@ -23,11 +23,11 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "3.4.11",
-    "@storybook/channel-postmessage": "3.4.11",
-    "@storybook/core": "3.4.11",
-    "@storybook/node-logger": "3.4.11",
-    "@storybook/ui": "3.4.11",
+    "@storybook/addons": "3.4.12",
+    "@storybook/channel-postmessage": "3.4.12",
+    "@storybook/core": "3.4.12",
+    "@storybook/node-logger": "3.4.12",
+    "@storybook/ui": "3.4.12",
     "airbnb-js-shims": "^1.4.1",
     "angular2-template-loader": "^0.6.2",
     "babel-loader": "^7.1.4",
