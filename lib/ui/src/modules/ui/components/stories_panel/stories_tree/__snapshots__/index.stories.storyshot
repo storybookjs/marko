@@ -8,11 +8,9 @@ exports[`Storyshots ui/stories/Stories empty 1`] = `
     <li
       style="position:relative"
     >
-      <span>
-        <ul
-          style="padding-left:19px;list-style:none"
-        />
-      </span>
+      <ul
+        style="padding-left:19px;list-style:none"
+      />
     </li>
   </ul>
 </div>
@@ -26,155 +24,148 @@ exports[`Storyshots ui/stories/Stories simple 1`] = `
     <li
       style="position:relative"
     >
-      <span>
-        <ul
-          style="padding-left:19px;list-style:none"
+      <ul
+        style="padding-left:19px;list-style:none"
+      >
+        <li
+          style="position:relative"
         >
-          <li
-            style="position:relative"
+          <div
+            data-name="a"
+            role="menuitem"
+            style="cursor:pointer;position:relative;overflow:hidden;padding:0px 5px;display:block;z-index:1"
+            tabindex="0"
           >
             <div
-              data-name="a"
-              role="menuitem"
-              style="cursor:pointer;position:relative;overflow:hidden;padding:0px 5px;display:block;z-index:1"
-              tabindex="0"
+              data-radium="true"
             >
               <div
-                data-radium="true"
+                style="position:relative;display:inline-block;vertical-align:top;margin-left:-5px;height:24px;width:24px;transform-origin:50% 11px"
               >
                 <div
-                  style="position:relative;display:inline-block;vertical-align:top;margin-left:-5px;height:24px;width:24px;transform-origin:50% 11px"
+                  style="position:absolute;top:50%;left:50%;margin:-6px 0 0 -5px"
                 >
-                  <div
-                    style="position:absolute;top:50%;left:50%;margin:-6px 0 0 -5px"
+                  <svg
+                    fill="currentColor"
+                    height="10"
+                    preserveAspectRatio="xMidYMid meet"
+                    style="vertical-align:top;fill:#9DA5AB"
+                    viewBox="0 0 40 40"
+                    width="10"
                   >
-                    <svg
-                      fill="currentColor"
-                      height="10"
-                      preserveAspectRatio="xMidYMid meet"
-                      style="vertical-align:top;fill:#9DA5AB"
-                      viewBox="0 0 40 40"
-                      width="10"
-                    >
-                      <g>
-                        <path
-                          d="m23.3 20l-13.1-13.6c-0.3-0.3-0.3-0.9 0-1.2l2.4-2.4c0.3-0.3 0.9-0.4 1.2-0.1l16 16.7c0.1 0.1 0.2 0.4 0.2 0.6s-0.1 0.5-0.2 0.6l-16 16.7c-0.3 0.3-0.9 0.3-1.2 0l-2.4-2.5c-0.3-0.3-0.3-0.9 0-1.2z"
-                        />
-                      </g>
-                    </svg>
-                  </div>
+                    <g>
+                      <path
+                        d="m23.3 20l-13.1-13.6c-0.3-0.3-0.3-0.9 0-1.2l2.4-2.4c0.3-0.3 0.9-0.4 1.2-0.1l16 16.7c0.1 0.1 0.2 0.4 0.2 0.6s-0.1 0.5-0.2 0.6l-16 16.7c-0.3 0.3-0.9 0.3-1.2 0l-2.4-2.5c-0.3-0.3-0.3-0.9 0-1.2z"
+                      />
+                    </g>
+                  </svg>
                 </div>
+              </div>
+              <div
+                style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
+              >
                 <div
-                  style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
+                  style="line-height:18px;padding:1px 0 5px"
                 >
-                  <div
-                    style="line-height:18px;padding:1px 0 5px"
-                  >
-                    a
-                  </div>
+                  a
                 </div>
               </div>
             </div>
-            <span />
-          </li>
-          <li
-            style="position:relative"
+          </div>
+        </li>
+        <li
+          style="position:relative"
+        >
+          <div
+            data-name="b"
+            role="menuitem"
+            style="cursor:pointer;position:relative;overflow:hidden;padding:0px 5px;display:block;z-index:1"
+            tabindex="0"
           >
             <div
-              data-name="b"
-              role="menuitem"
-              style="cursor:pointer;position:relative;overflow:hidden;padding:0px 5px;display:block;z-index:1"
-              tabindex="0"
+              data-radium="true"
             >
               <div
-                data-radium="true"
+                style="position:relative;display:inline-block;vertical-align:top;margin-left:-5px;height:24px;width:24px;transform-origin:50% 11px"
               >
                 <div
-                  style="position:relative;display:inline-block;vertical-align:top;margin-left:-5px;height:24px;width:24px;transform-origin:50% 11px"
+                  style="position:absolute;top:50%;left:50%;margin:-6px 0 0 -5px"
                 >
-                  <div
-                    style="position:absolute;top:50%;left:50%;margin:-6px 0 0 -5px"
+                  <svg
+                    fill="currentColor"
+                    height="10"
+                    preserveAspectRatio="xMidYMid meet"
+                    style="vertical-align:top;fill:#9DA5AB"
+                    viewBox="0 0 40 40"
+                    width="10"
                   >
-                    <svg
-                      fill="currentColor"
-                      height="10"
-                      preserveAspectRatio="xMidYMid meet"
-                      style="vertical-align:top;fill:#9DA5AB"
-                      viewBox="0 0 40 40"
-                      width="10"
-                    >
-                      <g>
-                        <path
-                          d="m23.3 20l-13.1-13.6c-0.3-0.3-0.3-0.9 0-1.2l2.4-2.4c0.3-0.3 0.9-0.4 1.2-0.1l16 16.7c0.1 0.1 0.2 0.4 0.2 0.6s-0.1 0.5-0.2 0.6l-16 16.7c-0.3 0.3-0.9 0.3-1.2 0l-2.4-2.5c-0.3-0.3-0.3-0.9 0-1.2z"
-                        />
-                      </g>
-                    </svg>
-                  </div>
+                    <g>
+                      <path
+                        d="m23.3 20l-13.1-13.6c-0.3-0.3-0.3-0.9 0-1.2l2.4-2.4c0.3-0.3 0.9-0.4 1.2-0.1l16 16.7c0.1 0.1 0.2 0.4 0.2 0.6s-0.1 0.5-0.2 0.6l-16 16.7c-0.3 0.3-0.9 0.3-1.2 0l-2.4-2.5c-0.3-0.3-0.3-0.9 0-1.2z"
+                      />
+                    </g>
+                  </svg>
                 </div>
+              </div>
+              <div
+                style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
+              >
                 <div
-                  style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
+                  style="line-height:18px;padding:1px 0 5px"
                 >
-                  <div
-                    style="line-height:18px;padding:1px 0 5px"
-                  >
-                    b
-                  </div>
+                  b
                 </div>
               </div>
             </div>
-            <span>
-              <ul
-                style="padding-left:19px;list-style:none"
+          </div>
+          <ul
+            style="padding-left:19px;list-style:none"
+          >
+            <li
+              style="position:relative"
+            >
+              <a
+                class="css-1b2u8sb"
+                data-name="b1"
+                href="?selectedKind=b&selectedStory=b1&full=NaN&addons=NaN&stories=NaN&panelRight=NaN"
               >
-                <li
-                  style="position:relative"
+                <div
+                  data-radium="true"
                 >
-                  <a
-                    class="css-1b2u8sb"
-                    data-name="b1"
-                    href="?selectedKind=b&selectedStory=b1&full=NaN&addons=NaN&stories=NaN&panelRight=NaN"
+                  <div
+                    style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
                   >
-                    <div
-                      data-radium="true"
-                    >
-                      <div
-                        style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
-                      >
-                        <div>
-                          b1
-                        </div>
-                      </div>
+                    <div>
+                      b1
                     </div>
-                  </a>
-                  <span />
-                </li>
-                <li
-                  style="position:relative"
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li
+              style="position:relative"
+            >
+              <a
+                class="css-1enjukp"
+                data-name="b2"
+                href="?selectedKind=b&selectedStory=b2&full=NaN&addons=NaN&stories=NaN&panelRight=NaN"
+              >
+                <div
+                  data-radium="true"
                 >
-                  <a
-                    class="css-1enjukp"
-                    data-name="b2"
-                    href="?selectedKind=b&selectedStory=b2&full=NaN&addons=NaN&stories=NaN&panelRight=NaN"
+                  <div
+                    style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
                   >
-                    <div
-                      data-radium="true"
-                    >
-                      <div
-                        style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
-                      >
-                        <div>
-                          b2
-                        </div>
-                      </div>
+                    <div>
+                      b2
                     </div>
-                  </a>
-                  <span />
-                </li>
-              </ul>
-            </span>
-          </li>
-        </ul>
-      </span>
+                  </div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </li>
   </ul>
 </div>
@@ -188,103 +179,148 @@ exports[`Storyshots ui/stories/Stories with hierarchy - hierarchySeparator is de
     <li
       style="position:relative"
     >
-      <span>
-        <ul
-          style="padding-left:19px;list-style:none"
+      <ul
+        style="padding-left:19px;list-style:none"
+      >
+        <li
+          style="position:relative"
         >
-          <li
-            style="position:relative"
+          <div
+            data-name="some"
+            role="menuitem"
+            style="cursor:pointer;position:relative;overflow:hidden;padding:0px 5px;display:block;z-index:1"
+            tabindex="0"
           >
             <div
-              data-name="some"
-              role="menuitem"
-              style="cursor:pointer;position:relative;overflow:hidden;padding:0px 5px;display:block;z-index:1"
-              tabindex="0"
+              data-radium="true"
             >
               <div
-                data-radium="true"
+                style="position:relative;display:inline-block;vertical-align:top;margin-left:-5px;height:24px;width:24px;transform-origin:50% 11px"
               >
                 <div
-                  style="position:relative;display:inline-block;vertical-align:top;margin-left:-5px;height:24px;width:24px;transform-origin:50% 11px"
+                  style="position:absolute;top:50%;left:50%;margin:-6px 0 0 -5px"
                 >
-                  <div
-                    style="position:absolute;top:50%;left:50%;margin:-6px 0 0 -5px"
+                  <svg
+                    fill="currentColor"
+                    height="10"
+                    preserveAspectRatio="xMidYMid meet"
+                    style="vertical-align:top;fill:#9DA5AB"
+                    viewBox="0 0 40 40"
+                    width="10"
                   >
-                    <svg
-                      fill="currentColor"
-                      height="10"
-                      preserveAspectRatio="xMidYMid meet"
-                      style="vertical-align:top;fill:#9DA5AB"
-                      viewBox="0 0 40 40"
-                      width="10"
-                    >
-                      <g>
-                        <path
-                          d="m23.3 20l-13.1-13.6c-0.3-0.3-0.3-0.9 0-1.2l2.4-2.4c0.3-0.3 0.9-0.4 1.2-0.1l16 16.7c0.1 0.1 0.2 0.4 0.2 0.6s-0.1 0.5-0.2 0.6l-16 16.7c-0.3 0.3-0.9 0.3-1.2 0l-2.4-2.5c-0.3-0.3-0.3-0.9 0-1.2z"
-                        />
-                      </g>
-                    </svg>
-                  </div>
+                    <g>
+                      <path
+                        d="m23.3 20l-13.1-13.6c-0.3-0.3-0.3-0.9 0-1.2l2.4-2.4c0.3-0.3 0.9-0.4 1.2-0.1l16 16.7c0.1 0.1 0.2 0.4 0.2 0.6s-0.1 0.5-0.2 0.6l-16 16.7c-0.3 0.3-0.9 0.3-1.2 0l-2.4-2.5c-0.3-0.3-0.3-0.9 0-1.2z"
+                      />
+                    </g>
+                  </svg>
                 </div>
+              </div>
+              <div
+                style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
+              >
                 <div
-                  style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
+                  style="line-height:18px;padding:1px 0 5px"
                 >
-                  <div
-                    style="line-height:18px;padding:1px 0 5px"
-                  >
-                    some
-                  </div>
+                  some
                 </div>
               </div>
             </div>
-            <span />
-          </li>
-          <li
-            style="position:relative"
+          </div>
+        </li>
+        <li
+          style="position:relative"
+        >
+          <div
+            data-name="another"
+            role="menuitem"
+            style="cursor:pointer;position:relative;overflow:hidden;padding:0px 5px;display:block;z-index:1"
+            tabindex="0"
           >
             <div
-              data-name="another"
-              role="menuitem"
-              style="cursor:pointer;position:relative;overflow:hidden;padding:0px 5px;display:block;z-index:1"
-              tabindex="0"
+              data-radium="true"
             >
               <div
-                data-radium="true"
+                style="position:relative;display:inline-block;vertical-align:top;margin-left:-5px;height:24px;width:24px;transform-origin:50% 11px"
               >
                 <div
-                  style="position:relative;display:inline-block;vertical-align:top;margin-left:-5px;height:24px;width:24px;transform-origin:50% 11px"
+                  style="position:absolute;top:50%;left:50%;margin:-6px 0 0 -5px"
                 >
-                  <div
-                    style="position:absolute;top:50%;left:50%;margin:-6px 0 0 -5px"
+                  <svg
+                    fill="currentColor"
+                    height="10"
+                    preserveAspectRatio="xMidYMid meet"
+                    style="vertical-align:top;fill:#9DA5AB"
+                    viewBox="0 0 40 40"
+                    width="10"
                   >
-                    <svg
-                      fill="currentColor"
-                      height="10"
-                      preserveAspectRatio="xMidYMid meet"
-                      style="vertical-align:top;fill:#9DA5AB"
-                      viewBox="0 0 40 40"
-                      width="10"
-                    >
-                      <g>
-                        <path
-                          d="m23.3 20l-13.1-13.6c-0.3-0.3-0.3-0.9 0-1.2l2.4-2.4c0.3-0.3 0.9-0.4 1.2-0.1l16 16.7c0.1 0.1 0.2 0.4 0.2 0.6s-0.1 0.5-0.2 0.6l-16 16.7c-0.3 0.3-0.9 0.3-1.2 0l-2.4-2.5c-0.3-0.3-0.3-0.9 0-1.2z"
-                        />
-                      </g>
-                    </svg>
-                  </div>
+                    <g>
+                      <path
+                        d="m23.3 20l-13.1-13.6c-0.3-0.3-0.3-0.9 0-1.2l2.4-2.4c0.3-0.3 0.9-0.4 1.2-0.1l16 16.7c0.1 0.1 0.2 0.4 0.2 0.6s-0.1 0.5-0.2 0.6l-16 16.7c-0.3 0.3-0.9 0.3-1.2 0l-2.4-2.5c-0.3-0.3-0.3-0.9 0-1.2z"
+                      />
+                    </g>
+                  </svg>
                 </div>
+              </div>
+              <div
+                style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
+              >
                 <div
-                  style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
+                  style="line-height:18px;padding:1px 0 5px"
                 >
-                  <div
-                    style="line-height:18px;padding:1px 0 5px"
-                  >
-                    another
-                  </div>
+                  another
                 </div>
               </div>
             </div>
-            <span>
+          </div>
+          <ul
+            style="padding-left:19px;list-style:none"
+          >
+            <li
+              style="position:relative"
+            >
+              <div
+                data-name="space"
+                role="menuitem"
+                style="cursor:pointer;position:relative;overflow:hidden;padding:0px 5px;display:block;z-index:1"
+                tabindex="0"
+              >
+                <div
+                  data-radium="true"
+                >
+                  <div
+                    style="position:relative;display:inline-block;vertical-align:top;margin-left:-5px;height:24px;width:24px;transform-origin:50% 11px"
+                  >
+                    <div
+                      style="position:absolute;top:50%;left:50%;margin:-6px 0 0 -5px"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="10"
+                        preserveAspectRatio="xMidYMid meet"
+                        style="vertical-align:top;fill:#9DA5AB"
+                        viewBox="0 0 40 40"
+                        width="10"
+                      >
+                        <g>
+                          <path
+                            d="m23.3 20l-13.1-13.6c-0.3-0.3-0.3-0.9 0-1.2l2.4-2.4c0.3-0.3 0.9-0.4 1.2-0.1l16 16.7c0.1 0.1 0.2 0.4 0.2 0.6s-0.1 0.5-0.2 0.6l-16 16.7c-0.3 0.3-0.9 0.3-1.2 0l-2.4-2.5c-0.3-0.3-0.3-0.9 0-1.2z"
+                          />
+                        </g>
+                      </svg>
+                    </div>
+                  </div>
+                  <div
+                    style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
+                  >
+                    <div
+                      style="line-height:18px;padding:1px 0 5px"
+                    >
+                      space
+                    </div>
+                  </div>
+                </div>
+              </div>
               <ul
                 style="padding-left:19px;list-style:none"
               >
@@ -292,7 +328,7 @@ exports[`Storyshots ui/stories/Stories with hierarchy - hierarchySeparator is de
                   style="position:relative"
                 >
                   <div
-                    data-name="space"
+                    data-name="20"
                     role="menuitem"
                     style="cursor:pointer;position:relative;overflow:hidden;padding:0px 5px;display:block;z-index:1"
                     tabindex="0"
@@ -328,119 +364,63 @@ exports[`Storyshots ui/stories/Stories with hierarchy - hierarchySeparator is de
                         <div
                           style="line-height:18px;padding:1px 0 5px"
                         >
-                          space
+                          20
                         </div>
                       </div>
                     </div>
                   </div>
-                  <span>
-                    <ul
-                      style="padding-left:19px;list-style:none"
+                  <ul
+                    style="padding-left:19px;list-style:none"
+                  >
+                    <li
+                      style="position:relative"
                     >
-                      <li
-                        style="position:relative"
+                      <a
+                        class="css-1b2u8sb"
+                        data-name="b1"
+                        href="?selectedKind=another.space.20&selectedStory=b1&full=NaN&addons=NaN&stories=NaN&panelRight=NaN"
                       >
                         <div
-                          data-name="20"
-                          role="menuitem"
-                          style="cursor:pointer;position:relative;overflow:hidden;padding:0px 5px;display:block;z-index:1"
-                          tabindex="0"
+                          data-radium="true"
                         >
                           <div
-                            data-radium="true"
+                            style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
                           >
-                            <div
-                              style="position:relative;display:inline-block;vertical-align:top;margin-left:-5px;height:24px;width:24px;transform-origin:50% 11px"
-                            >
-                              <div
-                                style="position:absolute;top:50%;left:50%;margin:-6px 0 0 -5px"
-                              >
-                                <svg
-                                  fill="currentColor"
-                                  height="10"
-                                  preserveAspectRatio="xMidYMid meet"
-                                  style="vertical-align:top;fill:#9DA5AB"
-                                  viewBox="0 0 40 40"
-                                  width="10"
-                                >
-                                  <g>
-                                    <path
-                                      d="m23.3 20l-13.1-13.6c-0.3-0.3-0.3-0.9 0-1.2l2.4-2.4c0.3-0.3 0.9-0.4 1.2-0.1l16 16.7c0.1 0.1 0.2 0.4 0.2 0.6s-0.1 0.5-0.2 0.6l-16 16.7c-0.3 0.3-0.9 0.3-1.2 0l-2.4-2.5c-0.3-0.3-0.3-0.9 0-1.2z"
-                                    />
-                                  </g>
-                                </svg>
-                              </div>
-                            </div>
-                            <div
-                              style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
-                            >
-                              <div
-                                style="line-height:18px;padding:1px 0 5px"
-                              >
-                                20
-                              </div>
+                            <div>
+                              b1
                             </div>
                           </div>
                         </div>
-                        <span>
-                          <ul
-                            style="padding-left:19px;list-style:none"
+                      </a>
+                    </li>
+                    <li
+                      style="position:relative"
+                    >
+                      <a
+                        class="css-1enjukp"
+                        data-name="b2"
+                        href="?selectedKind=another.space.20&selectedStory=b2&full=NaN&addons=NaN&stories=NaN&panelRight=NaN"
+                      >
+                        <div
+                          data-radium="true"
+                        >
+                          <div
+                            style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
                           >
-                            <li
-                              style="position:relative"
-                            >
-                              <a
-                                class="css-1b2u8sb"
-                                data-name="b1"
-                                href="?selectedKind=another.space.20&selectedStory=b1&full=NaN&addons=NaN&stories=NaN&panelRight=NaN"
-                              >
-                                <div
-                                  data-radium="true"
-                                >
-                                  <div
-                                    style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
-                                  >
-                                    <div>
-                                      b1
-                                    </div>
-                                  </div>
-                                </div>
-                              </a>
-                              <span />
-                            </li>
-                            <li
-                              style="position:relative"
-                            >
-                              <a
-                                class="css-1enjukp"
-                                data-name="b2"
-                                href="?selectedKind=another.space.20&selectedStory=b2&full=NaN&addons=NaN&stories=NaN&panelRight=NaN"
-                              >
-                                <div
-                                  data-radium="true"
-                                >
-                                  <div
-                                    style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
-                                  >
-                                    <div>
-                                      b2
-                                    </div>
-                                  </div>
-                                </div>
-                              </a>
-                              <span />
-                            </li>
-                          </ul>
-                        </span>
-                      </li>
-                    </ul>
-                  </span>
+                            <div>
+                              b2
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
                 </li>
               </ul>
-            </span>
-          </li>
-        </ul>
-      </span>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </li>
   </ul>
 </div>
@@ -454,66 +434,112 @@ exports[`Storyshots ui/stories/Stories with highlighting when storiesFilter is p
     <li
       style="position:relative"
     >
-      <span>
-        <ul
-          style="padding-left:19px;list-style:none"
+      <ul
+        style="padding-left:19px;list-style:none"
+      >
+        <li
+          style="position:relative"
         >
-          <li
-            style="position:relative"
+          <div
+            data-name="another"
+            role="menuitem"
+            style="cursor:pointer;position:relative;overflow:hidden;padding:0px 5px;display:block;z-index:1"
+            tabindex="0"
           >
             <div
-              data-name="another"
-              role="menuitem"
-              style="cursor:pointer;position:relative;overflow:hidden;padding:0px 5px;display:block;z-index:1"
-              tabindex="0"
+              data-radium="true"
             >
               <div
-                data-radium="true"
+                style="position:relative;display:inline-block;vertical-align:top;margin-left:-5px;height:24px;width:24px;transform-origin:50% 11px"
               >
                 <div
-                  style="position:relative;display:inline-block;vertical-align:top;margin-left:-5px;height:24px;width:24px;transform-origin:50% 11px"
+                  style="position:absolute;top:50%;left:50%;margin:-6px 0 0 -5px"
                 >
-                  <div
-                    style="position:absolute;top:50%;left:50%;margin:-6px 0 0 -5px"
+                  <svg
+                    fill="currentColor"
+                    height="10"
+                    preserveAspectRatio="xMidYMid meet"
+                    style="vertical-align:top;fill:#9DA5AB"
+                    viewBox="0 0 40 40"
+                    width="10"
                   >
-                    <svg
-                      fill="currentColor"
-                      height="10"
-                      preserveAspectRatio="xMidYMid meet"
-                      style="vertical-align:top;fill:#9DA5AB"
-                      viewBox="0 0 40 40"
-                      width="10"
-                    >
-                      <g>
-                        <path
-                          d="m23.3 20l-13.1-13.6c-0.3-0.3-0.3-0.9 0-1.2l2.4-2.4c0.3-0.3 0.9-0.4 1.2-0.1l16 16.7c0.1 0.1 0.2 0.4 0.2 0.6s-0.1 0.5-0.2 0.6l-16 16.7c-0.3 0.3-0.9 0.3-1.2 0l-2.4-2.5c-0.3-0.3-0.3-0.9 0-1.2z"
-                        />
-                      </g>
-                    </svg>
-                  </div>
+                    <g>
+                      <path
+                        d="m23.3 20l-13.1-13.6c-0.3-0.3-0.3-0.9 0-1.2l2.4-2.4c0.3-0.3 0.9-0.4 1.2-0.1l16 16.7c0.1 0.1 0.2 0.4 0.2 0.6s-0.1 0.5-0.2 0.6l-16 16.7c-0.3 0.3-0.9 0.3-1.2 0l-2.4-2.5c-0.3-0.3-0.3-0.9 0-1.2z"
+                      />
+                    </g>
+                  </svg>
                 </div>
+              </div>
+              <div
+                style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
+              >
                 <div
-                  style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
+                  style="line-height:18px;padding:1px 0 5px"
                 >
-                  <div
-                    style="line-height:18px;padding:1px 0 5px"
+                  <span>
+                    ano
+                  </span>
+                  <strong
+                    style="background-color:#FFFEAA;font-weight:inherit"
                   >
-                    <span>
-                      ano
-                    </span>
-                    <strong
-                      style="background-color:#FFFEAA;font-weight:inherit"
-                    >
-                      th
-                    </strong>
-                    <span>
-                      er
-                    </span>
-                  </div>
+                    th
+                  </strong>
+                  <span>
+                    er
+                  </span>
                 </div>
               </div>
             </div>
-            <span>
+          </div>
+          <ul
+            style="padding-left:19px;list-style:none"
+          >
+            <li
+              style="position:relative"
+            >
+              <div
+                data-name="space"
+                role="menuitem"
+                style="cursor:pointer;position:relative;overflow:hidden;padding:0px 5px;display:block;z-index:1"
+                tabindex="0"
+              >
+                <div
+                  data-radium="true"
+                >
+                  <div
+                    style="position:relative;display:inline-block;vertical-align:top;margin-left:-5px;height:24px;width:24px;transform-origin:50% 11px"
+                  >
+                    <div
+                      style="position:absolute;top:50%;left:50%;margin:-6px 0 0 -5px"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="10"
+                        preserveAspectRatio="xMidYMid meet"
+                        style="vertical-align:top;fill:#9DA5AB"
+                        viewBox="0 0 40 40"
+                        width="10"
+                      >
+                        <g>
+                          <path
+                            d="m23.3 20l-13.1-13.6c-0.3-0.3-0.3-0.9 0-1.2l2.4-2.4c0.3-0.3 0.9-0.4 1.2-0.1l16 16.7c0.1 0.1 0.2 0.4 0.2 0.6s-0.1 0.5-0.2 0.6l-16 16.7c-0.3 0.3-0.9 0.3-1.2 0l-2.4-2.5c-0.3-0.3-0.3-0.9 0-1.2z"
+                          />
+                        </g>
+                      </svg>
+                    </div>
+                  </div>
+                  <div
+                    style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
+                  >
+                    <div
+                      style="line-height:18px;padding:1px 0 5px"
+                    >
+                      space
+                    </div>
+                  </div>
+                </div>
+              </div>
               <ul
                 style="padding-left:19px;list-style:none"
               >
@@ -521,7 +547,7 @@ exports[`Storyshots ui/stories/Stories with highlighting when storiesFilter is p
                   style="position:relative"
                 >
                   <div
-                    data-name="space"
+                    data-name="20"
                     role="menuitem"
                     style="cursor:pointer;position:relative;overflow:hidden;padding:0px 5px;display:block;z-index:1"
                     tabindex="0"
@@ -557,119 +583,63 @@ exports[`Storyshots ui/stories/Stories with highlighting when storiesFilter is p
                         <div
                           style="line-height:18px;padding:1px 0 5px"
                         >
-                          space
+                          20
                         </div>
                       </div>
                     </div>
                   </div>
-                  <span>
-                    <ul
-                      style="padding-left:19px;list-style:none"
+                  <ul
+                    style="padding-left:19px;list-style:none"
+                  >
+                    <li
+                      style="position:relative"
                     >
-                      <li
-                        style="position:relative"
+                      <a
+                        class="css-1b2u8sb"
+                        data-name="b1"
+                        href="?selectedKind=another.space.20&selectedStory=b1&full=NaN&addons=NaN&stories=NaN&panelRight=NaN"
                       >
                         <div
-                          data-name="20"
-                          role="menuitem"
-                          style="cursor:pointer;position:relative;overflow:hidden;padding:0px 5px;display:block;z-index:1"
-                          tabindex="0"
+                          data-radium="true"
                         >
                           <div
-                            data-radium="true"
+                            style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
                           >
-                            <div
-                              style="position:relative;display:inline-block;vertical-align:top;margin-left:-5px;height:24px;width:24px;transform-origin:50% 11px"
-                            >
-                              <div
-                                style="position:absolute;top:50%;left:50%;margin:-6px 0 0 -5px"
-                              >
-                                <svg
-                                  fill="currentColor"
-                                  height="10"
-                                  preserveAspectRatio="xMidYMid meet"
-                                  style="vertical-align:top;fill:#9DA5AB"
-                                  viewBox="0 0 40 40"
-                                  width="10"
-                                >
-                                  <g>
-                                    <path
-                                      d="m23.3 20l-13.1-13.6c-0.3-0.3-0.3-0.9 0-1.2l2.4-2.4c0.3-0.3 0.9-0.4 1.2-0.1l16 16.7c0.1 0.1 0.2 0.4 0.2 0.6s-0.1 0.5-0.2 0.6l-16 16.7c-0.3 0.3-0.9 0.3-1.2 0l-2.4-2.5c-0.3-0.3-0.3-0.9 0-1.2z"
-                                    />
-                                  </g>
-                                </svg>
-                              </div>
-                            </div>
-                            <div
-                              style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
-                            >
-                              <div
-                                style="line-height:18px;padding:1px 0 5px"
-                              >
-                                20
-                              </div>
+                            <div>
+                              b1
                             </div>
                           </div>
                         </div>
-                        <span>
-                          <ul
-                            style="padding-left:19px;list-style:none"
+                      </a>
+                    </li>
+                    <li
+                      style="position:relative"
+                    >
+                      <a
+                        class="css-1enjukp"
+                        data-name="b2"
+                        href="?selectedKind=another.space.20&selectedStory=b2&full=NaN&addons=NaN&stories=NaN&panelRight=NaN"
+                      >
+                        <div
+                          data-radium="true"
+                        >
+                          <div
+                            style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
                           >
-                            <li
-                              style="position:relative"
-                            >
-                              <a
-                                class="css-1b2u8sb"
-                                data-name="b1"
-                                href="?selectedKind=another.space.20&selectedStory=b1&full=NaN&addons=NaN&stories=NaN&panelRight=NaN"
-                              >
-                                <div
-                                  data-radium="true"
-                                >
-                                  <div
-                                    style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
-                                  >
-                                    <div>
-                                      b1
-                                    </div>
-                                  </div>
-                                </div>
-                              </a>
-                              <span />
-                            </li>
-                            <li
-                              style="position:relative"
-                            >
-                              <a
-                                class="css-1enjukp"
-                                data-name="b2"
-                                href="?selectedKind=another.space.20&selectedStory=b2&full=NaN&addons=NaN&stories=NaN&panelRight=NaN"
-                              >
-                                <div
-                                  data-radium="true"
-                                >
-                                  <div
-                                    style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
-                                  >
-                                    <div>
-                                      b2
-                                    </div>
-                                  </div>
-                                </div>
-                              </a>
-                              <span />
-                            </li>
-                          </ul>
-                        </span>
-                      </li>
-                    </ul>
-                  </span>
+                            <div>
+                              b2
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
                 </li>
               </ul>
-            </span>
-          </li>
-        </ul>
-      </span>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </li>
   </ul>
 </div>
@@ -683,155 +653,148 @@ exports[`Storyshots ui/stories/Stories without hierarchy - hierarchySeparator is
     <li
       style="position:relative"
     >
-      <span>
-        <ul
-          style="padding-left:19px;list-style:none"
+      <ul
+        style="padding-left:19px;list-style:none"
+      >
+        <li
+          style="position:relative"
         >
-          <li
-            style="position:relative"
+          <div
+            data-name="some.name.item1"
+            role="menuitem"
+            style="cursor:pointer;position:relative;overflow:hidden;padding:0px 5px;display:block;z-index:1"
+            tabindex="0"
           >
             <div
-              data-name="some.name.item1"
-              role="menuitem"
-              style="cursor:pointer;position:relative;overflow:hidden;padding:0px 5px;display:block;z-index:1"
-              tabindex="0"
+              data-radium="true"
             >
               <div
-                data-radium="true"
+                style="position:relative;display:inline-block;vertical-align:top;margin-left:-5px;height:24px;width:24px;transform-origin:50% 11px"
               >
                 <div
-                  style="position:relative;display:inline-block;vertical-align:top;margin-left:-5px;height:24px;width:24px;transform-origin:50% 11px"
+                  style="position:absolute;top:50%;left:50%;margin:-6px 0 0 -5px"
                 >
-                  <div
-                    style="position:absolute;top:50%;left:50%;margin:-6px 0 0 -5px"
+                  <svg
+                    fill="currentColor"
+                    height="10"
+                    preserveAspectRatio="xMidYMid meet"
+                    style="vertical-align:top;fill:#9DA5AB"
+                    viewBox="0 0 40 40"
+                    width="10"
                   >
-                    <svg
-                      fill="currentColor"
-                      height="10"
-                      preserveAspectRatio="xMidYMid meet"
-                      style="vertical-align:top;fill:#9DA5AB"
-                      viewBox="0 0 40 40"
-                      width="10"
-                    >
-                      <g>
-                        <path
-                          d="m23.3 20l-13.1-13.6c-0.3-0.3-0.3-0.9 0-1.2l2.4-2.4c0.3-0.3 0.9-0.4 1.2-0.1l16 16.7c0.1 0.1 0.2 0.4 0.2 0.6s-0.1 0.5-0.2 0.6l-16 16.7c-0.3 0.3-0.9 0.3-1.2 0l-2.4-2.5c-0.3-0.3-0.3-0.9 0-1.2z"
-                        />
-                      </g>
-                    </svg>
-                  </div>
+                    <g>
+                      <path
+                        d="m23.3 20l-13.1-13.6c-0.3-0.3-0.3-0.9 0-1.2l2.4-2.4c0.3-0.3 0.9-0.4 1.2-0.1l16 16.7c0.1 0.1 0.2 0.4 0.2 0.6s-0.1 0.5-0.2 0.6l-16 16.7c-0.3 0.3-0.9 0.3-1.2 0l-2.4-2.5c-0.3-0.3-0.3-0.9 0-1.2z"
+                      />
+                    </g>
+                  </svg>
                 </div>
+              </div>
+              <div
+                style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
+              >
                 <div
-                  style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
+                  style="line-height:18px;padding:1px 0 5px"
                 >
-                  <div
-                    style="line-height:18px;padding:1px 0 5px"
-                  >
-                    some.name.item1
-                  </div>
+                  some.name.item1
                 </div>
               </div>
             </div>
-            <span />
-          </li>
-          <li
-            style="position:relative"
+          </div>
+        </li>
+        <li
+          style="position:relative"
+        >
+          <div
+            data-name="another.space.20"
+            role="menuitem"
+            style="cursor:pointer;position:relative;overflow:hidden;padding:0px 5px;display:block;z-index:1"
+            tabindex="0"
           >
             <div
-              data-name="another.space.20"
-              role="menuitem"
-              style="cursor:pointer;position:relative;overflow:hidden;padding:0px 5px;display:block;z-index:1"
-              tabindex="0"
+              data-radium="true"
             >
               <div
-                data-radium="true"
+                style="position:relative;display:inline-block;vertical-align:top;margin-left:-5px;height:24px;width:24px;transform-origin:50% 11px"
               >
                 <div
-                  style="position:relative;display:inline-block;vertical-align:top;margin-left:-5px;height:24px;width:24px;transform-origin:50% 11px"
+                  style="position:absolute;top:50%;left:50%;margin:-6px 0 0 -5px"
                 >
-                  <div
-                    style="position:absolute;top:50%;left:50%;margin:-6px 0 0 -5px"
+                  <svg
+                    fill="currentColor"
+                    height="10"
+                    preserveAspectRatio="xMidYMid meet"
+                    style="vertical-align:top;fill:#9DA5AB"
+                    viewBox="0 0 40 40"
+                    width="10"
                   >
-                    <svg
-                      fill="currentColor"
-                      height="10"
-                      preserveAspectRatio="xMidYMid meet"
-                      style="vertical-align:top;fill:#9DA5AB"
-                      viewBox="0 0 40 40"
-                      width="10"
-                    >
-                      <g>
-                        <path
-                          d="m23.3 20l-13.1-13.6c-0.3-0.3-0.3-0.9 0-1.2l2.4-2.4c0.3-0.3 0.9-0.4 1.2-0.1l16 16.7c0.1 0.1 0.2 0.4 0.2 0.6s-0.1 0.5-0.2 0.6l-16 16.7c-0.3 0.3-0.9 0.3-1.2 0l-2.4-2.5c-0.3-0.3-0.3-0.9 0-1.2z"
-                        />
-                      </g>
-                    </svg>
-                  </div>
+                    <g>
+                      <path
+                        d="m23.3 20l-13.1-13.6c-0.3-0.3-0.3-0.9 0-1.2l2.4-2.4c0.3-0.3 0.9-0.4 1.2-0.1l16 16.7c0.1 0.1 0.2 0.4 0.2 0.6s-0.1 0.5-0.2 0.6l-16 16.7c-0.3 0.3-0.9 0.3-1.2 0l-2.4-2.5c-0.3-0.3-0.3-0.9 0-1.2z"
+                      />
+                    </g>
+                  </svg>
                 </div>
+              </div>
+              <div
+                style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
+              >
                 <div
-                  style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
+                  style="line-height:18px;padding:1px 0 5px"
                 >
-                  <div
-                    style="line-height:18px;padding:1px 0 5px"
-                  >
-                    another.space.20
-                  </div>
+                  another.space.20
                 </div>
               </div>
             </div>
-            <span>
-              <ul
-                style="padding-left:19px;list-style:none"
+          </div>
+          <ul
+            style="padding-left:19px;list-style:none"
+          >
+            <li
+              style="position:relative"
+            >
+              <a
+                class="css-1b2u8sb"
+                data-name="b1"
+                href="?selectedKind=another.space.20&selectedStory=b1&full=NaN&addons=NaN&stories=NaN&panelRight=NaN"
               >
-                <li
-                  style="position:relative"
+                <div
+                  data-radium="true"
                 >
-                  <a
-                    class="css-1b2u8sb"
-                    data-name="b1"
-                    href="?selectedKind=another.space.20&selectedStory=b1&full=NaN&addons=NaN&stories=NaN&panelRight=NaN"
+                  <div
+                    style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
                   >
-                    <div
-                      data-radium="true"
-                    >
-                      <div
-                        style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
-                      >
-                        <div>
-                          b1
-                        </div>
-                      </div>
+                    <div>
+                      b1
                     </div>
-                  </a>
-                  <span />
-                </li>
-                <li
-                  style="position:relative"
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li
+              style="position:relative"
+            >
+              <a
+                class="css-1enjukp"
+                data-name="b2"
+                href="?selectedKind=another.space.20&selectedStory=b2&full=NaN&addons=NaN&stories=NaN&panelRight=NaN"
+              >
+                <div
+                  data-radium="true"
                 >
-                  <a
-                    class="css-1enjukp"
-                    data-name="b2"
-                    href="?selectedKind=another.space.20&selectedStory=b2&full=NaN&addons=NaN&stories=NaN&panelRight=NaN"
+                  <div
+                    style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
                   >
-                    <div
-                      data-radium="true"
-                    >
-                      <div
-                        style="display:inline-block;vertical-align:top;max-width:calc(100% - 24px)"
-                      >
-                        <div>
-                          b2
-                        </div>
-                      </div>
+                    <div>
+                      b2
                     </div>
-                  </a>
-                  <span />
-                </li>
-              </ul>
-            </span>
-          </li>
-        </ul>
-      </span>
+                  </div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </li>
   </ul>
 </div>
