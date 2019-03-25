@@ -14,7 +14,7 @@ import PropForm from './PropForm';
 
 const getTimestamp = () => +new Date();
 
-const DEFAULT_GROUP_ID = 'ALL';
+const DEFAULT_GROUP_ID = 'Other';
 
 const PanelWrapper = styled.div({
   height: '100%',
@@ -187,6 +187,9 @@ export default class KnobPanel extends PureComponent {
     }
 
     const entries = Object.entries(groups);
+    // Always sort 'Other' (ungrouped) tab last without changing the remaining tabs
+    entries.sort((a, b) => (a[0] === 'Other' ? 1 : 0)); // eslint-disable-line no-unused-vars
+
     return (
       <PanelWrapper>
         {entries.length > 1 ? (
