@@ -13,6 +13,9 @@ exports[`Storyshots UI|Layout/Desktop (mocked) bottom Panel 1`] = `
 <div
   class="emotion-0"
 >
+  <div
+    style="position:absolute;width:0;height:0;visibility:hidden;display:none"
+  />
   <div />
 </div>
 `;
@@ -30,6 +33,9 @@ exports[`Storyshots UI|Layout/Desktop (mocked) default 1`] = `
 <div
   class="emotion-0"
 >
+  <div
+    style="position:absolute;width:0;height:0;visibility:hidden;display:none"
+  />
   <div />
 </div>
 `;
@@ -47,6 +53,9 @@ exports[`Storyshots UI|Layout/Desktop (mocked) full 1`] = `
 <div
   class="emotion-0"
 >
+  <div
+    style="position:absolute;width:0;height:0;visibility:hidden;display:none"
+  />
   <div />
 </div>
 `;
@@ -64,6 +73,9 @@ exports[`Storyshots UI|Layout/Desktop (mocked) no Nav 1`] = `
 <div
   class="emotion-0"
 >
+  <div
+    style="position:absolute;width:0;height:0;visibility:hidden;display:none"
+  />
   <div />
 </div>
 `;
@@ -81,6 +93,9 @@ exports[`Storyshots UI|Layout/Desktop (mocked) no Panel 1`] = `
 <div
   class="emotion-0"
 >
+  <div
+    style="position:absolute;width:0;height:0;visibility:hidden;display:none"
+  />
   <div />
 </div>
 `;
@@ -98,6 +113,9 @@ exports[`Storyshots UI|Layout/Desktop (mocked) no Panel, no Nav 1`] = `
 <div
   class="emotion-0"
 >
+  <div
+    style="position:absolute;width:0;height:0;visibility:hidden;display:none"
+  />
   <div />
 </div>
 `;
@@ -115,6 +133,9 @@ exports[`Storyshots UI|Layout/Desktop (mocked) page 1`] = `
 <div
   class="emotion-0"
 >
+  <div
+    style="position:absolute;width:0;height:0;visibility:hidden;display:none"
+  />
   <div />
 </div>
 `;
@@ -132,6 +153,9 @@ exports[`Storyshots UI|Layout/Desktop (real) bottom Panel 1`] = `
 <div
   class="emotion-0"
 >
+  <div
+    style="position:absolute;width:0;height:0;visibility:hidden;display:none"
+  />
   <div />
 </div>
 `;
@@ -149,6 +173,9 @@ exports[`Storyshots UI|Layout/Desktop (real) default 1`] = `
 <div
   class="emotion-0"
 >
+  <div
+    style="position:absolute;width:0;height:0;visibility:hidden;display:none"
+  />
   <div />
 </div>
 `;
@@ -166,6 +193,9 @@ exports[`Storyshots UI|Layout/Desktop (real) full 1`] = `
 <div
   class="emotion-0"
 >
+  <div
+    style="position:absolute;width:0;height:0;visibility:hidden;display:none"
+  />
   <div />
 </div>
 `;
@@ -183,6 +213,9 @@ exports[`Storyshots UI|Layout/Desktop (real) no Nav 1`] = `
 <div
   class="emotion-0"
 >
+  <div
+    style="position:absolute;width:0;height:0;visibility:hidden;display:none"
+  />
   <div />
 </div>
 `;
@@ -200,6 +233,9 @@ exports[`Storyshots UI|Layout/Desktop (real) no Panel 1`] = `
 <div
   class="emotion-0"
 >
+  <div
+    style="position:absolute;width:0;height:0;visibility:hidden;display:none"
+  />
   <div />
 </div>
 `;
@@ -217,6 +253,9 @@ exports[`Storyshots UI|Layout/Desktop (real) no Panel, no Nav 1`] = `
 <div
   class="emotion-0"
 >
+  <div
+    style="position:absolute;width:0;height:0;visibility:hidden;display:none"
+  />
   <div />
 </div>
 `;
@@ -234,6 +273,9 @@ exports[`Storyshots UI|Layout/Desktop (real) page 1`] = `
 <div
   class="emotion-0"
 >
+  <div
+    style="position:absolute;width:0;height:0;visibility:hidden;display:none"
+  />
   <div />
 </div>
 `;
