@@ -8,7 +8,11 @@ import ColorBlindness from './components/ColorBlindness';
 import { ADDON_ID, PANEL_ID } from './constants';
 
 const Hidden = styled.div(() => ({
-  display: 'none',
+  '&, & svg': {
+    position: 'absolute',
+    width: 0,
+    height: 0,
+  },
 }));
 
 const PreviewWrapper = p => (
