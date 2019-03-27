@@ -30,7 +30,7 @@ module.exports = function({ config }) {
     enforce: 'pre',
   });
 
-  return defaultConfig;
+  return config;
 };
 ```
 
