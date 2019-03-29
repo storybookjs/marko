@@ -93,7 +93,7 @@ export class CssResourcePanel extends Component<CssResourcePanelProps, CssResour
     }
 
     return (
-      <Fragment>
+      <div>
         {list &&
           list.map(({ id, code, picked }) => (
             <div key={id} style={{ padding: 10 }}>
@@ -104,7 +104,7 @@ export class CssResourcePanel extends Component<CssResourcePanelProps, CssResour
               {code ? <SyntaxHighlighter language="html">{code}</SyntaxHighlighter> : null}
             </div>
           ))}
-      </Fragment>
+      </div>
     );
   }
 }
