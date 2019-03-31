@@ -1,0 +1,26 @@
+import { Story } from '@storybook/components';
+import { action } from '@storybook/addon-actions';
+import { Button } from '@storybook/react/demo';
+
+export const componentMeta = {
+  title: 'MDX|Button',
+  decorators: [],
+};
+
+# Some header
+
+Some documentation here
+
+<Button>just a button, not a story</Button>
+
+<Story name="hello story">
+  <Button onClick={action('clicked')}>hello world</Button>
+</Story>
+
+<Story name="goodbye">
+  <Button onClick={action('clicked')}>goodbye world</Button>
+</Story>
+
+<Story name="another one">
+  <Button onClick={action('clicked')}>one more</Button>
+</Story>

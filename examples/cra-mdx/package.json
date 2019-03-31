@@ -1,0 +1,37 @@
+{
+  "name": "cra-mdx",
+  "version": "5.1.0-alpha.20",
+  "private": true,
+  "dependencies": {
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5",
+    "react-scripts": "2.1.8"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 9009 -s public --no-dll",
+    "build-storybook": "build-storybook -s public"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.4.0",
+    "@babel/generator": "^7.4.0",
+    "@babel/parser": "^7.4.2",
+    "@mdx-js/loader": "^0.20.3",
+    "@mdx-js/mdx": "^0.20.3",
+    "@storybook/addon-actions": "5.1.0-alpha.20",
+    "@storybook/addon-links": "5.1.0-alpha.20",
+    "@storybook/addons": "5.1.0-alpha.20",
+    "@storybook/react": "5.1.0-alpha.20",
+    "babel-loader": "^8.0.5",
+    "lodash.camelcase": "^4.3.0"
+  }
+}

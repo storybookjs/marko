@@ -9,6 +9,7 @@ module.exports = {
   },
   projects: [
     '<rootDir>',
+    '<rootDir>/examples/cra-mdx',
     '<rootDir>/examples/cra-kitchen-sink',
     '<rootDir>/examples/cra-ts-kitchen-sink',
     '<rootDir>/examples/html-kitchen-sink',
