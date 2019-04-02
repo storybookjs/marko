@@ -50,7 +50,7 @@ function getStory(node, counter) {
     statements.push(`${storyFn}.title = '${storyName}';`);
   }
 
-  console.log(statements);
+  // console.log(statements);
 
   return statements.join('\n');
 }
@@ -66,7 +66,11 @@ function extractStories(node, options) {
       counter += 1;
     }
   });
-  return [outputJsx, `componentMeta.docs = () => <MDXContent />`, ...stories].join('\n\n');
+  return [
+    outputJsx,
+    `componentMeta.docs = () => <div style={{fontFamily: 'sans-serif'}}><MDXContent /></div>`,
+    ...stories,
+  ].join('\n\n');
 }
 
 function createCompiler(mdxOptions) {

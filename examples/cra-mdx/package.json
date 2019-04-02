@@ -5,7 +5,8 @@
   "dependencies": {
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
-    "react-scripts": "2.1.8"
+    "react-scripts": "2.1.8",
+    "victory": "^32.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -30,8 +31,12 @@
     "@storybook/addon-actions": "5.1.0-alpha.20",
     "@storybook/addon-links": "5.1.0-alpha.20",
     "@storybook/addons": "5.1.0-alpha.20",
+    "@storybook/api": "5.1.0-alpha.20",
+    "@storybook/components": "5.1.0-alpha.20",
     "@storybook/react": "5.1.0-alpha.20",
     "babel-loader": "^8.0.5",
-    "lodash.camelcase": "^4.3.0"
+    "lodash.camelcase": "^4.3.0",
+    "prop-types": "^15.7.2",
+    "global": "^4.3.2"
   }
 }
