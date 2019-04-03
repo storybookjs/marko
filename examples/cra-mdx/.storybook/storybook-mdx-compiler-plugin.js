@@ -9,8 +9,8 @@ const camelCase = require('lodash.camelcase');
 const STORY_REGEX = /^<Story /;
 const RESERVED = /^(?:do|if|in|for|let|new|try|var|case|else|enum|eval|false|null|this|true|void|with|await|break|catch|class|const|super|throw|while|yield|delete|export|import|public|return|static|switch|typeof|default|extends|finally|package|private|continue|debugger|function|arguments|interface|protected|implements|instanceof)$/;
 
-function getAttr(elt) {
-  const attr = elt.attributes.find(n => n.name.name === 'name');
+function getAttr(elt, what) {
+  const attr = elt.attributes.find(n => n.name.name === what);
   return attr && attr.value.value;
 }
 
@@ -67,8 +67,9 @@ function extractStories(node, options) {
     }
   });
   return [
+    'import { DocsContext as DC } from "@storybook/components"',
     outputJsx,
-    `componentMeta.docs = () => <div style={{fontFamily: 'sans-serif'}}><MDXContent /></div>`,
+    `componentMeta.docs = ({ context }) => <DC.Provider value={context}><MDXContent /></DC.Provider>`,
     ...stories,
   ].join('\n\n');
 }

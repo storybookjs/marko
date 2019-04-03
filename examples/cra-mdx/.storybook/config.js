@@ -13,13 +13,13 @@ if (module && module.hot && module.hot.dispose) {
   });
 }
 
-function importAll(context) {
+function importAll(req) {
   const storyStore = window.__STORYBOOK_CLIENT_API__._storyStore; // eslint-disable-line no-undef, no-underscore-dangle
 
-  context.keys().forEach(filename => {
-    const fileExports = context(filename);
+  req.keys().forEach(filename => {
+    const fileExports = req(filename);
 
-    // A old-style story file
+    // An old-style story file
     if (!fileExports.componentMeta) {
       return;
     }
