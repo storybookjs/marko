@@ -1,7 +1,14 @@
+import React from 'react';
 import { storiesOf, configure, addParameters } from '@storybook/react';
 import { Info } from './Info';
 
-addParameters({ docs: Info });
+addParameters({
+  mdxComponents: {
+    // eslint-disable-next-line react/prop-types
+    wrapper: ({ children }) => <div style={{ fontFamily: 'sans-serif' }}>{children}</div>,
+  },
+  docs: Info,
+});
 
 let previousExports = {};
 if (module && module.hot && module.hot.dispose) {
