@@ -69,7 +69,8 @@ function extractStories(node, options) {
   return [
     'import { DocsContext as DC } from "@storybook/components"',
     outputJsx,
-    `componentMeta.docs = ({ context }) => <DC.Provider value={context}><MDXContent /></DC.Provider>`,
+    'componentMeta.parameters = componentMeta.parameters || {};',
+    'componentMeta.parameters.docs = ({ context }) => <DC.Provider value={context}><MDXContent /></DC.Provider>;',
     ...stories,
   ].join('\n\n');
 }

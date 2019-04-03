@@ -1,7 +1,7 @@
-import { storiesOf, configure, setDocs } from '@storybook/react';
+import { storiesOf, configure, addParameters } from '@storybook/react';
 import { Info } from './Info';
 
-setDocs(Info);
+addParameters({ docs: Info });
 
 let previousExports = {};
 if (module && module.hot && module.hot.dispose) {
@@ -50,9 +50,6 @@ function importAll(req) {
     });
     if (componentOptions.parameters) {
       kind.addParameters(componentOptions.parameters);
-    }
-    if (componentOptions.docs) {
-      kind.setDocs(componentOptions.docs);
     }
 
     Object.keys(examples).forEach(key => {

@@ -13,7 +13,6 @@ export const {
   clearDecorators,
   getStorybook,
   raw,
-  setDocs,
 } = clientApi;
 
 export const { configure } = configApi;
