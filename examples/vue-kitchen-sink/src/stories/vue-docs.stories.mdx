@@ -1,0 +1,88 @@
+import { Story, Preview } from '@storybook/components';
+
+# Storybook Docs for Vue
+
+Storybook supports every major view layer:
+React, Vue, Angular, Ember, React Native, etc.
+
+Storybook Docs will too.
+
+Let's check out a Vue prototype to see how this works.
+
+## Component Declaration
+
+Just like in React, we first declare our component.
+
+export const componentMeta = {
+  title: 'MDX|Button',
+};
+
+This export doesn't show up in the MDX output.
+
+## SB5 "Classic" Vue Stories
+
+Next let's declare some stories.
+
+But first let's review how it's done in SB5 for Vue.
+
+```
+storiesOf('Button', module)
+  .add('rounded', () => ({
+    template: '<my-button :rounded="true">A Button with rounded edges</my-button>',
+  }))
+```
+
+## MDX Stories
+
+Unsurprisingly, here's how we do it in the Docs MDX format:
+
+<Story name="rounded">
+  {{
+    template: '<my-button :rounded="true">A Button with rounded edges</my-button>',
+  }}
+</Story>
+
+This isn't the final syntax, but it gets the job done.
+
+## Another one
+
+Let's add another one. The UI updates automatically as you'd expect.
+
+<Story name="square">
+  {{
+    template: '<my-button :rounded="false">A Button with square edges</my-button>',
+  }}
+</Story>
+
+## Longform docs
+
+And just like in the React, case we're generating long-form docs as we go.
+
+The primary difference is that for Vue Docs we generate an iframe per story.
+
+## Optimization
+
+This can be optimized using a library like [Vuera](https://github.com/akxcv/vuera)
+for embedding Vue components in React.
+
+We could also change the JSX rendering to render the entire page in Vue.
+
+## Previews
+
+Just like in React, we can easily reference other stories in our docs:
+
+<Preview id="addon-knobs--all-knobs" />
+
+## More info
+
+For more info, check out the [Storybook Docs RFC](https://docs.google.com/document/d/1D4Ov4UvrB80Uy1CLGshbFEWQKWEpr8dL4FmOqRDwjwI/edit?usp=sharing).
+
+The RFC also linked in the description below.
+
+We want your feedback to help make this more useful.
+
+## Thanks!
+
+Subscribe/follow for more short demos & project updates! ❤️📈🛠
+
+Thanks for watching and catch you next time!

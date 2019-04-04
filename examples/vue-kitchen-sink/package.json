@@ -7,7 +7,7 @@
     "build-storybook": "build-storybook -s public",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "now-build": "node ../../scripts/bootstrap --core && yarn run build-storybook --quiet",
-    "storybook": "start-storybook -p 9009 -s public"
+    "storybook": "start-storybook -p 9009 -s public --no-dll"
   },
   "dependencies": {
     "vue": "^2.6.8",
@@ -26,6 +26,8 @@
     "@storybook/addon-storysource": "5.1.0-alpha.20",
     "@storybook/addon-viewport": "5.1.0-alpha.20",
     "@storybook/addons": "5.1.0-alpha.20",
+    "@storybook/api": "5.1.0-alpha.20",
+    "@storybook/components": "5.1.0-alpha.20",
     "@storybook/vue": "5.1.0-alpha.20",
     "babel-core": "^7.0.0-bridge.0",
     "babel-loader": "^8.0.5",
@@ -34,6 +36,15 @@
     "svg-url-loader": "^2.3.2",
     "vue-loader": "^15.7.0",
     "webpack": "^4.28.0",
-    "webpack-dev-server": "^3.2.0"
+    "webpack-dev-server": "^3.2.0",
+    "lodash.camelcase": "^4.3.0",
+    "prop-types": "^15.7.2",
+    "global": "^4.3.2",
+    "@mdx-js/loader": "^0.20.3",
+    "@mdx-js/mdx": "^0.20.3",
+    "@babel/generator": "^7.4.0",
+    "@babel/parser": "^7.4.2",
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5"
   }
 }

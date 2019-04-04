@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { IFrame } from '@storybook/components';
 import addons, { types } from '@storybook/addons';
+import { IFrame } from '@storybook/components';
 import { Consumer } from '@storybook/api';
 
 const baseUrl = 'iframe.html';

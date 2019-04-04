@@ -1,11 +1,15 @@
-import React from 'react';
 import { storiesOf, configure, addParameters } from '@storybook/react';
+import { Wrapper } from '@storybook/components';
 import { Info } from './Info';
 
 addParameters({
-  mdxComponents: {
-    // eslint-disable-next-line react/prop-types
-    wrapper: ({ children }) => <div style={{ fontFamily: 'sans-serif' }}>{children}</div>,
+  options: {
+    docs: {
+      inlineStories: true,
+      mdxComponents: {
+        wrapper: Wrapper,
+      },
+    },
   },
   docs: Info,
 });

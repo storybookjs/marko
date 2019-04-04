@@ -42,7 +42,6 @@ function getStory(node, counter) {
   if (body.type === 'JSXExpressionContainer') {
     body = body.expression;
   }
-
   const { code } = generate(body, {});
   statements.push(
     `export const ${storyFn} = () => (
