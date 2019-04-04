@@ -1,6 +1,26 @@
 import { Story, Preview } from '@storybook/components';
 import { action } from '@storybook/addon-actions';
-import { VictoryPie, Slice } from 'victory';
+import { VictoryPie, Slice, VictoryErrorBar } from 'victory';
+
+# Storybook Docs
+
+Let's explore the Storybook Docs prototype.
+
+## MDX
+
+Storybook Docs allows you to mix stories and documentation in
+[MDX format](https://mdxjs.com/).
+
+MDX combines Markdown and JSX. Cool.
+
+## Victory
+
+We'll be writing stories for the PieChart component in
+[Victory](https://formidable.com/open-source/victory/).
+
+## Component Declaration
+
+First we declare our component.
 
 export const componentMeta = {
   title: 'MDX|Victory',
@@ -8,31 +28,53 @@ export const componentMeta = {
   decorators: [getStory => <div style={{ width: 400, height: 400 }}>{getStory()}</div>],
 };
 
-# VictoryPie
+This export doesn't show up in the MDX output.
 
-It's never been easier to create beautiful pie charts, so let's do it.
+## ComponentMeta SB5 Equivalent
 
-## Default
+This is roughly equivalent to SB5’s `storiesOf`:
 
-It's filled in by default, so you can be really lazy and still get good results
+```
+storiesOf('MDX|Victory', module)
+  .addParameter({ component: VictoryPie })
+  .addDecorator(getStory => <div style={{ width: 400, height: 400 }}>{getStory()}</div>)
+```
+
+## Story Declaration
+
+Next we can create stories.
 
 <Story name="by default">
   <VictoryPie />
 </Story>
 
-## Basic data
+## Docs Module format
 
-Or you can give it your own data
+When we write this MDX, the doc story gets compiled to the following
+`module` format:
 
-<Story name="with basic data">
-  <VictoryPie
-    data={[{ x: 'Cat', y: 62 }, { x: 'Dog', y: 91 }, { x: 'Fish', y: 55 }, { x: 'Bird', y: 55 }]}
-  />
-</Story>
+```js
+export const byDefault = () => <VictoryPie />;
+byDefault.title = 'by default';
+```
 
-## Fancy
+This is a portable format that's easy to reuse in other tools.
+For example, to create Jest test cases.
 
-Let's get fancy!!!
+## Story SB5 Equivalent
+
+The module format, in turn, is equivalent to:
+
+```
+storiesOf(...)
+  .add('by default', () => <VictoryPie />);
+```
+
+## More stories
+
+And of course we can add as many stories in the same way.
+
+Adding a new story updates the UI.
 
 <Story name="fancy">
   <VictoryPie
@@ -58,4 +100,60 @@ Let's get fancy!!!
   />
 </Story>
 
-<Preview id="module-button--with-text" inline="true" />
+## Addon compatibility
+
+Docs stories are compatible with addons.
+
+For example, this one uses `addon-actions`.
+
+<Story name="interactive">
+  <VictoryPie
+    data={[{ x: 'Cat', y: 62 }, { x: 'Dog', y: 91 }, { x: 'Fish', y: 55 }, { x: 'Bird', y: 55 }]}
+    events={[
+      {
+        target: 'data',
+        eventHandlers: {
+          onClick: (event, props) => {
+            action('click a slice of pie')();
+            const fill = props.style.fill;
+            return {
+              mutation: () => {
+                return fill === 'red' ? null : { style: { fill: 'red' } };
+              },
+            };
+          },
+        },
+      },
+    ]}
+  />
+</Story>
+
+## Documentation
+
+In addition to Storybook stories, the above code has also created
+**long-form documentation** aka Docs.
+
+Docs also updates in the browser when you edit it.
+_Sweeeeet_.
+
+## React Components
+
+This is MDX, so we can add arbitrary React code as well:
+
+<VictoryErrorBar />
+
+This doesn't show up as a story, but it shows up in the docs.
+
+## Preview
+
+We can even embed other stories in our docs wherever we want with the `Preview` component.
+
+<Preview id="mdx-button--with-icons" />
+
+## More Info
+
+For more info, check out the [Storybook Docs RFC](https://docs.google.com/document/d/1D4Ov4UvrB80Uy1CLGshbFEWQKWEpr8dL4FmOqRDwjwI/edit?usp=sharing).
+
+This document also linked in the description below.
+
+Feedback welcome!
