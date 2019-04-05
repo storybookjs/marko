@@ -1,0 +1,51 @@
+{
+  "name": "@storybook/addon-docs",
+  "version": "5.1.0-alpha.20",
+  "description": "Superior documentation for your components",
+  "keywords": [
+    "addon",
+    "notes",
+    "storybook"
+  ],
+  "homepage": "https://github.com/storybooks/storybook/tree/master/addons/docs",
+  "bugs": {
+    "url": "https://github.com/storybooks/storybook/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/storybooks/storybook.git",
+    "directory": "addons/docs"
+  },
+  "license": "MIT",
+  "main": "dist/public_api.js",
+  "types": "dist/public_api.d.ts",
+  "scripts": {
+    "prepare": "node ../../scripts/prepare.js"
+  },
+  "dependencies": {
+    "@babel/generator": "^7.4.0",
+    "@babel/parser": "^7.4.2",
+    "@storybook/addons": "5.1.0-alpha.20",
+    "@storybook/api": "5.1.0-alpha.20",
+    "@storybook/client-logger": "5.1.0-alpha.20",
+    "@storybook/components": "5.1.0-alpha.20",
+    "@storybook/core-events": "5.1.0-alpha.20",
+    "@storybook/theming": "5.1.0-alpha.20",
+    "core-js": "^2.6.5",
+    "lodash.camelcase": "^4.3.0",
+    "global": "^4.3.2",
+    "prop-types": "^15.7.2"
+  },
+  "devDependencies": {
+    "@types/prop-types": "^15.5.9",
+    "@types/util-deprecate": "^1.0.0",
+    "@types/webpack-env": "^1.13.7"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "@mdx-js/mdx": "^0.20.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
