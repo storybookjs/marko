@@ -1,0 +1,30 @@
+import { Story, Preview } from '@storybook/components';
+import { Welcome, Button } from '@storybook/angular/demo';
+import { linkTo } from '@storybook/addon-links';
+
+# Storybook Docs for Angular
+
+export const componentMeta = {
+  title: 'MDX|Welcome',
+};
+
+## Story preview
+
+Hallelujah! Angular is working out of the box without modification.
+How you like them apples?!
+
+<Preview id="app-component--component-with-separate-template" />
+
+## Basic story
+
+<Story name="to storybook">
+  {{
+    template: `<storybook-welcome-component (showApp)="showApp()"></storybook-welcome-component>`,
+    props: {
+      showApp: linkTo('Button'),
+    },
+    moduleMetadata: {
+      declarations: [Welcome],
+    },
+  }}
+</Story>
