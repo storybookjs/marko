@@ -1,8 +1,12 @@
-## 4.1.17 (April 15, 2019)
+## 4.1.18 (April 15, 2019)
 
 ### Bug Fixes
 
 - Pin react-treebeard dependency at 3.1.0 ([#6517](https://github.com/storybooks/storybook/pull/6517))
+
+## 4.1.17 (April 15, 2019)
+
+NPM publish failed
 
 ## 4.1.16 (March 24, 2019)
 
