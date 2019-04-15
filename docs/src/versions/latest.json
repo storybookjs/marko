@@ -1,1 +1,1 @@
-{"version":"5.0.7","info":{"plain":"### Bug Fixes\n\n- Addon-Knobs: Fix sorting of knobs Panels ([#6480](https://github.com/storybooks/storybook/pull/6480))\n- UI: Fix clickable footer links on about page ([#6441](https://github.com/storybooks/storybook/pull/6441))\n- UI: Fix 'read full changelog' link on about page ([#6385](https://github.com/storybooks/storybook/pull/6385))"}}
+{"version":"5.0.8","info":{"plain":"Bump version to make `5.0.x` latest since I just released a patch in `v4.1.18`"}}
