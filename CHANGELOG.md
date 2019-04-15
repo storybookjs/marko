@@ -1,3 +1,7 @@
+## 5.0.8 (April 14, 2019)
+
+Bump version to make `5.0.x` latest since I just released a patch in `v4.1.18`
+
 ## 5.0.7 (April 14, 2019)
 
 ### Bug Fixes
