@@ -39,7 +39,7 @@
     "webpack": "^4.28.0",
     "webpack-dev-server": "^3.2.0",
     "prop-types": "^15.7.2",
-    "@mdx-js/loader": "^0.20.3",
-    "@mdx-js/mdx": "^0.20.3"
+    "@mdx-js/loader": "^1.0.0",
+    "@mdx-js/mdx": "^1.0.0"
   }
 }

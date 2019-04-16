@@ -43,7 +43,7 @@
   },
   "peerDependencies": {
     "react": "*",
-    "@mdx-js/mdx": "^0.20.3"
+    "@mdx-js/mdx": "^1.0.0"
   },
   "publishConfig": {
     "access": "public"

@@ -24,8 +24,8 @@
   ],
   "devDependencies": {
     "@babel/core": "^7.4.0",
-    "@mdx-js/loader": "^0.20.3",
-    "@mdx-js/mdx": "^0.20.3",
+    "@mdx-js/loader": "^1.0.0",
+    "@mdx-js/mdx": "^1.0.0",
     "@storybook/addon-actions": "5.1.0-alpha.20",
     "@storybook/addon-links": "5.1.0-alpha.20",
     "@storybook/addon-docs": "5.1.0-alpha.20",
