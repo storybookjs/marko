@@ -1,3 +1,11 @@
+## 5.0.9 (April 17, 2019)
+
+### Bug Fixes
+
+- UI: Fix panel toggle behavior in fullscreen ([#6525](https://github.com/storybooks/storybook/pull/6525))
+- Addon-Knobs: Add missing groupId for files knob ([#6534](https://github.com/storybooks/storybook/pull/6534))
+- Theming: FIX brandImage when theme created with brandTitle ([#6120](https://github.com/storybooks/storybook/pull/6120))
+
 ## 5.0.8 (April 14, 2019)
 
 Bump version to make `5.0.x` latest since I just released a patch in `v4.1.18`
