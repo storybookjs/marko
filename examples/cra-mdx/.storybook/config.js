@@ -1,4 +1,5 @@
 import { storiesOf, configure, addParameters } from '@storybook/react';
+import { create } from '@storybook/theming';
 import { Wrapper } from '@storybook/components';
 import { Info } from './Info';
 
@@ -10,6 +11,10 @@ addParameters({
         wrapper: Wrapper,
       },
     },
+    theme: create({
+      base: 'light',
+      colorSecondary: 'darkorange',
+    }),
   },
   docs: Info,
 });

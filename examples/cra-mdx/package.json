@@ -33,6 +33,7 @@
     "@storybook/api": "5.1.0-alpha.20",
     "@storybook/components": "5.1.0-alpha.20",
     "@storybook/react": "5.1.0-alpha.20",
+    "@storybook/theming": "5.1.0-alpha.20",
     "babel-loader": "^8.0.5",
     "prop-types": "^15.7.2"
   }

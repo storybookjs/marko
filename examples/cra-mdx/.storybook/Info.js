@@ -1,15 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { PropTable } from '@storybook/components';
+import { Global, createGlobal, ThemeProvider, ensure as ensureTheme } from '@storybook/theming';
 
 export const Info = ({ context }) => {
   const {
-    parameters: { component },
+    parameters: { component, options },
   } = context;
-  if (component && component.propDefinitions) {
-    return <PropTable propDefinitions={component.propDefinitions} />;
-  }
-  return <div>No info</div>;
+
+  const themeVars = options && options.theme;
+  const propDefinitions = component && component.propDefinitions;
+  const theme = ensureTheme(themeVars);
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Global styles={createGlobal} />
+      {propDefinitions ? <PropTable propDefinitions={propDefinitions} /> : <div>No info</div>}
+    </ThemeProvider>
+  );
 };
 
 Info.propTypes = {
