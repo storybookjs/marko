@@ -1,1 +1,1 @@
-{"version":"5.0.8","info":{"plain":"Bump version to make `5.0.x` latest since I just released a patch in `v4.1.18`"}}
+{"version":"5.0.9","info":{"plain":"### Bug Fixes\n\n- UI: Fix panel toggle behavior in fullscreen ([#6525](https://github.com/storybooks/storybook/pull/6525))\n- Addon-Knobs: Add missing groupId for files knob ([#6534](https://github.com/storybooks/storybook/pull/6534))\n- Theming: FIX brandImage when theme created with brandTitle ([#6120](https://github.com/storybooks/storybook/pull/6120))"}}
