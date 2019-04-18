@@ -7624,6 +7624,7 @@ exports[`Storyshots UI|Sidebar/SidebarHeading customBrandImage 1`] = `
 
 .emotion-0 {
   width: auto;
+  height: auto;
   display: block;
   max-width: 100%;
 }
@@ -7759,6 +7760,7 @@ exports[`Storyshots UI|Sidebar/SidebarHeading customBrandImage 1`] = `
 
 .emotion-0 {
   width: auto;
+  height: auto;
   display: block;
   max-width: 100%;
 }
