@@ -1,3 +1,10 @@
+## 5.0.10 (April 18, 2019)
+
+### Bug Fixes
+
+* Theming: legacy options don't override set config options ([#6543](https://github.com/storybooks/storybook/pull/6543))
+* Theming: Fix null brandImage ([#6544](https://github.com/storybooks/storybook/pull/6544))
+
 ## 5.0.9 (April 17, 2019)
 
 ### Bug Fixes
