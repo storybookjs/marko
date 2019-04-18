@@ -49,7 +49,11 @@ addParameters({
   options: {
     hierarchySeparator: /\/|\./,
     hierarchyRootSeparator: '|',
-    theme: create({ colorPrimary: 'hotpink', colorSecondary: 'orangered' }),
+    theme: create({
+      colorPrimary: 'hotpink',
+      colorSecondary: 'orangered',
+      brandTitle: 'Storybook!',
+    }),
   },
   backgrounds: [
     { name: 'storybook app', value: themes.light.appBg, default: true },
