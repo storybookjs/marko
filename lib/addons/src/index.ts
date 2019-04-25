@@ -80,7 +80,7 @@ export class AddonStore {
 
   register = (name: string, registerCallback: (api: API) => void): void => {
     if (this.loaders[name]) {
-      logger.warn(`${name} was loaded twice, this could have bad side-effects`);
+      // logger.warn(`${name} was loaded twice, this could have bad side-effects`);
     }
     this.loaders[name] = registerCallback;
   };
