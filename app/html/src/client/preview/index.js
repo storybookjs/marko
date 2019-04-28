@@ -3,7 +3,7 @@ import { start } from '@storybook/core/client';
 import './globals';
 import render from './render';
 
-const { clientApi, configApi, forceReRender } = start(render);
+const { load, clientApi, configApi, forceReRender } = start(render);
 
 export const {
   storiesOf,
@@ -16,4 +16,4 @@ export const {
 } = clientApi;
 
 export const { configure } = configApi;
-export { forceReRender };
+export { load, forceReRender };
