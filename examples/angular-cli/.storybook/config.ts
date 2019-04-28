@@ -13,16 +13,6 @@ addParameters({
   },
 });
 
-let previousExports = {};
-if (module && module.hot && module.hot.dispose) {
-  ({ previousExports = {} } = module.hot.data || {});
-
-  module.hot.dispose(data => {
-    // eslint-disable-next-line no-param-reassign
-    data.previousExports = previousExports;
-  });
-}
-
 // put welcome screen at the top of the list so it's the first one displayed
 // FIXME: require('../src/stories');
 
