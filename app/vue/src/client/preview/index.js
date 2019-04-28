@@ -70,7 +70,7 @@ function decorateStory(getStory, decorators) {
   );
 }
 
-const { clientApi, configApi, forceReRender } = start(render, { decorateStory });
+const { load, clientApi, configApi, forceReRender } = start(render, { decorateStory });
 
 export const {
   storiesOf,
@@ -83,4 +83,4 @@ export const {
 } = clientApi;
 
 export const { configure } = configApi;
-export { forceReRender };
+export { load, forceReRender };
