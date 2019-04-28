@@ -10,8 +10,8 @@ addons.register(ADDON_ID, api => {
   addons.add(PANEL_ID, {
     type: types.TAB,
     title: 'Docs',
-    route: ({ storyId }) => `/info/${storyId}`, // todo add type
-    match: ({ viewMode }) => viewMode === 'info', // todo add type
+    route: ({ storyId }) => `/docs/${storyId}`, // todo add type
+    match: ({ viewMode }) => viewMode === 'docs', // todo add type
     render: ({ active }) => <Panel active={active} />,
   });
 });
