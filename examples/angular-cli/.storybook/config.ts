@@ -1,6 +1,6 @@
 import { load, addParameters } from '@storybook/angular';
-import addCssWarning from '../src/cssWarning';
 import { Wrapper } from '@storybook/components';
+import addCssWarning from '../src/cssWarning';
 
 addCssWarning();
 
