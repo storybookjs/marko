@@ -1,9 +1,21 @@
+## 5.0.11 (April 28, 2019)
+
+### Bug Fixes
+
+- Polymer: Fix re-rendering lit-html elements after non-lit-html element ([#5868](https://github.com/storybooks/storybook/pull/5868))
+- Addon-knobs: Check color knob value before applying uppercase ([#6598](https://github.com/storybooks/storybook/pull/6598))
+- Angular: Fix sourceMap property of angulars webpack config ([#6535](https://github.com/storybooks/storybook/pull/6535))
+
+## Maintenance
+
+- UI: Add missing props in stories ([#6353](https://github.com/storybooks/storybook/pull/6353))
+
 ## 5.0.10 (April 18, 2019)
 
 ### Bug Fixes
 
-* Theming: legacy options don't override set config options ([#6543](https://github.com/storybooks/storybook/pull/6543))
-* Theming: Fix null brandImage ([#6544](https://github.com/storybooks/storybook/pull/6544))
+- Theming: legacy options don't override set config options ([#6543](https://github.com/storybooks/storybook/pull/6543))
+- Theming: Fix null brandImage ([#6544](https://github.com/storybooks/storybook/pull/6544))
 
 ## 5.0.9 (April 17, 2019)
 
