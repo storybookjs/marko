@@ -5,7 +5,7 @@ import { addParameters } from '@storybook/react';
 
 addParameters({ globalParameter: 'globalParameter' });
 
-export default {
+export const componentMeta = {
   title: 'Core|Parameters',
   decorators: [fn => fn({ parameters: { decoratorParameter: 'decoratorParameter' } })],
   parameters: {

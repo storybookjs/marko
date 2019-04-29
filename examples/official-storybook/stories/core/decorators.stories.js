@@ -14,7 +14,7 @@ addDecorator((s, { kind }) =>
   )
 );
 
-export default {
+export const componentMeta = {
   title: 'Core|Decorators',
   decorators: [
     s => (

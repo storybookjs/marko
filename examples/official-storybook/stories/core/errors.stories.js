@@ -1,4 +1,4 @@
-export default {
+export const componentMeta = {
   title: 'Core|Errors',
 };
 

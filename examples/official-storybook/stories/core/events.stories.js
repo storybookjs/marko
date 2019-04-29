@@ -9,7 +9,7 @@ const increment = () => {
   addons.getChannel().emit(Events.FORCE_RE_RENDER);
 };
 
-export default {
+export const componentMeta = {
   title: 'Core|Events',
 };
 
