@@ -1,4 +1,4 @@
-import { configure, addParameters } from '@storybook/ember';
+import { load, addParameters } from '@storybook/ember';
 
 addParameters({
   options: {
@@ -7,11 +7,5 @@ addParameters({
   },
 });
 
-function loadStories() {
-  require('../stories/index.stories');
-
-  const req = require.context('../stories', true, /\.stories\.js$/);
-  req.keys().forEach(filename => req(filename));
-}
-
-configure(loadStories, module);
+// FIXME require('../stories/index.stories');
+load(require.context('../stories', true, /\.stories\.js$/), module);

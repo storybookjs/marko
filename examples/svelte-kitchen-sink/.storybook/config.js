@@ -1,4 +1,4 @@
-import { configure, addParameters } from '@storybook/svelte';
+import { load, addParameters } from '@storybook/svelte';
 
 addParameters({
   options: {
@@ -6,12 +6,5 @@ addParameters({
   },
 });
 
-function loadStories() {
-  require('../src/stories');
-
-  const req = require.context('../src/stories', true, /\.stories\.js$/);
-
-  req.keys().forEach(filename => req(filename));
-}
-
-configure(loadStories, module);
+// require('../src/stories');
+load(require.context('../src/stories', true, /\.stories\.js$/), module);

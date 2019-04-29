@@ -1,4 +1,4 @@
-import { configure, addParameters } from '@storybook/polymer';
+import { load, addParameters } from '@storybook/polymer';
 
 addParameters({
   options: {
@@ -6,11 +6,5 @@ addParameters({
   },
 });
 
-function loadStories() {
-  require('../src/stories/index.stories');
-
-  const req = require.context('../src/stories', true, /\.stories\.js$/);
-  req.keys().forEach(filename => req(filename));
-}
-
-configure(loadStories, module);
+// FIXME require('../src/stories/index.stories');
+load(require.context('../src/stories', true, /\.stories\.js$/), module);

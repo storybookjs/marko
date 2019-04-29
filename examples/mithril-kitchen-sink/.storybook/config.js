@@ -1,4 +1,4 @@
-import { configure, addParameters } from '@storybook/mithril';
+import { load, addParameters } from '@storybook/mithril';
 
 addParameters({
   options: {
@@ -6,9 +6,4 @@ addParameters({
   },
 });
 
-function loadStories() {
-  const req = require.context('../src/stories', true, /\.stories\.js$/);
-  req.keys().forEach(filename => req(filename));
-}
-
-configure(loadStories, module);
+load(require.context('../src/stories', true, /\.stories\.js$/), module);
