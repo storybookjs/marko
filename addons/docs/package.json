@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-docs",
-  "version": "5.1.0-alpha.36",
+  "version": "5.2.0-alpha.0",
   "description": "Superior documentation for your components",
   "keywords": [
     "addon",
@@ -25,15 +25,15 @@
   "dependencies": {
     "@babel/generator": "^7.4.0",
     "@babel/parser": "^7.4.2",
-    "@storybook/addons": "5.1.0-alpha.36",
-    "@storybook/api": "5.1.0-alpha.36",
-    "@storybook/client-logger": "5.1.0-alpha.36",
-    "@storybook/components": "5.1.0-alpha.36",
-    "@storybook/core-events": "5.1.0-alpha.36",
-    "@storybook/theming": "5.1.0-alpha.36",
+    "@storybook/addons": "5.2.0-alpha.0",
+    "@storybook/api": "5.2.0-alpha.0",
+    "@storybook/client-logger": "5.2.0-alpha.0",
+    "@storybook/components": "5.2.0-alpha.0",
+    "@storybook/core-events": "5.2.0-alpha.0",
+    "@storybook/theming": "5.2.0-alpha.0",
     "core-js": "^2.6.5",
-    "lodash.camelcase": "^4.3.0",
     "global": "^4.3.2",
+    "lodash.camelcase": "^4.3.0",
     "prop-types": "^15.7.2"
   },
   "devDependencies": {
@@ -42,8 +42,8 @@
     "@types/webpack-env": "^1.13.7"
   },
   "peerDependencies": {
-    "react": "*",
-    "@mdx-js/mdx": "^1.0.0"
+    "@mdx-js/mdx": "^1.0.0",
+    "react": "*"
   },
   "publishConfig": {
     "access": "public"
