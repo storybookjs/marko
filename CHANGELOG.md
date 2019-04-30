@@ -1,4 +1,4 @@
-## 5.2.0-alpha.1 (April 30, 2019)
+## 5.2.0-alpha.2 (April 30, 2019)
 
 Streamline setup, fix MDX dependencies, improve MDX import, and update guide
 
