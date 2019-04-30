@@ -25,6 +25,8 @@
   "dependencies": {
     "@babel/generator": "^7.4.0",
     "@babel/parser": "^7.4.2",
+    "@mdx-js/mdx": "^1.0.0",
+    "@mdx-js/loader": "^1.0.0",
     "@storybook/addons": "5.2.0-alpha.0",
     "@storybook/api": "5.2.0-alpha.0",
     "@storybook/client-logger": "5.2.0-alpha.0",
@@ -42,7 +44,6 @@
     "@types/webpack-env": "^1.13.7"
   },
   "peerDependencies": {
-    "@mdx-js/mdx": "^1.0.0",
     "react": "*"
   },
   "publishConfig": {
