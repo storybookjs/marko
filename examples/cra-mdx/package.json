@@ -1,6 +1,6 @@
 {
   "name": "cra-mdx",
-  "version": "5.2.0-alpha.1",
+  "version": "5.2.0-alpha.2",
   "private": true,
   "dependencies": {
     "react": "^16.8.5",
@@ -24,14 +24,14 @@
   ],
   "devDependencies": {
     "@babel/core": "^7.4.0",
-    "@storybook/addon-actions": "5.2.0-alpha.1",
-    "@storybook/addon-docs": "5.2.0-alpha.1",
-    "@storybook/addon-links": "5.2.0-alpha.1",
-    "@storybook/addons": "5.2.0-alpha.1",
-    "@storybook/api": "5.2.0-alpha.1",
-    "@storybook/components": "5.2.0-alpha.1",
-    "@storybook/react": "5.2.0-alpha.1",
-    "@storybook/theming": "5.2.0-alpha.1",
+    "@storybook/addon-actions": "5.2.0-alpha.2",
+    "@storybook/addon-docs": "5.2.0-alpha.2",
+    "@storybook/addon-links": "5.2.0-alpha.2",
+    "@storybook/addons": "5.2.0-alpha.2",
+    "@storybook/api": "5.2.0-alpha.2",
+    "@storybook/components": "5.2.0-alpha.2",
+    "@storybook/react": "5.2.0-alpha.2",
+    "@storybook/theming": "5.2.0-alpha.2",
     "babel-loader": "^8.0.5",
     "prop-types": "^15.7.2"
   }
