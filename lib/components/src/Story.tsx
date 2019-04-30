@@ -13,13 +13,13 @@ interface StoryProps {
 
 export const Story: React.FunctionComponent<StoryProps> = ({ name, children, height }) => (
   <DocsContext.Consumer>
-    {({ storyStore, parameters, selectedKind }) => {
+    {({ storyStore, parameters, mdxKind }) => {
       let contents = children;
       if (storyStore) {
         const { inlineStories } = (parameters && parameters.options && parameters.options.docs) || {
           inlineStories: false,
         };
-        const id = toId(selectedKind, name);
+        const id = toId(mdxKind, name);
         if (!inlineStories) {
           return <Preview {...{ id, height }} />;
         }
