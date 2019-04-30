@@ -11,22 +11,11 @@ interface StoryProps {
   height: string;
 }
 
-export const Story: React.FunctionComponent<StoryProps> = ({ name, children, height }) => (
+export const Story: React.FunctionComponent<StoryProps> = ({ name, height }) => (
   <DocsContext.Consumer>
-    {({ storyStore, parameters, mdxKind }) => {
-      let contents = children;
-      if (storyStore) {
-        const { inlineStories } = (parameters && parameters.options && parameters.options.docs) || {
-          inlineStories: false,
-        };
-        const id = toId(mdxKind, name);
-        if (!inlineStories) {
-          return <Preview {...{ id, height }} />;
-        }
-        const data = storyStore.fromId(id);
-        contents = data.getDecorated()();
-      }
-      return <div aria-labelledby={name}>{contents}</div>;
+    {({ mdxKind }) => {
+      const id = toId(mdxKind, name);
+      return <Preview {...{ id, height }} />;
     }}
   </DocsContext.Consumer>
 );
