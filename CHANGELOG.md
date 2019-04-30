@@ -1,3 +1,7 @@
+## 5.2.0-alpha.1 (April 30, 2019)
+
+Streamline setup, fix MDX dependencies, improve MDX import, and update guide
+
 ## 5.2.0-alpha.0 (April 29, 2019)
 
 Storybook Docs technical preview
