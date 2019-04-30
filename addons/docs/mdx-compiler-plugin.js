@@ -63,12 +63,16 @@ function getStory(node, counter) {
 // when we render <Story name="xxx">...</Story>, since this MDX can be attached to any `selectedKind`!
 const wrapperJs = `
 let mdxKind = null;
+let meta = null;
 if (typeof componentMeta !== 'undefined' && componentMeta) {
   mdxKind = componentMeta.title || componentMeta.displayName;
-  componentMeta.parameters = componentMeta.parameters || {};
-  componentMeta.parameters.docs = WrappedMDXContent;
+  meta = componentMeta;
 }
 const WrappedMDXContent = ({ context }) => <DocsWrapper context={{...context, mdxKind}} content={MDXContent} />;
+if (meta) {
+  meta.parameters = meta.parameters || {};
+  meta.parameters.docs = WrappedMDXContent;
+}
 export default WrappedMDXContent;
 `.trim();
 
