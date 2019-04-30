@@ -32,8 +32,10 @@ export { Icons } from './icon/icon';
 export { StorybookLogo } from './brand/StorybookLogo';
 export { StorybookIcon } from './brand/StorybookIcon';
 
-export { DocsContext } from './DocsContext';
-export { IFrame } from './IFrame';
-export { Preview } from './Preview';
-export { Story } from './Story';
-export { Wrapper } from './Wrapper';
+// Docs
+export { DocsWrapper } from './doc-blocks/DocsWrapper';
+export { DocsContext } from './doc-blocks/DocsContext';
+export { IFrame } from './doc-blocks/IFrame';
+export { Preview } from './doc-blocks/Preview';
+export { Story } from './doc-blocks/Story';
+export { Wrapper } from './doc-blocks/Wrapper';

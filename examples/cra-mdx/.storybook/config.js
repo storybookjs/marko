@@ -7,9 +7,6 @@ addParameters({
   options: {
     docs: {
       inlineStories: true,
-      mdxComponents: {
-        wrapper: Wrapper,
-      },
     },
     theme: create({
       base: 'light',

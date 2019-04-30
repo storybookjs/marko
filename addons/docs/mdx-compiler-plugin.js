@@ -59,16 +59,6 @@ function getStory(node, counter) {
   return statements.join('\n');
 }
 
-// insert `mdxKind` into the context so that we can know what "kind" we're rendering into
-// when we render <Story name="xxx">...</Story>, since this MDX can be attached to any `selectedKind`!
-const wrappedMDXContent = `
-const WrappedMDXContent = ({ context }) => (
-  <DC.Provider value={{...context, mdxKind: componentMeta && (componentMeta.title || componentMeta.displayName) }}>
-    <MDXContent components={((context && context.parameters && context.parameters.options && context.parameters.options.docs) || {}).mdxComponents} />
-  </DC.Provider>
-);
-`.trim();
-
 function extractStories(node, options) {
   // we're overriding default export
   const defaultJsx = mdxToJsx.toJSX(node, {}, { ...options, skipExport: true });
@@ -83,9 +73,12 @@ function extractStories(node, options) {
   });
 
   const fullJsx = [
-    'import { DocsContext as DC } from "@storybook/components"',
+    'import { DocsWrapper } from "@storybook/components"',
     defaultJsx,
-    wrappedMDXContent,
+    // insert `mdxKind` into the context so that we can know what "kind" we're rendering into
+    // when we render <Story name="xxx">...</Story>, since this MDX can be attached to any `selectedKind`!
+    'const mdxKind = componentMeta && (componentMeta.title || componentMeta.displayName);',
+    'const WrappedMDXContent = ({ context }) => <DocsWrapper context={{...context, mdxKind}} content={MDXContent} />;',
     'export default WrappedMDXContent;',
     'componentMeta.parameters = componentMeta.parameters || {};',
     'componentMeta.parameters.docs = WrappedMDXContent',
