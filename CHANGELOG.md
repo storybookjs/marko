@@ -1,10 +1,16 @@
+## 5.2.0-alpha.3 (May 1, 2019)
+
+- Addon-docs: Add Story decorator and parameter support
+- Addon-docs: Remove need for extra project babelrc
+
 ## 5.2.0-alpha.2 (April 30, 2019)
 
-Streamline setup, fix MDX dependencies, improve MDX import, and update guide
+- Addon-docs: Streamline setup, fix MDX dependencies, improve MDX import, and update guide
 
 ## 5.2.0-alpha.0 (April 29, 2019)
 
-Storybook Docs technical preview
+Storybook Docs technical preview:
+
 - Docs addon
 - MDX story format
 - Module story format
