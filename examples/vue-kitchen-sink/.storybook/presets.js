@@ -1,1 +1,8 @@
-module.exports = ['@storybook/addon-docs/preset'];
+module.exports = [
+  {
+    name: '@storybook/addon-docs/preset',
+    options: {
+      configureReactForMdx: true,
+    },
+  },
+];
