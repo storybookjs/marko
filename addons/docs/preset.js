@@ -1,7 +1,7 @@
 const createCompiler = require('./mdx-compiler-plugin');
 
-function createBableOptions({ babelOptions, configureReactForMdx }) {
-  if (!configureReactForMdx) {
+function createBableOptions({ babelOptions, configureJSX }) {
+  if (!configureJSX) {
     return babelOptions;
   }
 
@@ -18,7 +18,7 @@ function webpack(webpackConfig = {}, options = {}) {
   const { module = {} } = webpackConfig;
   // it will reuse babel options that are already in use in storybook
   // also, these babel options are chained with other presets.
-  const { babelOptions, configureReactForMdx } = options;
+  const { babelOptions, configureJSX } = options;
 
   return {
     ...webpackConfig,
@@ -31,7 +31,7 @@ function webpack(webpackConfig = {}, options = {}) {
           use: [
             {
               loader: 'babel-loader',
-              options: createBableOptions({ babelOptions, configureReactForMdx }),
+              options: createBableOptions({ babelOptions, configureJSX }),
             },
             {
               loader: '@mdx-js/loader',
