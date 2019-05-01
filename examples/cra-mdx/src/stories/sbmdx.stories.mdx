@@ -4,7 +4,8 @@ import { Button } from '@storybook/react/demo';
 
 export const componentMeta = {
   title: 'MDX|Button',
-  decorators: [],
+  decorators: [storyFn => <div style={{ backgroundColor: 'yellow' }}>{storyFn()}</div>],
+  parameters: { notes: 'component notes' },
 };
 
 # Some header
@@ -23,4 +24,8 @@ Some documentation here
 
 <Story name="with icons">
   <Button onClick={action('clicked')}>🤘🚀💯</Button>
+</Story>
+
+<Story name="notes" parameters={{ notes: 'story notes' }}>
+  <Button onClick={action('clicked')}>goodbye world</Button>
 </Story>

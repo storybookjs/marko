@@ -11,7 +11,7 @@ const RESERVED = /^(?:do|if|in|for|let|new|try|var|case|else|enum|eval|false|nul
 
 function getAttr(elt, what) {
   const attr = elt.attributes.find(n => n.name.name === what);
-  return attr && attr.value.value;
+  return attr && attr.value;
 }
 
 function getStoryFn(name, counter) {
@@ -30,7 +30,8 @@ function getStory(node, counter) {
   }
 
   const ast = parser.parseExpression(node.value, { plugins: ['jsx'] });
-  const storyName = getAttr(ast.openingElement, 'name');
+  let storyName = getAttr(ast.openingElement, 'name');
+  storyName = storyName && storyName.value;
 
   // console.log(JSON.stringify(ast, null, 2));
 
@@ -52,6 +53,13 @@ function getStory(node, counter) {
 
   if (storyName !== storyFn) {
     statements.push(`${storyFn}.title = '${storyName}';`);
+  }
+
+  let parameters = getAttr(ast.openingElement, 'parameters');
+  parameters = parameters && parameters.expression;
+  if (parameters) {
+    const { code: params } = generate(parameters, {});
+    statements.push(`${storyFn}.parameters = ${params};`);
   }
 
   // console.log(statements);
