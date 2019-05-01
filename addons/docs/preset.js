@@ -1,6 +1,6 @@
 const createCompiler = require('./mdx-compiler-plugin');
 
-function createBableOptions({ babelOptions, configureJSX }) {
+function createBabelOptions({ babelOptions, configureJSX }) {
   if (!configureJSX) {
     return babelOptions;
   }
@@ -31,7 +31,7 @@ function webpack(webpackConfig = {}, options = {}) {
           use: [
             {
               loader: 'babel-loader',
-              options: createBableOptions({ babelOptions, configureJSX }),
+              options: createBabelOptions({ babelOptions, configureJSX }),
             },
             {
               loader: '@mdx-js/loader',
