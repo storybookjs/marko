@@ -1,7 +1,7 @@
 import React from 'react';
 import { load, addDecorator, addParameters } from '@storybook/react';
 import { create } from '@storybook/theming';
-import { Info } from '@storybook/components';
+import { Info } from '@storybook/addon-docs/blocks';
 import { getPropDefs } from './getPropDefs';
 
 addParameters({
