@@ -1,12 +1,17 @@
 import React from 'react';
 import { load, addDecorator, addParameters } from '@storybook/react';
 import { create } from '@storybook/theming';
-import { Info } from './Info';
+import { Info } from '@storybook/components';
+import { getPropDefs } from './getPropDefs';
 
 addParameters({
   options: {
     docs: {
       inlineStories: true,
+      getPropDefs,
+      components: {
+        // p: ({ children }) => <b>{children}</b>,
+      },
     },
     theme: create({
       base: 'light',

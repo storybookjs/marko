@@ -98,7 +98,7 @@ function extractStories(node, options) {
   });
 
   const fullJsx = [
-    'import { DocsWrapper } from "@storybook/components"',
+    'import { DocsWrapper } from "@storybook/addon-docs/blocks"',
     defaultJsx,
     wrapperJs,
     ...stories,

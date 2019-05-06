@@ -1,5 +1,4 @@
 import { load, addParameters } from '@storybook/angular';
-import { Wrapper } from '@storybook/components';
 import addCssWarning from '../src/cssWarning';
 
 addCssWarning();
@@ -7,9 +6,6 @@ addCssWarning();
 addParameters({
   options: {
     hierarchyRootSeparator: /\|/,
-    docs: {
-      mdxComponents: { wrapper: Wrapper },
-    },
   },
 });
 

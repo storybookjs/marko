@@ -21,7 +21,6 @@ export const Story: React.FunctionComponent<StoryProps> = ({ name, height }) => 
 );
 
 Story.defaultProps = {
-  height: '500px',
   children: null,
   name: null,
 };

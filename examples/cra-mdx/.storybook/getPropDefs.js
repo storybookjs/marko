@@ -23,8 +23,8 @@ const propsFromDocgen = type => {
     const propType = docgenInfoProp.flowType || docgenInfoProp.type || 'other';
 
     props[property] = {
-      property,
-      propType,
+      name: property,
+      type: propType,
       required: docgenInfoProp.required,
       description: docgenInfoProp.description,
       defaultValue: defaultValueDesc.value,
@@ -52,7 +52,7 @@ const propsFromPropTypes = type => {
         }
       }
 
-      props[property] = { property, propType, required, description };
+      props[property] = { name: property, type: propType, required, description };
     });
   }
 
@@ -65,7 +65,7 @@ const propsFromPropTypes = type => {
       }
 
       if (!props[property]) {
-        props[property] = { property };
+        props[property] = { name: property };
       }
 
       props[property].defaultValue = value;
@@ -75,8 +75,5 @@ const propsFromPropTypes = type => {
   return Object.values(props);
 };
 
-const getProps = type => (hasDocgen(type) ? propsFromDocgen(type) : propsFromPropTypes(type));
-
-export const docInfo = type => ({
-  propDefinitions: getProps(type),
-});
+export const getPropDefs = type =>
+  hasDocgen(type) ? propsFromDocgen(type) : propsFromPropTypes(type);

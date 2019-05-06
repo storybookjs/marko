@@ -1,5 +1,4 @@
 import { load, addParameters } from '@storybook/html';
-import { Wrapper } from '@storybook/components';
 
 addParameters({
   html: {
@@ -7,9 +6,6 @@ addParameters({
   },
   options: {
     hierarchyRootSeparator: /\|/,
-    docs: {
-      mdxComponents: { wrapper: Wrapper },
-    },
   },
 });
 

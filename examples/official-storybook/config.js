@@ -32,7 +32,7 @@ addDecorator(withA11y);
 addDecorator(withNotes);
 
 addDecorator(storyFn => (
-  <ThemeProvider theme={convert(themes.light)}>
+  <ThemeProvider theme={convert(themes.dark)}>
     <Global styles={createReset} />
     {storyFn()}
   </ThemeProvider>
@@ -49,7 +49,7 @@ addParameters({
   options: {
     hierarchySeparator: /\/|\./,
     hierarchyRootSeparator: '|',
-    theme: { base: 'light', brandTitle: 'Storybook!' },
+    theme: themes.dark, // { base: 'dark',  brandTitle: 'Storybook!' },
   },
   backgrounds: [
     { name: 'storybook app', value: themes.light.appBg, default: true },
