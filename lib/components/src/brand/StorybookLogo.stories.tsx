@@ -2,7 +2,7 @@ import React from 'react';
 
 import { StorybookLogo } from './StorybookLogo';
 
-export default {
+export const componentMeta = {
   Component: StorybookLogo,
   title: 'Basics|Brand/StorybookLogo',
 };

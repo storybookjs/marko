@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import { Placeholder } from './placeholder';
 import { Link } from '../typography/link/link';
 
-export default {
+export const componentMeta = {
   Component: Placeholder,
   title: 'Basics|Placeholder',
 };

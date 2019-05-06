@@ -4,7 +4,7 @@ import Markdown from 'markdown-to-jsx';
 import { DocumentFormatting } from './DocumentFormatting';
 import markdownSample from './DocumentFormattingSample.md';
 
-export default {
+export const componentMeta = {
   Component: DocumentFormatting,
   title: 'Basics|DocumentFormatting',
   decorators: [
@@ -174,8 +174,9 @@ export const withDOM = () => (
       </a>
     </p>
     <p>
-      Autoconverted link <a href="https://github.com/nodeca/pica">https://github.com/nodeca/pica</a>{' '}
-      (enable linkify to see)
+      Autoconverted link{' '}
+      <a href="https://github.com/nodeca/pica">https:// github.com/nodeca/pica</a> (enable linkify
+      to see)
     </p>
     <h2>Images</h2>
     <p>
