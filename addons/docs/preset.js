@@ -27,7 +27,7 @@ function webpack(webpackConfig = {}, options = {}) {
       rules: [
         ...(module.rules || []),
         {
-          test: /\.mdx$/,
+          test: /\.stories.mdx$/,
           use: [
             {
               loader: 'babel-loader',
@@ -38,6 +38,19 @@ function webpack(webpackConfig = {}, options = {}) {
               options: {
                 compilers: [createCompiler(options)],
               },
+            },
+          ],
+        },
+        {
+          test: /\.mdx$/,
+          exclude: /\.stories.mdx$/,
+          use: [
+            {
+              loader: 'babel-loader',
+              options: createBabelOptions({ babelOptions, configureJSX }),
+            },
+            {
+              loader: '@mdx-js/loader',
             },
           ],
         },
