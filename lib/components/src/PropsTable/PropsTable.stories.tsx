@@ -1,6 +1,6 @@
 import React from 'react';
 import { PropsTable } from './PropsTable';
-import { string, number } from './PropRow.stories';
+import * as rowStories from './PropRow.stories';
 
 export const componentMeta = {
   Component: PropsTable,
@@ -9,8 +9,6 @@ export const componentMeta = {
 
 export const empty = () => <PropsTable rows={[]} />;
 
-const normalProps = {
-  rows: [string.def, number.def],
-};
-export const normal = () => <PropsTable {...normalProps} />;
-normal.props = normalProps;
+const { row: stringRow } = rowStories.string().props;
+const { row: numberRow } = rowStories.number().props;
+export const normal = () => <PropsTable rows={[stringRow, numberRow]} />;

@@ -6,15 +6,11 @@ export const componentMeta = {
   Component: Source,
 };
 
-const noStoryProps = { error: SourceError.NO_STORY };
-export const noStory = () => <Source {...noStoryProps} />;
+export const noStory = () => <Source error={SourceError.NO_STORY} />;
 noStory.title = 'no story';
-noStory.props = noStoryProps;
 
-const sourceUnavailableProps = { error: SourceError.SOURCE_UNAVAILABLE };
-export const sourceUnavailable = () => <Source {...sourceUnavailableProps} />;
+export const sourceUnavailable = () => <Source error={SourceError.SOURCE_UNAVAILABLE} />;
 sourceUnavailable.title = 'source unavailable';
-sourceUnavailable.props = sourceUnavailableProps;
 
 const jsxCode = `
 <MyComponent boolProp scalarProp={1} complexProp={{ foo: 1, bar: '2' }}>
@@ -22,12 +18,8 @@ const jsxCode = `
 </MyComponent>
 `.trim();
 
-const jsxProps = {
-  code: jsxCode,
-  language: 'jsx',
-};
-export const jsx = () => <Source {...jsxProps} />;
-jsx.props = jsxProps;
+const jsxProps = {};
+export const jsx = () => <Source code={jsxCode} language="jsx" />;
 
 const cssCode = `
 @-webkit-keyframes blinker {

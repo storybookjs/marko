@@ -7,9 +7,6 @@ export const componentMeta = {
   Component: Props,
 };
 
-const errorProps = { error: PropsError.NO_COMPONENT };
-export const error = () => <Props {...errorProps} />;
-error.props = errorProps;
+export const error = () => <Props error={PropsError.NO_COMPONENT} />;
 
-export const normal = () => <Props {...normalTable.props} />;
-normal.props = normalTable.props;
+export const normal = () => <Props rows={normalTable().props.rows} />;

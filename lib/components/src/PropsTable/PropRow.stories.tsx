@@ -31,6 +31,4 @@ const numberDef = {
 };
 
 export const string = () => <PropRow row={stringDef} />;
-string.def = stringDef;
 export const number = () => <PropRow row={numberDef} />;
-number.def = numberDef;

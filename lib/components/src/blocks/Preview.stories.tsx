@@ -7,19 +7,8 @@ export const componentMeta = {
   Component: Preview,
 };
 
-const errorProps = {
-  error: PreviewError.NO_STORY,
-};
-export const error = () => <Preview {...errorProps} />;
-error.props = errorProps;
+export const error = () => <Preview error={PreviewError.NO_STORY} />;
 
 const buttonFn = () => <Button>Hello Button</Button>;
 
-const inlineButtonProps = {
-  inline: true,
-  storyFn: buttonFn,
-  title: 'hello button',
-};
-
-export const inline = () => <Preview {...inlineButtonProps} />;
-inline.props = inlineButtonProps;
+export const inline = () => <Preview inline storyFn={buttonFn} title="hello button" />;
