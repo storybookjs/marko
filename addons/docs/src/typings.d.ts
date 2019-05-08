@@ -4,11 +4,3 @@ declare module '@mdx-js/react';
 declare module 'global';
 declare module 'react-inspector';
 declare module 'telejson';
-
-interface PropDef {
-  name: string;
-  type: any;
-  required: boolean;
-  description?: string;
-  defaultValue?: any;
-}

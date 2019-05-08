@@ -1,61 +1,40 @@
 import React from 'react';
-import { styled } from '@storybook/theming';
-import { PropsTable } from '@storybook/components';
-import { DocsContext } from './DocsContext';
-
-interface NoPropsProps {
-  message: string;
-  details: string;
-  link: string;
-}
+import { Props, PropsError, PropsProps as PurePropsProps } from '@storybook/components';
+import { DocsContext, DocsContextProps } from './DocsContext';
 
 interface PropsProps {
   exclude?: string[];
   of?: any;
 }
 
-export const NoProps: React.FunctionComponent<NoPropsProps> = ({ message, details, link }) => (
-  <>
-    <h1>{message}</h1>
-    <h1>{details}</h1>
-    <a href={link}>more info</a>
-  </>
-);
-
-class PropsError extends Error {
-  details: string = null;
-
-  link: string = null;
-
-  constructor(message: string, details: string, link: string) {
-    super(message);
-    this.details = details;
-    this.link = link;
+export const getPropsProps = (
+  { exclude, of }: PropsProps,
+  { parameters, getPropDefs }: DocsContextProps
+): PurePropsProps => {
+  const { component } = parameters;
+  try {
+    const target = of || component;
+    if (!target) {
+      throw new Error(PropsError.NO_COMPONENT);
+    }
+    if (!getPropDefs) {
+      throw new Error(PropsError.PROPS_UNSUPPORTED);
+    }
+    const allRows = getPropDefs(target);
+    const rows = !exclude ? allRows : allRows.filter(row => !exclude.includes(row.name));
+    return { rows };
+  } catch (err) {
+    return { error: err.message };
   }
-}
+};
 
-export const Props: React.FunctionComponent<PropsProps> = ({ exclude, of }) => (
+const PropsContainer: React.FunctionComponent<PropsProps> = props => (
   <DocsContext.Consumer>
-    {({ parameters, getPropDefs }) => {
-      const { component } = parameters;
-      try {
-        const target = of || component;
-        if (!target) {
-          throw new PropsError('No component', 'Props needs a component', 'http://fixme');
-        }
-        if (!getPropDefs) {
-          throw new PropsError(
-            'Props unsupported',
-            'Unable to extract props for your framework',
-            'http://fixme'
-          );
-        }
-        const allRows = getPropDefs(target);
-        const rows = !exclude ? allRows : allRows.filter(row => !exclude.includes(row.name));
-        return <PropsTable rows={rows} />;
-      } catch (err) {
-        return <NoProps message={err.message} details={err.details} link={err.link} />;
-      }
+    {context => {
+      const propsProps = getPropsProps(props, context);
+      return <Props {...propsProps} />;
     }}
   </DocsContext.Consumer>
 );
+
+export { PropsContainer as Props };

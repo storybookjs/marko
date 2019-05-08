@@ -8,4 +8,9 @@ export const componentMeta = {
 };
 
 export const empty = () => <PropsTable rows={[]} />;
-export const all = () => <PropsTable rows={[string.def, number.def]} />;
+
+const normalProps = {
+  rows: [string.def, number.def],
+};
+export const normal = () => <PropsTable {...normalProps} />;
+normal.props = normalProps;

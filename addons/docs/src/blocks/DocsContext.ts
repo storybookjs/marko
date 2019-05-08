@@ -1,5 +1,5 @@
 import React from 'react';
-// import { PropDef } from '@storybook/components';
+import { PropDef } from '@storybook/components';
 
 export interface DocsContextProps {
   selectedKind?: string;

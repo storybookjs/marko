@@ -1,7 +1,7 @@
 import React from 'react';
 import { load, addDecorator, addParameters } from '@storybook/react';
-import { create } from '@storybook/theming';
-import { Info } from '@storybook/addon-docs/blocks';
+import { themes, create } from '@storybook/theming';
+import { DocsPage } from '@storybook/addon-docs/blocks';
 import { getPropDefs } from './getPropDefs';
 
 addParameters({
@@ -13,12 +13,9 @@ addParameters({
         // p: ({ children }) => <b>{children}</b>,
       },
     },
-    theme: create({
-      base: 'light',
-      colorSecondary: 'darkorange',
-    }),
+    theme: themes.dark,
   },
-  docs: Info,
+  docs: DocsPage,
   notes: 'global notes',
 });
 

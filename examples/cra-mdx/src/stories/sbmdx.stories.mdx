@@ -1,14 +1,18 @@
-import { Story } from '@storybook/addon-docs/blocks';
+import { Story, Preview, Props, Source } from '@storybook/addon-docs/blocks';
 import { action } from '@storybook/addon-actions';
 import { Button } from '@storybook/react/demo';
 
 export const componentMeta = {
   title: 'MDX|Button',
   decorators: [storyFn => <div style={{ backgroundColor: 'yellow' }}>{storyFn()}</div>],
-  parameters: { notes: 'component notes' },
+  parameters: { component: Button, notes: 'component notes' },
 };
 
-# Some header
+# Selected
+
+<Preview />
+<Source />
+<Props />
 
 ## Getting into details
 

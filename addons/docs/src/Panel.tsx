@@ -1,6 +1,6 @@
 import React, { ReactElement, Component, Fragment, ReactNode } from 'react';
 import { Consumer, Combo } from '@storybook/api';
-import { IFrame } from './blocks';
+import { IFrame } from '@storybook/components';
 
 const baseUrl = 'iframe.html';
 

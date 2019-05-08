@@ -33,4 +33,5 @@ export { StorybookLogo } from './brand/StorybookLogo';
 export { StorybookIcon } from './brand/StorybookIcon';
 
 // Docs
-export { PropsTable } from './PropsTable/PropsTable';
+export { PropsTable, PropDef } from './PropsTable/PropsTable';
+export * from './blocks';

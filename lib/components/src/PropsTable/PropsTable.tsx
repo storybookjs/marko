@@ -1,5 +1,4 @@
 import React from 'react';
-import { styled } from '@storybook/theming';
 import { PropRow } from './PropRow';
 import { PropDef } from './PropDef';
 import { Table, Thead, Tbody, Tr, Th } from './Table';
@@ -9,7 +8,7 @@ interface PropsTableProps {
   // FIXME: table options
 }
 
-export const PropsTable: React.FunctionComponent<PropsTableProps> = ({ rows }) => (
+const PropsTable: React.FunctionComponent<PropsTableProps> = ({ rows }) => (
   <Table className="props-table">
     <Thead>
       <Tr>
@@ -25,3 +24,5 @@ export const PropsTable: React.FunctionComponent<PropsTableProps> = ({ rows }) =
     </Tbody>
   </Table>
 );
+
+export { PropsTable, PropDef };
