@@ -3,7 +3,7 @@
 Living documentation for your components.
 
 - [Sneak peak article](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a)
-- [Technical preview guide](https://gist.github.com/shilman/1187092d671e280587a58345817b3d3e)
+- [Technical preview guide](https://docs.google.com/document/d/1un6YX7xDKEKl5-MVb-egnOYN8dynb5Hf7mq0hipk8JE/edit?usp=sharing)
 
 ## Installation
 
