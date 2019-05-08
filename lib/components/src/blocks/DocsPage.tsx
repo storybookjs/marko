@@ -5,6 +5,7 @@ import { Props, PropsProps } from './Props';
 import { Source, SourceProps } from './Source';
 
 export interface DocsPageProps {
+  caption: any;
   title: string;
   previewProps: PreviewProps;
   propsProps: PropsProps;
@@ -12,6 +13,7 @@ export interface DocsPageProps {
 }
 
 const DocsPage: React.FunctionComponent<DocsPageProps> = ({
+  caption,
   title,
   previewProps,
   propsProps,
@@ -21,6 +23,7 @@ const DocsPage: React.FunctionComponent<DocsPageProps> = ({
     <h1>{title}</h1>
     <Preview {...previewProps} />
     <Source {...sourceProps} />
+    {caption}
     <Props {...propsProps} />
   </div>
 );
