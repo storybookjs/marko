@@ -8,7 +8,6 @@ import {
   LayoutChangeEvent,
   KeyboardEvent,
 } from 'react-native';
-import style from './style';
 
 export interface PreviewDimens {
   previewWidth: number;
@@ -18,6 +17,11 @@ export interface PreviewDimens {
 type Props = {
   onLayout: (dimens: PreviewDimens) => void;
 } & PreviewDimens;
+
+export interface PreviewDimens {
+  previewWidth: number;
+  previewHeight: number;
+}
 
 // Android changes screen size when keyboard opens.
 // To avoid issues we use absolute positioned element with predefined screen size
@@ -85,11 +89,11 @@ export default class AbsolutePositionedKeyboardAwareView extends PureComponent<P
     const { children, previewWidth, previewHeight } = this.props;
 
     return (
-      <View style={style.flex} onLayout={this.onLayoutHandler}>
+      <View style={{ flex: 1 }} onLayout={this.onLayoutHandler}>
         <View
           style={
             previewWidth === 0
-              ? style.flex
+              ? { flex: 1 }
               : { position: 'absolute', width: previewWidth, height: previewHeight }
           }
         >

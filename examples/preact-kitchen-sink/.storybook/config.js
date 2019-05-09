@@ -1,6 +1,8 @@
 /** @jsx h */
-import { load, addParameters } from '@storybook/preact';
+import { load, addParameters, addDecorator } from '@storybook/preact';
+import { withA11y } from '@storybook/addon-a11y';
 
+addDecorator(withA11y);
 addParameters({
   options: {
     hierarchySeparator: /\/|\./,

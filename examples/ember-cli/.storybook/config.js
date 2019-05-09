@@ -1,5 +1,7 @@
-import { load, addParameters } from '@storybook/ember';
+import { load, addParameters, addDecorator } from '@storybook/ember';
+import { withA11y } from '@storybook/addon-a11y';
 
+addDecorator(withA11y);
 addParameters({
   options: {
     hierarchySeparator: /\/|\./,

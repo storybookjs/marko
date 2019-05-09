@@ -1,5 +1,7 @@
-import { load, addParameters } from '@storybook/mithril';
+import { load, addParameters, addDecorator } from '@storybook/mithril';
+import { withA11y } from '@storybook/addon-a11y';
 
+addDecorator(withA11y);
 addParameters({
   options: {
     hierarchyRootSeparator: /\|/,

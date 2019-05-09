@@ -5,7 +5,7 @@ import { Props, PropsProps } from './Props';
 import { Source, SourceProps } from './Source';
 
 export interface DocsPageProps {
-  caption: any;
+  caption?: any;
   title: string;
   previewProps: PreviewProps;
   propsProps: PropsProps;
