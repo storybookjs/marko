@@ -2,7 +2,7 @@ import React from 'react';
 import { DocumentFormatting } from '../typography/DocumentFormatting';
 import { DocsPage } from './DocsPage';
 import * as previewStories from './Preview.stories';
-import * as propsStories from './Props.stories';
+import * as propsTableStories from './PropsTable/PropsTable.stories';
 import * as sourceStories from './Source.stories';
 import MarkdownCaption from './DocsPageExampleCaption.mdx';
 
@@ -16,7 +16,7 @@ export const empty = () => (
   <DocsPage
     title={null}
     previewProps={previewStories.error().props}
-    propsProps={propsStories.error().props}
+    propsTableProps={propsTableStories.error().props}
     sourceProps={sourceStories.sourceUnavailable().props}
   />
 );
@@ -25,7 +25,7 @@ export const noText = () => (
   <DocsPage
     title="no text"
     previewProps={previewStories.inline().props}
-    propsProps={propsStories.normal().props}
+    propsTableProps={propsTableStories.normal().props}
     sourceProps={sourceStories.jsx().props}
   />
 );
@@ -37,7 +37,7 @@ export const text = () => (
     title="text"
     caption={textCaption}
     previewProps={previewStories.inline().props}
-    propsProps={propsStories.normal().props}
+    propsTableProps={propsTableStories.normal().props}
     sourceProps={sourceStories.jsx().props}
   />
 );
@@ -47,7 +47,7 @@ export const markdown = () => (
     title="markdown"
     caption={<MarkdownCaption />}
     previewProps={previewStories.inline().props}
-    propsProps={propsStories.normal().props}
+    propsTableProps={propsTableStories.normal().props}
     sourceProps={sourceStories.jsx().props}
   />
 );

@@ -1,5 +1,5 @@
 export * from './DocsPage';
 export * from './Preview';
-export * from './Props';
+export * from './PropsTable/PropsTable';
 export * from './Source';
 export * from './IFrame';

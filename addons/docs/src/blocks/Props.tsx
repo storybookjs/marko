@@ -1,5 +1,5 @@
 import React from 'react';
-import { Props, PropsError, PropsProps as PurePropsProps } from '@storybook/components';
+import { PropsTable, PropsTableError, PropsTableProps } from '@storybook/components';
 import { DocsContext, DocsContextProps } from './DocsContext';
 
 interface PropsProps {
@@ -7,18 +7,18 @@ interface PropsProps {
   of?: any;
 }
 
-export const getPropsProps = (
+export const getPropsTableProps = (
   { exclude, of }: PropsProps,
   { parameters, getPropDefs }: DocsContextProps
-): PurePropsProps => {
+): PropsTableProps => {
   const { component } = parameters;
   try {
     const target = of || component;
     if (!target) {
-      throw new Error(PropsError.NO_COMPONENT);
+      throw new Error(PropsTableError.NO_COMPONENT);
     }
     if (!getPropDefs) {
-      throw new Error(PropsError.PROPS_UNSUPPORTED);
+      throw new Error(PropsTableError.PROPS_UNSUPPORTED);
     }
     const allRows = getPropDefs(target);
     const rows = !exclude ? allRows : allRows.filter(row => !exclude.includes(row.name));
@@ -31,8 +31,8 @@ export const getPropsProps = (
 const PropsContainer: React.FunctionComponent<PropsProps> = props => (
   <DocsContext.Consumer>
     {context => {
-      const propsProps = getPropsProps(props, context);
-      return <Props {...propsProps} />;
+      const propsTableProps = getPropsTableProps(props, context);
+      return <PropsTable {...propsTableProps} />;
     }}
   </DocsContext.Consumer>
 );

@@ -1,14 +1,14 @@
 import React from 'react';
 
 import { Preview, PreviewProps } from './Preview';
-import { Props, PropsProps } from './Props';
+import { PropsTable, PropsTableProps } from './PropsTable/PropsTable';
 import { Source, SourceProps } from './Source';
 
 export interface DocsPageProps {
   caption?: any;
   title: string;
   previewProps: PreviewProps;
-  propsProps: PropsProps;
+  propsTableProps: PropsTableProps;
   sourceProps: SourceProps;
 }
 
@@ -16,7 +16,7 @@ const DocsPage: React.FunctionComponent<DocsPageProps> = ({
   caption,
   title,
   previewProps,
-  propsProps,
+  propsTableProps,
   sourceProps,
 }) => (
   <div>
@@ -24,7 +24,7 @@ const DocsPage: React.FunctionComponent<DocsPageProps> = ({
     <Preview {...previewProps} />
     <Source {...sourceProps} />
     {caption}
-    <Props {...propsProps} />
+    <PropsTable {...propsTableProps} />
   </div>
 );
 

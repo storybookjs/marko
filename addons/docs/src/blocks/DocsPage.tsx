@@ -4,7 +4,7 @@ import { DocsPage } from '@storybook/components';
 import { DocsContext, DocsContextProps } from './DocsContext';
 import { DocsWrapper } from './DocsWrapper';
 import { getPreviewProps } from './Preview';
-import { getPropsProps } from './Props';
+import { getPropsTableProps } from './Props';
 import { getSourceProps } from './Source';
 
 interface DocsPageWrapperProps {
@@ -15,7 +15,7 @@ const getDocsPageProps = (context: DocsContextProps) => {
   return {
     title: context.selectedStory,
     previewProps: getPreviewProps({}, context),
-    propsProps: getPropsProps({}, context),
+    propsTableProps: getPropsTableProps({}, context),
     sourceProps: getSourceProps({}, context),
   };
 };
