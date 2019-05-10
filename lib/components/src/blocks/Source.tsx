@@ -1,5 +1,11 @@
 import React from 'react';
+import { styled } from '@storybook/theming';
+
 import { SyntaxHighlighter } from '../syntaxhighlighter/syntaxhighlighter';
+
+const StyledSyntaxHighlighter = styled(SyntaxHighlighter)(({ theme }) => ({
+  fontSize: theme.typography.size.s2 - 1,
+}));
 
 export enum SourceError {
   NO_STORY = 'no story',
@@ -17,9 +23,9 @@ const Source: React.FunctionComponent<SourceProps> = ({ language, code, error = 
     return <div>{error}</div>;
   }
   return (
-    <SyntaxHighlighter bordered copyable language={language}>
+    <StyledSyntaxHighlighter bordered copyable language={language}>
       {code}
-    </SyntaxHighlighter>
+    </StyledSyntaxHighlighter>
   );
 };
 
