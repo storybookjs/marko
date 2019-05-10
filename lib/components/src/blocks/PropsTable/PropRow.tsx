@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@storybook/theming';
+import { transparentize } from 'polished';
 import { PropDef } from './PropDef';
-import { Tr, Td } from './Table';
 
 enum PropType {
   Shape = 'shape',
@@ -29,7 +29,20 @@ interface PropRowProps {
 }
 
 const Name = styled.span({ fontWeight: 'bold' });
-const Required = styled.span({ color: 'red' });
+
+const Required = styled.span(({ theme }) => ({
+  color: theme.color.negative,
+  fontFamily: theme.typography.fonts.mono,
+}));
+
+const StyledPropDef = styled.div(({ theme }) => ({
+  color:
+    theme.base === 'light'
+      ? transparentize(0.4, theme.color.defaultText)
+      : transparentize(0.6, theme.color.defaultText),
+  fontFamily: theme.typography.fonts.mono,
+  fontSize: `${theme.typography.size.code}%`,
+}));
 
 export const PrettyPropType: React.FunctionComponent<PrettyPropTypeProps> = ({ type }) => (
   <span>{JSON.stringify(type)}</span>
@@ -42,18 +55,17 @@ export const PrettyPropVal: React.FunctionComponent<PrettyPropValProps> = ({ val
 export const PropRow: React.FunctionComponent<PropRowProps> = ({
   row: { name, type, required, description, defaultValue },
 }) => (
-  <Tr>
-    <Td>
+  <tr>
+    <td>
       <Name>{name}</Name>
-      {required ? <Required>*</Required> : null}
-    </Td>
-    <Td>
-      {description}
-      <br />
-      <div>
+      {required ? <Required title="Required">*</Required> : null}
+    </td>
+    <td>
+      <div>{description}</div>
+      <StyledPropDef>
         <PrettyPropType type={type} />
-      </div>
-    </Td>
-    <Td>{defaultValue === undefined ? '-' : <PrettyPropVal value={defaultValue} />}</Td>
-  </Tr>
+      </StyledPropDef>
+    </td>
+    <td>{defaultValue === undefined ? '-' : <PrettyPropVal value={defaultValue} />}</td>
+  </tr>
 );

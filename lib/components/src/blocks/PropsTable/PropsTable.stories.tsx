@@ -1,10 +1,12 @@
 import React from 'react';
 import { PropsTable, PropsTableError } from './PropsTable';
+import { Wrapper as DocsPageWrapper } from '../DocsPage';
 import * as rowStories from './PropRow.stories';
 
 export const componentMeta = {
   Component: PropsTable,
   title: 'Docs|PropTable',
+  decorators: [storyFn => <DocsPageWrapper>{storyFn()}</DocsPageWrapper>],
 };
 
 export const error = () => <PropsTable error={PropsTableError.NO_COMPONENT} />;

@@ -1,15 +1,19 @@
 import React from 'react';
 import { PropRow } from './PropRow';
-import { Table, Tbody } from './Table';
+
+import { Table } from './PropsTable';
+import { Wrapper as DocsPageWrapper } from '../DocsPage';
 
 export const componentMeta = {
   Component: PropRow,
   title: 'Docs|PropRow',
   decorators: [
     getStory => (
-      <Table>
-        <Tbody>{getStory()}</Tbody>
-      </Table>
+      <DocsPageWrapper>
+        <Table>
+          <tbody>{getStory()}</tbody>
+        </Table>
+      </DocsPageWrapper>
     ),
   ],
 };
@@ -22,6 +26,16 @@ const stringDef = {
   defaultValue: 'fixme',
 };
 
+const longNameDef = {
+  ...stringDef,
+  name: 'reallyLongStringThatTakesUpSpace',
+};
+
+const longDescDef = {
+  ...stringDef,
+  description: 'really long description that takes up a lot of space. sometimes this happens.',
+};
+
 const numberDef = {
   name: 'someNumber',
   type: { name: 'number' },
@@ -31,4 +45,6 @@ const numberDef = {
 };
 
 export const string = () => <PropRow row={stringDef} />;
+export const longName = () => <PropRow row={longNameDef} />;
+export const longDesc = () => <PropRow row={longDescDef} />;
 export const number = () => <PropRow row={numberDef} />;
