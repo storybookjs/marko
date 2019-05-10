@@ -1,5 +1,4 @@
 import React from 'react';
-import { DocumentFormatting } from '../typography/DocumentFormatting';
 import { DocsPage } from './DocsPage';
 import * as previewStories from './Preview.stories';
 import * as propsTableStories from './PropsTable/PropsTable.stories';
@@ -9,7 +8,6 @@ import MarkdownCaption from './DocsPageExampleCaption.mdx';
 export const componentMeta = {
   title: 'Docs|DocsPage',
   Component: DocsPage,
-  decorators: [storyFn => <DocumentFormatting>{storyFn()}</DocumentFormatting>],
 };
 
 export const empty = () => (

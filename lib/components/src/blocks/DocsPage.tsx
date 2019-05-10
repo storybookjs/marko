@@ -1,8 +1,20 @@
 import React from 'react';
+import { styled } from '@storybook/theming';
 
 import { Preview, PreviewProps } from './Preview';
 import { PropsTable, PropsTableProps } from './PropsTable/PropsTable';
 import { Source, SourceProps } from './Source';
+import { DocumentFormatting } from '../typography/DocumentFormatting';
+
+const Title = styled.h1(({ theme }) => ({
+  // fontSize: theme.typography.size.l1,
+  // fontWeight: theme.typography.weight.black,
+}));
+
+export const Wrapper = styled(DocumentFormatting)({
+  width: 700,
+  margin: '4rem auto',
+});
 
 export interface DocsPageProps {
   caption?: any;
@@ -19,13 +31,13 @@ const DocsPage: React.FunctionComponent<DocsPageProps> = ({
   propsTableProps,
   sourceProps,
 }) => (
-  <div>
-    <h1>{title}</h1>
+  <Wrapper>
+    <Title>{title}</Title>
     <Preview {...previewProps} />
     <Source {...sourceProps} />
     {caption}
     <PropsTable {...propsTableProps} />
-  </div>
+  </Wrapper>
 );
 
 export { DocsPage };
