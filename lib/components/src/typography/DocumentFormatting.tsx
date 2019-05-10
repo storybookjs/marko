@@ -6,6 +6,7 @@ const Wrapper = styled.div(
     /* Custom styles atop GitHub base theme (see below) */
     font-size: ${props.theme.typography.size.s2}px;
     line-height: 1.6;
+    color: ${props.theme.color.defaultText};
 
     h1 {
       font-size: ${props.theme.typography.size.l1}px;
