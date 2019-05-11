@@ -1,5 +1,6 @@
 import React from 'react';
 import { styled } from '@storybook/theming';
+import { EmptyBlock } from './EmptyBlock';
 
 import { SyntaxHighlighter } from '../syntaxhighlighter/syntaxhighlighter';
 
@@ -27,11 +28,7 @@ export interface SourceProps {
 
 const Source: React.FunctionComponent<SourceProps> = ({ language, code, error = null }) => {
   if (error) {
-    return (
-      <StyledSyntaxHighlighter bordered language="bash" className="docblock-source">
-        {error}
-      </StyledSyntaxHighlighter>
-    );
+    return <EmptyBlock>{error}</EmptyBlock>;
   }
   return (
     <StyledSyntaxHighlighter bordered copyable language={language} className="docblock-source">

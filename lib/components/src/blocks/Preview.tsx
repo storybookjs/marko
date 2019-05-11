@@ -2,6 +2,7 @@ import React from 'react';
 import { styled } from '@storybook/theming';
 
 import { IFrame } from './IFrame';
+import { EmptyBlock } from './EmptyBlock';
 
 const BASE_URL = 'iframe.html';
 
@@ -16,7 +17,7 @@ const StyledPreviewWrapper = styled.div(({ theme }) => ({
 }));
 
 export enum PreviewError {
-  NO_STORY = 'no story',
+  NO_STORY = 'No component or story to display',
 }
 
 interface InlinePreviewProps {
@@ -78,7 +79,7 @@ const Preview: React.FunctionComponent<PreviewProps> = ({
   title,
 }) => {
   if (error) {
-    return <div>{error}</div>;
+    return <EmptyBlock>{error}</EmptyBlock>;
   }
   return inline ? (
     <InlinePreview title={title} height={height} storyFn={storyFn} />

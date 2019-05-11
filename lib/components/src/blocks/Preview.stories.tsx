@@ -1,10 +1,13 @@
 import React from 'react';
 import { Preview, PreviewError } from './Preview';
+
+import { Wrapper as DocsPageWrapper } from './DocsPage';
 import { Button } from '../Button/Button';
 
 export const componentMeta = {
   title: 'Docs|Preview',
   Component: Preview,
+  decorators: [getStory => <DocsPageWrapper>{getStory()}</DocsPageWrapper>],
 };
 
 export const error = () => <Preview error={PreviewError.NO_STORY} />;
