@@ -9,6 +9,6 @@ export const componentMeta = {
 
 export const error = () => <Preview error={PreviewError.NO_STORY} />;
 
-const buttonFn = () => <Button>Hello Button</Button>;
+const buttonFn = () => <Button secondary>Hello Button</Button>;
 
 export const inline = () => <Preview inline storyFn={buttonFn} title="hello button" />;
