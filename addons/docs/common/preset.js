@@ -1,4 +1,4 @@
-const createCompiler = require('./mdx-compiler-plugin');
+const createCompiler = require('../mdx-compiler-plugin');
 
 function createBabelOptions({ babelOptions, configureJSX }) {
   if (!configureJSX) {
@@ -60,7 +60,7 @@ function webpack(webpackConfig = {}, options = {}) {
 }
 
 function addons(entry = []) {
-  return [...entry, require.resolve('./register')];
+  return [...entry, require.resolve('../register')];
 }
 
 module.exports = { webpack, addons };
