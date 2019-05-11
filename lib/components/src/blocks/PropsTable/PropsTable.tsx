@@ -25,8 +25,7 @@ export const Table = styled.table(({ theme }) => ({
     fontSize: theme.typography.size.s2,
     lineHeight: '20px',
 
-    float: 'left',
-    margin: '1.5em 0',
+    margin: '1.5rem 0 2.5rem',
     textAlign: 'left',
     width: '100%',
     // tableLayout: 'fixed',
@@ -59,7 +58,7 @@ export const Table = styled.table(({ theme }) => ({
     },
 
     tbody: {
-      boxShadow: `rgba(0, 0, 0, 0.10) 0 1px 3px 0, ${theme.color.border} 0 0 0 1px inset`,
+      boxShadow: `rgba(0, 0, 0, 0.10) 0 2px 5px 0`,
       borderRadius: theme.appBorderRadius,
 
       tr: {
