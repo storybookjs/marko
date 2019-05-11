@@ -1,3 +1,13 @@
+## 5.2.0-alpha.4 (May 1, 2019)
+
+- Addon-docs: Source, Props, DocsPage doc blocks
+
+#### Breaking changes:
+
+- Doc blocks & presets have moved. Update your MDX stories and `presets.js` file accordingly:
+  - `import { Preview, Story } from '@storybook/addon-docs/blocks';
+  - `module.exports = ['@storybook/addon-docs/common/preset'];`
+
 ## 5.2.0-alpha.3 (May 1, 2019)
 
 - Addon-docs: Add Story decorator and parameter support
