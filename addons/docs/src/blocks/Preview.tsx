@@ -14,7 +14,7 @@ export const getPreviewProps = (
 ): PurePreviewProps => {
   const previewId = id || toId(selectedKind, selectedStory);
   const data = storyStore.fromId(previewId);
-  const props = { height, title: data.name };
+  const props = { height, title: data && data.name };
   const { inlineStories } = (parameters && parameters.options && parameters.options.docs) || {
     inlineStories: false,
   };
