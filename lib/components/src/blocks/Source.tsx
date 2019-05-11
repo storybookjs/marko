@@ -1,5 +1,4 @@
 import React from 'react';
-import { styled } from '@storybook/theming';
 
 import { SyntaxHighlighter } from '../syntaxhighlighter/syntaxhighlighter';
 
