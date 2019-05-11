@@ -3,6 +3,7 @@ import { styled } from '@storybook/theming';
 import { transparentize } from 'polished';
 import { PropRow } from './PropRow';
 import { PropDef } from './PropDef';
+import { EmptyBlock } from '../EmptyBlock';
 
 export const Table = styled.table(({ theme }) => ({
   '&&': {
@@ -25,8 +26,7 @@ export const Table = styled.table(({ theme }) => ({
     fontSize: theme.typography.size.s2,
     lineHeight: '20px',
 
-    float: 'left',
-    margin: '1.5em 0',
+    margin: '1.5rem 0 2.5rem',
     textAlign: 'left',
     width: '100%',
     // tableLayout: 'fixed',
@@ -59,7 +59,7 @@ export const Table = styled.table(({ theme }) => ({
     },
 
     tbody: {
-      boxShadow: `rgba(0, 0, 0, 0.10) 0 1px 3px 0, ${theme.color.border} 0 0 0 1px inset`,
+      boxShadow: `rgba(0, 0, 0, 0.10) 0 2px 5px 0`,
       borderRadius: theme.appBorderRadius,
 
       tr: {
@@ -106,20 +106,6 @@ export const Table = styled.table(({ theme }) => ({
   },
 }));
 
-export const EmptyMessage = styled.div(({ theme }) => ({
-  background: theme.background.content,
-  borderRadius: theme.appBorderRadius,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: '10px',
-
-  color:
-    theme.base === 'light'
-      ? transparentize(0.4, theme.color.defaultText)
-      : transparentize(0.6, theme.color.defaultText),
-}));
-
 export enum PropsTableError {
   NO_COMPONENT = 'No component found',
   PROPS_UNSUPPORTED = 'The props unsupported. Check to see if your framework is supported.',
@@ -133,7 +119,10 @@ export interface PropsTableProps {
 
 const PropsTable: React.FunctionComponent<PropsTableProps> = ({ rows, error = null }) => {
   if (error) {
-    return <EmptyMessage>{error}</EmptyMessage>;
+    return <EmptyBlock>{error}</EmptyBlock>;
+  }
+  if (rows.length === 0) {
+    return <EmptyBlock>No props found for this component</EmptyBlock>;
   }
   return (
     <Table>
@@ -145,15 +134,9 @@ const PropsTable: React.FunctionComponent<PropsTableProps> = ({ rows, error = nu
         </tr>
       </thead>
       <tbody>
-        {rows.length > 0 ? (
-          rows.map(row => <PropRow key={row.name} row={row} />)
-        ) : (
-          <tr>
-            <td colSpan={3}>
-              <EmptyMessage>No props found for this component</EmptyMessage>
-            </td>
-          </tr>
-        )}
+        {rows.map(row => (
+          <PropRow key={row.name} row={row} />
+        ))}
       </tbody>
     </Table>
   );

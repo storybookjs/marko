@@ -1,10 +1,23 @@
 import React from 'react';
+import { styled } from '@storybook/theming';
+
 import { IFrame } from './IFrame';
+import { EmptyBlock } from './EmptyBlock';
 
 const BASE_URL = 'iframe.html';
 
+const StyledPreviewWrapper = styled.div(({ theme }) => ({
+  borderRadius: theme.appBorderRadius,
+  background: theme.background.content,
+  margin: '1.5rem 0 2.5rem',
+  boxShadow: 'rgba(0, 0, 0, 0.10) 0 2px 5px 0',
+  padding: 20,
+  display: 'flex',
+  alignItems: 'center',
+}));
+
 export enum PreviewError {
-  NO_STORY = 'no story',
+  NO_STORY = 'No component or story to display',
 }
 
 interface InlinePreviewProps {
@@ -30,9 +43,9 @@ export interface PreviewProps {
 }
 
 const InlinePreview: React.FunctionComponent<InlinePreviewProps> = ({ storyFn, title, height }) => (
-  <div aria-labelledby={title} style={{ height }}>
+  <StyledPreviewWrapper aria-labelledby={title} style={{ height }} className="docblock-preview">
     {storyFn()}
-  </div>
+  </StyledPreviewWrapper>
 );
 
 const IFramePreview: React.FunctionComponent<IFramePreviewProps> = ({
@@ -40,7 +53,7 @@ const IFramePreview: React.FunctionComponent<IFramePreviewProps> = ({
   title,
   height = '500px',
 }) => (
-  <div style={{ width: '100%', height }}>
+  <StyledPreviewWrapper style={{ width: '100%', height }} className="docblock-preview">
     <IFrame
       key="iframe"
       id={`storybook-preview-${id}`}
@@ -54,7 +67,7 @@ const IFramePreview: React.FunctionComponent<IFramePreviewProps> = ({
         border: '0 none',
       }}
     />
-  </div>
+  </StyledPreviewWrapper>
 );
 
 const Preview: React.FunctionComponent<PreviewProps> = ({
@@ -66,7 +79,7 @@ const Preview: React.FunctionComponent<PreviewProps> = ({
   title,
 }) => {
   if (error) {
-    return <div>{error}</div>;
+    return <EmptyBlock>{error}</EmptyBlock>;
   }
   return inline ? (
     <InlinePreview title={title} height={height} storyFn={storyFn} />
