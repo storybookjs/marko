@@ -11,6 +11,8 @@ const Title = styled.h1(({ theme }) => ({
   // fontWeight: theme.typography.weight.black,
 }));
 
+const Subtitle = styled.h2();
+
 export const Wrapper = styled(DocumentFormatting)({
   width: 700,
   margin: '4rem auto',
@@ -19,6 +21,7 @@ export const Wrapper = styled(DocumentFormatting)({
 export interface DocsPageProps {
   caption?: any;
   title: string;
+  subtitle?: string;
   previewProps: PreviewProps;
   propsTableProps: PropsTableProps;
   sourceProps: SourceProps;
@@ -27,15 +30,17 @@ export interface DocsPageProps {
 const DocsPage: React.FunctionComponent<DocsPageProps> = ({
   caption,
   title,
+  subtitle,
   previewProps,
   propsTableProps,
   sourceProps,
 }) => (
   <Wrapper>
     <Title>{title}</Title>
+    <Subtitle>{subtitle}</Subtitle>
+    {caption}
     <Preview {...previewProps} />
     <Source {...sourceProps} />
-    {caption}
     <PropsTable {...propsTableProps} />
   </Wrapper>
 );

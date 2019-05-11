@@ -2,6 +2,7 @@ import React from 'react';
 import { PropDef } from '@storybook/components';
 
 export interface DocsContextProps {
+  id?: string;
   selectedKind?: string;
   selectedStory?: string;
   mdxKind?: string;

@@ -19,7 +19,7 @@ addParameters({
   notes: 'global notes',
 });
 
-addDecorator(storyFn => <div style={{ border: '2px solid red' }}>{storyFn()}</div>);
+// addDecorator(storyFn => <div style={{ border: '2px solid red' }}>{storyFn()}</div>);
 
 load(require.context('../src', true, /\.stories\.js$/), module);
 load(require.context('../src', true, /\.stories\.mdx$/), module);
