@@ -1,6 +1,6 @@
 ---
-id: 'theming'
-title: 'Theming Storybook'
+id: "theming"
+title: "Theming Storybook"
 ---
 
 Storybook is theme-able! Just set a `theme` in the [options parameter](../options-parameter)!
@@ -14,14 +14,14 @@ We've created two basic themes that look good of the box: "normal" (a light them
 As the simplest example example, you can tell Storybook to use the "dark" theme by modifyig `.storybook/config.js`:
 
 ```js
-import { addParameters } from '@storybook/react';
-import { themes } from '@storybook/theming';
+import { addParameters } from "@storybook/react";
+import { themes } from "@storybook/theming/create";
 
 // Option defaults.
 addParameters({
   options: {
-    theme: themes.dark,
-  },
+    theme: themes.dark
+  }
 });
 ```
 
@@ -47,61 +47,61 @@ Read on for more on how to create your own theme.
 
 ## Create a theme quickstart
 
-The easiest way to customize Storybook is to generate a new theme using the `create()` function from `storybook/theming`. This function includes shorthands for the most common theme variables. Here's how to use it:
+The easiest way to customize Storybook is to generate a new theme using the `create()` function from `storybook/theming/create`. This function includes shorthands for the most common theme variables. Here's how to use it:
 
 First create a new file in `.storybook` called `yourTheme.js`.
 
 Next paste the code below and tweak the variables.
 
 ```ts
-import { create } from '@storybook/theming';
+import { create } from "@storybook/theming/create";
 
 export default create({
-  base: 'light',
+  base: "light",
 
-  colorPrimary: 'hotpink',
-  colorSecondary: 'deepskyblue',
+  colorPrimary: "hotpink",
+  colorSecondary: "deepskyblue",
 
   // UI
-  appBg: 'white',
-  appContentBg: 'silver',
-  appBorderColor: 'grey',
+  appBg: "white",
+  appContentBg: "silver",
+  appBorderColor: "grey",
   appBorderRadius: 4,
 
   // Typography
   fontBase: '"Open Sans", sans-serif',
-  fontCode: 'monospace',
+  fontCode: "monospace",
 
   // Text colors
-  textColor: 'black',
-  textInverseColor: 'rgba(255,255,255,0.9)',
+  textColor: "black",
+  textInverseColor: "rgba(255,255,255,0.9)",
 
   // Toolbar default and active colors
-  barTextColor: 'silver',
-  barSelectedColor: 'black',
-  barBg: 'hotpink',
+  barTextColor: "silver",
+  barSelectedColor: "black",
+  barBg: "hotpink",
 
   // Form colors
-  inputBg: 'white',
-  inputBorder: 'silver',
-  inputTextColor: 'black',
+  inputBg: "white",
+  inputBorder: "silver",
+  inputTextColor: "black",
   inputBorderRadius: 4,
 
-  brandTitle: 'My custom storybook',
-  brandUrl: 'https://example.com',
-  brandImage: 'https://placehold.it/350x150',
+  brandTitle: "My custom storybook",
+  brandUrl: "https://example.com",
+  brandImage: "https://placehold.it/350x150"
 });
 ```
 
 Finally, import your theme into `.storybook/config` and add it to your Storybook parameters.
 
 ```js
-import yourTheme from './yourTheme';
+import yourTheme from "./yourTheme";
 
 addParameters({
   options: {
-    theme: yourTheme,
-  },
+    theme: yourTheme
+  }
 });
 ```
 
@@ -110,14 +110,14 @@ The `storybook/theming` package is built using TypeScript, so this should help c
 Many theme variables are optional, the `base` property is NOT. This is a perfectly valid theme:
 
 ```ts
-import { create } from '@storybook/theming';
+import { create } from "@storybook/theming/create";
 
 export default create({
-  base: 'light',
+  base: "light",
 
-  brandTitle: 'My custom storybook',
-  brandUrl: 'https://example.com',
-  brandImage: 'https://placehold.it/350x150',
+  brandTitle: "My custom storybook",
+  brandUrl: "https://example.com",
+  brandImage: "https://placehold.it/350x150"
 });
 ```
 
@@ -140,7 +140,7 @@ addonActionsTheme: {
 For a native Storybook experience, we encourage addon authors to reuse the theme variables above. The theming engine relies on [emotion](https://emotion.sh/), a CSS-in-JS library.
 
 ```js
-import { styled } from '@storybook/theming';
+import { styled } from "@storybook/theming";
 ```
 
 Use the theme variables in object notation:
@@ -148,7 +148,7 @@ Use the theme variables in object notation:
 ```js
 const Component = styled.div(({ theme }) => ({
   background: theme.background.app,
-  width: 0,
+  width: 0
 }));
 ```
 

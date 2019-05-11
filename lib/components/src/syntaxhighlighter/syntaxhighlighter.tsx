@@ -37,8 +37,8 @@ const Wrapper = styled.div<WrapperProps>(
     bordered
       ? {
           border: `1px solid ${theme.appBorderColor}`,
-          borderRadius: theme.borderRadius,
-          background: theme.background.bar,
+          borderRadius: theme.appBorderRadius,
+          background: theme.background.content,
         }
       : {}
 );

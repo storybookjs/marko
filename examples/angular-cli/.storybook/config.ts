@@ -1,15 +1,13 @@
-import { load, addParameters } from '@storybook/angular';
-import { Wrapper } from '@storybook/components';
+import { load, addParameters, addDecorator } from '@storybook/angular';
+import { withA11y } from '@storybook/addon-a11y';
 import addCssWarning from '../src/cssWarning';
 
+addDecorator(withA11y);
 addCssWarning();
 
 addParameters({
   options: {
     hierarchyRootSeparator: /\|/,
-    docs: {
-      mdxComponents: { wrapper: Wrapper },
-    },
   },
 });
 

@@ -28,17 +28,17 @@
   "dependencies": {
     "@storybook/core": "5.2.0-alpha.3",
     "common-tags": "^1.8.0",
-    "core-js": "^2.6.5",
+    "core-js": "^3.0.1",
     "global": "^4.3.2",
     "regenerator-runtime": "^0.12.1"
   },
   "devDependencies": {
-    "svelte": "^2.16.1",
+    "svelte": "^3.1.0",
     "svelte-loader": "^2.13.3"
   },
   "peerDependencies": {
     "babel-loader": "^7.0.0 || ^8.0.0",
-    "svelte": "^2.7.2",
+    "svelte": "^3.1.0",
     "svelte-loader": "^2.9.1"
   },
   "publishConfig": {

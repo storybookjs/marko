@@ -16,7 +16,7 @@ yarn add -D @storybooks/addon-docs
 The add the following line to your `.storybook/presets.js` file:
 
 ```js
-module.exports = ['@storybook/addon-docs/presets/react'];
+module.exports = ['@storybook/addon-docs/react/preset'];
 ```
 
 Finally, import your stories and MDX files in `.storybook/config.js`:

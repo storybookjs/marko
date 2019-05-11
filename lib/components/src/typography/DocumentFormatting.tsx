@@ -1,11 +1,13 @@
 import React from 'react';
 import { styled, css } from '@storybook/theming';
+import { lighten, darken, transparentize } from 'polished';
 
 const Wrapper = styled.div(
   props => css`
     /* Custom styles atop GitHub base theme (see below) */
     font-size: ${props.theme.typography.size.s2}px;
     line-height: 1.6;
+    color: ${props.theme.color.defaultText};
 
     h1 {
       font-size: ${props.theme.typography.size.l1}px;
@@ -31,7 +33,9 @@ const Wrapper = styled.div(
 
     h6 {
       font-size: ${props.theme.typography.size.s2}px;
-      color: ${props.theme.color.dark};
+      color: ${props.theme.base === 'light'
+        ? transparentize(0.25, props.theme.color.defaultText)
+        : transparentize(0.3, props.theme.color.defaultText)};
     }
 
     /* Custom for SB SyntaxHighlighter */
@@ -50,7 +54,7 @@ const Wrapper = styled.div(
       margin: 0;
 
       white-space: pre-wrap;
-      color: ${props.theme.color.darkest};
+      color: ${props.theme.color.defaultText};
 
       font-size: 13px;
       line-height: 19px;
@@ -284,9 +288,11 @@ const Wrapper = styled.div(
     }
 
     blockquote {
-      border-left: 4px solid ${props.theme.color.medium};
+      border-left: 4px solid ${props.theme.appBorderColor};
       padding: 0 15px;
-      color: ${props.theme.color.dark};
+      color: ${props.theme.base === 'light'
+        ? transparentize(0.25, props.theme.color.defaultText)
+        : transparentize(0.2, props.theme.color.defaultText)};
     }
 
     blockquote > :first-of-type {
@@ -303,13 +309,15 @@ const Wrapper = styled.div(
     }
     table tr {
       border-top: 1px solid ${props.theme.appBorderColor};
-      background-color: white;
+      background-color: ${props.theme.background.content};
       margin: 0;
       padding: 0;
     }
 
     table tr:nth-of-type(2n) {
-      background-color: ${props.theme.color.lighter};
+      background-color: ${props.theme.base === 'light'
+        ? darken(0.03, props.theme.background.content)
+        : lighten(0.03, props.theme.background.content)};
     }
 
     table tr th {
@@ -434,8 +442,9 @@ const Wrapper = styled.div(
       margin: 0 2px;
       padding: 0 5px;
       white-space: nowrap;
-      border: 1px solid ${props.theme.color.mediumlight};
-      background-color: ${props.theme.color.lighter};
+      background-color: ${props.theme.base === 'light'
+        ? darken(0.03, props.theme.background.content)
+        : lighten(0.02, props.theme.background.content)};
       border-radius: 3px;
     }
   `

@@ -59,7 +59,10 @@ function getStory(node, counter) {
   parameters = parameters && parameters.expression;
   if (parameters) {
     const { code: params } = generate(parameters, {});
-    statements.push(`${storyFn}.parameters = ${params};`);
+    // FIXME: hack in the story's source as a parameter
+    statements.push(`${storyFn}.parameters = { source: \`${code}\`, ...${params} };`);
+  } else {
+    statements.push(`${storyFn}.parameters = { source: \`${code}\` };`);
   }
 
   // console.log(statements);
@@ -98,7 +101,7 @@ function extractStories(node, options) {
   });
 
   const fullJsx = [
-    'import { DocsWrapper } from "@storybook/components"',
+    'import { DocsWrapper } from "@storybook/addon-docs/blocks"',
     defaultJsx,
     wrapperJs,
     ...stories,

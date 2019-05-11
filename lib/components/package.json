@@ -24,7 +24,7 @@
     "@storybook/client-logger": "5.2.0-alpha.3",
     "@storybook/router": "5.2.0-alpha.3",
     "@storybook/theming": "5.2.0-alpha.3",
-    "core-js": "^2.6.5",
+    "core-js": "^3.0.1",
     "global": "^4.3.2",
     "js-beautify": "^1.8.9",
     "markdown-to-jsx": "^6.9.1",
@@ -36,12 +36,21 @@
     "react-addons-create-fragment": "^15.6.2",
     "react-dom": "^16.8.4",
     "react-focus-lock": "^1.18.3",
-    "react-helmet-async": "^0.2.0",
+    "react-helmet-async": "^1.0.2",
     "react-popper-tooltip": "^2.8.0",
     "react-syntax-highlighter": "^8.0.1",
     "react-textarea-autosize": "^7.1.0",
     "recompose": "^0.30.0",
-    "simplebar-react": "^0.1.5"
+    "simplebar-react": "^1.0.0-alpha.6"
+  },
+  "devDependencies": {
+    "@types/js-beautify": "^1.8.0",
+    "@types/react-syntax-highlighter": "^10.1.0",
+    "@types/react-textarea-autosize": "^4.3.3",
+    "@types/recompose": "^0.30.5",
+    "enzyme": "^3.9.0",
+    "jest": "^24.7.1",
+    "jest-enzyme": "^7.0.2"
   },
   "devDependencies": {
     "@types/js-beautify": "^1.8.0",
