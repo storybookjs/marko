@@ -1,9 +1,11 @@
 import React from 'react';
 import { Source, SourceError } from './Source';
+import { Wrapper as DocsPageWrapper } from './DocsPage';
 
 export const componentMeta = {
   title: 'Docs|Source',
   Component: Source,
+  decorators: [getStory => <DocsPageWrapper>{getStory()}</DocsPageWrapper>],
 };
 
 export const noStory = () => <Source error={SourceError.NO_STORY} />;

@@ -3,13 +3,9 @@ import { styled } from '@storybook/theming';
 
 import { SyntaxHighlighter } from '../syntaxhighlighter/syntaxhighlighter';
 
-const StyledSyntaxHighlighter = styled(SyntaxHighlighter)(({ theme }) => ({
-  fontSize: theme.typography.size.s2 - 1,
-}));
-
 export enum SourceError {
-  NO_STORY = 'no story',
-  SOURCE_UNAVAILABLE = 'source unavailable',
+  NO_STORY = 'There\u2019s no story here.',
+  SOURCE_UNAVAILABLE = 'Oh no! The source is not available.',
 }
 
 export interface SourceProps {
@@ -20,12 +16,16 @@ export interface SourceProps {
 
 const Source: React.FunctionComponent<SourceProps> = ({ language, code, error = null }) => {
   if (error) {
-    return <div>{error}</div>;
+    return (
+      <SyntaxHighlighter bordered language="bash">
+        {error}
+      </SyntaxHighlighter>
+    );
   }
   return (
-    <StyledSyntaxHighlighter bordered copyable language={language}>
+    <SyntaxHighlighter bordered copyable language={language}>
       {code}
-    </StyledSyntaxHighlighter>
+    </SyntaxHighlighter>
   );
 };
 
