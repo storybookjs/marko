@@ -1,5 +1,5 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
-import global from 'global';
 
 import { parseKind } from '@storybook/router';
 import { DocsPage } from '@storybook/components';
@@ -15,12 +15,12 @@ interface DocsPageWrapperProps {
 
 type Notes = string | any;
 type Info = string | any;
-type DocgenInfo = any;
+type Component = any;
 
 interface CaptionParams {
   notes?: Notes;
   info?: Info;
-  docgenInfo?: DocgenInfo;
+  component?: Component;
 }
 
 const getNotes = (notes?: Notes) =>
@@ -28,12 +28,13 @@ const getNotes = (notes?: Notes) =>
 
 const getInfo = (info?: Info) => info && (typeof info === 'string' ? info : info.text);
 
-const getDescription = (docgenInfo?: DocgenInfo) => (docgenInfo && docgenInfo.description) || '';
+const getDescription = (component?: Component) =>
+  (component && component.__docgenInfo && component.__docgenInfo.description) || '';
 
-const getCaption = ({ notes = null, info = null, docgenInfo = null }: CaptionParams) => (
+const getCaption = ({ notes = null, info = null, component = null }: CaptionParams) => (
   <>
     <p>{getNotes(notes) || getInfo(info)}</p>
-    <p>{getDescription(docgenInfo)}</p>
+    <p>{getDescription(component)}</p>
   </>
 );
 
@@ -49,17 +50,12 @@ const getDocsPageProps = (context: DocsContextProps) => {
 
   const { groups } = parseKind(selectedKind, { rootSeparator, groupSeparator });
   const title = (groups && groups[groups.length - 1]) || selectedKind;
-  const { notes, info } = parameters;
+  const { notes, info, component } = parameters;
 
-  const validMatches = [title, selectedStory];
-  const fileInfo = Object.values(global.STORYBOOK_REACT_CLASSES || {}).find(f =>
-    validMatches.includes(f.name)
-  );
-  const { docgenInfo } = fileInfo || {};
   return {
     title,
     subtitle: selectedStory,
-    caption: getCaption({ notes, info, docgenInfo }),
+    caption: getCaption({ notes, info, component }),
     previewProps: getPreviewProps({}, context),
     propsTableProps: getPropsTableProps({}, context),
     sourceProps: getSourceProps({}, context),
