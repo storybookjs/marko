@@ -57,12 +57,13 @@ function getStory(node, counter) {
 
   let parameters = getAttr(ast.openingElement, 'parameters');
   parameters = parameters && parameters.expression;
+  const source = `\`${code.replace('`', '\\`')}\``;
   if (parameters) {
     const { code: params } = generate(parameters, {});
     // FIXME: hack in the story's source as a parameter
-    statements.push(`${storyFn}.parameters = { source: \`${code}\`, ...${params} };`);
+    statements.push(`${storyFn}.parameters = { source: ${source}, ...${params} };`);
   } else {
-    statements.push(`${storyFn}.parameters = { source: \`${code}\` };`);
+    statements.push(`${storyFn}.parameters = { source: ${source} };`);
   }
 
   // console.log(statements);
