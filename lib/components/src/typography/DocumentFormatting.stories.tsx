@@ -10,7 +10,12 @@ export const componentMeta = {
   decorators: [
     (storyFn: any) => (
       <div
-        style={{ width: '600px', margin: '3rem auto', padding: '40px 20px', background: 'white' }}
+        style={{
+          width: '600px',
+          margin: '3rem auto',
+          padding: '40px 20px',
+          border: '1px dotted #999',
+        }}
       >
         {storyFn()}
       </div>
