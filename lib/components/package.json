@@ -1,6 +1,6 @@
 {
   "name": "@storybook/components",
-  "version": "5.2.0-alpha.4",
+  "version": "5.2.0-alpha.5",
   "description": "Core Storybook Components",
   "keywords": [
     "storybook"
@@ -21,9 +21,9 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/client-logger": "5.2.0-alpha.4",
-    "@storybook/router": "5.2.0-alpha.4",
-    "@storybook/theming": "5.2.0-alpha.4",
+    "@storybook/client-logger": "5.2.0-alpha.5",
+    "@storybook/router": "5.2.0-alpha.5",
+    "@storybook/theming": "5.2.0-alpha.5",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "js-beautify": "^1.8.9",
