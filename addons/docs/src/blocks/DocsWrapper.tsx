@@ -17,6 +17,16 @@ const defaultComponents = {
   wrapper: DocumentFormatting,
 };
 
+const globalWithOverflow = (args: any) => {
+  const global = createGlobal(args);
+  const { body, ...rest } = global;
+  const { overflow, ...bodyRest } = body;
+  return {
+    body: bodyRest,
+    ...rest,
+  };
+};
+
 export const DocsWrapper: React.FunctionComponent<DocsWrapperProps> = ({
   context,
   content: MDXContent,
@@ -29,7 +39,7 @@ export const DocsWrapper: React.FunctionComponent<DocsWrapperProps> = ({
   return (
     <DocsContext.Provider value={{ ...context, getPropDefs }}>
       <ThemeProvider theme={theme}>
-        <Global styles={createGlobal} />
+        <Global styles={globalWithOverflow} />
         <MDXProvider components={components}>
           <DocumentFormatting>
             <MDXContent components={components} />
