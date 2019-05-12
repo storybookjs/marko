@@ -53,20 +53,22 @@ const IFramePreview: React.FunctionComponent<IFramePreviewProps> = ({
   title,
   height = '500px',
 }) => (
-  <StyledPreviewWrapper style={{ width: '100%', height }} className="docblock-preview">
-    <IFrame
-      key="iframe"
-      id={`storybook-preview-${id}`}
-      title={title}
-      src={`${BASE_URL}?id=${id}`}
-      allowFullScreen
-      scale={1}
-      style={{
-        width: '100%',
-        height: '100%',
-        border: '0 none',
-      }}
-    />
+  <StyledPreviewWrapper className="docblock-preview">
+    <div style={{ width: '100%', height }}>
+      <IFrame
+        key="iframe"
+        id={`storybook-preview-${id}`}
+        title={title}
+        src={`${BASE_URL}?id=${id}`}
+        allowFullScreen
+        scale={1}
+        style={{
+          width: '100%',
+          height: '100%',
+          border: '0 none',
+        }}
+      />
+    </div>
   </StyledPreviewWrapper>
 );
 
