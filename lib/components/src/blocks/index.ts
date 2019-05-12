@@ -1,3 +1,4 @@
+export * from './Description';
 export * from './DocsPage';
 export * from './Preview';
 export * from './PropsTable/PropsTable';

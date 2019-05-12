@@ -4,6 +4,7 @@ import { styled } from '@storybook/theming';
 import { Preview, PreviewProps } from './Preview';
 import { PropsTable, PropsTableProps } from './PropsTable/PropsTable';
 import { Source, SourceProps } from './Source';
+import { Description, DescriptionProps } from './Description';
 import { DocumentFormatting } from '../typography/DocumentFormatting';
 
 const Title = styled.h1(({ theme }) => ({
@@ -19,18 +20,18 @@ export const Wrapper = styled(DocumentFormatting)({
 });
 
 export interface DocsPageProps {
-  caption?: any;
   title: string;
   subtitle?: string;
+  descriptionProps: DescriptionProps;
   previewProps: PreviewProps;
   propsTableProps: PropsTableProps;
   sourceProps: SourceProps;
 }
 
 const DocsPage: React.FunctionComponent<DocsPageProps> = ({
-  caption,
   title,
   subtitle,
+  descriptionProps,
   previewProps,
   propsTableProps,
   sourceProps,
@@ -38,7 +39,7 @@ const DocsPage: React.FunctionComponent<DocsPageProps> = ({
   <Wrapper>
     <Title>{title}</Title>
     <Subtitle>{subtitle}</Subtitle>
-    {caption}
+    <Description {...descriptionProps} />
     <Preview {...previewProps} />
     <Source {...sourceProps} />
     <PropsTable {...propsTableProps} />
