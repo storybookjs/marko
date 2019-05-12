@@ -1,3 +1,7 @@
+## 5.2.0-alpha.5 (May 1, 2019)
+
+- Addon-docs: Description block refactor and bugfixes
+
 ## 5.2.0-alpha.4 (May 1, 2019)
 
 - Addon-docs: Source, Props, DocsPage doc blocks
