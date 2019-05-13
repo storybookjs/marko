@@ -10,7 +10,7 @@ const Wrapper = styled.div(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'center',
   padding: '20px',
-  margin: '1.5rem 0 2.5rem',
+  margin: '25px 0 40px',
 
   color:
     theme.base === 'light'

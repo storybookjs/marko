@@ -6,4 +6,4 @@ export interface DescriptionProps {
 }
 
 export const Description: React.FunctionComponent<DescriptionProps> = ({ markdown }) =>
-  markdown ? <Markdown>{markdown}</Markdown> : null;
+  markdown ? <Markdown options={{ forceBlock: true }}>{markdown}</Markdown> : null;

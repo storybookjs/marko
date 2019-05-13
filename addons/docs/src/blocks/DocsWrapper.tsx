@@ -5,7 +5,6 @@ import { MDXProvider } from '@mdx-js/react';
 import { Global, createGlobal, ThemeProvider, ensure as ensureTheme } from '@storybook/theming';
 import { DocumentFormatting } from '@storybook/components';
 import { DocsContextProps, DocsContext } from './DocsContext';
-import { Wrapper } from './Wrapper';
 
 interface DocsWrapperProps {
   context: DocsContextProps;

@@ -7,8 +7,7 @@ import { EmptyBlock } from '../EmptyBlock';
 
 export const Table = styled.table(({ theme }) => ({
   '&&': {
-    // To prevent cascading styles from wrapper
-    // Resets
+    // Resets for cascading/system styles
     borderCollapse: 'collapse',
     borderSpacing: 0,
 
@@ -25,11 +24,12 @@ export const Table = styled.table(({ theme }) => ({
 
     fontSize: theme.typography.size.s2,
     lineHeight: '20px',
-
-    margin: '1.5rem 0 2.5rem',
     textAlign: 'left',
     width: '100%',
-    // tableLayout: 'fixed',
+
+    // Margin collapse
+    marginTop: '1.5rem',
+    marginBottom: '2.5rem',
 
     'th:first-of-type, td:first-of-type': {
       paddingLeft: 20,
@@ -39,42 +39,6 @@ export const Table = styled.table(({ theme }) => ({
       paddingRight: '20px',
       width: '20%',
     },
-
-    // Table "block" styling
-    // Emphasize tbody's background and set borderRadius
-    // Calling out because styling tables is finicky
-    'tr:first-child td:first-child': {
-      borderTopLeftRadius: theme.appBorderRadius,
-    },
-
-    'tr:first-child td:last-child': {
-      borderTopRightRadius: theme.appBorderRadius,
-    },
-    'tr:last-child td:first-child': {
-      borderBottomLeftRadius: theme.appBorderRadius,
-    },
-
-    'tr:last-child td:last-child': {
-      borderBottomRightRadius: theme.appBorderRadius,
-    },
-
-    tbody: {
-      boxShadow: `rgba(0, 0, 0, 0.10) 0 2px 5px 0`,
-      borderRadius: theme.appBorderRadius,
-
-      tr: {
-        background: 'transparent',
-        '&:not(:first-child)': {
-          borderTop: `1px solid ${theme.appBorderColor}`,
-        },
-      },
-
-      td: {
-        background: theme.background.content,
-      },
-    },
-
-    // End table block styling
 
     th: {
       color:
@@ -103,6 +67,52 @@ export const Table = styled.table(({ theme }) => ({
         paddingRight: '20px',
       },
     },
+
+    // Table "block" styling
+    // Emphasize tbody's background and set borderRadius
+    // Calling out because styling tables is finicky
+
+    // Makes border alignment consistent w/other DocBlocks
+    marginLeft: 1,
+    marginRight: 1,
+
+    'tr:first-child td:first-child': {
+      borderTopLeftRadius: theme.appBorderRadius,
+    },
+
+    'tr:first-child td:last-child': {
+      borderTopRightRadius: theme.appBorderRadius,
+    },
+    'tr:last-child td:first-child': {
+      borderBottomLeftRadius: theme.appBorderRadius,
+    },
+
+    'tr:last-child td:last-child': {
+      borderBottomRightRadius: theme.appBorderRadius,
+    },
+
+    tbody: {
+      // slightly different than the other DocBlock shadows to account for table styling gymnastics
+      boxShadow:
+        theme.base === 'light'
+          ? `rgba(0, 0, 0, 0.10) 0 1px 3px 1px,
+          ${transparentize(0.035, theme.appBorderColor)} 0 0 0 1px`
+          : `rgba(0, 0, 0, 0.20) 0 2px 5px 1px,
+          ${transparentize(0.035, theme.appBorderColor)} 0 0 0 1px`,
+      borderRadius: theme.appBorderRadius,
+
+      tr: {
+        background: 'transparent',
+        '&:not(:first-child)': {
+          borderTop: `1px solid ${theme.appBorderColor}`,
+        },
+      },
+
+      td: {
+        background: theme.background.content,
+      },
+    },
+    // End finicky table styling
   },
 }));
 

@@ -10,14 +10,14 @@ import lightThemeVars from './themes/light';
 
 const lightSyntaxColors = {
   green1: '#008000',
-  red1: '#A31515',
+  red1: '#FF4400',
   red2: '#9a050f',
-  red3: '#800000',
-  red4: '#ff0000',
-  gray1: '#393A34',
+  red3: '#694800',
+  red4: '#FC521F',
+  gray1: '#333333',
   cyan1: '#36acaa',
   cyan2: '#2B91AF',
-  blue1: '#0000ff',
+  blue1: '#1EA7FD',
   blue2: '#00009f',
 };
 
