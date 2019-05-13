@@ -1,7 +1,7 @@
 import React from 'react';
 import { EmptyBlock } from './EmptyBlock';
 
-import { Wrapper as DocsPageWrapper } from './DocsPage';
+import { Content as DocsPageWrapper } from './DocsPage';
 
 export const componentMeta = {
   title: 'Docs|EmptyBlock',

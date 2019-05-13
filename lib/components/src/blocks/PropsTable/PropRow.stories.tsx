@@ -2,7 +2,7 @@ import React from 'react';
 import { PropRow } from './PropRow';
 
 import { Table } from './PropsTable';
-import { Wrapper as DocsPageWrapper } from '../DocsPage';
+import { Content as DocsPageWrapper } from '../DocsPage';
 
 export const componentMeta = {
   Component: PropRow,

@@ -32,7 +32,7 @@ addDecorator(withA11y);
 addDecorator(withNotes);
 
 addDecorator(storyFn => (
-  <ThemeProvider theme={convert(themes.dark)}>
+  <ThemeProvider theme={convert(themes.light)}>
     <Global styles={createReset} />
     {storyFn()}
   </ThemeProvider>

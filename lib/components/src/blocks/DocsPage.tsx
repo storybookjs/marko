@@ -1,5 +1,6 @@
 import React from 'react';
 import { styled } from '@storybook/theming';
+import { transparentize } from 'polished';
 
 import { Story, StoryProps } from './Story';
 import { PropsTable, PropsTableProps } from './PropsTable/PropsTable';
@@ -7,17 +8,58 @@ import { Source, SourceProps } from './Source';
 import { Description, DescriptionProps } from './Description';
 import { DocumentFormatting } from '../typography/DocumentFormatting';
 
+export const breakpoint = 600;
+export const pageMargin = '5.55555';
+
 const Title = styled.h1(({ theme }) => ({
-  // fontSize: theme.typography.size.l1,
-  // fontWeight: theme.typography.weight.black,
+  // overrides h1 in DocumentFormatting
+  '&&': {
+    fontSize: theme.typography.size.m3,
+    lineHeight: '32px',
+
+    [`@media (min-width: ${breakpoint * 1}px)`]: {
+      fontSize: theme.typography.size.l1,
+      lineHeight: '36px',
+    },
+  },
 }));
 
-const Subtitle = styled.h2();
+const Subtitle = styled.h2(({ theme }) => ({
+  // overrides h2 in DocumentFormatting
+  '&&': {
+    fontWeight: theme.typography.weight.regular,
+    fontSize: theme.typography.size.s3,
+    lineHeight: '20px',
+    borderBottom: 'none',
+    marginBottom: '15px',
 
-export const Wrapper = styled(DocumentFormatting)({
-  width: 700,
-  margin: '4rem auto',
+    [`@media (min-width: ${breakpoint * 1}px)`]: {
+      fontSize: theme.typography.size.m1,
+      lineHeight: '28px',
+      marginBottom: '25px',
+    },
+  },
+
+  color:
+    theme.base === 'light'
+      ? transparentize(0.25, theme.color.defaultText)
+      : transparentize(0.25, theme.color.defaultText),
+}));
+
+export const Content = styled(DocumentFormatting)({
+  maxWidth: 800,
+  width: '100%',
 });
+
+const Wrapper = styled.div(({ theme }) => ({
+  background: theme.background.content,
+  display: 'flex',
+  justifyContent: 'center',
+  minHeight: '100vh',
+  padding: '4rem 20px',
+
+  [`@media (min-width: ${breakpoint * 1}px)`]: {},
+}));
 
 export interface DocsPageProps {
   title: string;
@@ -37,12 +79,14 @@ const DocsPage: React.FunctionComponent<DocsPageProps> = ({
   sourceProps,
 }) => (
   <Wrapper>
-    <Title>{title}</Title>
-    <Subtitle>{subtitle}</Subtitle>
-    <Description {...descriptionProps} />
-    <Story {...storyProps} />
-    <Source {...sourceProps} />
-    <PropsTable {...propsTableProps} />
+    <Content>
+      {title && <Title>{title}</Title>}
+      {subtitle && <Subtitle>{subtitle}</Subtitle>}
+      {descriptionProps && <Description {...descriptionProps} />}
+      {storyProps && <Story {...storyProps} />}
+      {sourceProps && <Source {...sourceProps} />}
+      {propsTableProps && <PropsTable {...propsTableProps} />}
+    </Content>
   </Wrapper>
 );
 

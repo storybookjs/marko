@@ -31,7 +31,18 @@ noText.title = 'no text';
 
 export const text = () => (
   <DocsPage
-    title="text"
+    title="Sensorium"
+    descriptionProps={descriptionStories.text().props}
+    previewProps={storyStories.inline().props}
+    propsTableProps={propsTableStories.normal().props}
+    sourceProps={sourceStories.jsx().props}
+  />
+);
+
+export const withSubtitle = () => (
+  <DocsPage
+    title="SimStim"
+    subtitle="A digital representation of the thoughts and feelings of another person."
     descriptionProps={descriptionStories.text().props}
     storyProps={storyStories.inline().props}
     propsTableProps={propsTableStories.normal().props}
