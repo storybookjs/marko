@@ -1,6 +1,6 @@
 import React from 'react';
 import { DocsPage } from './DocsPage';
-import * as previewStories from './Preview.stories';
+import * as storyStories from './Story.stories';
 import * as propsTableStories from './PropsTable/PropsTable.stories';
 import * as sourceStories from './Source.stories';
 import * as descriptionStories from './Description.stories';
@@ -13,7 +13,7 @@ export const componentMeta = {
 export const empty = () => (
   <DocsPage
     title={null}
-    previewProps={previewStories.error().props}
+    storyProps={storyStories.error().props}
     propsTableProps={propsTableStories.error().props}
     sourceProps={sourceStories.sourceUnavailable().props}
   />
@@ -22,7 +22,7 @@ export const empty = () => (
 export const noText = () => (
   <DocsPage
     title="no text"
-    previewProps={previewStories.inline().props}
+    storyProps={storyStories.inline().props}
     propsTableProps={propsTableStories.normal().props}
     sourceProps={sourceStories.jsx().props}
   />
@@ -33,7 +33,7 @@ export const text = () => (
   <DocsPage
     title="text"
     descriptionProps={descriptionStories.text().props}
-    previewProps={previewStories.inline().props}
+    storyProps={storyStories.inline().props}
     propsTableProps={propsTableStories.normal().props}
     sourceProps={sourceStories.jsx().props}
   />
@@ -43,7 +43,7 @@ export const markdown = () => (
   <DocsPage
     title="markdown"
     descriptionProps={descriptionStories.markdown().props}
-    previewProps={previewStories.inline().props}
+    storyProps={storyStories.inline().props}
     propsTableProps={propsTableStories.normal().props}
     sourceProps={sourceStories.jsx().props}
   />

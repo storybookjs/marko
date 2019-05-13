@@ -10,26 +10,27 @@ export const componentMeta = {
 
 # Selected
 
-<Preview />
+<Story />
+
 <Source />
+
 <Props />
 
 ## Getting into details
 
 <Button>just a button, not a story</Button>
 
-<Story name="hello story">
-  <Button onClick={action('clicked')}>hello world</Button>
-</Story>
-
-<Story name="goodbye">
-  <Button onClick={action('clicked')}>goodbye world</Button>
-</Story>
-
-<Story name="with icons">
-  <Button onClick={action('clicked')}>🤘🚀💯</Button>
-</Story>
-
-<Story name="notes" parameters={{ notes: 'story notes' }}>
-  <Button onClick={action('clicked')}>goodbye world</Button>
-</Story>
+<Preview>
+  <Story name="hello story">
+    <Button onClick={action('clicked')}>hello world</Button>
+  </Story>
+  <Story name="goodbye">
+    <Button onClick={action('clicked')}>goodbye world</Button>
+  </Story>
+  <Story name="with icons">
+    <Button onClick={action('clicked')}>🤘🚀💯</Button>
+  </Story>
+  <Story name="notes" parameters={{ notes: 'story notes' }}>
+    <Button onClick={action('clicked')}>goodbye world</Button>
+  </Story>
+</Preview>

@@ -9,9 +9,6 @@ addParameters({
     docs: {
       inlineStories: true,
       getPropDefs,
-      components: {
-        // p: ({ children }) => <b>{children}</b>,
-      },
     },
     theme: themes.dark,
   },

@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@storybook/theming';
 
-import { Preview, PreviewProps } from './Preview';
+import { Story, StoryProps } from './Story';
 import { PropsTable, PropsTableProps } from './PropsTable/PropsTable';
 import { Source, SourceProps } from './Source';
 import { Description, DescriptionProps } from './Description';
@@ -23,7 +23,7 @@ export interface DocsPageProps {
   title: string;
   subtitle?: string;
   descriptionProps: DescriptionProps;
-  previewProps: PreviewProps;
+  storyProps: StoryProps;
   propsTableProps: PropsTableProps;
   sourceProps: SourceProps;
 }
@@ -32,7 +32,7 @@ const DocsPage: React.FunctionComponent<DocsPageProps> = ({
   title,
   subtitle,
   descriptionProps,
-  previewProps,
+  storyProps,
   propsTableProps,
   sourceProps,
 }) => (
@@ -40,7 +40,7 @@ const DocsPage: React.FunctionComponent<DocsPageProps> = ({
     <Title>{title}</Title>
     <Subtitle>{subtitle}</Subtitle>
     <Description {...descriptionProps} />
-    <Preview {...previewProps} />
+    <Story {...storyProps} />
     <Source {...sourceProps} />
     <PropsTable {...propsTableProps} />
   </Wrapper>

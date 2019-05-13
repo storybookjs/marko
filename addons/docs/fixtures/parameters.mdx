@@ -1,0 +1,15 @@
+import { Button } from '@storybook/react/demo';
+import { Story } from '@storybook/addon-docs/blocks';
+
+export const componentMeta = {
+  title: 'Button',
+  parameters: { component: Button, notes: 'component notes' },
+};
+
+<Story name="component notes">
+  <Button>Component notes</Button>
+</Story>
+
+<Story name="story notes" parameters={{ notes: 'story notes' }}>
+  <Button>Story notes</Button>
+</Story>

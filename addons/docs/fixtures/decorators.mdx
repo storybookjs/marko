@@ -1,0 +1,13 @@
+import { Button } from '@storybook/react/demo';
+import { Story } from '@storybook/addon-docs/blocks';
+
+export const componentMeta = {
+  title: 'Button',
+  decorators: [storyFn => <div style={{ backgroundColor: 'yellow' }}>{storyFn()}</div>],
+};
+
+# Decorated story
+
+<Story name="one">
+  <Button>One</Button>
+</Story>
