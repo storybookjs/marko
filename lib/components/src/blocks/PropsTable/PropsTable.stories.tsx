@@ -1,6 +1,6 @@
 import React from 'react';
 import { PropsTable, PropsTableError } from './PropsTable';
-import { Wrapper as DocsPageWrapper } from '../DocsPage';
+import { Content as DocsPageWrapper } from '../DocsPage';
 import * as rowStories from './PropRow.stories';
 
 export const componentMeta = {

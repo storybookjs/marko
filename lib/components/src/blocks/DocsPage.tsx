@@ -12,12 +12,25 @@ const Title = styled.h1(({ theme }) => ({
   // fontWeight: theme.typography.weight.black,
 }));
 
-const Subtitle = styled.h2();
+const Subtitle = styled.h2(({ theme }) => ({
+  // overrides h2 in DocumentFormatting
+  fontSize: theme.typography.size.m3,
+  fontWeight: theme.typography.weight.black,
+}));
 
-export const Wrapper = styled(DocumentFormatting)({
-  width: 700,
-  margin: '4rem auto',
+export const Content = styled(DocumentFormatting)({
+  maxWidth: 700,
+  width: '100%',
 });
+
+const Wrapper = styled.div(({ theme }) => ({
+  background: theme.background.content,
+  display: 'flex',
+  justifyContent: 'center',
+  minHeight: '100vh',
+  paddingTop: '4rem',
+  paddingBottom: '4rem',
+}));
 
 export interface DocsPageProps {
   title: string;
@@ -37,12 +50,14 @@ const DocsPage: React.FunctionComponent<DocsPageProps> = ({
   sourceProps,
 }) => (
   <Wrapper>
-    <Title>{title}</Title>
-    <Subtitle>{subtitle}</Subtitle>
-    <Description {...descriptionProps} />
-    <Preview {...previewProps} />
-    <Source {...sourceProps} />
-    <PropsTable {...propsTableProps} />
+    <Content>
+      {title && <Title>{title}</Title>}
+      {subtitle && <Subtitle>{subtitle}</Subtitle>}
+      {descriptionProps && <Description {...descriptionProps} />}
+      {previewProps && <Preview {...previewProps} />}
+      {sourceProps && <Source {...sourceProps} />}
+      {propsTableProps && <PropsTable {...propsTableProps} />}
+    </Content>
   </Wrapper>
 );
 
