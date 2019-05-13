@@ -6,8 +6,9 @@ import { SyntaxHighlighter } from '../syntaxhighlighter/syntaxhighlighter';
 
 const StyledSyntaxHighlighter = styled(SyntaxHighlighter)(({ theme }) => ({
   // DocBlocks-specific styling and overrides
-  boxShadow: 'rgba(0, 0, 0, 0.10) 0 2px 5px 0',
   margin: '25px 0 40px',
+  boxShadow:
+    theme.base === 'light' ? 'rgba(0, 0, 0, 0.10) 0 1px 3px 0' : 'rgba(0, 0, 0, 0.20) 0 2px 5px 0',
 
   'pre.hljs': {
     padding: 20,

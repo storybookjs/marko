@@ -92,7 +92,13 @@ export const Table = styled.table(({ theme }) => ({
     },
 
     tbody: {
-      boxShadow: `rgba(0, 0, 0, 0.10) 0 2px 5px 0, ${theme.appBorderColor} 0 0 0 1px`,
+      // slightly different than the other DocBlock shadows to account for table styling gymnastics
+      boxShadow:
+        theme.base === 'light'
+          ? `rgba(0, 0, 0, 0.10) 0 1px 3px 1px,
+          ${transparentize(0.035, theme.appBorderColor)} 0 0 0 1px`
+          : `rgba(0, 0, 0, 0.20) 0 2px 5px 1px,
+          ${transparentize(0.035, theme.appBorderColor)} 0 0 0 1px`,
       borderRadius: theme.appBorderRadius,
 
       tr: {

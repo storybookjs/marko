@@ -9,8 +9,9 @@ const BASE_URL = 'iframe.html';
 const StyledPreviewWrapper = styled.div(({ theme }) => ({
   borderRadius: theme.appBorderRadius,
   background: theme.background.content,
-  boxShadow: 'rgba(0, 0, 0, 0.10) 0 2px 5px 0',
   margin: '25px 0 40px',
+  boxShadow:
+    theme.base === 'light' ? 'rgba(0, 0, 0, 0.10) 0 1px 3px 0' : 'rgba(0, 0, 0, 0.20) 0 2px 5px 0',
   border: `1px solid ${theme.appBorderColor}`,
   padding: 20,
   display: 'flex',
