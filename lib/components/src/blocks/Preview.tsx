@@ -11,6 +11,7 @@ const StyledPreviewWrapper = styled.div(({ theme }) => ({
   background: theme.background.content,
   margin: '1.5rem 0 2.5rem',
   boxShadow: 'rgba(0, 0, 0, 0.10) 0 2px 5px 0',
+  border: `1px solid ${theme.appBorderColor}`,
   padding: 20,
   display: 'flex',
   alignItems: 'center',
