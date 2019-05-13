@@ -47,7 +47,7 @@ const Subtitle = styled.h2(({ theme }) => ({
 }));
 
 export const Content = styled(DocumentFormatting)({
-  maxWidth: 700,
+  maxWidth: 800,
   width: '100%',
 });
 
