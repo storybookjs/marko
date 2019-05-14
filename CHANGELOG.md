@@ -1,3 +1,19 @@
+## 5.2.0-alpha.6 (May 1, 2019)
+
+- Addon-docs: Docs page content update
+- Addon-docs: Preview component redefinition
+
+#### Breaking changes
+
+Preview behavior has been updated. Docs page content has been updated.
+
+Before:
+- `<Story name="a">` defines a story, `<Preview id="x--a"/>` references it
+
+After:
+- `<Story name="a">` defines a story, `<Story id="x--a"/>` references it
+- `<Preview><Story .../><Story .../><Component/></Preview>` shows a grid of stories
+
 ## 5.2.0-alpha.5 (May 1, 2019)
 
 - Addon-docs: Description block refactor and bugfixes
@@ -6,7 +22,7 @@
 
 - Addon-docs: Source, Props, DocsPage doc blocks
 
-#### Breaking changes:
+#### Breaking changes
 
 - Doc blocks & presets have moved. Update your MDX stories and `presets.js` file accordingly:
   - `import { Preview, Story } from '@storybook/addon-docs/blocks';
