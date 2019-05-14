@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@storybook/theming';
-import { transparentize } from 'polished';
+import { opacify, transparentize } from 'polished';
 import { PropRow } from './PropRow';
 import { PropDef } from './PropDef';
 import { EmptyBlock } from '../EmptyBlock';
@@ -28,8 +28,8 @@ export const Table = styled.table(({ theme }) => ({
     width: '100%',
 
     // Margin collapse
-    marginTop: '1.5rem',
-    marginBottom: '2.5rem',
+    marginTop: '25px',
+    marginBottom: '40px',
 
     'th:first-of-type, td:first-of-type': {
       paddingLeft: 20,
@@ -98,7 +98,7 @@ export const Table = styled.table(({ theme }) => ({
           ? `rgba(0, 0, 0, 0.10) 0 1px 3px 1px,
           ${transparentize(0.035, theme.appBorderColor)} 0 0 0 1px`
           : `rgba(0, 0, 0, 0.20) 0 2px 5px 1px,
-          ${transparentize(0.035, theme.appBorderColor)} 0 0 0 1px`,
+          ${opacify(0.05, theme.appBorderColor)} 0 0 0 1px`,
       borderRadius: theme.appBorderRadius,
 
       tr: {

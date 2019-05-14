@@ -1,6 +1,6 @@
 export * from './DocsContext';
 export * from './DocsPage';
-export * from './DocsWrapper';
+export * from './DocsContainer';
 export * from './Preview';
 export * from './Props';
 export * from './Source';

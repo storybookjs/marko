@@ -7,6 +7,7 @@ const camelCase = require('lodash.camelcase');
 // story in the contents
 
 const STORY_REGEX = /^<Story /;
+const PREVIEW_REGEX = /^<Preview[ >]/;
 const RESERVED = /^(?:do|if|in|for|let|new|try|var|case|else|enum|eval|false|null|this|true|void|with|await|break|catch|class|const|super|throw|while|yield|delete|export|import|public|return|static|switch|typeof|default|extends|finally|package|private|continue|debugger|function|arguments|interface|protected|implements|instanceof)$/;
 
 function getAttr(elt, what) {
@@ -24,16 +25,18 @@ function getStoryFn(name, counter) {
   return `story${counter}`;
 }
 
-function getStory(node, counter) {
-  if (node.type !== 'jsx' || !STORY_REGEX.exec(node.value)) {
+function genStoryExport(ast, input, counter) {
+  let storyName = getAttr(ast.openingElement, 'name');
+  let storyId = getAttr(ast.openingElement, 'id');
+  storyName = storyName && storyName.value;
+  storyId = storyId && storyId.value;
+
+  // We don't generate exports for story references or the smart "current story"
+  if (storyId || !storyName) {
     return null;
   }
 
-  const ast = parser.parseExpression(node.value, { plugins: ['jsx'] });
-  let storyName = getAttr(ast.openingElement, 'name');
-  storyName = storyName && storyName.value;
-
-  // console.log(JSON.stringify(ast, null, 2));
+  // console.log('genStoryExport', JSON.stringify(ast, null, 2));
 
   const statements = [];
   const storyFn = getStoryFn(storyName, counter);
@@ -57,7 +60,7 @@ function getStory(node, counter) {
 
   let parameters = getAttr(ast.openingElement, 'parameters');
   parameters = parameters && parameters.expression;
-  const source = `\`${code.replace('`', '\\`')}\``;
+  const source = `\`${code.replace(/`/g, '\\`')}\``;
   if (parameters) {
     const { code: params } = generate(parameters, {});
     // FIXME: hack in the story's source as a parameter
@@ -68,7 +71,49 @@ function getStory(node, counter) {
 
   // console.log(statements);
 
-  return statements.join('\n');
+  return [statements.join('\n')];
+}
+
+function genPreviewExports(ast, input, counter) {
+  // console.log('genPreviewExports', JSON.stringify(ast, null, 2));
+
+  let localCounter = counter;
+  const previewExports = [];
+  for (let i = 0; i < ast.children.length; i += 1) {
+    const child = ast.children[i];
+    if (child.type === 'JSXElement' && child.openingElement.name.name === 'Story') {
+      const storyExport = genStoryExport(child, input, localCounter);
+      if (storyExport) {
+        previewExports.push(storyExport);
+        localCounter += 1;
+      }
+    }
+  }
+  return previewExports;
+}
+
+function getStories(node, counter) {
+  const { value, type } = node;
+  // Single story
+  if (type === 'jsx') {
+    try {
+      if (STORY_REGEX.exec(value)) {
+        // Single story
+        const ast = parser.parseExpression(value, { plugins: ['jsx'] });
+        const storyExport = genStoryExport(ast, value, counter);
+        return storyExport && [storyExport];
+      }
+      if (PREVIEW_REGEX.exec(value)) {
+        // Preview, possibly containing multiple stories
+        const ast = parser.parseExpression(value, { plugins: ['jsx'] });
+        return genPreviewExports(ast, value, counter);
+      }
+    } catch (err) {
+      console.log(err);
+      console.log(value);
+    }
+  }
+  return null;
 }
 
 // insert `mdxKind` into the context so that we can know what "kind" we're rendering into
@@ -80,7 +125,7 @@ if (typeof componentMeta !== 'undefined' && componentMeta) {
   mdxKind = componentMeta.title || componentMeta.displayName;
   meta = componentMeta;
 }
-const WrappedMDXContent = ({ context }) => <DocsWrapper context={{...context, mdxKind}} content={MDXContent} />;
+const WrappedMDXContent = ({ context }) => <DocsContainer context={{...context, mdxKind}} content={MDXContent} />;
 if (meta) {
   meta.parameters = meta.parameters || {};
   meta.parameters.docs = WrappedMDXContent;
@@ -91,21 +136,23 @@ export default WrappedMDXContent;
 function extractStories(node, options) {
   // we're overriding default export
   const defaultJsx = mdxToJsx.toJSX(node, {}, { ...options, skipExport: true });
-  const stories = [];
+  const storyExports = [];
   let counter = 0;
   node.children.forEach(n => {
-    const story = getStory(n, counter);
-    if (story) {
-      stories.push(story);
-      counter += 1;
+    const stories = getStories(n, counter);
+    if (stories) {
+      stories.forEach(story => {
+        storyExports.push(story);
+        counter += 1;
+      });
     }
   });
 
   const fullJsx = [
-    'import { DocsWrapper } from "@storybook/addon-docs/blocks"',
+    'import { DocsContainer } from "@storybook/addon-docs/blocks"',
     defaultJsx,
     wrapperJs,
-    ...stories,
+    ...storyExports,
   ].join('\n\n');
 
   return fullJsx;

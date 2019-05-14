@@ -1,5 +1,5 @@
 import React from 'react';
-import { Preview, PreviewError } from './Preview';
+import { Preview } from './Preview';
 
 import { Content as DocsPageWrapper } from './DocsPage';
 import { Button } from '../Button/Button';
@@ -10,8 +10,53 @@ export const componentMeta = {
   decorators: [getStory => <DocsPageWrapper>{getStory()}</DocsPageWrapper>],
 };
 
-export const error = () => <Preview error={PreviewError.NO_STORY} />;
+export const single = () => (
+  <Preview>
+    <Button secondary>Button 1</Button>
+  </Preview>
+);
 
-const buttonFn = () => <Button secondary>Hello Button</Button>;
+export const row = () => (
+  <Preview>
+    <Button secondary>Button 1</Button>
+    <Button secondary>Button 2</Button>
+    <Button secondary>Button 3</Button>
+    <Button secondary>Button 4</Button>
+    <Button secondary>Button 5</Button>
+    <Button secondary>Button 6</Button>
+    <Button secondary>Button 7</Button>
+  </Preview>
+);
 
-export const inline = () => <Preview inline storyFn={buttonFn} title="hello button" />;
+export const column = () => (
+  <Preview isColumn>
+    <Button secondary>Button 1</Button>
+    <Button secondary>Button 2</Button>
+    <Button secondary>Button 3</Button>
+  </Preview>
+);
+
+export const gridWith3Columns = () => (
+  <Preview columns={3}>
+    <Button secondary>Button 1</Button>
+    <Button secondary>Button 2</Button>
+    <Button secondary>Button 3</Button>
+    <Button secondary>Button 4</Button>
+    <Button secondary>Button 5</Button>
+    <Button secondary>Button 6</Button>
+    <Button secondary>Button 7 long long long long long title</Button>
+    <Button secondary>Button 8</Button>
+    <Button secondary>Button 9</Button>
+    <Button secondary>Button 10</Button>
+    <Button secondary>Button 11</Button>
+    <Button secondary>Button 12</Button>
+    <Button secondary>Button 13</Button>
+    <Button secondary>Button 14</Button>
+    <Button secondary>Button 15</Button>
+    <Button secondary>Button 16</Button>
+    <Button secondary>Button 17</Button>
+    <Button secondary>Button 18</Button>
+    <Button secondary>Button 19</Button>
+    <Button secondary>Button 20</Button>
+  </Preview>
+);

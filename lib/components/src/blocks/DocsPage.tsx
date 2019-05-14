@@ -2,7 +2,8 @@ import React from 'react';
 import { styled } from '@storybook/theming';
 import { transparentize } from 'polished';
 
-import { Preview, PreviewProps } from './Preview';
+import { Preview } from './Preview';
+import { Story, StoryProps } from './Story';
 import { PropsTable, PropsTableProps } from './PropsTable/PropsTable';
 import { Source, SourceProps } from './Source';
 import { Description, DescriptionProps } from './Description';
@@ -51,7 +52,7 @@ export const Content = styled(DocumentFormatting)({
   width: '100%',
 });
 
-const Wrapper = styled.div(({ theme }) => ({
+export const Wrapper = styled.div(({ theme }) => ({
   background: theme.background.content,
   display: 'flex',
   justifyContent: 'center',
@@ -65,7 +66,7 @@ export interface DocsPageProps {
   title: string;
   subtitle?: string;
   descriptionProps: DescriptionProps;
-  previewProps: PreviewProps;
+  storyProps: StoryProps;
   propsTableProps: PropsTableProps;
   sourceProps: SourceProps;
 }
@@ -74,7 +75,7 @@ const DocsPage: React.FunctionComponent<DocsPageProps> = ({
   title,
   subtitle,
   descriptionProps,
-  previewProps,
+  storyProps,
   propsTableProps,
   sourceProps,
 }) => (
@@ -83,7 +84,14 @@ const DocsPage: React.FunctionComponent<DocsPageProps> = ({
       {title && <Title>{title}</Title>}
       {subtitle && <Subtitle>{subtitle}</Subtitle>}
       {descriptionProps && <Description {...descriptionProps} />}
-      {previewProps && <Preview {...previewProps} />}
+      {storyProps &&
+        (storyProps.error ? (
+          <Story {...storyProps} />
+        ) : (
+          <Preview>
+            <Story {...storyProps} />
+          </Preview>
+        ))}
       {sourceProps && <Source {...sourceProps} />}
       {propsTableProps && <PropsTable {...propsTableProps} />}
     </Content>

@@ -2,6 +2,8 @@ import React, { Fragment } from 'react';
 import { styled } from '@storybook/theming';
 import { transparentize } from 'polished';
 
+import { getBlockBackgroundStyle } from './BlockBackgroundStyles';
+
 const ItemTitle = styled.div(({ theme }) => ({
   fontWeight: theme.typography.weight.bold,
 }));
@@ -48,15 +50,11 @@ const Swatch = styled.div({
 });
 
 const SwatchColors = styled.div(({ theme }) => ({
+  ...getBlockBackgroundStyle(theme),
   display: 'flex',
   flexDirection: 'row',
   height: 50,
   marginBottom: 5,
-
-  borderRadius: theme.appBorderRadius,
-  boxShadow:
-    theme.base === 'light' ? 'rgba(0, 0, 0, 0.10) 0 1px 3px 0' : 'rgba(0, 0, 0, 0.20) 0 2px 5px 0',
-  border: `1px solid ${theme.appBorderColor}`,
   overflow: 'hidden',
 }));
 
