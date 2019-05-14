@@ -8,9 +8,11 @@
 Preview behavior has been updated. Docs page content has been updated.
 
 Before:
+
 - `<Story name="a">` defines a story, `<Preview id="x--a"/>` references it
 
 After:
+
 - `<Story name="a">` defines a story, `<Story id="x--a"/>` references it
 - `<Preview><Story .../><Story .../><Component/></Preview>` shows one or more stories in a grid
 
