@@ -1,5 +1,5 @@
 import React from 'react';
-import { Color, ColorPalette } from './ColorPalette';
+import { ColorItem, ColorPalette } from './ColorPalette';
 
 import { Content as DocsPageWrapper } from './DocsPage';
 
@@ -11,14 +11,14 @@ export const componentMeta = {
 
 export const defaultStyle = () => (
   <ColorPalette>
-    <Color
+    <ColorItem
       title="theme.color.greyscale"
       subtitle="Some of the greys"
       colors={['#FFFFFF', '#F8F8F8', '#F3F3F3']}
     />
-    <Color title="theme.color.primary" subtitle="Coral" colors={['#FF4785']} />
-    <Color title="theme.color.secondary" subtitle="Ocean" colors={['#1EA7FD']} />
-    <Color
+    <ColorItem title="theme.color.primary" subtitle="Coral" colors={['#FF4785']} />
+    <ColorItem title="theme.color.secondary" subtitle="Ocean" colors={['#1EA7FD']} />
+    <ColorItem
       title="theme.color.positive"
       subtitle="Green"
       colors={[

@@ -109,7 +109,7 @@ interface ColorProps {
   colors: [string];
 }
 
-export const Color: React.FunctionComponent<ColorProps> = ({ title, subtitle, colors }) => {
+export const ColorItem: React.FunctionComponent<ColorProps> = ({ title, subtitle, colors }) => {
   return (
     <Item>
       <ItemDescription>
