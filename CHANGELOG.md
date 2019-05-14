@@ -12,7 +12,7 @@ Before:
 
 After:
 - `<Story name="a">` defines a story, `<Story id="x--a"/>` references it
-- `<Preview><Story .../><Story .../><Component/></Preview>` shows a grid of stories
+- `<Preview><Story .../><Story .../><Component/></Preview>` shows one or more stories in a grid
 
 ## 5.2.0-alpha.5 (May 1, 2019)
 
