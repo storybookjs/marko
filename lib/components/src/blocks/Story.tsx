@@ -1,5 +1,4 @@
 import React from 'react';
-import { styled } from '@storybook/theming';
 
 import { IFrame } from './IFrame';
 import { EmptyBlock } from './EmptyBlock';
@@ -32,22 +31,8 @@ export interface StoryProps {
   error?: StoryError;
 }
 
-const StyledStoryWrapper = styled.div(({ theme }) => ({
-  borderRadius: theme.appBorderRadius,
-  background: theme.background.content,
-  margin: '1.5rem 0 2.5rem',
-  boxShadow:
-    theme.base === 'light' ? 'rgba(0, 0, 0, 0.10) 0 1px 3px 0' : 'rgba(0, 0, 0, 0.20) 0 2px 5px 0',
-  border: `1px solid ${theme.appBorderColor}`,
-  padding: 20,
-  display: 'flex',
-  alignItems: 'center',
-}));
-
 const InlineStory: React.FunctionComponent<InlineStoryProps> = ({ storyFn, title, height }) => (
-  <StyledStoryWrapper aria-labelledby={title} style={{ height }} className="docblock-Story">
-    {storyFn()}
-  </StyledStoryWrapper>
+  <div>{storyFn()}</div>
 );
 
 const IFrameStory: React.FunctionComponent<IFrameStoryProps> = ({
@@ -55,23 +40,21 @@ const IFrameStory: React.FunctionComponent<IFrameStoryProps> = ({
   title,
   height = '500px',
 }) => (
-  <StyledStoryWrapper className="docblock-Story">
-    <div style={{ width: '100%', height }}>
-      <IFrame
-        key="iframe"
-        id={`storybook-Story-${id}`}
-        title={title}
-        src={`${BASE_URL}?id=${id}`}
-        allowFullScreen
-        scale={1}
-        style={{
-          width: '100%',
-          height: '100%',
-          border: '0 none',
-        }}
-      />
-    </div>
-  </StyledStoryWrapper>
+  <div style={{ width: '100%', height }}>
+    <IFrame
+      key="iframe"
+      id={`storybook-Story-${id}`}
+      title={title}
+      src={`${BASE_URL}?id=${id}`}
+      allowFullScreen
+      scale={1}
+      style={{
+        width: '100%',
+        height: '100%',
+        border: '0 none',
+      }}
+    />
+  </div>
 );
 
 const Story: React.FunctionComponent<StoryProps> = ({

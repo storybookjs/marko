@@ -12,47 +12,51 @@ export const componentMeta = {
 
 export const single = () => (
   <Preview>
-    <Button>Button 1</Button>
+    <Button secondary>Button 1</Button>
   </Preview>
 );
 
 export const row = () => (
   <Preview>
-    <Button>Button 1</Button>
-    <Button>Button 2</Button>
-    <Button>Button 3</Button>
+    <Button secondary>Button 1</Button>
+    <Button secondary>Button 2</Button>
+    <Button secondary>Button 3</Button>
+    <Button secondary>Button 4</Button>
+    <Button secondary>Button 5</Button>
+    <Button secondary>Button 6</Button>
+    <Button secondary>Button 7</Button>
   </Preview>
 );
 
 export const column = () => (
-  <Preview column>
-    <Button>Button 1</Button>
-    <Button>Button 2</Button>
-    <Button>Button 3</Button>
+  <Preview isColumn>
+    <Button secondary>Button 1</Button>
+    <Button secondary>Button 2</Button>
+    <Button secondary>Button 3</Button>
   </Preview>
 );
 
-export const grid = () => (
-  <Preview>
-    <Button>Button 1</Button>
-    <Button>Button 2</Button>
-    <Button>Button 3</Button>
-    <Button>Button 4</Button>
-    <Button>Button 5</Button>
-    <Button>Button 6</Button>
-    <Button>Button 7</Button>
-    <Button>Button 8</Button>
-    <Button>Button 9</Button>
-    <Button>Button 10</Button>
-    <Button>Button 11</Button>
-    <Button>Button 12</Button>
-    <Button>Button 13</Button>
-    <Button>Button 14</Button>
-    <Button>Button 15</Button>
-    <Button>Button 16</Button>
-    <Button>Button 17</Button>
-    <Button>Button 18</Button>
-    <Button>Button 19</Button>
-    <Button>Button 20</Button>
+export const gridWith3Columns = () => (
+  <Preview columns={3}>
+    <Button secondary>Button 1</Button>
+    <Button secondary>Button 2</Button>
+    <Button secondary>Button 3</Button>
+    <Button secondary>Button 4</Button>
+    <Button secondary>Button 5</Button>
+    <Button secondary>Button 6</Button>
+    <Button secondary>Button 7 long long long long long title</Button>
+    <Button secondary>Button 8</Button>
+    <Button secondary>Button 9</Button>
+    <Button secondary>Button 10</Button>
+    <Button secondary>Button 11</Button>
+    <Button secondary>Button 12</Button>
+    <Button secondary>Button 13</Button>
+    <Button secondary>Button 14</Button>
+    <Button secondary>Button 15</Button>
+    <Button secondary>Button 16</Button>
+    <Button secondary>Button 17</Button>
+    <Button secondary>Button 18</Button>
+    <Button secondary>Button 19</Button>
+    <Button secondary>Button 20</Button>
   </Preview>
 );

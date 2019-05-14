@@ -1,18 +1,43 @@
 import React from 'react';
 import { styled } from '@storybook/theming';
 
+import { getBlockBackgroundStyle } from './BlockBackgroundStyles';
+
 export interface PreviewProps {
-  column: boolean;
+  isColumn: boolean;
+  columns?: number;
 }
 
-const PreviewWrapper = styled.div<PreviewProps>(({ column }) => ({
+const ChildrenContainer = styled.div(({ isColumn, columns }) => ({
   display: 'flex',
   flexWrap: 'wrap',
-  flexDirection: column ? 'column' : 'row',
+  flexDirection: isColumn ? 'column' : 'row',
+  marginTop: -20,
+
+  '> *': {
+    flex: columns ? `1 1 calc(100%/${columns} - 20px)` : `1 1 0%`,
+    marginRight: 20,
+    marginTop: 20,
+  },
 }));
 
-const Preview: React.FunctionComponent<PreviewProps> = ({ column, children }) => (
-  <PreviewWrapper column={column}>{children}</PreviewWrapper>
+const PreviewWrapper = styled.div<PreviewProps>(({ theme }) => ({
+  ...getBlockBackgroundStyle(theme),
+  margin: '25px 0 40px',
+  padding: '30px 20px',
+}));
+
+const Preview: React.FunctionComponent<PreviewProps> = ({
+  isColumn,
+  columns,
+  children,
+  ...props
+}) => (
+  <PreviewWrapper {...props}>
+    <ChildrenContainer isColumn={isColumn} columns={columns}>
+      {Array.isArray(children) ? children.map(child => <div>{child}</div>) : <div>{children}</div>}
+    </ChildrenContainer>
+  </PreviewWrapper>
 );
 
 export { Preview };
