@@ -2,15 +2,15 @@ import React from 'react';
 import { styled } from '@storybook/theming';
 import { transparentize } from 'polished';
 
-import { Preview } from './Preview';
-import { Story, StoryProps } from './Story';
-import { PropsTable, PropsTableProps } from './PropsTable/PropsTable';
-import { Source, SourceProps } from './Source';
-import { Description, DescriptionProps } from './Description';
 import { DocumentFormatting } from '../typography/DocumentFormatting';
 
 export const breakpoint = 600;
 export const pageMargin = '5.55555';
+
+export interface DocsPageProps {
+  title: string;
+  subtitle?: string;
+}
 
 const Title = styled.h1(({ theme }) => ({
   // overrides h1 in DocumentFormatting
@@ -62,38 +62,12 @@ export const Wrapper = styled.div(({ theme }) => ({
   [`@media (min-width: ${breakpoint * 1}px)`]: {},
 }));
 
-export interface DocsPageProps {
-  title: string;
-  subtitle?: string;
-  descriptionProps: DescriptionProps;
-  storyProps: StoryProps;
-  propsTableProps: PropsTableProps;
-  sourceProps: SourceProps;
-}
-
-const DocsPage: React.FunctionComponent<DocsPageProps> = ({
-  title,
-  subtitle,
-  descriptionProps,
-  storyProps,
-  propsTableProps,
-  sourceProps,
-}) => (
+const DocsPage: React.FunctionComponent<DocsPageProps> = ({ title, subtitle, children }) => (
   <Wrapper>
     <Content>
       {title && <Title>{title}</Title>}
       {subtitle && <Subtitle>{subtitle}</Subtitle>}
-      {descriptionProps && <Description {...descriptionProps} />}
-      {storyProps &&
-        (storyProps.error ? (
-          <Story {...storyProps} />
-        ) : (
-          <Preview>
-            <Story {...storyProps} />
-          </Preview>
-        ))}
-      {sourceProps && <Source {...sourceProps} />}
-      {propsTableProps && <PropsTable {...propsTableProps} />}
+      {children}
     </Content>
   </Wrapper>
 );

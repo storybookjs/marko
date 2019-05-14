@@ -35,7 +35,11 @@ const Preview: React.FunctionComponent<PreviewProps> = ({
 }) => (
   <PreviewWrapper {...props}>
     <ChildrenContainer {...props}>
-      {Array.isArray(children) ? children.map(child => <div>{child}</div>) : <div>{children}</div>}
+      {Array.isArray(children) ? (
+        children.map((child, i) => <div key={i.toString()}>{child}</div>)
+      ) : (
+        <div>{children}</div>
+      )}
     </ChildrenContainer>
   </PreviewWrapper>
 );

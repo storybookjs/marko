@@ -13,6 +13,7 @@ export enum DescriptionType {
 interface DescriptionProps {
   of?: any;
   type?: DescriptionType;
+  markdown?: string;
 }
 
 type Notes = string | any;
@@ -28,9 +29,12 @@ const getDocgen = (component?: Component) =>
   (component && component.__docgenInfo && component.__docgenInfo.description) || '';
 
 export const getDescriptionProps = (
-  { of, type }: DescriptionProps,
+  { of, type, markdown }: DescriptionProps,
   { parameters, getPropDefs }: DocsContextProps
 ): PureDescriptionProps => {
+  if (markdown) {
+    return { markdown };
+  }
   const { component, notes, info } = parameters;
   const target = of || component;
   const options = {}; // placeholder
@@ -45,7 +49,7 @@ export const getDescriptionProps = (
     default:
       return {
         markdown: `
-${getNotes(notes) || getInfo(info)}
+${getNotes(notes) || getInfo(info) || ''}
 
 ${getDocgen(target)}
 `.trim(),
@@ -56,8 +60,8 @@ ${getDocgen(target)}
 const DescriptionContainer: React.FunctionComponent<DescriptionProps> = props => (
   <DocsContext.Consumer>
     {context => {
-      const descriptionProps = getDescriptionProps(props, context);
-      return <Description {...descriptionProps} />;
+      const { markdown } = getDescriptionProps(props, context);
+      return markdown && <Description markdown={markdown} />;
     }}
   </DocsContext.Consumer>
 );

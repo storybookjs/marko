@@ -132,7 +132,7 @@ export const ColorItem: React.FunctionComponent<ColorProps> = ({ title, subtitle
           </SwatchColors>
           <SwatchLabels>
             {colors.map(color => (
-              <SwatchLabel title={color}>
+              <SwatchLabel key={color} title={color}>
                 <div>{color}</div>
               </SwatchLabel>
             ))}
