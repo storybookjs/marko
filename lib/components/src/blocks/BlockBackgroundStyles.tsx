@@ -1,6 +1,6 @@
-import { Theme, Interpolation } from '@storybook/theming';
+import { Theme } from '@storybook/theming';
 
-export const getBlockBackgroundStyle: (theme: Theme) => Interpolation = (theme: Theme) => ({
+export const getBlockBackgroundStyle: (theme: Theme) => object = (theme: Theme) => ({
   borderRadius: theme.appBorderRadius,
   background: theme.background.content,
   boxShadow:

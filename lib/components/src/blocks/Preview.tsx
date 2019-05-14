@@ -8,7 +8,7 @@ export interface PreviewProps {
   columns?: number;
 }
 
-const ChildrenContainer = styled.div(({ isColumn, columns }) => ({
+const ChildrenContainer = styled.div<PreviewProps>(({ isColumn, columns }) => ({
   display: 'flex',
   flexWrap: 'wrap',
   flexDirection: isColumn ? 'column' : 'row',
@@ -34,7 +34,7 @@ const Preview: React.FunctionComponent<PreviewProps> = ({
   ...props
 }) => (
   <PreviewWrapper {...props}>
-    <ChildrenContainer isColumn={isColumn} columns={columns}>
+    <ChildrenContainer {...props}>
       {Array.isArray(children) ? children.map(child => <div>{child}</div>) : <div>{children}</div>}
     </ChildrenContainer>
   </PreviewWrapper>
