@@ -2,6 +2,7 @@ import React from 'react';
 import { styled } from '@storybook/theming';
 import { transparentize } from 'polished';
 
+import { Preview } from './Preview';
 import { Story, StoryProps } from './Story';
 import { PropsTable, PropsTableProps } from './PropsTable/PropsTable';
 import { Source, SourceProps } from './Source';
@@ -51,7 +52,7 @@ export const Content = styled(DocumentFormatting)({
   width: '100%',
 });
 
-const Wrapper = styled.div(({ theme }) => ({
+export const Wrapper = styled.div(({ theme }) => ({
   background: theme.background.content,
   display: 'flex',
   justifyContent: 'center',
@@ -83,7 +84,14 @@ const DocsPage: React.FunctionComponent<DocsPageProps> = ({
       {title && <Title>{title}</Title>}
       {subtitle && <Subtitle>{subtitle}</Subtitle>}
       {descriptionProps && <Description {...descriptionProps} />}
-      {storyProps && <Story {...storyProps} />}
+      {storyProps &&
+        (storyProps.error ? (
+          <Story {...storyProps} />
+        ) : (
+          <Preview>
+            <Story {...storyProps} />
+          </Preview>
+        ))}
       {sourceProps && <Source {...sourceProps} />}
       {propsTableProps && <PropsTable {...propsTableProps} />}
     </Content>

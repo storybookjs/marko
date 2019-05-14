@@ -3,7 +3,7 @@ import React from 'react';
 import { parseKind } from '@storybook/router';
 import { DocsPage } from '@storybook/components';
 import { DocsContext, DocsContextProps } from './DocsContext';
-import { DocsWrapper } from './DocsWrapper';
+import { DocsContainer } from './DocsContainer';
 import { getDescriptionProps } from './Description';
 import { getStoryProps } from './Story';
 import { getPropsTableProps } from './Props';
@@ -47,7 +47,7 @@ const DocsPageContainer: React.FunctionComponent = () => (
 
 const DocsPageWrapper: React.FunctionComponent<DocsPageWrapperProps> = ({ context }) => (
   /* eslint-disable react/destructuring-assignment */
-  <DocsWrapper
+  <DocsContainer
     context={{ ...context, mdxKind: context.selectedKind }}
     content={DocsPageContainer}
   />

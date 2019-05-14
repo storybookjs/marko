@@ -4,7 +4,7 @@ import { styled } from '@storybook/theming';
 import { getBlockBackgroundStyle } from './BlockBackgroundStyles';
 
 export interface PreviewProps {
-  isColumn: boolean;
+  isColumn?: boolean;
   columns?: number;
 }
 

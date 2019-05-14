@@ -1,5 +1,5 @@
 export * from './Description';
-export * from './DocsPage';
+export { DocsPage, Wrapper as DocsWrapper, Content as DocsContent } from './DocsPage';
 export * from './Preview';
 export * from './PropsTable/PropsTable';
 export * from './Source';

@@ -33,7 +33,7 @@ export const text = () => (
   <DocsPage
     title="Sensorium"
     descriptionProps={descriptionStories.text().props}
-    previewProps={storyStories.inline().props}
+    storyProps={storyStories.inline().props}
     propsTableProps={propsTableStories.normal().props}
     sourceProps={sourceStories.jsx().props}
   />

@@ -125,7 +125,7 @@ if (typeof componentMeta !== 'undefined' && componentMeta) {
   mdxKind = componentMeta.title || componentMeta.displayName;
   meta = componentMeta;
 }
-const WrappedMDXContent = ({ context }) => <DocsWrapper context={{...context, mdxKind}} content={MDXContent} />;
+const WrappedMDXContent = ({ context }) => <DocsContainer context={{...context, mdxKind}} content={MDXContent} />;
 if (meta) {
   meta.parameters = meta.parameters || {};
   meta.parameters.docs = WrappedMDXContent;
@@ -149,7 +149,7 @@ function extractStories(node, options) {
   });
 
   const fullJsx = [
-    'import { DocsWrapper } from "@storybook/addon-docs/blocks"',
+    'import { DocsContainer } from "@storybook/addon-docs/blocks"',
     defaultJsx,
     wrapperJs,
     ...storyExports,
