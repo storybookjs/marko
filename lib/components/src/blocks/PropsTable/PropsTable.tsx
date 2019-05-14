@@ -28,8 +28,8 @@ export const Table = styled.table(({ theme }) => ({
     width: '100%',
 
     // Margin collapse
-    marginTop: '1.5rem',
-    marginBottom: '2.5rem',
+    marginTop: '25px',
+    marginBottom: '40px',
 
     'th:first-of-type, td:first-of-type': {
       paddingLeft: 20,
