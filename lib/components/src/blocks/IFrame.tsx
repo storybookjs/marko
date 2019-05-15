@@ -27,13 +27,9 @@ export class IFrame extends React.Component<IFrameProps> {
   }
 
   shouldComponentUpdate(nextProps: IFrameProps) {
-    const { scale, src } = this.props;
-    return scale !== nextProps.scale || src !== nextProps.src;
-  }
-
-  componentDidUpdate(prevProps: IFrameProps) {
-    const { scale } = this.props;
-    if (scale !== prevProps.scale) {
+    const { src, scale } = nextProps;
+    // eslint-disable-next-line react/destructuring-assignment
+    if (scale !== this.props.scale) {
       this.setIframeBodyStyle({
         width: `${scale * 100}%`,
         height: `${scale * 100}%`,
@@ -41,6 +37,10 @@ export class IFrame extends React.Component<IFrameProps> {
         transformOrigin: 'top left',
       });
     }
+    // if(this.props.src !== src) {
+    //   debugger;
+    // }
+    return false;
   }
 
   setIframeBodyStyle(style: BodyStyle) {

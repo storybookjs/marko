@@ -20,7 +20,7 @@ const DocsPanel = ({ active }: Props) => {
           key="iframe"
           id="storybook-preview-iframe"
           title="docs"
-          src={`${baseUrl}?id=${storyId}&docs=true`}
+          src={`${baseUrl}?id=${storyId}&viewMode=docs`}
           allowFullScreen
           scale={1}
           style={{
