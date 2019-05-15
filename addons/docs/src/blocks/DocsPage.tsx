@@ -81,7 +81,7 @@ const DocsStories: React.FunctionComponent<DocsStoriesProps> = ({ type = DocsSto
       const expanded = type !== DocsStoriesType.PRIMARY;
       return (
         <>
-          {expanded && <h1>Stories</h1>}
+          {expanded && <h2>Stories</h2>}
           {stories.map(s => (
             <DocsStory key={s.id} expanded={expanded} {...s} />
           ))}
