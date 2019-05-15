@@ -64,6 +64,7 @@ const DocsStory: React.FunctionComponent<DocsStoryProps> = ({
     <Preview>
       <Story id={id} />
     </Preview>
+    {expanded && <Source id={id} />}
   </>
 );
 

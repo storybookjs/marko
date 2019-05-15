@@ -64,9 +64,9 @@ function genStoryExport(ast, input, counter) {
   if (parameters) {
     const { code: params } = generate(parameters, {});
     // FIXME: hack in the story's source as a parameter
-    statements.push(`${storyFn}.parameters = { source: ${source}, ...${params} };`);
+    statements.push(`${storyFn}.parameters = { mdxSource: ${source}, ...${params} };`);
   } else {
-    statements.push(`${storyFn}.parameters = { source: ${source} };`);
+    statements.push(`${storyFn}.parameters = { mdxSource: ${source} };`);
   }
 
   // console.log(statements);

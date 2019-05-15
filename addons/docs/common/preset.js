@@ -26,6 +26,18 @@ function webpack(webpackConfig = {}, options = {}) {
       ...module,
       rules: [
         ...(module.rules || []),
+        // {
+        //   test: [/\.stories\.(jsx?$|ts?$)/],
+        //   enforce: 'pre',
+        //   use: [
+        //     {
+        //       loader: require.resolve('@storybook/addon-storysource/loader'),
+        //       options: {
+        //         injectParameters: true,
+        //       },
+        //     },
+        //   ],
+        // },
         {
           test: /\.stories.mdx$/,
           use: [
@@ -60,7 +72,11 @@ function webpack(webpackConfig = {}, options = {}) {
 }
 
 function addons(entry = []) {
-  return [...entry, require.resolve('../register')];
+  return [
+    ...entry,
+    // require.resolve('@storybook/addon-storysource/register'),
+    require.resolve('../register'),
+  ];
 }
 
 module.exports = { webpack, addons };
