@@ -24,6 +24,7 @@ interface DocsStoryProps {
   id: string;
   name: string;
   description?: string;
+  expanded?: boolean;
 }
 
 interface StoryData {
@@ -33,19 +34,15 @@ interface StoryData {
   parameters?: any;
 }
 
-const getDocsStories = (
-  type: DocsStoriesType,
-  { selectedKind, storyStore }: DocsContextProps
-): DocsStoryProps[] => {
-  let stories: StoryData[] = storyStore.raw();
-  stories = stories.filter(s => s.kind === selectedKind);
+const getDocsStories = (type: DocsStoriesType, componentStories: StoryData[]): DocsStoryProps[] => {
+  let stories = componentStories;
   if (type !== DocsStoriesType.ALL) {
     const primary = stories.find(s => s.parameters && s.parameters.primary);
     const [first, ...rest] = stories;
     if (type === DocsStoriesType.PRIMARY) {
       stories = [primary || first];
     } else {
-      stories = primary ? rest : stories.filter(s => !s.parameters || !s.parameters.primary);
+      stories = primary ? stories.filter(s => !s.parameters || !s.parameters.primary) : rest;
     }
   }
   return stories.map(({ id, name, parameters: { notes, info } }) => ({
@@ -55,10 +52,15 @@ const getDocsStories = (
   }));
 };
 
-const DocsStory: React.FunctionComponent<DocsStoryProps> = ({ id, name, description }) => (
+const DocsStory: React.FunctionComponent<DocsStoryProps> = ({
+  id,
+  name,
+  description,
+  expanded = true,
+}) => (
   <>
-    <h2>{name}</h2>
-    {description && <Description markdown={description} />}
+    {expanded && <h3>{name}</h3>}
+    {expanded && description && <Description markdown={description} />}
     <Preview>
       <Story id={id} />
     </Preview>
@@ -67,9 +69,23 @@ const DocsStory: React.FunctionComponent<DocsStoryProps> = ({ id, name, descript
 
 const DocsStories: React.FunctionComponent<DocsStoriesProps> = ({ type = DocsStoriesType.ALL }) => (
   <DocsContext.Consumer>
-    {context => {
-      const docsStories = getDocsStories(type, context);
-      return docsStories.length > 0 ? docsStories.map(s => <DocsStory key={s.id} {...s} />) : null;
+    {({ selectedKind, storyStore }) => {
+      const componentStories = (storyStore.raw() as StoryData[]).filter(
+        s => s.kind === selectedKind
+      );
+      const stories = getDocsStories(type, componentStories);
+      if (stories.length === 0) {
+        return null;
+      }
+      const expanded = type !== DocsStoriesType.PRIMARY;
+      return (
+        <>
+          {expanded && <h1>Stories</h1>}
+          {stories.map(s => (
+            <DocsStory key={s.id} expanded={expanded} {...s} />
+          ))}
+        </>
+      );
     }}
   </DocsContext.Consumer>
 );
