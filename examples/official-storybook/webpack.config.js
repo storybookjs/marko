@@ -40,7 +40,10 @@ module.exports = async ({ config }) => ({
       },
       {
         test: /\.stories\.jsx?$/,
-        use: require.resolve('@storybook/addon-storysource/loader'),
+        use: {
+          loader: require.resolve('@storybook/addon-storysource/loader'),
+          options: { injectParameters: true },
+        },
         include: [
           path.resolve(__dirname, './stories'),
           path.resolve(__dirname, '../../lib/ui/src'),

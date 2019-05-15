@@ -8,6 +8,7 @@ module.exports = async ({ config }: { config: any }) => {
         loader: require.resolve('@storybook/addon-storysource/loader'),
         options: {
           parser: 'typescript',
+          injectParams: true,
         },
       },
     ],

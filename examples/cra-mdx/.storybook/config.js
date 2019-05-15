@@ -10,7 +10,7 @@ addParameters({
       inlineStories: true,
       getPropDefs,
     },
-    theme: themes.dark,
+    theme: themes.light,
   },
   docs: DocsPage,
   notes: 'global notes',
