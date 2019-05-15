@@ -1,0 +1,21 @@
+import { Story } from '@storybook/addon-docs/blocks';
+import { Welcome, Button } from '@storybook/angular/demo';
+import { linkTo } from '@storybook/addon-links';
+
+export const componentMeta = {
+  title: 'MDX|Welcome',
+};
+
+# Story object
+
+<Story name="to storybook" height="300px">
+  {{
+    template: `<storybook-welcome-component (showApp)="showApp()"></storybook-welcome-component>`,
+    props: {
+      showApp: linkTo('Button'),
+    },
+    moduleMetadata: {
+      declarations: [Welcome],
+    },
+  }}
+</Story>

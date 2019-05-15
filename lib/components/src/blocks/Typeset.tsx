@@ -2,6 +2,8 @@ import React from 'react';
 import { styled } from '@storybook/theming';
 import { transparentize } from 'polished';
 
+import { getBlockBackgroundStyle } from './BlockBackgroundStyles';
+
 const Label = styled.div(({ theme }) => ({
   marginRight: 30,
   fontSize: `${theme.typography.size.s1}px`,
@@ -26,12 +28,8 @@ const TypeSpecimen = styled.div({
 });
 
 const Wrapper = styled.div(({ theme }) => ({
-  borderRadius: theme.appBorderRadius,
-  background: theme.background.content,
+  ...getBlockBackgroundStyle(theme),
   margin: '25px 0 40px',
-  boxShadow:
-    theme.base === 'light' ? 'rgba(0, 0, 0, 0.10) 0 1px 3px 0' : 'rgba(0, 0, 0, 0.20) 0 2px 5px 0',
-  border: `1px solid ${theme.appBorderColor}`,
   padding: '30px 20px',
 }));
 

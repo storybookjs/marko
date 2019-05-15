@@ -73,6 +73,7 @@ export function handleADD(node, parent, adds) {
   }
 
   const storyName = addArgs[0];
+  const body = addArgs[1];
   const lastArg = addArgs[addArgs.length - 1];
 
   if (storyName.type !== 'Literal' && storyName.type !== 'StringLiteral') {
@@ -94,6 +95,14 @@ export function handleADD(node, parent, adds) {
       endLoc: {
         col: lastArg.loc.end.column,
         line: lastArg.loc.end.line,
+      },
+      startBody: {
+        col: body.loc.start.column,
+        line: body.loc.start.line,
+      },
+      endBody: {
+        col: body.loc.end.column,
+        line: body.loc.end.line,
       },
     };
   }

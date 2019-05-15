@@ -1,17 +1,15 @@
 import React from 'react';
 import { styled } from '@storybook/theming';
 
+import { getBlockBackgroundStyle } from './BlockBackgroundStyles';
+
 const ItemLabel = styled.div({
   marginLeft: 10,
   lineHeight: 1.2,
 });
 
 const ItemSpecimen = styled.div(({ theme }) => ({
-  borderRadius: theme.appBorderRadius,
-  background: theme.background.content,
-  boxShadow:
-    theme.base === 'light' ? 'rgba(0, 0, 0, 0.10) 0 1px 3px 0' : 'rgba(0, 0, 0, 0.20) 0 2px 5px 0',
-  border: `1px solid ${theme.appBorderColor}`,
+  ...getBlockBackgroundStyle(theme),
   overflow: 'hidden',
   height: 40,
   width: 40,

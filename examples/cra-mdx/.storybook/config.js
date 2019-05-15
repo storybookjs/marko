@@ -9,11 +9,8 @@ addParameters({
     docs: {
       inlineStories: true,
       getPropDefs,
-      components: {
-        // p: ({ children }) => <b>{children}</b>,
-      },
     },
-    theme: themes.dark,
+    theme: themes.light,
   },
   docs: DocsPage,
   notes: 'global notes',

@@ -1,29 +1,97 @@
 import React from 'react';
 
 import { parseKind } from '@storybook/router';
-import { DocsPage } from '@storybook/components';
+import { DocsPage as PureDocsPage, DocsPageProps } from '@storybook/components';
 import { DocsContext, DocsContextProps } from './DocsContext';
-import { DocsWrapper } from './DocsWrapper';
-import { getDescriptionProps } from './Description';
-import { getPreviewProps } from './Preview';
-import { getPropsTableProps } from './Props';
-import { getSourceProps } from './Source';
+import { DocsContainer } from './DocsContainer';
+import { Description } from './Description';
+import { Story } from './Story';
+import { Preview } from './Preview';
+import { Props } from './Props';
+import { Source } from './Source';
 
-interface DocsPageWrapperProps {
-  context: DocsContextProps;
+enum DocsStoriesType {
+  ALL = 'all',
+  PRIMARY = 'primary',
+  REST = 'rest',
 }
 
-type Notes = string | any;
-type Info = string | any;
-type Component = any;
-
-interface CaptionParams {
-  notes?: Notes;
-  info?: Info;
-  component?: Component;
+interface DocsStoriesProps {
+  type?: DocsStoriesType;
 }
 
-const getDocsPageProps = (context: DocsContextProps) => {
+interface DocsStoryProps {
+  id: string;
+  name: string;
+  description?: string;
+  expanded?: boolean;
+}
+
+interface StoryData {
+  id: string;
+  kind: string;
+  name: string;
+  parameters?: any;
+}
+
+const getDocsStories = (type: DocsStoriesType, componentStories: StoryData[]): DocsStoryProps[] => {
+  let stories = componentStories;
+  if (type !== DocsStoriesType.ALL) {
+    const primary = stories.find(s => s.parameters && s.parameters.primary);
+    const [first, ...rest] = stories;
+    if (type === DocsStoriesType.PRIMARY) {
+      stories = [primary || first];
+    } else {
+      stories = primary ? stories.filter(s => !s.parameters || !s.parameters.primary) : rest;
+    }
+  }
+  return stories.map(({ id, name, parameters: { notes, info } }) => ({
+    id,
+    name,
+    description: notes || info || null,
+  }));
+};
+
+const DocsStory: React.FunctionComponent<DocsStoryProps> = ({
+  id,
+  name,
+  description,
+  expanded = true,
+}) => (
+  <>
+    {expanded && <h3>{name}</h3>}
+    {expanded && description && <Description markdown={description} />}
+    <Preview>
+      <Story id={id} />
+    </Preview>
+    {expanded && <Source id={id} />}
+  </>
+);
+
+const DocsStories: React.FunctionComponent<DocsStoriesProps> = ({ type = DocsStoriesType.ALL }) => (
+  <DocsContext.Consumer>
+    {({ selectedKind, storyStore }) => {
+      const componentStories = (storyStore.raw() as StoryData[]).filter(
+        s => s.kind === selectedKind
+      );
+      const stories = getDocsStories(type, componentStories);
+      if (stories.length === 0) {
+        return null;
+      }
+      const expanded = type !== DocsStoriesType.PRIMARY;
+      return (
+        <>
+          {expanded && <h1>Stories</h1>}
+          {stories.map(s => (
+            <DocsStory key={s.id} expanded={expanded} {...s} />
+          ))}
+        </>
+      );
+    }}
+  </DocsContext.Consumer>
+);
+
+const getDocsPageProps = (context: DocsContextProps): DocsPageProps => {
   const { selectedKind, selectedStory, parameters } = context;
   const {
     hierarchyRootSeparator: rootSeparator,
@@ -38,29 +106,33 @@ const getDocsPageProps = (context: DocsContextProps) => {
 
   return {
     title,
-    subtitle: selectedStory,
-    descriptionProps: getDescriptionProps({}, context),
-    previewProps: getPreviewProps({}, context),
-    propsTableProps: getPropsTableProps({}, context),
-    sourceProps: getSourceProps({}, context),
+    subtitle: parameters && parameters.componentDescription,
   };
 };
 
-const DocsPageContainer: React.FunctionComponent = () => (
+const DocsPage: React.FunctionComponent = () => (
   <DocsContext.Consumer>
     {context => {
       const docsPageProps = getDocsPageProps(context);
-      return <DocsPage {...docsPageProps} />;
+      return (
+        <PureDocsPage {...docsPageProps}>
+          <Description />
+          <DocsStories type={DocsStoriesType.PRIMARY} />
+          <Props />
+          <DocsStories type={DocsStoriesType.REST} />
+        </PureDocsPage>
+      );
     }}
   </DocsContext.Consumer>
 );
 
+interface DocsPageWrapperProps {
+  context: DocsContextProps;
+}
+
 const DocsPageWrapper: React.FunctionComponent<DocsPageWrapperProps> = ({ context }) => (
   /* eslint-disable react/destructuring-assignment */
-  <DocsWrapper
-    context={{ ...context, mdxKind: context.selectedKind }}
-    content={DocsPageContainer}
-  />
+  <DocsContainer context={{ ...context, mdxKind: context.selectedKind }} content={DocsPage} />
 );
 
 export { DocsPageWrapper as DocsPage };

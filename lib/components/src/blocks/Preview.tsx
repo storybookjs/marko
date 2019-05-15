@@ -1,95 +1,47 @@
 import React from 'react';
 import { styled } from '@storybook/theming';
 
-import { IFrame } from './IFrame';
-import { EmptyBlock } from './EmptyBlock';
+import { getBlockBackgroundStyle } from './BlockBackgroundStyles';
 
-const BASE_URL = 'iframe.html';
+export interface PreviewProps {
+  isColumn?: boolean;
+  columns?: number;
+}
 
-const StyledPreviewWrapper = styled.div(({ theme }) => ({
-  borderRadius: theme.appBorderRadius,
-  background: theme.background.content,
-  margin: '25px 0 40px',
-  boxShadow:
-    theme.base === 'light' ? 'rgba(0, 0, 0, 0.10) 0 1px 3px 0' : 'rgba(0, 0, 0, 0.20) 0 2px 5px 0',
-  border: `1px solid ${theme.appBorderColor}`,
-  padding: 20,
+const ChildrenContainer = styled.div<PreviewProps>(({ isColumn, columns }) => ({
   display: 'flex',
-  alignItems: 'center',
+  flexWrap: 'wrap',
+  flexDirection: isColumn ? 'column' : 'row',
+  marginTop: -20,
+
+  '> *': {
+    flex: columns ? `1 1 calc(100%/${columns} - 20px)` : `1 1 0%`,
+    marginRight: 20,
+    marginTop: 20,
+  },
 }));
 
-export enum PreviewError {
-  NO_STORY = 'No component or story to display',
-}
-
-interface InlinePreviewProps {
-  title: string;
-  height?: string;
-  storyFn: () => React.ElementType;
-}
-
-interface IFramePreviewProps {
-  title: string;
-  height?: string;
-  id: string;
-}
-
-// How do you XOR properties in typescript?
-export interface PreviewProps {
-  inline: boolean;
-  title: string;
-  height?: string;
-  id?: string;
-  storyFn?: () => React.ElementType;
-  error?: PreviewError;
-}
-
-const InlinePreview: React.FunctionComponent<InlinePreviewProps> = ({ storyFn, title, height }) => (
-  <StyledPreviewWrapper aria-labelledby={title} style={{ height }} className="docblock-preview">
-    {storyFn()}
-  </StyledPreviewWrapper>
-);
-
-const IFramePreview: React.FunctionComponent<IFramePreviewProps> = ({
-  id,
-  title,
-  height = '500px',
-}) => (
-  <StyledPreviewWrapper className="docblock-preview">
-    <div style={{ width: '100%', height }}>
-      <IFrame
-        key="iframe"
-        id={`storybook-preview-${id}`}
-        title={title}
-        src={`${BASE_URL}?id=${id}`}
-        allowFullScreen
-        scale={1}
-        style={{
-          width: '100%',
-          height: '100%',
-          border: '0 none',
-        }}
-      />
-    </div>
-  </StyledPreviewWrapper>
-);
+const PreviewWrapper = styled.div<PreviewProps>(({ theme }) => ({
+  ...getBlockBackgroundStyle(theme),
+  margin: '25px 0 40px',
+  padding: '30px 20px',
+}));
 
 const Preview: React.FunctionComponent<PreviewProps> = ({
-  error,
-  height,
-  id,
-  inline,
-  storyFn,
-  title,
-}) => {
-  if (error) {
-    return <EmptyBlock>{error}</EmptyBlock>;
-  }
-  return inline ? (
-    <InlinePreview title={title} height={height} storyFn={storyFn} />
-  ) : (
-    <IFramePreview id={id} title={title} height={height} />
-  );
-};
+  isColumn,
+  columns,
+  children,
+  ...props
+}) => (
+  <PreviewWrapper {...props}>
+    <ChildrenContainer {...props}>
+      {Array.isArray(children) ? (
+        children.map((child, i) => <div key={i.toString()}>{child}</div>)
+      ) : (
+        <div>{children}</div>
+      )}
+    </ChildrenContainer>
+  </PreviewWrapper>
+);
 
 export { Preview };
