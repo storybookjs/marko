@@ -12,6 +12,7 @@ addons.register(ADDON_ID, api => {
     title: 'Docs',
     route: ({ storyId }) => `/docs/${storyId}`, // todo add type
     match: ({ viewMode }) => viewMode === 'docs', // todo add type
-    render: ({ active }) => <Panel active={active} />,
+    render: ({ active }) => null,
+    // render: ({ active }) => <Panel active={active} />,
   });
 });
