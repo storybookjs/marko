@@ -1,3 +1,7 @@
+## 5.2.0-alpha.8 (May 15, 2019)
+
+- Addon-docs: Optimize docs pane rerendering
+
 ## 5.2.0-alpha.7 (May 15, 2019)
 
 - Addon-docs: Docs page bugfix
