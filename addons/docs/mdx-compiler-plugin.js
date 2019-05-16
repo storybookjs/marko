@@ -6,7 +6,7 @@ const camelCase = require('lodash.camelcase');
 // Generate the MDX as is, but append named exports for every
 // story in the contents
 
-const STORY_REGEX = /^<Story /;
+const STORY_REGEX = /^<Story[ >]/;
 const PREVIEW_REGEX = /^<Preview[ >]/;
 const RESERVED = /^(?:do|if|in|for|let|new|try|var|case|else|enum|eval|false|null|this|true|void|with|await|break|catch|class|const|super|throw|while|yield|delete|export|import|public|return|static|switch|typeof|default|extends|finally|package|private|continue|debugger|function|arguments|interface|protected|implements|instanceof)$/;
 
@@ -30,6 +30,10 @@ function genStoryExport(ast, input, counter) {
   let storyId = getAttr(ast.openingElement, 'id');
   storyName = storyName && storyName.value;
   storyId = storyId && storyId.value;
+
+  if (!storyId && !storyName) {
+    throw new Error('Expected a story name or ID attribute');
+  }
 
   // We don't generate exports for story references or the smart "current story"
   if (storyId || !storyName) {
@@ -96,21 +100,16 @@ function getStories(node, counter) {
   const { value, type } = node;
   // Single story
   if (type === 'jsx') {
-    try {
-      if (STORY_REGEX.exec(value)) {
-        // Single story
-        const ast = parser.parseExpression(value, { plugins: ['jsx'] });
-        const storyExport = genStoryExport(ast, value, counter);
-        return storyExport && [storyExport];
-      }
-      if (PREVIEW_REGEX.exec(value)) {
-        // Preview, possibly containing multiple stories
-        const ast = parser.parseExpression(value, { plugins: ['jsx'] });
-        return genPreviewExports(ast, value, counter);
-      }
-    } catch (err) {
-      console.log(err);
-      console.log(value);
+    if (STORY_REGEX.exec(value)) {
+      // Single story
+      const ast = parser.parseExpression(value, { plugins: ['jsx'] });
+      const storyExport = genStoryExport(ast, value, counter);
+      return storyExport && [storyExport];
+    }
+    if (PREVIEW_REGEX.exec(value)) {
+      // Preview, possibly containing multiple stories
+      const ast = parser.parseExpression(value, { plugins: ['jsx'] });
+      return genPreviewExports(ast, value, counter);
     }
   }
   return null;
@@ -149,7 +148,7 @@ function extractStories(node, options) {
   });
 
   const fullJsx = [
-    'import { DocsContainer } from "@storybook/addon-docs/blocks"',
+    'import { DocsContainer } from "@storybook/addon-docs/blocks";',
     defaultJsx,
     wrapperJs,
     ...storyExports,

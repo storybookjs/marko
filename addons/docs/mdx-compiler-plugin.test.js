@@ -59,4 +59,9 @@ describe('docs-mdx-compiler-plugin', () => {
     const code = await generate(path.resolve(__dirname, './fixtures/parameters.mdx'));
     expect(code).toMatchSnapshot();
   });
+  it('errors on missing story props', async () => {
+    await expect(
+      generate(path.resolve(__dirname, './fixtures/story-missing-props.mdx'))
+    ).rejects.toThrow('Expected a story name or ID attribute');
+  });
 });
