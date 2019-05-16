@@ -1,5 +1,5 @@
 import React from 'react';
-import { DocsPage } from './DocsPage';
+import { DocsPage, DocsWrapper, DocsContent } from './DocsPage';
 import * as storyStories from './Story.stories';
 import * as previewStories from './Preview.stories';
 import * as propsTableStories from './PropsTable/PropsTable.stories';
@@ -9,6 +9,13 @@ import * as descriptionStories from './Description.stories';
 export const componentMeta = {
   title: 'Docs|DocsPage',
   Component: DocsPage,
+  decorators: [
+    storyFn => (
+      <DocsWrapper>
+        <DocsContent>{storyFn()}</DocsContent>
+      </DocsWrapper>
+    ),
+  ],
 };
 
 export const empty = () => (

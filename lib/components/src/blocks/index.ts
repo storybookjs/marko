@@ -1,10 +1,5 @@
 export * from './Description';
-export {
-  DocsPage,
-  DocsPageProps,
-  Wrapper as DocsWrapper,
-  Content as DocsContent,
-} from './DocsPage';
+export * from './DocsPage';
 export * from './Preview';
 export * from './PropsTable/PropsTable';
 export * from './Source';

@@ -4,8 +4,8 @@ import { transparentize } from 'polished';
 
 import { DocumentFormatting } from '../typography/DocumentFormatting';
 
-export const breakpoint = 600;
-export const pageMargin = '5.55555';
+const breakpoint = 600;
+const pageMargin = '5.55555';
 
 export interface DocsPageProps {
   title: string;
@@ -47,12 +47,12 @@ const Subtitle = styled.h2(({ theme }) => ({
       : transparentize(0.25, theme.color.defaultText),
 }));
 
-export const Content = styled(DocumentFormatting)({
+export const DocsContent = styled(DocumentFormatting)({
   maxWidth: 800,
   width: '100%',
 });
 
-export const Wrapper = styled.div(({ theme }) => ({
+export const DocsWrapper = styled.div(({ theme }) => ({
   background: theme.background.content,
   display: 'flex',
   justifyContent: 'center',
@@ -63,13 +63,11 @@ export const Wrapper = styled.div(({ theme }) => ({
 }));
 
 const DocsPage: React.FunctionComponent<DocsPageProps> = ({ title, subtitle, children }) => (
-  <Wrapper>
-    <Content>
-      {title && <Title>{title}</Title>}
-      {subtitle && <Subtitle>{subtitle}</Subtitle>}
-      {children}
-    </Content>
-  </Wrapper>
+  <>
+    {title && <Title>{title}</Title>}
+    {subtitle && <Subtitle>{subtitle}</Subtitle>}
+    {children}
+  </>
 );
 
 export { DocsPage };
