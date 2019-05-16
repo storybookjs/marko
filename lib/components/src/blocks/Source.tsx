@@ -12,6 +12,7 @@ const StyledSyntaxHighlighter = styled(SyntaxHighlighter)(({ theme }) => ({
 
   'pre.hljs': {
     padding: 20,
+    background: 'inherit',
   },
 }));
 
