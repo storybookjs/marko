@@ -33,7 +33,7 @@ npm install @storybook/svelte --save-dev
 Make sure that you have `@babel/core`, and `babel-loader` in your dependencies as well because we list these as a peer dependencies:
 
 ```sh
-npm install babel-loader @babel/core --save-dev 
+npm install babel-loader @babel/core --save-dev
 ```
 
 ## Step 2: Add a npm script
@@ -68,21 +68,21 @@ configure(loadStories, module);
 That'll load stories in `../stories/index.js`. You can choose where to place stories, you can co-locate them with source files, or place them in an other directory.
 
 > Requiring all your stories becomes bothersome real quick, so you can use this to load all stories matching a glob.
-> 
+>
 > <details>
 >   <summary>details</summary>
-> 
+>
 > ```js
 > import { configure } from '@storybook/svelte';
-> 
+>
 > function loadStories() {
 >   const req = require.context('../stories', true, /\.stories\.js$/);
 >   req.keys().forEach(filename => req(filename));
 > }
-> 
+>
 > configure(loadStories, module);
 > ```
-> 
+>
 > </details>
 
 ## Step 4: Write your stories
@@ -100,7 +100,7 @@ storiesOf('MyButton', module)
       buttonText: 'some text',
     },
   }))
-  .add('with text', () => ({
+  .add('with some emojies', () => ({
     Component: MyButton,
 
     props: {
@@ -109,7 +109,7 @@ storiesOf('MyButton', module)
   }));
 ```
 
-Svelte storybooks don't support using templates in a story yet. 
+Svelte storybooks don't support using templates in a story yet.
 Instead, you can create a `.svelte` file to compose components together, or simply to access all normal Svelte functionality, like slots.
 
 So you can create a story "view" file, essentially just a .svelte file to load your components into to test.
@@ -132,21 +132,20 @@ You would then write a story for this "view" the exact same way you did with a c
 import { storiesOf } from '@storybook/svelte';
 import MyButtonView from '../views/MyButtonView.svelte';
 
-storiesOf('Button', module)
-  .add('wrapped component(s) example', () => ({
-    Components: MyButtonView,
+storiesOf('Button', module).add('wrapped component(s) example', () => ({
+  Components: MyButtonView,
 
-    props: {
-      buttonText: 'some text',
-      rounded: true,
-    },
+  props: {
+    buttonText: 'some text',
+    rounded: true,
+  },
 
-    on: {
-      click: (event) => {
-        console.log('clicked', event);
-      },
+  on: {
+    click: event => {
+      console.log('clicked', event);
     },
-  }));
+  },
+}));
 ```
 
 Each story is a single state of your component. In the above case, there are two stories for the demo button component:

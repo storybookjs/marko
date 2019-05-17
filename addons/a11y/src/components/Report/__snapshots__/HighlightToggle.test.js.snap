@@ -146,10 +146,10 @@ exports[`HighlightToggle component should match snapshot 1`] = `
           },
           "code": Object {
             "language-json .token.boolean": Object {
-              "color": "#0000ff",
+              "color": "#1EA7FD",
             },
             "language-json .token.number": Object {
-              "color": "#0000ff",
+              "color": "#1EA7FD",
             },
             "language-json .token.property": Object {
               "color": "#2B91AF",
@@ -159,13 +159,13 @@ exports[`HighlightToggle component should match snapshot 1`] = `
             },
             "token": Object {
               "&.atrule": Object {
-                "color": "#0000ff",
+                "color": "#1EA7FD",
               },
               "&.attr-name": Object {
-                "color": "#ff0000",
+                "color": "#FC521F",
               },
               "&.attr-value": Object {
-                "color": "#0000ff",
+                "color": "#1EA7FD",
               },
               "&.bold": Object {
                 "fontWeight": "bold",
@@ -192,17 +192,17 @@ exports[`HighlightToggle component should match snapshot 1`] = `
               },
               "&.directive.tag .tag": Object {
                 "background": "#ffff00",
-                "color": "#393A34",
+                "color": "#333333",
               },
               "&.doctype": Object {
                 "color": "#008000",
                 "fontStyle": "italic",
               },
               "&.entity": Object {
-                "color": "#ff0000",
+                "color": "#FC521F",
               },
               "&.function": Object {
-                "color": "#393A34",
+                "color": "#333333",
               },
               "&.important": Object {
                 "fontWeight": "bold",
@@ -214,38 +214,38 @@ exports[`HighlightToggle component should match snapshot 1`] = `
                 "fontStyle": "italic",
               },
               "&.keyword": Object {
-                "color": "#0000ff",
+                "color": "#1EA7FD",
               },
               "&.number": Object {
                 "color": "#36acaa",
               },
               "&.operator": Object {
-                "color": "#393A34",
+                "color": "#333333",
               },
               "&.prolog": Object {
                 "color": "#008000",
                 "fontStyle": "italic",
               },
               "&.property": Object {
-                "color": "#ff0000",
+                "color": "#FC521F",
               },
               "&.punctuation": Object {
-                "color": "#393A34",
+                "color": "#333333",
               },
               "&.regex": Object {
-                "color": "#ff0000",
+                "color": "#FC521F",
               },
               "&.selector": Object {
-                "color": "#800000",
+                "color": "#694800",
               },
               "&.string": Object {
-                "color": "#A31515",
+                "color": "#FF4400",
               },
               "&.symbol": Object {
                 "color": "#36acaa",
               },
               "&.tag": Object {
-                "color": "#800000",
+                "color": "#694800",
               },
               "&.url": Object {
                 "color": "#36acaa",

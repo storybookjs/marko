@@ -18,11 +18,6 @@ type Props = {
   onLayout: (dimens: PreviewDimens) => void;
 } & PreviewDimens;
 
-export interface PreviewDimens {
-  previewWidth: number;
-  previewHeight: number;
-}
-
 // Android changes screen size when keyboard opens.
 // To avoid issues we use absolute positioned element with predefined screen size
 export default class AbsolutePositionedKeyboardAwareView extends PureComponent<Props> {

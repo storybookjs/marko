@@ -30,9 +30,9 @@ Array [
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -59,11 +59,11 @@ Array [
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -109,9 +109,9 @@ Array [
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -138,11 +138,11 @@ Array [
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -188,9 +188,9 @@ Array [
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -217,11 +217,11 @@ Array [
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -267,9 +267,9 @@ Array [
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -296,11 +296,11 @@ Array [
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -346,9 +346,9 @@ Array [
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -375,11 +375,11 @@ Array [
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -425,9 +425,9 @@ Array [
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -454,11 +454,11 @@ Array [
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -504,9 +504,9 @@ Array [
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -533,11 +533,11 @@ Array [
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -583,9 +583,9 @@ Array [
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -612,11 +612,11 @@ Array [
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -662,9 +662,9 @@ Array [
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -691,11 +691,11 @@ Array [
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -741,9 +741,9 @@ Array [
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -770,11 +770,11 @@ Array [
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -820,9 +820,9 @@ Array [
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -849,11 +849,11 @@ Array [
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -899,9 +899,9 @@ Array [
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -928,11 +928,11 @@ Array [
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -978,9 +978,9 @@ Array [
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -1007,11 +1007,11 @@ Array [
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -1057,9 +1057,9 @@ Array [
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -1086,11 +1086,11 @@ Array [
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -1136,9 +1136,9 @@ Array [
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -1165,11 +1165,11 @@ Array [
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -1215,9 +1215,9 @@ Array [
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -1244,11 +1244,11 @@ Array [
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -1294,9 +1294,9 @@ Array [
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -1323,11 +1323,11 @@ Array [
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -1373,9 +1373,9 @@ Array [
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -1402,11 +1402,11 @@ Array [
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -1452,9 +1452,9 @@ Array [
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -1481,11 +1481,11 @@ Array [
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -1531,9 +1531,9 @@ Array [
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -1560,11 +1560,11 @@ Array [
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -1614,9 +1614,9 @@ exports[`Storyshots Addons|Actions Basic example 1`] = `
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -1643,11 +1643,11 @@ exports[`Storyshots Addons|Actions Basic example 1`] = `
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -1696,9 +1696,9 @@ exports[`Storyshots Addons|Actions Circular Payload 1`] = `
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -1725,11 +1725,11 @@ exports[`Storyshots Addons|Actions Circular Payload 1`] = `
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -1778,9 +1778,9 @@ exports[`Storyshots Addons|Actions Decorated action + config 1`] = `
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -1807,11 +1807,11 @@ exports[`Storyshots Addons|Actions Decorated action + config 1`] = `
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -1860,9 +1860,9 @@ exports[`Storyshots Addons|Actions Decorated action 1`] = `
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -1889,11 +1889,11 @@ exports[`Storyshots Addons|Actions Decorated action 1`] = `
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -1942,9 +1942,9 @@ exports[`Storyshots Addons|Actions Decorated actions + config 1`] = `
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -1971,11 +1971,11 @@ exports[`Storyshots Addons|Actions Decorated actions + config 1`] = `
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -2024,9 +2024,9 @@ exports[`Storyshots Addons|Actions Decorated actions 1`] = `
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -2053,11 +2053,11 @@ exports[`Storyshots Addons|Actions Decorated actions 1`] = `
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -2107,9 +2107,9 @@ Array [
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -2136,11 +2136,11 @@ Array [
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -2186,9 +2186,9 @@ Array [
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -2215,11 +2215,11 @@ Array [
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -2269,9 +2269,9 @@ exports[`Storyshots Addons|Actions Multiple actions + config 1`] = `
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -2298,11 +2298,11 @@ exports[`Storyshots Addons|Actions Multiple actions + config 1`] = `
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -2351,9 +2351,9 @@ exports[`Storyshots Addons|Actions Multiple actions 1`] = `
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -2380,11 +2380,11 @@ exports[`Storyshots Addons|Actions Multiple actions 1`] = `
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -2433,9 +2433,9 @@ exports[`Storyshots Addons|Actions Multiple actions as object 1`] = `
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -2462,11 +2462,11 @@ exports[`Storyshots Addons|Actions Multiple actions as object 1`] = `
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -2515,9 +2515,9 @@ exports[`Storyshots Addons|Actions Multiple actions, object + config 1`] = `
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -2544,11 +2544,11 @@ exports[`Storyshots Addons|Actions Multiple actions, object + config 1`] = `
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -2601,9 +2601,9 @@ Array [
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -2630,11 +2630,11 @@ Array [
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -2684,9 +2684,9 @@ exports[`Storyshots Addons|Actions Reserved keyword as name 1`] = `
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -2713,11 +2713,11 @@ exports[`Storyshots Addons|Actions Reserved keyword as name 1`] = `
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -2766,9 +2766,9 @@ exports[`Storyshots Addons|Actions configureActionsDepth 1`] = `
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -2795,11 +2795,11 @@ exports[`Storyshots Addons|Actions configureActionsDepth 1`] = `
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {
@@ -2848,9 +2848,9 @@ exports[`Storyshots Addons|Actions.deprecated Decorated Action 1`] = `
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  background: #fafafa;
-  color: #333333;
-  box-shadow: rgba(0,0,0,.1) 0 0 0 1px inset;
+  background: #444;
+  color: #FFFFFF;
+  box-shadow: rgba(0,0,0,.3) 0 0 0 1px inset;
   border-radius: 4px;
   display: inline;
   -webkit-user-select: none;
@@ -2877,11 +2877,11 @@ exports[`Storyshots Addons|Actions.deprecated Decorated Action 1`] = `
 }
 
 .emotion-0:hover {
-  background: #f2f2f2;
+  background: #4c4c4c;
 }
 
 .emotion-0:active {
-  background: #FFFFFF;
+  background: #3f3f3f;
 }
 
 .emotion-0:focus {

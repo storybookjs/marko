@@ -18,7 +18,7 @@ exports[`Storyshots UI|Layout/Desktop bottom Panel 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  color: rgba(0,0,0,.1);
+  color: rgba(255,255,255,.1);
   overflow: hidden;
   -webkit-transition: color 0.2s linear,background-position 0.2s linear,background-size 0.2s linear,background 0.2s linear;
   transition: color 0.2s linear,background-position 0.2s linear,background-size 0.2s linear,background 0.2s linear;
@@ -100,7 +100,7 @@ exports[`Storyshots UI|Layout/Desktop bottom Panel 1`] = `
   left: 0;
   width: 100%;
   height: 100%;
-  background: #FFFFFF;
+  background: #333;
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 1px 5px 0 rgba(0,0,0,0.1);
@@ -171,7 +171,7 @@ exports[`Storyshots UI|Layout/Desktop bottom Panel 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  color: rgba(0,0,0,.1);
+  color: rgba(255,255,255,.1);
   overflow: hidden;
   -webkit-transition: color 0.2s linear,background-position 0.2s linear,background-size 0.2s linear,background 0.2s linear;
   transition: color 0.2s linear,background-position 0.2s linear,background-size 0.2s linear,background 0.2s linear;
@@ -204,7 +204,7 @@ exports[`Storyshots UI|Layout/Desktop bottom Panel 1`] = `
   width: 100%;
   height: 100%;
   opacity: 1;
-  border-top: 1px solid rgba(0,0,0,.1);
+  border-top: 1px solid rgba(255,255,255,.1);
   -webkit-transition: width 0.1s ease-out,height 0.1s ease-out,top 0.1s ease-out,left 0.1s ease-out,background 0.1s ease-out,opacity 0.1s ease-out,-webkit-transform 0.1s ease-out;
   -webkit-transition: width 0.1s ease-out,height 0.1s ease-out,top 0.1s ease-out,left 0.1s ease-out,background 0.1s ease-out,opacity 0.1s ease-out,transform 0.1s ease-out;
   transition: width 0.1s ease-out,height 0.1s ease-out,top 0.1s ease-out,left 0.1s ease-out,background 0.1s ease-out,opacity 0.1s ease-out,transform 0.1s ease-out;
@@ -340,7 +340,7 @@ exports[`Storyshots UI|Layout/Desktop default 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  color: rgba(0,0,0,.1);
+  color: rgba(255,255,255,.1);
   overflow: hidden;
   -webkit-transition: color 0.2s linear,background-position 0.2s linear,background-size 0.2s linear,background 0.2s linear;
   transition: color 0.2s linear,background-position 0.2s linear,background-size 0.2s linear,background 0.2s linear;
@@ -422,7 +422,7 @@ exports[`Storyshots UI|Layout/Desktop default 1`] = `
   left: 0;
   width: 100%;
   height: 100%;
-  background: #FFFFFF;
+  background: #333;
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 1px 5px 0 rgba(0,0,0,0.1);
@@ -460,7 +460,7 @@ exports[`Storyshots UI|Layout/Desktop default 1`] = `
   width: 100%;
   height: 100%;
   opacity: 1;
-  border-left: 1px solid rgba(0,0,0,.1);
+  border-left: 1px solid rgba(255,255,255,.1);
   -webkit-transition: width 0.1s ease-out,height 0.1s ease-out,top 0.1s ease-out,left 0.1s ease-out,background 0.1s ease-out,opacity 0.1s ease-out,-webkit-transform 0.1s ease-out;
   -webkit-transition: width 0.1s ease-out,height 0.1s ease-out,top 0.1s ease-out,left 0.1s ease-out,background 0.1s ease-out,opacity 0.1s ease-out,transform 0.1s ease-out;
   transition: width 0.1s ease-out,height 0.1s ease-out,top 0.1s ease-out,left 0.1s ease-out,background 0.1s ease-out,opacity 0.1s ease-out,transform 0.1s ease-out;
@@ -649,7 +649,7 @@ exports[`Storyshots UI|Layout/Desktop full 1`] = `
   width: 100%;
   height: 100%;
   opacity: 1;
-  border-left: 1px solid rgba(0,0,0,.1);
+  border-left: 1px solid rgba(255,255,255,.1);
   -webkit-transition: width 0.1s ease-out,height 0.1s ease-out,top 0.1s ease-out,left 0.1s ease-out,background 0.1s ease-out,opacity 0.1s ease-out,-webkit-transform 0.1s ease-out;
   -webkit-transition: width 0.1s ease-out,height 0.1s ease-out,top 0.1s ease-out,left 0.1s ease-out,background 0.1s ease-out,opacity 0.1s ease-out,transform 0.1s ease-out;
   transition: width 0.1s ease-out,height 0.1s ease-out,top 0.1s ease-out,left 0.1s ease-out,background 0.1s ease-out,opacity 0.1s ease-out,transform 0.1s ease-out;
@@ -775,7 +775,7 @@ exports[`Storyshots UI|Layout/Desktop no Nav 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  color: rgba(0,0,0,.1);
+  color: rgba(255,255,255,.1);
   overflow: hidden;
   -webkit-transition: color 0.2s linear,background-position 0.2s linear,background-size 0.2s linear,background 0.2s linear;
   transition: color 0.2s linear,background-position 0.2s linear,background-size 0.2s linear,background 0.2s linear;
@@ -820,7 +820,7 @@ exports[`Storyshots UI|Layout/Desktop no Nav 1`] = `
   left: 0;
   width: 100%;
   height: 100%;
-  background: #FFFFFF;
+  background: #333;
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 1px 5px 0 rgba(0,0,0,0.1);
@@ -858,7 +858,7 @@ exports[`Storyshots UI|Layout/Desktop no Nav 1`] = `
   width: 100%;
   height: 100%;
   opacity: 1;
-  border-left: 1px solid rgba(0,0,0,.1);
+  border-left: 1px solid rgba(255,255,255,.1);
   -webkit-transition: width 0.1s ease-out,height 0.1s ease-out,top 0.1s ease-out,left 0.1s ease-out,background 0.1s ease-out,opacity 0.1s ease-out,-webkit-transform 0.1s ease-out;
   -webkit-transition: width 0.1s ease-out,height 0.1s ease-out,top 0.1s ease-out,left 0.1s ease-out,background 0.1s ease-out,opacity 0.1s ease-out,transform 0.1s ease-out;
   transition: width 0.1s ease-out,height 0.1s ease-out,top 0.1s ease-out,left 0.1s ease-out,background 0.1s ease-out,opacity 0.1s ease-out,transform 0.1s ease-out;
@@ -985,7 +985,7 @@ exports[`Storyshots UI|Layout/Desktop no Panel 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  color: rgba(0,0,0,.1);
+  color: rgba(255,255,255,.1);
   overflow: hidden;
   -webkit-transition: color 0.2s linear,background-position 0.2s linear,background-size 0.2s linear,background 0.2s linear;
   transition: color 0.2s linear,background-position 0.2s linear,background-size 0.2s linear,background 0.2s linear;
@@ -1067,7 +1067,7 @@ exports[`Storyshots UI|Layout/Desktop no Panel 1`] = `
   left: 0;
   width: 100%;
   height: 100%;
-  background: #FFFFFF;
+  background: #333;
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 1px 5px 0 rgba(0,0,0,0.1);
@@ -1105,7 +1105,7 @@ exports[`Storyshots UI|Layout/Desktop no Panel 1`] = `
   width: 100%;
   height: 100%;
   opacity: 1;
-  border-left: 1px solid rgba(0,0,0,.1);
+  border-left: 1px solid rgba(255,255,255,.1);
   -webkit-transition: width 0.1s ease-out,height 0.1s ease-out,top 0.1s ease-out,left 0.1s ease-out,background 0.1s ease-out,opacity 0.1s ease-out,-webkit-transform 0.1s ease-out;
   -webkit-transition: width 0.1s ease-out,height 0.1s ease-out,top 0.1s ease-out,left 0.1s ease-out,background 0.1s ease-out,opacity 0.1s ease-out,transform 0.1s ease-out;
   transition: width 0.1s ease-out,height 0.1s ease-out,top 0.1s ease-out,left 0.1s ease-out,background 0.1s ease-out,opacity 0.1s ease-out,transform 0.1s ease-out;
@@ -1284,7 +1284,7 @@ exports[`Storyshots UI|Layout/Desktop no Panel, no Nav 1`] = `
   width: 100%;
   height: 100%;
   opacity: 1;
-  border-left: 1px solid rgba(0,0,0,.1);
+  border-left: 1px solid rgba(255,255,255,.1);
   -webkit-transition: width 0.1s ease-out,height 0.1s ease-out,top 0.1s ease-out,left 0.1s ease-out,background 0.1s ease-out,opacity 0.1s ease-out,-webkit-transform 0.1s ease-out;
   -webkit-transition: width 0.1s ease-out,height 0.1s ease-out,top 0.1s ease-out,left 0.1s ease-out,background 0.1s ease-out,opacity 0.1s ease-out,transform 0.1s ease-out;
   transition: width 0.1s ease-out,height 0.1s ease-out,top 0.1s ease-out,left 0.1s ease-out,background 0.1s ease-out,opacity 0.1s ease-out,transform 0.1s ease-out;
@@ -1410,7 +1410,7 @@ exports[`Storyshots UI|Layout/Desktop page 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  color: rgba(0,0,0,.1);
+  color: rgba(255,255,255,.1);
   overflow: hidden;
   -webkit-transition: color 0.2s linear,background-position 0.2s linear,background-size 0.2s linear,background 0.2s linear;
   transition: color 0.2s linear,background-position 0.2s linear,background-size 0.2s linear,background 0.2s linear;
@@ -1492,7 +1492,7 @@ exports[`Storyshots UI|Layout/Desktop page 1`] = `
   left: 0;
   width: 100%;
   height: 100%;
-  background: #FFFFFF;
+  background: #333;
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 1px 5px 0 rgba(0,0,0,0.1);
@@ -1568,7 +1568,7 @@ exports[`Storyshots UI|Layout/Desktop page 1`] = `
   width: 100%;
   height: 100%;
   opacity: 0;
-  border-left: 1px solid rgba(0,0,0,.1);
+  border-left: 1px solid rgba(255,255,255,.1);
   -webkit-transition: width 0.1s ease-out,height 0.1s ease-out,top 0.1s ease-out,left 0.1s ease-out,background 0.1s ease-out,opacity 0.1s ease-out,-webkit-transform 0.1s ease-out;
   -webkit-transition: width 0.1s ease-out,height 0.1s ease-out,top 0.1s ease-out,left 0.1s ease-out,background 0.1s ease-out,opacity 0.1s ease-out,transform 0.1s ease-out;
   transition: width 0.1s ease-out,height 0.1s ease-out,top 0.1s ease-out,left 0.1s ease-out,background 0.1s ease-out,opacity 0.1s ease-out,transform 0.1s ease-out;
@@ -1903,7 +1903,7 @@ exports[`Storyshots UI|Layout/Mobile initial 0 1`] = `
   top: 0;
   height: 100%;
   overflow: auto;
-  background: #FFFFFF;
+  background: #333;
   width: 80vw;
   -webkit-transform: translateX(-80vw);
   -ms-transform: translateX(-80vw);
@@ -1915,11 +1915,11 @@ exports[`Storyshots UI|Layout/Mobile initial 0 1`] = `
 }
 
 .emotion-1:nth-of-type(1) {
-  border-right: 1px solid rgba(0,0,0,.1);
+  border-right: 1px solid rgba(255,255,255,.1);
 }
 
 .emotion-1:nth-of-type(3) {
-  border-left: 1px solid rgba(0,0,0,.1);
+  border-left: 1px solid rgba(255,255,255,.1);
 }
 
 .emotion-3 {
@@ -1930,7 +1930,7 @@ exports[`Storyshots UI|Layout/Mobile initial 0 1`] = `
   top: 0;
   height: 100%;
   overflow: auto;
-  background: #FFFFFF;
+  background: #333;
   width: 100%;
   -webkit-transform: translateX(0) scale(1);
   -ms-transform: translateX(0) scale(1);
@@ -1942,11 +1942,11 @@ exports[`Storyshots UI|Layout/Mobile initial 0 1`] = `
 }
 
 .emotion-3:nth-of-type(1) {
-  border-right: 1px solid rgba(0,0,0,.1);
+  border-right: 1px solid rgba(255,255,255,.1);
 }
 
 .emotion-3:nth-of-type(3) {
-  border-left: 1px solid rgba(0,0,0,.1);
+  border-left: 1px solid rgba(255,255,255,.1);
 }
 
 .emotion-5 {
@@ -1957,7 +1957,7 @@ exports[`Storyshots UI|Layout/Mobile initial 0 1`] = `
   top: 0;
   height: 100%;
   overflow: auto;
-  background: #FFFFFF;
+  background: #333;
   width: 80vw;
   -webkit-transform: translateX(80vw);
   -ms-transform: translateX(80vw);
@@ -1966,11 +1966,11 @@ exports[`Storyshots UI|Layout/Mobile initial 0 1`] = `
 }
 
 .emotion-5:nth-of-type(1) {
-  border-right: 1px solid rgba(0,0,0,.1);
+  border-right: 1px solid rgba(255,255,255,.1);
 }
 
 .emotion-5:nth-of-type(3) {
-  border-left: 1px solid rgba(0,0,0,.1);
+  border-left: 1px solid rgba(255,255,255,.1);
 }
 
 .emotion-10 {
@@ -1984,7 +1984,7 @@ exports[`Storyshots UI|Layout/Mobile initial 0 1`] = `
   display: -ms-flexbox;
   display: flex;
   box-shadow: 0 1px 5px 0 rgba(0,0,0,0.1);
-  background: #FFFFFF;
+  background: #333333;
 }
 
 .emotion-10 > * {
@@ -2273,7 +2273,7 @@ exports[`Storyshots UI|Layout/Mobile initial 1 1`] = `
   top: 0;
   height: 100%;
   overflow: auto;
-  background: #FFFFFF;
+  background: #333;
   width: 80vw;
   -webkit-transform: translateX(80vw);
   -ms-transform: translateX(80vw);
@@ -2282,11 +2282,11 @@ exports[`Storyshots UI|Layout/Mobile initial 1 1`] = `
 }
 
 .emotion-5:nth-of-type(1) {
-  border-right: 1px solid rgba(0,0,0,.1);
+  border-right: 1px solid rgba(255,255,255,.1);
 }
 
 .emotion-5:nth-of-type(3) {
-  border-left: 1px solid rgba(0,0,0,.1);
+  border-left: 1px solid rgba(255,255,255,.1);
 }
 
 .emotion-10 {
@@ -2300,7 +2300,7 @@ exports[`Storyshots UI|Layout/Mobile initial 1 1`] = `
   display: -ms-flexbox;
   display: flex;
   box-shadow: 0 1px 5px 0 rgba(0,0,0,0.1);
-  background: #FFFFFF;
+  background: #333333;
 }
 
 .emotion-10 > * {
@@ -2317,7 +2317,7 @@ exports[`Storyshots UI|Layout/Mobile initial 1 1`] = `
   top: 0;
   height: 100%;
   overflow: auto;
-  background: #FFFFFF;
+  background: #333;
   width: 80vw;
   -webkit-transform: translateX(-80vw);
   -ms-transform: translateX(-80vw);
@@ -2326,11 +2326,11 @@ exports[`Storyshots UI|Layout/Mobile initial 1 1`] = `
 }
 
 .emotion-1:nth-of-type(1) {
-  border-right: 1px solid rgba(0,0,0,.1);
+  border-right: 1px solid rgba(255,255,255,.1);
 }
 
 .emotion-1:nth-of-type(3) {
-  border-left: 1px solid rgba(0,0,0,.1);
+  border-left: 1px solid rgba(255,255,255,.1);
 }
 
 .emotion-3 {
@@ -2341,7 +2341,7 @@ exports[`Storyshots UI|Layout/Mobile initial 1 1`] = `
   top: 0;
   height: 100%;
   overflow: auto;
-  background: #FFFFFF;
+  background: #333;
   width: 100%;
   -webkit-transform: translateX(0) scale(1);
   -ms-transform: translateX(0) scale(1);
@@ -2350,11 +2350,11 @@ exports[`Storyshots UI|Layout/Mobile initial 1 1`] = `
 }
 
 .emotion-3:nth-of-type(1) {
-  border-right: 1px solid rgba(0,0,0,.1);
+  border-right: 1px solid rgba(255,255,255,.1);
 }
 
 .emotion-3:nth-of-type(3) {
-  border-left: 1px solid rgba(0,0,0,.1);
+  border-left: 1px solid rgba(255,255,255,.1);
 }
 
 <div
@@ -2640,7 +2640,7 @@ exports[`Storyshots UI|Layout/Mobile initial 2 1`] = `
   display: -ms-flexbox;
   display: flex;
   box-shadow: 0 1px 5px 0 rgba(0,0,0,0.1);
-  background: #FFFFFF;
+  background: #333333;
 }
 
 .emotion-10 > * {
@@ -2657,7 +2657,7 @@ exports[`Storyshots UI|Layout/Mobile initial 2 1`] = `
   top: 0;
   height: 100%;
   overflow: auto;
-  background: #FFFFFF;
+  background: #333;
   width: 80vw;
   -webkit-transform: translateX(-80vw);
   -ms-transform: translateX(-80vw);
@@ -2666,11 +2666,11 @@ exports[`Storyshots UI|Layout/Mobile initial 2 1`] = `
 }
 
 .emotion-1:nth-of-type(1) {
-  border-right: 1px solid rgba(0,0,0,.1);
+  border-right: 1px solid rgba(255,255,255,.1);
 }
 
 .emotion-1:nth-of-type(3) {
-  border-left: 1px solid rgba(0,0,0,.1);
+  border-left: 1px solid rgba(255,255,255,.1);
 }
 
 .emotion-3 {
@@ -2681,7 +2681,7 @@ exports[`Storyshots UI|Layout/Mobile initial 2 1`] = `
   top: 0;
   height: 100%;
   overflow: auto;
-  background: #FFFFFF;
+  background: #333;
   width: 100%;
   -webkit-transform: translateX(0) scale(1);
   -ms-transform: translateX(0) scale(1);
@@ -2693,11 +2693,11 @@ exports[`Storyshots UI|Layout/Mobile initial 2 1`] = `
 }
 
 .emotion-3:nth-of-type(1) {
-  border-right: 1px solid rgba(0,0,0,.1);
+  border-right: 1px solid rgba(255,255,255,.1);
 }
 
 .emotion-3:nth-of-type(3) {
-  border-left: 1px solid rgba(0,0,0,.1);
+  border-left: 1px solid rgba(255,255,255,.1);
 }
 
 .emotion-5 {
@@ -2708,7 +2708,7 @@ exports[`Storyshots UI|Layout/Mobile initial 2 1`] = `
   top: 0;
   height: 100%;
   overflow: auto;
-  background: #FFFFFF;
+  background: #333;
   width: 80vw;
   -webkit-transform: translateX(80vw);
   -ms-transform: translateX(80vw);
@@ -2720,11 +2720,11 @@ exports[`Storyshots UI|Layout/Mobile initial 2 1`] = `
 }
 
 .emotion-5:nth-of-type(1) {
-  border-right: 1px solid rgba(0,0,0,.1);
+  border-right: 1px solid rgba(255,255,255,.1);
 }
 
 .emotion-5:nth-of-type(3) {
-  border-left: 1px solid rgba(0,0,0,.1);
+  border-left: 1px solid rgba(255,255,255,.1);
 }
 
 <div
@@ -3031,7 +3031,7 @@ exports[`Storyshots UI|Layout/Mobile page 1`] = `
   top: 0;
   height: 100%;
   overflow: auto;
-  background: #FFFFFF;
+  background: #333;
   width: 80vw;
   -webkit-transform: translateX(80vw);
   -ms-transform: translateX(80vw);
@@ -3040,11 +3040,11 @@ exports[`Storyshots UI|Layout/Mobile page 1`] = `
 }
 
 .emotion-6:nth-of-type(1) {
-  border-right: 1px solid rgba(0,0,0,.1);
+  border-right: 1px solid rgba(255,255,255,.1);
 }
 
 .emotion-6:nth-of-type(3) {
-  border-left: 1px solid rgba(0,0,0,.1);
+  border-left: 1px solid rgba(255,255,255,.1);
 }
 
 .emotion-11 {
@@ -3058,7 +3058,7 @@ exports[`Storyshots UI|Layout/Mobile page 1`] = `
   display: -ms-flexbox;
   display: flex;
   box-shadow: 0 1px 5px 0 rgba(0,0,0,0.1);
-  background: #FFFFFF;
+  background: #333333;
 }
 
 .emotion-11 > * {
@@ -3075,7 +3075,7 @@ exports[`Storyshots UI|Layout/Mobile page 1`] = `
   top: 0;
   height: 100%;
   overflow: auto;
-  background: #FFFFFF;
+  background: #333;
   width: 80vw;
   -webkit-transform: translateX(-80vw);
   -ms-transform: translateX(-80vw);
@@ -3084,11 +3084,11 @@ exports[`Storyshots UI|Layout/Mobile page 1`] = `
 }
 
 .emotion-1:nth-of-type(1) {
-  border-right: 1px solid rgba(0,0,0,.1);
+  border-right: 1px solid rgba(255,255,255,.1);
 }
 
 .emotion-1:nth-of-type(3) {
-  border-left: 1px solid rgba(0,0,0,.1);
+  border-left: 1px solid rgba(255,255,255,.1);
 }
 
 .emotion-4 {
@@ -3099,7 +3099,7 @@ exports[`Storyshots UI|Layout/Mobile page 1`] = `
   top: 0;
   height: 100%;
   overflow: auto;
-  background: #FFFFFF;
+  background: #333;
   width: 100%;
   -webkit-transform: translateX(0) scale(1);
   -ms-transform: translateX(0) scale(1);
@@ -3108,11 +3108,11 @@ exports[`Storyshots UI|Layout/Mobile page 1`] = `
 }
 
 .emotion-4:nth-of-type(1) {
-  border-right: 1px solid rgba(0,0,0,.1);
+  border-right: 1px solid rgba(255,255,255,.1);
 }
 
 .emotion-4:nth-of-type(3) {
-  border-left: 1px solid rgba(0,0,0,.1);
+  border-left: 1px solid rgba(255,255,255,.1);
 }
 
 <div

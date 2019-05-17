@@ -253,9 +253,17 @@ storiesOf('Addons|Info.GitHub issues', module).add(
 exports[`inject-decorator positive - angular calculates "adds" map 1`] = `
 Object {
   "custom-ng-content--default": Object {
+    "endBody": Object {
+      "col": 2,
+      "line": 17,
+    },
     "endLoc": Object {
       "col": 2,
       "line": 17,
+    },
+    "startBody": Object {
+      "col": 54,
+      "line": 12,
     },
     "startLoc": Object {
       "col": 43,
@@ -328,9 +336,17 @@ stories.add('Flow Class', withInfo('Lorum Ipsum Nem')(() => <Table />));
 exports[`inject-decorator positive - ts calculates "adds" map 1`] = `
 Object {
   "ngrx-store--with-component": Object {
+    "endBody": Object {
+      "col": 3,
+      "line": 32,
+    },
     "endLoc": Object {
       "col": 3,
       "line": 32,
+    },
+    "startBody": Object {
+      "col": 25,
+      "line": 28,
     },
     "startLoc": Object {
       "col": 7,
@@ -378,8 +394,16 @@ storiesOf('ngrx|Store', module).addDecorator(withStorySource(__STORY__, __ADDS_M
 exports[`inject-decorator positive calculates "adds" map 1`] = `
 Object {
   "addons-info-decorator--use-info-as-story-decorator": Object {
+    "endBody": Object {
+      "col": 73,
+      "line": 137,
+    },
     "endLoc": Object {
       "col": 73,
+      "line": 137,
+    },
+    "startBody": Object {
+      "col": 38,
       "line": 137,
     },
     "startLoc": Object {
@@ -388,9 +412,17 @@ Object {
     },
   },
   "addons-info-github-issues--1814": Object {
+    "endBody": Object {
+      "col": 4,
+      "line": 152,
+    },
     "endLoc": Object {
       "col": 4,
       "line": 152,
+    },
+    "startBody": Object {
+      "col": 2,
+      "line": 147,
     },
     "startLoc": Object {
       "col": 2,
@@ -398,8 +430,16 @@ Object {
     },
   },
   "addons-info-markdown--displays-markdown-in-description": Object {
+    "endBody": Object {
+      "col": 96,
+      "line": 44,
+    },
     "endLoc": Object {
       "col": 96,
+      "line": 44,
+    },
+    "startBody": Object {
+      "col": 2,
       "line": 44,
     },
     "startLoc": Object {
@@ -408,9 +448,17 @@ Object {
     },
   },
   "addons-info-options-header--shows-or-hides-info-addon-header": Object {
+    "endBody": Object {
+      "col": 41,
+      "line": 60,
+    },
     "endLoc": Object {
       "col": 41,
       "line": 60,
+    },
+    "startBody": Object {
+      "col": 2,
+      "line": 57,
     },
     "startLoc": Object {
       "col": 2,
@@ -418,9 +466,17 @@ Object {
     },
   },
   "addons-info-options-inline--inlines-component-inside-story": Object {
+    "endBody": Object {
+      "col": 41,
+      "line": 52,
+    },
     "endLoc": Object {
       "col": 41,
       "line": 52,
+    },
+    "startBody": Object {
+      "col": 2,
+      "line": 49,
     },
     "startLoc": Object {
       "col": 2,
@@ -428,9 +484,17 @@ Object {
     },
   },
   "addons-info-options-proptables--shows-additional-component-prop-tables": Object {
+    "endBody": Object {
+      "col": 41,
+      "line": 76,
+    },
     "endLoc": Object {
       "col": 41,
       "line": 76,
+    },
+    "startBody": Object {
+      "col": 2,
+      "line": 73,
     },
     "startLoc": Object {
       "col": 2,
@@ -438,9 +502,17 @@ Object {
     },
   },
   "addons-info-options-proptablesexclude--exclude-component-from-prop-tables": Object {
+    "endBody": Object {
+      "col": 4,
+      "line": 89,
+    },
     "endLoc": Object {
       "col": 4,
       "line": 89,
+    },
+    "startBody": Object {
+      "col": 2,
+      "line": 81,
     },
     "startLoc": Object {
       "col": 2,
@@ -448,9 +520,17 @@ Object {
     },
   },
   "addons-info-options-source--shows-or-hides-info-addon-source": Object {
+    "endBody": Object {
+      "col": 41,
+      "line": 68,
+    },
     "endLoc": Object {
       "col": 41,
       "line": 68,
+    },
+    "startBody": Object {
+      "col": 2,
+      "line": 65,
     },
     "startLoc": Object {
       "col": 2,
@@ -458,9 +538,17 @@ Object {
     },
   },
   "addons-info-options-styles--extend-info-styles-with-an-object": Object {
+    "endBody": Object {
+      "col": 43,
+      "line": 108,
+    },
     "endLoc": Object {
       "col": 43,
       "line": 108,
+    },
+    "startBody": Object {
+      "col": 4,
+      "line": 95,
     },
     "startLoc": Object {
       "col": 4,
@@ -468,9 +556,17 @@ Object {
     },
   },
   "addons-info-options-styles--full-control-over-styles-using-a-function": Object {
+    "endBody": Object {
+      "col": 43,
+      "line": 123,
+    },
     "endLoc": Object {
       "col": 43,
       "line": 123,
+    },
+    "startBody": Object {
+      "col": 4,
+      "line": 112,
     },
     "startLoc": Object {
       "col": 4,
@@ -478,9 +574,17 @@ Object {
     },
   },
   "addons-info-options-tablecomponent--use-a-custom-component-for-the-table": Object {
+    "endBody": Object {
+      "col": 41,
+      "line": 130,
+    },
     "endLoc": Object {
       "col": 41,
       "line": 130,
+    },
+    "startBody": Object {
+      "col": 2,
+      "line": 128,
     },
     "startLoc": Object {
       "col": 2,
@@ -488,9 +592,17 @@ Object {
     },
   },
   "addons-info-react-docgen--comments-from-component-declaration": Object {
+    "endBody": Object {
+      "col": 70,
+      "line": 28,
+    },
     "endLoc": Object {
       "col": 70,
       "line": 28,
+    },
+    "startBody": Object {
+      "col": 4,
+      "line": 26,
     },
     "startLoc": Object {
       "col": 4,
@@ -498,9 +610,17 @@ Object {
     },
   },
   "addons-info-react-docgen--comments-from-flow-declarations": Object {
+    "endBody": Object {
+      "col": 85,
+      "line": 22,
+    },
     "endLoc": Object {
       "col": 85,
       "line": 22,
+    },
+    "startBody": Object {
+      "col": 4,
+      "line": 20,
     },
     "startLoc": Object {
       "col": 4,
@@ -508,9 +628,17 @@ Object {
     },
   },
   "addons-info-react-docgen--comments-from-proptype-declarations": Object {
+    "endBody": Object {
+      "col": 79,
+      "line": 16,
+    },
     "endLoc": Object {
       "col": 79,
       "line": 16,
+    },
+    "startBody": Object {
+      "col": 4,
+      "line": 14,
     },
     "startLoc": Object {
       "col": 4,

@@ -4,14 +4,15 @@ exports[`Storyshots Basics|Tabs stateful - dynamic 1`] = `
 .emotion-9 {
   overflow-y: hidden;
   overflow-x: auto;
+  width: 100%;
   color: #999999;
   width: 100%;
   height: 40px;
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
-  box-shadow: rgba(0,0,0,.1) 0 -1px 0 0 inset;
-  background: #FFFFFF;
+  box-shadow: rgba(255,255,255,.1) 0 -1px 0 0 inset;
+  background: #333333;
 }
 
 .emotion-8 {
@@ -347,14 +348,15 @@ exports[`Storyshots Basics|Tabs stateful - no initial 1`] = `
 .emotion-9 {
   overflow-y: hidden;
   overflow-x: auto;
+  width: 100%;
   color: #999999;
   width: 100%;
   height: 40px;
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
-  box-shadow: rgba(0,0,0,.1) 0 -1px 0 0 inset;
-  background: #FFFFFF;
+  box-shadow: rgba(255,255,255,.1) 0 -1px 0 0 inset;
+  background: #333333;
 }
 
 .emotion-8 {
@@ -646,14 +648,15 @@ exports[`Storyshots Basics|Tabs stateful - static 1`] = `
 .emotion-5 {
   overflow-y: hidden;
   overflow-x: auto;
+  width: 100%;
   color: #999999;
   width: 100%;
   height: 40px;
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
-  box-shadow: rgba(0,0,0,.1) 0 -1px 0 0 inset;
-  background: #FFFFFF;
+  box-shadow: rgba(255,255,255,.1) 0 -1px 0 0 inset;
+  background: #333333;
 }
 
 .emotion-4 {
@@ -903,14 +906,15 @@ exports[`Storyshots Basics|Tabs stateless - absolute 1`] = `
 .emotion-9 {
   overflow-y: hidden;
   overflow-x: auto;
+  width: 100%;
   color: #999999;
   width: 100%;
   height: 40px;
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
-  box-shadow: rgba(0,0,0,.1) 0 -1px 0 0 inset;
-  background: #FFFFFF;
+  box-shadow: rgba(255,255,255,.1) 0 -1px 0 0 inset;
+  background: #333333;
 }
 
 .emotion-8 {
@@ -1077,7 +1081,7 @@ exports[`Storyshots Basics|Tabs stateless - absolute 1`] = `
 
 .emotion-12 {
   background-clip: padding-box;
-  border: 1px solid rgba(0,0,0,.1);
+  border: 1px solid rgba(255,255,255,.1);
   border-radius: 4px;
   overflow: hidden;
   width: 100%;
@@ -1276,14 +1280,15 @@ exports[`Storyshots Basics|Tabs stateless - bordered 1`] = `
 .emotion-9 {
   overflow-y: hidden;
   overflow-x: auto;
+  width: 100%;
   color: #999999;
   width: 100%;
   height: 40px;
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
-  box-shadow: rgba(0,0,0,.1) 0 -1px 0 0 inset;
-  background: #FFFFFF;
+  box-shadow: rgba(255,255,255,.1) 0 -1px 0 0 inset;
+  background: #333333;
 }
 
 .emotion-8 {
@@ -1433,7 +1438,7 @@ exports[`Storyshots Basics|Tabs stateless - bordered 1`] = `
 
 .emotion-12 {
   background-clip: padding-box;
-  border: 1px solid rgba(0,0,0,.1);
+  border: 1px solid rgba(255,255,255,.1);
   border-radius: 4px;
   overflow: hidden;
   display: block;
@@ -1623,7 +1628,7 @@ exports[`Storyshots Basics|Tabs stateless - empty 1`] = `
 .emotion-1 {
   padding: 30px;
   text-align: center;
-  color: #333333;
+  color: #FFFFFF;
   font-size: 13px;
 }
 
@@ -1650,14 +1655,15 @@ exports[`Storyshots Basics|Tabs stateless - with tools 1`] = `
 .emotion-10 {
   overflow-y: hidden;
   overflow-x: auto;
+  width: 100%;
   color: #999999;
   width: 100%;
   height: 40px;
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
-  box-shadow: rgba(0,0,0,.1) 0 -1px 0 0 inset;
-  background: #FFFFFF;
+  box-shadow: rgba(255,255,255,.1) 0 -1px 0 0 inset;
+  background: #333333;
 }
 
 .emotion-9 {
