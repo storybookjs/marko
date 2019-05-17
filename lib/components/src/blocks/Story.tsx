@@ -45,7 +45,7 @@ const IFrameStory: React.FunctionComponent<IFrameStoryProps> = ({
       key="iframe"
       id={`storybook-Story-${id}`}
       title={title}
-      src={`${BASE_URL}?id=${id}`}
+      src={`${BASE_URL}?id=${id}&viewMode=story`}
       allowFullScreen
       scale={1}
       style={{
