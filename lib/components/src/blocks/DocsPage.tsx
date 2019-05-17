@@ -62,7 +62,7 @@ export const DocsWrapper = styled.div(({ theme }) => ({
   [`@media (min-width: ${breakpoint * 1}px)`]: {},
 }));
 
-export const DocsPageWrapper = ({ children }) => (
+export const DocsPageWrapper: React.FunctionComponent = ({ children }) => (
   <DocsWrapper>
     <DocsContent>{children}</DocsContent>
   </DocsWrapper>
