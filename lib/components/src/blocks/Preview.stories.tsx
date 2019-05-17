@@ -1,14 +1,32 @@
 import React from 'react';
-import { Preview } from './Preview';
+import { action } from '@storybook/addon-actions';
 
+import { Preview } from './Preview';
 import { DocsPageWrapper } from './DocsPage';
 import { Button } from '../Button/Button';
+import { ActionBar } from '../ActionBar/ActionBar';
+import * as sourceStories from './Source.stories';
 
 export const componentMeta = {
   title: 'Docs|Preview',
   Component: Preview,
   decorators: [getStory => <DocsPageWrapper>{getStory()}</DocsPageWrapper>],
 };
+
+export const codeCollapsed = () => (
+  <Preview>
+    <Button secondary>Button 1</Button>
+    <ActionBar actionItems={[{ title: 'show', onClick: action('hide') }]} />
+  </Preview>
+);
+
+export const codeExpanded = () => (
+  <Preview>
+    <Button secondary>Button 1</Button>
+    {sourceStories.jsx()}
+    <ActionBar actionItems={[{ title: 'hide', onClick: action('hide') }]} />
+  </Preview>
+);
 
 export const single = () => (
   <Preview>
