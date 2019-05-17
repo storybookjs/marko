@@ -1,4 +1,4 @@
-## 5.2.0-alpha.9 (May 15, 2019)
+## 5.2.0-alpha.9 (May 17, 2019)
 
 - Addon-docs bugfixes:
   - Fix broken components stories
