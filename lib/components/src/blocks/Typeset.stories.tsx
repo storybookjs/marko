@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typeset } from './Typeset';
 
-import { Content as DocsPageWrapper } from './DocsPage';
+import { DocsPageWrapper } from './DocsPage';
 
 export const componentMeta = {
   title: 'Docs|Typeset',

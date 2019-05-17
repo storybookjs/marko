@@ -1,7 +1,7 @@
 import React from 'react';
 import { ColorItem, ColorPalette } from './ColorPalette';
 
-import { Content as DocsPageWrapper } from './DocsPage';
+import { DocsPageWrapper } from './DocsPage';
 
 export const componentMeta = {
   title: 'Docs|ColorPalette',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Source, SourceError } from './Source';
-import { Content as DocsPageWrapper } from './DocsPage';
+import { DocsPageWrapper } from './DocsPage';
 
 export const componentMeta = {
   title: 'Docs|Source',

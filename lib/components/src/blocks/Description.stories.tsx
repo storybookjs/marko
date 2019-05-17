@@ -1,7 +1,7 @@
 import React from 'react';
 import { Description } from './Description';
 
-import { Content as DocsPageWrapper } from './DocsPage';
+import { DocsPageWrapper } from './DocsPage';
 import markdownCaption from './DocsPageExampleCaption.md';
 
 export const componentMeta = {

@@ -62,6 +62,12 @@ export const DocsWrapper = styled.div(({ theme }) => ({
   [`@media (min-width: ${breakpoint * 1}px)`]: {},
 }));
 
+export const DocsPageWrapper = ({ children }) => (
+  <DocsWrapper>
+    <DocsContent>{children}</DocsContent>
+  </DocsWrapper>
+);
+
 const DocsPage: React.FunctionComponent<DocsPageProps> = ({ title, subtitle, children }) => (
   <>
     {title && <Title>{title}</Title>}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconItem, IconGallery } from './IconGallery';
 
-import { Content as DocsPageWrapper } from './DocsPage';
+import { DocsPageWrapper } from './DocsPage';
 import { Icons as ExampleIcon } from '../icon/icon';
 
 export const componentMeta = {

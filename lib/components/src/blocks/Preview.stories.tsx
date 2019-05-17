@@ -1,7 +1,7 @@
 import React from 'react';
 import { Preview } from './Preview';
 
-import { Content as DocsPageWrapper } from './DocsPage';
+import { DocsPageWrapper } from './DocsPage';
 import { Button } from '../Button/Button';
 
 export const componentMeta = {
