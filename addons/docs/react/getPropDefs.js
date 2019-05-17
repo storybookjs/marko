@@ -76,4 +76,4 @@ const propsFromPropTypes = type => {
 };
 
 export const getPropDefs = type =>
-  hasDocgen(type) ? propsFromDocgen(type) : propsFromPropTypes(type);
+  hasDocgen(type.__docgenInfo) ? propsFromDocgen(type) : propsFromPropTypes(type);
