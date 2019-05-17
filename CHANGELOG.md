@@ -1,3 +1,11 @@
+## 5.2.0-alpha.9 (May 15, 2019)
+
+- Addon-docs bugfixes:
+  - Fix broken components stories
+  - Fix regression in iframe preview
+  - Fix docgen props block
+  - Fix margin styling on docs page
+
 ## 5.2.0-alpha.8 (May 15, 2019)
 
 - Addon-docs: Optimize docs pane rerendering
