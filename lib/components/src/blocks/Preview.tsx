@@ -1,11 +1,16 @@
 import React from 'react';
 import { styled } from '@storybook/theming';
 
+import { string } from 'prop-types';
 import { getBlockBackgroundStyle } from './BlockBackgroundStyles';
+import { Source, SourceProps } from './Source';
+import { ActionBar } from '../ActionBar/ActionBar';
 
 export interface PreviewProps {
   isColumn?: boolean;
   columns?: number;
+  withSource?: SourceProps;
+  isExpanded?: boolean;
 }
 
 const ChildrenContainer = styled.div<PreviewProps>(({ isColumn, columns }) => ({
@@ -27,10 +32,38 @@ const PreviewWrapper = styled.div<PreviewProps>(({ theme }) => ({
   padding: '30px 20px',
 }));
 
+interface SourceExpanderProps {
+  withSource?: SourceProps;
+  isExpanded?: boolean;
+}
+const SourceExpander: React.FunctionComponent<SourceExpanderProps> = ({
+  withSource,
+  isExpanded = false,
+}) => {
+  const [expanded, setExpanded] = React.useState(isExpanded);
+  const { source, actionItem } = expanded
+    ? {
+        source: <Source {...withSource} />,
+        actionItem: { title: 'hide code', onClick: () => setExpanded(false) },
+      }
+    : {
+        source: null,
+        actionItem: { title: 'show code', onClick: () => setExpanded(true) },
+      };
+  return (
+    <>
+      {source}
+      <ActionBar actionItems={[actionItem]} />
+    </>
+  );
+};
+
 const Preview: React.FunctionComponent<PreviewProps> = ({
   isColumn,
   columns,
   children,
+  withSource,
+  isExpanded,
   ...props
 }) => (
   <PreviewWrapper {...props}>
@@ -41,6 +74,7 @@ const Preview: React.FunctionComponent<PreviewProps> = ({
         <div>{children}</div>
       )}
     </ChildrenContainer>
+    {withSource && <SourceExpander withSource={withSource} isExpanded={isExpanded} />}
   </PreviewWrapper>
 );
 

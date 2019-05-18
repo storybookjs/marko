@@ -4,7 +4,6 @@ import { action } from '@storybook/addon-actions';
 import { Preview } from './Preview';
 import { DocsPageWrapper } from './DocsPage';
 import { Button } from '../Button/Button';
-import { ActionBar } from '../ActionBar/ActionBar';
 import * as sourceStories from './Source.stories';
 
 export const componentMeta = {
@@ -14,17 +13,20 @@ export const componentMeta = {
 };
 
 export const codeCollapsed = () => (
-  <Preview>
+  <Preview isExpanded={false} withSource={sourceStories.jsx().props}>
     <Button secondary>Button 1</Button>
-    <ActionBar actionItems={[{ title: 'show', onClick: action('hide') }]} />
   </Preview>
 );
 
 export const codeExpanded = () => (
-  <Preview>
+  <Preview isExpanded withSource={sourceStories.jsx().props}>
     <Button secondary>Button 1</Button>
-    {sourceStories.jsx()}
-    <ActionBar actionItems={[{ title: 'hide', onClick: action('hide') }]} />
+  </Preview>
+);
+
+export const codeError = () => (
+  <Preview withSource={sourceStories.sourceUnavailable().props}>
+    <Button secondary>Button 1</Button>
   </Preview>
 );
 

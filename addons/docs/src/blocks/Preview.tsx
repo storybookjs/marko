@@ -5,7 +5,8 @@ import {
   PreviewProps as PurePreviewProps,
 } from '@storybook/components';
 import { Story } from './Story';
-import { Source } from './Source';
+import { getSourceProps } from './Source';
+import { DocsContext, DocsContextProps } from './DocsContext';
 
 export enum SourceState {
   OPEN = 'open',
@@ -13,54 +14,40 @@ export enum SourceState {
   NONE = 'none',
 }
 
-interface PreviewSourceProps {
-  source?: SourceState;
-}
-
 type PreviewProps = PurePreviewProps & {
-  source?: SourceState;
+  withSource?: SourceState;
 };
 
-export const Preview: React.FunctionComponent<PreviewProps> = ({
-  children,
-  source = SourceState.OPEN,
-  ...props
-}) => {
-  const [sourceState, setSourceState] = React.useState(source);
-
-  let actionItem;
-  let childWithId: React.ReactElement = null;
-  const childArray: ReactNodeArray = Array.isArray(children) ? children : [children];
-  console.log('children', children);
-  switch (sourceState) {
-    case SourceState.OPEN:
-      actionItem = {
-        title: 'hide code',
-        onClick: () => setSourceState(SourceState.CLOSED),
-      };
-      // FIXME: support multiple children
-      childWithId = childArray.find(
-        (c: React.ReactElement) => c.props && c.props.id
-      ) as ReactElement;
-      break;
-    case SourceState.CLOSED:
-      actionItem = {
-        title: 'show code',
-        onClick: () => setSourceState(SourceState.OPEN),
-      };
-      break;
-    case SourceState.NONE:
-    default:
-      break;
+const getPreviewProps = (
+  {
+    withSource = SourceState.CLOSED,
+    children,
+    ...props
+  }: PreviewProps & { children?: React.ReactNode },
+  { storyStore }: DocsContextProps
+): PurePreviewProps => {
+  const extraProps = {};
+  if (withSource === SourceState.NONE && !children) {
+    return props;
   }
-
-  const actionChild = actionItem ? <ActionBar actionItems={[actionItem]} /> : null;
-  const sourceChild = childWithId ? <Source id={childWithId.props.id} /> : null;
-  return (
-    <PurePreview {...props}>
-      {children || <Story />}
-      {sourceChild}
-      {actionChild}
-    </PurePreview>
-  );
+  const childArray: ReactNodeArray = Array.isArray(children) ? children : [children];
+  const childWithId: React.ReactElement = childArray.find(
+    (c: React.ReactElement) => c.props && c.props.id
+  ) as ReactElement;
+  const targetId = childWithId ? childWithId.props.id : null;
+  const sourceProps = getSourceProps({ id: targetId }, { storyStore });
+  return {
+    ...props, // pass through columns etc.
+    withSource: sourceProps,
+    isExpanded: withSource === SourceState.OPEN,
+  };
 };
+
+export const Preview: React.FunctionComponent<PreviewProps> = props => (
+  <DocsContext.Consumer>
+    {context => {
+      const previewProps = getPreviewProps(props, context);
+      return <PurePreview {...previewProps}>{props.children}</PurePreview>;
+    }}
+  </DocsContext.Consumer>
+);
