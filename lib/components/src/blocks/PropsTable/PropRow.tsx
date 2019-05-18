@@ -4,15 +4,12 @@ import { transparentize } from 'polished';
 import { PropDef } from './PropDef';
 
 enum PropType {
-  Shape = 'shape',
-  Union = 'union',
-  ArrayOf = 'arrayOf',
-  ObjectOf = 'objectOf',
-  // Might be overkill to have below proptypes as separate components *shrug*
-  Literal = 'literal',
-  OneOf = 'enum',
-  InstanceOf = 'instanceOf',
-  Signature = 'signature',
+  SHAPE = 'shape',
+  UNION = 'union',
+  ARRAYOF = 'arrayOf',
+  OBJECTOF = 'objectOf',
+  ENUM = 'enum',
+  INSTANCEOF = 'instanceOf',
 }
 
 interface PrettyPropTypeProps {
@@ -44,8 +41,41 @@ const StyledPropDef = styled.div(({ theme }) => ({
   fontSize: `${theme.typography.size.code}%`,
 }));
 
+const prettyPrint = (type: any): string => {
+  if (!type || !type.name) {
+    return '';
+  }
+  let fields = '';
+  switch (type.name) {
+    case PropType.SHAPE:
+      fields = Object.keys(type.value)
+        .map((key: string) => `${key}: ${prettyPrint(type.value[key])}`)
+        .join(', ');
+      return `{ ${fields} }`;
+    case PropType.UNION:
+      return Array.isArray(type.value)
+        ? `Union<${type.value.map(prettyPrint).join(' | ')}>`
+        : JSON.stringify(type.value);
+    case PropType.ARRAYOF:
+      return `[ ${prettyPrint(type.value)} ]`;
+    case PropType.OBJECTOF:
+      return `objectOf(${prettyPrint(type.value)})`;
+    case PropType.ENUM:
+      if (type.computed) {
+        return JSON.stringify(type);
+      }
+      return Array.isArray(type.value)
+        ? type.value.map((v: any) => v && v.value && v.value.toString()).join(' | ')
+        : JSON.stringify(type);
+    case PropType.INSTANCEOF:
+      return `instanceOf(${JSON.stringify(type.value)})`;
+    default:
+      return type.name;
+  }
+};
+
 export const PrettyPropType: React.FunctionComponent<PrettyPropTypeProps> = ({ type }) => (
-  <span>{JSON.stringify(type)}</span>
+  <span>{prettyPrint(type)}</span>
 );
 
 export const PrettyPropVal: React.FunctionComponent<PrettyPropValProps> = ({ value }) => (
