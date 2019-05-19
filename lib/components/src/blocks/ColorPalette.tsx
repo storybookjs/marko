@@ -106,7 +106,7 @@ const List = styled.div({
 interface ColorProps {
   title: string;
   subtitle: string;
-  colors: [string];
+  colors: string[];
 }
 
 export const ColorItem: React.FunctionComponent<ColorProps> = ({ title, subtitle, colors }) => {
