@@ -83,7 +83,7 @@ const Preview: React.FunctionComponent<PreviewProps> = ({
         </ChildrenContainer>
         {withSource && <ActionBar actionItems={[actionItem]} />}
       </PreviewWrapper>
-      {withSource && isExpanded && source}
+      {withSource && source}
     </PreviewContainer>
   );
 };
