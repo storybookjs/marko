@@ -1,5 +1,6 @@
 import React from 'react';
 import { styled } from '@storybook/theming';
+import { invert, darken } from 'polished';
 
 import { getBlockBackgroundStyle } from './BlockBackgroundStyles';
 import { Source, SourceProps } from './Source';
@@ -30,7 +31,14 @@ const StyledSource = styled(Source)(({ theme }) => ({
   borderTopLeftRadius: 0,
   borderTopRightRadius: 0,
   border: 'none',
-  paddingBottom: 10,
+
+  background:
+    theme.base === 'light' ? 'rgba(0, 0, 0, 0.85)' : darken(0.05, theme.background.content),
+  color: theme.color.lightest,
+  button: {
+    background:
+      theme.base === 'light' ? 'rgba(0, 0, 0, 0.85)' : darken(0.05, theme.background.content),
+  },
 }));
 
 const PreviewWrapper = styled.div<PreviewProps>(({ theme, withSource }) => ({

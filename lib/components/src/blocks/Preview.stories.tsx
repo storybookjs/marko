@@ -25,7 +25,7 @@ export const codeExpanded = () => (
 );
 
 export const codeError = () => (
-  <Preview withSource={sourceStories.sourceUnavailable().props}>
+  <Preview isExpanded withSource={sourceStories.sourceUnavailable().props}>
     <Button secondary>Button 1</Button>
   </Preview>
 );
