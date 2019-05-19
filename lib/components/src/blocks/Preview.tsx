@@ -1,5 +1,6 @@
 import React from 'react';
 import { styled } from '@storybook/theming';
+import { darken } from 'polished';
 
 import { string } from 'prop-types';
 import { getBlockBackgroundStyle } from './BlockBackgroundStyles';
@@ -26,56 +27,65 @@ const ChildrenContainer = styled.div<PreviewProps>(({ isColumn, columns }) => ({
   },
 }));
 
-const PreviewWrapper = styled.div<PreviewProps>(({ theme }) => ({
-  ...getBlockBackgroundStyle(theme),
-  margin: '25px 0 40px',
-  padding: '30px 20px',
+const StyledSource = styled(Source)(({ theme }) => ({
+  margin: 0,
+  borderTopLeftRadius: 0,
+  borderTopRightRadius: 0,
+  border: 'none',
+
+  // Todo always use dark syntax highlighter theme for this component
+  background: theme.base === 'light' ? theme.color.darkest : darken(0.05, theme.background.content),
+  button: {
+    background:
+      theme.base === 'light' ? theme.color.darkest : darken(0.05, theme.background.content),
+  },
 }));
 
-interface SourceExpanderProps {
-  withSource?: SourceProps;
-  isExpanded?: boolean;
-}
-const SourceExpander: React.FunctionComponent<SourceExpanderProps> = ({
-  withSource,
-  isExpanded = false,
-}) => {
-  const [expanded, setExpanded] = React.useState(isExpanded);
-  const { source, actionItem } = expanded
-    ? {
-        source: <Source {...withSource} />,
-        actionItem: { title: 'hide code', onClick: () => setExpanded(false) },
-      }
-    : {
-        source: null,
-        actionItem: { title: 'show code', onClick: () => setExpanded(true) },
-      };
-  return (
-    <>
-      {source}
-      <ActionBar actionItems={[actionItem]} />
-    </>
-  );
-};
+const PreviewWrapper = styled.div<PreviewProps>(({ theme, withSource }) => ({
+  ...getBlockBackgroundStyle(theme),
+  padding: '30px 20px',
+  position: 'relative',
+  borderBottomLeftRadius: withSource && 0,
+  borderBottomRightRadius: withSource && 0,
+}));
+
+const PreviewContainer = styled.div(({ theme }) => ({
+  margin: '25px 0 40px',
+}));
 
 const Preview: React.FunctionComponent<PreviewProps> = ({
   isColumn,
   columns,
   children,
   withSource,
-  isExpanded,
+  isExpanded = false,
   ...props
-}) => (
-  <PreviewWrapper {...props}>
-    <ChildrenContainer {...props}>
-      {Array.isArray(children) ? (
-        children.map((child, i) => <div key={i.toString()}>{child}</div>)
-      ) : (
-        <div>{children}</div>
-      )}
-    </ChildrenContainer>
-    {withSource && <SourceExpander withSource={withSource} isExpanded={isExpanded} />}
-  </PreviewWrapper>
-);
+}) => {
+  const [expanded, setExpanded] = React.useState(isExpanded);
+  const { source, actionItem } = expanded
+    ? {
+        source: <StyledSource {...withSource} />,
+        actionItem: { title: 'Hide code', onClick: () => setExpanded(false) },
+      }
+    : {
+        source: null,
+        actionItem: { title: 'Show code', onClick: () => setExpanded(true) },
+      };
+  return (
+    <PreviewContainer {...props}>
+      <PreviewWrapper withSource={withSource}>
+        <ChildrenContainer isColumn={isColumn} columns={columns}>
+          {Array.isArray(children) ? (
+            children.map((child, i) => <div key={i.toString()}>{child}</div>)
+          ) : (
+            <div>{children}</div>
+          )}
+        </ChildrenContainer>
+        {withSource && <ActionBar actionItems={[actionItem]} />}
+      </PreviewWrapper>
+      {withSource && isExpanded && source}
+    </PreviewContainer>
+  );
+};
 
 export { Preview };

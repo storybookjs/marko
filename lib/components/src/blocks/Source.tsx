@@ -27,12 +27,23 @@ export interface SourceProps {
   error?: SourceError;
 }
 
-const Source: React.FunctionComponent<SourceProps> = ({ language, code, error = null }) => {
+const Source: React.FunctionComponent<SourceProps> = ({
+  language,
+  code,
+  error = null,
+  ...props
+}) => {
   if (error) {
-    return <EmptyBlock>{error}</EmptyBlock>;
+    return <EmptyBlock {...props}>{error}</EmptyBlock>;
   }
   return (
-    <StyledSyntaxHighlighter bordered copyable language={language} className="docblock-source">
+    <StyledSyntaxHighlighter
+      bordered
+      copyable
+      language={language}
+      className="docblock-source"
+      {...props}
+    >
       {code}
     </StyledSyntaxHighlighter>
   );
