@@ -1,8 +1,6 @@
 import React from 'react';
 import { styled } from '@storybook/theming';
-import { darken } from 'polished';
 
-import { string } from 'prop-types';
 import { getBlockBackgroundStyle } from './BlockBackgroundStyles';
 import { Source, SourceProps } from './Source';
 import { ActionBar } from '../ActionBar/ActionBar';
@@ -32,13 +30,7 @@ const StyledSource = styled(Source)(({ theme }) => ({
   borderTopLeftRadius: 0,
   borderTopRightRadius: 0,
   border: 'none',
-
-  // Todo always use dark syntax highlighter theme for this component
-  background: theme.base === 'light' ? theme.color.darkest : darken(0.05, theme.background.content),
-  button: {
-    background:
-      theme.base === 'light' ? theme.color.darkest : darken(0.05, theme.background.content),
-  },
+  paddingBottom: 10,
 }));
 
 const PreviewWrapper = styled.div<PreviewProps>(({ theme, withSource }) => ({
@@ -64,7 +56,7 @@ const Preview: React.FunctionComponent<PreviewProps> = ({
   const [expanded, setExpanded] = React.useState(isExpanded);
   const { source, actionItem } = expanded
     ? {
-        source: <StyledSource {...withSource} />,
+        source: <StyledSource {...withSource} dark />,
         actionItem: { title: 'Hide code', onClick: () => setExpanded(false) },
       }
     : {

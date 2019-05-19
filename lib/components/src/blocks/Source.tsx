@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled } from '@storybook/theming';
+import { styled, ThemeProvider, convert, themes } from '@storybook/theming';
 import { EmptyBlock } from './EmptyBlock';
 
 import { SyntaxHighlighter } from '../syntaxhighlighter/syntaxhighlighter';
@@ -25,18 +25,20 @@ export interface SourceProps {
   language?: string;
   code?: string;
   error?: SourceError;
+  dark?: boolean;
 }
 
 const Source: React.FunctionComponent<SourceProps> = ({
   language,
   code,
   error = null,
+  dark,
   ...props
 }) => {
   if (error) {
     return <EmptyBlock {...props}>{error}</EmptyBlock>;
   }
-  return (
+  const syntaxHighlighter = (
     <StyledSyntaxHighlighter
       bordered
       copyable
@@ -47,6 +49,11 @@ const Source: React.FunctionComponent<SourceProps> = ({
       {code}
     </StyledSyntaxHighlighter>
   );
+  if (typeof dark === 'undefined') {
+    return syntaxHighlighter;
+  }
+  const overrideTheme = dark ? themes.dark : themes.light;
+  return <ThemeProvider theme={convert(overrideTheme)}>{syntaxHighlighter}</ThemeProvider>;
 };
 
 export { Source };
