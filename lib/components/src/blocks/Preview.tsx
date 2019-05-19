@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@storybook/theming';
-import { invert, darken } from 'polished';
+import { darken } from 'polished';
 
 import { getBlockBackgroundStyle } from './BlockBackgroundStyles';
 import { Source, SourceProps } from './Source';
@@ -49,9 +49,9 @@ const PreviewWrapper = styled.div<PreviewProps>(({ theme, withSource }) => ({
   borderBottomRightRadius: withSource && 0,
 }));
 
-const PreviewContainer = styled.div(({ theme }) => ({
+const PreviewContainer = styled.div({
   margin: '25px 0 40px',
-}));
+});
 
 const Preview: React.FunctionComponent<PreviewProps> = ({
   isColumn,
