@@ -2,6 +2,7 @@
 import React from 'react';
 import { Description, DescriptionProps as PureDescriptionProps } from '@storybook/components';
 import { DocsContext, DocsContextProps } from './DocsContext';
+import { CURRENT_SELECTION } from './shared';
 
 export enum DescriptionType {
   INFO = 'info',
@@ -36,8 +37,7 @@ export const getDescriptionProps = (
     return { markdown };
   }
   const { component, notes, info } = parameters;
-  const target = of || component;
-  const options = {}; // placeholder
+  const target = of === CURRENT_SELECTION ? component : of;
   switch (type) {
     case DescriptionType.INFO:
       return { markdown: getInfo(info) };

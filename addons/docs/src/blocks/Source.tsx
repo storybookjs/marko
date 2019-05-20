@@ -1,6 +1,7 @@
 import React from 'react';
 import { Source, SourceProps as PureSourceProps, SourceError } from '@storybook/components';
 import { DocsContext, DocsContextProps } from './DocsContext';
+import { CURRENT_SELECTION } from './shared';
 
 interface SourceProps {
   language?: string;
@@ -40,10 +41,10 @@ export const getSourceProps = (
 ): PureSourceProps => {
   let source = code; // prefer user-specified code
   if (!source) {
-    const targetId = id || currentId; // prefer user-specified story id
-    const { parameters } = storyStore.fromId(targetId);
-    if (parameters) {
-      const { mdxSource, storySource } = parameters;
+    const targetId = id === CURRENT_SELECTION ? currentId : id;
+    const data = storyStore.fromId(targetId);
+    if (data && data.parameters) {
+      const { mdxSource, storySource } = data.parameters;
       source = mdxSource || (storySource && extract(targetId, storySource));
     }
   }

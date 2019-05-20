@@ -1,10 +1,11 @@
 import React from 'react';
 import { PropsTable, PropsTableError, PropsTableProps } from '@storybook/components';
 import { DocsContext, DocsContextProps } from './DocsContext';
+import { CURRENT_SELECTION } from './shared';
 
 interface PropsProps {
   exclude?: string[];
-  of?: any;
+  of: any;
 }
 
 export const getPropsTableProps = (
@@ -13,7 +14,7 @@ export const getPropsTableProps = (
 ): PropsTableProps => {
   const { component } = parameters;
   try {
-    const target = of || component;
+    const target = of === CURRENT_SELECTION ? component : of;
     if (!target) {
       throw new Error(PropsTableError.NO_COMPONENT);
     }

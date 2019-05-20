@@ -1,6 +1,7 @@
 import React from 'react';
 import { toId } from '@storybook/router';
 import { Story, StoryProps as PureStoryProps } from '@storybook/components';
+import { CURRENT_SELECTION } from './shared';
 
 import { DocsContext, DocsContextProps } from './DocsContext';
 
@@ -15,18 +16,20 @@ export const getStoryProps = (
   { id, name, height }: StoryProps,
   { storyStore, parameters, mdxKind, selectedKind, selectedStory }: DocsContextProps
 ): PureStoryProps => {
-  const previewId = id || (name && toId(mdxKind, name)) || toId(selectedKind, selectedStory);
+  const previewId =
+    id === CURRENT_SELECTION
+      ? toId(selectedKind, selectedStory)
+      : id || (name && toId(mdxKind, name));
   const data = storyStore.fromId(previewId);
-  const props = { height, title: data && data.name };
   const { inlineStories } = (parameters && parameters.options && parameters.options.docs) || {
     inlineStories: false,
   };
   return {
     inline: inlineStories,
     id: previewId,
-    storyFn: data.getDecorated(),
+    storyFn: data && data.getDecorated(),
     height,
-    title: data.name,
+    title: data && data.name,
   };
 };
 

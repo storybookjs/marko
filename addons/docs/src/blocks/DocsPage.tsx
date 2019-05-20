@@ -116,9 +116,9 @@ const DocsPage: React.FunctionComponent = () => (
       const docsPageProps = getDocsPageProps(context);
       return (
         <PureDocsPage {...docsPageProps}>
-          <Description />
+          <Description of="." />
           <DocsStories type={DocsStoriesType.PRIMARY} />
-          <Props />
+          <Props of="." />
           <DocsStories type={DocsStoriesType.REST} />
         </PureDocsPage>
       );
