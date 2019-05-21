@@ -45,16 +45,23 @@ function genStoryExport(ast, input, counter) {
   const statements = [];
   const storyFn = getStoryFn(storyName, counter);
 
-  // FIXME: handle fragments
   let body = ast.children.find(n => n.type !== 'JSXText');
-  if (body.type === 'JSXExpressionContainer') {
-    body = body.expression;
+  let storyCode = null;
+  if (!body) {
+    // plain text node
+    const { code } = generate(ast.children[0], {});
+    storyCode = `'${code}'`;
+  } else {
+    if (body.type === 'JSXExpressionContainer') {
+      // FIXME: handle fragments
+      body = body.expression;
+    }
+    const { code } = generate(body, {});
+    storyCode = code;
   }
-
-  const { code } = generate(body, {});
   statements.push(
     `export const ${storyFn} = () => (
-      ${code}
+      ${storyCode}
     );`
   );
 
@@ -64,7 +71,7 @@ function genStoryExport(ast, input, counter) {
 
   let parameters = getAttr(ast.openingElement, 'parameters');
   parameters = parameters && parameters.expression;
-  const source = `\`${code.replace(/`/g, '\\`')}\``;
+  const source = `\`${storyCode.replace(/`/g, '\\`')}\``;
   if (parameters) {
     const { code: params } = generate(parameters, {});
     // FIXME: hack in the story's source as a parameter

@@ -35,6 +35,10 @@ describe('docs-mdx-compiler-plugin', () => {
     const code = await generate(path.resolve(__dirname, './fixtures/story-definitions.mdx'));
     expect(code).toMatchSnapshot();
   });
+  it('supports text-only story definitions', async () => {
+    const code = await generate(path.resolve(__dirname, './fixtures/story-def-text-only.mdx'));
+    expect(code).toMatchSnapshot();
+  });
   it('supports object-style story definitions', async () => {
     const code = await generate(path.resolve(__dirname, './fixtures/story-object.mdx'));
     expect(code).toMatchSnapshot();
