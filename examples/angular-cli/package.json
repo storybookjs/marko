@@ -51,7 +51,7 @@
     "@storybook/components": "5.2.0-alpha.10",
     "@types/core-js": "^2.5.0",
     "@types/jest": "^24.0.11",
-    "@types/node": "~12.0.0",
+    "@types/node": "~12.0.2",
     "@types/webpack-env": "^1.13.7",
     "babel-plugin-require-context-hook": "^1.0.0",
     "global": "^4.3.2",
