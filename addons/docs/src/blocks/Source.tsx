@@ -7,6 +7,7 @@ interface SourceProps {
   language?: string;
   code?: string;
   id?: string;
+  ids?: string[];
   name?: string;
 }
 
@@ -37,17 +38,23 @@ const extract = (targetId: string, { source, locationsMap }: StorySource) => {
 };
 
 export const getSourceProps = (
-  { language, code, name, id }: SourceProps,
+  { language, code, name, id, ids }: SourceProps,
   { id: currentId, mdxKind, storyStore }: DocsContextProps
 ): PureSourceProps => {
   let source = code; // prefer user-specified code
   if (!source) {
     const targetId = id || (name && toId(mdxKind, name)) || currentId; // prefer user-specified story id
-    const data = storyStore.fromId(targetId);
-    if (data && data.parameters) {
-      const { mdxSource, storySource } = data.parameters;
-      source = mdxSource || (storySource && extract(targetId, storySource));
-    }
+    const targetIds = ids || [targetId];
+    source = targetIds
+      .map(sourceId => {
+        const data = storyStore.fromId(sourceId);
+        if (data && data.parameters) {
+          const { mdxSource, storySource } = data.parameters;
+          return mdxSource || (storySource && extract(sourceId, storySource));
+        }
+        return '';
+      })
+      .join('\n\n');
   }
   return source
     ? { code: source, language: language || 'jsx' }

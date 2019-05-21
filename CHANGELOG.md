@@ -1,7 +1,9 @@
 ## 5.2.0-alpha.11 (May 19, 2019)
 
-- Addon-docs: Source refer to stories by name
-- Addon-docs: Fix loader bug for plaintext stories
+- Addon-docs:
+  - Source refer to stories by name
+  - Source support for multi-story previews
+  - Fix loader bug for plaintext stories
 
 ## 5.2.0-alpha.10 (May 19, 2019)
 

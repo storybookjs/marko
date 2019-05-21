@@ -31,11 +31,11 @@ const getPreviewProps = (
     return props;
   }
   const childArray: ReactNodeArray = Array.isArray(children) ? children : [children];
-  const firstStory: React.ReactElement = childArray.find(
+  const stories = childArray.filter(
     (c: React.ReactElement) => c.props && c.props.mdxType === 'Story'
-  ) as ReactElement;
-  const targetId = firstStory ? firstStory.props.id || toId(mdxKind, firstStory.props.name) : null;
-  const sourceProps = getSourceProps({ id: targetId }, { storyStore });
+  ) as React.ReactElement[];
+  const targetIds = stories.map(s => s.props.id || toId(mdxKind, s.props.name));
+  const sourceProps = getSourceProps({ ids: targetIds }, { storyStore });
   return {
     ...props, // pass through columns etc.
     withSource: sourceProps,
