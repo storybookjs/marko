@@ -1,4 +1,4 @@
-## 5.2.0-alpha.10 (May 17, 2019)
+## 5.2.0-alpha.10 (May 19, 2019)
 
 - Addon-docs: Display source dropdown in preview component
 
