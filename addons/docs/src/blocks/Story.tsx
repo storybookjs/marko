@@ -13,20 +13,19 @@ interface StoryProps {
 
 export const getStoryProps = (
   { id, name, height }: StoryProps,
-  { storyStore, parameters, mdxKind, selectedKind, selectedStory }: DocsContextProps
+  { id: currentId, storyStore, parameters, mdxKind }: DocsContextProps
 ): PureStoryProps => {
-  const previewId = id || (name && toId(mdxKind, name)) || toId(selectedKind, selectedStory);
+  const previewId = id || (name && toId(mdxKind, name)) || currentId;
   const data = storyStore.fromId(previewId);
-  const props = { height, title: data && data.name };
   const { inlineStories } = (parameters && parameters.options && parameters.options.docs) || {
     inlineStories: false,
   };
   return {
     inline: inlineStories,
     id: previewId,
-    storyFn: data.getDecorated(),
+    storyFn: data && data.getDecorated(),
     height,
-    title: data.name,
+    title: data && data.name,
   };
 };
 
