@@ -32,7 +32,7 @@ const getPreviewProps = (
   }
   const childArray: ReactNodeArray = Array.isArray(children) ? children : [children];
   const stories = childArray.filter(
-    (c: React.ReactElement) => c.props && c.props.mdxType === 'Story'
+    (c: React.ReactElement) => c.props && (c.props.id || c.props.name)
   ) as React.ReactElement[];
   const targetIds = stories.map(s => s.props.id || toId(mdxKind, s.props.name));
   const sourceProps = getSourceProps({ ids: targetIds }, { storyStore });

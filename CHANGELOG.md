@@ -1,4 +1,8 @@
-## 5.2.0-alpha.11 (May 19, 2019)
+## 5.2.0-alpha.12 (May 21, 2019)
+
+- Addon-docs: Fix regression in preview source for legacy stories
+
+## 5.2.0-alpha.11 (May 21, 2019)
 
 - Addon-docs:
   - Source refer to stories by name
