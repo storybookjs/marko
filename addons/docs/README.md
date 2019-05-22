@@ -16,7 +16,7 @@ features as well. This chart captures the current state of support
 | Module stories |   +   |  +  |    +    |    +    |    +    |  +   |   +   |   +    |  +   |   +   |   +    |
 | Legacy stories |   +   |  +  |    +    |    +    |    +    |  +   |   +   |   +    |  +   |   +   |   +    |
 | Source \*      |   +   |  +  |    +    |    +    |    +    |  +   |   +   |   +    |  +   |   +   |   +    |
-| Notes/Info     |   +   |  +  |    +    |    +    |    +    |  +   |   +   |   +    |  +   |   +   |   +    |
+| Notes / Info   |   +   |  +  |    +    |    +    |    +    |  +   |   +   |   +    |  +   |   +   |   +    |
 | Props table    |   +   |  #  |    #    |         |         |      |       |        |      |       |        |
 | Docgen         |   +   |  #  |    #    |         |         |      |       |        |      |       |        |
 | Inline stories |   +   |  #  |         |         |         |      |       |        |      |       |        |
