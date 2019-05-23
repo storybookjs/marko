@@ -10,6 +10,7 @@ interface Additions {
   panelPosition?: PanelPositions;
   showNav?: boolean;
   selectedPanel?: string;
+  viewMode?: string;
 }
 
 // Initialize the state based on the URL.
@@ -21,7 +22,7 @@ interface Additions {
 //     - nav: 0/1 -- show or hide the story list
 //
 //   We also support legacy URLs from storybook <5
-const initialUrlSupport = ({ navigate, location, path }: Module) => {
+const initialUrlSupport = ({ navigate, location, path, viewMode = 'story' }: Module) => {
   const addition: Additions = {};
   const query = queryFromLocation(location);
   let selectedPanel;
@@ -69,15 +70,16 @@ const initialUrlSupport = ({ navigate, location, path }: Module) => {
     selectedPanel = addonPanel;
   }
 
+  // debugger;
   if (selectedKind && selectedStory) {
     const storyId = toId(selectedKind, selectedStory);
-    setTimeout(() => navigate(`/story/${storyId}`, { replace: true }), 1);
+    setTimeout(() => navigate(`/${viewMode}/${storyId}`, { replace: true }), 1);
   } else if (selectedKind) {
     // Create a "storyId" of the form `kind-sanitized--*`
     const standInId = toId(selectedKind, 'star').replace(/star$/, '*');
-    setTimeout(() => navigate(`/story/${standInId}`, { replace: true }), 1);
+    setTimeout(() => navigate(`/${viewMode}/${standInId}`, { replace: true }), 1);
   } else if (!queryPath || queryPath === '/') {
-    setTimeout(() => navigate(`/story/*`, { replace: true }), 1);
+    setTimeout(() => navigate(`/${viewMode}/*`, { replace: true }), 1);
   } else if (Object.keys(query).length > 1) {
     // remove other queries
     setTimeout(() => navigate(`${queryPath}`, { replace: true }), 1);
@@ -142,6 +144,13 @@ export default function({ store, navigate, location, path: initialPath, ...rest 
 
   return {
     api,
-    state: initialUrlSupport({ store, navigate, location, path: initialPath, ...rest }),
+    state: initialUrlSupport({
+      store,
+      navigate,
+      location,
+      path: initialPath,
+      ...rest,
+      viewMode: 'docs',
+    }),
   };
 }

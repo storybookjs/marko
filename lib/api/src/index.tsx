@@ -34,7 +34,10 @@ import initVersions, {
   SubAPI as VersionsAPI,
 } from './modules/versions';
 
-const ManagerContext = createContext({ api: undefined, state: getInitialState({}) });
+const ManagerContext = createContext({
+  api: undefined,
+  state: getInitialState({ viewMode: 'docs' }),
+});
 
 const { STORY_CHANGED, SET_STORIES, SELECT_STORY } = Events;
 
