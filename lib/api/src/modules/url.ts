@@ -22,7 +22,7 @@ interface Additions {
 //     - nav: 0/1 -- show or hide the story list
 //
 //   We also support legacy URLs from storybook <5
-const initialUrlSupport = ({ navigate, location, path, viewMode = 'story' }: Module) => {
+const initialUrlSupport = ({ navigate, state: { location, path, viewMode, storyId } }: Module) => {
   const addition: Additions = {};
   const query = queryFromLocation(location);
   let selectedPanel;
@@ -70,10 +70,9 @@ const initialUrlSupport = ({ navigate, location, path, viewMode = 'story' }: Mod
     selectedPanel = addonPanel;
   }
 
-  // debugger;
   if (selectedKind && selectedStory) {
-    const storyId = toId(selectedKind, selectedStory);
-    setTimeout(() => navigate(`/${viewMode}/${storyId}`, { replace: true }), 1);
+    const id = toId(selectedKind, selectedStory);
+    setTimeout(() => navigate(`/${viewMode}/${id}`, { replace: true }), 1);
   } else if (selectedKind) {
     // Create a "storyId" of the form `kind-sanitized--*`
     const standInId = toId(selectedKind, 'star').replace(/star$/, '*');
@@ -85,7 +84,7 @@ const initialUrlSupport = ({ navigate, location, path, viewMode = 'story' }: Mod
     setTimeout(() => navigate(`${queryPath}`, { replace: true }), 1);
   }
 
-  return { layout: addition, selectedPanel, location, path, customQueryParams };
+  return { viewMode, layout: addition, selectedPanel, location, path, customQueryParams, storyId };
 };
 
 export interface QueryParams {
@@ -104,7 +103,7 @@ export interface SubAPI {
   setQueryParams: (input: QueryParams) => void;
 }
 
-export default function({ store, navigate, location, path: initialPath, ...rest }: Module) {
+export default function({ store, navigate, state, provider }: Module) {
   const api: SubAPI = {
     getQueryParam: key => {
       const { customQueryParams } = store.getState();
@@ -144,13 +143,6 @@ export default function({ store, navigate, location, path: initialPath, ...rest 
 
   return {
     api,
-    state: initialUrlSupport({
-      store,
-      navigate,
-      location,
-      path: initialPath,
-      ...rest,
-      viewMode: 'docs',
-    }),
+    state: initialUrlSupport({ store, navigate, state, provider }),
   };
 }
