@@ -53,6 +53,7 @@ export interface RouterData {
 }
 
 export type Module = StoreData &
+  RouterData &
   RouterAPI &
   ProviderData & {
     mode?: 'production' | 'development';
@@ -96,6 +97,10 @@ interface ProviderData {
   provider: Provider;
 }
 
+interface DocsModeData {
+  docsMode: boolean;
+}
+
 interface StoreData {
   store: Store;
 }
@@ -106,7 +111,7 @@ interface Children {
 
 type StatePartial = Partial<State>;
 
-export type Props = Children & RouterAPI & RouterData & ProviderData;
+export type Props = Children & RouterAPI & RouterData & ProviderData & DocsModeData;
 
 class ManagerProvider extends Component<Props, State> {
   static displayName = 'Manager';
@@ -117,7 +122,15 @@ class ManagerProvider extends Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    const { provider, location, path, viewMode = 'docs', storyId, navigate } = props;
+    const {
+      provider,
+      location,
+      path,
+      viewMode = props.docsMode ? 'docs' : 'story',
+      storyId,
+      docsMode,
+      navigate,
+    } = props;
 
     const store = new Store({
       getState: () => this.state,
@@ -129,13 +142,14 @@ class ManagerProvider extends Component<Props, State> {
     // Initialize the state to be the initial (persisted) state of the store.
     // This gives the modules the chance to read the persisted state, apply their defaults
     // and override if necessary
+    const docsModeState = {
+      layout: { isToolshown: false, showPanel: false },
+      ui: { docsMode: true },
+    };
     this.state = store.getInitialState(
       getInitialState({
         ...routeData,
-        layout: {
-          isToolshown: false,
-          showPanel: false,
-        },
+        ...(docsMode ? docsModeState : null),
       })
     );
 
@@ -154,7 +168,7 @@ class ManagerProvider extends Component<Props, State> {
       initStories,
       initURL,
       initVersions,
-    ].map(initModule => initModule({ ...apiData, state: this.state }));
+    ].map(initModule => initModule({ ...routeData, ...apiData, state: this.state }));
 
     // Create our initial state by combining the initial state of all modules, then overlaying any saved state
     const state = getInitialState(...this.modules.map(m => m.state));

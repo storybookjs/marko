@@ -25,6 +25,7 @@ export interface UI {
   enableShortcuts: boolean;
   sortStoriesByKind: boolean;
   sidebarAnimations: boolean;
+  docsMode: boolean;
 }
 
 export interface SubState {
@@ -134,6 +135,7 @@ const initial: SubState = {
     enableShortcuts: true,
     sortStoriesByKind: false,
     sidebarAnimations: true,
+    docsMode: false,
   },
   layout: {
     isToolshown: true,
