@@ -1,3 +1,7 @@
+## 5.2.0-alpha.13 (May 24, 2019)
+
+- Addon-docs: Add documentation-only `--docs` option to build storybook
+
 ## 5.2.0-alpha.12 (May 21, 2019)
 
 - Addon-docs: Fix regression in preview source for legacy stories
