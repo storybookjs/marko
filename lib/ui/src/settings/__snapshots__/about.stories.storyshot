@@ -1442,9 +1442,10 @@ exports[`Storyshots UI|Settings/AboutScreen new version required 1`] = `
 .emotion-23 {
   position: relative;
   overflow: hidden;
-  color: #333333;
-  border: 1px solid rgba(0,0,0,.1);
-  background: #FFFFFF;
+  color: #FFFFFF;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 4px;
+  background: #333;
 }
 
 .emotion-20 {
@@ -1635,7 +1636,6 @@ exports[`Storyshots UI|Settings/AboutScreen new version required 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  background: #333;
 }
 
 .emotion-21 {

@@ -170,7 +170,7 @@ exports[`Storyshots Basics|SyntaxHighlighter bash 1`] = `
 .emotion-3 {
   position: relative;
   overflow: hidden;
-  color: #333333;
+  color: #FFFFFF;
 }
 
 .emotion-1 {
@@ -277,9 +277,10 @@ exports[`Storyshots Basics|SyntaxHighlighter bordered & copy-able 1`] = `
 .emotion-5 {
   position: relative;
   overflow: hidden;
-  color: #333333;
-  border: 1px solid rgba(0,0,0,.1);
-  background: #FFFFFF;
+  color: #FFFFFF;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 4px;
+  background: #333;
 }
 
 .emotion-2 {
@@ -470,7 +471,6 @@ exports[`Storyshots Basics|SyntaxHighlighter bordered & copy-able 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  background: #333;
 }
 
 .emotion-3 {
@@ -773,33 +773,13 @@ exports[`Storyshots Basics|SyntaxHighlighter bordered & copy-able 1`] = `
 `;
 
 exports[`Storyshots Basics|SyntaxHighlighter dark unsupported 1`] = `
-.emotion-1 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  margin: 0;
-  padding: 10px;
-}
-
-.emotion-0 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  padding-right: 0;
-  opacity: 1;
-}
-
 .emotion-5 {
   position: relative;
   overflow: hidden;
   color: #FFFFFF;
   border: 1px solid rgba(255,255,255,.1);
-  background: #333333;
+  border-radius: 4px;
+  background: #333;
 }
 
 .emotion-2 {
@@ -960,6 +940,27 @@ exports[`Storyshots Basics|SyntaxHighlighter dark unsupported 1`] = `
   opacity: 0.7;
 }
 
+.emotion-1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 10px;
+}
+
+.emotion-0 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  padding-right: 0;
+  opacity: 1;
+}
+
 .emotion-4 {
   position: absolute;
   bottom: 0;
@@ -969,7 +970,6 @@ exports[`Storyshots Basics|SyntaxHighlighter dark unsupported 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  background: #333;
 }
 
 .emotion-3 {
@@ -1267,7 +1267,7 @@ exports[`Storyshots Basics|SyntaxHighlighter jsx 1`] = `
 .emotion-3 {
   position: relative;
   overflow: hidden;
-  color: #333333;
+  color: #FFFFFF;
 }
 
 .emotion-1 {
@@ -1749,7 +1749,7 @@ exports[`Storyshots Basics|SyntaxHighlighter padded 1`] = `
 .emotion-3 {
   position: relative;
   overflow: hidden;
-  color: #333333;
+  color: #FFFFFF;
 }
 
 <div
@@ -2175,7 +2175,7 @@ exports[`Storyshots Basics|SyntaxHighlighter showLineNumbers 1`] = `
 .emotion-3 {
   position: relative;
   overflow: hidden;
-  color: #333333;
+  color: #FFFFFF;
 }
 
 .emotion-1 {
@@ -2495,79 +2495,79 @@ exports[`Storyshots Basics|SyntaxHighlighter story 1`] = `
 }
 
 .emotion-2 * .token.comment {
-  color: #008000;
+  color: #7C7C7C;
   font-style: italic;
 }
 
 .emotion-2 * .token.prolog {
-  color: #008000;
+  color: #7C7C7C;
   font-style: italic;
 }
 
 .emotion-2 * .token.doctype {
-  color: #008000;
+  color: #7C7C7C;
   font-style: italic;
 }
 
 .emotion-2 * .token.cdata {
-  color: #008000;
+  color: #7C7C7C;
   font-style: italic;
 }
 
 .emotion-2 * .token.string {
-  color: #A31515;
+  color: #92C379;
 }
 
 .emotion-2 * .token.punctuation {
-  color: #393A34;
+  color: #EDEDED;
 }
 
 .emotion-2 * .token.operator {
-  color: #393A34;
+  color: #EDEDED;
 }
 
 .emotion-2 * .token.url {
-  color: #36acaa;
+  color: #C6C5FE;
 }
 
 .emotion-2 * .token.symbol {
-  color: #36acaa;
+  color: #C6C5FE;
 }
 
 .emotion-2 * .token.number {
-  color: #36acaa;
+  color: #C6C5FE;
 }
 
 .emotion-2 * .token.boolean {
-  color: #36acaa;
+  color: #C6C5FE;
 }
 
 .emotion-2 * .token.variable {
-  color: #36acaa;
+  color: #C6C5FE;
 }
 
 .emotion-2 * .token.constant {
-  color: #36acaa;
+  color: #C6C5FE;
 }
 
 .emotion-2 * .token.inserted {
-  color: #36acaa;
+  color: #C6C5FE;
 }
 
 .emotion-2 * .token.atrule {
-  color: #0000ff;
+  color: #B474DD;
 }
 
 .emotion-2 * .token.keyword {
-  color: #0000ff;
+  color: #B474DD;
 }
 
 .emotion-2 * .token.attr-value {
-  color: #0000ff;
+  color: #B474DD;
 }
 
 .emotion-2 * .token.function {
-  color: #393A34;
+  color: #EDEDED;
 }
 
 .emotion-2 * .token.deleted {
@@ -2587,48 +2587,48 @@ exports[`Storyshots Basics|SyntaxHighlighter story 1`] = `
 }
 
 .emotion-2 * .token.class-name {
-  color: #2B91AF;
+  color: #FFFFB6;
 }
 
 .emotion-2 * .token.tag {
-  color: #800000;
+  color: #A8FF60;
 }
 
 .emotion-2 * .token.selector {
-  color: #800000;
+  color: #A8FF60;
 }
 
 .emotion-2 * .token.attr-name {
-  color: #ff0000;
+  color: #96CBFE;
 }
 
 .emotion-2 * .token.property {
-  color: #ff0000;
+  color: #96CBFE;
 }
 
 .emotion-2 * .token.regex {
-  color: #ff0000;
+  color: #96CBFE;
 }
 
 .emotion-2 * .token.entity {
-  color: #ff0000;
+  color: #96CBFE;
 }
 
 .emotion-2 * .token.directive.tag .tag {
   background: #ffff00;
-  color: #393A34;
+  color: #EDEDED;
 }
 
 .emotion-2 * .language-json .token.boolean {
-  color: #0000ff;
+  color: #B474DD;
 }
 
 .emotion-2 * .language-json .token.number {
-  color: #0000ff;
+  color: #B474DD;
 }
 
 .emotion-2 * .language-json .token.property {
-  color: #2B91AF;
+  color: #FFFFB6;
 }
 
 .emotion-2 * .namespace {
@@ -2646,7 +2646,7 @@ exports[`Storyshots Basics|SyntaxHighlighter story 1`] = `
 .emotion-3 {
   position: relative;
   overflow: hidden;
-  color: #333333;
+  color: #FFFFFF;
 }
 
 .emotion-1 {
@@ -3649,9 +3649,10 @@ exports[`Storyshots Basics|SyntaxHighlighter unsupported 1`] = `
 .emotion-5 {
   position: relative;
   overflow: hidden;
-  color: #333333;
-  border: 1px solid rgba(0,0,0,.1);
-  background: #FFFFFF;
+  color: #FFFFFF;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 4px;
+  background: #333;
 }
 
 .emotion-2 {
@@ -3672,79 +3673,79 @@ exports[`Storyshots Basics|SyntaxHighlighter unsupported 1`] = `
 }
 
 .emotion-2 * .token.comment {
-  color: #008000;
+  color: #7C7C7C;
   font-style: italic;
 }
 
 .emotion-2 * .token.prolog {
-  color: #008000;
+  color: #7C7C7C;
   font-style: italic;
 }
 
 .emotion-2 * .token.doctype {
-  color: #008000;
+  color: #7C7C7C;
   font-style: italic;
 }
 
 .emotion-2 * .token.cdata {
-  color: #008000;
+  color: #7C7C7C;
   font-style: italic;
 }
 
 .emotion-2 * .token.string {
-  color: #A31515;
+  color: #92C379;
 }
 
 .emotion-2 * .token.punctuation {
-  color: #393A34;
+  color: #EDEDED;
 }
 
 .emotion-2 * .token.operator {
-  color: #393A34;
+  color: #EDEDED;
 }
 
 .emotion-2 * .token.url {
-  color: #36acaa;
+  color: #C6C5FE;
 }
 
 .emotion-2 * .token.symbol {
-  color: #36acaa;
+  color: #C6C5FE;
 }
 
 .emotion-2 * .token.number {
-  color: #36acaa;
+  color: #C6C5FE;
 }
 
 .emotion-2 * .token.boolean {
-  color: #36acaa;
+  color: #C6C5FE;
 }
 
 .emotion-2 * .token.variable {
-  color: #36acaa;
+  color: #C6C5FE;
 }
 
 .emotion-2 * .token.constant {
-  color: #36acaa;
+  color: #C6C5FE;
 }
 
 .emotion-2 * .token.inserted {
-  color: #36acaa;
+  color: #C6C5FE;
 }
 
 .emotion-2 * .token.atrule {
-  color: #0000ff;
+  color: #B474DD;
 }
 
 .emotion-2 * .token.keyword {
-  color: #0000ff;
+  color: #B474DD;
 }
 
 .emotion-2 * .token.attr-value {
-  color: #0000ff;
+  color: #B474DD;
 }
 
 .emotion-2 * .token.function {
-  color: #393A34;
+  color: #EDEDED;
 }
 
 .emotion-2 * .token.deleted {
@@ -3764,48 +3765,48 @@ exports[`Storyshots Basics|SyntaxHighlighter unsupported 1`] = `
 }
 
 .emotion-2 * .token.class-name {
-  color: #2B91AF;
+  color: #FFFFB6;
 }
 
 .emotion-2 * .token.tag {
-  color: #800000;
+  color: #A8FF60;
 }
 
 .emotion-2 * .token.selector {
-  color: #800000;
+  color: #A8FF60;
 }
 
 .emotion-2 * .token.attr-name {
-  color: #ff0000;
+  color: #96CBFE;
 }
 
 .emotion-2 * .token.property {
-  color: #ff0000;
+  color: #96CBFE;
 }
 
 .emotion-2 * .token.regex {
-  color: #ff0000;
+  color: #96CBFE;
 }
 
 .emotion-2 * .token.entity {
-  color: #ff0000;
+  color: #96CBFE;
 }
 
 .emotion-2 * .token.directive.tag .tag {
   background: #ffff00;
-  color: #393A34;
+  color: #EDEDED;
 }
 
 .emotion-2 * .language-json .token.boolean {
-  color: #0000ff;
+  color: #B474DD;
 }
 
 .emotion-2 * .language-json .token.number {
-  color: #0000ff;
+  color: #B474DD;
 }
 
 .emotion-2 * .language-json .token.property {
-  color: #2B91AF;
+  color: #FFFFB6;
 }
 
 .emotion-2 * .namespace {
@@ -3842,7 +3843,6 @@ exports[`Storyshots Basics|SyntaxHighlighter unsupported 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  background: #FFFFFF;
 }
 
 .emotion-3 {
@@ -3857,23 +3857,23 @@ exports[`Storyshots Basics|SyntaxHighlighter unsupported 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  color: #333333;
-  background: #FFFFFF;
+  color: #FFFFFF;
+  background: #333;
   font-size: 12px;
   line-height: 16px;
   font-weight: 700;
-  border-top: 1px solid rgba(0,0,0,.1);
-  border-left: 1px solid rgba(0,0,0,.1);
+  border-top: 1px solid rgba(255,255,255,.1);
+  border-left: 1px solid rgba(255,255,255,.1);
   margin-left: -1px;
   border-radius: 4px 0 0 0;
 }
 
 .emotion-3:not(:last-child) {
-  border-right: 1px solid rgba(0,0,0,.1);
+  border-right: 1px solid rgba(255,255,255,.1);
 }
 
 .emotion-3 + * {
-  border-left: 1px solid rgba(0,0,0,.1);
+  border-left: 1px solid rgba(255,255,255,.1);
   border-radius: 0;
 }
 
