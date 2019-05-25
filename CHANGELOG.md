@@ -1,3 +1,10 @@
+## 5.2.0-alpha.14 (May 25, 2019)
+
+- Addon-docs: Expanded source formats via `@storybook/source-loader`
+  - Legacy `storiesOf` format x (JS / TSX)
+  - Component modules format x (JS / TSX)
+  - Component MDX format
+
 ## 5.2.0-alpha.13 (May 24, 2019)
 
 - Addon-docs: Add documentation-only `--docs` option to build storybook
