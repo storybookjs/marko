@@ -18,5 +18,5 @@ addParameters({
 
 // addDecorator(storyFn => <div style={{ border: '2px solid red' }}>{storyFn()}</div>);
 
-load(require.context('../src', true, /\.stories\.js$/), module);
+load(require.context('../src', true, /\.stories\.[tj]sx?$/), module);
 load(require.context('../src', true, /\.stories\.mdx$/), module);

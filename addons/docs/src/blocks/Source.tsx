@@ -22,7 +22,10 @@ interface StorySource {
 }
 
 const extract = (targetId: string, { source, locationsMap }: StorySource) => {
-  const { startBody: start, endBody: end } = locationsMap[targetId];
+  const location = locationsMap[targetId];
+  // FIXME: bad locationsMap generated for module export functions whose titles are overridden
+  if (!location) return null;
+  const { startBody: start, endBody: end } = location;
   const lines = source.split('\n');
   if (start.line === end.line) {
     return lines[start.line - 1].substring(start.col, end.col);
