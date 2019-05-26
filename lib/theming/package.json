@@ -1,6 +1,6 @@
 {
   "name": "@storybook/theming",
-  "version": "5.2.0-alpha.9",
+  "version": "5.2.0-alpha.16",
   "description": "Core Storybook Components",
   "keywords": [
     "storybook"
@@ -23,7 +23,7 @@
   "dependencies": {
     "@emotion/core": "^10.0.9",
     "@emotion/styled": "^10.0.7",
-    "@storybook/client-logger": "5.2.0-alpha.9",
+    "@storybook/client-logger": "5.2.0-alpha.16",
     "common-tags": "^1.8.0",
     "core-js": "^3.0.1",
     "deep-object-diff": "^1.1.0",
@@ -32,9 +32,8 @@
     "lodash.isequal": "^4.5.0",
     "lodash.mergewith": "^4.6.1",
     "memoizerific": "^1.11.3",
-    "polished": "^3.0.0",
-    "prop-types": "^15.7.2",
-    "react-inspector": "^3.0.2"
+    "polished": "^3.3.1",
+    "prop-types": "^15.7.2"
   },
   "peerDependencies": {
     "react": "*",

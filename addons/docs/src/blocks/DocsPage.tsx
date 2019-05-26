@@ -8,7 +8,6 @@ import { Description } from './Description';
 import { Story } from './Story';
 import { Preview } from './Preview';
 import { Props } from './Props';
-import { Source } from './Source';
 
 enum DocsStoriesType {
   ALL = 'all',
@@ -64,7 +63,6 @@ const DocsStory: React.FunctionComponent<DocsStoryProps> = ({
     <Preview>
       <Story id={id} />
     </Preview>
-    {expanded && <Source id={id} />}
   </>
 );
 

@@ -1,3 +1,39 @@
+## 5.2.0-alpha.16 (May 25, 2019)
+
+- Addon-docs: Auto-configure `inlineStories` & `getPropDefs` based on framework
+
+## 5.2.0-alpha.15 (May 25, 2019)
+
+- Addon-docs: Expanded Vue support
+  - Props table support
+  - iframeHeight configuration parameter
+
+## 5.2.0-alpha.14 (May 25, 2019)
+
+- Addon-docs: Expanded source formats via `@storybook/source-loader`
+  - Legacy `storiesOf` format x (JS / TSX)
+  - Component modules format x (JS / TSX)
+  - Component MDX format
+
+## 5.2.0-alpha.13 (May 24, 2019)
+
+- Addon-docs: Add documentation-only `--docs` option to build storybook
+
+## 5.2.0-alpha.12 (May 21, 2019)
+
+- Addon-docs: Fix regression in preview source for legacy stories
+
+## 5.2.0-alpha.11 (May 21, 2019)
+
+- Addon-docs:
+  - Source refer to stories by name
+  - Source support for multi-story previews
+  - Fix loader bug for plaintext stories
+
+## 5.2.0-alpha.10 (May 19, 2019)
+
+- Addon-docs: Display source dropdown in preview component
+
 ## 5.2.0-alpha.9 (May 17, 2019)
 
 - Addon-docs bugfixes:
@@ -67,6 +103,31 @@ Storybook Docs technical preview:
 - Module story format
 - Load API
 - [Guide](https://docs.google.com/document/d/1un6YX7xDKEKl5-MVb-egnOYN8dynb5Hf7mq0hipk8JE/edit?usp=sharing)
+## 5.1.0-rc.0 (May 21, 2019)
+
+### Bug Fixes
+
+* UI: Fix initial bottom panel size ([#6822](https://github.com/storybooks/storybook/pull/6822))
+* UI: Fix syntaxthighlighter themes ([#6814](https://github.com/storybooks/storybook/pull/6814))
+* Addon-knobs: Fix Boolean knob (#6366) ([#6830](https://github.com/storybooks/storybook/pull/6830))
+* Theming: Change lib/theming so it no longer depends on react-inspector ([#6818](https://github.com/storybooks/storybook/pull/6818))
+* Core: Handle loading `.storybook/babel.config.js` (#6633) ([#6634](https://github.com/storybooks/storybook/pull/6634))
+* CLI: Fix init in create-react-library projects ([#6815](https://github.com/storybooks/storybook/pull/6815))
+* HTML: support knobs for both cached and uncached nodes ([#6783](https://github.com/storybooks/storybook/pull/6783))
+* Uncorrupt yarn lock ([#6811](https://github.com/storybooks/storybook/pull/6811))
+* Core: set a better value for process in manager webpack config ([#6767](https://github.com/storybooks/storybook/pull/6767))
+
+### Maintenance
+
+* Typescript: Migrate addon-centered ([#6772](https://github.com/storybooks/storybook/pull/6772))
+* Add engine field to package.json in apps ([#6809](https://github.com/storybooks/storybook/pull/6809))
+* Fix required engine for apps ([#6810](https://github.com/storybooks/storybook/pull/6810))
+
+### Dependency Upgrades
+
+* Upgrade lodash to latest ([#6832](https://github.com/storybooks/storybook/pull/6832))
+* Bump svelte from 3.4.1 to 3.4.2 ([#6838](https://github.com/storybooks/storybook/pull/6838))
+* Misc upgrades ([#6820](https://github.com/storybooks/storybook/pull/6820))
 
 ## 5.1.0-beta.1 (May 16, 2019)
 

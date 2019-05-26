@@ -1246,6 +1246,7 @@ exports[`Storyshots Addons|Info/Markdown Displays Markdown in description 1`] = 
 .emotion-5 {
   position: relative;
   overflow: hidden;
+  color: #FFFFFF;
   border: 1px solid rgba(255,255,255,.1);
   border-radius: 4px;
   background: #333;
@@ -1439,7 +1440,6 @@ exports[`Storyshots Addons|Info/Markdown Displays Markdown in description 1`] = 
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  background: #333;
 }
 
 .emotion-3 {
@@ -4609,6 +4609,7 @@ exports[`Storyshots Addons|Info/Parameters Overwrite the parameters with markdow
 .emotion-5 {
   position: relative;
   overflow: hidden;
+  color: #FFFFFF;
   border: 1px solid rgba(255,255,255,.1);
   border-radius: 4px;
   background: #333;
@@ -4802,7 +4803,6 @@ exports[`Storyshots Addons|Info/Parameters Overwrite the parameters with markdow
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  background: #333;
 }
 
 .emotion-3 {
@@ -5258,6 +5258,7 @@ exports[`Storyshots Addons|Info/Parameters Overwrite the text parameter with mar
 .emotion-5 {
   position: relative;
   overflow: hidden;
+  color: #FFFFFF;
   border: 1px solid rgba(255,255,255,.1);
   border-radius: 4px;
   background: #333;
@@ -5451,7 +5452,6 @@ exports[`Storyshots Addons|Info/Parameters Overwrite the text parameter with mar
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  background: #333;
 }
 
 .emotion-3 {
@@ -9503,6 +9503,7 @@ exports[`Storyshots Addons|Info/deprecated Displays Markdown in description 1`] 
 .emotion-5 {
   position: relative;
   overflow: hidden;
+  color: #FFFFFF;
   border: 1px solid rgba(255,255,255,.1);
   border-radius: 4px;
   background: #333;
@@ -9696,7 +9697,6 @@ exports[`Storyshots Addons|Info/deprecated Displays Markdown in description 1`] 
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  background: #333;
 }
 
 .emotion-3 {

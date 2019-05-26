@@ -7,6 +7,8 @@ interface SourceProps {
   language?: string;
   code?: string;
   id?: string;
+  ids?: string[];
+  name?: string;
 }
 
 interface Location {
@@ -20,7 +22,10 @@ interface StorySource {
 }
 
 const extract = (targetId: string, { source, locationsMap }: StorySource) => {
-  const { startBody: start, endBody: end } = locationsMap[targetId];
+  const location = locationsMap[targetId];
+  // FIXME: bad locationsMap generated for module export functions whose titles are overridden
+  if (!location) return null;
+  const { startBody: start, endBody: end } = location;
   const lines = source.split('\n');
   if (start.line === end.line) {
     return lines[start.line - 1].substring(start.col, end.col);
@@ -36,17 +41,23 @@ const extract = (targetId: string, { source, locationsMap }: StorySource) => {
 };
 
 export const getSourceProps = (
-  { language, code, id }: SourceProps,
-  { id: currentId, storyStore }: DocsContextProps
+  { language, code, name, id, ids }: SourceProps,
+  { id: currentId, mdxKind, storyStore }: DocsContextProps
 ): PureSourceProps => {
   let source = code; // prefer user-specified code
   if (!source) {
     const targetId = id === CURRENT_SELECTION ? currentId : id;
-    const data = storyStore.fromId(targetId);
-    if (data && data.parameters) {
-      const { mdxSource, storySource } = data.parameters;
-      source = mdxSource || (storySource && extract(targetId, storySource));
-    }
+    const targetIds = ids || [targetId];
+    source = targetIds
+      .map(sourceId => {
+        const data = storyStore.fromId(sourceId);
+        if (data && data.parameters) {
+          const { mdxSource, storySource } = data.parameters;
+          return mdxSource || (storySource && extract(sourceId, storySource));
+        }
+        return '';
+      })
+      .join('\n\n');
   }
   return source
     ? { code: source, language: language || 'jsx' }

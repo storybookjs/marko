@@ -5,7 +5,7 @@ import memoize from 'memoizerific';
 import shallowEqualObjects from 'shallow-equal/objects';
 
 import Events from '@storybook/core-events';
-import { RenderData as RouterData } from '@storybook/router';
+import { RenderData as RouterRenderData } from '@storybook/router';
 import initProviderApi, { SubAPI as ProviderAPI, Provider } from './init-provider-api';
 
 import { createContext } from './context';
@@ -34,13 +34,31 @@ import initVersions, {
   SubAPI as VersionsAPI,
 } from './modules/versions';
 
-const ManagerContext = createContext({ api: undefined, state: getInitialState({}) });
+const ManagerContext = createContext({
+  api: undefined,
+  state: getInitialState({}),
+});
 
 const { STORY_CHANGED, SET_STORIES, SELECT_STORY } = Events;
 
+interface RouterAPI {
+  navigate: RouterRenderData['navigate'];
+}
+
+export interface RouterData {
+  location: RouterRenderData['location'];
+  path: RouterRenderData['path'];
+  storyId: RouterRenderData['storyId'];
+  viewMode: RouterRenderData['viewMode'];
+}
+
 export type Module = StoreData &
   RouterData &
-  ProviderData & { mode?: 'production' | 'development' };
+  RouterAPI &
+  ProviderData & {
+    mode?: 'production' | 'development';
+    state: State;
+  };
 
 export type State = Other &
   LayoutSubState &
@@ -79,6 +97,10 @@ interface ProviderData {
   provider: Provider;
 }
 
+interface DocsModeData {
+  docsMode: boolean;
+}
+
 interface StoreData {
   store: Store;
 }
@@ -89,7 +111,7 @@ interface Children {
 
 type StatePartial = Partial<State>;
 
-export type Props = Children & RouterData & ProviderData;
+export type Props = Children & RouterAPI & RouterData & ProviderData & DocsModeData;
 
 class ManagerProvider extends Component<Props, State> {
   static displayName = 'Manager';
@@ -100,26 +122,41 @@ class ManagerProvider extends Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    const { provider, location, path, viewMode, storyId, navigate } = props;
+    const {
+      provider,
+      location,
+      path,
+      viewMode = props.docsMode ? 'docs' : 'story',
+      storyId,
+      docsMode,
+      navigate,
+    } = props;
 
     const store = new Store({
       getState: () => this.state,
       setState: (stateChange: StatePartial, callback) => this.setState(stateChange, callback),
     });
 
+    const routeData = { location, path, viewMode, storyId };
+
     // Initialize the state to be the initial (persisted) state of the store.
     // This gives the modules the chance to read the persisted state, apply their defaults
     // and override if necessary
-    this.state = store.getInitialState(getInitialState({}));
+    const docsModeState = {
+      layout: { isToolshown: false, showPanel: false },
+      ui: { docsMode: true },
+    };
+    this.state = store.getInitialState(
+      getInitialState({
+        ...routeData,
+        ...(docsMode ? docsModeState : null),
+      })
+    );
 
     const apiData = {
       navigate,
       store,
       provider,
-      location,
-      path,
-      viewMode,
-      storyId,
     };
 
     this.modules = [
@@ -131,7 +168,7 @@ class ManagerProvider extends Component<Props, State> {
       initStories,
       initURL,
       initVersions,
-    ].map(initModule => initModule(apiData));
+    ].map(initModule => initModule({ ...routeData, ...apiData, state: this.state }));
 
     // Create our initial state by combining the initial state of all modules, then overlaying any saved state
     const state = getInitialState(...this.modules.map(m => m.state));

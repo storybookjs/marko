@@ -12,23 +12,29 @@ interface StoryProps {
   height?: string;
 }
 
+const inferInlineStories = (framework: string): boolean => {
+  switch (framework) {
+    case 'react':
+      return true;
+    default:
+      return false;
+  }
+};
+
 export const getStoryProps = (
   { id, name, height }: StoryProps,
-  { storyStore, parameters, mdxKind, selectedKind, selectedStory }: DocsContextProps
+  { id: currentId, storyStore, parameters, mdxKind }: DocsContextProps
 ): PureStoryProps => {
-  const previewId =
-    id === CURRENT_SELECTION
-      ? toId(selectedKind, selectedStory)
-      : id || (name && toId(mdxKind, name));
+  const previewId = id === CURRENT_SELECTION ? currentId : id || (name && toId(mdxKind, name));
   const data = storyStore.fromId(previewId);
-  const { inlineStories } = (parameters && parameters.options && parameters.options.docs) || {
-    inlineStories: false,
-  };
+  const { framework = null } = parameters || {};
+  const { inlineStories = inferInlineStories(framework), iframeHeight = undefined } =
+    (parameters && parameters.options && parameters.options.docs) || {};
   return {
     inline: inlineStories,
     id: previewId,
     storyFn: data && data.getDecorated(),
-    height,
+    height: height || iframeHeight,
     title: data && data.name,
   };
 };

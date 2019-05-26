@@ -46,6 +46,7 @@ module.exports = {
     },
     {
       test: './lib',
+      exclude: './addons/storysource/src/loader',
       presets: [
         ['@babel/preset-env', { shippedProposals: true, useBuiltIns: 'usage', corejs: '3' }],
         '@babel/preset-react',
@@ -71,6 +72,7 @@ module.exports = {
         './lib/codemod',
         './addons/storyshots',
         './addons/storysource/src/loader',
+        './lib/source-loader/src',
         './app/**/src/server/**',
         './app/**/src/bin/**',
       ],

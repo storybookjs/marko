@@ -1,5 +1,6 @@
 import { load, addParameters, addDecorator } from '@storybook/angular';
 import { withA11y } from '@storybook/addon-a11y';
+import { DocsPage } from '@storybook/addon-docs/blocks';
 import addCssWarning from '../src/cssWarning';
 
 addDecorator(withA11y);
@@ -9,6 +10,7 @@ addParameters({
   options: {
     hierarchyRootSeparator: /\|/,
   },
+  docs: DocsPage,
 });
 
 // put welcome screen at the top of the list so it's the first one displayed

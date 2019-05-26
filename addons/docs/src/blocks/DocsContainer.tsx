@@ -30,13 +30,13 @@ export const DocsContainer: React.FunctionComponent<DocsContainerProps> = ({
   context,
   content: MDXContent,
 }) => {
-  const options = (context && context.parameters && context.parameters.options) || {};
-
+  const parameters = (context && context.parameters) || {};
+  const options = parameters.options || {};
   const theme = ensureTheme(options.theme);
-  const { getPropDefs = null, components: userComponents = null } = options.docs || {};
+  const { components: userComponents = null } = options.docs || {};
   const components = { ...defaultComponents, ...userComponents };
   return (
-    <DocsContext.Provider value={{ ...context, getPropDefs }}>
+    <DocsContext.Provider value={context}>
       <ThemeProvider theme={theme}>
         <Global styles={globalWithOverflow} />
         <MDXProvider components={components}>
