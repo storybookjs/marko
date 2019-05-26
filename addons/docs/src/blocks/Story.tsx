@@ -17,14 +17,17 @@ export const getStoryProps = (
 ): PureStoryProps => {
   const previewId = id || (name && toId(mdxKind, name)) || currentId;
   const data = storyStore.fromId(previewId);
-  const { inlineStories } = (parameters && parameters.options && parameters.options.docs) || {
+  const { inlineStories, iframeHeight } = (parameters &&
+    parameters.options &&
+    parameters.options.docs) || {
     inlineStories: false,
+    iframeHeight: undefined,
   };
   return {
     inline: inlineStories,
     id: previewId,
     storyFn: data && data.getDecorated(),
-    height,
+    height: height || iframeHeight,
     title: data && data.name,
   };
 };
