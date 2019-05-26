@@ -3,7 +3,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { withA11y } from '@storybook/addon-a11y';
 import { DocsPage } from '@storybook/addon-docs/blocks';
-import { getPropDefs } from '@storybook/addon-docs/react';
+import { getPropDefs } from '@storybook/addon-docs/vue';
 import MyButton from '../src/stories/Button.vue';
 
 addDecorator(withA11y);
