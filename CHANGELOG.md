@@ -1,3 +1,7 @@
+## 5.2.0-alpha.17 (May 26, 2019)
+
+- Addon-docs: Refer to selected story/component with `id="."` / `of="."`
+
 ## 5.2.0-alpha.16 (May 25, 2019)
 
 - Addon-docs: Auto-configure `inlineStories` & `getPropDefs` based on framework
