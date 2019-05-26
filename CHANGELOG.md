@@ -1,3 +1,9 @@
+## 5.2.0-alpha.15 (May 25, 2019)
+
+- Addon-docs: Expanded Vue support
+  - Props table support
+  - iframeHeight configuration parameter
+
 ## 5.2.0-alpha.14 (May 25, 2019)
 
 - Addon-docs: Expanded source formats via `@storybook/source-loader`
