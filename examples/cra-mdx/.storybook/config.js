@@ -2,13 +2,12 @@ import React from 'react';
 import { load, addDecorator, addParameters } from '@storybook/react';
 import { themes, create } from '@storybook/theming';
 import { DocsPage } from '@storybook/addon-docs/blocks';
-import { getPropDefs } from '@storybook/addon-docs/react';
 
 addParameters({
   options: {
     docs: {
-      inlineStories: true,
-      getPropDefs,
+      // inlineStories: true,
+      // getPropDefs,
     },
     theme: themes.light,
   },

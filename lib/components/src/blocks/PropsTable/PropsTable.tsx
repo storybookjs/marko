@@ -118,7 +118,7 @@ export const Table = styled.table(({ theme }) => ({
 
 export enum PropsTableError {
   NO_COMPONENT = 'No component found',
-  PROPS_UNSUPPORTED = 'The props unsupported. Check to see if your framework is supported.',
+  PROPS_UNSUPPORTED = 'Props unsupported. See Props documentation for your framework.',
 }
 
 export interface PropsTableProps {

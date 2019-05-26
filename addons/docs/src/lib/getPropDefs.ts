@@ -1,6 +1,13 @@
 /* eslint-disable no-underscore-dangle */
 
 import PropTypes from 'prop-types';
+import { PropDef } from '@storybook/components';
+
+interface PropDefMap {
+  [p: string]: PropDef;
+}
+
+export type PropDefGetter = (type: any) => PropDef[] | null;
 
 const propTypesMap = new Map();
 
@@ -11,10 +18,10 @@ Object.keys(PropTypes).forEach(typeName => {
   propTypesMap.set(type.isRequired, typeName);
 });
 
-const hasDocgen = obj => obj && obj.props && Object.keys(obj.props).length > 0;
+const hasDocgen = (obj: any) => obj && obj.props && Object.keys(obj.props).length > 0;
 
-const propsFromDocgen = type => {
-  const props = {};
+const propsFromDocgen: PropDefGetter = type => {
+  const props: PropDefMap = {};
   const docgenInfoProps = type.__docgenInfo.props;
 
   Object.keys(docgenInfoProps).forEach(property => {
@@ -34,8 +41,8 @@ const propsFromDocgen = type => {
   return Object.values(props);
 };
 
-const propsFromPropTypes = type => {
-  const props = {};
+const propsFromPropTypes: PropDefGetter = type => {
+  const props: PropDefMap = {};
 
   if (type.propTypes) {
     Object.keys(type.propTypes).forEach(property => {
@@ -65,7 +72,7 @@ const propsFromPropTypes = type => {
       }
 
       if (!props[property]) {
-        props[property] = { name: property };
+        props[property] = { name: property, type: 'any', required: false };
       }
 
       props[property].defaultValue = value;
@@ -75,5 +82,5 @@ const propsFromPropTypes = type => {
   return Object.values(props);
 };
 
-export const getPropDefs = type =>
+export const getPropDefs: PropDefGetter = type =>
   hasDocgen(type.__docgenInfo) ? propsFromDocgen(type) : propsFromPropTypes(type);

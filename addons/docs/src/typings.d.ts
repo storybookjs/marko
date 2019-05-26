@@ -4,3 +4,4 @@ declare module '@mdx-js/react';
 declare module 'global';
 declare module 'react-inspector';
 declare module 'telejson';
+declare module 'prop-types';

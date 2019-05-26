@@ -30,7 +30,7 @@ const getDocgen = (component?: Component) =>
 
 export const getDescriptionProps = (
   { of, type, markdown }: DescriptionProps,
-  { parameters, getPropDefs }: DocsContextProps
+  { parameters }: DocsContextProps
 ): PureDescriptionProps => {
   if (markdown) {
     return { markdown };
