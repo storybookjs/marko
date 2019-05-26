@@ -1,3 +1,7 @@
+## 5.2.0-alpha.16 (May 25, 2019)
+
+- Addon-docs: Auto-configure `inlineStories` & `getPropDefs` based on framework
+
 ## 5.2.0-alpha.15 (May 25, 2019)
 
 - Addon-docs: Expanded Vue support
