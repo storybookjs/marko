@@ -1,3 +1,8 @@
+## 5.2.0-alpha.18 (May 26, 2019)
+
+- Addon-docs: Codemod for adding component parameters
+- Core: Babel config loading bugfix ([#6878](https://github.com/storybooks/storybook/pull/6878))
+
 ## 5.2.0-alpha.17 (May 26, 2019)
 
 - Addon-docs: Refer to selected story/component with `id="."` / `of="."`
