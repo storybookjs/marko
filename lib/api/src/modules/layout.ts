@@ -23,7 +23,6 @@ export interface UI {
   name?: string;
   url?: string;
   enableShortcuts: boolean;
-  sortStoriesByKind: boolean;
   sidebarAnimations: boolean;
   docsMode: boolean;
 }
@@ -133,7 +132,6 @@ const checkDeprecatedLayoutOptions = (options: Options) => {
 const initial: SubState = {
   ui: {
     enableShortcuts: true,
-    sortStoriesByKind: false,
     sidebarAnimations: true,
     docsMode: false,
   },
