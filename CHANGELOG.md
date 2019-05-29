@@ -1,3 +1,7 @@
+## 5.2.0-alpha.19 (May 28, 2019)
+
+- Source-loader: Fix bad package dependencies
+
 ## 5.2.0-alpha.18 (May 26, 2019)
 
 - Addon-docs: Codemod for adding component parameters
