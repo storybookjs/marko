@@ -5,15 +5,16 @@ import {
   Source,
   ColorPalette,
   ColorItem,
+  Meta,
 } from '@storybook/addon-docs/blocks';
 import { action } from '@storybook/addon-actions';
 import { Button } from '@storybook/react/demo';
 
-export const componentMeta = {
-  title: 'MDX|Button',
-  decorators: [storyFn => <div style={{ backgroundColor: 'yellow' }}>{storyFn()}</div>],
-  parameters: { component: Button, notes: 'component notes' },
-};
+<Meta
+  title="MDX|Button"
+  decorators={[storyFn => <div style={{ backgroundColor: 'yellow' }}>{storyFn()}</div>]}
+  parameters={{ component: Button, notes: 'component notes' }}
+/>
 
 # Selected
 

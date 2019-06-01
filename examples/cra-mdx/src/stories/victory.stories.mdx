@@ -1,4 +1,4 @@
-import { Story, Preview } from '@storybook/addon-docs/blocks';
+import { Story, Preview, Meta } from '@storybook/addon-docs/blocks';
 import { action } from '@storybook/addon-actions';
 import { VictoryPie, Slice, VictoryErrorBar } from 'victory';
 
@@ -22,11 +22,11 @@ We'll be writing stories for the PieChart component in
 
 First we declare our component.
 
-export const componentMeta = {
-  title: 'MDX|Victory',
-  component: VictoryPie,
-  decorators: [getStory => <div style={{ width: 400, height: 400 }}>{getStory()}</div>],
-};
+<Meta
+  title="MDX|Victory"
+  component={VictoryPie}
+  decorators={[getStory => <div style={{ width: 400, height: 400 }}>{getStory()}</div>]}
+/>
 
 This export doesn't show up in the MDX output.
 

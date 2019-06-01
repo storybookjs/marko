@@ -1,11 +1,6 @@
-import React, { useState, ReactElement, ReactNodeArray } from 'react';
-import {
-  ActionBar,
-  Preview as PurePreview,
-  PreviewProps as PurePreviewProps,
-} from '@storybook/components';
+import React, { ReactNodeArray } from 'react';
+import { Preview as PurePreview, PreviewProps as PurePreviewProps } from '@storybook/components';
 import { toId } from '@storybook/router';
-import { Story } from './Story';
 import { getSourceProps } from './Source';
 import { DocsContext, DocsContextProps } from './DocsContext';
 

@@ -8,6 +8,7 @@ const camelCase = require('lodash.camelcase');
 
 const STORY_REGEX = /^<Story[ >]/;
 const PREVIEW_REGEX = /^<Preview[ >]/;
+const META_REGEX = /^<Meta[ >]/;
 const RESERVED = /^(?:do|if|in|for|let|new|try|var|case|else|enum|eval|false|null|this|true|void|with|await|break|catch|class|const|super|throw|while|yield|delete|export|import|public|return|static|switch|typeof|default|extends|finally|package|private|continue|debugger|function|arguments|interface|protected|implements|instanceof)$/;
 
 function getAttr(elt, what) {
@@ -103,6 +104,24 @@ function genPreviewExports(ast, input, counter) {
   return previewExports;
 }
 
+function genMetaExport(ast, input, counter) {
+  let title = getAttr(ast.openingElement, 'title');
+  let parameters = getAttr(ast.openingElement, 'parameters');
+  let decorators = getAttr(ast.openingElement, 'decorators');
+  title = title && `title: '${title.value}',`;
+  if (parameters && parameters.expression) {
+    const { code: params } = generate(parameters.expression, {});
+    parameters = `parameters: ${params},`;
+  }
+  if (decorators && decorators.expression) {
+    const { code: decos } = generate(decorators.expression, {});
+    decorators = `decorators: ${decos},`;
+  }
+  return [
+    `export const componentMeta = { ${title || ''} ${parameters || ''} ${decorators || ''} };`,
+  ];
+}
+
 function getStories(node, counter) {
   const { value, type } = node;
   // Single story
@@ -117,6 +136,11 @@ function getStories(node, counter) {
       // Preview, possibly containing multiple stories
       const ast = parser.parseExpression(value, { plugins: ['jsx'] });
       return genPreviewExports(ast, value, counter);
+    }
+    if (META_REGEX.exec(value)) {
+      // Preview, possibly containing multiple stories
+      const ast = parser.parseExpression(value, { plugins: ['jsx'] });
+      return genMetaExport(ast, value, counter);
     }
   }
   return null;
@@ -157,8 +181,8 @@ function extractStories(node, options) {
   const fullJsx = [
     'import { DocsContainer } from "@storybook/addon-docs/blocks";',
     defaultJsx,
-    wrapperJs,
     ...storyExports,
+    wrapperJs,
   ].join('\n\n');
 
   return fullJsx;
