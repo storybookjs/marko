@@ -1,3 +1,7 @@
+## 5.2.0-alpha.20 (May 31, 2019)
+
+- Addon-docs: Use Meta doc block instead of exporting componentMeta
+
 ## 5.2.0-alpha.19 (May 28, 2019)
 
 - Source-loader: Fix bad package dependencies
