@@ -3,7 +3,7 @@ import { Typeset } from './Typeset';
 
 import { DocsPageWrapper } from './DocsPage';
 
-export const componentMeta = {
+export default {
   title: 'Docs|Typeset',
   Component: Typeset,
   decorators: [getStory => <DocsPageWrapper>{getStory()}</DocsPageWrapper>],

@@ -3,7 +3,7 @@ import { ColorItem, ColorPalette } from './ColorPalette';
 
 import { DocsPageWrapper } from './DocsPage';
 
-export const componentMeta = {
+export default {
   title: 'Docs|ColorPalette',
   Component: ColorPalette,
   decorators: [getStory => <DocsPageWrapper>{getStory()}</DocsPageWrapper>],

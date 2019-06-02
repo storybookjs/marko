@@ -6,7 +6,7 @@ import * as propsTableStories from './PropsTable/PropsTable.stories';
 import * as sourceStories from './Source.stories';
 import * as descriptionStories from './Description.stories';
 
-export const componentMeta = {
+export default {
   title: 'Docs|DocsPage',
   Component: DocsPage,
   decorators: [

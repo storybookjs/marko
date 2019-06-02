@@ -3,7 +3,7 @@ import { PropsTable, PropsTableError } from './PropsTable';
 import { DocsPageWrapper } from '../DocsPage';
 import * as rowStories from './PropRow.stories';
 
-export const componentMeta = {
+export default {
   Component: PropsTable,
   title: 'Docs|PropTable',
   decorators: [storyFn => <DocsPageWrapper>{storyFn()}</DocsPageWrapper>],

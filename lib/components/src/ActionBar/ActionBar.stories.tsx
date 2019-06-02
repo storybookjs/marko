@@ -7,7 +7,7 @@ const action1 = action('action1');
 const action2 = action('action2');
 const action3 = action('action3');
 
-export const componentMeta = {
+export default {
   Component: ActionBar,
   title: 'Basics|ActionBar',
   decorators: [

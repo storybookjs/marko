@@ -29,6 +29,8 @@ function MDXContent({ components, ...props }) {
 
 MDXContent.isMDXComponent = true;
 
+const componentMeta = {};
+
 let mdxKind = null;
 let meta = null;
 if (typeof componentMeta !== 'undefined' && componentMeta) {
@@ -42,7 +44,8 @@ if (meta) {
   meta.parameters = meta.parameters || {};
   meta.parameters.docs = WrappedMDXContent;
 }
-export default WrappedMDXContent;
+
+export default componentMeta;
 "
 `;
 
@@ -96,6 +99,8 @@ MDXContent.isMDXComponent = true;
 export const one = () => <Button>One</Button>;
 one.parameters = { mdxSource: \`<Button>One</Button>\` };
 
+const componentMeta = {};
+
 let mdxKind = null;
 let meta = null;
 if (typeof componentMeta !== 'undefined' && componentMeta) {
@@ -109,7 +114,8 @@ if (meta) {
   meta.parameters = meta.parameters || {};
   meta.parameters.docs = WrappedMDXContent;
 }
-export default WrappedMDXContent;
+
+export default componentMeta;
 "
 `;
 
@@ -155,8 +161,6 @@ function MDXContent({ components, ...props }) {
 
 MDXContent.isMDXComponent = true;
 
-export const componentMeta = { title: 'MDX|Welcome' };
-
 export const toStorybook = () => ({
   template: \`<storybook-welcome-component (showApp)=\\"showApp()\\"></storybook-welcome-component>\`,
   props: {
@@ -179,6 +183,8 @@ toStorybook.parameters = {
 }\`,
 };
 
+const componentMeta = { title: 'MDX|Welcome' };
+
 let mdxKind = null;
 let meta = null;
 if (typeof componentMeta !== 'undefined' && componentMeta) {
@@ -192,7 +198,8 @@ if (meta) {
   meta.parameters = meta.parameters || {};
   meta.parameters.docs = WrappedMDXContent;
 }
-export default WrappedMDXContent;
+
+export default componentMeta;
 "
 `;
 
@@ -244,14 +251,6 @@ function MDXContent({ components, ...props }) {
 
 MDXContent.isMDXComponent = true;
 
-export const componentMeta = {
-  title: 'Button',
-  parameters: {
-    component: Button,
-    notes: 'component notes',
-  },
-};
-
 export const componentNotes = () => <Button>Component notes</Button>;
 componentNotes.title = 'component notes';
 componentNotes.parameters = { mdxSource: \`<Button>Component notes</Button>\` };
@@ -262,6 +261,14 @@ storyNotes.parameters = {
   mdxSource: \`<Button>Story notes</Button>\`,
   ...{
     notes: 'story notes',
+  },
+};
+
+const componentMeta = {
+  title: 'Button',
+  parameters: {
+    component: Button,
+    notes: 'component notes',
   },
 };
 
@@ -278,7 +285,8 @@ if (meta) {
   meta.parameters = meta.parameters || {};
   meta.parameters.docs = WrappedMDXContent;
 }
-export default WrappedMDXContent;
+
+export default componentMeta;
 "
 `;
 
@@ -330,20 +338,20 @@ function MDXContent({ components, ...props }) {
 
 MDXContent.isMDXComponent = true;
 
-export const componentMeta = {
-  title: 'Button',
-  parameters: {
-    component: Button,
-    notes: 'component notes',
-  },
-};
-
 export const helloButton = () => <Button>Hello button</Button>;
 helloButton.title = 'hello button';
 helloButton.parameters = { mdxSource: \`<Button>Hello button</Button>\` };
 
 export const two = () => <Button>Two</Button>;
 two.parameters = { mdxSource: \`<Button>Two</Button>\` };
+
+const componentMeta = {
+  title: 'Button',
+  parameters: {
+    component: Button,
+    notes: 'component notes',
+  },
+};
 
 let mdxKind = null;
 let meta = null;
@@ -358,7 +366,8 @@ if (meta) {
   meta.parameters = meta.parameters || {};
   meta.parameters.docs = WrappedMDXContent;
 }
-export default WrappedMDXContent;
+
+export default componentMeta;
 "
 `;
 
@@ -398,14 +407,14 @@ function MDXContent({ components, ...props }) {
 
 MDXContent.isMDXComponent = true;
 
-export const componentMeta = { title: 'Button' };
-
 export const one = () => <Button>One</Button>;
 one.parameters = { mdxSource: \`<Button>One</Button>\` };
 
 export const helloStory = () => <Button>Hello button</Button>;
 helloStory.title = 'hello story';
 helloStory.parameters = { mdxSource: \`<Button>Hello button</Button>\` };
+
+const componentMeta = { title: 'Button' };
 
 let mdxKind = null;
 let meta = null;
@@ -420,7 +429,8 @@ if (meta) {
   meta.parameters = meta.parameters || {};
   meta.parameters.docs = WrappedMDXContent;
 }
-export default WrappedMDXContent;
+
+export default componentMeta;
 "
 `;
 
@@ -453,6 +463,8 @@ function MDXContent({ components, ...props }) {
 
 MDXContent.isMDXComponent = true;
 
+const componentMeta = {};
+
 let mdxKind = null;
 let meta = null;
 if (typeof componentMeta !== 'undefined' && componentMeta) {
@@ -466,7 +478,8 @@ if (meta) {
   meta.parameters = meta.parameters || {};
   meta.parameters.docs = WrappedMDXContent;
 }
-export default WrappedMDXContent;
+
+export default componentMeta;
 "
 `;
 
@@ -502,10 +515,10 @@ function MDXContent({ components, ...props }) {
 
 MDXContent.isMDXComponent = true;
 
-export const componentMeta = { title: 'Text' };
-
 export const text = () => 'Plain text';
 text.parameters = { mdxSource: \`'Plain text'\` };
+
+const componentMeta = { title: 'Text' };
 
 let mdxKind = null;
 let meta = null;
@@ -520,7 +533,8 @@ if (meta) {
   meta.parameters = meta.parameters || {};
   meta.parameters.docs = WrappedMDXContent;
 }
-export default WrappedMDXContent;
+
+export default componentMeta;
 "
 `;
 
@@ -554,6 +568,8 @@ function MDXContent({ components, ...props }) {
 
 MDXContent.isMDXComponent = true;
 
+const componentMeta = {};
+
 let mdxKind = null;
 let meta = null;
 if (typeof componentMeta !== 'undefined' && componentMeta) {
@@ -567,6 +583,7 @@ if (meta) {
   meta.parameters = meta.parameters || {};
   meta.parameters.docs = WrappedMDXContent;
 }
-export default WrappedMDXContent;
+
+export default componentMeta;
 "
 `;

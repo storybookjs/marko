@@ -6,7 +6,7 @@ import { DocsPageWrapper } from './DocsPage';
 import { Button } from '../Button/Button';
 import * as sourceStories from './Source.stories';
 
-export const componentMeta = {
+export default {
   title: 'Docs|Preview',
   Component: Preview,
   decorators: [getStory => <DocsPageWrapper>{getStory()}</DocsPageWrapper>],

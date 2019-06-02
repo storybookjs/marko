@@ -4,7 +4,7 @@ import { PropRow } from './PropRow';
 import { Table } from './PropsTable';
 import { DocsPageWrapper } from '../DocsPage';
 
-export const componentMeta = {
+export default {
   Component: PropRow,
   title: 'Docs|PropRow',
   decorators: [

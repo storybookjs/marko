@@ -4,7 +4,7 @@ import { Description } from './Description';
 import { DocsPageWrapper } from './DocsPage';
 import markdownCaption from './DocsPageExampleCaption.md';
 
-export const componentMeta = {
+export default {
   title: 'Docs|Description',
   Component: Description,
   decorators: [getStory => <DocsPageWrapper>{getStory()}</DocsPageWrapper>],

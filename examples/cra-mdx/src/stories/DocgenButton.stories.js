@@ -2,7 +2,7 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import DocgenButton from './DocgenButton';
 
-export const componentMeta = {
+export default {
   title: 'Module|DocgenButton',
   decorators: [],
   parameters: { component: DocgenButton },

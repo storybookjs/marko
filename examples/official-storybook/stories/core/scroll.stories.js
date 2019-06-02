@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const componentMeta = {
+export default {
   title: 'Core|Scroll',
 };
 

@@ -4,7 +4,7 @@ import { IconItem, IconGallery } from './IconGallery';
 import { DocsPageWrapper } from './DocsPage';
 import { Icons as ExampleIcon } from '../icon/icon';
 
-export const componentMeta = {
+export default {
   title: 'Docs|IconGallery',
   Component: IconGallery,
   decorators: [getStory => <DocsPageWrapper>{getStory()}</DocsPageWrapper>],

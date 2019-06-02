@@ -6,9 +6,9 @@ const camelCase = require('lodash.camelcase');
 // Generate the MDX as is, but append named exports for every
 // story in the contents
 
-const STORY_REGEX = /^<Story[ >]/;
-const PREVIEW_REGEX = /^<Preview[ >]/;
-const META_REGEX = /^<Meta[ >]/;
+const STORY_REGEX = /^<Story[\s>]/;
+const PREVIEW_REGEX = /^<Preview[\s>]/;
+const META_REGEX = /^<Meta[\s>]/;
 const RESERVED = /^(?:do|if|in|for|let|new|try|var|case|else|enum|eval|false|null|this|true|void|with|await|break|catch|class|const|super|throw|while|yield|delete|export|import|public|return|static|switch|typeof|default|extends|finally|package|private|continue|debugger|function|arguments|interface|protected|implements|instanceof)$/;
 
 function getAttr(elt, what) {
@@ -26,7 +26,7 @@ function getStoryFn(name, counter) {
   return `story${counter}`;
 }
 
-function genStoryExport(ast, input, counter) {
+function genStoryExport(ast, counter) {
   let storyName = getAttr(ast.openingElement, 'name');
   let storyId = getAttr(ast.openingElement, 'id');
   storyName = storyName && storyName.value;
@@ -86,7 +86,7 @@ function genStoryExport(ast, input, counter) {
   return [statements.join('\n')];
 }
 
-function genPreviewExports(ast, input, counter) {
+function genPreviewExports(ast, counter) {
   // console.log('genPreviewExports', JSON.stringify(ast, null, 2));
 
   let localCounter = counter;
@@ -94,7 +94,7 @@ function genPreviewExports(ast, input, counter) {
   for (let i = 0; i < ast.children.length; i += 1) {
     const child = ast.children[i];
     if (child.type === 'JSXElement' && child.openingElement.name.name === 'Story') {
-      const storyExport = genStoryExport(child, input, localCounter);
+      const storyExport = genStoryExport(child, localCounter);
       if (storyExport) {
         previewExports.push(storyExport);
         localCounter += 1;
@@ -104,7 +104,7 @@ function genPreviewExports(ast, input, counter) {
   return previewExports;
 }
 
-function genMetaExport(ast, input, counter) {
+function genMetaExport(ast) {
   let title = getAttr(ast.openingElement, 'title');
   let parameters = getAttr(ast.openingElement, 'parameters');
   let decorators = getAttr(ast.openingElement, 'decorators');
@@ -117,30 +117,27 @@ function genMetaExport(ast, input, counter) {
     const { code: decos } = generate(decorators.expression, {});
     decorators = `decorators: ${decos},`;
   }
-  return [
-    `export const componentMeta = { ${title || ''} ${parameters || ''} ${decorators || ''} };`,
-  ];
+  return `const componentMeta = { ${title || ''} ${parameters || ''} ${decorators || ''} };`;
 }
 
-function getStories(node, counter) {
+function getExports(node, counter) {
   const { value, type } = node;
-  // Single story
   if (type === 'jsx') {
     if (STORY_REGEX.exec(value)) {
       // Single story
       const ast = parser.parseExpression(value, { plugins: ['jsx'] });
-      const storyExport = genStoryExport(ast, value, counter);
-      return storyExport && [storyExport];
+      const storyExport = genStoryExport(ast, counter);
+      return storyExport && { stories: [storyExport] };
     }
     if (PREVIEW_REGEX.exec(value)) {
       // Preview, possibly containing multiple stories
       const ast = parser.parseExpression(value, { plugins: ['jsx'] });
-      return genPreviewExports(ast, value, counter);
+      return { stories: genPreviewExports(ast, counter) };
     }
     if (META_REGEX.exec(value)) {
       // Preview, possibly containing multiple stories
       const ast = parser.parseExpression(value, { plugins: ['jsx'] });
-      return genMetaExport(ast, value, counter);
+      return { meta: genMetaExport(ast) };
     }
   }
   return null;
@@ -149,40 +146,47 @@ function getStories(node, counter) {
 // insert `mdxKind` into the context so that we can know what "kind" we're rendering into
 // when we render <Story name="xxx">...</Story>, since this MDX can be attached to any `selectedKind`!
 const wrapperJs = `
-let mdxKind = null;
-let meta = null;
-if (typeof componentMeta !== 'undefined' && componentMeta) {
-  mdxKind = componentMeta.title || componentMeta.displayName;
-  meta = componentMeta;
-}
+const mdxKind = componentMeta.title || componentMeta.displayName;
 const WrappedMDXContent = ({ context }) => <DocsContainer context={{...context, mdxKind}} content={MDXContent} />;
-if (meta) {
-  meta.parameters = meta.parameters || {};
-  meta.parameters.docs = WrappedMDXContent;
-}
-export default WrappedMDXContent;
+componentMeta.parameters = componentMeta.parameters || {};
+componentMeta.parameters.docs = WrappedMDXContent;
 `.trim();
 
-function extractStories(node, options) {
+function extractExports(node, options) {
   // we're overriding default export
   const defaultJsx = mdxToJsx.toJSX(node, {}, { ...options, skipExport: true });
   const storyExports = [];
+  let metaExport = null;
   let counter = 0;
   node.children.forEach(n => {
-    const stories = getStories(n, counter);
-    if (stories) {
-      stories.forEach(story => {
-        storyExports.push(story);
-        counter += 1;
-      });
+    const exports = getExports(n, counter);
+    if (exports) {
+      const { stories, meta } = exports;
+      if (stories) {
+        stories.forEach(story => {
+          storyExports.push(story);
+          counter += 1;
+        });
+      }
+      if (meta) {
+        if (metaExport) {
+          throw new Error('Meta can only be declared once');
+        }
+        metaExport = meta;
+      }
     }
   });
+  if (!metaExport) {
+    metaExport = 'const componentMeta = { };';
+  }
 
   const fullJsx = [
     'import { DocsContainer } from "@storybook/addon-docs/blocks";',
     defaultJsx,
     ...storyExports,
+    metaExport,
     wrapperJs,
+    'export default componentMeta;',
   ].join('\n\n');
 
   return fullJsx;
@@ -190,7 +194,7 @@ function extractStories(node, options) {
 
 function createCompiler(mdxOptions) {
   return function compiler(options = {}) {
-    this.Compiler = tree => extractStories(tree, options, mdxOptions);
+    this.Compiler = tree => extractExports(tree, options, mdxOptions);
   };
 }
 

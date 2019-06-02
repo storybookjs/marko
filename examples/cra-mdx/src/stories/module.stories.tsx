@@ -1,7 +1,7 @@
 import React from 'react';
 import TypescriptButton from './TypescriptButton';
 
-export const componentMeta: any = {
+export default {
   title: 'Typescript|Module',
   decorators: [],
   parameters: { component: TypescriptButton },

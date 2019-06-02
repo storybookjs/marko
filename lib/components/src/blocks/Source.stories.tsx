@@ -2,7 +2,7 @@ import React from 'react';
 import { Source, SourceError } from './Source';
 import { DocsPageWrapper } from './DocsPage';
 
-export const componentMeta = {
+export default {
   title: 'Docs|Source',
   Component: Source,
   decorators: [getStory => <DocsPageWrapper>{getStory()}</DocsPageWrapper>],

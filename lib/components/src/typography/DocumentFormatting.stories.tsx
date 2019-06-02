@@ -4,7 +4,7 @@ import Markdown from 'markdown-to-jsx';
 import { DocumentFormatting } from './DocumentFormatting';
 import markdownSample from './DocumentFormattingSample.md';
 
-export const componentMeta = {
+export default {
   Component: DocumentFormatting,
   title: 'Basics|DocumentFormatting',
   decorators: [

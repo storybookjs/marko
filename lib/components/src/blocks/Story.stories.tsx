@@ -3,7 +3,7 @@ import { Story, StoryError } from './Story';
 import { DocsPageWrapper } from './DocsPage';
 import { Button } from '../Button/Button';
 
-export const componentMeta = {
+export default {
   title: 'Docs|Story',
   Component: Story,
   decorators: [getStory => <DocsPageWrapper>{getStory()}</DocsPageWrapper>],
