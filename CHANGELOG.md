@@ -1,3 +1,9 @@
+## 5.2.0-alpha.21 (June 2, 2019)
+
+- Core: Convert module format to use default export for metadata
+- Addon-docs: Compile MDX to default export modules format
+- Source-loader: Support parameter injection for default export metadata
+
 ## 5.2.0-alpha.20 (May 31, 2019)
 
 - Addon-docs: Use Meta doc block instead of exporting componentMeta
