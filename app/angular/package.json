@@ -5,13 +5,13 @@
   "keywords": [
     "storybook"
   ],
-  "homepage": "https://github.com/storybooks/storybook/tree/master/app/angular",
+  "homepage": "https://github.com/storybookjs/storybook/tree/master/app/angular",
   "bugs": {
-    "url": "https://github.com/storybooks/storybook/issues"
+    "url": "https://github.com/storybookjs/storybook/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/storybooks/storybook.git",
+    "url": "https://github.com/storybookjs/storybook.git",
     "directory": "app/angular"
   },
   "license": "MIT",
@@ -38,9 +38,6 @@
     "tsconfig-paths-webpack-plugin": "^3.2.0",
     "webpack": "^4.32.2"
   },
-  "devDependencies": {
-    "zone.js": "^0.8.29"
-  },
   "peerDependencies": {
     "@angular-devkit/core": "^0.6.1 || >=7.0.0",
     "@angular/common": ">=6.0.0",
@@ -52,7 +49,7 @@
     "autoprefixer": "^8.1.0",
     "babel-loader": "^7.0.0 || ^8.0.0",
     "rxjs": "^6.0.0",
-    "zone.js": "^0.8.29"
+    "zone.js": "^0.8.29 || ^0.9.0"
   },
   "engines": {
     "node": ">=8.0.0"
