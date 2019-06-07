@@ -1,5 +1,6 @@
 export { ColorPalette, ColorItem, IconGallery, IconItem, Typeset } from '@storybook/components';
 
+export * from './Description';
 export * from './DocsContext';
 export * from './DocsPage';
 export * from './DocsContainer';

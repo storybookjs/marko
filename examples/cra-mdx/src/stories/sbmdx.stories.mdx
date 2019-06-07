@@ -3,6 +3,7 @@ import {
   Preview,
   Props,
   Source,
+  Description,
   ColorPalette,
   ColorItem,
   Meta,
@@ -70,4 +71,10 @@ import { Button } from '@storybook/react/demo';
 
 ## Configurable height
 
-<Story id="mdx-button--with-icons" height="500px" />
+<Story id="mdx-button--with-icons" height="200px" />
+
+## Description
+
+<Description markdown="this is _markdown_" />
+
+<Description of={Button} />
