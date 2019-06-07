@@ -1,3 +1,10 @@
+## 5.2.0-alpha.22 (June 2, 2019)
+
+- Merge in changes from 5.1.1
+- Addon-docs:
+  - Inline stories respect height prop
+  - Export Description block
+
 ## 5.2.0-alpha.21 (June 2, 2019)
 
 - Core: Convert module format to use default export for metadata
