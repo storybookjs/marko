@@ -31,8 +31,8 @@ export interface StoryProps {
   error?: StoryError;
 }
 
-const InlineStory: React.FunctionComponent<InlineStoryProps> = ({ storyFn, title, height }) => (
-  <div>{storyFn()}</div>
+const InlineStory: React.FunctionComponent<InlineStoryProps> = ({ storyFn, height }) => (
+  <div style={{ height }}>{storyFn()}</div>
 );
 
 const IFrameStory: React.FunctionComponent<IFrameStoryProps> = ({
