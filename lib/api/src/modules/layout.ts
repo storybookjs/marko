@@ -6,7 +6,7 @@ import deepEqual from 'fast-deep-equal';
 
 import { themes, ThemeVars } from '@storybook/theming';
 import merge from '../lib/merge';
-import { State, Module } from '../index';
+import { State } from '../index';
 import Store from '../store';
 
 export type PanelPositions = 'bottom' | 'right';
@@ -24,7 +24,6 @@ export interface UI {
   url?: string;
   enableShortcuts: boolean;
   sidebarAnimations: boolean;
-  docsMode: boolean;
 }
 
 export interface SubState {
@@ -133,7 +132,6 @@ const initial: SubState = {
   ui: {
     enableShortcuts: true,
     sidebarAnimations: true,
-    docsMode: false,
   },
   layout: {
     isToolshown: true,
@@ -153,7 +151,7 @@ export const focusableUIElements = {
 };
 
 let hasSetOptions = false;
-export default function({ store, state: initialState }: Module) {
+export default function({ store }: { store: Store }) {
   const api = {
     toggleFullscreen(toggled?: boolean) {
       return store.setState((state: State) => {
@@ -300,10 +298,6 @@ export default function({ store, state: initialState }: Module) {
   };
 
   const persisted = pick(store.getState(), 'layout', 'ui', 'selectedPanel', 'theme');
-  const rootInitial = pick(initialState, 'layout', 'ui', 'selectedPanel', 'theme');
 
-  return {
-    api,
-    state: merge(initial, merge(rootInitial, persisted)),
-  };
+  return { api, state: merge(initial, persisted) };
 }

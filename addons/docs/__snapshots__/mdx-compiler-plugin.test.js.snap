@@ -31,19 +31,12 @@ MDXContent.isMDXComponent = true;
 
 const componentMeta = {};
 
-let mdxKind = null;
-let meta = null;
-if (typeof componentMeta !== 'undefined' && componentMeta) {
-  mdxKind = componentMeta.title || componentMeta.displayName;
-  meta = componentMeta;
-}
+const mdxKind = componentMeta.title || componentMeta.displayName;
 const WrappedMDXContent = ({ context }) => (
   <DocsContainer context={{ ...context, mdxKind }} content={MDXContent} />
 );
-if (meta) {
-  meta.parameters = meta.parameters || {};
-  meta.parameters.docs = WrappedMDXContent;
-}
+componentMeta.parameters = componentMeta.parameters || {};
+componentMeta.parameters.docs = WrappedMDXContent;
 
 export default componentMeta;
 "
@@ -99,21 +92,27 @@ MDXContent.isMDXComponent = true;
 export const one = () => <Button>One</Button>;
 one.parameters = { mdxSource: \`<Button>One</Button>\` };
 
-const componentMeta = {};
+const componentMeta = {
+  title: 'Button',
+  decorators: [
+    storyFn => (
+      <div
+        style={{
+          backgroundColor: 'yellow',
+        }}
+      >
+        {storyFn()}
+      </div>
+    ),
+  ],
+};
 
-let mdxKind = null;
-let meta = null;
-if (typeof componentMeta !== 'undefined' && componentMeta) {
-  mdxKind = componentMeta.title || componentMeta.displayName;
-  meta = componentMeta;
-}
+const mdxKind = componentMeta.title || componentMeta.displayName;
 const WrappedMDXContent = ({ context }) => (
   <DocsContainer context={{ ...context, mdxKind }} content={MDXContent} />
 );
-if (meta) {
-  meta.parameters = meta.parameters || {};
-  meta.parameters.docs = WrappedMDXContent;
-}
+componentMeta.parameters = componentMeta.parameters || {};
+componentMeta.parameters.docs = WrappedMDXContent;
 
 export default componentMeta;
 "
@@ -185,19 +184,12 @@ toStorybook.parameters = {
 
 const componentMeta = { title: 'MDX|Welcome' };
 
-let mdxKind = null;
-let meta = null;
-if (typeof componentMeta !== 'undefined' && componentMeta) {
-  mdxKind = componentMeta.title || componentMeta.displayName;
-  meta = componentMeta;
-}
+const mdxKind = componentMeta.title || componentMeta.displayName;
 const WrappedMDXContent = ({ context }) => (
   <DocsContainer context={{ ...context, mdxKind }} content={MDXContent} />
 );
-if (meta) {
-  meta.parameters = meta.parameters || {};
-  meta.parameters.docs = WrappedMDXContent;
-}
+componentMeta.parameters = componentMeta.parameters || {};
+componentMeta.parameters.docs = WrappedMDXContent;
 
 export default componentMeta;
 "
@@ -272,19 +264,12 @@ const componentMeta = {
   },
 };
 
-let mdxKind = null;
-let meta = null;
-if (typeof componentMeta !== 'undefined' && componentMeta) {
-  mdxKind = componentMeta.title || componentMeta.displayName;
-  meta = componentMeta;
-}
+const mdxKind = componentMeta.title || componentMeta.displayName;
 const WrappedMDXContent = ({ context }) => (
   <DocsContainer context={{ ...context, mdxKind }} content={MDXContent} />
 );
-if (meta) {
-  meta.parameters = meta.parameters || {};
-  meta.parameters.docs = WrappedMDXContent;
-}
+componentMeta.parameters = componentMeta.parameters || {};
+componentMeta.parameters.docs = WrappedMDXContent;
 
 export default componentMeta;
 "
@@ -353,19 +338,12 @@ const componentMeta = {
   },
 };
 
-let mdxKind = null;
-let meta = null;
-if (typeof componentMeta !== 'undefined' && componentMeta) {
-  mdxKind = componentMeta.title || componentMeta.displayName;
-  meta = componentMeta;
-}
+const mdxKind = componentMeta.title || componentMeta.displayName;
 const WrappedMDXContent = ({ context }) => (
   <DocsContainer context={{ ...context, mdxKind }} content={MDXContent} />
 );
-if (meta) {
-  meta.parameters = meta.parameters || {};
-  meta.parameters.docs = WrappedMDXContent;
-}
+componentMeta.parameters = componentMeta.parameters || {};
+componentMeta.parameters.docs = WrappedMDXContent;
 
 export default componentMeta;
 "
@@ -416,19 +394,12 @@ helloStory.parameters = { mdxSource: \`<Button>Hello button</Button>\` };
 
 const componentMeta = { title: 'Button' };
 
-let mdxKind = null;
-let meta = null;
-if (typeof componentMeta !== 'undefined' && componentMeta) {
-  mdxKind = componentMeta.title || componentMeta.displayName;
-  meta = componentMeta;
-}
+const mdxKind = componentMeta.title || componentMeta.displayName;
 const WrappedMDXContent = ({ context }) => (
   <DocsContainer context={{ ...context, mdxKind }} content={MDXContent} />
 );
-if (meta) {
-  meta.parameters = meta.parameters || {};
-  meta.parameters.docs = WrappedMDXContent;
-}
+componentMeta.parameters = componentMeta.parameters || {};
+componentMeta.parameters.docs = WrappedMDXContent;
 
 export default componentMeta;
 "
@@ -465,19 +436,12 @@ MDXContent.isMDXComponent = true;
 
 const componentMeta = {};
 
-let mdxKind = null;
-let meta = null;
-if (typeof componentMeta !== 'undefined' && componentMeta) {
-  mdxKind = componentMeta.title || componentMeta.displayName;
-  meta = componentMeta;
-}
+const mdxKind = componentMeta.title || componentMeta.displayName;
 const WrappedMDXContent = ({ context }) => (
   <DocsContainer context={{ ...context, mdxKind }} content={MDXContent} />
 );
-if (meta) {
-  meta.parameters = meta.parameters || {};
-  meta.parameters.docs = WrappedMDXContent;
-}
+componentMeta.parameters = componentMeta.parameters || {};
+componentMeta.parameters.docs = WrappedMDXContent;
 
 export default componentMeta;
 "
@@ -520,19 +484,12 @@ text.parameters = { mdxSource: \`'Plain text'\` };
 
 const componentMeta = { title: 'Text' };
 
-let mdxKind = null;
-let meta = null;
-if (typeof componentMeta !== 'undefined' && componentMeta) {
-  mdxKind = componentMeta.title || componentMeta.displayName;
-  meta = componentMeta;
-}
+const mdxKind = componentMeta.title || componentMeta.displayName;
 const WrappedMDXContent = ({ context }) => (
   <DocsContainer context={{ ...context, mdxKind }} content={MDXContent} />
 );
-if (meta) {
-  meta.parameters = meta.parameters || {};
-  meta.parameters.docs = WrappedMDXContent;
-}
+componentMeta.parameters = componentMeta.parameters || {};
+componentMeta.parameters.docs = WrappedMDXContent;
 
 export default componentMeta;
 "
@@ -570,19 +527,12 @@ MDXContent.isMDXComponent = true;
 
 const componentMeta = {};
 
-let mdxKind = null;
-let meta = null;
-if (typeof componentMeta !== 'undefined' && componentMeta) {
-  mdxKind = componentMeta.title || componentMeta.displayName;
-  meta = componentMeta;
-}
+const mdxKind = componentMeta.title || componentMeta.displayName;
 const WrappedMDXContent = ({ context }) => (
   <DocsContainer context={{ ...context, mdxKind }} content={MDXContent} />
 );
-if (meta) {
-  meta.parameters = meta.parameters || {};
-  meta.parameters.docs = WrappedMDXContent;
-}
+componentMeta.parameters = componentMeta.parameters || {};
+componentMeta.parameters.docs = WrappedMDXContent;
 
 export default componentMeta;
 "

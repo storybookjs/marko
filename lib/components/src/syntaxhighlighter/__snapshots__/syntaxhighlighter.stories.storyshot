@@ -471,6 +471,8 @@ exports[`Storyshots Basics|SyntaxHighlighter bordered & copy-able 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-3 {
@@ -970,6 +972,8 @@ exports[`Storyshots Basics|SyntaxHighlighter dark unsupported 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-3 {
@@ -3843,6 +3847,8 @@ exports[`Storyshots Basics|SyntaxHighlighter unsupported 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-3 {

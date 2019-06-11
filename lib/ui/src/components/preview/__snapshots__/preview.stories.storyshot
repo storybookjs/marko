@@ -347,7 +347,7 @@ Array [
           allowfullscreen=""
           id="storybook-preview-iframe"
           scrolling="yes"
-          src="http://example.com?id=string&viewMode=story"
+          src="http://example.com?id=string&viewMode=undefined"
           title="string"
         />
       </div>
@@ -790,7 +790,7 @@ Array [
           allowfullscreen=""
           id="storybook-preview-iframe"
           scrolling="yes"
-          src="http://example.com?id=string&viewMode=story"
+          src="http://example.com?id=string&viewMode=undefined"
           title="string"
         />
       </div>

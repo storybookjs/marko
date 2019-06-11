@@ -64,6 +64,7 @@
     "@storybook/mithril": "5.2.0-alpha.22",
     "@storybook/polymer": "5.2.0-alpha.22",
     "@storybook/preact": "5.2.0-alpha.22",
+    "@storybook/rax": "5.2.0-alpha.22",
     "@storybook/react": "5.2.0-alpha.22",
     "@storybook/react-native": "5.2.0-alpha.22",
     "@storybook/riot": "5.2.0-alpha.22",

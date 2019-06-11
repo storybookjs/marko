@@ -10,6 +10,8 @@ exports[`Storyshots Basics|ActionBar manyItems 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-0 {
@@ -58,6 +60,8 @@ exports[`Storyshots Basics|ActionBar manyItems 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-0 {
@@ -134,6 +138,8 @@ exports[`Storyshots Basics|ActionBar singleItem 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-0 {
@@ -182,6 +188,8 @@ exports[`Storyshots Basics|ActionBar singleItem 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-0 {
@@ -2416,6 +2424,7 @@ exports[`Storyshots Basics|Placeholder twoChildren 1`] = `
   -webkit-text-decoration: none;
   text-decoration: none;
   color: #1EA7FD;
+  color: #999999;
 }
 
 .emotion-2 svg path {
@@ -2449,6 +2458,26 @@ exports[`Storyshots Basics|Placeholder twoChildren 1`] = `
   position: relative;
   bottom: -0.125em;
   margin-right: 0.4em;
+}
+
+.emotion-2 svg path {
+  fill: #999999;
+}
+
+.emotion-2:hover {
+  color: #666666;
+}
+
+.emotion-2:hover svg path {
+  fill: #666666;
+}
+
+.emotion-2:active {
+  color: #444444;
+}
+
+.emotion-2:active svg path {
+  fill: #444444;
 }
 
 .emotion-4 {
@@ -2469,6 +2498,7 @@ exports[`Storyshots Basics|Placeholder twoChildren 1`] = `
   -webkit-text-decoration: none;
   text-decoration: none;
   color: #1EA7FD;
+  color: #999999;
 }
 
 .emotion-2 svg path {
@@ -2502,6 +2532,26 @@ exports[`Storyshots Basics|Placeholder twoChildren 1`] = `
   position: relative;
   bottom: -0.125em;
   margin-right: 0.4em;
+}
+
+.emotion-2 svg path {
+  fill: #999999;
+}
+
+.emotion-2:hover {
+  color: #666666;
+}
+
+.emotion-2:hover svg path {
+  fill: #666666;
+}
+
+.emotion-2:active {
+  color: #444444;
+}
+
+.emotion-2:active svg path {
+  fill: #444444;
 }
 
 <div
@@ -5243,6 +5293,7 @@ exports[`Storyshots Core|Parameters passed to story 1`] = `
     }
   ],
   "globalParameter": "globalParameter",
+  "framework": "react",
   "chapterParameter": "chapterParameter",
   "storyParameter": "storyParameter",
   "decoratorParameter": "decoratorParameter"
@@ -9731,6 +9782,8 @@ exports[`Storyshots Docs|DocsPage markdown 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-14 {
@@ -10643,6 +10696,8 @@ exports[`Storyshots Docs|DocsPage markdown 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-14 {
@@ -11976,6 +12031,8 @@ exports[`Storyshots Docs|DocsPage no text 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-14 {
@@ -12888,6 +12945,8 @@ exports[`Storyshots Docs|DocsPage no text 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-14 {
@@ -14218,6 +14277,8 @@ exports[`Storyshots Docs|DocsPage text 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-14 {
@@ -15130,6 +15191,8 @@ exports[`Storyshots Docs|DocsPage text 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-14 {
@@ -16463,6 +16526,8 @@ exports[`Storyshots Docs|DocsPage withSubtitle 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-15 {
@@ -17395,6 +17460,8 @@ exports[`Storyshots Docs|DocsPage withSubtitle 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-15 {
@@ -20727,6 +20794,8 @@ exports[`Storyshots Docs|Preview codeCollapsed 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-2 {
@@ -21326,6 +21395,8 @@ exports[`Storyshots Docs|Preview codeCollapsed 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-2 {
@@ -21964,6 +22035,8 @@ exports[`Storyshots Docs|Preview codeError 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-2 {
@@ -22594,6 +22667,8 @@ exports[`Storyshots Docs|Preview codeError 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-2 {
@@ -23447,6 +23522,8 @@ exports[`Storyshots Docs|Preview codeExpanded 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-2 {
@@ -24251,6 +24328,8 @@ exports[`Storyshots Docs|Preview codeExpanded 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-2 {
@@ -41332,6 +41411,8 @@ exports[`Storyshots Docs|Source css 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-3 {
@@ -42026,6 +42107,8 @@ exports[`Storyshots Docs|Source css 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-3 {
@@ -43023,6 +43106,8 @@ exports[`Storyshots Docs|Source jsx 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-3 {
@@ -43717,6 +43802,8 @@ exports[`Storyshots Docs|Source jsx 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: #333;
+  z-index: 1;
 }
 
 .emotion-3 {

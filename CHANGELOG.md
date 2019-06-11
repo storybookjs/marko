@@ -133,6 +133,22 @@ Storybook Docs technical preview:
 - Module story format
 - Load API
 - [Guide](https://docs.google.com/document/d/1un6YX7xDKEKl5-MVb-egnOYN8dynb5Hf7mq0hipk8JE/edit?usp=sharing)
+
+## 5.1.1 (June 5, 2019)
+
+Storybook 5.1 is a juicy upgrade including:
+
+- 📱 Mobile: Standalone package architecture for React Native
+- 🎟 A11y addon: Realtime accessibility checks and visual feedback
+- 🛠 Context addon: New UI for themes, internationalization, & more
+- 🎛 Presets: One-line configuration for babel, webpack, & addons
+
+5.1 contains hundreds more fixes, features, and tweaks. Browse the changelogs matching `5.1.0-alpha.*`, `5.1.0-beta.*`, and `5.1.0-rc.*` for the full list of changes. See [MIGRATION.md](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) to ugprade from `5.0` or earlier.
+
+## 5.1.0 (June 5, 2019)
+
+Publish failed
+
 ## 5.1.0-rc.5 (June 4, 2019)
 
 ### Features
