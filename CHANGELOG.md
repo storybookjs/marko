@@ -1,3 +1,7 @@
+## 5.2.0-alpha.24 (June 13, 2019)
+
+Merge in changes from 5.1.3/next branch.
+
 ## 5.2.0-alpha.23 (June 10, 2019)
 
 Merge in changes from 5.1.3/next branch. Releasing from the addon-docs branch to keep things moving until we can merge addon-docs into next.
