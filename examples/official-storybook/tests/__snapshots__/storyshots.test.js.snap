@@ -338,7 +338,7 @@ exports[`Storyshots Basics|DocumentFormatting withDOM 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -773,7 +773,7 @@ exports[`Storyshots Basics|DocumentFormatting withDOM 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -1534,7 +1534,7 @@ exports[`Storyshots Basics|DocumentFormatting withMarkdown 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -1969,7 +1969,7 @@ exports[`Storyshots Basics|DocumentFormatting withMarkdown 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -5396,7 +5396,7 @@ exports[`Storyshots Docs|ColorPalette defaultStyle 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -5986,7 +5986,7 @@ exports[`Storyshots Docs|ColorPalette defaultStyle 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -6854,7 +6854,7 @@ exports[`Storyshots Docs|Description markdown 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -7305,7 +7305,7 @@ exports[`Storyshots Docs|Description markdown 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -7770,7 +7770,7 @@ exports[`Storyshots Docs|Description text 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -8221,7 +8221,7 @@ exports[`Storyshots Docs|Description text 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -8686,7 +8686,7 @@ exports[`Storyshots Docs|DocsPage empty 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -9158,7 +9158,7 @@ exports[`Storyshots Docs|DocsPage empty 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -9948,7 +9948,7 @@ exports[`Storyshots Docs|DocsPage markdown 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -10862,7 +10862,7 @@ exports[`Storyshots Docs|DocsPage markdown 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -12197,7 +12197,7 @@ exports[`Storyshots Docs|DocsPage no text 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -13111,7 +13111,7 @@ exports[`Storyshots Docs|DocsPage no text 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -14443,7 +14443,7 @@ exports[`Storyshots Docs|DocsPage text 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -15357,7 +15357,7 @@ exports[`Storyshots Docs|DocsPage text 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -16692,7 +16692,7 @@ exports[`Storyshots Docs|DocsPage withSubtitle 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -17626,7 +17626,7 @@ exports[`Storyshots Docs|DocsPage withSubtitle 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -18694,7 +18694,7 @@ exports[`Storyshots Docs|EmptyBlock error 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -19166,7 +19166,7 @@ exports[`Storyshots Docs|EmptyBlock error 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -19666,7 +19666,7 @@ exports[`Storyshots Docs|IconGallery defaultStyle 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -20194,7 +20194,7 @@ exports[`Storyshots Docs|IconGallery defaultStyle 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -20960,7 +20960,7 @@ exports[`Storyshots Docs|Preview codeCollapsed 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -21561,7 +21561,7 @@ exports[`Storyshots Docs|Preview codeCollapsed 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -22201,7 +22201,7 @@ exports[`Storyshots Docs|Preview codeError 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -22833,7 +22833,7 @@ exports[`Storyshots Docs|Preview codeError 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -23688,7 +23688,7 @@ exports[`Storyshots Docs|Preview codeExpanded 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -24494,7 +24494,7 @@ exports[`Storyshots Docs|Preview codeExpanded 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -25416,7 +25416,7 @@ exports[`Storyshots Docs|Preview column 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -25965,7 +25965,7 @@ exports[`Storyshots Docs|Preview column 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -26558,7 +26558,7 @@ exports[`Storyshots Docs|Preview gridWith3Columns 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -27107,7 +27107,7 @@ exports[`Storyshots Docs|Preview gridWith3Columns 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -27819,7 +27819,7 @@ exports[`Storyshots Docs|Preview row 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -28368,7 +28368,7 @@ exports[`Storyshots Docs|Preview row 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -28989,7 +28989,7 @@ exports[`Storyshots Docs|Preview single 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -29538,7 +29538,7 @@ exports[`Storyshots Docs|Preview single 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -30054,7 +30054,7 @@ exports[`Storyshots Docs|PropRow arrayOf 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -30608,7 +30608,7 @@ exports[`Storyshots Docs|PropRow arrayOf 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -31205,7 +31205,7 @@ exports[`Storyshots Docs|PropRow complex 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -31759,7 +31759,7 @@ exports[`Storyshots Docs|PropRow complex 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -32356,7 +32356,7 @@ exports[`Storyshots Docs|PropRow longDesc 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -32915,7 +32915,7 @@ exports[`Storyshots Docs|PropRow longDesc 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -33523,7 +33523,7 @@ exports[`Storyshots Docs|PropRow longName 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -34082,7 +34082,7 @@ exports[`Storyshots Docs|PropRow longName 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -34690,7 +34690,7 @@ exports[`Storyshots Docs|PropRow number 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -35244,7 +35244,7 @@ exports[`Storyshots Docs|PropRow number 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -35841,7 +35841,7 @@ exports[`Storyshots Docs|PropRow objectOf 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -36395,7 +36395,7 @@ exports[`Storyshots Docs|PropRow objectOf 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -36992,7 +36992,7 @@ exports[`Storyshots Docs|PropRow string 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -37551,7 +37551,7 @@ exports[`Storyshots Docs|PropRow string 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -38159,7 +38159,7 @@ exports[`Storyshots Docs|PropTable empty 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -38631,7 +38631,7 @@ exports[`Storyshots Docs|PropTable empty 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -39119,7 +39119,7 @@ exports[`Storyshots Docs|PropTable error 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -39591,7 +39591,7 @@ exports[`Storyshots Docs|PropTable error 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -40079,7 +40079,7 @@ exports[`Storyshots Docs|PropTable normal 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -40638,7 +40638,7 @@ exports[`Storyshots Docs|PropTable normal 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -41514,7 +41514,7 @@ exports[`Storyshots Docs|Source css 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -42210,7 +42210,7 @@ exports[`Storyshots Docs|Source css 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -43209,7 +43209,7 @@ exports[`Storyshots Docs|Source jsx 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -43905,7 +43905,7 @@ exports[`Storyshots Docs|Source jsx 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -44689,7 +44689,7 @@ exports[`Storyshots Docs|Source no story 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -45161,7 +45161,7 @@ exports[`Storyshots Docs|Source no story 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -45649,7 +45649,7 @@ exports[`Storyshots Docs|Source source unavailable 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -46121,7 +46121,7 @@ exports[`Storyshots Docs|Source source unavailable 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -46609,7 +46609,7 @@ exports[`Storyshots Docs|Story error 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -47081,7 +47081,7 @@ exports[`Storyshots Docs|Story error 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -47632,7 +47632,7 @@ exports[`Storyshots Docs|Story inline 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -48146,7 +48146,7 @@ exports[`Storyshots Docs|Story inline 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -48615,7 +48615,7 @@ exports[`Storyshots Docs|Typeset withFontSizes 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -49106,7 +49106,7 @@ exports[`Storyshots Docs|Typeset withFontSizes 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -49732,7 +49732,7 @@ exports[`Storyshots Docs|Typeset withFontWeight 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -50223,7 +50223,7 @@ exports[`Storyshots Docs|Typeset withFontWeight 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -50849,7 +50849,7 @@ exports[`Storyshots Docs|Typeset withWeightText 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }
@@ -51340,7 +51340,7 @@ exports[`Storyshots Docs|Typeset withWeightText 1`] = `
   padding: 15px;
   margin: 0;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: inherit;
   font-size: 13px;
   line-height: 19px;
 }

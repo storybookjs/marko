@@ -54,7 +54,7 @@ const Wrapper = styled.div(
       margin: 0;
 
       white-space: pre-wrap;
-      color: ${props.theme.color.defaultText};
+      color: inherit;
 
       font-size: 13px;
       line-height: 19px;

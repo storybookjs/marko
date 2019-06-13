@@ -40,7 +40,7 @@
     "storybook-addon-vue-info": "^1.2.0",
     "svg-url-loader": "^2.3.2",
     "vue-loader": "^15.7.0",
-    "webpack": "^4.28.0",
+    "webpack": "^4.33.0",
     "webpack-dev-server": "^3.4.1"
   }
 }
