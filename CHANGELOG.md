@@ -1,3 +1,10 @@
+## 5.2.0-alpha.25 (June 14, 2019)
+
+- Merge in changes from 5.1.7/next branch.
+- Fix earlier merge problems relating to addon-docs:
+  - Restore `--docs` command-line functionality
+  - Fix refreshing docs page bug
+
 ## 5.2.0-alpha.24 (June 13, 2019)
 
 Merge in changes from 5.1.3/next branch.
