@@ -1,3 +1,8 @@
+## 5.2.0-alpha.27 (June 17, 2019)
+
+* CLI: improve bootstrap list ([#6993](https://github.com/storybookjs/storybook/pull/6993))
+* CLI: replaced merge-dirs dependency by fs-extra ([#7100](https://github.com/storybookjs/storybook/pull/7100))
+
 ## 5.2.0-alpha.26 (June 14, 2019)
 
 - Merge in changes from 5.1.7/next branch.
