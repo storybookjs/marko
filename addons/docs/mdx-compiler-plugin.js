@@ -1,7 +1,7 @@
 const mdxToJsx = require('@mdx-js/mdx/mdx-hast-to-jsx');
 const parser = require('@babel/parser');
 const generate = require('@babel/generator').default;
-const camelCase = require('lodash.camelcase');
+const camelCase = require('lodash/camelCase');
 
 // Generate the MDX as is, but append named exports for every
 // story in the contents
