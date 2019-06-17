@@ -1,3 +1,25 @@
+## 5.2.0-alpha.28 (June 17, 2019)
+
+### Features
+
+* Addon-notes: enable multiple sections in notes panel ([#6861](https://github.com/storybookjs/storybook/pull/6861))
+* Addon-context: title fallback ([#7078](https://github.com/storybookjs/storybook/pull/7078))
+* Addon-info: Fix rendering of code block ([#6016](https://github.com/storybookjs/storybook/pull/6016))
+
+### Bug Fixes
+
+* Core: Fix JSON babel config error reporting ([#7104](https://github.com/storybookjs/storybook/pull/7104))
+* UI: Fix about page version check message ([#7105](https://github.com/storybookjs/storybook/pull/7105))
+
+### Maintenance
+
+* Core: Refactor story_store ([#6382](https://github.com/storybookjs/storybook/pull/6382))
+* Core: Make compatible with yarn Pnp ([#6922](https://github.com/storybookjs/storybook/pull/6922))
+
+### Dependency Upgrades
+
+* Bump jest-expo from 32.0.1 to 33.0.2 ([#6996](https://github.com/storybookjs/storybook/pull/6996))
+
 ## 5.2.0-alpha.27 (June 17, 2019)
 
 * CLI: improve bootstrap list ([#6993](https://github.com/storybookjs/storybook/pull/6993))
