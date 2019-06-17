@@ -31,7 +31,7 @@ features as well. This chart captures the current state of support
 First add the package. Make sure that the versions for your `@storybook/*` packages match:
 
 ```sh
-yarn add -D @storybooks/addon-docs
+yarn add -D @storybook/addon-docs
 ```
 
 The add the following line to your `.storybook/presets.js` file:

@@ -7,13 +7,13 @@
     "notes",
     "storybook"
   ],
-  "homepage": "https://github.com/storybooks/storybook/tree/master/addons/docs",
+  "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/docs",
   "bugs": {
-    "url": "https://github.com/storybooks/storybook/issues"
+    "url": "https://github.com/storybookjs/storybook/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/storybooks/storybook.git",
+    "url": "https://github.com/storybookjs/storybook.git",
     "directory": "addons/docs"
   },
   "license": "MIT",

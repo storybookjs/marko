@@ -46,7 +46,7 @@ Merge in changes from 5.1.3/next branch. Releasing from the addon-docs branch to
 ## 5.2.0-alpha.18 (May 26, 2019)
 
 - Addon-docs: Codemod for adding component parameters
-- Core: Babel config loading bugfix ([#6878](https://github.com/storybooks/storybook/pull/6878))
+- Core: Babel config loading bugfix ([#6878](https://github.com/storybookjs/storybook/pull/6878))
 
 ## 5.2.0-alpha.17 (May 26, 2019)
 
@@ -286,18 +286,18 @@ Publish failed
 
 ### Bug Fixes
 
-- UI: Scrollbar supports theming again ([#6794](https://github.com/storybooks/storybook/pull/6794))
-- UI: Fix scrolling styling ([#6785](https://github.com/storybooks/storybook/pull/6785))
-- UI: Fix iframe refresh ([#6787](https://github.com/storybooks/storybook/pull/6787))
-- UI: Preserve dimensions on resizing for panel ([#6696](https://github.com/storybooks/storybook/pull/6696))
+- UI: Scrollbar supports theming again ([#6794](https://github.com/storybookjs/storybook/pull/6794))
+- UI: Fix scrolling styling ([#6785](https://github.com/storybookjs/storybook/pull/6785))
+- UI: Fix iframe refresh ([#6787](https://github.com/storybookjs/storybook/pull/6787))
+- UI: Preserve dimensions on resizing for panel ([#6696](https://github.com/storybookjs/storybook/pull/6696))
 
 ### Maintenance
 
-- Move chromatic to circle ci ([#6752](https://github.com/storybooks/storybook/pull/6752))
+- Move chromatic to circle ci ([#6752](https://github.com/storybookjs/storybook/pull/6752))
 
 ### Dependency Upgrades
 
-- Bump fs-extra from 7.0.1 to 8.0.1 ([#6776](https://github.com/storybooks/storybook/pull/6776))
+- Bump fs-extra from 7.0.1 to 8.0.1 ([#6776](https://github.com/storybookjs/storybook/pull/6776))
 
 ## 5.1.0-beta.0 (May 10, 2019)
 
