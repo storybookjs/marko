@@ -8,9 +8,10 @@ const makePreset = (framework: string) => {
     return [...preConfig, ...entry];
   }
 
+  const sourceLoaderOptions = framework === 'svelte' ? null : {};
   const configureJSX = framework !== 'react';
   const webpack = (webpackConfig: any, options: any) =>
-    common.webpack(webpackConfig, { configureJSX, ...options });
+    common.webpack(webpackConfig, { configureJSX, sourceLoaderOptions, ...options });
 
   return {
     ...common,
