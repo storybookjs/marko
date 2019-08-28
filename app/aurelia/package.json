@@ -1,0 +1,60 @@
+{
+  "name": "@storybook/aurelia",
+  "version": "0.4.0",
+  "description": "Storybook for Aurelia: Develop Aurelia Components in isolation with Hot Reloading.",
+  "keywords": [
+    "storybook"
+  ],
+  "homepage": "https://github.com/storybookjs/storybook/tree/master/app/aurelia",
+  "bugs": {
+    "url": "https://github.com/storybookjs/storybook/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/storybookjs/storybook.git",
+    "directory": "app/aurelia"
+  },
+  "license": "MIT",
+  "main": "dist/client/index.js",
+  "types": "dist/client/index.d.ts",
+  "bin": {
+    "build-storybook": "./bin/build.js",
+    "start-storybook": "./bin/index.js",
+    "storybook-server": "./bin/index.js"
+  },
+  "scripts": {
+    "prepare": "node ../../scripts/prepare.js"
+  },
+  "dependencies": {
+    "@storybook/addons": "5.2.0-beta.40",
+    "@storybook/core": "5.2.0-beta.40",
+    "@storybook/node-logger": "5.2.0-beta.40",
+    "webpack": "^4.33.0"
+  },
+  "peerDependencies": {
+    "@aurelia/debug": "dev",
+    "@aurelia/jit-html": "dev",
+    "@aurelia/jit-html-browser": "dev",
+    "@aurelia/jit": "dev",
+    "@aurelia/kernel": "dev",
+    "@aurelia/runtime-html": "dev",
+    "@aurelia/runtime-html-browser": "dev",
+    "@aurelia/runtime": "dev"
+  },
+  "devDependencies": {
+    "htmlhint": "^0.11.0",
+    "rimraf": "^2.0.0",
+    "webpack": "^4.0.0",
+    "html-webpack-plugin": "^3.0.0",
+    "style-loader": "^0.23.0",
+    "css-loader": "^3.0.0",
+    "@aurelia/webpack-loader": "dev",
+    "ts-loader": "^6.0.0",
+    "@types/node": "^12.0.0",
+    "typescript": "^3.0.0",
+    "tslint": "^5.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
