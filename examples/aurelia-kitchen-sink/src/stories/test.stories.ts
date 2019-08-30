@@ -1,10 +1,8 @@
 import { storiesOf } from '@storybook/aurelia';
-import { customElement } from '@aurelia/runtime';
+import { CoolButton } from '../cool-button/cool-button';
+import { addComponents } from '@storybook/aurelia/dist/client/preview/decorators';
 
-
-@customElement({ name: 'TEST', template: '<button>asdfasdf</button>' })
-class Button {
-
-}
-
-storiesOf('Button|Basic', module).add('Simple', () => Button);
+storiesOf('Button|Basic', module)
+    .addDecorator(addComponents(CoolButton))
+    .add('Cool', () => ({ container: undefined, customElement: undefined, items: undefined, template: '<template>asdfasdfasdfas<cool-button></cool-button></template>' }), null)
+    .add('Test', () => ({ container: undefined, customElement: undefined, items: undefined, template: '<template>asdfasdfasdfas<test-button></test-button></template>' }), null);

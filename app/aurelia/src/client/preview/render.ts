@@ -1,8 +1,19 @@
 import { DebugConfiguration } from '@aurelia/debug';
 import { BasicConfiguration } from '@aurelia/jit-html-browser';
-import { Aurelia } from '@aurelia/runtime';
-import { RenderMainArgs } from './types';
-export default function render({ storyFn, selectedKind, selectedStory, showMain, showError }: RenderMainArgs) {
+import { Aurelia, INode, customElement } from '@aurelia/runtime';
+import { RenderMainArgs, StoryFnAureliaReturnType } from './types';
+import { Registration } from '@aurelia/kernel';
+import { Component } from './decorators';
+
+const host = document.getElementById('root'); // the root iframe provided by storybook
+let previousAurelia: Aurelia<INode>;
+export default async function render({
+  storyFn,
+  selectedKind,
+  selectedStory,
+  showMain,
+  showError,
+}: RenderMainArgs) {
   const element = storyFn();
 
   if (!element) {
@@ -14,13 +25,36 @@ export default function render({ storyFn, selectedKind, selectedStory, showMain,
       `,
     });
   }
-  const host = document.getElementById('root');
   showMain();
-  new Aurelia()
-    .register(BasicConfiguration, DebugConfiguration)
-    .app({
-      host: host,
-      component: element
-    })
-    .start();
+
+  if (previousAurelia) {
+    await previousAurelia.stop();
+  }
+
+  previousAurelia = new Aurelia(element.container);
+  if (element.items && element.items.length > 0) {
+    previousAurelia.register(...element.items);
+  } else {
+    previousAurelia.register(BasicConfiguration, DebugConfiguration);
+  }
+
+  if (element.components && element.components.length > 0) {
+    previousAurelia.container.register(...element.components);
+    element.components.filter(y => y.aliases && y.aliases.length > 0).forEach(y => (y as Component).aliases.forEach(alias => Registration.alias((y as Component).item, alias)));
+  }
+
+  if (element.customElement) {
+    previousAurelia.container.register(element.customElement);
+  }
+
+  const rootElement = element.template ? customElement({ name: 'app', template: element.template })(class App {
+  }) : element.customElement
+
+  await previousAurelia.app({
+    host: host,
+    component: rootElement
+  }).start();
+
+
+
 }
