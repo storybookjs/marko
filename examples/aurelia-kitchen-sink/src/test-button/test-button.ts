@@ -1,3 +1,1 @@
-export class TestButton{
-    
-}
+export class TestButton {}

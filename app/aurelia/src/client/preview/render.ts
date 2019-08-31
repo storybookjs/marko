@@ -1,8 +1,8 @@
 import { DebugConfiguration } from '@aurelia/debug';
 import { BasicConfiguration } from '@aurelia/jit-html-browser';
 import { Aurelia, INode, customElement } from '@aurelia/runtime';
-import { RenderMainArgs, StoryFnAureliaReturnType } from './types';
 import { Registration } from '@aurelia/kernel';
+import { RenderMainArgs, StoryFnAureliaReturnType } from './types';
 import { Component } from './decorators';
 
 const host = document.getElementById('root'); // the root iframe provided by storybook
@@ -40,21 +40,25 @@ export default async function render({
 
   if (element.components && element.components.length > 0) {
     previousAurelia.container.register(...element.components);
-    element.components.filter(y => y.aliases && y.aliases.length > 0).forEach(y => (y as Component).aliases.forEach(alias => Registration.alias((y as Component).item, alias)));
+    element.components
+      .filter(y => y.aliases && y.aliases.length > 0)
+      .forEach(y =>
+        (y as Component).aliases.forEach(alias => Registration.alias((y as Component).item, alias))
+      );
   }
 
   if (element.customElement) {
     previousAurelia.container.register(element.customElement);
   }
 
-  const rootElement = element.template ? customElement({ name: 'app', template: element.template })(class App {
-  }) : element.customElement
+  const rootElement = element.template
+    ? customElement({ name: 'app', template: element.template })(class App {})
+    : element.customElement;
 
-  await previousAurelia.app({
-    host: host,
-    component: rootElement
-  }).start();
-
-
-
+  await previousAurelia
+    .app({
+      host,
+      component: rootElement,
+    })
+    .start();
 }

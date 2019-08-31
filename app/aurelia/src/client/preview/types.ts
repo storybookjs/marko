@@ -11,13 +11,12 @@ export interface RenderMainArgs {
   showException: (...args: any[]) => void;
   forceRender: boolean;
 }
-export type StoryFnAureliaReturnType = {
+export interface StoryFnAureliaReturnType {
   customElement: any;
   components: Component[] | unknown[];
   template: unknown;
   items: IRegistry[];
   container: IContainer;
-
 }
 export interface ShowErrorArgs {
   title: string;

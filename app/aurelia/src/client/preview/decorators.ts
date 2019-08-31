@@ -1,39 +1,45 @@
-import { StoryFn } from "@storybook/addons";
-import { StoryFnAureliaReturnType } from "./types";
-import { IRegistry, IContainer } from "@aurelia/kernel";
+import { StoryFn } from '@storybook/addons';
+import { IRegistry, IContainer } from '@aurelia/kernel';
+import { StoryFnAureliaReturnType } from './types';
 
-export const addRegistries = (...items: IRegistry[]) => (storyFn: StoryFn<StoryFnAureliaReturnType>) => {
-    const story = storyFn();
-    story.items = story.items || [];
-    story.items.push(...items);
+export const addRegistries = (...items: IRegistry[]) => (
+  storyFn: StoryFn<StoryFnAureliaReturnType>
+) => {
+  const story = storyFn();
+  story.items = story.items || [];
+  story.items.push(...items);
 
-    return {
-        ...story,
-        items
-    };
+  return {
+    ...story,
+    items,
+  };
 };
 
-export type Component = {
-    item?: unknown,
-    aliases?: string[]
+export interface Component {
+  item?: unknown;
+  aliases?: string[];
 }
 
-export const addComponents = (...components: Component[] | unknown[]) => (storyFn: StoryFn<StoryFnAureliaReturnType>) => {
-    const story = storyFn();
-    story.components = story.components || [];
-    story.components.push(...components);
+export const addComponents = (...components: Component[] | unknown[]) => (
+  storyFn: StoryFn<StoryFnAureliaReturnType>
+) => {
+  const story = storyFn();
+  story.components = story.components || [];
+  story.components.push(...components);
 
-    return {
-        ...story,
-        components
-    };
+  return {
+    ...story,
+    components,
+  };
 };
 
-export const addContainer = (container: IContainer) => (storyFn: StoryFn<StoryFnAureliaReturnType>) => {
-    const story = storyFn();
+export const addContainer = (container: IContainer) => (
+  storyFn: StoryFn<StoryFnAureliaReturnType>
+) => {
+  const story = storyFn();
 
-    return {
-        ...story,
-        container
-    };
+  return {
+    ...story,
+    container,
+  };
 };

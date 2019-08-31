@@ -10,7 +10,7 @@ export {
   StoryFnAureliaReturnType,
   addContainer,
   addRegistries,
-  Component
+  Component,
 } from './preview';
 
 // tsc wants to use NodeModule instead of WebpackModule
