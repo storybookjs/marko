@@ -1,3 +1,4 @@
+import { document } from 'global';
 import { DebugConfiguration } from '@aurelia/debug';
 import { BasicConfiguration } from '@aurelia/jit-html-browser';
 import { Aurelia, INode, customElement } from '@aurelia/runtime';
@@ -28,7 +29,7 @@ export default async function render({
   showMain();
 
   if (previousAurelia) {
-    await previousAurelia.stop();
+    await previousAurelia.stop().wait();
   }
 
   previousAurelia = new Aurelia(element.container);
@@ -60,5 +61,6 @@ export default async function render({
       host,
       component: rootElement,
     })
-    .start();
+    .start()
+    .wait();
 }

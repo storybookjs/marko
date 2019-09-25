@@ -1,5 +1,5 @@
-import { Configuration } from 'webpack';
+// import { Configuration } from 'webpack';
 
-module.exports = async ({ config }: { config: Configuration }) => {
-  return config;
-};
+// module.exports = async ({ config }: { config: Configuration }) => {
+//   return config;
+// };

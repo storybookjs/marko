@@ -1,4 +1,7 @@
-import { customElement } from '@aurelia/runtime';
-import template from './cool-button.html';
+import { bindable } from '@aurelia/runtime';
+import 'bootstrap/scss/bootstrap.scss';
+import { text } from '@storybook/addon-knobs';
 
-export class CoolButton {}
+export class CoolButton {
+  @bindable text = text('asdfads', 'asdfasdf');
+}
