@@ -1,9 +1,9 @@
 import { document } from 'global';
 import { DebugConfiguration } from '@aurelia/debug';
 import { BasicConfiguration } from '@aurelia/jit-html-browser';
-import { Aurelia, INode, customElement, CustomElement } from '@aurelia/runtime';
+import { Aurelia, INode, CustomElement } from '@aurelia/runtime';
 import { Registration } from '@aurelia/kernel';
-import { RenderMainArgs, StoryFnAureliaReturnType } from './types';
+import { RenderMainArgs } from './types';
 import { Component } from './decorators';
 
 const host = document.getElementById('root'); // the root iframe provided by storybook
