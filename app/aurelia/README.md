@@ -1,14 +1,23 @@
-# aurelia
+# Storybook for Aurelia
 
-This project is bootstrapped by [aurelia/new](https://github.com/aurelia/new).
+Storybook for Aurelia is a UI development environment for your Aurelia components.
+With it, you can visualize different states of your UI components and develop them interactively.
 
-## Start dev web server
+![Storybook Screenshot](https://github.com/storybookjs/storybook/blob/master/media/storybook-intro.gif)
 
-    npm start
+Storybook runs outside of your app.
+So you can develop UI components in isolation without worrying about app specific dependencies and requirements.
 
-## Build the app
+## Getting Started
 
-Build files to dist folder.
+```sh
+cd my-aurelia-app
+npx -p @storybook/cli sb init
+```
 
-    npm run build
+For more information visit: [storybook.js.org](https://storybook.js.org)
 
+---
+
+Storybook also comes with a lot of [addons](https://storybook.js.org/addons/introduction) and a great API to customize as you wish.
+You can also build a [static version](https://storybook.js.org/basics/exporting-storybook) of your storybook and deploy it anywhere you want.

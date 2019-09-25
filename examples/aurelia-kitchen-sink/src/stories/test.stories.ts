@@ -6,22 +6,16 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 const t = storiesOf('Button|Basic', module);
 t.addDecorator(withKnobs);
+t.addDecorator(addComponents(CoolButton));
 
 t.add('Cool', () => {
-  const name = text('asdf', 'asfdasfd');
-
   return {
-    container: undefined,
-    customElement: undefined,
-    items: undefined,
-    template: `<template>${name}<cool-button></cool-button></template>`,
+    template: `<template>\${text}<cool-button text.bind="text"></cool-button></template>`,
+    state: { text: text('asdf', 'TEXT') },
   };
 }).add(
   'Test',
   () => ({
-    container: undefined,
-    customElement: undefined,
-    items: undefined,
     template: '<template>asdfasdfasdfas<test-button></test-button></template>',
   }),
   null

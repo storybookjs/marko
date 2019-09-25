@@ -1,6 +1,12 @@
 import { Configuration } from 'webpack';
+import createForkTsCheckerInstance from './create-fork-ts-checker-plugin';
+import getTsLoaderOptions from './ts_config';
 
-export function webpack(config: Configuration): Configuration {
+export function webpack(
+  config: Configuration,
+  { configDir }: { configDir: string }
+): Configuration {
+  const tsLoaderOptions = getTsLoaderOptions(configDir);
   return {
     ...config,
     resolve: {
@@ -39,6 +45,6 @@ export function webpack(config: Configuration): Configuration {
         { test: /\.html$/i, use: '@aurelia/webpack-loader', exclude: /node_modules/ },
       ],
     },
-    plugins: [...config.plugins],
+    plugins: [...config.plugins, createForkTsCheckerInstance(tsLoaderOptions)],
   };
 }

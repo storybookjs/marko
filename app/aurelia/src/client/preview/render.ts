@@ -1,7 +1,7 @@
 import { document } from 'global';
 import { DebugConfiguration } from '@aurelia/debug';
 import { BasicConfiguration } from '@aurelia/jit-html-browser';
-import { Aurelia, INode, customElement } from '@aurelia/runtime';
+import { Aurelia, INode, customElement, CustomElement } from '@aurelia/runtime';
 import { Registration } from '@aurelia/kernel';
 import { RenderMainArgs, StoryFnAureliaReturnType } from './types';
 import { Component } from './decorators';
@@ -48,18 +48,23 @@ export default async function render({
       );
   }
 
-  if (element.customElement) {
-    previousAurelia.container.register(element.customElement);
-  }
+  const isConstructable = element.state && element.state.prototype;
+  let App = CustomElement.define(
+    { name: 'app', template: element.template },
+    isConstructable ? element.state : class {}
+  );
 
-  const rootElement = element.template
-    ? customElement({ name: 'app', template: element.template })(class App {})
-    : element.customElement;
+  if (!isConstructable) {
+    App = new App();
+    Object.keys(element.state).forEach(prop => {
+      App[prop] = element.state[prop];
+    });
+  }
 
   await previousAurelia
     .app({
       host,
-      component: rootElement,
+      component: App,
     })
     .start()
     .wait();

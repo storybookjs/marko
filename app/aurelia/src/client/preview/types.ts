@@ -1,5 +1,5 @@
 import { StoryFn } from '@storybook/addons';
-import { IRegistry, IContainer } from '@aurelia/kernel';
+import { IRegistry, IContainer, Constructable } from '@aurelia/kernel';
 import { Component } from './decorators';
 
 export interface RenderMainArgs {
@@ -12,11 +12,12 @@ export interface RenderMainArgs {
   forceRender: boolean;
 }
 export interface StoryFnAureliaReturnType {
-  customElement: any;
+  customElement: Constructable;
   components: Component[] | unknown[];
   template: unknown;
   items: IRegistry[];
   container: IContainer;
+  state: any;
 }
 export interface ShowErrorArgs {
   title: string;
