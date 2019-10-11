@@ -5,6 +5,17 @@ import parameters from './parameters';
 import styles from './styles';
 
 function centered(storyFn: () => ReactNode) {
+  /* eslint-disable no-undef */
+  if (window) {
+    const params = new URL(window.location.href).search;
+    const isInDocsView = params.includes('viewMode=docs');
+
+    if (isInDocsView) {
+      return storyFn();
+    }
+  }
+  /* eslint-enable no-undef */
+
   return (
     <div style={styles.style}>
       <div style={styles.innerStyle}>{storyFn()}</div>
