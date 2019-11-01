@@ -1,0 +1,24 @@
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import { CoolButton } from '../cool-button/cool-button';
+import { Button } from '@storybook/aurelia/demo';
+import { addComponents } from '@storybook/aurelia';
+import { text, withKnobs, } from '@storybook/addon-knobs';
+
+<Meta title="Welcome" component={CoolButton} decorators={[withKnobs]}/>
+
+# Welcome
+
+This is a test document written in MDX that defines a `CoolButton` story wrapped in a `Preview` doc block:
+
+<Preview withToolbar>
+  <Story name="to Storybook">
+    {{
+      template: `<cool-button text.bind="testText"></cool-button>`,
+      state: {
+        testText: text('asfdafds', 'asasfdsa')
+      }
+    }}
+  </Story>
+</Preview>
+
+

@@ -1,10 +1,11 @@
 import { document } from 'global';
 import { DebugConfiguration } from '@aurelia/debug';
-import { BasicConfiguration } from '@aurelia/jit-html-browser';
-import { Aurelia, INode, CustomElement } from '@aurelia/runtime';
-import { Registration } from '@aurelia/kernel';
+import { JitHtmlBrowserConfiguration } from '@aurelia/jit-html-browser';
+import { Aurelia, INode, CustomElement, CustomElementType, IViewModel } from '@aurelia/runtime';
+import { Registration, Constructable } from '@aurelia/kernel';
 import { RenderMainArgs } from './types';
 import { Component } from './decorators';
+import { generateKnobsFor } from '.';
 
 const host = document.getElementById('root'); // the root iframe provided by storybook
 let previousAurelia: Aurelia<INode>;
@@ -36,35 +37,42 @@ export default async function render({
   if (element.items && element.items.length > 0) {
     previousAurelia.register(...element.items);
   } else {
-    previousAurelia.register(BasicConfiguration, DebugConfiguration);
+    previousAurelia.register(JitHtmlBrowserConfiguration, DebugConfiguration);
   }
 
   if (element.components && element.components.length > 0) {
     previousAurelia.container.register(...element.components);
-    element.components
-      .filter(y => y.aliases && y.aliases.length > 0)
-      .forEach(y =>
-        (y as Component).aliases.forEach(alias => Registration.alias((y as Component).item, alias))
-      );
   }
 
   const isConstructable = element.state && element.state.prototype;
+  let template = element.template;
+  if (element.customElement) {
+    const def = CustomElement.getDefinition(element.customElement);
+    template = `<${def.name} ${Object.keys(def.bindables).map(key => `${def.bindables[key].attribute}.bind="${def.bindables[key].property}" `)}  ></${def.name}>`;
+    previousAurelia.register(element.customElement);
+  }
+
+  let state: Constructable = class { };
+  if (element.state) {
+    state = isConstructable ? element.state : state;
+  } else if (element.customElement) {
+    state = generateKnobsFor(element.customElement);
+  }
+
   let App = CustomElement.define(
-    { name: 'app', template: element.template },
-    isConstructable ? element.state : class {}
+    { name: 'app', template: template },
+    state as Constructable
   );
 
-  if (!isConstructable) {
-    App = new App();
-    Object.keys(element.state).forEach(prop => {
-      App[prop] = element.state[prop];
-    });
+  let app: IViewModel<INode>;
+  if ((element.customElement || element.state) && !isConstructable) {
+    app = Object.assign(new App(), element.state || state);
   }
 
   await previousAurelia
     .app({
       host,
-      component: App,
+      component: app || App,
     })
     .start()
     .wait();

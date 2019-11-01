@@ -11,7 +11,8 @@
     "skipLibCheck": true,
     "rootDir": "src",
     "target": "es5",
-    "esModuleInterop": false
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
   },
   "include": [
     "src"
