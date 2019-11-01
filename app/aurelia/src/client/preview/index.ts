@@ -4,11 +4,11 @@ import { ClientStoryApi, Loadable } from '@storybook/addons';
 
 import './globals';
 import { text, boolean, number, date } from '@storybook/addon-knobs';
+import { CustomElement } from '@aurelia/runtime';
+import { Constructable } from '@aurelia/kernel';
 import render from './render';
 import { IStorybookSection, StoryFnAureliaReturnType } from './types';
 import { addRegistries, addContainer, Component, addComponents } from './decorators';
-import { CustomElement } from '@aurelia/runtime';
-import { Constructable } from '@aurelia/kernel';
 
 const framework = 'Aurelia 2';
 
@@ -45,59 +45,61 @@ export function generateKnobsFor(CustomElementClass: Constructable) {
   const def = CustomElement.getDefinition(CustomElementClass);
   const bindables = def && def.bindables;
 
-  if (!bindables) return class { };
-  const result = class { } as any;
+  if (!bindables) return class {};
+  const result = class {} as any;
   const elementConstructed = new CustomElementClass() as any;
 
-  Object.keys(bindables).map(y => bindables[y]).forEach(bindableDef => {
-    const bindable = bindableDef.property;
-    const currentVal = elementConstructed[bindable];
-    switch (typeof currentVal) {
-      case 'boolean':
-        result[bindable] = boolean(bindable, elementConstructed[bindable]);
-        return;
-      case 'string':
-        result[bindable] = text(bindable, elementConstructed[bindable] || 'lorem ipsum');
-        return;
-      case 'number':
-      case 'bigint':
-        result[bindable] = number(bindable, elementConstructed[bindable] || 0);
-        return;
-      case 'undefined':
-        if (bindable.toLocaleLowerCase().includes('is')) {
+  Object.keys(bindables)
+    .map(y => bindables[y])
+    .forEach(bindableDef => {
+      const bindable = bindableDef.property;
+      const currentVal = elementConstructed[bindable];
+      switch (typeof currentVal) {
+        case 'boolean':
           result[bindable] = boolean(bindable, elementConstructed[bindable]);
           return;
-        }
-        if (
-          bindable.toLocaleLowerCase().includes('count') ||
-          bindable.toLocaleLowerCase().includes('max') ||
-          bindable.toLocaleLowerCase().includes('min')
-        ) {
+        case 'string':
+          result[bindable] = text(bindable, elementConstructed[bindable] || 'lorem ipsum');
+          return;
+        case 'number':
+        case 'bigint':
           result[bindable] = number(bindable, elementConstructed[bindable] || 0);
           return;
-        }
-        if (
-          bindable.toLocaleLowerCase().includes('date') ||
-          bindable.toLocaleLowerCase().includes('time')
-        ) {
-          result[bindable] = date(bindable, elementConstructed[bindable] || new Date());
+        case 'undefined':
+          if (bindable.toLocaleLowerCase().includes('is')) {
+            result[bindable] = boolean(bindable, elementConstructed[bindable]);
+            return;
+          }
+          if (
+            bindable.toLocaleLowerCase().includes('count') ||
+            bindable.toLocaleLowerCase().includes('max') ||
+            bindable.toLocaleLowerCase().includes('min')
+          ) {
+            result[bindable] = number(bindable, elementConstructed[bindable] || 0);
+            return;
+          }
+          if (
+            bindable.toLocaleLowerCase().includes('date') ||
+            bindable.toLocaleLowerCase().includes('time')
+          ) {
+            result[bindable] = date(bindable, elementConstructed[bindable] || new Date());
+            return;
+          }
+          result[bindable] = text(bindable, elementConstructed[bindable] || 'lorem ipsum');
           return;
-        }
-        result[bindable] = text(bindable, elementConstructed[bindable] || 'lorem ipsum');
-        return;
-      case 'object':
-        if (currentVal instanceof Date) {
-          result[bindable] = date(bindable, elementConstructed[bindable] || new Date());
+        case 'object':
+          if (currentVal instanceof Date) {
+            result[bindable] = date(bindable, elementConstructed[bindable] || new Date());
+            return;
+          }
+          if (currentVal instanceof Date) {
+            result[bindable] = date(bindable, elementConstructed[bindable] || new Date());
+            return;
+          }
           return;
-        }
-        if (currentVal instanceof Date) {
-          result[bindable] = date(bindable, elementConstructed[bindable] || new Date());
-          return;
-        }
-        return;
-      default:
-        result[bindable] = text(bindable, elementConstructed[bindable] || 'lorem ipsum');
-    }
-  });
+        default:
+          result[bindable] = text(bindable, elementConstructed[bindable] || 'lorem ipsum');
+      }
+    });
   return result;
 }

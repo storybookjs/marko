@@ -1,4 +1,4 @@
-import { bindable, customElement } from "@aurelia/runtime";
+import { bindable, customElement } from '@aurelia/runtime';
 
 @customElement({
   name: 'storybook-welcome-component',
@@ -73,7 +73,7 @@ import { bindable, customElement } from "@aurelia/runtime";
       </style>
     `,
 })
-export class Welcome {
+export default class Welcome {
   @bindable()
   showApp: MouseEvent;
 }

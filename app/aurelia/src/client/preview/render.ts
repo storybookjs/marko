@@ -45,24 +45,23 @@ export default async function render({
   }
 
   const isConstructable = element.state && element.state.prototype;
-  let template = element.template;
+  let { template } = element;
   if (element.customElement) {
     const def = CustomElement.getDefinition(element.customElement);
-    template = `<${def.name} ${Object.keys(def.bindables).map(key => `${def.bindables[key].attribute}.bind="${def.bindables[key].property}" `)}  ></${def.name}>`;
+    template = `<${def.name} ${Object.keys(def.bindables).map(
+      key => `${def.bindables[key].attribute}.bind="${def.bindables[key].property}" `
+    )}  ></${def.name}>`;
     previousAurelia.register(element.customElement);
   }
 
-  let state: Constructable = class { };
+  let state: Constructable = class {};
   if (element.state) {
     state = isConstructable ? element.state : state;
   } else if (element.customElement) {
     state = generateKnobsFor(element.customElement);
   }
 
-  let App = CustomElement.define(
-    { name: 'app', template: template },
-    state as Constructable
-  );
+  const App = CustomElement.define({ name: 'app', template }, state as Constructable);
 
   let app: IViewModel<INode>;
   if ((element.customElement || element.state) && !isConstructable) {

@@ -42,7 +42,7 @@ export function webpack(
           issuer: /\.html?$/i,
         },
         { test: /\.ts$/i, use: ['ts-loader', '@aurelia/webpack-loader'], exclude: /node_modules/ },
-        { test: /\.html$/i, use: '@aurelia/webpack-loader', exclude: /node_modules/ }
+        { test: /\.html$/i, use: '@aurelia/webpack-loader', exclude: /node_modules/ },
       ],
     },
     plugins: [...config.plugins, createForkTsCheckerInstance(tsLoaderOptions)],

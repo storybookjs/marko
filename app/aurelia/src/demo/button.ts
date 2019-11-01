@@ -1,4 +1,4 @@
-import { customElement, bindable } from "@aurelia/runtime";
+import { customElement, bindable } from '@aurelia/runtime';
 
 @customElement({
   name: 'storybook-button-component',
@@ -19,7 +19,7 @@ import { customElement, bindable } from "@aurelia/runtime";
     </template>
   `,
 })
-export class Button {
+export default class Button {
   @bindable()
   text = '';
 
