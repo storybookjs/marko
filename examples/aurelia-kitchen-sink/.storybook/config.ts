@@ -1,4 +1,4 @@
-import { configure, addDecorator, addParameters } from '@storybook/aurelia';
+import { configure, addDecorator } from '@storybook/aurelia';
 import { withA11y } from '@storybook/addon-a11y';
 
 addDecorator(withA11y);

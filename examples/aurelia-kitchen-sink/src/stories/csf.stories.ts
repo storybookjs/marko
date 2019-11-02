@@ -1,5 +1,5 @@
 import { StoryFn } from '@storybook/addons';
-import { text, withKnobs } from '@storybook/addon-knobs';
+import { withKnobs } from '@storybook/addon-knobs';
 import { StoryFnAureliaReturnType } from '@storybook/aurelia';
 import { CoolButton } from '../cool-button/cool-button';
 import 'bootstrap/scss/bootstrap.scss';

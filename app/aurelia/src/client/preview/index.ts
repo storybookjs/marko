@@ -10,7 +10,7 @@ import render from './render';
 import { IStorybookSection, StoryFnAureliaReturnType } from './types';
 import { addRegistries, addContainer, Component, addComponents } from './decorators';
 
-const framework = 'Aurelia 2';
+const framework = 'Aurelia';
 
 interface ClientApi extends ClientStoryApi<Partial<StoryFnAureliaReturnType>> {
   setAddon(addon: any): void;

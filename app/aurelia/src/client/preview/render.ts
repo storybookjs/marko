@@ -1,10 +1,9 @@
 import { document } from 'global';
 import { DebugConfiguration } from '@aurelia/debug';
 import { JitHtmlBrowserConfiguration } from '@aurelia/jit-html-browser';
-import { Aurelia, INode, CustomElement, CustomElementType, IViewModel } from '@aurelia/runtime';
-import { Registration, Constructable } from '@aurelia/kernel';
+import { Aurelia, INode, CustomElement, IViewModel } from '@aurelia/runtime';
+import { Constructable } from '@aurelia/kernel';
 import { RenderMainArgs } from './types';
-import { Component } from './decorators';
 import { generateKnobsFor } from '.';
 
 const host = document.getElementById('root'); // the root iframe provided by storybook
@@ -54,18 +53,18 @@ export default async function render({
     previousAurelia.register(element.customElement);
   }
 
-  let state: Constructable = class {};
+  let State: Constructable = class {};
   if (element.state) {
-    state = isConstructable ? element.state : state;
+    State = isConstructable ? element.state : State;
   } else if (element.customElement) {
-    state = generateKnobsFor(element.customElement);
+    State = generateKnobsFor(element.customElement);
   }
 
-  const App = CustomElement.define({ name: 'app', template }, state as Constructable);
+  const App = CustomElement.define({ name: 'app', template }, State as Constructable);
 
   let app: IViewModel<INode>;
   if ((element.customElement || element.state) && !isConstructable) {
-    app = Object.assign(new App(), element.state || state);
+    app = Object.assign(new App(), element.state || State);
   }
 
   await previousAurelia
