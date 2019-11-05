@@ -8,9 +8,14 @@
   },
   "license": "MIT",
   "scripts": {
-    "build-storybook": "build-storybook -s public",
+    "build": "rimraf dist && webpack --env production",
+    "build-storybook": "build-storybook -s dist",
+    "lint": "npm run lint:js && npm run lint:html",
+    "lint:html": "htmlhint -c .htmlhintrc src",
+    "lint:js": "tslint --project tsconfig.json",
     "now-build": "node ../../scripts/bootstrap --core && yarn run build-storybook --quiet",
-    "storybook": "start-storybook -p 9009 -s public"
+    "start": "webpack-dev-server",
+    "storybook": "start-storybook -p 9009 -s dist"
   },
   "dependencies": {
     "@aurelia/debug": "dev",
