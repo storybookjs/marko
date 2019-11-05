@@ -1,3 +1,3 @@
-import { configure, addDecorator } from '@storybook/aurelia';
+import { configure } from '@storybook/aurelia';
 
 configure(require.context('../src/stories', true, /\.stories\.(js|ts|mdx)$/), module);
