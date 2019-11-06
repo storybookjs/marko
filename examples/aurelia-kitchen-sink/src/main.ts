@@ -8,6 +8,7 @@ import { App } from './app';
 new Aurelia()
   .register(JitHtmlBrowserConfiguration, DebugConfiguration)
   .app({
+    // eslint-disable-next-line no-undef
     host: document.querySelector('app'),
     component: App,
   })
