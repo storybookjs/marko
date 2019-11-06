@@ -12,7 +12,7 @@
     "rootDir": "src",
     "target": "es5",
     "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "src"
