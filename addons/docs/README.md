@@ -47,7 +47,7 @@ Here's an example file:
 import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
 import { Checkbox } from './Checkbox';
 
-<Meta title="MDX|Checkbox" component={Checkbox} />
+<Meta title="MDX/Checkbox" component={Checkbox} />
 
 # Checkbox
 
@@ -77,16 +77,16 @@ For more information on `MDX`, see the [`MDX` reference](./docs/mdx.md).
 
 Storybook Docs supports all view layers that Storybook supports except for React Native (currently). There are some framework-specific features as well, such as props tables and inline story rendering. This chart captures the current state of support:
 
-|                   | React |  Vue  | Angular | HTML  | [Web Components](./web-components) | Svelte | Polymer | Marko | Mithril | Riot  | Ember | Preact |
-| ----------------- | :---: | :---: | :-----: | :---: | :--------------------------------: | :----: | :-----: | :---: | :-----: | :---: | :---: | :----: |
-| MDX stories       |   +   |   +   |    +    |   +   |                 +                  |   +    |    +    |   +   |    +    |   +   |   +   |   +    |
-| CSF stories       |   +   |   +   |    +    |   +   |                 +                  |   +    |    +    |   +   |    +    |   +   |   +   |   +    |
-| StoriesOf stories |   +   |   +   |    +    |   +   |                 +                  |   +    |    +    |   +   |    +    |   +   |   +   |   +    |
-| Source            |   +   |   +   |    +    |   +   |                 +                  |   +    |    +    |   +   |    +    |   +   |   +   |   +    |
-| Notes / Info      |   +   |   +   |    +    |   +   |                 +                  |   +    |    +    |   +   |    +    |   +   |   +   |   +    |
-| Props table       |   +   |   +   |    #    |       |                 +                  |        |         |       |         |       |       |        |
-| Description       |   +   |   +   |    #    |       |                 +                  |        |         |       |         |       |       |        |
-| Inline stories    |   +   |   +   |         |       |                 +                  |        |         |       |         |       |       |        |
+|                   | React | Vue | Angular | HTML | [Web Components](./web-components) | Svelte | Polymer | Marko | Mithril | Riot | Ember | Preact |
+| ----------------- | :---: | :-: | :-----: | :--: | :--------------------------------: | :----: | :-----: | :---: | :-----: | :--: | :---: | :----: |
+| MDX stories       |   +   |  +  |    +    |  +   |                 +                  |   +    |    +    |   +   |    +    |  +   |   +   |   +    |
+| CSF stories       |   +   |  +  |    +    |  +   |                 +                  |   +    |    +    |   +   |    +    |  +   |   +   |   +    |
+| StoriesOf stories |   +   |  +  |    +    |  +   |                 +                  |   +    |    +    |   +   |    +    |  +   |   +   |   +    |
+| Source            |   +   |  +  |    +    |  +   |                 +                  |   +    |    +    |   +   |    +    |  +   |   +   |   +    |
+| Notes / Info      |   +   |  +  |    +    |  +   |                 +                  |   +    |    +    |   +   |    +    |  +   |   +   |   +    |
+| Props table       |   +   |  +  |    #    |      |                 +                  |        |         |       |         |      |       |        |
+| Description       |   +   |  +  |    #    |      |                 +                  |        |         |       |         |      |       |        |
+| Inline stories    |   +   |  +  |         |      |                 +                  |        |         |       |         |      |       |        |
 
 **Note:** `#` = WIP support
 
@@ -109,10 +109,8 @@ yarn add -D react react-is babel-loader
 Then add the following to your `.storybook/presets.js` exports:
 
 ```js
-module.exports = ['@storybook/addon-docs/react/preset'];
+module.exports = ['@storybook/addon-docs/preset'];
 ```
-
-If you're not using `react`, replace it with your framework of choice corresponding to the Storybook package name, e.g. `angular` for `@storybook/angular` etc.
 
 **Configure.** If you're migrating from an earlier version of Storybook and want to use `MDX`, you need to upgrade your Storybook config:
 
