@@ -44,7 +44,6 @@ export function webpack(
                 plugins: [autoprefixer()],
               },
             },
-            { loader: 'sass-loader' },
           ],
         },
       ],
