@@ -47,7 +47,6 @@ export interface SubAPI {
 type PartialSubState = Partial<SubState>;
 type PartialThemeVars = Partial<ThemeVars>;
 type PartialLayout = Partial<Layout>;
-type PartialUI = Partial<UI>;
 
 interface Options extends ThemeVars {
   name?: string;
@@ -130,7 +129,7 @@ const checkDeprecatedLayoutOptions = (options: Options) => {
   return {};
 };
 
-const initial: SubState = {
+const defaultState: SubState = {
   ui: {
     enableShortcuts: true,
     sidebarAnimations: true,
@@ -153,7 +152,6 @@ export const focusableUIElements = {
   storyPanelRoot: 'storybook-panel-root',
 };
 
-let hasSetOptions = false;
 export default function({ store, provider }: { store: Store; provider: Provider }) {
   const api = {
     toggleFullscreen(toggled?: boolean) {
@@ -274,31 +272,23 @@ export default function({ store, provider }: { store: Store; provider: Provider 
       const { theme, selectedPanel, ...options } = provider.getConfig();
 
       return {
-        ...initial,
+        ...defaultState,
         layout: {
-          ...initial.layout,
-          ...pick(options, Object.keys(initial.layout)),
+          ...defaultState.layout,
+          ...pick(options, Object.keys(defaultState.layout)),
           ...checkDeprecatedLayoutOptions(options),
         },
         ui: {
-          ...initial.ui,
-          ...pick(options, Object.keys(initial.ui)),
+          ...defaultState.ui,
+          ...pick(options, Object.keys(defaultState.ui)),
         },
-        selectedPanel: selectedPanel || initial.selectedPanel,
-        theme: theme || initial.theme,
+        selectedPanel: selectedPanel || defaultState.selectedPanel,
+        theme: theme || defaultState.theme,
       };
     },
 
     setOptions: (options: any) => {
-      // The very first time the user sets their options, we don't consider what is in the store.
-      // At this point in time, what is in the store is what we *persisted*. We did that in order
-      // to avoid a FOUC (e.g. initial rendering the wrong theme while we waited for the stories to load)
-      // However, we don't want to have a memory about these things, otherwise we see bugs like the
-      // user setting a name for their storybook, persisting it, then never being able to unset it
-      // without clearing localstorage. See https://github.com/storybookjs/storybook/issues/5857
-      const { layout, ui, selectedPanel, theme } = hasSetOptions
-        ? store.getState()
-        : api.getInitialOptions();
+      const { layout, ui, selectedPanel, theme } = store.getState();
 
       if (options) {
         const updatedLayout = {
@@ -326,9 +316,6 @@ export default function({ store, provider }: { store: Store; provider: Provider 
         if (!deepEqual(layout, updatedLayout)) {
           modification.layout = updatedLayout;
         }
-        if (!deepEqual(theme, updatedTheme)) {
-          modification.theme = updatedTheme;
-        }
         if (options.selectedPanel && !deepEqual(selectedPanel, options.selectedPanel)) {
           modification.selectedPanel = options.selectedPanel;
         }
@@ -336,13 +323,14 @@ export default function({ store, provider }: { store: Store; provider: Provider 
         if (Object.keys(modification).length) {
           store.setState(modification, { persistence: 'permanent' });
         }
-
-        hasSetOptions = true;
+        if (!deepEqual(theme, updatedTheme)) {
+          store.setState({ theme: updatedTheme });
+        }
       }
     },
   };
 
-  const persisted = pick(store.getState(), 'layout', 'ui', 'selectedPanel', 'theme');
+  const persisted = pick(store.getState(), 'layout', 'ui', 'selectedPanel');
 
   return { api, state: merge(api.getInitialOptions(), persisted) };
 }
