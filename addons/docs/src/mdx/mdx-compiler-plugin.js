@@ -128,11 +128,29 @@ function genPreviewExports(ast, context) {
   return previewExports;
 }
 
-function genMeta(ast) {
+function genMeta(ast, options) {
   let title = getAttr(ast.openingElement, 'title');
+  let id = getAttr(ast.openingElement, 'id');
   let parameters = getAttr(ast.openingElement, 'parameters');
   let decorators = getAttr(ast.openingElement, 'decorators');
-  title = title && `'${title.value}'`;
+  if (title) {
+    if (title.type === 'StringLiteral') {
+      title = "'".concat(jsStringEscape(title.value), "'");
+    } else {
+      try {
+        // generate code, so the expression is evaluated by the CSF compiler
+        const { code } = generate(title, {});
+        // remove the curly brackets at start and end of code
+        title = code.replace(/^\{(.+)\}$/, '$1');
+      } catch (e) {
+        // eat exception if title parsing didn't go well
+        // eslint-disable-next-line no-console
+        console.warn('Invalid title:', options.filepath);
+        title = undefined;
+      }
+    }
+  }
+  id = id && `'${id.value}'`;
   if (parameters && parameters.expression) {
     const { code: params } = generate(parameters.expression, {});
     parameters = params;
@@ -143,12 +161,13 @@ function genMeta(ast) {
   }
   return {
     title,
+    id,
     parameters,
     decorators,
   };
 }
 
-function getExports(node, counter) {
+function getExports(node, counter, options) {
   const { value, type } = node;
   if (type === 'jsx') {
     if (STORY_REGEX.exec(value)) {
@@ -165,7 +184,7 @@ function getExports(node, counter) {
     if (META_REGEX.exec(value)) {
       // Preview, possibly containing multiple stories
       const ast = parser.parseExpression(value, { plugins: ['jsx'] });
-      return { meta: genMeta(ast) };
+      return { meta: genMeta(ast, options) };
     }
   }
   return null;
@@ -176,8 +195,8 @@ function getExports(node, counter) {
 const wrapperJs = `
 componentMeta.parameters = componentMeta.parameters || {};
 componentMeta.parameters.docs = {
-  container: ({ context, children }) => <DocsContainer context={{...context, mdxStoryNameToId}}>{children}</DocsContainer>,
-  page: MDXContent,
+  ...(componentMeta.parameters.docs || {}),
+  page: () => <AddContext mdxStoryNameToId={mdxStoryNameToId}><MDXContent /></AddContext>,
 };
 `.trim();
 
@@ -267,7 +286,7 @@ function extractExports(node, options) {
     storyNameToKey: {},
   };
   node.children.forEach(n => {
-    const exports = getExports(n, context);
+    const exports = getExports(n, context, options);
     if (exports) {
       const { stories, meta } = exports;
       if (stories) {
@@ -295,11 +314,11 @@ function extractExports(node, options) {
   }
   metaExport.includeStories = JSON.stringify(includeStories);
 
-  const { title } = metaExport;
+  const { title, id: componentId } = metaExport;
   const mdxStoryNameToId = Object.entries(context.storyNameToKey).reduce(
     (acc, [storyName, storyKey]) => {
       if (title) {
-        acc[storyName] = toId(title, storyNameFromExport(storyKey));
+        acc[storyName] = toId(componentId || title, storyNameFromExport(storyKey));
       }
       return acc;
     },
@@ -307,7 +326,7 @@ function extractExports(node, options) {
   );
 
   const fullJsx = [
-    'import { DocsContainer, makeStoryFn } from "@storybook/addon-docs/blocks";',
+    'import { makeStoryFn, AddContext } from "@storybook/addon-docs/blocks";',
     defaultJsx,
     ...storyExports,
     `const componentMeta = ${stringifyMeta(metaExport)};`,

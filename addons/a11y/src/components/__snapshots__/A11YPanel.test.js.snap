@@ -177,8 +177,16 @@ exports[`A11YPanel should render report 1`] = `
             "storybook/a11y/result",
             [Function],
           ],
+          Array [
+            "storybook/a11y/error",
+            [Function],
+          ],
         ],
         "results": Array [
+          Object {
+            "type": "return",
+            "value": undefined,
+          },
           Object {
             "type": "return",
             "value": undefined,
@@ -944,6 +952,11 @@ exports[`A11YPanel should render report 1`] = `
         >
           <l
             className="emotion-0"
+            scrollableNodeProps={
+              Object {
+                "tabIndex": 0,
+              }
+            }
           >
             <div
               className="emotion-0"
@@ -967,6 +980,7 @@ exports[`A11YPanel should render report 1`] = `
                   >
                     <div
                       className="simplebar-content-wrapper"
+                      tabIndex={0}
                     >
                       <div
                         className="simplebar-content"
