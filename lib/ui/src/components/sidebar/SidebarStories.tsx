@@ -172,7 +172,6 @@ const SidebarStories: FunctionComponent<StoriesProps> = memo(
         </Wrapper>
       );
     }
-    console.log(stories);
     return (
       <Wrapper className={className}>
         <TreeState
