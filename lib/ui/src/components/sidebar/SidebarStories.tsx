@@ -57,9 +57,9 @@ const refinedViewMode = (
   isDocsOnly: boolean,
   parameters: { viewMode?: string } = {}
 ) => {
-  const { viewMode: pViewMode } = parameters;
-  if (typeof pViewMode === 'string') {
-    return pViewMode;
+  const { viewMode: paramViewMode } = parameters;
+  if (typeof paramViewMode === 'string') {
+    return paramViewMode;
   }
   if (isDocsOnly) {
     return 'docs';
