@@ -39,6 +39,8 @@ interface Group {
   isComponent: boolean;
   isRoot: boolean;
   isLeaf: boolean;
+  // MDX stories are "Group" type
+  parameters?: any;
 }
 
 interface StoryInput {
@@ -259,6 +261,7 @@ const initStoriesApi = ({
           const { name } = group;
           const parent = index > 0 && soFar[index - 1].id;
           const id = sanitize(parent ? `${parent}-${name}` : name);
+          const isComponent = index === original.length - 1;
           if (parent === id) {
             throw new Error(
               `
@@ -275,9 +278,11 @@ Did you create a path that uses the separator char accidentally, such as 'Vue <d
             parent,
             depth: index,
             children: [],
-            isComponent: index === original.length - 1,
+            isComponent,
             isLeaf: false,
             isRoot: !!root && index === 0,
+            // if isComponent is true, .mdx story - save parameters
+            parameters: isComponent ? parameters : undefined,
           };
           return soFar.concat([result]);
         }, [] as GroupsList);

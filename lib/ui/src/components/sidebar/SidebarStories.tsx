@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { styled } from '@storybook/theming';
 import { Placeholder, Link as StyledLink } from '@storybook/components';
-import { State } from '@storybook/api';
+import api, { State } from '@storybook/api';
 import { Location, Link as RouterLink } from '@storybook/router';
 import { TreeState } from './treeview/treeview';
 
@@ -52,7 +52,15 @@ const PlainLink = styled.a(plain);
 
 const Wrapper = styled.div({});
 
-const refinedViewMode = (viewMode: string | undefined, isDocsOnly: boolean) => {
+const refinedViewMode = (
+  viewMode: string | undefined,
+  isDocsOnly: boolean,
+  parameters: { viewMode?: string } = {}
+) => {
+  const { viewMode: pViewMode } = parameters;
+  if (typeof pViewMode === 'string') {
+    return pViewMode;
+  }
   if (isDocsOnly) {
     return 'docs';
   }
@@ -73,6 +81,7 @@ export const Link = ({
   onKeyUp,
   childIds,
   isExpanded,
+  parameters,
 }) => {
   return isLeaf || (isComponent && !isExpanded) ? (
     <Location>
@@ -80,7 +89,9 @@ export const Link = ({
         <PlainRouterLink
           title={name}
           id={prefix + id}
-          to={`/${refinedViewMode(viewMode, isLeaf && isComponent)}/${targetId(childIds) || id}`}
+          to={`/${refinedViewMode(viewMode, isLeaf && isComponent, parameters)}/${targetId(
+            childIds
+          ) || id}`}
           onKeyUp={onKeyUp}
           onClick={onClick}
         >
@@ -161,7 +172,7 @@ const SidebarStories: FunctionComponent<StoriesProps> = memo(
         </Wrapper>
       );
     }
-
+    console.log(stories);
     return (
       <Wrapper className={className}>
         <TreeState
