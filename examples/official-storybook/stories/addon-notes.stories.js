@@ -75,6 +75,11 @@ const giphyMarkdown = `
 
 export default {
   title: 'Addons/Notes',
+  parameters: {
+    previewTabs: {
+      'storybookjs/notes/panel': { hidden: false },
+    },
+  },
 };
 
 export const AddonNotes = () => (

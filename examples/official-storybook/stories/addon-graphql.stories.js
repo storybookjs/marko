@@ -2,6 +2,11 @@ import React from 'react';
 
 export default {
   title: 'Addons/GraphQL',
+  parameters: {
+    previewTabs: {
+      graphiql: { hidden: false, title: 'GraphiQL' },
+    },
+  },
 };
 
 export const GetPikachu = () => <div>hello</div>;
