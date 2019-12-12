@@ -71,6 +71,15 @@ addons.setConfig({
    * @type {String}	
    */	
   selectedPanel: undefined,
+
+  /**	
+   * Select the default active tab on Mobile.
+   * 0 - Sidebar
+   * 1 - Canvas
+   * 2 - Addons
+   * @type {Number}	
+   */	
+  initialActive: 0,
 });
 ```
 

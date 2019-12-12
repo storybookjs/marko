@@ -11,8 +11,14 @@ import Store from '../store';
 import { Provider } from '../init-provider-api';
 
 export type PanelPositions = 'bottom' | 'right';
+export const ActiveTabs = {
+  SIDEBAR: 0,
+  CANVAS: 1,
+  ADDONS: 2,
+};
 
 export interface Layout {
+  initialActive: number;
   isFullscreen: boolean;
   showPanel: boolean;
   panelPosition: PanelPositions;
@@ -137,6 +143,7 @@ const initial: SubState = {
     docsMode: false,
   },
   layout: {
+    initialActive: ActiveTabs.SIDEBAR,
     isToolshown: true,
     isFullscreen: false,
     showPanel: true,
