@@ -29,22 +29,19 @@ export const Subtitle = styled.h2<{}>(withReset, ({ theme }: { theme: Theme }) =
   fontSize: theme.typography.size.s3,
   lineHeight: '20px',
   borderBottom: 'none',
-  marginBottom: '15px',
+  marginBottom: 15,
 
   [`@media (min-width: ${breakpoint}px)`]: {
     fontSize: theme.typography.size.m1,
     lineHeight: '28px',
-    marginBottom: '24px',
+    marginBottom: 24,
   },
 
-  color:
-    theme.base === 'light'
-      ? transparentize(0.25, theme.color.defaultText)
-      : transparentize(0.25, theme.color.defaultText),
+  color: transparentize(0.25, theme.color.defaultText),
 }));
 
 export const DocsContent = styled.div({
-  maxWidth: 800,
+  maxWidth: 1000,
   width: '100%',
 });
 

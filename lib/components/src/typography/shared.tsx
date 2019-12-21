@@ -20,14 +20,13 @@ export const headerCommon = ({ theme }: { theme: Theme }): CSSObject => ({
 });
 
 export const codeCommon = ({ theme }: { theme: Theme }): CSSObject => ({
+  lineHeight: 1,
   margin: '0 2px',
-  padding: '0 5px',
+  padding: '3px 5px',
   whiteSpace: 'nowrap',
 
-  borderRadius: '3px',
+  borderRadius: 3,
   fontSize: theme.typography.size.s2 - 1,
-
-  // color: theme.base === 'dark' && theme.color.darkest,
 
   border:
     theme.base === 'light'

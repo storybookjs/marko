@@ -31,15 +31,15 @@ export const Table = styled.table<{}>(({ theme }) => ({
     width: '100%',
 
     // Margin collapse
-    marginTop: '25px',
-    marginBottom: '40px',
+    marginTop: 25,
+    marginBottom: 40,
 
     'th:first-of-type, td:first-of-type': {
       paddingLeft: 20,
     },
 
     'th:last-of-type, td:last-of-type': {
-      paddingRight: '20px',
+      paddingRight: 20,
       width: '20%',
     },
 
@@ -67,7 +67,7 @@ export const Table = styled.table<{}>(({ theme }) => ({
       },
 
       '&:last-of-type': {
-        paddingRight: '20px',
+        paddingRight: 20,
       },
     },
 
@@ -195,14 +195,14 @@ const PropsTable: FC<PropsTableProps> = props => {
   return (
     <ResetWrapper>
       <Table className="docblock-propstable">
-        <thead>
+        <thead className="docblock-propstable-head">
           <tr>
             <th>Name</th>
             <th>Description</th>
             <th>Default</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="docblock-propstable-body">
           {allRows.map(row => (
             <PropsTableRow key={row.key} {...row.value} />
           ))}

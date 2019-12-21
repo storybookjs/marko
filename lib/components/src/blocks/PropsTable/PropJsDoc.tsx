@@ -27,8 +27,8 @@ export const Table = styled.table(({ theme }) => ({
     },
     // End escape
 
-    marginTop: '0',
-    marginBottom: '0',
+    marginTop: 0,
+    marginBottom: 0,
 
     'th:first-of-type, td:first-of-type': {
       paddingLeft: 0,
@@ -39,8 +39,8 @@ export const Table = styled.table(({ theme }) => ({
     },
 
     td: {
-      paddingTop: '0',
-      paddingBottom: '4px',
+      paddingTop: 0,
+      paddingBottom: 4,
 
       '&:not(:first-of-type)': {
         paddingLeft: 10,
@@ -56,7 +56,6 @@ export const Table = styled.table(({ theme }) => ({
     code: codeCommon({ theme }),
 
     '& code': {
-      lineHeight: '18px',
       margin: 0,
       display: 'inline-block',
     },

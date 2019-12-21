@@ -49,12 +49,12 @@ export type MenuButtonProps = ComponentProps<typeof Button> &
     highlighted: boolean;
   };
 
-const MenuButton = styled(Button)<MenuButtonProps>(props => ({
+const MenuButton = styled(Button)<MenuButtonProps>(({ highlighted, theme }) => ({
   position: 'relative',
   overflow: 'visible',
   padding: 7,
 
-  ...(props.highlighted && {
+  ...(highlighted && {
     '&:after': {
       content: '""',
       position: 'absolute',
@@ -63,7 +63,7 @@ const MenuButton = styled(Button)<MenuButtonProps>(props => ({
       width: 8,
       height: 8,
       borderRadius: 8,
-      background: `${props.theme.color.positive}`,
+      background: theme.color.positive,
     },
   }),
 }));
@@ -86,7 +86,7 @@ const Brand = withTheme(
     }
     if (image === undefined && url) {
       return (
-        <LogoLink href={url} target={targetValue}>
+        <LogoLink title={title} href={url} target={targetValue}>
           <Logo alt={title} />
         </LogoLink>
       );
@@ -104,7 +104,7 @@ const Brand = withTheme(
     }
     if (image && url) {
       return (
-        <LogoLink href={url} target={targetValue}>
+        <LogoLink title={title} href={url} target={targetValue}>
           <Img src={image} alt={title} />
         </LogoLink>
       );
