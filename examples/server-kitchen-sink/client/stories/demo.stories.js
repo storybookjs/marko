@@ -1,8 +1,5 @@
 export default {
   title: 'Demo',
-  parameters: {
-    componentSubtitle: 'Handy status label',
-  },
 };
 
 export const Heading = () => {};
@@ -22,7 +19,6 @@ Headings.story = {
 export const Button = () => {};
 Button.story = {
   parameters: {
-    docs: { component: 'hi there docs' },
     server: { id: 'demo/button' },
   },
 };

@@ -3,13 +3,13 @@
   "version": "5.3.0-rc.4",
   "private": true,
   "scripts": {
-    "dev": "PORT=1337 nodemon server/app.js",
-    "start": "PORT=1337 node server/app.js"
-  },
-  "dependencies": {
-    "pug": "^2.0.4"
+    "start": "PORT=1337 nodemon server/app.js"
   },
   "devDependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/node": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/preset-react": "^7.7.4",
     "@storybook/addon-a11y": "5.3.0-rc.4",
     "@storybook/addon-actions": "5.3.0-rc.4",
     "@storybook/addon-backgrounds": "5.3.0-rc.4",
@@ -20,10 +20,16 @@
     "@storybook/addon-notes": "5.3.0-rc.4",
     "@storybook/csf": "0.0.1",
     "@storybook/server": "5.3.0-rc.4",
+    "babel-loader": "^8.0.6",
+    "cors": "^2.8.5",
     "express": "~4.16.4",
+    "html-webpack-plugin": "^3.2.0",
     "morgan": "^1.9.1",
     "nodemon": "^2.0.2",
-    "parcel-bundler": "^1.12.4",
-    "react": "*"
+    "pug": "^2.0.4",
+    "react": "^16.12.0",
+    "webpack": "^4.33.0",
+    "webpack-dev-middleware": "^3.7.2",
+    "webpack-hot-middleware": "^2.25.0"
   }
 }
