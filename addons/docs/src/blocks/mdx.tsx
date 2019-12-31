@@ -49,10 +49,13 @@ export const CodeOrSourceMdx: FC<CodeOrSourceMdxProps> = ({ className, children,
 };
 
 function generateHrefWithHash(hash: string): string {
-  const url = new URL(window.parent.location);
-  const href = `${url.origin}/${url.search}#${hash}`;
-
-  return href;
+  try {
+    const url = new URL(window.parent.location);
+    const href = `${url.origin}/${url.search}#${hash}`;
+    return href;
+  } catch (err) {
+    return '';
+  }
 }
 
 // @ts-ignore
