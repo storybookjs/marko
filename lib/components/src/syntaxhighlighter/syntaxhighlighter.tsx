@@ -1,14 +1,17 @@
-import React, { ComponentProps, FunctionComponent, MouseEvent, useState } from 'react';
+import React, { ComponentType, FunctionComponent, MouseEvent, useState } from 'react';
 import { styled } from '@storybook/theming';
 import { document, window } from 'global';
 import memoize from 'memoizerific';
+import { SyntaxHighlighterProps as ReactSyntaxHighlighterProps } from 'react-syntax-highlighter';
 
 import { ActionBar } from '../ActionBar/ActionBar';
 import { ScrollArea } from '../ScrollArea/ScrollArea';
 
 import { formatter } from './formatter';
 
-const ReactSyntaxHighlighter = require('react-syntax-highlighter/dist/esm/prism-light').default;
+const ReactSyntaxHighlighter: ComponentType<ReactSyntaxHighlighterProps> & {
+  registerLanguage: (name: string, func: any) => void;
+} = require('react-syntax-highlighter/dist/cjs/prism-light').default;
 
 ReactSyntaxHighlighter.registerLanguage(
   'jsx',
@@ -105,8 +108,6 @@ export interface SyntaxHighlighterProps {
 export interface SyntaxHighlighterState {
   copied: boolean;
 }
-
-type ReactSyntaxHighlighterProps = ComponentProps<typeof ReactSyntaxHighlighter>;
 
 type Props = SyntaxHighlighterProps & ReactSyntaxHighlighterProps;
 export const SyntaxHighlighter: FunctionComponent<Props> = ({
