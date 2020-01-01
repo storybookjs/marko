@@ -1,42 +1,28 @@
-import React, { ComponentType, FunctionComponent, MouseEvent, useState } from 'react';
+import React, { ComponentProps, FunctionComponent, MouseEvent, useState } from 'react';
 import { styled } from '@storybook/theming';
 import { document, window } from 'global';
 import memoize from 'memoizerific';
-import { SyntaxHighlighterProps as ReactSyntaxHighlighterProps } from 'react-syntax-highlighter';
+
+import jsx from 'react-syntax-highlighter/dist/cjs/languages/prism/jsx';
+import bash from 'react-syntax-highlighter/dist/cjs/languages/prism/bash';
+import css from 'react-syntax-highlighter/dist/cjs/languages/prism/css';
+import html from 'react-syntax-highlighter/dist/cjs/languages/prism/markup';
+import tsx from 'react-syntax-highlighter/dist/cjs/languages/prism/tsx';
+import typescript from 'react-syntax-highlighter/dist/cjs/languages/prism/typescript';
+
+import ReactSyntaxHighlighter from 'react-syntax-highlighter/dist/cjs/prism-light';
 
 import { ActionBar } from '../ActionBar/ActionBar';
 import { ScrollArea } from '../ScrollArea/ScrollArea';
 
 import { formatter } from './formatter';
 
-const ReactSyntaxHighlighter: ComponentType<ReactSyntaxHighlighterProps> & {
-  registerLanguage: (name: string, func: any) => void;
-} = require('react-syntax-highlighter/dist/cjs/prism-light').default;
-
-ReactSyntaxHighlighter.registerLanguage(
-  'jsx',
-  require('react-syntax-highlighter/dist/cjs/languages/prism/jsx').default
-);
-ReactSyntaxHighlighter.registerLanguage(
-  'bash',
-  require('react-syntax-highlighter/dist/cjs/languages/prism/bash').default
-);
-ReactSyntaxHighlighter.registerLanguage(
-  'css',
-  require('react-syntax-highlighter/dist/cjs/languages/prism/css').default
-);
-ReactSyntaxHighlighter.registerLanguage(
-  'html',
-  require('react-syntax-highlighter/dist/cjs/languages/prism/markup').default
-);
-ReactSyntaxHighlighter.registerLanguage(
-  'tsx',
-  require('react-syntax-highlighter/dist/cjs/languages/prism/tsx').default
-);
-ReactSyntaxHighlighter.registerLanguage(
-  'typescript',
-  require('react-syntax-highlighter/dist/cjs/languages/prism/typescript').default
-);
+ReactSyntaxHighlighter.registerLanguage('jsx', jsx);
+ReactSyntaxHighlighter.registerLanguage('bash', bash);
+ReactSyntaxHighlighter.registerLanguage('css', css);
+ReactSyntaxHighlighter.registerLanguage('html', html);
+ReactSyntaxHighlighter.registerLanguage('tsx', tsx);
+ReactSyntaxHighlighter.registerLanguage('typescript', typescript);
 
 const themedSyntax = memoize(2)(theme =>
   Object.entries(theme.code || {}).reduce((acc, [key, val]) => ({ ...acc, [`* .${key}`]: val }), {})
@@ -108,6 +94,8 @@ export interface SyntaxHighlighterProps {
 export interface SyntaxHighlighterState {
   copied: boolean;
 }
+
+type ReactSyntaxHighlighterProps = ComponentProps<typeof ReactSyntaxHighlighter>;
 
 type Props = SyntaxHighlighterProps & ReactSyntaxHighlighterProps;
 export const SyntaxHighlighter: FunctionComponent<Props> = ({
