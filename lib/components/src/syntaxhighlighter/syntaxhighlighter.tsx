@@ -3,26 +3,37 @@ import { styled } from '@storybook/theming';
 import { document, window } from 'global';
 import memoize from 'memoizerific';
 
-import jsx from 'react-syntax-highlighter/dist/esm/languages/prism/jsx';
-import bash from 'react-syntax-highlighter/dist/esm/languages/prism/bash';
-import css from 'react-syntax-highlighter/dist/esm/languages/prism/css';
-import html from 'react-syntax-highlighter/dist/esm/languages/prism/markup';
-import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
-import typescript from 'react-syntax-highlighter/dist/esm/languages/prism/typescript';
-
-import { PrismLight as ReactSyntaxHighlighter } from 'react-syntax-highlighter';
-
 import { ActionBar } from '../ActionBar/ActionBar';
 import { ScrollArea } from '../ScrollArea/ScrollArea';
 
 import { formatter } from './formatter';
 
-ReactSyntaxHighlighter.registerLanguage('jsx', jsx);
-ReactSyntaxHighlighter.registerLanguage('bash', bash);
-ReactSyntaxHighlighter.registerLanguage('css', css);
-ReactSyntaxHighlighter.registerLanguage('html', html);
-ReactSyntaxHighlighter.registerLanguage('tsx', tsx);
-ReactSyntaxHighlighter.registerLanguage('typescript', typescript);
+const ReactSyntaxHighlighter = require('react-syntax-highlighter/dist/esm/prism-light').default;
+
+ReactSyntaxHighlighter.registerLanguage(
+  'jsx',
+  require('react-syntax-highlighter/dist/cjs/languages/prism/jsx').default
+);
+ReactSyntaxHighlighter.registerLanguage(
+  'bash',
+  require('react-syntax-highlighter/dist/cjs/languages/prism/bash').default
+);
+ReactSyntaxHighlighter.registerLanguage(
+  'css',
+  require('react-syntax-highlighter/dist/cjs/languages/prism/css').default
+);
+ReactSyntaxHighlighter.registerLanguage(
+  'html',
+  require('react-syntax-highlighter/dist/cjs/languages/prism/markup').default
+);
+ReactSyntaxHighlighter.registerLanguage(
+  'tsx',
+  require('react-syntax-highlighter/dist/cjs/languages/prism/tsx').default
+);
+ReactSyntaxHighlighter.registerLanguage(
+  'typescript',
+  require('react-syntax-highlighter/dist/cjs/languages/prism/typescript').default
+);
 
 const themedSyntax = memoize(2)(theme =>
   Object.entries(theme.code || {}).reduce((acc, [key, val]) => ({ ...acc, [`* .${key}`]: val }), {})
