@@ -1,0 +1,18 @@
+{
+  "name": "server-kitchen-sink",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "PORT=1337 nodemon server/app.js",
+    "start": "PORT=1337 node server/app.js"
+  },
+  "devDependencies": {
+    "@storybook/server": "5.3.0-rc.3",
+    "camelcase": "^5.3.1",
+    "concurrently": "^5.0.0",
+    "express": "~4.16.4",
+    "morgan": "^1.9.1",
+    "nodemon": "^2.0.2",
+    "parcel-bundler": "^1.12.4"
+  }
+}
