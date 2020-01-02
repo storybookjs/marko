@@ -2,7 +2,7 @@
 
 ---
 
-Storybook for HTML is a UI development environment for your plain HTML snippets.
+Storybook for Server is a UI development environment for your plain HTML snippets rendered by your server backend.
 With it, you can visualize different states of your UI components and develop them interactively.
 
 ![Storybook Screenshot](https://github.com/storybookjs/storybook/blob/master/media/storybook-intro.gif)
@@ -14,7 +14,7 @@ So you can develop UI components in isolation without worrying about app specifi
 
 ```sh
 cd my-app
-npx -p @storybook/cli sb init -t html
+npx -p @storybook/cli sb init -t server
 ```
 
 For more information visit: [storybook.js.org](https://storybook.js.org)
