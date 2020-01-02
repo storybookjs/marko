@@ -1,4 +1,3 @@
-import React from 'react';
 import { configure, addParameters } from '@storybook/server';
 import { DocsPage, DocsContainer } from '@storybook/addon-docs/blocks';
 
