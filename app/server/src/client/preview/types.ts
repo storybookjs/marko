@@ -2,7 +2,7 @@ import { StoryFn } from '@storybook/addons';
 
 export type StoryFnServerReturnType = any;
 
-export type FetchStoryHtmlType = (id: string, params: any) => Promise<string | Node>;
+export type FetchStoryHtmlType = (url: string, id: string, params: any) => Promise<string | Node>;
 
 export interface IStorybookStory {
   name: string;
@@ -31,4 +31,5 @@ export interface RenderMainArgs {
   showMain: () => void;
   showError: (args: ShowErrorArgs) => void;
   forceRender: boolean;
+  parameters: any;
 }

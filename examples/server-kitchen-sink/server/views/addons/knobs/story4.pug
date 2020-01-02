@@ -1,0 +1,13 @@
+- today = new Date(parseInt(today, 10));
+- dateOptions = JSON.parse(dateOptions);
+- items = JSON.parse(items);
+
+div(style='#{style}')
+  h1 My name is #{name},
+  h3 today is #{today.toLocaleDateString('en-US', dateOptions)}
+  p !{stockMessage}
+  p Also, I have:
+  ul 
+    each item in items
+      li= item
+  p #{salutation}

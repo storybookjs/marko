@@ -3,18 +3,18 @@ const morgan = require('morgan');
 const Bundler = require('parcel-bundler');
 const Path = require('path');
 
-const renderStory = require('./renderStory');
-
 const port = process.env.PORT || 8080;
 
 const app = express();
 
-app.use(morgan('tiny'));
+app.use(morgan('dev'));
+app.set('views', Path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
-app.get('/storybook_preview/:component/:story', (req, res) => {
-  res.send(renderStory(req.params.component, req.params.story, req.query));
+app.get(/storybook_preview\/(.*)/, (req, res) => {
+  res.render(req.params[0], req.query);
 });
 
 const storybookFile = Path.join(__dirname, '../client/storybook.html');

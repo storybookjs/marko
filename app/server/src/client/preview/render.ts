@@ -14,10 +14,27 @@ export default async function renderMain({
   showMain,
   showError,
   forceRender,
+  parameters,
 }: RenderMainArgs) {
   const params = storyFn();
 
-  const element = await fetchStoryHtml(id, params);
+  const {
+    server: { url, id: storyId },
+  } = parameters;
+
+  if (fetchStoryHtml === undefined) {
+    showError({
+      title: `Expecting fetchStoryHtml to be configured for @storybook/server.`,
+      description: dedent`
+        Did you forget to pass a fetchStoryHtml function to configure?
+        Use "configure(() => stories, module, { fetchStoryHtml: yourFetchHtmlFunction });".
+      `,
+    });
+    return;
+  }
+
+  const fetchId = storyId || id;
+  const element = await fetchStoryHtml(url, fetchId, params);
 
   showMain();
   if (typeof element === 'string') {

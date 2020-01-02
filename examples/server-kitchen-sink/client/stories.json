@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Demo Examples",
+    "decorators": ["a11y", "knobs"],
+    "parameters": {
+      "options": { "selectedPanel": "storybook/a11y/panel" },
+      "backgrounds": [
+        { "name": "light", "value": "#eeeeee" },
+        { "name": "dark", "value": "#222222", "default": true }
+      ]
+    },
+    "stories": [
+      {
+        "name": "Heading" 
+      },
+      {
+        "name": "With Knobs",
+        "parameters": {
+          "knobs": [
+            {"name": "name", "type": "text", "default": "John Smith"},
+            {"name": "age", "type": "number", "default": "42"}
+          ]
+        } 
+      },
+      {
+        "name": "Simple note",
+        "parameters": {
+          "notes": "My notes on some bold text"
+        }
+      },
+      {
+        "name": "With Actions",
+        "parameters": {
+          "actions": [
+            { "click": "clicked", "contextmenu": "right clicked" },
+            { "clearOnStoryChange": false }
+          ]
+        } 
+      }
+    ]
+  }
+]

@@ -1,19 +1,37 @@
-import camelcase from 'camelcase';
-import { configure } from '@storybook/server';
+import { configure, addParameters } from '@storybook/server';
 
-import stories from './storybook.stories';
+import * as a11yStories from './stories/addon-a11y.stories';
+import * as actionsStories from './stories/addon-actions.stories';
+import * as backgroundStories from './stories/addon-backgrounds.stories';
+import * as knobsStories from './stories/addon-knobs.stories';
+import * as notesStories from './stories/addon-notes.stories';
+import * as welcomeStories from './stories/welcome.stories';
+import * as demoStories from './stories/demo.stories';
 
 const port = process.env.PORT || 8080;
 
-const fetchHtml = async (id, params) => {
-  const [component, story] = id.split('--').map(s => camelcase(s));
+addParameters({ server: { url: `http://localhost:${port}/storybook_preview` } });
 
-  const url = new URL(`http://localhost:${port}/storybook_preview/${component}/${story}`);
-  url.search = new URLSearchParams(params).toString();
+const fetchHtml = async (url, id, params) => {
+  const fetchUrl = new URL(`${url}/${id}`);
+  fetchUrl.search = new URLSearchParams(params).toString();
 
-  // eslint-disable-next-line no-undef
-  const response = await fetch(url);
+  const response = await fetch(fetchUrl);
   return response.text();
 };
 
-configure(() => stories, module, { fetchStoryHtml: fetchHtml });
+configure(
+  () => [
+    a11yStories,
+    actionsStories,
+    backgroundStories,
+    knobsStories,
+    notesStories,
+    welcomeStories,
+    demoStories,
+  ],
+  module,
+  {
+    fetchStoryHtml: fetchHtml,
+  }
+);
