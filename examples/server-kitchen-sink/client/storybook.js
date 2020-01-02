@@ -6,6 +6,7 @@ import * as backgroundStories from './stories/addon-backgrounds.stories';
 import * as knobsStories from './stories/addon-knobs.stories';
 import * as notesStories from './stories/addon-notes.stories';
 import * as welcomeStories from './stories/welcome.stories';
+import * as paramsStories from './stories/params.stories';
 import * as demoStories from './stories/demo.stories';
 
 const port = process.env.PORT || 8080;
@@ -28,6 +29,7 @@ configure(
     knobsStories,
     notesStories,
     welcomeStories,
+    paramsStories,
     demoStories,
   ],
   module,

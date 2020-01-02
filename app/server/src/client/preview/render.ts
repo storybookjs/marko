@@ -16,10 +16,10 @@ export default async function renderMain({
   forceRender,
   parameters,
 }: RenderMainArgs) {
-  const params = storyFn();
+  const storyParams = storyFn();
 
   const {
-    server: { url, id: storyId },
+    server: { url, id: storyId, params },
   } = parameters;
 
   if (fetchStoryHtml === undefined) {
@@ -34,7 +34,8 @@ export default async function renderMain({
   }
 
   const fetchId = storyId || id;
-  const element = await fetchStoryHtml(url, fetchId, params);
+  const fetchParams = { ...params, ...storyParams };
+  const element = await fetchStoryHtml(url, fetchId, fetchParams);
 
   showMain();
   if (typeof element === 'string') {

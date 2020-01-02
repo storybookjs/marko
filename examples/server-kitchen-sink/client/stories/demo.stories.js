@@ -26,11 +26,3 @@ Button.story = {
     server: { id: 'demo/button' },
   },
 };
-export const Params = () => {
-  return { message: 'Hi World!' };
-};
-Params.story = {
-  parameters: {
-    server: { id: 'demo/params' },
-  },
-};
