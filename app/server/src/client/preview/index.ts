@@ -10,7 +10,7 @@ const framework = 'server';
 
 interface ClientApi extends ClientStoryApi<StoryFnServerReturnType> {
   setAddon(addon: any): void;
-  configure(loader: Loadable, module: NodeModule, options: ConfigureOptionsArgs): void;
+  configure(loader: Loadable, module: NodeModule, options?: ConfigureOptionsArgs): void;
   getStorybook(): IStorybookSection[];
   clearDecorators(): void;
   forceReRender(): void;
@@ -26,7 +26,9 @@ export const storiesOf: ClientApi['storiesOf'] = (kind, m) => {
 };
 
 const setRenderFecthAndConfigure: ClientApi['configure'] = (loader, module, options) => {
-  setFetchStoryHtml(options.fetchStoryHtml);
+  if (options && options.fetchStoryHtml) {
+    setFetchStoryHtml(options.fetchStoryHtml);
+  }
   api.configure(loader, module, framework);
 };
 

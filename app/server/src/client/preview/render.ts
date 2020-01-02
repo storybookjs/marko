@@ -1,10 +1,16 @@
-import { document, Node } from 'global';
+import { document, fetch, Node } from 'global';
 import dedent from 'ts-dedent';
 import { RenderMainArgs, FetchStoryHtmlType } from './types';
 
 const rootElement = document.getElementById('root');
 
-let fetchStoryHtml: FetchStoryHtmlType;
+let fetchStoryHtml: FetchStoryHtmlType = async (url, id, params) => {
+  const fetchUrl = new URL(`${url}/${id}`);
+  fetchUrl.search = new URLSearchParams(params).toString();
+
+  const response = await fetch(fetchUrl);
+  return response.text();
+};
 
 export default async function renderMain({
   storyFn,
@@ -21,17 +27,6 @@ export default async function renderMain({
   const {
     server: { url, id: storyId, params },
   } = parameters;
-
-  if (fetchStoryHtml === undefined) {
-    showError({
-      title: `Expecting fetchStoryHtml to be configured for @storybook/server.`,
-      description: dedent`
-        Did you forget to pass a fetchStoryHtml function to configure?
-        Use "configure(() => stories, module, { fetchStoryHtml: yourFetchHtmlFunction });".
-      `,
-    });
-    return;
-  }
 
   const fetchId = storyId || id;
   const fetchParams = { ...params, ...storyParams };
@@ -60,5 +55,7 @@ export default async function renderMain({
 }
 
 export const setFetchStoryHtml: any = (fetchHtml: FetchStoryHtmlType) => {
-  fetchStoryHtml = fetchHtml;
+  if (fetchHtml !== undefined) {
+    fetchStoryHtml = fetchHtml;
+  }
 };
