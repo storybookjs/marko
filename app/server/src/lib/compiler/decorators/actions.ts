@@ -7,9 +7,13 @@ type Action = string | any;
 function stringifyActionsDecorator(actions: Action[], importName: string): string[] {
   if (!actions || actions.length === 0) return [];
 
-  const actionArgs = actions.map(action => stringifyObject(action, 2)).join(',\n    ');
+  // // const actionArgs = actions.map(action => stringifyObject(action, 3)).join(',\n      ');
 
-  return [`${importName}(${actionArgs})`];
+  // return [`${importName}(\n      ${actionArgs}\n    )`];
+
+  const actionArgs = stringifyObject(actions, 2, true);
+
+  return [`${importName}(\n      ${actionArgs}\n    )`];
 }
 
 function actionsStoryDecorator(story: StorybookStory, importName: string): StorybookStory {
@@ -23,7 +27,7 @@ function actionsStoryDecorator(story: StorybookStory, importName: string): Story
   };
 }
 
-export default function actionsDecorator(section: StorybookSection): StorybookSection {
+export function actionsDecorator(section: StorybookSection): StorybookSection {
   const { title, imports, decorators, stories, ...options } = section;
   const { importName, moduleName } = importMeta('actions');
 

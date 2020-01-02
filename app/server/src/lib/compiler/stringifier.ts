@@ -9,8 +9,10 @@ export function stringifyObject(object: any, level = 0, excludeOuterParams = fal
   }
   const indent = '  '.repeat(level);
   if (Array.isArray(object)) {
-    const arrayString: string[] = object.map((item: any) => stringifyObject(item, level + 1));
-    return `[\n${indent}  ${arrayString.join(`,\n${indent}  `)}\n${indent}]`;
+    const arrayStrings: string[] = object.map((item: any) => stringifyObject(item, level + 1));
+    const arrayString = arrayStrings.join(`,\n${indent}  `);
+    if (excludeOuterParams) return arrayString;
+    return `[\n${indent}  ${arrayString}\n${indent}]`;
   }
   if (typeof object === 'object') {
     let objectString = '';
@@ -21,9 +23,8 @@ export function stringifyObject(object: any, level = 0, excludeOuterParams = fal
       });
       objectString = objectStrings.join(',');
     }
-    if (level === 0 && excludeOuterParams) {
-      return objectString;
-    }
+    if (excludeOuterParams) return objectString;
+    if (objectString.length === 0) return '{}';
     return `{${objectString}\n${indent}}`;
   }
 
@@ -34,7 +35,7 @@ export function stringifyImports(imports: Record<string, string[]>): string {
   if (Object.keys(imports).length === 0) return '';
   return Object.entries(imports)
     .map(([module, names]) => `import { ${names.sort().join(', ')} } from '${module}';\n`)
-    .join();
+    .join('');
 }
 
 export function stringifyDecorators(decorators: string[]): string {
@@ -53,7 +54,7 @@ export function stringifyDefault(section: StorybookSection): string {
   return dedent`
   export default {
     title: '${title}',${decoratorsString}${optionsString}
-  }
+  };
   
   `;
 }
@@ -67,13 +68,12 @@ export function stringifyStory(story: StorybookStory): string {
 
   let storyString = '';
   if (decoratorsString.length > 0 || optionsString.length > 0) {
-    storyString = dedent`${storyId}.story = {${decoratorsString}${optionsString}
-      }`;
+    storyString = `${storyId}.story = {${decoratorsString}${optionsString}\n};\n`;
   }
   return `export const ${storyId} = ${storyFn};\n${storyString}`;
 }
 
-export default function stringifySection(section: StorybookSection): string {
+export function stringifySection(section: StorybookSection): string {
   const sectionString = [
     stringifyImports(section.imports),
     stringifyDefault(section),

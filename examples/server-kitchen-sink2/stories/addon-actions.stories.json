@@ -33,7 +33,6 @@
       },
       "actions": [{ "click": "clicked", "contextmenu": "right clicked" }]
     },
-
     {
       "name": "Multiple actions, object + config",
       "parameters": {

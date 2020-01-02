@@ -1,7 +1,7 @@
 import 'jest-specific-snapshot';
 import path from 'path';
 import fs from 'fs-extra';
-import compileCsfModule from '.';
+import { compileCsfModule } from '.';
 
 const inputRegExp = /\.json$/;
 

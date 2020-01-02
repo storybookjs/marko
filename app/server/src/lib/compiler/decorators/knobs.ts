@@ -67,7 +67,7 @@ function knobsStoryDecorator(story: StorybookStory): StorybookStory {
   };
 }
 
-export default function knobsDecorator(section: StorybookSection): StorybookSection {
+export function knobsDecorator(section: StorybookSection): StorybookSection {
   const { title, imports, decorators, stories, ...options } = decorateSimpleAddon(section, 'knobs');
   const { importName, moduleName } = importMeta('knobs');
 

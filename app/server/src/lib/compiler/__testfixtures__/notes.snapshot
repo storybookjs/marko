@@ -4,7 +4,7 @@ exports[`json-to-csf-compiler notes.json 1`] = `
 "
 export default {
   title: 'Addons/Notes',
-}
+};
 
 export const Simple_note = () => {};
 Simple_note.story = {
@@ -15,5 +15,6 @@ Simple_note.story = {
       id: 'addons/notes/story1'
     }
   }
-}"
+};
+"
 `;

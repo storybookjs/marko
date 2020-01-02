@@ -1,4 +1,4 @@
-import compileCsfModule from '../lib/compiler';
+import { compileCsfModule } from '../lib/compiler';
 
 export default (content: string) => {
   return compileCsfModule(JSON.parse(content));

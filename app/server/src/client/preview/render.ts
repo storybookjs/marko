@@ -12,7 +12,7 @@ let fetchStoryHtml: FetchStoryHtmlType = async (url, id, params) => {
   return response.text();
 };
 
-export default async function renderMain({
+export async function renderMain({
   storyFn,
   id,
   selectedKind,
