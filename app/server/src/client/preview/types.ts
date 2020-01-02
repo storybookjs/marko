@@ -19,6 +19,10 @@ export interface ShowErrorArgs {
   description: string;
 }
 
+export interface ConfigureOptionsArgs {
+  fetchStoryHtml: FetchStoryHtmlType;
+}
+
 export interface RenderMainArgs {
   storyFn: () => StoryFn<StoryFnServerReturnType>;
   id: string;
