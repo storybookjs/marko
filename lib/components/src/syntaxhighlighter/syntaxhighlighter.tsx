@@ -4,7 +4,6 @@ import { document, window } from 'global';
 import memoize from 'memoizerific';
 
 import jsx from 'react-syntax-highlighter/dist/cjs/languages/prism/jsx';
-import javascript from 'react-syntax-highlighter/dist/cjs/languages/prism/javascript';
 import bash from 'react-syntax-highlighter/dist/cjs/languages/prism/bash';
 import css from 'react-syntax-highlighter/dist/cjs/languages/prism/css';
 import html from 'react-syntax-highlighter/dist/cjs/languages/prism/markup';
@@ -14,15 +13,19 @@ import typescript from 'react-syntax-highlighter/dist/cjs/languages/prism/typesc
 
 import ReactSyntaxHighlighter from 'react-syntax-highlighter/dist/cjs/prism-light';
 
+import jsExtras from 'refractor/lang/js-extras';
+import cssExtras from 'refractor/lang/css-extras';
+
 import { ActionBar } from '../ActionBar/ActionBar';
 import { ScrollArea } from '../ScrollArea/ScrollArea';
 
 import { formatter } from './formatter';
 
+ReactSyntaxHighlighter.registerLanguage('', jsExtras);
 ReactSyntaxHighlighter.registerLanguage('jsx', jsx);
-ReactSyntaxHighlighter.registerLanguage('javascript', javascript);
 ReactSyntaxHighlighter.registerLanguage('bash', bash);
 ReactSyntaxHighlighter.registerLanguage('css', css);
+ReactSyntaxHighlighter.registerLanguage('', cssExtras);
 ReactSyntaxHighlighter.registerLanguage('html', html);
 ReactSyntaxHighlighter.registerLanguage('markdown', markdown);
 ReactSyntaxHighlighter.registerLanguage('tsx', tsx);
