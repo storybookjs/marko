@@ -1,20 +1,9 @@
 # Server Kitchen Sink
 
-This project demonstrates a standalone server using `@storybook/server`.
+This is a dmmo app to test a standalone server using integration with Storybook using `@storybook/server`.
 
-To run the server:
+Run `yarn install` to sync Storybook module with the source.
 
-```
-yarn start
-```
+Run `yarn start` to start. 
 
-This starts an express server on port `1337`.
-
-To view the stories in the storybook UI:
-
-```
-cd ../official-storybook
-yarn storybook --preview-url=http://localhost:1337/storybook.html
-```
-
-This runs the Storybook dev server, but instead of showing `official-storybook`'s stories, it attaches to the server, lists its stories in the navigation, and shows its stories in the preview iframe.
+This starts an ExpressJS server on port `1337` and Storybook on port `9006`.
