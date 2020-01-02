@@ -32,10 +32,12 @@ const setRenderFecthAndConfigure: ClientApi['configure'] = (loader, module, opti
 };
 
 export const configure: ClientApi['configure'] = setRenderFecthAndConfigure;
-export const { addDecorator } = api.clientApi;
-export const { addParameters } = api.clientApi;
-export const { clearDecorators } = api.clientApi;
-export const { setAddon } = api.clientApi;
-export const { forceReRender } = api;
-export const { getStorybook } = api.clientApi;
-export const { raw } = api.clientApi;
+export const {
+  addDecorator,
+  addParameters,
+  clearDecorators,
+  setAddon,
+  forceReRender,
+  getStorybook,
+  raw,
+} = api.clientApi;

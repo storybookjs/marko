@@ -7,12 +7,7 @@ type Action = string | any;
 function stringifyActionsDecorator(actions: Action[], importName: string): string[] {
   if (!actions || actions.length === 0) return [];
 
-  // // const actionArgs = actions.map(action => stringifyObject(action, 3)).join(',\n      ');
-
-  // return [`${importName}(\n      ${actionArgs}\n    )`];
-
   const actionArgs = stringifyObject(actions, 2, true);
-
   return [`${importName}(\n      ${actionArgs}\n    )`];
 }
 
