@@ -182,7 +182,7 @@ export function applyCRAWebpackConfig(baseConfig: Configuration, configDir: stri
       ...baseConfig.resolve,
       extensions: [...baseConfig.resolve.extensions, ...tsExtensions],
       modules: Array.from(
-        new Set([...baseConfig.resolve.modules, ...craWebpackConfig.resolve.modules])
+        new Set([...baseConfig.resolve.modules, ...(craWebpackConfig.resolve.modules || [])])
       ),
       alias: {
         ...baseConfig.resolve.alias,

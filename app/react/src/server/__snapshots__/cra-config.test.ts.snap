@@ -41,6 +41,7 @@ Object {
   "resolve": Object {
     "alias": Object {
       "baseAlias": "base-alias",
+      "react-native": "react-native-web",
     },
     "extensions": Array [
       ".js",
@@ -109,6 +110,7 @@ Object {
   "resolve": Object {
     "alias": Object {
       "baseAlias": "base-alias",
+      "react-native": "react-native-web",
     },
     "extensions": Array [
       ".js",
