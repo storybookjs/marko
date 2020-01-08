@@ -3,33 +3,27 @@ import { styled } from '@storybook/theming';
 import { document, window } from 'global';
 import memoize from 'memoizerific';
 
-import jsx from 'react-syntax-highlighter/dist/cjs/languages/prism/jsx';
-import bash from 'react-syntax-highlighter/dist/cjs/languages/prism/bash';
-import css from 'react-syntax-highlighter/dist/cjs/languages/prism/css';
-import html from 'react-syntax-highlighter/dist/cjs/languages/prism/markup';
-import markdown from 'react-syntax-highlighter/dist/cjs/languages/prism/markdown';
-import tsx from 'react-syntax-highlighter/dist/cjs/languages/prism/tsx';
-import typescript from 'react-syntax-highlighter/dist/cjs/languages/prism/typescript';
-
+import refractor from 'refractor/core';
 import ReactSyntaxHighlighter from 'react-syntax-highlighter/dist/cjs/prism-light';
-
-import jsExtras from 'refractor/lang/js-extras';
-import cssExtras from 'refractor/lang/css-extras';
 
 import { ActionBar } from '../ActionBar/ActionBar';
 import { ScrollArea } from '../ScrollArea/ScrollArea';
 
 import { formatter } from './formatter';
 
-ReactSyntaxHighlighter.registerLanguage('', jsExtras);
-ReactSyntaxHighlighter.registerLanguage('jsx', jsx);
-ReactSyntaxHighlighter.registerLanguage('bash', bash);
-ReactSyntaxHighlighter.registerLanguage('css', css);
-ReactSyntaxHighlighter.registerLanguage('', cssExtras);
-ReactSyntaxHighlighter.registerLanguage('html', html);
-ReactSyntaxHighlighter.registerLanguage('markdown', markdown);
-ReactSyntaxHighlighter.registerLanguage('tsx', tsx);
-ReactSyntaxHighlighter.registerLanguage('typescript', typescript);
+// refractor.register(require('refractor/lang/css'));
+// refractor.register(require('refractor/lang/css-extras'));
+
+refractor.register(require('refractor/lang/js-extras'));
+refractor.register(require('refractor/lang/jsx'));
+refractor.register(require('refractor/lang/tsx'));
+refractor.register(require('refractor/lang/typescript'));
+refractor.register(require('refractor/lang/jsdoc'));
+refractor.register(require('refractor/lang/json'));
+refractor.register(require('refractor/lang/json5'));
+refractor.register(require('refractor/lang/bash'));
+refractor.register(require('refractor/lang/markup'));
+refractor.register(require('refractor/lang/markdown'));
 
 const themedSyntax = memoize(2)(theme =>
   Object.entries(theme.code || {}).reduce((acc, [key, val]) => ({ ...acc, [`* .${key}`]: val }), {})
