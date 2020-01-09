@@ -10,23 +10,6 @@ export interface ScrollProps {
   [key: string]: any;
 }
 
-const getResizeValue = (horizontal: boolean, vertical: boolean) => {
-  switch (true) {
-    case horizontal && vertical: {
-      return 'both';
-    }
-    case horizontal: {
-      return 'horizontal';
-    }
-    case vertical: {
-      return 'vertical';
-    }
-    default: {
-      return 'none';
-    }
-  }
-};
-
 const Scroll = styled(({ vertical, horizontal, ...rest }: ScrollProps) => (
   <OverlayScrollbarsComponent options={{ scrollbars: { autoHide: 'scroll' } }} {...rest} />
 ))<ScrollProps>(
