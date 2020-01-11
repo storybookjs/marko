@@ -1,3 +1,4 @@
+import { DOCS_MODE } from 'global';
 import { toId, sanitize, parseKind } from '@storybook/csf';
 import deprecate from 'util-deprecate';
 
@@ -130,6 +131,11 @@ const initStoriesApi = ({
 
   const jumpToStory = (direction: Direction) => {
     const { storiesHash, viewMode, storyId } = store.getState();
+
+    if (DOCS_MODE) {
+      jumpToComponent(direction);
+      return;
+    }
 
     // cannot navigate when there's no current selection
     if (!storyId || !storiesHash[storyId]) {
@@ -274,7 +280,7 @@ Did you create a path that uses the separator char accidentally, such as 'Vue <d
             parent,
             depth: index,
             children: [],
-            isComponent: index === original.length - 1,
+            isComponent: false,
             isLeaf: false,
             isRoot: !!root && index === 0,
           };
@@ -306,7 +312,9 @@ Did you create a path that uses the separator char accidentally, such as 'Vue <d
         acc[item.id] = item;
         const { children } = item;
         if (children) {
-          children.forEach(id => addItem(acc, storiesHashOutOfOrder[id]));
+          const childNodes = children.map(id => storiesHashOutOfOrder[id]);
+          acc[item.id].isComponent = childNodes.every(childNode => childNode.isLeaf);
+          childNodes.forEach(childNode => addItem(acc, childNode));
         }
       }
       return acc;

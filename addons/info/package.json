@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-info",
-  "version": "5.3.0-beta.21",
+  "version": "5.3.0-rc.12",
   "description": "A Storybook addon to show additional information for your stories.",
   "keywords": [
     "addon",
@@ -28,13 +28,13 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "5.3.0-beta.21",
-    "@storybook/client-logger": "5.3.0-beta.21",
-    "@storybook/components": "5.3.0-beta.21",
-    "@storybook/theming": "5.3.0-beta.21",
+    "@storybook/addons": "5.3.0-rc.12",
+    "@storybook/client-logger": "5.3.0-rc.12",
+    "@storybook/components": "5.3.0-rc.12",
+    "@storybook/theming": "5.3.0-rc.12",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
-    "marksy": "^7.0.0",
+    "marksy": "^8.0.0",
     "nested-object-assign": "^1.0.3",
     "prop-types": "^15.7.2",
     "react": "^16.8.3",
@@ -52,5 +52,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff"
 }
