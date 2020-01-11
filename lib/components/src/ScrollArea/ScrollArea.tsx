@@ -2,7 +2,7 @@ import React, { Fragment, FunctionComponent } from 'react';
 import { styled, Global } from '@storybook/theming';
 
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
-import { getScrollAreaStyles } from './Styles';
+import { getScrollAreaStyles } from './ScrollAreaStyles';
 
 export interface ScrollProps {
   horizontal?: boolean;
