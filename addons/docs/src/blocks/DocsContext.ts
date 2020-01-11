@@ -1,4 +1,4 @@
-import React from 'react';
+import { Context, createContext } from 'react';
 
 export interface DocsContextProps {
   id?: string;
@@ -6,14 +6,15 @@ export interface DocsContextProps {
   selectedStory?: string;
 
   /**
-   * mdxStoryNameToId is an MDX-compiler-generated mapping of an MDX story's
-   * display name to its storyId. It's used internally by the `<Story>`
-   * doc block.
+   * mdxStoryNameToKey is an MDX-compiler-generated mapping of an MDX story's
+   * display name to its story key for ID generation. It's used internally by the `<Story>`
+   * and `Preview` doc blocks.
    */
-  mdxStoryNameToId?: Record<string, string>;
+  mdxStoryNameToKey?: Record<string, string>;
+  mdxComponentMeta?: any;
   parameters?: any;
   storyStore?: any;
   forceRender?: () => void;
 }
 
-export const DocsContext: React.Context<DocsContextProps> = React.createContext({});
+export const DocsContext: Context<DocsContextProps> = createContext({});

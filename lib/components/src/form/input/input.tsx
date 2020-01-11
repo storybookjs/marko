@@ -1,4 +1,4 @@
-import React, { FunctionComponent, forwardRef, Ref } from 'react';
+import React, { FunctionComponent, forwardRef, HTMLProps, SelectHTMLAttributes } from 'react';
 import { styled, Theme, CSSObject } from '@storybook/theming';
 
 import TextareaAutoResize, { TextareaAutosizeProps } from 'react-textarea-autosize';
@@ -8,7 +8,7 @@ import { Button as StyledButton } from '../../Button/Button';
 const styleResets: CSSObject = {
   // resets
   appearance: 'none',
-  border: '0',
+  border: '0 none',
   boxSizing: 'inherit',
   display: ' block',
   margin: ' 0',
@@ -102,7 +102,7 @@ const validation = ({ valid, theme }: { valid: ValidationStates; theme: Theme })
   }
 };
 
-type InputProps = Omit<React.HTMLProps<HTMLInputElement>, keyof InputStyleProps> & InputStyleProps;
+type InputProps = Omit<HTMLProps<HTMLInputElement>, keyof InputStyleProps> & InputStyleProps;
 export const Input = Object.assign(
   styled(
     forwardRef<any, InputProps>(({ size, valid, align, ...props }, ref) => (
@@ -120,7 +120,7 @@ export const Input = Object.assign(
 // (Input).sizes = sizes;
 // (Input).alignment = alignment;
 
-type SelectProps = Omit<React.SelectHTMLAttributes<HTMLSelectElement>, keyof InputStyleProps> &
+type SelectProps = Omit<SelectHTMLAttributes<HTMLSelectElement>, keyof InputStyleProps> &
   InputStyleProps;
 export const Select = Object.assign(
   styled(

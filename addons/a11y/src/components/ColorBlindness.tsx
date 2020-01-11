@@ -1,5 +1,5 @@
 import { document } from 'global';
-import React, { ReactNode, useState } from 'react';
+import React, { FunctionComponent, ReactNode, useState } from 'react';
 import memoize from 'memoizerific';
 import { styled } from '@storybook/theming';
 
@@ -79,7 +79,7 @@ const getColorList = (active: string | null, set: (i: string | null) => void): L
   })),
 ];
 
-export const ColorBlindness: React.FC = () => {
+export const ColorBlindness: FunctionComponent = () => {
   const [active, setActiveState] = useState(null);
 
   const setActive = (activeState: string | null): void => {
@@ -87,9 +87,7 @@ export const ColorBlindness: React.FC = () => {
 
     if (iframe) {
       iframe.style.filter = getFilter(activeState);
-      setActiveState({
-        active: activeState,
-      });
+      setActiveState(activeState);
     } else {
       logger.error('Cannot find Storybook iframe');
     }

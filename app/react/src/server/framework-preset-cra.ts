@@ -6,28 +6,34 @@ import { applyCRAWebpackConfig, getReactScriptsPath, isReactScriptsInstalled } f
 type Preset = string | { name: string };
 
 // Disable the built-in preset if the new preset is detected.
-const checkForNewPreset = (configDir: string) => {
-  try {
-    // eslint-disable-next-line global-require, import/no-dynamic-require
-    const presets = require(path.resolve(configDir, 'presets.js'));
+const checkForNewPreset = (presetsList: Preset[]) => {
+  const hasNewPreset = presetsList.some((preset: Preset) => {
+    const presetName = typeof preset === 'string' ? preset : preset.name;
+    return presetName === '@storybook/preset-create-react-app';
+  });
 
-    const hasNewPreset = presets.some((preset: Preset) => {
-      const presetName = typeof preset === 'string' ? preset : preset.name;
-      return presetName === '@storybook/preset-create-react-app';
-    });
-
-    return hasNewPreset;
-  } catch (e) {
+  if (!hasNewPreset) {
+    logger.warn('Storybook support for Create React App is now a separate preset.');
+    logger.warn(
+      'To get started with the new preset, simply add `@storybook/preset-create-react-app` to your project.'
+    );
+    logger.warn('The built-in preset will be disabled in Storybook 6.0.');
     return false;
   }
+
+  return true;
 };
 
-export function webpackFinal(config: Configuration, { configDir }: { configDir: string }) {
-  if (checkForNewPreset(configDir)) {
-    return config;
-  }
+export function webpackFinal(
+  config: Configuration,
+  { presetsList, configDir }: { presetsList: Preset[]; configDir: string }
+) {
   if (!isReactScriptsInstalled()) {
     logger.info('=> Using base config because react-scripts is not installed.');
+    return config;
+  }
+
+  if (checkForNewPreset(presetsList)) {
     return config;
   }
 
@@ -35,8 +41,8 @@ export function webpackFinal(config: Configuration, { configDir }: { configDir: 
   return applyCRAWebpackConfig(config, configDir);
 }
 
-export function managerWebpack(config: Configuration, { configDir }: { configDir: string }) {
-  if (!isReactScriptsInstalled() || checkForNewPreset(configDir)) {
+export function managerWebpack(config: Configuration, { presetsList }: { presetsList: Preset[] }) {
+  if (!isReactScriptsInstalled() || checkForNewPreset(presetsList)) {
     return config;
   }
 
@@ -48,8 +54,8 @@ export function managerWebpack(config: Configuration, { configDir }: { configDir
   };
 }
 
-export function babelDefault(config: Configuration, { configDir }: { configDir: string }) {
-  if (!isReactScriptsInstalled() || checkForNewPreset(configDir)) {
+export function babelDefault(config: Configuration, { presetsList }: { presetsList: Preset[] }) {
+  if (!isReactScriptsInstalled() || checkForNewPreset(presetsList)) {
     return config;
   }
 

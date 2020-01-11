@@ -2,9 +2,9 @@ import React from 'react';
 import { Button } from '@storybook/react/demo';
 
 export default {
-  title: 'Addons|Docs/csf-with-mdx-docs',
+  title: 'Addons/Docs/csf-with-mdx-docs',
   component: Button,
-  includeStories: [], // or simply don't load this file at all
+  includeStories: [], // or don't load this file at all
 };
 
 // eslint-disable-next-line react/prop-types

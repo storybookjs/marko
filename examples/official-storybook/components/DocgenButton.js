@@ -1,8 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-/** DocgenButton component description imported from comments inside the component file */
-const DocgenButton = ({ disabled, label, onClick }) => (
+/**
+ * DocgenButton component description imported from comments inside the component file,
+ *
+ * *Important Note*: Unlike with normal `<input>` elements, setting this will
+ * not validate the input contents. This is because in this project we use
+ * Formik and Yup to validate fields at the form-level, not at the individual
+ * input level. It is still very important to set this value properly for
+ * accessibility and user experience.
+ *
+ * Here's a list to test out formatting.
+ *
+ *  * `"number"` Any number not represented by a more specific type.
+ *  * `"password"` A password.
+ *  * `"email"` An email address.
+ *  * `"tel"` A phone or fax number. Shows the phone number keypad on
+ *      mobile keyboards.
+ */
+export const DocgenButton = ({ disabled, label, onClick }) => (
   <button type="button" disabled={disabled} onClick={onClick}>
     {label}
   </button>
@@ -131,6 +147,11 @@ DocgenButton.propTypes = {
   msg: PropTypes.instanceOf(Set),
   /**
    * `oneOf` is basically an Enum which is also supported but can be pretty big.
+   *
+   * Testing a list:
+   *
+   *  - `News` first
+   *  - `Photos` second
    */
   enm: PropTypes.oneOf(['News', 'Photos']),
   enmEval: PropTypes.oneOf((() => ['News', 'Photos'])()),
@@ -145,5 +166,3 @@ DocgenButton.propTypes = {
    */
   optionalString: PropTypes.string,
 };
-
-export default DocgenButton;

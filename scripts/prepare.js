@@ -19,7 +19,14 @@ function removeDist() {
   shell.rm('-rf', 'dist');
 }
 
-const ignore = ['__mocks__', '__snapshots__', '__tests__', '/tests/', /.+\.test\..+/];
+const ignore = [
+  '__mocks__',
+  '__snapshots__',
+  '__testfixtures__',
+  '__tests__',
+  '/tests/',
+  /.+\.test\..+/,
+];
 
 function cleanup() {
   // remove files after babel --copy-files output
@@ -27,6 +34,10 @@ function cleanup() {
   // https://github.com/babel/babel/issues/6226
   if (fs.existsSync(path.join(process.cwd(), 'dist'))) {
     const files = shell.find('dist').filter(filePath => {
+      // Remove all copied TS files (but not the .d.ts)
+      if (/\.tsx?$/.test(filePath) && !/\.d\.ts$/.test(filePath)) {
+        return true;
+      }
       if (fs.lstatSync(filePath).isDirectory()) {
         return false;
       }
