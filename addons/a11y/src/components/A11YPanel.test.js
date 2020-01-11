@@ -190,7 +190,7 @@ describe('A11YPanel', () => {
     onUpdate(axeResult);
 
     // then
-    expect(wrapper.find(A11YPanel)).toMatchSnapshot();
+    expect(wrapper.find(A11YPanel).html()).toMatchSnapshot();
   });
 
   it("should render loader when it's running", () => {
@@ -207,7 +207,7 @@ describe('A11YPanel', () => {
     expect(wrapper.find('ScrollArea').length).toBe(0);
     expect(wrapper.find('Loader').length).toBe(1);
     expect(wrapper.find('ActionBar').length).toBe(1);
-    expect(wrapper.find('Loader')).toMatchSnapshot();
+    expect(wrapper.find('Loader').html()).toMatchSnapshot();
   });
 
   it('should NOT anything when tab is not active', () => {

@@ -85,7 +85,7 @@ describe('addon Info', () => {
     const MemoizedTestComponent = React.memo(TestComponent);
     const Info = withInfo()(createStoryFn(MemoizedTestComponent));
 
-    expect(mount(<Info />)).toMatchSnapshot();
+    expect(mount(<Info />).html()).toMatchSnapshot();
   });
 
   it('should render component description if story kind matches component', () => {
@@ -98,7 +98,7 @@ describe('addon Info', () => {
         name: 'Basic test',
       });
 
-    expect(mount(<Info />)).toMatchSnapshot();
+    expect(mount(<Info />).html()).toMatchSnapshot();
 
     Object.assign(global.STORYBOOK_REACT_CLASSES, { [reactClassPath]: previousReactClassesValue });
   });
@@ -113,7 +113,7 @@ describe('addon Info', () => {
         name: 'TestComponent',
       });
 
-    expect(mount(<Info />)).toMatchSnapshot();
+    expect(mount(<Info />).html()).toMatchSnapshot();
 
     Object.assign(global.STORYBOOK_REACT_CLASSES, { [reactClassPath]: previousReactClassesValue });
   });
