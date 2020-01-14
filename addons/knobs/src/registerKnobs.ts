@@ -22,7 +22,9 @@ function setPaneKnobs(timestamp: boolean | number = +new Date()) {
 
 const resetAndForceUpdate = () => {
   knobStore.markAllUnused();
-  forceReRender();
+  if (!manager.options.disableForceUpdate) {
+    forceReRender();
+  }
 };
 
 // Increase performance by reducing how frequently the story is recreated during knob changes
