@@ -54,47 +54,43 @@ function genStoryExport(ast, context) {
 
   const bodyNodes = ast.children.filter(n => n.type !== 'JSXText');
   let storyCode = null;
-
+  let storyVal = null;
   if (!bodyNodes.length) {
     // plain text node
     const { code } = generate(ast.children[0], {});
     storyCode = `'${code}'`;
+    storyVal = `() => (
+      ${storyCode}
+    )`;
   } else {
-    const bodyPartsStr = bodyNodes.map(body => {
-      let code;
-      if (body.type === 'JSXExpressionContainer') {
-        // FIXME: handle fragments
-        ({ code } = generate(body.expression, {}));
-      } else {
-        ({ code } = generate(body, {}));
-      }
-      return code;
+    const bodyParts = bodyNodes.map(bodyNode => {
+      const body = bodyNode.type === 'JSXExpressionContainer' ? bodyNode.expression : bodyNode;
+      const { code } = generate(body, {});
+      return { code, body };
     });
     // if we have more than two children
     // 1. Enclose in <> ... </>
-    // 2. Add indentation of 2 spaces
-    // 3. Add line breaks
+    // 2. Add line breaks
     storyCode =
-      bodyPartsStr.length > 1
-        ? '<>\n'.concat(bodyPartsStr.map(part => `  ${part}`).join('\n'), '\n</>')
-        : bodyPartsStr[0];
-  }
-
-  let storyVal = null;
-  switch (bodyNodes.length === 1 && bodyNodes[0].type) {
-    // We don't know what type the identifier is, but this code
-    // assumes it's a function from CSF. Let's see who complains!
-    case 'Identifier':
-      storyVal = `assertIsFn(${storyCode})`;
-      break;
-    case 'ArrowFunctionExpression':
-      storyVal = `(${storyCode})`;
-      break;
-    default:
-      storyVal = `() => (
-        ${storyCode}
-      )`;
-      break;
+      bodyParts.length > 1 ? bodyParts.map(({ code }) => code).join('\n') : bodyParts[0].code;
+    const storyReactCode = bodyParts.length > 1 ? `<>\n${storyCode}\n</>` : storyCode;
+    // keep track if an indentifier or function call
+    // avoid breaking change for 5.3
+    switch (bodyParts.length === 1 && bodyParts[0].body.type) {
+      // We don't know what type the identifier is, but this code
+      // assumes it's a function from CSF. Let's see who complains!
+      case 'Identifier':
+        storyVal = `assertIsFn(${storyCode})`;
+        break;
+      case 'ArrowFunctionExpression':
+        storyVal = `(${storyCode})`;
+        break;
+      default:
+        storyVal = `() => (
+          ${storyReactCode}
+        )`;
+        break;
+    }
   }
 
   statements.push(`export const ${storyKey} = ${storyVal};`);
