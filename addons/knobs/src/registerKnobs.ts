@@ -22,9 +22,7 @@ function setPaneKnobs(timestamp: boolean | number = +new Date()) {
 
 const resetAndForceUpdate = () => {
   knobStore.markAllUnused();
-  if (!manager.options.disableForceUpdate) {
-    forceReRender();
-  }
+  forceReRender();
 };
 
 // Increase performance by reducing how frequently the story is recreated during knob changes
@@ -39,10 +37,12 @@ function knobChanged(change: KnobStoreKnob) {
   const knobOptions = knobStore.get(name);
   knobOptions.value = value;
 
-  if (!manager.options.disableDebounce) {
-    debouncedResetAndForceUpdate();
-  } else {
-    resetAndForceUpdate();
+  if (!manager.options.disableForceUpdate && !knobOptions.disableForceUpdate) {
+    if (!manager.options.disableDebounce && !knobOptions.disableDebounce) {
+      debouncedResetAndForceUpdate();
+    } else {
+      resetAndForceUpdate();
+    }
   }
 }
 
