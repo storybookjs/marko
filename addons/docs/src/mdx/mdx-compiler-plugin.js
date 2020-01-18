@@ -69,10 +69,9 @@ function genStoryExport(ast, context) {
       return { code, body };
     });
     // if we have more than two children
-    // 1. Enclose in <> ... </>
-    // 2. Add line breaks
-    storyCode =
-      bodyParts.length > 1 ? bodyParts.map(({ code }) => code).join('\n') : bodyParts[0].code;
+    // 1. Add line breaks
+    // 2. Enclose in <> ... </>
+    storyCode = bodyParts.map(({ code }) => code).join('\n');
     const storyReactCode = bodyParts.length > 1 ? `<>\n${storyCode}\n</>` : storyCode;
     // keep track if an indentifier or function call
     // avoid breaking change for 5.3
