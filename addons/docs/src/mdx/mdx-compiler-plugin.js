@@ -52,24 +52,36 @@ function genStoryExport(ast, context) {
   const statements = [];
   const storyKey = getStoryKey(storyName, context.counter);
 
-  let body = ast.children.find(n => n.type !== 'JSXText');
+  const bodyNodes = ast.children.filter(n => n.type !== 'JSXText');
   let storyCode = null;
 
-  if (!body) {
+  if (!bodyNodes.length) {
     // plain text node
     const { code } = generate(ast.children[0], {});
     storyCode = `'${code}'`;
   } else {
-    if (body.type === 'JSXExpressionContainer') {
-      // FIXME: handle fragments
-      body = body.expression;
-    }
-    const { code } = generate(body, {});
-    storyCode = code;
+    const bodyPartsStr = bodyNodes.map(body => {
+      let code;
+      if (body.type === 'JSXExpressionContainer') {
+        // FIXME: handle fragments
+        ({ code } = generate(body.expression, {}));
+      } else {
+        ({ code } = generate(body, {}));
+      }
+      return code;
+    });
+    // if we have more than two children
+    // 1. Enclose in <> ... </>
+    // 2. Add indentation of 2 spaces
+    // 3. Add line breaks
+    storyCode =
+      bodyPartsStr.length > 1
+        ? '<>\n'.concat(bodyPartsStr.map(part => `  ${part}`).join('\n'), '\n</>')
+        : bodyPartsStr[0];
   }
 
   let storyVal = null;
-  switch (body && body.type) {
+  switch (bodyNodes.length === 1 && bodyNodes[0].type) {
     // We don't know what type the identifier is, but this code
     // assumes it's a function from CSF. Let's see who complains!
     case 'Identifier':
