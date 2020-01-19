@@ -13,6 +13,10 @@ If it failed because it couldn't detect you're using react-native, you could try
 ```sh
 npx -p @storybook/cli sb init --type react_native
 ```
+#if you have an issue with this command you can try to install using npm instead:
+```sh
+npx -p @storybook/cli sb init --use-npm --type react_native
+```
 
 ## Manual setup
 
