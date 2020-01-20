@@ -82,13 +82,14 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
           storySource: { source, locationsMap } = { source: '', locationsMap: {} },
         } = {},
       } = story;
-      const currentLocation =
-        locationsMap[
-          Object.keys(locationsMap).find((key: string) => {
-            const sourceLoaderId = key.split('--');
-            return story.id.endsWith(sourceLoaderId[sourceLoaderId.length - 1]);
-          })
-        ];
+      const currentLocation = locationsMap
+        ? locationsMap[
+            Object.keys(locationsMap).find((key: string) => {
+              const sourceLoaderId = key.split('--');
+              return story.id.endsWith(sourceLoaderId[sourceLoaderId.length - 1]);
+            })
+          ]
+        : undefined;
       setState({ source: source || mdxSource, locationsMap, currentLocation });
     }
   }, [story ? story.id : null]);

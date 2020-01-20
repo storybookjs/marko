@@ -35,6 +35,9 @@ interface StorySource {
 }
 
 const extract = (targetId: string, { source, locationsMap }: StorySource) => {
+  if (!locationsMap) {
+    return source;
+  }
   const location = locationsMap[targetId];
   // FIXME: bad locationsMap generated for module export functions whose titles are overridden
   if (!location) return null;
