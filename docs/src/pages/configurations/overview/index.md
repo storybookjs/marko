@@ -40,3 +40,23 @@ There are 2 extra config files, for doing some special runtime configs for each 
 In `preview.js` you can add global [decorators](../../basics/writing-stories/#decorators) and [parameters](../../basics/writing-stories/#parameters):
 
 In `manager.js` you can add [UI options](/docs/configurations/options-parameter/#global-options).
+
+## entire main.js config
+
+The `main.js` file is actually a preset! so if you know how to configure storybook, you know how to write a preset, and vice-versa!
+So the API of `main.js` is equal to [that of presets](/docs/presets/writing-presets/#presets-api).
+
+Here's an overview of the important configuration properties in `main.js`:
+
+```js
+module.exports = {
+  // and array of glob patterns
+  stories: ['../src/components/**/*.stories.js'],
+
+  // an array of addons & presets
+  addons: ['@storybook/addon-essentials'],
+
+  // customize the webpack config for the preview application
+  webpackFinal: async (config) => { return config },
+};
+```
