@@ -1,6 +1,7 @@
 import { StoryFn } from '@storybook/addons';
+import { TemplateResult, SVGTemplateResult } from 'lit-element';
 
-export type StoryFnHtmlReturnType = string | Node;
+export type StoryFnHtmlReturnType = string | Node | TemplateResult | SVGTemplateResult;
 
 export interface IStorybookStory {
   name: string;
