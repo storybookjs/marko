@@ -40,12 +40,15 @@ const extract = (targetId: string, { source, locationsMap }: StorySource) => {
   if (!location) return null;
   const { startBody: start, endBody: end } = location;
   const lines = source.split('\n');
-  if (start.line === end.line) {
+  if (start.line === end.line && lines[start.line - 1] !== undefined) {
     return lines[start.line - 1].substring(start.col, end.col);
   }
   // NOTE: storysource locations are 1-based not 0-based!
   const startLine = lines[start.line - 1];
   const endLine = lines[end.line - 1];
+  if (startLine === undefined || endLine === undefined) {
+    return source;
+  }
   return [
     startLine.substring(start.col),
     ...lines.slice(start.line, end.line - 1),
