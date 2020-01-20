@@ -3,7 +3,11 @@ export { Badge } from './Badge/Badge';
 // Typography
 export { Link } from './typography/link/link';
 export { DocumentWrapper } from './typography/DocumentWrapper';
-export { SyntaxHighlighter } from './syntaxhighlighter/syntaxhighlighter';
+export {
+  SyntaxHighlighter,
+  SyntaxHighlighterProps,
+  SyntaxHighlighterRendererProps,
+} from './syntaxhighlighter/syntaxhighlighter';
 
 // UI
 export { ActionBar } from './ActionBar/ActionBar';

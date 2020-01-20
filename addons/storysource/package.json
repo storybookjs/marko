@@ -24,15 +24,19 @@
     "*.d.ts"
   ],
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
     "@storybook/addons": "5.3.5",
+    "@storybook/api": "5.3.5",
     "@storybook/components": "5.3.5",
+    "@storybook/core-events": "5.3.5",
     "@storybook/router": "5.3.5",
     "@storybook/source-loader": "5.3.5",
     "@storybook/theming": "5.3.5",
+    "@types/react-syntax-highlighter": "11.0.2",
     "core-js": "^3.0.1",
     "estraverse": "^4.2.0",
     "loader-utils": "^1.2.3",
@@ -41,6 +45,9 @@
     "react-syntax-highlighter": "^11.0.2",
     "regenerator-runtime": "^0.13.3",
     "util-deprecate": "^1.0.2"
+  },
+  "devDependencies": {
+    "@types/react-syntax-highlighter": "^11.0.4"
   },
   "peerDependencies": {
     "@storybook/source-loader": "*",

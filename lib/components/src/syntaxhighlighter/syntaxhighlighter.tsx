@@ -82,6 +82,11 @@ const Code = styled.code({
   opacity: 1,
 });
 
+export interface SyntaxHighlighterRendererProps {
+  rows: any[];
+  stylesheet: string;
+  useInlineStyles: boolean;
+}
 export interface SyntaxHighlighterProps {
   language: string;
   copyable?: boolean;
@@ -89,6 +94,7 @@ export interface SyntaxHighlighterProps {
   padded?: boolean;
   format?: boolean;
   className?: string;
+  renderer?: (props: SyntaxHighlighterRendererProps) => React.ReactNode;
 }
 
 export interface SyntaxHighlighterState {
