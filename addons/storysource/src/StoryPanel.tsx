@@ -49,12 +49,6 @@ const areLocationsEqual = (a: SourceBlock, b: SourceBlock): boolean =>
 interface LocationsMap {
   [key: string]: SourceBlock;
 }
-const getLocationKeys = (locationsMap: LocationsMap) =>
-  locationsMap
-    ? Array.from(Object.keys(locationsMap)).sort(
-        (key1, key2) => locationsMap[key1].startLoc.line - locationsMap[key2].startLoc.line
-      )
-    : [];
 
 interface StoryPanelProps {
   api: API;
