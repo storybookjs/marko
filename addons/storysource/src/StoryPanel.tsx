@@ -21,12 +21,10 @@ const StyledStoryLink = styled(Link)<{ to: string; key: string }>(({ theme }) =>
   },
 }));
 
-const SelectedStoryHighlight = styled.div<{ ref: React.RefObject<HTMLDivElement>; key: string }>(
-  ({ theme }) => ({
-    background: theme.background.hoverable,
-    borderRadius: theme.appBorderRadius,
-  })
-);
+const SelectedStoryHighlight = styled.div(({ theme }) => ({
+  background: theme.background.hoverable,
+  borderRadius: theme.appBorderRadius,
+}));
 
 const StyledSyntaxHighlighter = styled(SyntaxHighlighter)<SyntaxHighlighterProps>(({ theme }) => ({
   fontSize: theme.typography.size.s2 - 1,
@@ -71,6 +69,7 @@ export interface StoryData {
   kind?: string;
   parameters?: {
     storySource?: SourceParams;
+    mdxSource?: string;
   };
 }
 export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
@@ -80,11 +79,12 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
   });
 
   const story: StoryData | undefined = api.getCurrentStoryData();
-  const selectedStoryRef = React.useRef<HTMLDivElement>();
+  const selectedStoryRef = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     if (story) {
       const {
         parameters: {
+          mdxSource = '',
           storySource: { source, locationsMap } = { source: '', locationsMap: {} },
         } = {},
       } = story;
@@ -95,7 +95,7 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
             return story.id.endsWith(sourceLoaderId[sourceLoaderId.length - 1]);
           })
         ];
-      setState({ source, locationsMap, currentLocation });
+      setState({ source: source || mdxSource, locationsMap, currentLocation });
     }
   }, [story ? story.id : null]);
   React.useEffect(() => {
@@ -122,7 +122,7 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
     useInlineStyles,
     location,
     id,
-  }: SyntaxHighlighterRendererProps & { location: SourceBlock; id: string }): React.ReactNode => {
+  }: SyntaxHighlighterRendererProps & { location: SourceBlock; id: string }) => {
     const first = location.startLoc.line - 1;
     const last = location.endLoc.line;
 
