@@ -45,7 +45,11 @@ const getPreviewFile = (configDir: string): string | false => {
 
 const getMainFile = (configDir: string): string | false => {
   const main = path.join(configDir, 'main.js');
+  const mainTS = path.join(configDir, 'main.ts');
 
+  if (isFile(mainTS)) {
+    return mainTS;
+  }
   if (isFile(main)) {
     return main;
   }
