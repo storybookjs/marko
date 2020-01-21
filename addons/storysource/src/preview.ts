@@ -1,6 +1,7 @@
+import { logger } from '@storybook/client-logger';
+
 export function withStorySource(source: string, locationsMap = {}) {
-  // eslint-disable-next-line no-console
-  console.error(
+  logger.error(
     '@storybook/addon-storysource/withStorySource is deprecated, please use paramaters instead.'
   );
 

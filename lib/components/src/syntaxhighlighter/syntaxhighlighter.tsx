@@ -11,11 +11,14 @@ import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
 import typescript from 'react-syntax-highlighter/dist/esm/languages/prism/typescript';
 
 import { PrismLight as ReactSyntaxHighlighter } from 'react-syntax-highlighter';
-
+// @ts-ignore
+import createElement from 'react-syntax-highlighter/dist/esm/create-element';
 import { ActionBar } from '../ActionBar/ActionBar';
 import { ScrollArea } from '../ScrollArea/ScrollArea';
 
 import { formatter } from './formatter';
+
+export { createElement as createSyntaxHighlighterElement };
 
 ReactSyntaxHighlighter.registerLanguage('jsx', jsx);
 ReactSyntaxHighlighter.registerLanguage('bash', bash);

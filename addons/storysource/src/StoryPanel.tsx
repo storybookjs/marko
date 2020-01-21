@@ -6,9 +6,10 @@ import {
   SyntaxHighlighter,
   SyntaxHighlighterProps,
   SyntaxHighlighterRendererProps,
+  createSyntaxHighlighterElement,
 } from '@storybook/components';
 
-import createElement from 'react-syntax-highlighter/dist/esm/create-element';
+import { SourceBlock, LocationsMap } from '@storybook/source-loader';
 
 const StyledStoryLink = styled(Link)<{ to: string; key: string }>(({ theme }) => ({
   display: 'block',
@@ -30,25 +31,11 @@ const StyledSyntaxHighlighter = styled(SyntaxHighlighter)<SyntaxHighlighterProps
   fontSize: theme.typography.size.s2 - 1,
 }));
 
-interface SourceLoc {
-  line: number;
-  col: number;
-}
-
-interface SourceBlock {
-  startLoc: SourceLoc;
-  endLoc: SourceLoc;
-}
-
 const areLocationsEqual = (a: SourceBlock, b: SourceBlock): boolean =>
   a.startLoc.line === b.startLoc.line &&
   a.startLoc.col === b.startLoc.col &&
   a.endLoc.line === b.endLoc.line &&
   a.endLoc.col === b.endLoc.col;
-
-interface LocationsMap {
-  [key: string]: SourceBlock;
-}
 
 interface StoryPanelProps {
   api: API;
@@ -103,7 +90,7 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
 
   const createPart = ({ rows, stylesheet, useInlineStyles }: SyntaxHighlighterRendererProps) =>
     rows.map((node, i) =>
-      createElement({
+      createSyntaxHighlighterElement({
         node,
         stylesheet,
         useInlineStyles,

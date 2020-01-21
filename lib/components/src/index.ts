@@ -7,6 +7,7 @@ export {
   SyntaxHighlighter,
   SyntaxHighlighterProps,
   SyntaxHighlighterRendererProps,
+  createSyntaxHighlighterElement,
 } from './syntaxhighlighter/syntaxhighlighter';
 
 // UI
