@@ -9,7 +9,12 @@ interface ButtonProps {
   /**
    * Is primary?
    */
-  primary: boolean;
+  primary?: boolean;
+
+  /**
+   * default is false
+   */
+  secondary: boolean;
 }
 
 /**
@@ -23,4 +28,5 @@ export const Button: FC<ButtonProps> = ({ children, onClick }) => (
 
 Button.defaultProps = {
   primary: true,
+  secondary: false,
 };
