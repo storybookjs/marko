@@ -1,3 +1,59 @@
+## 6.0.0-alpha.0 (January 21, 2020)
+
+### Features
+
+* API: Add useSharedState, useStoryState ([#9566](https://github.com/storybookjs/storybook/pull/9566))
+* Addon-docs: Named colors with ColorPalette ([#9453](https://github.com/storybookjs/storybook/pull/9453))
+* Core: Add preview layouts ([#9229](https://github.com/storybookjs/storybook/pull/9229))
+* Marionette: Add marionette support ([#7981](https://github.com/storybookjs/storybook/pull/7981))
+* Addon-a11y: Support manual run ([#8883](https://github.com/storybookjs/storybook/pull/8883))
+* Addon-cssresources: Disable SyntaxHighlighter for long code ([#9360](https://github.com/storybookjs/storybook/pull/9360))
+* Core: Improve monorepo support ([#8822](https://github.com/storybookjs/storybook/pull/8822))
+
+### Bug Fixes
+
+* Addon-docs: Fix TS false default value in prop table ([#9560](https://github.com/storybookjs/storybook/pull/9560))
+* Addon-docs: Remove hard-coded lineHeight in Typeset block ([#9567](https://github.com/storybookjs/storybook/pull/9567))
+* Fixed Angular button example story ([#9540](https://github.com/storybookjs/storybook/pull/9540))
+* Core: Fix generated entry to import at top of file ([#9398](https://github.com/storybookjs/storybook/pull/9398))
+* Preact: Fix story function typescript type ([#9123](https://github.com/storybookjs/storybook/pull/9123))
+* UI: Make canvas link a link ([#9257](https://github.com/storybookjs/storybook/pull/9257))
+
+### Maintenance
+
+* Build: the build-storybooks script ([#9569](https://github.com/storybookjs/storybook/pull/9569))
+* CLI: Improve Rax template ([#9574](https://github.com/storybookjs/storybook/pull/9574))
+* Typescript: Migrate polymer ([#9565](https://github.com/storybookjs/storybook/pull/9565))
+* Typescript: Migrate ember ([#9020](https://github.com/storybookjs/storybook/pull/9020))
+* Next 6.0.0 ([#9212](https://github.com/storybookjs/storybook/pull/9212))
+* REMOVE subscription_store ([#9228](https://github.com/storybookjs/storybook/pull/9228))
+
+### Dependency Upgrades
+
+* Update husky to v4 ([#9509](https://github.com/storybookjs/storybook/pull/9509))
+* Bumped react-dev-utils dependency to v10. ([#9579](https://github.com/storybookjs/storybook/pull/9579))
+* Bump babel-plugin-macros from 2.7.1 to 2.8.0 ([#9236](https://github.com/storybookjs/storybook/pull/9236))
+* Bump babel-plugin-emotion from 10.0.23 to 10.0.27 ([#9239](https://github.com/storybookjs/storybook/pull/9239))
+* Bump @babel/runtime from 7.7.4 to 7.7.7 ([#9277](https://github.com/storybookjs/storybook/pull/9277))
+* Bump corejs-upgrade-webpack-plugin from 2.2.0 to 3.0.1 ([#9427](https://github.com/storybookjs/storybook/pull/9427))
+* Bump terser-webpack-plugin from 2.2.1 to 2.3.2 ([#9386](https://github.com/storybookjs/storybook/pull/9386))
+
+## 5.3.7 (January 20, 2020)
+
+### Bug Fixes
+
+* Node-logger: Move `@types/npmlog` to dependencies  ([#9538](https://github.com/storybookjs/storybook/pull/9538))
+* Core: Fix legacy story URLs ([#9545](https://github.com/storybookjs/storybook/pull/9545))
+* Addon-docs: Convert default prop value to string ([#9525](https://github.com/storybookjs/storybook/pull/9525))
+* Addon-docs: Preserve Source indentation by default ([#9513](https://github.com/storybookjs/storybook/pull/9513))
+
+## 5.3.6 (January 17, 2020)
+
+### Bug Fixes
+
+* Source-loader: Bypass if file has no exports ([#9505](https://github.com/storybookjs/storybook/pull/9505))
+* Core: Fix default sorting of docs-only stories ([#9504](https://github.com/storybookjs/storybook/pull/9504))
+
 ## 5.3.5 (January 17, 2020)
 
 ### Bug Fixes

@@ -8,7 +8,7 @@ import stable from 'stable';
 import { Channel } from '@storybook/channels';
 import Events from '@storybook/core-events';
 import { logger } from '@storybook/client-logger';
-import { StoryFn, Parameters } from '@storybook/addons';
+import { Comparator, Parameters, StoryFn } from '@storybook/addons';
 import {
   DecoratorFunction,
   LegacyData,
@@ -19,6 +19,7 @@ import {
   ErrorLike,
 } from './types';
 import { HooksContext } from './hooks';
+import storySort from './storySort';
 
 // TODO: these are copies from components/nav/lib
 // refactor to DRY
@@ -134,7 +135,13 @@ export default class StoryStore extends EventEmitter {
           !!(this._data[key] && this._data[key].parameters && this._data[key].parameters.options)
       );
       if (index && this._data[index].parameters.options.storySort) {
-        const sortFn = this._data[index].parameters.options.storySort;
+        const storySortParameter = this._data[index].parameters.options.storySort;
+        let sortFn: Comparator<any>;
+        if (typeof storySortParameter === 'function') {
+          sortFn = storySortParameter;
+        } else {
+          sortFn = storySort(storySortParameter);
+        }
         stable.inplace(stories, sortFn);
       } else {
         // NOTE: when kinds are HMR'ed they get temporarily removed from the `_data` array
@@ -280,6 +287,18 @@ export default class StoryStore extends EventEmitter {
     }
   }, 0);
 
+  // Unlike a bunch of deprecated APIs below, these lookup functions
+  // use the `_data` member, which is the new data structure. They should
+  // be the preferred way of looking up stories in the future.
+
+  getStoriesForKind(kind: string) {
+    return this.raw().filter(story => story.kind === kind);
+  }
+
+  getRawStory(kind: string, name: string) {
+    return this.getStoriesForKind(kind).find(s => s.name === name);
+  }
+
   // OLD apis
   getRevision() {
     return this._revision;
@@ -337,10 +356,6 @@ export default class StoryStore extends EventEmitter {
       .map(name => this._legacydata[key as string].stories[name])
       .sort((info1, info2) => info1.index - info2.index)
       .map(info => info.name);
-  }
-
-  getStoriesForKind(kind: string) {
-    return this.raw().filter(story => story.kind === kind);
   }
 
   getStoryFileName(kind: string) {

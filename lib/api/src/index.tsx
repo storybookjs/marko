@@ -1,9 +1,17 @@
-import React, { ReactElement, Component, useContext, useEffect, useRef } from 'react';
+import React, { ReactElement, Component, useContext, useEffect, useMemo, useRef } from 'react';
 import memoize from 'memoizerific';
 // @ts-ignore shallow-equal is not in DefinitelyTyped
 import shallowEqualObjects from 'shallow-equal/objects';
 
-import Events from '@storybook/core-events';
+import {
+  STORIES_CONFIGURED,
+  STORY_CHANGED,
+  SET_STORIES,
+  SELECT_STORY,
+  SHARED_STATE_CHANGED,
+  SHARED_STATE_SET,
+  NAVIGATE_URL,
+} from '@storybook/core-events';
 import { RenderData as RouterData } from '@storybook/router';
 import { Listener } from '@storybook/channels';
 import initProviderApi, { SubAPI as ProviderAPI, Provider } from './init-provider-api';
@@ -37,8 +45,6 @@ import initVersions, {
 export { Options as StoreOptions, Listener as ChannelListener };
 
 const ManagerContext = createContext({ api: undefined, state: getInitialState({}) });
-
-const { STORY_CHANGED, SET_STORIES, SELECT_STORY, NAVIGATE_URL } = Events;
 
 export type Module = StoreData &
   RouterData &
@@ -313,40 +319,14 @@ function orDefault<S>(fromStore: S, defaultState: S): S {
   return fromStore;
 }
 
-type StateMerger<S> = (input: S) => S;
-
-export function useAddonState<S>(addonId: string, defaultState?: S) {
-  const api = useStorybookApi();
-  const ref = useRef<{ [k: string]: boolean }>({});
-
-  const existingState = api.getAddonState<S>(addonId);
-  const state = orDefault<S>(existingState, defaultState);
-
-  const setState = (newStateOrMerger: S | StateMerger<S>, options?: Options) => {
-    return api.setAddonState<S>(addonId, newStateOrMerger, options);
-  };
-
-  if (typeof existingState === 'undefined' && typeof state !== 'undefined') {
-    if (!ref.current[addonId]) {
-      api.setAddonState<S>(addonId, state);
-      ref.current[addonId] = true;
-    }
-  }
-
-  return [state, setState] as [
-    S,
-    (newStateOrMerger: S | StateMerger<S>, options?: Options) => Promise<S>
-  ];
-}
-
-export const useChannel = (eventMap: EventMap) => {
+export const useChannel = (eventMap: EventMap, deps: any[] = []) => {
   const api = useStorybookApi();
   useEffect(() => {
     Object.entries(eventMap).forEach(([type, listener]) => api.on(type, listener));
     return () => {
       Object.entries(eventMap).forEach(([type, listener]) => api.off(type, listener));
     };
-  });
+  }, deps);
 
   return api.emit;
 };
@@ -356,4 +336,76 @@ export function useParameter<S>(parameterKey: string, defaultValue?: S) {
 
   const result = api.getCurrentParameter<S>(parameterKey);
   return orDefault<S>(result, defaultValue);
+}
+
+type StateMerger<S> = (input: S) => S;
+// chache for taking care of HMR
+const addonStateCache: {
+  [key: string]: any;
+} = {};
+
+// shared state
+export function useSharedState<S>(stateId: string, defaultState?: S) {
+  const api = useStorybookApi();
+  const existingState = api.getAddonState<S>(stateId);
+  const state = orDefault<S>(
+    existingState,
+    addonStateCache[stateId] ? addonStateCache[stateId] : defaultState
+  );
+  const setState = (s: S | StateMerger<S>, options?: Options) => {
+    // set only after the stories are loaded
+    if (addonStateCache[stateId]) {
+      addonStateCache[stateId] = s;
+    }
+    api.setAddonState<S>(stateId, s, options);
+  };
+  const allListeners = useMemo(() => {
+    const stateChangeHandlers = {
+      [`${SHARED_STATE_CHANGED}-client-${stateId}`]: (s: S) => setState(s),
+      [`${SHARED_STATE_SET}-client-${stateId}`]: (s: S) => setState(s),
+    };
+    const stateInitializationHandlers = {
+      [STORIES_CONFIGURED]: () => {
+        if (addonStateCache[stateId]) {
+          // this happens when HMR
+          setState(addonStateCache[stateId]);
+          api.emit(`${SHARED_STATE_SET}-manager-${stateId}`, addonStateCache[stateId]);
+        } else if (defaultState !== undefined) {
+          // if not HMR, yet the defaults are form the manager
+          setState(defaultState);
+          // initialize addonStateCache after first load, so its available for subsequent HMR
+          addonStateCache[stateId] = defaultState;
+          api.emit(`${SHARED_STATE_SET}-manager-${stateId}`, defaultState);
+        }
+      },
+      [STORY_CHANGED]: () => {
+        if (api.getAddonState(stateId) !== undefined) {
+          api.emit(`${SHARED_STATE_SET}-manager-${stateId}`, api.getAddonState(stateId));
+        }
+      },
+    };
+
+    return {
+      ...stateChangeHandlers,
+      ...stateInitializationHandlers,
+    };
+  }, [stateId]);
+
+  const emit = useChannel(allListeners);
+  return [
+    state,
+    (newStateOrMerger: S | StateMerger<S>, options?: Options) => {
+      setState(newStateOrMerger, options);
+      emit(`${SHARED_STATE_CHANGED}-manager-${stateId}`, newStateOrMerger);
+    },
+  ] as [S, (newStateOrMerger: S | StateMerger<S>, options?: Options) => void];
+}
+
+export function useAddonState<S>(addonId: string, defaultState?: S) {
+  return useSharedState<S>(addonId, defaultState);
+}
+
+export function useStoryState<S>(defaultState?: S) {
+  const { storyId } = useStorybookState();
+  return useSharedState<S>(`story-state-${storyId}`, defaultState);
 }

@@ -21,6 +21,8 @@ enum events {
   STORIES_COLLAPSE_ALL = 'storiesCollapseAll',
   STORIES_EXPAND_ALL = 'storiesExpandAll',
   DOCS_RENDERED = 'docsRendered',
+  SHARED_STATE_CHANGED = 'sharedStateChanged',
+  SHARED_STATE_SET = 'sharedStateSet',
   NAVIGATE_URL = 'navigateUrl',
 }
 
@@ -51,5 +53,7 @@ export const {
   STORIES_EXPAND_ALL,
   STORY_THREW_EXCEPTION,
   DOCS_RENDERED,
+  SHARED_STATE_CHANGED,
+  SHARED_STATE_SET,
   NAVIGATE_URL,
 } = events;
