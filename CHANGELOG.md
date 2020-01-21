@@ -1,3 +1,563 @@
+## 6.0.0-alpha.0 (January 21, 2020)
+
+### Features
+
+* Addon-a11y: Support manual run ([#8883](https://github.com/storybookjs/storybook/pull/8883))
+* Addon-cssresources: Disable SyntaxHighlighter for long code ([#9360](https://github.com/storybookjs/storybook/pull/9360))
+* Core: Improve monorepo support ([#8822](https://github.com/storybookjs/storybook/pull/8822))
+
+### Bug Fixes
+
+* Fixed Angular button example story ([#9540](https://github.com/storybookjs/storybook/pull/9540))
+* Core: Fix generated entry to import at top of file ([#9398](https://github.com/storybookjs/storybook/pull/9398))
+* Preact: Fix story function typescript type ([#9123](https://github.com/storybookjs/storybook/pull/9123))
+* UI: Make canvas link a link ([#9257](https://github.com/storybookjs/storybook/pull/9257))
+
+### Maintenance
+
+* Typescript: Migrate ember ([#9020](https://github.com/storybookjs/storybook/pull/9020))
+* Next 6.0.0 ([#9212](https://github.com/storybookjs/storybook/pull/9212))
+* Lock yarn version ([#9138](https://github.com/storybookjs/storybook/pull/9138))
+* REMOVE subscription_store ([#9228](https://github.com/storybookjs/storybook/pull/9228))
+
+### Dependency Upgrades
+
+* Update husky to v4 ([#9509](https://github.com/storybookjs/storybook/pull/9509))
+
+## 5.3.7 (January 20, 2020)
+
+### Bug Fixes
+
+* Node-logger: Move `@types/npmlog` to dependencies  ([#9538](https://github.com/storybookjs/storybook/pull/9538))
+* Core: Fix legacy story URLs ([#9545](https://github.com/storybookjs/storybook/pull/9545))
+* Addon-docs: Convert default prop value to string ([#9525](https://github.com/storybookjs/storybook/pull/9525))
+* Addon-docs: Preserve Source indentation by default ([#9513](https://github.com/storybookjs/storybook/pull/9513))
+
+## 5.3.6 (January 17, 2020)
+
+### Bug Fixes
+
+* Source-loader: Bypass if file has no exports ([#9505](https://github.com/storybookjs/storybook/pull/9505))
+* Core: Fix default sorting of docs-only stories ([#9504](https://github.com/storybookjs/storybook/pull/9504))
+
+## 5.3.5 (January 17, 2020)
+
+### Bug Fixes
+
+* Core: Fix typo for loading addon-notes/register-panel ([#9497](https://github.com/storybookjs/storybook/pull/9497))
+* Source-loader: Add imports to top of file ([#9492](https://github.com/storybookjs/storybook/pull/9492))
+
+## 5.3.4 (January 16, 2020)
+
+### Bug Fixes
+
+* Core: Fix presets register panel ([#9486](https://github.com/storybookjs/storybook/pull/9486))
+* Core: Fix addon/preset detection for local addons ([#9485](https://github.com/storybookjs/storybook/pull/9485))
+* Core: Fix default story sort ([#9482](https://github.com/storybookjs/storybook/pull/9482))
+
+## 5.3.3 (January 14, 2020)
+
+### Bug Fixes
+
+* UI: Fix edge case where only one legacy separator is defined ([#9425](https://github.com/storybookjs/storybook/pull/9425))
+* Core: Preserve kind load order on HMR when no sortFn is provided ([#9424](https://github.com/storybookjs/storybook/pull/9424))
+* Angular: Fix missing architect properties ([#9390](https://github.com/storybookjs/storybook/pull/9390))
+* Addon-knobs: Fix null knob values in select ([#9416](https://github.com/storybookjs/storybook/pull/9416))
+* Source-loader: Disable linting altogether ([#9417](https://github.com/storybookjs/storybook/pull/9417))
+
+## 5.3.2 (January 13, 2020)
+
+### Bug Fixes
+
+* Source-loader: Disable eslint entirely for generated code ([#9410](https://github.com/storybookjs/storybook/pull/9410))
+
+## 5.3.1 (January 12, 2020)
+
+### Bug Fixes
+
+* Core: Fix generated entry to import at top of file ([#9398](https://github.com/storybookjs/storybook/pull/9398))
+
+## 5.3.0 (January 11, 2020)
+
+Storybook 5.3 is here!
+
+- 📝 [Custom documentation in MDX](https://medium.com/storybookjs/rich-docs-with-storybook-mdx-61bc145ae7bc)
+- 🎨 [Multi-framework SB Docs (React, Vue, Angular, WC, Ember)](https://medium.com/storybookjs/storybook-docs-for-new-frameworks-b1f6090ee0ea)
+- 📦 [Web-components framework support](https://dev.to/open-wc/storybook-for-web-components-on-steroids-4h29)
+- 🔼 [Main.js declarative configuration](https://medium.com/storybookjs/declarative-storybook-configuration-49912f77b78)
+
+5.3 contains hundreds more fixes, features, and tweaks. Browse the changelogs matching `5.3.0-alpha.*`, `5.3.0-beta.*`, and `5.3.0-rc.*` for the full list of changes. See [MIGRATION.md](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) to upgrade from `5.0` or earlier.
+
+## 5.3.0-rc.14 (January 11, 2020)
+
+* Merge `master` into `next` for 5.3.0 release ([#9388](https://github.com/storybookjs/storybook/pull/9388))
+
+## 5.3.0-rc.13 (January 11, 2020)
+
+### Bug Fixes
+
+* Addon-docs: Fix link CORS errors using channel navigate event ([#9381](https://github.com/storybookjs/storybook/pull/9381))
+* CLI: Fix `sb init` to use spawn.sync if creating package.json ([#9359](https://github.com/storybookjs/storybook/pull/9359))
+
+### Maintenance
+
+* Official-storybook: Prop table example for multiple named exports ([#9364](https://github.com/storybookjs/storybook/pull/9364))
+* Addon-docs / web-components: Rename 'props' to 'properties' in props table ([#9362](https://github.com/storybookjs/storybook/pull/9362))
+
+### Dependency Upgrades
+
+* Upgrade @types/webpack-env and @types/node to fix conflicting types ([#9365](https://github.com/storybookjs/storybook/pull/9365))
+
+## 5.3.0-rc.12 (January 8, 2020)
+
+### Bug Fixes
+
+* Nav UI: Nodes are components only if they contain ALL leaf nodes ([#9356](https://github.com/storybookjs/storybook/pull/9356))
+* Core: Fix HMR for global decorators in main.js config ([#9354](https://github.com/storybookjs/storybook/pull/9354))
+* Presets: Fix register.js addons entry ([#9347](https://github.com/storybookjs/storybook/pull/9347))
+* React: Check CRA is installed before showing warning ([#9346](https://github.com/storybookjs/storybook/pull/9346))
+
+## 5.3.0-rc.11 (January 7, 2020)
+
+### Bug Fixes
+
+* Addon-Docs: Handle leaf/non-leaf mixture in docs-mode navigation ([#9321](https://github.com/storybookjs/storybook/pull/9321))
+
+### Dependency Upgrades
+
+* Axe storyshots: move to original @wordpress/jest-puppeteer-axe package ([#9337](https://github.com/storybookjs/storybook/pull/9337))
+
+## 5.3.0-rc.10 (January 6, 2020)
+
+### Bug Fixes
+
+* Revert "Source-loader: Disable no-implicit-any linting" ([#9333](https://github.com/storybookjs/storybook/pull/9333))
+* Addon-docs: Fix scroll behavior on page navigation ([#9331](https://github.com/storybookjs/storybook/pull/9331))
+
+## 5.3.0-rc.9 (January 4, 2020)
+
+### Features
+
+* CSF: Use `__namedExportsOrder` array in loader if provided ([#9315](https://github.com/storybookjs/storybook/pull/9315))
+
+### Bug Fixes
+
+* Router: Add storyNameFromExport to avoid breaking changes ([#9320](https://github.com/storybookjs/storybook/pull/9320))
+
+## 5.3.0-rc.8 (January 3, 2020)
+
+### Bug Fixes
+
+* Addon-docs: Tweak props table paragraph spacing ([#9307](https://github.com/storybookjs/storybook/pull/9307))
+
+### Maintenance
+
+* Add minimal typescript component to official-storybook ([#9308](https://github.com/storybookjs/storybook/pull/9308))
+
+### Dependency Upgrades
+
+* React: Upgrade babel-plugin-react-docgen to 4.0.0 ([#9303](https://github.com/storybookjs/storybook/pull/9303))
+
+## 5.3.0-rc.7 (January 2, 2020)
+
+### Bug Fixes
+
+* Core: Fix babel.js to disable simplify ([#9280](https://github.com/storybookjs/storybook/pull/9280))
+* Storyshots-Puppeteer: Don't infer story ID from its name ([#9291](https://github.com/storybookjs/storybook/pull/9291))
+
+## 5.3.0-rc.6 (December 31, 2019)
+
+This is significant change to `main.js` aka tri-config, dramatically simplifying how addons and presets are registered. See the maintenannce PR for details.
+
+### Maintenance
+
+* Main.js: Combine presets/registers in `addons` field ([#9246](https://github.com/storybookjs/storybook/pull/9246))
+
+## 5.3.0-rc.5 (December 31, 2019)
+
+### Bug Fixes
+
+* Addon-docs: Hide stories block when there are no stories ([#9271](https://github.com/storybookjs/storybook/pull/9271))
+* Source-loader: Disable no-implicit-any linting ([#9272](https://github.com/storybookjs/storybook/pull/9272))
+
+## 5.3.0-rc.4 (December 28, 2019)
+
+### Bug Fixes
+
+* Addon-docs: Fix MDX story rendering with dynamic component titles ([#9248](https://github.com/storybookjs/storybook/pull/9248))
+
+### Maintenance
+
+* Ignore testfixtures directory in storybook publish ([#9244](https://github.com/storybookjs/storybook/pull/9244))
+
+## 5.3.0-rc.3 (December 26, 2019)
+
+### Bug Fixes
+
+* Addon-docs: Include ember files in addon-docs publish ([#9230](https://github.com/storybookjs/storybook/pull/9230))
+
+### Maintenance
+
+* Standalone CSF example ([#9223](https://github.com/storybookjs/storybook/pull/9223))
+
+### Dependency Upgrades
+
+* Addon-info: Upgrade marksy for security ([#9234](https://github.com/storybookjs/storybook/pull/9234))
+
+## 5.3.0-rc.2 (December 26, 2019)
+
+Failed NPM publish
+
+## 5.3.0-rc.1 (December 23, 2019)
+
+### Bug Fixes
+
+* Angular: Add default value to the budgets property ([#9207](https://github.com/storybookjs/storybook/pull/9207))
+* DocsPage: Fix title with new path separator scheme ([#9204](https://github.com/storybookjs/storybook/pull/9204))
+
+### Maintenance
+
+* CLI: Make template `stories` glob more permissive ([#9224](https://github.com/storybookjs/storybook/pull/9224))
+
+## 5.3.0-rc.0 (December 19, 2019)
+
+### Features
+
+* CSF: Use `__orderedExports` in loader if provided  ([#9181](https://github.com/storybookjs/storybook/pull/9181))
+
+### Bug Fixes
+
+* Addon-a11y: Fix selected blindness color filter ([#9179](https://github.com/storybookjs/storybook/pull/9179))
+
+### Maintenance
+
+* Addon-essentials: Remove actions, links, knobs ([#9184](https://github.com/storybookjs/storybook/pull/9184))
+
+## 5.3.0-beta.31 (December 16, 2019)
+
+### Features
+
+* React: Add support for CRA without overrides ([#9157](https://github.com/storybookjs/storybook/pull/9157))
+* Addon-docs: Add fontFamily prop to Typeset component ([#9158](https://github.com/storybookjs/storybook/pull/9158))
+
+### Bug Fixes
+
+* Core: Emit store render event synchronously if we can ([#9087](https://github.com/storybookjs/storybook/pull/9087))
+
+## 5.3.0-beta.30 (December 16, 2019)
+
+Failed NPM publish
+
+## 5.3.0-beta.29 (December 16, 2019)
+
+Failed NPM publish
+
+## 5.3.0-beta.28 (December 16, 2019)
+
+Failed NPM publish
+
+## 5.3.0-beta.27 (December 16, 2019)
+
+Failed NPM publish
+
+## 5.3.0-beta.26 (December 16, 2019)
+
+Failed NPM publish
+
+## 5.3.0-beta.25 (December 15, 2019)
+
+### Bug Fixes
+
+* Addon-docs: Hide addons on  docs-only stories ([#9125](https://github.com/storybookjs/storybook/pull/9125))
+
+### Dependency Upgrades
+
+* Upgrade vue-docgen-loader to 1.3.0-beta.0 ([#9155](https://github.com/storybookjs/storybook/pull/9155))
+
+## 5.3.0-beta.24 (December 15, 2019)
+
+Failed NPM publish
+
+## 5.3.0-beta.23 (December 14, 2019)
+
+### Features
+
+* Addon-docs: Render components as leaves in `--docs` mode ([#7700](https://github.com/storybookjs/storybook/pull/7700))
+
+### Bug Fixes
+
+* Addon-viewport: Allow viewports config to be optional ([#9137](https://github.com/storybookjs/storybook/pull/9137))
+
+## 5.3.0-beta.22 (December 12, 2019)
+
+### Bug Fixes
+
+* React: Fix CRA preset check ([#9142](https://github.com/storybookjs/storybook/pull/9142))
+
+### Maintenance
+
+* Build: Change CI to chromatic on all examples ([#9114](https://github.com/storybookjs/storybook/pull/9114))
+* Web-components: Clean up example `custom-elements.json` and expose `defaultValue` ([#9107](https://github.com/storybookjs/storybook/pull/9107))
+
+### Dependency Upgrades
+
+* Restore main jscodeshift package ([#9140](https://github.com/storybookjs/storybook/pull/9140))
+
+## 5.3.0-beta.21 (December 11, 2019)
+
+### Features
+
+* CLI: Add Yarn workspaces support for init command ([#9104](https://github.com/storybookjs/storybook/pull/9104))
+
+### Bug Fixes
+
+* Addon-docs: Update MDX compiler to fix knobs ([#9118](https://github.com/storybookjs/storybook/pull/9118))
+* CLI: Add web-components to sb init ([#9106](https://github.com/storybookjs/storybook/pull/9106))
+
+### Maintenance
+
+* UI: Remove css usage ([#9003](https://github.com/storybookjs/storybook/pull/9003))
+
+## 5.3.0-beta.20 (December 9, 2019)
+
+### Features
+
+* Addon-essentials: Remove docs from essentials ([#9093](https://github.com/storybookjs/storybook/pull/9093))
+
+### Bug Fixes
+
+* Source-loader: Handle includeStories/excludeStories in CSF ([#9100](https://github.com/storybookjs/storybook/pull/9100))
+* Source-loader: Support function declaration story exports ([#9092](https://github.com/storybookjs/storybook/pull/9092))
+
+### Maintenance
+
+* CSF: Refactor router utils into CSF library ([#9099](https://github.com/storybookjs/storybook/pull/9099))
+
+## 5.3.0-beta.19 (December 7, 2019)
+
+### Features
+
+* Addon-essentials ([#9019](https://github.com/storybookjs/storybook/pull/9019))
+
+### Bug Fixes
+
+* Addon-docs: Fix prop table default value for web-components ([#9086](https://github.com/storybookjs/storybook/pull/9086))
+
+## 5.3.0-beta.18 (December 6, 2019)
+
+### Features
+
+* CLI: Change generators to Triconfig ([#9075](https://github.com/storybookjs/storybook/pull/9075))
+* Addon-docs: Add Props for Ember ([#9067](https://github.com/storybookjs/storybook/pull/9067))
+* MDX: Handle quotes / template literals in title ([#9069](https://github.com/storybookjs/storybook/pull/9069))
+
+### Bug Fixes
+
+* Addon-docs: MDX Octicon anchors should not be tabbable ([#9063](https://github.com/storybookjs/storybook/pull/9063))
+
+### Dependency Upgrades
+
+* Addon-docs: Upgrade vue-docgen-loader ([#9082](https://github.com/storybookjs/storybook/pull/9082))
+
+## 5.3.0-beta.17 (December 6, 2019)
+
+NPM publish failed
+
+## 5.3.0-beta.16 (December 5, 2019)
+
+### Features
+
+* Addon-docs: DocsPage Heading and Subheading anchor links ([#9060](https://github.com/storybookjs/storybook/pull/9060))
+
+### Bug Fixes
+
+* Core: Fix `api.selectStory` for component permalinks ([#9054](https://github.com/storybookjs/storybook/pull/9054))
+* Storyshots: Escape Windows fileNames ([#9061](https://github.com/storybookjs/storybook/pull/9061))
+
+### Dependency Upgrades
+
+* Addon-docs: Upgrade vue-docgen-api ([#9066](https://github.com/storybookjs/storybook/pull/9066))
+
+## 5.3.0-beta.15 (December 4, 2019)
+
+### Features
+
+* Addon-docs: MDX Linking ([#9051](https://github.com/storybookjs/storybook/pull/9051))
+
+## 5.2.8 (December 2, 2019)
+
+### Bug Fixes
+
+* UI: Fix layout of Preview container ([#8628](https://github.com/storybookjs/storybook/pull/8628))
+* Core: Use `stable` package to ensure story sorting is stable ([#8795](https://github.com/storybookjs/storybook/pull/8795))
+* Source-loader: Warn if applied to non-stories file ([#8773](https://github.com/storybookjs/storybook/pull/8773))
+
+## 5.3.0-beta.14 (December 2, 2019)
+
+### Features
+
+* Addon-docs: Increase Props summary and func length ([#8998](https://github.com/storybookjs/storybook/pull/8998))
+
+### Bug Fixes
+
+* Addon-docs: Restore IE11 compat by transpiling acorn-jsx ([#9021](https://github.com/storybookjs/storybook/pull/9021))
+* Source-loader: Handle template strings in CSF title ([#8995](https://github.com/storybookjs/storybook/pull/8995))
+* CLI: Fix various storiesof-to-csf cases based on chromatic stories upgrade ([#9013](https://github.com/storybookjs/storybook/pull/9013))
+
+## 5.2.7 (November 30, 2019)
+
+### Bug Fixes
+
+* Addon-contexts: Fix 'cannot read property h of undefined' in preact ([#9001](https://github.com/storybookjs/storybook/pull/9001))
+* Addon-viewports: Fix missing TypeScript types ([#8848](https://github.com/storybookjs/storybook/pull/8848))
+* Addon-A11y: Show errors, reset config properly ([#8779](https://github.com/storybookjs/storybook/pull/8779))
+* UI: Store layout state in sessionStorage ([#8786](https://github.com/storybookjs/storybook/pull/8786))
+* UI: Fix MobileLayout component error on master ([#8941](https://github.com/storybookjs/storybook/pull/8941))
+* Addon-analytics: Fix 'path is required in .pageview()' ([#8468](https://github.com/storybookjs/storybook/pull/8468))
+
+## 5.3.0-beta.13 (November 30, 2019)
+
+### Bug Fixes
+
+* Addon-contexts: Fix 'cannot read property h of undefined' in preact ([#9001](https://github.com/storybookjs/storybook/pull/9001))
+
+### Maintenance
+
+* CLI: Code cleanup ([#9004](https://github.com/storybookjs/storybook/pull/9004))
+
+## 5.3.0-beta.12 (November 29, 2019)
+
+### Features
+
+* Storyshots: Support a11y tests, generic tests ([#8934](https://github.com/storybookjs/storybook/pull/8934))
+
+### Maintenance
+
+* Dev: Add vscode launch.json for debugging ([#8993](https://github.com/storybookjs/storybook/pull/8993))
+* UI: viewMode proptypes changed to any string ([#8994](https://github.com/storybookjs/storybook/pull/8994))
+* Addon-docs: Remove deprecated framework-specific docs presets ([#8985](https://github.com/storybookjs/storybook/pull/8985))
+
+### Dependency Upgrades
+
+* Addon-docs: Upgrade MDX dependencies ([#8991](https://github.com/storybookjs/storybook/pull/8991))
+
+## 5.3.0-beta.11 (November 28, 2019)
+
+### Features
+
+* UI: Escape hatch CSS on for "active" tablist buttons ([#8989](https://github.com/storybookjs/storybook/pull/8989))
+* Addon-docs: Added dark theme option to source component ([#8732](https://github.com/storybookjs/storybook/pull/8732))
+* Triconfig: Configure UI options overhaul ([#8871](https://github.com/storybookjs/storybook/pull/8871))
+
+### Bug Fixes
+
+* Addon-docs: Fix vertical alignment of props expandable ([#8953](https://github.com/storybookjs/storybook/pull/8953))
+* Addon-links: Fix return type of linkTo and examples ([#8975](https://github.com/storybookjs/storybook/pull/8975))
+
+## 5.3.0-beta.10 (November 27, 2019)
+
+### Features
+
+* MDX: Allow user to override `docs.container` parameter ([#8968](https://github.com/storybookjs/storybook/pull/8968))
+* Addon-docs: Increase docs content wrapper max-width to 1000px ([#8970](https://github.com/storybookjs/storybook/pull/8970))
+* Addon-docs: Prop table support for Angular directives ([#8922](https://github.com/storybookjs/storybook/pull/8922))
+* Addon-docs: Increase width of props table type column ([#8950](https://github.com/storybookjs/storybook/pull/8950))
+
+### Bug Fixes
+
+* Addon-docs: Fix `Preview` theming escape hatch ([#8969](https://github.com/storybookjs/storybook/pull/8969))
+* Core: Don't try to require .ts files from dist ([#8971](https://github.com/storybookjs/storybook/pull/8971))
+* Core: Use logger in base-webpack.config.js ([#8966](https://github.com/storybookjs/storybook/pull/8966))
+
+### Maintenance
+
+* Examples: Add "debug" script for storybook-official ([#8973](https://github.com/storybookjs/storybook/pull/8973))
+* Build: Upgrade to node 10 on netlify ([#8967](https://github.com/storybookjs/storybook/pull/8967))
+* Core/triconfig everywhere: migrate examples ([#8942](https://github.com/storybookjs/storybook/pull/8942))
+
+## 5.3.0-beta.9 (November 26, 2019)
+
+### Features
+
+* Storyshots: Remove abandoned storyshots when run with `-u` flag ([#8889](https://github.com/storybookjs/storybook/pull/8889))
+
+### Bug Fixes
+
+* Addon-docs: Support subcomponents as a top-level default export ([#8931](https://github.com/storybookjs/storybook/pull/8931))
+
+### Dependency Upgrades
+
+* Core: Add missing dependencies  ([#8945](https://github.com/storybookjs/storybook/pull/8945))
+
+## 5.3.0-beta.8 (November 26, 2019)
+
+### Features
+
+* Storyshots-puppeteer: Add afterScreenshot handler ([#8092](https://github.com/storybookjs/storybook/pull/8092))
+
+### Bug Fixes
+
+* Core: Upgrade telejson to fix cross-origin frame error ([#8940](https://github.com/storybookjs/storybook/pull/8940))
+
+### Maintenance
+
+* Build: Fix image snapshots setup in official-storybook ([#8932](https://github.com/storybookjs/storybook/pull/8932))
+
+### Dependency Upgrades
+
+* Core: Add @babel/core peer dependency to  @storybook/core ([#8933](https://github.com/storybookjs/storybook/pull/8933))
+
+## 5.3.0-beta.7 (November 26, 2019)
+
+Failed npm publish
+
+## 5.3.0-beta.6 (November 24, 2019)
+
+### Features
+
+* Presets: dynamic preset injection ([#8921](https://github.com/storybookjs/storybook/pull/8921))
+
+### Bug Fixes
+
+* Revert "feat: use `puppeteer-core` instead of `puppeteer`" ([#8925](https://github.com/storybookjs/storybook/pull/8925))
+* Addon-docs: Fix props detail tooltip to prevent cutting end of content ([#8923](https://github.com/storybookjs/storybook/pull/8923))
+
+### Maintenance
+
+* Addon-docs: Base code to improve the props table for TS ([#8905](https://github.com/storybookjs/storybook/pull/8905))
+* Build: Fix now deploy ([#8929](https://github.com/storybookjs/storybook/pull/8929))
+
+### Dependency Upgrades
+
+* Miscellaneous upgrades ([#8912](https://github.com/storybookjs/storybook/pull/8912))
+
+## 5.3.0-beta.5 (November 23, 2019)
+
+Failed npm publish
+
+## 5.3.0-beta.4 (November 23, 2019)
+
+Failed npm publish
+
+## 5.3.0-beta.3 (November 21, 2019)
+
+### Features
+
+* Addon-docs: Rich props table UI ([#8887](https://github.com/storybookjs/storybook/pull/8887))
+* Addon-docs: Improve basic support for Flow props ([#8890](https://github.com/storybookjs/storybook/pull/8890))
+* CLI: Avoid id changes after `storiesof-to-csf` migration ([#8856](https://github.com/storybookjs/storybook/pull/8856))
+
+### Bug Fixes
+
+* Addon-docs: Fix props table for sections props ([#8904](https://github.com/storybookjs/storybook/pull/8904))
+* Addon-docs: Fix Description block when no component provided ([#8902](https://github.com/storybookjs/storybook/pull/8902))
+* Angular: Fix project without `architect.build` option ([#6737](https://github.com/storybookjs/storybook/pull/6737))
+
+### Maintenance
+
+* Addon-docs: Docgen lib maintenance ([#8896](https://github.com/storybookjs/storybook/pull/8896))
+* Examples: Fix stories glob in official-storybook ([#8888](https://github.com/storybookjs/storybook/pull/8888))
+
 ## 5.3.0-beta.2 (November 19, 2019)
 
 ### Features

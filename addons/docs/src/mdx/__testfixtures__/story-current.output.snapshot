@@ -2,7 +2,7 @@
 
 exports[`docs-mdx-compiler-plugin story-current.mdx 1`] = `
 "/* @jsx mdx */
-import { DocsContainer, makeStoryFn } from '@storybook/addon-docs/blocks';
+import { assertIsFn, AddContext } from '@storybook/addon-docs/blocks';
 
 import { Story } from '@storybook/addon-docs/blocks';
 
@@ -31,14 +31,16 @@ MDXContent.isMDXComponent = true;
 
 const componentMeta = { includeStories: [] };
 
-const mdxStoryNameToId = {};
+const mdxStoryNameToKey = {};
 
 componentMeta.parameters = componentMeta.parameters || {};
 componentMeta.parameters.docs = {
-  container: ({ context, children }) => (
-    <DocsContainer context={{ ...context, mdxStoryNameToId }}>{children}</DocsContainer>
+  ...(componentMeta.parameters.docs || {}),
+  page: () => (
+    <AddContext mdxStoryNameToKey={mdxStoryNameToKey} mdxComponentMeta={componentMeta}>
+      <MDXContent />
+    </AddContext>
   ),
-  page: MDXContent,
 };
 
 export default componentMeta;

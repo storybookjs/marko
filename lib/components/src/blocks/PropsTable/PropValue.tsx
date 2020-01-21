@@ -6,6 +6,7 @@ import { PropSummaryValue } from './PropDef';
 import { WithTooltipPure } from '../../tooltip/WithTooltip';
 import { Icons } from '../../icon/icon';
 import { SyntaxHighlighter } from '../../syntaxhighlighter/syntaxhighlighter';
+import { codeCommon } from '../../typography/shared';
 
 interface PropValueProps {
   value?: PropSummaryValue;
@@ -21,43 +22,40 @@ interface PropSummaryProps {
 
 const Text = styled.span(({ theme }) => ({
   fontFamily: theme.typography.fonts.mono,
-  fontSize: `${theme.typography.size.code}%`,
+  fontSize: theme.typography.size.s2 - 1,
 }));
 
-const Expandable = styled.div(({ theme }) => ({
+const Expandable = styled.div<{}>(codeCommon, ({ theme }) => ({
   fontFamily: theme.typography.fonts.mono,
-  fontSize: `${theme.typography.size.code}%`,
-  lineHeight: '20px',
-  display: 'inline-block',
-  textAlign: 'left',
   color: theme.color.secondary,
-  backgroundColor: theme.color.lighter,
-  padding: '4px 8px 4px 4px',
-  borderRadius: '4px',
-  cursor: 'pointer',
+  margin: 0,
   whiteSpace: 'nowrap',
+  display: 'flex',
+  alignItems: 'center',
 }));
 
-const ArrowIcon = styled(Icons)(({ theme }) => ({
+const Detail = styled.div<{ width: string }>(({ theme, width }) => ({
+  width,
+  minWidth: 200,
+  maxWidth: 800,
+  padding: 15,
+  // Dont remove the mono fontFamily here even if it seem useless, this is used by the browser to calculate the length of a "ch" unit.
+  fontFamily: theme.typography.fonts.mono,
+  fontSize: theme.typography.size.s2 - 1,
+  // Most custom stylesheet will reset the box-sizing to "border-box" and will break the tooltip.
+  boxSizing: 'content-box',
+
+  '& code': {
+    padding: '0 !important',
+  },
+}));
+
+const ArrowIcon = styled(Icons)({
   height: 10,
   width: 10,
   minWidth: 10,
-  color: theme.color.secondary,
-  marginLeft: '8px',
-  transition: 'transform 0.1s ease-in-out',
-  alignSelf: 'center',
-  display: 'inline-flex',
-}));
-
-const StyledSyntaxHighlighter = styled(SyntaxHighlighter)(({ theme, width }) => ({
-  width: `${width}ch`,
-  minWidth: '200px',
-  maxWith: '800px',
-  padding: '12px',
-  // Dont remove the mono fontFamily here even if it seem useless, this is used by the browser to calculate the length of a "ch" unit.
-  fontFamily: theme.typography.fonts.mono,
-  fontSize: theme.typography.size.s2,
-}));
+  marginLeft: 4,
+});
 
 const EmptyProp = () => {
   return <span>-</span>;
@@ -67,19 +65,24 @@ const PropText: FC<PropTextProps> = ({ text }) => {
   return <Text>{text}</Text>;
 };
 
-const inferDetailWidth = memoize(1000)(function(detail: string): number {
+const calculateDetailWidth = memoize(1000)((detail: string): string => {
   const lines = detail.split(/\r?\n/);
 
-  return Math.max(...lines.map(x => x.length));
+  return `${Math.max(...lines.map(x => x.length))}ch`;
 });
 
 const PropSummary: FC<PropSummaryProps> = ({ value }) => {
   const { summary, detail } = value;
 
   const [isOpen, setIsOpen] = useState(false);
-
+  // summary is used for the default value
+  // below check fixes not displaying default values for boolean typescript vars
+  const summaryAsString =
+    summary !== undefined && summary !== null && typeof summary.toString === 'function'
+      ? summary.toString()
+      : summary;
   if (isNil(detail)) {
-    return <PropText text={summary} />;
+    return <PropText text={summaryAsString} />;
   }
 
   return (
@@ -92,13 +95,15 @@ const PropSummary: FC<PropSummaryProps> = ({ value }) => {
         setIsOpen(isVisible);
       }}
       tooltip={
-        <StyledSyntaxHighlighter width={inferDetailWidth(detail)} language="jsx" format={false}>
-          {detail}
-        </StyledSyntaxHighlighter>
+        <Detail width={calculateDetailWidth(detail)}>
+          <SyntaxHighlighter language="jsx" format={false}>
+            {detail}
+          </SyntaxHighlighter>
+        </Detail>
       }
     >
       <Expandable className="sbdocs-expandable">
-        <span>{summary}</span>
+        <span>{summaryAsString}</span>
         <ArrowIcon icon={isOpen ? 'arrowup' : 'arrowdown'} />
       </Expandable>
     </WithTooltipPure>

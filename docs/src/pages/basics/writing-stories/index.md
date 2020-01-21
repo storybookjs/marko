@@ -93,9 +93,18 @@ It's up to you to find a naming/placing scheme that works for your project/team.
 
 ## Loading stories
 
-Stories are loaded in the `.storybook/config.js` file.
+Stories are loaded in the `.storybook/main.js` file or `.storybook/preview.js` file.
 
 The most convenient way to load stories is by filename. For example, if your stories files are located in the `src/components` directory, you can use the following snippet:
+
+```js
+// .storybook/main.js
+module.exports = {
+  stories: ['../src/components/**/*.stories.js'],
+};
+```
+
+Alternatively you can import all your stories in `.storybook/preview.js`:
 
 ```js
 import { configure } from '@storybook/react';
@@ -103,7 +112,7 @@ import { configure } from '@storybook/react';
 configure(require.context('../src/components', true, /\.stories\.js$/), module);
 ```
 
-> NOTE: The `configure` function should be called only once in `config.js`.
+> NOTE: The `configure` function should be called only once in `.storybook/preview.js`.
 
 The `configure` function accepts:
 
@@ -155,7 +164,7 @@ const loaderFn = () => {
 configure(loaderFn, module);
 ```
 
-Storybook uses Webpack's [require.context](https://webpack.js.org/guides/dependency-management/#require-context) to load modules dynamically. Take a look at the relevant Webpack [docs](https://webpack.js.org/guides/dependency-management/#require-context) to learn more about how to use `require.context`.
+Storybook uses Webpack's [require.context](https://webpack.js.org/guides/dependency-management/#requirecontext) to load modules dynamically. Take a look at the relevant Webpack [docs](https://webpack.js.org/guides/dependency-management/#requirecontext) to learn more about how to use `require.context`.
 
 If you are using the `storiesOf` API directly, or are using `@storybook/react-native` where CSF is unavailable, you should use a loader function with **no return value**:
 
@@ -183,16 +192,24 @@ A decorator is a way to wrap a story with a common set of components, for exampl
 
 Decorators can be applied globally, at the component level, or individually at the story level. Global decorators are typically applied in the Storybook config files, and component/story decorators are applied in the story file.
 
-Here is an example of a global decorator which centers every story in the storybook:
+Here is an example of a global decorator which centers every story in the `.storybook/preview.js`:
 
 ```jsx
 import React from 'react';
-import { load, addDecorator } from '@storybook/react';
+import { addDecorator } from '@storybook/react';
 
 addDecorator(storyFn => <div style={{ textAlign: 'center' }}>{storyFn()}</div>);
-
-load(require.context('../src/components', true, /\.stories\.js$/), module);
 ```
+
+> \* In Vue projects you have to use the special component `<story/>` instead of the function parameter `storyFn` that is used in React projects, even if you are using JSX, for example:
+>
+> ```jsx
+> var decoratorVueJsx = () => ({ render() { return <div style={{ textAlign: 'center' }}><story/></div>} })
+> addDecorator(decoratorVueJsx)
+>
+> var decoratorVueTemplate = () => { return { template: `<div style="text-align:center"><story/></div>` }
+> addDecorator(decoratorVueTemplate)
+> ```
 
 And here's an example of component/local decorators. The component decorator wraps all the stories in a yellow frame, and the story decorator wraps a single story in an additional red frame.
 
@@ -224,11 +241,12 @@ Parameters are custom metadata for a story. Like decorators, they can also be hi
 
 Here's an example where we are annotating our stories with [Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) notes using parameters, to be displayed in the [Notes addon](https://github.com/storybookjs/storybook/tree/next/addons/notes).
 
-We first apply some notes globally in the Storybook config.
+We first apply some notes globally in the `.storybook/preview.js`.
 
 ```js
 import { load, addParameters } from '@storybook/react';
 import defaultNotes from './instructions.md';
+
 addParameters({ notes: defaultNotes });
 ```
 
@@ -332,3 +350,35 @@ Multiple storybooks can be built for different kinds of stories or components in
   }
 }
 ```
+
+## Permalinking to stories
+
+Sometimes you might wish to change the name of a story or its position in the hierarchy, but preserve the link to the story or its documentation. Here's how to do it.
+
+Consider the following story:
+
+```js
+export default {
+  title: 'Foo/Bar',
+};
+
+export const Baz = () => <MyComponent />;
+```
+
+Storybook's ID-generation logic will give this the ID `foo-bar--baz`, so the link would be `?path=/story/foo-bar--baz`.
+
+Now suppose you want to change the position in the hierarchy to `OtherFoo/Bar` and the story name to `Moo`. Here's how to do that:
+
+```js
+export default {
+  title: 'OtherFoo/Bar',
+  id: 'Foo/Bar', // or 'foo-bar' if you prefer
+};
+
+export const Baz = () => <MyComponent />;
+Baz.story = {
+  name: 'Moo',
+};
+```
+
+Storybook will prioritize the `id` over the title for ID generation, if provided, and will prioritize the `story.name` over the export key for display.
