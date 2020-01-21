@@ -2,6 +2,7 @@
 
 ### Bug Fixes
 
+* Addon-docs:  Fix TS false default value in prop table ([#9560](https://github.com/storybookjs/storybook/pull/9560))
 * Addon-knobs: Fix broken repo link in empty panel ([#9530](https://github.com/storybookjs/storybook/pull/9530))
 * Typescript: Export IStory in `@storybook/angular` ([#9097](https://github.com/storybookjs/storybook/pull/9097))
 * Fixed Angular button example story ([#9540](https://github.com/storybookjs/storybook/pull/9540))
