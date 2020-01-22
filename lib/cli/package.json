@@ -77,7 +77,6 @@
     "@storybook/marionette": "6.0.0-alpha.0",
     "@storybook/marko": "6.0.0-alpha.0",
     "@storybook/mithril": "6.0.0-alpha.0",
-    "@storybook/polymer": "6.0.0-alpha.0",
     "@storybook/preact": "6.0.0-alpha.0",
     "@storybook/rax": "6.0.0-alpha.0",
     "@storybook/react": "6.0.0-alpha.0",
