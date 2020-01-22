@@ -115,7 +115,6 @@ For additional help, join us [in our Discord](https://discord.gg/sMFvFsG) or [Sl
 | [React Native](app/react-native) | -                                                 | [![React Native](https://img.shields.io/npm/dm/@storybook/react-native.svg)](app/react-native) |
 | [Vue](app/vue)                   | [v5.1.0](https://storybooks-vue.netlify.com/)     | [![Vue](https://img.shields.io/npm/dm/@storybook/vue.svg)](app/vue)                            |
 | [Angular](app/angular)           | [v5.1.0](https://storybooks-angular.netlify.com/) | [![Angular](https://img.shields.io/npm/dm/@storybook/angular.svg)](app/angular)                |
-| [Polymer](app/polymer)           | [v5.1.0](https://storybooks-polymer.netlify.com/) | [![Polymer](https://img.shields.io/npm/dm/@storybook/polymer.svg)](app/polymer)                |
 | [Marionette.js](app/marionette)  | -                                                 | [![Marionette.js](https://img.shields.io/npm/dm/@storybook/marionette.svg)](app/marionette)                |
 | [Mithril](app/mithril)           | [v5.1.0](https://storybooks-mithril.netlify.com/) | [![Mithril](https://img.shields.io/npm/dm/@storybook/mithril.svg)](app/mithril)                |
 | [Marko](app/marko)               | [v5.1.0](https://storybooks-marko.netlify.com/)   | [![Marko](https://img.shields.io/npm/dm/@storybook/marko.svg)](app/marko)                      |
