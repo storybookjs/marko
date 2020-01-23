@@ -69,7 +69,4 @@ const Source: FunctionComponent<SourceProps> = props => {
   return <ThemeProvider theme={convert(overrideTheme)}>{syntaxHighlighter}</ThemeProvider>;
 };
 
-Source.defaultProps = {
-  format: false,
-};
 export { Source };
