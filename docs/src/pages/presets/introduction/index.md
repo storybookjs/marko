@@ -3,7 +3,7 @@ id: 'introduction'
 title: 'Intro to Presets'
 ---
 
-> migration guide: This page document the method to configure storybook introduced recently in 5.3.0, consult the [migration guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) if you want to migrate to this format of configuring storybook.
+> migration guide: This page documents the method to configure storybook introduced recently in 5.3.0, consult the [migration guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) if you want to migrate to this format of configuring storybook.
 
 Storybook **presets** are grouped collections of `babel`, `webpack`, and `addons` configurations that support specific use cases.
 

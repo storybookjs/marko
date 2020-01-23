@@ -6,7 +6,7 @@ title: 'Configuration overview'
 
 For CLI options see: [here](/docs/cli-options).
 
-> migration guide: This page document the method to configure storybook introduced recently in 5.3.0, consult the [migration guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) if you want to migrate to this format of configuring storybook.
+> migration guide: This page documents the method to configure storybook introduced recently in 5.3.0, consult the [migration guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) if you want to migrate to this format of configuring storybook.
 
 ## main configuration
 
@@ -39,7 +39,25 @@ There are 2 extra config files, for doing some special runtime configs for each 
 
 In `preview.js` you can add global [decorators](../../basics/writing-stories/#decorators) and [parameters](../../basics/writing-stories/#parameters):
 
+```js
+// preview.js
+import { addDecorator } from '@storybook/svelte';
+import { withA11y } from '@storybook/addon-a11y';
+
+addDecorator(withA11y);
+```
+
 In `manager.js` you can add [UI options](/docs/configurations/options-parameter/#global-options).
+
+```js
+// manager.js
+import { themes } from '@storybook/theming/create';
+import { addons } from '@storybook/addons';
+
+addons.setConfig({
+  theme: themes.dark,
+});
+```
 
 ## entire main.js config
 
@@ -55,8 +73,9 @@ module.exports = {
 
   // an array of addons & presets
   addons: ['@storybook/addon-essentials'],
-
-  // customize the webpack config for the preview application
-  webpackFinal: async (config) => { return config },
 };
 ```
+
+## webpack
+
+For how to customize webpack, [view the customize webpack section](/docs/configurations/custom-webpack-config/)
