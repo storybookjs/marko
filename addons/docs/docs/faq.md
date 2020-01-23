@@ -10,7 +10,7 @@ You've read the [Storybook Docs README](../README.md). You're already familiar w
 
 ## Does Docs support framework X?
 
-Docs does not currently support [React Native](https://github.com/storybooks/storybook/tree/next/app/react-native). Otherwise, [it supports all frameworks that Storybook supports](../README.md#framework-support), including React, Vue, Angular, Ember, Svelte, Polymer, and others.
+Docs does not currently support [React Native](https://github.com/storybooks/storybook/tree/next/app/react-native). Otherwise, [it supports all frameworks that Storybook supports](../README.md#framework-support), including React, Vue, Angular, Ember, Svelte, and others.
 
 ## How does Docs interact with existing addons?
 
