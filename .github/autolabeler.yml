@@ -15,7 +15,6 @@
 'app: angular': ["app/angular/**"]
 'app: preact': ["app/preact/**"]
 'app: rax': ["app/rax/**"]
-'app: react-native': ["app/react-native/**"]
 'app: react': ["app/react/**"]
 'app: vue': ["app/vue/**"]
 'app: svelte': ["app/svelte/**"]
