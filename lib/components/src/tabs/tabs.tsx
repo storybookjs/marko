@@ -114,7 +114,7 @@ export const panelProps = {
 
 const childrenToList = (children: any, selected: string) =>
   Children.toArray(children).map(
-    ({ props: { title, id, color, children: childrenOfChild } }, index) => {
+    ({ props: { title, id, color, children: childrenOfChild } }: React.ReactElement, index) => {
       const content = Array.isArray(childrenOfChild) ? childrenOfChild[0] : childrenOfChild;
       return {
         active: selected ? id === selected : index === 0,
