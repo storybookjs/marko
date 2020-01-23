@@ -1,3 +1,20 @@
+## 6.0.0-alpha.1 (January 23, 2020)
+
+### Features
+
+* Core: Enable HMR logging in browser console ([#9535](https://github.com/storybookjs/storybook/pull/9535))
+
+### Bug Fixes
+
+* Addon-knobs: Fix broken link to repo in empty panel ([#9530](https://github.com/storybookjs/storybook/pull/9530))
+* Typescript: Export IStory in `@storybook/angular` ([#9097](https://github.com/storybookjs/storybook/pull/9097))
+
+### Maintenance
+
+* React-native: Extract to its own repo ([#9599](https://github.com/storybookjs/storybook/pull/9599))
+* Polymer: Extract to its own repo ([#9596](https://github.com/storybookjs/storybook/pull/9596))
+* Build: Fix some dependencies & ts problems ([#9603](https://github.com/storybookjs/storybook/pull/9603))
+
 ## 5.3.8 (January 22, 2020)
 
 ### Bug Fixes
