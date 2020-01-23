@@ -11,7 +11,7 @@ You can accomplish this by creating a file called `preview-body.html` inside the
 <div id="custom-root"></div>
 ```
 
-If using relative sizing in your project (like `rems` or `ems`), you may update the base `font-size` by adding a `style` tag to `preview-body.html`:
+If using relative sizing in your project (like `rem` or `em`), you may update the base `font-size` by adding a `style` tag to `preview-body.html`:
 
 ```html
 <style>
