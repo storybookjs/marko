@@ -7,7 +7,7 @@ This is a central reference for using Storybook with TypeScript.
 
 ## Typescript configuration presets
 
-The fatest and easiest way to write and configure your stories in TypeScript is by using a Storybook preset.
+The fastest and easiest way to write and configure your stories in TypeScript is by using a Storybook preset.
 
 * If you're using Create React App (CRA) and have configured it to work with TS, you should use [`@storybook/preset-create-react-app`](https://github.com/storybookjs/presets/tree/master/packages/preset-create-react-app), which configures Storybook to reuse CRA's TS handling.
 
