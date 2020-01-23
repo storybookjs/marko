@@ -80,9 +80,6 @@ jobs:
           name: Run chromatic on the pre-built mithril-kitchen-sink example
           command: yarn chromatic --storybook-build-dir="built-storybooks/mithril-kitchen-sink" --app-code="8adgm46jzk8"
       - run:
-          name: Run chromatic on the pre-built polymer-cli example
-          command: yarn chromatic --storybook-build-dir="built-storybooks/polymer-cli" --app-code="o6jl9kmh0qd"
-      - run:
           name: Run chromatic on the pre-built preact-kitchen-sink example
           command: yarn chromatic --storybook-build-dir="built-storybooks/preact-kitchen-sink" --app-code="ls0ikhnwqt"
       - run:
@@ -193,11 +190,6 @@ jobs:
           name: Run ember-cli (smoke test)
           command: |
             cd examples/ember-cli
-            yarn storybook --smoke-test --quiet
-      - run:
-          name: Run polymer-cli (smoke test)
-          command: |
-            cd examples/polymer-cli
             yarn storybook --smoke-test --quiet
       - run:
           name: Run marko-cli (smoke test)

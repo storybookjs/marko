@@ -43,7 +43,7 @@ do
     yarn sb init --skip-install --yes
     ;;
   mdx)
-    if [[ $dir =~ (react_native*|angular-cli-v6|ember-cli|marko|meteor|mithril|polymer|riot|react_babel_6) ]]
+    if [[ $dir =~ (react_native*|angular-cli-v6|ember-cli|marko|meteor|mithril|riot|react_babel_6) ]]
     then
       yarn sb init --skip-install --yes
     else
