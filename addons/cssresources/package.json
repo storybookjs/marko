@@ -21,7 +21,6 @@
   "author": "nm123github",
   "files": [
     "dist/**/*",
-    "docs/**/*",
     "README.md",
     "*.js",
     "*.d.ts"

@@ -21,7 +21,6 @@
   "author": "jbaxleyiii",
   "files": [
     "dist/**/*",
-    "docs/**/*",
     "README.md",
     "*.js",
     "*.d.ts"
