@@ -1,3 +1,9 @@
+## 5.3.9 (January 24, 2020)
+
+### Bug Fixes
+
+* Addon-docs: Revert breaking source indentation fix ([#9609](https://github.com/storybookjs/storybook/pull/9609))
+
 ## 5.3.8 (January 22, 2020)
 
 ### Bug Fixes
