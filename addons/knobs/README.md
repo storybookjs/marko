@@ -76,7 +76,7 @@ export default {
 // then pass the story's prop data to the component’s prop in
 // the template with `v-bind:` or by placing the prop within
 // the component’s slot.
-export const withKnobs = () => ({
+export const exampleWithKnobs = () => ({
   components: { MyButton },
   props: {
     isDisabled: {
