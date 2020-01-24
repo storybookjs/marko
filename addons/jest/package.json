@@ -24,7 +24,6 @@
   "author": "Renaud Tertrais <renaud.tertrais@gmail.com> (https://github.com/renaudtertrais)",
   "files": [
     "dist/**/*",
-    "docs/**/*",
     "README.md",
     "*.js",
     "*.d.ts"
