@@ -19,7 +19,6 @@
   "license": "MIT",
   "files": [
     "dist/**/*",
-    "docs/**/*",
     "README.md",
     "*.js",
     "*.d.ts"
