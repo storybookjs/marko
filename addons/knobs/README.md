@@ -133,7 +133,7 @@ export const withKnobs = () => ({
 ### With Ember
 ```js
 import { withKnobs, text, boolean } from '@storybook/addon-knobs';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 
 export default {
   title: 'StoryBook with Knobs',

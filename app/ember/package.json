@@ -30,7 +30,7 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@ember/test-helpers": "^1.5.0",
+    "@ember/test-helpers": "^1.7.0",
     "@storybook/core": "6.0.0-alpha.1",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
@@ -39,9 +39,8 @@
   },
   "peerDependencies": {
     "babel-loader": "^7.0.0 || ^8.0.0",
-    "babel-plugin-ember-modules-api-polyfill": "^2.4.0",
-    "ember-cli-htmlbars-inline-precompile": "^1.0.3",
-    "ember-source": "^3.4.0"
+    "babel-plugin-ember-modules-api-polyfill": "^2.12.0",
+    "ember-source": "^3.16.0"
   },
   "engines": {
     "node": ">=8.0.0"
