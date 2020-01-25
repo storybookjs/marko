@@ -3,12 +3,12 @@
   "version": "6.0.0-alpha.1",
   "private": true,
   "scripts": {
-    "build": "ember build",
-    "prebuild-storybook": "yarn build && shx cp -r public/* dist",
-    "build-storybook": "build-storybook -s dist",
+    "build": "ember build --output-path ember-output",
+    "prebuild-storybook": "yarn build && shx cp -r public/* ember-output",
+    "build-storybook": "build-storybook -s ember-output",
     "dev": "ember serve",
-    "storybook": "yarn build && start-storybook -p 9009 -s dist",
-    "storybook:dev": "yarn dev & start-storybook -p 9009 -s dist"
+    "storybook": "yarn build && start-storybook -p 9009 -s ember-output",
+    "storybook:dev": "yarn dev & start-storybook -p 9009 -s ember-output"
   },
   "dependencies": {
     "ember-template-compiler": "^1.9.0-alpha"
