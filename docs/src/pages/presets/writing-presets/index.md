@@ -101,6 +101,31 @@ module.exports = {
 };
 ```
 
+### Addons
+
+For users, the name `managerEntries` might be a bit too technical, so instead both users and preset-authors can simply use the property: `addons`:
+
+```js
+module.exports = {
+  addons: ['@storybook/addon-storysource/register'],
+};
+```
+
+The array of values can support both references to other presets and addons that should be included into the manager.
+
+This was decided so users didn't have to learn more concepts and the minor differences. Storybook will detect whether the module references a preset or an managerEntry and will do the appropriate thing.
+
+Here's what it looks when combining presets and managerEntries in the addons property:
+
+```js
+module.exports = {
+  addons: [
+    '@storybook/addon-storysource/register', // a managerEntry
+    '@storybook/addon-docs/preset', // a preset
+  ],
+};
+```
+
 ### Entries
 
 Entries are the place to register entry points for the preview. For example it could be used to make a basic configure-storybook preset that loads all the `*.stories.js` files into SB, instead of forcing people to copy-paste the same thing everywhere.
@@ -130,7 +155,6 @@ module.exports = {
   babel: async (config, options) => {
     return config;
   },
-  addons: [],
 };
 ```
 
@@ -142,7 +166,7 @@ Change your `main.js` file to:
 const path = require('path');
 
 module.exports = {
-  presets: [path.resolve('./.storybook/my-preset')],
+  addons: [path.resolve('./.storybook/my-preset')],
 };
 ```
 
@@ -164,7 +188,6 @@ module.exports = {
   babel: async (config, options) => {
     return config;
   },
-  addons: [],
 };
 ```
 
