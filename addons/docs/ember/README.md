@@ -91,7 +91,7 @@ Finally, you can create MDX files like this:
 
 ```md
 import { Meta, Story, Props } from '@storybook/addon-docs/blocks';
-import hbs from 'htmlbars-inline-precompile'
+import { hbs } from 'ember-cli-htmlbars';
 
 <Meta title='App Component' component='AppComponent' />
 
