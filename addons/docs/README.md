@@ -162,22 +162,20 @@ The `configureJSX` option is useful when you're writing your docs in MDX and you
 
 ## Manual configuration
 
-If you don't want to use the preset, and prefer to configure "the long way", first register the addon in `.storybook/main.js`:
-
-```js
-module.exports = {
-  addons: ['@storybook/addon-docs/register'],
-};
-```
-
-Then configure Storybook's webpack loader in `.storybook/main.js` to understand MDX story files and annotate TS/JS story files with source code using `source-loader`:
+If you don't want to use the preset, and prefer to configure "the long way" add the following configuration to `.storybook/main.js` (see comments inline for explanation):
 
 ```js
 const createCompiler = require('@storybook/addon-docs/mdx-compiler-plugin');
 
 module.exports = {
+  // 1. register the docs panel (as opposed to '@storybook/addon-docs' which
+  //    will configure everything with a preset)
+  addons: ['@storybook/addon-docs/register'],
+  // 2. manually configure webpack, since you're not using the preset
   webpackFinal: async config => {
     config.module.rules.push({
+      // 2a. Load `.stories.mdx` / `.story.mdx` files as CSF and generate
+      //     the docs page from the markdown
       test: /\.(stories|story)\.mdx$/,
       use: [
         {
@@ -195,6 +193,8 @@ module.exports = {
         },
       ],
     });
+    // 2b. Run `source-loader` on story files to show their source code
+    //     automatically in `DocsPage` or the `Source` doc block.
     config.module.rules.push({
       test: /\.(stories|story)\.[tj]sx?$/,
       loader: require.resolve('@storybook/source-loader'),
