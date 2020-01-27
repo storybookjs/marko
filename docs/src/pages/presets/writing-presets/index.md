@@ -113,7 +113,9 @@ module.exports = {
 
 The array of values can support both references to other presets and addons that should be included into the manager.
 
-This was decided so users didn't have to learn more concepts and the minor differences. Storybook will detect whether the module references a preset or an managerEntry and will do the appropriate thing.
+Storybook will automatically detect whether a reference to an addon is a preset or a manager entry by checking if the package contains a `./preset.js` or `./register.js` (manager entry), falling back to preset if it is unsure.
+
+If this heuristic is incorrect for an addon you are using, you can explicitly opt in to an entry being an a manager entry using the `managerEntries` key.
 
 Here's what it looks when combining presets and managerEntries in the addons property:
 
