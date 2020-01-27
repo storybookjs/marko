@@ -76,7 +76,7 @@ export default {
 // then pass the story's prop data to the component’s prop in
 // the template with `v-bind:` or by placing the prop within
 // the component’s slot.
-export const withKnobs = () => ({
+export const exampleWithKnobs = () => ({
   components: { MyButton },
   props: {
     isDisabled: {
@@ -133,7 +133,7 @@ export const withKnobs = () => ({
 ### With Ember
 ```js
 import { withKnobs, text, boolean } from '@storybook/addon-knobs';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 
 export default {
   title: 'StoryBook with Knobs',

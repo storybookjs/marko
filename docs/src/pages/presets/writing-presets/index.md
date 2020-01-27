@@ -3,6 +3,8 @@ id: 'writing-presets'
 title: 'Writing Presets'
 ---
 
+> migration guide: This page documents the method to configure storybook introduced recently in 5.3.0, consult the [migration guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) if you want to migrate to this format of configuring storybook.
+
 [Storybook presets](../introduction/) are grouped collections of `babel`, `webpack`, and `addons` configurations that support specific use cases in Storybook, such as typescript or MDX support.
 
 This doc covers the [presets API](#presets-api) and how to use the presets mechanism for [advanced configuration](#advanced-configuration).
@@ -99,6 +101,33 @@ module.exports = {
 };
 ```
 
+### Addons
+
+For users, the name `managerEntries` might be a bit too technical, so instead both users and preset-authors can simply use the property: `addons`:
+
+```js
+module.exports = {
+  addons: ['@storybook/addon-storysource/register'],
+};
+```
+
+The array of values can support both references to other presets and addons that should be included into the manager.
+
+Storybook will automatically detect whether a reference to an addon is a preset or a manager entry by checking if the package contains a `./preset.js` or `./register.js` (manager entry), falling back to preset if it is unsure.
+
+If this heuristic is incorrect for an addon you are using, you can explicitly opt in to an entry being an a manager entry using the `managerEntries` key.
+
+Here's what it looks when combining presets and managerEntries in the addons property:
+
+```js
+module.exports = {
+  addons: [
+    '@storybook/addon-storysource/register', // a managerEntry
+    '@storybook/addon-docs/preset', // a preset
+  ],
+};
+```
+
 ### Entries
 
 Entries are the place to register entry points for the preview. For example it could be used to make a basic configure-storybook preset that loads all the `*.stories.js` files into SB, instead of forcing people to copy-paste the same thing everywhere.
@@ -128,7 +157,6 @@ module.exports = {
   babel: async (config, options) => {
     return config;
   },
-  addons: [],
 };
 ```
 
@@ -140,7 +168,7 @@ Change your `main.js` file to:
 const path = require('path');
 
 module.exports = {
-  presets: [path.resolve('./.storybook/my-preset')],
+  addons: [path.resolve('./.storybook/my-preset')],
 };
 ```
 
@@ -162,7 +190,6 @@ module.exports = {
   babel: async (config, options) => {
     return config;
   },
-  addons: [],
 };
 ```
 
