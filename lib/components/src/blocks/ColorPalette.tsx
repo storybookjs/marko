@@ -35,6 +35,12 @@ const SwatchLabel = styled.div(({ theme }) => ({
       ? transparentize(0.4, theme.color.defaultText)
       : transparentize(0.6, theme.color.defaultText),
 
+  '> div': {
+    display: 'inline-block',
+    overflow: 'hidden',
+    maxWidth: '100%',
+  },
+
   span: {
     display: 'block',
     marginTop: 2,
