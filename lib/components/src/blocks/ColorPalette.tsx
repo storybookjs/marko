@@ -129,8 +129,10 @@ function renderSwatch(color: string) {
 function renderSwatchLabel(color: string, colorDescription?: string) {
   return (
     <SwatchLabel key={color} title={color}>
-      {color}
-      {colorDescription && <span>{colorDescription}</span>}
+      <div>
+        {color}
+        {colorDescription && <span>{colorDescription}</span>}
+      </div>
     </SwatchLabel>
   );
 }
