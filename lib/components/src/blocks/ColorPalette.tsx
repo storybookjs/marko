@@ -35,8 +35,9 @@ const SwatchLabel = styled.div(({ theme }) => ({
       ? transparentize(0.4, theme.color.defaultText)
       : transparentize(0.6, theme.color.defaultText),
 
-  small: {
+  span: {
     display: 'block',
+    marginTop: 2,
   },
 }));
 
@@ -129,7 +130,7 @@ function renderSwatchLabel(color: string, colorDescription?: string) {
   return (
     <SwatchLabel key={color} title={color}>
       {color}
-      {colorDescription && <small>{colorDescription}</small>}
+      {colorDescription && <span>{colorDescription}</span>}
     </SwatchLabel>
   );
 }
