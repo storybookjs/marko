@@ -8,7 +8,6 @@ module.exports = {
       '@ember/routing/router',
       '@ember/application',
       './config/environment',
-      'htmlbars-inline-precompile',
     ],
   },
 };

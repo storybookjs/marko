@@ -3,7 +3,6 @@ const parser = require('@babel/parser');
 const generate = require('@babel/generator').default;
 const camelCase = require('lodash/camelCase');
 const jsStringEscape = require('js-string-escape');
-const { toId, storyNameFromExport } = require('@storybook/router/utils');
 
 // Generate the MDX as is, but append named exports for every
 // story in the contents
@@ -55,7 +54,7 @@ function genStoryExport(ast, context) {
 
   let body = ast.children.find(n => n.type !== 'JSXText');
   let storyCode = null;
-  let isJsx = false;
+
   if (!body) {
     // plain text node
     const { code } = generate(ast.children[0], {});
@@ -64,21 +63,29 @@ function genStoryExport(ast, context) {
     if (body.type === 'JSXExpressionContainer') {
       // FIXME: handle fragments
       body = body.expression;
-    } else {
-      isJsx = true;
     }
     const { code } = generate(body, {});
     storyCode = code;
   }
-  if (isJsx) {
-    statements.push(
-      `export const ${storyKey} = () => (
+
+  let storyVal = null;
+  switch (body && body.type) {
+    // We don't know what type the identifier is, but this code
+    // assumes it's a function from CSF. Let's see who complains!
+    case 'Identifier':
+      storyVal = `assertIsFn(${storyCode})`;
+      break;
+    case 'ArrowFunctionExpression':
+      storyVal = `(${storyCode})`;
+      break;
+    default:
+      storyVal = `() => (
         ${storyCode}
-      );`
-    );
-  } else {
-    statements.push(`export const ${storyKey} = makeStoryFn(${storyCode});`);
+      )`;
+      break;
   }
+
+  statements.push(`export const ${storyKey} = ${storyVal};`);
   statements.push(`${storyKey}.story = {};`);
 
   // always preserve the name, since CSF exports can get modified by displayName
@@ -190,13 +197,13 @@ function getExports(node, counter, options) {
   return null;
 }
 
-// insert `mdxKind` into the context so that we can know what "kind" we're rendering into
-// when we render <Story name="xxx">...</Story>, since this MDX can be attached to any `selectedKind`!
+// insert `mdxStoryNameToKey` and `mdxComponentMeta` into the context so that we
+// can reconstruct the Story ID dynamically from the `name` at render time
 const wrapperJs = `
 componentMeta.parameters = componentMeta.parameters || {};
 componentMeta.parameters.docs = {
   ...(componentMeta.parameters.docs || {}),
-  page: () => <AddContext mdxStoryNameToId={mdxStoryNameToId}><MDXContent /></AddContext>,
+  page: () => <AddContext mdxStoryNameToKey={mdxStoryNameToKey} mdxComponentMeta={componentMeta}><MDXContent /></AddContext>,
 };
 `.trim();
 
@@ -314,23 +321,12 @@ function extractExports(node, options) {
   }
   metaExport.includeStories = JSON.stringify(includeStories);
 
-  const { title, id: componentId } = metaExport;
-  const mdxStoryNameToId = Object.entries(context.storyNameToKey).reduce(
-    (acc, [storyName, storyKey]) => {
-      if (title) {
-        acc[storyName] = toId(componentId || title, storyNameFromExport(storyKey));
-      }
-      return acc;
-    },
-    {}
-  );
-
   const fullJsx = [
-    'import { makeStoryFn, AddContext } from "@storybook/addon-docs/blocks";',
+    'import { assertIsFn, AddContext } from "@storybook/addon-docs/blocks";',
     defaultJsx,
     ...storyExports,
     `const componentMeta = ${stringifyMeta(metaExport)};`,
-    `const mdxStoryNameToId = ${JSON.stringify(mdxStoryNameToId)};`,
+    `const mdxStoryNameToKey = ${JSON.stringify(context.storyNameToKey)};`,
     wrapperJs,
     'export default componentMeta;',
   ].join('\n\n');

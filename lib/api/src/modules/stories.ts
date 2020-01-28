@@ -1,5 +1,5 @@
-// FIXME: we shouldn't import from dist but there are no types otherwise
-import { toId, sanitize, parseKind } from '@storybook/router';
+import { DOCS_MODE } from 'global';
+import { toId, sanitize, parseKind } from '@storybook/csf';
 import deprecate from 'util-deprecate';
 
 import { Module } from '../index';
@@ -131,34 +131,6 @@ const initStoriesApi = ({
     return undefined;
   };
 
-  const jumpToStory = (direction: Direction) => {
-    const { storiesHash, viewMode, storyId } = store.getState();
-
-    // cannot navigate when there's no current selection
-    if (!storyId || !storiesHash[storyId]) {
-      return;
-    }
-
-    const lookupList = Object.keys(storiesHash).filter(
-      k => !(storiesHash[k].children || Array.isArray(storiesHash[k]))
-    );
-    const index = lookupList.indexOf(storyId);
-
-    // cannot navigate beyond fist or last
-    if (index === lookupList.length - 1 && direction > 0) {
-      return;
-    }
-    if (index === 0 && direction < 0) {
-      return;
-    }
-
-    const result = lookupList[index + direction];
-
-    if (viewMode && result) {
-      navigate(`/${viewMode}/${result}`);
-    }
-  };
-
   const jumpToComponent = (direction: Direction) => {
     const state = store.getState();
     const { storiesHash, viewMode, storyId } = state;
@@ -189,6 +161,39 @@ const initStoriesApi = ({
     const result = lookupList[index + direction][0];
 
     navigate(`/${viewMode || 'story'}/${result}`);
+  };
+
+  const jumpToStory = (direction: Direction) => {
+    const { storiesHash, viewMode, storyId } = store.getState();
+
+    if (DOCS_MODE) {
+      jumpToComponent(direction);
+      return;
+    }
+
+    // cannot navigate when there's no current selection
+    if (!storyId || !storiesHash[storyId]) {
+      return;
+    }
+
+    const lookupList = Object.keys(storiesHash).filter(
+      k => !(storiesHash[k].children || Array.isArray(storiesHash[k]))
+    );
+    const index = lookupList.indexOf(storyId);
+
+    // cannot navigate beyond fist or last
+    if (index === lookupList.length - 1 && direction > 0) {
+      return;
+    }
+    if (index === 0 && direction < 0) {
+      return;
+    }
+
+    const result = lookupList[index + direction];
+
+    if (viewMode && result) {
+      navigate(`/${viewMode}/${result}`);
+    }
   };
 
   const toKey = (input: string) =>
@@ -235,7 +240,10 @@ const initStoriesApi = ({
       if (typeof rootSeparator !== 'undefined' || typeof groupSeparator !== 'undefined') {
         warnRemovingHierarchySeparators();
         if (usingShowRoots) warnUsingHierarchySeparatorsAndShowRoots();
-        ({ root, groups } = parseKind(kind, { rootSeparator, groupSeparator }));
+        ({ root, groups } = parseKind(kind, {
+          rootSeparator: rootSeparator || '|',
+          groupSeparator: groupSeparator || /\/|\./,
+        }));
 
         // 2. If the user hasn't passed separators, but is using | or . in kinds, use the old behaviour but warn
       } else if (anyKindMatchesOldHierarchySeparators && !usingShowRoots) {
@@ -261,7 +269,6 @@ const initStoriesApi = ({
           const { name } = group;
           const parent = index > 0 && soFar[index - 1].id;
           const id = sanitize(parent ? `${parent}-${name}` : name);
-          const isComponent = index === original.length - 1;
           if (parent === id) {
             throw new Error(
               `
@@ -278,11 +285,10 @@ Did you create a path that uses the separator char accidentally, such as 'Vue <d
             parent,
             depth: index,
             children: [],
-            isComponent,
+            isComponent: false,
             isLeaf: false,
             isRoot: !!root && index === 0,
-            // if isComponent is true, .mdx story - save parameters
-            parameters: isComponent ? parameters : undefined,
+            parameters,
           };
           return soFar.concat([result]);
         }, [] as GroupsList);
@@ -312,7 +318,9 @@ Did you create a path that uses the separator char accidentally, such as 'Vue <d
         acc[item.id] = item;
         const { children } = item;
         if (children) {
-          children.forEach(id => addItem(acc, storiesHashOutOfOrder[id]));
+          const childNodes = children.map(id => storiesHashOutOfOrder[id]);
+          acc[item.id].isComponent = childNodes.every(childNode => childNode.isLeaf);
+          childNodes.forEach(childNode => addItem(acc, childNode));
         }
       }
       return acc;

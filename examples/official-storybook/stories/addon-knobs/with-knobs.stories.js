@@ -45,6 +45,12 @@ export default {
   decorators: [withKnobs],
 };
 
+export const selectKnob = () => {
+  const value = select('value', [1, 2, 3, undefined, null], 1);
+
+  return <div>{JSON.stringify({ value: String(value) }, null, 2)}</div>;
+};
+
 export const TweaksStaticValues = () => {
   const name = text('Name', 'Storyteller');
   const age = number('Age', 70, { range: true, min: 0, max: 90, step: 5 });
@@ -69,7 +75,7 @@ export const TweaksStaticValues = () => {
   const otherStyles = object('Styles', {
     border: '2px dashed silver',
     borderRadius: 10,
-    padding: '10px',
+    padding: 10,
   });
   const nice = boolean('Nice', true);
   const images = files('Happy Picture', 'image/*', [
@@ -173,7 +179,7 @@ export const TweaksStaticValuesOrganizedInGroups = () => {
     {
       border: '2px dashed silver',
       borderRadius: 10,
-      padding: '10px',
+      padding: 10,
     },
     GROUP_IDS.DISPLAY
   );
