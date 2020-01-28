@@ -36,7 +36,6 @@ title: 'Live Examples'
 - [React Official](https://release-5-0--storybooks-official.netlify.com/)
 - [Vue](https://release-5-0--storybooks-vue.netlify.com/)
 - [Angular](https://release-5-0--storybooks-angular.netlify.com/)
-- [Polymer](https://release-5-0--storybooks-polymer.netlify.com/)
 - [Mithril](https://release-5-0--storybooks-mithril.netlify.com/)
 - [Marko](https://release-5-0--storybooks-marko.netlify.com/)
 - [HTML](https://release-5-0--storybooks-html.netlify.com/)
@@ -50,4 +49,3 @@ title: 'Live Examples'
 - [React Official](https://release-3-4--storybooks-official.netlify.com)
 - [Vue](https://release-3-4--storybooks-vue.netlify.com/)
 - [Angular](https://release-3-4--storybooks-angular.netlify.com/)
-- [Polymer](https://release-3-4--storybooks-polymer.netlify.com/)
