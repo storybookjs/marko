@@ -223,94 +223,99 @@ const initStoriesApi = ({
       kind.match(/\.|\|/)
     );
 
-    const storiesHashOutOfOrder = Object.values(input).reduce((acc, item) => {
-      const { kind, parameters } = item;
-      // FIXME: figure out why parameters is missing when used with react-native-server
-      const {
-        hierarchyRootSeparator: rootSeparator = undefined,
-        hierarchySeparator: groupSeparator = undefined,
-        showRoots = undefined,
-      } = { ...provider.getConfig(), ...((parameters && parameters.options) || {}) };
+    const { storySort = () => 0 } = provider.getConfig();
 
-      const usingShowRoots = typeof showRoots !== 'undefined';
+    const storiesHashOutOfOrder = Object.entries(input)
+      .sort(storySort)
+      .map(([k, v]) => v)
+      .reduce((acc, item) => {
+        const { kind, parameters } = item;
+        // FIXME: figure out why parameters is missing when used with react-native-server
+        const {
+          hierarchyRootSeparator: rootSeparator = undefined,
+          hierarchySeparator: groupSeparator = undefined,
+          showRoots = undefined,
+        } = { ...provider.getConfig(), ...((parameters && parameters.options) || {}) };
 
-      // Kind splitting behaviour as per https://github.com/storybookjs/storybook/issues/8793
-      let root = '';
-      let groups: string[];
-      // 1. If the user has passed separators, use the old behaviour but warn them
-      if (typeof rootSeparator !== 'undefined' || typeof groupSeparator !== 'undefined') {
-        warnRemovingHierarchySeparators();
-        if (usingShowRoots) warnUsingHierarchySeparatorsAndShowRoots();
-        ({ root, groups } = parseKind(kind, {
-          rootSeparator: rootSeparator || '|',
-          groupSeparator: groupSeparator || /\/|\./,
-        }));
+        const usingShowRoots = typeof showRoots !== 'undefined';
 
-        // 2. If the user hasn't passed separators, but is using | or . in kinds, use the old behaviour but warn
-      } else if (anyKindMatchesOldHierarchySeparators && !usingShowRoots) {
-        warnChangingDefaultHierarchySeparators();
-        ({ root, groups } = parseKind(kind, { rootSeparator: '|', groupSeparator: /\/|\./ }));
+        // Kind splitting behaviour as per https://github.com/storybookjs/storybook/issues/8793
+        let root = '';
+        let groups: string[];
+        // 1. If the user has passed separators, use the old behaviour but warn them
+        if (typeof rootSeparator !== 'undefined' || typeof groupSeparator !== 'undefined') {
+          warnRemovingHierarchySeparators();
+          if (usingShowRoots) warnUsingHierarchySeparatorsAndShowRoots();
+          ({ root, groups } = parseKind(kind, {
+            rootSeparator: rootSeparator || '|',
+            groupSeparator: groupSeparator || /\/|\./,
+          }));
 
-        // 3. If the user passes showRoots, or doesn't match above, do a simpler splitting.
-      } else {
-        const parts: string[] = kind.split('/');
-        if (showRoots && parts.length > 1) {
-          [root, ...groups] = parts;
+          // 2. If the user hasn't passed separators, but is using | or . in kinds, use the old behaviour but warn
+        } else if (anyKindMatchesOldHierarchySeparators && !usingShowRoots) {
+          warnChangingDefaultHierarchySeparators();
+          ({ root, groups } = parseKind(kind, { rootSeparator: '|', groupSeparator: /\/|\./ }));
+
+          // 3. If the user passes showRoots, or doesn't match above, do a simpler splitting.
         } else {
-          groups = parts;
+          const parts: string[] = kind.split('/');
+          if (showRoots && parts.length > 1) {
+            [root, ...groups] = parts;
+          } else {
+            groups = parts;
+          }
         }
-      }
 
-      const rootAndGroups = []
-        .concat(root || [])
-        .concat(groups)
-        .map(toGroup)
-        // Map a bunch of extra fields onto the groups, collecting the path as we go (thus the reduce)
-        .reduce((soFar, group, index, original) => {
-          const { name } = group;
-          const parent = index > 0 && soFar[index - 1].id;
-          const id = sanitize(parent ? `${parent}-${name}` : name);
-          if (parent === id) {
-            throw new Error(
-              `
+        const rootAndGroups = []
+          .concat(root || [])
+          .concat(groups)
+          .map(toGroup)
+          // Map a bunch of extra fields onto the groups, collecting the path as we go (thus the reduce)
+          .reduce((soFar, group, index, original) => {
+            const { name } = group;
+            const parent = index > 0 && soFar[index - 1].id;
+            const id = sanitize(parent ? `${parent}-${name}` : name);
+            if (parent === id) {
+              throw new Error(
+                `
 Invalid part '${name}', leading to id === parentId ('${id}'), inside kind '${kind}'
 
 Did you create a path that uses the separator char accidentally, such as 'Vue <docs/>' where '/' is a separator char? See https://github.com/storybookjs/storybook/issues/6128
               `.trim()
-            );
-          }
+              );
+            }
 
-          const result: Group = {
+            const result: Group = {
+              ...group,
+              id,
+              parent,
+              depth: index,
+              children: [],
+              isComponent: false,
+              isLeaf: false,
+              isRoot: !!root && index === 0,
+              parameters,
+            };
+            return soFar.concat([result]);
+          }, [] as GroupsList);
+
+        const paths = [...rootAndGroups.map(g => g.id), item.id];
+
+        // Ok, now let's add everything to the store
+        rootAndGroups.forEach((group, index) => {
+          const child = paths[index + 1];
+          const { id } = group;
+          acc[id] = merge(acc[id] || {}, {
             ...group,
-            id,
-            parent,
-            depth: index,
-            children: [],
-            isComponent: false,
-            isLeaf: false,
-            isRoot: !!root && index === 0,
-            parameters,
-          };
-          return soFar.concat([result]);
-        }, [] as GroupsList);
-
-      const paths = [...rootAndGroups.map(g => g.id), item.id];
-
-      // Ok, now let's add everything to the store
-      rootAndGroups.forEach((group, index) => {
-        const child = paths[index + 1];
-        const { id } = group;
-        acc[id] = merge(acc[id] || {}, {
-          ...group,
-          ...(child && { children: [child] }),
+            ...(child && { children: [child] }),
+          });
         });
-      });
 
-      const story = { ...item, parent: rootAndGroups[rootAndGroups.length - 1].id, isLeaf: true };
-      acc[item.id] = story as Story;
+        const story = { ...item, parent: rootAndGroups[rootAndGroups.length - 1].id, isLeaf: true };
+        acc[item.id] = story as Story;
 
-      return acc;
-    }, hash);
+        return acc;
+      }, hash);
 
     // When adding a group, also add all of its children, depth first
     function addItem(acc: StoriesHash, item: Story | Group) {
