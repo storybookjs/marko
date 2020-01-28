@@ -4,6 +4,8 @@
 
 # Storybook Docs
 
+> migration guide: This page documents the method to configure storybook introduced recently in 5.3.0, consult the [migration guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) if you want to migrate to this format of configuring storybook.
+
 Storybook Docs transforms your Storybook stories into world-class component documentation.
 
 **DocsPage.** Out of the box, all your stories get a `DocsPage`. `DocsPage` is a zero-config aggregation of your component stories, text descriptions, docgen comments, props tables, and code examples into clean, readable pages.
@@ -77,16 +79,16 @@ For more information on `MDX`, see the [`MDX` reference](./docs/mdx.md).
 
 Storybook Docs supports all view layers that Storybook supports except for React Native (currently). There are some framework-specific features as well, such as props tables and inline story rendering. This chart captures the current state of support:
 
-|                   | React | Vue | Angular | Ember | Web Components | HTML | Svelte | Preact | Polymer | Riot | Mithril | Marko |
-| ----------------- | :---: | :-: | :-----: | :---: | :------------: | :--: | :----: | :----: | :-----: | :--: | :-----: | :---: |
-| MDX stories       |   +   |  +  |    +    |   +   |       +        |  +   |   +    |   +    |    +    |  +   |    +    |   +   |
-| CSF stories       |   +   |  +  |    +    |   +   |       +        |  +   |   +    |   +    |    +    |  +   |    +    |   +   |
-| StoriesOf stories |   +   |  +  |    +    |   +   |       +        |  +   |   +    |   +    |    +    |  +   |    +    |   +   |
-| Source            |   +   |  +  |    +    |   +   |       +        |  +   |   +    |   +    |    +    |  +   |    +    |   +   |
-| Notes / Info      |   +   |  +  |    +    |   +   |       +        |  +   |   +    |   +    |    +    |  +   |    +    |   +   |
-| Props table       |   +   |  +  |    +    |   +   |       +        |      |        |        |         |      |         |       |
-| Description       |   +   |  +  |    +    |   +   |       +        |      |        |        |         |      |         |       |
-| Inline stories    |   +   |  +  |         |       |       +        |      |        |        |         |      |         |       |
+|                   | React | Vue | Angular | Ember | Web Components | HTML | Svelte | Preact | Riot | Mithril | Marko |
+| ----------------- | :---: | :-: | :-----: | :---: | :------------: | :--: | :----: | :----: | :--: | :-----: | :---: |
+| MDX stories       |   +   |  +  |    +    |   +   |       +        |  +   |   +    |   +    |  +   |    +    |   +   |
+| CSF stories       |   +   |  +  |    +    |   +   |       +        |  +   |   +    |   +    |  +   |    +    |   +   |
+| StoriesOf stories |   +   |  +  |    +    |   +   |       +        |  +   |   +    |   +    |  +   |    +    |   +   |
+| Source            |   +   |  +  |    +    |   +   |       +        |  +   |   +    |   +    |  +   |    +    |   +   |
+| Notes / Info      |   +   |  +  |    +    |   +   |       +        |  +   |   +    |   +    |  +   |    +    |   +   |
+| Props table       |   +   |  +  |    +    |   +   |       +        |      |        |        |      |         |       |
+| Description       |   +   |  +  |    +    |   +   |       +        |      |        |        |      |         |       |
+| Inline stories    |   +   |  +  |         |       |       +        |      |        |        |      |         |       |
 
 **Note:** `#` = WIP support
 
@@ -162,22 +164,20 @@ The `configureJSX` option is useful when you're writing your docs in MDX and you
 
 ## Manual configuration
 
-If you don't want to use the preset, and prefer to configure "the long way", first register the addon in `.storybook/main.js`:
-
-```js
-module.exports = {
-  addons: ['@storybook/addon-docs/register'],
-};
-```
-
-Then configure Storybook's webpack loader in `.storybook/main.js` to understand MDX story files and annotate TS/JS story files with source code using `source-loader`:
+If you don't want to use the preset, and prefer to configure "the long way" add the following configuration to `.storybook/main.js` (see comments inline for explanation):
 
 ```js
 const createCompiler = require('@storybook/addon-docs/mdx-compiler-plugin');
 
 module.exports = {
+  // 1. register the docs panel (as opposed to '@storybook/addon-docs' which
+  //    will configure everything with a preset)
+  addons: ['@storybook/addon-docs/register'],
+  // 2. manually configure webpack, since you're not using the preset
   webpackFinal: async config => {
     config.module.rules.push({
+      // 2a. Load `.stories.mdx` / `.story.mdx` files as CSF and generate
+      //     the docs page from the markdown
       test: /\.(stories|story)\.mdx$/,
       use: [
         {
@@ -195,6 +195,8 @@ module.exports = {
         },
       ],
     });
+    // 2b. Run `source-loader` on story files to show their source code
+    //     automatically in `DocsPage` or the `Source` doc block.
     config.module.rules.push({
       test: /\.(stories|story)\.[tj]sx?$/,
       loader: require.resolve('@storybook/source-loader'),
