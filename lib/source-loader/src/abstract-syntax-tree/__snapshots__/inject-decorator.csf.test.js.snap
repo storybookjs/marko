@@ -15,15 +15,15 @@ export const text = () => (
   <Button onClick={action(\\"clicked\\")}>Hello Button</Button>
 );
 
-export const emoji = addSourceDecorator(() => (
+export const emoji = () => (
   <Button onClick={action(\\"clicked\\")}>
     <span role=\\"img\\" aria-label=\\"so cool\\">
       😀 😎 👍 💯
     </span>
   </Button>
-), {__STORY__, __ADDS_MAP__,__MAIN_FILE_LOCATION__,__MODULE_DEPENDENCIES__,__LOCAL_DEPENDENCIES__,__SOURCE_PREFIX__,__IDS_TO_FRAMEWORKS__});;
+);;
 
-export const emojiFn = addSourceDecorator(function emojiFn() {
+export const emojiFn = function emojiFn() {
   return (
     <Button onClick={action(\\"clicked\\")}>
       <span role=\\"img\\" aria-label=\\"so cool\\">
@@ -31,6 +31,6 @@ export const emojiFn = addSourceDecorator(function emojiFn() {
       </span>
     </Button>
   )
-}, {__STORY__, __ADDS_MAP__,__MAIN_FILE_LOCATION__,__MODULE_DEPENDENCIES__,__LOCAL_DEPENDENCIES__,__SOURCE_PREFIX__,__IDS_TO_FRAMEWORKS__});
+};
 "
 `;
