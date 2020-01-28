@@ -1,4 +1,4 @@
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { checkA11y } from '@storybook/addon-a11y';
 
 export default {
