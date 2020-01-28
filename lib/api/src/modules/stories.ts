@@ -92,6 +92,7 @@ Read more about it in the migration guide: https://github.com/storybookjs/storyb
 const initStoriesApi = ({
   store,
   navigate,
+  provider,
   storyId: initialStoryId,
   viewMode: initialViewMode,
 }: Module) => {
@@ -229,7 +230,7 @@ const initStoriesApi = ({
         hierarchyRootSeparator: rootSeparator = undefined,
         hierarchySeparator: groupSeparator = undefined,
         showRoots = undefined,
-      } = (parameters && parameters.options) || {};
+      } = { ...provider.getConfig(), ...((parameters && parameters.options) || {}) };
 
       const usingShowRoots = typeof showRoots !== 'undefined';
 
