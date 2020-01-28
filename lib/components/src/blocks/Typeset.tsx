@@ -15,7 +15,6 @@ const Label = styled.div<{}>(({ theme }) => ({
 }));
 
 const Sample = styled.div({
-  lineHeight: 1,
   overflow: 'hidden',
   whiteSpace: 'nowrap',
   textOverflow: 'ellipsis',
@@ -35,6 +34,7 @@ const Wrapper = styled.div<{}>(withReset, ({ theme }) => ({
 }));
 
 export interface TypesetProps {
+  fontFamily?: string;
   fontSizes: string[];
   fontWeight?: number;
   sampleText?: string;
@@ -45,6 +45,7 @@ export interface TypesetProps {
  * with different sizes and weights and configurable sample text.
  */
 export const Typeset: FunctionComponent<TypesetProps> = ({
+  fontFamily,
   fontSizes,
   fontWeight,
   sampleText,
@@ -56,6 +57,7 @@ export const Typeset: FunctionComponent<TypesetProps> = ({
         <Label>{size}</Label>
         <Sample
           style={{
+            fontFamily,
             fontSize: size,
             fontWeight,
           }}

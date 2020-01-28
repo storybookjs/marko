@@ -52,11 +52,22 @@ const PlainLink = styled.a(plain);
 
 const Wrapper = styled.div({});
 
-const refinedViewMode = (viewMode: string | undefined, isDocsOnly: boolean) => {
-  if (isDocsOnly) {
-    return 'docs';
+export const viewMode = (
+  currentViewMode: string | undefined,
+  isDocsOnly: boolean,
+  parameters: { viewMode?: string } = {}
+) => {
+  const { viewMode: paramViewMode } = parameters;
+  switch (true) {
+    case typeof paramViewMode === 'string':
+      return paramViewMode;
+    case isDocsOnly:
+      return 'docs';
+    case currentViewMode === 'settings' || !currentViewMode:
+      return 'story';
+    default:
+      return currentViewMode;
   }
-  return viewMode === 'settings' || !viewMode ? 'story' : viewMode;
 };
 
 const targetId = (childIds?: string[]) =>
@@ -73,14 +84,17 @@ export const Link = ({
   onKeyUp,
   childIds,
   isExpanded,
+  parameters,
 }) => {
   return isLeaf || (isComponent && !isExpanded) ? (
     <Location>
-      {({ viewMode }) => (
+      {({ viewMode: currentViewMode }) => (
         <PlainRouterLink
           title={name}
           id={prefix + id}
-          to={`/${refinedViewMode(viewMode, isLeaf && isComponent)}/${targetId(childIds) || id}`}
+          to={`/${viewMode(currentViewMode, isLeaf && isComponent, parameters)}/${targetId(
+            childIds
+          ) || id}`}
           onKeyUp={onKeyUp}
           onClick={onClick}
         >
@@ -161,7 +175,6 @@ const SidebarStories: FunctionComponent<StoriesProps> = memo(
         </Wrapper>
       );
     }
-
     return (
       <Wrapper className={className}>
         <TreeState

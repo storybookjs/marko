@@ -3,7 +3,12 @@ export { Badge } from './Badge/Badge';
 // Typography
 export { Link } from './typography/link/link';
 export { DocumentWrapper } from './typography/DocumentWrapper';
-export { SyntaxHighlighter } from './syntaxhighlighter/syntaxhighlighter';
+export {
+  SyntaxHighlighter,
+  SyntaxHighlighterProps,
+  SyntaxHighlighterRendererProps,
+  createSyntaxHighlighterElement,
+} from './syntaxhighlighter/syntaxhighlighter';
 
 // UI
 export { ActionBar } from './ActionBar/ActionBar';
@@ -35,3 +40,6 @@ export { StorybookIcon } from './brand/StorybookIcon';
 
 // Doc blocks
 export * from './blocks';
+
+// Loader
+export { Loader } from './Loader/Loader';

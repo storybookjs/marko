@@ -2,6 +2,7 @@ import React, { ComponentProps } from 'react';
 import { styled } from '@storybook/theming';
 import { opacify, transparentize } from 'polished';
 import { Icons } from '@storybook/components';
+import { DOCS_MODE } from 'global';
 
 export type ExpanderProps = ComponentProps<'span'> & {
   isExpanded?: boolean;
@@ -50,7 +51,7 @@ const Icon = styled(Icons)<IconProps>(
     if (icon === 'component') {
       return { color: '#1ea7fd' };
     }
-    if (icon === 'bookmarkhollow') {
+    if (icon === 'bookmarkhollow' || (DOCS_MODE && icon === 'document')) {
       return { color: '#37d5d3' };
     }
     if (icon === 'document') {
@@ -103,7 +104,7 @@ export const Item = styled(({ className, children, id }) => (
         }),
   ({ theme, loading }) =>
     loading && {
-      '&& > svg + span': { background: theme.color.medium },
+      '&& > svg + span': { background: theme.appBorderColor },
       '&& > *': theme.animation.inlineGlow,
       '&& > span': { borderColor: 'transparent' },
     }
