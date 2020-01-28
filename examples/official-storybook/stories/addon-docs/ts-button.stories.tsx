@@ -6,6 +6,9 @@ import Button, { Type } from '../../components/TsButton';
 export default {
   title: 'Addons/Docs/TsButton',
   component: Button,
+  parameters: {
+    viewMode: 'story',
+  },
 };
 
 type Story = () => any;
