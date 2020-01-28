@@ -49,13 +49,6 @@ module.exports = {
       },
     },
     {
-      test: './examples/rax-kitchen-sink',
-      presets: [
-        ['@babel/preset-env', { shippedProposals: true, useBuiltIns: 'usage', corejs: '3' }],
-        ['babel-preset-rax', { development: process.env.BABEL_ENV === 'development' }],
-      ],
-    },
-    {
       test: './lib',
       presets: [
         ['@babel/preset-env', { shippedProposals: true, useBuiltIns: 'usage', corejs: '3' }],
@@ -74,11 +67,6 @@ module.exports = {
       env: {
         test: withTests,
       },
-    },
-    {
-      test: './app/react-native',
-      presets: ['module:metro-react-native-babel-preset'],
-      plugins: ['babel-plugin-macros', ['emotion', { sourceMap: true, autoLabel: true }]],
     },
     {
       test: [
