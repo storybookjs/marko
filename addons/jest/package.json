@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-jest",
-  "version": "5.3.0-rc.9",
+  "version": "6.0.0-alpha.1",
   "description": "React storybook addon that show component jest report",
   "keywords": [
     "addon",
@@ -24,7 +24,6 @@
   "author": "Renaud Tertrais <renaud.tertrais@gmail.com> (https://github.com/renaudtertrais)",
   "files": [
     "dist/**/*",
-    "docs/**/*",
     "README.md",
     "*.js",
     "*.d.ts"
@@ -35,17 +34,20 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "5.3.0-rc.9",
-    "@storybook/api": "5.3.0-rc.9",
-    "@storybook/components": "5.3.0-rc.9",
-    "@storybook/core-events": "5.3.0-rc.9",
-    "@storybook/theming": "5.3.0-rc.9",
+    "@storybook/addons": "6.0.0-alpha.1",
+    "@storybook/api": "6.0.0-alpha.1",
+    "@storybook/components": "6.0.0-alpha.1",
+    "@storybook/core-events": "6.0.0-alpha.1",
+    "@storybook/theming": "6.0.0-alpha.1",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "react": "^16.8.3",
     "react-sizeme": "^2.5.2",
     "upath": "^1.1.0",
     "util-deprecate": "^1.0.2"
+  },
+  "devDependencies": {
+    "@types/webpack-env": "^1.15.0"
   },
   "peerDependencies": {
     "react": "*"

@@ -5,6 +5,16 @@ interface ButtonProps {
    * Simple click handler
    */
   onClick?: () => void;
+
+  /**
+   * Is primary?
+   */
+  primary?: boolean;
+
+  /**
+   * default is false
+   */
+  secondary?: boolean;
 }
 
 /**
@@ -15,3 +25,8 @@ export const Button: FC<ButtonProps> = ({ children, onClick }) => (
     {children}
   </button>
 );
+
+Button.defaultProps = {
+  primary: true,
+  secondary: false,
+};
