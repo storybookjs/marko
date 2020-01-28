@@ -65,7 +65,7 @@ const BarInner = styled.div<{ bgColor: string }>(({ bgColor }) => ({
   flexShrink: 0,
   height: 40,
   backgroundColor: bgColor || '',
-  overflowX: 'scroll',
+  overflowX: 'auto',
 }));
 
 export interface FlexBarProps {
