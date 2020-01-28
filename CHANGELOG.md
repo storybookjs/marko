@@ -1,3 +1,36 @@
+## 5.3.9 (January 24, 2020)
+
+### Bug Fixes
+
+* Addon-docs: Revert breaking source indentation fix ([#9609](https://github.com/storybookjs/storybook/pull/9609))
+
+## 6.0.0-alpha.1 (January 23, 2020)
+
+### Features
+
+* Core: Enable HMR logging in browser console ([#9535](https://github.com/storybookjs/storybook/pull/9535))
+
+### Bug Fixes
+
+* Addon-knobs: Fix broken link to repo in empty panel ([#9530](https://github.com/storybookjs/storybook/pull/9530))
+* Typescript: Export IStory in `@storybook/angular` ([#9097](https://github.com/storybookjs/storybook/pull/9097))
+
+### Maintenance
+
+* React-native: Extract to its own repo ([#9599](https://github.com/storybookjs/storybook/pull/9599))
+* Polymer: Extract to its own repo ([#9596](https://github.com/storybookjs/storybook/pull/9596))
+* Build: Fix some dependencies & ts problems ([#9603](https://github.com/storybookjs/storybook/pull/9603))
+
+## 5.3.8 (January 22, 2020)
+
+### Bug Fixes
+
+* Addon-docs:  Fix TS false default value in prop table ([#9560](https://github.com/storybookjs/storybook/pull/9560))
+* Addon-knobs: Fix broken repo link in empty panel ([#9530](https://github.com/storybookjs/storybook/pull/9530))
+* Typescript: Export IStory in `@storybook/angular` ([#9097](https://github.com/storybookjs/storybook/pull/9097))
+* Fixed Angular button example story ([#9540](https://github.com/storybookjs/storybook/pull/9540))
+* Clean usage of `@types/webpack-env` dep in all packages ([#9536](https://github.com/storybookjs/storybook/pull/9536))
+
 ## 6.0.0-alpha.0 (January 21, 2020)
 
 ### Features

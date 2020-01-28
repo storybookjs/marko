@@ -35,3 +35,4 @@ storybook-out
 built-storybooks
 cypress/videos
 cypress/screenshots
+examples/ember-cli/ember-output
