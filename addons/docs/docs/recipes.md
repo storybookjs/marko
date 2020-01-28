@@ -209,6 +209,31 @@ User writes documentation & stories side-by-side in a single MDX file, and wants
 </Story>
 ```
 
+## Controlling a story's view mode
+
+Storybook's default story navigation behavior is to preserve the existing view mode. In other words, if a user is viewing a story in "docs" mode, and clicks on another story, they will navigate to the other story in "docs" mode. If they are viewing a story in "story" mode (i.e. "canvas" in the UI) they will navigate to another story in "story" mode (with the exception of "docs-only" pages, which are always shown in "docs" mode).
+
+Based on user feedback, it's also possible to control the view mode for an individual story using the `viewMode` story parameter. In the following example, the nav link will always set the view mode to story:
+
+```js
+export const Foo = () => <Component />;
+Foo.story = {
+  parameters: {
+    // reset the view mode to "story" whenever the user navigates to this story
+    viewMode: 'story',
+  },
+};
+```
+
+This can also be applied globally in `preview.js`:
+
+```js
+// always reset the view mode to "docs" whenever the user navigates
+addParameters({
+  viewMode: 'docs',
+});
+```
+
 ## More resources
 
 Want to learn more? Here are some more articles on Storybook Docs:
