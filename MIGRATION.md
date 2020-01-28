@@ -152,6 +152,8 @@ addons.setConfig({
 This makes storybook load and use the theme in the manager directly.
 This allows for richer theming in the future, and has a much better performance!
 
+> If you're using addon-docs, you should probably not do this. Docs uses the theme as well, but this change makes the theme inaccessible to addon-docs. We'll address this in 6.0.0.
+
 ### Create React App preset
 
 You can now move to the new preset for [Create React App](https://create-react-app.dev/). The in-built preset for Create React App will be disabled in Storybook 6.0.
