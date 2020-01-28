@@ -14,7 +14,7 @@ interface ButtonProps {
   /**
    * default is false
    */
-  secondary: boolean;
+  secondary?: boolean;
 }
 
 /**

@@ -69,11 +69,6 @@ module.exports = {
       },
     },
     {
-      test: './app/react-native',
-      presets: ['module:metro-react-native-babel-preset'],
-      plugins: ['babel-plugin-macros', ['emotion', { sourceMap: true, autoLabel: true }]],
-    },
-    {
       test: [
         './lib/node-logger',
         './lib/codemod',
