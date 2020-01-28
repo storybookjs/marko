@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { styled } from '@storybook/theming';
 import { Placeholder, Link as StyledLink } from '@storybook/components';
-import api, { State } from '@storybook/api';
+import { State } from '@storybook/api';
 import { Location, Link as RouterLink } from '@storybook/router';
 import { TreeState } from './treeview/treeview';
 
@@ -52,19 +52,22 @@ const PlainLink = styled.a(plain);
 
 const Wrapper = styled.div({});
 
-const refinedViewMode = (
-  viewMode: string | undefined,
+export const viewMode = (
+  currentViewMode: string | undefined,
   isDocsOnly: boolean,
   parameters: { viewMode?: string } = {}
 ) => {
   const { viewMode: paramViewMode } = parameters;
-  if (typeof paramViewMode === 'string') {
-    return paramViewMode;
+  switch (true) {
+    case typeof paramViewMode === 'string':
+      return paramViewMode;
+    case isDocsOnly:
+      return 'docs';
+    case currentViewMode === 'settings' || !currentViewMode:
+      return 'story';
+    default:
+      return currentViewMode;
   }
-  if (isDocsOnly) {
-    return 'docs';
-  }
-  return viewMode === 'settings' || !viewMode ? 'story' : viewMode;
 };
 
 const targetId = (childIds?: string[]) =>
@@ -85,11 +88,11 @@ export const Link = ({
 }) => {
   return isLeaf || (isComponent && !isExpanded) ? (
     <Location>
-      {({ viewMode }) => (
+      {({ viewMode: currentViewMode }) => (
         <PlainRouterLink
           title={name}
           id={prefix + id}
-          to={`/${refinedViewMode(viewMode, isLeaf && isComponent, parameters)}/${targetId(
+          to={`/${viewMode(currentViewMode, isLeaf && isComponent, parameters)}/${targetId(
             childIds
           ) || id}`}
           onKeyUp={onKeyUp}
