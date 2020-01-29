@@ -3,6 +3,8 @@ id: 'custom-webpack-config'
 title: 'Custom Webpack Config'
 ---
 
+> migration guide: This page documents the method to configure storybook introduced recently in 5.3.0, consult the [migration guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) if you want to migrate to this format of configuring storybook.
+
 You can customize Storybook's webpack setup by providing a `webpack` field in `main.js` file.
 The value should be an async function that receives a webpack config and eventually returns a webpack config.
 

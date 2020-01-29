@@ -11,11 +11,14 @@ import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
 import typescript from 'react-syntax-highlighter/dist/esm/languages/prism/typescript';
 
 import { PrismLight as ReactSyntaxHighlighter } from 'react-syntax-highlighter';
-
+// @ts-ignore
+import createElement from 'react-syntax-highlighter/dist/esm/create-element';
 import { ActionBar } from '../ActionBar/ActionBar';
 import { ScrollArea } from '../ScrollArea/ScrollArea';
 
 import { formatter } from './formatter';
+
+export { createElement as createSyntaxHighlighterElement };
 
 ReactSyntaxHighlighter.registerLanguage('jsx', jsx);
 ReactSyntaxHighlighter.registerLanguage('bash', bash);
@@ -82,6 +85,11 @@ const Code = styled.code({
   opacity: 1,
 });
 
+export interface SyntaxHighlighterRendererProps {
+  rows: any[];
+  stylesheet: string;
+  useInlineStyles: boolean;
+}
 export interface SyntaxHighlighterProps {
   language: string;
   copyable?: boolean;
@@ -89,6 +97,7 @@ export interface SyntaxHighlighterProps {
   padded?: boolean;
   format?: boolean;
   className?: string;
+  renderer?: (props: SyntaxHighlighterRendererProps) => React.ReactNode;
 }
 
 export interface SyntaxHighlighterState {
