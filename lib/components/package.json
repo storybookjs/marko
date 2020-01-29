@@ -30,7 +30,6 @@
     "@storybook/client-logger": "6.0.0-alpha.1",
     "@storybook/theming": "6.0.0-alpha.1",
     "@types/overlayscrollbars": "^1.9.0",
-    "@types/react-syntax-highlighter": "11.0.2",
     "@types/react-textarea-autosize": "^4.3.3",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
