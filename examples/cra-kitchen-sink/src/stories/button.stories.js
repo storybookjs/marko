@@ -1,7 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withInfo } from '@storybook/addon-info';
 import { Button } from '@storybook/react/demo';
 
 import Container from '../components/Container';
@@ -48,33 +47,4 @@ Story2.story = {
   parameters: {
     options: { selectedPanel: 'storybook/actions/panel' },
   },
-};
-
-export const Story3 = () => <Button>Check my notes in the notes panel</Button>;
-Story3.story = {
-  name: 'with notes',
-  parameters: {
-    notes: 'A very simple button',
-    options: { selectedPanel: 'storybook/notes/panel' },
-  },
-};
-
-export const Story4 = context => (
-  <Container>
-    <span>
-      click the <InfoButton /> label in top right for info about "{context.name}"
-    </span>
-  </Container>
-);
-Story4.story = {
-  name: 'with new info',
-  parameters: {
-    notes: 'Composition: Info(Notes())',
-    options: { selectedPanel: 'storybook/info/panel' },
-  },
-  decorators: [
-    withInfo(
-      'Use the [info addon](https://github.com/storybookjs/storybook/tree/master/addons/info) with its new painless API.'
-    ),
-  ],
 };
