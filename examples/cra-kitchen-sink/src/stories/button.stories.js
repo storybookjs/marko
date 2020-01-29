@@ -3,25 +3,6 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { Button } from '@storybook/react/demo';
 
-import Container from '../components/Container';
-
-const InfoButton = () => (
-  <span
-    style={{
-      fontFamily: 'sans-serif',
-      fontSize: 12,
-      textDecoration: 'none',
-      background: '#027ac5',
-      color: '#fff',
-      padding: '5px 15px',
-      margin: 10,
-      borderRadius: '0px 0px 0px 5px',
-    }}
-  >
-    &nbsp;Show Info&nbsp;
-  </span>
-);
-
 export default {
   title: 'Button',
   component: Button,
