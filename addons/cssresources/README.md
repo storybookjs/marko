@@ -20,8 +20,8 @@ Add following content to it:
 
 ```js
 module.exports = {
-  addons: ['@storybook/addon-cssresources/register']
-}
+  addons: ['@storybook/addon-cssresources/register'],
+};
 ```
 
 ## Usage
@@ -34,17 +34,17 @@ import { withCssResources } from '@storybook/addon-cssresources';
 export default {
   title: 'CssResources',
   parameters: {
-    cssresources: [{
+    cssresources: [
+      {
         id: `bluetheme`,
         code: `<style>body { background-color: lightblue; }</style>`,
         picked: false,
+        hideCode: false, // Defaults to false, this enables you to hide the code snippet and only displays the style selector
       },
     ],
   },
   decorators: [withCssResources],
 };
 
-export const defaultView = () => (
-  <div />
-);
+export const defaultView = () => <div />;
 ```
