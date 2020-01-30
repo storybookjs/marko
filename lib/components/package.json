@@ -51,7 +51,7 @@
   "devDependencies": {
     "@types/react-syntax-highlighter": "^11.0.2",
     "enzyme": "^3.9.0",
-    "jest": "^24.7.1",
+    "jest": "^25.1.0",
     "jest-enzyme": "^7.0.2"
   },
   "peerDependencies": {
