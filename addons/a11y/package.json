@@ -46,7 +46,7 @@
     "react-redux": "^7.0.2",
     "react-sizeme": "^2.5.2",
     "redux": "^4.0.1",
-    "ts-dedent": "^1.1.0",
+    "ts-dedent": "^1.1.1",
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {

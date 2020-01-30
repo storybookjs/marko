@@ -32,7 +32,7 @@
     "@storybook/addons": "6.0.0-alpha.2",
     "@storybook/api": "6.0.0-alpha.2",
     "@storybook/node-logger": "6.0.0-alpha.2",
-    "ts-dedent": "^1.1.0"
+    "ts-dedent": "^1.1.1"
   },
   "devDependencies": {
     "@types/jest": "^25.1.1"
