@@ -1,3 +1,28 @@
+## 6.0.0-alpha.2 (January 30, 2020)
+
+### Features
+
+* UI: Configure tabs title, visibility, order and disable ([#9095](https://github.com/storybookjs/storybook/pull/9095))
+* Addon-cssresources: Add hideCode option ([#9627](https://github.com/storybookjs/storybook/pull/9627))
+* UI: Add `viewMode` parameter to control story nav UI ([#9090](https://github.com/storybookjs/storybook/pull/9090))
+
+### Bug Fixes
+
+* Web-components: Fix default value for prop table docs ([#9655](https://github.com/storybookjs/storybook/pull/9655))
+* Web-components: Make TypeScript types play nicely with lit-element ([#9557](https://github.com/storybookjs/storybook/pull/9557))
+* UI: Fix tabs to scroll horizontally ([#9383](https://github.com/storybookjs/storybook/pull/9383))
+* UI: Add support for className prop on Form.Field ([#9665](https://github.com/storybookjs/storybook/pull/9665))
+* Core: Upgrade `min-css-extract-plugin` to fix SASS loading ([#9652](https://github.com/storybookjs/storybook/pull/9652))
+* Adon-docs: Fix ColorPalette styling ([#9643](https://github.com/storybookjs/storybook/pull/9643))
+* Addon-storyshots: Remove excess slashes from jest transform warning ([#9616](https://github.com/storybookjs/storybook/pull/9616))
+
+### Maintenance
+
+* Source-loader: Overhaul to remove decorators, support user-configurable source ([#9547](https://github.com/storybookjs/storybook/pull/9547))
+* Build: Use Netlify for examples again ([#9585](https://github.com/storybookjs/storybook/pull/9585))
+* Ember: Migrate to new "import { hbs } from 'ember-cli-htmlbars'" ([#9633](https://github.com/storybookjs/storybook/pull/9633))
+* Publish: Remove docs to reduce package size ([#9612](https://github.com/storybookjs/storybook/pull/9612))
+
 ## 5.3.9 (January 24, 2020)
 
 ### Bug Fixes
