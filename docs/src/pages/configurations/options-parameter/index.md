@@ -68,12 +68,10 @@ addons.setConfig({
 
   /**	
    * Select the default active tab on Mobile.
-   * 0 - Sidebar
-   * 1 - Canvas
-   * 2 - Addons
-   * @type {Number}	
+   * 'sidebar' | 'canvas' | 'addons'
+   * @type {('sidebar'|'canvas'|'addons')}
    */	
-  initialActive: 0,
+  initialActive: 'sidebar',
 });
 ```
 

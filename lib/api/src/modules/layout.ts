@@ -11,14 +11,15 @@ import Store from '../store';
 import { Provider } from '../init-provider-api';
 
 export type PanelPositions = 'bottom' | 'right';
+export type ActiveTabsType = 'sidebar' | 'canvas' | 'addons';
 export const ActiveTabs = {
-  SIDEBAR: 0,
-  CANVAS: 1,
-  ADDONS: 2,
+  SIDEBAR: 'sidebar',
+  CANVAS: 'canvas',
+  ADDONS: 'addons',
 };
 
 export interface Layout {
-  initialActive: number;
+  initialActive: ActiveTabsType;
   isFullscreen: boolean;
   showPanel: boolean;
   panelPosition: PanelPositions;
