@@ -3,6 +3,8 @@ id: 'introduction'
 title: 'Intro to Presets'
 ---
 
+> migration guide: This page documents the method to configure storybook introduced recently in 5.3.0, consult the [migration guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) if you want to migrate to this format of configuring storybook.
+
 Storybook **presets** are grouped collections of `babel`, `webpack`, and `addons` configurations that support specific use cases.
 
 For example, to write your stories in Typescript, rather than [manually configuring Storybook for typescript](../../configurations/typescript-config/) with individual [babel](../../configurations/custom-babel-config/) and [webpack](../../configurations/custom-webpack-config/) configs, you can use the `@storybook/preset-typescript` package, which does the heavy lifting for you.

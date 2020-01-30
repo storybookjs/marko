@@ -26,8 +26,8 @@ export interface FieldProps {
   label?: ReactNode;
 }
 
-export const Field: FunctionComponent<FieldProps> = ({ label, children }) => (
-  <Wrapper>
+export const Field: FunctionComponent<FieldProps> = ({ label, children, ...props }) => (
+  <Wrapper {...props}>
     {label ? (
       <Label>
         <span>{label}</span>

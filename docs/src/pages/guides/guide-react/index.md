@@ -26,12 +26,6 @@ npx -p @storybook/cli sb init --type react_scripts
 
 Note: You must have a `package.json` in your project or the above commands will fail.
 
-If you're using [Create React App](https://create-react-app.dev/), use:
-
-```sh
-npx -p @storybook/cli sb init --type react_scripts
-```
-
 ## Manual setup
 
 If you want to set up Storybook manually for your React project, this is the guide for you.
