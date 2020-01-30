@@ -41,7 +41,20 @@
     "qs": "*",
     "rax": "*",
     "react": "*",
-    "vue": "*"
+    "vue": "*",
+    "react-dom": "*",
+    "regenerator-runtime": "*"
+  },
+  "peerDependenciesMeta": {
+    "preact": {
+      "optional": true
+    },
+    "rax": {
+      "optional": true
+    },
+    "vue": {
+      "optional": true
+    }
   },
   "publishConfig": {
     "access": "public"

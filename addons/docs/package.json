@@ -81,9 +81,12 @@
     "jest-specific-snapshot": "^2.0.0"
   },
   "peerDependencies": {
+    "@babel/core": "^7.0.0-0",
     "babel-loader": "^8.0.0",
-    "react": "^16.8.0",
-    "react-is": "^16.8.0"
+    "react": "^16.9.0",
+    "react-is": "^16.8.0",
+    "react-dom": "*",
+    "regenerator-runtime": "*"
   },
   "publishConfig": {
     "access": "public"

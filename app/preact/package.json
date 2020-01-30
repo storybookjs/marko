@@ -46,9 +46,11 @@
     "preact": "^8.4.2"
   },
   "peerDependencies": {
-    "@babel/core": "7.0.1",
+    "@babel/core": "*",
     "babel-loader": "^7.0.0 || ^8.0.0",
-    "preact": "^8.4.2"
+    "preact": "^8.4.2",
+    "react": "*",
+    "react-dom": "*"
   },
   "engines": {
     "node": ">=8.0.0"

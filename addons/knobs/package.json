@@ -54,7 +54,9 @@
     "@types/webpack-env": "^1.15.1"
   },
   "peerDependencies": {
-    "react": "*"
+    "react": "*",
+    "react-dom": "*",
+    "regenerator-runtime": "*"
   },
   "publishConfig": {
     "access": "public"

@@ -51,7 +51,8 @@
   },
   "peerDependencies": {
     "@storybook/source-loader": "*",
-    "react": "*"
+    "react": "*",
+    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"

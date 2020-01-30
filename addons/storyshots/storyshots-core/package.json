@@ -56,6 +56,10 @@
     "jest-emotion": "^10.0.17",
     "react": "^16.8.3"
   },
+  "peerDependencies": {
+    "react-dom": "*",
+    "regenerator-runtime": "*"
+  },
   "publishConfig": {
     "access": "public"
   },

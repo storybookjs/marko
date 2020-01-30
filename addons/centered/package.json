@@ -41,5 +41,9 @@
     "preact": "*",
     "react": "*"
   },
+  "peerDependencies": {
+    "react-dom": "*",
+    "regenerator-runtime": "*"
+  },
   "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff"
 }

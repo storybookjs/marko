@@ -39,6 +39,10 @@
     "prop-types": "^15.7.2",
     "regenerator-runtime": "^0.13.3"
   },
+  "peerDependencies": {
+    "react-dom": "*",
+    "regenerator-runtime": "*"
+  },
   "publishConfig": {
     "access": "public"
   },

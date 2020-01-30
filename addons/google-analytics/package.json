@@ -26,6 +26,10 @@
     "global": "^4.3.2",
     "react-ga": "^2.5.7"
   },
+  "peerDependencies": {
+    "react-dom": "*",
+    "regenerator-runtime": "*"
+  },
   "publishConfig": {
     "access": "public"
   },
