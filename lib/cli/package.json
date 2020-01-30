@@ -54,7 +54,7 @@
     "semver": "^6.0.0",
     "shelljs": "^0.8.3",
     "strip-json-comments": "^3.0.1",
-    "update-notifier": "^3.0.0"
+    "update-notifier": "^4.0.0"
   },
   "devDependencies": {
     "@storybook/addon-actions": "6.0.0-alpha.2",
