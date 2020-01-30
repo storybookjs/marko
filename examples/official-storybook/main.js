@@ -1,5 +1,6 @@
 module.exports = {
   stories: [
+    // FIXME: Breaks e2e tests './intro.stories.mdx',
     '../../lib/ui/src/**/*.stories.(js|tsx|mdx)',
     '../../lib/components/src/**/*.stories.(js|tsx|mdx)',
     './stories/**/*.stories.(js|tsx|mdx)',
@@ -22,7 +23,7 @@ module.exports = {
     '@storybook/addon-graphql',
     '@storybook/addon-contexts',
   ],
-  webpack: async (config, { configType }) => ({
+  webpackFinal: async (config, { configType }) => ({
     ...config,
     module: {
       ...config.module,

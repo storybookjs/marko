@@ -1,11 +1,30 @@
-import { styled } from '@storybook/theming';
+import React, { AnchorHTMLAttributes, ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
+import { styled, isPropValid } from '@storybook/theming';
+
+interface ButtonProps
+  extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+  href?: void;
+}
+interface LinkProps
+  extends DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement> {
+  href: string;
+}
+
+const ButtonOrLink = ({ children, ...restProps }: ButtonProps | LinkProps) =>
+  restProps.href != null ? (
+    <a {...(restProps as LinkProps)}>{children}</a>
+  ) : (
+    <button type="button" {...(restProps as ButtonProps)}>
+      {children}
+    </button>
+  );
 
 export interface TabButtonProps {
   active?: boolean;
   textColor?: string;
 }
 
-export const TabButton = styled.button<TabButtonProps>(
+export const TabButton = styled(ButtonOrLink, { shouldForwardProp: isPropValid })<TabButtonProps>(
   {
     whiteSpace: 'normal',
     display: 'inline-flex',
@@ -22,7 +41,6 @@ export const TabButton = styled.button<TabButtonProps>(
   },
   ({ theme }) => ({
     padding: '0 15px',
-    textTransform: 'capitalize',
     transition: 'color 0.2s linear, border-bottom-color 0.2s linear',
     height: 40,
     lineHeight: '12px',
@@ -56,8 +74,9 @@ export interface IconButtonProps {
   active?: boolean;
 }
 
-export const IconButton = styled.button<IconButtonProps>(
+export const IconButton = styled(ButtonOrLink, { shouldForwardProp: isPropValid })<IconButtonProps>(
   ({ theme }) => ({
+    display: 'inline-flex',
     height: 40,
     background: 'none',
     color: 'inherit',
