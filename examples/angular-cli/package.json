@@ -54,7 +54,7 @@
     "@storybook/source-loader": "6.0.0-alpha.2",
     "@types/core-js": "^2.5.0",
     "@types/jest": "^25.1.1",
-    "@types/node": "^12.12.11",
+    "@types/node": "^13.5.2",
     "@types/webpack-env": "^1.15.1",
     "babel-plugin-require-context-hook": "^1.0.0",
     "global": "^4.3.2",
@@ -63,7 +63,7 @@
     "jest": "^25.1.0",
     "jest-preset-angular": "^7.1.0",
     "protractor": "~5.4.2",
-    "ts-node": "~8.5.2",
+    "ts-node": "~8.6.2",
     "typescript": "^3.4.0"
   }
 }

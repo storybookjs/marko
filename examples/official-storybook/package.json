@@ -43,7 +43,7 @@
     "@storybook/source-loader": "6.0.0-alpha.2",
     "@storybook/theming": "6.0.0-alpha.2",
     "cors": "^2.8.5",
-    "cross-env": "^6.0.3",
+    "cross-env": "^7.0.0",
     "enzyme-to-json": "^3.4.1",
     "eventemitter3": "^4.0.0",
     "express": "^4.17.0",

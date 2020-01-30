@@ -30,7 +30,7 @@
     "@storybook/riot": "6.0.0-alpha.2",
     "@storybook/source-loader": "6.0.0-alpha.2",
     "babel-loader": "^8.0.4",
-    "cross-env": "^6.0.3",
+    "cross-env": "^7.0.0",
     "file-loader": "^5.0.2",
     "raw-loader": "^3.1.0",
     "riot-tag-loader": "^2.1.0",

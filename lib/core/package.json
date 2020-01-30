@@ -76,7 +76,7 @@
     "lazy-universal-dotenv": "^3.0.1",
     "micromatch": "^4.0.2",
     "node-fetch": "^2.6.0",
-    "open": "^7.0.0",
+    "open": "^7.0.1",
     "pnp-webpack-plugin": "1.6.0",
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
