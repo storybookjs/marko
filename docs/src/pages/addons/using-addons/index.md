@@ -3,6 +3,8 @@ id: 'using-addons'
 title: 'Using Addons'
 ---
 
+> migration guide: This page documents the method to configure storybook introduced recently in 5.3.0, consult the [migration guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) if you want to migrate to this format of configuring storybook.
+
 Storybook comes with a variety of "core" addons developed and maintained alongside Storybook. Most examples in this site use [actions](https://github.com/storybookjs/storybook/tree/master/addons/actions) and [links](https://github.com/storybookjs/storybook/tree/master/addons/links). But you can use any third party addons distributed via NPM.
 
 Here's how to do it.
