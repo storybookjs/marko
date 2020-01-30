@@ -42,7 +42,7 @@ Then add the following NPM script to your `package.json` in order to start the s
 ```json
 {
   "scripts": {
-    "build-storybook": "ember build && build-storybook -p 9001 -s dist",
+    "build-storybook": "ember build && build-storybook -s dist",
     "storybook": "ember serve & start-storybook -p 9001 -s dist"
   }
 }
@@ -73,7 +73,7 @@ Now you can write some stories inside the `../stories/index.stories.js` file, li
 > It is important that you import the `hbs` function that is provided by a babel plugin in `@storybook/ember`
 
 ```js
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 
 export default { title: 'Demo' };
 

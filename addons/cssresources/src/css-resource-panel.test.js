@@ -300,5 +300,32 @@ describe('CSSResourcePanel', () => {
       node.instance().onStoryChange('fake-story-id');
       expect(node.find(SyntaxHighlighter).length).toEqual(1);
     });
+
+    it('should not render code for items /w the `hideCode` flag', () => {
+      const apiGetParameters = jest.fn(() => [
+        {
+          id: 'local-fake-id-1',
+          code: 'local-fake-code-1',
+          picked: true,
+          hideCode: true,
+        },
+        {
+          id: 'local-fake-id-2',
+          code: 'local-fake-code-2',
+          picked: false,
+        },
+      ]);
+
+      const node = shallowNode({
+        ...defaultProps,
+        api: {
+          ...defaultProps.api,
+          getParameters: apiGetParameters,
+        },
+      });
+
+      node.instance().onStoryChange('fake-story-id');
+      expect(node.find(SyntaxHighlighter).length).toEqual(1);
+    });
   });
 });

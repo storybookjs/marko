@@ -40,6 +40,11 @@ const SwatchLabel = styled.div(({ theme }) => ({
     overflow: 'hidden',
     maxWidth: '100%',
   },
+
+  span: {
+    display: 'block',
+    marginTop: 2,
+  },
 }));
 
 const SwatchLabels = styled.div({
@@ -107,10 +112,54 @@ const List = styled.div(({ theme }) => ({
   flexDirection: 'column',
 }));
 
+type Colors = string[] | { [key: string]: string };
+
 interface ColorProps {
   title: string;
   subtitle: string;
-  colors: string[];
+  colors: Colors;
+}
+
+function renderSwatch(color: string) {
+  return (
+    <Swatch
+      key={color}
+      title={color}
+      style={{
+        backgroundColor: color,
+      }}
+    />
+  );
+}
+
+function renderSwatchLabel(color: string, colorDescription?: string) {
+  return (
+    <SwatchLabel key={color} title={color}>
+      <div>
+        {color}
+        {colorDescription && <span>{colorDescription}</span>}
+      </div>
+    </SwatchLabel>
+  );
+}
+
+function renderSwatchSpecimen(colors: Colors) {
+  if (Array.isArray(colors)) {
+    return (
+      <SwatchSpecimen>
+        <SwatchColors>{colors.map(color => renderSwatch(color))}</SwatchColors>
+        <SwatchLabels>{colors.map(color => renderSwatchLabel(color))}</SwatchLabels>
+      </SwatchSpecimen>
+    );
+  }
+  return (
+    <SwatchSpecimen>
+      <SwatchColors>{Object.values(colors).map(color => renderSwatch(color))}</SwatchColors>
+      <SwatchLabels>
+        {Object.keys(colors).map(color => renderSwatchLabel(color, colors[color]))}
+      </SwatchLabels>
+    </SwatchSpecimen>
+  );
 }
 
 /**
@@ -124,29 +173,7 @@ export const ColorItem: FunctionComponent<ColorProps> = ({ title, subtitle, colo
         <ItemTitle>{title}</ItemTitle>
         <ItemSubtitle>{subtitle}</ItemSubtitle>
       </ItemDescription>
-
-      <Swatches>
-        <SwatchSpecimen>
-          <SwatchColors>
-            {colors.map(color => (
-              <Swatch
-                key={color}
-                title={color}
-                style={{
-                  backgroundColor: color,
-                }}
-              />
-            ))}
-          </SwatchColors>
-          <SwatchLabels>
-            {colors.map(color => (
-              <SwatchLabel key={color} title={color}>
-                <div>{color}</div>
-              </SwatchLabel>
-            ))}
-          </SwatchLabels>
-        </SwatchSpecimen>
-      </Swatches>
+      <Swatches>{renderSwatchSpecimen(colors)}</Swatches>
     </Item>
   );
 };

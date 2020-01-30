@@ -43,7 +43,7 @@ export class Stories2SnapsConverter {
           To fix it, add following to your jest.config.js:
               transform: {
                 // should be above any other js transform like babel-jest
-                '^.+\\\\.stories\\\\.js$': '@storybook/addon-storyshots/injectFileName',
+                '^.+\\.stories\\.js$': '@storybook/addon-storyshots/injectFileName',
               }
         `
       );

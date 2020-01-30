@@ -10,7 +10,6 @@ const FRAMEWORKS = [
   'html',
   'marko',
   'mithril',
-  'polymer',
   'preact',
   'rax',
   'react',

@@ -1,6 +1,8 @@
 import { StoryFn } from '@storybook/addons';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { TemplateResult, SVGTemplateResult } from 'lit-element';
 
-export type StoryFnHtmlReturnType = string | Node;
+export type StoryFnHtmlReturnType = string | Node | TemplateResult | SVGTemplateResult;
 
 export interface IStorybookStory {
   name: string;
