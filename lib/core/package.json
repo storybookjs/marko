@@ -31,7 +31,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-transform-react-constant-elements": "^7.2.0",
-    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-env": "^7.8.4",
     "@storybook/addons": "6.0.0-alpha.2",
     "@storybook/channel-postmessage": "6.0.0-alpha.2",
     "@storybook/client-api": "6.0.0-alpha.2",
