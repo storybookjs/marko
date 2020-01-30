@@ -46,7 +46,7 @@
   "devDependencies": {
     "@types/prop-types": "^15.5.9",
     "@types/util-deprecate": "^1.0.0",
-    "@types/webpack-env": "^1.15.0"
+    "@types/webpack-env": "^1.15.1"
   },
   "peerDependencies": {
     "react": "*"

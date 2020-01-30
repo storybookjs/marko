@@ -35,7 +35,7 @@
   "dependencies": {
     "@storybook/addons": "6.0.0-alpha.2",
     "@storybook/core": "6.0.0-alpha.2",
-    "@types/webpack-env": "^1.15.0",
+    "@types/webpack-env": "^1.15.1",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "html-loader": "^0.5.5",
