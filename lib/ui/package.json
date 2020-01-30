@@ -40,7 +40,7 @@
     "core-js": "^3.0.1",
     "core-js-pure": "^3.0.1",
     "emotion-theming": "^10.0.19",
-    "fast-deep-equal": "^2.0.1",
+    "fast-deep-equal": "^3.1.1",
     "fuse.js": "^3.4.6",
     "global": "^4.3.2",
     "lodash": "^4.17.15",
