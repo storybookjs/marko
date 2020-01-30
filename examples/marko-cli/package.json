@@ -19,7 +19,7 @@
     "test": "npm run lint"
   },
   "dependencies": {
-    "marko": "^4.18.25",
+    "marko": "^4.18.39",
     "marko-starter": "^2.1.0"
   },
   "devDependencies": {

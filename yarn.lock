@@ -3368,15 +3368,16 @@
     npmlog "^4.1.2"
     write-file-atomic "^2.3.0"
 
-"@marko/webpack@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@marko/webpack/-/webpack-2.0.0.tgz#4dfc905c10eeb64c05194d10d9ac5a08b244e4fc"
-  integrity sha512-89VfWHONSIV5Y/I6/aRNe12bQzpcMnLC7tcptTdABBCmYvMimsLK+vPxh9KmljyHCngjTc8Cu64gTVjq71i1bg==
+"@marko/webpack@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@marko/webpack/-/webpack-2.1.0.tgz#2042556c142201b3d05cdee8703b1b44afee089b"
+  integrity sha512-FYaQyZpdCFW07PRy4Yize7WJsxLxGZU+C611SAlanSisTaCGy1bof7V9YuvbddUf5XalmP4T2Qns0XyL2zkdhw==
   dependencies:
     base-x "^3.0.5"
     lasso-modules-client "^2.0.5"
     loader-utils "^1.2.3"
     sort-keys "^2.0.0"
+    tslib "^1.10.0"
     webpack-virtual-modules "^0.1.10"
 
 "@mdx-js/loader@^1.5.1":
@@ -19907,10 +19908,41 @@ marko-starter@^2.1.0:
     routes-table "^1.2.1"
     try-require "^1.2.1"
 
-marko@^4.1.1, marko@^4.10.0, marko@^4.18.25:
+marko@^4.1.1, marko@^4.10.0:
   version "4.18.35"
   resolved "https://registry.yarnpkg.com/marko/-/marko-4.18.35.tgz#bdb4a450516a29f00416eb7474f597f33c6bcd2f"
   integrity sha512-dOWK0MIsLZlB3Y3J71pOSylck40z+SHEzrjN6jdf7b3Vn94lSsCeCRfBho0K+hIitMNd0VcsMWhDQhKmwLTuqQ==
+  dependencies:
+    app-module-path "^2.2.0"
+    argly "^1.0.0"
+    browser-refresh-client "^1.0.0"
+    camelcase "^5.0.0"
+    char-props "~0.1.5"
+    complain "^1.6.0"
+    deresolve "^1.1.2"
+    escodegen "^1.8.1"
+    esprima "^4.0.0"
+    estraverse "^4.3.0"
+    events-light "^1.0.0"
+    he "^1.1.0"
+    htmljs-parser "^2.7.1"
+    lasso-caching-fs "^1.0.1"
+    lasso-modules-client "^2.0.4"
+    lasso-package-root "^1.0.1"
+    listener-tracker "^2.0.0"
+    minimatch "^3.0.2"
+    property-handlers "^1.0.0"
+    raptor-regexp "^1.0.0"
+    raptor-util "^3.2.0"
+    resolve-from "^2.0.0"
+    simple-sha1 "^2.1.0"
+    strip-json-comments "^2.0.1"
+    warp10 "^2.0.1"
+
+marko@^4.18.39:
+  version "4.18.39"
+  resolved "https://registry.yarnpkg.com/marko/-/marko-4.18.39.tgz#167e22076c1044969a3b2b81e6692eca389ec523"
+  integrity sha512-UafLg0Y34NBpzwAYT79TgH9t112wPjS18SmfOB+kcxx2EXqepwut0TJicfRI35RYfKhHV8Fcb5+9iavpACyqJg==
   dependencies:
     app-module-path "^2.2.0"
     argly "^1.0.0"
