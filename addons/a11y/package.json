@@ -34,6 +34,7 @@
   "dependencies": {
     "@storybook/addons": "6.0.0-alpha.2",
     "@storybook/api": "6.0.0-alpha.2",
+    "@storybook/client-api": "6.0.0-alpha.2",
     "@storybook/client-logger": "6.0.0-alpha.2",
     "@storybook/components": "6.0.0-alpha.2",
     "@storybook/core-events": "6.0.0-alpha.2",
