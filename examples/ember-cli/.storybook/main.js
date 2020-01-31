@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   addons: [
-    '@storybook/addon-a11y',
+    '@storybook/addon-a11y/preset',
     '@storybook/addon-storysource',
     '@storybook/addon-actions',
     '@storybook/addon-docs',

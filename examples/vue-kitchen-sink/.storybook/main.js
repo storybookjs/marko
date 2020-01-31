@@ -9,7 +9,7 @@ module.exports = {
     '@storybook/addon-viewport',
     '@storybook/addon-options',
     '@storybook/addon-backgrounds',
-    '@storybook/addon-a11y',
+    '@storybook/addon-a11y/preset',
     '@storybook/addon-contexts',
   ],
 };

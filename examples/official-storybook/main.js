@@ -16,7 +16,7 @@ module.exports = {
     '@storybook/addon-knobs',
     '@storybook/addon-cssresources',
     '@storybook/addon-backgrounds',
-    '@storybook/addon-a11y',
+    '@storybook/addon-a11y/preset',
     '@storybook/addon-jest',
     '@storybook/addon-viewport',
     '@storybook/addon-graphql',

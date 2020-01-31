@@ -10,7 +10,7 @@ module.exports = {
     '@storybook/addon-options',
     '@storybook/addon-knobs',
     '@storybook/addon-backgrounds',
-    '@storybook/addon-a11y',
+    '@storybook/addon-a11y/preset',
     '@storybook/addon-jest',
   ],
   webpackFinal: async config => ({
