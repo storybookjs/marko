@@ -1,16 +1,13 @@
 /* eslint no-underscore-dangle: 0 */
-import deprecate from 'util-deprecate';
 import isPlainObject from 'is-plain-object';
 import { logger } from '@storybook/client-logger';
-import addons, { StoryContext, StoryFn, Parameters, OptionsParameter } from '@storybook/addons';
-import Events from '@storybook/core-events';
-import { toId } from '@storybook/router/utils';
+import { StoryContext, StoryFn, Parameters } from '@storybook/addons';
+import { toId } from '@storybook/csf';
 
 import mergeWith from 'lodash/mergeWith';
 import isEqual from 'lodash/isEqual';
 import get from 'lodash/get';
 import { ClientApiParams, DecoratorFunction, ClientApiAddons, StoryApi } from './types';
-import subscriptionsStore from './subscriptions_store';
 import { applyHooks } from './hooks';
 import StoryStore from './story_store';
 
@@ -60,28 +57,6 @@ export const defaultDecorateStory = (storyFn: StoryFn, decorators: DecoratorFunc
     storyFn
   );
 
-const metaSubscriptionHandler = deprecate(
-  subscriptionsStore.register,
-  'Events.REGISTER_SUBSCRIPTION is deprecated and will be removed in 6.0. Please use useEffect from @storybook/client-api instead.'
-);
-
-const metaSubscription = () => {
-  addons.getChannel().on(Events.REGISTER_SUBSCRIPTION, metaSubscriptionHandler);
-  return () =>
-    addons.getChannel().removeListener(Events.REGISTER_SUBSCRIPTION, metaSubscriptionHandler);
-};
-
-const withSubscriptionTracking = (storyFn: StoryFn) => {
-  if (!addons.hasChannel()) {
-    return storyFn();
-  }
-  subscriptionsStore.markAllAsUnused();
-  subscriptionsStore.register(metaSubscription);
-  const result = storyFn();
-  subscriptionsStore.clearUnused();
-  return result;
-};
-
 let _globalDecorators: DecoratorFunction[] = [];
 
 let _globalParameters: Parameters = {};
@@ -129,11 +104,30 @@ export default class ClientApi {
     };
   };
 
-  getSeparators = () => ({
-    hierarchyRootSeparator: '|',
-    hierarchySeparator: /\/|\./,
-    ..._globalParameters.options,
-  });
+  getSeparators = () => {
+    const { hierarchySeparator, hierarchyRootSeparator, showRoots } =
+      _globalParameters.options || {};
+
+    // Note these checks will be removed in 6.0, leaving this much simpler
+    if (
+      typeof hierarchySeparator !== 'undefined' ||
+      typeof hierarchyRootSeparator !== 'undefined'
+    ) {
+      return { hierarchySeparator, hierarchyRootSeparator };
+    }
+    if (
+      typeof showRoots === 'undefined' &&
+      this.store()
+        .getStoryKinds()
+        .some(kind => kind.match(/\.|\|/))
+    ) {
+      return {
+        hierarchyRootSeparator: '|',
+        hierarchySeparator: /\/|\./,
+      };
+    }
+    return { hierarchySeparator: '/' };
+  };
 
   addDecorator = (decorator: DecoratorFunction) => {
     addDecorator(decorator);
@@ -204,10 +198,10 @@ export default class ClientApi {
       };
     });
 
-    api.add = (storyName, storyFn, parameters) => {
+    api.add = (storyName, storyFn, parameters = {}) => {
       hasAdded = true;
 
-      const id = toId(kind, storyName);
+      const id = parameters.__id || toId(kind, storyName);
 
       if (typeof storyName !== 'string') {
         throw new Error(`Invalid or missing storyName provided for a "${kind}" story.`);
@@ -221,17 +215,7 @@ export default class ClientApi {
 
       const fileName = m && m.id ? `${m.id}` : undefined;
 
-      const { hierarchyRootSeparator, hierarchySeparator } = this.getSeparators();
-      const baseOptions: OptionsParameter = {
-        hierarchyRootSeparator,
-        hierarchySeparator,
-      };
-      const allParam = [
-        { options: baseOptions },
-        _globalParameters,
-        localParameters,
-        parameters,
-      ].reduce(
+      const allParam = [_globalParameters, localParameters, parameters].reduce(
         (acc: Parameters, p) => {
           if (p) {
             Object.entries(p).forEach(([key, value]) => {
@@ -265,7 +249,6 @@ export default class ClientApi {
             ...(allParam.decorators || []),
             ...localDecorators,
             ..._globalDecorators,
-            withSubscriptionTracking,
           ],
         }
       );

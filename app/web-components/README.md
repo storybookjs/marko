@@ -14,7 +14,7 @@ So you can develop UI components in isolation without worrying about app specifi
 
 ```sh
 cd my-app
-npx -p @storybook/cli sb init -t web-components
+npx -p @storybook/cli sb init -t web_components
 ```
 
 For more information visit: [storybook.js.org](https://storybook.js.org)
@@ -57,17 +57,19 @@ By default storybook only works with precompiled es5 code but as most web compon
 For example if you have a library called `my-library` which is in es7 then you can add it like so
 
 ```js
-// .storybook/webpack.config.js
+// .storybook/main.js
 
-module.exports = ({ config }) => {
-  // find web-components rule for extra transpilation
-  const webComponentsRule = config.module.rules.find(
-    rule => rule.use && rule.use.options && rule.use.options.babelrc === false
-  );
-  // add your own `my-library`
-  webComponentsRule.test.push(new RegExp(`node_modules(\\/|\\\\)my-library(.*)\\.js$`));
+module.exports = { 
+  webpackFinal: async config => {
+    // find web-components rule for extra transpilation
+    const webComponentsRule = config.module.rules.find(
+      rule => rule.use && rule.use.options && rule.use.options.babelrc === false
+    );
+    // add your own `my-library`
+    webComponentsRule.test.push(new RegExp(`node_modules(\\/|\\\\)my-library(.*)\\.js$`));
 
-  return config;
+    return config;
+  },
 };
 ```
 

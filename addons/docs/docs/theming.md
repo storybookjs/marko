@@ -10,7 +10,11 @@
 
 Storybook theming is the **recommended way** to theme your docs. If you update your storybook theme according to [the documentation](https://storybook.js.org/docs/configurations/theming/), Storybook Docs should adapt in reasonable ways.
 
-For example, here's how to change your docs (and Storybook) to the dark theme, by modifying `.storybook/config.js`:
+> In the documentation it will say you can theme storybook in `manager.js`, That's a newer more optimal way to theme storybook, but it's currently incompatible with docs.
+> 
+> We're working on making it compatible in 6.0.0, so for now use the method described below.
+
+Here's how to change your docs (and Storybook) to the dark theme, by modifying `.storybook/preview.js`:
 
 ```js
 import { addParameters } from '@storybook/react';
@@ -45,7 +49,7 @@ You can style these classes in `.storybook/preview-head.html`. For example, here
 
 If you're using MDX, there's one more level of themability. MDX allows you to [completely override the components](https://mdxjs.com/advanced/components) that are rendered from markdown using a `components` parameter. This is an advanced usage that we don't officially support in Storybook, but it's a powerful mechanism if you need it.
 
-Here's how you might insert a custom code renderer for `code` blocks on the page, in `.storybook/config.js`:
+Here's how you might insert a custom code renderer for `code` blocks on the page, in `.storybook/preview.js`:
 
 ```js
 import { addParameters } from '@storybook/react';
@@ -55,6 +59,22 @@ addParameters({
   docs: {
     components: {
       code: CodeBlock,
+    },
+  },
+});
+```
+
+You can even override a Storybook *block* component.
+
+Here's how you might insert a custom `<Preview />` block:
+
+```js
+import { MyPreview } from './MyPreview';
+
+addParameters({
+  docs: {
+    components: {
+      Preview: MyPreview,
     },
   },
 });

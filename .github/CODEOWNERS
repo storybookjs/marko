@@ -18,9 +18,7 @@
 /addons/viewport/ @saponifi3d
 
 /app/angular/ @alterx @igor-dv
-/app/polymer/ @ndelangen @naipath @leonrodenburg
 /app/react/ @xavcz @shilman @thomasbertet
-/app/react-native/ @rmevans9 @Gongreg @tmeasday
 /app/vue/ @thomasbertet @kazupon
 /app/svelte/ @plumpNation
 
@@ -30,7 +28,6 @@
 /examples/cra-kitchen-sink/ @ndelangen @UsulPro
 /examples/cra-ts-kitchen-sink/ @mucsi96
 /examples/official-storybook/ @UsulPro
-/examples/polymer-cli/ @naipath @igor-dv
 /examples/vue-kitchen-sink/ @igor-dv @alexandrebodin
 /examples/svelte-kitchen-sink/ @plumpNation
 

@@ -37,10 +37,20 @@ export interface WrapperSettings {
   };
 }
 
+export type Comparator<T> = ((a: T, b: T) => boolean) | ((a: T, b: T) => number);
+export type StorySortMethod = 'configure' | 'alphabetical';
+export interface StorySortObjectParameter {
+  method?: StorySortMethod;
+  order?: any[];
+  locales?: string;
+}
+export type StorySortParameter = Comparator<any> | StorySortObjectParameter;
+
 export interface OptionsParameter extends Object {
-  storySort?: any;
+  storySort?: StorySortParameter;
   hierarchyRootSeparator?: string;
   hierarchySeparator?: RegExp;
+  showRoots?: boolean;
   theme?: {
     base: string;
     brandTitle?: string;

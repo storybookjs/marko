@@ -1,17 +1,17 @@
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { linkTo } from '@storybook/addon-links';
 
 export default {
-  title: 'Addon|Links',
+  title: 'Addon/Links',
 };
 
-export const goToWelcome = () => ({
+export const GoToWelcome = () => ({
   template: hbs`<button {{action onClick}}>This button brings you to welcome</button>`,
   context: {
     onClick: linkTo('Welcome'),
   },
 });
 
-goToWelcome.story = {
+GoToWelcome.story = {
   name: 'Go to welcome',
 };

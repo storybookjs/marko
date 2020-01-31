@@ -8,10 +8,10 @@ import { render } from 'lit-html';
 function mapData(data) {
   return data.map(item => ({
     name: item.name,
-    type: { name: item.type },
+    type: { summary: item.type },
     required: '',
     description: item.description,
-    defaultValue: item.default,
+    defaultValue: { summary: item.default !== undefined ? item.default : item.defaultValue },
   }));
 }
 
@@ -32,7 +32,7 @@ addParameters({
           sections.attributes = mapData(metaData.attributes);
         }
         if (metaData.properties) {
-          sections.props = mapData(metaData.properties);
+          sections.properties = mapData(metaData.properties);
         }
         if (metaData.events) {
           sections.events = mapData(metaData.events);

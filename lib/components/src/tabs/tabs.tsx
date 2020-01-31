@@ -114,7 +114,7 @@ export const panelProps = {
 
 const childrenToList = (children: any, selected: string) =>
   Children.toArray(children).map(
-    ({ props: { title, id, color, children: childrenOfChild } }, index) => {
+    ({ props: { title, id, color, children: childrenOfChild } }: React.ReactElement, index) => {
       const content = Array.isArray(childrenOfChild) ? childrenOfChild[0] : childrenOfChild;
       return {
         active: selected ? id === selected : index === 0,
@@ -164,6 +164,7 @@ export const Tabs: FunctionComponent<TabsProps> = memo(
                   actions.onSelect(id);
                 }}
                 role="tab"
+                className={`tabbutton ${active ? 'tabbutton-active' : ''}`}
               >
                 {typeof title === 'function' ? title() : title}
               </TabButton>
@@ -171,7 +172,7 @@ export const Tabs: FunctionComponent<TabsProps> = memo(
           </TabBar>
           {tools ? <Fragment>{tools}</Fragment> : null}
         </FlexBar>
-        <Content absolute={absolute}>
+        <Content absolute={absolute} tabIndex={0}>
           {list.map(({ id, active, render }) => render({ key: id, active }))}
         </Content>
       </Wrapper>

@@ -66,7 +66,7 @@ import { SomeComponent } from 'path/to/SomeComponent';
 
 I can define a story with the function imported from CSF:
 
-<Story name="basic">{stories.basic}</Story>
+<Story name="basic">{stories.basic()}</Story>
 
 And I can also embed arbitrary markdown & JSX in this file.
 
@@ -76,9 +76,7 @@ And I can also embed arbitrary markdown & JSX in this file.
 What's happening here:
 
 - Your stories are defined in CSF, but because of `includeStories: []`, they are not actually added to Storybook.
-- The MDX file is adding the stories to Storybook, and using the story function defined in CSF.
-- The MDX loader is using story metadata from CSF, such as name, decorators, parameters, but will give giving preference to anything defined in the MDX file.
-- The MDX file is using the Meta `default` defined in the CSF.
+- The MDX file is simply importing stories as functions in the MDX, and other aspects of the CSF file, such as decorators, parameters, and any other metadata should be applied as needed in the MDX from the import.
 
 ## CSF Stories with arbitrary MDX
 
@@ -157,7 +155,7 @@ We made this error explicit to make sure you know what you're doing when you mix
 
 If you're currently using the notes/info addons, you can upgrade to DocsPage by providing a custom `docs.extractComponentDescription` parameter. There are different ways to use each addon, so you can adapt this recipe according to your use case.
 
-Suppose you've added a `notes` parameter to each component in your library, containing markdown text, and you want that to show up at the top of the page in the `Description` slot. You could do that by adding the following snippet to `.storybook/config.js`:
+Suppose you've added a `notes` parameter to each component in your library, containing markdown text, and you want that to show up at the top of the page in the `Description` slot. You could do that by adding the following snippet to `.storybook/preview.js`:
 
 ```js
 import { addParameters } from '@storybook/client-api';
@@ -209,6 +207,31 @@ User writes documentation & stories side-by-side in a single MDX file, and wants
 <Story name="foo" parameters={{ docs: { disable: true }} >
   <Button>foo</Button>
 </Story>
+```
+
+## Controlling a story's view mode
+
+Storybook's default story navigation behavior is to preserve the existing view mode. In other words, if a user is viewing a story in "docs" mode, and clicks on another story, they will navigate to the other story in "docs" mode. If they are viewing a story in "story" mode (i.e. "canvas" in the UI) they will navigate to another story in "story" mode (with the exception of "docs-only" pages, which are always shown in "docs" mode).
+
+Based on user feedback, it's also possible to control the view mode for an individual story using the `viewMode` story parameter. In the following example, the nav link will always set the view mode to story:
+
+```js
+export const Foo = () => <Component />;
+Foo.story = {
+  parameters: {
+    // reset the view mode to "story" whenever the user navigates to this story
+    viewMode: 'story',
+  },
+};
+```
+
+This can also be applied globally in `preview.js`:
+
+```js
+// always reset the view mode to "docs" whenever the user navigates
+addParameters({
+  viewMode: 'docs',
+});
 ```
 
 ## More resources

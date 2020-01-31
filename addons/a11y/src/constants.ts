@@ -6,5 +6,7 @@ export const ADD_ELEMENT = 'ADD_ELEMENT';
 export const CLEAR_ELEMENTS = 'CLEAR_ELEMENTS';
 const RESULT = `${ADDON_ID}/result`;
 const REQUEST = `${ADDON_ID}/request`;
+const ERROR = `${ADDON_ID}/error`;
+const MANUAL = `${ADDON_ID}/manual`;
 
-export const EVENTS = { RESULT, REQUEST };
+export const EVENTS = { RESULT, REQUEST, ERROR, MANUAL };

@@ -1,17 +1,28 @@
 <center>
-  <img src="./media/docspage-hero.png" width="100%" />
+  <img src="https://raw.githubusercontent.com/storybookjs/storybook/master/addons/docs/docs/media/docspage-hero.png" width="100%" />
 </center>
 
 # Storybook DocsPage
 
 When you install [Storybook Docs](../README.md), `DocsPage` is the zero-config default documentation that all stories get out of the box. It aggregates your stories, text descriptions, docgen comments, props tables, and code examples into a single page for each component.
 
-- [Motivation](#motivation)
-- [Component parameter](#component-parameter)
-- [DocsPage slots](#docspage-slots)
-- [Replacing DocsPage](#replacing-docspage)
-- [Story file names](#story-file-names)
-- [More resources](#more-resources)
+- [Storybook DocsPage](#storybook-docspage)
+  - [Motivation](#motivation)
+  - [Component parameter](#component-parameter)
+  - [Subcomponents parameter](#subcomponents-parameter)
+  - [DocsPage slots](#docspage-slots)
+  - [Slot values](#slot-values)
+    - [Title](#title)
+    - [Subtitle](#subtitle)
+    - [Description](#description)
+    - [Primary](#primary)
+    - [Props](#props)
+    - [Stories](#stories)
+  - [Slot functions](#slot-functions)
+  - [Replacing DocsPage](#replacing-docspage)
+  - [Story file names](#story-file-names)
+  - [Inline stories vs. Iframe stories](#inline-stories-vs-iframe-stories)
+  - [More resources](#more-resources)
 
 ## Motivation
 
@@ -54,12 +65,32 @@ storiesOf('Path/to/Badge', module).addParameters({ component: Badge });
 
 If you're coming from the `storiesOf` format, there's [a codemod that adds it for you](https://github.com/storybookjs/storybook/blob/next/lib/codemod/README.md#add-component-parameters).
 
+## Subcomponents parameter
+
+Sometimes it's useful to document multiple components on the same page. For example, suppose your component library contains `List` and `ListItem` components that don't make sense without one another. `DocsPage` has the concept of a "primary" component with the [`component` parameter](#component-parameter), and can also accept one or more "subcomponents":
+
+```js
+import { List, ListHeading, ListItem } from './List';
+
+export default {
+  title: 'Path/to/List',
+  component: List,
+  subcomponents: { ListHeading, ListItem },
+};
+```
+
+Subcomponent prop tables will show up in a tabbed interface along with the primary component, and the tab titles will correspond to the keys of the `subcomponents` object.
+
+<img src="./media/docspage-subcomponents.png" width="100%" />
+
+If you want organize your documentation differently for groups of components, we recommend trying [MDX](./mdx.md) which is completely flexible to support any configuration.
+
 ## DocsPage slots
 
 `DocsPage` is organized into a series of "slots" including Title, Subtitle, Description, Props, and Story. Each of these slots pulls information from your project and formats it for the screen.
 
 <center>
-  <img style="padding: 30px; border: 3px solid #eee;" src="./media/docspage-slots.png" width="100%" />
+  <img style="padding: 30px; border: 3px solid #eee;" src="https://raw.githubusercontent.com/storybookjs/storybook/master/addons/docs/docs/media/docspage-slots.png" width="100%" />
 </center>
 
 ## Slot values
@@ -204,7 +235,7 @@ You can replace DocsPage at any level by overriding the `docs.page` parameter:
 - [With MDX](./recipes.md#csf-stories-with-mdx-docs) docs
 - With a custom React component
 
-**Globally (config.js)**
+**Globally (preview.js)**
 
 ```js
 import { addParameters } from '@storybook/react';

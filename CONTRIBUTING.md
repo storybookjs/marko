@@ -4,7 +4,7 @@ Thanks for your interest in improving Storybook! We are a community-driven proje
 
 Please review this document to help to streamline the process and save everyone's precious time.
 
-This repo uses yarn workspaces, so you should install `yarn@1.3.2` or higher as a package manager. See [installation guide](https://yarnpkg.com/en/docs/install).
+This repo uses yarn workspaces, so you should install `yarn` as the package manager. See [installation guide](https://yarnpkg.com/en/docs/install).
 
 ## Issues
 
@@ -187,7 +187,7 @@ If you've made a change to storybook's codebase and would want this change to be
 
 ### Updating Tests
 
-Before any contributes are submitted in a PR, make sure to add or update meaningful tests. A PR that has failing tests will be regarded as a “Work in Progress” and will not be merged until all tests pass.
+Before any contributions are submitted in a PR, make sure to add or update meaningful tests. A PR that has failing tests will be regarded as a “Work in Progress” and will not be merged until all tests pass.
 When creating new unit test files, the tests should adhere to a particular folder structure and naming convention, as defined below.
 
 ```sh
@@ -205,7 +205,7 @@ Before you submit a new PR, make sure you run `yarn test`. Do not submit a PR if
 
 ### Reviewing PRs
 
-**As a PR submitter**, you should reference the issue if there is one, include a short description of what you contributed and, if it is a code change, instructions for how to manually test out the change. This is informally enforced by our [PR template](https://github.com/storybookjs/storybook/blob/master/.github/PULL_REQUEST_TEMPLATE.md). If your PR is reviewed as only needing trivial changes (e.g. small typos etc), and you have commit access, then you can merge the PR after making those changes.
+**As a PR submitter**, you should reference the issue if there is one, include a short description of what you contributed and, if it is a code change, instructions for how to manually test out the change. This is informally enforced by our [PR template](https://github.com/storybookjs/storybook/blob/master/.github/PULL_REQUEST_TEMPLATE.md). If your PR is reviewed as only needing trivial changes (e.g. small typos etc), and you have commit access then you can merge the PR after making those changes.
 
 **As a PR reviewer**, you should read through the changes and comment on any potential problems. If you see something cool, a kind word never hurts either! Additionally, you should follow the testing instructions and manually test the changes. If the instructions are missing, unclear, or overly complex, feel free to request better instructions from the submitter. Unless the PR is tagged with the `do not merge` label, if you approve the review and there is no other required discussion or changes, you should also go ahead and merge the PR.
 
@@ -215,7 +215,7 @@ If you are looking for a way to help the project, triaging issues is a great pla
 
 ### Responding to issues
 
-Issues that are tagged `question / support` or `needs reproduction` are great places to help. If you can answer a question, it will help the asker as well as anyone searching. If an issue needs reproduction, you may be able to guide the reporter toward one, or even reproduce it yourself using [this technique](https://github.com/storybookjs/storybook/blob/master/CONTRIBUTING.md#reproductions).
+Issues that are tagged `question / support` or `needs reproduction` are great places to help. If you can answer a question, it will help the asker as well as anyone who has a similar question. Also in the future if anyone has that same question they can easily find it by searching. If an issue needs reproduction, you may be able to guide the reporter toward one, or even reproduce it yourself using [this technique](https://github.com/storybookjs/storybook/blob/master/CONTRIBUTING.md#reproductions).
 
 ### Triaging issues
 
@@ -273,7 +273,7 @@ If you run into trouble here, make sure your node, npm, and **_yarn_** are on th
 _This method is slow_
 
 1.  `yarn bootstrap --all`
-2.  Have a beer 🍺
+2.  Take a break 🍵
 3.  `yarn test` (to verify everything worked)
 
 ### Working with the kitchen sink apps
@@ -283,9 +283,10 @@ Within the `examples` folder of the Storybook repo, you will find kitchen sink e
 Not only do these show many of the options and add-ons available, they are also automatically linked to all the development packages. We highly encourage you to use these to develop/test contributions on.
 
 #### React and Vue
+
 1. `cd examples/official-storybook`
-2.  `yarn storybook`
-3.  Verify that your local version works
+2. `yarn storybook`
+3. Verify that your local version works
 
 ### Working with your own app
 
@@ -327,9 +328,7 @@ First we are going to install storybook, then we are going to link `@storybook/r
 
 You should now have a working storybook dev environment up and running.
 
-> TODO: update this section (is already incorrect)
-
-Save and go to `http://localhost:9009` (or wherever storybook is running)
+Save and go to `http://localhost:9011` (or wherever storybook is running)
 
 If you don't see the changes rerun `yarn storybook` again in your sandbox app
 

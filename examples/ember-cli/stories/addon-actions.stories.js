@@ -1,8 +1,8 @@
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { action } from '@storybook/addon-actions';
 
 export default {
-  title: 'Addon|Actions',
+  title: 'Addon/Actions',
 
   parameters: {
     options: {
@@ -11,7 +11,7 @@ export default {
   },
 };
 
-export const button = () => ({
+export const Button = () => ({
   template: hbs`<button {{action onClick}}>Click Me</button>`,
   context: {
     onClick: action('clicked'),

@@ -9,7 +9,6 @@
   + [Add a playground addon](#add-a-playground-addon)
   + [See multiple (or all) stories in 1 preview.](#see-multiple--or-all--stories-in-1-preview)
 * [Supporting other frameworks and libraries](#supporting-other-frameworks-and-libraries)
-  + [Polymer & Webcomponents](#polymer---webcomponents)
   + [Aurelia](#aurelia)
 * [Breaking changes](#breaking-changes)
   + [Addon API](#addon-api)
@@ -59,10 +58,6 @@ But it's up to you and your team to decide your stack.
 Unfortunately, if you choose anything not from the list of [supported frameworks](README.md#supported-frameworks) you can not use storybook.
 
 We want you to be able to use storybook with the framework / library of your choice.
-
-### Polymer & Webcomponents
-
-Storybook for Polymer is currently in development and will support custom elements and plain HTML.
 
 ### Aurelia
 

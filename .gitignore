@@ -2,7 +2,8 @@ node_modules
 *.log
 .idea
 *.iml
-.vscode
+.vscode/*
+!.vscode/launch.json
 *.sw*
 npm-shrinkwrap.json
 dist
@@ -34,3 +35,4 @@ storybook-out
 built-storybooks
 cypress/videos
 cypress/screenshots
+examples/ember-cli/ember-output

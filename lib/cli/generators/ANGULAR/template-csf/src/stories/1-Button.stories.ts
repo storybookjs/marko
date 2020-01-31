@@ -8,25 +8,25 @@ export default {
   component: Button,
 };
 
-export const text = () => ({
+export const Text = () => ({
   component: Button,
   props: {
     text: 'Hello Button',
   },
 });
 
-export const emoji = () => ({
+export const Emoji = () => ({
   component: Button,
   props: {
     text: '😀 😎 👍 💯',
   },
 });
 
-emoji.story = {
+Emoji.story = {
   parameters: { notes: 'My notes on a button with emojis' },
 };
 
-export const withSomeEmojiAndAction = () => ({
+export const WithSomeEmojiAndAction = () => ({
   component: Button,
   props: {
     text: '😀 😎 👍 💯',
@@ -34,12 +34,12 @@ export const withSomeEmojiAndAction = () => ({
   },
 });
 
-withSomeEmojiAndAction.story = {
+WithSomeEmojiAndAction.story = {
   name: 'with some emoji and action',
   parameters: { notes: 'My notes on a button with emojis' },
 };
 
-export const buttonWithLinkToAnotherStory = () => ({
+export const ButtonWithLinkToAnotherStory = () => ({
   component: Button,
   props: {
     text: 'Go to Welcome Story',
@@ -47,6 +47,6 @@ export const buttonWithLinkToAnotherStory = () => ({
   },
 });
 
-buttonWithLinkToAnotherStory.story = {
+ButtonWithLinkToAnotherStory.story = {
   name: 'button with link to another story',
 };

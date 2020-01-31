@@ -1,21 +1,20 @@
 <center>
-  <img src="./media/mdx-hero.png" width="100%" />
+  <img src="https://raw.githubusercontent.com/storybookjs/storybook/master/addons/docs/docs/media/mdx-hero.png" width="100%" />
 </center>
 
 # Storybook Docs MDX
 
-> ⚠️ MDX support is an experimental feature in Storybook 5.2. The API may change in 5.3 outside of the normal semver rules. Be forewarned!
-
 `MDX` is the syntax [Storybook Docs](../README.md) uses to capture long-form markdown documentation and stories in one file. You can also write pure documentation pages in `MDX` and add them to Storybook alongside your stories.
 
-- [Basic example](#basic-example)
-- [MDX-Flavored CSF](#mdx-flavored-csf)
-- [Writing stories](#writing-stories)
-- [Embedding stories](#embedding-stories)
-- [Decorators and parameters](#decorators-and-parameters)
-- [Documentation-only MDX](#documentation-only-mdx)
-- [MDX file names](#mdx-file-names)
-- [More resources](#more-resources)
+- [Storybook Docs MDX](#storybook-docs-mdx)
+  - [Basic example](#basic-example)
+  - [MDX-Flavored CSF](#mdx-flavored-csf)
+  - [Writing stories](#writing-stories)
+  - [Embedding stories](#embedding-stories)
+  - [Decorators and parameters](#decorators-and-parameters)
+  - [Documentation-only MDX](#documentation-only-mdx)
+  - [MDX file names](#mdx-file-names)
+  - [More resources](#more-resources)
 
 ## Basic example
 
@@ -25,7 +24,7 @@ Let's get started with an example that combines markdown with a single story:
 import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
 import { Checkbox } from './Checkbox';
 
-<Meta title="MDX|Checkbox" component={Checkbox} />
+<Meta title="MDX/Checkbox" component={Checkbox} />
 
 # Checkbox
 
@@ -46,7 +45,7 @@ markdown documentation.
 And here's how that's rendered in Storybook:
 
 <center>
-  <img src="./media/mdx-simple.png" width="100%" />
+  <img src="https://raw.githubusercontent.com/storybookjs/storybook/master/addons/docs/docs/media/mdx-simple.png" width="100%" />
 </center>
 
 As you can see there's a lot going on here. We're writing Markdown, we're writing JSX, and somehow we're also defining Storybook stories that are drop-in compatible with the entire Storybook ecosystem.
@@ -64,7 +63,7 @@ For example, here's the story from `Checkbox` example above, rewritten in CSF:
 ```js
 import React from 'react';
 import { Checkbox } from './Checkbox';
-export default { title: "MDX|Checkbox" component: Checkbox };
+export default { title: "MDX/Checkbox" component: Checkbox };
 export const allCheckboxes = () => (
   <form>
     <Checkbox id="Unchecked" label="Unchecked" />
@@ -86,7 +85,7 @@ import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
 import { Badge } from './Badge';
 import { Icon } from './Icon';
 
-<Meta title="MDX|Badge" component={Badge} />
+<Meta title="MDX/Badge" component={Badge} />
 
 # Badge
 
@@ -130,7 +129,7 @@ with unique URLs and isolated snapshot tests.
 And here's how that gets rendered in Storybook:
 
 <center>
-  <img src="./media/mdx-page.png" width="100%" />
+  <img src="https://raw.githubusercontent.com/storybookjs/storybook/master/addons/docs/docs/media/mdx-page.png" width="100%" />
 </center>
 
 ## Embedding stories
@@ -165,7 +164,7 @@ To add [decorators](https://github.com/storybookjs/storybook/blob/next/docs/src/
 </Story>
 ```
 
-In addition, global decorators work just like before, e.g. adding the following to your `.storybook/config.js`:
+In addition, global decorators work just like before, e.g. adding the following to your `.storybook/preview.js`:
 
 ```js
 import { addDecorator, addParameters } from '@storybook/react';
@@ -185,7 +184,7 @@ If you don't define a `Meta`, you can write Markdown and associate with an exist
 To get a "documentation-only story", in your UI, define a `<Meta>` as you normally would, but don't define any stories. It will show up in your UI as a documentation node:
 
 <center>
-  <img src="./media/mdx-documentation-only.png" width="100%" />
+  <img src="https://raw.githubusercontent.com/storybookjs/storybook/master/addons/docs/docs/media/mdx-documentation-only.png" width="100%" />
 </center>
 
 ## MDX file names
