@@ -1,7 +1,9 @@
 [build]
-  publish = "docs/public"
-  command = "cd docs && yarn && yarn build && cd .."
+  publish = "built-storybooks"
+  command = "yarn bootstrap --core && yarn build-storybooks"
 [build.environment]
   NODE_VERSION = "10"
   YARN_VERSION = "1.19.1"
   YARN_FLAGS = "--version"
+  DOTENV_DISPLAY_WARNING = "none"
+  STORYBOOK_EXAMPLE_APP ="true"

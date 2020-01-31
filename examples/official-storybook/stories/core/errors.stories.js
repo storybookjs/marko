@@ -27,7 +27,6 @@ export const badComponent = () => (
 badComponent.story = {
   name: 'story errors - invariant error',
   parameters: {
-    notes: 'Story does not return something react can render',
     storyshots: { disable: true },
     chromatic: { disable: true },
   },
@@ -37,7 +36,6 @@ export const BadStory = () => badOutput;
 BadStory.story = {
   name: 'story errors - story un-renderable type',
   parameters: {
-    notes: 'Story does not return something react can render',
     storyshots: { disable: true },
     chromatic: { disable: true },
   },

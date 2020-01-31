@@ -10,7 +10,7 @@ You've read the [Storybook Docs README](../README.md). You're already familiar w
 
 ## Does Docs support framework X?
 
-Docs does not currently support [React Native](https://github.com/storybooks/storybook/tree/next/app/react-native). Otherwise, [it supports all frameworks that Storybook supports](../README.md#framework-support), including React, Vue, Angular, Ember, Svelte, Polymer, and others.
+Docs does not currently support [React Native](https://github.com/storybooks/storybook/tree/next/app/react-native). Otherwise, [it supports all frameworks that Storybook supports](../README.md#framework-support), including React, Vue, Angular, Ember, Svelte, and others.
 
 ## How does Docs interact with existing addons?
 
@@ -19,7 +19,7 @@ Currently we hide the addons panel when docs is visible. It's tricky because all
 ## How do I debug my MDX story?
 
 <center>
-  <img src="./media/faq-debug.png" width="100%" />
+  <img src="https://raw.githubusercontent.com/storybookjs/storybook/master/addons/docs/docs/media/faq-debug.png" width="100%" />
 </center>
 
 > "My story renders in docs, but doesn’t show up the way I’d expect in the Canvas”
@@ -37,7 +37,7 @@ For example, the following MDX story:
 Shows up in the dev tools as follows:
 
 <center>
-  <img src="./media/faq-devtools.png" width="100%" />
+  <img src="https://raw.githubusercontent.com/storybookjs/storybook/master/addons/docs/docs/media/faq-devtools.png" width="100%" />
 </center>
 
 This is [Component Story Format (CSF)](https://medium.com/storybookjs/component-story-format-66f4c32366df), so there are ways to debug. You can copy and paste this code into a new `.stories.js` file and play around with it at a lower level to understand what's going wrong.

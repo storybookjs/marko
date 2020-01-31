@@ -3,18 +3,17 @@ const path = require('path');
 module.exports = {
   stories: ['../src/stories/**/*.stories.js'],
   addons: [
-    '@storybook/addon-storysource/register',
-    '@storybook/addon-actions/register',
-    '@storybook/addon-links/register',
-    '@storybook/addon-events/register',
-    '@storybook/addon-notes/register',
-    '@storybook/addon-options/register',
-    '@storybook/addon-knobs/register',
-    '@storybook/addon-backgrounds/register',
-    '@storybook/addon-a11y/register',
-    '@storybook/addon-jest/register',
+    '@storybook/addon-storysource',
+    '@storybook/addon-actions',
+    '@storybook/addon-links',
+    '@storybook/addon-events',
+    '@storybook/addon-options',
+    '@storybook/addon-knobs',
+    '@storybook/addon-backgrounds',
+    '@storybook/addon-a11y',
+    '@storybook/addon-jest',
   ],
-  webpack: async config => ({
+  webpackFinal: async config => ({
     ...config,
     module: {
       ...config.module,
@@ -25,10 +24,6 @@ module.exports = {
           loaders: [require.resolve('@storybook/source-loader')],
           include: [path.resolve(__dirname, '../src')],
           enforce: 'pre',
-        },
-        {
-          test: /\.stylesheet$/,
-          use: [require.resolve('stylesheet-loader')],
         },
       ],
     },
