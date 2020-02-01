@@ -7,7 +7,6 @@ module.exports = {
     '@storybook/addon-actions',
     '@storybook/addon-links',
     '@storybook/addon-events',
-    '@storybook/addon-notes',
     '@storybook/addon-options',
     '@storybook/addon-knobs',
     '@storybook/addon-backgrounds',
@@ -25,10 +24,6 @@ module.exports = {
           loaders: [require.resolve('@storybook/source-loader')],
           include: [path.resolve(__dirname, '../src')],
           enforce: 'pre',
-        },
-        {
-          test: /\.stylesheet$/,
-          use: [require.resolve('stylesheet-loader')],
         },
       ],
     },

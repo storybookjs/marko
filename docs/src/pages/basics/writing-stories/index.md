@@ -3,6 +3,8 @@ id: 'writing-stories'
 title: 'Writing Stories'
 ---
 
+> migration guide: This page documents the method to configure storybook introduced recently in 5.3.0, consult the [migration guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) if you want to migrate to this format of configuring storybook.
+
 A Storybook is a collection of stories. Each story represents a single visual state of a component.
 
 > Technically, a story is a function that returns something that can be rendered to screen.
@@ -372,7 +374,7 @@ Now suppose you want to change the position in the hierarchy to `OtherFoo/Bar` a
 ```js
 export default {
   title: 'OtherFoo/Bar',
-  componentId: 'Foo/Bar', // or 'foo-bar' if you prefer
+  id: 'Foo/Bar', // or 'foo-bar' if you prefer
 };
 
 export const Baz = () => <MyComponent />;
@@ -381,4 +383,4 @@ Baz.story = {
 };
 ```
 
-Storybook will prioritize the `componentId` over the title for ID generation, if provided, and will prioritize the `story.name` over the export key for display.
+Storybook will prioritize the `id` over the title for ID generation, if provided, and will prioritize the `story.name` over the export key for display.

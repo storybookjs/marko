@@ -5,6 +5,7 @@ import { ButtonGroup } from '../../components/ButtonGroup';
 export default {
   title: 'Addons/Docs/ButtonGroup',
   component: ButtonGroup,
+  parameters: { viewMode: 'docs' },
   subcomponents: { DocgenButton },
 };
 

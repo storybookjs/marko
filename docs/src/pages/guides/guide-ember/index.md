@@ -73,7 +73,7 @@ Now you can write some stories inside the `../stories/index.stories.js` file, li
 > It is important that you import the `hbs` function that is provided by a babel plugin in `@storybook/ember`
 
 ```js
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 
 export default { title: 'Demo' };
 

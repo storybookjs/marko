@@ -9,6 +9,7 @@
     - [Deprecate displayName parameter](#deprecate-displayname-parameter)
     - [Unified docs preset](#unified-docs-preset)
     - [Simplified hierarchy separators](#simplified-hierarchy-separators)
+    - [Addon StoryShots Puppeteer uses external puppeteer](#addon-storyshots-puppeteer-uses-external-puppeteer)
   - [From version 5.1.x to 5.2.x](#from-version-51x-to-52x)
     - [Source-loader](#source-loader)
     - [Default viewports](#default-viewports)
@@ -151,6 +152,8 @@ addons.setConfig({
 This makes storybook load and use the theme in the manager directly.
 This allows for richer theming in the future, and has a much better performance!
 
+> If you're using addon-docs, you should probably not do this. Docs uses the theme as well, but this change makes the theme inaccessible to addon-docs. We'll address this in 6.0.0.
+
 ### Create React App preset
 
 You can now move to the new preset for [Create React App](https://create-react-app.dev/). The in-built preset for Create React App will be disabled in Storybook 6.0.
@@ -186,6 +189,8 @@ getStorybookUI({
 });
 ```
 
+The benefit of using Async Storage is so that when users refresh the app, Storybook can open their last visited story.
+
 ### Deprecate displayName parameter
 
 In 5.2, the story parameter `displayName` was introduced as a publicly visible (but internal) API. Storybook's Component Story Format (CSF) loader used it to modify a story's display name independent of the story's `name`/`id` (which were coupled).
@@ -217,6 +222,17 @@ addParameters({
 ```
 
 NOTE: it is no longer possible to have some stories with roots and others without. If you want to keep the old behavior, simply add a root called "Others" to all your previously unrooted stories.
+
+### Addon StoryShots Puppeteer uses external puppeteer
+
+To give you more control on the Chrome version used when running StoryShots Puppeteer, `puppeteer` is no more included in the addon dependencies. So you can now pick the version of `puppeteer` you want and set it in your project.
+ 
+If you want the latest version available just run:
+```sh
+yarn add puppeteer --dev
+OR
+npm install puppeteer --save-dev
+``` 
 
 ## From version 5.1.x to 5.2.x
 
