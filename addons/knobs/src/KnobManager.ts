@@ -49,6 +49,7 @@ function escapeStrings(obj: any): any {
 interface KnobManagerOptions {
   escapeHTML?: boolean;
   disableDebounce?: boolean;
+  disableForceUpdate?: boolean;
 }
 
 export default class KnobManager {
