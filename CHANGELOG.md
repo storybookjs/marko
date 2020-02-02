@@ -1,3 +1,14 @@
+## 6.0.0-alpha.3 (February 2, 2020)
+
+### Bug Fixes
+
+* CRA: Fix jsconfig support ([#9324](https://github.com/storybookjs/storybook/pull/9324))
+* UI: Check if docsOnly is set to hide the addon panels ([#9687](https://github.com/storybookjs/storybook/pull/9687))
+
+### Maintenance
+
+* Addon-notes, addon-info: Move to deprecated-addons repo ([#9673](https://github.com/storybookjs/storybook/pull/9673))
+
 ## 6.0.0-alpha.2 (January 30, 2020)
 
 ### Features
