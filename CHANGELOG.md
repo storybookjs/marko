@@ -1,3 +1,20 @@
+## 5.3.10 (February 2, 2020)
+
+### Bug Fixes
+
+* Core: Upgrade `min-css-extract-plugin` to fix SASS loading ([#9652](https://github.com/storybookjs/storybook/pull/9652))
+* CRA: Fix jsconfig support ([#9324](https://github.com/storybookjs/storybook/pull/9324))
+* Web-components: Fix default value for docs prop table ([#9655](https://github.com/storybookjs/storybook/pull/9655))
+* Web-components: Fix types to play nicely with lit-element ([#9557](https://github.com/storybookjs/storybook/pull/9557))
+* UI: Add support for className prop on Form.Field ([#9665](https://github.com/storybookjs/storybook/pull/9665))
+* Addon-storyshots: Remove excess slashes from jest transform warning ([#9616](https://github.com/storybookjs/storybook/pull/9616))
+
+### Maintenance
+
+* Ember: Migrate to new "import { hbs } from 'ember-cli-htmlbars'" ([#9633](https://github.com/storybookjs/storybook/pull/9633))
+* Build: Netlify for examples again ([#9585](https://github.com/storybookjs/storybook/pull/9585))
+* Publish: Remove docs to reduce package size ([#9612](https://github.com/storybookjs/storybook/pull/9612))
+
 ## 5.3.9 (January 24, 2020)
 
 ### Bug Fixes
