@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-contexts",
-  "version": "6.0.0-alpha.3",
+  "version": "6.0.0-alpha.4",
   "description": "Storybook Addon Contexts",
   "keywords": [
     "preact",
@@ -15,22 +15,22 @@
   },
   "license": "MIT",
   "author": "Leo Y. Li",
+  "main": "dist/register.js",
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
     "*.d.ts"
   ],
-  "main": "dist/register.js",
   "scripts": {
     "dev:check-types": "tsc --noEmit",
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-alpha.3",
-    "@storybook/api": "6.0.0-alpha.3",
-    "@storybook/components": "6.0.0-alpha.3",
-    "@storybook/core-events": "6.0.0-alpha.3",
+    "@storybook/addons": "6.0.0-alpha.4",
+    "@storybook/api": "6.0.0-alpha.4",
+    "@storybook/components": "6.0.0-alpha.4",
+    "@storybook/core-events": "6.0.0-alpha.4",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "qs": "^6.6.0"

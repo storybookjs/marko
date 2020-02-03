@@ -1,6 +1,6 @@
 {
   "name": "@storybook/core-events",
-  "version": "6.0.0-alpha.3",
+  "version": "6.0.0-alpha.4",
   "description": "Event names used in storybook core",
   "keywords": [
     "storybook"
@@ -15,14 +15,14 @@
     "directory": "lib/core-events"
   },
   "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
     "*.d.ts"
   ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
