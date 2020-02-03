@@ -4,8 +4,8 @@ import { RenderMainArgs, FetchStoryHtmlType } from './types';
 
 const rootElement = document.getElementById('root');
 
-let fetchStoryHtml: FetchStoryHtmlType = async (url, id, params) => {
-  const fetchUrl = new URL(`${url}/${id}`);
+let fetchStoryHtml: FetchStoryHtmlType = async (url, path, params) => {
+  const fetchUrl = new URL(`${url}/${path}`);
   fetchUrl.search = new URLSearchParams(params).toString();
 
   const response = await fetch(fetchUrl);
