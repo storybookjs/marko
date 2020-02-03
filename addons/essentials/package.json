@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-essentials",
-  "version": "6.0.0-alpha.3",
+  "version": "6.0.0-alpha.4",
   "description": "Curated addons to bring out the best of Storybook",
   "keywords": [
     "addon",
@@ -17,25 +17,25 @@
     "directory": "addons/essentials"
   },
   "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
     "README.md"
   ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addon-backgrounds": "6.0.0-alpha.3",
-    "@storybook/addon-viewport": "6.0.0-alpha.3",
-    "@storybook/addons": "6.0.0-alpha.3",
-    "@storybook/api": "6.0.0-alpha.3",
-    "@storybook/node-logger": "6.0.0-alpha.3",
-    "ts-dedent": "^1.1.0"
+    "@storybook/addon-backgrounds": "6.0.0-alpha.4",
+    "@storybook/addon-viewport": "6.0.0-alpha.4",
+    "@storybook/addons": "6.0.0-alpha.4",
+    "@storybook/api": "6.0.0-alpha.4",
+    "@storybook/node-logger": "6.0.0-alpha.4",
+    "ts-dedent": "^1.1.1"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.11"
+    "@types/jest": "^25.1.1"
   },
   "peerDependencies": {
     "babel-loader": "^8.0.0",

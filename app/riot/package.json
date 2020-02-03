@@ -1,6 +1,6 @@
 {
   "name": "@storybook/riot",
-  "version": "6.0.0-alpha.3",
+  "version": "6.0.0-alpha.4",
   "description": "Storybook for riot.js: View riot snippets in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -15,6 +15,12 @@
     "directory": "app/riot"
   },
   "license": "MIT",
+  "main": "dist/client/index.js",
+  "bin": {
+    "build-storybook": "./bin/build.js",
+    "start-storybook": "./bin/index.js",
+    "storybook-server": "./bin/index.js"
+  },
   "files": [
     "bin/**/*",
     "dist/**/*",
@@ -23,26 +29,20 @@
     "*.js",
     "*.d.ts"
   ],
-  "main": "dist/client/index.js",
-  "bin": {
-    "build-storybook": "./bin/build.js",
-    "start-storybook": "./bin/index.js",
-    "storybook-server": "./bin/index.js"
-  },
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/core": "6.0.0-alpha.3",
+    "@storybook/core": "6.0.0-alpha.4",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
-    "raw-loader": "^3.1.0",
+    "raw-loader": "^4.0.0",
     "regenerator-runtime": "^0.13.3",
-    "ts-dedent": "^1.1.0"
+    "ts-dedent": "^1.1.1"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.7.0",
-    "@babel/preset-env": "^7.7.1",
+    "@babel/preset-env": "^7.8.4",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.7.0"
   },

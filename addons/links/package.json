@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-links",
-  "version": "6.0.0-alpha.3",
+  "version": "6.0.0-alpha.4",
   "description": "Story Links addon for storybook",
   "keywords": [
     "addon",
@@ -16,32 +16,32 @@
     "directory": "addons/links"
   },
   "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
     "*.d.ts"
   ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-alpha.3",
-    "@storybook/client-logger": "6.0.0-alpha.3",
-    "@storybook/core-events": "6.0.0-alpha.3",
+    "@storybook/addons": "6.0.0-alpha.4",
+    "@storybook/client-logger": "6.0.0-alpha.4",
+    "@storybook/core-events": "6.0.0-alpha.4",
     "@storybook/csf": "0.0.1",
-    "@storybook/router": "6.0.0-alpha.3",
+    "@storybook/router": "6.0.0-alpha.4",
     "@types/qs": "^6.9.0",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "prop-types": "^15.7.2",
     "qs": "^6.6.0",
-    "ts-dedent": "^1.1.0"
+    "ts-dedent": "^1.1.1"
   },
   "devDependencies": {
-    "@types/webpack-env": "^1.15.0"
+    "@types/webpack-env": "^1.15.1"
   },
   "peerDependencies": {
     "react": "*"

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/web-components",
-  "version": "6.0.0-alpha.3",
+  "version": "6.0.0-alpha.4",
   "description": "Storybook for web-components: View web components snippets in isolation with Hot Reloading.",
   "keywords": [
     "lit-html",
@@ -17,13 +17,6 @@
     "directory": "app/web-components"
   },
   "license": "MIT",
-  "files": [
-    "bin/**/*",
-    "dist/**/*",
-    "README.md",
-    "*.js",
-    "*.d.ts"
-  ],
   "main": "dist/client/index.js",
   "types": "dist/client/index.d.ts",
   "bin": {
@@ -31,20 +24,27 @@
     "start-storybook": "./bin/index.js",
     "storybook-server": "./bin/index.js"
   },
+  "files": [
+    "bin/**/*",
+    "dist/**/*",
+    "README.md",
+    "*.js",
+    "*.d.ts"
+  ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-syntax-import-meta": "^7.2.0",
-    "@storybook/addons": "6.0.0-alpha.3",
-    "@storybook/core": "6.0.0-alpha.3",
-    "@types/webpack-env": "^1.15.0",
+    "@storybook/addons": "6.0.0-alpha.4",
+    "@storybook/core": "6.0.0-alpha.4",
+    "@types/webpack-env": "^1.15.1",
     "babel-plugin-bundled-import-meta": "^0.3.1",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "regenerator-runtime": "^0.13.3",
-    "ts-dedent": "^1.1.0"
+    "ts-dedent": "^1.1.1"
   },
   "devDependencies": {
     "lit-html": "^1.0.0"

@@ -1,6 +1,6 @@
 {
   "name": "cra-ts-kitchen-sink",
-  "version": "6.0.0-alpha.3",
+  "version": "6.0.0-alpha.4",
   "private": true,
   "scripts": {
     "build": "react-scripts build",
@@ -23,36 +23,36 @@
     ]
   },
   "dependencies": {
-    "@types/jest": "24.0.23",
-    "@types/node": "12.12.11",
-    "@types/react": "16.9.11",
-    "@types/react-dom": "16.9.4",
+    "@types/jest": "25.1.1",
+    "@types/node": "13.5.3",
+    "@types/react": "16.9.19",
+    "@types/react-dom": "16.9.5",
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-scripts": "3.2.0",
-    "typescript": "3.7.2"
+    "typescript": "3.7.5"
   },
   "devDependencies": {
-    "@storybook/addon-a11y": "6.0.0-alpha.3",
-    "@storybook/addon-actions": "6.0.0-alpha.3",
-    "@storybook/addon-knobs": "6.0.0-alpha.3",
-    "@storybook/addon-links": "6.0.0-alpha.3",
-    "@storybook/addon-options": "6.0.0-alpha.3",
-    "@storybook/addons": "6.0.0-alpha.3",
+    "@storybook/addon-a11y": "6.0.0-alpha.4",
+    "@storybook/addon-actions": "6.0.0-alpha.4",
+    "@storybook/addon-knobs": "6.0.0-alpha.4",
+    "@storybook/addon-links": "6.0.0-alpha.4",
+    "@storybook/addon-options": "6.0.0-alpha.4",
+    "@storybook/addons": "6.0.0-alpha.4",
     "@storybook/preset-create-react-app": "^1.5.0",
-    "@storybook/react": "6.0.0-alpha.3",
+    "@storybook/react": "6.0.0-alpha.4",
     "@types/enzyme": "^3.9.0",
     "@types/react": "^16.8.14",
     "@types/react-dom": "^16.8.2",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.9.1",
     "enzyme-to-json": "^3.4.1",
-    "fork-ts-checker-webpack-plugin": "^3.0.1",
+    "fork-ts-checker-webpack-plugin": "^4.0.3",
     "react-docgen-typescript-loader": "^3.3.0",
     "react-moment-proptypes": "^1.7.0",
     "react-scripts": "^3.0.1",
-    "tslint": "^5.14.0",
+    "tslint": "^6.0.0",
     "tslint-config-airbnb": "^5.11.1",
     "typescript": "^3.4.0"
   }

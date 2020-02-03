@@ -1,6 +1,6 @@
 {
   "name": "@storybook/theming",
-  "version": "6.0.0-alpha.3",
+  "version": "6.0.0-alpha.4",
   "description": "Core Storybook Components",
   "keywords": [
     "storybook"
@@ -15,14 +15,14 @@
     "directory": "lib/theming"
   },
   "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
     "*.d.ts"
   ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
@@ -30,16 +30,16 @@
     "@emotion/core": "^10.0.20",
     "@emotion/is-prop-valid": "^0.8.6",
     "@emotion/styled": "^10.0.17",
-    "@storybook/client-logger": "6.0.0-alpha.3",
+    "@storybook/client-logger": "6.0.0-alpha.4",
     "core-js": "^3.0.1",
     "deep-object-diff": "^1.1.0",
     "emotion-theming": "^10.0.19",
     "global": "^4.3.2",
     "memoizerific": "^1.11.3",
-    "polished": "^3.3.1",
+    "polished": "^3.4.4",
     "prop-types": "^15.7.2",
     "resolve-from": "^5.0.0",
-    "ts-dedent": "^1.1.0"
+    "ts-dedent": "^1.1.1"
   },
   "peerDependencies": {
     "react": "*",

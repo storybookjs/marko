@@ -1,6 +1,6 @@
 {
   "name": "@storybook/rax",
-  "version": "6.0.0-alpha.3",
+  "version": "6.0.0-alpha.4",
   "description": "Storybook for Rax: Develop Rax Component in isolation.",
   "keywords": [
     "rax",
@@ -16,6 +16,12 @@
     "directory": "app/rax"
   },
   "license": "MIT",
+  "main": "dist/client/index.js",
+  "bin": {
+    "build-storybook": "./bin/build.js",
+    "start-storybook": "./bin/index.js",
+    "storybook-server": "./bin/index.js"
+  },
   "files": [
     "bin/**/*",
     "dist/**/*",
@@ -23,23 +29,17 @@
     "*.js",
     "*.d.ts"
   ],
-  "main": "dist/client/index.js",
-  "bin": {
-    "build-storybook": "./bin/build.js",
-    "start-storybook": "./bin/index.js",
-    "storybook-server": "./bin/index.js"
-  },
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/core": "6.0.0-alpha.3",
+    "@storybook/core": "6.0.0-alpha.4",
     "babel-preset-rax": "^1.0.0-beta.0",
     "core-js": "^3.0.1",
     "driver-dom": "^2.0.0",
     "global": "^4.3.2",
     "regenerator-runtime": "^0.13.3",
-    "ts-dedent": "^1.1.0"
+    "ts-dedent": "^1.1.1"
   },
   "devDependencies": {
     "rax": "^1.1.0"
