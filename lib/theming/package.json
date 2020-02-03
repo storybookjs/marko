@@ -36,10 +36,10 @@
     "emotion-theming": "^10.0.19",
     "global": "^4.3.2",
     "memoizerific": "^1.11.3",
-    "polished": "^3.3.1",
+    "polished": "^3.4.4",
     "prop-types": "^15.7.2",
     "resolve-from": "^5.0.0",
-    "ts-dedent": "^1.1.0"
+    "ts-dedent": "^1.1.1"
   },
   "peerDependencies": {
     "react": "*",

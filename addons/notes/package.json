@@ -1,18 +1,20 @@
 {
-  "name": "@storybook/addon-actions",
+  "name": "@storybook/addon-notes",
   "version": "6.0.0-alpha.3",
-  "description": "Action Logger addon for storybook",
+  "description": "Write notes for your Storybook stories.",
   "keywords": [
+    "addon",
+    "notes",
     "storybook"
   ],
-  "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/actions",
+  "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/notes",
   "bugs": {
     "url": "https://github.com/storybookjs/storybook/issues"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/storybookjs/storybook.git",
-    "directory": "addons/actions"
+    "directory": "addons/notes"
   },
   "license": "MIT",
   "files": [
@@ -21,31 +23,33 @@
     "*.js",
     "*.d.ts"
   ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/public_api.js",
+  "types": "dist/public_api.d.ts",
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
     "@storybook/addons": "6.0.0-alpha.3",
     "@storybook/api": "6.0.0-alpha.3",
-    "@storybook/client-api": "6.0.0-alpha.3",
+    "@storybook/client-logger": "6.0.0-alpha.3",
     "@storybook/components": "6.0.0-alpha.3",
     "@storybook/core-events": "6.0.0-alpha.3",
+    "@storybook/router": "6.0.0-alpha.3",
     "@storybook/theming": "6.0.0-alpha.3",
     "core-js": "^3.0.1",
-    "fast-deep-equal": "^3.1.1",
     "global": "^4.3.2",
-    "polished": "^3.4.4",
+    "markdown-to-jsx": "^6.10.3",
+    "memoizerific": "^1.11.3",
     "prop-types": "^15.7.2",
-    "react": "^16.8.3",
-    "react-inspector": "^4.0.0",
-    "uuid": "^3.3.2"
+    "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.149",
-    "@types/uuid": "^3.4.7",
+    "@types/prop-types": "^15.5.9",
+    "@types/util-deprecate": "^1.0.0",
     "@types/webpack-env": "^1.15.1"
+  },
+  "peerDependencies": {
+    "react": "*"
   },
   "publishConfig": {
     "access": "public"

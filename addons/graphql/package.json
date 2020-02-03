@@ -32,8 +32,8 @@
     "@storybook/api": "6.0.0-alpha.3",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
-    "graphiql": "^0.16.0",
-    "graphql": "^14.2.1",
+    "graphiql": "^0.17.5",
+    "graphql": "^14.6.0",
     "prop-types": "^15.7.2"
   },
   "peerDependencies": {

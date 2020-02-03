@@ -46,12 +46,12 @@
     "react-redux": "^7.0.2",
     "react-sizeme": "^2.5.2",
     "redux": "^4.0.1",
-    "ts-dedent": "^1.1.0",
+    "ts-dedent": "^1.1.1",
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
     "@types/react-redux": "^7.0.6",
-    "@types/webpack-env": "^1.15.0"
+    "@types/webpack-env": "^1.15.1"
   },
   "publishConfig": {
     "access": "public"

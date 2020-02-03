@@ -46,7 +46,7 @@
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
-    "@types/react": "^16.9.17",
+    "@types/react": "^16.9.19",
     "@types/react-syntax-highlighter": "^11.0.4"
   },
   "peerDependencies": {

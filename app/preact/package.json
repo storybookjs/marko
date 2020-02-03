@@ -36,11 +36,11 @@
     "@babel/plugin-transform-react-jsx": "^7.3.0",
     "@storybook/addons": "6.0.0-alpha.3",
     "@storybook/core": "6.0.0-alpha.3",
-    "@types/webpack-env": "^1.15.0",
+    "@types/webpack-env": "^1.15.1",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "regenerator-runtime": "^0.13.3",
-    "ts-dedent": "^1.1.0"
+    "ts-dedent": "^1.1.1"
   },
   "devDependencies": {
     "preact": "^8.4.2"

@@ -38,6 +38,6 @@
     "@storybook/theming": "6.0.0-alpha.3",
     "babel-eslint": "^10.0.3",
     "build-plugin-rax-app": "^0.2.0",
-    "stylesheet-loader": "^0.6.5"
+    "stylesheet-loader": "^0.7.0"
   }
 }

@@ -35,7 +35,7 @@
     "lodash": "^4.17.15",
     "markdown-to-jsx": "^6.9.1",
     "memoizerific": "^1.11.3",
-    "polished": "^3.3.1",
+    "polished": "^3.4.4",
     "popper.js": "^1.14.7",
     "prop-types": "^15.7.2",
     "react": "^16.8.3",
@@ -46,12 +46,12 @@
     "react-syntax-highlighter": "^11.0.2",
     "react-textarea-autosize": "^7.1.0",
     "simplebar-react": "^1.0.0-alpha.6",
-    "ts-dedent": "^1.1.0"
+    "ts-dedent": "^1.1.1"
   },
   "devDependencies": {
     "@types/react-syntax-highlighter": "^11.0.2",
     "enzyme": "^3.9.0",
-    "jest": "^24.7.1",
+    "jest": "^25.1.0",
     "jest-enzyme": "^7.0.2"
   },
   "peerDependencies": {
