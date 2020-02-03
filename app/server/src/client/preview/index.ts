@@ -24,14 +24,14 @@ export const storiesOf: ClientApi['storiesOf'] = (kind, m) => {
   });
 };
 
-const setRenderFecthAndConfigure: ClientApi['configure'] = (loader, module, options) => {
+const setRenderFetchAndConfigure: ClientApi['configure'] = (loader, module, options) => {
   if (options && options.fetchStoryHtml) {
     setFetchStoryHtml(options.fetchStoryHtml);
   }
   api.configure(loader, module, framework);
 };
 
-export const configure: ClientApi['configure'] = setRenderFecthAndConfigure;
+export const configure: ClientApi['configure'] = setRenderFetchAndConfigure;
 export const {
   addDecorator,
   addParameters,
