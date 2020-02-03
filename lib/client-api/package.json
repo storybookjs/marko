@@ -1,6 +1,6 @@
 {
   "name": "@storybook/client-api",
-  "version": "6.0.0-alpha.2",
+  "version": "6.0.0-alpha.3",
   "description": "Storybook Client API",
   "keywords": [
     "storybook"
@@ -27,13 +27,13 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-alpha.2",
-    "@storybook/channel-postmessage": "6.0.0-alpha.2",
-    "@storybook/channels": "6.0.0-alpha.2",
-    "@storybook/client-logger": "6.0.0-alpha.2",
-    "@storybook/core-events": "6.0.0-alpha.2",
+    "@storybook/addons": "6.0.0-alpha.3",
+    "@storybook/channel-postmessage": "6.0.0-alpha.3",
+    "@storybook/channels": "6.0.0-alpha.3",
+    "@storybook/client-logger": "6.0.0-alpha.3",
+    "@storybook/core-events": "6.0.0-alpha.3",
     "@storybook/csf": "0.0.1",
-    "@types/webpack-env": "^1.15.0",
+    "@types/webpack-env": "^1.15.1",
     "core-js": "^3.0.1",
     "eventemitter3": "^4.0.0",
     "global": "^4.3.2",
@@ -42,7 +42,7 @@
     "memoizerific": "^1.11.3",
     "qs": "^6.6.0",
     "stable": "^0.1.8",
-    "ts-dedent": "^1.1.0",
+    "ts-dedent": "^1.1.1",
     "util-deprecate": "^1.0.2"
   },
   "publishConfig": {
