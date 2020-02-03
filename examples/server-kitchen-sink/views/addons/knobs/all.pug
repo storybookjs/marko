@@ -1,0 +1,18 @@
+- nice = (nice === 'true')
+- stock = parseInt(stock)
+- stockMessage = stock > 0 ? `I have a stock of ${stock} ${fruit}, costing &dollar;${price} each.` : `I'm out of ${fruit}${nice ? ', Sorry!' : '.'}`;
+- salutation = nice ? 'Nice to meet you!' : 'Leave me alone!';
+- dateOptions = { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' };
+- style = `border: 2px dotted ${colour}; padding: 8px 22px; border-radius: 8px`;
+- today = new Date(parseInt(today, 10));
+- items = items.split(',');
+
+div(style=`${style}`)
+  h1 My name is #{name},
+  h3 today is #{today.toLocaleDateString('en-US', dateOptions)}
+  p !{stockMessage}
+  p Also, I have:
+  ul 
+    each item in items
+      li= item
+  p #{salutation}
