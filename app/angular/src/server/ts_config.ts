@@ -14,6 +14,9 @@ export default function(configDir: string) {
   const configFilePath = resolveTsConfig(path.resolve(configDir, 'tsconfig.json'));
   return {
     transpileOnly: true,
+    compilerOptions: {
+      emitDecoratorMetadata: true,
+    },
     configFile: configFilePath || undefined,
   };
 }
