@@ -1,11 +1,9 @@
 import { createElement } from 'rax';
-import { withA11Y } from '@storybook/addon-a11y';
 import Text from 'rax-text';
 import View from 'rax-view';
 
 export default {
   title: 'Addon/addon-a11y',
-  decorators: [withA11Y],
 };
 
 export const Basic = () => <Text>RAX TEXT NODE</Text>;
