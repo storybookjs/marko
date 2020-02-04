@@ -1,3 +1,10 @@
+## 6.0.0-alpha.6 (February 5, 2020)
+
+### Bug Fixes
+
+* Core: Fix dev server error - back out bad change ([#9753](https://github.com/storybookjs/storybook/pull/9753))
+* CLI: Fix file path for the Button story ([#9325](https://github.com/storybookjs/storybook/pull/9325))
+
 ## 5.3.12 (February 5, 2020)
 
 ### Bug Fixes
