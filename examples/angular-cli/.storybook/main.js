@@ -9,6 +9,6 @@ module.exports = {
     '@storybook/addon-options',
     '@storybook/addon-jest',
     '@storybook/addon-backgrounds',
-    '@storybook/addon-a11y/preset',
+    '@storybook/addon-a11y',
   ],
 };

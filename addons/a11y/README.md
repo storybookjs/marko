@@ -47,7 +47,7 @@ Add the decorator to all stories:
 
 ```js
 module.exports = {
-  addons: ['@storybook/addon-a11y/preset'],
+  addons: ['@storybook/addon-a11y'],
 };
 ```
 

@@ -3,7 +3,7 @@ module.exports = {
   stories: [`${__dirname}/../stories/*.stories.*`],
   addons: [
     '@storybook/addon-docs',
-    '@storybook/addon-a11y/preset',
+    '@storybook/addon-a11y',
     '@storybook/addon-actions',
     '@storybook/addon-backgrounds',
     '@storybook/addon-events',

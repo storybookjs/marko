@@ -11,7 +11,7 @@ module.exports = {
     '@storybook/addon-options',
     '@storybook/addon-backgrounds',
     '@storybook/addon-contexts',
-    '@storybook/addon-a11y/preset',
+    '@storybook/addon-a11y',
   ],
   webpackFinal: config => {
     config.module.rules.push({
