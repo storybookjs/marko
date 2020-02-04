@@ -1,3 +1,9 @@
+## 5.3.12 (February 5, 2020)
+
+### Bug Fixes
+
+* Core: Fix dev server error - back out bad change ([#9753](https://github.com/storybookjs/storybook/pull/9753))
+
 ## 5.3.11 (February 4, 2020)
 
 ### Bug Fixes
