@@ -40,7 +40,9 @@
   "peerDependencies": {
     "babel-loader": "^8.0.0",
     "react": "^16.8.0",
-    "react-is": "^16.8.0"
+    "react-dom": "*",
+    "react-is": "^16.8.0",
+    "regenerator-runtime": "*"
   },
   "publishConfig": {
     "access": "public"

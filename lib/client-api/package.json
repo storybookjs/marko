@@ -45,6 +45,10 @@
     "ts-dedent": "^1.1.1",
     "util-deprecate": "^1.0.2"
   },
+  "peerDependencies": {
+    "react-dom": "*",
+    "regenerator-runtime": "*"
+  },
   "publishConfig": {
     "access": "public"
   },

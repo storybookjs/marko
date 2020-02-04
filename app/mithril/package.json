@@ -48,8 +48,11 @@
     "mithril": "^1.1.6"
   },
   "peerDependencies": {
+    "@babel/core": "*",
     "babel-loader": "^7.0.0 || ^8.0.0",
-    "mithril": "^1.1.6"
+    "mithril": "^1.1.6",
+    "react": "*",
+    "react-dom": "*"
   },
   "engines": {
     "node": ">=8.0.0"

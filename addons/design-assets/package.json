@@ -45,6 +45,10 @@
     "ts-dedent": "^1.1.1",
     "use-image": "^1.0.3"
   },
+  "peerDependencies": {
+    "react-dom": "*",
+    "regenerator-runtime": "*"
+  },
   "publishConfig": {
     "access": "public"
   },

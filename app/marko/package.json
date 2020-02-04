@@ -41,8 +41,12 @@
     "ts-dedent": "^1.1.1"
   },
   "peerDependencies": {
+    "@babel/core": "*",
     "babel-loader": "^7.0.0 || ^8.0.0",
-    "marko": "^4.15.2"
+    "marko": "^4.15.2",
+    "react": "*",
+    "react-dom": "*",
+    "webpack": "^4"
   },
   "engines": {
     "node": ">=8.0.0"

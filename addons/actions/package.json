@@ -47,6 +47,10 @@
     "@types/uuid": "^3.4.7",
     "@types/webpack-env": "^1.15.1"
   },
+  "peerDependencies": {
+    "react-dom": "*",
+    "regenerator-runtime": "*"
+  },
   "publishConfig": {
     "access": "public"
   },

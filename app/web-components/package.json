@@ -50,8 +50,11 @@
     "lit-html": "^1.0.0"
   },
   "peerDependencies": {
+    "@babel/core": "*",
     "babel-loader": "^7.0.0 || ^8.0.0",
-    "lit-html": "^1.0.0"
+    "lit-html": "^1.0.0",
+    "react": "*",
+    "react-dom": "*"
   },
   "engines": {
     "node": ">=8.0.0"

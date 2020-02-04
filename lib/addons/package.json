@@ -38,6 +38,10 @@
   "devDependencies": {
     "@types/util-deprecate": "^1.0.0"
   },
+  "peerDependencies": {
+    "react-dom": "*",
+    "regenerator-runtime": "*"
+  },
   "publishConfig": {
     "access": "public"
   },

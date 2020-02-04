@@ -52,7 +52,11 @@
     "vue-template-compiler": "^2.6.8"
   },
   "peerDependencies": {
+    "@babel/core": "*",
     "babel-loader": "^7.0.0 || ^8.0.0",
+    "css-loader": "*",
+    "react": "*",
+    "react-dom": "*",
     "vue": "^2.6.8",
     "vue-loader": "^15.7.0",
     "vue-template-compiler": "^2.6.8"

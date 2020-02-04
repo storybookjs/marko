@@ -52,6 +52,7 @@
     "@types/semver": "^6.0.0"
   },
   "peerDependencies": {
+    "react-dom": "*",
     "regenerator-runtime": "*"
   },
   "publishConfig": {

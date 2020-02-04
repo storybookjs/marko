@@ -46,6 +46,10 @@
     "@types/util-deprecate": "^1.0.0",
     "@types/webpack-env": "^1.15.1"
   },
+  "peerDependencies": {
+    "react-dom": "*",
+    "regenerator-runtime": "*"
+  },
   "publishConfig": {
     "access": "public"
   },

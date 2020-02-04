@@ -38,9 +38,12 @@
     "ts-dedent": "^1.1.1"
   },
   "peerDependencies": {
+    "@babel/core": "*",
     "babel-loader": "^7.0.0 || ^8.0.0",
     "babel-plugin-ember-modules-api-polyfill": "^2.12.0",
-    "ember-source": "^3.16.0"
+    "ember-source": "^3.16.0",
+    "react": "*",
+    "react-dom": "*"
   },
   "engines": {
     "node": ">=8.0.0"
