@@ -1,3 +1,16 @@
+## 5.3.11 (February 4, 2020)
+
+### Bug Fixes
+
+* Svelte: Fix Svelte 3 slots for decorators ([#9724](https://github.com/storybookjs/storybook/pull/9724))
+* CLI: Fix file path for Button story ([#9325](https://github.com/storybookjs/storybook/pull/9325))
+* Angular: Emit decorator metadata by default ([#9701](https://github.com/storybookjs/storybook/pull/9701))
+* Storyshots: Fix config via main.ts ([#9577](https://github.com/storybookjs/storybook/pull/9577))
+
+### Maintenance
+
+* Cra-ts-kitchen-sink: Fix stories glob pattern ([#9706](https://github.com/storybookjs/storybook/pull/9706))
+
 ## 5.3.10 (February 2, 2020)
 
 ### Bug Fixes
