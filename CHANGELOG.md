@@ -1,3 +1,19 @@
+## 6.0.0-alpha.5 (February 4, 2020)
+
+### Features
+
+* Core: Add Yarn 2 compatibility ([#9667](https://github.com/storybookjs/storybook/pull/9667))
+* Addon-a11y: Add preset ([#9697](https://github.com/storybookjs/storybook/pull/9697))
+* Server: Initial support for @storybook/server ([#9722](https://github.com/storybookjs/storybook/pull/9722))
+
+### Bug Fixes
+
+* Svelte: Fix Svelte 3 slots for decorators ([#9724](https://github.com/storybookjs/storybook/pull/9724))
+
+### Maintenance
+
+* Cra-ts-kitchen-sink: Fix stories glob pattern ([#9706](https://github.com/storybookjs/storybook/pull/9706))
+
 ## 6.0.0-alpha.4 (February 3, 2020)
 
 ### Bug Fixes
