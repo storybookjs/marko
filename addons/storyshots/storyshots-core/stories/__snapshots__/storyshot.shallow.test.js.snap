@@ -139,7 +139,7 @@ exports[`Storyshots Welcome MDX to Storybook 1`] = `
     </InlineCode>
      stories located at 
     <InlineCode>
-      src/stories/index.js
+      src/stories/1-Button.stories.js
     </InlineCode>
     .)
   </p>
@@ -213,7 +213,7 @@ exports[`Storyshots Welcome to Storybook 1`] = `
     </InlineCode>
      stories located at 
     <InlineCode>
-      src/stories/index.js
+      src/stories/1-Button.stories.js
     </InlineCode>
     .)
   </p>
