@@ -1,6 +1,6 @@
 {
   "name": "@storybook/ui",
-  "version": "6.0.0-alpha.4",
+  "version": "6.0.0-alpha.5",
   "description": "Core Storybook UI",
   "keywords": [
     "storybook"
@@ -28,14 +28,14 @@
   },
   "dependencies": {
     "@emotion/core": "^10.0.20",
-    "@storybook/addons": "6.0.0-alpha.4",
-    "@storybook/api": "6.0.0-alpha.4",
-    "@storybook/channels": "6.0.0-alpha.4",
-    "@storybook/client-logger": "6.0.0-alpha.4",
-    "@storybook/components": "6.0.0-alpha.4",
-    "@storybook/core-events": "6.0.0-alpha.4",
-    "@storybook/router": "6.0.0-alpha.4",
-    "@storybook/theming": "6.0.0-alpha.4",
+    "@storybook/addons": "6.0.0-alpha.5",
+    "@storybook/api": "6.0.0-alpha.5",
+    "@storybook/channels": "6.0.0-alpha.5",
+    "@storybook/client-logger": "6.0.0-alpha.5",
+    "@storybook/components": "6.0.0-alpha.5",
+    "@storybook/core-events": "6.0.0-alpha.5",
+    "@storybook/router": "6.0.0-alpha.5",
+    "@storybook/theming": "6.0.0-alpha.5",
     "copy-to-clipboard": "^3.0.8",
     "core-js": "^3.0.1",
     "core-js-pure": "^3.0.1",
@@ -63,8 +63,8 @@
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "6.0.0-alpha.4",
-    "@storybook/addon-knobs": "6.0.0-alpha.4",
+    "@storybook/addon-actions": "6.0.0-alpha.5",
+    "@storybook/addon-knobs": "6.0.0-alpha.5",
     "corejs-upgrade-webpack-plugin": "^3.0.1",
     "flush-promises": "^1.0.2",
     "terser-webpack-plugin": "^2.3.4",
