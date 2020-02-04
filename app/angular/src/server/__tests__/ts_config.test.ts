@@ -20,6 +20,9 @@ describe('ts_config', () => {
 
     expect(config).toEqual({
       transpileOnly: true,
+      compilerOptions: {
+        emitDecoratorMetadata: true,
+      },
       configFile: 'tsconfig.json',
     });
   });
@@ -31,6 +34,9 @@ describe('ts_config', () => {
 
     expect(config).toEqual({
       transpileOnly: true,
+      compilerOptions: {
+        emitDecoratorMetadata: true,
+      },
     });
   });
 });

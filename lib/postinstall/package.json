@@ -1,6 +1,6 @@
 {
   "name": "@storybook/postinstall",
-  "version": "6.0.0-alpha.3",
+  "version": "6.0.0-alpha.4",
   "description": "Storybook addons postinstall utilities",
   "keywords": [
     "api",
@@ -16,14 +16,14 @@
     "directory": "lib/postinstall"
   },
   "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
     "*.d.ts"
   ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },

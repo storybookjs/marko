@@ -1,3 +1,18 @@
+## 6.0.0-alpha.4 (February 3, 2020)
+
+### Bug Fixes
+
+* Angular: Emit decorator metadata by default ([#9701](https://github.com/storybookjs/storybook/pull/9701))
+* Addon-centered: Fix clash with addon-docs for react ([#8388](https://github.com/storybookjs/storybook/pull/8388))
+
+### Maintenance
+
+* Add angular 8 and 9 cli fixtures ([#8769](https://github.com/storybookjs/storybook/pull/8769))
+
+### Dependency Upgrades
+
+* Misc upgrades ([#9688](https://github.com/storybookjs/storybook/pull/9688))
+
 ## 5.3.10 (February 2, 2020)
 
 ### Bug Fixes

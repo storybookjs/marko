@@ -1,6 +1,6 @@
 {
   "name": "@storybook/channel-postmessage",
-  "version": "6.0.0-alpha.3",
+  "version": "6.0.0-alpha.4",
   "description": "",
   "keywords": [
     "storybook"
@@ -15,20 +15,20 @@
     "directory": "lib/channel-postmessage"
   },
   "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
     "*.d.ts"
   ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/channels": "6.0.0-alpha.3",
-    "@storybook/client-logger": "6.0.0-alpha.3",
+    "@storybook/channels": "6.0.0-alpha.4",
+    "@storybook/client-logger": "6.0.0-alpha.4",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "telejson": "^3.2.0"
