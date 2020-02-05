@@ -13,6 +13,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'react/jsx-fragments': 'off',
     '@typescript-eslint/ban-ts-ignore': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/no-object-literal-type-assertion': 'off',
     'react/sort-comp': [
       'error',

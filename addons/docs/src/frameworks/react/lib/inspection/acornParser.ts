@@ -2,6 +2,7 @@ import { Parser } from 'acorn';
 // @ts-ignore
 import jsx from 'acorn-jsx';
 import { isNil } from 'lodash';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import estree from 'estree';
 // @ts-ignore
 import * as acornWalk from 'acorn-walk';

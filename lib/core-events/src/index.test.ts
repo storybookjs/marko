@@ -1,4 +1,3 @@
-/* eslint-disable import/no-duplicates */
 import * as EventsPackageExport from '.';
 import EventsDefaultExport, { CHANNEL_CREATED } from './index';
 
