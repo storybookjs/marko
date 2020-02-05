@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import semver from 'semver';
 import { Configuration, Plugin, RuleSetRule } from 'webpack';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+// import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { normalizeCondition } from 'webpack/lib/RuleSet';
 import { logger } from '@storybook/node-logger';
 
