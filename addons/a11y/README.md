@@ -18,8 +18,8 @@ Add this line to your `main.js` file (create this file inside your storybook con
 
 ```js
 module.exports = {
-  addons: ['@storybook/addon-a11y/register']
-}
+  addons: ['@storybook/addon-a11y/register'],
+};
 ```
 
 import the `withA11y` decorator to check your stories for violations within your components.
@@ -34,17 +34,21 @@ export default {
   decorators: [withA11y],
 };
 
-export const accessible = () => (
-  <button>
-    Accessible button
-  </button>
-);
+export const accessible = () => <button>Accessible button</button>;
 
 export const inaccessible = () => (
-  <button style={{ backgroundColor: 'red', color: 'darkRed', }}>
-    Inaccessible button
-  </button>
+  <button style={{ backgroundColor: 'red', color: 'darkRed' }}>Inaccessible button</button>
 );
+```
+
+## Using the preset
+
+Add the decorator to all stories:
+
+```js
+module.exports = {
+  addons: ['@storybook/addon-a11y'],
+};
 ```
 
 ## Parameters
@@ -69,29 +73,23 @@ export default {
       config: {},
       // axe-core optionsParameter (https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#options-parameter)
       options: {},
-       // optional flag to prevent the automatic check
+      // optional flag to prevent the automatic check
       manual: true,
     },
   },
 };
 
-export const accessible = () => (
-  <button>
-    Accessible button
-  </button>
-);
+export const accessible = () => <button>Accessible button</button>;
 
 export const inaccessible = () => (
-  <button style={{ backgroundColor: 'red', color: 'darkRed', }}>
-    Inaccessible button
-  </button>
+  <button style={{ backgroundColor: 'red', color: 'darkRed' }}>Inaccessible button</button>
 );
 ```
 
 ## Roadmap
 
-* Make UI accessible
-* Show in story where violations are.
-* Add more example tests
-* Add tests
-* Make CI integration possible
+- Make UI accessible
+- Show in story where violations are.
+- Add more example tests
+- Add tests
+- Make CI integration possible

@@ -6,9 +6,6 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { normalizeCondition } from 'webpack/lib/RuleSet';
 import { logger } from '@storybook/node-logger';
 
-const JSCONFIG = 'jsconfig.json';
-const TSCONFIG = 'tsconfig.json';
-
 const appDirectory = fs.realpathSync(process.cwd());
 const cssExtensions = ['.css', '.scss', '.sass'];
 const cssModuleExtensions = ['.module.css', '.module.scss', '.module.sass'];
@@ -114,23 +111,6 @@ export const getTypeScriptRules = (webpackConfigRules: RuleSetRule[], configDir:
   }, [] as RuleSetRule[]);
 };
 
-export const getModulePath = () => {
-  // As with CRA, we only support `jsconfig.json` if `tsconfig.json` doesn't exist.
-  let configName;
-  if (fs.existsSync(path.join(appDirectory, TSCONFIG))) {
-    configName = TSCONFIG;
-  } else if (fs.existsSync(path.join(appDirectory, JSCONFIG))) {
-    configName = JSCONFIG;
-  }
-
-  if (configName) {
-    // eslint-disable-next-line import/no-dynamic-require,global-require
-    const config = require(path.join(appDirectory, configName));
-    return config.compilerOptions && config.compilerOptions.baseUrl;
-  }
-  return false;
-};
-
 function mergePlugins(basePlugins: Plugin[], additionalPlugins: Plugin[]) {
   return [...basePlugins, ...additionalPlugins].reduce((plugins, plugin) => {
     if (
@@ -171,10 +151,6 @@ export function applyCRAWebpackConfig(baseConfig: Configuration, configDir: stri
   const tsExtensions = hasTsSupport ? typeScriptExtensions : [];
   const extensions = [...cssExtensions, ...tsExtensions];
 
-  // Support for this was added in `react-scripts@3.0.0`.
-  // https://github.com/facebook/create-react-app/pull/6656
-  const modulePath = isReactScriptsInstalled('3.0.0') && getModulePath();
-
   // Remove any rules from baseConfig that test true for any one of the extensions
   const filteredBaseRules = baseConfig.module.rules.filter(
     rule => !rule.test || !extensions.some(normalizeCondition(rule.test))
@@ -205,7 +181,13 @@ export function applyCRAWebpackConfig(baseConfig: Configuration, configDir: stri
     resolve: {
       ...baseConfig.resolve,
       extensions: [...baseConfig.resolve.extensions, ...tsExtensions],
-      modules: baseConfig.resolve.modules.concat(modulePath || []),
+      modules: Array.from(
+        new Set([...baseConfig.resolve.modules, ...(craWebpackConfig.resolve.modules || [])])
+      ),
+      alias: {
+        ...baseConfig.resolve.alias,
+        ...craWebpackConfig.resolve.alias,
+      },
     },
     resolveLoader: {
       modules: ['node_modules', path.join(getReactScriptsPath(), 'node_modules')],

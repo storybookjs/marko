@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-notes",
-  "version": "6.0.0-alpha.1",
+  "version": "6.0.0-alpha.6",
   "description": "Write notes for your Storybook stories.",
   "keywords": [
     "addon",
@@ -17,25 +17,25 @@
     "directory": "addons/notes"
   },
   "license": "MIT",
+  "main": "dist/public_api.js",
+  "types": "dist/public_api.d.ts",
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
     "*.d.ts"
   ],
-  "main": "dist/public_api.js",
-  "types": "dist/public_api.d.ts",
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-alpha.1",
-    "@storybook/api": "6.0.0-alpha.1",
-    "@storybook/client-logger": "6.0.0-alpha.1",
-    "@storybook/components": "6.0.0-alpha.1",
-    "@storybook/core-events": "6.0.0-alpha.1",
-    "@storybook/router": "6.0.0-alpha.1",
-    "@storybook/theming": "6.0.0-alpha.1",
+    "@storybook/addons": "6.0.0-alpha.6",
+    "@storybook/api": "6.0.0-alpha.6",
+    "@storybook/client-logger": "6.0.0-alpha.6",
+    "@storybook/components": "6.0.0-alpha.6",
+    "@storybook/core-events": "6.0.0-alpha.6",
+    "@storybook/router": "6.0.0-alpha.6",
+    "@storybook/theming": "6.0.0-alpha.6",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "markdown-to-jsx": "^6.10.3",
@@ -46,7 +46,7 @@
   "devDependencies": {
     "@types/prop-types": "^15.5.9",
     "@types/util-deprecate": "^1.0.0",
-    "@types/webpack-env": "^1.15.0"
+    "@types/webpack-env": "^1.15.1"
   },
   "peerDependencies": {
     "react": "*"
