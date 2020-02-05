@@ -137,7 +137,9 @@ function run() {
       option: '--dll',
       command: () => {
         log.info(prefix, 'dll');
-        spawn('lerna run createDlls --scope "@storybook/ui"');
+        setTimeout(() => {
+          spawn('lerna run createDlls --scope "@storybook/ui"');
+        }, 5000);
       },
       order: 3,
     }),
