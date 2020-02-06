@@ -30,6 +30,8 @@ cd storybook
 yarn bootstrap
 ```
 
+> NOTE: on windows you may need to run `yarn` before `yarn bootstrap`!
+
 The bootstrap command might ask which sections of the codebase you want to bootstrap. Unless you're going to work with ReactNative or the Documentation, you can keep the default.
 
 You can also pick directly from CLI:
@@ -139,6 +141,8 @@ A good way to do that is using the example `cra-kitchen-sink` app embedded in th
 git clone https://github.com/storybookjs/storybook.git
 cd storybook
 yarn bootstrap --core
+
+# NOTE: on windows you may need to run `yarn` before `yarn bootstrap`!
 
 # make changes to try and reproduce the problem, such as adding components + stories
 cd examples/cra-kitchen-sink
@@ -263,10 +267,11 @@ If you run into trouble here, make sure your node, npm, and **_yarn_** are on th
 1.  `cd ~` (optional)
 2.  `git clone https://github.com/storybookjs/storybook.git` _bonus_: use your own fork for this step
 3.  `cd storybook`
-4.  `yarn`
-5.  `yarn bootstrap --core`
-6.  `yarn test --core`
-7.  `yarn dev` _You must have this running for your changes to show up_
+4.  `yarn bootstrap --core`
+5.  `yarn test --core`
+6.  `yarn dev` _You must have this running for your changes to show up_
+
+> NOTE: on windows you may need to run `yarn` before `yarn bootstrap` (between steps 3 and 4).
 
 #### Bootstrapping everything
 
