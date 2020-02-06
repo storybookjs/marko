@@ -5,55 +5,47 @@ title: 'Live Examples'
 
 ### Next release
 
-- [React Official](https://storybookjs-next.now.sh/official-storybook/)
-- [Vue](https://storybookjs-next.now.sh/vue-kitchen-sink/)
-- [Angular](https://storybookjs-next.now.sh/angular-cli/)
-- [Mithril](https://storybookjs-next.now.sh/mithril-kitchen-sink/)
-- [Marko](https://storybookjs-next.now.sh/marko-cli/)
-- [HTML](https://storybookjs-next.now.sh/html-kitchen-sink/)
-- [Svelte](https://storybookjs-next.now.sh/svelte-kitchen-sink/)
-- [Riot](https://storybookjs-next.now.sh/riot-kitchen-sink/)
-- [Ember](https://storybookjs-next.now.sh/ember-cli/)
-- [Preact](https://storybookjs-next.now.sh/preact-kitchen-sink/)
-- [Rax](https://storybookjs-next.now.sh/rax-kitchen-sink/)
+- [React Official](https://next--storybookjs.netlify.com/official-storybook/)
+- [Vue](https://next--storybookjs.netlify.com/vue-kitchen-sink/)
+- [Angular](https://next--storybookjs.netlify.com/angular-cli/)
+- [Mithril](https://next--storybookjs.netlify.com/mithril-kitchen-sink/)
+- [Marko](https://next--storybookjs.netlify.com/marko-cli/)
+- [HTML](https://next--storybookjs.netlify.com/html-kitchen-sink/)
+- [Svelte](https://next--storybookjs.netlify.com/svelte-kitchen-sink/)
+- [Riot](https://next--storybookjs.netlify.com/riot-kitchen-sink/)
+- [Ember](https://next--storybookjs.netlify.com/ember-cli/)
+- [Preact](https://next--storybookjs.netlify.com/preact-kitchen-sink/)
+- [Rax](https://next--storybookjs.netlify.com/rax-kitchen-sink/)
 
 ### Current release
 
-- [React Official](https://storybookjs.now.sh/official-storybook/)
-- [Vue](https://storybookjs.now.sh/vue-kitchen-sink/)
-- [Angular](https://storybookjs.now.sh/angular-cli/)
-- [Mithril](https://storybookjs.now.sh/mithril-kitchen-sink/)
-- [Marko](https://storybookjs.now.sh/marko-cli/)
-- [HTML](https://storybookjs.now.sh/html-kitchen-sink/)
-- [Svelte](https://storybookjs.now.sh/svelte-kitchen-sink/)
-- [Riot](https://storybookjs.now.sh/riot-kitchen-sink/)
-- [Ember](https://storybookjs.now.sh/ember-cli/)
-- [Preact](https://storybookjs.now.sh/preact-kitchen-sink/)
-- [Rax](https://storybookjs.now.sh/rax-kitchen-sink/)
+- [React Official](https://storybookjs.netlify.com/official-storybook/)
+- [Vue](https://storybookjs.netlify.com/vue-kitchen-sink/)
+- [Angular](https://storybookjs.netlify.com/angular-cli/)
+- [Mithril](https://storybookjs.netlify.com/mithril-kitchen-sink/)
+- [Marko](https://storybookjs.netlify.com/marko-cli/)
+- [HTML](https://storybookjs.netlify.com/html-kitchen-sink/)
+- [Svelte](https://storybookjs.netlify.com/svelte-kitchen-sink/)
+- [Riot](https://storybookjs.netlify.com/riot-kitchen-sink/)
+- [Ember](https://storybookjs.netlify.com/ember-cli/)
+- [Preact](https://storybookjs.netlify.com/preact-kitchen-sink/)
+- [Rax](https://storybookjs.netlify.com/rax-kitchen-sink/)
 
-### 5.1
+### 5.0
 
-- [React Official](https://storybooks-official.netlify.com)
-- [Vue](https://storybooks-vue.netlify.com/)
-- [Angular](https://storybooks-angular.netlify.com/)
-- [Polymer](https://storybooks-polymer.netlify.com/)
-- [Mithril](https://storybooks-mithril.netlify.com/)
-- [Marko](https://storybooks-marko.netlify.com/)
-- [HTML](https://storybooks-html.netlify.com/)
-- [Svelte](https://storybooks-svelte.netlify.com/)
-- [Riot](https://storybooks-riot.netlify.com/)
-- [Ember](https://storybooks-ember.netlify.com/)
-- [Preact](https://storybooks-preact.netlify.com/)
+- [React Official](https://release-5-0--storybooks-official.netlify.com/)
+- [Vue](https://release-5-0--storybooks-vue.netlify.com/)
+- [Angular](https://release-5-0--storybooks-angular.netlify.com/)
+- [Mithril](https://release-5-0--storybooks-mithril.netlify.com/)
+- [Marko](https://release-5-0--storybooks-marko.netlify.com/)
+- [HTML](https://release-5-0--storybooks-html.netlify.com/)
+- [Svelte](https://release-5-0--storybooks-svelte.netlify.com/)
+- [Riot](https://release-5-0--storybooks-riot.netlify.com/)
+- [Ember](https://release-5-0--storybooks-ember.netlify.com/)
+- [Preact](https://release-5-0--storybooks-preact.netlify.com/)
 
 ### 3.4
 
 - [React Official](https://release-3-4--storybooks-official.netlify.com)
 - [Vue](https://release-3-4--storybooks-vue.netlify.com/)
 - [Angular](https://release-3-4--storybooks-angular.netlify.com/)
-- [Polymer](https://release-3-4--storybooks-polymer.netlify.com/)
-
-### 3.3
-
-- [React Official](https://release-3-3--storybooks-official.netlify.com)
-- [Vue](https://release-3-3--storybooks-vue.netlify.com/)
-- [Angular](https://release-3-3--storybooks-angular.netlify.com/)

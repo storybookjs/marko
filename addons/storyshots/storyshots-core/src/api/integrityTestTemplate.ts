@@ -4,15 +4,6 @@ import glob from 'glob';
 import { describe, it } from 'global';
 import dedent from 'ts-dedent';
 
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace,no-redeclare
-  namespace jest {
-    interface Matchers<R, T> {
-      notToBeAbandoned(stories2snapsConverter: any): R;
-    }
-  }
-}
-
 expect.extend({
   notToBeAbandoned(storyshots, stories2snapsConverter) {
     const abandonedStoryshots = storyshots.filter((fileName: string) => {
@@ -59,6 +50,7 @@ function integrityTest(integrityOptions: any, stories2snapsConverter: any) {
       const snapshotExtension = stories2snapsConverter.getSnapshotExtension();
       const storyshots = glob.sync(`**/*${snapshotExtension}`, integrityOptions);
 
+      // @ts-ignore
       expect(storyshots).notToBeAbandoned(stories2snapsConverter);
     });
   });

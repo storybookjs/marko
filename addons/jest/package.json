@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-jest",
-  "version": "6.0.0-alpha.1",
+  "version": "6.0.0-alpha.6",
   "description": "React storybook addon that show component jest report",
   "keywords": [
     "addon",
@@ -22,23 +22,23 @@
   },
   "license": "MIT",
   "author": "Renaud Tertrais <renaud.tertrais@gmail.com> (https://github.com/renaudtertrais)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
     "*.d.ts"
   ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-alpha.1",
-    "@storybook/api": "6.0.0-alpha.1",
-    "@storybook/components": "6.0.0-alpha.1",
-    "@storybook/core-events": "6.0.0-alpha.1",
-    "@storybook/theming": "6.0.0-alpha.1",
+    "@storybook/addons": "6.0.0-alpha.6",
+    "@storybook/api": "6.0.0-alpha.6",
+    "@storybook/components": "6.0.0-alpha.6",
+    "@storybook/core-events": "6.0.0-alpha.6",
+    "@storybook/theming": "6.0.0-alpha.6",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "react": "^16.8.3",
@@ -47,10 +47,12 @@
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
-    "@types/webpack-env": "^1.15.0"
+    "@types/webpack-env": "^1.15.1"
   },
   "peerDependencies": {
-    "react": "*"
+    "react": "*",
+    "react-dom": "*",
+    "regenerator-runtime": "*"
   },
   "publishConfig": {
     "access": "public"

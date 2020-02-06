@@ -82,36 +82,28 @@
   },
   "lint-staged": {
     "*.html": [
-      "yarn lint:js --fix",
-      "git add"
+      "yarn lint:js --fix"
     ],
     "*.js": [
-      "yarn lint:js --fix",
-      "git add"
+      "yarn lint:js --fix"
     ],
     "*.json": [
-      "yarn lint:js --fix",
-      "git add"
+      "yarn lint:js --fix"
     ],
     "*.jsx": [
-      "yarn lint:js --fix",
-      "git add"
+      "yarn lint:js --fix"
     ],
     "*.mjs": [
-      "yarn lint:js --fix",
-      "git add"
+      "yarn lint:js --fix"
     ],
     "*.ts": [
-      "yarn lint:js --fix",
-      "git add"
+      "yarn lint:js --fix"
     ],
     "*.tsx": [
-      "yarn lint:js --fix",
-      "git add"
+      "yarn lint:js --fix"
     ],
     "package.json": [
-      "yarn lint:package",
-      "git add"
+      "yarn lint:package"
     ]
   },
   "browserslist": "defaults",
@@ -122,19 +114,19 @@
     "@angular/forms": "^8.2.8",
     "@angular/platform-browser": "^8.2.8",
     "@angular/platform-browser-dynamic": "^8.2.8",
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.3.4",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
     "@babel/plugin-proposal-class-properties": "^7.3.3",
     "@babel/plugin-proposal-decorators": "^7.3.0",
     "@babel/plugin-proposal-export-default-from": "^7.2.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-transform-react-constant-elements": "^7.6.3",
-    "@babel/preset-env": "^7.7.1",
+    "@babel/preset-env": "^7.8.4",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
-    "@babel/runtime": "^7.7.2",
+    "@babel/runtime": "^7.8.4",
     "@emotion/snapshot-serializer": "^0.8.2",
     "@storybook/eslint-config-storybook": "^2.0.0",
     "@storybook/linter-config": "^2.0.0",
@@ -142,16 +134,16 @@
     "@types/doctrine": "^0.0.3",
     "@types/enzyme": "^3.10.3",
     "@types/escodegen": "^0.0.6",
-    "@types/jest": "^24.0.11",
+    "@types/jest": "^25.1.1",
     "@types/lodash": "^4.14.149",
-    "@types/node": "^12.12.11",
+    "@types/node": "^13.5.3",
     "@types/react": "^16.8.14",
     "@types/semver": "^6.0.0",
     "@types/webpack": "^4.41.0",
-    "@types/webpack-env": "^1.15.0",
+    "@types/webpack-env": "^1.15.1",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
-    "babel-jest": "^24.7.1",
+    "babel-jest": "^25.1.0",
     "babel-loader": "^8.0.5",
     "babel-plugin-add-react-displayname": "^0.0.5",
     "babel-plugin-dynamic-import-node": "^2.2.0",
@@ -163,10 +155,10 @@
     "codecov": "^3.5.0",
     "codelyzer": "^5.0.0",
     "commander": "^4.0.1",
-    "concurrently": "^5.0.0",
+    "concurrently": "^5.1.0",
     "core-js": "^3.0.1",
     "corejs-upgrade-webpack-plugin": "^3.0.1",
-    "cross-env": "^6.0.3",
+    "cross-env": "^7.0.0",
     "danger": "^9.2.1",
     "del": "^5.1.0",
     "detect-port": "^1.3.0",
@@ -178,26 +170,26 @@
     "esm": "^3.2.25",
     "github-release-from-changelog": "^2.1.0",
     "glob": "^7.1.3",
-    "http-server": "^0.11.1",
+    "http-server": "^0.12.1",
     "husky": "^4.0.10",
     "inquirer": "^7.0.0",
-    "jest": "^24.8.0",
-    "jest-cli": "^24.8.0",
-    "jest-config": "^24.8.0",
-    "jest-diff": "^24.8.0",
+    "jest": "^25.1.0",
+    "jest-cli": "^25.1.0",
+    "jest-config": "^25.1.0",
+    "jest-diff": "^25.1.0",
     "jest-emotion": "^10.0.17",
-    "jest-environment-jsdom": "^24.8.0",
+    "jest-environment-jsdom": "^25.1.0",
     "jest-environment-jsdom-thirteen": "^1.0.1",
     "jest-enzyme": "^7.0.2",
     "jest-image-snapshot": "^2.8.2",
     "jest-jasmine2": "^24.8.0",
-    "jest-matcher-utils": "^24.8.0",
+    "jest-matcher-utils": "^25.1.0",
     "jest-preset-angular": "^6.0.1",
     "jest-raw-loader": "^1.0.1",
     "jest-vue-preprocessor": "^1.5.0",
     "jest-watch-typeahead": "^0.4.0",
     "lerna": "^3.19.0",
-    "lint-staged": "^9.4.1",
+    "lint-staged": "^10.0.6",
     "lodash": "^4.17.15",
     "node-cleanup": "^2.1.2",
     "node-fetch": "^2.6.0",
@@ -216,15 +208,15 @@
     "riot-jest-transformer": "^2.0.0",
     "shelljs": "^0.8.3",
     "shx": "^0.3.2",
-    "sort-package-json": "^1.21.0",
-    "storybook-chromatic": "^3.0.0",
-    "svelte": "^3.15.0",
+    "sort-package-json": "^1.39.1",
+    "storybook-chromatic": "^3.5.0",
+    "svelte": "^3.18.1",
     "svelte-jest": "^0.3.0",
     "trash": "^6.1.1",
-    "ts-dedent": "^1.1.0",
+    "ts-dedent": "^1.1.1",
     "ts-jest": "^24.0.2",
     "typescript": "^3.4.0",
-    "wait-on": "^3.3.0"
+    "wait-on": "^4.0.0"
   },
   "optionalDependencies": {
     "@cypress/webpack-preprocessor": "^4.1.0",

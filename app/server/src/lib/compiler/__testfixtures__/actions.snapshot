@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`json-to-csf-compiler actions.json 1`] = `
+"import { withActions } from '@storybook/addon-actions';
+
+export default {
+  title: 'Addons/Actions',
+  parameters: {
+    options: {
+      selectedPanel: 'storybook/actions/panel'
+    }
+  }
+};
+
+export const Multiple_actions_config = () => {};
+Multiple_actions_config.story = {
+  decorators: [
+    withActions(
+      'click',
+      'contextmenu',
+      {
+        clearOnStoryChange: false
+      }
+    )
+  ],
+  name: 'Multiple actions + config',
+  parameters: {
+    server: {
+      id: 'addons/actions/story3'
+    }
+  }
+};
+"
+`;

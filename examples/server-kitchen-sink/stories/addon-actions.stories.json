@@ -1,0 +1,44 @@
+ {
+  "title": "Addons/Actions",
+  "addons": ["actions"],
+  "parameters": {
+    "options": { "selectedPanel": "storybook/actions/panel" }
+  },
+  "stories": [
+    {
+      "name": "Hello World",
+      "parameters": {
+        "server": { "id": "addons/actions/story1" }
+      },
+      "actions": ["click"]
+    },
+    {
+      "name": "Multiple actions",
+      "parameters": {
+        "server": { "id": "addons/actions/story2" }
+      },
+      "actions": ["click", "contextmenu"]
+    },
+    {
+      "name": "Multiple actions + config",
+      "parameters": {
+        "server": { "id": "addons/actions/story3" }
+      },
+      "actions": ["click", "contextmenu", { "clearOnStoryChange": false }]
+    },
+    {
+      "name": "Multiple actions, object",
+      "parameters": {
+        "server": { "id": "addons/actions/story4" }
+      },
+      "actions": [{ "click": "clicked", "contextmenu": "right clicked" }]
+    },
+    {
+      "name": "Multiple actions, object + config",
+      "parameters": {
+        "server": { "id": "addons/actions/story6" }
+      },
+      "actions": [{ "click": "clicked", "contextmenu": "right clicked" }, { "clearOnStoryChange": false }]
+    }
+  ]
+}

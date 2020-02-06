@@ -381,7 +381,7 @@ NOTICE that When using the `asyncJest: true` option, you also must specify a `te
 
 This is a really powerful technique to write stories of Relay components because it integrates data fetching with component rendering. So instead of passing data props manually, we can let Relay do the job for us as it does in our application.
 
-Whenever you change you're data requirements by adding (and rendering) or (accidentally) deleting fields in your graphql query fragments, you'll get a different snapshot and thus an error in the StoryShot test.
+Whenever you change your data requirements by adding (and rendering) or (accidentally) deleting fields in your graphql query fragments, you'll get a different snapshot and thus an error in the StoryShot test.
 
 ## Options
 
@@ -677,3 +677,22 @@ initStoryshots({
 ### `asyncJest`
 
 Enables Jest `done()` callback in the StoryShots tests for async testing. See [StoryShots for async rendered components](#storyshots-for-async-rendered-components) for more info.
+
+
+## Story Parameters
+
+### `disable`
+
+Some stories are difficult or impossible to snapshot, such as those covering components that use external DOM-modifying libraries, and those that deliberately throw errors. It is possible to skip stories like these by giving them a parameter of `storyshots: {disable: true}`. There is also a shorthand for this, `storyshots: false`.
+
+```js
+export const Exception = () => {
+  throw new Error('storyFn threw an error! WHOOPS');
+};
+Exception.story = {
+  name: 'story throws exception',
+  parameters: {
+    storyshots: { disable: true },
+  },
+};
+```
