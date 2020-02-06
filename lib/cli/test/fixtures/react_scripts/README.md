@@ -333,10 +333,7 @@ Next we add a 'lint-staged' field to the `package.json`, for example:
     // ...
   },
 + "lint-staged": {
-+   "src/**/*.{js,jsx,json,css}": [
-+     "prettier --single-quote --write",
-+     "git add"
-+   ]
++   "src/**/*.{js,jsx,json,css}": [ "prettier --single-quote --write" ]
 + },
   "scripts": {
 ```
