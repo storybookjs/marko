@@ -8,11 +8,12 @@ export const controlOrMetaSymbol = () => (isMacLike() ? '⌘' : 'ctrl');
 export const controlOrMetaKey = () => (isMacLike() ? 'meta' : 'control');
 export const optionOrAltSymbol = () => (isMacLike() ? '⌥' : 'alt');
 
-export const isShortcutTaken = (arr1, arr2) => JSON.stringify(arr1) === JSON.stringify(arr2);
+export const isShortcutTaken = (arr1: any, arr2: any) =>
+  JSON.stringify(arr1) === JSON.stringify(arr2);
 
 // Map a keyboard event to a keyboard shortcut
 // NOTE: if we change the fields on the event that we need, we'll need to update the serialization in core/preview/start.js
-export const eventToShortcut = e => {
+export const eventToShortcut = (e: KeyboardEvent) => {
   // Meta key only doesn't map to a shortcut
   if (['Meta', 'Alt', 'Control', 'Shift'].includes(e.key)) {
     return null;
@@ -57,16 +58,16 @@ export const eventToShortcut = e => {
   return keys.length > 0 ? keys : null;
 };
 
-export const shortcutMatchesShortcut = (inputShortcut, shortcut) =>
+export const shortcutMatchesShortcut = (inputShortcut: any[], shortcut: any[]) =>
   inputShortcut &&
   inputShortcut.length === shortcut.length &&
   !inputShortcut.find((key, i) => key !== shortcut[i]);
 
 // Should this keyboard event trigger this keyboard shortcut?
-export const eventMatchesShortcut = (e, shortcut) =>
+export const eventMatchesShortcut = (e: KeyboardEvent, shortcut: any) =>
   shortcutMatchesShortcut(eventToShortcut(e), shortcut);
 
-export const keyToSymbol = key => {
+export const keyToSymbol = (key: KeyboardEvent['key']) => {
   if (key === 'alt') {
     return optionOrAltSymbol();
   }
@@ -104,4 +105,4 @@ export const keyToSymbol = key => {
 };
 
 // Display the shortcut as a human readable string
-export const shortcutToHumanString = shortcut => shortcut.map(keyToSymbol).join(' ');
+export const shortcutToHumanString = (shortcut: any) => shortcut.map(keyToSymbol).join(' ');
