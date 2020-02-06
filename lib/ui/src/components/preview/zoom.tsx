@@ -1,20 +1,15 @@
-import React, { Fragment, Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment, Component, FunctionComponent } from 'react';
 
 import { Icons, IconButton } from '@storybook/components';
 
-const Context = React.createContext();
+const Context = React.createContext({ value: 1, set: (v: number) => {} });
 
-class Provider extends Component {
-  static propTypes = {
-    children: PropTypes.node.isRequired,
-  };
-
+class Provider extends Component<{}, { value: number }> {
   state = {
     value: 1,
   };
 
-  set = value => this.setState({ value });
+  set = (value: number) => this.setState({ value });
 
   render() {
     const { children } = this.props;
@@ -27,7 +22,7 @@ class Provider extends Component {
 
 const { Consumer } = Context;
 
-const Zoom = ({ set, reset }) => (
+const Zoom: FunctionComponent<{ set: Function; reset: Function }> = ({ set, reset }) => (
   <Fragment>
     <IconButton key="zoomin" onClick={e => e.preventDefault() || set(0.8)} title="Zoom in">
       <Icons icon="zoom" />
@@ -40,9 +35,5 @@ const Zoom = ({ set, reset }) => (
     </IconButton>
   </Fragment>
 );
-Zoom.propTypes = {
-  set: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
-};
 
 export { Zoom, Consumer as ZoomConsumer, Provider as ZoomProvider };
