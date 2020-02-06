@@ -20,7 +20,6 @@
     "@storybook/addon-centered": "6.0.0-alpha.6",
     "@storybook/addon-knobs": "6.0.0-alpha.6",
     "@storybook/addon-links": "6.0.0-alpha.6",
-    "@storybook/addon-notes": "6.0.0-alpha.6",
     "@storybook/node-logger": "6.0.0-alpha.6",
     "@storybook/server": "6.0.0-alpha.6",
     "concurrently": "^5.0.2",
