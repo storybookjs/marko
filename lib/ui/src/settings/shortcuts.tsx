@@ -1,5 +1,4 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, Fragment, SyntheticEvent } from 'react';
 import { styled, keyframes } from '@storybook/theming';
 import { GlobalHotKeys } from 'react-hotkeys';
 
@@ -54,9 +53,9 @@ export const Description = styled.div({
   alignSelf: 'center',
 });
 
-export const TextInput = styled(Input)(
-  ({ valid, theme }) =>
-    valid === 'error'
+export const TextInput = styled(Input)<{ isValid: string }>(
+  ({ isValid, theme }) =>
+    isValid === 'error'
       ? {
           animation: `${theme.animation.jiggle} 700ms ease-out`,
         }
@@ -77,9 +76,9 @@ export const Fade = keyframes`
   50% { opacity: 1; }
 `;
 
-export const SuccessIcon = styled(Icons)(
-  ({ valid, theme }) =>
-    valid === 'valid'
+export const SuccessIcon = styled(Icons)<{ isValid: string }>(
+  ({ isValid, theme }) =>
+    isValid === 'valid'
       ? {
           color: theme.color.positive,
           animation: `${Fade} 2s ease forwards`,
@@ -123,14 +122,16 @@ const shortcutLabels = {
   expandAll: 'Expand all items on sidebar',
 };
 
+type Feature = keyof typeof shortcutLabels;
+
 // Shortcuts that cannot be configured
 const fixedShortcuts = ['escape'];
 
-function toShortcutState(shortcutKeys) {
+function toShortcutState(shortcutKeys: ShortcutsScreenProps['shortcutKeys']) {
   return Object.entries(shortcutKeys).reduce(
-    (acc, [feature, shortcut]) =>
+    (acc, [feature, shortcut]: [Feature, string]) =>
       fixedShortcuts.includes(feature) ? acc : { ...acc, [feature]: { shortcut, error: false } },
-    {}
+    {} as Record<Feature, any>
   );
 }
 
@@ -138,12 +139,26 @@ const keyMap = {
   CLOSE: 'escape',
 };
 
-class ShortcutsScreen extends Component {
-  constructor(props) {
+interface ShortcutsScreenState {
+  activeFeature: Feature;
+  successField: Feature;
+  shortcutKeys: Record<Feature, any>;
+}
+
+interface ShortcutsScreenProps {
+  shortcutKeys: Record<Feature, any>;
+  setShortcut: Function;
+  restoreDefaultShortcut: Function;
+  restoreAllDefaultShortcuts: Function;
+  onClose: (e?: KeyboardEvent) => void;
+}
+
+class ShortcutsScreen extends Component<ShortcutsScreenProps, ShortcutsScreenState> {
+  constructor(props: ShortcutsScreenProps) {
     super(props);
     this.state = {
-      activeFeature: '',
-      successField: '',
+      activeFeature: undefined,
+      successField: undefined,
       // The initial shortcutKeys that come from props are the defaults/what was saved
       // As the user interacts with the page, the state stores the temporary, unsaved shortcuts
       // This object also includes the error attached to each shortcut
@@ -151,7 +166,7 @@ class ShortcutsScreen extends Component {
     };
   }
 
-  onKeyDown = e => {
+  onKeyDown = (e: KeyboardEvent) => {
     const { activeFeature, shortcutKeys } = this.state;
 
     if (e.key === 'Backspace') {
@@ -178,7 +193,7 @@ class ShortcutsScreen extends Component {
     });
   };
 
-  onFocus = focusedInput => () => {
+  onFocus = (focusedInput: Feature) => () => {
     const { shortcutKeys } = this.state;
 
     this.setState({
@@ -224,19 +239,19 @@ class ShortcutsScreen extends Component {
     return this.setState({
       shortcutKeys: {
         ...shortcutKeys,
-        ...toShortcutState({ [activeFeature]: defaultShortcut }),
+        ...toShortcutState({ [activeFeature]: defaultShortcut } as Record<Feature, any>),
       },
     });
   };
 
-  displaySuccessMessage = activeElement => {
+  displaySuccessMessage = (activeElement: Feature) => {
     const { successField, shortcutKeys } = this.state;
     return activeElement === successField && shortcutKeys[activeElement].error === false
       ? 'valid'
       : '';
   };
 
-  displayError = activeElement => {
+  displayError = (activeElement: Feature) => {
     const { activeFeature, shortcutKeys } = this.state;
     return activeElement === activeFeature && shortcutKeys[activeElement].error === true
       ? 'error'
@@ -245,23 +260,24 @@ class ShortcutsScreen extends Component {
 
   renderKeyInput = () => {
     const { shortcutKeys } = this.state;
-    const arr = Object.entries(shortcutKeys).map(([feature, { shortcut }]) => (
+    const arr = Object.entries(shortcutKeys).map(([feature, { shortcut }]: [Feature, any]) => (
       <Row key={feature}>
         <Description>{shortcutLabels[feature]}</Description>
 
         <TextInput
           spellCheck="false"
-          valid={this.displayError(feature)}
+          isValid={this.displayError(feature)}
           className="modalInput"
           onBlur={this.onBlur}
           onFocus={this.onFocus(feature)}
+          // @ts-ignore
           onKeyDown={this.onKeyDown}
           value={shortcut ? shortcutToHumanString(shortcut) : ''}
           placeholder="Type keys"
           readOnly
         />
 
-        <SuccessIcon valid={this.displaySuccessMessage(feature)} icon="check" />
+        <SuccessIcon isValid={this.displaySuccessMessage(feature)} icon="check" />
       </Row>
     ));
 
@@ -290,7 +306,7 @@ class ShortcutsScreen extends Component {
           tools={
             <Fragment>
               <IconButton
-                onClick={e => {
+                onClick={(e: SyntheticEvent) => {
                   e.preventDefault();
                   return onClose();
                 }}
@@ -317,13 +333,5 @@ class ShortcutsScreen extends Component {
     );
   }
 }
-
-ShortcutsScreen.propTypes = {
-  shortcutKeys: PropTypes.shape({}).isRequired, // Need TS for this
-  setShortcut: PropTypes.func.isRequired,
-  restoreDefaultShortcut: PropTypes.func.isRequired,
-  restoreAllDefaultShortcuts: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
 
 export default ShortcutsScreen;
