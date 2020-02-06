@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import semver from 'semver';
 import { Configuration, Plugin, RuleSetRule } from 'webpack';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+// import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { normalizeCondition } from 'webpack/lib/RuleSet';
 import { logger } from '@storybook/node-logger';
 
@@ -164,12 +164,15 @@ export function applyCRAWebpackConfig(baseConfig: Configuration, configDir: stri
     ? getTypeScriptRules(craWebpackConfig.module.rules, configDir)
     : [];
 
+  // I disabled the MiniCssExtractPlugin, because there's often a version mismatch between CRA & storybook
+  // causing a lot of issues of the build-storybook failing
+
   //  Add css minification for production
   const plugins = [...baseConfig.plugins];
-  if (baseConfig.mode === 'production') {
-    // @ts-ignore
-    plugins.push(new MiniCssExtractPlugin());
-  }
+  // if (baseConfig.mode === 'production') {
+  //   // @ts-ignore
+  //   plugins.push(new MiniCssExtractPlugin());
+  // }
 
   return {
     ...baseConfig,
