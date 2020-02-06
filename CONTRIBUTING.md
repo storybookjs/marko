@@ -140,8 +140,9 @@ A good way to do that is using the example `cra-kitchen-sink` app embedded in th
 # Download and build this repository:
 git clone https://github.com/storybookjs/storybook.git
 cd storybook
+yarn bootstrap --core
 
-> NOTE: on windows you may need to run `yarn` before `yarn bootstrap`!
+# NOTE: on windows you may need to run `yarn` before `yarn bootstrap`!
 
 # make changes to try and reproduce the problem, such as adding components + stories
 cd examples/cra-kitchen-sink
