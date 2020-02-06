@@ -1,7 +1,7 @@
 import { styled } from '@storybook/theming';
 import { Link } from '@storybook/router';
 
-export const FrameWrap = styled.div(({ offset }) => ({
+export const FrameWrap = styled.div<{ offset: number }>(({ offset }) => ({
   position: 'absolute',
   overflow: 'auto',
   left: 0,
