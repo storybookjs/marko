@@ -5,8 +5,14 @@ import '@storybook/addon-preview-wrapper/register';
 import { addons } from '@storybook/addons';
 import { themes } from '@storybook/theming';
 
+import logo from './logo.svg';
+
 addons.setConfig({
-  theme: themes.dark,
+  theme: {
+    brandImage: logo,
+    brandTitle: 'Custom - Storybook',
+    ...themes.dark,
+  },
   panelPosition: 'bottom',
   selectedPanel: 'storybook/roundtrip',
 });
