@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 // A small utility to add before/afterEach to stories.
-class WithLifecyle extends Component {
-  constructor(props, ...rest) {
-    super(props, ...rest);
+class WithLifecyle extends Component<{
+  storyFn: Function;
+  beforeEach?: Function;
+  afterEach?: Function;
+}> {
+  constructor(props) {
+    super(props);
 
-    props.beforeEach();
+    if (props.beforeEach) {
+      props.beforeEach();
+    }
   }
 
   componentWillUnmount() {
     const { afterEach } = this.props;
 
-    afterEach();
+    if (afterEach) {
+      afterEach();
+    }
   }
 
   render() {
@@ -21,16 +28,6 @@ class WithLifecyle extends Component {
     return storyFn();
   }
 }
-
-WithLifecyle.propTypes = {
-  storyFn: PropTypes.func.isRequired,
-  beforeEach: PropTypes.func,
-  afterEach: PropTypes.func,
-};
-WithLifecyle.defaultProps = {
-  beforeEach: () => {},
-  afterEach: () => {},
-};
 
 export default ({ beforeEach, afterEach }) => storyFn => (
   <WithLifecyle beforeEach={beforeEach} afterEach={afterEach} storyFn={storyFn} />
