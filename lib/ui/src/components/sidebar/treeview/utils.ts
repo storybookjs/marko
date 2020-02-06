@@ -1,14 +1,41 @@
 import memoize from 'memoizerific';
 import Fuse from 'fuse.js';
 import { DOCS_MODE } from 'global';
+import { SyntheticEvent } from 'react';
 
 const FUZZY_SEARCH_THRESHOLD = 0.4;
 
-export const prevent = e => e.preventDefault();
+export const prevent = (e: SyntheticEvent) => {
+  e.preventDefault();
+  return false;
+};
 
-const toList = memoize(1)(dataset => Object.values(dataset));
+const toList = memoize(1)((dataset: Dataset) => Object.values(dataset));
 
-export const keyEventToAction = ({ keyCode, ctrlKey, shiftKey, altKey, metaKey }) => {
+export interface Item {
+  id: string;
+  depth: number;
+  name: string;
+  kind: string;
+  isLeaf: boolean;
+  isComponent: boolean;
+  isRoot: boolean;
+  parent: string;
+  children: string[];
+  parameters: Record<string, any>;
+}
+
+export type Dataset = Record<string, Item>;
+export type SelectedSet = Record<string, boolean>;
+export type ExpandedSet = Record<string, boolean>;
+
+export const keyEventToAction = ({
+  keyCode,
+  ctrlKey,
+  shiftKey,
+  altKey,
+  metaKey,
+}: KeyboardEvent) => {
   if (shiftKey || metaKey || ctrlKey || altKey) {
     return false;
   }
@@ -37,9 +64,9 @@ export const keyEventToAction = ({ keyCode, ctrlKey, shiftKey, altKey, metaKey }
   }
 };
 
-export const createId = (id, prefix) => `${prefix}_${id}`;
+export const createId = (id: string, prefix: string) => `${prefix}_${id}`;
 
-export const get = memoize(1000)((id, dataset) => dataset[id]);
+export const get = memoize(1000)((id: string, dataset: Dataset) => dataset[id]);
 export const getParent = memoize(1000)((id, dataset) => {
   const item = get(id, dataset);
   if (!item || item.isRoot) {
@@ -47,7 +74,7 @@ export const getParent = memoize(1000)((id, dataset) => {
   }
   return get(item.parent, dataset);
 });
-export const getParents = memoize(1000)((id, dataset) => {
+export const getParents = memoize(1000)((id: string, dataset: Dataset): Item[] => {
   const parent = getParent(id, dataset);
 
   if (!parent) {
@@ -56,10 +83,20 @@ export const getParents = memoize(1000)((id, dataset) => {
   return [parent, ...getParents(parent.id, dataset)];
 });
 
-export const getMains = memoize(1)(dataset => toList(dataset).filter(m => m.depth === 0));
-const getMainsKeys = memoize(1)(dataset => getMains(dataset).map(m => m.id));
+export const getMains = memoize(1)((dataset: Dataset) =>
+  toList(dataset).filter(m => m.depth === 0)
+);
+const getMainsKeys = memoize(1)((dataset: Dataset) => getMains(dataset).map(m => m.id));
 
-export const getPrevious = ({ id, dataset, expanded }) => {
+export const getPrevious = ({
+  id,
+  dataset,
+  expanded,
+}: {
+  id: string;
+  dataset: Dataset;
+  expanded: ExpandedSet;
+}): Item | undefined => {
   // STEP 1
   // find parent
   // if no previous sibling, use parent
@@ -99,7 +136,15 @@ export const getPrevious = ({ id, dataset, expanded }) => {
   return item;
 };
 
-export const getNext = ({ id, dataset, expanded }) => {
+export const getNext = ({
+  id,
+  dataset,
+  expanded,
+}: {
+  id: string;
+  dataset: Dataset;
+  expanded: ExpandedSet;
+}): Item | undefined => {
   // STEP 1:
   // find any children if the node is expanded, first child
   //
@@ -122,7 +167,8 @@ export const getNext = ({ id, dataset, expanded }) => {
 
   const mains = getMainsKeys(dataset);
 
-  const parents = getParents(id, dataset).concat([{ children: mains }]);
+  const parents = getParents(id, dataset);
+  // .concat([{ children: mains }]);
 
   const next = parents.reduce(
     (acc, item) => {
@@ -155,15 +201,17 @@ const fuse = memoize(5)(
     })
 );
 
-const exactMatch = memoize(1)(filter => i =>
+const exactMatch = memoize(1)(filter => (i: Item) =>
   (i.kind && i.kind.includes(filter)) ||
   (i.name && i.name.includes(filter)) ||
   (i.parameters && i.parameters.fileName && i.parameters.fileName.includes(filter)) ||
   (i.parameters && typeof i.parameters.notes === 'string' && i.parameters.notes.includes(filter))
 );
 
-export const toId = (base, addition) => (base === '' ? `${addition}` : `${base}-${addition}`);
-export const toFiltered = (dataset, filter) => {
+export const toId = (base: string, addition: string) =>
+  base === '' ? `${addition}` : `${base}-${addition}`;
+
+export const toFiltered = (dataset: Dataset, filter: string) => {
   let found;
   if (filter.length && filter.length > 2) {
     found = fuse(dataset).search(filter);
@@ -179,11 +227,11 @@ export const toFiltered = (dataset, filter) => {
 
     acc[item.id] = item;
     return acc;
-  }, {});
+  }, {} as Dataset);
 
   // filter the children of the found items (and their parents) so only found entries are present
   return Object.entries(result).reduce((acc, [k, v]) => {
     acc[k] = v.children ? { ...v, children: v.children.filter(c => !!result[c]) } : v;
     return acc;
-  }, {});
+  }, {} as Dataset);
 };

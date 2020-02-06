@@ -1,4 +1,4 @@
-import React, { Fragment, Component, FunctionComponent } from 'react';
+import React, { Fragment, Component, FunctionComponent, SyntheticEvent } from 'react';
 
 import { Icons, IconButton } from '@storybook/components';
 
@@ -22,15 +22,28 @@ class Provider extends Component<{}, { value: number }> {
 
 const { Consumer } = Context;
 
+const cancel = (e: SyntheticEvent) => {
+  e.preventDefault();
+  return false;
+};
+
 const Zoom: FunctionComponent<{ set: Function; reset: Function }> = ({ set, reset }) => (
   <Fragment>
-    <IconButton key="zoomin" onClick={e => e.preventDefault() || set(0.8)} title="Zoom in">
+    <IconButton key="zoomin" onClick={(e: SyntheticEvent) => cancel(e) || set(0.8)} title="Zoom in">
       <Icons icon="zoom" />
     </IconButton>
-    <IconButton key="zoomout" onClick={e => e.preventDefault() || set(1.25)} title="Zoom out">
+    <IconButton
+      key="zoomout"
+      onClick={(e: SyntheticEvent) => cancel(e) || set(1.25)}
+      title="Zoom out"
+    >
       <Icons icon="zoomout" />
     </IconButton>
-    <IconButton key="zoomreset" onClick={e => e.preventDefault() || reset()} title="Reset zoom">
+    <IconButton
+      key="zoomreset"
+      onClick={(e: SyntheticEvent) => cancel(e) || reset()}
+      title="Reset zoom"
+    >
       <Icons icon="zoomreset" />
     </IconButton>
   </Fragment>

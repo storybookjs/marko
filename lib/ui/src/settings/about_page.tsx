@@ -1,14 +1,13 @@
 import { history } from 'global';
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 import { Route } from '@storybook/router';
-import { Consumer } from '@storybook/api';
+import { Consumer, API, Combo } from '@storybook/api';
 
 import AboutScreen from './about';
 
 // Clear a notification on mount. This could be exported by core/notifications.js perhaps?
-class NotificationClearer extends Component {
+class NotificationClearer extends Component<{ api: API; notificationId: string }> {
   componentDidMount() {
     const { api, notificationId } = this.props;
     api.clearNotification(notificationId);
@@ -20,18 +19,10 @@ class NotificationClearer extends Component {
   }
 }
 
-NotificationClearer.propTypes = {
-  api: PropTypes.shape({
-    clearNotification: PropTypes.func.isRequired,
-  }).isRequired,
-  notificationId: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-};
-
 export default () => (
   <Route path="about">
     <Consumer>
-      {({ api }) => (
+      {({ api }: Combo) => (
         <NotificationClearer api={api} notificationId="update">
           <AboutScreen
             current={api.getCurrentVersion()}

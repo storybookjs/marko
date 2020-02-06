@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 
-// A small utility to add before/afterEach to stories.
-class WithLifecyle extends Component<{
+interface WithLifecyleProps {
   storyFn: Function;
   beforeEach?: Function;
   afterEach?: Function;
-}> {
-  constructor(props) {
+}
+
+// A small utility to add before/afterEach to stories.
+class WithLifecyle extends Component<WithLifecyleProps> {
+  constructor(props: WithLifecyleProps) {
     super(props);
 
     if (props.beforeEach) {
@@ -29,6 +31,6 @@ class WithLifecyle extends Component<{
   }
 }
 
-export default ({ beforeEach, afterEach }) => storyFn => (
-  <WithLifecyle beforeEach={beforeEach} afterEach={afterEach} storyFn={storyFn} />
-);
+export default ({ beforeEach, afterEach }: { beforeEach: Function; afterEach: Function }) => (
+  storyFn: Function
+) => <WithLifecyle beforeEach={beforeEach} afterEach={afterEach} storyFn={storyFn} />;

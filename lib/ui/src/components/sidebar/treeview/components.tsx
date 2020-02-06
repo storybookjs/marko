@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent, ReactNode, SyntheticEvent } from 'react';
 import { styled } from '@storybook/theming';
 
 export const DefaultSection = styled.div({});
@@ -17,9 +16,14 @@ export const DefaultFilter = styled(props => <input placeholder="search..." {...
   border: '1px solid black',
 });
 
+export const prevent = (e: SyntheticEvent) => {
+  e.preventDefault();
+  return false;
+};
+
 export const DefaultMessage = styled.div({});
 
-export const LeafStyle = styled.div(
+export const LeafStyle = styled.div<{ depth: number; isSelected: boolean }>(
   {
     minHeight: 24,
     display: 'flex',
@@ -34,13 +38,23 @@ export const LeafStyle = styled.div(
   })
 );
 
-export const DefaultLeaf = ({ name, ...rest }) => <LeafStyle {...rest}>{name}</LeafStyle>;
+export const DefaultLeaf: FunctionComponent<{ name: ReactNode; depth: number } & Record<
+  string,
+  any
+>> = ({ name, isSelected, depth, ...rest }) => (
+  <LeafStyle isSelected={isSelected} depth={depth} {...rest}>
+    {name}
+  </LeafStyle>
+);
 DefaultLeaf.displayName = 'DefaultLeaf';
-DefaultLeaf.propTypes = {
-  name: PropTypes.node.isRequired,
-  depth: PropTypes.number.isRequired,
-};
-export const DefaultHead = ({ name, depth, isExpanded = true, isSelected, isComponent }) => (
+
+export const DefaultHead: FunctionComponent<{
+  name: ReactNode;
+  depth: number;
+  isExpanded?: boolean;
+  isSelected?: boolean;
+  isComponent?: boolean;
+}> = ({ name, depth, isExpanded = false, isSelected = false, isComponent = false }) => (
   <LeafStyle isSelected={isSelected} depth={depth}>
     <span>
       {isExpanded ? '-' : '+'}
@@ -50,29 +64,17 @@ export const DefaultHead = ({ name, depth, isExpanded = true, isSelected, isComp
   </LeafStyle>
 );
 DefaultHead.displayName = 'DefaultHead';
-DefaultHead.propTypes = {
-  name: PropTypes.node.isRequired,
-  depth: PropTypes.number.isRequired,
-  isExpanded: PropTypes.bool,
-  isSelected: PropTypes.bool,
-  isComponent: PropTypes.bool,
-};
-DefaultHead.defaultProps = {
-  isExpanded: false,
-  isComponent: false,
-  isSelected: false,
-};
 
 export const DefaultRootTitle = styled.h4({});
 
-export const DefaultLink = ({ id, prefix, children, ...rest }) => (
-  <A href={`#!${prefix}${id}`} {...rest} onClick={e => e.preventDefault() || rest.onClick(e)}>
+export const DefaultLink: FunctionComponent<{
+  id: string;
+  prefix: string;
+  children: string[];
+  onClick: Function;
+}> = ({ id, prefix, children, ...rest }) => (
+  <A href={`#!${prefix}${id}`} {...rest} onClick={e => prevent(e) || rest.onClick(e)}>
     {children}
   </A>
 );
 DefaultLink.displayName = 'DefaultLink';
-DefaultLink.propTypes = {
-  id: PropTypes.string.isRequired,
-  prefix: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-};

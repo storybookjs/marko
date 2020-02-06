@@ -1,6 +1,11 @@
 import { document } from 'global';
-import React, { PureComponent, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, {
+  PureComponent,
+  Fragment,
+  ComponentType,
+  FunctionComponent,
+  SyntheticEvent,
+} from 'react';
 import memoize from 'memoizerific';
 import addons from '@storybook/addons';
 import { STORIES_COLLAPSE_ALL, STORIES_EXPAND_ALL } from '@storybook/core-events';
@@ -8,7 +13,6 @@ import debounce from 'lodash/debounce';
 
 import {
   createId,
-  prevent,
   keyEventToAction,
   getParent,
   getParents,
@@ -16,6 +20,10 @@ import {
   getMains,
   getNext,
   toFiltered,
+  Dataset,
+  ExpandedSet,
+  SelectedSet,
+  Item,
 } from './utils';
 
 import {
@@ -29,13 +37,22 @@ import {
   DefaultMessage,
 } from './components';
 
-const createHandler = memoize(10000)((item, cb) => (...args) => cb(...args, item));
+const createHandler = memoize(10000)((item, cb) => (...args: any[]) => cb(...args, item));
 
-const linked = (C, { onClick, onKeyUp, prefix = '', Link: L }) => {
+const linked = (
+  C: ComponentType,
+  {
+    onClick,
+    onKeyUp,
+    prefix = '',
+    Link: L,
+  }: { onClick: Function; onKeyUp: Function; Link: ComponentType; prefix: string }
+) => {
   const Linked = React.memo(p => (
     <L
       prefix={prefix}
       {...p}
+      // @ts-ignore
       onKeyUp={createHandler(p, onKeyUp)}
       onClick={createHandler(p, onClick)}
     >
@@ -47,35 +64,62 @@ const linked = (C, { onClick, onKeyUp, prefix = '', Link: L }) => {
   return Linked;
 };
 
-const getLink = memoize(1)(Link => Link || DefaultLink);
+const getLink = memoize(1)((Link: ComponentType<any>) => Link || DefaultLink);
 
-const getHead = memoize(1)((Head, Link, prefix, events) =>
-  linked(Head || DefaultHead, {
-    onClick: events.onClick,
-    onKeyUp: events.onKeyUp,
-    prefix,
-    Link: getLink(Link),
-  })
+const getHead = memoize(1)(
+  (
+    Head: ComponentType<any>,
+    Link: ComponentType<any>,
+    prefix: string,
+    events: Record<string, any>
+  ) =>
+    linked(Head || DefaultHead, {
+      onClick: events.onClick,
+      onKeyUp: events.onKeyUp,
+      prefix,
+      Link: getLink(Link),
+    })
 );
 
-const getLeaf = memoize(1)((Leaf, Link, prefix, events) =>
-  linked(Leaf || DefaultLeaf, {
-    onClick: events.onClick,
-    onKeyUp: events.onKeyUp,
-    prefix,
-    Link: getLink(Link),
-  })
+const getLeaf = memoize(1)(
+  (
+    Leaf: ComponentType<any>,
+    Link: ComponentType<any>,
+    prefix: string,
+    events: Record<string, any>
+  ) =>
+    linked(Leaf || DefaultLeaf, {
+      onClick: events.onClick,
+      onKeyUp: events.onKeyUp,
+      prefix,
+      Link: getLink(Link),
+    })
 );
 
-const getFilter = memoize(1)(Filter => Filter || DefaultFilter);
-const getTitle = memoize(1)(Title => Title || DefaultRootTitle);
-const getContainer = memoize(1)(Section => Section || DefaultSection);
-const getMessage = memoize(1)(Message => Message || DefaultMessage);
+const getFilter = memoize(1)((Filter: ComponentType<any>) => Filter || DefaultFilter);
+const getTitle = memoize(1)((Title: ComponentType<any>) => Title || DefaultRootTitle);
+const getContainer = memoize(1)((Section: ComponentType<any>) => Section || DefaultSection);
+const getMessage = memoize(1)((Message: ComponentType<any>) => Message || DefaultMessage);
 
 const branchOrLeaf = (
-  // eslint-disable-next-line react/prop-types
-  { Branch, Leaf, Head, List },
-  { root, dataset, expanded, selected, depth }
+  {
+    Branch,
+    Leaf,
+    Head,
+    List,
+  }: {
+    Branch: ComponentType<any>;
+    Leaf: ComponentType<any>;
+    Head: ComponentType<any>;
+    List: ComponentType<any>;
+  },
+  {
+    root,
+    dataset,
+    expanded,
+    selected,
+    depth,
+  }: { root: string; dataset: Dataset; expanded: ExpandedSet; selected: SelectedSet; depth: number }
 ) => {
   const node = dataset[root];
   return node.children ? (
@@ -98,7 +142,19 @@ const branchOrLeaf = (
   );
 };
 
-const Tree = props => {
+const Tree: FunctionComponent<{
+  root: string;
+  depth: number;
+  dataset: Dataset;
+  expanded: ExpandedSet;
+  selected: SelectedSet;
+  events?: any;
+  Branch: ComponentType<any>;
+  Link?: ComponentType<any>;
+  List?: ComponentType<any>;
+  Leaf?: ComponentType<any>;
+  Head?: ComponentType<any>;
+}> = props => {
   const {
     root,
     depth,
@@ -110,9 +166,16 @@ const Tree = props => {
     Leaf = DefaultLeaf,
     Head = DefaultHead,
   } = props;
-  const { children, ...node } = dataset[root] || {};
 
-  const mapNode = i =>
+  const item = dataset[root];
+
+  if (!item) {
+    return null;
+  }
+
+  const { children, ...node } = item;
+
+  const mapNode = (i: string) =>
     branchOrLeaf(
       { Branch, Leaf, Head, List },
       { dataset, selected, expanded, root: i, depth: depth + 1 }
@@ -146,7 +209,13 @@ const Tree = props => {
 };
 
 const calculateTreeState = memoize(50)(
-  ({ dataset, selectedId }, { lastSelectedId, unfilteredExpanded }) => {
+  (
+    { dataset, selectedId }: { dataset: Dataset; selectedId: string },
+    {
+      lastSelectedId,
+      unfilteredExpanded,
+    }: { lastSelectedId: string; unfilteredExpanded: ExpandedSet }
+  ) => {
     if (selectedId === lastSelectedId) {
       return null;
     }
@@ -156,7 +225,7 @@ const calculateTreeState = memoize(50)(
     const newExpanded = Object.keys(dataset).reduce((acc, key) => {
       acc[key] = selectedAncestorIds.includes(key) || unfilteredExpanded[key];
       return acc;
-    }, {});
+    }, {} as SelectedSet);
 
     return {
       lastSelectedId: selectedId,
@@ -165,57 +234,116 @@ const calculateTreeState = memoize(50)(
   }
 );
 
-const getExpanded = ({ unfilteredExpanded, filteredExpanded, filter }) =>
-  filter ? filteredExpanded : unfilteredExpanded;
+const getExpanded = ({
+  unfilteredExpanded,
+  filteredExpanded,
+  filter,
+}: {
+  unfilteredExpanded: ExpandedSet;
+  filteredExpanded: ExpandedSet;
+  filter: string;
+}) => (filter ? filteredExpanded : unfilteredExpanded);
 
-const getFilteredDataset = memoize(50)(({ dataset, filter }) =>
+const getFilteredDataset = memoize(
+  50
+)(({ dataset, filter }: { dataset: Dataset; filter: string }) =>
   filter ? toFiltered(dataset, filter) : dataset
 );
 
 // Update the set of expansions we are currently working with
-const updateExpanded = fn => ({ unfilteredExpanded, filteredExpanded, filter }) => {
+const updateExpanded = (fn: (expandedset: ExpandedSet) => ExpandedSet) => ({
+  unfilteredExpanded,
+  filteredExpanded,
+  filter,
+  ...rest
+}: TreeStateState): TreeStateState => {
   if (filter) {
     return {
+      ...rest,
+      unfilteredExpanded,
+      filter,
       filteredExpanded: fn(filteredExpanded),
     };
   }
-  return { unfilteredExpanded: fn(unfilteredExpanded) };
+  return {
+    ...rest,
+    filteredExpanded,
+    filter,
+    unfilteredExpanded: fn(unfilteredExpanded),
+  };
 };
 
-const getPropsForTree = memoize(50)(({ dataset, selectedId }) => {
-  const selected = Object.keys(dataset).reduce(
-    (acc, k) => Object.assign(acc, { [k]: k === selectedId }),
-    {}
-  );
+const getPropsForTree = memoize(50)(
+  ({ dataset, selectedId }: { dataset: Dataset; selectedId: string }) => {
+    const selected = Object.keys(dataset).reduce(
+      (acc, k) => Object.assign(acc, { [k]: k === selectedId }),
+      {} as SelectedSet
+    );
 
-  const { roots, others } = getMains(dataset).reduce(
-    (acc, item) => {
-      const { isRoot } = item;
-      return isRoot
-        ? { ...acc, roots: [...acc.roots, item] }
-        : { ...acc, others: [...acc.others, item] };
-    },
-    { roots: [], others: [] }
-  );
+    const { roots, others } = getMains(dataset).reduce(
+      (acc, item) => {
+        const { isRoot } = item;
+        return isRoot
+          ? { ...acc, roots: [...acc.roots, item] }
+          : { ...acc, others: [...acc.others, item] };
+      },
+      { roots: [] as Item[], others: [] as Item[] }
+    );
 
-  return { selected, roots, others };
-});
+    return { selected, roots, others };
+  }
+);
 
-class TreeState extends PureComponent {
+interface TreeStateState {
+  unfilteredExpanded: SelectedSet;
+  filteredExpanded: ExpandedSet;
+  filter: string | null;
+  lastSelectedId: string | null;
+}
+
+interface TreeStateProps {
+  dataset: Dataset;
+  selectedId: string;
+  prefix: string;
+  filter?: string;
+  event?: any;
+  Filter: ComponentType<any>;
+  List: ComponentType<any>;
+  Title: ComponentType<any>;
+  Link: ComponentType<any>;
+  Leaf: ComponentType<any>;
+  Head: ComponentType<any>;
+  Section: ComponentType<any>;
+  Message: ComponentType<any>;
+}
+
+class TreeState extends PureComponent<TreeStateProps, TreeStateState> {
   state = {
     // We maintain two sets of expanded nodes, so we remember which were expanded if we clear the filter
     unfilteredExpanded: {},
     filteredExpanded: {},
     filter: null,
     lastSelectedId: null,
-  };
+  } as TreeStateState;
 
-  static getDerivedStateFromProps(props, state) {
+  static getDerivedStateFromProps(props: TreeStateProps, state: TreeStateState) {
     return calculateTreeState(props, state);
   }
 
+  static defaultProps: Partial<TreeStateProps> = {
+    selectedId: null,
+    Filter: undefined,
+    List: undefined,
+    Title: undefined,
+    Link: undefined,
+    Leaf: undefined,
+    Head: undefined,
+    Section: undefined,
+    Message: undefined,
+  };
+
   events = {
-    onClick: (e, item) => {
+    onClick: (e: SyntheticEvent, item: Item) => {
       this.setState(
         updateExpanded(expanded => ({
           ...expanded,
@@ -236,7 +364,7 @@ class TreeState extends PureComponent {
           Object.keys(filteredDataset).reduce((acc, k) => Object.assign(acc, { [k]: true }), {}),
       });
     }, 100),
-    onKeyUp: (e, item) => {
+    onKeyUp: (e: KeyboardEvent, item: Item) => {
       const { prefix, dataset } = this.props;
       const { filter } = this.state;
       const filteredDataset = getFilteredDataset({ dataset, filter });
@@ -244,7 +372,7 @@ class TreeState extends PureComponent {
 
       const action = keyEventToAction(e);
       if (action) {
-        prevent(e);
+        e.preventDefault();
       }
 
       if (action === 'RIGHT') {
@@ -319,7 +447,7 @@ class TreeState extends PureComponent {
     addons.getChannel().off(STORIES_EXPAND_ALL, this.onExpandAll);
   }
 
-  updateExpanded = expanded => {
+  updateExpanded = (expanded: string | boolean) => {
     const { dataset, selectedId } = this.props;
     this.setState(({ unfilteredExpanded }) => {
       const selectedAncestorIds = selectedId ? getParents(selectedId, dataset).map(i => i.id) : [];
@@ -409,30 +537,5 @@ class TreeState extends PureComponent {
     );
   }
 }
-
-TreeState.propTypes = {
-  prefix: PropTypes.string.isRequired,
-  dataset: PropTypes.shape({}).isRequired,
-  selectedId: PropTypes.string,
-  Filter: PropTypes.elementType,
-  List: PropTypes.elementType,
-  Title: PropTypes.elementType,
-  Link: PropTypes.elementType,
-  Leaf: PropTypes.elementType,
-  Head: PropTypes.elementType,
-  Section: PropTypes.elementType,
-  Message: PropTypes.elementType,
-};
-TreeState.defaultProps = {
-  selectedId: null,
-  Filter: undefined,
-  List: undefined,
-  Title: undefined,
-  Link: undefined,
-  Leaf: undefined,
-  Head: undefined,
-  Section: undefined,
-  Message: undefined,
-};
 
 export { TreeState, Tree };

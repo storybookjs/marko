@@ -73,7 +73,18 @@ export const viewMode = (
 const targetId = (childIds?: string[]) =>
   childIds && childIds.find((childId: string) => /.*--.*/.exec(childId));
 
-export const Link = ({
+export const Link: FunctionComponent<{
+  id: string;
+  name: string;
+  isLeaf: boolean;
+  prefix: string;
+  onKeyUp: Function;
+  onClick: Function;
+  childIds: string[] | null;
+  isExpanded: boolean;
+  isComponent: boolean;
+  parameters: Record<string, any>;
+}> = ({
   id,
   prefix,
   name,
@@ -82,8 +93,8 @@ export const Link = ({
   isComponent,
   onClick,
   onKeyUp,
-  childIds,
-  isExpanded,
+  childIds = null,
+  isExpanded = false,
   parameters,
 }) => {
   return isLeaf || (isComponent && !isExpanded) ? (
@@ -109,21 +120,6 @@ export const Link = ({
   );
 };
 Link.displayName = 'Link';
-Link.propTypes = {
-  children: PropTypes.node.isRequired,
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  isLeaf: PropTypes.bool.isRequired,
-  prefix: PropTypes.string.isRequired,
-  onKeyUp: PropTypes.func.isRequired,
-  onClick: PropTypes.func.isRequired,
-  childIds: PropTypes.arrayOf(PropTypes.string),
-  isExpanded: PropTypes.bool,
-};
-Link.defaultProps = {
-  childIds: null,
-  isExpanded: false,
-};
 
 export interface StoriesProps {
   loading: boolean;
