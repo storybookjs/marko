@@ -53,9 +53,9 @@ export const Description = styled.div({
   alignSelf: 'center',
 });
 
-export const TextInput = styled(Input)<{ isValid: string }>(
-  ({ isValid, theme }) =>
-    isValid === 'error'
+export const TextInput = styled(Input)<{ valid: string }>(
+  ({ valid, theme }) =>
+    valid === 'error'
       ? {
           animation: `${theme.animation.jiggle} 700ms ease-out`,
         }
@@ -76,9 +76,9 @@ export const Fade = keyframes`
   50% { opacity: 1; }
 `;
 
-export const SuccessIcon = styled(Icons)<{ isValid: string }>(
-  ({ isValid, theme }) =>
-    isValid === 'valid'
+export const SuccessIcon = styled(Icons)<{ valid: string }>(
+  ({ valid, theme }) =>
+    valid === 'valid'
       ? {
           color: theme.color.positive,
           animation: `${Fade} 2s ease forwards`,
@@ -266,7 +266,7 @@ class ShortcutsScreen extends Component<ShortcutsScreenProps, ShortcutsScreenSta
 
         <TextInput
           spellCheck="false"
-          isValid={this.displayError(feature)}
+          valid={this.displayError(feature)}
           className="modalInput"
           onBlur={this.onBlur}
           onFocus={this.onFocus(feature)}
@@ -277,7 +277,7 @@ class ShortcutsScreen extends Component<ShortcutsScreenProps, ShortcutsScreenSta
           readOnly
         />
 
-        <SuccessIcon isValid={this.displaySuccessMessage(feature)} icon="check" />
+        <SuccessIcon valid={this.displaySuccessMessage(feature)} icon="check" />
       </Row>
     ));
 

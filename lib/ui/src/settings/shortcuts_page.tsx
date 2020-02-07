@@ -9,7 +9,9 @@ import ShortcutsScreen from './shortcuts';
 export default () => (
   <Route path="shortcuts">
     <Consumer>
-      {({api: { getShortcutKeys, setShortcut, restoreDefaultShortcut, restoreAllDefaultShortcuts }}) => (
+      {({
+        api: { getShortcutKeys, setShortcut, restoreDefaultShortcut, restoreAllDefaultShortcuts },
+      }) => (
         <Route path="shortcuts">
           <ShortcutsScreen
             shortcutKeys={getShortcutKeys()}
@@ -21,4 +23,3 @@ export default () => (
     </Consumer>
   </Route>
 );
-
