@@ -1,7 +1,6 @@
 import { Parser } from 'acorn';
 // @ts-ignore
 import jsx from 'acorn-jsx';
-import { isNil } from 'lodash';
 import estree from 'estree';
 // @ts-ignore
 import * as acornWalk from 'acorn-walk';
@@ -32,7 +31,7 @@ const acornParser = Parser.extend(jsx());
 
 // Cannot use "estree.Identifier" type because this function also support "JSXIdentifier".
 function extractIdentifierName(identifierNode: any) {
-  return !isNil(identifierNode) ? identifierNode.name : null;
+  return identifierNode != null ? identifierNode.name : null;
 }
 
 function filterAncestors(ancestors: estree.Node[]): estree.Node[] {
@@ -91,7 +90,7 @@ function parseFunction(
     ACORN_WALK_VISITORS
   );
 
-  const isJsx = !isNil(innerJsxElementNode);
+  const isJsx = innerJsxElementNode != null;
 
   const inferedType: InspectionFunction | InspectionElement = {
     type: isJsx ? InspectionType.ELEMENT : InspectionType.FUNCTION,
@@ -100,7 +99,7 @@ function parseFunction(
   };
 
   const identifierName = extractIdentifierName((funcNode as estree.FunctionExpression).id);
-  if (!isNil(identifierName)) {
+  if (identifierName != null) {
     inferedType.identifier = identifierName;
   }
 
@@ -127,7 +126,7 @@ function parseClass(
   );
 
   const inferedType: any = {
-    type: !isNil(innerJsxElementNode) ? InspectionType.ELEMENT : InspectionType.CLASS,
+    type: innerJsxElementNode != null ? InspectionType.ELEMENT : InspectionType.CLASS,
     identifier: extractIdentifierName(classNode.id),
   };
 
@@ -143,7 +142,7 @@ function parseJsxElement(jsxElementNode: any): ParsingResult<InspectionElement> 
   };
 
   const identifierName = extractIdentifierName(jsxElementNode.openingElement.name);
-  if (!isNil(identifierName)) {
+  if (identifierName != null) {
     inferedType.identifier = identifierName;
   }
 
@@ -212,13 +211,13 @@ export function parse(value: string): ParsingResult<InspectionInferedType> {
     ast,
   };
 
-  if (!isNil(ast.body[0])) {
+  if (ast.body[0] != null) {
     const rootNode = ast.body[0];
 
     switch (rootNode.type) {
       case 'ExpressionStatement': {
         const expressionResult = parseExpression(rootNode.expression);
-        if (!isNil(expressionResult)) {
+        if (expressionResult != null) {
           parsingResult = expressionResult as any;
         }
         break;

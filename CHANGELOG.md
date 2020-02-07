@@ -1,3 +1,9 @@
+## 6.0.0-alpha.8 (February 8, 2020)
+
+### Maintenance
+
+* Replace lodash named imports with specific imports ([#9787](https://github.com/storybookjs/storybook/pull/9787))
+
 ## 6.0.0-alpha.7 (February 7, 2020)
 
 ### Bug Fixes

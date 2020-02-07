@@ -1,4 +1,3 @@
-import { isNil } from 'lodash';
 import { PropType } from '@storybook/components';
 import { createSummaryValue, isTooLongForTypeSummary } from '../../../lib';
 import { ExtractedProp, DocgenPropType } from '../../../lib/docgen';
@@ -74,7 +73,7 @@ function createTypeDef({
     name,
     short,
     compact,
-    full: !isNil(full) ? full : short,
+    full: full != null ? full : short,
     inferedType,
   };
 }
@@ -137,7 +136,7 @@ function generateTypeFromString(value: string, originalTypeName: string): TypeDe
     case InspectionType.ELEMENT: {
       const { identifier } = inferedType as InspectionElement;
 
-      short = !isNil(identifier) && !isHtmlTag(identifier) ? identifier : ELEMENT_CAPTION;
+      short = identifier != null && !isHtmlTag(identifier) ? identifier : ELEMENT_CAPTION;
       compact = splitIntoLines(value).length === 1 ? value : null;
       full = value;
       break;
@@ -167,7 +166,7 @@ function generateTypeFromString(value: string, originalTypeName: string): TypeDe
 }
 
 function generateCustom({ raw }: DocgenPropType): TypeDef {
-  if (!isNil(raw)) {
+  if (raw != null) {
     return generateTypeFromString(raw, PropTypesType.CUSTOM);
   }
 
@@ -181,8 +180,8 @@ function generateCustom({ raw }: DocgenPropType): TypeDef {
 function generateFunc(extractedProp: ExtractedProp): TypeDef {
   const { jsDocTags } = extractedProp;
 
-  if (!isNil(jsDocTags)) {
-    if (!isNil(jsDocTags.params) || !isNil(jsDocTags.returns)) {
+  if (jsDocTags != null) {
+    if (jsDocTags.params != null || jsDocTags.returns != null) {
       return createTypeDef({
         name: PropTypesType.FUNC,
         short: generateShortFuncSignature(jsDocTags.params, jsDocTags.returns),
@@ -225,7 +224,7 @@ function generateObjectOf(type: DocgenPropType, extractedProp: ExtractedProp): T
   return createTypeDef({
     name: PropTypesType.OBJECTOF,
     short: objectOf(short),
-    compact: !isNil(compact) ? objectOf(compact) : null,
+    compact: compact != null ? objectOf(compact) : null,
     full: objectOf(full),
   });
 }
@@ -248,7 +247,7 @@ function generateUnion(type: DocgenPropType, extractedProp: ExtractedProp): Type
     return createTypeDef({
       name: PropTypesType.UNION,
       short: values.short.join(' | '),
-      compact: values.compact.every((x: string) => !isNil(x)) ? values.compact.join(' | ') : null,
+      compact: values.compact.every((x: string) => x != null) ? values.compact.join(' | ') : null,
       full: values.full.join(' | '),
     });
   }
@@ -280,7 +279,7 @@ function generateEnum(type: DocgenPropType): TypeDef {
     return createTypeDef({
       name: PropTypesType.ENUM,
       short: values.short.join(' | '),
-      compact: values.compact.every((x: string) => !isNil(x)) ? values.compact.join(' | ') : null,
+      compact: values.compact.every((x: string) => x != null) ? values.compact.join(' | ') : null,
       full: values.full.join(' | '),
     });
   }
@@ -300,7 +299,7 @@ function createArrayOfObjectTypeDef(short: string, compact: string, full: string
   return createTypeDef({
     name: PropTypesType.ARRAYOF,
     short: braceAfter(short),
-    compact: !isNil(compact) ? braceAround(compact) : null,
+    compact: compact != null ? braceAround(compact) : null,
     full: braceAround(full),
   });
 }
@@ -361,7 +360,7 @@ export function createType(extractedProp: ExtractedProp): PropType {
   const { type } = extractedProp.docgenInfo;
 
   // A type could be null if a defaultProp has been provided without a type definition.
-  if (isNil(type)) {
+  if (type == null) {
     return null;
   }
 
@@ -376,7 +375,7 @@ export function createType(extractedProp: ExtractedProp): PropType {
       case PropTypesType.ARRAYOF: {
         const { short, compact, full } = generateType(type, extractedProp);
 
-        if (!isNil(compact)) {
+        if (compact != null) {
           if (!isTooLongForTypeSummary(compact)) {
             return createSummaryValue(compact);
           }
