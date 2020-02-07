@@ -1,3 +1,22 @@
+## 6.0.0-alpha.8 (February 8, 2020)
+
+### Maintenance
+
+* Replace lodash named imports with specific imports ([#9787](https://github.com/storybookjs/storybook/pull/9787))
+
+## 6.0.0-alpha.7 (February 7, 2020)
+
+### Bug Fixes
+
+* Core: Support custom addons using JSX ([#9648](https://github.com/storybookjs/storybook/pull/9648))
+* Components: Change react-syntax-highlighter from esm to cjs ([#9780](https://github.com/storybookjs/storybook/pull/9780))
+* Core: Fix manager assets to be routed in express ([#9646](https://github.com/storybookjs/storybook/pull/9646))
+
+### Maintenance
+
+* Examples: Remove addon-notes remnants ([#9782](https://github.com/storybookjs/storybook/pull/9782))
+* Build: Fix DLL generation race condition ([#9770](https://github.com/storybookjs/storybook/pull/9770))
+
 ## 6.0.0-alpha.6 (February 5, 2020)
 
 ### Bug Fixes

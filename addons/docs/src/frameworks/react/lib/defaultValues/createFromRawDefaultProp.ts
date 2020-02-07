@@ -1,5 +1,7 @@
 import { PropDefaultValue, PropDef } from '@storybook/components';
-import { isNil, isPlainObject, isArray, isFunction, isString } from 'lodash';
+import isPlainObject from 'lodash/isPlainObject';
+import isFunction from 'lodash/isFunction';
+import isString from 'lodash/isString';
 // @ts-ignore
 import reactElementToJSXString from 'react-element-to-jsx-string';
 import { createSummaryValue, isTooLongForDefaultValueSummary } from '../../../../lib';
@@ -20,7 +22,7 @@ export interface TypeResolvers {
 }
 
 function isReactElement(element: any): boolean {
-  return !isNil(element.$$typeof);
+  return element.$$typeof != null;
 }
 
 export function extractFunctionName(func: Function, propName: string): string {
@@ -44,7 +46,7 @@ function generateReactObject(rawDefaultProp: any) {
 
   const jsx = reactElementToJSXString(rawDefaultProp);
 
-  if (!isNil(displayName)) {
+  if (displayName != null) {
     const prettyIdentifier = getPrettyElementIdentifier(displayName);
 
     return createSummaryValue(prettyIdentifier, prettyIdentifier !== jsx ? jsx : undefined);
@@ -66,7 +68,7 @@ function generateReactObject(rawDefaultProp: any) {
 }
 
 const objectResolver: TypeResolver = rawDefaultProp => {
-  if (isReactElement(rawDefaultProp) && !isNil(rawDefaultProp.type)) {
+  if (isReactElement(rawDefaultProp) && rawDefaultProp.type != null) {
     return generateReactObject(rawDefaultProp);
   }
 
@@ -76,7 +78,7 @@ const objectResolver: TypeResolver = rawDefaultProp => {
     return generateObject(inspectionResult);
   }
 
-  if (isArray(rawDefaultProp)) {
+  if (Array.isArray(rawDefaultProp)) {
     const inspectionResult = inspectValue(JSON.stringify(rawDefaultProp));
 
     return generateArray(inspectionResult);
@@ -92,7 +94,7 @@ const functionResolver: TypeResolver = (rawDefaultProp, propDef) => {
   // Try to display the name of the component. The body of the component is ommited since the code has been transpiled.
   if (isFunction(rawDefaultProp.render)) {
     isElement = true;
-  } else if (!isNil(rawDefaultProp.prototype) && isFunction(rawDefaultProp.prototype.render)) {
+  } else if (rawDefaultProp.prototype != null && isFunction(rawDefaultProp.prototype.render)) {
     isElement = true;
   } else {
     let innerElement;
@@ -110,7 +112,7 @@ const functionResolver: TypeResolver = (rawDefaultProp, propDef) => {
         innerElement = rawDefaultProp();
       }
 
-      if (!isNil(innerElement)) {
+      if (innerElement != null) {
         if (isReactElement(innerElement)) {
           isElement = true;
         }
@@ -121,12 +123,12 @@ const functionResolver: TypeResolver = (rawDefaultProp, propDef) => {
   }
 
   const funcName = extractFunctionName(rawDefaultProp, propDef.name);
-  if (!isNil(funcName)) {
+  if (funcName != null) {
     if (isElement) {
       return createSummaryValue(getPrettyElementIdentifier(funcName));
     }
 
-    if (!isNil(inspectionResult)) {
+    if (inspectionResult != null) {
       inspectionResult = inspectValue(rawDefaultProp.toString());
     }
 
@@ -168,8 +170,7 @@ export function createDefaultValueFromRawDefaultProp(
 ): PropDefaultValue {
   try {
     // Keep the extra () otherwise it will fail for functions.
-    // eslint-disable-next-line prettier/prettier
-    switch (typeof (rawDefaultProp)) {
+    switch (typeof rawDefaultProp) {
       case 'string':
         return typeResolvers.string(rawDefaultProp, propDef);
       case 'object':
