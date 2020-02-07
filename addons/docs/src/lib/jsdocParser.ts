@@ -1,5 +1,4 @@
 import doctrine, { Annotation } from 'doctrine';
-import { isNil } from 'lodash';
 
 export interface ExtractedJsDocParam {
   name: string;
@@ -35,7 +34,7 @@ export interface JsDocParsingResult {
 export type ParseJsDoc = (value?: string, options?: JsDocParsingOptions) => JsDocParsingResult;
 
 function containsJsDoc(value?: string): boolean {
-  return !isNil(value) && value.includes('@');
+  return value != null && value.includes('@');
 }
 
 function parse(content: string, tags: string[]): Annotation {
@@ -112,8 +111,8 @@ function extractJsDocTags(ast: doctrine.Annotation): ExtractedJsDoc {
         case 'arg':
         case 'argument': {
           const paramTag = extractParam(tag);
-          if (!isNil(paramTag)) {
-            if (isNil(extractedTags.params)) {
+          if (paramTag != null) {
+            if (extractedTags.params == null) {
               extractedTags.params = [];
             }
             extractedTags.params.push(paramTag);
@@ -122,7 +121,7 @@ function extractJsDocTags(ast: doctrine.Annotation): ExtractedJsDoc {
         }
         case 'returns': {
           const returnsTag = extractReturns(tag);
-          if (!isNil(returnsTag)) {
+          if (returnsTag != null) {
             extractedTags.returns = returnsTag;
           }
           break;
@@ -140,7 +139,7 @@ function extractParam(tag: doctrine.Tag): ExtractedJsDocParam {
   const paramName = tag.name;
 
   // When the @param doesn't have a name but have a type and a description, "null-null" is returned.
-  if (!isNil(paramName) && paramName !== 'null-null') {
+  if (paramName != null && paramName !== 'null-null') {
     return {
       name: tag.name,
       type: tag.type,
@@ -156,7 +155,7 @@ function extractParam(tag: doctrine.Tag): ExtractedJsDocParam {
         return tag.name;
       },
       getTypeName: () => {
-        return !isNil(tag.type) ? extractTypeName(tag.type) : null;
+        return tag.type != null ? extractTypeName(tag.type) : null;
       },
     };
   }
@@ -165,7 +164,7 @@ function extractParam(tag: doctrine.Tag): ExtractedJsDocParam {
 }
 
 function extractReturns(tag: doctrine.Tag): ExtractedJsDocReturns {
-  if (!isNil(tag.type)) {
+  if (tag.type != null) {
     return {
       type: tag.type,
       description: tag.description,
@@ -185,7 +184,7 @@ function extractTypeName(type: doctrine.Type): string {
 
   if (type.type === 'RecordType') {
     const recordFields = type.fields.map((field: doctrine.type.FieldType) => {
-      if (!isNil(field.value)) {
+      if (field.value != null) {
         const valueTypeName = extractTypeName(field.value);
 
         return `${field.key}: ${valueTypeName}`;
@@ -209,7 +208,7 @@ function extractTypeName(type: doctrine.Type): string {
   }
 
   if (type.type === 'TypeApplication') {
-    if (!isNil(type.expression)) {
+    if (type.expression != null) {
       if ((type.expression as doctrine.type.NameExpression).name === 'Array') {
         const arrayType = extractTypeName(type.applications[0]);
 
