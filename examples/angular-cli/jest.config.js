@@ -5,6 +5,9 @@ module.exports = {
   ...config,
   globals: {
     __TRANSFORM_HTML__: true,
+    'ts-jest': {
+      tsConfigFile: '<rootDir>/examples/angular-cli/src/tsconfig.spec.json',
+    },
   },
   roots: [__dirname],
   transform: {

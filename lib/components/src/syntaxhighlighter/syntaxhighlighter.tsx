@@ -3,12 +3,12 @@ import { styled } from '@storybook/theming';
 import { document, window } from 'global';
 import memoize from 'memoizerific';
 
-import jsx from 'react-syntax-highlighter/dist/esm/languages/prism/jsx';
-import bash from 'react-syntax-highlighter/dist/esm/languages/prism/bash';
-import css from 'react-syntax-highlighter/dist/esm/languages/prism/css';
-import html from 'react-syntax-highlighter/dist/esm/languages/prism/markup';
-import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
-import typescript from 'react-syntax-highlighter/dist/esm/languages/prism/typescript';
+import jsx from 'react-syntax-highlighter/dist/cjs/languages/prism/jsx';
+import bash from 'react-syntax-highlighter/dist/cjs/languages/prism/bash';
+import css from 'react-syntax-highlighter/dist/cjs/languages/prism/css';
+import html from 'react-syntax-highlighter/dist/cjs/languages/prism/markup';
+import tsx from 'react-syntax-highlighter/dist/cjs/languages/prism/tsx';
+import typescript from 'react-syntax-highlighter/dist/cjs/languages/prism/typescript';
 
 import { PrismLight as ReactSyntaxHighlighter } from 'react-syntax-highlighter';
 // @ts-ignore

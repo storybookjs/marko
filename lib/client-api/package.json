@@ -1,6 +1,6 @@
 {
   "name": "@storybook/client-api",
-  "version": "6.0.0-alpha.2",
+  "version": "6.0.0-alpha.6",
   "description": "Storybook Client API",
   "keywords": [
     "storybook"
@@ -15,25 +15,25 @@
     "directory": "lib/client-api"
   },
   "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
     "*.d.ts"
   ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-alpha.2",
-    "@storybook/channel-postmessage": "6.0.0-alpha.2",
-    "@storybook/channels": "6.0.0-alpha.2",
-    "@storybook/client-logger": "6.0.0-alpha.2",
-    "@storybook/core-events": "6.0.0-alpha.2",
+    "@storybook/addons": "6.0.0-alpha.6",
+    "@storybook/channel-postmessage": "6.0.0-alpha.6",
+    "@storybook/channels": "6.0.0-alpha.6",
+    "@storybook/client-logger": "6.0.0-alpha.6",
+    "@storybook/core-events": "6.0.0-alpha.6",
     "@storybook/csf": "0.0.1",
-    "@types/webpack-env": "^1.15.0",
+    "@types/webpack-env": "^1.15.1",
     "core-js": "^3.0.1",
     "eventemitter3": "^4.0.0",
     "global": "^4.3.2",
@@ -42,8 +42,12 @@
     "memoizerific": "^1.11.3",
     "qs": "^6.6.0",
     "stable": "^0.1.8",
-    "ts-dedent": "^1.1.0",
+    "ts-dedent": "^1.1.1",
     "util-deprecate": "^1.0.2"
+  },
+  "peerDependencies": {
+    "react-dom": "*",
+    "regenerator-runtime": "*"
   },
   "publishConfig": {
     "access": "public"

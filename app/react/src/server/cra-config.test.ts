@@ -1,12 +1,7 @@
 /* eslint-disable jest/no-mocks-import */
 import fs from 'fs';
 import path from 'path';
-import {
-  applyCRAWebpackConfig,
-  getModulePath,
-  getReactScriptsPath,
-  getTypeScriptRules,
-} from './cra-config';
+import { applyCRAWebpackConfig, getReactScriptsPath, getTypeScriptRules } from './cra-config';
 import mockRules from './__mocks__/mockRules';
 import mockConfig from './__mocks__/mockConfig';
 
@@ -94,21 +89,6 @@ exit $ret`
       expect(
         rules.every(rule => rule.include.find(filePath => filePath.includes('.storybook')))
       ).toBe(true);
-    });
-
-    it('should get the baseUrl from a tsconfig.json', () => {
-      jest.spyOn(path, 'join').mockImplementation(() => 'project/tsconfig.json');
-      jest.mock(
-        'project/tsconfig.json',
-        () => ({
-          compilerOptions: {
-            baseUrl: 'src',
-          },
-        }),
-        { virtual: true }
-      );
-      expect(getModulePath()).toEqual('src');
-      path.join.mockRestore();
     });
   });
 

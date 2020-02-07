@@ -1,3 +1,84 @@
+## 6.0.0-alpha.6 (February 5, 2020)
+
+### Bug Fixes
+
+* Core: Fix dev server error - back out bad change ([#9753](https://github.com/storybookjs/storybook/pull/9753))
+* CLI: Fix file path for the Button story ([#9325](https://github.com/storybookjs/storybook/pull/9325))
+
+## 5.3.12 (February 5, 2020)
+
+### Bug Fixes
+
+* Core: Fix dev server error - back out bad change ([#9753](https://github.com/storybookjs/storybook/pull/9753))
+
+## 5.3.11 (February 4, 2020)
+
+### Bug Fixes
+
+* Svelte: Fix Svelte 3 slots for decorators ([#9724](https://github.com/storybookjs/storybook/pull/9724))
+* CLI: Fix file path for Button story ([#9325](https://github.com/storybookjs/storybook/pull/9325))
+* Angular: Emit decorator metadata by default ([#9701](https://github.com/storybookjs/storybook/pull/9701))
+* Storyshots: Fix config via main.ts ([#9577](https://github.com/storybookjs/storybook/pull/9577))
+
+## 6.0.0-alpha.5 (February 4, 2020)
+
+### Features
+
+* Core: Add Yarn 2 compatibility ([#9667](https://github.com/storybookjs/storybook/pull/9667))
+* Addon-a11y: Add preset ([#9697](https://github.com/storybookjs/storybook/pull/9697))
+* Server: Initial support for @storybook/server ([#9722](https://github.com/storybookjs/storybook/pull/9722))
+
+### Bug Fixes
+
+* Svelte: Fix Svelte 3 slots for decorators ([#9724](https://github.com/storybookjs/storybook/pull/9724))
+
+### Maintenance
+
+* Cra-ts-kitchen-sink: Fix stories glob pattern ([#9706](https://github.com/storybookjs/storybook/pull/9706))
+
+## 6.0.0-alpha.4 (February 3, 2020)
+
+### Bug Fixes
+
+* Angular: Emit decorator metadata by default ([#9701](https://github.com/storybookjs/storybook/pull/9701))
+* Addon-centered: Fix clash with addon-docs for react ([#8388](https://github.com/storybookjs/storybook/pull/8388))
+
+### Maintenance
+
+* Add angular 8 and 9 cli fixtures ([#8769](https://github.com/storybookjs/storybook/pull/8769))
+
+### Dependency Upgrades
+
+* Misc upgrades ([#9688](https://github.com/storybookjs/storybook/pull/9688))
+
+## 5.3.10 (February 2, 2020)
+
+### Bug Fixes
+
+* Core: Upgrade `min-css-extract-plugin` to fix SASS loading ([#9652](https://github.com/storybookjs/storybook/pull/9652))
+* CRA: Fix jsconfig support ([#9324](https://github.com/storybookjs/storybook/pull/9324))
+* Web-components: Fix default value for docs prop table ([#9655](https://github.com/storybookjs/storybook/pull/9655))
+* Web-components: Fix types to play nicely with lit-element ([#9557](https://github.com/storybookjs/storybook/pull/9557))
+* UI: Add support for className prop on Form.Field ([#9665](https://github.com/storybookjs/storybook/pull/9665))
+* Addon-storyshots: Remove excess slashes from jest transform warning ([#9616](https://github.com/storybookjs/storybook/pull/9616))
+
+### Maintenance
+
+* Ember: Migrate to new "import { hbs } from 'ember-cli-htmlbars'" ([#9633](https://github.com/storybookjs/storybook/pull/9633))
+* Build: Netlify for examples again ([#9585](https://github.com/storybookjs/storybook/pull/9585))
+* Publish: Remove docs to reduce package size ([#9612](https://github.com/storybookjs/storybook/pull/9612))
+
+## 6.0.0-alpha.3 (February 2, 2020)
+
+### Bug Fixes
+
+* CRA: Fix jsconfig support ([#9324](https://github.com/storybookjs/storybook/pull/9324))
+* UI: Check if docsOnly is set to hide the addon panels ([#9687](https://github.com/storybookjs/storybook/pull/9687))
+
+### Maintenance
+
+* Addon-notes, addon-info: Move to deprecated-addons repo ([#9673](https://github.com/storybookjs/storybook/pull/9673))
+
 ## 6.0.0-alpha.2 (January 30, 2020)
 
 ### Features

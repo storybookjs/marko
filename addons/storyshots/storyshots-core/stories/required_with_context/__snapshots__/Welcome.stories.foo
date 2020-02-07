@@ -117,7 +117,7 @@ exports[`Storyshots Welcome to Storybook 1`] = `
         }
       }
     >
-      src/stories/index.js
+      src/stories/1-Button.stories.js
     </code>
     .)
   </p>
