@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import createCompiler from '@storybook/addon-docs/mdx-compiler-plugin';
+import path from 'path';
 import remarkSlug from 'remark-slug';
 import remarkExternalLinks from 'remark-external-links';
 
@@ -52,7 +53,7 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
         ...(module.rules || []),
         {
           test: /\.js$/,
-          include: /node_modules\/acorn-jsx/,
+          include: path.join(__dirname, '../../../../../node_modules/acorn-jsx'),
           use: [
             {
               loader: 'babel-loader',
