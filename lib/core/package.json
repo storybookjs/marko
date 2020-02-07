@@ -48,6 +48,7 @@
     "airbnb-js-shims": "^2.2.1",
     "ansi-to-html": "^0.6.11",
     "autoprefixer": "^9.7.2",
+    "babel-loader": "^8.0.6",
     "babel-plugin-add-react-displayname": "^0.0.5",
     "babel-plugin-emotion": "^10.0.20",
     "babel-plugin-macros": "^2.8.0",
