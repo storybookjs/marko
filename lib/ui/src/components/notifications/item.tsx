@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
+import { State } from '@storybook/api';
 import { styled, lighten, darken } from '@storybook/theming';
 import { Link } from '@storybook/router';
 
-const baseStyle = ({ theme }) => ({
+const Notification = styled.div(({ theme }) => ({
   display: 'block',
   padding: '16px 20px',
   borderRadius: 10,
@@ -15,26 +15,21 @@ const baseStyle = ({ theme }) => ({
   backgroundColor:
     theme.base === 'light' ? darken(theme.background.app) : lighten(theme.background.app),
   textDecoration: 'none',
-});
-
-const NotificationLink = styled(Link)(baseStyle);
-const Notification = styled.div(baseStyle);
+}));
+const NotificationLink = Notification.withComponent(Link);
 
 export const NotificationItemSpacer = styled.div({
   height: 48,
 });
 
-export default function NotificationItem({ notification: { content, link } }) {
+const NotificationItem: FunctionComponent<{
+  notification: State['notifications'][0];
+}> = ({ notification: { content, link } }) => {
   return link ? (
     <NotificationLink to={link}>{content}</NotificationLink>
   ) : (
     <Notification>{content}</Notification>
   );
-}
-
-NotificationItem.propTypes = {
-  notification: PropTypes.shape({
-    content: PropTypes.string.isRequired,
-    link: PropTypes.string,
-  }).isRequired,
 };
+
+export default NotificationItem;

@@ -1,21 +1,31 @@
 import { PREVIEW_URL } from 'global';
 import React from 'react';
 
-import { Consumer } from '@storybook/api';
+import { Consumer, Combo } from '@storybook/api';
 
+import { StoriesHash } from '@storybook/api/dist/modules/stories';
 import { Preview } from '../components/preview/preview';
 
 const nonAlphanumSpace = /[^a-z0-9 ]/gi;
 const doubleSpace = /\s\s/gi;
-const replacer = match => ` ${match} `;
-const addExtraWhiteSpace = input =>
+const replacer = (match: string) => ` ${match} `;
+
+const addExtraWhiteSpace = (input: string) =>
   input.replace(nonAlphanumSpace, replacer).replace(doubleSpace, ' ');
-const getDescription = (storiesHash, storyId) => {
+
+const getDescription = (storiesHash: StoriesHash, storyId: string) => {
   const storyInfo = storiesHash[storyId];
-  return storyInfo ? addExtraWhiteSpace(`${storyInfo.kind} - ${storyInfo.name}`) : '';
+
+  if (storyInfo) {
+    // @ts-ignore
+    const { kind, name } = storyInfo;
+    return kind && name ? addExtraWhiteSpace(`${kind} - ${name}`) : '';
+  }
+
+  return '';
 };
 
-const mapper = ({ api, state }) => {
+const mapper = ({ api, state }: Combo) => {
   const { layout, location, customQueryParams, storiesHash, storyId } = state;
   const { parameters } = storiesHash[storyId] || {};
   return {
@@ -25,13 +35,13 @@ const mapper = ({ api, state }) => {
     description: getDescription(storiesHash, storyId),
     ...api.getUrlState(),
     queryParams: customQueryParams,
-    docsOnly: parameters && parameters.docsOnly,
+    docsOnly: (parameters && parameters.docsOnly) as boolean,
     location,
     parameters,
   };
 };
 
-function getBaseUrl() {
+function getBaseUrl(): string {
   try {
     return PREVIEW_URL || 'iframe.html';
   } catch (e) {
@@ -41,7 +51,7 @@ function getBaseUrl() {
 
 const PreviewConnected = React.memo(props => (
   <Consumer filter={mapper}>
-    {fromState => (
+    {(fromState: ReturnType<typeof mapper>) => (
       <Preview
         {...props}
         baseUrl={getBaseUrl()}
