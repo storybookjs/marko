@@ -1,7 +1,7 @@
 import Draggable from 'react-draggable';
 import { styled } from '@storybook/theming';
 
-const Handle = styled.div(
+const Handle = styled.div<{ isDragging: boolean; axis: 'x' | 'y'; shadow: 'top' | 'left' }>(
   ({ theme, isDragging }) => ({
     zIndex: 10,
     position: 'absolute',
