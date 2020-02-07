@@ -21,18 +21,16 @@ You can learn more about Storybook presets [over here](../../presets/introductio
 
 > If using TypeScript, some addons require features available in TS version 3.4+.
 
-## Setting up TypeScript with awesome-typescript-loader
+## Setting up TypeScript with ts-loader
 
 ### Dependencies you may need
 
 ```bash
 yarn add -D typescript
-yarn add -D awesome-typescript-loader
+yarn add -D ts-loader
 yarn add -D @storybook/addon-info react-docgen-typescript-loader # optional but recommended
 yarn add -D jest "@types/jest" ts-jest #testing
 ```
-
-We have had the best experience using `awesome-typescript-loader`, but other tutorials may use `ts-loader`, so be sure to configure accordingly. You can even use `babel-loader` with a `ts-loader` configuration.
 
 ### Setting up TypeScript to work with Storybook
 
@@ -45,7 +43,7 @@ module.exports = {
       test: /\.(ts|tsx)$/,
       use: [
         {
-          loader: require.resolve('awesome-typescript-loader'),
+          loader: require.resolve('ts-loader'),
         },
         // Optional
         {

@@ -1,3 +1,4 @@
+import { detach, insert, noop } from 'svelte/internal';
 import { document } from 'global';
 import dedent from 'ts-dedent';
 import { MountViewArgs, RenderMainArgs } from './types';
@@ -14,6 +15,32 @@ function cleanUpPreviousStory() {
   previousComponent = null;
 }
 
+function createSlotFn(element: any) {
+  return [
+    function createSlot() {
+      return {
+        c: noop,
+        m: function mount(target: any, anchor: any) {
+          insert(target, element, anchor);
+        },
+        d: function destroy(detaching: boolean) {
+          if (detaching) {
+            detach(element);
+          }
+        },
+        l: noop,
+      };
+    },
+  ];
+}
+
+function createSlots(slots: Record<string, any>): Record<string, any> {
+  return Object.entries(slots).reduce((acc, [slotName, element]) => {
+    acc[slotName] = createSlotFn(element);
+    return acc;
+  }, {} as Record<string, any>);
+}
+
 function mountView({ Component, target, props, on, Wrapper, WrapperData }: MountViewArgs) {
   let component: Component;
 
@@ -23,8 +50,11 @@ function mountView({ Component, target, props, on, Wrapper, WrapperData }: Mount
 
     const wrapper = new Wrapper({
       target,
-      slots: { default: fragment },
-      props: WrapperData || {},
+      props: {
+        ...WrapperData,
+        $$slots: createSlots({ default: fragment }),
+        $$scope: {},
+      },
     });
     component.$on('destroy', () => {
       wrapper.$destroy(true);

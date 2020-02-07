@@ -1,0 +1,33 @@
+{
+  "title": "Kitchen Sink",
+  "addons": ["a11y", "knobs", "actions", "links"],
+  "parameters": {
+    "backgrounds": [
+      { "name": "light", "value": "#eeeeee" },
+      { "name": "dark", "value": "#222222", "default": true }
+    ],
+    "options": { "selectedPanel": "storybook/a11y/panel" },
+    "server": { 
+      "params": { "name": "Jane Doe" }
+    }
+  },
+  "stories": [
+    {
+      "name": "All the things",
+      "parameters": {
+        "notes": "My notes on some person",
+        "server": { 
+          "id": "addons/knobs/simple",
+          "params": { 
+            "name": "Jim Doe"
+          }
+        }
+      },
+      "knobs": [
+        { "type": "text", "name": "Name", "value": "John Doe", "param": "name"},
+        { "type": "number", "name": "Age", "value": 44, "param": "age"}
+      ],
+      "actions": ["click", "contextmenu", { "clearOnStoryChange": false }]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "name": "server-kitchen-sink",
+  "version": "6.0.0-alpha.6",
+  "private": true,
+  "description": "",
+  "keywords": [],
+  "license": "MIT",
+  "author": "",
+  "main": "index.js",
+  "scripts": {
+    "build-storybook": "build-storybook",
+    "server": "PORT=1337 nodemon server.js",
+    "start": "concurrently \"yarn server\" \"yarn storybook\"",
+    "storybook": "SERVER_PORT=1137 start-storybook -p 9006 --quiet"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "6.0.0-alpha.6",
+    "@storybook/addon-actions": "6.0.0-alpha.6",
+    "@storybook/addon-backgrounds": "6.0.0-alpha.6",
+    "@storybook/addon-centered": "6.0.0-alpha.6",
+    "@storybook/addon-knobs": "6.0.0-alpha.6",
+    "@storybook/addon-links": "6.0.0-alpha.6",
+    "@storybook/node-logger": "6.0.0-alpha.6",
+    "@storybook/server": "6.0.0-alpha.6",
+    "concurrently": "^5.0.2",
+    "cors": "^2.8.5",
+    "express": "~4.16.4",
+    "morgan": "^1.9.1",
+    "nodemon": "^2.0.2",
+    "pug": "^2.0.4",
+    "safe-identifier": "^0.3.1"
+  }
+}
