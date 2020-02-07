@@ -1,1 +1,1 @@
-{"version":"6.0.0-alpha.6","info":{"plain":"### Bug Fixes\n\n* Core: Fix dev server error - back out bad change ([#9753](https://github.com/storybookjs/storybook/pull/9753))\n* CLI: Fix file path for the Button story ([#9325](https://github.com/storybookjs/storybook/pull/9325))"}}
+{"version":"6.0.0-alpha.8","info":{"plain":"### Maintenance\n\n* Replace lodash named imports with specific imports ([#9787](https://github.com/storybookjs/storybook/pull/9787))"}}
