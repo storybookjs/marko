@@ -327,7 +327,7 @@ When you are developing your addon as a package, you can't use `npm link` to add
 ```json
 {
   "dependencies": {
-    "@storybook/addon-notes": "file:///home/username/myrepo"
+    "@storybook/addon-custom": "file:///home/username/myrepo"
   }
 }
 ```
