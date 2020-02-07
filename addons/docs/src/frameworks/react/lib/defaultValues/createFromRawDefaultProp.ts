@@ -170,7 +170,6 @@ export function createDefaultValueFromRawDefaultProp(
 ): PropDefaultValue {
   try {
     // Keep the extra () otherwise it will fail for functions.
-    // eslint-disable-next-line prettier/prettier
     switch (typeof rawDefaultProp) {
       case 'string':
         return typeResolvers.string(rawDefaultProp, propDef);
