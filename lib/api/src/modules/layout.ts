@@ -13,9 +13,9 @@ import { Provider } from '../init-provider-api';
 export type PanelPositions = 'bottom' | 'right';
 export type ActiveTabsType = 'sidebar' | 'canvas' | 'addons';
 export const ActiveTabs = {
-  SIDEBAR: 'sidebar',
-  CANVAS: 'canvas',
-  ADDONS: 'addons',
+  SIDEBAR: 'sidebar' as 'sidebar',
+  CANVAS: 'canvas' as 'canvas',
+  ADDONS: 'addons' as 'addons',
 };
 
 export interface Layout {
