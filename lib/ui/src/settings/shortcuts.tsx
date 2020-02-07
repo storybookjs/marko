@@ -53,7 +53,9 @@ export const Description = styled.div({
   alignSelf: 'center',
 });
 
-export const TextInput = styled(Input)<{ valid: string }>(
+type ValidationStates = 'valid' | 'error' | 'warn';
+
+export const TextInput = styled(Input)<{ valid: ValidationStates }>(
   ({ valid, theme }) =>
     valid === 'error'
       ? {
@@ -248,14 +250,14 @@ class ShortcutsScreen extends Component<ShortcutsScreenProps, ShortcutsScreenSta
     const { successField, shortcutKeys } = this.state;
     return activeElement === successField && shortcutKeys[activeElement].error === false
       ? 'valid'
-      : '';
+      : undefined;
   };
 
-  displayError = (activeElement: Feature) => {
+  displayError = (activeElement: Feature): ValidationStates => {
     const { activeFeature, shortcutKeys } = this.state;
     return activeElement === activeFeature && shortcutKeys[activeElement].error === true
       ? 'error'
-      : '';
+      : undefined;
   };
 
   renderKeyInput = () => {
