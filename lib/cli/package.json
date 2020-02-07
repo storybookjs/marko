@@ -62,7 +62,6 @@
     "@storybook/addon-graphql": "6.0.0-alpha.6",
     "@storybook/addon-knobs": "6.0.0-alpha.6",
     "@storybook/addon-links": "6.0.0-alpha.6",
-    "@storybook/addon-notes": "6.0.0-alpha.6",
     "@storybook/addon-options": "6.0.0-alpha.6",
     "@storybook/addon-storyshots": "6.0.0-alpha.6",
     "@storybook/addons": "6.0.0-alpha.6",
