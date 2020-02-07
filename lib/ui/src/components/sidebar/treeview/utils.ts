@@ -167,8 +167,9 @@ export const getNext = ({
 
   const mains = getMainsKeys(dataset);
 
-  const parents = getParents(id, dataset);
-  // .concat([{ children: mains }]);
+  // we add a face super-root, otherwise we won't be able to jump to the next root
+  const superRoot = { children: mains } as Item;
+  const parents = getParents(id, dataset).concat([superRoot]);
 
   const next = parents.reduce(
     (acc, item) => {
