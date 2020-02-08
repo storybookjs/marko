@@ -1,4 +1,4 @@
-import Draggable from 'react-draggable';
+import Draggable, { DraggableEvent, DraggableData } from 'react-draggable';
 import { styled } from '@storybook/theming';
 
 const Handle = styled.div<{ isDragging: boolean; axis: 'x' | 'y'; shadow: 'top' | 'left' }>(
@@ -70,4 +70,4 @@ const Handle = styled.div<{ isDragging: boolean; axis: 'x' | 'y'; shadow: 'top' 
   }
 );
 
-export { Draggable, Handle };
+export { Draggable, Handle, DraggableEvent, DraggableData };

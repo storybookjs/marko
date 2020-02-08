@@ -3,7 +3,7 @@ import { State } from '@storybook/api';
 import { styled } from '@storybook/theming';
 
 import { TabButton } from '@storybook/components';
-import { Root } from './container';
+import { Root } from './Root';
 
 const Pane = styled.div<{ index: number; active: number }>(
   {

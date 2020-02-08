@@ -1,22 +1,19 @@
 /* eslint-disable react/no-did-update-set-state */
 
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { styled, withTheme } from '@storybook/theming';
+import React, { Component, Fragment, FunctionComponent, CSSProperties, ReactNode } from 'react';
+import { styled, withTheme, Theme } from '@storybook/theming';
+import { State } from '@storybook/api';
 import * as persistence from './persist';
 
-import { Draggable, Handle } from './draggers';
+import { Draggable, Handle, DraggableData, DraggableEvent } from './draggers';
 
-export const Root = styled.div({
-  position: 'fixed',
-  left: 0,
-  top: 0,
-  width: '100vw',
-  height: '100vh',
-  overflow: 'hidden',
-});
-
-const Pane = styled.div(
+const Pane = styled.div<{
+  border?: 'left' | 'right' | 'top' | 'bottom';
+  animate?: boolean;
+  top?: boolean;
+  hidden?: boolean;
+  children: ReactNode;
+}>(
   {
     position: 'absolute',
     boxSizing: 'border-box',
@@ -76,7 +73,7 @@ const Pane = styled.div(
       : {}
 );
 
-const Paper = styled.div(
+const Paper = styled.div<{ isFullscreen: boolean }>(
   {
     position: 'absolute',
     top: 0,
@@ -98,73 +95,49 @@ const Paper = styled.div(
         }
 );
 
-export const Nav = ({ hidden, children, position, ...props }) =>
+export const Nav: FunctionComponent<{ hidden: boolean; position: CSSProperties }> = ({
+  hidden = false,
+  children,
+  position = undefined,
+  ...props
+}) =>
   hidden ? null : (
     <Pane style={position} {...props}>
       {children}
     </Pane>
   );
 
-Nav.propTypes = {
-  hidden: PropTypes.bool,
-  children: PropTypes.node.isRequired,
-  position: PropTypes.shape({}),
-};
-Nav.defaultProps = {
-  hidden: false,
-  position: undefined,
-};
-
-export const Main = ({ isFullscreen, children, position, ...props }) => (
+export const Main: FunctionComponent<{ isFullscreen: boolean; position: CSSProperties }> = ({
+  isFullscreen = false,
+  children,
+  position = undefined,
+  ...props
+}) => (
   <Pane style={position} top {...props}>
     <Paper isFullscreen={isFullscreen}>{children}</Paper>
   </Pane>
 );
 
-Main.propTypes = {
-  isFullscreen: PropTypes.bool,
-  children: PropTypes.node.isRequired,
-  position: PropTypes.shape({}),
-};
-Main.defaultProps = {
-  isFullscreen: false,
-  position: undefined,
-};
-
-export const Preview = ({ hidden, children, position, ...props }) => (
+export const Preview: FunctionComponent<{ hidden: boolean; position: CSSProperties }> = ({
+  hidden = false,
+  children,
+  position = undefined,
+  ...props
+}) => (
   <Pane style={position} top hidden={hidden} {...props}>
     {children}
   </Pane>
 );
 
-Preview.propTypes = {
-  hidden: PropTypes.bool,
-  children: PropTypes.node.isRequired,
-  position: PropTypes.shape({}),
-};
-Preview.defaultProps = {
-  hidden: false,
-  position: undefined,
-};
-
-export const Panel = ({ hidden, children, position, align, ...props }) => (
+export const Panel: FunctionComponent<{
+  hidden: boolean;
+  position: CSSProperties;
+  align: 'bottom' | 'right';
+}> = ({ hidden = false, children, position = undefined, align = 'right', ...props }) => (
   <Pane style={position} hidden={hidden} {...props} border={align === 'bottom' ? 'top' : 'left'}>
     {children}
   </Pane>
 );
-
-Panel.propTypes = {
-  hidden: PropTypes.bool,
-  children: PropTypes.node.isRequired,
-  position: PropTypes.shape({}),
-  align: PropTypes.oneOf(['bottom', 'right']),
-};
-
-Panel.defaultProps = {
-  hidden: false,
-  position: undefined,
-  align: 'right',
-};
 
 const HoverBlocker = styled.div({
   position: 'absolute',
@@ -175,6 +148,19 @@ const HoverBlocker = styled.div({
   width: '100vw',
 });
 
+type PanelPosition = 'right' | 'bottom';
+interface Bounds {
+  top: number;
+  width: number;
+  left: number;
+  height: number;
+}
+
+interface Coordinates {
+  x: number;
+  y: number;
+}
+
 const getPreviewPosition = ({
   panelPosition,
   isPanelHidden,
@@ -184,9 +170,18 @@ const getPreviewPosition = ({
   resizerPanel,
   resizerNav,
   margin,
-}) => {
+}: {
+  panelPosition: PanelPosition;
+  isPanelHidden: boolean;
+  isNavHidden: boolean;
+  isFullscreen: boolean;
+  bounds: Bounds;
+  resizerPanel: Coordinates;
+  resizerNav: Coordinates;
+  margin: number;
+}): Bounds => {
   if (isFullscreen || isPanelHidden) {
-    return {};
+    return {} as Bounds;
   }
 
   const navX = isNavHidden ? 0 : resizerNav.x;
@@ -208,7 +203,19 @@ const getPreviewPosition = ({
       };
 };
 
-const getMainPosition = ({ bounds, resizerNav, isNavHidden, isFullscreen, margin }) => {
+const getMainPosition = ({
+  bounds,
+  resizerNav,
+  isNavHidden,
+  isFullscreen,
+  margin,
+}: {
+  bounds: Bounds;
+  resizerNav: Coordinates;
+  isNavHidden: boolean;
+  isFullscreen: boolean;
+  margin: number;
+}): Bounds => {
   if (isFullscreen) {
     return {};
   }
@@ -231,7 +238,15 @@ const getPanelPosition = ({
   resizerPanel,
   resizerNav,
   margin,
-}) => {
+}: {
+  isPanelBottom: boolean;
+  isPanelHidden: boolean;
+  isNavHidden: boolean;
+  bounds: Bounds;
+  resizerPanel: Coordinates;
+  resizerNav: Coordinates;
+  margin: number;
+}): Bounds => {
   const navX = isNavHidden ? 0 : resizerNav.x;
   const panelX = resizerPanel.x;
   const panelY = resizerPanel.y;
@@ -268,8 +283,61 @@ const getPanelPosition = ({
       };
 };
 
-class Layout extends Component {
-  constructor(props) {
+interface BasePanelRenderProps {
+  viewMode?: State['viewMode'];
+  animate: boolean;
+  isFullscreen?: boolean;
+  position: Bounds;
+}
+
+interface LayoutRenderProps {
+  mainProps: BasePanelRenderProps;
+  previewProps: BasePanelRenderProps & {
+    docsOnly: boolean;
+    isToolshown: boolean;
+  };
+  navProps: BasePanelRenderProps & {
+    hidden: boolean;
+  };
+  panelProps: BasePanelRenderProps & {
+    align: PanelPosition;
+    hidden: boolean;
+  };
+}
+
+interface LayoutState {
+  isDragging: 'nav' | 'panel' | false;
+  resizerNav: Coordinates;
+  resizerPanel: Coordinates;
+}
+interface LayoutProps {
+  children: (data: LayoutRenderProps) => ReactNode;
+  panelCount: number;
+  bounds: {
+    width: number;
+    height: number;
+    top: number;
+    left: number;
+  };
+  options: {
+    isFullscreen: boolean;
+    showNav: boolean;
+    showPanel: boolean;
+    panelPosition: 'bottom' | 'right';
+    isToolshown: boolean;
+  };
+  viewMode: State['viewMode'];
+  docsOnly: boolean;
+  theme: Theme;
+}
+
+class Layout extends Component<LayoutProps, LayoutState> {
+  static defaultProps: Partial<LayoutProps> = {
+    viewMode: undefined,
+    docsOnly: false,
+  };
+
+  constructor(props: LayoutProps) {
     super(props);
 
     const { bounds, options } = props;
@@ -287,7 +355,7 @@ class Layout extends Component {
     };
   }
 
-  static getDerivedStateFromProps(props, state) {
+  static getDerivedStateFromProps(props: LayoutProps, state: LayoutState) {
     const { bounds, options } = props;
     const { resizerPanel, resizerNav } = state;
 
@@ -303,7 +371,7 @@ class Layout extends Component {
     const panelY = resizerPanel.y;
     const minimalMainWidth = !isPanelHidden && isPanelRight ? 400 : 200;
 
-    const mutation = {};
+    const mutation = {} as LayoutState;
 
     if (!isNavHidden) {
       if (bounds.width - minimalMainWidth < navX) {
@@ -344,7 +412,7 @@ class Layout extends Component {
     return mutation.resizerPanel || mutation.resizerNav ? { ...state, ...mutation } : state;
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: LayoutProps, prevState: LayoutState) {
     const { resizerPanel, resizerNav } = this.state;
 
     persistence.set({
@@ -375,13 +443,13 @@ class Layout extends Component {
     }
   }
 
-  resizeNav = (e, data) => {
+  resizeNav = (e: DraggableEvent, data: DraggableData) => {
     if (data.deltaX) {
       this.setState({ resizerNav: { x: data.x, y: data.y } });
     }
   };
 
-  resizePanel = (e, data) => {
+  resizePanel = (e: DraggableEvent, data: DraggableData) => {
     const { options } = this.props;
 
     if (
@@ -544,28 +612,6 @@ class Layout extends Component {
     ) : null;
   }
 }
-Layout.propTypes = {
-  children: PropTypes.func.isRequired,
-  panelCount: PropTypes.number.isRequired,
-  bounds: PropTypes.shape({
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-  }).isRequired,
-  options: PropTypes.shape({
-    isFullscreen: PropTypes.bool.isRequired,
-    showNav: PropTypes.bool.isRequired,
-    showPanel: PropTypes.bool.isRequired,
-    panelPosition: PropTypes.string.isRequired,
-    isToolshown: PropTypes.bool.isRequired,
-  }).isRequired,
-  viewMode: PropTypes.string,
-  docsOnly: PropTypes.bool,
-  theme: PropTypes.shape({ layoutMargin: PropTypes.number }).isRequired,
-};
-Layout.defaultProps = {
-  viewMode: undefined,
-  docsOnly: false,
-};
 
 const ThemedLayout = withTheme(Layout);
 
