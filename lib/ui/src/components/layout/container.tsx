@@ -217,7 +217,7 @@ const getMainPosition = ({
   margin: number;
 }): Bounds => {
   if (isFullscreen) {
-    return {};
+    return {} as Bounds;
   }
 
   const navX = isNavHidden ? 0 : resizerNav.x;
