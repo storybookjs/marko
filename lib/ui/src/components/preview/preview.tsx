@@ -1,12 +1,11 @@
 import window from 'global';
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, Fragment, FunctionComponent, ReactNode } from 'react';
 import memoize from 'memoizerific';
 import copy from 'copy-to-clipboard';
 import { styled } from '@storybook/theming';
-import { Consumer } from '@storybook/api';
+import { Consumer, State, API, Combo } from '@storybook/api';
 import { SET_CURRENT_STORY } from '@storybook/core-events';
-import addons, { types } from '@storybook/addons';
+import addons, { types, Types, Addon } from '@storybook/addons';
 import merge from '@storybook/api/dist/lib/merge';
 import { Icons, IconButton, Loader, TabButton, TabBar, Separator } from '@storybook/components';
 
@@ -19,6 +18,7 @@ import * as S from './components';
 import { ZoomProvider, ZoomConsumer, Zoom } from './zoom';
 
 import { IFrame } from './iframe';
+import { ViewMode } from '@storybook/api/dist/modules/addons';
 
 const DesktopOnly = styled.span({
   // Hides full screen icon at mobile breakpoint defined in app.js
@@ -26,12 +26,12 @@ const DesktopOnly = styled.span({
     display: 'none',
   },
 });
-const stringifyQueryParams = queryParams =>
+const stringifyQueryParams = (queryParams: Record<string, string>) =>
   Object.entries(queryParams).reduce((acc, [k, v]) => {
     return `${acc}&${k}=${v}`;
   }, '');
 
-const renderIframe = (storyId, viewMode, id, baseUrl, scale, queryParams) => (
+const renderIframe: IframeRenderer = (storyId, viewMode, id, baseUrl, scale, queryParams) => (
   <IFrame
     key="iframe"
     id="storybook-preview-iframe"
@@ -42,9 +42,20 @@ const renderIframe = (storyId, viewMode, id, baseUrl, scale, queryParams) => (
   />
 );
 
-const getElementList = memoize(10)((getFn, type, base) => base.concat(Object.values(getFn(type))));
+type IframeRenderer = (storyId: string, viewMode: State['viewMode'], id: string, baseUrl: string, scale: number, queryParams: Record<string, any>) => ReactNode;
 
-const ActualPreview = ({
+const getElementList = memoize(10)((getFn: API['getElements'], type: Types, base: (Partial<Addon>)[]) => base.concat(Object.values(getFn(type))));
+
+interface WrapperProps {
+  index: number;
+  children: ReactNode;
+  id: string;
+  storyId: string;
+  active: boolean;
+}
+type Wrapper = { render: FunctionComponent<WrapperProps> };
+
+const ActualPreview: FunctionComponent<{ wrappers: Wrapper[], viewMode: State['viewMode']; id: string; storyId: string; active: boolean; baseUrl: string; scale: number; queryParams: Record<string, any>; customCanvas:  }> = ({
   wrappers,
   viewMode,
   id,
@@ -55,7 +66,7 @@ const ActualPreview = ({
   queryParams,
   customCanvas,
 }) => {
-  const data = [storyId, viewMode, id, baseUrl, scale, queryParams];
+  const data = [storyId, viewMode, id, baseUrl, scale, queryParams] as Parameters<IframeRenderer>;
   const base = customCanvas ? customCanvas(...data) : renderIframe(...data);
   return wrappers.reduceRight(
     (acc, wrapper, index) => wrapper.render({ index, children: acc, id, storyId, active }),
@@ -81,29 +92,29 @@ const defaultWrappers = [
         {p.children}
       </IframeWrapper>
     ),
-  },
+  } as Wrapper,
 ];
 
 const getTools = memoize(10)(
   (
-    getElements,
-    queryParams,
-    panels,
-    api,
+    getElements: API['getElements'],
+    queryParams: State['customQueryParams'],
+    panels: (Partial<Addon>)[],
+    api: API,
     options,
-    storyId,
-    viewMode,
-    docsOnly,
-    location,
-    path,
-    baseUrl
+    storyId: string,
+    viewMode: State['viewMode'],
+    docsOnly: boolean,
+    location: State['location'],
+    path: string,
+    baseUrl: string,
   ) => {
     const tools = getElementList(getElements, types.TOOL, [
       panels.filter(p => !p.hidden).length > 1
-        ? {
+        ? ({
             render: () => (
               <Fragment>
-                <TabBar key="tabs" scroll={false}>
+                <TabBar key="tabs">
                   {panels
                     .filter(p => !p.hidden)
                     .map((t, index) => {
@@ -121,7 +132,7 @@ const getTools = memoize(10)(
                 <Separator />
               </Fragment>
             ),
-          }
+          }) as Partial<Addon>
         : null,
       {
         match: p => p.viewMode === 'story',
@@ -129,7 +140,7 @@ const getTools = memoize(10)(
           <Fragment>
             <ZoomConsumer>
               {({ set, value }) => (
-                <Zoom key="zoom" current={value} set={v => set(value * v)} reset={() => set(1)} />
+                <Zoom key="zoom" set={(v: number) => set(value * v)} reset={() => set(1)} />
               )}
             </ZoomConsumer>
             <Separator />
@@ -145,7 +156,7 @@ const getTools = memoize(10)(
           <DesktopOnly>
             <IconButton
               key="full"
-              onClick={api.toggleFullscreen}
+              onClick={api.toggleFullscreen as any}
               title={options.isFullscreen ? 'Exit full screen' : 'Go full screen'}
             >
               <Icons icon={options.isFullscreen ? 'close' : 'expand'} />
@@ -186,7 +197,7 @@ const getTools = memoize(10)(
       },
     ]);
     // if its a docsOnly page, even the 'story' view mode is considered 'docs'
-    const filter = item =>
+    const filter = (item: Partial<Addon>) =>
       item &&
       (!item.match ||
         item.match({
@@ -196,13 +207,14 @@ const getTools = memoize(10)(
           path,
         }));
 
-    const displayItems = list =>
+    const displayItems = (list: (Partial<Addon>)[]) =>
       list.reduce(
         (acc, item, index) =>
           item ? (
+            // @ts-ignore
             <Fragment key={item.id || item.key || `f-${index}`}>
               {acc}
-              {item.render() || item}
+              {item.render({}) || item}
             </Fragment>
           ) : (
             acc
@@ -217,16 +229,39 @@ const getTools = memoize(10)(
   }
 );
 
-const getDocumentTitle = description => {
+const getDocumentTitle = (description: string) => {
   return description ? `${description} ⋅ Storybook` : 'Storybook';
 };
 
-const mapper = ({ state }) => ({
+const mapper = ({ state }: Combo) => ({
   loading: !state.storiesConfigured,
 });
 
-class Preview extends Component {
-  shouldComponentUpdate({ storyId, viewMode, docsOnly, options, queryParams, parameters }) {
+
+interface PreviewProps {
+  api: API;
+  storyId: string;
+  viewMode: ViewMode;
+  docsOnly: boolean;
+  options: {
+    isFullscreen: boolean;
+    isToolshown: boolean;
+  };
+  id: string,
+  path: string,
+  location: State['location'],
+  queryParams: State['customQueryParams'],
+  getElements: API['getElements'],
+  customCanvas?: IframeRenderer,
+  description: string,
+  baseUrl: string,
+  parameters: Record<string, any>,
+  withLoader: boolean,
+
+}
+
+class Preview extends Component<PreviewProps> {
+  shouldComponentUpdate({ storyId, viewMode, docsOnly, options, queryParams, parameters }: PreviewProps) {
     const { props } = this;
 
     return (
@@ -240,7 +275,7 @@ class Preview extends Component {
     );
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: PreviewProps) {
     const { api, storyId, viewMode } = this.props;
     const { storyId: prevStoryId, viewMode: prevViewMode } = prevProps;
     if ((storyId && storyId !== prevStoryId) || (viewMode && viewMode !== prevViewMode)) {
@@ -271,7 +306,7 @@ class Preview extends Component {
     let panels = getElementList(getElements, types.TAB, [
       {
         route: p => `/story/${p.storyId}`,
-        match: p => p.viewMode && p.viewMode.match(/^(story|docs)$/),
+        match: p => !!(p.viewMode && p.viewMode.match(/^(story|docs)$/)),
         render: p => (
           <ZoomConsumer>
             {({ value }) => {
@@ -291,7 +326,7 @@ class Preview extends Component {
                 <>
                   {withLoader && (
                     <Consumer filter={mapper}>
-                      {state => state.loading && <Loader id="preview-loader" role="progressbar" />}
+                      {(state: ReturnType<typeof mapper>) => state.loading && <Loader id="preview-loader" role="progressbar" />}
                     </Consumer>
                   )}
                   <ActualPreview {...props} />
