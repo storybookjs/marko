@@ -1,11 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import { Global, createGlobal, styled } from '@storybook/theming';
 import memoize from 'memoizerific';
 import sizeMe from 'react-sizeme';
 
 import { Route } from '@storybook/router';
 
+import { State } from '@storybook/api';
 import { Mobile } from './components/layout/mobile';
 import { Desktop } from './components/layout/desktop';
 import Nav from './containers/nav';
@@ -24,12 +24,11 @@ const createProps = memoize(1)(() => ({
     {
       key: 'settings',
       render: () => <SettingsPages />,
-      // eslint-disable-next-line react/prop-types
-      route: ({ children }) => (
+      route: (({ children }) => (
         <Route path="/settings" startsWith>
           {children}
         </Route>
-      ),
+      )) as FunctionComponent,
     },
   ],
 }));
@@ -41,7 +40,16 @@ const View = styled.div({
   width: '100vw',
 });
 
-const App = React.memo(({ viewMode, docsOnly, layout, panelCount, size: { width, height } }) => {
+const App = React.memo<{
+  viewMode: State['viewMode'];
+  docsOnly: boolean;
+  layout: State['layout'];
+  panelCount: number;
+  size: {
+    width: number;
+    height: number;
+  };
+}>(({ viewMode, docsOnly, layout, panelCount, size: { width, height } }) => {
   const props = createProps();
 
   let content;
@@ -53,7 +61,7 @@ const App = React.memo(({ viewMode, docsOnly, layout, panelCount, size: { width,
       </div>
     );
   } else if (width < 600) {
-    content = <Mobile {...props} viewMode={viewMode} options={layout} panelCount={panelCount} />;
+    content = <Mobile {...props} viewMode={viewMode} options={layout} />;
   } else {
     content = (
       <Desktop
@@ -74,20 +82,6 @@ const App = React.memo(({ viewMode, docsOnly, layout, panelCount, size: { width,
     </View>
   );
 });
-App.propTypes = {
-  viewMode: PropTypes.string,
-  panelCount: PropTypes.number.isRequired,
-  layout: PropTypes.shape({}).isRequired,
-  size: PropTypes.shape({
-    width: PropTypes.number,
-    height: PropTypes.number,
-  }).isRequired,
-  docsOnly: PropTypes.bool,
-};
-App.defaultProps = {
-  viewMode: undefined,
-  docsOnly: false,
-};
 
 const SizedApp = sizeMe({ monitorHeight: true })(App);
 
