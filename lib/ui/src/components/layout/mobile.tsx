@@ -92,7 +92,7 @@ const Panels = React.memo((({ children, active }) => (
       </Pane>
     ))}
   </PanelsContainer>
-)) as FunctionComponent<{ active: number; children: ReactNode }>);
+)) as FunctionComponent<{ active: ActiveTabsType; children: ReactNode }>);
 Panels.displayName = 'Panels';
 
 const PanelsContainer = styled.div({
@@ -130,7 +130,7 @@ interface Page {
 
 interface MobileProps {
   options: {
-    initialActive: number;
+    initialActive: ActiveTabsType;
     isToolshown: boolean;
   };
   Nav: ComponentType<any>;
@@ -144,7 +144,7 @@ interface MobileProps {
 }
 
 interface MobileState {
-  active: number;
+  active: ActiveTabsType;
 }
 
 class Mobile extends Component<MobileProps, MobileState> {
@@ -195,10 +195,7 @@ class Mobile extends Component<MobileProps, MobileState> {
           <TabButton onClick={() => this.setState({ active: SIDEBAR })} active={active === SIDEBAR}>
             Sidebar
           </TabButton>
-          <TabButton
-            onClick={() => this.setState({ active: CANVAS })}
-            active={active === CANVAS || active === false}
-          >
+          <TabButton onClick={() => this.setState({ active: CANVAS })} active={active === CANVAS}>
             {viewMode ? 'Canvas' : null}
             {pages.map(({ key, route: Route }) => (
               <Route key={key}>{key}</Route>

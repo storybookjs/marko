@@ -4,7 +4,7 @@ import React from 'react';
 import { Consumer, Combo } from '@storybook/api';
 
 import { StoriesHash } from '@storybook/api/dist/modules/stories';
-import { Preview } from '../components/preview/preview';
+import { Preview, PreviewProps } from '../components/preview/preview';
 
 const nonAlphanumSpace = /[^a-z0-9 ]/gi;
 const doubleSpace = /\s\s/gi;
@@ -49,16 +49,22 @@ function getBaseUrl(): string {
   }
 }
 
-const PreviewConnected = React.memo(props => (
+const PreviewConnected = React.memo<{ id: string; withLoader: boolean }>(props => (
   <Consumer filter={mapper}>
-    {(fromState: ReturnType<typeof mapper>) => (
-      <Preview
-        {...props}
-        baseUrl={getBaseUrl()}
-        {...fromState}
-        customCanvas={fromState.api.renderPreview}
-      />
-    )}
+    {(fromState: ReturnType<typeof mapper>) => {
+      const p = {
+        ...props,
+        baseUrl: getBaseUrl(),
+        ...fromState,
+        ...(fromState.api.renderPreview
+          ? {
+              customCanvas: fromState.api.renderPreview,
+            }
+          : {}),
+      } as PreviewProps;
+
+      return <Preview {...p} />;
+    }}
   </Consumer>
 ));
 PreviewConnected.displayName = 'PreviewConnected';

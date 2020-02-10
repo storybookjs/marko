@@ -11,6 +11,7 @@ import { Icons, IconButton, Loader, TabButton, TabBar, Separator } from '@storyb
 
 import { Helmet } from 'react-helmet-async';
 
+import { ViewMode } from '@storybook/api/dist/modules/addons';
 import { Toolbar } from './toolbar';
 
 import * as S from './components';
@@ -18,7 +19,6 @@ import * as S from './components';
 import { ZoomProvider, ZoomConsumer, Zoom } from './zoom';
 
 import { IFrame } from './iframe';
-import { ViewMode } from '@storybook/api/dist/modules/addons';
 
 const DesktopOnly = styled.span({
   // Hides full screen icon at mobile breakpoint defined in app.js
@@ -42,9 +42,20 @@ const renderIframe: IframeRenderer = (storyId, viewMode, id, baseUrl, scale, que
   />
 );
 
-type IframeRenderer = (storyId: string, viewMode: State['viewMode'], id: string, baseUrl: string, scale: number, queryParams: Record<string, any>) => ReactNode;
+type IframeRenderer = (
+  storyId: string,
+  viewMode: State['viewMode'],
+  id: string,
+  baseUrl: string,
+  scale: number,
+  queryParams: Record<string, any>
+) => ReactNode;
 
-const getElementList = memoize(10)((getFn: API['getElements'], type: Types, base: (Partial<Addon>)[]) => base.concat(Object.values(getFn(type))));
+const getElementList = memoize(
+  10
+)((getFn: API['getElements'], type: Types, base: Partial<Addon>[]) =>
+  base.concat(Object.values(getFn(type)))
+);
 
 interface WrapperProps {
   index: number;
@@ -55,7 +66,19 @@ interface WrapperProps {
 }
 type Wrapper = { render: FunctionComponent<WrapperProps> };
 
-const ActualPreview: FunctionComponent<{ wrappers: Wrapper[], viewMode: State['viewMode']; id: string; storyId: string; active: boolean; baseUrl: string; scale: number; queryParams: Record<string, any>; customCanvas:  }> = ({
+interface ActualPreviewProps {
+  wrappers: Wrapper[];
+  viewMode: State['viewMode'];
+  id: string;
+  storyId: string;
+  active: boolean;
+  baseUrl: string;
+  scale: number;
+  queryParams: Record<string, any>;
+  customCanvas?: IframeRenderer;
+}
+
+const ActualPreview: FunctionComponent<ActualPreviewProps> = ({
   wrappers,
   viewMode,
   id,
@@ -68,9 +91,14 @@ const ActualPreview: FunctionComponent<{ wrappers: Wrapper[], viewMode: State['v
 }) => {
   const data = [storyId, viewMode, id, baseUrl, scale, queryParams] as Parameters<IframeRenderer>;
   const base = customCanvas ? customCanvas(...data) : renderIframe(...data);
-  return wrappers.reduceRight(
-    (acc, wrapper, index) => wrapper.render({ index, children: acc, id, storyId, active }),
-    base
+
+  return (
+    <Fragment>
+      {wrappers.reduceRight(
+        (acc, wrapper, index) => wrapper.render({ index, children: acc, id, storyId, active }),
+        base
+      )}
+    </Fragment>
   );
 };
 
@@ -99,7 +127,7 @@ const getTools = memoize(10)(
   (
     getElements: API['getElements'],
     queryParams: State['customQueryParams'],
-    panels: (Partial<Addon>)[],
+    panels: Partial<Addon>[],
     api: API,
     options,
     storyId: string,
@@ -107,7 +135,7 @@ const getTools = memoize(10)(
     docsOnly: boolean,
     location: State['location'],
     path: string,
-    baseUrl: string,
+    baseUrl: string
   ) => {
     const tools = getElementList(getElements, types.TOOL, [
       panels.filter(p => !p.hidden).length > 1
@@ -132,7 +160,7 @@ const getTools = memoize(10)(
                 <Separator />
               </Fragment>
             ),
-          }) as Partial<Addon>
+          } as Partial<Addon>)
         : null,
       {
         match: p => p.viewMode === 'story',
@@ -207,7 +235,7 @@ const getTools = memoize(10)(
           path,
         }));
 
-    const displayItems = (list: (Partial<Addon>)[]) =>
+    const displayItems = (list: Partial<Addon>[]) =>
       list.reduce(
         (acc, item, index) =>
           item ? (
@@ -237,8 +265,7 @@ const mapper = ({ state }: Combo) => ({
   loading: !state.storiesConfigured,
 });
 
-
-interface PreviewProps {
+export interface PreviewProps {
   api: API;
   storyId: string;
   viewMode: ViewMode;
@@ -247,21 +274,27 @@ interface PreviewProps {
     isFullscreen: boolean;
     isToolshown: boolean;
   };
-  id: string,
-  path: string,
-  location: State['location'],
-  queryParams: State['customQueryParams'],
-  getElements: API['getElements'],
-  customCanvas?: IframeRenderer,
-  description: string,
-  baseUrl: string,
-  parameters: Record<string, any>,
-  withLoader: boolean,
-
+  id: string;
+  path: string;
+  location: State['location'];
+  queryParams: State['customQueryParams'];
+  getElements: API['getElements'];
+  customCanvas?: IframeRenderer;
+  description: string;
+  baseUrl: string;
+  parameters: Record<string, any>;
+  withLoader: boolean;
 }
 
 class Preview extends Component<PreviewProps> {
-  shouldComponentUpdate({ storyId, viewMode, docsOnly, options, queryParams, parameters }: PreviewProps) {
+  shouldComponentUpdate({
+    storyId,
+    viewMode,
+    docsOnly,
+    options,
+    queryParams,
+    parameters,
+  }: PreviewProps) {
     const { props } = this;
 
     return (
@@ -286,20 +319,20 @@ class Preview extends Component<PreviewProps> {
   render() {
     const {
       id,
-      path,
       location,
-      viewMode,
-      docsOnly,
-      storyId,
       queryParams,
       getElements,
       api,
-      customCanvas,
       options,
-      description,
-      baseUrl,
-      parameters,
-      withLoader,
+      viewMode = undefined,
+      docsOnly = false,
+      storyId = undefined,
+      path = undefined,
+      description = undefined,
+      baseUrl = 'iframe.html',
+      customCanvas = undefined,
+      parameters = undefined,
+      withLoader = true,
     } = this.props;
     const toolbarHeight = options.isToolshown ? 40 : 0;
     const wrappers = getElementList(getElements, types.PREVIEW, defaultWrappers);
@@ -320,13 +353,15 @@ class Preview extends Component<PreviewProps> {
                 queryParams,
                 scale: value,
                 customCanvas,
-              };
+              } as ActualPreviewProps;
 
               return (
                 <>
                   {withLoader && (
                     <Consumer filter={mapper}>
-                      {(state: ReturnType<typeof mapper>) => state.loading && <Loader id="preview-loader" role="progressbar" />}
+                      {(state: ReturnType<typeof mapper>) =>
+                        state.loading && <Loader id="preview-loader" role="progressbar" />
+                      }
                     </Consumer>
                   )}
                   <ActualPreview {...props} />
@@ -405,6 +440,7 @@ class Preview extends Component<PreviewProps> {
           )}
           <S.FrameWrap key="frame" offset={toolbarHeight}>
             {panels.map(p => (
+              // @ts-ignore
               <Fragment key={p.id || p.key}>
                 {p.render({ active: p.match({ storyId, viewMode, location, path }) })}
               </Fragment>
@@ -415,48 +451,5 @@ class Preview extends Component<PreviewProps> {
     );
   }
 }
-Preview.propTypes = {
-  id: PropTypes.string.isRequired,
-  description: PropTypes.string,
-  customCanvas: PropTypes.func,
-  api: PropTypes.shape({
-    on: PropTypes.func,
-    off: PropTypes.func,
-    emit: PropTypes.func,
-    toggleFullscreen: PropTypes.func,
-  }).isRequired,
-  storyId: PropTypes.string,
-  path: PropTypes.string,
-  viewMode: PropTypes.string,
-  location: PropTypes.shape({}).isRequired,
-  getElements: PropTypes.func.isRequired,
-  queryParams: PropTypes.shape({}).isRequired,
-  options: PropTypes.shape({
-    isFullscreen: PropTypes.bool,
-    isToolshown: PropTypes.bool,
-  }).isRequired,
-  baseUrl: PropTypes.string,
-  parameters: PropTypes.shape({
-    previewTabs: PropTypes.shape({
-      title: PropTypes.string,
-      hidden: PropTypes.string,
-      disabled: PropTypes.string,
-    }),
-  }),
-  docsOnly: PropTypes.bool,
-  withLoader: PropTypes.bool,
-};
-
-Preview.defaultProps = {
-  viewMode: undefined,
-  docsOnly: false,
-  storyId: undefined,
-  path: undefined,
-  description: undefined,
-  baseUrl: 'iframe.html',
-  customCanvas: undefined,
-  parameters: undefined,
-  withLoader: true,
-};
 
 export { Preview };
