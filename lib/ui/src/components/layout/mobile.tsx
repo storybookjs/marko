@@ -1,11 +1,15 @@
 import React, { Component, Children, ComponentType, FunctionComponent, ReactNode } from 'react';
-import { State } from '@storybook/api';
+import { State, ActiveTabs } from '@storybook/api';
 import { styled } from '@storybook/theming';
 
 import { TabButton } from '@storybook/components';
 import { Root } from './Root';
 
-const Pane = styled.div<{ index: number; active: number }>(
+export type ActiveTabsType = 'sidebar' | 'canvas' | 'addons';
+
+const { SIDEBAR, CANVAS, ADDONS } = ActiveTabs;
+
+const Pane = styled.div<{ index: number; active: ActiveTabsType }>(
   {
     transition: 'transform .2s ease',
     position: 'absolute',
@@ -52,22 +56,22 @@ const Pane = styled.div<{ index: number; active: number }>(
   },
   ({ active, index }) => {
     switch (true) {
-      case index === 0 && active === 0: {
+      case index === 0 && active === SIDEBAR: {
         return {
           transform: 'translateX(-0px)',
         };
       }
-      case index === 1 && active === 0: {
+      case index === 1 && active === SIDEBAR: {
         return {
           transform: 'translateX(40vw) translateY(-42.5vh) translateY(40px) scale(0.2)',
         };
       }
-      case index === 1 && active === 2: {
+      case index === 1 && active === ADDONS: {
         return {
           transform: 'translateX(-40vw) translateY(-42.5vh) translateY(40px) scale(0.2)',
         };
       }
-      case index === 2 && active === 2: {
+      case index === 2 && active === ADDONS: {
         return {
           transform: 'translateX(0px)',
         };
@@ -149,7 +153,7 @@ class Mobile extends Component<MobileProps, MobileState> {
 
     const { options } = props;
     this.state = {
-      active: options.initialActive || 0,
+      active: options.initialActive || SIDEBAR,
     };
   }
 
@@ -188,17 +192,20 @@ class Mobile extends Component<MobileProps, MobileState> {
           <Panel hidden={!viewMode} />
         </Panels>
         <Bar>
-          <TabButton onClick={() => this.setState({ active: 0 })} active={active === 0}>
+          <TabButton onClick={() => this.setState({ active: SIDEBAR })} active={active === SIDEBAR}>
             Sidebar
           </TabButton>
-          <TabButton onClick={() => this.setState({ active: 1 })} active={active === 1}>
+          <TabButton
+            onClick={() => this.setState({ active: CANVAS })}
+            active={active === CANVAS || active === false}
+          >
             {viewMode ? 'Canvas' : null}
             {pages.map(({ key, route: Route }) => (
               <Route key={key}>{key}</Route>
             ))}
           </TabButton>
           {viewMode ? (
-            <TabButton onClick={() => this.setState({ active: 2 })} active={active === 2}>
+            <TabButton onClick={() => this.setState({ active: ADDONS })} active={active === ADDONS}>
               Addons
             </TabButton>
           ) : null}

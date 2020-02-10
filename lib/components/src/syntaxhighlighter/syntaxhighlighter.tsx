@@ -12,7 +12,7 @@ import typescript from 'react-syntax-highlighter/dist/cjs/languages/prism/typesc
 
 import { PrismLight as ReactSyntaxHighlighter } from 'react-syntax-highlighter';
 // @ts-ignore
-import createElement from 'react-syntax-highlighter/dist/esm/create-element';
+import createElement from 'react-syntax-highlighter/dist/cjs/create-element';
 import { ActionBar } from '../ActionBar/ActionBar';
 import { ScrollArea } from '../ScrollArea/ScrollArea';
 

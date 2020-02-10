@@ -1,3 +1,18 @@
+## 6.0.0-alpha.9 (February 9, 2020)
+
+### Features
+
+* Addon-docs: Add preset options for vue-docgen-api ([#9699](https://github.com/storybookjs/storybook/pull/9699))
+* UI: Add initialActive option parameter ([#9141](https://github.com/storybookjs/storybook/pull/9141))
+
+### Bug Fixes
+
+* Components: Import react-syntax-highlighter/create-element from cjs ([#9795](https://github.com/storybookjs/storybook/pull/9795))
+
+### Maintenance
+
+* Examples: Change main.js to main.ts to show it's possible ([#9775](https://github.com/storybookjs/storybook/pull/9775))
+
 ## 6.0.0-alpha.8 (February 8, 2020)
 
 ### Maintenance
