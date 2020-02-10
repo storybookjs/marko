@@ -16,7 +16,7 @@
     "serve-static": "NODE_ENV=production marko-starter serve-static",
     "start": "marko-starter server",
     "storybook": "start-storybook -p 9005",
-    "test": "npm run lint"
+    "test": "yarn lint"
   },
   "dependencies": {
     "marko": "^4.18.39",
