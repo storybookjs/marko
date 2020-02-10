@@ -44,13 +44,11 @@ export interface Addon {
   disabled?: boolean;
   hidden?: boolean;
 }
-export interface Collection {
-  [key: string]: Addon;
+export interface Collection<T = Addon> {
+  [key: string]: T;
 }
 
-interface Panels {
-  [id: string]: Addon;
-}
+type Panels = Collection<Addon>;
 
 type StateMerger<S> = (input: S) => S;
 
@@ -61,9 +59,9 @@ interface StoryInput {
 }
 
 export interface SubAPI {
-  getElements: (type: Types) => Collection;
-  getPanels: () => Collection;
-  getStoryPanels: () => Collection;
+  getElements: <T>(type: Types) => Collection<T>;
+  getPanels: () => Panels;
+  getStoryPanels: () => Panels;
   getSelectedPanel: () => string;
   setSelectedPanel: (panelName: string) => void;
   setAddonState<S>(
@@ -102,7 +100,7 @@ export default ({ provider, store }: Module) => {
 
       const { parameters } = storyInput;
 
-      const filteredPanels: Collection = {};
+      const filteredPanels: Collection = {} as Collection<Addon>;
       Object.entries(allPanels).forEach(([id, panel]) => {
         const { paramKey } = panel;
         if (paramKey && parameters && parameters[paramKey] && parameters[paramKey].disabled) {

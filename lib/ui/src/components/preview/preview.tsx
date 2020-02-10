@@ -1,7 +1,7 @@
-import React, { Component, Fragment, FunctionComponent } from 'react';
+import React, { Component, Fragment } from 'react';
 import memoize from 'memoizerific';
 import { styled } from '@storybook/theming';
-import { Consumer, API, Combo } from '@storybook/api';
+import { API } from '@storybook/api';
 import { SET_CURRENT_STORY } from '@storybook/core-events';
 import addons, { types, Types, Addon } from '@storybook/addons';
 import merge from '@storybook/api/dist/lib/merge';
@@ -16,8 +16,9 @@ import * as S from './components';
 import { ZoomProvider, ZoomConsumer } from './zoom';
 
 import { IFrame } from './iframe';
-import { PreviewProps, ActualPreviewProps, Wrapper, IframeRenderer } from './PreviewProps';
+import { PreviewProps, ApplyWrappersProps, IframeRenderer } from './PreviewProps';
 import { getTools } from './getTools';
+import { defaultWrappers, ApplyWrappers } from './ApplyWrappers';
 
 export const DesktopOnly = styled.span({
   // Hides full screen icon at mobile breakpoint defined in app.js
@@ -25,12 +26,20 @@ export const DesktopOnly = styled.span({
     display: 'none',
   },
 });
+
 export const stringifyQueryParams = (queryParams: Record<string, string>) =>
   Object.entries(queryParams).reduce((acc, [k, v]) => {
     return `${acc}&${k}=${v}`;
   }, '');
 
-const renderIframe: IframeRenderer = (storyId, viewMode, id, baseUrl, scale, queryParams) => (
+export const renderIframe: IframeRenderer = (
+  storyId,
+  viewMode,
+  id,
+  baseUrl,
+  scale,
+  queryParams
+) => (
   <IFrame
     key="iframe"
     id="storybook-preview-iframe"
@@ -47,58 +56,9 @@ export const getElementList = memoize(
   base.concat(Object.values(getFn(type)))
 );
 
-const ActualPreview: FunctionComponent<ActualPreviewProps> = ({
-  wrappers,
-  viewMode,
-  id,
-  storyId,
-  active,
-  baseUrl,
-  scale,
-  queryParams,
-  customCanvas,
-}) => {
-  const data = [storyId, viewMode, id, baseUrl, scale, queryParams] as Parameters<IframeRenderer>;
-  const base = customCanvas ? customCanvas(...data) : renderIframe(...data);
-
-  return (
-    <Fragment>
-      {wrappers.reduceRight(
-        (acc, wrapper, index) => wrapper.render({ index, children: acc, id, storyId, active }),
-        base
-      )}
-    </Fragment>
-  );
-};
-
-const IframeWrapper = styled.div(({ theme }) => ({
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  bottom: 0,
-  right: 0,
-  width: '100%',
-  height: '100%',
-  background: theme.background.content,
-}));
-
-const defaultWrappers = [
-  {
-    render: p => (
-      <IframeWrapper id="storybook-preview-wrapper" hidden={!p.active}>
-        {p.children}
-      </IframeWrapper>
-    ),
-  } as Wrapper,
-];
-
 const getDocumentTitle = (description: string) => {
   return description ? `${description} ⋅ Storybook` : 'Storybook';
 };
-
-const mapper = ({ state }: Combo) => ({
-  loading: !state.storiesConfigured,
-});
 
 class Preview extends Component<PreviewProps> {
   shouldComponentUpdate({
@@ -146,6 +106,7 @@ class Preview extends Component<PreviewProps> {
       baseUrl = 'iframe.html',
       customCanvas = undefined,
       parameters = undefined,
+      isLoading = true,
       withLoader = true,
     } = this.props;
     const toolbarHeight = options.isToolshown ? 40 : 0;
@@ -156,7 +117,7 @@ class Preview extends Component<PreviewProps> {
         match: p => !!(p.viewMode && p.viewMode.match(/^(story|docs)$/)),
         render: p => (
           <ZoomConsumer>
-            {({ value }) => {
+            {({ value: scale }) => {
               const props = {
                 viewMode,
                 active: p.active,
@@ -165,20 +126,20 @@ class Preview extends Component<PreviewProps> {
                 storyId,
                 baseUrl,
                 queryParams,
-                scale: value,
+                scale,
                 customCanvas,
-              } as ActualPreviewProps;
+              } as ApplyWrappersProps;
+
+              const data = [storyId, viewMode, id, baseUrl, scale, queryParams] as Parameters<
+                IframeRenderer
+              >;
+
+              const content = customCanvas ? customCanvas(...data) : renderIframe(...data);
 
               return (
                 <>
-                  {withLoader && (
-                    <Consumer filter={mapper}>
-                      {(state: ReturnType<typeof mapper>) =>
-                        state.loading && <Loader id="preview-loader" role="progressbar" />
-                      }
-                    </Consumer>
-                  )}
-                  <ActualPreview {...props} />
+                  {withLoader && isLoading && <Loader id="preview-loader" role="progressbar" />}
+                  <ApplyWrappers {...props}>{content}</ApplyWrappers>
                 </>
               );
             }}

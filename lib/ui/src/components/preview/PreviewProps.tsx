@@ -7,6 +7,7 @@ export interface PreviewProps {
   storyId: string;
   viewMode: ViewMode;
   docsOnly: boolean;
+  isLoading: boolean;
   options: {
     isFullscreen: boolean;
     isToolshown: boolean;
@@ -35,7 +36,7 @@ export type Wrapper = {
   render: FunctionComponent<WrapperProps>;
 };
 
-export interface ActualPreviewProps {
+export interface ApplyWrappersProps {
   wrappers: Wrapper[];
   viewMode: State['viewMode'];
   id: string;

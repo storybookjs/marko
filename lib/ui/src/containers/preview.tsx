@@ -39,6 +39,7 @@ const mapper = ({ api, state }: Combo) => {
     docsOnly: (parameters && parameters.docsOnly) as boolean,
     location,
     parameters,
+    isLoading: !state.storiesConfigured,
   };
 };
 
