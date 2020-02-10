@@ -1,10 +1,9 @@
 import { DOCS_MODE } from 'global';
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import ReactDOM from 'react-dom';
 
 import { Location, LocationProvider } from '@storybook/router';
-import { Provider as ManagerProvider } from '@storybook/api';
+import { Provider as ManagerProvider, Combo } from '@storybook/api';
 import { ThemeProvider, ensure as ensureTheme } from '@storybook/theming';
 import { HelmetProvider } from 'react-helmet-async';
 
@@ -12,6 +11,7 @@ import App from './app';
 
 import Provider from './provider';
 
+// @ts-ignore
 ThemeProvider.displayName = 'ThemeProvider';
 HelmetProvider.displayName = 'HelmetProvider';
 
@@ -25,7 +25,11 @@ const getDocsMode = () => {
 
 const Container = process.env.XSTORYBOOK_EXAMPLE_APP ? React.StrictMode : React.Fragment;
 
-export const Root = ({ provider }) => (
+interface RootProps {
+  provider: Provider;
+}
+
+export const Root: FunctionComponent<RootProps> = ({ provider }) => (
   <Container key="container">
     <HelmetProvider key="helmet.Provider">
       <LocationProvider key="location.provider">
@@ -37,9 +41,10 @@ export const Root = ({ provider }) => (
               {...locationData}
               docsMode={getDocsMode()}
             >
-              {({ state, api }) => {
+              {({ state, api }: Combo) => {
                 const panelCount = Object.keys(api.getPanels()).length;
                 const story = state.storiesHash[state.storyId];
+
                 return (
                   <ThemeProvider key="theme.provider" theme={ensureTheme(state.theme)}>
                     <App
@@ -60,11 +65,7 @@ export const Root = ({ provider }) => (
   </Container>
 );
 
-Root.propTypes = {
-  provider: PropTypes.shape({}).isRequired,
-};
-
-function renderStorybookUI(domNode, provider) {
+function renderStorybookUI(domNode: HTMLElement, provider: Provider) {
   if (!(provider instanceof Provider)) {
     throw new Error('provider is not extended from the base Provider');
   }

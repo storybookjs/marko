@@ -1,10 +1,11 @@
 import { DOCS_MODE } from 'global';
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import memoize from 'memoizerific';
 
 import { Badge } from '@storybook/components';
-import { Consumer } from '@storybook/api';
+import { Consumer, Combo } from '@storybook/api';
 
+import { StoriesHash } from '@storybook/api/dist/modules/stories';
 import { shortcutToHumanString } from '../libs/shortcut';
 
 import ListItemIcon from '../components/sidebar/ListItemIcon';
@@ -16,7 +17,7 @@ const focusableUIElements = {
   storyPanelRoot: 'storybook-panel-root',
 };
 
-const shortcutToHumanStringIfEnabled = (shortcuts, enableShortcuts) =>
+const shortcutToHumanStringIfEnabled = (shortcuts: string[], enableShortcuts: boolean) =>
   enableShortcuts ? shortcutToHumanString(shortcuts) : null;
 
 const createMenu = memoize(1)(
@@ -108,9 +109,9 @@ const createMenu = memoize(1)(
   ]
 );
 
-export const collapseAllStories = stories => {
+export const collapseAllStories = (stories: StoriesHash) => {
   // keep track of component IDs that have been rewritten to the ID of their first leaf child
-  const componentIdToLeafId = {};
+  const componentIdToLeafId: Record<string, string> = {};
 
   // 1) remove all leaves
   const leavesRemoved = Object.values(stories).filter(
@@ -126,8 +127,8 @@ export const collapseAllStories = stories => {
       return item;
     }
 
-    const nonLeafChildren = [];
-    const leafChildren = [];
+    const nonLeafChildren: string[] = [];
+    const leafChildren: string[] = [];
     children.forEach(child => (stories[child].isLeaf ? leafChildren : nonLeafChildren).push(child));
 
     if (leafChildren.length === 0) {
@@ -135,7 +136,13 @@ export const collapseAllStories = stories => {
     }
 
     const leafId = leafChildren[0];
-    const component = { ...rest, id: leafId, isLeaf: true, isComponent: true };
+    const component = {
+      ...rest,
+      id: leafId,
+      isLeaf: true,
+      isComponent: true,
+      children: [] as string[],
+    };
     componentIdToLeafId[id] = leafId;
 
     // this is a component, so it should not have any non-leaf children
@@ -160,16 +167,16 @@ export const collapseAllStories = stories => {
     return { children: rewritten, ...rest };
   });
 
-  const result = {};
+  const result = {} as StoriesHash;
   childrenRewritten.forEach(item => {
     result[item.id] = item;
   });
   return result;
 };
 
-export const collapseDocsOnlyStories = storiesHash => {
+export const collapseDocsOnlyStories = (storiesHash: StoriesHash) => {
   // keep track of component IDs that have been rewritten to the ID of their first leaf child
-  const componentIdToLeafId = {};
+  const componentIdToLeafId: Record<string, string> = {};
   const docsOnlyStoriesRemoved = Object.values(storiesHash).filter(item => {
     if (item.isLeaf && item.parameters && item.parameters.docsOnly) {
       componentIdToLeafId[item.parent] = item.id;
@@ -187,7 +194,7 @@ export const collapseDocsOnlyStories = storiesHash => {
           ...item,
           id: leafId,
           isLeaf: true,
-          children: undefined,
+          children: [] as string[],
         };
         return collapsed;
       }
@@ -203,14 +210,14 @@ export const collapseDocsOnlyStories = storiesHash => {
     return item;
   });
 
-  const result = {};
+  const result = {} as StoriesHash;
   docsOnlyComponentsCollapsed.forEach(item => {
     result[item.id] = item;
   });
   return result;
 };
 
-export const mapper = ({ state, api }) => {
+export const mapper = ({ state, api }: Combo) => {
   const {
     ui: { name, url, enableShortcuts },
     viewMode,
@@ -236,6 +243,10 @@ export const mapper = ({ state, api }) => {
   };
 };
 
-export default props => (
-  <Consumer filter={mapper}>{fromState => <Sidebar {...props} {...fromState} />}</Consumer>
+const Nav: FunctionComponent<any> = props => (
+  <Consumer filter={mapper}>
+    {(fromState: ReturnType<typeof mapper>) => <Sidebar {...props} {...fromState} />}
+  </Consumer>
 );
+
+export default Nav;

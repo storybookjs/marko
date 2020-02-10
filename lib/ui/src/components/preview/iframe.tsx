@@ -1,6 +1,5 @@
 import window from 'global';
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, CSSProperties } from 'react';
 
 import { styled } from '@storybook/theming';
 
@@ -17,15 +16,23 @@ const StyledIframe = styled.iframe({
   backgroundPosition: '-1px -1px, -1px -1px, -1px -1px, -1px -1px',
 });
 
-export class IFrame extends Component {
-  iframe = null;
+interface IFrameProps {
+  id: string;
+  title: string;
+  src: string;
+  allowFullScreen: boolean;
+  scale: number;
+}
+
+export class IFrame extends Component<IFrameProps> {
+  iframe: HTMLIFrameElement = null;
 
   componentDidMount() {
     const { id } = this.props;
     this.iframe = window.document.getElementById(id);
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps: IFrameProps) {
     const { scale } = this.props;
     if (scale !== nextProps.scale) {
       if (window.navigator.userAgent.indexOf(FIREFOX_BROWSER) !== -1) {
@@ -47,7 +54,7 @@ export class IFrame extends Component {
     return false;
   }
 
-  setIframeBodyStyle(style) {
+  setIframeBodyStyle(style: CSSProperties) {
     return Object.assign(this.iframe.contentDocument.body.style, style);
   }
 
@@ -65,10 +72,3 @@ export class IFrame extends Component {
     );
   }
 }
-IFrame.propTypes = {
-  id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  src: PropTypes.string.isRequired,
-  allowFullScreen: PropTypes.bool.isRequired,
-  scale: PropTypes.number.isRequired,
-};

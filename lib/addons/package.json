@@ -36,6 +36,7 @@
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
+    "@reach/router": "^1.2.1",
     "@types/util-deprecate": "^1.0.0"
   },
   "peerDependencies": {

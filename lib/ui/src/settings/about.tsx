@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, FunctionComponent, SyntheticEvent } from 'react';
 import semver from 'semver';
-import PropTypes from 'prop-types';
 import { styled } from '@storybook/theming';
+import { State } from '@storybook/api';
 import { GlobalHotKeys } from 'react-hotkeys';
 import Markdown from 'markdown-to-jsx';
 
@@ -55,7 +55,7 @@ const Subheader = styled.div({
   marginBottom: '.75rem',
 });
 
-const UpdateMessage = styled.div(
+const UpdateMessage = styled.div<{ status: 'positive' | 'negative' | string }>(
   ({ status, theme }) => {
     if (status === 'positive') {
       return { background: theme.background.positive, color: theme.color.positive };
@@ -93,7 +93,11 @@ const Container = styled.div({
   margin: '0 auto',
 });
 
-const AboutScreen = ({ latest, current, onClose }) => {
+const AboutScreen: FunctionComponent<{
+  latest: State['versions']['latest'];
+  current: State['versions']['current'];
+  onClose: (e?: KeyboardEvent) => void;
+}> = ({ latest = null, current, onClose }) => {
   const canUpdate = latest && semver.gt(latest.version, current.version);
 
   let updateMessage;
@@ -126,7 +130,7 @@ const AboutScreen = ({ latest, current, onClose }) => {
         tools={
           <Fragment>
             <IconButton
-              onClick={e => {
+              onClick={(e: SyntheticEvent) => {
                 e.preventDefault();
                 return onClose();
               }}
@@ -204,23 +208,6 @@ const AboutScreen = ({ latest, current, onClose }) => {
       </Tabs>
     </GlobalHotKeys>
   );
-};
-
-AboutScreen.propTypes = {
-  current: PropTypes.shape({
-    version: PropTypes.string.isRequired,
-  }).isRequired,
-  latest: PropTypes.shape({
-    version: PropTypes.string.isRequired,
-    info: PropTypes.shape({
-      plain: PropTypes.string.isRequired,
-    }).isRequired,
-  }),
-  onClose: PropTypes.func.isRequired,
-};
-
-AboutScreen.defaultProps = {
-  latest: null,
 };
 
 export { AboutScreen as default };

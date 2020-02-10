@@ -1,7 +1,10 @@
 import { ReactElement } from 'react';
 
+import { WindowLocation } from '@reach/router';
 import { Module } from '../index';
 import { Options } from '../store';
+
+export type ViewMode = 'story' | 'info' | 'settings' | undefined | string;
 
 export enum types {
   TAB = 'tab',
@@ -19,9 +22,15 @@ export interface RenderOptions {
 
 export interface RouteOptions {
   storyId: string;
+  viewMode: ViewMode;
+  location: WindowLocation;
+  path: string;
 }
 export interface MatchOptions {
-  viewMode: string;
+  storyId: string;
+  viewMode: ViewMode;
+  location: WindowLocation;
+  path: string;
 }
 
 export interface Addon {
@@ -32,6 +41,8 @@ export interface Addon {
   match?: (matchOptions: MatchOptions) => boolean;
   render: (renderOptions: RenderOptions) => ReactElement<any>;
   paramKey?: string;
+  disabled?: boolean;
+  hidden?: boolean;
 }
 export interface Collection {
   [key: string]: Addon;

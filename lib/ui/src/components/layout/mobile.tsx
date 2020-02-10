@@ -1,14 +1,15 @@
-import React, { Component, Children } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, Children, ComponentType, FunctionComponent, ReactNode } from 'react';
+import { State, ActiveTabs } from '@storybook/api';
 import { styled } from '@storybook/theming';
-import { ActiveTabs } from '@storybook/api';
 
 import { TabButton } from '@storybook/components';
-import { Root } from './container';
+import { Root } from './Root';
+
+export type ActiveTabsType = 'sidebar' | 'canvas' | 'addons';
 
 const { SIDEBAR, CANVAS, ADDONS } = ActiveTabs;
 
-const Pane = styled.div(
+const Pane = styled.div<{ index: number; active: ActiveTabsType }>(
   {
     transition: 'transform .2s ease',
     position: 'absolute',
@@ -82,23 +83,19 @@ const Pane = styled.div(
   }
 );
 
-const Panels = React.memo(({ children, active }) => (
-  <Panels.Container>
+const Panels = React.memo((({ children, active }) => (
+  <PanelsContainer>
     {Children.toArray(children).map((item, index) => (
       // eslint-disable-next-line react/no-array-index-key
       <Pane key={index} index={index} active={active}>
         {item}
       </Pane>
     ))}
-  </Panels.Container>
-));
+  </PanelsContainer>
+)) as FunctionComponent<{ active: ActiveTabsType; children: ReactNode }>);
 Panels.displayName = 'Panels';
-Panels.propTypes = {
-  children: PropTypes.node.isRequired,
-  active: PropTypes.string.isRequired,
-};
 
-Panels.Container = styled.div({
+const PanelsContainer = styled.div({
   position: 'fixed',
   top: 0,
   left: 0,
@@ -125,9 +122,35 @@ const Bar = styled.nav(
   })
 );
 
-class Mobile extends Component {
-  constructor(props) {
-    super();
+interface Page {
+  key: string;
+  route: FunctionComponent;
+  render: FunctionComponent;
+}
+
+interface MobileProps {
+  options: {
+    initialActive: ActiveTabsType;
+    isToolshown: boolean;
+  };
+  Nav: ComponentType<any>;
+  Preview: ComponentType<any>;
+  Panel: ComponentType<any>;
+  Notifications: ComponentType<any>;
+
+  viewMode: State['viewMode'];
+
+  pages: Page[];
+}
+
+interface MobileState {
+  active: ActiveTabsType;
+}
+
+class Mobile extends Component<MobileProps, MobileState> {
+  constructor(props: MobileProps) {
+    super(props);
+
     const { options } = props;
     this.state = {
       active: options.initialActive || SIDEBAR,
@@ -160,20 +183,19 @@ class Mobile extends Component {
                 debug={options}
               />
             </div>
-            {pages.map(({ key, route: Route, render: content }) => (
-              <Route key={key}>{content()}</Route>
+            {pages.map(({ key, route: Route, render: Content }) => (
+              <Route key={key}>
+                <Content />
+              </Route>
             ))}
           </div>
           <Panel hidden={!viewMode} />
         </Panels>
-        <Bar active={active}>
+        <Bar>
           <TabButton onClick={() => this.setState({ active: SIDEBAR })} active={active === SIDEBAR}>
             Sidebar
           </TabButton>
-          <TabButton
-            onClick={() => this.setState({ active: CANVAS })}
-            active={active === CANVAS || active === false}
-          >
+          <TabButton onClick={() => this.setState({ active: CANVAS })} active={active === CANVAS}>
             {viewMode ? 'Canvas' : null}
             {pages.map(({ key, route: Route }) => (
               <Route key={key}>{key}</Route>
@@ -189,28 +211,5 @@ class Mobile extends Component {
     );
   }
 }
-
-Mobile.displayName = 'MobileLayout';
-Mobile.propTypes = {
-  Nav: PropTypes.any.isRequired, // eslint-disable-line react/forbid-prop-types
-  Preview: PropTypes.any.isRequired, // eslint-disable-line react/forbid-prop-types
-  Panel: PropTypes.any.isRequired, // eslint-disable-line react/forbid-prop-types
-  Notifications: PropTypes.any.isRequired, // eslint-disable-line react/forbid-prop-types
-  pages: PropTypes.arrayOf(
-    PropTypes.shape({
-      key: PropTypes.string.isRequired,
-      route: PropTypes.func.isRequired,
-      render: PropTypes.func.isRequired,
-    })
-  ).isRequired,
-  viewMode: PropTypes.string,
-  options: PropTypes.shape({
-    initialActive: PropTypes.string,
-    isToolshown: PropTypes.bool,
-  }).isRequired,
-};
-Mobile.defaultProps = {
-  viewMode: undefined,
-};
 
 export { Mobile };

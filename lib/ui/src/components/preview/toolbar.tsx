@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { styled } from '@storybook/theming';
 
 import { FlexBar } from '@storybook/components';
 
-export const Toolbar = styled(({ shown, ...props }) => <FlexBar {...props} />)(
+const Bar: FunctionComponent<{ shown: boolean } & Record<string, any>> = ({ shown, ...props }) => (
+  <FlexBar {...props} />
+);
+
+export const Toolbar = styled(Bar)(
   {
     position: 'absolute',
     left: 0,

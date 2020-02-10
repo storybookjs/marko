@@ -1,4 +1,12 @@
-import React, { ReactElement, Component, useContext, useEffect, useMemo, useRef } from 'react';
+import React, {
+  ReactElement,
+  Component,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  ReactNode,
+} from 'react';
 import memoize from 'memoizerific';
 // @ts-ignore shallow-equal is not in DefinitelyTyped
 import shallowEqualObjects from 'shallow-equal/objects';
@@ -104,7 +112,7 @@ interface StoreData {
 }
 
 interface Children {
-  children: Component | ((props: Combo) => Component);
+  children: ReactNode | ((props: Combo) => ReactNode);
 }
 
 type StatePartial = Partial<State>;
@@ -248,11 +256,10 @@ class ManagerProvider extends Component<Props, State> {
       api: this.api,
     };
 
-    return (
-      <ManagerContext.Provider value={value}>
-        {typeof children === 'function' ? children(value) : children}
-      </ManagerContext.Provider>
-    );
+    // @ts-ignore
+    const content: ReactNode = typeof children === 'function' ? children(value) : children;
+
+    return <ManagerContext.Provider value={value}>{content}</ManagerContext.Provider>;
   }
 }
 

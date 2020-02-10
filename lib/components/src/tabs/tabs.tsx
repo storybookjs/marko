@@ -139,7 +139,7 @@ export interface TabsProps {
   selected?: string;
   actions?: {
     onSelect: (id: string) => void;
-  };
+  } & Record<string, any>;
   backgroundColor?: string;
   absolute?: boolean;
   bordered?: boolean;
