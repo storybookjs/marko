@@ -1,4 +1,3 @@
-/* eslint-disable import/no-duplicates */
 import { mount, unregister, tag2 as tag } from 'riot';
 import * as riot from 'riot';
 import compiler from 'riot-compiler';
