@@ -5,7 +5,7 @@ Useful when you want to display usage or other types of documentation alongside 
 
 [Framework Support](https://github.com/storybookjs/storybook/blob/master/ADDONS_SUPPORT.md)
 
-![Screenshot](https://raw.githubusercontent.com/storybookjs/storybook/HEAD/addons/info/docs/home-screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/storybookjs/storybook/master/addons/info/docs/home-screenshot.png)
 
 ## Installation
 
