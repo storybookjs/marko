@@ -4,6 +4,7 @@ import { ReactElement } from 'react';
 import { Channel } from '@storybook/channels';
 import { API } from '@storybook/api';
 import { logger } from '@storybook/client-logger';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { WindowLocation } from '@reach/router';
 import { types, Types } from './types';
 
