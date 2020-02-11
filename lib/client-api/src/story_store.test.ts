@@ -93,6 +93,21 @@ describe('preview.story_store', () => {
       store.setStoryState('a--1', { baz: 'bing' });
       expect(store.getRawStory('a', '1').state).toEqual({ foo: 'bar', baz: 'bing' });
     });
+
+    it('synchronously emits STORY_STATE_CHANGED if different', () => {
+      const onStateChanged = jest.fn();
+      const testChannel = createChannel({ page: 'preview' });
+      testChannel.on(Events.STORY_STATE_CHANGED, onStateChanged);
+
+      const store = new StoryStore({ channel: testChannel });
+      addStoryToStore(store, 'a', '1', () => 0);
+
+      store.setStoryState('a--1', { foo: 'bar' });
+      expect(onStateChanged).toHaveBeenCalledWith('a--1', { foo: 'bar' });
+
+      store.setStoryState('a--1', { baz: 'bing' });
+      expect(onStateChanged).toHaveBeenCalledWith('a--1', { foo: 'bar', baz: 'bing' });
+    });
   });
 
   describe('storySort', () => {
