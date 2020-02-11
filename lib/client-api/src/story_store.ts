@@ -15,6 +15,7 @@ import {
   StoreData,
   AddStoryArgs,
   StoreItem,
+  StoryState,
   ErrorLike,
   GetStorybookKind,
 } from './types';
@@ -187,6 +188,7 @@ export default class StoryStore extends EventEmitter {
       storyFn,
 
       parameters: allParameters,
+      state: {},
     };
 
     // LET'S SEND IT TO THE MANAGER
@@ -344,6 +346,11 @@ export default class StoryStore extends EventEmitter {
 
   cleanHooksForKind(kind: string) {
     this.getStoriesForKind(kind).map(story => this.cleanHooks(story.id));
+  }
+
+  setStoryState(id: string, newState: StoryState) {
+    const { state } = this._stories[id];
+    this._stories[id].state = { ...state, ...newState };
   }
 
   // This API is a reimplementation of Storybook's original getStorybook() API.

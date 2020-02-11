@@ -81,6 +81,20 @@ describe('preview.story_store', () => {
     });
   });
 
+  describe('setStoryState', () => {
+    it('changes the state of a story, per-key', () => {
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0);
+      expect(store.getRawStory('a', '1').state).toEqual({});
+
+      store.setStoryState('a--1', { foo: 'bar' });
+      expect(store.getRawStory('a', '1').state).toEqual({ foo: 'bar' });
+
+      store.setStoryState('a--1', { baz: 'bing' });
+      expect(store.getRawStory('a', '1').state).toEqual({ foo: 'bar', baz: 'bing' });
+    });
+  });
+
   describe('storySort', () => {
     it('sorts stories using given function', () => {
       const parameters = {

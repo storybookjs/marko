@@ -20,6 +20,10 @@ export interface StoryMetadata {
   decorators: DecoratorFunction[];
 }
 
+export interface StoryState {
+  [key: string]: any;
+}
+
 export interface StoreItem extends StoryContext {
   id: string;
   kind: string;
@@ -30,6 +34,7 @@ export interface StoreItem extends StoryContext {
   storyFn: StoryFn;
   hooks: HooksContext;
   parameters: Parameters;
+  state: StoryState;
 }
 
 export interface StoreData {
