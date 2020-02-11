@@ -652,7 +652,7 @@ describe('preview.client_api', () => {
           expect(entry.stories).toHaveLength(1);
           expect(entry.stories[0].name).toBe('story');
 
-          expect(entry.stories[0].render).toBe(stories[0]);
+          expect(entry.stories[0].render()).toBe('story1');
         }
 
         storiesOf('kind', module).add('story', stories[1]);
@@ -669,7 +669,7 @@ describe('preview.client_api', () => {
           expect(entry.stories).toHaveLength(1);
           expect(entry.stories[0].name).toBe('story');
 
-          expect(entry.stories[0].render).toBe(stories[1]);
+          expect(entry.stories[0].render()).toBe('story2');
         }
       });
     });

@@ -4,7 +4,6 @@ import memoize from 'memoizerific';
 import debounce from 'lodash/debounce';
 import dedent from 'ts-dedent';
 import stable from 'stable';
-import deprecate from 'util-deprecate';
 
 import { Channel } from '@storybook/channels';
 import Events from '@storybook/core-events';
@@ -321,13 +320,13 @@ export default class StoryStore extends EventEmitter {
         const {
           kind,
           name,
-          getOriginal,
+          storyFn,
           parameters: { fileName },
         } = story;
 
         if (!kinds[kind]) Object.assign(kinds, { [kind]: { kind, fileName, stories: [] } });
 
-        kinds[kind].stories.push({ name, render: getOriginal() });
+        kinds[kind].stories.push({ name, render: storyFn });
 
         return kinds;
       }, {})
