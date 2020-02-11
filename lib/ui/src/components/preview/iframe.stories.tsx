@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 
 import { IFrame } from './iframe';
 
@@ -7,7 +7,12 @@ export default {
   title: 'UI/Iframe',
 };
 
-const style = { width: '500px', height: '500px', border: '2px solid hotpink' };
+const style: CSSProperties = {
+  width: '500px',
+  height: '500px',
+  border: '2px solid hotpink',
+  position: 'relative',
+};
 
 export const workingStory = () => (
   <IFrame

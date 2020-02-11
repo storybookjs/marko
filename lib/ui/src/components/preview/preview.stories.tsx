@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { Provider as ManagerProvider } from '@storybook/api';
+import { Provider as ManagerProvider, Combo, Consumer } from '@storybook/api';
 import { Location, LocationProvider } from '@storybook/router';
 import { ThemeProvider, ensure as ensureTheme, themes } from '@storybook/theming';
 
+import { DecoratorFn } from '@storybook/react';
 import { Preview } from './preview';
 
 import { PrettyFakeProvider } from '../../FakeProvider';
@@ -15,22 +16,28 @@ export default {
   title: 'UI/Preview',
   component: Preview,
   decorators: [
-    StoryFn => (
+    ((StoryFn, c) => (
       <LocationProvider key="location.provider">
         <Location key="location.consumer">
           {locationData => (
             <ManagerProvider key="manager" provider={provider} {...locationData} docsMode={false}>
               <ThemeProvider key="theme.provider" theme={ensureTheme(themes.light)}>
-                <StoryFn />
+                <StoryFn {...c} />
               </ThemeProvider>
             </ManagerProvider>
           )}
         </Location>
       </LocationProvider>
-    ),
+    )) as DecoratorFn,
   ],
 };
 
-export const noTabs = () => <Preview {...previewProps} getElements={() => []} />;
+export const noTabs = () => (
+  <Consumer>
+    {({ api }: Combo) => {
+      return <Preview {...previewProps} api={{ ...api, getElements: () => ({}) }} />;
+    }}
+  </Consumer>
+);
 
 export const withTabs = () => <Preview {...previewProps} />;

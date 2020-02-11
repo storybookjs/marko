@@ -128,7 +128,7 @@ interface Page {
   render: FunctionComponent;
 }
 
-interface MobileProps {
+export interface MobileProps {
   options: {
     initialActive: ActiveTabsType;
     isToolshown: boolean;

@@ -1,9 +1,11 @@
+/* eslint-disable react/destructuring-assignment */
 import React, { Fragment } from 'react';
 import { withKnobs, boolean, number } from '@storybook/addon-knobs';
+import { DecoratorFn } from '@storybook/react';
 
 import { isChromatic } from 'storybook-chromatic/isChromatic';
 
-import { Desktop } from './desktop';
+import { Desktop, DesktopProps } from './desktop';
 
 import { store } from './persist';
 import { mockProps, realProps, MockPage } from './app.mockdata';
@@ -13,7 +15,7 @@ export default {
   component: Desktop,
   decorators: [
     withKnobs,
-    StoryFn => {
+    ((StoryFn, c) => {
       const mocked = boolean('mock', true);
       const height = number('height', 900);
       const width = number('width', 1200);
@@ -32,37 +34,38 @@ export default {
 
       return (
         <div style={{ minHeight: 900, minWidth: 1200 }}>
-          <StoryFn props={props} />;
+          <StoryFn props={props} {...c} />;
         </div>
       );
-    },
+    }) as DecoratorFn,
   ],
 };
 
-export const Default = ({ props }) => <Desktop {...props} />;
-export const NoAddons = ({ props }) => <Desktop {...props} panelCount={0} />;
-export const NoNav = ({ props }) => (
+export const Default = ({ props }: { props: DesktopProps }) => <Desktop {...props} />;
+export const NoAddons = ({ props }: { props: DesktopProps }) => (
+  <Desktop {...props} panelCount={0} />
+);
+export const NoNav = ({ props }: { props: DesktopProps }) => (
   <Desktop {...props} options={{ ...props.options, showNav: false }} />
 );
-export const NoPanel = ({ props }) => (
+export const NoPanel = ({ props }: { props: DesktopProps }) => (
   <Desktop {...props} options={{ ...props.options, showPanel: false }} />
 );
-export const BottomPanel = ({ props }) => (
+export const BottomPanel = ({ props }: { props: DesktopProps }) => (
   <Desktop {...props} options={{ ...props.options, panelPosition: 'bottom' }} />
 );
-export const Fullscreen = ({ props }) => (
+export const Fullscreen = ({ props }: { props: DesktopProps }) => (
   <Desktop {...props} options={{ ...props.options, isFullscreen: true }} />
 );
-export const NoPanelNoNav = ({ props }) => (
+export const NoPanelNoNav = ({ props }: { props: DesktopProps }) => (
   <Desktop {...props} options={{ ...props.options, showPanel: false, showNav: false }} />
 );
-export const Page = ({ props }) => (
+export const Page = ({ props }: { props: DesktopProps }) => (
   <Desktop
     {...props}
     pages={[
       {
         key: 'settings',
-        // eslint-disable-next-line react/prop-types
         route: ({ children }) => <Fragment>{children}</Fragment>,
         render: () => <MockPage />,
       },
