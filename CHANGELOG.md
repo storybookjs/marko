@@ -1,3 +1,9 @@
+## 6.0.0-alpha.10 (February 11, 2020)
+
+### Maintenance
+
+* Typescript: Migrate @storybook/ui ([#9791](https://github.com/storybookjs/storybook/pull/9791))
+
 ## 6.0.0-alpha.9 (February 9, 2020)
 
 ### Features
