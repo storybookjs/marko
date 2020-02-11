@@ -31,7 +31,6 @@ const mapper = ({ api, state }: Combo) => {
   const { parameters } = storiesHash[storyId] || {};
   return {
     api,
-    getElements: api.getElements,
     options: layout,
     description: getDescription(storiesHash, storyId),
     ...api.getUrlState(),

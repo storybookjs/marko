@@ -3,7 +3,7 @@ import React, { Fragment, ComponentType, FunctionComponent } from 'react';
 import { State } from '@storybook/api';
 import * as S from './container';
 
-interface DesktopProps {
+export interface DesktopProps {
   width: number;
   panelCount: number;
   height: number;

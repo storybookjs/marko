@@ -1,14 +1,16 @@
 import { setInterval } from 'global';
 import React, { Component, FunctionComponent } from 'react';
 import { styled } from '@storybook/theming';
-import Sidebar from '../sidebar/Sidebar';
+import { Collection } from '@storybook/addons';
+import Sidebar, { SidebarProps } from '../sidebar/Sidebar';
 import Panel from '../panel/panel';
 import { Preview } from '../preview/preview';
 
 import { previewProps } from '../preview/preview.mockdata';
 import { mockDataset } from '../sidebar/treeview/treeview.mockdata';
+import { DesktopProps } from './desktop';
 
-export const panels = {
+export const panels: Collection = {
   test1: {
     title: 'Test 1',
     // eslint-disable-next-line react/prop-types
@@ -31,9 +33,7 @@ export const panels = {
   },
 };
 
-const realNavProps = {
-  title: 'Title',
-  url: 'https://example.com',
+const realNavProps: SidebarProps = {
   stories: mockDataset.withRoot,
   menu: [],
 };
@@ -117,20 +117,28 @@ export const MockPage: FunctionComponent<any> = props => (
   </PlaceholderClock>
 );
 
-export const mockProps = {
+export const mockProps: DesktopProps = {
   Nav: MockNav,
   Preview: MockPreview,
   Panel: MockPanel,
   Notifications: () => null,
   pages: [],
-  options: { isFullscreen: false, showNav: true, showPanel: true, panelPosition: 'right' },
-  path: '/story/UI-DesktopLayout-noNav',
+  options: {
+    isFullscreen: false,
+    showNav: true,
+    showPanel: true,
+    panelPosition: 'right',
+    isToolshown: true,
+    initialActive: 'canvas',
+  },
   viewMode: 'story',
-  storyId: 'UI-DesktopLayout-noNav',
   panelCount: 2,
+  width: 900,
+  height: 600,
+  docsOnly: false,
 };
 
-export const realProps = {
+export const realProps: DesktopProps = {
   Nav: () => <Sidebar {...realNavProps} />,
   Preview: () => <Preview {...previewProps} />,
   Notifications: () => null,
@@ -139,12 +147,22 @@ export const realProps = {
       panels={panels}
       actions={{ onSelect: () => {}, toggleVisibility: () => {}, togglePosition: () => {} }}
       selectedPanel="test2"
+      panelPosition="bottom"
+      absolute={false}
     />
   ),
   pages: [],
-  options: { isFullscreen: false, showNav: true, showPanel: true, panelPosition: 'right' },
-  path: '/story/UI-DesktopLayout-noNav',
+  options: {
+    isFullscreen: false,
+    showNav: true,
+    showPanel: true,
+    panelPosition: 'right',
+    isToolshown: true,
+    initialActive: 'canvas',
+  },
   viewMode: 'story',
-  storyId: 'UI-DesktopLayout-noNav',
   panelCount: 2,
+  width: 900,
+  height: 600,
+  docsOnly: false,
 };

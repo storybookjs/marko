@@ -1,5 +1,4 @@
-import React, { Component, Fragment } from 'react';
-import memoize from 'memoizerific';
+import React, { Fragment, FunctionComponent, useMemo, useEffect } from 'react';
 import { API, Consumer, Combo, State } from '@storybook/api';
 import { SET_CURRENT_STORY } from '@storybook/core-events';
 import addons, { types, Addon } from '@storybook/addons';
@@ -38,14 +37,10 @@ export const renderIframe: IframeRenderer = (
   />
 );
 
-const getWrapper = memoize(1)((getFn: API['getElements']) =>
-  Object.values(getFn<Addon>(types.PREVIEW))
-);
-const getTabs = memoize(1)((getFn: API['getElements']) => Object.values(getFn<Addon>(types.TAB)));
-const getTools = memoize(1)((getFn: API['getElements']) => Object.values(getFn<Addon>(types.TOOL)));
-const getToolsExtra = memoize(1)((getFn: API['getElements']) =>
-  Object.values(getFn<Addon>(types.TOOLEXTRA))
-);
+const getWrapper = (getFn: API['getElements']) => Object.values(getFn<Addon>(types.PREVIEW));
+const getTabs = (getFn: API['getElements']) => Object.values(getFn<Addon>(types.TAB));
+const getTools = (getFn: API['getElements']) => Object.values(getFn<Addon>(types.TOOL));
+const getToolsExtra = (getFn: API['getElements']) => Object.values(getFn<Addon>(types.TOOLEXTRA));
 
 const getDocumentTitle = (description: string) => {
   return description ? `${description} ⋅ Storybook` : 'Storybook';
@@ -111,94 +106,116 @@ const createCanvas = (id: string, baseUrl = 'iframe.html', withLoader = true): A
   },
 });
 
-class Preview extends Component<PreviewProps> {
-  shouldComponentUpdate({
-    storyId,
-    viewMode,
-    docsOnly,
-    options,
-    queryParams,
-    parameters,
-  }: PreviewProps) {
-    const { props } = this;
+const useTabs = (
+  id: PreviewProps['id'],
+  baseUrl: PreviewProps['baseUrl'],
+  withLoader: PreviewProps['withLoader'],
+  getElements: API['getElements'],
+  parameters: PreviewProps['parameters']
+) => {
+  const canvas = useMemo(() => {
+    return createCanvas(id, baseUrl, withLoader);
+  }, [id, baseUrl, withLoader]);
 
-    return (
-      options.isFullscreen !== props.options.isFullscreen ||
-      options.isToolshown !== props.options.isToolshown ||
-      viewMode !== props.viewMode ||
-      docsOnly !== props.docsOnly ||
-      storyId !== props.storyId ||
-      queryParams !== props.queryParams ||
-      parameters !== props.parameters
-    );
-  }
+  const tabsFromConfig = useMemo(() => {
+    return getTabs(getElements);
+  }, [getElements]);
 
-  componentDidUpdate(prevProps: PreviewProps) {
-    const { api, storyId, viewMode } = this.props;
-    const { storyId: prevStoryId, viewMode: prevViewMode } = prevProps;
-    if ((storyId && storyId !== prevStoryId) || (viewMode && viewMode !== prevViewMode)) {
-      api.emit(SET_CURRENT_STORY, { storyId, viewMode });
-    }
-  }
+  return useMemo(() => {
+    return filterTabs([canvas, ...tabsFromConfig], parameters);
+  }, [canvas, ...tabsFromConfig, parameters]);
+};
 
-  render() {
-    const { props } = this;
-    const {
-      id,
-      location,
-      getElements,
-      options,
-      docsOnly = false,
-      storyId = undefined,
-      path = undefined,
-      description = undefined,
-      baseUrl = 'iframe.html',
-      parameters = undefined,
-      withLoader = true,
-    } = props;
-    const viewMode = docsOnly && props.viewMode === 'story' ? 'docs' : props.viewMode;
-    const { isToolshown } = options;
+const useViewMode = (docsOnly: boolean, viewMode: PreviewProps['viewMode']) => {
+  return docsOnly && viewMode === 'story' ? 'docs' : viewMode;
+};
 
-    const allTabs = [createCanvas(id, baseUrl, withLoader), ...getTabs(getElements)];
-    const tabs = filterTabs(allTabs, parameters);
+const useTools = (
+  getElements: API['getElements'],
+  tabs: Addon[],
+  viewMode: PreviewProps['viewMode'],
+  storyId: PreviewProps['storyId'],
+  location: PreviewProps['location'],
+  path: PreviewProps['path']
+) => {
+  const toolsFromConfig = useMemo(() => {
+    return getTools(getElements);
+  }, [getElements]);
 
-    const tools = [...defaultTools, ...getTools(getElements)];
-    const toolsExtra = [...defaultToolsExtra, ...getToolsExtra(getElements)];
+  const toolsExtraFromConfig = useMemo(() => {
+    return getToolsExtra(getElements);
+  }, [getElements]);
 
-    const { left, right } = filterTools(tools, toolsExtra, tabs, {
+  const tools = useMemo(() => {
+    return [...defaultTools, ...toolsFromConfig];
+  }, [defaultTools, toolsFromConfig]);
+
+  const toolsExtra = useMemo(() => {
+    return [...defaultToolsExtra, ...toolsExtraFromConfig];
+  }, [defaultToolsExtra, toolsExtraFromConfig]);
+
+  return useMemo(() => {
+    return filterTools(tools, toolsExtra, tabs, {
       viewMode,
       storyId,
       location,
       path,
     });
+  }, [viewMode, storyId, location, path, tools, toolsExtra, tabs]);
+};
 
-    return (
-      <ZoomProvider>
-        <Fragment>
-          {id === 'main' && (
-            <Helmet key="description">
-              <title>{getDocumentTitle(description)}</title>
-            </Helmet>
-          )}
-          {(left || right) && (
-            <Toolbar key="toolbar" shown={isToolshown} border>
-              <Fragment key="left">{left}</Fragment>
-              <Fragment key="right">{right}</Fragment>
-            </Toolbar>
-          )}
-          <S.FrameWrap key="frame" offset={isToolshown ? 40 : 0}>
-            {tabs.map((p, i) => (
-              // @ts-ignore
-              <Fragment key={p.id || p.key || i}>
-                {p.render({ active: p.match({ storyId, viewMode, location, path }) })}
-              </Fragment>
-            ))}
-          </S.FrameWrap>
-        </Fragment>
-      </ZoomProvider>
-    );
-  }
-}
+const Preview: FunctionComponent<PreviewProps> = props => {
+  const {
+    api,
+    id,
+    location,
+    options,
+    docsOnly = false,
+    storyId = undefined,
+    path = undefined,
+    description = undefined,
+    baseUrl = 'iframe.html',
+    parameters = undefined,
+    withLoader = true,
+  } = props;
+  const { isToolshown } = options;
+  const { getElements } = api;
+
+  // eslint-disable-next-line react/destructuring-assignment
+  const viewMode = useViewMode(docsOnly, props.viewMode);
+  const tabs = useTabs(id, baseUrl, withLoader, getElements, parameters);
+  const { left, right } = useTools(getElements, tabs, viewMode, storyId, location, path);
+
+  useEffect(() => {
+    api.emit(SET_CURRENT_STORY, { storyId, viewMode });
+  }, [storyId, viewMode]);
+
+  return (
+    <ZoomProvider>
+      <Fragment>
+        {id === 'main' && (
+          <Helmet key="description">
+            <title>{getDocumentTitle(description)}</title>
+          </Helmet>
+        )}
+        {(left || right) && (
+          <Toolbar key="toolbar" shown={isToolshown} border>
+            <Fragment key="left">{left}</Fragment>
+            <Fragment key="right">{right}</Fragment>
+          </Toolbar>
+        )}
+        <S.FrameWrap key="frame" offset={isToolshown ? 40 : 0}>
+          {tabs.map((p, i) => (
+            // @ts-ignore
+            <Fragment key={p.id || p.key || i}>
+              {p.render({ active: p.match({ storyId, viewMode, location, path }) })}
+            </Fragment>
+          ))}
+        </S.FrameWrap>
+      </Fragment>
+    </ZoomProvider>
+  );
+};
 
 export { Preview };
 

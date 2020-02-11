@@ -15,7 +15,6 @@ export interface PreviewProps {
   path: string;
   location: State['location'];
   queryParams: State['customQueryParams'];
-  getElements: API['getElements'];
   customCanvas?: IframeRenderer;
   description: string;
   baseUrl: string;
