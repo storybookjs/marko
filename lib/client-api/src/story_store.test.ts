@@ -227,6 +227,7 @@ describe('preview.story_store', () => {
   });
 
   describe('removeStoryKind', () => {
+    // eslint-disable-next-line jest/expect-expect
     it('should not error even if there is no kind', () => {
       const store = new StoryStore({ channel });
       store.removeStoryKind('kind');
@@ -259,35 +260,6 @@ describe('preview.story_store', () => {
       // _data
       expect(store.fromId(toId('kind-1', 'story-1.1'))).toBeFalsy();
       expect(store.fromId(toId('kind-1', 'story-1.2'))).toBeTruthy();
-    });
-  });
-
-  describe('story sorting', () => {
-    const storySort = (a, b) => a[1].id.localeCompare(b[1].id);
-    it('should use the sorting function of the story parameter object', () => {
-      const store = new StoryStore({ channel });
-      addStoryToStore(store, 'kind-2', 'a-story-2.1', () => 0, {
-        fileName: 'bar.js',
-        options: { storySort },
-      });
-      addStoryToStore(store, 'kind-1', 'z-story-1.1', () => 0, {
-        fileName: 'foo.js',
-        options: { storySort },
-      });
-      addStoryToStore(store, 'kind-1', 'story-1.2', () => 0, {
-        fileName: 'foo-2.js',
-        options: { storySort },
-      });
-      addStoryToStore(store, 'kind-2', 'story-2.1', () => 0, {
-        fileName: 'bar.js',
-        options: { storySort },
-      });
-
-      const stories = Object.values(store.extract()) as any[];
-      expect(stories[0].id).toBe('kind-1--story-1-2');
-      expect(stories[1].id).toBe('kind-1--z-story-1-1');
-      expect(stories[2].id).toBe('kind-2--a-story-2-1');
-      expect(stories[3].id).toBe('kind-2--story-2-1');
     });
   });
 });
