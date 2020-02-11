@@ -16,27 +16,29 @@ jest.mock('@storybook/node-logger', () => ({
 
 const channel = createChannel({ page: 'preview' });
 
-const make = (kind, name, storyFn, parameters = {}) => [
-  {
-    kind,
-    name,
-    storyFn,
-    parameters,
-    id: toId(kind, name),
-  },
-  {
-    applyDecorators: defaultDecorateStory,
-    getDecorators: () => [],
-  },
-];
+// make a story and add it to the store
+const addStoryToStore = (store, kind, name, storyFn, parameters = {}) =>
+  store.addStory(
+    {
+      kind,
+      name,
+      storyFn,
+      parameters,
+      id: toId(kind, name),
+    },
+    {
+      applyDecorators: defaultDecorateStory,
+      getDecorators: () => [],
+    }
+  );
 
 describe('preview.story_store', () => {
   describe('raw storage', () => {
     it('stores hash object', () => {
       const store = new StoryStore({ channel });
-      store.addStory(...make('a', '1', () => 0), undefined);
-      store.addStory(...make('a', '2', () => 0));
-      store.addStory(...make('b', '1', () => 0));
+      addStoryToStore(store, 'a', '1', () => 0);
+      addStoryToStore(store, 'a', '2', () => 0);
+      addStoryToStore(store, 'b', '1', () => 0);
 
       const extracted = store.extract();
 
@@ -49,6 +51,7 @@ describe('preview.story_store', () => {
         kind: 'a',
         name: '1',
         parameters: expect.any(Object),
+        state: {},
       });
     });
   });
@@ -65,13 +68,13 @@ describe('preview.story_store', () => {
         },
       };
       const store = new StoryStore({ channel });
-      store.addStory(...make('a/a', '1', () => 0, parameters));
-      store.addStory(...make('a/a', '2', () => 0, parameters));
-      store.addStory(...make('a/b', '1', () => 0, parameters));
-      store.addStory(...make('b/b1', '1', () => 0, parameters));
-      store.addStory(...make('b/b10', '1', () => 0, parameters));
-      store.addStory(...make('b/b9', '1', () => 0, parameters));
-      store.addStory(...make('c', '1', () => 0, parameters));
+      addStoryToStore(store, 'a/a', '1', () => 0, parameters);
+      addStoryToStore(store, 'a/a', '2', () => 0, parameters);
+      addStoryToStore(store, 'a/b', '1', () => 0, parameters);
+      addStoryToStore(store, 'b/b1', '1', () => 0, parameters);
+      addStoryToStore(store, 'b/b10', '1', () => 0, parameters);
+      addStoryToStore(store, 'b/b9', '1', () => 0, parameters);
+      addStoryToStore(store, 'c', '1', () => 0, parameters);
 
       const extracted = store.extract();
 
@@ -95,13 +98,13 @@ describe('preview.story_store', () => {
         },
       };
       const store = new StoryStore({ channel });
-      store.addStory(...make('a/b', '1', () => 0, parameters));
-      store.addStory(...make('a/a', '2', () => 0, parameters));
-      store.addStory(...make('a/a', '1', () => 0, parameters));
-      store.addStory(...make('c', '1', () => 0, parameters));
-      store.addStory(...make('b/b10', '1', () => 0, parameters));
-      store.addStory(...make('b/b9', '1', () => 0, parameters));
-      store.addStory(...make('b/b1', '1', () => 0, parameters));
+      addStoryToStore(store, 'a/b', '1', () => 0, parameters);
+      addStoryToStore(store, 'a/a', '2', () => 0, parameters);
+      addStoryToStore(store, 'a/a', '1', () => 0, parameters);
+      addStoryToStore(store, 'c', '1', () => 0, parameters);
+      addStoryToStore(store, 'b/b10', '1', () => 0, parameters);
+      addStoryToStore(store, 'b/b9', '1', () => 0, parameters);
+      addStoryToStore(store, 'b/b1', '1', () => 0, parameters);
 
       const extracted = store.extract();
 
@@ -126,14 +129,14 @@ describe('preview.story_store', () => {
         },
       };
       const store = new StoryStore({ channel });
-      store.addStory(...make('a/b', '1', () => 0, parameters));
-      store.addStory(...make('a', '1', () => 0, parameters));
-      store.addStory(...make('c', '1', () => 0, parameters));
-      store.addStory(...make('b/bd', '1', () => 0, parameters));
-      store.addStory(...make('b/bb', '1', () => 0, parameters));
-      store.addStory(...make('b/ba', '1', () => 0, parameters));
-      store.addStory(...make('b/bc', '1', () => 0, parameters));
-      store.addStory(...make('b', '1', () => 0, parameters));
+      addStoryToStore(store, 'a/b', '1', () => 0, parameters);
+      addStoryToStore(store, 'a', '1', () => 0, parameters);
+      addStoryToStore(store, 'c', '1', () => 0, parameters);
+      addStoryToStore(store, 'b/bd', '1', () => 0, parameters);
+      addStoryToStore(store, 'b/bb', '1', () => 0, parameters);
+      addStoryToStore(store, 'b/ba', '1', () => 0, parameters);
+      addStoryToStore(store, 'b/bc', '1', () => 0, parameters);
+      addStoryToStore(store, 'b', '1', () => 0, parameters);
 
       const extracted = store.extract();
 
@@ -159,14 +162,14 @@ describe('preview.story_store', () => {
         },
       };
       const store = new StoryStore({ channel });
-      store.addStory(...make('a/b', '1', () => 0, parameters));
-      store.addStory(...make('a', '1', () => 0, parameters));
-      store.addStory(...make('c', '1', () => 0, parameters));
-      store.addStory(...make('b/bd', '1', () => 0, parameters));
-      store.addStory(...make('b/bb', '1', () => 0, parameters));
-      store.addStory(...make('b/ba', '1', () => 0, parameters));
-      store.addStory(...make('b/bc', '1', () => 0, parameters));
-      store.addStory(...make('b', '1', () => 0, parameters));
+      addStoryToStore(store, 'a/b', '1', () => 0, parameters);
+      addStoryToStore(store, 'a', '1', () => 0, parameters);
+      addStoryToStore(store, 'c', '1', () => 0, parameters);
+      addStoryToStore(store, 'b/bd', '1', () => 0, parameters);
+      addStoryToStore(store, 'b/bb', '1', () => 0, parameters);
+      addStoryToStore(store, 'b/ba', '1', () => 0, parameters);
+      addStoryToStore(store, 'b/bc', '1', () => 0, parameters);
+      addStoryToStore(store, 'b', '1', () => 0, parameters);
 
       const extracted = store.extract();
 
@@ -231,10 +234,10 @@ describe('preview.story_store', () => {
     it('should remove the kind', () => {
       const store = new StoryStore({ channel });
       addons.setChannel(channel);
-      store.addStory(...make('kind-1', 'story-1.1', () => 0));
-      store.addStory(...make('kind-1', 'story-1.2', () => 0));
-      store.addStory(...make('kind-2', 'story-2.1', () => 0));
-      store.addStory(...make('kind-2', 'story-2.2', () => 0));
+      addStoryToStore(store, 'kind-1', 'story-1.1', () => 0);
+      addStoryToStore(store, 'kind-1', 'story-1.2', () => 0);
+      addStoryToStore(store, 'kind-2', 'story-2.1', () => 0);
+      addStoryToStore(store, 'kind-2', 'story-2.2', () => 0);
 
       store.removeStoryKind('kind-1');
 
@@ -248,8 +251,8 @@ describe('preview.story_store', () => {
     it('should remove the story', () => {
       const store = new StoryStore({ channel });
       addons.setChannel(channel);
-      store.addStory(...make('kind-1', 'story-1.1', () => 0));
-      store.addStory(...make('kind-1', 'story-1.2', () => 0));
+      addStoryToStore(store, 'kind-1', 'story-1.1', () => 0);
+      addStoryToStore(store, 'kind-1', 'story-1.2', () => 0);
 
       store.remove(toId('kind-1', 'story-1.1'));
 
@@ -263,18 +266,22 @@ describe('preview.story_store', () => {
     const storySort = (a, b) => a[1].id.localeCompare(b[1].id);
     it('should use the sorting function of the story parameter object', () => {
       const store = new StoryStore({ channel });
-      store.addStory(
-        ...make('kind-2', 'a-story-2.1', () => 0, { fileName: 'bar.js', options: { storySort } })
-      );
-      store.addStory(
-        ...make('kind-1', 'z-story-1.1', () => 0, { fileName: 'foo.js', options: { storySort } })
-      );
-      store.addStory(
-        ...make('kind-1', 'story-1.2', () => 0, { fileName: 'foo-2.js', options: { storySort } })
-      );
-      store.addStory(
-        ...make('kind-2', 'story-2.1', () => 0, { fileName: 'bar.js', options: { storySort } })
-      );
+      addStoryToStore(store, 'kind-2', 'a-story-2.1', () => 0, {
+        fileName: 'bar.js',
+        options: { storySort },
+      });
+      addStoryToStore(store, 'kind-1', 'z-story-1.1', () => 0, {
+        fileName: 'foo.js',
+        options: { storySort },
+      });
+      addStoryToStore(store, 'kind-1', 'story-1.2', () => 0, {
+        fileName: 'foo-2.js',
+        options: { storySort },
+      });
+      addStoryToStore(store, 'kind-2', 'story-2.1', () => 0, {
+        fileName: 'bar.js',
+        options: { storySort },
+      });
 
       const stories = Object.values(store.extract()) as any[];
       expect(stories[0].id).toBe('kind-1--story-1-2');
