@@ -1,15 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import memoize from 'memoizerific';
-import { styled } from '@storybook/theming';
-import { API } from '@storybook/api';
+import { API, Consumer, Combo, State } from '@storybook/api';
 import { SET_CURRENT_STORY } from '@storybook/core-events';
-import addons, { types, Types, Addon } from '@storybook/addons';
+import addons, { types, Addon } from '@storybook/addons';
 import merge from '@storybook/api/dist/lib/merge';
 import { Loader } from '@storybook/components';
 
 import { Helmet } from 'react-helmet-async';
 
-import { Toolbar } from './toolbar';
+import { Toolbar, defaultTools, defaultToolsExtra, createTabsTool } from './toolbar';
 
 import * as S from './components';
 
@@ -17,20 +16,9 @@ import { ZoomProvider, ZoomConsumer } from './zoom';
 
 import { IFrame } from './iframe';
 import { PreviewProps, ApplyWrappersProps, IframeRenderer } from './PreviewProps';
-import { getTools } from './getTools';
-import { defaultWrappers, ApplyWrappers } from './ApplyWrappers';
 
-export const DesktopOnly = styled.span({
-  // Hides full screen icon at mobile breakpoint defined in app.js
-  '@media (max-width: 599px)': {
-    display: 'none',
-  },
-});
-
-export const stringifyQueryParams = (queryParams: Record<string, string>) =>
-  Object.entries(queryParams).reduce((acc, [k, v]) => {
-    return `${acc}&${k}=${v}`;
-  }, '');
+import { defaultWrappers, ApplyWrappers } from './wrappers';
+import { stringifyQueryParams } from './stringifyQueryParams';
 
 export const renderIframe: IframeRenderer = (
   storyId,
@@ -50,15 +38,78 @@ export const renderIframe: IframeRenderer = (
   />
 );
 
-export const getElementList = memoize(
-  10
-)((getFn: API['getElements'], type: Types, base: Partial<Addon>[]) =>
-  base.concat(Object.values(getFn(type)))
+const getWrapper = memoize(1)((getFn: API['getElements']) =>
+  Object.values(getFn<Addon>(types.PREVIEW))
+);
+const getTabs = memoize(1)((getFn: API['getElements']) => Object.values(getFn<Addon>(types.TAB)));
+const getTools = memoize(1)((getFn: API['getElements']) => Object.values(getFn<Addon>(types.TOOL)));
+const getToolsExtra = memoize(1)((getFn: API['getElements']) =>
+  Object.values(getFn<Addon>(types.TOOLEXTRA))
 );
 
 const getDocumentTitle = (description: string) => {
   return description ? `${description} ⋅ Storybook` : 'Storybook';
 };
+
+const mapper = ({ state, api }: Combo) => ({
+  storyId: state.storyId,
+  viewMode: state.viewMode,
+  customCanvas: api.renderPreview,
+  queryParams: state.customQueryParams,
+  getElements: api.getElements,
+  isLoading: !state.storiesConfigured,
+});
+
+const createCanvas = (id: string, baseUrl = 'iframe.html', withLoader = true): Addon => ({
+  id: 'canvas',
+  title: 'Canvas',
+  route: p => `/story/${p.storyId}`,
+  match: p => !!(p.viewMode && p.viewMode.match(/^(story|docs)$/)),
+  render: p => {
+    return (
+      <Consumer filter={mapper}>
+        {({
+          customCanvas,
+          storyId,
+          viewMode,
+          queryParams,
+          getElements,
+          isLoading,
+        }: ReturnType<typeof mapper>) => (
+          <ZoomConsumer>
+            {({ value: scale }) => {
+              const wrappers = [...defaultWrappers, ...getWrapper(getElements)];
+
+              const data = [storyId, viewMode, id, baseUrl, scale, queryParams] as Parameters<
+                IframeRenderer
+              >;
+
+              const content = customCanvas ? customCanvas(...data) : renderIframe(...data);
+              const props = {
+                viewMode,
+                active: p.active,
+                wrappers,
+                id,
+                storyId,
+                baseUrl,
+                queryParams,
+                scale,
+                customCanvas,
+              } as ApplyWrappersProps;
+
+              return (
+                <>
+                  {withLoader && isLoading && <Loader id="preview-loader" role="progressbar" />}
+                  <ApplyWrappers {...props}>{content}</ApplyWrappers>
+                </>
+              );
+            }}
+          </ZoomConsumer>
+        )}
+      </Consumer>
+    );
+  },
+});
 
 class Preview extends Component<PreviewProps> {
   shouldComponentUpdate({
@@ -91,113 +142,35 @@ class Preview extends Component<PreviewProps> {
   }
 
   render() {
+    const { props } = this;
     const {
       id,
       location,
-      queryParams,
       getElements,
-      api,
       options,
-      viewMode = undefined,
       docsOnly = false,
       storyId = undefined,
       path = undefined,
       description = undefined,
       baseUrl = 'iframe.html',
-      customCanvas = undefined,
       parameters = undefined,
-      isLoading = true,
       withLoader = true,
-    } = this.props;
-    const toolbarHeight = options.isToolshown ? 40 : 0;
-    const wrappers = getElementList(getElements, types.PREVIEW, defaultWrappers);
-    let panels = getElementList(getElements, types.TAB, [
-      {
-        route: p => `/story/${p.storyId}`,
-        match: p => !!(p.viewMode && p.viewMode.match(/^(story|docs)$/)),
-        render: p => (
-          <ZoomConsumer>
-            {({ value: scale }) => {
-              const props = {
-                viewMode,
-                active: p.active,
-                wrappers,
-                id,
-                storyId,
-                baseUrl,
-                queryParams,
-                scale,
-                customCanvas,
-              } as ApplyWrappersProps;
+    } = props;
+    const viewMode = docsOnly && props.viewMode === 'story' ? 'docs' : props.viewMode;
+    const { isToolshown } = options;
 
-              const data = [storyId, viewMode, id, baseUrl, scale, queryParams] as Parameters<
-                IframeRenderer
-              >;
+    const allTabs = [createCanvas(id, baseUrl, withLoader), ...getTabs(getElements)];
+    const tabs = filterTabs(allTabs, parameters);
 
-              const content = customCanvas ? customCanvas(...data) : renderIframe(...data);
+    const tools = [...defaultTools, ...getTools(getElements)];
+    const toolsExtra = [...defaultToolsExtra, ...getToolsExtra(getElements)];
 
-              return (
-                <>
-                  {withLoader && isLoading && <Loader id="preview-loader" role="progressbar" />}
-                  <ApplyWrappers {...props}>{content}</ApplyWrappers>
-                </>
-              );
-            }}
-          </ZoomConsumer>
-        ),
-        title: 'Canvas',
-        id: 'canvas',
-      },
-    ]);
-    const { previewTabs } = addons.getConfig();
-    const parametersTabs = parameters ? parameters.previewTabs : undefined;
-    if (previewTabs || parametersTabs) {
-      // deep merge global and local settings
-      const tabs = merge(previewTabs, parametersTabs);
-      const arrTabs = Object.keys(tabs).map((key, index) => ({
-        index,
-        ...(typeof tabs[key] === 'string' ? { title: tabs[key] } : tabs[key]),
-        id: key,
-      }));
-      panels = panels
-        .filter(panel => {
-          const t = arrTabs.find(tab => tab.id === panel.id);
-          return t === undefined || t.id === 'canvas' || !t.hidden;
-        })
-        .map((panel, index) => ({ ...panel, index }))
-        .sort((p1, p2) => {
-          const tab_1 = arrTabs.find(tab => tab.id === p1.id);
-          const index_1 = tab_1 ? tab_1.index : arrTabs.length + p1.index;
-          const tab_2 = arrTabs.find(tab => tab.id === p2.id);
-          const index_2 = tab_2 ? tab_2.index : arrTabs.length + p2.index;
-          return index_1 - index_2;
-        })
-        .map(panel => {
-          const t = arrTabs.find(tab => tab.id === panel.id);
-          if (t) {
-            return {
-              ...panel,
-              title: t.title || panel.title,
-              disabled: t.disabled,
-              hidden: t.hidden,
-            };
-          }
-          return panel;
-        });
-    }
-    const { left, right } = getTools(
-      getElements,
-      queryParams,
-      panels,
-      api,
-      options,
-      storyId,
+    const { left, right } = filterTools(tools, toolsExtra, tabs, {
       viewMode,
-      docsOnly,
+      storyId,
       location,
       path,
-      baseUrl
-    );
+    });
 
     return (
       <ZoomProvider>
@@ -208,15 +181,15 @@ class Preview extends Component<PreviewProps> {
             </Helmet>
           )}
           {(left || right) && (
-            <Toolbar key="toolbar" shown={options.isToolshown} border>
+            <Toolbar key="toolbar" shown={isToolshown} border>
               <Fragment key="left">{left}</Fragment>
               <Fragment key="right">{right}</Fragment>
             </Toolbar>
           )}
-          <S.FrameWrap key="frame" offset={toolbarHeight}>
-            {panels.map(p => (
+          <S.FrameWrap key="frame" offset={isToolshown ? 40 : 0}>
+            {tabs.map((p, i) => (
               // @ts-ignore
-              <Fragment key={p.id || p.key}>
+              <Fragment key={p.id || p.key || i}>
                 {p.render({ active: p.match({ storyId, viewMode, location, path }) })}
               </Fragment>
             ))}
@@ -228,3 +201,99 @@ class Preview extends Component<PreviewProps> {
 }
 
 export { Preview };
+
+function filterTabs(panels: Addon[], parameters: Record<string, any>) {
+  const { previewTabs } = addons.getConfig();
+  const parametersTabs = parameters ? parameters.previewTabs : undefined;
+
+  if (previewTabs || parametersTabs) {
+    // deep merge global and local settings
+    const tabs = merge(previewTabs, parametersTabs);
+    const arrTabs = Object.keys(tabs).map((key, index) => ({
+      index,
+      ...(typeof tabs[key] === 'string' ? { title: tabs[key] } : tabs[key]),
+      id: key,
+    }));
+    return panels
+      .filter(panel => {
+        const t = arrTabs.find(tab => tab.id === panel.id);
+        return t === undefined || t.id === 'canvas' || !t.hidden;
+      })
+      .map((panel, index) => ({ ...panel, index } as Addon))
+      .sort((p1, p2) => {
+        const tab_1 = arrTabs.find(tab => tab.id === p1.id);
+        // @ts-ignore
+        const index_1 = tab_1 ? tab_1.index : arrTabs.length + p1.index;
+        const tab_2 = arrTabs.find(tab => tab.id === p2.id);
+        // @ts-ignore
+        const index_2 = tab_2 ? tab_2.index : arrTabs.length + p2.index;
+        return index_1 - index_2;
+      })
+      .map(panel => {
+        const t = arrTabs.find(tab => tab.id === panel.id);
+        if (t) {
+          return {
+            ...panel,
+            title: t.title || panel.title,
+            disabled: t.disabled,
+            hidden: t.hidden,
+          } as Addon;
+        }
+        return panel;
+      });
+  }
+  return panels;
+}
+
+function filterTools(
+  tools: Addon[],
+  toolsExtra: Addon[],
+  tabs: Addon[],
+  {
+    viewMode,
+    storyId,
+    location,
+    path,
+  }: {
+    viewMode: State['viewMode'];
+    storyId: State['storyId'];
+    location: State['location'];
+    path: State['path'];
+  }
+) {
+  const tabsTool = createTabsTool(tabs);
+  const toolsLeft = [tabs.filter(p => !p.hidden).length > 1 ? tabsTool : null, ...tools];
+
+  const toolsRight = [...toolsExtra];
+
+  // if its a docsOnly page, even the 'story' view mode is considered 'docs'
+  const filter = (item: Partial<Addon>) =>
+    item &&
+    (!item.match ||
+      item.match({
+        storyId,
+        viewMode,
+        location,
+        path,
+      }));
+
+  const displayItems = (list: Partial<Addon>[]) =>
+    list.reduce(
+      (acc, item, index) =>
+        item ? (
+          // @ts-ignore
+          <Fragment key={item.id || item.key || `f-${index}`}>
+            {acc}
+            {item.render({}) || item}
+          </Fragment>
+        ) : (
+          acc
+        ),
+      null
+    );
+
+  const left = displayItems(toolsLeft.filter(filter));
+  const right = displayItems(toolsRight.filter(filter));
+
+  return { left, right };
+}

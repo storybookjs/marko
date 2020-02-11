@@ -18,6 +18,7 @@ export const ApplyWrappers: FunctionComponent<ApplyWrappersProps> = ({
     </Fragment>
   );
 };
+
 const IframeWrapper = styled.div(({ theme }) => ({
   position: 'absolute',
   top: 0,

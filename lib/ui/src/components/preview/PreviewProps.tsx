@@ -7,7 +7,6 @@ export interface PreviewProps {
   storyId: string;
   viewMode: ViewMode;
   docsOnly: boolean;
-  isLoading: boolean;
   options: {
     isFullscreen: boolean;
     isToolshown: boolean;

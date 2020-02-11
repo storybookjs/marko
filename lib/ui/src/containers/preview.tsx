@@ -39,7 +39,6 @@ const mapper = ({ api, state }: Combo) => {
     docsOnly: (parameters && parameters.docsOnly) as boolean,
     location,
     parameters,
-    isLoading: !state.storiesConfigured,
   };
 };
 
@@ -58,11 +57,6 @@ const PreviewConnected = React.memo<{ id: string; withLoader: boolean }>(props =
         ...props,
         baseUrl: getBaseUrl(),
         ...fromState,
-        ...(fromState.api.renderPreview
-          ? {
-              customCanvas: fromState.api.renderPreview,
-            }
-          : {}),
       } as PreviewProps;
 
       return <Preview {...p} />;
