@@ -1,6 +1,6 @@
 import createChannel from '@storybook/channel-postmessage';
 import { toId } from '@storybook/csf';
-import addons from '@storybook/addons';
+import addons, { mockChannel } from '@storybook/addons';
 import Events from '@storybook/core-events';
 
 import StoryStore from './story_store';
@@ -96,7 +96,7 @@ describe('preview.story_store', () => {
 
     it('synchronously emits STORY_STATE_CHANGED if different', () => {
       const onStateChanged = jest.fn();
-      const testChannel = createChannel({ page: 'preview' });
+      const testChannel = mockChannel();
       testChannel.on(Events.STORY_STATE_CHANGED, onStateChanged);
 
       const store = new StoryStore({ channel: testChannel });
@@ -107,6 +107,16 @@ describe('preview.story_store', () => {
 
       store.setStoryState('a--1', { baz: 'bing' });
       expect(onStateChanged).toHaveBeenCalledWith('a--1', { foo: 'bar', baz: 'bing' });
+    });
+
+    it('should update if the CHANGE_STORY_STATE event is received', () => {
+      const testChannel = mockChannel();
+      const store = new StoryStore({ channel: testChannel });
+      addStoryToStore(store, 'a', '1', () => 0);
+
+      testChannel.emit(Events.CHANGE_STORY_STATE, 'a--1', { foo: 'bar' });
+
+      expect(store.getRawStory('a', '1').state).toEqual({ foo: 'bar' });
     });
   });
 
