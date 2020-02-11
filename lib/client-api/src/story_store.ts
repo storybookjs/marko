@@ -20,18 +20,6 @@ import {
 import { HooksContext } from './hooks';
 import storySort from './storySort';
 
-// TODO: these are copies from components/nav/lib
-// refactor to DRY
-const toKey = (input: string) =>
-  input.replace(/[^a-z0-9]+([a-z0-9])/gi, (...params) => params[1].toUpperCase());
-
-let count = 0;
-
-const getId = (): number => {
-  count += 1;
-  return count;
-};
-
 const toExtracted = <T>(obj: T) =>
   Object.entries(obj).reduce((acc, [key, value]) => {
     if (typeof value === 'function') {
