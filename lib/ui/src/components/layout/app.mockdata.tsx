@@ -13,7 +13,6 @@ import { DesktopProps } from './desktop';
 export const panels: Collection = {
   test1: {
     title: 'Test 1',
-    // eslint-disable-next-line react/prop-types
     render: ({ active, key }) =>
       active ? (
         <div id="test1" key={key}>
@@ -23,7 +22,6 @@ export const panels: Collection = {
   },
   test2: {
     title: 'Test 2',
-    // eslint-disable-next-line react/prop-types
     render: ({ active, key }) =>
       active ? (
         <div id="test2" key={key}>
