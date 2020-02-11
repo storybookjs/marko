@@ -181,6 +181,7 @@ export default class StoryStore extends EventEmitter {
         hooks,
         // NOTE: we do not allow the passed in context to override parameters
         parameters: allParameters,
+        state: this._stories[id].state,
       });
 
     _stories[id] = {
