@@ -59,5 +59,5 @@ export interface GetStorybookStory {
 export interface GetStorybookKind {
   kind: string;
   fileName: string;
-  stories: Array<GetStorybookStory>;
+  stories: GetStorybookStory[];
 }
