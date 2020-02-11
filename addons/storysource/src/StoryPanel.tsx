@@ -10,6 +10,7 @@ import {
 } from '@storybook/components';
 
 import { SourceBlock, LocationsMap } from '@storybook/source-loader';
+import { Story } from '@storybook/api/dist/lib/stories';
 
 const StyledStoryLink = styled(Link)<{ to: string; key: string }>(({ theme }) => ({
   display: 'block',
@@ -45,21 +46,13 @@ interface SourceParams {
   source: string;
   locationsMap: LocationsMap;
 }
-export interface StoryData {
-  id: string;
-  kind?: string;
-  parameters?: {
-    storySource?: SourceParams;
-    mdxSource?: string;
-  };
-}
 export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
   const [state, setState] = React.useState<SourceParams & { currentLocation?: SourceBlock }>({
     source: 'loading source...',
     locationsMap: {},
   });
 
-  const story: StoryData | undefined = api.getCurrentStoryData();
+  const story: Story | undefined = api.getCurrentStoryData() as Story;
   const selectedStoryRef = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     if (story) {

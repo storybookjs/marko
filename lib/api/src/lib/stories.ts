@@ -46,8 +46,10 @@ export interface Story {
       hierarchyRootSeparator?: RegExp;
       hierarchySeparator?: RegExp;
       showRoots?: boolean;
-    } & Record<string, any>;
-  } & Record<string, any>;
+      [k: string]: any;
+    };
+    [k: string]: any;
+  };
 }
 
 export interface StoryInput {
@@ -76,7 +78,7 @@ export interface StoriesHash {
 
 export type StoriesList = (Group | Story)[];
 
-export type GroupsList = Group[];
+export type GroupsList = (Root | Group)[];
 
 export interface StoriesRaw {
   [id: string]: StoryInput;
@@ -116,8 +118,7 @@ const toGroup = (name: string) => ({
 
 export const transformStoriesRawToStoriesHash = (
   input: StoriesRaw,
-  base: StoriesHash,
-  options: Record<string, any>
+  base: StoriesHash
 ): StoriesHash => {
   const anyKindMatchesOldHierarchySeparators = Object.values(input).some(({ kind }) =>
     kind.match(/\.|\|/)
@@ -179,6 +180,19 @@ export const transformStoriesRawToStoriesHash = (
           );
         }
 
+        if (!!root && index === 0) {
+          const result: Root = {
+            ...group,
+            id,
+            depth: index,
+            children: [],
+            isComponent: false,
+            isLeaf: false,
+            isRoot: true,
+            parameters,
+          };
+          return soFar.concat([result]);
+        }
         const result: Group = {
           ...group,
           id,
@@ -187,7 +201,7 @@ export const transformStoriesRawToStoriesHash = (
           children: [],
           isComponent: false,
           isLeaf: false,
-          isRoot: !!root && index === 0,
+          isRoot: false,
           parameters,
         };
         return soFar.concat([result]);
@@ -217,7 +231,7 @@ export const transformStoriesRawToStoriesHash = (
       acc[item.id] = item;
       const { children } = item;
       if (children) {
-        const childNodes = children.map(id => storiesHashOutOfOrder[id]);
+        const childNodes = children.map(id => storiesHashOutOfOrder[id]) as (Story | Group)[];
         acc[item.id].isComponent = childNodes.every(childNode => childNode.isLeaf);
         childNodes.forEach(childNode => addItem(acc, childNode));
       }
@@ -227,3 +241,24 @@ export const transformStoriesRawToStoriesHash = (
 
   return Object.values(storiesHashOutOfOrder).reduce(addItem, base);
 };
+
+export type Item = StoriesHash[keyof StoriesHash];
+
+export function isRoot(item: Item): item is Root {
+  if (item as Root) {
+    return item.isRoot;
+  }
+  return false;
+}
+export function isGroup(item: Item): item is Group {
+  if (item as Group) {
+    return !item.isRoot && !item.isLeaf;
+  }
+  return false;
+}
+export function isStory(item: Item): item is Story {
+  if (item as Story) {
+    return item.isLeaf;
+  }
+  return false;
+}

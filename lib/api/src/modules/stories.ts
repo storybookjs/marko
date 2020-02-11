@@ -8,6 +8,7 @@ import {
   Group,
   StoriesRaw,
   StoryId,
+  isStory,
 } from '../lib/stories';
 
 import { Module } from '../index';
@@ -44,14 +45,8 @@ const initStoriesApi = ({
   storyId: initialStoryId,
   viewMode: initialViewMode,
 }: Module) => {
-  const isStory = (obj: Group | Story): boolean => {
-    const story = obj as Story;
-    return !!(story && story.parameters);
-  };
-
   const getData = (storyId: StoryId) => {
-    let ref;
-    const { storiesHash, refs } = store.getState();
+    const { storiesHash } = store.getState();
 
     if (storiesHash[storyId]) {
       return storiesHash[storyId];
@@ -68,7 +63,7 @@ const initStoriesApi = ({
     const data = getData(storyId);
 
     if (isStory(data)) {
-      const { parameters } = data as Story;
+      const { parameters } = data;
       return parameterName ? parameters[parameterName] : parameters;
     }
 
@@ -165,8 +160,7 @@ const initStoriesApi = ({
     // Now create storiesHash by reordering the above by group
     const storiesHash: StoriesHash = transformStoriesRawToStoriesHash(
       input,
-      (store.getState().storiesHash || {}) as StoriesHash,
-      {}
+      (store.getState().storiesHash || {}) as StoriesHash
     );
     const settingsPageList = ['about', 'shortcuts'];
     const { storyId, viewMode } = store.getState();
@@ -205,20 +199,14 @@ const initStoriesApi = ({
     });
   };
 
-  const selectStory = (
-    kindOrId: string,
-    story: string = undefined,
-    { ref }: { ref?: string } = {}
-  ) => {
-    const { viewMode = 'story', storyId, storiesHash, refs } = store.getState();
+  const selectStory = (kindOrId: string, story: string = undefined) => {
+    const { viewMode = 'story', storyId, storiesHash } = store.getState();
 
-    const hash = ref ? refs[ref].data : storiesHash;
-
-    console.log('selectStory', { hash, kindOrId, story });
+    const hash = storiesHash;
 
     if (!story) {
       const real = sanitize(kindOrId);
-      const s = ref ? hash[`${ref}_${real}`] : hash[real];
+      const s = hash[real];
       // eslint-disable-next-line no-nested-ternary
       const id = s ? (s.children ? s.children[0] : s.id) : kindOrId;
       navigate(`/${viewMode}/${id}`);
@@ -229,7 +217,7 @@ const initStoriesApi = ({
 
       selectStory(id);
     } else {
-      const id = ref ? `${ref}_${toId(kindOrId, story)}` : toId(kindOrId, story);
+      const id = toId(kindOrId, story);
       if (hash[id]) {
         selectStory(id);
       } else {
