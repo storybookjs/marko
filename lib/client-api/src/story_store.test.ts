@@ -223,59 +223,12 @@ describe('preview.story_store', () => {
     });
   });
 
-  describe('dumpStoryBook/getStoriesForManager', () => {
-    it('should return nothing when empty', () => {
-      const store = new StoryStore({ channel });
-      expect(store.dumpStoryBook()).toEqual([]);
-      expect(Object.keys(store.getStoriesForManager())).toEqual([]);
-    });
-
-    it('should return storybook with stories', () => {
-      const store = new StoryStore({ channel });
-
-      store.addStory(...make('kind-1', 'story-1.1', () => 0));
-      store.addStory(...make('kind-1', 'story-1.2', () => 0));
-      store.addStory(...make('kind-2', 'story-2.1', () => 0));
-      store.addStory(...make('kind-2', 'story-2.2', () => 0));
-
-      expect(store.dumpStoryBook()).toEqual([
-        {
-          kind: 'kind-1',
-          stories: ['story-1.1', 'story-1.2'],
-        },
-        {
-          kind: 'kind-2',
-          stories: ['story-2.1', 'story-2.2'],
-        },
-      ]);
-
-      expect(Object.keys(store.getStoriesForManager())).toEqual([
-        'kind-1--story-1-1',
-        'kind-1--story-1-2',
-        'kind-2--story-2-1',
-        'kind-2--story-2-2',
-      ]);
-    });
-  });
-
-  describe('getStoryFileName', () => {
-    it('should return the filename of the first story passed for the kind', () => {
-      const store = new StoryStore({ channel });
-      store.addStory(...make('kind-1', 'story-1.1', () => 0, { fileName: 'foo.js' }));
-      store.addStory(...make('kind-1', 'story-1.2', () => 0, { fileName: 'foo-2.js' }));
-      store.addStory(...make('kind-2', 'story-2.1', () => 0, { fileName: 'bar.js' }));
-
-      expect(store.getStoryFileName('kind-1')).toBe('foo.js');
-      expect(store.getStoryFileName('kind-2')).toBe('bar.js');
-    });
-  });
-
   describe('removeStoryKind', () => {
     it('should not error even if there is no kind', () => {
       const store = new StoryStore({ channel });
       store.removeStoryKind('kind');
     });
-    it('should remove the kind in both modern and legacy APIs', () => {
+    it('should remove the kind', () => {
       const store = new StoryStore({ channel });
       addons.setChannel(channel);
       store.addStory(...make('kind-1', 'story-1.1', () => 0));
@@ -285,10 +238,6 @@ describe('preview.story_store', () => {
 
       store.removeStoryKind('kind-1');
 
-      // _legacydata
-      expect(store.hasStory('kind-1', 'story-1.1')).toBeFalsy();
-      expect(store.hasStory('kind-2', 'story-2.1')).toBeTruthy();
-
       // _data
       expect(store.fromId(toId('kind-1', 'story-1.1'))).toBeFalsy();
       expect(store.fromId(toId('kind-2', 'story-2.1'))).toBeTruthy();
@@ -296,7 +245,7 @@ describe('preview.story_store', () => {
   });
 
   describe('remove', () => {
-    it('should remove the kind in both modern and legacy APIs', () => {
+    it('should remove the story', () => {
       const store = new StoryStore({ channel });
       addons.setChannel(channel);
       store.addStory(...make('kind-1', 'story-1.1', () => 0));
@@ -304,51 +253,9 @@ describe('preview.story_store', () => {
 
       store.remove(toId('kind-1', 'story-1.1'));
 
-      // _legacydata
-      expect(store.hasStory('kind-1', 'story-1.1')).toBeFalsy();
-      expect(store.hasStory('kind-1', 'story-1.2')).toBeTruthy();
-
       // _data
       expect(store.fromId(toId('kind-1', 'story-1.1'))).toBeFalsy();
       expect(store.fromId(toId('kind-1', 'story-1.2'))).toBeTruthy();
-    });
-  });
-
-  describe('getStoryAndParameters', () => {
-    it('should return parameters that we passed in', () => {
-      const store = new StoryStore({ channel });
-      const story = jest.fn();
-      const parameters = {
-        fileName: 'foo.js',
-        parameter: 'value',
-      };
-      store.addStory(...make('kind', 'name', story, parameters));
-
-      expect(store.getStoryAndParameters('kind', 'name').parameters).toEqual(parameters);
-    });
-  });
-
-  describe('getStoryWithContext', () => {
-    it('should return a function that calls the story with the context', () => {
-      const store = new StoryStore({ channel });
-      const storyFn = jest.fn();
-      const parameters = {
-        fileName: 'foo.js',
-        parameter: 'value',
-      };
-      store.addStory(...make('kind', 'name', storyFn, parameters));
-
-      const storyWithContext = store.getStoryWithContext('kind', 'name');
-      storyWithContext();
-      const { hooks } = store.fromId(toId('kind', 'name'));
-      expect(storyFn).toHaveBeenCalledWith({
-        id: 'kind--name',
-        name: 'name',
-        kind: 'kind',
-        story: 'name',
-        parameters,
-        hooks,
-      });
     });
   });
 
