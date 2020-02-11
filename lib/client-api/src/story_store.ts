@@ -287,10 +287,9 @@ export default class StoryStore extends EventEmitter {
 
   removeStoryKind(kind: string) {
     this.cleanHooksForKind(kind);
-    this._data = Object.entries(this._data).reduce((acc, [id, story]) => {
-      if (story.kind !== kind) {
-        Object.assign(acc, { [id]: story });
-      }
+    this._data = Object.entries(this._data).reduce((acc: StoreData, [id, story]) => {
+      if (story.kind !== kind) acc[id] = story;
+
       return acc;
     }, {});
     this.pushToManager();
@@ -312,7 +311,8 @@ export default class StoryStore extends EventEmitter {
           parameters: { fileName },
         } = story;
 
-        if (!kinds[kind]) Object.assign(kinds, { [kind]: { kind, fileName, stories: [] } });
+        // eslint-disable-next-line no-param-reassign
+        if (!kinds[kind]) kinds[kind] = { kind, fileName, stories: [] };
 
         kinds[kind].stories.push({ name, render: storyFn });
 
