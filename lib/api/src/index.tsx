@@ -22,6 +22,7 @@ import {
 } from '@storybook/core-events';
 import { RenderData as RouterData } from '@storybook/router';
 import { Listener } from '@storybook/channels';
+import { logger } from '@storybook/client-logger';
 import initProviderApi, { SubAPI as ProviderAPI, Provider } from './init-provider-api';
 
 import { createContext } from './context';
@@ -34,11 +35,8 @@ import initNotifications, {
   SubState as NotificationState,
   SubAPI as NotificationAPI,
 } from './modules/notifications';
-import initStories, {
-  SubState as StoriesSubState,
-  SubAPI as StoriesAPI,
-  StoriesRaw,
-} from './modules/stories';
+import initStories, { SubState as StoriesSubState, SubAPI as StoriesAPI } from './modules/stories';
+import { StoriesRaw } from './lib/stories';
 import initLayout, {
   ActiveTabs,
   SubState as LayoutSubState,

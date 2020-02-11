@@ -1,6 +1,7 @@
 import { State, API } from '@storybook/api';
-import { ViewMode } from '@storybook/api/dist/modules/addons';
 import { FunctionComponent, ReactNode } from 'react';
+
+type ViewMode = State['viewMode'];
 
 export interface PreviewProps {
   api: API;

@@ -123,7 +123,7 @@ Link.displayName = 'Link';
 
 export interface StoriesProps {
   loading: boolean;
-  stories: State['StoriesHash'];
+  stories: State['storiesHash'];
   storyId?: undefined | string;
   className?: undefined | string;
 }

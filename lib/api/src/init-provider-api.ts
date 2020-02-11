@@ -17,6 +17,7 @@ export interface Provider {
   channel?: Channel;
   renderPreview?: IframeRenderer;
   handleAPI(api: API): void;
+  getConfig(): Record<string, any>;
   [key: string]: any;
 }
 
