@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`json-to-csf-compiler kitchen_sink.json 1`] = `
+"import { withA11y } from '@storybook/addon-a11y';
+import { withLinks } from '@storybook/addon-links';
+import { array, boolean, color, date, number, object, select, text, withKnobs } from '@storybook/addon-knobs';
+import { withActions } from '@storybook/addon-actions';
+
+export default {
+  title: 'Kitchen Sink',
+  decorators: [
+    withA11y,
+    withLinks,
+    withKnobs
+  ],
+  parameters: {
+    backgrounds: [
+      {
+        name: 'light',
+        value: '#eeeeee'
+      },
+      {
+        name: 'dark',
+        value: '#222222',
+        default: true
+      }
+    ],
+    options: {
+      selectedPanel: 'storybook/a11y/panel'
+    },
+    server: {
+      params: {
+        color: 'red'
+      }
+    }
+  }
+};
+
+export const Heading = () => {
+  return {
+    name: text('Name', 'John Doe'),
+    age: number('Age', 44, {}),
+  };
+};
+Heading.story = {
+  decorators: [
+    withActions(
+      'click',
+      'contextmenu',
+      {
+        clearOnStoryChange: false
+      }
+    )
+  ],
+  name: 'Heading',
+  parameters: {
+    notes: 'My notes on some bold text',
+    server: {
+      id: 'demo/heading',
+      params: {
+        color: 'orange'
+      }
+    }
+  }
+};
+
+export const Button = () => {};
+Button.story = {
+  name: 'Button',
+  parameters: {
+    notes: 'My notes on a button',
+    server: {
+      id: 'demo/button'
+    }
+  }
+};
+"
+`;

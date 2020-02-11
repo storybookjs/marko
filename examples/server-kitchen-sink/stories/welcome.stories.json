@@ -1,0 +1,14 @@
+{
+  "title": "Welcome",
+  "addons": ["links"],
+  "stories": [
+    {
+      "name": "Welcome",
+      "parameters": {
+        "server": {
+          "id": "welcome/welcome"
+        }
+      }
+    }
+  ]
+}

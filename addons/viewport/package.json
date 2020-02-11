@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-viewport",
-  "version": "6.0.0-alpha.1",
+  "version": "6.0.0-alpha.10",
   "description": "Storybook addon to change the viewport size to mobile",
   "keywords": [
     "addon",
@@ -16,24 +16,24 @@
     "directory": "addons/viewport"
   },
   "license": "MIT",
+  "main": "dist/preview.js",
+  "types": "dist/preview.d.ts",
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
     "*.d.ts"
   ],
-  "main": "dist/preview.js",
-  "types": "dist/preview.d.ts",
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-alpha.1",
-    "@storybook/api": "6.0.0-alpha.1",
-    "@storybook/client-logger": "6.0.0-alpha.1",
-    "@storybook/components": "6.0.0-alpha.1",
-    "@storybook/core-events": "6.0.0-alpha.1",
-    "@storybook/theming": "6.0.0-alpha.1",
+    "@storybook/addons": "6.0.0-alpha.10",
+    "@storybook/api": "6.0.0-alpha.10",
+    "@storybook/client-logger": "6.0.0-alpha.10",
+    "@storybook/components": "6.0.0-alpha.10",
+    "@storybook/core-events": "6.0.0-alpha.10",
+    "@storybook/theming": "6.0.0-alpha.10",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "memoizerific": "^1.11.3",
@@ -44,7 +44,9 @@
     "@types/util-deprecate": "^1.0.0"
   },
   "peerDependencies": {
-    "react": "*"
+    "react": "*",
+    "react-dom": "*",
+    "regenerator-runtime": "*"
   },
   "publishConfig": {
     "access": "public"

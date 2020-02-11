@@ -1,5 +1,4 @@
 import { PropType } from '@storybook/components';
-import { isNil } from 'lodash';
 import { DocgenFlowType } from '../types';
 import { createSummaryValue, isTooLongForTypeSummary } from '../../utils';
 
@@ -13,11 +12,11 @@ interface DocgenFlowUnionType extends DocgenFlowType {
 }
 
 function generateUnion({ name, raw, elements }: DocgenFlowUnionType): PropType {
-  if (!isNil(raw)) {
+  if (raw != null) {
     return createSummaryValue(raw);
   }
 
-  if (!isNil(elements)) {
+  if (elements != null) {
     return createSummaryValue(elements.map(x => x.value).join(' | '));
   }
 
@@ -25,7 +24,7 @@ function generateUnion({ name, raw, elements }: DocgenFlowUnionType): PropType {
 }
 
 function generateFuncSignature({ type, raw }: DocgenFlowType): PropType {
-  if (!isNil(raw)) {
+  if (raw != null) {
     return createSummaryValue(raw);
   }
 
@@ -33,7 +32,7 @@ function generateFuncSignature({ type, raw }: DocgenFlowType): PropType {
 }
 
 function generateObjectSignature({ type, raw }: DocgenFlowType): PropType {
-  if (!isNil(raw)) {
+  if (raw != null) {
     return !isTooLongForTypeSummary(raw) ? createSummaryValue(raw) : createSummaryValue(type, raw);
   }
 
@@ -47,7 +46,7 @@ function generateSignature(flowType: DocgenFlowType): PropType {
 }
 
 function generateDefault({ name, raw }: DocgenFlowType): PropType {
-  if (!isNil(raw)) {
+  if (raw != null) {
     return !isTooLongForTypeSummary(raw) ? createSummaryValue(raw) : createSummaryValue(name, raw);
   }
 
@@ -56,7 +55,7 @@ function generateDefault({ name, raw }: DocgenFlowType): PropType {
 
 export function createType(type: DocgenFlowType): PropType {
   // A type could be null if a defaultProp has been provided without a type definition.
-  if (isNil(type)) {
+  if (type == null) {
     return null;
   }
 

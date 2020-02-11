@@ -8,7 +8,7 @@ import { Module, API } from '../index';
 
 export interface Version {
   version: string;
-  info?: string;
+  info?: { plain: string };
   [key: string]: any;
 }
 

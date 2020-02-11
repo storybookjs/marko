@@ -1,4 +1,12 @@
-import React, { ReactElement, Component, useContext, useEffect, useMemo, useRef } from 'react';
+import React, {
+  ReactElement,
+  Component,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  ReactNode,
+} from 'react';
 import memoize from 'memoizerific';
 // @ts-ignore shallow-equal is not in DefinitelyTyped
 import shallowEqualObjects from 'shallow-equal/objects';
@@ -31,7 +39,11 @@ import initStories, {
   SubAPI as StoriesAPI,
   StoriesRaw,
 } from './modules/stories';
-import initLayout, { SubState as LayoutSubState, SubAPI as LayoutAPI } from './modules/layout';
+import initLayout, {
+  ActiveTabs,
+  SubState as LayoutSubState,
+  SubAPI as LayoutAPI,
+} from './modules/layout';
 import initShortcuts, {
   SubState as ShortcutsSubState,
   SubAPI as ShortcutsAPI,
@@ -43,6 +55,7 @@ import initVersions, {
 } from './modules/versions';
 
 export { Options as StoreOptions, Listener as ChannelListener };
+export { ActiveTabs };
 
 const ManagerContext = createContext({ api: undefined, state: getInitialState({}) });
 
@@ -99,7 +112,7 @@ interface StoreData {
 }
 
 interface Children {
-  children: Component | ((props: Combo) => Component);
+  children: ReactNode | ((props: Combo) => ReactNode);
 }
 
 type StatePartial = Partial<State>;
@@ -243,11 +256,10 @@ class ManagerProvider extends Component<Props, State> {
       api: this.api,
     };
 
-    return (
-      <ManagerContext.Provider value={value}>
-        {typeof children === 'function' ? children(value) : children}
-      </ManagerContext.Provider>
-    );
+    // @ts-ignore
+    const content: ReactNode = typeof children === 'function' ? children(value) : children;
+
+    return <ManagerContext.Provider value={value}>{content}</ManagerContext.Provider>;
   }
 }
 
