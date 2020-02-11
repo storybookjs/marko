@@ -223,10 +223,7 @@ const initStoriesApi = ({
       kind.match(/\.|\|/)
     );
 
-    const { storySort = () => 0 } = provider.getConfig();
-
     const storiesHashOutOfOrder = Object.entries(input)
-      .sort(storySort)
       .map(([k, v]) => v)
       .reduce((acc, item) => {
         const { kind, parameters } = item;
