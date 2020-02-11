@@ -9,7 +9,7 @@ import { StoriesHash } from '@storybook/api/dist/modules/stories';
 import { shortcutToHumanString } from '../libs/shortcut';
 
 import ListItemIcon from '../components/sidebar/ListItemIcon';
-import Sidebar from '../components/sidebar/Sidebar';
+import SidebarComponent from '../components/sidebar/Sidebar';
 
 const focusableUIElements = {
   storySearchField: 'storybook-explorer-searchfield',
@@ -243,10 +243,10 @@ export const mapper = ({ state, api }: Combo) => {
   };
 };
 
-const Nav: FunctionComponent<any> = props => (
+const Sidebar: FunctionComponent<any> = props => (
   <Consumer filter={mapper}>
-    {(fromState: ReturnType<typeof mapper>) => <Sidebar {...props} {...fromState} />}
+    {(fromState: ReturnType<typeof mapper>) => <SidebarComponent {...props} {...fromState} />}
   </Consumer>
 );
 
-export default Nav;
+export default Sidebar;

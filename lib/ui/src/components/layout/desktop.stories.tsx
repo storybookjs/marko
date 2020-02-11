@@ -45,7 +45,7 @@ export const Default = ({ props }: { props: DesktopProps }) => <Desktop {...prop
 export const NoAddons = ({ props }: { props: DesktopProps }) => (
   <Desktop {...props} panelCount={0} />
 );
-export const NoNav = ({ props }: { props: DesktopProps }) => (
+export const NoSidebar = ({ props }: { props: DesktopProps }) => (
   <Desktop {...props} options={{ ...props.options, showNav: false }} />
 );
 export const NoPanel = ({ props }: { props: DesktopProps }) => (
@@ -57,7 +57,7 @@ export const BottomPanel = ({ props }: { props: DesktopProps }) => (
 export const Fullscreen = ({ props }: { props: DesktopProps }) => (
   <Desktop {...props} options={{ ...props.options, isFullscreen: true }} />
 );
-export const NoPanelNoNav = ({ props }: { props: DesktopProps }) => (
+export const NoPanelNoSidebar = ({ props }: { props: DesktopProps }) => (
   <Desktop {...props} options={{ ...props.options, showPanel: false, showNav: false }} />
 );
 export const Page = ({ props }: { props: DesktopProps }) => (

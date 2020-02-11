@@ -33,7 +33,7 @@ export const panels: Collection = {
   },
 };
 
-const realNavProps: SidebarProps = {
+const realSidebarProps: SidebarProps = {
   stories: mockDataset.withRoot,
   menu: [],
 };
@@ -96,7 +96,7 @@ class PlaceholderClock extends Component<{ color: string }, { count: number }> {
   }
 }
 
-const MockNav: FunctionComponent<any> = props => (
+const MockSidebar: FunctionComponent<any> = props => (
   <PlaceholderClock color="hotpink">
     <pre>{JSON.stringify(props, null, 2)}</pre>
   </PlaceholderClock>
@@ -118,7 +118,7 @@ export const MockPage: FunctionComponent<any> = props => (
 );
 
 export const mockProps: DesktopProps = {
-  Nav: MockNav,
+  Sidebar: MockSidebar,
   Preview: MockPreview,
   Panel: MockPanel,
   Notifications: () => null,
@@ -139,7 +139,7 @@ export const mockProps: DesktopProps = {
 };
 
 export const realProps: DesktopProps = {
-  Nav: () => <Sidebar {...realNavProps} />,
+  Sidebar: () => <Sidebar {...realSidebarProps} />,
   Preview: () => <Preview {...previewProps} />,
   Notifications: () => null,
   Panel: () => (

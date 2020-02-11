@@ -8,7 +8,7 @@ import { Route } from '@storybook/router';
 import { State } from '@storybook/api';
 import { Mobile } from './components/layout/mobile';
 import { Desktop } from './components/layout/desktop';
-import Nav from './containers/nav';
+import Sidebar from './containers/sidebar';
 import Preview from './containers/preview';
 import Panel from './containers/panel';
 import Notifications from './containers/notifications';
@@ -16,7 +16,7 @@ import Notifications from './containers/notifications';
 import SettingsPages from './settings';
 
 const createProps = memoize(1)(() => ({
-  Nav,
+  Sidebar,
   Preview,
   Panel,
   Notifications,
