@@ -33,7 +33,7 @@ const CustomScrollArea = styled(ScrollArea)({
 });
 
 export interface SidebarProps {
-  stories: State['StoriesHash'];
+  stories: State['storiesHash'];
   menu: any[];
   storyId?: string;
   menuHighlighted?: boolean;

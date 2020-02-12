@@ -3,13 +3,16 @@ import React, { FunctionComponent } from 'react';
 import memoize from 'memoizerific';
 
 import { Badge } from '@storybook/components';
-import { Consumer, Combo } from '@storybook/api';
+import { Consumer, Combo, State } from '@storybook/api';
 
-import { StoriesHash } from '@storybook/api/dist/modules/stories';
 import { shortcutToHumanString } from '../libs/shortcut';
 
 import ListItemIcon from '../components/sidebar/ListItemIcon';
 import SidebarComponent from '../components/sidebar/Sidebar';
+import { isStory } from '../components/sidebar/treeview/utils';
+
+type StoriesHash = State['storiesHash'];
+type Item = StoriesHash[keyof StoriesHash];
 
 const focusableUIElements = {
   storySearchField: 'storybook-explorer-searchfield',
@@ -114,9 +117,7 @@ export const collapseAllStories = (stories: StoriesHash) => {
   const componentIdToLeafId: Record<string, string> = {};
 
   // 1) remove all leaves
-  const leavesRemoved = Object.values(stories).filter(
-    item => !(item.isLeaf && stories[item.parent].isComponent)
-  );
+  const leavesRemoved = Object.values(stories).filter(item => isStory(item));
 
   // 2) make all components leaves and rewrite their ID's to the first leaf child
   const componentsFlattened = leavesRemoved.map(item => {
@@ -169,7 +170,7 @@ export const collapseAllStories = (stories: StoriesHash) => {
 
   const result = {} as StoriesHash;
   childrenRewritten.forEach(item => {
-    result[item.id] = item;
+    result[item.id] = item as Item;
   });
   return result;
 };
@@ -212,7 +213,7 @@ export const collapseDocsOnlyStories = (storiesHash: StoriesHash) => {
 
   const result = {} as StoriesHash;
   docsOnlyComponentsCollapsed.forEach(item => {
-    result[item.id] = item;
+    result[item.id] = item as Item;
   });
   return result;
 };

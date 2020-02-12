@@ -32,6 +32,7 @@ export class FakeProvider extends Provider {
     addons.loadAddons(api);
   }
 
+  // @ts-ignore
   getConfig() {
     return {};
   }

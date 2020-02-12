@@ -45,6 +45,7 @@
     "shallow-equal": "^1.1.0",
     "store2": "^2.7.1",
     "telejson": "^3.2.0",
+    "ts-dedent": "^1.1.1",
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
