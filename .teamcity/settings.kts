@@ -424,6 +424,7 @@ object Coverage : BuildType({
 
 object TestWorkflow : BuildType({
     name = "Test Workflow"
+    type = Type.COMPOSITE
 
     dependencies {
         snapshot(Build) {}
