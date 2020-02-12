@@ -1,6 +1,7 @@
 package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.ui.*
 
 /*
@@ -18,4 +19,14 @@ changeBuildType(RelativeId("Examples")) {
         "Unexpected option value: type = $type"
     }
     type = BuildTypeSettings.Type.REGULAR
+
+    expectSteps {
+    }
+    steps {
+        insert(0) {
+            script {
+                scriptContent = "echo 'Done'"
+            }
+        }
+    }
 }
