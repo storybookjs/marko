@@ -48,6 +48,8 @@ project {
     buildType(Test)
     buildType(Coverage)
 
+    subProject(ExamplesProject)
+
     features {
         githubConnection {
             id = "PROJECT_EXT_6"
