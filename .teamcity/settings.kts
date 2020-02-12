@@ -2,6 +2,7 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.ScriptBuildStep
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.projectFeatures.githubConnection
+import jetbrains.buildServer.configs.kotlin.v2019_2.ui.add
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -28,7 +29,16 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2019.2"
 
 project {
+    defaultTemplate = Common
+
     buildType(Build)
+
+    sequential {
+        buildType(Build)
+        parallel {
+
+        }
+    }
 
     features {
         githubConnection {
@@ -40,6 +50,31 @@ project {
     }
 }
 
+object Common: Template({
+    name = "Common"
+
+    vcs {
+        root(DslContext.settingsRoot)
+    }
+})
+
+var BuildType.script: String
+    get() = ""
+    set(value) {
+        steps {
+            script {
+                scriptContent = """
+                    #!/bin/bash
+                    set -e -x
+                    
+                    $value
+                """.trimIndent()
+                dockerImage = "node:lts"
+                dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+            }
+        }
+    }
+
 object Build : BuildType({
     name = "Build"
 
@@ -48,22 +83,9 @@ object Build : BuildType({
         -:**/node_modules/** => dist.tar.gz
     """.trimIndent()
 
-    vcs {
-        root(DslContext.settingsRoot)
-    }
-
-    steps {
-        script {
-            scriptContent = """
-                #!/bin/bash
-                set -e -x
-                
-                yarn install
-                yarn repo-dirty-check
-                yarn bootstrap --core
-            """.trimIndent()
-            dockerImage = "node:lts"
-            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
-        }
-    }
+    script = """
+        yarn install
+        yarn repo-dirty-check
+        yarn bootstrap --core
+    """.trimIndent()
 })
