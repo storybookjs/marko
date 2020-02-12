@@ -5,6 +5,7 @@ import memoize from 'memoizerific';
 import { Badge } from '@storybook/components';
 import { Consumer, Combo, State } from '@storybook/api';
 
+import { Group, Story } from '@storybook/api/dist/lib/stories';
 import { shortcutToHumanString } from '../libs/shortcut';
 
 import ListItemIcon from '../components/sidebar/ListItemIcon';
@@ -117,11 +118,13 @@ export const collapseAllStories = (stories: StoriesHash) => {
   const componentIdToLeafId: Record<string, string> = {};
 
   // 1) remove all leaves
-  const leavesRemoved = Object.values(stories).filter(item => isStory(item));
+  const leavesRemoved = Object.values(stories).filter(
+    item => !(item.isLeaf && stories[item.parent].isComponent)
+  );
 
   // 2) make all components leaves and rewrite their ID's to the first leaf child
   const componentsFlattened = leavesRemoved.map(item => {
-    const { id, isComponent, children, ...rest } = item;
+    const { id, isComponent, isRoot, children, ...rest } = item;
 
     // this is a folder, so just leave it alone
     if (!isComponent) {
@@ -140,6 +143,8 @@ export const collapseAllStories = (stories: StoriesHash) => {
     const component = {
       ...rest,
       id: leafId,
+      kind: (stories[leafId] as Story).kind,
+      isRoot: false,
       isLeaf: true,
       isComponent: true,
       children: [] as string[],
@@ -185,6 +190,9 @@ export const collapseDocsOnlyStories = (storiesHash: StoriesHash) => {
     }
     return true;
   });
+
+  // console.dir(docsOnlyStoriesRemoved, { depth: 10 });
+
   const docsOnlyComponentsCollapsed = docsOnlyStoriesRemoved.map(item => {
     // collapse docs-only components
     const { isComponent, children, id } = item;

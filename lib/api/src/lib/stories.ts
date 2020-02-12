@@ -37,7 +37,7 @@ export interface Story {
   name: string;
   kind: string;
   children?: StoryId[];
-  isComponent: false;
+  isComponent: boolean;
   isRoot: false;
   isLeaf: true;
   parameters?: {
