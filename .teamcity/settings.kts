@@ -27,6 +27,8 @@ version = "2019.2"
 
 project {
 
+    buildType(Build)
+
     features {
         githubConnection {
             id = "PROJECT_EXT_6"
@@ -36,3 +38,7 @@ project {
         }
     }
 }
+
+object Build : BuildType({
+    name = "Build"
+})
