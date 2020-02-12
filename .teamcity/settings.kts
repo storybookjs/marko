@@ -266,28 +266,29 @@ object Examples3 : BuildType({
 
 object AggregateExamples : BuildType({
     name = "Aggregate Examples"
-    type = Type.COMPOSITE
 
     dependencies {
         dependency(Examples1) {
             snapshot {}
             artifacts {
-                artifactRules = "built-storybooks.tar.gz!** => built-storybooks.tar.gz"
+                artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
             }
         }
         dependency(Examples2) {
             snapshot {}
             artifacts {
-                artifactRules = "built-storybooks.tar.gz!** => built-storybooks.tar.gz"
+                artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
             }
         }
         dependency(Examples3) {
             snapshot {}
             artifacts {
-                artifactRules = "built-storybooks.tar.gz!** => built-storybooks.tar.gz"
+                artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
             }
         }
     }
+
+    artifactRules = "built-storybooks => built-storybooks.tar.gz"
 })
 
 object E2E : BuildType({
