@@ -21,26 +21,15 @@ interface Output {
   files: string[];
 }
 
-const getPreviewFile = (configDir: string): string | false => {
-  const preview = path.join(configDir, 'preview.js');
-  const previewTS = path.join(configDir, 'preview.ts');
-  const config = path.join(configDir, 'config.js');
-  const configTS = path.join(configDir, 'config.ts');
+const supportedExtensions = ['ts', 'tsx', 'js', 'jsx'];
+const supportedFilenames = ['preview', 'config'];
 
-  if (isFile(previewTS)) {
-    return previewTS;
-  }
-  if (isFile(preview)) {
-    return preview;
-  }
-  if (isFile(configTS)) {
-    return configTS;
-  }
-  if (isFile(config)) {
-    return config;
-  }
+export const getPreviewFile = (configDir: string): string | false => {
+  const allFilenames = supportedFilenames
+    .flatMap(filename => supportedExtensions.map(ext => `${filename}.${ext}`))
+    .map(filename => path.join(configDir, filename));
 
-  return false;
+  return allFilenames.find(isFile) || false;
 };
 
 const getMainFile = (configDir: string): string | false => {
