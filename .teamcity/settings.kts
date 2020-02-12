@@ -1,4 +1,6 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.ScriptBuildStep
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.projectFeatures.githubConnection
 
 /*
@@ -44,5 +46,20 @@ object Build : BuildType({
 
     vcs {
         root(DslContext.settingsRoot)
+    }
+
+    steps {
+        script {
+            scriptContent = """
+                #!/bin/bash
+                set -e -x
+                
+                yarn install
+                yarn repo-dirty-check
+                yarn bootstrap --core
+            """.trimIndent()
+            dockerImage = "node:lts"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+        }
     }
 })
