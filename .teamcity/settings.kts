@@ -85,6 +85,7 @@ object Build : BuildType({
 
     artifactRules = """
         +:**/dist/** => dist.tar.gz
+        +:**/dll/** => dist.tar.gz
         -:**/node_modules/** => dist.tar.gz
     """.trimIndent()
 })
