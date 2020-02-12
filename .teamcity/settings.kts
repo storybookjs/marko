@@ -441,7 +441,7 @@ object Lint : BuildType({
                 set -e -x
                 
                 yarn install
-                yarn lint
+                yarn lint:js . --debug
             """.trimIndent()
             dockerImage = "node:lts"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
