@@ -257,19 +257,19 @@ object Examples : BuildType({
         dependency(Examples1) {
             snapshot {}
             artifacts {
-                artifactRules = "built-storybooks!** => built-storybooks"
+                artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
             }
         }
         dependency(Examples2) {
             snapshot {}
             artifacts {
-                artifactRules = "built-storybooks!** => built-storybooks"
+                artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
             }
         }
         dependency(Examples3) {
             snapshot {}
             artifacts {
-                artifactRules = "built-storybooks!** => built-storybooks"
+                artifactRules = "built-storybooks!.tar.gz** => built-storybooks"
             }
         }
     }
