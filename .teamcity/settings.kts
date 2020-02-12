@@ -49,6 +49,21 @@ project {
 
     subProject(ExamplesProject)
 
+    buildTypesOrderIds = arrayListOf(
+            RelativeId("TestWorkflow"), 
+            RelativeId("Build"), 
+            RelativeId("Packtracker"), 
+            RelativeId("Chromatic"), 
+            RelativeId("E2E"), 
+            RelativeId("SmokeTests"), 
+            RelativeId("Frontpage"), 
+            RelativeId("Docs"), 
+            RelativeId("Lint"), 
+            RelativeId("Test"),
+            RelativeId("Coverage")
+    )
+
+
     features {
         githubConnection {
             id = "PROJECT_EXT_6"
@@ -63,7 +78,7 @@ object Common: Template({
     name = "Common"
 
     vcs {
-        root(DslContext.settingsRoot)
+        root(DslContext.settingsRoot, "-:.teamcity")
     }
 
     features {
@@ -109,7 +124,7 @@ object Chromatic : BuildType({
     name = "Chromatic"
 
     dependencies {
-        dependency(Examples) {
+        dependency(AggregateExamples) {
             snapshot {}
             artifacts {
                 artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
@@ -185,7 +200,7 @@ object ExamplesProject : Project({
     buildType(Examples1)
     buildType(Examples2)
     buildType(Examples3)
-    buildType(Examples)
+    buildType(AggregateExamples)
 })
 
 object ExamplesTemplate : Template({
@@ -249,39 +264,37 @@ object Examples3 : BuildType({
     }
 })
 
-object Examples : BuildType({
-    name = "Examples"
+object AggregateExamples : BuildType({
+    name = "Aggregate Examples"
     type = Type.COMPOSITE
 
     dependencies {
         dependency(Examples1) {
             snapshot {}
             artifacts {
-                artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
+                artifactRules = "built-storybooks.tar.gz!** => built-storybooks.tar.gz"
             }
         }
         dependency(Examples2) {
             snapshot {}
             artifacts {
-                artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
+                artifactRules = "built-storybooks.tar.gz!** => built-storybooks.tar.gz"
             }
         }
         dependency(Examples3) {
             snapshot {}
             artifacts {
-                artifactRules = "built-storybooks!.tar.gz** => built-storybooks"
+                artifactRules = "built-storybooks.tar.gz!** => built-storybooks.tar.gz"
             }
         }
     }
-
-    artifactRules = "built-storybooks => built-storybooks.tar.gz"
 })
 
 object E2E : BuildType({
     name = "E2E"
 
     dependencies {
-        dependency(Examples) {
+        dependency(AggregateExamples) {
             snapshot {}
             artifacts {
                 artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
@@ -508,12 +521,13 @@ object Coverage : BuildType({
 object TestWorkflow : BuildType({
     name = "Test Workflow"
     type = Type.COMPOSITE
+    maxRunningBuilds = 2
 
     dependencies {
         snapshot(Build) {}
         snapshot(Chromatic) {}
         snapshot(Packtracker) {}
-        snapshot(Examples) {}
+        snapshot(AggregateExamples) {}
         snapshot(E2E) {}
         snapshot(SmokeTests) {}
         snapshot(Lint) {}
