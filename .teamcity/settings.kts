@@ -181,7 +181,6 @@ object ExamplesProject : Project({
     name = "Examples"
 
     template(ExamplesTemplate)
-    defaultTemplate = ExamplesTemplate
 
     buildType(Examples1)
     buildType(Examples2)
@@ -224,6 +223,7 @@ object ExamplesTemplate : Template({
 
 object Examples1 : BuildType({
     name = "Examples 1"
+    templates = listOf(ExamplesTemplate)
 
     params {
         param("env.CIRCLE_NODE_INDEX", "0")
@@ -232,6 +232,7 @@ object Examples1 : BuildType({
 
 object Examples2 : BuildType({
     name = "Examples 2"
+    templates = listOf(ExamplesTemplate)
 
     params {
         param("env.CIRCLE_NODE_INDEX", "0")
@@ -240,6 +241,7 @@ object Examples2 : BuildType({
 
 object Examples3 : BuildType({
     name = "Examples 3"
+    templates = listOf(ExamplesTemplate)
 
     params {
         param("env.CIRCLE_NODE_INDEX", "0")
