@@ -26,9 +26,7 @@ create(DslContext.projectId, Template({
                 #!/bin/bash
                 set -e -x
                 
-                yarn install
-                yarn repo-dirty-check
-                yarn bootstrap --core
+                %script%
             """.trimIndent()
             dockerImage = "node:lts"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
