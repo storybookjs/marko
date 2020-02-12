@@ -1,4 +1,5 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.commitStatusPublisher
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.ScriptBuildStep
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.projectFeatures.githubConnection
@@ -62,6 +63,19 @@ object Common: Template({
 
     vcs {
         root(DslContext.settingsRoot)
+    }
+
+    features {
+        commitStatusPublisher {
+            id = "BUILD_EXT_1"
+            publisher = github {
+                githubUrl = "https://api.github.com"
+                authType = personalToken {
+                    token = "credentialsJSON:5273320e-14be-4317-951e-a54c4dcca35d"
+                }
+            }
+            param("github_oauth_user", "Hypnosphi")
+        }
     }
 })
 
@@ -162,9 +176,19 @@ object Packtracker : BuildType({
     }
 })
 
-object Examples : BuildType({
+object ExamplesProject : Project({
     name = "Examples"
 
+    template(ExamplesTemplate)
+    defaultTemplate = ExamplesTemplate
+
+    buildType(Examples1)
+    buildType(Examples2)
+    buildType(Examples3)
+    buildType(Examples)
+})
+
+object ExamplesTemplate : Template({
     dependencies {
         dependency(Build) {
             snapshot {}
@@ -189,6 +213,59 @@ object Examples : BuildType({
     }
 
     artifactRules = "built-storybooks => built-storybooks.tar.gz"
+
+    params {
+        param("env.CIRCLE_NODE_TOTAL", "3")
+    }
+})
+
+object Examples1 : BuildType({
+    name = "Examples 1"
+
+    params {
+        param("env.CIRCLE_NODE_INDEX", "0")
+    }
+})
+
+object Examples2 : BuildType({
+    name = "Examples 2"
+
+    params {
+        param("env.CIRCLE_NODE_INDEX", "0")
+    }
+})
+
+object Examples3 : BuildType({
+    name = "Examples 3"
+
+    params {
+        param("env.CIRCLE_NODE_INDEX", "0")
+    }
+})
+
+object Examples : BuildType({
+    name = "Examples"
+
+    dependencies {
+        dependency(Examples1) {
+            snapshot {}
+            artifacts {
+                artifactRules = "built-storybooks!** => built-storybooks"
+            }
+        }
+        dependency(Examples2) {
+            snapshot {}
+            artifacts {
+                artifactRules = "built-storybooks!** => built-storybooks"
+            }
+        }
+        dependency(Examples3) {
+            snapshot {}
+            artifacts {
+                artifactRules = "built-storybooks!** => built-storybooks"
+            }
+        }
+    }
 })
 
 object E2E : BuildType({
