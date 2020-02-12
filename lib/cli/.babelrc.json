@@ -1,0 +1,19 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": 8
+        },
+        "useBuiltIns": "usage",
+        "corejs": "3"
+      }
+    ]
+  ],
+  "ignore": [
+    "./src/generators/**/template",
+    "./src/generators/**/template-csf",
+    "./src/generators/**/template-mdx"
+  ]
+}
