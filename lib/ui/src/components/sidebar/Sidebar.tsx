@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useMemo } from 'react';
 
 import { styled } from '@storybook/theming';
 import { ScrollArea } from '@storybook/components';
@@ -6,6 +6,7 @@ import { State } from '@storybook/api';
 
 import SidebarHeading, { SidebarHeadingProps } from './SidebarHeading';
 import SidebarStories from './SidebarStories';
+import SidebarItem from './SidebarItem';
 
 const Heading = styled(SidebarHeading)<SidebarHeadingProps>({
   padding: '20px 20px 12px',
@@ -34,11 +35,24 @@ const CustomScrollArea = styled(ScrollArea)({
 
 export interface SidebarProps {
   stories: State['storiesHash'];
+  refs: State['refs'];
   menu: any[];
   storyId?: string;
   menuHighlighted?: boolean;
   loading?: boolean;
 }
+
+type RefType = State['refs'][keyof State['refs']];
+
+const Ref: FunctionComponent<RefType & { storyId: string }> = ({ data, id, url, storyId }) => {
+  const isLoading = !useMemo<number>(() => Object.keys(data).length, [data]);
+
+  return isLoading ? (
+    <SidebarItem loading />
+  ) : (
+    <Stories key={id} stories={data} storyId={storyId} loading={isLoading} />
+  );
+};
 
 const Sidebar: FunctionComponent<SidebarProps> = ({
   storyId,
@@ -46,11 +60,15 @@ const Sidebar: FunctionComponent<SidebarProps> = ({
   menu,
   menuHighlighted = false,
   loading = false,
+  refs = {},
 }) => (
   <Container className="container sidebar-container">
     <CustomScrollArea vertical>
       <Heading className="sidebar-header" menuHighlighted={menuHighlighted} menu={menu} />
       <Stories stories={stories} storyId={storyId} loading={loading} />
+      {Object.entries(refs).map(([k, v]) => (
+        <Ref key={k} {...v} storyId={storyId} />
+      ))}
     </CustomScrollArea>
   </Container>
 );

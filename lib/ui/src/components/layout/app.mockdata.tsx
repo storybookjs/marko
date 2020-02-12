@@ -34,6 +34,7 @@ export const panels: Collection = {
 const realSidebarProps: SidebarProps = {
   stories: mockDataset.withRoot,
   menu: [],
+  refs: {},
 };
 
 const PlaceholderBlock = styled.div(({ color }) => ({
