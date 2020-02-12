@@ -1,12 +1,4 @@
-import React, {
-  ReactElement,
-  Component,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  ReactNode,
-} from 'react';
+import React, { ReactNode, ReactElement, Component, useContext, useEffect, useMemo } from 'react';
 import memoize from 'memoizerific';
 // @ts-ignore shallow-equal is not in DefinitelyTyped
 import shallowEqualObjects from 'shallow-equal/objects';
@@ -36,6 +28,13 @@ import initNotifications, {
   SubAPI as NotificationAPI,
 } from './modules/notifications';
 import initStories, { SubState as StoriesSubState, SubAPI as StoriesAPI } from './modules/stories';
+import initRefs, {
+  SubState as RefsSubState,
+  SubAPI as RefsAPI,
+  defaultMapper,
+  getSourceType,
+  Mapper,
+} from './modules/refs';
 import { StoriesRaw } from './lib/stories';
 import initLayout, {
   ActiveTabs,
@@ -67,6 +66,7 @@ export type Module = StoreData &
 export type State = Other &
   LayoutSubState &
   StoriesSubState &
+  RefsSubState &
   NotificationState &
   VersionsSubState &
   RouterData &
@@ -76,6 +76,7 @@ export type API = AddonsAPI &
   ChannelAPI &
   ProviderAPI &
   StoriesAPI &
+  RefsAPI &
   LayoutAPI &
   NotificationAPI &
   ShortcutsAPI &
@@ -170,6 +171,7 @@ class ManagerProvider extends Component<Props, State> {
       initNotifications,
       initShortcuts,
       initStories,
+      initRefs,
       initURL,
       initVersions,
     ].map(initModule => initModule({ ...routeData, ...apiData, state: this.state }));
@@ -190,19 +192,71 @@ class ManagerProvider extends Component<Props, State> {
       }
     });
 
-    api.on(SET_STORIES, (data: { stories: StoriesRaw }) => {
-      api.setStories(data.stories);
-      const options = storyId
-        ? api.getParameters(storyId, 'options')
-        : api.getParameters(Object.keys(data.stories)[0], 'options');
-      api.setOptions(options);
-    });
-    api.on(
-      SELECT_STORY,
-      ({ kind, story, ...rest }: { kind: string; story: string; [k: string]: any }) => {
-        api.selectStory(kind, story, rest);
+    api.on(SET_STORIES, function handleSetStories(data: { stories: StoriesRaw }) {
+      // the event originates from an iframe, event.source is the iframe's location origin + pathname
+      const { source }: { source: string } = this;
+      const sourceType = getSourceType(source);
+
+      switch (sourceType) {
+        // if it's a local source, we do nothing special
+        case 'local': {
+          api.setStories(data.stories);
+          const options = storyId
+            ? api.getParameters(storyId, 'options')
+            : api.getParameters(Object.keys(data.stories)[0], 'options');
+          api.setOptions(options);
+          break;
+        }
+
+        // if it's a ref, we need to map the incoming stories to a prefixed version, so it cannot conflict with others
+        case 'external': {
+          const refs = api.getRefs();
+
+          // find the exact ref, get it's id & url
+          const [refId] = Object.entries(refs).find(([, url]) => url.match(source));
+
+          api.setRef(refId, data.stories);
+          break;
+        }
+
+        // if we couldn't find the source, something risky happened, we ignore the input, and lo a warning
+        default: {
+          logger.warn('received a SET_STORIES frame that was not configured as a ref');
+          break;
+        }
       }
-    );
+    });
+    api.on(SELECT_STORY, function selectStoryHandler({
+      kind,
+      story,
+      ...rest
+    }: {
+      kind: string;
+      story: string;
+      [k: string]: any;
+    }) {
+      const { source }: { source: string } = this;
+      const sourceType = getSourceType(source);
+
+      switch (sourceType) {
+        case 'local': {
+          api.selectStory(kind, story, rest);
+          break;
+        }
+
+        case 'external': {
+          const refs = api.getRefs();
+          const [refId] = Object.entries(refs).find(([, url]) => url.match(source));
+
+          api.selectStory(kind, story, { ...rest, ref: refId });
+          break;
+        }
+        default: {
+          logger.warn('received a SET_STORIES frame that was not configured as a ref');
+          break;
+        }
+      }
+    });
     api.on(NAVIGATE_URL, (url: string, options: { [k: string]: any }) => {
       api.navigateUrl(url, options);
     });

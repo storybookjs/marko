@@ -2,11 +2,13 @@ import deprecate from 'util-deprecate';
 import dedent from 'ts-dedent';
 import { sanitize, parseKind } from '@storybook/csf';
 import merge from './merge';
+import { InceptionRef } from '../modules/refs';
 
 export type StoryId = string;
 
 export interface Root {
   id: StoryId;
+  knownAs?: StoryId;
   depth: 0;
   name: string;
   children: StoryId[];
@@ -19,6 +21,7 @@ export interface Root {
 
 export interface Group {
   id: StoryId;
+  knownAs?: StoryId;
   depth: number;
   name: string;
   children: StoryId[];
@@ -32,10 +35,12 @@ export interface Group {
 
 export interface Story {
   id: StoryId;
+  knownAs?: StoryId;
   depth: number;
   parent: StoryId;
   name: string;
   kind: string;
+  ref?: InceptionRef;
   children?: StoryId[];
   isComponent: boolean;
   isRoot: false;
@@ -55,6 +60,8 @@ export interface Story {
 export interface StoryInput {
   id: StoryId;
   name: string;
+  knownAs?: StoryId;
+  ref?: InceptionRef;
   kind: string;
   children: string[];
   parameters: {

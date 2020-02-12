@@ -1,8 +1,11 @@
 import { ReactNode } from 'react';
 import { Channel } from '@storybook/channels';
 
+import { ThemeVars } from '@storybook/theming';
 import { API, State } from './index';
 import Store from './store';
+import { RefId, RefUrl, Mapper } from './modules/refs';
+import { UIOptions } from './modules/layout';
 
 type IframeRenderer = (
   storyId: string,
@@ -17,7 +20,12 @@ export interface Provider {
   channel?: Channel;
   renderPreview?: IframeRenderer;
   handleAPI(api: API): void;
-  getConfig(): Record<string, any>;
+  getConfig(): {
+    theme?: ThemeVars;
+    refs?: Record<RefId, RefUrl>;
+    mapper?: Mapper;
+    [k: string]: any;
+  } & Partial<UIOptions>;
   [key: string]: any;
 }
 
