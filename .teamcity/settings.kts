@@ -250,6 +250,7 @@ object Examples3 : BuildType({
 
 object Examples : BuildType({
     name = "Examples"
+    type = Type.COMPOSITE
 
     dependencies {
         dependency(Examples1) {
