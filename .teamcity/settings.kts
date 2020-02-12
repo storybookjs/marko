@@ -215,7 +215,7 @@ object E2E : BuildType({
                 yarn await-serve-storybooks
                 yarn cypress run
             """.trimIndent()
-            dockerImage = "cypress/base:8"
+            dockerImage = "cypress/base:10"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
