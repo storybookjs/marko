@@ -194,12 +194,6 @@ object E2E : BuildType({
     name = "E2E"
 
     dependencies {
-        dependency(Build) {
-            snapshot {}
-            artifacts {
-                artifactRules = "dist.tar.gz!** => ."
-            }
-        }
         dependency(Examples) {
             snapshot {}
             artifacts {
