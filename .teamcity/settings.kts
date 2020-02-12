@@ -34,7 +34,6 @@ project {
     defaultTemplate = Common
 
     buildType(TestWorkflow)
-    buildType(DeployWorkflow)
 
     buildType(Build)
     buildType(Chromatic)
@@ -305,6 +304,13 @@ object Frontpage : BuildType({
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
+
+    triggers {
+        vcs {
+            quietPeriodMode = VcsTrigger.QuietPeriodMode.USE_DEFAULT
+            branchFilter = "+:master"
+        }
+    }
 })
 
 object Docs : BuildType({
@@ -321,8 +327,14 @@ object Docs : BuildType({
                 yarn install
                 yarn build
             """.trimIndent()
-            dockerImage = "node:lts"
+            dockerImage = "node:10"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+        }
+    }
+
+    triggers {
+        vcs {
+            quietPeriodMode = VcsTrigger.QuietPeriodMode.USE_DEFAULT
         }
     }
 })
@@ -431,20 +443,3 @@ object TestWorkflow : BuildType({
         }
     }
 })
-
-object DeployWorkflow : BuildType({
-    name = "Deploy Workflow"
-
-    dependencies {
-        snapshot(Frontpage) {}
-        snapshot(Docs) {}
-    }
-
-    triggers {
-        vcs {
-            quietPeriodMode = VcsTrigger.QuietPeriodMode.USE_DEFAULT
-        }
-    }
-})
-
-
