@@ -39,7 +39,6 @@ project {
     buildType(Build)
     buildType(Chromatic)
     buildType(Packtracker)
-    buildType(Examples)
     buildType(E2E)
     buildType(SmokeTests)
     buildType(Frontpage)
@@ -191,6 +190,8 @@ object ExamplesProject : Project({
 })
 
 object ExamplesTemplate : Template({
+    name = "Examples Template"
+
     dependencies {
         dependency(Build) {
             snapshot {}
