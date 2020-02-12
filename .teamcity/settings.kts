@@ -2,6 +2,7 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.ScriptBuildStep
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.projectFeatures.githubConnection
+import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.VcsTrigger
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 
 /*
@@ -425,7 +426,9 @@ object TestWorkflow : BuildType({
     }
 
     triggers {
-        vcs {}
+        vcs {
+            quietPeriodMode = VcsTrigger.QuietPeriodMode.USE_DEFAULT
+        }
     }
 })
 
@@ -438,7 +441,9 @@ object DeployWorkflow : BuildType({
     }
 
     triggers {
-        vcs {}
+        vcs {
+            quietPeriodMode = VcsTrigger.QuietPeriodMode.USE_DEFAULT
+        }
     }
 })
 
