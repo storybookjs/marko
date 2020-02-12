@@ -207,6 +207,7 @@ object ExamplesTemplate : Template({
                 set -e -x
                 
                 yarn install
+                rm -rf built-storybooks
                 yarn build-storybooks
             """.trimIndent()
             dockerImage = "node:lts"
