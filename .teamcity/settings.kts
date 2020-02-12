@@ -44,7 +44,8 @@ object Build : BuildType({
     name = "Build"
 
     artifactRules = """
-        **/dist/** => workspace.tar.gz
+        +:**/dist/** => dist.tar.gz
+        -:**/node_modules/** => dist.tar.gz
     """.trimIndent()
 
     vcs {
