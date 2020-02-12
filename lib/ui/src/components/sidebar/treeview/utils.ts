@@ -81,7 +81,7 @@ export function isStory(item: Item): item is Story {
 export const get = memoize(1000)((id: string, dataset: Dataset) => dataset[id]);
 export const getParent = memoize(1000)((id: string, dataset: Dataset) => {
   const item = get(id, dataset);
-  if (!isRoot(item)) {
+  if (item && !isRoot(item)) {
     return get(item.parent, dataset);
   }
   return undefined;
