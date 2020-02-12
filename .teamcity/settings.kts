@@ -28,7 +28,6 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2019.2"
 
 project {
-
     buildType(Build)
 
     features {
@@ -44,7 +43,10 @@ project {
 object Build : BuildType({
     name = "Build"
 
-    artifactRules = ". => workspace.tar.gz"
+    artifactRules = """
+        **/node_modules/** => workspace.tar.gz
+        **/dist/** => workspace.tar.gz
+    """.trimIndent()
 
     vcs {
         root(DslContext.settingsRoot)

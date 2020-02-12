@@ -101,4 +101,7 @@
       <scope>compile</scope>
     </dependency>
   </dependencies>
+  <properties>
+    <teamcity.dsl.version>2019.2.2-SNAPSHOT</teamcity.dsl.version>
+  </properties>
 </project>
