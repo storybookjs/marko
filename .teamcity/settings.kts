@@ -235,7 +235,7 @@ object Examples2 : BuildType({
     templates = listOf(ExamplesTemplate)
 
     params {
-        param("env.CIRCLE_NODE_INDEX", "0")
+        param("env.CIRCLE_NODE_INDEX", "1")
     }
 })
 
@@ -244,7 +244,7 @@ object Examples3 : BuildType({
     templates = listOf(ExamplesTemplate)
 
     params {
-        param("env.CIRCLE_NODE_INDEX", "0")
+        param("env.CIRCLE_NODE_INDEX", "2")
     }
 })
 
