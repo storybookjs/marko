@@ -11,6 +11,6 @@ accordingly, and delete the patch script.
 changeTemplate(RelativeId("Common")) {
     vcs {
         expectEntry(DslContext.settingsRoot.id!!)
-        root(DslContext.settingsRoot.id!!, "-.teamcity")
+        root(DslContext.settingsRoot.id!!, "-:.teamcity")
     }
 }
