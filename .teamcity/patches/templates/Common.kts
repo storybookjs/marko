@@ -15,11 +15,6 @@ create(DslContext.projectId, Template({
     id("Common")
     name = "Common"
 
-    artifactRules = """
-        +:**/dist/** => dist.tar.gz
-        -:**/node_modules/** => dist.tar.gz
-    """.trimIndent()
-
     vcs {
         root(DslContext.settingsRoot)
     }
