@@ -380,6 +380,7 @@ object Frontpage : BuildType({
     triggers {
         vcs {
             quietPeriodMode = VcsTrigger.QuietPeriodMode.USE_DEFAULT
+            triggerRules = "-:.teamcity/**"
             branchFilter = "+:master"
         }
     }
@@ -407,6 +408,7 @@ object Docs : BuildType({
     triggers {
         vcs {
             quietPeriodMode = VcsTrigger.QuietPeriodMode.USE_DEFAULT
+            triggerRules = "-:.teamcity/**"
         }
     }
 })
@@ -513,6 +515,7 @@ object TestWorkflow : BuildType({
     triggers {
         vcs {
             quietPeriodMode = VcsTrigger.QuietPeriodMode.USE_DEFAULT
+            triggerRules = "-:.teamcity/**"
         }
     }
 })
