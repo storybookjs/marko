@@ -9,6 +9,11 @@ To apply the patch, change the buildType with id = 'Examples'
 accordingly, and delete the patch script.
 */
 changeBuildType(RelativeId("Examples")) {
+    check(name == "Examples") {
+        "Unexpected name: '$name'"
+    }
+    name = "Aggregate"
+
     check(type == BuildTypeSettings.Type.COMPOSITE) {
         "Unexpected option value: type = $type"
     }
