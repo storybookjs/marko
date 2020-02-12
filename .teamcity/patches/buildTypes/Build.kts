@@ -22,6 +22,16 @@ changeBuildType(RelativeId("Build")) {
     }
     artifactRules = ""
 
+    params {
+        add {
+            param("script", """
+                yarn install
+                yarn repo-dirty-check
+                yarn bootstrap --core
+            """.trimIndent())
+        }
+    }
+
     vcs {
         remove(DslContext.settingsRoot.id!!)
     }
