@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-ondevice-knobs",
-  "version": "5.3.12",
+  "version": "5.3.13",
   "description": "Display storybook story knobs on your deviced.",
   "keywords": [
     "addon",
@@ -15,6 +15,7 @@
     "directory": "addons/ondevice-knobs"
   },
   "license": "MIT",
+  "main": "dist/index.js",
   "files": [
     "dist/**/*",
     "docs/**/*",
@@ -22,14 +23,13 @@
     "*.js",
     "*.d.ts"
   ],
-  "main": "dist/index.js",
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
     "@emotion/native": "^10.0.14",
-    "@storybook/addons": "5.3.12",
-    "@storybook/core-events": "5.3.12",
+    "@storybook/addons": "5.3.13",
+    "@storybook/core-events": "5.3.13",
     "core-js": "^3.0.1",
     "deep-equal": "^1.0.1",
     "prop-types": "^15.7.2",

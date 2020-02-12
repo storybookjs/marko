@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-events",
-  "version": "5.3.12",
+  "version": "5.3.13",
   "description": "Add events to your Storybook stories.",
   "keywords": [
     "addon",
@@ -18,23 +18,23 @@
     "directory": "addons/events"
   },
   "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
     "*.d.ts"
   ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "5.3.12",
-    "@storybook/api": "5.3.12",
-    "@storybook/client-api": "5.3.12",
-    "@storybook/core-events": "5.3.12",
-    "@storybook/theming": "5.3.12",
+    "@storybook/addons": "5.3.13",
+    "@storybook/api": "5.3.13",
+    "@storybook/client-api": "5.3.13",
+    "@storybook/core-events": "5.3.13",
+    "@storybook/theming": "5.3.13",
     "core-js": "^3.0.1",
     "format-json": "^1.0.3",
     "lodash": "^4.17.15",
