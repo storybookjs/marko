@@ -273,6 +273,8 @@ object Examples : BuildType({
             }
         }
     }
+
+    artifactRules = "built-storybooks => built-storybooks.tar.gz"
 })
 
 object E2E : BuildType({
