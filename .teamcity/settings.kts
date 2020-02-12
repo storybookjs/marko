@@ -44,6 +44,8 @@ project {
 object Build : BuildType({
     name = "Build"
 
+    artifactRules = ". => workspace.tar.gz"
+
     vcs {
         root(DslContext.settingsRoot)
     }
