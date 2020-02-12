@@ -2,7 +2,7 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.ScriptBuildStep
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.projectFeatures.githubConnection
-import jetbrains.buildServer.configs.kotlin.v2019_2.ui.add
+import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -31,14 +31,20 @@ version = "2019.2"
 project {
     defaultTemplate = Common
 
+    buildType(TestWorkflow)
+    buildType(DeployWorkflow)
+
     buildType(Build)
-
-    sequential {
-        buildType(Build)
-        parallel {
-
-        }
-    }
+    buildType(Chromatic)
+    buildType(Packtracker)
+    buildType(Examples)
+    buildType(E2E)
+    buildType(SmokeTests)
+    buildType(Frontpage)
+    buildType(Docs)
+    buildType(Lint)
+    buildType(Test)
+    buildType(Coverage)
 
     features {
         githubConnection {
@@ -58,34 +64,381 @@ object Common: Template({
     }
 })
 
-var BuildType.script: String
-    get() = ""
-    set(value) {
-        steps {
-            script {
-                scriptContent = """
-                    #!/bin/bash
-                    set -e -x
-                    
-                    $value
-                """.trimIndent()
-                dockerImage = "node:lts"
-                dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
-            }
-        }
-    }
-
 object Build : BuildType({
     name = "Build"
+
+    steps {
+        script {
+            scriptContent = """
+                #!/bin/bash
+                set -e -x
+                
+                yarn install
+                yarn repo-dirty-check
+                yarn bootstrap --core
+            """.trimIndent()
+            dockerImage = "node:lts"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+        }
+    }
 
     artifactRules = """
         +:**/dist/** => dist.tar.gz
         -:**/node_modules/** => dist.tar.gz
     """.trimIndent()
-
-    script = """
-        yarn install
-        yarn repo-dirty-check
-        yarn bootstrap --core
-    """.trimIndent()
 })
+
+object Chromatic : BuildType({
+    name = "Chromatic"
+
+    dependencies {
+        dependency(Examples) {
+            snapshot {}
+            artifacts {
+                artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
+            }
+        }
+    }
+
+    steps {
+        script {
+            scriptContent = """
+            #!/bin/bash
+            set -e -x
+
+            yarn install
+            yarn chromatic --storybook-build-dir="built-storybooks/official-storybook" --exit-zero-on-changes --app-code="ab7m45tp9p"
+            yarn chromatic --storybook-build-dir="built-storybooks/angular-cli" --app-code="tl92yzsj6w"
+            yarn chromatic --storybook-build-dir="built-storybooks/cra-kitchen-sink" --app-code="tg55gajmdt"
+            yarn chromatic --storybook-build-dir="built-storybooks/cra-react15" --app-code="gxk7iqej3wt"
+            yarn chromatic --storybook-build-dir="built-storybooks/cra-ts-essentials" --app-code="b311ypk6of"
+            yarn chromatic --storybook-build-dir="built-storybooks/cra-ts-kitchen-sink" --app-code="19whyj1tlac"
+            yarn chromatic --storybook-build-dir="built-storybooks/dev-kits" --app-code="7yykp9ifdxx"
+            yarn chromatic --storybook-build-dir="built-storybooks/ember-cli" --app-code="19z23qxndju"
+            yarn chromatic --storybook-build-dir="built-storybooks/html-kitchen-sink" --app-code="e8zolxoyg8o"
+            yarn chromatic --storybook-build-dir="built-storybooks/marko-cli" --app-code="qaegx64axu"
+            yarn chromatic --storybook-build-dir="built-storybooks/mithril-kitchen-sink" --app-code="8adgm46jzk8"
+            yarn chromatic --storybook-build-dir="built-storybooks/preact-kitchen-sink" --app-code="ls0ikhnwqt"
+            yarn chromatic --storybook-build-dir="built-storybooks/rax-kitchen-sink" --app-code="4co6vptx8qo"
+            yarn chromatic --storybook-build-dir="built-storybooks/riot-kitchen-sink" --app-code="g2dp3lnr34a"
+            yarn chromatic --storybook-build-dir="built-storybooks/svelte-kitchen-sink" --app-code="8ob73wgl995"
+            yarn chromatic --storybook-build-dir="built-storybooks/vue-kitchen-sink" --app-code="cyxj0e38bqj"
+            yarn chromatic --storybook-build-dir="built-storybooks/web-components-kitchen-sink" --app-code="npm5gsofwkf"
+        """.trimIndent()
+            dockerImage = "node:lts"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+        }
+    }
+})
+
+object Packtracker : BuildType({
+    name = "Packtracker"
+    description = "Report webpack stats for manager of official storybook"
+
+    dependencies {
+        dependency(Build) {
+            snapshot {}
+            artifacts {
+                artifactRules = "dist.tar.gz!** => ."
+            }
+        }
+    }
+
+    steps {
+        script {
+            workingDir = "examples/official-storybook"
+            scriptContent = """
+                #!/bin/bash
+                set -e -x
+                
+                yarn install
+                yarn packtracker
+            """.trimIndent()
+            dockerImage = "node:lts"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+        }
+    }
+})
+
+object Examples : BuildType({
+    name = "Examples"
+
+    dependencies {
+        dependency(Build) {
+            snapshot {}
+            artifacts {
+                artifactRules = "dist.tar.gz!** => ."
+            }
+        }
+    }
+
+    steps {
+        script {
+            scriptContent = """
+                #!/bin/bash
+                set -e -x
+                
+                yarn install
+                yarn build-storybooks
+            """.trimIndent()
+            dockerImage = "node:lts"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+        }
+    }
+
+    artifactRules = "built-storybooks => built-storybooks.tar.gz"
+})
+
+object E2E : BuildType({
+    name = "E2E"
+
+    dependencies {
+        dependency(Build) {
+            snapshot {}
+            artifacts {
+                artifactRules = "dist.tar.gz!** => ."
+            }
+        }
+        dependency(Examples) {
+            snapshot {}
+            artifacts {
+                artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
+            }
+        }
+    }
+
+    steps {
+        script {
+            scriptContent = """
+                #!/bin/bash
+                set -e -x
+
+                yarn install
+                yarn cypress install
+                yarn serve-storybooks &
+                yarn await-serve-storybooks
+                yarn cypress run
+            """.trimIndent()
+            dockerImage = "cypress/base:8"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+        }
+    }
+})
+
+object SmokeTests : BuildType({
+    name = "Smoke Tests"
+
+    dependencies {
+        dependency(Build) {
+            snapshot {}
+            artifacts {
+                artifactRules = "dist.tar.gz!** => ."
+            }
+        }
+    }
+
+    steps {
+        script {
+            workingDir = "examples"
+            scriptContent = """
+                #!/bin/bash
+                set -e -x
+
+                cd cra-kitchen-sink
+                yarn storybook --smoke-test --quiet
+          
+                cd ../cra-ts-kitchen-sink
+                yarn storybook --smoke-test --quiet
+          
+                cd ../vue-kitchen-sink
+                yarn storybook --smoke-test --quiet
+          
+                cd ../svelte-kitchen-sink
+                yarn storybook --smoke-test --quiet
+          
+                cd ../angular-cli
+                yarn storybook --smoke-test --quiet
+          
+                cd ../ember-cli
+                yarn storybook --smoke-test --quiet
+          
+                cd ../marko-cli
+                yarn storybook --smoke-test --quiet
+          
+                cd ../official-storybook
+                yarn storybook --smoke-test --quiet
+          
+                cd ../mithril-kitchen-sink
+                yarn storybook --smoke-test --quiet
+          
+                cd ../riot-kitchen-sink
+                yarn storybook --smoke-test --quiet
+          
+                cd ../preact-kitchen-sink
+                yarn storybook --smoke-test --quiet
+          
+                cd ../cra-react15
+                yarn storybook --smoke-test --quiet
+            """.trimIndent()
+            dockerImage = "node:lts"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+        }
+    }
+})
+
+object Frontpage : BuildType({
+    name = "Frontpage"
+    type = Type.DEPLOYMENT
+
+    steps {
+        script {
+            scriptContent = """
+                #!/bin/bash
+                set -e -x
+                
+                yarn bootstrap --install
+                node ./scripts/build-frontpage.js
+            """.trimIndent()
+            dockerImage = "node:lts"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+        }
+    }
+})
+
+object Docs : BuildType({
+    name = "Docs"
+    type = Type.DEPLOYMENT
+
+    steps {
+        script {
+            workingDir = "docs"
+            scriptContent = """
+                #!/bin/bash
+                set -e -x
+                
+                yarn install
+                yarn build
+            """.trimIndent()
+            dockerImage = "node:lts"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+        }
+    }
+})
+
+object Lint : BuildType({
+    name = "Lint"
+
+    dependencies {
+        dependency(Build) {
+            snapshot {}
+            artifacts {
+                artifactRules = "dist.tar.gz!** => ."
+            }
+        }
+    }
+
+    steps {
+        script {
+            scriptContent = """
+                #!/bin/bash
+                set -e -x
+                
+                yarn install
+                yarn lint
+            """.trimIndent()
+            dockerImage = "node:lts"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+        }
+    }
+})
+
+object Test : BuildType({
+    name = "Test"
+
+    dependencies {
+        dependency(Build) {
+            snapshot {}
+            artifacts {
+                artifactRules = "dist.tar.gz!** => ."
+            }
+        }
+    }
+
+    steps {
+        script {
+            scriptContent = """
+                #!/bin/bash
+                set -e -x
+                
+                yarn install
+                yarn test --coverage --w2 --core
+            """.trimIndent()
+            dockerImage = "node:lts"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+        }
+    }
+
+    artifactRules = "coverage => coverage.tar.gz"
+})
+
+object Coverage : BuildType({
+    name = "Coverage"
+
+    dependencies {
+        dependency(Test) {
+            snapshot {}
+            artifacts {
+                artifactRules = "coverage.tar.gz!** => coverage"
+            }
+        }
+    }
+
+    steps {
+        script {
+            scriptContent = """
+                #!/bin/bash
+                set -e -x
+                
+                yarn install
+                yarn coverage
+            """.trimIndent()
+            dockerImage = "node:lts"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+        }
+    }
+})
+
+object TestWorkflow : BuildType({
+    name = "Test Workflow"
+
+    dependencies {
+        snapshot(Build) {}
+        snapshot(Chromatic) {}
+        snapshot(Packtracker) {}
+        snapshot(Examples) {}
+        snapshot(E2E) {}
+        snapshot(SmokeTests) {}
+        snapshot(Lint) {}
+        snapshot(Test) {}
+        snapshot(Coverage) {}
+    }
+
+    triggers {
+        vcs {}
+    }
+})
+
+object DeployWorkflow : BuildType({
+    name = "Deploy Workflow"
+
+    dependencies {
+        snapshot(Frontpage) {}
+        snapshot(Docs) {}
+    }
+
+    triggers {
+        vcs {}
+    }
+})
+
+
