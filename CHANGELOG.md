@@ -1,3 +1,13 @@
+## 5.3.13 (February 12, 2020)
+
+### Bug Fixes
+
+* React: Remove `MiniCssExtractPlugin` for CRA ([#9759](https://github.com/storybookjs/storybook/pull/9759))
+
+### Maintenance
+
+* Build: Fix DLL generation race condition ([#9770](https://github.com/storybookjs/storybook/pull/9770))
+
 ## 5.3.12 (February 5, 2020)
 
 ### Bug Fixes
