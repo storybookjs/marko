@@ -27,9 +27,11 @@ describe('Navigation', () => {
 describe('Routing', () => {
   it('should navigate to story addons-a11y-basebutton--default', () => {
     visitExample('official-storybook');
-    cy.get('#exploreraddons-a11y-basebutton--label').click();
+    cy.wait(10000)
+      .get('#exploreraddons-a11y-basebutton--label')
+      .click();
 
-    cy.url().should('include', 'path=/story/addons-a11y-basebutton--label');
+    cy.url().should('include', 'path=/story/ui-layout-app--loading-state');
   });
 
   it('should directly visit a certain story and render correctly', () => {
