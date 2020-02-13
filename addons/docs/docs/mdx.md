@@ -2,19 +2,18 @@
   <img src="https://raw.githubusercontent.com/storybookjs/storybook/master/addons/docs/docs/media/mdx-hero.png" width="100%" />
 </center>
 
-# Storybook Docs MDX
+<h1>Storybook Docs MDX</h1>
 
 `MDX` is the syntax [Storybook Docs](../README.md) uses to capture long-form markdown documentation and stories in one file. You can also write pure documentation pages in `MDX` and add them to Storybook alongside your stories.
 
-- [Storybook Docs MDX](#storybook-docs-mdx)
-  - [Basic example](#basic-example)
-  - [MDX-Flavored CSF](#mdx-flavored-csf)
-  - [Writing stories](#writing-stories)
-  - [Embedding stories](#embedding-stories)
-  - [Decorators and parameters](#decorators-and-parameters)
-  - [Documentation-only MDX](#documentation-only-mdx)
-  - [MDX file names](#mdx-file-names)
-  - [More resources](#more-resources)
+- [Basic example](#basic-example)
+- [MDX-Flavored CSF](#mdx-flavored-csf)
+- [Writing stories](#writing-stories)
+- [Embedding stories](#embedding-stories)
+- [Decorators and parameters](#decorators-and-parameters)
+- [Documentation-only MDX](#documentation-only-mdx)
+- [MDX file names](#mdx-file-names)
+- [More resources](#more-resources)
 
 ## Basic example
 
@@ -195,10 +194,7 @@ Be sure to update your Storybook config file to load `.stories.mdx` stories, as 
 
 ## More resources
 
-`MDX` is an experimental feature and there's a lot more that hasn't been documented yet. Here are some more articles on Storybook Docs that contain more information:
-
-- References: [README](../README.md) / [DocsPage](docspage.md) / [FAQ](faq.md) / [Recipes](recipes.md) / [Theming](theming.md)
-- Vision: [Storybook Docs sneak peak](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a)
-- Announcement: [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf)
+- References: [README](../README.md) / [DocsPage](docspage.md) / [MDX](mdx.md) / [FAQ](faq.md) / [Recipes](recipes.md) / [Theming](theming.md)
+- Framework-specific docs: [React](../react/README.md) / [Vue](../vue/README.md) / [Angular](../angular/README.md) / [Web components](../web-components/README.md) / [Ember](../ember/README.md)
+- Announcements: [Vision](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a) / [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf) / [MDX](https://medium.com/storybookjs/rich-docs-with-storybook-mdx-61bc145ae7bc) / [Framework support](https://medium.com/storybookjs/storybook-docs-for-new-frameworks-b1f6090ee0ea)
 - Example: [Storybook Design System](https://github.com/storybookjs/design-system)
-- [Technical preview guide](https://docs.google.com/document/d/1un6YX7xDKEKl5-MVb-egnOYN8dynb5Hf7mq0hipk8JE/edit?usp=sharing)
