@@ -25,8 +25,7 @@ const supportedExtensions = ['ts', 'tsx', 'js', 'jsx'];
 
 const resolveFile = (configDir: string, supportedFilenames: string[]) =>
   supportedFilenames
-    .flatMap(filename => supportedExtensions.map(ext => `${filename}.${ext}`))
-    .map(filename => path.join(configDir, filename))
+    .flatMap(filename => supportedExtensions.map(ext => path.join(configDir, `${filename}.${ext}`)))
     .find(isFile) || false;
 
 export const getPreviewFile = (configDir: string): string | false =>
