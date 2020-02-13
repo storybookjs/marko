@@ -6,7 +6,7 @@ import { State, Consumer, Combo } from '@storybook/api';
 import { Preview } from '../components/preview/preview';
 import { PreviewProps } from '../components/preview/PreviewProps';
 
-type StoriesHash = State['storieshash'];
+type StoriesHash = State['storiesHash'];
 
 const nonAlphanumSpace = /[^a-z0-9 ]/gi;
 const doubleSpace = /\s\s/gi;

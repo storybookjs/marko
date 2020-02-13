@@ -191,8 +191,6 @@ export const collapseDocsOnlyStories = (storiesHash: StoriesHash) => {
     return true;
   });
 
-  // console.dir(docsOnlyStoriesRemoved, { depth: 10 });
-
   const docsOnlyComponentsCollapsed = docsOnlyStoriesRemoved.map(item => {
     // collapse docs-only components
     const { isComponent, children, id } = item;

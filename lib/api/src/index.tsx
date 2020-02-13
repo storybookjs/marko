@@ -22,7 +22,6 @@ import {
 } from '@storybook/core-events';
 import { RenderData as RouterData } from '@storybook/router';
 import { Listener } from '@storybook/channels';
-import { logger } from '@storybook/client-logger';
 import initProviderApi, { SubAPI as ProviderAPI, Provider } from './init-provider-api';
 
 import { createContext } from './context';

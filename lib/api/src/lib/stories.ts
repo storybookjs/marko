@@ -70,8 +70,6 @@ export interface StoryInput {
   isLeaf: boolean;
 }
 
-// export type Story = StoryInput & Group;
-
 export interface StoriesHash {
   [id: string]: Root | Group | Story;
 }
