@@ -62,6 +62,7 @@ export class IFrame extends Component<IFrameProps & IframeHTMLAttributes<HTMLIFr
     const { id, title, src, allowFullScreen, scale, ...rest } = this.props;
     return (
       <StyledIframe
+        data-is-storybook="true"
         scrolling="yes"
         id={id}
         title={title}

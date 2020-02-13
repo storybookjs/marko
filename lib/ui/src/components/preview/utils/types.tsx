@@ -1,12 +1,13 @@
-import { State, API } from '@storybook/api';
+import { State, API, Story, Group } from '@storybook/api';
 import { FunctionComponent, ReactNode } from 'react';
 
 type ViewMode = State['viewMode'];
 
 export interface PreviewProps {
   api: API;
-  storyId: string;
   viewMode: ViewMode;
+  refs: State['refs'];
+  story: Group | Story;
   docsOnly: boolean;
   options: {
     isFullscreen: boolean;
@@ -19,7 +20,6 @@ export interface PreviewProps {
   customCanvas?: IframeRenderer;
   description: string;
   baseUrl: string;
-  parameters: Record<string, any>;
   withLoader: boolean;
 }
 

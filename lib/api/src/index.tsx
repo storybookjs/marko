@@ -278,7 +278,8 @@ class ManagerProvider extends Component<Props, State> {
         ...state,
         location: props.location,
         path: props.path,
-        viewMode: props.viewMode,
+        // if its a docsOnly page, even the 'story' view mode is considered 'docs'
+        viewMode: (props.docsMode && props.viewMode) === 'story' ? 'docs' : props.viewMode,
         storyId: props.storyId,
       };
     }
