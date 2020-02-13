@@ -84,7 +84,7 @@ export function getLeadingAngularCliProject(ngCliConfig: any) {
   } else {
     logger.info(`=> Using angular project '${projectName}' for configuring Storybook.`);
   }
-  if (!project.architect.build) {
+  if (project && !project.architect.build) {
     logger.error(`architect.build is not defined for project '${projectName}'.`);
   }
   return project;

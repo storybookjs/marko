@@ -13,8 +13,9 @@ const Content = memo(({ results }: ContentProps) => (
   <Fragment>
     {results.length ? (
       <ol>
-        {results.map((i: string) => (
-          <li>{i}</li>
+        {results.map((i, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <li key={index}>{i}</li>
         ))}
       </ol>
     ) : null}
