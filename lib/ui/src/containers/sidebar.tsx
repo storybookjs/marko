@@ -3,16 +3,13 @@ import React, { FunctionComponent } from 'react';
 import memoize from 'memoizerific';
 
 import { Badge } from '@storybook/components';
-import { Consumer, Combo, State } from '@storybook/api';
+import { Consumer, Combo, StoriesHash, Story } from '@storybook/api';
 
-import { Group, Story } from '@storybook/api/dist/lib/stories';
 import { shortcutToHumanString } from '../libs/shortcut';
 
 import ListItemIcon from '../components/sidebar/ListItemIcon';
 import SidebarComponent from '../components/sidebar/Sidebar';
-import { isStory } from '../components/sidebar/treeview/utils';
 
-type StoriesHash = State['storiesHash'];
 type Item = StoriesHash[keyof StoriesHash];
 
 const focusableUIElements = {

@@ -2,8 +2,7 @@ import memoize from 'memoizerific';
 import Fuse from 'fuse.js';
 import { DOCS_MODE } from 'global';
 import { SyntheticEvent } from 'react';
-import { State } from '@storybook/api';
-import { Root, Group, Story } from '@storybook/api/dist/lib/stories';
+import { State, StoriesHash, isRoot, isGroup, isStory, Root, Group, Story } from '@storybook/api';
 
 const FUZZY_SEARCH_THRESHOLD = 0.4;
 
@@ -13,8 +12,6 @@ export const prevent = (e: SyntheticEvent) => {
 };
 
 const toList = memoize(1)((dataset: Dataset) => Object.values(dataset));
-
-type StoriesHash = State['storiesHash'];
 
 export type Item = StoriesHash[keyof StoriesHash];
 
@@ -58,25 +55,6 @@ export const keyEventToAction = ({
 };
 
 export const createId = (id: string, prefix: string) => `${prefix}_${id}`;
-
-export function isRoot(item: Item): item is Root {
-  if (item as Root) {
-    return item.isRoot;
-  }
-  return false;
-}
-export function isGroup(item: Item): item is Group {
-  if (item as Group) {
-    return !item.isRoot && !item.isLeaf;
-  }
-  return false;
-}
-export function isStory(item: Item): item is Story {
-  if (item as Story) {
-    return item.isLeaf;
-  }
-  return false;
-}
 
 export const get = memoize(1000)((id: string, dataset: Dataset) => dataset[id]);
 export const getParent = memoize(1000)((id: string, dataset: Dataset) => {
