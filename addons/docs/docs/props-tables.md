@@ -56,7 +56,7 @@ First, look to see if there's already a test case that corresponds to your situa
 If your problem is not already represented here, do the following:
 
 1. Create a **MINIMAL** repro for your problem. Each case should be just a few lines of code.
-2. Place it in the appropriate directory `./src/<framework>/__testfixtures__/`, e.g. `./src/react/__testfixtures__/XXXX-some-description`, where `XXXX` is the corresponding github issue.
+2. Place it in the appropriate directory `./src/frameworks/<framework>/__testfixtures__/`, e.g. `./src/frameworks/react/__testfixtures__/XXXX-some-description`, where `XXXX` is the corresponding github issue.
 3. Run the tests for your `<framework>`, e.g. `yarn jest --testPathPattern=react-properties.test.ts --watch`
 4. Inspect the output files for your test case.
 5. Add the example to the appropriate stories file, e.g. `react-properties.stories.ts` for `react`, for a visual repro
