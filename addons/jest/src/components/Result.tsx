@@ -1,4 +1,4 @@
-import React, { Component, Fragment, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { styled, themes, convert } from '@storybook/theming';
 import { Icons } from '@storybook/components';
 import Message from './Message';
