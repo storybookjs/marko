@@ -9,7 +9,7 @@ type Direction = -1 | 1;
 type StoryId = string;
 type ParameterName = string;
 
-type ViewMode = 'story' | 'info' | 'settings' | undefined;
+type ViewMode = 'story' | 'info' | 'settings' | undefined | string;
 
 export interface SubState {
   storiesHash: StoriesHash;

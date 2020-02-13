@@ -1,4 +1,3 @@
-import { isNil } from 'lodash';
 import { PropDef } from '@storybook/components';
 import { ExtractedProp } from '../../../lib/docgen';
 import { createDefaultValue, createDefaultValueFromRawDefaultProp } from '../lib/defaultValues';
@@ -7,15 +6,15 @@ export function enhanceTypeScriptProp(extractedProp: ExtractedProp, rawDefaultPr
   const { propDef } = extractedProp;
 
   const { defaultValue } = extractedProp.docgenInfo;
-  if (!isNil(defaultValue) && !isNil(defaultValue.value)) {
+  if (defaultValue != null && defaultValue.value != null) {
     const newDefaultValue = createDefaultValue(defaultValue.value);
-    if (!isNil(newDefaultValue)) {
+    if (newDefaultValue != null) {
       propDef.defaultValue = newDefaultValue;
     }
-  } else if (!isNil(rawDefaultProp)) {
+  } else if (rawDefaultProp != null) {
     const newDefaultValue = createDefaultValueFromRawDefaultProp(rawDefaultProp, propDef);
 
-    if (!isNil(newDefaultValue)) {
+    if (newDefaultValue != null) {
       propDef.defaultValue = newDefaultValue;
     }
   }

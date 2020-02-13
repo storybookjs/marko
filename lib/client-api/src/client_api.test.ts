@@ -652,12 +652,7 @@ describe('preview.client_api', () => {
           expect(entry.stories).toHaveLength(1);
           expect(entry.stories[0].name).toBe('story');
 
-          // v3 returns the same function we passed in
-          if (jest.isMockFunction(entry.stories[0].render)) {
-            expect(entry.stories[0].render).toBe(stories[0]);
-          } else {
-            expect(entry.stories[0].render()).toBe('story1');
-          }
+          expect(entry.stories[0].render()).toBe('story1');
         }
 
         storiesOf('kind', module).add('story', stories[1]);
@@ -674,12 +669,7 @@ describe('preview.client_api', () => {
           expect(entry.stories).toHaveLength(1);
           expect(entry.stories[0].name).toBe('story');
 
-          // v3 returns the same function we passed in
-          if (jest.isMockFunction(entry.stories[0].render)) {
-            expect(entry.stories[0].render).toBe(stories[0]);
-          } else {
-            expect(entry.stories[0].render()).toBe('story2');
-          }
+          expect(entry.stories[0].render()).toBe('story2');
         }
       });
     });

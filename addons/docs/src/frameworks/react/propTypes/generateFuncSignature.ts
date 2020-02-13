@@ -1,12 +1,11 @@
-import { isNil } from 'lodash';
 import { ExtractedJsDocParam, ExtractedJsDocReturns } from '../../../lib/jsdocParser';
 
 export function generateFuncSignature(
   params: ExtractedJsDocParam[],
   returns: ExtractedJsDocReturns
 ): string {
-  const hasParams = !isNil(params);
-  const hasReturns = !isNil(returns);
+  const hasParams = params != null;
+  const hasReturns = returns != null;
 
   if (!hasParams && !hasReturns) {
     return '';
@@ -19,7 +18,7 @@ export function generateFuncSignature(
       const prettyName = x.getPrettyName();
       const typeName = x.getTypeName();
 
-      if (!isNil(typeName)) {
+      if (typeName != null) {
         return `${prettyName}: ${typeName}`;
       }
 
@@ -42,8 +41,8 @@ export function generateShortFuncSignature(
   params: ExtractedJsDocParam[],
   returns: ExtractedJsDocReturns
 ): string {
-  const hasParams = !isNil(params);
-  const hasReturns = !isNil(returns);
+  const hasParams = params != null;
+  const hasReturns = returns != null;
 
   if (!hasParams && !hasReturns) {
     return '';

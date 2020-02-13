@@ -33,12 +33,12 @@ interface QueryMatchProps {
 }
 interface RouteProps {
   path: string;
-  startsWith: boolean;
-  hideOnly: boolean;
-  children: (renderData: RenderData) => ReactNode;
+  startsWith?: boolean;
+  hideOnly?: boolean;
+  children: ReactNode;
 }
 
-interface QueryLinkProps {
+export interface QueryLinkProps {
   to: string;
   children: ReactNode;
 }
