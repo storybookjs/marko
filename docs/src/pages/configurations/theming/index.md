@@ -7,7 +7,7 @@ Storybook is theme-able!
 
 > Note that themeing storybook changed recently, to be in `manager.js` (introduced in 5.3). But addon-docs is not yet compatible with this new way of configuring the theme.
 > 
-> See here how to use theme storybook in a way that addon-docs will be themed as well: https://github.com/storybookjs/storybook/tree/master/addons/docs 
+> See here how to use theme storybook in a way that addon-docs will be themed as well: https://github.com/storybookjs/storybook/blob/master/addons/docs/docs/theming.md
 
 ## Global theming
 
