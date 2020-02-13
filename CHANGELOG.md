@@ -1,3 +1,10 @@
+## 6.0.0-alpha.12 (February 14, 2020)
+
+### Maintenance
+
+* Typescript: Improve @storybook/ui types ([#9820](https://github.com/storybookjs/storybook/pull/9820))
+* Misc: Fix deepscan issues ([#9843](https://github.com/storybookjs/storybook/pull/9843)) ([#9842](https://github.com/storybookjs/storybook/pull/9842))
+
 ## 6.0.0-alpha.11 (February 13, 2020)
 
 ### Breaking Changes
