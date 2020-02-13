@@ -19793,9 +19793,9 @@ marko-starter@^2.1.0:
     try-require "^1.2.1"
 
 marko@^4.1.1, marko@^4.10.0, marko@^4.18.39:
-  version "4.18.42"
-  resolved "https://registry.yarnpkg.com/marko/-/marko-4.18.42.tgz#f791d267022ad84e0322736fe2728a97f6241c6e"
-  integrity sha512-pwPOqEMacUSMV5pnmnlzsbYbR5mUg07LX+lTRvU4ZHC/pQmnbTr4paL55SPyefTcINBSNgoSDFNg21bzCRfpig==
+  version "4.18.45"
+  resolved "https://registry.yarnpkg.com/marko/-/marko-4.18.45.tgz#446ec832265419f63af9c714d00a758258645d19"
+  integrity sha512-Mw6SYs5vA9nZhJYVtbN/ZljPkYBjGFQYr6/nY/WKUM+LQzat7Zjqnw3LXgODUKQ80ZyZ51CIeh/jRKzFCoyC2g==
   dependencies:
     app-module-path "^2.2.0"
     argly "^1.0.0"
@@ -19819,6 +19819,7 @@ marko@^4.1.1, marko@^4.10.0, marko@^4.18.39:
     raptor-regexp "^1.0.0"
     raptor-util "^3.2.0"
     resolve-from "^2.0.0"
+    self-closing-tags "^1.0.1"
     simple-sha1 "^2.1.0"
     strip-json-comments "^2.0.1"
     warp10 "^2.0.1"
@@ -26577,6 +26578,11 @@ selenium-webdriver@3.6.0, selenium-webdriver@^3.0.1:
     rimraf "^2.5.4"
     tmp "0.0.30"
     xml2js "^0.4.17"
+
+self-closing-tags@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/self-closing-tags/-/self-closing-tags-1.0.1.tgz#6c5fa497994bb826b484216916371accee490a5d"
+  integrity sha512-7t6hNbYMxM+VHXTgJmxwgZgLGktuXtVVD5AivWzNTdJBM4DBjnDKDzkf2SrNjihaArpeJYNjxkELBu1evI4lQA==
 
 selfsigned@^1.10.7, selfsigned@^1.9.1:
   version "1.10.7"
