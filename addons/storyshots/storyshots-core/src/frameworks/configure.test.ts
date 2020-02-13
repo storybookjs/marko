@@ -1,4 +1,4 @@
-import { getPreviewFile } from './configure';
+import { getPreviewFile, getMainFile } from './configure';
 
 // eslint-disable-next-line global-require, jest/no-mocks-import
 jest.mock('fs', () => require('../../../../../__mocks__/fs'));
@@ -7,20 +7,42 @@ const setupFiles = (files: Record<string, string>) => {
   require('fs').__setMockFiles(files);
 };
 
-it.each`
-  filepath
-  ${'preview.ts'}
-  ${'preview.tsx'}
-  ${'preview.js'}
-  ${'preview.jsx'}
-`('resolves a valid preview file from $filepath', ({ filepath }) => {
-  setupFiles({ [`test/${filepath}`]: 'true' });
+describe('preview files', () => {
+  it.each`
+    filepath
+    ${'preview.ts'}
+    ${'preview.tsx'}
+    ${'preview.js'}
+    ${'preview.jsx'}
+  `('resolves a valid preview file from $filepath', ({ filepath }) => {
+    setupFiles({ [`test/${filepath}`]: 'true' });
 
-  expect(getPreviewFile('test/')).toEqual(`test/${filepath}`);
+    expect(getPreviewFile('test/')).toEqual(`test/${filepath}`);
+  });
+
+  it('returns false when none of the paths exist', () => {
+    setupFiles(Object.create(null));
+
+    expect(getPreviewFile('test/')).toEqual(false);
+  });
 });
 
-it('returns false when none of the paths exist', () => {
-  setupFiles(Object.create(null));
+describe('main files', () => {
+  it.each`
+    filepath
+    ${'main.ts'}
+    ${'main.tsx'}
+    ${'main.js'}
+    ${'main.jsx'}
+  `('resolves a valid main file path from $filepath', ({ filepath }) => {
+    setupFiles({ [`test/${filepath}`]: 'true' });
 
-  expect(getPreviewFile('test/')).toEqual(false);
+    expect(getMainFile('test/')).toEqual(`test/${filepath}`);
+  });
+
+  it('returns false when none of the paths exist', () => {
+    setupFiles(Object.create(null));
+
+    expect(getPreviewFile('test/')).toEqual(false);
+  });
 });

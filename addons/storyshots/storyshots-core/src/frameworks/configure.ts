@@ -22,9 +22,9 @@ interface Output {
 }
 
 const supportedExtensions = ['ts', 'tsx', 'js', 'jsx'];
-const supportedFilenames = ['preview', 'config'];
 
 export const getPreviewFile = (configDir: string): string | false => {
+  const supportedFilenames = ['preview', 'config'];
   const allFilenames = supportedFilenames
     .flatMap(filename => supportedExtensions.map(ext => `${filename}.${ext}`))
     .map(filename => path.join(configDir, filename));
@@ -32,14 +32,13 @@ export const getPreviewFile = (configDir: string): string | false => {
   return allFilenames.find(isFile) || false;
 };
 
-const getMainFile = (configDir: string): string | false => {
-  const main = path.join(configDir, 'main.js');
+export const getMainFile = (configDir: string): string | false => {
+  const supportedFilenames = ['main'];
+  const allFilenames = supportedFilenames
+    .flatMap(filename => supportedExtensions.map(ext => `${filename}.${ext}`))
+    .map(filename => path.join(configDir, filename));
 
-  if (isFile(main)) {
-    return main;
-  }
-
-  return false;
+  return allFilenames.find(isFile) || false;
 };
 
 function getConfigPathParts(input: string): Output {
