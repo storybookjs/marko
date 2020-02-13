@@ -2,7 +2,7 @@ import memoize from 'memoizerific';
 import Fuse from 'fuse.js';
 import { DOCS_MODE } from 'global';
 import { SyntheticEvent } from 'react';
-import { State, StoriesHash, isRoot, isGroup, isStory, Root, Group, Story } from '@storybook/api';
+import { StoriesHash, isRoot, isStory } from '@storybook/api';
 
 const FUZZY_SEARCH_THRESHOLD = 0.4;
 
