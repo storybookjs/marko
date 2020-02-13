@@ -224,6 +224,10 @@ export class TabsState extends Component<TabsStateProps, TabsStateState> {
     };
   }
 
+  handlers = {
+    onSelect: (id: string) => this.setState({ selected: id }),
+  };
+
   render() {
     const { bordered = false, absolute = false, children, backgroundColor } = this.props;
     const { selected } = this.state;
@@ -233,9 +237,7 @@ export class TabsState extends Component<TabsStateProps, TabsStateState> {
         absolute={absolute}
         selected={selected}
         backgroundColor={backgroundColor}
-        actions={{
-          onSelect: id => this.setState({ selected: id }),
-        }}
+        actions={this.handlers}
       >
         {children}
       </Tabs>
