@@ -2,6 +2,7 @@ import memoize from 'memoizerific';
 import Fuse from 'fuse.js';
 import { DOCS_MODE } from 'global';
 import { SyntheticEvent } from 'react';
+import { StoriesHash, isRoot, isStory } from '@storybook/api';
 
 const FUZZY_SEARCH_THRESHOLD = 0.4;
 
@@ -12,18 +13,7 @@ export const prevent = (e: SyntheticEvent) => {
 
 const toList = memoize(1)((dataset: Dataset) => Object.values(dataset));
 
-export interface Item {
-  id: string;
-  depth: number;
-  name: string;
-  kind: string;
-  isLeaf: boolean;
-  isComponent: boolean;
-  isRoot: boolean;
-  parent: string;
-  children: string[];
-  parameters: Record<string, any>;
-}
+export type Item = StoriesHash[keyof StoriesHash];
 
 export type Dataset = Record<string, Item>;
 export type SelectedSet = Record<string, boolean>;
@@ -67,12 +57,12 @@ export const keyEventToAction = ({
 export const createId = (id: string, prefix: string) => `${prefix}_${id}`;
 
 export const get = memoize(1000)((id: string, dataset: Dataset) => dataset[id]);
-export const getParent = memoize(1000)((id, dataset) => {
+export const getParent = memoize(1000)((id: string, dataset: Dataset) => {
   const item = get(id, dataset);
-  if (!item || item.isRoot) {
-    return undefined;
+  if (item && !isRoot(item)) {
+    return get(item.parent, dataset);
   }
-  return get(item.parent, dataset);
+  return undefined;
 });
 export const getParents = memoize(1000)((id: string, dataset: Dataset): Item[] => {
   const parent = getParent(id, dataset);
@@ -203,7 +193,7 @@ const fuse = memoize(5)(
 );
 
 const exactMatch = memoize(1)(filter => (i: Item) =>
-  (i.kind && i.kind.includes(filter)) ||
+  (isStory(i) && i.kind.includes(filter)) ||
   (i.name && i.name.includes(filter)) ||
   (i.parameters && i.parameters.fileName && i.parameters.fileName.includes(filter)) ||
   (i.parameters && typeof i.parameters.notes === 'string' && i.parameters.notes.includes(filter))

@@ -1,6 +1,7 @@
 import React from 'react';
 import { actions as makeActions } from '@storybook/addon-actions';
 
+import { DecoratorFn } from '@storybook/react';
 import ShortcutsScreen from './shortcuts';
 
 const defaultShortcuts = {
@@ -35,7 +36,7 @@ export default {
   component: ShortcutsScreen,
   title: 'UI/Settings/ShortcutsScreen',
   decorators: [
-    s => (
+    ((StoryFn, c) => (
       <div
         style={{
           position: 'relative',
@@ -43,9 +44,9 @@ export default {
           width: 'calc(100vw)',
         }}
       >
-        {s()}
+        <StoryFn {...c} />
       </div>
-    ),
+    )) as DecoratorFn,
   ],
 };
 

@@ -3,11 +3,11 @@ import React, { Fragment, ComponentType, FunctionComponent } from 'react';
 import { State } from '@storybook/api';
 import * as S from './container';
 
-interface DesktopProps {
+export interface DesktopProps {
   width: number;
   panelCount: number;
   height: number;
-  Nav: ComponentType<any>;
+  Sidebar: ComponentType<any>;
   Preview: ComponentType<any>;
   Panel: ComponentType<any>;
   Notifications: ComponentType<any>;
@@ -24,7 +24,7 @@ interface DesktopProps {
 const Desktop = React.memo<DesktopProps>(
   ({
     Panel,
-    Nav,
+    Sidebar,
     Preview,
     Notifications,
     pages,
@@ -53,9 +53,9 @@ const Desktop = React.memo<DesktopProps>(
         >
           {({ navProps, mainProps, panelProps, previewProps }) => (
             <Fragment>
-              <S.Nav {...navProps}>
-                <Nav debug={navProps} />
-              </S.Nav>
+              <S.Sidebar {...navProps}>
+                <Sidebar debug={navProps} />
+              </S.Sidebar>
               <S.Main {...mainProps} isFullscreen={!!mainProps.isFullscreen}>
                 <S.Preview {...previewProps} hidden={viewMode === 'settings'}>
                   <Preview id="main" debug={previewProps} />

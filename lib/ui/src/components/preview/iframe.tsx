@@ -1,5 +1,5 @@
 import window from 'global';
-import React, { Component, CSSProperties } from 'react';
+import React, { Component, CSSProperties, IframeHTMLAttributes } from 'react';
 
 import { styled } from '@storybook/theming';
 
@@ -24,7 +24,7 @@ interface IFrameProps {
   scale: number;
 }
 
-export class IFrame extends Component<IFrameProps> {
+export class IFrame extends Component<IFrameProps & IframeHTMLAttributes<HTMLIFrameElement>> {
   iframe: HTMLIFrameElement = null;
 
   componentDidMount() {

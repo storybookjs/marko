@@ -19,3 +19,10 @@ export const UnstyledLink = styled(Link)({
   textDecoration: 'inherit',
   display: 'inline-block',
 });
+
+export const DesktopOnly = styled.span({
+  // Hides full screen icon at mobile breakpoint defined in app.js
+  '@media (max-width: 599px)': {
+    display: 'none',
+  },
+});

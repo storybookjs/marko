@@ -105,7 +105,7 @@ const applyDeprecatedThemeOptions = deprecate(({ name, url, theme }: Options): P
   };
 }, deprecationMessage(deprecatedThemeOptions));
 
-const applyDeprecatedLayoutOptions = deprecate((options: Options): PartialLayout => {
+const applyDeprecatedLayoutOptions = deprecate((options: Partial<Options>): PartialLayout => {
   const layoutUpdate: PartialLayout = {};
 
   ['goFullScreen', 'showStoriesPanel', 'showAddonPanel'].forEach(
@@ -130,7 +130,7 @@ const checkDeprecatedThemeOptions = (options: Options) => {
   return {};
 };
 
-const checkDeprecatedLayoutOptions = (options: Options) => {
+const checkDeprecatedLayoutOptions = (options: Partial<Options>) => {
   if (Object.keys(deprecatedLayoutOptions).find(v => v in options)) {
     return applyDeprecatedLayoutOptions(options);
   }

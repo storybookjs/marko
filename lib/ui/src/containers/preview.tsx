@@ -1,10 +1,10 @@
 import { PREVIEW_URL } from 'global';
 import React from 'react';
 
-import { Consumer, Combo } from '@storybook/api';
+import { State, Consumer, Combo, StoriesHash } from '@storybook/api';
 
-import { StoriesHash } from '@storybook/api/dist/modules/stories';
-import { Preview, PreviewProps } from '../components/preview/preview';
+import { Preview } from '../components/preview/preview';
+import { PreviewProps } from '../components/preview/PreviewProps';
 
 const nonAlphanumSpace = /[^a-z0-9 ]/gi;
 const doubleSpace = /\s\s/gi;
@@ -30,7 +30,6 @@ const mapper = ({ api, state }: Combo) => {
   const { parameters } = storiesHash[storyId] || {};
   return {
     api,
-    getElements: api.getElements,
     options: layout,
     description: getDescription(storiesHash, storyId),
     ...api.getUrlState(),
@@ -56,11 +55,6 @@ const PreviewConnected = React.memo<{ id: string; withLoader: boolean }>(props =
         ...props,
         baseUrl: getBaseUrl(),
         ...fromState,
-        ...(fromState.api.renderPreview
-          ? {
-              customCanvas: fromState.api.renderPreview,
-            }
-          : {}),
       } as PreviewProps;
 
       return <Preview {...p} />;

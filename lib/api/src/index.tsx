@@ -1,12 +1,4 @@
-import React, {
-  ReactElement,
-  Component,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  ReactNode,
-} from 'react';
+import React, { ReactElement, Component, useContext, useEffect, useMemo, ReactNode } from 'react';
 import memoize from 'memoizerific';
 // @ts-ignore shallow-equal is not in DefinitelyTyped
 import shallowEqualObjects from 'shallow-equal/objects';
@@ -34,11 +26,17 @@ import initNotifications, {
   SubState as NotificationState,
   SubAPI as NotificationAPI,
 } from './modules/notifications';
-import initStories, {
-  SubState as StoriesSubState,
-  SubAPI as StoriesAPI,
+import initStories, { SubState as StoriesSubState, SubAPI as StoriesAPI } from './modules/stories';
+import {
   StoriesRaw,
-} from './modules/stories';
+  StoriesHash,
+  Story,
+  Root,
+  Group,
+  isGroup,
+  isRoot,
+  isStory,
+} from './lib/stories';
 import initLayout, {
   ActiveTabs,
   SubState as LayoutSubState,
@@ -318,7 +316,17 @@ export function useStorybookApi(): API {
   return api;
 }
 
-export { ManagerConsumer as Consumer, ManagerProvider as Provider };
+export {
+  ManagerConsumer as Consumer,
+  ManagerProvider as Provider,
+  StoriesHash,
+  Story,
+  Root,
+  Group,
+  isGroup,
+  isRoot,
+  isStory,
+};
 
 export interface EventMap {
   [eventId: string]: Listener;

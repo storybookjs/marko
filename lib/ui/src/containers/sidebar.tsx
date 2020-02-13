@@ -3,13 +3,14 @@ import React, { FunctionComponent } from 'react';
 import memoize from 'memoizerific';
 
 import { Badge } from '@storybook/components';
-import { Consumer, Combo } from '@storybook/api';
+import { Consumer, Combo, StoriesHash, Story } from '@storybook/api';
 
-import { StoriesHash } from '@storybook/api/dist/modules/stories';
 import { shortcutToHumanString } from '../libs/shortcut';
 
 import ListItemIcon from '../components/sidebar/ListItemIcon';
-import Sidebar from '../components/sidebar/Sidebar';
+import SidebarComponent from '../components/sidebar/Sidebar';
+
+type Item = StoriesHash[keyof StoriesHash];
 
 const focusableUIElements = {
   storySearchField: 'storybook-explorer-searchfield',
@@ -120,7 +121,7 @@ export const collapseAllStories = (stories: StoriesHash) => {
 
   // 2) make all components leaves and rewrite their ID's to the first leaf child
   const componentsFlattened = leavesRemoved.map(item => {
-    const { id, isComponent, children, ...rest } = item;
+    const { id, isComponent, isRoot, children, ...rest } = item;
 
     // this is a folder, so just leave it alone
     if (!isComponent) {
@@ -139,6 +140,8 @@ export const collapseAllStories = (stories: StoriesHash) => {
     const component = {
       ...rest,
       id: leafId,
+      kind: (stories[leafId] as Story).kind,
+      isRoot: false,
       isLeaf: true,
       isComponent: true,
       children: [] as string[],
@@ -169,7 +172,7 @@ export const collapseAllStories = (stories: StoriesHash) => {
 
   const result = {} as StoriesHash;
   childrenRewritten.forEach(item => {
-    result[item.id] = item;
+    result[item.id] = item as Item;
   });
   return result;
 };
@@ -184,6 +187,7 @@ export const collapseDocsOnlyStories = (storiesHash: StoriesHash) => {
     }
     return true;
   });
+
   const docsOnlyComponentsCollapsed = docsOnlyStoriesRemoved.map(item => {
     // collapse docs-only components
     const { isComponent, children, id } = item;
@@ -212,7 +216,7 @@ export const collapseDocsOnlyStories = (storiesHash: StoriesHash) => {
 
   const result = {} as StoriesHash;
   docsOnlyComponentsCollapsed.forEach(item => {
-    result[item.id] = item;
+    result[item.id] = item as Item;
   });
   return result;
 };
@@ -243,10 +247,10 @@ export const mapper = ({ state, api }: Combo) => {
   };
 };
 
-const Nav: FunctionComponent<any> = props => (
+const Sidebar: FunctionComponent<any> = props => (
   <Consumer filter={mapper}>
-    {(fromState: ReturnType<typeof mapper>) => <Sidebar {...props} {...fromState} />}
+    {(fromState: ReturnType<typeof mapper>) => <SidebarComponent {...props} {...fromState} />}
   </Consumer>
 );
 
-export default Nav;
+export default Sidebar;

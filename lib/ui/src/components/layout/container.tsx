@@ -95,7 +95,7 @@ const Paper = styled.div<{ isFullscreen: boolean }>(
         }
 );
 
-export const Nav: FunctionComponent<{ hidden: boolean; position: CSSProperties }> = ({
+export const Sidebar: FunctionComponent<{ hidden: boolean; position: CSSProperties }> = ({
   hidden = false,
   children,
   position = undefined,
