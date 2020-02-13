@@ -2,7 +2,7 @@ import React, { FunctionComponent, useMemo } from 'react';
 
 import { styled } from '@storybook/theming';
 import { ScrollArea } from '@storybook/components';
-import { State } from '@storybook/api';
+import { StoriesHash, State } from '@storybook/api';
 
 import SidebarHeading, { SidebarHeadingProps } from './SidebarHeading';
 import SidebarStories from './SidebarStories';
@@ -34,7 +34,7 @@ const CustomScrollArea = styled(ScrollArea)({
 });
 
 export interface SidebarProps {
-  stories: State['storiesHash'];
+  stories: StoriesHash;
   refs: State['refs'];
   menu: any[];
   storyId?: string;

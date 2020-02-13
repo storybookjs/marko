@@ -1,7 +1,6 @@
-import { State } from '@storybook/api';
+import { StoriesHash } from '@storybook/api';
 import { collapseDocsOnlyStories, collapseAllStories } from './sidebar';
 
-type StoriesHash = State['storiesHash'];
 type Item = StoriesHash[keyof StoriesHash];
 
 const docsOnly = { parameters: { docsOnly: true } };

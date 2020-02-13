@@ -185,8 +185,8 @@ const getPreviewPosition = ({
   }
 
   const navX = isNavHidden ? 0 : resizerNav.x;
-  const panelX = isPanelHidden ? 0 : resizerPanel.x;
-  const panelY = isPanelHidden ? 0 : resizerPanel.y;
+  const panelX = resizerPanel.x;
+  const panelY = resizerPanel.y;
 
   return panelPosition === 'bottom'
     ? {

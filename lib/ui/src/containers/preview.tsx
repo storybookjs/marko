@@ -1,12 +1,10 @@
 import { PREVIEW_URL } from 'global';
 import React from 'react';
 
-import { State, Consumer, Combo } from '@storybook/api';
+import { State, Consumer, Combo, StoriesHash } from '@storybook/api';
 
 import { Preview } from '../components/preview/preview';
 import { PreviewProps } from '../components/preview/PreviewProps';
-
-type StoriesHash = State['storieshash'];
 
 const nonAlphanumSpace = /[^a-z0-9 ]/gi;
 const doubleSpace = /\s\s/gi;

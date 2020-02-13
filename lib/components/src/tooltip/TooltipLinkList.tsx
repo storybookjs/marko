@@ -1,4 +1,4 @@
-import React, { FunctionComponent, Key, ReactNode } from 'react';
+import React, { FunctionComponent } from 'react';
 import { styled } from '@storybook/theming';
 
 import ListItem, { LinkWrapperType, ListItemProps } from './ListItem';

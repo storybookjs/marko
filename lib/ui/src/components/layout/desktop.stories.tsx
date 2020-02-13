@@ -30,8 +30,6 @@ export default {
         ...(mocked ? mockProps : realProps),
       };
 
-      console.log({ props });
-
       return (
         <div style={{ minHeight: 900, minWidth: 1200 }}>
           <StoryFn props={props} {...c} />;

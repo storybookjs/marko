@@ -1,3 +1,17 @@
+## 6.0.0-alpha.11 (February 13, 2020)
+
+### Breaking Changes
+
+* Core: Remove legacy data from Story Store ([#9810](https://github.com/storybookjs/storybook/pull/9810))
+
+### Bug Fixes
+
+* Addon-docs: Preserve HTML element classes in MDX ([#8897](https://github.com/storybookjs/storybook/pull/8897))
+
+### Maintenance
+
+* CLI: transpile `@storybook/cli` to CJS ([#9807](https://github.com/storybookjs/storybook/pull/9807))
+
 ## 5.3.13 (February 12, 2020)
 
 ### Bug Fixes

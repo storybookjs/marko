@@ -105,7 +105,7 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
     const storySource = createPart({ rows: storyRows, stylesheet, useInlineStyles });
     const storyKey = `${first}-${last}`;
 
-    if (location && currentLocation && areLocationsEqual(location, currentLocation)) {
+    if (currentLocation && areLocationsEqual(location, currentLocation)) {
       return (
         <SelectedStoryHighlight key={storyKey} ref={selectedStoryRef}>
           {storySource}
@@ -128,7 +128,7 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
       const first = location.startLoc.line - 1;
       const last = location.endLoc.line;
       const { kind } = story;
-      // source loader ids are differnet from story id
+      // source loader ids are different from story id
       const sourceIdParts = key.split('--');
       const id = api.storyId(kind, sourceIdParts[sourceIdParts.length - 1]);
       const start = createPart({ rows: rows.slice(lastRow, first), stylesheet, useInlineStyles });

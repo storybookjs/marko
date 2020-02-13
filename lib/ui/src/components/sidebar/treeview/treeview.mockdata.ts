@@ -1,6 +1,6 @@
-import { State } from '@storybook/api';
+import { StoriesHash } from '@storybook/api';
 
-type MockDataSet = Record<string, State['storiesHash']>;
+type MockDataSet = Record<string, StoriesHash>;
 
 export const mockDataset: MockDataSet = {
   withRoot: {

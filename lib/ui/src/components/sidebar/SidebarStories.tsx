@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { styled } from '@storybook/theming';
 import { Placeholder, Link as StyledLink } from '@storybook/components';
-import { State } from '@storybook/api';
+import { StoriesHash } from '@storybook/api';
 import { Location, Link as RouterLink } from '@storybook/router';
 import { TreeState } from './treeview/treeview';
 
@@ -123,7 +123,7 @@ Link.displayName = 'Link';
 
 export interface StoriesProps {
   loading: boolean;
-  stories: State['storiesHash'];
+  stories: StoriesHash;
   storyId?: undefined | string;
   className?: undefined | string;
 }

@@ -100,7 +100,7 @@ export default ({ provider, store }: Module) => {
 
       const { parameters } = storyInput;
 
-      const filteredPanels: Collection = {} as Collection<Addon>;
+      const filteredPanels: Collection = {};
       Object.entries(allPanels).forEach(([id, panel]) => {
         const { paramKey } = panel;
         if (paramKey && parameters && parameters[paramKey] && parameters[paramKey].disabled) {

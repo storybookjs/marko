@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { spawn, exec } from 'child_process';
+import { spawn } from 'child_process';
 import trash from 'trash';
 import del from 'del';
 
