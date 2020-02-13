@@ -1,12 +1,4 @@
-import React, {
-  ReactElement,
-  Component,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  ReactNode,
-} from 'react';
+import React, { ReactElement, Component, useContext, useEffect, useMemo, ReactNode } from 'react';
 import memoize from 'memoizerific';
 // @ts-ignore shallow-equal is not in DefinitelyTyped
 import shallowEqualObjects from 'shallow-equal/objects';
