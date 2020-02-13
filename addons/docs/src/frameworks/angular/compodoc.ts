@@ -71,14 +71,9 @@ const mapItemToSection = (key: string, item: Method | Property): string => {
   }
 };
 
-export const findComponentByName = (name?: string, compodocJson?: CompodocJson) => {
-  return (
-    name &&
-    compodocJson &&
-    (compodocJson.components.find((c: Component) => c.name === name) ||
-      compodocJson.directives.find((c: Directive) => c.name === name))
-  );
-};
+export const findComponentByName = (name: string, compodocJson: CompodocJson) =>
+  compodocJson.components.find((c: Component) => c.name === name) ||
+  compodocJson.directives.find((c: Directive) => c.name === name);
 
 const getComponentData = (component: Component | Directive) => {
   if (!component) {
