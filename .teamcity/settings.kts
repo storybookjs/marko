@@ -200,6 +200,8 @@ object ExamplesProject : Project({
     buildType(Examples1)
     buildType(Examples2)
     buildType(Examples3)
+    buildType(Examples4)
+    buildType(Examples5)
     buildType(AggregateExamples)
 })
 
