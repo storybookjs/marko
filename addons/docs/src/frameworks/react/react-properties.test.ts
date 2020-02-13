@@ -6,6 +6,7 @@ import { transformFileSync, transformSync } from '@babel/core';
 import requireFromString from 'require-from-string';
 
 import { extractProps } from './extractProps';
+import { normalizeNewlines } from '../../lib/utils';
 
 // File hierarchy:
 // __testfixtures__ / some-test-case / input.*
@@ -37,8 +38,6 @@ const annotateWithDocgen = (inputPath: string) => {
   const { code } = transformFileSync(inputPath, options);
   return normalizeNewlines(code);
 };
-
-const normalizeNewlines = (string: string) => string.replace(/\\r\\n/g, '\\n');
 
 describe('react component properties', () => {
   const fixturesDir = path.join(__dirname, '__testfixtures__');
