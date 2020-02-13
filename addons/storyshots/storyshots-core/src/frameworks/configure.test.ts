@@ -14,6 +14,10 @@ describe('preview files', () => {
     ${'preview.tsx'}
     ${'preview.js'}
     ${'preview.jsx'}
+    ${'config.ts'}
+    ${'config.tsx'}
+    ${'config.js'}
+    ${'config.jsx'}
   `('resolves a valid preview file from $filepath', ({ filepath }) => {
     setupFiles({ [`test/${filepath}`]: 'true' });
 
