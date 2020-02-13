@@ -274,18 +274,7 @@ This is probably not what you intended. Read more here: https://github.com/story
     return api;
   };
 
-  // legacy
-  getStorybook = () =>
-    this._storyStore.getStoryKinds().map(kind => {
-      const fileName = this._storyStore.getStoryFileName(kind);
-
-      const stories = this._storyStore.getStories(kind).map(name => {
-        const render = this._storyStore.getStoryWithContext(kind, name);
-        return { name, render };
-      });
-
-      return { kind, fileName, stories };
-    });
+  getStorybook = () => this._storyStore.getStorybook();
 
   raw = () => this._storyStore.raw();
 

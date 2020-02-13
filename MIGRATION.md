@@ -3,6 +3,7 @@
 - [Migration](#migration)
   - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
     - [New addon presets](#new-addon-presets)
+    - [Removed legacy story APIs](#removed-legacy-story-apis)
   - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
     - [To main.js configuration](#to-mainjs-configuration)
     - [Create React App preset](#create-react-app-preset)
@@ -124,6 +125,14 @@ MyNonCheckedStory.story = {
   },
 };
 ```
+
+### Removed Legacy Story APIs
+
+In 6.0 we removed a set of APIs from the underlying `StoryStore` (which wasn't publicly accessible):
+
+- `getStories`, `getStoryFileName`, `getStoryAndParameters`, `getStory`, `getStoryWithContext`, `hasStoryKind`, `hasStory`, `dumpStoryBook`, `size`, `clean`
+
+Although these were private APIs, if you were using them, you could probably use the newer APIs (which are still private): `getStoriesForKind`, `getRawStory`, `removeStoryKind`, `remove`.
 
 ## From version 5.2.x to 5.3.x
 
