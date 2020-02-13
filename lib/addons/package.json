@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@storybook/api": "6.0.0-alpha.11",
+    "@storybook/router": "6.0.0-alpha.11",
     "@storybook/channels": "6.0.0-alpha.11",
     "@storybook/client-logger": "6.0.0-alpha.11",
     "@storybook/core-events": "6.0.0-alpha.11",
