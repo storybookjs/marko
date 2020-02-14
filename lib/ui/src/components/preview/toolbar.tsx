@@ -4,17 +4,21 @@ import { styled } from '@storybook/theming';
 
 import { FlexBar, IconButton, Icons, Separator, TabButton, TabBar } from '@storybook/components';
 import { Consumer, Combo, API, Story, Group, State } from '@storybook/api';
-import { Addon } from '@storybook/addons';
+import { Addon, types } from '@storybook/addons';
 
 import { Location, RenderData } from '@storybook/router';
-import { ZoomConsumer, Zoom, zoomTool } from './tools/zoom';
+import { zoomTool } from './tools/zoom';
 
 import * as S from './utils/components';
 
 import { PreviewProps } from './utils/types';
-import { getTools, getToolsExtra } from './preview';
 import { copyTool } from './tools/copy';
 import { ejectTool } from './tools/eject';
+
+export const getTools = (getFn: API['getElements']) => Object.values(getFn<Addon>(types.TOOL));
+
+export const getToolsExtra = (getFn: API['getElements']) =>
+  Object.values(getFn<Addon>(types.TOOLEXTRA));
 
 const Bar: FunctionComponent<{ shown: boolean } & Record<string, any>> = ({ shown, ...props }) => (
   <FlexBar {...props} />
