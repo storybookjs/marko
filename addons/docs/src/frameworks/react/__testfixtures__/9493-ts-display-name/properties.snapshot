@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`react component properties 9493-ts-display-name 1`] = `
+Object {
+  "rows": Array [
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "'Code Yellow'",
+      },
+      "description": undefined,
+      "name": "title",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "unknown",
+      },
+    },
+  ],
+}
+`;

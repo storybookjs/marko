@@ -24,6 +24,7 @@ const fixtures = [
   '9827-ts-default-values',
   '9586-js-react-memo',
   '9575-ts-camel-case',
+  '9493-ts-display-name',
 ];
 
 const stories = storiesOf('Properties/React', module);
