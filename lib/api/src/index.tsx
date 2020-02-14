@@ -220,7 +220,9 @@ class ManagerProvider extends Component<Props, State> {
           const refs = api.getRefs();
 
           // find the exact ref, get it's id & url
-          const [refId] = Object.entries(refs).find(([, url]) => url.match(source));
+          const [refId] = Object.entries(refs).find(([, url]) =>
+            `${url}/iframe.html`.match(source)
+          );
 
           api.setRef(refId, data.stories);
           break;
