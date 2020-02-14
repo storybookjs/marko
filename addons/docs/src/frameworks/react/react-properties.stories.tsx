@@ -22,6 +22,7 @@ const fixtures = [
   '9591-ts-import-types',
   '9721-ts-deprecated-jsdoc',
   '9827-ts-default-values',
+  '9586-js-react-memo',
 ];
 
 const stories = storiesOf('Properties/React', module);
