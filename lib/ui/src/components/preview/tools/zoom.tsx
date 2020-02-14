@@ -54,7 +54,7 @@ export { Zoom, ZoomConsumer, ZoomProvider };
 
 export const zoomTool: Addon = {
   title: 'zoom',
-  match: p => p.viewMode === 'story',
+  match: ({ viewMode }) => viewMode === 'story',
   render: () => (
     <Fragment>
       <ZoomConsumer>

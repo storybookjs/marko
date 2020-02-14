@@ -12,7 +12,7 @@ const ejectMapper = ({ state }: Combo) => ({
 
 export const ejectTool: Addon = {
   title: 'eject',
-  match: p => p.viewMode === 'story',
+  match: ({ viewMode }) => viewMode === 'story',
   render: () => (
     <Consumer filter={ejectMapper}>
       {({ baseUrl, storyId, queryParams }: ReturnType<typeof ejectMapper>) => (

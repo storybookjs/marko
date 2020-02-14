@@ -15,7 +15,7 @@ const copyMapper = ({ state }: Combo) => ({
 
 export const copyTool: Addon = {
   title: 'copy',
-  match: p => p.viewMode === 'story',
+  match: ({ viewMode }) => viewMode === 'story',
   render: () => (
     <Consumer filter={copyMapper}>
       {({ baseUrl, storyId, origin, pathname, queryParams }: ReturnType<typeof copyMapper>) => (
