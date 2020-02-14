@@ -27,7 +27,7 @@ export interface InceptionRef {
   url: string;
 }
 export interface RefState {
-  isInjected: boolean;
+  startInjected: boolean;
 }
 
 export type RefId = string;
@@ -113,7 +113,7 @@ const initRefsApi = ({ store, provider }: Module) => {
     store.setState({
       refs: {
         ...(store.getState().refs || {}),
-        [id]: { id, url, data: after, isInjected: true },
+        [id]: { id, url, data: after, startInjected: true },
       },
     });
   };
@@ -125,7 +125,7 @@ const initRefsApi = ({ store, provider }: Module) => {
         id: key,
         url: value,
         data: {},
-        isInjected: true,
+        startInjected: true,
       },
     }),
     {} as SubState['refs']
