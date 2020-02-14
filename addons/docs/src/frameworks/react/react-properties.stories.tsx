@@ -17,6 +17,7 @@ const fixtures = [
   '9023-js-hoc',
   '8740-ts-multi-props',
   '8894-ts-forward-ref',
+  '9556-ts-react-default-exports',
 ];
 
 const stories = storiesOf('Properties/React', module);
