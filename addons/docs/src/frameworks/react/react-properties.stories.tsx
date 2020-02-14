@@ -9,6 +9,7 @@ const fixtures = [
   '9399-js-proptypes-shape',
   '8663-js-styled-components',
   '9626-js-default-values',
+  '9668-js-proptypes-no-jsdoc',
 ];
 
 const stories = storiesOf('Properties/React', module);
