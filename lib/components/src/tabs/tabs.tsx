@@ -7,7 +7,6 @@ import React, {
   MouseEvent,
   ReactNode,
 } from 'react';
-import PropTypes from 'prop-types';
 import { styled } from '@storybook/theming';
 
 import { Placeholder } from '../placeholder/placeholder';
@@ -108,9 +107,7 @@ export const TabWrapper: FunctionComponent<TabWrapperProps> = ({ active, render,
   <VisuallyHidden active={active}>{render ? render() : children}</VisuallyHidden>
 );
 
-export const panelProps = {
-  active: PropTypes.bool,
-};
+export const panelProps = {};
 
 const childrenToList = (children: any, selected: string) =>
   Children.toArray(children).map(
