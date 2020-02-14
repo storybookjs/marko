@@ -1,3 +1,4 @@
+// @ts-nocheck
 /* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
 import {

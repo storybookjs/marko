@@ -5,15 +5,13 @@ import tmp from 'tmp';
 import { sync as spawnSync } from 'cross-spawn';
 
 import { findComponentByName, extractPropsFromData } from './compodoc';
-import { normalizeNewlines } from '../../lib/utils';
 
-// File hierarchy:
-// __testfixtures__ / some-test-case / input.*
+// File hierarchy: __testfixtures__ / some-test-case / input.*
 const inputRegExp = /^input\..*$/;
 
 const runCompodoc = (inputPath: string) => {
   const testDir = path.dirname(inputPath);
-  const { name: tmpDir } = tmp.dirSync();
+  const { name: tmpDir, removeCallback } = tmp.dirSync();
 
   // FIXME: for now, this requires a tsconfig.json for each test case. Tried generating
   // one dynamically in tmpDir, but compodoc doesn't handle absolute paths properly
@@ -21,11 +19,12 @@ const runCompodoc = (inputPath: string) => {
   spawnSync('compodoc', ['-p', `${testDir}/tsconfig.json`, '-e', 'json', '-d', tmpDir], {
     stdio: 'inherit',
   });
-  const json = fs.readFileSync(`${tmpDir}/documentation.json`, 'utf8');
-  return normalizeNewlines(json);
+  const output = fs.readFileSync(`${tmpDir}/documentation.json`, 'utf8');
+  removeCallback();
+  return output;
 };
 
-describe('react component properties', () => {
+describe('angular component properties', () => {
   const fixturesDir = path.join(__dirname, '__testfixtures__');
   fs.readdirSync(fixturesDir, { withFileTypes: true }).forEach(testEntry => {
     if (testEntry.isDirectory()) {

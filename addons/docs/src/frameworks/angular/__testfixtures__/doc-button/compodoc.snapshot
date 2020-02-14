@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`react component properties doc-button 1`] = `
+exports[`angular component properties doc-button 1`] = `
 Object {
   "classes": Array [],
   "components": Array [
@@ -10,7 +10,7 @@ Object {
           "getSignature": Object {
             "description": "<p>Getter for <code>inputValue</code>. </p>
 ",
-            "line": 101,
+            "line": 102,
             "name": "inputValue",
             "returnType": "",
             "type": "",
@@ -34,7 +34,7 @@ Object {
                 "type": "string",
               },
             ],
-            "line": 96,
+            "line": 97,
             "name": "inputValue",
             "returnType": "void",
             "type": "void",
@@ -58,7 +58,7 @@ Object {
                 "type": "[]",
               },
             ],
-            "line": 179,
+            "line": 180,
             "name": "item",
             "returnType": "void",
             "type": "void",
@@ -68,7 +68,7 @@ Object {
           "getSignature": Object {
             "description": "<p>Get the private value. </p>
 ",
-            "line": 138,
+            "line": 139,
             "name": "value",
             "returnType": "string | number",
             "type": "",
@@ -92,7 +92,7 @@ Object {
                 "type": "",
               },
             ],
-            "line": 133,
+            "line": 134,
             "name": "value",
             "returnType": "void",
             "type": "void",
@@ -113,7 +113,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
       "hostBindings": Array [
         Object {
           "defaultValue": "false",
-          "line": 110,
+          "line": 111,
           "name": "class.focused",
         },
       ],
@@ -128,7 +128,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
           "argsDecorator": Array [
             "$event.target",
           ],
-          "line": 106,
+          "line": 107,
           "name": "click",
         },
       ],
@@ -139,14 +139,14 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
           "defaultValue": "'secondary'",
           "description": "<p>Appearance style of the button. </p>
 ",
-          "line": 45,
+          "line": 46,
           "name": "appearance",
           "type": "\\"primary\\" | \\"secondary\\"",
         },
         Object {
           "description": "<p>Setter for <code>inputValue</code> that is also an <code>@Input</code>. </p>
 ",
-          "line": 96,
+          "line": 97,
           "name": "inputValue",
           "type": "string",
         },
@@ -154,23 +154,23 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
           "defaultValue": "false",
           "description": "<p>Sets the button to a disabled state. </p>
 ",
-          "line": 49,
+          "line": 50,
           "name": "isDisabled",
         },
         Object {
-          "line": 179,
+          "line": 180,
           "name": "item",
           "type": "[]",
         },
         Object {
           "description": "<p>The inner text of the button.</p>
 ",
-          "line": 57,
+          "line": 58,
           "name": "label",
           "type": "string",
         },
         Object {
-          "line": 176,
+          "line": 177,
           "name": "showKeyAlias",
           "type": "",
         },
@@ -178,7 +178,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
           "defaultValue": "'medium'",
           "description": "<p>Size of the button. </p>
 ",
-          "line": 61,
+          "line": 62,
           "name": "size",
           "type": "ButtonSize",
         },
@@ -186,85 +186,85 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
           "defaultValue": "false",
           "description": "<p>Some input you shouldn&#39;t use.</p>
 ",
-          "line": 69,
+          "line": 70,
           "name": "somethingYouShouldNotUse",
         },
       ],
       "jsdoctags": Array [
         Object {
           "atToken": Object {
-            "end": 772,
+            "end": 787,
             "flags": 0,
             "kind": 57,
-            "pos": 771,
+            "pos": 786,
           },
           "comment": "Hello world",
-          "end": 779,
+          "end": 794,
           "flags": 0,
           "kind": 288,
-          "pos": 771,
+          "pos": 786,
           "tagName": Object {
-            "end": 778,
+            "end": 793,
             "escapedText": "string",
             "flags": 0,
-            "pos": 772,
+            "pos": 787,
           },
         },
         Object {
           "atToken": Object {
-            "end": 795,
+            "end": 810,
             "flags": 0,
             "kind": 57,
-            "pos": 794,
+            "pos": 809,
           },
           "comment": "[Example](http://example.com)",
-          "end": 800,
+          "end": 815,
           "flags": 0,
           "kind": 288,
-          "pos": 794,
+          "pos": 809,
           "tagName": Object {
-            "end": 799,
+            "end": 814,
             "escapedText": "link",
             "flags": 0,
-            "pos": 795,
+            "pos": 810,
           },
         },
         Object {
           "atToken": Object {
-            "end": 834,
+            "end": 849,
             "flags": 0,
             "kind": 57,
-            "pos": 833,
+            "pos": 848,
           },
           "comment": "\`ThingThing\`",
-          "end": 839,
+          "end": 854,
           "flags": 0,
           "kind": 288,
-          "pos": 833,
+          "pos": 848,
           "tagName": Object {
-            "end": 838,
+            "end": 853,
             "escapedText": "code",
             "flags": 0,
-            "pos": 834,
+            "pos": 849,
           },
         },
         Object {
           "atToken": Object {
-            "end": 856,
+            "end": 871,
             "flags": 0,
             "kind": 57,
-            "pos": 855,
+            "pos": 870,
           },
           "comment": "<span class=\\"badge\\">aaa</span>",
-          "end": 861,
+          "end": 876,
           "flags": 0,
           "kind": 288,
-          "pos": 855,
+          "pos": 870,
           "tagName": Object {
-            "end": 860,
+            "end": 875,
             "escapedText": "html",
             "flags": 0,
-            "pos": 856,
+            "pos": 871,
           },
         },
       ],
@@ -287,16 +287,16 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
               "comment": "<p>Some number you&#39;d like to use.</p>
 ",
               "name": Object {
-                "end": 3186,
+                "end": 3201,
                 "escapedText": "x",
                 "flags": 0,
-                "pos": 3185,
+                "pos": 3200,
               },
               "tagName": Object {
-                "end": 3184,
+                "end": 3199,
                 "escapedText": "param",
                 "flags": 0,
-                "pos": 3179,
+                "pos": 3194,
               },
               "type": "number",
             },
@@ -304,21 +304,21 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
               "comment": "<p>Some other number or string you&#39;d like to use, will have <code>parseInt()</code> applied before calculation.</p>
 ",
               "name": Object {
-                "end": 3231,
+                "end": 3246,
                 "escapedText": "y",
                 "flags": 0,
-                "pos": 3230,
+                "pos": 3245,
               },
               "tagName": Object {
-                "end": 3229,
+                "end": 3244,
                 "escapedText": "param",
                 "flags": 0,
-                "pos": 3224,
+                "pos": 3239,
               },
               "type": "string | number",
             },
           ],
-          "line": 148,
+          "line": 149,
           "modifierKind": Array [
             114,
           ],
@@ -341,21 +341,21 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
               "comment": "<p>Some <code>password</code>.</p>
 ",
               "name": Object {
-                "end": 3747,
+                "end": 3762,
                 "escapedText": "password",
                 "flags": 0,
-                "pos": 3739,
+                "pos": 3754,
               },
               "tagName": Object {
-                "end": 3738,
+                "end": 3753,
                 "escapedText": "param",
                 "flags": 0,
-                "pos": 3733,
+                "pos": 3748,
               },
               "type": "string",
             },
           ],
-          "line": 171,
+          "line": 172,
           "modifierKind": Array [
             112,
           ],
@@ -379,22 +379,22 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
               "comment": "<p>Some <code>id</code>.</p>
 ",
               "name": Object {
-                "end": 3606,
+                "end": 3621,
                 "escapedText": "id",
                 "flags": 0,
-                "pos": 3604,
+                "pos": 3619,
               },
               "optional": true,
               "tagName": Object {
-                "end": 3603,
+                "end": 3618,
                 "escapedText": "param",
                 "flags": 0,
-                "pos": 3598,
+                "pos": 3613,
               },
               "type": "number",
             },
           ],
-          "line": 162,
+          "line": 163,
           "modifierKind": Array [
             113,
           ],
@@ -421,7 +421,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
               "type": "ISomeInterface",
             },
           ],
-          "line": 153,
+          "line": 154,
           "modifierKind": Array [
             114,
           ],
@@ -439,7 +439,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
           "description": "<p>Handler to be called when the button is clicked by a user.</p>
 <p>Will also block the emission of the event if <code>isDisabled</code> is true.</p>
 ",
-          "line": 77,
+          "line": 78,
           "name": "onClick",
           "type": "EventEmitter",
         },
@@ -448,7 +448,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
         Object {
           "defaultValue": "'some value'",
           "description": "",
-          "line": 92,
+          "line": 93,
           "modifierKind": Array [
             112,
           ],
@@ -460,7 +460,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
           "defaultValue": "'Private hello'",
           "description": "<p>Private value. </p>
 ",
-          "line": 130,
+          "line": 131,
           "modifierKind": Array [
             112,
           ],
@@ -476,7 +476,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
             },
           ],
           "description": "",
-          "line": 41,
+          "line": 42,
           "name": "buttonRef",
           "optional": false,
           "type": "ElementRef",
@@ -485,7 +485,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
           "defaultValue": "'Public hello'",
           "description": "<p>Public value. </p>
 ",
-          "line": 127,
+          "line": 128,
           "modifierKind": Array [
             114,
           ],
@@ -495,7 +495,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
         },
         Object {
           "description": "",
-          "line": 183,
+          "line": 184,
           "modifierKind": Array [
             114,
           ],
@@ -751,21 +751,21 @@ export class InputComponent<T> {
       "properties": Array [
         Object {
           "description": "",
-          "line": 19,
+          "line": 20,
           "name": "one",
           "optional": false,
           "type": "string",
         },
         Object {
           "description": "",
-          "line": 21,
+          "line": 22,
           "name": "three",
           "optional": false,
           "type": "any[]",
         },
         Object {
           "description": "",
-          "line": 20,
+          "line": 21,
           "name": "two",
           "optional": false,
           "type": "boolean",

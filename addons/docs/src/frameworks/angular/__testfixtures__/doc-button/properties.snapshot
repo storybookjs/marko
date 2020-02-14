@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`react component properties doc-button 1`] = `
+exports[`angular component properties doc-button 1`] = `
 Object {
   "sections": Object {
     "inputs": Array [
