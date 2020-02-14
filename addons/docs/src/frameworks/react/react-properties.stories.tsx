@@ -15,6 +15,7 @@ const fixtures = [
   '8279-js-styled-docgen',
   '8140-js-prop-types-oneof',
   '9023-js-hoc',
+  '8740-ts-multi-props',
 ];
 
 const stories = storiesOf('Properties/React', module);
