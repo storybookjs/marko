@@ -263,7 +263,7 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
 
     return (
       <ManagerContext.Provider value={value}>
-        <ManagerConsumerFunc>{children}</ManagerConsumerFunc>
+        <ManagerConsumer>{children}</ManagerConsumer>
       </ManagerContext.Provider>
     );
   }
@@ -276,7 +276,7 @@ interface ManagerConsumerProps<P = unknown> {
 
 const defaultFilter = (c: Combo) => c;
 
-function ManagerConsumerFunc<P = Combo>({
+function ManagerConsumer<P = Combo>({
   // @ts-ignore
   filter = defaultFilter,
   children,
@@ -312,7 +312,7 @@ export function useStorybookApi(): API {
 }
 
 export {
-  ManagerConsumerFunc as Consumer,
+  ManagerConsumer as Consumer,
   ManagerProvider as Provider,
   StoriesHash,
   Story,
