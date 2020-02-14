@@ -28,6 +28,7 @@ export interface Group {
   depth: number;
   name: string;
   children: StoryId[];
+  refId?: InceptionRef['id'];
   parent?: StoryId;
   isComponent: boolean;
   isRoot: false;
@@ -46,7 +47,7 @@ export interface Story {
   parent: StoryId;
   name: string;
   kind: string;
-  ref?: InceptionRef;
+  refId?: InceptionRef['id'];
   children?: StoryId[];
   isComponent: boolean;
   isRoot: false;
@@ -68,7 +69,7 @@ export interface StoryInput {
   id: StoryId;
   name: string;
   knownAs?: StoryId;
-  ref?: InceptionRef;
+  refId?: InceptionRef;
   kind: string;
   children: string[];
   parameters: {
