@@ -1,7 +1,14 @@
-import React, { ReactNode, ReactElement, Component, useContext, useEffect, useMemo } from 'react';
-import memoize from 'memoizerific';
-// @ts-ignore shallow-equal is not in DefinitelyTyped
-import shallowEqualObjects from 'shallow-equal/objects';
+import React, {
+  ReactNode,
+  ReactElement,
+  Component,
+  useContext,
+  useEffect,
+  useMemo,
+  FunctionComponent,
+  useRef,
+  Fragment,
+} from 'react';
 
 import {
   STORIES_CONFIGURED,
@@ -123,16 +130,16 @@ interface Children {
 
 type StatePartial = Partial<State>;
 
-export type Props = Children & RouterData & ProviderData & DocsModeData;
+export type ManagerProviderProps = Children & RouterData & ProviderData & DocsModeData;
 
-class ManagerProvider extends Component<Props, State> {
+class ManagerProvider extends Component<ManagerProviderProps, State> {
   api: API;
 
   modules: any[];
 
   static displayName = 'Manager';
 
-  constructor(props: Props) {
+  constructor(props: ManagerProviderProps) {
     super(props);
     const {
       provider,
@@ -274,7 +281,7 @@ class ManagerProvider extends Component<Props, State> {
     this.api = api;
   }
 
-  static getDerivedStateFromProps = (props: Props, state: State) => {
+  static getDerivedStateFromProps = (props: ManagerProviderProps, state: State) => {
     if (state.path !== props.path) {
       return {
         ...state,
@@ -298,7 +305,7 @@ class ManagerProvider extends Component<Props, State> {
     });
   }
 
-  shouldComponentUpdate(nextProps: Props, nextState: State) {
+  shouldComponentUpdate(nextProps: ManagerProviderProps, nextState: State) {
     const prevState = this.state;
     const prevProps = this.props;
 
@@ -318,57 +325,45 @@ class ManagerProvider extends Component<Props, State> {
       api: this.api,
     };
 
-    // @ts-ignore
-    const content: ReactNode = typeof children === 'function' ? children(value) : children;
-
-    return <ManagerContext.Provider value={value}>{content}</ManagerContext.Provider>;
-  }
-}
-
-interface ConsumerProps<S, C> {
-  filter?: (combo: C) => S;
-  pure?: boolean;
-  children: (d: S | C) => ReactElement<any> | null;
-}
-
-interface SubState {
-  [key: string]: any;
-}
-
-class ManagerConsumer extends Component<ConsumerProps<SubState, Combo>> {
-  prevChildren?: ReactElement<any> | null;
-
-  prevData?: SubState;
-
-  dataMemory?: (combo: Combo) => SubState;
-
-  constructor(props: ConsumerProps<SubState, Combo>) {
-    super(props);
-    this.dataMemory = props.filter ? memoize(10)(props.filter) : null;
-  }
-
-  render() {
-    const { children, pure } = this.props;
-
     return (
-      <ManagerContext.Consumer>
-        {d => {
-          const data = this.dataMemory ? this.dataMemory(d) : d;
-          if (
-            pure &&
-            this.prevChildren &&
-            this.prevData &&
-            shallowEqualObjects(data, this.prevData)
-          ) {
-            return this.prevChildren;
-          }
-          this.prevChildren = children(data);
-          this.prevData = data;
-          return this.prevChildren;
-        }}
-      </ManagerContext.Consumer>
+      <ManagerContext.Provider value={value}>
+        <ManagerConsumerFunc>{children}</ManagerConsumerFunc>
+      </ManagerContext.Provider>
     );
   }
+}
+
+interface ManagerConsumerProps<P = unknown> {
+  filter?: (combo: Combo) => P;
+  children: ReactNode | FunctionComponent<P>;
+}
+
+const defaultFilter = (c: Combo) => c;
+
+function ManagerConsumerFunc<P = unknown>({
+  // @ts-ignore
+  filter = defaultFilter,
+  children,
+}: ManagerConsumerProps<P>): ReactElement {
+  const c = useContext(ManagerContext);
+  const renderer = useRef(children);
+  const filterer = useRef(filter);
+
+  if (typeof renderer.current !== 'function') {
+    return <Fragment>{renderer.current}</Fragment>;
+  }
+
+  const data = filterer.current(c);
+
+  const l = useMemo(() => {
+    return [...Object.entries(data).reduce((acc, keyval) => acc.concat(keyval), [])];
+  }, [c.state]);
+
+  return useMemo(() => {
+    const Child = renderer.current as FunctionComponent<P>;
+
+    return <Child {...data} />;
+  }, l);
 }
 
 export function useStorybookState(): State {
@@ -381,7 +376,7 @@ export function useStorybookApi(): API {
 }
 
 export {
-  ManagerConsumer as Consumer,
+  ManagerConsumerFunc as Consumer,
   ManagerProvider as Provider,
   StoriesHash,
   Story,
@@ -423,7 +418,7 @@ export function useParameter<S>(parameterKey: string, defaultValue?: S) {
 }
 
 type StateMerger<S> = (input: S) => S;
-// chache for taking care of HMR
+// cache for taking care of HMR
 const addonStateCache: {
   [key: string]: any;
 } = {};
