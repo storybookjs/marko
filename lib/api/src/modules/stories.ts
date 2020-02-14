@@ -38,6 +38,7 @@ export interface SubAPI {
 }
 
 // When adding a group, also add all of its children, depth first
+const split = /((\w*)_)?(.*)/;
 
 const initStoriesApi = ({
   store,
@@ -46,10 +47,16 @@ const initStoriesApi = ({
   viewMode: initialViewMode,
 }: Module) => {
   const getData = (storyId: StoryId) => {
-    const { storiesHash } = store.getState();
+    const { storiesHash, refs } = store.getState();
 
     if (storiesHash[storyId]) {
       return storiesHash[storyId];
+    }
+
+    const [, , refId, realId] = storyId.match(split);
+
+    if (refs[refId] && refs[refId].data[storyId]) {
+      return refs[refId].data[storyId];
     }
 
     return undefined;
