@@ -10,6 +10,7 @@ const fixtures = [
   '8663-js-styled-components',
   '9626-js-default-values',
   '9668-js-proptypes-no-jsdoc',
+  '8143-ts-react-fc-generics',
 ];
 
 const stories = storiesOf('Properties/React', module);
