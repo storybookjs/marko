@@ -19,7 +19,7 @@ export default class Test extends React.Component {
 _defineProperty(Test, \\"propTypes\\", {
   /**
    * Please work...
-   * */
+   */
   test: PropTypes.string
 });
 
