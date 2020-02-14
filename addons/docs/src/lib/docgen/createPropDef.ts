@@ -1,4 +1,3 @@
-import { isNil } from 'lodash';
 import { PropDef, PropDefaultValue } from '@storybook/components';
 import { TypeSystem, DocgenInfo, DocgenType, DocgenPropDefaultValue } from './types';
 import { JsDocParsingResult } from '../jsdocParser';
@@ -15,11 +14,11 @@ export type PropDefFactory = (
 
 function createType(type: DocgenType) {
   // A type could be null if a defaultProp has been provided without a type definition.
-  return !isNil(type) ? createSummaryValue(type.name) : null;
+  return type != null ? createSummaryValue(type.name) : null;
 }
 
 function createDefaultValue(defaultValue: DocgenPropDefaultValue): PropDefaultValue {
-  if (!isNil(defaultValue)) {
+  if (defaultValue != null) {
     const { value } = defaultValue;
 
     if (!isDefaultValueBlacklisted(value)) {
@@ -46,13 +45,13 @@ function applyJsDocResult(propDef: PropDef, jsDocParsingResult: JsDocParsingResu
   if (jsDocParsingResult.includesJsDoc) {
     const { description, extractedTags } = jsDocParsingResult;
 
-    if (!isNil(description)) {
+    if (description != null) {
       // eslint-disable-next-line no-param-reassign
       propDef.description = jsDocParsingResult.description;
     }
 
-    const hasParams = !isNil(extractedTags.params);
-    const hasReturns = !isNil(extractedTags.returns) && !isNil(extractedTags.returns.type);
+    const hasParams = extractedTags.params != null;
+    const hasReturns = extractedTags.returns != null && extractedTags.returns.type != null;
 
     if (hasParams || hasReturns) {
       // eslint-disable-next-line no-param-reassign

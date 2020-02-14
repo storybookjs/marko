@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { SyntaxHighlighter, Placeholder, Spaced, Icons } from '@storybook/components';
 import { STORY_RENDERED } from '@storybook/core-events';
 import { API } from '@storybook/api';
@@ -112,16 +112,16 @@ export class CssResourcePanel extends Component<Props, State> {
     return (
       <div>
         {list &&
-          list.map(({ id, code, picked }) => (
+          list.map(({ id, code, picked, hideCode = false }) => (
             <div key={id} style={{ padding: 10 }}>
               <label>
                 <input type="checkbox" checked={picked} onChange={this.onChange} id={id} />
                 <span>#{id}</span>
               </label>
-              {code && code.length < maxLimitToUseSyntaxHighlighter && (
+              {code && !hideCode && code.length < maxLimitToUseSyntaxHighlighter && (
                 <SyntaxHighlighter language="html">{code}</SyntaxHighlighter>
               )}
-              {code && code.length >= maxLimitToUseSyntaxHighlighter && (
+              {code && !hideCode && code.length >= maxLimitToUseSyntaxHighlighter && (
                 <Placeholder>
                   <Spaced row={1}>
                     <PlainCode>{code.substring(0, maxLimitToUseSyntaxHighlighter)} ...</PlainCode>

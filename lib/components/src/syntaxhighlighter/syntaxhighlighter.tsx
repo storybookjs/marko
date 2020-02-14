@@ -3,27 +3,35 @@ import { styled } from '@storybook/theming';
 import { document, window } from 'global';
 import memoize from 'memoizerific';
 
-import refractor from 'refractor/core';
-import ReactSyntaxHighlighter from 'react-syntax-highlighter/dist/cjs/prism-light';
+import jsx from 'react-syntax-highlighter/dist/cjs/languages/prism/jsx';
+import bash from 'react-syntax-highlighter/dist/cjs/languages/prism/bash';
+import css from 'react-syntax-highlighter/dist/cjs/languages/prism/css';
+import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json';
+import html from 'react-syntax-highlighter/dist/cjs/languages/prism/markup';
+import md from 'react-syntax-highlighter/dist/cjs/languages/prism/markdown';
+import yml from 'react-syntax-highlighter/dist/cjs/languages/prism/yaml';
+import tsx from 'react-syntax-highlighter/dist/cjs/languages/prism/tsx';
+import typescript from 'react-syntax-highlighter/dist/cjs/languages/prism/typescript';
 
+import { PrismLight as ReactSyntaxHighlighter } from 'react-syntax-highlighter';
+// @ts-ignore
+import createElement from 'react-syntax-highlighter/dist/cjs/create-element';
 import { ActionBar } from '../ActionBar/ActionBar';
 import { ScrollArea } from '../ScrollArea/ScrollArea';
 
 import { formatter } from './formatter';
 
-// refractor.register(require('refractor/lang/css'));
-// refractor.register(require('refractor/lang/css-extras'));
+export { createElement as createSyntaxHighlighterElement };
 
-refractor.register(require('refractor/lang/js-extras'));
-refractor.register(require('refractor/lang/jsx'));
-refractor.register(require('refractor/lang/tsx'));
-refractor.register(require('refractor/lang/typescript'));
-refractor.register(require('refractor/lang/jsdoc'));
-refractor.register(require('refractor/lang/json'));
-refractor.register(require('refractor/lang/json5'));
-refractor.register(require('refractor/lang/bash'));
-refractor.register(require('refractor/lang/markup'));
-refractor.register(require('refractor/lang/markdown'));
+ReactSyntaxHighlighter.registerLanguage('jsx', jsx);
+ReactSyntaxHighlighter.registerLanguage('json', json);
+ReactSyntaxHighlighter.registerLanguage('yml', yml);
+ReactSyntaxHighlighter.registerLanguage('md', md);
+ReactSyntaxHighlighter.registerLanguage('bash', bash);
+ReactSyntaxHighlighter.registerLanguage('css', css);
+ReactSyntaxHighlighter.registerLanguage('html', html);
+ReactSyntaxHighlighter.registerLanguage('tsx', tsx);
+ReactSyntaxHighlighter.registerLanguage('typescript', typescript);
 
 const themedSyntax = memoize(2)(theme =>
   Object.entries(theme.code || {}).reduce((acc, [key, val]) => ({ ...acc, [`* .${key}`]: val }), {})
@@ -83,6 +91,11 @@ const Code = styled.code({
   opacity: 1,
 });
 
+export interface SyntaxHighlighterRendererProps {
+  rows: any[];
+  stylesheet: string;
+  useInlineStyles: boolean;
+}
 export interface SyntaxHighlighterProps {
   language: string;
   copyable?: boolean;
@@ -90,6 +103,7 @@ export interface SyntaxHighlighterProps {
   padded?: boolean;
   format?: boolean;
   className?: string;
+  renderer?: (props: SyntaxHighlighterRendererProps) => React.ReactNode;
 }
 
 export interface SyntaxHighlighterState {

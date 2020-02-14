@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useContext } from 'react';
-import { isNil } from 'lodash';
 
 import {
   PropsTable,
@@ -60,7 +59,7 @@ export const getComponentProps = (
       throw new Error(PropsTableError.PROPS_UNSUPPORTED);
     }
     let props = extractProps(component);
-    if (!isNil(exclude)) {
+    if (exclude != null) {
       const { rows } = props as PropsTableRowsProps;
       const { sections } = props as PropsTableSectionsProps;
       if (rows) {

@@ -11,27 +11,14 @@ import { logger } from '@storybook/client-logger';
 import { Comparator, Parameters, StoryFn } from '@storybook/addons';
 import {
   DecoratorFunction,
-  LegacyData,
-  LegacyItem,
   StoreData,
   AddStoryArgs,
   StoreItem,
   ErrorLike,
+  GetStorybookKind,
 } from './types';
 import { HooksContext } from './hooks';
 import storySort from './storySort';
-
-// TODO: these are copies from components/nav/lib
-// refactor to DRY
-const toKey = (input: string) =>
-  input.replace(/[^a-z0-9]+([a-z0-9])/gi, (...params) => params[1].toUpperCase());
-
-let count = 0;
-
-const getId = (): number => {
-  count += 1;
-  return count;
-};
 
 const toExtracted = <T>(obj: T) =>
   Object.entries(obj).reduce((acc, [key, value]) => {
@@ -76,10 +63,6 @@ export default class StoryStore extends EventEmitter {
 
   _data: StoreData;
 
-  _legacyData?: LegacyData;
-
-  _legacydata: LegacyData;
-
   _revision: number;
 
   _selection: Selection;
@@ -89,7 +72,6 @@ export default class StoryStore extends EventEmitter {
   constructor(params: { channel: Channel }) {
     super();
 
-    this._legacydata = {} as any;
     this._data = {} as any;
     this._revision = 0;
     this._selection = {} as any;
@@ -191,14 +173,7 @@ export default class StoryStore extends EventEmitter {
     const story = _data[id];
     delete _data[id];
 
-    if (story) {
-      story.hooks.clean();
-      const { kind, name } = story;
-      const kindData = this._legacydata[toKey(kind)];
-      if (kindData) {
-        delete kindData.stories[toKey(name)];
-      }
-    }
+    if (story) story.hooks.clean();
   };
 
   addStory(
@@ -258,13 +233,6 @@ export default class StoryStore extends EventEmitter {
       parameters,
     };
 
-    // Don't store docs-only stories in legacy data because
-    // existing clients (at the time?!), e.g. storyshots/chromatic
-    // are not necessarily equipped to process them
-    if (!isStoryDocsOnly(parameters)) {
-      this.addLegacyStory({ kind, name, storyFn, parameters });
-    }
-
     // Store 1-based order of kind loading to preserve sorting on HMR
     if (!this._kindOrder[kind]) {
       this._kindOrder[kind] = 1 + Object.keys(this._kindOrder).length;
@@ -287,9 +255,9 @@ export default class StoryStore extends EventEmitter {
     }
   }, 0);
 
-  // Unlike a bunch of deprecated APIs below, these lookup functions
-  // use the `_data` member, which is the new data structure. They should
-  // be the preferred way of looking up stories in the future.
+  getStoryKinds() {
+    return Array.from(new Set(this.raw().map(s => s.kind)));
+  }
 
   getStoriesForKind(kind: string) {
     return this.raw().filter(story => story.kind === kind);
@@ -299,148 +267,12 @@ export default class StoryStore extends EventEmitter {
     return this.getStoriesForKind(kind).find(s => s.name === name);
   }
 
-  // OLD apis
   getRevision() {
     return this._revision;
   }
 
   incrementRevision() {
     this._revision += 1;
-  }
-
-  addLegacyStory({
-    kind,
-    name,
-    storyFn,
-    parameters,
-  }: {
-    kind: string;
-    name: string;
-    storyFn: StoryFn;
-    parameters: Parameters;
-  }) {
-    const k = toKey(kind);
-    if (!this._legacydata[k as string]) {
-      this._legacydata[k as string] = {
-        kind,
-        fileName: parameters.fileName,
-        index: getId(),
-        stories: {},
-      };
-    }
-
-    this._legacydata[k as string].stories[toKey(name)] = {
-      name,
-      // kind,
-      index: getId(),
-      story: storyFn,
-      parameters,
-    };
-  }
-
-  getStoryKinds() {
-    return Object.values(this._legacydata)
-      .filter((kind: LegacyItem) => Object.keys(kind.stories).length > 0)
-      .sort((info1: LegacyItem, info2: LegacyItem) => info1.index - info2.index)
-      .map((info: LegacyItem) => info.kind);
-  }
-
-  getStories(kind: string) {
-    const key = toKey(kind);
-
-    if (!this._legacydata[key as string]) {
-      return [];
-    }
-
-    return Object.keys(this._legacydata[key as string].stories)
-      .map(name => this._legacydata[key as string].stories[name])
-      .sort((info1, info2) => info1.index - info2.index)
-      .map(info => info.name);
-  }
-
-  getStoryFileName(kind: string) {
-    const key = toKey(kind);
-    const storiesKind = this._legacydata[key as string];
-    if (!storiesKind) {
-      return null;
-    }
-
-    return storiesKind.fileName;
-  }
-
-  getStoryAndParameters(kind: string, name: string) {
-    if (!kind || !name) {
-      return null;
-    }
-
-    const storiesKind = this._legacydata[toKey(kind) as string];
-    if (!storiesKind) {
-      return null;
-    }
-
-    const storyInfo = storiesKind.stories[toKey(name)];
-    if (!storyInfo) {
-      return null;
-    }
-
-    const { story, parameters } = storyInfo;
-    return {
-      story,
-      parameters,
-    };
-  }
-
-  getStory(kind: string, name: string) {
-    const data = this.getStoryAndParameters(kind, name);
-    return data && data.story;
-  }
-
-  getStoryWithContext(kind: string, name: string) {
-    const data = this.getStoryAndParameters(kind, name);
-    if (!data) {
-      return null;
-    }
-    const { story } = data;
-    return story;
-  }
-
-  removeStoryKind(kind: string) {
-    if (this.hasStoryKind(kind)) {
-      this._legacydata[toKey(kind)].stories = {};
-      this.cleanHooksForKind(kind);
-      this._data = Object.entries(this._data).reduce((acc, [id, story]) => {
-        if (story.kind !== kind) {
-          Object.assign(acc, { [id]: story });
-        }
-        return acc;
-      }, {});
-      this.pushToManager();
-    }
-  }
-
-  hasStoryKind(kind: string) {
-    return Boolean(this._legacydata[toKey(kind) as string]);
-  }
-
-  hasStory(kind: string, name: string) {
-    return Boolean(this.getStory(kind, name));
-  }
-
-  dumpStoryBook() {
-    const data = this.getStoryKinds().map(kind => ({
-      kind,
-      stories: this.getStories(kind),
-    }));
-
-    return data;
-  }
-
-  size() {
-    return Object.keys(this._legacydata).length;
-  }
-
-  clean() {
-    this.getStoryKinds().forEach(kind => delete this._legacydata[toKey(kind) as string]);
   }
 
   cleanHooks(id: string) {
@@ -451,5 +283,41 @@ export default class StoryStore extends EventEmitter {
 
   cleanHooksForKind(kind: string) {
     this.getStoriesForKind(kind).map(story => this.cleanHooks(story.id));
+  }
+
+  removeStoryKind(kind: string) {
+    this.cleanHooksForKind(kind);
+    this._data = Object.entries(this._data).reduce((acc: StoreData, [id, story]) => {
+      if (story.kind !== kind) acc[id] = story;
+
+      return acc;
+    }, {});
+    this.pushToManager();
+  }
+
+  // This API is a reimplementation of Storybook's original getStorybook() API.
+  // As such it may not behave *exactly* the same, but aims to. Some notes:
+  //  - It is *NOT* sorted by the user's sort function, but remains sorted in "insertion order"
+  //  - It does not include docs-only stories
+  getStorybook(): GetStorybookKind[] {
+    return Object.values(
+      this.raw().reduce((kinds: { [kind: string]: GetStorybookKind }, story) => {
+        if (!includeStory(story)) return kinds;
+
+        const {
+          kind,
+          name,
+          storyFn,
+          parameters: { fileName },
+        } = story;
+
+        // eslint-disable-next-line no-param-reassign
+        if (!kinds[kind]) kinds[kind] = { kind, fileName, stories: [] };
+
+        kinds[kind].stories.push({ name, render: storyFn });
+
+        return kinds;
+      }, {})
+    ).sort((s1, s2) => this._kindOrder[s1.kind] - this._kindOrder[s2.kind]);
   }
 }

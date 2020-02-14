@@ -1,4 +1,4 @@
-# Storybook Docs framework dev guide
+<h1>Storybook Docs framework dev guide</h1>
 
 Storybook Docs [provides basic support for all non-RN Storybook view layers](../README.md#framework-support) out of the box. However, some frameworks have been docs-optimized, adding features like automatic props table generation and inline story rendering. This document is a dev guide for how to optimize a new framework in docs.
 
@@ -6,6 +6,7 @@ Storybook Docs [provides basic support for all non-RN Storybook view layers](../
 - [Props tables](#props-tables)
 - [Component descriptions](#component-descriptions)
 - [Inline story rendering](#inline-story-rendering)
+- [More resources](#more-resources)
 
 ## Framework-specific configuration
 
@@ -96,3 +97,10 @@ addParameters({
 ```
 
 The input is the story function, and the output is a React element, because we render docs pages in react. In the case of Vue, all of the work is done by the `@egoist/vue-to-react` library. If there's no analogous library for your framework, you may need to figure it out yourself!
+
+## More resources
+
+- References: [README](../README.md) / [DocsPage](docspage.md) / [MDX](mdx.md) / [FAQ](faq.md) / [Recipes](recipes.md) / [Theming](theming.md)
+- Framework-specific docs: [React](../react/README.md) / [Vue](../vue/README.md) / [Angular](../angular/README.md) / [Web components](../web-components/README.md) / [Ember](../ember/README.md)
+- Announcements: [Vision](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a) / [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf) / [MDX](https://medium.com/storybookjs/rich-docs-with-storybook-mdx-61bc145ae7bc) / [Framework support](https://medium.com/storybookjs/storybook-docs-for-new-frameworks-b1f6090ee0ea)
+- Example: [Storybook Design System](https://github.com/storybookjs/design-system)

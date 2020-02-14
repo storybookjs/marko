@@ -1,6 +1,9 @@
 # Migration
 
 - [Migration](#migration)
+  - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
+    - [New addon presets](#new-addon-presets)
+    - [Removed legacy story APIs](#removed-legacy-story-apis)
   - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
     - [To main.js configuration](#to-mainjs-configuration)
     - [Create React App preset](#create-react-app-preset)
@@ -75,6 +78,61 @@
     - [Webpack upgrade](#webpack-upgrade)
     - [Packages renaming](#packages-renaming)
     - [Deprecated embedded addons](#deprecated-embedded-addons)
+
+## From version 5.3.x to 6.0.x
+
+### New addon presets
+
+In Storybook 5.3 we introduced a declarative [main.js configuration](#to-mainjs-configuration), which is now the recommended way to configure Storybook. Part of the change is a simplified syntax for registering addons, which in 6.0 automatically registers many addons _using a preset_, which is a slightly different behavior than in earlier versions.
+
+This breaking change currently applies to: `addon-a11y`, `addon-knobs`.
+
+Consider the following `main.js` config for the accessibility addon, `addon-a11y`:
+
+```js
+module.exports = {
+  stories: ['../**/*.stories.js'],
+  addons: ['@storybook/addon-a11y'],
+};
+```
+
+In earlier versions of Storybook, this would automatically call `@storybook/addon-a11y/register`, which adds the the a11y panel to the Storybook UI. As a user you would also add a decorator:
+
+```js
+import { withA11Y } from '../index';
+
+addDecorator(withA11Y);
+```
+
+Now in 6.0, `addon-a11y` comes with a preset, `@storybook/addon-a11y/preset`, that does this automatically for you. This change simplifies configuration, since now you don't need to add that decorator. However, if you are upgrading
+
+If you wish to disable this new behavior, you can modify your `main.js` to force it to use the `register` logic rather than the `preset`:
+
+```js
+module.exports = {
+  stories: ['../**/*.stories.js'],
+  addons: ['@storybook/addon-a11y/register'],
+};
+```
+
+If you wish to selectively disable `a11y` checks for a subset of stories, you can control this with story parameters:
+
+```js
+export const MyNonCheckedStory = () => <SomeComponent />;
+MyNonCheckedStory.story = {
+  parameters: {
+    a11y: { disable: true },
+  },
+};
+```
+
+### Removed Legacy Story APIs
+
+In 6.0 we removed a set of APIs from the underlying `StoryStore` (which wasn't publicly accessible):
+
+- `getStories`, `getStoryFileName`, `getStoryAndParameters`, `getStory`, `getStoryWithContext`, `hasStoryKind`, `hasStory`, `dumpStoryBook`, `size`, `clean`
+
+Although these were private APIs, if you were using them, you could probably use the newer APIs (which are still private): `getStoriesForKind`, `getRawStory`, `removeStoryKind`, `remove`.
 
 ## From version 5.2.x to 5.3.x
 
@@ -152,6 +210,8 @@ addons.setConfig({
 This makes storybook load and use the theme in the manager directly.
 This allows for richer theming in the future, and has a much better performance!
 
+> If you're using addon-docs, you should probably not do this. Docs uses the theme as well, but this change makes the theme inaccessible to addon-docs. We'll address this in 6.0.0.
+
 ### Create React App preset
 
 You can now move to the new preset for [Create React App](https://create-react-app.dev/). The in-built preset for Create React App will be disabled in Storybook 6.0.
@@ -212,7 +272,7 @@ yarn sb migrate upgrade-hierarchy-separators --glob="*.stories.js"
 If you were using `|` and wish to keep the "root" behavior, use the `showRoots: true` option to re-enable roots:
 
 ```js
-addParameters({ 
+addParameters({
   options: {
     showRoots: true,
   },
@@ -224,13 +284,14 @@ NOTE: it is no longer possible to have some stories with roots and others withou
 ### Addon StoryShots Puppeteer uses external puppeteer
 
 To give you more control on the Chrome version used when running StoryShots Puppeteer, `puppeteer` is no more included in the addon dependencies. So you can now pick the version of `puppeteer` you want and set it in your project.
- 
+
 If you want the latest version available just run:
+
 ```sh
 yarn add puppeteer --dev
 OR
 npm install puppeteer --save-dev
-``` 
+```
 
 ## From version 5.1.x to 5.2.x
 

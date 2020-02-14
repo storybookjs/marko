@@ -11,8 +11,15 @@ import Store from '../store';
 import { Provider } from '../init-provider-api';
 
 export type PanelPositions = 'bottom' | 'right';
+export type ActiveTabsType = 'sidebar' | 'canvas' | 'addons';
+export const ActiveTabs = {
+  SIDEBAR: 'sidebar' as 'sidebar',
+  CANVAS: 'canvas' as 'canvas',
+  ADDONS: 'addons' as 'addons',
+};
 
 export interface Layout {
+  initialActive: ActiveTabsType;
   isFullscreen: boolean;
   showPanel: boolean;
   panelPosition: PanelPositions;
@@ -98,7 +105,7 @@ const applyDeprecatedThemeOptions = deprecate(({ name, url, theme }: Options): P
   };
 }, deprecationMessage(deprecatedThemeOptions));
 
-const applyDeprecatedLayoutOptions = deprecate((options: Options): PartialLayout => {
+const applyDeprecatedLayoutOptions = deprecate((options: Partial<Options>): PartialLayout => {
   const layoutUpdate: PartialLayout = {};
 
   ['goFullScreen', 'showStoriesPanel', 'showAddonPanel'].forEach(
@@ -123,7 +130,7 @@ const checkDeprecatedThemeOptions = (options: Options) => {
   return {};
 };
 
-const checkDeprecatedLayoutOptions = (options: Options) => {
+const checkDeprecatedLayoutOptions = (options: Partial<Options>) => {
   if (Object.keys(deprecatedLayoutOptions).find(v => v in options)) {
     return applyDeprecatedLayoutOptions(options);
   }
@@ -137,6 +144,7 @@ const initial: SubState = {
     docsMode: false,
   },
   layout: {
+    initialActive: ActiveTabs.SIDEBAR,
     isToolshown: true,
     isFullscreen: false,
     showPanel: true,

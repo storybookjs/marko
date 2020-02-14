@@ -32,6 +32,33 @@ storiesOf('Basics/SyntaxHighlighter', module)
       `}
     </SyntaxHighlighter>
   ))
+  .add('markdown', () => (
+    <SyntaxHighlighter language="markdown" copyable={false}>
+      {`
+      # a big header
+
+      some code:
+
+      ~~~js
+      const name = "a string";
+      ~~~
+
+      > crazy
+
+      `}
+    </SyntaxHighlighter>
+  ))
+  .add('yaml', () => (
+    <SyntaxHighlighter language="yaml" copyable={false}>
+      {`
+        product:
+        - sku         : BL394D
+          quantity    : 4
+          description : Basketball
+          price       : 450.00
+      `}
+    </SyntaxHighlighter>
+  ))
   .add('jsx', () => (
     <SyntaxHighlighter language="jsx" copyable={false}>
       {`import { Good, Things } from 'life';

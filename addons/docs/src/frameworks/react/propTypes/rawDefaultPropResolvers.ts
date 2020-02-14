@@ -1,4 +1,3 @@
-import { isNil } from 'lodash';
 import { TypeResolver, extractFunctionName, createTypeResolvers } from '../lib/defaultValues';
 import { createSummaryValue } from '../../../lib';
 import { FUNCTION_CAPTION, ELEMENT_CAPTION } from '../lib';
@@ -12,7 +11,7 @@ const funcResolver: TypeResolver = (rawDefaultProp, { name, type }) => {
   const isElement = type.summary === 'element' || type.summary === 'elementType';
 
   const funcName = extractFunctionName(rawDefaultProp, name);
-  if (!isNil(funcName)) {
+  if (funcName != null) {
     // Try to display the name of the component. The body of the component is ommited since the code has been transpiled.
     if (isElement) {
       return createSummaryValue(getPrettyElementIdentifier(funcName));

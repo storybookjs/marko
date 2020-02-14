@@ -1,4 +1,6 @@
 import React from 'react';
+import { DecoratorFn } from '@storybook/react';
+
 import { Spaced } from '@storybook/components';
 
 import SidebarStories from './SidebarStories';
@@ -7,7 +9,7 @@ import { mockDataset } from './treeview/treeview.mockdata';
 export default {
   component: SidebarStories,
   title: 'UI/Sidebar/SidebarStories',
-  decorators: [s => <Spaced>{s()}</Spaced>],
+  decorators: [s => <Spaced>{s()}</Spaced>] as DecoratorFn[],
   excludeStories: /.*Data$/,
 };
 

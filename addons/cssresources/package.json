@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-cssresources",
-  "version": "5.3.7",
+  "version": "6.0.0-alpha.12",
   "description": "A storybook addon to switch between css resources at runtime for your story",
   "keywords": [
     "addon",
@@ -19,33 +19,34 @@
   },
   "license": "MIT",
   "author": "nm123github",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
-    "docs/**/*",
     "README.md",
     "*.js",
     "*.d.ts"
   ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "5.3.7",
-    "@storybook/api": "5.3.7",
-    "@storybook/components": "5.3.7",
-    "@storybook/core-events": "5.3.7",
-    "@storybook/theming": "5.3.7",
+    "@storybook/addons": "6.0.0-alpha.12",
+    "@storybook/api": "6.0.0-alpha.12",
+    "@storybook/components": "6.0.0-alpha.12",
+    "@storybook/core-events": "6.0.0-alpha.12",
+    "@storybook/theming": "6.0.0-alpha.12",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "react": "^16.8.3"
   },
   "devDependencies": {
-    "@types/webpack-env": "^1.15.0"
+    "@types/webpack-env": "^1.15.1"
   },
   "peerDependencies": {
-    "react": "*"
+    "react": "*",
+    "react-dom": "*",
+    "regenerator-runtime": "*"
   },
   "publishConfig": {
     "access": "public"

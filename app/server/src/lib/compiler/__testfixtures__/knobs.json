@@ -1,0 +1,19 @@
+{
+  "title": "Addons/Knobs",
+  "addons": ["knobs"],
+  "parameters": {
+    "options": { "selectedPanel": "storybook/knobs/panel" }
+  },
+  "stories": [
+    {
+      "name": "Simple",
+      "parameters": {
+        "server": { "id": "addons/knobs/simple" }
+      },
+      "knobs": [
+        { "type": "text", "name": "Name", "value": "John Doe", "param": "name"},
+        { "type": "number", "name": "Age", "value": 44, "param": "age"}
+      ]
+    }
+  ]
+}

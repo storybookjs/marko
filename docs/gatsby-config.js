@@ -28,6 +28,7 @@ module.exports = {
         '/guides/guide-svelte/',
       ],
       configurations: [
+        '/configurations/overview/',
         '/configurations/options-parameter/',
         '/configurations/default-config/',
         '/configurations/custom-webpack-config/',

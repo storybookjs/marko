@@ -3,6 +3,8 @@ id: 'writing-addons'
 title: 'Writing Addons'
 ---
 
+> migration guide: This page documents the method to configure storybook introduced recently in 5.3.0, consult the [migration guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) if you want to migrate to this format of configuring storybook.
+
 This is a complete guide on how to create addons for Storybook.
 
 ## Storybook Basics
@@ -305,7 +307,7 @@ But if you do use emotion, you can use the active storybook theme, which benefit
 ## Re-using existing components
 
 Wouldn't it be awesome if we provided you with some common used components you could use to build out your own addon quickly and fit in right away?
-Good news! WE DO! We publish most of storybook's UI components as a package: `@storybook/components`. You can check them out in [our storybook](https://storybookjs.now.sh/) (pretty meta right?).
+Good news! WE DO! We publish most of storybook's UI components as a package: `@storybook/components`. You can check them out in [our storybook](https://storybookjs.netlify.com/) (pretty meta right?).
 
 ## Addon API
 
@@ -325,7 +327,7 @@ When you are developing your addon as a package, you can't use `npm link` to add
 ```json
 {
   "dependencies": {
-    "@storybook/addon-notes": "file:///home/username/myrepo"
+    "@storybook/addon-custom": "file:///home/username/myrepo"
   }
 }
 ```

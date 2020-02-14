@@ -84,7 +84,7 @@ export const Item = (props: ItemProps) => {
           <HighlightToggle
             toggleId={highlightToggleId}
             type={type}
-            elementsToHighlight={item ? item.nodes : null}
+            elementsToHighlight={item.nodes}
           />
         </HighlightToggleElement>
       </Wrapper>

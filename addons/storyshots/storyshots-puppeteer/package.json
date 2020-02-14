@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-storyshots-puppeteer",
-  "version": "5.3.7",
+  "version": "6.0.0-alpha.12",
   "description": "Image snapshots addition to StoryShots based on puppeteer",
   "keywords": [
     "addon",
@@ -16,21 +16,20 @@
     "directory": "addons/storyshots/storyshots-puppeteer"
   },
   "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
-    "docs/**/*",
     "README.md",
     "*.js",
     "*.d.ts"
   ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "node ../../../scripts/prepare.js"
   },
   "dependencies": {
     "@storybook/csf": "0.0.1",
-    "@storybook/node-logger": "5.3.7",
+    "@storybook/node-logger": "6.0.0-alpha.12",
     "@types/jest-image-snapshot": "^2.8.0",
     "@wordpress/jest-puppeteer-axe": "^1.5.0",
     "core-js": "^3.0.1",
@@ -42,16 +41,16 @@
     "@types/puppeteer": "^2.0.0"
   },
   "peerDependencies": {
-    "@storybook/addon-storyshots": "5.3.7",
+    "@storybook/addon-storyshots": "6.0.0-alpha.12",
     "puppeteer": "^1.12.2 || ^2.0.0"
   },
-  "publishConfig": {
-    "access": "public"
-  },
-  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
   "peerDependenciesMeta": {
     "puppeteer": {
       "optional": true
     }
-  }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff"
 }

@@ -95,7 +95,7 @@ export default class StoryPanel extends Component {
     const story = this.createPart(storyRows, stylesheet, useInlineStyles);
     const storyKey = `${first}-${last}`;
 
-    if (location && currentLocation && areLocationsEqual(location, currentLocation)) {
+    if (currentLocation && areLocationsEqual(location, currentLocation)) {
       return (
         <SelectedStoryHighlight key={storyKey} ref={this.setSelectedStoryRef}>
           {story}

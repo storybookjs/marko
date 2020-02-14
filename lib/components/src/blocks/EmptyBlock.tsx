@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { styled } from '@storybook/theming';
 import { transparentize } from 'polished';
 import { withReset } from '../typography/shared';

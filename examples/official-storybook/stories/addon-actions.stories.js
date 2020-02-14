@@ -1,18 +1,11 @@
 import { window, File } from 'global';
 import React, { Fragment } from 'react';
-import {
-  action,
-  actions,
-  configureActions,
-  decorate,
-  decorateAction,
-} from '@storybook/addon-actions';
+import { action, actions, configureActions, decorate } from '@storybook/addon-actions';
 import { Form } from '@storybook/components';
 
 const { Button } = Form;
 
 const pickNative = decorate([args => [args[0].nativeEvent]]);
-const pickNativeAction = decorateAction([args => [args[0].nativeEvent]]);
 
 export default {
   title: 'Addons/Actions',

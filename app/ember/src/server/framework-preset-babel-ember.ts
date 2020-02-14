@@ -5,7 +5,17 @@ export function babel(config: Configuration) {
   const babelConfigPlugins = config.plugins || [];
 
   const extraPlugins = [
-    [require.resolve('babel-plugin-htmlbars-inline-precompile'), { precompile }],
+    [
+      require.resolve('babel-plugin-htmlbars-inline-precompile'),
+      {
+        precompile,
+        modules: {
+          'ember-cli-htmlbars': 'hbs',
+          'ember-cli-htmlbars-inline-precompile': 'default',
+          'htmlbars-inline-precompile': 'default',
+        },
+      },
+    ],
     [require.resolve('babel-plugin-ember-modules-api-polyfill')],
   ];
 

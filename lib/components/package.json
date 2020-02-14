@@ -1,6 +1,6 @@
 {
   "name": "@storybook/components",
-  "version": "5.3.7",
+  "version": "6.0.0-alpha.12",
   "description": "Core Storybook Components",
   "keywords": [
     "storybook"
@@ -15,20 +15,20 @@
     "directory": "lib/components"
   },
   "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
     "*.d.ts"
   ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/client-logger": "5.3.7",
-    "@storybook/theming": "5.3.7",
+    "@storybook/client-logger": "6.0.0-alpha.12",
+    "@storybook/theming": "6.0.0-alpha.12",
     "@types/react-syntax-highlighter": "11.0.4",
     "@types/react-textarea-autosize": "^4.3.3",
     "@types/refractor": "^2.8.0",
@@ -37,9 +37,8 @@
     "lodash": "^4.17.15",
     "markdown-to-jsx": "^6.9.1",
     "memoizerific": "^1.11.3",
-    "polished": "^3.3.1",
+    "polished": "^3.4.4",
     "popper.js": "^1.14.7",
-    "prop-types": "^15.7.2",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-focus-lock": "^2.1.0",
@@ -49,11 +48,11 @@
     "react-textarea-autosize": "^7.1.0",
     "refractor": "^2.10.0",
     "simplebar-react": "^1.0.0-alpha.6",
-    "ts-dedent": "^1.1.0"
+    "ts-dedent": "^1.1.1"
   },
   "devDependencies": {
     "enzyme": "^3.9.0",
-    "jest": "^24.7.1",
+    "jest": "^25.1.0",
     "jest-enzyme": "^7.0.2"
   },
   "peerDependencies": {
