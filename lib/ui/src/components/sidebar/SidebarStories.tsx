@@ -1,5 +1,4 @@
 import React, { Fragment, FunctionComponent, memo } from 'react';
-import PropTypes from 'prop-types';
 
 import { styled } from '@storybook/theming';
 import { Placeholder, Link as StyledLink } from '@storybook/components';
@@ -18,10 +17,6 @@ const Search = styled(SidebarSearch)({
 const Subheading = styled(SidebarSubheading)({
   margin: '0 20px',
 });
-
-Subheading.propTypes = {
-  className: PropTypes.string,
-};
 
 Subheading.defaultProps = {
   className: 'sidebar-subheading',
