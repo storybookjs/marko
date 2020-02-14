@@ -1,101 +1,87 @@
 import React, { Fragment, FunctionComponent, useMemo, useEffect } from 'react';
+import merge from '@storybook/api/dist/lib/merge';
+import { Helmet } from 'react-helmet-async';
+
 import { API, Consumer, Combo } from '@storybook/api';
 import { SET_CURRENT_STORY } from '@storybook/core-events';
 import addons, { types, Addon } from '@storybook/addons';
-import merge from '@storybook/api/dist/lib/merge';
+
 import { Loader } from '@storybook/components';
-
-import { Helmet } from 'react-helmet-async';
-
 import { Location } from '@storybook/router';
 
 import * as S from './utils/components';
-
 import { ZoomProvider, ZoomConsumer } from './tools/zoom';
-
-import { IFrame } from './iframe';
-import { PreviewProps, ApplyWrappersProps, IframeRenderer } from './utils/types';
-
 import { defaultWrappers, ApplyWrappers } from './wrappers';
-import { stringifyQueryParams } from './utils/stringifyQueryParams';
 import { ToolbarComp } from './toolbar';
+import { FramesRenderer } from './FramesRenderer';
 
-export const renderIframe: IframeRenderer = (
-  storyId,
-  viewMode,
-  id,
-  baseUrl,
-  scale,
-  queryParams
-) => (
-  <IFrame
-    key="iframe"
-    id="storybook-preview-iframe"
-    title={id || 'preview'}
-    src={`${baseUrl}?id=${storyId}&viewMode=${viewMode}${stringifyQueryParams(queryParams)}`}
-    allowFullScreen
-    scale={scale}
-  />
-);
+import { PreviewProps } from './utils/types';
 
 const getWrapper = (getFn: API['getElements']) => Object.values(getFn<Addon>(types.PREVIEW));
 const getTabs = (getFn: API['getElements']) => Object.values(getFn<Addon>(types.TAB));
 
-export const getTools = (getFn: API['getElements']) => Object.values(getFn<Addon>(types.TOOL));
-
-export const getToolsExtra = (getFn: API['getElements']) =>
-  Object.values(getFn<Addon>(types.TOOLEXTRA));
-
-const mapper = ({ state, api }: Combo) => ({
+const canvasMapper = ({ state, api }: Combo) => ({
   storyId: state.storyId,
   viewMode: state.viewMode,
   customCanvas: api.renderPreview,
   queryParams: state.customQueryParams,
   getElements: api.getElements,
-  isLoading: !state.storiesConfigured,
+  story: api.getData(state.storyId),
+  refs: state.refs,
 });
 
 const createCanvas = (id: string, baseUrl = 'iframe.html', withLoader = true): Addon => ({
   id: 'canvas',
   title: 'Canvas',
-  route: p => `/story/${p.storyId}`,
-  match: p => !!(p.viewMode && p.viewMode.match(/^(story|docs)$/)),
-  render: p => {
+  route: ({ storyId }) => `/story/${storyId}`,
+  match: ({ viewMode }) => !!(viewMode && viewMode.match(/^(story|docs)$/)),
+  render: ({ active, key }) => {
     return (
-      <Consumer filter={mapper}>
+      <Consumer filter={canvasMapper} key={key}>
         {({
+          story,
+          refs,
           customCanvas,
           storyId,
           viewMode,
           queryParams,
           getElements,
-          isLoading,
-        }: ReturnType<typeof mapper>) => (
+        }: ReturnType<typeof canvasMapper>) => (
           <ZoomConsumer>
             {({ value: scale }) => {
-              const wrappers = [...defaultWrappers, ...getWrapper(getElements)];
+              const wrappers = useMemo(() => [...defaultWrappers, ...getWrapper(getElements)], [
+                getElements,
+                ...defaultWrappers,
+              ]);
 
-              const data = [storyId, viewMode, id, baseUrl, scale, queryParams] as Parameters<
-                IframeRenderer
-              >;
+              const content = customCanvas ? (
+                customCanvas(storyId, viewMode, id, baseUrl, scale, queryParams)
+              ) : (
+                <FramesRenderer
+                  refs={refs}
+                  scale={scale}
+                  story={story}
+                  viewMode={viewMode}
+                  queryParams={queryParams}
+                  storyId={storyId}
+                />
+              );
 
-              const content = customCanvas ? customCanvas(...data) : renderIframe(...data);
-              const props = {
-                viewMode,
-                active: p.active,
-                wrappers,
-                id,
-                storyId,
-                baseUrl,
-                queryParams,
-                scale,
-                customCanvas,
-              } as ApplyWrappersProps;
+              const isLoading =
+                (storyId && !story) || (story && story.refId && !refs[story.refId].startInjected);
 
               return (
                 <>
                   {withLoader && isLoading && <Loader id="preview-loader" role="progressbar" />}
-                  <ApplyWrappers {...props}>{content}</ApplyWrappers>
+                  <ApplyWrappers
+                    id={id}
+                    storyId={storyId}
+                    viewMode={viewMode}
+                    active={active}
+                    wrappers={wrappers}
+                  >
+                    {content}
+                  </ApplyWrappers>
                 </>
               );
             }}
@@ -148,7 +134,11 @@ const Preview: FunctionComponent<PreviewProps> = props => {
 
   useEffect(() => {
     if (story) {
-      api.emit(SET_CURRENT_STORY, { storyId: story.id, viewMode });
+      api.emit(SET_CURRENT_STORY, {
+        storyId: story.knownAs || story.id,
+        viewMode,
+        options: { target: story.refId },
+      });
     }
   }, [story, viewMode]);
 
@@ -160,7 +150,7 @@ const Preview: FunctionComponent<PreviewProps> = props => {
         </Helmet>
       )}
       <ZoomProvider>
-        <ToolbarComp story={story} api={api} isShown={isToolshown} tabs={tabs} />
+        <ToolbarComp key="tools" story={story} api={api} isShown={isToolshown} tabs={tabs} />
         <S.FrameWrap key="frame" offset={isToolshown ? 40 : 0}>
           {tabs.map(({ render: Render, match, ...t }, i) => {
             // @ts-ignore
