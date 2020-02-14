@@ -30,7 +30,29 @@ EmpireAlert.__docgenInfo = {
         \\"value\\": \\"'Code Yellow'\\",
         \\"computed\\": false
       },
-      \\"required\\": false
+      \\"required\\": false,
+      \\"tsType\\": {
+        \\"name\\": \\"union\\",
+        \\"raw\\": \\"'Code Red' | 'Code Yellow' | 'Code Green'\\",
+        \\"elements\\": [{
+          \\"name\\": \\"literal\\",
+          \\"value\\": \\"'Code Red'\\"
+        }, {
+          \\"name\\": \\"literal\\",
+          \\"value\\": \\"'Code Yellow'\\"
+        }, {
+          \\"name\\": \\"literal\\",
+          \\"value\\": \\"'Code Green'\\"
+        }]
+      },
+      \\"description\\": \\"A title that brings attention to the alert.\\"
+    },
+    \\"message\\": {
+      \\"required\\": true,
+      \\"tsType\\": {
+        \\"name\\": \\"string\\"
+      },
+      \\"description\\": \\"A message alerting about Empire activities.\\"
     }
   }
 };"

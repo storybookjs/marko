@@ -8,12 +8,25 @@ Object {
         "detail": undefined,
         "summary": "'Code Yellow'",
       },
-      "description": undefined,
+      "description": "A title that brings attention to the alert.",
       "name": "title",
       "required": false,
       "type": Object {
         "detail": undefined,
-        "summary": "unknown",
+        "summary": "union",
+      },
+    },
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "1",
+      },
+      "description": "A message alerting about Empire activities.",
+      "name": "message",
+      "required": true,
+      "type": Object {
+        "detail": undefined,
+        "summary": "string",
       },
     },
   ],
