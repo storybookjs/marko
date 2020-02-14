@@ -13,6 +13,7 @@ const fixtures = [
   '8143-ts-react-fc-generics',
   '8143-ts-imported-types',
   '8279-js-styled-docgen',
+  '8140-js-prop-types-oneof',
 ];
 
 const stories = storiesOf('Properties/React', module);
