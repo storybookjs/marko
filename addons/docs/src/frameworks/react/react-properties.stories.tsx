@@ -25,6 +25,7 @@ const fixtures = [
   '9575-ts-camel-case',
   '9493-ts-display-name',
   '8894-9511-ts-forward-ref',
+  '9465-ts-type-props',
 ];
 
 const stories = storiesOf('Properties/React', module);
