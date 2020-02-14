@@ -13058,7 +13058,7 @@ fast-glob@^2.0.2, fast-glob@^2.2.2, fast-glob@^2.2.6:
     merge2 "^1.2.3"
     micromatch "^3.1.10"
 
-fast-glob@^3.0.3, fast-glob@^3.1.1:
+fast-glob@^3.0.3, fast-glob@^3.1.0, fast-glob@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.1.1.tgz#87ee30e9e9f3eb40d6f254a7997655da753d7c82"
   integrity sha512-nTCREpBY8w8r+boyFYAx21iL6faSsQynliPHM4Uf56SbkyohCNxpVPEH9xrF5TXKy+IsjkPUHDKiUkzBVRXn9g==
@@ -29131,6 +29131,11 @@ ts-simple-ast@12.4.0:
     tslib "^1.9.0"
     typescript "2.9.1"
 
+ts-simple-type@~0.3.6:
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/ts-simple-type/-/ts-simple-type-0.3.7.tgz#1e77222c3d90d7093f80a954e74c725fd99c911c"
+  integrity sha512-bDXWURwpDpe1mA5E9eldmI0Mpt9zGprhtN/ZTLOJjsAMyeMy1UT7WvGRQghYewIYBYxDZurChhe4DrsPbcCVrA==
+
 tsconfig-paths-webpack-plugin@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/tsconfig-paths-webpack-plugin/-/tsconfig-paths-webpack-plugin-3.2.0.tgz#6e70bd42915ad0efb64d3385163f0c1270f3e04d"
@@ -29343,7 +29348,7 @@ typescript@3.5.3:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.3.tgz#c830f657f93f1ea846819e929092f5fe5983e977"
   integrity sha512-ACzBtm/PhXBDId6a6sDJfroT2pOWt/oOnk4/dElG5G33ZL776N3Y6/6bKZJBFpd+b05F3Ct9qDjMeJmRWtE2/g==
 
-typescript@3.7.5, typescript@^3.2.4, typescript@^3.4.0:
+typescript@3.7.5, typescript@^3.2.4, typescript@^3.4.0, typescript@^3.5.3:
   version "3.7.5"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.5.tgz#0692e21f65fd4108b9330238aac11dd2e177a1ae"
   integrity sha512-/P5lkRXkWHNAbcJIiHPfRoKqyd7bsyCma1hZNUGfn20qm64T6ZBlrzprymeu918H+mB/0rIg2gGK/BXkhhYgBw==
@@ -30482,6 +30487,16 @@ wcwidth@^1.0.0, wcwidth@^1.0.1:
   integrity sha1-8LDc+RW8X/FSivrbLA4XtTLaL+g=
   dependencies:
     defaults "^1.0.3"
+
+web-component-analyzer@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/web-component-analyzer/-/web-component-analyzer-1.0.3.tgz#da73dff15d6a8f4864311664476f0f436274e97d"
+  integrity sha512-QA6GVVJrKRPHLVqPv4evY0H+du1yY+E1q8c82bdY5e10+pWsRfeYA+Hsh2r8yl1EGQVC55SeV3tGvJ6+CxaH/Q==
+  dependencies:
+    fast-glob "^3.1.0"
+    ts-simple-type "~0.3.6"
+    typescript "^3.5.3"
+    yargs "^15.0.2"
 
 web-namespaces@^1.0.0, web-namespaces@^1.1.2:
   version "1.1.4"
@@ -31741,7 +31756,7 @@ yargs@^14.0.0, yargs@^14.2.2:
     y18n "^4.0.0"
     yargs-parser "^15.0.0"
 
-yargs@^15.0.0:
+yargs@^15.0.0, yargs@^15.0.2:
   version "15.1.0"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-15.1.0.tgz#e111381f5830e863a89550bd4b136bb6a5f37219"
   integrity sha512-T39FNN1b6hCW4SOIk1XyTOWxtXdcen0t+XYrysQmChzSipvhBO8Bj0nK1ozAasdk24dNWuMZvr4k24nz+8HHLg==
