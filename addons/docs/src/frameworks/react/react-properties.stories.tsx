@@ -18,6 +18,7 @@ const fixtures = [
   '8740-ts-multi-props',
   '8894-ts-forward-ref',
   '9556-ts-react-default-exports',
+  '9592-ts-styled-props',
 ];
 
 const stories = storiesOf('Properties/React', module);

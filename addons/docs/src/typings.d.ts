@@ -10,3 +10,4 @@ declare module 'babel-plugin-react-docgen';
 declare module 'require-from-string';
 declare module 'tmp';
 declare module 'cross-spawn';
+declare module 'styled-components';
