@@ -3,7 +3,13 @@ import { storiesOf } from '@storybook/react';
 import { PropsTable } from '@storybook/components';
 import { extractProps } from './extractProps';
 
-const fixtures = ['js-class-component', 'ts-function-component'];
+const fixtures = [
+  'js-class-component',
+  'ts-function-component',
+  '9399-js-proptypes-shape',
+  '8663-js-styled-components',
+  '9626-js-default-values',
+];
 
 const stories = storiesOf('Properties/React', module);
 
