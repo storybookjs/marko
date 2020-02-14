@@ -16,6 +16,7 @@ const fixtures = [
   '8140-js-prop-types-oneof',
   '9023-js-hoc',
   '8740-ts-multi-props',
+  '8894-ts-forward-ref',
 ];
 
 const stories = storiesOf('Properties/React', module);
