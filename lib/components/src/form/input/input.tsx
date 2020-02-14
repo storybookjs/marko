@@ -146,6 +146,7 @@ export const Textarea = Object.assign(
     ))
   )<TextareaProps>(styles, sizes, alignment, validation, {
     overflow: 'visible',
+    maxHeight: 400
   }),
   {
     displayName: 'Textarea',
