@@ -18,9 +18,7 @@ const mapper = ({ state, api }: Combo) => ({
 });
 
 const Panel: FunctionComponent<any> = props => (
-  <Consumer filter={mapper}>
-    {(customProps: ReturnType<typeof mapper>) => <AddonPanel {...props} {...customProps} />}
-  </Consumer>
+  <Consumer filter={mapper}>{customProps => <AddonPanel {...props} {...customProps} />}</Consumer>
 );
 
 export default Panel;

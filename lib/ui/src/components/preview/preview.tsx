@@ -63,14 +63,7 @@ const createCanvas = (id: string, baseUrl = 'iframe.html', withLoader = true): A
   render: p => {
     return (
       <Consumer filter={mapper}>
-        {({
-          customCanvas,
-          storyId,
-          viewMode,
-          queryParams,
-          getElements,
-          isLoading,
-        }: ReturnType<typeof mapper>) => (
+        {({ customCanvas, storyId, viewMode, queryParams, getElements, isLoading }) => (
           <ZoomConsumer>
             {({ value: scale }) => {
               const wrappers = [...defaultWrappers, ...getWrapper(getElements)];

@@ -50,7 +50,7 @@ function getBaseUrl(): string {
 
 const PreviewConnected = React.memo<{ id: string; withLoader: boolean }>(props => (
   <Consumer filter={mapper}>
-    {(fromState: ReturnType<typeof mapper>) => {
+    {fromState => {
       const p = {
         ...props,
         baseUrl: getBaseUrl(),

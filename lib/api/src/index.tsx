@@ -271,12 +271,12 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
 
 interface ManagerConsumerProps<P = unknown> {
   filter?: (combo: Combo) => P;
-  children: ReactNode | FunctionComponent<P>;
+  children: FunctionComponent<P> | ReactNode;
 }
 
 const defaultFilter = (c: Combo) => c;
 
-function ManagerConsumerFunc<P = unknown>({
+function ManagerConsumerFunc<P = Combo>({
   // @ts-ignore
   filter = defaultFilter,
   children,
