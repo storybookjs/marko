@@ -15,7 +15,7 @@ export const ejectTool: Addon = {
   match: ({ viewMode }) => viewMode === 'story',
   render: () => (
     <Consumer filter={ejectMapper}>
-      {({ baseUrl, storyId, queryParams }: ReturnType<typeof ejectMapper>) => (
+      {({ baseUrl, storyId, queryParams }) => (
         <IconButton
           key="opener"
           href={`${baseUrl}?id=${storyId}${stringifyQueryParams(queryParams)}`}

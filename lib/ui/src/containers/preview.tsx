@@ -59,7 +59,7 @@ const getBaseUrl = (): string => {
 
 const PreviewConnected = React.memo<{ id: string; withLoader: boolean }>(props => (
   <Consumer filter={mapper}>
-    {(fromState: ReturnType<typeof mapper>) => {
+    {fromState => {
       const p: PreviewProps = {
         ...props,
         baseUrl: getBaseUrl(),
@@ -67,7 +67,6 @@ const PreviewConnected = React.memo<{ id: string; withLoader: boolean }>(props =
       };
 
       return <Preview {...p} />;
-      return <pre>{JSON.stringify(p, null, 2)}</pre>;
     }}
   </Consumer>
 ));

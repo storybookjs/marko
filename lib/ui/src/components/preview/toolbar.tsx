@@ -47,7 +47,7 @@ export const fullScreenTool: Addon = {
   match: p => p.viewMode === 'story',
   render: () => (
     <Consumer filter={fullScreenMapper}>
-      {({ toggle, value }: ReturnType<typeof fullScreenMapper>) => (
+      {({ toggle, value }) => (
         <S.DesktopOnly>
           <IconButton
             key="full"
@@ -73,7 +73,7 @@ export const createTabsTool = (tabs: Addon[]): Addon => ({
   title: 'title',
   render: () => (
     <Consumer filter={tabsMapper}>
-      {({ viewMode, storyId, path, location }: ReturnType<typeof tabsMapper>) => (
+      {({ viewMode, storyId, path, location }) => (
         <Fragment>
           <TabBar key="tabs">
             {tabs

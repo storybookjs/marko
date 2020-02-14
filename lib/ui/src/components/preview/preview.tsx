@@ -17,7 +17,7 @@ import { FramesRenderer } from './FramesRenderer';
 
 import { PreviewProps } from './utils/types';
 
-const getWrapper = (getFn: API['getElements']) => Object.values(getFn<Addon>(types.PREVIEW));
+const getWrappers = (getFn: API['getElements']) => Object.values(getFn<Addon>(types.PREVIEW));
 const getTabs = (getFn: API['getElements']) => Object.values(getFn<Addon>(types.TAB));
 
 const canvasMapper = ({ state, api }: Combo) => ({
@@ -38,55 +38,49 @@ const createCanvas = (id: string, baseUrl = 'iframe.html', withLoader = true): A
   render: ({ active, key }) => {
     return (
       <Consumer filter={canvasMapper} key={key}>
-        {({
-          story,
-          refs,
-          customCanvas,
-          storyId,
-          viewMode,
-          queryParams,
-          getElements,
-        }: ReturnType<typeof canvasMapper>) => (
-          <ZoomConsumer>
-            {({ value: scale }) => {
-              const wrappers = useMemo(() => [...defaultWrappers, ...getWrapper(getElements)], [
-                getElements,
-                ...defaultWrappers,
-              ]);
+        {({ story, refs, customCanvas, storyId, viewMode, queryParams, getElements }) => {
+          const wrappers = useMemo(() => [...defaultWrappers, ...getWrappers(getElements)], [
+            getElements,
+            ...defaultWrappers,
+          ]);
 
-              const content = customCanvas ? (
-                customCanvas(storyId, viewMode, id, baseUrl, scale, queryParams)
-              ) : (
-                <FramesRenderer
-                  refs={refs}
-                  scale={scale}
-                  story={story}
-                  viewMode={viewMode}
-                  queryParams={queryParams}
-                  storyId={storyId}
-                />
-              );
+          const isLoading =
+            (storyId && !story) || (story && story.refId && !refs[story.refId].startInjected);
 
-              const isLoading =
-                (storyId && !story) || (story && story.refId && !refs[story.refId].startInjected);
-
-              return (
-                <>
-                  {withLoader && isLoading && <Loader id="preview-loader" role="progressbar" />}
-                  <ApplyWrappers
-                    id={id}
-                    storyId={storyId}
+          return (
+            <ZoomConsumer>
+              {({ value: scale }) => {
+                const content = customCanvas ? (
+                  customCanvas(storyId, viewMode, id, baseUrl, scale, queryParams)
+                ) : (
+                  <FramesRenderer
+                    refs={refs}
+                    scale={scale}
+                    story={story}
                     viewMode={viewMode}
-                    active={active}
-                    wrappers={wrappers}
-                  >
-                    {content}
-                  </ApplyWrappers>
-                </>
-              );
-            }}
-          </ZoomConsumer>
-        )}
+                    queryParams={queryParams}
+                    storyId={storyId}
+                  />
+                );
+
+                return (
+                  <>
+                    {withLoader && isLoading && <Loader id="preview-loader" role="progressbar" />}
+                    <ApplyWrappers
+                      id={id}
+                      storyId={storyId}
+                      viewMode={viewMode}
+                      active={active}
+                      wrappers={wrappers}
+                    >
+                      {content}
+                    </ApplyWrappers>
+                  </>
+                );
+              }}
+            </ZoomConsumer>
+          );
+        }}
       </Consumer>
     );
   },
