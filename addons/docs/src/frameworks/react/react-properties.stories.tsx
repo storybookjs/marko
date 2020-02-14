@@ -20,6 +20,7 @@ const fixtures = [
   '9556-ts-react-default-exports',
   '9592-ts-styled-props',
   '9591-ts-import-types',
+  '9721-ts-deprecated-jsdoc',
 ];
 
 const stories = storiesOf('Properties/React', module);
