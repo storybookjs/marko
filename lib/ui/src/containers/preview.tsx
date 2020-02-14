@@ -60,7 +60,7 @@ const getBaseUrl = (): string => {
 const PreviewConnected = React.memo<{ id: string; withLoader: boolean }>(props => (
   <Consumer filter={mapper}>
     {fromState => {
-      const p: PreviewProps = {
+      const p = {
         ...props,
         baseUrl: getBaseUrl(),
         ...fromState,

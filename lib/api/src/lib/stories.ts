@@ -69,7 +69,7 @@ export interface StoryInput {
   id: StoryId;
   name: string;
   knownAs?: StoryId;
-  refId?: InceptionRef;
+  refId?: InceptionRef['id'];
   kind: string;
   children: string[];
   parameters: {
@@ -233,8 +233,15 @@ export const transformStoriesRawToStoriesHash = (
       });
     });
 
-    const story = { ...item, parent: rootAndGroups[rootAndGroups.length - 1].id, isLeaf: true };
-    acc[item.id] = story as Story;
+    const story: Story = {
+      ...item,
+      depth: rootAndGroups.length - 1,
+      parent: rootAndGroups[rootAndGroups.length - 1].id,
+      isLeaf: true,
+      isComponent: false,
+      isRoot: false,
+    };
+    acc[item.id] = story;
 
     return acc;
   }, {} as StoriesHash);
