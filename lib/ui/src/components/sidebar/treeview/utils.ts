@@ -195,7 +195,9 @@ const fuse = memoize(5)(
 const exactMatch = memoize(1)(filter => (i: Item) =>
   (isStory(i) && i.kind.includes(filter)) ||
   (i.name && i.name.includes(filter)) ||
-  (i.parameters && i.parameters.fileName && i.parameters.fileName.includes(filter)) ||
+  (i.parameters &&
+    typeof i.parameters.fileName === 'string' &&
+    i.parameters.fileName.includes(filter)) ||
   (i.parameters && typeof i.parameters.notes === 'string' && i.parameters.notes.includes(filter))
 );
 
