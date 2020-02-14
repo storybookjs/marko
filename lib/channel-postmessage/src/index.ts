@@ -55,15 +55,9 @@ export class PostmsgTransport {
    * @param event
    */
   send(event: ChannelEvent, options?: any): Promise<any> {
-    const frames = this.getFrames();
-    if (!frames.length || this.buffer.length) {
-      return new Promise((resolve, reject) => {
-        this.buffer.push({ event, resolve, reject });
-      });
-    }
-
     let depth = 15;
     let allowFunction = true;
+    let target;
 
     if (options && typeof options.allowFunction === 'boolean') {
       allowFunction = options.allowFunction;
@@ -71,6 +65,11 @@ export class PostmsgTransport {
     if (options && Number.isInteger(options.depth)) {
       depth = options.depth;
     }
+    if (options && typeof options.target === 'string') {
+      target = options.target;
+    }
+
+    const frames = this.getFrames(target);
 
     const data = stringify(
       { key: KEY, event, source: document.location.origin + document.location.pathname },
@@ -86,6 +85,13 @@ export class PostmsgTransport {
         console.error('sending over postmessage fail');
       }
     });
+
+    if (!frames.length || this.buffer.length) {
+      return new Promise((resolve, reject) => {
+        this.buffer.push({ event, resolve, reject });
+      });
+    }
+
     return Promise.resolve(null);
   }
 
@@ -99,12 +105,17 @@ export class PostmsgTransport {
     });
   }
 
-  private getFrames(): Window[] {
+  private getFrames(target?: string): Window[] {
     if (this.config.page === 'manager') {
-      return [...document.getElementsByTagName('iframe')]
+      const list: HTMLIFrameElement[] = [...document.getElementsByTagName('iframe')];
+      return list
         .filter(e => {
           try {
-            return !!e.contentWindow && e.dataset.isStorybook !== undefined;
+            return (
+              !!e.contentWindow &&
+              e.dataset.isStorybook !== undefined &&
+              (e.id === `storybook-ref-${target}` || !target)
+            );
           } catch (er) {
             return false;
           }
