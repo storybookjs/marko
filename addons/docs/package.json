@@ -83,6 +83,7 @@
     "jest-specific-snapshot": "^2.0.0",
     "lit-html": "^1.0.0",
     "require-from-string": "^2.0.2",
+    "styled-components": "^5.0.1",
     "tmp": "^0.1.0",
     "web-component-analyzer": "^1.0.3"
   },
