@@ -23,6 +23,7 @@ const fixtures = [
   '9721-ts-deprecated-jsdoc',
   '9827-ts-default-values',
   '9586-js-react-memo',
+  '9575-ts-camel-case',
 ];
 
 const stories = storiesOf('Properties/React', module);
