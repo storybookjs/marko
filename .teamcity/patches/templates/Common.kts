@@ -10,6 +10,17 @@ accordingly, and delete the patch script.
 */
 changeTemplate(RelativeId("Common")) {
     vcs {
+
+        check(checkoutMode == CheckoutMode.AUTO) {
+            "Unexpected option value: checkoutMode = $checkoutMode"
+        }
+        checkoutMode = CheckoutMode.ON_AGENT
+
+        check(checkoutDir == "") {
+            "Unexpected option value: checkoutDir = $checkoutDir"
+        }
+        checkoutDir = "storybook/%teamcity.build.branch%"
+
         expectEntry(DslContext.settingsRoot.id!!, "-:.teamcity")
         root(DslContext.settingsRoot.id!!)
     }
