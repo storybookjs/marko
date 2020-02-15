@@ -1,7 +1,9 @@
 package patches.templates
 
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.PullRequests
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.Swabra
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.pullRequests
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.swabra
 import jetbrains.buildServer.configs.kotlin.v2019_2.ui.*
 
@@ -22,6 +24,15 @@ changeTemplate(RelativeId("Common")) {
         feature1.apply {
             enabled = false
             paths = "-:*/node_modules/*"
+        }
+        add {
+            pullRequests {
+                id = "BUILD_EXT_2"
+                provider = github {
+                    authType = vcsRoot()
+                    filterAuthorRole = PullRequests.GitHubRoleFilter.EVERYBODY
+                }
+            }
         }
     }
 }
