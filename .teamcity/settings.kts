@@ -581,6 +581,7 @@ object Lint : BuildType({
                 #!/bin/bash
                 set -e -x
                 
+                rm -rf examples/angular-cli/documentation.json
                 yarn install
                 yarn lint
             """.trimIndent()
