@@ -114,8 +114,8 @@ object Build : BuildType({
                 set -e -x
                 
                 yarn install
-                yarn repo-dirty-check
                 yarn bootstrap --core
+                yarn repo-dirty-check
             """.trimIndent()
             dockerImage = "node:lts"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
@@ -135,7 +135,9 @@ object Packtracker : BuildType({
 
     dependencies {
         dependency(Build) {
-            snapshot {}
+            snapshot {
+                onDependencyFailure = FailureAction.IGNORE
+            }
             artifacts {
                 artifactRules = "dist.tar.gz!** => ."
             }
@@ -175,7 +177,9 @@ object ExamplesTemplate : Template({
 
     dependencies {
         dependency(Build) {
-            snapshot {}
+            snapshot {
+                onDependencyFailure = FailureAction.IGNORE
+            }
             artifacts {
                 artifactRules = "dist.tar.gz!** => ."
             }
@@ -289,7 +293,9 @@ object Chromatic1 : BuildType({
 
     dependencies {
         dependency(AggregateExamples) {
-            snapshot {}
+            snapshot {
+                onDependencyFailure = FailureAction.IGNORE
+            }
             artifacts {
                 artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
             }
@@ -320,7 +326,9 @@ object Chromatic2 : BuildType({
 
     dependencies {
         dependency(AggregateExamples) {
-            snapshot {}
+            snapshot {
+                onDependencyFailure = FailureAction.IGNORE
+            }
             artifacts {
                 artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
             }
@@ -350,7 +358,9 @@ object Chromatic3 : BuildType({
 
     dependencies {
         dependency(AggregateExamples) {
-            snapshot {}
+            snapshot {
+                onDependencyFailure = FailureAction.IGNORE
+            }
             artifacts {
                 artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
             }
@@ -380,7 +390,9 @@ object Chromatic4 : BuildType({
 
     dependencies {
         dependency(AggregateExamples) {
-            snapshot {}
+            snapshot {
+                onDependencyFailure = FailureAction.IGNORE
+            }
             artifacts {
                 artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
             }
@@ -422,7 +434,9 @@ object E2E : BuildType({
 
     dependencies {
         dependency(AggregateExamples) {
-            snapshot {}
+            snapshot {
+                onDependencyFailure = FailureAction.IGNORE
+            }
             artifacts {
                 artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
             }
@@ -452,7 +466,9 @@ object SmokeTests : BuildType({
 
     dependencies {
         dependency(Build) {
-            snapshot {}
+            snapshot {
+                onDependencyFailure = FailureAction.IGNORE
+            }
             artifacts {
                 artifactRules = "dist.tar.gz!** => ."
             }
@@ -568,7 +584,9 @@ object Lint : BuildType({
 
     dependencies {
         dependency(Build) {
-            snapshot {}
+            snapshot {
+                onDependencyFailure = FailureAction.IGNORE
+            }
             artifacts {
                 artifactRules = "dist.tar.gz!** => ."
             }
@@ -596,7 +614,9 @@ object Test : BuildType({
 
     dependencies {
         dependency(Build) {
-            snapshot {}
+            snapshot {
+                onDependencyFailure = FailureAction.IGNORE
+            }
             artifacts {
                 artifactRules = "dist.tar.gz!** => ."
             }
@@ -625,7 +645,9 @@ object Coverage : BuildType({
 
     dependencies {
         dependency(Test) {
-            snapshot {}
+            snapshot {
+                onDependencyFailure = FailureAction.IGNORE
+            }
             artifacts {
                 artifactRules = "coverage.tar.gz!** => coverage"
             }
