@@ -1,5 +1,6 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.commitStatusPublisher
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.swabra
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.ScriptBuildStep
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.projectFeatures.githubConnection
@@ -79,7 +80,9 @@ object Common: Template({
     name = "Common"
 
     vcs {
-        root(DslContext.settingsRoot, "-:.teamcity")
+        root(DslContext.settingsRoot)
+        checkoutMode = CheckoutMode.ON_AGENT
+        checkoutDir = "storybook/%teamcity.build.branch%"
     }
 
     features {
@@ -92,6 +95,11 @@ object Common: Template({
                 }
             }
             param("github_oauth_user", "Hypnosphi")
+        }
+        swabra {
+            id = "swabra"
+            verbose = true
+            paths = "-:**/node_modules/**"
         }
     }
 })
@@ -182,6 +190,8 @@ object ExamplesTemplate : Template({
                 
                 yarn install
                 rm -rf built-storybooks
+                mkdir -p built-storybooks
+                
                 yarn build-storybooks
             """.trimIndent()
             dockerImage = "node:lts"
@@ -451,12 +461,13 @@ object SmokeTests : BuildType({
 
     steps {
         script {
-            workingDir = "examples"
             scriptContent = """
                 #!/bin/bash
                 set -e -x
 
-                cd cra-kitchen-sink
+                yarn install
+
+                cd examples/cra-kitchen-sink
                 yarn storybook --smoke-test --quiet
           
                 cd ../cra-ts-kitchen-sink
@@ -571,7 +582,7 @@ object Lint : BuildType({
                 set -e -x
                 
                 yarn install
-                yarn lint:js . --debug
+                yarn lint
             """.trimIndent()
             dockerImage = "node:lts"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
