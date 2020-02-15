@@ -1,5 +1,5 @@
 import window from 'global';
-import React, { Component, CSSProperties, IframeHTMLAttributes } from 'react';
+import React, { Component, IframeHTMLAttributes } from 'react';
 
 import { styled } from '@storybook/theming';
 

@@ -4,7 +4,6 @@ import React from 'react';
 import { Consumer, Combo, StoriesHash, isRoot, isGroup, isStory } from '@storybook/api';
 
 import { Preview } from '../components/preview/preview';
-import { PreviewProps } from '../components/preview/utils/types';
 
 type Item = StoriesHash[keyof StoriesHash];
 
