@@ -20,7 +20,10 @@ changeTemplate(RelativeId("Common")) {
             }
         }
         feature1.apply {
-            paths = "-:*/node_modules/*"
+            paths = """
+                -:*/node_modules
+                -:node_modules
+            """.trimIndent()
         }
     }
 }
