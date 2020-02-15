@@ -1,3 +1,21 @@
+## 6.0.0-alpha.13 (February 15, 2020)
+
+### Bug Fixes
+
+- CLI: fix React Scripts csf-ts story templates ([#9863](https://github.com/storybookjs/storybook/pull/9863))
+- Addon-viewports: Fix Galaxy S9's viewport size ([#9797](https://github.com/storybookjs/storybook/pull/9797))
+- Storyshots: Fix support for jsx/tsx config files ([#9834](https://github.com/storybookjs/storybook/pull/9834))
+
+### Maintenance
+
+- Addon-docs: Snapshot testing and bug reporting for props tables ([#9838](https://github.com/storybookjs/storybook/pull/9838))
+- Typescript: Remove prop types in lib/components ([#9747](https://github.com/storybookjs/storybook/pull/9747))
+- Typescript: Better api consumer ([#9861](https://github.com/storybookjs/storybook/pull/9861))
+
+### Dependency Upgrades
+
+- Bump marko from 4.18.42 to 4.18.45 ([#9839](https://github.com/storybookjs/storybook/pull/9839))
+
 ## 6.0.0-alpha.12 (February 14, 2020)
 
 ### Maintenance
