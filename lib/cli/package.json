@@ -32,7 +32,8 @@
   "scripts": {
     "prepare": "node ../../scripts/prepare.js",
     "test": "cd test && ./run_tests.sh",
-    "test-latest-cra": "cd test && ./test_latest_cra.sh"
+    "test-latest-cra": "cd test && ./test_latest_cra.sh",
+    "test-yarn-2": "cd test && ./run_tests_yarn_2.sh"
   },
   "dependencies": {
     "@babel/core": "^7.8.4",
