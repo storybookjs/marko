@@ -1,6 +1,7 @@
 package patches.templates
 
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.swabra
 import jetbrains.buildServer.configs.kotlin.v2019_2.ui.*
 
 /*
@@ -23,5 +24,15 @@ changeTemplate(RelativeId("Common")) {
 
         expectEntry(DslContext.settingsRoot.id!!, "-:.teamcity")
         root(DslContext.settingsRoot.id!!)
+    }
+
+    features {
+        add {
+            swabra {
+                id = "swabra"
+                verbose = true
+                paths = "-:**/node_modules/**"
+            }
+        }
     }
 }
