@@ -73,6 +73,8 @@
     "vue-docgen-loader": "^1.4.0"
   },
   "devDependencies": {
+    "@storybook/react": "6.0.0-alpha.11",
+    "@storybook/web-components": "6.0.0-alpha.11",
     "@types/doctrine": "^0.0.3",
     "@types/enzyme": "^3.10.3",
     "@types/jest": "^25.1.1",
