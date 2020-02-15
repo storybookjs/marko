@@ -48,6 +48,7 @@ project {
     buildType(Coverage)
 
     subProject(ExamplesProject)
+    subProject(ChromaticProject)
 
     buildTypesOrderIds = arrayListOf(
             RelativeId("TestWorkflow"), 
