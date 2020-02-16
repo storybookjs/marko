@@ -626,7 +626,7 @@ object Test : BuildType({
                 set -e -x
                 
                 yarn install
-                yarn test --coverage --runInBand --core
+                yarn test --coverage --w2 --core
             """.trimIndent()
             dockerImage = "node:lts"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
