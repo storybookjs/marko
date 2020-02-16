@@ -626,7 +626,9 @@ object Test : BuildType({
                 set -e -x
                 
                 yarn install
-                yarn test --coverage --w2 --core
+                # TODO remove after merging
+                yarn add -DW --ignore-scripts jest-teamcity
+                yarn jest --coverage -w 2 --testResultsProcessor=jest-teamcity
             """.trimIndent()
             dockerImage = "node:lts"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
