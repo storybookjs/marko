@@ -148,7 +148,7 @@ object Packtracker : BuildType({
     dependencies {
         dependency(Build) {
             snapshot {
-                onDependencyFailure = FailureAction.IGNORE
+                onDependencyFailure = FailureAction.CANCEL
             }
             artifacts {
                 artifactRules = "dist.tar.gz!** => ."
@@ -190,7 +190,7 @@ object ExamplesTemplate : Template({
     dependencies {
         dependency(Build) {
             snapshot {
-                onDependencyFailure = FailureAction.IGNORE
+                onDependencyFailure = FailureAction.CANCEL
             }
             artifacts {
                 artifactRules = "dist.tar.gz!** => ."
@@ -263,25 +263,33 @@ object AggregateExamples : BuildType({
 
     dependencies {
         dependency(Examples1) {
-            snapshot {}
+            snapshot {
+                onDependencyFailure = FailureAction.CANCEL
+            }
             artifacts {
                 artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
             }
         }
         dependency(Examples2) {
-            snapshot {}
+            snapshot {
+                onDependencyFailure = FailureAction.CANCEL
+            }
             artifacts {
                 artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
             }
         }
         dependency(Examples3) {
-            snapshot {}
+            snapshot {
+                onDependencyFailure = FailureAction.CANCEL
+            }
             artifacts {
                 artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
             }
         }
         dependency(Examples4) {
-            snapshot {}
+            snapshot {
+                onDependencyFailure = FailureAction.CANCEL
+            }
             artifacts {
                 artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
             }
@@ -305,7 +313,7 @@ object Chromatic1 : BuildType({
     dependencies {
         dependency(AggregateExamples) {
             snapshot {
-                onDependencyFailure = FailureAction.IGNORE
+                onDependencyFailure = FailureAction.CANCEL
             }
             artifacts {
                 artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
@@ -339,7 +347,7 @@ object Chromatic2 : BuildType({
     dependencies {
         dependency(AggregateExamples) {
             snapshot {
-                onDependencyFailure = FailureAction.IGNORE
+                onDependencyFailure = FailureAction.CANCEL
             }
             artifacts {
                 artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
@@ -373,7 +381,7 @@ object Chromatic3 : BuildType({
     dependencies {
         dependency(AggregateExamples) {
             snapshot {
-                onDependencyFailure = FailureAction.IGNORE
+                onDependencyFailure = FailureAction.CANCEL
             }
             artifacts {
                 artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
@@ -417,7 +425,7 @@ object E2E : BuildType({
     dependencies {
         dependency(AggregateExamples) {
             snapshot {
-                onDependencyFailure = FailureAction.IGNORE
+                onDependencyFailure = FailureAction.CANCEL
             }
             artifacts {
                 artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
@@ -449,7 +457,7 @@ object SmokeTests : BuildType({
     dependencies {
         dependency(Build) {
             snapshot {
-                onDependencyFailure = FailureAction.IGNORE
+                onDependencyFailure = FailureAction.CANCEL
             }
             artifacts {
                 artifactRules = "dist.tar.gz!** => ."
@@ -573,7 +581,7 @@ object Lint : BuildType({
     dependencies {
         dependency(Build) {
             snapshot {
-                onDependencyFailure = FailureAction.IGNORE
+                onDependencyFailure = FailureAction.CANCEL
             }
             artifacts {
                 artifactRules = "dist.tar.gz!** => ."
@@ -603,7 +611,7 @@ object Test : BuildType({
     dependencies {
         dependency(Build) {
             snapshot {
-                onDependencyFailure = FailureAction.IGNORE
+                onDependencyFailure = FailureAction.CANCEL
             }
             artifacts {
                 artifactRules = "dist.tar.gz!** => ."
@@ -634,7 +642,7 @@ object Coverage : BuildType({
     dependencies {
         dependency(Test) {
             snapshot {
-                onDependencyFailure = FailureAction.IGNORE
+                onDependencyFailure = FailureAction.CANCEL
             }
             artifacts {
                 artifactRules = "coverage.tar.gz!** => coverage"
