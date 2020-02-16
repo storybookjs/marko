@@ -35,6 +35,15 @@ Known analyzers that output `custom-elements.json`:
 - [stenciljs](https://stenciljs.com/)
   - Supports Stencil (but does not have all metadata)
 
+To generate this file with Stencil, 
+add `docs-vscode` to outputTargets in the stencil.config.ts
+```
+{
+  type: 'docs-vscode',
+  file: 'custom-elements.json'
+},
+```
+
 It basically looks like this:
 
 ```json
