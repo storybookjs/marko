@@ -557,6 +557,12 @@ object Docs : BuildType({
         vcs {
             quietPeriodMode = VcsTrigger.QuietPeriodMode.USE_DEFAULT
             triggerRules = "-:.teamcity/**"
+            branchFilter = """
+                +:<default>
+                +:next
+                +:master
+                +:pull/*
+            """.trimIndent()
         }
     }
 })
@@ -672,6 +678,12 @@ object TestWorkflow : BuildType({
         vcs {
             quietPeriodMode = VcsTrigger.QuietPeriodMode.USE_DEFAULT
             triggerRules = "-:.teamcity/**"
+            branchFilter = """
+                +:<default>
+                +:next
+                +:master
+                +:pull/*
+            """.trimIndent()
         }
     }
 })
