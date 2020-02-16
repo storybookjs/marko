@@ -630,7 +630,7 @@ object Test : BuildType({
                 yarn add -DW --ignore-scripts jest-teamcity
                 yarn jest --coverage -w 2 --testResultsProcessor=jest-teamcity
             """.trimIndent()
-            dockerImage = "node:lts"
+            dockerImage = "circleci/node:10"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
