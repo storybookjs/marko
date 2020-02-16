@@ -297,7 +297,6 @@ object ChromaticProject : Project({
     buildType(Chromatic1)
     buildType(Chromatic2)
     buildType(Chromatic3)
-    buildType(Chromatic4)
 })
 
 object Chromatic1 : BuildType({
@@ -326,6 +325,7 @@ object Chromatic1 : BuildType({
             yarn chromatic --storybook-build-dir="built-storybooks/cra-kitchen-sink" --app-code="tg55gajmdt"
             yarn chromatic --storybook-build-dir="built-storybooks/cra-react15" --app-code="gxk7iqej3wt"
             yarn chromatic --storybook-build-dir="built-storybooks/cra-ts-essentials" --app-code="b311ypk6of"
+            yarn chromatic --storybook-build-dir="built-storybooks/cra-ts-kitchen-sink" --app-code="19whyj1tlac"
         """.trimIndent()
             dockerImage = "node:lts"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
@@ -354,11 +354,13 @@ object Chromatic2 : BuildType({
             set -e -x
 
             yarn install
-            yarn chromatic --storybook-build-dir="built-storybooks/cra-ts-kitchen-sink" --app-code="19whyj1tlac"
             yarn chromatic --storybook-build-dir="built-storybooks/dev-kits" --app-code="7yykp9ifdxx"
             yarn chromatic --storybook-build-dir="built-storybooks/ember-cli" --app-code="19z23qxndju"
             yarn chromatic --storybook-build-dir="built-storybooks/html-kitchen-sink" --app-code="e8zolxoyg8o"
-        """.trimIndent()
+            yarn chromatic --storybook-build-dir="built-storybooks/marko-cli" --app-code="qaegx64axu"
+            yarn chromatic --storybook-build-dir="built-storybooks/mithril-kitchen-sink" --app-code="8adgm46jzk8"
+            yarn chromatic --storybook-build-dir="built-storybooks/preact-kitchen-sink" --app-code="ls0ikhnwqt"
+                    """.trimIndent()
             dockerImage = "node:lts"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
@@ -386,38 +388,7 @@ object Chromatic3 : BuildType({
             set -e -x
 
             yarn install
-            yarn chromatic --storybook-build-dir="built-storybooks/marko-cli" --app-code="qaegx64axu"
-            yarn chromatic --storybook-build-dir="built-storybooks/mithril-kitchen-sink" --app-code="8adgm46jzk8"
-            yarn chromatic --storybook-build-dir="built-storybooks/preact-kitchen-sink" --app-code="ls0ikhnwqt"
             yarn chromatic --storybook-build-dir="built-storybooks/rax-kitchen-sink" --app-code="4co6vptx8qo"
-        """.trimIndent()
-            dockerImage = "node:lts"
-            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
-        }
-    }
-})
-
-object Chromatic4 : BuildType({
-    name = "Chromatic 4"
-
-    dependencies {
-        dependency(AggregateExamples) {
-            snapshot {
-                onDependencyFailure = FailureAction.IGNORE
-            }
-            artifacts {
-                artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
-            }
-        }
-    }
-
-    steps {
-        script {
-            scriptContent = """
-            #!/bin/bash
-            set -e -x
-
-            yarn install
             yarn chromatic --storybook-build-dir="built-storybooks/riot-kitchen-sink" --app-code="g2dp3lnr34a"
             yarn chromatic --storybook-build-dir="built-storybooks/svelte-kitchen-sink" --app-code="8ob73wgl995"
             yarn chromatic --storybook-build-dir="built-storybooks/vue-kitchen-sink" --app-code="cyxj0e38bqj"
@@ -437,7 +408,6 @@ object Chromatic : BuildType({
         snapshot(Chromatic1) {}
         snapshot(Chromatic2) {}
         snapshot(Chromatic3) {}
-        snapshot(Chromatic4) {}
     }
 })
 
