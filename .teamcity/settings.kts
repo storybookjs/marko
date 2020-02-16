@@ -751,14 +751,11 @@ object TestWorkflow : BuildType({
     maxRunningBuilds = 2
 
     dependencies {
-        snapshot(Build) {}
         snapshot(Chromatic) {}
         snapshot(Packtracker) {}
-        snapshot(AggregateExamples) {}
         snapshot(E2E) {}
         snapshot(SmokeTests) {}
         snapshot(Lint) {}
-        snapshot(Test) {}
         snapshot(Coverage) {}
     }
 
