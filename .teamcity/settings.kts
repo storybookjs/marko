@@ -599,9 +599,14 @@ object Lint : BuildType({
                 yarn install
                 
                 # TODO remove after merging
-                yarn add -DW --ignore-scripts eslint-teamcity
+                mkdir temp-eslint-teamcity
+                cd temp-eslint-teamcity
+                yarn init -y
+                yarn add -D eslint-teamcity
+                cd ..
                 
-                yarn lint:js --format ./node_modules/eslint-teamcity/index.js && yarn lint:md
+                yarn lint:js --format ./temp-eslint-teamcity/node_modules/eslint-teamcity/index.js .
+                yarn lint:md .
             """.trimIndent()
             dockerImage = "node:10"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
@@ -632,9 +637,13 @@ object Test : BuildType({
                 yarn install
                 
                 # TODO remove after merging
-                yarn add -DW --ignore-scripts jest-teamcity
+                mkdir temp-jest-teamcity
+                cd temp-jest-teamcity
+                yarn init -y
+                yarn add -D jest-teamcity
+                cd ..
                 
-                yarn jest --coverage -w 2 --testResultsProcessor=jest-teamcity
+                yarn jest --coverage -w 2 --testResultsProcessor=${'$'}PWD/temp-jest-teamcity/node_modules/jest-teamcity
             """.trimIndent()
             dockerImage = "node:10"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
