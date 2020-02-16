@@ -163,13 +163,16 @@ object Packtracker : BuildType({
                 #!/bin/bash
                 set -e -x
                 
-                git rev-parse --abbrev-ref HEAD
                 yarn install
                 yarn packtracker
             """.trimIndent()
             dockerImage = "node:10"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
+    }
+
+    params {
+        param("env.PT_BRANCH", "%teamcity.build.branch%")
     }
 })
 
