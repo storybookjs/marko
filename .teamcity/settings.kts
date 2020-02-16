@@ -391,7 +391,7 @@ object Chromatic2 : BuildType({
             yarn chromatic --storybook-build-dir="built-storybooks/ember-cli" --app-code="19z23qxndju"
             yarn chromatic --storybook-build-dir="built-storybooks/html-kitchen-sink" --app-code="e8zolxoyg8o"
         """.trimIndent()
-            dockerImage = "node:lts"
+            dockerImage = "node:10"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
