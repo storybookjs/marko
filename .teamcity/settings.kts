@@ -129,7 +129,7 @@ object Build : BuildType({
                 yarn bootstrap --core
                 yarn repo-dirty-check
             """.trimIndent()
-            dockerImage = "node:lts"
+            dockerImage = "node:10"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
@@ -166,7 +166,7 @@ object Packtracker : BuildType({
                 yarn install
                 yarn packtracker
             """.trimIndent()
-            dockerImage = "node:lts"
+            dockerImage = "node:10"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
@@ -210,7 +210,7 @@ object ExamplesTemplate : Template({
                 
                 yarn build-storybooks
             """.trimIndent()
-            dockerImage = "node:lts"
+            dockerImage = "node:10"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
@@ -335,7 +335,7 @@ object Chromatic1 : BuildType({
             yarn chromatic --storybook-build-dir="built-storybooks/cra-ts-essentials" --app-code="b311ypk6of"
             yarn chromatic --storybook-build-dir="built-storybooks/cra-ts-kitchen-sink" --app-code="19whyj1tlac"
         """.trimIndent()
-            dockerImage = "node:lts"
+            dockerImage = "node:10"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
@@ -369,7 +369,7 @@ object Chromatic2 : BuildType({
             yarn chromatic --storybook-build-dir="built-storybooks/mithril-kitchen-sink" --app-code="8adgm46jzk8"
             yarn chromatic --storybook-build-dir="built-storybooks/preact-kitchen-sink" --app-code="ls0ikhnwqt"
                     """.trimIndent()
-            dockerImage = "node:lts"
+            dockerImage = "node:10"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
@@ -402,7 +402,7 @@ object Chromatic3 : BuildType({
             yarn chromatic --storybook-build-dir="built-storybooks/vue-kitchen-sink" --app-code="cyxj0e38bqj"
             yarn chromatic --storybook-build-dir="built-storybooks/web-components-kitchen-sink" --app-code="npm5gsofwkf"
         """.trimIndent()
-            dockerImage = "node:lts"
+            dockerImage = "node:10"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
@@ -509,7 +509,7 @@ object SmokeTests : BuildType({
                 cd ../cra-react15
                 yarn storybook --smoke-test --quiet
             """.trimIndent()
-            dockerImage = "node:lts"
+            dockerImage = "node:10"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
@@ -528,7 +528,7 @@ object Frontpage : BuildType({
                 yarn bootstrap --install
                 node ./scripts/build-frontpage.js
             """.trimIndent()
-            dockerImage = "node:lts"
+            dockerImage = "node:10"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
@@ -602,7 +602,7 @@ object Lint : BuildType({
                 
                 yarn lint:js --format ./node_modules/eslint-teamcity/index.js && yarn lint:md
             """.trimIndent()
-            dockerImage = "node:lts"
+            dockerImage = "node:10"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
@@ -635,7 +635,7 @@ object Test : BuildType({
                 
                 yarn jest --coverage -w 2 --testResultsProcessor=jest-teamcity
             """.trimIndent()
-            dockerImage = "circleci/node:10"
+            dockerImage = "node:10"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
@@ -666,7 +666,7 @@ object Coverage : BuildType({
                 yarn install
                 yarn coverage
             """.trimIndent()
-            dockerImage = "node:lts"
+            dockerImage = "node:10"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
