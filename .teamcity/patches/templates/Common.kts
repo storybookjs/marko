@@ -23,7 +23,10 @@ changeTemplate(RelativeId("Common")) {
         }
         feature1.apply {
             enabled = false
-            paths = "-:*/node_modules/*"
+            paths = """
+                -:node_modules
+                -:*/node_modules
+            """.trimIndent()
         }
         add {
             pullRequests {
