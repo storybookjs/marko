@@ -167,6 +167,7 @@
     "eslint": "^6.5.1",
     "eslint-plugin-cypress": "^2.7.0",
     "eslint-plugin-react": "^7.15.1",
+    "eslint-teamcity": "^2.2.0",
     "esm": "^3.2.25",
     "github-release-from-changelog": "^2.1.0",
     "glob": "^7.1.3",
@@ -230,6 +231,9 @@
   "collective": {
     "type": "opencollective",
     "url": "https://opencollective.com/storybook"
+  },
+  "eslint-teamcity": {
+    "reporter": "inspections"
   },
   "pr-log": {
     "skipLabels": [

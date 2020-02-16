@@ -595,9 +595,12 @@ object Lint : BuildType({
                 #!/bin/bash
                 set -e -x
                 
-                rm -rf examples/angular-cli/documentation.json
                 yarn install
-                yarn lint
+                
+                # TODO remove after merging
+                yarn add -DW --ignore-scripts eslint-teamcity
+                
+                yarn lint:js --format ./node_modules/eslint-teamcity/index.js && yarn lint:md
             """.trimIndent()
             dockerImage = "node:lts"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
@@ -626,8 +629,10 @@ object Test : BuildType({
                 set -e -x
                 
                 yarn install
+                
                 # TODO remove after merging
                 yarn add -DW --ignore-scripts jest-teamcity
+                
                 yarn jest --coverage -w 2 --testResultsProcessor=jest-teamcity
             """.trimIndent()
             dockerImage = "circleci/node:10"
