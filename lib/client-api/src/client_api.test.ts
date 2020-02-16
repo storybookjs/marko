@@ -552,7 +552,7 @@ describe('preview.client_api', () => {
       expect(getStorybook().map(story => story.kind)).toEqual(['kind1', 'kind2']);
     });
 
-    it('should bind dispose inside add and soriesOf by default', () => {
+    it('should call `module.hot.dispose` inside add and soriesOf by default', () => {
       const module = new MockModule();
       module.hot.dispose = jest.fn();
 
