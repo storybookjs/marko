@@ -163,6 +163,7 @@ object Packtracker : BuildType({
                 #!/bin/bash
                 set -e -x
                 
+                git rev-parse --abbrev-ref HEAD
                 yarn install
                 yarn packtracker
             """.trimIndent()
