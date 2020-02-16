@@ -87,7 +87,7 @@ export default class ClientApi {
   private _decorateStory: (storyFn: StoryFn, decorators: DecoratorFunction[]) => any;
 
   // React Native Fast refresh doesn't allow multiple dispose calls
-  private _disableAddStoryDispose: boolean;
+  private _noStoryModuleAddMethodHotDispose: boolean;
 
   constructor({
     storyStore,
@@ -97,7 +97,7 @@ export default class ClientApi {
     this._storyStore = storyStore;
     this._addons = {};
 
-    this._disableAddStoryDispose = noStoryModuleAddMethodHotDispose || false;
+    this._noStoryModuleAddMethodHotDispose = noStoryModuleAddMethodHotDispose || false;
 
     this._decorateStory = decorateStory;
 
@@ -216,7 +216,7 @@ export default class ClientApi {
         throw new Error(`Invalid or missing storyName provided for a "${kind}" story.`);
       }
 
-      if (!this._disableAddStoryDispose && m && m.hot && m.hot.dispose) {
+      if (!this._noStoryModuleAddMethodHotDispose && m && m.hot && m.hot.dispose) {
         m.hot.dispose(() => {
           const { _storyStore } = this;
           _storyStore.remove(id);
