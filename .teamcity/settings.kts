@@ -443,7 +443,7 @@ object E2E : BuildType({
                 yarn cypress install
                 yarn serve-storybooks &
                 yarn await-serve-storybooks
-                yarn cypress run
+                yarn cypress run --reporter teamcity
             """.trimIndent()
             dockerImage = "cypress/base:10.18.1"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
