@@ -92,12 +92,12 @@ export default class ClientApi {
   constructor({
     storyStore,
     decorateStory = defaultDecorateStory,
-    disableAddStoryDispose,
+    noStoryModuleAddMethodHotDispose,
   }: ClientApiParams) {
     this._storyStore = storyStore;
     this._addons = {};
 
-    this._disableAddStoryDispose = disableAddStoryDispose || false;
+    this._disableAddStoryDispose = noStoryModuleAddMethodHotDispose || false;
 
     this._decorateStory = decorateStory;
 

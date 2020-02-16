@@ -5,11 +5,14 @@ import ClientApi from './client_api';
 import ConfigApi from './config_api';
 import StoryStore from './story_store';
 
-const getContext = ({ decorateStory = undefined, disableAddStoryDispose = false } = {}) => {
+const getContext = ({
+  decorateStory = undefined,
+  noStoryModuleAddMethodHotDispose = false,
+} = {}) => {
   const channel = mockChannel();
   addons.setChannel(channel);
   const storyStore = new StoryStore({ channel });
-  const clientApi = new ClientApi({ storyStore, decorateStory, disableAddStoryDispose });
+  const clientApi = new ClientApi({ storyStore, decorateStory, noStoryModuleAddMethodHotDispose });
   const { clearDecorators } = clientApi;
   const configApi = new ConfigApi({ clearDecorators, storyStore, channel, clientApi });
 
@@ -559,20 +562,20 @@ describe('preview.client_api', () => {
 
       storiesOf('kind', module).add('story', jest.fn());
 
-      expect(module.hot.dispose.calls.length).toEqual(2);
+      expect(module.hot.dispose.mock.calls.length).toEqual(2);
     });
 
-    it('should not bind dispose inside add when disableAddStoryDispose is true', () => {
+    it('should not call `module.hot.dispose` inside add when noStoryModuleAddMethodHotDispose is true', () => {
       const module = new MockModule();
       module.hot.dispose = jest.fn();
 
       const {
         clientApi: { storiesOf, getStorybook },
-      } = getContext({ disableAddStoryDispose: true });
+      } = getContext({ noStoryModuleAddMethodHotDispose: true });
 
       storiesOf('kind', module).add('story', jest.fn());
 
-      expect(module.hot.dispose.calls.length).toEqual(1);
+      expect(module.hot.dispose.mock.calls.length).toEqual(1);
     });
   });
 
