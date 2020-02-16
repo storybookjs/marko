@@ -185,6 +185,7 @@ object ExamplesProject : Project({
     buildType(Examples2)
     buildType(Examples3)
     buildType(Examples4)
+    buildType(Examples5)
     buildType(AggregateExamples)
 })
 
@@ -222,7 +223,7 @@ object ExamplesTemplate : Template({
     artifactRules = "built-storybooks => built-storybooks.tar.gz"
 
     params {
-        param("env.CIRCLE_NODE_TOTAL", "4")
+        param("env.CIRCLE_NODE_TOTAL", "5")
     }
 })
 
@@ -262,6 +263,15 @@ object Examples4 : BuildType({
     }
 })
 
+object Examples5 : BuildType({
+    name = "Examples 5"
+    templates = listOf(ExamplesTemplate)
+
+    params {
+        param("env.CIRCLE_NODE_INDEX", "4")
+    }
+})
+
 object AggregateExamples : BuildType({
     name = "Aggregate Examples"
 
@@ -291,6 +301,14 @@ object AggregateExamples : BuildType({
             }
         }
         dependency(Examples4) {
+            snapshot {
+                onDependencyFailure = FailureAction.CANCEL
+            }
+            artifacts {
+                artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
+            }
+        }
+        dependency(Examples5) {
             snapshot {
                 onDependencyFailure = FailureAction.CANCEL
             }
