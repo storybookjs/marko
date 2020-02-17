@@ -20740,6 +20740,11 @@ node-dir@^0.1.10, node-dir@^0.1.17:
   dependencies:
     minimatch "^3.0.2"
 
+node-fetch-json@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/node-fetch-json/-/node-fetch-json-0.2.1.tgz#046af94018b6af91f4cd0dcfd6fcb2ab66d388e8"
+  integrity sha512-5ZsYjrq2wzZiv4hmZIMsswZyU0at57Xw+ZezpV/hXVFUHdvsCPufxZk1gid6R487OclwjLaNm5FIryIGBCfK0A==
+
 node-fetch-npm@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/node-fetch-npm/-/node-fetch-npm-2.0.2.tgz#7258c9046182dca345b4208eda918daf33697ff7"
