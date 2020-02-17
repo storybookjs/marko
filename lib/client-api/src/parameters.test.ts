@@ -2,22 +2,15 @@ import { combineParameters } from './parameters';
 
 describe('client-api.parameters', () => {
   it('merges different sets of parameters by key, preferencing last', () => {
-    expect(
-      combineParameters([
-        { a: 'b', c: 'd' },
-        { e: 'f', a: 'g' },
-      ])
-    ).toEqual({
+    expect(combineParameters({ a: 'b', c: 'd' }, { e: 'f', a: 'g' })).toEqual({
       a: 'g',
       c: 'd',
       e: 'f',
     });
   });
 
-  it('merges sub-keys if they are specified', () => {
-    expect(
-      combineParameters([{ ns: { a: 'b', c: 'd' } }, { ns: { e: 'f', a: 'g' } }], ['ns'])
-    ).toEqual({
+  it('merges sub-keys', () => {
+    expect(combineParameters({ ns: { a: 'b', c: 'd' } }, { ns: { e: 'f', a: 'g' } })).toEqual({
       ns: {
         a: 'g',
         c: 'd',
@@ -25,6 +18,20 @@ describe('client-api.parameters', () => {
       },
     });
   });
+
+  // XXX: yes it does-- what should it do?
+  // it('does not merges sub-sub-keys', () => {
+  //   expect(
+  //     combineParameters({ ns: { nns: { a: 'b', c: 'd' } } }, { ns: { nns: { e: 'f', a: 'g' } } })
+  //   ).toEqual({
+  //     ns: {
+  //       nns: {
+  //         e: 'f',
+  //         a: 'g',
+  //       },
+  //     },
+  //   });
+  // });
 
   it('combines array values inside sub-keys', () => {
     expect(

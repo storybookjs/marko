@@ -94,12 +94,7 @@ export default class StoryStore extends EventEmitter {
   addGlobalMetadata({ parameters, decorators }: StoryMetadata) {
     const globalParameters = this._globalMetadata.parameters;
 
-    // NOTE: currently we merge only these two keys globally.
-    // Note we merge *none* for kinds and *all* for stories.
-    this._globalMetadata.parameters = combineParameters(
-      [globalParameters, parameters],
-      ['options', 'docs']
-    );
+    this._globalMetadata.parameters = combineParameters(globalParameters, parameters);
 
     this._globalMetadata.decorators.push(...decorators);
   }
@@ -120,11 +115,7 @@ export default class StoryStore extends EventEmitter {
 
   addKindMetadata(kind: string, { parameters, decorators }: StoryMetadata) {
     this.ensureKind(kind);
-    // NOTE: currently we do not merge *any* keys for kinds.. no idea why
-    this._kinds[kind].parameters = combineParameters(
-      [this._kinds[kind].parameters, parameters],
-      []
-    );
+    this._kinds[kind].parameters = combineParameters(this._kinds[kind].parameters, parameters);
 
     this._kinds[kind].decorators.push(...decorators);
   }
@@ -165,11 +156,11 @@ export default class StoryStore extends EventEmitter {
       ...kindMetadata.decorators,
       ...this._globalMetadata.decorators,
     ];
-    const allParameters = combineParameters([
+    const allParameters = combineParameters(
       this._globalMetadata.parameters,
       kindMetadata.parameters,
-      parameters,
-    ]);
+      parameters
+    );
 
     // lazily decorate the story when it's loaded
     const getDecorated: () => StoryFn = memoize(1)(() =>
@@ -183,7 +174,7 @@ export default class StoryStore extends EventEmitter {
         ...identification,
         ...context,
         hooks,
-        parameters: combineParameters([allParameters, context && context.parameters], []),
+        parameters: combineParameters(allParameters, context && context.parameters),
       });
 
     _stories[id] = {

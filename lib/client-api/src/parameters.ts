@@ -26,14 +26,8 @@ export const mergeParameter = (a: any, b: any) =>
     return undefined;
   });
 
-// mergeSubkeys is a list of keys to be handled specially -- the individual items should be merged:
-//   (defaults to *all*)
-// e.g.
-//   combineParameters([{ a: { b: { c: 'd' } }}, { a: { b: { e: 'f' }}}]) ==> { a: { b: { e: 'f' } } }
-// but:
-//   combineParameters([{ a: { b: { c: 'd' } }}, { a: { b: { c: 'e' }}}], ['b']) ==> { a: { b: { c: 'd', e: 'f' } } }
-export function combineParameters(parameters: Parameters[], mergeSubkeys?: string[]) {
-  return parameters.reduce((acc: Parameters, p) => {
+export function combineParameters(...parameterSets: Parameters[]) {
+  return parameterSets.reduce((acc: Parameters, p) => {
     if (p) {
       Object.entries(p).forEach(([key, value]) => {
         const existingValue = acc[key];
@@ -41,11 +35,7 @@ export function combineParameters(parameters: Parameters[], mergeSubkeys?: strin
         if (Array.isArray(value)) {
           acc[key] = value;
         } else if (isPlainObject(value) && isPlainObject(existingValue)) {
-          if (mergeSubkeys && !mergeSubkeys.includes(key)) {
-            acc[key] = value;
-          } else {
-            acc[key] = mergeParameter(existingValue, value);
-          }
+          acc[key] = mergeParameter(existingValue, value);
         } else {
           acc[key] = value;
         }
