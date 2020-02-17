@@ -28,6 +28,7 @@ const canvasMapper = ({ state, api }: Combo) => ({
   getElements: api.getElements,
   story: api.getData(state.storyId),
   refs: state.refs,
+  active: !!(state.viewMode && state.viewMode.match(/^(story|docs)$/)),
 });
 
 const createCanvas = (id: string, baseUrl = 'iframe.html', withLoader = true): Addon => ({
@@ -35,10 +36,10 @@ const createCanvas = (id: string, baseUrl = 'iframe.html', withLoader = true): A
   title: 'Canvas',
   route: ({ storyId }) => `/story/${storyId}`,
   match: ({ viewMode }) => !!(viewMode && viewMode.match(/^(story|docs)$/)),
-  render: ({ active, key }) => {
+  render: () => {
     return (
-      <Consumer filter={canvasMapper} key={key}>
-        {({ story, refs, customCanvas, storyId, viewMode, queryParams, getElements }) => {
+      <Consumer filter={canvasMapper}>
+        {({ story, refs, customCanvas, storyId, viewMode, queryParams, getElements, active }) => {
           const wrappers = useMemo(() => [...defaultWrappers, ...getWrappers(getElements)], [
             getElements,
             ...defaultWrappers,

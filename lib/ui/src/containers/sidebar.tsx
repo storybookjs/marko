@@ -249,8 +249,8 @@ export const mapper = ({ state, api }: Combo) => {
   };
 };
 
-const Sidebar: FunctionComponent<any> = props => (
-  <Consumer filter={mapper}>{fromState => <SidebarComponent {...props} {...fromState} />}</Consumer>
+const Sidebar: FunctionComponent<{}> = () => (
+  <Consumer filter={mapper}>{fromState => <SidebarComponent {...fromState} />}</Consumer>
 );
 
 export default Sidebar;
