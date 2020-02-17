@@ -33,8 +33,8 @@ const addStoryToStore = (store, kind, name, storyFn, parameters = {}) =>
   );
 
 describe('preview.story_store', () => {
-  describe('raw storage', () => {
-    it('stores hash object', () => {
+  describe('extract', () => {
+    it('produces stories objects with inherited metadata', () => {
       const store = new StoryStore({ channel });
       addStoryToStore(store, 'a', '1', () => 0);
       addStoryToStore(store, 'a', '2', () => 0);
@@ -51,7 +51,6 @@ describe('preview.story_store', () => {
         kind: 'a',
         name: '1',
         parameters: expect.any(Object),
-        state: {},
       });
     });
   });
