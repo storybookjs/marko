@@ -3,36 +3,21 @@ import global from 'global';
 import { ReactElement } from 'react';
 import { Channel } from '@storybook/channels';
 import { API } from '@storybook/api';
+import { RenderData as RouterData } from '@storybook/router';
 import { logger } from '@storybook/client-logger';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { WindowLocation } from '@reach/router';
 import { types, Types } from './types';
-
-export type ViewMode = 'story' | 'info' | 'settings' | undefined | string;
 
 export interface RenderOptions {
   active?: boolean;
   key?: string;
-}
-export interface RouteOptions {
-  storyId: string;
-  viewMode: ViewMode;
-  location: WindowLocation;
-  path: string;
-}
-export interface MatchOptions {
-  storyId: string;
-  viewMode: ViewMode;
-  location: WindowLocation;
-  path: string;
 }
 
 export interface Addon {
   title: string;
   type?: Types;
   id?: string;
-  route?: (routeOptions: RouteOptions) => string;
-  match?: (matchOptions: MatchOptions) => boolean;
+  route?: (routeOptions: RouterData) => string;
+  match?: (matchOptions: RouterData) => boolean;
   render: (renderOptions: RenderOptions) => ReactElement<any>;
   paramKey?: string;
   disabled?: boolean;

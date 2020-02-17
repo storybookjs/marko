@@ -7,17 +7,21 @@ import {
   navigate,
   LocationProvider,
   RouteComponentProps,
+  LocationContext,
   NavigateFn,
 } from '@reach/router';
 import { ToggleVisibility } from './visibility';
 import { queryFromString, parsePath, getMatch } from './utils';
 
 interface Other {
-  viewMode?: string;
-  storyId?: string;
+  viewMode: string;
+  storyId: string;
+  path: string;
 }
 
-export type RenderData = RouteComponentProps & Other;
+export type RenderData = Pick<LocationContext, 'location'> &
+  Partial<Pick<LocationContext, 'navigate'>> &
+  Other;
 
 interface MatchingData {
   match: null | { path: string };

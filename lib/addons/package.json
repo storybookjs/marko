@@ -31,6 +31,7 @@
     "@storybook/channels": "6.0.0-alpha.13",
     "@storybook/client-logger": "6.0.0-alpha.13",
     "@storybook/core-events": "6.0.0-alpha.13",
+    "@storybook/router": "6.0.0-alpha.13",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "util-deprecate": "^1.0.2"
