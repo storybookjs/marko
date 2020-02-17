@@ -54,7 +54,7 @@ const initStoriesApi = ({
         return storiesHash[storyId];
       }
 
-      const [, , refId, realId] = storyId.match(split);
+      const [, , refId] = storyId.match(split);
 
       if (refs[refId] && refs[refId].data[storyId]) {
         return refs[refId].data[storyId];
