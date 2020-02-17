@@ -1,0 +1,67 @@
+{
+  "stories": {
+    "test--button": {
+      "id": "test--button",
+      "kind": "Test",
+      "name": "button",
+      "story": "button",
+      "parameters": {
+        "fileName": 1292
+      }
+    },
+    "anchors--page": {
+      "id": "anchors--page",
+      "kind": "Anchors",
+      "name": "Page",
+      "story": "Page",
+      "parameters": {
+        "fileName": 1283
+      }
+    },
+    "docgen-props--page": {
+      "id": "docgen-props--page",
+      "kind": "Docgen/Props",
+      "name": "Page",
+      "story": "Page",
+      "parameters": {
+        "fileName": 1291
+      }
+    },
+    "docgen-jsdoc-perfo--page": {
+      "id": "docgen-jsdoc-perfo--page",
+      "kind": "Docgen/jsdoc-perfo",
+      "name": "Page",
+      "story": "Page",
+      "parameters": {
+        "fileName": 1295
+      }
+    },
+    "docgen-jsdoc--page": {
+      "id": "docgen-jsdoc--page",
+      "kind": "Docgen/jsdoc",
+      "name": "Page",
+      "story": "Page",
+      "parameters": {
+        "fileName": 1290
+      }
+    },
+    "docgen-types--page": {
+      "id": "docgen-types--page",
+      "kind": "Docgen/types",
+      "name": "Page",
+      "story": "Page",
+      "parameters": {
+        "fileName": 1289
+      }
+    },
+    "propssort--page": {
+      "id": "propssort--page",
+      "kind": "PropsSort",
+      "name": "Page",
+      "story": "Page",
+      "parameters": {
+        "fileName": 1297
+      }
+    }
+  }
+}
