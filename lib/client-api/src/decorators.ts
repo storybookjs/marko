@@ -18,7 +18,9 @@ export const defaultDecorateStory = (storyFn: StoryFn, decorators: DecoratorFunc
               ? {
                   ...context,
                   ...innerContext,
-                  parameters: { ...context.parameters, ...innerContext.parameters },
+                  ...((context.parameters || innerContext.parameters) && {
+                    parameters: { ...context.parameters, ...innerContext.parameters },
+                  }),
                 }
               : context
           ),
