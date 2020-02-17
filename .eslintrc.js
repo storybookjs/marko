@@ -41,6 +41,7 @@ module.exports = {
     {
       files: [
         '**/__tests__/**',
+        '**/__testfixtures__/**',
         '**/*.test.*',
         '**/*.stories.*',
         '**/storyshots/**/stories/**',

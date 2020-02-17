@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`react component properties 9668-js-proptypes-no-jsdoc 1`] = `
+"/* eslint-disable react/require-default-props */
+
+/* eslint-disable react/no-unused-prop-types */
+
+/* eslint-disable react/forbid-prop-types */
+import React from 'react';
+import PropTypes from 'prop-types';
+
+const CCTable = props => React.createElement(React.Fragment, null, JSON.stringify(props));
+
+CCTable.propTypes = {
+  heads: PropTypes.array.isRequired,
+  onAddClick: PropTypes.func
+};
+export const component = CCTable;
+CCTable.__docgenInfo = {
+  \\"description\\": \\"\\",
+  \\"methods\\": [],
+  \\"displayName\\": \\"CCTable\\",
+  \\"props\\": {
+    \\"heads\\": {
+      \\"type\\": {
+        \\"name\\": \\"array\\"
+      },
+      \\"required\\": true,
+      \\"description\\": \\"\\"
+    },
+    \\"onAddClick\\": {
+      \\"type\\": {
+        \\"name\\": \\"func\\"
+      },
+      \\"required\\": false,
+      \\"description\\": \\"\\"
+    }
+  }
+};"
+`;

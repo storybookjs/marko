@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`react component properties 9592-ts-styled-props 1`] = `
+Object {
+  "rows": Array [
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "0",
+      },
+      "description": "",
+      "name": "title",
+      "required": true,
+      "type": Object {
+        "detail": undefined,
+        "summary": "string",
+      },
+    },
+  ],
+}
+`;
