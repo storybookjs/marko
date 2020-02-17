@@ -56,8 +56,8 @@ const initStoriesApi = ({
 
       const [, , refId] = storyId.match(split);
 
-      if (refs[refId] && refs[refId].data[storyId]) {
-        return refs[refId].data[storyId];
+      if (refs[refId] && refs[refId].stories && refs[refId].stories[storyId]) {
+        return refs[refId].stories[storyId];
       }
     }
 

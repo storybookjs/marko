@@ -1,7 +1,4 @@
 {
-  "versions": {
-    
-  },
   "stories": {
     "test--button": {
       "id": "test--button",
@@ -9,16 +6,7 @@
       "name": "button",
       "story": "button",
       "parameters": {
-        "fileName": 1292,
-        "docs": {},
-        "options": {
-          "brandTitle": "CRA TypeScript Kitchen Sink",
-          "brandUrl": "https://github.com/storybookjs/storybook/tree/master/examples/cra-ts-kitchen-sink",
-          "showRoots": true
-        },
-        "framework": "react",
-        "mdxSource": "<Button>hello</Button>",
-        "__id": "test--button"
+        "fileName": 1292
       }
     },
     "anchors--page": {
@@ -27,16 +15,7 @@
       "name": "Page",
       "story": "Page",
       "parameters": {
-        "fileName": 1283,
-        "docs": {},
-        "options": {
-          "brandTitle": "CRA TypeScript Kitchen Sink",
-          "brandUrl": "https://github.com/storybookjs/storybook/tree/master/examples/cra-ts-kitchen-sink",
-          "showRoots": true
-        },
-        "framework": "react",
-        "docsOnly": true,
-        "__id": "anchors--page"
+        "fileName": 1283
       }
     },
     "docgen-props--page": {
@@ -45,16 +24,7 @@
       "name": "Page",
       "story": "Page",
       "parameters": {
-        "fileName": 1291,
-        "docs": {},
-        "options": {
-          "brandTitle": "CRA TypeScript Kitchen Sink",
-          "brandUrl": "https://github.com/storybookjs/storybook/tree/master/examples/cra-ts-kitchen-sink",
-          "showRoots": true
-        },
-        "framework": "react",
-        "docsOnly": true,
-        "__id": "docgen-props--page"
+        "fileName": 1291
       }
     },
     "docgen-jsdoc-perfo--page": {
@@ -63,16 +33,7 @@
       "name": "Page",
       "story": "Page",
       "parameters": {
-        "fileName": 1295,
-        "docs": {},
-        "options": {
-          "brandTitle": "CRA TypeScript Kitchen Sink",
-          "brandUrl": "https://github.com/storybookjs/storybook/tree/master/examples/cra-ts-kitchen-sink",
-          "showRoots": true
-        },
-        "framework": "react",
-        "docsOnly": true,
-        "__id": "docgen-jsdoc-perfo--page"
+        "fileName": 1295
       }
     },
     "docgen-jsdoc--page": {
@@ -81,16 +42,7 @@
       "name": "Page",
       "story": "Page",
       "parameters": {
-        "fileName": 1290,
-        "docs": {},
-        "options": {
-          "brandTitle": "CRA TypeScript Kitchen Sink",
-          "brandUrl": "https://github.com/storybookjs/storybook/tree/master/examples/cra-ts-kitchen-sink",
-          "showRoots": true
-        },
-        "framework": "react",
-        "docsOnly": true,
-        "__id": "docgen-jsdoc--page"
+        "fileName": 1290
       }
     },
     "docgen-types--page": {
@@ -99,16 +51,7 @@
       "name": "Page",
       "story": "Page",
       "parameters": {
-        "fileName": 1289,
-        "docs": {},
-        "options": {
-          "brandTitle": "CRA TypeScript Kitchen Sink",
-          "brandUrl": "https://github.com/storybookjs/storybook/tree/master/examples/cra-ts-kitchen-sink",
-          "showRoots": true
-        },
-        "framework": "react",
-        "docsOnly": true,
-        "__id": "docgen-types--page"
+        "fileName": 1289
       }
     },
     "propssort--page": {
@@ -117,16 +60,7 @@
       "name": "Page",
       "story": "Page",
       "parameters": {
-        "fileName": 1297,
-        "docs": {},
-        "options": {
-          "brandTitle": "CRA TypeScript Kitchen Sink",
-          "brandUrl": "https://github.com/storybookjs/storybook/tree/master/examples/cra-ts-kitchen-sink",
-          "showRoots": true
-        },
-        "framework": "react",
-        "docsOnly": true,
-        "__id": "propssort--page"
+        "fileName": 1297
       }
     }
   }
