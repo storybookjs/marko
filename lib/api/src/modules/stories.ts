@@ -49,14 +49,16 @@ const initStoriesApi = ({
   const getData = (storyId: StoryId) => {
     const { storiesHash, refs } = store.getState();
 
-    if (storiesHash[storyId]) {
-      return storiesHash[storyId];
-    }
+    if (storyId) {
+      if (storiesHash[storyId]) {
+        return storiesHash[storyId];
+      }
 
-    const [, , refId, realId] = storyId.match(split);
+      const [, , refId, realId] = storyId.match(split);
 
-    if (refs[refId] && refs[refId].data[storyId]) {
-      return refs[refId].data[storyId];
+      if (refs[refId] && refs[refId].data[storyId]) {
+        return refs[refId].data[storyId];
+      }
     }
 
     return undefined;
