@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Channel } from '@storybook/channels';
+import { ThemeVars, ThemeVars } from '@storybook/theming';
 
-import { ThemeVars } from '@storybook/theming';
 import { API, State } from './index';
 import Store from './store';
 import { RefId, RefUrl, Mapper } from './modules/refs';

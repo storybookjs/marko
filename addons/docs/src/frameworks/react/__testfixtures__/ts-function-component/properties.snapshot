@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`react component properties ts-function-component 1`] = `
+Object {
+  "rows": Array [
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "true",
+      },
+      "description": "Is primary?",
+      "name": "primary",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "boolean",
+      },
+    },
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "false",
+      },
+      "description": "default is false",
+      "name": "secondary",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "boolean",
+      },
+    },
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "2",
+      },
+      "description": "Simple click handler",
+      "name": "onClick",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "signature",
+      },
+    },
+  ],
+}
+`;

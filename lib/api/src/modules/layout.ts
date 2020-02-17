@@ -54,7 +54,6 @@ export interface SubAPI {
 type PartialSubState = Partial<SubState>;
 type PartialThemeVars = Partial<ThemeVars>;
 type PartialLayout = Partial<Layout>;
-type PartialUI = Partial<UI>;
 
 export interface UIOptions {
   name?: string;
