@@ -44,13 +44,13 @@ export interface SidebarProps {
 
 type RefType = State['refs'][keyof State['refs']];
 
-const Ref: FunctionComponent<RefType & { storyId: string }> = ({ data, id, url, storyId }) => {
-  const isLoading = !useMemo<number>(() => Object.keys(data).length, [data]);
+const Ref: FunctionComponent<RefType & { storyId: string }> = ({ stories, id, storyId }) => {
+  const isLoading = !useMemo<number>(() => stories && Object.keys(stories).length, [stories]);
 
   return isLoading ? (
     <SidebarItem loading />
   ) : (
-    <Stories key={id} stories={data} storyId={storyId} loading={isLoading} />
+    <Stories key={id} stories={stories} storyId={storyId} loading={isLoading} />
   );
 };
 

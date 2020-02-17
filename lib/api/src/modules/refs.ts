@@ -13,23 +13,23 @@ import {
 import { Module } from '../index';
 
 export interface SubState {
-  refs: Record<string, InceptionRef & { data: StoriesHash } & RefState>;
+  refs: Refs;
 }
 
 export interface SubAPI {
   setRef: (id: string, stories: StoriesRaw) => void;
-  getRefs: () => Record<RefId, RefUrl>;
+  getRefs: () => Refs;
 }
 
 export type Mapper = (ref: InceptionRef, story: StoryInput) => StoryInput;
 export interface InceptionRef {
   id: string;
   url: string;
-}
-export interface RefState {
-  startInjected: boolean;
+  startInjected?: boolean;
+  stories: StoriesHash;
 }
 
+export type Refs = Record<string, InceptionRef>;
 export type RefId = string;
 export type RefUrl = string;
 
@@ -103,8 +103,7 @@ const initRefsApi = ({ store, provider }: Module) => {
   };
 
   const setRef: SubAPI['setRef'] = (id, data) => {
-    const url = getRefs()[id];
-    const ref = { id, url };
+    const ref = getRefs()[id];
     const after = namespace(
       transformStoriesRawToStoriesHash(map(data, ref, { mapper: defaultMapper }), {}),
       ref
@@ -113,19 +112,17 @@ const initRefsApi = ({ store, provider }: Module) => {
     store.setState({
       refs: {
         ...(store.getState().refs || {}),
-        [id]: { id, url, data: after, startInjected: true },
+        [id]: { startInjected: true, ...ref, stories: after },
       },
     });
   };
 
   const initialState: SubState['refs'] = Object.entries(getRefs()).reduce(
-    (acc, [key, value]) => ({
+    (acc, [key, data]) => ({
       ...acc,
       [key]: {
-        id: key,
-        url: value,
-        data: {},
         startInjected: true,
+        ...data,
       },
     }),
     {} as SubState['refs']
