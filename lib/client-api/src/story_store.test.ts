@@ -4,7 +4,7 @@ import addons from '@storybook/addons';
 import Events from '@storybook/core-events';
 
 import StoryStore from './story_store';
-import { defaultDecorateStory } from './client_api';
+import { defaultDecorateStory } from './decorators';
 
 jest.mock('@storybook/node-logger', () => ({
   logger: {
@@ -28,7 +28,6 @@ const addStoryToStore = (store, kind, name, storyFn, parameters = {}) =>
     },
     {
       applyDecorators: defaultDecorateStory,
-      getDecorators: () => [],
     }
   );
 
@@ -36,7 +35,12 @@ describe('preview.story_store', () => {
   describe('extract', () => {
     it('produces stories objects with inherited metadata', () => {
       const store = new StoryStore({ channel });
-      addStoryToStore(store, 'a', '1', () => 0);
+
+      store.addGlobalMetadata({ parameters: { global: 'global' }, decorators: [] });
+
+      store.addKindMetadata('a', { parameters: { kind: 'kind' }, decorators: [] });
+
+      addStoryToStore(store, 'a', '1', () => 0, { story: 'story' });
       addStoryToStore(store, 'a', '2', () => 0);
       addStoryToStore(store, 'b', '1', () => 0);
 
@@ -50,8 +54,30 @@ describe('preview.story_store', () => {
         id: 'a--1',
         kind: 'a',
         name: '1',
-        parameters: expect.any(Object),
+        parameters: { global: 'global', kind: 'kind', story: 'story' },
       });
+    });
+  });
+
+  describe('getRawStory', () => {
+    it('produces a story with inherited decorators applied', () => {
+      const store = new StoryStore({ channel });
+
+      const globalDecorator = jest.fn().mockImplementation(s => s());
+      store.addGlobalMetadata({ parameters: {}, decorators: [globalDecorator] });
+
+      const kindDecorator = jest.fn().mockImplementation(s => s());
+      store.addKindMetadata('a', { parameters: {}, decorators: [kindDecorator] });
+
+      const story = jest.fn();
+      addStoryToStore(store, 'a', '1', story);
+
+      const { getDecorated } = store.getRawStory('a', '1');
+      getDecorated()();
+
+      expect(globalDecorator).toHaveBeenCalled();
+      expect(kindDecorator).toHaveBeenCalled();
+      expect(story).toHaveBeenCalled();
     });
   });
 

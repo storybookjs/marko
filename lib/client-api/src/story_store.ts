@@ -108,7 +108,7 @@ export default class StoryStore extends EventEmitter {
     this._globalMetadata.decorators = [];
   }
 
-  addKindMetadata(kind: string, { parameters, decorators }: StoryMetadata) {
+  ensureKind(kind: string) {
     if (!this._kinds[kind]) {
       this._kinds[kind] = {
         order: Object.keys(this._kinds).length,
@@ -116,7 +116,10 @@ export default class StoryStore extends EventEmitter {
         decorators: [],
       };
     }
+  }
 
+  addKindMetadata(kind: string, { parameters, decorators }: StoryMetadata) {
+    this.ensureKind(kind);
     // NOTE: currently we do not merge *any* keys for kinds.. no idea why
     this._kinds[kind].parameters = combineParameters(
       [this._kinds[kind].parameters, parameters],
@@ -155,11 +158,8 @@ export default class StoryStore extends EventEmitter {
     // immutable original storyFn
     const getOriginal = () => original;
 
-    const kindMetadata: KindMetadata = this._kinds[kind] || {
-      order: 0,
-      decorators: [],
-      parameters: {},
-    };
+    this.ensureKind(kind);
+    const kindMetadata: KindMetadata = this._kinds[kind];
     const allDecorators = [
       ...this._globalMetadata.decorators,
       ...kindMetadata.decorators,
@@ -210,8 +210,11 @@ export default class StoryStore extends EventEmitter {
   };
 
   removeStoryKind(kind: string) {
+    if (!this._kinds[kind]) return;
+
     this._kinds[kind].parameters = {};
     this._kinds[kind].decorators = [];
+
     this.cleanHooksForKind(kind);
     this._stories = Object.entries(this._stories).reduce((acc: StoreData, [id, story]) => {
       if (story.kind !== kind) acc[id] = story;
