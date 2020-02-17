@@ -161,9 +161,9 @@ export default class StoryStore extends EventEmitter {
     this.ensureKind(kind);
     const kindMetadata: KindMetadata = this._kinds[kind];
     const allDecorators = [
-      ...this._globalMetadata.decorators,
-      ...kindMetadata.decorators,
       ...decorators,
+      ...kindMetadata.decorators,
+      ...this._globalMetadata.decorators,
     ];
     const allParameters = combineParameters([
       this._globalMetadata.parameters,

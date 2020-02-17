@@ -26,11 +26,6 @@ jest.mock('@storybook/client-logger', () => ({
 }));
 
 describe('preview.client_api', () => {
-  afterEach(() => {
-    const { clientApi } = getContext(undefined);
-    clientApi.clearDecorators();
-    clientApi.clearParameters();
-  });
   describe('setAddon', () => {
     it('should register addons', () => {
       const { clientApi } = getContext(undefined);
@@ -569,8 +564,6 @@ describe('preview.client_api', () => {
         b: 'kind',
         c: 'story',
         fileName: expect.any(String),
-        options: expect.any(Object),
-        docs: expect.any(Object),
       });
     });
 
@@ -587,8 +580,6 @@ describe('preview.client_api', () => {
           global: true,
           sub: { global: true },
         },
-        options: expect.any(Object),
-        docs: expect.any(Object),
       });
 
       storiesOf('kind', module)
@@ -625,8 +616,6 @@ describe('preview.client_api', () => {
           },
         },
         fileName: expect.any(String),
-        options: expect.any(Object),
-        docs: expect.any(Object),
       });
     });
   });
