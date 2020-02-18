@@ -8,16 +8,16 @@ import stable from 'stable';
 import { Channel } from '@storybook/channels';
 import Events from '@storybook/core-events';
 import { logger } from '@storybook/client-logger';
-import { Comparator, Parameters, StoryFn, StoryContext } from '@storybook/addons';
+import { Comparator, Parameters, Args, StoryFn, StoryContext } from '@storybook/addons';
 import {
   DecoratorFunction,
   StoryMetadata,
   StoreData,
   AddStoryArgs,
   StoreItem,
-  StoryArgs,
   ErrorLike,
   GetStorybookKind,
+  ParameterEnhancer,
 } from './types';
 import { HooksContext } from './hooks';
 import storySort from './storySort';
@@ -33,8 +33,6 @@ interface StoryOptions {
 }
 
 type KindMetadata = StoryMetadata & { order: number };
-
-type ParameterEnhancer = (context: StoryContext) => Parameters;
 
 const isStoryDocsOnly = (parameters?: Parameters) => {
   return parameters && parameters.docsOnly;

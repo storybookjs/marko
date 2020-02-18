@@ -21,6 +21,8 @@ export interface StoryMetadata {
   decorators: DecoratorFunction[];
 }
 
+export type ParameterEnhancer = (context: StoryContext) => Parameters;
+
 export interface StoreItem extends StoryContext {
   id: string;
   kind: string;
