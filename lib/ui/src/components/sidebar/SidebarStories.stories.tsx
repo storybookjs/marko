@@ -37,4 +37,8 @@ export const emptyData = {
 
 export const empty = () => <SidebarStories filter="" stories={{}} loading={false} />;
 
+export const filtered = () => (
+  <SidebarStories filter="A1" stories={mockDataset.withRoot} loading={false} />
+);
+
 export const loading = () => <SidebarStories filter="" loading stories={{}} />;
