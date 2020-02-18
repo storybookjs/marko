@@ -19,26 +19,10 @@ describe('client-api.parameters', () => {
     });
   });
 
-  // XXX: yes it does-- what should it do?
-  // it('does not merges sub-sub-keys', () => {
-  //   expect(
-  //     combineParameters({ ns: { nns: { a: 'b', c: 'd' } } }, { ns: { nns: { e: 'f', a: 'g' } } })
-  //   ).toEqual({
-  //     ns: {
-  //       nns: {
-  //         e: 'f',
-  //         a: 'g',
-  //       },
-  //     },
-  //   });
-  // });
-
-  it('combines array values inside sub-keys', () => {
-    expect(
-      combineParameters([{ ns: { array: [1, 2, 3] } }, { ns: { array: [3, 4, 5] } }], ['ns'])
-    ).toEqual({
+  it('treats array values as scalars', () => {
+    expect(combineParameters({ ns: { array: [1, 2, 3] } }, { ns: { array: [3, 4, 5] } })).toEqual({
       ns: {
-        array: [1, 2, 3, 4, 5],
+        array: [3, 4, 5],
       },
     });
   });
