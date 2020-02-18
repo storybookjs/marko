@@ -122,7 +122,8 @@ const initStoriesApi = ({
   };
 
   const jumpToStory = (direction: Direction) => {
-    const { storiesHash, viewMode, storyId } = store.getState();
+    const { storiesHash, viewMode, storyId, refs } = store.getState();
+    const story = getData(storyId);
 
     if (DOCS_MODE) {
       jumpToComponent(direction);
@@ -130,13 +131,13 @@ const initStoriesApi = ({
     }
 
     // cannot navigate when there's no current selection
-    if (!storyId || !storiesHash[storyId]) {
+    if (!story) {
       return;
     }
 
-    const lookupList = Object.keys(storiesHash).filter(
-      k => !(storiesHash[k].children || Array.isArray(storiesHash[k]))
-    );
+    const hash = story.refId ? refs[story.refId] : storiesHash;
+
+    const lookupList = Object.keys(hash).filter(k => !(hash[k].children || Array.isArray(hash[k])));
     const index = lookupList.indexOf(storyId);
 
     // cannot navigate beyond fist or last
@@ -172,7 +173,8 @@ const initStoriesApi = ({
       (store.getState().storiesHash || {}) as StoriesHash
     );
     const settingsPageList = ['about', 'shortcuts'];
-    const { storyId, viewMode } = store.getState();
+    const { storyId, viewMode, refs } = store.getState();
+    const story = getData(storyId);
 
     if (storyId && storyId.match(/--\*$/)) {
       const idStart = storyId.slice(0, -1); // drop the * at the end
@@ -183,7 +185,7 @@ const initStoriesApi = ({
       if (viewMode && firstKindLeaf) {
         navigate(`/${viewMode}/${firstKindLeaf.id}`);
       }
-    } else if (!storyId || storyId === '*' || !storiesHash[storyId]) {
+    } else if (!storyId || storyId === '*' || !story) {
       // when there's no storyId or the storyId item doesn't exist
       // we pick the first leaf and navigate
       const firstLeaf = Object.values(storiesHash).find((s: Story | Group) => !s.children);
@@ -195,10 +197,12 @@ const initStoriesApi = ({
       } else if (viewMode && firstLeaf) {
         navigate(`/${viewMode}/${firstLeaf.id}`);
       }
-    } else if (storiesHash[storyId] && !storiesHash[storyId].isLeaf) {
+    } else if (story && !story.isLeaf) {
       // When story exists but if it is not the leaf story, it finds the proper
       // leaf story from any depth.
-      const firstLeafStoryId = findLeafStoryId(storiesHash, storyId);
+      const hash = story.refId ? refs[story.refId].stories : storiesHash;
+
+      const firstLeafStoryId = findLeafStoryId(hash, storyId);
       navigate(`/${viewMode}/${firstLeafStoryId}`);
     }
 
