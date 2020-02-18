@@ -3,15 +3,19 @@ import { logger } from '@storybook/client-logger';
 import { StoryFn, Parameters } from '@storybook/addons';
 import { toId } from '@storybook/csf';
 
-import isEqual from 'lodash/isEqual';
 import { ClientApiParams, DecoratorFunction, ClientApiAddons, StoryApi } from './types';
 import { applyHooks } from './hooks';
 import StoryStore from './story_store';
 import { defaultDecorateStory } from './decorators';
 
-// TODO -- resolve these
-export const addDecorator = () => {};
-export const addParameters = () => {};
+export const addDecorator = () => {
+  throw new Error(`Global addDecorator is no longer exported by client-api. Please just export your decorators.
+Read more here: https://github.com/storybookjs/storybook/blob/master/MIGRATION.md#removed-addDecorator-and-addParameter-exports-from-client-api`);
+};
+export const addParameters = () => {
+  throw new Error(`Global addParameters is no longer exported by client-api. Please just export your decorators.
+Read more here: https://github.com/storybookjs/storybook/blob/master/MIGRATION.md#removed-addDecorator-and-addParameter-exports-from-client-api`);
+};
 
 export default class ClientApi {
   private _storyStore: StoryStore;
