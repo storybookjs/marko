@@ -251,24 +251,21 @@ const getFilteredDataset = memoize(
 );
 
 // Update the set of expansions we are currently working with
-const updateExpanded = (fn: (expandedset: ExpandedSet) => ExpandedSet) => ({
+const updateExpanded = (filtered: boolean, fn: (expandedset: ExpandedSet) => ExpandedSet) => ({
   unfilteredExpanded,
   filteredExpanded,
-  filter,
   ...rest
 }: TreeStateState): TreeStateState => {
-  if (filter) {
+  if (filtered) {
     return {
       ...rest,
       unfilteredExpanded,
-      filter,
       filteredExpanded: fn(filteredExpanded),
     };
   }
   return {
     ...rest,
     filteredExpanded,
-    filter,
     unfilteredExpanded: fn(unfilteredExpanded),
   };
 };
@@ -340,8 +337,10 @@ class TreeState extends PureComponent<TreeStateProps, TreeStateState> {
 
   events = {
     onClick: (e: SyntheticEvent, item: Item) => {
+      const { filter } = this.props;
+      const filtered = !!filter;
       this.setState(
-        updateExpanded(expanded => ({
+        updateExpanded(filtered, expanded => ({
           ...expanded,
           [item.id]: !expanded[item.id],
         }))
@@ -349,6 +348,7 @@ class TreeState extends PureComponent<TreeStateProps, TreeStateState> {
     },
     onKeyUp: (e: KeyboardEvent, item: Item) => {
       const { prefix, dataset, filter } = this.props;
+      const filtered = !!filter;
       const filteredDataset = getFilteredDataset({ dataset, filter });
       const expanded = getExpanded(this.state, filter);
 
@@ -369,7 +369,9 @@ class TreeState extends PureComponent<TreeStateProps, TreeStateState> {
           }
         }
 
-        this.setState(updateExpanded(currExpanded => ({ ...currExpanded, [item.id]: true })));
+        this.setState(
+          updateExpanded(filtered, currExpanded => ({ ...currExpanded, [item.id]: true }))
+        );
       }
       if (action === 'LEFT') {
         const prev = getPrevious({ id: item.id, dataset: filteredDataset, expanded });
@@ -393,7 +395,9 @@ class TreeState extends PureComponent<TreeStateProps, TreeStateState> {
           }
         }
 
-        this.setState(updateExpanded(currExpanded => ({ ...currExpanded, [item.id]: false })));
+        this.setState(
+          updateExpanded(filtered, currExpanded => ({ ...currExpanded, [item.id]: false }))
+        );
       }
       if (action === 'DOWN') {
         const next = getNext({ id: item.id, dataset: filteredDataset, expanded });
@@ -431,6 +435,7 @@ class TreeState extends PureComponent<TreeStateProps, TreeStateState> {
 
   updateExpanded = (expanded: string | boolean) => {
     const { dataset, selectedId } = this.props;
+
     this.setState(({ unfilteredExpanded }) => {
       const selectedAncestorIds = selectedId ? getParents(selectedId, dataset).map(i => i.id) : [];
       return {
