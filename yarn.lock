@@ -11073,6 +11073,14 @@ dotenv@^5.0.0:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-5.0.1.tgz#a5317459bd3d79ab88cff6e44057a6a3fbb1fcef"
   integrity sha512-4As8uPrjfwb7VXC+WnLCbXK7y+Ueb2B3zgNCePYfhxS1PYeaO1YTeplffTEcbfLhvFNGLAz90VvJs9yomG7bow==
 
+downlevel-dts@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/downlevel-dts/-/downlevel-dts-0.4.0.tgz#43f9f649c8b137373d76b4ee396d5a0227c10ddb"
+  integrity sha512-nh5vM3n2pRhPwZqh0iWo5gpItPAYEGEWw9yd0YpI+lO60B7A3A6iJlxDbt7kKVNbqBXKsptL+jwE/Yg5Go66WQ==
+  dependencies:
+    shelljs "^0.8.3"
+    typescript "^3.8.0-dev.20200111"
+
 driver-dom@^2.0.0, driver-dom@^2.0.5, driver-dom@^2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/driver-dom/-/driver-dom-2.0.6.tgz#7485b51842acb18fbf10bb9c7a9d756e36375472"
@@ -29436,6 +29444,11 @@ typescript@^2.4.2:
   version "2.9.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
   integrity sha512-Gr4p6nFNaoufRIY4NMdpQRNmgxVIGMs4Fcu/ujdYk3nAZqk7supzBE9idmvfZIlH/Cuj//dvi+019qEue9lV0w==
+
+typescript@^3.8.0-dev.20200111:
+  version "3.8.0-dev.20200211"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.8.0-dev.20200211.tgz#8723bc40da40e737b01977ba543af69d7a545d94"
+  integrity sha512-1LnADJbATvC2XSPcn7NwrhidLA03jXUx1x1ZfPNaceC8SCe5KtZwihzMe7PPmP5Sy2JiXD0pYp/X4MVogV57qQ==
 
 ua-parser-js@^0.7.18:
   version "0.7.21"
