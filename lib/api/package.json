@@ -20,7 +20,8 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts"
+    "*.d.ts",
+    "ts3.5/**/*"
   ],
   "scripts": {
     "prepare": "node ./scripts/generateVersion.js && node ../../scripts/prepare.js"
