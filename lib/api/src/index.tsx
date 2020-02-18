@@ -134,12 +134,9 @@ type StatePartial = Partial<State>;
 export type ManagerProviderProps = Children & RouterData & ProviderData & DocsModeData;
 
 class ManagerProvider extends Component<ManagerProviderProps, State> {
-  api: API;
+  api: API = {} as API;
 
   modules: any[];
-
-  // @ts-ignore
-  api = {};
 
   static displayName = 'Manager';
 
