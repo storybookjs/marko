@@ -11,6 +11,7 @@ export interface Root {
   knownAs?: StoryId;
   depth: 0;
   name: string;
+  refId?: InceptionRef['id'];
   children: StoryId[];
   isComponent: false;
   isRoot: true;
