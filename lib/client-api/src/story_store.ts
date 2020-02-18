@@ -8,7 +8,15 @@ import stable from 'stable';
 import { Channel } from '@storybook/channels';
 import Events from '@storybook/core-events';
 import { logger } from '@storybook/client-logger';
-import { Comparator, Parameters, Args, StoryFn, StoryContext } from '@storybook/addons';
+import {
+  Comparator,
+  Parameters,
+  Args,
+  LegacyStoryFn,
+  ArgsStoryFn,
+  StoryFn,
+  StoryContext,
+} from '@storybook/addons';
 import {
   DecoratorFunction,
   StoryMetadata,
@@ -94,7 +102,7 @@ export default class StoryStore extends EventEmitter {
 
   setChannel = (channel: Channel) => {
     this._channel = channel;
-    channel.on(Events.CHANGE_STORY_ARGS, (id: string, newArgs: StoryArgs) =>
+    channel.on(Events.CHANGE_STORY_ARGS, (id: string, newArgs: Args) =>
       this.setStoryArgs(id, newArgs)
     );
   };
@@ -188,13 +196,17 @@ export default class StoryStore extends EventEmitter {
       (accumlatedParameters, enhancer) =>
         combineParameters(
           accumlatedParameters,
-          enhancer({ ...identification, parameters: accumlatedParameters })
+          enhancer({ ...identification, parameters: accumlatedParameters, args: {} })
         ),
       parametersBeforeEnhancement
     );
 
-    let finalStoryFn = original;
-    if (parameters.passArgsFirst) finalStoryFn = context => original(context.args, context);
+    let finalStoryFn: LegacyStoryFn;
+    if (parameters.passArgsFirst) {
+      finalStoryFn = (context: StoryContext) => (original as ArgsStoryFn)(context.args, context);
+    } else {
+      finalStoryFn = original as LegacyStoryFn;
+    }
 
     // lazily decorate the story when it's loaded
     const getDecorated: () => StoryFn = memoize(1)(() => applyDecorators(finalStoryFn, decorators));
@@ -390,7 +402,7 @@ export default class StoryStore extends EventEmitter {
     this.getStoriesForKind(kind).map(story => this.cleanHooks(story.id));
   }
 
-  setStoryArgs(id: string, newArgs: StoryArgs) {
+  setStoryArgs(id: string, newArgs: Args) {
     if (!this._stories[id]) throw new Error(`No story for id ${id}`);
     const { args } = this._stories[id];
     this._stories[id].args = { ...args, ...newArgs };
