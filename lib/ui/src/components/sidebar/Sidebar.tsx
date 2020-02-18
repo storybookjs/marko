@@ -8,11 +8,7 @@ import SidebarHeading, { SidebarHeadingProps } from './SidebarHeading';
 import SidebarStories from './SidebarStories';
 import SidebarItem from './SidebarItem';
 
-import SidebarSearch from './SidebarSearch';
-
-const Search = styled(SidebarSearch)({
-  margin: '0 20px 1rem',
-});
+import Search from './SidebarSearch';
 
 const Heading = styled(SidebarHeading)<SidebarHeadingProps>({
   padding: '20px 20px 12px',

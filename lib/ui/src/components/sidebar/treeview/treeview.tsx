@@ -32,8 +32,6 @@ import {
   DefaultLeaf,
   DefaultHead,
   DefaultRootTitle,
-  DefaultFilter,
-  DefaultMessage,
 } from './components';
 
 const createHandler = memoize(10000)((item, cb) => (...args: any[]) => cb(...args, item));
@@ -98,7 +96,6 @@ const getLeaf = memoize(1)(
 const getTitle = memoize(1)((Title: ComponentType<any>) => Title || DefaultRootTitle);
 const getList = memoize(1)((Title: ComponentType<any>) => Title || DefaultList);
 const getContainer = memoize(1)((Section: ComponentType<any>) => Section || DefaultSection);
-const getMessage = memoize(1)((Message: ComponentType<any>) => Message || DefaultMessage);
 
 const branchOrLeaf = (
   {
@@ -121,6 +118,7 @@ const branchOrLeaf = (
   }: { root: string; dataset: Dataset; expanded: ExpandedSet; selected: SelectedSet; depth: number }
 ) => {
   const node = dataset[root];
+
   return node.children ? (
     <Branch
       key={node.id}

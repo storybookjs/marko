@@ -19,7 +19,7 @@ export const withRootData = {
 };
 
 export const withRoot = () => (
-  <SidebarStories stories={mockDataset.withRoot} storyId="1-12-121" loading={false} />
+  <SidebarStories filter="" stories={mockDataset.withRoot} storyId="1-12-121" loading={false} />
 );
 
 export const noRootData = {
@@ -28,13 +28,13 @@ export const noRootData = {
 };
 
 export const noRoot = () => (
-  <SidebarStories stories={mockDataset.noRoot} storyId="1-12-121" loading={false} />
+  <SidebarStories filter="" stories={mockDataset.noRoot} storyId="1-12-121" loading={false} />
 );
 
 export const emptyData = {
   stories: {},
 };
 
-export const empty = () => <SidebarStories stories={{}} loading={false} />;
+export const empty = () => <SidebarStories filter="" stories={{}} loading={false} />;
 
-export const loading = () => <SidebarStories loading stories={{}} />;
+export const loading = () => <SidebarStories filter="" loading stories={{}} />;

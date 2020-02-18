@@ -103,7 +103,7 @@ const FilterForm = styled.form<FilterFormProps>(({ theme, focussed }) => ({
   },
 }));
 
-export type PureSidebarSearchProps = FilterFieldProps & {
+export type PureSidebarSearchProps = Omit<FilterFieldProps, 'onChange'> & {
   onChange: (arg: string) => void;
 };
 
@@ -122,7 +122,9 @@ export const PureSidebarSearch = ({ className, onChange, ...props }: PureSidebar
         id="storybook-explorer-searchfield"
         onFocus={() => onSetFocussed(true)}
         onBlur={() => onSetFocussed(false)}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+          onChange(e.target.value);
+        }}
         {...props}
         placeholder={focussed ? 'Type to search...' : 'Press "/" to search...'}
         aria-label="Search stories"
@@ -135,4 +137,8 @@ export const PureSidebarSearch = ({ className, onChange, ...props }: PureSidebar
   );
 };
 
-export default PureSidebarSearch;
+const Search = styled(PureSidebarSearch)<PureSidebarSearchProps>({
+  margin: '0 20px 1rem',
+});
+
+export default Search;
