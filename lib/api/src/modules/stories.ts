@@ -12,6 +12,7 @@ import {
 } from '../lib/stories';
 
 import { Module } from '../index';
+import { InceptionRef } from './refs';
 
 type Direction = -1 | 1;
 type ParameterName = string;
@@ -212,10 +213,15 @@ const initStoriesApi = ({
     });
   };
 
-  const selectStory = (kindOrId: string, story: string = undefined) => {
-    const { viewMode = 'story', storyId, storiesHash } = store.getState();
+  const selectStory = (
+    kindOrId: string,
+    story: string = undefined,
+    options: { ref: InceptionRef['id'] }
+  ) => {
+    const { ref } = options;
+    const { viewMode = 'story', storyId, storiesHash, refs } = store.getState();
 
-    const hash = storiesHash;
+    const hash = ref ? refs[ref].stories : storiesHash;
 
     if (!story) {
       const real = sanitize(kindOrId);
@@ -228,18 +234,18 @@ const initStoriesApi = ({
       const kind = storyId.split('--', 2)[0];
       const id = toId(kind, story);
 
-      selectStory(id);
+      selectStory(id, undefined, options);
     } else {
-      const id = toId(kindOrId, story);
+      const id = ref ? `${ref}_${toId(kindOrId, story)}` : toId(kindOrId, story);
       if (hash[id]) {
-        selectStory(id);
+        selectStory(id, undefined, options);
       } else {
         // Support legacy API with component permalinks, where kind is `x/y` but permalink is 'z'
         const k = hash[sanitize(kindOrId)];
         if (k && k.children) {
           const foundId = k.children.find(childId => hash[childId].name === story);
           if (foundId) {
-            selectStory(foundId);
+            selectStory(foundId, undefined, options);
           }
         }
       }

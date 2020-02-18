@@ -268,8 +268,11 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
 
         case 'external': {
           const refs = api.getRefs();
-          const [refId] = Object.entries(refs).find(([, { url }]) => url.match(source));
+          const [refId] = Object.entries(refs).find(([, { url }]) =>
+            `${url}/iframe.html`.match(source)
+          );
 
+          debugger;
           api.selectStory(kind, story, { ...rest, ref: refId });
           break;
         }
