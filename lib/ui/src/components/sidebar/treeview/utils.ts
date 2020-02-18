@@ -4,7 +4,7 @@ import { DOCS_MODE } from 'global';
 import { SyntheticEvent } from 'react';
 import { StoriesHash, isRoot, isStory } from '@storybook/api';
 
-const FUZZY_SEARCH_THRESHOLD = 0.4;
+const FUZZY_SEARCH_THRESHOLD = 0.35;
 
 export const prevent = (e: SyntheticEvent) => {
   e.preventDefault();
