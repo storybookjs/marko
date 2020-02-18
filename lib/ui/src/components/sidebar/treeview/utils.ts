@@ -192,14 +192,19 @@ const fuse = memoize(5)(
     })
 );
 
-const exactMatch = memoize(1)(filter => (i: Item) =>
-  (isStory(i) && i.kind.includes(filter)) ||
-  (i.name && i.name.includes(filter)) ||
-  (i.parameters &&
-    typeof i.parameters.fileName === 'string' &&
-    i.parameters.fileName.includes(filter)) ||
-  (i.parameters && typeof i.parameters.notes === 'string' && i.parameters.notes.includes(filter))
-);
+const exactMatch = memoize(1)((filter: string) => (i: Item) => {
+  const reg = new RegExp(filter, 'i');
+  return (
+    (isStory(i) && reg.test(i.kind)) ||
+    (i.name && reg.test(i.name)) ||
+    (i.parameters &&
+      typeof i.parameters.fileName === 'string' &&
+      reg.test(i.parameters.fileName.toString())) ||
+    (i.parameters &&
+      typeof i.parameters.notes === 'string' &&
+      reg.test(i.parameters.notes.toString()))
+  );
+});
 
 export const toId = (base: string, addition: string) =>
   base === '' ? `${addition}` : `${base}-${addition}`;
