@@ -34,6 +34,8 @@ interface StoryOptions {
 
 type KindMetadata = StoryMetadata & { order: number };
 
+type ParameterEnhancer = (context: StoryContext) => Parameters;
+
 const isStoryDocsOnly = (parameters?: Parameters) => {
   return parameters && parameters.docsOnly;
 };
@@ -72,6 +74,8 @@ export default class StoryStore extends EventEmitter {
   // Keyed on storyId
   _stories: StoreData;
 
+  _parameterEnhancers: ParameterEnhancer[];
+
   _revision: number;
 
   _selection: Selection;
@@ -82,6 +86,7 @@ export default class StoryStore extends EventEmitter {
     this._globalMetadata = { parameters: {}, decorators: [] };
     this._kinds = {};
     this._stories = {};
+    this._parameterEnhancers = [];
     this._revision = 0;
     this._selection = {} as any;
     this._error = undefined;
@@ -123,6 +128,13 @@ export default class StoryStore extends EventEmitter {
     this._kinds[kind].parameters = combineParameters(this._kinds[kind].parameters, parameters);
 
     this._kinds[kind].decorators.push(...decorators);
+  }
+
+  addParameterEnhancer(parameterEnhancer: ParameterEnhancer) {
+    if (Object.keys(this._stories).length > 0)
+      throw new Error('Cannot add a parameter enhancer to the store after a story has been added.');
+
+    this._parameterEnhancers.push(parameterEnhancer);
   }
 
   addStory(
@@ -168,10 +180,19 @@ export default class StoryStore extends EventEmitter {
       ...kindMetadata.decorators,
       ...this._globalMetadata.decorators,
     ];
-    const parameters = combineParameters(
+    const parametersBeforeEnhancement = combineParameters(
       this._globalMetadata.parameters,
       kindMetadata.parameters,
       storyParameters
+    );
+
+    const parameters = this._parameterEnhancers.reduce(
+      (accumlatedParameters, enhancer) =>
+        combineParameters(
+          accumlatedParameters,
+          enhancer({ ...identification, parameters: accumlatedParameters })
+        ),
+      parametersBeforeEnhancement
     );
 
     // lazily decorate the story when it's loaded
@@ -181,13 +202,12 @@ export default class StoryStore extends EventEmitter {
 
     const hooks = new HooksContext();
 
-    const storyFn: StoryFn = (context: StoryContext) =>
+    const storyFn: StoryFn = (runtimeContext: StoryContext) =>
       getDecorated()({
         ...identification,
-        ...context,
-        hooks,
-        // NOTE: we do not allow the passed in context to override parameters
+        ...runtimeContext,
         parameters,
+        hooks,
         args: _stories[id].args,
       });
 

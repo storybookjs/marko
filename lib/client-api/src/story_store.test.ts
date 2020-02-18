@@ -154,6 +154,56 @@ describe('preview.story_store', () => {
     });
   });
 
+  describe('parameterEnhancer', () => {
+    it('allows you to alter parameters when stories are added', () => {
+      const store = new StoryStore({ channel });
+
+      const enhancer = jest.fn().mockReturnValue({ c: 'd' });
+      store.addParameterEnhancer(enhancer);
+
+      addStoryToStore(store, 'a', '1', () => 0, { a: 'b' });
+
+      expect(enhancer).toHaveBeenCalledWith(expect.objectContaining({ parameters: { a: 'b' } }));
+      expect(store.getRawStory('a', '1').parameters).toEqual({ a: 'b', c: 'd' });
+    });
+
+    it('recursively passes parameters to successive enhancers', () => {
+      const store = new StoryStore({ channel });
+
+      const firstEnhancer = jest.fn().mockReturnValue({ c: 'd' });
+      store.addParameterEnhancer(firstEnhancer);
+      const secondEnhancer = jest.fn().mockReturnValue({ e: 'f' });
+      store.addParameterEnhancer(secondEnhancer);
+
+      addStoryToStore(store, 'a', '1', () => 0, { a: 'b' });
+
+      expect(firstEnhancer).toHaveBeenCalledWith(
+        expect.objectContaining({ parameters: { a: 'b' } })
+      );
+      expect(secondEnhancer).toHaveBeenCalledWith(
+        expect.objectContaining({ parameters: { a: 'b', c: 'd' } })
+      );
+      expect(store.getRawStory('a', '1').parameters).toEqual({ a: 'b', c: 'd', e: 'f' });
+    });
+
+    it('allows you to alter parameters when stories are re-added', () => {
+      const store = new StoryStore({ channel });
+      addons.setChannel(channel);
+
+      const enhancer = jest.fn().mockReturnValue({ c: 'd' });
+      store.addParameterEnhancer(enhancer);
+
+      addStoryToStore(store, 'a', '1', () => 0, { a: 'b' });
+
+      enhancer.mockClear();
+      store.removeStoryKind('a');
+
+      addStoryToStore(store, 'a', '1', () => 0, { e: 'f' });
+      expect(enhancer).toHaveBeenCalledWith(expect.objectContaining({ parameters: { e: 'f' } }));
+      expect(store.getRawStory('a', '1').parameters).toEqual({ e: 'f', c: 'd' });
+    });
+  });
+
   describe('storySort', () => {
     it('sorts stories using given function', () => {
       const parameters = {
