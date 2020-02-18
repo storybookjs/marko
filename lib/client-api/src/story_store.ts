@@ -195,10 +195,11 @@ export default class StoryStore extends EventEmitter {
       parametersBeforeEnhancement
     );
 
+    let finalStoryFn = original;
+    if (parameters.passArgsFirst) finalStoryFn = context => original(context.args, context);
+
     // lazily decorate the story when it's loaded
-    const getDecorated: () => StoryFn = memoize(1)(() =>
-      applyDecorators(getOriginal(), decorators)
-    );
+    const getDecorated: () => StoryFn = memoize(1)(() => applyDecorators(finalStoryFn, decorators));
 
     const hooks = new HooksContext();
 

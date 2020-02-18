@@ -22,12 +22,16 @@ export interface Parameters {
   [key: string]: any;
 }
 
+export interface Args {
+  [key: string]: any;
+}
 export interface StoryContext {
   id: string;
   name: string;
   kind: string;
   [key: string]: any;
   parameters: Parameters;
+  args: Args;
   hooks?: HooksContext;
 }
 
@@ -60,7 +64,9 @@ export interface OptionsParameter extends Object {
 }
 
 export type StoryGetter = (context: StoryContext) => any;
-export type StoryFn<ReturnType = unknown> = (p?: StoryContext) => ReturnType;
+export type StoryFn<ReturnType = unknown> =
+  | ((p?: StoryContext) => ReturnType)
+  | ((a: Args, p?: StoryContext) => ReturnType);
 
 export type StoryWrapper = (
   getStory: StoryGetter,

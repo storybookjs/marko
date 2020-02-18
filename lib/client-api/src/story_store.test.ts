@@ -152,6 +152,41 @@ describe('preview.story_store', () => {
 
       expect(store.getRawStory('a', '1').args).toEqual({ foo: 'bar' });
     });
+
+    it('passes args as the first argument to the story if `parameters.passArgsFirst` is true', () => {
+      const store = new StoryStore({ channel });
+
+      store.addKindMetadata('a', {
+        parameters: {
+          argTypes: {
+            a: { defaultValue: 1 },
+          },
+        },
+        decorators: [],
+      });
+
+      const storyOne = jest.fn();
+      addStoryToStore(store, 'a', '1', storyOne);
+
+      store.getRawStory('a', '1').storyFn();
+      expect(storyOne).toHaveBeenCalledWith(
+        expect.objectContaining({
+          args: { a: 1 },
+          parameters: expect.objectContaining({}),
+        })
+      );
+
+      const storyTwo = jest.fn();
+      addStoryToStore(store, 'a', '2', storyTwo, { passArgsFirst: true });
+      store.getRawStory('a', '2').storyFn();
+      expect(storyTwo).toHaveBeenCalledWith(
+        { a: 1 },
+        expect.objectContaining({
+          args: { a: 1 },
+          parameters: expect.objectContaining({}),
+        })
+      );
+    });
   });
 
   describe('parameterEnhancer', () => {

@@ -3,6 +3,7 @@ import {
   StoryFn,
   StoryContext,
   Parameters,
+  Args,
   StoryApi,
   DecoratorFunction,
 } from '@storybook/addons';
@@ -20,10 +21,6 @@ export interface StoryMetadata {
   decorators: DecoratorFunction[];
 }
 
-export interface StoryArgs {
-  [key: string]: any;
-}
-
 export interface StoreItem extends StoryContext {
   id: string;
   kind: string;
@@ -34,7 +31,7 @@ export interface StoreItem extends StoryContext {
   storyFn: StoryFn;
   hooks: HooksContext;
   parameters: Parameters;
-  args: StoryArgs;
+  args: Args;
 }
 
 export interface StoreData {
