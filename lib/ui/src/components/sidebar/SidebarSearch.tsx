@@ -82,6 +82,7 @@ const FilterForm = styled.form<FilterFormProps>(({ theme, focussed }) => ({
     paddingTop: 2,
     paddingBottom: 2,
     paddingLeft: 20,
+    paddingRight: 20,
   },
 
   '> svg': {
