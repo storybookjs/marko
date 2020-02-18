@@ -66,7 +66,7 @@ export interface OptionsParameter extends Object {
 export type StoryGetter = (context: StoryContext) => any;
 
 export type LegacyStoryFn<ReturnType = unknown> = (p?: StoryContext) => ReturnType;
-export type ArgsStoryFn<ReturnType = unknown> = (a: Args, p?: StoryContext) => ReturnType;
+export type ArgsStoryFn<ReturnType = unknown> = (a?: Args, p?: StoryContext) => ReturnType;
 export type StoryFn<ReturnType = unknown> = LegacyStoryFn<ReturnType> | ArgsStoryFn<ReturnType>;
 
 export type StoryWrapper = (
