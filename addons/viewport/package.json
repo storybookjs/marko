@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-viewport",
-  "version": "6.0.0-alpha.13",
+  "version": "6.0.0-alpha.14",
   "description": "Storybook addon to change the viewport size to mobile",
   "keywords": [
     "addon",
@@ -22,18 +22,19 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts"
+    "*.d.ts",
+    "ts3.5/**/*"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-alpha.13",
-    "@storybook/api": "6.0.0-alpha.13",
-    "@storybook/client-logger": "6.0.0-alpha.13",
-    "@storybook/components": "6.0.0-alpha.13",
-    "@storybook/core-events": "6.0.0-alpha.13",
-    "@storybook/theming": "6.0.0-alpha.13",
+    "@storybook/addons": "6.0.0-alpha.14",
+    "@storybook/api": "6.0.0-alpha.14",
+    "@storybook/client-logger": "6.0.0-alpha.14",
+    "@storybook/components": "6.0.0-alpha.14",
+    "@storybook/core-events": "6.0.0-alpha.14",
+    "@storybook/theming": "6.0.0-alpha.14",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "memoizerific": "^1.11.3",
@@ -51,5 +52,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff"
+  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
+  "typesVersions": {
+    "<=3.5": {
+      "*": [
+        "ts3.5/*"
+      ]
+    }
+  }
 }
