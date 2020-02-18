@@ -1,4 +1,3 @@
-import { isNil } from 'lodash';
 import { PropDefaultValue } from '@storybook/components';
 import { FUNCTION_CAPTION, ELEMENT_CAPTION } from '../captions';
 import {
@@ -19,7 +18,7 @@ import { getPrettyIdentifier } from './prettyIdentifier';
 function generateFunc({ inferedType, ast }: InspectionResult): PropDefaultValue {
   const { identifier } = inferedType as InspectionFunction;
 
-  if (!isNil(identifier)) {
+  if (identifier != null) {
     return createSummaryValue(
       getPrettyIdentifier(inferedType as InspectionIdentifiableInferedType),
       generateCode(ast)
@@ -42,7 +41,7 @@ function generateElement(
   const { inferedType } = inspectionResult;
   const { identifier } = inferedType as InspectionElement;
 
-  if (!isNil(identifier)) {
+  if (identifier != null) {
     if (!isHtmlTag(identifier)) {
       const prettyIdentifier = getPrettyIdentifier(
         inferedType as InspectionIdentifiableInferedType

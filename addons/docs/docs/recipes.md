@@ -1,4 +1,4 @@
-# Storybook Docs Recipes
+<h1>Storybook Docs Recipes</h1>
 
 [Storybook Docs](../README.md) consists of two basic mechanisms, [DocsPage](docspage.md) and [MDX](mdx.md). But how should you use them in your project?
 
@@ -13,6 +13,7 @@
 - [Disabling docs stories](#disabling-docs-stories)
   - [DocsPage](#docspage)
   - [MDX Stories](#mdx-stories)
+- [Controlling a story's view mode](#controlling-a-storys-view-mode)
 - [More resources](#more-resources)
 
 ## Component Story Format (CSF) with DocsPage
@@ -57,7 +58,7 @@ basic.story = {
 
 ```md
 import { Meta, Story } from '@storybook/addon-docs/blocks';
-import * as stories from './Button.stories.js';
+import \* as stories from './Button.stories.js';
 import { SomeComponent } from 'path/to/SomeComponent';
 
 <Meta title="Demo/Button" component={Button} />
@@ -236,10 +237,7 @@ addParameters({
 
 ## More resources
 
-Want to learn more? Here are some more articles on Storybook Docs:
-
-- References: [README](../README.md) / [DocsPage](docspage.md) / [MDX](mdx.md) / [FAQ](faq.md) / [Theming](theming.md)
-- Vision: [Storybook Docs sneak peak](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a)
-- Announcement: [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf)
+- References: [README](../README.md) / [DocsPage](docspage.md) / [MDX](mdx.md) / [FAQ](faq.md) / [Recipes](recipes.md) / [Theming](theming.md)
+- Framework-specific docs: [React](../react/README.md) / [Vue](../vue/README.md) / [Angular](../angular/README.md) / [Web components](../web-components/README.md) / [Ember](../ember/README.md)
+- Announcements: [Vision](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a) / [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf) / [MDX](https://medium.com/storybookjs/rich-docs-with-storybook-mdx-61bc145ae7bc) / [Framework support](https://medium.com/storybookjs/storybook-docs-for-new-frameworks-b1f6090ee0ea)
 - Example: [Storybook Design System](https://github.com/storybookjs/design-system)
-- [Technical preview guide](https://docs.google.com/document/d/1un6YX7xDKEKl5-MVb-egnOYN8dynb5Hf7mq0hipk8JE/edit?usp=sharing)

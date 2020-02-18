@@ -1,9 +1,8 @@
 import React, { Fragment, FunctionComponent, memo } from 'react';
-import PropTypes from 'prop-types';
 
 import { styled } from '@storybook/theming';
 import { Placeholder, Link as StyledLink } from '@storybook/components';
-import { State } from '@storybook/api';
+import { StoriesHash } from '@storybook/api';
 import { Location, Link as RouterLink } from '@storybook/router';
 import { TreeState } from './treeview/treeview';
 
@@ -18,10 +17,6 @@ const Search = styled(SidebarSearch)({
 const Subheading = styled(SidebarSubheading)({
   margin: '0 20px',
 });
-
-Subheading.propTypes = {
-  className: PropTypes.string,
-};
 
 Subheading.defaultProps = {
   className: 'sidebar-subheading',
@@ -73,7 +68,18 @@ export const viewMode = (
 const targetId = (childIds?: string[]) =>
   childIds && childIds.find((childId: string) => /.*--.*/.exec(childId));
 
-export const Link = ({
+export const Link: FunctionComponent<{
+  id: string;
+  name: string;
+  isLeaf: boolean;
+  prefix: string;
+  onKeyUp: Function;
+  onClick: Function;
+  childIds: string[] | null;
+  isExpanded: boolean;
+  isComponent: boolean;
+  parameters: Record<string, any>;
+}> = ({
   id,
   prefix,
   name,
@@ -82,8 +88,8 @@ export const Link = ({
   isComponent,
   onClick,
   onKeyUp,
-  childIds,
-  isExpanded,
+  childIds = null,
+  isExpanded = false,
   parameters,
 }) => {
   return isLeaf || (isComponent && !isExpanded) ? (
@@ -109,25 +115,10 @@ export const Link = ({
   );
 };
 Link.displayName = 'Link';
-Link.propTypes = {
-  children: PropTypes.node.isRequired,
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  isLeaf: PropTypes.bool.isRequired,
-  prefix: PropTypes.string.isRequired,
-  onKeyUp: PropTypes.func.isRequired,
-  onClick: PropTypes.func.isRequired,
-  childIds: PropTypes.arrayOf(PropTypes.string),
-  isExpanded: PropTypes.bool,
-};
-Link.defaultProps = {
-  childIds: null,
-  isExpanded: false,
-};
 
 export interface StoriesProps {
   loading: boolean;
-  stories: State['StoriesHash'];
+  stories: StoriesHash;
   storyId?: undefined | string;
   className?: undefined | string;
 }

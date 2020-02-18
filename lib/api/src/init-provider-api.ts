@@ -1,13 +1,28 @@
-import { ReactElement } from 'react';
+import { ReactNode } from 'react';
 import { Channel } from '@storybook/channels';
+import { ThemeVars } from '@storybook/theming';
 
-import { API } from './index';
+import { API, State } from './index';
 import Store from './store';
+import { UIOptions } from './modules/layout';
+
+type IframeRenderer = (
+  storyId: string,
+  viewMode: State['viewMode'],
+  id: string,
+  baseUrl: string,
+  scale: number,
+  queryParams: Record<string, any>
+) => ReactNode;
 
 export interface Provider {
   channel?: Channel;
-  renderPreview?: () => ReactElement;
+  renderPreview?: IframeRenderer;
   handleAPI(api: API): void;
+  getConfig(): {
+    theme?: ThemeVars;
+    [k: string]: any;
+  } & Partial<UIOptions>;
   [key: string]: any;
 }
 

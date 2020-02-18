@@ -5,6 +5,7 @@ export enum types {
   TAB = 'tab',
   PANEL = 'panel',
   TOOL = 'tool',
+  TOOLEXTRA = 'toolextra',
   PREVIEW = 'preview',
   NOTES_ELEMENT = 'notes-element',
 }

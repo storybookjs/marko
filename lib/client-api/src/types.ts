@@ -35,15 +35,6 @@ export type ClientApiReturnFn<StoryFnReturnType> = (...args: any[]) => StoryApi<
 
 export { StoryApi, DecoratorFunction };
 
-export interface LegacyItem {
-  fileName: string;
-  index: number;
-  kind: string;
-  stories: { [key: string]: any };
-  revision?: number;
-  selection?: { storyId: string };
-}
-
 export interface AddStoryArgs {
   id: string;
   kind: string;
@@ -52,14 +43,21 @@ export interface AddStoryArgs {
   parameters: Parameters;
 }
 
-export interface LegacyData {
-  [K: string]: LegacyItem;
-}
-
 export interface ClientApiAddon<StoryFnReturnType = unknown> extends Addon {
   apply: (a: StoryApi<StoryFnReturnType>, b: any[]) => any;
 }
 
 export interface ClientApiAddons<StoryFnReturnType> {
   [key: string]: ClientApiAddon<StoryFnReturnType>;
+}
+
+export interface GetStorybookStory {
+  name: string;
+  render: StoryFn;
+}
+
+export interface GetStorybookKind {
+  kind: string;
+  fileName: string;
+  stories: GetStorybookStory[];
 }

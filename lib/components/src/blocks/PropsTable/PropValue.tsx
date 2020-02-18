@@ -1,5 +1,4 @@
 import React, { FC, useState } from 'react';
-import { isNil } from 'lodash';
 import { styled } from '@storybook/theming';
 import memoize from 'memoizerific';
 import { PropSummaryValue } from './PropDef';
@@ -81,7 +80,7 @@ const PropSummary: FC<PropSummaryProps> = ({ value }) => {
     summary !== undefined && summary !== null && typeof summary.toString === 'function'
       ? summary.toString()
       : summary;
-  if (isNil(detail)) {
+  if (detail == null) {
     return <PropText text={summaryAsString} />;
   }
 
@@ -111,5 +110,5 @@ const PropSummary: FC<PropSummaryProps> = ({ value }) => {
 };
 
 export const PropValue: FC<PropValueProps> = ({ value }) => {
-  return isNil(value) ? <EmptyProp /> : <PropSummary value={value} />;
+  return value == null ? <EmptyProp /> : <PropSummary value={value} />;
 };

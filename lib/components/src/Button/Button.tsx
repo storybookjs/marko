@@ -1,4 +1,4 @@
-import React, { FunctionComponent, forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import { styled } from '@storybook/theming';
 import { darken, lighten, rgba, transparentize } from 'polished';
 

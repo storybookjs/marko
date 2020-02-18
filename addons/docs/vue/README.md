@@ -32,11 +32,36 @@ module.exports = {
 };
 ```
 
+## Preset options
+
+The `addon-docs` preset for Vue has a configuration option that can be used to configure [`vue-docgen-api`](https://github.com/vue-styleguidist/vue-styleguidist/tree/dev/packages/vue-docgen-api), a tool which extracts information from Vue components. Here's an example of how to use the preset with options for Vue app:
+
+```js
+const path = require('path');
+
+module.exports = {
+  addons: [
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        vueDocgenOptions: {
+          alias: {
+            '@': path.resolve(__dirname, '../'),
+          },
+        },
+      },
+    },
+  ],
+};
+```
+
+The `vueDocgenOptions` is an object for configuring `vue-docgen-api`. See [`vue-docgen-api`'s docs](https://github.com/vue-styleguidist/vue-styleguidist/tree/dev/packages/vue-docgen-api#options-docgenoptions) for available configuration options.
+
 ## DocsPage
 
 When you [install docs](#installation) you should get basic [DocsPage](../docs/docspage.md) documentation automagically for all your stories, available in the `Docs` tab of the Storybook UI.
 
-Props tables for your components requires a few more steps. Docs for Vue relies on [Addon-vue-info](https://github.com/pocka/storybook-addon-vue-info)'s loader. It supports `props`, `events`, and `slots` as first class prop types.
+Props tables for your components requires a few more steps. Docs for Vue relies on [`vue-docgen-loader`](https://github.com/pocka/vue-docgen-loader). It supports `props`, `events`, and `slots` as first class prop types.
 
 Finally, be sure to fill in the `component` field in your story metadata:
 

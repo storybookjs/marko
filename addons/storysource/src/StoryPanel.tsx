@@ -10,6 +10,7 @@ import {
 } from '@storybook/components';
 
 import { SourceBlock, LocationsMap } from '@storybook/source-loader';
+import { Story } from '@storybook/api/dist/lib/stories';
 
 const StyledStoryLink = styled(Link)<{ to: string; key: string }>(({ theme }) => ({
   display: 'block',
@@ -45,21 +46,13 @@ interface SourceParams {
   source: string;
   locationsMap: LocationsMap;
 }
-export interface StoryData {
-  id: string;
-  kind?: string;
-  parameters?: {
-    storySource?: SourceParams;
-    mdxSource?: string;
-  };
-}
 export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
   const [state, setState] = React.useState<SourceParams & { currentLocation?: SourceBlock }>({
     source: 'loading source...',
     locationsMap: {},
   });
 
-  const story: StoryData | undefined = api.getCurrentStoryData();
+  const story: Story | undefined = api.getCurrentStoryData() as Story;
   const selectedStoryRef = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     if (story) {
@@ -112,7 +105,7 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
     const storySource = createPart({ rows: storyRows, stylesheet, useInlineStyles });
     const storyKey = `${first}-${last}`;
 
-    if (location && currentLocation && areLocationsEqual(location, currentLocation)) {
+    if (currentLocation && areLocationsEqual(location, currentLocation)) {
       return (
         <SelectedStoryHighlight key={storyKey} ref={selectedStoryRef}>
           {storySource}
@@ -135,7 +128,7 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
       const first = location.startLoc.line - 1;
       const last = location.endLoc.line;
       const { kind } = story;
-      // source loader ids are differnet from story id
+      // source loader ids are different from story id
       const sourceIdParts = key.split('--');
       const id = api.storyId(kind, sourceIdParts[sourceIdParts.length - 1]);
       const start = createPart({ rows: rows.slice(lastRow, first), stylesheet, useInlineStyles });

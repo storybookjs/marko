@@ -1,6 +1,5 @@
 /* eslint-disable no-underscore-dangle */
 
-import { isNil } from 'lodash';
 import { Component } from '../../../blocks/shared';
 import { str } from './string';
 
@@ -9,7 +8,7 @@ export function hasDocgen(component: Component): boolean {
 }
 
 export function isValidDocgenSection(docgenSection: any) {
-  return !isNil(docgenSection) && Object.keys(docgenSection).length > 0;
+  return docgenSection != null && Object.keys(docgenSection).length > 0;
 }
 
 export function getDocgenSection(component: Component, section: string): any {
