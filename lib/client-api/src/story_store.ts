@@ -126,7 +126,14 @@ export default class StoryStore extends EventEmitter {
   }
 
   addStory(
-    { id, kind, name, storyFn: original, parameters = {}, decorators = [] }: AddStoryArgs,
+    {
+      id,
+      kind,
+      name,
+      storyFn: original,
+      parameters: storyParameters = {},
+      decorators: storyDecorators = [],
+    }: AddStoryArgs,
     {
       applyDecorators,
     }: {
@@ -156,20 +163,20 @@ export default class StoryStore extends EventEmitter {
 
     this.ensureKind(kind);
     const kindMetadata: KindMetadata = this._kinds[kind];
-    const allDecorators = [
-      ...decorators,
+    const decorators = [
+      ...storyDecorators,
       ...kindMetadata.decorators,
       ...this._globalMetadata.decorators,
     ];
-    const allParameters = combineParameters(
+    const parameters = combineParameters(
       this._globalMetadata.parameters,
       kindMetadata.parameters,
-      parameters
+      storyParameters
     );
 
     // lazily decorate the story when it's loaded
     const getDecorated: () => StoryFn = memoize(1)(() =>
-      applyDecorators(getOriginal(), allDecorators)
+      applyDecorators(getOriginal(), decorators)
     );
 
     const hooks = new HooksContext();
@@ -180,9 +187,20 @@ export default class StoryStore extends EventEmitter {
         ...context,
         hooks,
         // NOTE: we do not allow the passed in context to override parameters
-        parameters: allParameters,
+        parameters,
         args: _stories[id].args,
       });
+
+    // Pull out parameters.argTypes.$.defaultValue into initialArgs
+    const initialArgs: Record<string, any> = parameters.argTypes
+      ? Object.entries(parameters.argTypes as Record<string, { defaultValue: any }>).reduce(
+          (acc, [arg, { defaultValue }]) => {
+            if (defaultValue) acc[arg] = defaultValue;
+            return acc;
+          },
+          {} as Record<string, any>
+        )
+      : {};
 
     _stories[id] = {
       ...identification,
@@ -192,8 +210,8 @@ export default class StoryStore extends EventEmitter {
       getOriginal,
       storyFn,
 
-      parameters: allParameters,
-      args: {},
+      parameters,
+      args: initialArgs,
     };
 
     // LET'S SEND IT TO THE MANAGER
