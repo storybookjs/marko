@@ -1,4 +1,4 @@
-import React, { Fragment, FunctionComponent, useMemo, useEffect, useRef } from 'react';
+import React, { Fragment, FunctionComponent, useMemo, useEffect, useState } from 'react';
 import { Global, CSSObject } from '@storybook/theming';
 import { IFrame } from './iframe';
 import { FramesRendererProps } from './utils/types';
@@ -32,25 +32,36 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
     };
   }, [storyId, story, refs]);
 
-  const frames = useRef<Record<string, string>>({
+  const [frames, setFrames] = useState<Record<string, string>>({
     'storybook-preview-iframe': `iframe.html?id=${storyId}&viewMode=${viewMode}${stringifiedQueryParams}`,
   });
 
   useEffect(() => {
-    Object.values(refs)
-      .filter(r => r.startInjected || (story && r.id === story.refId))
-      .forEach(r => {
-        frames.current = {
-          ...frames.current,
+    const newFrames = Object.values(refs)
+      .filter(r => {
+        if (r.startInjected) {
+          return true;
+        }
+        if (story && r.id === story.refId) {
+          return true;
+        }
+
+        return false;
+      })
+      .reduce((acc, r) => {
+        return {
+          ...acc,
           [`storybook-ref-${r.id}`]: `${r.url}/iframe.html?id=${storyId}&viewMode=${viewMode}${stringifiedQueryParams}`,
         };
-      });
+      }, frames);
+
+    setFrames(newFrames);
   }, [storyId, story, refs]);
 
   return (
     <Fragment>
       <Global styles={styles} />
-      {Object.entries(frames.current).map(([id, src]) => (
+      {Object.entries(frames).map(([id, src]) => (
         <IFrame key={id} id={id} title={id} src={src} allowFullScreen scale={scale} />
       ))}
     </Fragment>

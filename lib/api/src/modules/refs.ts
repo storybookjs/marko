@@ -27,6 +27,7 @@ export interface InceptionRef {
   url: string;
   startInjected?: boolean;
   stories: StoriesHash;
+  ready?: boolean;
 }
 
 export type Refs = Record<string, InceptionRef>;
@@ -43,7 +44,7 @@ export const getSourceType = (source: string) => {
 };
 
 export const defaultMapper: Mapper = (b, a) => {
-  return { ...a, kind: `${b.id}/${a.kind.replace('|', '/')}` };
+  return { ...a, kind: a.kind.replace('|', '/') };
 };
 
 const namespace = (input: StoriesHash, ref: InceptionRef): StoriesHash => {
@@ -112,7 +113,7 @@ const initRefsApi = ({ store, provider }: Module) => {
     store.setState({
       refs: {
         ...(store.getState().refs || {}),
-        [id]: { startInjected: true, ...ref, stories: after },
+        [id]: { startInjected: true, ...ref, stories: after, ready: true },
       },
     });
   };
@@ -138,4 +139,12 @@ const initRefsApi = ({ store, provider }: Module) => {
     },
   };
 };
+
 export default initRefsApi;
+
+export const transform = (input: StoriesRaw, ref: InceptionRef) => {
+  return namespace(
+    transformStoriesRawToStoriesHash(map(input, ref, { mapper: defaultMapper }), {}),
+    ref
+  );
+};
