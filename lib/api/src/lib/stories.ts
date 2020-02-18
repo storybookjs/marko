@@ -235,7 +235,7 @@ export const transformStoriesRawToStoriesHash = (
 
     const story: Story = {
       ...item,
-      depth: rootAndGroups.length - 1,
+      depth: rootAndGroups.length,
       parent: rootAndGroups[rootAndGroups.length - 1].id,
       isLeaf: true,
       isComponent: false,
