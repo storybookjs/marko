@@ -8,13 +8,21 @@ import { applyHooks } from './hooks';
 import StoryStore from './story_store';
 import { defaultDecorateStory } from './decorators';
 
-export const addDecorator = () => {
-  throw new Error(`Global addDecorator is no longer exported by client-api. Please just export your decorators.
-Read more here: https://github.com/storybookjs/storybook/blob/master/MIGRATION.md#removed-addDecorator-and-addParameter-exports-from-client-api`);
+// ClientApi (and StoreStore) are really singletons. However they are not created until the
+// relevant framework instanciates them via `start.js`. The good news is this happens right away.
+let singleton: ClientApi;
+
+export const addDecorator = (decorator: DecoratorFunction) => {
+  if (!singleton)
+    throw new Error(`Singleton client API not yet initialized, cannot call addDecorator`);
+
+  singleton.addDecorator(decorator);
 };
-export const addParameters = () => {
-  throw new Error(`Global addParameters is no longer exported by client-api. Please just export your decorators.
-Read more here: https://github.com/storybookjs/storybook/blob/master/MIGRATION.md#removed-addDecorator-and-addParameter-exports-from-client-api`);
+export const addParameters = (parameters: Parameters) => {
+  if (!singleton)
+    throw new Error(`Singleton client API not yet initialized, cannot call addParameters`);
+
+  singleton.addParameters(parameters);
 };
 
 export default class ClientApi {
@@ -30,9 +38,9 @@ export default class ClientApi {
 
     this._decorateStory = decorateStory;
 
-    if (!storyStore) {
-      throw new Error('storyStore is required');
-    }
+    if (!storyStore) throw new Error('storyStore is required');
+
+    singleton = this;
   }
 
   setAddon = (addon: any) => {

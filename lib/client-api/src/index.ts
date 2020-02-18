@@ -1,4 +1,4 @@
-import ClientApi from './client_api';
+import ClientApi, { addDecorator, addParameters } from './client_api';
 import { defaultDecorateStory } from './decorators';
 import StoryStore from './story_store';
 import ConfigApi from './config_api';
@@ -10,6 +10,8 @@ export * from './hooks';
 
 export {
   ClientApi,
+  addDecorator,
+  addParameters,
   StoryStore,
   ConfigApi,
   defaultDecorateStory,

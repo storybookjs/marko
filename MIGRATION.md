@@ -7,7 +7,6 @@
       - [Removed legacy story APIs](#removed-legacy-story-apis)
       - [Can no longer add decorators/parameters after stories](#can-no-longer-add-decorators-parameters-after-stories)
       - [Changed Parameter Handling](#changed-parameter-handling)
-      - [Removed addDecorator and addParameter exports from client-api](#removed-addDecorator-and-addParameter-exports-from-client-api)
   - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
     - [To main.js configuration](#to-mainjs-configuration)
     - [Create React App preset](#create-react-app-preset)
@@ -181,16 +180,6 @@ StoryOne.story = { parameters: { backgrounds: [...allBackgrounds, '#zyx' ] } };
 _You cannot set parameters from decorators_
 
 Parameters are intended to be statically set at story load time. So setting them via a decorator doesn't quite make sense. If you were using this to control the rendering of a story, chances are using the new `args` feature is a more idiomatic way to do this.
-
-### Removed addDecorator and addParameter exports from client-api
-
-Previously, to aid in the development of presets, we exported `addDecorator` and `addParameters` from `@storybook/client-api`. This is no longer necessary as you can now export decorators and parameters directly from config entries:
-
-```js
-import { myDecorator } from './path/to/myDecorator';
-
-export const decorators = [myDecorator];
-```
 
 ## From version 5.2.x to 5.3.x
 
