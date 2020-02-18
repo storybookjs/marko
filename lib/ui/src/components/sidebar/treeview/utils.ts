@@ -195,14 +195,15 @@ const fuse = memoize(5)(
 const exactMatch = memoize(1)((filter: string) => (i: Item) => {
   const reg = new RegExp(filter, 'i');
   return (
-    (isStory(i) && reg.test(i.kind)) ||
-    (i.name && reg.test(i.name)) ||
-    (i.parameters &&
-      typeof i.parameters.fileName === 'string' &&
-      reg.test(i.parameters.fileName.toString())) ||
-    (i.parameters &&
-      typeof i.parameters.notes === 'string' &&
-      reg.test(i.parameters.notes.toString()))
+    i.isLeaf &&
+    ((isStory(i) && reg.test(i.kind)) ||
+      (i.name && reg.test(i.name)) ||
+      (i.parameters &&
+        typeof i.parameters.fileName === 'string' &&
+        reg.test(i.parameters.fileName.toString())) ||
+      (i.parameters &&
+        typeof i.parameters.notes === 'string' &&
+        reg.test(i.parameters.notes.toString())))
   );
 });
 
@@ -210,7 +211,7 @@ export const toId = (base: string, addition: string) =>
   base === '' ? `${addition}` : `${base}-${addition}`;
 
 export const toFiltered = (dataset: Dataset, filter: string) => {
-  let found;
+  let found: Item[];
   if (filter.length && filter.length > 2) {
     found = fuse(dataset).search(filter);
   } else {
@@ -219,17 +220,24 @@ export const toFiltered = (dataset: Dataset, filter: string) => {
 
   // get all parents for all results
   const result = found.reduce((acc, item) => {
-    getParents(item.id, dataset).forEach(pitem => {
-      acc[pitem.id] = pitem;
-    });
+    if (item.isLeaf) {
+      getParents(item.id, dataset).forEach(pitem => {
+        acc[pitem.id] = pitem;
+      });
 
-    acc[item.id] = item;
+      acc[item.id] = item;
+    }
     return acc;
   }, {} as Dataset);
 
   // filter the children of the found items (and their parents) so only found entries are present
   return Object.entries(result).reduce((acc, [k, v]) => {
-    acc[k] = v.children ? { ...v, children: v.children.filter(c => !!result[c]) } : v;
+    const r = v.children ? { ...v, children: v.children.filter(c => !!result[c]) } : v;
+
+    if (r.isLeaf || r.children.length) {
+      acc[k] = r;
+    }
+
     return acc;
   }, {} as Dataset);
 };
