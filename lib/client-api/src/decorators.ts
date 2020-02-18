@@ -6,6 +6,7 @@ const defaultContext: StoryContext = {
   name: 'unspecified',
   kind: 'unspecified',
   parameters: {},
+  args: {},
 };
 
 export const defaultDecorateStory = (storyFn: StoryFn, decorators: DecoratorFunction[]) =>
@@ -13,7 +14,7 @@ export const defaultDecorateStory = (storyFn: StoryFn, decorators: DecoratorFunc
     (decorated, decorator) => (context: StoryContext = defaultContext) =>
       decorator(
         // You cannot override the parameters key, it is fixed
-        ({ parameters, ...innerContext }: StoryContext) =>
+        ({ parameters, ...innerContext }: StoryContext = {} as StoryContext) =>
           decorated(
             innerContext
               ? {
