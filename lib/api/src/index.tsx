@@ -75,6 +75,7 @@ export type Module = StoreData &
   ProviderData & {
     mode?: 'production' | 'development';
     state: State;
+    fullAPI: API;
   };
 
 export type State = Other &
@@ -137,6 +138,9 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
 
   modules: any[];
 
+  // @ts-ignore
+  api = {};
+
   static displayName = 'Manager';
 
   constructor(props: ManagerProviderProps) {
@@ -188,13 +192,15 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
       initRefs,
       initURL,
       initVersions,
-    ].map(initModule => initModule({ ...routeData, ...apiData, state: this.state }));
+    ].map(initModule =>
+      initModule({ ...routeData, ...apiData, state: this.state, fullAPI: this.api })
+    );
 
     // Create our initial state by combining the initial state of all modules, then overlaying any saved state
     const state = getInitialState(...this.modules.map(m => m.state));
 
     // Get our API by combining the APIs exported by each module
-    const combo = Object.assign({ navigate }, ...this.modules.map(m => m.api));
+    const combo: API = Object.assign(this.api, { navigate }, ...this.modules.map(m => m.api));
 
     const api = initProviderApi({ provider, store, api: combo });
 
