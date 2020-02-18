@@ -53,7 +53,7 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
         ...(module.rules || []),
         {
           test: /\.js$/,
-          include: path.join(__dirname, '../../../../../node_modules/acorn-jsx'),
+          include: new RegExp(path.join('node_modules', 'acorn-jsx')),
           use: [
             {
               loader: 'babel-loader',
