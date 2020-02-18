@@ -12,7 +12,7 @@ import {
 } from '../lib/stories';
 
 import { Module } from '../index';
-import { InceptionRef } from './refs';
+import { InceptionRef, Refs } from './refs';
 
 type Direction = -1 | 1;
 type ParameterName = string;
@@ -50,6 +50,9 @@ const initStoriesApi = ({
   const getData = (storyId: StoryId) => {
     const { storiesHash, refs } = store.getState();
 
+    return resolveStory(storyId, storiesHash, refs);
+  };
+  const resolveStory = (storyId: StoryId, storiesHash: StoriesHash, refs: Refs) => {
     if (storyId) {
       if (storiesHash[storyId]) {
         return storiesHash[storyId];
@@ -57,7 +60,7 @@ const initStoriesApi = ({
 
       const [, , refId] = storyId.match(split);
 
-      if (refs[refId] && refs[refId].stories && refs[refId].stories[storyId]) {
+      if (refs && refs[refId] && refs[refId].stories && refs[refId].stories[storyId]) {
         return refs[refId].stories[storyId];
       }
     }
@@ -175,7 +178,7 @@ const initStoriesApi = ({
     );
     const settingsPageList = ['about', 'shortcuts'];
     const { storyId, viewMode, refs } = store.getState();
-    const story = getData(storyId);
+    const story = resolveStory(storyId, storiesHash, refs);
 
     if (storyId && storyId.match(/--\*$/)) {
       const idStart = storyId.slice(0, -1); // drop the * at the end
@@ -216,7 +219,7 @@ const initStoriesApi = ({
   const selectStory = (
     kindOrId: string,
     story: string = undefined,
-    options: { ref: InceptionRef['id'] }
+    options: { ref?: InceptionRef['id'] } = {}
   ) => {
     const { ref } = options;
     const { viewMode = 'story', storyId, storiesHash, refs } = store.getState();
