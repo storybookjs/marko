@@ -1,12 +1,297 @@
 {
   "stories": {
+    "docgen-button--simple-button": {
+      "id": "docgen-button--simple-button",
+      "kind": "Docgen/Button",
+      "name": "Simple Button",
+      "story": "Simple Button",
+      "parameters": {
+        "fileName": "./src/components/Button.stories.tsx",
+        "docs": {},
+        "options": {
+          "showRoots": true
+        },
+        "framework": "react",
+        "storySource": {
+          "source": "import * as React from 'react';\nimport { action } from '@storybook/addon-actions';\nimport { radios } from '@storybook/addon-knobs';\nimport Button, { Type } from './Button';\n\nexport default {\n  title: 'Docgen/Button',\n  component: Button,\n};\n\ntype Story = () => any;\n\nexport const SimpleButton: Story = () => {\n  const x = 0;\n  return <Button onClick={action('button clicked')}>OK {x}</Button>;\n};\n\nconst typeOptions = {\n  Default: 'default',\n  Action: 'action',\n};\n\nexport const WithType = () => (\n  <Button type={radios('Type', typeOptions, typeOptions.Default) as Type}>Label</Button>\n);\n",
+          "locationsMap": {
+            "docgen-button--simple-button": {
+              "startLoc": {
+                "col": 35,
+                "line": 13
+              },
+              "endLoc": {
+                "col": 1,
+                "line": 16
+              },
+              "startBody": {
+                "col": 35,
+                "line": 13
+              },
+              "endBody": {
+                "col": 1,
+                "line": 16
+              }
+            },
+            "docgen-button--with-type": {
+              "startLoc": {
+                "col": 24,
+                "line": 23
+              },
+              "endLoc": {
+                "col": 1,
+                "line": 25
+              },
+              "startBody": {
+                "col": 24,
+                "line": 23
+              },
+              "endBody": {
+                "col": 1,
+                "line": 25
+              }
+            }
+          }
+        },
+        "__id": "docgen-button--simple-button"
+      }
+    },
+    "docgen-button--with-type": {
+      "id": "docgen-button--with-type",
+      "kind": "Docgen/Button",
+      "name": "With Type",
+      "story": "With Type",
+      "parameters": {
+        "fileName": "./src/components/Button.stories.tsx",
+        "docs": {},
+        "options": {
+          "showRoots": true
+        },
+        "framework": "react",
+        "storySource": {
+          "source": "import * as React from 'react';\nimport { action } from '@storybook/addon-actions';\nimport { radios } from '@storybook/addon-knobs';\nimport Button, { Type } from './Button';\n\nexport default {\n  title: 'Docgen/Button',\n  component: Button,\n};\n\ntype Story = () => any;\n\nexport const SimpleButton: Story = () => {\n  const x = 0;\n  return <Button onClick={action('button clicked')}>OK {x}</Button>;\n};\n\nconst typeOptions = {\n  Default: 'default',\n  Action: 'action',\n};\n\nexport const WithType = () => (\n  <Button type={radios('Type', typeOptions, typeOptions.Default) as Type}>Label</Button>\n);\n",
+          "locationsMap": {
+            "docgen-button--simple-button": {
+              "startLoc": {
+                "col": 35,
+                "line": 13
+              },
+              "endLoc": {
+                "col": 1,
+                "line": 16
+              },
+              "startBody": {
+                "col": 35,
+                "line": 13
+              },
+              "endBody": {
+                "col": 1,
+                "line": 16
+              }
+            },
+            "docgen-button--with-type": {
+              "startLoc": {
+                "col": 24,
+                "line": 23
+              },
+              "endLoc": {
+                "col": 1,
+                "line": 25
+              },
+              "startBody": {
+                "col": 24,
+                "line": 23
+              },
+              "endBody": {
+                "col": 1,
+                "line": 25
+              }
+            }
+          }
+        },
+        "__id": "docgen-button--with-type"
+      }
+    },
+    "welcome--to-storybook": {
+      "id": "welcome--to-storybook",
+      "kind": "Welcome",
+      "name": "to Storybook",
+      "story": "to Storybook",
+      "parameters": {
+        "fileName": "./src/stories/0-Welcome.stories.tsx",
+        "docs": {},
+        "options": {
+          "showRoots": true
+        },
+        "framework": "react",
+        "storySource": {
+          "source": "import React from 'react';\nimport { linkTo } from '@storybook/addon-links';\nimport { Welcome } from '@storybook/react/demo';\n\nexport default {\n  title: 'Welcome',\n  component: Welcome,\n};\n\nexport const ToStorybook = () => <Welcome showApp={linkTo('Button')} />;\n\nToStorybook.story = {\n  name: 'to Storybook',\n};\n",
+          "locationsMap": {
+            "welcome--to-storybook": {
+              "startLoc": {
+                "col": 27,
+                "line": 10
+              },
+              "endLoc": {
+                "col": 71,
+                "line": 10
+              },
+              "startBody": {
+                "col": 27,
+                "line": 10
+              },
+              "endBody": {
+                "col": 71,
+                "line": 10
+              }
+            }
+          }
+        },
+        "__id": "welcome--to-storybook"
+      }
+    },
+    "button--text": {
+      "id": "button--text",
+      "kind": "Button",
+      "name": "Text",
+      "story": "Text",
+      "parameters": {
+        "fileName": "./src/stories/1-Button.stories.tsx",
+        "docs": {},
+        "options": {
+          "showRoots": true
+        },
+        "framework": "react",
+        "storySource": {
+          "source": "import React from 'react';\nimport { action } from '@storybook/addon-actions';\nimport { Button } from './Button';\n\nexport default {\n  title: 'Button',\n  component: Button,\n};\n\nexport const Text = () => <Button onClick={action('clicked')}>Hello Button</Button>;\n\nexport const Emoji = () => (\n  <Button onClick={action('clicked')}>\n    <span role=\"img\" aria-label=\"so cool\">\n      😀 😎 👍 💯\n    </span>\n  </Button>\n);\n",
+          "locationsMap": {
+            "button--text": {
+              "startLoc": {
+                "col": 20,
+                "line": 10
+              },
+              "endLoc": {
+                "col": 83,
+                "line": 10
+              },
+              "startBody": {
+                "col": 20,
+                "line": 10
+              },
+              "endBody": {
+                "col": 83,
+                "line": 10
+              }
+            },
+            "button--emoji": {
+              "startLoc": {
+                "col": 21,
+                "line": 12
+              },
+              "endLoc": {
+                "col": 1,
+                "line": 18
+              },
+              "startBody": {
+                "col": 21,
+                "line": 12
+              },
+              "endBody": {
+                "col": 1,
+                "line": 18
+              }
+            }
+          }
+        },
+        "__id": "button--text"
+      }
+    },
+    "button--emoji": {
+      "id": "button--emoji",
+      "kind": "Button",
+      "name": "Emoji",
+      "story": "Emoji",
+      "parameters": {
+        "fileName": "./src/stories/1-Button.stories.tsx",
+        "docs": {},
+        "options": {
+          "showRoots": true
+        },
+        "framework": "react",
+        "storySource": {
+          "source": "import React from 'react';\nimport { action } from '@storybook/addon-actions';\nimport { Button } from './Button';\n\nexport default {\n  title: 'Button',\n  component: Button,\n};\n\nexport const Text = () => <Button onClick={action('clicked')}>Hello Button</Button>;\n\nexport const Emoji = () => (\n  <Button onClick={action('clicked')}>\n    <span role=\"img\" aria-label=\"so cool\">\n      😀 😎 👍 💯\n    </span>\n  </Button>\n);\n",
+          "locationsMap": {
+            "button--text": {
+              "startLoc": {
+                "col": 20,
+                "line": 10
+              },
+              "endLoc": {
+                "col": 83,
+                "line": 10
+              },
+              "startBody": {
+                "col": 20,
+                "line": 10
+              },
+              "endBody": {
+                "col": 83,
+                "line": 10
+              }
+            },
+            "button--emoji": {
+              "startLoc": {
+                "col": 21,
+                "line": 12
+              },
+              "endLoc": {
+                "col": 1,
+                "line": 18
+              },
+              "startBody": {
+                "col": 21,
+                "line": 12
+              },
+              "endBody": {
+                "col": 1,
+                "line": 18
+              }
+            }
+          }
+        },
+        "__id": "button--emoji"
+      }
+    },
+    "classes-stripped--page": {
+      "id": "classes-stripped--page",
+      "kind": "Classes Stripped",
+      "name": "Page",
+      "story": "Page",
+      "parameters": {
+        "fileName": "./src/stories/Classes.stories.mdx",
+        "docs": {},
+        "options": {
+          "showRoots": true
+        },
+        "framework": "react",
+        "docsOnly": true,
+        "__id": "classes-stripped--page"
+      }
+    },
     "test--button": {
       "id": "test--button",
       "kind": "Test",
       "name": "button",
       "story": "button",
       "parameters": {
-        "fileName": 1292
+        "fileName": "./src/stories/Test.stories.mdx",
+        "docs": {},
+        "options": {
+          "showRoots": true
+        },
+        "framework": "react",
+        "mdxSource": "<Button>hello</Button>",
+        "__id": "test--button"
       }
     },
     "anchors--page": {
@@ -15,7 +300,14 @@
       "name": "Page",
       "story": "Page",
       "parameters": {
-        "fileName": 1283
+        "fileName": "./src/stories/anchors/anchors.stories.mdx",
+        "docs": {},
+        "options": {
+          "showRoots": true
+        },
+        "framework": "react",
+        "docsOnly": true,
+        "__id": "anchors--page"
       }
     },
     "docgen-props--page": {
@@ -24,7 +316,14 @@
       "name": "Page",
       "story": "Page",
       "parameters": {
-        "fileName": 1291
+        "fileName": "./src/stories/docgen-tests/docgen.stories.mdx",
+        "docs": {},
+        "options": {
+          "showRoots": true
+        },
+        "framework": "react",
+        "docsOnly": true,
+        "__id": "docgen-props--page"
       }
     },
     "docgen-jsdoc-perfo--page": {
@@ -33,7 +332,14 @@
       "name": "Page",
       "story": "Page",
       "parameters": {
-        "fileName": 1295
+        "fileName": "./src/stories/docgen-tests/jsdoc/jsdoc-perfo.stories.mdx",
+        "docs": {},
+        "options": {
+          "showRoots": true
+        },
+        "framework": "react",
+        "docsOnly": true,
+        "__id": "docgen-jsdoc-perfo--page"
       }
     },
     "docgen-jsdoc--page": {
@@ -42,7 +348,14 @@
       "name": "Page",
       "story": "Page",
       "parameters": {
-        "fileName": 1290
+        "fileName": "./src/stories/docgen-tests/jsdoc/jsdoc.stories.mdx",
+        "docs": {},
+        "options": {
+          "showRoots": true
+        },
+        "framework": "react",
+        "docsOnly": true,
+        "__id": "docgen-jsdoc--page"
       }
     },
     "docgen-types--page": {
@@ -51,7 +364,14 @@
       "name": "Page",
       "story": "Page",
       "parameters": {
-        "fileName": 1289
+        "fileName": "./src/stories/docgen-tests/types/types.stories.mdx",
+        "docs": {},
+        "options": {
+          "showRoots": true
+        },
+        "framework": "react",
+        "docsOnly": true,
+        "__id": "docgen-types--page"
       }
     },
     "propssort--page": {
@@ -60,7 +380,14 @@
       "name": "Page",
       "story": "Page",
       "parameters": {
-        "fileName": 1297
+        "fileName": "./src/stories/props-sort.stories.mdx",
+        "docs": {},
+        "options": {
+          "showRoots": true
+        },
+        "framework": "react",
+        "docsOnly": true,
+        "__id": "propssort--page"
       }
     }
   }
