@@ -129,7 +129,11 @@ export default class ClientApi {
       };
     });
 
-    api.add = (storyName: string, storyFn: string, parameters: Parameters = {}) => {
+    api.add = (
+      storyName: string,
+      storyFn: StoryFn<StoryFnReturnType>,
+      parameters: Parameters = {}
+    ) => {
       hasAdded = true;
 
       const id = parameters.__id || toId(kind, storyName);
