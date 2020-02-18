@@ -11,8 +11,15 @@ import Store from '../store';
 import { Provider } from '../init-provider-api';
 
 export type PanelPositions = 'bottom' | 'right';
+export type ActiveTabsType = 'sidebar' | 'canvas' | 'addons';
+export const ActiveTabs = {
+  SIDEBAR: 'sidebar' as 'sidebar',
+  CANVAS: 'canvas' as 'canvas',
+  ADDONS: 'addons' as 'addons',
+};
 
 export interface Layout {
+  initialActive: ActiveTabsType;
   isFullscreen: boolean;
   showPanel: boolean;
   panelPosition: PanelPositions;
@@ -47,9 +54,8 @@ export interface SubAPI {
 type PartialSubState = Partial<SubState>;
 type PartialThemeVars = Partial<ThemeVars>;
 type PartialLayout = Partial<Layout>;
-type PartialUI = Partial<UI>;
 
-interface Options extends ThemeVars {
+export interface UIOptions {
   name?: string;
   url?: string;
   goFullScreen: boolean;
@@ -89,16 +95,19 @@ const deprecationMessage = (optionsMap: OptionsMap, prefix = '') =>
     prefix ? `${prefix}'s` : ''
   } { ${Object.values(optionsMap).join(', ')} } instead.`;
 
-const applyDeprecatedThemeOptions = deprecate(({ name, url, theme }: Options): PartialThemeVars => {
-  const { brandTitle, brandUrl, brandImage }: PartialThemeVars = theme || {};
-  return {
-    brandTitle: brandTitle || name,
-    brandUrl: brandUrl || url,
-    brandImage: brandImage || null,
-  };
-}, deprecationMessage(deprecatedThemeOptions));
+const applyDeprecatedThemeOptions = deprecate(
+  ({ name, url, theme }: UIOptions): PartialThemeVars => {
+    const { brandTitle, brandUrl, brandImage }: PartialThemeVars = theme || {};
+    return {
+      brandTitle: brandTitle || name,
+      brandUrl: brandUrl || url,
+      brandImage: brandImage || null,
+    };
+  },
+  deprecationMessage(deprecatedThemeOptions)
+);
 
-const applyDeprecatedLayoutOptions = deprecate((options: Options): PartialLayout => {
+const applyDeprecatedLayoutOptions = deprecate((options: Partial<UIOptions>): PartialLayout => {
   const layoutUpdate: PartialLayout = {};
 
   ['goFullScreen', 'showStoriesPanel', 'showAddonPanel'].forEach(
@@ -116,14 +125,14 @@ const applyDeprecatedLayoutOptions = deprecate((options: Options): PartialLayout
   return layoutUpdate;
 }, deprecationMessage(deprecatedLayoutOptions));
 
-const checkDeprecatedThemeOptions = (options: Options) => {
+const checkDeprecatedThemeOptions = (options: UIOptions) => {
   if (Object.keys(deprecatedThemeOptions).find(v => v in options)) {
     return applyDeprecatedThemeOptions(options);
   }
   return {};
 };
 
-const checkDeprecatedLayoutOptions = (options: Options) => {
+const checkDeprecatedLayoutOptions = (options: Partial<UIOptions>) => {
   if (Object.keys(deprecatedLayoutOptions).find(v => v in options)) {
     return applyDeprecatedLayoutOptions(options);
   }
@@ -137,6 +146,7 @@ const initial: SubState = {
     docsMode: false,
   },
   layout: {
+    initialActive: ActiveTabs.SIDEBAR,
     isToolshown: true,
     isFullscreen: false,
     showPanel: true,

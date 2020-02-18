@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`react component properties 8428-js-static-prop-types 1`] = `
+"function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/* eslint-disable react/no-unused-prop-types */
+
+/* eslint-disable react/require-default-props */
+import React from 'react';
+import PropTypes from 'prop-types'; // eslint-disable-next-line react/prefer-stateless-function
+
+export default class Test extends React.Component {
+  render() {
+    return React.createElement(\\"div\\", null, \\"test\\");
+  }
+
+}
+
+_defineProperty(Test, \\"propTypes\\", {
+  /**
+   * Please work...
+   */
+  test: PropTypes.string
+});
+
+export const component = Test;
+Test.__docgenInfo = {
+  \\"description\\": \\"\\",
+  \\"methods\\": [],
+  \\"displayName\\": \\"Test\\",
+  \\"props\\": {
+    \\"test\\": {
+      \\"type\\": {
+        \\"name\\": \\"string\\"
+      },
+      \\"required\\": false,
+      \\"description\\": \\"Please work...\\"
+    }
+  }
+};"
+`;

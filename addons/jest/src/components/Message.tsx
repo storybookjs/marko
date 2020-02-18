@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, FunctionComponent } from 'react';
 import { styled } from '@storybook/theming';
 
 const positiveConsoleRegex = /\[32m(.*?)\[39m/;
@@ -50,10 +50,6 @@ const StatusColor = styled.strong<{ status: string }>(({ status, theme }) => ({
   color: status === positiveType ? theme.color.positive : theme.color.negative,
   fontWeight: 500,
 }));
-
-const Main = styled(({ msg, className }) => <section className={className}>{msg}</section>)({
-  padding: 5,
-});
 
 const colorizeText: (msg: string, type: string) => MsgElement[] = (msg: string, type: string) => {
   if (type) {
@@ -148,7 +144,7 @@ interface MessageProps {
   msg: string;
 }
 
-export const Message = (props: any) => {
+export const Message: FunctionComponent<MessageProps> = props => {
   const { msg } = props;
 
   const detail: TestDetail = getTestDetail(msg);

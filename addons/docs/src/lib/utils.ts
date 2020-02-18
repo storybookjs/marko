@@ -14,3 +14,5 @@ export function isTooLongForDefaultValueSummary(value: string): boolean {
 export function createSummaryValue(summary: string, detail?: string): PropSummaryValue {
   return { summary, detail };
 }
+
+export const normalizeNewlines = (string: string) => string.replace(/\\r\\n/g, '\\n');

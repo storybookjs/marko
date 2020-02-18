@@ -1,6 +1,6 @@
 {
   "name": "@storybook/react",
-  "version": "6.0.0-alpha.7",
+  "version": "6.0.0-alpha.13",
   "description": "Storybook for React: Develop React Component in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -27,7 +27,8 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts"
+    "*.d.ts",
+    "ts3.5/**/*"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
@@ -36,14 +37,14 @@
     "@babel/plugin-transform-react-constant-elements": "^7.6.3",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
-    "@storybook/addons": "6.0.0-alpha.7",
-    "@storybook/core": "6.0.0-alpha.7",
-    "@storybook/node-logger": "6.0.0-alpha.7",
+    "@storybook/addons": "6.0.0-alpha.13",
+    "@storybook/core": "6.0.0-alpha.13",
+    "@storybook/node-logger": "6.0.0-alpha.13",
     "@svgr/webpack": "^5.1.0",
     "@types/webpack-env": "^1.15.1",
     "babel-plugin-add-react-displayname": "^0.0.5",
     "babel-plugin-named-asset-import": "^0.3.1",
-    "babel-plugin-react-docgen": "^4.0.0",
+    "babel-plugin-react-docgen": "^4.1.0",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "lodash": "^4.17.15",
@@ -72,5 +73,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff"
+  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
+  "typesVersions": {
+    "<=3.5": {
+      "*": [
+        "ts3.5/*"
+      ]
+    }
+  }
 }

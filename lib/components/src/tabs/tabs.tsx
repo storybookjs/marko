@@ -7,7 +7,6 @@ import React, {
   MouseEvent,
   ReactNode,
 } from 'react';
-import PropTypes from 'prop-types';
 import { styled } from '@storybook/theming';
 
 import { Placeholder } from '../placeholder/placeholder';
@@ -108,9 +107,7 @@ export const TabWrapper: FunctionComponent<TabWrapperProps> = ({ active, render,
   <VisuallyHidden active={active}>{render ? render() : children}</VisuallyHidden>
 );
 
-export const panelProps = {
-  active: PropTypes.bool,
-};
+export const panelProps = {};
 
 const childrenToList = (children: any, selected: string) =>
   Children.toArray(children).map(
@@ -139,7 +136,7 @@ export interface TabsProps {
   selected?: string;
   actions?: {
     onSelect: (id: string) => void;
-  };
+  } & Record<string, any>;
   backgroundColor?: string;
   absolute?: boolean;
   bordered?: boolean;
@@ -224,6 +221,10 @@ export class TabsState extends Component<TabsStateProps, TabsStateState> {
     };
   }
 
+  handlers = {
+    onSelect: (id: string) => this.setState({ selected: id }),
+  };
+
   render() {
     const { bordered = false, absolute = false, children, backgroundColor } = this.props;
     const { selected } = this.state;
@@ -233,9 +234,7 @@ export class TabsState extends Component<TabsStateProps, TabsStateState> {
         absolute={absolute}
         selected={selected}
         backgroundColor={backgroundColor}
-        actions={{
-          onSelect: id => this.setState({ selected: id }),
-        }}
+        actions={this.handlers}
       >
         {children}
       </Tabs>

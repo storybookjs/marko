@@ -341,3 +341,43 @@ export const TT = styled.title<{}>(codeCommon);
  */
 
 export const ResetWrapper = styled.div<{}>(withReset);
+
+const nameSpaceClassNames = ({ ...props }, key: string) => {
+  const classes = [props.class, props.className];
+  // eslint-disable-next-line no-param-reassign
+  delete props.class;
+
+  // eslint-disable-next-line no-param-reassign
+  props.className = ['sbdocs', `sbdocs-${key}`, ...classes].filter(Boolean).join(' ');
+
+  return props;
+};
+
+export const components = {
+  h1: (props => <H1 {...nameSpaceClassNames(props, 'h1')} />) as typeof H1,
+  h2: (props => <H2 {...nameSpaceClassNames(props, 'h2')} />) as typeof H2,
+  h3: (props => <H3 {...nameSpaceClassNames(props, 'h3')} />) as typeof H3,
+  h4: (props => <H4 {...nameSpaceClassNames(props, 'h4')} />) as typeof H4,
+  h5: (props => <H5 {...nameSpaceClassNames(props, 'h5')} />) as typeof H5,
+  h6: (props => <H6 {...nameSpaceClassNames(props, 'h6')} />) as typeof H6,
+  pre: (props => <Pre {...nameSpaceClassNames(props, 'pre')} />) as typeof Pre,
+  a: (props => <A {...nameSpaceClassNames(props, 'a')} />) as typeof A,
+  hr: (props => <HR {...nameSpaceClassNames(props, 'hr')} />) as typeof HR,
+  dl: (props => <DL {...nameSpaceClassNames(props, 'dl')} />) as typeof DL,
+  blockquote: (props => (
+    <Blockquote {...nameSpaceClassNames(props, 'blockquote')} />
+  )) as typeof Blockquote,
+  table: (props => <Table {...nameSpaceClassNames(props, 'table')} />) as typeof Table,
+  img: (props => <Img {...nameSpaceClassNames(props, 'img')} />) as typeof Img,
+  div: (props => <Div {...nameSpaceClassNames(props, 'div')} />) as typeof Div,
+  span: (props => <Span {...nameSpaceClassNames(props, 'span')} />) as typeof Span,
+  li: (props => <LI {...nameSpaceClassNames(props, 'li')} />) as typeof LI,
+  ul: (props => <UL {...nameSpaceClassNames(props, 'ul')} />) as typeof UL,
+  ol: (props => <OL {...nameSpaceClassNames(props, 'ol')} />) as typeof OL,
+  p: (props => <P {...nameSpaceClassNames(props, 'p')} />) as typeof P,
+  code: (props => <Code {...nameSpaceClassNames(props, 'code')} />) as typeof Code,
+  tt: (props => <TT {...nameSpaceClassNames(props, 'tt')} />) as typeof TT,
+  resetwrapper: (props => (
+    <ResetWrapper {...nameSpaceClassNames(props, 'resetwrapper')} />
+  )) as typeof ResetWrapper,
+};
