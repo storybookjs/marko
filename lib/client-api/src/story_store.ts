@@ -15,7 +15,7 @@ import {
   StoreData,
   AddStoryArgs,
   StoreItem,
-  StoryState,
+  StoryArgs,
   ErrorLike,
   GetStorybookKind,
 } from './types';
@@ -91,8 +91,8 @@ export default class StoryStore extends EventEmitter {
 
   setChannel = (channel: Channel) => {
     this._channel = channel;
-    channel.on(Events.CHANGE_STORY_STATE, (id: string, newState: StoryState) =>
-      this.setStoryState(id, newState)
+    channel.on(Events.CHANGE_STORY_ARGS, (id: string, newArgs: StoryArgs) =>
+      this.setStoryArgs(id, newArgs)
     );
   };
 
@@ -181,7 +181,7 @@ export default class StoryStore extends EventEmitter {
         hooks,
         // NOTE: we do not allow the passed in context to override parameters
         parameters: allParameters,
-        state: this._stories[id].state,
+        args: _stories[id].args,
       });
 
     _stories[id] = {
@@ -193,7 +193,7 @@ export default class StoryStore extends EventEmitter {
       storyFn,
 
       parameters: allParameters,
-      state: {},
+      args: {},
     };
 
     // LET'S SEND IT TO THE MANAGER
@@ -353,15 +353,15 @@ export default class StoryStore extends EventEmitter {
     this.getStoriesForKind(kind).map(story => this.cleanHooks(story.id));
   }
 
-  setStoryState(id: string, newState: StoryState) {
+  setStoryArgs(id: string, newArgs: StoryArgs) {
     if (!this._stories[id]) throw new Error(`No story for id ${id}`);
-    const { state } = this._stories[id];
-    this._stories[id].state = { ...state, ...newState };
+    const { args } = this._stories[id];
+    this._stories[id].args = { ...args, ...newArgs };
 
     // TODO: Sort out what is going on with both the store and the channel being event emitters.
     // It has something to do with React Native, but need to get to the bottom of it
-    this._channel.emit(Events.STORY_STATE_CHANGED, id, this._stories[id].state);
-    this.emit(Events.STORY_STATE_CHANGED, id, this._stories[id].state);
+    this._channel.emit(Events.STORY_ARGS_CHANGED, id, this._stories[id].args);
+    this.emit(Events.STORY_ARGS_CHANGED, id, this._stories[id].args);
   }
 
   // This API is a reimplementation of Storybook's original getStorybook() API.

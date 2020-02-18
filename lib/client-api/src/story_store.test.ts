@@ -81,60 +81,60 @@ describe('preview.story_store', () => {
     });
   });
 
-  describe('state', () => {
-    it('setStoryState changes the state of a story, per-key', () => {
+  describe('args', () => {
+    it('setStoryArgs changes the args of a story, per-key', () => {
       const store = new StoryStore({ channel });
       addStoryToStore(store, 'a', '1', () => 0);
-      expect(store.getRawStory('a', '1').state).toEqual({});
+      expect(store.getRawStory('a', '1').args).toEqual({});
 
-      store.setStoryState('a--1', { foo: 'bar' });
-      expect(store.getRawStory('a', '1').state).toEqual({ foo: 'bar' });
+      store.setStoryArgs('a--1', { foo: 'bar' });
+      expect(store.getRawStory('a', '1').args).toEqual({ foo: 'bar' });
 
-      store.setStoryState('a--1', { baz: 'bing' });
-      expect(store.getRawStory('a', '1').state).toEqual({ foo: 'bar', baz: 'bing' });
+      store.setStoryArgs('a--1', { baz: 'bing' });
+      expect(store.getRawStory('a', '1').args).toEqual({ foo: 'bar', baz: 'bing' });
     });
 
     it('is passed to the story in the context', () => {
       const storyFn = jest.fn();
       const store = new StoryStore({ channel });
       addStoryToStore(store, 'a', '1', storyFn);
-      store.setStoryState('a--1', { foo: 'bar' });
+      store.setStoryArgs('a--1', { foo: 'bar' });
       store.getRawStory('a', '1').storyFn();
 
       expect(storyFn).toHaveBeenCalledWith(
         expect.objectContaining({
-          state: { foo: 'bar' },
+          args: { foo: 'bar' },
         })
       );
     });
 
-    it('setStoryState emits STORY_STATE_CHANGED', () => {
-      const onStateChangedChannel = jest.fn();
-      const onStateChangedStore = jest.fn();
+    it('setStoryArgs emits STORY_ARGS_CHANGED', () => {
+      const onArgsChangedChannel = jest.fn();
+      const onArgsChangedStore = jest.fn();
       const testChannel = mockChannel();
-      testChannel.on(Events.STORY_STATE_CHANGED, onStateChangedChannel);
+      testChannel.on(Events.STORY_ARGS_CHANGED, onArgsChangedChannel);
 
       const store = new StoryStore({ channel: testChannel });
-      store.on(Events.STORY_STATE_CHANGED, onStateChangedStore);
+      store.on(Events.STORY_ARGS_CHANGED, onArgsChangedStore);
       addStoryToStore(store, 'a', '1', () => 0);
 
-      store.setStoryState('a--1', { foo: 'bar' });
-      expect(onStateChangedChannel).toHaveBeenCalledWith('a--1', { foo: 'bar' });
-      expect(onStateChangedStore).toHaveBeenCalledWith('a--1', { foo: 'bar' });
+      store.setStoryArgs('a--1', { foo: 'bar' });
+      expect(onArgsChangedChannel).toHaveBeenCalledWith('a--1', { foo: 'bar' });
+      expect(onArgsChangedStore).toHaveBeenCalledWith('a--1', { foo: 'bar' });
 
-      store.setStoryState('a--1', { baz: 'bing' });
-      expect(onStateChangedChannel).toHaveBeenCalledWith('a--1', { foo: 'bar', baz: 'bing' });
-      expect(onStateChangedStore).toHaveBeenCalledWith('a--1', { foo: 'bar', baz: 'bing' });
+      store.setStoryArgs('a--1', { baz: 'bing' });
+      expect(onArgsChangedChannel).toHaveBeenCalledWith('a--1', { foo: 'bar', baz: 'bing' });
+      expect(onArgsChangedStore).toHaveBeenCalledWith('a--1', { foo: 'bar', baz: 'bing' });
     });
 
-    it('should update if the CHANGE_STORY_STATE event is received', () => {
+    it('should update if the CHANGE_STORY_ARGS event is received', () => {
       const testChannel = mockChannel();
       const store = new StoryStore({ channel: testChannel });
       addStoryToStore(store, 'a', '1', () => 0);
 
-      testChannel.emit(Events.CHANGE_STORY_STATE, 'a--1', { foo: 'bar' });
+      testChannel.emit(Events.CHANGE_STORY_ARGS, 'a--1', { foo: 'bar' });
 
-      expect(store.getRawStory('a', '1').state).toEqual({ foo: 'bar' });
+      expect(store.getRawStory('a', '1').args).toEqual({ foo: 'bar' });
     });
   });
 

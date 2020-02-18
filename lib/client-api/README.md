@@ -10,7 +10,7 @@ Each story is loaded via the `.add()` API and contains the follow attributes, wh
 - `name` - the name of the specific story.
 - `id` - an unique, URL sanitized identifier for the story, created from the `kind` and `name`.
 - `parameters` - static data about the story, see below.
-- `properties` - dynamic inputs to the story, see blow.
+- `args` - dynamic inputs to the story, see blow.
 - `hooks` - listeners that will rerun when the story changes or is unmounted, see `@storybook/addons`.
 
 ## Parameters
@@ -61,11 +61,11 @@ const YourStory = ({ x, y } /*, context*/) => /* render your story using `x` and
 
 ### Using args in an addon
 
-Args values are automatically syncronized (via the `changeStoryArgs` and `storyArgsChanged` events) between the preview and manager; APIs exist in `lib/api` to read and set properties in the manager.
+Args values are automatically syncronized (via the `changeStoryArgs` and `storyArgsChanged` events) between the preview and manager; APIs exist in `lib/api` to read and set args in the manager.
 
 Args need to be serializable -- so currently cannot include callbacks (this may change in a future version).
 
-Note that arg values are passed directly to a story -- you should only store the actual value that the story needs to render in the property. If you need more complex information supporting that, use parameters or addon state.
+Note that arg values are passed directly to a story -- you should only store the actual value that the story needs to render in the arg. If you need more complex information supporting that, use parameters or addon state.
 
 ### Default values
 
