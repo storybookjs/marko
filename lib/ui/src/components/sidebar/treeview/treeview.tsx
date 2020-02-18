@@ -1,11 +1,5 @@
 import { document } from 'global';
-import React, {
-  PureComponent,
-  Fragment,
-  ComponentType,
-  FunctionComponent,
-  SyntheticEvent,
-} from 'react';
+import React, { PureComponent, ComponentType, FunctionComponent, SyntheticEvent } from 'react';
 import memoize from 'memoizerific';
 import addons from '@storybook/addons';
 import { STORIES_COLLAPSE_ALL, STORIES_EXPAND_ALL } from '@storybook/core-events';
@@ -181,7 +175,7 @@ const Tree: FunctionComponent<{
   switch (true) {
     case !!(children && children.length && node.name): {
       return (
-        <Fragment>
+        <>
           <Head
             {...node}
             depth={depth}
@@ -190,7 +184,7 @@ const Tree: FunctionComponent<{
             childIds={children}
           />
           {children && expanded[node.id] ? <List>{children.map(mapNode)}</List> : null}
-        </Fragment>
+        </>
       );
     }
     case !!(children && children.length): {
@@ -312,17 +306,6 @@ interface TreeStateProps {
 }
 
 class TreeState extends PureComponent<TreeStateProps, TreeStateState> {
-  state = {
-    // We maintain two sets of expanded nodes, so we remember which were expanded if we clear the filter
-    unfilteredExpanded: {},
-    filteredExpanded: {},
-    lastSelectedId: null,
-  } as TreeStateState;
-
-  static getDerivedStateFromProps(props: TreeStateProps, state: TreeStateState) {
-    return calculateTreeState(props, state);
-  }
-
   static defaultProps: Partial<TreeStateProps> = {
     selectedId: null,
     List: undefined,
@@ -333,6 +316,27 @@ class TreeState extends PureComponent<TreeStateProps, TreeStateState> {
     Section: undefined,
     Message: undefined,
   };
+
+  constructor(props: TreeStateProps) {
+    super(props);
+
+    this.state = {
+      // We maintain two sets of expanded nodes, so we remember which were expanded if we clear the filter
+      unfilteredExpanded: Object.keys(props.dataset).reduce(
+        (acc, item) => Object.assign(acc, { [item]: false }),
+        {}
+      ),
+      filteredExpanded: Object.keys(props.dataset).reduce(
+        (acc, item) => Object.assign(acc, { [item]: true }),
+        {}
+      ),
+      lastSelectedId: null,
+    };
+  }
+
+  static getDerivedStateFromProps(props: TreeStateProps, state: TreeStateState) {
+    return calculateTreeState(props, state);
+  }
 
   events = {
     onClick: (e: SyntheticEvent, item: Item) => {
