@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from 'react';
-import PropTypes from 'prop-types';
 import GraphiQL from 'graphiql';
 import 'graphiql/graphiql.css';
 
@@ -31,9 +30,6 @@ const GQL: FunctionComponent<GQLProps> = ({ active }) => {
       }}
     </Consumer>
   ) : null;
-};
-GQL.propTypes = {
-  active: PropTypes.bool.isRequired,
 };
 
 export default GQL;
