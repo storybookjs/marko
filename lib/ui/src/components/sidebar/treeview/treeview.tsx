@@ -308,6 +308,7 @@ interface TreeStateProps {
   Head: ComponentType<any>;
   Section: ComponentType<any>;
   Message: ComponentType<any>;
+  className?: string;
 }
 
 class TreeState extends PureComponent<TreeStateProps, TreeStateState> {
@@ -455,7 +456,7 @@ class TreeState extends PureComponent<TreeStateProps, TreeStateState> {
       state: { unfilteredExpanded, filteredExpanded },
       props,
     } = this;
-    const { prefix, dataset, selectedId, filter } = props;
+    const { prefix, dataset, selectedId, filter, className } = props;
 
     const List = getList(props.List);
     const Branch = Tree;
@@ -469,8 +470,10 @@ class TreeState extends PureComponent<TreeStateProps, TreeStateState> {
     const expanded = filter ? filteredExpanded : unfilteredExpanded;
     const { selected, roots, others } = getPropsForTree({ dataset: filteredDataset, selectedId });
 
-    return (
-      <Fragment>
+    const wrapperProps = className ? { className } : {};
+
+    return Object.keys(filteredDataset).length ? (
+      <div {...wrapperProps}>
         {others.length ? (
           <Section key="other">
             {others.map(({ id }) => (
@@ -513,8 +516,8 @@ class TreeState extends PureComponent<TreeStateProps, TreeStateState> {
             ))}
           </Section>
         ))}
-      </Fragment>
-    );
+      </div>
+    ) : null;
   }
 }
 

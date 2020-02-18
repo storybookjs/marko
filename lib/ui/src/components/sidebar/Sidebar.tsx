@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useMemo, useState, useCallback } from 'react';
 
 import { styled } from '@storybook/theming';
-import { ScrollArea } from '@storybook/components';
+import { ScrollArea, Placeholder } from '@storybook/components';
 import { StoriesHash, State } from '@storybook/api';
 
 import SidebarHeading, { SidebarHeadingProps } from './SidebarHeading';
@@ -61,6 +61,17 @@ const Ref: FunctionComponent<RefType & { storyId: string; filter: string }> = ({
   );
 };
 
+const Empty = styled.div(
+  {
+    display: 'none',
+  },
+  {
+    'form + &': {
+      display: 'block',
+    },
+  }
+);
+
 const Sidebar: FunctionComponent<SidebarProps> = ({
   storyId,
   stories,
@@ -87,6 +98,10 @@ const Sidebar: FunctionComponent<SidebarProps> = ({
         {Object.entries(refs).map(([k, v]) => (
           <Ref key={k} {...v} storyId={storyId} filter={filterValue} />
         ))}
+
+        <Empty>
+          <Placeholder>This filter resulted in 0 results</Placeholder>
+        </Empty>
       </CustomScrollArea>
     </Container>
   );

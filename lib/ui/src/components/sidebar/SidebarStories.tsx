@@ -163,23 +163,22 @@ const SidebarStories: FunctionComponent<StoriesProps> = memo(
       );
     }
     return (
-      <Wrapper className={className}>
-        <TreeState
-          key="treestate"
-          dataset={stories}
-          prefix="explorer"
-          selectedId={storyId}
-          filter={filter}
-          List={List}
-          Head={SidebarItem}
-          Link={Link}
-          Leaf={SidebarItem}
-          Title={Subheading}
-          Section={Section}
-          Message={Placeholder}
-          {...rest}
-        />
-      </Wrapper>
+      <TreeState
+        className={className}
+        key="treestate"
+        dataset={stories}
+        prefix="explorer"
+        selectedId={storyId}
+        filter={filter}
+        List={List}
+        Head={SidebarItem}
+        Link={Link}
+        Leaf={SidebarItem}
+        Title={Subheading}
+        Section={Section}
+        Message={Placeholder}
+        {...rest}
+      />
     );
   }
 );
