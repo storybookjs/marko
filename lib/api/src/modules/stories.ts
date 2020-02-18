@@ -136,7 +136,7 @@ const initStoriesApi = ({
       return;
     }
 
-    const hash = story.refId ? refs[story.refId] : storiesHash;
+    const hash = story.refId ? refs[story.refId].stories : storiesHash;
 
     const lookupList = Object.keys(hash).filter(k => !(hash[k].children || Array.isArray(hash[k])));
     const index = lookupList.indexOf(storyId);
