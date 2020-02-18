@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`react component properties 9493-ts-display-name 1`] = `
+Object {
+  "rows": Array [
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "'Code Yellow'",
+      },
+      "description": "A title that brings attention to the alert.",
+      "name": "title",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "union",
+      },
+    },
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "1",
+      },
+      "description": "A message alerting about Empire activities.",
+      "name": "message",
+      "required": true,
+      "type": Object {
+        "detail": undefined,
+        "summary": "string",
+      },
+    },
+  ],
+}
+`;

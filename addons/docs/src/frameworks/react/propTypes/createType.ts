@@ -209,8 +209,8 @@ function generateShape(type: DocgenPropType, extractedProp: ExtractedProp): Type
   return createTypeDef({
     name: PropTypesType.SHAPE,
     short: OBJECT_CAPTION,
-    compact: depth === 1 ? prettyObject(ast, true) : null,
-    full: prettyObject(ast),
+    compact: depth === 1 && ast ? prettyObject(ast, true) : null,
+    full: ast ? prettyObject(ast) : null,
   });
 }
 
