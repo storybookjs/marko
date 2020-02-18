@@ -174,7 +174,8 @@ export default class StoryStore extends EventEmitter {
         ...identification,
         ...context,
         hooks,
-        parameters: combineParameters(allParameters, context && context.parameters),
+        // NOTE: we do not allow the passed in context to override parameters
+        parameters: allParameters,
       });
 
     _stories[id] = {

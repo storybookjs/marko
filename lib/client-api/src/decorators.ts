@@ -12,15 +12,13 @@ export const defaultDecorateStory = (storyFn: StoryFn, decorators: DecoratorFunc
   decorators.reduce(
     (decorated, decorator) => (context: StoryContext = defaultContext) =>
       decorator(
-        (innerContext: StoryContext) =>
+        // You cannot override the parameters key, it is fixed
+        ({ parameters, ...innerContext }: StoryContext) =>
           decorated(
             innerContext
               ? {
                   ...context,
                   ...innerContext,
-                  ...((context.parameters || innerContext.parameters) && {
-                    parameters: { ...context.parameters, ...innerContext.parameters },
-                  }),
                 }
               : context
           ),
