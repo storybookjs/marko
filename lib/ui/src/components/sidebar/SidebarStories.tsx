@@ -7,12 +7,7 @@ import { Location, Link as RouterLink } from '@storybook/router';
 import { TreeState } from './treeview/treeview';
 
 import SidebarItem from './SidebarItem';
-import SidebarSearch from './SidebarSearch';
 import SidebarSubheading from './SidebarSubheading';
-
-const Search = styled(SidebarSearch)({
-  margin: '0 20px 1rem',
-});
 
 const Subheading = styled(SidebarSubheading)({
   margin: '0 20px',
@@ -121,10 +116,11 @@ export interface StoriesProps {
   stories: StoriesHash;
   storyId?: undefined | string;
   className?: undefined | string;
+  filter: string;
 }
 
 const SidebarStories: FunctionComponent<StoriesProps> = memo(
-  ({ stories, storyId, loading, className, ...rest }) => {
+  ({ stories, storyId, loading, className, filter = '', ...rest }) => {
     const list = Object.entries(stories);
 
     if (loading) {
@@ -173,7 +169,7 @@ const SidebarStories: FunctionComponent<StoriesProps> = memo(
           dataset={stories}
           prefix="explorer"
           selectedId={storyId}
-          filter=""
+          filter={filter}
           List={List}
           Head={SidebarItem}
           Link={Link}
@@ -181,8 +177,6 @@ const SidebarStories: FunctionComponent<StoriesProps> = memo(
           Title={Subheading}
           Section={Section}
           Message={Placeholder}
-          // eslint-disable-next-line react/jsx-no-duplicate-props
-          Filter={Search}
           {...rest}
         />
       </Wrapper>

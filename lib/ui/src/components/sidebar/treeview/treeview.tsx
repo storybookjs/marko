@@ -9,7 +9,6 @@ import React, {
 import memoize from 'memoizerific';
 import addons from '@storybook/addons';
 import { STORIES_COLLAPSE_ALL, STORIES_EXPAND_ALL } from '@storybook/core-events';
-import debounce from 'lodash/debounce';
 
 import {
   createId,
@@ -96,8 +95,8 @@ const getLeaf = memoize(1)(
     })
 );
 
-const getFilter = memoize(1)((Filter: ComponentType<any>) => Filter || DefaultFilter);
 const getTitle = memoize(1)((Title: ComponentType<any>) => Title || DefaultRootTitle);
+const getList = memoize(1)((Title: ComponentType<any>) => Title || DefaultList);
 const getContainer = memoize(1)((Section: ComponentType<any>) => Section || DefaultSection);
 const getMessage = memoize(1)((Message: ComponentType<any>) => Message || DefaultMessage);
 
@@ -234,15 +233,16 @@ const calculateTreeState = memoize(50)(
   }
 );
 
-const getExpanded = ({
-  unfilteredExpanded,
-  filteredExpanded,
-  filter,
-}: {
-  unfilteredExpanded: ExpandedSet;
-  filteredExpanded: ExpandedSet;
-  filter: string;
-}) => (filter ? filteredExpanded : unfilteredExpanded);
+const getExpanded = (
+  {
+    unfilteredExpanded,
+    filteredExpanded,
+  }: {
+    unfilteredExpanded: ExpandedSet;
+    filteredExpanded: ExpandedSet;
+  },
+  filter: string
+) => (filter ? filteredExpanded : unfilteredExpanded);
 
 const getFilteredDataset = memoize(
   50
@@ -297,7 +297,6 @@ const getPropsForTree = memoize(50)(
 interface TreeStateState {
   unfilteredExpanded: SelectedSet;
   filteredExpanded: ExpandedSet;
-  filter: string | null;
   lastSelectedId: string | null;
 }
 
@@ -307,7 +306,6 @@ interface TreeStateProps {
   prefix: string;
   filter?: string;
   event?: any;
-  Filter: ComponentType<any>;
   List: ComponentType<any>;
   Title: ComponentType<any>;
   Link: ComponentType<any>;
@@ -322,7 +320,6 @@ class TreeState extends PureComponent<TreeStateProps, TreeStateState> {
     // We maintain two sets of expanded nodes, so we remember which were expanded if we clear the filter
     unfilteredExpanded: {},
     filteredExpanded: {},
-    filter: null,
     lastSelectedId: null,
   } as TreeStateState;
 
@@ -332,7 +329,6 @@ class TreeState extends PureComponent<TreeStateProps, TreeStateState> {
 
   static defaultProps: Partial<TreeStateProps> = {
     selectedId: null,
-    Filter: undefined,
     List: undefined,
     Title: undefined,
     Link: undefined,
@@ -351,24 +347,10 @@ class TreeState extends PureComponent<TreeStateProps, TreeStateState> {
         }))
       );
     },
-    onFilter: debounce(inputFilter => {
-      const { dataset } = this.props;
-      const filter = inputFilter.length >= 2 ? inputFilter : '';
-      const filteredDataset = getFilteredDataset({ dataset, filter });
-
-      // Whenever we change the filter, we reset the "filtered" expanded set back to all matching stories
-      this.setState({
-        filter,
-        filteredExpanded:
-          !!filter &&
-          Object.keys(filteredDataset).reduce((acc, k) => Object.assign(acc, { [k]: true }), {}),
-      });
-    }, 100),
     onKeyUp: (e: KeyboardEvent, item: Item) => {
-      const { prefix, dataset } = this.props;
-      const { filter } = this.state;
+      const { prefix, dataset, filter } = this.props;
       const filteredDataset = getFilteredDataset({ dataset, filter });
-      const expanded = getExpanded(this.state);
+      const expanded = getExpanded(this.state, filter);
 
       const action = keyEventToAction(e);
       if (action) {
@@ -467,20 +449,18 @@ class TreeState extends PureComponent<TreeStateProps, TreeStateState> {
   render() {
     const {
       events,
-      state: { filter, unfilteredExpanded, filteredExpanded },
+      state: { unfilteredExpanded, filteredExpanded },
       props,
     } = this;
-    const { prefix, dataset, selectedId } = props;
+    const { prefix, dataset, selectedId, filter } = props;
 
-    const Filter = getFilter(props.Filter);
-    const List = getFilter(props.List);
+    const List = getList(props.List);
     const Branch = Tree;
     const Title = getTitle(props.Title);
     const Link = getLink(props.Link);
     const Leaf = getLeaf(props.Leaf, Link, prefix, events);
     const Head = getHead(props.Head, Link, prefix, events);
     const Section = getContainer(props.Section);
-    const Message = getMessage(props.Message);
 
     const filteredDataset = getFilteredDataset({ dataset, filter });
     const expanded = filter ? filteredExpanded : unfilteredExpanded;
@@ -488,9 +468,6 @@ class TreeState extends PureComponent<TreeStateProps, TreeStateState> {
 
     return (
       <Fragment>
-        {Filter ? <Filter key="filter" onChange={this.events.onFilter} /> : null}
-        {!roots.length && !others.length && <Message>This filter resulted in 0 results</Message>}
-
         {others.length ? (
           <Section key="other">
             {others.map(({ id }) => (

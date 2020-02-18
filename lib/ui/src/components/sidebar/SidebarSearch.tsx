@@ -1,4 +1,4 @@
-import React, { ComponentProps, useState } from 'react';
+import React, { ComponentProps, useState, ChangeEvent } from 'react';
 import { styled } from '@storybook/theming';
 import { opacify } from 'polished';
 import { Icons } from '@storybook/components';
@@ -122,7 +122,7 @@ export const PureSidebarSearch = ({ className, onChange, ...props }: PureSidebar
         id="storybook-explorer-searchfield"
         onFocus={() => onSetFocussed(true)}
         onBlur={() => onSetFocussed(false)}
-        onChange={e => onChange(e.target.value)}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
         {...props}
         placeholder={focussed ? 'Type to search...' : 'Press "/" to search...'}
         aria-label="Search stories"
