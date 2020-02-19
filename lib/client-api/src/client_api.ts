@@ -111,9 +111,18 @@ export default class ClientApi {
 
   private _decorateStory: (storyFn: StoryFn, decorators: DecoratorFunction[]) => any;
 
-  constructor({ storyStore, decorateStory = defaultDecorateStory }: ClientApiParams) {
+  // React Native Fast refresh doesn't allow multiple dispose calls
+  private _noStoryModuleAddMethodHotDispose: boolean;
+
+  constructor({
+    storyStore,
+    decorateStory = defaultDecorateStory,
+    noStoryModuleAddMethodHotDispose,
+  }: ClientApiParams) {
     this._storyStore = storyStore;
     this._addons = {};
+
+    this._noStoryModuleAddMethodHotDispose = noStoryModuleAddMethodHotDispose || false;
 
     this._decorateStory = decorateStory;
 
@@ -231,7 +240,8 @@ export default class ClientApi {
       if (typeof storyName !== 'string') {
         throw new Error(`Invalid or missing storyName provided for a "${kind}" story.`);
       }
-      if (m && m.hot && m.hot.dispose) {
+
+      if (!this._noStoryModuleAddMethodHotDispose && m && m.hot && m.hot.dispose) {
         m.hot.dispose(() => {
           const { _storyStore } = this;
           _storyStore.remove(id);
