@@ -29,7 +29,7 @@ export interface StoreData {
 export interface ClientApiParams {
   storyStore: StoryStore;
   decorateStory?: (storyFn: any, decorators: any) => any;
-  disableAddStoryDispose?: boolean;
+  noStoryModuleAddMethodHotDispose?: boolean;
 }
 
 export type ClientApiReturnFn<StoryFnReturnType> = (...args: any[]) => StoryApi<StoryFnReturnType>;
