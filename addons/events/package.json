@@ -43,6 +43,7 @@
     "react": "^16.8.3",
     "react-lifecycles-compat": "^3.0.4",
     "react-textarea-autosize": "^7.0.4",
+    "regenerator-runtime": "^0.13.3",
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
@@ -50,8 +51,7 @@
   },
   "peerDependencies": {
     "react": "*",
-    "react-dom": "*",
-    "regenerator-runtime": "*"
+    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"

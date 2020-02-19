@@ -35,6 +35,7 @@
     "@storybook/router": "6.0.0-alpha.15",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
+    "regenerator-runtime": "^0.13.3",
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
@@ -42,8 +43,7 @@
     "@types/util-deprecate": "^1.0.0"
   },
   "peerDependencies": {
-    "react-dom": "*",
-    "regenerator-runtime": "*"
+    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"

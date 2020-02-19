@@ -46,7 +46,8 @@
     "qs": "^6.6.0",
     "react-color": "^2.17.0",
     "react-lifecycles-compat": "^3.0.4",
-    "react-select": "^3.0.8"
+    "react-select": "^3.0.8",
+    "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
     "@types/escape-html": "0.0.20",
@@ -56,8 +57,7 @@
   },
   "peerDependencies": {
     "react": "*",
-    "react-dom": "*",
-    "regenerator-runtime": "*"
+    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"

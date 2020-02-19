@@ -41,6 +41,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.3",
     "react-inspector": "^4.0.0",
+    "regenerator-runtime": "^0.13.3",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
@@ -49,8 +50,7 @@
     "@types/webpack-env": "^1.15.1"
   },
   "peerDependencies": {
-    "react-dom": "*",
-    "regenerator-runtime": "*"
+    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"

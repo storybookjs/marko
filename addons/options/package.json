@@ -31,6 +31,7 @@
   "dependencies": {
     "@storybook/addons": "6.0.0-alpha.15",
     "core-js": "^3.0.1",
+    "regenerator-runtime": "^0.13.3",
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
@@ -38,8 +39,7 @@
   },
   "peerDependencies": {
     "react": "*",
-    "react-dom": "*",
-    "regenerator-runtime": "*"
+    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"

@@ -47,8 +47,7 @@
     "util-deprecate": "^1.0.2"
   },
   "peerDependencies": {
-    "react-dom": "*",
-    "regenerator-runtime": "*"
+    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"

@@ -33,7 +33,8 @@
     "@storybook/addons": "6.0.0-alpha.15",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
-    "util-deprecate": "^1.0.2"
+    "util-deprecate": "^1.0.2",
+    "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
     "@types/mithril": "^1.1.16",
@@ -43,8 +44,7 @@
     "react": "*"
   },
   "peerDependencies": {
-    "react-dom": "*",
-    "regenerator-runtime": "*"
+    "react-dom": "*"
   },
   "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
   "typesVersions": {
