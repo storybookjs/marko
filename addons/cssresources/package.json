@@ -43,7 +43,10 @@
     "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
-    "@types/webpack-env": "^1.15.1"
+    "@types/webpack-env": "^1.15.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "react-dom": "^16.12.0"
   },
   "peerDependencies": {
     "react": "*",

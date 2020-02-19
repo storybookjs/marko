@@ -37,6 +37,10 @@
     "qs": "^6.6.0",
     "regenerator-runtime": "^0.13.3"
   },
+  "devDependencies": {
+    "@types/enzyme": "^3.10.5",
+    "enzyme": "^3.11.0"
+  },
   "peerDependencies": {
     "global": "*",
     "preact": "*",

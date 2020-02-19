@@ -1,5 +1,4 @@
 /** @jsx createElement */
-/* eslint-disable import/no-extraneous-dependencies */
 import { createElement } from 'rax';
 import View from 'rax-view';
 import { makeDecorator } from '@storybook/addons';

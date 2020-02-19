@@ -32,6 +32,7 @@
     "@storybook/addons": "6.0.0-alpha.15",
     "@storybook/api": "6.0.0-alpha.15",
     "@storybook/client-api": "6.0.0-alpha.15",
+    "@storybook/channels": "6.0.0-alpha.15",
     "@storybook/components": "6.0.0-alpha.15",
     "@storybook/core-events": "6.0.0-alpha.15",
     "@storybook/theming": "6.0.0-alpha.15",
@@ -53,7 +54,9 @@
     "@types/escape-html": "0.0.20",
     "@types/react-lifecycles-compat": "^3.0.1",
     "@types/react-select": "^2.0.19",
-    "@types/webpack-env": "^1.15.1"
+    "@types/webpack-env": "^1.15.1",
+    "@types/enzyme": "^3.10.5",
+    "enzyme": "^3.11.0"
   },
   "peerDependencies": {
     "react": "*",

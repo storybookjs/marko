@@ -41,10 +41,34 @@
     "@types/webpack-env": "^1.15.1",
     "mithril": "*",
     "preact": "*",
+    "rax": "*",
+    "rax-view": "*",
     "react": "*"
   },
   "peerDependencies": {
+    "mithril": "*",
+    "preact": "*",
+    "rax": "*",
+    "rax-view": "*",
+    "react": "*",
     "react-dom": "*"
+  },
+  "peerDependenciesMeta": {
+    "mithril": {
+      "optional": true
+    },
+    "preact": {
+      "optional": true
+    },
+    "rax": {
+      "optional": true
+    },
+    "rax-view": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    }
   },
   "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
   "typesVersions": {
