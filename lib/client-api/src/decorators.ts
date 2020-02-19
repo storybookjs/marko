@@ -1,5 +1,9 @@
-import { StoryContext, StoryFn, Parameters } from '@storybook/addons';
-import { ClientApiParams, DecoratorFunction, ClientApiAddons, StoryApi } from './types';
+import { StoryContext, StoryFn } from '@storybook/addons';
+import { DecoratorFunction } from './types';
+
+interface StoryContextUpdate {
+  [key: string]: any;
+}
 
 const defaultContext: StoryContext = {
   id: 'unspecified',
@@ -14,15 +18,8 @@ export const defaultDecorateStory = (storyFn: StoryFn, decorators: DecoratorFunc
     (decorated, decorator) => (context: StoryContext = defaultContext) =>
       decorator(
         // You cannot override the parameters key, it is fixed
-        ({ parameters, ...innerContext }: StoryContext = {} as StoryContext) =>
-          decorated(
-            innerContext
-              ? {
-                  ...context,
-                  ...innerContext,
-                }
-              : context
-          ),
+        ({ parameters, ...innerContext }: StoryContextUpdate = {}) =>
+          decorated({ ...context, ...innerContext }),
         context
       ),
     storyFn
