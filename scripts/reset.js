@@ -28,6 +28,7 @@ cleaningProcess.stdout.on('data', data => {
           if (
             uri.match(/node_modules/) ||
             uri.match(/dist/) ||
+            uri.match(/ts3\.5/) ||
             uri.match(/\.cache/) ||
             uri.match(/dll/)
           ) {
