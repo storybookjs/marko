@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-docs",
-  "version": "6.0.0-alpha.12",
+  "version": "6.0.0-alpha.14",
   "description": "Superior documentation for your components",
   "keywords": [
     "addon",
@@ -31,7 +31,8 @@
     "web-components/**/*",
     "README.md",
     "*.js",
-    "*.d.ts"
+    "*.d.ts",
+    "ts3.5/**/*"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
@@ -45,14 +46,14 @@
     "@mdx-js/loader": "^1.5.1",
     "@mdx-js/mdx": "^1.5.1",
     "@mdx-js/react": "^1.5.1",
-    "@storybook/addons": "6.0.0-alpha.12",
-    "@storybook/api": "6.0.0-alpha.12",
-    "@storybook/components": "6.0.0-alpha.12",
-    "@storybook/core-events": "6.0.0-alpha.12",
+    "@storybook/addons": "6.0.0-alpha.14",
+    "@storybook/api": "6.0.0-alpha.14",
+    "@storybook/components": "6.0.0-alpha.14",
+    "@storybook/core-events": "6.0.0-alpha.14",
     "@storybook/csf": "0.0.1",
-    "@storybook/postinstall": "6.0.0-alpha.12",
-    "@storybook/source-loader": "6.0.0-alpha.12",
-    "@storybook/theming": "6.0.0-alpha.12",
+    "@storybook/postinstall": "6.0.0-alpha.14",
+    "@storybook/source-loader": "6.0.0-alpha.14",
+    "@storybook/theming": "6.0.0-alpha.14",
     "acorn": "^7.1.0",
     "acorn-jsx": "^5.1.0",
     "acorn-walk": "^7.0.0",
@@ -73,8 +74,8 @@
     "vue-docgen-loader": "^1.4.0"
   },
   "devDependencies": {
-    "@storybook/react": "6.0.0-alpha.11",
-    "@storybook/web-components": "6.0.0-alpha.11",
+    "@storybook/react": "6.0.0-alpha.14",
+    "@storybook/web-components": "6.0.0-alpha.14",
     "@types/doctrine": "^0.0.3",
     "@types/enzyme": "^3.10.3",
     "@types/jest": "^25.1.1",
@@ -100,5 +101,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff"
+  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
+  "typesVersions": {
+    "<=3.5": {
+      "*": [
+        "ts3.5/*"
+      ]
+    }
+  }
 }

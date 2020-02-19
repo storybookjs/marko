@@ -283,14 +283,14 @@ To avoid that now you have to manually pass asyncStorage to React Native Storybo
 
 Solution:
 
-- Use `require('@react-native-community/async-storage').AsyncStorage` for React Native v0.59 and above.
+- Use `require('@react-native-community/async-storage').default` for React Native v0.59 and above.
 - Use `require('react-native').AsyncStorage` for React Native v0.58 or below.
 - Use `null` to disable Async Storage completely.
 
 ```javascript
 getStorybookUI({
   ...
-  asyncStorage: require('@react-native-community/async-storage').AsyncStorage || require('react-native').AsyncStorage || null
+  asyncStorage: require('@react-native-community/async-storage').default || require('react-native').AsyncStorage || null
 });
 ```
 

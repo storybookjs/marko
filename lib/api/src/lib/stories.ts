@@ -14,7 +14,10 @@ export interface Root {
   isRoot: true;
   isLeaf: false;
   // MDX stories are "Group" type
-  parameters?: any;
+  parameters?: {
+    docsOnly?: boolean;
+    [k: string]: any;
+  };
 }
 
 export interface Group {
@@ -27,7 +30,10 @@ export interface Group {
   isRoot: false;
   isLeaf: false;
   // MDX stories are "Group" type
-  parameters?: any;
+  parameters?: {
+    docsOnly?: boolean;
+    [k: string]: any;
+  };
 }
 
 export interface Story {
@@ -48,6 +54,7 @@ export interface Story {
       showRoots?: boolean;
       [k: string]: any;
     };
+    docsOnly?: boolean;
     [k: string]: any;
   };
 }
@@ -65,6 +72,7 @@ export interface StoryInput {
       showRoots?: boolean;
       [key: string]: any;
     };
+    docsOnly?: boolean;
     [parameterName: string]: any;
   };
   isLeaf: boolean;

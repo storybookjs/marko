@@ -1,6 +1,6 @@
 import { WebSocket } from 'global';
-import JSON from 'json-fn';
 import { Channel, ChannelHandler } from '@storybook/channels';
+import { isJSON, parse, stringify } from 'telejson';
 
 type OnError = (message: Event) => void;
 
@@ -45,7 +45,7 @@ export class WebsocketTransport {
   }
 
   private sendNow(event: any) {
-    const data = JSON.stringify(event);
+    const data = stringify(event, { maxDepth: 15, allowFunction: true });
     this.socket.send(data);
   }
 
@@ -61,8 +61,8 @@ export class WebsocketTransport {
       this.isReady = true;
       this.flush();
     };
-    this.socket.onmessage = e => {
-      const event = JSON.parse(e.data);
+    this.socket.onmessage = ({ data }) => {
+      const event = typeof data === 'string' && isJSON(data) ? parse(data) : data;
       this.handler(event);
     };
     this.socket.onerror = e => {

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-centered",
-  "version": "6.0.0-alpha.12",
+  "version": "6.0.0-alpha.14",
   "description": "Storybook decorator to center components",
   "keywords": [
     "addon",
@@ -23,13 +23,14 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts"
+    "*.d.ts",
+    "ts3.5/**/*"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-alpha.12",
+    "@storybook/addons": "6.0.0-alpha.14",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "util-deprecate": "^1.0.2"
@@ -45,5 +46,12 @@
     "react-dom": "*",
     "regenerator-runtime": "*"
   },
-  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff"
+  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
+  "typesVersions": {
+    "<=3.5": {
+      "*": [
+        "ts3.5/*"
+      ]
+    }
+  }
 }
