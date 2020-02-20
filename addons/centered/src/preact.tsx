@@ -1,5 +1,4 @@
 /** @jsx h */
-/* eslint-disable import/no-extraneous-dependencies */
 import { Component, h } from 'preact';
 import { makeDecorator } from '@storybook/addons';
 import parameters from './parameters';

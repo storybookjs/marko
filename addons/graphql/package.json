@@ -35,12 +35,12 @@
     "global": "^4.3.2",
     "graphiql": "^0.17.5",
     "graphql": "^14.6.0",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "regenerator-runtime": "^0.13.3"
   },
   "peerDependencies": {
     "react": "*",
-    "react-dom": "*",
-    "regenerator-runtime": "*"
+    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"

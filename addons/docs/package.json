@@ -48,6 +48,7 @@
     "@mdx-js/react": "^1.5.1",
     "@storybook/addons": "6.0.0-alpha.15",
     "@storybook/api": "6.0.0-alpha.15",
+    "@storybook/client-api": "6.0.0-alpha.15",
     "@storybook/components": "6.0.0-alpha.15",
     "@storybook/core-events": "6.0.0-alpha.15",
     "@storybook/csf": "0.0.1",
@@ -66,6 +67,7 @@
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "react-element-to-jsx-string": "^14.1.0",
+    "regenerator-runtime": "^0.13.3",
     "remark-external-links": "^5.0.0",
     "remark-slug": "^5.1.2",
     "ts-dedent": "^1.1.1",
@@ -95,8 +97,7 @@
     "babel-loader": "^8.0.0",
     "react": "^16.9.0",
     "react-dom": "*",
-    "react-is": "^16.8.0",
-    "regenerator-runtime": "*"
+    "react-is": "^16.8.0"
   },
   "publishConfig": {
     "access": "public"

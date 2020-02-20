@@ -3,7 +3,6 @@
 import { navigator } from 'global';
 import escape from 'escape-html';
 import { getQueryParams } from '@storybook/client-api';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Channel } from '@storybook/channels';
 
 import KnobStore, { KnobStoreKnob } from './KnobStore';

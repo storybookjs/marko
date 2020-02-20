@@ -3940,7 +3940,7 @@
   resolved "https://registry.yarnpkg.com/@types/doctrine/-/doctrine-0.0.3.tgz#e892d293c92c9c1d3f9af72c15a554fbc7e0895a"
   integrity sha1-6JLSk8ksnB0/mvcsFaVU+8fgiVo=
 
-"@types/enzyme@^3.10.3", "@types/enzyme@^3.9.0":
+"@types/enzyme@^3.10.3", "@types/enzyme@^3.10.5", "@types/enzyme@^3.9.0":
   version "3.10.5"
   resolved "https://registry.yarnpkg.com/@types/enzyme/-/enzyme-3.10.5.tgz#fe7eeba3550369eed20e7fb565bfb74eec44f1f0"
   integrity sha512-R+phe509UuUYy9Tk0YlSbipRpfVtIzb/9BHn5pTEtjJTF5LXvUjrIQcZvNyANNEyFrd2YGs196PniNT1fgvOQA==
@@ -11789,7 +11789,7 @@ envinfo@^7.3.1, envinfo@^7.5.0:
   resolved "https://registry.yarnpkg.com/envinfo/-/envinfo-7.5.0.tgz#91410bb6db262fb4f1409bd506e9ff57e91023f4"
   integrity sha512-jDgnJaF/Btomk+m3PZDTTCb5XIIIX3zYItnCRfF73zVgvinLoRomuhi75Y4su0PtQxWz4v66XnLLckyvyJTOIQ==
 
-enzyme-adapter-react-16@^1.9.1:
+enzyme-adapter-react-16@^1.15.2, enzyme-adapter-react-16@^1.9.1:
   version "1.15.2"
   resolved "https://registry.yarnpkg.com/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.15.2.tgz#b16db2f0ea424d58a808f9df86ab6212895a4501"
   integrity sha512-SkvDrb8xU3lSxID8Qic9rB8pvevDbLybxPK6D/vW7PrT0s2Cl/zJYuXvsd1EBTz0q4o3iqG3FJhpYz3nUNpM2Q==
@@ -11840,7 +11840,7 @@ enzyme-to-json@^3.3.0, enzyme-to-json@^3.4.1:
     lodash "^4.17.15"
     react-is "^16.12.0"
 
-enzyme@^3.9.0:
+enzyme@^3.11.0, enzyme@^3.9.0:
   version "3.11.0"
   resolved "https://registry.yarnpkg.com/enzyme/-/enzyme-3.11.0.tgz#71d680c580fe9349f6f5ac6c775bc3e6b7a79c28"
   integrity sha512-Dw8/Gs4vRjxY6/6i9wU0V+utmQO9kvh9XLnz3LIudviOnVYDEe2ec+0k+NQoMamn1VrjKgCUOWj5jG/5M5M0Qw==
@@ -24340,7 +24340,7 @@ rax-text@^1.0.1, rax-text@^1.1.2:
   dependencies:
     universal-env "^3.0.0"
 
-rax-view@^1.0.0:
+rax-view@*, rax-view@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/rax-view/-/rax-view-1.1.0.tgz#4ff95bcadb6c5355d342753b7f4e364e219c3411"
   integrity sha512-AaBkFaks49Igs8tHU3HmYoa+PoXitMbddAQ8BlfJabYTT6/gfcMdj7ejDB/23MGtB/cuJthmuiQMlkr8/JVUuA==
@@ -24348,7 +24348,7 @@ rax-view@^1.0.0:
     classnames "^2.2.6"
     universal-env "^1.0.0"
 
-rax@^1.1.0:
+rax@*, rax@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/rax/-/rax-1.1.1.tgz#f8a8b51913bdcbf343d8ad8f50c742d555eb5e45"
   integrity sha512-sk34VJ/D4lMgT6z6PLTF5xK3Nvk2QMkdhvm45a3f4TZq3Uy18dDf5+b7oUqrHBZZNT5E0Se8RHSa/WodhMAV0g==
@@ -24501,7 +24501,7 @@ react-dom@^15.4.2:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
-react-dom@^16.10.2, react-dom@^16.11.0, react-dom@^16.8.3, react-dom@^16.8.4:
+react-dom@^16.10.2, react-dom@^16.11.0, react-dom@^16.12.0, react-dom@^16.8.3, react-dom@^16.8.4:
   version "16.12.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.12.0.tgz#0da4b714b8d13c2038c9396b54a92baea633fe11"
   integrity sha512-LMxFfAGrcS3kETtQaCkTKjMiifahaMySFDn71fZUNpPHZQEzmk/GiAeIT8JSOrHB23fnuCOMruL2a8NYlw+8Gw==
@@ -25292,11 +25292,6 @@ regenerator-runtime@^0.11.0:
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
   integrity sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==
-
-regenerator-runtime@^0.12.1:
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.12.1.tgz#fa1a71544764c036f8c49b13a08b2594c9f8a0de"
-  integrity sha512-odxIc1/vDlo4iZcfXqRYFj0vpXFNoGdKMAUieAlFYO6m/nl5e9KR/beGf41z4a1FI+aQgtjhuaSlDxQ0hmkrHg==
 
 regenerator-transform@^0.10.0:
   version "0.10.1"
