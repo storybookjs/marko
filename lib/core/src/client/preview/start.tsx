@@ -1,4 +1,4 @@
-import { navigator, window, document } from 'global';
+import { document, navigator, window } from 'global';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import deprecate from 'util-deprecate';
@@ -6,13 +6,14 @@ import AnsiToHtml from 'ansi-to-html';
 
 import addons from '@storybook/addons';
 import createChannel from '@storybook/channel-postmessage';
-import { ClientApi, StoryStore, ConfigApi } from '@storybook/client-api';
-import { toId, storyNameFromExport, isExportStory } from '@storybook/csf';
+import { ClientApi, ConfigApi, StoryStore } from '@storybook/client-api';
+import { isExportStory, storyNameFromExport, toId } from '@storybook/csf';
 import { logger } from '@storybook/client-logger';
 import Events from '@storybook/core-events';
 
 import { initializePath, setPath } from './url';
 import { NoDocs } from './NoDocs';
+import { Loadable, LoaderFunction, PreviewError, RequireContext } from './types';
 
 const ansiConverter = new AnsiToHtml({
   escapeXML: true,
@@ -38,7 +39,7 @@ function showNopreview() {
   document.body.classList.add(classes.NOPREVIEW);
 }
 
-function showErrorDisplay({ message = '', stack = '' }) {
+function showErrorDisplay({ message = '', stack = '' }: PreviewError) {
   document.getElementById('error-message').innerHTML = ansiConverter.toHtml(message);
   document.getElementById('error-stack').innerHTML = ansiConverter.toHtml(stack);
 
@@ -50,7 +51,7 @@ function showErrorDisplay({ message = '', stack = '' }) {
 
 // showError is used by the various app layers to inform the user they have done something
 // wrong -- for instance returned the wrong thing from a story
-function showError({ title, description }) {
+function showError({ title, description }: { title: string; description: string }) {
   addons.getChannel().emit(Events.STORY_ERRORED, { title, description });
   showErrorDisplay({
     message: title,
@@ -59,7 +60,7 @@ function showError({ title, description }) {
 }
 
 // showException is used if we fail to render the story and it is uncaught by the app layer
-function showException(exception) {
+function showException(exception: PreviewError) {
   addons.getChannel().emit(Events.STORY_THREW_EXCEPTION, exception);
   showErrorDisplay(exception);
 
@@ -75,11 +76,12 @@ const isBrowser =
   !(navigator.userAgent.indexOf('jsdom') > -1);
 
 export const getContext = (() => {
-  let cache;
-  return decorateStory => {
-    if (cache) {
-      return cache;
-    }
+  // let cache;
+  // todo add type
+  return (decorateStory: any) => {
+    // if (cache) {
+    //   return cache;
+    // }
     let channel = null;
     if (isBrowser) {
       try {
@@ -114,18 +116,17 @@ export const getContext = (() => {
   };
 })();
 
-function focusInInput(event) {
-  return (
-    /input|textarea/i.test(event.target.tagName) ||
-    event.target.getAttribute('contenteditable') !== null
-  );
+function focusInInput(event: Event) {
+  const target = event.target as Element;
+  return /input|textarea/i.test(target.tagName) || target.getAttribute('contenteditable') !== null;
 }
 
+type StyleKeyValue = { [key: string]: string };
 const applyLayout = (() => {
-  let previousStyles;
+  let previousStyles: string | undefined;
 
-  return layout => {
-    const layouts = {
+  return (layout: string) => {
+    const layouts: StyleKeyValue = {
       centered: `
         display: flex;
         justify-content: center;
@@ -152,7 +153,8 @@ const applyLayout = (() => {
   };
 })();
 
-export default function start(render, { decorateStory } = {}) {
+// todo improve typings
+export default function start(render: any, { decorateStory }: any = {}) {
   const context = getContext(decorateStory);
 
   const { clientApi, channel, configApi, storyStore } = context;
@@ -162,9 +164,9 @@ export default function start(render, { decorateStory } = {}) {
   let previousStory = '';
   let previousRevision = -1;
   let previousViewMode = '';
-  let previousId = null;
+  let previousId: string | null = null;
 
-  const renderMain = forceRender => {
+  const renderMain = (forceRender: boolean) => {
     const revision = storyStore.getRevision();
     const loadError = storyStore.getError();
     const { storyId, viewMode: urlViewMode } = storyStore.getSelection();
@@ -225,7 +227,7 @@ export default function start(render, { decorateStory } = {}) {
         break;
       case 'story':
       default:
-        if (previousId != null && (id !== previousId || viewMode !== previousViewMode)) {
+        if (previousId !== null && (id !== previousId || viewMode !== previousViewMode)) {
           storyStore.cleanHooks(previousId);
           ReactDOM.unmountComponentAtNode(document.getElementById('root'));
         }
@@ -238,14 +240,16 @@ export default function start(render, { decorateStory } = {}) {
       switch (viewMode) {
         case 'docs': {
           showMain();
-          document.getElementById('root').setAttribute('hidden', true);
+          // todo discuss: takes NodeModule, passed boolean
+          document.getElementById('root').setAttribute('hidden', true as any);
           document.getElementById('docs-root').removeAttribute('hidden');
           break;
         }
         case 'story':
         default: {
           if (previousViewMode === 'docs') {
-            document.getElementById('docs-root').setAttribute('hidden', true);
+            // todo discuss: takes NodeModule, passed boolean
+            document.getElementById('docs-root').setAttribute('hidden', true as any);
             document.getElementById('root').removeAttribute('hidden');
           }
         }
@@ -255,7 +259,8 @@ export default function start(render, { decorateStory } = {}) {
     switch (viewMode) {
       case 'docs': {
         const docs = parameters.docs || {};
-        const DocsContainer = docs.container || (({ children }) => <>{children}</>);
+        // todo improve typings
+        const DocsContainer = docs.container || (({ children }: any) => <>{children}</>);
         const Page = docs.page || NoDocs;
         ReactDOM.render(
           <DocsContainer context={renderContext}>
@@ -298,7 +303,7 @@ export default function start(render, { decorateStory } = {}) {
   };
 
   // initialize the UI
-  const renderUI = forceRender => {
+  const renderUI = (forceRender: boolean) => {
     if (isBrowser) {
       try {
         renderMain(forceRender);
@@ -333,7 +338,7 @@ export default function start(render, { decorateStory } = {}) {
     });
 
     // Handle keyboard shortcuts
-    window.onkeydown = event => {
+    window.onkeydown = (event: KeyboardEvent) => {
       if (!focusInInput(event)) {
         // We have to pick off the keys of the event that we need on the other side
         const { altKey, ctrlKey, metaKey, shiftKey, key, code, keyCode } = event;
@@ -357,28 +362,31 @@ export default function start(render, { decorateStory } = {}) {
     window.__STORYBOOK_ADDONS_CHANNEL__ = channel; // may not be defined
   }
 
-  let previousExports = new Map();
-  const loadStories = (loadable, framework) => () => {
+  let previousExports = new Map<any, string>();
+  const loadStories = (loadable: Loadable, framework: string) => () => {
     let reqs = null;
+    // todo discuss / improve type check
     if (Array.isArray(loadable)) {
       reqs = loadable;
-    } else if (loadable.keys) {
-      reqs = [loadable];
+    } else if ((loadable as RequireContext).keys) {
+      reqs = [loadable as RequireContext];
     }
 
-    let currentExports = new Map();
+    let currentExports = new Map<any, string>();
     if (reqs) {
       reqs.forEach(req => {
-        req.keys().forEach(filename => {
+        req.keys().forEach((filename: string) => {
           const fileExports = req(filename);
           currentExports.set(
             fileExports,
-            typeof req.resolve === 'function' ? req.resolve(filename) : null
+            // todo discuss: types infer that this is RequireContext; no checks needed?
+            // typeof req.resolve === 'function' ? req.resolve(filename) : null
+            req.resolve(filename)
           );
         });
       });
     } else {
-      const exported = loadable();
+      const exported = (loadable as LoaderFunction)();
       if (Array.isArray(exported) && exported.every(obj => obj.default != null)) {
         currentExports = new Map(exported.map(fileExports => [fileExports, null]));
       } else if (exported) {
@@ -437,7 +445,8 @@ export default function start(render, { decorateStory } = {}) {
         subcomponents,
       } = meta;
       // We pass true here to avoid the warning about HMR. It's cool clientApi, we got this
-      const kind = clientApi.storiesOf(kindName, true);
+      // todo discuss: TS now wants a NodeModule; should we fix this differently?
+      const kind = clientApi.storiesOf(kindName, true as any);
 
       // we should always have a framework, rest optional
       kind.addParameters({
@@ -448,7 +457,8 @@ export default function start(render, { decorateStory } = {}) {
         ...params,
       });
 
-      (decos || []).forEach(decorator => {
+      // todo add type
+      (decos || []).forEach((decorator: any) => {
         kind.addDecorator(decorator);
       });
 
@@ -484,7 +494,7 @@ export default function start(render, { decorateStory } = {}) {
    * @param {*} m - ES module object for hot-module-reloading (HMR)
    * @param {*} framework - name of framework in use, e.g. "react"
    */
-  const configure = (loadable, m, framework) => {
+  const configure = (loadable: Loadable, m: NodeModule, framework: string) => {
     if (typeof m === 'string') {
       throw new Error(
         `Invalid module '${m}'. Did you forget to pass \`module\` as the second argument to \`configure\`"?`
