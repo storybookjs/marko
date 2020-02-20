@@ -24,6 +24,7 @@ export interface SubAPI {
 export type Mapper = (ref: InceptionRef, story: StoryInput) => StoryInput;
 export interface InceptionRef {
   id: string;
+  title?: string;
   url: string;
   startInjected?: boolean;
   stories: StoriesHash;
