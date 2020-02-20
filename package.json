@@ -221,7 +221,7 @@
   },
   "optionalDependencies": {
     "@cypress/webpack-preprocessor": "^4.1.0",
-    "cypress": "^3.4.1"
+    "cypress": "^4.0.2"
   },
   "engines": {
     "node": ">=8.10.0",
