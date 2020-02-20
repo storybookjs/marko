@@ -42,12 +42,9 @@
     "preact": "*",
     "react": "*"
   },
-  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
-  "typesVersions": {
-    "<=3.5": {
-      "*": [
-        "ts3.5/*"
-      ]
-    }
-  }
+  "peerDependencies": {
+    "react-dom": "*",
+    "regenerator-runtime": "*"
+  },
+  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff"
 }
