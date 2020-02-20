@@ -1,4 +1,16 @@
+import { StoryContext } from '@storybook/addons';
+
 import { defaultDecorateStory } from './decorators';
+
+function makeContext(input: Record<string, any>): StoryContext {
+  return {
+    id: 'id',
+    kind: 'kind',
+    name: 'name',
+    parameters: {},
+    ...input,
+  };
+}
 
 describe('client-api.decorators', () => {
   it('calls decorators in out to in order', () => {
@@ -25,7 +37,7 @@ describe('client-api.decorators', () => {
     const decorated = defaultDecorateStory(c => contexts.push(c), decorators);
 
     expect(contexts).toEqual([]);
-    decorated({ k: 0 });
+    decorated(makeContext({ k: 0 }));
     expect(contexts).toEqual([{ k: 0 }, { k: 3 }, { k: 2 }, { k: 1 }]);
   });
 
@@ -35,7 +47,7 @@ describe('client-api.decorators', () => {
     const decorated = defaultDecorateStory(c => contexts.push(c), decorators);
 
     expect(contexts).toEqual([]);
-    decorated({ a: 'b' });
+    decorated(makeContext({ a: 'b' }));
     expect(contexts).toEqual([{ a: 'b' }, { a: 'b', c: 'd' }]);
   });
 
@@ -45,7 +57,7 @@ describe('client-api.decorators', () => {
     const decorated = defaultDecorateStory(c => contexts.push(c), decorators);
 
     expect(contexts).toEqual([]);
-    decorated({ parameters: { a: 'b' } });
+    decorated(makeContext({ parameters: { a: 'b' } }));
     expect(contexts).toEqual([{ parameters: { a: 'b' } }, { parameters: { a: 'b' } }]);
   });
 });
