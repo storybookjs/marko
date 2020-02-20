@@ -34,9 +34,6 @@ export type RequireContext = {
 export type LoaderFunction = () => void | any[];
 export type Loadable = RequireContext | RequireContext[] | LoaderFunction;
 
-// The function used by a framework to render story to the DOM
-export type RenderStoryFunction = (context: StoryContext) => void;
-
 // Previously this also included these fields but I don't think they were used:
 //   { configApi, storyStore, channel, clientApi, };
 export interface RenderContext extends StoreItem {
@@ -57,3 +54,6 @@ export interface RenderContext extends StoreItem {
   showError: (error: { title: string; description: string }) => void;
   showException: (err: Error) => void;
 }
+
+// The function used by a framework to render story to the DOM
+export type RenderStoryFunction = (context: RenderContext) => void;
