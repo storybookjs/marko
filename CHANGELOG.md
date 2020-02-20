@@ -1,3 +1,36 @@
+## 6.0.0-alpha.15 (February 20, 2020)
+
+### Breaking Changes
+
+- Refactor Client API: pull metadata handling code into the store. ([#9877](https://github.com/storybookjs/storybook/pull/9877))
+
+### Features
+
+- Core: Add skip dispose option to ClientApi ([#9868](https://github.com/storybookjs/storybook/pull/9868))
+
+## 6.0.0-alpha.14 (February 19, 2020)
+
+### Features
+
+- CLI: Add Yarn 2 compatibility ([#9866](https://github.com/storybookjs/storybook/pull/9866))
+
+### Bug Fixes
+
+- Typescript: Add downlevel dts for TS3.5 support ([#9902](https://github.com/storybookjs/storybook/pull/9902))
+- CLI: capture unknown arguments the native way ([#9888](https://github.com/storybookjs/storybook/pull/9888))
+- Core: Use telejson for websockets channel ([#9867](https://github.com/storybookjs/storybook/pull/9867))
+
+### Maintenance
+
+- Build: Upgrade to latest version of eslint config ([#9882](https://github.com/storybookjs/storybook/pull/9882))
+- Typescript: Misc improvements ([#9879](https://github.com/storybookjs/storybook/pull/9879))
+- Misc: Project root cleanup ([#9880](https://github.com/storybookjs/storybook/pull/9880))
+
+### Dependency Upgrades
+
+- Bump webpack-cli from 3.3.10 to 3.3.11 ([#9895](https://github.com/storybookjs/storybook/pull/9895))
+- Migrate to leven ([#9881](https://github.com/storybookjs/storybook/pull/9881))
+
 ## 6.0.0-alpha.13 (February 15, 2020)
 
 ### Bug Fixes

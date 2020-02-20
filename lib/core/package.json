@@ -1,6 +1,6 @@
 {
   "name": "@storybook/core",
-  "version": "6.0.0-alpha.13",
+  "version": "6.0.0-alpha.15",
   "description": "Storybook framework-agnostic API",
   "keywords": [
     "storybook"
@@ -21,7 +21,8 @@
     "dll/**/*",
     "README.md",
     "*.js",
-    "*.d.ts"
+    "*.d.ts",
+    "ts3.5/**/*"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
@@ -35,16 +36,16 @@
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-react": "^7.8.3",
     "@babel/preset-typescript": "^7.8.3",
-    "@storybook/addons": "6.0.0-alpha.13",
-    "@storybook/channel-postmessage": "6.0.0-alpha.13",
-    "@storybook/client-api": "6.0.0-alpha.13",
-    "@storybook/client-logger": "6.0.0-alpha.13",
-    "@storybook/core-events": "6.0.0-alpha.13",
+    "@storybook/addons": "6.0.0-alpha.15",
+    "@storybook/channel-postmessage": "6.0.0-alpha.15",
+    "@storybook/client-api": "6.0.0-alpha.15",
+    "@storybook/client-logger": "6.0.0-alpha.15",
+    "@storybook/core-events": "6.0.0-alpha.15",
     "@storybook/csf": "0.0.1",
-    "@storybook/node-logger": "6.0.0-alpha.13",
-    "@storybook/router": "6.0.0-alpha.13",
-    "@storybook/theming": "6.0.0-alpha.13",
-    "@storybook/ui": "6.0.0-alpha.13",
+    "@storybook/node-logger": "6.0.0-alpha.15",
+    "@storybook/router": "6.0.0-alpha.15",
+    "@storybook/theming": "6.0.0-alpha.15",
+    "@storybook/ui": "6.0.0-alpha.15",
     "airbnb-js-shims": "^2.2.1",
     "ansi-to-html": "^0.6.11",
     "autoprefixer": "^9.7.2",

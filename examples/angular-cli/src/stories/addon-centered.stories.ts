@@ -4,19 +4,16 @@ import { Button } from '@storybook/angular/demo';
 import { AppComponent } from '../app/app.component';
 
 storiesOf('Addon/Centered', module)
-  .addDecorator(centered)
-  .add('centered component', () => ({
-    component: AppComponent,
-    props: {},
-  }));
-
-storiesOf('Addon/Centered', module)
   .addDecorator(
     moduleMetadata({
       declarations: [Button],
     })
   )
   .addDecorator(centered)
+  .add('centered component', () => ({
+    component: AppComponent,
+    props: {},
+  }))
   .add('centered template', () => ({
     template: `<storybook-button-component [text]="text" (onClick)="onClick($event)"></storybook-button-component>`,
     props: {

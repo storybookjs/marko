@@ -1,82 +1,28 @@
 /* eslint no-underscore-dangle: 0 */
-import isPlainObject from 'is-plain-object';
 import { logger } from '@storybook/client-logger';
-import { StoryContext, StoryFn, Parameters } from '@storybook/addons';
+import { StoryFn, Parameters } from '@storybook/addons';
 import { toId } from '@storybook/csf';
 
-import mergeWith from 'lodash/mergeWith';
-import isEqual from 'lodash/isEqual';
-import get from 'lodash/get';
 import { ClientApiParams, DecoratorFunction, ClientApiAddons, StoryApi } from './types';
 import { applyHooks } from './hooks';
 import StoryStore from './story_store';
+import { defaultDecorateStory } from './decorators';
 
-// merge with concatenating arrays, but no duplicates
-const merge = (a: any, b: any) =>
-  mergeWith({}, a, b, (objValue, srcValue) => {
-    if (Array.isArray(srcValue) && Array.isArray(objValue)) {
-      srcValue.forEach(s => {
-        const existing = objValue.find(o => o === s || isEqual(o, s));
-        if (!existing) {
-          objValue.push(s);
-        }
-      });
+// ClientApi (and StoreStore) are really singletons. However they are not created until the
+// relevant framework instanciates them via `start.js`. The good news is this happens right away.
+let singleton: ClientApi;
 
-      return objValue;
-    }
-    if (Array.isArray(objValue)) {
-      logger.log('the types mismatch, picking', objValue);
-      return objValue;
-    }
-    return undefined;
-  });
+export const addDecorator = (decorator: DecoratorFunction) => {
+  if (!singleton)
+    throw new Error(`Singleton client API not yet initialized, cannot call addDecorator`);
 
-const defaultContext: StoryContext = {
-  id: 'unspecified',
-  name: 'unspecified',
-  kind: 'unspecified',
-  parameters: {},
+  singleton.addDecorator(decorator);
 };
-
-export const defaultDecorateStory = (storyFn: StoryFn, decorators: DecoratorFunction[]) =>
-  decorators.reduce(
-    (decorated, decorator) => (context: StoryContext = defaultContext) =>
-      decorator(
-        p =>
-          decorated(
-            p
-              ? {
-                  ...context,
-                  ...p,
-                  parameters: { ...context.parameters, ...p.parameters },
-                }
-              : context
-          ),
-        context
-      ),
-    storyFn
-  );
-
-let _globalDecorators: DecoratorFunction[] = [];
-
-let _globalParameters: Parameters = {};
-
-export const addDecorator = (decoratorFn: DecoratorFunction) => {
-  _globalDecorators.push(decoratorFn);
-};
-
 export const addParameters = (parameters: Parameters) => {
-  _globalParameters = {
-    ..._globalParameters,
-    ...parameters,
-    options: {
-      ...merge(get(_globalParameters, 'options', {}), get(parameters, 'options', {})),
-    },
-    // FIXME: https://github.com/storybookjs/storybook/issues/7872
-    docs: {
-      ...merge(get(_globalParameters, 'docs', {}), get(parameters, 'docs', {})),
-    },
-  };
+  if (!singleton)
+    throw new Error(`Singleton client API not yet initialized, cannot call addParameters`);
+
+  singleton.addParameters(parameters);
 };
 
 export default class ClientApi {
@@ -86,15 +32,24 @@ export default class ClientApi {
 
   private _decorateStory: (storyFn: StoryFn, decorators: DecoratorFunction[]) => any;
 
-  constructor({ storyStore, decorateStory = defaultDecorateStory }: ClientApiParams) {
+  // React Native Fast refresh doesn't allow multiple dispose calls
+  private _noStoryModuleAddMethodHotDispose: boolean;
+
+  constructor({
+    storyStore,
+    decorateStory = defaultDecorateStory,
+    noStoryModuleAddMethodHotDispose,
+  }: ClientApiParams) {
     this._storyStore = storyStore;
     this._addons = {};
 
+    this._noStoryModuleAddMethodHotDispose = noStoryModuleAddMethodHotDispose || false;
+
     this._decorateStory = decorateStory;
 
-    if (!storyStore) {
-      throw new Error('storyStore is required');
-    }
+    if (!storyStore) throw new Error('storyStore is required');
+
+    singleton = this;
   }
 
   setAddon = (addon: any) => {
@@ -106,7 +61,7 @@ export default class ClientApi {
 
   getSeparators = () => {
     const { hierarchySeparator, hierarchyRootSeparator, showRoots } =
-      _globalParameters.options || {};
+      this._storyStore._globalMetadata.parameters.options || {};
 
     // Note these checks will be removed in 6.0, leaving this much simpler
     if (
@@ -130,20 +85,15 @@ export default class ClientApi {
   };
 
   addDecorator = (decorator: DecoratorFunction) => {
-    addDecorator(decorator);
+    this._storyStore.addGlobalMetadata({ decorators: [decorator], parameters: {} });
   };
 
   addParameters = (parameters: Parameters) => {
-    addParameters(parameters);
+    this._storyStore.addGlobalMetadata({ decorators: [], parameters });
   };
 
   clearDecorators = () => {
-    _globalDecorators = [];
-  };
-
-  clearParameters = () => {
-    // Utility function FOR TESTING USE ONLY
-    _globalParameters = {};
+    this._storyStore.clearGlobalDecorators();
   };
 
   // what are the occasions that "m" is a boolean vs an obj
@@ -179,8 +129,6 @@ export default class ClientApi {
       });
     }
 
-    const localDecorators: DecoratorFunction<StoryFnReturnType>[] = [];
-    let localParameters: Parameters = {};
     let hasAdded = false;
     const api: StoryApi<StoryFnReturnType> = {
       kind: kind.toString(),
@@ -198,7 +146,11 @@ export default class ClientApi {
       };
     });
 
-    api.add = (storyName, storyFn, parameters = {}) => {
+    api.add = (
+      storyName: string,
+      storyFn: StoryFn<StoryFnReturnType>,
+      parameters: Parameters = {}
+    ) => {
       hasAdded = true;
 
       const id = parameters.__id || toId(kind, storyName);
@@ -206,7 +158,8 @@ export default class ClientApi {
       if (typeof storyName !== 'string') {
         throw new Error(`Invalid or missing storyName provided for a "${kind}" story.`);
       }
-      if (m && m.hot && m.hot.dispose) {
+
+      if (!this._noStoryModuleAddMethodHotDispose && m && m.hot && m.hot.dispose) {
         m.hot.dispose(() => {
           const { _storyStore } = this;
           _storyStore.remove(id);
@@ -215,59 +168,38 @@ export default class ClientApi {
 
       const fileName = m && m.id ? `${m.id}` : undefined;
 
-      const allParam = [_globalParameters, localParameters, parameters].reduce(
-        (acc: Parameters, p) => {
-          if (p) {
-            Object.entries(p).forEach(([key, value]) => {
-              const existingValue = acc[key];
-
-              if (Array.isArray(value)) {
-                acc[key] = value;
-              } else if (isPlainObject(value) && isPlainObject(existingValue)) {
-                acc[key] = merge(existingValue, value);
-              } else {
-                acc[key] = value;
-              }
-            });
-          }
-          return acc;
-        },
-        { fileName }
-      );
-
+      const { decorators, ...storyParameters } = parameters;
       this._storyStore.addStory(
         {
           id,
           kind,
           name: storyName,
           storyFn,
-          parameters: allParam,
+          parameters: { fileName, ...storyParameters },
+          decorators,
         },
         {
           applyDecorators: applyHooks(this._decorateStory),
-          getDecorators: () => [
-            ...(allParam.decorators || []),
-            ...localDecorators,
-            ..._globalDecorators,
-          ],
         }
       );
       return api;
     };
 
     api.addDecorator = (decorator: DecoratorFunction<StoryFnReturnType>) => {
-      if (hasAdded) {
-        logger.warn(`You have added a decorator to the kind '${kind}' after a story has already been added.
-In Storybook 4 this applied the decorator only to subsequent stories. In Storybook 5+ it applies to all stories.
-This is probably not what you intended. Read more here: https://github.com/storybookjs/storybook/blob/master/MIGRATION.md`);
-      }
+      if (hasAdded)
+        throw new Error(`You cannot add a decorator after the first story for a kind.
+Read more here: https://github.com/storybookjs/storybook/blob/master/MIGRATION.md#can-no-longer-add-decorators-parameters-after-stories`);
 
-      localDecorators.push(decorator);
+      this._storyStore.addKindMetadata(kind, { decorators: [decorator], parameters: [] });
       return api;
     };
 
     api.addParameters = (parameters: Parameters) => {
-      localParameters = { ...localParameters, ...parameters };
+      if (hasAdded)
+        throw new Error(`You cannot add parameters after the first story for a kind.
+Read more here: https://github.com/storybookjs/storybook/blob/master/MIGRATION.md#can-no-longer-add-decorators-parameters-after-stories`);
+
+      this._storyStore.addKindMetadata(kind, { decorators: [], parameters });
       return api;
     };
 

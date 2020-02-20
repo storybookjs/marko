@@ -1,6 +1,6 @@
 {
   "name": "@storybook/ui",
-  "version": "6.0.0-alpha.13",
+  "version": "6.0.0-alpha.15",
   "description": "Core Storybook UI",
   "keywords": [
     "storybook"
@@ -20,7 +20,8 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts"
+    "*.d.ts",
+    "ts3.5/**/*"
   ],
   "scripts": {
     "createDlls": "node -r esm ./scripts/createDlls.js",
@@ -28,14 +29,14 @@
   },
   "dependencies": {
     "@emotion/core": "^10.0.20",
-    "@storybook/addons": "6.0.0-alpha.13",
-    "@storybook/api": "6.0.0-alpha.13",
-    "@storybook/channels": "6.0.0-alpha.13",
-    "@storybook/client-logger": "6.0.0-alpha.13",
-    "@storybook/components": "6.0.0-alpha.13",
-    "@storybook/core-events": "6.0.0-alpha.13",
-    "@storybook/router": "6.0.0-alpha.13",
-    "@storybook/theming": "6.0.0-alpha.13",
+    "@storybook/addons": "6.0.0-alpha.15",
+    "@storybook/api": "6.0.0-alpha.15",
+    "@storybook/channels": "6.0.0-alpha.15",
+    "@storybook/client-logger": "6.0.0-alpha.15",
+    "@storybook/components": "6.0.0-alpha.15",
+    "@storybook/core-events": "6.0.0-alpha.15",
+    "@storybook/router": "6.0.0-alpha.15",
+    "@storybook/theming": "6.0.0-alpha.15",
     "@types/markdown-to-jsx": "^6.9.1",
     "copy-to-clipboard": "^3.0.8",
     "core-js": "^3.0.1",
@@ -63,9 +64,9 @@
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "6.0.0-alpha.13",
-    "@storybook/addon-knobs": "6.0.0-alpha.13",
-    "@storybook/react": "6.0.0-alpha.13",
+    "@storybook/addon-actions": "6.0.0-alpha.15",
+    "@storybook/addon-knobs": "6.0.0-alpha.15",
+    "@storybook/react": "6.0.0-alpha.15",
     "corejs-upgrade-webpack-plugin": "^3.0.1",
     "flush-promises": "^1.0.2",
     "terser-webpack-plugin": "^2.3.4",
@@ -74,5 +75,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff"
+  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
+  "typesVersions": {
+    "<=3.5": {
+      "*": [
+        "ts3.5/*"
+      ]
+    }
+  }
 }
