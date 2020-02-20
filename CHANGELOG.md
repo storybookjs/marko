@@ -1,3 +1,13 @@
+## 6.0.0-alpha.15 (February 20, 2020)
+
+### Breaking Changes
+
+- Refactor Client API: pull metadata handling code into the store. ([#9877](https://github.com/storybookjs/storybook/pull/9877))
+
+### Features
+
+- Core: Add skip dispose option to ClientApi ([#9868](https://github.com/storybookjs/storybook/pull/9868))
+
 ## 6.0.0-alpha.14 (February 19, 2020)
 
 ### Features
