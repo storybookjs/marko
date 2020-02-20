@@ -23,5 +23,5 @@ export function enhanceTypeScriptProp(extractedProp: ExtractedProp, rawDefaultPr
 }
 
 export function enhanceTypeScriptProps(extractedProps: ExtractedProp[]): PropDef[] {
-  return extractedProps.map(enhanceTypeScriptProp);
+  return extractedProps.map(prop => enhanceTypeScriptProp(prop));
 }
