@@ -1,10 +1,14 @@
 import {
   Addon,
+  StoryId,
+  StoryKind,
+  StoryName,
+  StoryIdentifier,
   StoryFn,
-  StoryContext,
   Parameters,
   StoryApi,
   DecoratorFunction,
+  DecorateStoryFunction,
 } from '@storybook/addons';
 import StoryStore from './story_store';
 import { HooksContext } from './hooks';
@@ -20,16 +24,24 @@ export interface StoryMetadata {
   decorators: DecoratorFunction[];
 }
 
-export interface StoreItem extends StoryContext {
-  id: string;
-  kind: string;
-  name: string;
+export interface AddStoryArgs extends StoryMetadata, StoryIdentifier {
+  id: StoryId;
+  kind: StoryKind;
+  name: StoryName;
+  parameters: Parameters;
+  decorators: DecoratorFunction[];
+  storyFn: StoryFn;
+}
+
+export interface StoreItem extends StoryIdentifier {
+  id: StoryId;
+  kind: StoryKind;
+  name: StoryName;
+  parameters: Parameters;
   getDecorated: () => StoryFn;
   getOriginal: () => StoryFn;
-  story: string;
   storyFn: StoryFn;
   hooks: HooksContext;
-  parameters: Parameters;
 }
 
 export interface StoreData {
@@ -38,20 +50,13 @@ export interface StoreData {
 
 export interface ClientApiParams {
   storyStore: StoryStore;
-  decorateStory?: (storyFn: any, decorators: any) => any;
+  decorateStory?: DecorateStoryFunction;
   noStoryModuleAddMethodHotDispose?: boolean;
 }
 
 export type ClientApiReturnFn<StoryFnReturnType> = (...args: any[]) => StoryApi<StoryFnReturnType>;
 
 export { StoryApi, DecoratorFunction };
-
-export interface AddStoryArgs extends StoryMetadata {
-  id: string;
-  kind: string;
-  name: string;
-  storyFn: StoryFn;
-}
 
 export interface ClientApiAddon<StoryFnReturnType = unknown> extends Addon {
   apply: (a: StoryApi<StoryFnReturnType>, b: any[]) => any;

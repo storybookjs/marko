@@ -1,6 +1,6 @@
 /* eslint no-underscore-dangle: 0 */
 import { logger } from '@storybook/client-logger';
-import { StoryFn, Parameters } from '@storybook/addons';
+import { StoryFn, Parameters, DecorateStoryFunction } from '@storybook/addons';
 import { toId } from '@storybook/csf';
 
 import { ClientApiParams, DecoratorFunction, ClientApiAddons, StoryApi } from './types';
@@ -30,7 +30,7 @@ export default class ClientApi {
 
   private _addons: ClientApiAddons<unknown>;
 
-  private _decorateStory: (storyFn: StoryFn, decorators: DecoratorFunction[]) => any;
+  private _decorateStory: DecorateStoryFunction;
 
   // React Native Fast refresh doesn't allow multiple dispose calls
   private _noStoryModuleAddMethodHotDispose: boolean;

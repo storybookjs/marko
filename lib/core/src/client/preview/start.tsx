@@ -2,9 +2,8 @@ import { document, navigator, window } from 'global';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import deprecate from 'util-deprecate';
-import AnsiToHtml from 'ansi-to-html';
 
-import addons from '@storybook/addons';
+import addons, { DecorateStoryFunction, Channel } from '@storybook/addons';
 import createChannel from '@storybook/channel-postmessage';
 import { ClientApi, ConfigApi, StoryStore } from '@storybook/client-api';
 import { isExportStory, storyNameFromExport, toId } from '@storybook/csf';
@@ -12,61 +11,15 @@ import { logger } from '@storybook/client-logger';
 import Events from '@storybook/core-events';
 
 import { initializePath, setPath } from './url';
-import { NoDocs } from './NoDocs';
-import { Loadable, LoaderFunction, PreviewError, RequireContext } from './types';
-
-const ansiConverter = new AnsiToHtml({
-  escapeXML: true,
-});
-
-const classes = {
-  MAIN: 'sb-show-main',
-  NOPREVIEW: 'sb-show-nopreview',
-  ERROR: 'sb-show-errordisplay',
-};
-
-function showMain() {
-  document.body.classList.remove(classes.NOPREVIEW);
-  document.body.classList.remove(classes.ERROR);
-
-  document.body.classList.add(classes.MAIN);
-}
-
-function showNopreview() {
-  document.body.classList.remove(classes.MAIN);
-  document.body.classList.remove(classes.ERROR);
-
-  document.body.classList.add(classes.NOPREVIEW);
-}
-
-function showErrorDisplay({ message = '', stack = '' }: PreviewError) {
-  document.getElementById('error-message').innerHTML = ansiConverter.toHtml(message);
-  document.getElementById('error-stack').innerHTML = ansiConverter.toHtml(stack);
-
-  document.body.classList.remove(classes.MAIN);
-  document.body.classList.remove(classes.NOPREVIEW);
-
-  document.body.classList.add(classes.ERROR);
-}
-
-// showError is used by the various app layers to inform the user they have done something
-// wrong -- for instance returned the wrong thing from a story
-function showError({ title, description }: { title: string; description: string }) {
-  addons.getChannel().emit(Events.STORY_ERRORED, { title, description });
-  showErrorDisplay({
-    message: title,
-    stack: description,
-  });
-}
-
-// showException is used if we fail to render the story and it is uncaught by the app layer
-function showException(exception: PreviewError) {
-  addons.getChannel().emit(Events.STORY_THREW_EXCEPTION, exception);
-  showErrorDisplay(exception);
-
-  // Log the stack to the console. So, user could check the source code.
-  logger.error(exception);
-}
+import {
+  Loadable,
+  LoaderFunction,
+  PreviewError,
+  RequireContext,
+  RenderContext,
+  RenderStoryFunction,
+} from './types';
+import { StoryRenderer } from './StoryRenderer';
 
 const isBrowser =
   navigator &&
@@ -75,245 +28,52 @@ const isBrowser =
   !(navigator.userAgent.indexOf('Node.js') > -1) &&
   !(navigator.userAgent.indexOf('jsdom') > -1);
 
-export const getContext = (() => {
-  // let cache;
-  // todo add type
-  return (decorateStory: any) => {
-    // if (cache) {
-    //   return cache;
-    // }
-    let channel = null;
-    if (isBrowser) {
-      try {
-        channel = addons.getChannel();
-      } catch (e) {
-        channel = createChannel({ page: 'preview' });
-        addons.setChannel(channel);
-      }
+function getOrCreateChannel() {
+  let channel = null;
+  if (isBrowser) {
+    try {
+      channel = addons.getChannel();
+    } catch (e) {
+      channel = createChannel({ page: 'preview' });
+      addons.setChannel(channel);
     }
-    let storyStore;
-    let clientApi;
-    if (typeof window !== 'undefined' && window.__STORYBOOK_CLIENT_API__) {
-      clientApi = window.__STORYBOOK_CLIENT_API__;
-      // eslint-disable-next-line no-underscore-dangle
-      storyStore = clientApi._storyStore;
-    } else {
-      storyStore = new StoryStore({ channel });
-      clientApi = new ClientApi({ storyStore, decorateStory });
-    }
-    const { clearDecorators } = clientApi;
-    const configApi = new ConfigApi({ clearDecorators, storyStore, channel, clientApi });
+  }
 
-    return {
-      configApi,
-      storyStore,
-      channel,
-      clientApi,
-      showMain,
-      showError,
-      showException,
-    };
-  };
-})();
+  return channel;
+}
+
+function getClientApi(channel: Channel, decorateStory: DecorateStoryFunction) {
+  let storyStore: StoryStore;
+  let clientApi: ClientApi;
+  if (
+    typeof window !== 'undefined' &&
+    window.__STORYBOOK_CLIENT_API__ &&
+    window.__STORYBOOK_STORY_STORE__
+  ) {
+    clientApi = window.__STORYBOOK_CLIENT_API__;
+    storyStore = window.__STORYBOOK_STORY_STORE__;
+  } else {
+    storyStore = new StoryStore({ channel });
+    clientApi = new ClientApi({ storyStore, decorateStory });
+  }
+  return { clientApi, storyStore };
+}
 
 function focusInInput(event: Event) {
   const target = event.target as Element;
   return /input|textarea/i.test(target.tagName) || target.getAttribute('contenteditable') !== null;
 }
 
-type StyleKeyValue = { [key: string]: string };
-const applyLayout = (() => {
-  let previousStyles: string | undefined;
-
-  return (layout: string) => {
-    const layouts: StyleKeyValue = {
-      centered: `
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        margin: 0;
-        padding: 1rem;
-        box-sizing: border-box;
-      `,
-      fullscreen: `
-        margin: 0;
-      `,
-      padded: `
-        margin: 0;
-        padding: 1rem;
-      `,
-    };
-    const styles = layouts[layout] || layouts.padded;
-
-    if (styles !== previousStyles) {
-      document.body.style = styles;
-      previousStyles = styles;
-    }
-  };
-})();
-
 // todo improve typings
-export default function start(render: any, { decorateStory }: any = {}) {
-  const context = getContext(decorateStory);
-
-  const { clientApi, channel, configApi, storyStore } = context;
-  // Provide access to external scripts if `window` is defined.
-  // NOTE this is different to isBrowser, primarily for the JSDOM use case
-  let previousKind = '';
-  let previousStory = '';
-  let previousRevision = -1;
-  let previousViewMode = '';
-  let previousId: string | null = null;
-
-  const renderMain = (forceRender: boolean) => {
-    const revision = storyStore.getRevision();
-    const loadError = storyStore.getError();
-    const { storyId, viewMode: urlViewMode } = storyStore.getSelection();
-
-    const data = storyStore.fromId(storyId);
-
-    const { kind, name, getDecorated, id, parameters = {}, error } = data || {};
-
-    const { docsOnly, layout } = parameters;
-    applyLayout(layout);
-
-    const viewMode = docsOnly ? 'docs' : urlViewMode;
-
-    const renderContext = {
-      ...context,
-      ...data,
-      selectedKind: kind,
-      selectedStory: name,
-      parameters,
-      forceRender,
-    };
-
-    if (loadError || error) {
-      showErrorDisplay(loadError || error);
-      return;
-    }
-
-    // Render story only if selectedKind or selectedStory have changed.
-    // However, we DO want the story to re-render if the store itself has changed
-    // (which happens at the moment when HMR occurs)
-    if (
-      !forceRender &&
-      revision === previousRevision &&
-      viewMode === previousViewMode &&
-      kind === previousKind &&
-      name === previousStory
-    ) {
-      addons.getChannel().emit(Events.STORY_UNCHANGED, {
-        id,
-        revision,
-        kind,
-        name,
-        viewMode,
-      });
-      return;
-    }
-
-    if (!forceRender && previousKind && previousStory && revision === previousRevision) {
-      addons.getChannel().emit(Events.STORY_CHANGED, id);
-    }
-
-    switch (previousViewMode) {
-      case 'docs':
-        if (previousKind != null && (kind !== previousKind || viewMode !== previousViewMode)) {
-          storyStore.cleanHooksForKind(previousKind);
-          ReactDOM.unmountComponentAtNode(document.getElementById('docs-root'));
-        }
-        break;
-      case 'story':
-      default:
-        if (previousId !== null && (id !== previousId || viewMode !== previousViewMode)) {
-          storyStore.cleanHooks(previousId);
-          ReactDOM.unmountComponentAtNode(document.getElementById('root'));
-        }
-    }
-
-    // Docs view renders into a different root ID to avoid conflicts
-    // with the user's view layer. Therefore we need to clean up whenever
-    // we transition between view modes
-    if (viewMode !== previousViewMode) {
-      switch (viewMode) {
-        case 'docs': {
-          showMain();
-          // todo discuss: takes NodeModule, passed boolean
-          document.getElementById('root').setAttribute('hidden', true as any);
-          document.getElementById('docs-root').removeAttribute('hidden');
-          break;
-        }
-        case 'story':
-        default: {
-          if (previousViewMode === 'docs') {
-            // todo discuss: takes NodeModule, passed boolean
-            document.getElementById('docs-root').setAttribute('hidden', true as any);
-            document.getElementById('root').removeAttribute('hidden');
-          }
-        }
-      }
-    }
-    // Given a cleaned up state, render the appropriate view mode
-    switch (viewMode) {
-      case 'docs': {
-        const docs = parameters.docs || {};
-        // todo improve typings
-        const DocsContainer = docs.container || (({ children }: any) => <>{children}</>);
-        const Page = docs.page || NoDocs;
-        ReactDOM.render(
-          <DocsContainer context={renderContext}>
-            <Page />
-          </DocsContainer>,
-          document.getElementById('docs-root'),
-          () => addons.getChannel().emit(Events.DOCS_RENDERED, kind)
-        );
-        break;
-      }
-      case 'story':
-      default: {
-        if (getDecorated) {
-          (async () => {
-            try {
-              await render(renderContext);
-              addons.getChannel().emit(Events.STORY_RENDERED, id);
-            } catch (ex) {
-              showException(ex);
-            }
-          })();
-        } else {
-          showNopreview();
-          addons.getChannel().emit(Events.STORY_MISSING, id);
-        }
-        break;
-      }
-    }
-
-    previousRevision = revision;
-    previousKind = kind;
-    previousStory = name;
-    previousViewMode = viewMode;
-    previousId = id;
-
-    if (!forceRender && viewMode !== 'docs') {
-      document.documentElement.scrollTop = 0;
-      document.documentElement.scrollLeft = 0;
-    }
-  };
-
-  // initialize the UI
-  const renderUI = (forceRender: boolean) => {
-    if (isBrowser) {
-      try {
-        renderMain(forceRender);
-      } catch (ex) {
-        showException(ex);
-      }
-    }
-  };
-
-  const forceReRender = () => renderUI(true);
+export default function start(
+  render: RenderStoryFunction,
+  { decorateStory }: { decorateStory?: DecorateStoryFunction } = {}
+) {
+  const channel = getOrCreateChannel();
+  const { clientApi, storyStore } = getClientApi(channel, decorateStory);
+  const { clearDecorators } = clientApi;
+  const configApi = new ConfigApi({ clearDecorators, storyStore, channel, clientApi });
+  const storyRenderer = new StoryRenderer({ render, channel, storyStore });
 
   // channel can be null in NodeJS
   if (isBrowser) {
@@ -322,7 +82,6 @@ export default function start(render: any, { decorateStory }: any = {}) {
       `Passing name+kind to the SET_CURRENT_STORY event is deprecated, use a storyId instead`
     );
 
-    channel.on(Events.FORCE_RE_RENDER, forceReRender);
     channel.on(Events.SET_CURRENT_STORY, ({ storyId: inputStoryId, name, kind, viewMode }) => {
       let storyId = inputStoryId;
       // For backwards compatibility
@@ -353,8 +112,6 @@ export default function start(render: any, { decorateStory }: any = {}) {
     const { storyId, viewMode } = initializePath(storyStore);
     storyStore.setSelection({ storyId, viewMode });
   });
-
-  storyStore.on(Events.STORY_RENDER, renderUI);
 
   if (typeof window !== 'undefined') {
     window.__STORYBOOK_CLIENT_API__ = clientApi;
@@ -398,7 +155,7 @@ export default function start(render: any, { decorateStory }: any = {}) {
       }
     }
 
-    const removed = [...previousExports.keys()].filter(exp => !currentExports.has(exp));
+    const removed = Array.from(previousExports.keys()).filter(exp => !currentExports.has(exp));
     removed.forEach(exp => {
       if (exp.default) {
         storyStore.removeStoryKind(exp.default.title);
@@ -408,7 +165,7 @@ export default function start(render: any, { decorateStory }: any = {}) {
       storyStore.incrementRevision();
     }
 
-    const added = [...currentExports.keys()].filter(exp => !previousExports.has(exp));
+    const added = Array.from(currentExports.keys()).filter(exp => !previousExports.has(exp));
     added.forEach(fileExports => {
       // An old-style story file
       if (!fileExports.default) {
@@ -516,5 +273,5 @@ export default function start(render: any, { decorateStory }: any = {}) {
     configApi.configure(loadStories(loadable, framework), m);
   };
 
-  return { configure, context, clientApi, configApi, forceReRender };
+  return { configure, clientApi, configApi, forceReRender: () => storyRenderer.forceReRender() };
 }
