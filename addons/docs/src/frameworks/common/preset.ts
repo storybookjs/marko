@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import createCompiler from '@storybook/addon-docs/mdx-compiler-plugin';
 import path from 'path';
 import remarkSlug from 'remark-slug';
@@ -53,7 +52,7 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
         ...(module.rules || []),
         {
           test: /\.js$/,
-          include: new RegExp(path.join('node_modules', 'acorn-jsx')),
+          include: new RegExp(`node_modules\\${path.sep}acorn-jsx`),
           use: [
             {
               loader: 'babel-loader',
