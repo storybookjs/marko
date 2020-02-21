@@ -210,6 +210,10 @@ const exactMatch = memoize(1)((filter: string) => (i: Item) => {
 export const toId = (base: string, addition: string) =>
   base === '' ? `${addition}` : `${base}-${addition}`;
 
+export const filteredLength = (dataset: Dataset, filter: string) => {
+  return Object.keys(toFiltered(dataset, filter)).length;
+};
+
 export const toFiltered = (dataset: Dataset, filter: string) => {
   let found: Item[];
   if (filter.length && filter.length > 2) {

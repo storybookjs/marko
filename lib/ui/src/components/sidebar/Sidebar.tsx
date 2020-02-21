@@ -1,14 +1,16 @@
-import React, { FunctionComponent, useMemo, useState, useCallback } from 'react';
+import React, { FunctionComponent, useMemo, useState, useCallback, Fragment } from 'react';
 
 import { styled } from '@storybook/theming';
 import { ScrollArea, Placeholder } from '@storybook/components';
 import { StoriesHash, State } from '@storybook/api';
 
+import { opacify } from 'polished';
 import SidebarHeading, { SidebarHeadingProps } from './SidebarHeading';
 import SidebarStories from './SidebarStories';
 import SidebarItem from './SidebarItem';
 
 import Search from './SidebarSearch';
+import { filteredLength } from './treeview/utils';
 
 const Heading = styled(SidebarHeading)<SidebarHeadingProps>({
   padding: '20px 20px 12px',
@@ -46,31 +48,39 @@ export interface SidebarProps {
 
 type RefType = State['refs'][keyof State['refs']];
 
+const RefHead = styled.div(({ theme }) => ({
+  // margin: `0 ${theme.layoutMargin * 2}px`,
+  // padding: `${theme.layoutMargin}px 0`,
+  padding: theme.layoutMargin,
+  paddingLeft: theme.layoutMargin * 2,
+}));
+
+const Hr = styled.hr(({ theme }) => ({
+  border: '0 none',
+  height: 0,
+  borderTop: `1px solid ${opacify(0.1, theme.appBorderColor)}`,
+}));
+
 const Ref: FunctionComponent<RefType & { storyId: string; filter: string }> = ({
   stories,
+  title,
   id,
   storyId,
   filter,
 }) => {
   const isLoading = !useMemo<number>(() => stories && Object.keys(stories).length, [stories]);
 
-  return isLoading ? (
-    <SidebarItem loading />
-  ) : (
-    <Stories key={id} stories={stories} storyId={storyId} loading={isLoading} filter={filter} />
+  return (
+    <div>
+      <RefHead>{title || id}</RefHead>
+      {isLoading ? (
+        <SidebarItem loading />
+      ) : (
+        <Stories key={id} stories={stories} storyId={storyId} loading={isLoading} filter={filter} />
+      )}
+    </div>
   );
 };
-
-const Empty = styled.div(
-  {
-    display: 'none',
-  },
-  {
-    'form + &': {
-      display: 'block',
-    },
-  }
-);
 
 const Sidebar: FunctionComponent<SidebarProps> = ({
   storyId,
@@ -86,6 +96,14 @@ const Sidebar: FunctionComponent<SidebarProps> = ({
   }, []);
 
   const filterValue = filter.length > 1 ? filter : '';
+  const list = useMemo(() => Object.entries(refs), [refs]);
+  const storiesLength = useMemo(() => filteredLength(stories, filter), [stories, filter]);
+  const refsLengths = useMemo(
+    () => list.map(([k, i]) => filteredLength(i.stories || {}, filter), 0),
+    [list, filter]
+  );
+  const refsTotal = useMemo(() => refsLengths.reduce((acc, i) => acc + i, 0), [list, filter]);
+  const total = storiesLength + refsTotal || 0;
 
   return (
     <Container className="container sidebar-container">
@@ -94,14 +112,26 @@ const Sidebar: FunctionComponent<SidebarProps> = ({
 
         <Search key="filter" onChange={onFilter} />
 
-        <Stories stories={stories} storyId={storyId} loading={loading} filter={filterValue} />
-        {Object.entries(refs).map(([k, v]) => (
-          <Ref key={k} {...v} storyId={storyId} filter={filterValue} />
-        ))}
-
-        <Empty>
+        {total === 0 && filter.length >= 2 ? (
           <Placeholder>This filter resulted in 0 results</Placeholder>
-        </Empty>
+        ) : (
+          <Fragment>
+            {storiesLength ? (
+              <Stories stories={stories} storyId={storyId} loading={loading} filter={filterValue} />
+            ) : null}
+
+            {list.map(([k, v], index) => {
+              const prev = index === 0 ? storiesLength : refsLengths[index];
+
+              return filter.length >= 2 && !refsLengths[index] ? null : (
+                <Fragment key={k}>
+                  {filter.length >= 2 && !prev ? null : <Hr />}
+                  <Ref {...v} storyId={storyId} filter={filterValue} />
+                </Fragment>
+              );
+            })}
+          </Fragment>
+        )}
       </CustomScrollArea>
     </Container>
   );

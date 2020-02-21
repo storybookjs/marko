@@ -17,14 +17,14 @@ Subheading.defaultProps = {
   className: 'sidebar-subheading',
 };
 
-const Section = styled.section({
-  '& + section': {
-    marginTop: 20,
+const Section = styled.section(({ theme }) => ({
+  '& + &': {
+    marginTop: theme.layoutMargin * 2,
   },
   '&:last-of-type': {
-    marginBottom: 40,
+    marginBottom: theme.layoutMargin * 4,
   },
-});
+}));
 
 const List = styled.div();
 List.displayName = 'List';
