@@ -1,3 +1,14 @@
+## 6.0.0-alpha.16 (February 21, 2020)
+
+### Bug Fixes
+
+- Props: Fix typescript unspecified default value ([#9873](https://github.com/storybookjs/storybook/pull/9873))
+- Centered: remove `typesVersions` attribute ([#9907](https://github.com/storybookjs/storybook/pull/9907))
+
+### Maintenance
+
+- Misc: Add missing dependencies or peerDependencies ([#9916](https://github.com/storybookjs/storybook/pull/9916))
+
 ## 6.0.0-alpha.15 (February 20, 2020)
 
 ### Breaking Changes
