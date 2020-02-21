@@ -1,3 +1,9 @@
+## 6.0.0-alpha.18 (February 22, 2020)
+
+### Features
+
+* Addon-knobs: Add `disableForceUpdate` option ([#9447](https://github.com/storybookjs/storybook/pull/9447))
+
 ## 6.0.0-alpha.17 (February 21, 2020)
 
 ### Bug Fixes
