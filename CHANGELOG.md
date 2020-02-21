@@ -1,4 +1,4 @@
-## 6.0.0-alpha.16 (February 21, 2020)
+## 6.0.0-alpha.17 (February 21, 2020)
 
 ### Bug Fixes
 
@@ -8,6 +8,10 @@
 ### Maintenance
 
 - Misc: Add missing dependencies or peerDependencies ([#9916](https://github.com/storybookjs/storybook/pull/9916))
+
+## 6.0.0-alpha.16 (February 21, 2020)
+
+Failed NPM publish
 
 ## 6.0.0-alpha.15 (February 20, 2020)
 
