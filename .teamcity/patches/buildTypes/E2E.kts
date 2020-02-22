@@ -12,5 +12,8 @@ changeBuildType(RelativeId("E2E")) {
     check(artifactRules == "") {
         "Unexpected option value: artifactRules = $artifactRules"
     }
-    artifactRules = "cypress => cypress.tar.gz"
+    artifactRules = """
+        cypress/screenshots => screenshots.tar.gz
+        cypress/videos => videos.tar.gz
+    """.trimIndent()
 }
