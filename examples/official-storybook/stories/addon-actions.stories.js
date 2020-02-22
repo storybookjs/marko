@@ -249,3 +249,13 @@ export const LimitActionOutput = () => {
 LimitActionOutput.story = {
   name: 'Limit Action Output',
 };
+
+export const SkippedViaDisableTrue = () => <Button onClick={action('hello-world')}>Hello World</Button>;
+
+SkippedViaDisableTrue.story = {
+  name: 'skipped via disable:true',
+
+  parameters: {
+    actions: { disable: true },
+  },
+};
