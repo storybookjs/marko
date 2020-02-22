@@ -128,12 +128,12 @@ interface Page {
   render: FunctionComponent;
 }
 
-interface MobileProps {
+export interface MobileProps {
   options: {
     initialActive: ActiveTabsType;
     isToolshown: boolean;
   };
-  Nav: ComponentType<any>;
+  Sidebar: ComponentType<any>;
   Preview: ComponentType<any>;
   Panel: ComponentType<any>;
   Notifications: ComponentType<any>;
@@ -158,7 +158,7 @@ class Mobile extends Component<MobileProps, MobileState> {
   }
 
   render() {
-    const { Nav, Preview, Panel, Notifications, pages, viewMode, options } = this.props;
+    const { Sidebar, Preview, Panel, Notifications, pages, viewMode, options } = this.props;
     const { active } = this.state;
 
     return (
@@ -173,7 +173,7 @@ class Mobile extends Component<MobileProps, MobileState> {
         />
 
         <Panels active={active}>
-          <Nav />
+          <Sidebar />
           <div>
             <div hidden={!viewMode}>
               <Preview

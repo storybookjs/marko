@@ -3,7 +3,10 @@
 - [Migration](#migration)
   - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
     - [New addon presets](#new-addon-presets)
-    - [Removed legacy story APIs](#removed-legacy-story-apis)
+    - [Client API changes](#client-api-changes)
+      - [Removed legacy story APIs](#removed-legacy-story-apis)
+      - [Can no longer add decorators/parameters after stories](#can-no-longer-add-decorators-parameters-after-stories)
+      - [Changed Parameter Handling](#changed-parameter-handling)
   - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
     - [To main.js configuration](#to-mainjs-configuration)
     - [Create React App preset](#create-react-app-preset)
@@ -126,13 +129,57 @@ MyNonCheckedStory.story = {
 };
 ```
 
-### Removed Legacy Story APIs
+### Client API changes
+
+#### Removed Legacy Story APIs
 
 In 6.0 we removed a set of APIs from the underlying `StoryStore` (which wasn't publicly accessible):
 
 - `getStories`, `getStoryFileName`, `getStoryAndParameters`, `getStory`, `getStoryWithContext`, `hasStoryKind`, `hasStory`, `dumpStoryBook`, `size`, `clean`
 
 Although these were private APIs, if you were using them, you could probably use the newer APIs (which are still private): `getStoriesForKind`, `getRawStory`, `removeStoryKind`, `remove`.
+
+#### Can no longer add decorators/parameters after stories
+
+You can no longer add decorators and parameters globally after you added your first story, and you can no longer add decorators and parameters to a kind after you've added your first story to it.
+
+It unclear and confusing what happened if you did. If you want to disable a decorator for certain stories, use a parameter to do so:
+
+```js
+export StoryOne = ...;
+StoryOne.story = { parameters: { addon: { disable: true } } };
+```
+
+If you want to use a parameter for a subset of stories in a kind, simply use a variable to do so:
+
+```js
+const commonParameters = { x: { y: 'z' } };
+export StoryOne = ...;
+StoryOne.story = { parameters: { ...commonParameters, other: 'things' } };
+```
+
+#### Changed Parameter Handling
+
+There have been a few rationalizations of parameter handling in 6.0 to make things more predictable and fit better with the intention of parameters:
+
+_All parameters are now merged recursively to arbitrary depth._
+
+In 5.3 we sometimes merged parameters all the way down and sometimes did not depending on where you added them. It was confusing. If you were relying on this behaviour, let us know.
+
+_Array parameters are no longer "merged"._
+
+If you override an array parameter, the override will be the end product. If you want the old behaviour (appending a new value to an array parameter), export the original and use array spread. This will give you maximum flexibility:
+
+```js
+import { allBackgrounds } from './util/allBackgrounds';
+
+export StoryOne = ...;
+StoryOne.story = { parameters: { backgrounds: [...allBackgrounds, '#zyx' ] } };
+```
+
+_You cannot set parameters from decorators_
+
+Parameters are intended to be statically set at story load time. So setting them via a decorator doesn't quite make sense. If you were using this to control the rendering of a story, chances are using the new `args` feature is a more idiomatic way to do this.
 
 ## From version 5.2.x to 5.3.x
 
@@ -236,14 +283,14 @@ To avoid that now you have to manually pass asyncStorage to React Native Storybo
 
 Solution:
 
-- Use `require('@react-native-community/async-storage').AsyncStorage` for React Native v0.59 and above.
+- Use `require('@react-native-community/async-storage').default` for React Native v0.59 and above.
 - Use `require('react-native').AsyncStorage` for React Native v0.58 or below.
 - Use `null` to disable Async Storage completely.
 
 ```javascript
 getStorybookUI({
   ...
-  asyncStorage: require('@react-native-community/async-storage').AsyncStorage || require('react-native').AsyncStorage || null
+  asyncStorage: require('@react-native-community/async-storage').default || require('react-native').AsyncStorage || null
 });
 ```
 

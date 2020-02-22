@@ -71,6 +71,10 @@ const mapItemToSection = (key: string, item: Method | Property): string => {
   }
 };
 
+export const findComponentByName = (name: string, compodocJson: CompodocJson) =>
+  compodocJson.components.find((c: Component) => c.name === name) ||
+  compodocJson.directives.find((c: Directive) => c.name === name);
+
 const getComponentData = (component: Component | Directive) => {
   if (!component) {
     return null;
@@ -79,10 +83,7 @@ const getComponentData = (component: Component | Directive) => {
   const compodocJson = getCompdocJson();
   checkValidCompodocJson(compodocJson);
   const { name } = component;
-  return (
-    compodocJson.components.find((c: Component) => c.name === name) ||
-    compodocJson.directives.find((c: Directive) => c.name === name)
-  );
+  return findComponentByName(name, compodocJson);
 };
 
 const displaySignature = (item: Method): string => {
@@ -92,12 +93,7 @@ const displaySignature = (item: Method): string => {
   return `(${args.join(', ')}) => ${item.returnType}`;
 };
 
-export const extractProps = (component: Component | Directive) => {
-  const componentData = getComponentData(component);
-  if (!componentData) {
-    return null;
-  }
-
+export const extractPropsFromData = (componentData: Directive) => {
   const sectionToItems: Sections = {};
   const compodocClasses = ['propertiesClass', 'methodsClass', 'inputsClass', 'outputsClass'];
   type COMPODOC_CLASS = 'propertiesClass' | 'methodsClass' | 'inputsClass' | 'outputsClass';
@@ -141,6 +137,11 @@ export const extractProps = (component: Component | Directive) => {
   });
 
   return isEmpty(sections) ? null : { sections };
+};
+
+export const extractProps = (component: Component | Directive) => {
+  const componentData = getComponentData(component);
+  return componentData && extractPropsFromData(componentData);
 };
 
 export const extractComponentDescription = (component: Component | Directive) => {

@@ -8,6 +8,8 @@ export default class Provider {
   }
 
   getConfig() {
-    throw new Error('Provider.getConfig() is not implemented!');
+    console.error('Provider.getConfig() is not implemented!');
+
+    return {};
   }
 }

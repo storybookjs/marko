@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 
 import { styled } from '@storybook/theming';
 import { ScrollArea } from '@storybook/components';
-import { State } from '@storybook/api';
+import { StoriesHash } from '@storybook/api';
 
 import SidebarHeading, { SidebarHeadingProps } from './SidebarHeading';
 import SidebarStories from './SidebarStories';
@@ -33,7 +33,7 @@ const CustomScrollArea = styled(ScrollArea)({
 });
 
 export interface SidebarProps {
-  stories: State['StoriesHash'];
+  stories: StoriesHash;
   menu: any[];
   storyId?: string;
   menuHighlighted?: boolean;

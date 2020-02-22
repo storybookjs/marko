@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import toReact from '@egoist/vue-to-react';
 import { StoryFn } from '@storybook/addons';

@@ -2,27 +2,26 @@
   <img src="https://raw.githubusercontent.com/storybookjs/storybook/master/addons/docs/docs/media/docspage-hero.png" width="100%" />
 </center>
 
-# Storybook DocsPage
+<h1>Storybook DocsPage</h1>
 
 When you install [Storybook Docs](../README.md), `DocsPage` is the zero-config default documentation that all stories get out of the box. It aggregates your stories, text descriptions, docgen comments, props tables, and code examples into a single page for each component.
 
-- [Storybook DocsPage](#storybook-docspage)
-  - [Motivation](#motivation)
-  - [Component parameter](#component-parameter)
-  - [Subcomponents parameter](#subcomponents-parameter)
-  - [DocsPage slots](#docspage-slots)
-  - [Slot values](#slot-values)
-    - [Title](#title)
-    - [Subtitle](#subtitle)
-    - [Description](#description)
-    - [Primary](#primary)
-    - [Props](#props)
-    - [Stories](#stories)
-  - [Slot functions](#slot-functions)
-  - [Replacing DocsPage](#replacing-docspage)
-  - [Story file names](#story-file-names)
-  - [Inline stories vs. Iframe stories](#inline-stories-vs-iframe-stories)
-  - [More resources](#more-resources)
+- [Motivation](#motivation)
+- [Component parameter](#component-parameter)
+- [Subcomponents parameter](#subcomponents-parameter)
+- [DocsPage slots](#docspage-slots)
+- [Slot values](#slot-values)
+  - [Title](#title)
+  - [Subtitle](#subtitle)
+  - [Description](#description)
+  - [Primary](#primary)
+  - [Props](#props)
+  - [Stories](#stories)
+- [Slot functions](#slot-functions)
+- [Replacing DocsPage](#replacing-docspage)
+- [Story file names](#story-file-names)
+- [Inline stories vs. Iframe stories](#inline-stories-vs-iframe-stories)
+- [More resources](#more-resources)
 
 ## Motivation
 
@@ -296,10 +295,7 @@ With that function, anyone using the docs addon for `@storybook/vue` can make th
 
 ## More resources
 
-Want to learn more? Here are some more articles on Storybook Docs:
-
-- References: [README](../README.md) / [MDX](mdx.md) / [FAQ](faq.md) / [Recipes](recipes.md) / [Theming](theming.md)
-- Vision: [Storybook Docs sneak peak](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a)
-- Announcement: [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf)
+- References: [README](../README.md) / [DocsPage](docspage.md) / [MDX](mdx.md) / [FAQ](faq.md) / [Recipes](recipes.md) / [Theming](theming.md)
+- Framework-specific docs: [React](../react/README.md) / [Vue](../vue/README.md) / [Angular](../angular/README.md) / [Web components](../web-components/README.md) / [Ember](../ember/README.md)
+- Announcements: [Vision](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a) / [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf) / [MDX](https://medium.com/storybookjs/rich-docs-with-storybook-mdx-61bc145ae7bc) / [Framework support](https://medium.com/storybookjs/storybook-docs-for-new-frameworks-b1f6090ee0ea)
 - Example: [Storybook Design System](https://github.com/storybookjs/design-system)
-- [Technical preview guide](https://docs.google.com/document/d/1un6YX7xDKEKl5-MVb-egnOYN8dynb5Hf7mq0hipk8JE/edit?usp=sharing)

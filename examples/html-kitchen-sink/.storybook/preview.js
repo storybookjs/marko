@@ -1,4 +1,4 @@
-import { addParameters, addDecorator } from '@storybook/html';
+import { addParameters } from '@storybook/html';
 
 addParameters({
   a11y: {
