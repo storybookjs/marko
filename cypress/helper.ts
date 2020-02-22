@@ -11,8 +11,8 @@ export const visitExample = (app: StorybookApps, route = '') => {
     .clearLocalStorage()
     .visit(`${baseUrl}/${app}/${route}`)
     .get(`#storybook-preview-iframe`)
-    .then({ timeout: 15000 }, iframe => {
-      return cy.wrap(iframe).should(() => {
+    .then({ timeout: 10000 }, iframe => {
+      return cy.wrap(iframe, { timeout: 10000 }).should(() => {
         const content: Document | null = (iframe[0] as HTMLIFrameElement).contentDocument;
         const element: HTMLElement | null = content !== null ? content.documentElement : null;
 
