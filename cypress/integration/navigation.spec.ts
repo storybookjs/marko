@@ -3,7 +3,6 @@ import { visitExample } from '../helper';
 describe('Navigation', () => {
   beforeEach(() => {
     visitExample('official-storybook');
-    throw new Error();
   });
 
   it('should search navigation item', () => {
@@ -34,7 +33,6 @@ describe('Routing', () => {
   });
 
   it('should directly visit a certain story and render correctly', () => {
-    throw new Error();
     visitExample('official-storybook', '?path=/story/addons-a11y-basebutton--label');
 
     cy.preview().should('contain.text', 'Testing the a11y addon');
