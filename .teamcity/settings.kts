@@ -7,6 +7,7 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.ScriptBuildStep
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.failureConditions.BuildFailureOnMetric
 import jetbrains.buildServer.configs.kotlin.v2019_2.failureConditions.failOnMetricChange
+import jetbrains.buildServer.configs.kotlin.v2019_2.projectFeatures.buildReportTab
 import jetbrains.buildServer.configs.kotlin.v2019_2.projectFeatures.githubConnection
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.VcsTrigger
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
@@ -56,15 +57,15 @@ project {
     subProject(ChromaticProject)
 
     buildTypesOrderIds = arrayListOf(
-            RelativeId("TestWorkflow"), 
-            RelativeId("Build"), 
-            RelativeId("Packtracker"), 
-            RelativeId("Chromatic"), 
-            RelativeId("E2E"), 
-            RelativeId("SmokeTests"), 
-            RelativeId("Frontpage"), 
-            RelativeId("Docs"), 
-            RelativeId("Lint"), 
+            RelativeId("TestWorkflow"),
+            RelativeId("Build"),
+            RelativeId("Packtracker"),
+            RelativeId("Chromatic"),
+            RelativeId("E2E"),
+            RelativeId("SmokeTests"),
+            RelativeId("Frontpage"),
+            RelativeId("Docs"),
+            RelativeId("Lint"),
             RelativeId("Test"),
             RelativeId("Coverage")
     )
@@ -76,6 +77,11 @@ project {
             displayName = "GitHub.com"
             clientId = "800d730c725f771d6d2a"
             clientSecret = "credentialsJSON:d1a5af15-1200-46c6-b0f1-f35bd466d909"
+        }
+        buildReportTab {
+            id = "PROJECT_EXT_8"
+            title = "Official"
+            startPage = "built-storybooks.tar.gz!official-storybook/index.html"
         }
     }
 }
@@ -499,10 +505,15 @@ object E2E : BuildType({
                 yarn await-serve-storybooks
                 yarn cypress run --reporter teamcity
             """.trimIndent()
-            dockerImage = "cypress/base:10.18.1"
+            dockerImage = "cypress/base:10.18.1
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
+
+    artifactRules = """
+        cypress/screenshots => screenshots.tar.gz
+        cypress/videos => videos.tar.gz
+    """.trimIndent()
 })
 
 object SmokeTests : BuildType({
