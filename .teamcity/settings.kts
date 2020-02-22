@@ -503,8 +503,8 @@ object E2E : BuildType({
                 yarn cypress install
                 yarn serve-storybooks &
                 yarn await-serve-storybooks
-                yarn cypress run --reporter teamcity
-                ts-node --transpile-only cypress/report-teamcity-metadata.ts
+                yarn cypress run --reporter teamcity || :
+                ts-node --transpile-only cypress/report-teamcity-metadata.ts || :
             """.trimIndent()
             dockerImage = "cypress/base:10.18.1"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
@@ -515,6 +515,15 @@ object E2E : BuildType({
         cypress/screenshots => screenshots.tar.gz
         cypress/videos => videos.tar.gz
     """.trimIndent()
+
+    failureConditions {
+        failOnMetricChange {
+            metric = BuildFailureOnMetric.MetricType.TEST_COUNT
+            units = BuildFailureOnMetric.MetricUnit.DEFAULT_UNIT
+            comparison = BuildFailureOnMetric.MetricComparison.LESS
+            compareTo = value()
+        }
+    }
 })
 
 object SmokeTests : BuildType({
