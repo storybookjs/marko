@@ -506,7 +506,7 @@ object E2E : BuildType({
                 yarn cypress run --reporter teamcity
                 ts-node --transpile-only cypress/report-teamcity-metadata.ts
             """.trimIndent()
-            dockerImage = "cypress/base:10.18.1
+            dockerImage = "cypress/base:10.18.1"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
