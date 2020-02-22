@@ -134,8 +134,8 @@ object Build : BuildType({
                 set -e -x
                 
                 yarn install
-                yarn bootstrap --core
                 yarn repo-dirty-check
+                yarn bootstrap --core
             """.trimIndent()
             dockerImage = "node:10"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
