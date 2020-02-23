@@ -8,42 +8,62 @@ const testsDir = path.join(__dirname, 'integration');
 const videosDir = path.join(__dirname, 'videos');
 const screensDir = path.join(__dirname, 'screenshots');
 
-const getTests = (fileName: string) => findSuitesAndTests(path.join(testsDir, fileName)).tests
-
-async function reportVideos() {
-  const files = await fs.readdir(videosDir);
-  files.forEach(file =>
-    getTests(file.replace(/\.mp4$/, '')).forEach((test: string) =>
-      testMetadata({
-        testName: test.replace(/\./, ': '),
-        type: 'video',
-        value: `videos.tar.gz!${file}`,
-      })
-    )
-  );
+let prevFoundTests: string[] = [];
+function getTests(fileName: string) {
+  const { tests } = findSuitesAndTests(path.join(testsDir, fileName));
+  const newTests = tests.filter((test: string) => !prevFoundTests.includes(test));
+  prevFoundTests = tests;
+  return newTests.map((test: string) => test.split(/\./));
 }
 
-async function reportScreenshots() {
-  const dirs = await fs.readdir(screensDir);
-  dirs.forEach(async dir => {
-    const currentDir = path.join(screensDir, dir);
-    const files = await fs.readdir(currentDir);
-    files.forEach(file => {
-      const match = file.match(/^(.*) \(failed\).png$/);
-      if (match == null) {
-        return;
-      }
-      testMetadata({
-        testName: match[1]
-          .split(' -- ')
-          .slice(0, 2)
-          .join(': '),
-        type: 'image',
-        value: `screenshots.tar.gz!${currentDir}/${file}`,
+const fullTestName = (suite: string, testName: string) => `${suite}: ${testName}`;
+
+async function report() {
+  const hookFailures: { [file: string]: Array<[string, string]> } = {};
+  const reports: any[] = [];
+  const testFiles = await fs.readdir(screensDir);
+  await Promise.all(
+    testFiles.map(async testFile => {
+      const files = await fs.readdir(path.join(screensDir, testFile));
+      files.forEach(file => {
+        const match = file.match(/^(.*) \(failed\).png$/);
+        if (match == null) {
+          return;
+        }
+
+        const [suite, test, hookPart] = match[1].split(' -- ');
+        let testName = test;
+        const hook = hookPart?.match(/^(.*) hook$/)?.[1];
+        if (hook != null) {
+          testName = `"${hook}" hook for "${test}"`;
+          hookFailures[testFile] = hookFailures[testFile] || [];
+          hookFailures[testFile].push([suite, testName]);
+        }
+        reports.push({
+          name: 'Screenshot',
+          testName: fullTestName(suite, testName),
+          type: 'image',
+          value: `screenshots.tar.gz!${testFile}/${file}`,
+        });
       });
-    });
+    })
+  );
+
+  const videoFiles = await fs.readdir(videosDir);
+  videoFiles.forEach(videoFile => {
+    const testFile = videoFile.replace(/\.mp4$/, '');
+    const tests = [...getTests(testFile), ...(hookFailures[testFile] || [])];
+    tests.forEach(([suite, testName]) =>
+      reports.unshift({
+        name: 'Video',
+        testName: fullTestName(suite, testName),
+        type: 'video',
+        value: `videos.tar.gz!${videoFile}`,
+      })
+    );
   });
+
+  reports.forEach(testMetadata);
 }
 
-reportVideos();
-reportScreenshots();
+report();
