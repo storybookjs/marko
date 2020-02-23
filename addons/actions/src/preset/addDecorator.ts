@@ -1,3 +1,3 @@
 import { withActions } from '../index';
 
-export const decorators = [withActions()];
+export const decorators = [withActions];

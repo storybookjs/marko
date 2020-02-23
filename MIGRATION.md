@@ -6,6 +6,7 @@
     - [Imported types](#imported-types)
     - [Rolling back](#rolling-back)
   - [New addon presets](#new-addon-presets)
+  - [Addon actions uses parameters](#addon-actions-uses-parameters)
   - [Removed Deprecated APIs](#removed-deprecated-apis)
   - [Client API changes](#client-api-changes)
     - [Removed Legacy Story APIs](#removed-legacy-story-apis)
@@ -213,6 +214,23 @@ MyNonCheckedStory.story = {
     a11y: { disable: true },
   },
 };
+```
+
+### Addon actions uses parameters
+
+Leveraging the new presets the  `@storybook/addon-actions` uses parameters to pass action options. If you previously had:
+
+```js
+import { withactions } from `@storybook/addon-actions`;
+
+storiesOf('Stories', module)
+  .addDecorator(withactions('mouseover', 'click .btn'));
+```
+
+You should replace it with:
+
+```js
+storiesOf('Stories', module).addParameters({ actions: ['mouseover', 'click .btn'] });
 ```
 
 ### Removed Deprecated APIs

@@ -60,3 +60,11 @@ exports[`Storyshots Addons/Actions Multiple actions, selector 1`] = `
 
         
 `;
+
+exports[`Storyshots Addons/Actions Parameters array shortcut 1`] = `
+<button
+  type="button"
+>
+  Hello World
+</button>
+`;

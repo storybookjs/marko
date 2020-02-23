@@ -4,6 +4,9 @@ import { useEffect } from '@storybook/client-api';
 
 import { actions } from './actions';
 
+import { makeDecorator } from '@storybook/addons';
+import { PARAM_KEY } from '../constants';
+
 const delegateEventSplitter = /^(\S+)\s*(.*)$/;
 
 const isIE = Element != null && !Element.prototype.matches;
@@ -37,7 +40,7 @@ const createHandlers = (actionsFn: (...arg: any[]) => object, ...args: any[]) =>
   });
 };
 
-export const createDecorator = (actionsFn: any) => (...args: any[]) => (storyFn: () => any) => {
+const applyEventHandlers = (actionsFn: any, ...args: any[]) => {
   useEffect(() => {
     if (root != null) {
       const handlers = createHandlers(actionsFn, ...args);
@@ -47,8 +50,25 @@ export const createDecorator = (actionsFn: any) => (...args: any[]) => (storyFn:
     }
     return undefined;
   }, [root, actionsFn, args]);
+}
 
+export const createDecorator = (actionsFn: any) => (...args: any[]) => (storyFn: () => any) => {
+  applyEventHandlers(actionsFn, ...args)
+  
   return storyFn();
 };
 
-export const withActions = createDecorator(actions);
+export const withActions = makeDecorator({
+  name: 'withActions',
+  parameterName: PARAM_KEY,
+  skipIfNoParametersOrOptions: true,
+  allowDeprecatedUsage: false,
+  wrapper: (getStory, context, { parameters }) => {
+    // allow a shortcut of providing just an array.
+    // Anticipating that we'll soon kill configureActions in favor of configuration via parameters
+    const storyOptions = Array.isArray(parameters) ? { handles: parameters } : parameters;
+    applyEventHandlers(actions, ...storyOptions.handles)
+
+    return getStory(context);
+  }
+});

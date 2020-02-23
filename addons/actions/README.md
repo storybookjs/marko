@@ -153,17 +153,20 @@ action('my-action', {
 | `clearOnStoryChange` | Boolean | Flag whether to clear the action logger when switching away from the current story. | `true`  |
 | `limit`              | Number  | Limits the number of items logged in the action logger                              | `50`    |
 
-## withActions decorator
+## Declarative Configuration via Parameters
 
-You can define action handles in a declarative way using `withActions` decorators. It accepts the same arguments as [`actions`](#multiple-actions). Keys have `'<eventName> <selector>'` format, e.g. `'click .btn'`. Selector is optional. This can be used with any framework but is especially useful for `@storybook/html`.
+You can define action handles in a declarative way using parameters. They accepts the same arguments as [`actions`](#multiple-actions)
+Keys have `'<eventName> <selector>'` format, e.g. `'click .btn'`. Selector is optional. This can be used with any framework but is especially useful for `@storybook/html`.
 
 ```js
-import { withActions } from '@storybook/addon-actions';
 import Button from './button';
 
 export default {
   title: 'Button',
-  decorators: [withActions('mouseover', 'click .btn')],
+  parameters: {
+    actions: {
+      handles: ['mouseover', 'click .btn']
+  }
 };
 
 export const first = () => <Button className="btn">Hello World!</Button>;
