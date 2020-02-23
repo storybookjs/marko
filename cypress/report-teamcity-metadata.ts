@@ -21,33 +21,37 @@ const fullTestName = (suite: string, testName: string) => `${suite}: ${testName}
 async function report() {
   const hookFailures: { [file: string]: Array<[string, string]> } = {};
   const reports: any[] = [];
-  const testFiles = await fs.readdir(screensDir);
-  await Promise.all(
-    testFiles.map(async testFile => {
-      const files = await fs.readdir(path.join(screensDir, testFile));
-      files.forEach(file => {
-        const match = file.match(/^(.*) \(failed\).png$/);
-        if (match == null) {
-          return;
-        }
+  try {
+    const testFiles = await fs.readdir(screensDir);
+    await Promise.all(
+      testFiles.map(async testFile => {
+        const files = await fs.readdir(path.join(screensDir, testFile));
+        files.forEach(file => {
+          const match = file.match(/^(.*) \(failed\).png$/);
+          if (match == null) {
+            return;
+          }
 
-        const [suite, test, hookPart] = match[1].split(' -- ');
-        let testName = test;
-        const hook = hookPart?.match(/^(.*) hook$/)?.[1];
-        if (hook != null) {
-          testName = `"${hook}" hook for "${test}"`;
-          hookFailures[testFile] = hookFailures[testFile] || [];
-          hookFailures[testFile].push([suite, testName]);
-        }
-        reports.push({
-          name: 'Screenshot',
-          testName: fullTestName(suite, testName),
-          type: 'image',
-          value: `screenshots.tar.gz!${testFile}/${file}`,
+          const [suite, test, hookPart] = match[1].split(' -- ');
+          let testName = test;
+          const hook = hookPart?.match(/^(.*) hook$/)?.[1];
+          if (hook != null) {
+            testName = `"${hook}" hook for "${test}"`;
+            hookFailures[testFile] = hookFailures[testFile] || [];
+            hookFailures[testFile].push([suite, testName]);
+          }
+          reports.push({
+            name: 'Screenshot',
+            testName: fullTestName(suite, testName),
+            type: 'image',
+            value: `screenshots.tar.gz!${testFile}/${file}`,
+          });
         });
-      });
-    })
-  );
+      })
+    );
+  } catch (e) {
+    // ignore
+  }
 
   const videoFiles = await fs.readdir(videosDir);
   videoFiles.forEach(videoFile => {
