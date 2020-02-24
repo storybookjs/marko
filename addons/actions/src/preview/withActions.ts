@@ -2,9 +2,9 @@
 import { document, Element } from 'global';
 import { useEffect } from '@storybook/client-api';
 
+import { makeDecorator } from '@storybook/addons';
 import { actions } from './actions';
 
-import { makeDecorator } from '@storybook/addons';
 import { PARAM_KEY } from '../constants';
 
 const delegateEventSplitter = /^(\S+)\s*(.*)$/;
@@ -50,11 +50,11 @@ const applyEventHandlers = (actionsFn: any, ...args: any[]) => {
     }
     return undefined;
   }, [root, actionsFn, args]);
-}
+};
 
 export const createDecorator = (actionsFn: any) => (...args: any[]) => (storyFn: () => any) => {
-  applyEventHandlers(actionsFn, ...args)
-  
+  applyEventHandlers(actionsFn, ...args);
+
   return storyFn();
 };
 
@@ -67,8 +67,8 @@ export const withActions = makeDecorator({
     // allow a shortcut of providing just an array.
     // Anticipating that we'll soon kill configureActions in favor of configuration via parameters
     const storyOptions = Array.isArray(parameters) ? { handles: parameters } : parameters;
-    applyEventHandlers(actions, ...storyOptions.handles)
+    applyEventHandlers(actions, ...storyOptions.handles);
 
     return getStory(context);
-  }
+  },
 });
