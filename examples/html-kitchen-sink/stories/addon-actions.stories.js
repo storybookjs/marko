@@ -72,33 +72,36 @@ Story6.story = {
   },
 };
 
-export const Story7 = () => pickTarget.withActions('click', 'contextmenu')(buttonStory());
-Story7.story = { name: 'Decorated actions' };
+export const DecoratedStory1 = pickTarget.withActions('click', 'contextmenu')(buttonStory());
+DecoratedStory1.story = {
+  name: 'Decorated actions',
+};
 
-export const Story8 = () =>
-  pickTarget.withActions('click', 'contextmenu', { clearOnStoryChange: false })(buttonStory());
-Story8.story = { name: 'Decorated actions + config' };
+export const DecoratedStory2 = pickTarget.withActions('click', 'contextmenu', {
+  clearOnStoryChange: false,
+})(buttonStory());
+DecoratedStory2.story = { name: 'Decorated actions + config' };
 
-export const Story9 = buttonStory();
-Story9.story = {
+export const DeprecatedDecoratorsStory1 = buttonStory();
+DeprecatedDecoratorsStory1.story = {
   name: 'Deprecated decorators - Single action',
   decorators: [withActions('click')],
 };
 
-export const Story10 = buttonStory();
-Story10.story = {
+export const DeprecatedDecoratorsStory2 = buttonStory();
+DeprecatedDecoratorsStory2.story = {
   name: 'Deprecated decorators - Multiple actions',
   decorators: [withActions('click', 'contextmenu')],
 };
 
-export const Story11 = buttonStory();
-Story11.story = {
-  name: 'Deprecated decorators -Multiple actions + config',
+export const DeprecatedDecoratorsStory3 = buttonStory();
+DeprecatedDecoratorsStory3.story = {
+  name: 'Deprecated decorators - Multiple actions + config',
   decorators: [withActions('click', 'contextmenu', { clearOnStoryChange: false })],
 };
 
-export const Story12 = buttonStory();
-Story12.story = {
-  name: 'Deprecated decorators -Multiple actions, object',
+export const DeprecatedDecoratorsStory4 = buttonStory();
+DeprecatedDecoratorsStory4.story = {
+  name: 'Deprecated decorators - Multiple actions, object',
   decorators: [withActions({ click: 'clicked', contextmenu: 'right clicked' })],
 };

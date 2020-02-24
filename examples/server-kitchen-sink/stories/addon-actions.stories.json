@@ -8,35 +8,45 @@
       "name": "Hello World",
       "parameters": {
         "server": { "id": "addons/actions/story1" },
-        "actions": ["click"]
+        "actions": {
+          "handles": ["click"]
+        }
       }
     },
     {
       "name": "Multiple actions",
       "parameters": {
         "server": { "id": "addons/actions/story2" },
-        "actions": ["click", "contextmenu"]
+        "actions": {
+          "handles": ["click", "contextmenu"]
+        }
       }
     },
     {
       "name": "Multiple actions + config",
       "parameters": {
         "server": { "id": "addons/actions/story3" },
-        "actions": ["click", "contextmenu", { "clearOnStoryChange": false }]
+        "actions": {
+          "handles": ["click", "contextmenu", { "clearOnStoryChange": false }]
+        }
       }
     },
     {
       "name": "Multiple actions, object",
       "parameters": {
         "server": { "id": "addons/actions/story4" },
-        "actions": [{ "click": "clicked", "contextmenu": "right clicked" }]
+        "actions": {
+          "handles": [{ "click": "clicked", "contextmenu": "right clicked" }]
+        }
       }
     },
     {
       "name": "Multiple actions, object + config",
       "parameters": {
         "server": { "id": "addons/actions/story6" },
-        "actions": [{ "click": "clicked", "contextmenu": "right clicked" }, { "clearOnStoryChange": false }]
+        "actions": {
+          "handles": [{ "click": "clicked", "contextmenu": "right clicked" }, { "clearOnStoryChange": false }]
+        }
       }
     }
   ]

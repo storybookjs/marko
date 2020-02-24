@@ -76,17 +76,9 @@ Story6.story = {
   },
 };
 
-export const Story7 = () => pickTarget.withActions('click', 'contextmenu')(buttonStory());
-Story7.story = { name: 'Decorated actions' };
+export const DecoratedStory1 = () => pickTarget.withActions('click', 'contextmenu')(buttonStory());
+DecoratedStory1.story = { name: 'Decorated actions' };
 
-export const Story8 = () =>
+export const DecoratedStory2 = () =>
   pickTarget.withActions('click', 'contextmenu', { clearOnStoryChange: false })(buttonStory());
-Story8.story = { name: 'Decorated actions + config' };
-
-export const Story9 = buttonStory();
-Story9.story = {
-  name: 'Parameters array shortcut',
-  parameters: {
-    actions: [{ click: 'clicked', contextmenu: 'right clicked' }, { clearOnStoryChange: false }],
-  },
-};
+DecoratedStory2.story = { name: 'Decorated actions + config' };

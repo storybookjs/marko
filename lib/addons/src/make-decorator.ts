@@ -45,7 +45,7 @@ export const makeDecorator = ({
       // Used as [.]addDecorator(decorator(options))
       if (innerArgs.length > 1) {
         // Used as [.]addDecorator(decorator(option1, option2))
-        if (Array.isArray(args) && args.length > 1) {
+        if (args.length > 1) {
           return decorator(args)(...innerArgs);
         }
         return decorator(...args)(...innerArgs);

@@ -5,7 +5,7 @@ import { config } from './configureActions';
 export const actions: ActionsFunction = (...args: any[]) => {
   let options: ActionOptions = config;
   let names = args;
-  // args argument can a single argument as an array
+  // args argument can be a single argument as an array
   if (names.length === 1 && Array.isArray(names[0])) {
     [names] = names;
   }
