@@ -4,10 +4,7 @@ exports[`react component properties 9764-ts-extend-props 1`] = `
 Object {
   "rows": Array [
     Object {
-      "defaultValue": Object {
-        "detail": undefined,
-        "summary": "0",
-      },
+      "defaultValue": null,
       "description": "The input content value",
       "name": "value",
       "required": false,
@@ -17,10 +14,7 @@ Object {
       },
     },
     Object {
-      "defaultValue": Object {
-        "detail": undefined,
-        "summary": "1",
-      },
+      "defaultValue": null,
       "description": "",
       "name": "defaultChecked",
       "required": false,
@@ -30,10 +24,7 @@ Object {
       },
     },
     Object {
-      "defaultValue": Object {
-        "detail": undefined,
-        "summary": "2",
-      },
+      "defaultValue": null,
       "description": "",
       "name": "checked",
       "required": false,

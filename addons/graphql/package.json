@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-graphql",
-  "version": "6.0.0-alpha.14",
+  "version": "6.0.0-alpha.19",
   "description": "Storybook addon to display the GraphiQL IDE",
   "keywords": [
     "addon",
@@ -29,18 +29,18 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-alpha.14",
-    "@storybook/api": "6.0.0-alpha.14",
+    "@storybook/addons": "6.0.0-alpha.19",
+    "@storybook/api": "6.0.0-alpha.19",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "graphiql": "^0.17.5",
     "graphql": "^14.6.0",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "regenerator-runtime": "^0.13.3"
   },
   "peerDependencies": {
     "react": "*",
-    "react-dom": "*",
-    "regenerator-runtime": "*"
+    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"

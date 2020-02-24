@@ -1,5 +1,4 @@
 /** @jsx m */
-/* eslint-disable import/no-extraneous-dependencies */
 import m, { ComponentTypes } from 'mithril';
 import { makeDecorator } from '@storybook/addons';
 import parameters from './parameters';

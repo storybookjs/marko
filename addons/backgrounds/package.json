@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-backgrounds",
-  "version": "6.0.0-alpha.14",
+  "version": "6.0.0-alpha.19",
   "description": "A storybook addon to show different backgrounds for your preview",
   "keywords": [
     "addon",
@@ -32,15 +32,16 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-alpha.14",
-    "@storybook/api": "6.0.0-alpha.14",
-    "@storybook/client-logger": "6.0.0-alpha.14",
-    "@storybook/components": "6.0.0-alpha.14",
-    "@storybook/core-events": "6.0.0-alpha.14",
-    "@storybook/theming": "6.0.0-alpha.14",
+    "@storybook/addons": "6.0.0-alpha.19",
+    "@storybook/api": "6.0.0-alpha.19",
+    "@storybook/client-logger": "6.0.0-alpha.19",
+    "@storybook/components": "6.0.0-alpha.19",
+    "@storybook/core-events": "6.0.0-alpha.19",
+    "@storybook/theming": "6.0.0-alpha.19",
     "core-js": "^3.0.1",
     "memoizerific": "^1.11.3",
     "react": "^16.8.3",
+    "regenerator-runtime": "^0.13.3",
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
@@ -48,8 +49,7 @@
     "@types/webpack-env": "^1.15.1"
   },
   "peerDependencies": {
-    "react-dom": "*",
-    "regenerator-runtime": "*"
+    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"

@@ -14,12 +14,22 @@ export interface ErrorLike {
   stack: string;
 }
 
+// Metadata about a story that can be set at various levels: global, for a kind, or for a single story.
+export interface StoryMetadata {
+  parameters: Parameters;
+  decorators: DecoratorFunction[];
+}
+
 export interface StoreItem extends StoryContext {
+  id: string;
+  kind: string;
+  name: string;
   getDecorated: () => StoryFn;
   getOriginal: () => StoryFn;
   story: string;
   storyFn: StoryFn;
   hooks: HooksContext;
+  parameters: Parameters;
 }
 
 export interface StoreData {
@@ -29,18 +39,18 @@ export interface StoreData {
 export interface ClientApiParams {
   storyStore: StoryStore;
   decorateStory?: (storyFn: any, decorators: any) => any;
+  noStoryModuleAddMethodHotDispose?: boolean;
 }
 
 export type ClientApiReturnFn<StoryFnReturnType> = (...args: any[]) => StoryApi<StoryFnReturnType>;
 
 export { StoryApi, DecoratorFunction };
 
-export interface AddStoryArgs {
+export interface AddStoryArgs extends StoryMetadata {
   id: string;
   kind: string;
   name: string;
   storyFn: StoryFn;
-  parameters: Parameters;
 }
 
 export interface ClientApiAddon<StoryFnReturnType = unknown> extends Addon {

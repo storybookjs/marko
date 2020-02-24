@@ -37,10 +37,12 @@ function knobChanged(change: KnobStoreKnob) {
   const knobOptions = knobStore.get(name);
   knobOptions.value = value;
 
-  if (!manager.options.disableDebounce) {
-    debouncedResetAndForceUpdate();
-  } else {
-    resetAndForceUpdate();
+  if (!manager.options.disableForceUpdate && !knobOptions.disableForceUpdate) {
+    if (!manager.options.disableDebounce && !knobOptions.disableDebounce) {
+      debouncedResetAndForceUpdate();
+    } else {
+      resetAndForceUpdate();
+    }
   }
 }
 

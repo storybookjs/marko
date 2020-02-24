@@ -1,3 +1,44 @@
+## 6.0.0-alpha.19 (February 24, 2020)
+
+### Features
+
+* Addon-links: Add preset ([#9932](https://github.com/storybookjs/storybook/pull/9932))
+
+### Bug Fixes
+
+* Addon-docs: Restore IE11 compat on Windows by transpiling acorn-jsx ([#9790](https://github.com/storybookjs/storybook/pull/9790))
+
+## 6.0.0-alpha.18 (February 22, 2020)
+
+### Features
+
+* Addon-knobs: Add `disableForceUpdate` option ([#9447](https://github.com/storybookjs/storybook/pull/9447))
+
+## 6.0.0-alpha.17 (February 21, 2020)
+
+### Bug Fixes
+
+- Props: Fix typescript unspecified default value ([#9873](https://github.com/storybookjs/storybook/pull/9873))
+- Centered: remove `typesVersions` attribute ([#9907](https://github.com/storybookjs/storybook/pull/9907))
+
+### Maintenance
+
+- Misc: Add missing dependencies or peerDependencies ([#9916](https://github.com/storybookjs/storybook/pull/9916))
+
+## 6.0.0-alpha.16 (February 21, 2020)
+
+Failed NPM publish
+
+## 6.0.0-alpha.15 (February 20, 2020)
+
+### Breaking Changes
+
+- Refactor Client API: pull metadata handling code into the store. ([#9877](https://github.com/storybookjs/storybook/pull/9877))
+
+### Features
+
+- Core: Add skip dispose option to ClientApi ([#9868](https://github.com/storybookjs/storybook/pull/9868))
+
 ## 6.0.0-alpha.14 (February 19, 2020)
 
 ### Features

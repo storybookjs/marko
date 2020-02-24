@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-options",
-  "version": "6.0.0-alpha.14",
+  "version": "6.0.0-alpha.19",
   "description": "Options addon for storybook",
   "keywords": [
     "addon",
@@ -29,8 +29,9 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-alpha.14",
+    "@storybook/addons": "6.0.0-alpha.19",
     "core-js": "^3.0.1",
+    "regenerator-runtime": "^0.13.3",
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
@@ -38,8 +39,7 @@
   },
   "peerDependencies": {
     "react": "*",
-    "react-dom": "*",
-    "regenerator-runtime": "*"
+    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"

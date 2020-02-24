@@ -1,6 +1,6 @@
 {
   "name": "@storybook/node-logger",
-  "version": "6.0.0-alpha.14",
+  "version": "6.0.0-alpha.19",
   "description": "",
   "keywords": [
     "storybook"
@@ -32,8 +32,7 @@
     "chalk": "^3.0.0",
     "core-js": "^3.0.1",
     "npmlog": "^4.1.2",
-    "pretty-hrtime": "^1.0.3",
-    "regenerator-runtime": "^0.13.3"
+    "pretty-hrtime": "^1.0.3"
   },
   "devDependencies": {
     "@types/pretty-hrtime": "^1.0.0"
