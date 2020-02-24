@@ -224,7 +224,7 @@ Leveraging the new presets the  `@storybook/addon-actions` uses parameters to pa
 import { withactions } from `@storybook/addon-actions`;
 
 storiesOf('Stories', module)
-  .addDecorator(withactions('mouseover', 'click .btn'));
+  .addDecorator(withActions('mouseover', 'click .btn'));
 ```
 
 You should replace it with:
