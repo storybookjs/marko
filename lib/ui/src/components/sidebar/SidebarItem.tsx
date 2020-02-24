@@ -66,7 +66,7 @@ const Icon = styled(Icons)<IconProps>(
 export const Item = styled.div<{
   depth?: number;
   isSelected?: boolean;
-  loading?: boolean;
+  isLoading?: boolean;
 }>(
   {
     fontSize: 13,
@@ -82,8 +82,8 @@ export const Item = styled.div<{
   ({ depth }) => ({
     paddingLeft: depth * 15 + 9,
   }),
-  ({ theme, isSelected, loading }) =>
-    !loading &&
+  ({ theme, isSelected, isLoading }) =>
+    !isLoading &&
     (isSelected
       ? {
           cursor: 'default',
@@ -102,8 +102,8 @@ export const Item = styled.div<{
             background: theme.background.hoverable,
           },
         }),
-  ({ theme, loading }) =>
-    loading && {
+  ({ theme, isLoading }) =>
+    isLoading && {
       '&& > svg + span': { background: theme.appBorderColor },
       '&& > *': theme.animation.inlineGlow,
       '&& > span': { borderColor: 'transparent' },
@@ -125,7 +125,7 @@ type SidebarItemProps = ComponentProps<typeof Item> & {
 };
 
 const SidebarItem: FunctionComponent<SidebarItemProps> = ({
-  name = 'loading story',
+  name = 'isLoading story',
   isComponent = false,
   isLeaf = false,
   isExpanded = false,

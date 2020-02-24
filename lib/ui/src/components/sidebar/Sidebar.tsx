@@ -4,9 +4,7 @@ import React, {
   useState,
   useCallback,
   Fragment,
-  Props,
   ComponentPropsWithoutRef,
-  useRef,
 } from 'react';
 
 import { styled } from '@storybook/theming';
@@ -14,34 +12,18 @@ import { ScrollArea, Placeholder } from '@storybook/components';
 import { StoriesHash, State, useStorybookApi } from '@storybook/api';
 
 import { opacify } from 'polished';
-import { navigate } from '@storybook/router';
 import SidebarHeading, { SidebarHeadingProps } from './SidebarHeading';
-import SidebarStories from './SidebarStories';
 import SidebarItem from './SidebarItem';
 
 import Search from './SidebarSearch';
 import { filteredLength, toFiltered, getMains } from './treeview/utils';
 
-import {
-  DefaultSection,
-  DefaultList,
-  DefaultLink,
-  DefaultLeaf,
-  DefaultHead,
-  DefaultRootTitle,
-} from './treeview/components';
 import { Tree } from './treeview/treeview';
 import SidebarSubheading from './SidebarSubheading';
 
 const Heading = styled(SidebarHeading)<SidebarHeadingProps>({
   padding: '20px 20px 12px',
 });
-
-const Stories = styled(({ className, ...rest }) => (
-  <SidebarStories className={className} {...rest} />
-))(({ isLoading }) =>
-  isLoading ? { marginTop: 8, overflow: 'isHidden' } : { overflow: 'isHidden' }
-);
 
 const Container = styled.nav({
   position: 'absolute',
@@ -129,13 +111,11 @@ const Section = styled.section(({ theme }) => ({
   },
 }));
 
-const Ref: FunctionComponent<RefType & { storyId: string; filter: string }> = ({
-  stories,
-  id: key,
-  title = key,
-  storyId,
-  filter,
-}) => {
+const Ref: FunctionComponent<RefType & {
+  storyId: string;
+  filter: string;
+  isHidden: boolean;
+}> = ({ stories, id: key, title = key, storyId, filter, isHidden = false }) => {
   const { dataSet, expandedSet, length, others, roots, setExpanded, selectedSet } = useDataset(
     stories,
     filter,
@@ -180,6 +160,10 @@ const Ref: FunctionComponent<RefType & { storyId: string; filter: string }> = ({
   }, [selectedSet]);
 
   const isLoading = !length;
+
+  if (isHidden) {
+    return null;
+  }
 
   return (
     <div>
@@ -227,25 +211,15 @@ const Ref: FunctionComponent<RefType & { storyId: string; filter: string }> = ({
 };
 
 const useDataset = (dataset: DataSet = {}, filter: string, storyId: string) => {
-  const r = useRef(dataset);
-
-  if (r.current !== dataset) {
-    console.log(r.current, dataset);
-  }
-
-  r.current = dataset;
-
-  const initial = useMemo(
-    () =>
-      Object.keys(dataset).reduce(
-        (acc, k) => ({
-          filtered: { ...acc.filtered, [k]: true },
-          unfiltered: { ...acc.unfiltered, [k]: false },
-        }),
-        { filtered: {} as BooleanSet, unfiltered: {} as BooleanSet }
-      ),
-    [dataset]
-  );
+  const initial = useMemo(() => {
+    return Object.keys(dataset).reduce(
+      (acc, k) => ({
+        filtered: { ...acc.filtered, [k]: true },
+        unfiltered: { ...acc.unfiltered, [k]: false },
+      }),
+      { filtered: {} as BooleanSet, unfiltered: {} as BooleanSet }
+    );
+  }, [dataset]);
 
   const type: 'filtered' | 'unfiltered' = filter.length >= 2 ? 'filtered' : 'unfiltered';
 
@@ -265,10 +239,8 @@ const useDataset = (dataset: DataSet = {}, filter: string, storyId: string) => {
 
   const filteredSet = useMemo(() => (type === 'filtered' ? toFiltered(dataset, filter) : dataset), [
     dataset,
-    type === 'filtered' && filter,
+    filter,
   ]);
-
-  // console.log({ state, type, expandedSets });
 
   const length = useMemo(() => Object.keys(filteredSet).length, [filteredSet]);
 
@@ -341,6 +313,8 @@ const Sidebar: FunctionComponent<SidebarProps> = ({
   const combined = useCombination(stories, refs);
   const { total, list } = useSearchResults(combined, filter);
 
+  const resultLess = total === 0 && filter;
+
   return (
     <Container className="container sidebar-container">
       <CustomScrollArea vertical>
@@ -348,22 +322,20 @@ const Sidebar: FunctionComponent<SidebarProps> = ({
 
         <Search key="filter" onChange={setFilter} />
 
-        {total === 0 && filter ? (
-          <Placeholder>This filter resulted in 0 results</Placeholder>
-        ) : (
-          <Fragment>
-            {combined.map(([k, v], index) => {
-              const prev = list[index - 1];
+        {resultLess ? <Placeholder>This filter resulted in 0 results</Placeholder> : null}
 
-              return filter && !list[index] ? null : (
-                <Fragment key={k}>
-                  {index === 0 || (filter && prev === 0) ? null : <Hr />}
-                  <Ref {...v} storyId={storyId} filter={filter} />
-                </Fragment>
-              );
-            })}
-          </Fragment>
-        )}
+        <Fragment>
+          {combined.map(([k, v], index) => {
+            const prev = list[index - 1];
+
+            return (
+              <Fragment key={k}>
+                {index === 0 || (filter && prev === 0) ? null : <Hr />}
+                <Ref {...v} storyId={storyId} filter={filter} isHidden={filter && !list[index]} />
+              </Fragment>
+            );
+          })}
+        </Fragment>
       </CustomScrollArea>
     </Container>
   );

@@ -2,7 +2,7 @@ import React from 'react';
 
 import Sidebar from './Sidebar';
 import { standardData as standardHeaderData } from './SidebarHeading.stories';
-import { withRootData } from './SidebarStories.stories';
+import { mockDataset } from './treeview/treeview.mockdata';
 
 export default {
   component: Sidebar,
@@ -11,7 +11,8 @@ export default {
 };
 
 const { menu } = standardHeaderData;
-const { stories, storyId } = withRootData;
+const stories = mockDataset.withRoot;
+const storyId = '1-12-121';
 
 export const simpleData = { menu, stories, storyId };
 export const loadingData = { menu, stories: {} };

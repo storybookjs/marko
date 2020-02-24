@@ -1,6 +1,5 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useMemo } from 'react';
 import { Global, createGlobal, styled } from '@storybook/theming';
-import memoize from 'memoizerific';
 import sizeMe from 'react-sizeme';
 
 import { Route } from '@storybook/router';
@@ -14,27 +13,6 @@ import Panel from './containers/panel';
 import Notifications from './containers/notifications';
 
 import SettingsPages from './settings';
-
-const createProps = memoize(1)(
-  () =>
-    console.log('createprops called') || {
-      Sidebar,
-      Preview,
-      Panel,
-      Notifications,
-      pages: [
-        {
-          key: 'settings',
-          render: () => <SettingsPages />,
-          route: (({ children }) => (
-            <Route path="/settings" startsWith>
-              {children}
-            </Route>
-          )) as FunctionComponent,
-        },
-      ],
-    }
-);
 
 const View = styled.div({
   position: 'fixed',
@@ -56,7 +34,26 @@ export interface AppProps {
 
 const App = React.memo<AppProps>(
   ({ viewMode, docsOnly, layout, panelCount, size: { width, height } }) => {
-    const props = createProps();
+    const props = useMemo(
+      () => ({
+        Sidebar,
+        Preview,
+        Panel,
+        Notifications,
+        pages: [
+          {
+            key: 'settings',
+            render: () => <SettingsPages />,
+            route: (({ children }) => (
+              <Route path="/settings" startsWith>
+                {children}
+              </Route>
+            )) as FunctionComponent,
+          },
+        ],
+      }),
+      []
+    );
 
     let content;
 

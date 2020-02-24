@@ -1,6 +1,7 @@
 import { DOCS_MODE } from 'global';
-import React, { FunctionComponent, useCallback } from 'react';
+import React, { FunctionComponent, useCallback, useMemo } from 'react';
 import memoize from 'memoizerific';
+import rfdc from 'rfdc';
 
 import { Badge } from '@storybook/components';
 import { Consumer, Combo, StoriesHash, Story } from '@storybook/api';
@@ -221,16 +222,10 @@ export const collapseDocsOnlyStories = (storiesHash: StoriesHash) => {
   return result;
 };
 
-const Sidebar: FunctionComponent<{}> = React.memo(() => {
-  const mapper = useCallback(({ state, api }: Combo) => {
-    console.log('mapper created');
-    const memoizedcollapseAllStories = memoize(1)(
-      (...args) => console.log('collapse called') || collapseAllStories(...args)
-    );
-    const memoizedcollapseDocsOnlyStories = memoize(1)(
-      (...args) => console.log('collapse called') || collapseDocsOnlyStories(...args)
-    );
+const clone = rfdc();
 
+const Sidebar: FunctionComponent<{}> = React.memo(() => {
+  const mapper = ({ state, api }: Combo) => {
     const {
       ui: { name, url, enableShortcuts },
       viewMode,
@@ -239,9 +234,13 @@ const Sidebar: FunctionComponent<{}> = React.memo(() => {
       storiesHash,
       refs,
     } = state;
-    const stories = DOCS_MODE
-      ? memoizedcollapseAllStories(storiesHash)
-      : memoizedcollapseDocsOnlyStories(storiesHash);
+
+    const stories = useMemo(() => {
+      // protect against mutation
+      const copy = clone(storiesHash);
+
+      return DOCS_MODE ? collapseAllStories(copy) : collapseDocsOnlyStories(copy);
+    }, [DOCS_MODE, storiesHash]);
 
     const shortcutKeys = api.getShortcutKeys();
     return {
@@ -254,8 +253,14 @@ const Sidebar: FunctionComponent<{}> = React.memo(() => {
       menu: createMenu(api, shortcutKeys, isFullscreen, showPanel, showNav, enableShortcuts),
       menuHighlighted: api.versionUpdateAvailable(),
     };
-  }, []);
-  return <Consumer filter={mapper}>{fromState => <SidebarComponent {...fromState} />}</Consumer>;
+  };
+  return (
+    <Consumer filter={mapper}>
+      {fromState => {
+        return <SidebarComponent {...fromState} />;
+      }}
+    </Consumer>
+  );
 });
 
 export default Sidebar;
