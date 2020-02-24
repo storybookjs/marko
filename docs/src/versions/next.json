@@ -1,1 +1,1 @@
-{"version":"6.0.0-alpha.18","info":{"plain":"### Features\n\n* Addon-knobs: Add `disableForceUpdate` option ([#9447](https://github.com/storybookjs/storybook/pull/9447))"}}
+{"version":"6.0.0-alpha.19","info":{"plain":"### Features\n\n* Addon-links: Add preset ([#9932](https://github.com/storybookjs/storybook/pull/9932))\n\n### Bug Fixes\n\n* Addon-docs: Restore IE11 compat on Windows by transpiling acorn-jsx ([#9790](https://github.com/storybookjs/storybook/pull/9790))"}}
