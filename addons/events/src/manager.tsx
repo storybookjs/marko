@@ -5,10 +5,10 @@ import Panel from './components/Panel';
 import { ADDON_ID, PANEL_ID, PARAM_KEY } from './constants';
 
 export function register() {
-  addons.register(ADDON_ID, api => {
+  addons.register(ADDON_ID, () => {
     addons.addPanel(PANEL_ID, {
       title: 'Events',
-      render: ({ active, key }) => <Panel key={key} api={api} active={active} />,
+      render: ({ active, key }) => <Panel key={key} active={active} />,
       paramKey: PARAM_KEY,
     });
   });
