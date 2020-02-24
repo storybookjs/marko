@@ -1,4 +1,4 @@
-import { decorate } from '@storybook/addon-actions';
+import { withActions, decorate } from '@storybook/addon-actions';
 
 const pickTarget = decorate([args => [args[0].target]]);
 
@@ -81,8 +81,24 @@ Story8.story = { name: 'Decorated actions + config' };
 
 export const Story9 = buttonStory();
 Story9.story = {
-  name: 'Parameters array shortcut',
-  parameters: {
-    actions: [{ click: 'clicked', contextmenu: 'right clicked' }, { clearOnStoryChange: false }],
-  },
+  name: 'Deprecated decorators - Single action',
+  decorators: [withActions('click')],
+};
+
+export const Story10 = buttonStory();
+Story10.story = {
+  name: 'Deprecated decorators - Multiple actions',
+  decorators: [withActions('click', 'contextmenu')],
+};
+
+export const Story11 = buttonStory();
+Story11.story = {
+  name: 'Deprecated decorators -Multiple actions + config',
+  decorators: [withActions('click', 'contextmenu', { clearOnStoryChange: false })],
+};
+
+export const Story12 = buttonStory();
+Story12.story = {
+  name: 'Deprecated decorators -Multiple actions, object',
+  decorators: [withActions({ click: 'clicked', contextmenu: 'right clicked' })],
 };

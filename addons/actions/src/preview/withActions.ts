@@ -1,6 +1,8 @@
 // Based on http://backbonejs.org/docs/backbone.html#section-164
 import { document, Element } from 'global';
 import { useEffect } from '@storybook/client-api';
+import deprecate from 'util-deprecate';
+import dedent from 'ts-dedent';
 
 import { makeDecorator } from '@storybook/addons';
 import { actions } from './actions';
@@ -52,6 +54,23 @@ const applyEventHandlers = (actionsFn: any, ...args: any[]) => {
   }, [root, actionsFn, args]);
 };
 
+const applyDeprecatedOptions = (options: any[]) => {
+  if (options) {
+    deprecate(
+      () => applyEventHandlers(actions, options),
+      dedent`
+        withActions(options) is deprecated, please configure addon-actions using the addParameter api:
+        
+        addParameters({
+          actions: {
+            handles: options
+          },
+        });
+      `
+    )();
+  }
+};
+
 export const createDecorator = (actionsFn: any) => (...args: any[]) => (storyFn: () => any) => {
   applyEventHandlers(actionsFn, ...args);
 
@@ -63,11 +82,10 @@ export const withActions = makeDecorator({
   parameterName: PARAM_KEY,
   skipIfNoParametersOrOptions: true,
   allowDeprecatedUsage: false,
-  wrapper: (getStory, context, { parameters }) => {
-    // allow a shortcut of providing just an array.
-    // Anticipating that we'll soon kill configureActions in favor of configuration via parameters
-    const storyOptions = Array.isArray(parameters) ? { handles: parameters } : parameters;
-    applyEventHandlers(actions, ...storyOptions.handles);
+  wrapper: (getStory, context, { parameters, options }) => {
+    applyDeprecatedOptions(options as any[]);
+
+    if (parameters && parameters.handles) applyEventHandlers(actions, ...parameters.handles);
 
     return getStory(context);
   },

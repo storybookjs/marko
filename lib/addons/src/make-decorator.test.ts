@@ -46,6 +46,51 @@ describe('makeDecorator', () => {
     expect(wrapper).toHaveBeenCalledWith(expect.any(Function), context, { options: 'test-val' });
   });
 
+  it('passes object options added at decoration time', () => {
+    const wrapper = jest.fn();
+    const decorator = makeDecorator({ wrapper, name: 'test', parameterName: 'test' });
+    const story = jest.fn();
+    const options = { test: 'val' };
+    const decoratedStory = defaultDecorateStory(story, [decorator(options)]);
+
+    const context = { ...baseContext };
+    decoratedStory(context);
+
+    expect(wrapper).toHaveBeenCalledWith(expect.any(Function), context, {
+      options: { test: 'val' },
+    });
+  });
+
+  it('passes multiple options added at decoration time', () => {
+    const wrapper = jest.fn();
+    const decorator = makeDecorator({ wrapper, name: 'test', parameterName: 'test' });
+    const story = jest.fn();
+    const options = ['test-val', 'test-val2'];
+    const decoratedStory = defaultDecorateStory(story, [decorator(...options)]);
+
+    const context = { ...baseContext };
+    decoratedStory(context);
+
+    expect(wrapper).toHaveBeenCalledWith(expect.any(Function), context, {
+      options: ['test-val', 'test-val2'],
+    });
+  });
+
+  it('passes multiple options including objects added at decoration time', () => {
+    const wrapper = jest.fn();
+    const decorator = makeDecorator({ wrapper, name: 'test', parameterName: 'test' });
+    const story = jest.fn();
+    const options = ['test-val', 'test-val2', { test: 'val' }];
+    const decoratedStory = defaultDecorateStory(story, [decorator(...options)]);
+
+    const context = { ...baseContext };
+    decoratedStory(context);
+
+    expect(wrapper).toHaveBeenCalledWith(expect.any(Function), context, {
+      options: ['test-val', 'test-val2', { test: 'val' }],
+    });
+  });
+
   it('passes both options *and* parameters at the same time', () => {
     const wrapper = jest.fn();
     const decorator = makeDecorator({ wrapper, name: 'test', parameterName: 'test' });
