@@ -261,7 +261,7 @@ export const transformStoriesRawToStoriesHash = (
     return acc;
   }
 
-  return Object.values(storiesHashOutOfOrder).reduce(addItem, base);
+  return Object.values(storiesHashOutOfOrder).reduce(addItem, { ...base });
 };
 
 export type Item = StoriesHash[keyof StoriesHash];
