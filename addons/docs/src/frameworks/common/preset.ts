@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import createCompiler from '@storybook/addon-docs/mdx-compiler-plugin';
 import path from 'path';
 import remarkSlug from 'remark-slug';
