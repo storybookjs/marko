@@ -1,3 +1,13 @@
+## 6.0.0-alpha.19 (February 24, 2020)
+
+### Features
+
+* Addon-links: Add preset ([#9932](https://github.com/storybookjs/storybook/pull/9932))
+
+### Bug Fixes
+
+* Addon-docs: Restore IE11 compat on Windows by transpiling acorn-jsx ([#9790](https://github.com/storybookjs/storybook/pull/9790))
+
 ## 6.0.0-alpha.18 (February 22, 2020)
 
 ### Features
