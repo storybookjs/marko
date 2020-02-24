@@ -1,8 +1,8 @@
-import React, { ComponentProps } from 'react';
-import { styled } from '@storybook/theming';
-import { opacify, transparentize } from 'polished';
-import { Icons } from '@storybook/components';
 import { DOCS_MODE } from 'global';
+import React, { ComponentProps, FunctionComponent } from 'react';
+import { opacify, transparentize } from 'polished';
+import { styled } from '@storybook/theming';
+import { Icons } from '@storybook/components';
 
 export type ExpanderProps = ComponentProps<'span'> & {
   isExpanded?: boolean;
@@ -63,11 +63,11 @@ const Icon = styled(Icons)<IconProps>(
   ({ isSelected = false }) => (isSelected ? { color: 'inherit' } : {})
 );
 
-export const Item = styled(({ className, children, id }) => (
-  <div className={className} id={id}>
-    {children}
-  </div>
-))(
+export const Item = styled.div<{
+  depth?: number;
+  isSelected?: boolean;
+  loading?: boolean;
+}>(
   {
     fontSize: 13,
     lineHeight: '16px',
@@ -111,20 +111,27 @@ export const Item = styled(({ className, children, id }) => (
 );
 
 type SidebarItemProps = ComponentProps<typeof Item> & {
+  childIds?: string[] | null;
+  id?: string;
   isComponent?: boolean;
-  isLeaf?: boolean;
   isExpanded?: boolean;
+  isLeaf?: boolean;
   isSelected?: boolean;
+  name?: string;
+  onClick?: Function;
+  onKeyUp?: Function;
+  parameters?: Record<string, any>;
+  prefix?: string;
 };
 
-const SidebarItem = ({
+const SidebarItem: FunctionComponent<SidebarItemProps> = ({
   name = 'loading story',
   isComponent = false,
   isLeaf = false,
   isExpanded = false,
   isSelected = false,
   ...props
-}: SidebarItemProps) => {
+}) => {
   let iconName: ComponentProps<typeof Icons>['icon'];
   if (isLeaf && isComponent) {
     iconName = 'document';

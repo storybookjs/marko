@@ -14,7 +14,6 @@ export const prevent = (e: SyntheticEvent) => {
 const toList = memoize(1)((dataset: Dataset) => Object.values(dataset));
 
 export type Item = StoriesHash[keyof StoriesHash];
-
 export type Dataset = Record<string, Item>;
 export type SelectedSet = Record<string, boolean>;
 export type ExpandedSet = Record<string, boolean>;

@@ -54,7 +54,7 @@ const Desktop = React.memo<DesktopProps>(
           {({ navProps, mainProps, panelProps, previewProps }) => (
             <Fragment>
               <S.Sidebar {...navProps}>
-                <Sidebar debug={navProps} />
+                <Sidebar />
               </S.Sidebar>
               <S.Main {...mainProps} isFullscreen={!!mainProps.isFullscreen}>
                 <S.Preview {...previewProps} hidden={viewMode === 'settings'}>

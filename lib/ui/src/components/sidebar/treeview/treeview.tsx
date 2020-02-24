@@ -139,9 +139,7 @@ const Tree: FunctionComponent<{
   dataset: Dataset;
   expanded: ExpandedSet;
   selected: SelectedSet;
-  events?: any;
   Branch: ComponentType<any>;
-  Link?: ComponentType<any>;
   List?: ComponentType<any>;
   Leaf?: ComponentType<any>;
   Head?: ComponentType<any>;
@@ -171,6 +169,8 @@ const Tree: FunctionComponent<{
       { Branch, Leaf, Head, List },
       { dataset, selected, expanded, root: i, depth: depth + 1 }
     );
+
+  //
 
   switch (true) {
     case !!(children && children.length && node.name): {

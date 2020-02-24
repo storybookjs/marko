@@ -15,23 +15,26 @@ import Notifications from './containers/notifications';
 
 import SettingsPages from './settings';
 
-const createProps = memoize(1)(() => ({
-  Sidebar,
-  Preview,
-  Panel,
-  Notifications,
-  pages: [
-    {
-      key: 'settings',
-      render: () => <SettingsPages />,
-      route: (({ children }) => (
-        <Route path="/settings" startsWith>
-          {children}
-        </Route>
-      )) as FunctionComponent,
-    },
-  ],
-}));
+const createProps = memoize(1)(
+  () =>
+    console.log('createprops called') || {
+      Sidebar,
+      Preview,
+      Panel,
+      Notifications,
+      pages: [
+        {
+          key: 'settings',
+          render: () => <SettingsPages />,
+          route: (({ children }) => (
+            <Route path="/settings" startsWith>
+              {children}
+            </Route>
+          )) as FunctionComponent,
+        },
+      ],
+    }
+);
 
 const View = styled.div({
   position: 'fixed',

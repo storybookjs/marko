@@ -1,5 +1,5 @@
 import { DOCS_MODE } from 'global';
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useCallback } from 'react';
 import memoize from 'memoizerific';
 
 import { Badge } from '@storybook/components';
@@ -221,36 +221,43 @@ export const collapseDocsOnlyStories = (storiesHash: StoriesHash) => {
   return result;
 };
 
-export const mapper = ({ state, api }: Combo) => {
-  const {
-    ui: { name, url, enableShortcuts },
-    viewMode,
-    storyId,
-    layout: { isFullscreen, showPanel, showNav },
-    storiesHash,
-    storiesConfigured,
-    refs,
-  } = state;
-  const stories = DOCS_MODE
-    ? collapseAllStories(storiesHash)
-    : collapseDocsOnlyStories(storiesHash);
+const Sidebar: FunctionComponent<{}> = React.memo(() => {
+  const mapper = useCallback(({ state, api }: Combo) => {
+    console.log('mapper created');
+    const memoizedcollapseAllStories = memoize(1)(
+      (...args) => console.log('collapse called') || collapseAllStories(...args)
+    );
+    const memoizedcollapseDocsOnlyStories = memoize(1)(
+      (...args) => console.log('collapse called') || collapseDocsOnlyStories(...args)
+    );
 
-  const shortcutKeys = api.getShortcutKeys();
-  return {
-    loading: !storiesConfigured,
-    title: name,
-    url,
-    stories,
-    refs,
-    storyId,
-    viewMode,
-    menu: createMenu(api, shortcutKeys, isFullscreen, showPanel, showNav, enableShortcuts),
-    menuHighlighted: api.versionUpdateAvailable(),
-  };
-};
+    const {
+      ui: { name, url, enableShortcuts },
+      viewMode,
+      storyId,
+      layout: { isFullscreen, showPanel, showNav },
+      storiesHash,
+      storiesConfigured,
+      refs,
+    } = state;
+    const stories = DOCS_MODE
+      ? memoizedcollapseAllStories(storiesHash)
+      : memoizedcollapseDocsOnlyStories(storiesHash);
 
-const Sidebar: FunctionComponent<{}> = () => (
-  <Consumer filter={mapper}>{fromState => <SidebarComponent {...fromState} />}</Consumer>
-);
+    const shortcutKeys = api.getShortcutKeys();
+    return {
+      loading: !storiesConfigured,
+      title: name,
+      url,
+      stories,
+      refs,
+      storyId,
+      viewMode,
+      menu: createMenu(api, shortcutKeys, isFullscreen, showPanel, showNav, enableShortcuts),
+      menuHighlighted: api.versionUpdateAvailable(),
+    };
+  }, []);
+  return <Consumer filter={mapper}>{fromState => <SidebarComponent {...fromState} />}</Consumer>;
+});
 
 export default Sidebar;
