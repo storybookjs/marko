@@ -5,7 +5,8 @@ import {
   __STORYBOOK_CLIENT_API__ as clientApi,
 } from 'global';
 import qs from 'qs';
-import addons from '@storybook/addons';
+import addons, { makeDecorator } from '@storybook/addons';
+import { PARAM_KEY } from './constants';
 import { STORY_CHANGED, SELECT_STORY } from '@storybook/core-events';
 import { toId } from '@storybook/csf';
 import { logger } from '@storybook/client-logger';
@@ -109,8 +110,12 @@ const off = () => {
   }
 };
 
-export const withLinks = (storyFn: () => void) => {
-  on();
-  addons.getChannel().once(STORY_CHANGED, off);
-  return storyFn();
-};
+export const withLinks = makeDecorator({
+  name: 'withLinks',
+  parameterName: PARAM_KEY,
+  wrapper: (getStory, context, { parameters }) => {
+    on();
+    addons.getChannel().once(STORY_CHANGED, off);
+    return getStory(context);
+  }
+});
