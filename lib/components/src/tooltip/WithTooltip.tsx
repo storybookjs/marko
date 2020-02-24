@@ -126,7 +126,7 @@ const WithToolTipState: FunctionComponent<WithTooltipPureProps & {
             });
           }
         } catch (e) {
-          logger.warn('Adding a click listener to iframe failed: ', e);
+          // logger.warn('Adding a click listener to iframe failed: ', e);
         }
       };
 
