@@ -237,7 +237,6 @@ const Sidebar: FunctionComponent<{}> = React.memo(() => {
       storyId,
       layout: { isFullscreen, showPanel, showNav },
       storiesHash,
-      storiesConfigured,
       refs,
     } = state;
     const stories = DOCS_MODE
@@ -246,7 +245,6 @@ const Sidebar: FunctionComponent<{}> = React.memo(() => {
 
     const shortcutKeys = api.getShortcutKeys();
     return {
-      loading: !storiesConfigured,
       title: name,
       url,
       stories,

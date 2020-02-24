@@ -39,7 +39,9 @@ const Heading = styled(SidebarHeading)<SidebarHeadingProps>({
 
 const Stories = styled(({ className, ...rest }) => (
   <SidebarStories className={className} {...rest} />
-))(({ loading }) => (loading ? { marginTop: 8, overflow: 'hidden' } : { overflow: 'hidden' }));
+))(({ isLoading }) =>
+  isLoading ? { marginTop: 8, overflow: 'isHidden' } : { overflow: 'isHidden' }
+);
 
 const Container = styled.nav({
   position: 'absolute',
@@ -64,7 +66,7 @@ export interface SidebarProps {
   menu: any[];
   storyId?: string;
   menuHighlighted?: boolean;
-  loading?: boolean;
+  isLoading?: boolean;
 }
 
 type Refs = State['refs'];
@@ -95,26 +97,26 @@ const Hr = styled.hr(({ theme }) => ({
 const Loader: FunctionComponent<{ size: 'single' | 'multiple' }> = ({ size }) => {
   return size === 'multiple' ? (
     <Fragment>
-      <SidebarItem loading />
-      <SidebarItem loading />
-      <SidebarItem depth={1} loading />
-      <SidebarItem depth={1} loading />
-      <SidebarItem depth={2} loading />
-      <SidebarItem depth={3} loading />
-      <SidebarItem depth={3} loading />
-      <SidebarItem depth={3} loading />
-      <SidebarItem depth={1} loading />
-      <SidebarItem depth={1} loading />
-      <SidebarItem depth={1} loading />
-      <SidebarItem depth={2} loading />
-      <SidebarItem depth={2} loading />
-      <SidebarItem depth={2} loading />
-      <SidebarItem depth={3} loading />
-      <SidebarItem loading />
-      <SidebarItem loading />
+      <SidebarItem isLoading />
+      <SidebarItem isLoading />
+      <SidebarItem depth={1} isLoading />
+      <SidebarItem depth={1} isLoading />
+      <SidebarItem depth={2} isLoading />
+      <SidebarItem depth={3} isLoading />
+      <SidebarItem depth={3} isLoading />
+      <SidebarItem depth={3} isLoading />
+      <SidebarItem depth={1} isLoading />
+      <SidebarItem depth={1} isLoading />
+      <SidebarItem depth={1} isLoading />
+      <SidebarItem depth={2} isLoading />
+      <SidebarItem depth={2} isLoading />
+      <SidebarItem depth={2} isLoading />
+      <SidebarItem depth={3} isLoading />
+      <SidebarItem isLoading />
+      <SidebarItem isLoading />
     </Fragment>
   ) : (
-    <SidebarItem loading />
+    <SidebarItem isLoading />
   );
 };
 

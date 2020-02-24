@@ -17,4 +17,4 @@ export const simpleData = { menu, stories, storyId };
 export const loadingData = { menu, stories: {} };
 
 export const simple = () => <Sidebar menu={menu} stories={stories} storyId={storyId} refs={{}} />;
-export const loading = () => <Sidebar menu={menu} stories={{}} loading refs={{}} />;
+export const isLoading = () => <Sidebar menu={menu} stories={{}} isLoading refs={{}} />;
