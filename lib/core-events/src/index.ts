@@ -1,8 +1,8 @@
 enum events {
   CHANNEL_CREATED = 'channelCreated',
-  GET_CURRENT_STORY = 'getCurrentStory',
   SET_CURRENT_STORY = 'setCurrentStory',
-  GET_STORIES = 'getStories',
+  // Slightly awkward name because the tense of "set" is not obvious
+  CURRENT_STORY_WAS_SET = 'currentStoryWasSet',
   SET_STORIES = 'setStories',
   STORIES_CONFIGURED = 'storiesConfigured',
   SELECT_STORY = 'selectStory',
@@ -33,9 +33,8 @@ export default events;
 // This is the preferred method
 export const {
   CHANNEL_CREATED,
-  GET_CURRENT_STORY,
   SET_CURRENT_STORY,
-  GET_STORIES,
+  CURRENT_STORY_WAS_SET,
   SET_STORIES,
   STORIES_CONFIGURED,
   SELECT_STORY,
