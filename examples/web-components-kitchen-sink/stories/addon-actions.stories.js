@@ -1,7 +1,4 @@
-import { decorate } from '@storybook/addon-actions';
 import { html } from 'lit-html';
-
-const pickTarget = decorate([args => [args[0].target]]);
 
 const buttonStory = () => () =>
   html`
@@ -75,10 +72,3 @@ Story6.story = {
     },
   },
 };
-
-export const DecoratedStory1 = () => pickTarget.withActions('click', 'contextmenu')(buttonStory());
-DecoratedStory1.story = { name: 'Decorated actions' };
-
-export const DecoratedStory2 = () =>
-  pickTarget.withActions('click', 'contextmenu', { clearOnStoryChange: false })(buttonStory());
-DecoratedStory2.story = { name: 'Decorated actions + config' };

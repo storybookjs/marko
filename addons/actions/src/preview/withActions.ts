@@ -71,13 +71,6 @@ const applyDeprecatedOptions = (actionsFn: any, options: any[]) => {
   }
 };
 
-// Supports the use case for html or webcomponents to decorate the event data
-export const createDecorator = (actionsFn: any) => (...handles: any[]) => (storyFn: () => any) => {
-  applyEventHandlers(actionsFn, ...handles);
-
-  return storyFn();
-};
-
 export const withActions = makeDecorator({
   name: 'withActions',
   parameterName: PARAM_KEY,

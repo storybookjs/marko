@@ -1,6 +1,4 @@
-import { withActions, decorate } from '@storybook/addon-actions';
-
-const pickTarget = decorate([args => [args[0].target]]);
+import { withActions } from '@storybook/addon-actions';
 
 const buttonStory = () => () => `<button type="button">Hello World</button>`;
 
@@ -71,16 +69,6 @@ Story6.story = {
     },
   },
 };
-
-export const DecoratedStory1 = pickTarget.withActions('click', 'contextmenu')(buttonStory());
-DecoratedStory1.story = {
-  name: 'Decorated actions',
-};
-
-export const DecoratedStory2 = pickTarget.withActions('click', 'contextmenu', {
-  clearOnStoryChange: false,
-})(buttonStory());
-DecoratedStory2.story = { name: 'Decorated actions + config' };
 
 export const DeprecatedDecoratorsStory1 = buttonStory();
 DeprecatedDecoratorsStory1.story = {
