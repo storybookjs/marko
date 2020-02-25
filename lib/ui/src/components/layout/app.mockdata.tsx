@@ -7,7 +7,7 @@ import Panel from '../panel/panel';
 import { Preview } from '../preview/preview';
 
 import { previewProps } from '../preview/preview.mockdata';
-import { mockDataset } from '../sidebar/treeview/treeview.mockdata';
+import { mockDataset } from '../sidebar/mockdata';
 import { DesktopProps } from './desktop';
 
 export const panels: Collection = {

@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Sidebar from './Sidebar';
-import { standardData as standardHeaderData } from './SidebarHeading.stories';
-import { mockDataset } from './treeview/treeview.mockdata';
+import { standardData as standardHeaderData } from './Heading.stories';
+import { mockDataset } from './mockdata';
 
 export default {
   component: Sidebar,

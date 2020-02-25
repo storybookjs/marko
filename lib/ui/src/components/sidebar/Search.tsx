@@ -1,9 +1,18 @@
-import React, { ComponentProps, useState, ChangeEvent } from 'react';
+import React, { ComponentProps, useState, ChangeEvent, FunctionComponent } from 'react';
 import { styled } from '@storybook/theming';
 import { opacify } from 'polished';
 import { Icons } from '@storybook/components';
 
 export type FilterFieldProps = ComponentProps<'input'>;
+
+export type CancelButtonProps = ComponentProps<'button'>;
+export type PureSidebarSearchProps = Omit<FilterFieldProps, 'onChange'> & {
+  onChange: (arg: string) => void;
+  defaultFocussed?: boolean;
+};
+export type FilterFormProps = ComponentProps<'form'> & {
+  focussed: boolean;
+};
 
 const FilterField = styled.input<FilterFieldProps>(({ theme }) => ({
   // resets
@@ -29,8 +38,6 @@ const FilterField = styled.input<FilterFieldProps>(({ theme }) => ({
     opacity: 0,
   },
 }));
-
-export type CancelButtonProps = ComponentProps<'button'>;
 
 const CancelButton = styled.button<CancelButtonProps>(({ theme }) => ({
   border: 0,
@@ -61,10 +68,6 @@ const CancelButton = styled.button<CancelButtonProps>(({ theme }) => ({
     background: opacify(0.1, theme.appBorderColor),
   },
 }));
-
-export type FilterFormProps = ComponentProps<'form'> & {
-  focussed: boolean;
-};
 
 const FilterForm = styled.form<FilterFormProps>(({ theme, focussed }) => ({
   transition: 'all 150ms ease-out',
@@ -104,12 +107,14 @@ const FilterForm = styled.form<FilterFormProps>(({ theme, focussed }) => ({
   },
 }));
 
-export type PureSidebarSearchProps = Omit<FilterFieldProps, 'onChange'> & {
-  onChange: (arg: string) => void;
-};
-
-export const PureSidebarSearch = ({ className, onChange, ...props }: PureSidebarSearchProps) => {
-  const [focussed, onSetFocussed] = useState(false);
+const PureSidebarSearch: FunctionComponent<PureSidebarSearchProps> = ({
+  className,
+  onChange,
+  defaultFocussed = false,
+  defaultValue,
+  ...props
+}) => {
+  const [focussed, onSetFocussed] = useState(defaultFocussed);
   return (
     <FilterForm
       autoComplete="off"
@@ -126,6 +131,7 @@ export const PureSidebarSearch = ({ className, onChange, ...props }: PureSidebar
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
           onChange(e.target.value);
         }}
+        defaultValue={defaultValue}
         {...props}
         placeholder={focussed ? 'Type to search...' : 'Press "/" to search...'}
         aria-label="Search stories"
@@ -138,8 +144,6 @@ export const PureSidebarSearch = ({ className, onChange, ...props }: PureSidebar
   );
 };
 
-const Search = styled(PureSidebarSearch)<PureSidebarSearchProps>({
+export const Search = styled(PureSidebarSearch)<PureSidebarSearchProps>({
   margin: '0 20px 1rem',
 });
-
-export default Search;
