@@ -5,7 +5,7 @@ import rfdc from 'rfdc';
 import { Consumer, Combo, StoriesHash, Story } from '@storybook/api';
 
 import SidebarComponent from '../components/sidebar/Sidebar';
-import { createMenu } from './menu';
+import { useMenu } from './menu';
 
 type Item = StoriesHash[keyof StoriesHash];
 
@@ -140,7 +140,8 @@ const Sidebar: FunctionComponent<{}> = React.memo(() => {
       return DOCS_MODE ? collapseAllStories(copy) : collapseDocsOnlyStories(copy);
     }, [DOCS_MODE, storiesHash]);
 
-    const shortcutKeys = api.getShortcutKeys();
+    const menu = useMenu(api, isFullscreen, showPanel, showNav, enableShortcuts);
+
     return {
       title: name,
       url,
@@ -148,7 +149,7 @@ const Sidebar: FunctionComponent<{}> = React.memo(() => {
       refs,
       storyId,
       viewMode,
-      menu: createMenu(api, shortcutKeys, isFullscreen, showPanel, showNav, enableShortcuts),
+      menu,
       menuHighlighted: api.versionUpdateAvailable(),
     };
   };
