@@ -3,6 +3,7 @@
 - [Migration](#migration)
   - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
     - [New addon presets](#new-addon-presets)
+    - [Removed Legacy Addon Decorators and Loaders](#removed-legacy-addon-decorators-and-loaders)
     - [Client API changes](#client-api-changes)
       - [Removed legacy story APIs](#removed-legacy-story-apis)
       - [Can no longer add decorators/parameters after stories](#can-no-longer-add-decorators-parameters-after-stories)
@@ -127,6 +128,36 @@ MyNonCheckedStory.story = {
     a11y: { disable: true },
   },
 };
+```
+
+### Removed Legacy Addon Decorators and Loaders
+
+In 6.0 we removed a11y and centered addon decorators that were previously deprecated. 
+
+#### a11y, background and storysource addons
+
+See the migration guides for further details:
+[Addon a11y uses parameters, decorator renamed](#addon-a11y-uses-parameters-decorator-renamed)
+[Addon backgrounds uses parameters](#addon-backgrounds-uses-parameters)
+[Source-loader](#source-loader)
+
+#### centered addon 
+
+If you previously had: 
+```js
+import centered from '@storybook/addon-centered'
+```
+
+You should replace it with the React or Vue version as appropriate
+
+```js
+import centered from '@storybook/addon-centered/react'
+```
+
+or
+
+```js
+import centered from '@storybook/addon-centered/vue'
 ```
 
 ### Client API changes

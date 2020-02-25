@@ -1,7 +1,5 @@
 import { document } from 'global';
 import axe, { AxeResults, ElementContext, RunOptions, Spec } from 'axe-core';
-import deprecate from 'util-deprecate';
-import dedent from 'ts-dedent';
 
 import addons, { makeDecorator } from '@storybook/addons';
 import { EVENTS, PARAM_KEY } from './constants';
@@ -14,7 +12,7 @@ interface Setup {
   manual: boolean;
 }
 
-let setup: Setup = { element: undefined, config: {}, options: {}, manual: false };
+const setup: Setup = { element: undefined, config: {}, options: {}, manual: false };
 
 const getElement = () => {
   const storyRoot = document.getElementById('story-root');
@@ -74,34 +72,3 @@ export const withA11y = makeDecorator({
     return getStory(context);
   },
 });
-
-// TODO: REMOVE at v6.0.0
-export const withA11Y = deprecate(
-  // @ts-ignore
-  (...args: any[]) => withA11y(...args),
-  'withA11Y has been renamed withA11y'
-);
-
-// TODO: REMOVE at v6.0.0
-export const checkA11y = deprecate(
-  // @ts-ignore
-  (...args: any[]) => withA11y(...args),
-  'checkA11y has been renamed withA11y'
-);
-
-// TODO: REMOVE at v6.0.0
-export const configureA11y = deprecate(
-  (config: any) => {
-    setup = config;
-  },
-  dedent`
-    configureA11y is deprecated, please configure addon-a11y using the addParameter api:
-    
-    addParameters({
-      a11y: {
-        // ... axe options
-        element: '#root', // optional selector which element to inspect
-      },
-    });
-  `
-);
