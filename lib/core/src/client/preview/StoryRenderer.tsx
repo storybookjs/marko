@@ -3,25 +3,13 @@ import ReactDOM from 'react-dom';
 import { document } from 'global';
 import AnsiToHtml from 'ansi-to-html';
 
-import {
-  StoryId,
-  StoryKind,
-  StoryName,
-  StoryFn,
-  StoryContext,
-  Channel,
-  Parameters,
-  DecoratorFunction,
-  HooksContext,
-} from '@storybook/addons';
+import { StoryId, StoryKind, ViewMode, Channel } from '@storybook/addons';
 import Events from '@storybook/core-events';
 import { logger } from '@storybook/client-logger';
 import { StoryStore, StoreItem } from '@storybook/client-api';
 
 import { NoDocs } from './NoDocs';
 import { RenderStoryFunction, RenderContext } from './types';
-
-type ViewMode = 'story' | 'docs';
 
 // We have "changed" story if this changes
 interface RenderMetadata {
