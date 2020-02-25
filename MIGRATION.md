@@ -102,12 +102,12 @@ module.exports = {
 In earlier versions of Storybook, this would automatically call `@storybook/addon-a11y/register`, which adds the the a11y panel to the Storybook UI. As a user you would also add a decorator:
 
 ```js
-import { withA11Y } from '../index';
+import { withA11y } from '../index';
 
-addDecorator(withA11Y);
+addDecorator(withA11y);
 ```
 
-Now in 6.0, `addon-a11y` comes with a preset, `@storybook/addon-a11y/preset`, that does this automatically for you. This change simplifies configuration, since now you don't need to add that decorator. However, if you are upgrading
+Now in 6.0, `addon-a11y` comes with a preset, `@storybook/addon-a11y/preset`, that does this automatically for you. This change simplifies configuration, since now you don't need to add that decorator.
 
 If you wish to disable this new behavior, you can modify your `main.js` to force it to use the `register` logic rather than the `preset`:
 

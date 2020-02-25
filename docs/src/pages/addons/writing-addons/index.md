@@ -101,7 +101,7 @@ within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: ['path/to/register.js']
+  addons: ['path/to/addon']
 }
 ```
 
@@ -235,7 +235,7 @@ within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: ['path/to/register.js']
+  addons: ['path/to/addon']
 }
 ```
 
