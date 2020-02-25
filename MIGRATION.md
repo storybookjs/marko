@@ -3,7 +3,7 @@
 - [Migration](#migration)
   - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
     - [New addon presets](#new-addon-presets)
-    - [Removed Legacy Addon Decorators and Loaders](#removed-legacy-addon-decorators-and-loaders)
+    - [Removed Deprecated APIs](#Removed-deprecated-apis)
     - [Client API changes](#client-api-changes)
       - [Removed legacy story APIs](#removed-legacy-story-apis)
       - [Can no longer add decorators/parameters after stories](#can-no-longer-add-decorators-parameters-after-stories)
@@ -42,6 +42,7 @@
     - [Addon cssresources name attribute renamed](#addon-cssresources-name-attribute-renamed)
     - [Addon viewport uses parameters](#addon-viewport-uses-parameters)
     - [Addon a11y uses parameters, decorator renamed](#addon-a11y-uses-parameters-decorator-renamed)
+    - [Addon centered decorator deprecated](#addon-centered-decorator-deprecated)
     - [New keyboard shortcuts defaults](#new-keyboard-shortcuts-defaults)
     - [New URL structure](#new-url-structure)
     - [Rename of the `--secure` cli parameter to `--https`](#rename-of-the---secure-cli-parameter-to---https)
@@ -130,35 +131,16 @@ MyNonCheckedStory.story = {
 };
 ```
 
-### Removed Legacy Addon Decorators and Loaders
+### Removed Deprecated APIs
 
-In 6.0 we removed a11y and centered addon decorators that were previously deprecated. 
-
-#### a11y, background and storysource addons
+In 6.0 we removed a number of APIs that were previously deprecated. 
 
 See the migration guides for further details:
-[Addon a11y uses parameters, decorator renamed](#addon-a11y-uses-parameters-decorator-renamed)
-[Addon backgrounds uses parameters](#addon-backgrounds-uses-parameters)
-[Source-loader](#source-loader)
-
-#### centered addon 
-
-If you previously had: 
-```js
-import centered from '@storybook/addon-centered'
-```
-
-You should replace it with the React or Vue version as appropriate
-
-```js
-import centered from '@storybook/addon-centered/react'
-```
-
-or
-
-```js
-import centered from '@storybook/addon-centered/vue'
-```
+* [Addon a11y uses parameters, decorator renamed](#addon-a11y-uses-parameters-decorator-renamed)
+* [Addon backgrounds uses parameters](#addon-backgrounds-uses-parameters)
+* [Source-loader](#source-loader)
+* [Unified docs preset](#unified-docs-preset)
+* [Addon centered decorator deprecated](#addon-centered-decorator-deprecated)
 
 ### Client API changes
 
@@ -780,6 +762,25 @@ You can also pass `a11y` parameters at the component level (via `storiesOf(...).
 Furthermore, the decorator `checkA11y` has been deprecated and renamed to `withA11y` to make it consistent with other Storybook decorators.
 
 See the [a11y addon README](https://github.com/storybookjs/storybook/blob/master/addons/a11y/README.md) for more information.
+
+### Addon centered decorator deprecated
+
+If you previously had: 
+```js
+import centered from '@storybook/addon-centered'
+```
+
+You should replace it with the React or Vue version as appropriate
+
+```js
+import centered from '@storybook/addon-centered/react'
+```
+
+or
+
+```js
+import centered from '@storybook/addon-centered/vue'
+```
 
 ### New keyboard shortcuts defaults
 
