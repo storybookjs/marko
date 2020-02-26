@@ -23,6 +23,7 @@ const LoaderWrapper = styled.div(({ theme }) => ({
   borderColor: transparentize(0.06, theme.appBorderColor),
   borderTopColor: opacify(0.07, theme.appBorderColor),
   animation: `${rotate360} 0.7s linear infinite`,
+  mixBlendMode: 'exclusion',
 }));
 
 export function Loader({ ...props }) {

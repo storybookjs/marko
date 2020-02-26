@@ -28,7 +28,7 @@ export interface SetRefData {
 }
 
 export interface SubAPI {
-  setRef: (id: string, data: SetRefData) => void;
+  setRef: (id: string, data: SetRefData, ready?: boolean) => void;
   getRefs: () => Refs;
   checkRef: (ref: InceptionRef) => Promise<void>;
 }
@@ -143,7 +143,7 @@ const initRefsApi = ({ store, provider }: Module) => {
       return { ...fromConfig, ...fromState };
     },
 
-    setRef: (id, { stories, ...rest }) => {
+    setRef: (id, { stories, ...rest }, ready = false) => {
       const ref = api.getRefs()[id];
       const after = stories
         ? namespace(
@@ -152,7 +152,7 @@ const initRefsApi = ({ store, provider }: Module) => {
           )
         : undefined;
 
-      const result = { ...ref, stories: after, ...rest, ready: true };
+      const result = { ...ref, stories: after, ...rest, ready };
 
       store.setState({
         refs: {
