@@ -1,4 +1,5 @@
-import { location } from 'global';
+import { location, fetch } from 'global';
+import { logger } from '@storybook/client-logger';
 import {
   transformStoriesRawToStoriesHash,
   StoriesRaw,
@@ -16,9 +17,20 @@ export interface SubState {
   refs: Refs;
 }
 
+type Versions = string[];
+
+export interface SetRefData {
+  stories?: StoriesRaw;
+  versions?: Versions;
+  startInjected?: true;
+  loginUrl?: string;
+  error?: any;
+}
+
 export interface SubAPI {
-  setRef: (id: string, stories: StoriesRaw) => void;
+  setRef: (id: string, data: SetRefData) => void;
   getRefs: () => Refs;
+  checkRef: (ref: InceptionRef) => Promise<void>;
 }
 
 export type Mapper = (ref: InceptionRef, story: StoryInput) => StoryInput;
@@ -28,7 +40,9 @@ export interface InceptionRef {
   url: string;
   startInjected?: boolean;
   stories: StoriesHash;
+  versions?: Versions;
   ready?: boolean;
+  error?: any;
 }
 
 export type Refs = Record<string, InceptionRef>;
@@ -98,43 +112,78 @@ const map = (input: StoriesRaw, ref: InceptionRef, options: { mapper?: Mapper })
 };
 
 const initRefsApi = ({ store, provider }: Module) => {
-  const getRefs: SubAPI['getRefs'] = () => {
-    const { refs = {} } = provider.getConfig();
+  const api: SubAPI = {
+    checkRef: async ref => {
+      const { id, url } = ref;
 
-    return refs;
+      const response = await fetch(`${url}/data.json`).catch(() => false);
+
+      if (response) {
+        const { ok } = response;
+
+        if (ok) {
+          const data: SetRefData = await response
+            .json()
+            .catch(error => ({ startInjected: true, error }));
+
+          api.setRef(id, data);
+        } else {
+          api.setRef(id, { startInjected: true });
+        }
+      } else {
+        logger.warn('an auto-injected ref threw a cors-error');
+        api.setRef(id, { startInjected: true });
+      }
+    },
+
+    getRefs: () => {
+      const { refs: fromConfig = {} } = provider.getConfig();
+      const { refs: fromState = {} } = store.getState();
+
+      return { ...fromConfig, ...fromState };
+    },
+
+    setRef: (id, { stories, ...rest }) => {
+      const ref = api.getRefs()[id];
+      const after = stories
+        ? namespace(
+            transformStoriesRawToStoriesHash(map(stories, ref, { mapper: defaultMapper }), {}),
+            ref
+          )
+        : undefined;
+
+      const result = { ...ref, stories: after, ...rest, ready: true };
+
+      store.setState({
+        refs: {
+          ...(store.getState().refs || {}),
+          [id]: result,
+        },
+      });
+    },
   };
 
-  const setRef: SubAPI['setRef'] = (id, data) => {
-    const ref = getRefs()[id];
-    const after = namespace(
-      transformStoriesRawToStoriesHash(map(data, ref, { mapper: defaultMapper }), {}),
-      ref
-    );
+  const refs = Object.entries(api.getRefs());
 
-    store.setState({
-      refs: {
-        ...(store.getState().refs || {}),
-        [id]: { startInjected: true, ...ref, stories: after, ready: true },
-      },
-    });
-  };
-
-  const initialState: SubState['refs'] = Object.entries(getRefs()).reduce(
+  const initialState: SubState['refs'] = refs.reduce(
     (acc, [key, data]) => ({
       ...acc,
       [key]: {
-        startInjected: true,
+        title: data.id,
         ...data,
       },
     }),
     {} as SubState['refs']
   );
 
+  console.log(refs);
+
+  refs.forEach(([k, v]) => {
+    api.checkRef(v);
+  });
+
   return {
-    api: {
-      setRef,
-      getRefs,
-    },
+    api,
     state: {
       refs: initialState,
     },

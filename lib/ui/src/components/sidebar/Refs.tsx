@@ -13,6 +13,7 @@ import { transparentize } from 'polished';
 import { styled } from '@storybook/theming';
 import { StoriesHash, State, useStorybookApi, isRoot } from '@storybook/api';
 
+import { Icons, WithTooltip, TooltipMessage } from '@storybook/components';
 import { ListItem } from './Tree/ListItem';
 import { toFiltered, getMains, getParents } from './Tree/utils';
 import { Tree } from './Tree/Tree';
@@ -24,6 +25,8 @@ type RefType = Refs[keyof Refs];
 type BooleanSet = Record<string, boolean>;
 type Item = StoriesHash[keyof StoriesHash];
 type DataSet = Record<string, Item>;
+
+type FilteredType = 'filtered' | 'unfiltered';
 
 interface RefProps {
   storyId: string;
@@ -93,14 +96,87 @@ const Components = {
   List: styled.div({}),
 };
 
-export const Ref: FunctionComponent<RefType & RefProps> = ({
-  stories,
-  id: key,
-  title = key,
-  storyId,
-  filter,
-  isHidden = false,
-}) => {
+const ProblemPlacement = styled.div({
+  position: 'absolute',
+  top: 0,
+  right: 10,
+  width: 20,
+  height: 20,
+});
+
+const getTitle = (ref: RefType) => {
+  switch (true) {
+    case !!ref.error: {
+      return 'an error occured';
+    }
+    case !!ref.startInjected: {
+      return 'auto injected';
+    }
+    default: {
+      return ref.title;
+    }
+  }
+};
+const getDescription = (ref: RefType) => {
+  switch (true) {
+    case !!ref.error: {
+      return <pre>{ref.error.toString()}</pre>;
+    }
+    case !!ref.startInjected: {
+      return (
+        <div>
+          <p>this storybook was auto-injected,</p>
+          <p>this is bad for performance, please do XYZ</p>
+        </div>
+      );
+    }
+    default: {
+      return (
+        <div>
+          this ref was loaded from <a href={ref.url}>{ref.url}</a>
+        </div>
+      );
+    }
+  }
+};
+const getIcon = (ref: RefType) => {
+  switch (true) {
+    case !!ref.error: {
+      return <Icons width="20" height="20" icon="alert" />;
+    }
+    case !!ref.startInjected: {
+      return <Icons width="20" height="20" icon="info" />;
+    }
+    default: {
+      return <Icons width="20" height="20" icon="ellipsis" />;
+    }
+  }
+};
+
+const RefIndicator: FunctionComponent<RefType> = ref => {
+  const title = getTitle(ref);
+  const description = getDescription(ref);
+  const icon = getIcon(ref);
+
+  return (
+    <ProblemPlacement>
+      <WithTooltip
+        placement="top"
+        trigger="hover"
+        tooltip={<TooltipMessage title={title} desc={description} />}
+      >
+        {icon}
+      </WithTooltip>
+    </ProblemPlacement>
+  );
+};
+
+const Wrapper = styled.div({
+  position: 'relative',
+});
+
+export const Ref: FunctionComponent<RefType & RefProps> = ref => {
+  const { stories, id: key, title = key, storyId, filter, isHidden = false } = ref;
   const { dataSet, expandedSet, length, others, roots, setExpanded, selectedSet } = useDataset(
     stories,
     filter,
@@ -118,7 +194,8 @@ export const Ref: FunctionComponent<RefType & RefProps> = ({
   const isMain = key === 'storybook_internal';
 
   return (
-    <div>
+    <Wrapper>
+      {!isMain ? <RefIndicator {...ref} /> : null}
       <ExpanderContext.Provider value={combo}>
         {!isMain ? <RefHead>{title}</RefHead> : null}
         {isLoading ? (
@@ -160,11 +237,9 @@ export const Ref: FunctionComponent<RefType & RefProps> = ({
           </Fragment>
         )}
       </ExpanderContext.Provider>
-    </div>
+    </Wrapper>
   );
 };
-
-type FilteredType = 'filtered' | 'unfiltered';
 
 const useExpanded = (
   type: FilteredType,
@@ -231,14 +306,25 @@ const useFiltered = (dataset: DataSet, filter: string, parents: Item[], storyId:
 };
 
 const useDataset = (dataset: DataSet = {}, filter: string, storyId: string) => {
+  const emptyInitial = useMemo(
+    () => ({
+      filtered: {},
+      unfiltered: {},
+    }),
+    []
+  );
+  const datasetKeys = Object.keys(dataset);
   const initial = useMemo(() => {
-    return Object.keys(dataset).reduce(
-      (acc, k) => ({
-        filtered: { ...acc.filtered, [k]: true },
-        unfiltered: { ...acc.unfiltered, [k]: false },
-      }),
-      { filtered: {} as BooleanSet, unfiltered: {} as BooleanSet }
-    );
+    if (datasetKeys.length) {
+      return Object.keys(dataset).reduce(
+        (acc, k) => ({
+          filtered: { ...acc.filtered, [k]: true },
+          unfiltered: { ...acc.unfiltered, [k]: false },
+        }),
+        { filtered: {} as BooleanSet, unfiltered: {} as BooleanSet }
+      );
+    }
+    return emptyInitial;
   }, [dataset]);
 
   const type: FilteredType = filter.length >= 2 ? 'filtered' : 'unfiltered';

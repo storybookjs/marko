@@ -234,7 +234,7 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
             `${url}/iframe.html`.match(source)
           );
 
-          api.setRef(refId, data.stories);
+          api.setRef(refId, data);
           break;
         }
 
