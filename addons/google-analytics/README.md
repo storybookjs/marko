@@ -16,7 +16,7 @@ within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: ['@storybook/addon-google-analytics/register']
+  addons: ['@storybook/addon-google-analytics']
 }
 ```
 

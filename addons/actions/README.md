@@ -18,7 +18,7 @@ Then, add following content to `.storybook/main.js`
 
 ```js
 module.exports = {
-  addons: ['@storybook/addon-actions/register']
+  addons: ['@storybook/addon-actions']
 }
 ```
 
