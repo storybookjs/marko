@@ -60,12 +60,16 @@ export default function start(
 ) {
   const channel = getOrCreateChannel();
   const { clientApi, storyStore } = getClientApi(channel, decorateStory);
-  const { clearDecorators } = clientApi;
-  const configApi = new ConfigApi({ clearDecorators, storyStore, channel, clientApi });
+  const configApi = new ConfigApi({ storyStore });
   const storyRenderer = new StoryRenderer({ render, channel, storyStore });
 
-  // channel can be null in NodeJS
+  // Only try and do URL/event based stuff in a browser context (i.e. not in storyshots)
   if (isBrowser) {
+    // Initialize the story store with the selection in the URL
+    const { storyId, viewMode } = initializePath(storyStore);
+    storyStore.setSelection({ storyId, viewMode });
+
+    // Keep the URL updated based on the current story
     channel.on(Events.CURRENT_STORY_WAS_SET, setPath);
 
     // Handle keyboard shortcuts
@@ -79,12 +83,6 @@ export default function start(
       }
     };
   }
-
-  storyStore.on(Events.STORY_INIT, () => {
-    const { storyId, viewMode } = initializePath(storyStore);
-
-    storyStore.setSelection({ storyId, viewMode });
-  });
 
   if (typeof window !== 'undefined') {
     window.__STORYBOOK_CLIENT_API__ = clientApi;

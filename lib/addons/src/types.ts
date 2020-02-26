@@ -19,6 +19,7 @@ export function isSupportedType(type: Types): boolean {
 export type StoryId = string;
 export type StoryKind = string;
 export type StoryName = string;
+export type ViewMode = 'story' | 'docs';
 
 export interface Parameters {
   fileName?: string;

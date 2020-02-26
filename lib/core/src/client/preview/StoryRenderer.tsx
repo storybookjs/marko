@@ -69,7 +69,7 @@ export class StoryRenderer {
     // Channel can be null in StoryShots
     if (this.channel) {
       this.channel.on(Events.FORCE_RE_RENDER, () => this.forceReRender());
-      this.channel.on(Events.STORY_RENDER, () => this.renderCurrentStory(false));
+      this.channel.on(Events.RENDER_CURRENT_STORY, () => this.renderCurrentStory(false));
     }
   }
 
@@ -81,6 +81,11 @@ export class StoryRenderer {
     const { storyStore } = this;
 
     const loadError = storyStore.getError();
+    if (loadError) {
+      this.showErrorDisplay(loadError);
+      return;
+    }
+
     const { storyId, viewMode: urlViewMode } = storyStore.getSelection();
 
     const data = storyStore.fromId(storyId);
@@ -105,11 +110,6 @@ export class StoryRenderer {
       showError: ({ title, description }) => this.renderError({ title, description }),
       showException: err => this.renderException(err),
     };
-
-    if (loadError) {
-      this.showErrorDisplay(loadError);
-      return;
-    }
 
     this.renderStoryIfChanged({ metadata, context });
   }

@@ -2,6 +2,7 @@ import { history, document } from 'global';
 import qs from 'qs';
 import { toId } from '@storybook/csf';
 import { StoryStore } from '@storybook/client-api';
+import { StoryId, ViewMode } from '@storybook/addons';
 
 export function pathToId(path: string) {
   const match = (path || '').match(/^\/story\/(.+)/);
@@ -12,7 +13,7 @@ export function pathToId(path: string) {
 }
 
 // todo add proper types
-export const setPath = ({ storyId, viewMode }: any) => {
+export const setPath = ({ storyId, viewMode }: { storyId: StoryId; viewMode: ViewMode }) => {
   const { path, selectedKind, selectedStory, ...rest } = qs.parse(document.location.search, {
     ignoreQueryPrefix: true,
   });
