@@ -124,7 +124,7 @@ const initRefsApi = ({ store, provider }: Module) => {
         if (ok) {
           const data: SetRefData = await response
             .json()
-            .catch(error => ({ startInjected: true, error }));
+            .catch((error: Error) => ({ startInjected: true, error }));
 
           api.setRef(id, data);
         } else {
