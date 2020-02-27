@@ -36,15 +36,7 @@ export type Loadable = RequireContext | RequireContext[] | LoaderFunction;
 
 // Previously this also included these fields but I don't think they were used:
 //   { configApi, storyStore, channel, clientApi, };
-export interface RenderContext extends StoreItem {
-  id: StoryId;
-  kind: StoryKind;
-  name: StoryName;
-  parameters: Parameters;
-  getDecorated: () => StoryFn;
-  getOriginal: () => StoryFn;
-  hooks: HooksContext;
-
+export type RenderContext = StoreItem & {
   // Legacy identifiers that are already on StoreItem (as name/kind) but widely used
   selectedKind: StoryKind;
   selectedStory: StoryName;
@@ -53,7 +45,7 @@ export interface RenderContext extends StoreItem {
   showMain: () => void;
   showError: (error: { title: string; description: string }) => void;
   showException: (err: Error) => void;
-}
+};
 
 // The function used by a framework to render story to the DOM
 export type RenderStoryFunction = (context: RenderContext) => void;

@@ -24,25 +24,19 @@ export interface StoryMetadata {
   decorators: DecoratorFunction[];
 }
 
-export interface AddStoryArgs extends StoryMetadata, StoryIdentifier {
-  id: StoryId;
-  kind: StoryKind;
-  name: StoryName;
-  parameters: Parameters;
-  decorators: DecoratorFunction[];
+export type AddStoryArgs = StoryIdentifier & {
   storyFn: StoryFn;
-}
+  parameters?: Parameters;
+  decorators?: DecoratorFunction[];
+};
 
-export interface StoreItem extends StoryIdentifier {
-  id: StoryId;
-  kind: StoryKind;
-  name: StoryName;
+export type StoreItem = StoryIdentifier & {
   parameters: Parameters;
   getDecorated: () => StoryFn;
   getOriginal: () => StoryFn;
   storyFn: StoryFn;
   hooks: HooksContext;
-}
+};
 
 export interface StoreData {
   [key: string]: StoreItem;

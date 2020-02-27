@@ -6,7 +6,7 @@ import AnsiToHtml from 'ansi-to-html';
 import { StoryId, StoryKind, ViewMode, Channel } from '@storybook/addons';
 import Events from '@storybook/core-events';
 import { logger } from '@storybook/client-logger';
-import { StoryStore, StoreItem } from '@storybook/client-api';
+import { StoryStore } from '@storybook/client-api';
 
 import { NoDocs } from './NoDocs';
 import { RenderStoryFunction, RenderContext } from './types';
@@ -102,13 +102,15 @@ export class StoryRenderer {
     this.applyLayout(layout);
 
     const context: RenderContext = {
+      id: storyId, // <- in case data is null, at least we'll know what we tried to render
       ...data,
       selectedKind: kind,
       selectedStory: name,
       forceRender,
       showMain: () => this.showMain(),
-      showError: ({ title, description }) => this.renderError({ title, description }),
-      showException: err => this.renderException(err),
+      showError: ({ title, description }: { title: string; description: string }) =>
+        this.renderError({ title, description }),
+      showException: (err: Error) => this.renderException(err),
     };
 
     this.renderStoryIfChanged({ metadata, context });
@@ -134,7 +136,6 @@ export class StoryRenderer {
     if (!forceRender && !storyChanged && !revisionChanged && !viewModeChanged) {
       this.channel.emit(Events.STORY_UNCHANGED, {
         ...metadata,
-        kind,
         name,
       });
       return;
@@ -167,15 +168,13 @@ export class StoryRenderer {
       switch (metadata.viewMode) {
         case 'docs': {
           this.showMain();
-          document.getElementById('root').setAttribute('hidden', 'true');
-          document.getElementById('docs-root').removeAttribute('hidden');
+          this.showDocs();
           break;
         }
         case 'story':
         default: {
           if (previousMetadata) {
-            document.getElementById('docs-root').setAttribute('hidden', 'true');
-            document.getElementById('root').removeAttribute('hidden');
+            this.showStory();
           }
         }
       }
@@ -250,6 +249,16 @@ export class StoryRenderer {
     document.body.classList.remove(classes.ERROR);
 
     document.body.classList.add(classes.MAIN);
+  }
+
+  showDocs() {
+    document.getElementById('root').setAttribute('hidden', 'true');
+    document.getElementById('docs-root').removeAttribute('hidden');
+  }
+
+  showStory() {
+    document.getElementById('docs-root').setAttribute('hidden', 'true');
+    document.getElementById('root').removeAttribute('hidden');
   }
 
   renderStory({ context, context: { id, getDecorated } }: { context: RenderContext }) {
