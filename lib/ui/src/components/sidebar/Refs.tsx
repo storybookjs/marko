@@ -127,7 +127,7 @@ const getDescription = (ref: RefType) => {
         <div>
           This storybook was auto-injected,
           <br />
-          this is bad for performance, please refer to the docs on how to resolve this.
+          This is bad for performance, please refer to the docs on how to resolve this.
         </div>
       );
     }
@@ -144,9 +144,7 @@ const getDescription = (ref: RefType) => {
                 ))}
               </ul>
             </div>
-          ) : (
-            <div>no other versions available</div>
-          )}
+          ) : null}
         </Fragment>
       );
     }
