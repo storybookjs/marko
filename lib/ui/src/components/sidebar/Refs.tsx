@@ -107,10 +107,10 @@ const ProblemPlacement = styled.div({
 const getTitle = (ref: RefType) => {
   switch (true) {
     case !!ref.error: {
-      return 'an error occured';
+      return 'An error occurred';
     }
     case !!ref.startInjected: {
-      return 'auto injected';
+      return 'Not optimized';
     }
     default: {
       return ref.title;
@@ -125,16 +125,29 @@ const getDescription = (ref: RefType) => {
     case !!ref.startInjected: {
       return (
         <div>
-          <p>this storybook was auto-injected,</p>
-          <p>this is bad for performance, please do XYZ</p>
+          This storybook was auto-injected,
+          <br />
+          this is bad for performance, please refer to the docs on how to resolve this.
         </div>
       );
     }
     default: {
       return (
-        <div>
-          this ref was loaded from <a href={ref.url}>{ref.url}</a>
-        </div>
+        <Fragment>
+          <p>This storybook was lazy-loaded.</p>
+          {ref.versions ? (
+            <div>
+              You can switch to other versions:
+              <ul>
+                {ref.versions.map(v => (
+                  <li>v</li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <div>no other versions available</div>
+          )}
+        </Fragment>
       );
     }
   }
@@ -147,8 +160,30 @@ const getIcon = (ref: RefType) => {
     case !!ref.startInjected: {
       return <Icons width="20" height="20" icon="info" />;
     }
+    case !ref.stories || !Object.keys(ref.stories).length: {
+      return <Icons width="20" height="20" icon="sync" />;
+    }
     default: {
       return <Icons width="20" height="20" icon="ellipsis" />;
+    }
+  }
+};
+const getLinks = (ref: RefType) => {
+  switch (true) {
+    case !!ref.error: {
+      return [
+        { title: 'documentation', href: 'https://storybook.js.org/docs' },
+        { title: 'referenced storybook', href: ref.url },
+      ];
+    }
+    case !!ref.startInjected: {
+      return [
+        { title: 'documentation', href: 'https://storybook.js.org/docs' },
+        { title: 'referenced storybook', href: ref.url },
+      ];
+    }
+    default: {
+      return [{ title: 'referenced storybook', href: ref.url }];
     }
   }
 };
@@ -157,13 +192,14 @@ const RefIndicator: FunctionComponent<RefType> = ref => {
   const title = getTitle(ref);
   const description = getDescription(ref);
   const icon = getIcon(ref);
+  const links = getLinks(ref);
 
   return (
     <ProblemPlacement>
       <WithTooltip
         placement="top"
-        trigger="hover"
-        tooltip={<TooltipMessage title={title} desc={description} />}
+        trigger="click"
+        tooltip={<TooltipMessage title={title} desc={description} links={links} />}
       >
         {icon}
       </WithTooltip>

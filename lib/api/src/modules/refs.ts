@@ -176,8 +176,6 @@ const initRefsApi = ({ store, provider }: Module) => {
     {} as SubState['refs']
   );
 
-  console.log(refs);
-
   refs.forEach(([k, v]) => {
     api.checkRef(v);
   });
