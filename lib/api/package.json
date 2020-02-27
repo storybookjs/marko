@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@reach/router": "^1.2.1",
+    "@storybook/addons": "6.0.0-alpha.20",
     "@storybook/channels": "6.0.0-alpha.20",
     "@storybook/client-logger": "6.0.0-alpha.20",
     "@storybook/core-events": "6.0.0-alpha.20",

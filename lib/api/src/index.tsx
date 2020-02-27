@@ -57,6 +57,10 @@ import initVersions, {
   SubState as VersionsSubState,
   SubAPI as VersionsAPI,
 } from './modules/versions';
+import initGlobalArgs, {
+  SubState as GlobalArgsSubState,
+  SubAPI as GlobalArgsAPI,
+} from './modules/globalArgs';
 
 export { Options as StoreOptions, Listener as ChannelListener };
 export { ActiveTabs };
@@ -76,7 +80,8 @@ export type State = Other &
   NotificationState &
   VersionsSubState &
   RouterData &
-  ShortcutsSubState;
+  ShortcutsSubState &
+  GlobalArgsSubState;
 
 export type API = AddonsAPI &
   ChannelAPI &
@@ -87,6 +92,7 @@ export type API = AddonsAPI &
   ShortcutsAPI &
   VersionsAPI &
   UrlAPI &
+  GlobalArgsAPI &
   OtherAPI;
 
 interface OtherAPI {
@@ -182,6 +188,7 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
       initStories,
       initURL,
       initVersions,
+      initGlobalArgs,
     ].map(initModule => initModule({ ...routeData, ...apiData, state: this.state }));
 
     // Create our initial state by combining the initial state of all modules, then overlaying any saved state
