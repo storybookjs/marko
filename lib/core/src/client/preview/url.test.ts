@@ -34,12 +34,12 @@ describe('url', () => {
 
   describe('setPath', () => {
     it('should navigate to storyId', () => {
-      setPath({ storyId: 'story--id' });
+      setPath({ storyId: 'story--id', viewMode: 'story' });
       expect(history.replaceState).toHaveBeenCalledWith({}, '', 'pathname?id=story--id');
     });
     it('should replace legacy parameters but preserve others', () => {
       document.location.search = 'foo=bar&selectedStory=selStory&selectedKind=selKind';
-      setPath({ storyId: 'story--id' });
+      setPath({ storyId: 'story--id', viewMode: 'story' });
       expect(history.replaceState).toHaveBeenCalledWith({}, '', 'pathname?foo=bar&id=story--id');
     });
   });
