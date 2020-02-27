@@ -19,7 +19,6 @@ import { toFiltered, getMains, getParents } from './Tree/utils';
 import { Tree } from './Tree/Tree';
 import { Section } from './Section';
 import { Loader } from './Loader';
-import { SmoothHeight } from './SmoothHeight';
 
 type Refs = State['refs'];
 type RefType = Refs[keyof Refs];
@@ -233,7 +232,7 @@ export const Ref: FunctionComponent<RefType & RefProps> = ref => {
       {!isMain ? <RefIndicator {...ref} /> : null}
       <ExpanderContext.Provider value={combo}>
         {!isMain ? <RefHead>{title}</RefHead> : null}
-        <SmoothHeight>
+        <Fragment>
           {isLoading ? (
             <Loader size={isMain ? 'multiple' : 'single'} />
           ) : (
@@ -272,7 +271,7 @@ export const Ref: FunctionComponent<RefType & RefProps> = ref => {
               ))}
             </Fragment>
           )}
-        </SmoothHeight>
+        </Fragment>
       </ExpanderContext.Provider>
     </Wrapper>
   );
