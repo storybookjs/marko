@@ -22,6 +22,7 @@ import {
   StoreData,
   AddStoryArgs,
   StoreItem,
+  PublishedStoreItem,
   ErrorLike,
   GetStorybookKind,
   ParameterEnhancer,
@@ -75,6 +76,8 @@ export default class StoryStore {
 
   _configuring: boolean;
 
+  _globalArgs: Args;
+
   _globalMetadata: StoryMetadata;
 
   // Keyed on kind name
@@ -92,6 +95,8 @@ export default class StoryStore {
   constructor(params: { channel: Channel }) {
     // Assume we are configuring until we hear otherwise
     this._configuring = true;
+
+    this._globalArgs = {};
     this._globalMetadata = { parameters: {}, decorators: [] };
     this._kinds = {};
     this._stories = {};
@@ -114,6 +119,10 @@ export default class StoryStore {
 
     this._channel.on(Events.CHANGE_STORY_ARGS, (id: string, newArgs: Args) =>
       this.setStoryArgs(id, newArgs)
+    );
+
+    this._channel.on(Events.CHANGE_GLOBAL_ARGS, (newGlobalArgs: Args) =>
+      this.setGlobalArgs(newGlobalArgs)
     );
   }
 
@@ -247,6 +256,7 @@ export default class StoryStore {
         parameters,
         hooks,
         args: _stories[id].args,
+        globalArgs: this._globalArgs,
       });
 
     // Pull out parameters.args.$ || .argTypes.$.defaultValue into initialArgs
@@ -306,7 +316,20 @@ export default class StoryStore {
     }, {});
   }
 
-  fromId = (id: string): StoreItem | null => {
+  setGlobalArgs(newGlobalArgs: Args) {
+    this._globalArgs = { ...this._globalArgs, ...newGlobalArgs };
+    this._channel.emit(Events.GLOBAL_ARGS_CHANGED, this._globalArgs);
+  }
+
+  setStoryArgs(id: string, newArgs: Args) {
+    if (!this._stories[id]) throw new Error(`No story for id ${id}`);
+    const { args } = this._stories[id];
+    this._stories[id].args = { ...args, ...newArgs };
+
+    this._channel.emit(Events.STORY_ARGS_CHANGED, id, this._stories[id].args);
+  }
+
+  fromId = (id: string): PublishedStoreItem | null => {
     try {
       const data = this._stories[id as string];
 
@@ -314,7 +337,10 @@ export default class StoryStore {
         return null;
       }
 
-      return data;
+      return {
+        ...data,
+        globalArgs: this._globalArgs,
+      };
     } catch (e) {
       logger.warn('failed to get story:', this._stories);
       logger.error(e);
@@ -432,14 +458,6 @@ export default class StoryStore {
 
   cleanHooksForKind(kind: string) {
     this.getStoriesForKind(kind).map(story => this.cleanHooks(story.id));
-  }
-
-  setStoryArgs(id: string, newArgs: Args) {
-    if (!this._stories[id]) throw new Error(`No story for id ${id}`);
-    const { args } = this._stories[id];
-    this._stories[id].args = { ...args, ...newArgs };
-
-    this._channel.emit(Events.STORY_ARGS_CHANGED, id, this._stories[id].args);
   }
 
   // This API is a reimplementation of Storybook's original getStorybook() API.

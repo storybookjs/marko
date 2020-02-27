@@ -85,7 +85,7 @@ describe('preview.story_store', () => {
   });
 
   describe('args', () => {
-    it('args is initialized to the value stored in parameters.args[name] || parameters.argType[name].defaultValue', () => {
+    it('is initialized to the value stored in parameters.args[name] || parameters.argType[name].defaultValue', () => {
       const store = new StoryStore({ channel });
       addStoryToStore(store, 'a', '1', () => 0, {
         argTypes: {
@@ -196,6 +196,111 @@ describe('preview.story_store', () => {
         expect.objectContaining({
           args: { a: 1 },
           parameters: expect.objectContaining({}),
+        })
+      );
+    });
+  });
+
+  describe('globalArgs', () => {
+    it.skip('is initialized to the value stored in parameters.globalArgTypes[name].defaultValue', () => {
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0, {
+        argTypes: {
+          arg1: { defaultValue: 'arg1' },
+          arg2: { defaultValue: 2 },
+          arg3: { defaultValue: { complex: { object: ['type'] } } },
+        },
+      });
+      expect(store.getRawStory('a', '1').args).toEqual({
+        arg1: 'arg1',
+        arg2: 2,
+        arg3: { complex: { object: ['type'] } },
+      });
+    });
+
+    it('setGlobalArgs changes the global args', () => {
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0);
+      expect(store.getRawStory('a', '1').globalArgs).toEqual({});
+
+      store.setGlobalArgs({ foo: 'bar' });
+      expect(store.getRawStory('a', '1').globalArgs).toEqual({ foo: 'bar' });
+
+      store.setGlobalArgs({ baz: 'bing' });
+      expect(store.getRawStory('a', '1').globalArgs).toEqual({ foo: 'bar', baz: 'bing' });
+    });
+
+    it('is passed to the story in the context', () => {
+      const storyFn = jest.fn();
+      const store = new StoryStore({ channel });
+
+      store.setGlobalArgs({ foo: 'bar' });
+      addStoryToStore(store, 'a', '1', storyFn);
+      store.getRawStory('a', '1').storyFn();
+
+      expect(storyFn).toHaveBeenCalledWith(
+        expect.objectContaining({
+          globalArgs: { foo: 'bar' },
+        })
+      );
+
+      store.setGlobalArgs({ baz: 'bing' });
+      store.getRawStory('a', '1').storyFn();
+
+      expect(storyFn).toHaveBeenCalledWith(
+        expect.objectContaining({
+          globalArgs: { foo: 'bar', baz: 'bing' },
+        })
+      );
+    });
+
+    it('setGlobalArgs emits GLOBAL_ARGS_CHANGED', () => {
+      const onGlobalArgsChangedChannel = jest.fn();
+      const testChannel = mockChannel();
+      testChannel.on(Events.GLOBAL_ARGS_CHANGED, onGlobalArgsChangedChannel);
+
+      const store = new StoryStore({ channel: testChannel });
+      addStoryToStore(store, 'a', '1', () => 0);
+
+      store.setGlobalArgs({ foo: 'bar' });
+      expect(onGlobalArgsChangedChannel).toHaveBeenCalledWith({ foo: 'bar' });
+
+      store.setGlobalArgs({ baz: 'bing' });
+      expect(onGlobalArgsChangedChannel).toHaveBeenCalledWith({ foo: 'bar', baz: 'bing' });
+    });
+
+    it('should update if the CHANGE_GLOBAL_ARGS event is received', () => {
+      const testChannel = mockChannel();
+      const store = new StoryStore({ channel: testChannel });
+      addStoryToStore(store, 'a', '1', () => 0);
+
+      testChannel.emit(Events.CHANGE_GLOBAL_ARGS, { foo: 'bar' });
+
+      expect(store.getRawStory('a', '1').globalArgs).toEqual({ foo: 'bar' });
+    });
+
+    it('DOES NOT pass globalArgs as the first argument to the story if `parameters.passArgsFirst` is true', () => {
+      const store = new StoryStore({ channel });
+
+      const storyOne = jest.fn();
+      addStoryToStore(store, 'a', '1', storyOne);
+
+      store.setGlobalArgs({ foo: 'bar' });
+
+      store.getRawStory('a', '1').storyFn();
+      expect(storyOne).toHaveBeenCalledWith(
+        expect.objectContaining({
+          globalArgs: { foo: 'bar' },
+        })
+      );
+
+      const storyTwo = jest.fn();
+      addStoryToStore(store, 'a', '2', storyTwo, { passArgsFirst: true });
+      store.getRawStory('a', '2').storyFn();
+      expect(storyTwo).toHaveBeenCalledWith(
+        {},
+        expect.objectContaining({
+          globalArgs: { foo: 'bar' },
         })
       );
     });
