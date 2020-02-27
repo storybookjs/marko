@@ -36,6 +36,10 @@ export interface StoreItem extends StoryContext {
   args: Args;
 }
 
+export type PublishedStoreItem = StoreItem & {
+  globalArgs: Args;
+};
+
 export interface StoreData {
   [key: string]: StoreItem;
 }

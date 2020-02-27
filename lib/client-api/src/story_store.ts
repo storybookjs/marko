@@ -23,6 +23,7 @@ import {
   StoreData,
   AddStoryArgs,
   StoreItem,
+  PublishedStoreItem,
   ErrorLike,
   GetStorybookKind,
   ParameterEnhancer,
@@ -72,6 +73,8 @@ export default class StoryStore extends EventEmitter {
 
   _channel: Channel;
 
+  _globalArgs: Args;
+
   _globalMetadata: StoryMetadata;
 
   // Keyed on kind name
@@ -89,6 +92,7 @@ export default class StoryStore extends EventEmitter {
   constructor(params: { channel: Channel }) {
     super();
 
+    this._globalArgs = {};
     this._globalMetadata = { parameters: {}, decorators: [] };
     this._kinds = {};
     this._stories = {};
@@ -105,6 +109,7 @@ export default class StoryStore extends EventEmitter {
     channel.on(Events.CHANGE_STORY_ARGS, (id: string, newArgs: Args) =>
       this.setStoryArgs(id, newArgs)
     );
+    channel.on(Events.CHANGE_GLOBAL_ARGS, (newGlobals: Args) => this.setGlobalArgs(newGlobals));
   };
 
   addGlobalMetadata({ parameters, decorators }: StoryMetadata) {
@@ -220,6 +225,7 @@ export default class StoryStore extends EventEmitter {
         parameters,
         hooks,
         args: _stories[id].args,
+        globalArgs: this._globalArgs,
       });
 
     // Pull out parameters.argTypes.$.defaultValue into initialArgs
@@ -272,7 +278,23 @@ export default class StoryStore extends EventEmitter {
     this.pushToManager();
   }
 
-  fromId = (id: string): StoreItem | null => {
+  setGlobalArgs(newGlobalArgs: Args) {
+    this._globalArgs = { ...this._globalArgs, ...newGlobalArgs };
+    this._channel.emit(Events.GLOBAL_ARGS_CHANGED, this._globalArgs);
+  }
+
+  setStoryArgs(id: string, newArgs: Args) {
+    if (!this._stories[id]) throw new Error(`No story for id ${id}`);
+    const { args } = this._stories[id];
+    this._stories[id].args = { ...args, ...newArgs };
+
+    // TODO: Sort out what is going on with both the store and the channel being event emitters.
+    // It has something to do with React Native, but need to get to the bottom of it
+    this._channel.emit(Events.STORY_ARGS_CHANGED, id, this._stories[id].args);
+    this.emit(Events.STORY_ARGS_CHANGED, id, this._stories[id].args);
+  }
+
+  fromId = (id: string): PublishedStoreItem | null => {
     try {
       const data = this._stories[id as string];
 
@@ -280,7 +302,10 @@ export default class StoryStore extends EventEmitter {
         return null;
       }
 
-      return data;
+      return {
+        ...data,
+        globalArgs: this._globalArgs,
+      };
     } catch (e) {
       logger.warn('failed to get story:', this._stories);
       logger.error(e);
@@ -400,17 +425,6 @@ export default class StoryStore extends EventEmitter {
 
   cleanHooksForKind(kind: string) {
     this.getStoriesForKind(kind).map(story => this.cleanHooks(story.id));
-  }
-
-  setStoryArgs(id: string, newArgs: Args) {
-    if (!this._stories[id]) throw new Error(`No story for id ${id}`);
-    const { args } = this._stories[id];
-    this._stories[id].args = { ...args, ...newArgs };
-
-    // TODO: Sort out what is going on with both the store and the channel being event emitters.
-    // It has something to do with React Native, but need to get to the bottom of it
-    this._channel.emit(Events.STORY_ARGS_CHANGED, id, this._stories[id].args);
-    this.emit(Events.STORY_ARGS_CHANGED, id, this._stories[id].args);
   }
 
   // This API is a reimplementation of Storybook's original getStorybook() API.
