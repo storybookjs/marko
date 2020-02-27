@@ -19,6 +19,7 @@ import { toFiltered, getMains, getParents } from './Tree/utils';
 import { Tree } from './Tree/Tree';
 import { Section } from './Section';
 import { Loader } from './Loader';
+import { SmoothHeight } from './SmoothHeight';
 
 type Refs = State['refs'];
 type RefType = Refs[keyof Refs];
@@ -232,44 +233,46 @@ export const Ref: FunctionComponent<RefType & RefProps> = ref => {
       {!isMain ? <RefIndicator {...ref} /> : null}
       <ExpanderContext.Provider value={combo}>
         {!isMain ? <RefHead>{title}</RefHead> : null}
-        {isLoading ? (
-          <Loader size={isMain ? 'multiple' : 'single'} />
-        ) : (
-          <Fragment>
-            {others.length ? (
-              <Section key="other">
-                {others.map(({ id }) => (
-                  <Tree
-                    key={id}
-                    depth={0}
-                    dataset={dataSet}
-                    selected={selectedSet}
-                    expanded={expandedSet}
-                    root={id}
-                    {...Components}
-                  />
-                ))}
-              </Section>
-            ) : null}
+        <SmoothHeight>
+          {isLoading ? (
+            <Loader size={isMain ? 'multiple' : 'single'} />
+          ) : (
+            <Fragment>
+              {others.length ? (
+                <Section key="other">
+                  {others.map(({ id }) => (
+                    <Tree
+                      key={id}
+                      depth={0}
+                      dataset={dataSet}
+                      selected={selectedSet}
+                      expanded={expandedSet}
+                      root={id}
+                      {...Components}
+                    />
+                  ))}
+                </Section>
+              ) : null}
 
-            {roots.map(({ id, name, children }) => (
-              <Section key={id}>
-                <RootHeading>{name}</RootHeading>
-                {children.map(child => (
-                  <Tree
-                    key={child}
-                    depth={0}
-                    dataset={dataSet}
-                    selected={selectedSet}
-                    expanded={expandedSet}
-                    root={child}
-                    {...Components}
-                  />
-                ))}
-              </Section>
-            ))}
-          </Fragment>
-        )}
+              {roots.map(({ id, name, children }) => (
+                <Section key={id}>
+                  <RootHeading>{name}</RootHeading>
+                  {children.map(child => (
+                    <Tree
+                      key={child}
+                      depth={0}
+                      dataset={dataSet}
+                      selected={selectedSet}
+                      expanded={expandedSet}
+                      root={child}
+                      {...Components}
+                    />
+                  ))}
+                </Section>
+              ))}
+            </Fragment>
+          )}
+        </SmoothHeight>
       </ExpanderContext.Provider>
     </Wrapper>
   );
