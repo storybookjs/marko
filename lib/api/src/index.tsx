@@ -444,3 +444,12 @@ export function useArgs() {
 
   return [args, (newArgs: Args) => setStoryArgs(id, newArgs)];
 }
+
+export function useGlobalArgs() {
+  const {
+    state: { globalArgs },
+    api: { setGlobalArgs },
+  } = useContext(ManagerContext);
+
+  return [globalArgs, setGlobalArgs];
+}
