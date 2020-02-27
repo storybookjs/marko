@@ -431,3 +431,11 @@ export function useStoryState<S>(defaultState?: S) {
   const { storyId } = useStorybookState();
   return useSharedState<S>(`story-state-${storyId}`, defaultState);
 }
+
+export function useGlobalArgs() {
+  const {
+    state: { globalArgs },
+    api: { setGlobalArgs },
+  } = useContext(ManagerContext);
+  return [globalArgs, setGlobalArgs];
+}
