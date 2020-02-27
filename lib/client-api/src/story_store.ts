@@ -109,7 +109,6 @@ export default class StoryStore extends EventEmitter {
   }
 
   startConfiguring() {
-    console.log('startConfiguring');
     this._configuring = true;
   }
 
@@ -156,6 +155,8 @@ export default class StoryStore extends EventEmitter {
       applyDecorators: (fn: StoryFn, decorators: DecoratorFunction[]) => any;
     }
   ) {
+    if (!this._configuring) throw new Error('Cannot add a story when not configuring');
+
     const { _stories } = this;
 
     if (_stories[id]) {
@@ -219,6 +220,8 @@ export default class StoryStore extends EventEmitter {
   }
 
   remove = (id: string): void => {
+    if (!this._configuring) throw new Error('Cannot remove a story when not configuring');
+
     const { _stories } = this;
     const story = _stories[id];
     delete _stories[id];
@@ -227,6 +230,8 @@ export default class StoryStore extends EventEmitter {
   };
 
   removeStoryKind(kind: string) {
+    if (!this._configuring) throw new Error('Cannot remove a kind when not configuring');
+
     if (!this._kinds[kind]) return;
 
     this._kinds[kind].parameters = {};
@@ -312,7 +317,6 @@ export default class StoryStore extends EventEmitter {
   getError = (): ErrorLike | undefined => this._error;
 
   setSelection(selection: Selection): void {
-    console.log({ selection });
     this._selection = selection;
 
     if (this._channel) {
