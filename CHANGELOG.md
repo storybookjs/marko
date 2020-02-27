@@ -1,18 +1,39 @@
+## 6.0.0-alpha.20 (February 27, 2020)
+
+### Bug Fixes
+
+- Core: Fix `configFilename` containing backticks ([#9960](https://github.com/storybookjs/storybook/pull/9960))
+
+### Maintenance
+
+- Core: Add stories to demonstrate `layout` ([#9940](https://github.com/storybookjs/storybook/pull/9940))
+
+## 5.3.14 (February 25, 2020)
+
+### Bug Fixes
+
+- Centered: remove `typesVersions` attribute ([#9907](https://github.com/storybookjs/storybook/pull/9907))
+- Props: Fix typescript unspecified default value ([#9873](https://github.com/storybookjs/storybook/pull/9873))
+- Core: Use telejson for websockets channel ([#9867](https://github.com/storybookjs/storybook/pull/9867))
+- Storyshots: Fix support for jsx/tsx config files ([#9834](https://github.com/storybookjs/storybook/pull/9834))
+- MDX: Fix custom classes getting stripped ([#8897](https://github.com/storybookjs/storybook/pull/8897))
+- Typescript: Add downlevel dts for 3.5 ([#9847](https://github.com/storybookjs/storybook/pull/9847))
+
 ## 6.0.0-alpha.19 (February 24, 2020)
 
 ### Features
 
-* Addon-links: Add preset ([#9932](https://github.com/storybookjs/storybook/pull/9932))
+- Addon-links: Add preset ([#9932](https://github.com/storybookjs/storybook/pull/9932))
 
 ### Bug Fixes
 
-* Addon-docs: Restore IE11 compat on Windows by transpiling acorn-jsx ([#9790](https://github.com/storybookjs/storybook/pull/9790))
+- Addon-docs: Restore IE11 compat on Windows by transpiling acorn-jsx ([#9790](https://github.com/storybookjs/storybook/pull/9790))
 
 ## 6.0.0-alpha.18 (February 22, 2020)
 
 ### Features
 
-* Addon-knobs: Add `disableForceUpdate` option ([#9447](https://github.com/storybookjs/storybook/pull/9447))
+- Addon-knobs: Add `disableForceUpdate` option ([#9447](https://github.com/storybookjs/storybook/pull/9447))
 
 ## 6.0.0-alpha.17 (February 21, 2020)
 
