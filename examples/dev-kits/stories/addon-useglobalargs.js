@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 export default {
-  title: 'addons|useGlobalArgs',
+  title: 'addons/useGlobalArgs',
 };
 
 export const PassedToStory = ({ globalArgs }) => {
