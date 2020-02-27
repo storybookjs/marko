@@ -20,7 +20,7 @@ const Links = styled.div`
 `;
 
 const Message = styled.div`
-  color: ${props => props.theme.color.darker};
+  color: ${props => props.theme.textColor};
   line-height: 18px;
 `;
 
