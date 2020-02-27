@@ -1,5 +1,6 @@
 import React, { Fragment, FunctionComponent, useMemo, useEffect, useState } from 'react';
 import { Global, CSSObject } from '@storybook/theming';
+import { useStorybookApi } from '@storybook/api';
 import { IFrame } from './iframe';
 import { FramesRendererProps } from './utils/types';
 import { stringifyQueryParams } from './utils/stringifyQueryParams';
@@ -35,6 +36,7 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
   const [frames, setFrames] = useState<Record<string, string>>({
     'storybook-preview-iframe': `iframe.html?id=${storyId}&viewMode=${viewMode}${stringifiedQueryParams}`,
   });
+  const { splitStoryId } = useStorybookApi();
 
   useEffect(() => {
     const newFrames = Object.values(refs)
@@ -49,7 +51,9 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
         return false;
       })
       .reduce((acc, r) => {
-        const id = story ? story.knownAs || story.id : storyId;
+        const { id } = splitStoryId(storyId);
+        // const id = story ? story.knownAs || story.id : storyId;
+
         return {
           ...acc,
           [`storybook-ref-${r.id}`]: `${r.url}/iframe.html?id=${id}&viewMode=${viewMode}${stringifiedQueryParams}`,
