@@ -16,7 +16,7 @@ within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: ['@storybook/addon-events/register']
+  addons: ['@storybook/addon-events']
 }
 ```
 

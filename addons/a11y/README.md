@@ -18,20 +18,15 @@ Add this line to your `main.js` file (create this file inside your storybook con
 
 ```js
 module.exports = {
-  addons: ['@storybook/addon-a11y/register'],
+  addons: ['@storybook/addon-a11y'],
 };
 ```
-
-import the `withA11y` decorator to check your stories for violations within your components.
 
 ```js
 import React from 'react';
 
-import { withA11y } from '@storybook/addon-a11y';
-
 export default {
   title: 'button',
-  decorators: [withA11y],
 };
 
 export const accessible = () => <button>Accessible button</button>;
@@ -41,13 +36,14 @@ export const inaccessible = () => (
 );
 ```
 
-## Using the preset
-
-Add the decorator to all stories:
+If you wish to selectively disable `a11y` checks for a subset of stories, you can control this with story parameters:
 
 ```js
-module.exports = {
-  addons: ['@storybook/addon-a11y'],
+export const MyNonCheckedStory = () => <SomeComponent />;
+MyNonCheckedStory.story = {
+  parameters: {
+    a11y: { disable: true },
+  },
 };
 ```
 

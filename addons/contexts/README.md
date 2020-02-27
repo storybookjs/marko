@@ -51,7 +51,7 @@ within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: ['@storybook/addon-contexts/register']
+  addons: ['@storybook/addon-contexts']
 }
 ```
 

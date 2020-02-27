@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { addParameters } from '@storybook/client-api';
 import { StoryFn } from '@storybook/addons';
 import { extractProps } from './extractProps';

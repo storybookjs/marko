@@ -4,10 +4,7 @@ exports[`react component properties 8143-ts-imported-types 1`] = `
 Object {
   "rows": Array [
     Object {
-      "defaultValue": Object {
-        "detail": undefined,
-        "summary": "0",
-      },
+      "defaultValue": null,
       "description": "",
       "name": "bar",
       "required": true,

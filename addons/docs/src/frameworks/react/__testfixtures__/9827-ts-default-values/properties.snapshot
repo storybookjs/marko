@@ -17,10 +17,7 @@ Object {
       },
     },
     Object {
-      "defaultValue": Object {
-        "detail": undefined,
-        "summary": "1",
-      },
+      "defaultValue": null,
       "description": "",
       "name": "foo",
       "required": true,
@@ -30,10 +27,7 @@ Object {
       },
     },
     Object {
-      "defaultValue": Object {
-        "detail": undefined,
-        "summary": "2",
-      },
+      "defaultValue": null,
       "description": "",
       "name": "bar",
       "required": false,

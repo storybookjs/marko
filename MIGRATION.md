@@ -88,7 +88,7 @@
 
 In Storybook 5.3 we introduced a declarative [main.js configuration](#to-mainjs-configuration), which is now the recommended way to configure Storybook. Part of the change is a simplified syntax for registering addons, which in 6.0 automatically registers many addons _using a preset_, which is a slightly different behavior than in earlier versions.
 
-This breaking change currently applies to: `addon-a11y`, `addon-knobs`.
+This breaking change currently applies to: `addon-a11y`, `addon-knobs`, `addon-links`.
 
 Consider the following `main.js` config for the accessibility addon, `addon-a11y`:
 
@@ -102,12 +102,12 @@ module.exports = {
 In earlier versions of Storybook, this would automatically call `@storybook/addon-a11y/register`, which adds the the a11y panel to the Storybook UI. As a user you would also add a decorator:
 
 ```js
-import { withA11Y } from '../index';
+import { withA11y } from '../index';
 
-addDecorator(withA11Y);
+addDecorator(withA11y);
 ```
 
-Now in 6.0, `addon-a11y` comes with a preset, `@storybook/addon-a11y/preset`, that does this automatically for you. This change simplifies configuration, since now you don't need to add that decorator. However, if you are upgrading
+Now in 6.0, `addon-a11y` comes with a preset, `@storybook/addon-a11y/preset`, that does this automatically for you. This change simplifies configuration, since now you don't need to add that decorator.
 
 If you wish to disable this new behavior, you can modify your `main.js` to force it to use the `register` logic rather than the `preset`:
 
@@ -283,14 +283,14 @@ To avoid that now you have to manually pass asyncStorage to React Native Storybo
 
 Solution:
 
-- Use `require('@react-native-community/async-storage').AsyncStorage` for React Native v0.59 and above.
+- Use `require('@react-native-community/async-storage').default` for React Native v0.59 and above.
 - Use `require('react-native').AsyncStorage` for React Native v0.58 or below.
 - Use `null` to disable Async Storage completely.
 
 ```javascript
 getStorybookUI({
   ...
-  asyncStorage: require('@react-native-community/async-storage').AsyncStorage || require('react-native').AsyncStorage || null
+  asyncStorage: require('@react-native-community/async-storage').default || require('react-native').AsyncStorage || null
 });
 ```
 
