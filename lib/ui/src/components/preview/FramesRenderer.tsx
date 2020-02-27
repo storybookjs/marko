@@ -49,9 +49,10 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
         return false;
       })
       .reduce((acc, r) => {
+        const id = story ? story.knownAs || story.id : storyId;
         return {
           ...acc,
-          [`storybook-ref-${r.id}`]: `${r.url}/iframe.html?id=${storyId}&viewMode=${viewMode}${stringifiedQueryParams}`,
+          [`storybook-ref-${r.id}`]: `${r.url}/iframe.html?id=${id}&viewMode=${viewMode}${stringifiedQueryParams}`,
         };
       }, frames);
 
