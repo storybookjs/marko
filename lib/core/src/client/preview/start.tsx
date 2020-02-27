@@ -31,7 +31,7 @@ function getOrCreateChannel() {
   return channel;
 }
 
-function getClientApi(channel: Channel, decorateStory: DecorateStoryFunction) {
+function getClientApi(decorateStory: DecorateStoryFunction, channel?: Channel) {
   let storyStore: StoryStore;
   let clientApi: ClientApi;
   if (
@@ -59,7 +59,7 @@ export default function start(
   { decorateStory }: { decorateStory?: DecorateStoryFunction } = {}
 ) {
   const channel = getOrCreateChannel();
-  const { clientApi, storyStore } = getClientApi(channel, decorateStory);
+  const { clientApi, storyStore } = getClientApi(decorateStory, channel);
   const configApi = new ConfigApi({ storyStore });
   const storyRenderer = new StoryRenderer({ render, channel, storyStore });
 
