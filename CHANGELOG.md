@@ -1,3 +1,13 @@
+## 6.0.0-alpha.20 (February 27, 2020)
+
+### Bug Fixes
+
+- Core: Fix `configFilename` containing backticks ([#9960](https://github.com/storybookjs/storybook/pull/9960))
+
+### Maintenance
+
+- Core: Add stories to demonstrate `layout` ([#9940](https://github.com/storybookjs/storybook/pull/9940))
+
 ## 5.3.14 (February 25, 2020)
 
 ### Bug Fixes
