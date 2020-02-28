@@ -34,7 +34,7 @@ it('returns apis', () => {
 
   expect(result).toEqual(
     expect.objectContaining({
-      context: expect.any(Object),
+      configure: expect.any(Function),
       clientApi: expect.any(Object),
       configApi: expect.any(Object),
       forceReRender: expect.any(Function),
@@ -51,7 +51,6 @@ it('reuses the current client api when the lib is reloaded', () => {
   const valueOfClientApi = window.__STORYBOOK_CLIENT_API__;
 
   const { clientApi: newClientApi } = start(render);
-  jest.runAllTimers();
 
   expect(clientApi).toEqual(newClientApi);
   expect(clientApi).toEqual(valueOfClientApi);
@@ -66,7 +65,6 @@ it('calls render when you add a story', () => {
   configApi.configure(() => {
     clientApi.storiesOf('kind', {} as NodeModule).add('story', () => {});
   }, {} as NodeModule);
-  jest.runAllTimers();
 
   expect(render).toHaveBeenCalledWith(
     expect.objectContaining({ selectedKind: 'kind', selectedStory: 'story' })
@@ -82,7 +80,6 @@ it('emits an exception and shows error when your story throws', () => {
   configApi.configure(() => {
     clientApi.storiesOf('kind', {} as NodeModule).add('story1', () => {});
   }, {} as NodeModule);
-  jest.runAllTimers();
 
   expect(render).not.toHaveBeenCalled();
   expect(document.body.classList.add).toHaveBeenCalledWith('sb-show-nopreview');
@@ -103,43 +100,7 @@ it('emits an error and shows error when your framework calls showError', () => {
   configApi.configure(() => {
     clientApi.storiesOf('kind', {} as NodeModule).add('story', () => {});
   }, {} as NodeModule);
-  jest.runAllTimers();
 
   expect(render).toHaveBeenCalled();
   expect(document.body.classList.add).toHaveBeenCalledWith('sb-show-errordisplay');
 });
-
-// FIXME:
-// describe('STORY_INIT', () => {
-//   it('supports path params', () => {
-//     document.location = {
-//       pathname: 'pathname',
-//       search: '?path=/story/kind--story&bar=baz',
-//     };
-
-//     const render = jest.fn();
-//     const { clientApi } = start(render);
-//     const store = clientApi._storyStore;
-//     store.setSelection = jest.fn();
-//     store.emit(Events.STORY_INIT);
-
-//     store.emit();
-//     expect(store.setSelection).toHaveBeenCalledWith({ storyId: 'kind--story' });
-//   });
-
-//   it('supports story kind/name params', () => {
-//     document.location = {
-//       pathname: 'pathname',
-//       search: '?selectedKind=kind&selectedStory=story&bar=baz',
-//     };
-
-//     const render = jest.fn();
-//     const { clientApi } = start(render);
-//     const store = clientApi._storyStore;
-//     store.setSelection = jest.fn();
-
-//     store.emit(Events.STORY_INIT);
-//     expect(history.replaceState).toHaveBeenCalledWith({}, '', 'pathname?bar=baz&id=kind--story');
-//     expect(store.setSelection).toHaveBeenCalledWith({ storyId: 'kind--story' });
-//   });
-// });
