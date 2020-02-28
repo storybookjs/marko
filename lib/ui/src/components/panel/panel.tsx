@@ -41,11 +41,11 @@ class SafeTab extends Component<SafeTabProps, { hasError: boolean }> {
 }
 
 const AddonPanel = React.memo<{
-  selectedPanel: string;
+  selectedPanel?: string;
   actions: { onSelect: (id: string) => void } & Record<string, any>;
   panels: Record<string, any>;
-  panelPosition: 'bottom' | 'right';
-  absolute: boolean;
+  panelPosition?: 'bottom' | 'right';
+  absolute?: boolean;
 }>(({ panels, actions, selectedPanel = null, panelPosition = 'right', absolute = true }) => (
   <Tabs
     absolute={absolute}

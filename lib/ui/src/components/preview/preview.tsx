@@ -1,37 +1,32 @@
-import window from 'global';
-import React, { Component, Fragment, FunctionComponent, ReactNode } from 'react';
-import memoize from 'memoizerific';
-import copy from 'copy-to-clipboard';
-import { styled } from '@storybook/theming';
-import { Consumer, State, API, Combo } from '@storybook/api';
+import React, { Fragment, FunctionComponent, useMemo, useEffect } from 'react';
+import { API, Consumer, Combo, State } from '@storybook/api';
 import { SET_CURRENT_STORY } from '@storybook/core-events';
-import addons, { types, Types, Addon } from '@storybook/addons';
+import addons, { types, Addon } from '@storybook/addons';
 import merge from '@storybook/api/dist/lib/merge';
-import { Icons, IconButton, Loader, TabButton, TabBar, Separator } from '@storybook/components';
+import { Loader } from '@storybook/components';
 
 import { Helmet } from 'react-helmet-async';
 
-import { ViewMode } from '@storybook/api/dist/modules/addons';
-import { Toolbar } from './toolbar';
+import { Toolbar, defaultTools, defaultToolsExtra, createTabsTool } from './toolbar';
 
 import * as S from './components';
 
-import { ZoomProvider, ZoomConsumer, Zoom } from './zoom';
+import { ZoomProvider, ZoomConsumer } from './zoom';
 
 import { IFrame } from './iframe';
+import { PreviewProps, ApplyWrappersProps, IframeRenderer } from './PreviewProps';
 
-const DesktopOnly = styled.span({
-  // Hides full screen icon at mobile breakpoint defined in app.js
-  '@media (max-width: 599px)': {
-    display: 'none',
-  },
-});
-const stringifyQueryParams = (queryParams: Record<string, string>) =>
-  Object.entries(queryParams).reduce((acc, [k, v]) => {
-    return `${acc}&${k}=${v}`;
-  }, '');
+import { defaultWrappers, ApplyWrappers } from './wrappers';
+import { stringifyQueryParams } from './stringifyQueryParams';
 
-const renderIframe: IframeRenderer = (storyId, viewMode, id, baseUrl, scale, queryParams) => (
+export const renderIframe: IframeRenderer = (
+  storyId,
+  viewMode,
+  id,
+  baseUrl,
+  scale,
+  queryParams
+) => (
   <IFrame
     key="iframe"
     id="storybook-preview-iframe"
@@ -42,307 +37,42 @@ const renderIframe: IframeRenderer = (storyId, viewMode, id, baseUrl, scale, que
   />
 );
 
-type IframeRenderer = (
-  storyId: string,
-  viewMode: State['viewMode'],
-  id: string,
-  baseUrl: string,
-  scale: number,
-  queryParams: Record<string, any>
-) => ReactNode;
-
-const getElementList = memoize(
-  10
-)((getFn: API['getElements'], type: Types, base: Partial<Addon>[]) =>
-  base.concat(Object.values(getFn(type)))
-);
-
-interface WrapperProps {
-  index: number;
-  children: ReactNode;
-  id: string;
-  storyId: string;
-  active: boolean;
-}
-type Wrapper = { render: FunctionComponent<WrapperProps> };
-
-interface ActualPreviewProps {
-  wrappers: Wrapper[];
-  viewMode: State['viewMode'];
-  id: string;
-  storyId: string;
-  active: boolean;
-  baseUrl: string;
-  scale: number;
-  queryParams: Record<string, any>;
-  customCanvas?: IframeRenderer;
-}
-
-const ActualPreview: FunctionComponent<ActualPreviewProps> = ({
-  wrappers,
-  viewMode,
-  id,
-  storyId,
-  active,
-  baseUrl,
-  scale,
-  queryParams,
-  customCanvas,
-}) => {
-  const data = [storyId, viewMode, id, baseUrl, scale, queryParams] as Parameters<IframeRenderer>;
-  const base = customCanvas ? customCanvas(...data) : renderIframe(...data);
-
-  return (
-    <Fragment>
-      {wrappers.reduceRight(
-        (acc, wrapper, index) => wrapper.render({ index, children: acc, id, storyId, active }),
-        base
-      )}
-    </Fragment>
-  );
-};
-
-const IframeWrapper = styled.div(({ theme }) => ({
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  bottom: 0,
-  right: 0,
-  width: '100%',
-  height: '100%',
-  background: theme.background.content,
-}));
-
-const defaultWrappers = [
-  {
-    render: p => (
-      <IframeWrapper id="storybook-preview-wrapper" hidden={!p.active}>
-        {p.children}
-      </IframeWrapper>
-    ),
-  } as Wrapper,
-];
-
-const getTools = memoize(10)(
-  (
-    getElements: API['getElements'],
-    queryParams: State['customQueryParams'],
-    panels: Partial<Addon>[],
-    api: API,
-    options,
-    storyId: string,
-    viewMode: State['viewMode'],
-    docsOnly: boolean,
-    location: State['location'],
-    path: string,
-    baseUrl: string
-  ) => {
-    const tools = getElementList(getElements, types.TOOL, [
-      panels.filter(p => !p.hidden).length > 1
-        ? ({
-            render: () => (
-              <Fragment>
-                <TabBar key="tabs">
-                  {panels
-                    .filter(p => !p.hidden)
-                    .map((t, index) => {
-                      const to = t.route({ storyId, viewMode, path, location });
-                      const isActive = path === to;
-                      return (
-                        <S.UnstyledLink key={t.id || `l${index}`} to={to}>
-                          <TabButton disabled={t.disabled} active={isActive}>
-                            {t.title}
-                          </TabButton>
-                        </S.UnstyledLink>
-                      );
-                    })}
-                </TabBar>
-                <Separator />
-              </Fragment>
-            ),
-          } as Partial<Addon>)
-        : null,
-      {
-        match: p => p.viewMode === 'story',
-        render: () => (
-          <Fragment>
-            <ZoomConsumer>
-              {({ set, value }) => (
-                <Zoom key="zoom" set={(v: number) => set(value * v)} reset={() => set(1)} />
-              )}
-            </ZoomConsumer>
-            <Separator />
-          </Fragment>
-        ),
-      },
-    ]);
-
-    const extraTools = getElementList(getElements, types.TOOLEXTRA, [
-      {
-        match: p => p.viewMode === 'story',
-        render: () => (
-          <DesktopOnly>
-            <IconButton
-              key="full"
-              onClick={api.toggleFullscreen as any}
-              title={options.isFullscreen ? 'Exit full screen' : 'Go full screen'}
-            >
-              <Icons icon={options.isFullscreen ? 'close' : 'expand'} />
-            </IconButton>
-          </DesktopOnly>
-        ),
-      },
-      {
-        match: p => p.viewMode === 'story',
-        render: () => (
-          <IconButton
-            key="opener"
-            href={`${baseUrl}?id=${storyId}${stringifyQueryParams(queryParams)}`}
-            target="_blank"
-            title="Open canvas in new tab"
-          >
-            <Icons icon="share" />
-          </IconButton>
-        ),
-      },
-      {
-        match: p => p.viewMode === 'story',
-        render: () => (
-          <IconButton
-            key="copy"
-            onClick={() =>
-              copy(
-                `${window.location.origin}${
-                  window.location.pathname
-                }${baseUrl}?id=${storyId}${stringifyQueryParams(queryParams)}`
-              )
-            }
-            title="Copy canvas link"
-          >
-            <Icons icon="copy" />
-          </IconButton>
-        ),
-      },
-    ]);
-    // if its a docsOnly page, even the 'story' view mode is considered 'docs'
-    const filter = (item: Partial<Addon>) =>
-      item &&
-      (!item.match ||
-        item.match({
-          storyId,
-          viewMode: docsOnly && viewMode === 'story' ? 'docs' : viewMode,
-          location,
-          path,
-        }));
-
-    const displayItems = (list: Partial<Addon>[]) =>
-      list.reduce(
-        (acc, item, index) =>
-          item ? (
-            // @ts-ignore
-            <Fragment key={item.id || item.key || `f-${index}`}>
-              {acc}
-              {item.render({}) || item}
-            </Fragment>
-          ) : (
-            acc
-          ),
-        null
-      );
-
-    const left = displayItems(tools.filter(filter));
-    const right = displayItems(extraTools.filter(filter));
-
-    return { left, right };
-  }
-);
+const getWrapper = (getFn: API['getElements']) => Object.values(getFn<Addon>(types.PREVIEW));
+const getTabs = (getFn: API['getElements']) => Object.values(getFn<Addon>(types.TAB));
+const getTools = (getFn: API['getElements']) => Object.values(getFn<Addon>(types.TOOL));
+const getToolsExtra = (getFn: API['getElements']) => Object.values(getFn<Addon>(types.TOOLEXTRA));
 
 const getDocumentTitle = (description: string) => {
   return description ? `${description} ⋅ Storybook` : 'Storybook';
 };
 
-const mapper = ({ state }: Combo) => ({
-  loading: !state.storiesConfigured,
+const mapper = ({ state, api }: Combo) => ({
+  storyId: state.storyId,
+  viewMode: state.viewMode,
+  customCanvas: api.renderPreview,
+  queryParams: state.customQueryParams,
+  getElements: api.getElements,
+  isLoading: !state.storiesConfigured,
 });
 
-export interface PreviewProps {
-  api: API;
-  storyId: string;
-  viewMode: ViewMode;
-  docsOnly: boolean;
-  options: {
-    isFullscreen: boolean;
-    isToolshown: boolean;
-  };
-  id: string;
-  path: string;
-  location: State['location'];
-  queryParams: State['customQueryParams'];
-  getElements: API['getElements'];
-  customCanvas?: IframeRenderer;
-  description: string;
-  baseUrl: string;
-  parameters: Record<string, any>;
-  withLoader: boolean;
-}
-
-class Preview extends Component<PreviewProps> {
-  shouldComponentUpdate({
-    storyId,
-    viewMode,
-    docsOnly,
-    options,
-    queryParams,
-    parameters,
-  }: PreviewProps) {
-    const { props } = this;
-
+const createCanvas = (id: string, baseUrl = 'iframe.html', withLoader = true): Addon => ({
+  id: 'canvas',
+  title: 'Canvas',
+  route: p => `/story/${p.storyId}`,
+  match: p => !!(p.viewMode && p.viewMode.match(/^(story|docs)$/)),
+  render: p => {
     return (
-      options.isFullscreen !== props.options.isFullscreen ||
-      options.isToolshown !== props.options.isToolshown ||
-      viewMode !== props.viewMode ||
-      docsOnly !== props.docsOnly ||
-      storyId !== props.storyId ||
-      queryParams !== props.queryParams ||
-      parameters !== props.parameters
-    );
-  }
-
-  componentDidUpdate(prevProps: PreviewProps) {
-    const { api, storyId, viewMode } = this.props;
-    const { storyId: prevStoryId, viewMode: prevViewMode } = prevProps;
-    if ((storyId && storyId !== prevStoryId) || (viewMode && viewMode !== prevViewMode)) {
-      api.emit(SET_CURRENT_STORY, { storyId, viewMode });
-    }
-  }
-
-  render() {
-    const {
-      id,
-      location,
-      queryParams,
-      getElements,
-      api,
-      options,
-      viewMode = undefined,
-      docsOnly = false,
-      storyId = undefined,
-      path = undefined,
-      description = undefined,
-      baseUrl = 'iframe.html',
-      customCanvas = undefined,
-      parameters = undefined,
-      withLoader = true,
-    } = this.props;
-    const toolbarHeight = options.isToolshown ? 40 : 0;
-    const wrappers = getElementList(getElements, types.PREVIEW, defaultWrappers);
-    let panels = getElementList(getElements, types.TAB, [
-      {
-        route: p => `/story/${p.storyId}`,
-        match: p => !!(p.viewMode && p.viewMode.match(/^(story|docs)$/)),
-        render: p => (
+      <Consumer filter={mapper}>
+        {({ customCanvas, storyId, viewMode, queryParams, getElements, isLoading }) => (
           <ZoomConsumer>
-            {({ value }) => {
+            {({ value: scale }) => {
+              const wrappers = [...defaultWrappers, ...getWrapper(getElements)];
+
+              const data = [storyId, viewMode, id, baseUrl, scale, queryParams] as Parameters<
+                IframeRenderer
+              >;
+
+              const content = customCanvas ? customCanvas(...data) : renderIframe(...data);
               const props = {
                 viewMode,
                 active: p.active,
@@ -351,105 +81,229 @@ class Preview extends Component<PreviewProps> {
                 storyId,
                 baseUrl,
                 queryParams,
-                scale: value,
+                scale,
                 customCanvas,
-              } as ActualPreviewProps;
+              } as ApplyWrappersProps;
 
               return (
                 <>
-                  {withLoader && (
-                    <Consumer filter={mapper}>
-                      {(state: ReturnType<typeof mapper>) =>
-                        state.loading && <Loader id="preview-loader" role="progressbar" />
-                      }
-                    </Consumer>
-                  )}
-                  <ActualPreview {...props} />
+                  {withLoader && isLoading && <Loader id="preview-loader" role="progressbar" />}
+                  <ApplyWrappers {...props}>{content}</ApplyWrappers>
                 </>
               );
             }}
           </ZoomConsumer>
-        ),
-        title: 'Canvas',
-        id: 'canvas',
-      },
-    ]);
-    const { previewTabs } = addons.getConfig();
-    const parametersTabs = parameters ? parameters.previewTabs : undefined;
-    if (previewTabs || parametersTabs) {
-      // deep merge global and local settings
-      const tabs = merge(previewTabs, parametersTabs);
-      const arrTabs = Object.keys(tabs).map((key, index) => ({
-        index,
-        ...(typeof tabs[key] === 'string' ? { title: tabs[key] } : tabs[key]),
-        id: key,
-      }));
-      panels = panels
-        .filter(panel => {
-          const t = arrTabs.find(tab => tab.id === panel.id);
-          return t === undefined || t.id === 'canvas' || !t.hidden;
-        })
-        .map((panel, index) => ({ ...panel, index }))
-        .sort((p1, p2) => {
-          const tab_1 = arrTabs.find(tab => tab.id === p1.id);
-          const index_1 = tab_1 ? tab_1.index : arrTabs.length + p1.index;
-          const tab_2 = arrTabs.find(tab => tab.id === p2.id);
-          const index_2 = tab_2 ? tab_2.index : arrTabs.length + p2.index;
-          return index_1 - index_2;
-        })
-        .map(panel => {
-          const t = arrTabs.find(tab => tab.id === panel.id);
-          if (t) {
-            return {
-              ...panel,
-              title: t.title || panel.title,
-              disabled: t.disabled,
-              hidden: t.hidden,
-            };
-          }
-          return panel;
-        });
-    }
-    const { left, right } = getTools(
-      getElements,
-      queryParams,
-      panels,
-      api,
-      options,
-      storyId,
+        )}
+      </Consumer>
+    );
+  },
+});
+
+const useTabs = (
+  id: PreviewProps['id'],
+  baseUrl: PreviewProps['baseUrl'],
+  withLoader: PreviewProps['withLoader'],
+  getElements: API['getElements'],
+  parameters: PreviewProps['parameters']
+) => {
+  const canvas = useMemo(() => {
+    return createCanvas(id, baseUrl, withLoader);
+  }, [id, baseUrl, withLoader]);
+
+  const tabsFromConfig = useMemo(() => {
+    return getTabs(getElements);
+  }, [getElements]);
+
+  return useMemo(() => {
+    return filterTabs([canvas, ...tabsFromConfig], parameters);
+  }, [canvas, ...tabsFromConfig, parameters]);
+};
+
+const useViewMode = (docsOnly: boolean, viewMode: PreviewProps['viewMode']) => {
+  return docsOnly && viewMode === 'story' ? 'docs' : viewMode;
+};
+
+const useTools = (
+  getElements: API['getElements'],
+  tabs: Addon[],
+  viewMode: PreviewProps['viewMode'],
+  storyId: PreviewProps['storyId'],
+  location: PreviewProps['location'],
+  path: PreviewProps['path']
+) => {
+  const toolsFromConfig = useMemo(() => {
+    return getTools(getElements);
+  }, [getElements]);
+
+  const toolsExtraFromConfig = useMemo(() => {
+    return getToolsExtra(getElements);
+  }, [getElements]);
+
+  const tools = useMemo(() => {
+    return [...defaultTools, ...toolsFromConfig];
+  }, [defaultTools, toolsFromConfig]);
+
+  const toolsExtra = useMemo(() => {
+    return [...defaultToolsExtra, ...toolsExtraFromConfig];
+  }, [defaultToolsExtra, toolsExtraFromConfig]);
+
+  return useMemo(() => {
+    return filterTools(tools, toolsExtra, tabs, {
       viewMode,
-      docsOnly,
+      storyId,
       location,
       path,
-      baseUrl
-    );
+    });
+  }, [viewMode, storyId, location, path, tools, toolsExtra, tabs]);
+};
 
-    return (
-      <ZoomProvider>
-        <Fragment>
-          {id === 'main' && (
-            <Helmet key="description">
-              <title>{getDocumentTitle(description)}</title>
-            </Helmet>
-          )}
-          {(left || right) && (
-            <Toolbar key="toolbar" shown={options.isToolshown} border>
-              <Fragment key="left">{left}</Fragment>
-              <Fragment key="right">{right}</Fragment>
-            </Toolbar>
-          )}
-          <S.FrameWrap key="frame" offset={toolbarHeight}>
-            {panels.map(p => (
-              // @ts-ignore
-              <Fragment key={p.id || p.key}>
-                {p.render({ active: p.match({ storyId, viewMode, location, path }) })}
-              </Fragment>
-            ))}
-          </S.FrameWrap>
-        </Fragment>
-      </ZoomProvider>
-    );
-  }
-}
+const Preview: FunctionComponent<PreviewProps> = props => {
+  const {
+    api,
+    id,
+    location,
+    options,
+    docsOnly = false,
+    storyId = undefined,
+    path = undefined,
+    description = undefined,
+    baseUrl = 'iframe.html',
+    parameters = undefined,
+    withLoader = true,
+  } = props;
+  const { isToolshown } = options;
+  const { getElements } = api;
+
+  // eslint-disable-next-line react/destructuring-assignment
+  const viewMode = useViewMode(docsOnly, props.viewMode);
+  const tabs = useTabs(id, baseUrl, withLoader, getElements, parameters);
+  const { left, right } = useTools(getElements, tabs, viewMode, storyId, location, path);
+
+  useEffect(() => {
+    api.emit(SET_CURRENT_STORY, { storyId, viewMode });
+  }, [storyId, viewMode]);
+
+  return (
+    <ZoomProvider>
+      <Fragment>
+        {id === 'main' && (
+          <Helmet key="description">
+            <title>{getDocumentTitle(description)}</title>
+          </Helmet>
+        )}
+        {(left || right) && (
+          <Toolbar key="toolbar" shown={isToolshown} border>
+            <Fragment key="left">{left}</Fragment>
+            <Fragment key="right">{right}</Fragment>
+          </Toolbar>
+        )}
+        <S.FrameWrap key="frame" offset={isToolshown ? 40 : 0}>
+          {tabs.map((p, i) => (
+            // @ts-ignore
+            <Fragment key={p.id || p.key || i}>
+              {p.render({ active: p.match({ storyId, viewMode, location, path }) })}
+            </Fragment>
+          ))}
+        </S.FrameWrap>
+      </Fragment>
+    </ZoomProvider>
+  );
+};
 
 export { Preview };
+
+function filterTabs(panels: Addon[], parameters: Record<string, any>) {
+  const { previewTabs } = addons.getConfig();
+  const parametersTabs = parameters ? parameters.previewTabs : undefined;
+
+  if (previewTabs || parametersTabs) {
+    // deep merge global and local settings
+    const tabs = merge(previewTabs, parametersTabs);
+    const arrTabs = Object.keys(tabs).map((key, index) => ({
+      index,
+      ...(typeof tabs[key] === 'string' ? { title: tabs[key] } : tabs[key]),
+      id: key,
+    }));
+    return panels
+      .filter(panel => {
+        const t = arrTabs.find(tab => tab.id === panel.id);
+        return t === undefined || t.id === 'canvas' || !t.hidden;
+      })
+      .map((panel, index) => ({ ...panel, index } as Addon))
+      .sort((p1, p2) => {
+        const tab_1 = arrTabs.find(tab => tab.id === p1.id);
+        // @ts-ignore
+        const index_1 = tab_1 ? tab_1.index : arrTabs.length + p1.index;
+        const tab_2 = arrTabs.find(tab => tab.id === p2.id);
+        // @ts-ignore
+        const index_2 = tab_2 ? tab_2.index : arrTabs.length + p2.index;
+        return index_1 - index_2;
+      })
+      .map(panel => {
+        const t = arrTabs.find(tab => tab.id === panel.id);
+        if (t) {
+          return {
+            ...panel,
+            title: t.title || panel.title,
+            disabled: t.disabled,
+            hidden: t.hidden,
+          } as Addon;
+        }
+        return panel;
+      });
+  }
+  return panels;
+}
+
+function filterTools(
+  tools: Addon[],
+  toolsExtra: Addon[],
+  tabs: Addon[],
+  {
+    viewMode,
+    storyId,
+    location,
+    path,
+  }: {
+    viewMode: State['viewMode'];
+    storyId: State['storyId'];
+    location: State['location'];
+    path: State['path'];
+  }
+) {
+  const tabsTool = createTabsTool(tabs);
+  const toolsLeft = [tabs.filter(p => !p.hidden).length > 1 ? tabsTool : null, ...tools];
+
+  const toolsRight = [...toolsExtra];
+
+  // if its a docsOnly page, even the 'story' view mode is considered 'docs'
+  const filter = (item: Partial<Addon>) =>
+    item &&
+    (!item.match ||
+      item.match({
+        storyId,
+        viewMode,
+        location,
+        path,
+      }));
+
+  const displayItems = (list: Partial<Addon>[]) =>
+    list.reduce(
+      (acc, item, index) =>
+        item ? (
+          // @ts-ignore
+          <Fragment key={item.id || item.key || `f-${index}`}>
+            {acc}
+            {item.render({}) || item}
+          </Fragment>
+        ) : (
+          acc
+        ),
+      null
+    );
+
+  const left = displayItems(toolsLeft.filter(filter));
+  const right = displayItems(toolsRight.filter(filter));
+
+  return { left, right };
+}

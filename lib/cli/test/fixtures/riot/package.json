@@ -19,6 +19,7 @@
     "raw-loader": "^1.0.0",
     "riot-compiler": "^3.6.0",
     "riot-hot-reload": "^1.0.0",
+    "riot-tmpl": "^3.0.8",
     "style-loader": "^0.23.1",
     "webpack": "^4.33.0",
     "webpack-bundle-analyzer": "^3.3.2",

@@ -1,17 +1,18 @@
-# Storybook Docs Theming
+<h1>Storybook Docs Theming</h1>
 
 [Storybook Docs](../README.md) is themable! There are three different levels of theming, just to keep things interesting:
 
 - [Storybook theming](#storybook-theming)
 - [CSS escape hatches](#css-escape-hatches)
 - [MDX component overrides](#mdx-component-overrides)
+- [More resources](#more-resources)
 
 ## Storybook theming
 
 Storybook theming is the **recommended way** to theme your docs. If you update your storybook theme according to [the documentation](https://storybook.js.org/docs/configurations/theming/), Storybook Docs should adapt in reasonable ways.
 
 > In the documentation it will say you can theme storybook in `manager.js`, That's a newer more optimal way to theme storybook, but it's currently incompatible with docs.
-> 
+>
 > We're working on making it compatible in 6.0.0, so for now use the method described below.
 
 Here's how to change your docs (and Storybook) to the dark theme, by modifying `.storybook/preview.js`:
@@ -64,7 +65,7 @@ addParameters({
 });
 ```
 
-You can even override a Storybook *block* component.
+You can even override a Storybook _block_ component.
 
 Here's how you might insert a custom `<Preview />` block:
 
@@ -82,10 +83,7 @@ addParameters({
 
 ## More resources
 
-Want to learn more? Here are some more articles on Storybook Docs:
-
-- References: [README](../README.md) / [DocsPage](docspage.md) / [MDX](mdx.md) / [FAQ](faq.md) / [Recipes](recipes.md)
-- Vision: [Storybook Docs sneak peak](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a)
-- Announcement: [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf)
+- References: [README](../README.md) / [DocsPage](docspage.md) / [MDX](mdx.md) / [FAQ](faq.md) / [Recipes](recipes.md) / [Theming](theming.md)
+- Framework-specific docs: [React](../react/README.md) / [Vue](../vue/README.md) / [Angular](../angular/README.md) / [Web components](../web-components/README.md) / [Ember](../ember/README.md)
+- Announcements: [Vision](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a) / [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf) / [MDX](https://medium.com/storybookjs/rich-docs-with-storybook-mdx-61bc145ae7bc) / [Framework support](https://medium.com/storybookjs/storybook-docs-for-new-frameworks-b1f6090ee0ea)
 - Example: [Storybook Design System](https://github.com/storybookjs/design-system)
-- [Technical preview guide](https://docs.google.com/document/d/1un6YX7xDKEKl5-MVb-egnOYN8dynb5Hf7mq0hipk8JE/edit?usp=sharing)

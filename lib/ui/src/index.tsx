@@ -25,7 +25,7 @@ const getDocsMode = () => {
 
 const Container = process.env.XSTORYBOOK_EXAMPLE_APP ? React.StrictMode : React.Fragment;
 
-interface RootProps {
+export interface RootProps {
   provider: Provider;
 }
 

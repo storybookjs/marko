@@ -1,9 +1,8 @@
 import React, { Fragment, FunctionComponent, memo } from 'react';
-import PropTypes from 'prop-types';
 
 import { styled } from '@storybook/theming';
 import { Placeholder, Link as StyledLink } from '@storybook/components';
-import { State } from '@storybook/api';
+import { StoriesHash } from '@storybook/api';
 import { Location, Link as RouterLink } from '@storybook/router';
 import { TreeState } from './treeview/treeview';
 
@@ -18,10 +17,6 @@ const Search = styled(SidebarSearch)({
 const Subheading = styled(SidebarSubheading)({
   margin: '0 20px',
 });
-
-Subheading.propTypes = {
-  className: PropTypes.string,
-};
 
 Subheading.defaultProps = {
   className: 'sidebar-subheading',
@@ -123,7 +118,7 @@ Link.displayName = 'Link';
 
 export interface StoriesProps {
   loading: boolean;
-  stories: State['StoriesHash'];
+  stories: StoriesHash;
   storyId?: undefined | string;
   className?: undefined | string;
 }

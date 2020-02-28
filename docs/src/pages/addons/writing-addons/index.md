@@ -101,7 +101,7 @@ within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: ['path/to/register.js']
+  addons: ['path/to/addon']
 }
 ```
 
@@ -132,7 +132,7 @@ Now we need to create two files, `register.js` and `index.js,`. `register.js` wi
 
 ## Creating a decorator
 
-Let's add the following content to the `index.js`. It will expose a decorator called `withFoo` which we use the `.addDecorator()` API to decorate all our stories.
+Let's add the following content to the `index.js`. It will expose a decorator called `withMyAddon` which we use the `.addDecorator()` API to decorate all our stories.
 
 The `@storybook/addons` package contains a `makeDecorator` function which we can use to create such a decorator:
 
@@ -235,7 +235,7 @@ within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: ['path/to/register.js']
+  addons: ['path/to/addon']
 }
 ```
 

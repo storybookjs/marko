@@ -1,6 +1,6 @@
 {
   "name": "@storybook/server",
-  "version": "6.0.0-alpha.10",
+  "version": "6.0.0-alpha.20",
   "description": "Storybook for Server: View HTML snippets from a server in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -27,21 +27,22 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts"
+    "*.d.ts",
+    "ts3.5/**/*"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-alpha.10",
-    "@storybook/core": "6.0.0-alpha.10",
+    "@storybook/addons": "6.0.0-alpha.20",
+    "@storybook/core": "6.0.0-alpha.20",
     "@storybook/node-logger": "^5.2.8",
     "@types/webpack-env": "^1.13.9",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "regenerator-runtime": "^0.13.3",
     "safe-identifier": "^0.3.1",
-    "ts-dedent": "^1.1.0"
+    "ts-dedent": "^1.1.1"
   },
   "devDependencies": {
     "fs-extra": "^8.0.1"

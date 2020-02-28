@@ -23,7 +23,7 @@ within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: ['@storybook/addon-knobs/register']
+  addons: ['@storybook/addon-knobs']
 }
 ```
 

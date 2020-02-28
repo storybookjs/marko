@@ -95,7 +95,7 @@ const Paper = styled.div<{ isFullscreen: boolean }>(
         }
 );
 
-export const Nav: FunctionComponent<{ hidden: boolean; position: CSSProperties }> = ({
+export const Sidebar: FunctionComponent<{ hidden: boolean; position: CSSProperties }> = ({
   hidden = false,
   children,
   position = undefined,
@@ -185,8 +185,8 @@ const getPreviewPosition = ({
   }
 
   const navX = isNavHidden ? 0 : resizerNav.x;
-  const panelX = isPanelHidden ? 0 : resizerPanel.x;
-  const panelY = isPanelHidden ? 0 : resizerPanel.y;
+  const panelX = resizerPanel.x;
+  const panelY = resizerPanel.y;
 
   return panelPosition === 'bottom'
     ? {

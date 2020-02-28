@@ -13,9 +13,7 @@ export const mapper = ({ state }: Combo) => {
 };
 
 const NotificationConnect: FunctionComponent<any> = props => (
-  <Consumer filter={mapper}>
-    {(fromState: ReturnType<typeof mapper>) => <Notifications {...props} {...fromState} />}
-  </Consumer>
+  <Consumer filter={mapper}>{fromState => <Notifications {...props} {...fromState} />}</Consumer>
 );
 
 export default NotificationConnect;

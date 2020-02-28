@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-centered",
-  "version": "6.0.0-alpha.10",
+  "version": "6.0.0-alpha.20",
   "description": "Storybook decorator to center components",
   "keywords": [
     "addon",
@@ -23,15 +23,17 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts"
+    "*.d.ts",
+    "ts3.5/**/*"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-alpha.10",
+    "@storybook/addons": "6.0.0-alpha.20",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
+    "regenerator-runtime": "^0.13.3",
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
@@ -39,11 +41,34 @@
     "@types/webpack-env": "^1.15.1",
     "mithril": "*",
     "preact": "*",
+    "rax": "*",
+    "rax-view": "*",
     "react": "*"
   },
   "peerDependencies": {
-    "react-dom": "*",
-    "regenerator-runtime": "*"
+    "mithril": "*",
+    "preact": "*",
+    "rax": "*",
+    "rax-view": "*",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "peerDependenciesMeta": {
+    "mithril": {
+      "optional": true
+    },
+    "preact": {
+      "optional": true
+    },
+    "rax": {
+      "optional": true
+    },
+    "rax-view": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    }
   },
   "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff"
 }

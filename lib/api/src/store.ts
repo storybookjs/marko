@@ -15,13 +15,13 @@ function get(storage: StoreAPI) {
 }
 
 function set(storage: StoreAPI, value: Patch) {
-  storage.set(STORAGE_KEY, value);
+  return storage.set(STORAGE_KEY, value);
 }
 
 function update(storage: StoreAPI, patch: Patch) {
   const previous = get(storage);
   // Apply the same behaviour as react here
-  set(storage, { ...previous, ...patch });
+  return set(storage, { ...previous, ...patch });
 }
 
 type GetState = () => State;

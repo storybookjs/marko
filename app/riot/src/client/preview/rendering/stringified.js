@@ -37,10 +37,11 @@ export default function renderStringified({
   tagConstructor,
 }) {
   const tag2 = tag;
-  tags.forEach(oneTag => {
+  tags.forEach(input => {
+    const oneTag = input || {};
     const rootName = oneTag.boundAs || guessRootName(oneTag);
-    const { content } = oneTag || {};
-    const code = content ? content.trim() : oneTag || '';
+    const { content } = oneTag;
+    const code = content ? content.trim() : input || '';
     const compiled = code.includes(alreadyCompiledMarker) ? code : compileText(code, rootName);
     unregister(rootName);
     eval(getRidOfRiotNoise(`${compiled}`)); // eslint-disable-line no-eval

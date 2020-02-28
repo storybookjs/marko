@@ -8,7 +8,7 @@ import { Route } from '@storybook/router';
 import { State } from '@storybook/api';
 import { Mobile } from './components/layout/mobile';
 import { Desktop } from './components/layout/desktop';
-import Nav from './containers/nav';
+import Sidebar from './containers/sidebar';
 import Preview from './containers/preview';
 import Panel from './containers/panel';
 import Notifications from './containers/notifications';
@@ -16,7 +16,7 @@ import Notifications from './containers/notifications';
 import SettingsPages from './settings';
 
 const createProps = memoize(1)(() => ({
-  Nav,
+  Sidebar,
   Preview,
   Panel,
   Notifications,
@@ -40,7 +40,7 @@ const View = styled.div({
   width: '100vw',
 });
 
-const App = React.memo<{
+export interface AppProps {
   viewMode: State['viewMode'];
   docsOnly: boolean;
   layout: State['layout'];
@@ -49,39 +49,43 @@ const App = React.memo<{
     width: number;
     height: number;
   };
-}>(({ viewMode, docsOnly, layout, panelCount, size: { width, height } }) => {
-  const props = createProps();
+}
 
-  let content;
+const App = React.memo<AppProps>(
+  ({ viewMode, docsOnly, layout, panelCount, size: { width, height } }) => {
+    const props = createProps();
 
-  if (!width || !height) {
-    content = (
-      <div>
-        {width} x {height}
-      </div>
-    );
-  } else if (width < 600) {
-    content = <Mobile {...props} viewMode={viewMode} options={layout} />;
-  } else {
-    content = (
-      <Desktop
-        {...props}
-        viewMode={viewMode}
-        options={layout}
-        docsOnly={docsOnly}
-        {...{ width, height }}
-        panelCount={panelCount}
-      />
+    let content;
+
+    if (!width || !height) {
+      content = (
+        <div>
+          {width} x {height}
+        </div>
+      );
+    } else if (width < 600) {
+      content = <Mobile {...props} viewMode={viewMode} options={layout} />;
+    } else {
+      content = (
+        <Desktop
+          {...props}
+          viewMode={viewMode}
+          options={layout}
+          docsOnly={docsOnly}
+          {...{ width, height }}
+          panelCount={panelCount}
+        />
+      );
+    }
+
+    return (
+      <View>
+        <Global styles={createGlobal} />
+        {content}
+      </View>
     );
   }
-
-  return (
-    <View>
-      <Global styles={createGlobal} />
-      {content}
-    </View>
-  );
-});
+);
 
 const SizedApp = sizeMe({ monitorHeight: true })(App);
 

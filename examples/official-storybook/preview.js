@@ -49,3 +49,7 @@ addParameters({
     page: () => <DocsPage subtitleSlot={({ selectedKind }) => `Subtitle: ${selectedKind}`} />,
   },
 });
+
+export const parameters = {
+  exportedParameter: 'exportedParameter',
+};
