@@ -36,12 +36,13 @@ export interface StoryIdentifier {
   name: StoryName;
 }
 
-export interface StoryContext extends StoryIdentifier {
+export type StoryContext = StoryIdentifier & {
   [key: string]: any;
   parameters: Parameters;
   args: Args;
+  globalArgs: Args;
   hooks?: HooksContext;
-}
+};
 
 export interface WrapperSettings {
   options: OptionsParameter;

@@ -1,7 +1,5 @@
-import { Args } from '@storybook/addons';
 import { CHANGE_GLOBAL_ARGS, GLOBAL_ARGS_CHANGED } from '@storybook/core-events';
-
-import { Module, API } from '../index';
+import { Args, Module, API } from '../index';
 
 export interface SubState {
   globalArgs: Args;
