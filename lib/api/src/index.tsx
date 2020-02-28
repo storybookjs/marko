@@ -126,6 +126,10 @@ interface Children {
   children: ReactNode | ((props: Combo) => ReactNode);
 }
 
+export interface Args {
+  [key: string]: any;
+}
+
 type StatePartial = Partial<State>;
 
 export type ManagerProviderProps = Children & RouterData & ProviderData & DocsModeData;
