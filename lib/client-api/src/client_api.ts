@@ -124,6 +124,7 @@ export default class ClientApi {
     if (m && m.hot && m.hot.dispose) {
       m.hot.dispose(() => {
         const { _storyStore } = this;
+        _storyStore.startConfiguring();
         _storyStore.removeStoryKind(kind);
         _storyStore.incrementRevision();
       });
@@ -162,6 +163,7 @@ export default class ClientApi {
       if (!this._noStoryModuleAddMethodHotDispose && m && m.hot && m.hot.dispose) {
         m.hot.dispose(() => {
           const { _storyStore } = this;
+          _storyStore.startConfiguring();
           _storyStore.remove(id);
         });
       }
