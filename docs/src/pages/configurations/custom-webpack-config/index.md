@@ -222,9 +222,7 @@ If you're using a non-standard Storybook config directory, you should put `main.
 
 ## Using Your Existing Config
 
-If you have an existing webpack config for your project and want to reuse this app's configuration, you can either:
-
-- Import your main webpack config into Storybook's `.storybook/main.js` and merge the 2 configs.
+If you have an existing webpack config for your project and want to reuse this app's configuration, you can import your main webpack config into Storybook's `.storybook/main.js` and merge the 2 configs:
 
 **Example**
 _replacing the loaders from storybook with the loaders from your app's `webpack.config.js`_
