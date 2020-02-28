@@ -88,7 +88,7 @@
 
 In Storybook 5.3 we introduced a declarative [main.js configuration](#to-mainjs-configuration), which is now the recommended way to configure Storybook. Part of the change is a simplified syntax for registering addons, which in 6.0 automatically registers many addons _using a preset_, which is a slightly different behavior than in earlier versions.
 
-This breaking change currently applies to: `addon-a11y`, `addon-knobs`, `addon-links`.
+This breaking change currently applies to: `addon-a11y`, `addon-knobs`, `addon-links`, `addon-queryparams`.
 
 Consider the following `main.js` config for the accessibility addon, `addon-a11y`:
 
