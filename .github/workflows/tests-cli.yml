@@ -1,6 +1,6 @@
 name: CLI tests
 
-on: 
+on:
   push
   # push:
 # disabled for now:
@@ -14,36 +14,36 @@ jobs:
     name: CLI Fixtures
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '10.x'
-    - uses: actions/checkout@v1
-    - name: Cache node modules
-      uses: actions/cache@v1
-      with:
-        path: node_modules
-        key: ${{ runner.OS }}-build-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.OS }}-build-${{ env.cache-name }}-
-          ${{ runner.OS }}-build-
-          ${{ runner.OS }}-
-    - name: install, bootstrap
-      run: |
-        yarn bootstrap --core
-    - name: cli
-      run: |
-        yarn test --cli
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - uses: actions/checkout@v2
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-${{ env.cache-name }}-
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+      - name: install, bootstrap
+        run: |
+          yarn bootstrap --core
+      - name: cli
+        run: |
+          yarn test --cli
   latest-cra:
     name: Latest CRA
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '10.x'
-    - uses: actions/checkout@v1
-    - name: install, bootstrap
-      run: |
-        yarn bootstrap --core
-    - name: latest-cra
-      run: |
-        yarn test-latest-cra
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - uses: actions/checkout@v2
+      - name: install, bootstrap
+        run: |
+          yarn bootstrap --core
+      - name: latest-cra
+        run: |
+          yarn test-latest-cra
