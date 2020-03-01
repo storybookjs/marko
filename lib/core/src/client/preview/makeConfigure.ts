@@ -57,6 +57,7 @@ const loadStories = (
   }
 
   const added = Array.from(currentExports.keys()).filter(exp => !previousExports.has(exp));
+
   added.forEach(fileExports => {
     // An old-style story file
     if (!fileExports.default) {
