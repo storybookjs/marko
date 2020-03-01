@@ -43,6 +43,7 @@
     "@types/util-deprecate": "^1.0.0"
   },
   "peerDependencies": {
+    "react": "*",
     "react-dom": "*"
   },
   "publishConfig": {
