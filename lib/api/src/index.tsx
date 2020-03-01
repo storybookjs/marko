@@ -436,7 +436,7 @@ export function useStoryState<S>(defaultState?: S) {
   return useSharedState<S>(`story-state-${storyId}`, defaultState);
 }
 
-export function useGlobalArgs() {
+export function useGlobalArgs(): [Args, (args: Args) => void] {
   const {
     state: { globalArgs },
     api: { setGlobalArgs },
