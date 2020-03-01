@@ -28,8 +28,8 @@ const loadStories = (
         currentExports.set(
           fileExports,
           // todo discuss: types infer that this is RequireContext; no checks needed?
-          // typeof req.resolve === 'function' ? req.resolve(filename) : null
-          req.resolve(filename)
+          // NOTE: turns out `babel-plugin-require-context-hook` doesn't implement this (yet)
+          typeof req.resolve === 'function' ? req.resolve(filename) : null
         );
       });
     });
