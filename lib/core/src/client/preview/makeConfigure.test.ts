@@ -25,18 +25,18 @@ afterEach(() => {
 });
 
 function makeMocks() {
-  const configApi = { configure: (x: Function) => x() };
-  const storyStore = {
+  const configApi = ({ configure: (x: Function) => x() } as unknown) as ConfigApi;
+  const storyStore = ({
     removeStoryKind: jest.fn(),
     incrementRevision: jest.fn(),
-  };
-  const clientApi = {
+  } as unknown) as StoryStore;
+  const clientApi = ({
     storiesOf: jest.fn().mockImplementation(() => ({
       addParameters: jest.fn(),
       addDecorator: jest.fn(),
       add: jest.fn(),
     })),
-  };
+  } as unknown) as ClientApi;
 
   const context = { configApi, storyStore, clientApi };
   const configure = makeConfigure(context);
@@ -74,13 +74,14 @@ describe('core.preview.makeConfigure', () => {
     };
     configure(makeRequireContext(input), mod, 'react');
 
-    expect(clientApi.storiesOf).toHaveBeenCalledWith('a', true);
-    const aApi = clientApi.storiesOf.mock.results[0].value;
+    const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
+    expect(mockedStoriesOf).toHaveBeenCalledWith('a', true);
+    const aApi = mockedStoriesOf.mock.results[0].value;
     expect(aApi.add).toHaveBeenCalledWith('1', input.a[1], { __id: 'a--1' });
     expect(aApi.add).toHaveBeenCalledWith('2', input.a[2], { __id: 'a--2' });
 
-    expect(clientApi.storiesOf).toHaveBeenCalledWith('b', true);
-    const bApi = clientApi.storiesOf.mock.results[1].value;
+    expect(mockedStoriesOf).toHaveBeenCalledWith('b', true);
+    const bApi = mockedStoriesOf.mock.results[1].value;
     expect(bApi.add).toHaveBeenCalledWith('1', input.b[1], { __id: 'b--1' });
     expect(bApi.add).toHaveBeenCalledWith('two', input.b[2], { __id: 'b--2' });
   });
@@ -103,7 +104,8 @@ describe('core.preview.makeConfigure', () => {
     };
     configure(makeRequireContext(input), mod, 'react');
 
-    const aApi = clientApi.storiesOf.mock.results[0].value;
+    const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
+    const aApi = mockedStoriesOf.mock.results[0].value;
     expect(aApi.add.mock.calls.map((c: string[]) => c[0])).toEqual(['W', 'X', 'Z', 'Y']);
   });
 
@@ -125,7 +127,8 @@ describe('core.preview.makeConfigure', () => {
     };
     configure(makeRequireContext(input), mod, 'react');
 
-    const aApi = clientApi.storiesOf.mock.results[0].value;
+    const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
+    const aApi = mockedStoriesOf.mock.results[0].value;
     expect(aApi.add.mock.calls.map((c: string[]) => c[0])).toEqual(['X', 'Z']);
   });
 
@@ -146,7 +149,8 @@ describe('core.preview.makeConfigure', () => {
     };
     configure(makeRequireContext(input), mod, 'react');
 
-    const aApi = clientApi.storiesOf.mock.results[0].value;
+    const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
+    const aApi = mockedStoriesOf.mock.results[0].value;
     expect(aApi.add.mock.calls.map((c: string[]) => c[0])).toEqual(['Y', 'W']);
   });
 
@@ -164,7 +168,8 @@ describe('core.preview.makeConfigure', () => {
     };
     configure(makeRequireContext(input), mod, 'react');
 
-    const aApi = clientApi.storiesOf.mock.results[0].value;
+    const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
+    const aApi = mockedStoriesOf.mock.results[0].value;
     expect(aApi.add).toHaveBeenCalledWith('X', input.a.x, { __id: 'random--x' });
   });
 
@@ -182,7 +187,8 @@ describe('core.preview.makeConfigure', () => {
     };
     configure(makeRequireContext(input), mod, 'react');
 
-    const aApi = clientApi.storiesOf.mock.results[0].value;
+    const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
+    const aApi = mockedStoriesOf.mock.results[0].value;
     expect(aApi.addParameters).toHaveBeenCalledWith({
       framework: 'react',
       component: 'c',
@@ -207,7 +213,8 @@ describe('core.preview.makeConfigure', () => {
     };
     configure(makeRequireContext(input), mod, 'react');
 
-    const aApi = clientApi.storiesOf.mock.results[0].value;
+    const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
+    const aApi = mockedStoriesOf.mock.results[0].value;
     expect(aApi.addParameters).toHaveBeenCalledWith(expect.objectContaining({ x: 'y' }));
     expect(aApi.addDecorator).toHaveBeenCalledWith(decorator);
   });
@@ -231,7 +238,8 @@ describe('core.preview.makeConfigure', () => {
     };
     configure(makeRequireContext(input), mod, 'react');
 
-    const aApi = clientApi.storiesOf.mock.results[0].value;
+    const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
+    const aApi = mockedStoriesOf.mock.results[0].value;
     expect(aApi.add).toHaveBeenCalledWith('X', input.a.x, {
       x: 'y',
       decorators: [decorator],
@@ -253,7 +261,8 @@ describe('core.preview.makeConfigure', () => {
     };
     configure(makeRequireContext(input), mod, 'react');
 
-    const aApi = clientApi.storiesOf.mock.results[0].value;
+    const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
+    const aApi = mockedStoriesOf.mock.results[0].value;
     expect(aApi.add).toHaveBeenCalledWith('X', input.a.x, {
       decorators: [decorator],
       __id: 'a--x',
@@ -276,7 +285,8 @@ describe('core.preview.makeConfigure', () => {
     // HMR dispose callbacks
     doHMRDispose();
 
-    clientApi.storiesOf.mockClear();
+    const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
+    mockedStoriesOf.mockClear();
     const secondInput = {
       ...firstInput,
       b: {
@@ -290,7 +300,7 @@ describe('core.preview.makeConfigure', () => {
 
     expect(storyStore.removeStoryKind).not.toHaveBeenCalled();
     expect(storyStore.incrementRevision).not.toHaveBeenCalled();
-    expect(clientApi.storiesOf).toHaveBeenCalledWith('b', true);
+    expect(mockedStoriesOf).toHaveBeenCalledWith('b', true);
   });
 
   it('handles HMR correctly when removing stories', () => {
@@ -315,7 +325,8 @@ describe('core.preview.makeConfigure', () => {
     // HMR dispose callbacks
     doHMRDispose();
 
-    clientApi.storiesOf.mockClear();
+    const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
+    mockedStoriesOf.mockClear();
     const secondInput = {
       a: firstInput.a,
     };
@@ -323,7 +334,7 @@ describe('core.preview.makeConfigure', () => {
 
     expect(storyStore.removeStoryKind).toHaveBeenCalledWith('b');
     expect(storyStore.incrementRevision).toHaveBeenCalled();
-    expect(clientApi.storiesOf).not.toHaveBeenCalled();
+    expect(mockedStoriesOf).not.toHaveBeenCalled();
   });
 
   it('handles HMR correctly when changing stories', () => {
@@ -349,7 +360,8 @@ describe('core.preview.makeConfigure', () => {
     // HMR dispose callbacks
     doHMRDispose();
 
-    clientApi.storiesOf.mockClear();
+    const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
+    mockedStoriesOf.mockClear();
     const secondInput = {
       ...firstInput,
       a: {
@@ -365,6 +377,6 @@ describe('core.preview.makeConfigure', () => {
     expect(storyStore.removeStoryKind).toHaveBeenCalledTimes(1);
     expect(storyStore.removeStoryKind).toHaveBeenCalledWith('a');
     expect(storyStore.incrementRevision).toHaveBeenCalled();
-    expect(clientApi.storiesOf).toHaveBeenCalledWith('a', true);
+    expect(mockedStoriesOf).toHaveBeenCalledWith('a', true);
   });
 });
