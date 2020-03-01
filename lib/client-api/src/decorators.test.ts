@@ -38,7 +38,7 @@ describe('client-api.decorators', () => {
 
     expect(contexts).toEqual([]);
     decorated(makeContext({ k: 0 }));
-    expect(contexts).toEqual([{ k: 0 }, { k: 3 }, { k: 2 }, { k: 1 }]);
+    expect(contexts.map(c => c.k)).toEqual([0, 3, 2, 1]);
   });
 
   it('merges contexts', () => {
@@ -48,7 +48,10 @@ describe('client-api.decorators', () => {
 
     expect(contexts).toEqual([]);
     decorated(makeContext({ a: 'b' }));
-    expect(contexts).toEqual([{ a: 'b' }, { a: 'b', c: 'd' }]);
+    expect(contexts).toEqual([
+      expect.objectContaining({ a: 'b' }),
+      expect.objectContaining({ a: 'b', c: 'd' }),
+    ]);
   });
 
   it('DOES NOT merge parameter or pass through parameters key in context', () => {
@@ -58,6 +61,9 @@ describe('client-api.decorators', () => {
 
     expect(contexts).toEqual([]);
     decorated(makeContext({ parameters: { a: 'b' } }));
-    expect(contexts).toEqual([{ parameters: { a: 'b' } }, { parameters: { a: 'b' } }]);
+    expect(contexts).toEqual([
+      expect.objectContaining({ parameters: { a: 'b' } }),
+      expect.objectContaining({ parameters: { a: 'b' } }),
+    ]);
   });
 });
