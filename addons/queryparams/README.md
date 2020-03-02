@@ -10,15 +10,19 @@ First, install the addon.
 $ yarn add @storybook/addon-queryparams --dev
 ```
 
-import the `withQuery` decorator so the url will be changed before rendering stories.
+Add this line to your `main.js` file (create this file inside your storybook config directory if needed).
+
+```js
+module.exports = {
+  addons: ['@storybook/addon-queryparams'],
+};
+```
 
 ```js
 import React from 'react';
-import { storiesOf, addDecorator } from '@storybook/react';
-import { withQuery } from '@storybook/addon-queryparams';
+import { storiesOf } from '@storybook/react';
 
 storiesOf('button', module)
-  .addDecorator(withQuery)
   .addParameters({
     query: {
       mock: true,

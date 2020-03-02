@@ -1,18 +1,11 @@
-import { FunctionComponent, ReactElement } from 'react';
+import { ReactElement } from 'react';
+
+// eslint-disable-next-line import/no-extraneous-dependencies
+export { RenderContext } from '@storybook/client-api';
 
 export interface ShowErrorArgs {
   title: string;
   description: string;
-}
-
-export interface RenderMainArgs {
-  storyFn: FunctionComponent<any>;
-  selectedKind: string;
-  selectedStory: string;
-  showMain: () => void;
-  showError: (args: ShowErrorArgs) => void;
-  showException: (err: Error) => void;
-  forceRender: boolean;
 }
 
 export type StoryFnReactReturnType = ReactElement<unknown>;
