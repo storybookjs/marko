@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 
-export { RenderContext } from '@storybook/core';
+// eslint-disable-next-line import/no-extraneous-dependencies
+export { RenderContext } from '@storybook/client-api';
 
 export interface ShowErrorArgs {
   title: string;
