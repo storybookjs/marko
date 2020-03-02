@@ -35,7 +35,6 @@ Ideally all parameters should be set _at build time_ of the Storybook, either di
 However, in some cases it is necessary to set parameters at _load time_ when the Storybook first loads. This should be avoided if at all possible as it is cost that must be paid each time a Storybook loads, rather than just once when the Storybook is built.
 
 To add a parameter enhancer, call `store.addParameterEnhancer(enhancer)` _before_ any stories are loaded (in addon registration or in `preview.js`). As each story is loaded, the enhancer will be called with the full story `context` -- the return value should be an object that will be patched into the Story's parameters.
-Alm
 
 ## Args
 
@@ -59,6 +58,33 @@ If you set the `parameters.options.passArgsFirst` option on a story, then the ar
 const YourStory = ({ x, y } /*, context*/) => /* render your story using `x` and `y` */
 ```
 
+### Arg types and values
+
+Arg types are used by the docs addon to populate the props table and are documented there. They are controlled by `parameters.argTypes` and can (sometimes) be automatically inferred from type information about the story or the component rendered by the story.
+
+A story can set initial values of its args with the `parameters.args` parameter. If you set an initial value for an arg that doesn't have a type a simple type will be inferred from the value.
+
+The initial value for an arg named "X" will be either `parameters.args.X` (if set) or `parameters.argTypes.X.defaultValue`. If an arg doesn't have a default value or an initial value, it will start unset, although it can still be set later via user interaction.
+
+For instance, for this story:
+
+```js
+export MyStory = ....
+MyStory.story = { parameters: {
+  argTypes: {
+    primary: { defaultValue: true, /* other things */ },
+    size: { /* other things */ },
+    color: { /* other things */ },
+  },
+  args: {
+    size: 'large',
+    extra: 'prop',
+  }
+}}
+```
+
+Then `context.args` will default to `{ primary: true, size: 'large', extra: 'prop' }`.
+
 ### Using args in an addon
 
 Args values are automatically syncronized (via the `changeStoryArgs` and `storyArgsChanged` events) between the preview and manager; APIs exist in `lib/api` to read and set args in the manager.
@@ -67,21 +93,10 @@ Args need to be serializable -- so currently cannot include callbacks (this may 
 
 Note that arg values are passed directly to a story -- you should only store the actual value that the story needs to render in the arg. If you need more complex information supporting that, use parameters or addon state.
 
-### Default values
-
-The initial value of an arg is driven by the `parameters.argTypes` field. For each key in that field, if a `defaultValue` exists, then the arg will be initialized to that value.
-
-For instance, for this story:
+Both `@storybook/client-api` (preview) and `@storybook/api` (manager) export a `useArgs()` hook that you can use to access args in decorators or addon panels. The API is as follows:
 
 ```js
-export MyStory = ....
-MyStory.story = { parameters: {
-  argTypes: {
-    primary: { defaultValue: true },
-    size: { defaultValue: 'large' },
-    color: { /* other things */ },
-  },
-}}
+// `args` is the args of the currently rendered story
+// `setArgs` will update its args. You can pass a subset of the args; other args will not be changed.
+const [args, setArgs] = useArgs();
 ```
-
-Then `context.args` will default to `{ primary: true, size: large }`
