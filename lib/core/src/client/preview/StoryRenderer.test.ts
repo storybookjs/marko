@@ -93,7 +93,7 @@ describe('core.preview.StoryRenderer', () => {
     );
 
     // the render function does something async so we need to jump to the end of the promise queue
-    await null;
+    await Promise.resolve(null);
 
     expect(onStoryRendered).toHaveBeenCalledWith('a--1');
   });

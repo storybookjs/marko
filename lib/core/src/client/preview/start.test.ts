@@ -1,6 +1,5 @@
-import { history, document, window } from 'global';
+import { document, window } from 'global';
 
-import Events from '@storybook/core-events';
 import start from './start';
 
 jest.mock('@storybook/client-logger');

@@ -1,4 +1,4 @@
-import React, { Context } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { document } from 'global';
 import AnsiToHtml from 'ansi-to-html';
@@ -89,7 +89,7 @@ export class StoryRenderer {
     const { storyId, viewMode: urlViewMode } = storyStore.getSelection();
 
     const data = storyStore.fromId(storyId);
-    const { kind, name, id, parameters = {} } = data || {};
+    const { kind, id, parameters = {} } = data || {};
     const { docsOnly, layout } = parameters;
 
     const metadata: RenderMetadata = {
@@ -121,7 +121,7 @@ export class StoryRenderer {
     metadata: RenderMetadata;
     context: RenderContext;
   }) {
-    const { forceRender, kind, name } = context;
+    const { forceRender, name } = context;
 
     const { previousMetadata } = this;
 
