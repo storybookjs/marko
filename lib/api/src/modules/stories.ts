@@ -1,6 +1,5 @@
 import { DOCS_MODE } from 'global';
 import { toId, sanitize } from '@storybook/csf';
-import { Args } from '@storybook/addons';
 import { CHANGE_STORY_ARGS, STORY_ARGS_CHANGED } from '@storybook/core-events';
 
 import {
@@ -13,7 +12,7 @@ import {
   isStory,
 } from '../lib/stories';
 
-import { Module, API } from '../index';
+import { Module, API, Args } from '../index';
 
 type Direction = -1 | 1;
 type ParameterName = string;

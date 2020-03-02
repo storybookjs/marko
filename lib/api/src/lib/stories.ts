@@ -1,7 +1,8 @@
 import deprecate from 'util-deprecate';
 import dedent from 'ts-dedent';
 import { sanitize, parseKind } from '@storybook/csf';
-import { Args } from '@storybook/addons';
+
+import { Args } from '../index';
 import merge from './merge';
 
 export type StoryId = string;
