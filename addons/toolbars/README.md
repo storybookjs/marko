@@ -118,18 +118,20 @@ Thus if you want to show right-justified flags for an internationalization local
 
 ```js
 export const parameters = {
-  locale: {
-    name: 'Locale',
-    description: 'Internationalization locale',
-    defaultValue: 'en',
-    icon: 'globe',
-    items: [
-      { value: 'en', right: '🇺🇸', title: 'English' },
-      { value: 'fr', right: '🇫🇷', title: 'Français' },
-      { value: 'es', right: '🇪🇸', title: 'Español' },
-      { value: 'zh', right: '🇨🇳', title: '中文' },
-      { value: 'kr', right: '🇰🇷', title: '한국어' },
-    ],
+  toolbars: {
+    locale: {
+      name: 'Locale',
+      description: 'Internationalization locale',
+      defaultValue: 'en',
+      icon: 'globe',
+      items: [
+        { value: 'en', right: '🇺🇸', title: 'English' },
+        { value: 'fr', right: '🇫🇷', title: 'Français' },
+        { value: 'es', right: '🇪🇸', title: 'Español' },
+        { value: 'zh', right: '🇨🇳', title: '中文' },
+        { value: 'kr', right: '🇰🇷', title: '한국어' },
+      ],
+    },
   },
 };
 ```
@@ -138,7 +140,7 @@ export const parameters = {
 
 The recommended usage, as shown in the examples above, is to consume global args from within a decorator and implement a global setting that applies to all stories. But sometimes it's useful to use toolbar options inside individual stories.
 
-Storybook's `globalArgs` are available via the second argument to the story function:
+Storybook's `globalArgs` are available via the story context:
 
 ```js
 const getCaptionForLocale = (locale) => {
@@ -152,9 +154,18 @@ const getCaptionForLocale = (locale) => {
   }
 }
 
-export const StoryWithLocale = (args, { globalArgs: { locale } }) => {
+export const StoryWithLocale = ({ globalArgs: { locale } }) => {
   const caption = getCaptionForLocale(locale);
   return <>{caption}</>
+};
+```
+
+**NOTE:** In Storybook 6.0, if you set the global option `passArgsFirst`, the story context is passes as the second argument:
+
+```js
+export const StoryWithLocale = (args, { globalArgs: { locale } }) => {
+  const caption = getCaptionForLocale(locale);
+  return <>{caption}</>;
 };
 ```
 

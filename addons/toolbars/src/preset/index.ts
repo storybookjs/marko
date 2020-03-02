@@ -3,6 +3,6 @@ export function managerEntries(entry: any[] = []) {
 }
 
 export function config(entry: any[] = []) {
-  const toolbarConfig = [require.resolve('./config')];
+  const toolbarConfig = [require.resolve('./enhanceGlobalArgs')];
   return [...entry, ...toolbarConfig];
 }
