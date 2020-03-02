@@ -1,7 +1,7 @@
 import { detach, insert, noop } from 'svelte/internal';
 import { document } from 'global';
 import dedent from 'ts-dedent';
-import { MountViewArgs, RenderMainArgs } from './types';
+import { MountViewArgs, RenderContext } from './types';
 
 type Component = any;
 
@@ -73,13 +73,7 @@ function mountView({ Component, target, props, on, Wrapper, WrapperData }: Mount
   previousComponent = component;
 }
 
-export default function render({
-  storyFn,
-  selectedKind,
-  selectedStory,
-  showMain,
-  showError,
-}: RenderMainArgs) {
+export default function render({ storyFn, kind, name, showMain, showError }: RenderContext) {
   const {
     /** @type {SvelteComponent} */
     Component,
@@ -97,7 +91,7 @@ export default function render({
 
   if (!DefaultCompatComponent) {
     showError({
-      title: `Expecting a Svelte component from the story: "${selectedStory}" of "${selectedKind}".`,
+      title: `Expecting a Svelte component from the story: "${name}" of "${kind}".`,
       description: dedent`
         Did you forget to return the Svelte component configuration from the story?
         Use "() => ({ Component: YourComponent, data: {} })"

@@ -17,6 +17,11 @@ export function isSupportedType(type: Types): boolean {
   return !!Object.values(types).find(typeVal => typeVal === type);
 }
 
+export type StoryId = string;
+export type StoryKind = string;
+export type StoryName = string;
+export type ViewMode = 'story' | 'docs';
+
 export interface Parameters {
   fileName?: string;
   options?: OptionsParameter;
@@ -25,10 +30,13 @@ export interface Parameters {
 
 export { Args };
 
-export interface StoryContext {
-  id: string;
-  name: string;
-  kind: string;
+export interface StoryIdentifier {
+  id: StoryId;
+  kind: StoryKind;
+  name: StoryName;
+}
+
+export interface StoryContext extends StoryIdentifier {
   [key: string]: any;
   parameters: Parameters;
   args: Args;
@@ -78,9 +86,9 @@ export type StoryWrapper = (
 export type MakeDecoratorResult = (...args: any) => any;
 
 export interface AddStoryArgs<StoryFnReturnType = unknown> {
-  id: string;
-  kind: string;
-  name: string;
+  id: StoryId;
+  kind: StoryKind;
+  name: StoryName;
   storyFn: StoryFn<StoryFnReturnType>;
   parameters: Parameters;
 }
@@ -95,9 +103,9 @@ export interface ClientApiAddons<StoryFnReturnType> {
 export type ClientApiReturnFn<StoryFnReturnType> = (...args: any[]) => StoryApi<StoryFnReturnType>;
 
 export interface StoryApi<StoryFnReturnType = unknown> {
-  kind: string;
+  kind: StoryKind;
   add: (
-    storyName: string,
+    storyName: StoryName,
     storyFn: StoryFn<StoryFnReturnType>,
     parameters?: Parameters
   ) => StoryApi<StoryFnReturnType>;
@@ -111,8 +119,13 @@ export type DecoratorFunction<StoryFnReturnType = unknown> = (
   c: StoryContext
 ) => ReturnType<StoryFn<StoryFnReturnType>>;
 
+export type DecorateStoryFunction<StoryFnReturnType = unknown> = (
+  storyFn: StoryFn<StoryFnReturnType>,
+  decorators: DecoratorFunction<StoryFnReturnType>[]
+) => StoryFn<StoryFnReturnType>;
+
 export interface ClientStoryApi<StoryFnReturnType = unknown> {
-  storiesOf(kind: string, module: NodeModule): StoryApi<StoryFnReturnType>;
+  storiesOf(kind: StoryKind, module: NodeModule): StoryApi<StoryFnReturnType>;
   addDecorator(decorator: DecoratorFunction<StoryFnReturnType>): StoryApi<StoryFnReturnType>;
   addParameters(parameter: Parameters): StoryApi<StoryFnReturnType>;
 }
