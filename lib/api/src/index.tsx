@@ -19,7 +19,6 @@ import {
   SHARED_STATE_SET,
   NAVIGATE_URL,
 } from '@storybook/core-events';
-import { Args } from '@storybook/addons';
 import { RenderData as RouterData } from '@storybook/router';
 import { Listener } from '@storybook/channels';
 import initProviderApi, { SubAPI as ProviderAPI, Provider } from './init-provider-api';
@@ -119,6 +118,10 @@ interface StoreData {
 
 interface Children {
   children: ReactNode | ((props: Combo) => ReactNode);
+}
+
+export interface Args {
+  [key: string]: any;
 }
 
 type StatePartial = Partial<State>;

@@ -1,3 +1,4 @@
+import { Args } from '@storybook/api';
 import { HooksContext } from './hooks';
 import { Addon } from './index';
 
@@ -22,9 +23,8 @@ export interface Parameters {
   [key: string]: any;
 }
 
-export interface Args {
-  [key: string]: any;
-}
+export { Args };
+
 export interface StoryContext {
   id: string;
   name: string;
