@@ -221,6 +221,25 @@ describe('preview.story_store', () => {
       expect(store.getRawStory('a', '1').parameters).toEqual({ a: 'b', c: 'd', e: 'f' });
     });
 
+    it('does not merge subkeys of parameter enhancer results', () => {
+      const store = new StoryStore({ channel });
+
+      const firstEnhancer = jest.fn().mockReturnValue({ ns: { c: 'd' } });
+      store.addParameterEnhancer(firstEnhancer);
+      const secondEnhancer = jest.fn().mockReturnValue({ ns: { e: 'f' } });
+      store.addParameterEnhancer(secondEnhancer);
+
+      addStoryToStore(store, 'a', '1', () => 0, { ns: { a: 'b' } });
+
+      expect(firstEnhancer).toHaveBeenCalledWith(
+        expect.objectContaining({ parameters: { ns: { a: 'b' } } })
+      );
+      expect(secondEnhancer).toHaveBeenCalledWith(
+        expect.objectContaining({ parameters: { ns: { c: 'd' } } })
+      );
+      expect(store.getRawStory('a', '1').parameters).toEqual({ ns: { e: 'f' } });
+    });
+
     it('allows you to alter parameters when stories are re-added', () => {
       const store = new StoryStore({ channel });
       addons.setChannel(channel);

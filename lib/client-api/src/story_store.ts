@@ -193,11 +193,10 @@ export default class StoryStore extends EventEmitter {
     );
 
     const parameters = this._parameterEnhancers.reduce(
-      (accumlatedParameters, enhancer) =>
-        combineParameters(
-          accumlatedParameters,
-          enhancer({ ...identification, parameters: accumlatedParameters, args: {} })
-        ),
+      (accumlatedParameters, enhancer) => ({
+        ...accumlatedParameters,
+        ...enhancer({ ...identification, parameters: accumlatedParameters, args: {} }),
+      }),
       parametersBeforeEnhancement
     );
 
