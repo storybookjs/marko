@@ -215,29 +215,49 @@ describe('preview.story_store', () => {
   });
 
   describe('configuration', () => {
-    it('does not allow addStory if not configuring', () => {
+    it('does not allow addStory if not configuring, unless allowUsafe=true', () => {
       const store = new StoryStore({ channel });
       store.finishConfiguring();
 
       expect(() => addStoryToStore(store, 'a', '1', () => 0)).toThrow(
         'Cannot add a story when not configuring'
       );
+
+      expect(() =>
+        store.addStory(
+          {
+            kind: 'a',
+            name: '1',
+            storyFn: () => 0,
+            parameters: {},
+            id: 'a--1',
+          },
+          {
+            applyDecorators: defaultDecorateStory,
+            allowUnsafe: true,
+          }
+        )
+      ).not.toThrow();
     });
 
-    it('does not allow remove if not configuring', () => {
+    it('does not allow remove if not configuring, unless allowUsafe=true', () => {
       const store = new StoryStore({ channel });
+      addons.setChannel(channel);
       addStoryToStore(store, 'a', '1', () => 0);
       store.finishConfiguring();
 
       expect(() => store.remove('a--1')).toThrow('Cannot remove a story when not configuring');
+      expect(() => store.remove('a--1', { allowUnsafe: true })).not.toThrow();
     });
 
-    it('does not allow removeStoryKind if not configuring', () => {
+    it('does not allow removeStoryKind if not configuring, unless allowUsafe=true', () => {
       const store = new StoryStore({ channel });
+      addons.setChannel(channel);
       addStoryToStore(store, 'a', '1', () => 0);
       store.finishConfiguring();
 
       expect(() => store.removeStoryKind('a')).toThrow('Cannot remove a kind when not configuring');
+      expect(() => store.removeStoryKind('a', { allowUnsafe: true })).not.toThrow();
     });
 
     it('waits for configuration to be over before emitting SET_STORIES', () => {

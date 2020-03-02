@@ -124,8 +124,10 @@ export default class ClientApi {
     if (m && m.hot && m.hot.dispose) {
       m.hot.dispose(() => {
         const { _storyStore } = this;
-        _storyStore.startConfiguring();
-        _storyStore.removeStoryKind(kind);
+        // If HMR dispose happens in a story file, we know that HMR will pass up to the configuration file (preview.js)
+        // and be handled by the HMR.allow in config_api, leading to a re-run of configuration.
+        // So configuration is about to happen--we can skip the safety check.
+        _storyStore.removeStoryKind(kind, { allowUnsafe: true });
         _storyStore.incrementRevision();
       });
     }
@@ -163,8 +165,9 @@ export default class ClientApi {
       if (!this._noStoryModuleAddMethodHotDispose && m && m.hot && m.hot.dispose) {
         m.hot.dispose(() => {
           const { _storyStore } = this;
-          _storyStore.startConfiguring();
-          _storyStore.remove(id);
+          // See note about allowUnsafe above
+          _storyStore.remove(id, { allowUnsafe: true });
+          _storyStore.incrementRevision();
         });
       }
 

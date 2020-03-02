@@ -8,6 +8,7 @@
       - [Can no longer add decorators/parameters after stories](#can-no-longer-add-decorators-parameters-after-stories)
       - [Changed Parameter Handling](#changed-parameter-handling)
       - [Simplified Render Context](#simplified-render-context)
+      - [Story Store immutable outside of configuration](#story-store-immutable-outside-of-configuration)
   - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
     - [To main.js configuration](#to-mainjs-configuration)
     - [Create React App preset](#create-react-app-preset)
@@ -191,6 +192,10 @@ The `RenderContext` that is passed to framework rendering layers in order to ren
 - `storyStore`
 - `channel`
 - `clientApi`
+
+### Story Store immutable outside of configuration
+
+You can no longer change the contents of the StoryStore outside of a `configure()` call. This is to ensure that any changes are properly published to the manager. If you want to add stories "out of band" you can call `store.startConfiguring()` and `store.finishConfiguring()` to ensure that your changes are published.
 
 ## From version 5.2.x to 5.3.x
 

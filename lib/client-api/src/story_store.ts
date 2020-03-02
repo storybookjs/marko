@@ -50,6 +50,8 @@ const includeStory = (story: StoreItem, options: StoryOptions = { includeDocsOnl
   return !isStoryDocsOnly(story.parameters);
 };
 
+type AllowUnsafeOption = { allowUnsafe?: boolean };
+
 const toExtracted = <T>(obj: T) =>
   Object.entries(obj).reduce((acc, [key, value]) => {
     if (typeof value === 'function') {
@@ -151,11 +153,15 @@ export default class StoryStore extends EventEmitter {
     { id, kind, name, storyFn: original, parameters = {}, decorators = [] }: AddStoryArgs,
     {
       applyDecorators,
+      allowUnsafe = false,
     }: {
       applyDecorators: (fn: StoryFn, decorators: DecoratorFunction[]) => any;
-    }
+    } & AllowUnsafeOption
   ) {
-    if (!this._configuring) throw new Error('Cannot add a story when not configuring');
+    if (!this._configuring && !allowUnsafe)
+      throw new Error(
+        'Cannot add a story when not configuring, see https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#story-store-immutable-outside-of-configuration'
+      );
 
     const { _stories } = this;
 
@@ -219,8 +225,11 @@ export default class StoryStore extends EventEmitter {
     };
   }
 
-  remove = (id: string): void => {
-    if (!this._configuring) throw new Error('Cannot remove a story when not configuring');
+  remove = (id: string, { allowUnsafe = false }: AllowUnsafeOption = {}): void => {
+    if (!this._configuring && !allowUnsafe)
+      throw new Error(
+        'Cannot remove a story when not configuring, see https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#story-store-immutable-outside-of-configuration'
+      );
 
     const { _stories } = this;
     const story = _stories[id];
@@ -229,8 +238,11 @@ export default class StoryStore extends EventEmitter {
     if (story) story.hooks.clean();
   };
 
-  removeStoryKind(kind: string) {
-    if (!this._configuring) throw new Error('Cannot remove a kind when not configuring');
+  removeStoryKind(kind: string, { allowUnsafe = false }: AllowUnsafeOption = {}) {
+    if (!this._configuring && !allowUnsafe)
+      throw new Error(
+        'Cannot remove a kind when not configuring, see https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#story-store-immutable-outside-of-configuration'
+      );
 
     if (!this._kinds[kind]) return;
 
