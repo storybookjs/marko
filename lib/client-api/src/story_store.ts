@@ -102,6 +102,7 @@ export default class StoryStore extends EventEmitter {
     this._revision = 0;
     this._selection = {} as any;
     this._error = undefined;
+    this._channel = params.channel;
 
     this.setupListeners();
   }
