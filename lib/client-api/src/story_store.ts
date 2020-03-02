@@ -230,7 +230,12 @@ export default class StoryStore {
     const parameters = this._parameterEnhancers.reduce(
       (accumlatedParameters, enhancer) => ({
         ...accumlatedParameters,
-        ...enhancer({ ...identification, parameters: accumlatedParameters, args: {} }),
+        ...enhancer({
+          ...identification,
+          parameters: accumlatedParameters,
+          args: {},
+          globalArgs: {},
+        }),
       }),
       parametersBeforeEnhancement
     );
