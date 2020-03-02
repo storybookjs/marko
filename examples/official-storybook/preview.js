@@ -46,7 +46,7 @@ addParameters({
     { name: 'dark', value: '#222222' },
   ],
   docs: {
-    page: () => <DocsPage subtitleSlot={({ selectedKind }) => `Subtitle: ${selectedKind}`} />,
+    page: () => <DocsPage subtitleSlot={({ kind }) => `Subtitle: ${kind}`} />,
   },
 });
 

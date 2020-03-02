@@ -1,4 +1,16 @@
+import { StoryContext } from '@storybook/addons';
+
 import { defaultDecorateStory } from './decorators';
+
+function makeContext(input: Record<string, any>): StoryContext {
+  return {
+    id: 'id',
+    kind: 'kind',
+    name: 'name',
+    parameters: {},
+    ...input,
+  };
+}
 
 describe('client-api.decorators', () => {
   it('calls decorators in out to in order', () => {
@@ -25,8 +37,8 @@ describe('client-api.decorators', () => {
     const decorated = defaultDecorateStory(c => contexts.push(c), decorators);
 
     expect(contexts).toEqual([]);
-    decorated({ k: 0 });
-    expect(contexts).toEqual([{ k: 0 }, { k: 3 }, { k: 2 }, { k: 1 }]);
+    decorated(makeContext({ k: 0 }));
+    expect(contexts.map(c => c.k)).toEqual([0, 3, 2, 1]);
   });
 
   it('merges contexts', () => {
@@ -35,8 +47,11 @@ describe('client-api.decorators', () => {
     const decorated = defaultDecorateStory(c => contexts.push(c), decorators);
 
     expect(contexts).toEqual([]);
-    decorated({ a: 'b' });
-    expect(contexts).toEqual([{ a: 'b' }, { a: 'b', c: 'd' }]);
+    decorated(makeContext({ a: 'b' }));
+    expect(contexts).toEqual([
+      expect.objectContaining({ a: 'b' }),
+      expect.objectContaining({ a: 'b', c: 'd' }),
+    ]);
   });
 
   it('DOES NOT merge parameter or pass through parameters key in context', () => {
@@ -45,7 +60,10 @@ describe('client-api.decorators', () => {
     const decorated = defaultDecorateStory(c => contexts.push(c), decorators);
 
     expect(contexts).toEqual([]);
-    decorated({ parameters: { a: 'b' } });
-    expect(contexts).toEqual([{ parameters: { a: 'b' } }, { parameters: { a: 'b' } }]);
+    decorated(makeContext({ parameters: { a: 'b' } }));
+    expect(contexts).toEqual([
+      expect.objectContaining({ parameters: { a: 'b' } }),
+      expect.objectContaining({ parameters: { a: 'b' } }),
+    ]);
   });
 });

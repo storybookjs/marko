@@ -1,14 +1,20 @@
 /* eslint no-underscore-dangle: 0 */
 import EventEmitter from 'eventemitter3';
 import memoize from 'memoizerific';
-import debounce from 'lodash/debounce';
 import dedent from 'ts-dedent';
 import stable from 'stable';
 
 import { Channel } from '@storybook/channels';
 import Events from '@storybook/core-events';
 import { logger } from '@storybook/client-logger';
-import { Comparator, Parameters, StoryFn, StoryContext } from '@storybook/addons';
+import {
+  StoryId,
+  ViewMode,
+  Comparator,
+  Parameters,
+  StoryFn,
+  StoryContext,
+} from '@storybook/addons';
 import {
   DecoratorFunction,
   StoryMetadata,
@@ -23,8 +29,8 @@ import storySort from './storySort';
 import { combineParameters } from './parameters';
 
 interface Selection {
-  storyId: string;
-  viewMode: string;
+  storyId: StoryId;
+  viewMode: ViewMode;
 }
 
 interface StoryOptions {
@@ -43,6 +49,8 @@ const includeStory = (story: StoreItem, options: StoryOptions = { includeDocsOnl
   }
   return !isStoryDocsOnly(story.parameters);
 };
+
+type AllowUnsafeOption = { allowUnsafe?: boolean };
 
 const toExtracted = <T>(obj: T) =>
   Object.entries(obj).reduce((acc, [key, value]) => {
@@ -63,6 +71,8 @@ export default class StoryStore extends EventEmitter {
 
   _channel: Channel;
 
+  _configuring: boolean;
+
   _globalMetadata: StoryMetadata;
 
   // Keyed on kind name
@@ -78,6 +88,8 @@ export default class StoryStore extends EventEmitter {
   constructor(params: { channel: Channel }) {
     super();
 
+    // Assume we are configuring until we hear otherwise
+    this._configuring = true;
     this._globalMetadata = { parameters: {}, decorators: [] };
     this._kinds = {};
     this._stories = {};
@@ -85,11 +97,28 @@ export default class StoryStore extends EventEmitter {
     this._selection = {} as any;
     this._channel = params.channel;
     this._error = undefined;
+
+    this.setupListeners();
   }
 
-  setChannel = (channel: Channel) => {
-    this._channel = channel;
-  };
+  setupListeners() {
+    // Channel can be null in StoryShots
+    if (!this._channel) return;
+
+    this._channel.on(Events.SET_CURRENT_STORY, ({ storyId, viewMode }) =>
+      this.setSelection({ storyId, viewMode })
+    );
+  }
+
+  startConfiguring() {
+    this._configuring = true;
+  }
+
+  finishConfiguring() {
+    this._configuring = false;
+    this.pushToManager();
+    if (this._channel) this._channel.emit(Events.RENDER_CURRENT_STORY);
+  }
 
   addGlobalMetadata({ parameters, decorators }: StoryMetadata) {
     const globalParameters = this._globalMetadata.parameters;
@@ -124,10 +153,16 @@ export default class StoryStore extends EventEmitter {
     { id, kind, name, storyFn: original, parameters = {}, decorators = [] }: AddStoryArgs,
     {
       applyDecorators,
+      allowUnsafe = false,
     }: {
       applyDecorators: (fn: StoryFn, decorators: DecoratorFunction[]) => any;
-    }
+    } & AllowUnsafeOption
   ) {
+    if (!this._configuring && !allowUnsafe)
+      throw new Error(
+        'Cannot add a story when not configuring, see https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#story-store-immutable-outside-of-configuration'
+      );
+
     const { _stories } = this;
 
     if (_stories[id]) {
@@ -188,12 +223,14 @@ export default class StoryStore extends EventEmitter {
 
       parameters: allParameters,
     };
-
-    // LET'S SEND IT TO THE MANAGER
-    this.pushToManager();
   }
 
-  remove = (id: string): void => {
+  remove = (id: string, { allowUnsafe = false }: AllowUnsafeOption = {}): void => {
+    if (!this._configuring && !allowUnsafe)
+      throw new Error(
+        'Cannot remove a story when not configuring, see https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#story-store-immutable-outside-of-configuration'
+      );
+
     const { _stories } = this;
     const story = _stories[id];
     delete _stories[id];
@@ -201,7 +238,12 @@ export default class StoryStore extends EventEmitter {
     if (story) story.hooks.clean();
   };
 
-  removeStoryKind(kind: string) {
+  removeStoryKind(kind: string, { allowUnsafe = false }: AllowUnsafeOption = {}) {
+    if (!this._configuring && !allowUnsafe)
+      throw new Error(
+        'Cannot remove a kind when not configuring, see https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#story-store-immutable-outside-of-configuration'
+      );
+
     if (!this._kinds[kind]) return;
 
     this._kinds[kind].parameters = {};
@@ -213,7 +255,6 @@ export default class StoryStore extends EventEmitter {
 
       return acc;
     }, {});
-    this.pushToManager();
   }
 
   fromId = (id: string): StoreItem | null => {
@@ -276,45 +317,43 @@ export default class StoryStore extends EventEmitter {
     );
   }
 
-  setSelection(data: Selection | undefined, error: ErrorLike): void {
-    this._selection =
-      data === undefined ? this._selection : { storyId: data.storyId, viewMode: data.viewMode };
-    this._error = error === undefined ? this._error : error;
+  clearError() {
+    this._error = null;
+  }
 
-    // Try and emit the STORY_RENDER event synchronously, but if the channel is not ready (RN),
-    // we'll try again later.
-    let isStarted = false;
+  setError = (err: ErrorLike) => {
+    this._error = err;
+    if (this._channel) this._channel.emit(Events.RENDER_CURRENT_STORY);
+  };
+
+  getError = (): ErrorLike | undefined => this._error;
+
+  setSelection(selection: Selection): void {
+    this._selection = selection;
+
     if (this._channel) {
-      this._channel.emit(Events.STORY_RENDER);
-      isStarted = true;
+      this._channel.emit(Events.CURRENT_STORY_WAS_SET, this._selection);
+
+      // If the selection is set while configuration is in process, we are guaranteed
+      // we'll emit RENDER_CURRENT_STORY at the end of the process, so we shouldn't do it now.
+      if (!this._configuring) this._channel.emit(Events.RENDER_CURRENT_STORY);
     }
-
-    setTimeout(() => {
-      if (this._channel && !isStarted) {
-        this._channel.emit(Events.STORY_RENDER);
-      }
-
-      // should be deprecated in future.
-      this.emit(Events.STORY_RENDER);
-    }, 1);
   }
 
   getSelection = (): Selection => this._selection;
-
-  getError = (): ErrorLike | undefined => this._error;
 
   getStoriesForManager = () => {
     return this.extract({ includeDocsOnly: true });
   };
 
-  pushToManager = debounce(() => {
+  pushToManager = () => {
     if (this._channel) {
       const stories = this.getStoriesForManager();
 
       // send to the parent frame.
       this._channel.emit(Events.SET_STORIES, { stories });
     }
-  }, 0);
+  };
 
   getStoryKinds() {
     return Array.from(new Set(this.raw().map(s => s.kind)));

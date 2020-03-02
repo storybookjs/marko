@@ -5,16 +5,12 @@ import ClientApi from './client_api';
 import ConfigApi from './config_api';
 import StoryStore from './story_store';
 
-const getContext = ({
-  decorateStory = undefined,
-  noStoryModuleAddMethodHotDispose = false,
-} = {}) => {
+const getContext = (clientApiOptions = {}) => {
   const channel = mockChannel();
   addons.setChannel(channel);
   const storyStore = new StoryStore({ channel });
-  const clientApi = new ClientApi({ storyStore, decorateStory, noStoryModuleAddMethodHotDispose });
-  const { clearDecorators } = clientApi;
-  const configApi = new ConfigApi({ clearDecorators, storyStore, channel, clientApi });
+  const clientApi = new ClientApi({ storyStore, ...clientApiOptions });
+  const configApi = new ConfigApi({ storyStore });
 
   return {
     configApi,
@@ -391,7 +387,7 @@ describe('preview.client_api', () => {
       } = getContext();
 
       const fn = jest.fn();
-      storiesOf('kind', { id: 'foo.js' }).add('name', fn);
+      storiesOf('kind', { id: 'foo.js' } as NodeModule).add('name', fn);
 
       const storybook = getStorybook();
 
@@ -415,7 +411,7 @@ describe('preview.client_api', () => {
       } = getContext();
 
       const fn = jest.fn();
-      storiesOf('kind', { id: 1211 }).add('name', fn);
+      storiesOf('kind', { id: 1211 } as NodeModule).add('name', fn);
 
       const storybook = getStorybook();
 
@@ -454,13 +450,13 @@ describe('preview.client_api', () => {
         storyStore,
         clientApi: { storiesOf },
       } = getContext();
-      const module = new MockModule();
+      const mod = new MockModule();
 
       expect(storyStore.getRevision()).toEqual(0);
 
-      storiesOf('kind', module);
+      storiesOf('kind', (mod as unknown) as NodeModule);
 
-      module.hot.reload();
+      mod.hot.reload();
 
       expect(storyStore.getRevision()).toEqual(1);
     });
@@ -469,13 +465,13 @@ describe('preview.client_api', () => {
       const {
         clientApi: { storiesOf, getStorybook },
       } = getContext();
-      const module = new MockModule();
+      const mod = new MockModule();
 
       const stories = [jest.fn(), jest.fn()];
 
       expect(getStorybook()).toEqual([]);
 
-      storiesOf('kind', module).add('story', stories[0]);
+      storiesOf('kind', (mod as unknown) as NodeModule).add('story', stories[0]);
 
       const firstStorybook = getStorybook();
       expect(firstStorybook).toEqual([
@@ -489,7 +485,7 @@ describe('preview.client_api', () => {
       firstStorybook[0].stories[0].render();
       expect(stories[0]).toHaveBeenCalled();
 
-      module.hot.reload();
+      mod.hot.reload();
       expect(getStorybook()).toEqual([]);
 
       storiesOf('kind', module).add('story', stories[1]);
@@ -510,67 +506,82 @@ describe('preview.client_api', () => {
     it('should maintain kind order when the module reloads', async () => {
       const {
         clientApi: { storiesOf, getStorybook },
+        storyStore,
         channel,
       } = getContext();
       const module0 = new MockModule();
       const module1 = new MockModule();
       const module2 = new MockModule();
-      channel.emit = jest.fn();
+
+      const mockChannelEmit = jest.fn();
+      channel.emit = mockChannelEmit;
 
       expect(getStorybook()).toEqual([]);
 
-      storiesOf('kind0', module0).add('story0-docs-only', jest.fn(), { docsOnly: true });
-      storiesOf('kind1', module1).add('story1', jest.fn());
-      storiesOf('kind2', module2).add('story2', jest.fn());
+      storyStore.startConfiguring();
+      storiesOf('kind0', (module0 as unknown) as NodeModule).add('story0-docs-only', jest.fn(), {
+        docsOnly: true,
+      });
+      storiesOf('kind1', (module1 as unknown) as NodeModule).add('story1', jest.fn());
+      storiesOf('kind2', (module2 as unknown) as NodeModule).add('story2', jest.fn());
+      storyStore.finishConfiguring();
 
-      // storyStore debounces so we need to wait for the next tick
-      await new Promise(r => setTimeout(r, 0));
-
-      let [event, args] = channel.emit.mock.calls[0];
+      let [event, args] = mockChannelEmit.mock.calls[0];
       expect(event).toEqual(Events.SET_STORIES);
-      expect(Object.values(args.stories).map(v => v.kind)).toEqual(['kind0', 'kind1', 'kind2']);
+      expect(Object.values(args.stories as [{ kind: string }]).map(v => v.kind)).toEqual([
+        'kind0',
+        'kind1',
+        'kind2',
+      ]);
       expect(getStorybook().map(story => story.kind)).toEqual(['kind1', 'kind2']);
 
-      channel.emit.mockClear();
+      mockChannelEmit.mockClear();
 
       // simulate an HMR of kind1, which would cause it to go to the end
       // if the original order is not maintainaed
       module1.hot.reload();
-      storiesOf('kind1', module1).add('story1', jest.fn());
+      storyStore.startConfiguring();
+      storiesOf('kind1', (module1 as unknown) as NodeModule).add('story1', jest.fn());
+      storyStore.finishConfiguring();
 
-      await new Promise(r => setTimeout(r, 0));
       // eslint-disable-next-line prefer-destructuring
-      [event, args] = channel.emit.mock.calls[0];
+      [event, args] = mockChannelEmit.mock.calls[0];
 
       expect(event).toEqual(Events.SET_STORIES);
-      expect(Object.values(args.stories).map(v => v.kind)).toEqual(['kind0', 'kind1', 'kind2']);
+      expect(Object.values(args.stories as [{ kind: string }]).map(v => v.kind)).toEqual([
+        'kind0',
+        'kind1',
+        'kind2',
+      ]);
       expect(getStorybook().map(story => story.kind)).toEqual(['kind1', 'kind2']);
     });
 
     it('should call `module.hot.dispose` inside add and soriesOf by default', () => {
-      const module = new MockModule();
-      module.hot.dispose = jest.fn();
+      const mod = (new MockModule() as unknown) as NodeModule;
+      const mockHotDispose = jest.fn();
+      mod.hot.dispose = mockHotDispose;
 
       const {
         clientApi: { storiesOf, getStorybook },
       } = getContext();
 
-      storiesOf('kind', module).add('story', jest.fn());
+      storiesOf('kind', mod).add('story', jest.fn());
 
-      expect(module.hot.dispose.mock.calls.length).toEqual(2);
+      expect(mockHotDispose.mock.calls.length).toEqual(2);
     });
 
     it('should not call `module.hot.dispose` inside add when noStoryModuleAddMethodHotDispose is true', () => {
-      const module = new MockModule();
-      module.hot.dispose = jest.fn();
+      const mod = (new MockModule() as unknown) as NodeModule;
+      const mockHotDispose = jest.fn();
+      mod.hot.dispose = mockHotDispose;
 
       const {
         clientApi: { storiesOf, getStorybook },
       } = getContext({ noStoryModuleAddMethodHotDispose: true });
 
-      storiesOf('kind', module).add('story', jest.fn());
+      storiesOf('kind', mod).add('story', jest.fn());
 
-      expect(module.hot.dispose.mock.calls.length).toEqual(1);
+      expect(mockHotDispose.mock.calls.length).toEqual(1);
     });
   });
 

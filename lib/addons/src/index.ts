@@ -1,11 +1,12 @@
 import global from 'global';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { ReactElement } from 'react';
 import { Channel } from '@storybook/channels';
 import { API } from '@storybook/api';
 import { RenderData as RouterData } from '@storybook/router';
 import { logger } from '@storybook/client-logger';
 import { types, Types } from './types';
+
+export { Channel };
 
 export interface RenderOptions {
   active?: boolean;
