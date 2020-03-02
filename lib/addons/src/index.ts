@@ -8,6 +8,8 @@ import { logger } from '@storybook/client-logger';
 import { ThemeVars } from '@storybook/theming';
 import { types, Types } from './types';
 
+export { Channel };
+
 export interface RenderOptions {
   active?: boolean;
   key?: string;
