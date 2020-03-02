@@ -1,7 +1,8 @@
 import { document } from 'global';
-import React, { Component, ReactElement, StrictMode } from 'react';
+import React, { Component, FunctionComponent, ReactElement, StrictMode } from 'react';
 import ReactDOM from 'react-dom';
-import { RenderMainArgs } from './types';
+
+import { RenderContext } from './types';
 
 const rootEl = document ? document.getElementById('root') : null;
 
@@ -47,11 +48,14 @@ class ErrorBoundary extends Component<{
 }
 
 export default async function renderMain({
-  storyFn: StoryFn,
+  storyFn,
   showMain,
   showException,
   forceRender,
-}: RenderMainArgs) {
+}: RenderContext) {
+  // storyFn has context bound in by now so can be treated as a function component with no args
+  const StoryFn = storyFn as FunctionComponent;
+
   const element = (
     <ErrorBoundary showMain={showMain} showException={showException}>
       <StoryFn />

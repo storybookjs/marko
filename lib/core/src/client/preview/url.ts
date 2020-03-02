@@ -1,8 +1,10 @@
 import { history, document } from 'global';
 import qs from 'qs';
 import { toId } from '@storybook/csf';
+import { StoryStore } from '@storybook/client-api';
+import { StoryId, ViewMode } from '@storybook/addons';
 
-export function pathToId(path) {
+export function pathToId(path: string) {
   const match = (path || '').match(/^\/story\/(.+)/);
   if (!match) {
     throw new Error(`Invalid path '${path}',  must start with '/story/'`);
@@ -10,7 +12,8 @@ export function pathToId(path) {
   return match[1];
 }
 
-export const setPath = ({ storyId, viewMode }) => {
+// todo add proper types
+export const setPath = ({ storyId, viewMode }: { storyId: StoryId; viewMode: ViewMode }) => {
   const { path, selectedKind, selectedStory, ...rest } = qs.parse(document.location.search, {
     ignoreQueryPrefix: true,
   });
@@ -22,7 +25,11 @@ export const setPath = ({ storyId, viewMode }) => {
   history.replaceState({}, '', newPath);
 };
 
-export const getIdFromLegacyQuery = ({ path, selectedKind, selectedStory }, storyStore) => {
+// todo add proper types
+export const getIdFromLegacyQuery = (
+  { path, selectedKind, selectedStory }: any,
+  storyStore: StoryStore
+) => {
   if (path) {
     return pathToId(path);
   }
@@ -40,12 +47,12 @@ export const getIdFromLegacyQuery = ({ path, selectedKind, selectedStory }, stor
   return undefined;
 };
 
-export const parseQueryParameters = search => {
+export const parseQueryParameters = (search: string) => {
   const { id } = qs.parse(search, { ignoreQueryPrefix: true });
   return id;
 };
 
-export const initializePath = storyStore => {
+export const initializePath = (storyStore: StoryStore) => {
   const query = qs.parse(document.location.search, { ignoreQueryPrefix: true });
   let { id: storyId, viewMode } = query; // eslint-disable-line prefer-const
   if (!storyId) {
