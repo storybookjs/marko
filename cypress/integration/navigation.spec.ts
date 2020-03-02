@@ -25,11 +25,11 @@ describe('Navigation', () => {
 });
 
 describe('Routing', () => {
-  it('should navigate to story ui-layout-app--loading-state', () => {
+  it('should navigate to story addons-a11y-basebutton--default', () => {
     visitExample('official-storybook');
-    cy.get('#explorerui-layout-app--loading-state').click();
+    cy.get('#exploreraddons-a11y-basebutton--label').click();
 
-    cy.url().should('include', 'path=/story/ui-layout-app--loading-state');
+    cy.url().should('include', 'path=/story/addons-a11y-basebutton--label');
   });
 
   it('should directly visit a certain story and render correctly', () => {
