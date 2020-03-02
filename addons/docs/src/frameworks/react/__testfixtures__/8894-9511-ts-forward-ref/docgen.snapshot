@@ -14,6 +14,7 @@ React.createElement(\\"button\\", {
 Button.__docgenInfo = {
   \\"description\\": \\"\\",
   \\"methods\\": [],
+  \\"displayName\\": \\"Button\\",
   \\"props\\": {
     \\"disabled\\": {
       \\"defaultValue\\": {
