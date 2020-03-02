@@ -1,5 +1,4 @@
 /* eslint no-underscore-dangle: 0 */
-import EventEmitter from 'eventemitter3';
 import memoize from 'memoizerific';
 import dedent from 'ts-dedent';
 import stable from 'stable';
@@ -69,7 +68,7 @@ const toExtracted = <T>(obj: T) =>
     return Object.assign(acc, { [key]: value });
   }, {});
 
-export default class StoryStore extends EventEmitter {
+export default class StoryStore {
   _error?: ErrorLike;
 
   _channel: Channel;
@@ -91,8 +90,6 @@ export default class StoryStore extends EventEmitter {
   _selection: Selection;
 
   constructor(params: { channel: Channel }) {
-    super();
-
     // Assume we are configuring until we hear otherwise
     this._configuring = true;
     this._globalMetadata = { parameters: {}, decorators: [] };
@@ -442,10 +439,7 @@ export default class StoryStore extends EventEmitter {
     const { args } = this._stories[id];
     this._stories[id].args = { ...args, ...newArgs };
 
-    // TODO: Sort out what is going on with both the store and the channel being event emitters.
-    // It has something to do with React Native, but need to get to the bottom of it
     this._channel.emit(Events.STORY_ARGS_CHANGED, id, this._stories[id].args);
-    this.emit(Events.STORY_ARGS_CHANGED, id, this._stories[id].args);
   }
 
   // This API is a reimplementation of Storybook's original getStorybook() API.
