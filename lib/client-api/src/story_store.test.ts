@@ -138,21 +138,17 @@ describe('preview.story_store', () => {
 
     it('setStoryArgs emits STORY_ARGS_CHANGED', () => {
       const onArgsChangedChannel = jest.fn();
-      const onArgsChangedStore = jest.fn();
       const testChannel = mockChannel();
       testChannel.on(Events.STORY_ARGS_CHANGED, onArgsChangedChannel);
 
       const store = new StoryStore({ channel: testChannel });
-      store.on(Events.STORY_ARGS_CHANGED, onArgsChangedStore);
       addStoryToStore(store, 'a', '1', () => 0);
 
       store.setStoryArgs('a--1', { foo: 'bar' });
       expect(onArgsChangedChannel).toHaveBeenCalledWith('a--1', { foo: 'bar' });
-      expect(onArgsChangedStore).toHaveBeenCalledWith('a--1', { foo: 'bar' });
 
       store.setStoryArgs('a--1', { baz: 'bing' });
       expect(onArgsChangedChannel).toHaveBeenCalledWith('a--1', { foo: 'bar', baz: 'bing' });
-      expect(onArgsChangedStore).toHaveBeenCalledWith('a--1', { foo: 'bar', baz: 'bing' });
     });
 
     it('should update if the CHANGE_STORY_ARGS event is received', () => {
@@ -202,19 +198,53 @@ describe('preview.story_store', () => {
   });
 
   describe('globalArgs', () => {
-    it.skip('is initialized to the value stored in parameters.globalArgTypes[name].defaultValue', () => {
+    it('is initialized to the value stored in parameters.globalArgs on the first story', () => {
       const store = new StoryStore({ channel });
       addStoryToStore(store, 'a', '1', () => 0, {
-        argTypes: {
-          arg1: { defaultValue: 'arg1' },
-          arg2: { defaultValue: 2 },
-          arg3: { defaultValue: { complex: { object: ['type'] } } },
+        globalArgs: {
+          arg1: 'arg1',
+          arg2: 2,
+          arg3: { complex: { object: ['type'] } },
         },
       });
-      expect(store.getRawStory('a', '1').args).toEqual({
+      store.finishConfiguring();
+      expect(store.getRawStory('a', '1').globalArgs).toEqual({
         arg1: 'arg1',
         arg2: 2,
         arg3: { complex: { object: ['type'] } },
+      });
+    });
+
+    it('on HMR it sensibly re-initializes with memory', () => {
+      const store = new StoryStore({ channel });
+      addons.setChannel(channel);
+      addStoryToStore(store, 'a', '1', () => 0, {
+        globalArgs: {
+          arg1: 'arg1',
+          arg2: 2,
+          arg3: { complex: { object: ['type'] } },
+        },
+      });
+      store.finishConfiguring();
+
+      // HMR
+      store.startConfiguring();
+      store.removeStoryKind('a');
+      addStoryToStore(store, 'a', '1', () => 0, {
+        globalArgs: {
+          arg2: 2,
+          // Although we have changed the default there is no way to tell that the user didn't change
+          // it themselves
+          arg3: { complex: { object: ['changed'] } },
+          arg4: 'new',
+        },
+      });
+      store.finishConfiguring();
+
+      expect(store.getRawStory('a', '1').globalArgs).toEqual({
+        arg2: 2,
+        arg3: { complex: { object: ['type'] } },
+        arg4: 'new',
       });
     });
 

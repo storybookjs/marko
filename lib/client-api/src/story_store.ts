@@ -134,6 +134,26 @@ export default class StoryStore {
     this._configuring = false;
     this.pushToManager();
     if (this._channel) this._channel.emit(Events.RENDER_CURRENT_STORY);
+
+    const storyIds = Object.keys(this._stories);
+    if (storyIds.length) {
+      const {
+        parameters: { globalArgs },
+      } = this.fromId(storyIds[0]);
+
+      // To deal with HMR, we consider the previous value of global args, and:
+      //   1. Remove any keys that are not in the new parameter
+      //   2. Preference any keys that were already set
+      //   3. Use any new keys from the new parameter
+      this._globalArgs = Object.entries(this._globalArgs || {}).reduce(
+        (acc, [key, previousValue]) => {
+          if (acc[key]) acc[key] = previousValue;
+
+          return acc;
+        },
+        globalArgs
+      );
+    }
   }
 
   addGlobalMetadata({ parameters, decorators }: StoryMetadata) {
