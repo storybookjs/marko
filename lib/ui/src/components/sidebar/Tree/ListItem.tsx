@@ -66,7 +66,6 @@ const Icon = styled(Icons)<IconProps>(
 export const Item = styled.div<{
   depth?: number;
   isSelected?: boolean;
-  isLoading?: boolean;
 }>(
   {
     fontSize: 13,
@@ -82,9 +81,8 @@ export const Item = styled.div<{
   ({ depth }) => ({
     paddingLeft: depth * 15 + 9,
   }),
-  ({ theme, isSelected, isLoading }) =>
-    !isLoading &&
-    (isSelected
+  ({ theme, isSelected }) =>
+    isSelected
       ? {
           cursor: 'default',
           background: theme.color.secondary,
@@ -101,31 +99,22 @@ export const Item = styled.div<{
             color: theme.color.defaultText,
             background: theme.background.hoverable,
           },
-        }),
-  ({ theme, isLoading }) =>
-    isLoading && {
-      '&& > svg + span': { background: theme.appBorderColor },
-      '&& > *': theme.animation.inlineGlow,
-      '&& > span': { borderColor: 'transparent' },
-    }
+        }
 );
 
 type ListItemProps = ComponentProps<typeof Item> & {
   childIds?: string[] | null;
-  id?: string;
-  isComponent?: boolean;
+  id: string;
+  isComponent: boolean;
   isExpanded?: boolean;
-  isLeaf?: boolean;
+  isLeaf: boolean;
   isSelected?: boolean;
-  name?: string;
-  onClick?: Function;
-  onKeyUp?: Function;
-  parameters?: Record<string, any>;
-  prefix?: string;
+  name: string;
+  parameters: Record<string, any>;
 };
 
 export const ListItem: FunctionComponent<ListItemProps> = ({
-  name = 'isLoading story',
+  name,
   isComponent = false,
   isLeaf = false,
   isExpanded = false,

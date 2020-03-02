@@ -26,6 +26,10 @@ const branchOrLeaf = (
 ) => {
   const node = dataset[root];
 
+  if (!node) {
+    return null;
+  }
+
   return node.children ? (
     <Branch
       key={node.id}

@@ -317,14 +317,17 @@ const useSelected = (dataset: DataSet, storyId: string) => {
 
 const useFiltered = (dataset: DataSet, filter: string, parents: Item[], storyId: string) => {
   const extra = useMemo(() => {
-    return parents.reduce(
-      (acc, item) => ({ ...acc, [item.id]: item }),
-      dataset[storyId]
-        ? {
-            [storyId]: dataset[storyId],
-          }
-        : {}
-    );
+    if (dataset[storyId]) {
+      return parents.reduce(
+        (acc, item) => ({ ...acc, [item.id]: item }),
+        dataset[storyId]
+          ? {
+              [storyId]: dataset[storyId],
+            }
+          : {}
+      );
+    }
+    return {};
   }, [parents]);
 
   const filteredSet = useMemo(() => (filter ? toFiltered(dataset, filter) : dataset), [
@@ -333,10 +336,13 @@ const useFiltered = (dataset: DataSet, filter: string, parents: Item[], storyId:
   ]);
 
   return useMemo(
-    () => ({
-      ...extra,
-      ...filteredSet,
-    }),
+    () =>
+      filteredSet[storyId]
+        ? filteredSet
+        : {
+            ...extra,
+            ...filteredSet,
+          },
     [extra, filteredSet]
   );
 };
@@ -365,7 +371,7 @@ const useDataset = (dataset: DataSet = {}, filter: string, storyId: string) => {
 
   const type: FilteredType = filter.length >= 2 ? 'filtered' : 'unfiltered';
 
-  const parents = useMemo(() => getParents(storyId, dataset), [storyId, dataset]);
+  const parents = useMemo(() => getParents(storyId, dataset), [dataset[storyId]]);
 
   const { expandedSet, setExpanded } = useExpanded(
     type,
