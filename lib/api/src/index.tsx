@@ -19,6 +19,7 @@ import {
   SHARED_STATE_SET,
   NAVIGATE_URL,
 } from '@storybook/core-events';
+import { Args } from '@storybook/addons';
 import { RenderData as RouterData } from '@storybook/router';
 import { Listener } from '@storybook/channels';
 import initProviderApi, { SubAPI as ProviderAPI, Provider } from './init-provider-api';
@@ -423,4 +424,14 @@ export function useAddonState<S>(addonId: string, defaultState?: S) {
 export function useStoryState<S>(defaultState?: S) {
   const { storyId } = useStorybookState();
   return useSharedState<S>(`story-state-${storyId}`, defaultState);
+}
+
+export function useArgs() {
+  const {
+    api: { getCurrentStoryData, setStoryArgs },
+  } = useStorybookApi();
+
+  const { id, args } = getCurrentStoryData();
+
+  return [args, (newArgs: Args) => setStoryArgs(id, newArgs)];
 }
