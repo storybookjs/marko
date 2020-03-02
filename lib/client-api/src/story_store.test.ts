@@ -82,19 +82,28 @@ describe('preview.story_store', () => {
   });
 
   describe('args', () => {
-    it('args is initialized to the value stored in parameters.argType[name].defaultValue', () => {
+    it('args is initialized to the value stored in parameters.args[name] || parameters.argType[name].defaultValue', () => {
       const store = new StoryStore({ channel });
       addStoryToStore(store, 'a', '1', () => 0, {
         argTypes: {
           arg1: { defaultValue: 'arg1' },
           arg2: { defaultValue: 2 },
           arg3: { defaultValue: { complex: { object: ['type'] } } },
+          arg4: {},
+          arg5: {},
+        },
+        args: {
+          arg2: 3,
+          arg4: 'foo',
+          arg6: false,
         },
       });
       expect(store.getRawStory('a', '1').args).toEqual({
         arg1: 'arg1',
-        arg2: 2,
+        arg2: 3,
         arg3: { complex: { object: ['type'] } },
+        arg4: 'foo',
+        arg6: false,
       });
     });
 

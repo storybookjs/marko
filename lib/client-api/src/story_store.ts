@@ -221,14 +221,15 @@ export default class StoryStore extends EventEmitter {
         args: _stories[id].args,
       });
 
-    // Pull out parameters.argTypes.$.defaultValue into initialArgs
-    const initialArgs: Record<string, any> = parameters.argTypes
+    // Pull out parameters.args.$ || .argTypes.$.defaultValue into initialArgs
+    const initialArgs: Args = parameters.args || {};
+    const defaultArgs: Args = parameters.argTypes
       ? Object.entries(parameters.argTypes as Record<string, { defaultValue: any }>).reduce(
           (acc, [arg, { defaultValue }]) => {
             if (defaultValue) acc[arg] = defaultValue;
             return acc;
           },
-          {} as Record<string, any>
+          {} as Args
         )
       : {};
 
@@ -241,7 +242,7 @@ export default class StoryStore extends EventEmitter {
       storyFn,
 
       parameters,
-      args: initialArgs,
+      args: { ...defaultArgs, ...initialArgs },
     };
 
     // LET'S SEND IT TO THE MANAGER
