@@ -66,9 +66,7 @@ it('calls render when you add a story', () => {
     clientApi.storiesOf('kind', {} as NodeModule).add('story', () => {});
   }, {} as NodeModule);
 
-  expect(render).toHaveBeenCalledWith(
-    expect.objectContaining({ selectedKind: 'kind', selectedStory: 'story' })
-  );
+  expect(render).toHaveBeenCalledWith(expect.objectContaining({ kind: 'kind', name: 'story' }));
 });
 
 it('emits an exception and shows error when your story throws', () => {

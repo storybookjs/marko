@@ -1,14 +1,3 @@
-import {
-  StoryId,
-  StoryKind,
-  StoryName,
-  StoryFn,
-  StoryContext,
-  Channel,
-  Parameters,
-  DecoratorFunction,
-  HooksContext,
-} from '@storybook/addons';
 import { StoreItem } from '@storybook/client-api';
 
 export interface PreviewError {
@@ -34,12 +23,7 @@ export type RequireContext = {
 export type LoaderFunction = () => void | any[];
 export type Loadable = RequireContext | RequireContext[] | LoaderFunction;
 
-// Previously this also included these fields but I don't think they were used:
-//   { configApi, storyStore, channel, clientApi, };
 export type RenderContext = StoreItem & {
-  // Legacy identifiers that are already on StoreItem (as name/kind) but widely used
-  selectedKind: StoryKind;
-  selectedStory: StoryName;
   forceRender: boolean;
 
   showMain: () => void;

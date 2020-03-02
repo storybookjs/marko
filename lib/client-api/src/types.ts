@@ -1,8 +1,5 @@
 import {
   Addon,
-  StoryId,
-  StoryKind,
-  StoryName,
   StoryIdentifier,
   StoryFn,
   Parameters,
@@ -25,16 +22,16 @@ export interface StoryMetadata {
 }
 
 export type AddStoryArgs = StoryIdentifier & {
-  storyFn: StoryFn;
+  storyFn: StoryFn<any>;
   parameters?: Parameters;
   decorators?: DecoratorFunction[];
 };
 
 export type StoreItem = StoryIdentifier & {
   parameters: Parameters;
-  getDecorated: () => StoryFn;
-  getOriginal: () => StoryFn;
-  storyFn: StoryFn;
+  getDecorated: () => StoryFn<any>;
+  getOriginal: () => StoryFn<any>;
+  storyFn: StoryFn<any>;
   hooks: HooksContext;
 };
 

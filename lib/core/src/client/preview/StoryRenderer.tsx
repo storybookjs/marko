@@ -104,8 +104,6 @@ export class StoryRenderer {
     const context: RenderContext = {
       id: storyId, // <- in case data is null, at least we'll know what we tried to render
       ...data,
-      selectedKind: kind,
-      selectedStory: name,
       forceRender,
       showMain: () => this.showMain(),
       showError: ({ title, description }: { title: string; description: string }) =>

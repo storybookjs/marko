@@ -7,6 +7,7 @@
       - [Removed legacy story APIs](#removed-legacy-story-apis)
       - [Can no longer add decorators/parameters after stories](#can-no-longer-add-decorators-parameters-after-stories)
       - [Changed Parameter Handling](#changed-parameter-handling)
+      - [Simplified Render Context](#simplified-render-context)
   - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
     - [To main.js configuration](#to-mainjs-configuration)
     - [Create React App preset](#create-react-app-preset)
@@ -180,6 +181,16 @@ StoryOne.story = { parameters: { backgrounds: [...allBackgrounds, '#zyx' ] } };
 _You cannot set parameters from decorators_
 
 Parameters are intended to be statically set at story load time. So setting them via a decorator doesn't quite make sense. If you were using this to control the rendering of a story, chances are using the new `args` feature is a more idiomatic way to do this.
+
+### Simplified Render Context
+
+The `RenderContext` that is passed to framework rendering layers in order to render a story has been simplified, dropping a few members that were not used by frameworks to render stories. In particular, the following have been removed:
+
+- `selectedKind`/`selectedStory` -- replaced by `kind`/`name`
+- `configApi`
+- `storyStore`
+- `channel`
+- `clientApi`
 
 ## From version 5.2.x to 5.3.x
 
