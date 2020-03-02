@@ -1,4 +1,4 @@
-import { StoreItem, RenderContext } from '@storybook/client-api';
+import { RenderContext } from '@storybook/client-api';
 
 export interface PreviewError {
   message?: string;
