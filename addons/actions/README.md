@@ -18,9 +18,42 @@ Then, add following content to `.storybook/main.js`
 
 ```js
 module.exports = {
-  addons: ['@storybook/addon-actions']
-}
+  addons: ['@storybook/addon-actions'],
+};
 ```
+
+## Actions args
+
+Starting in SB6.0, we recommend using the `actions` story parameter to specify actions. There are two relevant options `actions.args` and `actions.argTypesRegex` which the actions addon uses to inject actions into your story functions as Storybook Args.
+
+The following example uses the `actions.args` array to generate actions that are passed into the story (when `passArgsFirst` is set to `true`):
+
+```js
+import Button from './button';
+
+export default {
+  title: 'Button',
+  parameters: { actions: { args: ['onClick'] } },
+};
+
+export const defaultView = ({ onClick }) => <Button onClick={onClick}>Hello World!</Button>;
+```
+
+Alternatively, suppose you have a naming convention, like `onX` for event handlers. The following configuration automatically creates actions for each `onX` argType (which you can either specify manually or generate automatically using [Storybook Docs](https://www.npmjs.com/package/@storybook/addon-docs).
+
+```js
+import Button from './button';
+
+export default {
+  title: 'Button',
+  component: Button,
+  parameters: { actions: { argTypesRegex: '^on.*' } },
+};
+
+export const defaultView = ({ onClick }) => <Button onClick={onClick}>Hello World!</Button>;
+```
+
+## Manually-specified actions
 
 Import the `action` function and use it to create actions handlers. When creating action handlers, provide a **name** to make it easier to identify.
 
@@ -35,9 +68,7 @@ export default {
   component: Button,
 };
 
-export const defaultView = () => (
-  <Button onClick={action('button-click')}>Hello World!</Button>
-);
+export const defaultView = () => <Button onClick={action('button-click')}>Hello World!</Button>;
 ```
 
 ## Multiple actions
@@ -59,13 +90,9 @@ const eventsFromNames = actions('onClick', 'onMouseOver');
 // This will lead to { onClick: action('clicked'), ... }
 const eventsFromObject = actions({ onClick: 'clicked', onMouseOver: 'hovered' });
 
-export const first = () => (
-  <Button {...eventsFromNames}>Hello World!</Button>
-);
+export const first = () => <Button {...eventsFromNames}>Hello World!</Button>;
 
-export const second = () => (
-  <Button {...eventsFromObject}>Hello World!</Button>
-);
+export const second = () => <Button {...eventsFromObject}>Hello World!</Button>;
 ```
 
 ## Action Decorators
@@ -85,9 +112,7 @@ export default {
 
 const firstArg = decorate([args => args.slice(0, 1)]);
 
-export const first = () => (
-  <Button onClick={firstArg.action('button-click')}>Hello World!</Button>
-);
+export const first = () => <Button onClick={firstArg.action('button-click')}>Hello World!</Button>;
 ```
 
 ## Configuration
@@ -95,11 +120,11 @@ export const first = () => (
 Arguments which are passed to the action call will have to be serialized while be "transferred"
 over the channel.
 
-This is not very optimal and can cause lag when large objects are being logged, for this reason it is possible 
+This is not very optimal and can cause lag when large objects are being logged, for this reason it is possible
 to configure a maximum depth.
 
 The action logger, by default, will log all actions fired during the lifetime of the story. After a while
-this can make the storybook laggy. As a workaround, you can configure an upper limit to how many actions should 
+this can make the storybook laggy. As a workaround, you can configure an upper limit to how many actions should
 be logged.
 
 To apply the configuration globally use the `configureActions` function in your `preview.js` file.
@@ -115,6 +140,7 @@ configureActions({
 ```
 
 To apply the configuration per action use:
+
 ```js
 action('my-action', {
   depth: 5,
@@ -123,11 +149,11 @@ action('my-action', {
 
 ### Available Options
 
-|Name|Type|Description|Default|
-|---|---|---|---|
-|`depth`|Number|Configures the transferred depth of any logged objects.|`10`|
-|`clearOnStoryChange`|Boolean|Flag whether to clear the action logger when switching away from the current story.|`true`|
-|`limit`|Number|Limits the number of items logged in the action logger|`50`|
+| Name                 | Type    | Description                                                                         | Default |
+| -------------------- | ------- | ----------------------------------------------------------------------------------- | ------- |
+| `depth`              | Number  | Configures the transferred depth of any logged objects.                             | `10`    |
+| `clearOnStoryChange` | Boolean | Flag whether to clear the action logger when switching away from the current story. | `true`  |
+| `limit`              | Number  | Limits the number of items logged in the action logger                              | `50`    |
 
 ## withActions decorator
 
@@ -140,10 +166,8 @@ import Button from './button';
 
 export default {
   title: 'Button',
-  decorators: [withActions('mouseover', 'click .btn')]
+  decorators: [withActions('mouseover', 'click .btn')],
 };
 
-export const first = () => (
-  <Button className="btn">Hello World!</Button>
-);
+export const first = () => <Button className="btn">Hello World!</Button>;
 ```

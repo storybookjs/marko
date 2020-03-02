@@ -10,9 +10,36 @@ const pickNative = decorate([args => [args[0].nativeEvent]]);
 export default {
   title: 'Addons/Actions',
   parameters: {
+    passArgsFirst: true,
     options: {
       selectedPanel: 'storybook/actions/panel',
     },
+  },
+};
+
+export const ArgsExample = args => {
+  const { onClick } = args;
+  return <Button onClick={onClick}>Hello World</Button>;
+};
+
+ArgsExample.story = {
+  parameters: { actions: { args: ['onClick'] } },
+};
+
+export const ArgTypesExample = (args, context) => {
+  console.log({ args, context });
+  const { someFunction, onClick, onFocus } = args;
+  return (
+    <Button onMouseOver={someFunction} {...{ onClick, onFocus }}>
+      Hello World
+    </Button>
+  );
+};
+
+ArgTypesExample.story = {
+  parameters: {
+    actions: { argTypesRegex: '^on.*' },
+    argTypes: { someFunction: {}, onClick: {}, onFocus: {} },
   },
 };
 
