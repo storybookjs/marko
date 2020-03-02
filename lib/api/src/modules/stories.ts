@@ -48,6 +48,7 @@ const split = /((\w*)_)?(.*)/;
 const initStoriesApi = ({
   store,
   navigate,
+  provider,
   storyId: initialStoryId,
   viewMode: initialViewMode,
 }: Module) => {
@@ -181,7 +182,8 @@ const initStoriesApi = ({
       // Now create storiesHash by reordering the above by group
       const storiesHash: StoriesHash = transformStoriesRawToStoriesHash(
         input,
-        (store.getState().storiesHash || {}) as StoriesHash
+        (store.getState().storiesHash || {}) as StoriesHash,
+        { provider }
       );
       const settingsPageList = ['about', 'shortcuts'];
       const { storyId, viewMode, refs } = store.getState();

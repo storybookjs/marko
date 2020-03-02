@@ -147,7 +147,11 @@ const initRefsApi = ({ store, provider }: Module) => {
       const ref = api.getRefs()[id];
       const after = stories
         ? namespace(
-            transformStoriesRawToStoriesHash(map(stories, ref, { mapper: defaultMapper }), {}),
+            transformStoriesRawToStoriesHash(
+              map(stories, ref, { mapper: defaultMapper }),
+              {},
+              { provider }
+            ),
             ref
           )
         : undefined;
@@ -189,10 +193,3 @@ const initRefsApi = ({ store, provider }: Module) => {
 };
 
 export default initRefsApi;
-
-export const transform = (input: StoriesRaw, ref: InceptionRef) => {
-  return namespace(
-    transformStoriesRawToStoriesHash(map(input, ref, { mapper: defaultMapper }), {}),
-    ref
-  );
-};

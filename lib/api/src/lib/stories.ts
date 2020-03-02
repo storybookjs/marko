@@ -3,6 +3,7 @@ import dedent from 'ts-dedent';
 import { sanitize, parseKind } from '@storybook/csf';
 import merge from './merge';
 import { InceptionRef } from '../modules/refs';
+import { Provider } from '../init-provider-api';
 
 export type StoryId = string;
 
@@ -133,7 +134,8 @@ const toGroup = (name: string) => ({
 
 export const transformStoriesRawToStoriesHash = (
   input: StoriesRaw,
-  base: StoriesHash
+  base: StoriesHash,
+  { provider }: { provider: Provider }
 ): StoriesHash => {
   const anyKindMatchesOldHierarchySeparators = Object.values(input).some(({ kind }) =>
     kind.match(/\.|\|/)
@@ -145,7 +147,7 @@ export const transformStoriesRawToStoriesHash = (
       hierarchyRootSeparator: rootSeparator = undefined,
       hierarchySeparator: groupSeparator = undefined,
       showRoots = undefined,
-    } = (parameters && parameters.options) || {};
+    } = { ...provider.getConfig(), ...((parameters && parameters.options) || {}) };
 
     const usingShowRoots = typeof showRoots !== 'undefined';
 
