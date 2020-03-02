@@ -248,7 +248,7 @@ const initStoriesApi = ({
     fullApi.emit(CHANGE_STORY_ARGS, id, newArgs);
   };
 
-  function init(inputFullApi: API) {
+  function init({ api: inputFullApi }: { api: API }) {
     fullApi = inputFullApi;
 
     fullApi.on(STORY_ARGS_CHANGED, (id: StoryId, args: Args) => storyArgsChanged(id, args));
