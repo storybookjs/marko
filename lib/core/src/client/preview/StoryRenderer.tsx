@@ -123,7 +123,7 @@ export class StoryRenderer {
   }) {
     const { forceRender, name } = context;
 
-    const { previousMetadata } = this;
+    const { previousMetadata, storyStore } = this;
 
     const storyChanged = !previousMetadata || previousMetadata.id !== metadata.id;
     const revisionChanged = !previousMetadata || previousMetadata.revision !== metadata.revision;
@@ -180,7 +180,7 @@ export class StoryRenderer {
     // Given a cleaned up state, render the appropriate view mode
     switch (metadata.viewMode) {
       case 'docs': {
-        this.renderDocs({ context });
+        this.renderDocs({ context, storyStore });
         break;
       }
       case 'story':
@@ -275,15 +275,16 @@ export class StoryRenderer {
     }
   }
 
-  renderDocs({ context }: { context: RenderContext }) {
+  renderDocs({ context, storyStore }: { context: RenderContext; storyStore: StoryStore }) {
     const { kind, parameters } = context;
 
     const docs = parameters.docs || {};
     const DocsContainer =
       docs.container || (({ children }: { children: Element }) => <>{children}</>);
     const Page = docs.page || NoDocs;
+    // Docs context includes the storyStore. Probably it would be better if it didn't but that can be fixed in a later refactor
     ReactDOM.render(
-      <DocsContainer context={context}>
+      <DocsContainer context={{ storyStore, ...context }}>
         <Page />
       </DocsContainer>,
       document.getElementById('docs-root'),

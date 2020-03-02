@@ -2,8 +2,8 @@ import { Context, createContext } from 'react';
 
 export interface DocsContextProps {
   id?: string;
-  selectedKind?: string;
-  selectedStory?: string;
+  kind?: string;
+  name?: string;
 
   /**
    * mdxStoryNameToKey is an MDX-compiler-generated mapping of an MDX story's
