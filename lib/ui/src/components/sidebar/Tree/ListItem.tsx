@@ -1,28 +1,28 @@
 import { DOCS_MODE } from 'global';
-import React, { ComponentProps, FunctionComponent } from 'react';
+import React, { ComponentProps, FunctionComponent, useMemo } from 'react';
 import { opacify, transparentize } from 'polished';
 import { styled } from '@storybook/theming';
 import { Icons } from '@storybook/components';
 
 export type ExpanderProps = ComponentProps<'span'> & {
-  isExpanded?: boolean;
-  isExpandable?: boolean;
+  isExpanded: boolean;
+  depth: number;
 };
 
 const Expander = styled.span<ExpanderProps>(
-  ({ theme }) => ({
+  ({ theme, depth }) => ({
+    position: 'absolute',
     display: 'block',
+    left: 0,
+    top: 9,
     width: 0,
     height: 0,
-    marginRight: 6,
     borderTop: '3.5px solid transparent',
     borderBottom: '3.5px solid transparent',
     borderLeft: `3.5px solid ${opacify(0.2, theme.appBorderColor)}`,
     transition: 'transform .1s ease-out',
+    marginLeft: depth * 15 + 9,
   }),
-
-  ({ isExpandable = false }) => (!isExpandable ? { borderLeftColor: 'transparent' } : {}),
-
   ({ isExpanded = false }) => {
     return isExpanded
       ? {
@@ -39,6 +39,7 @@ type IconProps = ComponentProps<typeof Icons> & {
 
 const Icon = styled(Icons)<IconProps>(
   {
+    position: 'relative',
     flex: 'none',
     width: 10,
     height: 10,
@@ -63,11 +64,13 @@ const Icon = styled(Icons)<IconProps>(
   ({ isSelected = false }) => (isSelected ? { color: 'inherit' } : {})
 );
 
-export const Item = styled.div<{
+export const Item = styled.a<{
   depth?: number;
   isSelected?: boolean;
 }>(
   {
+    position: 'relative',
+    textDecoration: 'none',
     fontSize: 13,
     lineHeight: '16px',
     paddingTop: 4,
@@ -79,7 +82,7 @@ export const Item = styled.div<{
     background: 'transparent',
   },
   ({ depth }) => ({
-    paddingLeft: depth * 15 + 9,
+    paddingLeft: depth * 15 + 19,
   }),
   ({ theme, isSelected }) =>
     isSelected
@@ -110,15 +113,21 @@ type ListItemProps = ComponentProps<typeof Item> & {
   isLeaf: boolean;
   isSelected?: boolean;
   name: string;
+  kind: string;
+  depth: number;
   parameters: Record<string, any>;
 };
 
 export const ListItem: FunctionComponent<ListItemProps> = ({
   name,
+  id,
+  kind,
   isComponent = false,
   isLeaf = false,
   isExpanded = false,
   isSelected = false,
+  className,
+  depth,
   ...props
 }) => {
   let iconName: ComponentProps<typeof Icons>['icon'];
@@ -132,13 +141,16 @@ export const ListItem: FunctionComponent<ListItemProps> = ({
     iconName = 'folder';
   }
 
+  const classes = useMemo(
+    () => [className, 'sidebar-item', isSelected ? 'selected' : null].filter(Boolean).join(' '),
+    [className, isSelected]
+  );
+
   return (
-    <Item
-      isSelected={isSelected}
-      {...props}
-      className={isSelected ? 'sidebar-item selected' : 'sidebar-item'}
-    >
-      <Expander className="sidebar-expander" isExpandable={!isLeaf} isExpanded={isExpanded} />
+    <Item isSelected={isSelected} depth={depth} {...props} className={classes} id={id}>
+      {!isLeaf ? (
+        <Expander className="sidebar-expander" depth={depth} isExpanded={isExpanded} />
+      ) : null}
       <Icon className="sidebar-svg-icon" icon={iconName} isSelected={isSelected} />
       <span>{name}</span>
     </Item>

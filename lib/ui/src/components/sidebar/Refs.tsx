@@ -10,10 +10,11 @@ import React, {
 } from 'react';
 import { transparentize } from 'polished';
 
-import { styled } from '@storybook/theming';
 import { StoriesHash, State, useStorybookApi, isRoot } from '@storybook/api';
-
 import { Icons, WithTooltip, TooltipMessage } from '@storybook/components';
+import { Location } from '@storybook/router';
+import { styled } from '@storybook/theming';
+
 import { ListItem } from './Tree/ListItem';
 import { toFiltered, getMains, getParents } from './Tree/utils';
 import { Tree } from './Tree/Tree';
@@ -76,7 +77,7 @@ const Components = {
       },
       [id, expandedSet[id]]
     );
-    return <ListItem onClick={onClick} {...props} />;
+    return <ListItem onClick={onClick} {...props} href={`#${id}`} />;
   },
   Leaf: (props: ComponentPropsWithoutRef<typeof ListItem>) => {
     const api = useStorybookApi();
@@ -90,7 +91,14 @@ const Components = {
       },
       [id]
     );
-    return <ListItem onClick={onClick} {...props} />;
+
+    return (
+      <Location>
+        {({ viewMode }) => (
+          <ListItem onClick={onClick} {...props} href={`?path=/${viewMode}/${id}`} />
+        )}
+      </Location>
+    );
   },
   Branch: Tree,
   List: styled.div({}),
