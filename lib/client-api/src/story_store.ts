@@ -1,7 +1,5 @@
 /* eslint no-underscore-dangle: 0 */
-import EventEmitter from 'eventemitter3';
 import memoize from 'memoizerific';
-import debounce from 'lodash/debounce';
 import dedent from 'ts-dedent';
 import stable from 'stable';
 
@@ -9,12 +7,13 @@ import { Channel } from '@storybook/channels';
 import Events from '@storybook/core-events';
 import { logger } from '@storybook/client-logger';
 import {
+  StoryId,
+  ViewMode,
   Comparator,
   Parameters,
   Args,
   LegacyStoryFn,
   ArgsStoryFn,
-  StoryFn,
   StoryContext,
 } from '@storybook/addons';
 import {
@@ -33,8 +32,8 @@ import storySort from './storySort';
 import { combineParameters } from './parameters';
 
 interface Selection {
-  storyId: string;
-  viewMode: string;
+  storyId: StoryId;
+  viewMode: ViewMode;
 }
 
 interface StoryOptions {
@@ -54,6 +53,8 @@ const includeStory = (story: StoreItem, options: StoryOptions = { includeDocsOnl
   return !isStoryDocsOnly(story.parameters);
 };
 
+type AllowUnsafeOption = { allowUnsafe?: boolean };
+
 const toExtracted = <T>(obj: T) =>
   Object.entries(obj).reduce((acc, [key, value]) => {
     if (typeof value === 'function') {
@@ -68,10 +69,12 @@ const toExtracted = <T>(obj: T) =>
     return Object.assign(acc, { [key]: value });
   }, {});
 
-export default class StoryStore extends EventEmitter {
+export default class StoryStore {
   _error?: ErrorLike;
 
   _channel: Channel;
+
+  _configuring: boolean;
 
   _globalArgs: Args;
 
@@ -90,7 +93,8 @@ export default class StoryStore extends EventEmitter {
   _selection: Selection;
 
   constructor(params: { channel: Channel }) {
-    super();
+    // Assume we are configuring until we hear otherwise
+    this._configuring = true;
 
     this._globalArgs = {};
     this._globalMetadata = { parameters: {}, decorators: [] };
@@ -100,17 +104,57 @@ export default class StoryStore extends EventEmitter {
     this._revision = 0;
     this._selection = {} as any;
     this._error = undefined;
+    this._channel = params.channel;
 
-    if (params.channel) this.setChannel(params.channel);
+    this.setupListeners();
   }
 
-  setChannel = (channel: Channel) => {
-    this._channel = channel;
-    channel.on(Events.CHANGE_STORY_ARGS, (id: string, newArgs: Args) =>
+  setupListeners() {
+    // Channel can be null in StoryShots
+    if (!this._channel) return;
+
+    this._channel.on(Events.SET_CURRENT_STORY, ({ storyId, viewMode }) =>
+      this.setSelection({ storyId, viewMode })
+    );
+
+    this._channel.on(Events.CHANGE_STORY_ARGS, (id: string, newArgs: Args) =>
       this.setStoryArgs(id, newArgs)
     );
-    channel.on(Events.CHANGE_GLOBAL_ARGS, (newGlobals: Args) => this.setGlobalArgs(newGlobals));
-  };
+
+    this._channel.on(Events.CHANGE_GLOBAL_ARGS, (newGlobalArgs: Args) =>
+      this.setGlobalArgs(newGlobalArgs)
+    );
+  }
+
+  startConfiguring() {
+    this._configuring = true;
+  }
+
+  finishConfiguring() {
+    this._configuring = false;
+    this.pushToManager();
+    if (this._channel) this._channel.emit(Events.RENDER_CURRENT_STORY);
+
+    const storyIds = Object.keys(this._stories);
+    if (storyIds.length) {
+      const {
+        parameters: { globalArgs },
+      } = this.fromId(storyIds[0]);
+
+      // To deal with HMR, we consider the previous value of global args, and:
+      //   1. Remove any keys that are not in the new parameter
+      //   2. Preference any keys that were already set
+      //   3. Use any new keys from the new parameter
+      this._globalArgs = Object.entries(this._globalArgs || {}).reduce(
+        (acc, [key, previousValue]) => {
+          if (acc[key]) acc[key] = previousValue;
+
+          return acc;
+        },
+        globalArgs
+      );
+    }
+  }
 
   addGlobalMetadata({ parameters, decorators }: StoryMetadata) {
     const globalParameters = this._globalMetadata.parameters;
@@ -159,10 +203,16 @@ export default class StoryStore extends EventEmitter {
     }: AddStoryArgs,
     {
       applyDecorators,
+      allowUnsafe = false,
     }: {
-      applyDecorators: (fn: StoryFn, decorators: DecoratorFunction[]) => any;
-    }
+      applyDecorators: (fn: LegacyStoryFn, decorators: DecoratorFunction[]) => any;
+    } & AllowUnsafeOption
   ) {
+    if (!this._configuring && !allowUnsafe)
+      throw new Error(
+        'Cannot add a story when not configuring, see https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#story-store-immutable-outside-of-configuration'
+      );
+
     const { _stories } = this;
 
     if (_stories[id]) {
@@ -198,11 +248,15 @@ export default class StoryStore extends EventEmitter {
     );
 
     const parameters = this._parameterEnhancers.reduce(
-      (accumlatedParameters, enhancer) =>
-        combineParameters(
-          accumlatedParameters,
-          enhancer({ ...identification, parameters: accumlatedParameters, args: {} })
-        ),
+      (accumlatedParameters, enhancer) => ({
+        ...accumlatedParameters,
+        ...enhancer({
+          ...identification,
+          parameters: accumlatedParameters,
+          args: {},
+          globalArgs: {},
+        }),
+      }),
       parametersBeforeEnhancement
     );
 
@@ -214,11 +268,13 @@ export default class StoryStore extends EventEmitter {
     }
 
     // lazily decorate the story when it's loaded
-    const getDecorated: () => StoryFn = memoize(1)(() => applyDecorators(finalStoryFn, decorators));
+    const getDecorated: () => LegacyStoryFn = memoize(1)(() =>
+      applyDecorators(finalStoryFn, decorators)
+    );
 
     const hooks = new HooksContext();
 
-    const storyFn: StoryFn = (runtimeContext: StoryContext) =>
+    const storyFn: LegacyStoryFn = (runtimeContext: StoryContext) =>
       getDecorated()({
         ...identification,
         ...runtimeContext,
@@ -228,7 +284,7 @@ export default class StoryStore extends EventEmitter {
         globalArgs: this._globalArgs,
       });
 
-    // Pull out parameters.argTypes.$.defaultValue into initialArgs
+    // Pull out parameters.args.$ || .argTypes.$.defaultValue into initialArgs
     const initialArgs: Args = parameters.args || {};
     const defaultArgs: Args = parameters.argTypes
       ? Object.entries(parameters.argTypes as Record<string, { defaultValue: any }>).reduce(
@@ -251,12 +307,14 @@ export default class StoryStore extends EventEmitter {
       parameters,
       args: { ...defaultArgs, ...initialArgs },
     };
-
-    // LET'S SEND IT TO THE MANAGER
-    this.pushToManager();
   }
 
-  remove = (id: string): void => {
+  remove = (id: string, { allowUnsafe = false }: AllowUnsafeOption = {}): void => {
+    if (!this._configuring && !allowUnsafe)
+      throw new Error(
+        'Cannot remove a story when not configuring, see https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#story-store-immutable-outside-of-configuration'
+      );
+
     const { _stories } = this;
     const story = _stories[id];
     delete _stories[id];
@@ -264,7 +322,12 @@ export default class StoryStore extends EventEmitter {
     if (story) story.hooks.clean();
   };
 
-  removeStoryKind(kind: string) {
+  removeStoryKind(kind: string, { allowUnsafe = false }: AllowUnsafeOption = {}) {
+    if (!this._configuring && !allowUnsafe)
+      throw new Error(
+        'Cannot remove a kind when not configuring, see https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#story-store-immutable-outside-of-configuration'
+      );
+
     if (!this._kinds[kind]) return;
 
     this._kinds[kind].parameters = {};
@@ -276,7 +339,6 @@ export default class StoryStore extends EventEmitter {
 
       return acc;
     }, {});
-    this.pushToManager();
   }
 
   setGlobalArgs(newGlobalArgs: Args) {
@@ -289,10 +351,7 @@ export default class StoryStore extends EventEmitter {
     const { args } = this._stories[id];
     this._stories[id].args = { ...args, ...newArgs };
 
-    // TODO: Sort out what is going on with both the store and the channel being event emitters.
-    // It has something to do with React Native, but need to get to the bottom of it
     this._channel.emit(Events.STORY_ARGS_CHANGED, id, this._stories[id].args);
-    this.emit(Events.STORY_ARGS_CHANGED, id, this._stories[id].args);
   }
 
   fromId = (id: string): PublishedStoreItem | null => {
@@ -358,45 +417,43 @@ export default class StoryStore extends EventEmitter {
     );
   }
 
-  setSelection(data: Selection | undefined, error: ErrorLike): void {
-    this._selection =
-      data === undefined ? this._selection : { storyId: data.storyId, viewMode: data.viewMode };
-    this._error = error === undefined ? this._error : error;
+  clearError() {
+    this._error = null;
+  }
 
-    // Try and emit the STORY_RENDER event synchronously, but if the channel is not ready (RN),
-    // we'll try again later.
-    let isStarted = false;
+  setError = (err: ErrorLike) => {
+    this._error = err;
+    if (this._channel) this._channel.emit(Events.RENDER_CURRENT_STORY);
+  };
+
+  getError = (): ErrorLike | undefined => this._error;
+
+  setSelection(selection: Selection): void {
+    this._selection = selection;
+
     if (this._channel) {
-      this._channel.emit(Events.STORY_RENDER);
-      isStarted = true;
+      this._channel.emit(Events.CURRENT_STORY_WAS_SET, this._selection);
+
+      // If the selection is set while configuration is in process, we are guaranteed
+      // we'll emit RENDER_CURRENT_STORY at the end of the process, so we shouldn't do it now.
+      if (!this._configuring) this._channel.emit(Events.RENDER_CURRENT_STORY);
     }
-
-    setTimeout(() => {
-      if (this._channel && !isStarted) {
-        this._channel.emit(Events.STORY_RENDER);
-      }
-
-      // should be deprecated in future.
-      this.emit(Events.STORY_RENDER);
-    }, 1);
   }
 
   getSelection = (): Selection => this._selection;
-
-  getError = (): ErrorLike | undefined => this._error;
 
   getStoriesForManager = () => {
     return this.extract({ includeDocsOnly: true });
   };
 
-  pushToManager = debounce(() => {
+  pushToManager = () => {
     if (this._channel) {
       const stories = this.getStoriesForManager();
 
       // send to the parent frame.
       this._channel.emit(Events.SET_STORIES, { stories });
     }
-  }, 0);
+  };
 
   getStoryKinds() {
     return Array.from(new Set(this.raw().map(s => s.kind)));

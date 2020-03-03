@@ -74,8 +74,8 @@ const PANEL_ID = `${ADDON_ID}/panel`;
 
 const MyPanel = () => {
   const value = useParameter(PARAM_KEY, null);
-  
-  return <div>{value}</div>;
+  const item = value ? value.data : "";
+  return <div>{item}</div>;
 }
 
 addons.register(ADDON_ID, api => {

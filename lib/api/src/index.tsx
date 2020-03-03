@@ -11,9 +11,8 @@ import React, {
 } from 'react';
 
 import {
-  STORIES_CONFIGURED,
-  STORY_CHANGED,
   SET_STORIES,
+  STORY_CHANGED,
   SELECT_STORY,
   SHARED_STATE_CHANGED,
   SHARED_STATE_SET,
@@ -391,7 +390,7 @@ export function useSharedState<S>(stateId: string, defaultState?: S) {
       [`${SHARED_STATE_SET}-client-${stateId}`]: (s: S) => setState(s),
     };
     const stateInitializationHandlers = {
-      [STORIES_CONFIGURED]: () => {
+      [SET_STORIES]: () => {
         if (addonStateCache[stateId]) {
           // this happens when HMR
           setState(addonStateCache[stateId]);
@@ -436,7 +435,17 @@ export function useStoryState<S>(defaultState?: S) {
   return useSharedState<S>(`story-state-${storyId}`, defaultState);
 }
 
-export function useGlobalArgs(): [Args, (args: Args) => void] {
+export function useArgs() {
+  const {
+    api: { getCurrentStoryData, setStoryArgs },
+  } = useStorybookApi();
+
+  const { id, args } = getCurrentStoryData();
+
+  return [args, (newArgs: Args) => setStoryArgs(id, newArgs)];
+}
+
+export function useGlobalArgs() {
   const {
     state: { globalArgs },
     api: { setGlobalArgs },

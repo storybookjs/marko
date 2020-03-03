@@ -1,6 +1,8 @@
 import deprecate from 'util-deprecate';
 import dedent from 'ts-dedent';
 import { sanitize, parseKind } from '@storybook/csf';
+
+import { Args } from '../index';
 import merge from './merge';
 
 export type StoryId = string;
@@ -57,6 +59,7 @@ export interface Story {
     docsOnly?: boolean;
     [k: string]: any;
   };
+  args: Args;
 }
 
 export interface StoryInput {

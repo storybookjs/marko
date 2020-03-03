@@ -1,5 +1,6 @@
 import { DOCS_MODE } from 'global';
 import { toId, sanitize } from '@storybook/csf';
+import { CHANGE_STORY_ARGS, STORY_ARGS_CHANGED } from '@storybook/core-events';
 
 import {
   transformStoriesRawToStoriesHash,
@@ -11,7 +12,7 @@ import {
   isStory,
 } from '../lib/stories';
 
-import { Module } from '../index';
+import { Module, API, Args } from '../index';
 
 type Direction = -1 | 1;
 type ParameterName = string;
@@ -45,6 +46,8 @@ const initStoriesApi = ({
   storyId: initialStoryId,
   viewMode: initialViewMode,
 }: Module) => {
+  let fullApi: API;
+
   const getData = (storyId: StoryId) => {
     const { storiesHash } = store.getState();
 
@@ -233,6 +236,24 @@ const initStoriesApi = ({
     }
   };
 
+  const storyArgsChanged = (id: StoryId, args: Args) => {
+    const { storiesHash } = store.getState();
+    (storiesHash[id] as Story).args = args;
+    store.setState({ storiesHash });
+  };
+
+  const setStoryArgs = (id: StoryId, newArgs: Args) => {
+    if (!fullApi) throw new Error('Cannot set story args until api has been initialized');
+
+    fullApi.emit(CHANGE_STORY_ARGS, id, newArgs);
+  };
+
+  function init({ api: inputFullApi }: { api: API }) {
+    fullApi = inputFullApi;
+
+    fullApi.on(STORY_ARGS_CHANGED, (id: StoryId, args: Args) => storyArgsChanged(id, args));
+  }
+
   return {
     api: {
       storyId: toId,
@@ -244,6 +265,7 @@ const initStoriesApi = ({
       getData,
       getParameters,
       getCurrentParameter,
+      setStoryArgs,
     },
     state: {
       storiesHash: {},
@@ -251,6 +273,7 @@ const initStoriesApi = ({
       viewMode: initialViewMode,
       storiesConfigured: false,
     },
+    init,
   };
 };
 export default initStoriesApi;

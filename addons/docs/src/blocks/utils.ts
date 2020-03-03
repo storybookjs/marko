@@ -3,14 +3,14 @@ import { DocsContextProps } from './DocsContext';
 import { StoryData, Component } from './shared';
 
 export const getDocsStories = (context: DocsContextProps): StoryData[] => {
-  const { storyStore, selectedKind } = context;
+  const { storyStore, kind } = context;
 
   if (!storyStore) {
     return [];
   }
 
   return storyStore
-    .getStoriesForKind(selectedKind)
+    .getStoriesForKind(kind)
     .filter((s: any) => !(s.parameters && s.parameters.docs && s.parameters.docs.disable));
 };
 

@@ -12,10 +12,11 @@ function bootstrapADocumentAndReturnANode() {
 
 function makeSureThatResultIsRenderedSomehow({ context, result, rootElement }: any) {
   if (!rootElement.firstChild) {
+    const { kind, name } = context;
     riotForStorybook.render({
       storyFn: () => result,
-      selectedKind: context.kind,
-      selectedStory: context.name,
+      kind,
+      name,
     });
   }
 }
