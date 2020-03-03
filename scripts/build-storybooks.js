@@ -174,7 +174,7 @@ const run = async () => {
 
   if (
     deployables.length &&
-    (!!process.env.CIRCLE_NODE_INDEX ||
+    (process.env.CIRCLE_NODE_INDEX === undefined ||
       process.env.CIRCLE_NODE_INDEX === '0' ||
       process.env.CIRCLE_NODE_INDEX === 0)
   ) {
