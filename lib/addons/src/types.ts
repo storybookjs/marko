@@ -1,4 +1,3 @@
-import { Args } from '@storybook/api';
 import { HooksContext } from './hooks';
 import { Addon } from './index';
 
@@ -28,7 +27,11 @@ export interface Parameters {
   [key: string]: any;
 }
 
-export { Args };
+// This is duplicated in @storybook/api because there is no common place to put types (manager/preview)
+// We cannot import from @storybook/api here because it will lead to manager code (i.e. emotion) imported in the preview
+export interface Args {
+  [key: string]: any;
+}
 
 export interface StoryIdentifier {
   id: StoryId;
