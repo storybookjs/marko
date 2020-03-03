@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 
 const wrapper = {
   fontSize: '14px',
@@ -13,7 +13,7 @@ const main = {
   background: 'rgba(0,0,0,0.03)',
 };
 
-const heading = {
+const heading: CSSProperties = {
   textAlign: 'center',
 };
 
