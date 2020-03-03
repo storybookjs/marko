@@ -28,8 +28,6 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "rfdc": "^1.1.4",
-    "@types/rfdc": "^1.1.0",
     "@emotion/core": "^10.0.20",
     "@storybook/addons": "6.0.0-alpha.20",
     "@storybook/api": "6.0.0-alpha.20",
