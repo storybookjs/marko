@@ -58,7 +58,9 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
     if (story) {
       const {
         parameters: {
+          // @ts-ignore
           mdxSource = '',
+          // @ts-ignore
           storySource: { source, locationsMap } = { source: '', locationsMap: {} },
         } = {},
       } = story;

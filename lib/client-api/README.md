@@ -10,7 +10,7 @@ Each story is loaded via the `.add()` API and contains the follow attributes, wh
 - `name` - the name of the specific story.
 - `id` - an unique, URL sanitized identifier for the story, created from the `kind` and `name`.
 - `parameters` - static data about the story, see below.
-- `args` - dynamic inputs to the story, see blow.
+- `args` - dynamic inputs to the story, see below.
 - `hooks` - listeners that will rerun when the story changes or is unmounted, see `@storybook/addons`.
 
 ## Parameters

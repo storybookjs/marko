@@ -1,3 +1,4 @@
+// foo
 import createChannel from '@storybook/channel-postmessage';
 import { toId } from '@storybook/csf';
 import addons, { mockChannel } from '@storybook/addons';
