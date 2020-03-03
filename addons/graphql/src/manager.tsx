@@ -32,8 +32,5 @@ const GQL: FunctionComponent<GQLProps> = ({ active }) => {
     </Consumer>
   ) : null;
 };
-GQL.propTypes = {
-  active: PropTypes.bool.isRequired,
-};
 
 export default GQL;
