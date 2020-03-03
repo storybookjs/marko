@@ -141,20 +141,31 @@ For additional help, join us [in our Discord](https://discord.gg/sMFvFsG) or [Sl
 | [contexts](addons/contexts/)                | Interactively inject component contexts for stories in the Storybook UI    |
 | [cssresources](addons/cssresources/)        | Dynamically add/remove css resources to the component iframe               |
 | [design assets](addons/design-assets/)      | View images, videos, weblinks alongside your story                         |
+| [docs](addons/docs/)                        | Add high quality documentation to your components                          |
 | [events](addons/events/)                    | Interactively fire events to components that respond to EventEmitter       |
-| [graphql](addons/graphql/)                  | Query a GraphQL server within Storybook stories                            |
 | [google-analytics](addons/google-analytics) | Reports google analytics on stories                                        |
-| [info](addons/info/)                        | Annotate stories with extra component usage information                    |
+| [graphql](addons/graphql/)                  | Query a GraphQL server within Storybook stories                            |
 | [jest](addons/jest/)                        | View the results of components' unit tests in Storybook                    |
 | [knobs](addons/knobs/)                      | Interactively edit component prop data in the Storybook UI                 |
 | [links](addons/links/)                      | Create links between stories                                               |
-| [notes](addons/notes/)                      | Annotate Storybook stories with notes                                      |
 | [options](addons/options/)                  | Customize the Storybook UI in code                                         |
+| [query params](addons/queryparams/)         | Mock query params                                                          |
 | [storyshots](addons/storyshots/)            | Snapshot testing for components in Storybook                               |
 | [storysource](addons/storysource/)          | View the code of your stories within the Storybook UI                      |
 | [viewport](addons/viewport/)                | Change display sizes and layouts for responsive components using Storybook |
 
 See [Addon / Framework Support Table](ADDONS_SUPPORT.md)
+
+### Deprecated Addons
+
+| Addons                                      |                                                                            |
+| ------------------------------------------- | -------------------------------------------------------------------------- |
+| [info](https://github.com/storybookjs/storybook/tree/master/addons/info)                                        | Annotate stories with extra component usage information                    |
+| [notes](https://github.com/storybookjs/storybook/tree/master/addons/notes)                                       | Annotate Storybook stories with notes                                      |
+
+In order to continue improving your experience, we have to eventually deprecate certain addons in favor of new, better tools.
+
+If you're using info/notes, we highly recommend you to migrate to [docs](addons/docs/) instead, and [here is a guide](addons/docs/docs/recipes.md#migrating-from-notesinfo-addons) to help you.
 
 ## Badges & Presentation materials
 
