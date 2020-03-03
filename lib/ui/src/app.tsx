@@ -34,6 +34,8 @@ export interface AppProps {
 
 const App = React.memo<AppProps>(
   ({ viewMode, docsOnly, layout, panelCount, size: { width, height } }) => {
+    let content;
+
     const props = useMemo(
       () => ({
         Sidebar,
@@ -54,8 +56,6 @@ const App = React.memo<AppProps>(
       }),
       []
     );
-
-    let content;
 
     if (!width || !height) {
       content = (
