@@ -16,7 +16,7 @@ const GQL: FunctionComponent<GQLProps> = ({ active }) => {
   return active ? (
     <Consumer>
       {({ api, state }: Combo) => {
-        const story = state.storiesHash[state.storyId];
+        const story = api.getData(state.storyId);
         const parameters = story ? api.getParameters(story.id, PARAM_KEY) : null;
 
         if (parameters) {
