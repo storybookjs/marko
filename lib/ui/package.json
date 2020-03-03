@@ -38,6 +38,7 @@
     "@storybook/router": "6.0.0-alpha.20",
     "@storybook/theming": "6.0.0-alpha.20",
     "@types/markdown-to-jsx": "^6.9.1",
+    "@types/rfdc": "^1.1.0",
     "copy-to-clipboard": "^3.0.8",
     "core-js": "^3.0.1",
     "core-js-pure": "^3.0.1",
