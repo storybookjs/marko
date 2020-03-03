@@ -138,21 +138,16 @@ describe('preview.story_store', () => {
 
     it('setStoryArgs emits STORY_ARGS_CHANGED', () => {
       const onArgsChangedChannel = jest.fn();
-      const onArgsChangedStore = jest.fn();
       const testChannel = mockChannel();
       testChannel.on(Events.STORY_ARGS_CHANGED, onArgsChangedChannel);
 
       const store = new StoryStore({ channel: testChannel });
-      store.on(Events.STORY_ARGS_CHANGED, onArgsChangedStore);
-      addStoryToStore(store, 'a', '1', () => 0);
 
       store.setStoryArgs('a--1', { foo: 'bar' });
       expect(onArgsChangedChannel).toHaveBeenCalledWith('a--1', { foo: 'bar' });
-      expect(onArgsChangedStore).toHaveBeenCalledWith('a--1', { foo: 'bar' });
 
       store.setStoryArgs('a--1', { baz: 'bing' });
       expect(onArgsChangedChannel).toHaveBeenCalledWith('a--1', { foo: 'bar', baz: 'bing' });
-      expect(onArgsChangedStore).toHaveBeenCalledWith('a--1', { foo: 'bar', baz: 'bing' });
     });
 
     it('should update if the CHANGE_STORY_ARGS event is received', () => {
