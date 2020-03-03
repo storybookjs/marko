@@ -1,3 +1,4 @@
+// foo
 import createChannel from '@storybook/channel-postmessage';
 import { toId } from '@storybook/csf';
 import addons, { mockChannel } from '@storybook/addons';
@@ -142,6 +143,7 @@ describe('preview.story_store', () => {
       testChannel.on(Events.STORY_ARGS_CHANGED, onArgsChangedChannel);
 
       const store = new StoryStore({ channel: testChannel });
+      addStoryToStore(store, 'a', '1', () => 0);
 
       store.setStoryArgs('a--1', { foo: 'bar' });
       expect(onArgsChangedChannel).toHaveBeenCalledWith('a--1', { foo: 'bar' });
