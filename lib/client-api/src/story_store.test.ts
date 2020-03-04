@@ -137,10 +137,10 @@ describe('preview.story_store', () => {
       );
     });
 
-    it('updateStoryArgs emits STORY_ARGS_CHANGED', () => {
+    it('updateStoryArgs emits STORY_ARGS_UPDATED', () => {
       const onArgsChangedChannel = jest.fn();
       const testChannel = mockChannel();
-      testChannel.on(Events.STORY_ARGS_CHANGED, onArgsChangedChannel);
+      testChannel.on(Events.STORY_ARGS_UPDATED, onArgsChangedChannel);
 
       const store = new StoryStore({ channel: testChannel });
       addStoryToStore(store, 'a', '1', () => 0);
@@ -152,12 +152,12 @@ describe('preview.story_store', () => {
       expect(onArgsChangedChannel).toHaveBeenCalledWith('a--1', { foo: 'bar', baz: 'bing' });
     });
 
-    it('should update if the CHANGE_STORY_ARGS event is received', () => {
+    it('should update if the UPDATE_STORY_ARGS event is received', () => {
       const testChannel = mockChannel();
       const store = new StoryStore({ channel: testChannel });
       addStoryToStore(store, 'a', '1', () => 0);
 
-      testChannel.emit(Events.CHANGE_STORY_ARGS, 'a--1', { foo: 'bar' });
+      testChannel.emit(Events.UPDATE_STORY_ARGS, 'a--1', { foo: 'bar' });
 
       expect(store.getRawStory('a', '1').args).toEqual({ foo: 'bar' });
     });

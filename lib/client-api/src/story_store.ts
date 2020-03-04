@@ -112,7 +112,7 @@ export default class StoryStore {
       this.setSelection({ storyId, viewMode })
     );
 
-    this._channel.on(Events.CHANGE_STORY_ARGS, (id: string, newArgs: Args) =>
+    this._channel.on(Events.UPDATE_STORY_ARGS, (id: string, newArgs: Args) =>
       this.updateStoryArgs(id, newArgs)
     );
   }
@@ -439,7 +439,7 @@ export default class StoryStore {
     const { args } = this._stories[id];
     this._stories[id].args = { ...args, ...newArgs };
 
-    this._channel.emit(Events.STORY_ARGS_CHANGED, id, this._stories[id].args);
+    this._channel.emit(Events.STORY_ARGS_UPDATED, id, this._stories[id].args);
   }
 
   // This API is a reimplementation of Storybook's original getStorybook() API.

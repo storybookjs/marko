@@ -1,6 +1,6 @@
 import { DOCS_MODE } from 'global';
 import { toId, sanitize } from '@storybook/csf';
-import { CHANGE_STORY_ARGS, STORY_ARGS_CHANGED } from '@storybook/core-events';
+import { UPDATE_STORY_ARGS, STORY_ARGS_UPDATED } from '@storybook/core-events';
 
 import {
   transformStoriesRawToStoriesHash,
@@ -247,13 +247,13 @@ const initStoriesApi = ({
   const updateStoryArgs = (id: StoryId, newArgs: Args) => {
     if (!fullApi) throw new Error('Cannot set story args until api has been initialized');
 
-    fullApi.emit(CHANGE_STORY_ARGS, id, newArgs);
+    fullApi.emit(UPDATE_STORY_ARGS, id, newArgs);
   };
 
   function init({ api: inputFullApi }: { api: API }) {
     fullApi = inputFullApi;
 
-    fullApi.on(STORY_ARGS_CHANGED, (id: StoryId, args: Args) => storyArgsChanged(id, args));
+    fullApi.on(STORY_ARGS_UPDATED, (id: StoryId, args: Args) => storyArgsChanged(id, args));
   }
 
   return {
@@ -267,7 +267,7 @@ const initStoriesApi = ({
       getData,
       getParameters,
       getCurrentParameter,
-      setStoryArgs,
+      updateStoryArgs,
     },
     state: {
       storiesHash: {},
