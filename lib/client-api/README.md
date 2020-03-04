@@ -99,8 +99,8 @@ Both `@storybook/client-api` (preview) and `@storybook/api` (manager) export a `
 import { useArgs } from '@storybook/client-api'; // or '@storybook/api'
 
 // `args` is the args of the currently rendered story
-// `setArgs` will update its args. You can pass a subset of the args; other args will not be changed.
-const [args, setArgs] = useArgs();
+// `updateArgs` will update its args. You can pass a subset of the args; other args will not be changed.
+const [args, updateArgs] = useArgs();
 ```
 
 ## Global Args
