@@ -113,7 +113,7 @@ export default class StoryStore {
     );
 
     this._channel.on(Events.CHANGE_STORY_ARGS, (id: string, newArgs: Args) =>
-      this.setStoryArgs(id, newArgs)
+      this.updateStoryArgs(id, newArgs)
     );
   }
 
@@ -434,7 +434,7 @@ export default class StoryStore {
     this.getStoriesForKind(kind).map(story => this.cleanHooks(story.id));
   }
 
-  setStoryArgs(id: string, newArgs: Args) {
+  updateStoryArgs(id: string, newArgs: Args) {
     if (!this._stories[id]) throw new Error(`No story for id ${id}`);
     const { args } = this._stories[id];
     this._stories[id].args = { ...args, ...newArgs };

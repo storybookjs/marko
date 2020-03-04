@@ -244,7 +244,7 @@ const initStoriesApi = ({
     store.setState({ storiesHash });
   };
 
-  const setStoryArgs = (id: StoryId, newArgs: Args) => {
+  const updateStoryArgs = (id: StoryId, newArgs: Args) => {
     if (!fullApi) throw new Error('Cannot set story args until api has been initialized');
 
     fullApi.emit(CHANGE_STORY_ARGS, id, newArgs);

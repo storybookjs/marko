@@ -428,12 +428,12 @@ export function useStoryState<S>(defaultState?: S) {
   return useSharedState<S>(`story-state-${storyId}`, defaultState);
 }
 
-export function useArgs() {
+export function useArgs(): [Args, (newArgs: Args) => void] {
   const {
-    api: { getCurrentStoryData, setStoryArgs },
+    api: { getCurrentStoryData, updateStoryArgs },
   } = useStorybookApi();
 
   const { id, args } = getCurrentStoryData();
 
-  return [args, (newArgs: Args) => setStoryArgs(id, newArgs)];
+  return [args, (newArgs: Args) => updateStoryArgs(id, newArgs)];
 }
