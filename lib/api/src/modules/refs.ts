@@ -28,6 +28,7 @@ export interface SetRefData {
 }
 
 export interface SubAPI {
+  findRef: (source: string) => InceptionRef;
   setRef: (id: string, data: SetRefData, ready?: boolean) => void;
   getRefs: () => Refs;
   checkRef: (ref: InceptionRef) => Promise<void>;
@@ -113,6 +114,11 @@ const map = (input: StoriesRaw, ref: InceptionRef, options: { mapper?: Mapper })
 
 const initRefsApi = ({ store, provider }: Module) => {
   const api: SubAPI = {
+    findRef: source => {
+      const refs = api.getRefs();
+
+      return Object.values(refs).find(({ url }) => `${url}/iframe.html`.match(source));
+    },
     checkRef: async ref => {
       const { id, url } = ref;
 

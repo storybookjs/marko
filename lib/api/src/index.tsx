@@ -226,18 +226,12 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
 
         // if it's a ref, we need to map the incoming stories to a prefixed version, so it cannot conflict with others
         case 'external': {
-          const refs = api.getRefs();
-
-          // find the exact ref, get it's id & url
-          const [refId] = Object.entries(refs).find(([, { url }]) =>
-            `${url}/iframe.html`.match(source)
-          );
-
-          api.setRef(refId, data, true);
+          const ref = api.findRef(source);
+          api.setRef(ref.id, data, true);
           break;
         }
 
-        // if we couldn't find the source, something risky happened, we ignore the input, and lo a warning
+        // if we couldn't find the source, something risky happened, we ignore the input, and log a warning
         default: {
           logger.warn('received a SET_STORIES frame that was not configured as a ref');
           break;
@@ -263,12 +257,8 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
         }
 
         case 'external': {
-          const refs = api.getRefs();
-          const [refId] = Object.entries(refs).find(([, { url }]) =>
-            `${url}/iframe.html`.match(source)
-          );
-
-          api.selectStory(kind, story, { ...rest, ref: refId });
+          const ref = api.findRef(source);
+          api.selectStory(kind, story, { ...rest, ref: ref.id });
           break;
         }
         default: {
