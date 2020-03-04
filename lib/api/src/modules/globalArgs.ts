@@ -6,19 +6,19 @@ export interface SubState {
 }
 
 export interface SubAPI {
-  setGlobalArgs: (newGlobalArgs: Args) => void;
+  updateGlobalArgs: (newGlobalArgs: Args) => void;
 }
 
 const initGlobalArgsApi = ({ store }: Module) => {
   let fullApi: API;
-  const setGlobalArgs = (newGlobalArgs: Args) => {
+  const updateGlobalArgs = (newGlobalArgs: Args) => {
     if (!fullApi) throw new Error('Cannot set global args until api has been initialized');
 
     fullApi.emit(CHANGE_GLOBAL_ARGS, newGlobalArgs);
   };
 
   const api: SubAPI = {
-    setGlobalArgs,
+    updateGlobalArgs,
   };
 
   const state: SubState = {

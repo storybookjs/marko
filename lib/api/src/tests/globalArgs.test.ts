@@ -53,7 +53,7 @@ describe('stories API', () => {
     const fullApi = ({ emit: jest.fn(), on: jest.fn() } as unknown) as API;
     init({ api: fullApi });
 
-    api.setGlobalArgs({ a: 'b' });
+    api.updateGlobalArgs({ a: 'b' });
     expect(fullApi.emit).toHaveBeenCalledWith(CHANGE_GLOBAL_ARGS, { a: 'b' });
   });
 });

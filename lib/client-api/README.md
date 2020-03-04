@@ -118,5 +118,5 @@ Similar to args, global args are syncronized to the manager and can be accessed 
 ```js
 import { useGlobalArgs } from '@storybook/client-api'; // or '@storybook/api'
 
-const [globalArgs, setGlobalArgs] = useGlobalArgs();
+const [globalArgs, updateGlobalArgs] = useGlobalArgs();
 ```

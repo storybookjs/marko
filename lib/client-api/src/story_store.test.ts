@@ -249,15 +249,15 @@ describe('preview.story_store', () => {
       });
     });
 
-    it('setGlobalArgs changes the global args', () => {
+    it('updateGlobalArgs changes the global args', () => {
       const store = new StoryStore({ channel });
       addStoryToStore(store, 'a', '1', () => 0);
       expect(store.getRawStory('a', '1').globalArgs).toEqual({});
 
-      store.setGlobalArgs({ foo: 'bar' });
+      store.updateGlobalArgs({ foo: 'bar' });
       expect(store.getRawStory('a', '1').globalArgs).toEqual({ foo: 'bar' });
 
-      store.setGlobalArgs({ baz: 'bing' });
+      store.updateGlobalArgs({ baz: 'bing' });
       expect(store.getRawStory('a', '1').globalArgs).toEqual({ foo: 'bar', baz: 'bing' });
     });
 
@@ -265,7 +265,7 @@ describe('preview.story_store', () => {
       const storyFn = jest.fn();
       const store = new StoryStore({ channel });
 
-      store.setGlobalArgs({ foo: 'bar' });
+      store.updateGlobalArgs({ foo: 'bar' });
       addStoryToStore(store, 'a', '1', storyFn);
       store.getRawStory('a', '1').storyFn();
 
@@ -275,7 +275,7 @@ describe('preview.story_store', () => {
         })
       );
 
-      store.setGlobalArgs({ baz: 'bing' });
+      store.updateGlobalArgs({ baz: 'bing' });
       store.getRawStory('a', '1').storyFn();
 
       expect(storyFn).toHaveBeenCalledWith(
@@ -285,7 +285,7 @@ describe('preview.story_store', () => {
       );
     });
 
-    it('setGlobalArgs emits GLOBAL_ARGS_CHANGED', () => {
+    it('updateGlobalArgs emits GLOBAL_ARGS_CHANGED', () => {
       const onGlobalArgsChangedChannel = jest.fn();
       const testChannel = mockChannel();
       testChannel.on(Events.GLOBAL_ARGS_CHANGED, onGlobalArgsChangedChannel);
@@ -293,10 +293,10 @@ describe('preview.story_store', () => {
       const store = new StoryStore({ channel: testChannel });
       addStoryToStore(store, 'a', '1', () => 0);
 
-      store.setGlobalArgs({ foo: 'bar' });
+      store.updateGlobalArgs({ foo: 'bar' });
       expect(onGlobalArgsChangedChannel).toHaveBeenCalledWith({ foo: 'bar' });
 
-      store.setGlobalArgs({ baz: 'bing' });
+      store.updateGlobalArgs({ baz: 'bing' });
       expect(onGlobalArgsChangedChannel).toHaveBeenCalledWith({ foo: 'bar', baz: 'bing' });
     });
 
@@ -316,7 +316,7 @@ describe('preview.story_store', () => {
       const storyOne = jest.fn();
       addStoryToStore(store, 'a', '1', storyOne);
 
-      store.setGlobalArgs({ foo: 'bar' });
+      store.updateGlobalArgs({ foo: 'bar' });
 
       store.getRawStory('a', '1').storyFn();
       expect(storyOne).toHaveBeenCalledWith(

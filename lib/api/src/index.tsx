@@ -445,11 +445,11 @@ export function useArgs() {
   return [args, (newArgs: Args) => setStoryArgs(id, newArgs)];
 }
 
-export function useGlobalArgs() {
+export function useGlobalArgs(): [Args, (newGlobalArgs: Args) => void] {
   const {
     state: { globalArgs },
-    api: { setGlobalArgs },
+    api: { updateGlobalArgs },
   } = useContext(ManagerContext);
 
-  return [globalArgs, setGlobalArgs];
+  return [globalArgs, updateGlobalArgs];
 }

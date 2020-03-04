@@ -122,7 +122,7 @@ export default class StoryStore {
     );
 
     this._channel.on(Events.CHANGE_GLOBAL_ARGS, (newGlobalArgs: Args) =>
-      this.setGlobalArgs(newGlobalArgs)
+      this.updateGlobalArgs(newGlobalArgs)
     );
   }
 
@@ -341,12 +341,12 @@ export default class StoryStore {
     }, {});
   }
 
-  setGlobalArgs(newGlobalArgs: Args) {
+  updateGlobalArgs(newGlobalArgs: Args) {
     this._globalArgs = { ...this._globalArgs, ...newGlobalArgs };
     this._channel.emit(Events.GLOBAL_ARGS_CHANGED, this._globalArgs);
   }
 
-  setStoryArgs(id: string, newArgs: Args) {
+  updateStoryArgs(id: string, newArgs: Args) {
     if (!this._stories[id]) throw new Error(`No story for id ${id}`);
     const { args } = this._stories[id];
     this._stories[id].args = { ...args, ...newArgs };
