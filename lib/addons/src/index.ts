@@ -4,6 +4,7 @@ import { Channel } from '@storybook/channels';
 import { API } from '@storybook/api';
 import { RenderData as RouterData } from '@storybook/router';
 import { logger } from '@storybook/client-logger';
+import { ThemeVars } from '@storybook/theming';
 import { types, Types } from './types';
 
 export { Channel };
@@ -38,6 +39,7 @@ interface Elements {
 }
 
 interface Config {
+  theme?: ThemeVars;
   [key: string]: any;
 }
 
