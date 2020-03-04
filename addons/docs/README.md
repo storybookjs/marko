@@ -164,7 +164,7 @@ The `configureJSX` option is useful when you're writing your docs in MDX and you
 
 ## Manual configuration
 
-If you don't want to use the preset, and prefer to configure "the long way" add the following configuration to `.storybook/main.js` (see comments inline for explanation):
+We recommend using the preset, which should work out of the box. If you don't want to use the preset, and prefer to configure "the long way" add the following configuration to `.storybook/main.js` (see comments inline for explanation):
 
 ```js
 const createCompiler = require('@storybook/addon-docs/mdx-compiler-plugin');
@@ -208,7 +208,7 @@ module.exports = {
 };
 ```
 
-Finally, you'll need to set up DocsPage in `.storybook/preview.js`:
+You'll also need to set up the docs parameter in `.storybook/preview.js`. This includes the `DocsPage` for rendering the page, a container, and various configuration options, such as `extractComponentDescription` for manually extracting a component description:
 
 ```js
 import { addParameters } from '@storybook/react';
