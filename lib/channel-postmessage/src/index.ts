@@ -1,4 +1,4 @@
-import { window, document } from 'global';
+import { window, document, location } from 'global';
 import Channel, { ChannelEvent, ChannelHandler } from '@storybook/channels';
 import { logger } from '@storybook/client-logger';
 
@@ -107,9 +107,11 @@ export class PostmsgTransport {
 
   private getFrames(target?: string): Window[] {
     if (this.config.page === 'manager') {
-      const list: HTMLIFrameElement[] = [
+      const nodes: HTMLIFrameElement[] = [
         ...document.querySelectorAll('#storybook-preview-wrapper iframe'),
-      ]
+      ];
+      
+      const list = nodes
         .filter(e => {
           try {
             return !!e.contentWindow && e.dataset.isStorybook !== undefined && e.id === target;
