@@ -134,7 +134,9 @@ const Preview: FunctionComponent<PreviewProps> = props => {
       api.emit(SET_CURRENT_STORY, {
         storyId: story.knownAs || story.id,
         viewMode,
-        options: { target: story.refId },
+        options: {
+          target: story.refId ? `storybook-ref-${story.refId}` : 'storybook-preview-iframe',
+        },
       });
     }
   }, [story, viewMode]);

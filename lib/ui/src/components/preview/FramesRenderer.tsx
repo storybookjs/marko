@@ -22,16 +22,22 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
         (acc, r) => ({
           ...acc,
           [`#storybook-ref-${r.id}`]: {
-            visibility: active === `storybook-ref-${r.id}` ? 'visible' : 'hidden',
+            visibility: 'hidden',
+          },
+          [`span + #storybook-ref-${r.id}`]: {
+            visibility: 'visible',
           },
         }),
         {} as CSSObject
       ),
       '#storybook-preview-iframe': {
-        visibility: active === 'storybook-preview-iframe' ? 'visible' : 'hidden',
+        visibility: 'hidden',
+      },
+      'span + #storybook-preview-iframe': {
+        visibility: 'visible',
       },
     };
-  }, [storyId, story, refs]);
+  }, [refs]);
 
   const [frames, setFrames] = useState<Record<string, string>>({
     'storybook-preview-iframe': `iframe.html?id=${storyId}&viewMode=${viewMode}${stringifiedQueryParams}`,
@@ -67,7 +73,10 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
     <Fragment>
       <Global styles={styles} />
       {Object.entries(frames).map(([id, src]) => (
-        <IFrame key={id} id={id} title={id} src={src} allowFullScreen scale={scale} />
+        <Fragment key={id}>
+          {id === active ? <span key={`${id}-indicator`} /> : null}
+          <IFrame key={id} id={id} title={id} src={src} allowFullScreen scale={scale} />
+        </Fragment>
       ))}
     </Fragment>
   );

@@ -107,20 +107,33 @@ export class PostmsgTransport {
 
   private getFrames(target?: string): Window[] {
     if (this.config.page === 'manager') {
-      const list: HTMLIFrameElement[] = [...document.getElementsByTagName('iframe')];
-      return list
+      const list: HTMLIFrameElement[] = [
+        ...document.querySelectorAll('#storybook-preview-wrapper iframe'),
+      ]
         .filter(e => {
           try {
-            return (
-              !!e.contentWindow &&
-              e.dataset.isStorybook !== undefined &&
-              (e.id === `storybook-ref-${target}` || !target)
-            );
+            return !!e.contentWindow && e.dataset.isStorybook !== undefined && e.id === target;
           } catch (er) {
             return false;
           }
         })
         .map(e => e.contentWindow);
+
+      return list.length ? list : this.getCurrentFrame();
+    }
+    if (window && window.parent) {
+      return [window.parent];
+    }
+
+    return [];
+  }
+
+  private getCurrentFrame(): Window[] {
+    if (this.config.page === 'manager') {
+      const list: HTMLIFrameElement[] = [
+        ...document.querySelectorAll('#storybook-preview-wrapper span + iframe'),
+      ];
+      return list.map(e => e.contentWindow);
     }
     if (window && window.parent) {
       return [window.parent];
@@ -136,7 +149,7 @@ export class PostmsgTransport {
       if (key === KEY) {
         event.source = source || getEventSourceUrl(rawEvent);
         logger.debug(
-          `message arrived at ${this.config.page} from ${event.source}`,
+          `message arrived at ${this.config.page} on ${location.origin} from ${event.source}`,
           event.type,
           ...event.args
         );
