@@ -5,7 +5,7 @@ import {
   STORY_RENDERED,
   DOCS_RENDERED,
   CHANGE_STORY_ARGS,
-  CHANGE_GLOBAL_ARGS,
+  UPDATE_GLOBAL_ARGS,
 } from '@storybook/core-events';
 import { addons } from './index';
 import { StoryGetter, StoryContext, Args } from './types';
@@ -435,7 +435,7 @@ export function useGlobalArgs(): [Args, (newGlobalArgs: Args) => void] {
   const { globalArgs } = useStoryContext();
 
   const updateGlobalArgs = useCallback(
-    (newGlobalArgs: Args) => channel.emit(CHANGE_GLOBAL_ARGS, newGlobalArgs),
+    (newGlobalArgs: Args) => channel.emit(UPDATE_GLOBAL_ARGS, newGlobalArgs),
     [channel]
   );
 

@@ -121,7 +121,7 @@ export default class StoryStore {
       this.setStoryArgs(id, newArgs)
     );
 
-    this._channel.on(Events.CHANGE_GLOBAL_ARGS, (newGlobalArgs: Args) =>
+    this._channel.on(Events.UPDATE_GLOBAL_ARGS, (newGlobalArgs: Args) =>
       this.updateGlobalArgs(newGlobalArgs)
     );
   }
@@ -343,7 +343,7 @@ export default class StoryStore {
 
   updateGlobalArgs(newGlobalArgs: Args) {
     this._globalArgs = { ...this._globalArgs, ...newGlobalArgs };
-    this._channel.emit(Events.GLOBAL_ARGS_CHANGED, this._globalArgs);
+    this._channel.emit(Events.GLOBAL_ARGS_UPDATED, this._globalArgs);
   }
 
   updateStoryArgs(id: string, newArgs: Args) {

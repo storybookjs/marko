@@ -60,7 +60,7 @@ addons.addPanel('useAddonState', {
 });
 
 const GlobalArgsPanel = ({ active, key }) => {
-  const [globalArgs, setGlobalArgs] = useGlobalArgs();
+  const [globalArgs, updateGlobalArgs] = useGlobalArgs();
   const [globalArgsInput, updateGlobalArgsInput] = useState(JSON.stringify(globalArgs));
   return (
     <AddonPanel key={key} active={active}>
@@ -70,7 +70,7 @@ const GlobalArgsPanel = ({ active, key }) => {
         <form
           onSubmit={e => {
             e.preventDefault();
-            setGlobalArgs(JSON.parse(globalArgsInput));
+            updateGlobalArgs(JSON.parse(globalArgsInput));
           }}
         >
           <textarea value={globalArgsInput} onChange={e => updateGlobalArgsInput(e.target.value)} />

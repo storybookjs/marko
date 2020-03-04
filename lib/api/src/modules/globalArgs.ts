@@ -1,4 +1,4 @@
-import { CHANGE_GLOBAL_ARGS, GLOBAL_ARGS_CHANGED } from '@storybook/core-events';
+import { UPDATE_GLOBAL_ARGS, GLOBAL_ARGS_UPDATED } from '@storybook/core-events';
 import { Args, Module, API } from '../index';
 
 export interface SubState {
@@ -14,7 +14,7 @@ const initGlobalArgsApi = ({ store }: Module) => {
   const updateGlobalArgs = (newGlobalArgs: Args) => {
     if (!fullApi) throw new Error('Cannot set global args until api has been initialized');
 
-    fullApi.emit(CHANGE_GLOBAL_ARGS, newGlobalArgs);
+    fullApi.emit(UPDATE_GLOBAL_ARGS, newGlobalArgs);
   };
 
   const api: SubAPI = {
@@ -28,7 +28,7 @@ const initGlobalArgsApi = ({ store }: Module) => {
 
   const init = ({ api: inputApi }: { api: API }) => {
     fullApi = inputApi;
-    fullApi.on(GLOBAL_ARGS_CHANGED, (globalArgs: Args) => store.setState({ globalArgs }));
+    fullApi.on(GLOBAL_ARGS_UPDATED, (globalArgs: Args) => store.setState({ globalArgs }));
   };
 
   return {
