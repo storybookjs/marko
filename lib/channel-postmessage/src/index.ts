@@ -110,7 +110,7 @@ export class PostmsgTransport {
       const nodes: HTMLIFrameElement[] = [
         ...document.querySelectorAll('#storybook-preview-wrapper iframe'),
       ];
-      
+
       const list = nodes
         .filter(e => {
           try {
