@@ -191,9 +191,10 @@ const fuse = memoize(5)(
     })
 );
 
-const exactMatch = memoize(1)((filter: string) => (i: Item) => {
+const exactMatch = (filter: string) => {
   const reg = new RegExp(filter, 'i');
-  return (
+
+  return (i: Item) =>
     i.isLeaf &&
     ((isStory(i) && reg.test(i.kind)) ||
       (i.name && reg.test(i.name)) ||
@@ -202,9 +203,8 @@ const exactMatch = memoize(1)((filter: string) => (i: Item) => {
         reg.test(i.parameters.fileName.toString())) ||
       (i.parameters &&
         typeof i.parameters.notes === 'string' &&
-        reg.test(i.parameters.notes.toString())))
-  );
-});
+        reg.test(i.parameters.notes.toString())));
+};
 
 export const toId = (base: string, addition: string) =>
   base === '' ? `${addition}` : `${base}-${addition}`;
@@ -218,7 +218,8 @@ export const toFiltered = (dataset: Dataset, filter: string) => {
   if (filter.length && filter.length > 2) {
     found = fuse(dataset).search(filter);
   } else {
-    found = toList(dataset).filter(exactMatch(filter));
+    const matcher = exactMatch(filter);
+    found = toList(dataset).filter(matcher);
   }
 
   // get all parents for all results
