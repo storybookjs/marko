@@ -21,7 +21,7 @@ const Links = styled.div(({ theme }) => ({
 
 const Message = styled.div(({ theme }) => ({
   color: theme.textColor,
-  lineHeight: 18,
+  lineHeight: '18px',
 }));
 
 const MessageWrapper = styled.div({
