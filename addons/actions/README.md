@@ -53,6 +53,8 @@ export default {
 export const defaultView = ({ onClick }) => <Button onClick={onClick}>Hello World!</Button>;
 ```
 
+> **NOTE:** If you're generating `argTypes` in using another addon (like Docs, which is the common behavior) you'll need to make sure that the actions addon loads **AFTER** the other addon. You can do this by listing it later in the `addons` registration code in `.storybook/main.js`.
+
 ## Manually-specified actions
 
 Import the `action` function and use it to create actions handlers. When creating action handlers, provide a **name** to make it easier to identify.
