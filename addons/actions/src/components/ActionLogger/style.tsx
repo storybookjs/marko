@@ -8,6 +8,7 @@ export const Action = styled.div({
   borderBottom: '1px solid transparent',
   transition: 'all 0.1s',
   alignItems: 'flex-start',
+  whiteSpace: 'pre',
 });
 
 export const Counter = styled.div<{}>(({ theme }) => ({
