@@ -176,12 +176,7 @@ class Mobile extends Component<MobileProps, MobileState> {
           <Sidebar />
           <div>
             <div hidden={!viewMode}>
-              <Preview
-                isToolshown={options.isToolshown}
-                id="main"
-                viewMode={viewMode}
-                debug={options}
-              />
+              <Preview isToolshown={options.isToolshown} id="main" viewMode={viewMode} />
             </div>
             {pages.map(({ key, route: Route, render: Content }) => (
               <Route key={key}>

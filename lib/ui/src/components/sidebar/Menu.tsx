@@ -10,26 +10,20 @@ type MenuButtonProps = ComponentProps<typeof Button> &
     highlighted: boolean;
   };
 
-const sharedStyles = css`
-  height: 10px;
-  width: 10px;
-  margin-left: -5px;
-  margin-right: -5px;
-  display: block;
-`;
+const sharedStyles = {
+  height: 10,
+  width: 10,
+  marginLeft: -5,
+  marginRight: -5,
+  display: 'block',
+};
 
-const Icon = styled(Icons)`
-  ${sharedStyles};
-  color: ${props => props.theme.color.secondary};
-`;
+const Icon = styled(Icons)(sharedStyles, ({ theme }) => ({
+  color: theme.color.secondary,
+}));
 
-const Img = styled.img`
-  ${sharedStyles};
-`;
-
-const Placeholder = styled.div`
-  ${sharedStyles};
-`;
+const Img = styled.img(sharedStyles);
+const Placeholder = styled.div(sharedStyles);
 
 export interface ListItemIconProps {
   icon?: ComponentProps<typeof Icons>['icon'];

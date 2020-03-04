@@ -58,11 +58,11 @@ const Desktop = React.memo<DesktopProps>(
               </S.Sidebar>
               <S.Main {...mainProps} isFullscreen={!!mainProps.isFullscreen}>
                 <S.Preview {...previewProps} hidden={viewMode === 'settings'}>
-                  <Preview id="main" debug={previewProps} />
+                  <Preview id="main" />
                 </S.Preview>
 
                 <S.Panel {...panelProps} hidden={viewMode !== 'story' || docsOnly}>
-                  <Panel debug={panelProps} />
+                  <Panel />
                 </S.Panel>
 
                 {pages.map(({ key, route: Route, render: Content }) => (
