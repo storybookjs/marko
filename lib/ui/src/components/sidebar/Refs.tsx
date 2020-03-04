@@ -148,7 +148,7 @@ const getDescription = (ref: RefType) => {
               You can switch to other versions:
               <ul>
                 {ref.versions.map(v => (
-                  <li>v</li>
+                  <li key={v}>v</li>
                 ))}
               </ul>
             </div>
