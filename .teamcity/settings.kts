@@ -727,7 +727,7 @@ object Test : BuildType({
                 yarn add -D jest-teamcity
                 cd ..
                 
-                yarn jest --coverage -w 2 --testResultsProcessor=${'$'}PWD/temp-jest-teamcity/node_modules/jest-teamcity
+                yarn jest --coverage -w 2 --reporters=${'$'}PWD/temp-jest-teamcity/node_modules/jest-teamcity
             """.trimIndent()
             dockerImage = "node:10"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
