@@ -27,8 +27,8 @@ const Handle = styled.div<{ isDragging: boolean; axis: 'x' | 'y'; shadow: 'top' 
     axis === 'x'
       ? {
           height: '100%',
-          width: theme.layoutMargin,
-          marginLeft: 0,
+          width: theme.layoutMargin / 2,
+          marginLeft: 5,
         }
       : {
           height: theme.layoutMargin,
