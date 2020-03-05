@@ -19,7 +19,7 @@ const Expander = styled.span<ExpanderProps>(
     height: 0,
     borderTop: '3.5px solid transparent',
     borderBottom: '3.5px solid transparent',
-    borderLeft: `3.5px solid ${opacify(0.2, theme.appBorderColor)}`,
+    borderLeft: `3.5px solid ${theme.base === 'dark' ? theme.color.lighter : theme.color.medium}`,
     transition: 'transform .1s ease-out',
     marginLeft: depth * 15 + 9,
   }),
@@ -61,7 +61,8 @@ const Icon = styled(Icons)<IconProps>(
 
     return {};
   },
-  ({ isSelected = false }) => (isSelected ? { color: 'inherit' } : {})
+  ({ isSelected = false, theme }) =>
+    isSelected ? { color: 'inherit', fontWeight: theme.typography.weight.bold } : {}
 );
 
 export const Item = styled.a<{

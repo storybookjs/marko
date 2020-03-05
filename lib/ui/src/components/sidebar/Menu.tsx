@@ -41,7 +41,9 @@ export const MenuItemIcon = ({ icon, imgSrc }: ListItemIconProps) => {
 };
 
 const MenuButton = styled(Button)<MenuButtonProps>(({ highlighted, theme }) => ({
-  position: 'relative',
+  position: 'absolute',
+  right: 0,
+  top: 0,
   overflow: 'visible',
   padding: 7,
 

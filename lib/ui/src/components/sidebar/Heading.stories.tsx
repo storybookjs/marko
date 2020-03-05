@@ -1,11 +1,11 @@
 import React from 'react';
-import { themes, ThemeProvider, convert } from '@storybook/theming';
+import { themes, ThemeProvider, ensure } from '@storybook/theming';
 import { action } from '@storybook/addon-actions';
 
 import { Heading } from './Heading';
 
 const { light } = themes;
-const theme = convert(light);
+const theme = ensure(light);
 
 export default {
   component: Heading,

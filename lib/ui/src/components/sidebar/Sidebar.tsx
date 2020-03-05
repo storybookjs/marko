@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useMemo, useState, useCallback, Fragment } from 'react';
 
 import { styled } from '@storybook/theming';
-import { ScrollArea, Placeholder } from '@storybook/components';
+import { ScrollArea, Placeholder, Spaced } from '@storybook/components';
 import { StoriesHash, State } from '@storybook/api';
 
 import { Heading } from './Heading';
@@ -30,6 +30,7 @@ const CustomScrollArea = styled(ScrollArea)({
   '.simplebar-track.simplebar-vertical': {
     right: 4,
   },
+  padding: 20,
 });
 
 export interface SidebarProps {
@@ -90,24 +91,26 @@ const Sidebar: FunctionComponent<SidebarProps> = ({
   return (
     <Container className="container sidebar-container">
       <CustomScrollArea vertical>
-        <Heading className="sidebar-header" menuHighlighted={menuHighlighted} menu={menu} />
+        <Spaced row={2}>
+          <Heading className="sidebar-header" menuHighlighted={menuHighlighted} menu={menu} />
 
-        <Search key="filter" onChange={setFilter} />
+          <Search key="filter" onChange={setFilter} />
 
-        {resultLess ? <Placeholder>This filter resulted in 0 results</Placeholder> : null}
+          {resultLess ? <Placeholder>This filter resulted in 0 results</Placeholder> : null}
 
-        <Fragment>
-          {combined.map(([k, v], index) => {
-            const prev = list[index - 1];
+          <Fragment>
+            {combined.map(([k, v], index) => {
+              const isHidden = filter && !list[index];
 
-            return (
-              <Fragment key={k}>
-                {index === 0 || (filter && prev === 0) ? null : <Hr />}
-                <Ref {...v} storyId={storyId} filter={filter} isHidden={filter && !list[index]} />
-              </Fragment>
-            );
-          })}
-        </Fragment>
+              return (
+                <Fragment key={k}>
+                  {index === 0 || isHidden ? null : <Hr />}
+                  <Ref {...v} storyId={storyId} filter={filter} isHidden={isHidden} />
+                </Fragment>
+              );
+            })}
+          </Fragment>
+        </Spaced>
       </CustomScrollArea>
     </Container>
   );

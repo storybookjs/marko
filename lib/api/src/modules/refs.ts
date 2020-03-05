@@ -17,7 +17,7 @@ export interface SubState {
   refs: Refs;
 }
 
-type Versions = string[];
+type Versions = Record<string, string>;
 
 export interface SetRefData {
   stories?: StoriesRaw;

@@ -13,13 +13,11 @@ export interface HeadingProps {
 const BrandArea = styled.div(({ theme }) => ({
   fontSize: theme.typography.size.s2,
   fontWeight: theme.typography.weight.bold,
-  marginRight: theme.layoutMargin,
+  marginRight: 40,
   display: 'flex',
   width: '100%',
   alignItems: 'center',
-  paddingTop: 3,
-  paddingBottom: 3,
-  minHeight: 28,
+  minHeight: 22,
 
   '& > *': {
     maxWidth: '100%',
@@ -33,7 +31,7 @@ const HeadingWrapper = styled.div({
   display: 'flex',
   alignItems: 'flex-start',
   justifyContent: 'space-between',
-  padding: '20px 20px 12px',
+  position: 'relative',
 });
 
 export const Heading: FunctionComponent<HeadingProps> = ({

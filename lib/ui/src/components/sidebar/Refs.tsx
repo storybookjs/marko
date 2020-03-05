@@ -11,7 +11,7 @@ import React, {
 import { transparentize } from 'polished';
 
 import { StoriesHash, State, useStorybookApi, isRoot } from '@storybook/api';
-import { Icons, WithTooltip, TooltipMessage } from '@storybook/components';
+import { Icons, WithTooltip, TooltipMessage, Spaced } from '@storybook/components';
 import { Location } from '@storybook/router';
 import { styled } from '@storybook/theming';
 
@@ -41,7 +41,7 @@ const RootHeading = styled.div(({ theme }) => ({
   fontWeight: theme.typography.weight.black,
   fontSize: theme.typography.size.s1 - 1,
   lineHeight: '24px',
-  color: transparentize(0.5, theme.color.defaultText),
+  color: theme.color.mediumdark,
   margin: '0 20px',
 }));
 RootHeading.defaultProps = {
@@ -49,8 +49,17 @@ RootHeading.defaultProps = {
 };
 
 const RefHead = styled.div(({ theme }) => ({
-  padding: theme.layoutMargin,
+  fontWeight: theme.typography.weight.bold,
+  fontSize: theme.typography.size.s2,
+  color: theme.color.darkest,
+  textTransform: 'capitalize',
+
+  lineHeight: '16px',
+  paddingTop: 4,
+  paddingBottom: 4,
+
   paddingLeft: theme.layoutMargin * 2,
+  paddingRight: theme.layoutMargin * 2,
 }));
 
 const ExpanderContext = React.createContext<{
@@ -104,13 +113,18 @@ const Components = {
   List: styled.div({}),
 };
 
-const ProblemPlacement = styled.div({
-  position: 'absolute',
-  top: 0,
-  right: 10,
-  width: 20,
-  height: 20,
-});
+const ProblemPlacement = styled.div(
+  {
+    position: 'absolute',
+    top: 0,
+    right: 20,
+    width: 14,
+    height: 14,
+  },
+  ({ theme }) => ({
+    color: theme.color.mediumdark,
+  })
+);
 
 const getTitle = (ref: RefType) => {
   switch (true) {
@@ -147,8 +161,8 @@ const getDescription = (ref: RefType) => {
             <div>
               You can switch to other versions:
               <ul>
-                {ref.versions.map(v => (
-                  <li key={v}>v</li>
+                {Object.entries(ref.versions).map(([k, v]) => (
+                  <li key={k}>{v}</li>
                 ))}
               </ul>
             </div>
@@ -161,16 +175,10 @@ const getDescription = (ref: RefType) => {
 const getIcon = (ref: RefType) => {
   switch (true) {
     case !!ref.error: {
-      return <Icons width="20" height="20" icon="alert" />;
-    }
-    case !!ref.startInjected: {
-      return <Icons width="20" height="20" icon="info" />;
-    }
-    case !ref.stories || !Object.keys(ref.stories).length: {
-      return <Icons width="20" height="20" icon="sync" />;
+      return <Icons width="14" height="14" icon="alert" />;
     }
     default: {
-      return <Icons width="20" height="20" icon="ellipsis" />;
+      return <Icons width="14" height="14" icon="globe" />;
     }
   }
 };
@@ -215,6 +223,8 @@ const RefIndicator: FunctionComponent<RefType> = ref => {
 
 const Wrapper = styled.div({
   position: 'relative',
+  marginLeft: -20,
+  marginRight: -20,
 });
 
 export const Ref: FunctionComponent<RefType & RefProps> = ref => {
@@ -236,7 +246,7 @@ export const Ref: FunctionComponent<RefType & RefProps> = ref => {
   const isMain = key === 'storybook_internal';
 
   return (
-    <Wrapper>
+    <Wrapper title={title}>
       {!isMain ? <RefIndicator {...ref} /> : null}
       <ExpanderContext.Provider value={combo}>
         {!isMain ? <RefHead>{title}</RefHead> : null}
@@ -244,9 +254,9 @@ export const Ref: FunctionComponent<RefType & RefProps> = ref => {
           {isLoading ? (
             <Loader size={isMain ? 'multiple' : 'single'} />
           ) : (
-            <Fragment>
+            <Spaced row={1.5}>
               {others.length ? (
-                <Section key="other">
+                <Section title="categorized" key="categorized">
                   {others.map(({ id }) => (
                     <Tree
                       key={id}
@@ -262,7 +272,7 @@ export const Ref: FunctionComponent<RefType & RefProps> = ref => {
               ) : null}
 
               {roots.map(({ id, name, children }) => (
-                <Section key={id}>
+                <Section title={name} key={id}>
                   <RootHeading>{name}</RootHeading>
                   {children.map(child => (
                     <Tree
@@ -277,7 +287,7 @@ export const Ref: FunctionComponent<RefType & RefProps> = ref => {
                   ))}
                 </Section>
               ))}
-            </Fragment>
+            </Spaced>
           )}
         </Fragment>
       </ExpanderContext.Provider>

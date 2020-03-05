@@ -6,7 +6,7 @@ import { Icons } from '@storybook/components';
 export type FilterFieldProps = ComponentProps<'input'>;
 
 export type CancelButtonProps = ComponentProps<'button'>;
-export type PureSidebarSearchProps = Omit<FilterFieldProps, 'onChange'> & {
+export type SearchProps = Omit<FilterFieldProps, 'onChange'> & {
   onChange: (arg: string) => void;
   defaultFocussed?: boolean;
 };
@@ -19,10 +19,9 @@ const FilterField = styled.input<FilterFieldProps>(({ theme }) => ({
   appearance: 'none',
   border: 'none',
   boxSizing: 'inherit',
-  display: ' block',
+  display: 'block',
   outline: 'none',
-  width: ' 100%',
-  margin: ' 0',
+  width: '100%',
   background: 'transparent',
   padding: 0,
   fontSize: 'inherit',
@@ -77,6 +76,7 @@ const FilterForm = styled.form<FilterFormProps>(({ theme, focussed }) => ({
     : opacify(0.1, theme.appBorderColor),
   outline: 0,
   position: 'relative',
+  color: theme.input.color,
 
   input: {
     color: theme.input.color,
@@ -107,7 +107,7 @@ const FilterForm = styled.form<FilterFormProps>(({ theme, focussed }) => ({
   },
 }));
 
-const PureSidebarSearch: FunctionComponent<PureSidebarSearchProps> = ({
+export const Search: FunctionComponent<SearchProps> = ({
   className,
   onChange,
   defaultFocussed = false,
@@ -143,7 +143,3 @@ const PureSidebarSearch: FunctionComponent<PureSidebarSearchProps> = ({
     </FilterForm>
   );
 };
-
-export const Search = styled(PureSidebarSearch)<PureSidebarSearchProps>({
-  margin: '0 20px 1rem',
-});
