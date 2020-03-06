@@ -97,7 +97,24 @@ In earlier versions, we recommended `react-docgen-typescript-loader` (`RDTL`) an
 
 As a consequence we've removed `RDTL` from the presets, which is a breaking change. We made this change because `react-docgen` now supports TypeScript natively, and fewer dependencies simplifies things for everybody.
 
-We will be updating this section with migration information as we collect information from our users.
+We will be updating this section with migration information as we collect information from our users.In the meantime, if you need to manually configure your setup to add back `react-docgen-typescript-loader`, add the following to your `.storybook/main.js`:
+
+```js
+module.exports = {
+  webpack: async (config, { configType }) => ({
+    ...config,
+    module: {
+      ...config.module,
+      rules: [
+        ...config.module.rules,
+        {
+          loader: require.resolve('react-docgen-typescript-loader'),
+          options: {}, // your options here
+        },
+    }
+  }
+}
+```
 
 ### New addon presets
 
