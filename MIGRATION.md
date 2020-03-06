@@ -1,6 +1,7 @@
 <h1>Migration</h1>
 
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
+  - [React prop tables with Typescript](#react-prop-tables-with-typescript)
   - [New addon presets](#new-addon-presets)
   - [Client API changes](#client-api-changes)
     - [Removed Legacy Story APIs](#removed-legacy-story-apis)
@@ -87,6 +88,16 @@
   - [Deprecated embedded addons](#deprecated-embedded-addons)
 
 ## From version 5.3.x to 6.0.x
+
+### React prop tables with Typescript
+
+Starting in 6.0 we are changing our recommended setup for extracting prop tables in `addon-docs` for React projects using TypeScript.
+
+In earlier versions, we recommended `react-docgen-typescript-loader` (`RDTL`) and bundled it with `@storybook/preset-create-react-app` and `@storybook/preset-typescript` for this reason. We now recommend `babel-plugin-react-docgen`, which is already bundled as part of `@storybook/react`.
+
+As a consequence we've removed `RDTL` from the presets, which is a breaking change. We made this change because `react-docgen` now supports TypeScript natively, and fewer dependencies simplifies things for everybody.
+
+We will be updating this section with migration information as we collect information from our users.
 
 ### New addon presets
 
