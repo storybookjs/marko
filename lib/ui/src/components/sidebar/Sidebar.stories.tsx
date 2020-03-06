@@ -28,31 +28,43 @@ export const withRefs = () => (
     refs={{
       completed: {
         id: 'completed',
+        title: 'All completed',
         url: 'https://example.com',
         stories,
       },
       loading: {
         id: 'loading',
+        title: 'This is Loading',
         url: 'https://example.com',
         stories: {},
       },
       startInjected: {
         id: 'startInjected',
+        title: 'Start Injected',
         url: 'https://example.com',
         stories,
         startInjected: true,
       },
       versions: {
         id: 'versions',
+        title: 'It has versions',
         url: 'https://example.com',
         stories,
         versions: { '1.0.0': 'https://example.com', '2.0.0': 'https://example.com' },
       },
       error: {
         id: 'error',
+        title: 'This has problems',
         url: 'https://example.com',
         stories,
         error: new Error('there was a problem'),
+      },
+      auth: {
+        id: 'Authentication',
+        title: 'This requires a login',
+        url: 'https://example.com',
+        stories,
+        authUrl: 'https://example.com',
       },
     }}
   />
@@ -67,31 +79,43 @@ export const darkWithRefs = () => (
       refs={{
         completed: {
           id: 'completed',
+          title: 'All completed',
           url: 'https://example.com',
           stories,
         },
         loading: {
           id: 'loading',
+          title: 'This is Loading',
           url: 'https://example.com',
           stories: {},
         },
         startInjected: {
           id: 'startInjected',
+          title: 'Start Injected',
           url: 'https://example.com',
           stories,
           startInjected: true,
         },
         versions: {
           id: 'versions',
+          title: 'It has versions',
           url: 'https://example.com',
           stories,
           versions: { '1.0.0': 'https://example.com', '2.0.0': 'https://example.com' },
         },
         error: {
           id: 'error',
+          title: 'This has problems',
           url: 'https://example.com',
           stories,
           error: new Error('there was a problem'),
+        },
+        auth: {
+          id: 'Authentication',
+          title: 'This requires a login',
+          url: 'https://example.com',
+          stories,
+          authUrl: 'https://example.com',
         },
       }}
     />
