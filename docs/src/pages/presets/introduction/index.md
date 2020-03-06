@@ -43,7 +43,7 @@ module.exports = {
       name: '@storybook/preset-typescript',
       options: {
         tsLoaderOptions: {
-          tsconfigPath: path.resolve(__dirname, '../tsconfig.json'),
+          configFile: path.resolve(__dirname, '../tsconfig.json'),
         },
         include: [path.resolve(__dirname)],
       },
