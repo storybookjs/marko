@@ -359,7 +359,10 @@ export const Ref: FunctionComponent<RefType & RefProps> = ref => {
             <Spaced>
               {isAuthAttempted ? (
                 <Fragment>
-                  <Text>Authentication concluded</Text>
+                  <Text>
+                    Authentication on <strong>{authUrl}</strong> seems to have concluded, refresh
+                    the page to fetch this storybook
+                  </Text>
                   <div>
                     <Button small gray onClick={refresh}>
                       <Icons icon="sync" />
