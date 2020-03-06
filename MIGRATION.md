@@ -147,7 +147,7 @@ Although these were private APIs, if you were using them, you could probably use
 
 You can no longer add decorators and parameters globally after you added your first story, and you can no longer add decorators and parameters to a kind after you've added your first story to it.
 
-It unclear and confusing what happened if you did. If you want to disable a decorator for certain stories, use a parameter to do so:
+It's unclear and confusing what would happened if you did. If you want to disable a decorator for certain stories, use a parameter to do so:
 
 ```js
 export StoryOne = ...;
