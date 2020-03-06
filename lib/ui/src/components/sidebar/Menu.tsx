@@ -3,7 +3,7 @@ import React, { FunctionComponent, useMemo, ComponentProps } from 'react';
 import { styled } from '@storybook/theming';
 import { WithTooltip, TooltipLinkList, Button, Icons } from '@storybook/components';
 
-import { HeadingProps } from './Heading';
+export type MenuList = ComponentProps<typeof TooltipLinkList>['links'];
 
 type MenuButtonProps = ComponentProps<typeof Button> &
   // FIXME: Button should extends from the native <button>
@@ -63,7 +63,7 @@ const MenuButton = styled(Button)<MenuButtonProps>(({ highlighted, theme }) => (
 }));
 
 const SidebarMenuList: FunctionComponent<{
-  menu: HeadingProps['menu'];
+  menu: MenuList;
   onHide: () => void;
 }> = ({ menu, onHide }) => {
   const links = useMemo(() => {
@@ -81,7 +81,7 @@ const SidebarMenuList: FunctionComponent<{
 };
 
 export const SidebarMenu: FunctionComponent<{
-  menu: HeadingProps['menu'];
+  menu: MenuList;
   isHighlighted: boolean;
 }> = ({ isHighlighted, menu }) => {
   return (

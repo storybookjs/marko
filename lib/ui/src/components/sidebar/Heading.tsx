@@ -1,13 +1,12 @@
-import React, { ComponentProps, FunctionComponent } from 'react';
+import React, { FunctionComponent, ComponentProps } from 'react';
 import { styled } from '@storybook/theming';
-import { TooltipLinkList } from '@storybook/components';
-import { Brand } from './Brand';
-import { SidebarMenu } from './Menu';
 
-export interface HeadingProps {
+import { Brand } from './Brand';
+import { SidebarMenu, MenuList } from './Menu';
+
+interface HeadingProps {
   menuHighlighted?: boolean;
-  menu: ComponentProps<typeof TooltipLinkList>['links'];
-  className?: string;
+  menu: MenuList;
 }
 
 const BrandArea = styled.div(({ theme }) => ({
@@ -34,7 +33,7 @@ const HeadingWrapper = styled.div({
   position: 'relative',
 });
 
-export const Heading: FunctionComponent<HeadingProps> = ({
+export const Heading: FunctionComponent<HeadingProps & ComponentProps<typeof HeadingWrapper>> = ({
   menuHighlighted = false,
   menu,
   ...props

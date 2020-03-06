@@ -21,6 +21,8 @@ import { ExpanderContext } from './Tree/State';
 
 import { Item, DataSet, BooleanSet } from './RefHelpers';
 
+type ListitemProps = ComponentProps<typeof ListItem>;
+
 const Section = styled.section();
 
 const RootHeading = styled.div(({ theme }) => ({
@@ -38,7 +40,7 @@ const Text = styled.p(({ theme }) => ({
   margin: 0,
 }));
 
-const Head: FunctionComponent<ComponentProps<typeof ListItem>> = props => {
+const Head: FunctionComponent<ListitemProps> = props => {
   const api = useStorybookApi();
   const { setExpanded, expandedSet } = useContext(ExpanderContext);
   const { id, isComponent, childIds } = props;
@@ -56,7 +58,7 @@ const Head: FunctionComponent<ComponentProps<typeof ListItem>> = props => {
   return <ListItem onClick={onClick} {...props} href={`#${id}`} />;
 };
 
-const Leaf: FunctionComponent<ComponentProps<typeof ListItem>> = props => {
+const Leaf: FunctionComponent<ListitemProps> = props => {
   const api = useStorybookApi();
   const { setExpanded } = useContext(ExpanderContext);
   const { id } = props;
