@@ -509,7 +509,7 @@ class Layout extends Component<LayoutProps, LayoutState> {
             onDrag={this.resizeNav}
             onStop={this.unsetDrag}
           >
-            <Handle shadow="left" axis="x" isDragging={isDragging === 'nav'} />
+            <Handle axis="x" isDragging={isDragging === 'nav'} />
           </Draggable>
         )}
 
@@ -538,7 +538,6 @@ class Layout extends Component<LayoutProps, LayoutState> {
           >
             <Handle
               isDragging={isDragging === 'panel'}
-              shadow={isPanelBottom ? 'top' : 'left'}
               style={
                 isPanelBottom
                   ? {
