@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo, Fragment } from 'react';
+import React, { FunctionComponent, useMemo } from 'react';
 
 import { StoriesHash, State } from '@storybook/api';
 import { styled } from '@storybook/theming';
@@ -20,18 +20,24 @@ interface RefProps {
   isHidden: boolean;
 }
 
-const RefHead = styled.header(({ theme }) => ({
+const RefHead = styled.div({
+  display: 'flex',
+});
+
+const RefTitle = styled.header(({ theme }) => ({
   fontWeight: theme.typography.weight.bold,
   fontSize: theme.typography.size.s2,
   color: theme.color.darkest,
   textTransform: 'capitalize',
 
-  lineHeight: '16px',
-  paddingTop: 4,
-  paddingBottom: 4,
+  flex: 1,
+  height: 24,
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  paddingRight: theme.layoutMargin,
+  overflow: 'hidden',
 
-  paddingLeft: theme.layoutMargin * 2,
-  paddingRight: theme.layoutMargin * 2,
+  lineHeight: '24px',
 }));
 
 const Wrapper = styled.div({
@@ -41,14 +47,14 @@ const Wrapper = styled.div({
 });
 
 export const getType = (isLoading: boolean, isAuthRequired: boolean, isError: boolean) => {
-  if (isLoading) {
-    return 'loading';
-  }
   if (isAuthRequired) {
     return 'auth';
   }
   if (isError) {
     return 'error';
+  }
+  if (isLoading) {
+    return 'loading';
   }
   return 'ready';
 };
@@ -72,14 +78,13 @@ export const Ref: FunctionComponent<RefType & RefProps> = ref => {
 
   return isHidden ? null : (
     <ExpanderContext.Provider value={combo}>
+      {isMain ? null : (
+        <RefHead>
+          <RefTitle title={title}>{title}</RefTitle>
+          <RefIndicator {...ref} type={type} />
+        </RefHead>
+      )}
       <Wrapper data-title={title}>
-        {isMain ? null : (
-          <Fragment>
-            <RefHead>{title}</RefHead>
-            <RefIndicator {...ref} type={type} />
-          </Fragment>
-        )}
-
         {type === 'auth' && <AuthBlock id={ref.id} authUrl={authUrl} />}
         {type === 'error' && <ErrorBlock error={error} />}
         {type === 'loading' && <LoaderBlock isMain={isMain} />}

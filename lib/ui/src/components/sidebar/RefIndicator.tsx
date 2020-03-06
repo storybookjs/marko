@@ -4,12 +4,10 @@ import { Icons, WithTooltip, Spaced, TooltipLinkList } from '@storybook/componen
 import { styled } from '@storybook/theming';
 
 import { RefType, getType } from './Refs';
+import { MenuItemIcon } from './Menu';
 
 const IndicatorPlacement = styled.aside(
   ({ theme }) => ({
-    position: 'absolute',
-    top: 0,
-    right: 20,
     height: 14,
     display: 'flex',
 
@@ -164,7 +162,12 @@ export const RefIndicator: FunctionComponent<RefType & {
           trigger="click"
           tooltip={
             <TooltipLinkList
-              links={Object.entries(ref.versions).map(([id, href]) => ({ id, title: id, href }))}
+              links={Object.entries(ref.versions).map(([id, href]) => ({
+                left: href === ref.url ? <MenuItemIcon icon="check" /> : <span />,
+                id,
+                title: id,
+                href,
+              }))}
             />
           }
         >
