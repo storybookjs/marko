@@ -1,4 +1,4 @@
-import { window } from 'global';
+import { window, document } from 'global';
 import React, {
   FunctionComponent,
   useState,
@@ -14,7 +14,6 @@ import { styled } from '@storybook/theming';
 import { Location } from '@storybook/router';
 import { Tree } from './Tree/Tree';
 import { Loader, Contained } from './Loader';
-import { MessageWrapper } from './RefIndicator';
 import { Item, DataSet, BooleanSet } from './Refs';
 import { ListItem } from './Tree/ListItem';
 import { ExpanderContext } from './Tree/State';
@@ -81,6 +80,67 @@ const Components = {
   List: styled.div({}),
 };
 
+const ErrorDisplay = styled.pre(
+  {
+    width: 420,
+    boxSizing: 'border-box',
+    borderRadius: 8,
+    overflow: 'auto',
+    whiteSpace: 'pre',
+  },
+  ({ theme }) => ({
+    color: theme.color.dark,
+  })
+);
+
+const ErrorName = styled.strong(({ theme }) => ({
+  color: theme.color.orange,
+}));
+const ErrorImportant = styled.strong(({ theme }) => ({
+  color: theme.color.ancillary,
+  textDecoration: 'underline',
+}));
+const ErrorDetail = styled.em(({ theme }) => ({
+  color: theme.color.mediumdark,
+}));
+
+const firstLineRegex = /(Error): (.*)\n/;
+const linesRegex = /at (?:(.*)\ )?\(?(.+)\)?/;
+const ErrorFormatter: FunctionComponent<{ error: Error }> = ({ error }) => {
+  const input = error.stack.toString();
+  const [, type, name] = input.match(firstLineRegex);
+
+  const rawLines = input.split(/\n/).slice(1);
+  const [, ...lines] = rawLines
+    .map(line => {
+      const r = line.match(linesRegex);
+
+      return r ? { name: r[1], location: r[2].replace(document.location.origin, '') } : null;
+    })
+    .filter(Boolean);
+
+  return (
+    <Fragment>
+      <span>{type}</span>: <ErrorName>{name}</ErrorName>
+      <br />
+      {lines.map((l, i) =>
+        l.name ? (
+          <Fragment key={i}>
+            {'  '}at <ErrorImportant>{l.name}</ErrorImportant> (
+            <ErrorDetail>{l.location}</ErrorDetail>)
+            <br />
+          </Fragment>
+        ) : (
+          <Fragment key={i}>
+            {'  '}at <ErrorDetail>{l.location}</ErrorDetail>
+            <br />
+          </Fragment>
+        )
+      )}
+    </Fragment>
+  );
+};
+
 const Section = styled.section();
 
 export const AuthBlock: FunctionComponent<{ authUrl: string; id: string }> = ({ authUrl, id }) => {
@@ -144,10 +204,11 @@ export const ErrorBlock: FunctionComponent<{ error: Error }> = ({ error }) => (
       <Text>Ow now! something went wrong loading this storybook</Text>
       <WithTooltip
         trigger="click"
+        closeOnClick={false}
         tooltip={
-          <MessageWrapper>
-            <pre>{error.toString()}</pre>
-          </MessageWrapper>
+          <ErrorDisplay>
+            <ErrorFormatter error={error} />
+          </ErrorDisplay>
         }
       >
         <Button small gray>
