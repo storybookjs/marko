@@ -42,6 +42,7 @@ export interface InceptionRef {
   startInjected?: boolean;
   stories: StoriesHash;
   versions?: Versions;
+  authUrl?: string;
   ready?: boolean;
   error?: any;
 }
