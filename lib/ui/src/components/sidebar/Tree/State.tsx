@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { isRoot } from '@storybook/api';
 import { toFiltered, getMains, getParents } from './utils';
-import { BooleanSet, FilteredType, Item, DataSet } from '../Refs';
+import { BooleanSet, FilteredType, Item, DataSet } from '../RefHelpers';
 
 export const ExpanderContext = React.createContext<{
   setExpanded: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;

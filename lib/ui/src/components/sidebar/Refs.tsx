@@ -1,18 +1,10 @@
 import React, { FunctionComponent, useMemo } from 'react';
-
-import { StoriesHash, State } from '@storybook/api';
 import { styled } from '@storybook/theming';
 
+import { ExpanderContext, useDataset } from './Tree/State';
 import { RefIndicator } from './RefIndicator';
 import { AuthBlock, ErrorBlock, LoaderBlock, ContentBlock } from './RefBlocks';
-import { ExpanderContext, useDataset } from './Tree/State';
-
-type Refs = State['refs'];
-export type RefType = Refs[keyof Refs];
-export type BooleanSet = Record<string, boolean>;
-export type Item = StoriesHash[keyof StoriesHash];
-export type DataSet = Record<string, Item>;
-export type FilteredType = 'filtered' | 'unfiltered';
+import { getType, RefType } from './RefHelpers';
 
 interface RefProps {
   storyId: string;
@@ -45,19 +37,6 @@ const Wrapper = styled.div({
   marginLeft: -20,
   marginRight: -20,
 });
-
-export const getType = (isLoading: boolean, isAuthRequired: boolean, isError: boolean) => {
-  if (isAuthRequired) {
-    return 'auth';
-  }
-  if (isError) {
-    return 'error';
-  }
-  if (isLoading) {
-    return 'loading';
-  }
-  return 'ready';
-};
 
 export const Ref: FunctionComponent<RefType & RefProps> = ref => {
   const { stories, id: key, title = key, storyId, filter, isHidden = false, authUrl, error } = ref;

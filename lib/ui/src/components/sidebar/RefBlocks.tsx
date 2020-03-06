@@ -4,19 +4,24 @@ import React, {
   useState,
   useCallback,
   Fragment,
-  ComponentPropsWithoutRef,
   useContext,
+  ComponentProps,
 } from 'react';
+
 import { Icons, WithTooltip, Spaced, Button } from '@storybook/components';
 import { logger } from '@storybook/client-logger';
 import { useStorybookApi } from '@storybook/api';
 import { styled } from '@storybook/theming';
 import { Location } from '@storybook/router';
+
 import { Tree } from './Tree/Tree';
 import { Loader, Contained } from './Loader';
-import { Item, DataSet, BooleanSet } from './Refs';
 import { ListItem } from './Tree/ListItem';
 import { ExpanderContext } from './Tree/State';
+
+import { Item, DataSet, BooleanSet } from './RefHelpers';
+
+const Section = styled.section();
 
 const RootHeading = styled.div(({ theme }) => ({
   letterSpacing: '0.35em',
@@ -27,57 +32,50 @@ const RootHeading = styled.div(({ theme }) => ({
   color: theme.color.mediumdark,
   margin: '0 20px',
 }));
-RootHeading.defaultProps = {
-  className: 'sidebar-subheading',
-};
 
 const Text = styled.p(({ theme }) => ({
   fontSize: theme.typography.size.s2 - 1,
-
   margin: 0,
 }));
 
-const Components = {
-  Head: (props: ComponentPropsWithoutRef<typeof ListItem>) => {
-    const api = useStorybookApi();
-    const { setExpanded, expandedSet } = useContext(ExpanderContext);
-    const { id, isComponent, childIds } = props;
+const Head: FunctionComponent<ComponentProps<typeof ListItem>> = props => {
+  const api = useStorybookApi();
+  const { setExpanded, expandedSet } = useContext(ExpanderContext);
+  const { id, isComponent, childIds } = props;
 
-    const onClick = useCallback(
-      e => {
-        e.preventDefault();
-        if (!expandedSet[id] && isComponent && childIds && childIds.length) {
-          api.selectStory(childIds[0]);
-        }
-        setExpanded(s => ({ ...s, [id]: !s[id] }));
-      },
-      [id, expandedSet[id]]
-    );
-    return <ListItem onClick={onClick} {...props} href={`#${id}`} />;
-  },
-  Leaf: (props: ComponentPropsWithoutRef<typeof ListItem>) => {
-    const api = useStorybookApi();
-    const { setExpanded } = useContext(ExpanderContext);
-    const { id } = props;
-    const onClick = useCallback(
-      e => {
-        e.preventDefault();
-        api.selectStory(id);
-        setExpanded(s => ({ ...s, [id]: !s[id] }));
-      },
-      [id]
-    );
+  const onClick = useCallback(
+    e => {
+      e.preventDefault();
+      if (!expandedSet[id] && isComponent && childIds && childIds.length) {
+        api.selectStory(childIds[0]);
+      }
+      setExpanded(s => ({ ...s, [id]: !s[id] }));
+    },
+    [id, expandedSet[id]]
+  );
+  return <ListItem onClick={onClick} {...props} href={`#${id}`} />;
+};
 
-    return (
-      <Location>
-        {({ viewMode }) => (
-          <ListItem onClick={onClick} {...props} href={`?path=/${viewMode}/${id}`} />
-        )}
-      </Location>
-    );
-  },
-  Branch: Tree,
-  List: styled.div({}),
+const Leaf: FunctionComponent<ComponentProps<typeof ListItem>> = props => {
+  const api = useStorybookApi();
+  const { setExpanded } = useContext(ExpanderContext);
+  const { id } = props;
+  const onClick = useCallback(
+    e => {
+      e.preventDefault();
+      api.selectStory(id);
+      setExpanded(s => ({ ...s, [id]: !s[id] }));
+    },
+    [id]
+  );
+
+  return (
+    <Location>
+      {({ viewMode }) => (
+        <ListItem onClick={onClick} {...props} href={`?path=/${viewMode}/${id}`} />
+      )}
+    </Location>
+  );
 };
 
 const ErrorDisplay = styled.pre(
@@ -140,8 +138,6 @@ const ErrorFormatter: FunctionComponent<{ error: Error }> = ({ error }) => {
     </Fragment>
   );
 };
-
-const Section = styled.section();
 
 export const AuthBlock: FunctionComponent<{ authUrl: string; id: string }> = ({ authUrl, id }) => {
   const [isAuthAttempted, setAuthAttempted] = useState(false);
@@ -226,6 +222,12 @@ export const LoaderBlock: FunctionComponent<{ isMain: boolean }> = ({ isMain }) 
   </Contained>
 );
 
+const TreeComponents = {
+  Head,
+  Leaf,
+  Branch: Tree,
+  List: styled.div({}),
+};
 export const ContentBlock: FunctionComponent<{
   others: Item[];
   dataSet: DataSet;
@@ -245,7 +247,7 @@ export const ContentBlock: FunctionComponent<{
               selected={selectedSet}
               expanded={expandedSet}
               root={id}
-              {...Components}
+              {...TreeComponents}
             />
           ))}
         </Section>
@@ -253,7 +255,7 @@ export const ContentBlock: FunctionComponent<{
 
       {roots.map(({ id, name, children }) => (
         <Section data-title={name} key={id}>
-          <RootHeading>{name}</RootHeading>
+          <RootHeading className="sidebar-subheading">{name}</RootHeading>
           {children.map(child => (
             <Tree
               key={child}
@@ -262,7 +264,7 @@ export const ContentBlock: FunctionComponent<{
               selected={selectedSet}
               expanded={expandedSet}
               root={child}
-              {...Components}
+              {...TreeComponents}
             />
           ))}
         </Section>

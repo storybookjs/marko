@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useMemo, ComponentProps } from 'react';
-import { styled, css } from '@storybook/theming';
+
+import { styled } from '@storybook/theming';
 import { WithTooltip, TooltipLinkList, Button, Icons } from '@storybook/components';
 
 import { HeadingProps } from './Heading';

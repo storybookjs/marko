@@ -3,7 +3,7 @@ import React, { FunctionComponent, useMemo, Fragment, ComponentProps } from 'rea
 import { Icons, WithTooltip, Spaced, TooltipLinkList } from '@storybook/components';
 import { styled } from '@storybook/theming';
 
-import { RefType, getType } from './Refs';
+import { getType, RefType } from './RefHelpers';
 import { MenuItemIcon } from './Menu';
 
 const IndicatorPlacement = styled.aside(
