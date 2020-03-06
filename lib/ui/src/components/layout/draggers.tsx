@@ -38,7 +38,7 @@ const Handle = styled.div<{ isDragging: boolean; axis: Axis }>(
           marginTop: 0,
         },
   ({ axis, isDragging }) => {
-    if (axis === 'x') {
+    if (axis === 'y') {
       const style = {
         backgroundImage: `radial-gradient(at center center,rgba(0,0,0,0.2) 0%,transparent 70%,transparent 100%)`,
         backgroundSize: '100% 50px',
@@ -53,7 +53,7 @@ const Handle = styled.div<{ isDragging: boolean; axis: Axis }>(
             '&:hover': style,
           };
     }
-    if (axis === 'y') {
+    if (axis === 'x') {
       const style = {
         backgroundImage: `radial-gradient(at center center,rgba(0,0,0,0.2) 0%,transparent 70%,transparent 100%)`,
         backgroundSize: '50px 100%',
