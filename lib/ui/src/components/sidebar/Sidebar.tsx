@@ -9,7 +9,6 @@ import { Heading } from './Heading';
 import { Search } from './Search';
 import { filteredLength } from './Tree/utils';
 
-import { Hr } from './Section';
 import { Ref } from './Refs';
 
 type Refs = State['refs'];
@@ -37,6 +36,13 @@ const CustomScrollArea = styled(ScrollArea)({
   },
   padding: 20,
 });
+
+const Hr = styled.hr(({ theme }) => ({
+  border: '0 none',
+  height: 0,
+  marginBottom: 0,
+  borderTop: `1px solid ${theme.color.mediumlight}`,
+}));
 
 export interface SidebarProps {
   stories: StoriesHash;
