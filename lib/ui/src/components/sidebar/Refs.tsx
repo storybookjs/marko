@@ -1,3 +1,4 @@
+import { window } from 'global';
 import React, {
   FunctionComponent,
   useMemo,
@@ -8,18 +9,18 @@ import React, {
   useEffect,
   useContext,
 } from 'react';
-import { transparentize } from 'polished';
 
 import { StoriesHash, State, useStorybookApi, isRoot } from '@storybook/api';
-import { Icons, WithTooltip, TooltipMessage, Spaced } from '@storybook/components';
+import { Icons, WithTooltip, Spaced, Button, TooltipLinkList } from '@storybook/components';
+import { logger } from '@storybook/client-logger';
 import { Location } from '@storybook/router';
 import { styled } from '@storybook/theming';
 
 import { ListItem } from './Tree/ListItem';
 import { toFiltered, getMains, getParents } from './Tree/utils';
 import { Tree } from './Tree/Tree';
-import { Section } from './Section';
-import { Loader } from './Loader';
+import { Section, Hr } from './Section';
+import { Loader, Contained } from './Loader';
 
 type Refs = State['refs'];
 type RefType = Refs[keyof Refs];
@@ -113,65 +114,23 @@ const Components = {
   List: styled.div({}),
 };
 
-const ProblemPlacement = styled.div(
-  {
+const IndicatorPlacement = styled.div(
+  ({ theme }) => ({
     position: 'absolute',
     top: 0,
     right: 20,
-    width: 14,
     height: 14,
-  },
+    display: 'flex',
+
+    '& > * + *': {
+      marginLeft: theme.layoutMargin,
+    },
+  }),
   ({ theme }) => ({
     color: theme.color.mediumdark,
   })
 );
 
-const getTitle = (ref: RefType) => {
-  switch (true) {
-    case !!ref.error: {
-      return 'An error occurred';
-    }
-    case !!ref.startInjected: {
-      return 'Not optimized';
-    }
-    default: {
-      return ref.title;
-    }
-  }
-};
-const getDescription = (ref: RefType) => {
-  switch (true) {
-    case !!ref.error: {
-      return <pre>{ref.error.toString()}</pre>;
-    }
-    case !!ref.startInjected: {
-      return (
-        <div>
-          This storybook was auto-injected,
-          <br />
-          This is bad for performance, please refer to the docs on how to resolve this.
-        </div>
-      );
-    }
-    default: {
-      return (
-        <Fragment>
-          <p>This storybook was lazy-loaded.</p>
-          {ref.versions ? (
-            <div>
-              You can switch to other versions:
-              <ul>
-                {Object.entries(ref.versions).map(([k, v]) => (
-                  <li key={k}>{v}</li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
-        </Fragment>
-      );
-    }
-  }
-};
 const getIcon = (ref: RefType) => {
   switch (true) {
     case !!ref.error: {
@@ -182,42 +141,142 @@ const getIcon = (ref: RefType) => {
     }
   }
 };
-const getLinks = (ref: RefType) => {
-  switch (true) {
-    case !!ref.error: {
-      return [
-        { title: 'documentation', href: 'https://storybook.js.org/docs' },
-        { title: 'referenced storybook', href: ref.url },
-      ];
-    }
-    case !!ref.startInjected: {
-      return [
-        { title: 'documentation', href: 'https://storybook.js.org/docs' },
-        { title: 'referenced storybook', href: ref.url },
-      ];
-    }
-    default: {
-      return [{ title: 'referenced storybook', href: ref.url }];
-    }
-  }
-};
 
-const RefIndicator: FunctionComponent<RefType> = ref => {
-  const title = getTitle(ref);
-  const description = getDescription(ref);
+const Message = styled.a(({ theme }) => ({
+  textDecoration: 'none',
+  lineHeight: '18px',
+  padding: 10,
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'flex-start',
+  color: theme.color.darker,
+
+  '&:hover': {
+    background: theme.background.hoverable,
+    color: theme.color.darker,
+  },
+  '&:link': {
+    color: theme.color.darker,
+  },
+  '&:active': {
+    color: theme.color.darker,
+  },
+  '&:focus': {
+    color: theme.color.darker,
+  },
+
+  '& > *': {
+    flex: 1,
+  },
+  '& > svg': {
+    marginTop: 5,
+    width: 20,
+    marginRight: 10,
+    flex: 'unset',
+  },
+}));
+
+const MessageWrapper = styled.div({
+  width: 280,
+  boxSizing: 'border-box',
+  borderRadius: 8,
+  overflow: 'hidden',
+});
+
+const BlueIcon = styled(Icons)(({ theme }) => ({
+  color: theme.color.secondary,
+}));
+const YellowIcon = styled(Icons)(({ theme }) => ({
+  color: theme.color.gold,
+}));
+
+const RefIndicator: FunctionComponent<RefType & { type: ReturnType<typeof getType> }> = ({
+  type,
+  ...ref
+}) => {
   const icon = getIcon(ref);
-  const links = getLinks(ref);
+
+  const list = useMemo(() => Object.values(ref.stories || {}), [ref.stories]);
+  const componentCount = useMemo(() => list.filter(v => v.isComponent).length, [list]);
+  const leafCount = useMemo(() => list.filter(v => v.isLeaf).length, [list]);
 
   return (
-    <ProblemPlacement>
+    <IndicatorPlacement>
       <WithTooltip
         placement="top"
         trigger="click"
-        tooltip={<TooltipMessage title={title} desc={description} links={links} />}
+        tooltip={
+          <MessageWrapper>
+            <Spaced row={0}>
+              {type === 'loading' ? (
+                <Message href={ref.url} target="_blank">
+                  <BlueIcon icon="time" />
+                  <div>
+                    <strong>Please wait</strong>
+                    <div>This storybook is being loaded, explore in a new browser tab</div>
+                  </div>
+                </Message>
+              ) : (
+                <Message href={ref.url} target="_blank">
+                  <BlueIcon icon="globe" />
+                  <div>
+                    <strong>View external storybook</strong>
+                    <div>
+                      Explore {componentCount} components and {leafCount} stories in a new browser
+                      tab
+                    </div>
+                  </div>
+                </Message>
+              )}
+
+              {ref.startInjected ? (
+                <Fragment>
+                  <Hr />
+                  <Message href="https://storybook.js.org" target="_blank">
+                    <YellowIcon icon="lightning" />
+                    <div>
+                      <strong>Reduce lag</strong>
+                      <div>Learn how to speed up Storybook Composition performance</div>
+                    </div>
+                  </Message>
+                </Fragment>
+              ) : null}
+
+              {type === 'error' ? (
+                <Fragment>
+                  <Hr />
+                  <Message href="https://storybook.js.org" target="_blank">
+                    <YellowIcon icon="book" />
+                    <div>
+                      <strong>A problem occured</strong>
+                      <div>Explore the documentation</div>
+                    </div>
+                  </Message>
+                </Fragment>
+              ) : null}
+            </Spaced>
+          </MessageWrapper>
+        }
       >
         {icon}
       </WithTooltip>
-    </ProblemPlacement>
+      {ref.versions ? (
+        <WithTooltip
+          placement="top"
+          trigger="click"
+          tooltip={
+            <TooltipLinkList
+              links={Object.entries(ref.versions).map(([id, href]) => ({ id, title: id, href }))}
+            />
+          }
+        >
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <span style={{ marginRight: 4, fontSize: 11 }}>{Object.keys(ref.versions)[0]}</span>
+            <Icons width="14" height="14" icon="chevrondown" />
+          </div>
+        </WithTooltip>
+      ) : null}
+    </IndicatorPlacement>
   );
 };
 
@@ -227,8 +286,27 @@ const Wrapper = styled.div({
   marginRight: -20,
 });
 
+const getType = (isLoading: boolean, isAuthRequired: boolean, isError: boolean) => {
+  if (isLoading) {
+    return 'loading';
+  }
+  if (isAuthRequired) {
+    return 'auth';
+  }
+  if (isError) {
+    return 'error';
+  }
+  return 'ready';
+};
+
+const Text = styled.p(({ theme }) => ({
+  fontSize: theme.typography.size.s2 - 1,
+
+  margin: 0,
+}));
+
 export const Ref: FunctionComponent<RefType & RefProps> = ref => {
-  const { stories, id: key, title = key, storyId, filter, isHidden = false } = ref;
+  const { stories, id: key, title = key, storyId, filter, isHidden = false, authUrl, error } = ref;
   const { dataSet, expandedSet, length, others, roots, setExpanded, selectedSet } = useDataset(
     stories,
     filter,
@@ -238,25 +316,104 @@ export const Ref: FunctionComponent<RefType & RefProps> = ref => {
   const combo = useMemo(() => ({ setExpanded, expandedSet }), [setExpanded, expandedSet]);
 
   const isLoading = !length;
-
-  if (isHidden) {
-    return null;
-  }
-
   const isMain = key === 'storybook_internal';
+  const isError = !!error;
+  const isAuthRequired = !!authUrl;
 
-  return (
-    <Wrapper title={title}>
-      {!isMain ? <RefIndicator {...ref} /> : null}
-      <ExpanderContext.Provider value={combo}>
-        {!isMain ? <RefHead>{title}</RefHead> : null}
-        <Fragment>
-          {isLoading ? (
+  const type = getType(isLoading, isAuthRequired, isError);
+  const [isAuthAttempted, setAuthAttempted] = useState(false);
+
+  const refresh = useCallback(() => {
+    window.document.location.reload();
+  }, []);
+
+  const open = useCallback(e => {
+    e.preventDefault();
+    const childWindow = window.open(authUrl, `storybook_auth_${ref.id}`, 'resizable,scrollbars');
+
+    // wait for window to close
+    const timer = setInterval(() => {
+      if (!childWindow) {
+        logger.error('unable to access authUrl window');
+        clearInterval(timer);
+      }
+      if (childWindow.closed) {
+        clearInterval(timer);
+        setAuthAttempted(true);
+      }
+    }, 1000);
+  }, []);
+
+  return isHidden ? null : (
+    <ExpanderContext.Provider value={combo}>
+      <Wrapper data-title={title}>
+        {isMain ? null : (
+          <Fragment>
+            <RefHead>{title}</RefHead>
+            <RefIndicator {...ref} type={type} />
+          </Fragment>
+        )}
+
+        {type === 'auth' && (
+          <Contained>
+            <Spaced>
+              {isAuthAttempted ? (
+                <Fragment>
+                  <Text>Authentication concluded</Text>
+                  <div>
+                    <Button small gray onClick={refresh}>
+                      <Icons icon="sync" />
+                      Refresh the page
+                    </Button>
+                  </div>
+                </Fragment>
+              ) : (
+                <Fragment>
+                  <Text>Browse this secure storybook</Text>
+                  <div>
+                    <Button small gray onClick={open}>
+                      <Icons icon="lock" />
+                      Login
+                    </Button>
+                  </div>
+                </Fragment>
+              )}
+            </Spaced>
+          </Contained>
+        )}
+
+        {type === 'error' && (
+          <Contained>
+            <Spaced>
+              <Text>Ow now! something went wrong loading this storybook</Text>
+              <WithTooltip
+                trigger="click"
+                tooltip={
+                  <MessageWrapper>
+                    <pre>{error.toString()}</pre>
+                  </MessageWrapper>
+                }
+              >
+                <Button small gray>
+                  <Icons icon="doclist" />
+                  View error
+                </Button>
+              </WithTooltip>
+            </Spaced>
+          </Contained>
+        )}
+
+        {type === 'loading' && (
+          <Contained>
             <Loader size={isMain ? 'multiple' : 'single'} />
-          ) : (
+          </Contained>
+        )}
+
+        {type === 'ready' && (
+          <Fragment>
             <Spaced row={1.5}>
               {others.length ? (
-                <Section title="categorized" key="categorized">
+                <Section data-title="categorized" key="categorized">
                   {others.map(({ id }) => (
                     <Tree
                       key={id}
@@ -272,7 +429,7 @@ export const Ref: FunctionComponent<RefType & RefProps> = ref => {
               ) : null}
 
               {roots.map(({ id, name, children }) => (
-                <Section title={name} key={id}>
+                <Section data-title={name} key={id}>
                   <RootHeading>{name}</RootHeading>
                   {children.map(child => (
                     <Tree
@@ -288,10 +445,10 @@ export const Ref: FunctionComponent<RefType & RefProps> = ref => {
                 </Section>
               ))}
             </Spaced>
-          )}
-        </Fragment>
-      </ExpanderContext.Provider>
-    </Wrapper>
+          </Fragment>
+        )}
+      </Wrapper>
+    </ExpanderContext.Provider>
   );
 };
 

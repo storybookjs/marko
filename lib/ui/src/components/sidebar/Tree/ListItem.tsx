@@ -69,19 +69,19 @@ export const Item = styled.a<{
   depth?: number;
   isSelected?: boolean;
 }>(
-  {
+  ({ theme }) => ({
     position: 'relative',
     textDecoration: 'none',
-    fontSize: 13,
+    fontSize: theme.typography.size.s2,
     lineHeight: '16px',
     paddingTop: 4,
     paddingBottom: 4,
-    paddingRight: 20,
+    paddingRight: theme.layoutMargin * 2,
     display: 'flex',
     alignItems: 'center',
     flex: 1,
     background: 'transparent',
-  },
+  }),
   ({ depth }) => ({
     paddingLeft: depth * 15 + 19,
   }),
