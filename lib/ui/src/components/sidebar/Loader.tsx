@@ -5,6 +5,7 @@ const Loadingitem = styled.div<{
   depth?: number;
 }>(
   {
+    cursor: 'progress',
     fontSize: 13,
     height: '16px',
     marginTop: 4,
@@ -22,10 +23,9 @@ const Loadingitem = styled.div<{
   })
 );
 
-const Contained = styled.div({
+export const Contained = styled.div({
   display: 'flex',
   flexDirection: 'column',
-  cursor: 'progress',
   paddingLeft: 20,
   paddingRight: 20,
 });
@@ -33,31 +33,27 @@ const Contained = styled.div({
 export const Loader: FunctionComponent<{
   size: 'single' | 'multiple';
 }> = ({ size }) => {
-  return (
-    <Contained>
-      {size === 'multiple' ? (
-        <Fragment>
-          <Loadingitem />
-          <Loadingitem />
-          <Loadingitem depth={1} />
-          <Loadingitem depth={1} />
-          <Loadingitem depth={2} />
-          <Loadingitem depth={3} />
-          <Loadingitem depth={3} />
-          <Loadingitem depth={3} />
-          <Loadingitem depth={1} />
-          <Loadingitem depth={1} />
-          <Loadingitem depth={1} />
-          <Loadingitem depth={2} />
-          <Loadingitem depth={2} />
-          <Loadingitem depth={2} />
-          <Loadingitem depth={3} />
-          <Loadingitem />
-          <Loadingitem />
-        </Fragment>
-      ) : (
-        <Loadingitem />
-      )}
-    </Contained>
+  return size === 'multiple' ? (
+    <Fragment>
+      <Loadingitem />
+      <Loadingitem />
+      <Loadingitem depth={1} />
+      <Loadingitem depth={1} />
+      <Loadingitem depth={2} />
+      <Loadingitem depth={3} />
+      <Loadingitem depth={3} />
+      <Loadingitem depth={3} />
+      <Loadingitem depth={1} />
+      <Loadingitem depth={1} />
+      <Loadingitem depth={1} />
+      <Loadingitem depth={2} />
+      <Loadingitem depth={2} />
+      <Loadingitem depth={2} />
+      <Loadingitem depth={3} />
+      <Loadingitem />
+      <Loadingitem />
+    </Fragment>
+  ) : (
+    <Loadingitem />
   );
 };
