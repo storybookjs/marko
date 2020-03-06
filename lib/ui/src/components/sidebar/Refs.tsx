@@ -336,8 +336,7 @@ export const Ref: FunctionComponent<RefType & RefProps> = ref => {
       if (!childWindow) {
         logger.error('unable to access authUrl window');
         clearInterval(timer);
-      }
-      if (childWindow.closed) {
+      } else if (childWindow.closed) {
         clearInterval(timer);
         setAuthAttempted(true);
       }
