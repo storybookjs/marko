@@ -88,7 +88,6 @@ const Paper = styled.div<{ isFullscreen: boolean }>(
           borderRadius: 0,
         }
       : {
-          background: theme.background.content,
           borderRadius: theme.appBorderRadius,
           overflow: 'hidden',
           boxShadow: '0 1px 5px 0 rgba(0, 0, 0, 0.1)',

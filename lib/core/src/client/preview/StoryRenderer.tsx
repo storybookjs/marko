@@ -280,6 +280,7 @@ export class StoryRenderer {
     if (id === '*' || !parameters) {
       return;
     }
+
     const docs = parameters.docs || {};
     const DocsContainer =
       docs.container || (({ children }: { children: Element }) => <>{children}</>);
