@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { FunctionComponent, ComponentProps } from 'react';
 import { styled } from '@storybook/theming';
 import { rotate360 } from '../shared/animation';
 
-const LoaderWrapper = styled.div(({ theme }) => ({
+const LoaderWrapper = styled.div<{ size?: number }>(({ size = 32 }) => ({
   borderRadius: '3em',
   cursor: 'progress',
   display: 'inline-block',
@@ -12,27 +12,19 @@ const LoaderWrapper = styled.div(({ theme }) => ({
   verticalAlign: 'top',
   top: '50%',
   left: '50%',
-  marginTop: -16,
-  marginLeft: -16,
-  height: 32,
-  width: 32,
+  marginTop: -(size / 2),
+  marginLeft: -(size / 2),
+  height: size,
+  width: size,
   zIndex: 4,
   borderWidth: 2,
   borderStyle: 'solid',
-  borderColor: 'rgba(0, 0, 0, 0)',
-  borderTopColor: 'rgb(136, 136, 136)',
+  borderColor: 'rgba(97, 97, 97, 0.29)',
+  borderTopColor: 'rgb(100,100,100)',
   animation: `${rotate360} 0.7s linear infinite`,
-  mixBlendMode: 'exclusion',
-  opacity: 0.7,
+  mixBlendMode: 'difference',
 }));
 
-export function Loader({ ...props }) {
-  return (
-    <LoaderWrapper
-      aria-label="Content is loading ..."
-      aria-live="polite"
-      role="status"
-      {...props}
-    />
-  );
-}
+export const Loader: FunctionComponent<ComponentProps<typeof LoaderWrapper>> = props => (
+  <LoaderWrapper aria-label="Content is loading ..." aria-live="polite" role="status" {...props} />
+);
