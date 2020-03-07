@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, FunctionComponent, ComponentProps } from 'react';
 import { styled } from '@storybook/theming';
 import { darken, lighten, rgba, transparentize } from 'polished';
 
@@ -7,6 +7,7 @@ export interface ButtonProps {
   primary?: boolean;
   secondary?: boolean;
   tertiary?: boolean;
+  gray?: boolean;
   inForm?: boolean;
   disabled?: boolean;
   small?: boolean;
@@ -78,7 +79,7 @@ const ButtonWrapper = styled.button<ButtonWrapperProps>(
           ...(small ? { padding: 9 } : { padding: 12 }),
         }
       : {},
-  ({ theme, primary, secondary }) => {
+  ({ theme, primary, secondary, gray }) => {
     let color;
 
     if (primary) {
@@ -87,11 +88,14 @@ const ButtonWrapper = styled.button<ButtonWrapperProps>(
     if (secondary) {
       color = theme.color.secondary;
     }
+    if (gray) {
+      color = theme.color.medium;
+    }
 
     return color
       ? {
           background: color,
-          color: theme.color.lightest,
+          color: gray ? '#333333' : theme.color.inverseText,
 
           '&:hover': {
             background: darken(0.05, color),
@@ -226,7 +230,7 @@ const ButtonWrapper = styled.button<ButtonWrapperProps>(
 
 const ButtonLink = ButtonWrapper.withComponent('a');
 
-export const Button = Object.assign(
+export const Button: FunctionComponent<ComponentProps<typeof ButtonWrapper>> = Object.assign(
   forwardRef<any, ButtonProps>(({ isLink, children, ...props }, ref) => {
     if (isLink) {
       return (
