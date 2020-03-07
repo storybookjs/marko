@@ -1,3 +1,12 @@
+## 5.3.18 (March 31, 2020)
+
+### Bug Fixes
+
+- Core: Fix manager assets to be routed in express ([#9646](https://github.com/storybookjs/storybook/pull/9646))
+- Storyshots: Fix MDX transform ([#10223](https://github.com/storybookjs/storybook/pull/10223))
+- Addon-docs: Restore IE11 compat on Windows by transpiling acorn-jsx ([#9790](https://github.com/storybookjs/storybook/pull/9790))
+- Addon-docs: Ensure visibility of links within prop descriptions ([#10210](https://github.com/storybookjs/storybook/pull/10210))
+
 ## 5.3.17 (March 14, 2020)
 
 ### Bug Fixes
