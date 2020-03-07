@@ -114,6 +114,9 @@
     ]
   },
   "browserslist": "defaults",
+  "resolutions": {
+    "serialize-javascript": "2.1.2"
+  },
   "devDependencies": {
     "@angular/common": "^8.2.8",
     "@angular/compiler": "^8.2.8",
