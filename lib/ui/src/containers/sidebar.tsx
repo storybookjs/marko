@@ -144,7 +144,7 @@ const Sidebar: FunctionComponent<{}> = React.memo(() => {
     const menu = useMenu(api, isFullscreen, showPanel, showNav, enableShortcuts);
 
     return {
-      loading: !storiesConfigured,
+      isLoading: !storiesConfigured,
       title: name,
       url,
       stories,
