@@ -62,6 +62,8 @@ const MenuButton = styled(Button)<MenuButtonProps>(({ highlighted, theme }) => (
   }),
 }));
 
+type ClickHandler = ComponentProps<typeof TooltipLinkList>['links'][number]['onClick'];
+
 const SidebarMenuList: FunctionComponent<{
   menu: MenuList;
   onHide: () => void;
@@ -69,12 +71,12 @@ const SidebarMenuList: FunctionComponent<{
   const links = useMemo(() => {
     return menu.map(({ onClick, ...rest }) => ({
       ...rest,
-      onClick: () => {
+      onClick: ((event, item) => {
         if (onClick) {
-          onClick();
+          onClick(event, item);
         }
         onHide();
-      },
+      }) as ClickHandler,
     }));
   }, [menu]);
   return <TooltipLinkList links={links} />;
