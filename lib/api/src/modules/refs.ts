@@ -19,19 +19,16 @@ export interface SubState {
 
 type Versions = Record<string, string>;
 
-export interface SetRefData {
+export type SetRefData = Omit<InceptionRef, 'stories'> & {
   stories?: StoriesRaw;
-  versions?: Versions;
-  startInjected?: true;
-  loginUrl?: string;
-  error?: any;
-}
+};
 
 export interface SubAPI {
   findRef: (source: string) => InceptionRef;
   setRef: (id: string, data: SetRefData, ready?: boolean) => void;
   getRefs: () => Refs;
-  checkRef: (ref: InceptionRef) => Promise<void>;
+  checkRef: (ref: SetRefData) => Promise<void>;
+  changeRefVersion: (id: string, url: string) => void;
 }
 
 export type Mapper = (ref: InceptionRef, story: StoryInput) => StoryInput;
@@ -120,6 +117,12 @@ const initRefsApi = ({ store, provider }: Module) => {
 
       return Object.values(refs).find(({ url }) => `${url}/iframe.html`.match(source));
     },
+    changeRefVersion: (id, url) => {
+      const previous = api.getRefs()[id];
+      const ref = { ...previous, stories: {}, url } as SetRefData;
+
+      api.checkRef(ref);
+    },
     checkRef: async ref => {
       const { id, url } = ref;
 
@@ -135,11 +138,11 @@ const initRefsApi = ({ store, provider }: Module) => {
 
           api.setRef(id, data);
         } else {
-          api.setRef(id, { startInjected: true });
+          api.setRef(id, { id, url, startInjected: true });
         }
       } else {
         logger.warn('an auto-injected ref threw a cors-error');
-        api.setRef(id, { startInjected: true });
+        api.setRef(id, { id, url, startInjected: true });
       }
     },
 
@@ -188,7 +191,7 @@ const initRefsApi = ({ store, provider }: Module) => {
   );
 
   refs.forEach(([k, v]) => {
-    api.checkRef(v);
+    api.checkRef(v as SetRefData);
   });
 
   return {
