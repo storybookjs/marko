@@ -57,8 +57,7 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
         return false;
       })
       .reduce((acc, r) => {
-        const { id } = splitStoryId(storyId);
-        // const id = story ? story.knownAs || story.id : storyId;
+        const id = storyId === '*' ? storyId : splitStoryId(storyId).id;
 
         return {
           ...acc,
