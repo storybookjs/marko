@@ -1,6 +1,7 @@
 import { DOCS_MODE } from 'global';
 import { toId, sanitize } from '@storybook/csf';
 
+import { STORY_CHANGED, SET_STORIES, SELECT_STORY } from '@storybook/core-events';
 import {
   transformStoriesRawToStoriesHash,
   StoriesHash,
@@ -40,6 +41,7 @@ export interface SubAPI {
 // When adding a group, also add all of its children, depth first
 
 const initStoriesApi = ({
+  fullAPI,
   store,
   navigate,
   provider,
@@ -144,6 +146,31 @@ const initStoriesApi = ({
     if (viewMode && result) {
       navigate(`/${viewMode}/${result}`);
     }
+  };
+
+  const init = () => {
+    fullAPI.on(STORY_CHANGED, (id: string) => {
+      const options = fullAPI.getParameters(id, 'options');
+
+      if (options) {
+        fullAPI.setOptions(options);
+      }
+    });
+
+    fullAPI.on(SET_STORIES, (data: { stories: StoriesRaw }) => {
+      const { storyId } = store.getState();
+      fullAPI.setStories(data.stories);
+      const options = storyId
+        ? fullAPI.getParameters(storyId, 'options')
+        : fullAPI.getParameters(Object.keys(data.stories)[0], 'options');
+      fullAPI.setOptions(options);
+    });
+    fullAPI.on(
+      SELECT_STORY,
+      ({ kind, story, ...rest }: { kind: string; story: string; [k: string]: any }) => {
+        fullAPI.selectStory(kind, story, rest);
+      }
+    );
   };
 
   // Recursively traverse storiesHash from the initial storyId until finding
@@ -253,6 +280,7 @@ const initStoriesApi = ({
       viewMode: initialViewMode,
       storiesConfigured: false,
     },
+    init,
   };
 };
 export default initStoriesApi;
