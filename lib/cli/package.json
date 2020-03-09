@@ -85,6 +85,9 @@
     "@storybook/vue": "6.0.0-alpha.21",
     "@storybook/web-components": "6.0.0-alpha.21"
   },
+  "peerDependencies": {
+    "jest": "*"
+  },
   "publishConfig": {
     "access": "public"
   },
