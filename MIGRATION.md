@@ -130,11 +130,13 @@ module.exports = {
       rules: [
         ...config.module.rules,
         {
+          test: /\.tsx?$/,
           loader: require.resolve('react-docgen-typescript-loader'),
           options: {}, // your options here
         },
+      ]
     }
-  }
+  })
 }
 ```
 
