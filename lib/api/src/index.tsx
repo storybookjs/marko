@@ -227,7 +227,7 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
         // if it's a ref, we need to map the incoming stories to a prefixed version, so it cannot conflict with others
         case 'external': {
           const ref = api.findRef(source);
-          api.setRef(ref.id, data, true);
+          api.setRef(ref.id, { ...ref, ...data }, true);
           break;
         }
 
