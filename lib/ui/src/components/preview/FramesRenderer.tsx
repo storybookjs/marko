@@ -13,8 +13,11 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
   queryParams,
   storyId,
 }) => {
+  const { splitStoryId } = useStorybookApi();
   const stringifiedQueryParams = stringifyQueryParams(queryParams);
-  const active = story && story.refId ? `storybook-ref-${story.refId}` : 'storybook-preview-iframe';
+  const { id, ref } =
+    !storyId || storyId === '*' ? { id: storyId, ref: undefined } : splitStoryId(storyId);
+  const active = ref ? `storybook-ref-${ref}` : 'storybook-preview-iframe';
 
   const styles = useMemo<CSSObject>(() => {
     return {
@@ -40,9 +43,8 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
   }, [refs]);
 
   const [frames, setFrames] = useState<Record<string, string>>({
-    'storybook-preview-iframe': `iframe.html?id=${storyId}&viewMode=${viewMode}${stringifiedQueryParams}`,
+    'storybook-preview-iframe': `iframe.html?id=${id}&viewMode=${viewMode}${stringifiedQueryParams}`,
   });
-  const { splitStoryId } = useStorybookApi();
 
   useEffect(() => {
     const newFrames = Object.values(refs)
@@ -57,8 +59,6 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
         return false;
       })
       .reduce((acc, r) => {
-        const id = storyId === '*' ? storyId : splitStoryId(storyId).id;
-
         return {
           ...acc,
           [`storybook-ref-${r.id}`]: `${r.url}/iframe.html?id=${id}&viewMode=${viewMode}${stringifiedQueryParams}`,
@@ -74,7 +74,7 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
       {Object.entries(frames).map(([id, src]) => (
         <Fragment key={id}>
           {id === active ? <span key={`${id}-indicator`} /> : null}
-          <IFrame key={id} id={id} title={id} src={src} allowFullScreen scale={scale} />
+          <IFrame key={src} id={id} title={id} src={src} allowFullScreen scale={scale} />
         </Fragment>
       ))}
     </Fragment>
