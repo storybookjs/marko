@@ -12,47 +12,6 @@
           "showRoots": true
         },
         "framework": "react",
-        "storySource": {
-          "source": "import * as React from 'react';\nimport { action } from '@storybook/addon-actions';\nimport { radios } from '@storybook/addon-knobs';\nimport Button, { Type } from './Button';\n\nexport default {\n  title: 'Docgen/Button',\n  component: Button,\n};\n\ntype Story = () => any;\n\nexport const SimpleButton: Story = () => {\n  const x = 0;\n  return <Button onClick={action('button clicked')}>OK {x}</Button>;\n};\n\nconst typeOptions = {\n  Default: 'default',\n  Action: 'action',\n};\n\nexport const WithType = () => (\n  <Button type={radios('Type', typeOptions, typeOptions.Default) as Type}>Label</Button>\n);\n",
-          "locationsMap": {
-            "docgen-button--simple-button": {
-              "startLoc": {
-                "col": 35,
-                "line": 13
-              },
-              "endLoc": {
-                "col": 1,
-                "line": 16
-              },
-              "startBody": {
-                "col": 35,
-                "line": 13
-              },
-              "endBody": {
-                "col": 1,
-                "line": 16
-              }
-            },
-            "docgen-button--with-type": {
-              "startLoc": {
-                "col": 24,
-                "line": 23
-              },
-              "endLoc": {
-                "col": 1,
-                "line": 25
-              },
-              "startBody": {
-                "col": 24,
-                "line": 23
-              },
-              "endBody": {
-                "col": 1,
-                "line": 25
-              }
-            }
-          }
-        },
         "__id": "docgen-button--simple-button"
       }
     },
@@ -68,47 +27,6 @@
           "showRoots": true
         },
         "framework": "react",
-        "storySource": {
-          "source": "import * as React from 'react';\nimport { action } from '@storybook/addon-actions';\nimport { radios } from '@storybook/addon-knobs';\nimport Button, { Type } from './Button';\n\nexport default {\n  title: 'Docgen/Button',\n  component: Button,\n};\n\ntype Story = () => any;\n\nexport const SimpleButton: Story = () => {\n  const x = 0;\n  return <Button onClick={action('button clicked')}>OK {x}</Button>;\n};\n\nconst typeOptions = {\n  Default: 'default',\n  Action: 'action',\n};\n\nexport const WithType = () => (\n  <Button type={radios('Type', typeOptions, typeOptions.Default) as Type}>Label</Button>\n);\n",
-          "locationsMap": {
-            "docgen-button--simple-button": {
-              "startLoc": {
-                "col": 35,
-                "line": 13
-              },
-              "endLoc": {
-                "col": 1,
-                "line": 16
-              },
-              "startBody": {
-                "col": 35,
-                "line": 13
-              },
-              "endBody": {
-                "col": 1,
-                "line": 16
-              }
-            },
-            "docgen-button--with-type": {
-              "startLoc": {
-                "col": 24,
-                "line": 23
-              },
-              "endLoc": {
-                "col": 1,
-                "line": 25
-              },
-              "startBody": {
-                "col": 24,
-                "line": 23
-              },
-              "endBody": {
-                "col": 1,
-                "line": 25
-              }
-            }
-          }
-        },
         "__id": "docgen-button--with-type"
       }
     },
@@ -124,29 +42,6 @@
           "showRoots": true
         },
         "framework": "react",
-        "storySource": {
-          "source": "import React from 'react';\nimport { linkTo } from '@storybook/addon-links';\nimport { Welcome } from '@storybook/react/demo';\n\nexport default {\n  title: 'Welcome',\n  component: Welcome,\n};\n\nexport const ToStorybook = () => <Welcome showApp={linkTo('Button')} />;\n\nToStorybook.story = {\n  name: 'to Storybook',\n};\n",
-          "locationsMap": {
-            "welcome--to-storybook": {
-              "startLoc": {
-                "col": 27,
-                "line": 10
-              },
-              "endLoc": {
-                "col": 71,
-                "line": 10
-              },
-              "startBody": {
-                "col": 27,
-                "line": 10
-              },
-              "endBody": {
-                "col": 71,
-                "line": 10
-              }
-            }
-          }
-        },
         "__id": "welcome--to-storybook"
       }
     },
@@ -162,47 +57,6 @@
           "showRoots": true
         },
         "framework": "react",
-        "storySource": {
-          "source": "import React from 'react';\nimport { action } from '@storybook/addon-actions';\nimport { Button } from './Button';\n\nexport default {\n  title: 'Button',\n  component: Button,\n};\n\nexport const Text = () => <Button onClick={action('clicked')}>Hello Button</Button>;\n\nexport const Emoji = () => (\n  <Button onClick={action('clicked')}>\n    <span role=\"img\" aria-label=\"so cool\">\n      😀 😎 👍 💯\n    </span>\n  </Button>\n);\n",
-          "locationsMap": {
-            "button--text": {
-              "startLoc": {
-                "col": 20,
-                "line": 10
-              },
-              "endLoc": {
-                "col": 83,
-                "line": 10
-              },
-              "startBody": {
-                "col": 20,
-                "line": 10
-              },
-              "endBody": {
-                "col": 83,
-                "line": 10
-              }
-            },
-            "button--emoji": {
-              "startLoc": {
-                "col": 21,
-                "line": 12
-              },
-              "endLoc": {
-                "col": 1,
-                "line": 18
-              },
-              "startBody": {
-                "col": 21,
-                "line": 12
-              },
-              "endBody": {
-                "col": 1,
-                "line": 18
-              }
-            }
-          }
-        },
         "__id": "button--text"
       }
     },
@@ -218,47 +72,6 @@
           "showRoots": true
         },
         "framework": "react",
-        "storySource": {
-          "source": "import React from 'react';\nimport { action } from '@storybook/addon-actions';\nimport { Button } from './Button';\n\nexport default {\n  title: 'Button',\n  component: Button,\n};\n\nexport const Text = () => <Button onClick={action('clicked')}>Hello Button</Button>;\n\nexport const Emoji = () => (\n  <Button onClick={action('clicked')}>\n    <span role=\"img\" aria-label=\"so cool\">\n      😀 😎 👍 💯\n    </span>\n  </Button>\n);\n",
-          "locationsMap": {
-            "button--text": {
-              "startLoc": {
-                "col": 20,
-                "line": 10
-              },
-              "endLoc": {
-                "col": 83,
-                "line": 10
-              },
-              "startBody": {
-                "col": 20,
-                "line": 10
-              },
-              "endBody": {
-                "col": 83,
-                "line": 10
-              }
-            },
-            "button--emoji": {
-              "startLoc": {
-                "col": 21,
-                "line": 12
-              },
-              "endLoc": {
-                "col": 1,
-                "line": 18
-              },
-              "startBody": {
-                "col": 21,
-                "line": 12
-              },
-              "endBody": {
-                "col": 1,
-                "line": 18
-              }
-            }
-          }
-        },
         "__id": "button--emoji"
       }
     },

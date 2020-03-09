@@ -5,150 +5,21 @@
       "kind": "Welcome",
       "name": "to Storybook",
       "story": "to Storybook",
-      "parameters": {
-        "fileName": "./src/stories/0-Welcome.stories.tsx",
-        "docs": {},
-        "options": {
-          "showRoots": true
-        },
-        "framework": "react",
-        "storySource": {
-          "source": "import React from 'react';\nimport { linkTo } from '@storybook/addon-links';\nimport { Welcome } from '@storybook/react/demo';\n\nexport default {\n  title: 'Welcome',\n  component: Welcome,\n};\n\nexport const ToStorybook = () => <Welcome showApp={linkTo('Button')} />;\n\nToStorybook.story = {\n  name: 'to Storybook',\n};\n",
-          "locationsMap": {
-            "welcome--to-storybook": {
-              "startLoc": {
-                "col": 27,
-                "line": 10
-              },
-              "endLoc": {
-                "col": 71,
-                "line": 10
-              },
-              "startBody": {
-                "col": 27,
-                "line": 10
-              },
-              "endBody": {
-                "col": 71,
-                "line": 10
-              }
-            }
-          }
-        },
-        "__id": "welcome--to-storybook"
-      }
+      "parameters": {}
     },
     "button--text": {
       "id": "button--text",
       "kind": "Button",
       "name": "Text",
       "story": "Text",
-      "parameters": {
-        "fileName": "./src/stories/1-Button.stories.tsx",
-        "docs": {},
-        "options": {
-          "showRoots": true
-        },
-        "framework": "react",
-        "storySource": {
-          "source": "import React from 'react';\nimport { action } from '@storybook/addon-actions';\nimport { Button } from './Button';\n\nexport default {\n  title: 'Button',\n  component: Button,\n};\n\nexport const Text = () => <Button onClick={action('clicked')}>Hello Button</Button>;\n\nexport const Emoji = () => (\n  <Button onClick={action('clicked')}>\n    <span role=\"img\" aria-label=\"so cool\">\n      😀 😎 👍 💯\n    </span>\n  </Button>\n);\n",
-          "locationsMap": {
-            "button--text": {
-              "startLoc": {
-                "col": 20,
-                "line": 10
-              },
-              "endLoc": {
-                "col": 83,
-                "line": 10
-              },
-              "startBody": {
-                "col": 20,
-                "line": 10
-              },
-              "endBody": {
-                "col": 83,
-                "line": 10
-              }
-            },
-            "button--emoji": {
-              "startLoc": {
-                "col": 21,
-                "line": 12
-              },
-              "endLoc": {
-                "col": 1,
-                "line": 18
-              },
-              "startBody": {
-                "col": 21,
-                "line": 12
-              },
-              "endBody": {
-                "col": 1,
-                "line": 18
-              }
-            }
-          }
-        },
-        "__id": "button--text"
-      }
+      "parameters": {}
     },
     "button--emoji": {
       "id": "button--emoji",
       "kind": "Button",
       "name": "Emoji",
       "story": "Emoji",
-      "parameters": {
-        "fileName": "./src/stories/1-Button.stories.tsx",
-        "docs": {},
-        "options": {
-          "showRoots": true
-        },
-        "framework": "react",
-        "storySource": {
-          "source": "import React from 'react';\nimport { action } from '@storybook/addon-actions';\nimport { Button } from './Button';\n\nexport default {\n  title: 'Button',\n  component: Button,\n};\n\nexport const Text = () => <Button onClick={action('clicked')}>Hello Button</Button>;\n\nexport const Emoji = () => (\n  <Button onClick={action('clicked')}>\n    <span role=\"img\" aria-label=\"so cool\">\n      😀 😎 👍 💯\n    </span>\n  </Button>\n);\n",
-          "locationsMap": {
-            "button--text": {
-              "startLoc": {
-                "col": 20,
-                "line": 10
-              },
-              "endLoc": {
-                "col": 83,
-                "line": 10
-              },
-              "startBody": {
-                "col": 20,
-                "line": 10
-              },
-              "endBody": {
-                "col": 83,
-                "line": 10
-              }
-            },
-            "button--emoji": {
-              "startLoc": {
-                "col": 21,
-                "line": 12
-              },
-              "endLoc": {
-                "col": 1,
-                "line": 18
-              },
-              "startBody": {
-                "col": 21,
-                "line": 12
-              },
-              "endBody": {
-                "col": 1,
-                "line": 18
-              }
-            }
-          }
-        },
-        "__id": "button--emoji"
-      }
+      "parameters": {}
     }
   }
 }
