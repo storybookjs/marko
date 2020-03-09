@@ -28,7 +28,7 @@ export interface TooltipLinkListProps {
 
 const Item: FunctionComponent<TooltipLinkListProps['links'][number]> = props => {
   const { LinkWrapper, onClick: onClickFromProps, ...rest } = props;
-  const { id, title, href, active } = rest;
+  const { title, href, active } = rest;
   const onClick = useCallback(
     (event: SyntheticEvent) => {
       onClickFromProps(event, rest);
@@ -40,7 +40,6 @@ const Item: FunctionComponent<TooltipLinkListProps['links'][number]> = props => 
 
   return (
     <ListItem
-      key={id || (title as string)}
       title={title}
       active={active}
       href={href}
@@ -57,7 +56,7 @@ export const TooltipLinkList: FunctionComponent<TooltipLinkListProps> = ({
 }) => (
   <List>
     {links.map(({ isGatsby, ...p }) => (
-      <Item LinkWrapper={isGatsby ? LinkWrapper : null} {...p} />
+      <Item key={p.id} LinkWrapper={isGatsby ? LinkWrapper : null} {...p} />
     ))}
   </List>
 );
