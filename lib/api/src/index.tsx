@@ -13,14 +13,11 @@ import React, {
 import {
   SET_STORIES,
   STORY_CHANGED,
-  SELECT_STORY,
   SHARED_STATE_CHANGED,
   SHARED_STATE_SET,
-  NAVIGATE_URL,
 } from '@storybook/core-events';
 import { RenderData as RouterData } from '@storybook/router';
 import { Listener } from '@storybook/channels';
-import { logger } from '@storybook/client-logger';
 import initProviderApi, { SubAPI as ProviderAPI, Provider } from './init-provider-api';
 
 import { createContext } from './context';
@@ -34,21 +31,8 @@ import initNotifications, {
   SubAPI as NotificationAPI,
 } from './modules/notifications';
 import initStories, { SubState as StoriesSubState, SubAPI as StoriesAPI } from './modules/stories';
-import initRefs, {
-  SubState as RefsSubState,
-  SubAPI as RefsAPI,
-  getSourceType,
-} from './modules/refs';
-import {
-  StoriesRaw,
-  StoriesHash,
-  Story,
-  Root,
-  Group,
-  isGroup,
-  isRoot,
-  isStory,
-} from './lib/stories';
+import initRefs, { SubState as RefsSubState, SubAPI as RefsAPI } from './modules/refs';
+import { StoriesHash, Story, Root, Group, isGroup, isRoot, isStory } from './lib/stories';
 import initLayout, {
   ActiveTabs,
   SubState as LayoutSubState,
@@ -200,77 +184,6 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
 
     initProviderApi({ provider, store, api });
 
-    api.on(STORY_CHANGED, (id: string) => {
-      const options = api.getParameters(id, 'options');
-
-      if (options) {
-        api.setOptions(options);
-      }
-    });
-
-    api.on(SET_STORIES, function handleSetStories(data: { stories: StoriesRaw }) {
-      // the event originates from an iframe, event.source is the iframe's location origin + pathname
-      const { source }: { source: string } = this;
-      const sourceType = getSourceType(source);
-
-      switch (sourceType) {
-        // if it's a local source, we do nothing special
-        case 'local': {
-          api.setStories(data.stories);
-          const options = storyId
-            ? api.getParameters(storyId, 'options')
-            : api.getParameters(Object.keys(data.stories)[0], 'options');
-          api.setOptions(options);
-          break;
-        }
-
-        // if it's a ref, we need to map the incoming stories to a prefixed version, so it cannot conflict with others
-        case 'external': {
-          const ref = api.findRef(source);
-          api.setRef(ref.id, { ...ref, ...data }, true);
-          break;
-        }
-
-        // if we couldn't find the source, something risky happened, we ignore the input, and log a warning
-        default: {
-          logger.warn('received a SET_STORIES frame that was not configured as a ref');
-          break;
-        }
-      }
-    });
-    api.on(SELECT_STORY, function selectStoryHandler({
-      kind,
-      story,
-      ...rest
-    }: {
-      kind: string;
-      story: string;
-      [k: string]: any;
-    }) {
-      const { source }: { source: string } = this;
-      const sourceType = getSourceType(source);
-
-      switch (sourceType) {
-        case 'local': {
-          api.selectStory(kind, story, rest);
-          break;
-        }
-
-        case 'external': {
-          const ref = api.findRef(source);
-          api.selectStory(kind, story, { ...rest, ref: ref.id });
-          break;
-        }
-        default: {
-          logger.warn('received a SET_STORIES frame that was not configured as a ref');
-          break;
-        }
-      }
-    });
-    api.on(NAVIGATE_URL, (url: string, options: { [k: string]: any }) => {
-      api.navigateUrl(url, options);
-    });
-
     this.state = state;
     this.api = api;
   }
@@ -294,7 +207,7 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
     // a chance to do things that call other modules' APIs.
     this.modules.forEach(({ init }) => {
       if (init) {
-        init({ api: this.api });
+        init();
       }
     });
   }

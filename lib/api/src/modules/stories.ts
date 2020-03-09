@@ -1,6 +1,8 @@
 import { DOCS_MODE } from 'global';
 import { toId, sanitize } from '@storybook/csf';
 
+import { STORY_CHANGED, SET_STORIES, SELECT_STORY } from '@storybook/core-events';
+import { logger } from '@storybook/client-logger';
 import {
   transformStoriesRawToStoriesHash,
   StoriesHash,
@@ -14,7 +16,7 @@ import {
 } from '../lib/stories';
 
 import { Module } from '../index';
-import { InceptionRef, Refs } from './refs';
+import { InceptionRef, Refs, getSourceType } from './refs';
 
 type Direction = -1 | 1;
 type ParameterName = string;
@@ -46,6 +48,7 @@ export interface SubAPI {
 const split = /((\w*)_)?(.*)/;
 
 const initStoriesApi = ({
+  fullAPI,
   store,
   navigate,
   provider,
@@ -264,6 +267,78 @@ const initStoriesApi = ({
     },
   };
 
+  const init = () => {
+    fullAPI.on(STORY_CHANGED, (id: string) => {
+      const options = fullAPI.getParameters(id, 'options');
+
+      if (options) {
+        fullAPI.setOptions(options);
+      }
+    });
+
+    fullAPI.on(SET_STORIES, function handleSetStories(data: { stories: StoriesRaw }) {
+      // the event originates from an iframe, event.source is the iframe's location origin + pathname
+      const { storyId } = store.getState();
+      const { source }: { source: string } = this;
+      const sourceType = getSourceType(source);
+
+      switch (sourceType) {
+        // if it's a local source, we do nothing special
+        case 'local': {
+          fullAPI.setStories(data.stories);
+          const options = storyId
+            ? fullAPI.getParameters(storyId, 'options')
+            : fullAPI.getParameters(Object.keys(data.stories)[0], 'options');
+          fullAPI.setOptions(options);
+          break;
+        }
+
+        // if it's a ref, we need to map the incoming stories to a prefixed version, so it cannot conflict with others
+        case 'external': {
+          const ref = fullAPI.findRef(source);
+          fullAPI.setRef(ref.id, { ...ref, ...data }, true);
+          break;
+        }
+
+        // if we couldn't find the source, something risky happened, we ignore the input, and log a warning
+        default: {
+          logger.warn('received a SET_STORIES frame that was not configured as a ref');
+          break;
+        }
+      }
+    });
+
+    fullAPI.on(SELECT_STORY, function selectStoryHandler({
+      kind,
+      story,
+      ...rest
+    }: {
+      kind: string;
+      story: string;
+      [k: string]: any;
+    }) {
+      const { source }: { source: string } = this;
+      const sourceType = getSourceType(source);
+
+      switch (sourceType) {
+        case 'local': {
+          fullAPI.selectStory(kind, story, rest);
+          break;
+        }
+
+        case 'external': {
+          const ref = fullAPI.findRef(source);
+          fullAPI.selectStory(kind, story, { ...rest, ref: ref.id });
+          break;
+        }
+        default: {
+          logger.warn('received a SET_STORIES frame that was not configured as a ref');
+          break;
+        }
+      }
+    });
+  };
+
   // Recursively traverse storiesHash from the initial storyId until finding
   // the leaf story.
   const findLeafStoryId = (storiesHash: StoriesHash, storyId: string): string => {
@@ -283,6 +358,7 @@ const initStoriesApi = ({
       viewMode: initialViewMode,
       storiesConfigured: false,
     },
+    init,
   };
 };
 export default initStoriesApi;
