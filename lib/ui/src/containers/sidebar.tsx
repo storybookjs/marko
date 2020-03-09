@@ -7,7 +7,7 @@ import { Consumer, Combo, StoriesHash, Story } from '@storybook/api';
 import SidebarComponent from '../components/sidebar/Sidebar';
 import { useMenu } from './menu';
 
-type Item = StoriesHash[keyof StoriesHash];
+export type Item = StoriesHash[keyof StoriesHash];
 
 export const collapseAllStories = (stories: StoriesHash) => {
   // keep track of component IDs that have been rewritten to the ID of their first leaf child
@@ -144,7 +144,7 @@ const Sidebar: FunctionComponent<{}> = React.memo(() => {
     const menu = useMenu(api, isFullscreen, showPanel, showNav, enableShortcuts);
 
     return {
-      loading: !storiesConfigured,
+      isLoading: !storiesConfigured,
       title: name,
       url,
       stories,

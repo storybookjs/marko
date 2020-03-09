@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-interface WithLifecyleProps {
+export interface WithLifecyleProps {
   storyFn: Function;
   beforeEach?: Function;
   afterEach?: Function;

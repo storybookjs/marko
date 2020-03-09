@@ -117,36 +117,36 @@ export const Link: FunctionComponent<{
 Link.displayName = 'Link';
 
 export interface StoriesProps {
-  loading: boolean;
+  isLoading: boolean;
   stories: StoriesHash;
   storyId?: undefined | string;
   className?: undefined | string;
 }
 
 const SidebarStories: FunctionComponent<StoriesProps> = memo(
-  ({ stories, storyId, loading, className, ...rest }) => {
+  ({ stories, storyId, isLoading, className, ...rest }) => {
     const list = Object.entries(stories);
 
-    if (loading) {
+    if (isLoading) {
       return (
         <Wrapper className={className}>
-          <SidebarItem loading />
-          <SidebarItem loading />
-          <SidebarItem depth={1} loading />
-          <SidebarItem depth={1} loading />
-          <SidebarItem depth={2} loading />
-          <SidebarItem depth={3} loading />
-          <SidebarItem depth={3} loading />
-          <SidebarItem depth={3} loading />
-          <SidebarItem depth={1} loading />
-          <SidebarItem depth={1} loading />
-          <SidebarItem depth={1} loading />
-          <SidebarItem depth={2} loading />
-          <SidebarItem depth={2} loading />
-          <SidebarItem depth={2} loading />
-          <SidebarItem depth={3} loading />
-          <SidebarItem loading />
-          <SidebarItem loading />
+          <SidebarItem isLoading />
+          <SidebarItem isLoading />
+          <SidebarItem depth={1} isLoading />
+          <SidebarItem depth={1} isLoading />
+          <SidebarItem depth={2} isLoading />
+          <SidebarItem depth={3} isLoading />
+          <SidebarItem depth={3} isLoading />
+          <SidebarItem depth={3} isLoading />
+          <SidebarItem depth={1} isLoading />
+          <SidebarItem depth={1} isLoading />
+          <SidebarItem depth={1} isLoading />
+          <SidebarItem depth={2} isLoading />
+          <SidebarItem depth={2} isLoading />
+          <SidebarItem depth={2} isLoading />
+          <SidebarItem depth={3} isLoading />
+          <SidebarItem isLoading />
+          <SidebarItem isLoading />
         </Wrapper>
       );
     }

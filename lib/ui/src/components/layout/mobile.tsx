@@ -122,7 +122,7 @@ const Bar = styled.nav(
   })
 );
 
-interface Page {
+export interface Page {
   key: string;
   route: FunctionComponent;
   render: FunctionComponent;
@@ -143,7 +143,7 @@ export interface MobileProps {
   pages: Page[];
 }
 
-interface MobileState {
+export interface MobileState {
   active: ActiveTabsType;
 }
 

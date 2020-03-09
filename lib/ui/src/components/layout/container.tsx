@@ -147,15 +147,15 @@ const HoverBlocker = styled.div({
   width: '100vw',
 });
 
-type PanelPosition = 'right' | 'bottom';
-interface Bounds {
+export type PanelPosition = 'right' | 'bottom';
+export interface Bounds {
   top: number;
   width: number;
   left: number;
   height: number;
 }
 
-interface Coordinates {
+export interface Coordinates {
   x: number;
   y: number;
 }
@@ -282,14 +282,14 @@ const getPanelPosition = ({
       };
 };
 
-interface BasePanelRenderProps {
+export interface BasePanelRenderProps {
   viewMode?: State['viewMode'];
   animate: boolean;
   isFullscreen?: boolean;
   position: Bounds;
 }
 
-interface LayoutRenderProps {
+export interface LayoutRenderProps {
   mainProps: BasePanelRenderProps;
   previewProps: BasePanelRenderProps & {
     docsOnly: boolean;
@@ -304,12 +304,12 @@ interface LayoutRenderProps {
   };
 }
 
-interface LayoutState {
+export interface LayoutState {
   isDragging: 'nav' | 'panel' | false;
   resizerNav: Coordinates;
   resizerPanel: Coordinates;
 }
-interface LayoutProps {
+export interface LayoutProps {
   children: (data: LayoutRenderProps) => ReactNode;
   panelCount: number;
   bounds: {
