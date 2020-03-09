@@ -1,7 +1,7 @@
 import Draggable, { DraggableEvent, DraggableData } from 'react-draggable';
 import { styled } from '@storybook/theming';
 
-type Axis = 'x' | 'y';
+export type Axis = 'x' | 'y';
 
 const Handle = styled.div<{ isDragging: boolean; axis: Axis }>(
   ({ theme, isDragging }) => ({

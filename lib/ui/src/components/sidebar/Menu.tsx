@@ -5,7 +5,7 @@ import { WithTooltip, TooltipLinkList, Button, Icons } from '@storybook/componen
 
 export type MenuList = ComponentProps<typeof TooltipLinkList>['links'];
 
-type MenuButtonProps = ComponentProps<typeof Button> &
+export type MenuButtonProps = ComponentProps<typeof Button> &
   // FIXME: Button should extends from the native <button>
   ComponentProps<'button'> & {
     highlighted: boolean;

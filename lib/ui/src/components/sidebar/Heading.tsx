@@ -4,7 +4,7 @@ import { styled } from '@storybook/theming';
 import { Brand } from './Brand';
 import { SidebarMenu, MenuList } from './Menu';
 
-interface HeadingProps {
+export interface HeadingProps {
   menuHighlighted?: boolean;
   menu: MenuList;
 }

@@ -5,7 +5,7 @@ import { Consumer, Combo, StoriesHash, isRoot, isGroup, isStory } from '@storybo
 
 import { Preview } from '../components/preview/preview';
 
-type Item = StoriesHash[keyof StoriesHash];
+export type Item = StoriesHash[keyof StoriesHash];
 
 const nonAlphanumSpace = /[^a-z0-9 ]/gi;
 const doubleSpace = /\s\s/gi;

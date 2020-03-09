@@ -21,7 +21,7 @@ import { ExpanderContext } from './Tree/State';
 
 import { Item, DataSet, BooleanSet } from './RefHelpers';
 
-type ListitemProps = ComponentProps<typeof ListItem>;
+export type ListitemProps = ComponentProps<typeof ListItem>;
 
 const Section = styled.section();
 

@@ -6,7 +6,7 @@ import { RefIndicator } from './RefIndicator';
 import { AuthBlock, ErrorBlock, LoaderBlock, ContentBlock } from './RefBlocks';
 import { getType, RefType } from './RefHelpers';
 
-interface RefProps {
+export interface RefProps {
   storyId: string;
   filter: string;
   isHidden: boolean;

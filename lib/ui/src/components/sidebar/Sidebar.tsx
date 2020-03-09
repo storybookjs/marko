@@ -10,9 +10,7 @@ import { Search } from './Search';
 import { filteredLength } from './Tree/utils';
 
 import { Ref } from './Refs';
-
-type Refs = State['refs'];
-type RefType = Refs[keyof Refs];
+import { RefType, Refs } from './RefHelpers';
 
 const Container = styled.nav(
   {

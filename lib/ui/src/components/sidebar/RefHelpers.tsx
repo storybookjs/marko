@@ -1,6 +1,6 @@
 import { StoriesHash, State } from '@storybook/api';
 
-type Refs = State['refs'];
+export type Refs = State['refs'];
 export type RefType = Refs[keyof Refs];
 export type BooleanSet = Record<string, boolean>;
 export type Item = StoriesHash[keyof StoriesHash];

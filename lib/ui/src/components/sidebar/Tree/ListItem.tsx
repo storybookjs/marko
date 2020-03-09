@@ -32,7 +32,7 @@ const Expander = styled.span<ExpanderProps>(
   }
 );
 
-type IconProps = ComponentProps<typeof Icons> & {
+export type IconProps = ComponentProps<typeof Icons> & {
   className: string; // FIXME: Icons should extended its typing from the native <svg>
   isSelected?: boolean;
 };
@@ -106,7 +106,7 @@ export const Item = styled.a<{
         }
 );
 
-type ListItemProps = ComponentProps<typeof Item> & {
+export type ListItemProps = ComponentProps<typeof Item> & {
   childIds?: string[] | null;
   id: string;
   isComponent: boolean;
