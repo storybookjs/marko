@@ -1,10 +1,20 @@
-import React, { FunctionComponent, useMemo, Fragment, ComponentProps } from 'react';
+import React, { FunctionComponent, useMemo, Fragment, ComponentProps, useCallback } from 'react';
 
 import { Icons, WithTooltip, Spaced, TooltipLinkList } from '@storybook/components';
 import { styled } from '@storybook/theming';
+import { useStorybookApi } from '@storybook/api';
 
 import { getType, RefType } from './RefHelpers';
 import { MenuItemIcon } from './Menu';
+
+export type ClickHandler = ComponentProps<typeof TooltipLinkList>['links'][number]['onClick'];
+export interface IndicatorIconProps {
+  type: ReturnType<typeof getType>;
+}
+export interface CurrentVersionProps {
+  url: string;
+  versions: RefType['versions'];
+}
 
 const IndicatorPlacement = styled.aside(
   ({ theme }) => ({
@@ -25,7 +35,7 @@ const Hr = styled.hr(({ theme }) => ({
   borderTop: `1px solid ${theme.color.mediumlight}`,
 }));
 
-const IndicatorIcon: FunctionComponent<{ type: ReturnType<typeof getType> }> = ({ type }) => {
+const IndicatorIcon: FunctionComponent<IndicatorIconProps> = ({ type }) => {
   let icon: ComponentProps<typeof Icons>['icon'];
 
   switch (true) {
@@ -98,10 +108,7 @@ const Version = styled.div({
   },
 });
 
-const CurrentVersion: FunctionComponent<{ url: string; versions: RefType['versions'] }> = ({
-  url,
-  versions,
-}) => {
+const CurrentVersion: FunctionComponent<CurrentVersionProps> = ({ url, versions }) => {
   const currentVersionId = useMemo(() => Object.entries(versions).find(([k, v]) => v === url)[0], [
     url,
     versions,
@@ -118,9 +125,18 @@ const CurrentVersion: FunctionComponent<{ url: string; versions: RefType['versio
 export const RefIndicator: FunctionComponent<RefType & {
   type: ReturnType<typeof getType>;
 }> = ({ type, ...ref }) => {
+  const api = useStorybookApi();
   const list = useMemo(() => Object.values(ref.stories || {}), [ref.stories]);
   const componentCount = useMemo(() => list.filter(v => v.isComponent).length, [list]);
   const leafCount = useMemo(() => list.filter(v => v.isLeaf).length, [list]);
+
+  const changeVersion = useCallback(
+    ((event, item) => {
+      event.preventDefault();
+      api.changeRefVersion(ref.id, item.href);
+    }) as ClickHandler,
+    []
+  );
 
   return (
     <IndicatorPlacement>
@@ -167,6 +183,7 @@ export const RefIndicator: FunctionComponent<RefType & {
                 id,
                 title: id,
                 href,
+                onClick: changeVersion,
               }))}
             />
           }
