@@ -192,7 +192,7 @@ export interface ListItemProps extends Omit<ComponentProps<typeof Item>, 'href' 
   right?: ReactNode;
   active?: boolean;
   disabled?: boolean;
-  href?: string | object;
+  href?: string;
   LinkWrapper?: LinkWrapperType;
 }
 
