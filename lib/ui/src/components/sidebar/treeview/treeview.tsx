@@ -294,14 +294,14 @@ const getPropsForTree = memoize(50)(
   }
 );
 
-interface TreeStateState {
+export interface TreeStateState {
   unfilteredExpanded: SelectedSet;
   filteredExpanded: ExpandedSet;
   filter: string | null;
   lastSelectedId: string | null;
 }
 
-interface TreeStateProps {
+export interface TreeStateProps {
   dataset: Dataset;
   selectedId: string;
   prefix: string;

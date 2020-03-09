@@ -7,7 +7,7 @@ import { Consumer, Combo, StoriesHash, Story } from '@storybook/api';
 import SidebarComponent from '../components/sidebar/Sidebar';
 import { useMenu } from './menu';
 
-type Item = StoriesHash[keyof StoriesHash];
+export type Item = StoriesHash[keyof StoriesHash];
 
 export const collapseAllStories = (stories: StoriesHash) => {
   // keep track of component IDs that have been rewritten to the ID of their first leaf child
