@@ -110,7 +110,7 @@ export const Item = styled(({ className, children, id }) => (
     }
 );
 
-type SidebarItemProps = ComponentProps<typeof Item> & {
+export type SidebarItemProps = ComponentProps<typeof Item> & {
   isComponent?: boolean;
   isLeaf?: boolean;
   isExpanded?: boolean;
