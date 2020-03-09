@@ -141,7 +141,7 @@ export const RefIndicator: FunctionComponent<RefType & {
   return (
     <IndicatorPlacement>
       <WithTooltip
-        placement="top"
+        placement="bottom-start"
         trigger="click"
         tooltip={
           <MessageWrapper>
@@ -174,7 +174,7 @@ export const RefIndicator: FunctionComponent<RefType & {
 
       {ref.versions ? (
         <WithTooltip
-          placement="top"
+          placement="bottom-start"
           trigger="click"
           tooltip={
             <TooltipLinkList
