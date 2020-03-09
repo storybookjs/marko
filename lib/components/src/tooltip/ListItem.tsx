@@ -192,7 +192,7 @@ export interface ListItemProps {
   right?: ReactNode;
   active?: boolean;
   disabled?: boolean;
-  href?: string | object;
+  href?: string;
   LinkWrapper?: LinkWrapperType;
   onClick?: () => void;
 }
