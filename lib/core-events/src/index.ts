@@ -19,6 +19,10 @@ enum events {
   STORY_MISSING = 'storyMissing',
   STORY_ERRORED = 'storyErrored',
   STORY_THREW_EXCEPTION = 'storyThrewException',
+  // Tell the story store to update (a subset of) a stories arg values
+  UPDATE_STORY_ARGS = 'updateStoryArgs',
+  // The values of a stories args just changed
+  STORY_ARGS_UPDATED = 'storyArgsChanged',
   REGISTER_SUBSCRIPTION = 'registerSubscription',
   // Tell the manager that the user pressed a key in the preview
   PREVIEW_KEYDOWN = 'previewKeydown',
@@ -50,6 +54,8 @@ export const {
   STORY_MISSING,
   STORY_ERRORED,
   STORY_THREW_EXCEPTION,
+  UPDATE_STORY_ARGS,
+  STORY_ARGS_UPDATED,
   REGISTER_SUBSCRIPTION,
   PREVIEW_KEYDOWN,
   SELECT_STORY,
