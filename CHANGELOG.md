@@ -1,3 +1,24 @@
+## 6.0.0-alpha.22 (March 10, 2020)
+
+### Breaking Changes
+
+- MDX: Compile to improved source-loader format ([#10084](https://github.com/storybookjs/storybook/pull/10084))
+
+### Features
+
+- Core: Add args feature ([#10014](https://github.com/storybookjs/storybook/pull/10014))
+
+### Maintenance
+
+- Tech/improvements ([#10083](https://github.com/storybookjs/storybook/pull/10083))
+- Few minor improvements extracted from the inception feature PR ([#10072](https://github.com/storybookjs/storybook/pull/10072))
+- Tech/improvements ([#10070](https://github.com/storybookjs/storybook/pull/10070))
+
+### Dependency Upgrades
+
+- Yarn 2: Add missing dependencies ([#10012](https://github.com/storybookjs/storybook/pull/10012))
+- Security: Remove usage of a vulnerable version of serialize-javascript ([#10071](https://github.com/storybookjs/storybook/pull/10071))
+
 ## 6.0.0-alpha.21 (March 5, 2020)
 
 ### Breaking Changes

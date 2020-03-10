@@ -75,8 +75,8 @@ export const getSourceProps = (
       .map(sourceId => {
         const data = storyStore.fromId(sourceId);
         if (data && data.parameters) {
-          const { mdxSource, storySource } = data.parameters;
-          return mdxSource || (storySource && extract(sourceId, storySource));
+          const { storySource } = data.parameters;
+          return storySource && extract(sourceId, storySource);
         }
         return '';
       })

@@ -109,6 +109,10 @@ interface Children {
   children: ReactNode | ((props: Combo) => ReactNode);
 }
 
+export interface Args {
+  [key: string]: any;
+}
+
 type StatePartial = Partial<State>;
 
 export type ManagerProviderProps = Children & RouterData & ProviderData & DocsModeData;
@@ -390,4 +394,14 @@ export function useAddonState<S>(addonId: string, defaultState?: S) {
 export function useStoryState<S>(defaultState?: S) {
   const { storyId } = useStorybookState();
   return useSharedState<S>(`story-state-${storyId}`, defaultState);
+}
+
+export function useArgs(): [Args, (newArgs: Args) => void] {
+  const {
+    api: { getCurrentStoryData, updateStoryArgs },
+  } = useStorybookApi();
+
+  const { id, args } = getCurrentStoryData();
+
+  return [args, (newArgs: Args) => updateStoryArgs(id, newArgs)];
 }

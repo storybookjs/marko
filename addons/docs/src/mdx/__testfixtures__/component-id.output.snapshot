@@ -35,7 +35,7 @@ MDXContent.isMDXComponent = true;
 export const componentNotes = () => <Button>Component notes</Button>;
 componentNotes.story = {};
 componentNotes.story.name = 'component notes';
-componentNotes.story.parameters = { mdxSource: '<Button>Component notes</Button>' };
+componentNotes.story.parameters = { storySource: { source: '<Button>Component notes</Button>' } };
 
 const componentMeta = { title: 'Button', id: 'button-id', includeStories: ['componentNotes'] };
 
