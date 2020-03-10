@@ -32,7 +32,6 @@
     "@storybook/theming": "6.0.0-alpha.22",
     "@types/react-syntax-highlighter": "11.0.4",
     "@types/react-textarea-autosize": "^4.3.3",
-    "@types/refractor": "^2.8.0",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "lodash": "^4.17.15",
@@ -47,7 +46,6 @@
     "react-popper-tooltip": "^2.8.3",
     "react-syntax-highlighter": "^11.0.2",
     "react-textarea-autosize": "^7.1.0",
-    "refractor": "^2.10.0",
     "simplebar-react": "^1.0.0-alpha.6",
     "ts-dedent": "^1.1.1"
   },
