@@ -35,14 +35,15 @@ npm install rax --save
 npm install babel-loader @babel/core --save-dev
 ```
 
-## Step 2: Add a npm script
+## Step 2: Add npm scripts
 
-Then add the following NPM script to your `package.json` in order to start the storybook later in this guide:
+Then add the following scripts to your `package.json` in order to start the storybook later in this guide:
 
 ```json
 {
   "scripts": {
-    "storybook": "start-storybook"
+    "storybook": "start-storybook",
+    "build-storybook": "build-storybook"
   }
 }
 ```
@@ -54,7 +55,7 @@ For a basic Storybook configuration, the only thing you need to do is tell Story
 To do that, create a file at `.storybook/main.js` with the following content:
 
 ```js
-module.exports {
+module.exports = {
   stories: ['../src/**/*.stories.[tj]s'],
 };
 ```

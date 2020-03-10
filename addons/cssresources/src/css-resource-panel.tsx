@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { SyntaxHighlighter, Placeholder, Spaced, Icons } from '@storybook/components';
 import { STORY_RENDERED } from '@storybook/core-events';
 import { API } from '@storybook/api';

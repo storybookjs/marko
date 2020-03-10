@@ -26,7 +26,7 @@ const Icon = styled(Icons)({
   marginRight: 4,
 });
 
-const RotatingIcon = styled(Icon)(({ theme }) => ({
+const RotatingIcon = styled(Icon)<{}>(({ theme }) => ({
   animation: `${theme.animation.rotate360} 1s linear infinite;`,
 }));
 

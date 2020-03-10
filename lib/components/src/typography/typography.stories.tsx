@@ -2,73 +2,73 @@ import React from 'react';
 import { styled } from '@storybook/theming';
 import { storiesOf } from '@storybook/react';
 
-const Info = styled.div`
-  margin-bottom: 3rem;
-`;
+const Info = styled.div({
+  marginBottom: '3rem',
+});
 
-const Heading1 = styled.div`
-  font-size: ${props => props.theme.typography.size.l3}px;
-`;
-const Heading2 = styled.div`
-  font-size: ${props => props.theme.typography.size.l2}px;
-`;
-const Heading3 = styled.div`
-  font-size: ${props => props.theme.typography.size.l1}px;
-`;
-const Heading4 = styled.div`
-  font-size: ${props => props.theme.typography.size.m3}px;
-`;
-const Heading5 = styled.div`
-  font-size: ${props => props.theme.typography.size.m3}px;
-`;
-const Heading6 = styled.div`
-  font-size: ${props => props.theme.typography.size.m1}px;
-`;
-const Heading7 = styled.div`
-  font-size: ${props => props.theme.typography.size.s3}px;
-`;
-const Heading8 = styled.div`
-  font-size: ${props => props.theme.typography.size.s2}px;
-`;
-const Heading9 = styled.div`
-  font-size: ${props => props.theme.typography.size.s1}px;
-`;
+const Heading1 = styled.div(({ theme }) => ({
+  fontSize: theme.typography.size.l3,
+}));
+const Heading2 = styled.div(({ theme }) => ({
+  fontSize: theme.typography.size.l2,
+}));
+const Heading3 = styled.div(({ theme }) => ({
+  fontSize: theme.typography.size.l1,
+}));
+const Heading4 = styled.div(({ theme }) => ({
+  fontSize: theme.typography.size.m3,
+}));
+const Heading5 = styled.div(({ theme }) => ({
+  fontSize: theme.typography.size.m3,
+}));
+const Heading6 = styled.div(({ theme }) => ({
+  fontSize: theme.typography.size.m1,
+}));
+const Heading7 = styled.div(({ theme }) => ({
+  fontSize: theme.typography.size.s3,
+}));
+const Heading8 = styled.div(({ theme }) => ({
+  fontSize: theme.typography.size.s2,
+}));
+const Heading9 = styled.div(({ theme }) => ({
+  fontSize: theme.typography.size.s1,
+}));
 
-const HeadingWrapper = styled.div`
-  font-weight: ${props => props.theme.typography.weight.black};
-  > * {
-    margin-bottom: 1rem;
-  }
-`;
+const HeadingWrapper = styled.div(({ theme }) => ({
+  fontWeight: theme.typography.weight.black,
+  '> *': {
+    marginBottom: '1rem',
+  },
+}));
 
-const Type1 = styled.div`
-  font-size: ${props => props.theme.typography.size.s3}px;
-`;
-const Type2 = styled.div`
-  font-size: ${props => props.theme.typography.size.s2}px;
-`;
-const Type3 = styled.div`
-  font-size: ${props => props.theme.typography.size.s1}px;
-`;
+const Type1 = styled.div(({ theme }) => ({
+  fontSize: theme.typography.size.s3,
+}));
+const Type2 = styled.div(({ theme }) => ({
+  fontSize: theme.typography.size.s2,
+}));
+const Type3 = styled.div(({ theme }) => ({
+  fontSize: theme.typography.size.s1,
+}));
 
-const TypeWrapper = styled.div`
-  > * {
-    margin-bottom: 1rem;
-  }
-`;
+const TypeWrapper = styled.div({
+  '> *': {
+    marginBottom: '1rem',
+  },
+});
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  > * {
-    flex: 1;
-    padding-right: 40px;
-  }
-`;
+const Wrapper = styled.div({
+  display: 'flex',
+  flexDirection: 'row',
+  '> *': {
+    flex: 1,
+    paddingRight: 40,
+  },
+});
 
-const Page = styled.div`
-  padding: 3rem;
-`;
+const Page = styled.div({
+  padding: '3rem',
+});
 
 storiesOf('Basics/typography', module).add('all', () => (
   <Page>

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import { ThemeProvider, themes, convert, ensure } from '@storybook/theming';
+import { ThemeProvider, themes, ensure } from '@storybook/theming';
 import { SyntaxHighlighter } from './syntaxhighlighter';
 
 storiesOf('Basics/SyntaxHighlighter', module)
@@ -9,11 +9,74 @@ storiesOf('Basics/SyntaxHighlighter', module)
       npx npm-check-updates '/storybook/' -u && npm install
     </SyntaxHighlighter>
   ))
+  .add('css', () => (
+    <SyntaxHighlighter language="css" copyable={false}>
+      {`
+        .className {
+          border: 1px solid hotpink;
+        }
+      `}
+    </SyntaxHighlighter>
+  ))
+  .add('json', () => (
+    <SyntaxHighlighter language="json" copyable={false}>
+      {`
+      {
+        "number": 1,
+        "string": "something",
+        "object": {
+          "property": "value",
+        },
+        array: [1,2,3],
+      }
+      `}
+    </SyntaxHighlighter>
+  ))
+  .add('markdown', () => (
+    <SyntaxHighlighter language="markdown" copyable={false}>
+      {`
+      # a big header
+
+      some code:
+
+      ~~~js
+      const name = "a string";
+      ~~~
+
+      > crazy
+
+      `}
+    </SyntaxHighlighter>
+  ))
+  .add('yaml', () => (
+    <SyntaxHighlighter language="yaml" copyable={false}>
+      {`
+        product:
+        - sku         : BL394D
+          quantity    : 4
+          description : Basketball
+          price       : 450.00
+      `}
+    </SyntaxHighlighter>
+  ))
   .add('jsx', () => (
     <SyntaxHighlighter language="jsx" copyable={false}>
       {`import { Good, Things } from 'life';
 
         const result = () => <Good><Things all={true} /></Good>;
+
+        export { result as default };
+      `}
+    </SyntaxHighlighter>
+  ))
+  .add('js', () => (
+    <SyntaxHighlighter language="jsx" copyable={false}>
+      {`import React, { createElement } from 'react';
+        import { Good, Things } from 'life';
+
+        const result = () => createElement(Good, [createElement(Things, [], { all: true }), []);
+
+        console.log(result);
 
         export { result as default };
       `}

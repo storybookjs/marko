@@ -67,7 +67,7 @@ const Eject: FunctionComponent<EjectProps> = ({ baseUrl, storyId }) => (
   </IconButton>
 );
 
-const Bar = styled(props => <FlexBar {...props} />)({
+const Bar = styled(FlexBar)({
   position: 'absolute',
   left: 0,
   right: 0,

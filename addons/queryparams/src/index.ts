@@ -8,6 +8,7 @@ import { PARAM_KEY } from './constants';
 export const withQuery = makeDecorator({
   name: 'withQuery',
   parameterName: PARAM_KEY,
+  skipIfNoParametersOrOptions: true,
   wrapper: (getStory: StoryGetter, context: StoryContext, { parameters }) => {
     const { location } = document;
     const currentQuery = qs.parse(location.search, { ignoreQueryPrefix: true });

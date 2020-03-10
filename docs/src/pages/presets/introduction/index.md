@@ -31,7 +31,7 @@ That's it. When Storybook starts up, it will configure itself for typescript wit
 
 ## Preset configuration
 
-Presets can also take optional parameters. Sometimes these used by the preset itself, and another common case is to pass them through to configure webpack loaders that are used by the presets.
+Presets can also take optional parameters. These can be used by the preset itself or passed through to configure the webpack loaders that are used by the preset.
 
 Consider this example:
 
