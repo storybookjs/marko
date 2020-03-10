@@ -4,7 +4,7 @@ import memoize from 'memoizerific';
 
 import { version as currentVersion } from '../version';
 
-import { Module, API } from '../index';
+import { Module } from '../index';
 
 export interface Version {
   version: string;

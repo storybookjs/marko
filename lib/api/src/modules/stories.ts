@@ -40,7 +40,7 @@ export interface SubAPI {
   storyId: typeof toId;
   resolveStory: (storyId: StoryId, storiesHash: StoriesHash, refs: Refs) => Story | Group | Root;
   splitStoryId: (storyId: StoryId) => { ref?: string; id: StoryId };
-  selectStory: (kindOrId: string, story?: string, obj?: any) => void;
+  selectStory: (kindOrId: string, story?: string, obj?: { ref?: InceptionRef['id'] }) => void;
   getCurrentStoryData: () => Story | Group;
   setStories: (stories: StoriesRaw) => void;
   jumpToComponent: (direction: Direction) => void;
@@ -49,6 +49,7 @@ export interface SubAPI {
   getParameters: (storyId: StoryId, parameterName?: ParameterName) => Story['parameters'] | any;
   getCurrentParameter<S>(parameterName?: ParameterName): S;
   updateStoryArgs(id: StoryId, newArgs: Args): void;
+  findLeafStoryId(StoriesHash: StoriesHash, storyId: StoryId): StoryId;
 }
 
 // When adding a group, also add all of its children, depth first
@@ -86,7 +87,7 @@ const initStoriesApi = ({
 
       return undefined;
     },
-    splitStoryId: (storyId: StoryId) => {
+    splitStoryId: storyId => {
       if (storyId) {
         const [, , refId, realid] = storyId.match(split);
 
@@ -188,9 +189,9 @@ const initStoriesApi = ({
         navigate(`/${viewMode}/${result}`);
       }
     },
-    setStories: (input: StoriesRaw) => {
+    setStories: input => {
       // Now create storiesHash by reordering the above by group
-      const storiesHash: StoriesHash = transformStoriesRawToStoriesHash(
+      const storiesHash = transformStoriesRawToStoriesHash(
         input,
         (store.getState().storiesHash || {}) as StoriesHash,
         { provider }
@@ -225,7 +226,7 @@ const initStoriesApi = ({
         // leaf story from any depth.
         const hash = story.refId ? refs[story.refId].stories : storiesHash;
 
-        const firstLeafStoryId = findLeafStoryId(hash, storyId);
+        const firstLeafStoryId = api.findLeafStoryId(hash, storyId);
         navigate(`/${viewMode}/${firstLeafStoryId}`);
       }
 
@@ -234,11 +235,7 @@ const initStoriesApi = ({
         storiesConfigured: true,
       });
     },
-    selectStory: (
-      kindOrId: string,
-      story: string = undefined,
-      options: { ref?: InceptionRef['id'] } = {}
-    ) => {
+    selectStory: (kindOrId, story = undefined, options = {}) => {
       const { ref } = options;
       const { viewMode = 'story', storyId, storiesHash, refs } = store.getState();
 
@@ -272,7 +269,15 @@ const initStoriesApi = ({
         }
       }
     },
-    updateStoryArgs: (id: StoryId, newArgs: Args) => {
+    findLeafStoryId(storiesHash, storyId) {
+      if (storiesHash[storyId].isLeaf) {
+        return storyId;
+      }
+
+      const childStoryId = storiesHash[storyId].children[0];
+      return api.findLeafStoryId(storiesHash, childStoryId);
+    },
+    updateStoryArgs: (id, newArgs) => {
       fullAPI.emit(UPDATE_STORY_ARGS, id, newArgs);
     },
   };
@@ -348,24 +353,11 @@ const initStoriesApi = ({
       }
     });
 
-    const storyArgsChanged = (id: StoryId, args: Args) => {
+    fullAPI.on(STORY_ARGS_UPDATED, (id: StoryId, args: Args) => {
       const { storiesHash } = store.getState();
       (storiesHash[id] as Story).args = args;
       store.setState({ storiesHash });
-    };
-
-    fullAPI.on(STORY_ARGS_UPDATED, (id: StoryId, args: Args) => storyArgsChanged(id, args));
-  };
-
-  // Recursively traverse storiesHash from the initial storyId until finding
-  // the leaf story.
-  const findLeafStoryId = (storiesHash: StoriesHash, storyId: string): string => {
-    if (storiesHash[storyId].isLeaf) {
-      return storyId;
-    }
-
-    const childStoryId = storiesHash[storyId].children[0];
-    return findLeafStoryId(storiesHash, childStoryId);
+    });
   };
 
   return {
