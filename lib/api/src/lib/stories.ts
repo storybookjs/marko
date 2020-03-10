@@ -1,6 +1,8 @@
 import deprecate from 'util-deprecate';
 import dedent from 'ts-dedent';
 import { sanitize, parseKind } from '@storybook/csf';
+
+import { Args } from '../index';
 import merge from './merge';
 import { InceptionRef } from '../modules/refs';
 import { Provider } from '../init-provider-api';
@@ -65,6 +67,7 @@ export interface Story {
     docsOnly?: boolean;
     [k: string]: any;
   };
+  args: Args;
 }
 
 export interface StoryInput {

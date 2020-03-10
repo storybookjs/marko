@@ -149,7 +149,7 @@ export default function({ store, navigate, state, provider, fullAPI, ...rest }: 
 
   const init = () => {
     fullAPI.on(NAVIGATE_URL, (url: string, options: { [k: string]: any }) => {
-      api.navigateUrl(url, options);
+      fullAPI.navigateUrl(url, options);
     });
   };
 

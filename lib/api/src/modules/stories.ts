@@ -1,7 +1,13 @@
 import { DOCS_MODE } from 'global';
 import { toId, sanitize } from '@storybook/csf';
+import {
+  UPDATE_STORY_ARGS,
+  STORY_ARGS_UPDATED,
+  STORY_CHANGED,
+  SET_STORIES,
+  SELECT_STORY,
+} from '@storybook/core-events';
 
-import { STORY_CHANGED, SET_STORIES, SELECT_STORY } from '@storybook/core-events';
 import { logger } from '@storybook/client-logger';
 import {
   transformStoriesRawToStoriesHash,
@@ -15,7 +21,7 @@ import {
   isRoot,
 } from '../lib/stories';
 
-import { Module } from '../index';
+import { Module, Args } from '../index';
 import { InceptionRef, Refs, getSourceType } from './refs';
 
 type Direction = -1 | 1;
@@ -42,6 +48,7 @@ export interface SubAPI {
   getData: (storyId: StoryId) => Story | Group;
   getParameters: (storyId: StoryId, parameterName?: ParameterName) => Story['parameters'] | any;
   getCurrentParameter<S>(parameterName?: ParameterName): S;
+  updateStoryArgs(id: StoryId, newArgs: Args): void;
 }
 
 // When adding a group, also add all of its children, depth first
@@ -265,6 +272,9 @@ const initStoriesApi = ({
         }
       }
     },
+    updateStoryArgs: (id: StoryId, newArgs: Args) => {
+      fullAPI.emit(UPDATE_STORY_ARGS, id, newArgs);
+    },
   };
 
   const init = () => {
@@ -337,6 +347,14 @@ const initStoriesApi = ({
         }
       }
     });
+
+    const storyArgsChanged = (id: StoryId, args: Args) => {
+      const { storiesHash } = store.getState();
+      (storiesHash[id] as Story).args = args;
+      store.setState({ storiesHash });
+    };
+
+    fullAPI.on(STORY_ARGS_UPDATED, (id: StoryId, args: Args) => storyArgsChanged(id, args));
   };
 
   // Recursively traverse storiesHash from the initial storyId until finding

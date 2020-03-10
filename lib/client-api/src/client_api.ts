@@ -3,7 +3,13 @@ import { logger } from '@storybook/client-logger';
 import { StoryFn, Parameters, DecorateStoryFunction } from '@storybook/addons';
 import { toId } from '@storybook/csf';
 
-import { ClientApiParams, DecoratorFunction, ClientApiAddons, StoryApi } from './types';
+import {
+  ClientApiParams,
+  DecoratorFunction,
+  ClientApiAddons,
+  StoryApi,
+  ParameterEnhancer,
+} from './types';
 import { applyHooks } from './hooks';
 import StoryStore from './story_store';
 import { defaultDecorateStory } from './decorators';
@@ -23,6 +29,13 @@ export const addParameters = (parameters: Parameters) => {
     throw new Error(`Singleton client API not yet initialized, cannot call addParameters`);
 
   singleton.addParameters(parameters);
+};
+
+export const addParameterEnhancer = (enhancer: ParameterEnhancer) => {
+  if (!singleton)
+    throw new Error(`Singleton client API not yet initialized, cannot call addParameterEnhancer`);
+
+  singleton.addParameterEnhancer(enhancer);
 };
 
 export default class ClientApi {
@@ -90,6 +103,10 @@ export default class ClientApi {
 
   addParameters = (parameters: Parameters) => {
     this._storyStore.addGlobalMetadata({ decorators: [], parameters });
+  };
+
+  addParameterEnhancer = (enhancer: ParameterEnhancer) => {
+    this._storyStore.addParameterEnhancer(enhancer);
   };
 
   clearDecorators = () => {

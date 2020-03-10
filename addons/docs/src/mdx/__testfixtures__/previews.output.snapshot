@@ -55,12 +55,12 @@ MDXContent.isMDXComponent = true;
 export const helloButton = () => <Button>Hello button</Button>;
 helloButton.story = {};
 helloButton.story.name = 'hello button';
-helloButton.story.parameters = { mdxSource: '<Button>Hello button</Button>' };
+helloButton.story.parameters = { storySource: { source: '<Button>Hello button</Button>' } };
 
 export const two = () => <Button>Two</Button>;
 two.story = {};
 two.story.name = 'two';
-two.story.parameters = { mdxSource: '<Button>Two</Button>' };
+two.story.parameters = { storySource: { source: '<Button>Two</Button>' } };
 
 const componentMeta = {
   title: 'Button',

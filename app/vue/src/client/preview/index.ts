@@ -68,6 +68,7 @@ const defaultContext: StoryContext = {
   name: 'unspecified',
   kind: 'unspecified',
   parameters: {},
+  args: {},
 };
 
 function decorateStory(

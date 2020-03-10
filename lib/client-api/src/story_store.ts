@@ -1,5 +1,4 @@
 /* eslint no-underscore-dangle: 0 */
-import EventEmitter from 'eventemitter3';
 import memoize from 'memoizerific';
 import dedent from 'ts-dedent';
 import stable from 'stable';
@@ -12,7 +11,9 @@ import {
   ViewMode,
   Comparator,
   Parameters,
-  StoryFn,
+  Args,
+  LegacyStoryFn,
+  ArgsStoryFn,
   StoryContext,
 } from '@storybook/addons';
 import {
@@ -23,6 +24,7 @@ import {
   StoreItem,
   ErrorLike,
   GetStorybookKind,
+  ParameterEnhancer,
 } from './types';
 import { HooksContext } from './hooks';
 import storySort from './storySort';
@@ -66,7 +68,7 @@ const toExtracted = <T>(obj: T) =>
     return Object.assign(acc, { [key]: value });
   }, {});
 
-export default class StoryStore extends EventEmitter {
+export default class StoryStore {
   _error?: ErrorLike;
 
   _channel: Channel;
@@ -81,22 +83,23 @@ export default class StoryStore extends EventEmitter {
   // Keyed on storyId
   _stories: StoreData;
 
+  _parameterEnhancers: ParameterEnhancer[];
+
   _revision: number;
 
   _selection: Selection;
 
   constructor(params: { channel: Channel }) {
-    super();
-
     // Assume we are configuring until we hear otherwise
     this._configuring = true;
     this._globalMetadata = { parameters: {}, decorators: [] };
     this._kinds = {};
     this._stories = {};
+    this._parameterEnhancers = [];
     this._revision = 0;
     this._selection = {} as any;
-    this._channel = params.channel;
     this._error = undefined;
+    this._channel = params.channel;
 
     this.setupListeners();
   }
@@ -107,6 +110,10 @@ export default class StoryStore extends EventEmitter {
 
     this._channel.on(Events.SET_CURRENT_STORY, ({ storyId, viewMode }) =>
       this.setSelection({ storyId, viewMode })
+    );
+
+    this._channel.on(Events.UPDATE_STORY_ARGS, (id: string, newArgs: Args) =>
+      this.updateStoryArgs(id, newArgs)
     );
   }
 
@@ -149,13 +156,27 @@ export default class StoryStore extends EventEmitter {
     this._kinds[kind].decorators.push(...decorators);
   }
 
+  addParameterEnhancer(parameterEnhancer: ParameterEnhancer) {
+    if (Object.keys(this._stories).length > 0)
+      throw new Error('Cannot add a parameter enhancer to the store after a story has been added.');
+
+    this._parameterEnhancers.push(parameterEnhancer);
+  }
+
   addStory(
-    { id, kind, name, storyFn: original, parameters = {}, decorators = [] }: AddStoryArgs,
+    {
+      id,
+      kind,
+      name,
+      storyFn: original,
+      parameters: storyParameters = {},
+      decorators: storyDecorators = [],
+    }: AddStoryArgs,
     {
       applyDecorators,
       allowUnsafe = false,
     }: {
-      applyDecorators: (fn: StoryFn, decorators: DecoratorFunction[]) => any;
+      applyDecorators: (fn: LegacyStoryFn, decorators: DecoratorFunction[]) => any;
     } & AllowUnsafeOption
   ) {
     if (!this._configuring && !allowUnsafe)
@@ -186,32 +207,59 @@ export default class StoryStore extends EventEmitter {
 
     this.ensureKind(kind);
     const kindMetadata: KindMetadata = this._kinds[kind];
-    const allDecorators = [
-      ...decorators,
+    const decorators = [
+      ...storyDecorators,
       ...kindMetadata.decorators,
       ...this._globalMetadata.decorators,
     ];
-    const allParameters = combineParameters(
+    const parametersBeforeEnhancement = combineParameters(
       this._globalMetadata.parameters,
       kindMetadata.parameters,
-      parameters
+      storyParameters
     );
 
+    const parameters = this._parameterEnhancers.reduce(
+      (accumlatedParameters, enhancer) => ({
+        ...accumlatedParameters,
+        ...enhancer({ ...identification, parameters: accumlatedParameters, args: {} }),
+      }),
+      parametersBeforeEnhancement
+    );
+
+    let finalStoryFn: LegacyStoryFn;
+    if (parameters.passArgsFirst) {
+      finalStoryFn = (context: StoryContext) => (original as ArgsStoryFn)(context.args, context);
+    } else {
+      finalStoryFn = original as LegacyStoryFn;
+    }
+
     // lazily decorate the story when it's loaded
-    const getDecorated: () => StoryFn = memoize(1)(() =>
-      applyDecorators(getOriginal(), allDecorators)
+    const getDecorated: () => LegacyStoryFn = memoize(1)(() =>
+      applyDecorators(finalStoryFn, decorators)
     );
 
     const hooks = new HooksContext();
 
-    const storyFn: StoryFn = (context: StoryContext) =>
+    const storyFn: LegacyStoryFn = (runtimeContext: StoryContext) =>
       getDecorated()({
         ...identification,
-        ...context,
+        ...runtimeContext,
+        parameters,
         hooks,
-        // NOTE: we do not allow the passed in context to override parameters
-        parameters: allParameters,
+        args: _stories[id].args,
       });
+
+    // Pull out parameters.args.$ || .argTypes.$.defaultValue into initialArgs
+    const initialArgs: Args = parameters.args || {};
+    const defaultArgs: Args = parameters.argTypes
+      ? Object.entries(parameters.argTypes as Record<string, { defaultValue: any }>).reduce(
+          (acc, [arg, { defaultValue }]) => {
+            if (defaultValue) acc[arg] = defaultValue;
+            return acc;
+          },
+          {} as Args
+        )
+      : {};
 
     _stories[id] = {
       ...identification,
@@ -221,7 +269,8 @@ export default class StoryStore extends EventEmitter {
       getOriginal,
       storyFn,
 
-      parameters: allParameters,
+      parameters,
+      args: { ...defaultArgs, ...initialArgs },
     };
   }
 
@@ -383,6 +432,14 @@ export default class StoryStore extends EventEmitter {
 
   cleanHooksForKind(kind: string) {
     this.getStoriesForKind(kind).map(story => this.cleanHooks(story.id));
+  }
+
+  updateStoryArgs(id: string, newArgs: Args) {
+    if (!this._stories[id]) throw new Error(`No story for id ${id}`);
+    const { args } = this._stories[id];
+    this._stories[id].args = { ...args, ...newArgs };
+
+    this._channel.emit(Events.STORY_ARGS_UPDATED, id, this._stories[id].args);
   }
 
   // This API is a reimplementation of Storybook's original getStorybook() API.
