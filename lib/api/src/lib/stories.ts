@@ -89,6 +89,7 @@ export interface StoryInput {
     [parameterName: string]: any;
   };
   isLeaf: boolean;
+  args: Args;
 }
 
 export interface StoriesHash {
