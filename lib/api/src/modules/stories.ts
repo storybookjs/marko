@@ -169,7 +169,7 @@ const initStoriesApi = ({
 
     setStories: input => {
       // Now create storiesHash by reordering the above by group
-      const storiesHash: StoriesHash = transformStoriesRawToStoriesHash(
+      const storiesHash = transformStoriesRawToStoriesHash(
         input,
         (store.getState().storiesHash || {}) as StoriesHash,
         { provider }
