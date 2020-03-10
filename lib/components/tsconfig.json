@@ -4,7 +4,6 @@
     "rootDir": "./src",
     "types": [
       "jest",
-      "react-syntax-highlighter"
     ]
   },
   "include": [
