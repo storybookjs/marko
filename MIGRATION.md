@@ -9,6 +9,7 @@
     - [Changed Parameter Handling](#changed-parameter-handling)
   - [Simplified Render Context](#simplified-render-context)
   - [Story Store immutable outside of configuration](#story-store-immutable-outside-of-configuration)
+  - [Improved story source handling](#improved-story-source-handling)
 - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
   - [To main.js configuration](#to-mainjs-configuration)
     - [Using main.js](#using-mainjs)
@@ -250,6 +251,33 @@ The `RenderContext` that is passed to framework rendering layers in order to ren
 ### Story Store immutable outside of configuration
 
 You can no longer change the contents of the StoryStore outside of a `configure()` call. This is to ensure that any changes are properly published to the manager. If you want to add stories "out of band" you can call `store.startConfiguring()` and `store.finishConfiguring()` to ensure that your changes are published.
+
+### Improved story source handling
+
+The story source code handling has been improved in both `addon-storysource` and `addon-docs`.
+
+In 5.x some users used an undocumented _internal_ API, `mdxSource` to customize source snippetization in `addon-docs`. This has been removed in 6.0.
+
+The preferred way to customize source snippets for stories is now:
+
+```js
+export const Example = () => <Button />;
+Example.story = {
+  parameters: {
+    storySource: {
+      source: 'custom source',
+    },
+  },
+};
+```
+
+The MDX analog:
+
+```jsx
+<Story name="Example" parameters={{ storySource: { source: 'custom source' } }}>
+  <Button />
+</Story>
+```
 
 ## From version 5.2.x to 5.3.x
 

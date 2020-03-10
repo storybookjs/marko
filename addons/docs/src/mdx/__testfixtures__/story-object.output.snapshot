@@ -54,8 +54,10 @@ export const toStorybook = () => ({
 toStorybook.story = {};
 toStorybook.story.name = 'to storybook';
 toStorybook.story.parameters = {
-  mdxSource:
-    '{\\\\n  template: \`<storybook-welcome-component (showApp)=\\"showApp()\\"></storybook-welcome-component>\`,\\\\n  props: {\\\\n    showApp: linkTo(\\\\'Button\\\\')\\\\n  },\\\\n  moduleMetadata: {\\\\n    declarations: [Welcome]\\\\n  }\\\\n}',
+  storySource: {
+    source:
+      '{\\\\n  template: \`<storybook-welcome-component (showApp)=\\"showApp()\\"></storybook-welcome-component>\`,\\\\n  props: {\\\\n    showApp: linkTo(\\\\'Button\\\\')\\\\n  },\\\\n  moduleMetadata: {\\\\n    declarations: [Welcome]\\\\n  }\\\\n}',
+  },
 };
 
 const componentMeta = { title: 'MDX|Welcome', includeStories: ['toStorybook'] };

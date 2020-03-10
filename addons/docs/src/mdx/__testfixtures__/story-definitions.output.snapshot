@@ -45,22 +45,22 @@ MDXContent.isMDXComponent = true;
 export const one = () => <Button>One</Button>;
 one.story = {};
 one.story.name = 'one';
-one.story.parameters = { mdxSource: '<Button>One</Button>' };
+one.story.parameters = { storySource: { source: '<Button>One</Button>' } };
 
 export const helloStory = () => <Button>Hello button</Button>;
 helloStory.story = {};
 helloStory.story.name = 'hello story';
-helloStory.story.parameters = { mdxSource: '<Button>Hello button</Button>' };
+helloStory.story.parameters = { storySource: { source: '<Button>Hello button</Button>' } };
 
 export const wPunctuation = () => <Button>with punctuation</Button>;
 wPunctuation.story = {};
 wPunctuation.story.name = 'w/punctuation';
-wPunctuation.story.parameters = { mdxSource: '<Button>with punctuation</Button>' };
+wPunctuation.story.parameters = { storySource: { source: '<Button>with punctuation</Button>' } };
 
 export const _1FineDay = () => <Button>starts with number</Button>;
 _1FineDay.story = {};
 _1FineDay.story.name = '1 fine day';
-_1FineDay.story.parameters = { mdxSource: '<Button>starts with number</Button>' };
+_1FineDay.story.parameters = { storySource: { source: '<Button>starts with number</Button>' } };
 
 const componentMeta = {
   title: 'Button',
