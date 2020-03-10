@@ -38,6 +38,7 @@ export const previewProps: PreviewProps = {
       options: {},
       docsOnly: false,
     },
+    args: {},
   },
   path: 'string',
   viewMode: 'story',
