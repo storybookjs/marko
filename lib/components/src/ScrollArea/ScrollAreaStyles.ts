@@ -288,9 +288,15 @@ export const getScrollAreaStyles: (theme: Theme) => CSSObject = (theme: Theme) =
   '.os-scrollbar-corner': {
     bottom: 0,
     right: 0,
+    height: 10,
+    width: 10,
+    backgroundColor: 'transparent',
   },
   '.os-scrollbar': {
     pointerEvents: 'none',
+    padding: 2,
+    boxSizing: 'border-box',
+    background: 0,
   },
   '.os-scrollbar-track': {
     pointerEvents: 'auto',
@@ -318,10 +324,14 @@ export const getScrollAreaStyles: (theme: Theme) => CSSObject = (theme: Theme) =
   '.os-scrollbar-horizontal': {
     bottom: 0,
     left: 0,
+    right: 10,
+    height: 10,
   },
   '.os-scrollbar-vertical': {
     top: 0,
     right: 0,
+    bottom: 10,
+    width: 10,
   },
   '.os-host-rtl>.os-scrollbar-horizontal': {
     right: 0,
@@ -379,65 +389,36 @@ export const getScrollAreaStyles: (theme: Theme) => CSSObject = (theme: Theme) =
   '.os-host-overflow': {
     overflow: ('hidden!important' as any) as 'hidden',
   },
-  '.os-theme-dark>.os-scrollbar-horizontal, .os-theme-light>.os-scrollbar-horizontal': {
-    right: 10,
-    height: 10,
-  },
-  '.os-theme-dark>.os-scrollbar-vertical, .os-theme-light>.os-scrollbar-vertical': {
-    bottom: 10,
-    width: 10,
-  },
-  '.os-theme-dark.os-host-rtl>.os-scrollbar-horizontal, .os-theme-light.os-host-rtl>.os-scrollbar-horizontal': {
+  '.os-theme-dark.os-host-rtl>.os-scrollbar-horizontal': {
     left: 10,
     right: 0,
   },
-  '.os-theme-dark>.os-scrollbar-corner, .os-theme-light>.os-scrollbar-corner': {
-    height: 10,
-    width: 10,
-    backgroundColor: 'transparent',
-  },
-  '.os-theme-dark>.os-scrollbar, .os-theme-light>.os-scrollbar': {
-    padding: 2,
-    boxSizing: 'border-box',
+  '.os-scrollbar.os-scrollbar-unusable': {
     background: 0,
   },
-  '.os-theme-dark>.os-scrollbar.os-scrollbar-unusable, .os-theme-light>.os-scrollbar.os-scrollbar-unusable': {
+  '.os-scrollbar>.os-scrollbar-track': {
     background: 0,
   },
-  '.os-theme-dark>.os-scrollbar>.os-scrollbar-track, .os-theme-light>.os-scrollbar>.os-scrollbar-track': {
-    background: 0,
-  },
-  '.os-theme-dark>.os-scrollbar-horizontal>.os-scrollbar-track>.os-scrollbar-handle, .os-theme-light>.os-scrollbar-horizontal>.os-scrollbar-track>.os-scrollbar-handle': {
+  '.os-scrollbar-horizontal>.os-scrollbar-track>.os-scrollbar-handle': {
     minWidth: 30,
   },
-  '.os-theme-dark>.os-scrollbar-vertical>.os-scrollbar-track>.os-scrollbar-handle, .os-theme-light>.os-scrollbar-vertical>.os-scrollbar-track>.os-scrollbar-handle': {
+  '.os-scrollbar-vertical>.os-scrollbar-track>.os-scrollbar-handle': {
     minHeight: 30,
   },
-  '.os-theme-dark.os-host-transition>.os-scrollbar>.os-scrollbar-track>.os-scrollbar-handle, .os-theme-light.os-host-transition>.os-scrollbar>.os-scrollbar-track>.os-scrollbar-handle': {
+  '.os-theme-dark.os-host-transition>.os-scrollbar>.os-scrollbar-track>.os-scrollbar-handle': {
     transition: 'background-color .3s',
   },
-  '.os-theme-dark>.os-scrollbar>.os-scrollbar-track>.os-scrollbar-handle, .os-theme-light>.os-scrollbar>.os-scrollbar-track>.os-scrollbar-handle, .os-theme-dark>.os-scrollbar>.os-scrollbar-track, .os-theme-light>.os-scrollbar>.os-scrollbar-track': {
+  '.os-scrollbar>.os-scrollbar-track>.os-scrollbar-handle, .os-scrollbar>.os-scrollbar-track': {
     borderRadius: 10,
   },
-  '.os-theme-dark>.os-scrollbar>.os-scrollbar-track>.os-scrollbar-handle': {
-    background: 'rgba(0,0,0,.4)',
+  '.os-scrollbar>.os-scrollbar-track>.os-scrollbar-handle': {
+    background: theme.color.darker,
+    opacity: 0.5,
   },
-  '.os-theme-light>.os-scrollbar>.os-scrollbar-track>.os-scrollbar-handle': {
-    background: 'rgba(255,255,255,.4)',
+  '.os-scrollbar:hover>.os-scrollbar-track>.os-scrollbar-handle': {
+    opacity: 0.6,
   },
-  '.os-theme-dark>.os-scrollbar:hover>.os-scrollbar-track>.os-scrollbar-handle': {
-    background: 'rgba(0,0,0,.55)',
-  },
-  '.os-theme-light>.os-scrollbar:hover>.os-scrollbar-track>.os-scrollbar-handle': {
-    background: 'rgba(255,255,255,.55)',
-  },
-  '.os-theme-dark>.os-scrollbar>.os-scrollbar-track>.os-scrollbar-handle.active': {
-    background: 'rgba(0,0,0,.7)',
-  },
-  '.os-theme-light>.os-scrollbar>.os-scrollbar-track>.os-scrollbar-handle.active': {
-    background: 'rgba(255,255,255,.7)',
-  },
-  '.os-theme-dark>.os-scrollbar-horizontal .os-scrollbar-handle:before, .os-theme-dark>.os-scrollbar-vertical .os-scrollbar-handle:before, .os-theme-light>.os-scrollbar-horizontal .os-scrollbar-handle:before, .os-theme-light>.os-scrollbar-vertical .os-scrollbar-handle:before': {
+  '.os-scrollbar-horizontal .os-scrollbar-handle:before, .os-scrollbar-vertical .os-scrollbar-handle:before': {
     content: "''",
     position: 'absolute',
     left: 0,
@@ -446,18 +427,18 @@ export const getScrollAreaStyles: (theme: Theme) => CSSObject = (theme: Theme) =
     bottom: 0,
     display: 'block',
   },
-  '.os-theme-dark.os-host-scrollbar-horizontal-hidden>.os-scrollbar-horizontal .os-scrollbar-handle:before, .os-theme-dark.os-host-scrollbar-vertical-hidden>.os-scrollbar-vertical .os-scrollbar-handle:before, .os-theme-light.os-host-scrollbar-horizontal-hidden>.os-scrollbar-horizontal .os-scrollbar-handle:before, .os-theme-light.os-host-scrollbar-vertical-hidden>.os-scrollbar-vertical .os-scrollbar-handle:before': {
+  '.os-theme-dark.os-host-scrollbar-horizontal-hidden>.os-scrollbar-horizontal .os-scrollbar-handle:before, .os-theme-dark.os-host-scrollbar-vertical-hidden>.os-scrollbar-vertical .os-scrollbar-handle:before': {
     display: 'none',
   },
-  '.os-theme-dark>.os-scrollbar-horizontal .os-scrollbar-handle:before, .os-theme-light>.os-scrollbar-horizontal .os-scrollbar-handle:before': {
+  '.os-scrollbar-horizontal .os-scrollbar-handle:before': {
     top: -6,
     bottom: -2,
   },
-  '.os-theme-dark>.os-scrollbar-vertical .os-scrollbar-handle:before, .os-theme-light>.os-scrollbar-vertical .os-scrollbar-handle:before': {
+  '.os-scrollbar-vertical .os-scrollbar-handle:before': {
     left: -6,
     right: -2,
   },
-  '.os-host-rtl.os-theme-dark>.os-scrollbar-vertical .os-scrollbar-handle:before, .os-host-rtl.os-theme-light>.os-scrollbar-vertical .os-scrollbar-handle:before': {
+  '.os-host-rtl.os-scrollbar-vertical .os-scrollbar-handle:before': {
     right: -6,
     left: -2,
   },
