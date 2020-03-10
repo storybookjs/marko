@@ -1,7 +1,7 @@
 import { navigator, document } from 'global';
 import { PREVIEW_KEYDOWN } from '@storybook/core-events';
 
-import { Module, API } from '../index';
+import { Module } from '../index';
 
 import { shortcutMatchesShortcut, eventToShortcut } from '../lib/shortcut';
 import { focusableUIElements } from './layout';
