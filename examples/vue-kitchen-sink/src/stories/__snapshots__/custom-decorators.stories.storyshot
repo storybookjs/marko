@@ -52,12 +52,11 @@ exports[`Storyshots Custom/Decorator for Vue With Data 1`] = `
       "inlineStories": true,
       "iframeHeight": "60px"
     },
-    "options": {},
     "globalParameter": "globalParameter",
     "framework": "vue",
-    "__id": "custom-decorator-for-vue--with-data",
-    "customParameter": 42
+    "__id": "custom-decorator-for-vue--with-data"
   },
+  "args": {},
   "customContext": 52
 }
     </pre>

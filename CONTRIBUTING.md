@@ -126,7 +126,21 @@ It can be immensely helpful to get feedback in your editor, if you're using VsCo
 "eslint.alwaysShowStatus": true
 ```
 
+
 This should enable auto-fix for all source files, and give linting warnings and errors within your editor.
+
+### 2d. Run Cypress tests
+
+First make sure the repo is bootstrapped.
+
+Then run `yarn build-storybooks`, this creates a static website from all examples.
+
+Then run `yarn serve-storybooks`, this will run the static sit of the port cypress expects.
+
+Then run `yarn add cyress -W --optional`. When this has completed cypress should be installed on your system. If it is already on your system, this step can be skipped.
+
+Then run `yarn cypress open` if you ant to see the tests run in the UI, or `yarn cypress run` to run the tests headless.
+
 
 ### Reproductions
 

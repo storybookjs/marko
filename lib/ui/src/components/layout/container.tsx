@@ -88,7 +88,6 @@ const Paper = styled.div<{ isFullscreen: boolean }>(
           borderRadius: 0,
         }
       : {
-          background: theme.background.content,
           borderRadius: theme.appBorderRadius,
           overflow: 'hidden',
           boxShadow: '0 1px 5px 0 rgba(0, 0, 0, 0.1)',
@@ -148,15 +147,15 @@ const HoverBlocker = styled.div({
   width: '100vw',
 });
 
-type PanelPosition = 'right' | 'bottom';
-interface Bounds {
+export type PanelPosition = 'right' | 'bottom';
+export interface Bounds {
   top: number;
   width: number;
   left: number;
   height: number;
 }
 
-interface Coordinates {
+export interface Coordinates {
   x: number;
   y: number;
 }
@@ -283,14 +282,14 @@ const getPanelPosition = ({
       };
 };
 
-interface BasePanelRenderProps {
+export interface BasePanelRenderProps {
   viewMode?: State['viewMode'];
   animate: boolean;
   isFullscreen?: boolean;
   position: Bounds;
 }
 
-interface LayoutRenderProps {
+export interface LayoutRenderProps {
   mainProps: BasePanelRenderProps;
   previewProps: BasePanelRenderProps & {
     docsOnly: boolean;
@@ -305,12 +304,12 @@ interface LayoutRenderProps {
   };
 }
 
-interface LayoutState {
+export interface LayoutState {
   isDragging: 'nav' | 'panel' | false;
   resizerNav: Coordinates;
   resizerPanel: Coordinates;
 }
-interface LayoutProps {
+export interface LayoutProps {
   children: (data: LayoutRenderProps) => ReactNode;
   panelCount: number;
   bounds: {
@@ -510,7 +509,7 @@ class Layout extends Component<LayoutProps, LayoutState> {
             onDrag={this.resizeNav}
             onStop={this.unsetDrag}
           >
-            <Handle shadow="left" axis="x" isDragging={isDragging === 'nav'} />
+            <Handle axis="x" isDragging={isDragging === 'nav'} />
           </Draggable>
         )}
 
@@ -539,7 +538,6 @@ class Layout extends Component<LayoutProps, LayoutState> {
           >
             <Handle
               isDragging={isDragging === 'panel'}
-              shadow={isPanelBottom ? 'top' : 'left'}
               style={
                 isPanelBottom
                   ? {

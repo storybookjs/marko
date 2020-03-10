@@ -58,7 +58,7 @@ basic.story = {
 
 ```md
 import { Meta, Story } from '@storybook/addon-docs/blocks';
-import \* as stories from './Button.stories.js';
+import * as stories from './Button.stories.js';
 import { SomeComponent } from 'path/to/SomeComponent';
 
 <Meta title="Demo/Button" component={Button} />
@@ -205,7 +205,7 @@ foo.story = { parameters: { docs: { disable: true } } };
 User writes documentation & stories side-by-side in a single MDX file, and wants those stories to show up in the canvas but not in the docs themselves. They want something similar to the recipe "CSF stories with MDX docs" but want to do everything in MDX:
 
 ```js
-<Story name="foo" parameters={{ docs: { disable: true }} >
+<Story name="foo" parameters={{ docs: { disable: true }}} >
   <Button>foo</Button>
 </Story>
 ```

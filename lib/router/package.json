@@ -1,6 +1,6 @@
 {
   "name": "@storybook/router",
-  "version": "6.0.0-alpha.13",
+  "version": "6.0.0-alpha.22",
   "description": "Core Storybook Router",
   "keywords": [
     "storybook"
@@ -21,13 +21,14 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts"
+    "*.d.ts",
+    "ts3.5/**/*"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@reach/router": "^1.2.1",
+    "@reach/router": "^1.3.3",
     "@storybook/csf": "0.0.1",
     "@types/reach__router": "^1.2.3",
     "core-js": "^3.0.1",
@@ -44,5 +45,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff"
+  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
+  "typesVersions": {
+    "<=3.5": {
+      "*": [
+        "ts3.5/*"
+      ]
+    }
+  }
 }

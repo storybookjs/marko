@@ -22,6 +22,7 @@ module.exports = {
     '@storybook/addon-viewport',
     '@storybook/addon-graphql',
     '@storybook/addon-contexts',
+    '@storybook/addon-queryparams',
   ],
   webpackFinal: async (config, { configType }) => ({
     ...config,

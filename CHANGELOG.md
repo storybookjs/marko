@@ -1,3 +1,139 @@
+## 6.0.0-alpha.22 (March 10, 2020)
+
+### Breaking Changes
+
+- MDX: Compile to improved source-loader format ([#10084](https://github.com/storybookjs/storybook/pull/10084))
+
+### Features
+
+- Core: Add args feature ([#10014](https://github.com/storybookjs/storybook/pull/10014))
+
+### Maintenance
+
+- Tech/improvements ([#10083](https://github.com/storybookjs/storybook/pull/10083))
+- Few minor improvements extracted from the inception feature PR ([#10072](https://github.com/storybookjs/storybook/pull/10072))
+- Tech/improvements ([#10070](https://github.com/storybookjs/storybook/pull/10070))
+
+### Dependency Upgrades
+
+- Yarn 2: Add missing dependencies ([#10012](https://github.com/storybookjs/storybook/pull/10012))
+- Security: Remove usage of a vulnerable version of serialize-javascript ([#10071](https://github.com/storybookjs/storybook/pull/10071))
+
+## 6.0.0-alpha.21 (March 5, 2020)
+
+### Breaking Changes
+
+- Core: Overhaul start.js and event emitting/listening ([#9914](https://github.com/storybookjs/storybook/pull/9914))
+
+### Features
+
+- CLI: Support js / jsx / ts / tsx stories in React CSF template ([#10003](https://github.com/storybookjs/storybook/pull/10003))
+- Cra-kitchen-sink : Add Named Color Palette Example(MDX) ([#9709](https://github.com/storybookjs/storybook/pull/9709))
+- Addon-Queryparams: Add addon preset ([#9949](https://github.com/storybookjs/storybook/pull/9949))
+
+### Bug Fixes
+
+- Addon-actions: Style ActionLogger to preserve whitespace ([#10046](https://github.com/storybookjs/storybook/pull/10046))
+- Core: Disables html-webpack-plugin's option to remove script tag types ([#10042](https://github.com/storybookjs/storybook/pull/10042))
+
+### Maintenance
+
+- Tech: Misc improvements ([#10052](https://github.com/storybookjs/storybook/pull/10052))
+- Tech: Misc improvements extracted from composition ([#10040](https://github.com/storybookjs/storybook/pull/10040))
+- CI: change parallelism ([#10041](https://github.com/storybookjs/storybook/pull/10041))
+- Storybook-official: try moving options to `manager.js` ([#9323](https://github.com/storybookjs/storybook/pull/9323))
+- Misc: Add missing dependencies ([#9965](https://github.com/storybookjs/storybook/pull/9965))
+- CI: Fix GitHub unit test workflow ([#9971](https://github.com/storybookjs/storybook/pull/9971))
+
+### Dependency Upgrades
+
+- Upgrade reach router ([#10016](https://github.com/storybookjs/storybook/pull/10016))
+
+## 6.0.0-alpha.20 (February 27, 2020)
+
+### Bug Fixes
+
+- Core: Fix `configFilename` containing backticks ([#9960](https://github.com/storybookjs/storybook/pull/9960))
+
+### Maintenance
+
+- Core: Add stories to demonstrate `layout` ([#9940](https://github.com/storybookjs/storybook/pull/9940))
+
+## 5.3.14 (February 25, 2020)
+
+### Bug Fixes
+
+- Centered: remove `typesVersions` attribute ([#9907](https://github.com/storybookjs/storybook/pull/9907))
+- Props: Fix typescript unspecified default value ([#9873](https://github.com/storybookjs/storybook/pull/9873))
+- Core: Use telejson for websockets channel ([#9867](https://github.com/storybookjs/storybook/pull/9867))
+- Storyshots: Fix support for jsx/tsx config files ([#9834](https://github.com/storybookjs/storybook/pull/9834))
+- MDX: Fix custom classes getting stripped ([#8897](https://github.com/storybookjs/storybook/pull/8897))
+- Typescript: Add downlevel dts for 3.5 ([#9847](https://github.com/storybookjs/storybook/pull/9847))
+
+## 6.0.0-alpha.19 (February 24, 2020)
+
+### Features
+
+- Addon-links: Add preset ([#9932](https://github.com/storybookjs/storybook/pull/9932))
+
+### Bug Fixes
+
+- Addon-docs: Restore IE11 compat on Windows by transpiling acorn-jsx ([#9790](https://github.com/storybookjs/storybook/pull/9790))
+
+## 6.0.0-alpha.18 (February 22, 2020)
+
+### Features
+
+- Addon-knobs: Add `disableForceUpdate` option ([#9447](https://github.com/storybookjs/storybook/pull/9447))
+
+## 6.0.0-alpha.17 (February 21, 2020)
+
+### Bug Fixes
+
+- Props: Fix typescript unspecified default value ([#9873](https://github.com/storybookjs/storybook/pull/9873))
+- Centered: remove `typesVersions` attribute ([#9907](https://github.com/storybookjs/storybook/pull/9907))
+
+### Maintenance
+
+- Misc: Add missing dependencies or peerDependencies ([#9916](https://github.com/storybookjs/storybook/pull/9916))
+
+## 6.0.0-alpha.16 (February 21, 2020)
+
+Failed NPM publish
+
+## 6.0.0-alpha.15 (February 20, 2020)
+
+### Breaking Changes
+
+- Refactor Client API: pull metadata handling code into the store. ([#9877](https://github.com/storybookjs/storybook/pull/9877))
+
+### Features
+
+- Core: Add skip dispose option to ClientApi ([#9868](https://github.com/storybookjs/storybook/pull/9868))
+
+## 6.0.0-alpha.14 (February 19, 2020)
+
+### Features
+
+- CLI: Add Yarn 2 compatibility ([#9866](https://github.com/storybookjs/storybook/pull/9866))
+
+### Bug Fixes
+
+- Typescript: Add downlevel dts for TS3.5 support ([#9902](https://github.com/storybookjs/storybook/pull/9902))
+- CLI: capture unknown arguments the native way ([#9888](https://github.com/storybookjs/storybook/pull/9888))
+- Core: Use telejson for websockets channel ([#9867](https://github.com/storybookjs/storybook/pull/9867))
+
+### Maintenance
+
+- Build: Upgrade to latest version of eslint config ([#9882](https://github.com/storybookjs/storybook/pull/9882))
+- Typescript: Misc improvements ([#9879](https://github.com/storybookjs/storybook/pull/9879))
+- Misc: Project root cleanup ([#9880](https://github.com/storybookjs/storybook/pull/9880))
+
+### Dependency Upgrades
+
+- Bump webpack-cli from 3.3.10 to 3.3.11 ([#9895](https://github.com/storybookjs/storybook/pull/9895))
+- Migrate to leven ([#9881](https://github.com/storybookjs/storybook/pull/9881))
+
 ## 6.0.0-alpha.13 (February 15, 2020)
 
 ### Bug Fixes

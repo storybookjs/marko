@@ -11,13 +11,10 @@ import React, {
 } from 'react';
 
 import {
-  STORIES_CONFIGURED,
-  STORY_CHANGED,
   SET_STORIES,
-  SELECT_STORY,
+  STORY_CHANGED,
   SHARED_STATE_CHANGED,
   SHARED_STATE_SET,
-  NAVIGATE_URL,
 } from '@storybook/core-events';
 import { RenderData as RouterData } from '@storybook/router';
 import { Listener } from '@storybook/channels';
@@ -34,16 +31,7 @@ import initNotifications, {
   SubAPI as NotificationAPI,
 } from './modules/notifications';
 import initStories, { SubState as StoriesSubState, SubAPI as StoriesAPI } from './modules/stories';
-import {
-  StoriesRaw,
-  StoriesHash,
-  Story,
-  Root,
-  Group,
-  isGroup,
-  isRoot,
-  isStory,
-} from './lib/stories';
+import { StoriesHash, Story, Root, Group, isGroup, isRoot, isStory } from './lib/stories';
 import initLayout, {
   ActiveTabs,
   SubState as LayoutSubState,
@@ -69,6 +57,7 @@ export type Module = StoreData &
   ProviderData & {
     mode?: 'production' | 'development';
     state: State;
+    fullAPI: API;
   };
 
 export type State = Other &
@@ -120,12 +109,16 @@ interface Children {
   children: ReactNode | ((props: Combo) => ReactNode);
 }
 
+export interface Args {
+  [key: string]: any;
+}
+
 type StatePartial = Partial<State>;
 
 export type ManagerProviderProps = Children & RouterData & ProviderData & DocsModeData;
 
 class ManagerProvider extends Component<ManagerProviderProps, State> {
-  api: API;
+  api: API = {} as API;
 
   modules: any[];
 
@@ -179,40 +172,17 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
       initStories,
       initURL,
       initVersions,
-    ].map(initModule => initModule({ ...routeData, ...apiData, state: this.state }));
+    ].map(initModule =>
+      initModule({ ...routeData, ...apiData, state: this.state, fullAPI: this.api })
+    );
 
     // Create our initial state by combining the initial state of all modules, then overlaying any saved state
     const state = getInitialState(...this.modules.map(m => m.state));
 
     // Get our API by combining the APIs exported by each module
-    const combo = Object.assign({ navigate }, ...this.modules.map(m => m.api));
+    const api: API = Object.assign(this.api, { navigate }, ...this.modules.map(m => m.api));
 
-    const api = initProviderApi({ provider, store, api: combo });
-
-    api.on(STORY_CHANGED, (id: string) => {
-      const options = api.getParameters(id, 'options');
-
-      if (options) {
-        api.setOptions(options);
-      }
-    });
-
-    api.on(SET_STORIES, (data: { stories: StoriesRaw }) => {
-      api.setStories(data.stories);
-      const options = storyId
-        ? api.getParameters(storyId, 'options')
-        : api.getParameters(Object.keys(data.stories)[0], 'options');
-      api.setOptions(options);
-    });
-    api.on(
-      SELECT_STORY,
-      ({ kind, story, ...rest }: { kind: string; story: string; [k: string]: any }) => {
-        api.selectStory(kind, story, rest);
-      }
-    );
-    api.on(NAVIGATE_URL, (url: string, options: { [k: string]: any }) => {
-      api.navigateUrl(url, options);
-    });
+    initProviderApi({ provider, store, api });
 
     this.state = state;
     this.api = api;
@@ -224,7 +194,8 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
         ...state,
         location: props.location,
         path: props.path,
-        viewMode: props.viewMode,
+        // if its a docsOnly page, even the 'story' view mode is considered 'docs'
+        viewMode: (props.docsMode && props.viewMode) === 'story' ? 'docs' : props.viewMode,
         storyId: props.storyId,
       };
     }
@@ -236,7 +207,7 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
     // a chance to do things that call other modules' APIs.
     this.modules.forEach(({ init }) => {
       if (init) {
-        init({ api: this.api });
+        init();
       }
     });
   }
@@ -380,7 +351,7 @@ export function useSharedState<S>(stateId: string, defaultState?: S) {
       [`${SHARED_STATE_SET}-client-${stateId}`]: (s: S) => setState(s),
     };
     const stateInitializationHandlers = {
-      [STORIES_CONFIGURED]: () => {
+      [SET_STORIES]: () => {
         if (addonStateCache[stateId]) {
           // this happens when HMR
           setState(addonStateCache[stateId]);
@@ -423,4 +394,14 @@ export function useAddonState<S>(addonId: string, defaultState?: S) {
 export function useStoryState<S>(defaultState?: S) {
   const { storyId } = useStorybookState();
   return useSharedState<S>(`story-state-${storyId}`, defaultState);
+}
+
+export function useArgs(): [Args, (newArgs: Args) => void] {
+  const {
+    api: { getCurrentStoryData, updateStoryArgs },
+  } = useStorybookApi();
+
+  const { id, args } = getCurrentStoryData();
+
+  return [args, (newArgs: Args) => updateStoryArgs(id, newArgs)];
 }

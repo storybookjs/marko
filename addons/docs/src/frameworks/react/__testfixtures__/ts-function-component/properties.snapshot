@@ -30,10 +30,7 @@ Object {
       },
     },
     Object {
-      "defaultValue": Object {
-        "detail": undefined,
-        "summary": "2",
-      },
+      "defaultValue": null,
       "description": "Simple click handler",
       "name": "onClick",
       "required": false,

@@ -107,7 +107,7 @@ For users, the name `managerEntries` might be a bit too technical, so instead bo
 
 ```js
 module.exports = {
-  addons: ['@storybook/addon-storysource/register'],
+  addons: ['@storybook/addon-storysource'],
 };
 ```
 

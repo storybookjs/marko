@@ -13,7 +13,7 @@ const Heading = styled(SidebarHeading)<SidebarHeadingProps>({
 
 const Stories = styled(({ className, ...rest }) => (
   <SidebarStories className={className} {...rest} />
-))(({ loading }) => (loading ? { marginTop: 8, overflow: 'hidden' } : { overflow: 'hidden' }));
+))(({ isLoading }) => (isLoading ? { marginTop: 8, overflow: 'hidden' } : { overflow: 'hidden' }));
 
 const Container = styled.nav({
   position: 'absolute',
@@ -37,7 +37,7 @@ export interface SidebarProps {
   menu: any[];
   storyId?: string;
   menuHighlighted?: boolean;
-  loading?: boolean;
+  isLoading?: boolean;
 }
 
 const Sidebar: FunctionComponent<SidebarProps> = ({
@@ -45,12 +45,12 @@ const Sidebar: FunctionComponent<SidebarProps> = ({
   stories,
   menu,
   menuHighlighted = false,
-  loading = false,
+  isLoading = false,
 }) => (
   <Container className="container sidebar-container">
     <CustomScrollArea vertical>
       <Heading className="sidebar-header" menuHighlighted={menuHighlighted} menu={menu} />
-      <Stories stories={stories} storyId={storyId} loading={loading} />
+      <Stories stories={stories} storyId={storyId} isLoading={isLoading} />
     </CustomScrollArea>
   </Container>
 );
