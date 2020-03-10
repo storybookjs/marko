@@ -75,8 +75,12 @@ export const getSourceProps = (
       .map(sourceId => {
         const data = storyStore.fromId(sourceId);
         if (data && data.parameters) {
-          const { storySource } = data.parameters;
-          return storySource && extract(sourceId, storySource);
+          const {
+            storySource,
+            docs: { formatSource },
+          } = data.parameters;
+          const extracted = storySource && extract(sourceId, storySource);
+          return formatSource ? formatSource(extracted, sourceId) : extracted;
         }
         return '';
       })
