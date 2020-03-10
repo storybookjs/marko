@@ -75,7 +75,7 @@ module.exports = {
     DOCS_MODE: false,
     PREVIEW_URL: undefined,
   },
-  snapshotSerializers: ['jest-emotion', 'enzyme-to-json/serializer'],
+  snapshotSerializers: ['jest-emotion', 'enzyme-to-json/serializer', 'jest-serializer-html'],
   coverageDirectory: 'coverage',
   setupFilesAfterEnv: ['./scripts/jest.init.js'],
   coverageReporters: ['lcov'],
