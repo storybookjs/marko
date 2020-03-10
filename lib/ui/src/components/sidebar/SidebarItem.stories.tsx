@@ -33,4 +33,4 @@ export const nestedDepths = () => (
     <SidebarItem name="Depth 3" depth={3} isLeaf />
   </div>
 );
-export const loading = () => <SidebarItem loading />;
+export const isLoading = () => <SidebarItem isLoading />;
