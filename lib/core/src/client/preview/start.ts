@@ -67,6 +67,7 @@ export default function start(
   if (isBrowser) {
     // Initialize the story store with the selection in the URL
     const { storyId, viewMode } = initializePath(storyStore);
+
     if (storyId !== '*') {
       storyStore.setSelection({ storyId, viewMode });
 
