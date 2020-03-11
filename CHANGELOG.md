@@ -1,3 +1,11 @@
+## 6.0.0-alpha.25 (March 11, 2020)
+
+NOTE: `6.0.0-alpha.24` broken due to bad merge. Sorry!
+
+### Bug Fixes
+
+- Core: Fix initialization of global args ([#10106](https://github.com/storybookjs/storybook/pull/10106))
+
 ## 6.0.0-alpha.24 (March 11, 2020)
 
 ### Features
