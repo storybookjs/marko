@@ -1,4 +1,4 @@
-## 6.0.0-alpha.23 (March 11, 2020)
+## 6.0.0-alpha.24 (March 11, 2020)
 
 ### Features
 
@@ -20,6 +20,10 @@
 ### Dependency Upgrades
 
 - Bump axe-core from 3.5.1 to 3.5.2 ([#10090](https://github.com/storybookjs/storybook/pull/10090))
+
+## 6.0.0-alpha.23 (March 11, 2020)
+
+Failed publish
 
 ## 6.0.0-alpha.22 (March 10, 2020)
 
