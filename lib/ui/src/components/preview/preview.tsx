@@ -116,7 +116,7 @@ const useTabs = (
 const Preview: FunctionComponent<PreviewProps> = props => {
   const {
     api,
-    id,
+    id: previewId,
     options,
     viewMode,
     story = undefined,
@@ -127,12 +127,13 @@ const Preview: FunctionComponent<PreviewProps> = props => {
   const { isToolshown } = options;
   const { getElements } = api;
 
-  const tabs = useTabs(id, baseUrl, withLoader, getElements, story);
+  const tabs = useTabs(previewId, baseUrl, withLoader, getElements, story);
 
   useEffect(() => {
     if (story) {
+      const { refId, id } = story;
       api.emit(SET_CURRENT_STORY, {
-        storyId: story.knownAs || story.id,
+        storyId: refId ? `${refId}_${id}` : id,
         viewMode,
         options: {
           target: story.refId ? `storybook-ref-${story.refId}` : 'storybook-preview-iframe',
@@ -143,7 +144,7 @@ const Preview: FunctionComponent<PreviewProps> = props => {
 
   return (
     <Fragment>
-      {id === 'main' && (
+      {previewId === 'main' && (
         <Helmet key="description">
           <title>{description}</title>
         </Helmet>

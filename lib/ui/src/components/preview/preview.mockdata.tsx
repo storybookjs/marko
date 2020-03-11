@@ -32,7 +32,6 @@ export const previewProps: PreviewProps = {
     name: 'story name',
     parent: 'root',
     children: [],
-    knownAs: 'storyId',
     parameters: {
       filename: '',
       options: {},

@@ -11,7 +11,6 @@ export type StoryId = string;
 
 export interface Root {
   id: StoryId;
-  knownAs?: StoryId;
   depth: 0;
   name: string;
   refId?: InceptionRef['id'];
@@ -28,7 +27,6 @@ export interface Root {
 
 export interface Group {
   id: StoryId;
-  knownAs?: StoryId;
   depth: number;
   name: string;
   children: StoryId[];
@@ -46,7 +44,6 @@ export interface Group {
 
 export interface Story {
   id: StoryId;
-  knownAs?: StoryId;
   depth: number;
   parent: StoryId;
   name: string;
@@ -73,7 +70,6 @@ export interface Story {
 export interface StoryInput {
   id: StoryId;
   name: string;
-  knownAs?: StoryId;
   refId?: InceptionRef['id'];
   kind: string;
   children: string[];

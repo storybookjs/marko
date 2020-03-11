@@ -70,8 +70,6 @@ const namespace = (input: StoriesHash, ref: InceptionRef): StoriesHash => {
 
     const addition: Partial<Story> = {
       id: mappedId,
-      // this is used later to emit the correct commands over the channel
-      knownAs: id,
       // this is used to know which iframe to emit the message to
       refId: ref.id,
     };

@@ -7,13 +7,16 @@ import { stringifyQueryParams } from '../utils/stringifyQueryParams';
 
 const copyMapper = ({ state, api }: Combo) => {
   const story = api.getData(state.storyId);
-  const ref = api.getRefs()[story && story.refId];
+  const ref = story ? api.getRefs()[story && story.refId] : undefined;
+
+  const { refId, id } = story || {};
+  const storyId = refId ? `${refId}_${id}` : id;
 
   return {
     baseUrl: ref
       ? `${ref.url}/iframe.html`
       : `${state.location.origin + state.location.pathname}iframe.html`,
-    storyId: story ? story.knownAs || story.id : null,
+    storyId,
     queryParams: state.customQueryParams,
   };
 };
