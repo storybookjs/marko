@@ -240,13 +240,13 @@ addParameters({
 
 As of SB 6.0, there are two ways to customize how Docs renders source code, via story parameter or via a formatting function.
 
-If you override the `storySource.source` parameter, the `Source` block will render whatever string is added:
+If you override the `docs.source.code` parameter, the `Source` block will render whatever string is added:
 
 ```js
 const Example = () => <Button />;
 Example.story = {
   parameters: {
-    storySource: { source: 'some arbitrary string' },
+    docs: { source: { code: 'some arbitrary string' } },
   },
 };
 ```
