@@ -1,5 +1,5 @@
 import { UPDATE_GLOBAL_ARGS, GLOBAL_ARGS_UPDATED } from '@storybook/core-events';
-import { Args, Module, API } from '../index';
+import { Args, Module } from '../index';
 
 export interface SubState {
   globalArgs: Args;
