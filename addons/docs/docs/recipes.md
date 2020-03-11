@@ -14,6 +14,7 @@
   - [DocsPage](#docspage)
   - [MDX Stories](#mdx-stories)
 - [Controlling a story's view mode](#controlling-a-storys-view-mode)
+- [Customizing source snippets](#customizing-source-snippets)
 - [More resources](#more-resources)
 
 ## Component Story Format (CSF) with DocsPage
@@ -205,7 +206,7 @@ foo.story = { parameters: { docs: { disable: true } } };
 User writes documentation & stories side-by-side in a single MDX file, and wants those stories to show up in the canvas but not in the docs themselves. They want something similar to the recipe "CSF stories with MDX docs" but want to do everything in MDX:
 
 ```js
-<Story name="foo" parameters={{ docs: { disable: true }}} >
+<Story name="foo" parameters={{ docs: { disable: true } }}>
   <Button>foo</Button>
 </Story>
 ```
@@ -234,6 +235,37 @@ addParameters({
   viewMode: 'docs',
 });
 ```
+
+## Customizing source snippets
+
+As of SB 6.0, there are two ways to customize how Docs renders source code, via story parameter or via a formatting function.
+
+If you override the `docs.source.code` parameter, the `Source` block will render whatever string is added:
+
+```js
+const Example = () => <Button />;
+Example.story = {
+  parameters: {
+    docs: { source: { code: 'some arbitrary string' } },
+  },
+};
+```
+
+Alternatively, you can provide a function in the `docs.formatSource` parameter. For example, the following snippet in `.storybook/preview.js` globally removes the arrow at the beginning of a function that returns a string:
+
+```js
+const SOURCE_REGEX = /^\(\) => `(.*)`$/;
+export const parameters = {
+  docs: {
+    formatSource: (src, storyId) => {
+      const match = SOURCE_REGEX.exec(src);
+      return match ? match[1] : src;
+    },
+  },
+};
+```
+
+These two methods are complementary. The former is useful for story-specific, and the latter is useful for global formatting.
 
 ## More resources
 
