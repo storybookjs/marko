@@ -14,7 +14,7 @@ export const Button = () => button;
 Button.story = {
   parameters: {
     storySource: {
-      source: button,
+      source: `source: ${button}`,
     },
   },
 };

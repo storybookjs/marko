@@ -21,7 +21,6 @@ module.exports = {
     'babel-runtime/core-js/(.*)': `core-js/es/$1`,
     // 'babel-runtime/core-js/object/assign'
     'core-js/library/fn/object/assign': 'core-js/es/object/assign',
-    'react-syntax-highlighter/dist/esm/(.*)': 'react-syntax-highlighter/dist/cjs/$1',
   },
   projects: [
     '<rootDir>',
@@ -76,7 +75,7 @@ module.exports = {
     DOCS_MODE: false,
     PREVIEW_URL: undefined,
   },
-  snapshotSerializers: ['jest-emotion', 'enzyme-to-json/serializer'],
+  snapshotSerializers: ['jest-emotion', 'enzyme-to-json/serializer', 'jest-serializer-html'],
   coverageDirectory: 'coverage',
   setupFilesAfterEnv: ['./scripts/jest.init.js'],
   coverageReporters: ['lcov'],

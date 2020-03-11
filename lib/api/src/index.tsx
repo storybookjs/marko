@@ -13,10 +13,8 @@ import React, {
 import {
   SET_STORIES,
   STORY_CHANGED,
-  SELECT_STORY,
   SHARED_STATE_CHANGED,
   SHARED_STATE_SET,
-  NAVIGATE_URL,
 } from '@storybook/core-events';
 import { RenderData as RouterData } from '@storybook/router';
 import { Listener } from '@storybook/channels';
@@ -33,16 +31,7 @@ import initNotifications, {
   SubAPI as NotificationAPI,
 } from './modules/notifications';
 import initStories, { SubState as StoriesSubState, SubAPI as StoriesAPI } from './modules/stories';
-import {
-  StoriesRaw,
-  StoriesHash,
-  Story,
-  Root,
-  Group,
-  isGroup,
-  isRoot,
-  isStory,
-} from './lib/stories';
+import { StoriesHash, Story, Root, Group, isGroup, isRoot, isStory } from './lib/stories';
 import initLayout, {
   ActiveTabs,
   SubState as LayoutSubState,
@@ -57,6 +46,10 @@ import initVersions, {
   SubState as VersionsSubState,
   SubAPI as VersionsAPI,
 } from './modules/versions';
+import initGlobalArgs, {
+  SubState as GlobalArgsSubState,
+  SubAPI as GlobalArgsAPI,
+} from './modules/globalArgs';
 
 export { Options as StoreOptions, Listener as ChannelListener };
 export { ActiveTabs };
@@ -77,7 +70,8 @@ export type State = Other &
   NotificationState &
   VersionsSubState &
   RouterData &
-  ShortcutsSubState;
+  ShortcutsSubState &
+  GlobalArgsSubState;
 
 export type API = AddonsAPI &
   ChannelAPI &
@@ -88,6 +82,7 @@ export type API = AddonsAPI &
   ShortcutsAPI &
   VersionsAPI &
   UrlAPI &
+  GlobalArgsAPI &
   OtherAPI;
 
 interface OtherAPI {
@@ -183,6 +178,7 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
       initStories,
       initURL,
       initVersions,
+      initGlobalArgs,
     ].map(initModule =>
       initModule({ ...routeData, ...apiData, state: this.state, fullAPI: this.api })
     );
@@ -194,31 +190,6 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
     const api: API = Object.assign(this.api, { navigate }, ...this.modules.map(m => m.api));
 
     initProviderApi({ provider, store, api });
-
-    api.on(STORY_CHANGED, (id: string) => {
-      const options = api.getParameters(id, 'options');
-
-      if (options) {
-        api.setOptions(options);
-      }
-    });
-
-    api.on(SET_STORIES, (data: { stories: StoriesRaw }) => {
-      api.setStories(data.stories);
-      const options = storyId
-        ? api.getParameters(storyId, 'options')
-        : api.getParameters(Object.keys(data.stories)[0], 'options');
-      api.setOptions(options);
-    });
-    api.on(
-      SELECT_STORY,
-      ({ kind, story, ...rest }: { kind: string; story: string; [k: string]: any }) => {
-        api.selectStory(kind, story, rest);
-      }
-    );
-    api.on(NAVIGATE_URL, (url: string, options: { [k: string]: any }) => {
-      api.navigateUrl(url, options);
-    });
 
     this.state = state;
     this.api = api;
@@ -243,7 +214,7 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
     // a chance to do things that call other modules' APIs.
     this.modules.forEach(({ init }) => {
       if (init) {
-        init({ api: this.api });
+        init();
       }
     });
   }
@@ -440,4 +411,13 @@ export function useArgs(): [Args, (newArgs: Args) => void] {
   const { id, args } = getCurrentStoryData();
 
   return [args, (newArgs: Args) => updateStoryArgs(id, newArgs)];
+}
+
+export function useGlobalArgs(): [Args, (newGlobalArgs: Args) => void] {
+  const {
+    state: { globalArgs },
+    api: { updateGlobalArgs },
+  } = useContext(ManagerContext);
+
+  return [globalArgs, updateGlobalArgs];
 }
