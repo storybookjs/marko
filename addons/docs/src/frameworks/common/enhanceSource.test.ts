@@ -1,5 +1,4 @@
 import { StoryContext } from '@storybook/addons';
-import { empty } from 'rxjs';
 import { enhanceSource } from './enhanceSource';
 
 const emptyContext: StoryContext = {
