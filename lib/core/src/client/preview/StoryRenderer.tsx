@@ -283,6 +283,10 @@ export class StoryRenderer {
     }
 
     const docs = parameters.docs || {};
+    if (docs.page && !docs.container) {
+      throw new Error('No `docs.container` set, did you run `addon-docs/preset`?');
+    }
+
     const DocsContainer =
       docs.container || (({ children }: { children: Element }) => <>{children}</>);
     const Page = docs.page || NoDocs;
