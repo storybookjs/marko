@@ -119,15 +119,11 @@ export const first = () => <Button onClick={firstArg.action('button-click')}>Hel
 
 ## Configuration
 
-Arguments which are passed to the action call will have to be serialized while be "transferred"
-over the channel.
+Arguments which are passed to the action call will have to be serialized while be "transferred" over the channel.
 
-This is not very optimal and can cause lag when large objects are being logged, for this reason it is possible
-to configure a maximum depth.
+This is not very optimal and can cause lag when large objects are being logged, for this reason it is possible to configure a maximum depth.
 
-The action logger, by default, will log all actions fired during the lifetime of the story. After a while
-this can make the storybook laggy. As a workaround, you can configure an upper limit to how many actions should
-be logged.
+The action logger, by default, will log all actions fired during the lifetime of the story. After a while this can make the storybook laggy. As a workaround, you can configure an upper limit to how many actions should be logged.
 
 To apply the configuration globally use the `configureActions` function in your `preview.js` file.
 
@@ -159,8 +155,7 @@ action('my-action', {
 
 ## withActions decorator
 
-You can define action handles in a declarative way using `withActions` decorators. It accepts the same arguments as [`actions`](#multiple-actions)
-Keys have `'<eventName> <selector>'` format, e.g. `'click .btn'`. Selector is optional. This can be used with any framework but is especially useful for `@storybook/html`.
+You can define action handles in a declarative way using `withActions` decorators. It accepts the same arguments as [`actions`](#multiple-actions). Keys have `'<eventName> <selector>'` format, e.g. `'click .btn'`. Selector is optional. This can be used with any framework but is especially useful for `@storybook/html`.
 
 ```js
 import { withActions } from '@storybook/addon-actions';

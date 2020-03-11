@@ -27,7 +27,6 @@ ArgsExample.story = {
 };
 
 export const ArgTypesExample = (args, context) => {
-  console.log({ args, context });
   const { someFunction, onClick, onFocus } = args;
   return (
     <Button onMouseOver={someFunction} {...{ onClick, onFocus }}>
