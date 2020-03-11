@@ -37,6 +37,4 @@ export default ({ provider, api }: { provider: Provider; api: API; store: Store 
     // eslint-disable-next-line no-param-reassign
     api.renderPreview = provider.renderPreview;
   }
-
-  return api;
 };
