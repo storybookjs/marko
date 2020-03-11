@@ -13,6 +13,7 @@ addons.setConfig({
     brandImage: logo,
     brandTitle: 'Custom - Storybook',
     ...themes.dark,
+    appContentBg: 'white',
   },
   panelPosition: 'bottom',
   selectedPanel: 'storybook/roundtrip',

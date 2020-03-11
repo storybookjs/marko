@@ -278,7 +278,10 @@ export class StoryRenderer {
   }
 
   renderDocs({ context, storyStore }: { context: RenderContext; storyStore: StoryStore }) {
-    const { kind, parameters } = context;
+    const { kind, parameters, id } = context;
+    if (id === '*' || !parameters) {
+      return;
+    }
 
     const docs = parameters.docs || {};
     const DocsContainer =

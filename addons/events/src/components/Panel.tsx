@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 import { styled } from '@storybook/theming';
 import { API } from '@storybook/api';
@@ -24,15 +23,6 @@ interface EventsPanelState {
 }
 
 export default class EventsPanel extends Component<EventsPanelProps, EventsPanelState> {
-  static propTypes = {
-    active: PropTypes.bool.isRequired,
-    api: PropTypes.shape({
-      emit: PropTypes.func,
-      off: PropTypes.func,
-      on: PropTypes.func,
-    }).isRequired,
-  };
-
   state: EventsPanelState = {
     events: [],
   };

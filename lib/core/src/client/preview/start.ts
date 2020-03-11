@@ -67,10 +67,13 @@ export default function start(
   if (isBrowser) {
     // Initialize the story store with the selection in the URL
     const { storyId, viewMode } = initializePath(storyStore);
-    storyStore.setSelection({ storyId, viewMode });
 
-    // Keep the URL updated based on the current story
-    channel.on(Events.CURRENT_STORY_WAS_SET, setPath);
+    if (storyId !== '*') {
+      storyStore.setSelection({ storyId, viewMode });
+
+      // Keep the URL updated based on the current story
+      channel.on(Events.CURRENT_STORY_WAS_SET, setPath);
+    }
 
     // Handle keyboard shortcuts
     window.onkeydown = (event: KeyboardEvent) => {
