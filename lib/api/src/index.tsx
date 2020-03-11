@@ -178,6 +178,7 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
       initStories,
       initURL,
       initVersions,
+      initGlobalArgs,
     ].map(initModule =>
       initModule({ ...routeData, ...apiData, state: this.state, fullAPI: this.api })
     );
