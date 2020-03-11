@@ -15,13 +15,13 @@ function get(storage: StoreAPI) {
 }
 
 function set(storage: StoreAPI, value: Patch) {
-  storage.set(STORAGE_KEY, value);
+  return storage.set(STORAGE_KEY, value);
 }
 
 function update(storage: StoreAPI, patch: Patch) {
   const previous = get(storage);
   // Apply the same behaviour as react here
-  set(storage, { ...previous, ...patch });
+  return set(storage, { ...previous, ...patch });
 }
 
 type GetState = () => State;
@@ -91,7 +91,7 @@ export default class Store {
     // What did the patch actually return
     let delta: Patch = {};
     if (typeof inputPatch === 'function') {
-      // Pass the same function, but just set delta on the way
+      // Pass the same function, but set delta on the way
       patch = (state: State) => {
         const getDelta = inputPatch as InputFnPatch;
         delta = getDelta(state);

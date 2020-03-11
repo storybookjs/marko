@@ -3,7 +3,6 @@
 import { navigator } from 'global';
 import escape from 'escape-html';
 import { getQueryParams } from '@storybook/client-api';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Channel } from '@storybook/channels';
 
 import KnobStore, { KnobStoreKnob } from './KnobStore';
@@ -49,6 +48,7 @@ function escapeStrings(obj: any): any {
 interface KnobManagerOptions {
   escapeHTML?: boolean;
   disableDebounce?: boolean;
+  disableForceUpdate?: boolean;
 }
 
 export default class KnobManager {
@@ -58,7 +58,7 @@ export default class KnobManager {
 
   options: KnobManagerOptions = {};
 
-  calling: boolean = false;
+  calling = false;
 
   setChannel(channel: Channel) {
     this.channel = channel;
@@ -91,6 +91,8 @@ export default class KnobManager {
       // userAgent is not set in react-native
       (!navigator.userAgent || !navigator.userAgent.includes('jsdom'))
     ) {
+      const { value, ...restOptions } = options;
+      knobStore.update(knobName, restOptions);
       return this.getKnobValue(existingKnob);
     }
 

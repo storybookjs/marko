@@ -3,17 +3,17 @@ import React, {
   Component,
   Fragment,
   FunctionComponent,
+  memo,
   MouseEvent,
   ReactNode,
 } from 'react';
-import PropTypes from 'prop-types';
 import { styled } from '@storybook/theming';
 
 import { Placeholder } from '../placeholder/placeholder';
 import { FlexBar } from '../bar/bar';
 import { TabButton } from '../bar/button';
 
-const ignoreSsrWarning = 
+const ignoreSsrWarning =
   '/* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */';
 
 export interface WrapperProps {
@@ -107,13 +107,11 @@ export const TabWrapper: FunctionComponent<TabWrapperProps> = ({ active, render,
   <VisuallyHidden active={active}>{render ? render() : children}</VisuallyHidden>
 );
 
-export const panelProps = {
-  active: PropTypes.bool,
-};
+export const panelProps = {};
 
 const childrenToList = (children: any, selected: string) =>
   Children.toArray(children).map(
-    ({ props: { title, id, color, children: childrenOfChild } }, index) => {
+    ({ props: { title, id, color, children: childrenOfChild } }: React.ReactElement, index) => {
       const content = Array.isArray(childrenOfChild) ? childrenOfChild[0] : childrenOfChild;
       return {
         active: selected ? id === selected : index === 0,
@@ -134,28 +132,18 @@ const childrenToList = (children: any, selected: string) =>
 
 export interface TabsProps {
   id?: string;
-  children?: ReactNode;
   tools?: ReactNode;
   selected?: string;
   actions?: {
     onSelect: (id: string) => void;
-  };
+  } & Record<string, any>;
   backgroundColor?: string;
   absolute?: boolean;
   bordered?: boolean;
 }
 
-export const Tabs = React.memo<TabsProps>(
-  ({
-    children,
-    selected,
-    actions,
-    absolute,
-    bordered,
-    tools,
-    backgroundColor,
-    id: htmlId,
-  }: TabsProps) => {
+export const Tabs: FunctionComponent<TabsProps> = memo(
+  ({ children, selected, actions, absolute, bordered, tools, backgroundColor, id: htmlId }) => {
     const list = childrenToList(children, selected);
 
     return list.length ? (
@@ -173,6 +161,7 @@ export const Tabs = React.memo<TabsProps>(
                   actions.onSelect(id);
                 }}
                 role="tab"
+                className={`tabbutton ${active ? 'tabbutton-active' : ''}`}
               >
                 {typeof title === 'function' ? title() : title}
               </TabButton>
@@ -180,7 +169,7 @@ export const Tabs = React.memo<TabsProps>(
           </TabBar>
           {tools ? <Fragment>{tools}</Fragment> : null}
         </FlexBar>
-        <Content absolute={absolute}>
+        <Content absolute={absolute} tabIndex={0}>
           {list.map(({ id, active, render }) => render({ key: id, active }))}
         </Content>
       </Wrapper>
@@ -232,6 +221,10 @@ export class TabsState extends Component<TabsStateProps, TabsStateState> {
     };
   }
 
+  handlers = {
+    onSelect: (id: string) => this.setState({ selected: id }),
+  };
+
   render() {
     const { bordered = false, absolute = false, children, backgroundColor } = this.props;
     const { selected } = this.state;
@@ -241,9 +234,7 @@ export class TabsState extends Component<TabsStateProps, TabsStateState> {
         absolute={absolute}
         selected={selected}
         backgroundColor={backgroundColor}
-        actions={{
-          onSelect: id => this.setState({ selected: id }),
-        }}
+        actions={this.handlers}
       >
         {children}
       </Tabs>

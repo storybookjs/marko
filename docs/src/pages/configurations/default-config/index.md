@@ -14,7 +14,7 @@ Here are some key features of Storybook's Babel configurations.
 
 We have added ES2016 support with Babel for transpiling your JS code.
 In addition to that, we've added a few experimental features, like object spreading and async await.
-Check out our [source](https://github.com/storybookjs/storybook/blob/master/lib/core/src/server/config/babel.dev.js) to learn more about these plugins.
+Check out our [source](https://github.com/storybookjs/storybook/blob/master/lib/core/src/server/common/babel.js) to learn more about these plugins.
 
 ### .babelrc support
 
@@ -40,7 +40,7 @@ The webpack config [is configurable](/configurations/custom-webpack-config/), an
     entry: [
       '@storybook/core/dist/server/common/polyfills.js',
       '@storybook/core/dist/server/preview/globals.js',
-      '<your-storybook-dir>/config.js',
+      '<your-storybook-dir>/preview.js',
       'webpack-hot-middleware/client.js?reload=true',
     ],
     output: {
@@ -97,7 +97,7 @@ The webpack config [is configurable](/configurations/custom-webpack-config/), an
     ],
     module: {
       rules: [
-        { test: /\.(mjs|jsx?)$/, 
+        { test: /\.(mjs|jsx?)$/,
           use: [
             { loader: 'babel-loader', options:
               { cacheDirectory: './node_modules/.cache/storybook',
@@ -122,7 +122,7 @@ The webpack config [is configurable](/configurations/custom-webpack-config/), an
           include: [ './' ],
           exclude: [ './node_modules' ],
         },
-        { test: /\.md$/, 
+        { test: /\.md$/,
           use: [
             { loader: './node_modules/raw-loader/index.js' },
           ],
@@ -167,7 +167,7 @@ The webpack config [is configurable](/configurations/custom-webpack-config/), an
 
 ### CSS Support
 
-You can simply import CSS files wherever you want, whether it's in the storybook config file, a UI component, or inside a story definition file.
+You can import CSS files wherever you want, whether it's in the storybook config file, a UI component, or inside a story definition file.
 
 Basically, you can import CSS like this:
 
@@ -189,7 +189,7 @@ import './styles.css';
 ### Image and Static File Support
 
 You can also import images and media files directly via JavaScript.
-This helps you to write stories with media files easily. This is how to do it:
+This helps you to write stories with media files. This is how to do it:
 
 ```js
 import React from 'react';
@@ -228,4 +228,4 @@ storiesOf('Component', module)
 ## NPM Modules
 
 You can use any of the NPM modules installed on your project.
-You can simply import and use them.
+You can import and use them.

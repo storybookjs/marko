@@ -1,10 +1,10 @@
 {
   "name": "@storybook/rax",
-  "version": "5.2.0-beta.40",
+  "version": "6.0.0-alpha.22",
   "description": "Storybook for Rax: Develop Rax Component in isolation.",
   "keywords": [
-    "storybook",
-    "rax"
+    "rax",
+    "storybook"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/app/rax",
   "bugs": {
@@ -17,31 +17,43 @@
   },
   "license": "MIT",
   "main": "dist/client/index.js",
-  "jsnext:main": "src/client/index.js",
   "bin": {
     "build-storybook": "./bin/build.js",
     "start-storybook": "./bin/index.js",
     "storybook-server": "./bin/index.js"
   },
+  "files": [
+    "bin/**/*",
+    "dist/**/*",
+    "README.md",
+    "*.js",
+    "*.d.ts",
+    "ts3.5/**/*"
+  ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/core": "5.2.0-beta.40",
+    "@storybook/core": "6.0.0-alpha.22",
     "babel-preset-rax": "^1.0.0-beta.0",
-    "common-tags": "^1.8.0",
-    "core-js": "^2.6.2",
+    "core-js": "^3.0.1",
+    "driver-dom": "^2.0.0",
     "global": "^4.3.2",
-    "regenerator-runtime": "^0.12.1"
+    "regenerator-runtime": "^0.13.3",
+    "ts-dedent": "^1.1.1"
   },
   "devDependencies": {
-    "rax": "^0.6.5"
+    "rax": "^1.1.0"
   },
   "peerDependencies": {
+    "@babel/core": "*",
     "babel-loader": "^7.0.0 || ^8.0.0",
-    "rax": "^0.4.0 || ^1.0.0"
+    "rax": "^0.4.0 || ^1.0.0",
+    "react": "*",
+    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff"
 }

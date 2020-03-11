@@ -1,23 +1,20 @@
-import React from 'react';
+import { Context, createContext } from 'react';
 
 export interface DocsContextProps {
   id?: string;
-  selectedKind?: string;
-  selectedStory?: string;
+  kind?: string;
+  name?: string;
 
   /**
-   * mdxKind is a statically-generated "kind" that corresponds to the
-   * component that's being documented in the MDX file, It's combined
-   * with the MDX story name `<Story name='story name'>...</Story>` to
-   * generate a storyId. In the case that the user is viewing a non-MDX
-   * story, the value of `mdxKind` will be the currently-selected kind.
-   * (I can't remember the corner case in which using the currentl-selected
-   * kind breaks down in MDX-defined stories, but there is one!)
+   * mdxStoryNameToKey is an MDX-compiler-generated mapping of an MDX story's
+   * display name to its story key for ID generation. It's used internally by the `<Story>`
+   * and `Preview` doc blocks.
    */
-  mdxKind?: string;
+  mdxStoryNameToKey?: Record<string, string>;
+  mdxComponentMeta?: any;
   parameters?: any;
   storyStore?: any;
   forceRender?: () => void;
 }
 
-export const DocsContext: React.Context<DocsContextProps> = React.createContext({});
+export const DocsContext: Context<DocsContextProps> = createContext({});

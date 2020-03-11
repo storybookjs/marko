@@ -1,12 +1,12 @@
 import { document } from 'global';
-import { stripIndents } from 'common-tags';
+import dedent from 'ts-dedent';
 import { unregister } from 'riot';
 import { render as renderRiot } from './rendering';
 
 export default function renderMain({
   storyFn,
-  selectedKind,
-  selectedStory,
+  kind,
+  name,
   showMain = () => {},
   showError = () => {},
 }) {
@@ -19,8 +19,8 @@ export default function renderMain({
   const rendered = renderRiot(element);
   if (!rendered) {
     showError({
-      title: `Expecting a riot snippet or a riot component from the story: "${selectedStory}" of "${selectedKind}".`,
-      description: stripIndents`
+      title: `Expecting a riot snippet or a riot component from the story: "${name}" of "${kind}".`,
+      description: dedent`
         Did you forget to return the component snippet from the story?
         Use "() => <your snippet or node>" or when defining the story.
       `,

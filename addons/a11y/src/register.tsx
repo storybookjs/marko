@@ -93,7 +93,7 @@ addons.register(ADDON_ID, api => {
   addons.add(PANEL_ID, {
     title: 'Accessibility',
     type: types.PANEL,
-    render: ({ active, key }) => <A11YPanel key={key} api={api} active={active} />,
+    render: ({ active = true, key }) => <A11YPanel key={key} api={api} active={active} />,
     paramKey: PARAM_KEY,
   });
 

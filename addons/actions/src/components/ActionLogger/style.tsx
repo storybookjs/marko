@@ -3,11 +3,12 @@ import { opacify } from 'polished';
 
 export const Action = styled.div({
   display: 'flex',
-  padding: '0',
+  padding: 0,
   borderLeft: '5px solid transparent',
   borderBottom: '1px solid transparent',
   transition: 'all 0.1s',
   alignItems: 'flex-start',
+  whiteSpace: 'pre',
 });
 
 export const Counter = styled.div<{}>(({ theme }) => ({
@@ -17,7 +18,7 @@ export const Counter = styled.div<{}>(({ theme }) => ({
   fontWeight: theme.typography.weight.bold,
   lineHeight: 1,
   padding: '1px 5px',
-  borderRadius: '20px',
+  borderRadius: 20,
   margin: '2px 0px',
 }));
 

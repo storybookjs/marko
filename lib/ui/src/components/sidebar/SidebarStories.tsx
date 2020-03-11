@@ -1,9 +1,8 @@
-import React, { Fragment, FunctionComponent } from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment, FunctionComponent, memo } from 'react';
 
 import { styled } from '@storybook/theming';
 import { Placeholder, Link as StyledLink } from '@storybook/components';
-import { State } from '@storybook/api';
+import { StoriesHash } from '@storybook/api';
 import { Location, Link as RouterLink } from '@storybook/router';
 import { TreeState } from './treeview/treeview';
 
@@ -18,10 +17,6 @@ const Search = styled(SidebarSearch)({
 const Subheading = styled(SidebarSubheading)({
   margin: '0 20px',
 });
-
-Subheading.propTypes = {
-  className: PropTypes.string,
-};
 
 Subheading.defaultProps = {
   className: 'sidebar-subheading',
@@ -52,17 +47,39 @@ const PlainLink = styled.a(plain);
 
 const Wrapper = styled.div({});
 
-const refinedViewMode = (viewMode: string | undefined, isDocsOnly: boolean) => {
-  if (isDocsOnly) {
-    return 'docs';
+export const viewMode = (
+  currentViewMode: string | undefined,
+  isDocsOnly: boolean,
+  parameters: { viewMode?: string } = {}
+) => {
+  const { viewMode: paramViewMode } = parameters;
+  switch (true) {
+    case typeof paramViewMode === 'string':
+      return paramViewMode;
+    case isDocsOnly:
+      return 'docs';
+    case currentViewMode === 'settings' || !currentViewMode:
+      return 'story';
+    default:
+      return currentViewMode;
   }
-  return viewMode === 'settings' || !viewMode ? 'story' : viewMode;
 };
 
 const targetId = (childIds?: string[]) =>
   childIds && childIds.find((childId: string) => /.*--.*/.exec(childId));
 
-export const Link = ({
+export const Link: FunctionComponent<{
+  id: string;
+  name: string;
+  isLeaf: boolean;
+  prefix: string;
+  onKeyUp: Function;
+  onClick: Function;
+  childIds: string[] | null;
+  isExpanded: boolean;
+  isComponent: boolean;
+  parameters: Record<string, any>;
+}> = ({
   id,
   prefix,
   name,
@@ -71,16 +88,19 @@ export const Link = ({
   isComponent,
   onClick,
   onKeyUp,
-  childIds,
-  isExpanded,
+  childIds = null,
+  isExpanded = false,
+  parameters,
 }) => {
   return isLeaf || (isComponent && !isExpanded) ? (
     <Location>
-      {({ viewMode }) => (
+      {({ viewMode: currentViewMode }) => (
         <PlainRouterLink
           title={name}
           id={prefix + id}
-          to={`/${refinedViewMode(viewMode, isLeaf && isComponent)}/${targetId(childIds) || id}`}
+          to={`/${viewMode(currentViewMode, isLeaf && isComponent, parameters)}/${targetId(
+            childIds
+          ) || id}`}
           onKeyUp={onKeyUp}
           onClick={onClick}
         >
@@ -95,53 +115,38 @@ export const Link = ({
   );
 };
 Link.displayName = 'Link';
-Link.propTypes = {
-  children: PropTypes.node.isRequired,
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  isLeaf: PropTypes.bool.isRequired,
-  prefix: PropTypes.string.isRequired,
-  onKeyUp: PropTypes.func.isRequired,
-  onClick: PropTypes.func.isRequired,
-  childIds: PropTypes.arrayOf(PropTypes.string),
-  isExpanded: PropTypes.bool,
-};
-Link.defaultProps = {
-  childIds: null,
-  isExpanded: false,
-};
 
 export interface StoriesProps {
-  loading: boolean;
-  stories: State['StoriesHash'];
+  isLoading: boolean;
+  stories: StoriesHash;
   storyId?: undefined | string;
   className?: undefined | string;
 }
 
-const SidebarStories: FunctionComponent<StoriesProps> = React.memo(
-  ({ stories, storyId, loading, className, ...rest }) => {
+const SidebarStories: FunctionComponent<StoriesProps> = memo(
+  ({ stories, storyId, isLoading, className, ...rest }) => {
     const list = Object.entries(stories);
 
-    if (loading) {
+    if (isLoading) {
       return (
         <Wrapper className={className}>
-          <SidebarItem loading />
-          <SidebarItem loading />
-          <SidebarItem depth={1} loading />
-          <SidebarItem depth={1} loading />
-          <SidebarItem depth={2} loading />
-          <SidebarItem depth={3} loading />
-          <SidebarItem depth={3} loading />
-          <SidebarItem depth={3} loading />
-          <SidebarItem depth={1} loading />
-          <SidebarItem depth={1} loading />
-          <SidebarItem depth={1} loading />
-          <SidebarItem depth={2} loading />
-          <SidebarItem depth={2} loading />
-          <SidebarItem depth={2} loading />
-          <SidebarItem depth={3} loading />
-          <SidebarItem loading />
-          <SidebarItem loading />
+          <SidebarItem isLoading />
+          <SidebarItem isLoading />
+          <SidebarItem depth={1} isLoading />
+          <SidebarItem depth={1} isLoading />
+          <SidebarItem depth={2} isLoading />
+          <SidebarItem depth={3} isLoading />
+          <SidebarItem depth={3} isLoading />
+          <SidebarItem depth={3} isLoading />
+          <SidebarItem depth={1} isLoading />
+          <SidebarItem depth={1} isLoading />
+          <SidebarItem depth={1} isLoading />
+          <SidebarItem depth={2} isLoading />
+          <SidebarItem depth={2} isLoading />
+          <SidebarItem depth={2} isLoading />
+          <SidebarItem depth={3} isLoading />
+          <SidebarItem isLoading />
+          <SidebarItem isLoading />
         </Wrapper>
       );
     }
@@ -152,7 +157,7 @@ const SidebarStories: FunctionComponent<StoriesProps> = React.memo(
           <Placeholder key="empty">
             <Fragment key="title">No stories found</Fragment>
             <Fragment>
-              Learn how to{' '}
+              Learn how to&nbsp;
               <StyledLink href="https://storybook.js.org/basics/writing-stories/" target="_blank">
                 write stories
               </StyledLink>
@@ -161,7 +166,6 @@ const SidebarStories: FunctionComponent<StoriesProps> = React.memo(
         </Wrapper>
       );
     }
-
     return (
       <Wrapper className={className}>
         <TreeState

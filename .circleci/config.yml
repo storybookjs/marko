@@ -1,41 +1,54 @@
-version: 2
+version: 2.1
 
 aliases:
   - &defaults
     working_directory: /tmp/storybook
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:10
 
-dependencies:
-  pre:
-    - yarn global add npm
 jobs:
-  build:
+  install:
     <<: *defaults
     steps:
       - checkout
       - restore_cache:
           name: Restore core dependencies cache
           keys:
-            - core-dependencies-v3-{{ checksum "yarn.lock" }}
+            - core-dependencies-v4-{{ checksum "yarn.lock" }}
       - run:
           name: Install dependencies
           command: yarn install
       - run:
           name: Check that yarn.lock is not corrupted
           command: yarn repo-dirty-check
-      - run:
-          name: Bootstrap
-          command: yarn bootstrap --core
       - save_cache:
           name: Cache core dependencies
-          key: core-dependencies-v3-{{ checksum "yarn.lock" }}
+          key: core-dependencies-v4-{{ checksum "yarn.lock" }}
           paths:
-            - ~/.cache/yarn
+            - ~/.cache
+            - node_modules
+            - /root/.cache
       - persist_to_workspace:
           root: .
           paths:
             - node_modules
+            - examples
+            - addons
+            - dev-kits
+            - app
+            - lib
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Bootstrap
+          command: yarn bootstrap --core
+      - persist_to_workspace:
+          root: .
+          paths:
             - examples
             - addons
             - dev-kits
@@ -48,8 +61,57 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: Run chromatic on the pre-built storybook
-          command: yarn chromatic -- -d ./storybook-static
+          name: Run chromatic on the pre-built official example
+          command: yarn chromatic --storybook-build-dir="built-storybooks/official-storybook" --exit-zero-on-changes --app-code="ab7m45tp9p"
+      - run:
+          name: Run chromatic on the pre-built angular example
+          command: yarn chromatic --storybook-build-dir="built-storybooks/angular-cli" --app-code="tl92yzsj6w"
+      - run:
+          name: Run chromatic on the pre-built cra-kitchen-sink example
+          command: yarn chromatic --storybook-build-dir="built-storybooks/cra-kitchen-sink" --app-code="tg55gajmdt"
+      - run:
+          name: Run chromatic on the pre-built cra-react15 example
+          command: yarn chromatic --storybook-build-dir="built-storybooks/cra-react15" --app-code="gxk7iqej3wt"
+      - run:
+          name: Run chromatic on the pre-built cra-ts-essentials example
+          command: yarn chromatic --storybook-build-dir="built-storybooks/cra-ts-essentials" --app-code="b311ypk6of"
+      - run:
+          name: Run chromatic on the pre-built cra-ts-kitchen-sink example
+          command: yarn chromatic --storybook-build-dir="built-storybooks/cra-ts-kitchen-sink" --app-code="19whyj1tlac"
+      - run:
+          name: Run chromatic on the pre-built dev-kits example
+          command: yarn chromatic --storybook-build-dir="built-storybooks/dev-kits" --app-code="7yykp9ifdxx"
+      - run:
+          name: Run chromatic on the pre-built ember-cli example
+          command: yarn chromatic --storybook-build-dir="built-storybooks/ember-cli" --app-code="19z23qxndju"
+      - run:
+          name: Run chromatic on the pre-built html-kitchen-sink example
+          command: yarn chromatic --storybook-build-dir="built-storybooks/html-kitchen-sink" --app-code="e8zolxoyg8o"
+      - run:
+          name: Run chromatic on the pre-built marko-cli example
+          command: yarn chromatic --storybook-build-dir="built-storybooks/marko-cli" --app-code="qaegx64axu"
+      - run:
+          name: Run chromatic on the pre-built mithril-kitchen-sink example
+          command: yarn chromatic --storybook-build-dir="built-storybooks/mithril-kitchen-sink" --app-code="8adgm46jzk8"
+      - run:
+          name: Run chromatic on the pre-built preact-kitchen-sink example
+          command: yarn chromatic --storybook-build-dir="built-storybooks/preact-kitchen-sink" --app-code="ls0ikhnwqt"
+      - run:
+          name: Run chromatic on the pre-built rax-kitchen-sink example
+          command: yarn chromatic --storybook-build-dir="built-storybooks/rax-kitchen-sink" --app-code="4co6vptx8qo"
+      - run:
+          name: Run chromatic on the pre-built riot-kitchen-sink example
+          command: yarn chromatic --storybook-build-dir="built-storybooks/riot-kitchen-sink" --app-code="g2dp3lnr34a"
+      - run:
+          name: Run chromatic on the pre-built svelte-kitchen-sink example
+          command: yarn chromatic --storybook-build-dir="built-storybooks/svelte-kitchen-sink" --app-code="8ob73wgl995"
+      - run:
+          name: Run chromatic on the pre-built vue-kitchen-sink example
+          command: yarn chromatic --storybook-build-dir="built-storybooks/vue-kitchen-sink" --app-code="cyxj0e38bqj"
+      - run:
+          name: Run chromatic on the pre-built web-components-kitchen-sink example
+          command: yarn chromatic --storybook-build-dir="built-storybooks/web-components-kitchen-sink" --app-code="npm5gsofwkf"
+
   packtracker:
     <<: *defaults
     steps:
@@ -63,97 +125,50 @@ jobs:
             yarn packtracker
   examples:
     <<: *defaults
+    parallelism: 10
     steps:
       - checkout
       - attach_workspace:
           at: .
       - run:
-          name: Workaround for https://github.com/GoogleChrome/puppeteer/issues/290
-          command: sh ./scripts/workaround-puppeteer-issue-290.sh
-      - run:
-          name: Build react kitchen-sink
+          name: examples
           command: |
-            cd examples/cra-kitchen-sink
-            yarn build-storybook
-      - run:
-          name: Build react typescript kitchen-sink
-          command: |
-            cd examples/cra-ts-kitchen-sink
-            yarn build-storybook
-      - run:
-          name: Build vue kitchen-sink
-          command: |
-            cd examples/vue-kitchen-sink
-            yarn build-storybook
-      - run:
-          name: Build svelte kitchen-sink
-          command: |
-            cd examples/svelte-kitchen-sink
-            yarn build-storybook
-      - run:
-          name: Build angular-cli
-          command: |
-            cd examples/angular-cli
-            yarn build-storybook
-      - run:
-          name: Build ember-cli
-          command: |
-            cd examples/ember-cli
-            yarn build-storybook
-      - run:
-          name: Build polymer-cli
-          command: |
-            cd examples/polymer-cli
-            yarn build-storybook
-      - run:
-          name: Build marko-cli
-          command: |
-            cd examples/marko-cli
-            yarn build-storybook
-      - run:
-          name: Build mithril kitchen-sink
-          command: |
-            cd examples/mithril-kitchen-sink
-            yarn build-storybook
-      - run:
-          name: Build html kitchen-sink
-          command: |
-            cd examples/html-kitchen-sink
-            yarn build-storybook
-      - run:
-          name: Build riot kitchen-sink
-          command: |
-            cd examples/riot-kitchen-sink
-            yarn build-storybook
-      - run:
-          name: Build preact kitchen-sink
-          command: |
-            cd examples/preact-kitchen-sink
-            yarn build-storybook
-      - run:
-          name: Build cra react15
-          command: |
-            cd examples/cra-react15
-            yarn build-storybook
-      - run:
-          name: Build official-storybook
-          command: |
-            cd examples/official-storybook
-            yarn build-storybook
-      # - run:
-      #     name: Run image snapshots
-      #     command: yarn test --image
-      - store_artifacts:
-          path: examples/official-storybook/image-snapshots/__image_snapshots__
-          destination: official_storybook_image_snapshots
+            yarn build-storybooks
       - persist_to_workspace:
           root: .
           paths:
+            - built-storybooks
+  e2e:
+    working_directory: /tmp/storybook
+    docker:
+      - image: cypress/base:8
+        environment:
+          TERM: xterm
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: install cypress
+          command: yarn cypress install
+      - save_cache:
+          name: Cache core dependencies
+          key: core-dependencies-v4-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache
             - node_modules
-            - examples
-            - addons
-            - app
-            - lib
+            - /root/.cache
+      - run:
+          name: running example
+          command: yarn serve-storybooks
+          background: true
+      - run:
+          name: await running examples
+          command: yarn await-serve-storybooks
+      - run:
+          name: cypress run
+          command: yarn cypress run
+
   smoke-tests:
     <<: *defaults
     steps:
@@ -191,11 +206,6 @@ jobs:
             cd examples/ember-cli
             yarn storybook --smoke-test --quiet
       - run:
-          name: Run polymer-cli (smoke test)
-          command: |
-            cd examples/polymer-cli
-            yarn storybook --smoke-test --quiet
-      - run:
           name: Run marko-cli (smoke test)
           command: |
             cd examples/marko-cli
@@ -225,24 +235,6 @@ jobs:
           command: |
             cd examples/cra-react15
             yarn storybook --smoke-test --quiet
-  native-smoke-tests:
-    <<: *defaults
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - run:
-          name: Bootstrap
-          command: yarn bootstrap --core
-      - run:
-          name: Run React-Native-App example
-          command: |
-            cd examples-native/crna-kitchen-sink
-            yarn storybook --smoke-test
-      - run:
-          name: Publish React-Native-App example
-          command: |
-            ./scripts/crna-publish.js
   frontpage:
     <<: *defaults
     steps:
@@ -250,18 +242,13 @@ jobs:
       - restore_cache:
           name: Restore core dependencies cache
           keys:
-            - core-dependencies-v3-{{ checksum "yarn.lock" }}
+            - core-dependencies-v4-{{ checksum "yarn.lock" }}
       - run:
           name: Install dependencies
-          command: yarn install
+          command: yarn bootstrap --install
       - run:
           name: Trigger build
           command: ./scripts/build-frontpage.js
-      - save_cache:
-          name: Cache core dependencies
-          key: core-dependencies-v3-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
   docs:
     <<: *defaults
     steps:
@@ -284,12 +271,7 @@ jobs:
           name: Cache docs dependencies
           key: docs-dependencies-v2-{{ checksum "docs/yarn.lock" }}
           paths:
-            - ~/.cache/yarn
-      - persist_to_workspace:
-          root: .
-          paths:
-            - docs/public
-            - docs/node_modules
+            - ~/.cache
   lint:
     <<: *defaults
     steps:
@@ -322,26 +304,25 @@ jobs:
           name: Upload coverage
           command: yarn coverage
 workflows:
-  version: 2
-  build_test_deploy:
+  test:
     jobs:
-      - build
-      - docs
-      - frontpage
+      - install
+      - build:
+          requires:
+            - install
       - lint:
           requires:
-            - docs
             - build
       - examples:
           requires:
             - build
+      - e2e:
+          requires:
+            - examples
       - smoke-tests:
           requires:
             - build
       - packtracker:
-          requires:
-            - build
-      - native-smoke-tests:
           requires:
             - build
       - test:
@@ -353,3 +334,7 @@ workflows:
       - chromatic:
           requires:
             - examples
+  deploy:
+    jobs:
+      - docs
+      - frontpage

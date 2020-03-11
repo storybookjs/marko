@@ -1,14 +1,18 @@
 import React from 'react';
 
 export default {
-  title: 'Addons|GraphQL',
+  title: 'Addons/GraphQL',
+  parameters: {
+    previewTabs: {
+      graphiql: { hidden: false, title: 'GraphiQL' },
+    },
+  },
 };
 
-export const getPickachu = () => <div>hello</div>;
+export const GetPikachu = () => <div>hello</div>;
 
-getPickachu.story = {
-  name: 'get Pickachu',
-
+GetPikachu.story = {
+  name: 'get Pikachu',
   parameters: {
     graphiql: {
       query: `{

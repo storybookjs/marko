@@ -19,20 +19,22 @@ class LifecycleLogger extends Component {
     log('componentDidMount');
   }
 
+  // deepscan-disable-next-line
+  getSnapshotBeforeUpdate() {
+    // deepscan-disable-next-line
+    log('getSnapshotBeforeUpdate');
+  }
+
   componentDidUpdate() {
     log('componentDidUpdate');
   }
 
-  componentWillUnmount() {
-    log('componentWillUnmount');
-  }
-
-  getSnapshotBeforeUpdate() {
-    log('getSnapshotBeforeUpdate');
-  }
-
   componentDidCatch() {
     log('componentDidCatch');
+  }
+
+  componentWillUnmount() {
+    log('componentWillUnmount');
   }
 
   render() {

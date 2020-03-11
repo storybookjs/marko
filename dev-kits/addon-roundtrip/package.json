@@ -1,12 +1,12 @@
 {
   "name": "@storybook/addon-roundtrip",
-  "version": "5.2.0-beta.40",
+  "version": "6.0.0-alpha.22",
   "description": "roundtrip addon for storybook",
   "keywords": [
-    "devkit",
     "addon",
-    "storybook",
-    "roundtrip"
+    "devkit",
+    "roundtrip",
+    "storybook"
   ],
   "homepage": "https://github.com/storybooks/storybook#readme",
   "bugs": {
@@ -24,22 +24,27 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "5.2.0-beta.40",
-    "@storybook/api": "5.2.0-beta.40",
-    "@storybook/client-api": "5.2.0-beta.40",
-    "@storybook/client-logger": "5.2.0-beta.40",
-    "@storybook/components": "5.2.0-beta.40",
-    "@storybook/core-events": "5.2.0-beta.40",
-    "@storybook/theming": "5.2.0-beta.40",
-    "common-tags": "^1.8.0",
+    "@storybook/addons": "6.0.0-alpha.22",
+    "@storybook/api": "6.0.0-alpha.22",
+    "@storybook/client-api": "6.0.0-alpha.22",
+    "@storybook/client-logger": "6.0.0-alpha.22",
+    "@storybook/components": "6.0.0-alpha.22",
+    "@storybook/core-events": "6.0.0-alpha.22",
+    "@storybook/theming": "6.0.0-alpha.22",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
-    "react": "^16.8.3"
-  },
-  "devDependencies": {
-    "@types/common-tags": "^1.8.0"
+    "react": "^16.8.3",
+    "ts-dedent": "^1.1.1"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
+  "typesVersions": {
+    "<=3.5": {
+      "*": [
+        "ts3.5/*"
+      ]
+    }
   }
 }

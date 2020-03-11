@@ -1,0 +1,31 @@
+{
+  "name": "storybook",
+  "version": "6.0.0-alpha.22",
+  "description": "Storybook CLI",
+  "keywords": [
+    "storybook"
+  ],
+  "homepage": "https://github.com/storybookjs/storybook/tree/master/lib/cli",
+  "bugs": {
+    "url": "https://github.com/storybookjs/storybook/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/storybookjs/storybook.git",
+    "directory": "lib/cli"
+  },
+  "license": "MIT",
+  "bin": {
+    "sb": "./index.js",
+    "storybook": "./index.js"
+  },
+  "scripts": {
+    "prepare": "node ../../scripts/prepare.js"
+  },
+  "dependencies": {
+    "@storybook/cli": "6.0.0-alpha.22"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

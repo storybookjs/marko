@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`json-to-csf-compiler knobs.json 1`] = `
+"import { array, boolean, color, date, number, object, select, text, withKnobs } from '@storybook/addon-knobs';
+
+export default {
+  title: 'Addons/Knobs',
+  decorators: [
+    withKnobs
+  ],
+  parameters: {
+    options: {
+      selectedPanel: 'storybook/knobs/panel'
+    }
+  }
+};
+
+export const Simple = () => {
+  return {
+    name: text('Name', 'John Doe'),
+    age: number('Age', 44, {}),
+  };
+};
+Simple.story = {
+  name: 'Simple',
+  parameters: {
+    server: {
+      id: 'addons/knobs/simple'
+    }
+  }
+};
+"
+`;

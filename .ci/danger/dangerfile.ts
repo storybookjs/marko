@@ -3,7 +3,9 @@ import { execSync } from 'child_process';
 
 execSync('npm install lodash');
 
-const { flatten, intersection, isEmpty } = require('lodash');
+const flatten = require('lodash/flatten');
+const intersection = require('lodash/intersection');
+const isEmpty = require('lodash/isEmpty');
 
 const pkg = require('../../package.json'); // eslint-disable-line import/newline-after-import
 const prLogConfig = pkg['pr-log'];

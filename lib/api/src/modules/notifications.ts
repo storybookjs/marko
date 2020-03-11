@@ -2,6 +2,8 @@ import { Module } from '../index';
 
 export interface Notification {
   id: string;
+  link: string;
+  content: string;
   onClear?: () => void;
 }
 

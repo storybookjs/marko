@@ -1,16 +1,26 @@
 <center>
-  <img src="./media/docspage-hero.png" width="100%" />
+  <img src="https://raw.githubusercontent.com/storybookjs/storybook/master/addons/docs/docs/media/docspage-hero.png" width="100%" />
 </center>
 
-# Storybook DocsPage
+<h1>Storybook DocsPage</h1>
 
 When you install [Storybook Docs](../README.md), `DocsPage` is the zero-config default documentation that all stories get out of the box. It aggregates your stories, text descriptions, docgen comments, props tables, and code examples into a single page for each component.
 
 - [Motivation](#motivation)
 - [Component parameter](#component-parameter)
+- [Subcomponents parameter](#subcomponents-parameter)
 - [DocsPage slots](#docspage-slots)
+- [Slot values](#slot-values)
+  - [Title](#title)
+  - [Subtitle](#subtitle)
+  - [Description](#description)
+  - [Primary](#primary)
+  - [Props](#props)
+  - [Stories](#stories)
+- [Slot functions](#slot-functions)
 - [Replacing DocsPage](#replacing-docspage)
 - [Story file names](#story-file-names)
+- [Inline stories vs. Iframe stories](#inline-stories-vs-iframe-stories)
 - [More resources](#more-resources)
 
 ## Motivation
@@ -24,7 +34,7 @@ However, `DocsPage` brings the following improvements:
 - It supports all frameworks that Storybook supports, including React, Vue, Angular and [many others](../README.md#framework-support).
 - It generates better documentation that can be used as a standalone docs site, independently of Storybook.
 - It supports better configuration, so you can capture project specific information with ease.
-- It's built to work with [`MDX`](./mdx.md`) when you need more control of your documentation.
+- It's built to work with [`MDX`](./mdx.md) when you need more control of your documentation.
 
 ## Component parameter
 
@@ -32,7 +42,7 @@ However, `DocsPage` brings the following improvements:
 
 Storybook uses `component` to extract the component's description and props, and will rely on it further in future releases. We encourage you to add it to existing stories and use it in all new stories.
 
-Here's how to set the component in [Component Story Format (CSF)]():
+Here's how to set the component in [Component Story Format (CSF)](https://storybook.js.org/docs/formats/component-story-format/):
 
 ```js
 import { Badge } from './Badge';
@@ -54,12 +64,32 @@ storiesOf('Path/to/Badge', module).addParameters({ component: Badge });
 
 If you're coming from the `storiesOf` format, there's [a codemod that adds it for you](https://github.com/storybookjs/storybook/blob/next/lib/codemod/README.md#add-component-parameters).
 
+## Subcomponents parameter
+
+Sometimes it's useful to document multiple components on the same page. For example, suppose your component library contains `List` and `ListItem` components that don't make sense without one another. `DocsPage` has the concept of a "primary" component with the [`component` parameter](#component-parameter), and can also accept one or more "subcomponents":
+
+```js
+import { List, ListHeading, ListItem } from './List';
+
+export default {
+  title: 'Path/to/List',
+  component: List,
+  subcomponents: { ListHeading, ListItem },
+};
+```
+
+Subcomponent prop tables will show up in a tabbed interface along with the primary component, and the tab titles will correspond to the keys of the `subcomponents` object.
+
+<img src="./media/docspage-subcomponents.png" width="100%" />
+
+If you want organize your documentation differently for groups of components, we recommend trying [MDX](./mdx.md) which is completely flexible to support any configuration.
+
 ## DocsPage slots
 
 `DocsPage` is organized into a series of "slots" including Title, Subtitle, Description, Props, and Story. Each of these slots pulls information from your project and formats it for the screen.
 
 <center>
-  <img style="padding: 30px; border: 3px solid #eee;" src="./media/docspage-slots.png" width="100%" />
+  <img style="padding: 30px; border: 3px solid #eee;" src="https://raw.githubusercontent.com/storybookjs/storybook/master/addons/docs/docs/media/docspage-slots.png" width="100%" />
 </center>
 
 ## Slot values
@@ -76,6 +106,8 @@ Here is a summary of the slots, where the data comes from by default, and the sl
 | Primary     | storybook stories                   | `primarySlot`     | All        |
 | Props       | component docgen props or propTypes | `propsSlot`       | React, Vue |
 | Stories     | storybook stories                   | `storiesSlot`     | All        |
+
+The `storiesSlot` uses the `docs.storyDescription` parameter to show a description for each story, if available.
 
 For more information on frameworks, see ["Framework support"](../README.md#framework-support)
 
@@ -114,7 +146,7 @@ For example, here's the source for `Badge`:
 
 ```js
 /**
- * Use `Badge` to highlight key info with a predefined status. Easy peasy!
+ * Use `Badge` to highlight key info with a predefined status.
  */
 export const Badge = ({ status, children }) => { ... }
 ```
@@ -175,8 +207,8 @@ Here is the `SlotContext` type definition:
 ```ts
 export interface SlotContext {
   id?: string;
-  selectedKind?: string;
-  selectedStory?: string;
+  kind?: string;
+  name?: string;
   parameters?: any;
   storyStore?: any;
 }
@@ -196,17 +228,17 @@ And here are the return type signatures for each of the slot functions
 
 What if you don't want a `DocsPage` for your storybook, for a specific component, or even for a specific story?
 
-You can replace DocsPage at any level by overriding the `docs` parameter:
+You can replace DocsPage at any level by overriding the `docs.page` parameter:
 
 - With `null` to remove docs
-- [With MDX](#csf-stories-with-mdx-docs) docs
+- [With MDX](./recipes.md#csf-stories-with-mdx-docs) docs
 - With a custom React component
 
-**Globally (config.js)**
+**Globally (preview.js)**
 
 ```js
 import { addParameters } from '@storybook/react';
-addParameters({ docs: null });
+addParameters({ docs: { page: null } });
 ```
 
 **Component-level (Button.stories.js)**
@@ -216,7 +248,7 @@ import { Button } from './Button';
 export default {
   title: 'Demo/Button',
   component: Button,
-  parameters: { docs: null },
+  parameters: { docs: { page: null } },
 };
 ```
 
@@ -227,7 +259,7 @@ import { Button } from './Button';
 // export default { ... }
 export const basic => () => <Button>Basic</Button>
 basic.story = {
-  parameters: { docs: null }
+  parameters: { docs: { page: null } }
 }
 ```
 
@@ -237,11 +269,33 @@ Unless you use a custom webpack configuration, all of your story files should ha
 
 The docs preset assumes this naming convention for its `source-loader` setup. If you want to use a different naming convention, you'll need a [manual configuration](../README.md#manual-configuration).
 
+## Inline stories vs. Iframe stories
+
+Due to the complex nature of writing a cross-framework utility like Storybook, the story blocks for most frameworks exist within an `<iframe>` element. This creates a clean separation of the context the code for each framework lives inside, but it isn't a perfect tradeoff. It does create a set of disadvantages--namely, you have to explicitly set the height of a story. It also causes some headaches for certain dev tools (Vue dev tools, for example, don't pick up components that exist in an iframe, without substantial jerry-rigging).
+
+That being said, there is a system in place to remove the necessity of this tradeoff. The docs configuration contains two options, `inlineStories` and `prepareForInline` that can work together to integrate non-react stories seamlessly (or should I say "scroll-bar-less-ly") into DocsPage. Setting `inlineStories` to `true` tells storybook to stop putting your stories into an iframe. The hard(er) part is providing the `prepareForInline` parameter. This parameter accepts a function that transforms story content in your given framework into something react can render. Any given framework will need to approach this in a different way. Angular, for example, might convert its story content into a custom element (you can read about that [here](https://angular.io/guide/elements)). We've actually taken the initiative and implemented Vue inline stories _for you_ in the default docs config for Vue, because we're such nice people. The following docs config block allows Vue components to be rendered inline through an effect hook provided by [@egoist/vue-to-react](https://github.com/egoist/vue-to-react):
+
+```js
+import React from 'react';
+import { render } from 'react-dom';
+import toReact from '@egoist/vue-to-react';
+import { addParameters } from '@storybook/vue';
+
+addParameters({
+  docs: {
+    prepareForInline: storyFn => {
+      const Story = toReact(storyFn());
+      return <Story />;
+    },
+  },
+});
+```
+
+With that function, anyone using the docs addon for `@storybook/vue` can make their stories render inline, either globally with the `inlineStories` docs parameter, or on a per-story-basis using the `inline` prop on the `<Story>` doc block. If you come up with an elegant and flexible implementation for the `prepareForInline` function for your own framework, let us know! We'd love to make it the default configuration, to make inline stories more accessible for a larger variety of frameworks!
+
 ## More resources
 
-Want to learn more? Here are some more articles on Storybook Docs:
-
-- References: [README](../README.md) / [MDX](./mdx.md) / [FAQ](./faq.md) / [Recipes](recipes.md)
-- Vision: [Storybook Docs sneak peak](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a)
+- References: [README](../README.md) / [DocsPage](docspage.md) / [MDX](mdx.md) / [FAQ](faq.md) / [Recipes](recipes.md) / [Theming](theming.md)
+- Framework-specific docs: [React](../react/README.md) / [Vue](../vue/README.md) / [Angular](../angular/README.md) / [Web components](../web-components/README.md) / [Ember](../ember/README.md)
+- Announcements: [Vision](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a) / [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf) / [MDX](https://medium.com/storybookjs/rich-docs-with-storybook-mdx-61bc145ae7bc) / [Framework support](https://medium.com/storybookjs/storybook-docs-for-new-frameworks-b1f6090ee0ea)
 - Example: [Storybook Design System](https://github.com/storybookjs/design-system)
-- [Technical preview guide](https://docs.google.com/document/d/1un6YX7xDKEKl5-MVb-egnOYN8dynb5Hf7mq0hipk8JE/edit?usp=sharing)

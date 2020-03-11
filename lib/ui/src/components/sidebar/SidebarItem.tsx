@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { ComponentProps } from 'react';
 import { styled } from '@storybook/theming';
 import { opacify, transparentize } from 'polished';
 import { Icons } from '@storybook/components';
+import { DOCS_MODE } from 'global';
 
-export type ExpanderProps = React.ComponentProps<'span'> & {
+export type ExpanderProps = ComponentProps<'span'> & {
   isExpanded?: boolean;
   isExpandable?: boolean;
 };
@@ -31,7 +32,7 @@ const Expander = styled.span<ExpanderProps>(
   }
 );
 
-export type IconProps = React.ComponentProps<typeof Icons> & {
+export type IconProps = ComponentProps<typeof Icons> & {
   className: string; // FIXME: Icons should extended its typing from the native <svg>
   isSelected?: boolean;
 };
@@ -50,7 +51,7 @@ const Icon = styled(Icons)<IconProps>(
     if (icon === 'component') {
       return { color: '#1ea7fd' };
     }
-    if (icon === 'bookmarkhollow') {
+    if (icon === 'bookmarkhollow' || (DOCS_MODE && icon === 'document')) {
       return { color: '#37d5d3' };
     }
     if (icon === 'document') {
@@ -81,8 +82,8 @@ export const Item = styled(({ className, children, id }) => (
   ({ depth }) => ({
     paddingLeft: depth * 15 + 9,
   }),
-  ({ theme, isSelected, loading }) =>
-    !loading &&
+  ({ theme, isSelected, isLoading }) =>
+    !isLoading &&
     (isSelected
       ? {
           cursor: 'default',
@@ -101,15 +102,15 @@ export const Item = styled(({ className, children, id }) => (
             background: theme.background.hoverable,
           },
         }),
-  ({ theme, loading }) =>
-    loading && {
-      '&& > svg + span': { background: theme.color.medium },
+  ({ theme, isLoading }) =>
+    isLoading && {
+      '&& > svg + span': { background: theme.appBorderColor },
       '&& > *': theme.animation.inlineGlow,
       '&& > span': { borderColor: 'transparent' },
     }
 );
 
-type SidebarItemProps = React.ComponentProps<typeof Item> & {
+export type SidebarItemProps = ComponentProps<typeof Item> & {
   isComponent?: boolean;
   isLeaf?: boolean;
   isExpanded?: boolean;
@@ -117,14 +118,14 @@ type SidebarItemProps = React.ComponentProps<typeof Item> & {
 };
 
 const SidebarItem = ({
-  name = 'loading story',
+  name = 'isLoading story',
   isComponent = false,
   isLeaf = false,
   isExpanded = false,
   isSelected = false,
   ...props
 }: SidebarItemProps) => {
-  let iconName: React.ComponentProps<typeof Icons>['icon'];
+  let iconName: ComponentProps<typeof Icons>['icon'];
   if (isLeaf && isComponent) {
     iconName = 'document';
   } else if (isLeaf) {

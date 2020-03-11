@@ -1,18 +1,21 @@
-import ClientApi, { defaultDecorateStory } from './client_api';
+import ClientApi, { addDecorator, addParameters, addParameterEnhancer } from './client_api';
+import { defaultDecorateStory } from './decorators';
 import StoryStore from './story_store';
 import ConfigApi from './config_api';
-import subscriptionsStore from './subscriptions_store';
 import pathToId from './pathToId';
 
 import { getQueryParams, getQueryParam } from './queryparams';
 
 export * from './hooks';
+export * from './types';
 
 export {
   ClientApi,
+  addDecorator,
+  addParameters,
+  addParameterEnhancer,
   StoryStore,
   ConfigApi,
-  subscriptionsStore,
   defaultDecorateStory,
   pathToId,
   getQueryParams,

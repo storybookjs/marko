@@ -3,6 +3,9 @@ import { styled } from '@storybook/theming';
 
 const toNumber = (input: any) => (typeof input === 'number' ? input : Number(input));
 
+const ignoreSsrWarning =
+  '/* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */';
+
 export interface ContainerProps {
   col?: number;
   row?: number;
@@ -19,7 +22,7 @@ const Container = styled.div<ContainerProps>(
             marginLeft: col * theme.layoutMargin,
             verticalAlign: 'inherit',
           },
-          '& > *:first-of-type': {
+          [`& > *:first-child${ignoreSsrWarning}`]: {
             marginLeft: 0,
           },
         }
@@ -27,7 +30,7 @@ const Container = styled.div<ContainerProps>(
           '& > *': {
             marginTop: row * theme.layoutMargin,
           },
-          '& > *:first-of-type': {
+          [`& > *:first-child${ignoreSsrWarning}`]: {
             marginTop: 0,
           },
         },
@@ -58,11 +61,11 @@ export interface SpacedProps {
   outer?: number | boolean;
 }
 
-export const Spaced: FunctionComponent<SpacedProps> = ({ col, row, outer, children }) => {
+export const Spaced: FunctionComponent<SpacedProps> = ({ col, row, outer, children, ...rest }) => {
   const outerAmount = toNumber(typeof outer === 'number' || !outer ? outer : col || row);
 
   return (
-    <Container col={col} row={row} outer={outerAmount}>
+    <Container col={col} row={row} outer={outerAmount} {...rest}>
       {children}
     </Container>
   );

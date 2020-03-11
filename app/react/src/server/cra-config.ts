@@ -6,9 +6,6 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { normalizeCondition } from 'webpack/lib/RuleSet';
 import { logger } from '@storybook/node-logger';
 
-const JSCONFIG = 'jsconfig.json';
-const TSCONFIG = 'tsconfig.json';
-
 const appDirectory = fs.realpathSync(process.cwd());
 const cssExtensions = ['.css', '.scss', '.sass'];
 const cssModuleExtensions = ['.module.css', '.module.scss', '.module.sass'];
@@ -71,29 +68,26 @@ export function isReactScriptsInstalled(requiredVersion = '2.0.0') {
 }
 
 export const getRules = (extensions: string[]) => (rules: RuleSetRule[]) =>
-  rules.reduce(
-    (craRules, rule) => {
-      // If at least one extension satisfies the rule test, the rule is one
-      // we want to extract
-      if (rule.test && extensions.some(normalizeCondition(rule.test))) {
-        // If the base test is for extensions, return early
-        return craRules.concat(rule);
-      }
+  rules.reduce((craRules, rule) => {
+    // If at least one extension satisfies the rule test, the rule is one
+    // we want to extract
+    if (rule.test && extensions.some(normalizeCondition(rule.test))) {
+      // If the base test is for extensions, return early
+      return craRules.concat(rule);
+    }
 
-      // Get any rules contained in rule.oneOf
-      if (!rule.test && rule.oneOf) {
-        craRules.push(...getRules(extensions)(rule.oneOf));
-      }
+    // Get any rules contained in rule.oneOf
+    if (!rule.test && rule.oneOf) {
+      craRules.push(...getRules(extensions)(rule.oneOf));
+    }
 
-      // Get any rules contained in rule.rules
-      if (!rule.test && rule.rules) {
-        craRules.push(...getRules(extensions)(rule.rules));
-      }
+    // Get any rules contained in rule.rules
+    if (!rule.test && rule.rules) {
+      craRules.push(...getRules(extensions)(rule.rules));
+    }
 
-      return craRules;
-    },
-    [] as RuleSetRule[]
-  );
+    return craRules;
+  }, [] as RuleSetRule[]);
 
 const getStyleRules = getRules(cssExtensions.concat(cssModuleExtensions));
 
@@ -101,40 +95,20 @@ export const getTypeScriptRules = (webpackConfigRules: RuleSetRule[], configDir:
   const rules = getRules(typeScriptExtensions)(webpackConfigRules);
 
   // Adds support for using TypeScript in the `.storybook` (or config) folder.
-  return rules.reduce(
-    (accRules, rule) => {
-      // Resolves an issue where this config is parsed twice (#4903).
-      if (typeof rule.include !== 'string') {
-        return [...accRules, rule];
-      }
+  return rules.reduce((accRules, rule) => {
+    // Resolves an issue where this config is parsed twice (#4903).
+    if (typeof rule.include !== 'string') {
+      return [...accRules, rule];
+    }
 
-      return [
-        ...accRules,
-        {
-          ...rule,
-          include: [rule.include, path.resolve(configDir)],
-        },
-      ];
-    },
-    [] as RuleSetRule[]
-  );
-};
-
-export const getModulePath = () => {
-  // As with CRA, we only support `jsconfig.json` if `tsconfig.json` doesn't exist.
-  let configName;
-  if (fs.existsSync(path.join(appDirectory, TSCONFIG))) {
-    configName = TSCONFIG;
-  } else if (fs.existsSync(path.join(appDirectory, JSCONFIG))) {
-    configName = JSCONFIG;
-  }
-
-  if (configName) {
-    // eslint-disable-next-line import/no-dynamic-require,global-require
-    const config = require(path.join(appDirectory, configName));
-    return config.compilerOptions && config.compilerOptions.baseUrl;
-  }
-  return false;
+    return [
+      ...accRules,
+      {
+        ...rule,
+        include: [rule.include, path.resolve(configDir)],
+      },
+    ];
+  }, [] as RuleSetRule[]);
 };
 
 function mergePlugins(basePlugins: Plugin[], additionalPlugins: Plugin[]) {
@@ -177,10 +151,6 @@ export function applyCRAWebpackConfig(baseConfig: Configuration, configDir: stri
   const tsExtensions = hasTsSupport ? typeScriptExtensions : [];
   const extensions = [...cssExtensions, ...tsExtensions];
 
-  // Support for this was added in `react-scripts@3.0.0`.
-  // https://github.com/facebook/create-react-app/pull/6656
-  const modulePath = isReactScriptsInstalled('3.0.0') && getModulePath();
-
   // Remove any rules from baseConfig that test true for any one of the extensions
   const filteredBaseRules = baseConfig.module.rules.filter(
     rule => !rule.test || !extensions.some(normalizeCondition(rule.test))
@@ -197,6 +167,7 @@ export function applyCRAWebpackConfig(baseConfig: Configuration, configDir: stri
   //  Add css minification for production
   const plugins = [...baseConfig.plugins];
   if (baseConfig.mode === 'production') {
+    // @ts-ignore
     plugins.push(new MiniCssExtractPlugin());
   }
 
@@ -210,7 +181,13 @@ export function applyCRAWebpackConfig(baseConfig: Configuration, configDir: stri
     resolve: {
       ...baseConfig.resolve,
       extensions: [...baseConfig.resolve.extensions, ...tsExtensions],
-      modules: baseConfig.resolve.modules.concat(modulePath || []),
+      modules: Array.from(
+        new Set([...baseConfig.resolve.modules, ...(craWebpackConfig.resolve.modules || [])])
+      ),
+      alias: {
+        ...baseConfig.resolve.alias,
+        ...craWebpackConfig.resolve.alias,
+      },
     },
     resolveLoader: {
       modules: ['node_modules', path.join(getReactScriptsPath(), 'node_modules')],

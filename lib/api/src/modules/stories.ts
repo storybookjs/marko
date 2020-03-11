@@ -1,14 +1,23 @@
-// FIXME: we shouldn't import from dist but there are no types otherwise
-import { toId, sanitize, parseKind } from '@storybook/router';
+import { DOCS_MODE } from 'global';
+import { toId, sanitize } from '@storybook/csf';
+import { UPDATE_STORY_ARGS, STORY_ARGS_UPDATED } from '@storybook/core-events';
 
-import { Module } from '../index';
-import merge from '../lib/merge';
+import {
+  transformStoriesRawToStoriesHash,
+  StoriesHash,
+  Story,
+  Group,
+  StoriesRaw,
+  StoryId,
+  isStory,
+} from '../lib/stories';
+
+import { Module, API, Args } from '../index';
 
 type Direction = -1 | 1;
-type StoryId = string;
 type ParameterName = string;
 
-type ViewMode = 'story' | 'info' | 'settings' | undefined;
+type ViewMode = 'story' | 'info' | 'settings' | string | undefined;
 
 export interface SubState {
   storiesHash: StoriesHash;
@@ -29,61 +38,25 @@ export interface SubAPI {
   getCurrentParameter<S>(parameterName?: ParameterName): S;
 }
 
-interface Group {
-  id: StoryId;
-  name: string;
-  children: StoryId[];
-  parent: StoryId;
-  depth: number;
-  isComponent: boolean;
-  isRoot: boolean;
-  isLeaf: boolean;
-}
-
-interface StoryInput {
-  id: StoryId;
-  name: string;
-  kind: string;
-  children: string[];
-  parameters: {
-    filename: string;
-    options: {
-      hierarchyRootSeparator: RegExp;
-      hierarchySeparator: RegExp;
-      [key: string]: any;
-    };
-    [parameterName: string]: any;
-  };
-  isLeaf: boolean;
-}
-
-type Story = StoryInput & Group;
-
-export interface StoriesHash {
-  [id: string]: Group | Story;
-}
-export type StoriesList = (Group | Story)[];
-export type GroupsList = Group[];
-
-export interface StoriesRaw {
-  [id: string]: StoryInput;
-}
+// When adding a group, also add all of its children, depth first
 
 const initStoriesApi = ({
   store,
   navigate,
+  provider,
   storyId: initialStoryId,
   viewMode: initialViewMode,
 }: Module) => {
-  const isStory = (obj: Group | Story): boolean => {
-    const story = obj as Story;
-    return !!(story && story.parameters);
-  };
+  let fullApi: API;
 
   const getData = (storyId: StoryId) => {
     const { storiesHash } = store.getState();
 
-    return storiesHash[storyId];
+    if (storiesHash[storyId]) {
+      return storiesHash[storyId];
+    }
+
+    return undefined;
   };
   const getCurrentStoryData = () => {
     const { storyId } = store.getState();
@@ -94,7 +67,7 @@ const initStoriesApi = ({
     const data = getData(storyId);
 
     if (isStory(data)) {
-      const { parameters } = data as Story;
+      const { parameters } = data;
       return parameterName ? parameters[parameterName] : parameters;
     }
 
@@ -109,34 +82,6 @@ const initStoriesApi = ({
       return parameters as S;
     }
     return undefined;
-  };
-
-  const jumpToStory = (direction: Direction) => {
-    const { storiesHash, viewMode, storyId } = store.getState();
-
-    // cannot navigate when there's no current selection
-    if (!storyId || !storiesHash[storyId]) {
-      return;
-    }
-
-    const lookupList = Object.keys(storiesHash).filter(
-      k => !(storiesHash[k].children || Array.isArray(storiesHash[k]))
-    );
-    const index = lookupList.indexOf(storyId);
-
-    // cannot navigate beyond fist or last
-    if (index === lookupList.length - 1 && direction > 0) {
-      return;
-    }
-    if (index === 0 && direction < 0) {
-      return;
-    }
-
-    const result = lookupList[index + direction];
-
-    if (viewMode && result) {
-      navigate(`/${viewMode}/${result}`);
-    }
   };
 
   const jumpToComponent = (direction: Direction) => {
@@ -171,97 +116,57 @@ const initStoriesApi = ({
     navigate(`/${viewMode || 'story'}/${result}`);
   };
 
-  const toKey = (input: string) =>
-    input.replace(/[^a-z0-9]+([a-z0-9])/gi, (...params) => params[1].toUpperCase());
+  const jumpToStory = (direction: Direction) => {
+    const { storiesHash, viewMode, storyId } = store.getState();
 
-  const toGroup = (name: string) => ({
-    name,
-    id: toKey(name),
-  });
-
-  const setStories = (input: StoriesRaw) => {
-    const hash: StoriesHash = {};
-    const storiesHashOutOfOrder = Object.values(input).reduce((acc, item) => {
-      const { kind, parameters } = item;
-      // FIXME: figure out why parameters is missing when used with react-native-server
-      const {
-        hierarchyRootSeparator: rootSeparator,
-        hierarchySeparator: groupSeparator,
-      } = (parameters && parameters.options) || {
-        hierarchyRootSeparator: '|',
-        hierarchySeparator: /\/|\./,
-      };
-
-      const { root, groups } = parseKind(kind, { rootSeparator, groupSeparator });
-
-      const rootAndGroups = []
-        .concat(root || [])
-        .concat(groups)
-        .map(toGroup)
-        // Map a bunch of extra fields onto the groups, collecting the path as we go (thus the reduce)
-        .reduce(
-          (soFar, group, index, original) => {
-            const { name } = group;
-            const parent = index > 0 && soFar[index - 1].id;
-            const id = sanitize(parent ? `${parent}-${name}` : name);
-            if (parent === id) {
-              throw new Error(
-                `
-Invalid part '${name}', leading to id === parentId ('${id}'), inside kind '${kind}'
-
-Did you create a path that uses the separator char accidentally, such as 'Vue <docs/>' where '/' is a separator char? See https://github.com/storybookjs/storybook/issues/6128
-              `.trim()
-              );
-            }
-
-            const result: Group = {
-              ...group,
-              id,
-              parent,
-              depth: index,
-              children: [],
-              isComponent: index === original.length - 1,
-              isLeaf: false,
-              isRoot: !!root && index === 0,
-            };
-            return soFar.concat([result]);
-          },
-          [] as GroupsList
-        );
-
-      const paths = [...rootAndGroups.map(g => g.id), item.id];
-
-      // Ok, now let's add everything to the store
-      rootAndGroups.forEach((group, index) => {
-        const child = paths[index + 1];
-        const { id } = group;
-        acc[id] = merge(acc[id] || {}, {
-          ...group,
-          ...(child && { children: [child] }),
-        });
-      });
-
-      const story = { ...item, parent: rootAndGroups[rootAndGroups.length - 1].id, isLeaf: true };
-      acc[item.id] = story as Story;
-
-      return acc;
-    }, hash);
-
-    // When adding a group, also add all of its children, depth first
-    function addItem(acc: StoriesHash, item: Story | Group) {
-      if (!acc[item.id]) {
-        // If we were already inserted as part of a group, that's great.
-        acc[item.id] = item;
-        const { children } = item;
-        if (children) {
-          children.forEach(id => addItem(acc, storiesHashOutOfOrder[id]));
-        }
-      }
-      return acc;
+    if (DOCS_MODE) {
+      jumpToComponent(direction);
+      return;
     }
 
+    // cannot navigate when there's no current selection
+    if (!storyId || !storiesHash[storyId]) {
+      return;
+    }
+
+    const lookupList = Object.keys(storiesHash).filter(
+      k => !(storiesHash[k].children || Array.isArray(storiesHash[k]))
+    );
+    const index = lookupList.indexOf(storyId);
+
+    // cannot navigate beyond fist or last
+    if (index === lookupList.length - 1 && direction > 0) {
+      return;
+    }
+    if (index === 0 && direction < 0) {
+      return;
+    }
+
+    const result = lookupList[index + direction];
+
+    if (viewMode && result) {
+      navigate(`/${viewMode}/${result}`);
+    }
+  };
+
+  // Recursively traverse storiesHash from the initial storyId until finding
+  // the leaf story.
+  const findLeafStoryId = (storiesHash: StoriesHash, storyId: string): string => {
+    if (storiesHash[storyId].isLeaf) {
+      return storyId;
+    }
+
+    const childStoryId = storiesHash[storyId].children[0];
+    return findLeafStoryId(storiesHash, childStoryId);
+  };
+
+  const setStories = (input: StoriesRaw) => {
     // Now create storiesHash by reordering the above by group
-    const storiesHash: StoriesHash = Object.values(storiesHashOutOfOrder).reduce(addItem, {});
+    const storiesHash: StoriesHash = transformStoriesRawToStoriesHash(
+      input,
+      (store.getState().storiesHash || {}) as StoriesHash,
+      { provider }
+    );
     const settingsPageList = ['about', 'shortcuts'];
     const { storyId, viewMode } = store.getState();
 
@@ -286,6 +191,11 @@ Did you create a path that uses the separator char accidentally, such as 'Vue <d
       } else if (viewMode && firstLeaf) {
         navigate(`/${viewMode}/${firstLeaf.id}`);
       }
+    } else if (storiesHash[storyId] && !storiesHash[storyId].isLeaf) {
+      // When story exists but if it is not the leaf story, it finds the proper
+      // leaf story from any depth.
+      const firstLeafStoryId = findLeafStoryId(storiesHash, storyId);
+      navigate(`/${viewMode}/${firstLeafStoryId}`);
     }
 
     store.setState({
@@ -294,21 +204,57 @@ Did you create a path that uses the separator char accidentally, such as 'Vue <d
     });
   };
 
-  const selectStory = (kindOrId: string, story?: string) => {
+  const selectStory = (kindOrId: string, story: string = undefined) => {
     const { viewMode = 'story', storyId, storiesHash } = store.getState();
+
+    const hash = storiesHash;
+
     if (!story) {
-      const s = storiesHash[sanitize(kindOrId)];
+      const real = sanitize(kindOrId);
+      const s = hash[real];
       // eslint-disable-next-line no-nested-ternary
       const id = s ? (s.children ? s.children[0] : s.id) : kindOrId;
       navigate(`/${viewMode}/${id}`);
     } else if (!kindOrId) {
       // This is a slugified version of the kind, but that's OK, our toId function is idempotent
       const kind = storyId.split('--', 2)[0];
-      selectStory(toId(kind, story));
+      const id = toId(kind, story);
+
+      selectStory(id);
     } else {
-      selectStory(toId(kindOrId, story));
+      const id = toId(kindOrId, story);
+      if (hash[id]) {
+        selectStory(id);
+      } else {
+        // Support legacy API with component permalinks, where kind is `x/y` but permalink is 'z'
+        const k = hash[sanitize(kindOrId)];
+        if (k && k.children) {
+          const foundId = k.children.find(childId => hash[childId].name === story);
+          if (foundId) {
+            selectStory(foundId);
+          }
+        }
+      }
     }
   };
+
+  const storyArgsChanged = (id: StoryId, args: Args) => {
+    const { storiesHash } = store.getState();
+    (storiesHash[id] as Story).args = args;
+    store.setState({ storiesHash });
+  };
+
+  const updateStoryArgs = (id: StoryId, newArgs: Args) => {
+    if (!fullApi) throw new Error('Cannot set story args until api has been initialized');
+
+    fullApi.emit(UPDATE_STORY_ARGS, id, newArgs);
+  };
+
+  function init({ api: inputFullApi }: { api: API }) {
+    fullApi = inputFullApi;
+
+    fullApi.on(STORY_ARGS_UPDATED, (id: StoryId, args: Args) => storyArgsChanged(id, args));
+  }
 
   return {
     api: {
@@ -321,6 +267,7 @@ Did you create a path that uses the separator char accidentally, such as 'Vue <d
       getData,
       getParameters,
       getCurrentParameter,
+      updateStoryArgs,
     },
     state: {
       storiesHash: {},
@@ -328,6 +275,7 @@ Did you create a path that uses the separator char accidentally, such as 'Vue <d
       viewMode: initialViewMode,
       storiesConfigured: false,
     },
+    init,
   };
 };
 export default initStoriesApi;

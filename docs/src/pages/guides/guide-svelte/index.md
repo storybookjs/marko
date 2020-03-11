@@ -36,92 +36,79 @@ Make sure that you have `@babel/core`, and `babel-loader` in your dependencies a
 npm install babel-loader @babel/core --save-dev 
 ```
 
-## Step 2: Add a npm script
+### svelte-loader
 
-Then add the following NPM script to your `package.json` in order to start the storybook later in this guide:
+You'll also need to install `svelte-loader` if you haven't already.
+
+```sh
+
+npm install svelte-loader --save-dev
+```
+
+## Step 2: Add npm scripts
+
+Then add the following scripts to your `package.json` in order to start the storybook later in this guide:
 
 ```json
 {
   "scripts": {
-    "storybook": "start-storybook"
+    "storybook": "start-storybook",
+    "build-storybook": "build-storybook"
   }
 }
 ```
 
-## Step 3: Create the config file
+## Step 3: Create the main file
 
 For a basic Storybook configuration, the only thing you need to do is tell Storybook where to find stories.
 
-To do that, create a file at `.storybook/config.js` with the following content:
+To do that, create a file at `.storybook/main.js` with the following content:
 
 ```js
-import { configure } from '@storybook/svelte';
-
-function loadStories() {
-  require('../stories/index.js');
-  // You can require as many stories as you need.
-}
-
-configure(loadStories, module);
+module.exports = {
+  stories: ['../src/**/*.stories.[tj]s'],
+};
 ```
 
-That'll load stories in `../stories/index.js`. You can choose where to place stories, you can co-locate them with source files, or place them in an other directory.
-
-> Requiring all your stories becomes bothersome real quick, so you can use this to load all stories matching a glob.
-> 
-> <details>
->   <summary>details</summary>
-> 
-> ```js
-> import { configure } from '@storybook/svelte';
-> 
-> function loadStories() {
->   const req = require.context('../stories', true, /\.stories\.js$/);
->   req.keys().forEach(filename => req(filename));
-> }
-> 
-> configure(loadStories, module);
-> ```
-> 
-> </details>
+That will load all the stories underneath your `../src` directory that match the pattern `*.stories.js`. We recommend co-locating your stories with your source files, but you can place them wherever you choose.
 
 ## Step 4: Write your stories
 
-Now create a `../stories/index.js` file, and write your first story like this:
+Now create a `../src/index.stories.js` file, and write your first story like this:
 
 ```js
-import { storiesOf } from '@storybook/svelte';
 import MyButton from '../components/MyButton.svelte';
 
-storiesOf('MyButton', module)
-  .add('with text', () => ({
-    Component: MyButton,
-    props: {
-      buttonText: 'some text',
-    },
-  }))
-  .add('with some emojies', () => ({
-    Component: MyButton,
+export default { title: 'MyButton' }
 
-    props: {
-      buttonText: '😀 😎 👍 💯',
-    },
-  }));
+export const withText = () => ({
+  Component: MyButton,
+  props: {
+    buttonText: 'some text',
+  },
+});
+
+export const withEmoji = () => ({
+  Component: MyButton,
+  props: {
+    buttonText: '😀 😎 👍 💯',
+  },
+});
 ```
 
 Svelte storybooks don't support using templates in a story yet. 
-Instead, you can create a `.svelte` file to compose components together, or simply to access all normal Svelte functionality, like slots.
+Instead, you can create a `.svelte` file to compose components together, or to access all normal Svelte functionality, like slots.
 
-So you can create a story "view" file, essentially just a .svelte file to load your components into to test.
+So you can create a story "view" file, which is essentially a .svelte file to load your components into to test.
 
 ```html
 <!-- MyButtonView  -->
 <MyButton {rounded} on:click>
   {buttonText}
-</Button>
+</MyButton>
 ```
 
-In this example, the `on:click` that is heard on the `MyButton` component is simply passed up to the containing component `MyButtonView` using the svelte shorthand.
+In this example, the `on:click` that is heard on the `MyButton` component is passed up to the containing component `MyButtonView` using the svelte shorthand.
 It's the equivalent to `on:click="fire('click', event)"`, but it's worth knowing about especially in this "component wrapper" scenario.
 
 > If your component doesn't use slots, you don't need to do this, but if it does or some other svelte functionality that requires the component to exist in a svelte view, then this is how to do that.
@@ -129,33 +116,31 @@ It's the equivalent to `on:click="fire('click', event)"`, but it's worth knowing
 You would then write a story for this "view" the exact same way you did with a component.
 
 ```js
-import { storiesOf } from '@storybook/svelte';
 import MyButtonView from '../views/MyButtonView.svelte';
 
-storiesOf('Button', module)
-  .add('wrapped component(s) example', () => ({
-    Components: MyButtonView,
+export default { title 'Button' }
 
-    props: {
-      buttonText: 'some text',
-      rounded: true,
+export const wrappedComponentExample = () => ({
+  Components: MyButtonView,
+  props: {
+    buttonText: 'some text',
+    rounded: true,
+  },
+  on: {
+    click: (event) => {
+      console.log('clicked', event);
     },
-
-    on: {
-      click: (event) => {
-        console.log('clicked', event);
-      },
-    },
-  }));
+  },
+});
 ```
 
 Each story is a single state of your component. In the above case, there are two stories for the demo button component:
 
 ```plaintext
 Button
-  ├── with text
-  ├── with emoji
-  └── wrapped component(s) example
+  ├── With Text
+  ├── With Emoji
+  └── Wrapped Component Example
 ```
 
 ## Finally: Run your Storybook

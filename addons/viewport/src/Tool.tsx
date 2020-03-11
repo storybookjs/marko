@@ -1,5 +1,5 @@
 /* eslint-disable no-fallthrough */
-import React, { Fragment, ReactNode, useEffect, useRef, FunctionComponent } from 'react';
+import React, { Fragment, ReactNode, useEffect, useRef, FunctionComponent, memo } from 'react';
 import memoize from 'memoizerific';
 
 import { styled, Global, Theme, withTheme } from '@storybook/theming';
@@ -8,6 +8,7 @@ import { Icons, IconButton, WithTooltip, TooltipLinkList } from '@storybook/comp
 
 import { useParameter, useAddonState } from '@storybook/api';
 import { PARAM_KEY, ADDON_ID } from './constants';
+import { MINIMAL_VIEWPORTS } from './defaults';
 import { ViewportAddonParameter, ViewportMap, ViewportStyles, Styles } from './models';
 
 interface ViewportItem {
@@ -70,7 +71,11 @@ interface Link extends LinkBase {
   onClick: () => void;
 }
 
-const flip = ({ width, height }: ViewportStyles) => ({ height: width, width: height });
+const flip = ({ width, height, ...styles }: ViewportStyles) => ({
+  ...styles,
+  height: width,
+  width: height,
+});
 
 const ActiveViewportSize = styled.div(() => ({
   display: 'inline-flex',
@@ -79,10 +84,10 @@ const ActiveViewportSize = styled.div(() => ({
 const ActiveViewportLabel = styled.div<{}>(({ theme }) => ({
   display: 'inline-block',
   textDecoration: 'none',
-  padding: '10px',
+  padding: 10,
   fontWeight: theme.typography.weight.bold,
   fontSize: theme.typography.size.s2 - 1,
-  lineHeight: 1,
+  lineHeight: '1',
   height: 40,
   border: 'none',
   borderTop: '3px solid transparent',
@@ -97,7 +102,7 @@ const IconButtonWithLabel = styled(IconButton)(() => ({
 
 const IconButtonLabel = styled.div<{}>(({ theme }) => ({
   fontSize: theme.typography.size.s2 - 1,
-  marginLeft: '10px',
+  marginLeft: 10,
 }));
 
 interface ViewportToolState {
@@ -117,20 +122,32 @@ const getStyles = (
   return isRotated ? flip(result) : result;
 };
 
-export const ViewportTool: FunctionComponent<{}> = React.memo(
+export const ViewportTool: FunctionComponent = memo(
   withTheme(({ theme }: { theme: Theme }) => {
-    const { viewports, defaultViewport, disable } = useParameter<ViewportAddonParameter>(
-      PARAM_KEY,
-      {
-        viewports: {},
-        defaultViewport: responsiveViewport.id,
-      }
-    );
+    const {
+      viewports = MINIMAL_VIEWPORTS,
+      defaultViewport = responsiveViewport.id,
+      disable,
+    } = useParameter<ViewportAddonParameter>(PARAM_KEY, {});
     const [state, setState] = useAddonState<ViewportToolState>(ADDON_ID, {
-      selected: defaultViewport || responsiveViewport.id,
+      selected: defaultViewport,
       isRotated: false,
     });
     const list = toList(viewports);
+
+    if (!list.find(i => i.id === defaultViewport)) {
+      console.warn(
+        `Cannot find "defaultViewport" of "${defaultViewport}" in addon-viewport configs, please check the "viewports" setting in the configuration.`
+      );
+    }
+
+    useEffect(() => {
+      setState({
+        selected:
+          defaultViewport || (viewports[state.selected] ? state.selected : responsiveViewport.id),
+        isRotated: state.isRotated,
+      });
+    }, [defaultViewport]);
 
     const { selected, isRotated } = state;
     const item =
@@ -186,8 +203,7 @@ export const ViewportTool: FunctionComponent<{}> = React.memo(
                   margin: `auto`,
                   transition: 'width .3s, height .3s',
                   position: 'relative',
-                  border: `${theme.layoutMargin}px solid black`,
-                  borderRadius: theme.appBorderRadius,
+                  border: `1px solid black`,
                   boxShadow:
                     '0 0 100px 1000px rgba(0,0,0,0.5), 0 4px 8px 0 rgba(0,0,0,0.12), 0 2px 4px 0 rgba(0,0,0,0.08)',
 
@@ -195,13 +211,15 @@ export const ViewportTool: FunctionComponent<{}> = React.memo(
                 },
                 [`#${wrapperId}`]: {
                   padding: theme.layoutMargin,
-                  display: 'grid',
                   alignContent: 'center',
                   alignItems: 'center',
                   justifyContent: 'center',
                   justifyItems: 'center',
                   overflow: 'auto',
-                  gridTemplateColumns: 'minmax(0, 1fr)',
+
+                  display: 'grid',
+                  gridTemplateColumns: '100%',
+                  gridTemplateRows: '100%',
                 },
               }}
             />

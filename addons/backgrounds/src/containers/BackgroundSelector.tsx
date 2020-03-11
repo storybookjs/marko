@@ -64,7 +64,7 @@ const getSelectedBackgroundColor = (list: Input[], currentSelectedValue: string)
 };
 
 const mapper = ({ api, state }: Combo): { items: Input[]; selected: string | null } => {
-  const story = state.storiesHash[state.storyId];
+  const story = api.getData(state.storyId);
   const list = story ? api.getParameters(story.id, PARAM_KEY) : [];
   const selected = state.addons[PARAM_KEY] || null;
 
@@ -128,7 +128,7 @@ export class BackgroundSelector extends Component<Props> {
                 <Global
                   styles={(theme: Theme) => ({
                     [`#${iframeId}`]: {
-                      background:
+                      backgroundColor:
                         selectedBackgroundColor === 'transparent'
                           ? theme.background.content
                           : selectedBackgroundColor,

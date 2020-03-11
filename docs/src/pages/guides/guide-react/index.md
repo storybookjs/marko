@@ -5,6 +5,12 @@ title: 'Storybook for React'
 
 ## Automatic setup
 
+Before trying the below commands, you should try the following command. In most cases, Storybook will detect that you're using `react` or `react-scripts`, and install the appropriate packages.
+
+```sh
+npx -p @storybook/cli sb init
+```
+
 You may have tried to use our quick start guide to setup your project for Storybook.
 If it failed because it couldn't detect you're using React, you could try forcing it to use React:
 
@@ -12,11 +18,21 @@ If it failed because it couldn't detect you're using React, you could try forcin
 npx -p @storybook/cli sb init --type react
 ```
 
-Note: be sure you have a `package.json` in your project or the above command will fail.
+If you're using [Create React App](https://create-react-app.dev/) (or a fork of `react-scripts`), you should use this command instead:
+
+```sh
+npx -p @storybook/cli sb init --type react_scripts
+```
+
+Note: You must have a `package.json` in your project or the above commands will fail.
 
 ## Manual setup
 
 If you want to set up Storybook manually for your React project, this is the guide for you.
+
+### A note for Create React App users
+
+You can now use [`@storybook/preset-create-react-app`](https://github.com/storybookjs/presets/tree/master/packages/preset-create-react-app) to configure Storybook on your behalf. This is installed by Storybook during automatic setup (Storybook 5.3 or newer).
 
 ## Step 1: Add dependencies
 
@@ -34,82 +50,63 @@ Make sure that you have `react`, `react-dom`, `@babel/core`, and `babel-loader` 
 
 ```sh
 npm install react react-dom --save
-npm install babel-loader @babel/core --save-dev 
+npm install babel-loader @babel/core --save-dev
 ```
 
-## Step 2: Add an npm script
+## Step 2: Add npm scripts
 
-Then add the following NPM script to your `package.json` in order to start the storybook later in this guide:
+Then add the following scripts to your `package.json` in order to start the storybook later in this guide:
 
 ```json
 {
   "scripts": {
-    "storybook": "start-storybook"
+    "storybook": "start-storybook",
+    "build-storybook": "build-storybook"
   }
 }
 ```
 
-## Step 3: Create the config file
+## Step 3: Create the main file
 
 For a basic Storybook configuration, the only thing you need to do is tell Storybook where to find stories.
 
-To do that, create a file at `.storybook/config.js` with the following content:
+To do that, create a file at `.storybook/main.js` with the following content:
 
 ```js
-import { configure } from '@storybook/react';
-
-function loadStories() {
-  require('../stories/index.js');
-  // You can require as many stories as you need.
-}
-
-configure(loadStories, module);
+module.exports = {
+  stories: ['../src/**/*.stories.[tj]s'],
+};
 ```
 
-That'll load stories in `../stories/index.js`. You can choose where to place stories, you can co-locate them with source files, or place them in an other directory.
-
-> Requiring all your stories becomes bothersome real quick, so you can use this to load all stories matching a glob.
-> 
-> <details>
->   <summary>details</summary>
-> 
-> ```js
-> import { configure } from '@storybook/react';
-> 
-> function loadStories() {
->   const req = require.context('../stories', true, /\.stories\.js$/);
->   req.keys().forEach(filename => req(filename));
-> }
-> 
-> configure(loadStories, module);
-> ```
-> 
-> </details>
+That will load all the stories underneath your `../src` directory that match the pattern `*.stories.js`. We recommend co-locating your stories with your source files, but you can place them wherever you choose.
 
 ## Step 4: Write your stories
 
-Now create a `../stories/index.js` file, and write your first story like this:
+Now create a `../src/index.stories.js` file, and write your first story like this:
 
 ```js
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { Button } from '@storybook/react/demo';
 
-storiesOf('Button', module)
-  .add('with text', () => (
-    <Button>Hello Button</Button>
-  ))
-  .add('with emoji', () => (
-    <Button><span role="img" aria-label="so cool">😀 😎 👍 💯</span></Button>
-  ));   
+export default { title: 'Button' };
+
+export const withText = () => <Button>Hello Button</Button>;
+
+export const withEmoji = () => (
+  <Button>
+    <span role="img" aria-label="so cool">
+      😀 😎 👍 💯
+    </span>
+  </Button>
+);
 ```
 
 Each story is a single state of your component. In the above case, there are two stories for the demo button component:
 
 ```plaintext
 Button
-  ├── with text
-  └── with emoji
+  ├── With Text
+  └── With Emoji
 ```
 
 ## Finally: Run your Storybook

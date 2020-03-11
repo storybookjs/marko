@@ -8,6 +8,7 @@ import { PARAM_KEY } from './constants';
 export const withQuery = makeDecorator({
   name: 'withQuery',
   parameterName: PARAM_KEY,
+  skipIfNoParametersOrOptions: true,
   wrapper: (getStory: StoryGetter, context: StoryContext, { parameters }) => {
     const { location } = document;
     const currentQuery = qs.parse(location.search, { ignoreQueryPrefix: true });
@@ -16,7 +17,7 @@ export const withQuery = makeDecorator({
         ? qs.parse(parameters, { ignoreQueryPrefix: true })
         : parameters;
 
-    const newQuery = qs.stringify(Object.assign({}, currentQuery, additionalQuery));
+    const newQuery = qs.stringify({ ...currentQuery, ...additionalQuery });
     const newLocation = location.href.replace(location.search, `?${newQuery}`);
 
     history.replaceState({}, document.title, newLocation);

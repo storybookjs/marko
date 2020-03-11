@@ -1,71 +1,469 @@
-# Migration
+<h1>Migration</h1>
 
-- [Migration](#migration)
-  - [From version 5.1.x to 5.2.x](#from-version-51x-to-52x)
-    - [Grid toolbar-feature](#grid-toolbar-feature)
-    - [Docs mode docgen](#docs-mode-docgen)
-    - [storySort option](#storysort-option)
-  - [From version 5.1.x to 5.1.10](#from-version-51x-to-5110)
-    - [babel.config.js support](#babelconfigjs-support)
-  - [From version 5.0.x to 5.1.x](#from-version-50x-to-51x)
-    - [React native server](#react-native-server)
-    - [Angular 7](#angular-7)
-    - [CoreJS 3](#corejs-3)
-  - [From version 5.0.1 to 5.0.2](#from-version-501-to-502)
-    - [Deprecate webpack extend mode](#deprecate-webpack-extend-mode)
-  - [From version 4.1.x to 5.0.x](#from-version-41x-to-50x)
-    - [sortStoriesByKind](#sortstoriesbykind)
-    - [Webpack config simplification](#webpack-config-simplification)
-    - [Theming overhaul](#theming-overhaul)
-    - [Story hierarchy defaults](#story-hierarchy-defaults)
-    - [Options addon deprecated](#options-addon-deprecated)
-    - [Individual story decorators](#individual-story-decorators)
-    - [Addon backgrounds uses parameters](#addon-backgrounds-uses-parameters)
-    - [Addon cssresources name attribute renamed](#addon-cssresources-name-attribute-renamed)
-    - [Addon viewport uses parameters](#addon-viewport-uses-parameters)
-    - [Addon a11y uses parameters, decorator renamed](#addon-a11y-uses-parameters-decorator-renamed)
-    - [New keyboard shortcuts defaults](#new-keyboard-shortcuts-defaults)
-    - [New URL structure](#new-url-structure)
-    - [Rename of the `--secure` cli parameter to `--https`](#rename-of-the---secure-cli-parameter-to---https)
-    - [Vue integration](#vue-integration)
-  - [From version 4.0.x to 4.1.x](#from-version-40x-to-41x)
-    - [Private addon config](#private-addon-config)
-    - [React 15.x](#react-15x)
-  - [From version 3.4.x to 4.0.x](#from-version-34x-to-40x)
-    - [React 16.3+](#react-163)
-    - [Generic addons](#generic-addons)
-    - [Knobs select ordering](#knobs-select-ordering)
-    - [Knobs URL parameters](#knobs-url-parameters)
-    - [Keyboard shortcuts moved](#keyboard-shortcuts-moved)
-    - [Removed addWithInfo](#removed-addwithinfo)
-    - [Removed RN packager](#removed-rn-packager)
-    - [Removed RN addons](#removed-rn-addons)
-    - [Storyshots Changes](#storyshots-changes)
-    - [Webpack 4](#webpack-4)
-    - [Babel 7](#babel-7)
-    - [Create-react-app](#create-react-app)
-      - [Upgrade CRA1 to babel 7](#upgrade-cra1-to-babel-7)
-      - [Migrate CRA1 while keeping babel 6](#migrate-cra1-while-keeping-babel-6)
-    - [start-storybook opens browser](#start-storybook-opens-browser)
-    - [CLI Rename](#cli-rename)
-    - [Addon story parameters](#addon-story-parameters)
-  - [From version 3.3.x to 3.4.x](#from-version-33x-to-34x)
-  - [From version 3.2.x to 3.3.x](#from-version-32x-to-33x)
-    - [`babel-core` is now a peer dependency (#2494)](#babel-core-is-now-a-peer-dependency-2494)
-    - [Base webpack config now contains vital plugins (#1775)](#base-webpack-config-now-contains-vital-plugins-1775)
-    - [Refactored Knobs](#refactored-knobs)
-  - [From version 3.1.x to 3.2.x](#from-version-31x-to-32x)
-    - [Moved TypeScript addons definitions](#moved-typescript-addons-definitions)
-    - [Updated Addons API](#updated-addons-api)
-  - [From version 3.0.x to 3.1.x](#from-version-30x-to-31x)
-    - [Moved TypeScript definitions](#moved-typescript-definitions)
-    - [Deprecated head.html](#deprecated-headhtml)
-  - [From version 2.x.x to 3.x.x](#from-version-2xx-to-3xx)
-    - [Webpack upgrade](#webpack-upgrade)
-    - [Packages renaming](#packages-renaming)
-    - [Deprecated embedded addons](#deprecated-embedded-addons)
+- [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
+  - [React prop tables with Typescript](#react-prop-tables-with-typescript)
+  - [New addon presets](#new-addon-presets)
+  - [Client API changes](#client-api-changes)
+    - [Removed Legacy Story APIs](#removed-legacy-story-apis)
+    - [Can no longer add decorators/parameters after stories](#can-no-longer-add-decoratorsparameters-after-stories)
+    - [Changed Parameter Handling](#changed-parameter-handling)
+  - [Simplified Render Context](#simplified-render-context)
+  - [Story Store immutable outside of configuration](#story-store-immutable-outside-of-configuration)
+  - [Improved story source handling](#improved-story-source-handling)
+- [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
+  - [To main.js configuration](#to-mainjs-configuration)
+    - [Using main.js](#using-mainjs)
+    - [Using preview.js](#using-previewjs)
+    - [Using manager.js](#using-managerjs)
+  - [Create React App preset](#create-react-app-preset)
+  - [Description doc block](#description-doc-block)
+  - [React Native Async Storage](#react-native-async-storage)
+  - [Deprecate displayName parameter](#deprecate-displayname-parameter)
+  - [Unified docs preset](#unified-docs-preset)
+  - [Simplified hierarchy separators](#simplified-hierarchy-separators)
+  - [Addon StoryShots Puppeteer uses external puppeteer](#addon-storyshots-puppeteer-uses-external-puppeteer)
+- [From version 5.1.x to 5.2.x](#from-version-51x-to-52x)
+  - [Source-loader](#source-loader)
+  - [Default viewports](#default-viewports)
+  - [Grid toolbar-feature](#grid-toolbar-feature)
+  - [Docs mode docgen](#docs-mode-docgen)
+  - [storySort option](#storysort-option)
+- [From version 5.1.x to 5.1.10](#from-version-51x-to-5110)
+  - [babel.config.js support](#babelconfigjs-support)
+- [From version 5.0.x to 5.1.x](#from-version-50x-to-51x)
+  - [React native server](#react-native-server)
+  - [Angular 7](#angular-7)
+  - [CoreJS 3](#corejs-3)
+- [From version 5.0.1 to 5.0.2](#from-version-501-to-502)
+  - [Deprecate webpack extend mode](#deprecate-webpack-extend-mode)
+- [From version 4.1.x to 5.0.x](#from-version-41x-to-50x)
+  - [sortStoriesByKind](#sortstoriesbykind)
+  - [Webpack config simplification](#webpack-config-simplification)
+  - [Theming overhaul](#theming-overhaul)
+  - [Story hierarchy defaults](#story-hierarchy-defaults)
+  - [Options addon deprecated](#options-addon-deprecated)
+  - [Individual story decorators](#individual-story-decorators)
+  - [Addon backgrounds uses parameters](#addon-backgrounds-uses-parameters)
+  - [Addon cssresources name attribute renamed](#addon-cssresources-name-attribute-renamed)
+  - [Addon viewport uses parameters](#addon-viewport-uses-parameters)
+  - [Addon a11y uses parameters, decorator renamed](#addon-a11y-uses-parameters-decorator-renamed)
+  - [New keyboard shortcuts defaults](#new-keyboard-shortcuts-defaults)
+  - [New URL structure](#new-url-structure)
+  - [Rename of the `--secure` cli parameter to `--https`](#rename-of-the---secure-cli-parameter-to---https)
+  - [Vue integration](#vue-integration)
+- [From version 4.0.x to 4.1.x](#from-version-40x-to-41x)
+  - [Private addon config](#private-addon-config)
+  - [React 15.x](#react-15x)
+- [From version 3.4.x to 4.0.x](#from-version-34x-to-40x)
+  - [React 16.3+](#react-163)
+  - [Generic addons](#generic-addons)
+  - [Knobs select ordering](#knobs-select-ordering)
+  - [Knobs URL parameters](#knobs-url-parameters)
+  - [Keyboard shortcuts moved](#keyboard-shortcuts-moved)
+  - [Removed addWithInfo](#removed-addwithinfo)
+  - [Removed RN packager](#removed-rn-packager)
+  - [Removed RN addons](#removed-rn-addons)
+  - [Storyshots Changes](#storyshots-changes)
+  - [Webpack 4](#webpack-4)
+  - [Babel 7](#babel-7)
+  - [Create-react-app](#create-react-app)
+    - [Upgrade CRA1 to babel 7](#upgrade-cra1-to-babel-7)
+    - [Migrate CRA1 while keeping babel 6](#migrate-cra1-while-keeping-babel-6)
+  - [start-storybook opens browser](#start-storybook-opens-browser)
+  - [CLI Rename](#cli-rename)
+  - [Addon story parameters](#addon-story-parameters)
+- [From version 3.3.x to 3.4.x](#from-version-33x-to-34x)
+- [From version 3.2.x to 3.3.x](#from-version-32x-to-33x)
+  - [`babel-core` is now a peer dependency (#2494)](#babel-core-is-now-a-peer-dependency-2494)
+  - [Base webpack config now contains vital plugins (#1775)](#base-webpack-config-now-contains-vital-plugins-1775)
+  - [Refactored Knobs](#refactored-knobs)
+- [From version 3.1.x to 3.2.x](#from-version-31x-to-32x)
+  - [Moved TypeScript addons definitions](#moved-typescript-addons-definitions)
+  - [Updated Addons API](#updated-addons-api)
+- [From version 3.0.x to 3.1.x](#from-version-30x-to-31x)
+  - [Moved TypeScript definitions](#moved-typescript-definitions)
+  - [Deprecated head.html](#deprecated-headhtml)
+- [From version 2.x.x to 3.x.x](#from-version-2xx-to-3xx)
+  - [Webpack upgrade](#webpack-upgrade)
+  - [Packages renaming](#packages-renaming)
+  - [Deprecated embedded addons](#deprecated-embedded-addons)
+
+## From version 5.3.x to 6.0.x
+
+### React prop tables with Typescript
+
+Starting in 6.0 we are changing our recommended setup for extracting prop tables in `addon-docs` for React projects using TypeScript.
+
+In earlier versions, we recommended `react-docgen-typescript-loader` (`RDTL`) and bundled it with `@storybook/preset-create-react-app` and `@storybook/preset-typescript` for this reason. We now recommend `babel-plugin-react-docgen`, which is already bundled as part of `@storybook/react`.
+
+As a consequence we've removed `RDTL` from the presets, which is a breaking change. We made this change because `react-docgen` now supports TypeScript natively, and fewer dependencies simplifies things for everybody.
+
+We will be updating this section with migration information as we collect information from our users, and fixing issues as they come up throughout the 6.0 prerelease process. We are cataloging known issues [here](https://github.com/storybookjs/storybook/blob/next/addons/docs/docs/props-tables.md#known-limitations).
+
+The biggest known issue is https://github.com/reactjs/react-docgen/issues/387, which means that the following common pattern **DOESN'T WORK**:
+
+```tsx
+import React, { FC } from 'react';
+interface IProps { ... };
+const MyComponent: FC<IProps> = ({ ... }) => ...
+```
+
+The following workaround is needed:
+
+```tsx
+const MyComponent: FC<IProps> = ({ ... }: IProps) => ...
+```
+
+Please upvote https://github.com/reactjs/react-docgen/issues/387 if this is affecting your productivity, or better yet, submit a fix!
+
+In the meantime, if you're not ready to make the move you have two options:
+
+1. Pin your to a specific preset version: `preset-create-react-app@1.5.2` or `preset-typescript@1.2.2`
+
+2. OR: Manually configure your setup to add back `react-docgen-typescript-loader`, add the following to your `.storybook/main.js`:
+
+```js
+module.exports = {
+  webpack: async (config, { configType }) => ({
+    ...config,
+    module: {
+      ...config.module,
+      rules: [
+        ...config.module.rules,
+        {
+          test: /\.tsx?$/,
+          loader: require.resolve('react-docgen-typescript-loader'),
+          options: {}, // your options here
+        },
+      ]
+    }
+  })
+}
+```
+
+### New addon presets
+
+In Storybook 5.3 we introduced a declarative [main.js configuration](#to-mainjs-configuration), which is now the recommended way to configure Storybook. Part of the change is a simplified syntax for registering addons, which in 6.0 automatically registers many addons _using a preset_, which is a slightly different behavior than in earlier versions.
+
+This breaking change currently applies to: `addon-a11y`, `addon-knobs`, `addon-links`, `addon-queryparams`.
+
+Consider the following `main.js` config for the accessibility addon, `addon-a11y`:
+
+```js
+module.exports = {
+  stories: ['../**/*.stories.js'],
+  addons: ['@storybook/addon-a11y'],
+};
+```
+
+In earlier versions of Storybook, this would automatically call `@storybook/addon-a11y/register`, which adds the the a11y panel to the Storybook UI. As a user you would also add a decorator:
+
+```js
+import { withA11y } from '../index';
+
+addDecorator(withA11y);
+```
+
+Now in 6.0, `addon-a11y` comes with a preset, `@storybook/addon-a11y/preset`, that does this automatically for you. This change simplifies configuration, since now you don't need to add that decorator.
+
+If you wish to disable this new behavior, you can modify your `main.js` to force it to use the `register` logic rather than the `preset`:
+
+```js
+module.exports = {
+  stories: ['../**/*.stories.js'],
+  addons: ['@storybook/addon-a11y/register'],
+};
+```
+
+If you wish to selectively disable `a11y` checks for a subset of stories, you can control this with story parameters:
+
+```js
+export const MyNonCheckedStory = () => <SomeComponent />;
+MyNonCheckedStory.story = {
+  parameters: {
+    a11y: { disable: true },
+  },
+};
+```
+
+### Client API changes
+
+#### Removed Legacy Story APIs
+
+In 6.0 we removed a set of APIs from the underlying `StoryStore` (which wasn't publicly accessible):
+
+- `getStories`, `getStoryFileName`, `getStoryAndParameters`, `getStory`, `getStoryWithContext`, `hasStoryKind`, `hasStory`, `dumpStoryBook`, `size`, `clean`
+
+Although these were private APIs, if you were using them, you could probably use the newer APIs (which are still private): `getStoriesForKind`, `getRawStory`, `removeStoryKind`, `remove`.
+
+#### Can no longer add decorators/parameters after stories
+
+You can no longer add decorators and parameters globally after you added your first story, and you can no longer add decorators and parameters to a kind after you've added your first story to it.
+
+It's unclear and confusing what would happened if you did. If you want to disable a decorator for certain stories, use a parameter to do so:
+
+```js
+export StoryOne = ...;
+StoryOne.story = { parameters: { addon: { disable: true } } };
+```
+
+If you want to use a parameter for a subset of stories in a kind, simply use a variable to do so:
+
+```js
+const commonParameters = { x: { y: 'z' } };
+export StoryOne = ...;
+StoryOne.story = { parameters: { ...commonParameters, other: 'things' } };
+```
+
+#### Changed Parameter Handling
+
+There have been a few rationalizations of parameter handling in 6.0 to make things more predictable and fit better with the intention of parameters:
+
+_All parameters are now merged recursively to arbitrary depth._
+
+In 5.3 we sometimes merged parameters all the way down and sometimes did not depending on where you added them. It was confusing. If you were relying on this behaviour, let us know.
+
+_Array parameters are no longer "merged"._
+
+If you override an array parameter, the override will be the end product. If you want the old behaviour (appending a new value to an array parameter), export the original and use array spread. This will give you maximum flexibility:
+
+```js
+import { allBackgrounds } from './util/allBackgrounds';
+
+export StoryOne = ...;
+StoryOne.story = { parameters: { backgrounds: [...allBackgrounds, '#zyx' ] } };
+```
+
+_You cannot set parameters from decorators_
+
+Parameters are intended to be statically set at story load time. So setting them via a decorator doesn't quite make sense. If you were using this to control the rendering of a story, chances are using the new `args` feature is a more idiomatic way to do this.
+
+### Simplified Render Context
+
+The `RenderContext` that is passed to framework rendering layers in order to render a story has been simplified, dropping a few members that were not used by frameworks to render stories. In particular, the following have been removed:
+
+- `selectedKind`/`selectedStory` -- replaced by `kind`/`name`
+- `configApi`
+- `storyStore`
+- `channel`
+- `clientApi`
+
+### Story Store immutable outside of configuration
+
+You can no longer change the contents of the StoryStore outside of a `configure()` call. This is to ensure that any changes are properly published to the manager. If you want to add stories "out of band" you can call `store.startConfiguring()` and `store.finishConfiguring()` to ensure that your changes are published.
+
+### Improved story source handling
+
+The story source code handling has been improved in both `addon-storysource` and `addon-docs`.
+
+In 5.x some users used an undocumented _internal_ API, `mdxSource` to customize source snippetization in `addon-docs`. This has been removed in 6.0.
+
+The preferred way to customize source snippets for stories is now:
+
+```js
+export const Example = () => <Button />;
+Example.story = {
+  parameters: {
+    storySource: {
+      source: 'custom source',
+    },
+  },
+};
+```
+
+The MDX analog:
+
+```jsx
+<Story name="Example" parameters={{ storySource: { source: 'custom source' } }}>
+  <Button />
+</Story>
+```
+
+## From version 5.2.x to 5.3.x
+
+### To main.js configuration
+
+In storybook 5.3 3 new files for configuration were introduced, that replaced some previous files.
+
+These files are now soft-deprecated, (_they still work, but over time we will promote users to migrate_):
+
+- `presets.js` has been renamed to `main.js`. `main.js` is the main point of configuration for storybook.
+- `config.js` has been renamed to `preview.js`. `preview.js` configures the "preview" iframe that renders your components.
+- `addons.js` has been renamed to `manager.js`. `manager.js` configures Storybook's "manager" UI that wraps the preview, and also configures addons panel.
+
+#### Using main.js
+
+`main.js` is now the main point of configuration for Storybook. This is what a basic `main.js` looks like:
+
+```js
+module.exports = {
+  stories: ['../**/*.stories.js'],
+  addons: ['@storybook/addon-knobs'],
+};
+```
+
+You remove all "register" import from `addons.js` and place them inside the array. You can also safely remove the `/register` suffix from these entries, for a cleaner, more readable configuration. If this means `addons.js` is now empty for you, it's safe to remove.
+
+Next you remove the code that imports/requires all your stories from `config.js`, and change it to a glob-pattern and place that glob in the `stories` array. If this means `config.js` is empty, it's safe to remove.
+
+If you had a `presets.js` file before you can add the array of presets to the main.js file and remove `presets.js` like so:
+
+```js
+module.exports = {
+  stories: ['../**/*.stories.js'],
+  addons: [
+    '@storybook/preset-create-react-app'
+    {
+      name: '@storybook/addon-docs',
+      options: { configureJSX: true }
+    }
+  ],
+};
+```
+
+By default, adding a package to the `addons` array will first try to load its `preset` entry, then its `register` entry, and finally, it will just assume the package itself is a preset.
+
+If you want to load a specific package entry, for example you want to use `@storybook/addon-docs/register`, you can also include that in the addons array and Storybook will do the right thing.
+
+#### Using preview.js
+
+If after migrating the imports/requires of your stories to `main.js` you're left with some code in `config.js` it's likely the usage of `addParameters` & `addDecorator`.
+
+This is fine, rename `config.js` to `preview.js`.
+
+This file can also be used to inject global stylesheets, fonts etc, into the preview bundle.
+
+#### Using manager.js
+
+If you are setting storybook options in `config.js`, especially `theme`, you should migrate it to `manager.js`:
+
+```js
+import { addons } from '@storybook/addons';
+import { create } from '@storybook/theming/create';
+
+const theme = create({
+  base: 'light',
+  brandTitle: 'My custom title',
+});
+
+addons.setConfig({
+  panelPosition: 'bottom',
+  theme,
+});
+```
+
+This makes storybook load and use the theme in the manager directly.
+This allows for richer theming in the future, and has a much better performance!
+
+> If you're using addon-docs, you should probably not do this. Docs uses the theme as well, but this change makes the theme inaccessible to addon-docs. We'll address this in 6.0.0.
+
+### Create React App preset
+
+You can now move to the new preset for [Create React App](https://create-react-app.dev/). The in-built preset for Create React App will be disabled in Storybook 6.0.
+
+Simply install [`@storybook/preset-create-react-app`](https://github.com/storybookjs/presets/tree/master/packages/preset-create-react-app) and it will be used automatically.
+
+### Description doc block
+
+In 5.3 we've changed `addon-docs`'s `Description` doc block's default behavior. Technically this is a breaking change, but MDX was not officially released in 5.2 and we reserved the right to make small breaking changes. The behavior of `DocsPage`, which was officially released, remains unchanged.
+
+The old behavior of `<Description of={Component} />` was to concatenate the info parameter or notes parameter, if available, with the docgen information loaded from source comments. If you depend on the old behavior, it's still available with `<Description of={Component} type='legacy-5.2' />`. This description type will be removed in Storybook 6.0.
+
+The new default behavior is to use the framework-specific description extractor, which for React/Vue is still docgen, but may come from other places (e.g. a JSON file) for other frameworks.
+
+The description doc block on DocsPage has also been updated. To see how to configure it in 5.3, please see [the updated recipe](https://github.com/storybookjs/storybook/blob/next/addons/docs/docs/recipes.md#migrating-from-notesinfo-addons)
+
+### React Native Async Storage
+
+Starting from version React Native 0.59, Async Storage is deprecated in React Native itself. The new @react-native-community/async-storage module requires native installation, and we don't want to have it as a dependency for React Native Storybook.
+
+To avoid that now you have to manually pass asyncStorage to React Native Storybook with asyncStorage prop. To notify users we are displaying a warning about it.
+
+Solution:
+
+- Use `require('@react-native-community/async-storage').default` for React Native v0.59 and above.
+- Use `require('react-native').AsyncStorage` for React Native v0.58 or below.
+- Use `null` to disable Async Storage completely.
+
+```javascript
+getStorybookUI({
+  ...
+  asyncStorage: require('@react-native-community/async-storage').default || require('react-native').AsyncStorage || null
+});
+```
+
+The benefit of using Async Storage is so that when users refresh the app, Storybook can open their last visited story.
+
+### Deprecate displayName parameter
+
+In 5.2, the story parameter `displayName` was introduced as a publicly visible (but internal) API. Storybook's Component Story Format (CSF) loader used it to modify a story's display name independent of the story's `name`/`id` (which were coupled).
+
+In 5.3, the CSF loader decouples the story's `name`/`id`, which means that `displayName` is no longer necessary. Unfortunately, this is a breaking change for any code that uses the story `name` field. Storyshots relies on story `name`, and the appropriate migration is to simply update your snapshots. Apologies for the inconvenience!
+
+### Unified docs preset
+
+Addon-docs configuration gets simpler in 5.3. In 5.2, each framework had its own preset, e.g. `@storybook/addon-docs/react/preset`. Starting in 5.3, everybody should use `@storybook/addon-docs/preset`.
+
+### Simplified hierarchy separators
+
+We've deprecated the ability to specify the hierarchy separators (how you control the grouping of story kinds in the sidebar). From Storybook 6.0 we will have a single separator `/`, which cannot be configured.
+
+If you are currently using using custom separators, we encourage you to migrate to using `/` as the sole separator. If you are using `|` or `.` as a separator currently, we provide a codemod, [`upgrade-hierarchy-separators`](https://github.com/storybookjs/storybook/blob/next/lib/codemod/README.md#upgrade-hierarchy-separators), that can be used to rename all your components.
+
+```
+yarn sb migrate upgrade-hierarchy-separators --glob="*.stories.js"
+```
+
+If you were using `|` and wish to keep the "root" behavior, use the `showRoots: true` option to re-enable roots:
+
+```js
+addParameters({
+  options: {
+    showRoots: true,
+  },
+});
+```
+
+NOTE: it is no longer possible to have some stories with roots and others without. If you want to keep the old behavior, simply add a root called "Others" to all your previously unrooted stories.
+
+### Addon StoryShots Puppeteer uses external puppeteer
+
+To give you more control on the Chrome version used when running StoryShots Puppeteer, `puppeteer` is no more included in the addon dependencies. So you can now pick the version of `puppeteer` you want and set it in your project.
+
+If you want the latest version available just run:
+
+```sh
+yarn add puppeteer --dev
+OR
+npm install puppeteer --save-dev
+```
 
 ## From version 5.1.x to 5.2.x
+
+### Source-loader
+
+Addon-storysource contains a loader, `@storybook/addon-storysource/loader`, which has been deprecated in 5.2. If you use it, you'll see the warning:
+
+```
+@storybook/addon-storysource/loader is deprecated, please use @storybook/source-loader instead.
+```
+
+To upgrade to `@storybook/source-loader`, run `npm install -D @storybook/source-loader` (or use `yarn`), and replace every instance of `@storybook/addon-storysource/loader` with `@storybook/source-loader`.
+
+### Default viewports
+
+The default viewports have been reduced to a smaller set, we think is enough for most use cases.
+You can get the old default back by adding the following to your `config.js`:
+
+```js
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+
+addParameters({
+  viewport: {
+    viewports: INITIAL_VIEWPORTS,
+  },
+});
+```
 
 ### Grid toolbar-feature
 
@@ -80,7 +478,7 @@ This isn't a breaking change per se, because `addon-docs` is a new feature. Howe
 
 ### storySort option
 
-In 5.0.x the global option `sortStoriesByKind` option was [inadverttly removed](#sortstoriesbykind). In 5.2 we've introduced a new option, `storySort`, to replace it. `storySort` takes a comparator function, so it is strictly more powerful than `sortStoriesByKind`.
+In 5.0.x the global option `sortStoriesByKind` option was [inadvertently removed](#sortstoriesbykind). In 5.2 we've introduced a new option, `storySort`, to replace it. `storySort` takes a comparator function, so it is strictly more powerful than `sortStoriesByKind`.
 
 For example, here's how to sort by story ID using `storySort`:
 
@@ -88,7 +486,7 @@ For example, here's how to sort by story ID using `storySort`:
 addParameters({
   options: {
     storySort: (a, b) =>
-      a[1].kind === b[1].kind ? 0 : a[1].id.localeCompare(b[1].id, { numeric: true }),
+      a[1].kind === b[1].kind ? 0 : a[1].id.localeCompare(b[1].id, undefined, { numeric: true }),
   },
 });
 ```
@@ -112,7 +510,7 @@ Storybook 5.1 contains a major overhaul of `@storybook/react-native` as compared
 
 In addition, both packages share more code with the rest of Storybook, which will reduce bugs and increase compatibility (e.g. with the latest versions of babel, etc.).
 
-As a user with an existing 4.1.x RN setup, no migration should be necessary to your RN app. Simply upgrading the library should be enough.
+As a user with an existing 4.1.x RN setup, no migration should be necessary to your RN app. Upgrading the library should be enough.
 
 If you wish to run the optional web server, you will need to do the following migration:
 
@@ -257,7 +655,7 @@ In 5.0, we now provide recommended defaults:
 
 This means if you use the characters { `|`, `/`, `.` } in your story kinds it will triggger the story hierarchy to appear. For example `storiesOf('UI|Widgets/Basics/Button')` will create a story root called `UI` containing a `Widgets/Basics` group, containing a `Button` component.
 
-If you wish to opt-out of this new behavior and restore the flat UI, simply set them back to `null` in your storybook config, or remove { `|`, `/`, `.` } from your story kinds:
+If you wish to opt-out of this new behavior and restore the flat UI, set them back to `null` in your storybook config, or remove { `|`, `/`, `.` } from your story kinds:
 
 ```js
 addParameters({
@@ -288,7 +686,7 @@ addDecorator(
 And here's its new counterpart:
 
 ```js
-import { create } from '@storybook/theming';
+import { create } from '@storybook/theming/create';
 addParameters({
   options: {
     theme: create({
@@ -628,7 +1026,7 @@ Storybook now uses Babel 7. There's a couple of cases when it can break with you
 If you are using `create-react-app` (aka CRA), you may need to do some manual steps to upgrade, depending on the setup.
 
 - `create-react-app@1` may require manual migrations.
-  - If you're adding storybook for the first time, it should just work: `sb init` should add the correct dependencies.
+  - If you're adding storybook for the first time: `sb init` should add the correct dependencies.
   - If you're upgrading an existing project, your `package.json` probably already uses Babel 6, making it incompatible with `@storybook/react@4` which uses Babel 7. There are two ways to make it compatible, each of which is spelled out in detail in the next section:
     - Upgrade to Babel 7 if you are not dependent on Babel 6-specific features.
     - Migrate Babel 6 if you're heavily dependent on some Babel 6-specific features).
@@ -647,7 +1045,7 @@ yarn add @babel/core babel-loader --dev
 yarn add babel-loader@7
 ```
 
-Also, make sure you have a `.babelrc` in your project directory. You probably already do if you are using Babel 6 features (otherwise you should consider upgrading to Babel 7 instead). If you don't have one, here's a simple one that works:
+Also, make sure you have a `.babelrc` in your project directory. You probably already do if you are using Babel 6 features (otherwise you should consider upgrading to Babel 7 instead). If you don't have one, here's one that works:
 
 ```json
 {
@@ -691,7 +1089,7 @@ storiesOf('My component', module)
 
 This example applies notes globally to all stories. You can apply it locally with `storiesOf(...).addDecorator(withNotes)`.
 
-The story parameters correspond directly to the old withX arguments, so it's easy to migrate your code. See the parameters documentation for the packages that have been upgraded:
+The story parameters correspond directly to the old withX arguments, so it's less demanding to migrate your code. See the parameters documentation for the packages that have been upgraded:
 
 - [Notes](https://github.com/storybookjs/storybook/blob/master/addons/notes/README.md)
 - [Jest](https://github.com/storybookjs/storybook/blob/master/addons/jest/README.md)
@@ -721,11 +1119,11 @@ This was done to support different major versions of babel.
 
 ### Base webpack config now contains vital plugins ([#1775](https://github.com/storybookjs/storybook/pull/1775))
 
-This affects you if you use custom webpack config in [Full Control Mode](https://storybook.js.org/configurations/custom-webpack-config/#full-control-mode) while not preserving the plugins from `storybookBaseConfig`. Before `3.3`, preserving them was just a recommendation, but now it [became](https://github.com/storybookjs/storybook/pull/2578) a requirement.
+This affects you if you use custom webpack config in [Full Control Mode](https://storybook.js.org/configurations/custom-webpack-config/#full-control-mode) while not preserving the plugins from `storybookBaseConfig`. Before `3.3`, preserving them was a recommendation, but now it [became](https://github.com/storybookjs/storybook/pull/2578) a requirement.
 
 ### Refactored Knobs
 
-Knobs users: there was a bug in 3.2.x where using the knobs addon imported all framework runtimes (e.g. React and Vue). To fix the problem, we [refactored knobs](https://github.com/storybookjs/storybook/pull/1832). Switching to the new style is easy:
+Knobs users: there was a bug in 3.2.x where using the knobs addon imported all framework runtimes (e.g. React and Vue). To fix the problem, we [refactored knobs](https://github.com/storybookjs/storybook/pull/1832). Switching to the new style is only takes one line of code.
 
 In the case of React or React-Native, import knobs like this:
 
@@ -852,7 +1250,7 @@ The new package names are:
 | `@kadira/storybook-addon-graphql`            | `@storybook/addon-graphql`       |
 | `@kadira/react-storybook-decorator-centered` | `@storybook/addon-centered`      |
 
-If your codebase is small, it's probably doable to just replace them by hand. (in your codebase and in `package.json`).
+If your codebase is small, it's probably doable to replace them by hand (in your codebase and in `package.json`).
 
 But if you have a lot of occurrences in your codebase, you can use a [codemod we created](./lib/codemod) for you.
 
@@ -866,7 +1264,7 @@ You have to change your `package.json`, prune old and install new dependencies b
 
 We used to ship 2 addons with every single installation of storybook: `actions` and `links`. But in practice not everyone is using them, so we decided to deprecate this and in the future, they will be completely removed. If you use `@storybook/react/addons` you will get a deprecation warning.
 
-If you **are** using these addons, migrating is simple:
+If you **are** using these addons, it takes two steps to migrate:
 
 - add the addons you use to your `package.json`.
 - update your code:

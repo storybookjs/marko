@@ -1,7 +1,6 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, FunctionComponent, MouseEvent } from 'react';
 import { styled } from '@storybook/theming';
 
-import { window } from 'global';
 import { FlexBar } from '../bar/bar';
 import { Icons } from '../icon/icon';
 import { IconButton } from '../bar/button';
@@ -22,11 +21,11 @@ interface BarProps {
 
 export type ToolbarProps = BarProps & ZoomProps & EjectProps;
 
-const Zoom: React.FC<ZoomProps> = ({ zoom, resetZoom }) => (
+const Zoom: FunctionComponent<ZoomProps> = ({ zoom, resetZoom }) => (
   <>
     <IconButton
       key="zoomin"
-      onClick={e => {
+      onClick={(e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         zoom(0.8);
       }}
@@ -36,7 +35,7 @@ const Zoom: React.FC<ZoomProps> = ({ zoom, resetZoom }) => (
     </IconButton>
     <IconButton
       key="zoomout"
-      onClick={e => {
+      onClick={(e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         zoom(1.25);
       }}
@@ -46,7 +45,7 @@ const Zoom: React.FC<ZoomProps> = ({ zoom, resetZoom }) => (
     </IconButton>
     <IconButton
       key="zoomreset"
-      onClick={e => {
+      onClick={(e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         resetZoom();
       }}
@@ -57,17 +56,18 @@ const Zoom: React.FC<ZoomProps> = ({ zoom, resetZoom }) => (
   </>
 );
 
-const Eject: React.FC<EjectProps> = ({ baseUrl, storyId }) => (
+const Eject: FunctionComponent<EjectProps> = ({ baseUrl, storyId }) => (
   <IconButton
     key="opener"
-    onClick={() => window.open(`${baseUrl}?id=${storyId}`)}
+    href={`${baseUrl}?id=${storyId}`}
+    target="_blank"
     title="Open canvas in new tab"
   >
     <Icons icon="share" />
   </IconButton>
 );
 
-const Bar = styled(props => <FlexBar {...props} />)({
+const Bar = styled(FlexBar)({
   position: 'absolute',
   left: 0,
   right: 0,
@@ -75,7 +75,13 @@ const Bar = styled(props => <FlexBar {...props} />)({
   transition: 'transform .2s linear',
 });
 
-export const Toolbar: React.FC<ToolbarProps> = ({ storyId, baseUrl, zoom, resetZoom, ...rest }) => (
+export const Toolbar: FunctionComponent<ToolbarProps> = ({
+  storyId,
+  baseUrl,
+  zoom,
+  resetZoom,
+  ...rest
+}) => (
   <Bar {...rest}>
     <Fragment key="left">
       <Zoom {...{ zoom, resetZoom }} />

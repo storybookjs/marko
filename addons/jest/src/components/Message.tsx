@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, FunctionComponent } from 'react';
 import { styled } from '@storybook/theming';
 
 const positiveConsoleRegex = /\[32m(.*?)\[39m/;
@@ -22,27 +22,27 @@ class TestDetail {
 }
 const StackTrace = styled.pre<{}>(({ theme }) => ({
   background: theme.color.lighter,
-  paddingTop: '4px',
-  paddingBottom: '4px',
-  paddingLeft: '6px',
-  borderRadius: '2px',
+  paddingTop: 4,
+  paddingBottom: 4,
+  paddingLeft: 6,
+  borderRadius: 2,
   overflow: 'auto',
   margin: '10px 30px 10px 30px',
   whiteSpace: 'pre',
 }));
 
 const Results = styled.div({
-  paddingTop: '10px',
-  marginLeft: '31px',
-  marginRight: '30px',
+  paddingTop: 10,
+  marginLeft: 31,
+  marginRight: 30,
 });
 
 const Description = styled.div<{}>(({ theme }) => ({
-  paddingBottom: '10px',
-  paddingTop: '10px',
+  paddingBottom: 10,
+  paddingTop: 10,
   borderBottom: theme.appBorderColor,
-  marginLeft: '31px',
-  marginRight: '30px',
+  marginLeft: 31,
+  marginRight: 30,
   overflowWrap: 'break-word',
 }));
 
@@ -50,10 +50,6 @@ const StatusColor = styled.strong<{ status: string }>(({ status, theme }) => ({
   color: status === positiveType ? theme.color.positive : theme.color.negative,
   fontWeight: 500,
 }));
-
-const Main = styled(({ msg, className }) => <section className={className}>{msg}</section>)({
-  padding: 5,
-});
 
 const colorizeText: (msg: string, type: string) => MsgElement[] = (msg: string, type: string) => {
   if (type) {
@@ -148,7 +144,7 @@ interface MessageProps {
   msg: string;
 }
 
-export const Message = (props: any) => {
+export const Message: FunctionComponent<MessageProps> = props => {
   const { msg } = props;
 
   const detail: TestDetail = getTestDetail(msg);

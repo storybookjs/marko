@@ -40,7 +40,7 @@ Each `.add` call takes a story name, a story function that returns a renderable 
 
 [Decorators](../../basics/writing-stories/#decorators) and [parameters](../../basics/writing-stories/#parameters) can be specified globally, at the component level, or locally at the story level.
 
-Global decorators are parameters are specified in the Storybook config:
+Global decorators and parameters are specified in the Storybook config:
 
 ```js
 addDecorator(storyFn => <blink>{storyFn()}</blink>);
@@ -80,7 +80,7 @@ storiesOf('Button', module).add(
 To make it easier to adopt the new [Component Story Format (CSF)](../component-story-format/), we've created an automatic migration tool to transform `storiesOf` API to Module format.
 
 ```sh
-sb migrate storiesof-to-csf --glob src/**/*.stories.js
+sb migrate storiesof-to-csf --glob=src/**/*.stories.js
 ```
 
 For more information, see the CLI's [Codemod README](https://github.com/storybookjs/storybook/tree/next/lib/codemod).

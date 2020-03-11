@@ -1,11 +1,12 @@
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { action } from '@storybook/addon-actions';
 
 export default {
   title: 'welcome-banner',
+  component: 'WelcomeBanner',
 };
 
-export const basic = () => ({
+export const Basic = () => ({
   template: hbs`
       {{welcome-banner
         backgroundColor=backgroundColor

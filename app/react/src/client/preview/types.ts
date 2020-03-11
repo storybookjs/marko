@@ -1,20 +1,14 @@
-import React from 'react';
+import { ReactElement } from 'react';
+
+// eslint-disable-next-line import/no-extraneous-dependencies
+export { RenderContext } from '@storybook/client-api';
 
 export interface ShowErrorArgs {
   title: string;
   description: string;
 }
 
-export interface RenderMainArgs {
-  storyFn: () => React.ReactElement | undefined;
-  selectedKind: string;
-  selectedStory: string;
-  showMain: () => void;
-  showError: (args: ShowErrorArgs) => void;
-  forceRender: boolean;
-}
-
-export type StoryFnReactReturnType = React.ReactElement<unknown>;
+export type StoryFnReactReturnType = ReactElement<unknown>;
 
 export interface IStorybookStory {
   name: string;

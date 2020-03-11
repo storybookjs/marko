@@ -1,5 +1,4 @@
-/* eslint-disable import/no-duplicates */
-import * as EventsPackageExport from '.';
+import * as EventsPackageExport from './index';
 import EventsDefaultExport, { CHANNEL_CREATED } from './index';
 
 describe('Core Events', () => {

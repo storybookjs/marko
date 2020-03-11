@@ -3,13 +3,15 @@ id: 'writing-stories'
 title: 'Writing Stories'
 ---
 
+> migration guide: This page documents the method to configure storybook introduced recently in 5.3.0, consult the [migration guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) if you want to migrate to this format of configuring storybook.
+
 A Storybook is a collection of stories. Each story represents a single visual state of a component.
 
 > Technically, a story is a function that returns something that can be rendered to screen.
 
 ## Basic story
 
-Here is a simple example of stories for a `Button` component:
+Here is an example of stories for a `Button` component:
 
 ```js
 import React from 'react';
@@ -49,7 +51,7 @@ Furthermore, Storybook for React Native currently only supports the `storiesOf` 
 
 ## Story file location
 
-Stories are easier to maintain when they are located alongside the components they are documented. We recommend:
+Stories are easier to maintain when they are located alongside the components they document. We recommend:
 
 ```plaintext
 •
@@ -93,9 +95,18 @@ It's up to you to find a naming/placing scheme that works for your project/team.
 
 ## Loading stories
 
-Stories are loaded in the `.storybook/config.js` file.
+Stories are loaded in the `.storybook/main.js` file or `.storybook/preview.js` file.
 
-The most convenient way to load stories is by filename. For example, if you stories files are located in the `src/components` directory, you can use the following snippet:
+The most convenient way to load stories is by filename. For example, if your stories files are located in the `src/components` directory, you can use the following snippet:
+
+```js
+// .storybook/main.js
+module.exports = {
+  stories: ['../src/components/**/*.stories.js'],
+};
+```
+
+Alternatively you can import all your stories in `.storybook/preview.js`:
 
 ```js
 import { configure } from '@storybook/react';
@@ -103,24 +114,44 @@ import { configure } from '@storybook/react';
 configure(require.context('../src/components', true, /\.stories\.js$/), module);
 ```
 
+> NOTE: The `configure` function should be called only once in `.storybook/preview.js`.
+
 The `configure` function accepts:
 
 - A single `require.context` "`req`"
 - An array of `req`s to load from multiple locations
 - A loader function that should return void or an array of module exports
 
-If you want to load from multiple locations, you could use an array:
+If you want to load from multiple locations, you can use an array:
 
 ```js
 import { configure } from '@storybook/react';
 
-configure([
-  require.context('../src/components', true, /\.stories\.js$/)
-  require.context('../lib', true, /\.stories\.js$/)
-], module);
+configure(
+  [
+    require.context('../src/components', true, /\.stories\.js$/),
+    require.context('../lib', true, /\.stories\.js$/),
+  ],
+  module
+);
 ```
 
-Or if you want to do some custom loading logic, you can use a loader function. Just remember to return an array of module exports if you want to use the module story format:
+Or if you want to do some custom loading logic, you can use a loader function. Just remember to return an array of module exports if you want to use Component Story Format. Here's an example that forces files to load in a specific order.
+
+```js
+import { configure } from '@storybook/react';
+
+const loaderFn = () => [
+  require('./welcome.stories.js'),
+  require('./prelude.stories.js'),
+  require('./button.stories.js'),
+  require('./input.stories.js'),
+];
+
+configure(loaderFn, module);
+```
+
+Here's another example that mixes manual loading with glob-style loading:
 
 ```js
 import { configure } from '@storybook/react';
@@ -135,9 +166,25 @@ const loaderFn = () => {
 configure(loaderFn, module);
 ```
 
-Storybook uses Webpack's [require.context](https://webpack.js.org/guides/dependency-management/#require-context) to load modules dynamically. Take a look at the relevant Webpack [docs](https://webpack.js.org/guides/dependency-management/#require-context) to learn more about how to use `require.context`.
+Storybook uses Webpack's [require.context](https://webpack.js.org/guides/dependency-management/#requirecontext) to load modules dynamically. Take a look at the relevant Webpack [docs](https://webpack.js.org/guides/dependency-management/#requirecontext) to learn more about how to use `require.context`.
 
-If you are using the `storiesOf` API directly, or are using `@storybook/react-native` where CSF is unavailable, you should use a loader function with no return value.
+If you are using the `storiesOf` API directly, or are using `@storybook/react-native` where CSF is unavailable, you should use a loader function with **no return value**:
+
+```js
+import { configure } from '@storybook/react';
+
+const loaderFn = () => {
+  // manual loading
+  require('./welcome.stories.js');
+  require('./button.stories.js');
+
+  // dynamic loading, unavailable in react-native
+  const req = require.context('../src/components', true, /\.stories\.js$/);
+  req.keys().forEach(fname => req(fname));
+};
+
+configure(loaderFn, module);
+```
 
 Furthermore, the **React Native** packager resolves all imports at build-time, so it's not possible to load modules dynamically. There is a third party loader [react-native-storybook-loader](https://github.com/elderfo/react-native-storybook-loader) to automatically generate the import statements for all stories.
 
@@ -147,18 +194,26 @@ A decorator is a way to wrap a story with a common set of components, for exampl
 
 Decorators can be applied globally, at the component level, or individually at the story level. Global decorators are typically applied in the Storybook config files, and component/story decorators are applied in the story file.
 
-Here is an example of a global decorator which centers every story in the storybook:
+Here is an example of a global decorator which centers every story in the `.storybook/preview.js`:
 
 ```jsx
 import React from 'react';
-import { load, addDecorator } from '@storybook/react';
+import { addDecorator } from '@storybook/react';
 
 addDecorator(storyFn => <div style={{ textAlign: 'center' }}>{storyFn()}</div>);
-
-load(require.context('../src/components', true, /\.stories\.js$/), module);
 ```
 
-And here's an example of component/local decorators. The component decorator wraps all the stories in a yellow frame, and the story director wraps a single story in an additional red frame.
+> \* In Vue projects you have to use the special component `<story/>` instead of the function parameter `storyFn` that is used in React projects, even if you are using JSX, for example:
+>
+> ```jsx
+> var decoratorVueJsx = () => ({ render() { return <div style={{ textAlign: 'center' }}><story/></div>} })
+> addDecorator(decoratorVueJsx)
+>
+> var decoratorVueTemplate = () => { return { template: `<div style="text-align:center"><story/></div>` }
+> addDecorator(decoratorVueTemplate)
+> ```
+
+And here's an example of component/local decorators. The component decorator wraps all the stories in a yellow frame, and the story decorator wraps a single story in an additional red frame.
 
 ```jsx
 import React from 'react';
@@ -176,9 +231,9 @@ special.story = {
 };
 ```
 
-Decorators are not just for story formatting, they are generally useful for any kind of context needed by a story.
+Decorators are not only for story formatting, they are generally useful for any kind of context needed by a story.
 
-- Theming libraries require a theme to be passed in through context. Rather than redefining this in every story, just add a decorator.
+- Theming libraries require a theme to be passed in through context. Rather than redefining this in every story, add a decorator.
 - Likewise, state management libraries like Redux provide a global data store through context.
 - Finally, Storybook [addons](../../addons/introduction) heavily use decorators. For example, the Storybook's [Knobs addon](https://github.com/storybookjs/storybook/tree/next/addons/knobs) uses decorators to modify the input properties of the story based on a UI.
 
@@ -188,11 +243,12 @@ Parameters are custom metadata for a story. Like decorators, they can also be hi
 
 Here's an example where we are annotating our stories with [Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) notes using parameters, to be displayed in the [Notes addon](https://github.com/storybookjs/storybook/tree/next/addons/notes).
 
-We first apply some notes globally in the Storybook config.
+We first apply some notes globally in the `.storybook/preview.js`.
 
 ```js
 import { load, addParameters } from '@storybook/react';
 import defaultNotes from './instructions.md';
+
 addParameters({ notes: defaultNotes });
 ```
 
@@ -204,7 +260,7 @@ Then for components that did have documentation, we might override it at the com
 import React from 'react';
 import MyComponent from './MyComponent';
 import componentNotes from './notes.md';
-import specialNotes from '/.special.md';
+import specialNotes from './special.md';
 
 export default {
   title: 'MyComponent',
@@ -234,7 +290,7 @@ callout.story = {
 
 ## Story hierarchy
 
-Stories can be organized in a nested structure using "/" as a separator, and can be given a top-level heading using a "|" root separator.
+Stories can be organized in a nested structure using "/" as a separator.
 
 For example the following snippets nest the `Button` and `Checkbox` components within the `Atoms` group, under a top-level heading called `Design System`.
 
@@ -244,7 +300,7 @@ import React from 'react';
 import Button from './Button';
 
 export default {
-  title: 'Design System|Atoms/Button',
+  title: 'Design System/Atoms/Button',
 };
 export const normal = () => <Button onClick={action('clicked')}>Hello Button</Button>;
 ```
@@ -255,13 +311,13 @@ import React from 'react';
 import Checkbox from './Checkbox';
 
 export default {
-  title: 'Design System|Atoms/Checkbox',
+  title: 'Design System/Atoms/Checkbox',
 };
 export const empty = () => <Checkbox label="empty" />;
 export const checked = () => <Checkbox label="checked" checked />;
 ```
 
-If you prefer other characters as separators, you can configure this using the `hierarchySeparator` and `hierarchyRootSeparator` config options. See the
+By default the top-level heading will be treated as any other group, but if you'd like it to be given special emphasis as a "root", use the `showRoots` config option. See the
 [configuration options parameter](/configurations/options-parameter) page to learn more.
 
 ## Generating nesting path based on \_\_dirname
@@ -276,7 +332,7 @@ import base from 'paths.macro';
 import BaseButton from '../components/BaseButton';
 
 export default {
-  title: `Other|${base}/Dirname Example`,
+  title: `Other/${base}/Dirname Example`,
 };
 export const story1 = () => <BaseButton label="Story 1" />;
 export const story2 = () => <BaseButton label="Story 2" />;
@@ -296,3 +352,35 @@ Multiple storybooks can be built for different kinds of stories or components in
   }
 }
 ```
+
+## Permalinking to stories
+
+Sometimes you might wish to change the name of a story or its position in the hierarchy, but preserve the link to the story or its documentation. Here's how to do it.
+
+Consider the following story:
+
+```js
+export default {
+  title: 'Foo/Bar',
+};
+
+export const Baz = () => <MyComponent />;
+```
+
+Storybook's ID-generation logic will give this the ID `foo-bar--baz`, so the link would be `?path=/story/foo-bar--baz`.
+
+Now suppose you want to change the position in the hierarchy to `OtherFoo/Bar` and the story name to `Moo`. Here's how to do that:
+
+```js
+export default {
+  title: 'OtherFoo/Bar',
+  id: 'Foo/Bar', // or 'foo-bar' if you prefer
+};
+
+export const Baz = () => <MyComponent />;
+Baz.story = {
+  name: 'Moo',
+};
+```
+
+Storybook will prioritize the `id` over the title for ID generation, if provided, and will prioritize the `story.name` over the export key for display.

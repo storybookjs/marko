@@ -3,6 +3,8 @@ id: 'writing-presets'
 title: 'Writing Presets'
 ---
 
+> migration guide: This page documents the method to configure storybook introduced recently in 5.3.0, consult the [migration guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) if you want to migrate to this format of configuring storybook.
+
 [Storybook presets](../introduction/) are grouped collections of `babel`, `webpack`, and `addons` configurations that support specific use cases in Storybook, such as typescript or MDX support.
 
 This doc covers the [presets API](#presets-api) and how to use the presets mechanism for [advanced configuration](#advanced-configuration).
@@ -79,22 +81,51 @@ export function webpackFinal(config, { configDir }) {
 - `webpackFinal` is applied to the preview config after all user presets have been applied
 - `webpackManager` is applied to the manager config
 
-### Addons
+### Manager entries
 
-The addon config `addons` allows you to add addons to Storybook from within a preset. For addons that require custom webpack/babel configuration, it is easier to simply install the preset, and it will take care of everything.
+The addon config `managerEntries` allows you to add addons to Storybook from within a preset. For addons that require custom webpack/babel configuration, it is easier to install the preset, and it will take care of everything.
 
 For example, the Storysource preset contains the following code:
 
 ```js
-export function addons(entry = []) {
+export function managerEntries(entry = []) {
   return [...entry, require.resolve('@storybook/addon-storysource/register')];
 }
 ```
 
-This is equivalent to [registering the addon manually](../../addons/using-addons/) in `addons.js`:
+This is equivalent to [registering the addon manually](../../addons/using-addons/) in `main.js`:
 
 ```js
-import '@storybook/addon-storysource/register';
+module.exports = {
+  managerEntries: ['@storybook/addon-storysource/register'],
+};
+```
+
+### Addons
+
+For users, the name `managerEntries` might be a bit too technical, so instead both users and preset-authors can simply use the property: `addons`:
+
+```js
+module.exports = {
+  addons: ['@storybook/addon-storysource'],
+};
+```
+
+The array of values can support both references to other presets and addons that should be included into the manager.
+
+Storybook will automatically detect whether a reference to an addon is a preset or a manager entry by checking if the package contains a `./preset.js` or `./register.js` (manager entry), falling back to preset if it is unsure.
+
+If this heuristic is incorrect for an addon you are using, you can explicitly opt in to an entry being an a manager entry using the `managerEntries` key.
+
+Here's what it looks when combining presets and managerEntries in the addons property:
+
+```js
+module.exports = {
+  addons: [
+    '@storybook/addon-storysource/register', // a managerEntry
+    '@storybook/addon-docs/preset', // a preset
+  ],
+};
 ```
 
 ### Entries
@@ -107,27 +138,59 @@ The presets API is also more powerful than the [standard configuration options](
 
 For example, some users want to configure the webpack for Storybook's UI and addons ([issue](https://github.com/storybookjs/storybook/issues/4995)), but this is not possible using [standard webpack configuration](../custom-webpack-config/) (it used to be possible before SB4.1). However, you can achieve this with a private preset.
 
-First, create a file `my-preset.js` in your storybook folder:
+If it doesn't exist yet, create a file `.storybook/main.js`:
 
 ```js
-export async function managerWebpack(config, options) {
-  // update config here
-  return config;
-}
-export async function managerBabel(config, options) {
-  // update config here
-  return config;
-}
-export async function webpack(config, options) {
-  return config;
-}
-export async function babel(config, options) {
-  return config;
-}
+module.exports = {
+  managerWebpack: async (config, options) => {
+    // update config here
+    return config;
+  },
+  managerBabel: async (config, options) => {
+    // update config here
+    return config;
+  },
+  webpackFinal: async (config, options) => {
+    // change webpack config
+    return config;
+  },
+  babel: async (config, options) => {
+    return config;
+  },
+};
 ```
 
-Then, load that preset in your `presets.js` file:
+## Sharing advanced configuration
+
+Change your `main.js` file to:
 
 ```js
-module.exports = [path.resolve('./my-preset')];
+const path = require('path');
+
+module.exports = {
+  addons: [path.resolve('./.storybook/my-preset')],
+};
 ```
+
+and extract the configuration to a new file `./storybook/my-preset.js`:
+
+```js
+module.exports = {
+  managerWebpack: async (config, options) => {
+    // update config here
+    return config;
+  },
+  managerBabel: async (config, options) => {
+    // update config here
+    return config;
+  },
+  webpackFinal: async (config, options) => {
+    return config;
+  },
+  babel: async (config, options) => {
+    return config;
+  },
+};
+```
+
+Place your `my-preset.js` file wherever you want, if you want to share it far and wide you'll want to make it its own package.

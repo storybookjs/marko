@@ -1,15 +1,16 @@
-import React, { Fragment } from 'react';
+import React, { FunctionComponent } from 'react';
 import { styled } from '@storybook/theming';
 import { transparentize } from 'polished';
 
 import { getBlockBackgroundStyle } from './BlockBackgroundStyles';
 import { ResetWrapper } from '../typography/DocumentFormatting';
 
-const ItemTitle = styled.div<{}>(({ theme }) => ({
+const ItemTitle = styled.div(({ theme }) => ({
   fontWeight: theme.typography.weight.bold,
+  color: theme.color.defaultText,
 }));
 
-const ItemSubtitle = styled.div<{}>(({ theme }) => ({
+const ItemSubtitle = styled.div(({ theme }) => ({
   color:
     theme.base === 'light'
       ? transparentize(0.2, theme.color.defaultText)
@@ -22,7 +23,7 @@ const ItemDescription = styled.div({
   marginTop: 5,
 });
 
-const SwatchLabel = styled.div<{}>(({ theme }) => ({
+const SwatchLabel = styled.div(({ theme }) => ({
   flex: 1,
   textAlign: 'center',
   fontFamily: theme.typography.fonts.mono,
@@ -39,6 +40,11 @@ const SwatchLabel = styled.div<{}>(({ theme }) => ({
     overflow: 'hidden',
     maxWidth: '100%',
   },
+
+  span: {
+    display: 'block',
+    marginTop: 2,
+  },
 }));
 
 const SwatchLabels = styled.div({
@@ -50,7 +56,7 @@ const Swatch = styled.div({
   flex: 1,
 });
 
-const SwatchColors = styled.div<{}>(({ theme }) => ({
+const SwatchColors = styled.div(({ theme }) => ({
   ...getBlockBackgroundStyle(theme),
   display: 'flex',
   flexDirection: 'row',
@@ -86,20 +92,19 @@ const ListSwatches = styled.div({
   flex: 1,
 });
 
-const ListHeading = styled.div<{}>(({ theme }) => ({
+const ListHeading = styled.div(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
   paddingBottom: 20,
   fontWeight: theme.typography.weight.bold,
-
   color:
     theme.base === 'light'
       ? transparentize(0.4, theme.color.defaultText)
       : transparentize(0.6, theme.color.defaultText),
 }));
 
-const List = styled.div<{}>(({ theme }) => ({
+const List = styled.div(({ theme }) => ({
   fontSize: theme.typography.size.s2,
   lineHeight: `20px`,
 
@@ -107,46 +112,68 @@ const List = styled.div<{}>(({ theme }) => ({
   flexDirection: 'column',
 }));
 
+type Colors = string[] | { [key: string]: string };
+
 interface ColorProps {
   title: string;
   subtitle: string;
-  colors: string[];
+  colors: Colors;
+}
+
+function renderSwatch(color: string) {
+  return (
+    <Swatch
+      key={color}
+      title={color}
+      style={{
+        backgroundColor: color,
+      }}
+    />
+  );
+}
+
+function renderSwatchLabel(color: string, colorDescription?: string) {
+  return (
+    <SwatchLabel key={color} title={color}>
+      <div>
+        {color}
+        {colorDescription && <span>{colorDescription}</span>}
+      </div>
+    </SwatchLabel>
+  );
+}
+
+function renderSwatchSpecimen(colors: Colors) {
+  if (Array.isArray(colors)) {
+    return (
+      <SwatchSpecimen>
+        <SwatchColors>{colors.map(color => renderSwatch(color))}</SwatchColors>
+        <SwatchLabels>{colors.map(color => renderSwatchLabel(color))}</SwatchLabels>
+      </SwatchSpecimen>
+    );
+  }
+  return (
+    <SwatchSpecimen>
+      <SwatchColors>{Object.values(colors).map(color => renderSwatch(color))}</SwatchColors>
+      <SwatchLabels>
+        {Object.keys(colors).map(color => renderSwatchLabel(color, colors[color]))}
+      </SwatchLabels>
+    </SwatchSpecimen>
+  );
 }
 
 /**
  * A single color row your styleguide showing title, subtitle and one or more colors, used
  * as a child of `ColorPalette`.
  */
-export const ColorItem: React.FunctionComponent<ColorProps> = ({ title, subtitle, colors }) => {
+export const ColorItem: FunctionComponent<ColorProps> = ({ title, subtitle, colors }) => {
   return (
     <Item>
       <ItemDescription>
         <ItemTitle>{title}</ItemTitle>
         <ItemSubtitle>{subtitle}</ItemSubtitle>
       </ItemDescription>
-
-      <Swatches>
-        <SwatchSpecimen>
-          <SwatchColors>
-            {colors.map(color => (
-              <Swatch
-                key={color}
-                title={color}
-                style={{
-                  backgroundColor: color,
-                }}
-              />
-            ))}
-          </SwatchColors>
-          <SwatchLabels>
-            {colors.map(color => (
-              <SwatchLabel key={color} title={color}>
-                <div>{color}</div>
-              </SwatchLabel>
-            ))}
-          </SwatchLabels>
-        </SwatchSpecimen>
-      </Swatches>
+      <Swatches>{renderSwatchSpecimen(colors)}</Swatches>
     </Item>
   );
 };
@@ -155,7 +182,7 @@ export const ColorItem: React.FunctionComponent<ColorProps> = ({ title, subtitle
  * Styleguide documentation for colors, including names, captions, and color swatches,
  * all specified as `ColorItem` children of this wrapper component.
  */
-export const ColorPalette: React.FunctionComponent = ({ children, ...props }) => (
+export const ColorPalette: FunctionComponent = ({ children, ...props }) => (
   <ResetWrapper>
     <List {...props} className="docblock-colorpalette">
       <ListHeading>

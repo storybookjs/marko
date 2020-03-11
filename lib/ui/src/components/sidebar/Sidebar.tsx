@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 
 import { styled } from '@storybook/theming';
 import { ScrollArea } from '@storybook/components';
-import { State } from '@storybook/api';
+import { StoriesHash } from '@storybook/api';
 
 import SidebarHeading, { SidebarHeadingProps } from './SidebarHeading';
 import SidebarStories from './SidebarStories';
@@ -13,7 +13,7 @@ const Heading = styled(SidebarHeading)<SidebarHeadingProps>({
 
 const Stories = styled(({ className, ...rest }) => (
   <SidebarStories className={className} {...rest} />
-))(({ loading }) => (loading ? { marginTop: 8 } : {}));
+))(({ isLoading }) => (isLoading ? { marginTop: 8, overflow: 'hidden' } : { overflow: 'hidden' }));
 
 const Container = styled.nav({
   position: 'absolute',
@@ -28,29 +28,29 @@ const Container = styled.nav({
 
 const CustomScrollArea = styled(ScrollArea)({
   '.simplebar-track.simplebar-vertical': {
-    right: '4px',
+    right: 4,
   },
 });
 
 export interface SidebarProps {
-  stories: State['StoriesHash'];
+  stories: StoriesHash;
   menu: any[];
   storyId?: string;
   menuHighlighted?: boolean;
-  loading?: boolean;
+  isLoading?: boolean;
 }
 
-const Sidebar = ({
+const Sidebar: FunctionComponent<SidebarProps> = ({
   storyId,
   stories,
   menu,
   menuHighlighted = false,
-  loading = false,
-}: SidebarProps) => (
+  isLoading = false,
+}) => (
   <Container className="container sidebar-container">
     <CustomScrollArea vertical>
       <Heading className="sidebar-header" menuHighlighted={menuHighlighted} menu={menu} />
-      <Stories stories={stories} storyId={storyId} loading={loading} />
+      <Stories stories={stories} storyId={storyId} isLoading={isLoading} />
     </CustomScrollArea>
   </Container>
 );

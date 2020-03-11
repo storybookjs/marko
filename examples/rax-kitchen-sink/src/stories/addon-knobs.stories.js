@@ -1,15 +1,14 @@
 import { createElement } from 'rax';
 import { withKnobs, text, boolean, number } from '@storybook/addon-knobs';
 
-import Button from 'rax-button';
 import Text from 'rax-text';
 
 export default {
-  title: 'Addon|addon-knobs',
+  title: 'Addon/addon-knobs',
   decorators: [withKnobs],
 };
 
-export const withAButton = () => {
+export const WithAButton = () => {
   const disabled = boolean('Disabled', false);
   const hasStyle = boolean('Has Style', false);
   const style = hasStyle
@@ -29,17 +28,17 @@ export const withAButton = () => {
         color: disabled ? '#666' : '#000',
       };
   return (
-    <Button style={style} disabled={disabled}>
+    <button style={style} disabled={disabled} type="button">
       <Text style={textStyle}>{text('Label', 'Hello Storybook')}</Text>
-    </Button>
+    </button>
   );
 };
 
-withAButton.story = {
+WithAButton.story = {
   name: 'with a button',
 };
 
-export const asDynamicVariables = () => {
+export const AsDynamicVariables = () => {
   const name = text('Name', 'Benjamin Button');
   const age = number('Age', 89);
 
@@ -47,6 +46,6 @@ export const asDynamicVariables = () => {
   return <Text>{content}</Text>;
 };
 
-asDynamicVariables.story = {
+AsDynamicVariables.story = {
   name: 'as dynamic variables',
 };

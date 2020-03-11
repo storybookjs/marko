@@ -45,16 +45,11 @@ function run() {
   log.addLevel('aborted', 3001, { fg: 'red', bold: true });
 
   const spawn = (command, options = {}) => {
-    const out = childProcess.spawnSync(
-      `${command}`,
-      Object.assign(
-        {
-          shell: true,
-          stdio: 'inherit',
-        },
-        options
-      )
-    );
+    const out = childProcess.spawnSync(`${command}`, {
+      shell: true,
+      stdio: 'inherit',
+      ...options,
+    });
 
     if (out.status !== 0) {
       process.exit(out.status);
@@ -122,7 +117,7 @@ function run() {
       defaultValue: false,
       option: '--install',
       command: () => {
-        spawn('yarn install --ignore-optional ');
+        spawn('yarn install --ignore-optional --network-concurrency 8');
       },
       order: 1,
     }),
@@ -142,7 +137,9 @@ function run() {
       option: '--dll',
       command: () => {
         log.info(prefix, 'dll');
-        spawn('lerna run createDlls --scope "@storybook/ui"');
+        setTimeout(() => {
+          spawn('lerna run createDlls --scope "@storybook/ui"');
+        }, 5000);
       },
       order: 3,
     }),

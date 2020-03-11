@@ -1,6 +1,6 @@
 {
   "name": "@storybook/react",
-  "version": "5.2.0-beta.40",
+  "version": "6.0.0-alpha.22",
   "description": "Storybook for React: Develop React Component in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -22,31 +22,45 @@
     "start-storybook": "./bin/index.js",
     "storybook-server": "./bin/index.js"
   },
+  "files": [
+    "bin/**/*",
+    "dist/**/*",
+    "README.md",
+    "*.js",
+    "*.d.ts",
+    "ts3.5/**/*"
+  ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@babel/plugin-transform-react-constant-elements": "^7.2.0",
+    "@babel/plugin-transform-react-constant-elements": "^7.6.3",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
-    "@storybook/addons": "5.2.0-beta.40",
-    "@storybook/core": "5.2.0-beta.40",
-    "@storybook/node-logger": "5.2.0-beta.40",
-    "@svgr/webpack": "^4.0.3",
+    "@storybook/addons": "6.0.0-alpha.22",
+    "@storybook/core": "6.0.0-alpha.22",
+    "@storybook/node-logger": "6.0.0-alpha.22",
+    "@svgr/webpack": "^5.1.0",
+    "@types/webpack-env": "^1.15.1",
     "babel-plugin-add-react-displayname": "^0.0.5",
     "babel-plugin-named-asset-import": "^0.3.1",
-    "babel-plugin-react-docgen": "^3.0.0",
-    "babel-preset-react-app": "^9.0.0",
-    "common-tags": "^1.8.0",
+    "babel-plugin-react-docgen": "^4.1.0",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
-    "lodash": "^4.17.11",
-    "mini-css-extract-plugin": "^0.7.0",
+    "lodash": "^4.17.15",
+    "mini-css-extract-plugin": "^0.9.0",
     "prop-types": "^15.7.2",
-    "react-dev-utils": "^9.0.0",
-    "regenerator-runtime": "^0.12.1",
+    "react-dev-utils": "^10.0.0",
+    "regenerator-runtime": "^0.13.3",
     "semver": "^6.0.0",
+    "ts-dedent": "^1.1.1",
     "webpack": "^4.33.0"
+  },
+  "devDependencies": {
+    "@storybook/client-api": "6.0.0-alpha.22",
+    "@types/mini-css-extract-plugin": "^0.9.0",
+    "@types/node": "^13.5.3",
+    "@types/webpack": "^4.41.0"
   },
   "peerDependencies": {
     "@babel/core": "^7.0.1",
@@ -54,15 +68,18 @@
     "react": "*",
     "react-dom": "*"
   },
-  "devDependencies": {
-    "@types/mini-css-extract-plugin": "^0.2.1",
-    "@types/node": "^12.0.8",
-    "@types/webpack": "^4.4.32"
-  },
   "engines": {
     "node": ">=8.0.0"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
+  "typesVersions": {
+    "<=3.5": {
+      "*": [
+        "ts3.5/*"
+      ]
+    }
   }
 }

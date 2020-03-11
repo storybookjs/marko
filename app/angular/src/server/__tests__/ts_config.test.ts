@@ -1,6 +1,6 @@
 import getTsLoaderOptions from '../ts_config';
 
-// eslint-disable-next-line global-require
+// eslint-disable-next-line global-require, jest/no-mocks-import
 jest.mock('fs', () => require('../../../../../__mocks__/fs'));
 jest.mock('path', () => ({
   resolve: () => 'tsconfig.json',
@@ -20,6 +20,9 @@ describe('ts_config', () => {
 
     expect(config).toEqual({
       transpileOnly: true,
+      compilerOptions: {
+        emitDecoratorMetadata: true,
+      },
       configFile: 'tsconfig.json',
     });
   });
@@ -31,6 +34,9 @@ describe('ts_config', () => {
 
     expect(config).toEqual({
       transpileOnly: true,
+      compilerOptions: {
+        emitDecoratorMetadata: true,
+      },
     });
   });
 });

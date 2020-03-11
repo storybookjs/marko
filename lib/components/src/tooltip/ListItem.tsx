@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { FunctionComponent, ReactNode, ComponentProps } from 'react';
 import { styled } from '@storybook/theming';
 import memoize from 'memoizerific';
 import { transparentize } from 'polished';
@@ -8,9 +8,11 @@ export interface TitleProps {
   loading?: boolean;
   disabled?: boolean;
 }
-const Title = styled(({ active, loading, disabled, ...rest }: TitleProps) => (
-  <span {...rest}></span>
-))<{ active: boolean; loading: boolean; disabled: boolean }>(
+const Title = styled(({ active, loading, disabled, ...rest }: TitleProps) => <span {...rest} />)<{
+  active: boolean;
+  loading: boolean;
+  disabled: boolean;
+}>(
   ({ theme }) => ({
     color: theme.color.defaultText,
     // Previously was theme.typography.weight.normal but this weight does not exists in Theme
@@ -47,12 +49,12 @@ const Right = styled.span<RightProps>(
   {
     '& svg': {
       transition: 'all 200ms ease-out',
-      opacity: '0',
-      height: '12px',
-      width: '12px',
+      opacity: 0,
+      height: 12,
+      width: 12,
       margin: '3px 0',
       verticalAlign: 'top',
-    } as any,
+    },
     '& path': {
       fill: 'inherit',
     },
@@ -182,7 +184,7 @@ const getItemProps = memoize(100)((onClick, href, LinkWrapper) => {
 
 export type LinkWrapperType = FunctionComponent;
 
-export interface ListItemProps {
+export interface ListItemProps extends Omit<ComponentProps<typeof Item>, 'href' | 'title'> {
   loading?: boolean;
   left?: ReactNode;
   title?: ReactNode;
@@ -190,9 +192,8 @@ export interface ListItemProps {
   right?: ReactNode;
   active?: boolean;
   disabled?: boolean;
-  href?: string | object;
+  href?: string;
   LinkWrapper?: LinkWrapperType;
-  onClick?: () => void;
 }
 
 const ListItem: FunctionComponent<ListItemProps> = ({

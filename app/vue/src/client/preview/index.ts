@@ -17,13 +17,18 @@ import { extractProps } from './util';
 
 export const WRAPS = 'STORYBOOK_WRAPS';
 
-function prepare(rawStory: StoryFnVueReturnType, innerStory?: VueConstructor): VueConstructor {
+function prepare(
+  rawStory: StoryFnVueReturnType,
+  innerStory?: VueConstructor
+): VueConstructor | null {
   let story: ComponentOptions<Vue> | VueConstructor;
 
   if (typeof rawStory === 'string') {
     story = { template: rawStory };
-  } else {
+  } else if (rawStory != null) {
     story = rawStory as ComponentOptions<Vue>;
+  } else {
+    return null;
   }
 
   // @ts-ignore
@@ -63,6 +68,7 @@ const defaultContext: StoryContext = {
   name: 'unspecified',
   kind: 'unspecified',
   parameters: {},
+  args: {},
 };
 
 function decorateStory(
@@ -73,22 +79,13 @@ function decorateStory(
     (decorated: StoryFn<VueConstructor>, decorator) => (context: StoryContext = defaultContext) => {
       let story;
 
-      const decoratedStory = decorator(p => {
-        story = decorated(
-          p
-            ? {
-                ...context,
-                ...p,
-                parameters: {
-                  ...context.parameters,
-                  ...p.parameters,
-                },
-              }
-            : context
-        );
-
-        return story;
-      }, context);
+      const decoratedStory = decorator(
+        ({ parameters, ...innerContext }: StoryContext = {} as StoryContext) => {
+          story = decorated({ ...context, ...innerContext });
+          return story;
+        },
+        context
+      );
 
       if (!story) {
         story = decorated(context);

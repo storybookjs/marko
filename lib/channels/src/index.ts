@@ -40,6 +40,8 @@ export class Channel {
 
   private events: EventsKeyValue = {};
 
+  private data: Record<string, any> = {};
+
   private readonly transport: ChannelTransport;
 
   constructor({ transport, async = false }: ChannelArgs = {}) {
@@ -69,7 +71,6 @@ export class Channel {
     const event: ChannelEvent = { type: eventName, args, from: this.sender };
     let options = {};
     if (args.length >= 1 && args[0] && args[0].options) {
-      // eslint-disable-next-line prefer-destructuring
       options = args[0].options;
     }
 
@@ -86,6 +87,10 @@ export class Channel {
     } else {
       handler();
     }
+  }
+
+  last(eventName: string) {
+    return this.data[eventName];
   }
 
   eventNames() {
@@ -126,11 +131,16 @@ export class Channel {
     this.addListener(eventName, listener);
   }
 
+  off(eventName: string, listener: Listener) {
+    this.removeListener(eventName, listener);
+  }
+
   private handleEvent(event: ChannelEvent, isPeer = false) {
     const listeners = this.listeners(event.type);
     if (listeners && (isPeer || event.from !== this.sender)) {
-      listeners.forEach(fn => !(isPeer && fn.ignorePeer) && fn(...event.args));
+      listeners.forEach(fn => !(isPeer && fn.ignorePeer) && fn.apply(event, event.args));
     }
+    this.data[event.type] = event.args;
   }
 
   private onceListener(eventName: string, listener: Listener) {

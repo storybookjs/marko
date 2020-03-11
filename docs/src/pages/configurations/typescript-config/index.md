@@ -3,42 +3,57 @@ id: 'typescript-config'
 title: 'TypeScript Config'
 ---
 
+> migration guide: This page documents the method to configure storybook introduced recently in 5.3.0, consult the [migration guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) if you want to migrate to this format of configuring storybook.
+
 This is a central reference for using Storybook with TypeScript.
 
-## Setting up TypeScript with awesome-typescript-loader
+## Typescript configuration presets
+
+The fastest and easiest way to write and configure your stories in TypeScript is by using a Storybook preset.
+
+* If you're using Create React App (CRA) and have configured it to work with TS, you should use [`@storybook/preset-create-react-app`](https://github.com/storybookjs/presets/tree/master/packages/preset-create-react-app), which configures Storybook to reuse CRA's TS handling.
+
+* If you are not using CRA or have other requirements, then the next best option is [`@storybook/preset-typescript`](https://github.com/storybookjs/presets/tree/master/packages/preset-typescript), which configures `ts-loader` under the hood.
+
+If you need more control than these presets offer, read on for manual configuration instructions.
+
+You can learn more about Storybook presets [over here](../../presets/introduction).
+
+> If using TypeScript, some addons require features available in TS version 3.4+.
+
+## Setting up TypeScript with ts-loader
 
 ### Dependencies you may need
 
 ```bash
 yarn add -D typescript
-yarn add -D awesome-typescript-loader
-yarn add -D @types/storybook__react # typings
+yarn add -D ts-loader
 yarn add -D @storybook/addon-info react-docgen-typescript-loader # optional but recommended
 yarn add -D jest "@types/jest" ts-jest #testing
 ```
 
-We have had the best experience using `awesome-typescript-loader`, but other tutorials may use `ts-loader`, just configure accordingly. You can even use `babel-loader` with a `ts-loader` configuration.
-
 ### Setting up TypeScript to work with Storybook
 
-We first have to use the [custom Webpack config in full control mode, extending default configs](/configurations/custom-webpack-config/#full-control-mode--default) by creating a `webpack.config.js` file in our Storybook configuration directory (by default, it’s `.storybook`):
+We [configure storybook's webpack](/configurations/custom-webpack-config/#full-control-mode--default) by changing `.storybook/main.js`:
 
 ```js
-module.exports = ({ config }) => {
-  config.module.rules.push({
-    test: /\.(ts|tsx)$/,
-    use: [
-      {
-        loader: require.resolve('awesome-typescript-loader'),
-      },
-      // Optional
-      {
-        loader: require.resolve('react-docgen-typescript-loader'),
-      },
-    ],
-  });
-  config.resolve.extensions.push('.ts', '.tsx');
-  return config;
+module.exports = {
+  webpackFinal: async config => {
+    config.module.rules.push({
+      test: /\.(ts|tsx)$/,
+      use: [
+        {
+          loader: require.resolve('ts-loader'),
+        },
+        // Optional
+        {
+          loader: require.resolve('react-docgen-typescript-loader'),
+        },
+      ],
+    });
+    config.resolve.extensions.push('.ts', '.tsx');
+    return config;
+  },
 };
 ```
 
@@ -76,60 +91,44 @@ The above example shows a working Webpack config with the [TSDocgen plugin](http
 }
 ```
 
-This is for the default configuration where `/stories` is a peer of `src`. If you have them all in just `src` you may wish to replace `"rootDirs": ["src", "stories"]` above with `"rootDir": "src",`.
+This is for the default configuration where `/stories` is a peer of `src`. If you have them all in `src`, you may wish to replace `"rootDirs": ["src", "stories"]` above with `"rootDir": "src",`.
 
 ## Setting up TypeScript with babel-loader
 
-When using latest create-react-app (CRA 2.0), Babel 7 has native TypeScript support. Setup becomes easier.
-For a full working demo (that also uses react-docgen-typescript-loader) you can check out this [repo](https://github.com/johot/storybook4-cra2-typescript-react-docgen-typescript-demo).
+### A note for Create React App users
 
-### Dependencies you may need
-
-```bash
-yarn add -D @types/storybook__react # typings
-```
+Please use [`@storybook/preset-create-react-app`](https://github.com/storybookjs/presets/tree/master/packages/preset-create-react-app) for full compatibility with [Create React App](https://create-react-app.dev/) features - which includes TypeScript support.
 
 ### Setting up TypeScript to work with Storybook
 
-We first have to use the [custom Webpack config in full control mode, extending default configs](/configurations/custom-webpack-config/#full-control-mode--default) by creating a `webpack.config.js` file in our Storybook configuration directory (by default, it’s `.storybook`):
+The following code uses [`babel-preset-react-app`](https://github.com/facebook/create-react-app/tree/master/packages/babel-preset-react-app).
+
+We will create a [custom Webpack config](/configurations/custom-webpack-config/) by creating editing/creating the `.storybook/main.js`:
 
 ```js
-module.exports = ({ config, mode }) => {
-  config.module.rules.push({
-    test: /\.(ts|tsx)$/,
-    loader: require.resolve('babel-loader'),
-    options: {
-      presets: [['react-app', { flow: false, typescript: true }]],
-    },
-  });
-  config.resolve.extensions.push('.ts', '.tsx');
-  return config;
+module.exports = {
+  stories: ['../src/**/*.stories.tsx'],
+  webpackFinal: async config => {
+    config.module.rules.push({
+      test: /\.(ts|tsx)$/,
+      loader: require.resolve('babel-loader'),
+      options: {
+        presets: [['react-app', { flow: false, typescript: true }]],
+      },
+    });
+    config.resolve.extensions.push('.ts', '.tsx');
+    return config;
+  },
 };
 ```
 
 ### `tsconfig.json`
 
-The default `tsconfig.json` that comes with CRA works great. If your stories are outside the `src` folder, for example the `stories` folder in root, then `"rootDirs": ["src", "stories"]` needs to be added to be added to `compilerOptions` so it knows what folders to compile. Make sure `jsx` is set to preserve. Should be unchanged.
+If your stories are outside the `src` folder, for example the `stories` folder in root, then `"rootDirs": ["src", "stories"]` needs to be added to be added to `compilerOptions` so it knows what folders to compile. Make sure `jsx` is set to preserve. Should be unchanged.
 
-## Create a TSX storybook index 
+## Create a TSX storybook index
 
-The default storybook index file is `stories/index.js` -- you'll want to rename this to `stories/index.tsx`.
-
-## Import tsx stories
-
-Change `config.ts` inside the Storybook config directory (by default, it’s `.storybook`) to import stories made with TypeScript:
-
-```js
-import { configure } from '@storybook/react';
-// automatically import all files ending in *.stories.tsx
-const req = require.context('../stories', true, /\.stories\.tsx$/);
-
-function loadStories() {
-  req.keys().forEach(req);
-}
-
-configure(loadStories, module);
-```
+The default storybook index file is `stories/index.stories.js` -- you'll want to rename this to `stories/index.stories.tsx`.
 
 ## Using TypeScript with the TSDocgen addon
 
@@ -137,16 +136,17 @@ The very handy [Storybook Info addon](https://github.com/storybookjs/storybook/t
 
 ```js
 import * as React from 'react';
-import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
 import TicTacToeCell from './TicTacToeCell';
 
-const stories = storiesOf('Components', module);
+export default {
+  title: 'Components',
+  parameters: {
+    info: { inline: true },
+  },
+};
 
-stories.add(
-  'TicTacToeCell',
-  () => <TicTacToeCell value="X" position={{ x: 0, y: 0 }} onClick={action('onClick')} />,
-  { info: { inline: true } }
+export const TicTacToeCell = () => (
+  <TicTacToeCell value="X" position={{ x: 0, y: 0 }} />,
 );
 ```
 
@@ -154,13 +154,12 @@ stories.add(
 
 Please refer to the [react-docgen-typescript-loader](https://github.com/strothj/react-docgen-typescript-loader) docs for writing prop descriptions and other annotations to your Typescript interfaces.
 
-Additional annotation can be achieved by setting a default set of info parameters:
+Additional annotation can be achieved by setting a default set of info parameters in `.storybook/preview.js`:
 
 ```ts
 import { addDecorator } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 
-// Globally in your .storybook/config.js, or alternatively, per-chapter
 addDecorator(
   withInfo({
     styles: {
@@ -190,51 +189,6 @@ addDecorator(
   })
 );
 ```
-
-This can be used like so:
-
-```js
-import * as React from 'react';
-
-import { storiesOf } from '@storybook/react';
-import { PrimaryButton } from './Button';
-import { text, select, boolean } from '@storybook/addon-knobs/react';
-
-storiesOf('Components/Button', module).addWithJSX(
-  'basic PrimaryButton',
-  () => (
-    <PrimaryButton
-      label={text('label', 'Enroll')}
-      disabled={boolean('disabled', false)}
-      onClick={() => alert('hello there')}
-    />
-  ),
-  {
-    info: {
-      text: `
-
-  ### Notes
-
-  light button seen on <https://zpl.io/aM49ZBd>
-
-  ### Usage
-  ~~~js
-  <PrimaryButton
-    label={text('label', 'Enroll')}
-    disabled={boolean('disabled',false)}
-    onClick={() => alert('hello there')}
-  />
-  ~~~
-
-`,
-    },
-  }
-);
-```
-
-And this is how it looks:
-
-![image](https://user-images.githubusercontent.com/35976578/38376038-ac02b432-38c5-11e8-9aed-f4fa2e258f60.png)
 
 Note: Component docgen information can not be generated for components that are only exported as default. You can work around the issue by exporting the component using a named export.
 

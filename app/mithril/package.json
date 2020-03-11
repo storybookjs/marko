@@ -1,6 +1,6 @@
 {
   "name": "@storybook/mithril",
-  "version": "5.2.0-beta.40",
+  "version": "6.0.0-alpha.22",
   "description": "Storybook for Mithril: Develop Mithril Component in isolation.",
   "keywords": [
     "storybook"
@@ -16,34 +16,57 @@
   },
   "license": "MIT",
   "main": "dist/client/index.js",
-  "jsnext:main": "src/client/index.js",
+  "types": "dist/client/index.d.ts",
   "bin": {
     "build-storybook": "./bin/build.js",
     "start-storybook": "./bin/index.js",
     "storybook-server": "./bin/index.js"
   },
+  "files": [
+    "bin/**/*",
+    "dist/**/*",
+    "README.md",
+    "*.js",
+    "*.d.ts",
+    "ts3.5/**/*"
+  ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
+    "@babel/core": "^7.8.4",
     "@babel/plugin-transform-react-jsx": "^7.3.0",
-    "@storybook/core": "5.2.0-beta.40",
-    "common-tags": "^1.8.0",
+    "@storybook/addons": "6.0.0-alpha.22",
+    "@storybook/core": "6.0.0-alpha.22",
+    "@types/mithril": "^2.0.0",
+    "@types/webpack-env": "^1.15.1",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
-    "regenerator-runtime": "^0.12.1"
+    "regenerator-runtime": "^0.13.3",
+    "ts-dedent": "^1.1.1"
   },
   "devDependencies": {
     "mithril": "^1.1.6"
   },
   "peerDependencies": {
+    "@babel/core": "*",
     "babel-loader": "^7.0.0 || ^8.0.0",
-    "mithril": "^1.1.6"
+    "mithril": "^1.1.6",
+    "react": "*",
+    "react-dom": "*"
   },
   "engines": {
     "node": ">=8.0.0"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
+  "typesVersions": {
+    "<=3.5": {
+      "*": [
+        "ts3.5/*"
+      ]
+    }
   }
 }

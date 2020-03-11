@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`json-to-csf-compiler multiple_stories.json 1`] = `
+"
+export default {
+  title: 'Demo',
+};
+
+export const Heading = () => {};
+Heading.story = {
+  name: 'Heading',
+  parameters: {
+    server: {
+      id: 'demo/heading'
+    }
+  }
+};
+
+export const Headings = () => {};
+Headings.story = {
+  name: 'Headings',
+  parameters: {
+    server: {
+      id: 'demo/headings'
+    }
+  }
+};
+
+export const Button = () => {};
+Button.story = {
+  name: 'Button',
+  parameters: {
+    server: {
+      id: 'demo/button'
+    }
+  }
+};
+"
+`;

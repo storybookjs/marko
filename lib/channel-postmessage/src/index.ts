@@ -4,10 +4,6 @@ import { logger } from '@storybook/client-logger';
 
 import { isJSON, parse, stringify } from 'telejson';
 
-interface RawEvent {
-  data: string;
-}
-
 interface Config {
   page: 'manager' | 'preview';
 }
@@ -31,7 +27,6 @@ export class PostmsgTransport {
 
   private connected: boolean;
 
-  // eslint-disable-next-line @typescript-eslint/no-parameter-properties
   constructor(private readonly config: Config) {
     this.buffer = [];
     this.handler = null;
@@ -61,7 +56,7 @@ export class PostmsgTransport {
    */
   send(event: ChannelEvent, options?: any): Promise<any> {
     const iframeWindow = this.getWindow();
-    if (!iframeWindow) {
+    if (!iframeWindow || this.buffer.length) {
       return new Promise((resolve, reject) => {
         this.buffer.push({ event, resolve, reject });
       });
@@ -70,11 +65,9 @@ export class PostmsgTransport {
     let allowFunction = true;
 
     if (options && typeof options.allowFunction === 'boolean') {
-      // eslint-disable-next-line prefer-destructuring
       allowFunction = options.allowFunction;
     }
     if (options && Number.isInteger(options.depth)) {
-      // eslint-disable-next-line prefer-destructuring
       depth = options.depth;
     }
 
@@ -109,7 +102,7 @@ export class PostmsgTransport {
     return window.parent;
   }
 
-  private handleEvent(rawEvent: RawEvent): void {
+  private handleEvent(rawEvent: MessageEvent): void {
     try {
       const { data } = rawEvent;
       const { key, event } = typeof data === 'string' && isJSON(data) ? parse(data) : data;

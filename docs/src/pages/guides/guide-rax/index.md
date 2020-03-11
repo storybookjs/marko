@@ -35,76 +35,52 @@ npm install rax --save
 npm install babel-loader @babel/core --save-dev
 ```
 
-## Step 2: Add a npm script
+## Step 2: Add npm scripts
 
-Then add the following NPM script to your `package.json` in order to start the storybook later in this guide:
+Then add the following scripts to your `package.json` in order to start the storybook later in this guide:
 
 ```json
 {
   "scripts": {
-    "storybook": "start-storybook"
+    "storybook": "start-storybook",
+    "build-storybook": "build-storybook"
   }
 }
 ```
 
-## Step 3: Create the config file
+## Step 3: Create the main file
 
 For a basic Storybook configuration, the only thing you need to do is tell Storybook where to find stories.
 
-To do that, create a file at `.storybook/config.js` with the following content:
+To do that, create a file at `.storybook/main.js` with the following content:
 
 ```js
-import { configure } from '@storybook/rax';
-
-function loadStories() {
-  require('../stories/index.js');
-  // You can require as many stories as you need.
-}
-
-configure(loadStories, module);
+module.exports = {
+  stories: ['../src/**/*.stories.[tj]s'],
+};
 ```
 
-That'll load stories in `../stories/index.js`. You can choose where to place stories, you can co-locate them with source files, or place them in an other directory.
-
-> Requiring all your stories becomes bothersome real quick, so you can use this to load all stories matching a glob.
->
-> <details>
->   <summary>details</summary>
->
-> ```js
-> import { configure } from '@storybook/rax';
->
-> function loadStories() {
->   const req = require.context('../stories', true, /\.stories\.js$/);
->   req.keys().forEach(filename => req(filename));
-> }
->
-> configure(loadStories, module);
-> ```
->
-> </details>
+That will load all the stories underneath your `../src` directory that match the pattern `*.stories.js`. We recommend co-locating your stories with your source files, but you can place them wherever you choose.
 
 ## Step 4: Write your stories
 
-Now create a `../stories/index.js` file, and write your first story like this:
+Now create a `../src/index.stories.js` file, and write your first story like this:
 
 ```js
 import { createElement } from 'rax';
-import { storiesOf } from '@storybook/rax';
-
 import Button from '<your button>';
 
-storiesOf('Button', module)
-  .add('with text', () => <Button>Hello Button</Button>)
-  .add('with emoji', () => <Button>😀 😎 👍 💯</Button>);
+export const { title: 'Button' }
+export const withText = () => <Button>Hello Button</Button>;
+export const withEmoji = () => <Button>😀 😎 👍 💯</Button>;
 ```
 
 Each story is a single state of your component. In the above case, there are two stories for the demo button component:
 
 ```plaintext
 Button
-  ├── with text
-  └── with emoji
+  ├── With Text
+  └── With Emoji
 ```
 
 ## Finally: Run your Storybook

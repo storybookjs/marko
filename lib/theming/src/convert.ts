@@ -4,8 +4,8 @@ import { background, typography, color } from './base';
 import { Theme, Color, ThemeVars } from './types';
 import { easing, animation } from './animation';
 import { create as createSyntax, chromeLight, chromeDark } from './modules/syntax';
-
-import lightThemeVars from './themes/light';
+import { getPreferredColorScheme } from './utils';
+import { themes } from './create';
 
 const lightSyntaxColors = {
   green1: '#008000',
@@ -49,15 +49,15 @@ const createColors = (vars: ThemeVars): Color => ({
   ultraviolet: color.ultraviolet,
 
   // Monochrome
-  lightest: color.lightest,
-  lighter: color.lighter,
-  light: color.light,
-  mediumlight: color.mediumlight,
+  lightest: vars.base === 'dark' ? color.darkest : color.lightest,
+  lighter: vars.base === 'dark' ? color.darker : color.lighter,
+  light: vars.base === 'dark' ? color.dark : color.light,
+  mediumlight: vars.base === 'dark' ? color.mediumdark : color.mediumlight,
   medium: color.medium,
-  mediumdark: color.mediumdark,
-  dark: color.dark,
-  darker: color.darker,
-  darkest: color.darkest,
+  mediumdark: vars.base === 'dark' ? color.mediumlight : color.mediumdark,
+  dark: vars.base === 'dark' ? color.light : color.dark,
+  darker: vars.base === 'dark' ? color.lighter : color.darker,
+  darkest: vars.base === 'dark' ? color.lightest : color.darkest,
 
   // For borders
   border: color.border,
@@ -72,7 +72,7 @@ const createColors = (vars: ThemeVars): Color => ({
   inverseText: vars.textInverseColor || color.lightest,
 });
 
-export const convert = (inherit: ThemeVars = lightThemeVars): Theme => {
+export const convert = (inherit: ThemeVars = themes[getPreferredColorScheme()]): Theme => {
   const {
     base,
     colorPrimary,

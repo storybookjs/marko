@@ -1,6 +1,6 @@
 {
   "name": "@storybook/node-logger",
-  "version": "5.2.0-beta.40",
+  "version": "6.0.0-alpha.22",
   "description": "",
   "keywords": [
     "storybook"
@@ -17,21 +17,35 @@
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "*.js",
+    "*.d.ts",
+    "ts3.5/**/*"
+  ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "chalk": "^2.4.2",
+    "@types/npmlog": "^4.1.2",
+    "chalk": "^3.0.0",
     "core-js": "^3.0.1",
     "npmlog": "^4.1.2",
-    "pretty-hrtime": "^1.0.3",
-    "regenerator-runtime": "^0.12.1"
+    "pretty-hrtime": "^1.0.3"
   },
   "devDependencies": {
-    "@types/npmlog": "^4.1.1",
     "@types/pretty-hrtime": "^1.0.0"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
+  "typesVersions": {
+    "<=3.5": {
+      "*": [
+        "ts3.5/*"
+      ]
+    }
   }
 }

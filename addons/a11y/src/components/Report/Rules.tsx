@@ -1,60 +1,40 @@
 import React, { FunctionComponent } from 'react';
 import { styled } from '@storybook/theming';
-import { Badge, Icons } from '@storybook/components';
+import { Badge } from '@storybook/components';
 import { CheckResult } from 'axe-core';
 import { SizeMe } from 'react-sizeme';
-import { RuleType } from '../A11YPanel';
-
-const impactColors = {
-  minor: '#f1c40f',
-  moderate: '#e67e22',
-  serious: '#e74c3c',
-  critical: '#c0392b',
-  success: '#2ecc71',
-};
 
 const List = styled.div({
   display: 'flex',
   flexDirection: 'column',
-  paddingBottom: '4px',
-  paddingRight: '4px',
-  paddingTop: '4px',
+  paddingBottom: 4,
+  paddingRight: 4,
+  paddingTop: 4,
   fontWeight: '400',
 } as any);
 
-const Item = styled.div(({ elementWidth }: { elementWidth: number }) => {
+const Item = styled.div<{ elementWidth: number }>(({ elementWidth }) => {
   const maxWidthBeforeBreak = 407;
   return {
     flexDirection: elementWidth > maxWidthBeforeBreak ? 'row' : 'inherit',
-    marginBottom: elementWidth > maxWidthBeforeBreak ? '6px' : '12px',
+    marginBottom: elementWidth > maxWidthBeforeBreak ? 6 : 12,
     display: elementWidth > maxWidthBeforeBreak ? 'flex' : 'block',
   };
 });
 
-const StyledBadge = styled(Badge)(({ status }: { status: string }) => ({
+const StyledBadge = styled(Badge)({
   padding: '2px 8px',
-  marginBottom: '3px',
-  minWidth: '65px',
+  marginBottom: 3,
+  minWidth: 65,
   maxWidth: 'fit-content',
   width: '100%',
   textAlign: 'center',
-}));
-
-const Message = styled.div({
-  paddingLeft: '6px',
-  paddingRight: '23px',
 });
 
-const Status = styled.div(({ passes, impact }: { passes: boolean; impact: string }) => ({
-  display: 'inline-flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  color: passes ? impactColors.success : (impactColors as any)[impact],
-  '& > svg': {
-    height: '16px',
-    width: '16px',
-  },
-}));
+const Message = styled.div({
+  paddingLeft: 6,
+  paddingRight: 23,
+});
 
 export enum ImpactValue {
   MINOR = 'minor',
@@ -94,7 +74,7 @@ const Rule: FunctionComponent<RuleProps> = ({ rule }) => {
   }
   return (
     <SizeMe refreshMode="debounce">
-      {({ size }: { size: any }) => (
+      {({ size }: { size: { width: number; height: number } }) => (
         <Item elementWidth={size.width}>
           <StyledBadge status={badgeType}>{formatSeverityText(rule.impact)}</StyledBadge>
           <Message>{rule.message}</Message>

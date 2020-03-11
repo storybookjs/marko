@@ -1,7 +1,13 @@
-import { window } from 'global';
+import window from 'global';
 import { logger } from '@storybook/client-logger';
-import { FORCE_RE_RENDER, STORY_RENDERED } from '@storybook/core-events';
-import addons, { StoryGetter, StoryContext } from './public_api';
+import {
+  FORCE_RE_RENDER,
+  STORY_RENDERED,
+  DOCS_RENDERED,
+  UPDATE_STORY_ARGS,
+} from '@storybook/core-events';
+import { addons } from './index';
+import { StoryGetter, StoryContext, Args } from './types';
 
 interface StoryStore {
   fromId: (
@@ -31,6 +37,8 @@ interface Effect {
 type Decorator = (getStory: StoryGetter, context: StoryContext) => any;
 type AbstractFunction = (...args: any[]) => any;
 
+const RenderEvents = [STORY_RENDERED, DOCS_RENDERED];
+
 export class HooksContext {
   hookListsMap: WeakMap<AbstractFunction, Hook[]>;
 
@@ -53,6 +61,12 @@ export class HooksContext {
   hasUpdates: boolean;
 
   currentContext: StoryContext | null;
+
+  renderListener = () => {
+    this.triggerEffects();
+    this.currentContext = null;
+    this.removeRenderListeners();
+  };
 
   constructor() {
     this.init();
@@ -79,6 +93,7 @@ export class HooksContext {
       }
     });
     this.init();
+    this.removeRenderListeners();
   }
 
   getNextHook() {
@@ -104,6 +119,17 @@ export class HooksContext {
     this.prevEffects = this.currentEffects;
     this.currentEffects = [];
   }
+
+  addRenderListeners() {
+    this.removeRenderListeners();
+    const channel = addons.getChannel();
+    RenderEvents.forEach(e => channel.on(e, this.renderListener));
+  }
+
+  removeRenderListeners() {
+    const channel = addons.getChannel();
+    RenderEvents.forEach(e => channel.removeListener(e, this.renderListener));
+  }
 }
 
 const hookify = (fn: AbstractFunction) => (...args: any[]) => {
@@ -122,6 +148,7 @@ const hookify = (fn: AbstractFunction) => (...args: any[]) => {
     hooks.currentPhase = 'MOUNT';
     hooks.currentHooks = [];
     hooks.hookListsMap.set(fn, hooks.currentHooks);
+    hooks.prevMountedDecorators.add(fn);
   }
   hooks.nextHookIndex = 0;
 
@@ -161,7 +188,6 @@ export const applyHooks = (
     while (hooks.hasUpdates) {
       hooks.hasUpdates = false;
       hooks.currentEffects = [];
-      hooks.prevMountedDecorators = hooks.mountedDecorators;
       result = decorated(context);
       numberOfRenders += 1;
       if (numberOfRenders > RENDER_LIMIT) {
@@ -170,10 +196,7 @@ export const applyHooks = (
         );
       }
     }
-    addons.getChannel().once(STORY_RENDERED, () => {
-      hooks.triggerEffects();
-      hooks.currentContext = null;
-    });
+    hooks.addRenderListeners();
     return result;
   };
 };
@@ -343,7 +366,9 @@ export function useReducer<S, A>(
 export function useEffect(create: () => (() => void) | void, deps?: any[]): void {
   const hooks = getHooksContextOrThrow();
   const effect = useMemoLike('useEffect', () => ({ create }), deps);
-  hooks.currentEffects.push(effect);
+  if (!hooks.currentEffects.includes(effect)) {
+    hooks.currentEffects.push(effect);
+  }
 }
 
 export interface Listener {
@@ -358,6 +383,7 @@ export interface EventMap {
 /* Accepts a map of Storybook channel event listeners, returns an emit function */
 export function useChannel(eventMap: EventMap, deps: any[] = []) {
   const channel = addons.getChannel();
+
   useEffect(() => {
     Object.entries(eventMap).forEach(([type, listener]) => channel.on(type, listener));
     return () => {
@@ -367,7 +393,7 @@ export function useChannel(eventMap: EventMap, deps: any[] = []) {
     };
   }, [...Object.keys(eventMap), ...deps]);
 
-  return channel.emit.bind(channel);
+  return useCallback(channel.emit.bind(channel), [channel]);
 }
 
 /* Returns current story context */
@@ -387,4 +413,17 @@ export function useParameter<S>(parameterKey: string, defaultValue?: S): S | und
     return parameters[parameterKey] || (defaultValue as S);
   }
   return undefined;
+}
+
+/* Returns current value of story args */
+export function useArgs(): [Args, (newArgs: Args) => void] {
+  const channel = addons.getChannel();
+  const { id: storyId, args } = useStoryContext();
+
+  const updateArgs = useCallback(
+    (newArgs: Args) => channel.emit(UPDATE_STORY_ARGS, storyId, newArgs),
+    [channel, storyId]
+  );
+
+  return [args, updateArgs];
 }

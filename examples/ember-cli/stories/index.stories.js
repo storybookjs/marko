@@ -1,4 +1,4 @@
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 
 export default {
   title: 'Welcome',
@@ -8,7 +8,7 @@ export default {
   },
 };
 
-export const basic = () => ({
+export const Basic = () => ({
   template: hbs`
         {{welcome-page}}
       `,

@@ -8,10 +8,18 @@ import { themes, ThemeVars } from '@storybook/theming';
 import merge from '../lib/merge';
 import { State } from '../index';
 import Store from '../store';
+import { Provider } from '../init-provider-api';
 
 export type PanelPositions = 'bottom' | 'right';
+export type ActiveTabsType = 'sidebar' | 'canvas' | 'addons';
+export const ActiveTabs = {
+  SIDEBAR: 'sidebar' as 'sidebar',
+  CANVAS: 'canvas' as 'canvas',
+  ADDONS: 'addons' as 'addons',
+};
 
 export interface Layout {
+  initialActive: ActiveTabsType;
   isFullscreen: boolean;
   showPanel: boolean;
   panelPosition: PanelPositions;
@@ -46,9 +54,8 @@ export interface SubAPI {
 type PartialSubState = Partial<SubState>;
 type PartialThemeVars = Partial<ThemeVars>;
 type PartialLayout = Partial<Layout>;
-type PartialUI = Partial<UI>;
 
-interface Options extends ThemeVars {
+export interface UIOptions {
   name?: string;
   url?: string;
   goFullScreen: boolean;
@@ -83,21 +90,24 @@ const deprecatedLayoutOptions: {
   addonPanelInRight: 'panelPosition',
 };
 
-const deprecationMessage = (optionsMap: OptionsMap, prefix: string = '') =>
+const deprecationMessage = (optionsMap: OptionsMap, prefix = '') =>
   `The options { ${Object.keys(optionsMap).join(', ')} } are deprecated -- use ${
     prefix ? `${prefix}'s` : ''
   } { ${Object.values(optionsMap).join(', ')} } instead.`;
 
-const applyDeprecatedThemeOptions = deprecate(({ name, url, theme }: Options): PartialThemeVars => {
-  const { brandTitle, brandUrl, brandImage }: PartialThemeVars = theme || {};
-  return {
-    brandTitle: brandTitle || name,
-    brandUrl: brandUrl || url,
-    brandImage: brandImage || null,
-  };
-}, deprecationMessage(deprecatedThemeOptions));
+const applyDeprecatedThemeOptions = deprecate(
+  ({ name, url, theme }: UIOptions): PartialThemeVars => {
+    const { brandTitle, brandUrl, brandImage }: PartialThemeVars = theme || {};
+    return {
+      brandTitle: brandTitle || name,
+      brandUrl: brandUrl || url,
+      brandImage: brandImage || null,
+    };
+  },
+  deprecationMessage(deprecatedThemeOptions)
+);
 
-const applyDeprecatedLayoutOptions = deprecate((options: Options): PartialLayout => {
+const applyDeprecatedLayoutOptions = deprecate((options: Partial<UIOptions>): PartialLayout => {
   const layoutUpdate: PartialLayout = {};
 
   ['goFullScreen', 'showStoriesPanel', 'showAddonPanel'].forEach(
@@ -115,14 +125,14 @@ const applyDeprecatedLayoutOptions = deprecate((options: Options): PartialLayout
   return layoutUpdate;
 }, deprecationMessage(deprecatedLayoutOptions));
 
-const checkDeprecatedThemeOptions = (options: Options) => {
+const checkDeprecatedThemeOptions = (options: UIOptions) => {
   if (Object.keys(deprecatedThemeOptions).find(v => v in options)) {
     return applyDeprecatedThemeOptions(options);
   }
   return {};
 };
 
-const checkDeprecatedLayoutOptions = (options: Options) => {
+const checkDeprecatedLayoutOptions = (options: Partial<UIOptions>) => {
   if (Object.keys(deprecatedLayoutOptions).find(v => v in options)) {
     return applyDeprecatedLayoutOptions(options);
   }
@@ -136,6 +146,7 @@ const initial: SubState = {
     docsMode: false,
   },
   layout: {
+    initialActive: ActiveTabs.SIDEBAR,
     isToolshown: true,
     isFullscreen: false,
     showPanel: true,
@@ -153,89 +164,110 @@ export const focusableUIElements = {
 };
 
 let hasSetOptions = false;
-export default function({ store }: { store: Store }) {
+export default function({ store, provider }: { store: Store; provider: Provider }) {
   const api = {
     toggleFullscreen(toggled?: boolean) {
-      return store.setState((state: State) => {
-        const value = typeof toggled === 'boolean' ? toggled : !state.layout.isFullscreen;
+      return store.setState(
+        (state: State) => {
+          const value = typeof toggled === 'boolean' ? toggled : !state.layout.isFullscreen;
 
-        return {
-          layout: {
-            ...state.layout,
-            isFullscreen: value,
-          },
-        };
-      });
+          return {
+            layout: {
+              ...state.layout,
+              isFullscreen: value,
+            },
+          };
+        },
+        { persistence: 'session' }
+      );
     },
 
     togglePanel(toggled?: boolean) {
-      return store.setState((state: State) => {
-        const value = typeof toggled !== 'undefined' ? toggled : !state.layout.showPanel;
+      return store.setState(
+        (state: State) => {
+          const value = typeof toggled !== 'undefined' ? toggled : !state.layout.showPanel;
 
-        return {
-          layout: {
-            ...state.layout,
-            showPanel: value,
-          },
-        };
-      });
+          return {
+            layout: {
+              ...state.layout,
+              showPanel: value,
+            },
+          };
+        },
+        { persistence: 'session' }
+      );
     },
 
     togglePanelPosition(position?: 'bottom' | 'right') {
       if (typeof position !== 'undefined') {
-        return store.setState((state: State) => ({
-          layout: {
-            ...state.layout,
-            panelPosition: position,
-          },
-        }));
+        return store.setState(
+          (state: State) => ({
+            layout: {
+              ...state.layout,
+              panelPosition: position,
+            },
+          }),
+          { persistence: 'session' }
+        );
       }
 
-      return store.setState((state: State) => ({
-        layout: {
-          ...state.layout,
-          panelPosition: state.layout.panelPosition === 'right' ? 'bottom' : 'right',
-        },
-      }));
+      return store.setState(
+        (state: State) => ({
+          layout: {
+            ...state.layout,
+            panelPosition: state.layout.panelPosition === 'right' ? 'bottom' : 'right',
+          },
+        }),
+        { persistence: 'session' }
+      );
     },
 
     toggleNav(toggled?: boolean) {
-      return store.setState((state: State) => {
-        const value = typeof toggled !== 'undefined' ? toggled : !state.layout.showNav;
+      return store.setState(
+        (state: State) => {
+          const value = typeof toggled !== 'undefined' ? toggled : !state.layout.showNav;
 
-        return {
-          layout: {
-            ...state.layout,
-            showNav: value,
-          },
-        };
-      });
+          return {
+            layout: {
+              ...state.layout,
+              showNav: value,
+            },
+          };
+        },
+        { persistence: 'session' }
+      );
     },
 
     toggleToolbar(toggled?: boolean) {
-      return store.setState((state: State) => {
-        const value = typeof toggled !== 'undefined' ? toggled : !state.layout.isToolshown;
+      return store.setState(
+        (state: State) => {
+          const value = typeof toggled !== 'undefined' ? toggled : !state.layout.isToolshown;
 
-        return {
-          layout: {
-            ...state.layout,
-            isToolshown: value,
-          },
-        };
-      });
+          return {
+            layout: {
+              ...state.layout,
+              isToolshown: value,
+            },
+          };
+        },
+        { persistence: 'session' }
+      );
     },
 
     resetLayout() {
-      return store.setState((state: State) => {
-        return {
-          layout: {
-            ...state.layout,
-            showNav: false,
-            showPanel: false,
-            isFullscreen: false,
-          },
-        };
-      });
+      return store.setState(
+        (state: State) => {
+          return {
+            layout: {
+              ...state.layout,
+              showNav: false,
+              showPanel: false,
+              isFullscreen: false,
+            },
+          };
+        },
+        { persistence: 'session' }
+      );
     },
 
     focusOnUIElement(elementId?: string) {
@@ -248,6 +280,25 @@ export default function({ store }: { store: Store }) {
       }
     },
 
+    getInitialOptions() {
+      const { theme, selectedPanel, ...options } = provider.getConfig();
+
+      return {
+        ...initial,
+        layout: {
+          ...initial.layout,
+          ...pick(options, Object.keys(initial.layout)),
+          ...checkDeprecatedLayoutOptions(options),
+        },
+        ui: {
+          ...initial.ui,
+          ...pick(options, Object.keys(initial.ui)),
+        },
+        selectedPanel: selectedPanel || initial.selectedPanel,
+        theme: theme || initial.theme,
+      };
+    },
+
     setOptions: (options: any) => {
       // The very first time the user sets their options, we don't consider what is in the store.
       // At this point in time, what is in the store is what we *persisted*. We did that in order
@@ -255,7 +306,9 @@ export default function({ store }: { store: Store }) {
       // However, we don't want to have a memory about these things, otherwise we see bugs like the
       // user setting a name for their storybook, persisting it, then never being able to unset it
       // without clearing localstorage. See https://github.com/storybookjs/storybook/issues/5857
-      const { layout, ui, selectedPanel, theme } = hasSetOptions ? store.getState() : initial;
+      const { layout, ui, selectedPanel, theme } = hasSetOptions
+        ? store.getState()
+        : api.getInitialOptions();
 
       if (options) {
         const updatedLayout = {
@@ -301,5 +354,5 @@ export default function({ store }: { store: Store }) {
 
   const persisted = pick(store.getState(), 'layout', 'ui', 'selectedPanel', 'theme');
 
-  return { api, state: merge(initial, persisted) };
+  return { api, state: merge(api.getInitialOptions(), persisted) };
 }

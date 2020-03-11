@@ -1,28 +1,28 @@
 import { document } from 'global';
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
 import { styled, themes, convert } from '@storybook/theming';
 import memoize from 'memoizerific';
 
 import { NodeResult } from 'axe-core';
+import { Dispatch } from 'redux';
 import { RuleType } from '../A11YPanel';
 import { addElement } from '../../redux-config';
 import { IFRAME } from '../../constants';
 
-export class HighlightedElementData {
+export interface HighlightedElementData {
   originalOutline: string;
-
   isHighlighted: boolean;
 }
 
 interface ToggleProps {
   elementsToHighlight: NodeResult[];
   type: RuleType;
-  addElement?: (data: any) => void;
-  highlightedElementsMap?: Map<HTMLElement, HighlightedElementData>;
+  addElement: (data: any) => void;
+  highlightedElementsMap: Map<HTMLElement, HighlightedElementData>;
   isToggledOn?: boolean;
   toggleId?: string;
-  indeterminate?: boolean;
+  indeterminate: boolean;
 }
 
 enum CheckBoxStates {
@@ -48,7 +48,7 @@ function getElementBySelectorPath(elementPath: string): HTMLElement {
   if (iframe && iframe.contentDocument && elementPath) {
     return iframe.contentDocument.querySelector(elementPath);
   }
-  return null;
+  return (null as unknown) as HTMLElement;
 }
 
 function setElementOutlineStyle(targetElement: HTMLElement, outlineStyle: string): void {
@@ -64,7 +64,7 @@ function areAllRequiredElementsHighlighted(
     const targetElement = getElementBySelectorPath(item.target[0]);
     return (
       highlightedElementsMap.has(targetElement) &&
-      highlightedElementsMap.get(targetElement).isHighlighted
+      (highlightedElementsMap.get(targetElement) as HighlightedElementData).isHighlighted
     );
   }).length;
 
@@ -76,7 +76,7 @@ function areAllRequiredElementsHighlighted(
     : CheckBoxStates.INDETERMINATE;
 }
 
-function mapDispatchToProps(dispatch: any) {
+function mapDispatchToProps(dispatch: Dispatch) {
   return {
     addElement: (data: { element: HTMLElement; data: HighlightedElementData }) =>
       dispatch(addElement(data)),
@@ -100,7 +100,7 @@ class HighlightToggle extends Component<ToggleProps> {
     elementsToHighlight: [],
   };
 
-  private checkBoxRef = React.createRef<HTMLInputElement>();
+  private checkBoxRef = createRef<HTMLInputElement>();
 
   componentDidMount() {
     const { elementsToHighlight, highlightedElementsMap } = this.props;
@@ -112,7 +112,7 @@ class HighlightToggle extends Component<ToggleProps> {
     });
   }
 
-  componentDidUpdate(prevProps: Readonly<ToggleProps>): void {
+  componentDidUpdate(): void {
     const { indeterminate } = this.props;
     if (this.checkBoxRef.current) {
       this.checkBoxRef.current.indeterminate = indeterminate;
@@ -126,8 +126,9 @@ class HighlightToggle extends Component<ToggleProps> {
       if (!highlightedElementsMap.has(targetElement)) {
         return;
       }
-      const { originalOutline } = highlightedElementsMap.get(targetElement);
-      const { isHighlighted } = highlightedElementsMap.get(targetElement);
+      const { originalOutline, isHighlighted } = highlightedElementsMap.get(
+        targetElement
+      ) as HighlightedElementData;
       const { isToggledOn } = this.props;
       if ((isToggledOn && isHighlighted) || (!isToggledOn && !isHighlighted)) {
         const addHighlight = !isToggledOn && !isHighlighted;
@@ -151,7 +152,7 @@ class HighlightToggle extends Component<ToggleProps> {
     if (highlightedElementsMap.has(targetElement)) {
       setElementOutlineStyle(
         targetElement,
-        highlightedElementsMap.get(targetElement).originalOutline
+        highlightedElementsMap.get(targetElement)!.originalOutline
       );
     }
   }
@@ -162,9 +163,7 @@ class HighlightToggle extends Component<ToggleProps> {
     originalOutline: string
   ): void {
     const { addElement: localAddElement } = this.props;
-    const data: HighlightedElementData = new HighlightedElementData();
-    data.isHighlighted = isHighlighted;
-    data.originalOutline = originalOutline;
+    const data: HighlightedElementData = { isHighlighted, originalOutline };
     const payload = { element: targetElement, highlightedElementData: data };
     localAddElement(payload);
   }
@@ -185,7 +184,4 @@ class HighlightToggle extends Component<ToggleProps> {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HighlightToggle);
+export default connect(mapStateToProps, mapDispatchToProps)(HighlightToggle);

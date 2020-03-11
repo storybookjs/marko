@@ -1,5 +1,5 @@
 import { document } from 'global';
-import { stripIndents } from 'common-tags';
+import dedent from 'ts-dedent';
 
 import { logger } from '@storybook/client-logger';
 
@@ -9,8 +9,8 @@ let activeTemplate = null; // template for the currently loaded component.
 
 export default function renderMain({
   storyFn,
-  selectedKind,
-  selectedStory,
+  kind,
+  name,
   showMain,
   showError,
   parameters,
@@ -20,8 +20,8 @@ export default function renderMain({
 
   if (!config || !(config.appendTo || config.component || parameters.component)) {
     showError({
-      title: `Expecting an object with a component property to be returned from the story: "${selectedStory}" of "${selectedKind}".`,
-      description: stripIndents`
+      title: `Expecting an object with a component property to be returned from the story: "${name}" of "${kind}".`,
+      description: dedent`
         Did you forget to return the component from the story?
         Use "() => ({ component: MyComponent, input: { hello: 'world' } })" when defining the story.
       `,

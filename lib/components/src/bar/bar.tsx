@@ -65,6 +65,7 @@ const BarInner = styled.div<{ bgColor: string }>(({ bgColor }) => ({
   flexShrink: 0,
   height: 40,
   backgroundColor: bgColor || '',
+  overflowX: 'auto',
 }));
 
 export interface FlexBarProps {
@@ -80,14 +81,12 @@ export const FlexBar: FunctionComponent<FlexBarProps> = ({
 }) => {
   const [left, right] = Children.toArray(children);
   return (
-    <div>
-      <Bar {...rest}>
-        <BarInner bgColor={backgroundColor}>
-          <Side left>{left}</Side>
-          {right ? <Side right>{right}</Side> : null}
-        </BarInner>
-      </Bar>
-    </div>
+    <Bar {...rest}>
+      <BarInner bgColor={backgroundColor}>
+        <Side left>{left}</Side>
+        {right ? <Side right>{right}</Side> : null}
+      </BarInner>
+    </Bar>
   );
 };
 FlexBar.displayName = 'FlexBar';

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-centered",
-  "version": "5.2.0-beta.40",
+  "version": "6.0.0-alpha.22",
   "description": "Storybook decorator to center components",
   "keywords": [
     "addon",
@@ -19,27 +19,56 @@
   "author": "Muhammed Thanish <mnmtanish@gmail.com>",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "*.js",
+    "*.d.ts",
+    "ts3.5/**/*"
+  ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "5.2.0-beta.40",
+    "@storybook/addons": "6.0.0-alpha.22",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
+    "regenerator-runtime": "^0.13.3",
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
     "@types/mithril": "^1.1.16",
+    "@types/webpack-env": "^1.15.1",
     "mithril": "*",
     "preact": "*",
+    "rax": "*",
+    "rax-view": "*",
     "react": "*"
   },
   "peerDependencies": {
     "mithril": "*",
     "preact": "*",
-    "react": "*"
+    "rax": "*",
+    "rax-view": "*",
+    "react": "*",
+    "react-dom": "*"
   },
-  "publishConfig": {
-    "access": "public"
-  }
+  "peerDependenciesMeta": {
+    "mithril": {
+      "optional": true
+    },
+    "preact": {
+      "optional": true
+    },
+    "rax": {
+      "optional": true
+    },
+    "rax-view": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    }
+  },
+  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff"
 }
