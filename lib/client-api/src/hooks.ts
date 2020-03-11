@@ -14,6 +14,7 @@ import {
   useStoryContext,
   useParameter,
   useArgs,
+  useGlobalArgs,
 } from '@storybook/addons';
 
 export {
@@ -29,6 +30,7 @@ export {
   useStoryContext,
   useParameter,
   useArgs,
+  useGlobalArgs,
 };
 
 export function useSharedState<S>(sharedId: string, defaultState?: S): [S, (s: S) => void] {

@@ -22,6 +22,7 @@ import {
   StoreData,
   AddStoryArgs,
   StoreItem,
+  PublishedStoreItem,
   ErrorLike,
   GetStorybookKind,
   ParameterEnhancer,
@@ -75,6 +76,8 @@ export default class StoryStore {
 
   _configuring: boolean;
 
+  _globalArgs: Args;
+
   _globalMetadata: StoryMetadata;
 
   // Keyed on kind name
@@ -92,6 +95,8 @@ export default class StoryStore {
   constructor(params: { channel: Channel }) {
     // Assume we are configuring until we hear otherwise
     this._configuring = true;
+
+    this._globalArgs = {};
     this._globalMetadata = { parameters: {}, decorators: [] };
     this._kinds = {};
     this._stories = {};
@@ -115,6 +120,10 @@ export default class StoryStore {
     this._channel.on(Events.UPDATE_STORY_ARGS, (id: string, newArgs: Args) =>
       this.updateStoryArgs(id, newArgs)
     );
+
+    this._channel.on(Events.UPDATE_GLOBAL_ARGS, (newGlobalArgs: Args) =>
+      this.updateGlobalArgs(newGlobalArgs)
+    );
   }
 
   startConfiguring() {
@@ -125,6 +134,26 @@ export default class StoryStore {
     this._configuring = false;
     this.pushToManager();
     if (this._channel) this._channel.emit(Events.RENDER_CURRENT_STORY);
+
+    const storyIds = Object.keys(this._stories);
+    if (storyIds.length) {
+      const {
+        parameters: { globalArgs },
+      } = this.fromId(storyIds[0]);
+
+      // To deal with HMR, we consider the previous value of global args, and:
+      //   1. Remove any keys that are not in the new parameter
+      //   2. Preference any keys that were already set
+      //   3. Use any new keys from the new parameter
+      this._globalArgs = Object.entries(this._globalArgs || {}).reduce(
+        (acc, [key, previousValue]) => {
+          if (acc[key]) acc[key] = previousValue;
+
+          return acc;
+        },
+        globalArgs
+      );
+    }
   }
 
   addGlobalMetadata({ parameters, decorators }: StoryMetadata) {
@@ -221,7 +250,12 @@ export default class StoryStore {
     const parameters = this._parameterEnhancers.reduce(
       (accumlatedParameters, enhancer) => ({
         ...accumlatedParameters,
-        ...enhancer({ ...identification, parameters: accumlatedParameters, args: {} }),
+        ...enhancer({
+          ...identification,
+          parameters: accumlatedParameters,
+          args: {},
+          globalArgs: {},
+        }),
       }),
       parametersBeforeEnhancement
     );
@@ -247,6 +281,7 @@ export default class StoryStore {
         parameters,
         hooks,
         args: _stories[id].args,
+        globalArgs: this._globalArgs,
       });
 
     // Pull out parameters.args.$ || .argTypes.$.defaultValue into initialArgs
@@ -306,7 +341,20 @@ export default class StoryStore {
     }, {});
   }
 
-  fromId = (id: string): StoreItem | null => {
+  updateGlobalArgs(newGlobalArgs: Args) {
+    this._globalArgs = { ...this._globalArgs, ...newGlobalArgs };
+    this._channel.emit(Events.GLOBAL_ARGS_UPDATED, this._globalArgs);
+  }
+
+  updateStoryArgs(id: string, newArgs: Args) {
+    if (!this._stories[id]) throw new Error(`No story for id ${id}`);
+    const { args } = this._stories[id];
+    this._stories[id].args = { ...args, ...newArgs };
+
+    this._channel.emit(Events.STORY_ARGS_UPDATED, id, this._stories[id].args);
+  }
+
+  fromId = (id: string): PublishedStoreItem | null => {
     try {
       const data = this._stories[id as string];
 
@@ -314,7 +362,10 @@ export default class StoryStore {
         return null;
       }
 
-      return data;
+      return {
+        ...data,
+        globalArgs: this._globalArgs,
+      };
     } catch (e) {
       logger.warn('failed to get story:', this._stories);
       logger.error(e);
@@ -432,14 +483,6 @@ export default class StoryStore {
 
   cleanHooksForKind(kind: string) {
     this.getStoriesForKind(kind).map(story => this.cleanHooks(story.id));
-  }
-
-  updateStoryArgs(id: string, newArgs: Args) {
-    if (!this._stories[id]) throw new Error(`No story for id ${id}`);
-    const { args } = this._stories[id];
-    this._stories[id].args = { ...args, ...newArgs };
-
-    this._channel.emit(Events.STORY_ARGS_UPDATED, id, this._stories[id].args);
   }
 
   // This API is a reimplementation of Storybook's original getStorybook() API.

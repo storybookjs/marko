@@ -5,6 +5,7 @@ import {
   STORY_RENDERED,
   DOCS_RENDERED,
   UPDATE_STORY_ARGS,
+  UPDATE_GLOBAL_ARGS,
 } from '@storybook/core-events';
 import { addons } from './index';
 import { StoryGetter, StoryContext, Args } from './types';
@@ -426,4 +427,17 @@ export function useArgs(): [Args, (newArgs: Args) => void] {
   );
 
   return [args, updateArgs];
+}
+
+/* Returns current value of global args */
+export function useGlobalArgs(): [Args, (newGlobalArgs: Args) => void] {
+  const channel = addons.getChannel();
+  const { globalArgs } = useStoryContext();
+
+  const updateGlobalArgs = useCallback(
+    (newGlobalArgs: Args) => channel.emit(UPDATE_GLOBAL_ARGS, newGlobalArgs),
+    [channel]
+  );
+
+  return [globalArgs, updateGlobalArgs];
 }
