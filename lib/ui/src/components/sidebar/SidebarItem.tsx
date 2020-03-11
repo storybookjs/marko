@@ -82,8 +82,8 @@ export const Item = styled(({ className, children, id }) => (
   ({ depth }) => ({
     paddingLeft: depth * 15 + 9,
   }),
-  ({ theme, isSelected, loading }) =>
-    !loading &&
+  ({ theme, isSelected, isLoading }) =>
+    !isLoading &&
     (isSelected
       ? {
           cursor: 'default',
@@ -102,15 +102,15 @@ export const Item = styled(({ className, children, id }) => (
             background: theme.background.hoverable,
           },
         }),
-  ({ theme, loading }) =>
-    loading && {
+  ({ theme, isLoading }) =>
+    isLoading && {
       '&& > svg + span': { background: theme.appBorderColor },
       '&& > *': theme.animation.inlineGlow,
       '&& > span': { borderColor: 'transparent' },
     }
 );
 
-type SidebarItemProps = ComponentProps<typeof Item> & {
+export type SidebarItemProps = ComponentProps<typeof Item> & {
   isComponent?: boolean;
   isLeaf?: boolean;
   isExpanded?: boolean;
@@ -118,7 +118,7 @@ type SidebarItemProps = ComponentProps<typeof Item> & {
 };
 
 const SidebarItem = ({
-  name = 'loading story',
+  name = 'isLoading story',
   isComponent = false,
   isLeaf = false,
   isExpanded = false,

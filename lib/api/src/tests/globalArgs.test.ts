@@ -1,5 +1,5 @@
 import EventEmitter from 'event-emitter';
-import { CHANGE_GLOBAL_ARGS, GLOBAL_ARGS_CHANGED } from '@storybook/core-events';
+import { UPDATE_GLOBAL_ARGS, GLOBAL_ARGS_UPDATED } from '@storybook/core-events';
 
 import { Module, API } from '../index';
 import initGlobalArgs from '../modules/globalArgs';
@@ -28,7 +28,7 @@ describe('stories API', () => {
     });
   });
 
-  it('updates the state when the preview emits GLOBAL_ARGS_CHANGED', () => {
+  it('updates the state when the preview emits GLOBAL_ARGS_UPDATED', () => {
     const mod = createMockModule();
     const { state, init } = initGlobalArgs(mod);
     mod.store.setState(state);
@@ -36,24 +36,24 @@ describe('stories API', () => {
     const api = new EventEmitter() as API;
     init({ api });
 
-    api.emit(GLOBAL_ARGS_CHANGED, { a: 'b' });
+    api.emit(GLOBAL_ARGS_UPDATED, { a: 'b' });
     expect(mod.store.getState()).toEqual({ globalArgs: { a: 'b' } });
 
-    api.emit(GLOBAL_ARGS_CHANGED, { a: 'c' });
+    api.emit(GLOBAL_ARGS_UPDATED, { a: 'c' });
     expect(mod.store.getState()).toEqual({ globalArgs: { a: 'c' } });
 
     // SHOULD NOT merge global args
-    api.emit(GLOBAL_ARGS_CHANGED, { d: 'e' });
+    api.emit(GLOBAL_ARGS_UPDATED, { d: 'e' });
     expect(mod.store.getState()).toEqual({ globalArgs: { d: 'e' } });
   });
 
-  it('emits CHANGE_GLOBAL_ARGS when setGlobalArgs is called', () => {
+  it('emits UPDATE_GLOBAL_ARGS when updateGlobalArgs is called', () => {
     const { init, api } = initGlobalArgs({} as Module);
 
     const fullApi = ({ emit: jest.fn(), on: jest.fn() } as unknown) as API;
     init({ api: fullApi });
 
-    api.setGlobalArgs({ a: 'b' });
-    expect(fullApi.emit).toHaveBeenCalledWith(CHANGE_GLOBAL_ARGS, { a: 'b' });
+    api.updateGlobalArgs({ a: 'b' });
+    expect(fullApi.emit).toHaveBeenCalledWith(UPDATE_GLOBAL_ARGS, { a: 'b' });
   });
 });

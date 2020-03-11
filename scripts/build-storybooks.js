@@ -35,6 +35,19 @@ const exec = async (command, args = [], options = {}) =>
       });
   });
 
+const getDeployables = files => {
+  return files.filter(f => {
+    const packageJsonLocation = p(['examples', f, 'package.json']);
+    let stats = null;
+    try {
+      stats = statSync(packageJsonLocation);
+    } catch (e) {
+      // the folder had no package.json, we'll ignore
+    }
+    return stats && stats.isFile() && hasBuildScript(packageJsonLocation);
+  });
+};
+
 const hasBuildScript = l => {
   const text = readFileSync(l, 'utf8');
   const json = JSON.parse(text);
@@ -116,19 +129,7 @@ const createContent = deployables => {
   `;
 };
 
-const handleExamples = async files => {
-  const deployables = files.filter(f => {
-    const packageJsonLocation = p(['examples', f, 'package.json']);
-    let stats = null;
-    try {
-      stats = statSync(packageJsonLocation);
-    } catch (e) {
-      // the folder had no package.json, we'll ignore
-    }
-
-    return stats && stats.isFile() && hasBuildScript(packageJsonLocation);
-  });
-
+const handleExamples = async deployables => {
   await deployables.reduce(async (acc, d) => {
     await acc;
 
@@ -150,21 +151,9 @@ const handleExamples = async files => {
     await exec(`yarn`, [`build-storybook`, `--output-dir=${out}`, '--quiet'], { cwd });
 
     logger.log('-------');
-    logger.log('✅ done');
+    logger.log(`✅ ${d} built`);
     logger.log('-------');
   }, Promise.resolve());
-
-  logger.log('');
-  logger.log(`📑 creating index`);
-
-  const indexLocation = p(['built-storybooks', 'index.html']);
-  const indexContent = createContent(deployables);
-
-  await writeFile(indexLocation, indexContent);
-
-  logger.log('-------');
-  logger.log('✅ done');
-  logger.log('-------');
 };
 
 const run = async () => {
@@ -176,8 +165,29 @@ const run = async () => {
   const offset = step * a;
 
   const list = examples.slice().splice(offset, step);
+  const deployables = getDeployables(list);
 
-  await handleExamples(list);
+  if (deployables.length) {
+    logger.log(`will build: ${deployables.join(', ')}`);
+    await handleExamples(deployables);
+  }
+
+  if (
+    deployables.length &&
+    (process.env.CIRCLE_NODE_INDEX === undefined ||
+      process.env.CIRCLE_NODE_INDEX === '0' ||
+      process.env.CIRCLE_NODE_INDEX === 0)
+  ) {
+    const indexLocation = p(['built-storybooks', 'index.html']);
+    logger.log('');
+    logger.log(`📑 creating index at: ${indexLocation}`);
+    logger.log('');
+    await writeFile(indexLocation, createContent(deployables));
+
+    logger.log('-------');
+    logger.log('✅ done');
+    logger.log('-------');
+  }
 };
 
 run().catch(e => {

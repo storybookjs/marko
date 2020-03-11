@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`react component properties 10017-ts-union 1`] = `
+Object {
+  "rows": Array [
+    Object {
+      "defaultValue": null,
+      "description": "specify icon=\\"search\\" or icon={IconComponent}",
+      "name": "icon",
+      "required": true,
+      "type": Object {
+        "detail": undefined,
+        "summary": "union",
+      },
+    },
+  ],
+}
+`;

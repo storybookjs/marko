@@ -4,8 +4,8 @@ import {
   FORCE_RE_RENDER,
   STORY_RENDERED,
   DOCS_RENDERED,
-  CHANGE_STORY_ARGS,
-  CHANGE_GLOBAL_ARGS,
+  UPDATE_STORY_ARGS,
+  UPDATE_GLOBAL_ARGS,
 } from '@storybook/core-events';
 import { addons } from './index';
 import { StoryGetter, StoryContext, Args } from './types';
@@ -422,7 +422,7 @@ export function useArgs(): [Args, (newArgs: Args) => void] {
   const { id: storyId, args } = useStoryContext();
 
   const updateArgs = useCallback(
-    (newArgs: Args) => channel.emit(CHANGE_STORY_ARGS, storyId, newArgs),
+    (newArgs: Args) => channel.emit(UPDATE_STORY_ARGS, storyId, newArgs),
     [channel, storyId]
   );
 
@@ -435,7 +435,7 @@ export function useGlobalArgs(): [Args, (newGlobalArgs: Args) => void] {
   const { globalArgs } = useStoryContext();
 
   const updateGlobalArgs = useCallback(
-    (newGlobalArgs: Args) => channel.emit(CHANGE_GLOBAL_ARGS, newGlobalArgs),
+    (newGlobalArgs: Args) => channel.emit(UPDATE_GLOBAL_ARGS, newGlobalArgs),
     [channel]
   );
 

@@ -7,7 +7,7 @@ aliases:
       - image: circleci/node:10
 
 jobs:
-  build:
+  install:
     <<: *defaults
     steps:
       - checkout
@@ -21,9 +21,6 @@ jobs:
       - run:
           name: Check that yarn.lock is not corrupted
           command: yarn repo-dirty-check
-      - run:
-          name: Bootstrap
-          command: yarn bootstrap --core
       - save_cache:
           name: Cache core dependencies
           key: core-dependencies-v4-{{ checksum "yarn.lock" }}
@@ -35,6 +32,23 @@ jobs:
           root: .
           paths:
             - node_modules
+            - examples
+            - addons
+            - dev-kits
+            - app
+            - lib
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Bootstrap
+          command: yarn bootstrap --core
+      - persist_to_workspace:
+          root: .
+          paths:
             - examples
             - addons
             - dev-kits
@@ -111,7 +125,7 @@ jobs:
             yarn packtracker
   examples:
     <<: *defaults
-    parallelism: 4
+    parallelism: 10
     steps:
       - checkout
       - attach_workspace:
@@ -292,7 +306,10 @@ jobs:
 workflows:
   test:
     jobs:
-      - build
+      - install
+      - build:
+          requires:
+            - install
       - lint:
           requires:
             - build

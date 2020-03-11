@@ -117,12 +117,12 @@ export default class StoryStore {
       this.setSelection({ storyId, viewMode })
     );
 
-    this._channel.on(Events.CHANGE_STORY_ARGS, (id: string, newArgs: Args) =>
-      this.setStoryArgs(id, newArgs)
+    this._channel.on(Events.UPDATE_STORY_ARGS, (id: string, newArgs: Args) =>
+      this.updateStoryArgs(id, newArgs)
     );
 
-    this._channel.on(Events.CHANGE_GLOBAL_ARGS, (newGlobalArgs: Args) =>
-      this.setGlobalArgs(newGlobalArgs)
+    this._channel.on(Events.UPDATE_GLOBAL_ARGS, (newGlobalArgs: Args) =>
+      this.updateGlobalArgs(newGlobalArgs)
     );
   }
 
@@ -341,17 +341,17 @@ export default class StoryStore {
     }, {});
   }
 
-  setGlobalArgs(newGlobalArgs: Args) {
+  updateGlobalArgs(newGlobalArgs: Args) {
     this._globalArgs = { ...this._globalArgs, ...newGlobalArgs };
-    this._channel.emit(Events.GLOBAL_ARGS_CHANGED, this._globalArgs);
+    this._channel.emit(Events.GLOBAL_ARGS_UPDATED, this._globalArgs);
   }
 
-  setStoryArgs(id: string, newArgs: Args) {
+  updateStoryArgs(id: string, newArgs: Args) {
     if (!this._stories[id]) throw new Error(`No story for id ${id}`);
     const { args } = this._stories[id];
     this._stories[id].args = { ...args, ...newArgs };
 
-    this._channel.emit(Events.STORY_ARGS_CHANGED, id, this._stories[id].args);
+    this._channel.emit(Events.STORY_ARGS_UPDATED, id, this._stories[id].args);
   }
 
   fromId = (id: string): PublishedStoreItem | null => {

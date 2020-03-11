@@ -10,6 +10,7 @@ Storybook Docs automatically generates props tables for components in supported 
 - [Reporting a bug](#reporting-a-bug)
 - [Known limitations](#known-limitations)
   - [React](#react)
+    - [Fully support React.FC](#fully-support-reactfc)
   - [Vue](#vue)
   - [Angular](#angular)
   - [Web components](#web-components)
@@ -72,6 +73,24 @@ This package relies on a variety of sub-packages to extract property information
 ### React
 
 SB Docs for React uses `babel-plugin-react-docgen`/`react-docgen` for both JS PropTypes prop tables and, as of 6.0, TypeScript-driven props tables.
+
+#### Fully support React.FC
+
+The biggest known issue is https://github.com/reactjs/react-docgen/issues/387, which means that the following common pattern **DOESN'T WORK**:
+
+```tsx
+import React, { FC } from 'react';
+interface IProps { ... };
+const MyComponent: FC<IProps> = ({ ... }) => ...
+```
+
+The following workaround is needed:
+
+```tsx
+const MyComponent: FC<IProps> = ({ ... }: IProps) => ...
+```
+
+Please upvote https://github.com/reactjs/react-docgen/issues/387 if this is affecting your productivity, or better yet, submit a fix!
 
 ### Vue
 

@@ -10,7 +10,7 @@ Each story is loaded via the `.add()` API and contains the follow attributes, wh
 - `name` - the name of the specific story.
 - `id` - an unique, URL sanitized identifier for the story, created from the `kind` and `name`.
 - `parameters` - static data about the story, see below.
-- `args` - dynamic inputs to the story, see blow.
+- `args` - dynamic inputs to the story, see below.
 - `hooks` - listeners that will rerun when the story changes or is unmounted, see `@storybook/addons`.
 
 ## Parameters
@@ -99,8 +99,8 @@ Both `@storybook/client-api` (preview) and `@storybook/api` (manager) export a `
 import { useArgs } from '@storybook/client-api'; // or '@storybook/api'
 
 // `args` is the args of the currently rendered story
-// `setArgs` will update its args. You can pass a subset of the args; other args will not be changed.
-const [args, setArgs] = useArgs();
+// `updateArgs` will update its args. You can pass a subset of the args; other args will not be changed.
+const [args, updateArgs] = useArgs();
 ```
 
 ## Global Args
@@ -118,5 +118,5 @@ Similar to args, global args are syncronized to the manager and can be accessed 
 ```js
 import { useGlobalArgs } from '@storybook/client-api'; // or '@storybook/api'
 
-const [globalArgs, setGlobalArgs] = useGlobalArgs();
+const [globalArgs, updateGlobalArgs] = useGlobalArgs();
 ```
