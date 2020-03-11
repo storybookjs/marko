@@ -8,6 +8,7 @@ import { getQueryParams, getQueryParam } from './queryparams';
 
 export * from './hooks';
 export * from './types';
+export * from './parameters';
 
 export {
   ClientApi,
