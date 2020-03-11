@@ -1,6 +1,6 @@
 import { addParameters } from '@storybook/html';
 
-const SOURCE_REGEX = /^\(\) => `(.*)`$/;
+const SOURCE_REGEX = /^\(\) => [`'"](.*)['`"]$/;
 
 addParameters({
   a11y: {
