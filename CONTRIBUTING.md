@@ -135,11 +135,11 @@ First make sure the repo is bootstrapped.
 
 Then run `yarn build-storybooks`, this creates a static website from all examples.
 
-Then run `yarn serve-storybooks`, this will run the static sit of the port cypress expects.
+Then run `yarn serve-storybooks`, this will run the static site on the port cypress expects.
 
-Then run `yarn add cyress -W --optional`. When this has completed cypress should be installed on your system. If it is already on your system, this step can be skipped.
+Then run `yarn add cypress -W --optional`. When this has completed cypress should be installed on your system. If it is already on your system, this step can be skipped.
 
-Then run `yarn cypress open` if you ant to see the tests run in the UI, or `yarn cypress run` to run the tests headless.
+Then run `yarn cypress open` if you want to see the tests run in the UI, or `yarn cypress run` to run the tests headless.
 
 
 ### Reproductions
