@@ -42,7 +42,7 @@ export const enhanceSource: ParameterEnhancer = context => {
   const { formatSource, source } = docs;
 
   // no input or user has manually overridden the output
-  if (!storySource?.source || source?.code) {
+  if (!storySource?.source || docs.source?.code) {
     return null;
   }
 
