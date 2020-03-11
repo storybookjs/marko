@@ -2,6 +2,9 @@
 
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
   - [React prop tables with Typescript](#react-prop-tables-with-typescript)
+    - [React.FC interfaces](#reactfc-interfaces)
+    - [Imported types](#imported-types)
+    - [Rolling back](#rolling-back)
   - [New addon presets](#new-addon-presets)
   - [Client API changes](#client-api-changes)
     - [Removed Legacy Story APIs](#removed-legacy-story-apis)
@@ -100,6 +103,8 @@ As a consequence we've removed `RDTL` from the presets, which is a breaking chan
 
 We will be updating this section with migration information as we collect information from our users, and fixing issues as they come up throughout the 6.0 prerelease process. We are cataloging known issues [here](https://github.com/storybookjs/storybook/blob/next/addons/docs/docs/props-tables.md#known-limitations).
 
+#### React.FC interfaces
+
 The biggest known issue is https://github.com/reactjs/react-docgen/issues/387, which means that the following common pattern **DOESN'T WORK**:
 
 ```tsx
@@ -115,6 +120,22 @@ const MyComponent: FC<IProps> = ({ ... }: IProps) => ...
 ```
 
 Please upvote https://github.com/reactjs/react-docgen/issues/387 if this is affecting your productivity, or better yet, submit a fix!
+
+#### Imported types
+
+Another major issue is support for imported types.
+
+```tsx
+import React, { FC } from 'react';
+import SomeType from './someFile';
+
+type NewType = SomeType & { foo: string };
+const MyComponent: FC<NewType> = ...
+```
+
+This was also an issue in `RDTL` so it doesn't get worse with `react-docgen`. There's an open PR for this https://github.com/reactjs/react-docgen/pull/352 which you can upvote if it affects you.
+
+#### Rolling back
 
 In the meantime, if you're not ready to make the move you have two options:
 
@@ -135,10 +156,10 @@ module.exports = {
           loader: require.resolve('react-docgen-typescript-loader'),
           options: {}, // your options here
         },
-      ]
-    }
-  })
-}
+      ],
+    },
+  }),
+};
 ```
 
 ### New addon presets
