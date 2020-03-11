@@ -11,8 +11,6 @@ export interface SubAPI {
 
 const initGlobalArgsApi = ({ store, fullAPI }: Module) => {
   const updateGlobalArgs = (newGlobalArgs: Args) => {
-    if (!fullAPI) throw new Error('Cannot set global args until api has been initialized');
-
     fullAPI.emit(UPDATE_GLOBAL_ARGS, newGlobalArgs);
   };
 
