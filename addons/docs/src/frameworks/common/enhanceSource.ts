@@ -39,7 +39,7 @@ const extract = (targetId: string, { source, locationsMap }: StorySource) => {
 export const enhanceSource: ParameterEnhancer = context => {
   const { id, parameters } = context;
   const { storySource, docs = {} } = parameters;
-  const { formatSource, source } = docs;
+  const { formatSource } = docs;
 
   // no input or user has manually overridden the output
   if (!storySource?.source || docs.source?.code) {
