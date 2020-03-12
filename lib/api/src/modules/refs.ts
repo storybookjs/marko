@@ -146,20 +146,10 @@ export const init: ModuleFn = ({ store, provider }) => {
     },
   };
 
-  const refs = Object.entries(api.loadRefs());
+  const refs = api.loadRefs();
+  const initialState: SubState['refs'] = refs;
 
-  const initialState: SubState['refs'] = refs.reduce(
-    (acc, [key, data]) => ({
-      ...acc,
-      [key]: {
-        title: data.id,
-        ...data,
-      },
-    }),
-    {} as SubState['refs']
-  );
-
-  refs.forEach(([k, v]) => {
+  Object.entries(refs).forEach(([k, v]) => {
     api.checkRef(v as SetRefData);
   });
 
