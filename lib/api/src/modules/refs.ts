@@ -61,38 +61,20 @@ export const defaultMapper: Mapper = (b, a) => {
   return { ...a, kind: a.kind.replace('|', '/') };
 };
 
-const namespace = (input: StoriesHash, ref: InceptionRef): StoriesHash => {
-  const output = {} as StoriesHash;
-
-  Object.entries(input).forEach(([id, item]) => {
-    const mappedId = item.id;
-    const target = output[mappedId] || ({} as Story | Group | Root);
-
-    const addition: Partial<Story> = {
-      id: mappedId,
-      // this is used to know which iframe to emit the message to
-      refId: ref.id,
-    };
-
-    Object.assign(target, item, addition);
-
-    output[mappedId] = target;
-  });
-
-  return output;
+const addRefIds = (input: StoriesHash, ref: InceptionRef): StoriesHash => {
+  return Object.entries(input).reduce((acc, [id, item]) => {
+    return { ...acc, [id]: { ...item, refId: ref.id } };
+  }, {} as StoriesHash);
 };
 
 const map = (input: StoriesRaw, ref: InceptionRef, options: { mapper?: Mapper }): StoriesRaw => {
-  const output: StoriesRaw = {};
-  // map the incoming stories to a prefixed, non-conflicting version
-  Object.entries(input).forEach(([unmappedStoryId, unmappedStoryInput]) => {
-    const mapped = options.mapper ? options.mapper(ref, unmappedStoryInput) : unmappedStoryInput;
-
-    if (mapped) {
-      output[unmappedStoryId] = mapped;
-    }
-  });
-  return output;
+  const { mapper } = options;
+  if (mapper) {
+    return Object.entries(input).reduce((acc, [id, item]) => {
+      return { ...acc, [id]: mapper(ref, item) };
+    }, {} as StoriesRaw);
+  }
+  return input;
 };
 
 const initRefsApi = ({ store, provider }: Module) => {
@@ -141,7 +123,7 @@ const initRefsApi = ({ store, provider }: Module) => {
     setRef: (id, { stories, ...rest }, ready = false) => {
       const ref = api.getRefs()[id];
       const after = stories
-        ? namespace(
+        ? addRefIds(
             transformStoriesRawToStoriesHash(
               map(stories, ref, { mapper: defaultMapper }),
               {},
