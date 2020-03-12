@@ -21,7 +21,7 @@ import {
   isRoot,
 } from '../lib/stories';
 
-import { Module, Args } from '../index';
+import { Args, ModuleFn } from '../index';
 import { getSourceType } from './refs';
 
 type Direction = -1 | 1;
@@ -58,14 +58,14 @@ export interface SubAPI {
   findLeafStoryId(StoriesHash: StoriesHash, storyId: StoryId): StoryId;
 }
 
-export const init = ({
+export const init: ModuleFn = ({
   fullAPI,
   store,
   navigate,
   provider,
   storyId: initialStoryId,
   viewMode: initialViewMode,
-}: Module) => {
+}) => {
   const setInitialStory = () => {
     const { storyId, viewMode, storiesHash } = store.getState();
     const story = api.getData(storyId);

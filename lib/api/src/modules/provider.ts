@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { Channel } from '@storybook/channels';
 import { ThemeVars } from '@storybook/theming';
 
-import { API, State, Module } from '../index';
+import { API, State, ModuleFn } from '../index';
 import { Mapper, Refs } from './refs';
 import { UIOptions } from './layout';
 
@@ -32,12 +32,10 @@ export interface SubAPI {
   renderPreview?: Provider['renderPreview'];
 }
 
-export const init = ({ provider, fullAPI }: Module) => {
+export const init: ModuleFn = ({ provider, fullAPI }) => {
   provider.handleAPI(fullAPI);
 
-  return provider.renderPreview
-    ? {
-        renderPreview: provider.renderPreview,
-      }
-    : {};
+  return {
+    api: provider.renderPreview ? { renderPreview: provider.renderPreview } : {},
+  };
 };

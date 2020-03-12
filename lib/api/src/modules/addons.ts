@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 
 import { WindowLocation } from '@reach/router';
-import { Module } from '../index';
+import { ModuleFn } from '../index';
 import { Options } from '../store';
 
 export type ViewMode = 'story' | 'info' | 'settings' | 'page' | undefined | string;
@@ -85,7 +85,7 @@ export function ensurePanel(panels: Panels, selectedPanel?: string, currentPanel
   return currentPanel;
 }
 
-export const init = ({ provider, store, fullAPI }: Module) => {
+export const init: ModuleFn = ({ provider, store, fullAPI }) => {
   const api: SubAPI = {
     getElements: type => provider.getElements(type),
     getPanels: () => api.getElements(types.PANEL),

@@ -41,22 +41,23 @@ export { Options as StoreOptions, Listener as ChannelListener, ActiveTabs };
 
 const ManagerContext = createContext({ api: undefined, state: getInitialState({}) });
 
-export type Module = StoreData &
-  RouterData &
+export type ModuleArgs = RouterData &
   ProviderData & {
     mode?: 'production' | 'development';
     state: State;
     fullAPI: API;
+    store: Store;
   };
 
-export type State = Other &
-  layout.SubState &
+export type State = layout.SubState &
   stories.SubState &
   refs.SubState &
   notifications.SubState &
   version.SubState &
+  url.SubState &
+  shortcuts.SubState &
   RouterData &
-  shortcuts.SubState;
+  Other;
 
 export type API = addons.SubAPI &
   channel.SubAPI &
@@ -68,14 +69,9 @@ export type API = addons.SubAPI &
   shortcuts.SubAPI &
   version.SubAPI &
   url.SubAPI &
-  OtherAPI;
+  Other;
 
-interface OtherAPI {
-  [key: string]: any;
-}
 interface Other {
-  customQueryParams: url.QueryParams;
-
   [key: string]: any;
 }
 
@@ -88,30 +84,28 @@ interface ProviderData {
   provider: provider.Provider;
 }
 
-interface DocsModeData {
-  docsMode: boolean;
-}
-
-interface StoreData {
-  store: Store;
-}
-
-interface Children {
-  children: ReactNode | ((props: Combo) => ReactNode);
-}
-
 export interface Args {
   [key: string]: any;
 }
 
-type StatePartial = Partial<State>;
+export type ManagerProviderProps = RouterData &
+  ProviderData & {
+    docsMode: boolean;
+    children: ReactNode | ((props: Combo) => ReactNode);
+  };
 
-export type ManagerProviderProps = Children & RouterData & ProviderData & DocsModeData;
+export type ModuleFn = (m: ModuleArgs) => Module;
+
+interface Module {
+  init?: () => void;
+  api?: unknown;
+  state?: unknown;
+}
 
 class ManagerProvider extends Component<ManagerProviderProps, State> {
   api: API = {} as API;
 
-  modules: any[];
+  modules: Module[];
 
   static displayName = 'Manager';
 
@@ -129,7 +123,7 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
 
     const store = new Store({
       getState: () => this.state,
-      setState: (stateChange: StatePartial, callback) => this.setState(stateChange, callback),
+      setState: (stateChange: Partial<State>, callback) => this.setState(stateChange, callback),
     });
 
     const routeData = { location, path, viewMode, storyId, refId };

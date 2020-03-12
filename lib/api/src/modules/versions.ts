@@ -4,7 +4,7 @@ import memoize from 'memoizerific';
 
 import { version as currentVersion } from '../version';
 
-import { Module } from '../index';
+import { ModuleFn } from '../index';
 
 export interface Version {
   version: string;
@@ -46,7 +46,7 @@ export interface SubAPI {
   versionUpdateAvailable: () => boolean;
 }
 
-export const init = ({ store, mode, fullAPI }: Module) => {
+export const init: ModuleFn = ({ store, mode, fullAPI }) => {
   const { dismissedVersionNotification } = store.getState();
 
   const state = {

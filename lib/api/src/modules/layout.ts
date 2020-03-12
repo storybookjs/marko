@@ -6,9 +6,9 @@ import deepEqual from 'fast-deep-equal';
 
 import { themes, ThemeVars } from '@storybook/theming';
 import merge from '../lib/merge';
-import { State } from '../index';
+import { State, ModuleFn } from '../index';
 import Store from '../store';
-import { Provider } from '../init-provider-api';
+import { Provider } from './provider';
 
 export type PanelPositions = 'bottom' | 'right';
 export type ActiveTabsType = 'sidebar' | 'canvas' | 'addons';
@@ -164,7 +164,7 @@ export const focusableUIElements = {
 };
 
 let hasSetOptions = false;
-export const init = ({ store, provider }: { store: Store; provider: Provider }) => {
+export const init: ModuleFn = ({ store, provider }) => {
   const api = {
     toggleFullscreen(toggled?: boolean) {
       return store.setState(

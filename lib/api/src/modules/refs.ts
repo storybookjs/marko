@@ -7,7 +7,7 @@ import {
   StoriesHash,
 } from '../lib/stories';
 
-import { Module } from '../index';
+import { ModuleFn } from '../index';
 
 export interface SubState {
   refs: Refs;
@@ -73,7 +73,7 @@ const map = (input: StoriesRaw, ref: ComposedRef, options: { mapper?: Mapper }):
   return input;
 };
 
-export const init = ({ store, provider }: Module) => {
+export const init: ModuleFn = ({ store, provider }) => {
   const api: SubAPI = {
     findRef: source => {
       const refs = api.getRefs();
