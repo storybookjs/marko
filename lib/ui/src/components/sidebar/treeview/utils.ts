@@ -4,7 +4,7 @@ import { DOCS_MODE } from 'global';
 import { SyntheticEvent } from 'react';
 import { StoriesHash, isRoot, isStory } from '@storybook/api';
 
-const FUZZY_SEARCH_THRESHOLD = 0.4;
+const FUZZY_SEARCH_THRESHOLD = 0.35;
 
 export const prevent = (e: SyntheticEvent) => {
   e.preventDefault();
@@ -14,7 +14,6 @@ export const prevent = (e: SyntheticEvent) => {
 const toList = memoize(1)((dataset: Dataset) => Object.values(dataset));
 
 export type Item = StoriesHash[keyof StoriesHash];
-
 export type Dataset = Record<string, Item>;
 export type SelectedSet = Record<string, boolean>;
 export type ExpandedSet = Record<string, boolean>;
@@ -192,12 +191,20 @@ const fuse = memoize(5)(
     })
 );
 
-const exactMatch = memoize(1)(filter => (i: Item) =>
-  (isStory(i) && i.kind.includes(filter)) ||
-  (i.name && i.name.includes(filter)) ||
-  (i.parameters && i.parameters.fileName && i.parameters.fileName.includes(filter)) ||
-  (i.parameters && typeof i.parameters.notes === 'string' && i.parameters.notes.includes(filter))
-);
+const exactMatch = (filter: string) => {
+  const reg = new RegExp(filter, 'i');
+
+  return (i: Item) =>
+    i.isLeaf &&
+    ((isStory(i) && reg.test(i.kind)) ||
+      (i.name && reg.test(i.name)) ||
+      (i.parameters &&
+        typeof i.parameters.fileName === 'string' &&
+        reg.test(i.parameters.fileName.toString())) ||
+      (i.parameters &&
+        typeof i.parameters.notes === 'string' &&
+        reg.test(i.parameters.notes.toString())));
+};
 
 export const toId = (base: string, addition: string) =>
   base === '' ? `${addition}` : `${base}-${addition}`;
@@ -207,7 +214,8 @@ export const toFiltered = (dataset: Dataset, filter: string) => {
   if (filter.length && filter.length > 2) {
     found = fuse(dataset).search(filter);
   } else {
-    found = toList(dataset).filter(exactMatch(filter));
+    const matcher = exactMatch(filter);
+    found = toList(dataset).filter(matcher);
   }
 
   // get all parents for all results

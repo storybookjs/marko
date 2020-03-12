@@ -1,1 +1,1 @@
-{"version":"6.0.0-alpha.20","info":{"plain":"### Bug Fixes\n\n- Core: Fix `configFilename` containing backticks ([#9960](https://github.com/storybookjs/storybook/pull/9960))\n\n### Maintenance\n\n- Core: Add stories to demonstrate `layout` ([#9940](https://github.com/storybookjs/storybook/pull/9940))"}}
+{"version":"6.0.0-alpha.25","info":{"plain":"NOTE: `6.0.0-alpha.24` broken due to bad merge. Sorry!\n\n### Bug Fixes\n\n- Core: Fix initialization of global args ([#10106](https://github.com/storybookjs/storybook/pull/10106))"}}

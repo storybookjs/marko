@@ -14,7 +14,7 @@ const { menu } = standardHeaderData;
 const { stories, storyId } = withRootData;
 
 export const simpleData = { menu, stories, storyId };
-export const loadingData = { menu, stories: {} };
+export const isLoadingData = { menu, stories: {} };
 
 export const simple = () => <Sidebar menu={menu} stories={stories} storyId={storyId} />;
-export const loading = () => <Sidebar menu={menu} stories={{}} loading />;
+export const isLoading = () => <Sidebar menu={menu} stories={{}} isLoading />;

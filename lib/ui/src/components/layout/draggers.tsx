@@ -1,7 +1,9 @@
 import Draggable, { DraggableEvent, DraggableData } from 'react-draggable';
 import { styled } from '@storybook/theming';
 
-const Handle = styled.div<{ isDragging: boolean; axis: 'x' | 'y'; shadow: 'top' | 'left' }>(
+export type Axis = 'x' | 'y';
+
+const Handle = styled.div<{ isDragging: boolean; axis: Axis }>(
   ({ theme, isDragging }) => ({
     zIndex: 10,
     position: 'absolute',
@@ -35,8 +37,8 @@ const Handle = styled.div<{ isDragging: boolean; axis: 'x' | 'y'; shadow: 'top' 
           width: '100%',
           marginTop: 0,
         },
-  ({ shadow, isDragging }) => {
-    if (shadow === 'top') {
+  ({ axis, isDragging }) => {
+    if (axis === 'y') {
       const style = {
         backgroundImage: `radial-gradient(at center center,rgba(0,0,0,0.2) 0%,transparent 70%,transparent 100%)`,
         backgroundSize: '100% 50px',
@@ -51,7 +53,7 @@ const Handle = styled.div<{ isDragging: boolean; axis: 'x' | 'y'; shadow: 'top' 
             '&:hover': style,
           };
     }
-    if (shadow === 'left') {
+    if (axis === 'x') {
       const style = {
         backgroundImage: `radial-gradient(at center center,rgba(0,0,0,0.2) 0%,transparent 70%,transparent 100%)`,
         backgroundSize: '50px 100%',

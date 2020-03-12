@@ -16,7 +16,7 @@ const StyledIframe = styled.iframe({
   backgroundPosition: '-1px -1px, -1px -1px, -1px -1px, -1px -1px',
 });
 
-interface IFrameProps {
+export interface IFrameProps {
   id: string;
   title: string;
   src: string;

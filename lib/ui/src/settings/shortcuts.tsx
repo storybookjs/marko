@@ -53,7 +53,7 @@ export const Description = styled.div({
   alignSelf: 'center',
 });
 
-type ValidationStates = 'valid' | 'error' | 'warn';
+export type ValidationStates = 'valid' | 'error' | 'warn';
 
 export const TextInput = styled(Input)<{ valid: ValidationStates }>(
   ({ valid, theme }) =>
@@ -124,7 +124,7 @@ const shortcutLabels = {
   expandAll: 'Expand all items on sidebar',
 };
 
-type Feature = keyof typeof shortcutLabels;
+export type Feature = keyof typeof shortcutLabels;
 
 // Shortcuts that cannot be configured
 const fixedShortcuts = ['escape'];
@@ -141,13 +141,13 @@ const keyMap = {
   CLOSE: 'escape',
 };
 
-interface ShortcutsScreenState {
+export interface ShortcutsScreenState {
   activeFeature: Feature;
   successField: Feature;
   shortcutKeys: Record<Feature, any>;
 }
 
-interface ShortcutsScreenProps {
+export interface ShortcutsScreenProps {
   shortcutKeys: Record<Feature, any>;
   setShortcut: Function;
   restoreDefaultShortcut: Function;

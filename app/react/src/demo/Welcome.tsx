@@ -5,7 +5,6 @@ import React, {
   FunctionComponent,
   HTMLAttributes,
 } from 'react';
-import PropTypes from 'prop-types';
 
 type MainProps = Omit<DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>, 'style'>;
 const Main: FunctionComponent<MainProps> = props => (
@@ -25,12 +24,6 @@ type TitleProps = DetailedHTMLProps<HTMLAttributes<HTMLHeadingElement>, HTMLHead
 const Title: FunctionComponent<TitleProps> = ({ children, ...props }) => (
   <h1 {...props}>{children}</h1>
 );
-Title.propTypes = {
-  children: PropTypes.node,
-};
-Title.defaultProps = {
-  children: undefined,
-};
 
 type NoteProps = Omit<
   DetailedHTMLProps<HTMLAttributes<HTMLParagraphElement>, HTMLParagraphElement>,
@@ -85,14 +78,6 @@ const Link: FunctionComponent<LinkProps> = ({ children, href, target, rel, ...pr
     {children}
   </a>
 );
-Link.propTypes = {
-  href: PropTypes.string,
-  children: PropTypes.node,
-};
-Link.defaultProps = {
-  href: undefined,
-  children: undefined,
-};
 
 type NavButtonProps = Omit<
   DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
@@ -120,12 +105,6 @@ const NavButton: FunctionComponent<NavButtonProps> = ({ children, onClick, ...pr
     {children}
   </button>
 );
-NavButton.propTypes = {
-  children: PropTypes.node,
-};
-NavButton.defaultProps = {
-  children: undefined,
-};
 
 type WelcomeProps = {
   showApp: () => void;
@@ -176,8 +155,5 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ showApp }) => (
   </Main>
 );
 Welcome.displayName = 'Welcome';
-Welcome.defaultProps = {
-  showApp: null,
-};
 
 export { Welcome as default };

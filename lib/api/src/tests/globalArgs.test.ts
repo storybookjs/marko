@@ -1,5 +1,5 @@
 import EventEmitter from 'event-emitter';
-import { CHANGE_GLOBAL_ARGS, GLOBAL_ARGS_CHANGED } from '@storybook/core-events';
+import { UPDATE_GLOBAL_ARGS, GLOBAL_ARGS_UPDATED } from '@storybook/core-events';
 
 import { Module, API } from '../index';
 import initGlobalArgs from '../modules/globalArgs';
@@ -11,49 +11,51 @@ function createMockStore() {
     setState: jest.fn().mockImplementation(s => {
       state = { ...state, ...s };
     }),
-  };
+  }; // as unknown) as Module['store'];
 }
 
-function createMockModule() {
-  // This mock module doesn't have all the fields but we don't use them all in this sub-module
-  return ({ store: createMockStore() } as unknown) as Module;
-}
+// function createMockModule() {
+//   // This mock module doesn't have all the fields but we don't use them all in this sub-module
+//   return ({  as unknown) as Module;
+// }
 
 describe('stories API', () => {
   it('sets a sensible initialState', () => {
-    const { state } = initGlobalArgs(createMockModule());
+    const store = createMockStore();
+    const { state } = initGlobalArgs(({ store } as unknown) as Module);
 
     expect(state).toEqual({
       globalArgs: {},
     });
   });
 
-  it('updates the state when the preview emits GLOBAL_ARGS_CHANGED', () => {
-    const mod = createMockModule();
-    const { state, init } = initGlobalArgs(mod);
-    mod.store.setState(state);
+  it('updates the state when the preview emits GLOBAL_ARGS_UPDATED', () => {
+    const api = EventEmitter();
+    const store = createMockStore();
+    const { state, init } = initGlobalArgs(({ store, fullAPI: api } as unknown) as Module);
+    store.setState(state);
 
-    const api = new EventEmitter() as API;
-    init({ api });
+    init();
 
-    api.emit(GLOBAL_ARGS_CHANGED, { a: 'b' });
-    expect(mod.store.getState()).toEqual({ globalArgs: { a: 'b' } });
+    api.emit(GLOBAL_ARGS_UPDATED, { a: 'b' });
+    expect(store.getState()).toEqual({ globalArgs: { a: 'b' } });
 
-    api.emit(GLOBAL_ARGS_CHANGED, { a: 'c' });
-    expect(mod.store.getState()).toEqual({ globalArgs: { a: 'c' } });
+    api.emit(GLOBAL_ARGS_UPDATED, { a: 'c' });
+    expect(store.getState()).toEqual({ globalArgs: { a: 'c' } });
 
     // SHOULD NOT merge global args
-    api.emit(GLOBAL_ARGS_CHANGED, { d: 'e' });
-    expect(mod.store.getState()).toEqual({ globalArgs: { d: 'e' } });
+    api.emit(GLOBAL_ARGS_UPDATED, { d: 'e' });
+    expect(store.getState()).toEqual({ globalArgs: { d: 'e' } });
   });
 
-  it('emits CHANGE_GLOBAL_ARGS when setGlobalArgs is called', () => {
-    const { init, api } = initGlobalArgs({} as Module);
+  it('emits UPDATE_GLOBAL_ARGS when updateGlobalArgs is called', () => {
+    const fullAPI = ({ emit: jest.fn(), on: jest.fn() } as unknown) as API;
+    const store = createMockStore();
+    const { init, api } = initGlobalArgs(({ store, fullAPI } as unknown) as Module);
 
-    const fullApi = ({ emit: jest.fn(), on: jest.fn() } as unknown) as API;
-    init({ api: fullApi });
+    init();
 
-    api.setGlobalArgs({ a: 'b' });
-    expect(fullApi.emit).toHaveBeenCalledWith(CHANGE_GLOBAL_ARGS, { a: 'b' });
+    api.updateGlobalArgs({ a: 'b' });
+    expect(fullAPI.emit).toHaveBeenCalledWith(UPDATE_GLOBAL_ARGS, { a: 'b' });
   });
 });

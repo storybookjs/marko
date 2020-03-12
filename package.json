@@ -107,6 +107,9 @@
     ]
   },
   "browserslist": "defaults",
+  "resolutions": {
+    "serialize-javascript": "2.1.2"
+  },
   "devDependencies": {
     "@angular/common": "^8.2.8",
     "@angular/compiler": "^8.2.8",
@@ -168,7 +171,9 @@
     "eslint": "^6.5.1",
     "eslint-plugin-cypress": "^2.10.1",
     "eslint-plugin-react": "^7.15.1",
+    "eslint-teamcity": "^2.2.0",
     "esm": "^3.2.25",
+    "fs-extra": "^8.1.0",
     "github-release-from-changelog": "^2.1.0",
     "glob": "^7.1.3",
     "http-server": "^0.12.1",
@@ -187,11 +192,14 @@
     "jest-matcher-utils": "^25.1.0",
     "jest-preset-angular": "^6.0.1",
     "jest-raw-loader": "^1.0.1",
+    "jest-serializer-html": "^7.0.0",
+    "jest-teamcity": "^1.7.0",
     "jest-vue-preprocessor": "^1.5.0",
     "jest-watch-typeahead": "^0.4.0",
     "lerna": "^3.19.0",
     "lint-staged": "^10.0.6",
     "lodash": "^4.17.15",
+    "mocha-list-tests": "^1.0.2",
     "node-cleanup": "^2.1.2",
     "node-fetch": "^2.6.0",
     "node-sass": "^4.12.0",
@@ -213,9 +221,11 @@
     "storybook-chromatic": "^3.5.0",
     "svelte": "^3.18.1",
     "svelte-jest": "^0.3.0",
+    "teamcity-service-messages": "^0.1.10",
     "trash": "^6.1.1",
     "ts-dedent": "^1.1.1",
     "ts-jest": "^24.0.2",
+    "ts-node": "^8.6.2",
     "typescript": "^3.4.0",
     "wait-on": "^4.0.0"
   },
@@ -230,6 +240,9 @@
   "collective": {
     "type": "opencollective",
     "url": "https://opencollective.com/storybook"
+  },
+  "eslint-teamcity": {
+    "reporter": "inspections"
   },
   "pr-log": {
     "skipLabels": [
