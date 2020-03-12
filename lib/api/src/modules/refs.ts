@@ -23,6 +23,7 @@ export interface SubAPI {
   findRef: (source: string) => ComposedRef;
   setRef: (id: string, data: SetRefData, ready?: boolean) => void;
   getRefs: () => Refs;
+  loadRefs: () => Refs;
   checkRef: (ref: SetRefData) => Promise<void>;
   changeRefVersion: (id: string, url: string) => void;
 }
@@ -110,10 +111,15 @@ export const init: ModuleFn = ({ store, provider }) => {
     },
 
     getRefs: () => {
-      const { refs: fromConfig = {} } = provider.getConfig();
-      const { refs: fromState = {} } = store.getState();
+      const { refs = {} } = store.getState();
 
-      return { ...fromConfig, ...fromState };
+      return refs;
+    },
+
+    loadRefs: () => {
+      const { refs = {} } = provider.getConfig();
+
+      return refs;
     },
 
     setRef: (id, { stories, ...rest }, ready = false) => {
@@ -140,7 +146,7 @@ export const init: ModuleFn = ({ store, provider }) => {
     },
   };
 
-  const refs = Object.entries(api.getRefs());
+  const refs = Object.entries(api.loadRefs());
 
   const initialState: SubState['refs'] = refs.reduce(
     (acc, [key, data]) => ({
