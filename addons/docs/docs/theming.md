@@ -29,11 +29,9 @@ Here's how you'd specify the same theme for docs in `.storybook/preview.js`:
 import { themes } from '@storybook/theming';
 
 // or global addParameters
-export default {
-  parameters: {
-    docs: {
-      theme: themes.dark,
-    },
+export const parameters = {
+  docs: {
+    theme: themes.dark,
   },
 };
 ```
