@@ -86,7 +86,7 @@ describe('preview.story_store', () => {
   });
 
   describe('args', () => {
-    it('args is initialized to the value stored in parameters.args[name] || parameters.argType[name].defaultValue', () => {
+    it('is initialized to the value stored in parameters.args[name] || parameters.argType[name].defaultValue', () => {
       const store = new StoryStore({ channel });
       addStoryToStore(store, 'a', '1', () => 0, {
         argTypes: {
@@ -193,6 +193,145 @@ describe('preview.story_store', () => {
         expect.objectContaining({
           args: { a: 1 },
           parameters: expect.objectContaining({}),
+        })
+      );
+    });
+  });
+
+  describe('globalArgs', () => {
+    it('is initialized to the value stored in parameters.globalArgs on the first story', () => {
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0, {
+        globalArgs: {
+          arg1: 'arg1',
+          arg2: 2,
+          arg3: { complex: { object: ['type'] } },
+        },
+      });
+      store.finishConfiguring();
+      expect(store.getRawStory('a', '1').globalArgs).toEqual({
+        arg1: 'arg1',
+        arg2: 2,
+        arg3: { complex: { object: ['type'] } },
+      });
+    });
+
+    it('on HMR it sensibly re-initializes with memory', () => {
+      const store = new StoryStore({ channel });
+      addons.setChannel(channel);
+      addStoryToStore(store, 'a', '1', () => 0, {
+        globalArgs: {
+          arg1: 'arg1',
+          arg2: 2,
+          arg3: { complex: { object: ['type'] } },
+        },
+      });
+      store.finishConfiguring();
+
+      // HMR
+      store.startConfiguring();
+      store.removeStoryKind('a');
+      addStoryToStore(store, 'a', '1', () => 0, {
+        globalArgs: {
+          arg2: 2,
+          // Although we have changed the default there is no way to tell that the user didn't change
+          // it themselves
+          arg3: { complex: { object: ['changed'] } },
+          arg4: 'new',
+        },
+      });
+      store.finishConfiguring();
+
+      expect(store.getRawStory('a', '1').globalArgs).toEqual({
+        arg2: 2,
+        arg3: { complex: { object: ['type'] } },
+        arg4: 'new',
+      });
+    });
+
+    it('updateGlobalArgs changes the global args', () => {
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0);
+      expect(store.getRawStory('a', '1').globalArgs).toEqual({});
+
+      store.updateGlobalArgs({ foo: 'bar' });
+      expect(store.getRawStory('a', '1').globalArgs).toEqual({ foo: 'bar' });
+
+      store.updateGlobalArgs({ baz: 'bing' });
+      expect(store.getRawStory('a', '1').globalArgs).toEqual({ foo: 'bar', baz: 'bing' });
+    });
+
+    it('is passed to the story in the context', () => {
+      const storyFn = jest.fn();
+      const store = new StoryStore({ channel });
+
+      store.updateGlobalArgs({ foo: 'bar' });
+      addStoryToStore(store, 'a', '1', storyFn);
+      store.getRawStory('a', '1').storyFn();
+
+      expect(storyFn).toHaveBeenCalledWith(
+        expect.objectContaining({
+          globalArgs: { foo: 'bar' },
+        })
+      );
+
+      store.updateGlobalArgs({ baz: 'bing' });
+      store.getRawStory('a', '1').storyFn();
+
+      expect(storyFn).toHaveBeenCalledWith(
+        expect.objectContaining({
+          globalArgs: { foo: 'bar', baz: 'bing' },
+        })
+      );
+    });
+
+    it('updateGlobalArgs emits GLOBAL_ARGS_UPDATED', () => {
+      const onGlobalArgsChangedChannel = jest.fn();
+      const testChannel = mockChannel();
+      testChannel.on(Events.GLOBAL_ARGS_UPDATED, onGlobalArgsChangedChannel);
+
+      const store = new StoryStore({ channel: testChannel });
+      addStoryToStore(store, 'a', '1', () => 0);
+
+      store.updateGlobalArgs({ foo: 'bar' });
+      expect(onGlobalArgsChangedChannel).toHaveBeenCalledWith({ foo: 'bar' });
+
+      store.updateGlobalArgs({ baz: 'bing' });
+      expect(onGlobalArgsChangedChannel).toHaveBeenCalledWith({ foo: 'bar', baz: 'bing' });
+    });
+
+    it('should update if the UPDATE_GLOBAL_ARGS event is received', () => {
+      const testChannel = mockChannel();
+      const store = new StoryStore({ channel: testChannel });
+      addStoryToStore(store, 'a', '1', () => 0);
+
+      testChannel.emit(Events.UPDATE_GLOBAL_ARGS, { foo: 'bar' });
+
+      expect(store.getRawStory('a', '1').globalArgs).toEqual({ foo: 'bar' });
+    });
+
+    it('DOES NOT pass globalArgs as the first argument to the story if `parameters.passArgsFirst` is true', () => {
+      const store = new StoryStore({ channel });
+
+      const storyOne = jest.fn();
+      addStoryToStore(store, 'a', '1', storyOne);
+
+      store.updateGlobalArgs({ foo: 'bar' });
+
+      store.getRawStory('a', '1').storyFn();
+      expect(storyOne).toHaveBeenCalledWith(
+        expect.objectContaining({
+          globalArgs: { foo: 'bar' },
+        })
+      );
+
+      const storyTwo = jest.fn();
+      addStoryToStore(store, 'a', '2', storyTwo, { passArgsFirst: true });
+      store.getRawStory('a', '2').storyFn();
+      expect(storyTwo).toHaveBeenCalledWith(
+        {},
+        expect.objectContaining({
+          globalArgs: { foo: 'bar' },
         })
       );
     });

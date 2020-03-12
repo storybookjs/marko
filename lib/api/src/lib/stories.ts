@@ -54,7 +54,7 @@ export interface Story {
   isRoot: false;
   isLeaf: true;
   parameters?: {
-    filename: string;
+    fileName: string;
     options: {
       hierarchyRootSeparator?: RegExp;
       hierarchySeparator?: RegExp;
@@ -74,7 +74,7 @@ export interface StoryInput {
   kind: string;
   children: string[];
   parameters: {
-    filename: string;
+    fileName: string;
     options: {
       hierarchyRootSeparator: RegExp;
       hierarchySeparator: RegExp;

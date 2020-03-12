@@ -1,10 +1,7 @@
-// Storybook's implementation of SimpleBar https://github.com/Grsmto/simplebar
-// Note: "SimpleBar can't be used on the <body>, <textarea> or <iframe> elements."
-
 import React, { Fragment, FunctionComponent } from 'react';
 import { styled, Global } from '@storybook/theming';
 
-import SimpleBar from 'simplebar-react';
+import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 import { getScrollAreaStyles } from './ScrollAreaStyles';
 
 export interface ScrollProps {
@@ -14,7 +11,7 @@ export interface ScrollProps {
 }
 
 const Scroll = styled(({ vertical, horizontal, ...rest }: ScrollProps) => (
-  <SimpleBar {...rest} scrollableNodeProps={{ tabIndex: 0 }} />
+  <OverlayScrollbarsComponent options={{ scrollbars: { autoHide: 'scroll' } }} {...rest} />
 ))<ScrollProps>(
   ({ vertical }) =>
     !vertical

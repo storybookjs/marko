@@ -34,6 +34,7 @@ import * as layout from './modules/layout';
 import * as shortcuts from './modules/shortcuts';
 import * as url from './modules/url';
 import * as version from './modules/versions';
+import * as globalArgs from './modules/globalArgs';
 
 const { ActiveTabs } = layout;
 
@@ -56,6 +57,7 @@ export type State = layout.SubState &
   version.SubState &
   url.SubState &
   shortcuts.SubState &
+  globalArgs.SubState &
   RouterData &
   Other;
 
@@ -64,6 +66,7 @@ export type API = addons.SubAPI &
   provider.SubAPI &
   stories.SubAPI &
   refs.SubAPI &
+  globalArgs.SubAPI &
   layout.SubAPI &
   notifications.SubAPI &
   shortcuts.SubAPI &
@@ -158,6 +161,7 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
       shortcuts,
       stories,
       refs,
+      globalArgs,
       url,
       version,
     ].map(m => m.init({ ...routeData, ...apiData, state: this.state, fullAPI: this.api }));
@@ -389,4 +393,13 @@ export function useArgs(): [Args, (newArgs: Args) => void] {
   const { id, args } = getCurrentStoryData();
 
   return [args, (newArgs: Args) => updateStoryArgs(id, newArgs)];
+}
+
+export function useGlobalArgs(): [Args, (newGlobalArgs: Args) => void] {
+  const {
+    state: { globalArgs: oldGlobalArgs },
+    api: { updateGlobalArgs },
+  } = useContext(ManagerContext);
+
+  return [oldGlobalArgs, updateGlobalArgs];
 }
