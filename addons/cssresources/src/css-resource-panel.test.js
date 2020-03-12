@@ -40,7 +40,7 @@ const defaultProps = {
     emit: jest.fn(),
     on: jest.fn(),
     off: jest.fn(),
-    getParameters: jest.fn(() => defaultParameters),
+    getCurrentParameters: jest.fn(() => defaultParameters),
   },
 };
 
@@ -125,13 +125,13 @@ describe('CSSResourcePanel', () => {
       expect(node.state('list')).toMatchObject(defaultParameters);
     });
 
-    it('should pull default items from getParameters', () => {
+    it('should pull default items from getCurrentParameters', () => {
       const apiGetParameters = jest.fn(() => newFakeParameters);
       const node = shallowNode({
         ...defaultProps,
         api: {
           ...defaultProps.api,
-          getParameters: apiGetParameters,
+          getCurrentParameters: apiGetParameters,
         },
       });
       expect(node.state('list')).toMatchObject([]);
@@ -164,7 +164,7 @@ describe('CSSResourcePanel', () => {
         ...defaultProps,
         api: {
           ...defaultProps.api,
-          getParameters: apiGetParameters,
+          getCurrentParameters: apiGetParameters,
         },
       });
       node.setState({ list: fakeList, currentStoryId: 'fake-story-id' });
@@ -180,7 +180,7 @@ describe('CSSResourcePanel', () => {
         ...defaultProps,
         api: {
           ...defaultProps.api,
-          getParameters: apiGetParameters,
+          getCurrentParameters: apiGetParameters,
         },
       });
       node.setState({ list: fakeList });
@@ -294,7 +294,7 @@ describe('CSSResourcePanel', () => {
         ...defaultProps,
         api: {
           ...defaultProps.api,
-          getParameters: apiGetParameters,
+          getCurrentParameters: apiGetParameters,
         },
       });
       node.instance().onStoryChange('fake-story-id');
@@ -320,7 +320,7 @@ describe('CSSResourcePanel', () => {
         ...defaultProps,
         api: {
           ...defaultProps.api,
-          getParameters: apiGetParameters,
+          getCurrentParameters: apiGetParameters,
         },
       });
 
