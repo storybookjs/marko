@@ -166,27 +166,19 @@ export class PostmsgTransport {
 
 const getEventSourceUrl = (event: MessageEvent) => {
   const frames: HTMLIFrameElement[] = [...document.getElementsByTagName('iframe')];
-  let result = event.origin;
-  let frame;
-  let remainder;
-  try {
-    // try to find the originating iframe by matching it's contentWindow
-    // This might not be cross-origin safe
-    [frame, ...remainder] = frames.filter(element => element.contentWindow === event.source);
 
-    const src = frame.getAttribute('src');
-    const { pathname, origin } = new URL(src);
-
-    result = origin + pathname;
-  } catch (e) {
-    // if the contentWindow access was not allowed we match on origin alone
-    [frame, ...remainder] = frames.filter(element => {
+  // try to find the originating iframe by matching it's contentWindow
+  // This might not be cross-origin safe
+  const [frame, ...remainder] = frames.filter(element => {
+    try {
+      return element.contentWindow === event.source;
+    } catch (err) {
       const src = element.getAttribute('src');
       const { origin } = new URL(src);
 
       return origin === event.origin;
-    });
-  }
+    }
+  });
 
   // If we found multiple matches, there's going to be trouble
   if (remainder.length) {
@@ -194,7 +186,9 @@ const getEventSourceUrl = (event: MessageEvent) => {
     return null;
   }
 
-  return result;
+  const src = frame.getAttribute('src');
+  const { origin, pathname } = new URL(src);
+  return origin + pathname;
 };
 
 /**
