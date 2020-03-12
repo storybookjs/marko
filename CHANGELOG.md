@@ -1,3 +1,38 @@
+## 6.0.0-alpha.25 (March 11, 2020)
+
+NOTE: `6.0.0-alpha.24` broken due to bad merge. Sorry!
+
+### Bug Fixes
+
+- Core: Fix initialization of global args ([#10106](https://github.com/storybookjs/storybook/pull/10106))
+
+## 6.0.0-alpha.24 (March 11, 2020)
+
+### Features
+
+- Addon-docs: formatSource snippet customization function ([#10089](https://github.com/storybookjs/storybook/pull/10089))
+- Core: Add global args feature ([#10015](https://github.com/storybookjs/storybook/pull/10015))
+- UI: Migrate from simplebar to overlaybars ([#9375](https://github.com/storybookjs/storybook/pull/9375))
+
+### Bug Fixes
+
+- Core: Fix StoryInput parameters typings ([#10013](https://github.com/storybookjs/storybook/pull/10013))
+- Changed import of react-syntax-highlighter from esm to cjs ([#9292](https://github.com/storybookjs/storybook/pull/9292))
+
+### Maintenance
+
+- Buidld: Setup TeamCity Cloud ([#9875](https://github.com/storybookjs/storybook/pull/9875))
+- Tech/improvements ([#10096](https://github.com/storybookjs/storybook/pull/10096))
+- Core: Move event handlers into module init ([#10085](https://github.com/storybookjs/storybook/pull/10085))
+
+### Dependency Upgrades
+
+- Bump axe-core from 3.5.1 to 3.5.2 ([#10090](https://github.com/storybookjs/storybook/pull/10090))
+
+## 6.0.0-alpha.23 (March 11, 2020)
+
+Failed publish
+
 ## 6.0.0-alpha.22 (March 10, 2020)
 
 ### Breaking Changes

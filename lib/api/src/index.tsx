@@ -46,6 +46,10 @@ import initVersions, {
   SubState as VersionsSubState,
   SubAPI as VersionsAPI,
 } from './modules/versions';
+import initGlobalArgs, {
+  SubState as GlobalArgsSubState,
+  SubAPI as GlobalArgsAPI,
+} from './modules/globalArgs';
 
 export { Options as StoreOptions, Listener as ChannelListener };
 export { ActiveTabs };
@@ -66,7 +70,8 @@ export type State = Other &
   NotificationState &
   VersionsSubState &
   RouterData &
-  ShortcutsSubState;
+  ShortcutsSubState &
+  GlobalArgsSubState;
 
 export type API = AddonsAPI &
   ChannelAPI &
@@ -77,6 +82,7 @@ export type API = AddonsAPI &
   ShortcutsAPI &
   VersionsAPI &
   UrlAPI &
+  GlobalArgsAPI &
   OtherAPI;
 
 interface OtherAPI {
@@ -172,6 +178,7 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
       initStories,
       initURL,
       initVersions,
+      initGlobalArgs,
     ].map(initModule =>
       initModule({ ...routeData, ...apiData, state: this.state, fullAPI: this.api })
     );
@@ -404,4 +411,13 @@ export function useArgs(): [Args, (newArgs: Args) => void] {
   const { id, args } = getCurrentStoryData();
 
   return [args, (newArgs: Args) => updateStoryArgs(id, newArgs)];
+}
+
+export function useGlobalArgs(): [Args, (newGlobalArgs: Args) => void] {
+  const {
+    state: { globalArgs },
+    api: { updateGlobalArgs },
+  } = useContext(ManagerContext);
+
+  return [globalArgs, updateGlobalArgs];
 }

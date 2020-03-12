@@ -96,7 +96,27 @@ Note that arg values are passed directly to a story -- you should only store the
 Both `@storybook/client-api` (preview) and `@storybook/api` (manager) export a `useArgs()` hook that you can use to access args in decorators or addon panels. The API is as follows:
 
 ```js
+import { useArgs } from '@storybook/client-api'; // or '@storybook/api'
+
 // `args` is the args of the currently rendered story
 // `updateArgs` will update its args. You can pass a subset of the args; other args will not be changed.
 const [args, updateArgs] = useArgs();
+```
+
+## Global Args
+
+Global args are args that are "global" across all stories. They are used for things like themes and internationalization (i18n) in stories, where you want Storybook to "remember" your setting as you browse between stories.
+
+### Initial values of global args
+
+To set initial values of global args, set the `parameters.globalArgs` parameters. Addons can use parameter enhancers (see above) to do this.
+
+### Using global args in an addon
+
+Similar to args, global args are syncronized to the manager and can be accessed via the `useGlobalArgs` hook.
+
+```js
+import { useGlobalArgs } from '@storybook/client-api'; // or '@storybook/api'
+
+const [globalArgs, updateGlobalArgs] = useGlobalArgs();
 ```
