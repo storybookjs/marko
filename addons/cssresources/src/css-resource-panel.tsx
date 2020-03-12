@@ -65,7 +65,7 @@ export class CssResourcePanel extends Component<Props, State> {
   onStoryChange = (id: string) => {
     const { list: currentList, currentStoryId } = this.state;
     const { api } = this.props;
-    const list = api.getParameters(id, PARAM_KEY) as CssResource[];
+    const list = api.getCurrentParameter<CssResource[]>(PARAM_KEY);
 
     if (list && currentStoryId !== id) {
       const existingIds = currentList.reduce((lookup: CssResourceLookup, res) => {

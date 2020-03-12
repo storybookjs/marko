@@ -64,8 +64,7 @@ const getSelectedBackgroundColor = (list: Input[], currentSelectedValue: string)
 };
 
 const mapper = ({ api, state }: Combo): { items: Input[]; selected: string | null } => {
-  const story = api.getData(state.storyId);
-  const list = story ? api.getParameters(story.id, PARAM_KEY) : [];
+  const list = api.getCurrentParameter<Input[]>(PARAM_KEY);
   const selected = state.addons[PARAM_KEY] || null;
 
   return { items: list || [], selected };
