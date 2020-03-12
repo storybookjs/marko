@@ -2,10 +2,9 @@ import { ReactNode } from 'react';
 import { Channel } from '@storybook/channels';
 import { ThemeVars } from '@storybook/theming';
 
-import { API, State } from './index';
-import Store from './store';
-import { Mapper, Refs } from './modules/refs';
-import { UIOptions } from './modules/layout';
+import { API, State, Module } from '../index';
+import { Mapper, Refs } from './refs';
+import { UIOptions } from './layout';
 
 type IframeRenderer = (
   storyId: string,
@@ -33,11 +32,12 @@ export interface SubAPI {
   renderPreview?: Provider['renderPreview'];
 }
 
-export default ({ provider, api }: { provider: Provider; api: API; store: Store }) => {
-  provider.handleAPI(api);
+export const init = ({ provider, fullAPI }: Module) => {
+  provider.handleAPI(fullAPI);
 
-  if (provider.renderPreview) {
-    // eslint-disable-next-line no-param-reassign
-    api.renderPreview = provider.renderPreview;
-  }
+  return provider.renderPreview
+    ? {
+        renderPreview: provider.renderPreview,
+      }
+    : {};
 };

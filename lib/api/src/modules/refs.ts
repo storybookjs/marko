@@ -5,10 +5,6 @@ import {
   StoriesRaw,
   StoryInput,
   StoriesHash,
-  isRoot,
-  Story,
-  Group,
-  Root,
 } from '../lib/stories';
 
 import { Module } from '../index';
@@ -77,7 +73,7 @@ const map = (input: StoriesRaw, ref: ComposedRef, options: { mapper?: Mapper }):
   return input;
 };
 
-const initRefsApi = ({ store, provider }: Module) => {
+export const init = ({ store, provider }: Module) => {
   const api: SubAPI = {
     findRef: source => {
       const refs = api.getRefs();
@@ -168,5 +164,3 @@ const initRefsApi = ({ store, provider }: Module) => {
     },
   };
 };
-
-export default initRefsApi;

@@ -13,7 +13,7 @@ export interface Root {
   id: StoryId;
   depth: 0;
   name: string;
-  refId?: ComposedRef['id'];
+  refId?: string;
   children: StoryId[];
   isComponent: false;
   isRoot: true;
@@ -30,7 +30,7 @@ export interface Group {
   depth: number;
   name: string;
   children: StoryId[];
-  refId?: ComposedRef['id'];
+  refId?: string;
   parent?: StoryId;
   isComponent: boolean;
   isRoot: false;
@@ -48,7 +48,7 @@ export interface Story {
   parent: StoryId;
   name: string;
   kind: string;
-  refId?: ComposedRef['id'];
+  refId?: string;
   children?: StoryId[];
   isComponent: boolean;
   isRoot: false;
@@ -70,7 +70,7 @@ export interface Story {
 export interface StoryInput {
   id: StoryId;
   name: string;
-  refId?: ComposedRef['id'];
+  refId?: string;
   kind: string;
   children: string[];
   parameters: {

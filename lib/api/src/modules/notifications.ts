@@ -16,7 +16,7 @@ export interface SubAPI {
   clearNotification: (id: string) => void;
 }
 
-export default function({ store }: Module) {
+export const init = ({ store }: Module) => {
   const api = {
     addNotification: (notification: Notification) => {
       // Get rid of it if already exists
@@ -42,4 +42,4 @@ export default function({ store }: Module) {
   const state: SubState = { notifications: [] };
 
   return { api, state };
-}
+};

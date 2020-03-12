@@ -4,7 +4,7 @@ import { WindowLocation } from '@reach/router';
 import { Module } from '../index';
 import { Options } from '../store';
 
-export type ViewMode = 'story' | 'info' | 'settings' | undefined | string;
+export type ViewMode = 'story' | 'info' | 'settings' | 'page' | undefined | string;
 
 export enum types {
   TAB = 'tab',
@@ -85,7 +85,7 @@ export function ensurePanel(panels: Panels, selectedPanel?: string, currentPanel
   return currentPanel;
 }
 
-export default ({ provider, store, fullAPI }: Module) => {
+export const init = ({ provider, store, fullAPI }: Module) => {
   const api: SubAPI = {
     getElements: type => provider.getElements(type),
     getPanels: () => api.getElements(types.PANEL),

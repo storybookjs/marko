@@ -106,7 +106,7 @@ export interface SubAPI {
   setQueryParams: (input: QueryParams) => void;
 }
 
-export default function({ store, navigate, state, provider, fullAPI, ...rest }: Module) {
+export const init = ({ store, navigate, state, provider, fullAPI, ...rest }: Module) => {
   const api: SubAPI = {
     getQueryParam: key => {
       const { customQueryParams } = store.getState();
@@ -147,7 +147,7 @@ export default function({ store, navigate, state, provider, fullAPI, ...rest }: 
     },
   };
 
-  const init = () => {
+  const initModule = () => {
     fullAPI.on(NAVIGATE_URL, (url: string, options: { [k: string]: any }) => {
       fullAPI.navigateUrl(url, options);
     });
@@ -156,6 +156,6 @@ export default function({ store, navigate, state, provider, fullAPI, ...rest }: 
   return {
     api,
     state: initialUrlSupport({ store, navigate, state, provider, fullAPI, ...rest }),
-    init,
+    init: initModule,
   };
-}
+};

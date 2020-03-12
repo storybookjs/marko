@@ -15,7 +15,7 @@ export interface SubAPI {
   expandAll: () => void;
 }
 
-export default ({ provider }: Module) => {
+export const init = ({ provider }: Module) => {
   const api: SubAPI = {
     getChannel: () => provider.channel,
     on: (type, cb, peer = true) => {

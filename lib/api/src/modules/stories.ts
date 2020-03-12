@@ -22,7 +22,7 @@ import {
 } from '../lib/stories';
 
 import { Module, Args } from '../index';
-import { ComposedRef, Refs, getSourceType } from './refs';
+import { getSourceType } from './refs';
 
 type Direction = -1 | 1;
 type ParameterName = string;
@@ -38,19 +38,19 @@ export interface SubState {
 
 export interface SubAPI {
   storyId: typeof toId;
-  resolveStory: (storyId: StoryId, refsId?: ComposedRef['id']) => Story | Group | Root;
+  resolveStory: (storyId: StoryId, refsId?: string) => Story | Group | Root;
   selectStory: (
     kindOrId: string,
     story?: string,
-    obj?: { ref?: ComposedRef['id']; viewMode?: ViewMode }
+    obj?: { ref?: string; viewMode?: ViewMode }
   ) => void;
   getCurrentStoryData: () => Story | Group;
   setStories: (stories: StoriesRaw) => Promise<void>;
   jumpToComponent: (direction: Direction) => void;
   jumpToStory: (direction: Direction) => void;
-  getData: (storyId: StoryId, refId?: ComposedRef['id']) => Story | Group;
+  getData: (storyId: StoryId, refId?: string) => Story | Group;
   getParameters: (
-    storyId: StoryId | { storyId: StoryId; refId: ComposedRef['id'] },
+    storyId: StoryId | { storyId: StoryId; refId: string },
     parameterName?: ParameterName
   ) => Story['parameters'] | any;
   getCurrentParameter<S>(parameterName?: ParameterName): S;
@@ -58,7 +58,7 @@ export interface SubAPI {
   findLeafStoryId(StoriesHash: StoriesHash, storyId: StoryId): StoryId;
 }
 
-const initStoriesApi = ({
+export const init = ({
   fullAPI,
   store,
   navigate,
@@ -286,7 +286,7 @@ const initStoriesApi = ({
     },
   };
 
-  const init = () => {
+  const initModule = () => {
     fullAPI.on(STORY_CHANGED, function handleStoryChange(storyId: string) {
       const { source }: { source: string } = this;
       const sourceType = getSourceType(source);
@@ -376,7 +376,6 @@ const initStoriesApi = ({
       viewMode: initialViewMode,
       storiesConfigured: false,
     },
-    init,
+    init: initModule,
   };
 };
-export default initStoriesApi;

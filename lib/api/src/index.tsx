@@ -18,38 +18,26 @@ import {
 } from '@storybook/core-events';
 import { RenderData as RouterData } from '@storybook/router';
 import { Listener } from '@storybook/channels';
-import initProviderApi, { SubAPI as ProviderAPI, Provider } from './init-provider-api';
 
 import { createContext } from './context';
 import Store, { Options } from './store';
 import getInitialState from './initial-state';
-
-import initAddons, { SubAPI as AddonsAPI } from './modules/addons';
-import initChannel, { SubAPI as ChannelAPI } from './modules/channel';
-import initNotifications, {
-  SubState as NotificationState,
-  SubAPI as NotificationAPI,
-} from './modules/notifications';
-import initStories, { SubState as StoriesSubState, SubAPI as StoriesAPI } from './modules/stories';
-import initRefs, { SubState as RefsSubState, SubAPI as RefsAPI } from './modules/refs';
 import { StoriesHash, Story, Root, Group, isGroup, isRoot, isStory } from './lib/stories';
-import initLayout, {
-  ActiveTabs,
-  SubState as LayoutSubState,
-  SubAPI as LayoutAPI,
-} from './modules/layout';
-import initShortcuts, {
-  SubState as ShortcutsSubState,
-  SubAPI as ShortcutsAPI,
-} from './modules/shortcuts';
-import initURL, { QueryParams, SubAPI as UrlAPI } from './modules/url';
-import initVersions, {
-  SubState as VersionsSubState,
-  SubAPI as VersionsAPI,
-} from './modules/versions';
 
-export { Options as StoreOptions, Listener as ChannelListener };
-export { ActiveTabs };
+import * as provider from './modules/provider';
+import * as addons from './modules/addons';
+import * as channel from './modules/channel';
+import * as notifications from './modules/notifications';
+import * as stories from './modules/stories';
+import * as refs from './modules/refs';
+import * as layout from './modules/layout';
+import * as shortcuts from './modules/shortcuts';
+import * as url from './modules/url';
+import * as version from './modules/versions';
+
+const { ActiveTabs } = layout;
+
+export { Options as StoreOptions, Listener as ChannelListener, ActiveTabs };
 
 const ManagerContext = createContext({ api: undefined, state: getInitialState({}) });
 
@@ -62,31 +50,31 @@ export type Module = StoreData &
   };
 
 export type State = Other &
-  LayoutSubState &
-  StoriesSubState &
-  RefsSubState &
-  NotificationState &
-  VersionsSubState &
+  layout.SubState &
+  stories.SubState &
+  refs.SubState &
+  notifications.SubState &
+  version.SubState &
   RouterData &
-  ShortcutsSubState;
+  shortcuts.SubState;
 
-export type API = AddonsAPI &
-  ChannelAPI &
-  ProviderAPI &
-  StoriesAPI &
-  RefsAPI &
-  LayoutAPI &
-  NotificationAPI &
-  ShortcutsAPI &
-  VersionsAPI &
-  UrlAPI &
+export type API = addons.SubAPI &
+  channel.SubAPI &
+  provider.SubAPI &
+  stories.SubAPI &
+  refs.SubAPI &
+  layout.SubAPI &
+  notifications.SubAPI &
+  shortcuts.SubAPI &
+  version.SubAPI &
+  url.SubAPI &
   OtherAPI;
 
 interface OtherAPI {
   [key: string]: any;
 }
 interface Other {
-  customQueryParams: QueryParams;
+  customQueryParams: url.QueryParams;
 
   [key: string]: any;
 }
@@ -97,7 +85,7 @@ export interface Combo {
 }
 
 interface ProviderData {
-  provider: Provider;
+  provider: provider.Provider;
 }
 
 interface DocsModeData {
@@ -130,7 +118,6 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
   constructor(props: ManagerProviderProps) {
     super(props);
     const {
-      provider,
       location,
       path,
       refId,
@@ -165,30 +152,27 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
     const apiData = {
       navigate,
       store,
-      provider,
+      provider: props.provider,
     };
 
     this.modules = [
-      initChannel,
-      initAddons,
-      initLayout,
-      initNotifications,
-      initShortcuts,
-      initStories,
-      initRefs,
-      initURL,
-      initVersions,
-    ].map(initModule =>
-      initModule({ ...routeData, ...apiData, state: this.state, fullAPI: this.api })
-    );
+      provider,
+      channel,
+      addons,
+      layout,
+      notifications,
+      shortcuts,
+      stories,
+      refs,
+      url,
+      version,
+    ].map(m => m.init({ ...routeData, ...apiData, state: this.state, fullAPI: this.api }));
 
     // Create our initial state by combining the initial state of all modules, then overlaying any saved state
     const state = getInitialState(this.state, ...this.modules.map(m => m.state));
 
     // Get our API by combining the APIs exported by each module
     const api: API = Object.assign(this.api, { navigate }, ...this.modules.map(m => m.api));
-
-    initProviderApi({ provider, store, api });
 
     this.state = state;
     this.api = api;

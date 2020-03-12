@@ -164,7 +164,7 @@ export const focusableUIElements = {
 };
 
 let hasSetOptions = false;
-export default function({ store, provider }: { store: Store; provider: Provider }) {
+export const init = ({ store, provider }: { store: Store; provider: Provider }) => {
   const api = {
     toggleFullscreen(toggled?: boolean) {
       return store.setState(
@@ -355,4 +355,4 @@ export default function({ store, provider }: { store: Store; provider: Provider 
   const persisted = pick(store.getState(), 'layout', 'ui', 'selectedPanel', 'theme');
 
   return { api, state: merge(api.getInitialOptions(), persisted) };
-}
+};
