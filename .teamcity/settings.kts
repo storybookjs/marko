@@ -235,7 +235,7 @@ object ExamplesTemplate : Template({
         param("env.CIRCLE_NODE_TOTAL", "5")
     }
 
-    disableFeature("Commit status publisher")
+    disableSettings("Commit status publisher")
 })
 
 object Examples1 : BuildType({
@@ -373,7 +373,7 @@ object Chromatic1 : BuildType({
         }
     }
 
-    disableFeature("Commit status publisher")
+    disableSettings("Commit status publisher")
 })
 
 object Chromatic2 : BuildType({
@@ -407,7 +407,7 @@ object Chromatic2 : BuildType({
         }
     }
 
-    disableFeature("Commit status publisher")
+    disableSettings("Commit status publisher")
 })
 
 object Chromatic3 : BuildType({
@@ -440,7 +440,7 @@ object Chromatic3 : BuildType({
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
-    disableFeature("Commit status publisher")
+    disableSettings("Commit status publisher")
 })
 
 object Chromatic4 : BuildType({
@@ -473,7 +473,7 @@ object Chromatic4 : BuildType({
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
-    disableFeature("Commit status publisher")
+    disableSettings("Commit status publisher")
 })
 
 object Chromatic : BuildType({
