@@ -50,6 +50,7 @@ addParameters({
     { name: 'dark', value: '#222222' },
   ],
   docs: {
+    theme: themes.light,
     page: () => <DocsPage subtitleSlot={({ kind }) => `Subtitle: ${kind}`} />,
   },
 });
