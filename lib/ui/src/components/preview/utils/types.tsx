@@ -55,6 +55,8 @@ export type CustomCanvasRenderer = (
 export interface FramesRendererProps {
   story: Story | Group;
   storyId: string;
+  refId: string;
+  baseUrl: string;
   scale: number;
   viewMode: ViewMode;
   queryParams: State['customQueryParams'];

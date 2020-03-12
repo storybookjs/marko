@@ -65,7 +65,7 @@ const namespace = (input: StoriesHash, ref: InceptionRef): StoriesHash => {
   const output = {} as StoriesHash;
 
   Object.entries(input).forEach(([id, item]) => {
-    const mappedId = `${ref.id}_${item.id}`;
+    const mappedId = item.id;
     const target = output[mappedId] || ({} as Story | Group | Root);
 
     const addition: Partial<Story> = {
@@ -76,19 +76,6 @@ const namespace = (input: StoriesHash, ref: InceptionRef): StoriesHash => {
 
     Object.assign(target, item, addition);
 
-    if (!isRoot(item)) {
-      const mappedParentId = `${ref.id}_${item.parent}`;
-
-      Object.assign(target, {
-        parent: mappedParentId,
-      });
-    }
-
-    if (item.children) {
-      Object.assign(target, {
-        children: item.children.map(c => `${ref.id}_${c}`),
-      });
-    }
     output[mappedId] = target;
   });
 

@@ -115,6 +115,7 @@ export type ListItemProps = ComponentProps<typeof Item> & {
   isSelected?: boolean;
   name: string;
   kind: string;
+  refId?: string;
   depth: number;
   parameters: Record<string, any>;
 };
@@ -123,6 +124,7 @@ export const ListItem: FunctionComponent<ListItemProps> = ({
   name,
   id,
   kind,
+  refId,
   isComponent = false,
   isLeaf = false,
   isExpanded = false,

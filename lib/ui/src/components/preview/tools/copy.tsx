@@ -5,14 +5,12 @@ import { Consumer, Combo } from '@storybook/api';
 import { Addon } from '@storybook/addons';
 import { stringifyQueryParams } from '../utils/stringifyQueryParams';
 
-const copyMapper = ({ state, api }: Combo) => {
-  const story = api.getData(state.storyId);
-  const ref = story ? api.getRefs()[story && story.refId] : undefined;
-
-  const { refId, id } = story || {};
-  const storyId = refId ? `${refId}_${id}` : id;
+const copyMapper = ({ state }: Combo) => {
+  const { storyId, refId, refs } = state;
+  const ref = refs[refId];
 
   return {
+    refId,
     baseUrl: ref
       ? `${ref.url}/iframe.html`
       : `${state.location.origin + state.location.pathname}iframe.html`,

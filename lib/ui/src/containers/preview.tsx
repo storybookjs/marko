@@ -30,8 +30,8 @@ const getDescription = (item: Item) => {
 };
 
 const mapper = ({ api, state }: Combo) => {
-  const { layout, location, customQueryParams, storyId, refs, viewMode, path } = state;
-  const story = api.getData(storyId);
+  const { layout, location, customQueryParams, storyId, refs, viewMode, path, refId } = state;
+  const story = api.getData(storyId, refId);
   const docsOnly = story && story.parameters ? !!story.parameters.docsOnly : false;
 
   return {
@@ -42,33 +42,15 @@ const mapper = ({ api, state }: Combo) => {
     viewMode,
     path,
     refs,
+    baseUrl: PREVIEW_URL || 'iframe.html',
     queryParams: customQueryParams,
     docsOnly,
     location,
   };
 };
 
-const getBaseUrl = (): string => {
-  try {
-    return PREVIEW_URL || 'iframe.html';
-  } catch (e) {
-    return 'iframe.html';
-  }
-};
-
 const PreviewConnected = React.memo<{ id: string; withLoader: boolean }>(props => (
-  <Consumer filter={mapper}>
-    {fromState => {
-      const p = {
-        ...props,
-        baseUrl: getBaseUrl(),
-        ...fromState,
-      };
-
-      return <Preview {...p} />;
-    }}
-  </Consumer>
+  <Consumer filter={mapper}>{fromState => <Preview {...props} {...fromState} />}</Consumer>
 ));
-PreviewConnected.displayName = 'PreviewConnected';
 
 export default PreviewConnected;

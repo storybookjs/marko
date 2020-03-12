@@ -1,6 +1,5 @@
 import React, { Fragment, FunctionComponent, useMemo, useEffect, useState } from 'react';
 import { Global, CSSObject } from '@storybook/theming';
-import { useStorybookApi } from '@storybook/api';
 import { IFrame } from './iframe';
 import { FramesRendererProps } from './utils/types';
 import { stringifyQueryParams } from './utils/stringifyQueryParams';
@@ -10,14 +9,13 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
   story,
   scale,
   viewMode,
+  refId,
   queryParams,
+  baseUrl,
   storyId,
 }) => {
-  const { splitStoryId } = useStorybookApi();
   const stringifiedQueryParams = stringifyQueryParams(queryParams);
-  const { id, ref } =
-    !storyId || storyId === '*' ? { id: storyId, ref: undefined } : splitStoryId(storyId);
-  const active = ref ? `storybook-ref-${ref}` : 'storybook-preview-iframe';
+  const active = refId ? `storybook-ref-${refId}` : 'storybook-preview-iframe';
 
   const styles = useMemo<CSSObject>(() => {
     return {
@@ -43,7 +41,7 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
   }, [refs]);
 
   const [frames, setFrames] = useState<Record<string, string>>({
-    'storybook-preview-iframe': `iframe.html?id=${id}&viewMode=${viewMode}${stringifiedQueryParams}`,
+    'storybook-preview-iframe': `${baseUrl}?id=${storyId}&viewMode=${viewMode}${stringifiedQueryParams}`,
   });
 
   useEffect(() => {
@@ -61,7 +59,7 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
       .reduce((acc, r) => {
         return {
           ...acc,
-          [`storybook-ref-${r.id}`]: `${r.url}/iframe.html?id=${id}&viewMode=${viewMode}${stringifiedQueryParams}`,
+          [`storybook-ref-${r.id}`]: `${r.url}/iframe.html?id=${storyId}&viewMode=${viewMode}${stringifiedQueryParams}`,
         };
       }, frames);
 
@@ -74,7 +72,14 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
       {Object.entries(frames).map(([id, src]) => (
         <Fragment key={id}>
           {id === active ? <span key={`${id}-indicator`} /> : null}
-          <IFrame key={src} id={id} title={id} src={src} allowFullScreen scale={scale} />
+          <IFrame
+            key={refs[id] ? refs[id].url : id}
+            id={id}
+            title={id}
+            src={src}
+            allowFullScreen
+            scale={scale}
+          />
         </Fragment>
       ))}
     </Fragment>

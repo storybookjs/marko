@@ -67,20 +67,21 @@ const tabsMapper = ({ state }: Combo) => ({
   storyId: state.storyId,
   path: state.path,
   location: state.location,
+  refId: state.refId,
 });
 
 export const createTabsTool = (tabs: Addon[]): Addon => ({
   title: 'title',
   render: () => (
     <Consumer filter={tabsMapper}>
-      {({ viewMode, storyId, path, location }) => (
+      {rp => (
         <Fragment>
           <TabBar key="tabs">
             {tabs
               .filter(p => !p.hidden)
               .map((t, index) => {
-                const to = t.route({ storyId, viewMode, path, location });
-                const isActive = path === to;
+                const to = t.route(rp);
+                const isActive = rp.path === to;
                 return (
                   <S.UnstyledLink key={t.id || `l${index}`} to={to}>
                     <TabButton disabled={t.disabled} active={isActive}>
@@ -205,6 +206,7 @@ export function filterTools(
     (!item.match ||
       item.match({
         storyId: story.id,
+        refId: story.refId,
         viewMode,
         location,
         path,

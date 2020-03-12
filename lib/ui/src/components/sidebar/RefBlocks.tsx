@@ -43,13 +43,13 @@ const Text = styled.p(({ theme }) => ({
 const Head: FunctionComponent<ListitemProps> = props => {
   const api = useStorybookApi();
   const { setExpanded, expandedSet } = useContext(ExpanderContext);
-  const { id, isComponent, childIds } = props;
+  const { id, isComponent, childIds, refId } = props;
 
   const onClick = useCallback(
     e => {
       e.preventDefault();
       if (!expandedSet[id] && isComponent && childIds && childIds.length) {
-        api.selectStory(childIds[0]);
+        api.selectStory(childIds[0], undefined, { ref: refId });
       }
       setExpanded(s => ({ ...s, [id]: !s[id] }));
     },
@@ -61,11 +61,11 @@ const Head: FunctionComponent<ListitemProps> = props => {
 const Leaf: FunctionComponent<ListitemProps> = props => {
   const api = useStorybookApi();
   const { setExpanded } = useContext(ExpanderContext);
-  const { id } = props;
+  const { id, refId } = props;
   const onClick = useCallback(
     e => {
       e.preventDefault();
-      api.selectStory(id);
+      api.selectStory(id, undefined, { ref: refId });
       setExpanded(s => ({ ...s, [id]: !s[id] }));
     },
     [id]

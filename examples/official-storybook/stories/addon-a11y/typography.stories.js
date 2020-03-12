@@ -2,7 +2,7 @@
 import React, { Fragment } from 'react';
 
 const text = 'Testing the a11y addon';
-const href = 'javascript:void 0';
+const href = 'http://example.com';
 
 export default {
   title: 'Addons/A11y/Typography',

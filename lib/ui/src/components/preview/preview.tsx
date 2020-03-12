@@ -22,11 +22,12 @@ const getTabs = (getFn: API['getElements']) => Object.values(getFn<Addon>(types.
 
 const canvasMapper = ({ state, api }: Combo) => ({
   storyId: state.storyId,
+  refId: state.refId,
   viewMode: state.viewMode,
   customCanvas: api.renderPreview,
   queryParams: state.customQueryParams,
   getElements: api.getElements,
-  story: api.getData(state.storyId),
+  story: api.getData(state.storyId, state.refId),
   refs: state.refs,
   active: !!(state.viewMode && state.viewMode.match(/^(story|docs)$/)),
 });
@@ -34,12 +35,22 @@ const canvasMapper = ({ state, api }: Combo) => ({
 const createCanvas = (id: string, baseUrl = 'iframe.html', withLoader = true): Addon => ({
   id: 'canvas',
   title: 'Canvas',
-  route: ({ storyId }) => `/story/${storyId}`,
+  route: ({ storyId, refId }) => (refId ? `/story/${refId}_${storyId}` : `/story/${storyId}`),
   match: ({ viewMode }) => !!(viewMode && viewMode.match(/^(story|docs)$/)),
   render: () => {
     return (
       <Consumer filter={canvasMapper}>
-        {({ story, refs, customCanvas, storyId, viewMode, queryParams, getElements, active }) => {
+        {({
+          story,
+          refs,
+          customCanvas,
+          storyId,
+          refId,
+          viewMode,
+          queryParams,
+          getElements,
+          active,
+        }) => {
           const wrappers = useMemo(() => [...defaultWrappers, ...getWrappers(getElements)], [
             getElements,
             ...defaultWrappers,
@@ -47,25 +58,12 @@ const createCanvas = (id: string, baseUrl = 'iframe.html', withLoader = true): A
 
           const isLoading = !!(
             (storyId && !story) ||
-            (story && story.refId && !refs[story.refId].ready)
+            (story && story.refId && refs[refId] && !refs[refId].ready)
           );
 
           return (
             <ZoomConsumer>
               {({ value: scale }) => {
-                const content = customCanvas ? (
-                  customCanvas(storyId, viewMode, id, baseUrl, scale, queryParams)
-                ) : (
-                  <FramesRenderer
-                    refs={refs}
-                    scale={scale}
-                    story={story}
-                    viewMode={viewMode}
-                    queryParams={queryParams}
-                    storyId={storyId}
-                  />
-                );
-
                 return (
                   <>
                     {withLoader && isLoading && <Loader id="preview-loader" role="progressbar" />}
@@ -76,7 +74,20 @@ const createCanvas = (id: string, baseUrl = 'iframe.html', withLoader = true): A
                       active={active}
                       wrappers={wrappers}
                     >
-                      {content}
+                      {customCanvas ? (
+                        customCanvas(storyId, viewMode, id, baseUrl, scale, queryParams)
+                      ) : (
+                        <FramesRenderer
+                          baseUrl={baseUrl}
+                          refs={refs}
+                          scale={scale}
+                          story={story}
+                          viewMode={viewMode}
+                          refId={refId}
+                          queryParams={queryParams}
+                          storyId={storyId}
+                        />
+                      )}
                     </ApplyWrappers>
                   </>
                 );
@@ -121,7 +132,7 @@ const Preview: FunctionComponent<PreviewProps> = props => {
     viewMode,
     story = undefined,
     description,
-    baseUrl = 'iframe.html',
+    baseUrl,
     withLoader = true,
   } = props;
   const { isToolshown } = options;
@@ -133,10 +144,10 @@ const Preview: FunctionComponent<PreviewProps> = props => {
     if (story) {
       const { refId, id } = story;
       api.emit(SET_CURRENT_STORY, {
-        storyId: refId ? `${refId}_${id}` : id,
+        storyId: id,
         viewMode,
         options: {
-          target: story.refId ? `storybook-ref-${story.refId}` : 'storybook-preview-iframe',
+          target: refId ? `storybook-ref-${refId}` : 'storybook-preview-iframe',
         },
       });
     }

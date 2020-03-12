@@ -133,6 +133,7 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
       provider,
       location,
       path,
+      refId,
       viewMode = props.docsMode ? 'docs' : 'story',
       storyId,
       docsMode,
@@ -144,7 +145,7 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
       setState: (stateChange: StatePartial, callback) => this.setState(stateChange, callback),
     });
 
-    const routeData = { location, path, viewMode, storyId };
+    const routeData = { location, path, viewMode, storyId, refId };
 
     // Initialize the state to be the initial (persisted) state of the store.
     // This gives the modules the chance to read the persisted state, apply their defaults
@@ -153,6 +154,7 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
       layout: { isToolshown: false, showPanel: false },
       ui: { docsMode: true },
     };
+
     this.state = store.getInitialState(
       getInitialState({
         ...routeData,
@@ -181,7 +183,7 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
     );
 
     // Create our initial state by combining the initial state of all modules, then overlaying any saved state
-    const state = getInitialState(...this.modules.map(m => m.state));
+    const state = getInitialState(this.state, ...this.modules.map(m => m.state));
 
     // Get our API by combining the APIs exported by each module
     const api: API = Object.assign(this.api, { navigate }, ...this.modules.map(m => m.api));
@@ -198,6 +200,7 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
         ...state,
         location: props.location,
         path: props.path,
+        refId: props.refId,
         // if its a docsOnly page, even the 'story' view mode is considered 'docs'
         viewMode: (props.docsMode && props.viewMode) === 'story' ? 'docs' : props.viewMode,
         storyId: props.storyId,
