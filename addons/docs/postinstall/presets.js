@@ -1,6 +1,5 @@
 import fs from 'fs';
 import { presetsAddPreset, getFrameworks } from '@storybook/postinstall';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { logger } from '@storybook/node-logger';
 
 export default function transformer(file, api) {

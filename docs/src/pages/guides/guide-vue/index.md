@@ -35,14 +35,15 @@ npm install vue --save
 npm install vue-loader vue-template-compiler @babel/core babel-loader babel-preset-vue --save-dev
 ```
 
-## Step 2: Add an npm script
+## Step 2: Add npm scripts
 
-Then add the following NPM script to your `package.json` in order to start the storybook later in this guide:
+Then add the following scripts to your `package.json` in order to start the storybook later in this guide:
 
 ```json
 {
   "scripts": {
-    "storybook": "start-storybook"
+    "storybook": "start-storybook",
+    "build-storybook": "build-storybook"
   }
 }
 ```

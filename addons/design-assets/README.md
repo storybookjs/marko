@@ -15,7 +15,7 @@ within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: ['@storybook/addon-design-assets/register']
+  addons: ['@storybook/addon-design-assets']
 }
 ```
 

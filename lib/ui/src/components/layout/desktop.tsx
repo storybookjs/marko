@@ -21,66 +21,69 @@ export interface DesktopProps {
   docsOnly: boolean;
 }
 
-const Desktop = React.memo<DesktopProps>(
-  ({
-    Panel,
-    Sidebar,
-    Preview,
-    Notifications,
-    pages,
-    options,
-    viewMode = undefined,
-    width = 0,
-    height = 0,
-    panelCount,
-    docsOnly = false,
-  }) => (
-    <Fragment>
-      <Notifications
-        placement={{
-          position: 'fixed',
-          bottom: 20,
-          left: 20,
-        }}
-      />
-      {width && height ? (
-        <S.Layout
-          options={options}
-          bounds={{ width, height, top: 0, left: 0 }}
-          viewMode={viewMode}
-          docsOnly={!!docsOnly}
-          panelCount={panelCount}
-        >
-          {({ navProps, mainProps, panelProps, previewProps }) => (
-            <Fragment>
-              <S.Sidebar {...navProps}>
-                <Sidebar debug={navProps} />
-              </S.Sidebar>
-              <S.Main {...mainProps} isFullscreen={!!mainProps.isFullscreen}>
-                <S.Preview {...previewProps} hidden={viewMode === 'settings'}>
-                  <Preview id="main" debug={previewProps} />
-                </S.Preview>
+const Desktop = Object.assign(
+  React.memo<DesktopProps>(
+    ({
+      Panel,
+      Sidebar,
+      Preview,
+      Notifications,
+      pages,
+      options,
+      viewMode = undefined,
+      width = 0,
+      height = 0,
+      panelCount,
+      docsOnly = false,
+    }) => (
+      <Fragment>
+        <Notifications
+          placement={{
+            position: 'fixed',
+            bottom: 20,
+            left: 20,
+          }}
+        />
+        {width && height ? (
+          <S.Layout
+            options={options}
+            bounds={{ width, height, top: 0, left: 0 }}
+            viewMode={viewMode}
+            docsOnly={!!docsOnly}
+            panelCount={panelCount}
+          >
+            {({ navProps, mainProps, panelProps, previewProps }) => (
+              <Fragment>
+                <S.Sidebar {...navProps}>
+                  <Sidebar />
+                </S.Sidebar>
+                <S.Main {...mainProps} isFullscreen={!!mainProps.isFullscreen}>
+                  <S.Preview {...previewProps} hidden={viewMode === 'settings'}>
+                    <Preview id="main" />
+                  </S.Preview>
 
-                <S.Panel {...panelProps} hidden={viewMode !== 'story' || docsOnly}>
-                  <Panel debug={panelProps} />
-                </S.Panel>
+                  <S.Panel {...panelProps} hidden={viewMode !== 'story' || docsOnly}>
+                    <Panel />
+                  </S.Panel>
 
-                {pages.map(({ key, route: Route, render: Content }) => (
-                  <Route key={key}>
-                    <Content />
-                  </Route>
-                ))}
-              </S.Main>
-            </Fragment>
-          )}
-        </S.Layout>
-      ) : (
-        <div title={JSON.stringify({ width, height })} />
-      )}
-    </Fragment>
-  )
+                  {pages.map(({ key, route: Route, render: Content }) => (
+                    <Route key={key}>
+                      <Content />
+                    </Route>
+                  ))}
+                </S.Main>
+              </Fragment>
+            )}
+          </S.Layout>
+        ) : (
+          <div title={JSON.stringify({ width, height })} />
+        )}
+      </Fragment>
+    )
+  ),
+  {
+    displayName: 'DesktopLayout',
+  }
 );
-
-Desktop.displayName = 'DesktopLayout';
 
 export { Desktop };

@@ -36,6 +36,9 @@ storiesOf('Basics/Button', module).add('all buttons', () => (
     <Button secondary small>
       Secondary
     </Button>
+    <Button gray small>
+      Secondary
+    </Button>
     <Button outline small>
       Outline
     </Button>

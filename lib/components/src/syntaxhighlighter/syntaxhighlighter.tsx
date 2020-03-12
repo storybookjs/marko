@@ -6,7 +6,10 @@ import memoize from 'memoizerific';
 import jsx from 'react-syntax-highlighter/dist/cjs/languages/prism/jsx';
 import bash from 'react-syntax-highlighter/dist/cjs/languages/prism/bash';
 import css from 'react-syntax-highlighter/dist/cjs/languages/prism/css';
+import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json';
 import html from 'react-syntax-highlighter/dist/cjs/languages/prism/markup';
+import md from 'react-syntax-highlighter/dist/cjs/languages/prism/markdown';
+import yml from 'react-syntax-highlighter/dist/cjs/languages/prism/yaml';
 import tsx from 'react-syntax-highlighter/dist/cjs/languages/prism/tsx';
 import typescript from 'react-syntax-highlighter/dist/cjs/languages/prism/typescript';
 
@@ -21,6 +24,9 @@ import { formatter } from './formatter';
 export { createElement as createSyntaxHighlighterElement };
 
 ReactSyntaxHighlighter.registerLanguage('jsx', jsx);
+ReactSyntaxHighlighter.registerLanguage('json', json);
+ReactSyntaxHighlighter.registerLanguage('yml', yml);
+ReactSyntaxHighlighter.registerLanguage('md', md);
 ReactSyntaxHighlighter.registerLanguage('bash', bash);
 ReactSyntaxHighlighter.registerLanguage('css', css);
 ReactSyntaxHighlighter.registerLanguage('html', html);

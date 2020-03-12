@@ -8,8 +8,8 @@ const rootElement = document ? document.getElementById('root') : null;
 
 export default function renderMain({
   storyFn,
-  selectedKind,
-  selectedStory,
+  kind,
+  name,
   showMain,
   showError,
   // forceRender,
@@ -18,7 +18,7 @@ export default function renderMain({
 
   if (!Element) {
     showError({
-      title: `Expecting a Rax element from the story: "${selectedStory}" of "${selectedKind}".`,
+      title: `Expecting a Rax element from the story: "${name}" of "${kind}".`,
       description: dedent`
         Did you forget to return the Rax element from the story?
         Use "() => (<MyComp/>)" or "() => { return <MyComp/>; }" when defining the story.

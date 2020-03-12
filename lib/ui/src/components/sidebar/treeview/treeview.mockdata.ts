@@ -1,6 +1,6 @@
 import { StoriesHash } from '@storybook/api';
 
-type MockDataSet = Record<string, StoriesHash>;
+export type MockDataSet = Record<string, StoriesHash>;
 
 export const mockDataset: MockDataSet = {
   withRoot: {
@@ -41,6 +41,7 @@ export const mockDataset: MockDataSet = {
       depth: 2,
       name: 'GrandChild A1.1',
       kind: '',
+      args: {},
     },
     '1-12-122': {
       isRoot: false,
@@ -51,6 +52,7 @@ export const mockDataset: MockDataSet = {
       depth: 2,
       name: 'GrandChild A1.2',
       kind: '',
+      args: {},
     },
     '1-12': {
       isRoot: false,
@@ -71,6 +73,7 @@ export const mockDataset: MockDataSet = {
       name: 'Child B1',
       parent: '2',
       kind: '',
+      args: {},
     },
     '2-22': {
       isRoot: false,
@@ -81,6 +84,7 @@ export const mockDataset: MockDataSet = {
       name: 'Child B2',
       parent: '2',
       kind: '',
+      args: {},
     },
     '3': {
       isRoot: true,
@@ -100,6 +104,7 @@ export const mockDataset: MockDataSet = {
       name: 'Child A1',
       parent: '3',
       kind: '',
+      args: {},
     },
     '3-32': {
       isRoot: false,
@@ -120,6 +125,7 @@ export const mockDataset: MockDataSet = {
       name: 'GrandChild A1.1',
       parent: '3-32',
       kind: '',
+      args: {},
     },
     '3-32-322': {
       isRoot: false,
@@ -130,6 +136,7 @@ export const mockDataset: MockDataSet = {
       name: 'GrandChild A1.2',
       parent: '3-32',
       kind: '',
+      args: {},
     },
   },
   noRoot: {
@@ -160,6 +167,7 @@ export const mockDataset: MockDataSet = {
       isRoot: false,
       parent: '1',
       kind: '',
+      args: {},
     },
     '1-12-121': {
       id: '1-12-121',
@@ -170,6 +178,7 @@ export const mockDataset: MockDataSet = {
       isRoot: false,
       parent: '1-12',
       kind: '',
+      args: {},
     },
     '1-12-122': {
       id: '1-12-122',
@@ -180,6 +189,7 @@ export const mockDataset: MockDataSet = {
       isRoot: false,
       parent: '1-12',
       kind: '',
+      args: {},
     },
     '1-12': {
       id: '1-12',
@@ -200,6 +210,7 @@ export const mockDataset: MockDataSet = {
       isRoot: false,
       parent: '2',
       kind: '',
+      args: {},
     },
     '2-22': {
       id: '2-22',
@@ -210,6 +221,7 @@ export const mockDataset: MockDataSet = {
       isRoot: false,
       parent: '2',
       kind: '',
+      args: {},
     },
   },
 };

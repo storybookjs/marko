@@ -85,20 +85,20 @@ export function ensurePanel(panels: Panels, selectedPanel?: string, currentPanel
   return currentPanel;
 }
 
-export default ({ provider, store }: Module) => {
+export default ({ provider, store, fullAPI }: Module) => {
   const api: SubAPI = {
     getElements: type => provider.getElements(type),
     getPanels: () => api.getElements(types.PANEL),
     getStoryPanels: () => {
       const allPanels = api.getPanels();
-      const { storyId, storiesHash } = store.getState();
-      const storyInput = storyId && (storiesHash[storyId] as StoryInput);
+      const { storyId } = store.getState();
+      const story = fullAPI.getData(storyId);
 
-      if (!allPanels || !storyInput) {
+      if (!allPanels || !story) {
         return allPanels;
       }
 
-      const { parameters } = storyInput;
+      const { parameters } = story;
 
       const filteredPanels: Collection = {};
       Object.entries(allPanels).forEach(([id, panel]) => {

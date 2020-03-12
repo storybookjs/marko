@@ -51,7 +51,7 @@ within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: ['@storybook/addon-contexts/register']
+  addons: ['@storybook/addon-contexts']
 }
 ```
 
@@ -84,7 +84,7 @@ Finally, you may want to modify the default setups at per story level. Here is h
 export const defaultView = () => <div />;
 defaultView.story = {
   parameters: {
-    context: [{}]
+    contexts: [{}]
   }
 };
 ```

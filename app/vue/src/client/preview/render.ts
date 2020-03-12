@@ -1,6 +1,6 @@
 import dedent from 'ts-dedent';
 import Vue from 'vue';
-import { RenderMainArgs } from './types';
+import { RenderContext } from './types';
 
 export const COMPONENT = 'STORYBOOK_COMPONENT';
 export const VALUES = 'STORYBOOK_VALUES';
@@ -20,20 +20,20 @@ const root = new Vue({
 
 export default function render({
   storyFn,
-  selectedKind,
-  selectedStory,
+  kind,
+  name,
   showMain,
   showError,
   showException,
   forceRender,
-}: RenderMainArgs) {
+}: RenderContext) {
   Vue.config.errorHandler = showException;
 
   const element = storyFn();
 
   if (!element) {
     showError({
-      title: `Expecting a Vue component from the story: "${selectedStory}" of "${selectedKind}".`,
+      title: `Expecting a Vue component from the story: "${name}" of "${kind}".`,
       description: dedent`
         Did you forget to return the Vue component from the story?
         Use "() => ({ template: '<my-comp></my-comp>' })" or "() => ({ components: MyComp, template: '<my-comp></my-comp>' })" when defining the story.

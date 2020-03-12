@@ -18,8 +18,8 @@ export type DocsStoryProps = StoryData & {
 
 export interface SlotContext {
   id?: string;
-  selectedKind?: string;
-  selectedStory?: string;
+  kind?: string;
+  name?: string;
   parameters?: any;
   storyStore?: any;
 }
