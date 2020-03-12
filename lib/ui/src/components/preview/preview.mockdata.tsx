@@ -33,7 +33,7 @@ export const previewProps: PreviewProps = {
     parent: 'root',
     children: [],
     parameters: {
-      filename: '',
+      fileName: '',
       options: {},
       docsOnly: false,
     },
