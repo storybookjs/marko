@@ -1,6 +1,6 @@
 import deprecate from 'util-deprecate';
 
-import { ConfigApi, ClientApi, StoryStore, combineParameters } from '@storybook/client-api';
+import { ConfigApi, ClientApi, StoryStore } from '@storybook/client-api';
 import { isExportStory, storyNameFromExport, toId } from '@storybook/csf';
 import { logger } from '@storybook/client-logger';
 
