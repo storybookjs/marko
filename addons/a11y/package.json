@@ -48,9 +48,7 @@
     "react-redux": "^7.0.2",
     "react-sizeme": "^2.5.2",
     "redux": "^4.0.1",
-    "regenerator-runtime": "^0.13.3",
-    "ts-dedent": "^1.1.1",
-    "util-deprecate": "^1.0.2"
+    "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
     "@types/react-redux": "^7.0.6",

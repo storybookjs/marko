@@ -43,8 +43,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.9.17",
     "react-syntax-highlighter": "^11.0.2",
-    "regenerator-runtime": "^0.13.3",
-    "util-deprecate": "^1.0.2"
+    "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
     "@types/react": "^16.9.19",
