@@ -4,8 +4,7 @@ import { sanitize, parseKind } from '@storybook/csf';
 
 import { Args } from '../index';
 import merge from './merge';
-import { ComposedRef } from '../modules/refs';
-import { Provider } from '../init-provider-api';
+import { Provider } from '../modules/provider';
 
 export type StoryId = string;
 

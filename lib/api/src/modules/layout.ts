@@ -7,8 +7,6 @@ import deepEqual from 'fast-deep-equal';
 import { themes, ThemeVars } from '@storybook/theming';
 import merge from '../lib/merge';
 import { State, ModuleFn } from '../index';
-import Store from '../store';
-import { Provider } from './provider';
 
 export type PanelPositions = 'bottom' | 'right';
 export type ActiveTabsType = 'sidebar' | 'canvas' | 'addons';

@@ -1,6 +1,6 @@
 import { DOCS_MODE } from 'global';
 import React, { ComponentProps, FunctionComponent, useMemo } from 'react';
-import { opacify, transparentize } from 'polished';
+import { transparentize } from 'polished';
 import { styled } from '@storybook/theming';
 import { Icons } from '@storybook/components';
 

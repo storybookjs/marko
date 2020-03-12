@@ -1,7 +1,5 @@
 import React, { FunctionComponent, ReactNode, useState, useEffect } from 'react';
 import { styled } from '@storybook/theming';
-import { logger } from '@storybook/client-logger';
-// import { withState, lifecycle } from 'recompose';
 import { document } from 'global';
 
 import TooltipTrigger from 'react-popper-tooltip';
