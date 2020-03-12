@@ -54,7 +54,7 @@ export const PassedToStory = inputArgs => {
 };
 
 PassedToStory.story = {
-  parameters: { argTypes: { name: { defaultValue: 'initial' } } },
+  argTypes: { name: { defaultValue: 'initial' } },
 };
 
 PassedToStory.propTypes = {
