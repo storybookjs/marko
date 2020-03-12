@@ -19,20 +19,20 @@ export interface SubState {
 
 type Versions = Record<string, string>;
 
-export type SetRefData = Omit<InceptionRef, 'stories'> & {
+export type SetRefData = Omit<ComposedRef, 'stories'> & {
   stories?: StoriesRaw;
 };
 
 export interface SubAPI {
-  findRef: (source: string) => InceptionRef;
+  findRef: (source: string) => ComposedRef;
   setRef: (id: string, data: SetRefData, ready?: boolean) => void;
   getRefs: () => Refs;
   checkRef: (ref: SetRefData) => Promise<void>;
   changeRefVersion: (id: string, url: string) => void;
 }
 
-export type Mapper = (ref: InceptionRef, story: StoryInput) => StoryInput;
-export interface InceptionRef {
+export type Mapper = (ref: ComposedRef, story: StoryInput) => StoryInput;
+export interface ComposedRef {
   id: string;
   title?: string;
   url: string;
@@ -44,7 +44,7 @@ export interface InceptionRef {
   error?: any;
 }
 
-export type Refs = Record<string, InceptionRef>;
+export type Refs = Record<string, ComposedRef>;
 export type RefId = string;
 export type RefUrl = string;
 
@@ -61,13 +61,13 @@ export const defaultMapper: Mapper = (b, a) => {
   return { ...a, kind: a.kind.replace('|', '/') };
 };
 
-const addRefIds = (input: StoriesHash, ref: InceptionRef): StoriesHash => {
+const addRefIds = (input: StoriesHash, ref: ComposedRef): StoriesHash => {
   return Object.entries(input).reduce((acc, [id, item]) => {
     return { ...acc, [id]: { ...item, refId: ref.id } };
   }, {} as StoriesHash);
 };
 
-const map = (input: StoriesRaw, ref: InceptionRef, options: { mapper?: Mapper }): StoriesRaw => {
+const map = (input: StoriesRaw, ref: ComposedRef, options: { mapper?: Mapper }): StoriesRaw => {
   const { mapper } = options;
   if (mapper) {
     return Object.entries(input).reduce((acc, [id, item]) => {

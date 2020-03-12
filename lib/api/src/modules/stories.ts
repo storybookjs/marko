@@ -22,7 +22,7 @@ import {
 } from '../lib/stories';
 
 import { Module, Args } from '../index';
-import { InceptionRef, Refs, getSourceType } from './refs';
+import { ComposedRef, Refs, getSourceType } from './refs';
 
 type Direction = -1 | 1;
 type ParameterName = string;
@@ -38,19 +38,19 @@ export interface SubState {
 
 export interface SubAPI {
   storyId: typeof toId;
-  resolveStory: (storyId: StoryId, refsId?: InceptionRef['id']) => Story | Group | Root;
+  resolveStory: (storyId: StoryId, refsId?: ComposedRef['id']) => Story | Group | Root;
   selectStory: (
     kindOrId: string,
     story?: string,
-    obj?: { ref?: InceptionRef['id']; viewMode?: ViewMode }
+    obj?: { ref?: ComposedRef['id']; viewMode?: ViewMode }
   ) => void;
   getCurrentStoryData: () => Story | Group;
   setStories: (stories: StoriesRaw) => Promise<void>;
   jumpToComponent: (direction: Direction) => void;
   jumpToStory: (direction: Direction) => void;
-  getData: (storyId: StoryId, refId?: InceptionRef['id']) => Story | Group;
+  getData: (storyId: StoryId, refId?: ComposedRef['id']) => Story | Group;
   getParameters: (
-    storyId: StoryId | { storyId: StoryId; refId: InceptionRef['id'] },
+    storyId: StoryId | { storyId: StoryId; refId: ComposedRef['id'] },
     parameterName?: ParameterName
   ) => Story['parameters'] | any;
   getCurrentParameter<S>(parameterName?: ParameterName): S;

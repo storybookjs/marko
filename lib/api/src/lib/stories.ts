@@ -4,7 +4,7 @@ import { sanitize, parseKind } from '@storybook/csf';
 
 import { Args } from '../index';
 import merge from './merge';
-import { InceptionRef } from '../modules/refs';
+import { ComposedRef } from '../modules/refs';
 import { Provider } from '../init-provider-api';
 
 export type StoryId = string;
@@ -13,7 +13,7 @@ export interface Root {
   id: StoryId;
   depth: 0;
   name: string;
-  refId?: InceptionRef['id'];
+  refId?: ComposedRef['id'];
   children: StoryId[];
   isComponent: false;
   isRoot: true;
@@ -30,7 +30,7 @@ export interface Group {
   depth: number;
   name: string;
   children: StoryId[];
-  refId?: InceptionRef['id'];
+  refId?: ComposedRef['id'];
   parent?: StoryId;
   isComponent: boolean;
   isRoot: false;
@@ -48,7 +48,7 @@ export interface Story {
   parent: StoryId;
   name: string;
   kind: string;
-  refId?: InceptionRef['id'];
+  refId?: ComposedRef['id'];
   children?: StoryId[];
   isComponent: boolean;
   isRoot: false;
@@ -70,7 +70,7 @@ export interface Story {
 export interface StoryInput {
   id: StoryId;
   name: string;
-  refId?: InceptionRef['id'];
+  refId?: ComposedRef['id'];
   kind: string;
   children: string[];
   parameters: {
