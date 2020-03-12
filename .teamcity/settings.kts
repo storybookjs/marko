@@ -43,8 +43,8 @@ project {
     buildType(TestWorkflow)
 
     buildType(Build)
-    buildType(Chromatic)
-    buildType(Packtracker)
+    //buildType(Chromatic)
+    //buildType(Packtracker)
     buildType(E2E)
     buildType(SmokeTests)
     buildType(Frontpage)
@@ -59,8 +59,8 @@ project {
     buildTypesOrderIds = arrayListOf(
             RelativeId("TestWorkflow"),
             RelativeId("Build"),
-            RelativeId("Packtracker"),
-            RelativeId("Chromatic"),
+            //RelativeId("Packtracker"),
+            //RelativeId("Chromatic"),
             RelativeId("E2E"),
             RelativeId("SmokeTests"),
             RelativeId("Frontpage"),
@@ -97,7 +97,7 @@ object Common: Template({
 
     features {
         commitStatusPublisher {
-            id = "BUILD_EXT_1"
+            id = "Commit status publisher"
             publisher = github {
                 githubUrl = "https://api.github.com"
                 authType = personalToken {
@@ -110,12 +110,13 @@ object Common: Template({
             id = "swabra"
             verbose = true
             paths = """
+                -:.cache
                 -:node_modules
                 -:**/node_modules
             """.trimIndent()
         }
         pullRequests {
-            id = "BUILD_EXT_2"
+            id = "Pull requests"
             provider = github {
                 authType = vcsRoot()
                 filterAuthorRole = PullRequests.GitHubRoleFilter.EVERYBODY
@@ -233,6 +234,8 @@ object ExamplesTemplate : Template({
     params {
         param("env.CIRCLE_NODE_TOTAL", "5")
     }
+
+    disableFeature("Commit status publisher")
 })
 
 object Examples1 : BuildType({
@@ -369,6 +372,8 @@ object Chromatic1 : BuildType({
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
+
+    disableFeature("Commit status publisher")
 })
 
 object Chromatic2 : BuildType({
@@ -401,6 +406,8 @@ object Chromatic2 : BuildType({
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
+
+    disableFeature("Commit status publisher")
 })
 
 object Chromatic3 : BuildType({
@@ -433,6 +440,7 @@ object Chromatic3 : BuildType({
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
+    disableFeature("Commit status publisher")
 })
 
 object Chromatic4 : BuildType({
@@ -465,6 +473,7 @@ object Chromatic4 : BuildType({
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
+    disableFeature("Commit status publisher")
 })
 
 object Chromatic : BuildType({
@@ -772,8 +781,8 @@ object TestWorkflow : BuildType({
     maxRunningBuilds = 2
 
     dependencies {
-        snapshot(Chromatic) {}
-        snapshot(Packtracker) {}
+        //snapshot(Chromatic) {}
+        //snapshot(Packtracker) {}
         snapshot(E2E) {}
         snapshot(SmokeTests) {}
         snapshot(Lint) {}
