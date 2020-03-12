@@ -45,7 +45,7 @@ export interface SubAPI {
     obj?: { ref?: InceptionRef['id']; viewMode?: ViewMode }
   ) => void;
   getCurrentStoryData: () => Story | Group;
-  setStories: (stories: StoriesRaw) => void;
+  setStories: (stories: StoriesRaw) => Promise<void>;
   jumpToComponent: (direction: Direction) => void;
   jumpToStory: (direction: Direction) => void;
   getData: (storyId: StoryId, refId?: InceptionRef['id']) => Story | Group;
@@ -58,9 +58,6 @@ export interface SubAPI {
   findLeafStoryId(StoriesHash: StoriesHash, storyId: StoryId): StoryId;
 }
 
-// When adding a group, also add all of its children, depth first
-const split = /((\w*)_)?(.*)/;
-
 const initStoriesApi = ({
   fullAPI,
   store,
@@ -70,9 +67,12 @@ const initStoriesApi = ({
   viewMode: initialViewMode,
 }: Module) => {
   const setInitialStory = () => {
-    const settingsPageList = ['about', 'shortcuts'];
     const { storyId, viewMode, storiesHash } = store.getState();
-    const story = storiesHash[storyId];
+    const story = api.getData(storyId);
+
+    if (viewMode === 'settings' || viewMode === 'page') {
+      return;
+    }
 
     if (storyId && storyId.match(/--\*$/)) {
       const idStart = storyId.slice(0, -1); // drop the * at the end
@@ -88,11 +88,7 @@ const initStoriesApi = ({
       // we pick the first leaf and navigate
       const firstLeaf = Object.values(storiesHash).find((s: Story | Group) => !s.children);
 
-      if (viewMode === 'settings' && settingsPageList.includes(storyId)) {
-        api.selectStory(storyId, undefined, {});
-      } else if (viewMode === 'settings' && !settingsPageList.includes(storyId)) {
-        api.selectStory(firstLeaf.id, undefined, { viewMode: 'story' });
-      } else if (viewMode && firstLeaf) {
+      if (viewMode && firstLeaf) {
         api.selectStory(firstLeaf.id, undefined, {});
       }
     } else if (story && !story.isLeaf) {
@@ -116,7 +112,7 @@ const initStoriesApi = ({
       if (refId) {
         return refs[refId].stories ? refs[refId].stories[storyId] : undefined;
       }
-      return storiesHash[storyId];
+      return storiesHash ? storiesHash[storyId] : undefined;
     },
     getCurrentStoryData: () => {
       const { storyId, refId } = store.getState();
@@ -216,27 +212,23 @@ const initStoriesApi = ({
         api.selectStory(result, undefined, { ref: refId });
       }
     },
-    setStories: input => {
+    setStories: async input => {
       // Now create storiesHash by reordering the above by group
       const existing = store.getState().storiesHash;
       const hash = transformStoriesRawToStoriesHash(input, existing, {
         provider,
       });
 
-      store.setState(
-        {
-          storiesHash: hash,
-          storiesConfigured: true,
-        },
-        () => {
-          const { storyId, refId } = store.getState();
-          const story = api.getData(storyId);
+      await store.setState({
+        storiesHash: hash,
+        storiesConfigured: true,
+      });
 
-          if (!refId && !story) {
-            setInitialStory();
-          }
-        }
-      );
+      const { refId } = store.getState();
+
+      if (!refId) {
+        setInitialStory();
+      }
     },
     selectStory: (kindOrId, story = undefined, options = {}) => {
       const { ref, viewMode: viewModeFromArgs } = options;
