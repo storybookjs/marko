@@ -138,8 +138,18 @@ export default class StoryStore {
     const storyIds = Object.keys(this._stories);
     if (storyIds.length) {
       const {
-        parameters: { globalArgs },
+        parameters: { globalArgs: initialGlobalArgs, globalArgTypes },
       } = this.fromId(storyIds[0]);
+
+      const defaultGlobalArgs: Args = globalArgTypes
+        ? Object.entries(globalArgTypes as Record<string, { defaultValue: any }>).reduce(
+            (acc, [arg, { defaultValue }]) => {
+              if (defaultValue) acc[arg] = defaultValue;
+              return acc;
+            },
+            {} as Args
+          )
+        : {};
 
       // To deal with HMR, we consider the previous value of global args, and:
       //   1. Remove any keys that are not in the new parameter
@@ -151,7 +161,7 @@ export default class StoryStore {
 
           return acc;
         },
-        globalArgs
+        { ...defaultGlobalArgs, ...initialGlobalArgs }
       );
     }
   }

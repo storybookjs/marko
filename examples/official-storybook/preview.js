@@ -58,3 +58,12 @@ addParameters({
 export const parameters = {
   exportedParameter: 'exportedParameter',
 };
+
+export const globalArgs = {
+  foo: 'fooValue',
+};
+
+export const globalArgTypes = {
+  foo: { defaultValue: 'fooDefaultValue' },
+  bar: { defaultValue: 'barDefaultValue' },
+};
