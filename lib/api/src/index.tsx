@@ -119,6 +119,17 @@ export interface Args {
   [key: string]: any;
 }
 
+export interface ArgType {
+  name?: string;
+  description?: string;
+  defaultValue?: any;
+  [key: string]: any;
+}
+
+export interface ArgTypes {
+  [key: string]: ArgType;
+}
+
 type StatePartial = Partial<State>;
 
 export type ManagerProviderProps = Children & RouterData & ProviderData & DocsModeData;
@@ -420,4 +431,12 @@ export function useGlobalArgs(): [Args, (newGlobalArgs: Args) => void] {
   } = useContext(ManagerContext);
 
   return [globalArgs, updateGlobalArgs];
+}
+
+export function useArgTypes(): ArgTypes {
+  return useParameter<ArgTypes>('argTypes', {});
+}
+
+export function useGlobalArgTypes(): ArgTypes {
+  return useParameter<ArgTypes>('globalArgTypes', {});
 }
