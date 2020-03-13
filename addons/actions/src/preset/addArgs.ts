@@ -1,11 +1,10 @@
 import { ParameterEnhancer, combineParameters } from '@storybook/client-api';
-import { Args } from '@storybook/addons';
+import { Args, ArgType } from '@storybook/addons';
 
 import { action } from '../index';
 
 // interface ActionsParameter {
 //   disable?: boolean;
-//   args?: string[];
 //   argTypesRegex?: RegExp;
 // }
 
@@ -13,7 +12,7 @@ import { action } from '../index';
  * Automatically add action args for argTypes whose name
  * matches a regex, such as `^on.*` for react-style `onClick` etc.
  */
-export const inferActionsFromArgTypes: ParameterEnhancer = context => {
+export const inferActionsFromArgTypesRegex: ParameterEnhancer = context => {
   const { args, actions, argTypes } = context.parameters;
   if (!actions || actions.disable || !actions.argTypesRegex || !argTypes) {
     return null;
@@ -35,14 +34,18 @@ export const inferActionsFromArgTypes: ParameterEnhancer = context => {
 /**
  * Add action args for list of strings.
  */
-export const addActionsFromArgs: ParameterEnhancer = context => {
-  const { args, actions } = context.parameters;
-  if (!actions || actions.disable || !actions.args) {
+export const addActionsFromArgTypes: ParameterEnhancer = context => {
+  const { args, argTypes, actions } = context.parameters;
+  if (actions?.disable || !argTypes) {
     return null;
   }
 
-  const actionArgs = (actions.args as string[]).reduce((acc, name) => {
-    acc[name] = action(name);
+  const actionArgs = Object.keys(argTypes).reduce((acc, argName) => {
+    const argType: ArgType = argTypes[argName];
+    if (argType.action) {
+      const message = typeof argType.action === 'string' ? argType.action : argName;
+      acc[argName] = action(message);
+    }
     return acc;
   }, {} as Args);
 
@@ -51,4 +54,4 @@ export const addActionsFromArgs: ParameterEnhancer = context => {
   };
 };
 
-export const parameterEnhancers = [addActionsFromArgs, inferActionsFromArgTypes];
+export const parameterEnhancers = [addActionsFromArgTypes, inferActionsFromArgTypesRegex];

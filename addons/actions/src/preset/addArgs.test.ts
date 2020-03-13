@@ -1,8 +1,8 @@
 import { StoryContext } from '@storybook/addons';
-import { inferActionsFromArgTypes, addActionsFromArgs } from './addArgs';
+import { inferActionsFromArgTypesRegex, addActionsFromArgTypes } from './addArgs';
 
 describe('actions parameter enhancers', () => {
-  describe('argTypes option', () => {
+  describe('actions.argTypesRegex parameter', () => {
     const baseParameters = {
       argTypes: { onClick: {}, onFocus: {}, somethingElse: {} },
       actions: { argTypesRegex: '^on.*' },
@@ -10,7 +10,7 @@ describe('actions parameter enhancers', () => {
 
     it('should add actions that match a pattern', () => {
       const parameters = baseParameters;
-      const { args } = inferActionsFromArgTypes({ parameters } as StoryContext);
+      const { args } = inferActionsFromArgTypesRegex({ parameters } as StoryContext);
       expect(Object.keys(args)).toEqual(['onClick', 'onFocus']);
     });
 
@@ -19,7 +19,7 @@ describe('actions parameter enhancers', () => {
         ...baseParameters,
         args: { onClick: 'pre-existing arg' },
       };
-      const { args } = inferActionsFromArgTypes({ parameters } as StoryContext);
+      const { args } = inferActionsFromArgTypesRegex({ parameters } as StoryContext);
       expect(Object.keys(args)).toEqual(['onClick', 'onFocus']);
       expect(args.onClick).toEqual('pre-existing arg');
     });
@@ -29,19 +29,22 @@ describe('actions parameter enhancers', () => {
         ...baseParameters,
         actions: { ...baseParameters.actions, disable: true },
       };
-      const result = inferActionsFromArgTypes({ parameters } as StoryContext);
+      const result = inferActionsFromArgTypesRegex({ parameters } as StoryContext);
       expect(result).toBeFalsy();
     });
   });
 
-  describe('args option', () => {
+  describe('argTypes.action parameter', () => {
     const baseParameters = {
-      actions: { args: ['onClick', 'onBlur'] },
+      argTypes: {
+        onClick: { action: 'clicked!' },
+        onBlur: { action: 'blurred!' },
+      },
     };
 
     it('should add actions based on action.args', () => {
       const parameters = baseParameters;
-      const { args } = addActionsFromArgs({ parameters } as StoryContext);
+      const { args } = addActionsFromArgTypes({ parameters } as StoryContext);
       expect(Object.keys(args)).toEqual(['onClick', 'onBlur']);
     });
 
@@ -50,14 +53,14 @@ describe('actions parameter enhancers', () => {
         ...baseParameters,
         args: { onClick: 'pre-existing arg' },
       };
-      const { args } = addActionsFromArgs({ parameters } as StoryContext);
+      const { args } = addActionsFromArgTypes({ parameters } as StoryContext);
       expect(Object.keys(args)).toEqual(['onClick', 'onBlur']);
       expect(args.onClick).toEqual('pre-existing arg');
     });
 
     it('should do nothing if actions are disabled', () => {
-      const parameters = { actions: { ...baseParameters.actions, disable: true } };
-      const result = addActionsFromArgs({ parameters } as StoryContext);
+      const parameters = { ...baseParameters, actions: { disable: true } };
+      const result = addActionsFromArgTypes({ parameters } as StoryContext);
       expect(result).toBeFalsy();
     });
   });

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { window, File } from 'global';
 import React, { Fragment } from 'react';
 import { action, actions, configureActions, decorate } from '@storybook/addon-actions';
@@ -17,16 +18,18 @@ export default {
   },
 };
 
-export const ArgsExample = args => {
-  const { onClick } = args;
-  return <Button onClick={onClick}>Hello World</Button>;
+export const ArgTypesExample = ({ onClick, onFocus }) => (
+  <Button {...{ onClick, onFocus }}>Hello World</Button>
+);
+
+ArgTypesExample.story = {
+  argTypes: {
+    onClick: { action: 'clicked!' },
+    onFocus: { action: true },
+  },
 };
 
-ArgsExample.story = {
-  parameters: { actions: { args: ['onClick'] } },
-};
-
-export const ArgTypesExample = (args, context) => {
+export const ArgTypesRegexExample = (args, context) => {
   const { someFunction, onClick, onFocus } = args;
   return (
     <Button onMouseOver={someFunction} {...{ onClick, onFocus }}>
@@ -35,11 +38,9 @@ export const ArgTypesExample = (args, context) => {
   );
 };
 
-ArgTypesExample.story = {
-  parameters: {
-    actions: { argTypesRegex: '^on.*' },
-    argTypes: { someFunction: {}, onClick: {}, onFocus: {} },
-  },
+ArgTypesRegexExample.story = {
+  parameters: { actions: { argTypesRegex: '^on.*' } },
+  argTypes: { someFunction: {}, onClick: {}, onFocus: {} },
 };
 
 export const BasicExample = () => <Button onClick={action('hello-world')}>Hello World</Button>;

@@ -24,22 +24,22 @@ module.exports = {
 
 ## Actions args
 
-Starting in SB6.0, we recommend using the `actions` story parameter to specify actions. There are two relevant options `actions.args` and `actions.argTypesRegex` which the actions addon uses to inject actions into your story functions as Storybook Args.
+Starting in SB6.0, we recommend using story parameters to specify actions which get passed into your story as [Args](https://docs.google.com/document/d/1Mhp1UFRCKCsN8pjlfPdz8ZdisgjNXeMXpXvGoALjxYM/edit?usp=sharing) (passed as the first argument when `passArgsFirst` is set to `true`).
 
-The following example uses the `actions.args` array to generate actions that are passed into the story (when `passArgsFirst` is set to `true`):
+The first option is to specify `argTypes` for your story with an `action` field. Take the following example:
 
 ```js
 import Button from './button';
 
 export default {
   title: 'Button',
-  parameters: { actions: { args: ['onClick'] } },
+  argTypes: { onClick: { action: 'clicked' } },
 };
 
-export const defaultView = ({ onClick }) => <Button onClick={onClick}>Hello World!</Button>;
+export const Basic = ({ onClick }) => <Button onClick={onClick}>Hello World!</Button>;
 ```
 
-Alternatively, suppose you have a naming convention, like `onX` for event handlers. The following configuration automatically creates actions for each `onX` argType (which you can either specify manually or generate automatically using [Storybook Docs](https://www.npmjs.com/package/@storybook/addon-docs).
+Alternatively, suppose you have a naming convention, like `onX` for event handlers. The following configuration automatically creates actions for each `onX` `argType` (which you can either specify manually or generate automatically using [Storybook Docs](https://www.npmjs.com/package/@storybook/addon-docs).
 
 ```js
 import Button from './button';
@@ -50,7 +50,7 @@ export default {
   parameters: { actions: { argTypesRegex: '^on.*' } },
 };
 
-export const defaultView = ({ onClick }) => <Button onClick={onClick}>Hello World!</Button>;
+export const Basic = ({ onClick }) => <Button onClick={onClick}>Hello World!</Button>;
 ```
 
 > **NOTE:** If you're generating `argTypes` in using another addon (like Docs, which is the common behavior) you'll need to make sure that the actions addon loads **AFTER** the other addon. You can do this by listing it later in the `addons` registration code in `.storybook/main.js`.
