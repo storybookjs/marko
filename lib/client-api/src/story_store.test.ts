@@ -199,75 +199,75 @@ describe('preview.story_store', () => {
   });
 
   describe('globalArgs', () => {
-    it('is initialized to the value stored in parameters.globalArgs on the first story', () => {
-      const store = new StoryStore({ channel });
-      addStoryToStore(store, 'a', '1', () => 0, {
-        globalArgs: {
-          arg1: 'arg1',
-          arg2: 2,
-          arg3: { complex: { object: ['type'] } },
-        },
-      });
-      store.finishConfiguring();
-      expect(store.getRawStory('a', '1').globalArgs).toEqual({
-        arg1: 'arg1',
-        arg2: 2,
-        arg3: { complex: { object: ['type'] } },
-      });
-    });
+    // it('is initialized to the value stored in parameters.globalArgs on the first story', () => {
+    //   const store = new StoryStore({ channel });
+    //   addStoryToStore(store, 'a', '1', () => 0, {
+    //     globalArgs: {
+    //       arg1: 'arg1',
+    //       arg2: 2,
+    //       arg3: { complex: { object: ['type'] } },
+    //     },
+    //   });
+    //   store.finishConfiguring();
+    //   expect(store.getRawStory('a', '1').globalArgs).toEqual({
+    //     arg1: 'arg1',
+    //     arg2: 2,
+    //     arg3: { complex: { object: ['type'] } },
+    //   });
+    // });
 
-    it('is initialized to the default values stored in parameters.globalArgsTypes on the first story', () => {
-      const store = new StoryStore({ channel });
-      addStoryToStore(store, 'a', '1', () => 0, {
-        globalArgs: {
-          arg1: 'arg1',
-          arg2: 2,
-        },
-        globalArgTypes: {
-          arg2: { defaultValue: 'arg2' },
-          arg3: { defaultValue: { complex: { object: ['type'] } } },
-        },
-      });
-      store.finishConfiguring();
-      expect(store.getRawStory('a', '1').globalArgs).toEqual({
-        arg1: 'arg1',
-        arg2: 2,
-        arg3: { complex: { object: ['type'] } },
-      });
-    });
+    // it('is initialized to the default values stored in parameters.globalArgsTypes on the first story', () => {
+    //   const store = new StoryStore({ channel });
+    //   addStoryToStore(store, 'a', '1', () => 0, {
+    //     globalArgs: {
+    //       arg1: 'arg1',
+    //       arg2: 2,
+    //     },
+    //     globalArgTypes: {
+    //       arg2: { defaultValue: 'arg2' },
+    //       arg3: { defaultValue: { complex: { object: ['type'] } } },
+    //     },
+    //   });
+    //   store.finishConfiguring();
+    //   expect(store.getRawStory('a', '1').globalArgs).toEqual({
+    //     arg1: 'arg1',
+    //     arg2: 2,
+    //     arg3: { complex: { object: ['type'] } },
+    //   });
+    // });
 
-    it('on HMR it sensibly re-initializes with memory', () => {
-      const store = new StoryStore({ channel });
-      addons.setChannel(channel);
-      addStoryToStore(store, 'a', '1', () => 0, {
-        globalArgs: {
-          arg1: 'arg1',
-          arg2: 2,
-          arg3: { complex: { object: ['type'] } },
-        },
-      });
-      store.finishConfiguring();
+    // it('on HMR it sensibly re-initializes with memory', () => {
+    //   const store = new StoryStore({ channel });
+    //   addons.setChannel(channel);
+    //   addStoryToStore(store, 'a', '1', () => 0, {
+    //     globalArgs: {
+    //       arg1: 'arg1',
+    //       arg2: 2,
+    //       arg3: { complex: { object: ['type'] } },
+    //     },
+    //   });
+    //   store.finishConfiguring();
 
-      // HMR
-      store.startConfiguring();
-      store.removeStoryKind('a');
-      addStoryToStore(store, 'a', '1', () => 0, {
-        globalArgs: {
-          arg2: 2,
-          // Although we have changed the default there is no way to tell that the user didn't change
-          // it themselves
-          arg3: { complex: { object: ['changed'] } },
-          arg4: 'new',
-        },
-      });
-      store.finishConfiguring();
+    //   // HMR
+    //   store.startConfiguring();
+    //   store.removeStoryKind('a');
+    //   addStoryToStore(store, 'a', '1', () => 0, {
+    //     globalArgs: {
+    //       arg2: 2,
+    //       // Although we have changed the default there is no way to tell that the user didn't change
+    //       // it themselves
+    //       arg3: { complex: { object: ['changed'] } },
+    //       arg4: 'new',
+    //     },
+    //   });
+    //   store.finishConfiguring();
 
-      expect(store.getRawStory('a', '1').globalArgs).toEqual({
-        arg2: 2,
-        arg3: { complex: { object: ['type'] } },
-        arg4: 'new',
-      });
-    });
+    //   expect(store.getRawStory('a', '1').globalArgs).toEqual({
+    //     arg2: 2,
+    //     arg3: { complex: { object: ['type'] } },
+    //     arg4: 'new',
+    //   });
+    // });
 
     it('updateGlobalArgs changes the global args', () => {
       const store = new StoryStore({ channel });
