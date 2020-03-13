@@ -5,6 +5,12 @@ module.exports = {
   addons: [
     '@storybook/addon-storysource',
     '@storybook/addon-actions',
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        configureJSX: true,
+      },
+    },
     '@storybook/addon-links',
     '@storybook/addon-knobs',
     '@storybook/addon-backgrounds',

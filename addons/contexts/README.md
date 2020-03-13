@@ -78,16 +78,35 @@ export default {
 };
 ```
 
-Finally, you may want to modify the default setups at per story level. Here is how you can do this:
+Finally, you may want to create new contextual environments or disable default setups at the story level. To create a new contextual environment at the story level:
+
+```js
+export const defaultView = () => <div />; // sample story in CSF format
+defaultView.story = {
+  parameters: {
+    contexts: [{ /* contextual environment defined using the API below */ }]
+  }
+};
+```
+
+To disable a default setup at the story level:
 
 ```js
 export const defaultView = () => <div />;
 defaultView.story = {
   parameters: {
-    contexts: [{}]
+    contexts: [
+      {
+         title: '[title of contextual environment defined in contexts.js]'
+         options: { disable: true }
+      }
+    ]
   }
 };
 ```
+
+To override the default option for a default setup at the story level, see [this suggestion](https://discordapp.com/channels/486522875931656193/501692020226654208/687359410577604732).
+
 
 ## ⚙️ Setups
 

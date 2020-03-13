@@ -2,7 +2,11 @@
 
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
   - [React prop tables with Typescript](#react-prop-tables-with-typescript)
+    - [React.FC interfaces](#reactfc-interfaces)
+    - [Imported types](#imported-types)
+    - [Rolling back](#rolling-back)
   - [New addon presets](#new-addon-presets)
+  - [Removed Deprecated APIs](#removed-deprecated-apis)
   - [Client API changes](#client-api-changes)
     - [Removed Legacy Story APIs](#removed-legacy-story-apis)
     - [Can no longer add decorators/parameters after stories](#can-no-longer-add-decoratorsparameters-after-stories)
@@ -47,6 +51,7 @@
   - [Addon cssresources name attribute renamed](#addon-cssresources-name-attribute-renamed)
   - [Addon viewport uses parameters](#addon-viewport-uses-parameters)
   - [Addon a11y uses parameters, decorator renamed](#addon-a11y-uses-parameters-decorator-renamed)
+  - [Addon centered decorator deprecated](#addon-centered-decorator-deprecated)
   - [New keyboard shortcuts defaults](#new-keyboard-shortcuts-defaults)
   - [New URL structure](#new-url-structure)
   - [Rename of the `--secure` cli parameter to `--https`](#rename-of-the---secure-cli-parameter-to---https)
@@ -100,6 +105,8 @@ As a consequence we've removed `RDTL` from the presets, which is a breaking chan
 
 We will be updating this section with migration information as we collect information from our users, and fixing issues as they come up throughout the 6.0 prerelease process. We are cataloging known issues [here](https://github.com/storybookjs/storybook/blob/next/addons/docs/docs/props-tables.md#known-limitations).
 
+#### React.FC interfaces
+
 The biggest known issue is https://github.com/reactjs/react-docgen/issues/387, which means that the following common pattern **DOESN'T WORK**:
 
 ```tsx
@@ -115,6 +122,22 @@ const MyComponent: FC<IProps> = ({ ... }: IProps) => ...
 ```
 
 Please upvote https://github.com/reactjs/react-docgen/issues/387 if this is affecting your productivity, or better yet, submit a fix!
+
+#### Imported types
+
+Another major issue is support for imported types.
+
+```tsx
+import React, { FC } from 'react';
+import SomeType from './someFile';
+
+type NewType = SomeType & { foo: string };
+const MyComponent: FC<NewType> = ...
+```
+
+This was also an issue in `RDTL` so it doesn't get worse with `react-docgen`. There's an open PR for this https://github.com/reactjs/react-docgen/pull/352 which you can upvote if it affects you.
+
+#### Rolling back
 
 In the meantime, if you're not ready to make the move you have two options:
 
@@ -135,10 +158,10 @@ module.exports = {
           loader: require.resolve('react-docgen-typescript-loader'),
           options: {}, // your options here
         },
-      ]
-    }
-  })
-}
+      ],
+    },
+  }),
+};
 ```
 
 ### New addon presets
@@ -185,6 +208,18 @@ MyNonCheckedStory.story = {
   },
 };
 ```
+
+### Removed Deprecated APIs
+
+In 6.0 we removed a number of APIs that were previously deprecated.
+
+See the migration guides for further details:
+
+- [Addon a11y uses parameters, decorator renamed](#addon-a11y-uses-parameters-decorator-renamed)
+- [Addon backgrounds uses parameters](#addon-backgrounds-uses-parameters)
+- [Source-loader](#source-loader)
+- [Unified docs preset](#unified-docs-preset)
+- [Addon centered decorator deprecated](#addon-centered-decorator-deprecated)
 
 ### Client API changes
 
@@ -847,6 +882,26 @@ You can also pass `a11y` parameters at the component level (via `storiesOf(...).
 Furthermore, the decorator `checkA11y` has been deprecated and renamed to `withA11y` to make it consistent with other Storybook decorators.
 
 See the [a11y addon README](https://github.com/storybookjs/storybook/blob/master/addons/a11y/README.md) for more information.
+
+### Addon centered decorator deprecated
+
+If you previously had:
+
+```js
+import centered from '@storybook/addon-centered';
+```
+
+You should replace it with the React or Vue version as appropriate
+
+```js
+import centered from '@storybook/addon-centered/react';
+```
+
+or
+
+```js
+import centered from '@storybook/addon-centered/vue';
+```
 
 ### New keyboard shortcuts defaults
 

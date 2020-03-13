@@ -7,7 +7,7 @@ import Events from '@storybook/core-events';
 
 import { initializePath, setPath } from './url';
 import { RenderStoryFunction } from './types';
-import { makeConfigure } from './makeConfigure';
+import { loadCsf } from './loadCsf';
 import { StoryRenderer } from './StoryRenderer';
 
 const isBrowser =
@@ -93,6 +93,6 @@ export default function start(
     window.__STORYBOOK_ADDONS_CHANNEL__ = channel; // may not be defined
   }
 
-  const configure = makeConfigure({ clientApi, storyStore, configApi });
+  const configure = loadCsf({ clientApi, storyStore, configApi });
   return { configure, clientApi, configApi, forceReRender: () => storyRenderer.forceReRender() };
 }
