@@ -24,5 +24,10 @@
     "@storybook/mithril": "6.0.0-alpha.27",
     "@storybook/source-loader": "6.0.0-alpha.27",
     "webpack": "^4.33.0"
+  },
+  "storybook": {
+    "chromatic": {
+      "appCode": "8adgm46jzk8"
+    }
   }
 }

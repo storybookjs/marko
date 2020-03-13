@@ -33,5 +33,10 @@
     "@storybook/source-loader": "6.0.0-alpha.27",
     "prettier": "^1.16.4",
     "webpack": "^4.33.0"
+  },
+  "storybook": {
+    "chromatic": {
+      "appCode": "qaegx64axu"
+    }
   }
 }

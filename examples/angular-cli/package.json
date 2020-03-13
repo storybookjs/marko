@@ -64,5 +64,10 @@
     "protractor": "~5.4.3",
     "ts-node": "~8.6.2",
     "typescript": "^3.4.0"
+  },
+  "storybook": {
+    "chromatic": {
+      "appCode": "tl92yzsj6w"
+    }
   }
 }

@@ -34,5 +34,10 @@
     "@storybook/react": "6.0.0-alpha.27",
     "@storybook/theming": "6.0.0-alpha.27",
     "react-scripts": "^3.0.1"
+  },
+  "storybook": {
+    "chromatic": {
+      "appCode": "tg55gajmdt"
+    }
   }
 }

@@ -39,5 +39,10 @@
     "babel-eslint": "^10.0.3",
     "build-plugin-rax-app": "^0.2.0",
     "stylesheet-loader": "^0.7.0"
+  },
+  "storybook": {
+    "chromatic": {
+      "appCode": "4co6vptx8qo"
+    }
   }
 }
