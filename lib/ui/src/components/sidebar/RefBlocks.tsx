@@ -105,7 +105,7 @@ const ErrorDetail = styled.em(({ theme }) => ({
 }));
 
 const firstLineRegex = /(Error): (.*)\n/;
-const linesRegex = /at (?:(.*)\ )?\(?(.+)\)?/;
+const linesRegex = /at (?:(.*) )?\(?(.+)\)?/;
 const ErrorFormatter: FunctionComponent<{ error: Error }> = ({ error }) => {
   const input = error.stack.toString();
   const [, type, name] = input.match(firstLineRegex);
@@ -125,12 +125,14 @@ const ErrorFormatter: FunctionComponent<{ error: Error }> = ({ error }) => {
       <br />
       {lines.map((l, i) =>
         l.name ? (
+          // eslint-disable-next-line react/no-array-index-key
           <Fragment key={i}>
             {'  '}at <ErrorImportant>{l.name}</ErrorImportant> (
             <ErrorDetail>{l.location}</ErrorDetail>)
             <br />
           </Fragment>
         ) : (
+          // eslint-disable-next-line react/no-array-index-key
           <Fragment key={i}>
             {'  '}at <ErrorDetail>{l.location}</ErrorDetail>
             <br />

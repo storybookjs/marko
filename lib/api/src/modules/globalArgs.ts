@@ -23,13 +23,13 @@ export const init: ModuleFn = ({ store, fullAPI }) => {
     globalArgs: {},
   };
 
-  const init = () => {
+  const initModule = () => {
     fullAPI.on(GLOBAL_ARGS_UPDATED, (globalArgs: Args) => store.setState({ globalArgs }));
   };
 
   return {
     api,
     state,
-    init,
+    init: initModule,
   };
 };
