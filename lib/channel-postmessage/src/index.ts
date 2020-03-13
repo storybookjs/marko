@@ -108,7 +108,7 @@ export class PostmsgTransport {
   private getFrames(target?: string): Window[] {
     if (this.config.page === 'manager') {
       const nodes: HTMLIFrameElement[] = [
-        ...document.querySelectorAll('#storybook-preview-wrapper iframe'),
+        ...document.querySelectorAll('iframe[data-is-storybook]'),
       ];
 
       const list = nodes
@@ -133,7 +133,7 @@ export class PostmsgTransport {
   private getCurrentFrame(): Window[] {
     if (this.config.page === 'manager') {
       const list: HTMLIFrameElement[] = [
-        ...document.querySelectorAll('#storybook-preview-wrapper span + iframe'),
+        ...document.querySelectorAll('[data-is-storybook="true"]'),
       ];
       return list.map(e => e.contentWindow);
     }

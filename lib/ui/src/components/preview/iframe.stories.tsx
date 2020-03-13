@@ -16,6 +16,7 @@ const style: CSSProperties = {
 
 export const workingStory = () => (
   <IFrame
+    active
     id="iframe"
     title="Missing"
     src="/iframe.html?id=ui-panel--default"
@@ -27,6 +28,7 @@ export const workingStory = () => (
 
 export const missingStory = () => (
   <IFrame
+    active
     id="iframe"
     title="Missing"
     src="/iframe.html?id=missing"

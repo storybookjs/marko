@@ -19,22 +19,10 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
 
   const styles = useMemo<CSSObject>(() => {
     return {
-      ...Object.values(refs).reduce(
-        (acc, r) => ({
-          ...acc,
-          [`#storybook-ref-${r.id}`]: {
-            visibility: 'hidden',
-          },
-          [`span + #storybook-ref-${r.id}`]: {
-            visibility: 'visible',
-          },
-        }),
-        {} as CSSObject
-      ),
-      '#storybook-preview-iframe': {
+      '[data-is-storybook="false"]': {
         visibility: 'hidden',
       },
-      'span + #storybook-preview-iframe': {
+      '[data-is-storybook="true"]': {
         visibility: 'visible',
       },
     };
@@ -71,8 +59,8 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
       <Global styles={styles} />
       {Object.entries(frames).map(([id, src]) => (
         <Fragment key={id}>
-          {id === active ? <span key={`${id}-indicator`} /> : null}
           <IFrame
+            active={id === active}
             key={refs[id] ? refs[id].url : id}
             id={id}
             title={id}

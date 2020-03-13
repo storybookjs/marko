@@ -22,6 +22,7 @@ export interface IFrameProps {
   src: string;
   allowFullScreen: boolean;
   scale: number;
+  active: boolean;
 }
 
 export class IFrame extends Component<IFrameProps & IframeHTMLAttributes<HTMLIFrameElement>> {
@@ -33,10 +34,14 @@ export class IFrame extends Component<IFrameProps & IframeHTMLAttributes<HTMLIFr
   }
 
   shouldComponentUpdate(nextProps: IFrameProps) {
-    const { scale } = this.props;
+    const { scale, active } = this.props;
 
     if (scale !== nextProps.scale) {
       this.setIframeInnerZoom(nextProps.scale);
+    }
+
+    if (active !== nextProps.active) {
+      this.iframe.setAttribute('data-is-storybook', nextProps.active ? 'true' : 'false');
     }
 
     // this component renders an iframe, which gets updates via post-messages
@@ -73,10 +78,10 @@ export class IFrame extends Component<IFrameProps & IframeHTMLAttributes<HTMLIFr
   }
 
   render() {
-    const { id, title, src, allowFullScreen, scale, ...rest } = this.props;
+    const { id, title, src, allowFullScreen, scale, active, ...rest } = this.props;
     return (
       <StyledIframe
-        data-is-storybook="true"
+        data-is-storybook={active ? 'true' : 'false'}
         scrolling="yes"
         id={id}
         title={title}
