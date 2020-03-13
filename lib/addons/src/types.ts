@@ -33,6 +33,17 @@ export interface Args {
   [key: string]: any;
 }
 
+export interface ArgType {
+  name?: string;
+  description?: string;
+  defaultValue?: any;
+  [key: string]: any;
+}
+
+export interface ArgTypes {
+  [key: string]: ArgType;
+}
+
 export interface StoryIdentifier {
   id: StoryId;
   kind: StoryKind;
