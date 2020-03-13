@@ -36,5 +36,10 @@
     "svg-url-loader": "^3.0.2",
     "webpack": "^4.33.0",
     "webpack-dev-server": "^3.8.2"
+  },
+  "storybook": {
+    "chromatic": {
+      "appCode": "g2dp3lnr34a"
+    }
   }
 }

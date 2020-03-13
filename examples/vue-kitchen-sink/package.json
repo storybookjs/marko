@@ -38,5 +38,10 @@
     "vue-loader": "^15.7.0",
     "webpack": "^4.33.0",
     "webpack-dev-server": "^3.8.2"
+  },
+  "storybook": {
+    "chromatic": {
+      "appCode": "cyxj0e38bqj"
+    }
   }
 }

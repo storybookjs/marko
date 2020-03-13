@@ -40,5 +40,10 @@
     "@storybook/addons": "6.0.0-alpha.27",
     "@storybook/preset-create-react-app": "^1.5.0",
     "@storybook/react": "6.0.0-alpha.27"
+  },
+  "storybook": {
+    "chromatic": {
+      "appCode": "b311ypk6of"
+    }
   }
 }

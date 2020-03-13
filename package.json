@@ -68,6 +68,7 @@
     "publish:latest": "lerna publish --exact --concurrency 1 --force-publish",
     "publish:next": "npm run publish:latest -- --npm-tag=next",
     "repo-dirty-check": "node ./scripts/repo-dirty-check",
+    "run-chromatics": "node ./scripts/run-chromatics.js",
     "serve-storybooks": "http-server ./built-storybooks -p 8001",
     "start": "yarn --cwd examples/official-storybook storybook",
     "test": "node ./scripts/test.js",
