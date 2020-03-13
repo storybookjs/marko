@@ -57,9 +57,10 @@ const checkGlobalArgs = (parameters: Parameters) => {
   const { globalArgs, globalArgTypes } = parameters;
   if (globalArgs || globalArgTypes) {
     throw new Error(
-      `Global args/argTypes can only be set globally: ${JSON.stringify(
-        globalArgs
-      )} ${JSON.stringify(globalArgTypes)}`
+      `Global args/argTypes can only be set globally: ${JSON.stringify({
+        globalArgs,
+        globalArgTypes,
+      })}`
     );
   }
 };
@@ -181,7 +182,10 @@ export default class StoryStore {
     if (parameters) {
       const { args, argTypes } = parameters;
       if (args || argTypes)
-        logger.warn('Found args/argTypes in global parameters.', JSON.stringify(args || argTypes));
+        logger.warn(
+          'Found args/argTypes in global parameters.',
+          JSON.stringify({ args, argTypes })
+        );
     }
     const globalParameters = this._globalMetadata.parameters;
 
