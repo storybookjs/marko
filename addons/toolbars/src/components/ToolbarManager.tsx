@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useGlobalArgTypes } from '@storybook/api';
 import { Separator } from '@storybook/components';
 
-import { ToolbarConfig, ToolbarArgType } from '../types';
+import { ToolbarArgType } from '../types';
 import { MenuToolbar } from './MenuToolbar';
 
 const normalize = (key: string, argType: ToolbarArgType) => ({
