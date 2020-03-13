@@ -132,7 +132,7 @@ export const init: ModuleFn = ({ store, provider }) => {
 
       store.setState({
         refs: {
-          ...(store.getState().refs || {}),
+          ...api.getRefs(),
           [id]: result,
         },
       });
