@@ -53,6 +53,17 @@ const includeStory = (story: StoreItem, options: StoryOptions = { includeDocsOnl
   return !isStoryDocsOnly(story.parameters);
 };
 
+const checkGlobalArgs = (parameters: Parameters) => {
+  const { globalArgs, globalArgTypes } = parameters;
+  if (globalArgs || globalArgTypes) {
+    throw new Error(
+      `Global args/argTypes can only be set globally: ${JSON.stringify(
+        globalArgs
+      )} ${JSON.stringify(globalArgTypes)}`
+    );
+  }
+};
+
 type AllowUnsafeOption = { allowUnsafe?: boolean };
 
 const toExtracted = <T>(obj: T) =>
@@ -167,6 +178,11 @@ export default class StoryStore {
   }
 
   addGlobalMetadata({ parameters, decorators }: StoryMetadata) {
+    if (parameters) {
+      const { args, argTypes } = parameters;
+      if (args || argTypes)
+        logger.warn('Found args/argTypes in global parameters.', JSON.stringify(args || argTypes));
+    }
     const globalParameters = this._globalMetadata.parameters;
 
     this._globalMetadata.parameters = combineParameters(globalParameters, parameters);
@@ -190,6 +206,7 @@ export default class StoryStore {
 
   addKindMetadata(kind: string, { parameters, decorators }: StoryMetadata) {
     this.ensureKind(kind);
+    if (parameters) checkGlobalArgs(parameters);
     this._kinds[kind].parameters = combineParameters(this._kinds[kind].parameters, parameters);
 
     this._kinds[kind].decorators.push(...decorators);
@@ -222,6 +239,8 @@ export default class StoryStore {
       throw new Error(
         'Cannot add a story when not configuring, see https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#story-store-immutable-outside-of-configuration'
       );
+
+    if (storyParameters) checkGlobalArgs(storyParameters);
 
     const { _stories } = this;
 

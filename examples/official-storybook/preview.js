@@ -57,7 +57,10 @@ addParameters({
 
 export const parameters = {
   exportedParameter: 'exportedParameter',
+  args: { invalid1: 'will warn' },
 };
+
+export const args = { invalid2: 'will warn' };
 
 export const globalArgs = {
   foo: 'fooValue',
