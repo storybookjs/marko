@@ -216,6 +216,26 @@ describe('preview.story_store', () => {
       });
     });
 
+    it('is initialized to the default values stored in parameters.globalArgsTypes on the first story', () => {
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0, {
+        globalArgs: {
+          arg1: 'arg1',
+          arg2: 2,
+        },
+        globalArgTypes: {
+          arg2: { defaultValue: 'arg2' },
+          arg3: { defaultValue: { complex: { object: ['type'] } } },
+        },
+      });
+      store.finishConfiguring();
+      expect(store.getRawStory('a', '1').globalArgs).toEqual({
+        arg1: 'arg1',
+        arg2: 2,
+        arg3: { complex: { object: ['type'] } },
+      });
+    });
+
     it('on HMR it sensibly re-initializes with memory', () => {
       const store = new StoryStore({ channel });
       addons.setChannel(channel);
