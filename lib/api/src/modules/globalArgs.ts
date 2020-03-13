@@ -10,12 +10,10 @@ export interface SubAPI {
 }
 
 export const init: ModuleFn = ({ store, fullAPI }) => {
-  const updateGlobalArgs = (newGlobalArgs: Args) => {
-    fullAPI.emit(UPDATE_GLOBAL_ARGS, newGlobalArgs);
-  };
-
   const api: SubAPI = {
-    updateGlobalArgs,
+    updateGlobalArgs(newGlobalArgs) {
+      fullAPI.emit(UPDATE_GLOBAL_ARGS, newGlobalArgs);
+    },
   };
 
   const state: SubState = {

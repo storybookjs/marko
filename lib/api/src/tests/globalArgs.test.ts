@@ -2,7 +2,7 @@ import EventEmitter from 'event-emitter';
 import { UPDATE_GLOBAL_ARGS, GLOBAL_ARGS_UPDATED } from '@storybook/core-events';
 
 import { ModuleArgs, API } from '../index';
-import { init as initModule } from '../modules/globalArgs';
+import { init as initModule, SubAPI } from '../modules/globalArgs';
 
 function createMockStore() {
   let state = {};
@@ -11,13 +11,8 @@ function createMockStore() {
     setState: jest.fn().mockImplementation(s => {
       state = { ...state, ...s };
     }),
-  }; // as unknown) as Module['store'];
+  };
 }
-
-// function createMockModule() {
-//   // This mock module doesn't have all the fields but we don't use them all in this sub-module
-//   return ({  as unknown) as Module;
-// }
 
 describe('stories API', () => {
   it('sets a sensible initialState', () => {
@@ -55,7 +50,7 @@ describe('stories API', () => {
 
     init();
 
-    api.updateGlobalArgs({ a: 'b' });
+    (api as SubAPI).updateGlobalArgs({ a: 'b' });
     expect(fullAPI.emit).toHaveBeenCalledWith(UPDATE_GLOBAL_ARGS, { a: 'b' });
   });
 });
