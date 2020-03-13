@@ -1,3 +1,11 @@
+## 6.0.0-alpha.27 (March 13, 2020)
+
+### Features
+
+- Addon-toolbars: Global args support in the toolbar ([#10028](https://github.com/storybookjs/storybook/pull/10028))
+- Addon-actions: Add Storybook Args support ([#10029](https://github.com/storybookjs/storybook/pull/10029))
+- Core: Add globalArgs/globalArgTypes `preview.js` exports ([#10123](https://github.com/storybookjs/storybook/pull/10123))
+
 ## 6.0.0-alpha.26 (March 12, 2020)
 
 ### Breaking Changes
