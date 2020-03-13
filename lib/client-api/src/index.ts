@@ -1,5 +1,6 @@
 import ClientApi, { addDecorator, addParameters, addParameterEnhancer } from './client_api';
 import { defaultDecorateStory } from './decorators';
+import { combineParameters } from './parameters';
 import StoryStore from './story_store';
 import ConfigApi from './config_api';
 import pathToId from './pathToId';
@@ -15,6 +16,7 @@ export {
   addDecorator,
   addParameters,
   addParameterEnhancer,
+  combineParameters,
   StoryStore,
   ConfigApi,
   defaultDecorateStory,
