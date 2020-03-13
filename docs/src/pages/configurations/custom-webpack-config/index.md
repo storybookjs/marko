@@ -173,7 +173,7 @@ The console should log the entire config, for you to inspect.
 
 The value should export a `function`, it's first argument, is the config that storybook would use, if you were to not customize it. The second argument is an options object from storybook, this will have information about where config came from, whether we're in production of development mode etc.
 
-For example, here's a `.storybook/main.js` to add [SASS](http://sass-lang.com/) support:
+For example, here's a `.storybook/main.js` to add [Sass](https://sass-lang.com/) support:
 
 ```js
 const path = require('path');
