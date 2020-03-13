@@ -87,15 +87,25 @@ interface ProviderData {
   provider: provider.Provider;
 }
 
-export interface Args {
-  [key: string]: any;
-}
-
 export type ManagerProviderProps = RouterData &
   ProviderData & {
     docsMode: boolean;
     children: ReactNode | ((props: Combo) => ReactNode);
   };
+
+export interface Args {
+  [key: string]: any;
+}
+export interface ArgType {
+  name?: string;
+  description?: string;
+  defaultValue?: any;
+  [key: string]: any;
+}
+
+export interface ArgTypes {
+  [key: string]: ArgType;
+}
 
 export type ModuleFn = (m: ModuleArgs) => Module;
 
@@ -402,4 +412,12 @@ export function useGlobalArgs(): [Args, (newGlobalArgs: Args) => void] {
   } = useContext(ManagerContext);
 
   return [oldGlobalArgs, updateGlobalArgs];
+}
+
+export function useArgTypes(): ArgTypes {
+  return useParameter<ArgTypes>('argTypes', {});
+}
+
+export function useGlobalArgTypes(): ArgTypes {
+  return useParameter<ArgTypes>('globalArgTypes', {});
 }

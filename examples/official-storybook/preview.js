@@ -25,6 +25,18 @@ addHeadWarning('dotenv-file-not-loaded', 'Dotenv file not loaded');
 
 addDecorator(withCssResources);
 
+const themeDecorator = (storyFn, { globalArgs: { theme } }) => {
+  const selectedTheme = theme === 'dark' ? themes.dark : themes.light;
+  return (
+    <ThemeProvider theme={convert(selectedTheme)}>
+      <Global styles={createReset} />
+      {storyFn()}
+    </ThemeProvider>
+  );
+};
+
+addDecorator(themeDecorator);
+
 addDecorator(storyFn => (
   <ThemeProvider theme={convert(themes.light)}>
     <Global styles={createReset} />
@@ -69,4 +81,31 @@ export const globalArgs = {
 export const globalArgTypes = {
   foo: { defaultValue: 'fooDefaultValue' },
   bar: { defaultValue: 'barDefaultValue' },
+  theme: {
+    name: 'Theme',
+    description: 'Global theme for components',
+    defaultValue: null,
+    toolbar: {
+      icon: 'circlehollow',
+      // items: ['light', 'dark'],
+      items: [
+        { value: 'light', icon: 'circlehollow', title: 'light' },
+        { value: 'dark', icon: 'circle', title: 'dark' },
+      ],
+    },
+  },
+  locale: {
+    name: 'Locale',
+    description: 'Internationalization locale',
+    defaultValue: 'en',
+    toolbar: {
+      icon: 'globe',
+      items: [
+        { value: 'en', right: '🇺🇸', title: 'English' },
+        { value: 'es', right: '🇪🇸', title: 'Español' },
+        { value: 'zh', right: '🇨🇳', title: '中文' },
+        { value: 'kr', right: '🇰🇷', title: '한국어' },
+      ],
+    },
+  },
 };
