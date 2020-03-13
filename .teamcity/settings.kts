@@ -43,8 +43,6 @@ project {
     buildType(TestWorkflow)
 
     buildType(Build)
-    buildType(Chromatic)
-    buildType(Packtracker)
     buildType(E2E)
     buildType(SmokeTests)
     buildType(Frontpage)
@@ -54,13 +52,10 @@ project {
     buildType(Coverage)
 
     subProject(ExamplesProject)
-    subProject(ChromaticProject)
 
     buildTypesOrderIds = arrayListOf(
             RelativeId("TestWorkflow"),
             RelativeId("Build"),
-            RelativeId("Packtracker"),
-            RelativeId("Chromatic"),
             RelativeId("E2E"),
             RelativeId("SmokeTests"),
             RelativeId("Frontpage"),
@@ -97,7 +92,7 @@ object Common: Template({
 
     features {
         commitStatusPublisher {
-            id = "BUILD_EXT_1"
+            id = "Commit status publisher"
             publisher = github {
                 githubUrl = "https://api.github.com"
                 authType = personalToken {
@@ -110,12 +105,13 @@ object Common: Template({
             id = "swabra"
             verbose = true
             paths = """
+                -:.cache
                 -:node_modules
                 -:**/node_modules
             """.trimIndent()
         }
         pullRequests {
-            id = "BUILD_EXT_2"
+            id = "Pull requests"
             provider = github {
                 authType = vcsRoot()
                 filterAuthorRole = PullRequests.GitHubRoleFilter.EVERYBODY
@@ -147,41 +143,6 @@ object Build : BuildType({
         +:**/dll/** => dist.tar.gz
         -:**/node_modules/** => dist.tar.gz
     """.trimIndent()
-})
-
-object Packtracker : BuildType({
-    name = "Packtracker"
-    description = "Report webpack stats for manager of official storybook"
-
-    dependencies {
-        dependency(Build) {
-            snapshot {
-                onDependencyFailure = FailureAction.CANCEL
-            }
-            artifacts {
-                artifactRules = "dist.tar.gz!** => ."
-            }
-        }
-    }
-
-    steps {
-        script {
-            workingDir = "examples/official-storybook"
-            scriptContent = """
-                #!/bin/bash
-                set -e -x
-                
-                yarn install
-                yarn packtracker
-            """.trimIndent()
-            dockerImage = "node:10"
-            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
-        }
-    }
-
-    params {
-        param("env.PT_BRANCH", "%teamcity.build.branch%")
-    }
 })
 
 object ExamplesProject : Project({
@@ -242,6 +203,8 @@ object Examples1 : BuildType({
     params {
         param("env.CIRCLE_NODE_INDEX", "0")
     }
+
+    disableSettings("Commit status publisher")
 })
 
 object Examples2 : BuildType({
@@ -251,6 +214,8 @@ object Examples2 : BuildType({
     params {
         param("env.CIRCLE_NODE_INDEX", "1")
     }
+
+    disableSettings("Commit status publisher")
 })
 
 object Examples3 : BuildType({
@@ -260,6 +225,8 @@ object Examples3 : BuildType({
     params {
         param("env.CIRCLE_NODE_INDEX", "2")
     }
+
+    disableSettings("Commit status publisher")
 })
 
 object Examples4 : BuildType({
@@ -269,6 +236,8 @@ object Examples4 : BuildType({
     params {
         param("env.CIRCLE_NODE_INDEX", "3")
     }
+
+    disableSettings("Commit status publisher")
 })
 
 object Examples5 : BuildType({
@@ -278,6 +247,8 @@ object Examples5 : BuildType({
     params {
         param("env.CIRCLE_NODE_INDEX", "4")
     }
+
+    disableSettings("Commit status publisher")
 })
 
 object AggregateExamples : BuildType({
@@ -327,156 +298,6 @@ object AggregateExamples : BuildType({
     }
 
     artifactRules = "built-storybooks => built-storybooks.tar.gz"
-})
-
-object ChromaticProject : Project({
-    name = "Chromatic"
-
-    buildType(Chromatic1)
-    buildType(Chromatic2)
-    buildType(Chromatic3)
-    buildType(Chromatic4)
-})
-
-object Chromatic1 : BuildType({
-    name = "Chromatic 1"
-
-    dependencies {
-        dependency(AggregateExamples) {
-            snapshot {
-                onDependencyFailure = FailureAction.CANCEL
-            }
-            artifacts {
-                artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
-            }
-        }
-    }
-
-    steps {
-        script {
-            scriptContent = """
-            #!/bin/bash
-            set -e -x
-
-            yarn install
-            yarn chromatic --storybook-build-dir="built-storybooks/official-storybook" --exit-zero-on-changes --app-code="ab7m45tp9p"
-            yarn chromatic --storybook-build-dir="built-storybooks/angular-cli" --app-code="tl92yzsj6w"
-            yarn chromatic --storybook-build-dir="built-storybooks/cra-kitchen-sink" --app-code="tg55gajmdt"
-            yarn chromatic --storybook-build-dir="built-storybooks/cra-react15" --app-code="gxk7iqej3wt"
-            yarn chromatic --storybook-build-dir="built-storybooks/cra-ts-essentials" --app-code="b311ypk6of"
-        """.trimIndent()
-            dockerImage = "node:10"
-            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
-        }
-    }
-})
-
-object Chromatic2 : BuildType({
-    name = "Chromatic 2"
-
-    dependencies {
-        dependency(AggregateExamples) {
-            snapshot {
-                onDependencyFailure = FailureAction.CANCEL
-            }
-            artifacts {
-                artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
-            }
-        }
-    }
-
-    steps {
-        script {
-            scriptContent = """
-            #!/bin/bash
-            set -e -x
-
-            yarn install
-            yarn chromatic --storybook-build-dir="built-storybooks/cra-ts-kitchen-sink" --app-code="19whyj1tlac"
-            yarn chromatic --storybook-build-dir="built-storybooks/dev-kits" --app-code="7yykp9ifdxx"
-            yarn chromatic --storybook-build-dir="built-storybooks/ember-cli" --app-code="19z23qxndju"
-            yarn chromatic --storybook-build-dir="built-storybooks/html-kitchen-sink" --app-code="e8zolxoyg8o"
-        """.trimIndent()
-            dockerImage = "node:10"
-            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
-        }
-    }
-})
-
-object Chromatic3 : BuildType({
-    name = "Chromatic 3"
-
-    dependencies {
-        dependency(AggregateExamples) {
-            snapshot {
-                onDependencyFailure = FailureAction.IGNORE
-            }
-            artifacts {
-                artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
-            }
-        }
-    }
-
-    steps {
-        script {
-            scriptContent = """
-            #!/bin/bash
-            set -e -x
-
-            yarn install
-            yarn chromatic --storybook-build-dir="built-storybooks/marko-cli" --app-code="qaegx64axu"
-            yarn chromatic --storybook-build-dir="built-storybooks/mithril-kitchen-sink" --app-code="8adgm46jzk8"
-            yarn chromatic --storybook-build-dir="built-storybooks/preact-kitchen-sink" --app-code="ls0ikhnwqt"
-            yarn chromatic --storybook-build-dir="built-storybooks/rax-kitchen-sink" --app-code="4co6vptx8qo"
-        """.trimIndent()
-            dockerImage = "node:10"
-            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
-        }
-    }
-})
-
-object Chromatic4 : BuildType({
-    name = "Chromatic 4"
-
-    dependencies {
-        dependency(AggregateExamples) {
-            snapshot {
-                onDependencyFailure = FailureAction.CANCEL
-            }
-            artifacts {
-                artifactRules = "built-storybooks.tar.gz!** => built-storybooks"
-            }
-        }
-    }
-
-    steps {
-        script {
-            scriptContent = """
-            #!/bin/bash
-            set -e -x
-
-            yarn install
-            yarn chromatic --storybook-build-dir="built-storybooks/riot-kitchen-sink" --app-code="g2dp3lnr34a"
-            yarn chromatic --storybook-build-dir="built-storybooks/svelte-kitchen-sink" --app-code="8ob73wgl995"
-            yarn chromatic --storybook-build-dir="built-storybooks/vue-kitchen-sink" --app-code="cyxj0e38bqj"
-            yarn chromatic --storybook-build-dir="built-storybooks/web-components-kitchen-sink" --app-code="npm5gsofwkf"
-        """.trimIndent()
-            dockerImage = "node:10"
-            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
-        }
-    }
-})
-
-object Chromatic : BuildType({
-    name = "Chromatic"
-    type = Type.COMPOSITE
-
-    dependencies {
-        snapshot(Chromatic1) {}
-        snapshot(Chromatic2) {}
-        snapshot(Chromatic3) {}
-        snapshot(Chromatic4) {}
-    }
 })
 
 object E2E : BuildType({
@@ -772,8 +593,6 @@ object TestWorkflow : BuildType({
     maxRunningBuilds = 2
 
     dependencies {
-        snapshot(Chromatic) {}
-        snapshot(Packtracker) {}
         snapshot(E2E) {}
         snapshot(SmokeTests) {}
         snapshot(Lint) {}
