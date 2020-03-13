@@ -1,11 +1,16 @@
 import React, { FC } from 'react';
 import { useGlobalArgs } from '@storybook/api';
 import { Icons, IconButton, WithTooltip, TooltipLinkList } from '@storybook/components';
-import { NormalizedToolbarConfig } from '../types';
+import { NormalizedToolbarArgType } from '../types';
 
-export type MenuToolbarProps = NormalizedToolbarConfig & { id: string };
+export type MenuToolbarProps = NormalizedToolbarArgType & { id: string };
 
-export const MenuToolbar: FC<MenuToolbarProps> = ({ id, name, description, icon, items }) => {
+export const MenuToolbar: FC<MenuToolbarProps> = ({
+  id,
+  name,
+  description,
+  toolbar: { icon, items },
+}) => {
   const [globalArgs, updateGlobalArgs] = useGlobalArgs();
   const selectedValue = globalArgs[id];
   const active = selectedValue != null;

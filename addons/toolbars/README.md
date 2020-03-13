@@ -31,7 +31,7 @@ To get started with `addon-toolbars`: (1) [install the addon](#installation), (2
 First, install the package:
 
 ```sh
-npm install @storybook/addon-toolbars -D #or yarn
+npm install @storybook/addon-toolbars -D # or yarn
 ```
 
 Then add it to your `.storybook/main.js` config:
@@ -44,21 +44,16 @@ module.exports = {
 
 ### Configure menu UI
 
-Addon-toolbars has a simple, declarative syntax for configuring toolbar menus. You can add toolbars by adding entries to the `toolbars` parameter, in `.storybook/preview.js`:
+Addon-toolbars has a simple, declarative syntax for configuring toolbar menus. You can add toolbars by adding `globalArgTypes` with a `toolbar` annotation, in `.storybook/preview.js`:
 
 ```js
-const toolbars = {
+export const globalArgTypes = {
   theme: {
-    title: 'Theme'
-    icon: 'box'
+    name: 'Theme'
     description: 'Global theme for components',
     defaultValue: 'light',
-    options: ['light','dark', 'medium'],
+    toolbar: { icon: 'box', options: ['light','dark', 'medium'] },
   }
-}
-
-export default {
-  parameters: { toolbars },
 }
 ```
 
@@ -75,10 +70,7 @@ const styledComponentsThemeDecorator = (storyFn, { globalArgs: { theme } }) => (
   <ThemeProvider {...getTheme(theme)}>{storyFn()}</ThemeProvider>
 );
 
-export default {
-  parameters: { toolbars }, // same as above
-  decorators: [styledComponentsThemeDecorator],
-};
+export const decorators = [styledComponentsThemeDecorator];
 ```
 
 ## Advanced usage
@@ -114,23 +106,24 @@ type MenuItem {
 }
 ```
 
-Thus if you want to show right-justified flags for an internationalization locale, you might set up the following configuration in `.storybook/config.js`:
+Thus if you want to show right-justified flags for an internationalization locale, you might set up the following configuration in `.storybook/preview.js`:
 
 ```js
-export const parameters = {
-  toolbars: {
+export const globalArgTypes = {
     locale: {
       name: 'Locale',
       description: 'Internationalization locale',
       defaultValue: 'en',
-      icon: 'globe',
-      items: [
-        { value: 'en', right: '🇺🇸', title: 'English' },
-        { value: 'fr', right: '🇫🇷', title: 'Français' },
-        { value: 'es', right: '🇪🇸', title: 'Español' },
-        { value: 'zh', right: '🇨🇳', title: '中文' },
-        { value: 'kr', right: '🇰🇷', title: '한국어' },
-      ],
+      toolbar: {
+        icon: 'globe',
+        items: [
+          { value: 'en', right: '🇺🇸', title: 'English' },
+          { value: 'fr', right: '🇫🇷', title: 'Français' },
+          { value: 'es', right: '🇪🇸', title: 'Español' },
+          { value: 'zh', right: '🇨🇳', title: '中文' },
+          { value: 'kr', right: '🇰🇷', title: '한국어' },
+        ],
+      }
     },
   },
 };

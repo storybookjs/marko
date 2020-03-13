@@ -1,4 +1,5 @@
 import { IconsProps } from '@storybook/components';
+import { ArgType } from '@storybook/api';
 
 export interface ToolbarItem {
   value: string;
@@ -9,15 +10,18 @@ export interface ToolbarItem {
 }
 
 export interface NormalizedToolbarConfig {
-  name: string;
   icon?: IconsProps['icon'];
-  description: string;
-  defaultValue?: any;
   items: ToolbarItem[];
 }
+
+export type NormalizedToolbarArgType = ArgType & {
+  toolbar: NormalizedToolbarConfig;
+};
 
 export type ToolbarConfig = NormalizedToolbarConfig & {
   items: string[] | ToolbarItem[];
 };
 
-export type Toolbars = Record<string, ToolbarConfig>;
+export type ToolbarArgType = ArgType & {
+  toolbar: ToolbarConfig;
+};
