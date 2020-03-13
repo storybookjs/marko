@@ -88,10 +88,12 @@ const loadStories = (
     const {
       title: kindName,
       id: componentId,
-      parameters: params,
-      decorators: decos,
+      parameters: kindParameters,
+      decorators: kindDecorators,
       component,
       subcomponents,
+      args: kindArgs,
+      argTypes: kindArgTypes,
     } = meta;
     // We pass true here to avoid the warning about HMR. It's cool clientApi, we got this
     // todo discuss: TS now wants a NodeModule; should we fix this differently?
@@ -103,18 +105,20 @@ const loadStories = (
       component,
       subcomponents,
       fileName: currentExports.get(fileExports),
-      ...params,
+      ...kindParameters,
+      args: kindArgs,
+      argTypes: kindArgTypes,
     });
 
     // todo add type
-    (decos || []).forEach((decorator: any) => {
+    (kindDecorators || []).forEach((decorator: any) => {
       kind.addDecorator(decorator);
     });
 
     Object.keys(exports).forEach(key => {
       if (isExportStory(key, meta)) {
         const storyFn = exports[key];
-        const { name, parameters, decorators } = storyFn.story || {};
+        const { name, parameters, decorators, args, argTypes } = storyFn.story || {};
         if (parameters && parameters.decorators) {
           deprecate(() => {},
           `${kindName} => ${name || key}: story.parameters.decorators is deprecated; use story.decorators instead.`)();
@@ -122,11 +126,15 @@ const loadStories = (
         const decoratorParams = decorators ? { decorators } : null;
         const exportName = storyNameFromExport(key);
         const idParams = { __id: toId(componentId || kindName, exportName) };
-        kind.add(name || exportName, storyFn, {
+
+        const storyParams = {
           ...parameters,
           ...decoratorParams,
           ...idParams,
-        });
+          args,
+          argTypes,
+        };
+        kind.add(name || exportName, storyFn, storyParams);
       }
     });
   });
@@ -134,7 +142,7 @@ const loadStories = (
 };
 
 let loaded = false;
-export const makeConfigure = ({
+export const loadCsf = ({
   clientApi,
   storyStore,
   configApi,

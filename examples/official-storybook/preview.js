@@ -62,6 +62,7 @@ addParameters({
     { name: 'dark', value: '#222222' },
   ],
   docs: {
+    theme: themes.light,
     page: () => <DocsPage subtitleSlot={({ kind }) => `Subtitle: ${kind}`} />,
   },
 });
@@ -93,4 +94,16 @@ export const parameters = {
       ],
     },
   },
+  args: { invalid1: 'will warn' },
+};
+
+export const args = { invalid2: 'will warn' };
+
+export const globalArgs = {
+  foo: 'fooValue',
+};
+
+export const globalArgTypes = {
+  foo: { defaultValue: 'fooDefaultValue' },
+  bar: { defaultValue: 'barDefaultValue' },
 };

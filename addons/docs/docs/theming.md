@@ -9,23 +9,31 @@
 
 ## Storybook theming
 
-Storybook theming is the **recommended way** to theme your docs. If you update your storybook theme according to [the documentation](https://storybook.js.org/docs/configurations/theming/), Storybook Docs should adapt in reasonable ways.
+Storybook theming is the **recommended way** to theme your docs. Docs uses the same theme system as [Storybook UI](https://storybook.js.org/docs/configurations/theming/), but is themed independently from the main UI.
 
-> In the documentation it will say you can theme storybook in `manager.js`, That's a newer more optimal way to theme storybook, but it's currently incompatible with docs.
->
-> We're working on making it compatible in 6.0.0, so for now use the method described below.
-
-Here's how to change your docs (and Storybook) to the dark theme, by modifying `.storybook/preview.js`:
+Supposing you have a Storybook theme defined for the main UI in `.storybook/manager.js`:
 
 ```js
-import { addParameters } from '@storybook/react';
+import { addons } from '@storybook/addons';
+// or a custom theme
 import { themes } from '@storybook/theming';
 
-addParameters({
-  options: {
+addons.setConfig({
+  theme: themes.dark,
+});
+```
+
+Here's how you'd specify the same theme for docs in `.storybook/preview.js`:
+
+```js
+import { themes } from '@storybook/theming';
+
+// or global addParameters
+export const parameters = {
+  docs: {
     theme: themes.dark,
   },
-});
+};
 ```
 
 ## CSS escape hatches

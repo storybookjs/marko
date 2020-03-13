@@ -70,7 +70,7 @@ For instance, for this story:
 
 ```js
 export MyStory = ....
-MyStory.story = { parameters: {
+MyStory.story = {
   argTypes: {
     primary: { defaultValue: true, /* other things */ },
     size: { /* other things */ },
@@ -80,7 +80,7 @@ MyStory.story = { parameters: {
     size: 'large',
     extra: 'prop',
   }
-}}
+}
 ```
 
 Then `context.args` will default to `{ primary: true, size: 'large', extra: 'prop' }`.

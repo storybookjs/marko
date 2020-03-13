@@ -1,7 +1,7 @@
 import { ConfigApi, ClientApi, StoryStore } from '@storybook/client-api';
 import { RequireContext } from './types';
 
-import { makeConfigure } from './makeConfigure';
+import { loadCsf } from './loadCsf';
 
 let cbs: ((data: any) => void)[];
 let mod: NodeModule;
@@ -39,7 +39,7 @@ function makeMocks() {
   } as unknown) as ClientApi;
 
   const context = { configApi, storyStore, clientApi };
-  const configure = makeConfigure(context);
+  const configure = loadCsf(context);
   return { ...context, configure };
 }
 
@@ -52,7 +52,7 @@ function makeRequireContext(map: Record<string, any>): RequireContext {
   });
 }
 
-describe('core.preview.makeConfigure', () => {
+describe('core.preview.loadCsf', () => {
   it('calls storiesOf and add correctly from CSF exports', () => {
     const { configure, clientApi } = makeMocks();
 
@@ -197,7 +197,7 @@ describe('core.preview.makeConfigure', () => {
     });
   });
 
-  it('allows setting component parameters and decorators', () => {
+  it('allows setting component parameters, decorators, and args/argTypes', () => {
     const { configure, clientApi } = makeMocks();
 
     const decorator = jest.fn();
@@ -207,6 +207,8 @@ describe('core.preview.makeConfigure', () => {
           title: 'a',
           parameters: { x: 'y' },
           decorators: [decorator],
+          args: { b: 1 },
+          argTypes: { b: 'string' },
         },
         x: () => 0,
       },
@@ -215,11 +217,13 @@ describe('core.preview.makeConfigure', () => {
 
     const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
     const aApi = mockedStoriesOf.mock.results[0].value;
-    expect(aApi.addParameters).toHaveBeenCalledWith(expect.objectContaining({ x: 'y' }));
+    expect(aApi.addParameters).toHaveBeenCalledWith(
+      expect.objectContaining({ x: 'y', args: { b: 1 }, argTypes: { b: 'string' } })
+    );
     expect(aApi.addDecorator).toHaveBeenCalledWith(decorator);
   });
 
-  it('allows setting story parameters and decorators', () => {
+  it('allows setting story parameters and decorators, and args/argTypes', () => {
     const { configure, clientApi } = makeMocks();
 
     const decorator = jest.fn();
@@ -232,6 +236,8 @@ describe('core.preview.makeConfigure', () => {
           story: {
             parameters: { x: 'y' },
             decorators: [decorator],
+            args: { b: 1 },
+            argTypes: { b: 'string' },
           },
         }),
       },
@@ -244,6 +250,8 @@ describe('core.preview.makeConfigure', () => {
       x: 'y',
       decorators: [decorator],
       __id: 'a--x',
+      args: { b: 1 },
+      argTypes: { b: 'string' },
     });
   });
 

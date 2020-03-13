@@ -1,3 +1,19 @@
+## 6.0.0-alpha.26 (March 12, 2020)
+
+### Breaking Changes
+
+- Remove deprecated decorators and loaders ([#9951](https://github.com/storybookjs/storybook/pull/9951))
+
+### Features
+
+- Core: Improve support for main.ts/preview.ts files ([#10099](https://github.com/storybookjs/storybook/pull/10099))
+- Addon-docs: Theme with `docs.theme` parameter ([#10114](https://github.com/storybookjs/storybook/pull/10114))
+- Addon-docs: Svelte example ([#7673](https://github.com/storybookjs/storybook/pull/7673))
+
+### Maintenance
+
+- CSF: Promote args/argTypes to first-class metadata ([#10117](https://github.com/storybookjs/storybook/pull/10117))
+
 ## 6.0.0-alpha.25 (March 11, 2020)
 
 NOTE: `6.0.0-alpha.24` broken due to bad merge. Sorry!
