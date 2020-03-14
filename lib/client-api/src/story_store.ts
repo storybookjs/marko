@@ -53,14 +53,17 @@ const includeStory = (story: StoreItem, options: StoryOptions = { includeDocsOnl
   return !isStoryDocsOnly(story.parameters);
 };
 
+const inJest = () => process.env.JEST_WORKER_ID !== undefined;
+
 const checkGlobalArgs = (parameters: Parameters) => {
   const { globalArgs, globalArgTypes } = parameters;
-  if (globalArgs || globalArgTypes) {
-    throw new Error(
-      `Global args/argTypes can only be set globally: ${JSON.stringify({
+  if ((globalArgs || globalArgTypes) && !inJest()) {
+    logger.error(
+      'Global args/argTypes can only be set globally',
+      JSON.stringify({
         globalArgs,
         globalArgTypes,
-      })}`
+      })
     );
   }
 };
