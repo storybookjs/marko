@@ -1,8 +1,12 @@
-## 5.3.16 (March 14, 2020)
+## 5.3.17 (March 14, 2020)
 
 ### Bug Fixes
 
-- Components: Import react-syntax-highlighter/create-element from cjs ([#9795](https://github.com/storybookjs/storybook/pull/9795))
+- Components: Change react-syntax-highlighter from esm to cjs ([#9780](https://github.com/storybookjs/storybook/pull/9780))
+
+## 5.3.16 (March 14, 2020)
+
+Failed NPM publish
 
 ## 5.3.15 (March 14, 2020)
 
