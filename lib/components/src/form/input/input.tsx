@@ -51,6 +51,7 @@ export interface InputStyleProps {
   size?: Sizes;
   align?: Alignments;
   valid?: ValidationStates;
+  height?: number;
 }
 
 const sizes = ({ size }: { size?: Sizes }): CSSObject => {
@@ -116,10 +117,6 @@ export const Input = Object.assign(
   }
 );
 
-// (Input).styles = { ...styleResets, ...styles };
-// (Input).sizes = sizes;
-// (Input).alignment = alignment;
-
 type SelectProps = Omit<SelectHTMLAttributes<HTMLSelectElement>, keyof InputStyleProps> &
   InputStyleProps;
 export const Select = Object.assign(
@@ -144,9 +141,10 @@ export const Textarea = Object.assign(
     forwardRef<any, TextareaProps>(({ size, valid, align, ...props }, ref) => (
       <TextareaAutoResize {...props} ref={ref} />
     ))
-  )<TextareaProps>(styles, sizes, alignment, validation, {
+  )<TextareaProps>(styles, sizes, alignment, validation, ({ height = 400 }) => ({
     overflow: 'visible',
-  }),
+    maxHeight: height,
+  })),
   {
     displayName: 'Textarea',
   }

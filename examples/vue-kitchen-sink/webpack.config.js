@@ -27,10 +27,15 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|gif)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]?[hash]',
-        },
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              esModule: false,
+              fallback: 'file-loader',
+            },
+          },
+        ],
       },
       {
         test: /\.svg$/,
@@ -44,6 +49,21 @@ module.exports = {
         loader: require.resolve('@storybook/source-loader'),
         include: [path.resolve(__dirname, '../stories')],
         enforce: 'pre',
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'vue-style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              // enable CSS Modules
+              modules: true,
+              // customize generated class names
+              localIdentName: '[local]_[hash:base64:8]',
+            },
+          },
+        ],
       },
     ],
   },
