@@ -52,12 +52,12 @@ export const globalArgTypes = {
     name: 'Theme'
     description: 'Global theme for components',
     defaultValue: 'light',
-    toolbar: { icon: 'box', options: ['light','dark', 'medium'] },
+    toolbar: { icon: 'circlehollow', items: ['light','dark'] },
   }
 }
 ```
 
-You should see a dropdown in your toolbar with options `light`, `dark`, and `medium`.
+You should see a dropdown in your toolbar with options `light` and `dark`.
 
 ### Create a decorator
 
