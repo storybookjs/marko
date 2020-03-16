@@ -60,11 +60,11 @@ To do that, create a file at `.storybook/main.js` with the following content:
 
 ```js
 module.exports = {
-  stories: ['../src/**/*.stories.[tj]s'],
+  stories: ['../app/**/*.stories.[tj]s'],
 };
 ```
 
-That will load all the stories underneath your `../src` directory that match the pattern `*.stories.js`. We recommend co-locating your stories with your source files, but you can place them wherever you choose.
+That will load all the stories underneath your `../app` directory that match the pattern `*.stories.js`. We recommend co-locating your stories with your source files, but you can place them wherever you choose.
 
 ## Write your stories
 
