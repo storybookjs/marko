@@ -19,8 +19,26 @@ interface RenderMetadata {
   viewMode: ViewMode;
 }
 
-type Layout = 'centered' | 'fullscreen' | 'padded';
-type StyleKeyValue = { centered: string; fullscreen: string; padded: string };
+type Layout = keyof typeof layouts;
+
+const layouts = {
+  centered: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: '100vh',
+    margin: 0,
+    padding: '1rem',
+    boxSizing: 'border-box',
+  },
+  fullscreen: {
+    margin: 0,
+  },
+  padded: {
+    margin: 0,
+    padding: '1rem',
+  },
+} as const;
 
 const classes = {
   MAIN: 'sb-show-main',
@@ -47,7 +65,7 @@ export class StoryRenderer {
 
   previousMetadata?: RenderMetadata;
 
-  previousStyles?: string;
+  previousStyles?: typeof layouts[keyof typeof layouts];
 
   constructor({
     render,
@@ -97,7 +115,7 @@ export class StoryRenderer {
     const metadata: RenderMetadata = {
       id,
       kind,
-      viewMode: docsOnly ? 'docs' : (urlViewMode as ViewMode),
+      viewMode: docsOnly ? 'docs' : urlViewMode,
       revision: storyStore.getRevision(),
     };
 
@@ -201,24 +219,6 @@ export class StoryRenderer {
   }
 
   applyLayout(layout: Layout) {
-    const layouts: StyleKeyValue = {
-      centered: `
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        margin: 0;
-        padding: 1rem;
-        box-sizing: border-box;
-      `,
-      fullscreen: `
-        margin: 0;
-      `,
-      padded: `
-        margin: 0;
-        padding: 1rem;
-      `,
-    };
     const styles = layouts[layout] || layouts.padded;
 
     if (styles !== this.previousStyles) {
