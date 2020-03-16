@@ -58,7 +58,7 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
     if (story) {
       const {
         parameters: {
-          mdxSource = '',
+          // @ts-ignore
           storySource: { source, locationsMap } = { source: '', locationsMap: {} },
         } = {},
       } = story;
@@ -70,7 +70,7 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
             })
           ]
         : undefined;
-      setState({ source: source || mdxSource, locationsMap, currentLocation });
+      setState({ source, locationsMap, currentLocation });
     }
   }, [story ? story.id : null]);
   React.useEffect(() => {

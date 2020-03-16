@@ -1,10 +1,8 @@
 import { document } from 'global';
 import React from 'react';
-import { withQuery } from '@storybook/addon-queryparams';
 
 export default {
   title: 'Addons/QueryParams',
-  decorators: [withQuery],
 
   parameters: {
     query: {

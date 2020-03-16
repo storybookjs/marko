@@ -1,9 +1,15 @@
 /* eslint no-underscore-dangle: 0 */
 import { logger } from '@storybook/client-logger';
-import { StoryFn, Parameters } from '@storybook/addons';
+import { StoryFn, Parameters, DecorateStoryFunction } from '@storybook/addons';
 import { toId } from '@storybook/csf';
 
-import { ClientApiParams, DecoratorFunction, ClientApiAddons, StoryApi } from './types';
+import {
+  ClientApiParams,
+  DecoratorFunction,
+  ClientApiAddons,
+  StoryApi,
+  ParameterEnhancer,
+} from './types';
 import { applyHooks } from './hooks';
 import StoryStore from './story_store';
 import { defaultDecorateStory } from './decorators';
@@ -25,12 +31,19 @@ export const addParameters = (parameters: Parameters) => {
   singleton.addParameters(parameters);
 };
 
+export const addParameterEnhancer = (enhancer: ParameterEnhancer) => {
+  if (!singleton)
+    throw new Error(`Singleton client API not yet initialized, cannot call addParameterEnhancer`);
+
+  singleton.addParameterEnhancer(enhancer);
+};
+
 export default class ClientApi {
   private _storyStore: StoryStore;
 
   private _addons: ClientApiAddons<unknown>;
 
-  private _decorateStory: (storyFn: StoryFn, decorators: DecoratorFunction[]) => any;
+  private _decorateStory: DecorateStoryFunction;
 
   // React Native Fast refresh doesn't allow multiple dispose calls
   private _noStoryModuleAddMethodHotDispose: boolean;
@@ -92,6 +105,10 @@ export default class ClientApi {
     this._storyStore.addGlobalMetadata({ decorators: [], parameters });
   };
 
+  addParameterEnhancer = (enhancer: ParameterEnhancer) => {
+    this._storyStore.addParameterEnhancer(enhancer);
+  };
+
   clearDecorators = () => {
     this._storyStore.clearGlobalDecorators();
   };
@@ -124,7 +141,10 @@ export default class ClientApi {
     if (m && m.hot && m.hot.dispose) {
       m.hot.dispose(() => {
         const { _storyStore } = this;
-        _storyStore.removeStoryKind(kind);
+        // If HMR dispose happens in a story file, we know that HMR will pass up to the configuration file (preview.js)
+        // and be handled by the HMR.allow in config_api, leading to a re-run of configuration.
+        // So configuration is about to happen--we can skip the safety check.
+        _storyStore.removeStoryKind(kind, { allowUnsafe: true });
         _storyStore.incrementRevision();
       });
     }
@@ -162,7 +182,9 @@ export default class ClientApi {
       if (!this._noStoryModuleAddMethodHotDispose && m && m.hot && m.hot.dispose) {
         m.hot.dispose(() => {
           const { _storyStore } = this;
-          _storyStore.remove(id);
+          // See note about allowUnsafe above
+          _storyStore.remove(id, { allowUnsafe: true });
+          _storyStore.incrementRevision();
         });
       }
 

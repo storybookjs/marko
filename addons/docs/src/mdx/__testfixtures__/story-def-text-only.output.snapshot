@@ -35,7 +35,7 @@ MDXContent.isMDXComponent = true;
 export const text = () => 'Plain text';
 text.story = {};
 text.story.name = 'text';
-text.story.parameters = { mdxSource: \\"'Plain text'\\" };
+text.story.parameters = { storySource: { source: \\"'Plain text'\\" } };
 
 const componentMeta = { title: 'Text', includeStories: ['text'] };
 

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useCallback, SyntheticEvent } from 'react';
 import { styled } from '@storybook/theming';
 
 import ListItem, { LinkWrapperType, ListItemProps } from './ListItem';
@@ -15,9 +15,10 @@ const List = styled.div<{}>(
   })
 );
 
-export interface Link extends ListItemProps {
+export interface Link extends Omit<ListItemProps, 'onClick'> {
   id: string;
   isGatsby?: boolean;
+  onClick?: (event: SyntheticEvent, item: ListItemProps) => void;
 }
 
 export interface TooltipLinkListProps {
@@ -25,21 +26,37 @@ export interface TooltipLinkListProps {
   LinkWrapper?: LinkWrapperType;
 }
 
+const Item: FunctionComponent<TooltipLinkListProps['links'][number]> = props => {
+  const { LinkWrapper, onClick: onClickFromProps, ...rest } = props;
+  const { title, href, active } = rest;
+  const onClick = useCallback(
+    (event: SyntheticEvent) => {
+      onClickFromProps(event, rest);
+    },
+    [onClickFromProps]
+  );
+
+  const hasOnClick = !!onClickFromProps;
+
+  return (
+    <ListItem
+      title={title}
+      active={active}
+      href={href}
+      LinkWrapper={LinkWrapper}
+      {...rest}
+      {...(hasOnClick ? { onClick } : {})}
+    />
+  );
+};
+
 export const TooltipLinkList: FunctionComponent<TooltipLinkListProps> = ({
   links,
   LinkWrapper,
 }) => (
   <List>
-    {links.map(({ id, title, href, onClick, active, isGatsby, ...props }) => (
-      <ListItem
-        key={id || (title as string)}
-        title={title}
-        onClick={onClick}
-        active={active}
-        href={href}
-        LinkWrapper={isGatsby ? LinkWrapper : null}
-        {...props}
-      />
+    {links.map(({ isGatsby, ...p }) => (
+      <Item key={p.id} LinkWrapper={isGatsby ? LinkWrapper : null} {...p} />
     ))}
   </List>
 );

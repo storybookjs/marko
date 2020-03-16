@@ -1,0 +1,44 @@
+{
+  "name": "@storybook/addon-toolbars",
+  "version": "6.0.0-alpha.27",
+  "description": "Storybook toolbars addon",
+  "keywords": [
+    "addon",
+    "storybook",
+    "theming",
+    "i18n",
+    "internationalization"
+  ],
+  "homepage": "https://github.com/storybookjs/storybook/tree/next/addons/toolbars",
+  "bugs": {
+    "url": "https://github.com/storybookjs/storybook/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/storybookjs/storybook.git",
+    "directory": "addons/toolbars"
+  },
+  "license": "MIT",
+  "main": "dist/register.js",
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "*.js",
+    "*.d.ts"
+  ],
+  "scripts": {
+    "prepare": "node ../../scripts/prepare.js"
+  },
+  "dependencies": {
+    "@storybook/addons": "6.0.0-alpha.27",
+    "@storybook/api": "6.0.0-alpha.27",
+    "@storybook/client-api": "6.0.0-alpha.27",
+    "@storybook/components": "6.0.0-alpha.27"
+  },
+  "peerDependencies": {
+    "react": "*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -24,7 +24,7 @@ within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: ['@storybook/addon-viewport/register'],
+  addons: ['@storybook/addon-viewport'],
 };
 ```
 

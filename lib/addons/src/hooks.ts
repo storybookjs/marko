@@ -1,8 +1,14 @@
 import window from 'global';
 import { logger } from '@storybook/client-logger';
-import { FORCE_RE_RENDER, STORY_RENDERED, DOCS_RENDERED } from '@storybook/core-events';
+import {
+  FORCE_RE_RENDER,
+  STORY_RENDERED,
+  DOCS_RENDERED,
+  UPDATE_STORY_ARGS,
+  UPDATE_GLOBAL_ARGS,
+} from '@storybook/core-events';
 import { addons } from './index';
-import { StoryGetter, StoryContext } from './types';
+import { StoryGetter, StoryContext, Args } from './types';
 
 interface StoryStore {
   fromId: (
@@ -408,4 +414,30 @@ export function useParameter<S>(parameterKey: string, defaultValue?: S): S | und
     return parameters[parameterKey] || (defaultValue as S);
   }
   return undefined;
+}
+
+/* Returns current value of story args */
+export function useArgs(): [Args, (newArgs: Args) => void] {
+  const channel = addons.getChannel();
+  const { id: storyId, args } = useStoryContext();
+
+  const updateArgs = useCallback(
+    (newArgs: Args) => channel.emit(UPDATE_STORY_ARGS, storyId, newArgs),
+    [channel, storyId]
+  );
+
+  return [args, updateArgs];
+}
+
+/* Returns current value of global args */
+export function useGlobalArgs(): [Args, (newGlobalArgs: Args) => void] {
+  const channel = addons.getChannel();
+  const { globalArgs } = useStoryContext();
+
+  const updateGlobalArgs = useCallback(
+    (newGlobalArgs: Args) => channel.emit(UPDATE_GLOBAL_ARGS, newGlobalArgs),
+    [channel]
+  );
+
+  return [globalArgs, updateGlobalArgs];
 }

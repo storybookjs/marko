@@ -1,20 +1,10 @@
-import { Component, VueConstructor } from 'vue';
-import { StoryFn } from '@storybook/addons';
-// TODO, 'any' should be what is actually expected from a storyFn
+import { Component } from 'vue';
+
+export { RenderContext } from '@storybook/core';
 
 export interface ShowErrorArgs {
   title: string;
   description: string;
-}
-
-export interface RenderMainArgs {
-  storyFn: StoryFn<VueConstructor>;
-  selectedKind: string;
-  selectedStory: string;
-  showMain: () => void;
-  showError: (args: ShowErrorArgs) => void;
-  showException: (...args: any[]) => void;
-  forceRender: boolean;
 }
 
 // TODO: some vue expert needs to look at this

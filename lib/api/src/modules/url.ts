@@ -2,6 +2,7 @@ import { navigate as navigateRouter, NavigateOptions } from '@reach/router';
 import { queryFromLocation } from '@storybook/router';
 import { toId } from '@storybook/csf';
 
+import { NAVIGATE_URL } from '@storybook/core-events';
 import { Module } from '../index';
 import { PanelPositions } from './layout';
 
@@ -105,7 +106,7 @@ export interface SubAPI {
   setQueryParams: (input: QueryParams) => void;
 }
 
-export default function({ store, navigate, state, provider, ...rest }: Module) {
+export default function({ store, navigate, state, provider, fullAPI, ...rest }: Module) {
   const api: SubAPI = {
     getQueryParam: key => {
       const { customQueryParams } = store.getState();
@@ -146,8 +147,15 @@ export default function({ store, navigate, state, provider, ...rest }: Module) {
     },
   };
 
+  const init = () => {
+    fullAPI.on(NAVIGATE_URL, (url: string, options: { [k: string]: any }) => {
+      fullAPI.navigateUrl(url, options);
+    });
+  };
+
   return {
     api,
-    state: initialUrlSupport({ store, navigate, state, provider, ...rest }),
+    state: initialUrlSupport({ store, navigate, state, provider, fullAPI, ...rest }),
+    init,
   };
 }

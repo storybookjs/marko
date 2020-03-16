@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-a11y",
-  "version": "6.0.0-alpha.19",
+  "version": "6.0.0-alpha.27",
   "description": "a11y addon for storybook",
   "keywords": [
     "a11y",
@@ -33,13 +33,13 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-alpha.19",
-    "@storybook/api": "6.0.0-alpha.19",
-    "@storybook/client-api": "6.0.0-alpha.19",
-    "@storybook/client-logger": "6.0.0-alpha.19",
-    "@storybook/components": "6.0.0-alpha.19",
-    "@storybook/core-events": "6.0.0-alpha.19",
-    "@storybook/theming": "6.0.0-alpha.19",
+    "@storybook/addons": "6.0.0-alpha.27",
+    "@storybook/api": "6.0.0-alpha.27",
+    "@storybook/client-api": "6.0.0-alpha.27",
+    "@storybook/client-logger": "6.0.0-alpha.27",
+    "@storybook/components": "6.0.0-alpha.27",
+    "@storybook/core-events": "6.0.0-alpha.27",
+    "@storybook/theming": "6.0.0-alpha.27",
     "axe-core": "^3.3.2",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
@@ -48,9 +48,7 @@
     "react-redux": "^7.0.2",
     "react-sizeme": "^2.5.2",
     "redux": "^4.0.1",
-    "regenerator-runtime": "^0.13.3",
-    "ts-dedent": "^1.1.1",
-    "util-deprecate": "^1.0.2"
+    "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
     "@types/react-redux": "^7.0.6",

@@ -42,8 +42,8 @@ module.exports = {
     {
       name: '@storybook/preset-typescript',
       options: {
-        tsDocgenLoaderOptions: {
-          tsconfigPath: path.resolve(__dirname, '../tsconfig.json'),
+        tsLoaderOptions: {
+          configFile: path.resolve(__dirname, '../tsconfig.json'),
         },
         include: [path.resolve(__dirname)],
       },
@@ -52,7 +52,7 @@ module.exports = {
 };
 ```
 
-This configures the typescript docgen loader using the app's `tsconfig.json` and also tells the typescript loaders to only be applied to the current directory.
+This configures the typescript loader using the app's `tsconfig.json` and also tells the typescript loader to only be applied to the current directory.
 
 Each preset has its own option and those options should be documented in the preset's README.
 
