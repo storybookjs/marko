@@ -24,6 +24,8 @@ export type ViewMode = 'story' | 'docs';
 export interface Parameters {
   fileName?: string;
   options?: OptionsParameter;
+  layout?: 'centered' | 'fullscreen' | 'padded';
+  docsOnly?: boolean;
   [key: string]: any;
 }
 
