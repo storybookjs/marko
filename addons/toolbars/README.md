@@ -1,5 +1,5 @@
 <center>
-  <img src="./docs/hero.gif" width="100%" />
+  <img src="https://github.com/storybookjs/storybook/blob/next/addons/toolbars/docs/hero.gif" width="100%" />
 </center>
 
 <h1>Storybook Addon Toolbars</h1>
@@ -52,12 +52,12 @@ export const globalArgTypes = {
     name: 'Theme'
     description: 'Global theme for components',
     defaultValue: 'light',
-    toolbar: { icon: 'box', options: ['light','dark', 'medium'] },
+    toolbar: { icon: 'circlehollow', items: ['light','dark'] },
   }
 }
 ```
 
-You should see a dropdown in your toolbar with options `light`, `dark`, and `medium`.
+You should see a dropdown in your toolbar with options `light` and `dark`.
 
 ### Create a decorator
 

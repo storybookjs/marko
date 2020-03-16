@@ -19,6 +19,7 @@ When you install [Storybook Docs](../README.md), `DocsPage` is the zero-config d
   - [Stories](#stories)
 - [Slot functions](#slot-functions)
 - [Replacing DocsPage](#replacing-docspage)
+  - [Remixing DocsPage using doc blocks](#remixing-docspage-using-doc-blocks)
 - [Story file names](#story-file-names)
 - [Inline stories vs. Iframe stories](#inline-stories-vs-iframe-stories)
 - [More resources](#more-resources)
@@ -262,6 +263,44 @@ basic.story = {
   parameters: { docs: { page: null } }
 }
 ```
+
+### Remixing DocsPage using doc blocks
+
+Here's an example of rebuilding `DocsPage` out of doc blocks:
+
+```js
+import React from 'react';
+import {
+  Title,
+  Subtitle,
+  Description,
+  Primary,
+  Props,
+  Stories,
+} from '@storybook/addon-docs/blocks';
+import { DocgenButton } from '../../components/DocgenButton';
+
+export default {
+  title: 'Addons/Docs/stories docs blocks',
+  component: DocgenButton,
+  parameters: {
+    docs: {
+      page: () => (
+        <>
+          <Title />
+          <Subtitle />
+          <Description />
+          <Primary />
+          <Props />
+          <Stories />
+        </>
+      ),
+    },
+  },
+};
+```
+
+You can interleave your own components to customize the auto-generated contents of the page, or pass in different options to the blocks to customize their appearance. For more info see the examples in [official-storybook](https://github.com/storybookjs/storybook/blob/next/examples/official-storybook/stories/addon-docs/addon-docs-blocks.stories.js).
 
 ## Story file names
 

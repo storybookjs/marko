@@ -1,3 +1,28 @@
+## 5.3.17 (March 14, 2020)
+
+### Bug Fixes
+
+- Components: Change react-syntax-highlighter from esm to cjs ([#9780](https://github.com/storybookjs/storybook/pull/9780))
+
+## 5.3.16 (March 14, 2020)
+
+Failed NPM publish
+
+## 5.3.15 (March 14, 2020)
+
+### Bug Fixes
+
+- Core: Disables html-webpack-plugin's option to remove script tag types ([#10042](https://github.com/storybookjs/storybook/pull/10042))
+- Addon-actions: Style ActionLogger to preserve whitespace ([#10046](https://github.com/storybookjs/storybook/pull/10046))
+
+### Maintenance
+
+- CI: Fix GitHub unit test workflow ([#9971](https://github.com/storybookjs/storybook/pull/9971))
+
+### Dependency Upgrades
+
+- Security: Remove usage of a vulnerable version of serialize-javascript ([#10071](https://github.com/storybookjs/storybook/pull/10071))
+
 ## 6.0.0-alpha.27 (March 13, 2020)
 
 ### Features
