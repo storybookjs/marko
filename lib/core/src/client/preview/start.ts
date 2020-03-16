@@ -7,7 +7,7 @@ import Events from '@storybook/core-events';
 
 import { initializePath, setPath } from './url';
 import { RenderStoryFunction } from './types';
-import { makeConfigure } from './makeConfigure';
+import { loadCsf } from './loadCsf';
 import { StoryRenderer } from './StoryRenderer';
 
 const isBrowser =
@@ -67,10 +67,13 @@ export default function start(
   if (isBrowser) {
     // Initialize the story store with the selection in the URL
     const { storyId, viewMode } = initializePath(storyStore);
-    storyStore.setSelection({ storyId, viewMode });
 
-    // Keep the URL updated based on the current story
-    channel.on(Events.CURRENT_STORY_WAS_SET, setPath);
+    if (storyId !== '*') {
+      storyStore.setSelection({ storyId, viewMode });
+
+      // Keep the URL updated based on the current story
+      channel.on(Events.CURRENT_STORY_WAS_SET, setPath);
+    }
 
     // Handle keyboard shortcuts
     window.onkeydown = (event: KeyboardEvent) => {
@@ -90,6 +93,6 @@ export default function start(
     window.__STORYBOOK_ADDONS_CHANNEL__ = channel; // may not be defined
   }
 
-  const configure = makeConfigure({ clientApi, storyStore, configApi });
+  const configure = loadCsf({ clientApi, storyStore, configApi });
   return { configure, clientApi, configApi, forceReRender: () => storyRenderer.forceReRender() };
 }

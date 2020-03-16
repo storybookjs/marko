@@ -3,9 +3,11 @@ import {
   StoryIdentifier,
   StoryFn,
   Parameters,
+  Args,
   StoryApi,
   DecoratorFunction,
   DecorateStoryFunction,
+  StoryContext,
 } from '@storybook/addons';
 import StoryStore from './story_store';
 import { HooksContext } from './hooks';
@@ -20,6 +22,7 @@ export interface StoryMetadata {
   parameters: Parameters;
   decorators: DecoratorFunction[];
 }
+export type ParameterEnhancer = (context: StoryContext) => Parameters;
 
 export type AddStoryArgs = StoryIdentifier & {
   storyFn: StoryFn<any>;
@@ -33,6 +36,11 @@ export type StoreItem = StoryIdentifier & {
   getOriginal: () => StoryFn<any>;
   storyFn: StoryFn<any>;
   hooks: HooksContext;
+  args: Args;
+};
+
+export type PublishedStoreItem = StoreItem & {
+  globalArgs: Args;
 };
 
 export interface StoreData {

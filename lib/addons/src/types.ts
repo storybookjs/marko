@@ -27,17 +27,36 @@ export interface Parameters {
   [key: string]: any;
 }
 
+// This is duplicated in @storybook/api because there is no common place to put types (manager/preview)
+// We cannot import from @storybook/api here because it will lead to manager code (i.e. emotion) imported in the preview
+export interface Args {
+  [key: string]: any;
+}
+
+export interface ArgType {
+  name?: string;
+  description?: string;
+  defaultValue?: any;
+  [key: string]: any;
+}
+
+export interface ArgTypes {
+  [key: string]: ArgType;
+}
+
 export interface StoryIdentifier {
   id: StoryId;
   kind: StoryKind;
   name: StoryName;
 }
 
-export interface StoryContext extends StoryIdentifier {
+export type StoryContext = StoryIdentifier & {
   [key: string]: any;
   parameters: Parameters;
+  args: Args;
+  globalArgs: Args;
   hooks?: HooksContext;
-}
+};
 
 export interface WrapperSettings {
   options: OptionsParameter;
@@ -68,7 +87,10 @@ export interface OptionsParameter extends Object {
 }
 
 export type StoryGetter = (context: StoryContext) => any;
-export type StoryFn<ReturnType = unknown> = (p?: StoryContext) => ReturnType;
+
+export type LegacyStoryFn<ReturnType = unknown> = (p?: StoryContext) => ReturnType;
+export type ArgsStoryFn<ReturnType = unknown> = (a?: Args, p?: StoryContext) => ReturnType;
+export type StoryFn<ReturnType = unknown> = LegacyStoryFn<ReturnType> | ArgsStoryFn<ReturnType>;
 
 export type StoryWrapper = (
   getStory: StoryGetter,

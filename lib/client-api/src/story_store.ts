@@ -1,5 +1,4 @@
 /* eslint no-underscore-dangle: 0 */
-import EventEmitter from 'eventemitter3';
 import memoize from 'memoizerific';
 import dedent from 'ts-dedent';
 import stable from 'stable';
@@ -12,7 +11,9 @@ import {
   ViewMode,
   Comparator,
   Parameters,
-  StoryFn,
+  Args,
+  LegacyStoryFn,
+  ArgsStoryFn,
   StoryContext,
 } from '@storybook/addons';
 import {
@@ -21,8 +22,10 @@ import {
   StoreData,
   AddStoryArgs,
   StoreItem,
+  PublishedStoreItem,
   ErrorLike,
   GetStorybookKind,
+  ParameterEnhancer,
 } from './types';
 import { HooksContext } from './hooks';
 import storySort from './storySort';
@@ -50,6 +53,21 @@ const includeStory = (story: StoreItem, options: StoryOptions = { includeDocsOnl
   return !isStoryDocsOnly(story.parameters);
 };
 
+const inJest = () => process.env.JEST_WORKER_ID !== undefined;
+
+const checkGlobalArgs = (parameters: Parameters) => {
+  const { globalArgs, globalArgTypes } = parameters;
+  if ((globalArgs || globalArgTypes) && !inJest()) {
+    logger.error(
+      'Global args/argTypes can only be set globally',
+      JSON.stringify({
+        globalArgs,
+        globalArgTypes,
+      })
+    );
+  }
+};
+
 type AllowUnsafeOption = { allowUnsafe?: boolean };
 
 const toExtracted = <T>(obj: T) =>
@@ -66,12 +84,14 @@ const toExtracted = <T>(obj: T) =>
     return Object.assign(acc, { [key]: value });
   }, {});
 
-export default class StoryStore extends EventEmitter {
+export default class StoryStore {
   _error?: ErrorLike;
 
   _channel: Channel;
 
   _configuring: boolean;
+
+  _globalArgs: Args;
 
   _globalMetadata: StoryMetadata;
 
@@ -81,22 +101,25 @@ export default class StoryStore extends EventEmitter {
   // Keyed on storyId
   _stories: StoreData;
 
+  _parameterEnhancers: ParameterEnhancer[];
+
   _revision: number;
 
   _selection: Selection;
 
   constructor(params: { channel: Channel }) {
-    super();
-
     // Assume we are configuring until we hear otherwise
     this._configuring = true;
+
+    this._globalArgs = {};
     this._globalMetadata = { parameters: {}, decorators: [] };
     this._kinds = {};
     this._stories = {};
+    this._parameterEnhancers = [];
     this._revision = 0;
     this._selection = {} as any;
-    this._channel = params.channel;
     this._error = undefined;
+    this._channel = params.channel;
 
     this.setupListeners();
   }
@@ -108,6 +131,14 @@ export default class StoryStore extends EventEmitter {
     this._channel.on(Events.SET_CURRENT_STORY, ({ storyId, viewMode }) =>
       this.setSelection({ storyId, viewMode })
     );
+
+    this._channel.on(Events.UPDATE_STORY_ARGS, (id: string, newArgs: Args) =>
+      this.updateStoryArgs(id, newArgs)
+    );
+
+    this._channel.on(Events.UPDATE_GLOBAL_ARGS, (newGlobalArgs: Args) =>
+      this.updateGlobalArgs(newGlobalArgs)
+    );
   }
 
   startConfiguring() {
@@ -118,9 +149,47 @@ export default class StoryStore extends EventEmitter {
     this._configuring = false;
     this.pushToManager();
     if (this._channel) this._channel.emit(Events.RENDER_CURRENT_STORY);
+
+    const storyIds = Object.keys(this._stories);
+    if (storyIds.length) {
+      const {
+        parameters: { globalArgs: initialGlobalArgs, globalArgTypes },
+      } = this.fromId(storyIds[0]);
+
+      const defaultGlobalArgs: Args = globalArgTypes
+        ? Object.entries(globalArgTypes as Record<string, { defaultValue: any }>).reduce(
+            (acc, [arg, { defaultValue }]) => {
+              if (defaultValue) acc[arg] = defaultValue;
+              return acc;
+            },
+            {} as Args
+          )
+        : {};
+
+      // To deal with HMR, we consider the previous value of global args, and:
+      //   1. Remove any keys that are not in the new parameter
+      //   2. Preference any keys that were already set
+      //   3. Use any new keys from the new parameter
+      this._globalArgs = Object.entries(this._globalArgs || {}).reduce(
+        (acc, [key, previousValue]) => {
+          if (acc[key]) acc[key] = previousValue;
+
+          return acc;
+        },
+        { ...defaultGlobalArgs, ...initialGlobalArgs }
+      );
+    }
   }
 
   addGlobalMetadata({ parameters, decorators }: StoryMetadata) {
+    if (parameters) {
+      const { args, argTypes } = parameters;
+      if (args || argTypes)
+        logger.warn(
+          'Found args/argTypes in global parameters.',
+          JSON.stringify({ args, argTypes })
+        );
+    }
     const globalParameters = this._globalMetadata.parameters;
 
     this._globalMetadata.parameters = combineParameters(globalParameters, parameters);
@@ -144,24 +213,41 @@ export default class StoryStore extends EventEmitter {
 
   addKindMetadata(kind: string, { parameters, decorators }: StoryMetadata) {
     this.ensureKind(kind);
+    if (parameters) checkGlobalArgs(parameters);
     this._kinds[kind].parameters = combineParameters(this._kinds[kind].parameters, parameters);
 
     this._kinds[kind].decorators.push(...decorators);
   }
 
+  addParameterEnhancer(parameterEnhancer: ParameterEnhancer) {
+    if (Object.keys(this._stories).length > 0)
+      throw new Error('Cannot add a parameter enhancer to the store after a story has been added.');
+
+    this._parameterEnhancers.push(parameterEnhancer);
+  }
+
   addStory(
-    { id, kind, name, storyFn: original, parameters = {}, decorators = [] }: AddStoryArgs,
+    {
+      id,
+      kind,
+      name,
+      storyFn: original,
+      parameters: storyParameters = {},
+      decorators: storyDecorators = [],
+    }: AddStoryArgs,
     {
       applyDecorators,
       allowUnsafe = false,
     }: {
-      applyDecorators: (fn: StoryFn, decorators: DecoratorFunction[]) => any;
+      applyDecorators: (fn: LegacyStoryFn, decorators: DecoratorFunction[]) => any;
     } & AllowUnsafeOption
   ) {
     if (!this._configuring && !allowUnsafe)
       throw new Error(
         'Cannot add a story when not configuring, see https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#story-store-immutable-outside-of-configuration'
       );
+
+    if (storyParameters) checkGlobalArgs(storyParameters);
 
     const { _stories } = this;
 
@@ -186,32 +272,65 @@ export default class StoryStore extends EventEmitter {
 
     this.ensureKind(kind);
     const kindMetadata: KindMetadata = this._kinds[kind];
-    const allDecorators = [
-      ...decorators,
+    const decorators = [
+      ...storyDecorators,
       ...kindMetadata.decorators,
       ...this._globalMetadata.decorators,
     ];
-    const allParameters = combineParameters(
+    const parametersBeforeEnhancement = combineParameters(
       this._globalMetadata.parameters,
       kindMetadata.parameters,
-      parameters
+      storyParameters
     );
 
+    const parameters = this._parameterEnhancers.reduce(
+      (accumlatedParameters, enhancer) => ({
+        ...accumlatedParameters,
+        ...enhancer({
+          ...identification,
+          parameters: accumlatedParameters,
+          args: {},
+          globalArgs: {},
+        }),
+      }),
+      parametersBeforeEnhancement
+    );
+
+    let finalStoryFn: LegacyStoryFn;
+    if (parameters.passArgsFirst) {
+      finalStoryFn = (context: StoryContext) => (original as ArgsStoryFn)(context.args, context);
+    } else {
+      finalStoryFn = original as LegacyStoryFn;
+    }
+
     // lazily decorate the story when it's loaded
-    const getDecorated: () => StoryFn = memoize(1)(() =>
-      applyDecorators(getOriginal(), allDecorators)
+    const getDecorated: () => LegacyStoryFn = memoize(1)(() =>
+      applyDecorators(finalStoryFn, decorators)
     );
 
     const hooks = new HooksContext();
 
-    const storyFn: StoryFn = (context: StoryContext) =>
+    const storyFn: LegacyStoryFn = (runtimeContext: StoryContext) =>
       getDecorated()({
         ...identification,
-        ...context,
+        ...runtimeContext,
+        parameters,
         hooks,
-        // NOTE: we do not allow the passed in context to override parameters
-        parameters: allParameters,
+        args: _stories[id].args,
+        globalArgs: this._globalArgs,
       });
+
+    // Pull out parameters.args.$ || .argTypes.$.defaultValue into initialArgs
+    const initialArgs: Args = parameters.args || {};
+    const defaultArgs: Args = parameters.argTypes
+      ? Object.entries(parameters.argTypes as Record<string, { defaultValue: any }>).reduce(
+          (acc, [arg, { defaultValue }]) => {
+            if (defaultValue) acc[arg] = defaultValue;
+            return acc;
+          },
+          {} as Args
+        )
+      : {};
 
     _stories[id] = {
       ...identification,
@@ -221,7 +340,8 @@ export default class StoryStore extends EventEmitter {
       getOriginal,
       storyFn,
 
-      parameters: allParameters,
+      parameters,
+      args: { ...defaultArgs, ...initialArgs },
     };
   }
 
@@ -257,7 +377,20 @@ export default class StoryStore extends EventEmitter {
     }, {});
   }
 
-  fromId = (id: string): StoreItem | null => {
+  updateGlobalArgs(newGlobalArgs: Args) {
+    this._globalArgs = { ...this._globalArgs, ...newGlobalArgs };
+    this._channel.emit(Events.GLOBAL_ARGS_UPDATED, this._globalArgs);
+  }
+
+  updateStoryArgs(id: string, newArgs: Args) {
+    if (!this._stories[id]) throw new Error(`No story for id ${id}`);
+    const { args } = this._stories[id];
+    this._stories[id].args = { ...args, ...newArgs };
+
+    this._channel.emit(Events.STORY_ARGS_UPDATED, id, this._stories[id].args);
+  }
+
+  fromId = (id: string): PublishedStoreItem | null => {
     try {
       const data = this._stories[id as string];
 
@@ -265,7 +398,10 @@ export default class StoryStore extends EventEmitter {
         return null;
       }
 
-      return data;
+      return {
+        ...data,
+        globalArgs: this._globalArgs,
+      };
     } catch (e) {
       logger.warn('failed to get story:', this._stories);
       logger.error(e);

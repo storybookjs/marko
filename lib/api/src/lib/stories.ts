@@ -1,7 +1,10 @@
 import deprecate from 'util-deprecate';
 import dedent from 'ts-dedent';
 import { sanitize, parseKind } from '@storybook/csf';
+
+import { Args } from '../index';
 import merge from './merge';
+import { Provider } from '../init-provider-api';
 
 export type StoryId = string;
 
@@ -47,7 +50,7 @@ export interface Story {
   isRoot: false;
   isLeaf: true;
   parameters?: {
-    filename: string;
+    fileName: string;
     options: {
       hierarchyRootSeparator?: RegExp;
       hierarchySeparator?: RegExp;
@@ -57,6 +60,7 @@ export interface Story {
     docsOnly?: boolean;
     [k: string]: any;
   };
+  args: Args;
 }
 
 export interface StoryInput {
@@ -65,7 +69,7 @@ export interface StoryInput {
   kind: string;
   children: string[];
   parameters: {
-    filename: string;
+    fileName: string;
     options: {
       hierarchyRootSeparator: RegExp;
       hierarchySeparator: RegExp;
@@ -124,7 +128,8 @@ const toGroup = (name: string) => ({
 
 export const transformStoriesRawToStoriesHash = (
   input: StoriesRaw,
-  base: StoriesHash
+  base: StoriesHash,
+  { provider }: { provider: Provider }
 ): StoriesHash => {
   const anyKindMatchesOldHierarchySeparators = Object.values(input).some(({ kind }) =>
     kind.match(/\.|\|/)
@@ -136,7 +141,7 @@ export const transformStoriesRawToStoriesHash = (
       hierarchyRootSeparator: rootSeparator = undefined,
       hierarchySeparator: groupSeparator = undefined,
       showRoots = undefined,
-    } = (parameters && parameters.options) || {};
+    } = { ...provider.getConfig(), ...((parameters && parameters.options) || {}) };
 
     const usingShowRoots = typeof showRoots !== 'undefined';
 
@@ -245,7 +250,7 @@ export const transformStoriesRawToStoriesHash = (
     return acc;
   }
 
-  return Object.values(storiesHashOutOfOrder).reduce(addItem, base);
+  return Object.values(storiesHashOutOfOrder).reduce(addItem, { ...base });
 };
 
 export type Item = StoriesHash[keyof StoriesHash];

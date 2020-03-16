@@ -4,7 +4,6 @@ on: [push]
 
 jobs:
   build:
-
     name: Puppeteer & A11y tests
     runs-on: ubuntu-latest
     steps:

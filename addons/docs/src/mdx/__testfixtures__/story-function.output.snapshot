@@ -42,8 +42,10 @@ export const functionStory = () => {
 functionStory.story = {};
 functionStory.story.name = 'function';
 functionStory.story.parameters = {
-  mdxSource:
-    \\"() => {\\\\n  const btn = document.createElement('button');\\\\n  btn.innerHTML = 'Hello Button';\\\\n  btn.addEventListener('click', action('Click'));\\\\n  return btn;\\\\n}\\",
+  storySource: {
+    source:
+      \\"() => {\\\\n  const btn = document.createElement('button');\\\\n  btn.innerHTML = 'Hello Button';\\\\n  btn.addEventListener('click', action('Click'));\\\\n  return btn;\\\\n}\\",
+  },
 };
 
 const componentMeta = { includeStories: ['functionStory'] };

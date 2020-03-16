@@ -26,5 +26,10 @@ export const extractProps = componentName => {
 export const extractComponentDescription = componentName => {
   const json = getJSONDoc();
   const componentDoc = json.included.find(doc => doc.attributes.name === componentName);
+
+  if (!componentDoc) {
+    return '';
+  }
+
   return componentDoc.attributes.description;
 };
