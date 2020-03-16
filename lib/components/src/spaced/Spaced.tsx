@@ -3,6 +3,9 @@ import { styled } from '@storybook/theming';
 
 const toNumber = (input: any) => (typeof input === 'number' ? input : Number(input));
 
+const ignoreSsrWarning =
+  '/* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */';
+
 export interface ContainerProps {
   col?: number;
   row?: number;
@@ -19,7 +22,7 @@ const Container = styled.div<ContainerProps>(
             marginLeft: col * theme.layoutMargin,
             verticalAlign: 'inherit',
           },
-          '& > *:first-of-type': {
+          [`& > *:first-child${ignoreSsrWarning}`]: {
             marginLeft: 0,
           },
         }
@@ -27,7 +30,7 @@ const Container = styled.div<ContainerProps>(
           '& > *': {
             marginTop: row * theme.layoutMargin,
           },
-          '& > *:first-of-type': {
+          [`& > *:first-child${ignoreSsrWarning}`]: {
             marginTop: 0,
           },
         },

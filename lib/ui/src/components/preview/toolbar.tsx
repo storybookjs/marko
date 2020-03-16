@@ -39,7 +39,7 @@ export const fullScreenTool: Addon = {
   match: p => p.viewMode === 'story',
   render: () => (
     <Consumer filter={fullScreenMapper}>
-      {({ toggle, value }: ReturnType<typeof fullScreenMapper>) => (
+      {({ toggle, value }) => (
         <S.DesktopOnly>
           <IconButton
             key="full"
@@ -67,7 +67,7 @@ export const copyTool: Addon = {
   match: p => p.viewMode === 'story',
   render: () => (
     <Consumer filter={copyMapper}>
-      {({ baseUrl, storyId, origin, pathname, queryParams }: ReturnType<typeof copyMapper>) => (
+      {({ baseUrl, storyId, origin, pathname, queryParams }) => (
         <IconButton
           key="copy"
           onClick={() =>
@@ -93,7 +93,7 @@ export const ejectTool: Addon = {
   match: p => p.viewMode === 'story',
   render: () => (
     <Consumer filter={ejectMapper}>
-      {({ baseUrl, storyId, queryParams }: ReturnType<typeof ejectMapper>) => (
+      {({ baseUrl, storyId, queryParams }) => (
         <IconButton
           key="opener"
           href={`${baseUrl}?id=${storyId}${stringifyQueryParams(queryParams)}`}
@@ -133,7 +133,7 @@ export const createTabsTool = (tabs: Addon[]): Addon => ({
   title: 'title',
   render: () => (
     <Consumer filter={tabsMapper}>
-      {({ viewMode, storyId, path, location }: ReturnType<typeof tabsMapper>) => (
+      {({ viewMode, storyId, path, location }) => (
         <Fragment>
           <TabBar key="tabs">
             {tabs

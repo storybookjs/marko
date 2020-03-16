@@ -43,7 +43,7 @@ export const Root: FunctionComponent<RootProps> = ({ provider }) => (
             >
               {({ state, api }: Combo) => {
                 const panelCount = Object.keys(api.getPanels()).length;
-                const story = state.storiesHash[state.storyId];
+                const story = api.getData(state.storyId);
 
                 return (
                   <ThemeProvider key="theme.provider" theme={ensureTheme(state.theme)}>

@@ -200,7 +200,12 @@ storiesOf('Basics/Tabs', module)
     </Tabs>
   ))
   .add('stateless - absolute', () => (
-    <Tabs bordered absolute selected="test3" actions={{ onSelect }}>
+    <Tabs absolute selected="test3" actions={{ onSelect }}>
+      {content}
+    </Tabs>
+  ))
+  .add('stateless - absolute bordered', () => (
+    <Tabs absolute bordered selected="test3" actions={{ onSelect }}>
       {content}
     </Tabs>
   ))

@@ -94,12 +94,12 @@ function genStoryExport(ast, context) {
   let parameters = getAttr(ast.openingElement, 'parameters');
   parameters = parameters && parameters.expression;
   const source = jsStringEscape(storyCode);
+  const sourceParam = `storySource: { source: '${source}' }`;
   if (parameters) {
     const { code: params } = generate(parameters, {});
-    // FIXME: hack in the story's source as a parameter
-    statements.push(`${storyKey}.story.parameters = { mdxSource: '${source}', ...${params} };`);
+    statements.push(`${storyKey}.story.parameters = { ${sourceParam}, ...${params} };`);
   } else {
-    statements.push(`${storyKey}.story.parameters = { mdxSource: '${source}' };`);
+    statements.push(`${storyKey}.story.parameters = { ${sourceParam} };`);
   }
 
   let decorators = getAttr(ast.openingElement, 'decorators');

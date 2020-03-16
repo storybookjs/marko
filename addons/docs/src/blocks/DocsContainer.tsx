@@ -1,5 +1,7 @@
 import React, { FunctionComponent, useEffect } from 'react';
 import { document, window } from 'global';
+import deprecate from 'util-deprecate';
+import dedent from 'ts-dedent';
 import { MDXProvider } from '@mdx-js/react';
 import { ThemeProvider, ensure as ensureTheme } from '@storybook/theming';
 import { DocsWrapper, DocsContent } from '@storybook/components';
@@ -23,10 +25,20 @@ const defaultComponents = {
 
 export const DocsContainer: FunctionComponent<DocsContainerProps> = ({ context, children }) => {
   const { id: storyId = null, parameters = {} } = context || {};
-  const options = parameters.options || {};
-  const theme = ensureTheme(options.theme);
-  const { components: userComponents = null } = parameters.docs || {};
-  const allComponents = { ...defaultComponents, ...userComponents };
+  const { options = {}, docs = {} } = parameters;
+  let themeVars = docs.theme;
+  if (!themeVars && options.theme) {
+    deprecate(
+      () => {},
+      dedent`
+        options.theme => Deprecated: use  story.parameters.docs.theme instead.
+        See https://github.com/storybookjs/storybook/blob/next/addons/docs/docs/theming.md#storybook-theming for details.
+    `
+    )();
+    themeVars = options.theme;
+  }
+  const theme = ensureTheme(themeVars);
+  const allComponents = { ...defaultComponents, ...docs.components };
 
   useEffect(() => {
     let url;

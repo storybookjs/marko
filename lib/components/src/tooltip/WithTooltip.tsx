@@ -121,12 +121,12 @@ const WithToolTipState: FunctionComponent<WithTooltipPureProps & {
               try {
                 iframe.contentWindow.document.removeEventListener('click', hide);
               } catch (e) {
-                logger.warn('Removing a click listener from iframe failed: ', e);
+                logger.debug('Removing a click listener from iframe failed: ', e);
               }
             });
           }
         } catch (e) {
-          logger.warn('Adding a click listener to iframe failed: ', e);
+          logger.debug('Adding a click listener to iframe failed: ', e);
         }
       };
 

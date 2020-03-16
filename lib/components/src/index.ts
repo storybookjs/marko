@@ -34,7 +34,7 @@ export { Bar, FlexBar } from './bar/bar';
 export { AddonPanel } from './addon-panel/addon-panel';
 
 // Graphics
-export { Icons } from './icon/icon';
+export { Icons, IconsProps } from './icon/icon';
 export { StorybookLogo } from './brand/StorybookLogo';
 export { StorybookIcon } from './brand/StorybookIcon';
 

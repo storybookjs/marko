@@ -1,6 +1,6 @@
 import { document, fetch, Node } from 'global';
 import dedent from 'ts-dedent';
-import { RenderMainArgs, FetchStoryHtmlType } from './types';
+import { RenderContext, FetchStoryHtmlType } from './types';
 
 const rootElement = document.getElementById('root');
 
@@ -15,13 +15,13 @@ let fetchStoryHtml: FetchStoryHtmlType = async (url, path, params) => {
 export async function renderMain({
   storyFn,
   id,
-  selectedKind,
-  selectedStory,
+  kind,
+  name,
   showMain,
   showError,
   forceRender,
   parameters,
-}: RenderMainArgs) {
+}: RenderContext) {
   const storyParams = storyFn();
 
   const {
@@ -45,7 +45,7 @@ export async function renderMain({
     rootElement.appendChild(element);
   } else {
     showError({
-      title: `Expecting an HTML snippet or DOM node from the story: "${selectedStory}" of "${selectedKind}".`,
+      title: `Expecting an HTML snippet or DOM node from the story: "${name}" of "${kind}".`,
       description: dedent`
         Did you forget to return the HTML snippet from the story?
         Use "() => <your snippet or node>" or when defining the story.

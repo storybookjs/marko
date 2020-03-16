@@ -1,16 +1,20 @@
-import React, { ReactElement, Component, useContext, useEffect, useMemo, ReactNode } from 'react';
-import memoize from 'memoizerific';
-// @ts-ignore shallow-equal is not in DefinitelyTyped
-import shallowEqualObjects from 'shallow-equal/objects';
+import React, {
+  Component,
+  Fragment,
+  FunctionComponent,
+  ReactElement,
+  ReactNode,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
 
 import {
-  STORIES_CONFIGURED,
-  STORY_CHANGED,
   SET_STORIES,
-  SELECT_STORY,
+  STORY_CHANGED,
   SHARED_STATE_CHANGED,
   SHARED_STATE_SET,
-  NAVIGATE_URL,
 } from '@storybook/core-events';
 import { RenderData as RouterData } from '@storybook/router';
 import { Listener } from '@storybook/channels';
@@ -27,16 +31,7 @@ import initNotifications, {
   SubAPI as NotificationAPI,
 } from './modules/notifications';
 import initStories, { SubState as StoriesSubState, SubAPI as StoriesAPI } from './modules/stories';
-import {
-  StoriesRaw,
-  StoriesHash,
-  Story,
-  Root,
-  Group,
-  isGroup,
-  isRoot,
-  isStory,
-} from './lib/stories';
+import { StoriesHash, Story, Root, Group, isGroup, isRoot, isStory } from './lib/stories';
 import initLayout, {
   ActiveTabs,
   SubState as LayoutSubState,
@@ -51,6 +46,10 @@ import initVersions, {
   SubState as VersionsSubState,
   SubAPI as VersionsAPI,
 } from './modules/versions';
+import initGlobalArgs, {
+  SubState as GlobalArgsSubState,
+  SubAPI as GlobalArgsAPI,
+} from './modules/globalArgs';
 
 export { Options as StoreOptions, Listener as ChannelListener };
 export { ActiveTabs };
@@ -62,6 +61,7 @@ export type Module = StoreData &
   ProviderData & {
     mode?: 'production' | 'development';
     state: State;
+    fullAPI: API;
   };
 
 export type State = Other &
@@ -70,7 +70,8 @@ export type State = Other &
   NotificationState &
   VersionsSubState &
   RouterData &
-  ShortcutsSubState;
+  ShortcutsSubState &
+  GlobalArgsSubState;
 
 export type API = AddonsAPI &
   ChannelAPI &
@@ -81,6 +82,7 @@ export type API = AddonsAPI &
   ShortcutsAPI &
   VersionsAPI &
   UrlAPI &
+  GlobalArgsAPI &
   OtherAPI;
 
 interface OtherAPI {
@@ -113,18 +115,33 @@ interface Children {
   children: ReactNode | ((props: Combo) => ReactNode);
 }
 
+export interface Args {
+  [key: string]: any;
+}
+
+export interface ArgType {
+  name?: string;
+  description?: string;
+  defaultValue?: any;
+  [key: string]: any;
+}
+
+export interface ArgTypes {
+  [key: string]: ArgType;
+}
+
 type StatePartial = Partial<State>;
 
-export type Props = Children & RouterData & ProviderData & DocsModeData;
+export type ManagerProviderProps = Children & RouterData & ProviderData & DocsModeData;
 
-class ManagerProvider extends Component<Props, State> {
-  api: API;
+class ManagerProvider extends Component<ManagerProviderProps, State> {
+  api: API = {} as API;
 
   modules: any[];
 
   static displayName = 'Manager';
 
-  constructor(props: Props) {
+  constructor(props: ManagerProviderProps) {
     super(props);
     const {
       provider,
@@ -172,52 +189,31 @@ class ManagerProvider extends Component<Props, State> {
       initStories,
       initURL,
       initVersions,
-    ].map(initModule => initModule({ ...routeData, ...apiData, state: this.state }));
+      initGlobalArgs,
+    ].map(initModule =>
+      initModule({ ...routeData, ...apiData, state: this.state, fullAPI: this.api })
+    );
 
     // Create our initial state by combining the initial state of all modules, then overlaying any saved state
     const state = getInitialState(...this.modules.map(m => m.state));
 
     // Get our API by combining the APIs exported by each module
-    const combo = Object.assign({ navigate }, ...this.modules.map(m => m.api));
+    const api: API = Object.assign(this.api, { navigate }, ...this.modules.map(m => m.api));
 
-    const api = initProviderApi({ provider, store, api: combo });
-
-    api.on(STORY_CHANGED, (id: string) => {
-      const options = api.getParameters(id, 'options');
-
-      if (options) {
-        api.setOptions(options);
-      }
-    });
-
-    api.on(SET_STORIES, (data: { stories: StoriesRaw }) => {
-      api.setStories(data.stories);
-      const options = storyId
-        ? api.getParameters(storyId, 'options')
-        : api.getParameters(Object.keys(data.stories)[0], 'options');
-      api.setOptions(options);
-    });
-    api.on(
-      SELECT_STORY,
-      ({ kind, story, ...rest }: { kind: string; story: string; [k: string]: any }) => {
-        api.selectStory(kind, story, rest);
-      }
-    );
-    api.on(NAVIGATE_URL, (url: string, options: { [k: string]: any }) => {
-      api.navigateUrl(url, options);
-    });
+    initProviderApi({ provider, store, api });
 
     this.state = state;
     this.api = api;
   }
 
-  static getDerivedStateFromProps = (props: Props, state: State) => {
+  static getDerivedStateFromProps = (props: ManagerProviderProps, state: State) => {
     if (state.path !== props.path) {
       return {
         ...state,
         location: props.location,
         path: props.path,
-        viewMode: props.viewMode,
+        // if its a docsOnly page, even the 'story' view mode is considered 'docs'
+        viewMode: (props.docsMode && props.viewMode) === 'story' ? 'docs' : props.viewMode,
         storyId: props.storyId,
       };
     }
@@ -229,12 +225,12 @@ class ManagerProvider extends Component<Props, State> {
     // a chance to do things that call other modules' APIs.
     this.modules.forEach(({ init }) => {
       if (init) {
-        init({ api: this.api });
+        init();
       }
     });
   }
 
-  shouldComponentUpdate(nextProps: Props, nextState: State) {
+  shouldComponentUpdate(nextProps: ManagerProviderProps, nextState: State) {
     const prevState = this.state;
     const prevProps = this.props;
 
@@ -254,57 +250,45 @@ class ManagerProvider extends Component<Props, State> {
       api: this.api,
     };
 
-    // @ts-ignore
-    const content: ReactNode = typeof children === 'function' ? children(value) : children;
-
-    return <ManagerContext.Provider value={value}>{content}</ManagerContext.Provider>;
-  }
-}
-
-interface ConsumerProps<S, C> {
-  filter?: (combo: C) => S;
-  pure?: boolean;
-  children: (d: S | C) => ReactElement<any> | null;
-}
-
-interface SubState {
-  [key: string]: any;
-}
-
-class ManagerConsumer extends Component<ConsumerProps<SubState, Combo>> {
-  prevChildren?: ReactElement<any> | null;
-
-  prevData?: SubState;
-
-  dataMemory?: (combo: Combo) => SubState;
-
-  constructor(props: ConsumerProps<SubState, Combo>) {
-    super(props);
-    this.dataMemory = props.filter ? memoize(10)(props.filter) : null;
-  }
-
-  render() {
-    const { children, pure } = this.props;
-
     return (
-      <ManagerContext.Consumer>
-        {d => {
-          const data = this.dataMemory ? this.dataMemory(d) : d;
-          if (
-            pure &&
-            this.prevChildren &&
-            this.prevData &&
-            shallowEqualObjects(data, this.prevData)
-          ) {
-            return this.prevChildren;
-          }
-          this.prevChildren = children(data);
-          this.prevData = data;
-          return this.prevChildren;
-        }}
-      </ManagerContext.Consumer>
+      <ManagerContext.Provider value={value}>
+        <ManagerConsumer>{children}</ManagerConsumer>
+      </ManagerContext.Provider>
     );
   }
+}
+
+interface ManagerConsumerProps<P = unknown> {
+  filter?: (combo: Combo) => P;
+  children: FunctionComponent<P> | ReactNode;
+}
+
+const defaultFilter = (c: Combo) => c;
+
+function ManagerConsumer<P = Combo>({
+  // @ts-ignore
+  filter = defaultFilter,
+  children,
+}: ManagerConsumerProps<P>): ReactElement {
+  const c = useContext(ManagerContext);
+  const renderer = useRef(children);
+  const filterer = useRef(filter);
+
+  if (typeof renderer.current !== 'function') {
+    return <Fragment>{renderer.current}</Fragment>;
+  }
+
+  const data = filterer.current(c);
+
+  const l = useMemo(() => {
+    return [...Object.entries(data).reduce((acc, keyval) => acc.concat(keyval), [])];
+  }, [c.state]);
+
+  return useMemo(() => {
+    const Child = renderer.current as FunctionComponent<P>;
+
+    return <Child {...data} />;
+  }, l);
 }
 
 export function useStorybookState(): State {
@@ -359,7 +343,7 @@ export function useParameter<S>(parameterKey: string, defaultValue?: S) {
 }
 
 type StateMerger<S> = (input: S) => S;
-// chache for taking care of HMR
+// cache for taking care of HMR
 const addonStateCache: {
   [key: string]: any;
 } = {};
@@ -385,7 +369,7 @@ export function useSharedState<S>(stateId: string, defaultState?: S) {
       [`${SHARED_STATE_SET}-client-${stateId}`]: (s: S) => setState(s),
     };
     const stateInitializationHandlers = {
-      [STORIES_CONFIGURED]: () => {
+      [SET_STORIES]: () => {
         if (addonStateCache[stateId]) {
           // this happens when HMR
           setState(addonStateCache[stateId]);
@@ -428,4 +412,31 @@ export function useAddonState<S>(addonId: string, defaultState?: S) {
 export function useStoryState<S>(defaultState?: S) {
   const { storyId } = useStorybookState();
   return useSharedState<S>(`story-state-${storyId}`, defaultState);
+}
+
+export function useArgs(): [Args, (newArgs: Args) => void] {
+  const {
+    api: { getCurrentStoryData, updateStoryArgs },
+  } = useStorybookApi();
+
+  const { id, args } = getCurrentStoryData();
+
+  return [args, (newArgs: Args) => updateStoryArgs(id, newArgs)];
+}
+
+export function useGlobalArgs(): [Args, (newGlobalArgs: Args) => void] {
+  const {
+    state: { globalArgs },
+    api: { updateGlobalArgs },
+  } = useContext(ManagerContext);
+
+  return [globalArgs, updateGlobalArgs];
+}
+
+export function useArgTypes(): ArgTypes {
+  return useParameter<ArgTypes>('argTypes', {});
+}
+
+export function useGlobalArgTypes(): ArgTypes {
+  return useParameter<ArgTypes>('globalArgTypes', {});
 }

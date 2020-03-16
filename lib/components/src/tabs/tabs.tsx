@@ -7,7 +7,6 @@ import React, {
   MouseEvent,
   ReactNode,
 } from 'react';
-import PropTypes from 'prop-types';
 import { styled } from '@storybook/theming';
 
 import { Placeholder } from '../placeholder/placeholder';
@@ -30,6 +29,7 @@ const Wrapper = styled.div<WrapperProps>(
           border: `1px solid ${theme.appBorderColor}`,
           borderRadius: theme.appBorderRadius,
           overflow: 'hidden',
+          boxSizing: 'border-box',
         }
       : {},
   ({ absolute }) =>
@@ -56,6 +56,7 @@ export const TabBar = styled.div({
 
 export interface ContentProps {
   absolute?: boolean;
+  bordered?: boolean;
 }
 
 const Content = styled.div<ContentProps>(
@@ -66,24 +67,30 @@ const Content = styled.div<ContentProps>(
   ({ theme }) => ({
     fontSize: theme.typography.size.s2 - 1,
   }),
-  ({ absolute }) =>
+  ({ bordered, theme }) =>
+    bordered
+      ? {
+          borderRadius: `0 0 ${theme.appBorderRadius - 1}px ${theme.appBorderRadius - 1}px`,
+        }
+      : {},
+  ({ absolute, bordered }) =>
     absolute
       ? {
-          height: 'calc(100% - 40px)',
+          height: `calc(100% - ${bordered ? 42 : 40}px)`,
 
           position: 'absolute',
-          left: 0,
-          right: 0,
-          bottom: 0,
-          top: 40,
+          left: 0 + (bordered ? 1 : 0),
+          right: 0 + (bordered ? 1 : 0),
+          bottom: 0 + (bordered ? 1 : 0),
+          top: 40 + (bordered ? 1 : 0),
           overflow: 'auto',
           [`& > *:first-child${ignoreSsrWarning}`]: {
             position: 'absolute',
-            left: 0,
-            right: 0,
-            bottom: 0,
-            top: 0,
-            height: '100%',
+            left: 0 + (bordered ? 1 : 0),
+            right: 0 + (bordered ? 1 : 0),
+            bottom: 0 + (bordered ? 1 : 0),
+            top: 0 + (bordered ? 1 : 0),
+            height: `calc(100% - ${bordered ? 2 : 0}px)`,
             overflow: 'auto',
           },
         }
@@ -108,9 +115,7 @@ export const TabWrapper: FunctionComponent<TabWrapperProps> = ({ active, render,
   <VisuallyHidden active={active}>{render ? render() : children}</VisuallyHidden>
 );
 
-export const panelProps = {
-  active: PropTypes.bool,
-};
+export const panelProps = {};
 
 const childrenToList = (children: any, selected: string) =>
   Children.toArray(children).map(
@@ -172,7 +177,7 @@ export const Tabs: FunctionComponent<TabsProps> = memo(
           </TabBar>
           {tools ? <Fragment>{tools}</Fragment> : null}
         </FlexBar>
-        <Content absolute={absolute} tabIndex={0}>
+        <Content bordered={bordered} absolute={absolute} tabIndex={0}>
           {list.map(({ id, active, render }) => render({ key: id, active }))}
         </Content>
       </Wrapper>
