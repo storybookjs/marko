@@ -114,9 +114,13 @@ storiesOf('Basics/Form/Textarea', module)
   ))
   .add('height', () => (
     <Spaced>
-      {[undefined, 200, 600].map(height => (
+      {[100, 200, undefined].map(height => (
         <Flexed key={(height || 'undefined').toString()} label={(height || 'undefined').toString()}>
-          <Textarea defaultValue="textarea" size="100%" height={height} />
+          <Textarea
+            defaultValue={[...new Array(650)].fill('textarea textvalue').join(' ')}
+            size="100%"
+            height={height}
+          />
         </Flexed>
       ))}
     </Spaced>
