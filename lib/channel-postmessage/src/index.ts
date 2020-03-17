@@ -1,8 +1,11 @@
 import { window, document, location } from 'global';
+import * as EVENTS from '@storybook/core-events';
 import Channel, { ChannelEvent, ChannelHandler } from '@storybook/channels';
 import { logger } from '@storybook/client-logger';
-
 import { isJSON, parse, stringify } from 'telejson';
+import { prettyLog } from './prettylog';
+
+const prettyDebug = prettyLog('debug');
 
 interface Config {
   page: 'manager' | 'preview';
@@ -76,8 +79,6 @@ export class PostmsgTransport {
       { maxDepth: depth, allowFunction }
     );
 
-    // TODO: investigate http://blog.teamtreehouse.com/cross-domain-messaging-with-postmessage
-    // might replace '*' with document.location ?
     frames.forEach(f => {
       try {
         f.postMessage(data, '*');
@@ -148,18 +149,37 @@ export class PostmsgTransport {
     try {
       const { data } = rawEvent;
       const { key, event, source } = typeof data === 'string' && isJSON(data) ? parse(data) : data;
+
       if (key === KEY) {
+        const pageString =
+          this.config.page === 'manager'
+            ? `<span style="color: #37D5D3; background: black"> manager </span>`
+            : `<span style="color: #1EA7FD; background: black"> preview </span>`;
+
+        const eventString = Object.values(EVENTS).includes(event.type)
+          ? `<span style="color: #FF4785">${event.type}</span>`
+          : `<span style="color: #FFAE00">${event.type}</span>`;
+
         event.source = source || getEventSourceUrl(rawEvent);
-        logger.debug(
-          `message arrived at ${this.config.page} on ${location.origin} from ${event.source}`,
-          event.type,
+
+        if (!event.source) {
+          logger.error(
+            `${pageString} received ${eventString} but was unable to determine the source of the event`
+          );
+
+          return;
+        }
+        prettyDebug(
+          location.origin !== event.source
+            ? `${pageString} received ${eventString}`
+            : `${pageString} received ${eventString} <span style="color: gray">(on ${location.origin} from ${event.source})</span>`,
           ...event.args
         );
+
         this.handler(event);
       }
     } catch (error) {
       logger.error(error);
-      // debugger;
     }
   }
 }
