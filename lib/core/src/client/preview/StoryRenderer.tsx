@@ -222,7 +222,7 @@ export class StoryRenderer {
     const styles = layouts[layout] || layouts.padded;
 
     if (styles !== this.previousStyles) {
-      Object.assign(document.body.style, styles);
+      Object.assign(document.body.style, styles || {});
       this.previousStyles = styles;
     }
   }
