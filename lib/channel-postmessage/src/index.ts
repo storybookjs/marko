@@ -125,7 +125,7 @@ export class PostmsgTransport {
         })
         .map(e => e.contentWindow);
 
-      return list.length ? list : this.getCurrentFrame();
+      return list.length ? list : this.getCurrentFrames();
     }
     if (window && window.parent) {
       return [window.parent];
@@ -134,7 +134,7 @@ export class PostmsgTransport {
     return [];
   }
 
-  private getCurrentFrame(): Window[] {
+  private getCurrentFrames(): Window[] {
     if (this.config.page === 'manager') {
       const list: HTMLIFrameElement[] = [
         ...document.querySelectorAll('[data-is-storybook="true"]'),
