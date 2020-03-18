@@ -89,22 +89,30 @@ export const init: ModuleFn = ({ store, provider }) => {
     checkRef: async ref => {
       const { id, url } = ref;
 
-      const response = await fetch(`${url}/data.json`).catch(() => false);
+      const handler = async (response: Response) => {
+        if (response) {
+          const { ok } = response;
 
-      if (response) {
-        const { ok } = response;
+          if (ok) {
+            const data: SetRefData = await response.json().catch((error: Error) => ({ error }));
 
-        if (ok) {
-          const data: SetRefData = await response
-            .json()
-            .catch((error: Error) => ({ startInjected: true, error }));
-
-          api.setRef(id, { id, url, startInjected: false, ...data });
+            api.setRef(id, { id, url, ...data });
+          }
         } else {
-          api.setRef(id, { id, url, startInjected: true });
+          logger.warn('an auto-injected ref threw a cors-error');
         }
-      } else {
-        logger.warn('an auto-injected ref threw a cors-error');
+      };
+
+      const [stories, metadata] = await Promise.all([
+        fetch(`${url}/stories.json`)
+          .catch(() => false)
+          .then(handler),
+        fetch(`${url}/metadata.json`)
+          .catch(() => false)
+          .then(handler),
+      ]);
+
+      if (!stories && !metadata) {
         api.setRef(id, { id, url, startInjected: true });
       }
     },
