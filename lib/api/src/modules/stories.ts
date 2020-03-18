@@ -291,7 +291,7 @@ export const init: ModuleFn = ({
       const sourceType = getSourceType(source);
 
       if (sourceType === 'local') {
-        const options = fullAPI.getParameters({ storyId, refId: undefined }, 'options');
+        const options = fullAPI.getCurrentParameter('options');
 
         if (options) {
           fullAPI.setOptions(options);
