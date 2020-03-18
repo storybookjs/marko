@@ -1,11 +1,8 @@
 import { window, document, location } from 'global';
 import * as EVENTS from '@storybook/core-events';
 import Channel, { ChannelEvent, ChannelHandler } from '@storybook/channels';
-import { logger } from '@storybook/client-logger';
+import { logger, pretty } from '@storybook/client-logger';
 import { isJSON, parse, stringify } from 'telejson';
-import { prettyLog } from './prettylog';
-
-const prettyDebug = prettyLog('debug');
 
 interface Config {
   page: 'manager' | 'preview';
@@ -184,7 +181,7 @@ export class PostmsgTransport {
 
           return;
         }
-        prettyDebug(
+        pretty.debug(
           location.origin !== event.source
             ? `${pageString} received ${eventString}`
             : `${pageString} received ${eventString} <span style="color: gray">(on ${location.origin} from ${event.source})</span>`,
