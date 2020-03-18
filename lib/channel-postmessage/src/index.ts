@@ -84,7 +84,7 @@ export class PostmsgTransport {
         this.buffer.push({ event, resolve, reject });
       });
     }
-    if (frames.length && this.buffer.length) {
+    if (this.buffer.length) {
       this.flush();
     }
 
