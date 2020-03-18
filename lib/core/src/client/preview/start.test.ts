@@ -16,7 +16,7 @@ jest.mock('global', () => ({
   document: {
     addEventListener: jest.fn(),
     getElementById: jest.fn().mockReturnValue({}),
-    body: { classList: { add: jest.fn(), remove: jest.fn() } },
+    body: { classList: { add: jest.fn(), remove: jest.fn() }, style: {} },
     documentElement: {},
     location: { search: '?id=kind--story' },
   },
