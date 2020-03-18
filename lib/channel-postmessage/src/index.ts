@@ -45,7 +45,7 @@ export class PostmsgTransport {
     this.handler = (...args) => {
       handler.apply(this, args);
 
-      if (!this.connected && this.getFrames().length) {
+      if (!this.connected && this.getLocalFrame().length) {
         this.flush();
         this.connected = true;
       }
@@ -79,6 +79,15 @@ export class PostmsgTransport {
       { maxDepth: depth, allowFunction }
     );
 
+    if (!frames.length) {
+      return new Promise((resolve, reject) => {
+        this.buffer.push({ event, resolve, reject });
+      });
+    }
+    if (frames.length && this.buffer.length) {
+      this.flush();
+    }
+
     frames.forEach(f => {
       try {
         f.postMessage(data, '*');
@@ -86,12 +95,6 @@ export class PostmsgTransport {
         console.error('sending over postmessage fail');
       }
     });
-
-    if (!frames.length || this.buffer.length) {
-      return new Promise((resolve, reject) => {
-        this.buffer.push({ event, resolve, reject });
-      });
-    }
 
     return Promise.resolve(null);
   }
@@ -109,7 +112,7 @@ export class PostmsgTransport {
   private getFrames(target?: string): Window[] {
     if (this.config.page === 'manager') {
       const nodes: HTMLIFrameElement[] = [
-        ...document.querySelectorAll('iframe[data-is-storybook]'),
+        ...document.querySelectorAll('iframe[data-is-storybook][data-is-loaded]'),
       ];
 
       const list = nodes
@@ -136,6 +139,18 @@ export class PostmsgTransport {
       const list: HTMLIFrameElement[] = [
         ...document.querySelectorAll('[data-is-storybook="true"]'),
       ];
+      return list.map(e => e.contentWindow);
+    }
+    if (window && window.parent) {
+      return [window.parent];
+    }
+
+    return [];
+  }
+
+  private getLocalFrame(): Window[] {
+    if (this.config.page === 'manager') {
+      const list: HTMLIFrameElement[] = [...document.querySelectorAll('#storybook-preview-iframe')];
       return list.map(e => e.contentWindow);
     }
     if (window && window.parent) {
