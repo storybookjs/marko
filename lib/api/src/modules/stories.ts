@@ -289,6 +289,7 @@ export const init: ModuleFn = ({
     fullAPI.on(STORY_CHANGED, function handleStoryChange(storyId: string) {
       const { source }: { source: string } = this;
       const sourceType = getSourceType(source);
+
       if (sourceType === 'local') {
         const options = fullAPI.getParameters({ storyId, refId: undefined }, 'options');
 
