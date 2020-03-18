@@ -68,6 +68,8 @@ const defaultContext: StoryContext = {
   name: 'unspecified',
   kind: 'unspecified',
   parameters: {},
+  args: {},
+  globalArgs: {},
 };
 
 function decorateStory(
@@ -78,22 +80,13 @@ function decorateStory(
     (decorated: StoryFn<VueConstructor>, decorator) => (context: StoryContext = defaultContext) => {
       let story;
 
-      const decoratedStory = decorator(p => {
-        story = decorated(
-          p
-            ? {
-                ...context,
-                ...p,
-                parameters: {
-                  ...context.parameters,
-                  ...p.parameters,
-                },
-              }
-            : context
-        );
-
-        return story;
-      }, context);
+      const decoratedStory = decorator(
+        ({ parameters, ...innerContext }: StoryContext = {} as StoryContext) => {
+          story = decorated({ ...context, ...innerContext });
+          return story;
+        },
+        context
+      );
 
       if (!story) {
         story = decorated(context);

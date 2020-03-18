@@ -4,10 +4,6 @@ import { logger } from '@storybook/client-logger';
 
 import { isJSON, parse, stringify } from 'telejson';
 
-interface RawEvent {
-  data: string;
-}
-
 interface Config {
   page: 'manager' | 'preview';
 }
@@ -106,7 +102,7 @@ export class PostmsgTransport {
     return window.parent;
   }
 
-  private handleEvent(rawEvent: RawEvent): void {
+  private handleEvent(rawEvent: MessageEvent): void {
     try {
       const { data } = rawEvent;
       const { key, event } = typeof data === 'string' && isJSON(data) ? parse(data) : data;

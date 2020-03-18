@@ -1,18 +1,18 @@
 import React, { Children, FunctionComponent } from 'react';
 import { styled } from '@storybook/theming';
 
-const Title = styled.div`
-  font-weight: ${props => props.theme.typography.weight.bold};
-`;
+const Title = styled.div(({ theme }) => ({
+  fontWeight: theme.typography.weight.bold,
+}));
 
-const Desc = styled.div``;
+const Desc = styled.div();
 
-const Message = styled.div`
-  padding: 30px;
-  text-align: center;
-  color: ${props => props.theme.color.defaultText};
-  font-size: ${props => props.theme.typography.size.s2 - 1}px;
-`;
+const Message = styled.div(({ theme }) => ({
+  padding: 30,
+  textAlign: 'center',
+  color: theme.color.defaultText,
+  fontSize: theme.typography.size.s2 - 1,
+}));
 
 export const Placeholder: FunctionComponent = ({ children, ...props }) => {
   const [title, desc] = Children.toArray(children);

@@ -3,32 +3,32 @@ import { styled } from '@storybook/theming';
 
 import { Link } from '../typography/link/link';
 
-const Title = styled.div`
-  font-weight: ${props => props.theme.typography.weight.black};
-`;
+const Title = styled.div(({ theme }) => ({
+  fontWeight: theme.typography.weight.black,
+}));
 
-const Desc = styled.span``;
+const Desc = styled.span();
 
-const Links = styled.div`
-  margin-top: 8px;
-  text-align: center;
+const Links = styled.div(({ theme }) => ({
+  marginTop: 8,
+  textAlign: 'center',
 
-  > * {
-    margin: 0 8px;
-    font-weight: ${props => props.theme.typography.weight.black};
-  }
-`;
+  '> *': {
+    margin: '0 8px',
+    fontWeight: theme.typography.weight.black,
+  },
+}));
 
-const Message = styled.div`
-  color: ${props => props.theme.color.darker};
-  line-height: 18px;
-`;
+const Message = styled.div(({ theme }) => ({
+  color: theme.textColor,
+  lineHeight: '18px',
+}));
 
-const MessageWrapper = styled.div`
-  padding: 15px;
-  width: 280px;
-  box-sizing: border-box;
-`;
+const MessageWrapper = styled.div({
+  padding: 15,
+  width: 280,
+  boxSizing: 'border-box',
+});
 
 export interface TooltipMessageProps {
   title?: ReactNode;

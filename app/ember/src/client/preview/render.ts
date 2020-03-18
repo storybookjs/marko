@@ -1,6 +1,6 @@
 import { window, document } from 'global';
 import dedent from 'ts-dedent';
-import { RenderMainArgs, ElementArgs, OptionsArgs } from './types';
+import { RenderContext, ElementArgs, OptionsArgs } from './types';
 
 declare let Ember: any;
 
@@ -52,18 +52,12 @@ function render(options: OptionsArgs, el: ElementArgs) {
     });
 }
 
-export default function renderMain({
-  storyFn,
-  selectedKind,
-  selectedStory,
-  showMain,
-  showError,
-}: RenderMainArgs) {
+export default function renderMain({ storyFn, kind, name, showMain, showError }: RenderContext) {
   const element = storyFn();
 
   if (!element) {
     showError({
-      title: `Expecting a Ember element from the story: "${selectedStory}" of "${selectedKind}".`,
+      title: `Expecting a Ember element from the story: "${name}" of "${kind}".`,
       description: dedent`
         Did you forget to return the Ember element from the story?
         Use "() => hbs('{{component}}')" or "() => { return {

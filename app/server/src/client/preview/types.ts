@@ -1,4 +1,4 @@
-import { StoryFn } from '@storybook/addons';
+export { RenderContext } from '@storybook/core';
 
 export type StoryFnServerReturnType = any;
 
@@ -21,15 +21,4 @@ export interface ShowErrorArgs {
 
 export interface ConfigureOptionsArgs {
   fetchStoryHtml: FetchStoryHtmlType;
-}
-
-export interface RenderMainArgs {
-  storyFn: () => StoryFn<StoryFnServerReturnType>;
-  id: string;
-  selectedKind: string;
-  selectedStory: string;
-  showMain: () => void;
-  showError: (args: ShowErrorArgs) => void;
-  forceRender: boolean;
-  parameters: any;
 }

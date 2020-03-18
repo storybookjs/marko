@@ -1,8 +1,6 @@
 /* eslint no-underscore-dangle: 0 */
 
-import Events from '@storybook/core-events';
 import Channel from '@storybook/channels';
-import { ErrorLike } from './types';
 import StoryStore from './story_store';
 import ClientApi from './client_api';
 
@@ -15,85 +13,32 @@ export default class ConfigApi {
 
   clientApi: ClientApi;
 
-  constructor({
-    channel,
-    storyStore,
-    clientApi,
-    clearDecorators,
-  }: {
-    channel: Channel | null;
-    storyStore: StoryStore;
-    clientApi: ClientApi;
-    clearDecorators: () => void;
-  }) {
-    // channel can be null when running in node
-    // always check whether channel is available
-    this._channel = channel;
+  constructor({ storyStore }: { storyStore: StoryStore }) {
     this._storyStore = storyStore;
-    this._clearDecorators = clearDecorators;
-    this.clientApi = clientApi;
-  }
-
-  _renderMain() {
-    // do initial render of story
-    this._storyStore.emit(Events.STORY_INIT);
-  }
-
-  _renderError(err: Error) {
-    const { stack, message } = err;
-    const error: ErrorLike = { stack, message };
-    this._storyStore.setSelection(undefined, error);
   }
 
   configure = (loaders: () => void, module: NodeModule) => {
-    const render = () => {
-      const errors = [];
+    this._storyStore.startConfiguring();
 
-      try {
-        if (loaders) {
-          loaders();
-        }
-      } catch (e) {
-        errors.push(e);
-      }
+    try {
+      loaders();
 
-      if (!errors.length) {
-        try {
-          this._renderMain();
-        } catch (e) {
-          errors.push(e);
-        }
-      }
-
-      if (errors.length) {
-        this._storyStore.setSelection(undefined, errors[0]);
-
-        throw errors[0];
-      } else {
-        this._storyStore.setSelection(undefined, null);
-      }
-    };
+      this._storyStore.clearError();
+      this._storyStore.finishConfiguring();
+    } catch (err) {
+      this._storyStore.setError(err);
+    }
 
     if (module.hot) {
       module.hot.accept();
+      // The generated entry point for main.js:stories adds this flag as it cannot
+      // set decorators but calls configure, and aims not to clear decorators added by other files.
+      // HOWEVER: this will still clear global decorators added by addons when reloading preview.js
+      //   which is a bug!
       // @ts-ignore
       if (!module._StorybookPreserveDecorators) {
-        module.hot.dispose(() => {
-          this._clearDecorators();
-        });
+        module.hot.dispose(() => this._storyStore.clearGlobalDecorators());
       }
-    }
-
-    if (this._channel) {
-      // in Browser
-      render();
-      // Send a signal to the manager that configure() is done. We do this in a timeout
-      // because the story_store sends stories in a debounced function, which results in
-      // as setTimeout. We want to ensure this happens after, to avoid a FOUC.
-      setTimeout(() => this._channel.emit(Events.STORIES_CONFIGURED), 0);
-    } else {
-      // in NodeJS
-      loaders();
     }
   };
 }

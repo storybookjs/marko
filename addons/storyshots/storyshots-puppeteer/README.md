@@ -80,7 +80,10 @@ import { puppeteerTest } from '@storybook/addon-storyshots-puppeteer';
 
 initStoryshots({
   suite: 'Puppeteer storyshots',
-  test: puppeteerTest({ storybookUrl: 'file:///path/to/my/storybook-static' }),
+  test: puppeteerTest({ 
+    storybookUrl: 'file:///path/to/my/storybook-static',
+    // storybookUrl: 'file://${path.resolve(__dirname, '../storybook-static')}'
+  }),
 });
 ```
 

@@ -1,7 +1,7 @@
 import { navigator, document } from 'global';
 import { PREVIEW_KEYDOWN } from '@storybook/core-events';
 
-import { Module, API } from '../index';
+import { Module } from '../index';
 
 import { shortcutMatchesShortcut, eventToShortcut } from '../lib/shortcut';
 import { focusableUIElements } from './layout';
@@ -24,8 +24,8 @@ export interface SubAPI {
   setShortcut(action: Action, value: KeyCollection): Promise<KeyCollection>;
   restoreAllDefaultShortcuts(): Promise<Shortcuts>;
   restoreDefaultShortcut(action: Action): Promise<KeyCollection>;
-  handleKeydownEvent(api: API, event: Event): void;
-  handleShortcutFeature(api: API, feature: Action): void;
+  handleKeydownEvent(event: Event): void;
+  handleShortcutFeature(feature: Action): void;
 }
 export type KeyCollection = string[];
 
@@ -83,7 +83,14 @@ export interface Event extends KeyboardEvent {
   };
 }
 
-export default function initShortcuts({ store }: Module) {
+function focusInInput(event: Event) {
+  return (
+    /input|textarea/i.test(event.target.tagName) ||
+    event.target.getAttribute('contenteditable') !== null
+  );
+}
+
+export default function initShortcuts({ store, fullAPI }: Module) {
   const api: SubAPI = {
     // Getting and setting shortcuts
     getShortcutKeys(): Shortcuts {
@@ -107,7 +114,7 @@ export default function initShortcuts({ store }: Module) {
     },
 
     // Listening to shortcut events
-    handleKeydownEvent(fullApi, event) {
+    handleKeydownEvent(event) {
       const shortcut = eventToShortcut(event);
       const shortcuts = api.getShortcutKeys();
       const actions = keys(shortcuts);
@@ -115,11 +122,11 @@ export default function initShortcuts({ store }: Module) {
         shortcutMatchesShortcut(shortcut, shortcuts[feature])
       );
       if (matchedFeature) {
-        api.handleShortcutFeature(fullApi, matchedFeature);
+        api.handleShortcutFeature(matchedFeature);
       }
     },
 
-    handleShortcutFeature(fullApi, feature) {
+    handleShortcutFeature(feature) {
       const {
         layout: { isFullscreen, showNav, showPanel },
         ui: { enableShortcuts },
@@ -130,34 +137,34 @@ export default function initShortcuts({ store }: Module) {
       switch (feature) {
         case 'escape': {
           if (isFullscreen) {
-            fullApi.toggleFullscreen();
+            fullAPI.toggleFullscreen();
           } else if (!showNav) {
-            fullApi.toggleNav();
+            fullAPI.toggleNav();
           }
           break;
         }
 
         case 'focusNav': {
           if (isFullscreen) {
-            fullApi.toggleFullscreen();
+            fullAPI.toggleFullscreen();
           }
           if (!showNav) {
-            fullApi.toggleNav();
+            fullAPI.toggleNav();
           }
-          fullApi.focusOnUIElement(focusableUIElements.storyListMenu);
+          fullAPI.focusOnUIElement(focusableUIElements.storyListMenu);
           break;
         }
 
         case 'search': {
           if (isFullscreen) {
-            fullApi.toggleFullscreen();
+            fullAPI.toggleFullscreen();
           }
           if (!showNav) {
-            fullApi.toggleNav();
+            fullAPI.toggleNav();
           }
 
           setTimeout(() => {
-            fullApi.focusOnUIElement(focusableUIElements.storySearchField);
+            fullAPI.focusOnUIElement(focusableUIElements.storySearchField);
           }, 0);
           break;
         }
@@ -178,92 +185,92 @@ export default function initShortcuts({ store }: Module) {
 
         case 'focusPanel': {
           if (isFullscreen) {
-            fullApi.toggleFullscreen();
+            fullAPI.toggleFullscreen();
           }
           if (!showPanel) {
-            fullApi.togglePanel();
+            fullAPI.togglePanel();
           }
-          fullApi.focusOnUIElement(focusableUIElements.storyPanelRoot);
+          fullAPI.focusOnUIElement(focusableUIElements.storyPanelRoot);
           break;
         }
 
         case 'nextStory': {
-          fullApi.jumpToStory(1);
+          fullAPI.jumpToStory(1);
           break;
         }
 
         case 'prevStory': {
-          fullApi.jumpToStory(-1);
+          fullAPI.jumpToStory(-1);
           break;
         }
 
         case 'nextComponent': {
-          fullApi.jumpToComponent(1);
+          fullAPI.jumpToComponent(1);
           break;
         }
 
         case 'prevComponent': {
-          fullApi.jumpToComponent(-1);
+          fullAPI.jumpToComponent(-1);
           break;
         }
 
         case 'fullScreen': {
-          fullApi.toggleFullscreen();
+          fullAPI.toggleFullscreen();
           break;
         }
 
         case 'togglePanel': {
           if (isFullscreen) {
-            fullApi.toggleFullscreen();
-            fullApi.resetLayout();
+            fullAPI.toggleFullscreen();
+            fullAPI.resetLayout();
           }
 
-          fullApi.togglePanel();
+          fullAPI.togglePanel();
           break;
         }
 
         case 'toggleNav': {
           if (isFullscreen) {
-            fullApi.toggleFullscreen();
-            fullApi.resetLayout();
+            fullAPI.toggleFullscreen();
+            fullAPI.resetLayout();
           }
 
-          fullApi.toggleNav();
+          fullAPI.toggleNav();
           break;
         }
 
         case 'toolbar': {
-          fullApi.toggleToolbar();
+          fullAPI.toggleToolbar();
           break;
         }
 
         case 'panelPosition': {
           if (isFullscreen) {
-            fullApi.toggleFullscreen();
+            fullAPI.toggleFullscreen();
           }
           if (!showPanel) {
-            fullApi.togglePanel();
+            fullAPI.togglePanel();
           }
 
-          fullApi.togglePanelPosition();
+          fullAPI.togglePanelPosition();
           break;
         }
 
         case 'aboutPage': {
-          fullApi.navigate('/settings/about');
+          fullAPI.navigate('/settings/about');
           break;
         }
 
         case 'shortcutsPage': {
-          fullApi.navigate('/settings/shortcuts');
+          fullAPI.navigate('/settings/shortcuts');
           break;
         }
         case 'collapseAll': {
-          fullApi.collapseAll();
+          fullAPI.collapseAll();
           break;
         }
         case 'expandAll': {
-          fullApi.expandAll();
+          fullAPI.expandAll();
           break;
         }
         default:
@@ -281,26 +288,19 @@ export default function initShortcuts({ store }: Module) {
     ),
   };
 
-  const init = ({ api: fullApi }: API) => {
-    function focusInInput(event: Event) {
-      return (
-        /input|textarea/i.test(event.target.tagName) ||
-        event.target.getAttribute('contenteditable') !== null
-      );
-    }
+  const init = () => {
     // Listen for keydown events in the manager
     document.addEventListener('keydown', (event: Event) => {
       if (!focusInInput(event)) {
-        fullApi.handleKeydownEvent(fullApi, event);
+        fullAPI.handleKeydownEvent(event);
       }
     });
 
     // Also listen to keydown events sent over the channel
-    fullApi.on(PREVIEW_KEYDOWN, (data: { event: Event }) => {
-      fullApi.handleKeydownEvent(fullApi, data.event);
+    fullAPI.on(PREVIEW_KEYDOWN, (data: { event: Event }) => {
+      fullAPI.handleKeydownEvent(data.event);
     });
   };
-  const result = { api, state, init };
 
-  return result;
+  return { api, state, init };
 }

@@ -1,24 +1,74 @@
 /* eslint no-underscore-dangle: 0 */
-import EventEmitter from 'eventemitter3';
 import memoize from 'memoizerific';
-import debounce from 'lodash/debounce';
 import dedent from 'ts-dedent';
 import stable from 'stable';
 
 import { Channel } from '@storybook/channels';
 import Events from '@storybook/core-events';
 import { logger } from '@storybook/client-logger';
-import { Comparator, Parameters, StoryFn } from '@storybook/addons';
+import {
+  StoryId,
+  ViewMode,
+  Comparator,
+  Parameters,
+  Args,
+  LegacyStoryFn,
+  ArgsStoryFn,
+  StoryContext,
+} from '@storybook/addons';
 import {
   DecoratorFunction,
+  StoryMetadata,
   StoreData,
   AddStoryArgs,
   StoreItem,
+  PublishedStoreItem,
   ErrorLike,
   GetStorybookKind,
+  ParameterEnhancer,
 } from './types';
 import { HooksContext } from './hooks';
 import storySort from './storySort';
+import { combineParameters } from './parameters';
+
+interface Selection {
+  storyId: StoryId;
+  viewMode: ViewMode;
+}
+
+interface StoryOptions {
+  includeDocsOnly?: boolean;
+}
+
+type KindMetadata = StoryMetadata & { order: number };
+
+const isStoryDocsOnly = (parameters?: Parameters) => {
+  return parameters && parameters.docsOnly;
+};
+
+const includeStory = (story: StoreItem, options: StoryOptions = { includeDocsOnly: false }) => {
+  if (options.includeDocsOnly) {
+    return true;
+  }
+  return !isStoryDocsOnly(story.parameters);
+};
+
+const inJest = () => process.env.JEST_WORKER_ID !== undefined;
+
+const checkGlobalArgs = (parameters: Parameters) => {
+  const { globalArgs, globalArgTypes } = parameters;
+  if ((globalArgs || globalArgTypes) && !inJest()) {
+    logger.error(
+      'Global args/argTypes can only be set globally',
+      JSON.stringify({
+        globalArgs,
+        globalArgTypes,
+      })
+    );
+  }
+};
+
+type AllowUnsafeOption = { allowUnsafe?: boolean };
 
 const toExtracted = <T>(obj: T) =>
   Object.entries(obj).reduce((acc, [key, value]) => {
@@ -34,161 +84,174 @@ const toExtracted = <T>(obj: T) =>
     return Object.assign(acc, { [key]: value });
   }, {});
 
-interface Selection {
-  storyId: string;
-  viewMode: string;
-}
-
-interface StoryOptions {
-  includeDocsOnly?: boolean;
-}
-
-type KindOrder = Record<string, number>;
-
-const isStoryDocsOnly = (parameters?: Parameters) => {
-  return parameters && parameters.docsOnly;
-};
-
-const includeStory = (story: StoreItem, options: StoryOptions = { includeDocsOnly: false }) => {
-  if (options.includeDocsOnly) {
-    return true;
-  }
-  return !isStoryDocsOnly(story.parameters);
-};
-
-export default class StoryStore extends EventEmitter {
+export default class StoryStore {
   _error?: ErrorLike;
 
   _channel: Channel;
 
-  _data: StoreData;
+  _configuring: boolean;
+
+  _globalArgs: Args;
+
+  _globalMetadata: StoryMetadata;
+
+  // Keyed on kind name
+  _kinds: Record<string, KindMetadata>;
+
+  // Keyed on storyId
+  _stories: StoreData;
+
+  _parameterEnhancers: ParameterEnhancer[];
 
   _revision: number;
 
   _selection: Selection;
 
-  _kindOrder: KindOrder;
-
   constructor(params: { channel: Channel }) {
-    super();
+    // Assume we are configuring until we hear otherwise
+    this._configuring = true;
 
-    this._data = {} as any;
+    this._globalArgs = {};
+    this._globalMetadata = { parameters: {}, decorators: [] };
+    this._kinds = {};
+    this._stories = {};
+    this._parameterEnhancers = [];
     this._revision = 0;
     this._selection = {} as any;
-    this._channel = params.channel;
     this._error = undefined;
-    this._kindOrder = {};
+    this._channel = params.channel;
+
+    this.setupListeners();
   }
 
-  setChannel = (channel: Channel) => {
-    this._channel = channel;
-  };
+  setupListeners() {
+    // Channel can be null in StoryShots
+    if (!this._channel) return;
 
-  // NEW apis
-  fromId = (id: string): StoreItem | null => {
-    try {
-      const data = this._data[id as string];
+    this._channel.on(Events.SET_CURRENT_STORY, ({ storyId, viewMode }) =>
+      this.setSelection({ storyId, viewMode })
+    );
 
-      if (!data || !data.getDecorated) {
-        return null;
-      }
+    this._channel.on(Events.UPDATE_STORY_ARGS, (id: string, newArgs: Args) =>
+      this.updateStoryArgs(id, newArgs)
+    );
 
-      return data;
-    } catch (e) {
-      logger.warn('failed to get story:', this._data);
-      logger.error(e);
-      return null;
-    }
-  };
-
-  raw(options?: StoryOptions) {
-    return Object.values(this._data)
-      .filter(i => !!i.getDecorated)
-      .filter(i => includeStory(i, options))
-      .map(({ id }) => this.fromId(id));
-  }
-
-  extract(options?: StoryOptions) {
-    const stories = Object.entries(this._data);
-    // determine if we should apply a sort to the stories or use default import order
-    if (Object.values(this._data).length > 0) {
-      const index = Object.keys(this._data).find(
-        key =>
-          !!(this._data[key] && this._data[key].parameters && this._data[key].parameters.options)
-      );
-      if (index && this._data[index].parameters.options.storySort) {
-        const storySortParameter = this._data[index].parameters.options.storySort;
-        let sortFn: Comparator<any>;
-        if (typeof storySortParameter === 'function') {
-          sortFn = storySortParameter;
-        } else {
-          sortFn = storySort(storySortParameter);
-        }
-        stable.inplace(stories, sortFn);
-      } else {
-        // NOTE: when kinds are HMR'ed they get temporarily removed from the `_data` array
-        // and thus lose order. However `_kindOrder` preservers the original load order
-        stable.inplace(
-          stories,
-          (s1, s2) => this._kindOrder[s1[1].kind] - this._kindOrder[s2[1].kind]
-        );
-      }
-    }
-    // removes function values from all stories so they are safe to transport over the channel
-    return stories.reduce(
-      (a, [k, v]) => (includeStory(v, options) ? Object.assign(a, { [k]: toExtracted(v) }) : a),
-      {}
+    this._channel.on(Events.UPDATE_GLOBAL_ARGS, (newGlobalArgs: Args) =>
+      this.updateGlobalArgs(newGlobalArgs)
     );
   }
 
-  setSelection(data: Selection | undefined, error: ErrorLike): void {
-    this._selection =
-      data === undefined ? this._selection : { storyId: data.storyId, viewMode: data.viewMode };
-    this._error = error === undefined ? this._error : error;
-
-    // Try and emit the STORY_RENDER event synchronously, but if the channel is not ready (RN),
-    // we'll try again later.
-    let isStarted = false;
-    if (this._channel) {
-      this._channel.emit(Events.STORY_RENDER);
-      isStarted = true;
-    }
-
-    setTimeout(() => {
-      if (this._channel && !isStarted) {
-        this._channel.emit(Events.STORY_RENDER);
-      }
-
-      // should be deprecated in future.
-      this.emit(Events.STORY_RENDER);
-    }, 1);
+  startConfiguring() {
+    this._configuring = true;
   }
 
-  getSelection = (): Selection => this._selection;
+  finishConfiguring() {
+    this._configuring = false;
+    this.pushToManager();
+    if (this._channel) this._channel.emit(Events.RENDER_CURRENT_STORY);
 
-  getError = (): ErrorLike | undefined => this._error;
+    const storyIds = Object.keys(this._stories);
+    if (storyIds.length) {
+      const {
+        parameters: { globalArgs: initialGlobalArgs, globalArgTypes },
+      } = this.fromId(storyIds[0]);
 
-  remove = (id: string): void => {
-    const { _data } = this;
-    const story = _data[id];
-    delete _data[id];
+      const defaultGlobalArgs: Args = globalArgTypes
+        ? Object.entries(globalArgTypes as Record<string, { defaultValue: any }>).reduce(
+            (acc, [arg, { defaultValue }]) => {
+              if (defaultValue) acc[arg] = defaultValue;
+              return acc;
+            },
+            {} as Args
+          )
+        : {};
 
-    if (story) story.hooks.clean();
-  };
+      // To deal with HMR, we consider the previous value of global args, and:
+      //   1. Remove any keys that are not in the new parameter
+      //   2. Preference any keys that were already set
+      //   3. Use any new keys from the new parameter
+      this._globalArgs = Object.entries(this._globalArgs || {}).reduce(
+        (acc, [key, previousValue]) => {
+          if (acc[key]) acc[key] = previousValue;
+
+          return acc;
+        },
+        { ...defaultGlobalArgs, ...initialGlobalArgs }
+      );
+    }
+  }
+
+  addGlobalMetadata({ parameters, decorators }: StoryMetadata) {
+    if (parameters) {
+      const { args, argTypes } = parameters;
+      if (args || argTypes)
+        logger.warn(
+          'Found args/argTypes in global parameters.',
+          JSON.stringify({ args, argTypes })
+        );
+    }
+    const globalParameters = this._globalMetadata.parameters;
+
+    this._globalMetadata.parameters = combineParameters(globalParameters, parameters);
+
+    this._globalMetadata.decorators.push(...decorators);
+  }
+
+  clearGlobalDecorators() {
+    this._globalMetadata.decorators = [];
+  }
+
+  ensureKind(kind: string) {
+    if (!this._kinds[kind]) {
+      this._kinds[kind] = {
+        order: Object.keys(this._kinds).length,
+        parameters: {},
+        decorators: [],
+      };
+    }
+  }
+
+  addKindMetadata(kind: string, { parameters, decorators }: StoryMetadata) {
+    this.ensureKind(kind);
+    if (parameters) checkGlobalArgs(parameters);
+    this._kinds[kind].parameters = combineParameters(this._kinds[kind].parameters, parameters);
+
+    this._kinds[kind].decorators.push(...decorators);
+  }
+
+  addParameterEnhancer(parameterEnhancer: ParameterEnhancer) {
+    if (Object.keys(this._stories).length > 0)
+      throw new Error('Cannot add a parameter enhancer to the store after a story has been added.');
+
+    this._parameterEnhancers.push(parameterEnhancer);
+  }
 
   addStory(
-    { id, kind, name, storyFn: original, parameters = {} }: AddStoryArgs,
     {
-      getDecorators,
+      id,
+      kind,
+      name,
+      storyFn: original,
+      parameters: storyParameters = {},
+      decorators: storyDecorators = [],
+    }: AddStoryArgs,
+    {
       applyDecorators,
+      allowUnsafe = false,
     }: {
-      getDecorators: () => DecoratorFunction[];
-      applyDecorators: (fn: StoryFn, decorators: DecoratorFunction[]) => any;
-    }
+      applyDecorators: (fn: LegacyStoryFn, decorators: DecoratorFunction[]) => any;
+    } & AllowUnsafeOption
   ) {
-    const { _data } = this;
+    if (!this._configuring && !allowUnsafe)
+      throw new Error(
+        'Cannot add a story when not configuring, see https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#story-store-immutable-outside-of-configuration'
+      );
 
-    if (_data[id]) {
+    if (storyParameters) checkGlobalArgs(storyParameters);
+
+    const { _stories } = this;
+
+    if (_stories[id]) {
       logger.warn(dedent`
         Story with id ${id} already exists in the store!
 
@@ -207,22 +270,69 @@ export default class StoryStore extends EventEmitter {
     // immutable original storyFn
     const getOriginal = () => original;
 
+    this.ensureKind(kind);
+    const kindMetadata: KindMetadata = this._kinds[kind];
+    const decorators = [
+      ...storyDecorators,
+      ...kindMetadata.decorators,
+      ...this._globalMetadata.decorators,
+    ];
+    const parametersBeforeEnhancement = combineParameters(
+      this._globalMetadata.parameters,
+      kindMetadata.parameters,
+      storyParameters
+    );
+
+    const parameters = this._parameterEnhancers.reduce(
+      (accumlatedParameters, enhancer) => ({
+        ...accumlatedParameters,
+        ...enhancer({
+          ...identification,
+          parameters: accumlatedParameters,
+          args: {},
+          globalArgs: {},
+        }),
+      }),
+      parametersBeforeEnhancement
+    );
+
+    let finalStoryFn: LegacyStoryFn;
+    if (parameters.passArgsFirst) {
+      finalStoryFn = (context: StoryContext) => (original as ArgsStoryFn)(context.args, context);
+    } else {
+      finalStoryFn = original as LegacyStoryFn;
+    }
+
     // lazily decorate the story when it's loaded
-    const getDecorated: () => StoryFn = memoize(1)(() =>
-      applyDecorators(getOriginal(), getDecorators())
+    const getDecorated: () => LegacyStoryFn = memoize(1)(() =>
+      applyDecorators(finalStoryFn, decorators)
     );
 
     const hooks = new HooksContext();
 
-    const storyFn: StoryFn = p =>
+    const storyFn: LegacyStoryFn = (runtimeContext: StoryContext) =>
       getDecorated()({
         ...identification,
-        ...p,
+        ...runtimeContext,
+        parameters,
         hooks,
-        parameters: { ...parameters, ...(p && p.parameters) },
+        args: _stories[id].args,
+        globalArgs: this._globalArgs,
       });
 
-    _data[id] = {
+    // Pull out parameters.args.$ || .argTypes.$.defaultValue into initialArgs
+    const initialArgs: Args = parameters.args || {};
+    const defaultArgs: Args = parameters.argTypes
+      ? Object.entries(parameters.argTypes as Record<string, { defaultValue: any }>).reduce(
+          (acc, [arg, { defaultValue }]) => {
+            if (defaultValue) acc[arg] = defaultValue;
+            return acc;
+          },
+          {} as Args
+        )
+      : {};
+
+    _stories[id] = {
       ...identification,
 
       hooks,
@@ -231,29 +341,155 @@ export default class StoryStore extends EventEmitter {
       storyFn,
 
       parameters,
+      args: { ...defaultArgs, ...initialArgs },
     };
-
-    // Store 1-based order of kind loading to preserve sorting on HMR
-    if (!this._kindOrder[kind]) {
-      this._kindOrder[kind] = 1 + Object.keys(this._kindOrder).length;
-    }
-
-    // LET'S SEND IT TO THE MANAGER
-    this.pushToManager();
   }
+
+  remove = (id: string, { allowUnsafe = false }: AllowUnsafeOption = {}): void => {
+    if (!this._configuring && !allowUnsafe)
+      throw new Error(
+        'Cannot remove a story when not configuring, see https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#story-store-immutable-outside-of-configuration'
+      );
+
+    const { _stories } = this;
+    const story = _stories[id];
+    delete _stories[id];
+
+    if (story) story.hooks.clean();
+  };
+
+  removeStoryKind(kind: string, { allowUnsafe = false }: AllowUnsafeOption = {}) {
+    if (!this._configuring && !allowUnsafe)
+      throw new Error(
+        'Cannot remove a kind when not configuring, see https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#story-store-immutable-outside-of-configuration'
+      );
+
+    if (!this._kinds[kind]) return;
+
+    this._kinds[kind].parameters = {};
+    this._kinds[kind].decorators = [];
+
+    this.cleanHooksForKind(kind);
+    this._stories = Object.entries(this._stories).reduce((acc: StoreData, [id, story]) => {
+      if (story.kind !== kind) acc[id] = story;
+
+      return acc;
+    }, {});
+  }
+
+  updateGlobalArgs(newGlobalArgs: Args) {
+    this._globalArgs = { ...this._globalArgs, ...newGlobalArgs };
+    this._channel.emit(Events.GLOBAL_ARGS_UPDATED, this._globalArgs);
+  }
+
+  updateStoryArgs(id: string, newArgs: Args) {
+    if (!this._stories[id]) throw new Error(`No story for id ${id}`);
+    const { args } = this._stories[id];
+    this._stories[id].args = { ...args, ...newArgs };
+
+    this._channel.emit(Events.STORY_ARGS_UPDATED, id, this._stories[id].args);
+  }
+
+  fromId = (id: string): PublishedStoreItem | null => {
+    try {
+      const data = this._stories[id as string];
+
+      if (!data || !data.getDecorated) {
+        return null;
+      }
+
+      return {
+        ...data,
+        globalArgs: this._globalArgs,
+      };
+    } catch (e) {
+      logger.warn('failed to get story:', this._stories);
+      logger.error(e);
+      return null;
+    }
+  };
+
+  raw(options?: StoryOptions) {
+    return Object.values(this._stories)
+      .filter(i => !!i.getDecorated)
+      .filter(i => includeStory(i, options))
+      .map(({ id }) => this.fromId(id));
+  }
+
+  extract(options?: StoryOptions) {
+    const stories = Object.entries(this._stories);
+    // determine if we should apply a sort to the stories or use default import order
+    if (Object.values(this._stories).length > 0) {
+      const index = Object.keys(this._stories).find(
+        key =>
+          !!(
+            this._stories[key] &&
+            this._stories[key].parameters &&
+            this._stories[key].parameters.options
+          )
+      );
+      if (index && this._stories[index].parameters.options.storySort) {
+        const storySortParameter = this._stories[index].parameters.options.storySort;
+        let sortFn: Comparator<any>;
+        if (typeof storySortParameter === 'function') {
+          sortFn = storySortParameter;
+        } else {
+          sortFn = storySort(storySortParameter);
+        }
+        stable.inplace(stories, sortFn);
+      } else {
+        // NOTE: when kinds are HMR'ed they get temporarily removed from the `_stories` array
+        // and thus lose order. However `_kindOrder` preservers the original load order
+        stable.inplace(
+          stories,
+          (s1, s2) => this._kinds[s1[1].kind].order - this._kinds[s2[1].kind].order
+        );
+      }
+    }
+    // removes function values from all stories so they are safe to transport over the channel
+    return stories.reduce(
+      (a, [k, v]) => (includeStory(v, options) ? Object.assign(a, { [k]: toExtracted(v) }) : a),
+      {}
+    );
+  }
+
+  clearError() {
+    this._error = null;
+  }
+
+  setError = (err: ErrorLike) => {
+    this._error = err;
+    if (this._channel) this._channel.emit(Events.RENDER_CURRENT_STORY);
+  };
+
+  getError = (): ErrorLike | undefined => this._error;
+
+  setSelection(selection: Selection): void {
+    this._selection = selection;
+
+    if (this._channel) {
+      this._channel.emit(Events.CURRENT_STORY_WAS_SET, this._selection);
+
+      // If the selection is set while configuration is in process, we are guaranteed
+      // we'll emit RENDER_CURRENT_STORY at the end of the process, so we shouldn't do it now.
+      if (!this._configuring) this._channel.emit(Events.RENDER_CURRENT_STORY);
+    }
+  }
+
+  getSelection = (): Selection => this._selection;
 
   getStoriesForManager = () => {
     return this.extract({ includeDocsOnly: true });
   };
 
-  pushToManager = debounce(() => {
+  pushToManager = () => {
     if (this._channel) {
       const stories = this.getStoriesForManager();
 
       // send to the parent frame.
       this._channel.emit(Events.SET_STORIES, { stories });
     }
-  }, 0);
+  };
 
   getStoryKinds() {
     return Array.from(new Set(this.raw().map(s => s.kind)));
@@ -276,23 +512,13 @@ export default class StoryStore extends EventEmitter {
   }
 
   cleanHooks(id: string) {
-    if (this._data[id]) {
-      this._data[id].hooks.clean();
+    if (this._stories[id]) {
+      this._stories[id].hooks.clean();
     }
   }
 
   cleanHooksForKind(kind: string) {
     this.getStoriesForKind(kind).map(story => this.cleanHooks(story.id));
-  }
-
-  removeStoryKind(kind: string) {
-    this.cleanHooksForKind(kind);
-    this._data = Object.entries(this._data).reduce((acc: StoreData, [id, story]) => {
-      if (story.kind !== kind) acc[id] = story;
-
-      return acc;
-    }, {});
-    this.pushToManager();
   }
 
   // This API is a reimplementation of Storybook's original getStorybook() API.
@@ -318,6 +544,6 @@ export default class StoryStore extends EventEmitter {
 
         return kinds;
       }, {})
-    ).sort((s1, s2) => this._kindOrder[s1.kind] - this._kindOrder[s2.kind]);
+    ).sort((s1, s2) => this._kinds[s1.kind].order - this._kinds[s2.kind].order);
   }
 }

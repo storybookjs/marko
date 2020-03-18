@@ -10,12 +10,12 @@ function render(view) {
   rootRegion.show(view);
 }
 
-export default function renderMain({ storyFn, selectedKind, selectedStory, showMain, showError }) {
+export default function renderMain({ storyFn, kind, name, showMain, showError }) {
   const element = storyFn();
 
   if (!element) {
     showError({
-      title: `Expecting a Marionette View from the story: "${selectedStory}" of "${selectedKind}".`,
+      title: `Expecting a Marionette View from the story: "${name}" of "${kind}".`,
       description: stripIndents`
         Did you forget to return the React element from the story?
         Use "() => (<MyComp/>)" or "() => { return <MyComp/>; }" when defining the story.
@@ -26,7 +26,7 @@ export default function renderMain({ storyFn, selectedKind, selectedStory, showM
 
   if (!isMarionetteRenderable(element)) {
     showError({
-      title: `Expecting a valid Marionette View from the story: "${selectedStory}" of "${selectedKind}".`,
+      title: `Expecting a valid Marionette View from the story: "${name}" of "${kind}".`,
       description: stripIndents`
         Seems like you are not returning a correct Marionette View from the story.
         Could you double check that?
