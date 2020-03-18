@@ -94,13 +94,13 @@ export const init: ModuleFn = ({ store, provider }) => {
           const { ok } = response;
 
           if (ok) {
-            const data: SetRefData = await response.json().catch((error: Error) => ({ error }));
-
-            api.setRef(id, { id, url, ...data });
+            return response.json().catch((error: Error) => ({ error }));
           }
         } else {
           logger.warn('an auto-injected ref threw a cors-error');
         }
+
+        return false;
       };
 
       const [stories, metadata] = await Promise.all([
@@ -112,9 +112,13 @@ export const init: ModuleFn = ({ store, provider }) => {
           .then(handler),
       ]);
 
-      if (!stories && !metadata) {
-        api.setRef(id, { id, url, startInjected: true });
-      }
+      api.setRef(id, {
+        id,
+        url,
+        ...(stories || {}),
+        ...(metadata || {}),
+        startInjected: !stories && !metadata,
+      });
     },
 
     getRefs: () => {
