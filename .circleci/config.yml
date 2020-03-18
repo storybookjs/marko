@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  puppeteer: threetreeslight/puppeteer@0.1.2
+  
 aliases:
   - &defaults
     working_directory: /tmp/storybook
