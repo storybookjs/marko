@@ -10,7 +10,7 @@ export const logger = {
   error: (message: any, ...rest: any[]): void => console.error(message, ...rest),
 };
 
-export const pretty = (type: 'debug') => (...args: string[]) => {
+export const pretty = (type: keyof typeof logger) => (...args: string[]) => {
   const argArray = [];
 
   if (args.length) {
