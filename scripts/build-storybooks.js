@@ -148,7 +148,9 @@ const handleExamples = async deployables => {
     const out = p(['built-storybooks', d]);
     const cwd = p(['examples', d]);
 
-    await exec(`yarn`, [`build-storybook`, `--output-dir=${out}`, '--quiet'], { cwd });
+    await exec(`yarn`, [`build-storybook`, `--output-dir=${out}`, '--quiet', '--debug-webpack'], {
+      cwd,
+    });
 
     logger.log('-------');
     logger.log(`✅ ${d} built`);
