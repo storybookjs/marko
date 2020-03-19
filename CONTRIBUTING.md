@@ -211,6 +211,8 @@ Before you submit a new PR, make sure you run `yarn test`. Do not submit a PR if
 
 **As a PR submitter**, you should reference the issue if there is one, include a short description of what you contributed and, if it is a code change, instructions for how to manually test out the change. This is informally enforced by our [PR template](https://github.com/storybookjs/storybook/blob/master/.github/PULL_REQUEST_TEMPLATE.md). If your PR is reviewed as only needing trivial changes (e.g. small typos etc), and you have commit access then you can merge the PR after making those changes.
 
+> NOTE: Although the latest stable version of storybook corresponds to the `master` branch, nearly all Storybook development happens in the `next` branch. If you submit a PR, branch off `next` and target your PR to `next`.
+
 **As a PR reviewer**, you should read through the changes and comment on any potential problems. If you see something cool, a kind word never hurts either! Additionally, you should follow the testing instructions and manually test the changes. If the instructions are missing, unclear, or overly complex, feel free to request better instructions from the submitter. Unless the PR is tagged with the `do not merge` label, if you approve the review and there is no other required discussion or changes, you should also go ahead and merge the PR.
 
 ## Issue Triage
@@ -288,9 +290,10 @@ Within the `examples` folder of the Storybook repo, you will find kitchen sink e
 Not only do these show many of the options and add-ons available, they are also automatically linked to all the development packages. We highly encourage you to use these to develop/test contributions on.
 
 #### React and Vue
+
 1. `cd examples/official-storybook`
-2.  `yarn storybook`
-3.  Verify that your local version works
+2. `yarn storybook`
+3. Verify that your local version works
 
 ### Working with your own app
 
