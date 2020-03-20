@@ -100,6 +100,7 @@
     "semver": "^6.0.0",
     "serve-favicon": "^2.5.0",
     "shelljs": "^0.8.3",
+    "stable": "^0.1.8",
     "style-loader": "^1.0.0",
     "terser-webpack-plugin": "^2.3.4",
     "ts-dedent": "^1.1.1",
