@@ -10,7 +10,7 @@
 'api: addons': ['ndelangen']
 'addon: a11y': ['CodeByAlex', 'Armanio', 'jsomsanith']
 'addon: contexts': ['leoyli']
-'addon: docs': ['shilman', 'elevatebart', 'jeroenreumkens']
+'addon: docs': ['shilman', 'patricklafrance']
 'addon: info': ['shilman', 'elevatebart']
 'addon: knobs': ['leoyli', 'Armanio']
 'addon: storysource': ['igor-dv', 'libetl']
