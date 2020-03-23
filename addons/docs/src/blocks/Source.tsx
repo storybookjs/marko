@@ -39,7 +39,7 @@ export const getSourceProps = (
     source = targetIds
       .map(sourceId => {
         const data = storyStore.fromId(sourceId);
-        return data.parameters.docs?.source?.code || '';
+        return data?.parameters?.docs?.source?.code || '';
       })
       .join('\n\n');
   }
