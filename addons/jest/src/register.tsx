@@ -6,7 +6,7 @@ import Panel from './components/Panel';
 
 addons.register(ADDON_ID, api => {
   addons.addPanel(PANEL_ID, {
-    title: 'tests',
+    title: 'Tests',
     render: ({ active, key }) => <Panel key={key} api={api} active={active} />,
     paramKey: PARAM_KEY,
   });
