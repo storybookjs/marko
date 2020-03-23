@@ -1,13 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`json-to-csf-compiler links.json 1`] = `
-"import { withLinks } from '@storybook/addon-links';
-
+"
 export default {
   title: 'Welcome',
-  decorators: [
-    withLinks
-  ],
 };
 
 export const Welcome = () => {};
