@@ -42,7 +42,7 @@ First create a new file in `.storybook` called `yourTheme.js`.
 Next paste the code below and tweak the variables.
 
 ```ts
-import { create } from '@storybook/theming/create';
+import { create } from '@storybook/theming';
 
 export default create({
   base: 'light',
