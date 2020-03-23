@@ -1,3 +1,28 @@
+## 6.0.0-alpha.28 (March 23, 2020)
+
+### Features
+
+- UI: Form/textarea maxHeight : 400 ([#9860](https://github.com/storybookjs/storybook/pull/9860))
+
+### Bug Fixes
+
+- Addon-docs: Make source resilient to bad story ID's ([#10184](https://github.com/storybookjs/storybook/pull/10184))
+- Core: Don't persist theme to localStorage ([#9076](https://github.com/storybookjs/storybook/pull/9076))
+- Core: Fix to load Storybook in IE11 ([#9942](https://github.com/storybookjs/storybook/pull/9942))
+
+### Maintenance
+
+- Server: Simplify server addons ([#9931](https://github.com/storybookjs/storybook/pull/9931))
+- Core: FIX error of load order when using configure in preview|config.js ([#10159](https://github.com/storybookjs/storybook/pull/10159))
+- Build: Experiment to make CircleCI tests a faster and more stable ([#9969](https://github.com/storybookjs/storybook/pull/9969))
+- Vue: Fix webpack config when excute 'yarn workspace vue-example dev' ([#9704](https://github.com/storybookjs/storybook/pull/9704))
+- Core: Re-enable failing args tests ([#10126](https://github.com/storybookjs/storybook/pull/10126))
+- Build: Add script & parallelization for running chromatic on examples ([#10125](https://github.com/storybookjs/storybook/pull/10125))
+
+### Dependency Upgrades
+
+- Addon-a11y: Move react to peer dependency ([#9957](https://github.com/storybookjs/storybook/pull/9957))
+
 ## 5.3.17 (March 14, 2020)
 
 ### Bug Fixes

@@ -1,6 +1,5 @@
 {
   "title": "Addons/a11y",
-  "addons": ["a11y"],
   "parameters": {
     "options": { "selectedPanel": "storybook/a11y/panel" }
   },

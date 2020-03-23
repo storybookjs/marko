@@ -1,7 +1,7 @@
 import { addParameters, addDecorator } from '@storybook/server';
-import { withA11y } from '@storybook/addon-a11y';
+import { withLinks } from '@storybook/addon-links';
 
-addDecorator(withA11y);
+addDecorator(withLinks);
 
 const port = process.env.SERVER_PORT || 1337;
 
