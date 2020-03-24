@@ -1,8 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`json-to-csf-compiler kitchen_sink.json 1`] = `
-
-import { array, boolean, color, date, number, object, select, text, withKnobs } from '@storybook/addon-knobs';
+"import { array, boolean, color, date, number, object, select, text, withKnobs } from '@storybook/addon-knobs';
 
 export default {
   title: 'Kitchen Sink',
