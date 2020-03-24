@@ -6,7 +6,6 @@
     - [Imported types](#imported-types)
     - [Rolling back](#rolling-back)
   - [New addon presets](#new-addon-presets)
-  - [Addon actions uses parameters](#addon-actions-uses-parameters)
   - [Removed Deprecated APIs](#removed-deprecated-apis)
   - [Client API changes](#client-api-changes)
     - [Removed Legacy Story APIs](#removed-legacy-story-apis)
@@ -178,7 +177,7 @@ module.exports = {
 
 In Storybook 5.3 we introduced a declarative [main.js configuration](#to-mainjs-configuration), which is now the recommended way to configure Storybook. Part of the change is a simplified syntax for registering addons, which in 6.0 automatically registers many addons _using a preset_, which is a slightly different behavior than in earlier versions.
 
-This breaking change currently applies to:  `addon-a11y`, `addon-actions`, `addon-knobs`, `addon-links`, `addon-queryparams`.
+This breaking change currently applies to: `addon-a11y`, `addon-actions`, `addon-knobs`, `addon-links`, `addon-queryparams`.
 
 Consider the following `main.js` config for the accessibility addon, `addon-a11y`:
 
@@ -217,23 +216,6 @@ MyNonCheckedStory.story = {
     a11y: { disable: true },
   },
 };
-```
-
-### Addon actions uses parameters
-
-Leveraging the new presets the  `@storybook/addon-actions` uses parameters to pass action options. If you previously had:
-
-```js
-import { withactions } from `@storybook/addon-actions`;
-
-storiesOf('Stories', module)
-  .addDecorator(withActions('mouseover', 'click .btn'));
-```
-
-You should replace it with:
-
-```js
-storiesOf('Stories', module).addParameters({ actions: ['mouseover', 'click .btn'] });
 ```
 
 ### Removed Deprecated APIs
