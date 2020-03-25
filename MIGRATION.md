@@ -103,6 +103,12 @@ In earlier versions, we recommended `react-docgen-typescript-loader` (`RDTL`) an
 
 As a consequence we've removed `RDTL` from the presets, which is a breaking change. We made this change because `react-docgen` now supports TypeScript natively, and fewer dependencies simplifies things for everybody.
 
+The Babel-based `react-docgen` version is the default in:
+- `@storybook/preset-create-react-app` @ `^2.0.0`
+- `@storybook/preset-typescript` @ `^3.0.0-alpha.1`
+
+> NOTE: If you're using `preset-create-react-app` you don't need `preset-typescript`!
+
 We will be updating this section with migration information as we collect information from our users, and fixing issues as they come up throughout the 6.0 prerelease process. We are cataloging known issues [here](https://github.com/storybookjs/storybook/blob/next/addons/docs/docs/props-tables.md#known-limitations).
 
 #### React.FC interfaces

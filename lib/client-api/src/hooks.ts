@@ -72,8 +72,3 @@ export function useSharedState<S>(sharedId: string, defaultState?: S): [S, (s: S
 export function useAddonState<S>(addonId: string, defaultState?: S): [S, (s: S) => void] {
   return useSharedState<S>(addonId, defaultState);
 }
-
-export function useStoryState<S>(defaultState?: S): [S, (s: S) => void] {
-  const { id: storyId } = useStoryContext();
-  return useSharedState<S>(`story-state-${storyId}`, defaultState);
-}

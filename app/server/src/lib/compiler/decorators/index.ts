@@ -1,15 +1,8 @@
 import { StorybookSection, Decorator } from '../types';
-import { decorateSimpleAddon } from './utils';
 import { knobsDecorator } from './knobs';
 import { actionsDecorator } from './actions';
 
-function createSimpleDecorator(addon: string) {
-  return (section: StorybookSection): StorybookSection => decorateSimpleAddon(section, addon);
-}
-
 const allDecorators: Record<string, Decorator> = {
-  a11y: createSimpleDecorator('a11y'),
-  links: createSimpleDecorator('links'),
   knobs: knobsDecorator,
   actions: actionsDecorator,
 };

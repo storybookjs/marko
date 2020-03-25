@@ -1,6 +1,6 @@
 {
   "title": "Kitchen Sink",
-  "addons": ["a11y", "knobs", "actions", "links"],
+  "addons": ["knobs", "actions"],
   "parameters": {
     "backgrounds": [
       { "name": "light", "value": "#eeeeee" },
