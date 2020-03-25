@@ -4,7 +4,7 @@ import memoize from 'memoizerific';
 
 import { version as currentVersion } from '../version';
 
-import { Module } from '../index';
+import { ModuleFn } from '../index';
 
 export interface Version {
   version: string;
@@ -46,7 +46,7 @@ export interface SubAPI {
   versionUpdateAvailable: () => boolean;
 }
 
-export default function({ store, mode, fullAPI }: Module) {
+export const init: ModuleFn = ({ store, mode, fullAPI }) => {
   const { dismissedVersionNotification } = store.getState();
 
   const state = {
@@ -106,7 +106,7 @@ export default function({ store, mode, fullAPI }: Module) {
   };
 
   // Grab versions from the server/local storage right away
-  async function init() {
+  const initModule = async () => {
     const { versions = {} } = store.getState();
 
     const { latest, next } = getVersionCheckData();
@@ -139,7 +139,7 @@ export default function({ store, mode, fullAPI }: Module) {
         });
       }
     }
-  }
+  };
 
-  return { init, state, api };
-}
+  return { init: initModule, state, api };
+};

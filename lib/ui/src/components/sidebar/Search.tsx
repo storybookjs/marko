@@ -1,9 +1,18 @@
-import React, { ComponentProps, useState } from 'react';
+import React, { ComponentProps, useState, ChangeEvent, FunctionComponent } from 'react';
 import { styled } from '@storybook/theming';
 import { opacify } from 'polished';
 import { Icons } from '@storybook/components';
 
 export type FilterFieldProps = ComponentProps<'input'>;
+
+export type CancelButtonProps = ComponentProps<'button'>;
+export type SearchProps = Omit<FilterFieldProps, 'onChange'> & {
+  onChange: (arg: string) => void;
+  defaultFocussed?: boolean;
+};
+export type FilterFormProps = ComponentProps<'form'> & {
+  focussed: boolean;
+};
 
 const FilterField = styled.input<FilterFieldProps>(({ theme }) => ({
   // resets
@@ -13,7 +22,6 @@ const FilterField = styled.input<FilterFieldProps>(({ theme }) => ({
   display: 'block',
   outline: 'none',
   width: '100%',
-  margin: 0,
   background: 'transparent',
   padding: 0,
   fontSize: 'inherit',
@@ -29,8 +37,6 @@ const FilterField = styled.input<FilterFieldProps>(({ theme }) => ({
     opacity: 0,
   },
 }));
-
-export type CancelButtonProps = ComponentProps<'button'>;
 
 const CancelButton = styled.button<CancelButtonProps>(({ theme }) => ({
   border: 0,
@@ -62,10 +68,6 @@ const CancelButton = styled.button<CancelButtonProps>(({ theme }) => ({
   },
 }));
 
-export type FilterFormProps = ComponentProps<'form'> & {
-  focussed: boolean;
-};
-
 const FilterForm = styled.form<FilterFormProps>(({ theme, focussed }) => ({
   transition: 'all 150ms ease-out',
   borderBottom: '1px solid transparent',
@@ -74,6 +76,7 @@ const FilterForm = styled.form<FilterFormProps>(({ theme, focussed }) => ({
     : opacify(0.1, theme.appBorderColor),
   outline: 0,
   position: 'relative',
+  color: theme.input.color,
 
   input: {
     color: theme.input.color,
@@ -82,6 +85,7 @@ const FilterForm = styled.form<FilterFormProps>(({ theme, focussed }) => ({
     paddingTop: 2,
     paddingBottom: 2,
     paddingLeft: 20,
+    paddingRight: 20,
   },
 
   '> svg': {
@@ -103,12 +107,14 @@ const FilterForm = styled.form<FilterFormProps>(({ theme, focussed }) => ({
   },
 }));
 
-export type PureSidebarSearchProps = FilterFieldProps & {
-  onChange: (arg: string) => void;
-};
-
-export const PureSidebarSearch = ({ className, onChange, ...props }: PureSidebarSearchProps) => {
-  const [focussed, onSetFocussed] = useState(false);
+export const Search: FunctionComponent<SearchProps> = ({
+  className,
+  onChange,
+  defaultFocussed = false,
+  defaultValue,
+  ...props
+}) => {
+  const [focussed, onSetFocussed] = useState(defaultFocussed);
   return (
     <FilterForm
       autoComplete="off"
@@ -122,7 +128,10 @@ export const PureSidebarSearch = ({ className, onChange, ...props }: PureSidebar
         id="storybook-explorer-searchfield"
         onFocus={() => onSetFocussed(true)}
         onBlur={() => onSetFocussed(false)}
-        onChange={e => onChange(e.target.value)}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+          onChange(e.target.value);
+        }}
+        defaultValue={defaultValue}
         {...props}
         placeholder={focussed ? 'Type to search...' : 'Press "/" to search...'}
         aria-label="Search stories"
@@ -134,5 +143,3 @@ export const PureSidebarSearch = ({ className, onChange, ...props }: PureSidebar
     </FilterForm>
   );
 };
-
-export default PureSidebarSearch;

@@ -97,7 +97,8 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
     useInlineStyles,
     location,
     id,
-  }: SyntaxHighlighterRendererProps & { location: SourceBlock; id: string }) => {
+    refId,
+  }: SyntaxHighlighterRendererProps & { location: SourceBlock; id: string; refId?: string }) => {
     const first = location.startLoc.line - 1;
     const last = location.endLoc.line;
 
@@ -113,7 +114,7 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
       );
     }
     return (
-      <StyledStoryLink to={`/story/${id}`} key={storyKey}>
+      <StyledStoryLink to={refId ? `/story/${refId}_${id}` : `/story/${id}`} key={storyKey}>
         {storySource}
       </StyledStoryLink>
     );
@@ -127,12 +128,12 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
       const location = locationsMap[key];
       const first = location.startLoc.line - 1;
       const last = location.endLoc.line;
-      const { kind } = story;
+      const { kind, refId } = story;
       // source loader ids are different from story id
       const sourceIdParts = key.split('--');
       const id = api.storyId(kind, sourceIdParts[sourceIdParts.length - 1]);
       const start = createPart({ rows: rows.slice(lastRow, first), stylesheet, useInlineStyles });
-      const storyPart = createStoryPart({ rows, stylesheet, useInlineStyles, location, id });
+      const storyPart = createStoryPart({ rows, stylesheet, useInlineStyles, location, id, refId });
 
       parts.push(start);
       parts.push(storyPart);

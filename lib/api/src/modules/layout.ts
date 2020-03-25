@@ -6,9 +6,7 @@ import deepEqual from 'fast-deep-equal';
 
 import { themes, ThemeVars } from '@storybook/theming';
 import merge from '../lib/merge';
-import { State } from '../index';
-import Store from '../store';
-import { Provider } from '../init-provider-api';
+import { State, ModuleFn } from '../index';
 
 export type PanelPositions = 'bottom' | 'right';
 export type ActiveTabsType = 'sidebar' | 'canvas' | 'addons';
@@ -163,7 +161,7 @@ export const focusableUIElements = {
   storyPanelRoot: 'storybook-panel-root',
 };
 
-export default function({ store, provider }: { store: Store; provider: Provider }) {
+export const init: ModuleFn = ({ store, provider }) => {
   const api = {
     toggleFullscreen(toggled?: boolean) {
       return store.setState(
@@ -344,4 +342,4 @@ export default function({ store, provider }: { store: Store; provider: Provider 
   const persisted = pick(store.getState(), 'layout', 'ui', 'selectedPanel');
 
   return { api, state: merge(api.getInitialOptions(), persisted) };
-}
+};

@@ -3,7 +3,7 @@ import { queryFromLocation } from '@storybook/router';
 import { toId } from '@storybook/csf';
 
 import { NAVIGATE_URL } from '@storybook/core-events';
-import { Module } from '../index';
+import { ModuleArgs, ModuleFn } from '../index';
 import { PanelPositions } from './layout';
 
 interface Additions {
@@ -15,6 +15,10 @@ interface Additions {
   viewMode?: string;
 }
 
+export interface SubState {
+  customQueryParams: QueryParams;
+}
+
 // Initialize the state based on the URL.
 // NOTE:
 //   Although we don't change the URL when you change the state, we do support setting initial state
@@ -24,7 +28,10 @@ interface Additions {
 //     - nav: 0/1 -- show or hide the story list
 //
 //   We also support legacy URLs from storybook <5
-const initialUrlSupport = ({ navigate, state: { location, path, viewMode, storyId } }: Module) => {
+const initialUrlSupport = ({
+  navigate,
+  state: { location, path, viewMode, storyId },
+}: ModuleArgs) => {
   const addition: Additions = {};
   const query = queryFromLocation(location);
   let selectedPanel;
@@ -106,7 +113,7 @@ export interface SubAPI {
   setQueryParams: (input: QueryParams) => void;
 }
 
-export default function({ store, navigate, state, provider, fullAPI, ...rest }: Module) {
+export const init: ModuleFn = ({ store, navigate, state, provider, fullAPI, ...rest }) => {
   const api: SubAPI = {
     getQueryParam: key => {
       const { customQueryParams } = store.getState();
@@ -147,7 +154,7 @@ export default function({ store, navigate, state, provider, fullAPI, ...rest }: 
     },
   };
 
-  const init = () => {
+  const initModule = () => {
     fullAPI.on(NAVIGATE_URL, (url: string, options: { [k: string]: any }) => {
       fullAPI.navigateUrl(url, options);
     });
@@ -156,6 +163,6 @@ export default function({ store, navigate, state, provider, fullAPI, ...rest }: 
   return {
     api,
     state: initialUrlSupport({ store, navigate, state, provider, fullAPI, ...rest }),
-    init,
+    init: initModule,
   };
-}
+};

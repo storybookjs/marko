@@ -1,6 +1,6 @@
 import { types, Addon } from '@storybook/addons';
 import { API, State } from '@storybook/api';
-import { PreviewProps } from './PreviewProps';
+import { PreviewProps } from './utils/types';
 
 export const previewProps: PreviewProps = {
   id: 'string',
@@ -22,7 +22,23 @@ export const previewProps: PreviewProps = {
           ]
         : []) as API['getElements'],
   } as any) as API,
-  storyId: 'string',
+  story: {
+    id: 'storyId',
+    depth: 1,
+    isComponent: false,
+    isLeaf: true,
+    isRoot: false,
+    kind: 'kind',
+    name: 'story name',
+    parent: 'root',
+    children: [],
+    parameters: {
+      fileName: '',
+      options: {},
+      docsOnly: false,
+    },
+    args: {},
+  },
   path: 'string',
   viewMode: 'story',
   location: ({} as any) as State['location'],
@@ -35,5 +51,5 @@ export const previewProps: PreviewProps = {
   withLoader: false,
   docsOnly: false,
   description: '',
-  parameters: {},
+  refs: {},
 };

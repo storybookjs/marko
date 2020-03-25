@@ -1,14 +1,11 @@
 import React, { FunctionComponent, ReactNode, SyntheticEvent } from 'react';
 import { styled } from '@storybook/theming';
 
-export const DefaultSection = styled.div({});
-DefaultSection.displayName = 'DefaultSection';
+export const DefaultSection = styled.div();
 
 export const DefaultList = styled.div();
-DefaultList.displayName = 'DefaultList';
 
-export const A = styled.a({});
-A.displayName = 'A';
+export const A = styled.a();
 
 export const DefaultFilter = styled(props => <input placeholder="search..." {...props} />)({
   width: '100%',
@@ -46,7 +43,6 @@ export const DefaultLeaf: FunctionComponent<{ name: ReactNode; depth: number } &
     {name}
   </LeafStyle>
 );
-DefaultLeaf.displayName = 'DefaultLeaf';
 
 export const DefaultHead: FunctionComponent<{
   name: ReactNode;
@@ -63,7 +59,6 @@ export const DefaultHead: FunctionComponent<{
     <span>{name}</span>
   </LeafStyle>
 );
-DefaultHead.displayName = 'DefaultHead';
 
 export const DefaultRootTitle = styled.h4({});
 
@@ -77,4 +72,3 @@ export const DefaultLink: FunctionComponent<{
     {children}
   </A>
 );
-DefaultLink.displayName = 'DefaultLink';

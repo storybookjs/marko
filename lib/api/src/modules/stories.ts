@@ -8,6 +8,7 @@ import {
   SELECT_STORY,
 } from '@storybook/core-events';
 
+import { logger } from '@storybook/client-logger';
 import {
   transformStoriesRawToStoriesHash,
   StoriesHash,
@@ -16,10 +17,12 @@ import {
   StoriesRaw,
   StoryId,
   isStory,
+  Root,
   isRoot,
 } from '../lib/stories';
 
-import { Module, Args } from '../index';
+import { Args, ModuleFn } from '../index';
+import { getSourceType } from './refs';
 
 type Direction = -1 | 1;
 type ParameterName = string;
@@ -35,47 +38,93 @@ export interface SubState {
 
 export interface SubAPI {
   storyId: typeof toId;
-  selectStory: (kindOrId: string, story?: string, obj?: any) => void;
+  resolveStory: (storyId: StoryId, refsId?: string) => Story | Group | Root;
+  selectStory: (
+    kindOrId: string,
+    story?: string,
+    obj?: { ref?: string; viewMode?: ViewMode }
+  ) => void;
   getCurrentStoryData: () => Story | Group;
-  setStories: (stories: StoriesRaw) => void;
+  setStories: (stories: StoriesRaw) => Promise<void>;
   jumpToComponent: (direction: Direction) => void;
   jumpToStory: (direction: Direction) => void;
-  getData: (storyId: StoryId) => Story | Group;
-  getParameters: (storyId: StoryId, parameterName?: ParameterName) => Story['parameters'] | any;
+  getData: (storyId: StoryId, refId?: string) => Story | Group;
+  getParameters: (
+    storyId: StoryId | { storyId: StoryId; refId: string },
+    parameterName?: ParameterName
+  ) => Story['parameters'] | any;
   getCurrentParameter<S>(parameterName?: ParameterName): S;
   updateStoryArgs(id: StoryId, newArgs: Args): void;
   findLeafStoryId(StoriesHash: StoriesHash, storyId: StoryId): StoryId;
 }
 
-// When adding a group, also add all of its children, depth first
-
-const initStoriesApi = ({
+export const init: ModuleFn = ({
   fullAPI,
   store,
   navigate,
   provider,
   storyId: initialStoryId,
   viewMode: initialViewMode,
-}: Module) => {
+}) => {
+  const setInitialStory = () => {
+    const { storyId, viewMode, storiesHash } = store.getState();
+    const story = api.getData(storyId);
+
+    if (viewMode === 'settings' || viewMode === 'page') {
+      return;
+    }
+
+    if (storyId && storyId.match(/--\*$/)) {
+      const idStart = storyId.slice(0, -1); // drop the * at the end
+      const firstKindLeaf = Object.values(storiesHash).find(
+        (s: Story | Group) => !s.children && s.id.substring(0, idStart.length) === idStart
+      );
+
+      if (viewMode && firstKindLeaf) {
+        api.selectStory(firstKindLeaf.id, undefined, {});
+      }
+    } else if (!storyId || storyId === '*' || !story) {
+      // when there's no storyId or the storyId item doesn't exist
+      // we pick the first leaf and navigate
+      const firstLeaf = Object.values(storiesHash).find((s: Story | Group) => !s.children);
+
+      if (viewMode && firstLeaf) {
+        api.selectStory(firstLeaf.id, undefined, {});
+      }
+    } else if (story && !story.isLeaf) {
+      // When story exists but if it is not the leaf story, it finds the proper
+      // leaf story from any depth.
+      const firstLeafStoryId = api.findLeafStoryId(storiesHash, storyId);
+
+      api.selectStory(firstLeafStoryId, undefined, {});
+    }
+  };
+
   const api: SubAPI = {
     storyId: toId,
-    getData: storyId => {
-      const { storiesHash } = store.getState();
-      const item = storiesHash[storyId];
+    getData: (storyId, refId) => {
+      const result = api.resolveStory(storyId, refId);
 
-      if (!isRoot(item)) {
-        return item;
+      return isRoot(result) ? undefined : result;
+    },
+    resolveStory: (storyId, refId) => {
+      const { refs, storiesHash } = store.getState();
+      if (refId) {
+        return refs[refId].stories ? refs[refId].stories[storyId] : undefined;
       }
-
-      return undefined;
+      return storiesHash ? storiesHash[storyId] : undefined;
     },
     getCurrentStoryData: () => {
-      const { storyId } = store.getState();
+      const { storyId, refId } = store.getState();
 
-      return api.getData(storyId);
+      return api.getData(storyId, refId);
     },
-    getParameters: (storyId, parameterName) => {
-      const data = api.getData(storyId);
+    getParameters: (storyIdOrCombo, parameterName) => {
+      const { storyId, refId } =
+        typeof storyIdOrCombo === 'string'
+          ? { storyId: storyIdOrCombo, refId: undefined }
+          : storyIdOrCombo;
+      const data = api.getData(storyId, refId);
 
       if (isStory(data)) {
         const { parameters } = data;
@@ -84,25 +133,27 @@ const initStoriesApi = ({
 
       return null;
     },
-    getCurrentParameter: function getCurrentParameter<S>(parameterName: ParameterName) {
-      const { storyId } = store.getState();
-      const parameters = api.getParameters(storyId, parameterName);
+    getCurrentParameter: parameterName => {
+      const { storyId, refId } = store.getState();
+      const parameters = api.getParameters({ storyId, refId }, parameterName);
 
       if (parameters) {
-        return parameters as S;
+        return parameters;
       }
       return undefined;
     },
     jumpToComponent: direction => {
-      const state = store.getState();
-      const { storiesHash, viewMode, storyId } = state;
+      const { storiesHash, storyId, refs, refId } = store.getState();
+      const story = api.getData(storyId, refId);
 
       // cannot navigate when there's no current selection
-      if (!storyId || !storiesHash[storyId]) {
+      if (!story) {
         return;
       }
 
-      const lookupList = Object.entries(storiesHash).reduce((acc, i) => {
+      const hash = refId ? refs[refId].stories || {} : storiesHash;
+
+      const lookupList = Object.entries(hash).reduce((acc, i) => {
         const value = i[1];
         if (value.isComponent) {
           acc.push([...i[1].children]);
@@ -122,10 +173,13 @@ const initStoriesApi = ({
 
       const result = lookupList[index + direction][0];
 
-      navigate(`/${viewMode || 'story'}/${result}`);
+      if (result) {
+        api.selectStory(result, undefined, { ref: refId });
+      }
     },
     jumpToStory: direction => {
-      const { storiesHash, viewMode, storyId } = store.getState();
+      const { storiesHash, storyId, refs, refId } = store.getState();
+      const story = api.getData(storyId, refId);
 
       if (DOCS_MODE) {
         api.jumpToComponent(direction);
@@ -133,12 +187,14 @@ const initStoriesApi = ({
       }
 
       // cannot navigate when there's no current selection
-      if (!storyId || !storiesHash[storyId]) {
+      if (!story) {
         return;
       }
 
-      const lookupList = Object.keys(storiesHash).filter(
-        k => !(storiesHash[k].children || Array.isArray(storiesHash[k]))
+      const hash = story.refId ? refs[story.refId].stories : storiesHash;
+
+      const lookupList = Object.keys(hash).filter(
+        k => !(hash[k].children || Array.isArray(hash[k]))
       );
       const index = lookupList.indexOf(storyId);
 
@@ -152,13 +208,71 @@ const initStoriesApi = ({
 
       const result = lookupList[index + direction];
 
-      if (viewMode && result) {
-        navigate(`/${viewMode}/${result}`);
+      if (result) {
+        api.selectStory(result, undefined, { ref: refId });
       }
     },
-    // Recursively traverse storiesHash from the initial storyId until finding
-    // the leaf story.
-    findLeafStoryId: (storiesHash, storyId) => {
+    setStories: async input => {
+      // Now create storiesHash by reordering the above by group
+      const existing = store.getState().storiesHash;
+      const hash = transformStoriesRawToStoriesHash(input, existing, {
+        provider,
+      });
+
+      await store.setState({
+        storiesHash: hash,
+        storiesConfigured: true,
+      });
+
+      const { refId } = store.getState();
+
+      if (!refId) {
+        setInitialStory();
+      }
+    },
+    selectStory: (kindOrId, story = undefined, options = {}) => {
+      const { ref, viewMode: viewModeFromArgs } = options;
+      const {
+        viewMode: viewModeFromState = 'story',
+        storyId,
+        storiesHash,
+        refs,
+      } = store.getState();
+
+      const viewMode = viewModeFromArgs || viewModeFromState;
+
+      const hash = ref ? refs[ref].stories : storiesHash;
+
+      if (!story) {
+        const s = hash[kindOrId] || hash[sanitize(kindOrId)];
+        // eslint-disable-next-line no-nested-ternary
+        const id = s ? (s.children ? s.children[0] : s.id) : kindOrId;
+        const p = s && s.refId ? `/${viewMode}/${s.refId}_${id}` : `/${viewMode}/${id}`;
+
+        navigate(p);
+      } else if (!kindOrId) {
+        // This is a slugified version of the kind, but that's OK, our toId function is idempotent
+        const kind = storyId.split('--', 2)[0];
+        const id = toId(kind, story);
+
+        api.selectStory(id, undefined, options);
+      } else {
+        const id = ref ? `${ref}_${toId(kindOrId, story)}` : toId(kindOrId, story);
+        if (hash[id]) {
+          api.selectStory(id, undefined, options);
+        } else {
+          // Support legacy API with component permalinks, where kind is `x/y` but permalink is 'z'
+          const k = hash[sanitize(kindOrId)];
+          if (k && k.children) {
+            const foundId = k.children.find(childId => hash[childId].name === story);
+            if (foundId) {
+              api.selectStory(foundId, undefined, options);
+            }
+          }
+        }
+      }
+    },
+    findLeafStoryId(storiesHash, storyId) {
       if (storiesHash[storyId].isLeaf) {
         return storyId;
       }
@@ -166,113 +280,86 @@ const initStoriesApi = ({
       const childStoryId = storiesHash[storyId].children[0];
       return api.findLeafStoryId(storiesHash, childStoryId);
     },
-
-    setStories: input => {
-      // Now create storiesHash by reordering the above by group
-      const storiesHash = transformStoriesRawToStoriesHash(
-        input,
-        (store.getState().storiesHash || {}) as StoriesHash,
-        { provider }
-      );
-      const settingsPageList = ['about', 'shortcuts'];
-      const { storyId, viewMode } = store.getState();
-
-      if (storyId && storyId.match(/--\*$/)) {
-        const idStart = storyId.slice(0, -1); // drop the * at the end
-        const firstKindLeaf = Object.values(storiesHash).find(
-          (s: Story | Group) => !s.children && s.id.substring(0, idStart.length) === idStart
-        );
-
-        if (viewMode && firstKindLeaf) {
-          navigate(`/${viewMode}/${firstKindLeaf.id}`);
-        }
-      } else if (!storyId || storyId === '*' || !storiesHash[storyId]) {
-        // when there's no storyId or the storyId item doesn't exist
-        // we pick the first leaf and navigate
-        const firstLeaf = Object.values(storiesHash).find((s: Story | Group) => !s.children);
-
-        if (viewMode === 'settings' && settingsPageList.includes(storyId)) {
-          navigate(`/${viewMode}/${storyId}`);
-        } else if (viewMode === 'settings' && !settingsPageList.includes(storyId)) {
-          navigate(`/story/${firstLeaf.id}`);
-        } else if (viewMode && firstLeaf) {
-          navigate(`/${viewMode}/${firstLeaf.id}`);
-        }
-      } else if (storiesHash[storyId] && !storiesHash[storyId].isLeaf) {
-        // When story exists but if it is not the leaf story, it finds the proper
-        // leaf story from any depth.
-        const firstLeafStoryId = api.findLeafStoryId(storiesHash, storyId);
-        navigate(`/${viewMode}/${firstLeafStoryId}`);
-      }
-
-      store.setState({
-        storiesHash,
-        storiesConfigured: true,
-      });
-    },
-
-    selectStory: (kindOrId, story = undefined) => {
-      const { viewMode = 'story', storyId, storiesHash } = store.getState();
-
-      const hash = storiesHash;
-
-      if (!story) {
-        const real = sanitize(kindOrId);
-        const s = hash[real];
-        // eslint-disable-next-line no-nested-ternary
-        const id = s ? (s.children ? s.children[0] : s.id) : kindOrId;
-        navigate(`/${viewMode}/${id}`);
-      } else if (!kindOrId) {
-        // This is a slugified version of the kind, but that's OK, our toId function is idempotent
-        const kind = storyId.split('--', 2)[0];
-        const id = toId(kind, story);
-
-        api.selectStory(id);
-      } else {
-        const id = toId(kindOrId, story);
-        if (hash[id]) {
-          api.selectStory(id);
-        } else {
-          // Support legacy API with component permalinks, where kind is `x/y` but permalink is 'z'
-          const k = hash[sanitize(kindOrId)];
-          if (k && k.children) {
-            const foundId = k.children.find(childId => hash[childId].name === story);
-            if (foundId) {
-              api.selectStory(foundId);
-            }
-          }
-        }
-      }
-    },
     updateStoryArgs: (id, newArgs) => {
       fullAPI.emit(UPDATE_STORY_ARGS, id, newArgs);
     },
   };
 
-  const init = () => {
-    fullAPI.on(STORY_CHANGED, (id: string) => {
-      const options = fullAPI.getParameters(id, 'options');
+  const initModule = () => {
+    fullAPI.on(STORY_CHANGED, function handleStoryChange(storyId: string) {
+      const { source }: { source: string } = this;
+      const sourceType = getSourceType(source);
 
-      if (options) {
-        fullAPI.setOptions(options);
+      if (sourceType === 'local') {
+        const options = fullAPI.getCurrentParameter('options');
+
+        if (options) {
+          fullAPI.setOptions(options);
+        }
       }
     });
 
-    fullAPI.on(SET_STORIES, (data: { stories: StoriesRaw }) => {
+    fullAPI.on(SET_STORIES, function handleSetStories(data: { stories: StoriesRaw }) {
+      // the event originates from an iframe, event.source is the iframe's location origin + pathname
       const { storyId } = store.getState();
-      fullAPI.setStories(data.stories);
-      const options = storyId
-        ? fullAPI.getParameters(storyId, 'options')
-        : fullAPI.getParameters(Object.keys(data.stories)[0], 'options');
-      fullAPI.setOptions(options);
+      const { source }: { source: string } = this;
+      const sourceType = getSourceType(source);
+
+      switch (sourceType) {
+        // if it's a local source, we do nothing special
+        case 'local': {
+          fullAPI.setStories(data.stories);
+          const options = storyId
+            ? fullAPI.getParameters(storyId, 'options')
+            : fullAPI.getParameters(Object.keys(data.stories)[0], 'options');
+          fullAPI.setOptions(options);
+          break;
+        }
+
+        // if it's a ref, we need to map the incoming stories to a prefixed version, so it cannot conflict with others
+        case 'external': {
+          const ref = fullAPI.findRef(source);
+          fullAPI.setRef(ref.id, { ...ref, ...data }, true);
+          break;
+        }
+
+        // if we couldn't find the source, something risky happened, we ignore the input, and log a warning
+        default: {
+          logger.warn('received a SET_STORIES frame that was not configured as a ref');
+          break;
+        }
+      }
     });
 
-    fullAPI.on(
-      SELECT_STORY,
-      ({ kind, story, ...rest }: { kind: string; story: string; [k: string]: any }) => {
-        fullAPI.selectStory(kind, story, rest);
+    fullAPI.on(SELECT_STORY, function selectStoryHandler({
+      kind,
+      story,
+      ...rest
+    }: {
+      kind: string;
+      story: string;
+      [k: string]: any;
+    }) {
+      const { source }: { source: string } = this;
+      const sourceType = getSourceType(source);
+
+      switch (sourceType) {
+        case 'local': {
+          fullAPI.selectStory(kind, story, rest);
+          break;
+        }
+
+        case 'external': {
+          const ref = fullAPI.findRef(source);
+          fullAPI.selectStory(kind, story, { ...rest, ref: ref.id });
+          break;
+        }
+        default: {
+          logger.warn('received a SET_STORIES frame that was not configured as a ref');
+          break;
+        }
       }
-    );
+    });
 
     fullAPI.on(STORY_ARGS_UPDATED, (id: StoryId, args: Args) => {
       const { storiesHash } = store.getState();
@@ -289,7 +376,6 @@ const initStoriesApi = ({
       viewMode: initialViewMode,
       storiesConfigured: false,
     },
-    init,
+    init: initModule,
   };
 };
-export default initStoriesApi;

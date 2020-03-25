@@ -40,7 +40,7 @@ const defaultProps = {
     emit: jest.fn(),
     on: jest.fn(),
     off: jest.fn(),
-    getParameters: jest.fn(() => defaultParameters),
+    getCurrentParameter: jest.fn(() => defaultParameters),
   },
 };
 
@@ -104,11 +104,13 @@ describe('CSSResourcePanel', () => {
 
     it('should remove STORY_RENDERED listener from the api', () => {
       const apiRemove = jest.fn();
+      const getCurrentParameter = jest.fn(() => newFakeParameters);
       const node = shallowNode({
         ...defaultProps,
         api: {
           ...defaultProps.api,
           off: apiRemove,
+          getCurrentParameter,
         },
       });
       const { onStoryChange } = node.instance();
@@ -125,18 +127,18 @@ describe('CSSResourcePanel', () => {
       expect(node.state('list')).toMatchObject(defaultParameters);
     });
 
-    it('should pull default items from getParameters', () => {
-      const apiGetParameters = jest.fn(() => newFakeParameters);
+    it('should pull default items from getCurrentParameter', () => {
+      const getCurrentParameter = jest.fn(() => newFakeParameters);
       const node = shallowNode({
         ...defaultProps,
         api: {
           ...defaultProps.api,
-          getParameters: apiGetParameters,
+          getCurrentParameter,
         },
       });
       expect(node.state('list')).toMatchObject([]);
       node.instance().onStoryChange('fake-story-id');
-      expect(apiGetParameters).toHaveBeenCalledWith('fake-story-id', PARAM_KEY);
+      expect(getCurrentParameter).toHaveBeenCalledWith(PARAM_KEY);
       expect(node.state('list')).toMatchObject(newFakeParameters);
     });
 
@@ -159,12 +161,12 @@ describe('CSSResourcePanel', () => {
 
     it("should not overwrite list when story id hasn't changed", () => {
       const fakeList = [];
-      const apiGetParameters = jest.fn(() => newFakeParameters);
+      const getCurrentParameter = jest.fn(() => newFakeParameters);
       const node = shallowNode({
         ...defaultProps,
         api: {
           ...defaultProps.api,
-          getParameters: apiGetParameters,
+          getCurrentParameter,
         },
       });
       node.setState({ list: fakeList, currentStoryId: 'fake-story-id' });
@@ -175,12 +177,12 @@ describe('CSSResourcePanel', () => {
 
     it('should not overwrite list when default list is undefined', () => {
       const fakeList = [];
-      const apiGetParameters = jest.fn(() => undefined);
+      const getCurrentParameter = jest.fn(() => undefined);
       const node = shallowNode({
         ...defaultProps,
         api: {
           ...defaultProps.api,
-          getParameters: apiGetParameters,
+          getCurrentParameter,
         },
       });
       node.setState({ list: fakeList });
@@ -279,7 +281,7 @@ describe('CSSResourcePanel', () => {
     });
 
     it('should not render code for items without a code', () => {
-      const apiGetParameters = jest.fn(() => [
+      const getCurrentParameter = jest.fn(() => [
         {
           id: 'local-fake-id-1',
           picked: true,
@@ -294,7 +296,7 @@ describe('CSSResourcePanel', () => {
         ...defaultProps,
         api: {
           ...defaultProps.api,
-          getParameters: apiGetParameters,
+          getCurrentParameter,
         },
       });
       node.instance().onStoryChange('fake-story-id');
@@ -302,7 +304,7 @@ describe('CSSResourcePanel', () => {
     });
 
     it('should not render code for items /w the `hideCode` flag', () => {
-      const apiGetParameters = jest.fn(() => [
+      const getCurrentParameter = jest.fn(() => [
         {
           id: 'local-fake-id-1',
           code: 'local-fake-code-1',
@@ -320,7 +322,7 @@ describe('CSSResourcePanel', () => {
         ...defaultProps,
         api: {
           ...defaultProps.api,
-          getParameters: apiGetParameters,
+          getCurrentParameter,
         },
       });
 

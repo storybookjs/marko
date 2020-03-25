@@ -18,79 +18,63 @@ import {
 } from '@storybook/core-events';
 import { RenderData as RouterData } from '@storybook/router';
 import { Listener } from '@storybook/channels';
-import initProviderApi, { SubAPI as ProviderAPI, Provider } from './init-provider-api';
 
 import { createContext } from './context';
 import Store, { Options } from './store';
 import getInitialState from './initial-state';
-
-import initAddons, { SubAPI as AddonsAPI } from './modules/addons';
-import initChannel, { SubAPI as ChannelAPI } from './modules/channel';
-import initNotifications, {
-  SubState as NotificationState,
-  SubAPI as NotificationAPI,
-} from './modules/notifications';
-import initStories, { SubState as StoriesSubState, SubAPI as StoriesAPI } from './modules/stories';
 import { StoriesHash, Story, Root, Group, isGroup, isRoot, isStory } from './lib/stories';
-import initLayout, {
-  ActiveTabs,
-  SubState as LayoutSubState,
-  SubAPI as LayoutAPI,
-} from './modules/layout';
-import initShortcuts, {
-  SubState as ShortcutsSubState,
-  SubAPI as ShortcutsAPI,
-} from './modules/shortcuts';
-import initURL, { QueryParams, SubAPI as UrlAPI } from './modules/url';
-import initVersions, {
-  SubState as VersionsSubState,
-  SubAPI as VersionsAPI,
-} from './modules/versions';
-import initGlobalArgs, {
-  SubState as GlobalArgsSubState,
-  SubAPI as GlobalArgsAPI,
-} from './modules/globalArgs';
 
-export { Options as StoreOptions, Listener as ChannelListener };
-export { ActiveTabs };
+import * as provider from './modules/provider';
+import * as addons from './modules/addons';
+import * as channel from './modules/channel';
+import * as notifications from './modules/notifications';
+import * as stories from './modules/stories';
+import * as refs from './modules/refs';
+import * as layout from './modules/layout';
+import * as shortcuts from './modules/shortcuts';
+import * as url from './modules/url';
+import * as version from './modules/versions';
+import * as globalArgs from './modules/globalArgs';
+
+const { ActiveTabs } = layout;
+
+export { Options as StoreOptions, Listener as ChannelListener, ActiveTabs };
 
 const ManagerContext = createContext({ api: undefined, state: getInitialState({}) });
 
-export type Module = StoreData &
-  RouterData &
+export type ModuleArgs = RouterData &
   ProviderData & {
     mode?: 'production' | 'development';
     state: State;
     fullAPI: API;
+    store: Store;
   };
 
-export type State = Other &
-  LayoutSubState &
-  StoriesSubState &
-  NotificationState &
-  VersionsSubState &
+export type State = layout.SubState &
+  stories.SubState &
+  refs.SubState &
+  notifications.SubState &
+  version.SubState &
+  url.SubState &
+  shortcuts.SubState &
+  globalArgs.SubState &
   RouterData &
-  ShortcutsSubState &
-  GlobalArgsSubState;
+  Other;
 
-export type API = AddonsAPI &
-  ChannelAPI &
-  ProviderAPI &
-  StoriesAPI &
-  LayoutAPI &
-  NotificationAPI &
-  ShortcutsAPI &
-  VersionsAPI &
-  UrlAPI &
-  GlobalArgsAPI &
-  OtherAPI;
+export type API = addons.SubAPI &
+  channel.SubAPI &
+  provider.SubAPI &
+  stories.SubAPI &
+  refs.SubAPI &
+  globalArgs.SubAPI &
+  layout.SubAPI &
+  notifications.SubAPI &
+  shortcuts.SubAPI &
+  version.SubAPI &
+  url.SubAPI &
+  Other;
 
-interface OtherAPI {
-  [key: string]: any;
-}
 interface Other {
-  customQueryParams: QueryParams;
-
   [key: string]: any;
 }
 
@@ -100,25 +84,18 @@ export interface Combo {
 }
 
 interface ProviderData {
-  provider: Provider;
+  provider: provider.Provider;
 }
 
-interface DocsModeData {
-  docsMode: boolean;
-}
-
-interface StoreData {
-  store: Store;
-}
-
-interface Children {
-  children: ReactNode | ((props: Combo) => ReactNode);
-}
+export type ManagerProviderProps = RouterData &
+  ProviderData & {
+    docsMode: boolean;
+    children: ReactNode | ((props: Combo) => ReactNode);
+  };
 
 export interface Args {
   [key: string]: any;
 }
-
 export interface ArgType {
   name?: string;
   description?: string;
@@ -130,23 +107,27 @@ export interface ArgTypes {
   [key: string]: ArgType;
 }
 
-type StatePartial = Partial<State>;
+export type ModuleFn = (m: ModuleArgs) => Module;
 
-export type ManagerProviderProps = Children & RouterData & ProviderData & DocsModeData;
+interface Module {
+  init?: () => void;
+  api?: unknown;
+  state?: unknown;
+}
 
 class ManagerProvider extends Component<ManagerProviderProps, State> {
   api: API = {} as API;
 
-  modules: any[];
+  modules: Module[];
 
   static displayName = 'Manager';
 
   constructor(props: ManagerProviderProps) {
     super(props);
     const {
-      provider,
       location,
       path,
+      refId,
       viewMode = props.docsMode ? 'docs' : 'story',
       storyId,
       docsMode,
@@ -155,10 +136,10 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
 
     const store = new Store({
       getState: () => this.state,
-      setState: (stateChange: StatePartial, callback) => this.setState(stateChange, callback),
+      setState: (stateChange: Partial<State>, callback) => this.setState(stateChange, callback),
     });
 
-    const routeData = { location, path, viewMode, storyId };
+    const routeData = { location, path, viewMode, storyId, refId };
 
     // Initialize the state to be the initial (persisted) state of the store.
     // This gives the modules the chance to read the persisted state, apply their defaults
@@ -167,6 +148,7 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
       layout: { isToolshown: false, showPanel: false },
       ui: { docsMode: true },
     };
+
     this.state = store.getInitialState(
       getInitialState({
         ...routeData,
@@ -177,30 +159,28 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
     const apiData = {
       navigate,
       store,
-      provider,
+      provider: props.provider,
     };
 
     this.modules = [
-      initChannel,
-      initAddons,
-      initLayout,
-      initNotifications,
-      initShortcuts,
-      initStories,
-      initURL,
-      initVersions,
-      initGlobalArgs,
-    ].map(initModule =>
-      initModule({ ...routeData, ...apiData, state: this.state, fullAPI: this.api })
-    );
+      provider,
+      channel,
+      addons,
+      layout,
+      notifications,
+      shortcuts,
+      stories,
+      refs,
+      globalArgs,
+      url,
+      version,
+    ].map(m => m.init({ ...routeData, ...apiData, state: this.state, fullAPI: this.api }));
 
     // Create our initial state by combining the initial state of all modules, then overlaying any saved state
-    const state = getInitialState(...this.modules.map(m => m.state));
+    const state = getInitialState(this.state, ...this.modules.map(m => m.state));
 
     // Get our API by combining the APIs exported by each module
     const api: API = Object.assign(this.api, { navigate }, ...this.modules.map(m => m.api));
-
-    initProviderApi({ provider, store, api });
 
     this.state = state;
     this.api = api;
@@ -212,6 +192,7 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
         ...state,
         location: props.location,
         path: props.path,
+        refId: props.refId,
         // if its a docsOnly page, even the 'story' view mode is considered 'docs'
         viewMode: (props.docsMode && props.viewMode) === 'story' ? 'docs' : props.viewMode,
         storyId: props.storyId,
@@ -421,11 +402,11 @@ export function useArgs(): [Args, (newArgs: Args) => void] {
 
 export function useGlobalArgs(): [Args, (newGlobalArgs: Args) => void] {
   const {
-    state: { globalArgs },
+    state: { globalArgs: oldGlobalArgs },
     api: { updateGlobalArgs },
   } = useContext(ManagerContext);
 
-  return [globalArgs, updateGlobalArgs];
+  return [oldGlobalArgs, updateGlobalArgs];
 }
 
 export function useArgTypes(): ArgTypes {

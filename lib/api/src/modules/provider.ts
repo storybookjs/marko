@@ -2,9 +2,9 @@ import { ReactNode } from 'react';
 import { Channel } from '@storybook/channels';
 import { ThemeVars } from '@storybook/theming';
 
-import { API, State } from './index';
-import Store from './store';
-import { UIOptions } from './modules/layout';
+import { API, State, ModuleFn } from '../index';
+import { Mapper, Refs } from './refs';
+import { UIOptions } from './layout';
 
 type IframeRenderer = (
   storyId: string,
@@ -21,6 +21,8 @@ export interface Provider {
   handleAPI(api: API): void;
   getConfig(): {
     theme?: ThemeVars;
+    refs?: Refs;
+    mapper?: Mapper;
     [k: string]: any;
   } & Partial<UIOptions>;
   [key: string]: any;
@@ -30,11 +32,10 @@ export interface SubAPI {
   renderPreview?: Provider['renderPreview'];
 }
 
-export default ({ provider, api }: { provider: Provider; api: API; store: Store }) => {
-  provider.handleAPI(api);
+export const init: ModuleFn = ({ provider, fullAPI }) => {
+  provider.handleAPI(fullAPI);
 
-  if (provider.renderPreview) {
-    // eslint-disable-next-line no-param-reassign
-    api.renderPreview = provider.renderPreview;
-  }
+  return {
+    api: provider.renderPreview ? { renderPreview: provider.renderPreview } : {},
+  };
 };

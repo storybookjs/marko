@@ -15,22 +15,25 @@ export const { toId, parseKind, sanitize, storyNameFromExport } = {
   ),
 };
 
-interface StoryData {
+export interface StoryData {
   viewMode?: string;
   storyId?: string;
+  refId?: string;
 }
 
-const splitPathRegex = /\/([^/]+)\/([^/]+)?/;
+const splitPathRegex = /\/([^/]+)\/(?:(.*)_)?([^/]+)?/;
 
 export const parsePath: (path?: string) => StoryData = memoize(1000)(
   (path: string | undefined | null) => {
     const result: StoryData = {
       viewMode: undefined,
       storyId: undefined,
+      refId: undefined,
     };
 
     if (path) {
-      const [, viewMode, storyId] = path.toLowerCase().match(splitPathRegex) || [
+      const [, viewMode, refId, storyId] = path.toLowerCase().match(splitPathRegex) || [
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -39,6 +42,7 @@ export const parsePath: (path?: string) => StoryData = memoize(1000)(
         Object.assign(result, {
           viewMode,
           storyId,
+          refId,
         });
       }
     }

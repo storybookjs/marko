@@ -1,12 +1,13 @@
-import { State, API } from '@storybook/api';
+import { State, API, Story, Group } from '@storybook/api';
 import { FunctionComponent, ReactNode } from 'react';
 
 export type ViewMode = State['viewMode'];
 
 export interface PreviewProps {
   api: API;
-  storyId: string;
   viewMode: ViewMode;
+  refs: State['refs'];
+  story: Group | Story;
   docsOnly: boolean;
   options: {
     isFullscreen: boolean;
@@ -16,10 +17,9 @@ export interface PreviewProps {
   path: string;
   location: State['location'];
   queryParams: State['customQueryParams'];
-  customCanvas?: IframeRenderer;
+  customCanvas?: CustomCanvasRenderer;
   description: string;
   baseUrl: string;
-  parameters: Record<string, any>;
   withLoader: boolean;
 }
 
@@ -41,13 +41,9 @@ export interface ApplyWrappersProps {
   id: string;
   storyId: string;
   active: boolean;
-  baseUrl: string;
-  scale: number;
-  queryParams: Record<string, any>;
-  customCanvas?: IframeRenderer;
 }
 
-export type IframeRenderer = (
+export type CustomCanvasRenderer = (
   storyId: string,
   viewMode: State['viewMode'],
   id: string,
@@ -55,3 +51,14 @@ export type IframeRenderer = (
   scale: number,
   queryParams: Record<string, any>
 ) => ReactNode;
+
+export interface FramesRendererProps {
+  story: Story | Group;
+  storyId: string;
+  refId: string;
+  baseUrl: string;
+  scale: number;
+  viewMode: ViewMode;
+  queryParams: State['customQueryParams'];
+  refs: State['refs'];
+}

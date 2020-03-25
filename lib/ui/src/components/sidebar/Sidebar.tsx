@@ -1,30 +1,32 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useMemo, useState, useCallback, Fragment } from 'react';
 
 import { styled } from '@storybook/theming';
-import { ScrollArea } from '@storybook/components';
-import { StoriesHash } from '@storybook/api';
+import { ScrollArea, Placeholder, Spaced } from '@storybook/components';
+import { StoriesHash, State } from '@storybook/api';
 
-import SidebarHeading, { SidebarHeadingProps } from './SidebarHeading';
-import SidebarStories from './SidebarStories';
+import { Heading } from './Heading';
 
-const Heading = styled(SidebarHeading)<SidebarHeadingProps>({
-  padding: '20px 20px 12px',
-});
+import { Search } from './Search';
+import { filteredLength } from './Tree/utils';
 
-const Stories = styled(({ className, ...rest }) => (
-  <SidebarStories className={className} {...rest} />
-))(({ isLoading }) => (isLoading ? { marginTop: 8, overflow: 'hidden' } : { overflow: 'hidden' }));
+import { Ref } from './Refs';
+import { RefType, Refs } from './RefHelpers';
 
-const Container = styled.nav({
-  position: 'absolute',
-  zIndex: 1,
-  left: 0,
-  top: 0,
-  bottom: 0,
-  right: 0,
-  width: '100%',
-  height: '100%',
-});
+const Container = styled.nav(
+  {
+    position: 'absolute',
+    zIndex: 1,
+    left: 0,
+    top: 0,
+    bottom: 0,
+    right: 0,
+    width: '100%',
+    height: '100%',
+  },
+  ({ theme }) => ({
+    color: theme.color.darker,
+  })
+);
 
 const CustomScrollArea = styled(ScrollArea)({
   '&&&&& .os-scrollbar-handle:before': {
@@ -33,29 +35,97 @@ const CustomScrollArea = styled(ScrollArea)({
   '&&&&& .os-scrollbar-vertical': {
     right: 5,
   },
+  padding: 20,
 });
+
+const Hr = styled.hr(({ theme }) => ({
+  border: '0 none',
+  height: 0,
+  marginBottom: 0,
+  borderTop: `1px solid ${theme.color.mediumlight}`,
+}));
 
 export interface SidebarProps {
   stories: StoriesHash;
+  refs: State['refs'];
   menu: any[];
   storyId?: string;
   menuHighlighted?: boolean;
   isLoading?: boolean;
 }
 
+const useFilterState = (initial: string) => {
+  const [state, setState] = useState(initial);
+  const changeFilter = useCallback((value: string) => {
+    setState(value);
+  }, []);
+
+  const value = state.length > 1 ? state : '';
+
+  return [value, changeFilter] as [typeof state, typeof changeFilter];
+};
+
+const useSearchResults = (refsList: [string, RefType][], filter: string) => {
+  const refsLengths = useMemo(
+    () => refsList.map(([k, i]) => filteredLength(i.stories || {}, filter), 0),
+    [refsList, filter]
+  );
+  const refsTotal = useMemo(() => refsLengths.reduce((acc, i) => acc + i, 0), [refsList, filter]);
+
+  return { total: refsTotal || 0, list: refsLengths };
+};
+
+const useCombination = (stories: StoriesHash, refs: Refs) => {
+  const merged = useMemo<Refs>(
+    () => ({
+      storybook_internal: { stories, title: null, id: 'storybook_internal', url: 'iframe.html' },
+      ...refs,
+    }),
+    [refs, stories]
+  );
+
+  return useMemo(() => Object.entries(merged), [merged]);
+};
+
 const Sidebar: FunctionComponent<SidebarProps> = ({
   storyId,
   stories,
   menu,
   menuHighlighted = false,
-  isLoading = false,
-}) => (
-  <Container className="container sidebar-container">
-    <CustomScrollArea vertical>
-      <Heading className="sidebar-header" menuHighlighted={menuHighlighted} menu={menu} />
-      <Stories stories={stories} storyId={storyId} isLoading={isLoading} />
-    </CustomScrollArea>
-  </Container>
-);
+  refs = {},
+}) => {
+  const [filter, setFilter] = useFilterState('');
+  const combined = useCombination(stories, refs);
+  const { total, list } = useSearchResults(combined, filter);
+
+  const resultLess = total === 0 && filter;
+
+  return (
+    <Container className="container sidebar-container">
+      <CustomScrollArea vertical>
+        <Spaced row={2}>
+          <Heading className="sidebar-header" menuHighlighted={menuHighlighted} menu={menu} />
+
+          <Search key="filter" onChange={setFilter} />
+
+          {resultLess ? <Placeholder>This filter resulted in 0 results</Placeholder> : null}
+
+          <Fragment>
+            {combined.map(([k, v], index) => {
+              const isHidden = filter && !list[index];
+
+              return (
+                <Fragment key={k}>
+                  {index === 0 || isHidden ? null : <Hr />}
+                  <Ref {...v} storyId={storyId} filter={filter} isHidden={isHidden} />
+                </Fragment>
+              );
+            })}
+          </Fragment>
+        </Spaced>
+      </CustomScrollArea>
+    </Container>
+  );
+};
 
 export default Sidebar;

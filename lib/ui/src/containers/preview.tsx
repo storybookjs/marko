@@ -4,7 +4,6 @@ import React from 'react';
 import { Consumer, Combo, StoriesHash, isRoot, isGroup, isStory } from '@storybook/api';
 
 import { Preview } from '../components/preview/preview';
-import { PreviewProps } from '../components/preview/PreviewProps';
 
 export type Item = StoriesHash[keyof StoriesHash];
 
@@ -31,44 +30,27 @@ const getDescription = (item: Item) => {
 };
 
 const mapper = ({ api, state }: Combo) => {
-  const { layout, location, customQueryParams, storyId } = state;
-  const story = api.getData(storyId);
-  const parameters = story ? story.parameters : {};
+  const { layout, location, customQueryParams, storyId, refs, viewMode, path, refId } = state;
+  const story = api.getData(storyId, refId);
   const docsOnly = story && story.parameters ? !!story.parameters.docsOnly : false;
 
   return {
     api,
+    story,
     options: layout,
     description: getDescription(story),
-    ...api.getUrlState(),
+    viewMode,
+    path,
+    refs,
+    baseUrl: PREVIEW_URL || 'iframe.html',
     queryParams: customQueryParams,
     docsOnly,
     location,
-    parameters,
   };
 };
 
-const getBaseUrl = (): string => {
-  try {
-    return PREVIEW_URL || 'iframe.html';
-  } catch (e) {
-    return 'iframe.html';
-  }
-};
-
 const PreviewConnected = React.memo<{ id: string; withLoader: boolean }>(props => (
-  <Consumer filter={mapper}>
-    {fromState => {
-      const p = {
-        ...props,
-        baseUrl: getBaseUrl(),
-        ...fromState,
-      } as PreviewProps;
-
-      return <Preview {...p} />;
-    }}
-  </Consumer>
+  <Consumer filter={mapper}>{fromState => <Preview {...props} {...fromState} />}</Consumer>
 ));
-PreviewConnected.displayName = 'PreviewConnected';
 
 export default PreviewConnected;

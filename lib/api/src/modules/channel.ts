@@ -2,7 +2,7 @@ import deprecate from 'util-deprecate';
 import { STORY_CHANGED, STORIES_COLLAPSE_ALL, STORIES_EXPAND_ALL } from '@storybook/core-events';
 import { Channel, Listener } from '@storybook/channels';
 
-import { Module } from '../index';
+import { ModuleFn } from '../index';
 
 export interface SubAPI {
   getChannel: () => Channel;
@@ -15,7 +15,7 @@ export interface SubAPI {
   expandAll: () => void;
 }
 
-export default ({ provider }: Module) => {
+export const init: ModuleFn = ({ provider }) => {
   const api: SubAPI = {
     getChannel: () => provider.channel,
     on: (type, cb, peer = true) => {

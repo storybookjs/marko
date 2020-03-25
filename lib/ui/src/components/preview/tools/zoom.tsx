@@ -1,10 +1,11 @@
 import React, { Fragment, Component, FunctionComponent, SyntheticEvent } from 'react';
 
-import { Icons, IconButton } from '@storybook/components';
+import { Icons, IconButton, Separator } from '@storybook/components';
+import { Addon } from '@storybook/addons';
 
 const Context = React.createContext({ value: 1, set: (v: number) => {} });
 
-class Provider extends Component<{}, { value: number }> {
+class ZoomProvider extends Component<{}, { value: number }> {
   state = {
     value: 1,
   };
@@ -20,7 +21,7 @@ class Provider extends Component<{}, { value: number }> {
   }
 }
 
-const { Consumer } = Context;
+const { Consumer: ZoomConsumer } = Context;
 
 const cancel = (e: SyntheticEvent) => {
   e.preventDefault();
@@ -49,4 +50,19 @@ const Zoom: FunctionComponent<{ set: Function; reset: Function }> = ({ set, rese
   </Fragment>
 );
 
-export { Zoom, Consumer as ZoomConsumer, Provider as ZoomProvider };
+export { Zoom, ZoomConsumer, ZoomProvider };
+
+export const zoomTool: Addon = {
+  title: 'zoom',
+  match: ({ viewMode }) => viewMode === 'story',
+  render: () => (
+    <Fragment>
+      <ZoomConsumer>
+        {({ set, value }) => (
+          <Zoom key="zoom" set={(v: number) => set(value * v)} reset={() => set(1)} />
+        )}
+      </ZoomConsumer>
+      <Separator />
+    </Fragment>
+  ),
+};

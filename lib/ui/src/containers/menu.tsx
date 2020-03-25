@@ -1,10 +1,10 @@
-import React, { useMemo, ComponentProps } from 'react';
+import React, { useMemo } from 'react';
 
-import { Badge, Icons } from '@storybook/components';
+import { Badge } from '@storybook/components';
 import { API } from '@storybook/api';
 
-import { styled } from '@storybook/theming';
 import { shortcutToHumanString } from '../libs/shortcut';
+import { MenuItemIcon } from '../components/sidebar/Menu';
 
 const focusableUIElements = {
   storySearchField: 'storybook-explorer-searchfield',
@@ -14,35 +14,6 @@ const focusableUIElements = {
 
 const shortcutToHumanStringIfEnabled = (shortcuts: string[], enableShortcuts: boolean) =>
   enableShortcuts ? shortcutToHumanString(shortcuts) : null;
-
-const sharedStyles = {
-  height: 10,
-  width: 10,
-  marginLeft: -5,
-  marginRight: -5,
-  display: 'block',
-};
-
-const Icon = styled(Icons)(sharedStyles, ({ theme }) => ({
-  color: theme.color.secondary,
-}));
-
-const Img = styled.img(sharedStyles);
-const Placeholder = styled.div({ sharedStyles });
-
-export interface ListItemIconProps {
-  icon?: ComponentProps<typeof Icons>['icon'];
-  imgSrc?: string;
-}
-export const MenuItemIcon = ({ icon, imgSrc }: ListItemIconProps) => {
-  if (icon) {
-    return <Icon icon={icon} />;
-  }
-  if (imgSrc) {
-    return <Img src={imgSrc} alt="image" />;
-  }
-  return <Placeholder />;
-};
 
 export const useMenu = (
   api: API,

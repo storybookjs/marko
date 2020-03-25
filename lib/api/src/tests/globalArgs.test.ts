@@ -1,8 +1,8 @@
 import EventEmitter from 'event-emitter';
 import { UPDATE_GLOBAL_ARGS, GLOBAL_ARGS_UPDATED } from '@storybook/core-events';
 
-import { Module, API } from '../index';
-import initGlobalArgs from '../modules/globalArgs';
+import { ModuleArgs, API } from '../index';
+import { init as initModule, SubAPI } from '../modules/globalArgs';
 
 function createMockStore() {
   let state = {};
@@ -11,18 +11,13 @@ function createMockStore() {
     setState: jest.fn().mockImplementation(s => {
       state = { ...state, ...s };
     }),
-  }; // as unknown) as Module['store'];
+  };
 }
-
-// function createMockModule() {
-//   // This mock module doesn't have all the fields but we don't use them all in this sub-module
-//   return ({  as unknown) as Module;
-// }
 
 describe('stories API', () => {
   it('sets a sensible initialState', () => {
     const store = createMockStore();
-    const { state } = initGlobalArgs(({ store } as unknown) as Module);
+    const { state } = initModule(({ store } as unknown) as ModuleArgs);
 
     expect(state).toEqual({
       globalArgs: {},
@@ -32,7 +27,7 @@ describe('stories API', () => {
   it('updates the state when the preview emits GLOBAL_ARGS_UPDATED', () => {
     const api = EventEmitter();
     const store = createMockStore();
-    const { state, init } = initGlobalArgs(({ store, fullAPI: api } as unknown) as Module);
+    const { state, init } = initModule(({ store, fullAPI: api } as unknown) as ModuleArgs);
     store.setState(state);
 
     init();
@@ -51,11 +46,11 @@ describe('stories API', () => {
   it('emits UPDATE_GLOBAL_ARGS when updateGlobalArgs is called', () => {
     const fullAPI = ({ emit: jest.fn(), on: jest.fn() } as unknown) as API;
     const store = createMockStore();
-    const { init, api } = initGlobalArgs(({ store, fullAPI } as unknown) as Module);
+    const { init, api } = initModule(({ store, fullAPI } as unknown) as ModuleArgs);
 
     init();
 
-    api.updateGlobalArgs({ a: 'b' });
+    (api as SubAPI).updateGlobalArgs({ a: 'b' });
     expect(fullAPI.emit).toHaveBeenCalledWith(UPDATE_GLOBAL_ARGS, { a: 'b' });
   });
 });

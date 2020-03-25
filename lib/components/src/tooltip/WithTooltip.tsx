@@ -1,7 +1,5 @@
 import React, { FunctionComponent, ReactNode, useState, useEffect } from 'react';
 import { styled } from '@storybook/theming';
-import { logger } from '@storybook/client-logger';
-// import { withState, lifecycle } from 'recompose';
 import { document } from 'global';
 
 import TooltipTrigger from 'react-popper-tooltip';
@@ -121,12 +119,12 @@ const WithToolTipState: FunctionComponent<WithTooltipPureProps & {
               try {
                 iframe.contentWindow.document.removeEventListener('click', hide);
               } catch (e) {
-                logger.debug('Removing a click listener from iframe failed: ', e);
+                // logger.debug('Removing a click listener from iframe failed: ', e);
               }
             });
           }
         } catch (e) {
-          logger.debug('Adding a click listener to iframe failed: ', e);
+          // logger.debug('Adding a click listener to iframe failed: ', e);
         }
       };
 

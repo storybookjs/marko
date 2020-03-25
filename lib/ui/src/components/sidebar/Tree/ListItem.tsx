@@ -1,28 +1,28 @@
-import React, { ComponentProps } from 'react';
-import { styled } from '@storybook/theming';
-import { opacify, transparentize } from 'polished';
-import { Icons } from '@storybook/components';
 import { DOCS_MODE } from 'global';
+import React, { ComponentProps, FunctionComponent, useMemo } from 'react';
+import { transparentize } from 'polished';
+import { styled } from '@storybook/theming';
+import { Icons } from '@storybook/components';
 
 export type ExpanderProps = ComponentProps<'span'> & {
-  isExpanded?: boolean;
-  isExpandable?: boolean;
+  isExpanded: boolean;
+  depth: number;
 };
 
 const Expander = styled.span<ExpanderProps>(
-  ({ theme }) => ({
+  ({ theme, depth }) => ({
+    position: 'absolute',
     display: 'block',
+    left: 0,
+    top: 9,
     width: 0,
     height: 0,
-    marginRight: 6,
     borderTop: '3.5px solid transparent',
     borderBottom: '3.5px solid transparent',
-    borderLeft: `3.5px solid ${opacify(0.2, theme.appBorderColor)}`,
+    borderLeft: `3.5px solid ${theme.base === 'dark' ? theme.color.lighter : theme.color.medium}`,
     transition: 'transform .1s ease-out',
+    marginLeft: depth * 15 + 9,
   }),
-
-  ({ isExpandable = false }) => (!isExpandable ? { borderLeftColor: 'transparent' } : {}),
-
   ({ isExpanded = false }) => {
     return isExpanded
       ? {
@@ -39,6 +39,7 @@ export type IconProps = ComponentProps<typeof Icons> & {
 
 const Icon = styled(Icons)<IconProps>(
   {
+    position: 'relative',
     flex: 'none',
     width: 10,
     height: 10,
@@ -60,31 +61,32 @@ const Icon = styled(Icons)<IconProps>(
 
     return {};
   },
-  ({ isSelected = false }) => (isSelected ? { color: 'inherit' } : {})
+  ({ isSelected = false, theme }) =>
+    isSelected ? { color: 'inherit', fontWeight: theme.typography.weight.bold } : {}
 );
 
-export const Item = styled(({ className, children, id }) => (
-  <div className={className} id={id}>
-    {children}
-  </div>
-))(
-  {
-    fontSize: 13,
+export const Item = styled.a<{
+  depth?: number;
+  isSelected?: boolean;
+}>(
+  ({ theme }) => ({
+    position: 'relative',
+    textDecoration: 'none',
+    fontSize: theme.typography.size.s2,
     lineHeight: '16px',
     paddingTop: 4,
     paddingBottom: 4,
-    paddingRight: 20,
+    paddingRight: theme.layoutMargin * 2,
     display: 'flex',
     alignItems: 'center',
     flex: 1,
     background: 'transparent',
-  },
-  ({ depth }) => ({
-    paddingLeft: depth * 15 + 9,
   }),
-  ({ theme, isSelected, isLoading }) =>
-    !isLoading &&
-    (isSelected
+  ({ depth }) => ({
+    paddingLeft: depth * 15 + 19,
+  }),
+  ({ theme, isSelected }) =>
+    isSelected
       ? {
           cursor: 'default',
           background: theme.color.secondary,
@@ -101,30 +103,36 @@ export const Item = styled(({ className, children, id }) => (
             color: theme.color.defaultText,
             background: theme.background.hoverable,
           },
-        }),
-  ({ theme, isLoading }) =>
-    isLoading && {
-      '&& > svg + span': { background: theme.appBorderColor },
-      '&& > *': theme.animation.inlineGlow,
-      '&& > span': { borderColor: 'transparent' },
-    }
+        }
 );
 
-export type SidebarItemProps = ComponentProps<typeof Item> & {
-  isComponent?: boolean;
-  isLeaf?: boolean;
+export type ListItemProps = ComponentProps<typeof Item> & {
+  childIds?: string[] | null;
+  id: string;
+  isComponent: boolean;
   isExpanded?: boolean;
+  isLeaf: boolean;
   isSelected?: boolean;
+  name: string;
+  kind: string;
+  refId?: string;
+  depth: number;
+  parameters: Record<string, any>;
 };
 
-const SidebarItem = ({
-  name = 'isLoading story',
+export const ListItem: FunctionComponent<ListItemProps> = ({
+  name,
+  id,
+  kind,
+  refId,
   isComponent = false,
   isLeaf = false,
   isExpanded = false,
   isSelected = false,
+  className,
+  depth,
   ...props
-}: SidebarItemProps) => {
+}) => {
   let iconName: ComponentProps<typeof Icons>['icon'];
   if (isLeaf && isComponent) {
     iconName = 'document';
@@ -136,17 +144,18 @@ const SidebarItem = ({
     iconName = 'folder';
   }
 
+  const classes = useMemo(
+    () => [className, 'sidebar-item', isSelected ? 'selected' : null].filter(Boolean).join(' '),
+    [className, isSelected]
+  );
+
   return (
-    <Item
-      isSelected={isSelected}
-      {...props}
-      className={isSelected ? 'sidebar-item selected' : 'sidebar-item'}
-    >
-      <Expander className="sidebar-expander" isExpandable={!isLeaf} isExpanded={isExpanded} />
+    <Item isSelected={isSelected} depth={depth} {...props} className={classes} id={id}>
+      {!isLeaf ? (
+        <Expander className="sidebar-expander" depth={depth} isExpanded={isExpanded} />
+      ) : null}
       <Icon className="sidebar-svg-icon" icon={iconName} isSelected={isSelected} />
       <span>{name}</span>
     </Item>
   );
 };
-
-export default SidebarItem;

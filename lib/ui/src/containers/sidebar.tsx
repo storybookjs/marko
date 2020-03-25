@@ -125,7 +125,6 @@ const clone = rfdc({ circles: true });
 const Sidebar: FunctionComponent<{}> = React.memo(() => {
   const mapper = ({ state, api }: Combo) => {
     const {
-      storiesConfigured,
       ui: { name, url, enableShortcuts },
       viewMode,
       storyId,
@@ -144,7 +143,6 @@ const Sidebar: FunctionComponent<{}> = React.memo(() => {
     const menu = useMenu(api, isFullscreen, showPanel, showNav, enableShortcuts);
 
     return {
-      isLoading: !storiesConfigured,
       title: name,
       url,
       stories,

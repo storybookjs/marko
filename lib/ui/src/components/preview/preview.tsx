@@ -1,99 +1,100 @@
 import React, { Fragment, FunctionComponent, useMemo, useEffect } from 'react';
-import { API, Consumer, Combo, State } from '@storybook/api';
-import { SET_CURRENT_STORY } from '@storybook/core-events';
-import addons, { types, Addon } from '@storybook/addons';
 import merge from '@storybook/api/dist/lib/merge';
-import { Loader } from '@storybook/components';
-
 import { Helmet } from 'react-helmet-async';
 
-import { Toolbar, defaultTools, defaultToolsExtra, createTabsTool } from './toolbar';
+import { API, Consumer, Combo } from '@storybook/api';
+import { SET_CURRENT_STORY } from '@storybook/core-events';
+import addons, { types, Addon } from '@storybook/addons';
 
-import * as S from './components';
+import { Loader } from '@storybook/components';
+import { Location } from '@storybook/router';
 
-import { ZoomProvider, ZoomConsumer } from './zoom';
-
-import { IFrame } from './iframe';
-import { PreviewProps, ApplyWrappersProps, IframeRenderer } from './PreviewProps';
-
+import * as S from './utils/components';
+import { ZoomProvider, ZoomConsumer } from './tools/zoom';
 import { defaultWrappers, ApplyWrappers } from './wrappers';
-import { stringifyQueryParams } from './stringifyQueryParams';
+import { ToolbarComp } from './toolbar';
+import { FramesRenderer } from './FramesRenderer';
 
-export const renderIframe: IframeRenderer = (
-  storyId,
-  viewMode,
-  id,
-  baseUrl,
-  scale,
-  queryParams
-) => (
-  <IFrame
-    key="iframe"
-    id="storybook-preview-iframe"
-    title={id || 'preview'}
-    src={`${baseUrl}?id=${storyId}&viewMode=${viewMode}${stringifyQueryParams(queryParams)}`}
-    allowFullScreen
-    scale={scale}
-  />
-);
+import { PreviewProps } from './utils/types';
 
-const getWrapper = (getFn: API['getElements']) => Object.values(getFn<Addon>(types.PREVIEW));
+const getWrappers = (getFn: API['getElements']) => Object.values(getFn<Addon>(types.PREVIEW));
 const getTabs = (getFn: API['getElements']) => Object.values(getFn<Addon>(types.TAB));
-const getTools = (getFn: API['getElements']) => Object.values(getFn<Addon>(types.TOOL));
-const getToolsExtra = (getFn: API['getElements']) => Object.values(getFn<Addon>(types.TOOLEXTRA));
 
-const getDocumentTitle = (description: string) => {
-  return description ? `${description} ⋅ Storybook` : 'Storybook';
-};
-
-const mapper = ({ state, api }: Combo) => ({
+const canvasMapper = ({ state, api }: Combo) => ({
   storyId: state.storyId,
+  refId: state.refId,
   viewMode: state.viewMode,
   customCanvas: api.renderPreview,
   queryParams: state.customQueryParams,
   getElements: api.getElements,
-  isLoading: !state.storiesConfigured,
+  story: api.getData(state.storyId, state.refId),
+  refs: state.refs,
+  active: !!(state.viewMode && state.viewMode.match(/^(story|docs)$/)),
 });
 
 const createCanvas = (id: string, baseUrl = 'iframe.html', withLoader = true): Addon => ({
   id: 'canvas',
   title: 'Canvas',
-  route: p => `/story/${p.storyId}`,
-  match: p => !!(p.viewMode && p.viewMode.match(/^(story|docs)$/)),
-  render: p => {
+  route: ({ storyId, refId }) => (refId ? `/story/${refId}_${storyId}` : `/story/${storyId}`),
+  match: ({ viewMode }) => !!(viewMode && viewMode.match(/^(story|docs)$/)),
+  render: () => {
     return (
-      <Consumer filter={mapper}>
-        {({ customCanvas, storyId, viewMode, queryParams, getElements, isLoading }) => (
-          <ZoomConsumer>
-            {({ value: scale }) => {
-              const wrappers = [...defaultWrappers, ...getWrapper(getElements)];
+      <Consumer filter={canvasMapper}>
+        {({
+          story,
+          refs,
+          customCanvas,
+          storyId,
+          refId,
+          viewMode,
+          queryParams,
+          getElements,
+          active,
+        }) => {
+          const wrappers = useMemo(() => [...defaultWrappers, ...getWrappers(getElements)], [
+            getElements,
+            ...defaultWrappers,
+          ]);
 
-              const data = [storyId, viewMode, id, baseUrl, scale, queryParams] as Parameters<
-                IframeRenderer
-              >;
+          const isLoading = !!(
+            (storyId && !story) ||
+            (story && story.refId && refs[refId] && !refs[refId].ready)
+          );
 
-              const content = customCanvas ? customCanvas(...data) : renderIframe(...data);
-              const props = {
-                viewMode,
-                active: p.active,
-                wrappers,
-                id,
-                storyId,
-                baseUrl,
-                queryParams,
-                scale,
-                customCanvas,
-              } as ApplyWrappersProps;
-
-              return (
-                <>
-                  {withLoader && isLoading && <Loader id="preview-loader" role="progressbar" />}
-                  <ApplyWrappers {...props}>{content}</ApplyWrappers>
-                </>
-              );
-            }}
-          </ZoomConsumer>
-        )}
+          return (
+            <ZoomConsumer>
+              {({ value: scale }) => {
+                return (
+                  <>
+                    {withLoader && isLoading && <Loader id="preview-loader" role="progressbar" />}
+                    <ApplyWrappers
+                      id={id}
+                      storyId={storyId}
+                      viewMode={viewMode}
+                      active={active}
+                      wrappers={wrappers}
+                    >
+                      {customCanvas ? (
+                        customCanvas(storyId, viewMode, id, baseUrl, scale, queryParams)
+                      ) : (
+                        <FramesRenderer
+                          baseUrl={baseUrl}
+                          refs={refs}
+                          scale={scale}
+                          story={story}
+                          viewMode={viewMode}
+                          refId={refId}
+                          queryParams={queryParams}
+                          storyId={storyId}
+                        />
+                      )}
+                    </ApplyWrappers>
+                  </>
+                );
+              }}
+            </ZoomConsumer>
+          );
+        }}
       </Consumer>
     );
   },
@@ -104,7 +105,7 @@ const useTabs = (
   baseUrl: PreviewProps['baseUrl'],
   withLoader: PreviewProps['withLoader'],
   getElements: API['getElements'],
-  parameters: PreviewProps['parameters']
+  story: PreviewProps['story']
 ) => {
   const canvas = useMemo(() => {
     return createCanvas(id, baseUrl, withLoader);
@@ -115,98 +116,65 @@ const useTabs = (
   }, [getElements]);
 
   return useMemo(() => {
-    return filterTabs([canvas, ...tabsFromConfig], parameters);
-  }, [canvas, ...tabsFromConfig, parameters]);
-};
+    if (story && story.parameters) {
+      return filterTabs([canvas, ...tabsFromConfig], story.parameters);
+    }
 
-const useViewMode = (docsOnly: boolean, viewMode: PreviewProps['viewMode']) => {
-  return docsOnly && viewMode === 'story' ? 'docs' : viewMode;
-};
-
-const useTools = (
-  getElements: API['getElements'],
-  tabs: Addon[],
-  viewMode: PreviewProps['viewMode'],
-  storyId: PreviewProps['storyId'],
-  location: PreviewProps['location'],
-  path: PreviewProps['path']
-) => {
-  const toolsFromConfig = useMemo(() => {
-    return getTools(getElements);
-  }, [getElements]);
-
-  const toolsExtraFromConfig = useMemo(() => {
-    return getToolsExtra(getElements);
-  }, [getElements]);
-
-  const tools = useMemo(() => {
-    return [...defaultTools, ...toolsFromConfig];
-  }, [defaultTools, toolsFromConfig]);
-
-  const toolsExtra = useMemo(() => {
-    return [...defaultToolsExtra, ...toolsExtraFromConfig];
-  }, [defaultToolsExtra, toolsExtraFromConfig]);
-
-  return useMemo(() => {
-    return filterTools(tools, toolsExtra, tabs, {
-      viewMode,
-      storyId,
-      location,
-      path,
-    });
-  }, [viewMode, storyId, location, path, tools, toolsExtra, tabs]);
+    return [canvas, ...tabsFromConfig];
+  }, [story, canvas, ...tabsFromConfig]);
 };
 
 const Preview: FunctionComponent<PreviewProps> = props => {
   const {
     api,
-    id,
-    location,
+    id: previewId,
     options,
-    docsOnly = false,
-    storyId = undefined,
-    path = undefined,
-    description = undefined,
-    baseUrl = 'iframe.html',
-    parameters = undefined,
+    viewMode,
+    story = undefined,
+    description,
+    baseUrl,
     withLoader = true,
   } = props;
   const { isToolshown } = options;
   const { getElements } = api;
 
-  // eslint-disable-next-line react/destructuring-assignment
-  const viewMode = useViewMode(docsOnly, props.viewMode);
-  const tabs = useTabs(id, baseUrl, withLoader, getElements, parameters);
-  const { left, right } = useTools(getElements, tabs, viewMode, storyId, location, path);
+  const tabs = useTabs(previewId, baseUrl, withLoader, getElements, story);
 
   useEffect(() => {
-    api.emit(SET_CURRENT_STORY, { storyId, viewMode });
-  }, [storyId, viewMode]);
+    if (story) {
+      const { refId, id } = story;
+      api.emit(SET_CURRENT_STORY, {
+        storyId: id,
+        viewMode,
+        options: {
+          target: refId ? `storybook-ref-${refId}` : 'storybook-preview-iframe',
+        },
+      });
+    }
+  }, [story, viewMode]);
 
   return (
-    <ZoomProvider>
-      <Fragment>
-        {id === 'main' && (
-          <Helmet key="description">
-            <title>{getDocumentTitle(description)}</title>
-          </Helmet>
-        )}
-        {(left || right) && (
-          <Toolbar key="toolbar" shown={isToolshown} border>
-            <Fragment key="left">{left}</Fragment>
-            <Fragment key="right">{right}</Fragment>
-          </Toolbar>
-        )}
+    <Fragment>
+      {previewId === 'main' && (
+        <Helmet key="description">
+          <title>{description}</title>
+        </Helmet>
+      )}
+      <ZoomProvider>
+        <ToolbarComp key="tools" story={story} api={api} isShown={isToolshown} tabs={tabs} />
         <S.FrameWrap key="frame" offset={isToolshown ? 40 : 0}>
-          {tabs.map((p, i) => (
+          {tabs.map(({ render: Render, match, ...t }, i) => {
             // @ts-ignore
-            <Fragment key={p.id || p.key || i}>
-              {p.render({ active: p.match({ storyId, viewMode, location, path }) })}
-            </Fragment>
-          ))}
+            const key = t.id || t.key || i;
+            return (
+              <Fragment key={key}>
+                <Location>{lp => <Render active={match(lp)} />}</Location>
+              </Fragment>
+            );
+          })}
         </S.FrameWrap>
-      </Fragment>
-    </ZoomProvider>
+      </ZoomProvider>
+    </Fragment>
   );
 };
 
@@ -253,57 +221,4 @@ function filterTabs(panels: Addon[], parameters: Record<string, any>) {
       });
   }
   return panels;
-}
-
-function filterTools(
-  tools: Addon[],
-  toolsExtra: Addon[],
-  tabs: Addon[],
-  {
-    viewMode,
-    storyId,
-    location,
-    path,
-  }: {
-    viewMode: State['viewMode'];
-    storyId: State['storyId'];
-    location: State['location'];
-    path: State['path'];
-  }
-) {
-  const tabsTool = createTabsTool(tabs);
-  const toolsLeft = [tabs.filter(p => !p.hidden).length > 1 ? tabsTool : null, ...tools];
-
-  const toolsRight = [...toolsExtra];
-
-  // if its a docsOnly page, even the 'story' view mode is considered 'docs'
-  const filter = (item: Partial<Addon>) =>
-    item &&
-    (!item.match ||
-      item.match({
-        storyId,
-        viewMode,
-        location,
-        path,
-      }));
-
-  const displayItems = (list: Partial<Addon>[]) =>
-    list.reduce(
-      (acc, item, index) =>
-        item ? (
-          // @ts-ignore
-          <Fragment key={item.id || item.key || `f-${index}`}>
-            {acc}
-            {item.render({}) || item}
-          </Fragment>
-        ) : (
-          acc
-        ),
-      null
-    );
-
-  const left = displayItems(toolsLeft.filter(filter));
-  const right = displayItems(toolsRight.filter(filter));
-
-  return { left, right };
 }

@@ -1,7 +1,7 @@
-import { window, document } from 'global';
+import { window, document, location } from 'global';
+import * as EVENTS from '@storybook/core-events';
 import Channel, { ChannelEvent, ChannelHandler } from '@storybook/channels';
-import { logger } from '@storybook/client-logger';
-
+import { logger, pretty } from '@storybook/client-logger';
 import { isJSON, parse, stringify } from 'telejson';
 
 interface Config {
@@ -42,7 +42,7 @@ export class PostmsgTransport {
     this.handler = (...args) => {
       handler.apply(this, args);
 
-      if (!this.connected && this.getWindow()) {
+      if (!this.connected && this.getLocalFrame().length) {
         this.flush();
         this.connected = true;
       }
@@ -55,14 +55,9 @@ export class PostmsgTransport {
    * @param event
    */
   send(event: ChannelEvent, options?: any): Promise<any> {
-    const iframeWindow = this.getWindow();
-    if (!iframeWindow || this.buffer.length) {
-      return new Promise((resolve, reject) => {
-        this.buffer.push({ event, resolve, reject });
-      });
-    }
     let depth = 15;
     let allowFunction = true;
+    let target;
 
     if (options && typeof options.allowFunction === 'boolean') {
       allowFunction = options.allowFunction;
@@ -70,12 +65,34 @@ export class PostmsgTransport {
     if (options && Number.isInteger(options.depth)) {
       depth = options.depth;
     }
+    if (options && typeof options.target === 'string') {
+      target = options.target;
+    }
 
-    const data = stringify({ key: KEY, event }, { maxDepth: depth, allowFunction });
+    const frames = this.getFrames(target);
 
-    // TODO: investigate http://blog.teamtreehouse.com/cross-domain-messaging-with-postmessage
-    // might replace '*' with document.location ?
-    iframeWindow.postMessage(data, '*');
+    const data = stringify(
+      { key: KEY, event, source: document.location.origin + document.location.pathname },
+      { maxDepth: depth, allowFunction }
+    );
+
+    if (!frames.length) {
+      return new Promise((resolve, reject) => {
+        this.buffer.push({ event, resolve, reject });
+      });
+    }
+    if (this.buffer.length) {
+      this.flush();
+    }
+
+    frames.forEach(f => {
+      try {
+        f.postMessage(data, '*');
+      } catch (e) {
+        console.error('sending over postmessage fail');
+      }
+    });
+
     return Promise.resolve(null);
   }
 
@@ -89,33 +106,122 @@ export class PostmsgTransport {
     });
   }
 
-  private getWindow(): Window {
+  private getFrames(target?: string): Window[] {
     if (this.config.page === 'manager') {
-      // FIXME this is a really bad idea! use a better way to do this.
-      // This finds the storybook preview iframe to send messages to.
-      const iframe = document.getElementById('storybook-preview-iframe');
-      if (!iframe) {
-        return null;
-      }
-      return iframe.contentWindow;
+      const nodes: HTMLIFrameElement[] = [
+        ...document.querySelectorAll('iframe[data-is-storybook][data-is-loaded]'),
+      ];
+
+      const list = nodes
+        .filter(e => {
+          try {
+            return !!e.contentWindow && e.dataset.isStorybook !== undefined && e.id === target;
+          } catch (er) {
+            return false;
+          }
+        })
+        .map(e => e.contentWindow);
+
+      return list.length ? list : this.getCurrentFrames();
     }
-    return window.parent;
+    if (window && window.parent) {
+      return [window.parent];
+    }
+
+    return [];
+  }
+
+  private getCurrentFrames(): Window[] {
+    if (this.config.page === 'manager') {
+      const list: HTMLIFrameElement[] = [
+        ...document.querySelectorAll('[data-is-storybook="true"]'),
+      ];
+      return list.map(e => e.contentWindow);
+    }
+    if (window && window.parent) {
+      return [window.parent];
+    }
+
+    return [];
+  }
+
+  private getLocalFrame(): Window[] {
+    if (this.config.page === 'manager') {
+      const list: HTMLIFrameElement[] = [...document.querySelectorAll('#storybook-preview-iframe')];
+      return list.map(e => e.contentWindow);
+    }
+    if (window && window.parent) {
+      return [window.parent];
+    }
+
+    return [];
   }
 
   private handleEvent(rawEvent: MessageEvent): void {
     try {
       const { data } = rawEvent;
-      const { key, event } = typeof data === 'string' && isJSON(data) ? parse(data) : data;
+      const { key, event, source } = typeof data === 'string' && isJSON(data) ? parse(data) : data;
+
       if (key === KEY) {
-        logger.debug(`message arrived at ${this.config.page}`, event.type, ...event.args);
+        const pageString =
+          this.config.page === 'manager'
+            ? `<span style="color: #37D5D3; background: black"> manager </span>`
+            : `<span style="color: #1EA7FD; background: black"> preview </span>`;
+
+        const eventString = Object.values(EVENTS).includes(event.type)
+          ? `<span style="color: #FF4785">${event.type}</span>`
+          : `<span style="color: #FFAE00">${event.type}</span>`;
+
+        event.source = source || getEventSourceUrl(rawEvent);
+
+        if (!event.source) {
+          logger.error(
+            `${pageString} received ${eventString} but was unable to determine the source of the event`
+          );
+
+          return;
+        }
+        pretty.debug(
+          location.origin !== event.source
+            ? `${pageString} received ${eventString}`
+            : `${pageString} received ${eventString} <span style="color: gray">(on ${location.origin} from ${event.source})</span>`,
+          ...event.args
+        );
+
         this.handler(event);
       }
     } catch (error) {
       logger.error(error);
-      // debugger;
     }
   }
 }
+
+const getEventSourceUrl = (event: MessageEvent) => {
+  const frames: HTMLIFrameElement[] = [...document.getElementsByTagName('iframe')];
+
+  // try to find the originating iframe by matching it's contentWindow
+  // This might not be cross-origin safe
+  const [frame, ...remainder] = frames.filter(element => {
+    try {
+      return element.contentWindow === event.source;
+    } catch (err) {
+      const src = element.getAttribute('src');
+      const { origin } = new URL(src);
+
+      return origin === event.origin;
+    }
+  });
+
+  // If we found multiple matches, there's going to be trouble
+  if (remainder.length) {
+    console.error('unable to locate origin of postmessage');
+    return null;
+  }
+
+  const src = frame.getAttribute('src');
+  const { origin, pathname } = new URL(src);
+  return origin + pathname;
+};
 
 /**
  * Creates a channel which communicates with an iframe or child window.

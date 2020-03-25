@@ -1,7 +1,7 @@
 import { navigator, document } from 'global';
 import { PREVIEW_KEYDOWN } from '@storybook/core-events';
 
-import { Module } from '../index';
+import { ModuleFn } from '../index';
 
 import { shortcutMatchesShortcut, eventToShortcut } from '../lib/shortcut';
 import { focusableUIElements } from './layout';
@@ -90,7 +90,7 @@ function focusInInput(event: Event) {
   );
 }
 
-export default function initShortcuts({ store, fullAPI }: Module) {
+export const init: ModuleFn = ({ store, fullAPI }) => {
   const api: SubAPI = {
     // Getting and setting shortcuts
     getShortcutKeys(): Shortcuts {
@@ -288,7 +288,7 @@ export default function initShortcuts({ store, fullAPI }: Module) {
     ),
   };
 
-  const init = () => {
+  const initModule = () => {
     // Listen for keydown events in the manager
     document.addEventListener('keydown', (event: Event) => {
       if (!focusInInput(event)) {
@@ -302,5 +302,5 @@ export default function initShortcuts({ store, fullAPI }: Module) {
     });
   };
 
-  return { api, state, init };
-}
+  return { api, state, init: initModule };
+};

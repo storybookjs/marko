@@ -16,7 +16,14 @@ const GQL: FunctionComponent<GQLProps> = ({ active }) => {
     <Consumer>
       {({ api, state }: Combo) => {
         const story = api.getData(state.storyId);
-        const parameters = story ? api.getParameters(story.id, PARAM_KEY) : null;
+        const parameters = story
+          ? api.getCurrentParameter<{
+              query: string;
+              variables: Record<string, any>;
+              url: string;
+              fetcher: ReturnType<typeof getDefaultFetcher>;
+            }>(PARAM_KEY)
+          : null;
 
         if (parameters) {
           const query = reIndentQuery(parameters.query);

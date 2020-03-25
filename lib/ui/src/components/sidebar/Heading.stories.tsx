@@ -1,21 +1,20 @@
 import React from 'react';
-import { themes, ThemeProvider, convert } from '@storybook/theming';
+import { themes, ThemeProvider, ensure } from '@storybook/theming';
 import { action } from '@storybook/addon-actions';
 
-import Heading from './SidebarHeading';
+import { Heading } from './Heading';
 
 const { light } = themes;
-const theme = convert(light);
+const theme = ensure(light);
 
 export default {
   component: Heading,
-  title: 'UI/Sidebar/SidebarHeading',
+  title: 'UI/Sidebar/Heading',
   decorators: [
     (storyFn: any) => (
       <div
         style={{
-          width: '240px',
-          margin: '1rem',
+          maxWidth: '240px',
         }}
       >
         {storyFn()}
@@ -23,6 +22,9 @@ export default {
     ),
   ],
   excludeStories: /.*Data$/,
+  parameters: {
+    layout: 'fullscreen',
+  },
 };
 
 const menuItems = [

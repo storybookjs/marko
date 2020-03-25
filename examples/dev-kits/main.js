@@ -1,6 +1,14 @@
 module.exports = {
   stories: ['./stories/*.*'],
-  webpack: async (config, { configType }) => ({
+  refs: {
+    ember: {
+      id: 'ember',
+      title: 'Ember',
+      url: 'https://deploy-preview-9210--storybookjs.netlify.com/ember-cli',
+    },
+    cra: 'https://deploy-preview-9210--storybookjs.netlify.com/cra-ts-kitchen-sink',
+  },
+  webpack: async config => ({
     ...config,
     module: {
       ...config.module,

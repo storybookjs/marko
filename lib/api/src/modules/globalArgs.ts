@@ -1,5 +1,5 @@
 import { UPDATE_GLOBAL_ARGS, GLOBAL_ARGS_UPDATED } from '@storybook/core-events';
-import { Args, Module } from '../index';
+import { Args, ModuleFn } from '../index';
 
 export interface SubState {
   globalArgs: Args;
@@ -9,13 +9,11 @@ export interface SubAPI {
   updateGlobalArgs: (newGlobalArgs: Args) => void;
 }
 
-const initGlobalArgsApi = ({ store, fullAPI }: Module) => {
-  const updateGlobalArgs = (newGlobalArgs: Args) => {
-    fullAPI.emit(UPDATE_GLOBAL_ARGS, newGlobalArgs);
-  };
-
+export const init: ModuleFn = ({ store, fullAPI }) => {
   const api: SubAPI = {
-    updateGlobalArgs,
+    updateGlobalArgs(newGlobalArgs) {
+      fullAPI.emit(UPDATE_GLOBAL_ARGS, newGlobalArgs);
+    },
   };
 
   const state: SubState = {
@@ -23,15 +21,13 @@ const initGlobalArgsApi = ({ store, fullAPI }: Module) => {
     globalArgs: {},
   };
 
-  const init = () => {
+  const initModule = () => {
     fullAPI.on(GLOBAL_ARGS_UPDATED, (globalArgs: Args) => store.setState({ globalArgs }));
   };
 
   return {
     api,
     state,
-    init,
+    init: initModule,
   };
 };
-
-export default initGlobalArgsApi;
