@@ -390,11 +390,6 @@ export function useAddonState<S>(addonId: string, defaultState?: S) {
   return useSharedState<S>(addonId, defaultState);
 }
 
-export function useStoryState<S>(defaultState?: S) {
-  const { storyId } = useStorybookState();
-  return useSharedState<S>(`story-state-${storyId}`, defaultState);
-}
-
 export function useArgs(): [Args, (newArgs: Args) => void] {
   const {
     api: { getCurrentStoryData, updateStoryArgs },

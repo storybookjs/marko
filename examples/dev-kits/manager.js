@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { Button } from '@storybook/react/demo';
 import { addons } from '@storybook/addons';
-import { useAddonState, useStoryState, useGlobalArgs } from '@storybook/api';
+import { useAddonState, useGlobalArgs } from '@storybook/api';
 import { themes } from '@storybook/theming';
 import { AddonPanel } from '@storybook/components';
 
@@ -22,7 +22,6 @@ addons.setConfig({
 const StatePanel = ({ active, key }) => {
   const [managerState, setManagerState] = useAddonState('manager', 10);
   const [previewState, setPreviewState] = useAddonState('preview');
-  const [storyState, setstoryState] = useStoryState(10);
   return (
     <AddonPanel key={key} active={active}>
       <div>
@@ -37,13 +36,6 @@ const StatePanel = ({ active, key }) => {
         <br />
         <Button onClick={() => previewState && setPreviewState(previewState - 1)}>decrement</Button>
         <Button onClick={() => previewState && setPreviewState(previewState + 1)}>increment</Button>
-      </div>
-      <br />
-      <div>
-        Story counter: {storyState}
-        <br />
-        <Button onClick={() => storyState && setstoryState(storyState - 1)}>decrement</Button>
-        <Button onClick={() => storyState && setstoryState(storyState + 1)}>increment</Button>
       </div>
     </AddonPanel>
   );
