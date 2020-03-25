@@ -24,6 +24,14 @@ const Description = styled.div(({ theme }) => ({
     p: {
       margin: '0 0 10px 0',
     },
+
+    a: {
+      textDecoration: 'underline',
+
+      '&:hover': {
+        textDecoration: 'none',
+      },
+    },
   },
 
   code: codeCommon({ theme }),
