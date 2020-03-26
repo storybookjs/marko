@@ -113,7 +113,6 @@ describe('makeDecorator', () => {
       wrapper,
       name: 'test',
       parameterName: 'test',
-      allowDeprecatedUsage: false,
     });
     const options = 'test-val';
     const story = jest.fn();

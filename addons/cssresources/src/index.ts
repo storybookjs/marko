@@ -65,7 +65,6 @@ export const withCssResources = makeDecorator({
   name: 'withCssResources',
   parameterName: PARAM_KEY,
   skipIfNoParametersOrOptions: true,
-  allowDeprecatedUsage: false,
 
   wrapper: (getStory, context, { options, parameters }) => {
     const storyOptions = parameters || options;

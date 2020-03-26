@@ -5,7 +5,6 @@ type MakeDecoratorResult = (...args: any) => any;
 interface MakeDecoratorOptions {
   name: string;
   parameterName: string;
-  allowDeprecatedUsage?: boolean;
   skipIfNoParametersOrOptions?: boolean;
   wrapper: StoryWrapper;
 }
@@ -15,7 +14,6 @@ export const makeDecorator = ({
   parameterName,
   wrapper,
   skipIfNoParametersOrOptions = false,
-  allowDeprecatedUsage = false,
 }: MakeDecoratorOptions): MakeDecoratorResult => {
   const decorator: any = (options: object) => (getStory: StoryGetter, context: StoryContext) => {
     const parameters = context.parameters && context.parameters[parameterName];

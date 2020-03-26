@@ -32,7 +32,6 @@ export const createAddonDecorator: CreateAddonDecorator = render => {
     name: ID,
     parameterName: PARAM,
     skipIfNoParametersOrOptions: true,
-    allowDeprecatedUsage: false,
     wrapper,
   });
 };
