@@ -1,6 +1,6 @@
 {
   "name": "@storybook/ui",
-  "version": "6.0.0-alpha.28",
+  "version": "6.0.0-alpha.29",
   "description": "Core Storybook UI",
   "keywords": [
     "storybook"
@@ -29,14 +29,14 @@
   },
   "dependencies": {
     "@emotion/core": "^10.0.20",
-    "@storybook/addons": "6.0.0-alpha.28",
-    "@storybook/api": "6.0.0-alpha.28",
-    "@storybook/channels": "6.0.0-alpha.28",
-    "@storybook/client-logger": "6.0.0-alpha.28",
-    "@storybook/components": "6.0.0-alpha.28",
-    "@storybook/core-events": "6.0.0-alpha.28",
-    "@storybook/router": "6.0.0-alpha.28",
-    "@storybook/theming": "6.0.0-alpha.28",
+    "@storybook/addons": "6.0.0-alpha.29",
+    "@storybook/api": "6.0.0-alpha.29",
+    "@storybook/channels": "6.0.0-alpha.29",
+    "@storybook/client-logger": "6.0.0-alpha.29",
+    "@storybook/components": "6.0.0-alpha.29",
+    "@storybook/core-events": "6.0.0-alpha.29",
+    "@storybook/router": "6.0.0-alpha.29",
+    "@storybook/theming": "6.0.0-alpha.29",
     "@types/markdown-to-jsx": "^6.9.1",
     "@types/rfdc": "^1.1.0",
     "copy-to-clipboard": "^3.0.8",
@@ -67,9 +67,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
-    "@storybook/addon-actions": "6.0.0-alpha.28",
-    "@storybook/addon-knobs": "6.0.0-alpha.28",
-    "@storybook/react": "6.0.0-alpha.28",
+    "@storybook/addon-actions": "6.0.0-alpha.29",
+    "@storybook/addon-knobs": "6.0.0-alpha.29",
+    "@storybook/react": "6.0.0-alpha.29",
     "@testing-library/react": "^9.2.0",
     "babel-loader": "^8.0.6",
     "corejs-upgrade-webpack-plugin": "^3.0.1",
