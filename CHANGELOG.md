@@ -1,3 +1,24 @@
+## 6.0.0-alpha.29 (March 26, 2020)
+
+### Features
+
+- Core: Composition - load remote storybooks ([#9210](https://github.com/storybookjs/storybook/pull/9210))
+- CLI: extract-storybook bin ([#10146](https://github.com/storybookjs/storybook/pull/10146))
+
+### Bug Fixes
+
+- Addon-docs: Ensure visibility of links within prop descriptions ([#10210](https://github.com/storybookjs/storybook/pull/10210))
+
+### Maintenance
+
+- Core: Remove useStoryState ([#10187](https://github.com/storybookjs/storybook/pull/10187))
+- Addon-jest: Title case panel name ([#10161](https://github.com/storybookjs/storybook/pull/10161))
+
+### Dependency Upgrades
+
+- Bump semver from 6.3.0 to 7.1.3 ([#9864](https://github.com/storybookjs/storybook/pull/9864))
+- Bump @types/jest from 25.1.3 to 25.1.4 ([#10133](https://github.com/storybookjs/storybook/pull/10133))
+
 ## 6.0.0-alpha.28 (March 23, 2020)
 
 ### Features
