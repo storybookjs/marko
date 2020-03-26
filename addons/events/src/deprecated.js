@@ -1,7 +1,6 @@
 // TODO remove in 6.0
 import addons from '@storybook/addons';
 import CoreEvents from '@storybook/core-events';
-import deprecate from 'util-deprecate';
 
 import { EVENTS } from './constants';
 
@@ -30,8 +29,3 @@ const addEvents = ({ emit, events }) => {
   currentEmit = emit;
   addons.getChannel().emit(CoreEvents.REGISTER_SUBSCRIPTION, subscription);
 };
-
-export const WithEvents = deprecate(({ children, ...options }) => {
-  addEvents(options);
-  return children;
-}, `<WithEvents> usage is deprecated, use .addDecorator(withEvents({emit, events})) instead`);
