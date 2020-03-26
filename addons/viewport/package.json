@@ -39,11 +39,7 @@
     "global": "^4.3.2",
     "memoizerific": "^1.11.3",
     "prop-types": "^15.7.2",
-    "regenerator-runtime": "^0.13.3",
-    "util-deprecate": "^1.0.2"
-  },
-  "devDependencies": {
-    "@types/util-deprecate": "^1.0.0"
+    "regenerator-runtime": "^0.13.3"
   },
   "peerDependencies": {
     "react": "*",
