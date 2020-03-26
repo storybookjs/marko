@@ -37,17 +37,3 @@ All.story = {
     ),
   ],
 };
-
-export const Deprecated = () => <p>Story</p>;
-Deprecated.story = {
-  parameters: {
-    decorators: [
-      s => (
-        <>
-          <p>Deprecated Local Decorator</p>
-          {s()}
-        </>
-      ),
-    ],
-  },
-};
