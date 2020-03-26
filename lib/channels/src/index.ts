@@ -13,8 +13,6 @@ export interface ChannelEvent {
 
 export interface Listener {
   (...args: any[]): void;
-
-  ignorePeer?: boolean;
 }
 
 interface EventsKeyValue {
@@ -62,9 +60,7 @@ export class Channel {
   }
 
   addPeerListener(eventName: string, listener: Listener) {
-    const peerListener = listener;
-    peerListener.ignorePeer = true;
-    this.addListener(eventName, peerListener);
+    this.addListener(eventName, listener);
   }
 
   emit(eventName: string, ...args: any) {
@@ -75,10 +71,10 @@ export class Channel {
     }
 
     const handler = () => {
+      this.handleEvent(event);
       if (this.transport) {
         this.transport.send(event, options);
       }
-      this.handleEvent(event, true);
     };
 
     if (this.isAsync) {
@@ -135,10 +131,13 @@ export class Channel {
     this.removeListener(eventName, listener);
   }
 
-  private handleEvent(event: ChannelEvent, isPeer = false) {
+  private handleEvent(event: ChannelEvent) {
     const listeners = this.listeners(event.type);
-    if (listeners && (isPeer || event.from !== this.sender)) {
-      listeners.forEach(fn => !(isPeer && fn.ignorePeer) && fn.apply(event, event.args));
+    // console.log(this.page, 'handle', event.type, listeners);
+    if (listeners && listeners.length) {
+      listeners.forEach(fn => {
+        fn.apply(event, event.args);
+      });
     }
     this.data[event.type] = event.args;
   }
