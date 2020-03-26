@@ -1,4 +1,4 @@
-import addons, { Parameters, StoryFn } from '@storybook/addons';
+import addons, { Parameters } from '@storybook/addons';
 import { normalize, sep } from 'upath';
 import { ADD_TESTS } from './shared';
 
