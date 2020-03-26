@@ -1,4 +1,3 @@
-import deprecate from 'util-deprecate';
 import { StoryWrapper, StoryGetter, StoryContext } from './types';
 
 type MakeDecoratorResult = (...args: any) => any;
@@ -45,16 +44,6 @@ export const makeDecorator = ({
       // Used as [.]addDecorator(decorator(options))
       if (innerArgs.length > 1) {
         return decorator(...args)(...innerArgs);
-      }
-
-      if (allowDeprecatedUsage) {
-        // Used to wrap a story directly .add('story', decorator(options)(() => <Story />))
-        //   This is now deprecated:
-        return deprecate(
-          (context: any) => decorator(...args)(innerArgs[0], context),
-          `Passing stories directly into ${name}() is deprecated,
-          instead use addDecorator(${name}) and pass options with the '${parameterName}' parameter`
-        );
       }
 
       throw new Error(
