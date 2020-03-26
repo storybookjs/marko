@@ -255,28 +255,6 @@ describe('core.preview.loadCsf', () => {
     });
   });
 
-  it('allows passing decorators on parameters (deprecated)', () => {
-    const { configure, clientApi } = makeMocks();
-
-    const decorator = jest.fn();
-    const input = {
-      a: {
-        default: {
-          title: 'a',
-        },
-        x: Object.assign(() => 0, { story: { parameters: { decorators: [decorator] } } }),
-      },
-    };
-    configure(makeRequireContext(input), mod, 'react');
-
-    const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
-    const aApi = mockedStoriesOf.mock.results[0].value;
-    expect(aApi.add).toHaveBeenCalledWith('X', input.a.x, {
-      decorators: [decorator],
-      __id: 'a--x',
-    });
-  });
-
   it('handles HMR correctly when adding stories', () => {
     const { configure, clientApi, storyStore } = makeMocks();
 
