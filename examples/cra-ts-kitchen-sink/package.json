@@ -38,7 +38,6 @@
     "@storybook/addon-actions": "6.0.0-alpha.29",
     "@storybook/addon-knobs": "6.0.0-alpha.29",
     "@storybook/addon-links": "6.0.0-alpha.29",
-    "@storybook/addon-options": "6.0.0-alpha.29",
     "@storybook/addons": "6.0.0-alpha.29",
     "@storybook/preset-create-react-app": "^1.5.0",
     "@storybook/react": "6.0.0-alpha.29",
