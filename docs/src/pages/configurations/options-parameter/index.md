@@ -60,17 +60,17 @@ addons.setConfig({
    */
   theme: undefined,
 
-  /**	
-   * id to select an addon panel	
-   * @type {String}	
-   */	
+  /**
+   * id to select an addon panel
+   * @type {String}
+   */
   selectedPanel: undefined,
 
-  /**	
+  /**
    * Select the default active tab on Mobile.
    * 'sidebar' | 'canvas' | 'addons'
    * @type {('sidebar'|'canvas'|'addons')}
-   */	
+   */
   initialActive: 'sidebar',
 });
 ```
@@ -126,9 +126,9 @@ addParameters({
 });
 ```
 
-To sort your stories alphabetically, set `method` to `'alphabetical'` and optionally set the `locales` string. To sort your stories using a custom list, use the `sort` array; stories that don't match an item in the `sort` list will appear after the items in the list. 2nd
+To sort your stories alphabetically, set `method` to `'alphabetical'` and optionally set the `locales` string. To sort your stories using a custom list, use the `order` array; stories that don't match an item in the `order` list will appear after the items in the list.
 
-The `sort` array can accept a nested array in order to sort 2nd-level story kinds. For example:
+The `order` array can accept a nested array in order to sort 2nd-level story kinds. For example:
 
 ```js
 import { addParameters, configure } from '@storybook/react';
@@ -136,16 +136,7 @@ import { addParameters, configure } from '@storybook/react';
 addParameters({
   options: {
     storySort: {
-      order: [
-        'Intro',
-        'Pages',
-        [
-          'Home',
-          'Login',
-          'Admin',
-        ],
-        'Components',
-      ],
+      order: ['Intro', 'Pages', ['Home', 'Login', 'Admin'], 'Components'],
     },
   },
 });
