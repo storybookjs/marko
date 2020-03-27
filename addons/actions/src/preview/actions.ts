@@ -4,9 +4,13 @@ import { config } from './configureActions';
 
 export const actions: ActionsFunction = (...args: any[]) => {
   let options: ActionOptions = config;
-  const names = args;
+  let names = args;
+  // args argument can be a single argument as an array
+  if (names.length === 1 && Array.isArray(names[0])) {
+    [names] = names;
+  }
   // last argument can be options
-  if (names.length !== 1 && typeof args[args.length - 1] !== 'string') {
+  if (names.length !== 1 && typeof names[names.length - 1] !== 'string') {
     options = {
       ...config,
       ...names.pop(),
