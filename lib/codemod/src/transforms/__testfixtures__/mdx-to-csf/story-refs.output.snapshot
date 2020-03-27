@@ -10,7 +10,7 @@ export default {
   component: Button,
 
   decorators: [
-    storyFn => (
+    (storyFn) => (
       <div
         style={{
           backgroundColor: 'yellow',

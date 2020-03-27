@@ -9,7 +9,7 @@ export let EnumWithExtraProps;
   EnumWithExtraProps[\\"key2\\"] = \\"key2\\";
 })(EnumWithExtraProps || (EnumWithExtraProps = {}));
 
-export const component = () => React.createElement(\\"div\\", null, \\"hello\\");
+export const component = () => /*#__PURE__*/React.createElement(\\"div\\", null, \\"hello\\");
 component.__docgenInfo = {
   \\"description\\": \\"\\",
   \\"methods\\": [],

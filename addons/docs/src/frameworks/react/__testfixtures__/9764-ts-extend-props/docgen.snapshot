@@ -3,7 +3,7 @@
 exports[`react component properties 9764-ts-extend-props 1`] = `
 "import React from 'react';
 
-const Radio = props => React.createElement(React.Fragment, null, JSON.stringify(props));
+const Radio = props => /*#__PURE__*/React.createElement(React.Fragment, null, JSON.stringify(props));
 
 export const component = Radio;
 Radio.__docgenInfo = {

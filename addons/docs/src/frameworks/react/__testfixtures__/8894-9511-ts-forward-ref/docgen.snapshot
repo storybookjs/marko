@@ -6,7 +6,9 @@ const Button = forwardRef(({
   disabled = false,
   variant = 'small',
   children
-}, ref) => // eslint-disable-next-line react/button-has-type
+}, ref) =>
+/*#__PURE__*/
+// eslint-disable-next-line react/button-has-type
 React.createElement(\\"button\\", {
   disabled: disabled,
   ref: ref

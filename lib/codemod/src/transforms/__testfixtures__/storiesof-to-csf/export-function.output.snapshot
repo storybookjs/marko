@@ -11,7 +11,7 @@ export function someHelper() {
 
 export default {
   title: 'ComponentItem',
-  decorators: [storyFn => <div style={{ margin: '1rem' }}>{storyFn()}</div>],
+  decorators: [(storyFn) => <div style={{ margin: '1rem' }}>{storyFn()}</div>],
   excludeStories: ['someHelper'],
 };
 
