@@ -97,26 +97,6 @@ export const first = () => <Button {...eventsFromNames}>Hello World!</Button>;
 export const second = () => <Button {...eventsFromObject}>Hello World!</Button>;
 ```
 
-## Action Decorators
-
-If you wish to process action data before sending them over to the logger, you can do it with action decorators.
-
-`decorate` takes an array of decorator functions. Each decorator function is passed an array of arguments, and should return a new arguments array to use. `decorate` returns a object with two functions: `action` and `actions`, that act like the above, except they log the modified arguments instead of the original arguments.
-
-```js
-import { decorate } from '@storybook/addon-actions';
-import Button from './button';
-
-export default {
-  title: 'Button',
-  component: Button,
-};
-
-const firstArg = decorate([args => args.slice(0, 1)]);
-
-export const first = () => <Button onClick={firstArg.action('button-click')}>Hello World!</Button>;
-```
-
 ## Configuration
 
 Arguments which are passed to the action call will have to be serialized while be "transferred" over the channel.
@@ -153,17 +133,20 @@ action('my-action', {
 | `clearOnStoryChange` | Boolean | Flag whether to clear the action logger when switching away from the current story. | `true`  |
 | `limit`              | Number  | Limits the number of items logged in the action logger                              | `50`    |
 
-## withActions decorator
+## Declarative Configuration via Parameters
 
-You can define action handles in a declarative way using `withActions` decorators. It accepts the same arguments as [`actions`](#multiple-actions). Keys have `'<eventName> <selector>'` format, e.g. `'click .btn'`. Selector is optional. This can be used with any framework but is especially useful for `@storybook/html`.
+You can define action handles in a declarative way using parameters. They accepts the same arguments as [`actions`](#multiple-actions)
+Keys have `'<eventName> <selector>'` format, e.g. `'click .btn'`. Selector is optional. This can be used with any framework but is especially useful for `@storybook/html`.
 
 ```js
-import { withActions } from '@storybook/addon-actions';
 import Button from './button';
 
 export default {
   title: 'Button',
-  decorators: [withActions('mouseover', 'click .btn')],
+  parameters: {
+    actions: {
+      handles: ['mouseover', 'click .btn']
+  }
 };
 
 export const first = () => <Button className="btn">Hello World!</Button>;
