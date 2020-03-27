@@ -73,12 +73,9 @@ const getConvertedText: (msg: string) => MsgElement[] = (msg: string) => {
 
   if (!msg) return elementArray;
 
-  const splitText = msg
-    .split(/\[2m/)
-    .join('')
-    .split(/\[22m/);
+  const splitText = msg.split(/\[2m/).join('').split(/\[22m/);
 
-  splitText.forEach(element => {
+  splitText.forEach((element) => {
     if (element && element.trim()) {
       if (
         element.indexOf(failStartToken) > -1 &&
@@ -110,12 +107,7 @@ const getTestDetail: (msg: string) => TestDetail = (msg: string) => {
     const current = lines[index];
     const next = lines[index + 1];
 
-    if (
-      current
-        .trim()
-        .toLowerCase()
-        .indexOf(stackTraceStartToken) === 0
-    ) {
+    if (current.trim().toLowerCase().indexOf(stackTraceStartToken) === 0) {
       testDetail.stackTrace += `${current.trim()}\n`;
     } else if (current.trim().indexOf(titleEndToken) > -1) {
       let title;
@@ -144,7 +136,7 @@ interface MessageProps {
   msg: string;
 }
 
-export const Message: FunctionComponent<MessageProps> = props => {
+export const Message: FunctionComponent<MessageProps> = (props) => {
   const { msg } = props;
 
   const detail: TestDetail = getTestDetail(msg);

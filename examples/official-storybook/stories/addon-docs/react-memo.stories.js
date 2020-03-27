@@ -1,7 +1,7 @@
 import React from 'react';
 import { DocgenButton } from '../../components/DocgenButton';
 
-const ButtonWithMemo = React.memo(props => <DocgenButton {...props} />);
+const ButtonWithMemo = React.memo((props) => <DocgenButton {...props} />);
 
 export default {
   title: 'Addons|Docs/ButtonWithMemo',

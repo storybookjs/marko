@@ -28,7 +28,7 @@ export const ToolBarControl: ToolBarControl = ({
     // validate the integrity of the selected name
     ([...paramNames, options.cancelable && OPT_OUT].includes(selected) && selected) ||
     // fallback to default
-    (params.find(param => !!param.default) || { name: null }).name ||
+    (params.find((param) => !!param.default) || { name: null }).name ||
     // fallback to the first
     params[0].name;
   const list = options.cancelable ? [OPT_OUT, ...paramNames] : paramNames;

@@ -13,14 +13,14 @@ const META_REGEX = /^<Meta[\s>]/;
 const RESERVED = /^(?:do|if|in|for|let|new|try|var|case|else|enum|eval|false|null|this|true|void|with|await|break|catch|class|const|super|throw|while|yield|delete|export|import|public|return|static|switch|typeof|default|extends|finally|package|private|continue|debugger|function|arguments|interface|protected|implements|instanceof)$/;
 
 function getAttr(elt, what) {
-  const attr = elt.attributes.find(n => n.name.name === what);
+  const attr = elt.attributes.find((n) => n.name.name === what);
   return attr && attr.value;
 }
 
-const isReserved = name => RESERVED.exec(name);
-const startsWithNumber = name => /^\d/.exec(name);
+const isReserved = (name) => RESERVED.exec(name);
+const startsWithNumber = (name) => /^\d/.exec(name);
 
-const sanitizeName = name => {
+const sanitizeName = (name) => {
   let key = camelCase(name);
   if (startsWithNumber(key)) {
     key = `_${key}`;
@@ -52,7 +52,7 @@ function genStoryExport(ast, context) {
   const statements = [];
   const storyKey = getStoryKey(storyName, context.counter);
 
-  let body = ast.children.find(n => n.type !== 'JSXText');
+  let body = ast.children.find((n) => n.type !== 'JSXText');
   let storyCode = null;
 
   if (!body) {
@@ -221,18 +221,18 @@ function stringifyMeta(meta) {
   return result;
 }
 
-const hasStoryChild = node => {
+const hasStoryChild = (node) => {
   if (node.openingElement && node.openingElement.name.name === 'Story') {
     return node;
   }
   if (node.children && node.children.length > 0) {
-    return node.children.find(child => hasStoryChild(child));
+    return node.children.find((child) => hasStoryChild(child));
   }
   return null;
 };
 
 function extractExports(node, options) {
-  node.children.forEach(child => {
+  node.children.forEach((child) => {
     if (child.type === 'jsx') {
       try {
         const ast = parser.parseExpression(child.value, { plugins: ['jsx'] });
@@ -254,7 +254,7 @@ function extractExports(node, options) {
               value: encodeURI(
                 ast.children
                   .map(
-                    el =>
+                    (el) =>
                       generate(el, {
                         quotes: 'double',
                       }).code
@@ -292,7 +292,7 @@ function extractExports(node, options) {
     counter: 0,
     storyNameToKey: {},
   };
-  node.children.forEach(n => {
+  node.children.forEach((n) => {
     const exports = getExports(n, context, options);
     if (exports) {
       const { stories, meta } = exports;
@@ -336,7 +336,7 @@ function extractExports(node, options) {
 
 function createCompiler(mdxOptions) {
   return function compiler(options = {}) {
-    this.Compiler = tree => extractExports(tree, options, mdxOptions);
+    this.Compiler = (tree) => extractExports(tree, options, mdxOptions);
   };
 }
 

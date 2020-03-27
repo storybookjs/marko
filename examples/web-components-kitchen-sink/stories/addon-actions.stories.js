@@ -1,9 +1,6 @@
 import { html } from 'lit-html';
 
-const buttonStory = () => () =>
-  html`
-    <button type="button">Hello World</button>
-  `;
+const buttonStory = () => () => html` <button type="button">Hello World</button> `;
 
 export default {
   title: 'Addons/Actions',

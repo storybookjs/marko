@@ -30,7 +30,7 @@ const NotificationList: FunctionComponent<{
 }> = ({ notifications, placement = undefined }) => {
   return (
     <List placement={placement}>
-      {notifications.map(notification => (
+      {notifications.map((notification) => (
         <NotificationItem key={notification.id} notification={notification} />
       ))}
     </List>

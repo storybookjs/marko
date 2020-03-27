@@ -223,7 +223,7 @@ export const transformStoriesRawToStoriesHash = (
         return soFar.concat([result]);
       }, [] as GroupsList);
 
-    const paths = [...rootAndGroups.map(g => g.id), item.id];
+    const paths = [...rootAndGroups.map((g) => g.id), item.id];
 
     // Ok, now let's add everything to the store
     rootAndGroups.forEach((group, index) => {
@@ -254,9 +254,9 @@ export const transformStoriesRawToStoriesHash = (
       acc[item.id] = item;
       const { children } = item;
       if (children) {
-        const childNodes = children.map(id => storiesHashOutOfOrder[id]) as (Story | Group)[];
-        acc[item.id].isComponent = childNodes.every(childNode => childNode.isLeaf);
-        childNodes.forEach(childNode => addItem(acc, childNode));
+        const childNodes = children.map((id) => storiesHashOutOfOrder[id]) as (Story | Group)[];
+        acc[item.id].isComponent = childNodes.every((childNode) => childNode.isLeaf);
+        childNodes.forEach((childNode) => addItem(acc, childNode));
       }
     }
     return acc;

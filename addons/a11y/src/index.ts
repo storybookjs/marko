@@ -40,7 +40,7 @@ const run = (element: ElementContext, config: Spec, options: RunOptions) => {
           } as RunOptions) // cast to RunOptions is necessary because axe types are not up to date
       )
       .then(report)
-      .catch(error => addons.getChannel().emit(EVENTS.ERROR, String(error)));
+      .catch((error) => addons.getChannel().emit(EVENTS.ERROR, String(error)));
   });
 };
 

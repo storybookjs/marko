@@ -17,7 +17,7 @@ export const getDocsStories = (context: DocsContextProps): StoryData[] => {
 const titleCase = (str: string): string =>
   str
     .split('-')
-    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join('');
 
 export const getComponentName = (component: Component): string => {

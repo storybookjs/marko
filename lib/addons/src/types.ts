@@ -13,7 +13,7 @@ export enum types {
 export type Types = types | string;
 
 export function isSupportedType(type: Types): boolean {
-  return !!Object.values(types).find(typeVal => typeVal === type);
+  return !!Object.values(types).find((typeVal) => typeVal === type);
 }
 
 export type StoryId = string;

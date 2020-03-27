@@ -64,7 +64,7 @@ export const AllKnobs = () => {
             <p>${stockMessage}</p>
             <p>Also, I have:</p>
             <ul>
-              ${items.map(item => `<li key="${item}">${item}</li>`).join('')}
+              ${items.map((item) => `<li key="${item}">${item}</li>`).join('')}
             </ul>
             <p>${salutation}</p>
           </div></WhatIGot>

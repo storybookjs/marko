@@ -11,17 +11,17 @@ const isDirectory = (source: string) => fs.lstatSync(source).isDirectory();
 function getLoaders(): Loader[] {
   return fs
     .readdirSync(__dirname)
-    .map(name => path.join(__dirname, name))
+    .map((name) => path.join(__dirname, name))
     .filter(isDirectory)
-    .map(framework => path.join(framework, loaderScriptName))
+    .map((framework) => path.join(framework, loaderScriptName))
     .filter(fs.existsSync)
-    .map(loader => require(loader).default);
+    .map((loader) => require(loader).default);
 }
 
 function loadFramework(options: StoryshotsOptions) {
   const loaders = getLoaders();
 
-  const loader = loaders.find(frameworkLoader => frameworkLoader.test(options));
+  const loader = loaders.find((frameworkLoader) => frameworkLoader.test(options));
 
   if (!loader) {
     throw new Error(

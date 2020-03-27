@@ -25,7 +25,7 @@ function getFrameworkPreset(frameworkPresetFile: string): Preset {
 // appends any framework-specific extensions as needed
 function withFrameworkExtensions(basePreset: Preset, mapper: FrameworkPresetMapper): Preset {
   const extended: Preset = {};
-  PRESET_METHODS.forEach(method => {
+  PRESET_METHODS.forEach((method) => {
     extended[method] = (existing: any, options: any) => {
       let updated = existing;
 
@@ -47,7 +47,7 @@ function withFrameworkExtensions(basePreset: Preset, mapper: FrameworkPresetMapp
   return extended;
 }
 
-module.exports = withFrameworkExtensions(commonPreset, framework => {
+module.exports = withFrameworkExtensions(commonPreset, (framework) => {
   try {
     return require.resolve(`./frameworks/${framework}/preset`) as string;
   } catch (err) {

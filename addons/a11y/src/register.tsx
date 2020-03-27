@@ -14,7 +14,7 @@ const Hidden = styled.div(() => ({
   },
 }));
 
-const PreviewWrapper: FunctionComponent<{}> = p => (
+const PreviewWrapper: FunctionComponent<{}> = (p) => (
   <Fragment>
     {p.children}
     <Hidden>
@@ -82,7 +82,7 @@ const PreviewWrapper: FunctionComponent<{}> = p => (
   </Fragment>
 );
 
-addons.register(ADDON_ID, api => {
+addons.register(ADDON_ID, (api) => {
   addons.add(PANEL_ID, {
     title: '',
     type: types.TOOL,

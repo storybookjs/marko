@@ -75,10 +75,10 @@ export default {
 export const Logger = () => {
   const [events, setEvents] = useState([]);
   useEffect(() => {
-    const eventHandlers = Object.values(TEST_EVENTS).map(name => ({
+    const eventHandlers = Object.values(TEST_EVENTS).map((name) => ({
       name,
-      handler: payload => {
-        setEvents(prevEvents => [...prevEvents, { name, payload }]);
+      handler: (payload) => {
+        setEvents((prevEvents) => [...prevEvents, { name, payload }]);
       },
     }));
     eventHandlers.forEach(({ name, handler }) => emitter.on(name, handler));

@@ -68,7 +68,7 @@ const getColorList = (active: string | null, set: (i: string | null) => void): L
         },
       ]
     : []),
-  ...baseList.map(i => ({
+  ...baseList.map((i) => ({
     id: i,
     title: i.charAt(0).toUpperCase() + i.slice(1),
     onClick: () => {
@@ -98,7 +98,7 @@ export const ColorBlindness: FunctionComponent = () => {
       placement="top"
       trigger="click"
       tooltip={({ onHide }) => {
-        const colorList = getColorList(active, i => {
+        const colorList = getColorList(active, (i) => {
           setActive(i);
           onHide();
         });

@@ -38,7 +38,7 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add('preview', {}, () => {
-  return cy.get(`#storybook-preview-iframe`).then({ timeout: 10000 }, iframe => {
+  return cy.get(`#storybook-preview-iframe`).then({ timeout: 10000 }, (iframe) => {
     const content = iframe[0].contentDocument;
     const element = content !== null ? content.documentElement : null;
 

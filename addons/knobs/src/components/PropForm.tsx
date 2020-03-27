@@ -47,7 +47,7 @@ export default class PropForm extends Component<PropFormProps> {
 
     return (
       <Form>
-        {knobs.map(knob => {
+        {knobs.map((knob) => {
           const changeHandler = this.makeChangeHandler(knob.name, knob.type);
           const InputType: ComponentType<any> = getKnobControl(knob.type) || InvalidType;
 

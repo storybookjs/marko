@@ -23,4 +23,4 @@ export const memorize: memorize = (fn, resolver) => {
  */
 type singleton = <T, U extends any[]>(fn: (...args: U) => T) => (...args: U) => T;
 
-export const singleton: singleton = fn => memorize(fn, () => 'singleton');
+export const singleton: singleton = (fn) => memorize(fn, () => 'singleton');

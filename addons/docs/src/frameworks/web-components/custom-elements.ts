@@ -32,7 +32,7 @@ interface Sections {
 }
 
 function mapData(data: TagItem[]) {
-  return data.map(item => ({
+  return data.map((item) => ({
     name: item.name,
     type: { summary: item.type },
     required: '',
@@ -50,7 +50,7 @@ export const extractPropsFromElements = (tagName: string, customElements: Custom
     return null;
   }
   const metaData = customElements.tags.find(
-    tag => tag.name.toUpperCase() === tagName.toUpperCase()
+    (tag) => tag.name.toUpperCase() === tagName.toUpperCase()
   );
   const sections: Sections = {};
   if (metaData.attributes) {
@@ -82,7 +82,7 @@ export const extractComponentDescription = (tagName: string) => {
     return null;
   }
   const metaData = customElements.tags.find(
-    tag => tag.name.toUpperCase() === tagName.toUpperCase()
+    (tag) => tag.name.toUpperCase() === tagName.toUpperCase()
   );
   return metaData && metaData.description;
 };

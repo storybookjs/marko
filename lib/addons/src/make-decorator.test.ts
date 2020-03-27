@@ -12,7 +12,7 @@ const defaultDecorateStory = (getStory: StoryGetter, decorators: DecoratorFn[]) 
     getStory
   );
 
-jest.mock('util-deprecate', () => jest.fn(fn => jest.fn((...a) => fn(...a))));
+jest.mock('util-deprecate', () => jest.fn((fn) => jest.fn((...a) => fn(...a))));
 
 const baseContext = {
   name: '',

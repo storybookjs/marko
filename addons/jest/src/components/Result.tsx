@@ -41,10 +41,7 @@ const Icon = styled<any, any>(Icons)(({ theme }) => ({
 }));
 
 const capitalizeFirstLetter = (text: string) => {
-  return text
-    .charAt(0)
-    .toUpperCase()
-    .concat(text.slice(1));
+  return text.charAt(0).toUpperCase().concat(text.slice(1));
 };
 
 interface ResultProps {

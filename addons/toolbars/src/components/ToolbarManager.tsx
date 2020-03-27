@@ -11,7 +11,7 @@ const normalize = (key: string, argType: ToolbarArgType) => ({
   description: argType.description || key,
   toolbar: {
     ...argType.toolbar,
-    items: argType.toolbar.items.map(item =>
+    items: argType.toolbar.items.map((item) =>
       typeof item === 'string' ? { value: item, title: item } : item
     ),
   },
@@ -22,13 +22,13 @@ const normalize = (key: string, argType: ToolbarArgType) => ({
  */
 export const ToolbarManager: FC = () => {
   const globalArgTypes = useGlobalArgTypes();
-  const keys = Object.keys(globalArgTypes).filter(key => !!globalArgTypes[key].toolbar);
+  const keys = Object.keys(globalArgTypes).filter((key) => !!globalArgTypes[key].toolbar);
   if (!keys.length) return null;
 
   return (
     <>
       <Separator />
-      {keys.map(key => {
+      {keys.map((key) => {
         const normalizedConfig = normalize(key, globalArgTypes[key] as ToolbarArgType);
         return <MenuToolbar key={key} id={key} {...normalizedConfig} />;
       })}

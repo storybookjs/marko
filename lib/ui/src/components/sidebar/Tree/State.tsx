@@ -110,7 +110,7 @@ export const useDataset = (dataset: DataSet = {}, filter: string, storyId: strin
   const topLevel = useMemo(
     () =>
       Object.values(filteredSet).filter(
-        i => (i.depth === 0 && !isRoot(i)) || (!isRoot(i) && isRoot(filteredSet[i.parent]))
+        (i) => (i.depth === 0 && !isRoot(i)) || (!isRoot(i) && isRoot(filteredSet[i.parent]))
       ),
     [filteredSet]
   );

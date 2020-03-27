@@ -22,7 +22,7 @@ storiesOf('Basics/Form/Field', module).add('field', () => (
 storiesOf('Basics/Form/Select', module)
   .add('sizes', () => (
     <Spaced>
-      {['auto', 'flex', '100%'].map(size => (
+      {['auto', 'flex', '100%'].map((size) => (
         <Flexed key={size} label={size}>
           <Select value="val2" onChange={action('onChange')} size={size}>
             <option value="val1">Value 1</option>
@@ -36,7 +36,7 @@ storiesOf('Basics/Form/Select', module)
   .add('validations', () => (
     <div>
       <Spaced>
-        {['error', 'warn', 'valid', null].map(valid => (
+        {['error', 'warn', 'valid', null].map((valid) => (
           <Field label={String(valid)}>
             <Select
               key={valid}
@@ -65,7 +65,7 @@ storiesOf('Basics/Form/Select', module)
 storiesOf('Basics/Form/Button', module)
   .add('sizes', () => (
     <Spaced>
-      {['auto', 'flex', '100%'].map(size => (
+      {['auto', 'flex', '100%'].map((size) => (
         <Flexed key={size} label={size}>
           <Button size={size}>click this button</Button>
         </Flexed>
@@ -74,7 +74,7 @@ storiesOf('Basics/Form/Button', module)
   ))
   .add('validations', () => (
     <Spaced>
-      {['error', 'warn', 'valid', null].map(valid => (
+      {['error', 'warn', 'valid', null].map((valid) => (
         <Flexed key={valid} label={String(valid)}>
           <Button size="100%" valid={valid}>
             click this button
@@ -87,7 +87,7 @@ storiesOf('Basics/Form/Button', module)
 storiesOf('Basics/Form/Textarea', module)
   .add('sizes', () => (
     <Spaced>
-      {['auto', 'flex', '100%'].map(size => (
+      {['auto', 'flex', '100%'].map((size) => (
         <Flexed key={size} label={size}>
           <Textarea defaultValue="textarea" size={size} />
         </Flexed>
@@ -96,7 +96,7 @@ storiesOf('Basics/Form/Textarea', module)
   ))
   .add('validations', () => (
     <Spaced>
-      {['error', 'warn', 'valid', null].map(valid => (
+      {['error', 'warn', 'valid', null].map((valid) => (
         <Flexed key={valid} label={String(valid)}>
           <Textarea defaultValue="textarea" size="100%" valid={valid} />
         </Flexed>
@@ -105,7 +105,7 @@ storiesOf('Basics/Form/Textarea', module)
   ))
   .add('alignment', () => (
     <Spaced>
-      {['end', 'center', 'start'].map(align => (
+      {['end', 'center', 'start'].map((align) => (
         <Flexed key={align} label={align}>
           <Textarea defaultValue="textarea" size="100%" align={align} />
         </Flexed>
@@ -114,7 +114,7 @@ storiesOf('Basics/Form/Textarea', module)
   ))
   .add('height', () => (
     <Spaced>
-      {[100, 200, undefined].map(height => (
+      {[100, 200, undefined].map((height) => (
         <Flexed key={(height || 'undefined').toString()} label={(height || 'undefined').toString()}>
           <Textarea
             defaultValue={[...new Array(650)].fill('textarea textvalue').join(' ')}
@@ -129,7 +129,7 @@ storiesOf('Basics/Form/Textarea', module)
 storiesOf('Basics/Form/Input', module)
   .add('sizes', () => (
     <Spaced>
-      {['auto', 'flex', '100%'].map(size => (
+      {['auto', 'flex', '100%'].map((size) => (
         <Flexed key={size} label={size}>
           <Input defaultValue="text" size={size} />
         </Flexed>
@@ -138,7 +138,7 @@ storiesOf('Basics/Form/Input', module)
   ))
   .add('validations', () => (
     <Spaced>
-      {['error', 'warn', 'valid', null].map(valid => (
+      {['error', 'warn', 'valid', null].map((valid) => (
         <Flexed key={valid} label={String(valid)}>
           <Input defaultValue="text" size="100%" valid={valid} />
         </Flexed>
@@ -147,7 +147,7 @@ storiesOf('Basics/Form/Input', module)
   ))
   .add('alignment', () => (
     <Spaced>
-      {['end', 'center', 'start'].map(align => (
+      {['end', 'center', 'start'].map((align) => (
         <Flexed key={align} label={align}>
           <Input defaultValue="text" size="100%" align={align} />
         </Flexed>

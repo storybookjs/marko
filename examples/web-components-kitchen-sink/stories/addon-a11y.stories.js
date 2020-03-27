@@ -10,15 +10,9 @@ export default {
   },
 };
 
-export const Default = () => html`
-  <button></button>
-`;
-export const Label = () => html`
-  <button>${text}</button>
-`;
-export const Disabled = () => html`
-  <button disabled>${text}</button>
-`;
+export const Default = () => html` <button></button> `;
+export const Label = () => html` <button>${text}</button> `;
+export const Disabled = () => html` <button disabled>${text}</button> `;
 export const Story4 = () => html`
   <button style="color: black; background-color: brown;">${text}</button>
 `;

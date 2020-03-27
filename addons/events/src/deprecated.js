@@ -8,7 +8,7 @@ import { EVENTS } from './constants';
 let prevEvents;
 let currentEmit;
 
-const onEmit = event => {
+const onEmit = (event) => {
   currentEmit(event.name, event.payload);
 };
 

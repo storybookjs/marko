@@ -45,7 +45,7 @@ export const extractComponentSectionObject = (docgenSection: any) => {
   const createPropDef = getPropDefFactory(typeSystem);
 
   return docgenPropsKeys
-    .map(propName => {
+    .map((propName) => {
       const docgenInfo = docgenSection[propName];
 
       return docgenInfo != null

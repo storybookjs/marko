@@ -98,7 +98,7 @@ customStoriesFilter.story = {
     docs: {
       page: () => (
         <>
-          <Stories slot={stories => stories} />
+          <Stories slot={(stories) => stories} />
         </>
       ),
     },
@@ -111,7 +111,7 @@ descriptionSlot.story = {
     docs: {
       page: () => (
         <>
-          <Description slot={description => `<b>${description}</b>`} />
+          <Description slot={(description) => `<b>${description}</b>`} />
         </>
       ),
     },
@@ -141,7 +141,7 @@ multipleComponents.story = {
           <Title />
           <Subtitle />
           <Description />
-          <Primary slot={stories => stories.find(story => story.story === 'Many Components')} />
+          <Primary slot={(stories) => stories.find((story) => story.story === 'Many Components')} />
           <Props />
         </>
       ),

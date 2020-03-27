@@ -37,7 +37,7 @@ const themeDecorator = (storyFn, { globalArgs: { theme } }) => {
 
 addDecorator(themeDecorator);
 
-addDecorator(storyFn => (
+addDecorator((storyFn) => (
   <ThemeProvider theme={convert(themes.light)}>
     <Global styles={createReset} />
     {storyFn()}

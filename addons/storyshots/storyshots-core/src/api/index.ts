@@ -14,7 +14,7 @@ const methods: TestMethod[] = ['beforeAll', 'beforeEach', 'afterEach', 'afterAll
 function callTestMethodGlobals(
   testMethod: { [key in TestMethod]?: Function & { timeout?: number } } & { [key in string]: any }
 ) {
-  methods.forEach(method => {
+  methods.forEach((method) => {
     if (typeof testMethod[method] === 'function') {
       global[method](testMethod[method], testMethod[method].timeout);
     }

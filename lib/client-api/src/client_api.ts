@@ -87,7 +87,7 @@ export default class ClientApi {
       typeof showRoots === 'undefined' &&
       this.store()
         .getStoryKinds()
-        .some(kind => kind.match(/\.|\|/))
+        .some((kind) => kind.match(/\.|\|/))
     ) {
       return {
         hierarchyRootSeparator: '|',
@@ -158,7 +158,7 @@ export default class ClientApi {
     };
 
     // apply addons
-    Object.keys(this._addons).forEach(name => {
+    Object.keys(this._addons).forEach((name) => {
       const addon = this._addons[name];
       api[name] = (...args: any[]) => {
         addon.apply(api, args);

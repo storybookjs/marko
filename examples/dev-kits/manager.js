@@ -61,12 +61,15 @@ const GlobalArgsPanel = ({ active, key }) => {
         <h2>Global Args</h2>
 
         <form
-          onSubmit={e => {
+          onSubmit={(e) => {
             e.preventDefault();
             updateGlobalArgs(JSON.parse(globalArgsInput));
           }}
         >
-          <textarea value={globalArgsInput} onChange={e => updateGlobalArgsInput(e.target.value)} />
+          <textarea
+            value={globalArgsInput}
+            onChange={(e) => updateGlobalArgsInput(e.target.value)}
+          />
           <br />
           <button type="submit">Change</button>
         </form>

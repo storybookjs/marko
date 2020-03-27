@@ -12,7 +12,7 @@ const findTestResults = (
   jestTestResults: { testResults: { name: string }[] },
   jestTestFilesExt: string
 ) =>
-  Object.values(testFiles).map(name => {
+  Object.values(testFiles).map((name) => {
     const fileName = `${sep}${name}${jestTestFilesExt}`;
 
     if (jestTestResults && jestTestResults.testResults) {
@@ -21,7 +21,7 @@ const findTestResults = (
       return {
         fileName,
         name,
-        result: jestTestResults.testResults.find(test =>
+        result: jestTestResults.testResults.find((test) =>
           Boolean(normalize(test.name).match(fileNamePattern))
         ),
       };

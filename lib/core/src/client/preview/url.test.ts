@@ -26,7 +26,7 @@ describe('url', () => {
       expect(pathToId('/story/story--id')).toEqual('story--id');
     });
     it('should error on invalid ids', () => {
-      [null, '', '/whatever/story/story--id'].forEach(path => {
+      [null, '', '/whatever/story/story--id'].forEach((path) => {
         expect(() => pathToId(path)).toThrow(/Invalid/);
       });
     });

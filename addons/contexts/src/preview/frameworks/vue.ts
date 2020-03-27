@@ -13,7 +13,7 @@ export const renderVue: Render<Vue.Component> = (contextNodes, propsMap, getStor
   return Vue.extend({
     name: ID,
     data: () => reactiveProps, // deepscan-disable-line
-    render: createElement =>
+    render: (createElement) =>
       getRendererFrom((Component, props, children) => {
         const { key, ref, style, classNames, ...rest } = props || Object();
         const contextData =

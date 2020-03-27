@@ -33,7 +33,7 @@ const fixtures = [
 
 const stories = storiesOf('Properties/React', module);
 
-fixtures.forEach(fixture => {
+fixtures.forEach((fixture) => {
   // eslint-disable-next-line import/no-dynamic-require, global-require
   const { component } = require(`./__testfixtures__/${fixture}/input`);
   const props = extractProps(component);

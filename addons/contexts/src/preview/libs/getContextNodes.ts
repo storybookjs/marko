@@ -44,10 +44,10 @@ export const getContextNodes: getContextNodes = ({ options, parameters }) => {
 
   return Array.from(new Set(titles))
     .filter(Boolean)
-    .map(title =>
+    .map((title) =>
       _getMergedSettings(
-        (options && options.find(option => option.title === title)) || {},
-        (parameters && parameters.find(param => param.title === title)) || {}
+        (options && options.find((option) => option.title === title)) || {},
+        (parameters && parameters.find((param) => param.title === title)) || {}
       )
     );
 };

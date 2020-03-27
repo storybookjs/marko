@@ -16,7 +16,7 @@ function centered(storyFn: () => ComponentTypes) {
 
 export default makeDecorator({
   ...parameters,
-  wrapper: getStory => centered(getStory as any),
+  wrapper: (getStory) => centered(getStory as any),
 });
 
 if (module && module.hot && module.hot.decline) {

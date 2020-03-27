@@ -26,7 +26,7 @@ const replaceStringsWithRequires = (string: string) => {
   });
 };
 
-export default function(source: string) {
+export default function (source: string) {
   const styleProperty = 'styles';
   const templateProperty = 'template';
 

@@ -124,14 +124,14 @@ const applyDeprecatedLayoutOptions = deprecate((options: Partial<UIOptions>): Pa
 }, deprecationMessage(deprecatedLayoutOptions));
 
 const checkDeprecatedThemeOptions = (options: UIOptions) => {
-  if (Object.keys(deprecatedThemeOptions).find(v => v in options)) {
+  if (Object.keys(deprecatedThemeOptions).find((v) => v in options)) {
     return applyDeprecatedThemeOptions(options);
   }
   return {};
 };
 
 const checkDeprecatedLayoutOptions = (options: Partial<UIOptions>) => {
-  if (Object.keys(deprecatedLayoutOptions).find(v => v in options)) {
+  if (Object.keys(deprecatedLayoutOptions).find((v) => v in options)) {
     return applyDeprecatedLayoutOptions(options);
   }
   return {};

@@ -3,13 +3,13 @@ import { PropsExtractor, hasDocgen, extractComponentProps } from '../../lib/docg
 
 const SECTIONS = ['props', 'events', 'slots'];
 
-export const extractProps: PropsExtractor = component => {
+export const extractProps: PropsExtractor = (component) => {
   if (!hasDocgen(component)) {
     return null;
   }
   const sections: Record<string, PropDef[]> = {};
-  SECTIONS.forEach(section => {
-    sections[section] = extractComponentProps(component, section).map(x => x.propDef);
+  SECTIONS.forEach((section) => {
+    sections[section] = extractComponentProps(component, section).map((x) => x.propDef);
   });
   return { sections };
 };
