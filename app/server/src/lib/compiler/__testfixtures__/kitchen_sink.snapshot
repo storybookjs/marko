@@ -2,7 +2,6 @@
 
 exports[`json-to-csf-compiler kitchen_sink.json 1`] = `
 "import { array, boolean, color, date, number, object, select, text, withKnobs } from '@storybook/addon-knobs';
-import { withActions } from '@storybook/addon-actions';
 
 export default {
   title: 'Kitchen Sink',
@@ -39,17 +38,15 @@ export const Heading = () => {
   };
 };
 Heading.story = {
-  decorators: [
-    withActions(
+  name: 'Heading',
+  parameters: {
+    actions: [
       'click',
       'contextmenu',
       {
         clearOnStoryChange: false
       }
-    )
-  ],
-  name: 'Heading',
-  parameters: {
+    ],
     notes: 'My notes on some bold text',
     server: {
       id: 'demo/heading',

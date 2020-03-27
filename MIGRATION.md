@@ -11,6 +11,9 @@
     - [Removed Legacy Story APIs](#removed-legacy-story-apis)
     - [Can no longer add decorators/parameters after stories](#can-no-longer-add-decoratorsparameters-after-stories)
     - [Changed Parameter Handling](#changed-parameter-handling)
+  - [Actions Addon API changes](#actions-addon-api-changes)
+    - [Actions Addon uses parameters](#actions-addon-uses-parameters)
+    - [Removed action decorator APIs](#removed-action-decorator-apis)
   - [Simplified Render Context](#simplified-render-context)
   - [Story Store immutable outside of configuration](#story-store-immutable-outside-of-configuration)
   - [Improved story source handling](#improved-story-source-handling)
@@ -174,7 +177,7 @@ module.exports = {
 
 In Storybook 5.3 we introduced a declarative [main.js configuration](#to-mainjs-configuration), which is now the recommended way to configure Storybook. Part of the change is a simplified syntax for registering addons, which in 6.0 automatically registers many addons _using a preset_, which is a slightly different behavior than in earlier versions.
 
-This breaking change currently applies to: `addon-a11y`, `addon-knobs`, `addon-links`, `addon-queryparams`.
+This breaking change currently applies to: `addon-a11y`, `addon-actions`, `addon-knobs`, `addon-links`, `addon-queryparams`.
 
 Consider the following `main.js` config for the accessibility addon, `addon-a11y`:
 
@@ -319,6 +322,34 @@ The MDX analog:
   <Button />
 </Story>
 ```
+### Actions Addon API changes
+
+#### Actions Addon uses parameters
+
+Leveraging the new preset `@storybook/addon-actions` uses parameters to pass action options. If you previously had:
+
+```js
+import { withactions } from `@storybook/addon-actions`;
+
+export StoryOne = ...;
+StoryOne.story = {
+  decorators: [withActions('mouseover', 'click .btn')],
+}
+
+```
+
+You should replace it with:
+
+```js
+export StoryOne = ...;
+StoryOne.story = {
+  parameters: { actions: ['mouseover', 'click .btn'] },
+}
+```
+
+#### Removed action decorator APIs
+
+In 6.0 we removed the actions addon decorate API. Actions handles can be configured globaly, for a collection of stories or per story via parameters. The ability to manipulate the data arguments of an event is only relevant in a few frameworks and is not a common enough usecase to be worth the complexity of supporting.
 
 ## From version 5.2.x to 5.3.x
 
