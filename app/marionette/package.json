@@ -29,7 +29,7 @@
     "common-tags": "^1.8.0",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
-    "html-loader": "^0.5.5",
+    "html-loader": "^1.0.0",
     "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
