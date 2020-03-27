@@ -29,6 +29,10 @@ module.exports = {
       import { mdx } from '@mdx-js/react'
       ${mdx.sync(src, { compilers, filepath: filename })}
     `;
-    return getNextTransformer(filename, config).transformSource(filename, result, instrument);
+    
+    const extension = path.extname(filename);
+    const jsFileName = `${filename.slice(0, -extension.length)}.js`;
+    
+    return getNextTransformer(filename, config).transformSource(jsFileName, result, instrument);
   },
 };
