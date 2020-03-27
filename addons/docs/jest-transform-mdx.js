@@ -4,6 +4,7 @@ const { ScriptTransformer } = require('@jest/transform');
 const { dedent } = require('ts-dedent');
 
 const createCompiler = require('./mdx-compiler-plugin');
+
 const compilers = [createCompiler({})];
 
 module.exports = {
