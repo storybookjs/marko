@@ -30,7 +30,8 @@ module.exports = {
       ${mdx.sync(src, { compilers, filepath: filename })}
     `;
     
-    const jsFileName = `${filename}.js`;
+    const extension = path.extname(filename);
+    const jsFileName = `${filename.slice(0, -extension.length)}.js`;
     
     return getNextTransformer(filename, config).transformSource(jsFileName, result, instrument);
   },
