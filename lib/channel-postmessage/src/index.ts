@@ -205,16 +205,16 @@ const getEventSourceUrl = (event: MessageEvent) => {
     try {
       return element.contentWindow === event.source;
     } catch (err) {
-      //
+      // continue
     }
 
     const src = element.getAttribute('src');
     let origin;
 
     try {
-      ({ origin } = new URL(src));
-    } catch (err) {
       ({ origin } = new URL(src, document.location));
+    } catch (err) {
+      return false;
     }
     return origin === event.origin;
   });
