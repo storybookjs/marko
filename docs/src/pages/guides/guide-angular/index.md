@@ -58,7 +58,7 @@ module.exports = {
 };
 ```
 
-That will load all the stories underneath your `../src` directory that match the pattern `*.stories.[tj]sx?`. We recommend co-locating your stories with your source files, but you can place them wherever you choose.
+That will load all the stories underneath your `../src` directory that match the pattern `*.stories.[tj]s`. We recommend co-locating your stories with your source files, but you can place them wherever you choose.
 
 ## Step 4: Storybook TypeScript configuration
 
