@@ -203,11 +203,18 @@ const getEventSourceUrl = (event: MessageEvent) => {
     try {
       return element.contentWindow === event.source;
     } catch (err) {
-      const src = element.getAttribute('src');
-      const { origin } = new URL(src);
-
-      return origin === event.origin;
+      // continue
     }
+
+    const src = element.getAttribute('src');
+    let origin;
+
+    try {
+      ({ origin } = new URL(src, document.location));
+    } catch (err) {
+      return false;
+    }
+    return origin === event.origin;
   });
 
   // If we found multiple matches, there's going to be trouble
@@ -217,7 +224,7 @@ const getEventSourceUrl = (event: MessageEvent) => {
   }
 
   const src = frame.getAttribute('src');
-  const { origin, pathname } = new URL(src);
+  const { origin, pathname } = new URL(src, document.location);
   return origin + pathname;
 };
 
