@@ -85,7 +85,7 @@ export class PostmsgTransport {
       this.flush();
     }
 
-    frames.forEach(f => {
+    frames.forEach((f) => {
       try {
         f.postMessage(data, '*');
       } catch (e) {
@@ -99,10 +99,8 @@ export class PostmsgTransport {
   private flush(): void {
     const { buffer } = this;
     this.buffer = [];
-    buffer.forEach(item => {
-      this.send(item.event)
-        .then(item.resolve)
-        .catch(item.reject);
+    buffer.forEach((item) => {
+      this.send(item.event).then(item.resolve).catch(item.reject);
     });
   }
 
@@ -113,14 +111,14 @@ export class PostmsgTransport {
       ];
 
       const list = nodes
-        .filter(e => {
+        .filter((e) => {
           try {
             return !!e.contentWindow && e.dataset.isStorybook !== undefined && e.id === target;
           } catch (er) {
             return false;
           }
         })
-        .map(e => e.contentWindow);
+        .map((e) => e.contentWindow);
 
       return list.length ? list : this.getCurrentFrames();
     }
@@ -136,7 +134,7 @@ export class PostmsgTransport {
       const list: HTMLIFrameElement[] = [
         ...document.querySelectorAll('[data-is-storybook="true"]'),
       ];
-      return list.map(e => e.contentWindow);
+      return list.map((e) => e.contentWindow);
     }
     if (window && window.parent) {
       return [window.parent];
@@ -148,7 +146,7 @@ export class PostmsgTransport {
   private getLocalFrame(): Window[] {
     if (this.config.page === 'manager') {
       const list: HTMLIFrameElement[] = [...document.querySelectorAll('#storybook-preview-iframe')];
-      return list.map(e => e.contentWindow);
+      return list.map((e) => e.contentWindow);
     }
     if (window && window.parent) {
       return [window.parent];
@@ -201,15 +199,22 @@ const getEventSourceUrl = (event: MessageEvent) => {
 
   // try to find the originating iframe by matching it's contentWindow
   // This might not be cross-origin safe
-  const [frame, ...remainder] = frames.filter(element => {
+  const [frame, ...remainder] = frames.filter((element) => {
     try {
       return element.contentWindow === event.source;
     } catch (err) {
-      const src = element.getAttribute('src');
-      const { origin } = new URL(src);
-
-      return origin === event.origin;
+      // continue
     }
+
+    const src = element.getAttribute('src');
+    let origin;
+
+    try {
+      ({ origin } = new URL(src, document.location));
+    } catch (err) {
+      return false;
+    }
+    return origin === event.origin;
   });
 
   // If we found multiple matches, there's going to be trouble
@@ -219,7 +224,7 @@ const getEventSourceUrl = (event: MessageEvent) => {
   }
 
   const src = frame.getAttribute('src');
-  const { origin, pathname } = new URL(src);
+  const { origin, pathname } = new URL(src, document.location);
   return origin + pathname;
 };
 
