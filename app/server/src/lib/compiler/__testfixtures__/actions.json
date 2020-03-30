@@ -1,6 +1,5 @@
 {
   "title": "Addons/Actions",
-  "addons": ["actions"],
   "parameters": {
     "options": { "selectedPanel": "storybook/actions/panel" }
   },
@@ -8,9 +7,9 @@
     {
       "name": "Multiple actions + config",
       "parameters": {
+        "actions": ["click", "contextmenu", { "clearOnStoryChange": false }],
         "server": { "id": "addons/actions/story3" }
-      },
-      "actions": ["click", "contextmenu", { "clearOnStoryChange": false }]
+      }
     }
   ]
 }

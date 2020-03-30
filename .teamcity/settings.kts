@@ -177,14 +177,14 @@ object ExamplesTemplate : Template({
             scriptContent = """
                 #!/bin/bash
                 set -e -x
-                
+
                 yarn install
                 rm -rf built-storybooks
                 mkdir -p built-storybooks
                 
                 yarn build-storybooks
             """.trimIndent()
-            dockerImage = "node:10"
+            dockerImage = "buildkite/puppeteer"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }

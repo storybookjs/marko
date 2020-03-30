@@ -1,6 +1,6 @@
 {
   "title": "Kitchen Sink",
-  "addons": ["knobs", "actions"],
+  "addons": ["knobs"],
   "parameters": {
     "backgrounds": [
       { "name": "light", "value": "#eeeeee" },
@@ -15,6 +15,7 @@
     {
       "name": "Heading",
       "parameters": {
+        "actions": ["click", "contextmenu", { "clearOnStoryChange": false }],
         "notes": "My notes on some bold text",
         "server": { 
           "id": "demo/heading",
@@ -26,8 +27,7 @@
       "knobs": [
         { "type": "text", "name": "Name", "value": "John Doe", "param": "name"},
         { "type": "number", "name": "Age", "value": 44, "param": "age"}
-      ],
-      "actions": ["click", "contextmenu", { "clearOnStoryChange": false }]
+      ]
     },
     {
       "name": "Button",
