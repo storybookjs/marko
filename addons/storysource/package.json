@@ -46,7 +46,7 @@
     "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
-    "@types/react": "^16.9.19",
+    "@types/react": "^16.9.27",
     "@types/react-syntax-highlighter": "^11.0.4"
   },
   "peerDependencies": {
