@@ -107,8 +107,8 @@ In earlier versions, we recommended `react-docgen-typescript-loader` (`RDTL`) an
 As a consequence we've removed `RDTL` from the presets, which is a breaking change. We made this change because `react-docgen` now supports TypeScript natively, and fewer dependencies simplifies things for everybody.
 
 The Babel-based `react-docgen` version is the default in:
-- `@storybook/preset-create-react-app` @ `^2.0.0`
-- `@storybook/preset-typescript` @ `^3.0.0-alpha.1`
+- `@storybook/preset-create-react-app` @ `^2.1.0`
+- `@storybook/preset-typescript` @ `^3.0.0`
 
 > NOTE: If you're using `preset-create-react-app` you don't need `preset-typescript`!
 
