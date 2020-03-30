@@ -6,6 +6,11 @@ aliases:
     docker:
       - image: buildkite/puppeteer
 
+  - &docs
+    working_directory: /tmp/storybook
+    docker:
+      - image: circleci/node:10
+
 jobs:
   install:
     <<: *defaults
@@ -189,7 +194,7 @@ jobs:
             cd examples/cra-react15
             yarn storybook --smoke-test --quiet
   frontpage:
-    <<: *defaults
+    <<: *docs
     steps:
       - checkout
       - restore_cache:
@@ -203,7 +208,7 @@ jobs:
           name: Trigger build
           command: ./scripts/build-frontpage.js
   docs:
-    <<: *defaults
+    <<: *docs
     steps:
       - checkout
       - restore_cache:
