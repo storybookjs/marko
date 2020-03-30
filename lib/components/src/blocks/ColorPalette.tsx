@@ -39,6 +39,7 @@ const SwatchLabel = styled.div(({ theme }) => ({
     display: 'inline-block',
     overflow: 'hidden',
     maxWidth: '100%',
+    textOverflow: 'ellipsis',
   },
 
   span: {
@@ -126,7 +127,7 @@ function renderSwatch(color: string) {
       key={color}
       title={color}
       style={{
-        backgroundColor: color,
+        background: color,
       }}
     />
   );
