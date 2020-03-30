@@ -112,12 +112,12 @@
     "serialize-javascript": "^3.0.0"
   },
   "devDependencies": {
-    "@angular/common": "^8.2.8",
-    "@angular/compiler": "^8.2.8",
-    "@angular/core": "^8.2.8",
-    "@angular/forms": "^8.2.8",
-    "@angular/platform-browser": "^8.2.8",
-    "@angular/platform-browser-dynamic": "^8.2.8",
+    "@angular/common": "^9.1.0",
+    "@angular/compiler": "^9.1.0",
+    "@angular/core": "^9.1.0",
+    "@angular/forms": "^9.1.0",
+    "@angular/platform-browser": "^9.1.0",
+    "@angular/platform-browser-dynamic": "^9.1.0",
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
     "@babel/plugin-proposal-class-properties": "^7.3.3",

@@ -78,7 +78,7 @@
     "vue-docgen-loader": "^1.4.0"
   },
   "devDependencies": {
-    "@angular/core": "^8.2.8",
+    "@angular/core": "^9.1.0",
     "@babel/core": "^7.8.4",
     "@emotion/core": "^10.0.20",
     "@emotion/styled": "^10.0.17",
