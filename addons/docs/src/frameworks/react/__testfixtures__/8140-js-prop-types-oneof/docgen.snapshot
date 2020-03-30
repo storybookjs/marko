@@ -7,7 +7,7 @@ exports[`react component properties 8140-js-prop-types-oneof 1`] = `
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Alert = props => React.createElement(React.Fragment, null, JSON.stringify(props));
+const Alert = props => /*#__PURE__*/React.createElement(React.Fragment, null, JSON.stringify(props));
 
 Alert.defaultProps = {
   mode: 'static',

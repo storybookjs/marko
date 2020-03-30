@@ -37,7 +37,7 @@ export const getSourceProps = (
     const targetId = singleProps.id === CURRENT_SELECTION ? currentId : singleProps.id;
     const targetIds = multiProps.ids || [targetId];
     source = targetIds
-      .map(sourceId => {
+      .map((sourceId) => {
         const data = storyStore.fromId(sourceId);
         return data?.parameters?.docs?.source?.code || '';
       })
@@ -53,9 +53,9 @@ export const getSourceProps = (
  * or the source for a story if `storyId` is provided, or
  * the source for the current story if nothing is provided.
  */
-const SourceContainer: FunctionComponent<SourceProps> = props => (
+const SourceContainer: FunctionComponent<SourceProps> = (props) => (
   <DocsContext.Consumer>
-    {context => {
+    {(context) => {
       const sourceProps = getSourceProps(props, context);
       return <Source {...sourceProps} />;
     }}

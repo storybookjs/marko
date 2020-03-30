@@ -33,7 +33,7 @@ ReactSyntaxHighlighter.registerLanguage('html', html);
 ReactSyntaxHighlighter.registerLanguage('tsx', tsx);
 ReactSyntaxHighlighter.registerLanguage('typescript', typescript);
 
-const themedSyntax = memoize(2)(theme =>
+const themedSyntax = memoize(2)((theme) =>
   Object.entries(theme.code || {}).reduce((acc, [key, val]) => ({ ...acc, [`* .${key}`]: val }), {})
 );
 

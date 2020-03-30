@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'; // eslint-disable-next-line react/prefer-sta
 
 export default class Test extends React.Component {
   render() {
-    return React.createElement(\\"div\\", null, \\"test\\");
+    return /*#__PURE__*/React.createElement(\\"div\\", null, \\"test\\");
   }
 
 }

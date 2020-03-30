@@ -73,9 +73,9 @@ export const getParents = memoize(1000)((id: string, dataset: Dataset): Item[] =
 });
 
 export const getMains = memoize(1)((dataset: Dataset) =>
-  toList(dataset).filter(m => m.depth === 0)
+  toList(dataset).filter((m) => m.depth === 0)
 );
-const getMainsKeys = memoize(1)((dataset: Dataset) => getMains(dataset).map(m => m.id));
+const getMainsKeys = memoize(1)((dataset: Dataset) => getMains(dataset).map((m) => m.id));
 
 export const getPrevious = ({
   id,
@@ -184,7 +184,7 @@ export const getNext = ({
 };
 
 const fuse = memoize(5)(
-  dataset =>
+  (dataset) =>
     new Fuse(toList(dataset), {
       threshold: FUZZY_SEARCH_THRESHOLD,
       keys: ['kind', 'name', 'parameters.fileName', 'parameters.notes'],
@@ -216,7 +216,9 @@ export const filteredLength = (dataset: Dataset, filter: string) => {
 export const toFiltered = (dataset: Dataset, filter: string) => {
   let found: Item[];
   if (filter.length && filter.length > 2) {
-    found = fuse(dataset).search(filter);
+    found = fuse(dataset)
+      .search(filter)
+      .map(({ item }) => item);
   } else {
     const matcher = exactMatch(filter);
     found = toList(dataset).filter(matcher);
@@ -225,7 +227,7 @@ export const toFiltered = (dataset: Dataset, filter: string) => {
   // get all parents for all results
   const result = found.reduce((acc, item) => {
     if (item.isLeaf) {
-      getParents(item.id, dataset).forEach(pitem => {
+      getParents(item.id, dataset).forEach((pitem) => {
         acc[pitem.id] = pitem;
       });
 
@@ -236,7 +238,7 @@ export const toFiltered = (dataset: Dataset, filter: string) => {
 
   // filter the children of the found items (and their parents) so only found entries are present
   return Object.entries(result).reduce((acc, [k, v]) => {
-    const r = v.children ? { ...v, children: v.children.filter(c => !!result[c]) } : v;
+    const r = v.children ? { ...v, children: v.children.filter((c) => !!result[c]) } : v;
 
     if (r.isLeaf || r.children.length) {
       acc[k] = r;

@@ -124,7 +124,7 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
     const parts = [];
     let lastRow = 0;
 
-    Object.keys(locationsMap).forEach(key => {
+    Object.keys(locationsMap).forEach((key) => {
       const location = locationsMap[key];
       const first = location.startLoc.line - 1;
       const last = location.endLoc.line;

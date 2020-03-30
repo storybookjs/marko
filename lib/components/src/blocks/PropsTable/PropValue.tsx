@@ -67,7 +67,7 @@ const PropText: FC<PropTextProps> = ({ text }) => {
 const calculateDetailWidth = memoize(1000)((detail: string): string => {
   const lines = detail.split(/\r?\n/);
 
-  return `${Math.max(...lines.map(x => x.length))}ch`;
+  return `${Math.max(...lines.map((x) => x.length))}ch`;
 });
 
 const PropSummary: FC<PropSummaryProps> = ({ value }) => {
@@ -90,7 +90,7 @@ const PropSummary: FC<PropSummaryProps> = ({ value }) => {
       trigger="click"
       placement="bottom"
       tooltipShown={isOpen}
-      onVisibilityChange={isVisible => {
+      onVisibilityChange={(isVisible) => {
         setIsOpen(isVisible);
       }}
       tooltip={

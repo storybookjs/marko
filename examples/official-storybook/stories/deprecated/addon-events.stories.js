@@ -13,9 +13,9 @@ const EVENTS = {
 const emitter = new EventEmitter();
 const emit = emitter.emit.bind(emitter);
 
-const eventHandler = name => payload => emit(Logger.LOG_EVENT, { name, payload });
+const eventHandler = (name) => (payload) => emit(Logger.LOG_EVENT, { name, payload });
 
-Object.keys(EVENTS).forEach(event => emitter.on(EVENTS[event], eventHandler(EVENTS[event])));
+Object.keys(EVENTS).forEach((event) => emitter.on(EVENTS[event], eventHandler(EVENTS[event])));
 
 const events = [
   {
@@ -68,7 +68,7 @@ const events = [
 export default {
   title: 'Addons/Events/deprecated',
   decorators: [
-    storyFn => (
+    (storyFn) => (
       <WithEvents emit={emit} events={events}>
         {storyFn()}
       </WithEvents>

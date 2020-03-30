@@ -41,7 +41,7 @@ const RadioLabel = styled.label({
 class RadiosType extends Component<RadiosTypeProps> {
   static defaultProps: RadiosTypeProps = {
     knob: {} as any,
-    onChange: value => value,
+    onChange: (value) => value,
     isInline: false,
   };
 
@@ -61,9 +61,9 @@ class RadiosType extends Component<RadiosTypeProps> {
 
   renderRadioButtonList({ options }: RadiosTypeKnob) {
     if (Array.isArray(options)) {
-      return options.map(val => this.renderRadioButton(val, val));
+      return options.map((val) => this.renderRadioButton(val, val));
     }
-    return Object.keys(options).map(key => this.renderRadioButton(key, options[key]));
+    return Object.keys(options).map((key) => this.renderRadioButton(key, options[key]));
   }
 
   renderRadioButton(label: string, value: RadiosTypeKnobValue) {
@@ -79,7 +79,7 @@ class RadiosType extends Component<RadiosTypeProps> {
           id={id}
           name={name}
           value={opts.value || undefined}
-          onChange={e => onChange(e.target.value)}
+          onChange={(e) => onChange(e.target.value)}
           checked={value === knob.value}
         />
         <RadioLabel htmlFor={id}>{label}</RadioLabel>

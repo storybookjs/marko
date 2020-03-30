@@ -7,7 +7,7 @@ export default {
   component: SectionRow,
   title: 'Docs/SectionRow',
   decorators: [
-    getStory => (
+    (getStory) => (
       <ResetWrapper>
         <Table>
           <tbody>{getStory()}</tbody>

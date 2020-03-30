@@ -15,7 +15,7 @@ const withStyles = themeFn => Comp => Comp;
 
 class Alert extends React.Component {
   render() {
-    return React.createElement(React.Fragment, null, \\"Alert\\");
+    return /*#__PURE__*/React.createElement(React.Fragment, null, \\"Alert\\");
   }
 
 }

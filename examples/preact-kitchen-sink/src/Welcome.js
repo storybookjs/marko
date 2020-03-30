@@ -2,7 +2,7 @@
 
 import { h } from 'preact';
 
-const Main = props => (
+const Main = (props) => (
   <article
     {...props}
     style={{
@@ -17,7 +17,7 @@ const Main = props => (
 // eslint-disable-next-line react/prop-types
 const Title = ({ children, ...props }) => <h1 {...props}>{children}</h1>;
 
-const Note = props => (
+const Note = (props) => (
   <p
     {...props}
     style={{
@@ -26,7 +26,7 @@ const Note = props => (
   />
 );
 
-const InlineCode = props => (
+const InlineCode = (props) => (
   <code
     {...props}
     style={{

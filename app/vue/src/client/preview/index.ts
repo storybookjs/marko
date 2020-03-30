@@ -98,7 +98,7 @@ function decorateStory(
 
       return prepare(decoratedStory, story);
     },
-    context => prepare(storyFn(context))
+    (context) => prepare(storyFn(context))
   );
 }
 const framework = 'vue';

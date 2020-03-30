@@ -143,13 +143,7 @@ describe('A11YPanel', () => {
     wrapper.update();
 
     // then
-    expect(
-      wrapper
-        .find('button')
-        .last()
-        .text()
-        .trim()
-    ).toBe('Tests completed');
+    expect(wrapper.find('button').last().text().trim()).toBe('Tests completed');
     expect(wrapper.find('Tabs').prop('tabs').length).toBe(3);
     expect(wrapper.find('Tabs').prop('tabs')[0].label.props.children).toEqual([1, ' Violations']);
     expect(wrapper.find('Tabs').prop('tabs')[1].label.props.children).toEqual([1, ' Passes']);

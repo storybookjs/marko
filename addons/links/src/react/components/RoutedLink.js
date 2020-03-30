@@ -10,11 +10,11 @@ import React from 'react';
 
 const LEFT_BUTTON = 0;
 // Cmd/Ctrl/Shift/Alt + Click should trigger default browser behaviour. Same applies to non-left clicks
-const isPlainLeftClick = e =>
+const isPlainLeftClick = (e) =>
   e.button === LEFT_BUTTON && !e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey;
 
 export default class RoutedLink extends React.Component {
-  onClick = e => {
+  onClick = (e) => {
     const { onClick } = this.props;
 
     if (isPlainLeftClick(e)) {

@@ -11,7 +11,7 @@ type ToolBarMenuOptions = FCNoChildren<{
 
 export const ToolBarMenuOptions: ToolBarMenuOptions = ({ activeName, list, onSelectOption }) => (
   <TooltipLinkList
-    links={list.map(name => ({
+    links={list.map((name) => ({
       key: name,
       id: name,
       title: name !== OPT_OUT ? name : 'Off',

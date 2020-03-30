@@ -25,7 +25,9 @@ const supportedExtensions = ['ts', 'tsx', 'js', 'jsx'];
 
 const resolveFile = (configDir: string, supportedFilenames: string[]) =>
   supportedFilenames
-    .flatMap(filename => supportedExtensions.map(ext => path.join(configDir, `${filename}.${ext}`)))
+    .flatMap((filename) =>
+      supportedExtensions.map((ext) => path.join(configDir, `${filename}.${ext}`))
+    )
     .find(isFile) || false;
 
 export const getPreviewFile = (configDir: string): string | false =>
@@ -82,7 +84,7 @@ function configure(
 
   const { files, stories } = getConfigPathParts(configPath);
 
-  files.forEach(f => {
+  files.forEach((f) => {
     require.requireActual(f);
   });
 

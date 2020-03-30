@@ -38,8 +38,8 @@ const performRun = (() => {
 
     await run(s)
       .then(
-        result => callback(undefined, result),
-        error => callback(error)
+        (result) => callback(undefined, result),
+        (error) => callback(error)
       )
       .then(() => {
         isRunning = false;

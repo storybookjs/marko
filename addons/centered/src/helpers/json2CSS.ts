@@ -13,7 +13,7 @@ import { document } from 'global';
 export default function jsonToCss(jsonStyles: Partial<CSSStyleDeclaration>) {
   const frag = document.createElement('div') as HTMLDivElement;
 
-  Object.keys(jsonStyles).forEach(key => {
+  Object.keys(jsonStyles).forEach((key) => {
     (frag.style as any)[key] = (jsonStyles as any)[key];
   });
 

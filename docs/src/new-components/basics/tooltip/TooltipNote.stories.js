@@ -8,7 +8,7 @@ storiesOf('basics/tooltip/TooltipNote', module)
   .addParameters({
     component: TooltipNote,
   })
-  .addDecorator(storyFn => (
+  .addDecorator((storyFn) => (
     <div style={{ height: '300px' }}>
       <WithTooltip hasChrome={false} placement="top" trigger="click" startOpen tooltip={storyFn()}>
         <div>Tooltip</div>

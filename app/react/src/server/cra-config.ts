@@ -114,7 +114,7 @@ export const getTypeScriptRules = (webpackConfigRules: RuleSetRule[], configDir:
 function mergePlugins(basePlugins: Plugin[], additionalPlugins: Plugin[]) {
   return [...basePlugins, ...additionalPlugins].reduce((plugins, plugin) => {
     if (
-      plugins.some(includedPlugin => includedPlugin.constructor.name === plugin.constructor.name)
+      plugins.some((includedPlugin) => includedPlugin.constructor.name === plugin.constructor.name)
     ) {
       return plugins;
     }
@@ -153,7 +153,7 @@ export function applyCRAWebpackConfig(baseConfig: Configuration, configDir: stri
 
   // Remove any rules from baseConfig that test true for any one of the extensions
   const filteredBaseRules = baseConfig.module.rules.filter(
-    rule => !rule.test || !extensions.some(normalizeCondition(rule.test))
+    (rule) => !rule.test || !extensions.some(normalizeCondition(rule.test))
   );
 
   //  Load create-react-app config

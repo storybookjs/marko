@@ -10,7 +10,7 @@ export const WithDecoratorCallingStoryFunctionMoreThanOnce = () => {
 WithDecoratorCallingStoryFunctionMoreThanOnce.story = {
   decorators: [
     withKnobs,
-    storyFn => {
+    (storyFn) => {
       storyFn();
       return storyFn();
     },

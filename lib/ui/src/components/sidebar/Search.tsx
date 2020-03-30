@@ -121,7 +121,7 @@ export const Search: FunctionComponent<SearchProps> = ({
       focussed={focussed}
       className={className}
       onReset={() => onChange('')}
-      onSubmit={e => e.preventDefault()}
+      onSubmit={(e) => e.preventDefault()}
     >
       <FilterField
         type="text"

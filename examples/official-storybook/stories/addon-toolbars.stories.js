@@ -5,7 +5,7 @@ export default {
   title: 'Addons/Toolbars',
 };
 
-const getCaptionForLocale = locale => {
+const getCaptionForLocale = (locale) => {
   switch (locale) {
     case 'es':
       return 'Hola!';

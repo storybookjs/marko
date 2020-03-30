@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { addons, types } from '@storybook/addons';
 import { ADDON_ID } from './constants';
 
-const PreviewWrapper: FunctionComponent<{}> = p => (
+const PreviewWrapper: FunctionComponent<{}> = (p) => (
   <div
     style={{
       width: '100%',

@@ -41,7 +41,7 @@ export function enhancePropTypesProps(
   component: Component
 ): PropDef[] {
   const rawDefaultProps = component.defaultProps != null ? component.defaultProps : {};
-  const enhancedProps = extractedProps.map(x =>
+  const enhancedProps = extractedProps.map((x) =>
     enhancePropTypesProp(x, rawDefaultProps[x.propDef.name])
   );
 

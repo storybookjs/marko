@@ -87,7 +87,7 @@ export function ensurePanel(panels: Panels, selectedPanel?: string, currentPanel
 
 export const init: ModuleFn = ({ provider, store, fullAPI }) => {
   const api: SubAPI = {
-    getElements: type => provider.getElements(type),
+    getElements: (type) => provider.getElements(type),
     getPanels: () => api.getElements(types.PANEL),
     getStoryPanels: () => {
       const allPanels = api.getPanels();
@@ -115,7 +115,7 @@ export const init: ModuleFn = ({ provider, store, fullAPI }) => {
       const { selectedPanel } = store.getState();
       return ensurePanel(api.getPanels(), selectedPanel, selectedPanel);
     },
-    setSelectedPanel: panelName => {
+    setSelectedPanel: (panelName) => {
       store.setState({ selectedPanel: panelName }, { persistence: 'session' });
     },
     setAddonState<S>(
@@ -135,7 +135,7 @@ export const init: ModuleFn = ({ provider, store, fullAPI }) => {
         .setState({ addons: { ...existing, [addonId]: nextState } }, options)
         .then(() => api.getAddonState(addonId));
     },
-    getAddonState: addonId => {
+    getAddonState: (addonId) => {
       return store.getState().addons[addonId];
     },
   };

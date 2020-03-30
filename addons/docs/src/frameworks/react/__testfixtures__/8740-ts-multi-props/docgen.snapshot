@@ -5,13 +5,13 @@ exports[`react component properties 8740-ts-multi-props 1`] = `
 export const Header = ({
   size = 'a',
   children
-}) => React.createElement(\\"div\\", {
+}) => /*#__PURE__*/React.createElement(\\"div\\", {
   className: size
 }, children);
 export const Paragraph = ({
   size,
   children
-}) => React.createElement(\\"div\\", {
+}) => /*#__PURE__*/React.createElement(\\"div\\", {
   className: size
 }, children);
 Paragraph.defaultProps = {

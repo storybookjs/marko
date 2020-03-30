@@ -23,7 +23,7 @@ interface TagsProps {
 export const Tags: FunctionComponent<TagsProps> = ({ tags }) => {
   return (
     <Wrapper>
-      {tags.map(tag => (
+      {tags.map((tag) => (
         <Item key={tag}>{tag}</Item>
       ))}
     </Wrapper>

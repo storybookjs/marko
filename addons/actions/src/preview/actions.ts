@@ -20,13 +20,13 @@ export const actions: ActionsFunction = (...args: any[]) => {
   let namesObject = names[0];
   if (names.length !== 1 || typeof namesObject === 'string') {
     namesObject = {};
-    names.forEach(name => {
+    names.forEach((name) => {
       namesObject[name] = name;
     });
   }
 
   const actionsObject: ActionsMap = {};
-  Object.keys(namesObject).forEach(name => {
+  Object.keys(namesObject).forEach((name) => {
     actionsObject[name] = action(namesObject[name], options);
   });
   return actionsObject;

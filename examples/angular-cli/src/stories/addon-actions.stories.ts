@@ -21,7 +21,7 @@ export const ActionAndMethod = () => ({
   component: Button,
   props: {
     text: 'Action and Method',
-    onClick: e => {
+    onClick: (e) => {
       console.log(e);
       e.preventDefault();
       action('log2')(e.target);

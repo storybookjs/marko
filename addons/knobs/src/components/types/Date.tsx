@@ -42,7 +42,7 @@ const formatTime = (date: Date) => {
 export default class DateType extends Component<DateTypeProps, DateTypeState> {
   static defaultProps: DateTypeProps = {
     knob: {} as any,
-    onChange: value => value,
+    onChange: (value) => value,
   };
 
   static propTypes = {

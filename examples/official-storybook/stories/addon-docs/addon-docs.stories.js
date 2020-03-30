@@ -3,7 +3,7 @@ import notes from '../notes/notes.md';
 import mdxNotes from '../notes/notes.mdx';
 import { DocgenButton } from '../../components/DocgenButton';
 
-const docsTitle = title => `Docs/${title}`;
+const docsTitle = (title) => `Docs/${title}`;
 
 export default {
   title: `Addons/${docsTitle('stories')}`,

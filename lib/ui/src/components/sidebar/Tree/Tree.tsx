@@ -60,7 +60,7 @@ const Tree: FunctionComponent<{
   List?: ComponentType<any>;
   Leaf?: ComponentType<any>;
   Head?: ComponentType<any>;
-}> = props => {
+}> = (props) => {
   const {
     root,
     depth,

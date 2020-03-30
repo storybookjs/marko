@@ -16,7 +16,7 @@ beforeEach(() => {
 });
 
 function doHMRDispose() {
-  cbs.forEach(cb => cb(mod.hot.data));
+  cbs.forEach((cb) => cb(mod.hot.data));
   cbs = [];
 }
 

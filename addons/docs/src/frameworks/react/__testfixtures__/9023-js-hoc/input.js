@@ -5,7 +5,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const withStyles = themeFn => Comp => Comp;
+const withStyles = (themeFn) => (Comp) => Comp;
 
 class Alert extends React.Component {
   render() {
@@ -23,8 +23,8 @@ Alert.defaultProps = {
   dismissible: false,
 };
 
-const StyledAlert = withStyles(theme => ({
-  alert: props => ({
+const StyledAlert = withStyles((theme) => ({
+  alert: (props) => ({
     backgroundColor: theme.palette[props.variant].main,
   }),
   message: {

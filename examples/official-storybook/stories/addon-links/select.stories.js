@@ -7,7 +7,7 @@ export default {
 };
 
 export const Index = () => (
-  <select value="Index" onChange={linkTo('Addons|Links.Select', e => e.currentTarget.value)}>
+  <select value="Index" onChange={linkTo('Addons|Links.Select', (e) => e.currentTarget.value)}>
     <option>Index</option>
     <option>First</option>
     <option>Second</option>

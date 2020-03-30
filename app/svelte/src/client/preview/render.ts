@@ -65,7 +65,7 @@ function mountView({ Component, target, props, on, Wrapper, WrapperData }: Mount
 
   if (on) {
     // Attach svelte event listeners.
-    Object.keys(on).forEach(eventName => {
+    Object.keys(on).forEach((eventName) => {
       component.$on(eventName, on[eventName]);
     });
   }

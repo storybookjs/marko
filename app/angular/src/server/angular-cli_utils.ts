@@ -45,7 +45,7 @@ function isStylingRule(rule: RuleSetRule) {
 }
 
 export function filterOutStylingRules(config: Configuration) {
-  return config.module.rules.filter(rule => !isStylingRule(rule));
+  return config.module.rules.filter((rule) => !isStylingRule(rule));
 }
 
 export function isBuildAngularInstalled() {

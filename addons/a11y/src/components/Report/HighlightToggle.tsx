@@ -60,7 +60,7 @@ function areAllRequiredElementsHighlighted(
   elementsToHighlight: NodeResult[],
   highlightedElementsMap: Map<HTMLElement, HighlightedElementData>
 ): CheckBoxStates {
-  const highlightedCount = elementsToHighlight.filter(item => {
+  const highlightedCount = elementsToHighlight.filter((item) => {
     const targetElement = getElementBySelectorPath(item.target[0]);
     return (
       highlightedElementsMap.has(targetElement) &&
@@ -104,7 +104,7 @@ class HighlightToggle extends Component<ToggleProps> {
 
   componentDidMount() {
     const { elementsToHighlight, highlightedElementsMap } = this.props;
-    elementsToHighlight.forEach(element => {
+    elementsToHighlight.forEach((element) => {
       const targetElement = getElementBySelectorPath(element.target[0]);
       if (targetElement && !highlightedElementsMap.has(targetElement)) {
         this.saveElementDataToMap(targetElement, false, targetElement.style.outline);
@@ -121,7 +121,7 @@ class HighlightToggle extends Component<ToggleProps> {
 
   onToggle = (): void => {
     const { elementsToHighlight, highlightedElementsMap } = this.props;
-    elementsToHighlight.forEach(element => {
+    elementsToHighlight.forEach((element) => {
       const targetElement = getElementBySelectorPath(element.target[0]);
       if (!highlightedElementsMap.has(targetElement)) {
         return;

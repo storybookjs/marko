@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.149",
-    "@types/semver": "^6.0.0",
+    "@types/semver": "^7.1.0",
     "flush-promises": "^1.0.2",
     "qs": "^6.6.0"
   },

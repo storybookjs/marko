@@ -251,7 +251,7 @@ describe('enhancePropTypesProp', () => {
       'element',
       'elementType',
       'node',
-    ].forEach(x => {
+    ].forEach((x) => {
       it(`should return '${x}' when type is ${x}`, () => {
         const component = createTestComponent({
           type: {
@@ -1173,7 +1173,7 @@ describe('enhancePropTypesProp', () => {
         { type: 'number', defaultProp: 1 },
         { type: 'boolean', defaultProp: true },
         { type: 'symbol', defaultProp: Symbol('hey!') },
-      ].forEach(x => {
+      ].forEach((x) => {
         it(`should support ${x.type}`, () => {
           const component = createTestComponent(null);
 
@@ -1327,7 +1327,7 @@ describe('enhancePropTypesProp', () => {
         expect(defaultValue.detail.replace(/\s/g, '')).toBe(expectedDetail.replace(/\s/g, ''));
       });
 
-      ['element', 'elementType'].forEach(x => {
+      ['element', 'elementType'].forEach((x) => {
         it(`should support inlined React class component for ${x}`, () => {
           const component = createTestComponent(null, x);
 

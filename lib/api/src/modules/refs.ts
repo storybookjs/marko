@@ -75,7 +75,7 @@ const map = (input: StoriesRaw, ref: ComposedRef, options: { mapper?: Mapper }):
 
 export const init: ModuleFn = ({ store, provider }) => {
   const api: SubAPI = {
-    findRef: source => {
+    findRef: (source) => {
       const refs = api.getRefs();
 
       return Object.values(refs).find(({ url }) => `${url}/iframe.html`.match(source));
@@ -86,7 +86,7 @@ export const init: ModuleFn = ({ store, provider }) => {
 
       api.checkRef(ref);
     },
-    checkRef: async ref => {
+    checkRef: async (ref) => {
       const { id, url } = ref;
 
       const handler = async (response: Response) => {

@@ -73,7 +73,7 @@ export class CssResourcePanel extends Component<Props, State> {
         lookup[res.id] = res;
         return lookup;
       }, {}) as CssResourceLookup;
-      const mergedList = list.map(res => {
+      const mergedList = list.map((res) => {
         const existingItem = existingIds[res.id];
         return existingItem
           ? {
@@ -82,14 +82,14 @@ export class CssResourcePanel extends Component<Props, State> {
             }
           : res;
       });
-      const picked = mergedList.filter(res => res.picked);
+      const picked = mergedList.filter((res) => res.picked);
       this.setState({ list: mergedList, currentStoryId: id }, () => this.emit(picked));
     }
   };
 
   onChange = (event: any) => {
     const { list: oldList } = this.state;
-    const list = oldList.map(i => ({
+    const list = oldList.map((i) => ({
       ...i,
       picked: i.id === event.target.id ? event.target.checked : i.picked,
     }));

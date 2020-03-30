@@ -36,7 +36,7 @@ export function extractFunctionName(func: Function, propName: string): string {
   return null;
 }
 
-const stringResolver: TypeResolver = rawDefaultProp => {
+const stringResolver: TypeResolver = (rawDefaultProp) => {
   return createSummaryValue(rawDefaultProp);
 };
 
@@ -67,7 +67,7 @@ function generateReactObject(rawDefaultProp: any) {
   return createSummaryValue(ELEMENT_CAPTION, jsx);
 }
 
-const objectResolver: TypeResolver = rawDefaultProp => {
+const objectResolver: TypeResolver = (rawDefaultProp) => {
   if (isReactElement(rawDefaultProp) && rawDefaultProp.type != null) {
     return generateReactObject(rawDefaultProp);
   }
@@ -140,7 +140,7 @@ const functionResolver: TypeResolver = (rawDefaultProp, propDef) => {
   return createSummaryValue(isElement ? ELEMENT_CAPTION : FUNCTION_CAPTION);
 };
 
-const defaultResolver: TypeResolver = rawDefaultProp => {
+const defaultResolver: TypeResolver = (rawDefaultProp) => {
   return createSummaryValue(rawDefaultProp.toString());
 };
 

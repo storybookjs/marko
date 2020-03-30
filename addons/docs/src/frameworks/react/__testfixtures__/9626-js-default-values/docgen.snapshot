@@ -5,7 +5,7 @@ exports[`react component properties 9626-js-default-values 1`] = `
 
 export const Tag = ({
   title = 'Beta'
-}) => React.createElement(\\"div\\", null, title);
+}) => /*#__PURE__*/React.createElement(\\"div\\", null, title);
 export const component = Tag;
 Tag.__docgenInfo = {
   \\"description\\": \\"\\",

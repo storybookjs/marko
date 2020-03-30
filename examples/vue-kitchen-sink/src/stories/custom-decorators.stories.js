@@ -3,7 +3,7 @@ import MyButton from './Button.vue';
 export default {
   title: 'Custom/Decorator for Vue',
   decorators: [
-    storyFn => {
+    (storyFn) => {
       // Decorated with story-function
       const WrapButton = storyFn({ customContext: 52, parameters: { customParameter: 42 } });
       return {

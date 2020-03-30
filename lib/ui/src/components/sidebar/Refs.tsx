@@ -38,7 +38,7 @@ const Wrapper = styled.div({
   marginRight: -20,
 });
 
-export const Ref: FunctionComponent<RefType & RefProps> = ref => {
+export const Ref: FunctionComponent<RefType & RefProps> = (ref) => {
   const { stories, id: key, title = key, storyId, filter, isHidden = false, authUrl, error } = ref;
   const { dataSet, expandedSet, length, others, roots, setExpanded, selectedSet } = useDataset(
     stories,

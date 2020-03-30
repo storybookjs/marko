@@ -67,10 +67,10 @@ describe('preview.story_store', () => {
     it('produces a story with inherited decorators applied', () => {
       const store = new StoryStore({ channel });
 
-      const globalDecorator = jest.fn().mockImplementation(s => s());
+      const globalDecorator = jest.fn().mockImplementation((s) => s());
       store.addGlobalMetadata({ parameters: {}, decorators: [globalDecorator] });
 
-      const kindDecorator = jest.fn().mockImplementation(s => s());
+      const kindDecorator = jest.fn().mockImplementation((s) => s());
       store.addKindMetadata('a', { parameters: {}, decorators: [kindDecorator] });
 
       const story = jest.fn();

@@ -3,7 +3,7 @@ import implementations from './implementations';
 
 const storyGroups = {};
 
-Object.keys(implementations).forEach(key => {
+Object.keys(implementations).forEach((key) => {
   const [groupName, itemName] = key.split('.');
   const implementation = implementations[key];
 

@@ -58,7 +58,10 @@ function applyJsDocResult(propDef: PropDef, jsDocParsingResult: JsDocParsingResu
       propDef.jsDocTags = {
         params:
           hasParams &&
-          extractedTags.params.map(x => ({ name: x.getPrettyName(), description: x.description })),
+          extractedTags.params.map((x) => ({
+            name: x.getPrettyName(),
+            description: x.description,
+          })),
         returns: hasReturns && { description: extractedTags.returns.description },
       };
     }

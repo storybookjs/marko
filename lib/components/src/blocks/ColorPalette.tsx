@@ -148,16 +148,16 @@ function renderSwatchSpecimen(colors: Colors) {
   if (Array.isArray(colors)) {
     return (
       <SwatchSpecimen>
-        <SwatchColors>{colors.map(color => renderSwatch(color))}</SwatchColors>
-        <SwatchLabels>{colors.map(color => renderSwatchLabel(color))}</SwatchLabels>
+        <SwatchColors>{colors.map((color) => renderSwatch(color))}</SwatchColors>
+        <SwatchLabels>{colors.map((color) => renderSwatchLabel(color))}</SwatchLabels>
       </SwatchSpecimen>
     );
   }
   return (
     <SwatchSpecimen>
-      <SwatchColors>{Object.values(colors).map(color => renderSwatch(color))}</SwatchColors>
+      <SwatchColors>{Object.values(colors).map((color) => renderSwatch(color))}</SwatchColors>
       <SwatchLabels>
-        {Object.keys(colors).map(color => renderSwatchLabel(color, colors[color]))}
+        {Object.keys(colors).map((color) => renderSwatchLabel(color, colors[color]))}
       </SwatchLabels>
     </SwatchSpecimen>
   );

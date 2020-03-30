@@ -11,7 +11,7 @@ type TextTypeProps = KnobControlProps<TextTypeKnobValue>;
 export default class TextType extends Component<TextTypeProps> {
   static defaultProps: TextTypeProps = {
     knob: {} as any,
-    onChange: value => value,
+    onChange: (value) => value,
   };
 
   static propTypes = {

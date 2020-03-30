@@ -65,7 +65,7 @@ export const getComponentProps = (
       if (rows) {
         props = { rows: filterRows(rows, exclude) };
       } else if (sections) {
-        Object.keys(sections).forEach(section => {
+        Object.keys(sections).forEach((section) => {
           sections[section] = filterRows(sections[section], exclude);
         });
       }
@@ -92,7 +92,7 @@ export const getComponent = (props: PropsProps = {}, context: DocsContextProps):
   return target;
 };
 
-const PropsContainer: FunctionComponent<PropsProps> = props => {
+const PropsContainer: FunctionComponent<PropsProps> = (props) => {
   const context = useContext(DocsContext);
   const { slot, components } = props;
   const {

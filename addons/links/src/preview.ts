@@ -75,7 +75,7 @@ export const linkTo = (
 };
 
 export const hrefTo = (kind: string, name: string): Promise<string> => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const { storyId } = storyStore.getSelection();
     const current = storyStore.fromId(storyId);
     resolve(generateUrl(toId(kind || current.kind, name)));

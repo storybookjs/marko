@@ -12,7 +12,7 @@ export interface PropDefMap {
 
 const propTypesMap = new Map();
 
-Object.keys(PropTypes).forEach(typeName => {
+Object.keys(PropTypes).forEach((typeName) => {
   // @ts-ignore
   const type = PropTypes[typeName];
 
@@ -44,10 +44,10 @@ function getPropDefs(component: Component, section: string): PropDef[] {
     case TypeSystem.TYPESCRIPT:
       return enhanceTypeScriptProps(extractedProps);
     default:
-      return extractedProps.map(x => x.propDef);
+      return extractedProps.map((x) => x.propDef);
   }
 }
 
-export const extractProps: PropsExtractor = component => ({
+export const extractProps: PropsExtractor = (component) => ({
   rows: getPropDefs(component, 'props'),
 });

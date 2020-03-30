@@ -17,7 +17,7 @@ addDecorator((s, { kind }) =>
 export default {
   title: 'Core/Decorators',
   decorators: [
-    s => (
+    (s) => (
       <>
         <p>Kind Decorator</p>
         {s()}
@@ -29,7 +29,7 @@ export default {
 export const All = () => <p>Story</p>;
 All.story = {
   decorators: [
-    s => (
+    (s) => (
       <>
         <p>Local Decorator</p>
         {s()}
@@ -42,7 +42,7 @@ export const Deprecated = () => <p>Story</p>;
 Deprecated.story = {
   parameters: {
     decorators: [
-      s => (
+      (s) => (
         <>
           <p>Deprecated Local Decorator</p>
           {s()}

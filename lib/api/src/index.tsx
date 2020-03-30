@@ -174,13 +174,13 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
       globalArgs,
       url,
       version,
-    ].map(m => m.init({ ...routeData, ...apiData, state: this.state, fullAPI: this.api }));
+    ].map((m) => m.init({ ...routeData, ...apiData, state: this.state, fullAPI: this.api }));
 
     // Create our initial state by combining the initial state of all modules, then overlaying any saved state
-    const state = getInitialState(this.state, ...this.modules.map(m => m.state));
+    const state = getInitialState(this.state, ...this.modules.map((m) => m.state));
 
     // Get our API by combining the APIs exported by each module
-    const api: API = Object.assign(this.api, { navigate }, ...this.modules.map(m => m.api));
+    const api: API = Object.assign(this.api, { navigate }, ...this.modules.map((m) => m.api));
 
     this.state = state;
     this.api = api;

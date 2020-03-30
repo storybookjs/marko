@@ -63,13 +63,13 @@ interface OptionsSelectValueItem {
   label: string;
 }
 
-const serialize: { <T>(value: T): T } = value => value;
-const deserialize: { <T>(value: T): T } = value => value;
+const serialize: { <T>(value: T): T } = (value) => value;
+const deserialize: { <T>(value: T): T } = (value) => value;
 
 const OptionsType: FunctionComponent<OptionsTypeProps<any>> & {
   serialize: typeof serialize;
   deserialize: typeof deserialize;
-} = props => {
+} = (props) => {
   const { knob, onChange } = props;
   const { display } = knob.optionsObj;
 
@@ -84,19 +84,20 @@ const OptionsType: FunctionComponent<OptionsTypeProps<any>> & {
   }
 
   if (display === 'select' || display === 'multi-select') {
-    const options: OptionsSelectValueItem[] = Object.keys(knob.options).map(key => ({
+    const options: OptionsSelectValueItem[] = Object.keys(knob.options).map((key) => ({
       value: knob.options[key],
       label: key,
     }));
 
     const isMulti = display === 'multi-select';
-    const optionsIndex = options.findIndex(i => i.value === knob.value);
+    const optionsIndex = options.findIndex((i) => i.value === knob.value);
     let defaultValue: typeof options | typeof options[0] = options[optionsIndex];
     let handleChange: ReactSelectOnChangeFn = (e: OptionsSelectValueItem) => onChange(e.value);
 
     if (isMulti) {
-      defaultValue = options.filter(i => knob.value.includes(i.value));
-      handleChange = (values: OptionsSelectValueItem[]) => onChange(values.map(item => item.value));
+      defaultValue = options.filter((i) => knob.value.includes(i.value));
+      handleChange = (values: OptionsSelectValueItem[]) =>
+        onChange(values.map((item) => item.value));
     }
 
     return (
@@ -115,7 +116,7 @@ const OptionsType: FunctionComponent<OptionsTypeProps<any>> & {
 OptionsType.defaultProps = {
   knob: {} as any,
   display: 'select',
-  onChange: value => value,
+  onChange: (value) => value,
 };
 
 OptionsType.propTypes = {

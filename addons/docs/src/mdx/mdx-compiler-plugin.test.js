@@ -28,9 +28,9 @@ const inputRegExp = /\.mdx$/;
 describe('docs-mdx-compiler-plugin', () => {
   const transformFixturesDir = path.join(__dirname, '__testfixtures__');
   fs.readdirSync(transformFixturesDir)
-    .filter(fileName => inputRegExp.test(fileName))
-    .filter(fileName => fileName !== 'story-missing-props.mdx')
-    .forEach(fixtureFile => {
+    .filter((fileName) => inputRegExp.test(fileName))
+    .filter((fileName) => fileName !== 'story-missing-props.mdx')
+    .forEach((fixtureFile) => {
       it(fixtureFile, async () => {
         const inputPath = path.join(transformFixturesDir, fixtureFile);
         const code = await generate(inputPath);

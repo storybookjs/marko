@@ -95,22 +95,22 @@ class PlaceholderClock extends Component<{ color: string }, { count: number }> {
   }
 }
 
-const MockSidebar: FunctionComponent<any> = props => (
+const MockSidebar: FunctionComponent<any> = (props) => (
   <PlaceholderClock color="hotpink">
     <pre>{JSON.stringify(props, null, 2)}</pre>
   </PlaceholderClock>
 );
-const MockPreview: FunctionComponent<any> = props => (
+const MockPreview: FunctionComponent<any> = (props) => (
   <PlaceholderClock color="deepskyblue">
     <pre>{JSON.stringify(props, null, 2)}</pre>
   </PlaceholderClock>
 );
-const MockPanel: FunctionComponent<any> = props => (
+const MockPanel: FunctionComponent<any> = (props) => (
   <PlaceholderClock color="orangered">
     <pre>{JSON.stringify(props, null, 2)}</pre>
   </PlaceholderClock>
 );
-export const MockPage: FunctionComponent<any> = props => (
+export const MockPage: FunctionComponent<any> = (props) => (
   <PlaceholderClock color="cyan">
     <pre>{JSON.stringify(props, null, 2)}</pre>
   </PlaceholderClock>

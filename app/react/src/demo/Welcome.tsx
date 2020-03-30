@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 
 type MainProps = Omit<DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>, 'style'>;
-const Main: FunctionComponent<MainProps> = props => (
+const Main: FunctionComponent<MainProps> = (props) => (
   <article
     {...props}
     style={{
@@ -29,7 +29,7 @@ type NoteProps = Omit<
   DetailedHTMLProps<HTMLAttributes<HTMLParagraphElement>, HTMLParagraphElement>,
   'style'
 >;
-const Note: FunctionComponent<NoteProps> = props => (
+const Note: FunctionComponent<NoteProps> = (props) => (
   <p
     {...props}
     style={{
@@ -39,7 +39,7 @@ const Note: FunctionComponent<NoteProps> = props => (
 );
 
 type InlineCodeProps = Omit<DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>, 'style'>;
-const InlineCode: FunctionComponent<InlineCodeProps> = props => (
+const InlineCode: FunctionComponent<InlineCodeProps> = (props) => (
   <code
     {...props}
     style={{

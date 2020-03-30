@@ -66,7 +66,7 @@ export default class LinkTo extends PureComponent<Props, State> {
     const { href } = this.state;
 
     return (
-      <a href={href} onClick={e => cancelled(e, this.handleClick)} {...rest}>
+      <a href={href} onClick={(e) => cancelled(e, this.handleClick)} {...rest}>
         {children}
       </a>
     );

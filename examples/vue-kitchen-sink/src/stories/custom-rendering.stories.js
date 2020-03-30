@@ -9,7 +9,7 @@ export default {
 };
 
 export const Render = () => ({
-  render: h => h('div', ['renders a div with some text in it..']),
+  render: (h) => h('div', ['renders a div with some text in it..']),
 });
 
 export const RenderComponent = () => ({

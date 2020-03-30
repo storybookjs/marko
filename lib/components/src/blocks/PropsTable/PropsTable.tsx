@@ -147,7 +147,7 @@ export interface PropsTableErrorProps {
 
 export type PropsTableProps = PropsTableRowsProps | PropsTableSectionsProps | PropsTableErrorProps;
 
-const PropsTableRow: FC<SectionRowProps | PropRowProps> = props => {
+const PropsTableRow: FC<SectionRowProps | PropRowProps> = (props) => {
   const { section } = props as SectionRowProps;
   if (section) {
     return <SectionRow section={section} />;
@@ -160,7 +160,7 @@ const PropsTableRow: FC<SectionRowProps | PropRowProps> = props => {
  * Display the props for a component as a props table. Each row is a collection of
  * PropDefs, usually derived from docgen info for the component.
  */
-const PropsTable: FC<PropsTableProps> = props => {
+const PropsTable: FC<PropsTableProps> = (props) => {
   const { error } = props as PropsTableErrorProps;
   if (error) {
     return <EmptyBlock>{error}</EmptyBlock>;
@@ -170,11 +170,11 @@ const PropsTable: FC<PropsTableProps> = props => {
   const { sections } = props as PropsTableSectionsProps;
   const { rows } = props as PropsTableRowsProps;
   if (sections) {
-    Object.keys(sections).forEach(section => {
+    Object.keys(sections).forEach((section) => {
       const sectionRows = sections[section];
       if (sectionRows && sectionRows.length > 0) {
         allRows.push({ key: section, value: { section } });
-        sectionRows.forEach(row => {
+        sectionRows.forEach((row) => {
           allRows.push({
             key: `${section}_${row.name}`,
             value: { row },
@@ -183,7 +183,7 @@ const PropsTable: FC<PropsTableProps> = props => {
       }
     });
   } else if (rows) {
-    allRows = rows.map(row => ({
+    allRows = rows.map((row) => ({
       key: row.name,
       value: { row },
     }));
@@ -203,7 +203,7 @@ const PropsTable: FC<PropsTableProps> = props => {
           </tr>
         </thead>
         <tbody className="docblock-propstable-body">
-          {allRows.map(row => (
+          {allRows.map((row) => (
             <PropsTableRow key={row.key} {...row.value} />
           ))}
         </tbody>

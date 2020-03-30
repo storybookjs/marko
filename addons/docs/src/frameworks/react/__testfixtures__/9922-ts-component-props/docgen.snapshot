@@ -6,7 +6,7 @@ exports[`react component properties 9922-ts-component-props 1`] = `
 const Button = ({
   children,
   onClick
-}) => React.createElement(\\"button\\", {
+}) => /*#__PURE__*/React.createElement(\\"button\\", {
   onClick: onClick,
   type: \\"button\\"
 }, children);
@@ -14,11 +14,11 @@ const Button = ({
 const WrappedButton = ({
   spacing,
   ...buttonProps
-}) => React.createElement(\\"div\\", {
+}) => /*#__PURE__*/React.createElement(\\"div\\", {
   style: {
     padding: spacing
   }
-}, React.createElement(Button, buttonProps));
+}, /*#__PURE__*/React.createElement(Button, buttonProps));
 
 export const component = WrappedButton;
 WrappedButton.__docgenInfo = {

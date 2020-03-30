@@ -61,7 +61,7 @@ ${extractComponentDescription(target) || ''}
   }
 };
 
-const DescriptionContainer: FunctionComponent<DescriptionProps> = props => {
+const DescriptionContainer: FunctionComponent<DescriptionProps> = (props) => {
   const context = useContext(DocsContext);
   const { slot } = props;
   let { markdown } = getDescriptionProps(props, context);

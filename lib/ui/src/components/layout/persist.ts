@@ -15,7 +15,7 @@ export const get = () => {
   }
 };
 
-const write = memoize(1)(changes => {
+const write = memoize(1)((changes) => {
   try {
     store.local.set(`storybook-layout`, changes);
   } catch (e) {

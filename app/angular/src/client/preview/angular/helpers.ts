@@ -69,7 +69,7 @@ const extractNgModuleMetadata = (importItem: any): NgModule => {
   }
 
   const ngModuleDecorator: NgModule | undefined = decorators.find(
-    decorator => decorator instanceof NgModule
+    (decorator) => decorator instanceof NgModule
   );
   if (!ngModuleDecorator) {
     return null;
@@ -82,7 +82,7 @@ const getExistenceOfComponentInModules = (
   declarations: any[],
   imports: any[]
 ): boolean => {
-  if (declarations && declarations.some(declaration => declaration === component)) {
+  if (declarations && declarations.some((declaration) => declaration === component)) {
     // Found component in declarations array
     return true;
   }
@@ -90,7 +90,7 @@ const getExistenceOfComponentInModules = (
     return false;
   }
 
-  return imports.some(importItem => {
+  return imports.some((importItem) => {
     const extractedNgModuleMetadata = extractNgModuleMetadata(importItem);
     if (!extractedNgModuleMetadata) {
       // Not an NgModule
@@ -161,8 +161,8 @@ const draw = (newModule: DynamicComponentType): void => {
     platform = platformBrowserDynamic();
     promises.push(platform.bootstrapModule(newModule));
   } else {
-    Promise.all(promises).then(modules => {
-      modules.forEach(mod => mod.destroy());
+    Promise.all(promises).then((modules) => {
+      modules.forEach((mod) => mod.destroy());
 
       insertDynamicRoot();
       promises = [];
