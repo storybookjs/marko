@@ -1,6 +1,6 @@
 import React from 'react';
 
-// We would need to add this in config.js idomatically however that would make this file a bit confusing
+// We would need to add this in config.js idiomatically however that would make this file a bit confusing
 import { addDecorator } from '@storybook/react';
 
 addDecorator((s, { kind }) =>
@@ -36,18 +36,4 @@ All.story = {
       </>
     ),
   ],
-};
-
-export const Deprecated = () => <p>Story</p>;
-Deprecated.story = {
-  parameters: {
-    decorators: [
-      (s) => (
-        <>
-          <p>Deprecated Local Decorator</p>
-          {s()}
-        </>
-      ),
-    ],
-  },
 };

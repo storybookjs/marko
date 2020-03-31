@@ -27,7 +27,6 @@
     "@storybook/addon-jest": "6.0.0-alpha.29",
     "@storybook/addon-knobs": "6.0.0-alpha.29",
     "@storybook/addon-links": "6.0.0-alpha.29",
-    "@storybook/addon-options": "6.0.0-alpha.29",
     "@storybook/addon-storyshots": "6.0.0-alpha.29",
     "@storybook/addons": "6.0.0-alpha.29",
     "@storybook/client-logger": "6.0.0-alpha.29",

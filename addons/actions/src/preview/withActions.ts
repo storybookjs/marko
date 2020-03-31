@@ -75,7 +75,6 @@ export const withActions = makeDecorator({
   name: 'withActions',
   parameterName: PARAM_KEY,
   skipIfNoParametersOrOptions: true,
-  allowDeprecatedUsage: true,
   wrapper: (getStory, context, { parameters, options }) => {
     applyDeprecatedOptions(actions, options as any[]);
 

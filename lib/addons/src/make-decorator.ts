@@ -1,4 +1,3 @@
-import deprecate from 'util-deprecate';
 import { StoryWrapper, StoryGetter, StoryContext } from './types';
 
 type MakeDecoratorResult = (...args: any) => any;
@@ -6,7 +5,6 @@ type MakeDecoratorResult = (...args: any) => any;
 interface MakeDecoratorOptions {
   name: string;
   parameterName: string;
-  allowDeprecatedUsage?: boolean;
   skipIfNoParametersOrOptions?: boolean;
   wrapper: StoryWrapper;
 }
@@ -16,7 +14,6 @@ export const makeDecorator = ({
   parameterName,
   wrapper,
   skipIfNoParametersOrOptions = false,
-  allowDeprecatedUsage = false,
 }: MakeDecoratorOptions): MakeDecoratorResult => {
   const decorator: any = (options: object) => (getStory: StoryGetter, context: StoryContext) => {
     const parameters = context.parameters && context.parameters[parameterName];
@@ -49,16 +46,6 @@ export const makeDecorator = ({
           return decorator(args)(...innerArgs);
         }
         return decorator(...args)(...innerArgs);
-      }
-
-      if (allowDeprecatedUsage) {
-        // Used to wrap a story directly .add('story', decorator(options)(() => <Story />))
-        //   This is now deprecated:
-        return deprecate(
-          (context: any) => decorator(...args)(innerArgs[0], context),
-          `Passing stories directly into ${name}() is deprecated,
-          instead use addDecorator(${name}) and pass options with the '${parameterName}' parameter`
-        );
       }
 
       throw new Error(

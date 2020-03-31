@@ -1,6 +1,1 @@
-export {
-  configureViewport,
-  DEFAULT_VIEWPORT,
-  INITIAL_VIEWPORTS,
-  MINIMAL_VIEWPORTS,
-} from './legacy_preview';
+export { INITIAL_VIEWPORTS, DEFAULT_VIEWPORT, MINIMAL_VIEWPORTS } from './defaults';

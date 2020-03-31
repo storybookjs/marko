@@ -20,10 +20,6 @@ export interface IStorybookStory {
   render: () => any;
 }
 
-// @deprecated Use IStorybookSection instead
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IStoribookSection extends IStorybookSection {}
-
 export interface IStorybookSection {
   kind: string;
   stories: IStorybookStory[];

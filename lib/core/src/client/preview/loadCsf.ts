@@ -1,5 +1,3 @@
-import deprecate from 'util-deprecate';
-
 import { ConfigApi, ClientApi, StoryStore } from '@storybook/client-api';
 import { isExportStory, storyNameFromExport, toId } from '@storybook/csf';
 import { logger } from '@storybook/client-logger';
@@ -119,10 +117,6 @@ const loadStories = (
       if (isExportStory(key, meta)) {
         const storyFn = exports[key];
         const { name, parameters, decorators, args, argTypes } = storyFn.story || {};
-        if (parameters && parameters.decorators) {
-          deprecate(() => {},
-          `${kindName} => ${name || key}: story.parameters.decorators is deprecated; use story.decorators instead.`)();
-        }
         const decoratorParams = decorators ? { decorators } : null;
         const exportName = storyNameFromExport(key);
         const idParams = { __id: toId(componentId || kindName, exportName) };

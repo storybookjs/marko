@@ -2,7 +2,6 @@ import { ReactNode } from 'react';
 
 import addons from '@storybook/addons';
 import CoreEvents from '@storybook/core-events';
-import deprecate from 'util-deprecate';
 
 import { EVENTS } from './constants';
 
@@ -49,15 +48,7 @@ interface Options {
   events: Event[];
 }
 
-const WithEvents = deprecate(({ children, ...options }: Options) => {
-  addEvents(options);
-  return children;
-}, `<WithEvents> usage is deprecated, use .addDecorator(withEvents({emit, events})) instead`);
-
 export default (options: Options) => {
-  if (options.children) {
-    return WithEvents(options);
-  }
   return (storyFn: () => ReactNode) => {
     addEvents(options);
     return storyFn();
