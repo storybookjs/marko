@@ -7,15 +7,15 @@ import { DocsStoryProps } from './shared';
 
 interface StoriesProps {
   title?: JSX.Element | string;
-  excludePrimary?: boolean;
+  includePrimary?: boolean;
 }
 
-export const Stories: FunctionComponent<StoriesProps> = ({ title, excludePrimary = true }) => {
+export const Stories: FunctionComponent<StoriesProps> = ({ title, includePrimary = false }) => {
   const context = useContext(DocsContext);
   const componentStories = getDocsStories(context);
 
   let stories: DocsStoryProps[] = componentStories;
-  if (excludePrimary) stories = stories.slice(1);
+  if (!includePrimary) stories = stories.slice(1);
 
   if (!stories || stories.length === 0) {
     return null;

@@ -92,6 +92,15 @@ customLabels.story = {
   },
 };
 
+export const customStoriesFilter = () => <div>Displays ALL stories (not excluding first one)</div>;
+customStoriesFilter.story = {
+  parameters: {
+    docs: {
+      page: () => <Stories includePrimary />,
+    },
+  },
+};
+
 export const multipleComponents = () => (
   <ButtonGroup>
     <DocgenButton label="one" />
