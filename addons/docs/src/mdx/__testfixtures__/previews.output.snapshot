@@ -67,6 +67,7 @@ const componentMeta = {
   parameters: {
     notes: 'component notes',
   },
+  component: Button,
   includeStories: ['helloButton', 'two'],
 };
 

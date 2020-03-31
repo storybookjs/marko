@@ -32,6 +32,15 @@ const sanitizeName = (name) => {
 
 const getStoryKey = (name, counter) => (name ? sanitizeName(name) : `story${counter}`);
 
+function genAttribute(key, element) {
+  const value = getAttr(element, key);
+  if (value && value.expression) {
+    const { code } = generate(value.expression, {});
+    return code;
+  }
+  return undefined;
+}
+
 function genStoryExport(ast, context) {
   let storyName = getAttr(ast.openingElement, 'name');
   let storyId = getAttr(ast.openingElement, 'id');
@@ -91,6 +100,12 @@ function genStoryExport(ast, context) {
   // always preserve the name, since CSF exports can get modified by displayName
   statements.push(`${storyKey}.story.name = '${storyName}';`);
 
+  const argTypes = genAttribute('argTypes', ast.openingElement);
+  if (argTypes) statements.push(`${storyKey}.story.argTypes = ${argTypes};`);
+
+  const args = genAttribute('args', ast.openingElement);
+  if (args) statements.push(`${storyKey}.story.args = ${args};`);
+
   let parameters = getAttr(ast.openingElement, 'parameters');
   parameters = parameters && parameters.expression;
   const source = jsStringEscape(storyCode);
@@ -138,8 +153,6 @@ function genPreviewExports(ast, context) {
 function genMeta(ast, options) {
   let title = getAttr(ast.openingElement, 'title');
   let id = getAttr(ast.openingElement, 'id');
-  let parameters = getAttr(ast.openingElement, 'parameters');
-  let decorators = getAttr(ast.openingElement, 'decorators');
   if (title) {
     if (title.type === 'StringLiteral') {
       title = "'".concat(jsStringEscape(title.value), "'");
@@ -158,19 +171,22 @@ function genMeta(ast, options) {
     }
   }
   id = id && `'${id.value}'`;
-  if (parameters && parameters.expression) {
-    const { code: params } = generate(parameters.expression, {});
-    parameters = params;
-  }
-  if (decorators && decorators.expression) {
-    const { code: decos } = generate(decorators.expression, {});
-    decorators = decos;
-  }
+  const parameters = genAttribute('parameters', ast.openingElement);
+  const decorators = genAttribute('decorators', ast.openingElement);
+  const component = genAttribute('component', ast.openingElement);
+  const subcomponents = genAttribute('subcomponents', ast.openingElement);
+  const args = genAttribute('args', ast.openingElement);
+  const argTypes = genAttribute('argTypes', ast.openingElement);
+
   return {
     title,
     id,
     parameters,
     decorators,
+    component,
+    subcomponents,
+    args,
+    argTypes,
   };
 }
 
