@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 
-import { Component } from '../../blocks/shared';
+import { Component } from '../../blocks/types';
 import { extractComponentProps } from './extractDocgenProps';
 
 const DOCGEN_SECTION = 'props';

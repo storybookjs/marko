@@ -2,7 +2,7 @@ import { PropDef } from '@storybook/components';
 import { ExtractedProp } from '../../../lib/docgen';
 import { createType } from './createType';
 import { createDefaultValue, createDefaultValueFromRawDefaultProp } from '../lib/defaultValues';
-import { Component } from '../../../blocks/shared';
+import { Component } from '../../../blocks/types';
 import { keepOriginalDefinitionOrder } from './sortProps';
 import { rawDefaultPropTypeResolvers } from './rawDefaultPropResolvers';
 

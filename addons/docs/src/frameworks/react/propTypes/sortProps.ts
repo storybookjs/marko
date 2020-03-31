@@ -1,5 +1,5 @@
 import { PropDef } from '@storybook/components';
-import { Component } from '../../../blocks/shared';
+import { Component } from '../../../blocks/types';
 
 // react-docgen doesn't returned the props in the order they were defined in the "propTypes" object of the component.
 // This function re-order them by their original definition order.

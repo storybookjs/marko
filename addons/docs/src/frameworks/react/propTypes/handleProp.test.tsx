@@ -3,7 +3,7 @@
 import { PropDef } from '@storybook/components';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Component } from '../../../blocks/shared';
+import { Component } from '../../../blocks/types';
 import { extractComponentProps, DocgenInfo, DocgenPropDefaultValue } from '../../../lib/docgen';
 import { enhancePropTypesProp, enhancePropTypesProps } from './handleProp';
 
