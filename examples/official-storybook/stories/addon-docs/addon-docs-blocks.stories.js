@@ -92,32 +92,6 @@ customLabels.story = {
   },
 };
 
-export const customStoriesFilter = () => <div>Displays ALL stories (not excluding first one)</div>;
-customStoriesFilter.story = {
-  parameters: {
-    docs: {
-      page: () => (
-        <>
-          <Stories slot={(stories) => stories} />
-        </>
-      ),
-    },
-  },
-};
-
-export const descriptionSlot = () => <div>Adds markdown to the description</div>;
-descriptionSlot.story = {
-  parameters: {
-    docs: {
-      page: () => (
-        <>
-          <Description slot={(description) => `<b>${description}</b>`} />
-        </>
-      ),
-    },
-  },
-};
-
 export const multipleComponents = () => (
   <ButtonGroup>
     <DocgenButton label="one" />
@@ -141,7 +115,7 @@ multipleComponents.story = {
           <Title />
           <Subtitle />
           <Description />
-          <Primary slot={(stories) => stories.find((story) => story.story === 'Many Components')} />
+          <Primary name="Many Components" />
           <Props />
         </>
       ),

@@ -1,6 +1,7 @@
 <h1>Migration</h1>
 
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
+  - [DocsPage slots removed](#docspage-slots-removed)
   - [React prop tables with Typescript](#react-prop-tables-with-typescript)
     - [React.FC interfaces](#reactfc-interfaces)
     - [Imported types](#imported-types)
@@ -11,12 +12,12 @@
     - [Removed Legacy Story APIs](#removed-legacy-story-apis)
     - [Can no longer add decorators/parameters after stories](#can-no-longer-add-decoratorsparameters-after-stories)
     - [Changed Parameter Handling](#changed-parameter-handling)
-  - [Actions Addon API changes](#actions-addon-api-changes)
-    - [Actions Addon uses parameters](#actions-addon-uses-parameters)
-    - [Removed action decorator APIs](#removed-action-decorator-apis)
   - [Simplified Render Context](#simplified-render-context)
   - [Story Store immutable outside of configuration](#story-store-immutable-outside-of-configuration)
   - [Improved story source handling](#improved-story-source-handling)
+  - [Actions Addon API changes](#actions-addon-api-changes)
+    - [Actions Addon uses parameters](#actions-addon-uses-parameters)
+    - [Removed action decorator APIs](#removed-action-decorator-apis)
 - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
   - [To main.js configuration](#to-mainjs-configuration)
     - [Using main.js](#using-mainjs)
@@ -98,6 +99,25 @@
 
 ## From version 5.3.x to 6.0.x
 
+### DocsPage slots removed
+
+In SB5.2, we introduced the concept of [DocsPage slots](https://github.com/storybookjs/storybook/blob/0de8575eab73bfd5c5c7ba5fe33e53a49b92db3a/addons/docs/docs/docspage.md#docspage-slots) for customizing the DocsPage.
+
+In 5.3, we introduced `docs.x` story parameters like `docs.prepareForInline` which get filled in by frameworks and can also be overwritten by users, which is a more natural/convenient way to make global customizations.
+
+We also introduced introduced [Custom DocsPage](https://github.com/storybookjs/storybook/blob/next/addons/docs/docs/docspage.md#replacing-docspage), which makes it possible to add/remove/update DocBlocks on the page.
+
+These mechanisms are superior to slots, so we've removed slots in 6.0. For each slot, we provide a migration path here:
+
+| Slot        | Slot function     | Replacement                                  |
+| ----------- | ----------------- | -------------------------------------------- |
+| Title       | `titleSlot`       | Custom DocsPage                              |
+| Subtitle    | `subtitleSlot`    | Custom DocsPage                              |
+| Description | `descriptionSlot` | `docs.extractComponentDescription` parameter |
+| Primary     | `primarySlot`     | Custom DocsPage                              |
+| Props       | `propsSlot`       | `docs.extractProps` parameter                |
+| Stories     | `storiesSlot`     | Custom DocsPage                              |
+
 ### React prop tables with Typescript
 
 Starting in 6.0 we are changing our recommended setup for extracting prop tables in `addon-docs` for React projects using TypeScript.
@@ -107,6 +127,7 @@ In earlier versions, we recommended `react-docgen-typescript-loader` (`RDTL`) an
 As a consequence we've removed `RDTL` from the presets, which is a breaking change. We made this change because `react-docgen` now supports TypeScript natively, and fewer dependencies simplifies things for everybody.
 
 The Babel-based `react-docgen` version is the default in:
+
 - `@storybook/preset-create-react-app` @ `^2.1.0`
 - `@storybook/preset-typescript` @ `^3.0.0`
 
@@ -322,6 +343,7 @@ The MDX analog:
   <Button />
 </Story>
 ```
+
 ### Actions Addon API changes
 
 #### Actions Addon uses parameters
