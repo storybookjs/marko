@@ -9,7 +9,7 @@ function Button({
   onClick
 }) {
   // eslint-disable-next-line react/button-has-type
-  return React.createElement(\\"button\\", {
+  return /*#__PURE__*/React.createElement(\\"button\\", {
     onClick: onClick
   }, label);
 }

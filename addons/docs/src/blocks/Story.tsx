@@ -3,7 +3,7 @@ import { MDXProvider } from '@mdx-js/react';
 import { components as docsComponents } from '@storybook/components/html';
 import { Story, StoryProps as PureStoryProps } from '@storybook/components';
 import { toId, storyNameFromExport } from '@storybook/csf';
-import { CURRENT_SELECTION } from './shared';
+import { CURRENT_SELECTION } from './types';
 
 import { DocsContext, DocsContextProps } from './DocsContext';
 

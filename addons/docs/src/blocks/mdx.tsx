@@ -16,7 +16,7 @@ export const assertIsFn = (val: any) => {
 };
 
 // Hacky utilty for adding mdxStoryToId to the default context
-export const AddContext: FC<DocsContextProps> = props => {
+export const AddContext: FC<DocsContextProps> = (props) => {
   const { children, ...rest } = props;
   const parentContext = React.useContext(DocsContext);
   return (
@@ -80,7 +80,7 @@ interface AnchorMdxProps {
   target: string;
 }
 
-export const AnchorMdx: FC<AnchorMdxProps> = props => {
+export const AnchorMdx: FC<AnchorMdxProps> = (props) => {
   const { href, target, children, ...rest } = props;
 
   if (href) {
@@ -182,7 +182,7 @@ interface HeaderMdxProps {
   id: string;
 }
 
-export const HeaderMdx: FC<HeaderMdxProps> = props => {
+export const HeaderMdx: FC<HeaderMdxProps> = (props) => {
   const { as, id, children, ...rest } = props;
 
   // An id should have been added on every header by the "remark-slug" plugin.

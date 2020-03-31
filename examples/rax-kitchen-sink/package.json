@@ -37,7 +37,7 @@
     "@storybook/theming": "6.0.0-alpha.29",
     "babel-eslint": "^10.0.3",
     "build-plugin-rax-app": "^0.2.0",
-    "stylesheet-loader": "^0.7.0"
+    "stylesheet-loader": "^0.8.0"
   },
   "storybook": {
     "chromatic": {

@@ -102,7 +102,7 @@ export default class Store {
       delta = patch;
     }
 
-    const newState: State = await new Promise(resolve => {
+    const newState: State = await new Promise((resolve) => {
       this.upstreamSetState(patch, resolve);
     });
 

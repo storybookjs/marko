@@ -56,10 +56,7 @@ describe('preview.client_api', () => {
         },
       });
 
-      clientApi
-        .storiesOf('none', module)
-        .aa()
-        .bb();
+      clientApi.storiesOf('none', module).aa().bb();
       expect(data).toEqual(['foo', 'bar']);
     });
 
@@ -205,7 +202,7 @@ describe('preview.client_api', () => {
       } = getContext();
 
       storiesOf('kind', module)
-        .addDecorator(fn => `aa-${fn()}`)
+        .addDecorator((fn) => `aa-${fn()}`)
         .add('name', () => 'Hello');
 
       expect(storyStore.fromId('kind--name').storyFn()).toBe('aa-Hello');
@@ -217,7 +214,7 @@ describe('preview.client_api', () => {
         storyStore,
       } = getContext();
 
-      addDecorator(fn => `bb-${fn()}`);
+      addDecorator((fn) => `bb-${fn()}`);
 
       storiesOf('kind', module).add('name', () => 'Hello');
       const f = storyStore.fromId('x');
@@ -231,10 +228,10 @@ describe('preview.client_api', () => {
         storyStore,
       } = getContext();
 
-      addDecorator(fn => `aa-${fn()}`);
+      addDecorator((fn) => `aa-${fn()}`);
 
       storiesOf('kind', module)
-        .addDecorator(fn => `bb-${fn()}`)
+        .addDecorator((fn) => `bb-${fn()}`)
         .add('name', () => 'Hello');
 
       expect(storyStore.fromId('kind--name').storyFn()).toBe('aa-bb-Hello');
@@ -247,8 +244,8 @@ describe('preview.client_api', () => {
       } = getContext();
 
       storiesOf('kind', module)
-        .addDecorator(fn => `aa-${fn()}`)
-        .add('name', c => `${c.kind}-${c.name}`);
+        .addDecorator((fn) => `aa-${fn()}`)
+        .add('name', (c) => `${c.kind}-${c.name}`);
 
       const result = storyStore.fromId('kind--name').storyFn();
       expect(result).toBe(`aa-kind-name`);
@@ -440,7 +437,7 @@ describe('preview.client_api', () => {
           this.callbacks.push(fn);
         },
         reload() {
-          this.callbacks.forEach(fn => fn());
+          this.callbacks.forEach((fn) => fn());
         },
       };
     }
@@ -528,12 +525,12 @@ describe('preview.client_api', () => {
 
       let [event, args] = mockChannelEmit.mock.calls[0];
       expect(event).toEqual(Events.SET_STORIES);
-      expect(Object.values(args.stories as [{ kind: string }]).map(v => v.kind)).toEqual([
+      expect(Object.values(args.stories as [{ kind: string }]).map((v) => v.kind)).toEqual([
         'kind0',
         'kind1',
         'kind2',
       ]);
-      expect(getStorybook().map(story => story.kind)).toEqual(['kind1', 'kind2']);
+      expect(getStorybook().map((story) => story.kind)).toEqual(['kind1', 'kind2']);
 
       mockChannelEmit.mockClear();
 
@@ -548,12 +545,12 @@ describe('preview.client_api', () => {
       [event, args] = mockChannelEmit.mock.calls[0];
 
       expect(event).toEqual(Events.SET_STORIES);
-      expect(Object.values(args.stories as [{ kind: string }]).map(v => v.kind)).toEqual([
+      expect(Object.values(args.stories as [{ kind: string }]).map((v) => v.kind)).toEqual([
         'kind0',
         'kind1',
         'kind2',
       ]);
-      expect(getStorybook().map(story => story.kind)).toEqual(['kind1', 'kind2']);
+      expect(getStorybook().map((story) => story.kind)).toEqual(['kind1', 'kind2']);
     });
 
     it('should call `module.hot.dispose` inside add and soriesOf by default', () => {

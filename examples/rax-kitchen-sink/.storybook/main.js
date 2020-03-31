@@ -12,7 +12,7 @@ module.exports = {
     '@storybook/addon-a11y',
     '@storybook/addon-jest',
   ],
-  webpackFinal: async config => ({
+  webpackFinal: async (config) => ({
     ...config,
     module: {
       ...config.module,

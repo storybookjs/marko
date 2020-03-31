@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import BaseButton from './BaseButton';
 
-const NamedExportButton = props => <BaseButton {...props} />;
+const NamedExportButton = (props) => <BaseButton {...props} />;
 
 NamedExportButton.defaultProps = {
   disabled: false,

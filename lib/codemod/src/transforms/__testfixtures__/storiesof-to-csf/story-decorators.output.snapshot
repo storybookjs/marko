@@ -17,7 +17,7 @@ WithStoryParamsAndDecorators.story = {
     bar: 1,
   },
 
-  decorators: [withKnobs, storyFn => <div className=\\"foo\\">{storyFn}</div>],
+  decorators: [withKnobs, (storyFn) => <div className=\\"foo\\">{storyFn}</div>],
 };
 
 export const WithStoryDecorators = () => <Button label=\\"The Button\\" />;

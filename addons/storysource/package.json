@@ -38,15 +38,15 @@
     "@storybook/theming": "6.0.0-alpha.29",
     "core-js": "^3.0.1",
     "estraverse": "^4.2.0",
-    "loader-utils": "^1.2.3",
-    "prettier": "^1.16.4",
+    "loader-utils": "^2.0.0",
+    "prettier": "^2.0.2",
     "prop-types": "^15.7.2",
     "react": "^16.9.17",
     "react-syntax-highlighter": "^11.0.2",
     "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
-    "@types/react": "^16.9.19",
+    "@types/react": "^16.9.27",
     "@types/react-syntax-highlighter": "^11.0.4"
   },
   "peerDependencies": {

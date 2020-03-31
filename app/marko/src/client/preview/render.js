@@ -53,10 +53,7 @@ export default function renderMain({
       }
 
       activeTemplate = template;
-      activeComponent = activeTemplate
-        .renderSync(config.input)
-        .appendTo(rootEl)
-        .getComponent();
+      activeComponent = activeTemplate.renderSync(config.input).appendTo(rootEl).getComponent();
     }
   }
 

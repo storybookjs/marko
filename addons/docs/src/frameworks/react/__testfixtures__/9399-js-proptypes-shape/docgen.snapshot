@@ -5,7 +5,7 @@ exports[`react component properties 9399-js-proptypes-shape 1`] = `
 import PropTypes from 'prop-types';
 export const Credits = ({
   areas
-}) => React.createElement(React.Fragment, null, JSON.stringify(areas)); // https://github.com/storybookjs/storybook/issues/9399
+}) => /*#__PURE__*/React.createElement(React.Fragment, null, JSON.stringify(areas)); // https://github.com/storybookjs/storybook/issues/9399
 
 Credits.propTypes = {
   areas: PropTypes.arrayOf(PropTypes.shape({

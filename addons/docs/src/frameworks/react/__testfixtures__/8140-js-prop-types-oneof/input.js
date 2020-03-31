@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Alert = props => <>{JSON.stringify(props)}</>;
+const Alert = (props) => <>{JSON.stringify(props)}</>;
 
 Alert.defaultProps = {
   mode: 'static',

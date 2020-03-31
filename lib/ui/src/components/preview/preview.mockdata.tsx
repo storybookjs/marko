@@ -8,7 +8,7 @@ export const previewProps: PreviewProps = {
     on: () => {},
     emit: () => {},
     off: () => {},
-    getElements: (type =>
+    getElements: ((type) =>
       type === types.TAB
         ? [
             {

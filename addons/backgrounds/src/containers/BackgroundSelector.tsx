@@ -52,12 +52,12 @@ const getSelectedBackgroundColor = (list: Input[], currentSelectedValue: string)
     return currentSelectedValue;
   }
 
-  if (list.find(i => i.value === currentSelectedValue)) {
+  if (list.find((i) => i.value === currentSelectedValue)) {
     return currentSelectedValue;
   }
 
-  if (list.find(i => i.default)) {
-    return list.find(i => i.default).value;
+  if (list.find((i) => i.default)) {
+    return list.find((i) => i.default).value;
   }
 
   return 'transparent';
@@ -140,7 +140,7 @@ export class BackgroundSelector extends Component<Props> {
                 trigger="click"
                 tooltip={({ onHide }) => (
                   <TooltipLinkList
-                    links={getDisplayedItems(items, selectedBackgroundColor, i => {
+                    links={getDisplayedItems(items, selectedBackgroundColor, (i) => {
                       this.change(i);
                       onHide();
                     })}

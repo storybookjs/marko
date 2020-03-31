@@ -40,33 +40,33 @@ const Text = styled.p(({ theme }) => ({
   margin: 0,
 }));
 
-const Head: FunctionComponent<ListitemProps> = props => {
+const Head: FunctionComponent<ListitemProps> = (props) => {
   const api = useStorybookApi();
   const { setExpanded, expandedSet } = useContext(ExpanderContext);
   const { id, isComponent, childIds, refId } = props;
 
   const onClick = useCallback(
-    e => {
+    (e) => {
       e.preventDefault();
       if (!expandedSet[id] && isComponent && childIds && childIds.length) {
         api.selectStory(childIds[0], undefined, { ref: refId });
       }
-      setExpanded(s => ({ ...s, [id]: !s[id] }));
+      setExpanded((s) => ({ ...s, [id]: !s[id] }));
     },
     [id, expandedSet[id]]
   );
   return <ListItem onClick={onClick} {...props} href={`#${id}`} />;
 };
 
-const Leaf: FunctionComponent<ListitemProps> = props => {
+const Leaf: FunctionComponent<ListitemProps> = (props) => {
   const api = useStorybookApi();
   const { setExpanded } = useContext(ExpanderContext);
   const { id, refId } = props;
   const onClick = useCallback(
-    e => {
+    (e) => {
       e.preventDefault();
       api.selectStory(id, undefined, { ref: refId });
-      setExpanded(s => ({ ...s, [id]: !s[id] }));
+      setExpanded((s) => ({ ...s, [id]: !s[id] }));
     },
     [id]
   );
@@ -112,7 +112,7 @@ const ErrorFormatter: FunctionComponent<{ error: Error }> = ({ error }) => {
 
   const rawLines = input.split(/\n/).slice(1);
   const [, ...lines] = rawLines
-    .map(line => {
+    .map((line) => {
       const r = line.match(linesRegex);
 
       return r ? { name: r[1], location: r[2].replace(document.location.origin, '') } : null;
@@ -150,7 +150,7 @@ export const AuthBlock: FunctionComponent<{ authUrl: string; id: string }> = ({ 
     window.document.location.reload();
   }, []);
 
-  const open = useCallback(e => {
+  const open = useCallback((e) => {
     e.preventDefault();
     const childWindow = window.open(authUrl, `storybook_auth_${id}`, 'resizable,scrollbars');
 
@@ -260,7 +260,7 @@ export const ContentBlock: FunctionComponent<{
       {roots.map(({ id, name, children }) => (
         <Section data-title={name} key={id}>
           <RootHeading className="sidebar-subheading">{name}</RootHeading>
-          {children.map(child => (
+          {children.map((child) => (
             <Tree
               key={child}
               depth={0}

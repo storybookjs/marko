@@ -8,7 +8,7 @@ module.exports = {
     },
     cra: 'https://deploy-preview-9210--storybookjs.netlify.com/cra-ts-kitchen-sink',
   },
-  webpack: async config => ({
+  webpack: async (config) => ({
     ...config,
     module: {
       ...config.module,
@@ -28,7 +28,7 @@ module.exports = {
       extensions: [...(config.resolve.extensions || []), '.ts', '.tsx'],
     },
   }),
-  managerWebpack: async config => ({
+  managerWebpack: async (config) => ({
     ...config,
     module: {
       ...config.module,

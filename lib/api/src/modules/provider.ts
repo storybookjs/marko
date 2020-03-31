@@ -33,9 +33,10 @@ export interface SubAPI {
 }
 
 export const init: ModuleFn = ({ provider, fullAPI }) => {
-  provider.handleAPI(fullAPI);
-
   return {
     api: provider.renderPreview ? { renderPreview: provider.renderPreview } : {},
+    init: () => {
+      provider.handleAPI(fullAPI);
+    },
   };
 };

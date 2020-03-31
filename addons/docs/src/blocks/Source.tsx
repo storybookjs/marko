@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Source, SourceProps as PureSourceProps, SourceError } from '@storybook/components';
 import { DocsContext, DocsContextProps } from './DocsContext';
-import { CURRENT_SELECTION } from './shared';
+import { CURRENT_SELECTION } from './types';
 
 interface CommonProps {
   language?: string;

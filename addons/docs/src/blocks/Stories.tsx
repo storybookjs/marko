@@ -3,20 +3,20 @@ import { DocsContext } from './DocsContext';
 import { DocsStory } from './DocsStory';
 import { Heading } from './Heading';
 import { getDocsStories } from './utils';
-import { StoriesSlot, DocsStoryProps } from './shared';
+import { DocsStoryProps } from './types';
 
 interface StoriesProps {
-  slot?: StoriesSlot;
   title?: JSX.Element | string;
+  includePrimary?: boolean;
 }
 
-export const Stories: FunctionComponent<StoriesProps> = ({ slot, title }) => {
+export const Stories: FunctionComponent<StoriesProps> = ({ title, includePrimary = false }) => {
   const context = useContext(DocsContext);
   const componentStories = getDocsStories(context);
 
-  const stories: DocsStoryProps[] = slot
-    ? slot(componentStories, context)
-    : componentStories && componentStories.slice(1);
+  let stories: DocsStoryProps[] = componentStories;
+  if (!includePrimary) stories = stories.slice(1);
+
   if (!stories || stories.length === 0) {
     return null;
   }

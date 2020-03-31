@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { Loader } from './Loader';
 
 storiesOf('Basics/Loader', module)
-  .addDecorator(storyFn => (
+  .addDecorator((storyFn) => (
     <div
       style={{
         position: 'fixed',

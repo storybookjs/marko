@@ -19,7 +19,7 @@ export default {
     ((StoryFn, c) => (
       <LocationProvider key="location.provider">
         <Location key="location.consumer">
-          {locationData => (
+          {(locationData) => (
             <ManagerProvider key="manager" provider={provider} {...locationData} docsMode={false}>
               <ThemeProvider key="theme.provider" theme={ensureTheme(themes.light)}>
                 <StoryFn {...c} />

@@ -8,7 +8,7 @@ export default {
   title: 'Docs/PropRow',
   excludeStories: /.*Def$/,
   decorators: [
-    getStory => (
+    (getStory) => (
       <ResetWrapper>
         <Table>
           <tbody>{getStory()}</tbody>

@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useContext } from 'react';
 import { Description, DescriptionProps as PureDescriptionProps } from '@storybook/components';
 import { DocsContext, DocsContextProps } from './DocsContext';
-import { Component, CURRENT_SELECTION, DescriptionSlot } from './shared';
+import { Component, CURRENT_SELECTION } from './types';
 import { str } from '../lib/docgen';
 
 export enum DescriptionType {
@@ -16,7 +16,6 @@ type Notes = string | any;
 type Info = string | any;
 
 interface DescriptionProps {
-  slot?: DescriptionSlot;
   of?: '.' | Component;
   type?: DescriptionType;
   markdown?: string;
@@ -63,11 +62,7 @@ ${extractComponentDescription(target) || ''}
 
 const DescriptionContainer: FunctionComponent<DescriptionProps> = props => {
   const context = useContext(DocsContext);
-  const { slot } = props;
-  let { markdown } = getDescriptionProps(props, context);
-  if (slot) {
-    markdown = slot(markdown, context);
-  }
+  const { markdown } = getDescriptionProps(props, context);
   return markdown ? <Description markdown={markdown} /> : null;
 };
 

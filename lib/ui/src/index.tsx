@@ -34,7 +34,7 @@ export const Root: FunctionComponent<RootProps> = ({ provider }) => (
     <HelmetProvider key="helmet.Provider">
       <LocationProvider key="location.provider">
         <Location key="location.consumer">
-          {locationData => (
+          {(locationData) => (
             <ManagerProvider
               key="manager"
               provider={provider}

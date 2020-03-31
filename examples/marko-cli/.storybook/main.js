@@ -8,7 +8,7 @@ module.exports = {
     '@storybook/addon-knobs',
     '@storybook/addon-a11y',
   ],
-  webpackFinal: async config => {
+  webpackFinal: async (config) => {
     config.module.rules.push({
       test: [/\.stories\.js$/],
       loaders: [require.resolve('@storybook/source-loader')],

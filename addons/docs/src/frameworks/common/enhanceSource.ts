@@ -36,7 +36,7 @@ const extract = (targetId: string, { source, locationsMap }: StorySource) => {
   ].join('\n');
 };
 
-export const enhanceSource: ParameterEnhancer = context => {
+export const enhanceSource: ParameterEnhancer = (context) => {
   const { id, parameters } = context;
   const { storySource, docs = {} } = parameters;
   const { formatSource } = docs;

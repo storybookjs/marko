@@ -24,7 +24,7 @@ function centered(storyFn: () => ReactNode) {
 
 export default makeDecorator({
   ...parameters,
-  wrapper: getStory => centered(getStory as StoryFn),
+  wrapper: (getStory) => centered(getStory as StoryFn),
 });
 
 if (module && module.hot && module.hot.decline) {

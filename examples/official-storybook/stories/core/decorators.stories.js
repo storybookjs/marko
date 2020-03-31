@@ -1,6 +1,6 @@
 import React from 'react';
 
-// We would need to add this in config.js idomatically however that would make this file a bit confusing
+// We would need to add this in config.js idiomatically however that would make this file a bit confusing
 import { addDecorator } from '@storybook/react';
 
 addDecorator((s, { kind }) =>
@@ -17,7 +17,7 @@ addDecorator((s, { kind }) =>
 export default {
   title: 'Core/Decorators',
   decorators: [
-    s => (
+    (s) => (
       <>
         <p>Kind Decorator</p>
         {s()}
@@ -29,7 +29,7 @@ export default {
 export const All = () => <p>Story</p>;
 All.story = {
   decorators: [
-    s => (
+    (s) => (
       <>
         <p>Local Decorator</p>
         {s()}

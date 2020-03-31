@@ -129,7 +129,7 @@ export const extractPropsFromData = (componentData: Directive) => {
     'content children',
   ];
   const sections: Sections = {};
-  SECTIONS.forEach(section => {
+  SECTIONS.forEach((section) => {
     const items = sectionToItems[section];
     if (items) {
       sections[section] = items;

@@ -10,7 +10,7 @@ import {
   TabsState,
 } from '@storybook/components';
 import { DocsContext, DocsContextProps } from './DocsContext';
-import { Component, PropsSlot, CURRENT_SELECTION } from './shared';
+import { Component, CURRENT_SELECTION } from './types';
 import { getComponentName } from './utils';
 
 import { PropsExtractor } from '../lib/docgen/types';
@@ -23,7 +23,6 @@ interface PropsProps {
   components?: {
     [label: string]: Component;
   };
-  slot?: PropsSlot;
 }
 
 // FIXME: remove in SB6.0 & require config
@@ -94,7 +93,7 @@ export const getComponent = (props: PropsProps = {}, context: DocsContextProps):
 
 const PropsContainer: FunctionComponent<PropsProps> = props => {
   const context = useContext(DocsContext);
-  const { slot, components } = props;
+  const { components } = props;
   const {
     parameters: { subcomponents },
   } = context;
@@ -103,7 +102,7 @@ const PropsContainer: FunctionComponent<PropsProps> = props => {
   if (!allComponents) {
     const main = getComponent(props, context);
     const mainLabel = getComponentName(main);
-    const mainProps = slot ? slot(context, main) : getComponentProps(main, props, context);
+    const mainProps = getComponentProps(main, props, context);
 
     if (!subcomponents || typeof subcomponents !== 'object') {
       return mainProps && <PropsTable {...mainProps} />;
@@ -116,7 +115,7 @@ const PropsContainer: FunctionComponent<PropsProps> = props => {
   Object.entries(allComponents).forEach(([label, component]) => {
     tabs.push({
       label,
-      table: slot ? slot(context, component) : getComponentProps(component, props, context),
+      table: getComponentProps(component, props, context),
     });
   });
 

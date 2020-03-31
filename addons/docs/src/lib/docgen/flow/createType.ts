@@ -17,7 +17,7 @@ function generateUnion({ name, raw, elements }: DocgenFlowUnionType): PropType {
   }
 
   if (elements != null) {
-    return createSummaryValue(elements.map(x => x.value).join(' | '));
+    return createSummaryValue(elements.map((x) => x.value).join(' | '));
   }
 
   return createSummaryValue(name);

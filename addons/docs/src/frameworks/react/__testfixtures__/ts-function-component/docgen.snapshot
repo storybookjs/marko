@@ -8,7 +8,7 @@ exports[`react component properties ts-function-component 1`] = `
  */
 export const Button = ({
   onClick
-}) => React.createElement(\\"button\\", {
+}) => /*#__PURE__*/React.createElement(\\"button\\", {
   onClick: onClick,
   type: \\"button\\"
 }, \\"hello\\");

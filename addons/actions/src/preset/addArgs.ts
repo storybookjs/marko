@@ -12,7 +12,7 @@ import { action } from '../index';
  * Automatically add action args for argTypes whose name
  * matches a regex, such as `^on.*` for react-style `onClick` etc.
  */
-export const inferActionsFromArgTypesRegex: ParameterEnhancer = context => {
+export const inferActionsFromArgTypesRegex: ParameterEnhancer = (context) => {
   const { args, actions, argTypes } = context.parameters;
   if (!actions || actions.disable || !actions.argTypesRegex || !argTypes) {
     return null;
@@ -34,7 +34,7 @@ export const inferActionsFromArgTypesRegex: ParameterEnhancer = context => {
 /**
  * Add action args for list of strings.
  */
-export const addActionsFromArgTypes: ParameterEnhancer = context => {
+export const addActionsFromArgTypes: ParameterEnhancer = (context) => {
   const { args, argTypes, actions } = context.parameters;
   if (actions?.disable || !argTypes) {
     return null;

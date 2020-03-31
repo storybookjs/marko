@@ -41,7 +41,7 @@ export default {
 
 export const vertical = () => (
   <ScrollArea vertical>
-    {list(i => (
+    {list((i) => (
       <Fragment key={i}>
         <Block>{i}</Block>
         <br />
@@ -52,7 +52,7 @@ export const vertical = () => (
 
 export const horizontal = () => (
   <ScrollArea horizontal>
-    {list(i => (
+    {list((i) => (
       <Block key={i}>{i}</Block>
     ))}
   </ScrollArea>
@@ -60,9 +60,9 @@ export const horizontal = () => (
 
 export const both = () => (
   <ScrollArea horizontal vertical>
-    {list(i => (
+    {list((i) => (
       <Fragment key={i}>
-        {list(ii => (
+        {list((ii) => (
           <Block key={ii}>{ii * i}</Block>
         ))}
         <br />

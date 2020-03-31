@@ -48,10 +48,7 @@ interface RuleProps {
 }
 
 const formatSeverityText = (severity: string) => {
-  return severity
-    .charAt(0)
-    .toUpperCase()
-    .concat(severity.slice(1));
+  return severity.charAt(0).toUpperCase().concat(severity.slice(1));
 };
 
 const Rule: FunctionComponent<RuleProps> = ({ rule }) => {

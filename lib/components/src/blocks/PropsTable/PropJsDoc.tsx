@@ -62,7 +62,7 @@ export const Table = styled.table(({ theme }) => ({
 }));
 
 export const PropJsDoc: FC<PropJsDocProps> = ({ tags }) => {
-  const params = (tags.params || []).filter(x => x.description);
+  const params = (tags.params || []).filter((x) => x.description);
   const hasDisplayableParams = params.length !== 0;
   const hasDisplayableReturns = tags.returns != null && tags.returns.description != null;
 
@@ -74,7 +74,7 @@ export const PropJsDoc: FC<PropJsDocProps> = ({ tags }) => {
     <Table>
       <tbody>
         {hasDisplayableParams &&
-          params.map(x => {
+          params.map((x) => {
             return (
               <tr key={x.name}>
                 <td>

@@ -34,14 +34,14 @@ const BooleanType: FunctionComponent<BooleanTypeProps> & {
     id={knob.name}
     name={knob.name}
     type="checkbox"
-    onChange={e => onChange(e.target.checked)}
+    onChange={(e) => onChange(e.target.checked)}
     checked={knob.value}
   />
 );
 
 BooleanType.defaultProps = {
   knob: {} as any,
-  onChange: value => value,
+  onChange: (value) => value,
 };
 
 BooleanType.propTypes = {

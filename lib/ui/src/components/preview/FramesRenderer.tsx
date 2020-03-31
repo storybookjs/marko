@@ -34,7 +34,7 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
 
   useEffect(() => {
     const newFrames = Object.values(refs)
-      .filter(r => {
+      .filter((r) => {
         if (r.startInjected) {
           return true;
         }

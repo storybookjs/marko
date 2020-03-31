@@ -30,7 +30,7 @@
     "@storybook/addons": "6.0.0-alpha.29",
     "@storybook/marko": "6.0.0-alpha.29",
     "@storybook/source-loader": "6.0.0-alpha.29",
-    "prettier": "^1.16.4",
+    "prettier": "^2.0.2",
     "webpack": "^4.33.0"
   },
   "storybook": {

@@ -33,7 +33,7 @@ function cleanup() {
   // --copy-files option doesn't work with --ignore
   // https://github.com/babel/babel/issues/6226
   if (fs.existsSync(path.join(process.cwd(), 'dist'))) {
-    const files = shell.find('dist').filter(filePath => {
+    const files = shell.find('dist').filter((filePath) => {
       // Do not remove folder
       // And do not clean anything for @storybook/cli/dist/generators/**/template* because these are the template files
       // that will be copied to init SB on users' projects
@@ -67,8 +67,8 @@ const packageJson = getPackageJson();
 
 removeDist();
 
-babelify({ errorCallback: errorLogs => logError('js', packageJson, errorLogs) });
-tscfy({ errorCallback: errorLogs => logError('ts', packageJson, errorLogs) });
+babelify({ errorCallback: (errorLogs) => logError('js', packageJson, errorLogs) });
+tscfy({ errorCallback: (errorLogs) => logError('ts', packageJson, errorLogs) });
 
 cleanup();
 

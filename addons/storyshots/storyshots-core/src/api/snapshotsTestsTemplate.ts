@@ -11,7 +11,7 @@ function snapshotTest({ item, asyncJest, framework, testMethod, testMethodParams
     it(
       name,
       () =>
-        new Promise(done =>
+        new Promise((done) =>
           testMethod({
             done,
             story: item,

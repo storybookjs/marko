@@ -21,7 +21,7 @@ class AnotherStories2SnapsConverter extends Stories2SnapsConverter {
 
     const [fileName] = name.split('@');
 
-    return storiesExtensions.map(ext =>
+    return storiesExtensions.map((ext) =>
       path.format({
         dir: path.dirname(dir),
         name: fileName,
@@ -38,7 +38,7 @@ initStoryshots({
   config: ({ configure }) =>
     configure(() => {
       // eslint-disable-next-line global-require
-      require('../stories/directly_required');
+      require('./directly_required');
     }, module),
   test: multiSnapshotWithOptions(),
 });

@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class ChipTextPipe implements PipeTransform {
   transform(value: string): string {
     return Array.from(value)
-      .map(char => this.accentVowel(char))
+      .map((char) => this.accentVowel(char))
       .join('');
   }
 

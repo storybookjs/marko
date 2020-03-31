@@ -14,7 +14,7 @@ const TargetContainer = styled.div`
 `;
 
 const TargetSvgContainer = styled.g`
-  cursor: ${props => (props.mode === 'hover' ? 'default' : 'pointer')};
+  cursor: ${(props) => (props.mode === 'hover' ? 'default' : 'pointer')};
 `;
 
 function WithTooltip({

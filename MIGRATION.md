@@ -1,6 +1,7 @@
 <h1>Migration</h1>
 
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
+  - [DocsPage slots removed](#docspage-slots-removed)
   - [React prop tables with Typescript](#react-prop-tables-with-typescript)
     - [React.FC interfaces](#reactfc-interfaces)
     - [Imported types](#imported-types)
@@ -14,6 +15,9 @@
   - [Simplified Render Context](#simplified-render-context)
   - [Story Store immutable outside of configuration](#story-store-immutable-outside-of-configuration)
   - [Improved story source handling](#improved-story-source-handling)
+  - [Actions Addon API changes](#actions-addon-api-changes)
+    - [Actions Addon uses parameters](#actions-addon-uses-parameters)
+    - [Removed action decorator APIs](#removed-action-decorator-apis)
 - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
   - [To main.js configuration](#to-mainjs-configuration)
     - [Using main.js](#using-mainjs)
@@ -95,6 +99,25 @@
 
 ## From version 5.3.x to 6.0.x
 
+### DocsPage slots removed
+
+In SB5.2, we introduced the concept of [DocsPage slots](https://github.com/storybookjs/storybook/blob/0de8575eab73bfd5c5c7ba5fe33e53a49b92db3a/addons/docs/docs/docspage.md#docspage-slots) for customizing the DocsPage.
+
+In 5.3, we introduced `docs.x` story parameters like `docs.prepareForInline` which get filled in by frameworks and can also be overwritten by users, which is a more natural/convenient way to make global customizations.
+
+We also introduced introduced [Custom DocsPage](https://github.com/storybookjs/storybook/blob/next/addons/docs/docs/docspage.md#replacing-docspage), which makes it possible to add/remove/update DocBlocks on the page.
+
+These mechanisms are superior to slots, so we've removed slots in 6.0. For each slot, we provide a migration path here:
+
+| Slot        | Slot function     | Replacement                                  |
+| ----------- | ----------------- | -------------------------------------------- |
+| Title       | `titleSlot`       | Custom DocsPage                              |
+| Subtitle    | `subtitleSlot`    | Custom DocsPage                              |
+| Description | `descriptionSlot` | `docs.extractComponentDescription` parameter |
+| Primary     | `primarySlot`     | Custom DocsPage                              |
+| Props       | `propsSlot`       | `docs.extractProps` parameter                |
+| Stories     | `storiesSlot`     | Custom DocsPage                              |
+
 ### React prop tables with Typescript
 
 Starting in 6.0 we are changing our recommended setup for extracting prop tables in `addon-docs` for React projects using TypeScript.
@@ -104,8 +127,9 @@ In earlier versions, we recommended `react-docgen-typescript-loader` (`RDTL`) an
 As a consequence we've removed `RDTL` from the presets, which is a breaking change. We made this change because `react-docgen` now supports TypeScript natively, and fewer dependencies simplifies things for everybody.
 
 The Babel-based `react-docgen` version is the default in:
-- `@storybook/preset-create-react-app` @ `^2.0.0`
-- `@storybook/preset-typescript` @ `^3.0.0-alpha.1`
+
+- `@storybook/preset-create-react-app` @ `^2.1.0`
+- `@storybook/preset-typescript` @ `^3.0.0`
 
 > NOTE: If you're using `preset-create-react-app` you don't need `preset-typescript`!
 
@@ -174,7 +198,7 @@ module.exports = {
 
 In Storybook 5.3 we introduced a declarative [main.js configuration](#to-mainjs-configuration), which is now the recommended way to configure Storybook. Part of the change is a simplified syntax for registering addons, which in 6.0 automatically registers many addons _using a preset_, which is a slightly different behavior than in earlier versions.
 
-This breaking change currently applies to: `addon-a11y`, `addon-knobs`, `addon-links`, `addon-queryparams`.
+This breaking change currently applies to: `addon-a11y`, `addon-actions`, `addon-knobs`, `addon-links`, `addon-queryparams`.
 
 Consider the following `main.js` config for the accessibility addon, `addon-a11y`:
 
@@ -319,6 +343,35 @@ The MDX analog:
   <Button />
 </Story>
 ```
+
+### Actions Addon API changes
+
+#### Actions Addon uses parameters
+
+Leveraging the new preset `@storybook/addon-actions` uses parameters to pass action options. If you previously had:
+
+```js
+import { withactions } from `@storybook/addon-actions`;
+
+export StoryOne = ...;
+StoryOne.story = {
+  decorators: [withActions('mouseover', 'click .btn')],
+}
+
+```
+
+You should replace it with:
+
+```js
+export StoryOne = ...;
+StoryOne.story = {
+  parameters: { actions: ['mouseover', 'click .btn'] },
+}
+```
+
+#### Removed action decorator APIs
+
+In 6.0 we removed the actions addon decorate API. Actions handles can be configured globaly, for a collection of stories or per story via parameters. The ability to manipulate the data arguments of an event is only relevant in a few frameworks and is not a common enough usecase to be worth the complexity of supporting.
 
 ## From version 5.2.x to 5.3.x
 

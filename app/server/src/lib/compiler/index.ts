@@ -25,7 +25,7 @@ function createSection(args: CompileStorybookSectionArgs): StorybookSection {
     imports: {},
     decorators: [],
     title,
-    stories: stories.map(storyArgs => createStory(storyArgs)),
+    stories: stories.map((storyArgs) => createStory(storyArgs)),
     ...options,
   };
 }

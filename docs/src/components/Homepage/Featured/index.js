@@ -34,7 +34,7 @@ const Featured = ({ featuredStorybooks }) => (
     <div className="col-xs-12">
       <h2>Featured Storybooks</h2>
       <div className="row">
-        {featuredStorybooks.map(item => (
+        {featuredStorybooks.map((item) => (
           <Item {...item} />
         ))}
       </div>

@@ -9,7 +9,7 @@ exports[`react component properties 9668-js-proptypes-no-jsdoc 1`] = `
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const CCTable = props => React.createElement(React.Fragment, null, JSON.stringify(props));
+const CCTable = props => /*#__PURE__*/React.createElement(React.Fragment, null, JSON.stringify(props));
 
 CCTable.propTypes = {
   heads: PropTypes.array.isRequired,

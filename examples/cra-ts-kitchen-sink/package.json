@@ -24,14 +24,14 @@
   },
   "dependencies": {
     "@types/jest": "25.1.4",
-    "@types/node": "13.5.3",
-    "@types/react": "16.9.19",
+    "@types/node": "13.9.5",
+    "@types/react": "16.9.27",
     "@types/react-dom": "16.9.5",
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "react-scripts": "3.2.0",
-    "typescript": "3.7.5"
+    "react-scripts": "3.4.1",
+    "typescript": "3.8.3"
   },
   "devDependencies": {
     "@storybook/addon-a11y": "6.0.0-alpha.29",
@@ -39,7 +39,7 @@
     "@storybook/addon-knobs": "6.0.0-alpha.29",
     "@storybook/addon-links": "6.0.0-alpha.29",
     "@storybook/addons": "6.0.0-alpha.29",
-    "@storybook/preset-create-react-app": "^1.5.0",
+    "@storybook/preset-create-react-app": "^2.1.1",
     "@storybook/react": "6.0.0-alpha.29",
     "@types/enzyme": "^3.9.0",
     "@types/node": "13.5.3",
@@ -49,10 +49,10 @@
     "enzyme-adapter-react-16": "^1.9.1",
     "enzyme-to-json": "^3.4.1",
     "fork-ts-checker-webpack-plugin": "^4.0.3",
-    "react-docgen-typescript-loader": "^3.3.0",
+    "react-docgen-typescript-loader": "^3.7.2",
     "react-moment-proptypes": "^1.7.0",
     "react-scripts": "^3.0.1",
-    "ts-node": "~7.0.0",
+    "ts-node": "~8.8.1",
     "tslint": "^6.0.0",
     "tslint-config-airbnb": "^5.11.1",
     "typescript": "^3.4.0"

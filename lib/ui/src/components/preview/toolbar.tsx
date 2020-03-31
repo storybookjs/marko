@@ -44,7 +44,7 @@ const fullScreenMapper = ({ api, state }: Combo) => ({
 
 export const fullScreenTool: Addon = {
   title: 'fullscreen',
-  match: p => p.viewMode === 'story',
+  match: (p) => p.viewMode === 'story',
   render: () => (
     <Consumer filter={fullScreenMapper}>
       {({ toggle, value }) => (
@@ -74,11 +74,11 @@ export const createTabsTool = (tabs: Addon[]): Addon => ({
   title: 'title',
   render: () => (
     <Consumer filter={tabsMapper}>
-      {rp => (
+      {(rp) => (
         <Fragment>
           <TabBar key="tabs">
             {tabs
-              .filter(p => !p.hidden)
+              .filter((p) => !p.hidden)
               .map((t, index) => {
                 const to = t.route(rp);
                 const isActive = rp.path === to;
@@ -163,8 +163,8 @@ export const ToolRes: FunctionComponent<ToolData & RenderData> = ({
   ) : null;
 };
 
-export const ToolbarComp: FunctionComponent<ToolData> = p => (
-  <Location>{l => <ToolRes {...l} {...p} />}</Location>
+export const ToolbarComp: FunctionComponent<ToolData> = (p) => (
+  <Location>{(l) => <ToolRes {...l} {...p} />}</Location>
 );
 
 export const Tools: FunctionComponent<{
@@ -198,7 +198,7 @@ export function filterTools(
   }
 ) {
   const tabsTool = createTabsTool(tabs);
-  const toolsLeft = [tabs.filter(p => !p.hidden).length > 1 ? tabsTool : null, ...tools];
+  const toolsLeft = [tabs.filter((p) => !p.hidden).length > 1 ? tabsTool : null, ...tools];
   const toolsRight = [...toolsExtra];
 
   const filter = (item: Partial<Addon>) =>

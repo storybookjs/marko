@@ -16,13 +16,13 @@ export const ContextsManager: ContextsManager = ({ api }) => {
   const [nodes, setNodes] = useState([]);
   const [state, setState] = useState(deserialize(api.getQueryParam(PARAM)));
   const setSelected = useCallback(
-    (nodeId, name) => setState(obj => ({ ...obj, [nodeId]: name })),
+    (nodeId, name) => setState((obj) => ({ ...obj, [nodeId]: name })),
     []
   );
 
   // from preview
   const emit = useChannel({
-    [UPDATE_MANAGER]: newNodes => setNodes(newNodes || []),
+    [UPDATE_MANAGER]: (newNodes) => setNodes(newNodes || []),
   });
 
   // to preview

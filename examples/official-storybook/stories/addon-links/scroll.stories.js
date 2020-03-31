@@ -4,7 +4,7 @@ import LinkTo from '@storybook/addon-links/react';
 export default {
   title: 'Addons/Links/Scroll position',
   decorators: [
-    storyFn => (
+    (storyFn) => (
       <Fragment>
         <div style={{ marginBottom: '100vh' }}>Scroll down to see the link</div>
         {storyFn()}

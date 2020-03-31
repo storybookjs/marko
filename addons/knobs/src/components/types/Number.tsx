@@ -69,7 +69,7 @@ export default class NumberType extends Component<NumberTypeProps> {
 
   static defaultProps: NumberTypeProps = {
     knob: {} as any,
-    onChange: value => value,
+    onChange: (value) => value,
   };
 
   static serialize = (value: NumberTypeKnobValue | null | undefined) =>

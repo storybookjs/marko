@@ -62,7 +62,7 @@ export function useSharedState<S>(sharedId: string, defaultState?: S): [S, (s: S
 
   return [
     state,
-    s => {
+    (s) => {
       setState(s);
       emit(`${SHARED_STATE_CHANGED}-client-${sharedId}`, s);
     },

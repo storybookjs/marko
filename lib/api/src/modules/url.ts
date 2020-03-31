@@ -115,7 +115,7 @@ export interface SubAPI {
 
 export const init: ModuleFn = ({ store, navigate, state, provider, fullAPI, ...rest }) => {
   const api: SubAPI = {
-    getQueryParam: key => {
+    getQueryParam: (key) => {
       const { customQueryParams } = store.getState();
       if (customQueryParams) {
         return customQueryParams[key];

@@ -57,7 +57,7 @@ export class Stories2SnapsConverter {
     const { dir, name } = path.parse(storyshotFile);
     const { storiesExtensions } = this.options;
 
-    return storiesExtensions.map(ext =>
+    return storiesExtensions.map((ext) =>
       path.format({
         dir: path.dirname(dir),
         name,
