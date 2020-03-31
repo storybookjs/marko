@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`docs-mdx-compiler-plugin parameters.mdx 1`] = `
+exports[`docs-mdx-compiler-plugin story-args.mdx 1`] = `
 "/* @jsx mdx */
 import { assertIsFn, AddContext } from '@storybook/addon-docs/blocks';
 
@@ -22,25 +22,25 @@ const MDXLayout = 'wrapper';
 function MDXContent({ components, ...props }) {
   return (
     <MDXLayout {...layoutProps} {...props} components={components} mdxType=\\"MDXLayout\\">
-      <Meta
-        title=\\"Button\\"
-        component={Button}
-        parameters={{
-          notes: 'component notes',
-        }}
-        mdxType=\\"Meta\\"
-      />
-      <Story name=\\"component notes\\" mdxType=\\"Story\\">
-        <Button mdxType=\\"Button\\">Component notes</Button>
-      </Story>
+      <Meta title=\\"Button\\" mdxType=\\"Meta\\" />
+      <h1>{\`Args\`}</h1>
       <Story
-        name=\\"story notes\\"
-        parameters={{
-          notes: 'story notes',
+        name=\\"component notes\\"
+        args={{
+          a: 1,
+          b: 2,
+        }}
+        argTypes={{
+          a: {
+            name: 'A',
+          },
+          b: {
+            name: 'B',
+          },
         }}
         mdxType=\\"Story\\"
       >
-        <Button mdxType=\\"Button\\">Story notes</Button>
+        <Button mdxType=\\"Button\\">Component notes</Button>
       </Story>
     </MDXLayout>
   );
@@ -51,28 +51,23 @@ MDXContent.isMDXComponent = true;
 export const componentNotes = () => <Button>Component notes</Button>;
 componentNotes.story = {};
 componentNotes.story.name = 'component notes';
+componentNotes.story.argTypes = {
+  a: {
+    name: 'A',
+  },
+  b: {
+    name: 'B',
+  },
+};
+componentNotes.story.args = {
+  a: 1,
+  b: 2,
+};
 componentNotes.story.parameters = { storySource: { source: '<Button>Component notes</Button>' } };
 
-export const storyNotes = () => <Button>Story notes</Button>;
-storyNotes.story = {};
-storyNotes.story.name = 'story notes';
-storyNotes.story.parameters = {
-  storySource: { source: '<Button>Story notes</Button>' },
-  ...{
-    notes: 'story notes',
-  },
-};
+const componentMeta = { title: 'Button', includeStories: ['componentNotes'] };
 
-const componentMeta = {
-  title: 'Button',
-  parameters: {
-    notes: 'component notes',
-  },
-  component: Button,
-  includeStories: ['componentNotes', 'storyNotes'],
-};
-
-const mdxStoryNameToKey = { 'component notes': 'componentNotes', 'story notes': 'storyNotes' };
+const mdxStoryNameToKey = { 'component notes': 'componentNotes' };
 
 componentMeta.parameters = componentMeta.parameters || {};
 componentMeta.parameters.docs = {
