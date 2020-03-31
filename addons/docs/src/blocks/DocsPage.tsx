@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { DocsPageProps } from './shared';
+import { DocsPageProps } from './types';
 import { Title } from './Title';
 import { Subtitle } from './Subtitle';
 import { Description } from './Description';

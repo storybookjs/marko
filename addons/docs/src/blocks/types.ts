@@ -1,5 +1,3 @@
-import { PropsTableProps } from '@storybook/components';
-
 export const CURRENT_SELECTION = '.';
 
 export type Component = any;

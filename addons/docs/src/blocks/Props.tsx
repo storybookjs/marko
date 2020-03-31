@@ -10,7 +10,7 @@ import {
   TabsState,
 } from '@storybook/components';
 import { DocsContext, DocsContextProps } from './DocsContext';
-import { Component, CURRENT_SELECTION } from './shared';
+import { Component, CURRENT_SELECTION } from './types';
 import { getComponentName } from './utils';
 
 import { PropsExtractor } from '../lib/docgen/types';

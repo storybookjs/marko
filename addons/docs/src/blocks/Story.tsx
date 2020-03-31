@@ -3,14 +3,14 @@ import { MDXProvider } from '@mdx-js/react';
 import { components as docsComponents } from '@storybook/components/html';
 import { Story, StoryProps as PureStoryProps } from '@storybook/components';
 import { toId, storyNameFromExport } from '@storybook/csf';
-import { CURRENT_SELECTION } from './shared';
+import { CURRENT_SELECTION } from './types';
 
 import { DocsContext, DocsContextProps } from './DocsContext';
 
 export const storyBlockIdFromId = (storyId: string) => `story--${storyId}`;
 
 const resetComponents: Record<string, ElementType> = {};
-Object.keys(docsComponents).forEach((key) => {
+Object.keys(docsComponents).forEach(key => {
   resetComponents[key] = (props: any) => createElement(key, props);
 });
 
@@ -87,9 +87,9 @@ export const getStoryProps = (
   };
 };
 
-const StoryContainer: FunctionComponent<StoryProps> = (props) => (
+const StoryContainer: FunctionComponent<StoryProps> = props => (
   <DocsContext.Consumer>
-    {(context) => {
+    {context => {
       const storyProps = getStoryProps(props, context);
       if (!storyProps) {
         return null;
