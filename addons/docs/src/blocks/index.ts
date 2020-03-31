@@ -19,5 +19,5 @@ export * from './Subtitle';
 export * from './Title';
 export * from './Wrapper';
 
-export * from './shared';
+export * from './types';
 export * from './mdx';
