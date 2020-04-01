@@ -216,9 +216,7 @@ export const filteredLength = (dataset: Dataset, filter: string) => {
 export const toFiltered = (dataset: Dataset, filter: string) => {
   let found: Item[];
   if (filter.length && filter.length > 2) {
-    found = fuse(dataset)
-      .search(filter)
-      .map(({ item }) => item);
+    found = fuse(dataset).search(filter);
   } else {
     const matcher = exactMatch(filter);
     found = toList(dataset).filter(matcher);
