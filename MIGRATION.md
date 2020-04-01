@@ -165,7 +165,8 @@ type NewType = SomeType & { foo: string };
 const MyComponent: FC<NewType> = ...
 ```
 
-This was also an issue in `RDTL` so it doesn't get worse with `react-docgen`. There's an open PR for this https://github.com/reactjs/react-docgen/pull/352 which you can upvote if it affects you.
+This isn't an issue with `RDTL` so unfortunately it gets worse with `react-docgen`.
+There's an open PR for this https://github.com/reactjs/react-docgen/pull/352 which you can upvote if it affects you.
 
 #### Rolling back
 
