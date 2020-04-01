@@ -14,11 +14,8 @@ export interface NumberTypeKnobOptions {
   step?: number;
 }
 
-export interface NumberTypeKnob
-  extends KnobControlConfig<NumberTypeKnobValue>,
-    NumberTypeKnobOptions {
-  value: NumberTypeKnobValue;
-}
+export type NumberTypeKnob = KnobControlConfig<NumberTypeKnobValue> &
+  NumberTypeKnobOptions & { value?: NumberTypeKnobValue };
 
 interface NumberTypeProps extends KnobControlProps<NumberTypeKnobValue | null> {
   knob: NumberTypeKnob;
