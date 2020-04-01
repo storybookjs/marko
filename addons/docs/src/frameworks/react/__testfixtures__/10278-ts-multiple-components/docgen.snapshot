@@ -1,7 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`react component properties 10278-ts-multiple-components 1`] = `
-"import React from 'react';
+"/* eslint-disable react/destructuring-assignment */
+import React from 'react';
 
 /**
  * A component
