@@ -5,7 +5,7 @@ import { Form } from '@storybook/components';
 import { KnobControlConfig, KnobControlProps } from './types';
 
 type TextTypeKnobValue = string;
-export type TextTypeKnob = KnobControlConfig<TextTypeKnobValue>;
+export type TextTypeKnob = KnobControlConfig<TextTypeKnobValue> & { value?: TextTypeKnobValue };
 type TextTypeProps = KnobControlProps<TextTypeKnobValue>;
 
 export default class TextType extends Component<TextTypeProps> {

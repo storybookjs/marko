@@ -1,3 +1,40 @@
+## 5.3.18 (March 31, 2020)
+
+### Bug Fixes
+
+- Core: Fix manager assets to be routed in express ([#9646](https://github.com/storybookjs/storybook/pull/9646))
+- Storyshots: Fix MDX transform ([#10223](https://github.com/storybookjs/storybook/pull/10223))
+- Addon-docs: Restore IE11 compat on Windows by transpiling acorn-jsx ([#9790](https://github.com/storybookjs/storybook/pull/9790))
+- Addon-docs: Ensure visibility of links within prop descriptions ([#10210](https://github.com/storybookjs/storybook/pull/10210))
+
+## 6.0.0-alpha.30 (March 31, 2020)
+
+### Breaking Changes
+
+- Misc: remove deprecations for 6.0.0 ([#10216](https://github.com/storybookjs/storybook/pull/10216))
+- DocsPage: Remove slots for 6.0 ([#10259](https://github.com/storybookjs/storybook/pull/10259))
+- Addon-actions: Add preset and configure with parameters ([#9933](https://github.com/storybookjs/storybook/pull/9933))
+
+### Features
+
+- MDX: Add args/argTypes/component/subcomponents support ([#10258](https://github.com/storybookjs/storybook/pull/10258))
+- Addon-docs: Add linear gradient support to ColorPalette block ([#10237](https://github.com/storybookjs/storybook/pull/10237))
+
+### Bug Fixes
+
+- Addon-a11y: Performance fix ([#10219](https://github.com/storybookjs/storybook/pull/10219))
+- API: Fix local addon handling ([#10254](https://github.com/storybookjs/storybook/pull/10254))
+- Core: Fix URL load failure due to missing base ([#10228](https://github.com/storybookjs/storybook/pull/10228))
+- Storyshots: Fix MDX transform ([#10223](https://github.com/storybookjs/storybook/pull/10223))
+
+### Maintenance
+
+- Build: Add puppeteer libs so teamcity can build examples ([#10235](https://github.com/storybookjs/storybook/pull/10235))
+
+### Dependency Upgrades
+
+- Misc upgrades ([#10236](https://github.com/storybookjs/storybook/pull/10236))
+
 ## 6.0.0-alpha.29 (March 26, 2020)
 
 ### Features
@@ -1916,7 +1953,7 @@ Publish failed
 CSF users: This is potentially a breaking change. If you want to opt-out of the new default display name calculation (`lodash.startCase`) you can add the following to your SB config:
 
 ```js
-addParameters({ options: { makeDisplayName: key => key } });
+addParameters({ options: { makeDisplayName: (key) => key } });
 ```
 
 ### Features
