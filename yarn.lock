@@ -882,7 +882,7 @@
     "@babel/helper-plugin-utils" "^7.8.3"
     lodash "^4.17.13"
 
-"@babel/plugin-transform-classes@^7.2.0", "@babel/plugin-transform-classes@^7.9.0":
+"@babel/plugin-transform-classes@^7.2.0", "@babel/plugin-transform-classes@^7.9.0", "@babel/plugin-transform-classes@^7.9.2":
   version "7.9.2"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-classes/-/plugin-transform-classes-7.9.2.tgz#8603fc3cc449e31fdbdbc257f67717536a11af8d"
   integrity sha512-TC2p3bPzsfvSsqBZo0kJnuelnoK9O3welkUpqSqBQuBF6R5MN2rysopri8kNvtlGIb2jmUO7i15IooAZJjZuMQ==

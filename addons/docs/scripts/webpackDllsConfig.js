@@ -6,17 +6,17 @@ import CoreJSUpgradeWebpackPlugin from 'corejs-upgrade-webpack-plugin';
 const resolveLocal = (dir) => path.join(__dirname, dir);
 
 const r = resolveLocal('../../../node_modules');
-const out = resolveLocal('../../core/dll');
+const out = resolveLocal('../../../lib/core/dll');
 
 export default ({ entry, provided = [] }) => ({
-  name: 'storybook-ui',
+  name: 'storybook-docs',
   mode: 'development',
 
   entry,
   output: {
     path: out,
-    filename: 'storybook-ui_dll.js',
-    library: 'storybook-ui_dll',
+    filename: 'storybook_docs_dll.js',
+    library: 'storybook_docs_dll',
   },
   externals: provided,
 
@@ -56,8 +56,8 @@ export default ({ entry, provided = [] }) => ({
     new ProgressPlugin(),
     new DllPlugin({
       context: r,
-      path: `${out}/storybook-ui-manifest.json`,
-      name: 'storybook-ui_dll',
+      path: `${out}/storybook_docs-manifest.json`,
+      name: 'storybook_docs_dll',
     }),
     new CoreJSUpgradeWebpackPlugin(),
   ],

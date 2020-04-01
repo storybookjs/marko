@@ -4,6 +4,11 @@ import path from 'path';
 import remarkSlug from 'remark-slug';
 import remarkExternalLinks from 'remark-external-links';
 
+import { DllReferencePlugin } from 'webpack';
+
+const coreDirName = path.dirname(require.resolve('@storybook/core/package.json'));
+const context = path.join(coreDirName, '../../node_modules');
+
 function createBabelOptions(babelOptions?: any, configureJSX?: boolean) {
   if (!configureJSX) {
     return babelOptions;
@@ -18,6 +23,10 @@ function createBabelOptions(babelOptions?: any, configureJSX?: boolean) {
     plugins: [...babelPlugins, '@babel/plugin-transform-react-jsx'],
   };
 }
+
+export const webpackDlls = (dlls: string[], options: any) => {
+  return options.dll ? [...dlls, './sb_dll/storybook_docs_dll.js'] : [];
+};
 
 export function webpack(webpackConfig: any = {}, options: any = {}) {
   const { module = {} } = webpackConfig;
@@ -97,6 +106,16 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
       ],
     },
   };
+
+  if (options.dll) {
+    result.plugins.push(
+      new DllReferencePlugin({
+        context,
+        manifest: path.join(coreDirName, 'dll', 'storybook_docs-manifest.json'),
+      })
+    );
+  }
+
   return result;
 }
 
