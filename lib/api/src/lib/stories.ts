@@ -37,7 +37,8 @@ export interface Group {
   // MDX stories are "Group" type
   parameters?: {
     docsOnly?: boolean;
-    [k: string]: any;
+    viewMode?: boolean;
+    [parameterName: string]: any;
   };
 }
 
@@ -58,10 +59,11 @@ export interface Story {
       hierarchyRootSeparator?: RegExp;
       hierarchySeparator?: RegExp;
       showRoots?: boolean;
-      [k: string]: any;
+      [optionName: string]: any;
     };
     docsOnly?: boolean;
-    [k: string]: any;
+    viewMode?: boolean;
+    [parameterName: string]: any;
   };
   args: Args;
 }
@@ -78,9 +80,10 @@ export interface StoryInput {
       hierarchyRootSeparator: RegExp;
       hierarchySeparator: RegExp;
       showRoots?: boolean;
-      [key: string]: any;
+      [optionName: string]: any;
     };
     docsOnly?: boolean;
+    viewMode?: boolean;
     [parameterName: string]: any;
   };
   isLeaf: boolean;
