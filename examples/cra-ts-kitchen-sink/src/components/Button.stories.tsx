@@ -8,8 +8,6 @@ export default {
   component: Button,
 };
 
-type Story = () => any;
-
 export const SimpleButton = () => {
   const x = 0;
   return <Button onClick={action('button clicked')}>OK {x}</Button>;
