@@ -4175,11 +4175,6 @@
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.0.tgz#69a23a3ad29caf0097f06eda59b361ee2f0639f6"
   integrity sha1-aaI6OtKcrwCX8G7aWbNh7i8GOfY=
 
-"@types/mithril@^1.1.16":
-  version "1.1.17"
-  resolved "https://registry.yarnpkg.com/@types/mithril/-/mithril-1.1.17.tgz#1a5dde2a653ef6011cd36ef70eefe6bac0cb92e4"
-  integrity sha512-U/wwKZT8hjstY2Q470bLMGVh/fjT2+SgBMzIILn0Z4nmgzzG6j+n18UOAxQ63aI8vXIOkQsbkAdbESt8+jIQdQ==
-
 "@types/mithril@^2.0.0":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@types/mithril/-/mithril-2.0.2.tgz#29a6e32103769b29840ae25f5bf75bb382801a15"
@@ -20534,11 +20529,6 @@ mississippi@^3.0.0:
     stream-each "^1.1.0"
     through2 "^2.0.0"
 
-mithril@*:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/mithril/-/mithril-2.0.4.tgz#d125969d992b924c7185d24ff92d997e5c00116b"
-  integrity sha512-mgw+DMZlhMS4PpprF6dl7ZoeZq5GGcAuWnrg5e12MvaGauc4jzWsDZtVGRCktsiQczOEUr2K5teKbE5k44RlOg==
-
 mithril@^1.1.6:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/mithril/-/mithril-1.1.7.tgz#505d7d77fe164ff16969de8f9b6eda42e0346cbe"
@@ -23571,11 +23561,6 @@ preact-render-to-json@^3.6.6:
   resolved "https://registry.yarnpkg.com/preact-render-to-json/-/preact-render-to-json-3.6.6.tgz#f67f48581912ac53fc9f4873bc6d7ce342f71c20"
   integrity sha1-9n9IWBkSrFP8n0hzvG1840L3HCA=
 
-preact@*:
-  version "10.3.4"
-  resolved "https://registry.yarnpkg.com/preact/-/preact-10.3.4.tgz#e1542a4d3eba3e7a37f312a2c331231b97052024"
-  integrity sha512-wMgzs/RGYf0I1PZf8ZFJdyU/3kCcwepJyVYe+N9FGajyQWarMoPrPfrQajcG0psPj6ySYv2cSuLYFCihvV/Qrw==
-
 preact@^8.4.2:
   version "8.5.3"
   resolved "https://registry.yarnpkg.com/preact/-/preact-8.5.3.tgz#78c2a5562fcecb1fed1d0055fa4ac1e27bde17c1"
@@ -24503,7 +24488,7 @@ rax-text@^1.0.1, rax-text@^1.1.2:
   dependencies:
     universal-env "^3.0.0"
 
-rax-view@*, rax-view@^1.0.0:
+rax-view@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/rax-view/-/rax-view-1.1.0.tgz#4ff95bcadb6c5355d342753b7f4e364e219c3411"
   integrity sha512-AaBkFaks49Igs8tHU3HmYoa+PoXitMbddAQ8BlfJabYTT6/gfcMdj7ejDB/23MGtB/cuJthmuiQMlkr8/JVUuA==
@@ -24511,7 +24496,7 @@ rax-view@*, rax-view@^1.0.0:
     classnames "^2.2.6"
     universal-env "^1.0.0"
 
-rax@*, rax@^1.1.0:
+rax@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/rax/-/rax-1.1.1.tgz#f8a8b51913bdcbf343d8ad8f50c742d555eb5e45"
   integrity sha512-sk34VJ/D4lMgT6z6PLTF5xK3Nvk2QMkdhvm45a3f4TZq3Uy18dDf5+b7oUqrHBZZNT5E0Se8RHSa/WodhMAV0g==
@@ -24988,15 +24973,6 @@ react-transition-group@^4.3.0:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react@*, react@^16.10.2, react@^16.11.0, react@^16.8.3, react@^16.8.4, react@^16.9.17:
-  version "16.13.1"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
-  integrity sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    prop-types "^15.6.2"
-
 react@^15.4.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/react/-/react-15.6.2.tgz#dba0434ab439cfe82f108f0f511663908179aa72"
@@ -25007,6 +24983,15 @@ react@^15.4.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
     prop-types "^15.5.10"
+
+react@^16.10.2, react@^16.11.0, react@^16.8.3, react@^16.8.4, react@^16.9.17:
+  version "16.13.1"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
+  integrity sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
 
 reactcss@^1.2.0:
   version "1.2.3"
