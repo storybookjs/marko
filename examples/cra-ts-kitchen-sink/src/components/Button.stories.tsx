@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { radios } from '@storybook/addon-knobs';
 import Button, { Type } from './Button';
@@ -10,7 +10,7 @@ export default {
 
 type Story = () => any;
 
-export const SimpleButton: Story = () => {
+export const SimpleButton = () => {
   const x = 0;
   return <Button onClick={action('button clicked')}>OK {x}</Button>;
 };
