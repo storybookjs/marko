@@ -245,7 +245,10 @@ export const init: ModuleFn = ({
         const s = hash[kindOrId] || hash[sanitize(kindOrId)];
         // eslint-disable-next-line no-nested-ternary
         const id = s ? (s.children ? s.children[0] : s.id) : kindOrId;
-        const viewMode = viewModeFromArgs || s ? s.parameters.viewMode : viewModeFromState;
+        const viewMode =
+          viewModeFromArgs || (s && s.parameters.viewMode)
+            ? s.parameters.viewMode
+            : viewModeFromState;
         const p = s && s.refId ? `/${viewMode}/${s.refId}_${id}` : `/${viewMode}/${id}`;
 
         navigate(p);
