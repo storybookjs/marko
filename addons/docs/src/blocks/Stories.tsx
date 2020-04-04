@@ -23,7 +23,7 @@ export const Stories: FunctionComponent<StoriesProps> = ({ title, includePrimary
   return (
     <>
       <Heading>{title}</Heading>
-      {stories.map(story => story && <DocsStory key={story.id} {...story} expanded />)}
+      {stories.map((story) => story && <DocsStory key={story.id} {...story} expanded />)}
     </>
   );
 };
