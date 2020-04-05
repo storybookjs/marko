@@ -44,7 +44,6 @@
     "popper.js": "^1.14.7",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
-    "react-focus-lock": "^2.1.0",
     "react-helmet-async": "^1.0.2",
     "react-popper-tooltip": "^2.11.0",
     "react-syntax-highlighter": "^11.0.2",
