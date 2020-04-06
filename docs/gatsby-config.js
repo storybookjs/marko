@@ -29,6 +29,7 @@ module.exports = {
         '/guides/guide-preact/',
       ],
       configurations: [
+        '/configurations/overview/',
         '/configurations/options-parameter/',
         '/configurations/default-config/',
         '/configurations/custom-webpack-config/',
