@@ -17,7 +17,6 @@
     "@storybook/addon-a11y": "6.0.0-alpha.30",
     "@storybook/addon-actions": "6.0.0-alpha.30",
     "@storybook/addon-backgrounds": "6.0.0-alpha.30",
-    "@storybook/addon-centered": "6.0.0-alpha.30",
     "@storybook/addon-contexts": "6.0.0-alpha.30",
     "@storybook/addon-cssresources": "6.0.0-alpha.30",
     "@storybook/addon-design-assets": "6.0.0-alpha.30",

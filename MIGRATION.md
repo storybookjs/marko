@@ -374,6 +374,22 @@ StoryOne.story = {
 
 In 6.0 we removed the actions addon decorate API. Actions handles can be configured globaly, for a collection of stories or per story via parameters. The ability to manipulate the data arguments of an event is only relevant in a few frameworks and is not a common enough usecase to be worth the complexity of supporting.
 
+#### Removed addon centered
+
+In 6.0 we removed the centered addon. Centering is now core feature of storybook, that no longer needs an addon.
+
+Remove the addon-centered decorator and instead add a `layout` parameter:
+
+```js
+export const MyStory = () => <div>my story</div>;
+
+MyStory.story = {
+  parameters: { layout: 'centered' },
+};
+
+```
+Other possible values are: `padded` (default) and `fullscreen`.
+
 ## From version 5.2.x to 5.3.x
 
 ### To main.js configuration

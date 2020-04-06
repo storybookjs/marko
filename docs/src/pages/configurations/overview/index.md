@@ -3,7 +3,7 @@ id: 'overview'
 title: 'Configuration overview'
 ---
 
-For CLI options see: [here](/docs/cli-options).
+For CLI options see: [here](../cli-options).
 
 > migration guide: This page documents the method to configure storybook introduced recently in 5.3.0, consult the [migration guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) if you want to migrate to this format of configuring storybook.
 
@@ -26,11 +26,11 @@ module.exports = {
 
 `stories` is a list of [glob](https://www.npmjs.com/package/glob) patterns that tells where your stories are located, relative to the configuration file.
 
-The `addons` field can refer to traditional [addons](docs/addons/introduction), but it can also include [presets](/docs/presets/introduction/), which are able to extend the config further.
+The `addons` field can refer to traditional [addons](../../addons/introduction), but it can also include [presets](/docs/presets/introduction/), which are able to extend the config further.
 
 ### `main.js` is a  Preset
 The `main.js` file is actually a preset! So if you know how to configure storybook, then you know how to write a preset, and vice-versa!
-So the `main.js` API is equal to [that of presets](/docs/presets/writing-presets/#presets-api).
+So the `main.js` API is equal to [that of presets](../../presets/writing-presets/#presets-api).
 
 
 ## Manager & preview
@@ -39,7 +39,7 @@ Storybook works by being split into 2 applications ("manager" and "preview"), wh
 
 The preview application is essentially just your stories with a framework-agnostic 'router'. It renders whichever story the  manager application tells it to render.
 
-The manager application renders the UI of [addons](docs/addons/introduction), the navigator and [toolbar](/docs/basics/toolbar-guide/).
+The manager application renders the UI of [addons](../../addons/introduction), the navigator and [toolbar](../../basics/toolbar-guide/).
 
 There are two extra config files, if you need to configure the runtime of Manager or Preview.
 
@@ -53,7 +53,7 @@ import { withA11y } from '@storybook/addon-a11y';
 addDecorator(withA11y);
 ```
 
-In `manager.js` you can add [UI options](/docs/configurations/options-parameter/#global-options).
+In `manager.js` you can add [UI options](../options-parameter/#global-options).
 
 ```js
 // manager.js
@@ -67,4 +67,4 @@ addons.setConfig({
 
 ## webpack
 
-For how to customize webpack, [view the customize webpack section](/docs/configurations/custom-webpack-config/)
+For how to customize webpack, [view the customize webpack section](../custom-webpack-config/)

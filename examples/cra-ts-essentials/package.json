@@ -22,16 +22,14 @@
       "last 1 safari version"
     ]
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "dependencies": {
     "@types/jest": "25.1.4",
     "@types/node": "13.9.5",
-    "@types/react": "16.9.27",
-    "@types/react-dom": "16.9.5",
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0",
+    "@types/react": "^16.0.0",
+    "@types/react-dom": "16.9.6",
+    "global": "^4.3.2",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "react-scripts": "3.4.1",
     "typescript": "3.8.3"
   },
