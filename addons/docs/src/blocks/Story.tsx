@@ -10,7 +10,7 @@ import { DocsContext, DocsContextProps } from './DocsContext';
 export const storyBlockIdFromId = (storyId: string) => `story--${storyId}`;
 
 const resetComponents: Record<string, ElementType> = {};
-Object.keys(docsComponents).forEach(key => {
+Object.keys(docsComponents).forEach((key) => {
   resetComponents[key] = (props: any) => createElement(key, props);
 });
 
@@ -87,9 +87,9 @@ export const getStoryProps = (
   };
 };
 
-const StoryContainer: FunctionComponent<StoryProps> = props => (
+const StoryContainer: FunctionComponent<StoryProps> = (props) => (
   <DocsContext.Consumer>
-    {context => {
+    {(context) => {
       const storyProps = getStoryProps(props, context);
       if (!storyProps) {
         return null;

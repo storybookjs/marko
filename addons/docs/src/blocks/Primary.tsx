@@ -12,7 +12,7 @@ export const Primary: FC<PrimaryProps> = ({ name }) => {
   const componentStories = getDocsStories(context);
   let story;
   if (componentStories) {
-    story = name ? componentStories.find(s => s.name === name) : componentStories[0];
+    story = name ? componentStories.find((s) => s.name === name) : componentStories[0];
   }
   return story ? <DocsStory {...story} expanded={false} withToolbar /> : null;
 };
