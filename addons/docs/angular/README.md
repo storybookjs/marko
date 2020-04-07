@@ -145,6 +145,7 @@ import { moduleMetadata } from '@storybook/angular';
 ]} />
 
 # Basic Checkbox
+
 <Story name='basic check' height='400px'>{{
   template: `
     <div class="some-wrapper-with-padding">
@@ -157,6 +158,7 @@ import { moduleMetadata } from '@storybook/angular';
 }}</Story>
 
 # Basic Radiobutton
+
 <Story name='basic radio' height='400px'>{{
   moduleMetadata: {
     declarations: [RadioButtonComponent]
