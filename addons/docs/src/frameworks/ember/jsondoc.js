@@ -8,16 +8,20 @@ export const getJSONDoc = () => {
   return window.__EMBER_GENERATED_DOC_JSON__;
 };
 
-export const extractProps = (componentName) => {
+export const extractArgTypes = (componentName) => {
   const json = getJSONDoc();
   const componentDoc = json.included.find((doc) => doc.attributes.name === componentName);
   const rows = componentDoc.attributes.arguments.map((prop) => {
     return {
       name: prop.name,
-      type: prop.type,
-      required: prop.tags.length ? prop.tags.some((tag) => tag.name === 'required') : false,
       defaultValue: prop.defaultValue,
       description: prop.description,
+      table: {
+        type: {
+          summary: prop.type,
+          required: prop.tags.length ? prop.tags.some((tag) => tag.name === 'required') : false,
+        },
+      },
     };
   });
   return { rows };

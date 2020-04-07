@@ -1,6 +1,7 @@
 /* eslint-disable-next-line import/no-extraneous-dependencies */
 import { DocsPage, DocsContainer } from '@storybook/addon-docs/blocks';
 import { enhanceSource } from './enhanceSource';
+import { enhanceArgTypes } from './enhanceArgTypes';
 
 export const parameters = {
   docs: {
@@ -9,4 +10,4 @@ export const parameters = {
   },
 };
 
-export const parameterEnhancers = [enhanceSource];
+export const parameterEnhancers = [enhanceSource, enhanceArgTypes];

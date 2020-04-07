@@ -212,4 +212,4 @@ const PropsTable: FC<PropsTableProps> = (props) => {
   );
 };
 
-export { PropsTable, PropDef, PropType, PropDefaultValue, PropSummaryValue };
+export { PropsTable, PropDef };

@@ -8,6 +8,9 @@ Object {
       "description": "",
       "name": "width",
       "required": true,
+      "sbType": Object {
+        "name": "number",
+      },
       "type": Object {
         "detail": undefined,
         "summary": "number",
@@ -18,6 +21,18 @@ Object {
       "description": "The size (replaces width)",
       "name": "size",
       "required": true,
+      "sbType": Object {
+        "name": "object",
+        "raw": "{ width: number; height: number }",
+        "value": Object {
+          "height": Object {
+            "name": "number",
+          },
+          "width": Object {
+            "name": "number",
+          },
+        },
+      },
       "type": Object {
         "detail": undefined,
         "summary": "signature",

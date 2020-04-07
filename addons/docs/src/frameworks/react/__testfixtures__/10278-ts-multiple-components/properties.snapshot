@@ -8,6 +8,10 @@ Object {
       "description": "",
       "name": "aProperty",
       "required": true,
+      "sbType": Object {
+        "name": "other",
+        "value": "any",
+      },
       "type": Object {
         "detail": undefined,
         "summary": "any",
