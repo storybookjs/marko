@@ -3,7 +3,7 @@ import { styled } from '@storybook/theming';
 import { opacify, transparentize, darken, lighten } from 'polished';
 import { PropRow, PropRowProps } from './PropRow';
 import { SectionRow, SectionRowProps } from './SectionRow';
-import { PropDef, PropType, PropDefaultValue, PropSummaryValue } from './PropDef';
+import { PropDef } from './PropDef';
 import { EmptyBlock } from '../EmptyBlock';
 import { ResetWrapper } from '../../typography/DocumentFormatting';
 

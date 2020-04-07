@@ -32,11 +32,7 @@ export const inferArgTypes = (args: Args) => {
   return Object.entries(args).reduce((acc, [name, arg]) => {
     if (arg != null) {
       const type = inferType(arg);
-      if (type) {
-        acc[name] = { name, type };
-      } else {
-        throw new Error(`Unknown arg: ${arg}`);
-      }
+      acc[name] = { name, type };
     }
     return acc;
   }, {} as ArgTypes);

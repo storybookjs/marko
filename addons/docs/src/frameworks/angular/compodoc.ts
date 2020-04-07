@@ -31,10 +31,6 @@ export const checkValidCompodocJson = (compodocJson: CompodocJson) => {
   }
 };
 
-function isEmpty(obj: any) {
-  return Object.entries(obj).length === 0 && obj.constructor === Object;
-}
-
 const hasDecorator = (item: Property, decoratorName: string) =>
   item.decorators && item.decorators.find((x: any) => x.name === decoratorName);
 

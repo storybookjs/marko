@@ -3,7 +3,7 @@ import { styled } from '@storybook/theming';
 import { opacify, transparentize, darken, lighten } from 'polished';
 import { ArgRow, ArgRowProps } from './ArgRow';
 import { SectionRow, SectionRowProps } from './SectionRow';
-import { ArgType, ArgTypes, Args } from './types';
+import { ArgTypes, Args } from './types';
 import { EmptyBlock } from '../EmptyBlock';
 import { ResetWrapper } from '../../typography/DocumentFormatting';
 
