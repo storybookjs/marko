@@ -1,3 +1,18 @@
+## 6.0.0-alpha.31 (April 7, 2020)
+
+### Bug Fixes
+
+* Core: Fix ie11 compatibility ([#10281](https://github.com/storybookjs/storybook/pull/10281))
+* Core: Add .cjs & .mjs to interpret-files ([#10288](https://github.com/storybookjs/storybook/pull/10288))
+* Core: Fix source-map strategy for production ([#10290](https://github.com/storybookjs/storybook/pull/10290))
+* Addon-knobs: Allow `text` and `number` to take undefined values ([#10101](https://github.com/storybookjs/storybook/pull/10101))
+
+### Maintenance
+
+* Core: Warn about deprecated config files ([#10097](https://github.com/storybookjs/storybook/pull/10097))
+* Yarn 2: rework imports in webpack preview virtual module to fix compatibility ([#10305](https://github.com/storybookjs/storybook/pull/10305))
+* Addon-centered: Move to deprecated-addons ([#10300](https://github.com/storybookjs/storybook/pull/10300))
+
 ## 5.3.18 (March 31, 2020)
 
 ### Bug Fixes
