@@ -11,51 +11,6 @@ expect.addSnapshotSerializer({
   test: (val) => true,
 });
 
-const transformToModule = (inputCode: string) => {
-  const options = {
-    presets: [
-      [
-        '@babel/preset-env',
-        {
-          targets: {
-            esmodules: true,
-          },
-        },
-      ],
-    ],
-  };
-  const { code } = transformSync(inputCode, options);
-  return normalizeNewlines(code);
-};
-
-const annotateWithDocgen = (inputCode: string) => {
-  const options = {
-    presets: ['@babel/typescript', '@babel/react'],
-    plugins: ['babel-plugin-react-docgen', '@babel/plugin-proposal-class-properties'],
-    babelrc: false,
-    filename: 'temp.tsx',
-  };
-  const { code } = transformSync(inputCode, options);
-  return normalizeNewlines(code);
-};
-
-const convertTs = (propsInterface: string) => {
-  const code = dedent`
-    import React, { FC } from 'react';
-    ${propsInterface}
-    export const Component: FC<Props> = (props: Props) => <>JSON.stringify(props)</>;
-  `;
-  const docgenPretty = annotateWithDocgen(code);
-  const { Component } = requireFromString(transformToModule(docgenPretty));
-  // eslint-disable-next-line no-underscore-dangle
-  const { props = {} } = Component.__docgenInfo || {};
-  const types = Object.keys(props).reduce((acc: Record<string, any>, key) => {
-    acc[key] = convert(props[key]);
-    return acc;
-  }, {});
-  return types;
-};
-
 describe('storybook type system', () => {
   describe('typescript', () => {
     it('scalars', () => {
@@ -503,4 +458,282 @@ describe('storybook type system', () => {
       `);
     });
   });
+  describe('PropTypes', () => {
+    it('scalars', () => {
+      expect(
+        convertJs(dedent`{
+          optionalBool: PropTypes.bool,
+          optionalFunc: PropTypes.func,
+          optionalNumber: PropTypes.number,
+          optionalString: PropTypes.string,
+          optionalSymbol: PropTypes.symbol,
+        }`)
+      ).toMatchInlineSnapshot(`
+        {
+          "optionalBool": {
+            "name": "boolean"
+          },
+          "optionalFunc": {
+            "name": "function"
+          },
+          "optionalNumber": {
+            "name": "number"
+          },
+          "optionalString": {
+            "name": "string"
+          },
+          "optionalSymbol": {
+            "name": "symbol"
+          }
+        }
+      `);
+    });
+    it('arrays', () => {
+      expect(
+        convertJs(dedent`{
+        optionalArray: PropTypes.array,
+        arrayOfStrings: PropTypes.arrayOf(PropTypes.string),
+        arrayOfShape: PropTypes.arrayOf(
+          PropTypes.shape({
+            active: PropTypes.bool,
+          })
+        )
+      }`)
+      ).toMatchInlineSnapshot(`
+        {
+          "optionalArray": {
+            "name": "other",
+            "value": "array"
+          },
+          "arrayOfStrings": {
+            "name": "array",
+            "value": {
+              "name": "string"
+            }
+          },
+          "arrayOfShape": {
+            "name": "array",
+            "value": {
+              "name": "object",
+              "value": {
+                "active": {
+                  "name": "boolean"
+                }
+              }
+            }
+          }
+        }
+      `);
+    });
+    it('enums', () => {
+      expect(
+        convertJs(dedent`{
+          oneOfNumber: PropTypes.oneOf([1, 2, 3]),
+          oneOfString: PropTypes.oneOf(['static', 'timed'])
+        }`)
+      ).toMatchInlineSnapshot(`
+        {
+          "oneOfNumber": {
+            "name": "enum",
+            "value": [
+              "1",
+              "2",
+              "3"
+            ]
+          },
+          "oneOfString": {
+            "name": "enum",
+            "value": [
+              "'static'",
+              "'timed'"
+            ]
+          }
+        }
+      `);
+    });
+    it('misc', () => {
+      expect(
+        convertJs(dedent`{
+          // An object that could be one of many types
+          optionalUnion: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.number,
+            PropTypes.instanceOf(Object),
+          ]),
+        
+          optionalMessage: PropTypes.instanceOf(Object),
+        
+          // A value of any data type
+          // eslint-disable-next-line react/forbid-prop-types
+          requiredAny: PropTypes.any.isRequired,
+        }`)
+      ).toMatchInlineSnapshot(`
+        {
+          "optionalUnion": {
+            "name": "union",
+            "value": [
+              {
+                "name": "string"
+              },
+              {
+                "name": "number"
+              },
+              {
+                "name": "other",
+                "value": "instanceOf(Object)"
+              }
+            ]
+          },
+          "optionalMessage": {
+            "name": "other",
+            "value": "instanceOf(Object)"
+          },
+          "requiredAny": {
+            "name": "other",
+            "value": "any"
+          }
+        }
+      `);
+    });
+    it('objects', () => {
+      expect(
+        convertJs(dedent`{
+          optionalObject: PropTypes.object,
+          optionalObjectOf: PropTypes.objectOf(PropTypes.number),
+          optionalObjectWithShape: PropTypes.shape({
+            color: PropTypes.string,
+            fontSize: PropTypes.number,
+          }),
+          optionalObjectWithStrictShape: PropTypes.exact({
+            name: PropTypes.string,
+            quantity: PropTypes.number,
+          }),
+        }`)
+      ).toMatchInlineSnapshot(`
+        {
+          "optionalObject": {
+            "name": "object"
+          },
+          "optionalObjectOf": {
+            "name": "objectOf",
+            "value": {
+              "name": "number"
+            }
+          },
+          "optionalObjectWithShape": {
+            "name": "object",
+            "value": {
+              "color": {
+                "name": "string"
+              },
+              "fontSize": {
+                "name": "number"
+              }
+            }
+          },
+          "optionalObjectWithStrictShape": {
+            "name": "object",
+            "value": {
+              "name": {
+                "name": "string"
+              },
+              "quantity": {
+                "name": "number"
+              }
+            }
+          }
+        }
+      `);
+    });
+    it('react', () => {
+      expect(
+        convertJs(dedent`{
+        // Anything that can be rendered: numbers, strings, elements or an array
+        // (or fragment) containing these types.
+        optionalNode: PropTypes.node,
+      
+        // A React element.
+        optionalElement: PropTypes.element,
+      
+        // A React element type (ie. MyComponent).
+        optionalElementType: PropTypes.elementType,
+        }`)
+      ).toMatchInlineSnapshot(`
+        {
+          "optionalNode": {
+            "name": "other",
+            "value": "node"
+          },
+          "optionalElement": {
+            "name": "other",
+            "value": "element"
+          },
+          "optionalElementType": {
+            "name": "other",
+            "value": "elementType"
+          }
+        }
+      `);
+    });
+  });
 });
+
+const transformToModule = (inputCode: string) => {
+  const options = {
+    presets: [
+      [
+        '@babel/preset-env',
+        {
+          targets: {
+            esmodules: true,
+          },
+        },
+      ],
+    ],
+  };
+  const { code } = transformSync(inputCode, options);
+  return normalizeNewlines(code);
+};
+
+const annotateWithDocgen = (inputCode: string, filename: string) => {
+  const options = {
+    presets: ['@babel/typescript', '@babel/react'],
+    plugins: ['babel-plugin-react-docgen', '@babel/plugin-proposal-class-properties'],
+    babelrc: false,
+    filename,
+  };
+  const { code } = transformSync(inputCode, options);
+  return normalizeNewlines(code);
+};
+
+const convertCommon = (code: string, fileExt: string) => {
+  const docgenPretty = annotateWithDocgen(code, `temp.${fileExt}`);
+  const { Component } = requireFromString(transformToModule(docgenPretty));
+  // eslint-disable-next-line no-underscore-dangle
+  const { props = {} } = Component.__docgenInfo || {};
+  const types = Object.keys(props).reduce((acc: Record<string, any>, key) => {
+    acc[key] = convert(props[key]);
+    return acc;
+  }, {});
+  return types;
+};
+
+const convertTs = (propsInterface: string) => {
+  const code = dedent`
+    import React, { FC } from 'react';
+    ${propsInterface}
+    export const Component: FC<Props> = (props: Props) => <>JSON.stringify(props)</>;
+  `;
+  return convertCommon(code, 'tsx');
+};
+
+const convertJs = (propTypes: string) => {
+  const code = dedent`
+    import React from 'react';
+    import PropTypes from 'prop-types';
+    
+    export const Component = props => <>JSON.stringify(props)</>;
+    Component.propTypes = ${propTypes};
+  `;
+  return convertCommon(code, 'js');
+};
