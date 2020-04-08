@@ -109,7 +109,7 @@ function run() {
           type: 'checkbox',
           message: 'Select the packages to build',
           name: 'todo',
-          pageSize: Object.keys(tasks).length / 5,
+          pageSize: Object.keys(tasks).length + 2,
           choices,
         },
       ])
