@@ -230,7 +230,8 @@
     "ts-jest": "^25.3.0",
     "ts-node": "^8.6.2",
     "typescript": "^3.4.0",
-    "wait-on": "^4.0.0"
+    "wait-on": "^4.0.0",
+    "window-size": "^1.1.1"
   },
   "optionalDependencies": {
     "@cypress/webpack-preprocessor": "^4.1.0",

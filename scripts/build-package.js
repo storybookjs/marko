@@ -2,6 +2,7 @@
 
 /* eslint-disable global-require */
 const { resolve } = require('path');
+const terminalSize = require('window-size');
 const { checkDependenciesAndRun, spawn } = require('./cli-utils');
 
 const getStorybookPackages = () => {
@@ -104,7 +105,7 @@ function run() {
           type: 'checkbox',
           message: 'Select the packages to build',
           name: 'todo',
-          pageSize: Object.keys(tasks).length + 2,
+          pageSize: terminalSize.height - 3, // 3 lines for extra info
           choices,
         },
       ])
