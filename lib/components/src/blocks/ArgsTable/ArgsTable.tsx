@@ -188,7 +188,6 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
   const allRows: { key: string; value: any }[] = [];
   Object.entries(ungroupedRows).forEach(([key, row]) => {
     const arg = args && args[key];
-    console.log('allRows', { key, args, arg });
     allRows.push({
       key,
       value: { row, arg, updateArgs },

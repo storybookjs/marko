@@ -1,13 +1,21 @@
-import yaml from 'yaml';
 import { ArgType } from '@storybook/api';
 import { enhanceArgTypes } from './enhanceArgTypes';
+import { extractArgTypes } from '../angular';
 
 expect.addSnapshotSerializer({
-  print: (val: any) => yaml.stringify(val).trim(),
+  print: (val: any) => JSON.stringify(val, null, 2),
   test: (val) => true,
 });
 
-const enhance = (argType: ArgType, arg?: any, extraction?: ArgType) => {
+const enhance = ({
+  argType,
+  arg,
+  extractedArgType,
+}: {
+  argType?: ArgType;
+  arg?: any;
+  extractedArgType?: ArgType;
+}) => {
   const context = {
     id: 'foo--bar',
     kind: 'foo',
@@ -15,7 +23,7 @@ const enhance = (argType: ArgType, arg?: any, extraction?: ArgType) => {
     parameters: {
       component: 'dummy',
       docs: {
-        extractArgTypes: () => ({ input: extraction }),
+        extractArgTypes: () => ({ input: extractedArgType }),
       },
       argTypes: {
         input: argType,
@@ -35,53 +43,76 @@ describe('enhanceArgTypes', () => {
     it('number', () => {
       expect(
         enhance({
-          type: { name: 'number' },
+          argType: { type: { name: 'number' } },
         })
       ).toMatchInlineSnapshot(`
-        name: input
-        type:
-          name: number
+        {
+          "name": "input",
+          "type": {
+            "name": "number"
+          }
+        }
       `);
     });
   });
   describe('args input', () => {
     it('number', () => {
-      expect(enhance({}, 5)).toMatchInlineSnapshot(`name: input`);
+      expect(enhance({ arg: 5 })).toMatchInlineSnapshot(`
+        {
+          "name": "input",
+          "type": {
+            "name": "number"
+          }
+        }
+      `);
     });
   });
 
   describe('extraction', () => {
     it('number', () => {
-      expect(enhance({}, undefined, { name: 'input', type: { name: 'number' } }))
+      expect(enhance({ extractedArgType: { name: 'input', type: { name: 'number' } } }))
         .toMatchInlineSnapshot(`
-        name: input
-        type:
-          name: number
+        {
+          "name": "input",
+          "type": {
+            "name": "number"
+          }
+        }
       `);
     });
   });
 
   describe('controls input', () => {
     it('range', () => {
-      expect(enhance({ controls: { type: 'range', min: 0, max: 100 } })).toMatchInlineSnapshot(`
-        name: input
-        controls:
-          type: range
-          min: 0
-          max: 100
+      expect(enhance({ argType: { controls: { type: 'range', min: 0, max: 100 } } }))
+        .toMatchInlineSnapshot(`
+        {
+          "name": "input",
+          "controls": {
+            "type": "range",
+            "min": 0,
+            "max": 100
+          }
+        }
       `);
     });
     it('options', () => {
-      expect(enhance({ controls: { type: 'options', options: [1, 2, 3], controlType: 'radio' } }))
-        .toMatchInlineSnapshot(`
-        name: input
-        controls:
-          type: options
-          options:
-            - 1
-            - 2
-            - 3
-          controlType: radio
+      expect(
+        enhance({
+          argType: { controls: { type: 'options', options: [1, 2], controlType: 'radio' } },
+        })
+      ).toMatchInlineSnapshot(`
+        {
+          "name": "input",
+          "controls": {
+            "type": "options",
+            "options": [
+              1,
+              2
+            ],
+            "controlType": "radio"
+          }
+        }
       `);
     });
   });
@@ -89,13 +120,20 @@ describe('enhanceArgTypes', () => {
   describe('mixed input', () => {
     it('mixed input', () => {
       expect(
-        enhance({ defaultValue: 5, control: { type: 'range', step: 50 } }, 3, { name: 'input' })
+        enhance({
+          argType: { defaultValue: 5, control: { type: 'range', step: 50 } },
+          arg: 3,
+          extractedArgType: { name: 'input' },
+        })
       ).toMatchInlineSnapshot(`
-        name: input
-        defaultValue: 5
-        control:
-          type: range
-          step: 50
+        {
+          "name": "input",
+          "defaultValue": 5,
+          "control": {
+            "type": "range",
+            "step": 50
+          }
+        }
       `);
     });
   });

@@ -7,15 +7,12 @@ const isSubset = (kind: string, subset: object, superset: object) => {
   const keys = Object.keys(subset);
   // eslint-disable-next-line no-prototype-builtins
   const overlap = keys.filter((key) => superset.hasOwnProperty(key));
-  if (kind === 'Addons/Docs/props') {
-    console.log('isSubset', { overlap: overlap.length, keys: keys.length });
-  }
   return overlap.length === keys.length;
 };
 
 export const enhanceArgTypes: ParameterEnhancer = (context) => {
-  const { parameters } = context;
-  const { component, subcomponents, args = {}, argTypes = {}, docs = {} } = parameters;
+  const { parameters, args = {} } = context;
+  const { component, subcomponents, argTypes = {}, docs = {} } = parameters;
   const { extractArgTypes } = docs;
   // if (context.storyFn.length === 0 || !component || !extractArgTypes) {
   if (!component || !extractArgTypes) {
@@ -43,12 +40,6 @@ export const enhanceArgTypes: ParameterEnhancer = (context) => {
     });
     return acc;
   }, {} as ArgTypes);
-
-  if (context.kind === 'Addons/Docs/props') {
-    console.log('input args', { args });
-    console.log('inferredArgTypes', { inferredArgTypes });
-    console.log('namedArgTypes', { namedArgTypes });
-  }
 
   if (
     (Object.keys(argTypes).length > 0 && !isSubset(context.kind, extractedArgTypes, argTypes)) ||

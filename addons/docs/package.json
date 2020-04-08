@@ -90,7 +90,6 @@
     "@types/jest": "^25.1.1",
     "@types/prop-types": "^15.5.9",
     "@types/util-deprecate": "^1.0.0",
-    "@types/yaml": "^1.2.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-react-docgen": "^4.1.0",
     "corejs-upgrade-webpack-plugin": "^4.0.1",
@@ -111,7 +110,6 @@
     "tmp": "^0.1.0",
     "web-component-analyzer": "^1.0.3",
     "webpack": "^4.33.0",
-    "yaml": "^1.8.3",
     "zone.js": "^0.10.2"
   },
   "peerDependencies": {
