@@ -34,7 +34,6 @@ function run() {
         name: package,
         suffix: package.replace('@storybook/', ''),
         defaultValue: false,
-        option: `--${package}`,
         helpText: `build only the ${package} package`,
       };
     })
@@ -47,7 +46,7 @@ function run() {
     watch: {
       name: `watch`,
       defaultValue: false,
-      option: '--watch',
+      suffix: '--watch',
       helpText: 'build on watch mode',
     },
     ...packageTasks,
@@ -61,17 +60,13 @@ function run() {
   const main = program.version('5.0.0').option('--all', `build everything ${chalk.gray('(all)')}`);
 
   Object.keys(tasks)
-    .reduce((acc, key) => acc.option(tasks[key].option, tasks[key].helpText), main)
+    .reduce((acc, key) => acc.option(tasks[key].suffix, tasks[key].helpText), main)
     .parse(process.argv);
 
   Object.keys(tasks).forEach((key) => {
-    const formattedKey = tasks[key].option
-      .replace('--', '')
-      // converts text like --@storybook/addon-docs to @storybook/addonDocs
-      // which is how the option is parsed in the process
-      .replace(/-./g, (str) => str.toUpperCase()[1]);
     // checks if a flag is passed e.g. yarn build --@storybook/addon-docs --watch
-    tasks[key].value = program[formattedKey] || program.all;
+    const containsFlag = program.rawArgs.includes(tasks[key].suffix);
+    tasks[key].value = containsFlag || program.all;
   });
 
   const createSeparator = (input) => `- ${input}${' ---------'.substr(0, 12)}`;
@@ -99,7 +94,7 @@ function run() {
     const ui = new inquirer.ui.BottomBar();
     ui.log.write(
       chalk.yellow(
-        'You can also run `yarn build --packagename` directly or `yarn build --all` for all packages!'
+        'You can also run directly with package name like `yarn build core`, or `yarn build --all` for all packages!'
       )
     );
 
@@ -122,7 +117,6 @@ function run() {
   } else {
     // hits here when running yarn build --packagename
     watchMode = process.argv.includes('--watch');
-
     selection = Promise.resolve(
       Object.keys(tasks)
         .map((key) => tasks[key])
@@ -136,8 +130,9 @@ function run() {
         log.warn(prefix, 'Nothing to build!');
       } else {
         const packageNames = list
-          .map((key) => key.suffix)
           // filters out watch command if --watch is used
+          .filter((key) => key.name !== 'watch')
+          .map((key) => key.suffix)
           .filter(Boolean);
 
         const glob =
