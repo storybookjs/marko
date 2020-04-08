@@ -6,6 +6,7 @@ import { logger } from '@storybook/client-logger';
 const rootEl = document.getElementById('root');
 let activeComponent = null; // currently loaded marko component.
 let activeTemplate = null; // template for the currently loaded component.
+let activeStoryFn = null; // used to determine if we've switched stories.
 
 export default function renderMain({
   storyFn,
@@ -16,7 +17,9 @@ export default function renderMain({
   parameters,
   // forceRender,
 }) {
+  const isSameStory = activeStoryFn === storyFn;
   const config = storyFn();
+  activeStoryFn = storyFn;
 
   if (!config || !(config.appendTo || config.component || parameters.component)) {
     showError({
@@ -43,7 +46,7 @@ export default function renderMain({
   } else {
     const template = config.component || parameters.component;
 
-    if (activeTemplate === template) {
+    if (isSameStory && activeTemplate === template) {
       // When rendering the same template with new input, we reuse the same instance.
       activeComponent.input = config.input;
       activeComponent.update();
