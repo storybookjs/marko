@@ -38,7 +38,7 @@ type StoryProps = BaseProps & {
 
 type PropsProps = BaseProps | OfProps | ComponentsProps | StoryProps;
 
-const useArgs = (storyId: string, storyStore: StoryStore) => {
+const useArgs = (storyId: string, storyStore: StoryStore): [Args, (args: Args) => void] => {
   const story = storyStore.fromId(storyId);
   if (!story) {
     throw new Error(`Unknown story: ${storyId}`);
@@ -57,7 +57,7 @@ const useArgs = (storyId: string, storyStore: StoryStore) => {
   }, [storyId]);
   const updateArgs = useCallback((newArgs) => storyStore.updateStoryArgs(storyId, newArgs), [
     storyId,
-  ]) as (args: Args) => void;
+  ]);
   return [args, updateArgs];
 };
 
@@ -143,8 +143,7 @@ export const StoryTable: FC<StoryProps & { components: Record<string, Component>
       storyArgTypes = data.parameters.argTypes;
     }
     storyArgTypes = filterArgTypes(storyArgTypes, exclude);
-    const [args, argUpdater] = useArgs(storyId, storyStore);
-    const updateArgs = argUpdater as (args: Args) => void;
+    const [args, updateArgs] = useArgs(storyId, storyStore);
     let tabs = { Story: { rows: storyArgTypes, args, updateArgs } } as Record<
       string,
       ArgsTableProps
