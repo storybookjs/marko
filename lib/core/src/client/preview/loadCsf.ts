@@ -113,24 +113,29 @@ const loadStories = (
       kind.addDecorator(decorator);
     });
 
-    Object.keys(exports).forEach((key) => {
-      if (isExportStory(key, meta)) {
-        const storyFn = exports[key];
-        const { name, parameters, decorators, args, argTypes } = storyFn.story || {};
-        const decoratorParams = decorators ? { decorators } : null;
-        const exportName = storyNameFromExport(key);
-        const idParams = { __id: toId(componentId || kindName, exportName) };
+    const storyExports = Object.keys(exports);
+    if (storyExports.length === 0) {
+      logger.warn(`Found a storyfile for "${kindName}" but no exported stories.`);
+    } else {
+      storyExports.forEach((key) => {
+        if (isExportStory(key, meta)) {
+          const storyFn = exports[key];
+          const { name, parameters, decorators, args, argTypes } = storyFn.story || {};
+          const decoratorParams = decorators ? { decorators } : null;
+          const exportName = storyNameFromExport(key);
+          const idParams = { __id: toId(componentId || kindName, exportName) };
 
-        const storyParams = {
-          ...parameters,
-          ...decoratorParams,
-          ...idParams,
-          args,
-          argTypes,
-        };
-        kind.add(name || exportName, storyFn, storyParams);
-      }
-    });
+          const storyParams = {
+            ...parameters,
+            ...decoratorParams,
+            ...idParams,
+            args,
+            argTypes,
+          };
+          kind.add(name || exportName, storyFn, storyParams);
+        }
+      });
+    }
   });
   previousExports = currentExports;
 };
