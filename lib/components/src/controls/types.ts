@@ -70,7 +70,7 @@ export type ControlType =
   | OptionsControlType
   | 'text';
 
-export type ControlConfig =
+export type Control =
   | ArrayConfig
   | BooleanConfig
   | ColorConfig
@@ -81,4 +81,4 @@ export type ControlConfig =
   | RangeConfig
   | TextConfig;
 
-export type Controls = Record<string, ControlConfig>;
+export type Controls = Record<string, Control>;

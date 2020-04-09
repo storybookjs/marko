@@ -17,7 +17,7 @@ const inferControl = (argType: ArgType): Control => {
     case 'number':
       return { type: 'number' };
     case 'enum': {
-      const { value } = argType.sbType as SBEnumType;
+      const { value } = argType.type as SBEnumType;
       return { type: 'options', controlType: 'select', options: value };
     }
     case 'function':

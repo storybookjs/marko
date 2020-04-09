@@ -2,65 +2,82 @@ import 'jest-specific-snapshot';
 import { transformSync } from '@babel/core';
 import requireFromString from 'require-from-string';
 import dedent from 'ts-dedent';
+import fs from 'fs';
 
 import { convert } from './convert';
 import { normalizeNewlines } from '../utils';
 
 expect.addSnapshotSerializer({
   print: (val: any) => JSON.stringify(val, null, 2),
-  test: (val) => true,
+  test: (val) => typeof val !== 'string',
 });
 
 describe('storybook type system', () => {
-  describe('typescript', () => {
+  describe('TypeScript', () => {
     it('scalars', () => {
-      expect(
-        convertTs(dedent`
-          interface Props {
-            any: any;
-            string: string;
-            bool: boolean;
-            number: number;
-            symbol: symbol;
-            readonly readonlyPrimitive: string;
-          }
-        `)
-      ).toMatchInlineSnapshot(`
+      const input = readFixture('typescript/functions.tsx');
+      expect(input).toMatchInlineSnapshot(`
+        "import React, { FC } from 'react';
+
+        interface ItemInterface {
+          text: string;
+          value: string;
+        }
+        interface Props {
+          onClick?: () => void;
+          voidFunc: () => void;
+          funcWithArgsAndReturns: (a: string, b: string) => string;
+          funcWithUnionArg: (a: string | number) => string;
+          funcWithMultipleUnionReturns: () => string | ItemInterface;
+        }
+        export const Component: FC<Props> = (props: Props) => <>JSON.stringify(props)</>;
+        "
+      `);
+      expect(convertTs(input)).toMatchInlineSnapshot(`
         {
-          "any": {
-            "name": "other",
-            "value": "any"
+          "onClick": {
+            "raw": "() => void",
+            "name": "function"
           },
-          "string": {
-            "name": "string"
+          "voidFunc": {
+            "raw": "() => void",
+            "name": "function"
           },
-          "bool": {
-            "name": "boolean"
+          "funcWithArgsAndReturns": {
+            "raw": "(a: string, b: string) => string",
+            "name": "function"
           },
-          "number": {
-            "name": "number"
+          "funcWithUnionArg": {
+            "raw": "(a: string | number) => string",
+            "name": "function"
           },
-          "symbol": {
-            "name": "symbol"
-          },
-          "readonlyPrimitive": {
-            "name": "string"
+          "funcWithMultipleUnionReturns": {
+            "raw": "() => string | ItemInterface",
+            "name": "function"
           }
         }
       `);
     });
     it('functions', () => {
-      expect(
-        convertTs(dedent`
-          interface Props {
-            onClick?: () => void;
-            voidFunc: () => void;
-            funcWithArgsAndReturns: (a: string, b: string) => string;
-            funcWithUnionArg: (a: string | number) => string;
-            funcWithMultipleUnionReturns: () => string | ItemInterface;
-          }
-        `)
-      ).toMatchInlineSnapshot(`
+      const input = readFixture('typescript/functions.tsx');
+      expect(input).toMatchInlineSnapshot(`
+        "import React, { FC } from 'react';
+
+        interface ItemInterface {
+          text: string;
+          value: string;
+        }
+        interface Props {
+          onClick?: () => void;
+          voidFunc: () => void;
+          funcWithArgsAndReturns: (a: string, b: string) => string;
+          funcWithUnionArg: (a: string | number) => string;
+          funcWithMultipleUnionReturns: () => string | ItemInterface;
+        }
+        export const Component: FC<Props> = (props: Props) => <>JSON.stringify(props)</>;
+        "
+      `);
+      expect(convertTs(input)).toMatchInlineSnapshot(`
         {
           "onClick": {
             "raw": "() => void",
@@ -86,30 +103,34 @@ describe('storybook type system', () => {
       `);
     });
     it('enums', () => {
-      expect(
-        convertTs(dedent`
-          enum DefaultEnum {
-            TopLeft,
-            TopRight,
-            TopCenter,
-          }
-          enum NumericEnum {
-            TopLeft = 0,
-            TopRight,
-            TopCenter,
-          }
-          enum StringEnum {
-            TopLeft = 'top-left',
-            TopRight = 'top-right',
-            TopCenter = 'top-center',
-          }
-          interface Props {
-            defaultEnum: DefaultEnum;
-            numericEnum: NumericEnum;
-            stringEnum: StringEnum;
-          }
-        `)
-      ).toMatchInlineSnapshot(`
+      const input = readFixture('typescript/enums.tsx');
+      expect(input).toMatchInlineSnapshot(`
+        "import React, { FC } from 'react';
+
+        enum DefaultEnum {
+          TopLeft,
+          TopRight,
+          TopCenter,
+        }
+        enum NumericEnum {
+          TopLeft = 0,
+          TopRight,
+          TopCenter,
+        }
+        enum StringEnum {
+          TopLeft = 'top-left',
+          TopRight = 'top-right',
+          TopCenter = 'top-center',
+        }
+        interface Props {
+          defaultEnum: DefaultEnum;
+          numericEnum: NumericEnum;
+          stringEnum: StringEnum;
+        }
+        export const Component: FC<Props> = (props: Props) => <>JSON.stringify(props)</>;
+        "
+      `);
+      expect(convertTs(input)).toMatchInlineSnapshot(`
         {
           "defaultEnum": {
             "name": "other",
@@ -127,27 +148,31 @@ describe('storybook type system', () => {
       `);
     });
     it('unions', () => {
-      expect(
-        convertTs(dedent`
-          type Kind = 'default' | 'action';
-          enum DefaultEnum {
-            TopLeft,
-            TopRight,
-            TopCenter,
-          }            
-          enum NumericEnum {
-            TopLeft = 0,
-            TopRight,
-            TopCenter,
-          }
-          type EnumUnion = DefaultEnum | NumericEnum;
-          interface Props {
-            kind?: Kind;
-            inlinedNumericLiteralUnion: 0 | 1;
-            enumUnion: EnumUnion;
-          }
-        `)
-      ).toMatchInlineSnapshot(`
+      const input = readFixture('typescript/unions.tsx');
+      expect(input).toMatchInlineSnapshot(`
+        "import React, { FC } from 'react';
+
+        type Kind = 'default' | 'action';
+        enum DefaultEnum {
+          TopLeft,
+          TopRight,
+          TopCenter,
+        }
+        enum NumericEnum {
+          TopLeft = 0,
+          TopRight,
+          TopCenter,
+        }
+        type EnumUnion = DefaultEnum | NumericEnum;
+        interface Props {
+          kind?: Kind;
+          inlinedNumericLiteralUnion: 0 | 1;
+          enumUnion: EnumUnion;
+        }
+        export const Component: FC<Props> = (props: Props) => <>JSON.stringify(props)</>;
+        "
+      `);
+      expect(convertTs(input)).toMatchInlineSnapshot(`
         {
           "kind": {
             "raw": "'default' | 'action'",
@@ -195,22 +220,26 @@ describe('storybook type system', () => {
       `);
     });
     it('intersections', () => {
-      expect(
-        convertTs(dedent`
-          interface ItemInterface {
-            text: string;
-            value: string;
-          }
-          interface PersonInterface {
-            name: string;
-          }
-          type InterfaceIntersection = ItemInterface & PersonInterface;
-          interface Props {
-            intersectionType: InterfaceIntersection;
-            intersectionWithInlineType: ItemInterface & { inlineValue: string };
-          }
-        `)
-      ).toMatchInlineSnapshot(`
+      const input = readFixture('typescript/intersections.tsx');
+      expect(input).toMatchInlineSnapshot(`
+        "import React, { FC } from 'react';
+
+        interface ItemInterface {
+          text: string;
+          value: string;
+        }
+        interface PersonInterface {
+          name: string;
+        }
+        type InterfaceIntersection = ItemInterface & PersonInterface;
+        interface Props {
+          intersectionType: InterfaceIntersection;
+          intersectionWithInlineType: ItemInterface & { inlineValue: string };
+        }
+        export const Component: FC<Props> = (props: Props) => <>JSON.stringify(props)</>;
+        "
+      `);
+      expect(convertTs(input)).toMatchInlineSnapshot(`
         {
           "intersectionType": {
             "raw": "ItemInterface & PersonInterface",
@@ -249,24 +278,28 @@ describe('storybook type system', () => {
       `);
     });
     it('arrays', () => {
-      expect(
-        convertTs(dedent`
-          interface ItemInterface {
-            text: string;
-            value: string;
-          }
-          interface Point {
-            x: number;
-            y: number;
-          }
-          interface Props {
-            arrayOfPoints: Point[];
-            arrayOfInlineObjects: { w: number; h: number }[];
-            arrayOfPrimitive: string[];
-            arrayOfComplexObject: ItemInterface[];
-          }
-        `)
-      ).toMatchInlineSnapshot(`
+      const input = readFixture('typescript/arrays.tsx');
+      expect(input).toMatchInlineSnapshot(`
+        "import React, { FC } from 'react';
+
+        interface ItemInterface {
+          text: string;
+          value: string;
+        }
+        interface Point {
+          x: number;
+          y: number;
+        }
+        interface Props {
+          arrayOfPoints: Point[];
+          arrayOfInlineObjects: { w: number; h: number }[];
+          arrayOfPrimitive: string[];
+          arrayOfComplexObject: ItemInterface[];
+        }
+        export const Component: FC<Props> = (props: Props) => <>JSON.stringify(props)</>;
+        "
+      `);
+      expect(convertTs(input)).toMatchInlineSnapshot(`
         {
           "arrayOfPoints": {
             "raw": "Point[]",
@@ -319,21 +352,25 @@ describe('storybook type system', () => {
       `);
     });
     it('interfaces', () => {
-      expect(
-        convertTs(dedent`
-          interface ItemInterface {
-            text: string;
-            value: string;
-          }
-          interface GenericInterface<T> {
-            value: T;
-          }
-          interface Props {
-            interface: ItemInterface;
-            genericInterface: GenericInterface<string>;
-          }
-        `)
-      ).toMatchInlineSnapshot(`
+      const input = readFixture('typescript/interfaces.tsx');
+      expect(input).toMatchInlineSnapshot(`
+        "import React, { FC } from 'react';
+
+        interface ItemInterface {
+          text: string;
+          value: string;
+        }
+        interface GenericInterface<T> {
+          value: T;
+        }
+        interface Props {
+          interface: ItemInterface;
+          genericInterface: GenericInterface<string>;
+        }
+        export const Component: FC<Props> = (props: Props) => <>JSON.stringify(props)</>;
+        "
+      `);
+      expect(convertTs(input)).toMatchInlineSnapshot(`
         {
           "interface": {
             "name": "other",
@@ -348,18 +385,22 @@ describe('storybook type system', () => {
       `);
     });
     it('records', () => {
-      expect(
-        convertTs(dedent`
-          interface ItemInterface {
-            text: string;
-            value: string;
-          }
-          interface Props {
-            recordOfPrimitive: Record<string, number>;
-            recordOfComplexObject: Record<string, ItemInterface>;
-          }
-        `)
-      ).toMatchInlineSnapshot(`
+      const input = readFixture('typescript/records.tsx');
+      expect(input).toMatchInlineSnapshot(`
+        "import React, { FC } from 'react';
+
+        interface ItemInterface {
+          text: string;
+          value: string;
+        }
+        interface Props {
+          recordOfPrimitive: Record<string, number>;
+          recordOfComplexObject: Record<string, ItemInterface>;
+        }
+        export const Component: FC<Props> = (props: Props) => <>JSON.stringify(props)</>;
+        "
+      `);
+      expect(convertTs(input)).toMatchInlineSnapshot(`
         {
           "recordOfPrimitive": {
             "raw": "Record<string, number>",
@@ -375,21 +416,25 @@ describe('storybook type system', () => {
       `);
     });
     it('aliases', () => {
-      expect(
-        convertTs(dedent`
-          type StringAlias = string;
-          type NumberAlias = number;
-          type AliasesIntersection = StringAlias & NumberAlias;
-          type AliasesUnion = StringAlias | NumberAlias;
-          type GenericAlias<T> = { value: T };
-          interface Props {
-            typeAlias: StringAlias;
-            aliasesIntersection: AliasesIntersection;
-            aliasesUnion: AliasesUnion;
-            genericAlias: GenericAlias<string>;
-          }
-        `)
-      ).toMatchInlineSnapshot(`
+      const input = readFixture('typescript/aliases.tsx');
+      expect(input).toMatchInlineSnapshot(`
+        "import React, { FC } from 'react';
+
+        type StringAlias = string;
+        type NumberAlias = number;
+        type AliasesIntersection = StringAlias & NumberAlias;
+        type AliasesUnion = StringAlias | NumberAlias;
+        type GenericAlias<T> = { value: T };
+        interface Props {
+          typeAlias: StringAlias;
+          aliasesIntersection: AliasesIntersection;
+          aliasesUnion: AliasesUnion;
+          genericAlias: GenericAlias<string>;
+        }
+        export const Component: FC<Props> = (props: Props) => <>JSON.stringify(props)</>;
+        "
+      `);
+      expect(convertTs(input)).toMatchInlineSnapshot(`
         {
           "typeAlias": {
             "name": "string"
@@ -431,18 +476,22 @@ describe('storybook type system', () => {
       `);
     });
     it('tuples', () => {
-      expect(
-        convertTs(dedent`
-          interface ItemInterface {
-            text: string;
-            value: string;
-          }
-          interface Props {
-            tupleOfPrimitive: [string, number];
-            tupleWithComplexType: [string, ItemInterface];
-          }
-        `)
-      ).toMatchInlineSnapshot(`
+      const input = readFixture('typescript/tuples.tsx');
+      expect(input).toMatchInlineSnapshot(`
+        "import React, { FC } from 'react';
+
+        interface ItemInterface {
+          text: string;
+          value: string;
+        }
+        interface Props {
+          tupleOfPrimitive: [string, number];
+          tupleWithComplexType: [string, ItemInterface];
+        }
+        export const Component: FC<Props> = (props: Props) => <>JSON.stringify(props)</>;
+        "
+      `);
+      expect(convertTs(input)).toMatchInlineSnapshot(`
         {
           "tupleOfPrimitive": {
             "raw": "[string, number]",
@@ -460,15 +509,22 @@ describe('storybook type system', () => {
   });
   describe('PropTypes', () => {
     it('scalars', () => {
-      expect(
-        convertJs(dedent`{
+      const input = readFixture('proptypes/scalars.js');
+      expect(input).toMatchInlineSnapshot(`
+        "import React from 'react';
+        import PropTypes from 'prop-types';
+
+        export const Component = (props) => <>JSON.stringify(props)</>;
+        Component.propTypes = {
           optionalBool: PropTypes.bool,
           optionalFunc: PropTypes.func,
           optionalNumber: PropTypes.number,
           optionalString: PropTypes.string,
           optionalSymbol: PropTypes.symbol,
-        }`)
-      ).toMatchInlineSnapshot(`
+        };
+        "
+      `);
+      expect(convertJs(input)).toMatchInlineSnapshot(`
         {
           "optionalBool": {
             "name": "boolean"
@@ -489,17 +545,24 @@ describe('storybook type system', () => {
       `);
     });
     it('arrays', () => {
-      expect(
-        convertJs(dedent`{
-        optionalArray: PropTypes.array,
-        arrayOfStrings: PropTypes.arrayOf(PropTypes.string),
-        arrayOfShape: PropTypes.arrayOf(
-          PropTypes.shape({
-            active: PropTypes.bool,
-          })
-        )
-      }`)
-      ).toMatchInlineSnapshot(`
+      const input = readFixture('proptypes/arrays.js');
+      expect(input).toMatchInlineSnapshot(`
+        "import React from 'react';
+        import PropTypes from 'prop-types';
+
+        export const Component = (props) => <>JSON.stringify(props)</>;
+        Component.propTypes = {
+          optionalArray: PropTypes.array,
+          arrayOfStrings: PropTypes.arrayOf(PropTypes.string),
+          arrayOfShape: PropTypes.arrayOf(
+            PropTypes.shape({
+              active: PropTypes.bool,
+            })
+          ),
+        };
+        "
+      `);
+      expect(convertJs(input)).toMatchInlineSnapshot(`
         {
           "optionalArray": {
             "name": "other",
@@ -526,12 +589,19 @@ describe('storybook type system', () => {
       `);
     });
     it('enums', () => {
-      expect(
-        convertJs(dedent`{
+      const input = readFixture('proptypes/enums.js');
+      expect(input).toMatchInlineSnapshot(`
+        "import React from 'react';
+        import PropTypes from 'prop-types';
+
+        export const Component = (props) => <>JSON.stringify(props)</>;
+        Component.propTypes = {
           oneOfNumber: PropTypes.oneOf([1, 2, 3]),
-          oneOfString: PropTypes.oneOf(['static', 'timed'])
-        }`)
-      ).toMatchInlineSnapshot(`
+          oneOfString: PropTypes.oneOf(['static', 'timed']),
+        };
+        "
+      `);
+      expect(convertJs(input)).toMatchInlineSnapshot(`
         {
           "oneOfNumber": {
             "name": "enum",
@@ -552,22 +622,26 @@ describe('storybook type system', () => {
       `);
     });
     it('misc', () => {
-      expect(
-        convertJs(dedent`{
+      const input = readFixture('proptypes/misc.js');
+      expect(input).toMatchInlineSnapshot(`
+        "import React from 'react';
+        import PropTypes from 'prop-types';
+
+        export const Component = (props) => <>JSON.stringify(props)</>;
+        Component.propTypes = {
           // An object that could be one of many types
           optionalUnion: PropTypes.oneOfType([
             PropTypes.string,
             PropTypes.number,
             PropTypes.instanceOf(Object),
           ]),
-        
           optionalMessage: PropTypes.instanceOf(Object),
-        
           // A value of any data type
-          // eslint-disable-next-line react/forbid-prop-types
           requiredAny: PropTypes.any.isRequired,
-        }`)
-      ).toMatchInlineSnapshot(`
+        };
+        "
+      `);
+      expect(convertJs(input)).toMatchInlineSnapshot(`
         {
           "optionalUnion": {
             "name": "union",
@@ -596,8 +670,13 @@ describe('storybook type system', () => {
       `);
     });
     it('objects', () => {
-      expect(
-        convertJs(dedent`{
+      const input = readFixture('proptypes/objects.js');
+      expect(input).toMatchInlineSnapshot(`
+        "import React from 'react';
+        import PropTypes from 'prop-types';
+
+        export const Component = (props) => <>JSON.stringify(props)</>;
+        Component.propTypes = {
           optionalObject: PropTypes.object,
           optionalObjectOf: PropTypes.objectOf(PropTypes.number),
           optionalObjectWithShape: PropTypes.shape({
@@ -608,8 +687,10 @@ describe('storybook type system', () => {
             name: PropTypes.string,
             quantity: PropTypes.number,
           }),
-        }`)
-      ).toMatchInlineSnapshot(`
+        };
+        "
+      `);
+      expect(convertJs(input)).toMatchInlineSnapshot(`
         {
           "optionalObject": {
             "name": "object"
@@ -646,19 +727,24 @@ describe('storybook type system', () => {
       `);
     });
     it('react', () => {
-      expect(
-        convertJs(dedent`{
-        // Anything that can be rendered: numbers, strings, elements or an array
-        // (or fragment) containing these types.
-        optionalNode: PropTypes.node,
-      
-        // A React element.
-        optionalElement: PropTypes.element,
-      
-        // A React element type (ie. MyComponent).
-        optionalElementType: PropTypes.elementType,
-        }`)
-      ).toMatchInlineSnapshot(`
+      const input = readFixture('proptypes/react.js');
+      expect(input).toMatchInlineSnapshot(`
+        "import React from 'react';
+        import PropTypes from 'prop-types';
+
+        export const Component = (props) => <>JSON.stringify(props)</>;
+        Component.propTypes = {
+          // Anything that can be rendered: numbers, strings, elements or an array
+          // (or fragment) containing these types.
+          optionalNode: PropTypes.node,
+          // A React element.
+          optionalElement: PropTypes.element,
+          // A React element type (ie. MyComponent).
+          optionalElementType: PropTypes.elementType,
+        };
+        "
+      `);
+      expect(convertJs(input)).toMatchInlineSnapshot(`
         {
           "optionalNode": {
             "name": "other",
@@ -677,6 +763,9 @@ describe('storybook type system', () => {
     });
   });
 });
+
+const readFixture = (fixture: string) =>
+  fs.readFileSync(`${__dirname}/__testfixtures__/${fixture}`).toString();
 
 const transformToModule = (inputCode: string) => {
   const options = {
@@ -718,22 +807,22 @@ const convertCommon = (code: string, fileExt: string) => {
   return types;
 };
 
-const convertTs = (propsInterface: string) => {
-  const code = dedent`
-    import React, { FC } from 'react';
-    ${propsInterface}
-    export const Component: FC<Props> = (props: Props) => <>JSON.stringify(props)</>;
-  `;
+const convertTs = (code: string) => {
+  // const code = dedent`
+  //   import React, { FC } from 'react';
+  //   ${propsInterface}
+  //   export const Component: FC<Props> = (props: Props) => <>JSON.stringify(props)</>;
+  // `;
   return convertCommon(code, 'tsx');
 };
 
-const convertJs = (propTypes: string) => {
-  const code = dedent`
-    import React from 'react';
-    import PropTypes from 'prop-types';
-    
-    export const Component = props => <>JSON.stringify(props)</>;
-    Component.propTypes = ${propTypes};
-  `;
+const convertJs = (code: string) => {
+  // const code = dedent`
+  //   import React from 'react';
+  //   import PropTypes from 'prop-types';
+
+  //   export const Component = props => <>JSON.stringify(props)</>;
+  //   Component.propTypes = ${propTypes};
+  // `;
   return convertCommon(code, 'js');
 };
