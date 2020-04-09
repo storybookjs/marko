@@ -173,12 +173,8 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
     Object.entries(rows).forEach(([key, row]) => {
       const { table: { category = null } = {} } = row;
       if (category) {
-        let catRows = categoryRows[category];
-        if (!catRows) {
-          catRows = {};
-          categoryRows[category] = catRows;
-        }
-        catRows[key] = row;
+        if (!categoryRows[category]) categoryRows[category] = {}
+        categoryRows[category][key] = row;
       } else {
         ungroupedRows[key] = row;
       }
