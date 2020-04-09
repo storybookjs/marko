@@ -2,6 +2,7 @@ import camelCase from 'lodash/camelCase';
 import { ParameterEnhancer, combineParameters } from '@storybook/client-api';
 import { ArgTypes } from '@storybook/api';
 import { inferArgTypes } from './inferArgTypes';
+import { inferControls } from './inferControls';
 
 const isSubset = (kind: string, subset: object, superset: object) => {
   const keys = Object.keys(subset);
@@ -55,5 +56,9 @@ export const enhanceArgTypes: ParameterEnhancer = (context) => {
     { argTypes: extractedArgTypes, componentArgTypes }
   );
 
-  return withArgTypes;
+  const withControls = inferControls(withArgTypes.argTypes);
+
+  const result = combineParameters(withArgTypes, { argTypes: withControls });
+
+  return result;
 };

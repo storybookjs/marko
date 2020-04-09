@@ -5,6 +5,7 @@ import { styled } from '@storybook/theming';
 import { TableArgType, Args, TableAnnotation } from './types';
 import { ArgJsDoc } from './ArgJsDoc';
 import { ArgValue } from './ArgValue';
+import { ArgControl, ArgControlProps } from './ArgControl';
 import { codeCommon } from '../../typography/shared';
 
 export interface ArgRowProps {
@@ -54,7 +55,7 @@ const TypeWithJsDoc = styled.div<{ hasDescription: boolean }>(({ theme, hasDescr
 }));
 
 export const ArgRow: FC<ArgRowProps> = (props) => {
-  const { row } = props;
+  const { row, arg, updateArgs } = props;
   const { name, description } = row;
   const table = (row.table || {}) as TableAnnotation;
   const type = table.type || row.type;
@@ -90,6 +91,11 @@ export const ArgRow: FC<ArgRowProps> = (props) => {
       <td>
         <ArgValue value={defaultValue} />
       </td>
+      {updateArgs ? (
+        <td>
+          <ArgControl {...(props as ArgControlProps)} />
+        </td>
+      ) : null}
     </tr>
   );
 };

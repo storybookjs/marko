@@ -173,7 +173,7 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
     Object.entries(rows).forEach(([key, row]) => {
       const { table: { category = null } = {} } = row;
       if (category) {
-        if (!categoryRows[category]) categoryRows[category] = {}
+        if (!categoryRows[category]) categoryRows[category] = {};
         categoryRows[category][key] = row;
       } else {
         ungroupedRows[key] = row;
@@ -214,6 +214,7 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
             <th>Name</th>
             <th>Description</th>
             <th>Default</th>
+            {args && Object.keys(args).length > 0 ? <th>Control</th> : null}
           </tr>
         </thead>
         <tbody className="docblock-propstable-body">
