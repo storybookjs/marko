@@ -2,6 +2,7 @@
 import memoize from 'memoizerific';
 import dedent from 'ts-dedent';
 import stable from 'stable';
+import { pick } from 'lodash';
 
 import { Channel } from '@storybook/channels';
 import Events from '@storybook/core-events';
@@ -15,6 +16,7 @@ import {
   LegacyStoryFn,
   ArgsStoryFn,
   StoryContext,
+  StoryKind,
 } from '@storybook/addons';
 import {
   DecoratorFunction,
@@ -226,6 +228,15 @@ export default class StoryStore {
     this._parameterEnhancers.push(parameterEnhancer);
   }
 
+  // Combine the global, kind & story parameters of a story
+  combineStoryParameters(parameters: Parameters, kind: StoryKind) {
+    return combineParameters(
+      this._globalMetadata.parameters,
+      this._kinds[kind].parameters,
+      parameters
+    );
+  }
+
   addStory(
     {
       id,
@@ -277,31 +288,11 @@ export default class StoryStore {
       ...kindMetadata.decorators,
       ...this._globalMetadata.decorators,
     ];
-    const parametersBeforeEnhancement = combineParameters(
-      this._globalMetadata.parameters,
-      kindMetadata.parameters,
-      storyParameters
-    );
 
-    const parameters = this._parameterEnhancers.reduce(
-      (accumlatedParameters, enhancer) => ({
-        ...accumlatedParameters,
-        ...enhancer({
-          ...identification,
-          parameters: accumlatedParameters,
-          args: {},
-          globalArgs: {},
-        }),
-      }),
-      parametersBeforeEnhancement
-    );
-
-    let finalStoryFn: LegacyStoryFn;
-    if (parameters.passArgsFirst) {
-      finalStoryFn = (context: StoryContext) => (original as ArgsStoryFn)(context.args, context);
-    } else {
-      finalStoryFn = original as LegacyStoryFn;
-    }
+    const finalStoryFn = (context: StoryContext) =>
+      context.parameters.passArgsFirst
+        ? (original as ArgsStoryFn)(context.args, context)
+        : original(context);
 
     // lazily decorate the story when it's loaded
     const getDecorated: () => LegacyStoryFn = memoize(1)(() =>
@@ -314,23 +305,39 @@ export default class StoryStore {
       getDecorated()({
         ...identification,
         ...runtimeContext,
-        parameters,
+        // Calculate "combined" parameters at render time
+        parameters: this.combineStoryParameters(storyParameters, kind),
         hooks,
         args: _stories[id].args,
         globalArgs: this._globalArgs,
       });
 
+    // We need the combined parameters now in order to calculate argTypes and args, but we won't keep them
+    const combinedParameters = this.combineStoryParameters(storyParameters, kind);
+
+    // You aren't allowed to enhance anything apart from args and argTypes. In fact we will soon make this
+    // argTypesEnhancers
+    const { args = {}, argTypes = {} } = this._parameterEnhancers.reduce(
+      (accumlatedParameters: Parameters, enhancer) => ({
+        ...accumlatedParameters,
+        ...enhancer({
+          ...identification,
+          parameters: accumlatedParameters,
+          args: {},
+          globalArgs: {},
+        }),
+      }),
+      combinedParameters
+    );
+
     // Pull out parameters.args.$ || .argTypes.$.defaultValue into initialArgs
-    const initialArgs: Args = parameters.args || {};
-    const defaultArgs: Args = parameters.argTypes
-      ? Object.entries(parameters.argTypes as Record<string, { defaultValue: any }>).reduce(
-          (acc, [arg, { defaultValue }]) => {
-            if (defaultValue) acc[arg] = defaultValue;
-            return acc;
-          },
-          {} as Args
-        )
-      : {};
+    const initialArgs: Args = args;
+    const defaultArgs: Args = Object.entries(
+      argTypes as Record<string, { defaultValue: any }>
+    ).reduce((acc, [arg, { defaultValue }]) => {
+      if (defaultValue) acc[arg] = defaultValue;
+      return acc;
+    }, {} as Args);
 
     _stories[id] = {
       ...identification,
@@ -340,7 +347,7 @@ export default class StoryStore {
       getOriginal,
       storyFn,
 
-      parameters,
+      parameters: storyParameters,
       args: { ...defaultArgs, ...initialArgs },
     };
   }
@@ -416,41 +423,41 @@ export default class StoryStore {
       .map(({ id }) => this.fromId(id));
   }
 
-  extract(options?: StoryOptions) {
+  extract(options: StoryOptions & { normalizeParameters?: boolean } = {}) {
     const stories = Object.entries(this._stories);
-    // determine if we should apply a sort to the stories or use default import order
-    if (Object.values(this._stories).length > 0) {
-      const index = Object.keys(this._stories).find(
-        (key) =>
-          !!(
-            this._stories[key] &&
-            this._stories[key].parameters &&
-            this._stories[key].parameters.options
-          )
-      );
-      if (index && this._stories[index].parameters.options.storySort) {
-        const storySortParameter = this._stories[index].parameters.options.storySort;
-        let sortFn: Comparator<any>;
-        if (typeof storySortParameter === 'function') {
-          sortFn = storySortParameter;
-        } else {
-          sortFn = storySort(storySortParameter);
-        }
-        stable.inplace(stories, sortFn);
+
+    const storySortParameter = this._globalMetadata.parameters?.options?.storySort;
+    if (storySortParameter) {
+      let sortFn: Comparator<any>;
+      if (typeof storySortParameter === 'function') {
+        sortFn = storySortParameter;
       } else {
-        // NOTE: when kinds are HMR'ed they get temporarily removed from the `_stories` array
-        // and thus lose order. However `_kindOrder` preservers the original load order
-        stable.inplace(
-          stories,
-          (s1, s2) => this._kinds[s1[1].kind].order - this._kinds[s2[1].kind].order
-        );
+        sortFn = storySort(storySortParameter);
       }
+      stable.inplace(stories, sortFn);
+    } else {
+      // NOTE: when kinds are HMR'ed they get temporarily removed from the `_stories` array
+      // and thus lose order. However `_kindOrder` preservers the original load order
+      stable.inplace(
+        stories,
+        (s1, s2) => this._kinds[s1[1].kind].order - this._kinds[s2[1].kind].order
+      );
     }
+
     // removes function values from all stories so they are safe to transport over the channel
-    return stories.reduce(
-      (a, [k, v]) => (includeStory(v, options) ? Object.assign(a, { [k]: toExtracted(v) }) : a),
-      {}
-    );
+    return stories.reduce((acc, [id, story]) => {
+      if (!includeStory) return acc;
+
+      const extracted = toExtracted(story);
+      if (options.normalizeParameters) return Object.assign(acc, { [id]: extracted });
+
+      const { parameters, kind } = extracted as { parameters: Parameters; kind: StoryKind };
+      return Object.assign(acc, {
+        [id]: Object.assign(extracted, {
+          parameters: this.combineStoryParameters(parameters, kind),
+        }),
+      });
+    }, {});
   }
 
   clearError() {
@@ -479,7 +486,8 @@ export default class StoryStore {
   getSelection = (): Selection => this._selection;
 
   getStoriesForManager = () => {
-    return this.extract({ includeDocsOnly: true });
+    // TODO -- make normalizeParameters: true, deal with on the other side
+    return this.extract({ includeDocsOnly: true, normalizeParameters: false });
   };
 
   pushToManager = () => {
