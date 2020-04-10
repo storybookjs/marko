@@ -170,7 +170,7 @@ export class PostmsgTransport {
           ? `<span style="color: #FF4785">${event.type}</span>`
           : `<span style="color: #FFAE00">${event.type}</span>`;
 
-        event.source = source || getEventSourceUrl(rawEvent);
+        event.source = source || getEventSourceUrl(rawEvent, this.getFrames());
 
         if (!event.source) {
           logger.error(
@@ -194,9 +194,7 @@ export class PostmsgTransport {
   }
 }
 
-const getEventSourceUrl = (event: MessageEvent) => {
-  const frames: HTMLIFrameElement[] = [...document.getElementsByTagName('iframe')];
-
+const getEventSourceUrl = (event: MessageEvent, frames: HTMLIFrameElement[]) => {
   // try to find the originating iframe by matching it's contentWindow
   // This might not be cross-origin safe
   const [frame, ...remainder] = frames.filter((element) => {
@@ -223,9 +221,13 @@ const getEventSourceUrl = (event: MessageEvent) => {
     return null;
   }
 
-  const src = frame.getAttribute('src');
-  const { origin, pathname } = new URL(src, document.location);
-  return origin + pathname;
+  if (frame) {
+    const src = frame.getAttribute('src');
+    const { origin, pathname } = new URL(src, document.location);
+    return origin + pathname;
+  }
+
+  return event.origin;
 };
 
 /**
