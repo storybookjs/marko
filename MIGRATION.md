@@ -18,6 +18,8 @@
   - [Actions Addon API changes](#actions-addon-api-changes)
     - [Actions Addon uses parameters](#actions-addon-uses-parameters)
     - [Removed action decorator APIs](#removed-action-decorator-apis)
+    - [Removed addon centered](#removed-addon-centered)
+    - [Removed withA11y decorator](#removed-witha11y-decorator)
 - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
   - [To main.js configuration](#to-mainjs-configuration)
     - [Using main.js](#using-mainjs)
@@ -213,9 +215,9 @@ module.exports = {
 In earlier versions of Storybook, this would automatically call `@storybook/addon-a11y/register`, which adds the the a11y panel to the Storybook UI. As a user you would also add a decorator:
 
 ```js
-import { withA11y } from '../index';
+import { withKnobs } from '../index';
 
-addDecorator(withA11y);
+addDecorator(withKnobs);
 ```
 
 Now in 6.0, `addon-a11y` comes with a preset, `@storybook/addon-a11y/preset`, that does this automatically for you. This change simplifies configuration, since now you don't need to add that decorator.
@@ -386,9 +388,15 @@ export const MyStory = () => <div>my story</div>;
 MyStory.story = {
   parameters: { layout: 'centered' },
 };
-
 ```
+
 Other possible values are: `padded` (default) and `fullscreen`.
+
+#### Removed withA11y decorator
+
+In 6.0 we removed the `withA11y` decorator. The code that runs accessibility checks is now directly injected in the preview.
+
+Remove the addon-centered decorator. Nothing else to do
 
 ## From version 5.2.x to 5.3.x
 
@@ -726,7 +734,7 @@ var sortedModules = modules.slice().sort((a, b) => {
 });
 
 // execute them
-sortedModules.forEach(key => {
+sortedModules.forEach((key) => {
   context(key);
 });
 ```
@@ -1290,7 +1298,7 @@ Here's an example of using Notes and Info in 3.2 with the new API.
 storiesOf('composition', module).add(
   'new addons api',
   withInfo('see Notes panel for composition info')(
-    withNotes({ text: 'Composition: Info(Notes())' })(context => (
+    withNotes({ text: 'Composition: Info(Notes())' })((context) => (
       <MyComponent name={context.story} />
     ))
   )

@@ -48,9 +48,9 @@ In `preview.js` you can add global [decorators](../../basics/writing-stories/#de
 ```js
 // preview.js
 import { addDecorator } from '@storybook/svelte';
-import { withA11y } from '@storybook/addon-a11y';
+import { withKnobs } from '@storybook/addon-knobs';
 
-addDecorator(withA11y);
+addDecorator(withKnobs);
 ```
 
 In `manager.js` you can add [UI options](../options-parameter/#global-options).
