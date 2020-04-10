@@ -3,12 +3,6 @@ import { ArgTypes } from '@storybook/api';
 import { ArgTypesExtractor } from '../../lib/docgen';
 import { extractProps } from './extractProps';
 
-// import camelCase from 'lodash/camelCase';
-// Object.entries(subTypes).forEach(([key, val]) => {
-//   const subLabel = camelCase(`${label} ${key}`);
-//   acc[subLabel] = { ...val, table: { ...val.table, tab: label } };
-// });
-
 export const extractArgTypes: ArgTypesExtractor = (component) => {
   if (component) {
     const props = extractProps(component);
