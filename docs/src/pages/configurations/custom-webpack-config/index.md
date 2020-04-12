@@ -3,7 +3,7 @@ id: 'custom-webpack-config'
 title: 'Custom Webpack Config'
 ---
 
-You can customize Storybook's webpack setup by providing a `webpack` field in `main.js` file.
+You can customize Storybook's webpack setup by providing a `webpackFinal` field in `main.js` file.
 The value should be an async function that receives a webpack config and eventually returns a webpack config.
 
 Storybook has its own Webpack setup and a dev server.
