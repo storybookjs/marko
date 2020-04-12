@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { ArgsTable, ArgsTableProps } from '@storybook/components';
 import { action } from '@storybook/addon-actions';
@@ -9,15 +9,38 @@ import { extractArgTypes } from './extractArgTypes';
 import { inferControls } from '../common/inferControls';
 import { Component } from '../../blocks';
 
-const argsTableProps = (component: Component): ArgsTableProps => {
+const argsTableProps = (component: Component) => {
   const argTypes = extractArgTypes(component);
-  const args = Object.keys(argTypes).reduce((acc, key) => {
+  const controls = inferControls(argTypes);
+  const rows = combineParameters(argTypes, controls);
+  return { rows };
+};
+
+const ArgsStory = ({ component }: any) => {
+  const { rows } = argsTableProps(component);
+  const initialArgs = Object.keys(rows).reduce((acc, key) => {
     acc[key] = null;
     return acc;
   }, {} as Args);
-  const controls = inferControls(argTypes);
-  const rows = combineParameters(argTypes, controls);
-  return { rows, args };
+
+  const [args, setArgs] = useState(initialArgs);
+  return (
+    <>
+      <table>
+        <tr>
+          <th>key</th>
+          <th>val</th>
+        </tr>
+        {Object.entries(args).map(([key, val]) => (
+          <tr key={key}>
+            <td>{key}</td>
+            <td>{JSON.stringify(val, null, 2)}</td>
+          </tr>
+        ))}
+      </table>
+      <ArgsTable rows={rows} args={args} updateArgs={(val) => setArgs({ ...args, ...val })} />
+    </>
+  );
 };
 
 const typescriptFixtures = [
@@ -37,9 +60,7 @@ const typescriptStories = storiesOf('ArgTypes/TypeScript', module);
 typescriptFixtures.forEach((fixture) => {
   // eslint-disable-next-line import/no-dynamic-require, global-require, no-shadow
   const { Component } = require(`../../lib/sbtypes/__testfixtures__/typescript/${fixture}`);
-  const props = argsTableProps(Component);
-
-  typescriptStories.add(fixture, () => <ArgsTable {...props} updateArgs={action('updateArgs')} />);
+  typescriptStories.add(fixture, () => <ArgsStory component={Component} />);
 });
 
 const proptypesFixtures = ['arrays', 'enums', 'misc', 'objects', 'react', 'scalars'];
@@ -48,9 +69,7 @@ const proptypesStories = storiesOf('ArgTypes/PropTypes', module);
 proptypesFixtures.forEach((fixture) => {
   // eslint-disable-next-line import/no-dynamic-require, global-require, no-shadow
   const { Component } = require(`../../lib/sbtypes/__testfixtures__/proptypes/${fixture}`);
-  const props = argsTableProps(Component);
-
-  proptypesStories.add(fixture, () => <ArgsTable {...props} updateArgs={action('updateArgs')} />);
+  proptypesStories.add(fixture, () => <ArgsStory component={Component} />);
 });
 
 const issuesFixtures = [

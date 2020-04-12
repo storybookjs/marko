@@ -1,4 +1,4 @@
-import React, { FC, ChangeEvent } from 'react';
+import React, { FC, ChangeEvent, useCallback } from 'react';
 
 import { Form } from '../form';
 import { ControlProps, ArrayValue, ArrayConfig } from './types';
@@ -12,10 +12,13 @@ const format = (value: ArrayValue, separator: string) => {
 
 export type ArrayProps = ControlProps<ArrayValue> & ArrayConfig;
 export const ArrayControl: FC<ArrayProps> = ({ name, value, onChange, separator = ',' }) => {
-  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
-    const { value: newVal } = e.target as HTMLTextAreaElement;
-    onChange(name, parse(newVal, separator));
-  };
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLTextAreaElement>): void => {
+      const { value: newVal } = e.target;
+      onChange(name, parse(newVal, separator));
+    },
+    [onChange]
+  );
 
   return (
     <Form.Textarea
