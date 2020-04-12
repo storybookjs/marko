@@ -2,13 +2,16 @@
 import { PTType } from './types';
 import { SBType } from '../types';
 
+const QUOTE_REGEX = /^['"]|['"]$/g;
+const trimQuotes = (str: string) => str.replace(QUOTE_REGEX, '');
+
 export const convert = (type: PTType): SBType | any => {
   const { name, raw, computed, value } = type;
   const base: any = {};
   if (typeof raw !== 'undefined') base.raw = raw;
   switch (name) {
     case 'enum': {
-      const values = computed ? value : value.map((v: PTType) => v.value);
+      const values = computed ? value : value.map((v: PTType) => trimQuotes(v.value));
       return { ...base, name, value: values };
     }
     case 'string':
@@ -20,7 +23,8 @@ export const convert = (type: PTType): SBType | any => {
     case 'bool':
       return { ...base, name: 'boolean' };
     case 'arrayOf':
-      return { ...base, name: 'array', value: convert(value as PTType) };
+    case 'array':
+      return { ...base, name: 'array', value: value && convert(value as PTType) };
     case 'object':
       return { ...base, name };
     case 'objectOf':

@@ -565,8 +565,7 @@ describe('storybook type system', () => {
       expect(convertJs(input)).toMatchInlineSnapshot(`
         {
           "optionalArray": {
-            "name": "other",
-            "value": "array"
+            "name": "array"
           },
           "arrayOfStrings": {
             "name": "array",
