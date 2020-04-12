@@ -21,6 +21,7 @@ const inferControl = (argType: ArgType): Control => {
       return { type: 'options', controlType: 'select', options: value };
     }
     case 'function':
+    case 'symbol':
       return null;
     default:
       return { type: 'object' };
