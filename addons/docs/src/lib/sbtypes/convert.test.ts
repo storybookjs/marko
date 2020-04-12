@@ -613,8 +613,8 @@ describe('storybook type system', () => {
           "oneOfString": {
             "name": "enum",
             "value": [
-              "'static'",
-              "'timed'"
+              "static",
+              "timed"
             ]
           }
         }
