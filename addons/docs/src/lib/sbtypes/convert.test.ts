@@ -806,22 +806,6 @@ const convertCommon = (code: string, fileExt: string) => {
   return types;
 };
 
-const convertTs = (code: string) => {
-  // const code = dedent`
-  //   import React, { FC } from 'react';
-  //   ${propsInterface}
-  //   export const Component: FC<Props> = (props: Props) => <>JSON.stringify(props)</>;
-  // `;
-  return convertCommon(code, 'tsx');
-};
+const convertTs = (code: string) => convertCommon(code, 'tsx');
 
-const convertJs = (code: string) => {
-  // const code = dedent`
-  //   import React from 'react';
-  //   import PropTypes from 'prop-types';
-
-  //   export const Component = props => <>JSON.stringify(props)</>;
-  //   Component.propTypes = ${propTypes};
-  // `;
-  return convertCommon(code, 'js');
-};
+const convertJs = (code: string) => convertCommon(code, 'js');
