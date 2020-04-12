@@ -299,12 +299,12 @@ _This method is slow_
 
 If you're working on one or a few packages, for every change that you make, you have to rebuild those packages. To make the process easier, there is a CLI command for that:
 
-*  Run `yarn build` to bring you a list of packages to select from. There will be also an option to run in watch mode.
-*  Run `yarn build <package-name>` to build that package specifically. \
-For the package name, use its short version. Example: for `@storybook/addon-docs`, run `yarn build addon-docs`.
-*  Run `yarn build --all` to build everything.
-* Add `--watch` to run automatically in watch more if you are either building a selection of packages by name or building all.
-Example: `yarn build core addon-docs --watch` or `yarn build --all --watch`.
+- Run `yarn build` to bring you a list of packages to select from. There will be also an option to run in watch mode.
+- Run `yarn build <package-name>` to build that package specifically. \
+  For the package name, use its short version. Example: for `@storybook/addon-docs`, run `yarn build addon-docs`.
+- Run `yarn build --all` to build everything.
+- Add `--watch` to run automatically in watch more if you are either building a selection of packages by name or building all.
+  Example: `yarn build core addon-docs --watch` or `yarn build --all --watch`.
 
 ### Working with the kitchen sink apps
 
