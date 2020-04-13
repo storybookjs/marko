@@ -357,12 +357,12 @@ describe('preview.story_store', () => {
     });
   });
 
-  describe('parameterEnhancer', () => {
+  describe('argsEnhancer', () => {
     it('allows you to alter parameters when stories are added', () => {
       const store = new StoryStore({ channel });
 
       const enhancer = jest.fn().mockReturnValue({ c: 'd' });
-      store.addParameterEnhancer(enhancer);
+      store.addArgsEnhancer(enhancer);
 
       addStoryToStore(store, 'a', '1', () => 0, { a: 'b' });
 
@@ -374,9 +374,9 @@ describe('preview.story_store', () => {
       const store = new StoryStore({ channel });
 
       const firstEnhancer = jest.fn().mockReturnValue({ c: 'd' });
-      store.addParameterEnhancer(firstEnhancer);
+      store.addArgsEnhancer(firstEnhancer);
       const secondEnhancer = jest.fn().mockReturnValue({ e: 'f' });
-      store.addParameterEnhancer(secondEnhancer);
+      store.addArgsEnhancer(secondEnhancer);
 
       addStoryToStore(store, 'a', '1', () => 0, { a: 'b' });
 
@@ -393,9 +393,9 @@ describe('preview.story_store', () => {
       const store = new StoryStore({ channel });
 
       const firstEnhancer = jest.fn().mockReturnValue({ ns: { c: 'd' } });
-      store.addParameterEnhancer(firstEnhancer);
+      store.addArgsEnhancer(firstEnhancer);
       const secondEnhancer = jest.fn().mockReturnValue({ ns: { e: 'f' } });
-      store.addParameterEnhancer(secondEnhancer);
+      store.addArgsEnhancer(secondEnhancer);
 
       addStoryToStore(store, 'a', '1', () => 0, { ns: { a: 'b' } });
 
@@ -413,7 +413,7 @@ describe('preview.story_store', () => {
       addons.setChannel(channel);
 
       const enhancer = jest.fn().mockReturnValue({ c: 'd' });
-      store.addParameterEnhancer(enhancer);
+      store.addArgsEnhancer(enhancer);
 
       addStoryToStore(store, 'a', '1', () => 0, { a: 'b' });
 

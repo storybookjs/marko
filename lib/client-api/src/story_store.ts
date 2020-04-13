@@ -25,7 +25,7 @@ import {
   PublishedStoreItem,
   ErrorLike,
   GetStorybookKind,
-  ParameterEnhancer,
+  ArgsEnhancer,
 } from './types';
 import { HooksContext } from './hooks';
 import storySort from './storySort';
@@ -101,7 +101,7 @@ export default class StoryStore {
   // Keyed on storyId
   _stories: StoreData;
 
-  _parameterEnhancers: ParameterEnhancer[];
+  _argsEnhancers: ArgsEnhancer[];
 
   _revision: number;
 
@@ -115,7 +115,7 @@ export default class StoryStore {
     this._globalMetadata = { parameters: {}, decorators: [] };
     this._kinds = {};
     this._stories = {};
-    this._parameterEnhancers = [];
+    this._argsEnhancers = [];
     this._revision = 0;
     this._selection = {} as any;
     this._error = undefined;
@@ -219,11 +219,11 @@ export default class StoryStore {
     this._kinds[kind].decorators.push(...decorators);
   }
 
-  addParameterEnhancer(parameterEnhancer: ParameterEnhancer) {
+  addArgsEnhancer(argsEnhancer: ArgsEnhancer) {
     if (Object.keys(this._stories).length > 0)
       throw new Error('Cannot add a parameter enhancer to the store after a story has been added.');
 
-    this._parameterEnhancers.push(parameterEnhancer);
+    this._argsEnhancers.push(argsEnhancer);
   }
 
   addStory(
@@ -283,7 +283,7 @@ export default class StoryStore {
       storyParameters
     );
 
-    const parameters = this._parameterEnhancers.reduce(
+    const parameters = this._argsEnhancers.reduce(
       (accumlatedParameters, enhancer) => ({
         ...accumlatedParameters,
         ...enhancer({
