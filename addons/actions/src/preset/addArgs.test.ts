@@ -33,7 +33,7 @@ describe('actions parameter enhancers', () => {
         actions: { ...baseParameters.actions, disable: true },
       };
       const result = inferActionsFromArgTypesRegex({ parameters } as StoryContext);
-      expect(result).toBeFalsy();
+      expect(result).toEqual(parameters.argTypes);
     });
   });
 
@@ -66,7 +66,7 @@ describe('actions parameter enhancers', () => {
     it('should do nothing if actions are disabled', () => {
       const parameters = { ...baseParameters, actions: { disable: true } };
       const result = addActionsFromArgTypes({ parameters } as StoryContext);
-      expect(result).toBeFalsy();
+      expect(result).toEqual(parameters.argTypes);
     });
   });
 });
