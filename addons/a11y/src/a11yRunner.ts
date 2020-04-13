@@ -4,6 +4,10 @@ import axe, { ElementContext, RunOptions, Spec } from 'axe-core';
 import addons from '@storybook/addons';
 import { EVENTS } from './constants';
 
+if (module && module.hot && module.hot.decline) {
+  module.hot.decline();
+}
+
 interface Setup {
   element?: ElementContext;
   config: Spec;
