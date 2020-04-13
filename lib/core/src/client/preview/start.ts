@@ -77,7 +77,7 @@ export default function start(
       }
     };
 
-    channel.on(Events.SET_STORIES, afterStoriesSet);
+    channel.once(Events.SET_STORIES, afterStoriesSet);
 
     // Handle keyboard shortcuts
     window.onkeydown = (event: KeyboardEvent) => {
@@ -98,5 +98,11 @@ export default function start(
   }
 
   const configure = loadCsf({ clientApi, storyStore, configApi });
-  return { configure, clientApi, configApi, forceReRender: () => storyRenderer.forceReRender() };
+  return {
+    configure,
+    clientApi,
+    configApi,
+    channel,
+    forceReRender: () => storyRenderer.forceReRender(),
+  };
 }
