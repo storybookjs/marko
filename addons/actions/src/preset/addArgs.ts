@@ -15,7 +15,7 @@ import { action } from '../index';
 export const inferActionsFromArgTypesRegex: ArgTypesEnhancer = (context) => {
   const { actions, argTypes } = context.parameters;
   if (!actions || actions.disable || !actions.argTypesRegex || !argTypes) {
-    return null;
+    return argTypes;
   }
 
   const argTypesRegex = new RegExp(actions.argTypesRegex);
@@ -35,7 +35,7 @@ export const inferActionsFromArgTypesRegex: ArgTypesEnhancer = (context) => {
 export const addActionsFromArgTypes: ArgTypesEnhancer = (context) => {
   const { argTypes, actions } = context.parameters;
   if (actions?.disable || !argTypes) {
-    return null;
+    return argTypes;
   }
 
   const actionArgTypes = Object.keys(argTypes).reduce((acc, argName) => {

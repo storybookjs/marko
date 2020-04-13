@@ -405,20 +405,6 @@ describe('preview.story_store', () => {
       expect(store.getRawStory('a', '1').parameters.argTypes).toEqual({ c: 'd' });
     });
 
-    it('leaves argTypes untouched when enhancer returns a falsey result', () => {
-      const store = new StoryStore({ channel });
-
-      const enhancer = jest.fn().mockReturnValue(null);
-      store.addArgTypesEnhancer(enhancer);
-
-      addStoryToStore(store, 'a', '1', () => 0, { argTypes: { a: 'b' } });
-
-      expect(enhancer).toHaveBeenCalledWith(
-        expect.objectContaining({ parameters: { argTypes: { a: 'b' } } })
-      );
-      expect(store.getRawStory('a', '1').parameters.argTypes).toEqual({ a: 'b' });
-    });
-
     it('allows you to alter argTypes when stories are re-added', () => {
       const store = new StoryStore({ channel });
       addons.setChannel(channel);
