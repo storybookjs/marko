@@ -9,8 +9,8 @@ Object {
       "name": "heads",
       "required": true,
       "sbType": Object {
-        "name": "other",
-        "value": "array",
+        "name": "array",
+        "value": undefined,
       },
       "type": Object {
         "detail": undefined,

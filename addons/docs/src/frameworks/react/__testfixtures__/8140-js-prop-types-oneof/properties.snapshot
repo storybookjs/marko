@@ -14,8 +14,8 @@ Object {
       "sbType": Object {
         "name": "enum",
         "value": Array [
-          "'static'",
-          "'timed'",
+          "static",
+          "timed",
         ],
       },
       "type": Object {
@@ -34,10 +34,10 @@ Object {
       "sbType": Object {
         "name": "enum",
         "value": Array [
-          "'success'",
-          "'warning'",
-          "'error'",
-          "'primary'",
+          "success",
+          "warning",
+          "error",
+          "primary",
         ],
       },
       "type": Object {
