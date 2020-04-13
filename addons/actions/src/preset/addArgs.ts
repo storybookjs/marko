@@ -1,5 +1,5 @@
 import { ArgsEnhancer, combineParameters } from '@storybook/client-api';
-import { Args, ArgType } from '@storybook/addons';
+import { ArgTypes, ArgType } from '@storybook/addons';
 
 import { action } from '../index';
 
@@ -13,21 +13,21 @@ import { action } from '../index';
  * matches a regex, such as `^on.*` for react-style `onClick` etc.
  */
 export const inferActionsFromArgTypesRegex: ArgsEnhancer = (context) => {
-  const { args, actions, argTypes } = context.parameters;
+  const { actions, argTypes } = context.parameters;
   if (!actions || actions.disable || !actions.argTypesRegex || !argTypes) {
     return null;
   }
 
   const argTypesRegex = new RegExp(actions.argTypesRegex);
-  const actionArgs = Object.keys(argTypes).reduce((acc, name) => {
+  const actionArgTypes = Object.keys(argTypes).reduce((acc, name) => {
     if (argTypesRegex.test(name)) {
-      acc[name] = action(name);
+      acc[name] = { defaultValue: action(name) };
     }
     return acc;
-  }, {} as Args);
+  }, {} as ArgTypes);
 
   return {
-    args: combineParameters(actionArgs, args),
+    argTypes: combineParameters(actionArgTypes, argTypes),
   };
 };
 
@@ -35,22 +35,22 @@ export const inferActionsFromArgTypesRegex: ArgsEnhancer = (context) => {
  * Add action args for list of strings.
  */
 export const addActionsFromArgTypes: ArgsEnhancer = (context) => {
-  const { args, argTypes, actions } = context.parameters;
+  const { argTypes, actions } = context.parameters;
   if (actions?.disable || !argTypes) {
     return null;
   }
 
-  const actionArgs = Object.keys(argTypes).reduce((acc, argName) => {
+  const actionArgTypes = Object.keys(argTypes).reduce((acc, argName) => {
     const argType: ArgType = argTypes[argName];
     if (argType.action) {
       const message = typeof argType.action === 'string' ? argType.action : argName;
-      acc[argName] = action(message);
+      acc[argName] = { defaultValue: action(message) };
     }
     return acc;
-  }, {} as Args);
+  }, {} as ArgTypes);
 
   return {
-    args: combineParameters(actionArgs, args),
+    argTypes: combineParameters(actionArgTypes, argTypes),
   };
 };
 
