@@ -4,7 +4,7 @@ import { ButtonGroup, SubGroup } from '../../components/ButtonGroup';
 import { ForwardRefButton } from '../../components/ForwardRefButton';
 import { MemoButton } from '../../components/MemoButton';
 
-<Meta title="Addons/Docs/props" component={ButtonGroup} />
+<Meta title="Addons/Docs/props" component={ButtonGroup} parameters={{ passArgsFirst: true }} />
 
 export const FooBar = ({ foo, bar } = {}) => (
   <table>
@@ -24,7 +24,6 @@ export const FooBar = ({ foo, bar } = {}) => (
 <Preview>
   <Story
     name="ArgTypes"
-    parameters={{ passArgsFirst: true }}
     args={{
       foo: false,
       bar: '',
@@ -49,7 +48,6 @@ export const FooBar = ({ foo, bar } = {}) => (
 <Preview>
   <Story
     name="Args"
-    parameters={{ passArgsFirst: true }}
     args={{
       foo: false,
       bar: '',
@@ -64,7 +62,7 @@ export const FooBar = ({ foo, bar } = {}) => (
 ## Component Story
 
 <Preview>
-  <Story name="Component" parameters={{ passArgsFirst: true }}>
+  <Story name="Component" argTypes={{ background: { control: { type: 'color' } } }}>
     {(args) => <DocgenButton {...args} />}
   </Story>
 </Preview>
@@ -76,9 +74,6 @@ export const FooBar = ({ foo, bar } = {}) => (
 <Preview>
   <Story
     name="Controls"
-    parameters={{
-      passArgsFirst: true,
-    }}
     argTypes={{
       foo: { control: { type: 'range' } },
       bar: { control: { type: 'options', options: ['a', 'b', 'c'] } },

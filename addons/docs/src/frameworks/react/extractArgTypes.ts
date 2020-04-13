@@ -12,6 +12,7 @@ export const extractArgTypes: ArgTypesExtractor = (component) => {
         const { type, sbType, defaultValue, jsDocTags } = row;
         acc[row.name] = {
           ...row,
+          defaultValue: defaultValue && (defaultValue.detail || defaultValue.summary),
           type: sbType,
           table: {
             type,

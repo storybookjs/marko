@@ -32,10 +32,6 @@ export const ArgControl: FC<ArgControlProps> = ({ row, arg, updateArgs }) => {
     return <>-</>;
   }
 
-  if (control.type === 'range') {
-    console.log('range', { arg });
-  }
-
   const props = { name, value: arg, onChange };
   switch (control.type) {
     case 'array':

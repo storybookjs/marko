@@ -12,11 +12,16 @@ const isSubset = (kind: string, subset: object, superset: object) => {
 };
 
 export const enhanceArgTypes: ArgTypesEnhancer = (context) => {
-  const { parameters, args = {} } = context;
-  const { component, subcomponents, argTypes = {}, docs = {} } = parameters;
+  const {
+    component,
+    subcomponents,
+    argTypes: userArgTypes = {},
+    docs = {},
+    args = {},
+  } = context.parameters;
   const { extractArgTypes } = docs;
 
-  const namedArgTypes = Object.entries(argTypes as ArgTypes).reduce((acc, [key, val]) => {
+  const namedArgTypes = Object.entries(userArgTypes as ArgTypes).reduce((acc, [key, val]) => {
     acc[key] = { name: key, ...val };
     return acc;
   }, {} as ArgTypes);
@@ -25,23 +30,26 @@ export const enhanceArgTypes: ArgTypesEnhancer = (context) => {
   const components = { Primary: component, ...subcomponents };
   let extractedArgTypes: ArgTypes = {};
 
-  if (extractArgTypes) {
+  if (extractArgTypes && components) {
     const componentArgTypes = Object.entries(components).reduce((acc, [label, comp]) => {
       acc[label] = extractArgTypes(comp);
       return acc;
     }, {} as Record<string, ArgTypes>);
 
     extractedArgTypes = Object.entries(componentArgTypes).reduce((acc, [label, compTypes]) => {
-      Object.entries(compTypes).forEach(([key, argType]) => {
-        const subLabel = label === 'Primary' ? key : camelCase(`${label} ${key}`);
-        acc[subLabel] = argType;
-      });
+      if (compTypes) {
+        Object.entries(compTypes).forEach(([key, argType]) => {
+          const subLabel = label === 'Primary' ? key : camelCase(`${label} ${key}`);
+          acc[subLabel] = argType;
+        });
+      }
       return acc;
     }, {} as ArgTypes);
   }
 
   if (
-    (Object.keys(argTypes).length > 0 && !isSubset(context.kind, argTypes, extractedArgTypes)) ||
+    (Object.keys(userArgTypes).length > 0 &&
+      !isSubset(context.kind, userArgTypes, extractedArgTypes)) ||
     (Object.keys(inferredArgTypes).length > 0 &&
       !isSubset(context.kind, inferredArgTypes, extractedArgTypes))
   ) {
@@ -50,11 +58,11 @@ export const enhanceArgTypes: ArgTypesEnhancer = (context) => {
 
   const withArgTypes = combineParameters(inferredArgTypes, extractedArgTypes, namedArgTypes);
 
-  let result = withArgTypes;
-  if (context.storyFn.length > 0) {
-    const withControls = inferControls(withArgTypes);
-    result = combineParameters(withControls, withArgTypes);
+  if (context.storyFn.length === 0) {
+    return withArgTypes;
   }
 
+  const withControls = inferControls(withArgTypes);
+  const result = combineParameters(withControls, withArgTypes);
   return result;
 };

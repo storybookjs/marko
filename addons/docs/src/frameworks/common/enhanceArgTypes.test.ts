@@ -30,10 +30,11 @@ const enhance = ({
       argTypes: argType && {
         input: argType,
       },
+      args: {
+        input: arg,
+      },
     },
-    args: {
-      input: arg,
-    },
+    args: {},
     globalArgs: {},
   };
   return enhanceArgTypes(context);
