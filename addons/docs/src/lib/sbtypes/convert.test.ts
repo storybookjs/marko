@@ -1,7 +1,6 @@
 import 'jest-specific-snapshot';
 import { transformSync } from '@babel/core';
 import requireFromString from 'require-from-string';
-import dedent from 'ts-dedent';
 import fs from 'fs';
 
 import { convert } from './convert';

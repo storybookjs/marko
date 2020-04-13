@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { ArgsTable, ArgsTableProps } from '@storybook/components';
+import { ArgsTable } from '@storybook/components';
 import { action } from '@storybook/addon-actions';
 import { Args } from '@storybook/api';
 import { combineParameters } from '@storybook/client-api';

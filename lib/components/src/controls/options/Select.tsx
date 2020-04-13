@@ -1,4 +1,4 @@
-import React, { FC, ChangeEvent } from 'react';
+import React, { FC } from 'react';
 import ReactSelect from 'react-select';
 import { styled } from '@storybook/theming';
 import { ControlProps, OptionsSelection, NormalizedOptionsConfig } from '../types';
