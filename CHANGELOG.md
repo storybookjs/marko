@@ -1,3 +1,20 @@
+## 6.0.0-alpha.33 (April 14, 2020)
+
+### Breaking prerelease
+
+- Core: Rename ParameterEnhancer to ArgsEnhancer ([#10398](https://github.com/storybookjs/storybook/pull/10398))
+
+### Bug Fixes
+
+- Core: Fix `webpackFinal` being called twice ([#10402](https://github.com/storybookjs/storybook/pull/10402))
+- Core: Fix legacy redirect ([#10404](https://github.com/storybookjs/storybook/pull/10404))
+
+### Maintenance
+
+- CLI: Update fixtures used for CLI tests ([#10396](https://github.com/storybookjs/storybook/pull/10396))
+- Build: Update bootstrap to install optional deps on CI ([#10408](https://github.com/storybookjs/storybook/pull/10408))
+- Addon-docs: Format source at render time ([#10383](https://github.com/storybookjs/storybook/pull/10383))
+
 ## 6.0.0-alpha.32 (April 11, 2020)
 
 ### Features
