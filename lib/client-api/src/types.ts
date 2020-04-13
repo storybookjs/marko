@@ -4,6 +4,7 @@ import {
   StoryFn,
   Parameters,
   Args,
+  ArgTypes,
   StoryApi,
   DecoratorFunction,
   DecorateStoryFunction,
@@ -22,7 +23,7 @@ export interface StoryMetadata {
   parameters: Parameters;
   decorators: DecoratorFunction[];
 }
-export type ParameterEnhancer = (context: StoryContext) => Parameters;
+export type ArgTypesEnhancer = (context: StoryContext) => ArgTypes;
 
 export type AddStoryArgs = StoryIdentifier & {
   storyFn: StoryFn<any>;
