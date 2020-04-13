@@ -8,7 +8,7 @@ import {
   DecoratorFunction,
   ClientApiAddons,
   StoryApi,
-  ArgsEnhancer,
+  ArgTypesEnhancer,
 } from './types';
 import { applyHooks } from './hooks';
 import StoryStore from './story_store';
@@ -31,11 +31,11 @@ export const addParameters = (parameters: Parameters) => {
   singleton.addParameters(parameters);
 };
 
-export const addArgsEnhancer = (enhancer: ArgsEnhancer) => {
+export const addArgTypesEnhancer = (enhancer: ArgTypesEnhancer) => {
   if (!singleton)
-    throw new Error(`Singleton client API not yet initialized, cannot call addArgsEnhancer`);
+    throw new Error(`Singleton client API not yet initialized, cannot call addArgTypesEnhancer`);
 
-  singleton.addArgsEnhancer(enhancer);
+  singleton.addArgTypesEnhancer(enhancer);
 };
 
 export default class ClientApi {
@@ -105,8 +105,8 @@ export default class ClientApi {
     this._storyStore.addGlobalMetadata({ decorators: [], parameters });
   };
 
-  addArgsEnhancer = (enhancer: ArgsEnhancer) => {
-    this._storyStore.addArgsEnhancer(enhancer);
+  addArgTypesEnhancer = (enhancer: ArgTypesEnhancer) => {
+    this._storyStore.addArgTypesEnhancer(enhancer);
   };
 
   clearDecorators = () => {

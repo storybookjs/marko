@@ -13,7 +13,7 @@ describe('actions parameter enhancers', () => {
 
     it('should add actions that match a pattern', () => {
       const parameters = baseParameters;
-      const { argTypes } = inferActionsFromArgTypesRegex({ parameters } as StoryContext);
+      const argTypes = inferActionsFromArgTypesRegex({ parameters } as StoryContext);
       expect(withDefaultValue(argTypes)).toEqual(['onClick', 'onFocus']);
     });
 
@@ -22,7 +22,7 @@ describe('actions parameter enhancers', () => {
         ...baseParameters,
         argTypes: { onClick: { defaultValue: 'pre-existing value' }, onFocus: {} },
       };
-      const { argTypes } = inferActionsFromArgTypesRegex({ parameters } as StoryContext);
+      const argTypes = inferActionsFromArgTypesRegex({ parameters } as StoryContext);
       expect(withDefaultValue(argTypes)).toEqual(['onClick', 'onFocus']);
       expect(argTypes.onClick.defaultValue).toEqual('pre-existing value');
     });
@@ -46,7 +46,7 @@ describe('actions parameter enhancers', () => {
     };
     it('should add actions based on action.args', () => {
       const parameters = baseParameters;
-      const { argTypes } = addActionsFromArgTypes({ parameters } as StoryContext);
+      const argTypes = addActionsFromArgTypes({ parameters } as StoryContext);
       expect(withDefaultValue(argTypes)).toEqual(['onClick', 'onBlur']);
     });
 
@@ -58,7 +58,7 @@ describe('actions parameter enhancers', () => {
           onBlur: { action: 'onBlur' },
         },
       };
-      const { argTypes } = addActionsFromArgTypes({ parameters } as StoryContext);
+      const argTypes = addActionsFromArgTypes({ parameters } as StoryContext);
       expect(withDefaultValue(argTypes)).toEqual(['onClick', 'onBlur']);
       expect(argTypes.onClick.defaultValue).toEqual('pre-existing value');
     });

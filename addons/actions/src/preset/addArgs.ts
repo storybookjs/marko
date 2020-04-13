@@ -1,4 +1,4 @@
-import { ArgsEnhancer, combineParameters } from '@storybook/client-api';
+import { ArgTypesEnhancer, combineParameters } from '@storybook/client-api';
 import { ArgTypes, ArgType } from '@storybook/addons';
 
 import { action } from '../index';
@@ -12,7 +12,7 @@ import { action } from '../index';
  * Automatically add action args for argTypes whose name
  * matches a regex, such as `^on.*` for react-style `onClick` etc.
  */
-export const inferActionsFromArgTypesRegex: ArgsEnhancer = (context) => {
+export const inferActionsFromArgTypesRegex: ArgTypesEnhancer = (context) => {
   const { actions, argTypes } = context.parameters;
   if (!actions || actions.disable || !actions.argTypesRegex || !argTypes) {
     return null;
@@ -26,15 +26,13 @@ export const inferActionsFromArgTypesRegex: ArgsEnhancer = (context) => {
     return acc;
   }, {} as ArgTypes);
 
-  return {
-    argTypes: combineParameters(actionArgTypes, argTypes),
-  };
+  return combineParameters(actionArgTypes, argTypes) as ArgTypes;
 };
 
 /**
  * Add action args for list of strings.
  */
-export const addActionsFromArgTypes: ArgsEnhancer = (context) => {
+export const addActionsFromArgTypes: ArgTypesEnhancer = (context) => {
   const { argTypes, actions } = context.parameters;
   if (actions?.disable || !argTypes) {
     return null;
@@ -49,9 +47,7 @@ export const addActionsFromArgTypes: ArgsEnhancer = (context) => {
     return acc;
   }, {} as ArgTypes);
 
-  return {
-    argTypes: combineParameters(actionArgTypes, argTypes),
-  };
+  return combineParameters(actionArgTypes, argTypes) as ArgTypes;
 };
 
-export const argsEnhancers = [addActionsFromArgTypes, inferActionsFromArgTypesRegex];
+export const argTypesEnhancers = [addActionsFromArgTypes, inferActionsFromArgTypesRegex];

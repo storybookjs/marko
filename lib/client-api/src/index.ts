@@ -1,4 +1,4 @@
-import ClientApi, { addDecorator, addParameters, addArgsEnhancer } from './client_api';
+import ClientApi, { addDecorator, addParameters, addArgTypesEnhancer } from './client_api';
 import { defaultDecorateStory } from './decorators';
 import { combineParameters } from './parameters';
 import StoryStore from './story_store';
@@ -15,7 +15,7 @@ export {
   ClientApi,
   addDecorator,
   addParameters,
-  addArgsEnhancer,
+  addArgTypesEnhancer,
   combineParameters,
   StoryStore,
   ConfigApi,
