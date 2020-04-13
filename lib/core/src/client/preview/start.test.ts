@@ -35,6 +35,7 @@ it('returns apis', () => {
   expect(result).toEqual(
     expect.objectContaining({
       configure: expect.any(Function),
+      channel: expect.any(Object),
       clientApi: expect.any(Object),
       configApi: expect.any(Object),
       forceReRender: expect.any(Function),
