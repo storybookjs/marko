@@ -34,7 +34,7 @@ Ideally all parameters should be set _at build time_ of the Storybook, either di
 
 However, in some cases it is necessary to set parameters at _load time_ when the Storybook first loads. This should be avoided if at all possible as it is cost that must be paid each time a Storybook loads, rather than just once when the Storybook is built.
 
-To add a parameter enhancer, call `store.addParameterEnhancer(enhancer)` _before_ any stories are loaded (in addon registration or in `preview.js`). As each story is loaded, the enhancer will be called with the full story `context` -- the return value should be an object that will be patched into the Story's parameters.
+To add a parameter enhancer, call `store.addArgTypesEnhancer(enhancer)` _before_ any stories are loaded (in addon registration or in `preview.js`). As each story is loaded, the enhancer will be called with the full story `context` -- the return value should be an object that will be patched into the Story's `argTypes`.
 
 ## Args
 
