@@ -62,7 +62,7 @@
     "case-sensitive-paths-webpack-plugin": "^2.2.0",
     "chalk": "^3.0.0",
     "cli-table3": "0.5.1",
-    "commander": "^4.0.1",
+    "commander": "^5.0.0",
     "core-js": "^3.0.1",
     "corejs-upgrade-webpack-plugin": "^4.0.1",
     "css-loader": "^3.0.0",
