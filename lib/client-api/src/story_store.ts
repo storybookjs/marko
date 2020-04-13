@@ -496,17 +496,11 @@ export default class StoryStore {
   }
 
   getStoriesForKind(kind: string) {
-    return this.raw().filter((story) => {
-      console.log('filter', { story, kind });
-      return story.kind === kind;
-    });
+    return this.raw().filter((story) => story.kind === kind);
   }
 
   getRawStory(kind: string, name: string) {
-    return this.getStoriesForKind(kind).find((s) => {
-      console.log('compare', { s, name });
-      return s.name === name;
-    });
+    return this.getStoriesForKind(kind).find((s) => s.name === name);
   }
 
   getRevision() {
