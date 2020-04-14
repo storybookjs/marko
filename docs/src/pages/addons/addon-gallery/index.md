@@ -99,6 +99,10 @@ Add different paddings to your preview. Useful for checking how components behav
 Given possible values for each prop, renders your component with all combinations of prop values.
 Useful for finding edge cases or seeing all component states at once.
 
+### [Performance](https://github.com/atlassian-labs/storybook-addon-performance)
+
+This addon will help you better understand and debug performance for `React` components.
+
 ### [Material-UI](https://github.com/sm-react/storybook-addon-material-ui)
 
 Wraps your story into MuiThemeProvider.
