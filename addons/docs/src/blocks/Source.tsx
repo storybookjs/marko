@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Source, SourceProps as PureSourceProps, SourceError } from '@storybook/components';
 import { DocsContext, DocsContextProps } from './DocsContext';
 import { CURRENT_SELECTION } from './types';
+import { enhanceSource } from './enhanceSource';
 
 interface CommonProps {
   language?: string;
@@ -39,7 +40,8 @@ export const getSourceProps = (
     source = targetIds
       .map((sourceId) => {
         const data = storyStore.fromId(sourceId);
-        return data?.parameters?.docs?.source?.code || '';
+        const enhanced = enhanceSource(data);
+        return enhanced?.docs?.source?.code || '';
       })
       .join('\n\n');
   }
