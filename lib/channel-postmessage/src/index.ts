@@ -195,7 +195,8 @@ export class PostmsgTransport {
 }
 
 const getEventSourceUrl = (event: MessageEvent) => {
-  const frames = [...document.querySelectorAll('iframe[data-is-storybook]')];
+  const frames: HTMLIFrameElement[] = [...document.getElementsByTagName('iframe')];
+
   // try to find the originating iframe by matching it's contentWindow
   // This might not be cross-origin safe
   const [frame, ...remainder] = frames.filter((element) => {
@@ -222,13 +223,9 @@ const getEventSourceUrl = (event: MessageEvent) => {
     return null;
   }
 
-  if (frame) {
-    const src = frame.getAttribute('src');
-    const { origin, pathname } = new URL(src, document.location);
-    return origin + pathname;
-  }
-
-  return event.origin;
+  const src = frame.getAttribute('src');
+  const { origin, pathname } = new URL(src, document.location);
+  return origin + pathname;
 };
 
 /**
