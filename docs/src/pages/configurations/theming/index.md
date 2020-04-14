@@ -24,10 +24,7 @@ import { themes } from '@storybook/theming';
 addons.setConfig({
   theme: themes.dark,
 });
-
 ```
-
-> `addParameters` needs to be called before `configure()` method or it won't have any effect.
 
 When setting a theme, set a full theme object. The theme is replaced, not combined.
 
