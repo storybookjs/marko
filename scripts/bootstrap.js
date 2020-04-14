@@ -1,32 +1,9 @@
 #!/usr/bin/env node
 
-/* eslint-disable global-require, no-octal-escape */
-const childProcess = require('child_process');
+/* eslint-disable global-require */
 const { lstatSync, readdirSync } = require('fs');
 const { join } = require('path');
-
-const logger = console;
-
-let cooldown = 0;
-
-try {
-  require('inquirer');
-  require('commander');
-  require('chalk');
-  require('npmlog');
-} catch (e) {
-  logger.log('🕘 running bootstrap on a clean repo, we have to install dependencies');
-  childProcess.spawnSync('yarn', ['install', '--ignore-optional'], {
-    stdio: ['inherit', 'inherit', 'inherit'],
-  });
-  process.stdout.write('\x07');
-  process.stdout.write('\033c');
-
-  // give the filesystem some time
-  cooldown = 1000;
-} finally {
-  setTimeout(run, cooldown);
-}
+const { checkDependenciesAndRun, spawn } = require('./cli-utils');
 
 function run() {
   const inquirer = require('inquirer');
@@ -43,19 +20,6 @@ function run() {
   log.heading = 'storybook';
   const prefix = 'bootstrap';
   log.addLevel('aborted', 3001, { fg: 'red', bold: true });
-
-  const spawn = (command, options = {}) => {
-    const out = childProcess.spawnSync(`${command}`, {
-      shell: true,
-      stdio: 'inherit',
-      ...options,
-    });
-
-    if (out.status !== 0) {
-      process.exit(out.status);
-    }
-    return out;
-  };
 
   const main = program
     .version('5.0.0')
@@ -117,7 +81,10 @@ function run() {
       defaultValue: false,
       option: '--install',
       command: () => {
-        spawn('yarn install --ignore-optional --network-concurrency 8');
+        const command = process.env.CI
+          ? 'yarn install --network-concurrency 8'
+          : 'yarn install --ignore-optional --network-concurrency 8';
+        spawn(command);
       },
       order: 1,
     }),
@@ -280,3 +247,5 @@ function run() {
       process.exit(1);
     });
 }
+
+checkDependenciesAndRun(run);

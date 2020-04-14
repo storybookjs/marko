@@ -1,6 +1,7 @@
 import { ConfigApi, ClientApi, StoryStore } from '@storybook/client-api';
 import { isExportStory, storyNameFromExport, toId } from '@storybook/csf';
 import { logger } from '@storybook/client-logger';
+import dedent from 'ts-dedent';
 
 import { Loadable, LoaderFunction, RequireContext } from './types';
 
@@ -113,7 +114,16 @@ const loadStories = (
       kind.addDecorator(decorator);
     });
 
-    Object.keys(exports).forEach((key) => {
+    const storyExports = Object.keys(exports);
+    if (storyExports.length === 0) {
+      logger.warn(
+        dedent`Found a story file for "${kindName}" but no exported stories.
+        Check the docs for reference: https://storybook.js.org/docs/formats/component-story-format/`
+      );
+      return;
+    }
+
+    storyExports.forEach((key) => {
       if (isExportStory(key, meta)) {
         const storyFn = exports[key];
         const { name, parameters, decorators, args, argTypes } = storyFn.story || {};
