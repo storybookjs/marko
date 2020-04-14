@@ -1,4 +1,5 @@
-import { ParameterEnhancer, combineParameters } from '@storybook/client-api';
+import { combineParameters } from '@storybook/client-api';
+import { StoryContext, Parameters } from '@storybook/addons';
 
 interface Location {
   line: number;
@@ -36,7 +37,7 @@ const extract = (targetId: string, { source, locationsMap }: StorySource) => {
   ].join('\n');
 };
 
-export const enhanceSource: ParameterEnhancer = (context) => {
+export const enhanceSource = (context: StoryContext): Parameters => {
   const { id, parameters } = context;
   const { storySource, docs = {} } = parameters;
   const { formatSource } = docs;

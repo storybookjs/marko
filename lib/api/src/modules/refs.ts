@@ -47,7 +47,11 @@ export type RefUrl = string;
 export const getSourceType = (source: string) => {
   const { origin, pathname } = location;
 
-  if (source === origin || source === `${origin + pathname}iframe.html`) {
+  if (
+    source === origin ||
+    source === `${origin + pathname}iframe.html` ||
+    source === `${origin + pathname.replace(/(?!.*\/).*\.html$/, '')}iframe.html`
+  ) {
     return 'local';
   }
   return 'external';
