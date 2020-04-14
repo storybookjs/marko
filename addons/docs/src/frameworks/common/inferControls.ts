@@ -1,3 +1,4 @@
+import mapValues from 'lodash/mapValues';
 import { ArgTypes, ArgType } from '@storybook/addons';
 import { Control } from '@storybook/components';
 import { SBEnumType } from '../../lib/sbtypes';
@@ -28,12 +29,9 @@ const inferControl = (argType: ArgType): Control => {
   }
 };
 
-export const inferControls = (argTypes: ArgTypes) => {
-  return Object.entries(argTypes).reduce((acc, [key, argType]) => {
+export const inferControls = (argTypes: ArgTypes): ArgTypes => {
+  return mapValues(argTypes, (argType) => {
     const control = argType && argType.type && inferControl(argType);
-    if (control) {
-      acc[key] = { control };
-    }
-    return acc;
-  }, {} as ArgTypes);
+    return control ? { control } : undefined;
+  });
 };

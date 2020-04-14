@@ -1,3 +1,4 @@
+import mapValues from 'lodash/mapValues';
 import { Args, ArgTypes } from '@storybook/addons';
 import { SBType } from '../../lib/sbtypes';
 
@@ -18,22 +19,18 @@ const inferType = (value?: any): SBType => {
     return { name: 'array', value: [childType] };
   }
   if (value) {
-    const fieldTypes = Object.keys(value).reduce((acc, key) => {
-      acc[key] = inferType(value[key]);
-      return acc;
-    }, {} as Record<string, SBType>);
+    const fieldTypes = mapValues(value, (field) => inferType(field));
     return { name: 'object', value: fieldTypes };
   }
   return { name: 'other', value: 'unknown' };
 };
 
-export const inferArgTypes = (args: Args) => {
+export const inferArgTypes = (args: Args): ArgTypes => {
   if (!args) return {};
-  return Object.entries(args).reduce((acc, [name, arg]) => {
-    if (arg != null) {
-      const type = inferType(arg);
-      acc[name] = { name, type };
+  return mapValues(args, (arg, name) => {
+    if (arg !== null && typeof arg !== 'undefined') {
+      return { name, type: inferType(arg) };
     }
-    return acc;
-  }, {} as ArgTypes);
+    return undefined;
+  });
 };

@@ -1,4 +1,5 @@
 /* eslint-disable no-case-declarations */
+import mapValues from 'lodash/mapValues';
 import { PTType } from './types';
 import { SBType } from '../types';
 
@@ -31,10 +32,7 @@ export const convert = (type: PTType): SBType | any => {
       return { ...base, name, value: convert(value as PTType) };
     case 'shape':
     case 'exact':
-      const values = Object.keys(value).reduce((acc: any, key) => {
-        acc[key] = convert(value[key]);
-        return acc;
-      }, {});
+      const values = mapValues(value, (field) => convert(field));
       return { ...base, name: 'object', value: values };
     case 'union':
       return { ...base, name: 'union', value: value.map((v: PTType) => convert(v)) };

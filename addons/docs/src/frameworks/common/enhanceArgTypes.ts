@@ -1,4 +1,5 @@
 import camelCase from 'lodash/camelCase';
+import mapValues from 'lodash/mapValues';
 import { ArgTypesEnhancer, combineParameters } from '@storybook/client-api';
 import { ArgTypes } from '@storybook/api';
 import { inferArgTypes } from './inferArgTypes';
@@ -21,21 +22,13 @@ export const enhanceArgTypes: ArgTypesEnhancer = (context) => {
   } = context.parameters;
   const { extractArgTypes } = docs;
 
-  const namedArgTypes = Object.entries(userArgTypes as ArgTypes).reduce((acc, [key, val]) => {
-    acc[key] = { name: key, ...val };
-    return acc;
-  }, {} as ArgTypes);
-
+  const namedArgTypes = mapValues(userArgTypes, (val, key) => ({ name: key, ...val }));
   const inferredArgTypes = inferArgTypes(args);
   const components = { Primary: component, ...subcomponents };
   let extractedArgTypes: ArgTypes = {};
 
   if (extractArgTypes && components) {
-    const componentArgTypes = Object.entries(components).reduce((acc, [label, comp]) => {
-      acc[label] = extractArgTypes(comp);
-      return acc;
-    }, {} as Record<string, ArgTypes>);
-
+    const componentArgTypes = mapValues(components, (comp) => extractArgTypes(comp));
     extractedArgTypes = Object.entries(componentArgTypes).reduce((acc, [label, compTypes]) => {
       if (compTypes) {
         Object.entries(compTypes).forEach(([key, argType]) => {

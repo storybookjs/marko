@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import mapValues from 'lodash/mapValues';
 import { storiesOf } from '@storybook/react';
 import { ArgsTable } from '@storybook/components';
 import { action } from '@storybook/addon-actions';
@@ -18,10 +19,7 @@ const argsTableProps = (component: Component) => {
 
 const ArgsStory = ({ component }: any) => {
   const { rows } = argsTableProps(component);
-  const initialArgs = Object.keys(rows).reduce((acc, key) => {
-    acc[key] = null;
-    return acc;
-  }, {} as Args);
+  const initialArgs = mapValues(rows, () => null) as Args;
 
   const [args, setArgs] = useState(initialArgs);
   return (

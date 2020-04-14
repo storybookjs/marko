@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import React, { FC, useContext, useEffect, useState, useCallback } from 'react';
+import mapValues from 'lodash/mapValues';
 import {
   ArgsTable,
   ArgsTableProps,
@@ -67,14 +68,10 @@ const filterArgTypes = (argTypes: ArgTypes, exclude?: string[]) => {
   }
   return (
     argTypes &&
-    Object.entries(argTypes).reduce((acc, entry) => {
-      const [key, val] = entry;
-      const name = val.name || key;
-      if (!exclude.includes(name)) {
-        acc[key] = val;
-      }
-      return acc;
-    }, {} as ArgTypes)
+    mapValues(argTypes, (argType, key) => {
+      const name = argType.name || key;
+      return exclude.includes(name) ? undefined : argType;
+    })
   );
 };
 
@@ -114,14 +111,12 @@ const addComponentTabs = (
   components: Record<string, Component>,
   context: DocsContextProps,
   exclude?: string[]
-) =>
-  Object.entries(components).reduce(
-    (acc, [label, component]) => {
-      acc[label] = { rows: extractComponentArgTypes(component, context, exclude) };
-      return acc;
-    },
-    { ...tabs }
-  );
+) => ({
+  ...tabs,
+  ...mapValues(components, (comp) => ({
+    rows: extractComponentArgTypes(comp, context, exclude),
+  })),
+});
 
 export const StoryTable: FC<StoryProps & { components: Record<string, Component> }> = (props) => {
   const context = useContext(DocsContext);

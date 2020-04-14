@@ -1,4 +1,5 @@
 import 'jest-specific-snapshot';
+import mapValues from 'lodash/mapValues';
 import { transformSync } from '@babel/core';
 import requireFromString from 'require-from-string';
 import fs from 'fs';
@@ -798,10 +799,7 @@ const convertCommon = (code: string, fileExt: string) => {
   const { Component } = requireFromString(transformToModule(docgenPretty));
   // eslint-disable-next-line no-underscore-dangle
   const { props = {} } = Component.__docgenInfo || {};
-  const types = Object.keys(props).reduce((acc: Record<string, any>, key) => {
-    acc[key] = convert(props[key]);
-    return acc;
-  }, {});
+  const types = mapValues(props, (prop) => convert(prop));
   return types;
 };
 
