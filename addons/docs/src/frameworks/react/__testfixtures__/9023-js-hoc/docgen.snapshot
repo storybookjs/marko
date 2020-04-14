@@ -1,13 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`react component properties 9023-js-hoc 1`] = `
-"/* eslint-disable react/forbid-prop-types */
-
-/* eslint-disable react/require-default-props */
-
-/* eslint-disable react/no-unused-prop-types */
-
-/* eslint-disable react/prefer-stateless-function */
+"/* eslint-disable react/prefer-stateless-function */
 import React from 'react';
 import PropTypes from 'prop-types';
 
