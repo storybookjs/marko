@@ -170,10 +170,11 @@ export class PostmsgTransport {
           ? `<span style="color: #FF4785">${event.type}</span>`
           : `<span style="color: #FFAE00">${event.type}</span>`;
 
-        event.source = source || getEventSourceUrl(rawEvent);
+        event.source =
+          source || this.config.page === 'preview' ? event.origin : getEventSourceUrl(rawEvent);
 
         if (!event.source) {
-          logger.error(
+          pretty.error(
             `${pageString} received ${eventString} but was unable to determine the source of the event`
           );
 
