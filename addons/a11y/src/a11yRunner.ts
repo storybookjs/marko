@@ -28,13 +28,7 @@ const run = async (storyId: string) => {
 
     if (!active) {
       active = true;
-      const {
-        element = getElement(),
-        config,
-        options = {
-          restoreScroll: true,
-        },
-      } = input;
+      const { element = getElement(), config, options } = input;
       axe.reset();
       if (config) {
         axe.configure(config);
@@ -50,10 +44,18 @@ const run = async (storyId: string) => {
   }
 };
 
+/** Returns story parameters or default ones. */
 const getParams = (storyId: string): Setup => {
   // eslint-disable-next-line no-underscore-dangle
   const { parameters } = window.__STORYBOOK_STORY_STORE__._stories[storyId] || {};
-  return parameters.a11y;
+  return (
+    parameters.a11y || {
+      config: {},
+      options: {
+        restoreScroll: true,
+      },
+    }
+  );
 };
 
 channel.on(STORY_RENDERED, run);
