@@ -1,3 +1,15 @@
+## 6.0.0-alpha.35 (April 16, 2020)
+
+### Bug Fixes
+
+- Core: Fix static build with DLL ([#10377](https://github.com/storybookjs/storybook/pull/10377))
+- Addon-Docs: Fix Args table generation for story with no component ([#10436](https://github.com/storybookjs/storybook/pull/10436))
+
+### Maintenance
+
+- Yarn 2: Fix compatibility with `.storybook/preview.js` file ([#10342](https://github.com/storybookjs/storybook/pull/10342))
+- Official-storybook: Fix passArgsFirst problems ([#10432](https://github.com/storybookjs/storybook/pull/10432))
+
 ## 6.0.0-alpha.34 (April 15, 2020)
 
 ### Breaking Changes
