@@ -4,7 +4,7 @@ import fs from 'fs';
 import tmp from 'tmp';
 import { sync as spawnSync } from 'cross-spawn';
 
-import { findComponentByName, extractPropsFromData } from './compodoc';
+import { findComponentByName, extractArgTypesFromData } from './compodoc';
 
 // File hierarchy: __testfixtures__ / some-test-case / input.*
 const inputRegExp = /^input\..*$/;
@@ -41,8 +41,8 @@ describe('angular component properties', () => {
 
           // snapshot the output of addon-docs angular-properties
           const componentData = findComponentByName('InputComponent', compodocJson);
-          const properties = extractPropsFromData(componentData);
-          expect(properties).toMatchSpecificSnapshot(path.join(testDir, 'properties.snapshot'));
+          const argTypes = extractArgTypesFromData(componentData);
+          expect(argTypes).toMatchSpecificSnapshot(path.join(testDir, 'argtypes.snapshot'));
         });
       }
     }

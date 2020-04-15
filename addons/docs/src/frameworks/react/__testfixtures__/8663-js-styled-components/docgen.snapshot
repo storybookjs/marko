@@ -12,7 +12,6 @@ Box.propTypes = {
 };
 export const MyBox = props => /*#__PURE__*/React.createElement(Box, props);
 MyBox.propTypes = {
-  // eslint-disable-next-line react/require-default-props
   bg: PropTypes.string
 };
 export const component = MyBox;

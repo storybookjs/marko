@@ -13,7 +13,6 @@ Box.propTypes = {
 export const MyBox = (props) => <Box {...props} />;
 
 MyBox.propTypes = {
-  // eslint-disable-next-line react/require-default-props
   bg: PropTypes.string,
 };
 
