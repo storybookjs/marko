@@ -40,7 +40,7 @@ export const getSourceProps = (
     source = targetIds
       .map((sourceId) => {
         const data = storyStore.fromId(sourceId);
-        const enhanced = enhanceSource(data);
+        const enhanced = data && enhanceSource(data);
         return enhanced?.docs?.source?.code || '';
       })
       .join('\n\n');

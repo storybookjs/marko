@@ -8,6 +8,18 @@ Object {
       "description": "The input content value",
       "name": "value",
       "required": false,
+      "sbType": Object {
+        "name": "union",
+        "raw": "string | number",
+        "value": Array [
+          Object {
+            "name": "string",
+          },
+          Object {
+            "name": "number",
+          },
+        ],
+      },
       "type": Object {
         "detail": undefined,
         "summary": "union",
@@ -18,6 +30,9 @@ Object {
       "description": "",
       "name": "defaultChecked",
       "required": false,
+      "sbType": Object {
+        "name": "boolean",
+      },
       "type": Object {
         "detail": undefined,
         "summary": "boolean",
@@ -28,6 +43,9 @@ Object {
       "description": "",
       "name": "checked",
       "required": false,
+      "sbType": Object {
+        "name": "boolean",
+      },
       "type": Object {
         "detail": undefined,
         "summary": "boolean",

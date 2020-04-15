@@ -11,6 +11,9 @@ Object {
       "description": "",
       "name": "disabled",
       "required": false,
+      "sbType": Object {
+        "name": "boolean",
+      },
       "type": Object {
         "detail": undefined,
         "summary": "boolean",

@@ -17,6 +17,14 @@ module.exports = {
         'import/no-extraneous-dependencies': 'off',
       },
     },
+    {
+      files: ['**/__testfixtures__/**'],
+      rules: {
+        'react/forbid-prop-types': 'off',
+        'react/no-unused-prop-types': 'off',
+        'react/require-default-props': 'off',
+      },
+    },
     { files: '**/.storybook/config.js', rules: { 'global-require': 'off' } },
     {
       files: ['**/*.stories.*'],
