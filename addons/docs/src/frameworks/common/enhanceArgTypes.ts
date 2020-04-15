@@ -1,4 +1,3 @@
-import camelCase from 'lodash/camelCase';
 import mapValues from 'lodash/mapValues';
 import { ArgTypesEnhancer, combineParameters } from '@storybook/client-api';
 import { ArgTypes } from '@storybook/api';
