@@ -4,6 +4,7 @@ import { styled } from '@storybook/theming';
 
 export interface SectionRowProps {
   section: string;
+  showControls: boolean;
 }
 
 const SectionTh = styled.th<{}>(({ theme }) => ({
@@ -19,8 +20,8 @@ const SectionTh = styled.th<{}>(({ theme }) => ({
   background: `${theme.background.app} !important`,
 }));
 
-export const SectionRow: FC<SectionRowProps> = ({ section }) => (
+export const SectionRow: FC<SectionRowProps> = ({ section, showControls }) => (
   <tr>
-    <SectionTh colSpan={3}>{section}</SectionTh>
+    <SectionTh colSpan={showControls ? 4 : 3}>{section}</SectionTh>
   </tr>
 );

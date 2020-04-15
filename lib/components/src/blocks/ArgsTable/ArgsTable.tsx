@@ -147,9 +147,9 @@ export type ArgsTableProps = ArgsTableRowProps | ArgsTableErrorProps;
 type RowProps = SectionRowProps | ArgRowProps;
 
 const ArgsTableRow: FC<RowProps> = (props) => {
-  const { section } = props as SectionRowProps;
+  const { section, showControls } = props as SectionRowProps;
   if (section) {
-    return <SectionRow section={section} />;
+    return <SectionRow {...{ section, showControls }} />;
   }
   const { row, arg, updateArgs } = props as ArgRowProps;
   return <ArgRow {...{ row, arg, updateArgs }} />;
@@ -181,6 +181,8 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
     });
   }
 
+  const showControls = args && Object.keys(args).length > 0;
+
   const allRows: { key: string; value: any }[] = [];
   Object.entries(ungroupedRows).forEach(([key, row]) => {
     const arg = args && args[key];
@@ -192,7 +194,7 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
   Object.keys(categoryRows).forEach((category) => {
     const catRows = categoryRows[category];
     if (Object.keys(catRows).length > 0) {
-      allRows.push({ key: category, value: { section: category } });
+      allRows.push({ key: category, value: { section: category, showControls } });
       Object.entries(catRows).forEach(([key, row]) => {
         const arg = args && args[key];
         allRows.push({
@@ -214,7 +216,7 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
             <th>Name</th>
             <th>Description</th>
             <th>Default</th>
-            {args && Object.keys(args).length > 0 ? <th>Control</th> : null}
+            {showControls ? <th>Control</th> : null}
           </tr>
         </thead>
         <tbody className="docblock-propstable-body">
