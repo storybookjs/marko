@@ -14,7 +14,7 @@ export default {
 };
 
 export const PassedToStory = ({ parameters: { fileName, ...parameters } }) => ({
-  template: `<div>Parameters are ${JSON.stringify(parameters)}</div>`,
+  template: `<div>Parameters are ${JSON.stringify(parameters, null, 2)}</div>`,
 });
 
 PassedToStory.story = {
