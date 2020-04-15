@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import mapValues from 'lodash/mapValues';
 import { storiesOf } from '@storybook/react';
 import { ArgsTable } from '@storybook/components';
-import { action } from '@storybook/addon-actions';
 import { Args } from '@storybook/api';
 import { combineParameters } from '@storybook/client-api';
 
