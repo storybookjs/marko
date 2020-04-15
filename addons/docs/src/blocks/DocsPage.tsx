@@ -12,7 +12,7 @@ export const DocsPage: FC = () => (
     <Subtitle />
     <Description />
     <Primary />
-    <Props />
+    <Props story="." />
     <Stories />
   </>
 );

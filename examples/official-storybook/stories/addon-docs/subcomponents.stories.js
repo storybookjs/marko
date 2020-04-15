@@ -7,10 +7,15 @@ export default {
   component: ButtonGroup,
   parameters: { viewMode: 'docs' },
   subcomponents: { DocgenButton },
+  argTypes: {
+    background: {
+      control: { type: 'color' },
+    },
+  },
 };
 
-export const basic = () => (
-  <ButtonGroup>
+export const Basic = (args) => (
+  <ButtonGroup {...args}>
     <DocgenButton label="foo" />
     <DocgenButton label="bar" />
   </ButtonGroup>

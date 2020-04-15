@@ -8,6 +8,20 @@ Object {
       "description": "specify icon=\\"search\\" or icon={IconComponent}",
       "name": "icon",
       "required": true,
+      "sbType": Object {
+        "name": "union",
+        "raw": "React.ReactNode | string",
+        "value": Array [
+          Object {
+            "name": "other",
+            "raw": "React.ReactNode",
+            "value": "ReactReactNode",
+          },
+          Object {
+            "name": "string",
+          },
+        ],
+      },
       "type": Object {
         "detail": undefined,
         "summary": "union",

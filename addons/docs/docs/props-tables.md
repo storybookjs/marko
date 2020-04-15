@@ -7,10 +7,16 @@
 Storybook Docs automatically generates props tables for components in supported frameworks. This document is a consolidated summary of prop tables, provides instructions for reporting bugs, and list known limitations for each framework.
 
 - [Usage](#usage)
+- [Args Controls](#args-controls)
+  - [DocsPage](#docspage)
+  - [MDX](#mdx)
+  - [Controls customization](#controls-customization)
+  - [Rows customization](#rows-customization)
 - [Reporting a bug](#reporting-a-bug)
 - [Known limitations](#known-limitations)
   - [React](#react)
     - [Fully support React.FC](#fully-support-reactfc)
+    - [Imported types](#imported-types)
   - [Vue](#vue)
   - [Angular](#angular)
   - [Web components](#web-components)
@@ -45,6 +51,127 @@ import { MyComponent } from './MyComponent';
 
 <Props of={MyComponent} />
 ```
+
+## Args Controls
+
+Starting in SB 6.0, the `Props` block has built-in controls (formerly known as "knobs") for editing stories dynamically.
+
+<center>
+  <img src="./media/props-tables-controls.png" width="100%" />
+</center>
+
+These controls are implemented appear automatically in the props table when your story accepts [Storybook Args](#https://github.com/storybookjs/storybook/blob/next/docs/src/pages/formats/component-story-format/index.md#args-story-inputs) as its input.
+
+### DocsPage
+
+In DocsPage, simply write your story to consume args and the auto-generated props table will display controls in the right-most column:
+
+```js
+export default {
+  title: 'MyComponent',
+  component: MyComponent,
+};
+
+export const Controls = (args) => <MyComponent {...args} />;
+```
+
+These controls can be [customized](#controls-customization) if the defaults don't meet your needs.
+
+### MDX
+
+In [MDX](./mdx.md), the `Props` controls are more configurable than in DocsPage. In order to show controls, `Props` must be a function of a story, not a component:
+
+```js
+<Story name="Controls">
+  {args => <MyComponent {...args} />}
+</Story>
+
+<Props story="Controls" />
+```
+
+### Controls customization
+
+Under the hood, props tables are rendered from an internal data structure called `ArgTypes`. When you declare a story's `component` metadata, Docs automatically extracts `ArgTypes` based on the component's properties. We can customize this by editing the `argTypes` metadata.
+
+For example, consider a `Label` component that accepts a `background` color:
+
+```js
+import React from 'react';
+import PropTypes from 'prop-types';
+
+export const Label = ({ label, borderWidth, background }) => <div style={{ borderWidth, background }}>{label}</div>;
+Label.propTypes = {
+  label: PropTypes.string;
+  borderWidth: PropTypes.number;
+  background: PropTypes.string;
+}
+```
+
+Given this input, the Docs addon will show a text editor for the `background` and a numeric input for the `borderWidth` prop:
+
+<center>
+  <img src="./media/props-tables-controls-uncustomized.png" width="100%" />
+</center>
+
+But suppose we prefer to show a color picker for `background` and a numeric input for `borderWidth`. We can customize this in the story metadata's `argTypes` field (at the component OR story level):
+
+```js
+export default {
+  title: 'Label',
+  component: Label,
+  argTypes: {
+    background: { control: { type: 'color' } },
+    borderWidth: { control: { type: 'range', min: 0, max: 6 } },
+  },
+};
+```
+
+This generates the following custom UI:
+
+<center>
+  <img src="./media/props-tables-controls-customized.png" width="100%" />
+</center>
+
+Support controls include `array`, `boolean`, `color`, `date`, `range`, `object`, `text`, as well as a number of different options controls: `radio`, `inline-radio`, `check`, `inline-check`, `select`, `multi-select`.
+
+To see the full list of configuration options, see the [typescript type defintions](https://github.com/storybookjs/storybook/blob/next/lib/components/src/controls/types.ts).
+
+### Rows customization
+
+In addition to customizing [controls](#controls-customization), it's also possible to customize `Props` fields, such as description, or even the rows themselves.
+
+Consider the following story for the `Label` component from in the previous section:
+
+```js
+export const Batch = ({ labels, padding }) => (
+  <div style={{ padding }}>
+    {labels.map((label) => (
+      <Label key={label} label={label} />
+    ))}
+  </div>
+);
+```
+
+In this case, the args are basically unrelated to the underlying component's props, and are instead related to the individual story. To generate a prop table for the story, you can configure the Story's metadata:
+
+```js
+Batch.story = {
+  argTypes: {
+    labels: {
+      description: 'A comma-separated list of labels to display',
+      defaultValue: 'a,b,c',
+      control: { type: 'array' }
+    }
+    padding: {
+      description: 'The padding to space out labels int he story',
+      defaultValue: 4,
+      control: { type: 'range', min: 0, max: 20, step: 2 },
+    }
+  }
+}
+```
+
+In this case, the user-specified `argTypes` are not a subset of the component's props, so Storybook shows ONLY the user-specified `argTypes`, and shows the component's props (without controls) in a separate tab.
 
 ## Reporting a bug
 
