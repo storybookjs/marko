@@ -17,7 +17,7 @@ export const enhanceArgTypes: ArgTypesEnhancer = (context) => {
 
   const namedArgTypes = mapValues(userArgTypes, (val, key) => ({ name: key, ...val }));
   const inferredArgTypes = inferArgTypes(args);
-  let extractedArgTypes: ArgTypes = component ? extractArgTypes(component) : {};
+  let extractedArgTypes: ArgTypes = extractArgTypes && component ? extractArgTypes(component) : {};
 
   if (
     (Object.keys(userArgTypes).length > 0 &&
