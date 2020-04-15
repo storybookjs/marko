@@ -1,7 +1,7 @@
 import React, { createElement, ElementType, FunctionComponent, ReactNode } from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { components as docsComponents } from '@storybook/components/html';
-import { Story, StoryProps as PureStoryProps } from '@storybook/components';
+import { Story as PureStory, StoryProps as PureStoryProps } from '@storybook/components';
 import { toId, storyNameFromExport } from '@storybook/csf';
 import { CURRENT_SELECTION } from './types';
 
@@ -39,22 +39,23 @@ const inferInlineStories = (framework: string): boolean => {
   }
 };
 
-export const getStoryProps = (
-  props: StoryProps,
-  { id: currentId, storyStore, mdxStoryNameToKey, mdxComponentMeta }: DocsContextProps | null
-): PureStoryProps => {
+export const lookupStoryId = (
+  storyName: string,
+  { mdxStoryNameToKey, mdxComponentMeta }: DocsContextProps
+) =>
+  toId(
+    mdxComponentMeta.id || mdxComponentMeta.title,
+    storyNameFromExport(mdxStoryNameToKey[storyName])
+  );
+
+export const getStoryProps = (props: StoryProps, context: DocsContextProps): PureStoryProps => {
   const { id } = props as StoryRefProps;
   const { name } = props as StoryDefProps;
-  const inputId = id === CURRENT_SELECTION ? currentId : id;
-  const previewId =
-    inputId ||
-    toId(
-      mdxComponentMeta.id || mdxComponentMeta.title,
-      storyNameFromExport(mdxStoryNameToKey[name])
-    );
+  const inputId = id === CURRENT_SELECTION ? context.id : id;
+  const previewId = inputId || lookupStoryId(name, context);
 
   const { height, inline } = props;
-  const data = storyStore.fromId(previewId);
+  const data = context.storyStore.fromId(previewId);
   const { framework = null } = (data && data.parameters) || {};
 
   const docsParam = (data && data.parameters && data.parameters.docs) || {};
@@ -87,7 +88,7 @@ export const getStoryProps = (
   };
 };
 
-const StoryContainer: FunctionComponent<StoryProps> = (props) => (
+const Story: FunctionComponent<StoryProps> = (props) => (
   <DocsContext.Consumer>
     {(context) => {
       const storyProps = getStoryProps(props, context);
@@ -97,7 +98,7 @@ const StoryContainer: FunctionComponent<StoryProps> = (props) => (
       return (
         <div id={storyBlockIdFromId(storyProps.id)}>
           <MDXProvider components={resetComponents}>
-            <Story {...storyProps} />
+            <PureStory {...storyProps} />
           </MDXProvider>
         </div>
       );
@@ -105,9 +106,9 @@ const StoryContainer: FunctionComponent<StoryProps> = (props) => (
   </DocsContext.Consumer>
 );
 
-StoryContainer.defaultProps = {
+Story.defaultProps = {
   children: null,
   name: null,
 };
 
-export { StoryContainer as Story };
+export { Story };

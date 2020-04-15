@@ -1,0 +1,94 @@
+import { Meta, Preview, Story, Props } from '@storybook/addon-docs/blocks';
+import { DocgenButton } from '../../components/DocgenButton';
+import { ButtonGroup, SubGroup } from '../../components/ButtonGroup';
+import { ForwardRefButton } from '../../components/ForwardRefButton';
+import { MemoButton } from '../../components/MemoButton';
+
+<Meta title="Addons/Docs/props" component={ButtonGroup} parameters={{ passArgsFirst: true }} />
+
+export const FooBar = ({ foo, bar } = {}) => (
+  <table>
+    <tr>
+      <td>Foo</td>
+      <td>{foo && foo.toString()}</td>
+    </tr>
+    <tr>
+      <td>Bar</td>
+      <td>{bar}</td>
+    </tr>
+  </table>
+);
+
+## ArgTypes
+
+<Preview>
+  <Story
+    name="ArgTypes"
+    args={{
+      foo: false,
+      bar: '',
+    }}
+    argTypes={{
+      foo: { name: 'foo', type: { name: 'boolean' }, description: 'foo description' },
+      bar: { name: 'bar', type: { name: 'string' }, description: 'bar description' },
+    }}
+  >
+    {(args) => <FooBar {...args} />}
+  </Story>
+</Preview>
+
+<Props story="ArgTypes" />
+
+## ArgTypes w/ Components
+
+<Props story="ArgTypes" showComponents />
+
+## Args
+
+<Preview>
+  <Story
+    name="Args"
+    args={{
+      foo: false,
+      bar: '',
+    }}
+  >
+    {(args) => <FooBar {...args} />}
+  </Story>
+</Preview>
+
+<Props story="Args" />
+
+## Component Story
+
+<Preview>
+  <Story name="Component" argTypes={{ background: { control: { type: 'color' } } }}>
+    {(args) => <DocgenButton {...args} />}
+  </Story>
+</Preview>
+
+<Props story="Component" />
+
+## Controls Story
+
+<Preview>
+  <Story
+    name="Controls"
+    argTypes={{
+      foo: { control: { type: 'range' } },
+      bar: { control: { type: 'options', options: ['a', 'b', 'c'] } },
+    }}
+  >
+    {(args) => <FooBar {...args} />}
+  </Story>
+</Preview>
+
+<Props story="Controls" />
+
+## Components
+
+<Props components={{ ButtonGroup, SubGroup }} />
+
+## Component
+
+<Props of={DocgenButton} />

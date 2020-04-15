@@ -1,10 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`react component properties 8140-js-prop-types-oneof 1`] = `
-"/* eslint-disable react/no-unused-prop-types */
-
-/* eslint-disable react/require-default-props */
-import React from 'react';
+"import React from 'react';
 import PropTypes from 'prop-types';
 
 const Alert = props => /*#__PURE__*/React.createElement(React.Fragment, null, JSON.stringify(props));

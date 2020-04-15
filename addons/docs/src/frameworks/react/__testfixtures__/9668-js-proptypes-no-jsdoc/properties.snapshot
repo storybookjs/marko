@@ -8,6 +8,10 @@ Object {
       "description": "",
       "name": "heads",
       "required": true,
+      "sbType": Object {
+        "name": "array",
+        "value": undefined,
+      },
       "type": Object {
         "detail": undefined,
         "summary": "array",
@@ -18,6 +22,9 @@ Object {
       "description": "",
       "name": "onAddClick",
       "required": false,
+      "sbType": Object {
+        "name": "function",
+      },
       "type": Object {
         "detail": undefined,
         "summary": "func",

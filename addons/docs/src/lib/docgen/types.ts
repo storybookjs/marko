@@ -1,7 +1,10 @@
 import { PropsTableProps } from '@storybook/components';
+import { ArgTypes } from '@storybook/api';
 import { Component } from '../../blocks/types';
 
 export type PropsExtractor = (component: Component) => PropsTableProps | null;
+
+export type ArgTypesExtractor = (component: Component) => ArgTypes | null;
 
 export interface DocgenType {
   name: string;

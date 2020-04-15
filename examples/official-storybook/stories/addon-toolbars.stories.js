@@ -26,8 +26,7 @@ const Themed = styled.div(({ theme }) => ({
   background: theme.background.content,
 }));
 
-// eslint-disable-next-line react/prop-types
-export const Locale = ({ globalArgs: { locale } }) => {
+export const Locale = (_args, { globalArgs: { locale } }) => {
   return (
     <Themed style={{ fontSize: 30 }}>
       Your locale is '{locale}', so I say:
