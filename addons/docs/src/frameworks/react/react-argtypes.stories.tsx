@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import mapValues from 'lodash/mapValues';
 import { storiesOf } from '@storybook/react';
 import { ArgsTable } from '@storybook/components';
-import { action } from '@storybook/addon-actions';
 import { Args } from '@storybook/api';
 import { combineParameters } from '@storybook/client-api';
 
@@ -102,7 +101,6 @@ const issuesStories = storiesOf('ArgTypes/Issues', module);
 issuesFixtures.forEach((fixture) => {
   // eslint-disable-next-line import/no-dynamic-require, global-require
   const { component } = require(`./__testfixtures__/${fixture}/input`);
-  const props = argsTableProps(component);
 
-  issuesStories.add(fixture, () => <ArgsTable {...props} updateArgs={action('updateArgs')} />);
+  issuesStories.add(fixture, () => <ArgsStory component={component} />);
 });
