@@ -171,7 +171,7 @@ export class PostmsgTransport {
           : `<span style="color: #FFAE00">${event.type}</span>`;
 
         event.source =
-          source || this.config.page === 'preview' ? event.origin : getEventSourceUrl(rawEvent);
+          source || this.config.page === 'preview' ? rawEvent.origin : getEventSourceUrl(rawEvent);
 
         if (!event.source) {
           pretty.error(
