@@ -42,7 +42,7 @@
     "@storybook/codemod": "6.0.0-alpha.33",
     "@storybook/node-logger": "6.0.0-alpha.33",
     "chalk": "^3.0.0",
-    "commander": "^4.0.1",
+    "commander": "^5.0.0",
     "core-js": "^3.0.1",
     "cross-spawn": "^7.0.0",
     "envinfo": "^7.5.0",
