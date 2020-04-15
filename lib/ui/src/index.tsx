@@ -13,6 +13,7 @@ import Provider from './provider';
 
 // @ts-ignore
 ThemeProvider.displayName = 'ThemeProvider';
+// @ts-ignore
 HelmetProvider.displayName = 'HelmetProvider';
 
 const getDocsMode = () => {
