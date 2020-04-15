@@ -1,5 +1,5 @@
 import { PropDef } from '@storybook/components';
-import { Component } from '../../blocks/shared';
+import { Component } from '../../blocks/types';
 import { ExtractedJsDoc, parseJsDoc } from '../jsdocParser';
 import { DocgenInfo, TypeSystem } from './types';
 import { getDocgenSection, isValidDocgenSection, getDocgenDescription } from './utils';
@@ -45,7 +45,7 @@ export const extractComponentSectionObject = (docgenSection: any) => {
   const createPropDef = getPropDefFactory(typeSystem);
 
   return docgenPropsKeys
-    .map(propName => {
+    .map((propName) => {
       const docgenInfo = docgenSection[propName];
 
       return docgenInfo != null

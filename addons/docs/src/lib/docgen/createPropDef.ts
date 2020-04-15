@@ -5,6 +5,7 @@ import { createSummaryValue } from '../utils';
 import { createFlowPropDef } from './flow/createPropDef';
 import { isDefaultValueBlacklisted } from './utils/defaultValue';
 import { createTsPropDef } from './typeScript/createPropDef';
+import { convert } from '../sbtypes';
 
 export type PropDefFactory = (
   propName: string,
@@ -58,7 +59,10 @@ function applyJsDocResult(propDef: PropDef, jsDocParsingResult: JsDocParsingResu
       propDef.jsDocTags = {
         params:
           hasParams &&
-          extractedTags.params.map(x => ({ name: x.getPrettyName(), description: x.description })),
+          extractedTags.params.map((x) => ({
+            name: x.getPrettyName(),
+            description: x.description,
+          })),
         returns: hasReturns && { description: extractedTags.returns.description },
       };
     }
@@ -69,18 +73,21 @@ function applyJsDocResult(propDef: PropDef, jsDocParsingResult: JsDocParsingResu
 
 export const javaScriptFactory: PropDefFactory = (propName, docgenInfo, jsDocParsingResult) => {
   const propDef = createBasicPropDef(propName, docgenInfo.type, docgenInfo);
+  propDef.sbType = convert(docgenInfo);
 
   return applyJsDocResult(propDef, jsDocParsingResult);
 };
 
 export const tsFactory: PropDefFactory = (propName, docgenInfo, jsDocParsingResult) => {
   const propDef = createTsPropDef(propName, docgenInfo);
+  propDef.sbType = convert(docgenInfo);
 
   return applyJsDocResult(propDef, jsDocParsingResult);
 };
 
 export const flowFactory: PropDefFactory = (propName, docgenInfo, jsDocParsingResult) => {
   const propDef = createFlowPropDef(propName, docgenInfo);
+  propDef.sbType = convert(docgenInfo);
 
   return applyJsDocResult(propDef, jsDocParsingResult);
 };

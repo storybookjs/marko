@@ -13,6 +13,7 @@ export interface ButtonProps {
   small?: boolean;
   outline?: boolean;
   containsIcon?: boolean;
+  children?: React.ReactNode;
 }
 
 type ButtonWrapperProps = ButtonProps;

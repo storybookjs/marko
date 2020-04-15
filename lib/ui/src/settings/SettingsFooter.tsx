@@ -14,7 +14,7 @@ const Footer = styled.div(({ theme }) => ({
     marginLeft: 20,
   },
 }));
-const SettingsFooter: FunctionComponent<any> = props => (
+const SettingsFooter: FunctionComponent<any> = (props) => (
   <Footer {...props}>
     <Link secondary href="https://storybook.js.org" cancel={false} target="_blank">
       Docs

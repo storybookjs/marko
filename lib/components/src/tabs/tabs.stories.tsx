@@ -5,7 +5,7 @@ import { logger } from '@storybook/client-logger';
 
 import { Tabs, TabsState, TabWrapper } from './tabs';
 
-const colours = Array.from(new Array(15), (val, index) => index).map(i =>
+const colours = Array.from(new Array(15), (val, index) => index).map((i) =>
   Math.floor((1 / 15) * i * 16777215)
     .toString(16)
     .padStart(6, '0')
@@ -114,7 +114,7 @@ const content = Object.entries(panels).map(([k, v]) => (
 ));
 
 storiesOf('Basics/Tabs', module)
-  .addDecorator(s => (
+  .addDecorator((s) => (
     <div
       style={{
         position: 'relative',

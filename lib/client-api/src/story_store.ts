@@ -25,7 +25,7 @@ import {
   PublishedStoreItem,
   ErrorLike,
   GetStorybookKind,
-  ParameterEnhancer,
+  ArgTypesEnhancer,
 } from './types';
 import { HooksContext } from './hooks';
 import storySort from './storySort';
@@ -101,7 +101,7 @@ export default class StoryStore {
   // Keyed on storyId
   _stories: StoreData;
 
-  _parameterEnhancers: ParameterEnhancer[];
+  _argTypesEnhancers: ArgTypesEnhancer[];
 
   _revision: number;
 
@@ -115,7 +115,7 @@ export default class StoryStore {
     this._globalMetadata = { parameters: {}, decorators: [] };
     this._kinds = {};
     this._stories = {};
-    this._parameterEnhancers = [];
+    this._argTypesEnhancers = [];
     this._revision = 0;
     this._selection = {} as any;
     this._error = undefined;
@@ -219,11 +219,11 @@ export default class StoryStore {
     this._kinds[kind].decorators.push(...decorators);
   }
 
-  addParameterEnhancer(parameterEnhancer: ParameterEnhancer) {
+  addArgTypesEnhancer(argTypesEnhancer: ArgTypesEnhancer) {
     if (Object.keys(this._stories).length > 0)
       throw new Error('Cannot add a parameter enhancer to the store after a story has been added.');
 
-    this._parameterEnhancers.push(parameterEnhancer);
+    this._argTypesEnhancers.push(argTypesEnhancer);
   }
 
   addStory(
@@ -283,11 +283,12 @@ export default class StoryStore {
       storyParameters
     );
 
-    const parameters = this._parameterEnhancers.reduce(
+    const parameters = this._argTypesEnhancers.reduce(
       (accumlatedParameters, enhancer) => ({
         ...accumlatedParameters,
-        ...enhancer({
+        argTypes: enhancer({
           ...identification,
+          storyFn: original,
           parameters: accumlatedParameters,
           args: {},
           globalArgs: {},
@@ -411,8 +412,8 @@ export default class StoryStore {
 
   raw(options?: StoryOptions) {
     return Object.values(this._stories)
-      .filter(i => !!i.getDecorated)
-      .filter(i => includeStory(i, options))
+      .filter((i) => !!i.getDecorated)
+      .filter((i) => includeStory(i, options))
       .map(({ id }) => this.fromId(id));
   }
 
@@ -421,7 +422,7 @@ export default class StoryStore {
     // determine if we should apply a sort to the stories or use default import order
     if (Object.values(this._stories).length > 0) {
       const index = Object.keys(this._stories).find(
-        key =>
+        (key) =>
           !!(
             this._stories[key] &&
             this._stories[key].parameters &&
@@ -492,15 +493,15 @@ export default class StoryStore {
   };
 
   getStoryKinds() {
-    return Array.from(new Set(this.raw().map(s => s.kind)));
+    return Array.from(new Set(this.raw().map((s) => s.kind)));
   }
 
   getStoriesForKind(kind: string) {
-    return this.raw().filter(story => story.kind === kind);
+    return this.raw().filter((story) => story.kind === kind);
   }
 
   getRawStory(kind: string, name: string) {
-    return this.getStoriesForKind(kind).find(s => s.name === name);
+    return this.getStoriesForKind(kind).find((s) => s.name === name);
   }
 
   getRevision() {
@@ -518,7 +519,7 @@ export default class StoryStore {
   }
 
   cleanHooksForKind(kind: string) {
-    this.getStoriesForKind(kind).map(story => this.cleanHooks(story.id));
+    this.getStoriesForKind(kind).map((story) => this.cleanHooks(story.id));
   }
 
   // This API is a reimplementation of Storybook's original getStorybook() API.

@@ -17,7 +17,5 @@ export const Story1 = () => html`
 `;
 Story1.story = { name: 'story 1' };
 
-export const Story2 = () => html`
-  <demo-wc-card back-side>This one too!</demo-wc-card>
-`;
+export const Story2 = () => html` <demo-wc-card back-side>This one too!</demo-wc-card> `;
 Story2.story = { name: 'story 2' };

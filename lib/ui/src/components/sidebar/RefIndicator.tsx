@@ -122,13 +122,15 @@ const CurrentVersion: FunctionComponent<CurrentVersionProps> = ({ url, versions 
   );
 };
 
-export const RefIndicator: FunctionComponent<RefType & {
-  type: ReturnType<typeof getType>;
-}> = ({ type, ...ref }) => {
+export const RefIndicator: FunctionComponent<
+  RefType & {
+    type: ReturnType<typeof getType>;
+  }
+> = ({ type, ...ref }) => {
   const api = useStorybookApi();
   const list = useMemo(() => Object.values(ref.stories || {}), [ref.stories]);
-  const componentCount = useMemo(() => list.filter(v => v.isComponent).length, [list]);
-  const leafCount = useMemo(() => list.filter(v => v.isLeaf).length, [list]);
+  const componentCount = useMemo(() => list.filter((v) => v.isComponent).length, [list]);
+  const leafCount = useMemo(() => list.filter((v) => v.isLeaf).length, [list]);
 
   const changeVersion = useCallback(
     ((event, item) => {

@@ -19,7 +19,7 @@ function stringifyKnob(knob: StoryKnob) {
   const level = 2;
   const stringifiedValue = stringifyObject(value, level);
   // TODO: Add group
-  const knobFunction = (t => {
+  const knobFunction = ((t) => {
     switch (t) {
       case 'text':
         return `text('${name}', ${stringifiedValue})`;
@@ -87,7 +87,7 @@ export function knobsDecorator(section: StorybookSection): StorybookSection {
     title,
     imports: { ...imports, ...{ [moduleName]: knobImports } },
     decorators,
-    stories: stories.map(story => knobsStoryDecorator(story)),
+    stories: stories.map((story) => knobsStoryDecorator(story)),
     ...options,
   };
 }

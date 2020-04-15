@@ -53,7 +53,7 @@ export default class EventsPanel extends Component<EventsPanelProps, EventsPanel
     const { active } = this.props;
     return active ? (
       <Wrapper>
-        {events.map(event => (
+        {events.map((event) => (
           <Event key={event.name} {...event} onEmit={this.onEmit} />
         ))}
       </Wrapper>

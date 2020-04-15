@@ -38,7 +38,7 @@ MultipleActionsObject.story = {
 export const ActionAndMethod = () => ({
   template: '<my-button @click="log">Click me to log the action</my-button>',
   methods: {
-    log: e => {
+    log: (e) => {
       e.preventDefault();
       action('log2')(e.target);
     },

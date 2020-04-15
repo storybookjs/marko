@@ -5,7 +5,7 @@ exports[`react component properties 8143-ts-react-fc-generics 1`] = `
 export const Text = ({
   padding = '0',
   margin
-}) => React.createElement(React.Fragment, null, \\"Text\\");
+}) => /*#__PURE__*/React.createElement(React.Fragment, null, \\"Text\\");
 export const component = Text;
 Text.__docgenInfo = {
   \\"description\\": \\"\\",

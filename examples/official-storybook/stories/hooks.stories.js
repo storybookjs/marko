@@ -9,7 +9,7 @@ export const Checkbox = () => {
   const [on, setOn] = useState(false);
   return (
     <label>
-      <input type="checkbox" checked={on} onChange={e => setOn(e.target.checked)} />
+      <input type="checkbox" checked={on} onChange={(e) => setOn(e.target.checked)} />
       On
     </label>
   );
@@ -17,7 +17,7 @@ export const Checkbox = () => {
 
 export const Input = () => {
   const [text, setText] = useState('foo');
-  return <input value={text} onChange={e => setText(e.target.value)} />;
+  return <input value={text} onChange={(e) => setText(e.target.value)} />;
 };
 
 export const Effect = () => {
@@ -39,7 +39,7 @@ export const ReactHookCheckbox = () => {
   const [on, setOn] = React.useState(false);
   return (
     <label>
-      <input type="checkbox" checked={on} onChange={e => setOn(e.target.checked)} />
+      <input type="checkbox" checked={on} onChange={(e) => setOn(e.target.checked)} />
       On
     </label>
   );

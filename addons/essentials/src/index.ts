@@ -24,9 +24,9 @@ const makeAddon = (key: string) => `@storybook/addon-${key}`;
 
 export function managerEntries(entry: any[] = [], options: PresetOptions = {}) {
   const registerAddons = ['backgrounds', 'viewport']
-    .filter(key => (options as any)[key] !== false)
-    .map(key => makeAddon(key))
-    .filter(addon => !isInstalled(addon))
-    .map(addon => `${addon}/register`);
+    .filter((key) => (options as any)[key] !== false)
+    .map((key) => makeAddon(key))
+    .filter((addon) => !isInstalled(addon))
+    .map((addon) => `${addon}/register`);
   return [...entry, ...registerAddons];
 }

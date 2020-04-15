@@ -25,12 +25,12 @@ class ObjectType<T> extends Component<ObjectTypeProps<T>> {
 
   static defaultProps: ObjectTypeProps<any> = {
     knob: {} as any,
-    onChange: value => value,
+    onChange: (value) => value,
   };
 
-  static serialize: { <T>(object: T): string } = object => JSON.stringify(object);
+  static serialize: { <T>(object: T): string } = (object) => JSON.stringify(object);
 
-  static deserialize: { <T>(value: string): T } = value => (value ? JSON.parse(value) : {});
+  static deserialize: { <T>(value: string): T } = (value) => (value ? JSON.parse(value) : {});
 
   static getDerivedStateFromProps<T>(
     props: ObjectTypeProps<T>,

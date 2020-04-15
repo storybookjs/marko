@@ -142,7 +142,7 @@ class Item extends Component<ItemProps, ItemState> {
       newState.failed = true;
     }
 
-    this.setState(state => ({ ...state, ...newState }));
+    this.setState((state) => ({ ...state, ...newState }));
   };
 
   onEmitClick = () => {

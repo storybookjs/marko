@@ -74,7 +74,7 @@ const Item = styled.a`
     }
   }
 
-  ${props =>
+  ${(props) =>
     props.active &&
     css`
       ${Title} {
@@ -92,7 +92,7 @@ const Item = styled.a`
       }
     `};
 
-  ${props =>
+  ${(props) =>
     props.loading &&
     css`
       ${Title} {
@@ -102,7 +102,7 @@ const Item = styled.a`
       }
     `};
 
-  ${props =>
+  ${(props) =>
     props.disabled &&
     css`
       cursor: not-allowed !important;

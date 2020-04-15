@@ -1,7 +1,12 @@
 import { ConfigApi, ClientApi, StoryStore } from '@storybook/client-api';
+import { logger } from '@storybook/client-logger';
 import { RequireContext } from './types';
 
 import { loadCsf } from './loadCsf';
+
+jest.mock('@storybook/client-logger', () => ({
+  logger: { warn: jest.fn() },
+}));
 
 let cbs: ((data: any) => void)[];
 let mod: NodeModule;
@@ -16,7 +21,7 @@ beforeEach(() => {
 });
 
 function doHMRDispose() {
-  cbs.forEach(cb => cb(mod.hot.data));
+  cbs.forEach((cb) => cb(mod.hot.data));
   cbs = [];
 }
 
@@ -255,28 +260,6 @@ describe('core.preview.loadCsf', () => {
     });
   });
 
-  it('allows passing decorators on parameters (deprecated)', () => {
-    const { configure, clientApi } = makeMocks();
-
-    const decorator = jest.fn();
-    const input = {
-      a: {
-        default: {
-          title: 'a',
-        },
-        x: Object.assign(() => 0, { story: { parameters: { decorators: [decorator] } } }),
-      },
-    };
-    configure(makeRequireContext(input), mod, 'react');
-
-    const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
-    const aApi = mockedStoriesOf.mock.results[0].value;
-    expect(aApi.add).toHaveBeenCalledWith('X', input.a.x, {
-      decorators: [decorator],
-      __id: 'a--x',
-    });
-  });
-
   it('handles HMR correctly when adding stories', () => {
     const { configure, clientApi, storyStore } = makeMocks();
 
@@ -386,5 +369,35 @@ describe('core.preview.loadCsf', () => {
     expect(storyStore.removeStoryKind).toHaveBeenCalledWith('a');
     expect(storyStore.incrementRevision).toHaveBeenCalled();
     expect(mockedStoriesOf).toHaveBeenCalledWith('a', true);
+  });
+
+  it('gives a warning if there are no exported stories', () => {
+    const { configure } = makeMocks();
+
+    const input = {
+      a: {
+        default: {
+          title: 'MissingExportsComponent',
+        },
+        // no named exports, will not present a story
+      },
+    };
+    configure(makeRequireContext(input), mod, 'react');
+    expect(logger.warn).toHaveBeenCalled();
+  });
+
+  it('does not give a warning if there are exported stories', () => {
+    const { configure } = makeMocks();
+
+    const input = {
+      a: {
+        default: {
+          title: 'MissingExportsComponent',
+        },
+        x: () => 0,
+      },
+    };
+    configure(makeRequireContext(input), mod, 'react');
+    expect(logger.warn).not.toHaveBeenCalled();
   });
 });

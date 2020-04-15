@@ -10,7 +10,7 @@ export default {
   title: 'Docs/DocsPage',
   component: DocsWrapper,
   decorators: [
-    storyFn => (
+    (storyFn) => (
       <DocsWrapper>
         <DocsContent>{storyFn()}</DocsContent>
       </DocsWrapper>

@@ -35,7 +35,7 @@ MultipleActionsObject.story = {
 
 export const ActionAndMethod = () => (
   <Button
-    onclick={event => {
+    onclick={(event) => {
       event.preventDefault();
       action('method-log')(event.target);
     }}

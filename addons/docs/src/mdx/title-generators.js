@@ -1,1 +1,1 @@
-export const titleFunction = title => `Addons/Docs/${title}`;
+export const titleFunction = (title) => `Addons/Docs/${title}`;

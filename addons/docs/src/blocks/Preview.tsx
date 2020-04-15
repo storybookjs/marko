@@ -38,7 +38,7 @@ const getPreviewProps = (
     (c: ReactElement) => c.props && (c.props.id || c.props.name)
   ) as ReactElement[];
   const targetIds = stories.map(
-    s =>
+    (s) =>
       s.props.id ||
       toId(
         mdxComponentMeta.id || mdxComponentMeta.title,
@@ -53,9 +53,9 @@ const getPreviewProps = (
   };
 };
 
-export const Preview: FunctionComponent<PreviewProps> = props => (
+export const Preview: FunctionComponent<PreviewProps> = (props) => (
   <DocsContext.Consumer>
-    {context => {
+    {(context) => {
       const previewProps = getPreviewProps(props, context);
       return <PurePreview {...previewProps}>{props.children}</PurePreview>;
     }}

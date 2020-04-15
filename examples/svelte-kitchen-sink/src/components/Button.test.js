@@ -12,7 +12,7 @@ describe('Button Component', () => {
   });
 
   it('should render `text` property', () => {
-    return new Promise(done => {
+    return new Promise((done) => {
       const text = 'Hello world';
       const expected = `Round corners ${text}`;
 

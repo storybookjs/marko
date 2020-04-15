@@ -14,14 +14,14 @@ export const MenuToolbar: FC<MenuToolbarProps> = ({
   const [globalArgs, updateGlobalArgs] = useGlobalArgs();
   const selectedValue = globalArgs[id];
   const active = selectedValue != null;
-  const selectedItem = active && items.find(item => item.value === selectedValue);
+  const selectedItem = active && items.find((item) => item.value === selectedValue);
 
   return (
     <WithTooltip
       placement="top"
       trigger="click"
       tooltip={({ onHide }) => {
-        const links = items.map(item => {
+        const links = items.map((item) => {
           const { value, left, title, right } = item;
           return {
             id: value,

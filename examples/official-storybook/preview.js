@@ -37,7 +37,7 @@ const themeDecorator = (storyFn, { globalArgs: { theme } }) => {
 
 addDecorator(themeDecorator);
 
-addDecorator(storyFn => (
+addDecorator((storyFn) => (
   <ThemeProvider theme={convert(themes.light)}>
     <Global styles={createReset} />
     {storyFn()}
@@ -68,11 +68,9 @@ addParameters({
 });
 
 export const parameters = {
+  passArgsFirst: true,
   exportedParameter: 'exportedParameter',
-  args: { invalid1: 'will warn' },
 };
-
-export const args = { invalid2: 'will warn' };
 
 export const globalArgs = {
   foo: 'fooValue',

@@ -28,9 +28,7 @@ interface ChannelArgs {
 
 const generateRandomId = () => {
   // generates a random 13 character string
-  return Math.random()
-    .toString(16)
-    .slice(2);
+  return Math.random().toString(16).slice(2);
 };
 
 export class Channel {
@@ -48,7 +46,7 @@ export class Channel {
     this.isAsync = async;
     if (transport) {
       this.transport = transport;
-      this.transport.setHandler(event => this.handleEvent(event));
+      this.transport.setHandler((event) => this.handleEvent(event));
     }
   }
 
@@ -123,7 +121,7 @@ export class Channel {
   removeListener(eventName: string, listener: Listener) {
     const listeners = this.listeners(eventName);
     if (listeners) {
-      this.events[eventName] = listeners.filter(l => l !== listener);
+      this.events[eventName] = listeners.filter((l) => l !== listener);
     }
   }
 
@@ -138,7 +136,7 @@ export class Channel {
   private handleEvent(event: ChannelEvent, isPeer = false) {
     const listeners = this.listeners(event.type);
     if (listeners && (isPeer || event.from !== this.sender)) {
-      listeners.forEach(fn => !(isPeer && fn.ignorePeer) && fn.apply(event, event.args));
+      listeners.forEach((fn) => !(isPeer && fn.ignorePeer) && fn.apply(event, event.args));
     }
     this.data[event.type] = event.args;
   }

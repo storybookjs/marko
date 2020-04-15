@@ -2,7 +2,7 @@
 
 exports[`react component properties 8143-ts-imported-types 1`] = `
 "import React from 'react';
-export const FooComponent = foo => React.createElement(React.Fragment, null, JSON.stringify(foo));
+export const FooComponent = foo => /*#__PURE__*/React.createElement(React.Fragment, null, JSON.stringify(foo));
 export const component = FooComponent;
 FooComponent.__docgenInfo = {
   \\"description\\": \\"\\",

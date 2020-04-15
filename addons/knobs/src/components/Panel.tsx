@@ -126,7 +126,7 @@ export default class KnobPanel extends PureComponent<KnobPanelProps> {
     const { api } = this.props;
 
     if (!this.options.timestamps || !timestamp || this.lastEdit <= timestamp) {
-      Object.keys(knobs).forEach(name => {
+      Object.keys(knobs).forEach((name) => {
         const knob = knobs[name];
         // For the first time, get values from the URL and set them.
         if (!this.loadedFromUrl) {
@@ -192,7 +192,7 @@ export default class KnobPanel extends PureComponent<KnobPanelProps> {
 
       const queryParams: { [key: string]: any } = {};
 
-      Object.keys(newKnobs).forEach(n => {
+      Object.keys(newKnobs).forEach((n) => {
         const knob = newKnobs[n];
         queryParams[`knob-${n}`] = getKnobControl(knob.type).serialize(knob.value);
       });
@@ -219,9 +219,9 @@ export default class KnobPanel extends PureComponent<KnobPanelProps> {
     const groups: Record<string, PanelKnobGroups> = {};
     const groupIds: string[] = [];
 
-    const knobKeysArray = Object.keys(knobs).filter(key => knobs[key].used);
+    const knobKeysArray = Object.keys(knobs).filter((key) => knobs[key].used);
 
-    knobKeysArray.forEach(key => {
+    knobKeysArray.forEach((key) => {
       const knobKeyGroupId = knobs[key].groupId || DEFAULT_GROUP_ID;
       groupIds.push(knobKeyGroupId);
       groups[knobKeyGroupId] = {
@@ -229,7 +229,7 @@ export default class KnobPanel extends PureComponent<KnobPanelProps> {
           <TabWrapper key={knobKeyGroupId} active={active}>
             <PropForm
               knobs={knobsArray.filter(
-                knob => (knob.groupId || DEFAULT_GROUP_ID) === knobKeyGroupId
+                (knob) => (knob.groupId || DEFAULT_GROUP_ID) === knobKeyGroupId
               )}
               onFieldChange={this.handleChange}
               onFieldClick={this.handleClick}
@@ -240,7 +240,7 @@ export default class KnobPanel extends PureComponent<KnobPanelProps> {
       };
     });
 
-    const knobsArray = knobKeysArray.map(key => knobs[key]);
+    const knobsArray = knobKeysArray.map((key) => knobs[key]);
 
     if (knobsArray.length === 0) {
       return (
@@ -265,9 +265,9 @@ export default class KnobPanel extends PureComponent<KnobPanelProps> {
     const sortEntries = (g: Record<string, PanelKnobGroups>): [string, PanelKnobGroups][] => {
       const unsortedKeys = Object.keys(g);
       if (unsortedKeys.includes(DEFAULT_GROUP_ID)) {
-        const sortedKeys = unsortedKeys.filter(key => key !== DEFAULT_GROUP_ID);
+        const sortedKeys = unsortedKeys.filter((key) => key !== DEFAULT_GROUP_ID);
         sortedKeys.push(DEFAULT_GROUP_ID);
-        return sortedKeys.map<[string, PanelKnobGroups]>(key => [key, g[key]]);
+        return sortedKeys.map<[string, PanelKnobGroups]>((key) => [key, g[key]]);
       }
       return Object.entries(g);
     };

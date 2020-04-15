@@ -13,7 +13,7 @@ const style = {
 };
 
 const Button = {
-  view: vnode => (
+  view: (vnode) => (
     <button type="button" style={style} {...vnode.attrs}>
       {vnode.children}
     </button>

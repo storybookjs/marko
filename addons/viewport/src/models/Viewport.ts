@@ -4,11 +4,6 @@ export interface Viewport {
   name: string;
   styles: Styles;
   type: 'desktop' | 'mobile' | 'tablet' | 'other';
-  /*
-   * @deprecated
-   * Deprecated option?
-   */
-  default?: boolean;
 }
 
 export interface ViewportStyles {

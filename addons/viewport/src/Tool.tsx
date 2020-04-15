@@ -35,7 +35,7 @@ const baseViewports: ViewportItem[] = [responsiveViewport];
 
 const toLinks = memoize(50)((list: ViewportItem[], active: LinkBase, set, state, close): Link[] => {
   return list
-    .map(i => {
+    .map((i) => {
       switch (i.id) {
         case responsiveViewport.id: {
           if (active.id === i.id) {
@@ -135,7 +135,7 @@ export const ViewportTool: FunctionComponent = memo(
     });
     const list = toList(viewports);
 
-    if (!list.find(i => i.id === defaultViewport)) {
+    if (!list.find((i) => i.id === defaultViewport)) {
       console.warn(
         `Cannot find "defaultViewport" of "${defaultViewport}" in addon-viewport configs, please check the "viewports" setting in the configuration.`
       );
@@ -151,9 +151,9 @@ export const ViewportTool: FunctionComponent = memo(
 
     const { selected, isRotated } = state;
     const item =
-      list.find(i => i.id === selected) ||
-      list.find(i => i.id === defaultViewport) ||
-      list.find(i => i.default) ||
+      list.find((i) => i.id === selected) ||
+      list.find((i) => i.id === defaultViewport) ||
+      list.find((i) => i.default) ||
       responsiveViewport;
 
     const ref = useRef<ViewportStyles>();

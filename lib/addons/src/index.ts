@@ -45,7 +45,7 @@ interface Config {
 
 export class AddonStore {
   constructor() {
-    this.promise = new Promise(res => {
+    this.promise = new Promise((res) => {
       this.resolve = () => res(this.getChannel());
     }) as Promise<Channel>;
   }
@@ -116,7 +116,7 @@ export class AddonStore {
   };
 
   loadAddons = (api: any) => {
-    Object.values(this.loaders).forEach(value => value(api));
+    Object.values(this.loaders).forEach((value) => value(api));
   };
 }
 

@@ -124,7 +124,7 @@ const useTabs = (
   }, [story, canvas, ...tabsFromConfig]);
 };
 
-const Preview: FunctionComponent<PreviewProps> = props => {
+const Preview: FunctionComponent<PreviewProps> = (props) => {
   const {
     api,
     id: previewId,
@@ -168,7 +168,7 @@ const Preview: FunctionComponent<PreviewProps> = props => {
             const key = t.id || t.key || i;
             return (
               <Fragment key={key}>
-                <Location>{lp => <Render active={match(lp)} />}</Location>
+                <Location>{(lp) => <Render active={match(lp)} />}</Location>
               </Fragment>
             );
           })}
@@ -193,22 +193,22 @@ function filterTabs(panels: Addon[], parameters: Record<string, any>) {
       id: key,
     }));
     return panels
-      .filter(panel => {
-        const t = arrTabs.find(tab => tab.id === panel.id);
+      .filter((panel) => {
+        const t = arrTabs.find((tab) => tab.id === panel.id);
         return t === undefined || t.id === 'canvas' || !t.hidden;
       })
       .map((panel, index) => ({ ...panel, index } as Addon))
       .sort((p1, p2) => {
-        const tab_1 = arrTabs.find(tab => tab.id === p1.id);
+        const tab_1 = arrTabs.find((tab) => tab.id === p1.id);
         // @ts-ignore
         const index_1 = tab_1 ? tab_1.index : arrTabs.length + p1.index;
-        const tab_2 = arrTabs.find(tab => tab.id === p2.id);
+        const tab_2 = arrTabs.find((tab) => tab.id === p2.id);
         // @ts-ignore
         const index_2 = tab_2 ? tab_2.index : arrTabs.length + p2.index;
         return index_1 - index_2;
       })
-      .map(panel => {
-        const t = arrTabs.find(tab => tab.id === panel.id);
+      .map((panel) => {
+        const t = arrTabs.find((tab) => tab.id === panel.id);
         if (t) {
           return {
             ...panel,

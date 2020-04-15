@@ -13,7 +13,6 @@ const iconButton: FC<IProps> = function IconButton(props) {
 };
 
 iconButton.propTypes = {
-  // eslint-disable-next-line react/no-unused-prop-types
   color: PropTypes.string,
 };
 

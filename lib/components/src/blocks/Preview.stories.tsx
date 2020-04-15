@@ -89,7 +89,7 @@ export const withToolbar = () => (
   </Preview>
 );
 
-const Horizontal = styled(props => <Spaced col={1} {...props} />)({
+const Horizontal = styled((props) => <Spaced col={1} {...props} />)({
   display: 'grid',
   gridTemplateColumns: '100px calc(100vw + 100px) 100px',
 });

@@ -12,7 +12,7 @@ class Nav extends React.Component {
   handleHeadingChange(event) {
     const { sections } = this.props;
     const selectedSectionId = event.target.value;
-    const section = sections.find(s => s.id === selectedSectionId);
+    const section = sections.find((s) => s.id === selectedSectionId);
     const itemId = section.items[0].id;
     this.changeRoute(selectedSectionId, itemId);
   }
@@ -50,7 +50,7 @@ class Nav extends React.Component {
     const selectedSectionId = selectedSection || sections[0].id;
     const selectedItemId = selectedItem || sections[0].items[0].id;
 
-    const selectedSectionData = sections.find(section => section.id === selectedSectionId);
+    const selectedSectionData = sections.find((section) => section.id === selectedSectionId);
     const navs = selectedSectionData.items;
 
     return redirect ? (
@@ -61,9 +61,9 @@ class Nav extends React.Component {
           <select
             className="custom-select custom-select-sm"
             value={selectedSectionId}
-            onChange={event => this.handleHeadingChange(event)}
+            onChange={(event) => this.handleHeadingChange(event)}
           >
-            {sections.map(section => this.renderHeadingOpts(section))}
+            {sections.map((section) => this.renderHeadingOpts(section))}
           </select>
         </div>
 
@@ -71,9 +71,9 @@ class Nav extends React.Component {
           <select
             className="custom-select custom-select-sm"
             value={selectedItemId}
-            onChange={event => this.handleNavChange(event)}
+            onChange={(event) => this.handleNavChange(event)}
           >
-            {navs.map(nav => this.renderNavOpts(nav))}
+            {navs.map((nav) => this.renderNavOpts(nav))}
           </select>
         </div>
       </div>

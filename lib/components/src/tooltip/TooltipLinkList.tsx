@@ -26,7 +26,7 @@ export interface TooltipLinkListProps {
   LinkWrapper?: LinkWrapperType;
 }
 
-const Item: FunctionComponent<TooltipLinkListProps['links'][number]> = props => {
+const Item: FunctionComponent<TooltipLinkListProps['links'][number]> = (props) => {
   const { LinkWrapper, onClick: onClickFromProps, ...rest } = props;
   const { title, href, active } = rest;
   const onClick = useCallback(

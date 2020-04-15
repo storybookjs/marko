@@ -1,6 +1,6 @@
 {
   "name": "cra-ts-essentials",
-  "version": "6.0.0-alpha.29",
+  "version": "6.0.0-alpha.33",
   "private": true,
   "scripts": {
     "build": "react-scripts build",
@@ -22,24 +22,22 @@
       "last 1 safari version"
     ]
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "dependencies": {
     "@types/jest": "25.1.4",
-    "@types/node": "13.5.3",
-    "@types/react": "16.9.19",
-    "@types/react-dom": "16.9.5",
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0",
-    "react-scripts": "3.2.0",
-    "typescript": "3.7.5"
+    "@types/node": "13.9.5",
+    "@types/react": "^16.0.0",
+    "@types/react-dom": "16.9.6",
+    "global": "^4.3.2",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-scripts": "3.4.1",
+    "typescript": "3.8.3"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "6.0.0-alpha.29",
-    "@storybook/addons": "6.0.0-alpha.29",
-    "@storybook/preset-create-react-app": "^1.5.0",
-    "@storybook/react": "6.0.0-alpha.29"
+    "@storybook/addon-essentials": "6.0.0-alpha.33",
+    "@storybook/addons": "6.0.0-alpha.33",
+    "@storybook/preset-create-react-app": "^2.1.1",
+    "@storybook/react": "6.0.0-alpha.33"
   },
   "storybook": {
     "chromatic": {

@@ -4,7 +4,7 @@ import { Consumer, Combo } from '@storybook/api';
 
 import AddonPanel from '../components/panel/panel';
 
-const createPanelActions = memoize(1)(api => ({
+const createPanelActions = memoize(1)((api) => ({
   onSelect: (panel: string) => api.setSelectedPanel(panel),
   toggleVisibility: () => api.togglePanel(),
   togglePosition: () => api.togglePanelPosition(),
@@ -17,8 +17,8 @@ const mapper = ({ state, api }: Combo) => ({
   actions: createPanelActions(api),
 });
 
-const Panel: FunctionComponent<any> = props => (
-  <Consumer filter={mapper}>{customProps => <AddonPanel {...props} {...customProps} />}</Consumer>
+const Panel: FunctionComponent<any> = (props) => (
+  <Consumer filter={mapper}>{(customProps) => <AddonPanel {...props} {...customProps} />}</Consumer>
 );
 
 export default Panel;

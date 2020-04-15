@@ -1,8 +1,7 @@
-import deprecate from 'util-deprecate';
-
 import { ConfigApi, ClientApi, StoryStore } from '@storybook/client-api';
 import { isExportStory, storyNameFromExport, toId } from '@storybook/csf';
 import { logger } from '@storybook/client-logger';
+import dedent from 'ts-dedent';
 
 import { Loadable, LoaderFunction, RequireContext } from './types';
 
@@ -22,7 +21,7 @@ const loadStories = (
 
   let currentExports = new Map<any, string>();
   if (reqs) {
-    reqs.forEach(req => {
+    reqs.forEach((req) => {
       req.keys().forEach((filename: string) => {
         const fileExports = req(filename);
         currentExports.set(
@@ -35,8 +34,8 @@ const loadStories = (
     });
   } else {
     const exported = (loadable as LoaderFunction)();
-    if (Array.isArray(exported) && exported.every(obj => obj.default != null)) {
-      currentExports = new Map(exported.map(fileExports => [fileExports, null]));
+    if (Array.isArray(exported) && exported.every((obj) => obj.default != null)) {
+      currentExports = new Map(exported.map((fileExports) => [fileExports, null]));
     } else if (exported) {
       logger.warn(
         `Loader function passed to 'configure' should return void or an array of module exports that all contain a 'default' export. Received: ${JSON.stringify(
@@ -46,8 +45,8 @@ const loadStories = (
     }
   }
 
-  const removed = Array.from(previousExports.keys()).filter(exp => !currentExports.has(exp));
-  removed.forEach(exp => {
+  const removed = Array.from(previousExports.keys()).filter((exp) => !currentExports.has(exp));
+  removed.forEach((exp) => {
     if (exp.default) {
       storyStore.removeStoryKind(exp.default.title);
     }
@@ -56,9 +55,9 @@ const loadStories = (
     storyStore.incrementRevision();
   }
 
-  const added = Array.from(currentExports.keys()).filter(exp => !previousExports.has(exp));
+  const added = Array.from(currentExports.keys()).filter((exp) => !previousExports.has(exp));
 
-  added.forEach(fileExports => {
+  added.forEach((fileExports) => {
     // An old-style story file
     if (!fileExports.default) {
       return;
@@ -78,7 +77,7 @@ const loadStories = (
     // see https://github.com/storybookjs/storybook/issues/9136
     if (Array.isArray(__namedExportsOrder)) {
       exports = {};
-      __namedExportsOrder.forEach(name => {
+      __namedExportsOrder.forEach((name) => {
         if (namedExports[name]) {
           exports[name] = namedExports[name];
         }
@@ -115,14 +114,19 @@ const loadStories = (
       kind.addDecorator(decorator);
     });
 
-    Object.keys(exports).forEach(key => {
+    const storyExports = Object.keys(exports);
+    if (storyExports.length === 0) {
+      logger.warn(
+        dedent`Found a story file for "${kindName}" but no exported stories.
+        Check the docs for reference: https://storybook.js.org/docs/formats/component-story-format/`
+      );
+      return;
+    }
+
+    storyExports.forEach((key) => {
       if (isExportStory(key, meta)) {
         const storyFn = exports[key];
         const { name, parameters, decorators, args, argTypes } = storyFn.story || {};
-        if (parameters && parameters.decorators) {
-          deprecate(() => {},
-          `${kindName} => ${name || key}: story.parameters.decorators is deprecated; use story.decorators instead.`)();
-        }
         const decoratorParams = decorators ? { decorators } : null;
         const exportName = storyNameFromExport(key);
         const idParams = { __id: toId(componentId || kindName, exportName) };
@@ -169,7 +173,7 @@ export const loadCsf = ({
     if (m && m.hot && m.hot.dispose) {
       ({ previousExports = new Map() } = m.hot.data || {});
 
-      m.hot.dispose(data => {
+      m.hot.dispose((data) => {
         loaded = false;
         // eslint-disable-next-line no-param-reassign
         data.previousExports = previousExports;

@@ -1,14 +1,12 @@
 import React, { useContext, FunctionComponent } from 'react';
 import { parseKind } from '@storybook/csf';
 import { Title as PureTitle } from '@storybook/components';
-import { DocsContext } from './DocsContext';
-import { StringSlot } from './shared';
+import { DocsContext, DocsContextProps } from './DocsContext';
 
 interface TitleProps {
-  slot?: StringSlot;
   children?: JSX.Element | string;
 }
-export const defaultTitleSlot: StringSlot = ({ kind, parameters }) => {
+export const extractTitle = ({ kind, parameters }: DocsContextProps) => {
   const {
     showRoots,
     hierarchyRootSeparator: rootSeparator = '|',
@@ -29,16 +27,11 @@ export const defaultTitleSlot: StringSlot = ({ kind, parameters }) => {
   return (groups && groups[groups.length - 1]) || kind;
 };
 
-export const Title: FunctionComponent<TitleProps> = ({ slot, children }) => {
+export const Title: FunctionComponent<TitleProps> = ({ children }) => {
   const context = useContext(DocsContext);
-  const { kind, parameters } = context;
   let text: JSX.Element | string = children;
   if (!text) {
-    if (slot) {
-      text = slot(context);
-    } else {
-      text = defaultTitleSlot({ kind, parameters });
-    }
+    text = extractTitle(context);
   }
   return text ? <PureTitle className="sbdocs-title">{text}</PureTitle> : null;
 };

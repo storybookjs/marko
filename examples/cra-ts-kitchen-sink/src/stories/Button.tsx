@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FunctionComponent } from 'react';
 
 interface ButtonProps {
   /**
@@ -20,7 +20,7 @@ interface ButtonProps {
 /**
  * The world's most _basic_ button
  */
-export const Button: FC<ButtonProps> = ({ children, onClick }) => (
+export const Button: FunctionComponent<ButtonProps> = ({ children, onClick }) => (
   <button onClick={onClick} type="button">
     {children}
   </button>

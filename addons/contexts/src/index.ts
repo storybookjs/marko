@@ -19,7 +19,7 @@ import { AddonSetting, AnyFunctionReturns, ContextNode, PropsMap } from './share
 export type Render<T> = (...args: [ContextNode[], PropsMap, AnyFunctionReturns<T>]) => T;
 type CreateAddonDecorator = <T>(render: Render<T>) => (contexts: AddonSetting[]) => unknown;
 
-export const createAddonDecorator: CreateAddonDecorator = render => {
+export const createAddonDecorator: CreateAddonDecorator = (render) => {
   const wrapper: StoryWrapper = (getStory, context, settings: any) => {
     const { getContextNodes, getSelectionState, getPropsMap } = ContextsPreviewAPI();
     const nodes = getContextNodes(settings);
@@ -32,7 +32,6 @@ export const createAddonDecorator: CreateAddonDecorator = render => {
     name: ID,
     parameterName: PARAM,
     skipIfNoParametersOrOptions: true,
-    allowDeprecatedUsage: false,
     wrapper,
   });
 };

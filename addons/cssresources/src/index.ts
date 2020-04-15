@@ -35,8 +35,8 @@ const getElement = (id: string, code: string) => {
 const updateElement = (id: string, code: string, value: boolean) => {
   const { element, created } = getElement(id, code);
 
-  element.querySelectorAll('link').forEach(child => changeMediaAttribute(child, value));
-  element.querySelectorAll('style').forEach(child => changeMediaAttribute(child, value));
+  element.querySelectorAll('link').forEach((child) => changeMediaAttribute(child, value));
+  element.querySelectorAll('style').forEach((child) => changeMediaAttribute(child, value));
 
   if (created) {
     document.body.appendChild(element);
@@ -46,16 +46,16 @@ const updateElement = (id: string, code: string, value: boolean) => {
 const list: any[] = [];
 
 const setResources = (resources: { code: string; id: string }[]) => {
-  const added = resources.filter(i => !list.find(r => r.code === i.code));
-  const removed = list.filter(i => !resources.find(r => r.code === i.code));
+  const added = resources.filter((i) => !list.find((r) => r.code === i.code));
+  const removed = list.filter((i) => !resources.find((r) => r.code === i.code));
 
-  added.forEach(r => list.push(r));
+  added.forEach((r) => list.push(r));
 
-  resources.forEach(r => {
+  resources.forEach((r) => {
     const { id, code } = r;
     updateElement(id, code, true);
   });
-  removed.forEach(r => {
+  removed.forEach((r) => {
     const { id, code } = r;
     updateElement(id, code, false);
   });
@@ -65,7 +65,6 @@ export const withCssResources = makeDecorator({
   name: 'withCssResources',
   parameterName: PARAM_KEY,
   skipIfNoParametersOrOptions: true,
-  allowDeprecatedUsage: false,
 
   wrapper: (getStory, context, { options, parameters }) => {
     const storyOptions = parameters || options;

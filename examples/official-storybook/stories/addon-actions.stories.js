@@ -1,12 +1,10 @@
 /* eslint-disable react/prop-types */
 import { window, File } from 'global';
 import React, { Fragment } from 'react';
-import { action, actions, configureActions, decorate } from '@storybook/addon-actions';
+import { action, actions, configureActions } from '@storybook/addon-actions';
 import { Form } from '@storybook/components';
 
 const { Button } = Form;
-
-const pickNative = decorate([args => [args[0].nativeEvent]]);
 
 export default {
   title: 'Addons/Actions',
@@ -85,42 +83,6 @@ export const MultipleActionsObjectConfig = () => (
 
 MultipleActionsObjectConfig.story = {
   name: 'Multiple actions, object + config',
-};
-
-export const DecoratedAction = () => (
-  <Button onClick={pickNative.action('decorated')}>Native Event</Button>
-);
-
-DecoratedAction.story = {
-  name: 'Decorated action',
-};
-
-export const DecoratedActionConfig = () => (
-  <Button onClick={pickNative.action('decorated', { clearOnStoryChange: false })}>
-    Moving away from this story will persist the action logger
-  </Button>
-);
-
-DecoratedActionConfig.story = {
-  name: 'Decorated action + config',
-};
-
-export const DecoratedActions = () => (
-  <Button {...pickNative.actions('onClick', 'onMouseOver')}>Native Event</Button>
-);
-
-DecoratedActions.story = {
-  name: 'Decorated actions',
-};
-
-export const DecoratedActionsConfig = () => (
-  <Button {...pickNative.actions('onClick', 'onMouseOver', { clearOnStoryChange: false })}>
-    Moving away from this story will persist the action logger
-  </Button>
-);
-
-DecoratedActionsConfig.story = {
-  name: 'Decorated actions + config',
 };
 
 export const CircularPayload = () => {
@@ -248,4 +210,16 @@ export const LimitActionOutput = () => {
 };
 LimitActionOutput.story = {
   name: 'Limit Action Output',
+};
+
+export const SkippedViaDisableTrue = () => (
+  <Button onClick={action('hello-world')}>Hello World</Button>
+);
+
+SkippedViaDisableTrue.story = {
+  name: 'skipped via disable:true',
+
+  parameters: {
+    actions: { disable: true },
+  },
 };

@@ -15,7 +15,7 @@ addParameters({
   },
   docs: {
     iframeHeight: '200px',
-    formatSource: src => {
+    formatSource: (src) => {
       const match = SOURCE_REGEX.exec(src);
       return match ? match[1] : src;
     },

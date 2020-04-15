@@ -63,7 +63,7 @@ export default class KnobStore {
   }
 
   markAllUnused() {
-    Object.keys(this.store).forEach(knobName => {
+    Object.keys(this.store).forEach((knobName) => {
       this.store[knobName].used = false;
     });
   }

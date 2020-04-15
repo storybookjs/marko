@@ -24,9 +24,9 @@ async function report() {
   try {
     const testFiles = await fs.readdir(screensDir);
     await Promise.all(
-      testFiles.map(async testFile => {
+      testFiles.map(async (testFile) => {
         const files = await fs.readdir(path.join(screensDir, testFile));
-        files.forEach(file => {
+        files.forEach((file) => {
           const match = file.match(/^(.*) \(failed\).png$/);
           if (match == null) {
             return;
@@ -54,7 +54,7 @@ async function report() {
   }
 
   const videoFiles = await fs.readdir(videosDir);
-  videoFiles.forEach(videoFile => {
+  videoFiles.forEach((videoFile) => {
     const testFile = videoFile.replace(/\.mp4$/, '');
     const tests = [...getTests(testFile), ...(hookFailures[testFile] || [])];
     tests.forEach(([suite, testName]) =>

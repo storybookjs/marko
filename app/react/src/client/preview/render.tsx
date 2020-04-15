@@ -7,7 +7,7 @@ import { RenderContext } from './types';
 const rootEl = document ? document.getElementById('root') : null;
 
 const render = (node: ReactElement, el: Element) =>
-  new Promise(resolve => {
+  new Promise((resolve) => {
     ReactDOM.render(
       process.env.STORYBOOK_EXAMPLE_APP ? <StrictMode>{node}</StrictMode> : node,
       el,
