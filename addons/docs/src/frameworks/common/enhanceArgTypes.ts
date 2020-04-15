@@ -32,8 +32,9 @@ export const enhanceArgTypes: ArgTypesEnhancer = (context) => {
     extractedArgTypes = Object.entries(componentArgTypes).reduce((acc, [label, compTypes]) => {
       if (compTypes) {
         Object.entries(compTypes).forEach(([key, argType]) => {
-          const subLabel = label === 'Primary' ? key : camelCase(`${label} ${key}`);
-          acc[subLabel] = argType;
+          if (label === 'Primary') {
+            acc[key] = argType;
+          }
         });
       }
       return acc;
