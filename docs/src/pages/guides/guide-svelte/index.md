@@ -117,7 +117,7 @@ You would then write a story for this "view" the exact same way you did with a c
 ```js
 import MyButtonView from '../views/MyButtonView.svelte';
 
-export default { title 'Button' }
+export default { title: 'Button' }
 
 export const wrappedComponentExample = () => ({
   Components: MyButtonView,
