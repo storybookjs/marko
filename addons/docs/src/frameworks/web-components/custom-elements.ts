@@ -18,6 +18,7 @@ interface Tag {
   events?: TagItem[];
   slots?: TagItem[];
   cssProperties?: TagItem[];
+  cssParts?: TagItem[];
 }
 
 interface CustomElements {
@@ -29,7 +30,8 @@ interface Sections {
   properties?: any;
   events?: any;
   slots?: any;
-  css?: any;
+  cssCustomProperties?: any;
+  cssShadowParts?: any;
 }
 
 function mapData(data: TagItem[], category: string) {
@@ -69,7 +71,8 @@ export const extractArgTypesFromElements = (tagName: string, customElements: Cus
     ...mapData(metaData.properties, 'properties'),
     ...mapData(metaData.events, 'events'),
     ...mapData(metaData.slots, 'slots'),
-    ...mapData(metaData.cssProperties, 'css'),
+    ...mapData(metaData.cssProperties, 'css custom properties'),
+    ...mapData(metaData.cssParts, 'css shadow parts'),
   };
   return argTypes;
 };
