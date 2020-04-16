@@ -1,3 +1,16 @@
+## 6.0.0-alpha.36 (April 16, 2020)
+
+### Bug Fixes
+
+- Server: Fix serialization of knobs params back to server ([#10391](https://github.com/storybookjs/storybook/pull/10391))
+- Core: Serve correctly hashed static files with the Cache-Control header ([#10390](https://github.com/storybookjs/storybook/pull/10390))
+- Addon-a11y: Fix default a11y parameters ([#10439](https://github.com/storybookjs/storybook/pull/10439))
+- Core: Fix event source handling ([#10416](https://github.com/storybookjs/storybook/pull/10416))
+
+### Maintenance
+
+- Addon-docs: Add blocks typings ([#10441](https://github.com/storybookjs/storybook/pull/10441))
+
 ## 6.0.0-alpha.35 (April 16, 2020)
 
 ### Bug Fixes
