@@ -50,8 +50,6 @@ export interface SubAPI {
 }
 
 type PartialSubState = Partial<SubState>;
-type PartialThemeVars = Partial<ThemeVars>;
-type PartialLayout = Partial<Layout>;
 
 export interface UIOptions {
   name?: string;
@@ -62,10 +60,6 @@ export interface UIOptions {
   addonPanelInRight: boolean;
   theme?: ThemeVars;
   selectedPanel?: string;
-}
-
-interface OptionsMap {
-  [key: string]: string;
 }
 
 const defaultState: SubState = {
