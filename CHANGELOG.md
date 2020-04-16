@@ -1,3 +1,17 @@
+## 6.0.0-alpha.37 (April 17, 2020)
+
+### Features
+
+- Addon-actions: Make arg auto-generation more aggressive ([#10451](https://github.com/storybookjs/storybook/pull/10451))
+
+### Maintenance
+
+- Examples: Format stringified parameters ([#10435](https://github.com/storybookjs/storybook/pull/10435))
+
+### Dependency Upgrades
+
+- Bump recast from 0.16.2 to 0.19.0 ([#10415](https://github.com/storybookjs/storybook/pull/10415))
+
 ## 6.0.0-alpha.36 (April 16, 2020)
 
 ### Bug Fixes
