@@ -14,7 +14,7 @@
         { "type": "text", "name": "Name", "value": "John Doe", "param": "name"},
         { "type": "date", "name": "Birthday", "value": "1960-12-25T00:42:03.600Z", "param": "birthday"},
         { "type": "color", "name": "Favorite Color", "value": "red", "param": "favorite_color"},
-        { "type": "boolean", "name": "Acive", "value": true, "param": "active"},
+        { "type": "boolean", "name": "Active", "value": true, "param": "active"},
         { "type": "number", "name": "Pets", "value": 2, "param": "pets"},
         { "type": "array", "name": "Sports", "value": ["football", "baseball"], "param": "sports"},
           { 
