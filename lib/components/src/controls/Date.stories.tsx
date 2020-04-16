@@ -7,7 +7,7 @@ export default {
 };
 
 export const Basic = () => {
-  const [value, setValue] = useState(new Date());
+  const [value, setValue] = useState(new Date(2020, 4, 20));
   return (
     <>
       <DateControl name="date" value={value} onChange={(name, newVal) => setValue(newVal)} />
