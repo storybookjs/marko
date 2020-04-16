@@ -4,7 +4,10 @@ import { IFrame } from './iframe';
 import { FramesRendererProps } from './utils/types';
 import { stringifyQueryParams } from './utils/stringifyQueryParams';
 
-const getActive = (refId, storyId) => {
+const getActive = (
+  refId: FramesRendererProps['refId'],
+  storyId: FramesRendererProps['storyId']
+) => {
   if (storyId === '*') {
     return undefined;
   }
