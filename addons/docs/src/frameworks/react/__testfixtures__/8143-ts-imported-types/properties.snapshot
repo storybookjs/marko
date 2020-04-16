@@ -8,6 +8,11 @@ Object {
       "description": "",
       "name": "bar",
       "required": true,
+      "sbType": Object {
+        "name": "other",
+        "raw": "Foo['bar']",
+        "value": "Foo['bar']",
+      },
       "type": Object {
         "detail": undefined,
         "summary": "Foo['bar']",

@@ -56,11 +56,8 @@ You can override these options [at story level too](https://storybook.js.org/doc
 import React from 'react';
 import { storiesOf, addDecorator, addParameters } from '@storybook/react';
 
-import { withA11y } from '@storybook/addon-a11y';
-
 export default {
   title: 'button',
-  decorators: [withA11y],
   parameters: {
     a11y: {
       // optional selector which element to inspect

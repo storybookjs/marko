@@ -60,7 +60,7 @@ ${extractComponentDescription(target) || ''}
   }
 };
 
-const DescriptionContainer: FunctionComponent<DescriptionProps> = props => {
+const DescriptionContainer: FunctionComponent<DescriptionProps> = (props) => {
   const context = useContext(DocsContext);
   const { markdown } = getDescriptionProps(props, context);
   return markdown ? <Description markdown={markdown} /> : null;

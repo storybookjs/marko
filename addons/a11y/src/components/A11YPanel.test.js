@@ -12,6 +12,8 @@ function createApi() {
   jest.spyOn(emitter, 'emit');
   jest.spyOn(emitter, 'on');
   jest.spyOn(emitter, 'off');
+
+  emitter.getCurrentStoryData = () => ({ id: '1' });
   return emitter;
 }
 
@@ -130,7 +132,7 @@ describe('A11YPanel', () => {
 
     // then
     expect(wrapper.text()).toMatch(/Please wait while the accessibility scan is running/);
-    expect(api.emit).toHaveBeenCalledWith(EVENTS.REQUEST);
+    expect(api.emit).toHaveBeenCalledWith(EVENTS.REQUEST, '1');
   });
 
   it('should handle "ran" status', () => {

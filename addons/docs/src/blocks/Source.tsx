@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Source, SourceProps as PureSourceProps, SourceError } from '@storybook/components';
 import { DocsContext, DocsContextProps } from './DocsContext';
 import { CURRENT_SELECTION } from './types';
+import { enhanceSource } from './enhanceSource';
 
 interface CommonProps {
   language?: string;
@@ -37,9 +38,10 @@ export const getSourceProps = (
     const targetId = singleProps.id === CURRENT_SELECTION ? currentId : singleProps.id;
     const targetIds = multiProps.ids || [targetId];
     source = targetIds
-      .map(sourceId => {
+      .map((sourceId) => {
         const data = storyStore.fromId(sourceId);
-        return data?.parameters?.docs?.source?.code || '';
+        const enhanced = data && enhanceSource(data);
+        return enhanced?.docs?.source?.code || '';
       })
       .join('\n\n');
   }
@@ -53,9 +55,9 @@ export const getSourceProps = (
  * or the source for a story if `storyId` is provided, or
  * the source for the current story if nothing is provided.
  */
-const SourceContainer: FunctionComponent<SourceProps> = props => (
+const SourceContainer: FunctionComponent<SourceProps> = (props) => (
   <DocsContext.Consumer>
-    {context => {
+    {(context) => {
       const sourceProps = getSourceProps(props, context);
       return <Source {...sourceProps} />;
     }}

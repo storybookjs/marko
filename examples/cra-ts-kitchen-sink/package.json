@@ -1,6 +1,6 @@
 {
   "name": "cra-ts-kitchen-sink",
-  "version": "6.0.0-alpha.30",
+  "version": "6.0.0-alpha.36",
   "private": true,
   "scripts": {
     "build": "react-scripts build",
@@ -34,28 +34,23 @@
     "typescript": "3.8.3"
   },
   "devDependencies": {
-    "@storybook/addon-a11y": "6.0.0-alpha.30",
-    "@storybook/addon-actions": "6.0.0-alpha.30",
-    "@storybook/addon-knobs": "6.0.0-alpha.30",
-    "@storybook/addon-links": "6.0.0-alpha.30",
-    "@storybook/addons": "6.0.0-alpha.30",
+    "@storybook/addon-a11y": "6.0.0-alpha.36",
+    "@storybook/addon-actions": "6.0.0-alpha.36",
+    "@storybook/addon-knobs": "6.0.0-alpha.36",
+    "@storybook/addon-links": "6.0.0-alpha.36",
+    "@storybook/addons": "6.0.0-alpha.36",
     "@storybook/preset-create-react-app": "^2.1.1",
-    "@storybook/react": "6.0.0-alpha.30",
+    "@storybook/react": "6.0.0-alpha.36",
     "@types/enzyme": "^3.9.0",
-    "@types/node": "13.5.3",
-    "@types/react": "^16.8.14",
-    "@types/react-dom": "^16.8.2",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.9.1",
     "enzyme-to-json": "^3.4.1",
     "fork-ts-checker-webpack-plugin": "^4.0.3",
     "react-docgen-typescript-loader": "^3.7.2",
     "react-moment-proptypes": "^1.7.0",
-    "react-scripts": "^3.0.1",
     "ts-node": "~8.8.1",
     "tslint": "^6.0.0",
-    "tslint-config-airbnb": "^5.11.1",
-    "typescript": "^3.4.0"
+    "tslint-config-airbnb": "^5.11.1"
   },
   "storybook": {
     "chromatic": {
