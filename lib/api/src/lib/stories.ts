@@ -5,6 +5,7 @@ import { sanitize, parseKind } from '@storybook/csf';
 import { Args } from '../index';
 import merge from './merge';
 import { Provider } from '../modules/provider';
+import { ViewMode } from '../modules/addons';
 
 export type StoryId = string;
 
@@ -37,7 +38,7 @@ export interface Group {
   // MDX stories are "Group" type
   parameters?: {
     docsOnly?: boolean;
-    viewMode?: boolean;
+    viewMode?: ViewMode;
     [parameterName: string]: any;
   };
 }
@@ -62,7 +63,7 @@ export interface Story {
       [optionName: string]: any;
     };
     docsOnly?: boolean;
-    viewMode?: boolean;
+    viewMode?: ViewMode;
     [parameterName: string]: any;
   };
   args: Args;
@@ -83,7 +84,7 @@ export interface StoryInput {
       [optionName: string]: any;
     };
     docsOnly?: boolean;
-    viewMode?: boolean;
+    viewMode?: ViewMode;
     [parameterName: string]: any;
   };
   isLeaf: boolean;
