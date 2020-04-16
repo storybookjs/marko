@@ -4,7 +4,13 @@ const globalParameter = 'globalParameter';
 const chapterParameter = 'chapterParameter';
 const storyParameter = 'storyParameter';
 
-tag('parameters', '<pre>Parameters are {JSON.stringify(this.opts, null, 2)}</pre>', '', '', () => {});
+tag(
+  'parameters',
+  '<div>Parameters are <pre>{JSON.stringify(this.opts, null, 2)}</pre></div>',
+  '',
+  '',
+  () => {}
+);
 
 addParameters({ globalParameter });
 
