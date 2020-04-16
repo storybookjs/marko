@@ -1,4 +1,5 @@
-import { document } from 'global';
+import { DOCS_MODE, document } from 'global';
+
 import pick from 'lodash/pick';
 
 import deepEqual from 'fast-deep-equal';
@@ -75,7 +76,7 @@ const defaultState: SubState = {
   },
   layout: {
     initialActive: ActiveTabs.SIDEBAR,
-    isToolshown: true,
+    isToolshown: !DOCS_MODE,
     isFullscreen: false,
     showPanel: true,
     showNav: true,
