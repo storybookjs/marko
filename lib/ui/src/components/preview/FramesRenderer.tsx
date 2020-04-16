@@ -4,6 +4,18 @@ import { IFrame } from './iframe';
 import { FramesRendererProps } from './utils/types';
 import { stringifyQueryParams } from './utils/stringifyQueryParams';
 
+const getActive = (refId, storyId) => {
+  if (storyId === '*') {
+    return undefined;
+  }
+
+  if (refId) {
+    return `storybook-ref-${refId}`;
+  }
+
+  return 'storybook-preview-iframe';
+};
+
 export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
   refs,
   story,
@@ -15,7 +27,7 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
   storyId,
 }) => {
   const stringifiedQueryParams = stringifyQueryParams(queryParams);
-  const active = refId ? `storybook-ref-${refId}` : 'storybook-preview-iframe';
+  const active = getActive(refId, storyId);
 
   const styles = useMemo<CSSObject>(() => {
     return {
