@@ -7,5 +7,4 @@ export default {
   includeStories: [], // or don't load this file at all
 };
 
-// eslint-disable-next-line react/prop-types
-export const basic = ({ parameters }) => <Button>Basic</Button>;
+export const basic = () => <Button>Basic</Button>;
