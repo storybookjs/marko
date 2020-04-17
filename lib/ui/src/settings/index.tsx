@@ -4,7 +4,8 @@ import ShortcutsPage from './shortcuts_page';
 
 const SettingsPages: FunctionComponent = () => (
   <Fragment>
-    <AboutPage key="about" />, <ShortcutsPage key="shortcuts" />
+    <AboutPage key="about" />
+    <ShortcutsPage key="shortcuts" />
   </Fragment>
 );
 
