@@ -8,5 +8,6 @@ const RESULT = `${ADDON_ID}/result`;
 const REQUEST = `${ADDON_ID}/request`;
 const ERROR = `${ADDON_ID}/error`;
 const MANUAL = `${ADDON_ID}/manual`;
+const HIGHLIGHT = `${ADDON_ID}/highlight`;
 
-export const EVENTS = { RESULT, REQUEST, ERROR, MANUAL };
+export const EVENTS = { RESULT, REQUEST, ERROR, MANUAL, HIGHLIGHT };
