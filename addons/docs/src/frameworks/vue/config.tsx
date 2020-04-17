@@ -7,6 +7,7 @@ import { extractComponentDescription } from '../../lib/docgen';
 
 addParameters({
   docs: {
+    inlineStories: true,
     prepareForInline: (storyFn: StoryFn) => {
       const Story = toReact(storyFn());
       return <Story />;
