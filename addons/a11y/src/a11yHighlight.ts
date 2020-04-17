@@ -1,6 +1,6 @@
 import { document } from 'global';
 import addons from '@storybook/addons';
-import { EVENTS } from './constants';
+import { EVENTS, HIGHLIGHT_STYLE_ID } from './constants';
 
 if (module && module.hot && module.hot.decline) {
   module.hot.decline();
@@ -15,7 +15,7 @@ interface HighlightInfo {
 const channel = addons.getChannel();
 
 const highlight = (infos: HighlightInfo) => {
-  const id = 'a11yHighlight';
+  const id = HIGHLIGHT_STYLE_ID;
   const sheetToBeRemoved = document.getElementById(id);
   if (sheetToBeRemoved) {
     sheetToBeRemoved.parentNode.removeChild(sheetToBeRemoved);

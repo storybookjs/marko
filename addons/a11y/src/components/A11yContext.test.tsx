@@ -1,6 +1,7 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, act } from '@testing-library/react';
 import * as api from '@storybook/api';
+import { STORY_CHANGED } from '@storybook/core-events';
 
 import { A11yContextProvider } from './A11yContext';
 import { EVENTS } from '../constants';
@@ -46,6 +47,21 @@ describe('A11YPanel', () => {
         <div data-testid="child" />
       </A11yContextProvider>
     );
+    expect(emit).toHaveBeenLastCalledWith(
+      EVENTS.HIGHLIGHT,
+      expect.objectContaining({
+        color: expect.any(String),
+        elements: [],
+      })
+    );
+  });
+
+  it('should emit highlight with no values when story changed', () => {
+    const emit = jest.fn();
+    mockedApi.useChannel.mockReturnValue(emit);
+    render(<A11yContextProvider active />);
+    const useChannelArgs = mockedApi.useChannel.mock.calls[0][0];
+    act(() => useChannelArgs[STORY_CHANGED]());
     expect(emit).toHaveBeenLastCalledWith(
       EVENTS.HIGHLIGHT,
       expect.objectContaining({

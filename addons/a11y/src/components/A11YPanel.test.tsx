@@ -48,10 +48,10 @@ const axeResult = {
   ],
 };
 
-function ThemedA11YPanel(props) {
+function ThemedA11YPanel() {
   return (
     <ThemeProvider theme={convert(themes.light)}>
-      <A11YPanel {...props} />
+      <A11YPanel />
     </ThemeProvider>
   );
 }
@@ -61,10 +61,14 @@ describe('A11YPanel', () => {
     mockedApi.useChannel.mockReset();
     mockedApi.useParameter.mockReset();
     mockedApi.useStorybookState.mockReset();
+    mockedApi.useAddonState.mockReset();
 
     mockedApi.useChannel.mockReturnValue(jest.fn());
     mockedApi.useParameter.mockReturnValue({ manual: false });
-    mockedApi.useStorybookState.mockReturnValue({ storyId: 'jest' });
+    const state: Partial<api.State> = { storyId: 'jest' };
+    // Lazy to mock entire state
+    mockedApi.useStorybookState.mockReturnValue(state as any);
+    mockedApi.useAddonState.mockImplementation(React.useState);
   });
 
   it('should render', () => {
@@ -84,7 +88,6 @@ describe('A11YPanel', () => {
 
   it('should handle "initial" status', () => {
     const { getByText } = render(<A11YPanel />);
-    const text = getByText(/Initializing/);
     expect(getByText(/Initializing/)).toBeTruthy();
   });
 
@@ -96,18 +99,29 @@ describe('A11YPanel', () => {
     });
   });
 
-  it('should handle "running" status', async () => {
-    const emit = jest.fn();
-    mockedApi.useChannel.mockReturnValue(emit);
-    mockedApi.useParameter.mockReturnValue({ manual: true });
-    const { getByRole, getByText } = render(<ThemedA11YPanel />);
-    await waitFor(() => {
-      const button = getByRole('button', { name: 'Run test' });
-      fireEvent.click(button);
+  describe('running', () => {
+    it('should handle "running" status', async () => {
+      const emit = jest.fn();
+      mockedApi.useChannel.mockReturnValue(emit);
+      mockedApi.useParameter.mockReturnValue({ manual: true });
+      const { getByRole, getByText } = render(<ThemedA11YPanel />);
+      await waitFor(() => {
+        const button = getByRole('button', { name: 'Run test' });
+        fireEvent.click(button);
+      });
+      await waitFor(() => {
+        expect(getByText(/Please wait while the accessibility scan is running/)).toBeTruthy();
+        expect(emit).toHaveBeenCalledWith(EVENTS.MANUAL, 'jest');
+      });
     });
-    await waitFor(() => {
-      expect(getByText(/Please wait while the accessibility scan is running/)).toBeTruthy();
-      expect(emit).toHaveBeenCalledWith(EVENTS.MANUAL, 'jest');
+
+    it('should set running status on event', async () => {
+      const { getByText } = render(<ThemedA11YPanel />);
+      const useChannelArgs = mockedApi.useChannel.mock.calls[0][0];
+      act(() => useChannelArgs[EVENTS.RUNNING]());
+      await waitFor(() => {
+        expect(getByText(/Please wait while the accessibility scan is running/)).toBeTruthy();
+      });
     });
   });
 

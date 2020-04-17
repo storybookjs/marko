@@ -1,16 +1,16 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import { styled } from '@storybook/theming';
 
 import { ActionBar, Icons, ScrollArea } from '@storybook/components';
 
 import { AxeResults } from 'axe-core';
-import { useChannel, useParameter, useStorybookState } from '@storybook/api';
+import { useChannel, useParameter, useStorybookState, useAddonState } from '@storybook/api';
 import { Report } from './Report';
 import { Tabs } from './Tabs';
 
 import { useA11yContext } from './A11yContext';
-import { EVENTS } from '../constants';
+import { EVENTS, ADDON_ID } from '../constants';
 import { A11yParameters } from '../params';
 
 export enum RuleType {
@@ -51,7 +51,7 @@ const Centered = styled.span<{}>({
 type Status = 'initial' | 'manual' | 'running' | 'error' | 'ran' | 'ready';
 
 export const A11YPanel: React.FC = () => {
-  const [status, setStatus] = React.useState<Status>('initial');
+  const [status, setStatus] = useAddonState<Status>(ADDON_ID, 'initial');
   const [error, setError] = React.useState<unknown>(undefined);
   const { setResults, results } = useA11yContext();
   const { passes, incomplete, violations } = results;
@@ -75,12 +75,17 @@ export const A11YPanel: React.FC = () => {
     }, 900);
   };
 
+  const handleRun = useCallback(() => {
+    setStatus('running');
+  }, []);
+
   const handleError = useCallback((err: unknown) => {
     setStatus('error');
     setError(err);
   }, []);
 
   const emit = useChannel({
+    [EVENTS.RUNNING]: handleRun,
     [EVENTS.RESULT]: handleResult,
     [EVENTS.ERROR]: handleError,
   });
@@ -90,13 +95,32 @@ export const A11YPanel: React.FC = () => {
     emit(EVENTS.MANUAL, storyId);
   }, [storyId]);
 
+  const manualActionItems = useMemo(() => [{ title: 'Run test', onClick: handleManual }], [
+    handleManual,
+  ]);
+  const readyActionItems = useMemo(
+    () => [
+      {
+        title:
+          status === 'ready' ? (
+            'Rerun tests'
+          ) : (
+            <>
+              <Icon inline icon="check" /> Tests completed
+            </>
+          ),
+        onClick: handleManual,
+      },
+    ],
+    [status, handleManual]
+  );
   return (
     <>
       {status === 'initial' && <Centered>Initializing...</Centered>}
       {status === 'manual' && (
         <>
           <Centered>Manually run the accessibility scan.</Centered>
-          <ActionBar key="actionbar" actionItems={[{ title: 'Run test', onClick: handleManual }]} />
+          <ActionBar key="actionbar" actionItems={manualActionItems} />
         </>
       )}
       {status === 'running' && (
@@ -150,29 +174,14 @@ export const A11YPanel: React.FC = () => {
               ]}
             />
           </ScrollArea>
-          <ActionBar
-            key="actionbar"
-            actionItems={[
-              {
-                title:
-                  status === 'ready' ? (
-                    'Rerun tests'
-                  ) : (
-                    <>
-                      <Icon inline icon="check" /> Tests completed
-                    </>
-                  ),
-                onClick: handleManual,
-              },
-            ]}
-          />
+          <ActionBar key="actionbar" actionItems={readyActionItems} />
         </>
       )}
       {status === 'error' && (
         <Centered>
           The accessibility scan encountered an error.
           <br />
-          {error}
+          {typeof error === 'string' ? error : JSON.stringify(error)}
         </Centered>
       )}
     </>

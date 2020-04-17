@@ -23,6 +23,8 @@ const run = async (storyId: string) => {
 
     if (!active) {
       active = true;
+      channel.emit(EVENTS.RUNNING);
+
       const { element = getElement(), config, options } = input;
       axe.reset();
       if (config) {
