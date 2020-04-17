@@ -2,6 +2,7 @@ import * as React from 'react';
 import { themes, convert } from '@storybook/theming';
 import { Result } from 'axe-core';
 import { useChannel } from '@storybook/api';
+import { STORY_CHANGED } from '@storybook/core-events';
 import { EVENTS } from '../constants';
 
 interface Results {
@@ -44,13 +45,14 @@ interface A11yContextProviderProps {
   active: boolean;
 }
 
+const defaultResult = {
+  passes: [],
+  incomplete: [],
+  violations: [],
+};
+
 export const A11yContextProvider: React.FC<A11yContextProviderProps> = ({ active, ...props }) => {
-  const emit = useChannel({});
-  const [results, setResults] = React.useState<Results>({
-    passes: [],
-    incomplete: [],
-    violations: [],
-  });
+  const [results, setResults] = React.useState<Results>(defaultResult);
   const [tab, setTab] = React.useState(0);
   const [highlighted, setHighlighted] = React.useState<string[]>([]);
   const handleToggleHighlight = React.useCallback((target: string[], hightlight: boolean) => {
@@ -65,6 +67,16 @@ export const A11yContextProvider: React.FC<A11yContextProviderProps> = ({ active
     handleClearHighlights();
     setTab(index);
   }, []);
+
+  const handleReset = React.useCallback(() => {
+    setTab(0);
+    setResults(defaultResult);
+    handleClearHighlights();
+  }, []);
+
+  const emit = useChannel({
+    [STORY_CHANGED]: handleReset,
+  });
 
   React.useEffect(() => {
     emit(EVENTS.HIGHLIGHT, { elements: highlighted, color: colorsByType[tab] });
