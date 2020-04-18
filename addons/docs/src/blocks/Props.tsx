@@ -69,9 +69,6 @@ const useArgs = (storyId: string, storyStore: StoryStore): [Args, (args: Args) =
 const matches = (name: string, descriptor: PropDescriptor) =>
   Array.isArray(descriptor) ? descriptor.includes(name) : name.match(descriptor);
 
-const shouldInclude = (name: string, include?: PropDescriptor, exclude?: PropDescriptor) =>
-  (!include || matches(name, include)) && (!exclude || !matches(name, exclude));
-
 const filterArgTypes = (argTypes: ArgTypes, include?: PropDescriptor, exclude?: PropDescriptor) => {
   if (!include && !exclude) {
     return argTypes;
@@ -80,8 +77,7 @@ const filterArgTypes = (argTypes: ArgTypes, include?: PropDescriptor, exclude?: 
     argTypes &&
     pickBy(argTypes, (argType, key) => {
       const name = argType.name || key;
-      console.log(name, { name, include, exclude, should: shouldInclude(name, include, exclude) });
-      return shouldInclude(name, include, exclude);
+      return (!include || matches(name, include)) && (!exclude || !matches(name, exclude));
     })
   );
 };
