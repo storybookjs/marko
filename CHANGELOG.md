@@ -1,4 +1,4 @@
-## 6.0.0-alpha.38 (April 18, 2020)
+## 6.0.0-alpha.39 (April 18, 2020)
 
 ### Breaking Changes
 
@@ -12,6 +12,10 @@
 ### Bug Fixes
 
 - UI: Fix bad shortcutpage layout ([#10445](https://github.com/storybookjs/storybook/pull/10445))
+
+## 6.0.0-alpha.38 (April 18, 2020)
+
+Failed publish
 
 ## 6.0.0-alpha.37 (April 17, 2020)
 
