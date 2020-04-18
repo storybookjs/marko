@@ -64,7 +64,7 @@ export default {
 };
 
 export const defaultView = () => <Component />;
-defaultView = {
+defaultView.story = {
   parameters: {
     info: { inline: true },
   },
