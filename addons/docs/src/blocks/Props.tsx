@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import React, { FC, useContext, useEffect, useState, useCallback } from 'react';
 import mapValues from 'lodash/mapValues';
+import pickBy from 'lodash/pickBy';
 import {
   ArgsTable,
   ArgsTableProps,
@@ -18,8 +19,11 @@ import { getComponentName } from './utils';
 import { ArgTypesExtractor } from '../lib/docgen/types';
 import { lookupStoryId } from './Story';
 
+type PropDescriptor = string[] | RegExp;
+
 interface BaseProps {
-  exclude?: string[];
+  include?: PropDescriptor;
+  exclude?: PropDescriptor;
 }
 
 type OfProps = BaseProps & {
@@ -62,15 +66,18 @@ const useArgs = (storyId: string, storyStore: StoryStore): [Args, (args: Args) =
   return [args, updateArgs];
 };
 
-const filterArgTypes = (argTypes: ArgTypes, exclude?: string[]) => {
-  if (!exclude) {
+const matches = (name: string, descriptor: PropDescriptor) =>
+  Array.isArray(descriptor) ? descriptor.includes(name) : name.match(descriptor);
+
+const filterArgTypes = (argTypes: ArgTypes, include?: PropDescriptor, exclude?: PropDescriptor) => {
+  if (!include && !exclude) {
     return argTypes;
   }
   return (
     argTypes &&
-    mapValues(argTypes, (argType, key) => {
+    pickBy(argTypes, (argType, key) => {
       const name = argType.name || key;
-      return exclude.includes(name) ? undefined : argType;
+      return (!include || matches(name, include)) && (!exclude || !matches(name, exclude));
     })
   );
 };
@@ -78,7 +85,8 @@ const filterArgTypes = (argTypes: ArgTypes, exclude?: string[]) => {
 export const extractComponentArgTypes = (
   component: Component,
   { parameters }: DocsContextProps,
-  exclude?: string[]
+  include?: PropDescriptor,
+  exclude?: PropDescriptor
 ): ArgTypes => {
   const params = parameters || {};
   const { extractArgTypes }: { extractArgTypes: ArgTypesExtractor } = params.docs || {};
@@ -86,7 +94,7 @@ export const extractComponentArgTypes = (
     throw new Error(ArgsTableError.ARGS_UNSUPPORTED);
   }
   let argTypes = extractArgTypes(component);
-  argTypes = filterArgTypes(argTypes, exclude);
+  argTypes = filterArgTypes(argTypes, include, exclude);
 
   return argTypes;
 };
@@ -110,11 +118,12 @@ const addComponentTabs = (
   tabs: Record<string, ArgsTableProps>,
   components: Record<string, Component>,
   context: DocsContextProps,
-  exclude?: string[]
+  include?: PropDescriptor,
+  exclude?: PropDescriptor
 ) => ({
   ...tabs,
   ...mapValues(components, (comp) => ({
-    rows: extractComponentArgTypes(comp, context, exclude),
+    rows: extractComponentArgTypes(comp, context, include, exclude),
   })),
 });
 
@@ -125,7 +134,7 @@ export const StoryTable: FC<StoryProps & { components: Record<string, Component>
     parameters: { argTypes },
     storyStore,
   } = context;
-  const { story, showComponents, components, exclude } = props;
+  const { story, showComponents, components, include, exclude } = props;
   let storyArgTypes;
   try {
     let storyId;
@@ -137,14 +146,14 @@ export const StoryTable: FC<StoryProps & { components: Record<string, Component>
       const data = storyStore.fromId(storyId);
       storyArgTypes = data.parameters.argTypes;
     }
-    storyArgTypes = filterArgTypes(storyArgTypes, exclude);
+    storyArgTypes = filterArgTypes(storyArgTypes, include, exclude);
     const [args, updateArgs] = useArgs(storyId, storyStore);
     let tabs = { Story: { rows: storyArgTypes, args, updateArgs } } as Record<
       string,
       ArgsTableProps
     >;
     if (showComponents) {
-      tabs = addComponentTabs(tabs, components, context, exclude);
+      tabs = addComponentTabs(tabs, components, context, include, exclude);
     }
 
     return <TabbedArgsTable tabs={tabs} />;
@@ -155,9 +164,9 @@ export const StoryTable: FC<StoryProps & { components: Record<string, Component>
 
 export const ComponentsTable: FC<ComponentsProps> = (props) => {
   const context = useContext(DocsContext);
-  const { components, exclude } = props;
+  const { components, include, exclude } = props;
 
-  const tabs = addComponentTabs({}, components, context, exclude);
+  const tabs = addComponentTabs({}, components, context, include, exclude);
   return <TabbedArgsTable tabs={tabs} />;
 };
 
@@ -167,7 +176,7 @@ export const Props: FC<PropsProps> = (props) => {
     parameters: { subcomponents },
   } = context;
 
-  const { exclude, components } = props as ComponentsProps;
+  const { include, exclude, components } = props as ComponentsProps;
   const { story } = props as StoryProps;
 
   let allComponents = components;
@@ -185,14 +194,14 @@ export const Props: FC<PropsProps> = (props) => {
   if (!components && !subcomponents) {
     let mainProps;
     try {
-      mainProps = { rows: extractComponentArgTypes(main, context, exclude) };
+      mainProps = { rows: extractComponentArgTypes(main, context, include, exclude) };
     } catch (err) {
       mainProps = { error: err.message };
     }
     return <ArgsTable {...mainProps} />;
   }
 
-  return <ComponentsTable exclude={exclude} components={allComponents} />;
+  return <ComponentsTable {...(props as ComponentsProps)} components={allComponents} />;
 };
 
 Props.defaultProps = {
