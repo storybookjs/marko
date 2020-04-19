@@ -1,5 +1,4 @@
 import { document, window } from 'global';
-import { STORY_RENDERED } from '@storybook/core-events';
 import axe from 'axe-core';
 import addons from '@storybook/addons';
 import { EVENTS } from './constants';
@@ -18,7 +17,6 @@ const getElement = () => {
 };
 
 const run = async (storyId: string) => {
-  console.log('Running', storyId);
   try {
     const input = getParams(storyId);
 

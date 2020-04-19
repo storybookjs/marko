@@ -1,5 +1,4 @@
 import addons from '@storybook/addons';
-import { STORY_RENDERED } from '@storybook/core-events';
 import { EVENTS } from './constants';
 
 jest.mock('@storybook/addons');
@@ -20,7 +19,6 @@ describe('a11yRunner', () => {
     require('./a11yRunner');
 
     expect(mockedAddons.getChannel).toHaveBeenCalled();
-    expect(mockChannel.on).toHaveBeenCalledWith(STORY_RENDERED, expect.any(Function));
     expect(mockChannel.on).toHaveBeenCalledWith(EVENTS.REQUEST, expect.any(Function));
     expect(mockChannel.on).toHaveBeenCalledWith(EVENTS.MANUAL, expect.any(Function));
   });
