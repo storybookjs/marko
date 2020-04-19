@@ -24,7 +24,10 @@ const highlight = (infos: HighlightInfo) => {
   const sheet = document.createElement('style');
   sheet.setAttribute('id', id);
   sheet.innerHTML = infos.elements
-    .map((target) => `${target}{ outline: 1px dotted ${infos.color}!important; }`)
+    .map(
+      (target) =>
+        `${target}{ outline: 1px dotted ${infos.color}!important; box-shadow: 0 1px 5px 0 ${infos.color}!important; }`
+    )
     .join(' ');
   document.head.appendChild(sheet);
 };
