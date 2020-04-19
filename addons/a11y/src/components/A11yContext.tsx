@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { themes, convert } from '@storybook/theming';
 import { Result } from 'axe-core';
-import { useChannel } from '@storybook/api';
-import { STORY_CHANGED } from '@storybook/core-events';
+import { useChannel, useStorybookState } from '@storybook/api';
+import { STORY_CHANGED, STORY_RENDERED } from '@storybook/core-events';
 import { EVENTS } from '../constants';
 
 interface Results {
@@ -55,13 +55,18 @@ export const A11yContextProvider: React.FC<A11yContextProviderProps> = ({ active
   const [results, setResults] = React.useState<Results>(defaultResult);
   const [tab, setTab] = React.useState(0);
   const [highlighted, setHighlighted] = React.useState<string[]>([]);
-  const handleToggleHighlight = React.useCallback((target: string[], hightlight: boolean) => {
+  const { storyId } = useStorybookState();
+
+  const handleToggleHighlight = React.useCallback((target: string[], highlight: boolean) => {
     setHighlighted((prevHighlighted) =>
-      hightlight
+      highlight
         ? [...prevHighlighted, ...target]
         : prevHighlighted.filter((t) => !target.includes(t))
     );
   }, []);
+  const handleRun = React.useCallback(() => {
+    emit(EVENTS.REQUEST, storyId);
+  }, [storyId]);
   const handleClearHighlights = React.useCallback(() => setHighlighted([]), []);
   const handleSetTab = React.useCallback((index: number) => {
     handleClearHighlights();
@@ -75,6 +80,7 @@ export const A11yContextProvider: React.FC<A11yContextProviderProps> = ({ active
   }, []);
 
   const emit = useChannel({
+    [STORY_RENDERED]: handleRun,
     [STORY_CHANGED]: handleReset,
   });
 
@@ -83,10 +89,12 @@ export const A11yContextProvider: React.FC<A11yContextProviderProps> = ({ active
   }, [highlighted, tab]);
 
   React.useEffect(() => {
-    if (!active) {
+    if (active) {
+      handleRun();
+    } else {
       handleClearHighlights();
     }
-  }, [active, handleClearHighlights]);
+  }, [active, handleClearHighlights, emit, storyId]);
 
   if (!active) return null;
 

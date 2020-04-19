@@ -9,11 +9,17 @@ import { EVENTS } from '../constants';
 jest.mock('@storybook/api');
 const mockedApi = api as jest.Mocked<typeof api>;
 
+const storyId = 'jest';
+
 describe('A11YPanel', () => {
   beforeEach(() => {
     mockedApi.useChannel.mockReset();
+    mockedApi.useStorybookState.mockReset();
 
     mockedApi.useChannel.mockReturnValue(jest.fn());
+    const state: Partial<api.State> = { storyId };
+    // Lazy to mock entire state
+    mockedApi.useStorybookState.mockReturnValue(state as any);
   });
 
   it('should render children', () => {
@@ -26,27 +32,30 @@ describe('A11YPanel', () => {
   });
 
   it('should not render when inactive', () => {
+    const emit = jest.fn();
+    mockedApi.useChannel.mockReturnValue(emit);
     const { queryByTestId } = render(
       <A11yContextProvider active={false}>
         <div data-testid="child" />
       </A11yContextProvider>
     );
     expect(queryByTestId('child')).toBeFalsy();
+    expect(emit).not.toHaveBeenCalledWith(EVENTS.REQUEST);
+  });
+
+  it('should emit request when moving from inactive to active', () => {
+    const emit = jest.fn();
+    mockedApi.useChannel.mockReturnValue(emit);
+    const { rerender } = render(<A11yContextProvider active={false} />);
+    rerender(<A11yContextProvider active />);
+    expect(emit).toHaveBeenLastCalledWith(EVENTS.REQUEST, storyId);
   });
 
   it('should emit highlight with no values when inactive', () => {
     const emit = jest.fn();
     mockedApi.useChannel.mockReturnValue(emit);
-    const { rerender } = render(
-      <A11yContextProvider active>
-        <div data-testid="child" />
-      </A11yContextProvider>
-    );
-    rerender(
-      <A11yContextProvider active={false}>
-        <div data-testid="child" />
-      </A11yContextProvider>
-    );
+    const { rerender } = render(<A11yContextProvider active />);
+    rerender(<A11yContextProvider active={false} />);
     expect(emit).toHaveBeenLastCalledWith(
       EVENTS.HIGHLIGHT,
       expect.objectContaining({

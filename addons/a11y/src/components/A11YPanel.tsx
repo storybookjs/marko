@@ -54,7 +54,6 @@ export const A11YPanel: React.FC = () => {
   const [status, setStatus] = useAddonState<Status>(ADDON_ID, 'initial');
   const [error, setError] = React.useState<unknown>(undefined);
   const { setResults, results } = useA11yContext();
-  const { passes, incomplete, violations } = results;
   const { storyId } = useStorybookState();
   const { manual } = useParameter<Pick<A11yParameters, 'manual'>>('a11y', {
     manual: false,
@@ -114,6 +113,43 @@ export const A11YPanel: React.FC = () => {
     ],
     [status, handleManual]
   );
+  const tabs = useMemo(() => {
+    const { passes, incomplete, violations } = results;
+    return [
+      {
+        label: <Violations>{violations.length} Violations</Violations>,
+        panel: (
+          <Report
+            items={violations}
+            type={RuleType.VIOLATION}
+            empty="No accessibility violations found."
+          />
+        ),
+        items: violations,
+        type: RuleType.VIOLATION,
+      },
+      {
+        label: <Passes>{passes.length} Passes</Passes>,
+        panel: (
+          <Report items={passes} type={RuleType.PASS} empty="No accessibility checks passed." />
+        ),
+        items: passes,
+        type: RuleType.PASS,
+      },
+      {
+        label: <Incomplete>{incomplete.length} Incomplete</Incomplete>,
+        panel: (
+          <Report
+            items={incomplete}
+            type={RuleType.INCOMPLETION}
+            empty="No accessibility checks incomplete."
+          />
+        ),
+        items: incomplete,
+        type: RuleType.INCOMPLETION,
+      },
+    ];
+  }, [results]);
   return (
     <>
       {status === 'initial' && <Centered>Initializing...</Centered>}
@@ -132,47 +168,7 @@ export const A11YPanel: React.FC = () => {
       {(status === 'ready' || status === 'ran') && (
         <>
           <ScrollArea vertical horizontal>
-            <Tabs
-              key="tabs"
-              tabs={[
-                {
-                  label: <Violations>{violations.length} Violations</Violations>,
-                  panel: (
-                    <Report
-                      items={violations}
-                      type={RuleType.VIOLATION}
-                      empty="No accessibility violations found."
-                    />
-                  ),
-                  items: violations,
-                  type: RuleType.VIOLATION,
-                },
-                {
-                  label: <Passes>{passes.length} Passes</Passes>,
-                  panel: (
-                    <Report
-                      items={passes}
-                      type={RuleType.PASS}
-                      empty="No accessibility checks passed."
-                    />
-                  ),
-                  items: passes,
-                  type: RuleType.PASS,
-                },
-                {
-                  label: <Incomplete>{incomplete.length} Incomplete</Incomplete>,
-                  panel: (
-                    <Report
-                      items={incomplete}
-                      type={RuleType.INCOMPLETION}
-                      empty="No accessibility checks incomplete."
-                    />
-                  ),
-                  items: incomplete,
-                  type: RuleType.INCOMPLETION,
-                },
-              ]}
-            />
+            <Tabs key="tabs" tabs={tabs} />
           </ScrollArea>
           <ActionBar key="actionbar" actionItems={readyActionItems} />
         </>

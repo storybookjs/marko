@@ -18,6 +18,7 @@ const getElement = () => {
 };
 
 const run = async (storyId: string) => {
+  console.log('Running', storyId);
   try {
     const input = getParams(storyId);
 
@@ -55,6 +56,5 @@ const getParams = (storyId: string): Setup => {
   );
 };
 
-channel.on(STORY_RENDERED, run);
 channel.on(EVENTS.REQUEST, run);
 channel.on(EVENTS.MANUAL, run);
