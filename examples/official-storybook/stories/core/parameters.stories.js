@@ -15,7 +15,10 @@ export default {
 // I'm not sure what we should recommend regarding propTypes? are they a good idea for examples?
 // Given we sort of control the props, should we export a prop type?
 export const Passed = (_args, { parameters: { options, fileName, ...parameters }, ...rest }) => (
-  <pre>Parameters: {JSON.stringify(parameters, null, 2)}</pre>
+  <div>
+    Parameters:
+    <pre>{JSON.stringify(parameters, null, 2)}</pre>
+  </div>
 );
 Passed.story = {
   name: 'passed to story',

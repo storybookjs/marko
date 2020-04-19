@@ -57,7 +57,7 @@ import { MyComponent } from './MyComponent';
 Starting in SB 6.0, the `Props` block has built-in controls (formerly known as "knobs") for editing stories dynamically.
 
 <center>
-  <img src="./media/props-tables-controls.png" width="100%" />
+  <img src="./media/args-controls.gif" width="100%" />
 </center>
 
 These controls are implemented appear automatically in the props table when your story accepts [Storybook Args](#https://github.com/storybookjs/storybook/blob/next/docs/src/pages/formats/component-story-format/index.md#args-story-inputs) as its input.
@@ -251,7 +251,7 @@ SB Docs for Ember uses `yui-doc` for prop table information.
 
 ## More resources
 
-- References: [README](../README.md) / [DocsPage](docspage.md) / [MDX](mdx.md) / [FAQ](faq.md) / [Recipes](recipes.md) / [Theming](theming.md)
+- References: [README](../README.md) / [DocsPage](docspage.md) / [MDX](mdx.md) / [FAQ](faq.md) / [Recipes](recipes.md) / [Theming](theming.md) / [Props](props-tables.md)
 - Framework-specific docs: [React](../react/README.md) / [Vue](../vue/README.md) / [Angular](../angular/README.md) / [Web components](../web-components/README.md) / [Ember](../ember/README.md)
 - Announcements: [Vision](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a) / [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf) / [MDX](https://medium.com/storybookjs/rich-docs-with-storybook-mdx-61bc145ae7bc) / [Framework support](https://medium.com/storybookjs/storybook-docs-for-new-frameworks-b1f6090ee0ea)
 - Example: [Storybook Design System](https://github.com/storybookjs/design-system)

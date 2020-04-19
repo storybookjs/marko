@@ -1,3 +1,49 @@
+## 6.0.0-alpha.39 (April 18, 2020)
+
+### Breaking Changes
+
+- Addon-docs: Inline stories in Vue by default ([#10463](https://github.com/storybookjs/storybook/pull/10463))
+
+### Features
+
+- Addon-docs: Provide better props include/exclude features ([#10464](https://github.com/storybookjs/storybook/pull/10464))
+- UI: Improve loading state ([#10444](https://github.com/storybookjs/storybook/pull/10444))
+
+### Bug Fixes
+
+- UI: Fix bad shortcutpage layout ([#10445](https://github.com/storybookjs/storybook/pull/10445))
+
+## 6.0.0-alpha.38 (April 18, 2020)
+
+Failed publish
+
+## 6.0.0-alpha.37 (April 17, 2020)
+
+### Features
+
+- Addon-actions: Make arg auto-generation more aggressive ([#10451](https://github.com/storybookjs/storybook/pull/10451))
+
+### Maintenance
+
+- Examples: Format stringified parameters ([#10435](https://github.com/storybookjs/storybook/pull/10435))
+
+### Dependency Upgrades
+
+- Bump recast from 0.16.2 to 0.19.0 ([#10415](https://github.com/storybookjs/storybook/pull/10415))
+
+## 6.0.0-alpha.36 (April 16, 2020)
+
+### Bug Fixes
+
+- Server: Fix serialization of knobs params back to server ([#10391](https://github.com/storybookjs/storybook/pull/10391))
+- Core: Serve correctly hashed static files with the Cache-Control header ([#10390](https://github.com/storybookjs/storybook/pull/10390))
+- Addon-a11y: Fix default a11y parameters ([#10439](https://github.com/storybookjs/storybook/pull/10439))
+- Core: Fix event source handling ([#10416](https://github.com/storybookjs/storybook/pull/10416))
+
+### Maintenance
+
+- Addon-docs: Add blocks typings ([#10441](https://github.com/storybookjs/storybook/pull/10441))
+
 ## 6.0.0-alpha.35 (April 16, 2020)
 
 ### Bug Fixes

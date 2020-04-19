@@ -12,7 +12,24 @@
       },
       "knobs": [
         { "type": "text", "name": "Name", "value": "John Doe", "param": "name"},
-        { "type": "number", "name": "Age", "value": 44, "param": "age"}
+        { "type": "date", "name": "Birthday", "value": "1960-12-25T00:42:03.600Z", "param": "birthday"},
+        { "type": "color", "name": "Favorite Color", "value": "red", "param": "favorite_color"},
+        { "type": "boolean", "name": "Active", "value": true, "param": "active"},
+        { "type": "number", "name": "Pets", "value": 2, "param": "pets"},
+        { "type": "array", "name": "Sports", "value": ["football", "baseball"], "param": "sports"},
+          { 
+            "type": "select",
+            "name": "Favorite Food",
+            "value": "Ice Cream",
+            "options": {
+              "hot_dog": "Hot Dog",
+              "pizza": "Pizza",
+              "burgers": "Burgers",
+              "ice_cream": "Ice Cream"
+            },
+            "param": "favorite_food"
+          },
+        { "type": "object", "name": "Other Things", "value": {"hair": "Brown", "eyes": "Blue"}, "param": "other_thinkgs"}
       ]
     }
   ]
