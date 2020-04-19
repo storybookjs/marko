@@ -39,6 +39,7 @@ export default ({ entry, provided = [] }) => ({
                 require.resolve('@babel/plugin-transform-parameters'),
                 require.resolve('@babel/plugin-transform-destructuring'),
                 require.resolve('@babel/plugin-transform-spread'),
+                require.resolve('@babel/plugin-transform-for-of'),
               ],
             },
           },
