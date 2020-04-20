@@ -14,8 +14,15 @@ export default {
   },
 };
 
-export const Basic = (args) => (
+export const Args = (args) => (
   <ButtonGroup {...args}>
+    <DocgenButton label="foo" />
+    <DocgenButton label="bar" />
+  </ButtonGroup>
+);
+
+export const NoArgs = () => (
+  <ButtonGroup background="#eee">
     <DocgenButton label="foo" />
     <DocgenButton label="bar" />
   </ButtonGroup>
