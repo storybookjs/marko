@@ -369,7 +369,7 @@ const arrayOfObjects = [
 ];
 const defaultValue = arrayOfObjects[0];
 const groupId = 'GROUP-ID3';
-const value = select(label, options, defaultValue, groupId);
+const value = select(label, arrayOfObjects, defaultValue, groupId);
 ```
 
 ### radio buttons
