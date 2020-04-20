@@ -12,11 +12,11 @@ export const extractArgTypes: ArgTypesExtractor = (component) => {
     const { rows } = props as PropsTableRowsProps;
     if (rows) {
       return rows.reduce((acc: ArgTypes, row: PropDef) => {
-        const { type, sbType, defaultValue, jsDocTags } = row;
+        const { type, sbType, defaultValue, jsDocTags, required } = row;
         acc[row.name] = {
           ...row,
           defaultValue: defaultValue && trim(defaultValue.detail || defaultValue.summary),
-          type: sbType,
+          type: { required, ...sbType },
           table: {
             type,
             jsDocTags,
