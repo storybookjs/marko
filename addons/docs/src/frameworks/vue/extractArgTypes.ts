@@ -14,9 +14,11 @@ export const extractArgTypes: ArgTypesExtractor = (component) => {
   SECTIONS.forEach((section) => {
     const props = extractComponentProps(component, section);
     props.forEach(({ propDef, jsDocTags }) => {
-      const { name, type, description, defaultValue } = propDef;
+      const { name, sbType, type, description, defaultValue } = propDef;
       results[name] = {
         name,
+        description,
+        type: sbType,
         defaultValue: defaultValue && trim(defaultValue.detail || defaultValue.summary),
         table: {
           type,
