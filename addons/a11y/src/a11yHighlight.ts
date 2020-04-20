@@ -14,6 +14,13 @@ interface HighlightInfo {
 
 const channel = addons.getChannel();
 
+const higlighted = (color: string) => `
+  outline: 2px dashed ${color};
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px rgba(255,255,255,0.6);
+}
+`;
+
 const highlight = (infos: HighlightInfo) => {
   const id = HIGHLIGHT_STYLE_ID;
   const sheetToBeRemoved = document.getElementById(id);
@@ -26,7 +33,9 @@ const highlight = (infos: HighlightInfo) => {
   sheet.innerHTML = infos.elements
     .map(
       (target) =>
-        `${target}{ outline: 1px dotted ${infos.color}!important; box-shadow: 0 1px 5px 0 ${infos.color}!important; }`
+        `${target}{ 
+          ${higlighted(infos.color)}
+         }`
     )
     .join(' ');
   document.head.appendChild(sheet);
