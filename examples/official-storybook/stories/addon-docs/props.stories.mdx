@@ -63,7 +63,10 @@ export const FooBar = ({ foo, bar } = {}) => (
 
 <Preview>
   <Story name="Component" argTypes={{ background: { control: { type: 'color' } } }}>
-    {(args) => <DocgenButton {...args} />}
+    {({ background, children }) => {
+      const contents = children && children.length > 0 ? children : <DocgenButton label="child" />;
+      return <ButtonGroup background={background}>{contents}</ButtonGroup>;
+    }}
   </Story>
 </Preview>
 
