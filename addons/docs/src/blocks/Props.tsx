@@ -147,7 +147,13 @@ export const StoryTable: FC<StoryProps & { components: Record<string, Component>
       storyArgTypes = data.parameters.argTypes;
     }
     storyArgTypes = filterArgTypes(storyArgTypes, include, exclude);
-    const [args, updateArgs] = useArgs(storyId, storyStore);
+
+    // eslint-disable-next-line prefer-const
+    let [args, updateArgs] = useArgs(storyId, storyStore);
+    if (!storyArgTypes || !Object.values(storyArgTypes).find((v) => !!v.control)) {
+      updateArgs = null;
+    }
+
     let tabs = { Story: { rows: storyArgTypes, args, updateArgs } } as Record<
       string,
       ArgsTableProps
