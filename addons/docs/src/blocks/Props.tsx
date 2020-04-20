@@ -150,7 +150,7 @@ export const StoryTable: FC<StoryProps & { components: Record<string, Component>
 
     // eslint-disable-next-line prefer-const
     let [args, updateArgs] = useArgs(storyId, storyStore);
-    if (!storyArgTypes || !Object.values(storyArgTypes).find((v) => !!v.control)) {
+    if (!storyArgTypes || !Object.values(storyArgTypes).find((v) => !!v?.control)) {
       updateArgs = null;
     }
 
