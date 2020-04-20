@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
 import { transparentize } from 'polished';
 import { styled } from '@storybook/theming';
+import { Args } from './types';
 
 export interface SectionRowProps {
   section: string;
-  showControls: boolean;
+  updateArgs?: (args: Args) => void;
 }
 
 const SectionTh = styled.th<{}>(({ theme }) => ({
@@ -20,8 +21,8 @@ const SectionTh = styled.th<{}>(({ theme }) => ({
   background: `${theme.background.app} !important`,
 }));
 
-export const SectionRow: FC<SectionRowProps> = ({ section, showControls }) => (
+export const SectionRow: FC<SectionRowProps> = ({ section, updateArgs }) => (
   <tr>
-    <SectionTh colSpan={showControls ? 4 : 3}>{section}</SectionTh>
+    <SectionTh colSpan={updateArgs ? 4 : 3}>{section}</SectionTh>
   </tr>
 );
