@@ -1,6 +1,7 @@
 <h1>Migration</h1>
 
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
+  - [6.0 Deprecated Addons](#60-deprecated-addons)
   - [DocsPage slots removed](#docspage-slots-removed)
   - [React prop tables with Typescript](#react-prop-tables-with-typescript)
     - [React.FC interfaces](#reactfc-interfaces)
@@ -100,6 +101,18 @@
   - [Deprecated embedded addons](#deprecated-embedded-addons)
 
 ## From version 5.3.x to 6.0.x
+
+### 6.0 Deprecated Addons
+
+We have moved a few addons into the [deprecated addons repo](https://github.com/storybookjs/deprecated-addons). This means that these addons will no longer be maintained as part of Storybook's core and will be released on an irregular schedule, based on community contributions.
+
+| Deprecated                  | Replacement                 |
+| --------------------------- | --------------------------- |
+| `@storybook/addon-info`     | `@storybook/addon-docs`     |
+| `@storybook/addon-notes`    | `@storybook/addon-docs`     |
+| `@storybook/addon-contexts` | `@storybook/addon-toolbars` |
+
+If you are able to upgrade to the recommended replacement, we recommend it! Not only are these new addons an improvement on the packages they replace, but they are actively maintained.
 
 ### DocsPage slots removed
 
@@ -746,7 +759,7 @@ var sortedModules = modules.slice().sort((a, b) => {
 });
 
 // execute them
-sortedModules.forEach(key => {
+sortedModules.forEach((key) => {
   context(key);
 });
 ```
@@ -1310,7 +1323,7 @@ Here's an example of using Notes and Info in 3.2 with the new API.
 storiesOf('composition', module).add(
   'new addons api',
   withInfo('see Notes panel for composition info')(
-    withNotes({ text: 'Composition: Info(Notes())' })(context => (
+    withNotes({ text: 'Composition: Info(Notes())' })((context) => (
       <MyComponent name={context.story} />
     ))
   )
