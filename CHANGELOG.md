@@ -1,3 +1,9 @@
+## 6.0.0-alpha.40 (April 20, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix controls column display logic ([#10473](https://github.com/storybookjs/storybook/pull/10473))
+
 ## 6.0.0-alpha.39 (April 18, 2020)
 
 ### Breaking Changes
