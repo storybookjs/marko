@@ -2,7 +2,7 @@ import React from 'react';
 import toReact from '@egoist/vue-to-react';
 import { StoryFn } from '@storybook/addons';
 import { addParameters } from '@storybook/client-api';
-import { extractProps } from './extractProps';
+import { extractArgTypes } from './extractArgTypes';
 import { extractComponentDescription } from '../../lib/docgen';
 
 addParameters({
@@ -12,7 +12,7 @@ addParameters({
       const Story = toReact(storyFn());
       return <Story />;
     },
-    extractProps,
+    extractArgTypes,
     extractComponentDescription,
   },
 });

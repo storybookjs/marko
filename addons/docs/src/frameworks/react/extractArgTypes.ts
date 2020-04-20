@@ -1,7 +1,10 @@
 import { PropDef, PropsTableRowsProps } from '@storybook/components';
 import { ArgTypes } from '@storybook/api';
 import { ArgTypesExtractor } from '../../lib/docgen';
+import { trimQuotes } from '../../lib/sbtypes/utils';
 import { extractProps } from './extractProps';
+
+const trim = (val: any) => (val && typeof val === 'string' ? trimQuotes(val) : val);
 
 export const extractArgTypes: ArgTypesExtractor = (component) => {
   if (component) {
@@ -12,7 +15,7 @@ export const extractArgTypes: ArgTypesExtractor = (component) => {
         const { type, sbType, defaultValue, jsDocTags } = row;
         acc[row.name] = {
           ...row,
-          defaultValue: defaultValue && (defaultValue.detail || defaultValue.summary),
+          defaultValue: defaultValue && trim(defaultValue.detail || defaultValue.summary),
           type: sbType,
           table: {
             type,
