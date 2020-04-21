@@ -427,23 +427,26 @@ describe('preview.story_store', () => {
 
   describe('storySort', () => {
     it('sorts stories using given function', () => {
-      const parameters = {
-        options: {
-          // Test function does reverse alphabetical ordering.
-          storySort: (a: any, b: any): number =>
-            a[1].kind === b[1].kind
-              ? 0
-              : -1 * a[1].id.localeCompare(b[1].id, undefined, { numeric: true }),
-        },
-      };
       const store = new StoryStore({ channel });
-      addStoryToStore(store, 'a/a', '1', () => 0, parameters);
-      addStoryToStore(store, 'a/a', '2', () => 0, parameters);
-      addStoryToStore(store, 'a/b', '1', () => 0, parameters);
-      addStoryToStore(store, 'b/b1', '1', () => 0, parameters);
-      addStoryToStore(store, 'b/b10', '1', () => 0, parameters);
-      addStoryToStore(store, 'b/b9', '1', () => 0, parameters);
-      addStoryToStore(store, 'c', '1', () => 0, parameters);
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          options: {
+            // Test function does reverse alphabetical ordering.
+            storySort: (a: any, b: any): number =>
+              a[1].kind === b[1].kind
+                ? 0
+                : -1 * a[1].id.localeCompare(b[1].id, undefined, { numeric: true }),
+          },
+        },
+      });
+      addStoryToStore(store, 'a/a', '1', () => 0);
+      addStoryToStore(store, 'a/a', '2', () => 0);
+      addStoryToStore(store, 'a/b', '1', () => 0);
+      addStoryToStore(store, 'b/b1', '1', () => 0);
+      addStoryToStore(store, 'b/b10', '1', () => 0);
+      addStoryToStore(store, 'b/b9', '1', () => 0);
+      addStoryToStore(store, 'c', '1', () => 0);
 
       const extracted = store.extract();
 
@@ -459,21 +462,24 @@ describe('preview.story_store', () => {
     });
 
     it('sorts stories alphabetically', () => {
-      const parameters = {
-        options: {
-          storySort: {
-            method: 'alphabetical',
+      const store = new StoryStore({ channel });
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          options: {
+            storySort: {
+              method: 'alphabetical',
+            },
           },
         },
-      };
-      const store = new StoryStore({ channel });
-      addStoryToStore(store, 'a/b', '1', () => 0, parameters);
-      addStoryToStore(store, 'a/a', '2', () => 0, parameters);
-      addStoryToStore(store, 'a/a', '1', () => 0, parameters);
-      addStoryToStore(store, 'c', '1', () => 0, parameters);
-      addStoryToStore(store, 'b/b10', '1', () => 0, parameters);
-      addStoryToStore(store, 'b/b9', '1', () => 0, parameters);
-      addStoryToStore(store, 'b/b1', '1', () => 0, parameters);
+      });
+      addStoryToStore(store, 'a/b', '1', () => 0);
+      addStoryToStore(store, 'a/a', '2', () => 0);
+      addStoryToStore(store, 'a/a', '1', () => 0);
+      addStoryToStore(store, 'c', '1', () => 0);
+      addStoryToStore(store, 'b/b10', '1', () => 0);
+      addStoryToStore(store, 'b/b9', '1', () => 0);
+      addStoryToStore(store, 'b/b1', '1', () => 0);
 
       const extracted = store.extract();
 
@@ -489,23 +495,26 @@ describe('preview.story_store', () => {
     });
 
     it('sorts stories in specified order or alphabetically', () => {
-      const parameters = {
-        options: {
-          storySort: {
-            method: 'alphabetical',
-            order: ['b', ['bc', 'ba', 'bb'], 'a', 'c'],
+      const store = new StoryStore({ channel });
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          options: {
+            storySort: {
+              method: 'alphabetical',
+              order: ['b', ['bc', 'ba', 'bb'], 'a', 'c'],
+            },
           },
         },
-      };
-      const store = new StoryStore({ channel });
-      addStoryToStore(store, 'a/b', '1', () => 0, parameters);
-      addStoryToStore(store, 'a', '1', () => 0, parameters);
-      addStoryToStore(store, 'c', '1', () => 0, parameters);
-      addStoryToStore(store, 'b/bd', '1', () => 0, parameters);
-      addStoryToStore(store, 'b/bb', '1', () => 0, parameters);
-      addStoryToStore(store, 'b/ba', '1', () => 0, parameters);
-      addStoryToStore(store, 'b/bc', '1', () => 0, parameters);
-      addStoryToStore(store, 'b', '1', () => 0, parameters);
+      });
+      addStoryToStore(store, 'a/b', '1', () => 0);
+      addStoryToStore(store, 'a', '1', () => 0);
+      addStoryToStore(store, 'c', '1', () => 0);
+      addStoryToStore(store, 'b/bd', '1', () => 0);
+      addStoryToStore(store, 'b/bb', '1', () => 0);
+      addStoryToStore(store, 'b/ba', '1', () => 0);
+      addStoryToStore(store, 'b/bc', '1', () => 0);
+      addStoryToStore(store, 'b', '1', () => 0);
 
       const extracted = store.extract();
 
@@ -522,23 +531,26 @@ describe('preview.story_store', () => {
     });
 
     it('sorts stories in specified order or by configure order', () => {
-      const parameters = {
-        options: {
-          storySort: {
-            method: 'configure',
-            order: ['b', 'a', 'c'],
+      const store = new StoryStore({ channel });
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          options: {
+            storySort: {
+              method: 'configure',
+              order: ['b', 'a', 'c'],
+            },
           },
         },
-      };
-      const store = new StoryStore({ channel });
-      addStoryToStore(store, 'a/b', '1', () => 0, parameters);
-      addStoryToStore(store, 'a', '1', () => 0, parameters);
-      addStoryToStore(store, 'c', '1', () => 0, parameters);
-      addStoryToStore(store, 'b/bd', '1', () => 0, parameters);
-      addStoryToStore(store, 'b/bb', '1', () => 0, parameters);
-      addStoryToStore(store, 'b/ba', '1', () => 0, parameters);
-      addStoryToStore(store, 'b/bc', '1', () => 0, parameters);
-      addStoryToStore(store, 'b', '1', () => 0, parameters);
+      });
+      addStoryToStore(store, 'a/b', '1', () => 0);
+      addStoryToStore(store, 'a', '1', () => 0);
+      addStoryToStore(store, 'c', '1', () => 0);
+      addStoryToStore(store, 'b/bd', '1', () => 0);
+      addStoryToStore(store, 'b/bb', '1', () => 0);
+      addStoryToStore(store, 'b/ba', '1', () => 0);
+      addStoryToStore(store, 'b/bc', '1', () => 0);
+      addStoryToStore(store, 'b', '1', () => 0);
 
       const extracted = store.extract();
 
