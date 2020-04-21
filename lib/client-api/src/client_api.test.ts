@@ -601,6 +601,7 @@ describe('preview.client_api', () => {
         b: 'kind',
         c: 'story',
         fileName: expect.any(String),
+        argTypes: {},
       });
     });
 
@@ -653,6 +654,7 @@ describe('preview.client_api', () => {
           },
         },
         fileName: expect.any(String),
+        argTypes: {},
       });
     });
   });
