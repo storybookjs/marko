@@ -30,9 +30,19 @@ export const Contained = styled.div({
   paddingRight: 20,
 });
 
-export const Loader: FunctionComponent<{
-  size: 'single' | 'multiple';
-}> = ({ size }) => {
+const getRandomInt = (max: number) => Math.floor(Math.random() * Math.floor(max + 1));
+
+export const Loader: FunctionComponent<{ size: 'single' | 'multiple' | number }> = ({ size }) => {
+  if (typeof size === 'number') {
+    return (
+      <Fragment>
+        {Array.from(Array(size)).map((item, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <Loadingitem depth={index > 0 ? getRandomInt(1) : 0} key={index} />
+        ))}
+      </Fragment>
+    );
+  }
   return size === 'multiple' ? (
     <Fragment>
       <Loadingitem />
