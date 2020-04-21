@@ -1,3 +1,4 @@
+/* eslint-disable no-fallthrough */
 import { DOCS_MODE } from 'global';
 import { toId, sanitize } from '@storybook/csf';
 import {
@@ -327,7 +328,6 @@ export const init: ModuleFn = ({
         }
 
         // if we couldn't find the source, something risky happened, we ignore the input, and log a warning
-        // eslint-disable-next-line no-fallthrough
         default: {
           logger.warn('received a SET_STORIES frame that was not configured as a ref');
           break;
