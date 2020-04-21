@@ -37,7 +37,7 @@ const addStoryToStore = (store, kind, name, storyFn, parameters = {}) =>
 
 describe('preview.story_store', () => {
   describe('extract', () => {
-    it('produces stories objects with inherited metadata', () => {
+    it('produces stories objects with inherited (denormalized) metadata', () => {
       const store = new StoryStore({ channel });
 
       store.addGlobalMetadata({ parameters: { global: 'global' }, decorators: [] });
@@ -59,6 +59,32 @@ describe('preview.story_store', () => {
         kind: 'a',
         name: '1',
         parameters: { global: 'global', kind: 'kind', story: 'story' },
+      });
+    });
+  });
+
+  describe('getDataForManager', () => {
+    it('produces stories objects with normalized metadata', () => {
+      const store = new StoryStore({ channel });
+
+      store.addGlobalMetadata({ parameters: { global: 'global' }, decorators: [] });
+
+      store.addKindMetadata('a', { parameters: { kind: 'kind' }, decorators: [] });
+
+      addStoryToStore(store, 'a', '1', () => 0, { story: 'story' });
+
+      const { globalParameters, kindParameters, stories } = store.getDataForManager();
+
+      expect(globalParameters).toEqual({ global: 'global' });
+      expect(Object.keys(kindParameters)).toEqual(['a']);
+      expect(kindParameters.a).toEqual({ kind: 'kind' });
+
+      expect(Object.keys(stories)).toEqual(['a--1']);
+      expect(stories['a--1']).toMatchObject({
+        id: 'a--1',
+        kind: 'a',
+        name: '1',
+        parameters: { story: 'story' },
       });
     });
   });
@@ -623,6 +649,8 @@ describe('preview.story_store', () => {
 
       store.finishConfiguring();
       expect(onSetStories).toHaveBeenCalledWith({
+        globalParameters: {},
+        kindParameters: { a: {} },
         stories: {
           'a--1': expect.objectContaining({
             id: 'a--1',
@@ -637,7 +665,11 @@ describe('preview.story_store', () => {
       const store = new StoryStore({ channel });
 
       store.finishConfiguring();
-      expect(onSetStories).toHaveBeenCalledWith({ stories: {} });
+      expect(onSetStories).toHaveBeenCalledWith({
+        globalParameters: {},
+        kindParameters: {},
+        stories: {},
+      });
     });
 
     it('allows configuration as second time (HMR)', () => {
@@ -652,6 +684,8 @@ describe('preview.story_store', () => {
       store.finishConfiguring();
 
       expect(onSetStories).toHaveBeenCalledWith({
+        globalParameters: {},
+        kindParameters: { a: {} },
         stories: {
           'a--1': expect.objectContaining({
             id: 'a--1',
@@ -681,6 +715,8 @@ describe('preview.story_store', () => {
       store.finishConfiguring();
 
       expect(onSetStories).toHaveBeenCalledWith({
+        globalParameters: {},
+        kindParameters: { 'kind-1': {} },
         stories: {
           'kind-1--story-1-2': expect.objectContaining({
             id: 'kind-1--story-1-2',
@@ -713,6 +749,8 @@ describe('preview.story_store', () => {
       store.finishConfiguring();
 
       expect(onSetStories).toHaveBeenCalledWith({
+        globalParameters: {},
+        kindParameters: { 'kind-1': {}, 'kind-2': {} },
         stories: {
           'kind-2--story-2-1': expect.objectContaining({
             id: 'kind-2--story-2-1',

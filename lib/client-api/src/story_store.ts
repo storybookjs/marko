@@ -2,7 +2,7 @@
 import memoize from 'memoizerific';
 import dedent from 'ts-dedent';
 import stable from 'stable';
-import { pick } from 'lodash';
+import { mapValues } from 'lodash';
 
 import { Channel } from '@storybook/channels';
 import Events from '@storybook/core-events';
@@ -484,17 +484,18 @@ export default class StoryStore {
 
   getSelection = (): Selection => this._selection;
 
-  getStoriesForManager = () => {
-    // TODO -- make normalizeParameters: true, deal with on the other side
-    return this.extract({ includeDocsOnly: true, normalizeParameters: false });
+  getDataForManager = () => {
+    return {
+      globalParameters: this._globalMetadata.parameters,
+      kindParameters: mapValues(this._kinds, (metadata) => metadata.parameters),
+      stories: this.extract({ includeDocsOnly: true, normalizeParameters: true }),
+    };
   };
 
   pushToManager = () => {
     if (this._channel) {
-      const stories = this.getStoriesForManager();
-
       // send to the parent frame.
-      this._channel.emit(Events.SET_STORIES, { stories });
+      this._channel.emit(Events.SET_STORIES, this.getDataForManager());
     }
   };
 
