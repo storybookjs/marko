@@ -9,7 +9,7 @@ function getRenderedTree(story: any, context: any, { renderer, ...rendererOption
   const currentRenderer = renderer || reactTestRenderer.create;
   const tree = currentRenderer(storyElement, rendererOptions);
 
-  return tree;
+  return tree.children();
 }
 
 export default getRenderedTree;
