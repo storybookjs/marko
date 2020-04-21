@@ -30,7 +30,7 @@ To use StoryShots, first make sure you are inside a Storybook-enabled repo (make
 Then, install StoryShots into your app with:
 
 ```sh
-npm i -D @storybook/addon-storyshots
+npm i -D @storybook/addon-storyshots react-test-renderer
 ```
 
 Then, assuming you are using Jest for testing, you can create a test file `storyshots.test.js` that contains the following:
