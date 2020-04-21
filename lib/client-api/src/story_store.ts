@@ -405,6 +405,7 @@ export default class StoryStore {
 
       return {
         ...data,
+        parameters: this.combineStoryParameters(data.parameters, data.kind),
         globalArgs: this._globalArgs,
       };
     } catch (e) {
