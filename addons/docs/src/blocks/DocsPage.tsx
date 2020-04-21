@@ -5,6 +5,7 @@ import { Description } from './Description';
 import { Primary } from './Primary';
 import { Props } from './Props';
 import { Stories } from './Stories';
+import { PRIMARY_STORY } from './types';
 
 export const DocsPage: FC = () => (
   <>
@@ -12,7 +13,7 @@ export const DocsPage: FC = () => (
     <Subtitle />
     <Description />
     <Primary />
-    <Props story="." />
+    <Props story={PRIMARY_STORY} />
     <Stories />
   </>
 );
