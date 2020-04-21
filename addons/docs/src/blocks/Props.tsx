@@ -14,8 +14,8 @@ import { StoryStore } from '@storybook/client-api';
 import Events from '@storybook/core-events';
 
 import { DocsContext, DocsContextProps } from './DocsContext';
-import { Component, CURRENT_SELECTION } from './types';
-import { getComponentName } from './utils';
+import { Component, CURRENT_SELECTION, PRIMARY_STORY } from './types';
+import { getComponentName, getDocsStories } from './utils';
 import { ArgTypesExtractor } from '../lib/docgen/types';
 import { lookupStoryId } from './Story';
 
@@ -138,13 +138,23 @@ export const StoryTable: FC<StoryProps & { components: Record<string, Component>
   let storyArgTypes;
   try {
     let storyId;
-    if (story === CURRENT_SELECTION) {
-      storyId = currentId;
-      storyArgTypes = argTypes;
-    } else {
-      storyId = lookupStoryId(story, context);
-      const data = storyStore.fromId(storyId);
-      storyArgTypes = data.parameters.argTypes;
+    switch (story) {
+      case CURRENT_SELECTION: {
+        storyId = currentId;
+        storyArgTypes = argTypes;
+        break;
+      }
+      case PRIMARY_STORY: {
+        const primaryStory = getDocsStories(context)[0];
+        storyId = primaryStory.id;
+        storyArgTypes = primaryStory.parameters.argTypes;
+        break;
+      }
+      default: {
+        storyId = lookupStoryId(story, context);
+        const data = storyStore.fromId(storyId);
+        storyArgTypes = data.parameters.argTypes;
+      }
     }
     storyArgTypes = filterArgTypes(storyArgTypes, include, exclude);
 
