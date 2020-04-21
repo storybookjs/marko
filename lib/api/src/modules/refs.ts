@@ -54,7 +54,10 @@ export const getSourceType = (source: string) => {
   ) {
     return 'local';
   }
-  return 'external';
+  if (source) {
+    return 'external';
+  }
+  return null;
 };
 
 export const defaultMapper: Mapper = (b, a) => {
@@ -82,7 +85,7 @@ export const init: ModuleFn = ({ store, provider }) => {
     findRef: (source) => {
       const refs = api.getRefs();
 
-      return Object.values(refs).find(({ url }) => `${url}/iframe.html`.match(source));
+      return Object.values(refs).find(({ url }) => url.match(source));
     },
     changeRefVersion: (id, url) => {
       const previous = api.getRefs()[id];
@@ -156,6 +159,7 @@ export const init: ModuleFn = ({ store, provider }) => {
   };
 
   const refs = provider.getConfig().refs || {};
+
   const initialState: SubState['refs'] = refs;
 
   Object.entries(refs).forEach(([k, v]) => {
