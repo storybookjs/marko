@@ -1,3 +1,4 @@
+/* eslint-disable no-fallthrough */
 import { DOCS_MODE } from 'global';
 import { toId, sanitize } from '@storybook/csf';
 import {
@@ -319,8 +320,11 @@ export const init: ModuleFn = ({
         // if it's a ref, we need to map the incoming stories to a prefixed version, so it cannot conflict with others
         case 'external': {
           const ref = fullAPI.findRef(source);
-          fullAPI.setRef(ref.id, { ...ref, ...data }, true);
-          break;
+
+          if (ref) {
+            fullAPI.setRef(ref.id, { ...ref, ...data }, true);
+            break;
+          }
         }
 
         // if we couldn't find the source, something risky happened, we ignore the input, and log a warning
