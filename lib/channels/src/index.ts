@@ -58,6 +58,7 @@ export class Channel {
   }
 
   addPeerListener(eventName: string, listener: Listener) {
+    console.warn('channel.addPeerListener is deprecated');
     this.addListener(eventName, listener);
   }
 
