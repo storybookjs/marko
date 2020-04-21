@@ -315,10 +315,10 @@ export default class StoryStore {
     // We need the combined parameters now in order to calculate argTypes, but we won't keep them
     const combinedParameters = this.combineStoryParameters(storyParameters, kind);
 
-    const { argTypes } = this._argTypesEnhancers.reduce(
+    const { argTypes = {} } = this._argTypesEnhancers.reduce(
       (accumlatedParameters: Parameters, enhancer) => ({
         ...accumlatedParameters,
-        ...enhancer({
+        argTypes: enhancer({
           ...identification,
           parameters: accumlatedParameters,
           args: {},
