@@ -14,11 +14,8 @@ export interface NumberTypeKnobOptions {
   step?: number;
 }
 
-export interface NumberTypeKnob
-  extends KnobControlConfig<NumberTypeKnobValue>,
-    NumberTypeKnobOptions {
-  value: NumberTypeKnobValue;
-}
+export type NumberTypeKnob = KnobControlConfig<NumberTypeKnobValue> &
+  NumberTypeKnobOptions & { value?: NumberTypeKnobValue };
 
 interface NumberTypeProps extends KnobControlProps<NumberTypeKnobValue | null> {
   knob: NumberTypeKnob;
@@ -69,7 +66,7 @@ export default class NumberType extends Component<NumberTypeProps> {
 
   static defaultProps: NumberTypeProps = {
     knob: {} as any,
-    onChange: value => value,
+    onChange: (value) => value,
   };
 
   static serialize = (value: NumberTypeKnobValue | null | undefined) =>

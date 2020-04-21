@@ -121,7 +121,7 @@ describe('parseJsDoc', () => {
       expect(extractedTags.params[1].name).toBe('anotherEvent');
     });
 
-    ['@arg', '@argument'].forEach(x => {
+    ['@arg', '@argument'].forEach((x) => {
       it(`should support ${x} alias`, () => {
         const { extractedTags } = parseJsDoc(`${x} {SyntheticEvent} event - React event`);
 

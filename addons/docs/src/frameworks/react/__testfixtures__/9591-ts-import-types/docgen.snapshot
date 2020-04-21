@@ -3,7 +3,7 @@
 exports[`react component properties 9591-ts-import-types 1`] = `
 "import React from 'react';
 
-const Other = props => React.createElement(\\"span\\", props, \\"Other\\");
+const Other = props => /*#__PURE__*/React.createElement(\\"span\\", props, \\"Other\\");
 
 export const component = Other;
 Other.__docgenInfo = {

@@ -4,7 +4,7 @@ import fs from 'fs';
 import tmp from 'tmp';
 import { sync as spawnSync } from 'cross-spawn';
 
-import { findComponentByName, extractPropsFromData } from './compodoc';
+import { findComponentByName, extractArgTypesFromData } from './compodoc';
 
 // File hierarchy: __testfixtures__ / some-test-case / input.*
 const inputRegExp = /^input\..*$/;
@@ -26,10 +26,10 @@ const runCompodoc = (inputPath: string) => {
 
 describe('angular component properties', () => {
   const fixturesDir = path.join(__dirname, '__testfixtures__');
-  fs.readdirSync(fixturesDir, { withFileTypes: true }).forEach(testEntry => {
+  fs.readdirSync(fixturesDir, { withFileTypes: true }).forEach((testEntry) => {
     if (testEntry.isDirectory()) {
       const testDir = path.join(fixturesDir, testEntry.name);
-      const testFile = fs.readdirSync(testDir).find(fileName => inputRegExp.test(fileName));
+      const testFile = fs.readdirSync(testDir).find((fileName) => inputRegExp.test(fileName));
       if (testFile) {
         it(testEntry.name, () => {
           const inputPath = path.join(testDir, testFile);
@@ -41,8 +41,8 @@ describe('angular component properties', () => {
 
           // snapshot the output of addon-docs angular-properties
           const componentData = findComponentByName('InputComponent', compodocJson);
-          const properties = extractPropsFromData(componentData);
-          expect(properties).toMatchSpecificSnapshot(path.join(testDir, 'properties.snapshot'));
+          const argTypes = extractArgTypesFromData(componentData);
+          expect(argTypes).toMatchSpecificSnapshot(path.join(testDir, 'argtypes.snapshot'));
         });
       }
     }

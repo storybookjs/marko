@@ -8,11 +8,10 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-knobs',
     '@storybook/addon-viewport',
-    '@storybook/addon-options',
     '@storybook/addon-backgrounds',
     '@storybook/addon-a11y',
   ],
-  webpackFinal: async config => {
+  webpackFinal: async (config) => {
     config.module.rules.push({
       test: [/\.stories\.js$/, /index\.js$/],
       loaders: [require.resolve('@storybook/source-loader')],

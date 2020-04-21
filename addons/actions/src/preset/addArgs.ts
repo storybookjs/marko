@@ -1,5 +1,5 @@
-import { ParameterEnhancer, combineParameters } from '@storybook/client-api';
-import { Args, ArgType } from '@storybook/addons';
+import mapValues from 'lodash/mapValues';
+import { ArgTypesEnhancer } from '@storybook/client-api';
 
 import { action } from '../index';
 
@@ -12,46 +12,37 @@ import { action } from '../index';
  * Automatically add action args for argTypes whose name
  * matches a regex, such as `^on.*` for react-style `onClick` etc.
  */
-export const inferActionsFromArgTypesRegex: ParameterEnhancer = context => {
-  const { args, actions, argTypes } = context.parameters;
+export const inferActionsFromArgTypesRegex: ArgTypesEnhancer = (context) => {
+  const { actions, argTypes } = context.parameters;
   if (!actions || actions.disable || !actions.argTypesRegex || !argTypes) {
-    return null;
+    return argTypes;
   }
 
   const argTypesRegex = new RegExp(actions.argTypesRegex);
-  const actionArgs = Object.keys(argTypes).reduce((acc, name) => {
-    if (argTypesRegex.test(name)) {
-      acc[name] = action(name);
+  return mapValues(argTypes, (argType, name) => {
+    if (!argTypesRegex.test(name)) {
+      return argType;
     }
-    return acc;
-  }, {} as Args);
-
-  return {
-    args: combineParameters(actionArgs, args),
-  };
+    return { ...argType, defaultValue: argType.defaultValue || action(name) };
+  });
 };
 
 /**
  * Add action args for list of strings.
  */
-export const addActionsFromArgTypes: ParameterEnhancer = context => {
-  const { args, argTypes, actions } = context.parameters;
+export const addActionsFromArgTypes: ArgTypesEnhancer = (context) => {
+  const { argTypes, actions } = context.parameters;
   if (actions?.disable || !argTypes) {
-    return null;
+    return argTypes;
   }
 
-  const actionArgs = Object.keys(argTypes).reduce((acc, argName) => {
-    const argType: ArgType = argTypes[argName];
-    if (argType.action) {
-      const message = typeof argType.action === 'string' ? argType.action : argName;
-      acc[argName] = action(message);
+  return mapValues(argTypes, (argType, name) => {
+    if (!argType.action) {
+      return argType;
     }
-    return acc;
-  }, {} as Args);
-
-  return {
-    args: combineParameters(actionArgs, args),
-  };
+    const message = typeof argType.action === 'string' ? argType.action : name;
+    return { ...argType, defaultValue: argType.defaultValue || action(message) };
+  });
 };
 
-export const parameterEnhancers = [addActionsFromArgTypes, inferActionsFromArgTypesRegex];
+export const argTypesEnhancers = [addActionsFromArgTypes, inferActionsFromArgTypesRegex];

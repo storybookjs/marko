@@ -77,7 +77,7 @@ export class DemoWcCard extends LitElement {
             : html`
                 <dl>
                   ${this.rows.map(
-                    row => html`
+                    (row) => html`
                       <dt>${row.header}</dt>
                       <dd>${row.value}</dd>
                     `

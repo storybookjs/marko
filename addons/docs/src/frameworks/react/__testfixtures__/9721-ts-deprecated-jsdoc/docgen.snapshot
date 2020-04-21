@@ -3,7 +3,7 @@
 exports[`react component properties 9721-ts-deprecated-jsdoc 1`] = `
 "import React from 'react';
 
-const Foo = props => React.createElement(React.Fragment, null, JSON.stringify(props));
+const Foo = props => /*#__PURE__*/React.createElement(React.Fragment, null, JSON.stringify(props));
 
 export const component = Foo;
 Foo.__docgenInfo = {

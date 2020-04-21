@@ -17,7 +17,7 @@ export function stringifyObject(object: any, level = 0, excludeOuterParams = fal
   if (typeof object === 'object') {
     let objectString = '';
     if (Object.keys(object).length > 0) {
-      const objectStrings: string[] = Object.keys(object).map(key => {
+      const objectStrings: string[] = Object.keys(object).map((key) => {
         const value: string = stringifyObject(object[key], level + 1);
         return `\n${indent}  ${key}: ${value}`;
       });
@@ -77,7 +77,7 @@ export function stringifySection(section: StorybookSection): string {
   const sectionString = [
     stringifyImports(section.imports),
     stringifyDefault(section),
-    ...section.stories.map(story => stringifyStory(story)),
+    ...section.stories.map((story) => stringifyStory(story)),
   ].join('\n');
 
   // console.log('sectionString:\n', sectionString);

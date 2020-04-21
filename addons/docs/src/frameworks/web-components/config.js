@@ -10,7 +10,7 @@ addParameters({
     extractProps,
     extractComponentDescription,
     inlineStories: true,
-    prepareForInline: storyFn => {
+    prepareForInline: (storyFn) => {
       class Story extends React.Component {
         constructor(props) {
           super(props);

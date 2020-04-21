@@ -52,7 +52,7 @@ export class WebsocketTransport {
   private flush() {
     const { buffer } = this;
     this.buffer = [];
-    buffer.forEach(event => this.send(event));
+    buffer.forEach((event) => this.send(event));
   }
 
   private connect(url: string, onError: OnError) {
@@ -65,7 +65,7 @@ export class WebsocketTransport {
       const event = typeof data === 'string' && isJSON(data) ? parse(data) : data;
       this.handler(event);
     };
-    this.socket.onerror = e => {
+    this.socket.onerror = (e) => {
       if (onError) {
         onError(e);
       }

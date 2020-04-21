@@ -21,7 +21,7 @@ export const ApplyWrappers: FunctionComponent<ApplyWrappersProps> = ({
 
 export const defaultWrappers = [
   {
-    render: p => (
+    render: (p) => (
       <IframeWrapper id="storybook-preview-wrapper" hidden={!p.active}>
         {p.children}
       </IframeWrapper>

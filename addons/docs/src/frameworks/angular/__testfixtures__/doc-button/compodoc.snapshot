@@ -58,7 +58,7 @@ Object {
                 "type": "[]",
               },
             ],
-            "line": 180,
+            "line": 182,
             "name": "item",
             "returnType": "void",
             "type": "void",
@@ -68,7 +68,7 @@ Object {
           "getSignature": Object {
             "description": "<p>Get the private value. </p>
 ",
-            "line": 139,
+            "line": 141,
             "name": "value",
             "returnType": "string | number",
             "type": "",
@@ -92,7 +92,7 @@ Object {
                 "type": "",
               },
             ],
-            "line": 134,
+            "line": 136,
             "name": "value",
             "returnType": "void",
             "type": "void",
@@ -132,7 +132,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
           "name": "click",
         },
       ],
-      "id": "component-InputComponent-62457013911a3b491fc4b1bdc175baf8",
+      "id": "component-InputComponent-8088cb533b6defa9d43d10841b59ce18",
       "inputs": Array [],
       "inputsClass": Array [
         Object {
@@ -158,7 +158,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
           "name": "isDisabled",
         },
         Object {
-          "line": 180,
+          "line": 182,
           "name": "item",
           "type": "[]",
         },
@@ -170,7 +170,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
           "type": "string",
         },
         Object {
-          "line": 177,
+          "line": 179,
           "name": "showKeyAlias",
           "type": "",
         },
@@ -287,16 +287,16 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
               "comment": "<p>Some number you&#39;d like to use.</p>
 ",
               "name": Object {
-                "end": 3201,
+                "end": 3219,
                 "escapedText": "x",
                 "flags": 0,
-                "pos": 3200,
+                "pos": 3218,
               },
               "tagName": Object {
-                "end": 3199,
+                "end": 3217,
                 "escapedText": "param",
                 "flags": 0,
-                "pos": 3194,
+                "pos": 3212,
               },
               "type": "number",
             },
@@ -304,21 +304,21 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
               "comment": "<p>Some other number or string you&#39;d like to use, will have <code>parseInt()</code> applied before calculation.</p>
 ",
               "name": Object {
-                "end": 3246,
+                "end": 3264,
                 "escapedText": "y",
                 "flags": 0,
-                "pos": 3245,
+                "pos": 3263,
               },
               "tagName": Object {
-                "end": 3244,
+                "end": 3262,
                 "escapedText": "param",
                 "flags": 0,
-                "pos": 3239,
+                "pos": 3257,
               },
               "type": "string | number",
             },
           ],
-          "line": 149,
+          "line": 151,
           "modifierKind": Array [
             114,
           ],
@@ -341,21 +341,21 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
               "comment": "<p>Some <code>password</code>.</p>
 ",
               "name": Object {
-                "end": 3762,
+                "end": 3780,
                 "escapedText": "password",
                 "flags": 0,
-                "pos": 3754,
+                "pos": 3772,
               },
               "tagName": Object {
-                "end": 3753,
+                "end": 3771,
                 "escapedText": "param",
                 "flags": 0,
-                "pos": 3748,
+                "pos": 3766,
               },
               "type": "string",
             },
           ],
-          "line": 172,
+          "line": 174,
           "modifierKind": Array [
             112,
           ],
@@ -379,22 +379,22 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
               "comment": "<p>Some <code>id</code>.</p>
 ",
               "name": Object {
-                "end": 3621,
+                "end": 3639,
                 "escapedText": "id",
                 "flags": 0,
-                "pos": 3619,
+                "pos": 3637,
               },
               "optional": true,
               "tagName": Object {
-                "end": 3618,
+                "end": 3636,
                 "escapedText": "param",
                 "flags": 0,
-                "pos": 3613,
+                "pos": 3631,
               },
               "type": "number",
             },
           ],
-          "line": 163,
+          "line": 165,
           "modifierKind": Array [
             113,
           ],
@@ -421,7 +421,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
               "type": "ISomeInterface",
             },
           ],
-          "line": 154,
+          "line": 156,
           "modifierKind": Array [
             114,
           ],
@@ -460,7 +460,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
           "defaultValue": "'Private hello'",
           "description": "<p>Private value. </p>
 ",
-          "line": 131,
+          "line": 133,
           "modifierKind": Array [
             112,
           ],
@@ -485,7 +485,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
           "defaultValue": "'Public hello'",
           "description": "<p>Public value. </p>
 ",
-          "line": 128,
+          "line": 130,
           "modifierKind": Array [
             114,
           ],
@@ -495,7 +495,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
         },
         Object {
           "description": "",
-          "line": 184,
+          "line": 186,
           "modifierKind": Array [
             114,
           ],
@@ -627,7 +627,9 @@ export class InputComponent<T> {
    * @ignore
    */
   public get classes(): string[] {
-    return [this.appearance, this.size].filter(_class => !!_class).map(_class => \`btn-\${_class}\`);
+    return [this.appearance, this.size]
+      .filter((_class) => !!_class)
+      .map((_class) => \`btn-\${_class}\`);
   }
 
   /**
@@ -743,7 +745,7 @@ export class InputComponent<T> {
   "interfaces": Array [
     Object {
       "file": "addons/docs/src/frameworks/angular/__testfixtures__/doc-button/input.ts",
-      "id": "interface-ISomeInterface-62457013911a3b491fc4b1bdc175baf8",
+      "id": "interface-ISomeInterface-8088cb533b6defa9d43d10841b59ce18",
       "indexSignatures": Array [],
       "kind": 150,
       "methods": Array [],
@@ -886,7 +888,9 @@ export class InputComponent<T> {
    * @ignore
    */
   public get classes(): string[] {
-    return [this.appearance, this.size].filter(_class => !!_class).map(_class => \`btn-\${_class}\`);
+    return [this.appearance, this.size]
+      .filter((_class) => !!_class)
+      .map((_class) => \`btn-\${_class}\`);
   }
 
   /**

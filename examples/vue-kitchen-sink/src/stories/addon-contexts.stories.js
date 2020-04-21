@@ -55,7 +55,7 @@ SimpleCssTheming.story = {
 };
 
 // Example B: Language (Vue provide/inject API)
-const createContext = initialValue => {
+const createContext = (initialValue) => {
   const uid = `_${Date.now()}${Math.random()}`;
   return {
     Provider: {

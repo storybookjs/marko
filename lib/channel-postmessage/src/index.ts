@@ -85,7 +85,7 @@ export class PostmsgTransport {
       this.flush();
     }
 
-    frames.forEach(f => {
+    frames.forEach((f) => {
       try {
         f.postMessage(data, '*');
       } catch (e) {
@@ -99,10 +99,8 @@ export class PostmsgTransport {
   private flush(): void {
     const { buffer } = this;
     this.buffer = [];
-    buffer.forEach(item => {
-      this.send(item.event)
-        .then(item.resolve)
-        .catch(item.reject);
+    buffer.forEach((item) => {
+      this.send(item.event).then(item.resolve).catch(item.reject);
     });
   }
 
@@ -113,14 +111,14 @@ export class PostmsgTransport {
       ];
 
       const list = nodes
-        .filter(e => {
+        .filter((e) => {
           try {
             return !!e.contentWindow && e.dataset.isStorybook !== undefined && e.id === target;
           } catch (er) {
             return false;
           }
         })
-        .map(e => e.contentWindow);
+        .map((e) => e.contentWindow);
 
       return list.length ? list : this.getCurrentFrames();
     }
@@ -136,7 +134,7 @@ export class PostmsgTransport {
       const list: HTMLIFrameElement[] = [
         ...document.querySelectorAll('[data-is-storybook="true"]'),
       ];
-      return list.map(e => e.contentWindow);
+      return list.map((e) => e.contentWindow);
     }
     if (window && window.parent) {
       return [window.parent];
@@ -148,7 +146,7 @@ export class PostmsgTransport {
   private getLocalFrame(): Window[] {
     if (this.config.page === 'manager') {
       const list: HTMLIFrameElement[] = [...document.querySelectorAll('#storybook-preview-iframe')];
-      return list.map(e => e.contentWindow);
+      return list.map((e) => e.contentWindow);
     }
     if (window && window.parent) {
       return [window.parent];
@@ -172,10 +170,11 @@ export class PostmsgTransport {
           ? `<span style="color: #FF4785">${event.type}</span>`
           : `<span style="color: #FFAE00">${event.type}</span>`;
 
-        event.source = source || getEventSourceUrl(rawEvent);
+        event.source =
+          source || this.config.page === 'preview' ? rawEvent.origin : getEventSourceUrl(rawEvent);
 
         if (!event.source) {
-          logger.error(
+          pretty.error(
             `${pageString} received ${eventString} but was unable to determine the source of the event`
           );
 
@@ -197,30 +196,40 @@ export class PostmsgTransport {
 }
 
 const getEventSourceUrl = (event: MessageEvent) => {
-  const frames: HTMLIFrameElement[] = [...document.getElementsByTagName('iframe')];
-
+  const frames = [...document.querySelectorAll('iframe[data-is-storybook]')];
   // try to find the originating iframe by matching it's contentWindow
   // This might not be cross-origin safe
-  const [frame, ...remainder] = frames.filter(element => {
+  const [frame, ...remainder] = frames.filter((element) => {
     try {
       return element.contentWindow === event.source;
     } catch (err) {
-      const src = element.getAttribute('src');
-      const { origin } = new URL(src);
-
-      return origin === event.origin;
+      // continue
     }
+
+    const src = element.getAttribute('src');
+    let origin;
+
+    try {
+      ({ origin } = new URL(src, document.location));
+    } catch (err) {
+      return false;
+    }
+    return origin === event.origin;
   });
 
-  // If we found multiple matches, there's going to be trouble
-  if (remainder.length) {
-    console.error('unable to locate origin of postmessage');
-    return null;
+  if (frame && remainder.length === 0) {
+    const src = frame.getAttribute('src');
+    const { origin, pathname } = new URL(src, document.location);
+    return origin + pathname;
   }
 
-  const src = frame.getAttribute('src');
-  const { origin, pathname } = new URL(src);
-  return origin + pathname;
+  if (remainder.length > 0) {
+    // If we found multiple matches, there's going to be trouble
+    logger.error('found multiple candidates for event source');
+  }
+
+  // If we found no frames of matches
+  return null;
 };
 
 /**

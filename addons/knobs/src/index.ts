@@ -128,7 +128,6 @@ export const withKnobs = makeDecorator({
   name: 'withKnobs',
   parameterName: 'knobs',
   skipIfNoParametersOrOptions: false,
-  allowDeprecatedUsage: true,
   wrapper: (getStory, context, { options, parameters }) => {
     const storyOptions = parameters || options;
     const allOptions = { ...defaultOptions, ...storyOptions };

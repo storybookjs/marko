@@ -65,7 +65,7 @@ const UsedBy = ({ users }) => (
       <div className="used-by-contents">
         <h2 className="used-by-title">Used by these fine folks:</h2>
         <div className="used-by-users">
-          {users.map(user => (
+          {users.map((user) => (
             <User key={user.site} {...user} />
           ))}
         </div>

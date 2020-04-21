@@ -37,7 +37,7 @@ function extractIdentifierName(identifierNode: any) {
 }
 
 function filterAncestors(ancestors: estree.Node[]): estree.Node[] {
-  return ancestors.filter(x => x.type === 'ObjectExpression' || x.type === 'ArrayExpression');
+  return ancestors.filter((x) => x.type === 'ObjectExpression' || x.type === 'ArrayExpression');
 }
 
 function calculateNodeDepth(node: estree.Expression): number {

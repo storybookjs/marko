@@ -1,6 +1,6 @@
 {
   "name": "@storybook/router",
-  "version": "6.0.0-alpha.29",
+  "version": "6.0.0-alpha.41",
   "description": "Core Storybook Router",
   "keywords": [
     "storybook"
@@ -35,8 +35,7 @@
     "global": "^4.3.2",
     "lodash": "^4.17.15",
     "memoizerific": "^1.11.3",
-    "qs": "^6.6.0",
-    "util-deprecate": "^1.0.2"
+    "qs": "^6.6.0"
   },
   "peerDependencies": {
     "react": "*",

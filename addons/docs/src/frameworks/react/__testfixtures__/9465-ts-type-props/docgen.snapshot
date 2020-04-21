@@ -6,7 +6,9 @@ exports[`react component properties 9465-ts-type-props 1`] = `
 const Component = ({
   disabled = false,
   children
-}) => // eslint-disable-next-line react/button-has-type
+}) =>
+/*#__PURE__*/
+// eslint-disable-next-line react/button-has-type
 React.createElement(\\"button\\", {
   disabled: disabled
 }, children);

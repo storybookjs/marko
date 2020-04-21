@@ -28,10 +28,10 @@ describe('web-components component properties', () => {
   const { extractPropsFromElements } = require('./custom-elements');
 
   const fixturesDir = path.join(__dirname, '__testfixtures__');
-  fs.readdirSync(fixturesDir, { withFileTypes: true }).forEach(testEntry => {
+  fs.readdirSync(fixturesDir, { withFileTypes: true }).forEach((testEntry) => {
     if (testEntry.isDirectory()) {
       const testDir = path.join(fixturesDir, testEntry.name);
-      const testFile = fs.readdirSync(testDir).find(fileName => inputRegExp.test(fileName));
+      const testFile = fs.readdirSync(testDir).find((fileName) => inputRegExp.test(fileName));
       if (testFile) {
         it(testEntry.name, () => {
           const inputPath = path.join(testDir, testFile);

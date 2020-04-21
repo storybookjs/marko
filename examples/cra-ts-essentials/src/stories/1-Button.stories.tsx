@@ -8,6 +8,7 @@ export default {
   component: Button,
 };
 
+// eslint-disable-next-line no-underscore-dangle
 export const _text = () => (
   <Button onClick={action('clicked')}>{text('label', 'testing knobs')}</Button>
 );

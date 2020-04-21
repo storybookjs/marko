@@ -5,11 +5,11 @@ import './style.css';
 
 const Nav = ({ sections, selectedSectionId, selectedItemId }) => (
   <div id="nav">
-    {sections.map(section => (
+    {sections.map((section) => (
       <div key={section.id}>
         <h3>{section.heading}</h3>
         <ul>
-          {section.items.map(item => {
+          {section.items.map((item) => {
             const cssClass =
               section.id === selectedSectionId && item.id === selectedItemId ? 'selected' : '';
 

@@ -3,7 +3,7 @@ import { memorize, singleton } from './decorators';
 describe('Test on functional helpers: memorize', () => {
   it('should memorize the calculated result', () => {
     // given
-    const someFn = jest.fn(x => [x]);
+    const someFn = jest.fn((x) => [x]);
     const someFnMemo = memorize(someFn);
 
     // when

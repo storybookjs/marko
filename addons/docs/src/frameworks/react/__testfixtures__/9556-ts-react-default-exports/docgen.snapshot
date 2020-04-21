@@ -8,7 +8,7 @@ import React from 'react';
 export const Button = ({
   isDisabled = false,
   ...props
-}) => React.createElement(\\"button\\", _extends({
+}) => /*#__PURE__*/React.createElement(\\"button\\", _extends({
   disabled: isDisabled
 }, props));
 export const component = Button;

@@ -41,7 +41,7 @@ export const ContextsPreviewAPI = singleton(() => {
    * Preview-manager communications.
    */
   // from manager
-  channel.on(UPDATE_PREVIEW, state => {
+  channel.on(UPDATE_PREVIEW, (state) => {
     if (state) {
       selectionState = state;
       channel.emit(FORCE_RE_RENDER);

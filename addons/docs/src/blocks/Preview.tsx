@@ -1,5 +1,7 @@
 import React, { FunctionComponent, ReactElement, ReactNode, ReactNodeArray } from 'react';
+import { MDXProvider } from '@mdx-js/react';
 import { toId, storyNameFromExport } from '@storybook/csf';
+import { resetComponents } from '@storybook/components/html';
 import { Preview as PurePreview, PreviewProps as PurePreviewProps } from '@storybook/components';
 import { getSourceProps } from './Source';
 import { DocsContext, DocsContextProps } from './DocsContext';
@@ -38,7 +40,7 @@ const getPreviewProps = (
     (c: ReactElement) => c.props && (c.props.id || c.props.name)
   ) as ReactElement[];
   const targetIds = stories.map(
-    s =>
+    (s) =>
       s.props.id ||
       toId(
         mdxComponentMeta.id || mdxComponentMeta.title,
@@ -53,11 +55,15 @@ const getPreviewProps = (
   };
 };
 
-export const Preview: FunctionComponent<PreviewProps> = props => (
+export const Preview: FunctionComponent<PreviewProps> = (props) => (
   <DocsContext.Consumer>
-    {context => {
+    {(context) => {
       const previewProps = getPreviewProps(props, context);
-      return <PurePreview {...previewProps}>{props.children}</PurePreview>;
+      return (
+        <MDXProvider components={resetComponents}>
+          <PurePreview {...previewProps}>{props.children}</PurePreview>
+        </MDXProvider>
+      );
     }}
   </DocsContext.Consumer>
 );

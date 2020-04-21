@@ -4,7 +4,7 @@ aliases:
   - &defaults
     working_directory: /tmp/storybook
     docker:
-      - image: circleci/node:10
+      - image: circleci/node:10-browsers
 
 jobs:
   install:
@@ -14,7 +14,7 @@ jobs:
       - restore_cache:
           name: Restore core dependencies cache
           keys:
-            - core-dependencies-v4-{{ checksum "yarn.lock" }}
+            - core-dependencies-v5-{{ checksum "yarn.lock" }}
       - run:
           name: Install dependencies
           command: yarn install
@@ -23,7 +23,7 @@ jobs:
           command: yarn repo-dirty-check
       - save_cache:
           name: Cache core dependencies
-          key: core-dependencies-v4-{{ checksum "yarn.lock" }}
+          key: core-dependencies-v5-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache
             - node_modules
@@ -84,15 +84,6 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: Install Headless Chrome dependencies
-          command: |
-            sudo apt-get install -yq \
-            gconf-service libasound2 libatk1.0-0 libatk-bridge2.0-0 libc6 libcairo2 libcups2 libdbus-1-3 \
-            libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 \
-            libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 \
-            libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates \
-            fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
-      - run:
           name: examples
           command: |
             yarn build-storybooks
@@ -115,7 +106,7 @@ jobs:
           command: yarn cypress install
       - save_cache:
           name: Cache core dependencies
-          key: core-dependencies-v4-{{ checksum "yarn.lock" }}
+          key: core-dependencies-v5-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache
             - node_modules
@@ -204,7 +195,7 @@ jobs:
       - restore_cache:
           name: Restore core dependencies cache
           keys:
-            - core-dependencies-v4-{{ checksum "yarn.lock" }}
+            - core-dependencies-v5-{{ checksum "yarn.lock" }}
       - run:
           name: Install dependencies
           command: yarn bootstrap --install
@@ -218,7 +209,7 @@ jobs:
       - restore_cache:
           name: Restore docs dependencies cache
           keys:
-            - docs-dependencies-v2-{{ checksum "docs/yarn.lock" }}
+            - docs-dependencies-v3-{{ checksum "docs/yarn.lock" }}
       - run:
           name: Install dependencies
           command: |
@@ -231,7 +222,7 @@ jobs:
             yarn build
       - save_cache:
           name: Cache docs dependencies
-          key: docs-dependencies-v2-{{ checksum "docs/yarn.lock" }}
+          key: docs-dependencies-v3-{{ checksum "docs/yarn.lock" }}
           paths:
             - ~/.cache
   lint:

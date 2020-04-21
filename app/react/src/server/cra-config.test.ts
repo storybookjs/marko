@@ -19,7 +19,7 @@ const stripCwd = (loaderPath: string) => loaderPath.replace(process.cwd(), '');
 describe('cra-config', () => {
   describe('when used with the default react-scripts package', () => {
     beforeEach(() => {
-      fs.realpathSync.mockImplementationOnce(filePath =>
+      fs.realpathSync.mockImplementationOnce((filePath) =>
         filePath.replace(SCRIPT_PATH, `react-scripts/${SCRIPT_PATH}`)
       );
     });
@@ -33,7 +33,7 @@ describe('cra-config', () => {
 
   describe('when used with a custom react-scripts package', () => {
     beforeEach(() => {
-      fs.realpathSync.mockImplementationOnce(filePath =>
+      fs.realpathSync.mockImplementationOnce((filePath) =>
         filePath.replace(SCRIPT_PATH, `custom-react-scripts/${SCRIPT_PATH}`)
       );
     });
@@ -49,7 +49,7 @@ describe('cra-config', () => {
     beforeEach(() => {
       // In case of .bin/react-scripts is not symlink (like it happens on Windows),
       // realpathSync() method does not translate the path.
-      fs.realpathSync.mockImplementationOnce(filePath => filePath);
+      fs.realpathSync.mockImplementationOnce((filePath) => filePath);
 
       fs.readFileSync.mockImplementationOnce(
         () => `#!/bin/sh
@@ -87,7 +87,7 @@ exit $ret`
     it('should add the Storybook config directory to `include` for all TS related rules', () => {
       const rules = getTypeScriptRules(mockRules, './.storybook');
       expect(
-        rules.every(rule => rule.include.find(filePath => filePath.includes('.storybook')))
+        rules.every((rule) => rule.include.find((filePath) => filePath.includes('.storybook')))
       ).toBe(true);
     });
   });

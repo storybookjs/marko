@@ -7,7 +7,7 @@ import { assertIsFn, AddContext } from '@storybook/addon-docs/blocks';
 import { Meta, Story } from '@storybook/addon-docs/blocks';
 import { titleFunction } from '../title-generators';
 
-const makeShortcode = name =>
+const makeShortcode = (name) =>
   function MDXDefaultShortcode(props) {
     console.warn(
       'Component ' +

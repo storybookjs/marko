@@ -7,7 +7,7 @@ import { assertIsFn, AddContext } from '@storybook/addon-docs/blocks';
 import { Button } from '@storybook/react/demo';
 import { Story, Meta } from '@storybook/addon-docs/blocks';
 
-const makeShortcode = name =>
+const makeShortcode = (name) =>
   function MDXDefaultShortcode(props) {
     console.warn(
       'Component ' +
@@ -37,7 +37,12 @@ componentNotes.story = {};
 componentNotes.story.name = 'component notes';
 componentNotes.story.parameters = { storySource: { source: '<Button>Component notes</Button>' } };
 
-const componentMeta = { title: 'Button', id: 'button-id', includeStories: ['componentNotes'] };
+const componentMeta = {
+  title: 'Button',
+  id: 'button-id',
+  component: Button,
+  includeStories: ['componentNotes'],
+};
 
 const mdxStoryNameToKey = { 'component notes': 'componentNotes' };
 

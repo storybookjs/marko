@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-actions",
-  "version": "6.0.0-alpha.29",
+  "version": "6.0.0-alpha.41",
   "description": "Action Logger addon for storybook",
   "keywords": [
     "storybook"
@@ -28,20 +28,23 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-alpha.29",
-    "@storybook/api": "6.0.0-alpha.29",
-    "@storybook/client-api": "6.0.0-alpha.29",
-    "@storybook/components": "6.0.0-alpha.29",
-    "@storybook/core-events": "6.0.0-alpha.29",
-    "@storybook/theming": "6.0.0-alpha.29",
+    "@storybook/addons": "6.0.0-alpha.41",
+    "@storybook/api": "6.0.0-alpha.41",
+    "@storybook/client-api": "6.0.0-alpha.41",
+    "@storybook/components": "6.0.0-alpha.41",
+    "@storybook/core-events": "6.0.0-alpha.41",
+    "@storybook/theming": "6.0.0-alpha.41",
     "core-js": "^3.0.1",
     "fast-deep-equal": "^3.1.1",
     "global": "^4.3.2",
+    "lodash": "^4.17.15",
     "polished": "^3.4.4",
     "prop-types": "^15.7.2",
     "react": "^16.8.3",
-    "react-inspector": "^4.0.0",
+    "react-inspector": "^5.0.1",
     "regenerator-runtime": "^0.13.3",
+    "ts-dedent": "^1.1.1",
+    "util-deprecate": "^1.0.2",
     "uuid": "^3.3.2"
   },
   "devDependencies": {

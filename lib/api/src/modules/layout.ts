@@ -1,7 +1,6 @@
 import { document } from 'global';
 import pick from 'lodash/pick';
 
-import deprecate from 'util-deprecate';
 import deepEqual from 'fast-deep-equal';
 
 import { themes, ThemeVars } from '@storybook/theming';
@@ -67,75 +66,6 @@ export interface UIOptions {
 interface OptionsMap {
   [key: string]: string;
 }
-
-const deprecatedThemeOptions: {
-  name: 'theme.brandTitle';
-  url: 'theme.brandUrl';
-} = {
-  name: 'theme.brandTitle',
-  url: 'theme.brandUrl',
-};
-
-const deprecatedLayoutOptions: {
-  goFullScreen: 'isFullscreen';
-  showStoriesPanel: 'showNav';
-  showAddonPanel: 'showPanel';
-  addonPanelInRight: 'panelPosition';
-} = {
-  goFullScreen: 'isFullscreen',
-  showStoriesPanel: 'showNav',
-  showAddonPanel: 'showPanel',
-  addonPanelInRight: 'panelPosition',
-};
-
-const deprecationMessage = (optionsMap: OptionsMap, prefix = '') =>
-  `The options { ${Object.keys(optionsMap).join(', ')} } are deprecated -- use ${
-    prefix ? `${prefix}'s` : ''
-  } { ${Object.values(optionsMap).join(', ')} } instead.`;
-
-const applyDeprecatedThemeOptions = deprecate(
-  ({ name, url, theme }: UIOptions): PartialThemeVars => {
-    const { brandTitle, brandUrl, brandImage }: PartialThemeVars = theme || {};
-    return {
-      brandTitle: brandTitle || name,
-      brandUrl: brandUrl || url,
-      brandImage: brandImage || null,
-    };
-  },
-  deprecationMessage(deprecatedThemeOptions)
-);
-
-const applyDeprecatedLayoutOptions = deprecate((options: Partial<UIOptions>): PartialLayout => {
-  const layoutUpdate: PartialLayout = {};
-
-  ['goFullScreen', 'showStoriesPanel', 'showAddonPanel'].forEach(
-    (option: 'goFullScreen' | 'showStoriesPanel' | 'showAddonPanel') => {
-      const v = options[option];
-      if (typeof v !== 'undefined') {
-        const key = deprecatedLayoutOptions[option];
-        layoutUpdate[key] = v;
-      }
-    }
-  );
-  if (options.addonPanelInRight) {
-    layoutUpdate.panelPosition = 'right';
-  }
-  return layoutUpdate;
-}, deprecationMessage(deprecatedLayoutOptions));
-
-const checkDeprecatedThemeOptions = (options: UIOptions) => {
-  if (Object.keys(deprecatedThemeOptions).find(v => v in options)) {
-    return applyDeprecatedThemeOptions(options);
-  }
-  return {};
-};
-
-const checkDeprecatedLayoutOptions = (options: Partial<UIOptions>) => {
-  if (Object.keys(deprecatedLayoutOptions).find(v => v in options)) {
-    return applyDeprecatedLayoutOptions(options);
-  }
-  return {};
-};
 
 const defaultState: SubState = {
   ui: {
@@ -285,7 +215,6 @@ export const init: ModuleFn = ({ store, provider }) => {
         layout: {
           ...defaultState.layout,
           ...pick(options, Object.keys(defaultState.layout)),
-          ...checkDeprecatedLayoutOptions(options),
         },
         ui: {
           ...defaultState.ui,
@@ -303,7 +232,6 @@ export const init: ModuleFn = ({ store, provider }) => {
         const updatedLayout = {
           ...layout,
           ...pick(options, Object.keys(layout)),
-          ...checkDeprecatedLayoutOptions(options),
         };
 
         const updatedUi = {
@@ -314,7 +242,6 @@ export const init: ModuleFn = ({ store, provider }) => {
         const updatedTheme = {
           ...theme,
           ...options.theme,
-          ...checkDeprecatedThemeOptions(options),
         };
 
         const modification: PartialSubState = {};

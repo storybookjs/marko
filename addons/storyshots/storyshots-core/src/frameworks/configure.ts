@@ -25,7 +25,9 @@ const supportedExtensions = ['ts', 'tsx', 'js', 'jsx'];
 
 const resolveFile = (configDir: string, supportedFilenames: string[]) =>
   supportedFilenames
-    .flatMap(filename => supportedExtensions.map(ext => path.join(configDir, `${filename}.${ext}`)))
+    .flatMap((filename) =>
+      supportedExtensions.map((ext) => path.join(configDir, `${filename}.${ext}`))
+    )
     .find(isFile) || false;
 
 export const getPreviewFile = (configDir: string): string | false =>
@@ -52,12 +54,7 @@ function getConfigPathParts(input: string): Output {
         (pattern: string | { path: string; recursive: boolean; match: string }) => {
           const { path: basePath, recursive, match } = toRequireContext(pattern);
           // eslint-disable-next-line no-underscore-dangle
-          return global.__requireContext(
-            configDir,
-            basePath,
-            recursive,
-            new RegExp(match.slice(1, -1))
-          );
+          return global.__requireContext(configDir, basePath, recursive, match);
         }
       );
     }
@@ -82,7 +79,7 @@ function configure(
 
   const { files, stories } = getConfigPathParts(configPath);
 
-  files.forEach(f => {
+  files.forEach((f) => {
     require.requireActual(f);
   });
 

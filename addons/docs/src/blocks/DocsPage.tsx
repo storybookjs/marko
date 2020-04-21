@@ -1,26 +1,19 @@
-import React, { FunctionComponent } from 'react';
-import { DocsPageProps } from './shared';
+import React, { FC } from 'react';
 import { Title } from './Title';
 import { Subtitle } from './Subtitle';
 import { Description } from './Description';
 import { Primary } from './Primary';
 import { Props } from './Props';
 import { Stories } from './Stories';
+import { PRIMARY_STORY } from './types';
 
-export const DocsPage: FunctionComponent<DocsPageProps> = ({
-  titleSlot,
-  subtitleSlot,
-  descriptionSlot,
-  primarySlot,
-  propsSlot,
-  storiesSlot,
-}) => (
+export const DocsPage: FC = () => (
   <>
-    <Title slot={titleSlot} />
-    <Subtitle slot={subtitleSlot} />
-    <Description slot={descriptionSlot} />
-    <Primary slot={primarySlot} />
-    <Props slot={propsSlot} />
-    <Stories slot={storiesSlot} />
+    <Title />
+    <Subtitle />
+    <Description />
+    <Primary />
+    <Props story={PRIMARY_STORY} />
+    <Stories />
   </>
 );

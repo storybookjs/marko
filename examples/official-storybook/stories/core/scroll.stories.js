@@ -7,11 +7,11 @@ export default {
   title: 'Core/Scroll',
 };
 
-const Horizontal = styled(props => <Spaced col={1} {...props} />)({
+const Horizontal = styled((props) => <Spaced col={1} {...props} />)({
   display: 'grid',
   gridTemplateColumns: '100px calc(100vw + 100px) 100px',
 });
-const Vertical = styled(props => <Spaced row={1} {...props} />)({});
+const Vertical = styled((props) => <Spaced row={1} {...props} />)({});
 
 export const Story1 = () => (
   <Vertical>

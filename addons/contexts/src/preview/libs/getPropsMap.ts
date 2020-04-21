@@ -17,9 +17,9 @@ export const _getPropsByParamName: _getPropsByParamName = (params, name = '', op
     // when opt-out context
     (options.cancelable && name === OPT_OUT && { props: OPT_OUT }) ||
     // when menu option get selected
-    (name && params.find(param => param.name === name)) ||
+    (name && params.find((param) => param.name === name)) ||
     // when being initialized
-    params.find(param => !!param.default) ||
+    params.find((param) => !!param.default) ||
     // fallback to the first
     params[0] ||
     // fallback for destructuring

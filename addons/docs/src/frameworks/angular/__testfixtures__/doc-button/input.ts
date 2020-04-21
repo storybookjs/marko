@@ -116,7 +116,9 @@ export class InputComponent<T> {
    * @ignore
    */
   public get classes(): string[] {
-    return [this.appearance, this.size].filter(_class => !!_class).map(_class => `btn-${_class}`);
+    return [this.appearance, this.size]
+      .filter((_class) => !!_class)
+      .map((_class) => `btn-${_class}`);
   }
 
   /**

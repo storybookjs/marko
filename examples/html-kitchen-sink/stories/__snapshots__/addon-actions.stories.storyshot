@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Addons/Actions Decorated actions + config 1`] = `
+exports[`Storyshots Addons/Actions Deprecated decorators - Multiple actions + config 1`] = `
 <button
   type="button"
 >
@@ -8,7 +8,23 @@ exports[`Storyshots Addons/Actions Decorated actions + config 1`] = `
 </button>
 `;
 
-exports[`Storyshots Addons/Actions Decorated actions 1`] = `
+exports[`Storyshots Addons/Actions Deprecated decorators - Multiple actions 1`] = `
+<button
+  type="button"
+>
+  Hello World
+</button>
+`;
+
+exports[`Storyshots Addons/Actions Deprecated decorators - Multiple actions, object 1`] = `
+<button
+  type="button"
+>
+  Hello World
+</button>
+`;
+
+exports[`Storyshots Addons/Actions Deprecated decorators - Single action 1`] = `
 <button
   type="button"
 >

@@ -25,10 +25,7 @@ function compileText(code, rootName) {
     code.substring(sourceCodeEndOfHtml);
   const sourceCode =
     rootName === 'root' ? `<root>${sourceCodeReformatted}</root>` : sourceCodeReformatted;
-  return compiler
-    .compile(sourceCode, {})
-    .replace(alreadyCompiledMarker, '')
-    .trim();
+  return compiler.compile(sourceCode, {}).replace(alreadyCompiledMarker, '').trim();
 }
 
 export default function renderStringified({
@@ -37,7 +34,7 @@ export default function renderStringified({
   tagConstructor,
 }) {
   const tag2 = tag;
-  tags.forEach(input => {
+  tags.forEach((input) => {
     const oneTag = input || {};
     const rootName = oneTag.boundAs || guessRootName(oneTag);
     const { content } = oneTag;

@@ -7,13 +7,12 @@ module.exports = {
     '@storybook/addon-actions',
     '@storybook/addon-links',
     '@storybook/addon-events',
-    '@storybook/addon-options',
     '@storybook/addon-knobs',
     '@storybook/addon-backgrounds',
     '@storybook/addon-a11y',
     '@storybook/addon-jest',
   ],
-  webpackFinal: async config => ({
+  webpackFinal: async (config) => ({
     ...config,
     module: {
       ...config.module,

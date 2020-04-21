@@ -8,6 +8,10 @@ Object {
       "description": "PropTypes description",
       "name": "children",
       "required": true,
+      "sbType": Object {
+        "name": "other",
+        "value": "node",
+      },
       "type": Object {
         "detail": undefined,
         "summary": "node",

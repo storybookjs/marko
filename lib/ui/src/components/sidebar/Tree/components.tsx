@@ -7,7 +7,7 @@ export const DefaultList = styled.div();
 
 export const A = styled.a();
 
-export const DefaultFilter = styled(props => <input placeholder="search..." {...props} />)({
+export const DefaultFilter = styled((props) => <input placeholder="search..." {...props} />)({
   width: '100%',
   background: 'transparent',
   border: '1px solid black',
@@ -35,10 +35,9 @@ export const LeafStyle = styled.div<{ depth: number; isSelected: boolean }>(
   })
 );
 
-export const DefaultLeaf: FunctionComponent<{ name: ReactNode; depth: number } & Record<
-  string,
-  any
->> = ({ name, isSelected, depth, ...rest }) => (
+export const DefaultLeaf: FunctionComponent<
+  { name: ReactNode; depth: number } & Record<string, any>
+> = ({ name, isSelected, depth, ...rest }) => (
   <LeafStyle isSelected={isSelected} depth={depth} {...rest}>
     {name}
   </LeafStyle>
@@ -68,7 +67,7 @@ export const DefaultLink: FunctionComponent<{
   children: string[];
   onClick: Function;
 }> = ({ id, prefix, children, ...rest }) => (
-  <A href={`#!${prefix}${id}`} {...rest} onClick={e => prevent(e) || rest.onClick(e)}>
+  <A href={`#!${prefix}${id}`} {...rest} onClick={(e) => prevent(e) || rest.onClick(e)}>
     {children}
   </A>
 );

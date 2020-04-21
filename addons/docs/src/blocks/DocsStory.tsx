@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { Subheading } from './Subheading';
-import { DocsStoryProps } from './shared';
+import { DocsStoryProps } from './types';
 import { Anchor } from './Anchor';
 import { Description } from './Description';
 import { Story } from './Story';

@@ -16,9 +16,9 @@ describe('client-api.decorators', () => {
   it('calls decorators in out to in order', () => {
     const order = [];
     const decorators = [
-      s => order.push(1) && s(),
-      s => order.push(2) && s(),
-      s => order.push(3) && s(),
+      (s) => order.push(1) && s(),
+      (s) => order.push(2) && s(),
+      (s) => order.push(3) && s(),
     ];
     const decorated = defaultDecorateStory(() => order.push(4), decorators);
 
@@ -34,17 +34,17 @@ describe('client-api.decorators', () => {
       (s, c) => contexts.push(c) && s({ k: 2 }),
       (s, c) => contexts.push(c) && s({ k: 3 }),
     ];
-    const decorated = defaultDecorateStory(c => contexts.push(c), decorators);
+    const decorated = defaultDecorateStory((c) => contexts.push(c), decorators);
 
     expect(contexts).toEqual([]);
     decorated(makeContext({ k: 0 }));
-    expect(contexts.map(c => c.k)).toEqual([0, 3, 2, 1]);
+    expect(contexts.map((c) => c.k)).toEqual([0, 3, 2, 1]);
   });
 
   it('merges contexts', () => {
     const contexts = [];
     const decorators = [(s, c) => contexts.push(c) && s({ c: 'd' })];
-    const decorated = defaultDecorateStory(c => contexts.push(c), decorators);
+    const decorated = defaultDecorateStory((c) => contexts.push(c), decorators);
 
     expect(contexts).toEqual([]);
     decorated(makeContext({ a: 'b' }));
@@ -57,7 +57,7 @@ describe('client-api.decorators', () => {
   it('DOES NOT merge parameter or pass through parameters key in context', () => {
     const contexts = [];
     const decorators = [(s, c) => contexts.push(c) && s({ parameters: { c: 'd' } })];
-    const decorated = defaultDecorateStory(c => contexts.push(c), decorators);
+    const decorated = defaultDecorateStory((c) => contexts.push(c), decorators);
 
     expect(contexts).toEqual([]);
     decorated(makeContext({ parameters: { a: 'b' } }));

@@ -80,7 +80,7 @@ export const Story4 = () => {
         <h3>today is ${new Date(today).toLocaleDateString('en-US', dateOptions)}</h3>
         <p>${stockMessage}</p>
         <p>Also, I have:</p>
-        <ul>${items.map(item => `<li>${item}</li>`).join('')}</ul>
+        <ul>${items.map((item) => `<li>${item}</li>`).join('')}</ul>
         <p>${salutation}</p>
       </div>
     `;

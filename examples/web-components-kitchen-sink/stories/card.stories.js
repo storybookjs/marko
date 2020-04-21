@@ -7,13 +7,9 @@ export default {
   component: 'demo-wc-card',
 };
 
-export const Front = () => html`
-  <demo-wc-card>A simple card</demo-wc-card>
-`;
+export const Front = () => html` <demo-wc-card>A simple card</demo-wc-card> `;
 
-export const Back = () => html`
-  <demo-wc-card back-side>A simple card</demo-wc-card>
-`;
+export const Back = () => html` <demo-wc-card back-side>A simple card</demo-wc-card> `;
 
 export const FrontOwnHeader = () => html`
   <demo-wc-card header="My own Header">A simple card</demo-wc-card>

@@ -88,7 +88,7 @@ export class HooksContext {
   }
 
   clean() {
-    this.prevEffects.forEach(effect => {
+    this.prevEffects.forEach((effect) => {
       if (effect.destroy) {
         effect.destroy();
       }
@@ -105,13 +105,13 @@ export class HooksContext {
 
   triggerEffects() {
     // destroy removed effects
-    this.prevEffects.forEach(effect => {
+    this.prevEffects.forEach((effect) => {
       if (!this.currentEffects.includes(effect) && effect.destroy) {
         effect.destroy();
       }
     });
     // trigger added effects
-    this.currentEffects.forEach(effect => {
+    this.currentEffects.forEach((effect) => {
       if (!this.prevEffects.includes(effect)) {
         // eslint-disable-next-line no-param-reassign
         effect.destroy = effect.create();
@@ -124,12 +124,12 @@ export class HooksContext {
   addRenderListeners() {
     this.removeRenderListeners();
     const channel = addons.getChannel();
-    RenderEvents.forEach(e => channel.on(e, this.renderListener));
+    RenderEvents.forEach((e) => channel.on(e, this.renderListener));
   }
 
   removeRenderListeners() {
     const channel = addons.getChannel();
-    RenderEvents.forEach(e => channel.removeListener(e, this.renderListener));
+    RenderEvents.forEach((e) => channel.removeListener(e, this.renderListener));
   }
 }
 
@@ -273,7 +273,7 @@ Incoming: ${deps}`);
 function useMemoLike<T>(name: string, nextCreate: () => T, deps: any[] | undefined): T {
   const { memoizedState } = useHook(
     name,
-    hook => {
+    (hook) => {
       // eslint-disable-next-line no-param-reassign
       hook.memoizedState = nextCreate();
     },
@@ -356,7 +356,7 @@ export function useReducer<S, A>(
 ): [S, (action: A) => void] {
   const initialState: (() => S) | S = init != null ? () => init(initialArg) : initialArg;
   const [state, setState] = useStateLike('useReducer', initialState);
-  const dispatch = (action: A) => setState(prevState => reducer(prevState, action));
+  const dispatch = (action: A) => setState((prevState) => reducer(prevState, action));
   return [state, dispatch];
 }
 

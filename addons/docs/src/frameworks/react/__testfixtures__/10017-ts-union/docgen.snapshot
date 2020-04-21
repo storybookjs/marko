@@ -6,7 +6,7 @@ exports[`react component properties 10017-ts-union 1`] = `
 const Avatar = ({
   icon
 }) => {
-  return React.createElement(\\"div\\", {
+  return /*#__PURE__*/React.createElement(\\"div\\", {
     className: \\"hello\\"
   }, \\"Hello Component \\", icon);
 };

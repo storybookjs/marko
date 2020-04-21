@@ -96,24 +96,7 @@ export const customStoriesFilter = () => <div>Displays ALL stories (not excludin
 customStoriesFilter.story = {
   parameters: {
     docs: {
-      page: () => (
-        <>
-          <Stories slot={stories => stories} />
-        </>
-      ),
-    },
-  },
-};
-
-export const descriptionSlot = () => <div>Adds markdown to the description</div>;
-descriptionSlot.story = {
-  parameters: {
-    docs: {
-      page: () => (
-        <>
-          <Description slot={description => `<b>${description}</b>`} />
-        </>
-      ),
+      page: () => <Stories includePrimary />,
     },
   },
 };
@@ -141,7 +124,7 @@ multipleComponents.story = {
           <Title />
           <Subtitle />
           <Description />
-          <Primary slot={stories => stories.find(story => story.story === 'Many Components')} />
+          <Primary name="Many Components" />
           <Props />
         </>
       ),

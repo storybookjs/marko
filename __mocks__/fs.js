@@ -13,8 +13,8 @@ function __setMockFiles(newMockFiles) {
 // A custom version of `readdirSync` that reads from the special mocked out
 // file list set via __setMockFiles
 const readFileSync = (filePath = '') => mockFiles[filePath];
-const existsSync = filePath => !!mockFiles[filePath];
-const lstatSync = filePath => ({
+const existsSync = (filePath) => !!mockFiles[filePath];
+const lstatSync = (filePath) => ({
   isFile: () => !!mockFiles[filePath],
 });
 

@@ -262,7 +262,7 @@ describe('CSSResourcePanel', () => {
       const node = shallowNode();
       node.instance().onStoryChange('fake-story-id');
 
-      defaultParameters.forEach(param => {
+      defaultParameters.forEach((param) => {
         it(`should render list item with id '${param.id}'`, () => {
           expect(node.find(`#${param.id}`).length).toEqual(1);
         });
@@ -270,12 +270,7 @@ describe('CSSResourcePanel', () => {
         it(`should render list item with id '${param.id}' as ${
           param.picked ? 'checked' : 'unchecked'
         }`, () => {
-          expect(
-            node
-              .find(`#${param.id}`)
-              .first()
-              .prop('checked')
-          ).toBe(param.picked);
+          expect(node.find(`#${param.id}`).first().prop('checked')).toBe(param.picked);
         });
       });
     });

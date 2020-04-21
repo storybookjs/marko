@@ -133,7 +133,7 @@ export const init: ModuleFn = ({
 
       return null;
     },
-    getCurrentParameter: parameterName => {
+    getCurrentParameter: (parameterName) => {
       const { storyId, refId } = store.getState();
       const parameters = api.getParameters({ storyId, refId }, parameterName);
 
@@ -142,7 +142,7 @@ export const init: ModuleFn = ({
       }
       return undefined;
     },
-    jumpToComponent: direction => {
+    jumpToComponent: (direction) => {
       const { storiesHash, storyId, refs, refId } = store.getState();
       const story = api.getData(storyId, refId);
 
@@ -161,7 +161,7 @@ export const init: ModuleFn = ({
         return acc;
       }, []);
 
-      const index = lookupList.findIndex(i => i.includes(storyId));
+      const index = lookupList.findIndex((i) => i.includes(storyId));
 
       // cannot navigate beyond fist or last
       if (index === lookupList.length - 1 && direction > 0) {
@@ -177,7 +177,7 @@ export const init: ModuleFn = ({
         api.selectStory(result, undefined, { ref: refId });
       }
     },
-    jumpToStory: direction => {
+    jumpToStory: (direction) => {
       const { storiesHash, storyId, refs, refId } = store.getState();
       const story = api.getData(storyId, refId);
 
@@ -194,7 +194,7 @@ export const init: ModuleFn = ({
       const hash = story.refId ? refs[story.refId].stories : storiesHash;
 
       const lookupList = Object.keys(hash).filter(
-        k => !(hash[k].children || Array.isArray(hash[k]))
+        (k) => !(hash[k].children || Array.isArray(hash[k]))
       );
       const index = lookupList.indexOf(storyId);
 
@@ -212,7 +212,7 @@ export const init: ModuleFn = ({
         api.selectStory(result, undefined, { ref: refId });
       }
     },
-    setStories: async input => {
+    setStories: async (input) => {
       // Now create storiesHash by reordering the above by group
       const existing = store.getState().storiesHash;
       const hash = transformStoriesRawToStoriesHash(input, existing, {
@@ -264,7 +264,7 @@ export const init: ModuleFn = ({
           // Support legacy API with component permalinks, where kind is `x/y` but permalink is 'z'
           const k = hash[sanitize(kindOrId)];
           if (k && k.children) {
-            const foundId = k.children.find(childId => hash[childId].name === story);
+            const foundId = k.children.find((childId) => hash[childId].name === story);
             if (foundId) {
               api.selectStory(foundId, undefined, options);
             }

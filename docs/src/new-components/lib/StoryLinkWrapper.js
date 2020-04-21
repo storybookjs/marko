@@ -10,7 +10,7 @@ export default function StoryLinkWrapper({ href, passHref, children }) {
 
   return React.cloneElement(child, {
     href: passHref && href,
-    onClick: e => {
+    onClick: (e) => {
       e.preventDefault();
       onLinkClick(href);
     },

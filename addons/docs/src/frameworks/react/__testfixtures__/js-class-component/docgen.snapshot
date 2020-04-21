@@ -13,7 +13,7 @@ class ErrorBox extends React.Component {
     const {
       children
     } = this.props;
-    return React.createElement(\\"div\\", {
+    return /*#__PURE__*/React.createElement(\\"div\\", {
       className: \\"error-box\\"
     }, children);
   }
