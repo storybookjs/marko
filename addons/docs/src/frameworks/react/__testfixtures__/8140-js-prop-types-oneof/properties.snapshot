@@ -11,6 +11,13 @@ Object {
       "description": "",
       "name": "mode",
       "required": false,
+      "sbType": Object {
+        "name": "enum",
+        "value": Array [
+          "static",
+          "timed",
+        ],
+      },
       "type": Object {
         "detail": undefined,
         "summary": "'static' | 'timed'",
@@ -24,6 +31,15 @@ Object {
       "description": "",
       "name": "type",
       "required": false,
+      "sbType": Object {
+        "name": "enum",
+        "value": Array [
+          "success",
+          "warning",
+          "error",
+          "primary",
+        ],
+      },
       "type": Object {
         "detail": undefined,
         "summary": "'success' | 'warning' | 'error' | 'primary'",
@@ -34,6 +50,9 @@ Object {
       "description": "",
       "name": "message",
       "required": true,
+      "sbType": Object {
+        "name": "string",
+      },
       "type": Object {
         "detail": undefined,
         "summary": "string",
@@ -44,6 +63,9 @@ Object {
       "description": "No background or border if static alert",
       "name": "blank",
       "required": false,
+      "sbType": Object {
+        "name": "boolean",
+      },
       "type": Object {
         "detail": undefined,
         "summary": "bool",
@@ -54,6 +76,9 @@ Object {
       "description": "Allows icon override, accepts material icon name",
       "name": "icon",
       "required": false,
+      "sbType": Object {
+        "name": "string",
+      },
       "type": Object {
         "detail": undefined,
         "summary": "string",

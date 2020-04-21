@@ -170,10 +170,11 @@ export class PostmsgTransport {
           ? `<span style="color: #FF4785">${event.type}</span>`
           : `<span style="color: #FFAE00">${event.type}</span>`;
 
-        event.source = source || getEventSourceUrl(rawEvent);
+        event.source =
+          source || this.config.page === 'preview' ? rawEvent.origin : getEventSourceUrl(rawEvent);
 
         if (!event.source) {
-          logger.error(
+          pretty.error(
             `${pageString} received ${eventString} but was unable to determine the source of the event`
           );
 
@@ -195,8 +196,7 @@ export class PostmsgTransport {
 }
 
 const getEventSourceUrl = (event: MessageEvent) => {
-  const frames: HTMLIFrameElement[] = [...document.getElementsByTagName('iframe')];
-
+  const frames = [...document.querySelectorAll('iframe[data-is-storybook]')];
   // try to find the originating iframe by matching it's contentWindow
   // This might not be cross-origin safe
   const [frame, ...remainder] = frames.filter((element) => {
@@ -217,15 +217,19 @@ const getEventSourceUrl = (event: MessageEvent) => {
     return origin === event.origin;
   });
 
-  // If we found multiple matches, there's going to be trouble
-  if (remainder.length) {
-    console.error('unable to locate origin of postmessage');
-    return null;
+  if (frame && remainder.length === 0) {
+    const src = frame.getAttribute('src');
+    const { origin, pathname } = new URL(src, document.location);
+    return origin + pathname;
   }
 
-  const src = frame.getAttribute('src');
-  const { origin, pathname } = new URL(src, document.location);
-  return origin + pathname;
+  if (remainder.length > 0) {
+    // If we found multiple matches, there's going to be trouble
+    logger.error('found multiple candidates for event source');
+  }
+
+  // If we found no frames of matches
+  return null;
 };
 
 /**

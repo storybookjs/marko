@@ -8,6 +8,9 @@ Object {
       "description": "",
       "name": "other",
       "required": false,
+      "sbType": Object {
+        "name": "number",
+      },
       "type": Object {
         "detail": undefined,
         "summary": "number",

@@ -27,7 +27,7 @@ import {
   PublishedStoreItem,
   ErrorLike,
   GetStorybookKind,
-  ParameterEnhancer,
+  ArgTypesEnhancer,
 } from './types';
 import { HooksContext } from './hooks';
 import storySort from './storySort';
@@ -103,7 +103,7 @@ export default class StoryStore {
   // Keyed on storyId
   _stories: StoreData;
 
-  _parameterEnhancers: ParameterEnhancer[];
+  _argTypesEnhancers: ArgTypesEnhancer[];
 
   _revision: number;
 
@@ -117,7 +117,7 @@ export default class StoryStore {
     this._globalMetadata = { parameters: {}, decorators: [] };
     this._kinds = {};
     this._stories = {};
-    this._parameterEnhancers = [];
+    this._argTypesEnhancers = [];
     this._revision = 0;
     this._selection = {} as any;
     this._error = undefined;
@@ -221,11 +221,11 @@ export default class StoryStore {
     this._kinds[kind].decorators.push(...decorators);
   }
 
-  addParameterEnhancer(parameterEnhancer: ParameterEnhancer) {
+  addArgTypesEnhancer(argTypesEnhancer: ArgTypesEnhancer) {
     if (Object.keys(this._stories).length > 0)
       throw new Error('Cannot add a parameter enhancer to the store after a story has been added.');
 
-    this._parameterEnhancers.push(parameterEnhancer);
+    this._argTypesEnhancers.push(argTypesEnhancer);
   }
 
   // Combine the global, kind & story parameters of a story
@@ -312,12 +312,10 @@ export default class StoryStore {
         globalArgs: this._globalArgs,
       });
 
-    // We need the combined parameters now in order to calculate argTypes and args, but we won't keep them
+    // We need the combined parameters now in order to calculate argTypes, but we won't keep them
     const combinedParameters = this.combineStoryParameters(storyParameters, kind);
 
-    // You aren't allowed to enhance anything apart from args and argTypes. In fact we will soon make this
-    // argTypesEnhancers
-    const { args = {}, argTypes = {} } = this._parameterEnhancers.reduce(
+    const { argTypes } = this._argTypesEnhancers.reduce(
       (accumlatedParameters: Parameters, enhancer) => ({
         ...accumlatedParameters,
         ...enhancer({
@@ -331,7 +329,7 @@ export default class StoryStore {
     );
 
     // Pull out parameters.args.$ || .argTypes.$.defaultValue into initialArgs
-    const initialArgs: Args = args;
+    const initialArgs: Args = combinedParameters.args;
     const defaultArgs: Args = Object.entries(
       argTypes as Record<string, { defaultValue: any }>
     ).reduce((acc, [arg, { defaultValue }]) => {
@@ -347,7 +345,7 @@ export default class StoryStore {
       getOriginal,
       storyFn,
 
-      parameters: storyParameters,
+      parameters: { ...storyParameters, argTypes },
       args: { ...defaultArgs, ...initialArgs },
     };
   }

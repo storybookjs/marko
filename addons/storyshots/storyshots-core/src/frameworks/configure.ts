@@ -54,12 +54,7 @@ function getConfigPathParts(input: string): Output {
         (pattern: string | { path: string; recursive: boolean; match: string }) => {
           const { path: basePath, recursive, match } = toRequireContext(pattern);
           // eslint-disable-next-line no-underscore-dangle
-          return global.__requireContext(
-            configDir,
-            basePath,
-            recursive,
-            new RegExp(match.slice(1, -1))
-          );
+          return global.__requireContext(configDir, basePath, recursive, match);
         }
       );
     }

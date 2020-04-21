@@ -11,6 +11,7 @@ import { mockProps, realProps, MockPage } from './app.mockdata';
 export default {
   title: 'UI/Layout/Mobile',
   component: Mobile,
+  parameters: { passArgsFirst: false },
   decorators: [
     withKnobs,
     ((StoryFn, c) => {
