@@ -320,6 +320,7 @@ export default class StoryStore {
         ...accumlatedParameters,
         argTypes: enhancer({
           ...identification,
+          storyFn,
           parameters: accumlatedParameters,
           args: {},
           globalArgs: {},
@@ -464,6 +465,7 @@ export default class StoryStore {
   }
 
   setError = (err: ErrorLike) => {
+    console.log(err);
     this._error = err;
     if (this._channel) this._channel.emit(Events.RENDER_CURRENT_STORY);
   };
@@ -493,6 +495,7 @@ export default class StoryStore {
   };
 
   pushToManager = () => {
+    console.log('pushToMAanger');
     if (this._channel) {
       // send to the parent frame.
       this._channel.emit(Events.SET_STORY_STORE_DATA, this.getDataForManager());
