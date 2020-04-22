@@ -1,6 +1,7 @@
 <h1>Migration</h1>
 
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
+  - [Docs theme separated](#docs-theme-separated)
   - [DocsPage slots removed](#docspage-slots-removed)
   - [React prop tables with Typescript](#react-prop-tables-with-typescript)
     - [React.FC interfaces](#reactfc-interfaces)
@@ -100,6 +101,12 @@
   - [Deprecated embedded addons](#deprecated-embedded-addons)
 
 ## From version 5.3.x to 6.0.x
+
+### Docs theme separated
+
+In 6.0, you should theme Storybook Docs with the `docs.theme` parameter.
+
+In 5.x, the Storybook UI and Storybook Docs were themed using the same theme object. However, in 5.3 we introduced a new API, `addons.setConfig`, which improved UI theming but broke Docs theming. Rather than trying to keep the two unified, we introduced a separate theming mechanism for docs, `docs.theme`. [Read about Docs theming here](https://github.com/storybookjs/storybook/blob/next/addons/docs/docs/theming.md#storybook-theming).
 
 ### DocsPage slots removed
 
@@ -746,7 +753,7 @@ var sortedModules = modules.slice().sort((a, b) => {
 });
 
 // execute them
-sortedModules.forEach(key => {
+sortedModules.forEach((key) => {
   context(key);
 });
 ```
@@ -1310,7 +1317,7 @@ Here's an example of using Notes and Info in 3.2 with the new API.
 storiesOf('composition', module).add(
   'new addons api',
   withInfo('see Notes panel for composition info')(
-    withNotes({ text: 'Composition: Info(Notes())' })(context => (
+    withNotes({ text: 'Composition: Info(Notes())' })((context) => (
       <MyComponent name={context.story} />
     ))
   )
