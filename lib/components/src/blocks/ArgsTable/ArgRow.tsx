@@ -55,12 +55,12 @@ const TypeWithJsDoc = styled.div<{ hasDescription: boolean }>(({ theme, hasDescr
 }));
 
 export const ArgRow: FC<ArgRowProps> = (props) => {
-  const { row, arg, updateArgs } = props;
+  const { row, updateArgs } = props;
   const { name, description } = row;
   const table = (row.table || {}) as TableAnnotation;
   const type = table.type || row.type;
   const defaultValue = table.defaultValue || row.defaultValue;
-  const required = type?.required;
+  const required = row.type?.required;
   const hasDescription = description != null && description !== '';
 
   return (

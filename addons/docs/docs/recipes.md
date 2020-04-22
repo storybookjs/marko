@@ -251,13 +251,13 @@ Example.story = {
 };
 ```
 
-Alternatively, you can provide a function in the `docs.formatSource` parameter. For example, the following snippet in `.storybook/preview.js` globally removes the arrow at the beginning of a function that returns a string:
+Alternatively, you can provide a function in the `docs.transformSource` parameter. For example, the following snippet in `.storybook/preview.js` globally removes the arrow at the beginning of a function that returns a string:
 
 ```js
 const SOURCE_REGEX = /^\(\) => `(.*)`$/;
 export const parameters = {
   docs: {
-    formatSource: (src, storyId) => {
+    transformSource: (src, storyId) => {
       const match = SOURCE_REGEX.exec(src);
       return match ? match[1] : src;
     },
