@@ -9,5 +9,5 @@ export default {
   parameters: { chromatic: { disable: true } },
 };
 
-export const displaysCorrectly = () => <ForwardedButton>Hello World!</ForwardedButton>;
+export const displaysCorrectly = () => <ForwardedButton label="hello" />;
 displaysCorrectly.story = { name: 'Displays forwarded ref components correctly' };
