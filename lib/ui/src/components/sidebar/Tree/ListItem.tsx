@@ -9,7 +9,7 @@ export type ExpanderProps = ComponentProps<'span'> & {
   depth: number;
 };
 
-const Expander = styled.span<ExpanderProps>(
+export const Expander = styled.span<ExpanderProps>(
   ({ theme, depth }) => ({
     position: 'absolute',
     display: 'block',
