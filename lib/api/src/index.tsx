@@ -93,9 +93,14 @@ export type ManagerProviderProps = RouterData &
     children: ReactNode | ((props: Combo) => ReactNode);
   };
 
+// These types are duplicated in addons.
+export type StoryId = string;
+export type StoryKind = string;
+
 export interface Args {
   [key: string]: any;
 }
+
 export interface ArgType {
   name?: string;
   description?: string;
@@ -105,6 +110,10 @@ export interface ArgType {
 
 export interface ArgTypes {
   [key: string]: ArgType;
+}
+
+export interface Parameters {
+  [key: string]: any;
 }
 
 export type ModuleFn = (m: ModuleArgs) => Module;
