@@ -44,7 +44,7 @@ export type Refs = Record<string, ComposedRef>;
 export type RefId = string;
 export type RefUrl = string;
 
-const findFilename = /(\/((?:[a-z]+?)\.(.+))|\/)$/;
+const findFilename = /(\/((?:[^\/]+?)\.[^\/]+?)|\/)$/;
 
 export const getSourceType = (source: string) => {
   const { origin: localOrigin, pathname: localPathname } = location;
