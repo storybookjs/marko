@@ -4,7 +4,7 @@
     "rootDir": "./src",
     "types": ["webpack-env"],
     "resolveJsonModule": true,
-    "lib": ["ESNext", "DOM"]
+    "lib": ["ESNext", "DOM", "DOM.Iterable"]
   },
   "include": ["src/**/*"],
   "exclude": ["src/**/*.test.*", "src/__tests__/**/*"]

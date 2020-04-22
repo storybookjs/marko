@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo, useState } from 'react';
+import React, { FunctionComponent, MouseEvent, useMemo, useState, useRef } from 'react';
 import { styled } from '@storybook/theming';
 
 import { ExpanderContext, useDataset } from './Tree/State';
@@ -52,6 +52,7 @@ const Wrapper = styled.div<{ isMain: boolean }>(({ isMain }) => ({
 
 export const Ref: FunctionComponent<RefType & RefProps> = (ref) => {
   const [isExpanded, setIsExpanded] = useState(true);
+  const indicatorRef = useRef<HTMLElement>(null);
 
   const { stories, id: key, title = key, storyId, filter, isHidden = false, authUrl, error } = ref;
   const { dataSet, expandedSet, length, others, roots, setExpanded, selectedSet } = useDataset(
@@ -59,6 +60,12 @@ export const Ref: FunctionComponent<RefType & RefProps> = (ref) => {
     filter,
     storyId
   );
+
+  const handleClick = ({ target }: MouseEvent) => {
+    // Don't fire if the click is from the indicator.
+    if (target === indicatorRef.current || indicatorRef.current?.contains(target as Node)) return;
+    setIsExpanded(!isExpanded);
+  };
 
   const combo = useMemo(() => ({ setExpanded, expandedSet }), [setExpanded, expandedSet]);
 
@@ -76,11 +83,11 @@ export const Ref: FunctionComponent<RefType & RefProps> = (ref) => {
           aria-label={`${isExpanded ? 'Hide' : 'Show'} ${title} stories`}
           aria-expanded={isExpanded}
           type="button"
-          onClick={() => setIsExpanded(!isExpanded)}
+          onClick={handleClick}
         >
           <Expander className="sidebar-ref-expander" depth={0} isExpanded={isExpanded} />
           <RefTitle title={title}>{title}</RefTitle>
-          <RefIndicator {...ref} type={type} />
+          <RefIndicator {...ref} type={type} ref={indicatorRef} />
         </RefHead>
       )}
       {isExpanded && (
