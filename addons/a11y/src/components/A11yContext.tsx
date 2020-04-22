@@ -76,7 +76,7 @@ export const A11yContextProvider: React.FC<A11yContextProviderProps> = ({ active
   const handleReset = React.useCallback(() => {
     setTab(0);
     setResults(defaultResult);
-    handleClearHighlights();
+    // Highlights is cleared by a11yHighlights.ts
   }, []);
 
   const emit = useChannel({
