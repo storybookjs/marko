@@ -14,7 +14,7 @@ export const extractArgTypes = (componentName) => {
   const rows = componentDoc.attributes.arguments.map((prop) => {
     return {
       name: prop.name,
-      defaultValue: prop.defaultValue,
+      defaultValue: { summary: prop.defaultValue },
       description: prop.description,
       table: {
         type: {

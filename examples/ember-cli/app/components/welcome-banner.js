@@ -23,6 +23,7 @@ export default Component.extend({
    * The hex-formatted color code for the background.
    * @argument backgroundColor
    * @type {string}
+   * @default null
    */
   backgroundColor: null,
 
