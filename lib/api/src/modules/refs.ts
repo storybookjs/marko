@@ -44,6 +44,7 @@ export type Refs = Record<string, ComposedRef>;
 export type RefId = string;
 export type RefUrl = string;
 
+// eslint-disable-next-line no-useless-escape
 const findFilename = /(\/((?:[^\/]+?)\.[^\/]+?)|\/)$/;
 
 export const getSourceType = (source: string) => {
