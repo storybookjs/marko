@@ -44,20 +44,22 @@ export type Refs = Record<string, ComposedRef>;
 export type RefId = string;
 export type RefUrl = string;
 
-export const getSourceType = (source: string) => {
-  const { origin, pathname } = location;
+const findFilename = /(\/((?:[a-z]+?)\.(.+))|\/)$/;
 
-  if (
-    source === origin ||
-    source === `${origin + pathname}iframe.html` ||
-    source === `${origin + pathname.replace(/(?!.*\/).*\.html$/, '')}iframe.html`
-  ) {
-    return 'local';
+export const getSourceType = (source: string) => {
+  const { origin: localOrigin, pathname: localPathname } = location;
+  const { origin: sourceOrigin, pathname: sourcePathname } = new URL(source);
+
+  const localFull = `${localOrigin + localPathname}`.replace(findFilename, '');
+  const sourceFull = `${sourceOrigin + sourcePathname}`.replace(findFilename, '');
+
+  if (localFull === sourceFull) {
+    return ['local', sourceFull];
   }
   if (source) {
-    return 'external';
+    return ['external', sourceFull];
   }
-  return null;
+  return [null, null];
 };
 
 export const defaultMapper: Mapper = (b, a) => {

@@ -289,7 +289,7 @@ export const init: ModuleFn = ({
   const initModule = () => {
     fullAPI.on(STORY_CHANGED, function handleStoryChange(storyId: string) {
       const { source }: { source: string } = this;
-      const sourceType = getSourceType(source);
+      const [sourceType] = getSourceType(source);
 
       if (sourceType === 'local') {
         const options = fullAPI.getCurrentParameter('options');
@@ -304,7 +304,7 @@ export const init: ModuleFn = ({
       // the event originates from an iframe, event.source is the iframe's location origin + pathname
       const { storyId } = store.getState();
       const { source }: { source: string } = this;
-      const sourceType = getSourceType(source);
+      const [sourceType, sourceLocation] = getSourceType(source);
 
       switch (sourceType) {
         // if it's a local source, we do nothing special
@@ -319,9 +319,10 @@ export const init: ModuleFn = ({
 
         // if it's a ref, we need to map the incoming stories to a prefixed version, so it cannot conflict with others
         case 'external': {
-          const ref = fullAPI.findRef(source);
+          const ref = fullAPI.findRef(sourceLocation);
 
           if (ref) {
+            console.log('ref2', ref);
             fullAPI.setRef(ref.id, { ...ref, ...data }, true);
             break;
           }
@@ -345,7 +346,7 @@ export const init: ModuleFn = ({
       [k: string]: any;
     }) {
       const { source }: { source: string } = this;
-      const sourceType = getSourceType(source);
+      const [sourceType, sourceLocation] = getSourceType(source);
 
       switch (sourceType) {
         case 'local': {
@@ -354,7 +355,7 @@ export const init: ModuleFn = ({
         }
 
         case 'external': {
-          const ref = fullAPI.findRef(source);
+          const ref = fullAPI.findRef(sourceLocation);
           fullAPI.selectStory(kind, story, { ...rest, ref: ref.id });
           break;
         }
