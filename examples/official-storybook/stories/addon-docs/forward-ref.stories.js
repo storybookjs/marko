@@ -1,7 +1,9 @@
 import React from 'react';
 import { DocgenButton } from '../../components/DocgenButton';
 
-const ForwardedButton = React.forwardRef((props, ref) => <DocgenButton ref={ref} {...props} />);
+const ForwardedButton = React.forwardRef((props = { label: '' }, ref) => (
+  <DocgenButton ref={ref} {...props} />
+));
 
 export default {
   title: 'Addons|Docs/ForwardRef',
