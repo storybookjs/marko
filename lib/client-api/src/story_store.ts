@@ -495,7 +495,7 @@ export default class StoryStore {
   pushToManager = () => {
     if (this._channel) {
       // send to the parent frame.
-      this._channel.emit(Events.SET_STORIES, this.getDataForManager());
+      this._channel.emit(Events.SET_STORY_STORE_DATA, this.getDataForManager());
     }
   };
 

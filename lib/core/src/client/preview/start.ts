@@ -65,7 +65,7 @@ export default function start(
 
   // Only try and do URL/event based stuff in a browser context (i.e. not in storyshots)
   if (isBrowser) {
-    const afterStoriesSet = () => {
+    const afterStoryStoreDataSet = () => {
       // Initialize the story store with the selection in the URL
       const { storyId, viewMode } = initializePath(storyStore);
 
@@ -77,7 +77,7 @@ export default function start(
       }
     };
 
-    channel.once(Events.SET_STORIES, afterStoriesSet);
+    channel.once(Events.SET_STORY_STORE_DATA, afterStoryStoreDataSet);
 
     // Handle keyboard shortcuts
     window.onkeydown = (event: KeyboardEvent) => {

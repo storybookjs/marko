@@ -4,8 +4,10 @@ enum events {
   SET_CURRENT_STORY = 'setCurrentStory',
   // The current story changed due to the above
   CURRENT_STORY_WAS_SET = 'currentStoryWasSet',
-  // Emitted by the preview whenever the list of stories changes (in batches)
-  SET_STORIES = 'setStories',
+  // Emitted by the preview whenever the list of stories changes
+  SET_STORY_STORE_DATA = 'setStoryStoreData',
+  // This is the legacy event that used to do the above
+  LEGACY_SET_STORIES = 'setStories',
   // Emitted by the preview when the current story (or error) should be rendered
   RENDER_CURRENT_STORY = 'renderCurrentStory',
   // Deprecated version of the above
@@ -47,7 +49,8 @@ export default events;
 export const {
   CHANNEL_CREATED,
   SET_CURRENT_STORY,
-  SET_STORIES,
+  SET_STORY_STORE_DATA,
+  LEGACY_SET_STORIES,
   RENDER_CURRENT_STORY,
   STORY_RENDER,
   FORCE_RE_RENDER,
