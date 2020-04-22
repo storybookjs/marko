@@ -9,7 +9,7 @@ This [storybook](https://storybooks.js.org) ([source](https://github.com/storybo
 ### Getting Started
 
 ```sh
-npm i --save-dev @storybook/addon-events
+npm i --save-dev @storybook/addon-events event-emitter
 ```
 
 within `.storybook/main.js`:
@@ -24,13 +24,13 @@ Then write your stories like this:
 
 ```js
 import withEvents from '@storybook/addon-events';
-import EventEmiter from 'event-emiter';
+import EventEmitter from 'event-emitter';
 
 import Logger from './Logger';
 import * as EVENTS from './events';
 
-const emiter = new EventEmiter();
-const emit = emiter.emit.bind(emiter);
+const emitter = new EventEmitter();
+const emit = emitter.emit.bind(emitter);
 
 export default {
   title: 'withEvents',
@@ -89,6 +89,6 @@ export default {
 }
 
 export const defaultView = () => (
-  <Logger emiter={emiter} />
+  <Logger emitter={emitter} />
 );
 ```
