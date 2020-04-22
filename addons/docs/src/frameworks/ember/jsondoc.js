@@ -11,7 +11,7 @@ export const getJSONDoc = () => {
 export const extractArgTypes = (componentName) => {
   const json = getJSONDoc();
   const componentDoc = json.included.find((doc) => doc.attributes.name === componentName);
-  const rows = componentDoc.attributes.arguments.map((prop) => {
+  return componentDoc.attributes.arguments.map((prop) => {
     return {
       name: prop.name,
       defaultValue: prop.defaultValue,
@@ -24,7 +24,6 @@ export const extractArgTypes = (componentName) => {
       },
     };
   });
-  return { rows };
 };
 
 export const extractComponentDescription = (componentName) => {
