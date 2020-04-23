@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { styled } from '@storybook/theming';
+import { styled, ignoreSsrWarning } from '@storybook/theming';
 import { opacify, transparentize, darken, lighten } from 'polished';
 import { ArgRow, ArgRowProps } from './ArgRow';
 import { SectionRow, SectionRowProps } from './SectionRow';
@@ -79,20 +79,20 @@ export const TableWrapper = styled.table<{}>(({ theme }) => ({
     marginLeft: 1,
     marginRight: 1,
 
-    'tr:first-child': {
-      'td:first-child, th:first-child': {
+    [`tr:first-child${ignoreSsrWarning}`]: {
+      [`td:first-child${ignoreSsrWarning}, th:first-child${ignoreSsrWarning}`]: {
         borderTopLeftRadius: theme.appBorderRadius,
       },
-      'td:last-child, th:last-child': {
+      [`td:last-child${ignoreSsrWarning}, th:last-child${ignoreSsrWarning}`]: {
         borderTopRightRadius: theme.appBorderRadius,
       },
     },
 
-    'tr:last-child': {
-      'td:first-child, th:first-child': {
+    [`tr:last-child${ignoreSsrWarning}`]: {
+      [`td:first-child${ignoreSsrWarning}, th:first-child${ignoreSsrWarning}`]: {
         borderBottomLeftRadius: theme.appBorderRadius,
       },
-      'td:last-child, th:last-child': {
+      [`td:last-child${ignoreSsrWarning}, th:last-child${ignoreSsrWarning}`]: {
         borderBottomRightRadius: theme.appBorderRadius,
       },
     },
@@ -110,7 +110,7 @@ export const TableWrapper = styled.table<{}>(({ theme }) => ({
       tr: {
         background: 'transparent',
         overflow: 'hidden',
-        '&:not(:first-child)': {
+        [`&:not(:first-child${ignoreSsrWarning})`]: {
           borderTopWidth: 1,
           borderTopStyle: 'solid',
           borderTopColor:

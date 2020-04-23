@@ -1,4 +1,11 @@
-import React, { FunctionComponent, useMemo, Fragment, ComponentProps, useCallback } from 'react';
+import React, {
+  FunctionComponent,
+  useMemo,
+  Fragment,
+  ComponentProps,
+  useCallback,
+  forwardRef,
+} from 'react';
 
 import { Icons, WithTooltip, Spaced, TooltipLinkList } from '@storybook/components';
 import { styled } from '@storybook/theming';
@@ -122,11 +129,12 @@ const CurrentVersion: FunctionComponent<CurrentVersionProps> = ({ url, versions 
   );
 };
 
-export const RefIndicator: FunctionComponent<
+export const RefIndicator = forwardRef<
+  HTMLElement,
   RefType & {
     type: ReturnType<typeof getType>;
   }
-> = ({ type, ...ref }) => {
+>(({ type, ...ref }, forwardedRef) => {
   const api = useStorybookApi();
   const list = useMemo(() => Object.values(ref.stories || {}), [ref.stories]);
   const componentCount = useMemo(() => list.filter((v) => v.isComponent).length, [list]);
@@ -141,7 +149,7 @@ export const RefIndicator: FunctionComponent<
   );
 
   return (
-    <IndicatorPlacement>
+    <IndicatorPlacement ref={forwardedRef}>
       <WithTooltip
         placement="bottom-start"
         trigger="click"
@@ -195,7 +203,7 @@ export const RefIndicator: FunctionComponent<
       ) : null}
     </IndicatorPlacement>
   );
-};
+});
 
 const PerformanceDegradedMessage: FunctionComponent = () => (
   <Message href="https://storybook.js.org" target="_blank">

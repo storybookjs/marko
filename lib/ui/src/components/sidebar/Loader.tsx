@@ -1,6 +1,8 @@
 import React, { FunctionComponent, Fragment } from 'react';
 import { styled } from '@storybook/theming';
 
+const LOADER_SEQUENCE = [0, 0, 1, 1, 2, 3, 3, 3, 1, 1, 1, 2, 2, 2, 3];
+
 const Loadingitem = styled.div<{
   depth?: number;
 }>(
@@ -30,30 +32,24 @@ export const Contained = styled.div({
   paddingRight: 20,
 });
 
-export const Loader: FunctionComponent<{
-  size: 'single' | 'multiple';
-}> = ({ size }) => {
-  return size === 'multiple' ? (
+interface LoaderProps {
+  /**
+   * The number of lines to display in the loader.
+   * These are indented according to a pre-defined sequence of depths.
+   */
+  size: number;
+}
+
+export const Loader: FunctionComponent<LoaderProps> = ({ size }) => {
+  const repeats = Math.ceil(size / LOADER_SEQUENCE.length);
+  // Creates an array that repeats LOADER_SEQUENCE depths in order, until the size is reached.
+  const sequence = Array.from(Array(repeats)).fill(LOADER_SEQUENCE).flat().slice(0, size);
+  return (
     <Fragment>
-      <Loadingitem />
-      <Loadingitem />
-      <Loadingitem depth={1} />
-      <Loadingitem depth={1} />
-      <Loadingitem depth={2} />
-      <Loadingitem depth={3} />
-      <Loadingitem depth={3} />
-      <Loadingitem depth={3} />
-      <Loadingitem depth={1} />
-      <Loadingitem depth={1} />
-      <Loadingitem depth={1} />
-      <Loadingitem depth={2} />
-      <Loadingitem depth={2} />
-      <Loadingitem depth={2} />
-      <Loadingitem depth={3} />
-      <Loadingitem />
-      <Loadingitem />
+      {sequence.map((depth, index) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <Loadingitem depth={depth} key={index} />
+      ))}
     </Fragment>
-  ) : (
-    <Loadingitem />
   );
 };

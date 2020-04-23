@@ -21,8 +21,9 @@ export default {
 export const stringType = {
   name: 'someString',
   description: 'someString description',
+  type: { required: true },
   table: {
-    type: { summary: 'string', required: true },
+    type: { summary: 'string' },
     defaultValue: { summary: 'fixme' },
   },
 };
@@ -40,8 +41,9 @@ export const longDescType = {
 export const numberType = {
   name: 'someNumber',
   description: 'someNumber description',
+  type: { required: false },
   table: {
-    type: { summary: 'number', required: false },
+    type: { summary: 'number' },
     defaultValue: { summary: '0' },
   },
 };
@@ -50,7 +52,7 @@ export const objectType = {
   name: 'someObject',
   description: 'A simple `objectOf` propType.',
   table: {
-    type: { summary: 'objectOf(number)', required: false },
+    type: { summary: 'objectOf(number)' },
     defaultValue: { summary: '{ key: 1 }' },
   },
 };
@@ -59,7 +61,7 @@ export const arrayType = {
   name: 'someArray',
   description: 'array of a certain type',
   table: {
-    type: { summary: 'number[]', required: false },
+    type: { summary: 'number[]' },
     defaultValue: { summary: '[1, 2, 3]' },
   },
 };
@@ -75,7 +77,6 @@ export const complexType = {
     func: func,
     arr: [{ index: number }]
   }]`,
-      required: false,
     },
     defaultValue: {
       summary: 'object',
@@ -91,8 +92,9 @@ export const complexType = {
 export const funcType = {
   name: 'concat',
   description: 'concat 2 string values.',
+  type: { required: true },
   table: {
-    type: { summary: '(a: string, b: string) => string', required: true },
+    type: { summary: '(a: string, b: string) => string' },
     defaultValue: { summary: 'func', detail: '(a, b) => { return a + b; }' },
     jsDocTags: {
       params: [
@@ -109,7 +111,7 @@ export const markdownType = {
   description:
     'A `prop` can *support* __markdown__ syntax. This was ship in ~~5.2~~ 5.3. [Find more info in the storybook docs.](https://storybook.js.org/)',
   table: {
-    type: { summary: 'string', required: false },
+    type: { summary: 'string' },
   },
 };
 
