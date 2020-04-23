@@ -9,7 +9,6 @@ module.exports = {
     '@storybook/addon-knobs',
     '@storybook/addon-viewport',
     '@storybook/addon-backgrounds',
-    '@storybook/addon-contexts',
     '@storybook/addon-a11y',
   ],
   webpackFinal: (config) => {
