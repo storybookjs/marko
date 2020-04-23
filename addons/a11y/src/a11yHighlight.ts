@@ -3,6 +3,8 @@ import addons from '@storybook/addons';
 import { STORY_CHANGED } from '@storybook/core-events';
 import { EVENTS, HIGHLIGHT_STYLE_ID } from './constants';
 
+import { higlightStyle } from './highlight';
+
 if (module && module.hot && module.hot.decline) {
   module.hot.decline();
 }
@@ -15,13 +17,6 @@ interface HighlightInfo {
 
 const channel = addons.getChannel();
 
-const higlighted = (color: string) => `
-  outline: 2px dashed ${color};
-  outline-offset: 2px;
-  box-shadow: 0 0 0 6px rgba(255,255,255,0.6);
-}
-`;
-
 const highlight = (infos: HighlightInfo) => {
   const id = HIGHLIGHT_STYLE_ID;
   resetHighlight();
@@ -32,7 +27,7 @@ const highlight = (infos: HighlightInfo) => {
     .map(
       (target) =>
         `${target}{ 
-          ${higlighted(infos.color)}
+          ${higlightStyle(infos.color)}
          }`
     )
     .join(' ');
