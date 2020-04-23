@@ -1,7 +1,7 @@
 <h1>Migration</h1>
 
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
-  - [6.0 Deprecated Addons](#60-deprecated-addons)
+  - [Docs theme separated](#docs-theme-separated)
   - [DocsPage slots removed](#docspage-slots-removed)
   - [React prop tables with Typescript](#react-prop-tables-with-typescript)
     - [React.FC interfaces](#reactfc-interfaces)
@@ -102,17 +102,11 @@
 
 ## From version 5.3.x to 6.0.x
 
-### 6.0 Deprecated Addons
+### Docs theme separated
 
-We have moved a few addons into the [deprecated addons repo](https://github.com/storybookjs/deprecated-addons). This means that these addons will no longer be maintained as part of Storybook's core and will be released on an irregular schedule, based on community contributions.
+In 6.0, you should theme Storybook Docs with the `docs.theme` parameter.
 
-| Deprecated                  | Replacement                 |
-| --------------------------- | --------------------------- |
-| `@storybook/addon-info`     | `@storybook/addon-docs`     |
-| `@storybook/addon-notes`    | `@storybook/addon-docs`     |
-| `@storybook/addon-contexts` | `@storybook/addon-toolbars` |
-
-If you are able to upgrade to the recommended replacement, we recommend it! Not only are these new addons an improvement on the packages they replace, but they are actively maintained.
+In 5.x, the Storybook UI and Storybook Docs were themed using the same theme object. However, in 5.3 we introduced a new API, `addons.setConfig`, which improved UI theming but broke Docs theming. Rather than trying to keep the two unified, we introduced a separate theming mechanism for docs, `docs.theme`. [Read about Docs theming here](https://github.com/storybookjs/storybook/blob/next/addons/docs/docs/theming.md#storybook-theming).
 
 ### DocsPage slots removed
 

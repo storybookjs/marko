@@ -1,10 +1,7 @@
 import React, { FunctionComponent } from 'react';
-import { styled } from '@storybook/theming';
+import { styled, ignoreSsrWarning } from '@storybook/theming';
 
 const toNumber = (input: any) => (typeof input === 'number' ? input : Number(input));
-
-const ignoreSsrWarning =
-  '/* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */';
 
 export interface ContainerProps {
   col?: number;
