@@ -1,17 +1,11 @@
 import { document, window } from 'global';
-import { STORY_RENDERED } from '@storybook/core-events';
-import axe, { ElementContext, RunOptions, Spec } from 'axe-core';
+import axe from 'axe-core';
 import addons from '@storybook/addons';
 import { EVENTS } from './constants';
+import { Setup } from './params';
 
 if (module && module.hot && module.hot.decline) {
   module.hot.decline();
-}
-
-interface Setup {
-  element?: ElementContext;
-  config: Spec;
-  options: RunOptions;
 }
 
 const channel = addons.getChannel();
@@ -28,6 +22,8 @@ const run = async (storyId: string) => {
 
     if (!active) {
       active = true;
+      channel.emit(EVENTS.RUNNING);
+
       const { element = getElement(), config, options } = input;
       axe.reset();
       if (config) {
@@ -58,5 +54,5 @@ const getParams = (storyId: string): Setup => {
   );
 };
 
-channel.on(STORY_RENDERED, run);
 channel.on(EVENTS.REQUEST, run);
+channel.on(EVENTS.MANUAL, run);
