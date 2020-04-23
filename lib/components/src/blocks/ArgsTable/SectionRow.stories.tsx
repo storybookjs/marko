@@ -5,7 +5,7 @@ import { ResetWrapper } from '../../typography/DocumentFormatting';
 
 export default {
   component: SectionRow,
-  title: 'Docs/SectionRow',
+  title: 'Docs/ArgsSectionRow',
   decorators: [
     (getStory) => (
       <ResetWrapper>
