@@ -1,3 +1,14 @@
+## 6.0.0-alpha.42 (April 23, 2020)
+
+### Bug Fixes
+
+- Build: Fix misc warnings that trip up Chromatic ([#10521](https://github.com/storybookjs/storybook/pull/10521))
+- Composition: Update UI for refs ([#10504](https://github.com/storybookjs/storybook/pull/10504))
+
+### Maintenance
+
+- Addon-docs: Rename `formatSource` to `transformSource` ([#10503](https://github.com/storybookjs/storybook/pull/10503))
+
 ## 6.0.0-alpha.41 (April 21, 2020)
 
 ### Features
