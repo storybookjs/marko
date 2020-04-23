@@ -1,3 +1,18 @@
+## 6.0.0-alpha.43 (April 24, 2020)
+
+### Features
+
+- Addon-a11y: Use channel to highlight elements in preview ([#10456](https://github.com/storybookjs/storybook/pull/10456))
+- Storyshots: Support react hooks ([#10529](https://github.com/storybookjs/storybook/pull/10529))
+
+### Bug Fixes
+
+- Core: Transform for/of in dlls for IE11 compatibility ([#10471](https://github.com/storybookjs/storybook/pull/10471))
+
+### Maintenance
+
+- Addon-contexts: Move to deprecated-addons repo ([#10479](https://github.com/storybookjs/storybook/pull/10479))
+
 ## 6.0.0-alpha.42 (April 23, 2020)
 
 ### Bug Fixes
