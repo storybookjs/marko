@@ -11,7 +11,7 @@ For CLI options see: [here](../cli-options).
 
 Storybook has a few files it uses for configuration, and they are grouped together into a directory (default: `.storybook`).
 
-The most import file is the `main.js` file. This is where general config is declared.
+The most important file is the `main.js` file. This is where general config is declared.
 
 Here's an minimal example of that file:
 

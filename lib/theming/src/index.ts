@@ -16,3 +16,6 @@ export * from './convert';
 export * from './ensure';
 
 export { lightenColor as lighten, darkenColor as darken } from './utils';
+
+export const ignoreSsrWarning =
+  '/* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */';

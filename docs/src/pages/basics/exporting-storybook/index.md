@@ -37,11 +37,11 @@ Additionally, you can deploy Storybook directly into GitHub pages with our [stor
 
 Or, you can export your storybook into the docs directory and use it as the root for GitHub pages. Have a look at [this guide](https://github.com/blog/2233-publish-your-project-documentation-with-github-pages) for more information.
 
-## Deploying to ZEIT Now
+## Deploying to Vercel Now
 
-[ZEIT Now](https://zeit.co/home) is a cloud platform for websites and serverless APIs, that you can use to deploy your Storybook projects to your personal domain (or a free `.now.sh` suffixed URL).
+[Vercel Now](https://vercel.com/home) is a cloud platform for websites and serverless APIs, that you can use to deploy your Storybook projects to your personal domain (or a free `.now.sh` suffixed URL).
 
-- Install the [Now CLI](https://github.com/zeit/now):
+- Install the [Vercel Now CLI](https://github.com/zeit/now):
 
 ```sh
 npm i -g now
