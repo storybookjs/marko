@@ -323,7 +323,7 @@ export const init: ModuleFn = ({
         case 'external': {
           const ref = fullAPI.findRef(sourceLocation);
           if (ref) {
-            fullAPI.setRef(ref.id, { ...ref, stories }, true);
+            fullAPI.setRef(ref.id, { ...ref, ...data, stories }, true);
             break;
           }
         }
