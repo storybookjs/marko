@@ -222,7 +222,7 @@ export const ErrorBlock: FunctionComponent<{ error: Error }> = ({ error }) => (
 
 export const LoaderBlock: FunctionComponent<{ isMain: boolean }> = ({ isMain }) => (
   <Contained>
-    <Loader size={isMain ? 'multiple' : 'single'} />
+    <Loader size={isMain ? 17 : 5} />
   </Contained>
 );
 
