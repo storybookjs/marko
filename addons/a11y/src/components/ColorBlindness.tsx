@@ -1,15 +1,27 @@
-import { document } from 'global';
 import React, { FunctionComponent, ReactNode, useState } from 'react';
-import memoize from 'memoizerific';
-import { styled } from '@storybook/theming';
-
-import { logger } from '@storybook/client-logger';
+import { Global, styled } from '@storybook/theming';
 import { Icons, IconButton, WithTooltip, TooltipLinkList } from '@storybook/components';
 
-const getIframe = memoize(1)(() => document.getElementById('storybook-preview-iframe'));
+import { Filters } from './ColorFilters';
 
-const getFilter = (filter: string | null) => {
-  if (filter === null) {
+const iframeId = 'storybook-preview-iframe';
+
+const baseList = [
+  'protanopia',
+  'protanomaly',
+  'deuteranopia',
+  'deuteranomaly',
+  'tritanopia',
+  'tritanomaly',
+  'achromatopsia',
+  'achromatomaly',
+  'mono',
+] as const;
+
+type Filter = typeof baseList[number] | null;
+
+const getFilter = (filter: Filter) => {
+  if (!filter) {
     return 'none';
   }
   if (filter === 'mono') {
@@ -18,7 +30,15 @@ const getFilter = (filter: string | null) => {
   return `url('#${filter}')`;
 };
 
-const ColorIcon = styled.span<{ filter: string | null }>(
+const Hidden = styled.div(() => ({
+  '&, & svg': {
+    position: 'absolute',
+    width: 0,
+    height: 0,
+  },
+}));
+
+const ColorIcon = styled.span<{ filter: Filter }>(
   {
     background: 'linear-gradient(to right, #F44336, #FF9800, #FFEB3B, #8BC34A, #2196F3, #9C27B0)',
     borderRadius: '1rem',
@@ -34,18 +54,6 @@ const ColorIcon = styled.span<{ filter: string | null }>(
   })
 );
 
-const baseList = [
-  'protanopia',
-  'protanomaly',
-  'deuteranopia',
-  'deuteranomaly',
-  'tritanopia',
-  'tritanomaly',
-  'achromatopsia',
-  'achromatomaly',
-  'mono',
-];
-
 export interface Link {
   id: string;
   title: ReactNode;
@@ -54,7 +62,7 @@ export interface Link {
   onClick: () => void;
 }
 
-const getColorList = (active: string | null, set: (i: string | null) => void): Link[] => [
+const getColorList = (active: Filter, set: (i: Filter) => void): Link[] => [
   ...(active !== null
     ? [
         {
@@ -80,36 +88,39 @@ const getColorList = (active: string | null, set: (i: string | null) => void): L
 ];
 
 export const ColorBlindness: FunctionComponent = () => {
-  const [active, setActiveState] = useState<string | null>(null);
-
-  const setActive = (activeState: string | null): void => {
-    const iframe = getIframe();
-
-    if (iframe) {
-      iframe.style.filter = getFilter(activeState);
-      setActiveState(activeState);
-    } else {
-      logger.error('Cannot find Storybook iframe');
-    }
-  };
+  const [filter, setFilter] = useState<Filter>(null);
 
   return (
-    <WithTooltip
-      placement="top"
-      trigger="click"
-      tooltip={({ onHide }) => {
-        const colorList = getColorList(active, (i) => {
-          setActive(i);
-          onHide();
-        });
-        return <TooltipLinkList links={colorList} />;
-      }}
-      closeOnClick
-      onDoubleClick={() => setActive(null)}
-    >
-      <IconButton key="filter" active={!!active} title="Color Blindness Emulation">
-        <Icons icon="mirror" />
-      </IconButton>
-    </WithTooltip>
+    <>
+      {filter && (
+        <Global
+          styles={{
+            [`#${iframeId}`]: {
+              filter: getFilter(filter),
+            },
+          }}
+        />
+      )}
+      <WithTooltip
+        placement="top"
+        trigger="click"
+        tooltip={({ onHide }) => {
+          const colorList = getColorList(filter, (i) => {
+            setFilter(i);
+            onHide();
+          });
+          return <TooltipLinkList links={colorList} />;
+        }}
+        closeOnClick
+        onDoubleClick={() => setFilter(null)}
+      >
+        <IconButton key="filter" active={!!filter} title="Color Blindness Emulation">
+          <Icons icon="mirror" />
+        </IconButton>
+      </WithTooltip>
+      <Hidden>
+        <Filters />
+      </Hidden>
+    </>
   );
 };
