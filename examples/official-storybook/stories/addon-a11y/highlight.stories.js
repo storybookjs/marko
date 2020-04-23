@@ -12,6 +12,7 @@ export default {
   parameters: {
     options: { selectedPanel: 'storybook/a11y/panel' },
   },
+  decorators: [(storyFn) => <div style={{ padding: 10 }}>{storyFn()}</div>],
 };
 
 const PassesHighlight = styled.div(highlightObject(convert(themes.normal).color.positive));
