@@ -374,7 +374,6 @@ export function useEffect(create: () => (() => void) | void, deps?: any[]): void
 
 export interface Listener {
   (...args: any[]): void;
-  ignorePeer?: boolean;
 }
 
 export interface EventMap {
