@@ -28,7 +28,9 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "core-js": "^3.0.1"
+    "core-js": "^3.0.1",
+    "ts-dedent": "^1.1.1",
+    "util-deprecate": "^1.0.2"
   },
   "publishConfig": {
     "access": "public"
