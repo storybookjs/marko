@@ -1,6 +1,7 @@
 <h1>Migration</h1>
 
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
+  - [Docs theme separated](#docs-theme-separated)
   - [DocsPage slots removed](#docspage-slots-removed)
   - [React prop tables with Typescript](#react-prop-tables-with-typescript)
     - [React.FC interfaces](#reactfc-interfaces)
@@ -18,6 +19,8 @@
   - [Actions Addon API changes](#actions-addon-api-changes)
     - [Actions Addon uses parameters](#actions-addon-uses-parameters)
     - [Removed action decorator APIs](#removed-action-decorator-apis)
+    - [Removed addon centered](#removed-addon-centered)
+    - [Removed withA11y decorator](#removed-witha11y-decorator)
 - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
   - [To main.js configuration](#to-mainjs-configuration)
     - [Using main.js](#using-mainjs)
@@ -98,6 +101,12 @@
   - [Deprecated embedded addons](#deprecated-embedded-addons)
 
 ## From version 5.3.x to 6.0.x
+
+### Docs theme separated
+
+In 6.0, you should theme Storybook Docs with the `docs.theme` parameter.
+
+In 5.x, the Storybook UI and Storybook Docs were themed using the same theme object. However, in 5.3 we introduced a new API, `addons.setConfig`, which improved UI theming but broke Docs theming. Rather than trying to keep the two unified, we introduced a separate theming mechanism for docs, `docs.theme`. [Read about Docs theming here](https://github.com/storybookjs/storybook/blob/next/addons/docs/docs/theming.md#storybook-theming).
 
 ### DocsPage slots removed
 
@@ -201,41 +210,41 @@ In Storybook 5.3 we introduced a declarative [main.js configuration](#to-mainjs-
 
 This breaking change currently applies to: `addon-a11y`, `addon-actions`, `addon-knobs`, `addon-links`, `addon-queryparams`.
 
-Consider the following `main.js` config for the accessibility addon, `addon-a11y`:
+Consider the following `main.js` config for the accessibility addon, `addon-knobs`:
 
 ```js
 module.exports = {
   stories: ['../**/*.stories.js'],
-  addons: ['@storybook/addon-a11y'],
+  addons: ['@storybook/addon-knobs'],
 };
 ```
 
-In earlier versions of Storybook, this would automatically call `@storybook/addon-a11y/register`, which adds the the a11y panel to the Storybook UI. As a user you would also add a decorator:
+In earlier versions of Storybook, this would automatically call `@storybook/addon-knobs/register`, which adds the the knobs panel to the Storybook UI. As a user you would also add a decorator:
 
 ```js
-import { withA11y } from '../index';
+import { withKnobs } from '../index';
 
-addDecorator(withA11y);
+addDecorator(withKnobs);
 ```
 
-Now in 6.0, `addon-a11y` comes with a preset, `@storybook/addon-a11y/preset`, that does this automatically for you. This change simplifies configuration, since now you don't need to add that decorator.
+Now in 6.0, `addon-knobs` comes with a preset, `@storybook/addon-knobs/preset`, that does this automatically for you. This change simplifies configuration, since now you don't need to add that decorator.
 
 If you wish to disable this new behavior, you can modify your `main.js` to force it to use the `register` logic rather than the `preset`:
 
 ```js
 module.exports = {
   stories: ['../**/*.stories.js'],
-  addons: ['@storybook/addon-a11y/register'],
+  addons: ['@storybook/addon-knobs/register'],
 };
 ```
 
-If you wish to selectively disable `a11y` checks for a subset of stories, you can control this with story parameters:
+If you wish to selectively disable `knobs` checks for a subset of stories, you can control this with story parameters:
 
 ```js
 export const MyNonCheckedStory = () => <SomeComponent />;
 MyNonCheckedStory.story = {
   parameters: {
-    a11y: { disable: true },
+    knobs: { disable: true },
   },
 };
 ```
@@ -386,9 +395,27 @@ export const MyStory = () => <div>my story</div>;
 MyStory.story = {
   parameters: { layout: 'centered' },
 };
-
 ```
+
 Other possible values are: `padded` (default) and `fullscreen`.
+
+#### Removed withA11y decorator
+
+In 6.0 we removed the `withA11y` decorator. The code that runs accessibility checks is now directly injected in the preview.
+
+Remove the addon-a11y decorator.
+To configure a11y now, you have to specify configuration using `addParameters`.
+
+```js
+addParameters({
+  a11y: {
+    element: "#root",
+    config: {},
+    options: {},
+    manual: true,
+  }
+};
+```
 
 ## From version 5.2.x to 5.3.x
 
@@ -726,7 +753,7 @@ var sortedModules = modules.slice().sort((a, b) => {
 });
 
 // execute them
-sortedModules.forEach(key => {
+sortedModules.forEach((key) => {
   context(key);
 });
 ```
@@ -1290,7 +1317,7 @@ Here's an example of using Notes and Info in 3.2 with the new API.
 storiesOf('composition', module).add(
   'new addons api',
   withInfo('see Notes panel for composition info')(
-    withNotes({ text: 'Composition: Info(Notes())' })(context => (
+    withNotes({ text: 'Composition: Info(Notes())' })((context) => (
       <MyComponent name={context.story} />
     ))
   )

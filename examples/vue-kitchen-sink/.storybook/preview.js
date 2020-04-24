@@ -9,7 +9,6 @@ Vue.use(Vuex);
 
 addParameters({
   docs: {
-    inlineStories: true,
     iframeHeight: '60px',
   },
 });

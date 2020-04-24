@@ -4,7 +4,7 @@ module.exports = {
     '../../lib/ui/src/**/*.stories.(js|tsx|mdx)',
     '../../lib/components/src/**/*.stories.(js|tsx|mdx)',
     './stories/**/*.stories.(js|tsx|mdx)',
-    './../../addons/docs/**/react-properties.stories.tsx',
+    './../../addons/docs/**/*.stories.tsx',
   ],
   addons: [
     '@storybook/addon-docs',
@@ -20,7 +20,6 @@ module.exports = {
     '@storybook/addon-jest',
     '@storybook/addon-viewport',
     '@storybook/addon-graphql',
-    '@storybook/addon-contexts',
     '@storybook/addon-toolbars',
     '@storybook/addon-queryparams',
   ],

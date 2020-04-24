@@ -1,9 +1,7 @@
 import { hbs } from 'ember-cli-htmlbars';
-import { withA11y } from '@storybook/addon-a11y';
 
 export default {
   title: 'Addon/a11y',
-  decorators: [withA11y],
 
   parameters: {
     options: { selectedPanel: '@storybook/a11y/panel' },

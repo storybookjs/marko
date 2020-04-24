@@ -1,5 +1,7 @@
 import React, { FunctionComponent, ReactElement, ReactNode, ReactNodeArray } from 'react';
+import { MDXProvider } from '@mdx-js/react';
 import { toId, storyNameFromExport } from '@storybook/csf';
+import { resetComponents } from '@storybook/components/html';
 import { Preview as PurePreview, PreviewProps as PurePreviewProps } from '@storybook/components';
 import { getSourceProps } from './Source';
 import { DocsContext, DocsContextProps } from './DocsContext';
@@ -57,7 +59,11 @@ export const Preview: FunctionComponent<PreviewProps> = (props) => (
   <DocsContext.Consumer>
     {(context) => {
       const previewProps = getPreviewProps(props, context);
-      return <PurePreview {...previewProps}>{props.children}</PurePreview>;
+      return (
+        <MDXProvider components={resetComponents}>
+          <PurePreview {...previewProps}>{props.children}</PurePreview>
+        </MDXProvider>
+      );
     }}
   </DocsContext.Consumer>
 );

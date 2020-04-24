@@ -27,14 +27,16 @@ function stringifyKnob(knob: StoryKnob) {
         return `number('${name}', ${stringifiedValue}, ${stringifyObject(opts, level)})`;
       case 'color':
         return `color('${name}', ${stringifiedValue})`;
-      case 'array':
-        return `array('${name}', ${stringifiedValue}).join(',')`;
+      case 'array': {
+        const separator = opts.separator || ',';
+        return `array('${name}', ${stringifiedValue}, '${separator}').join('${separator}')`;
+      }
       case 'boolean':
         return `boolean('${name}', ${stringifiedValue})`;
       case 'object':
-        return `object('${name}', ${stringifiedValue})`;
+        return `JSON.stringify(object('${name}', ${stringifiedValue}))`;
       case 'date':
-        return `date('${name}', new Date(${stringifiedValue}))`;
+        return `new Date(date('${name}', new Date(${stringifiedValue}))).toISOString()`;
       case 'select':
         return `select('${name}', ${stringifyObject(opts.options, level)}, ${stringifiedValue})`;
       default:

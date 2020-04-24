@@ -10,16 +10,16 @@ const emptyContext: StoryContext = {
   parameters: {},
 };
 
-const formatSource = (src?: string) => (src ? `formatted: ${src}` : 'no src');
+const transformSource = (src?: string) => (src ? `formatted: ${src}` : 'no src');
 
 describe('addon-docs enhanceSource', () => {
   describe('no source loaded', () => {
     const baseContext = emptyContext;
-    it('no formatSource', () => {
+    it('no transformSource', () => {
       expect(enhanceSource(baseContext)).toBeNull();
     });
-    it('formatSource', () => {
-      const parameters = { ...baseContext.parameters, docs: { formatSource } };
+    it('transformSource', () => {
+      const parameters = { ...baseContext.parameters, docs: { transformSource } };
       expect(enhanceSource({ ...baseContext, parameters })).toBeNull();
     });
   });
@@ -28,13 +28,13 @@ describe('addon-docs enhanceSource', () => {
       ...emptyContext,
       parameters: { storySource: { source: 'storySource.source' } },
     };
-    it('no formatSource', () => {
+    it('no transformSource', () => {
       expect(enhanceSource(baseContext)).toEqual({
         docs: { source: { code: 'storySource.source' } },
       });
     });
-    it('formatSource', () => {
-      const parameters = { ...baseContext.parameters, docs: { formatSource } };
+    it('transformSource', () => {
+      const parameters = { ...baseContext.parameters, docs: { transformSource } };
       expect(enhanceSource({ ...baseContext, parameters }).docs.source).toEqual({
         code: 'formatted: storySource.source',
       });
@@ -52,11 +52,11 @@ describe('addon-docs enhanceSource', () => {
         },
       },
     };
-    it('no formatSource', () => {
+    it('no transformSource', () => {
       expect(enhanceSource(baseContext)).toEqual({ docs: { source: { code: 'Source' } } });
     });
-    it('formatSource', () => {
-      const parameters = { ...baseContext.parameters, docs: { formatSource } };
+    it('transformSource', () => {
+      const parameters = { ...baseContext.parameters, docs: { transformSource } };
       expect(enhanceSource({ ...baseContext, parameters }).docs.source).toEqual({
         code: 'formatted: Source',
       });
@@ -70,12 +70,12 @@ describe('addon-docs enhanceSource', () => {
         docs: { source: { code: 'docs.source.code' } },
       },
     };
-    it('no formatSource', () => {
+    it('no transformSource', () => {
       expect(enhanceSource(baseContext)).toBeNull();
     });
-    it('formatSource', () => {
+    it('transformSource', () => {
       const { source } = baseContext.parameters.docs;
-      const parameters = { ...baseContext.parameters, docs: { source, formatSource } };
+      const parameters = { ...baseContext.parameters, docs: { source, transformSource } };
       expect(enhanceSource({ ...baseContext, parameters })).toBeNull();
     });
   });

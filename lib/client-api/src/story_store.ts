@@ -288,6 +288,7 @@ export default class StoryStore {
         ...accumlatedParameters,
         argTypes: enhancer({
           ...identification,
+          storyFn: original,
           parameters: accumlatedParameters,
           args: {},
           globalArgs: {},

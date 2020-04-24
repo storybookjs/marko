@@ -49,7 +49,6 @@ exports[`Storyshots Custom/Decorator for Vue With Data 1`] = `
   "story": "With Data",
   "parameters": {
     "docs": {
-      "inlineStories": true,
       "iframeHeight": "60px"
     },
     "globalParameter": "globalParameter",

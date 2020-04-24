@@ -4,7 +4,7 @@
 'app: marko': ['nm123github']
 'app: preact': ['BartWaardenburg']
 'app: rax': ['SoloJiang']
-'app: svelte': ['rixo', 'cam-stitt', 'plumpNation']
+'app: svelte': ['rixo', 'plumpNation']
 'app: vue': ['backbone87', 'elevatebart', 'pksunkara', 'Aaron-Pool', 'pocka']
 'app: web-components': ['daKmoR']
 'api: addons': ['ndelangen']

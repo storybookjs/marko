@@ -9,5 +9,5 @@ export default {
   parameters: { chromatic: { disable: true } },
 };
 
-export const displaysCorrectly = () => <ButtonWithMemo>Hello World!</ButtonWithMemo>;
+export const displaysCorrectly = () => <ButtonWithMemo label="Hello World" />;
 displaysCorrectly.story = { name: 'Displays components with memo correctly' };

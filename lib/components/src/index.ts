@@ -40,6 +40,7 @@ export { StorybookIcon } from './brand/StorybookIcon';
 
 // Doc blocks
 export * from './blocks';
+export * from './controls';
 
 // Loader
 export { Loader } from './Loader/Loader';
