@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-a11y",
-  "version": "6.0.0-alpha.42",
+  "version": "6.0.0-alpha.43",
   "description": "a11y addon for storybook",
   "keywords": [
     "a11y",
@@ -33,28 +33,23 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-alpha.42",
-    "@storybook/api": "6.0.0-alpha.42",
-    "@storybook/channels": "6.0.0-alpha.42",
-    "@storybook/client-api": "6.0.0-alpha.42",
-    "@storybook/client-logger": "6.0.0-alpha.42",
-    "@storybook/components": "6.0.0-alpha.42",
-    "@storybook/core-events": "6.0.0-alpha.42",
-    "@storybook/theming": "6.0.0-alpha.42",
+    "@storybook/addons": "6.0.0-alpha.43",
+    "@storybook/api": "6.0.0-alpha.43",
+    "@storybook/channels": "6.0.0-alpha.43",
+    "@storybook/client-api": "6.0.0-alpha.43",
+    "@storybook/client-logger": "6.0.0-alpha.43",
+    "@storybook/components": "6.0.0-alpha.43",
+    "@storybook/core-events": "6.0.0-alpha.43",
+    "@storybook/theming": "6.0.0-alpha.43",
     "axe-core": "^3.5.2",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "lodash": "^4.17.15",
-    "memoizerific": "^1.11.3",
-    "react-redux": "^7.0.2",
     "react-sizeme": "^2.5.2",
-    "redux": "^4.0.1",
     "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
-    "@types/react-redux": "^7.0.6",
-    "@types/webpack-env": "^1.15.1",
-    "enzyme": "^3.11.0"
+    "@types/webpack-env": "^1.15.1"
   },
   "peerDependencies": {
     "react": "*",

@@ -1,6 +1,6 @@
 {
   "name": "server-kitchen-sink",
-  "version": "6.0.0-alpha.42",
+  "version": "6.0.0-alpha.43",
   "private": true,
   "description": "",
   "keywords": [],
@@ -14,13 +14,13 @@
     "storybook": "SERVER_PORT=1137 start-storybook -p 9006 --quiet"
   },
   "devDependencies": {
-    "@storybook/addon-a11y": "6.0.0-alpha.42",
-    "@storybook/addon-actions": "6.0.0-alpha.42",
-    "@storybook/addon-backgrounds": "6.0.0-alpha.42",
-    "@storybook/addon-knobs": "6.0.0-alpha.42",
-    "@storybook/addon-links": "6.0.0-alpha.42",
-    "@storybook/node-logger": "6.0.0-alpha.42",
-    "@storybook/server": "6.0.0-alpha.42",
+    "@storybook/addon-a11y": "6.0.0-alpha.43",
+    "@storybook/addon-actions": "6.0.0-alpha.43",
+    "@storybook/addon-backgrounds": "6.0.0-alpha.43",
+    "@storybook/addon-knobs": "6.0.0-alpha.43",
+    "@storybook/addon-links": "6.0.0-alpha.43",
+    "@storybook/node-logger": "6.0.0-alpha.43",
+    "@storybook/server": "6.0.0-alpha.43",
     "concurrently": "^5.0.2",
     "cors": "^2.8.5",
     "express": "~4.17.1",

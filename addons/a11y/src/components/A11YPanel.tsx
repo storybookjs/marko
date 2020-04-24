@@ -1,18 +1,17 @@
-/* eslint-disable react/destructuring-assignment,default-case,consistent-return,no-case-declarations */
-import React, { Component, Fragment } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import { styled } from '@storybook/theming';
 
 import { ActionBar, Icons, ScrollArea } from '@storybook/components';
 
-import { AxeResults, Result } from 'axe-core';
-import { API } from '@storybook/api';
-import { Provider } from 'react-redux';
+import { AxeResults } from 'axe-core';
+import { useChannel, useParameter, useStorybookState, useAddonState } from '@storybook/api';
 import { Report } from './Report';
 import { Tabs } from './Tabs';
-import { EVENTS } from '../constants';
 
-import store, { clearElements } from '../redux-config';
+import { useA11yContext } from './A11yContext';
+import { EVENTS, ADDON_ID } from '../constants';
+import { A11yParameters } from '../params';
 
 export enum RuleType {
   VIOLATION,
@@ -49,228 +48,138 @@ const Centered = styled.span<{}>({
   height: '100%',
 });
 
-interface InitialState {
-  status: 'initial';
-}
+type Status = 'initial' | 'manual' | 'running' | 'error' | 'ran' | 'ready';
 
-interface ManualState {
-  status: 'manual';
-}
+export const A11YPanel: React.FC = () => {
+  const [status, setStatus] = useAddonState<Status>(ADDON_ID, 'initial');
+  const [error, setError] = React.useState<unknown>(undefined);
+  const { setResults, results } = useA11yContext();
+  const { storyId } = useStorybookState();
+  const { manual } = useParameter<Pick<A11yParameters, 'manual'>>('a11y', {
+    manual: false,
+  });
 
-interface RunningState {
-  status: 'running';
-}
+  React.useEffect(() => {
+    setStatus(manual ? 'manual' : 'initial');
+  }, [manual]);
 
-interface RanState {
-  status: 'ran';
-  passes: Result[];
-  violations: Result[];
-  incomplete: Result[];
-}
+  const handleResult = (axeResults: AxeResults) => {
+    setStatus('ran');
+    setResults(axeResults);
 
-interface ReadyState {
-  status: 'ready';
-  passes: Result[];
-  violations: Result[];
-  incomplete: Result[];
-}
-
-interface ErrorState {
-  status: 'error';
-  error: unknown;
-}
-
-type A11YPanelState =
-  | InitialState
-  | ManualState
-  | RunningState
-  | RanState
-  | ReadyState
-  | ErrorState;
-
-interface A11YPanelProps {
-  active: boolean;
-  api: API;
-}
-
-export class A11YPanel extends Component<A11YPanelProps, A11YPanelState> {
-  state: A11YPanelState = {
-    status: 'initial',
-  };
-
-  componentDidMount() {
-    const { api } = this.props;
-
-    api.on(EVENTS.RESULT, this.onResult);
-    api.on(EVENTS.ERROR, this.onError);
-    api.on(EVENTS.MANUAL, this.onManual);
-  }
-
-  componentDidUpdate(prevProps: A11YPanelProps) {
-    // TODO: might be able to remove this
-    const { active } = this.props;
-
-    if (!prevProps.active && active) {
-      // removes all elements from the redux map in store from the previous panel
-      store.dispatch(clearElements());
-    }
-  }
-
-  componentWillUnmount() {
-    const { api } = this.props;
-
-    api.off(EVENTS.RESULT, this.onResult);
-    api.off(EVENTS.ERROR, this.onError);
-    api.off(EVENTS.MANUAL, this.onManual);
-  }
-
-  onResult = ({ passes, violations, incomplete }: AxeResults) => {
-    this.setState(
-      {
-        status: 'ran',
-        passes,
-        violations,
-        incomplete,
-      },
-      () => {
-        setTimeout(() => {
-          const { status } = this.state;
-          if (status === 'ran') {
-            this.setState({
-              status: 'ready',
-            });
-          }
-        }, 900);
+    setTimeout(() => {
+      if (status === 'ran') {
+        setStatus('ready');
       }
-    );
+    }, 900);
   };
 
-  onError = (error: unknown) => {
-    this.setState({
-      status: 'error',
-      error,
-    });
-  };
+  const handleRun = useCallback(() => {
+    setStatus('running');
+  }, []);
 
-  onManual = (manual: boolean) => {
-    if (manual) {
-      this.setState({
-        status: 'manual',
-      });
-    } else {
-      this.request();
-    }
-  };
+  const handleError = useCallback((err: unknown) => {
+    setStatus('error');
+    setError(err);
+  }, []);
 
-  request = () => {
-    const { api } = this.props;
-    this.setState(
+  const emit = useChannel({
+    [EVENTS.RUNNING]: handleRun,
+    [EVENTS.RESULT]: handleResult,
+    [EVENTS.ERROR]: handleError,
+  });
+
+  const handleManual = useCallback(() => {
+    setStatus('running');
+    emit(EVENTS.MANUAL, storyId);
+  }, [storyId]);
+
+  const manualActionItems = useMemo(() => [{ title: 'Run test', onClick: handleManual }], [
+    handleManual,
+  ]);
+  const readyActionItems = useMemo(
+    () => [
       {
-        status: 'running',
-      },
-      () => {
-        api.emit(EVENTS.REQUEST, api.getCurrentStoryData().id);
-        // removes all elements from the redux map in store from the previous panel
-        store.dispatch(clearElements());
-      }
-    );
-  };
-
-  render() {
-    const { active } = this.props;
-    if (!active) return null;
-
-    switch (this.state.status) {
-      case 'initial':
-        return <Centered>Initializing...</Centered>;
-      case 'manual':
-        return (
-          <Fragment>
-            <Centered>Manually run the accessibility scan.</Centered>
-            <ActionBar
-              key="actionbar"
-              actionItems={[{ title: 'Run test', onClick: this.request }]}
-            />
-          </Fragment>
-        );
-      case 'running':
-        return (
-          <Centered>
-            <RotatingIcon inline icon="sync" /> Please wait while the accessibility scan is running
-            ...
-          </Centered>
-        );
-      case 'ready':
-      case 'ran':
-        const { passes, violations, incomplete, status } = this.state;
-        const actionTitle =
+        title:
           status === 'ready' ? (
             'Rerun tests'
           ) : (
-            <Fragment>
+            <>
               <Icon inline icon="check" /> Tests completed
-            </Fragment>
-          );
-        return (
-          <Provider store={store}>
-            <ScrollArea vertical horizontal>
-              <Tabs
-                key="tabs"
-                tabs={[
-                  {
-                    label: <Violations>{violations.length} Violations</Violations>,
-                    panel: (
-                      <Report
-                        items={violations}
-                        type={RuleType.VIOLATION}
-                        empty="No accessibility violations found."
-                      />
-                    ),
-                    items: violations,
-                    type: RuleType.VIOLATION,
-                  },
-                  {
-                    label: <Passes>{passes.length} Passes</Passes>,
-                    panel: (
-                      <Report
-                        items={passes}
-                        type={RuleType.PASS}
-                        empty="No accessibility checks passed."
-                      />
-                    ),
-                    items: passes,
-                    type: RuleType.PASS,
-                  },
-                  {
-                    label: <Incomplete>{incomplete.length} Incomplete</Incomplete>,
-                    panel: (
-                      <Report
-                        items={incomplete}
-                        type={RuleType.INCOMPLETION}
-                        empty="No accessibility checks incomplete."
-                      />
-                    ),
-                    items: incomplete,
-                    type: RuleType.INCOMPLETION,
-                  },
-                ]}
-              />
-            </ScrollArea>
-            <ActionBar
-              key="actionbar"
-              actionItems={[{ title: actionTitle, onClick: this.request }]}
-            />
-          </Provider>
-        );
-      case 'error':
-        const { error } = this.state;
-        return (
-          <Centered>
-            The accessibility scan encountered an error.
-            <br />
-            {error}
-          </Centered>
-        );
-    }
-  }
-}
+            </>
+          ),
+        onClick: handleManual,
+      },
+    ],
+    [status, handleManual]
+  );
+  const tabs = useMemo(() => {
+    const { passes, incomplete, violations } = results;
+    return [
+      {
+        label: <Violations>{violations.length} Violations</Violations>,
+        panel: (
+          <Report
+            items={violations}
+            type={RuleType.VIOLATION}
+            empty="No accessibility violations found."
+          />
+        ),
+        items: violations,
+        type: RuleType.VIOLATION,
+      },
+      {
+        label: <Passes>{passes.length} Passes</Passes>,
+        panel: (
+          <Report items={passes} type={RuleType.PASS} empty="No accessibility checks passed." />
+        ),
+        items: passes,
+        type: RuleType.PASS,
+      },
+      {
+        label: <Incomplete>{incomplete.length} Incomplete</Incomplete>,
+        panel: (
+          <Report
+            items={incomplete}
+            type={RuleType.INCOMPLETION}
+            empty="No accessibility checks incomplete."
+          />
+        ),
+        items: incomplete,
+        type: RuleType.INCOMPLETION,
+      },
+    ];
+  }, [results]);
+  return (
+    <>
+      {status === 'initial' && <Centered>Initializing...</Centered>}
+      {status === 'manual' && (
+        <>
+          <Centered>Manually run the accessibility scan.</Centered>
+          <ActionBar key="actionbar" actionItems={manualActionItems} />
+        </>
+      )}
+      {status === 'running' && (
+        <Centered>
+          <RotatingIcon inline icon="sync" /> Please wait while the accessibility scan is running
+          ...
+        </Centered>
+      )}
+      {(status === 'ready' || status === 'ran') && (
+        <>
+          <ScrollArea vertical horizontal>
+            <Tabs key="tabs" tabs={tabs} />
+          </ScrollArea>
+          <ActionBar key="actionbar" actionItems={readyActionItems} />
+        </>
+      )}
+      {status === 'error' && (
+        <Centered>
+          The accessibility scan encountered an error.
+          <br />
+          {typeof error === 'string' ? error : JSON.stringify(error)}
+        </Centered>
+      )}
+    </>
+  );
+};
