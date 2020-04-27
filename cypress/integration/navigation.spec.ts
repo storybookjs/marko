@@ -22,13 +22,10 @@ describe('Navigation', () => {
 });
 
 describe('Routing', () => {
-  before(() => {
-    visitExample('official-storybook');
-  });
-
   it('should navigate to story addons-a11y-basebutton--default', () => {
-    cy.get('#addons-a11y-basebutton--label').click();
+    visitExample('official-storybook');
 
+    cy.get('#addons-a11y-basebutton--label').click();
     cy.url().should('include', 'path=/story/addons-a11y-basebutton--label');
   });
 

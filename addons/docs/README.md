@@ -174,7 +174,7 @@ module.exports = {
   //    will configure everything with a preset)
   addons: ['@storybook/addon-docs/register'],
   // 2. manually configure webpack, since you're not using the preset
-  webpackFinal: async config => {
+  webpackFinal: async (config) => {
     config.module.rules.push({
       // 2a. Load `.stories.mdx` / `.story.mdx` files as CSF and generate
       //     the docs page from the markdown
@@ -235,7 +235,6 @@ Install the preset with care. If you've already configured Typescript manually, 
 
 Want to learn more? Here are some more articles on Storybook Docs:
 
-- References: [DocsPage](./docs/docspage.md) / [MDX](./docs/mdx.md) / [FAQ](./docs/faq.md) / [Recipes](./docs/recipes.md) / [Theming](./docs/theming.md)
-- Vision: [Storybook Docs sneak peak](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a)
-- Announcement: [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf)
+- References: [DocsPage](./docs/docspage.md) / [MDX](./docs/mdx.md) / [FAQ](./docs/faq.md) / [Recipes](./docs/recipes.md) / [Theming](./docs/theming.md) / [Props](./docs/props-tables.md)
+- Announcements: [Vision](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a) / [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf) / [MDX](https://medium.com/storybookjs/rich-docs-with-storybook-mdx-61bc145ae7bc) / [Framework support](https://medium.com/storybookjs/storybook-docs-for-new-frameworks-b1f6090ee0ea)
 - Example: [Storybook Design System](https://github.com/storybookjs/design-system)

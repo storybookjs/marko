@@ -17,14 +17,18 @@ describe('actions parameter enhancers', () => {
       expect(withDefaultValue(argTypes)).toEqual(['onClick', 'onFocus']);
     });
 
-    it('should prioritize pre-existing argTypes', () => {
+    it('should prioritize pre-existing argTypes unless they are null', () => {
       const parameters = {
         ...baseParameters,
-        argTypes: { onClick: { defaultValue: 'pre-existing value' }, onFocus: {} },
+        argTypes: {
+          onClick: { defaultValue: 'pre-existing value' },
+          onFocus: { defaultValue: null },
+        },
       };
       const argTypes = inferActionsFromArgTypesRegex({ parameters } as StoryContext);
       expect(withDefaultValue(argTypes)).toEqual(['onClick', 'onFocus']);
       expect(argTypes.onClick.defaultValue).toEqual('pre-existing value');
+      expect(argTypes.onFocus.defaultValue).not.toBeNull();
     });
 
     it('should do nothing if actions are disabled', () => {

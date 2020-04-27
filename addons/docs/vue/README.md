@@ -10,11 +10,13 @@ Storybook Docs transforms your Storybook stories into world-class component docu
 
 To learn more about Storybook Docs, read the [general documentation](../README.md). To learn the Vue specifics, read on!
 
-- [Installation](#installation)
-- [DocsPage](#docspage)
-- [MDX](#mdx)
-- [Inline stories](#inline-stories)
-- [More resources](#more-resources)
+- [Storybook Docs for Vue](#storybook-docs-for-vue)
+  - [Installation](#installation)
+  - [Preset options](#preset-options)
+  - [DocsPage](#docspage)
+  - [MDX](#mdx)
+  - [Inline Stories](#inline-stories)
+  - [More resources](#more-resources)
 
 ## Installation
 
@@ -131,7 +133,7 @@ Yes, it's redundant to declare `component` twice. [Coming soon](https://github.c
 
 Storybook Docs renders all Vue stories inside IFrames, with a default height of `60px` (configurable using the `docs.iframeHeight` story parameter).
 
-Starting in 5.3, you can also render stories inline, and in 6.0 this will become the default behavior. To render inline, update `.storybook/preview.js`:
+Starting in 5.3, you can also render stories inline, and in 6.0 this has become the default behavior. To render inline, update `.storybook/preview.js`:
 
 ```js
 import { addParameters } from '@storybook/vue';
@@ -147,7 +149,6 @@ addParameters({
 
 Want to learn more? Here are some more articles on Storybook Docs:
 
-- References: [DocsPage](../docs/docspage.md) / [MDX](../docs/mdx.md) / [FAQ](../docs/faq.md) / [Recipes](../docs/recipes.md) / [Theming](../docs/theming.md)
-- Vision: [Storybook Docs sneak peak](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a)
-- Announcement: [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf)
+- References: [DocsPage](../docs/docspage.md) / [MDX](../docs/mdx.md) / [FAQ](../docs/faq.md) / [Recipes](../docs/recipes.md) / [Theming](../docs/theming.md) / [Props](../docs/props-tables.md)
+- Announcements: [Vision](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a) / [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf) / [MDX](https://medium.com/storybookjs/rich-docs-with-storybook-mdx-61bc145ae7bc) / [Framework support](https://medium.com/storybookjs/storybook-docs-for-new-frameworks-b1f6090ee0ea)
 - Example: [Storybook Design System](https://github.com/storybookjs/design-system)

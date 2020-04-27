@@ -21,10 +21,20 @@ export const snapshotWithOptions = (
   const result = renderTree(story, context, optionsOrCallOptions(options, story));
 
   function match(tree: any) {
+    let target = tree;
+    const isReact = story.parameters.framework === 'react';
+
+    if (isReact && typeof tree.childAt === 'function') {
+      target = tree.childAt(0);
+    }
+    if (isReact && Array.isArray(tree.children)) {
+      [target] = tree.children;
+    }
+
     if (snapshotFileName) {
-      expect(tree).toMatchSpecificSnapshot(snapshotFileName);
+      expect(target).toMatchSpecificSnapshot(snapshotFileName);
     } else {
-      expect(tree).toMatchSnapshot();
+      expect(target).toMatchSnapshot();
     }
 
     if (typeof tree.unmount === 'function') {
