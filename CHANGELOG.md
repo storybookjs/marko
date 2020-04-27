@@ -1,3 +1,13 @@
+## 6.0.0-alpha.44 (April 27, 2020)
+
+### Features
+
+- CLI: Automatically detect typescript in `sb init` ([#10547](https://github.com/storybookjs/storybook/pull/10547))
+
+### Bug Fixes
+
+- UI: Fix `viewMode` parameter handling ([#10292](https://github.com/storybookjs/storybook/pull/10292))
+
 ## 6.0.0-alpha.43 (April 24, 2020)
 
 ### Features
