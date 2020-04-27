@@ -23,6 +23,7 @@ const inferControl = (argType: ArgType): Control => {
     }
     case 'function':
     case 'symbol':
+    case 'void':
       return null;
     default:
       return { type: 'object' };
