@@ -7,7 +7,7 @@ export default {
 
 export const Rounded = (args) => ({
   components: { MyButton },
-  template: '<my-button :rounded="rounded">A Button with rounded edges</my-button>',
+  template: '<my-button :color="color" :rounded="rounded">A Button with rounded edges</my-button>',
   data() {
     return args;
   },
