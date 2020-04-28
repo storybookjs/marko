@@ -524,7 +524,7 @@ describe('preview.client_api', () => {
       storyStore.finishConfiguring();
 
       let [event, args] = mockChannelEmit.mock.calls[0];
-      expect(event).toEqual(Events.SET_STORY_STORE_DATA);
+      expect(event).toEqual(Events.SET_STORIES);
       expect(Object.values(args.stories as [{ kind: string }]).map((v) => v.kind)).toEqual([
         'kind0',
         'kind1',
@@ -544,7 +544,7 @@ describe('preview.client_api', () => {
       // eslint-disable-next-line prefer-destructuring
       [event, args] = mockChannelEmit.mock.calls[0];
 
-      expect(event).toEqual(Events.SET_STORY_STORE_DATA);
+      expect(event).toEqual(Events.SET_STORIES);
       expect(Object.values(args.stories as [{ kind: string }]).map((v) => v.kind)).toEqual([
         'kind0',
         'kind1',

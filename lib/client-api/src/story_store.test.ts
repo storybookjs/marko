@@ -639,9 +639,9 @@ describe('preview.story_store', () => {
       expect(() => store.removeStoryKind('a', { allowUnsafe: true })).not.toThrow();
     });
 
-    it('waits for configuration to be over before emitting SET_STORY_STORE_DATA', () => {
+    it('waits for configuration to be over before emitting SET_STORIES', () => {
       const onSetStories = jest.fn();
-      channel.on(Events.SET_STORY_STORE_DATA, onSetStories);
+      channel.on(Events.SET_STORIES, onSetStories);
       const store = new StoryStore({ channel });
 
       addStoryToStore(store, 'a', '1', () => 0);
@@ -659,9 +659,9 @@ describe('preview.story_store', () => {
       });
     });
 
-    it('emits an empty SET_STORY_STORE_DATA if no stories were added during configuration', () => {
+    it('emits an empty SET_STORIES if no stories were added during configuration', () => {
       const onSetStories = jest.fn();
-      channel.on(Events.SET_STORY_STORE_DATA, onSetStories);
+      channel.on(Events.SET_STORIES, onSetStories);
       const store = new StoryStore({ channel });
 
       store.finishConfiguring();
@@ -674,7 +674,7 @@ describe('preview.story_store', () => {
 
     it('allows configuration as second time (HMR)', () => {
       const onSetStories = jest.fn();
-      channel.on(Events.SET_STORY_STORE_DATA, onSetStories);
+      channel.on(Events.SET_STORIES, onSetStories);
       const store = new StoryStore({ channel });
       store.finishConfiguring();
 
@@ -698,7 +698,7 @@ describe('preview.story_store', () => {
   describe('HMR behaviour', () => {
     it('emits the right things after removing a story', () => {
       const onSetStories = jest.fn();
-      channel.on(Events.SET_STORY_STORE_DATA, onSetStories);
+      channel.on(Events.SET_STORIES, onSetStories);
       const store = new StoryStore({ channel });
 
       // For hooks
@@ -730,7 +730,7 @@ describe('preview.story_store', () => {
 
     it('emits the right things after removing a kind', () => {
       const onSetStories = jest.fn();
-      channel.on(Events.SET_STORY_STORE_DATA, onSetStories);
+      channel.on(Events.SET_STORIES, onSetStories);
       const store = new StoryStore({ channel });
 
       // For hooks

@@ -53,7 +53,7 @@ it('reuses the current client api when the lib is reloaded', () => {
 
   const { clientApi: newClientApi, channel } = start(render);
 
-  channel.emit(Events.SET_STORY_STORE_DATA, {});
+  channel.emit(Events.SET_STORIES, {});
 
   expect(clientApi).toEqual(newClientApi);
   expect(clientApi).toEqual(valueOfClientApi);
@@ -69,7 +69,7 @@ it('calls render when you add a story', () => {
     clientApi.storiesOf('kind', {} as NodeModule).add('story', () => {});
   }, {} as NodeModule);
 
-  channel.emit(Events.SET_STORY_STORE_DATA, {});
+  channel.emit(Events.SET_STORIES, {});
 
   expect(render).toHaveBeenCalledWith(expect.objectContaining({ kind: 'kind', name: 'story' }));
 });
@@ -84,7 +84,7 @@ it('emits an exception and shows error when your story throws', () => {
     clientApi.storiesOf('kind', {} as NodeModule).add('story1', () => {});
   }, {} as NodeModule);
 
-  channel.emit(Events.SET_STORY_STORE_DATA, {});
+  channel.emit(Events.SET_STORIES, {});
 
   expect(render).not.toHaveBeenCalled();
   expect(document.body.classList.add).toHaveBeenCalledWith('sb-show-nopreview');
@@ -106,7 +106,7 @@ it('emits an error and shows error when your framework calls showError', () => {
     clientApi.storiesOf('kind', {} as NodeModule).add('story', () => {});
   }, {} as NodeModule);
 
-  channel.emit(Events.SET_STORY_STORE_DATA, {});
+  channel.emit(Events.SET_STORIES, {});
 
   expect(render).toHaveBeenCalled();
   expect(document.body.classList.add).toHaveBeenCalledWith('sb-show-errordisplay');
