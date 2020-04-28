@@ -9,7 +9,6 @@ const { Button } = Form;
 export default {
   title: 'Addons/Actions',
   parameters: {
-    passArgsFirst: true,
     options: {
       selectedPanel: 'storybook/actions/panel',
     },

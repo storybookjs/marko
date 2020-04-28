@@ -1,6 +1,7 @@
 <h1>Migration</h1>
 
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
+  - [Args passed as first argument to story](#args-passed-as-first-argument-to-story)
   - [Docs theme separated](#docs-theme-separated)
   - [DocsPage slots removed](#docspage-slots-removed)
   - [React prop tables with Typescript](#react-prop-tables-with-typescript)
@@ -101,6 +102,32 @@
   - [Deprecated embedded addons](#deprecated-embedded-addons)
 
 ## From version 5.3.x to 6.0.x
+
+### Args passed as first argument to story
+
+Starting in 6.0, the first argument to a story function is an [Args object](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/formats/component-story-format/index.md#args-story-inputs). In 5.3 and earlier, the first argument was a [StoryContext](https://github.com/storybookjs/storybook/blob/next/lib/addons/src/types.ts#L49-L61), and that context is now passed as the second argument by default.
+
+This breaking change only affects you if your stories actually use the context, which is not common. If you have any stories that use the context, you can either (1) update your stories, or (2) set a flag to opt-out of new behavior.
+
+Consider the following story that uses the context:
+
+```js
+export const Dummy = ({ parameters }) => <div>{JSON.stringify(parameters)}</div>;
+```
+
+Here's an updated story for 6.0 that ignores the args object:
+
+```js
+export const Dummy = (_args, { parameters }) => <div>{JSON.stringify(parameters)}</div>;
+```
+
+Alternatively, if you want to opt out of the new behavior, you can add the following to your `.storybook/preview.js` config:
+
+```js
+export const parameters = {
+  passArgsFirst: false,
+};
+```
 
 ### Docs theme separated
 

@@ -298,7 +298,8 @@ export default class StoryStore {
     );
 
     let finalStoryFn: LegacyStoryFn;
-    if (parameters.passArgsFirst) {
+    const { passArgsFirst } = parameters;
+    if (passArgsFirst || typeof passArgsFirst === 'undefined') {
       finalStoryFn = (context: StoryContext) => (original as ArgsStoryFn)(context.args, context);
     } else {
       finalStoryFn = original as LegacyStoryFn;
