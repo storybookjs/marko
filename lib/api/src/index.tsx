@@ -9,6 +9,7 @@ import React, {
   useMemo,
   useRef,
 } from 'react';
+import { mergeWith } from 'lodash';
 
 import {
   STORY_CHANGED,
@@ -115,6 +116,15 @@ export interface ArgTypes {
 export interface Parameters {
   [key: string]: any;
 }
+
+// This is duplicated from @storybook/client-api for the reasons mentioned in lib-addons/types.js
+export const combineParameters = (...parameterSets: Parameters[]) =>
+  mergeWith({}, ...parameterSets, (objValue: any, srcValue: any) => {
+    // Treat arrays as scalars:
+    if (Array.isArray(srcValue)) return srcValue;
+
+    return undefined;
+  });
 
 export type ModuleFn = (m: ModuleArgs) => Module;
 

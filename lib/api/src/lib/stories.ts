@@ -1,9 +1,9 @@
 import deprecate from 'util-deprecate';
 import dedent from 'ts-dedent';
 import { sanitize, parseKind } from '@storybook/csf';
-import { mapValues, mergeWith } from 'lodash';
+import { mapValues } from 'lodash';
 
-import { StoryId, StoryKind, Args, Parameters } from '../index';
+import { StoryId, StoryKind, Args, Parameters, combineParameters } from '../index';
 import merge from './merge';
 import { Provider } from '../modules/provider';
 
@@ -139,15 +139,6 @@ const toGroup = (name: string) => ({
   name,
   id: toKey(name),
 });
-
-// This is duplicated from @storybook/client-api for the reasons mentioned in lib-addons/types.js
-const combineParameters = (...parameterSets: Parameters[]) =>
-  mergeWith({}, ...parameterSets, (objValue: any, srcValue: any) => {
-    // Treat arrays as scalars:
-    if (Array.isArray(srcValue)) return srcValue;
-
-    return undefined;
-  });
 
 export const denormalizeStoryParameters = ({
   globalParameters,
