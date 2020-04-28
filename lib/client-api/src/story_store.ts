@@ -476,7 +476,6 @@ export default class StoryStore {
   }
 
   setError = (err: ErrorLike) => {
-    console.log(err);
     this._error = err;
     if (this._channel) this._channel.emit(Events.RENDER_CURRENT_STORY);
   };
