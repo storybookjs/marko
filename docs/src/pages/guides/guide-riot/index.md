@@ -6,7 +6,7 @@ title: 'Storybook for Riot'
 ## Automatic setup
 
 You may have tried to use our quick start guide to setup your project for Storybook.
-If it failed because it couldn't detect you're using riot, you could try forcing it to use riot:
+If it failed because it couldn't detect you're using Riot, you could try forcing it to use riot:
 
 ```sh
 npx -p @storybook/cli sb init --type riot
@@ -14,7 +14,7 @@ npx -p @storybook/cli sb init --type riot
 
 ## Manual setup
 
-If you want to set up Storybook manually for your Angular project, this is the guide for you.
+If you want to set up Storybook manually for your Riot project, this is the guide for you.
 
 ## Step 1: Add dependencies
 
