@@ -415,7 +415,8 @@ export default class StoryStore {
     return Object.values(this._stories)
       .filter((i) => !!i.getDecorated)
       .filter((i) => includeStory(i, options))
-      .map(({ id }) => this.fromId(id));
+      .map(({ id }) => this.fromId(id))
+      .filter(Boolean);
   }
 
   extract(options?: StoryOptions) {
