@@ -1,6 +1,6 @@
 {
   "name": "@storybook/components",
-  "version": "6.0.0-alpha.44",
+  "version": "6.0.0-alpha.45",
   "description": "Core Storybook Components",
   "keywords": [
     "storybook"
@@ -28,8 +28,8 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/client-logger": "6.0.0-alpha.44",
-    "@storybook/theming": "6.0.0-alpha.44",
+    "@storybook/client-logger": "6.0.0-alpha.45",
+    "@storybook/theming": "6.0.0-alpha.45",
     "@types/overlayscrollbars": "^1.9.0",
     "@types/react-color": "^3.0.1",
     "@types/react-syntax-highlighter": "11.0.4",
