@@ -1,3 +1,9 @@
+## 6.0.0-alpha.45 (April 28, 2020)
+
+## Breaking changes
+
+- Core: Pass args first to stories by default ([#10452](https://github.com/storybookjs/storybook/pull/10452))
+
 ## 6.0.0-alpha.44 (April 27, 2020)
 
 ### Features
