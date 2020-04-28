@@ -1,1 +1,1 @@
-{"version":"6.0.0-alpha.44","info":{"plain":"### Features\n\n- CLI: Automatically detect typescript in `sb init` ([#10547](https://github.com/storybookjs/storybook/pull/10547))\n\n### Bug Fixes\n\n- UI: Fix `viewMode` parameter handling ([#10292](https://github.com/storybookjs/storybook/pull/10292))"}}
+{"version":"6.0.0-alpha.45","info":{"plain":""}}
