@@ -70,6 +70,11 @@ const checkGlobalArgs = (parameters: Parameters) => {
   }
 };
 
+const checkStorySort = (parameters: Parameters) => {
+  const { options } = parameters;
+  if (options?.storySort) logger.error('The storySort option parameter can only be set globally');
+};
+
 type AllowUnsafeOption = { allowUnsafe?: boolean };
 
 const toExtracted = <T>(obj: T) =>
@@ -215,7 +220,10 @@ export default class StoryStore {
 
   addKindMetadata(kind: string, { parameters, decorators }: StoryMetadata) {
     this.ensureKind(kind);
-    if (parameters) checkGlobalArgs(parameters);
+    if (parameters) {
+      checkGlobalArgs(parameters);
+      checkStorySort(parameters);
+    }
     this._kinds[kind].parameters = combineParameters(this._kinds[kind].parameters, parameters);
 
     this._kinds[kind].decorators.push(...decorators);
@@ -258,7 +266,10 @@ export default class StoryStore {
         'Cannot add a story when not configuring, see https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#story-store-immutable-outside-of-configuration'
       );
 
-    if (storyParameters) checkGlobalArgs(storyParameters);
+    if (storyParameters) {
+      checkGlobalArgs(storyParameters);
+      checkStorySort(storyParameters);
+    }
 
     const { _stories } = this;
 

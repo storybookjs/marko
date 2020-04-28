@@ -313,6 +313,10 @@ _You cannot set parameters from decorators_
 
 Parameters are intended to be statically set at story load time. So setting them via a decorator doesn't quite make sense. If you were using this to control the rendering of a story, chances are using the new `args` feature is a more idiomatic way to do this.
 
+_You can only set storySort globally_
+
+If you want to change the ordering of stories, use `export parameters = { options: { storySort: ... } }` in `preview.js`.
+
 ### Simplified Render Context
 
 The `RenderContext` that is passed to framework rendering layers in order to render a story has been simplified, dropping a few members that were not used by frameworks to render stories. In particular, the following have been removed:
