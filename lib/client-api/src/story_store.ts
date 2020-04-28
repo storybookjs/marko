@@ -498,6 +498,7 @@ export default class StoryStore {
 
   getDataForManager = () => {
     return {
+      v: 2,
       globalParameters: this._globalMetadata.parameters,
       kindParameters: mapValues(this._kinds, (metadata) => metadata.parameters),
       stories: this.extract({ includeDocsOnly: true, normalizeParameters: true }),

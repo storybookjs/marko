@@ -73,8 +73,9 @@ describe('preview.story_store', () => {
 
       addStoryToStore(store, 'a', '1', () => 0, { story: 'story' });
 
-      const { globalParameters, kindParameters, stories } = store.getDataForManager();
+      const { v, globalParameters, kindParameters, stories } = store.getDataForManager();
 
+      expect(v).toBe(2);
       expect(globalParameters).toEqual({ global: 'global' });
       expect(Object.keys(kindParameters)).toEqual(['a']);
       expect(kindParameters.a).toEqual({ kind: 'kind' });
@@ -649,6 +650,7 @@ describe('preview.story_store', () => {
 
       store.finishConfiguring();
       expect(onSetStories).toHaveBeenCalledWith({
+        v: 2,
         globalParameters: {},
         kindParameters: { a: {} },
         stories: {
@@ -666,6 +668,7 @@ describe('preview.story_store', () => {
 
       store.finishConfiguring();
       expect(onSetStories).toHaveBeenCalledWith({
+        v: 2,
         globalParameters: {},
         kindParameters: {},
         stories: {},
@@ -684,6 +687,7 @@ describe('preview.story_store', () => {
       store.finishConfiguring();
 
       expect(onSetStories).toHaveBeenCalledWith({
+        v: 2,
         globalParameters: {},
         kindParameters: { a: {} },
         stories: {
@@ -715,6 +719,7 @@ describe('preview.story_store', () => {
       store.finishConfiguring();
 
       expect(onSetStories).toHaveBeenCalledWith({
+        v: 2,
         globalParameters: {},
         kindParameters: { 'kind-1': {} },
         stories: {
@@ -749,6 +754,7 @@ describe('preview.story_store', () => {
       store.finishConfiguring();
 
       expect(onSetStories).toHaveBeenCalledWith({
+        v: 2,
         globalParameters: {},
         kindParameters: { 'kind-1': {}, 'kind-2': {} },
         stories: {

@@ -100,7 +100,13 @@ export interface StoriesRaw {
   [id: string]: StoryInput;
 }
 
-export interface StoryStoreData {
+export interface SetStoriesPayload {
+  v?: number;
+  stories: StoriesRaw;
+}
+
+export interface SetStoriesPayloadV2 extends SetStoriesPayload {
+  v: 2;
   globalParameters: Parameters;
   kindParameters: {
     [kind: string]: Parameters;
@@ -144,7 +150,7 @@ export const denormalizeStoryParameters = ({
   globalParameters,
   kindParameters,
   stories,
-}: StoryStoreData): StoriesRaw => {
+}: SetStoriesPayloadV2): StoriesRaw => {
   return mapValues(stories, (storyData) => ({
     ...storyData,
     parameters: combineParameters(

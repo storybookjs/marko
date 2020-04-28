@@ -6,8 +6,7 @@ import {
   STORY_ARGS_UPDATED,
   STORY_CHANGED,
   SELECT_STORY,
-  SET_STORY_STORE_DATA,
-  LEGACY_SET_STORIES,
+  SET_STORIES,
 } from '@storybook/core-events';
 
 import { logger } from '@storybook/client-logger';
@@ -17,12 +16,14 @@ import {
   StoriesHash,
   Story,
   Group,
-  StoryStoreData,
+  SetStoriesPayload,
   StoryId,
   isStory,
   Root,
   isRoot,
   StoriesRaw,
+  SetStoriesPayloadVersion2,
+  SetStoriesPayloadV2,
 } from '../lib/stories';
 
 import { Args, ModuleFn } from '../index';
@@ -303,19 +304,27 @@ export const init: ModuleFn = ({
       }
     });
 
-    fullAPI.on(SET_STORY_STORE_DATA, function handleSetStories(data: StoryStoreData) {
+    fullAPI.on(SET_STORIES, function handleSetStories(data: SetStoriesPayload) {
       // the event originates from an iframe, event.source is the iframe's location origin + pathname
       const { source }: { source: string } = this;
       const [sourceType, sourceLocation] = getSourceType(source);
 
-      const stories = denormalizeStoryParameters(data);
+      // TODO: what is the mechanism where we warn here?
+      if (data.v && data.v > 2)
+        console.warn(`Received SET_STORIES event with version ${data.v}, we'll try and handle it`);
+
+      const stories = data.v
+        ? denormalizeStoryParameters(data as SetStoriesPayloadV2)
+        : data.stories;
 
       switch (sourceType) {
         // if it's a local source, we do nothing special
         case 'local': {
+          if (!data.v) throw new Error('Unexpected legacy SET_STORIES event from local source');
+
           fullAPI.setStories(stories);
 
-          fullAPI.setOptions((data as StoryStoreData).globalParameters.options);
+          fullAPI.setOptions((data as SetStoriesPayloadV2).globalParameters.options);
           break;
         }
 
@@ -331,35 +340,6 @@ export const init: ModuleFn = ({
         // if we couldn't find the source, something risky happened, we ignore the input, and log a warning
         default: {
           logger.warn('received a SET_STORY_STORE_DATA frame that was not configured as a ref');
-          break;
-        }
-      }
-    });
-
-    fullAPI.on(LEGACY_SET_STORIES, function handleSetStories(data: { stories: StoriesRaw }) {
-      // the event originates from an iframe, event.source is the iframe's location origin + pathname
-      const { source }: { source: string } = this;
-      const [sourceType, sourceLocation] = getSourceType(source);
-
-      switch (sourceType) {
-        // We shouldn't get the legacy event from the local source
-        case 'local': {
-          throw new Error('Unexpected legacy SET_STORIES event from local source');
-        }
-
-        // Basically the same as `SET_STORIES_DATA` above, except the parameters are denormalized
-        case 'external': {
-          const ref = fullAPI.findRef(sourceLocation);
-
-          if (ref) {
-            fullAPI.setRef(ref.id, { ...ref, ...data }, true);
-            break;
-          }
-        }
-
-        // if we couldn't find the source, something risky happened, we ignore the input, and log a warning
-        default: {
-          logger.warn('received a SET_STORIES frame that was not configured as a ref');
           break;
         }
       }
