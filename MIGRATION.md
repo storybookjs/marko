@@ -1,6 +1,7 @@
 <h1>Migration</h1>
 
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
+  - [CRA preset removed](#cra-preset-removed)
   - [Args passed as first argument to story](#args-passed-as-first-argument-to-story)
   - [Docs theme separated](#docs-theme-separated)
   - [DocsPage slots removed](#docspage-slots-removed)
@@ -102,6 +103,12 @@
   - [Deprecated embedded addons](#deprecated-embedded-addons)
 
 ## From version 5.3.x to 6.0.x
+
+### CRA preset removed
+
+The built-in create-react-app preset, which was [previously deprecated](#create-react-app-preset), has been fully removed.
+
+If you're using CRA and migrating from an earlier Storybook version, please install [`@storybook/preset-create-react-app`](https://github.com/storybookjs/presets/tree/master/packages/preset-create-react-app) if you haven't already.
 
 ### Args passed as first argument to story
 
