@@ -75,7 +75,7 @@ describe('core.preview.StoryRenderer', () => {
         id: 'a--1',
         kind: 'a',
         name: '1',
-        parameters: { p: 'q' },
+        parameters: { argTypes: {}, p: 'q' },
         forceRender: false,
 
         showMain: expect.any(Function),

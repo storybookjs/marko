@@ -11,6 +11,7 @@
     - [Rolling back](#rolling-back)
   - [New addon presets](#new-addon-presets)
   - [Removed Deprecated APIs](#removed-deprecated-apis)
+  - [New setStories event](#new-setstories-event)
   - [Client API changes](#client-api-changes)
     - [Removed Legacy Story APIs](#removed-legacy-story-apis)
     - [Can no longer add decorators/parameters after stories](#can-no-longer-add-decoratorsparameters-after-stories)
@@ -295,6 +296,31 @@ See the migration guides for further details:
 - [Unified docs preset](#unified-docs-preset)
 - [Addon centered decorator deprecated](#addon-centered-decorator-deprecated)
 
+### New setStories event
+
+The `setStories`/`SET_STORIES` event has changed and now denormalizes global and kind-level parameters. The new format of the event data is:
+
+```js
+{
+  globalParameters: { p: 'q' },
+  kindParameters: { kind: { p: 'q' } },
+  stories: /* as before but with only story-level parameters */
+}
+```
+
+If you want the full denormalized parameters for a story, you can do something like:
+
+```js
+import { combineParameters } from '@storybook/api';
+
+const story = data.stories[storyId];
+const parameters = combineParameters(
+  data.globalParameters,
+  data.kindParameters[story.kind],
+  story.parameters
+);
+```
+
 ### Client API changes
 
 #### Removed Legacy Story APIs
@@ -346,6 +372,10 @@ StoryOne.story = { parameters: { backgrounds: [...allBackgrounds, '#zyx' ] } };
 _You cannot set parameters from decorators_
 
 Parameters are intended to be statically set at story load time. So setting them via a decorator doesn't quite make sense. If you were using this to control the rendering of a story, chances are using the new `args` feature is a more idiomatic way to do this.
+
+_You can only set storySort globally_
+
+If you want to change the ordering of stories, use `export const parameters = { options: { storySort: ... } }` in `preview.js`.
 
 ### Simplified Render Context
 
