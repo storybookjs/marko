@@ -1,4 +1,3 @@
-import { addParameters } from '@storybook/vue';
 import Vue from 'vue';
 import Vuex from 'vuex';
 

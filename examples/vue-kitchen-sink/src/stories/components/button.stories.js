@@ -15,7 +15,7 @@ export const Rounded = (args) => ({
 Rounded.story = {
   argTypes: {
     rounded: { defaultValue: true },
-    color: { control: { type: 'color' } },
+    color: { control: { type: 'color' }, defaultValue: '#f00' },
   },
 };
 
