@@ -87,6 +87,7 @@ Storybook Docs supports all view layers that Storybook supports except for React
 | Source            |   +   |  +  |    +    |   +   |       +        |  +   |   +    |   +    |  +   |    +    |   +   |
 | Notes / Info      |   +   |  +  |    +    |   +   |       +        |  +   |   +    |   +    |  +   |    +    |   +   |
 | Props table       |   +   |  +  |    +    |   +   |       +        |      |        |        |      |         |       |
+| Props controls    |   +   |  +  |         |       |                |      |        |        |      |         |       |
 | Description       |   +   |  +  |    +    |   +   |       +        |      |        |        |      |         |       |
 | Inline stories    |   +   |  +  |         |       |       +        |      |        |        |      |         |       |
 
