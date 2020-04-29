@@ -20,6 +20,7 @@ export const convert = (type: PTType): SBType | any => {
     case 'func':
       return { ...base, name: 'function' };
     case 'bool':
+    case 'boolean':
       return { ...base, name: 'boolean' };
     case 'arrayOf':
     case 'array':
