@@ -1,3 +1,18 @@
+## 6.0.0-alpha.46 (April 29, 2020)
+
+### Breaking Changes
+
+* Core: Normalize parameters in store/channel ([#10373](https://github.com/storybookjs/storybook/pull/10373))
+* React: Remove deprecated CRA preset ([#10571](https://github.com/storybookjs/storybook/pull/10571))
+
+### Features
+
+* Addon-docs: Props controls for Vue ([#10559](https://github.com/storybookjs/storybook/pull/10559))
+
+### Bug Fixes
+
+* Addon-docs: Add subcomponents prop to Meta block ([#10573](https://github.com/storybookjs/storybook/pull/10573))
+
 ## 6.0.0-alpha.45 (April 28, 2020)
 
 ## Breaking changes
