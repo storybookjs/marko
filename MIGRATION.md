@@ -375,7 +375,7 @@ Parameters are intended to be statically set at story load time. So setting them
 
 _You can only set storySort globally_
 
-If you want to change the ordering of stories, use `export parameters = { options: { storySort: ... } }` in `preview.js`.
+If you want to change the ordering of stories, use `export const parameters = { options: { storySort: ... } }` in `preview.js`.
 
 ### Simplified Render Context
 

@@ -77,12 +77,10 @@ addons.setConfig({
 
 ### showRoots
 
-Import and use `addParameters` with the `options` key in your `preview.js` file.
+Export `parameters` with the `options` key in your `preview.js` file.
 
 ```js
-import { addParameters } from '@storybook/react';
-
-addParameters({
+export const parameters = {
   options: {
     /**
      * display the top-level grouping as a "root" in the sidebar
@@ -100,8 +98,7 @@ By default, stories are sorted in the order in which they were imported. This ca
 The most powerful method of sorting is to provide a function to `storySort`. Any custom sorting can be achieved with this method.
 
 ```js
-
-export parameters = {
+export const parameters = {
   options: {
     storySort: (a, b) =>
       a[1].kind === b[1].kind ? 0 : a[1].id.localeCompare(b[1].id, undefined, { numeric: true }),
