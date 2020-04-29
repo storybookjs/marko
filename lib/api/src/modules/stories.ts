@@ -22,7 +22,6 @@ import {
   Root,
   isRoot,
   StoriesRaw,
-  SetStoriesPayloadVersion2,
   SetStoriesPayloadV2,
 } from '../lib/stories';
 
@@ -313,6 +312,7 @@ export const init: ModuleFn = ({
 
       // TODO: what is the mechanism where we warn here?
       if (data.v && data.v > 2)
+        // eslint-disable-next-line no-console
         console.warn(`Received SET_STORIES event with version ${data.v}, we'll try and handle it`);
 
       const stories = data.v
