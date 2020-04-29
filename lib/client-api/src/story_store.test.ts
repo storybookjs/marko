@@ -153,7 +153,7 @@ describe('preview.story_store', () => {
     it('is passed to the story in the context', () => {
       const storyFn = jest.fn();
       const store = new StoryStore({ channel });
-      addStoryToStore(store, 'a', '1', storyFn);
+      addStoryToStore(store, 'a', '1', storyFn, { passArgsFirst: false });
       store.updateStoryArgs('a--1', { foo: 'bar' });
       store.getRawStory('a', '1').storyFn();
 
@@ -202,7 +202,7 @@ describe('preview.story_store', () => {
       });
 
       const storyOne = jest.fn();
-      addStoryToStore(store, 'a', '1', storyOne);
+      addStoryToStore(store, 'a', '1', storyOne, { passArgsFirst: false });
 
       store.getRawStory('a', '1').storyFn();
       expect(storyOne).toHaveBeenCalledWith(
@@ -313,7 +313,7 @@ describe('preview.story_store', () => {
       const store = new StoryStore({ channel });
 
       store.updateGlobalArgs({ foo: 'bar' });
-      addStoryToStore(store, 'a', '1', storyFn);
+      addStoryToStore(store, 'a', '1', storyFn, { passArgsFirst: false });
       store.getRawStory('a', '1').storyFn();
 
       expect(storyFn).toHaveBeenCalledWith(
@@ -361,7 +361,7 @@ describe('preview.story_store', () => {
       const store = new StoryStore({ channel });
 
       const storyOne = jest.fn();
-      addStoryToStore(store, 'a', '1', storyOne);
+      addStoryToStore(store, 'a', '1', storyOne, { passArgsFirst: false });
 
       store.updateGlobalArgs({ foo: 'bar' });
 

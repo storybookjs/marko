@@ -300,10 +300,12 @@ export default class StoryStore {
       ...this._globalMetadata.decorators,
     ];
 
-    const finalStoryFn = (context: StoryContext) =>
-      context.parameters.passArgsFirst
+    const finalStoryFn = (context: StoryContext) => {
+      const { passArgsFirst } = context.parameters;
+      return passArgsFirst || typeof passArgsFirst === 'undefined'
         ? (original as ArgsStoryFn)(context.args, context)
         : original(context);
+    };
 
     // lazily decorate the story when it's loaded
     const getDecorated: () => LegacyStoryFn = memoize(1)(() =>

@@ -3,5 +3,5 @@ export function managerEntries(entry: any[] = []) {
 }
 
 export function config(entry: any[] = []) {
-  return [...entry, require.resolve('./a11yRunner')];
+  return [...entry, require.resolve('./a11yRunner'), require.resolve('./a11yHighlight')];
 }

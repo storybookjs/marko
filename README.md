@@ -137,7 +137,6 @@ For additional help, join us [in our Discord](https://discord.gg/sMFvFsG) or [Sl
 | [a11y](addons/a11y/)                        | Test components for user accessibility in Storybook                        |
 | [actions](addons/actions/)                  | Log actions as users interact with components in the Storybook UI          |
 | [backgrounds](addons/backgrounds/)          | Let users choose backgrounds in the Storybook UI                           |
-| [contexts](addons/contexts/)                | Interactively inject component contexts for stories in the Storybook UI    |
 | [cssresources](addons/cssresources/)        | Dynamically add/remove css resources to the component iframe               |
 | [design assets](addons/design-assets/)      | View images, videos, weblinks alongside your story                         |
 | [docs](addons/docs/)                        | Add high quality documentation to your components                          |

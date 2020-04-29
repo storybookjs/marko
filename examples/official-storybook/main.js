@@ -20,7 +20,6 @@ module.exports = {
     '@storybook/addon-jest',
     '@storybook/addon-viewport',
     '@storybook/addon-graphql',
-    '@storybook/addon-contexts',
     '@storybook/addon-toolbars',
     '@storybook/addon-queryparams',
   ],

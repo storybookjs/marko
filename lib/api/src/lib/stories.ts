@@ -6,6 +6,7 @@ import { mapValues } from 'lodash';
 import { StoryId, StoryKind, Args, Parameters, combineParameters } from '../index';
 import merge from './merge';
 import { Provider } from '../modules/provider';
+import { ViewMode } from '../modules/addons';
 
 export { StoryId };
 
@@ -38,7 +39,8 @@ export interface Group {
   // MDX stories are "Group" type
   parameters?: {
     docsOnly?: boolean;
-    [k: string]: any;
+    viewMode?: ViewMode;
+    [parameterName: string]: any;
   };
 }
 
@@ -59,10 +61,11 @@ export interface Story {
       hierarchyRootSeparator?: RegExp;
       hierarchySeparator?: RegExp;
       showRoots?: boolean;
-      [k: string]: any;
+      [optionName: string]: any;
     };
     docsOnly?: boolean;
-    [k: string]: any;
+    viewMode?: ViewMode;
+    [parameterName: string]: any;
   };
   args: Args;
 }
@@ -79,9 +82,10 @@ export interface StoryInput {
       hierarchyRootSeparator: RegExp;
       hierarchySeparator: RegExp;
       showRoots?: boolean;
-      [key: string]: any;
+      [optionName: string]: any;
     };
     docsOnly?: boolean;
+    viewMode?: ViewMode;
     [parameterName: string]: any;
   };
   isLeaf: boolean;
