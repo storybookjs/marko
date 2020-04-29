@@ -1,17 +1,30 @@
+## 6.0.0-beta.0 (April 29, 2020)
+
+Storybook 6.0 is in beta. 🎉🎉🎉
+
+Hundreds of improvements and fixes, including:
+
+- **Args** - Dynamic story data with automatic prop controls and actions.
+- **Composition** - Compose storybooks for better documentation, performance, and multi-framework support.
+- **Server** - Enabling Storybook for Rails and other server-side components.
+- **Yarn 2** - Supporting next generation package management.
+
+Track the release in the Github: [Storybook 6.0 Release 🏆](https://github.com/storybookjs/storybook/issues/9311)
+
 ## 6.0.0-alpha.46 (April 29, 2020)
 
 ### Breaking Changes
 
-* Core: Normalize parameters in store/channel ([#10373](https://github.com/storybookjs/storybook/pull/10373))
-* React: Remove deprecated CRA preset ([#10571](https://github.com/storybookjs/storybook/pull/10571))
+- Core: Normalize parameters in store/channel ([#10373](https://github.com/storybookjs/storybook/pull/10373))
+- React: Remove deprecated CRA preset ([#10571](https://github.com/storybookjs/storybook/pull/10571))
 
 ### Features
 
-* Addon-docs: Props controls for Vue ([#10559](https://github.com/storybookjs/storybook/pull/10559))
+- Addon-docs: Props controls for Vue ([#10559](https://github.com/storybookjs/storybook/pull/10559))
 
 ### Bug Fixes
 
-* Addon-docs: Add subcomponents prop to Meta block ([#10573](https://github.com/storybookjs/storybook/pull/10573))
+- Addon-docs: Add subcomponents prop to Meta block ([#10573](https://github.com/storybookjs/storybook/pull/10573))
 
 ## 6.0.0-alpha.45 (April 28, 2020)
 
