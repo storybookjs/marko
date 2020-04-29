@@ -459,7 +459,7 @@ export default class StoryStore {
 
     // removes function values from all stories so they are safe to transport over the channel
     return stories.reduce((acc, [id, story]) => {
-      if (!includeStory) return acc;
+      if (!includeStory(story, options)) return acc;
 
       const extracted = toExtracted(story);
       if (options.normalizeParameters) return Object.assign(acc, { [id]: extracted });
