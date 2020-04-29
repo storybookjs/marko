@@ -68,7 +68,6 @@ addParameters({
 });
 
 export const parameters = {
-  passArgsFirst: true,
   exportedParameter: 'exportedParameter',
 };
 
