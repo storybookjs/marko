@@ -1,5 +1,6 @@
 import { ArgTypes } from '@storybook/api';
 import { ArgTypesExtractor, hasDocgen, extractComponentProps } from '../../lib/docgen';
+import { convert } from '../../lib/sbtypes';
 import { trimQuotes } from '../../lib/sbtypes/utils';
 
 const SECTIONS = ['props', 'events', 'slots'];
@@ -13,8 +14,9 @@ export const extractArgTypes: ArgTypesExtractor = (component) => {
   const results: ArgTypes = {};
   SECTIONS.forEach((section) => {
     const props = extractComponentProps(component, section);
-    props.forEach(({ propDef, jsDocTags }) => {
-      const { name, sbType, type, description, defaultValue, required } = propDef;
+    props.forEach(({ propDef, docgenInfo, jsDocTags }) => {
+      const { name, type, description, defaultValue, required } = propDef;
+      const sbType = section === 'props' ? convert(docgenInfo) : { name: 'void' };
       results[name] = {
         name,
         description,
