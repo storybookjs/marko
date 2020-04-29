@@ -314,17 +314,6 @@ export default class StoryStore {
 
     const hooks = new HooksContext();
 
-    const storyFn: LegacyStoryFn = (runtimeContext: StoryContext) =>
-      getDecorated()({
-        ...identification,
-        ...runtimeContext,
-        // Calculate "combined" parameters at render time
-        parameters: this.combineStoryParameters(storyParameters, kind),
-        hooks,
-        args: _stories[id].args,
-        globalArgs: this._globalArgs,
-      });
-
     // We need the combined parameters now in order to calculate argTypes, but we won't keep them
     const combinedParameters = this.combineStoryParameters(storyParameters, kind);
 
@@ -333,7 +322,7 @@ export default class StoryStore {
         ...accumlatedParameters,
         argTypes: enhancer({
           ...identification,
-          storyFn,
+          storyFn: original,
           parameters: accumlatedParameters,
           args: {},
           globalArgs: {},
@@ -341,6 +330,19 @@ export default class StoryStore {
       }),
       combinedParameters
     );
+
+    const storyParametersWithArgTypes = { ...storyParameters, argTypes };
+
+    const storyFn: LegacyStoryFn = (runtimeContext: StoryContext) =>
+      getDecorated()({
+        ...identification,
+        ...runtimeContext,
+        // Calculate "combined" parameters at render time (NOTE: for perf we could just use combinedParameters from above?)
+        parameters: this.combineStoryParameters(storyParametersWithArgTypes, kind),
+        hooks,
+        args: _stories[id].args,
+        globalArgs: this._globalArgs,
+      });
 
     // Pull out parameters.args.$ || .argTypes.$.defaultValue into initialArgs
     const initialArgs: Args = combinedParameters.args;
