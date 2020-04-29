@@ -15,7 +15,7 @@ import {
   STORY_CHANGED,
   SHARED_STATE_CHANGED,
   SHARED_STATE_SET,
-  SET_STORY_STORE_DATA,
+  SET_STORIES,
 } from '@storybook/core-events';
 import { RenderData as RouterData } from '@storybook/router';
 import { Listener } from '@storybook/channels';
@@ -369,7 +369,7 @@ export function useSharedState<S>(stateId: string, defaultState?: S) {
       [`${SHARED_STATE_SET}-client-${stateId}`]: (s: S) => setState(s),
     };
     const stateInitializationHandlers = {
-      [SET_STORY_STORE_DATA]: () => {
+      [SET_STORIES]: () => {
         if (addonStateCache[stateId]) {
           // this happens when HMR
           setState(addonStateCache[stateId]);

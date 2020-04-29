@@ -341,7 +341,7 @@ export const init: ModuleFn = ({
 
         // if we couldn't find the source, something risky happened, we ignore the input, and log a warning
         default: {
-          logger.warn('received a SET_STORY_STORE_DATA frame that was not configured as a ref');
+          logger.warn('received a SET_STORIES frame that was not configured as a ref');
           break;
         }
       }
