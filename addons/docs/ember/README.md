@@ -1,4 +1,4 @@
-# Storybook Docs for Ember
+<h1>Storybook Docs for Ember</h1>
 
 > migration guide: This page documents the method to configure storybook introduced recently in 5.3.0, consult the [migration guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) if you want to migrate to this format of configuring storybook.
 
@@ -6,12 +6,11 @@ Storybook Docs transforms your Storybook stories into world-class component docu
 
 To learn more about Storybook Docs, read the [general documentation](../README.md). To learn the Ember specifics, read on!
 
-- [Storybook Docs for Ember](#storybook-docs-for-ember)
-  - [Installation](#installation)
-  - [DocsPage](#docspage)
-  - [MDX](#mdx)
-  - [IFrame height](#iframe-height)
-  - [More resources](#more-resources)
+- [Installation](#installation)
+- [DocsPage](#docspage)
+- [MDX](#mdx)
+- [IFrame height](#iframe-height)
+- [More resources](#more-resources)
 
 ## Installation
 

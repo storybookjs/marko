@@ -139,6 +139,7 @@ Add the following to your Jest configuration:
 - [Angular](./angular)
 - [Ember](./ember)
 - [Web Components](./web-components)
+- [Common setup (all other frameworks)](./common)
 
 ## Preset options
 
