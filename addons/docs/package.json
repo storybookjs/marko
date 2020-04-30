@@ -108,7 +108,7 @@
     "rxjs": "^6.5.4",
     "styled-components": "^5.0.1",
     "terser-webpack-plugin": "^2.3.6",
-    "tmp": "^0.1.0",
+    "tmp": "^0.2.1",
     "web-component-analyzer": "^1.0.3",
     "webpack": "^4.33.0",
     "zone.js": "^0.10.2"
