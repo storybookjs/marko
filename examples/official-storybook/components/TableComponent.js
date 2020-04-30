@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Red = props => <span style={{ color: 'red' }} {...props} />;
+const Red = (props) => <span style={{ color: 'red' }} {...props} />;
 const TableComponent = ({ propDefinitions }) => {
   const props = propDefinitions.map(
     ({ property, propType, required, description, defaultValue }) => (

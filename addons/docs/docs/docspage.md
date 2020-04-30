@@ -2,27 +2,18 @@
   <img src="https://raw.githubusercontent.com/storybookjs/storybook/master/addons/docs/docs/media/docspage-hero.png" width="100%" />
 </center>
 
-# Storybook DocsPage
+<h1>Storybook DocsPage</h1>
 
 When you install [Storybook Docs](../README.md), `DocsPage` is the zero-config default documentation that all stories get out of the box. It aggregates your stories, text descriptions, docgen comments, props tables, and code examples into a single page for each component.
 
-- [Storybook DocsPage](#storybook-docspage)
-  - [Motivation](#motivation)
-  - [Component parameter](#component-parameter)
-  - [Subcomponents parameter](#subcomponents-parameter)
-  - [DocsPage slots](#docspage-slots)
-  - [Slot values](#slot-values)
-    - [Title](#title)
-    - [Subtitle](#subtitle)
-    - [Description](#description)
-    - [Primary](#primary)
-    - [Props](#props)
-    - [Stories](#stories)
-  - [Slot functions](#slot-functions)
-  - [Replacing DocsPage](#replacing-docspage)
-  - [Story file names](#story-file-names)
-  - [Inline stories vs. Iframe stories](#inline-stories-vs-iframe-stories)
-  - [More resources](#more-resources)
+- [Motivation](#motivation)
+- [Component parameter](#component-parameter)
+- [Subcomponents parameter](#subcomponents-parameter)
+- [Replacing DocsPage](#replacing-docspage)
+  - [Remixing DocsPage using doc blocks](#remixing-docspage-using-doc-blocks)
+- [Story file names](#story-file-names)
+- [Inline stories vs. Iframe stories](#inline-stories-vs-iframe-stories)
+- [More resources](#more-resources)
 
 ## Motivation
 
@@ -85,146 +76,6 @@ Subcomponent prop tables will show up in a tabbed interface along with the prima
 
 If you want organize your documentation differently for groups of components, we recommend trying [MDX](./mdx.md) which is completely flexible to support any configuration.
 
-## DocsPage slots
-
-`DocsPage` is organized into a series of "slots" including Title, Subtitle, Description, Props, and Story. Each of these slots pulls information from your project and formats it for the screen.
-
-<center>
-  <img style="padding: 30px; border: 3px solid #eee;" src="https://raw.githubusercontent.com/storybookjs/storybook/master/addons/docs/docs/media/docspage-slots.png" width="100%" />
-</center>
-
-## Slot values
-
-Each of the slots is computed by a built-in function, that can also be overridden using [Slot Function](#slot-functions).
-
-Here is a summary of the slots, where the data comes from by default, and the slot function that can be used to override it:
-
-| Slot        | Default source                      | Slot function     | Frameworks |
-| ----------- | ----------------------------------- | ----------------- | ---------- |
-| Title       | component `title`                   | `titleSlot`       | All        |
-| Subtitle    | `componentSubtitle` parameter       | `subtitleSlot`    | All        |
-| Description | component `docgen` comment          | `descriptionSlot` | React, Vue |
-| Primary     | storybook stories                   | `primarySlot`     | All        |
-| Props       | component docgen props or propTypes | `propsSlot`       | React, Vue |
-| Stories     | storybook stories                   | `storiesSlot`     | All        |
-
-The `storiesSlot` uses the `docs.storyDescription` parameter to show a description for each story, if available.
-
-For more information on frameworks, see ["Framework support"](../README.md#framework-support)
-
-### Title
-
-`Title` is computed from the component's `title`, and matches the component caption in Storybook's navigation.
-
-For example:
-
-```js
-export default {
-  title: 'Path/to/Badge',
-};
-```
-
-### Subtitle
-
-The `Subtitle` slot is computed from the component's `componentSubtitle` parameter.
-
-For example in [Component Story Format (CSF)](https://medium.com/storybookjs/component-story-format-66f4c32366df):
-
-```js
-export default {
-  ...
-  parameters: {
-    componentSubtitle: 'Handy status label',
-  },
-};
-```
-
-### Description
-
-The `Description` slot is computed from the Component's docgen comments in the component's source.
-
-For example, here's the source for `Badge`:
-
-```js
-/**
- * Use `Badge` to highlight key info with a predefined status.
- */
-export const Badge = ({ status, children }) => { ... }
-```
-
-### Primary
-
-The `Primary` slot is computed from the first user-defined story for the component.
-
-For example here are `Badge`'s stories in CSF. The `allBadges` is selected as the primary story because it's first:
-
-```js
-// export default { ... }; /* Badge component metadata */
-export const allBadges = () => ...
-export const positive = () => ...
-export const negative = () => ...
-```
-
-### Props
-
-The `Props` slot is computed from the component's docgen props, which can be defined in typescript or using `react` PropTypes.
-
-For example, here are the `PropTypes` for the `Badge` component
-
-```js
-import PropTypes from 'prop-types';
-
-// ... Badge definition ...
-
-Badge.propTypes = {
-  status: PropTypes.oneOf(['positive', 'negative', 'neutral', 'error', 'warning']),
-};
-Badge.defaultProps = {
-  status: 'neutral',
-};
-```
-
-### Stories
-
-The `Stories` slot is computed from the user-defined stories for the component, excluding the first.
-
-For example here are `Badge`'s stories in CSF. The `positive` and `negative` stories are selected in that order:
-
-```js
-// export default { ... }; /* Badge component metadata */
-export const allBadges = () => ...
-export const positive = () => ...
-export const negative = () => ...
-```
-
-## Slot functions
-
-> ⚠️ Slot functions are an experimental feature in Storybook 5.2. The API may change in 5.3 outside of the normal semver rules. Be forewarned!
-
-The value for each slot is computed from a `SlotContext` context, and the function that's used to compute the value can be overridden if you need to customize the page. If you find yourself doing a lot of configuration, or wanting different configurations for different pages, you might be better off using `MDX`. Everything that `DocsPage` gives you can be reconstructed in a few lines of `MDX`.
-
-Here is the `SlotContext` type definition:
-
-```ts
-export interface SlotContext {
-  id?: string;
-  selectedKind?: string;
-  selectedStory?: string;
-  parameters?: any;
-  storyStore?: any;
-}
-```
-
-And here are the return type signatures for each of the slot functions
-
-| Slot     | Function     | Inputs                       | Output             |
-| -------- | ------------ | ---------------------------- | ------------------ |
-| Title    | titleSlot    | `SlotContext`                | `string?`          |
-| Subtitle | subtitleSlot | `SlotContext`                | `string?`          |
-| Primary  | primarySlot  | `StoryData[]`, `SlotContext` | `StoryProps?`      |
-| Props    | propsSlot    | `SlotContext`                | `PropsTableProps?` |
-| Stories  | storiesSlot  | `StoryData[]`, `SlotContext` | `StoryProps[]?`    |
-
 ## Replacing DocsPage
 
 What if you don't want a `DocsPage` for your storybook, for a specific component, or even for a specific story?
@@ -264,6 +115,44 @@ basic.story = {
 }
 ```
 
+### Remixing DocsPage using doc blocks
+
+Here's an example of rebuilding `DocsPage` out of doc blocks:
+
+```js
+import React from 'react';
+import {
+  Title,
+  Subtitle,
+  Description,
+  Primary,
+  Props,
+  Stories,
+} from '@storybook/addon-docs/blocks';
+import { DocgenButton } from '../../components/DocgenButton';
+
+export default {
+  title: 'Addons/Docs/stories docs blocks',
+  component: DocgenButton,
+  parameters: {
+    docs: {
+      page: () => (
+        <>
+          <Title />
+          <Subtitle />
+          <Description />
+          <Primary />
+          <Props />
+          <Stories />
+        </>
+      ),
+    },
+  },
+};
+```
+
+You can interleave your own components to customize the auto-generated contents of the page, or pass in different options to the blocks to customize their appearance. For more info see the examples in [official-storybook](https://github.com/storybookjs/storybook/blob/next/examples/official-storybook/stories/addon-docs/addon-docs-blocks.stories.js).
+
 ## Story file names
 
 Unless you use a custom webpack configuration, all of your story files should have the suffix `*.stories.[jt]sx?`, e.g. `"Badge.stories.js"`, `"Badge.stories.tsx"`, etc.
@@ -284,7 +173,7 @@ import { addParameters } from '@storybook/vue';
 
 addParameters({
   docs: {
-    prepareForInline: storyFn => {
+    prepareForInline: (storyFn) => {
       const Story = toReact(storyFn());
       return <Story />;
     },
@@ -296,10 +185,7 @@ With that function, anyone using the docs addon for `@storybook/vue` can make th
 
 ## More resources
 
-Want to learn more? Here are some more articles on Storybook Docs:
-
-- References: [README](../README.md) / [MDX](mdx.md) / [FAQ](faq.md) / [Recipes](recipes.md) / [Theming](theming.md)
-- Vision: [Storybook Docs sneak peak](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a)
-- Announcement: [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf)
+- References: [README](../README.md) / [DocsPage](docspage.md) / [MDX](mdx.md) / [FAQ](faq.md) / [Recipes](recipes.md) / [Theming](theming.md) / [Props](props-tables.md)
+- Framework-specific docs: [React](../react/README.md) / [Vue](../vue/README.md) / [Angular](../angular/README.md) / [Web components](../web-components/README.md) / [Ember](../ember/README.md)
+- Announcements: [Vision](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a) / [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf) / [MDX](https://medium.com/storybookjs/rich-docs-with-storybook-mdx-61bc145ae7bc) / [Framework support](https://medium.com/storybookjs/storybook-docs-for-new-frameworks-b1f6090ee0ea)
 - Example: [Storybook Design System](https://github.com/storybookjs/design-system)
-- [Technical preview guide](https://docs.google.com/document/d/1un6YX7xDKEKl5-MVb-egnOYN8dynb5Hf7mq0hipk8JE/edit?usp=sharing)

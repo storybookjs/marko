@@ -13,7 +13,7 @@ export interface ReportProps {
 export const Report: FunctionComponent<ReportProps> = ({ items, empty, type }) => (
   <Fragment>
     {items && items.length ? (
-      items.map(item => <Item item={item} key={`${type}:${item.id}`} type={type} />)
+      items.map((item) => <Item item={item} key={`${type}:${item.id}`} type={type} />)
     ) : (
       <Placeholder key="placeholder">{empty}</Placeholder>
     )}

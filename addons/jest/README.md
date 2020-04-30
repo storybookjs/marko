@@ -73,7 +73,7 @@ within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: ['@storybook/addon-jest/register']
+  addons: ['@storybook/addon-jest']
 }
 ```
 

@@ -71,7 +71,7 @@ And finally, story-level decorators are provided via parameters:
 storiesOf('Button', module).add(
   'with text',
   () => <Button onClick={action('clicked')}>Hello Button</Button>,
-  { decorators: withA11y }
+  { decorators: withKnobs }
 );
 ```
 

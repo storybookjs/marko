@@ -1,6 +1,6 @@
 {
   "name": "@storybook/react",
-  "version": "6.0.0-alpha.1",
+  "version": "6.0.0-beta.0",
   "description": "Storybook for React: Develop React Component in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -15,13 +15,6 @@
     "directory": "app/react"
   },
   "license": "MIT",
-  "files": [
-    "bin/**/*",
-    "dist/**/*",
-    "README.md",
-    "*.js",
-    "*.d.ts"
-  ],
   "main": "dist/client/index.js",
   "types": "dist/client/index.d.ts",
   "bin": {
@@ -29,6 +22,14 @@
     "start-storybook": "./bin/index.js",
     "storybook-server": "./bin/index.js"
   },
+  "files": [
+    "bin/**/*",
+    "dist/**/*",
+    "README.md",
+    "*.js",
+    "*.d.ts",
+    "ts3.5/**/*"
+  ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
@@ -36,29 +37,28 @@
     "@babel/plugin-transform-react-constant-elements": "^7.6.3",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
-    "@storybook/addons": "6.0.0-alpha.1",
-    "@storybook/core": "6.0.0-alpha.1",
-    "@storybook/node-logger": "6.0.0-alpha.1",
-    "@svgr/webpack": "^4.0.3",
-    "@types/webpack-env": "^1.15.0",
+    "@storybook/addons": "6.0.0-beta.0",
+    "@storybook/core": "6.0.0-beta.0",
+    "@storybook/node-logger": "6.0.0-beta.0",
+    "@svgr/webpack": "^5.1.0",
+    "@types/webpack-env": "^1.15.1",
     "babel-plugin-add-react-displayname": "^0.0.5",
     "babel-plugin-named-asset-import": "^0.3.1",
-    "babel-plugin-react-docgen": "^4.0.0",
+    "babel-plugin-react-docgen": "^4.1.0",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "lodash": "^4.17.15",
-    "mini-css-extract-plugin": "^0.9.0",
     "prop-types": "^15.7.2",
     "react-dev-utils": "^10.0.0",
     "regenerator-runtime": "^0.13.3",
-    "semver": "^6.0.0",
-    "ts-dedent": "^1.1.0",
+    "semver": "^7.3.2",
+    "ts-dedent": "^1.1.1",
     "webpack": "^4.33.0"
   },
   "devDependencies": {
-    "@types/mini-css-extract-plugin": "^0.9.0",
-    "@types/node": "^13.1.5",
-    "@types/webpack": "^4.41.0"
+    "@storybook/client-api": "6.0.0-beta.0",
+    "@types/node": "^13.9.5",
+    "@types/webpack": "^4.41.9"
   },
   "peerDependencies": {
     "@babel/core": "^7.0.1",
@@ -72,5 +72,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff"
+  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
+  "typesVersions": {
+    "<=3.5": {
+      "*": [
+        "ts3.5/*"
+      ]
+    }
+  }
 }

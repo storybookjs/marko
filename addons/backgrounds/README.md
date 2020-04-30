@@ -20,7 +20,7 @@ Add following content to it:
 
 ```js
 module.exports = {
-  addons: ['@storybook/addon-backgrounds/register']
+  addons: ['@storybook/addon-backgrounds']
 }
 ```
 

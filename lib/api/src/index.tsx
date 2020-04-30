@@ -1,83 +1,81 @@
-import React, { ReactElement, Component, useContext, useEffect, useMemo, useRef } from 'react';
-import memoize from 'memoizerific';
-// @ts-ignore shallow-equal is not in DefinitelyTyped
-import shallowEqualObjects from 'shallow-equal/objects';
+import React, {
+  Component,
+  Fragment,
+  FunctionComponent,
+  ReactElement,
+  ReactNode,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
+import { mergeWith } from 'lodash';
 
 import {
-  STORIES_CONFIGURED,
   STORY_CHANGED,
-  SET_STORIES,
-  SELECT_STORY,
   SHARED_STATE_CHANGED,
   SHARED_STATE_SET,
-  NAVIGATE_URL,
+  SET_STORIES,
 } from '@storybook/core-events';
 import { RenderData as RouterData } from '@storybook/router';
 import { Listener } from '@storybook/channels';
-import initProviderApi, { SubAPI as ProviderAPI, Provider } from './init-provider-api';
 
 import { createContext } from './context';
 import Store, { Options } from './store';
 import getInitialState from './initial-state';
+import { StoriesHash, Story, Root, Group, isGroup, isRoot, isStory } from './lib/stories';
 
-import initAddons, { SubAPI as AddonsAPI } from './modules/addons';
-import initChannel, { SubAPI as ChannelAPI } from './modules/channel';
-import initNotifications, {
-  SubState as NotificationState,
-  SubAPI as NotificationAPI,
-} from './modules/notifications';
-import initStories, {
-  SubState as StoriesSubState,
-  SubAPI as StoriesAPI,
-  StoriesRaw,
-} from './modules/stories';
-import initLayout, { SubState as LayoutSubState, SubAPI as LayoutAPI } from './modules/layout';
-import initShortcuts, {
-  SubState as ShortcutsSubState,
-  SubAPI as ShortcutsAPI,
-} from './modules/shortcuts';
-import initURL, { QueryParams, SubAPI as UrlAPI } from './modules/url';
-import initVersions, {
-  SubState as VersionsSubState,
-  SubAPI as VersionsAPI,
-} from './modules/versions';
+import * as provider from './modules/provider';
+import * as addons from './modules/addons';
+import * as channel from './modules/channel';
+import * as notifications from './modules/notifications';
+import * as stories from './modules/stories';
+import * as refs from './modules/refs';
+import * as layout from './modules/layout';
+import * as shortcuts from './modules/shortcuts';
+import * as url from './modules/url';
+import * as version from './modules/versions';
+import * as globalArgs from './modules/globalArgs';
 
-export { Options as StoreOptions, Listener as ChannelListener };
+const { ActiveTabs } = layout;
+
+export { Options as StoreOptions, Listener as ChannelListener, ActiveTabs };
 
 const ManagerContext = createContext({ api: undefined, state: getInitialState({}) });
 
-export type Module = StoreData &
-  RouterData &
+export type ModuleArgs = RouterData &
   ProviderData & {
     mode?: 'production' | 'development';
     state: State;
+    fullAPI: API;
+    store: Store;
   };
 
-export type State = Other &
-  LayoutSubState &
-  StoriesSubState &
-  NotificationState &
-  VersionsSubState &
+export type State = layout.SubState &
+  stories.SubState &
+  refs.SubState &
+  notifications.SubState &
+  version.SubState &
+  url.SubState &
+  shortcuts.SubState &
+  globalArgs.SubState &
   RouterData &
-  ShortcutsSubState;
+  Other;
 
-export type API = AddonsAPI &
-  ChannelAPI &
-  ProviderAPI &
-  StoriesAPI &
-  LayoutAPI &
-  NotificationAPI &
-  ShortcutsAPI &
-  VersionsAPI &
-  UrlAPI &
-  OtherAPI;
+export type API = addons.SubAPI &
+  channel.SubAPI &
+  provider.SubAPI &
+  stories.SubAPI &
+  refs.SubAPI &
+  globalArgs.SubAPI &
+  layout.SubAPI &
+  notifications.SubAPI &
+  shortcuts.SubAPI &
+  version.SubAPI &
+  url.SubAPI &
+  Other;
 
-interface OtherAPI {
-  [key: string]: any;
-}
 interface Other {
-  customQueryParams: QueryParams;
-
   [key: string]: any;
 }
 
@@ -87,38 +85,68 @@ export interface Combo {
 }
 
 interface ProviderData {
-  provider: Provider;
+  provider: provider.Provider;
 }
 
-interface DocsModeData {
-  docsMode: boolean;
+export type ManagerProviderProps = RouterData &
+  ProviderData & {
+    docsMode: boolean;
+    children: ReactNode | ((props: Combo) => ReactNode);
+  };
+
+// These types are duplicated in addons.
+export type StoryId = string;
+export type StoryKind = string;
+
+export interface Args {
+  [key: string]: any;
 }
 
-interface StoreData {
-  store: Store;
+export interface ArgType {
+  name?: string;
+  description?: string;
+  defaultValue?: any;
+  [key: string]: any;
 }
 
-interface Children {
-  children: Component | ((props: Combo) => Component);
+export interface ArgTypes {
+  [key: string]: ArgType;
 }
 
-type StatePartial = Partial<State>;
+export interface Parameters {
+  [key: string]: any;
+}
 
-export type Props = Children & RouterData & ProviderData & DocsModeData;
+// This is duplicated from @storybook/client-api for the reasons mentioned in lib-addons/types.js
+export const combineParameters = (...parameterSets: Parameters[]) =>
+  mergeWith({}, ...parameterSets, (objValue: any, srcValue: any) => {
+    // Treat arrays as scalars:
+    if (Array.isArray(srcValue)) return srcValue;
 
-class ManagerProvider extends Component<Props, State> {
-  api: API;
+    return undefined;
+  });
 
-  modules: any[];
+export type ModuleFn = (m: ModuleArgs) => Module;
+
+interface Module {
+  init?: () => void;
+  api?: unknown;
+  state?: unknown;
+}
+
+class ManagerProvider extends Component<ManagerProviderProps, State> {
+  api: API = {} as API;
+
+  modules: Module[];
 
   static displayName = 'Manager';
 
-  constructor(props: Props) {
+  constructor(props: ManagerProviderProps) {
     super(props);
     const {
-      provider,
       location,
       path,
+      refId,
       viewMode = props.docsMode ? 'docs' : 'story',
       storyId,
       docsMode,
@@ -127,10 +155,10 @@ class ManagerProvider extends Component<Props, State> {
 
     const store = new Store({
       getState: () => this.state,
-      setState: (stateChange: StatePartial, callback) => this.setState(stateChange, callback),
+      setState: (stateChange: Partial<State>, callback) => this.setState(stateChange, callback),
     });
 
-    const routeData = { location, path, viewMode, storyId };
+    const routeData = { location, path, viewMode, storyId, refId };
 
     // Initialize the state to be the initial (persisted) state of the store.
     // This gives the modules the chance to read the persisted state, apply their defaults
@@ -139,6 +167,7 @@ class ManagerProvider extends Component<Props, State> {
       layout: { isToolshown: false, showPanel: false },
       ui: { docsMode: true },
     };
+
     this.state = store.getInitialState(
       getInitialState({
         ...routeData,
@@ -149,64 +178,42 @@ class ManagerProvider extends Component<Props, State> {
     const apiData = {
       navigate,
       store,
-      provider,
+      provider: props.provider,
     };
 
     this.modules = [
-      initChannel,
-      initAddons,
-      initLayout,
-      initNotifications,
-      initShortcuts,
-      initStories,
-      initURL,
-      initVersions,
-    ].map(initModule => initModule({ ...routeData, ...apiData, state: this.state }));
+      provider,
+      channel,
+      addons,
+      layout,
+      notifications,
+      shortcuts,
+      stories,
+      refs,
+      globalArgs,
+      url,
+      version,
+    ].map((m) => m.init({ ...routeData, ...apiData, state: this.state, fullAPI: this.api }));
 
     // Create our initial state by combining the initial state of all modules, then overlaying any saved state
-    const state = getInitialState(...this.modules.map(m => m.state));
+    const state = getInitialState(this.state, ...this.modules.map((m) => m.state));
 
     // Get our API by combining the APIs exported by each module
-    const combo = Object.assign({ navigate }, ...this.modules.map(m => m.api));
-
-    const api = initProviderApi({ provider, store, api: combo });
-
-    api.on(STORY_CHANGED, (id: string) => {
-      const options = api.getParameters(id, 'options');
-
-      if (options) {
-        api.setOptions(options);
-      }
-    });
-
-    api.on(SET_STORIES, (data: { stories: StoriesRaw }) => {
-      api.setStories(data.stories);
-      const options = storyId
-        ? api.getParameters(storyId, 'options')
-        : api.getParameters(Object.keys(data.stories)[0], 'options');
-      api.setOptions(options);
-    });
-    api.on(
-      SELECT_STORY,
-      ({ kind, story, ...rest }: { kind: string; story: string; [k: string]: any }) => {
-        api.selectStory(kind, story, rest);
-      }
-    );
-    api.on(NAVIGATE_URL, (url: string, options: { [k: string]: any }) => {
-      api.navigateUrl(url, options);
-    });
+    const api: API = Object.assign(this.api, { navigate }, ...this.modules.map((m) => m.api));
 
     this.state = state;
     this.api = api;
   }
 
-  static getDerivedStateFromProps = (props: Props, state: State) => {
+  static getDerivedStateFromProps = (props: ManagerProviderProps, state: State) => {
     if (state.path !== props.path) {
       return {
         ...state,
         location: props.location,
         path: props.path,
-        viewMode: props.viewMode,
+        refId: props.refId,
+        // if its a docsOnly page, even the 'story' view mode is considered 'docs'
+        viewMode: (props.docsMode && props.viewMode) === 'story' ? 'docs' : props.viewMode,
         storyId: props.storyId,
       };
     }
@@ -218,12 +225,12 @@ class ManagerProvider extends Component<Props, State> {
     // a chance to do things that call other modules' APIs.
     this.modules.forEach(({ init }) => {
       if (init) {
-        init({ api: this.api });
+        init();
       }
     });
   }
 
-  shouldComponentUpdate(nextProps: Props, nextState: State) {
+  shouldComponentUpdate(nextProps: ManagerProviderProps, nextState: State) {
     const prevState = this.state;
     const prevProps = this.props;
 
@@ -245,56 +252,43 @@ class ManagerProvider extends Component<Props, State> {
 
     return (
       <ManagerContext.Provider value={value}>
-        {typeof children === 'function' ? children(value) : children}
+        <ManagerConsumer>{children}</ManagerConsumer>
       </ManagerContext.Provider>
     );
   }
 }
 
-interface ConsumerProps<S, C> {
-  filter?: (combo: C) => S;
-  pure?: boolean;
-  children: (d: S | C) => ReactElement<any> | null;
+interface ManagerConsumerProps<P = unknown> {
+  filter?: (combo: Combo) => P;
+  children: FunctionComponent<P> | ReactNode;
 }
 
-interface SubState {
-  [key: string]: any;
-}
+const defaultFilter = (c: Combo) => c;
 
-class ManagerConsumer extends Component<ConsumerProps<SubState, Combo>> {
-  prevChildren?: ReactElement<any> | null;
+function ManagerConsumer<P = Combo>({
+  // @ts-ignore
+  filter = defaultFilter,
+  children,
+}: ManagerConsumerProps<P>): ReactElement {
+  const c = useContext(ManagerContext);
+  const renderer = useRef(children);
+  const filterer = useRef(filter);
 
-  prevData?: SubState;
-
-  dataMemory?: (combo: Combo) => SubState;
-
-  constructor(props: ConsumerProps<SubState, Combo>) {
-    super(props);
-    this.dataMemory = props.filter ? memoize(10)(props.filter) : null;
+  if (typeof renderer.current !== 'function') {
+    return <Fragment>{renderer.current}</Fragment>;
   }
 
-  render() {
-    const { children, pure } = this.props;
+  const data = filterer.current(c);
 
-    return (
-      <ManagerContext.Consumer>
-        {d => {
-          const data = this.dataMemory ? this.dataMemory(d) : d;
-          if (
-            pure &&
-            this.prevChildren &&
-            this.prevData &&
-            shallowEqualObjects(data, this.prevData)
-          ) {
-            return this.prevChildren;
-          }
-          this.prevChildren = children(data);
-          this.prevData = data;
-          return this.prevChildren;
-        }}
-      </ManagerContext.Consumer>
-    );
-  }
+  const l = useMemo(() => {
+    return [...Object.entries(data).reduce((acc, keyval) => acc.concat(keyval), [])];
+  }, [c.state]);
+
+  return useMemo(() => {
+    const Child = renderer.current as FunctionComponent<P>;
+
+    return <Child {...data} />;
+  }, l);
 }
 
 export function useStorybookState(): State {
@@ -306,7 +300,17 @@ export function useStorybookApi(): API {
   return api;
 }
 
-export { ManagerConsumer as Consumer, ManagerProvider as Provider };
+export {
+  ManagerConsumer as Consumer,
+  ManagerProvider as Provider,
+  StoriesHash,
+  Story,
+  Root,
+  Group,
+  isGroup,
+  isRoot,
+  isStory,
+};
 
 export interface EventMap {
   [eventId: string]: Listener;
@@ -339,7 +343,7 @@ export function useParameter<S>(parameterKey: string, defaultValue?: S) {
 }
 
 type StateMerger<S> = (input: S) => S;
-// chache for taking care of HMR
+// cache for taking care of HMR
 const addonStateCache: {
   [key: string]: any;
 } = {};
@@ -365,7 +369,7 @@ export function useSharedState<S>(stateId: string, defaultState?: S) {
       [`${SHARED_STATE_SET}-client-${stateId}`]: (s: S) => setState(s),
     };
     const stateInitializationHandlers = {
-      [STORIES_CONFIGURED]: () => {
+      [SET_STORIES]: () => {
         if (addonStateCache[stateId]) {
           // this happens when HMR
           setState(addonStateCache[stateId]);
@@ -405,7 +409,29 @@ export function useAddonState<S>(addonId: string, defaultState?: S) {
   return useSharedState<S>(addonId, defaultState);
 }
 
-export function useStoryState<S>(defaultState?: S) {
-  const { storyId } = useStorybookState();
-  return useSharedState<S>(`story-state-${storyId}`, defaultState);
+export function useArgs(): [Args, (newArgs: Args) => void] {
+  const {
+    api: { getCurrentStoryData, updateStoryArgs },
+  } = useStorybookApi();
+
+  const { id, args } = getCurrentStoryData();
+
+  return [args, (newArgs: Args) => updateStoryArgs(id, newArgs)];
+}
+
+export function useGlobalArgs(): [Args, (newGlobalArgs: Args) => void] {
+  const {
+    state: { globalArgs: oldGlobalArgs },
+    api: { updateGlobalArgs },
+  } = useContext(ManagerContext);
+
+  return [oldGlobalArgs, updateGlobalArgs];
+}
+
+export function useArgTypes(): ArgTypes {
+  return useParameter<ArgTypes>('argTypes', {});
+}
+
+export function useGlobalArgTypes(): ArgTypes {
+  return useParameter<ArgTypes>('globalArgTypes', {});
 }

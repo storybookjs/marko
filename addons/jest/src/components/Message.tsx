@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, FunctionComponent } from 'react';
 import { styled } from '@storybook/theming';
 
 const positiveConsoleRegex = /\[32m(.*?)\[39m/;
@@ -51,10 +51,6 @@ const StatusColor = styled.strong<{ status: string }>(({ status, theme }) => ({
   fontWeight: 500,
 }));
 
-const Main = styled(({ msg, className }) => <section className={className}>{msg}</section>)({
-  padding: 5,
-});
-
 const colorizeText: (msg: string, type: string) => MsgElement[] = (msg: string, type: string) => {
   if (type) {
     return msg
@@ -77,12 +73,9 @@ const getConvertedText: (msg: string) => MsgElement[] = (msg: string) => {
 
   if (!msg) return elementArray;
 
-  const splitText = msg
-    .split(/\[2m/)
-    .join('')
-    .split(/\[22m/);
+  const splitText = msg.split(/\[2m/).join('').split(/\[22m/);
 
-  splitText.forEach(element => {
+  splitText.forEach((element) => {
     if (element && element.trim()) {
       if (
         element.indexOf(failStartToken) > -1 &&
@@ -114,12 +107,7 @@ const getTestDetail: (msg: string) => TestDetail = (msg: string) => {
     const current = lines[index];
     const next = lines[index + 1];
 
-    if (
-      current
-        .trim()
-        .toLowerCase()
-        .indexOf(stackTraceStartToken) === 0
-    ) {
+    if (current.trim().toLowerCase().indexOf(stackTraceStartToken) === 0) {
       testDetail.stackTrace += `${current.trim()}\n`;
     } else if (current.trim().indexOf(titleEndToken) > -1) {
       let title;
@@ -148,7 +136,7 @@ interface MessageProps {
   msg: string;
 }
 
-export const Message = (props: any) => {
+export const Message: FunctionComponent<MessageProps> = (props) => {
   const { msg } = props;
 
   const detail: TestDetail = getTestDetail(msg);

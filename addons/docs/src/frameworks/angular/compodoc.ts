@@ -2,6 +2,7 @@
 /* global window */
 
 import { PropDef } from '@storybook/components';
+import { ArgType, ArgTypes } from '@storybook/api';
 import { Argument, CompodocJson, Component, Method, Property, Directive } from './types';
 
 type Sections = Record<string, PropDef[]>;
@@ -29,10 +30,6 @@ export const checkValidCompodocJson = (compodocJson: CompodocJson) => {
     throw new Error('Invalid compodoc JSON');
   }
 };
-
-function isEmpty(obj: any) {
-  return Object.entries(obj).length === 0 && obj.constructor === Object;
-}
 
 const hasDecorator = (item: Property, decoratorName: string) =>
   item.decorators && item.decorators.find((x: any) => x.name === decoratorName);
@@ -71,6 +68,10 @@ const mapItemToSection = (key: string, item: Method | Property): string => {
   }
 };
 
+export const findComponentByName = (name: string, compodocJson: CompodocJson) =>
+  compodocJson.components.find((c: Component) => c.name === name) ||
+  compodocJson.directives.find((c: Directive) => c.name === name);
+
 const getComponentData = (component: Component | Directive) => {
   if (!component) {
     return null;
@@ -79,10 +80,7 @@ const getComponentData = (component: Component | Directive) => {
   const compodocJson = getCompdocJson();
   checkValidCompodocJson(compodocJson);
   const { name } = component;
-  return (
-    compodocJson.components.find((c: Component) => c.name === name) ||
-    compodocJson.directives.find((c: Directive) => c.name === name)
-  );
+  return findComponentByName(name, compodocJson);
 };
 
 const displaySignature = (item: Method): string => {
@@ -92,36 +90,35 @@ const displaySignature = (item: Method): string => {
   return `(${args.join(', ')}) => ${item.returnType}`;
 };
 
-export const extractProps = (component: Component | Directive) => {
-  const componentData = getComponentData(component);
-  if (!componentData) {
-    return null;
-  }
-
-  const sectionToItems: Sections = {};
+export const extractArgTypesFromData = (componentData: Directive) => {
+  const sectionToItems: Record<string, ArgType[]> = {};
   const compodocClasses = ['propertiesClass', 'methodsClass', 'inputsClass', 'outputsClass'];
   type COMPODOC_CLASS = 'propertiesClass' | 'methodsClass' | 'inputsClass' | 'outputsClass';
 
   compodocClasses.forEach((key: COMPODOC_CLASS) => {
     const data = componentData[key] || [];
     data.forEach((item: Method | Property) => {
-      const sectionItem: PropDef = {
+      const section = mapItemToSection(key, item);
+      const argType = {
         name: item.name,
-        type: { summary: isMethod(item) ? displaySignature(item) : item.type },
-        required: isMethod(item) ? false : !item.optional,
         description: item.description,
         defaultValue: { summary: isMethod(item) ? '' : item.defaultValue },
+        table: {
+          category: section,
+          type: {
+            summary: isMethod(item) ? displaySignature(item) : item.type,
+            required: isMethod(item) ? false : !item.optional,
+          },
+        },
       };
 
-      const section = mapItemToSection(key, item);
       if (!sectionToItems[section]) {
         sectionToItems[section] = [];
       }
-      sectionToItems[section].push(sectionItem);
+      sectionToItems[section].push(argType);
     });
   });
 
-  // sort the sections
   const SECTIONS = [
     'inputs',
     'outputs',
@@ -132,15 +129,22 @@ export const extractProps = (component: Component | Directive) => {
     'content child',
     'content children',
   ];
-  const sections: Sections = {};
-  SECTIONS.forEach(section => {
+  const argTypes: ArgTypes = {};
+  SECTIONS.forEach((section) => {
     const items = sectionToItems[section];
     if (items) {
-      sections[section] = items;
+      items.forEach((argType) => {
+        argTypes[argType.name] = argType;
+      });
     }
   });
 
-  return isEmpty(sections) ? null : { sections };
+  return argTypes;
+};
+
+export const extractArgTypes = (component: Component | Directive) => {
+  const componentData = getComponentData(component);
+  return componentData && extractArgTypesFromData(componentData);
 };
 
 export const extractComponentDescription = (component: Component | Directive) => {

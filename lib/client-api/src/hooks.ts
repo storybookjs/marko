@@ -13,6 +13,8 @@ import {
   useChannel,
   useStoryContext,
   useParameter,
+  useArgs,
+  useGlobalArgs,
 } from '@storybook/addons';
 
 export {
@@ -27,6 +29,8 @@ export {
   useChannel,
   useStoryContext,
   useParameter,
+  useArgs,
+  useGlobalArgs,
 };
 
 export function useSharedState<S>(sharedId: string, defaultState?: S): [S, (s: S) => void] {
@@ -58,7 +62,7 @@ export function useSharedState<S>(sharedId: string, defaultState?: S): [S, (s: S
 
   return [
     state,
-    s => {
+    (s) => {
       setState(s);
       emit(`${SHARED_STATE_CHANGED}-client-${sharedId}`, s);
     },
@@ -67,9 +71,4 @@ export function useSharedState<S>(sharedId: string, defaultState?: S): [S, (s: S
 
 export function useAddonState<S>(addonId: string, defaultState?: S): [S, (s: S) => void] {
   return useSharedState<S>(addonId, defaultState);
-}
-
-export function useStoryState<S>(defaultState?: S): [S, (s: S) => void] {
-  const { id: storyId } = useStoryContext();
-  return useSharedState<S>(`story-state-${storyId}`, defaultState);
 }

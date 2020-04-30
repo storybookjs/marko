@@ -233,7 +233,7 @@ describe('parse', () => {
       { name: 'boolean (true)', value: 'true' },
       { name: 'boolean (false)', value: 'false' },
       { name: 'null', value: 'null' },
-    ].forEach(x => {
+    ].forEach((x) => {
       it(`support ${x.name}`, () => {
         const result = parse(x.value);
         const inferedType = result.inferedType as InspectionLiteral;

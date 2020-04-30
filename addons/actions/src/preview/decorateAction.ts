@@ -1,37 +1,36 @@
-import { action } from './action';
-import { actions } from './actions';
-import { createDecorator } from './withActions';
-import { ActionOptions, DecoratorFunction, HandlerFunction } from '../models';
+import deprecate from 'util-deprecate';
+import dedent from 'ts-dedent';
 
-const applyDecorators = (decorators: DecoratorFunction[], actionCallback: HandlerFunction) => {
-  return (..._args: any[]) => {
-    const decorated = decorators.reduce((args, storyFn) => storyFn(args), _args);
-    actionCallback(...decorated);
-  };
+import { DecoratorFunction } from '../models';
+
+export const decorateAction = (_decorators: DecoratorFunction[]) => {
+  return deprecate(
+    () => {},
+    dedent`
+    decorateAction is no longer supported as of Storybook 6.0.
+  `
+  );
 };
 
-export const decorateAction = (
-  decorators: DecoratorFunction[]
-): ((name: string, options?: ActionOptions) => HandlerFunction) => {
-  return (name: string, options?: ActionOptions) => {
-    const callAction = action(name, options);
-    return applyDecorators(decorators, callAction);
-  };
-};
-
-export const decorate = (decorators: DecoratorFunction[]) => {
-  const decorated = decorateAction(decorators);
-  const decoratedActions = (...args: any[]) => {
-    const rawActions = actions(...args);
-    const actionsObject = {} as any;
-    Object.keys(rawActions).forEach(name => {
-      actionsObject[name] = applyDecorators(decorators, rawActions[name]);
-    });
-    return actionsObject;
-  };
-  return {
-    action: decorated,
-    actions: decoratedActions,
-    withActions: createDecorator(decoratedActions),
-  };
+export const decorate = (_decorators: DecoratorFunction[]) => {
+  return deprecate(
+    () => {
+      return {
+        action: deprecate(() => {}, 'decorate.action is no longer supported as of Storybook 6.0.'),
+        actions: deprecate(() => {},
+        'decorate.actions is no longer supported as of Storybook 6.0.'),
+        withActions: deprecate(() => {},
+        'decorate.withActions is no longer supported as of Storybook 6.0.'),
+      };
+    },
+    dedent`
+    decorate is deprecated, please configure addon-actions using the addParameter api:
+      
+      addParameters({
+        actions: {
+          handles: options
+        },
+      });
+    `
+  );
 };

@@ -51,7 +51,7 @@ const CheckboxLabel = styled.label({
 export default class CheckboxesType extends Component<CheckboxesTypeProps, CheckboxesTypeState> {
   static defaultProps: CheckboxesTypeProps = {
     knob: {} as any,
-    onChange: value => value,
+    onChange: (value) => value,
     isInline: false,
   };
 
@@ -95,7 +95,7 @@ export default class CheckboxesType extends Component<CheckboxesTypeProps, Check
   };
 
   renderCheckboxList = ({ options }: CheckboxesTypeKnob) =>
-    Object.keys(options).map(key => this.renderCheckbox(key, options[key]));
+    Object.keys(options).map((key) => this.renderCheckbox(key, options[key]));
 
   renderCheckbox = (label: string, value: string) => {
     const { knob } = this.props;

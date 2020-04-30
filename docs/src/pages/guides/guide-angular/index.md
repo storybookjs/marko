@@ -31,17 +31,18 @@ npm install @storybook/angular --save-dev
 Make sure that you have `@babel/core`, and `babel-loader` in your dependencies as well because we list these as a peer dependencies:
 
 ```sh
-npm install babel-loader @babel/core --save-dev 
+npm install babel-loader @babel/core --save-dev
 ```
 
-## Step 2: Add a npm script
+## Step 2: Add npm scripts
 
-Then add the following NPM script to your `package.json` in order to start the storybook later in this guide:
+Then add the following scripts to your `package.json` in order to start the storybook later in this guide:
 
 ```json
 {
   "scripts": {
-    "storybook": "start-storybook"
+    "storybook": "start-storybook",
+    "build-storybook": "build-storybook"
   }
 }
 ```
@@ -53,12 +54,12 @@ For a basic Storybook configuration, the only thing you need to do is tell Story
 To do that, create a file at `.storybook/main.js` with the following content:
 
 ```js
-module.exports {
+module.exports = {
   stories: ['../src/**/*.stories.[tj]s'],
 };
 ```
 
-That will load all the stories underneath your `../src` directory that match the pattern `*.stories.[tj]sx?`. We recommend co-locating your stories with your source files, but you can place them wherever you choose.
+That will load all the stories underneath your `../src` directory that match the pattern `*.stories.[tj]s`. We recommend co-locating your stories with your source files, but you can place them wherever you choose.
 
 ## Step 4: Storybook TypeScript configuration
 

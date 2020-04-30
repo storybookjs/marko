@@ -36,7 +36,7 @@ describe('getPossibleStoriesFiles', () => {
     const storyshots = 'test/__snapshots__/foo.web.stories.storyshot';
 
     const result = target.getPossibleStoriesFiles(storyshots);
-    const platformAgnosticResult = result.map(path => path.replace(/\\|\//g, '/'));
+    const platformAgnosticResult = result.map((path) => path.replace(/\\|\//g, '/'));
 
     expect(platformAgnosticResult).toEqual([
       'test/foo.web.stories.js',

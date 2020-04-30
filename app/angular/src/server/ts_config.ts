@@ -10,10 +10,13 @@ function resolveTsConfig(tsConfigPath: string): string | undefined {
   return undefined;
 }
 
-export default function(configDir: string) {
+export default function (configDir: string) {
   const configFilePath = resolveTsConfig(path.resolve(configDir, 'tsconfig.json'));
   return {
     transpileOnly: true,
+    compilerOptions: {
+      emitDecoratorMetadata: true,
+    },
     configFile: configFilePath || undefined,
   };
 }

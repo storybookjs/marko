@@ -1,7 +1,10 @@
 import { ReactElement } from 'react';
 
-import { Module } from '../index';
+import { WindowLocation } from '@reach/router';
+import { ModuleFn } from '../index';
 import { Options } from '../store';
+
+export type ViewMode = 'story' | 'info' | 'settings' | 'page' | undefined | string;
 
 export enum types {
   TAB = 'tab',
@@ -19,9 +22,15 @@ export interface RenderOptions {
 
 export interface RouteOptions {
   storyId: string;
+  viewMode: ViewMode;
+  location: WindowLocation;
+  path: string;
 }
 export interface MatchOptions {
-  viewMode: string;
+  storyId: string;
+  viewMode: ViewMode;
+  location: WindowLocation;
+  path: string;
 }
 
 export interface Addon {
@@ -32,14 +41,14 @@ export interface Addon {
   match?: (matchOptions: MatchOptions) => boolean;
   render: (renderOptions: RenderOptions) => ReactElement<any>;
   paramKey?: string;
+  disabled?: boolean;
+  hidden?: boolean;
 }
-export interface Collection {
-  [key: string]: Addon;
+export interface Collection<T = Addon> {
+  [key: string]: T;
 }
 
-interface Panels {
-  [id: string]: Addon;
-}
+type Panels = Collection<Addon>;
 
 type StateMerger<S> = (input: S) => S;
 
@@ -50,9 +59,9 @@ interface StoryInput {
 }
 
 export interface SubAPI {
-  getElements: (type: Types) => Collection;
-  getPanels: () => Collection;
-  getStoryPanels: () => Collection;
+  getElements: <T>(type: Types) => Collection<T>;
+  getPanels: () => Panels;
+  getStoryPanels: () => Panels;
   getSelectedPanel: () => string;
   setSelectedPanel: (panelName: string) => void;
   setAddonState<S>(
@@ -76,20 +85,20 @@ export function ensurePanel(panels: Panels, selectedPanel?: string, currentPanel
   return currentPanel;
 }
 
-export default ({ provider, store }: Module) => {
+export const init: ModuleFn = ({ provider, store, fullAPI }) => {
   const api: SubAPI = {
-    getElements: type => provider.getElements(type),
+    getElements: (type) => provider.getElements(type),
     getPanels: () => api.getElements(types.PANEL),
     getStoryPanels: () => {
       const allPanels = api.getPanels();
-      const { storyId, storiesHash } = store.getState();
-      const storyInput = storyId && (storiesHash[storyId] as StoryInput);
+      const { storyId } = store.getState();
+      const story = fullAPI.getData(storyId);
 
-      if (!allPanels || !storyInput) {
+      if (!allPanels || !story) {
         return allPanels;
       }
 
-      const { parameters } = storyInput;
+      const { parameters } = story;
 
       const filteredPanels: Collection = {};
       Object.entries(allPanels).forEach(([id, panel]) => {
@@ -106,7 +115,7 @@ export default ({ provider, store }: Module) => {
       const { selectedPanel } = store.getState();
       return ensurePanel(api.getPanels(), selectedPanel, selectedPanel);
     },
-    setSelectedPanel: panelName => {
+    setSelectedPanel: (panelName) => {
       store.setState({ selectedPanel: panelName }, { persistence: 'session' });
     },
     setAddonState<S>(
@@ -126,7 +135,7 @@ export default ({ provider, store }: Module) => {
         .setState({ addons: { ...existing, [addonId]: nextState } }, options)
         .then(() => api.getAddonState(addonId));
     },
-    getAddonState: addonId => {
+    getAddonState: (addonId) => {
       return store.getState().addons[addonId];
     },
   };

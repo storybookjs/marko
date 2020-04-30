@@ -1,9 +1,8 @@
-import { isNil } from 'lodash';
 import { PropDef } from '@storybook/components';
 import { ExtractedProp } from '../../../lib/docgen';
 import { createType } from './createType';
 import { createDefaultValue, createDefaultValueFromRawDefaultProp } from '../lib/defaultValues';
-import { Component } from '../../../blocks/shared';
+import { Component } from '../../../blocks/types';
 import { keepOriginalDefinitionOrder } from './sortProps';
 import { rawDefaultPropTypeResolvers } from './rawDefaultPropResolvers';
 
@@ -11,25 +10,25 @@ export function enhancePropTypesProp(extractedProp: ExtractedProp, rawDefaultPro
   const { propDef } = extractedProp;
 
   const newtype = createType(extractedProp);
-  if (!isNil(newtype)) {
+  if (newtype != null) {
     propDef.type = newtype;
   }
 
   const { defaultValue } = extractedProp.docgenInfo;
-  if (!isNil(defaultValue) && !isNil(defaultValue.value)) {
+  if (defaultValue != null && defaultValue.value != null) {
     const newDefaultValue = createDefaultValue(defaultValue.value);
 
-    if (!isNil(newDefaultValue)) {
+    if (newDefaultValue != null) {
       propDef.defaultValue = newDefaultValue;
     }
-  } else if (!isNil(rawDefaultProp)) {
+  } else if (rawDefaultProp != null) {
     const newDefaultValue = createDefaultValueFromRawDefaultProp(
       rawDefaultProp,
       propDef,
       rawDefaultPropTypeResolvers
     );
 
-    if (!isNil(newDefaultValue)) {
+    if (newDefaultValue != null) {
       propDef.defaultValue = newDefaultValue;
     }
   }
@@ -41,8 +40,8 @@ export function enhancePropTypesProps(
   extractedProps: ExtractedProp[],
   component: Component
 ): PropDef[] {
-  const rawDefaultProps = !isNil(component.defaultProps) ? component.defaultProps : {};
-  const enhancedProps = extractedProps.map(x =>
+  const rawDefaultProps = component.defaultProps != null ? component.defaultProps : {};
+  const enhancedProps = extractedProps.map((x) =>
     enhancePropTypesProp(x, rawDefaultProps[x.propDef.name])
   );
 

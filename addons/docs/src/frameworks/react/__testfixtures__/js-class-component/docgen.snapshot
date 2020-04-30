@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`react component properties js-class-component 1`] = `
+"/* eslint-disable react/prefer-stateless-function */
+import React from 'react';
+import PropTypes from 'prop-types';
+/**
+ * Component description
+ */
+
+class ErrorBox extends React.Component {
+  render() {
+    const {
+      children
+    } = this.props;
+    return /*#__PURE__*/React.createElement(\\"div\\", {
+      className: \\"error-box\\"
+    }, children);
+  }
+
+}
+
+ErrorBox.propTypes = {
+  /**
+   * PropTypes description
+   */
+  children: PropTypes.node.isRequired
+};
+ErrorBox.__docgenInfo = {
+  \\"description\\": \\"Component description\\",
+  \\"methods\\": [],
+  \\"displayName\\": \\"ErrorBox\\",
+  \\"props\\": {
+    \\"children\\": {
+      \\"type\\": {
+        \\"name\\": \\"node\\"
+      },
+      \\"required\\": true,
+      \\"description\\": \\"PropTypes description\\"
+    }
+  }
+};
+export default ErrorBox;
+export const component = ErrorBox;"
+`;

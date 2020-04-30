@@ -4,22 +4,16 @@ import { document } from 'global';
 import m from 'mithril';
 import dedent from 'ts-dedent';
 
-import { RenderMainArgs } from './types';
+import { RenderContext } from './types';
 
 const rootEl = document.getElementById('root');
 
-export default function renderMain({
-  storyFn,
-  selectedKind,
-  selectedStory,
-  showMain,
-  showError,
-}: RenderMainArgs) {
+export default function renderMain({ storyFn, kind, name, showMain, showError }: RenderContext) {
   const element = storyFn();
 
   if (!element) {
     const error = {
-      title: `Expecting a Mithril element from the story: "${selectedStory}" of "${selectedKind}".`,
+      title: `Expecting a Mithril element from the story: "${name}" of "${kind}".`,
       description: dedent`
         Did you forget to return the Mithril element from the story?
         Use "() => MyComp" or "() => { return MyComp; }" when defining the story.

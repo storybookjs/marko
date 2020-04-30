@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`react component properties ts-function-component 1`] = `
+"import React from 'react';
+
+/**
+ * The world's most _basic_ button
+ */
+export const Button = ({
+  onClick
+}) => /*#__PURE__*/React.createElement(\\"button\\", {
+  onClick: onClick,
+  type: \\"button\\"
+}, \\"hello\\");
+Button.defaultProps = {
+  primary: true,
+  secondary: false
+};
+export const component = Button;
+Button.__docgenInfo = {
+  \\"description\\": \\"The world's most _basic_ button\\",
+  \\"methods\\": [],
+  \\"displayName\\": \\"Button\\",
+  \\"props\\": {
+    \\"primary\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"true\\",
+        \\"computed\\": false
+      },
+      \\"required\\": false,
+      \\"tsType\\": {
+        \\"name\\": \\"boolean\\"
+      },
+      \\"description\\": \\"Is primary?\\"
+    },
+    \\"secondary\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"false\\",
+        \\"computed\\": false
+      },
+      \\"required\\": false,
+      \\"tsType\\": {
+        \\"name\\": \\"boolean\\"
+      },
+      \\"description\\": \\"default is false\\"
+    },
+    \\"onClick\\": {
+      \\"required\\": false,
+      \\"tsType\\": {
+        \\"name\\": \\"signature\\",
+        \\"type\\": \\"function\\",
+        \\"raw\\": \\"() => void\\",
+        \\"signature\\": {
+          \\"arguments\\": [],
+          \\"return\\": {
+            \\"name\\": \\"void\\"
+          }
+        }
+      },
+      \\"description\\": \\"Simple click handler\\"
+    }
+  }
+};"
+`;

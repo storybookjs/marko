@@ -1,4 +1,4 @@
-import React, { Component, Fragment, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { styled, themes, convert } from '@storybook/theming';
 import { Icons } from '@storybook/components';
 import Message from './Message';
@@ -41,10 +41,7 @@ const Icon = styled<any, any>(Icons)(({ theme }) => ({
 }));
 
 const capitalizeFirstLetter = (text: string) => {
-  return text
-    .charAt(0)
-    .toUpperCase()
-    .concat(text.slice(1));
+  return text.charAt(0).toUpperCase().concat(text.slice(1));
 };
 
 interface ResultProps {

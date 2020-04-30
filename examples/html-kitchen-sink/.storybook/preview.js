@@ -1,7 +1,6 @@
-import { addParameters, addDecorator } from '@storybook/html';
-import { withA11y } from '@storybook/addon-a11y';
+import { addParameters } from '@storybook/html';
 
-addDecorator(withA11y);
+const SOURCE_REGEX = /^\(\) => [`'"](.*)['`"]$/;
 
 addParameters({
   a11y: {
@@ -16,5 +15,9 @@ addParameters({
   },
   docs: {
     iframeHeight: '200px',
+    transformSource: (src) => {
+      const match = SOURCE_REGEX.exec(src);
+      return match ? match[1] : src;
+    },
   },
 });

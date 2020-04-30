@@ -56,7 +56,7 @@ export default class ColorType extends Component<ColorTypeProps, ColorTypeState>
 
   static defaultProps: ColorTypeProps = {
     knob: {} as any,
-    onChange: value => value,
+    onChange: (value) => value,
   };
 
   static serialize = (value: ColorTypeKnobValue) => value;
@@ -129,7 +129,7 @@ export default class ColorType extends Component<ColorTypeProps, ColorTypeState>
         <Swatch style={colorStyle} />
         {displayColorPicker ? (
           <Popover
-            ref={e => {
+            ref={(e) => {
               if (e) this.popover = e;
             }}
           >

@@ -49,7 +49,7 @@ describe('preview', () => {
     it('should select the kind (only) provided', () => {
       const channel = { emit: jest.fn() };
       addons.getChannel.mockReturnValue(channel);
-      __STORYBOOK_STORY_STORE__.fromId.mockImplementation(input => null);
+      __STORYBOOK_STORY_STORE__.fromId.mockImplementation((input) => null);
 
       const handler = linkTo('kind');
       handler();
@@ -64,7 +64,7 @@ describe('preview', () => {
       const channel = { emit: jest.fn() };
       addons.getChannel.mockReturnValue(channel);
       // simulate a currently selected, but not found as ID
-      __STORYBOOK_STORY_STORE__.fromId.mockImplementation(input =>
+      __STORYBOOK_STORY_STORE__.fromId.mockImplementation((input) =>
         !input
           ? {
               kind: 'kind',
@@ -85,7 +85,7 @@ describe('preview', () => {
     it('should select the id provided', () => {
       const channel = { emit: jest.fn() };
       addons.getChannel.mockReturnValue(channel);
-      __STORYBOOK_STORY_STORE__.fromId.mockImplementation(input =>
+      __STORYBOOK_STORY_STORE__.fromId.mockImplementation((input) =>
         input === 'kind--story'
           ? {
               story: 'name',
@@ -106,7 +106,7 @@ describe('preview', () => {
     it('should handle functions returning strings', () => {
       const channel = { emit: jest.fn() };
       addons.getChannel.mockReturnValue(channel);
-      __STORYBOOK_STORY_STORE__.fromId.mockImplementation(input => null);
+      __STORYBOOK_STORY_STORE__.fromId.mockImplementation((input) => null);
 
       const handler = linkTo(
         (a, b) => a + b,

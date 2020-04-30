@@ -4,11 +4,11 @@ import memoize from 'memoizerific';
 
 import { version as currentVersion } from '../version';
 
-import { Module, API } from '../index';
+import { ModuleFn } from '../index';
 
 export interface Version {
   version: string;
-  info?: string;
+  info?: { plain: string };
   [key: string]: any;
 }
 
@@ -46,7 +46,7 @@ export interface SubAPI {
   versionUpdateAvailable: () => boolean;
 }
 
-export default function({ store, mode }: Module) {
+export const init: ModuleFn = ({ store, mode, fullAPI }) => {
   const { dismissedVersionNotification } = store.getState();
 
   const state = {
@@ -106,10 +106,11 @@ export default function({ store, mode }: Module) {
   };
 
   // Grab versions from the server/local storage right away
-  async function init({ api: fullApi }: API) {
+  const initModule = async () => {
     const { versions = {} } = store.getState();
 
     const { latest, next } = getVersionCheckData();
+
     await store.setState({
       versions: { ...versions, latest, next },
     });
@@ -125,7 +126,7 @@ export default function({ store, mode }: Module) {
         !semver.prerelease(latestVersion) &&
         mode !== 'production'
       ) {
-        fullApi.addNotification({
+        fullAPI.addNotification({
           id: 'update',
           link: '/settings/about',
           content: `🎉 Storybook ${latestVersion} is available!`,
@@ -138,7 +139,7 @@ export default function({ store, mode }: Module) {
         });
       }
     }
-  }
+  };
 
-  return { init, state, api };
-}
+  return { init: initModule, state, api };
+};

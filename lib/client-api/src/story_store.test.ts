@@ -1,10 +1,11 @@
+// foo
 import createChannel from '@storybook/channel-postmessage';
 import { toId } from '@storybook/csf';
-import addons from '@storybook/addons';
+import addons, { mockChannel } from '@storybook/addons';
 import Events from '@storybook/core-events';
 
-import StoryStore from './story_store';
-import { defaultDecorateStory } from './client_api';
+import StoryStore, { ErrorLike } from './story_store';
+import { defaultDecorateStory } from './decorators';
 
 jest.mock('@storybook/node-logger', () => ({
   logger: {
@@ -14,29 +15,38 @@ jest.mock('@storybook/node-logger', () => ({
   },
 }));
 
-const channel = createChannel({ page: 'preview' });
+let channel;
+beforeEach(() => {
+  channel = createChannel({ page: 'preview' });
+});
 
-const make = (kind, name, storyFn, parameters = {}) => [
-  {
-    kind,
-    name,
-    storyFn,
-    parameters,
-    id: toId(kind, name),
-  },
-  {
-    applyDecorators: defaultDecorateStory,
-    getDecorators: () => [],
-  },
-];
+// make a story and add it to the store
+const addStoryToStore = (store, kind, name, storyFn, parameters = {}) =>
+  store.addStory(
+    {
+      kind,
+      name,
+      storyFn,
+      parameters,
+      id: toId(kind, name),
+    },
+    {
+      applyDecorators: defaultDecorateStory,
+    }
+  );
 
 describe('preview.story_store', () => {
-  describe('raw storage', () => {
-    it('stores hash object', () => {
+  describe('extract', () => {
+    it('produces stories objects with inherited (denormalized) metadata', () => {
       const store = new StoryStore({ channel });
-      store.addStory(...make('a', '1', () => 0), undefined);
-      store.addStory(...make('a', '2', () => 0));
-      store.addStory(...make('b', '1', () => 0));
+
+      store.addGlobalMetadata({ parameters: { global: 'global' }, decorators: [] });
+
+      store.addKindMetadata('a', { parameters: { kind: 'kind' }, decorators: [] });
+
+      addStoryToStore(store, 'a', '1', () => 0, { story: 'story' });
+      addStoryToStore(store, 'a', '2', () => 0);
+      addStoryToStore(store, 'b', '1', () => 0);
 
       const extracted = store.extract();
 
@@ -48,30 +58,422 @@ describe('preview.story_store', () => {
         id: 'a--1',
         kind: 'a',
         name: '1',
-        parameters: expect.any(Object),
+        parameters: { global: 'global', kind: 'kind', story: 'story' },
       });
+    });
+  });
+
+  describe('getDataForManager', () => {
+    it('produces stories objects with normalized metadata', () => {
+      const store = new StoryStore({ channel });
+
+      store.addGlobalMetadata({ parameters: { global: 'global' }, decorators: [] });
+
+      store.addKindMetadata('a', { parameters: { kind: 'kind' }, decorators: [] });
+
+      addStoryToStore(store, 'a', '1', () => 0, { story: 'story' });
+
+      const { v, globalParameters, kindParameters, stories } = store.getDataForManager();
+
+      expect(v).toBe(2);
+      expect(globalParameters).toEqual({ global: 'global' });
+      expect(Object.keys(kindParameters)).toEqual(['a']);
+      expect(kindParameters.a).toEqual({ kind: 'kind' });
+
+      expect(Object.keys(stories)).toEqual(['a--1']);
+      expect(stories['a--1']).toMatchObject({
+        id: 'a--1',
+        kind: 'a',
+        name: '1',
+        parameters: { story: 'story' },
+      });
+    });
+  });
+
+  describe('getRawStory', () => {
+    it('produces a story with inherited decorators applied', () => {
+      const store = new StoryStore({ channel });
+
+      const globalDecorator = jest.fn().mockImplementation((s) => s());
+      store.addGlobalMetadata({ parameters: {}, decorators: [globalDecorator] });
+
+      const kindDecorator = jest.fn().mockImplementation((s) => s());
+      store.addKindMetadata('a', { parameters: {}, decorators: [kindDecorator] });
+
+      const story = jest.fn();
+      addStoryToStore(store, 'a', '1', story);
+
+      const { getDecorated } = store.getRawStory('a', '1');
+      getDecorated()();
+
+      expect(globalDecorator).toHaveBeenCalled();
+      expect(kindDecorator).toHaveBeenCalled();
+      expect(story).toHaveBeenCalled();
+    });
+  });
+
+  describe('args', () => {
+    it('is initialized to the value stored in parameters.args[name] || parameters.argType[name].defaultValue', () => {
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0, {
+        argTypes: {
+          arg1: { defaultValue: 'arg1' },
+          arg2: { defaultValue: 2 },
+          arg3: { defaultValue: { complex: { object: ['type'] } } },
+          arg4: {},
+          arg5: {},
+        },
+        args: {
+          arg2: 3,
+          arg4: 'foo',
+          arg6: false,
+        },
+      });
+      expect(store.getRawStory('a', '1').args).toEqual({
+        arg1: 'arg1',
+        arg2: 3,
+        arg3: { complex: { object: ['type'] } },
+        arg4: 'foo',
+        arg6: false,
+      });
+    });
+
+    it('updateStoryArgs changes the args of a story, per-key', () => {
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0);
+      expect(store.getRawStory('a', '1').args).toEqual({});
+
+      store.updateStoryArgs('a--1', { foo: 'bar' });
+      expect(store.getRawStory('a', '1').args).toEqual({ foo: 'bar' });
+
+      store.updateStoryArgs('a--1', { baz: 'bing' });
+      expect(store.getRawStory('a', '1').args).toEqual({ foo: 'bar', baz: 'bing' });
+    });
+
+    it('is passed to the story in the context', () => {
+      const storyFn = jest.fn();
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', storyFn, { passArgsFirst: false });
+      store.updateStoryArgs('a--1', { foo: 'bar' });
+      store.getRawStory('a', '1').storyFn();
+
+      expect(storyFn).toHaveBeenCalledWith(
+        expect.objectContaining({
+          args: { foo: 'bar' },
+        })
+      );
+    });
+
+    it('updateStoryArgs emits STORY_ARGS_UPDATED', () => {
+      const onArgsChangedChannel = jest.fn();
+      const testChannel = mockChannel();
+      testChannel.on(Events.STORY_ARGS_UPDATED, onArgsChangedChannel);
+
+      const store = new StoryStore({ channel: testChannel });
+      addStoryToStore(store, 'a', '1', () => 0);
+
+      store.updateStoryArgs('a--1', { foo: 'bar' });
+      expect(onArgsChangedChannel).toHaveBeenCalledWith('a--1', { foo: 'bar' });
+
+      store.updateStoryArgs('a--1', { baz: 'bing' });
+      expect(onArgsChangedChannel).toHaveBeenCalledWith('a--1', { foo: 'bar', baz: 'bing' });
+    });
+
+    it('should update if the UPDATE_STORY_ARGS event is received', () => {
+      const testChannel = mockChannel();
+      const store = new StoryStore({ channel: testChannel });
+      addStoryToStore(store, 'a', '1', () => 0);
+
+      testChannel.emit(Events.UPDATE_STORY_ARGS, 'a--1', { foo: 'bar' });
+
+      expect(store.getRawStory('a', '1').args).toEqual({ foo: 'bar' });
+    });
+
+    it('passes args as the first argument to the story if `parameters.passArgsFirst` is true', () => {
+      const store = new StoryStore({ channel });
+
+      store.addKindMetadata('a', {
+        parameters: {
+          argTypes: {
+            a: { defaultValue: 1 },
+          },
+        },
+        decorators: [],
+      });
+
+      const storyOne = jest.fn();
+      addStoryToStore(store, 'a', '1', storyOne, { passArgsFirst: false });
+
+      store.getRawStory('a', '1').storyFn();
+      expect(storyOne).toHaveBeenCalledWith(
+        expect.objectContaining({
+          args: { a: 1 },
+          parameters: expect.objectContaining({}),
+        })
+      );
+
+      const storyTwo = jest.fn();
+      addStoryToStore(store, 'a', '2', storyTwo, { passArgsFirst: true });
+      store.getRawStory('a', '2').storyFn();
+      expect(storyTwo).toHaveBeenCalledWith(
+        { a: 1 },
+        expect.objectContaining({
+          args: { a: 1 },
+          parameters: expect.objectContaining({}),
+        })
+      );
+    });
+  });
+
+  describe('globalArgs', () => {
+    it('is initialized to the value stored in parameters.globalArgs on the first story', () => {
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0, {
+        globalArgs: {
+          arg1: 'arg1',
+          arg2: 2,
+          arg3: { complex: { object: ['type'] } },
+        },
+      });
+      store.finishConfiguring();
+      expect(store.getRawStory('a', '1').globalArgs).toEqual({
+        arg1: 'arg1',
+        arg2: 2,
+        arg3: { complex: { object: ['type'] } },
+      });
+    });
+
+    it('is initialized to the default values stored in parameters.globalArgsTypes on the first story', () => {
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0, {
+        globalArgs: {
+          arg1: 'arg1',
+          arg2: 2,
+        },
+        globalArgTypes: {
+          arg2: { defaultValue: 'arg2' },
+          arg3: { defaultValue: { complex: { object: ['type'] } } },
+        },
+      });
+      store.finishConfiguring();
+      expect(store.getRawStory('a', '1').globalArgs).toEqual({
+        arg1: 'arg1',
+        arg2: 2,
+        arg3: { complex: { object: ['type'] } },
+      });
+    });
+
+    it('on HMR it sensibly re-initializes with memory', () => {
+      const store = new StoryStore({ channel });
+      addons.setChannel(channel);
+      addStoryToStore(store, 'a', '1', () => 0, {
+        globalArgs: {
+          arg1: 'arg1',
+          arg2: 2,
+          arg3: { complex: { object: ['type'] } },
+        },
+      });
+      store.finishConfiguring();
+
+      // HMR
+      store.startConfiguring();
+      store.removeStoryKind('a');
+      addStoryToStore(store, 'a', '1', () => 0, {
+        globalArgs: {
+          arg2: 2,
+          // Although we have changed the default there is no way to tell that the user didn't change
+          // it themselves
+          arg3: { complex: { object: ['changed'] } },
+          arg4: 'new',
+        },
+      });
+      store.finishConfiguring();
+
+      expect(store.getRawStory('a', '1').globalArgs).toEqual({
+        arg2: 2,
+        arg3: { complex: { object: ['type'] } },
+        arg4: 'new',
+      });
+    });
+
+    it('updateGlobalArgs changes the global args', () => {
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0);
+      expect(store.getRawStory('a', '1').globalArgs).toEqual({});
+
+      store.updateGlobalArgs({ foo: 'bar' });
+      expect(store.getRawStory('a', '1').globalArgs).toEqual({ foo: 'bar' });
+
+      store.updateGlobalArgs({ baz: 'bing' });
+      expect(store.getRawStory('a', '1').globalArgs).toEqual({ foo: 'bar', baz: 'bing' });
+    });
+
+    it('is passed to the story in the context', () => {
+      const storyFn = jest.fn();
+      const store = new StoryStore({ channel });
+
+      store.updateGlobalArgs({ foo: 'bar' });
+      addStoryToStore(store, 'a', '1', storyFn, { passArgsFirst: false });
+      store.getRawStory('a', '1').storyFn();
+
+      expect(storyFn).toHaveBeenCalledWith(
+        expect.objectContaining({
+          globalArgs: { foo: 'bar' },
+        })
+      );
+
+      store.updateGlobalArgs({ baz: 'bing' });
+      store.getRawStory('a', '1').storyFn();
+
+      expect(storyFn).toHaveBeenCalledWith(
+        expect.objectContaining({
+          globalArgs: { foo: 'bar', baz: 'bing' },
+        })
+      );
+    });
+
+    it('updateGlobalArgs emits GLOBAL_ARGS_UPDATED', () => {
+      const onGlobalArgsChangedChannel = jest.fn();
+      const testChannel = mockChannel();
+      testChannel.on(Events.GLOBAL_ARGS_UPDATED, onGlobalArgsChangedChannel);
+
+      const store = new StoryStore({ channel: testChannel });
+      addStoryToStore(store, 'a', '1', () => 0);
+
+      store.updateGlobalArgs({ foo: 'bar' });
+      expect(onGlobalArgsChangedChannel).toHaveBeenCalledWith({ foo: 'bar' });
+
+      store.updateGlobalArgs({ baz: 'bing' });
+      expect(onGlobalArgsChangedChannel).toHaveBeenCalledWith({ foo: 'bar', baz: 'bing' });
+    });
+
+    it('should update if the UPDATE_GLOBAL_ARGS event is received', () => {
+      const testChannel = mockChannel();
+      const store = new StoryStore({ channel: testChannel });
+      addStoryToStore(store, 'a', '1', () => 0);
+
+      testChannel.emit(Events.UPDATE_GLOBAL_ARGS, { foo: 'bar' });
+
+      expect(store.getRawStory('a', '1').globalArgs).toEqual({ foo: 'bar' });
+    });
+
+    it('DOES NOT pass globalArgs as the first argument to the story if `parameters.passArgsFirst` is true', () => {
+      const store = new StoryStore({ channel });
+
+      const storyOne = jest.fn();
+      addStoryToStore(store, 'a', '1', storyOne, { passArgsFirst: false });
+
+      store.updateGlobalArgs({ foo: 'bar' });
+
+      store.getRawStory('a', '1').storyFn();
+      expect(storyOne).toHaveBeenCalledWith(
+        expect.objectContaining({
+          globalArgs: { foo: 'bar' },
+        })
+      );
+
+      const storyTwo = jest.fn();
+      addStoryToStore(store, 'a', '2', storyTwo, { passArgsFirst: true });
+      store.getRawStory('a', '2').storyFn();
+      expect(storyTwo).toHaveBeenCalledWith(
+        {},
+        expect.objectContaining({
+          globalArgs: { foo: 'bar' },
+        })
+      );
+    });
+  });
+
+  describe('argTypesEnhancer', () => {
+    it('allows you to alter argTypes when stories are added', () => {
+      const store = new StoryStore({ channel });
+
+      const enhancer = jest.fn((context) => ({ ...context.parameters.argTypes, c: 'd' }));
+      store.addArgTypesEnhancer(enhancer);
+
+      addStoryToStore(store, 'a', '1', () => 0, { argTypes: { a: 'b' } });
+
+      expect(enhancer).toHaveBeenCalledWith(
+        expect.objectContaining({ parameters: { argTypes: { a: 'b' } } })
+      );
+      expect(store.getRawStory('a', '1').parameters.argTypes).toEqual({ a: 'b', c: 'd' });
+    });
+
+    it('recursively passes argTypes to successive enhancers', () => {
+      const store = new StoryStore({ channel });
+
+      const firstEnhancer = jest.fn((context) => ({ ...context.parameters.argTypes, c: 'd' }));
+      store.addArgTypesEnhancer(firstEnhancer);
+      const secondEnhancer = jest.fn((context) => ({ ...context.parameters.argTypes, e: 'f' }));
+      store.addArgTypesEnhancer(secondEnhancer);
+
+      addStoryToStore(store, 'a', '1', () => 0, { argTypes: { a: 'b' } });
+
+      expect(firstEnhancer).toHaveBeenCalledWith(
+        expect.objectContaining({ parameters: { argTypes: { a: 'b' } } })
+      );
+      expect(secondEnhancer).toHaveBeenCalledWith(
+        expect.objectContaining({ parameters: { argTypes: { a: 'b', c: 'd' } } })
+      );
+      expect(store.getRawStory('a', '1').parameters.argTypes).toEqual({ a: 'b', c: 'd', e: 'f' });
+    });
+
+    it('does not merge argType enhancer results', () => {
+      const store = new StoryStore({ channel });
+
+      const enhancer = jest.fn().mockReturnValue({ c: 'd' });
+      store.addArgTypesEnhancer(enhancer);
+
+      addStoryToStore(store, 'a', '1', () => 0, { argTypes: { a: 'b' } });
+
+      expect(enhancer).toHaveBeenCalledWith(
+        expect.objectContaining({ parameters: { argTypes: { a: 'b' } } })
+      );
+      expect(store.getRawStory('a', '1').parameters.argTypes).toEqual({ c: 'd' });
+    });
+
+    it('allows you to alter argTypes when stories are re-added', () => {
+      const store = new StoryStore({ channel });
+      addons.setChannel(channel);
+
+      const enhancer = jest.fn((context) => ({ ...context.parameters.argTypes, c: 'd' }));
+      store.addArgTypesEnhancer(enhancer);
+
+      addStoryToStore(store, 'a', '1', () => 0, { argTypes: { a: 'b' } });
+
+      enhancer.mockClear();
+      store.removeStoryKind('a');
+
+      addStoryToStore(store, 'a', '1', () => 0, { argTypes: { e: 'f' } });
+      expect(enhancer).toHaveBeenCalledWith(
+        expect.objectContaining({ parameters: { argTypes: { e: 'f' } } })
+      );
+      expect(store.getRawStory('a', '1').parameters.argTypes).toEqual({ e: 'f', c: 'd' });
     });
   });
 
   describe('storySort', () => {
     it('sorts stories using given function', () => {
-      const parameters = {
-        options: {
-          // Test function does reverse alphabetical ordering.
-          storySort: (a: any, b: any): number =>
-            a[1].kind === b[1].kind
-              ? 0
-              : -1 * a[1].id.localeCompare(b[1].id, undefined, { numeric: true }),
-        },
-      };
       const store = new StoryStore({ channel });
-      store.addStory(...make('a/a', '1', () => 0, parameters));
-      store.addStory(...make('a/a', '2', () => 0, parameters));
-      store.addStory(...make('a/b', '1', () => 0, parameters));
-      store.addStory(...make('b/b1', '1', () => 0, parameters));
-      store.addStory(...make('b/b10', '1', () => 0, parameters));
-      store.addStory(...make('b/b9', '1', () => 0, parameters));
-      store.addStory(...make('c', '1', () => 0, parameters));
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          options: {
+            // Test function does reverse alphabetical ordering.
+            storySort: (a: any, b: any): number =>
+              a[1].kind === b[1].kind
+                ? 0
+                : -1 * a[1].id.localeCompare(b[1].id, undefined, { numeric: true }),
+          },
+        },
+      });
+      addStoryToStore(store, 'a/a', '1', () => 0);
+      addStoryToStore(store, 'a/a', '2', () => 0);
+      addStoryToStore(store, 'a/b', '1', () => 0);
+      addStoryToStore(store, 'b/b1', '1', () => 0);
+      addStoryToStore(store, 'b/b10', '1', () => 0);
+      addStoryToStore(store, 'b/b9', '1', () => 0);
+      addStoryToStore(store, 'c', '1', () => 0);
 
       const extracted = store.extract();
 
@@ -87,21 +489,24 @@ describe('preview.story_store', () => {
     });
 
     it('sorts stories alphabetically', () => {
-      const parameters = {
-        options: {
-          storySort: {
-            method: 'alphabetical',
+      const store = new StoryStore({ channel });
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          options: {
+            storySort: {
+              method: 'alphabetical',
+            },
           },
         },
-      };
-      const store = new StoryStore({ channel });
-      store.addStory(...make('a/b', '1', () => 0, parameters));
-      store.addStory(...make('a/a', '2', () => 0, parameters));
-      store.addStory(...make('a/a', '1', () => 0, parameters));
-      store.addStory(...make('c', '1', () => 0, parameters));
-      store.addStory(...make('b/b10', '1', () => 0, parameters));
-      store.addStory(...make('b/b9', '1', () => 0, parameters));
-      store.addStory(...make('b/b1', '1', () => 0, parameters));
+      });
+      addStoryToStore(store, 'a/b', '1', () => 0);
+      addStoryToStore(store, 'a/a', '2', () => 0);
+      addStoryToStore(store, 'a/a', '1', () => 0);
+      addStoryToStore(store, 'c', '1', () => 0);
+      addStoryToStore(store, 'b/b10', '1', () => 0);
+      addStoryToStore(store, 'b/b9', '1', () => 0);
+      addStoryToStore(store, 'b/b1', '1', () => 0);
 
       const extracted = store.extract();
 
@@ -117,23 +522,26 @@ describe('preview.story_store', () => {
     });
 
     it('sorts stories in specified order or alphabetically', () => {
-      const parameters = {
-        options: {
-          storySort: {
-            method: 'alphabetical',
-            order: ['b', ['bc', 'ba', 'bb'], 'a', 'c'],
+      const store = new StoryStore({ channel });
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          options: {
+            storySort: {
+              method: 'alphabetical',
+              order: ['b', ['bc', 'ba', 'bb'], 'a', 'c'],
+            },
           },
         },
-      };
-      const store = new StoryStore({ channel });
-      store.addStory(...make('a/b', '1', () => 0, parameters));
-      store.addStory(...make('a', '1', () => 0, parameters));
-      store.addStory(...make('c', '1', () => 0, parameters));
-      store.addStory(...make('b/bd', '1', () => 0, parameters));
-      store.addStory(...make('b/bb', '1', () => 0, parameters));
-      store.addStory(...make('b/ba', '1', () => 0, parameters));
-      store.addStory(...make('b/bc', '1', () => 0, parameters));
-      store.addStory(...make('b', '1', () => 0, parameters));
+      });
+      addStoryToStore(store, 'a/b', '1', () => 0);
+      addStoryToStore(store, 'a', '1', () => 0);
+      addStoryToStore(store, 'c', '1', () => 0);
+      addStoryToStore(store, 'b/bd', '1', () => 0);
+      addStoryToStore(store, 'b/bb', '1', () => 0);
+      addStoryToStore(store, 'b/ba', '1', () => 0);
+      addStoryToStore(store, 'b/bc', '1', () => 0);
+      addStoryToStore(store, 'b', '1', () => 0);
 
       const extracted = store.extract();
 
@@ -150,23 +558,26 @@ describe('preview.story_store', () => {
     });
 
     it('sorts stories in specified order or by configure order', () => {
-      const parameters = {
-        options: {
-          storySort: {
-            method: 'configure',
-            order: ['b', 'a', 'c'],
+      const store = new StoryStore({ channel });
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          options: {
+            storySort: {
+              method: 'configure',
+              order: ['b', 'a', 'c'],
+            },
           },
         },
-      };
-      const store = new StoryStore({ channel });
-      store.addStory(...make('a/b', '1', () => 0, parameters));
-      store.addStory(...make('a', '1', () => 0, parameters));
-      store.addStory(...make('c', '1', () => 0, parameters));
-      store.addStory(...make('b/bd', '1', () => 0, parameters));
-      store.addStory(...make('b/bb', '1', () => 0, parameters));
-      store.addStory(...make('b/ba', '1', () => 0, parameters));
-      store.addStory(...make('b/bc', '1', () => 0, parameters));
-      store.addStory(...make('b', '1', () => 0, parameters));
+      });
+      addStoryToStore(store, 'a/b', '1', () => 0);
+      addStoryToStore(store, 'a', '1', () => 0);
+      addStoryToStore(store, 'c', '1', () => 0);
+      addStoryToStore(store, 'b/bd', '1', () => 0);
+      addStoryToStore(store, 'b/bb', '1', () => 0);
+      addStoryToStore(store, 'b/ba', '1', () => 0);
+      addStoryToStore(store, 'b/bc', '1', () => 0);
+      addStoryToStore(store, 'b', '1', () => 0);
 
       const extracted = store.extract();
 
@@ -183,197 +594,227 @@ describe('preview.story_store', () => {
     });
   });
 
-  describe('emitting behaviour', () => {
-    it('is syncronously emits STORY_RENDER if the channel is defined', async () => {
-      const onChannelRender = jest.fn();
-      const testChannel = createChannel({ page: 'preview' });
-      testChannel.on(Events.STORY_RENDER, onChannelRender);
-
-      const onStoreRender = jest.fn();
-      const store = new StoryStore({ channel: testChannel });
-      store.on(Events.STORY_RENDER, onStoreRender);
-
-      store.setSelection({ storyId: 'storyId', viewMode: 'viewMode' }, undefined);
-      expect(onChannelRender).toHaveBeenCalled();
-      expect(onStoreRender).not.toHaveBeenCalled();
-
-      onChannelRender.mockClear();
-      await new Promise(r => setTimeout(r, 10));
-      expect(onChannelRender).not.toHaveBeenCalled();
-      expect(onStoreRender).toHaveBeenCalled();
-    });
-
-    it('is asychronously emits STORY_RENDER if the channel is not yet defined', async () => {
-      const onChannelRender = jest.fn();
-      const testChannel = createChannel({ page: 'preview' });
-      testChannel.on(Events.STORY_RENDER, onChannelRender);
-
-      const onStoreRender = jest.fn();
-      const store = new StoryStore({ channel: undefined });
-      store.on(Events.STORY_RENDER, onStoreRender);
-
-      store.setSelection({ storyId: 'storyId', viewMode: 'viewMode' }, undefined);
-      expect(onChannelRender).not.toHaveBeenCalled();
-      expect(onStoreRender).not.toHaveBeenCalled();
-
-      store.setChannel(testChannel);
-      await new Promise(r => setTimeout(r, 10));
-      expect(onChannelRender).toHaveBeenCalled();
-      expect(onStoreRender).toHaveBeenCalled();
-    });
-  });
-
-  describe('dumpStoryBook/getStoriesForManager', () => {
-    it('should return nothing when empty', () => {
+  describe('configuration', () => {
+    it('does not allow addStory if not configuring, unless allowUsafe=true', () => {
       const store = new StoryStore({ channel });
-      expect(store.dumpStoryBook()).toEqual([]);
-      expect(Object.keys(store.getStoriesForManager())).toEqual([]);
+      store.finishConfiguring();
+
+      expect(() => addStoryToStore(store, 'a', '1', () => 0)).toThrow(
+        'Cannot add a story when not configuring'
+      );
+
+      expect(() =>
+        store.addStory(
+          {
+            kind: 'a',
+            name: '1',
+            storyFn: () => 0,
+            parameters: {},
+            id: 'a--1',
+          },
+          {
+            applyDecorators: defaultDecorateStory,
+            allowUnsafe: true,
+          }
+        )
+      ).not.toThrow();
     });
 
-    it('should return storybook with stories', () => {
-      const store = new StoryStore({ channel });
-
-      store.addStory(...make('kind-1', 'story-1.1', () => 0));
-      store.addStory(...make('kind-1', 'story-1.2', () => 0));
-      store.addStory(...make('kind-2', 'story-2.1', () => 0));
-      store.addStory(...make('kind-2', 'story-2.2', () => 0));
-
-      expect(store.dumpStoryBook()).toEqual([
-        {
-          kind: 'kind-1',
-          stories: ['story-1.1', 'story-1.2'],
-        },
-        {
-          kind: 'kind-2',
-          stories: ['story-2.1', 'story-2.2'],
-        },
-      ]);
-
-      expect(Object.keys(store.getStoriesForManager())).toEqual([
-        'kind-1--story-1-1',
-        'kind-1--story-1-2',
-        'kind-2--story-2-1',
-        'kind-2--story-2-2',
-      ]);
-    });
-  });
-
-  describe('getStoryFileName', () => {
-    it('should return the filename of the first story passed for the kind', () => {
-      const store = new StoryStore({ channel });
-      store.addStory(...make('kind-1', 'story-1.1', () => 0, { fileName: 'foo.js' }));
-      store.addStory(...make('kind-1', 'story-1.2', () => 0, { fileName: 'foo-2.js' }));
-      store.addStory(...make('kind-2', 'story-2.1', () => 0, { fileName: 'bar.js' }));
-
-      expect(store.getStoryFileName('kind-1')).toBe('foo.js');
-      expect(store.getStoryFileName('kind-2')).toBe('bar.js');
-    });
-  });
-
-  describe('removeStoryKind', () => {
-    it('should not error even if there is no kind', () => {
-      const store = new StoryStore({ channel });
-      store.removeStoryKind('kind');
-    });
-    it('should remove the kind in both modern and legacy APIs', () => {
+    it('does not allow remove if not configuring, unless allowUsafe=true', () => {
       const store = new StoryStore({ channel });
       addons.setChannel(channel);
-      store.addStory(...make('kind-1', 'story-1.1', () => 0));
-      store.addStory(...make('kind-1', 'story-1.2', () => 0));
-      store.addStory(...make('kind-2', 'story-2.1', () => 0));
-      store.addStory(...make('kind-2', 'story-2.2', () => 0));
+      addStoryToStore(store, 'a', '1', () => 0);
+      store.finishConfiguring();
 
-      store.removeStoryKind('kind-1');
-
-      // _legacydata
-      expect(store.hasStory('kind-1', 'story-1.1')).toBeFalsy();
-      expect(store.hasStory('kind-2', 'story-2.1')).toBeTruthy();
-
-      // _data
-      expect(store.fromId(toId('kind-1', 'story-1.1'))).toBeFalsy();
-      expect(store.fromId(toId('kind-2', 'story-2.1'))).toBeTruthy();
+      expect(() => store.remove('a--1')).toThrow('Cannot remove a story when not configuring');
+      expect(() => store.remove('a--1', { allowUnsafe: true })).not.toThrow();
     });
-  });
 
-  describe('remove', () => {
-    it('should remove the kind in both modern and legacy APIs', () => {
+    it('does not allow removeStoryKind if not configuring, unless allowUsafe=true', () => {
       const store = new StoryStore({ channel });
       addons.setChannel(channel);
-      store.addStory(...make('kind-1', 'story-1.1', () => 0));
-      store.addStory(...make('kind-1', 'story-1.2', () => 0));
+      addStoryToStore(store, 'a', '1', () => 0);
+      store.finishConfiguring();
 
-      store.remove(toId('kind-1', 'story-1.1'));
-
-      // _legacydata
-      expect(store.hasStory('kind-1', 'story-1.1')).toBeFalsy();
-      expect(store.hasStory('kind-1', 'story-1.2')).toBeTruthy();
-
-      // _data
-      expect(store.fromId(toId('kind-1', 'story-1.1'))).toBeFalsy();
-      expect(store.fromId(toId('kind-1', 'story-1.2'))).toBeTruthy();
+      expect(() => store.removeStoryKind('a')).toThrow('Cannot remove a kind when not configuring');
+      expect(() => store.removeStoryKind('a', { allowUnsafe: true })).not.toThrow();
     });
-  });
 
-  describe('getStoryAndParameters', () => {
-    it('should return parameters that we passed in', () => {
+    it('waits for configuration to be over before emitting SET_STORIES', () => {
+      const onSetStories = jest.fn();
+      channel.on(Events.SET_STORIES, onSetStories);
       const store = new StoryStore({ channel });
-      const story = jest.fn();
-      const parameters = {
-        fileName: 'foo.js',
-        parameter: 'value',
-      };
-      store.addStory(...make('kind', 'name', story, parameters));
 
-      expect(store.getStoryAndParameters('kind', 'name').parameters).toEqual(parameters);
+      addStoryToStore(store, 'a', '1', () => 0);
+      expect(onSetStories).not.toHaveBeenCalled();
+
+      store.finishConfiguring();
+      expect(onSetStories).toHaveBeenCalledWith({
+        v: 2,
+        globalParameters: {},
+        kindParameters: { a: {} },
+        stories: {
+          'a--1': expect.objectContaining({
+            id: 'a--1',
+          }),
+        },
+      });
     });
-  });
 
-  describe('getStoryWithContext', () => {
-    it('should return a function that calls the story with the context', () => {
+    it('emits an empty SET_STORIES if no stories were added during configuration', () => {
+      const onSetStories = jest.fn();
+      channel.on(Events.SET_STORIES, onSetStories);
       const store = new StoryStore({ channel });
-      const storyFn = jest.fn();
-      const parameters = {
-        fileName: 'foo.js',
-        parameter: 'value',
-      };
-      store.addStory(...make('kind', 'name', storyFn, parameters));
 
-      const storyWithContext = store.getStoryWithContext('kind', 'name');
-      storyWithContext();
-      const { hooks } = store.fromId(toId('kind', 'name'));
-      expect(storyFn).toHaveBeenCalledWith({
-        id: 'kind--name',
-        name: 'name',
-        kind: 'kind',
-        story: 'name',
-        parameters,
-        hooks,
+      store.finishConfiguring();
+      expect(onSetStories).toHaveBeenCalledWith({
+        v: 2,
+        globalParameters: {},
+        kindParameters: {},
+        stories: {},
+      });
+    });
+
+    it('allows configuration as second time (HMR)', () => {
+      const onSetStories = jest.fn();
+      channel.on(Events.SET_STORIES, onSetStories);
+      const store = new StoryStore({ channel });
+      store.finishConfiguring();
+
+      onSetStories.mockClear();
+      store.startConfiguring();
+      addStoryToStore(store, 'a', '1', () => 0);
+      store.finishConfiguring();
+
+      expect(onSetStories).toHaveBeenCalledWith({
+        v: 2,
+        globalParameters: {},
+        kindParameters: { a: {} },
+        stories: {
+          'a--1': expect.objectContaining({
+            id: 'a--1',
+          }),
+        },
       });
     });
   });
 
-  describe('story sorting', () => {
-    const storySort = (a, b) => a[1].id.localeCompare(b[1].id);
-    it('should use the sorting function of the story parameter object', () => {
+  describe('HMR behaviour', () => {
+    it('emits the right things after removing a story', () => {
+      const onSetStories = jest.fn();
+      channel.on(Events.SET_STORIES, onSetStories);
       const store = new StoryStore({ channel });
-      store.addStory(
-        ...make('kind-2', 'a-story-2.1', () => 0, { fileName: 'bar.js', options: { storySort } })
-      );
-      store.addStory(
-        ...make('kind-1', 'z-story-1.1', () => 0, { fileName: 'foo.js', options: { storySort } })
-      );
-      store.addStory(
-        ...make('kind-1', 'story-1.2', () => 0, { fileName: 'foo-2.js', options: { storySort } })
-      );
-      store.addStory(
-        ...make('kind-2', 'story-2.1', () => 0, { fileName: 'bar.js', options: { storySort } })
-      );
 
-      const stories = Object.values(store.extract()) as any[];
-      expect(stories[0].id).toBe('kind-1--story-1-2');
-      expect(stories[1].id).toBe('kind-1--z-story-1-1');
-      expect(stories[2].id).toBe('kind-2--a-story-2-1');
-      expect(stories[3].id).toBe('kind-2--story-2-1');
+      // For hooks
+      addons.setChannel(channel);
+
+      store.startConfiguring();
+      addStoryToStore(store, 'kind-1', 'story-1.1', () => 0);
+      addStoryToStore(store, 'kind-1', 'story-1.2', () => 0);
+      store.finishConfiguring();
+
+      onSetStories.mockClear();
+      store.startConfiguring();
+      store.remove(toId('kind-1', 'story-1.1'));
+      store.finishConfiguring();
+
+      expect(onSetStories).toHaveBeenCalledWith({
+        v: 2,
+        globalParameters: {},
+        kindParameters: { 'kind-1': {} },
+        stories: {
+          'kind-1--story-1-2': expect.objectContaining({
+            id: 'kind-1--story-1-2',
+          }),
+        },
+      });
+
+      expect(store.fromId(toId('kind-1', 'story-1.1'))).toBeFalsy();
+      expect(store.fromId(toId('kind-1', 'story-1.2'))).toBeTruthy();
+    });
+
+    it('emits the right things after removing a kind', () => {
+      const onSetStories = jest.fn();
+      channel.on(Events.SET_STORIES, onSetStories);
+      const store = new StoryStore({ channel });
+
+      // For hooks
+      addons.setChannel(channel);
+
+      store.startConfiguring();
+      addStoryToStore(store, 'kind-1', 'story-1.1', () => 0);
+      addStoryToStore(store, 'kind-1', 'story-1.2', () => 0);
+      addStoryToStore(store, 'kind-2', 'story-2.1', () => 0);
+      addStoryToStore(store, 'kind-2', 'story-2.2', () => 0);
+      store.finishConfiguring();
+
+      onSetStories.mockClear();
+      store.startConfiguring();
+      store.removeStoryKind('kind-1');
+      store.finishConfiguring();
+
+      expect(onSetStories).toHaveBeenCalledWith({
+        v: 2,
+        globalParameters: {},
+        kindParameters: { 'kind-1': {}, 'kind-2': {} },
+        stories: {
+          'kind-2--story-2-1': expect.objectContaining({
+            id: 'kind-2--story-2-1',
+          }),
+          'kind-2--story-2-2': expect.objectContaining({
+            id: 'kind-2--story-2-2',
+          }),
+        },
+      });
+
+      expect(store.fromId(toId('kind-1', 'story-1.1'))).toBeFalsy();
+      expect(store.fromId(toId('kind-2', 'story-2.1'))).toBeTruthy();
+    });
+
+    // eslint-disable-next-line jest/expect-expect
+    it('should not error even if you remove a kind that does not exist', () => {
+      const store = new StoryStore({ channel });
+      store.removeStoryKind('kind');
+    });
+  });
+
+  describe('RENDER_CURRENT_STORY', () => {
+    it('is emitted when setError is called', () => {
+      const onRenderCurrentStory = jest.fn();
+      channel.on(Events.RENDER_CURRENT_STORY, onRenderCurrentStory);
+      const store = new StoryStore({ channel });
+
+      store.setError(new Error('Something is bad!') as ErrorLike);
+      expect(onRenderCurrentStory).toHaveBeenCalled();
+    });
+
+    it('is NOT emitted when setSelection is called during configuration', () => {
+      const onRenderCurrentStory = jest.fn();
+      channel.on(Events.RENDER_CURRENT_STORY, onRenderCurrentStory);
+      const store = new StoryStore({ channel });
+
+      store.setSelection({ storyId: 'a--1', viewMode: 'story' });
+      expect(onRenderCurrentStory).not.toHaveBeenCalled();
+    });
+
+    it('is emitted when configuration ends', () => {
+      const onRenderCurrentStory = jest.fn();
+      channel.on(Events.RENDER_CURRENT_STORY, onRenderCurrentStory);
+      const store = new StoryStore({ channel });
+
+      store.finishConfiguring();
+      expect(onRenderCurrentStory).toHaveBeenCalled();
+    });
+
+    it('is emitted when setSelection is called outside of configuration', () => {
+      const onRenderCurrentStory = jest.fn();
+      channel.on(Events.RENDER_CURRENT_STORY, onRenderCurrentStory);
+      const store = new StoryStore({ channel });
+      store.finishConfiguring();
+
+      onRenderCurrentStory.mockClear();
+      store.setSelection({ storyId: 'a--1', viewMode: 'story' });
+      expect(onRenderCurrentStory).toHaveBeenCalled();
     });
   });
 });

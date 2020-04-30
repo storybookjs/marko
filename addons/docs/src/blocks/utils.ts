@@ -1,23 +1,23 @@
 /* eslint-disable no-underscore-dangle */
 import { DocsContextProps } from './DocsContext';
-import { StoryData, Component } from './shared';
+import { StoryData, Component } from './types';
 
 export const getDocsStories = (context: DocsContextProps): StoryData[] => {
-  const { storyStore, selectedKind } = context;
+  const { storyStore, kind } = context;
 
   if (!storyStore) {
     return [];
   }
 
   return storyStore
-    .getStoriesForKind(selectedKind)
+    .getStoriesForKind(kind)
     .filter((s: any) => !(s.parameters && s.parameters.docs && s.parameters.docs.disable));
 };
 
 const titleCase = (str: string): string =>
   str
     .split('-')
-    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join('');
 
 export const getComponentName = (component: Component): string => {

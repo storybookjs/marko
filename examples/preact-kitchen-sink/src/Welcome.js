@@ -2,7 +2,7 @@
 
 import { h } from 'preact';
 
-const Main = props => (
+const Main = (props) => (
   <article
     {...props}
     style={{
@@ -17,7 +17,7 @@ const Main = props => (
 // eslint-disable-next-line react/prop-types
 const Title = ({ children, ...props }) => <h1 {...props}>{children}</h1>;
 
-const Note = props => (
+const Note = (props) => (
   <p
     {...props}
     style={{
@@ -26,7 +26,7 @@ const Note = props => (
   />
 );
 
-const InlineCode = props => (
+const InlineCode = (props) => (
   <code
     {...props}
     style={{
@@ -112,7 +112,7 @@ const Welcome = ({ showApp }) => (
       You can also edit those components and see changes right away.
       <br />
       (Try editing the <InlineCode>Button</InlineCode> stories located at&nbsp;
-      <InlineCode>src/stories/index.js</InlineCode>
+      <InlineCode>src/stories/1-Button.stories.js</InlineCode>
       .)
     </p>
     <p>

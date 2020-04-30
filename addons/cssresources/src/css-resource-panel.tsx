@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { SyntaxHighlighter, Placeholder, Spaced, Icons } from '@storybook/components';
 import { STORY_RENDERED } from '@storybook/core-events';
 import { API } from '@storybook/api';
@@ -65,7 +65,7 @@ export class CssResourcePanel extends Component<Props, State> {
   onStoryChange = (id: string) => {
     const { list: currentList, currentStoryId } = this.state;
     const { api } = this.props;
-    const list = api.getParameters(id, PARAM_KEY) as CssResource[];
+    const list = api.getCurrentParameter<CssResource[]>(PARAM_KEY);
 
     if (list && currentStoryId !== id) {
       const existingIds = currentList.reduce((lookup: CssResourceLookup, res) => {
@@ -73,7 +73,7 @@ export class CssResourcePanel extends Component<Props, State> {
         lookup[res.id] = res;
         return lookup;
       }, {}) as CssResourceLookup;
-      const mergedList = list.map(res => {
+      const mergedList = list.map((res) => {
         const existingItem = existingIds[res.id];
         return existingItem
           ? {
@@ -82,14 +82,14 @@ export class CssResourcePanel extends Component<Props, State> {
             }
           : res;
       });
-      const picked = mergedList.filter(res => res.picked);
+      const picked = mergedList.filter((res) => res.picked);
       this.setState({ list: mergedList, currentStoryId: id }, () => this.emit(picked));
     }
   };
 
   onChange = (event: any) => {
     const { list: oldList } = this.state;
-    const list = oldList.map(i => ({
+    const list = oldList.map((i) => ({
       ...i,
       picked: i.id === event.target.id ? event.target.checked : i.picked,
     }));

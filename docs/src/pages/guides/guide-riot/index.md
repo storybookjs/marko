@@ -6,7 +6,7 @@ title: 'Storybook for Riot'
 ## Automatic setup
 
 You may have tried to use our quick start guide to setup your project for Storybook.
-If it failed because it couldn't detect you're using riot, you could try forcing it to use riot:
+If it failed because it couldn't detect you're using Riot, you could try forcing it to use riot:
 
 ```sh
 npx -p @storybook/cli sb init --type riot
@@ -14,7 +14,7 @@ npx -p @storybook/cli sb init --type riot
 
 ## Manual setup
 
-If you want to set up Storybook manually for your Angular project, this is the guide for you.
+If you want to set up Storybook manually for your Riot project, this is the guide for you.
 
 ## Step 1: Add dependencies
 
@@ -34,14 +34,15 @@ Make sure that you have `riot`, `@babel/core`, and `babel-loader` in your depend
 npm install riot babel-loader @babel/core --save-dev
 ```
 
-## Step 2: Add a npm script
+## Step 2: Add npm scripts
 
-Then add the following NPM script to your `package.json` in order to start the storybook later in this guide:
+Then add the following scripts to your `package.json` in order to start the storybook later in this guide:
 
 ```json
 {
   "scripts": {
-    "storybook": "start-storybook"
+    "storybook": "start-storybook",
+    "build-storybook": "build-storybook"
   }
 }
 ```
@@ -53,7 +54,7 @@ For a basic Storybook configuration, the only thing you need to do is tell Story
 To do that, create a file at `.storybook/main.js` with the following content:
 
 ```js
-module.exports {
+module.exports = {
   stories: ['../src/**/*.stories.[tj]s'],
 };
 ```

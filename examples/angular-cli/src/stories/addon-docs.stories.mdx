@@ -1,8 +1,9 @@
 import { moduleMetadata } from '@storybook/angular';
-import { Story, Meta } from '@storybook/addon-docs/blocks';
+import { Story, Meta, Props } from '@storybook/addon-docs/blocks';
 import { Welcome, Button } from '@storybook/angular/demo';
 import { linkTo } from '@storybook/addon-links';
 import { text, withKnobs } from '@storybook/addon-knobs';
+import { ButtonComponent } from './doc-button/doc-button.component';
 
 # Storybook Docs for Angular
 
@@ -73,6 +74,12 @@ Let's add another one. The UI updates automatically as you'd expect.
     },
   }}
 </Story>
+
+## Props
+
+We can automatically generate props tables from Angular components:
+
+<Props of={ButtonComponent} />
 
 ## More info
 

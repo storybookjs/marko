@@ -4,6 +4,7 @@ module.exports = {
     '../../lib/ui/src/**/*.stories.(js|tsx|mdx)',
     '../../lib/components/src/**/*.stories.(js|tsx|mdx)',
     './stories/**/*.stories.(js|tsx|mdx)',
+    './../../addons/docs/**/*.stories.tsx',
   ],
   addons: [
     '@storybook/addon-docs',
@@ -12,8 +13,6 @@ module.exports = {
     '@storybook/addon-actions',
     '@storybook/addon-links',
     '@storybook/addon-events',
-    '@storybook/addon-notes',
-    '@storybook/addon-options',
     '@storybook/addon-knobs',
     '@storybook/addon-cssresources',
     '@storybook/addon-backgrounds',
@@ -21,7 +20,8 @@ module.exports = {
     '@storybook/addon-jest',
     '@storybook/addon-viewport',
     '@storybook/addon-graphql',
-    '@storybook/addon-contexts',
+    '@storybook/addon-toolbars',
+    '@storybook/addon-queryparams',
   ],
   webpackFinal: async (config, { configType }) => ({
     ...config,

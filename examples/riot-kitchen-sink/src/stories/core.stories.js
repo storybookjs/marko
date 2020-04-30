@@ -4,7 +4,13 @@ const globalParameter = 'globalParameter';
 const chapterParameter = 'chapterParameter';
 const storyParameter = 'storyParameter';
 
-tag('parameters', '<div>Parameters are {JSON.stringify (this.opts)}</div>', '', '', () => {});
+tag(
+  'parameters',
+  '<div>Parameters are <pre>{JSON.stringify(this.opts, null, 2)}</pre></div>',
+  '',
+  '',
+  () => {}
+);
 
 addParameters({ globalParameter });
 
@@ -15,7 +21,7 @@ export default {
   },
 };
 
-export const PassedToStory = ({ parameters: { fileName, ...parameters } }) =>
+export const PassedToStory = (_args, { parameters: { fileName, ...parameters } }) =>
   mount('parameters', { ...parameters, storyParameter });
 
 PassedToStory.story = {

@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 
-import { Component } from '../../blocks/shared';
+import { Component } from '../../blocks/types';
 import { extractComponentProps } from './extractDocgenProps';
 
 const DOCGEN_SECTION = 'props';
@@ -53,7 +53,7 @@ function createComponent(docgenInfo: Record<string, any>): Component {
   return component;
 }
 
-TypeSystems.forEach(x => {
+TypeSystems.forEach((x) => {
   describe(`${x.name}`, () => {
     it('should map defaults docgen info properly', () => {
       const component = createComponent({

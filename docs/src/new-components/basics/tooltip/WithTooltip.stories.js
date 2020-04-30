@@ -49,7 +49,7 @@ storiesOf('basics/tooltip/WithTooltip', module)
   .addParameters({
     component: WithTooltip,
   })
-  .addDecorator(storyFn => (
+  .addDecorator((storyFn) => (
     <ViewPort>
       <BackgroundBox>
         <Spacer />

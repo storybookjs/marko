@@ -13,17 +13,17 @@ const categories = [
 ];
 
 const getSections = (sections, edges) =>
-  Object.keys(sections).map(key => ({
+  Object.keys(sections).map((key) => ({
     id: key,
     heading: capitalize(key),
-    items: sections[key].map(path => {
+    items: sections[key].map((path) => {
       const page = edges.find(({ node }) => node.fields.slug === path);
       return page.node.frontmatter;
     }),
   }));
 
 const getSelectedSection = (sections, path) =>
-  Object.keys(sections).find(key => sections[key].indexOf(path) >= 0);
+  Object.keys(sections).find((key) => sections[key].indexOf(path) >= 0);
 
 const DocsContainer = ({ data }) => {
   const { site, markdownRemark, allMarkdownRemark } = data;

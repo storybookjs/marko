@@ -44,7 +44,7 @@ Link.propTypes = {
 
 class Header extends React.Component {
   renderSections() {
-    return sections.map(section => (
+    return sections.map((section) => (
       <Link className="selected" key={section.id} to={section.href}>
         {section.caption}
       </Link>

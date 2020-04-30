@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from 'react';
-import PropTypes from 'prop-types';
 import GraphiQL from 'graphiql';
 import 'graphiql/graphiql.css';
 
@@ -16,8 +15,15 @@ const GQL: FunctionComponent<GQLProps> = ({ active }) => {
   return active ? (
     <Consumer>
       {({ api, state }: Combo) => {
-        const story = state.storiesHash[state.storyId];
-        const parameters = story ? api.getParameters(story.id, PARAM_KEY) : null;
+        const story = api.getData(state.storyId);
+        const parameters = story
+          ? api.getCurrentParameter<{
+              query: string;
+              variables: Record<string, any>;
+              url: string;
+              fetcher: ReturnType<typeof getDefaultFetcher>;
+            }>(PARAM_KEY)
+          : null;
 
         if (parameters) {
           const query = reIndentQuery(parameters.query);
@@ -31,9 +37,6 @@ const GQL: FunctionComponent<GQLProps> = ({ active }) => {
       }}
     </Consumer>
   ) : null;
-};
-GQL.propTypes = {
-  active: PropTypes.bool.isRequired,
 };
 
 export default GQL;

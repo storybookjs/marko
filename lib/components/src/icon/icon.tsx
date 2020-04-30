@@ -1,14 +1,14 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, ComponentProps } from 'react';
 import { styled } from '@storybook/theming';
 import icons, { IconKey } from './icons';
 
-import Svg, { SvgProps } from './svg';
+import Svg from './svg';
 
 const Path = styled.path({
   fill: 'currentColor',
 });
 
-export interface IconsProps extends SvgProps {
+export interface IconsProps extends ComponentProps<typeof Svg> {
   icon: IconKey;
 }
 

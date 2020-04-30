@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addons",
-  "version": "6.0.0-alpha.1",
+  "version": "6.0.0-beta.0",
   "description": "Storybook addons store",
   "keywords": [
     "storybook"
@@ -15,31 +15,45 @@
     "directory": "lib/addons"
   },
   "license": "MIT",
+  "main": "dist/public_api.js",
+  "types": "dist/public_api.d.ts",
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts"
+    "*.d.ts",
+    "ts3.5/**/*"
   ],
-  "main": "dist/public_api.js",
-  "types": "dist/public_api.d.ts",
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/api": "6.0.0-alpha.1",
-    "@storybook/channels": "6.0.0-alpha.1",
-    "@storybook/client-logger": "6.0.0-alpha.1",
-    "@storybook/core-events": "6.0.0-alpha.1",
+    "@storybook/api": "6.0.0-beta.0",
+    "@storybook/channels": "6.0.0-beta.0",
+    "@storybook/client-logger": "6.0.0-beta.0",
+    "@storybook/core-events": "6.0.0-beta.0",
+    "@storybook/router": "6.0.0-beta.0",
+    "@storybook/theming": "6.0.0-beta.0",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
-    "util-deprecate": "^1.0.2"
+    "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
-    "@types/util-deprecate": "^1.0.0"
+    "@reach/router": "^1.3.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff"
+  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
+  "typesVersions": {
+    "<=3.5": {
+      "*": [
+        "ts3.5/*"
+      ]
+    }
+  }
 }

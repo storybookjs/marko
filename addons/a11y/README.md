@@ -18,33 +18,33 @@ Add this line to your `main.js` file (create this file inside your storybook con
 
 ```js
 module.exports = {
-  addons: ['@storybook/addon-a11y/register']
-}
+  addons: ['@storybook/addon-a11y'],
+};
 ```
-
-import the `withA11y` decorator to check your stories for violations within your components.
 
 ```js
 import React from 'react';
 
-import { withA11y } from '@storybook/addon-a11y';
-
 export default {
   title: 'button',
-  decorators: [withA11y],
 };
 
-export const accessible = () => (
-  <button>
-    Accessible button
-  </button>
-);
+export const accessible = () => <button>Accessible button</button>;
 
 export const inaccessible = () => (
-  <button style={{ backgroundColor: 'red', color: 'darkRed', }}>
-    Inaccessible button
-  </button>
+  <button style={{ backgroundColor: 'red', color: 'darkRed' }}>Inaccessible button</button>
 );
+```
+
+If you wish to selectively disable `a11y` checks for a subset of stories, you can control this with story parameters:
+
+```js
+export const MyNonCheckedStory = () => <SomeComponent />;
+MyNonCheckedStory.story = {
+  parameters: {
+    a11y: { disable: true },
+  },
+};
 ```
 
 ## Parameters
@@ -56,11 +56,8 @@ You can override these options [at story level too](https://storybook.js.org/doc
 import React from 'react';
 import { storiesOf, addDecorator, addParameters } from '@storybook/react';
 
-import { withA11y } from '@storybook/addon-a11y';
-
 export default {
   title: 'button',
-  decorators: [withA11y],
   parameters: {
     a11y: {
       // optional selector which element to inspect
@@ -69,29 +66,23 @@ export default {
       config: {},
       // axe-core optionsParameter (https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#options-parameter)
       options: {},
-       // optional flag to prevent the automatic check
+      // optional flag to prevent the automatic check
       manual: true,
     },
   },
 };
 
-export const accessible = () => (
-  <button>
-    Accessible button
-  </button>
-);
+export const accessible = () => <button>Accessible button</button>;
 
 export const inaccessible = () => (
-  <button style={{ backgroundColor: 'red', color: 'darkRed', }}>
-    Inaccessible button
-  </button>
+  <button style={{ backgroundColor: 'red', color: 'darkRed' }}>Inaccessible button</button>
 );
 ```
 
 ## Roadmap
 
-* Make UI accessible
-* Show in story where violations are.
-* Add more example tests
-* Add tests
-* Make CI integration possible
+- Make UI accessible
+- Show in story where violations are.
+- Add more example tests
+- Add tests
+- Make CI integration possible

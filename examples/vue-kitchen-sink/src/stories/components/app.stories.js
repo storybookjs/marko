@@ -6,6 +6,6 @@ export default {
 };
 
 export const app = () => ({
-  render: h => h(App),
+  render: (h) => h(App),
 });
 app.story = { name: 'App' };

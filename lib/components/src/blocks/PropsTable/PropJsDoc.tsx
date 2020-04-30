@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { styled } from '@storybook/theming';
-import { isNil } from 'lodash';
 import { JsDocTags } from './PropDef';
 import { codeCommon } from '../../typography/shared';
 
@@ -63,9 +62,9 @@ export const Table = styled.table(({ theme }) => ({
 }));
 
 export const PropJsDoc: FC<PropJsDocProps> = ({ tags }) => {
-  const params = (tags.params || []).filter(x => x.description);
+  const params = (tags.params || []).filter((x) => x.description);
   const hasDisplayableParams = params.length !== 0;
-  const hasDisplayableReturns = !isNil(tags.returns) && !isNil(tags.returns.description);
+  const hasDisplayableReturns = tags.returns != null && tags.returns.description != null;
 
   if (!hasDisplayableParams && !hasDisplayableReturns) {
     return null;
@@ -75,7 +74,7 @@ export const PropJsDoc: FC<PropJsDocProps> = ({ tags }) => {
     <Table>
       <tbody>
         {hasDisplayableParams &&
-          params.map(x => {
+          params.map((x) => {
             return (
               <tr key={x.name}>
                 <td>

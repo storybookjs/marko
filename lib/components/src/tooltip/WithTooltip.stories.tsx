@@ -45,7 +45,7 @@ Tooltip.defaultProps = {
 };
 
 storiesOf('basics/Tooltip/WithTooltip', module)
-  .addDecorator(storyFn => (
+  .addDecorator((storyFn) => (
     <ViewPort>
       <BackgroundBox>
         <Spacer />

@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Storyshots Addons/Docs custom source 1`] = `
+<h1>
+  Custom source
+</h1>
+`;
+
 exports[`Storyshots Addons/Docs function 1`] = `
 <button>
   Hello Button

@@ -74,8 +74,8 @@ const PANEL_ID = `${ADDON_ID}/panel`;
 
 const MyPanel = () => {
   const value = useParameter(PARAM_KEY, null);
-  
-  return <div>{value}</div>;
+  const item = value ? value.data : "";
+  return <div>{item}</div>;
 }
 
 addons.register(ADDON_ID, api => {
@@ -101,7 +101,7 @@ within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: ['path/to/register.js']
+  addons: ['path/to/addon']
 }
 ```
 
@@ -132,7 +132,7 @@ Now we need to create two files, `register.js` and `index.js,`. `register.js` wi
 
 ## Creating a decorator
 
-Let's add the following content to the `index.js`. It will expose a decorator called `withFoo` which we use the `.addDecorator()` API to decorate all our stories.
+Let's add the following content to the `index.js`. It will expose a decorator called `withMyAddon` which we use the `.addDecorator()` API to decorate all our stories.
 
 The `@storybook/addons` package contains a `makeDecorator` function which we can use to create such a decorator:
 
@@ -235,7 +235,7 @@ within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: ['path/to/register.js']
+  addons: ['path/to/addon']
 }
 ```
 
@@ -307,7 +307,7 @@ But if you do use emotion, you can use the active storybook theme, which benefit
 ## Re-using existing components
 
 Wouldn't it be awesome if we provided you with some common used components you could use to build out your own addon quickly and fit in right away?
-Good news! WE DO! We publish most of storybook's UI components as a package: `@storybook/components`. You can check them out in [our storybook](https://storybookjs.now.sh/) (pretty meta right?).
+Good news! WE DO! We publish most of storybook's UI components as a package: `@storybook/components`. You can check them out in [our storybook](https://storybookjs.netlify.com/) (pretty meta right?).
 
 ## Addon API
 
@@ -327,7 +327,7 @@ When you are developing your addon as a package, you can't use `npm link` to add
 ```json
 {
   "dependencies": {
-    "@storybook/addon-notes": "file:///home/username/myrepo"
+    "@storybook/addon-custom": "file:///home/username/myrepo"
   }
 }
 ```

@@ -1,32 +1,9 @@
 #!/usr/bin/env node
 
-/* eslint-disable global-require, no-octal-escape */
-const childProcess = require('child_process');
+/* eslint-disable global-require */
 const { lstatSync, readdirSync } = require('fs');
 const { join } = require('path');
-
-const logger = console;
-
-let cooldown = 0;
-
-try {
-  require('inquirer');
-  require('commander');
-  require('chalk');
-  require('npmlog');
-} catch (e) {
-  logger.log('🕘 running bootstrap on a clean repo, we have to install dependencies');
-  childProcess.spawnSync('yarn', ['install', '--ignore-optional'], {
-    stdio: ['inherit', 'inherit', 'inherit'],
-  });
-  process.stdout.write('\x07');
-  process.stdout.write('\033c');
-
-  // give the filesystem some time
-  cooldown = 1000;
-} finally {
-  setTimeout(run, cooldown);
-}
+const { checkDependenciesAndRun, spawn } = require('./cli-utils');
 
 function run() {
   const inquirer = require('inquirer');
@@ -34,28 +11,15 @@ function run() {
   const chalk = require('chalk');
   const log = require('npmlog');
 
-  const isTgz = source => lstatSync(source).isFile() && source.match(/.tgz$/);
-  const getDirectories = source =>
+  const isTgz = (source) => lstatSync(source).isFile() && source.match(/.tgz$/);
+  const getDirectories = (source) =>
     readdirSync(source)
-      .map(name => join(source, name))
+      .map((name) => join(source, name))
       .filter(isTgz);
 
   log.heading = 'storybook';
   const prefix = 'bootstrap';
   log.addLevel('aborted', 3001, { fg: 'red', bold: true });
-
-  const spawn = (command, options = {}) => {
-    const out = childProcess.spawnSync(`${command}`, {
-      shell: true,
-      stdio: 'inherit',
-      ...options,
-    });
-
-    if (out.status !== 0) {
-      process.exit(out.status);
-    }
-    return out;
-  };
 
   const main = program
     .version('5.0.0')
@@ -79,8 +43,8 @@ function run() {
     command: () => {
       // run all pre tasks
       pre
-        .map(key => tasks[key])
-        .forEach(task => {
+        .map((key) => tasks[key])
+        .forEach((task) => {
           if (task.check()) {
             task.command();
           }
@@ -117,7 +81,10 @@ function run() {
       defaultValue: false,
       option: '--install',
       command: () => {
-        spawn('yarn install --ignore-optional --network-concurrency 8');
+        const command = process.env.CI
+          ? 'yarn install --network-concurrency 8'
+          : 'yarn install --ignore-optional --network-concurrency 8';
+        spawn(command);
       },
       order: 1,
     }),
@@ -137,7 +104,9 @@ function run() {
       option: '--dll',
       command: () => {
         log.info(prefix, 'dll');
-        spawn('lerna run createDlls --scope "@storybook/ui"');
+        setTimeout(() => {
+          spawn('lerna run createDlls --scope "@storybook/ui" --scope "@storybook/addon-docs"');
+        }, 5000);
       },
       order: 3,
     }),
@@ -190,15 +159,15 @@ function run() {
     .reduce((acc, key) => acc.option(tasks[key].option, tasks[key].name), main)
     .parse(process.argv);
 
-  Object.keys(tasks).forEach(key => {
+  Object.keys(tasks).forEach((key) => {
     tasks[key].value = program[tasks[key].option.replace('--', '')] || program.all;
   });
 
-  const createSeperator = input => `- ${input}${' ---------'.substr(0, 12)}`;
+  const createSeperator = (input) => `- ${input}${' ---------'.substr(0, 12)}`;
 
   const choices = Object.values(groups)
-    .map(l =>
-      l.map(key => ({
+    .map((l) =>
+      l.map((key) => ({
         name: tasks[key].name,
         checked: tasks[key].defaultValue,
       }))
@@ -212,7 +181,7 @@ function run() {
   let selection;
   if (
     !Object.keys(tasks)
-      .map(key => tasks[key].value)
+      .map((key) => tasks[key].value)
       .filter(Boolean).length
   ) {
     selection = inquirer
@@ -226,10 +195,10 @@ function run() {
         },
       ])
       .then(({ todo }) =>
-        todo.map(name => tasks[Object.keys(tasks).find(i => tasks[i].name === name)])
+        todo.map((name) => tasks[Object.keys(tasks).find((i) => tasks[i].name === name)])
       )
-      .then(list => {
-        if (list.find(i => i === tasks.reset)) {
+      .then((list) => {
+        if (list.find((i) => i === tasks.reset)) {
           return inquirer
             .prompt([
               {
@@ -254,27 +223,29 @@ function run() {
   } else {
     selection = Promise.resolve(
       Object.keys(tasks)
-        .map(key => tasks[key])
-        .filter(item => item.value === true)
+        .map((key) => tasks[key])
+        .filter((item) => item.value === true)
     );
   }
 
   selection
-    .then(list => {
+    .then((list) => {
       if (list.length === 0) {
         log.warn(prefix, 'Nothing to bootstrap');
       } else {
         list
           .sort((a, b) => a.order - b.order)
-          .forEach(key => {
+          .forEach((key) => {
             key.command();
           });
         process.stdout.write('\x07');
       }
     })
-    .catch(e => {
+    .catch((e) => {
       log.aborted(prefix, chalk.red(e.message));
       log.silly(prefix, e);
       process.exit(1);
     });
 }
+
+checkDependenciesAndRun(run);

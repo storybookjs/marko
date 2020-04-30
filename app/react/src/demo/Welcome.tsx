@@ -5,10 +5,9 @@ import React, {
   FunctionComponent,
   HTMLAttributes,
 } from 'react';
-import PropTypes from 'prop-types';
 
 type MainProps = Omit<DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>, 'style'>;
-const Main: FunctionComponent<MainProps> = props => (
+const Main: FunctionComponent<MainProps> = (props) => (
   <article
     {...props}
     style={{
@@ -25,18 +24,12 @@ type TitleProps = DetailedHTMLProps<HTMLAttributes<HTMLHeadingElement>, HTMLHead
 const Title: FunctionComponent<TitleProps> = ({ children, ...props }) => (
   <h1 {...props}>{children}</h1>
 );
-Title.propTypes = {
-  children: PropTypes.node,
-};
-Title.defaultProps = {
-  children: undefined,
-};
 
 type NoteProps = Omit<
   DetailedHTMLProps<HTMLAttributes<HTMLParagraphElement>, HTMLParagraphElement>,
   'style'
 >;
-const Note: FunctionComponent<NoteProps> = props => (
+const Note: FunctionComponent<NoteProps> = (props) => (
   <p
     {...props}
     style={{
@@ -46,7 +39,7 @@ const Note: FunctionComponent<NoteProps> = props => (
 );
 
 type InlineCodeProps = Omit<DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>, 'style'>;
-const InlineCode: FunctionComponent<InlineCodeProps> = props => (
+const InlineCode: FunctionComponent<InlineCodeProps> = (props) => (
   <code
     {...props}
     style={{
@@ -85,14 +78,6 @@ const Link: FunctionComponent<LinkProps> = ({ children, href, target, rel, ...pr
     {children}
   </a>
 );
-Link.propTypes = {
-  href: PropTypes.string,
-  children: PropTypes.node,
-};
-Link.defaultProps = {
-  href: undefined,
-  children: undefined,
-};
 
 type NavButtonProps = Omit<
   DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
@@ -120,12 +105,6 @@ const NavButton: FunctionComponent<NavButtonProps> = ({ children, onClick, ...pr
     {children}
   </button>
 );
-NavButton.propTypes = {
-  children: PropTypes.node,
-};
-NavButton.defaultProps = {
-  children: undefined,
-};
 
 type WelcomeProps = {
   showApp: () => void;
@@ -151,7 +130,7 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ showApp }) => (
       You can also edit those components and see changes right away.
       <br />
       (Try editing the <InlineCode>Button</InlineCode> stories located at&nbsp;
-      <InlineCode>src/stories/index.js</InlineCode>
+      <InlineCode>src/stories/1-Button.stories.js</InlineCode>
       .)
     </p>
     <p>
@@ -176,8 +155,5 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ showApp }) => (
   </Main>
 );
 Welcome.displayName = 'Welcome';
-Welcome.defaultProps = {
-  showApp: null,
-};
 
 export { Welcome as default };
