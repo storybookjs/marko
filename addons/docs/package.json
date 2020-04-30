@@ -88,6 +88,8 @@
     "@types/doctrine": "^0.0.3",
     "@types/enzyme": "^3.10.3",
     "@types/jest": "^25.1.1",
+    "@types/tmp": "^0.1.0",
+    "@types/cross-spawn": "^6.0.1",
     "@types/prop-types": "^15.5.9",
     "@types/react-is": "^16.7.1",
     "@types/util-deprecate": "^1.0.0",
