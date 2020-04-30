@@ -1,11 +1,10 @@
+import { Constructable, CustomElement } from 'aurelia';
 /* eslint-disable prefer-destructuring */
 import { start } from '@storybook/core/client';
 import { ClientStoryApi, Loadable } from '@storybook/addons';
+import { text, boolean, number, date } from '@storybook/addon-knobs';
 
 import './globals';
-import { text, boolean, number, date } from '@storybook/addon-knobs';
-import { CustomElement } from '@aurelia/runtime';
-import { Constructable } from '@aurelia/kernel';
 import render from './render';
 import { IStorybookSection, StoryFnAureliaReturnType } from './types';
 import { addRegistries, addContainer, Component, addComponents } from './decorators';
@@ -50,8 +49,8 @@ export function generateKnobsFor(CustomElementClass: Constructable) {
   const elementConstructed = new CustomElementClass() as any;
 
   Object.keys(bindables)
-    .map(y => bindables[y])
-    .forEach(bindableDef => {
+    .map((y) => bindables[y])
+    .forEach((bindableDef) => {
       const bindable = bindableDef.property;
       const currentVal = elementConstructed[bindable];
       switch (typeof currentVal) {

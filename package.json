@@ -149,6 +149,7 @@
     "@types/semver": "^7.1.0",
     "@types/webpack": "^4.41.9",
     "@types/webpack-env": "^1.15.1",
+    "aurelia": "dev",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^25.2.4",

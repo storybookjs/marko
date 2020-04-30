@@ -12,8 +12,8 @@ This `Button` document defines a few stories:
 
 <Story name="text">
   {{
-    customElement: Button,
-    state: {
+    component: Button,
+    props: {
       text: 'Hello Button',
     },
   }}
@@ -21,8 +21,8 @@ This `Button` document defines a few stories:
 
 <Story name="emoji">
   {{
-    customElement: Button,
-    state: {
+    component: Button,
+    props: {
       text: '😀 😎 👍 💯',
     },
   }}
@@ -30,8 +30,8 @@ This `Button` document defines a few stories:
 
 <Story name="with some emoji and action">
   {{
-    customElement: Button,
-    state: {
+    component: Button,
+    props: {
       text: '😀 😎 👍 💯',
       onClick: action('This was clicked OMG'),
     },
@@ -40,8 +40,8 @@ This `Button` document defines a few stories:
 
 <Story name="button with link to another story">
   {{
-    customElement: Button,
-    state: {
+    component: Button,
+    props: {
       text: 'Go to Welcome Story',
       onClick: linkTo('Welcome'),
     },

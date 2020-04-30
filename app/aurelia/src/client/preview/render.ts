@@ -1,13 +1,18 @@
 import { document } from 'global';
-import { DebugConfiguration } from '@aurelia/debug';
-import { JitHtmlBrowserConfiguration } from '@aurelia/jit-html-browser';
-import { Aurelia, INode, CustomElement, IViewModel } from '@aurelia/runtime';
-import { Constructable } from '@aurelia/kernel';
+import {
+  Aurelia,
+  INode,
+  JitHtmlBrowserConfiguration,
+  DebugConfiguration,
+  CustomElement,
+  Constructable,
+  IViewModel,
+} from 'aurelia';
 import { RenderMainArgs } from './types';
 import { generateKnobsFor } from '.';
 
 const host = document.getElementById('root'); // the root iframe provided by storybook
-let previousAurelia: Aurelia<INode>;
+let previousAurelia: Aurelia;
 export default async function render({
   storyFn,
   selectedKind,
@@ -48,7 +53,7 @@ export default async function render({
   if (element.customElement) {
     const def = CustomElement.getDefinition(element.customElement);
     template = `<${def.name} ${Object.keys(def.bindables).map(
-      key => `${def.bindables[key].attribute}.bind="${def.bindables[key].property}" `
+      (key) => `${def.bindables[key].attribute}.bind="${def.bindables[key].property}" `
     )}  ></${def.name}>`;
     previousAurelia.register(element.customElement);
   }
