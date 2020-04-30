@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import path from 'path';
 import remarkSlug from 'remark-slug';
 import remarkExternalLinks from 'remark-external-links';

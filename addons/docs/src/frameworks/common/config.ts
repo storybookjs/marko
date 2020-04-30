@@ -1,4 +1,3 @@
-/* eslint-disable-next-line import/no-extraneous-dependencies */
 import { DocsContainer, DocsPage } from '../../blocks';
 import { enhanceArgTypes } from './enhanceArgTypes';
 
