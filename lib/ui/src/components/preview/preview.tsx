@@ -135,10 +135,12 @@ const Preview: FunctionComponent<PreviewProps> = (props) => {
     baseUrl,
     withLoader = true,
   } = props;
-  const { isToolshown } = options;
   const { getElements } = api;
 
   const tabs = useTabs(previewId, baseUrl, withLoader, getElements, story);
+
+  const isToolshown =
+    !(viewMode === 'docs' && tabs.filter((t) => !t.hidden).length < 2) && options.isToolshown;
 
   useEffect(() => {
     if (story) {
