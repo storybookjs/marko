@@ -19,7 +19,7 @@
   - [Simplified Render Context](#simplified-render-context)
   - [Story Store immutable outside of configuration](#story-store-immutable-outside-of-configuration)
   - [Improved story source handling](#improved-story-source-handling)
-  - [Actions Addon API changes](#actions-addon-api-changes)
+  - [6.0 Addon API changes](#60-addon-api-changes)
     - [Actions Addon uses parameters](#actions-addon-uses-parameters)
     - [Removed action decorator APIs](#removed-action-decorator-apis)
     - [Removed addon centered](#removed-addon-centered)
@@ -418,7 +418,7 @@ The MDX analog:
 </Story>
 ```
 
-### Actions Addon API changes
+### 6.0 Addon API changes
 
 #### Actions Addon uses parameters
 
