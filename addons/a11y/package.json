@@ -49,7 +49,7 @@
     "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
-    "@types/webpack-env": "^1.15.1"
+    "@types/webpack-env": "^1.15.2"
   },
   "peerDependencies": {
     "react": "*",

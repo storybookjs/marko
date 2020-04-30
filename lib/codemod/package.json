@@ -36,12 +36,12 @@
     "globby": "^11.0.0",
     "jscodeshift": "^0.7.0",
     "lodash": "^4.17.15",
-    "prettier": "^2.0.2",
+    "prettier": "^2.0.5",
     "recast": "^0.19.0",
     "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
-    "jest": "^25.2.4",
+    "jest": "^25.5.2",
     "jest-specific-snapshot": "^3.0.0"
   },
   "publishConfig": {

@@ -38,7 +38,7 @@
     "graphql": "^14.6.0",
     "prop-types": "^15.7.2",
     "regenerator-runtime": "^0.13.3",
-    "webpack": "^4.33.0"
+    "webpack": "^4.43.0"
   },
   "peerDependencies": {
     "react": "*",
