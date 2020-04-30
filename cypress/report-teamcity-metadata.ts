@@ -19,7 +19,7 @@ function getTests(fileName: string) {
 const fullTestName = (suite: string, testName: string) => `${suite}: ${testName}`;
 
 async function report() {
-  const hookFailures: { [file: string]: Array<[string, string]> } = {};
+  const hookFailures: { [file: string]: [string, string][] } = {};
   const reports: any[] = [];
   try {
     const testFiles = await fs.readdir(screensDir);

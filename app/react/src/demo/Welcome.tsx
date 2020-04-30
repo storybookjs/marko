@@ -106,9 +106,9 @@ const NavButton: FunctionComponent<NavButtonProps> = ({ children, onClick, ...pr
   </button>
 );
 
-type WelcomeProps = {
+interface WelcomeProps {
   showApp: () => void;
-};
+}
 const Welcome: FunctionComponent<WelcomeProps> = ({ showApp }) => (
   <Main>
     <Title>Welcome to storybook</Title>

@@ -1,10 +1,10 @@
 import fs from 'fs';
 import { logger } from '@storybook/node-logger';
 
-type PresetOptions = {
+interface PresetOptions {
   backgrounds?: any;
   viewport?: any;
-};
+}
 
 let packageJson: any = {};
 if (fs.existsSync('./package.json')) {
