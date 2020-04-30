@@ -29,9 +29,12 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
+    "@babel/core": "^7.9.0",
     "@babel/plugin-transform-classes": "^7.9.2",
     "@storybook/addons": "6.0.0-beta.0",
     "@storybook/api": "6.0.0-beta.0",
+    "@types/webpack": "^4.41.9",
+    "babel-loader": "^8.0.6",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "graphiql": "^0.17.5",
