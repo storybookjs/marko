@@ -49,7 +49,6 @@
   },
   "peerDependencies": {
     "@babel/core": "*",
-    "babel-loader": "^7.0.0 || ^8.0.0",
     "react": "*",
     "react-dom": "*",
     "riot": "^3.0.0 || ^4.0.0",

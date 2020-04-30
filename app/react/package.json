@@ -62,7 +62,6 @@
   },
   "peerDependencies": {
     "@babel/core": "^7.0.1",
-    "babel-loader": "^7.0.0 || ^8.0.0",
     "react": "*",
     "react-dom": "*"
   },

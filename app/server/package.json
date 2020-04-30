@@ -47,9 +47,6 @@
   "devDependencies": {
     "fs-extra": "^9.0.0"
   },
-  "peerDependencies": {
-    "babel-loader": "^7.0.0 || ^8.0.0"
-  },
   "engines": {
     "node": ">=8.0.0"
   },
