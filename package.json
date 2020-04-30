@@ -221,7 +221,7 @@
     "shelljs": "^0.8.4",
     "shx": "^0.3.2",
     "sort-package-json": "^1.42.1",
-    "storybook-chromatic": "^3.5.0",
+    "chromatic": "^4.0.2",
     "svelte": "^3.18.1",
     "svelte-jest": "^0.3.0",
     "teamcity-service-messages": "^0.1.11",
