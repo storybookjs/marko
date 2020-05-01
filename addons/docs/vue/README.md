@@ -2,7 +2,7 @@
   <img src="../docs/media/vue-hero.png" width="100%" />
 </center>
 
-# Storybook Docs for Vue
+<h1>Storybook Docs for Vue</h1>
 
 > migration guide: This page documents the method to configure storybook introduced recently in 5.3.0, consult the [migration guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) if you want to migrate to this format of configuring storybook.
 
@@ -10,13 +10,12 @@ Storybook Docs transforms your Storybook stories into world-class component docu
 
 To learn more about Storybook Docs, read the [general documentation](../README.md). To learn the Vue specifics, read on!
 
-- [Storybook Docs for Vue](#storybook-docs-for-vue)
-  - [Installation](#installation)
-  - [Preset options](#preset-options)
-  - [DocsPage](#docspage)
-  - [MDX](#mdx)
-  - [Inline Stories](#inline-stories)
-  - [More resources](#more-resources)
+- [Installation](#installation)
+- [Preset options](#preset-options)
+- [DocsPage](#docspage)
+- [MDX](#mdx)
+- [Inline Stories](#inline-stories)
+- [More resources](#more-resources)
 
 ## Installation
 

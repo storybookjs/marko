@@ -5,10 +5,19 @@ export default {
   component: MyButton,
 };
 
-export const Rounded = () => ({
+export const Rounded = (args) => ({
   components: { MyButton },
-  template: '<my-button :rounded="true">A Button with rounded edges</my-button>',
+  template: '<my-button :color="color" :rounded="rounded">A Button with rounded edges</my-button>',
+  data() {
+    return args;
+  },
 });
+Rounded.story = {
+  argTypes: {
+    rounded: { defaultValue: true },
+    color: { control: { type: 'color' }, defaultValue: '#f00' },
+  },
+};
 
 export const Square = () => ({
   components: { MyButton },

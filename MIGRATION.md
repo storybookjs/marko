@@ -1,6 +1,8 @@
 <h1>Migration</h1>
 
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
+  - [CRA preset removed](#cra-preset-removed)
+  - [Args passed as first argument to story](#args-passed-as-first-argument-to-story)
   - [Docs theme separated](#docs-theme-separated)
   - [DocsPage slots removed](#docspage-slots-removed)
   - [React prop tables with Typescript](#react-prop-tables-with-typescript)
@@ -9,6 +11,7 @@
     - [Rolling back](#rolling-back)
   - [New addon presets](#new-addon-presets)
   - [Removed Deprecated APIs](#removed-deprecated-apis)
+  - [New setStories event](#new-setstories-event)
   - [Client API changes](#client-api-changes)
     - [Removed Legacy Story APIs](#removed-legacy-story-apis)
     - [Can no longer add decorators/parameters after stories](#can-no-longer-add-decoratorsparameters-after-stories)
@@ -16,7 +19,7 @@
   - [Simplified Render Context](#simplified-render-context)
   - [Story Store immutable outside of configuration](#story-store-immutable-outside-of-configuration)
   - [Improved story source handling](#improved-story-source-handling)
-  - [Actions Addon API changes](#actions-addon-api-changes)
+  - [6.0 Addon API changes](#60-addon-api-changes)
     - [Actions Addon uses parameters](#actions-addon-uses-parameters)
     - [Removed action decorator APIs](#removed-action-decorator-apis)
     - [Removed addon centered](#removed-addon-centered)
@@ -101,6 +104,38 @@
   - [Deprecated embedded addons](#deprecated-embedded-addons)
 
 ## From version 5.3.x to 6.0.x
+
+### CRA preset removed
+
+The built-in create-react-app preset, which was [previously deprecated](#create-react-app-preset), has been fully removed.
+
+If you're using CRA and migrating from an earlier Storybook version, please install [`@storybook/preset-create-react-app`](https://github.com/storybookjs/presets/tree/master/packages/preset-create-react-app) if you haven't already.
+
+### Args passed as first argument to story
+
+Starting in 6.0, the first argument to a story function is an [Args object](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/formats/component-story-format/index.md#args-story-inputs). In 5.3 and earlier, the first argument was a [StoryContext](https://github.com/storybookjs/storybook/blob/next/lib/addons/src/types.ts#L49-L61), and that context is now passed as the second argument by default.
+
+This breaking change only affects you if your stories actually use the context, which is not common. If you have any stories that use the context, you can either (1) update your stories, or (2) set a flag to opt-out of new behavior.
+
+Consider the following story that uses the context:
+
+```js
+export const Dummy = ({ parameters }) => <div>{JSON.stringify(parameters)}</div>;
+```
+
+Here's an updated story for 6.0 that ignores the args object:
+
+```js
+export const Dummy = (_args, { parameters }) => <div>{JSON.stringify(parameters)}</div>;
+```
+
+Alternatively, if you want to opt out of the new behavior, you can add the following to your `.storybook/preview.js` config:
+
+```js
+export const parameters = {
+  passArgsFirst: false,
+};
+```
 
 ### Docs theme separated
 
@@ -261,6 +296,31 @@ See the migration guides for further details:
 - [Unified docs preset](#unified-docs-preset)
 - [Addon centered decorator deprecated](#addon-centered-decorator-deprecated)
 
+### New setStories event
+
+The `setStories`/`SET_STORIES` event has changed and now denormalizes global and kind-level parameters. The new format of the event data is:
+
+```js
+{
+  globalParameters: { p: 'q' },
+  kindParameters: { kind: { p: 'q' } },
+  stories: /* as before but with only story-level parameters */
+}
+```
+
+If you want the full denormalized parameters for a story, you can do something like:
+
+```js
+import { combineParameters } from '@storybook/api';
+
+const story = data.stories[storyId];
+const parameters = combineParameters(
+  data.globalParameters,
+  data.kindParameters[story.kind],
+  story.parameters
+);
+```
+
 ### Client API changes
 
 #### Removed Legacy Story APIs
@@ -313,6 +373,10 @@ _You cannot set parameters from decorators_
 
 Parameters are intended to be statically set at story load time. So setting them via a decorator doesn't quite make sense. If you were using this to control the rendering of a story, chances are using the new `args` feature is a more idiomatic way to do this.
 
+_You can only set storySort globally_
+
+If you want to change the ordering of stories, use `export const parameters = { options: { storySort: ... } }` in `preview.js`.
+
 ### Simplified Render Context
 
 The `RenderContext` that is passed to framework rendering layers in order to render a story has been simplified, dropping a few members that were not used by frameworks to render stories. In particular, the following have been removed:
@@ -354,7 +418,7 @@ The MDX analog:
 </Story>
 ```
 
-### Actions Addon API changes
+### 6.0 Addon API changes
 
 #### Actions Addon uses parameters
 

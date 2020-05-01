@@ -46,15 +46,15 @@ export type OptionsControlType =
   | 'select'
   | 'multi-select';
 
-export type OptionsConfig = {
+export interface OptionsConfig {
   options: Options;
   controlType: OptionsControlType;
-};
+}
 
-export type NormalizedOptionsConfig = {
+export interface NormalizedOptionsConfig {
   options: OptionsObject;
   controlType: OptionsControlType;
-};
+}
 
 export type TextValue = string;
 export interface TextConfig {}
