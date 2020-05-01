@@ -44,12 +44,12 @@
     "regenerator-runtime": "^0.13.3",
     "semver": "^7.3.2",
     "store2": "^2.7.1",
-    "telejson": "^3.2.0",
+    "telejson": "^4.0.0",
     "ts-dedent": "^1.1.1",
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.149",
+    "@types/lodash": "^4.14.150",
     "@types/semver": "^7.1.0",
     "flush-promises": "^1.0.2",
     "qs": "^6.6.0"

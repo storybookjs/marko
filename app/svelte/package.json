@@ -42,7 +42,7 @@
     "ts-dedent": "^1.1.1"
   },
   "devDependencies": {
-    "@types/webpack-env": "^1.15.1",
+    "@types/webpack-env": "^1.15.2",
     "svelte": "^3.18.1",
     "svelte-loader": "^2.13.4"
   },

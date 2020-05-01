@@ -13,7 +13,7 @@
     "vuex": "^3.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
+    "@babel/core": "^7.9.6",
     "@storybook/addon-a11y": "6.0.0-beta.0",
     "@storybook/addon-actions": "6.0.0-beta.0",
     "@storybook/addon-backgrounds": "6.0.0-beta.0",
@@ -39,7 +39,7 @@
   },
   "storybook": {
     "chromatic": {
-      "appCode": "cyxj0e38bqj"
+      "projectToken": "cyxj0e38bqj"
     }
   }
 }

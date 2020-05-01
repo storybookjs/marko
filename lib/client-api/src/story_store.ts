@@ -75,7 +75,9 @@ const checkStorySort = (parameters: Parameters) => {
   if (options?.storySort) logger.error('The storySort option parameter can only be set globally');
 };
 
-type AllowUnsafeOption = { allowUnsafe?: boolean };
+interface AllowUnsafeOption {
+  allowUnsafe?: boolean;
+}
 
 const toExtracted = <T>(obj: T) =>
   Object.entries(obj).reduce((acc, [key, value]) => {

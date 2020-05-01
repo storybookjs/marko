@@ -1,10 +1,11 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import createCompiler from '@storybook/addon-docs/mdx-compiler-plugin';
 import path from 'path';
 import remarkSlug from 'remark-slug';
 import remarkExternalLinks from 'remark-external-links';
 
 import { DllReferencePlugin } from 'webpack';
+
+// @ts-ignore
+import createCompiler from '../../mdx/mdx-compiler-plugin';
 
 const coreDirName = path.dirname(require.resolve('@storybook/core/package.json'));
 const context = path.join(coreDirName, '../../node_modules');

@@ -48,7 +48,7 @@
     "upath": "^1.1.0"
   },
   "devDependencies": {
-    "@types/webpack-env": "^1.15.1"
+    "@types/webpack-env": "^1.15.2"
   },
   "peerDependencies": {
     "react": "*",

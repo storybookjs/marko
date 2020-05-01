@@ -14,7 +14,7 @@
     "riot-hot-reload": "^1.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
+    "@babel/core": "^7.9.6",
     "@storybook/addon-a11y": "6.0.0-beta.0",
     "@storybook/addon-actions": "6.0.0-beta.0",
     "@storybook/addon-backgrounds": "6.0.0-beta.0",
@@ -29,7 +29,7 @@
     "babel-loader": "^8.0.4",
     "cross-env": "^7.0.0",
     "file-loader": "^6.0.0",
-    "raw-loader": "^4.0.0",
+    "raw-loader": "^4.0.1",
     "riot-tag-loader": "^2.1.0",
     "svg-url-loader": "^5.0.0",
     "webpack": "^4.33.0",
@@ -37,7 +37,7 @@
   },
   "storybook": {
     "chromatic": {
-      "appCode": "g2dp3lnr34a"
+      "projectToken": "g2dp3lnr34a"
     }
   }
 }

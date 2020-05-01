@@ -40,8 +40,8 @@
     "@storybook/addons": "6.0.0-beta.0",
     "@storybook/core": "6.0.0-beta.0",
     "@storybook/node-logger": "6.0.0-beta.0",
-    "@svgr/webpack": "^5.1.0",
-    "@types/webpack-env": "^1.15.1",
+    "@svgr/webpack": "^5.4.0",
+    "@types/webpack-env": "^1.15.2",
     "babel-plugin-add-react-displayname": "^0.0.5",
     "babel-plugin-named-asset-import": "^0.3.1",
     "babel-plugin-react-docgen": "^4.1.0",
@@ -53,12 +53,12 @@
     "regenerator-runtime": "^0.13.3",
     "semver": "^7.3.2",
     "ts-dedent": "^1.1.1",
-    "webpack": "^4.33.0"
+    "webpack": "^4.43.0"
   },
   "devDependencies": {
     "@storybook/client-api": "6.0.0-beta.0",
-    "@types/node": "^13.9.5",
-    "@types/webpack": "^4.41.9"
+    "@types/node": "^13.13.4",
+    "@types/webpack": "^4.41.12"
   },
   "peerDependencies": {
     "@babel/core": "^7.0.1",

@@ -45,12 +45,12 @@
     "regenerator-runtime": "^0.13.3",
     "ts-dedent": "^1.1.1",
     "util-deprecate": "^1.0.2",
-    "uuid": "^3.3.2"
+    "uuid": "^8.0.0"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.149",
-    "@types/uuid": "^3.4.7",
-    "@types/webpack-env": "^1.15.1"
+    "@types/lodash": "^4.14.150",
+    "@types/uuid": "^7.0.3",
+    "@types/webpack-env": "^1.15.2"
   },
   "peerDependencies": {
     "react-dom": "*"
