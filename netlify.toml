@@ -1,6 +1,6 @@
 [build]
   publish = "built-storybooks"
-  command = "yarn bootstrap --core && yarn build-storybooks"
+  command = "./scripts/fix-puppeteer-5704.sh && yarn bootstrap --core && yarn build-storybooks"
 [build.environment]
   NODE_VERSION = "10"
   YARN_VERSION = "1.19.1"
