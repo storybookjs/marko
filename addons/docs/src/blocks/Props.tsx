@@ -158,6 +158,12 @@ export const StoryTable: FC<StoryProps & { components: Record<string, Component>
     }
     storyArgTypes = filterArgTypes(storyArgTypes, include, exclude);
 
+    // This code handles three cases:
+    //  1. the story has args, in which case we want to show controls for the story
+    //  2. the story has args, and the user specifies showComponents, in which case
+    //     we want to show controls for the primary component AND show props for each component
+    //  3. the story has NO args, in which case we want to show props for each component
+
     // eslint-disable-next-line prefer-const
     let [args, updateArgs] = useArgs(storyId, storyStore);
     let tabs = { Story: { rows: storyArgTypes, args, updateArgs } } as Record<
