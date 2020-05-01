@@ -27,6 +27,6 @@ export function managerEntries(entry: any[] = [], options: PresetOptions = {}) {
     .filter((key) => (options as any)[key] !== false)
     .map((key) => makeAddon(key))
     .filter((addon) => !isInstalled(addon))
-    .map((addon) => `${addon}/register`);
+    .map((addon) => require.resolve(`${addon}/register`));
   return [...entry, ...registerAddons];
 }
