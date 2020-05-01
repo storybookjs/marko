@@ -61,11 +61,11 @@
     "webpack": "^4.33.0"
   },
   "peerDependencies": {
-    "puppeteer": "^2.1.0"
+    "puppeteer": "^2.0.0 || ^3.0.0"
   },
   "storybook": {
     "chromatic": {
-      "appCode": "ab7m45tp9p"
+      "projectToken": "ab7m45tp9p"
     }
   }
 }

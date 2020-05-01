@@ -37,7 +37,7 @@
   },
   "storybook": {
     "chromatic": {
-      "appCode": "ls0ikhnwqt"
+      "projectToken": "ls0ikhnwqt"
     }
   }
 }
