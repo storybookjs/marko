@@ -160,15 +160,17 @@ export const StoryTable: FC<StoryProps & { components: Record<string, Component>
 
     // eslint-disable-next-line prefer-const
     let [args, updateArgs] = useArgs(storyId, storyStore);
-    if (!storyArgTypes || !Object.values(storyArgTypes).find((v) => !!v?.control)) {
-      updateArgs = null;
-    }
-
     let tabs = { Story: { rows: storyArgTypes, args, updateArgs } } as Record<
       string,
       ArgsTableProps
     >;
-    if (showComponents) {
+    if (!storyArgTypes || !Object.values(storyArgTypes).find((v) => !!v?.control)) {
+      updateArgs = null;
+      tabs = {};
+    }
+
+    // Use the dynamically generated component tabs if there are no controls
+    if (showComponents || !updateArgs) {
       tabs = addComponentTabs(tabs, components, context, include, exclude);
     }
 
