@@ -1,5 +1,5 @@
 import { StoryFn } from '@storybook/addons';
-import { IRegistry, IContainer } from '@aurelia/kernel';
+import { IRegistry, IContainer } from 'aurelia';
 import { StoryFnAureliaReturnType } from './types';
 
 export const addRegistries = (...items: IRegistry[]) => (

@@ -18,14 +18,7 @@
     "storybook": "start-storybook -p 9009 -s dist"
   },
   "dependencies": {
-    "@aurelia/debug": "dev",
-    "@aurelia/jit": "dev",
-    "@aurelia/jit-html": "dev",
-    "@aurelia/jit-html-browser": "dev",
-    "@aurelia/kernel": "dev",
-    "@aurelia/runtime": "dev",
-    "@aurelia/runtime-html": "dev",
-    "@aurelia/runtime-html-browser": "dev",
+    "aurelia": "dev",
     "bootstrap": "^4.3.1",
     "promise-polyfill": "^8.1.3"
   },

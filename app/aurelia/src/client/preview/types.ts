@@ -1,5 +1,5 @@
 import { StoryFn } from '@storybook/addons';
-import { IRegistry, IContainer, Constructable } from '@aurelia/kernel';
+import { IRegistry, IContainer, Constructable } from 'aurelia';
 import { Component } from './decorators';
 
 export interface RenderMainArgs {

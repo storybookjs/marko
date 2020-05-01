@@ -1,4 +1,4 @@
-import { customElement, bindable } from '@aurelia/runtime';
+import { customElement, bindable } from 'aurelia';
 
 @customElement({
   name: 'storybook-button-component',
