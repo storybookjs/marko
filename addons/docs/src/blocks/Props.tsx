@@ -170,13 +170,14 @@ export const StoryTable: FC<StoryProps & { components: Record<string, Component>
       string,
       ArgsTableProps
     >;
-    if (!storyArgTypes || !Object.values(storyArgTypes).find((v) => !!v?.control)) {
+    const storyHasArgsWithControls = !storyArgTypes || !Object.values(storyArgTypes).find((v) => !!v?.control);
+    if (storyHasArgsWithControls) {
       updateArgs = null;
       tabs = {};
     }
 
     // Use the dynamically generated component tabs if there are no controls
-    if (showComponents || !updateArgs) {
+    if (showComponents || !storyHasArgsWithControls) {
       tabs = addComponentTabs(tabs, components, context, include, exclude);
     }
 
