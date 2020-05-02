@@ -1,4 +1,4 @@
-import uuid from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 import { addons } from '@storybook/addons';
 import { EVENT_ID } from '../constants';
 import { ActionDisplay, ActionOptions, HandlerFunction } from '../models';
@@ -12,7 +12,7 @@ export function action(name: string, options: ActionOptions = {}): HandlerFuncti
 
   const handler = function actionHandler(...args: any[]) {
     const channel = addons.getChannel();
-    const id = uuid();
+    const id = uuidv4();
     const minDepth = 5; // anything less is really just storybook internals
 
     const actionDisplayToEmit: ActionDisplay = {
