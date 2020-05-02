@@ -103,14 +103,19 @@ Parameters can be configured for a whole set of stories or a single story via th
 export default {
   title: 'Stories',
   parameters: {
-    viewport: { defaultViewport: 'iphone6' },
+    viewport: { 
+      viewports: INITIAL_VIEWPORTS,
+      defaultViewport: 'iphone6' 
+    },
   };
 };
 
 export const myStory = () => <div />;
 myStory.story = {
   parameters: {
-    viewport: { defaultViewport: 'iphonex' },
+    viewport: { 
+      defaultViewport: 'iphonex' 
+    },
   },
 };
 ```
