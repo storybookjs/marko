@@ -158,17 +158,26 @@ export const StoryTable: FC<StoryProps & { components: Record<string, Component>
     }
     storyArgTypes = filterArgTypes(storyArgTypes, include, exclude);
 
+    // This code handles three cases:
+    //  1. the story has args, in which case we want to show controls for the story
+    //  2. the story has args, and the user specifies showComponents, in which case
+    //     we want to show controls for the primary component AND show props for each component
+    //  3. the story has NO args, in which case we want to show props for each component
+
     // eslint-disable-next-line prefer-const
     let [args, updateArgs] = useArgs(storyId, storyStore);
-    if (!storyArgTypes || !Object.values(storyArgTypes).find((v) => !!v?.control)) {
-      updateArgs = null;
-    }
-
     let tabs = { Story: { rows: storyArgTypes, args, updateArgs } } as Record<
       string,
       ArgsTableProps
     >;
-    if (showComponents) {
+    const storyHasArgsWithControls = !storyArgTypes || !Object.values(storyArgTypes).find((v) => !!v?.control);
+    if (storyHasArgsWithControls) {
+      updateArgs = null;
+      tabs = {};
+    }
+
+    // Use the dynamically generated component tabs if there are no controls
+    if (showComponents || !storyHasArgsWithControls) {
       tabs = addComponentTabs(tabs, components, context, include, exclude);
     }
 
