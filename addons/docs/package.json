@@ -52,6 +52,7 @@
     "@storybook/api": "6.0.0-beta.0",
     "@storybook/client-api": "6.0.0-beta.0",
     "@storybook/components": "6.0.0-beta.0",
+    "@storybook/core": "6.0.0-beta.0",
     "@storybook/core-events": "6.0.0-beta.0",
     "@storybook/csf": "0.0.1",
     "@storybook/node-logger": "6.0.0-beta.0",
@@ -87,6 +88,7 @@
     "@storybook/web-components": "6.0.0-beta.0",
     "@types/doctrine": "^0.0.3",
     "@types/enzyme": "^3.10.3",
+    "@types/estree": "^0.0.44",
     "@types/jest": "^25.1.1",
     "@types/tmp": "^0.1.0",
     "@types/cross-spawn": "^6.0.1",
@@ -111,6 +113,7 @@
     "styled-components": "^5.0.1",
     "terser-webpack-plugin": "^2.3.6",
     "tmp": "^0.2.1",
+    "tslib": "^1.11.1",
     "web-component-analyzer": "^1.0.3",
     "webpack": "^4.33.0",
     "zone.js": "^0.10.2"
