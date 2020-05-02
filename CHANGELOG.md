@@ -1,3 +1,19 @@
+## 6.0.0-beta.1 (May 2, 2020)
+
+### Features
+
+- CLI: Add automatic detection for svelte ([#10623](https://github.com/storybookjs/storybook/pull/10623))
+
+### Bug Fixes
+
+- Addon-docs: Fix no-props logic in Source block ([#10619](https://github.com/storybookjs/storybook/pull/10619))
+- Props: Fix subcomponents ([#10608](https://github.com/storybookjs/storybook/pull/10608))
+
+### Maintenance
+
+- Yarn 2: Fix dependencies issues for compatibility ([#10613](https://github.com/storybookjs/storybook/pull/10613))
+- CLI: Fix cli when working with Yarn 2 and Node 10 ([#10550](https://github.com/storybookjs/storybook/pull/10550))
+
 ## 6.0.0-beta.0 (April 29, 2020)
 
 Storybook 6.0 is in beta. 🎉🎉🎉
