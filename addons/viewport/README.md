@@ -106,7 +106,7 @@ export default {
     viewport: { 
       viewports: INITIAL_VIEWPORTS,
       defaultViewport: 'iphone6' 
-     },
+    },
   };
 };
 
@@ -114,9 +114,8 @@ export const myStory = () => <div />;
 myStory.story = {
   parameters: {
     viewport: { 
-      viewports: INITIAL_VIEWPORTS,
       defaultViewport: 'iphonex' 
-     },
+    },
   },
 };
 ```
