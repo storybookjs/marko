@@ -22,8 +22,11 @@
   - [6.0 Addon API changes](#60-addon-api-changes)
     - [Actions Addon uses parameters](#actions-addon-uses-parameters)
     - [Removed action decorator APIs](#removed-action-decorator-apis)
-    - [Removed addon centered](#removed-addon-centered)
     - [Removed withA11y decorator](#removed-witha11y-decorator)
+  - [6.0 Deprecated addons](#60-deprecated-addons)
+    - [Deprecated addon-info, addon-notes](#deprecated-addon-info-addon-notes)
+    - [Deprecated addon-contexts](#deprecated-addon-contexts)
+    - [Removed addon-centered](#removed-addon-centered)
 - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
   - [To main.js configuration](#to-mainjs-configuration)
     - [Using main.js](#using-mainjs)
@@ -447,22 +450,6 @@ StoryOne.story = {
 
 In 6.0 we removed the actions addon decorate API. Actions handles can be configured globaly, for a collection of stories or per story via parameters. The ability to manipulate the data arguments of an event is only relevant in a few frameworks and is not a common enough usecase to be worth the complexity of supporting.
 
-#### Removed addon centered
-
-In 6.0 we removed the centered addon. Centering is now core feature of storybook, that no longer needs an addon.
-
-Remove the addon-centered decorator and instead add a `layout` parameter:
-
-```js
-export const MyStory = () => <div>my story</div>;
-
-MyStory.story = {
-  parameters: { layout: 'centered' },
-};
-```
-
-Other possible values are: `padded` (default) and `fullscreen`.
-
 #### Removed withA11y decorator
 
 In 6.0 we removed the `withA11y` decorator. The code that runs accessibility checks is now directly injected in the preview.
@@ -480,6 +467,37 @@ addParameters({
   }
 };
 ```
+
+### 6.0 Deprecated addons
+
+We've deprecated the following addons in 6.0: `addon-info`, `addon-notes`, `addon-contexts`, `addon-centered`.
+
+#### Deprecated addon-info, addon-notes
+
+The info/notes addons have been replaced by [addon-docs](https://github.com/storybookjs/storybook/tree/next/addons/docs). We've documented a migration in the [docs recipes](https://github.com/storybookjs/storybook/blob/next/addons/docs/docs/recipes.md#migrating-from-notesinfo-addons).
+
+Both addons are still widely used, and their source code is still available in the [deprecated-addons repo](https://github.com/storybookjs/deprecated-addons). We're looking for maintainers for both addons. If you're interested, please get in touch on [our Discord](https://discordapp.com/invite/UUt2PJb).
+
+#### Deprecated addon-contexts
+
+The contexts addon has been replaced by [addon-toolbars](https://github.com/storybookjs/storybook/blob/next/addons/toolbars), which is simpler, more ergonomic, and compatible with all Storybook frameworks.
+
+The addon's source code is still available in the [deprecated-addons repo](https://github.com/storybookjs/deprecated-addons). If you're interested in maintaining it, please get in touch on [our Discord](https://discordapp.com/invite/UUt2PJb).
+
+#### Removed addon-centered
+
+In 6.0 we removed the centered addon. Centering is now core feature of storybook, so w no longer need an addon.
+
+Remove the addon-centered decorator and instead add a `layout` parameter:
+
+```js
+export const MyStory = () => <div>my story</div>;
+MyStory.story = {
+  parameters: { layout: 'centered' },
+};
+```
+
+Other possible values are: `padded` (default) and `fullscreen`.
 
 ## From version 5.2.x to 5.3.x
 
