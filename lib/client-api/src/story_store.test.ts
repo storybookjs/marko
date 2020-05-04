@@ -1,4 +1,3 @@
-// foo
 import createChannel from '@storybook/channel-postmessage';
 import { toId } from '@storybook/csf';
 import addons, { mockChannel } from '@storybook/addons';
@@ -228,13 +227,17 @@ describe('preview.story_store', () => {
   describe('globalArgs', () => {
     it('is initialized to the value stored in parameters.globalArgs on the first story', () => {
       const store = new StoryStore({ channel });
-      addStoryToStore(store, 'a', '1', () => 0, {
-        globalArgs: {
-          arg1: 'arg1',
-          arg2: 2,
-          arg3: { complex: { object: ['type'] } },
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          globalArgs: {
+            arg1: 'arg1',
+            arg2: 2,
+            arg3: { complex: { object: ['type'] } },
+          },
         },
       });
+      addStoryToStore(store, 'a', '1', () => 0);
       store.finishConfiguring();
       expect(store.getRawStory('a', '1').globalArgs).toEqual({
         arg1: 'arg1',
@@ -245,16 +248,20 @@ describe('preview.story_store', () => {
 
     it('is initialized to the default values stored in parameters.globalArgsTypes on the first story', () => {
       const store = new StoryStore({ channel });
-      addStoryToStore(store, 'a', '1', () => 0, {
-        globalArgs: {
-          arg1: 'arg1',
-          arg2: 2,
-        },
-        globalArgTypes: {
-          arg2: { defaultValue: 'arg2' },
-          arg3: { defaultValue: { complex: { object: ['type'] } } },
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          globalArgs: {
+            arg1: 'arg1',
+            arg2: 2,
+          },
+          globalArgTypes: {
+            arg2: { defaultValue: 'arg2' },
+            arg3: { defaultValue: { complex: { object: ['type'] } } },
+          },
         },
       });
+      addStoryToStore(store, 'a', '1', () => 0);
       store.finishConfiguring();
       expect(store.getRawStory('a', '1').globalArgs).toEqual({
         arg1: 'arg1',
@@ -266,30 +273,38 @@ describe('preview.story_store', () => {
     it('on HMR it sensibly re-initializes with memory', () => {
       const store = new StoryStore({ channel });
       addons.setChannel(channel);
-      addStoryToStore(store, 'a', '1', () => 0, {
-        globalArgs: {
-          arg1: 'arg1',
-          arg2: 2,
-          arg3: { complex: { object: ['type'] } },
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          globalArgs: {
+            arg1: 'arg1',
+            arg2: 2,
+            arg3: { complex: { object: ['type'] } },
+          },
         },
       });
+      addStoryToStore(store, 'a', '1', () => 0);
       store.finishConfiguring();
 
       // HMR
       store.startConfiguring();
-      store.removeStoryKind('a');
-      addStoryToStore(store, 'a', '1', () => 0, {
-        globalArgs: {
-          arg2: 2,
-          // Although we have changed the default there is no way to tell that the user didn't change
-          // it themselves
-          arg3: { complex: { object: ['changed'] } },
-          arg4: 'new',
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          globalArgs: {
+            arg2: 2,
+            // Although we have changed the default there is no way to tell that the user didn't change
+            // it themselves
+            arg3: { complex: { object: ['changed'] } },
+            arg4: 'new',
+          },
         },
       });
       store.finishConfiguring();
 
       expect(store.getRawStory('a', '1').globalArgs).toEqual({
+        // You cannot remove a global arg in HMR currently
+        arg1: 'arg1',
         arg2: 2,
         arg3: { complex: { object: ['type'] } },
         arg4: 'new',
