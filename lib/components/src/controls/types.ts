@@ -30,7 +30,9 @@ export interface NumberConfig {
 export type RangeConfig = NumberConfig;
 
 export type ObjectValue = any;
-export interface ObjectConfig {}
+export interface ObjectConfig {
+  validator?: (obj: any) => boolean;
+}
 
 export type OptionsSingleSelection = any;
 export type OptionsMultiSelection = any[];

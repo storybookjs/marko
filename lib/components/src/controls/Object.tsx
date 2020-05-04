@@ -11,7 +11,7 @@ const parse = (value: string) => {
 };
 
 export type ObjectProps = ControlProps<ObjectValue> & ObjectConfig;
-export const ObjectControl: FC<ObjectProps> = ({ name, value, onChange }) => {
+export const ObjectControl: FC<ObjectProps> = ({ name, value, onChange, validator }) => {
   const [valid, setValid] = useState(true);
   const [text, setText] = useState(format(value));
 
@@ -19,10 +19,11 @@ export const ObjectControl: FC<ObjectProps> = ({ name, value, onChange }) => {
     (e: ChangeEvent<HTMLTextAreaElement>) => {
       try {
         const newVal = parse(e.target.value);
-        if (!deepEqual(value, newVal)) {
+        const newValid = !validator || validator(newVal);
+        if (newValid && !deepEqual(value, newVal)) {
           onChange(name, newVal);
         }
-        setValid(true);
+        setValid(newValid);
       } catch (err) {
         setValid(false);
       }

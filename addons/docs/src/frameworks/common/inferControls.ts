@@ -13,7 +13,10 @@ const inferControl = (argType: ArgType): Control => {
     case 'array': {
       const { value } = type;
       if (value?.name && ['object', 'other'].includes(value.name)) {
-        return { type: 'object' };
+        return {
+          type: 'object',
+          validator: (obj: any) => Array.isArray(obj),
+        };
       }
       return { type: 'array' };
     }
