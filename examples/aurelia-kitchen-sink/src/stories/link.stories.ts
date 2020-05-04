@@ -2,8 +2,7 @@ import { StoryFn } from '@storybook/addons';
 import { withActions } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 import { withKnobs } from '@storybook/addon-knobs';
-import { addComponents, StoryFnAureliaReturnType } from '@storybook/aurelia';
-import { CoolButton } from '../cool-button/cool-button';
+import { StoryFnAureliaReturnType } from '@storybook/aurelia';
 
 export default {
   title: 'Link|Basic',

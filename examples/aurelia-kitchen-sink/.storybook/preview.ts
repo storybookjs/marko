@@ -1,4 +1,4 @@
-import { addParameters, addDecorator } from '@storybook/aurelia';
+import { addParameters } from '@storybook/aurelia';
 
 addParameters({
   options: {
