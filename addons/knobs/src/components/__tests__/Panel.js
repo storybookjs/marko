@@ -18,7 +18,7 @@ const createTestApi = () => ({
 // is a workaround
 jest.mock('react', () => {
   const r = jest.requireActual('react');
-  return { ...r, memo: x => x };
+  return { ...r, memo: (x) => x };
 });
 
 describe('Panel', () => {
@@ -50,7 +50,7 @@ describe('Panel', () => {
           handlers[e] = handler;
         },
         emit: jest.fn(),
-        getQueryParam: key => testQueryParams[key],
+        getQueryParam: (key) => testQueryParams[key],
         setQueryParams: jest.fn(),
       };
 
@@ -146,7 +146,7 @@ describe('Panel', () => {
       const wrapper = root.update().find(Panel);
 
       const formWrapper = wrapper.find(PropForm);
-      const knobs = formWrapper.map(formInstanceWrapper => formInstanceWrapper.prop('knobs'));
+      const knobs = formWrapper.map((formInstanceWrapper) => formInstanceWrapper.prop('knobs'));
 
       expect(knobs).toMatchSnapshot();
 
@@ -182,7 +182,7 @@ describe('Panel', () => {
       const titles = wrapper
         .find(TabsState)
         .find('button')
-        .map(child => child.prop('children'));
+        .map((child) => child.prop('children'));
       expect(titles).toEqual(['foo', 'bar']);
 
       const knobs = wrapper.find(PropForm);
@@ -222,10 +222,10 @@ describe('Panel', () => {
       const titles = wrapper
         .find(TabsState)
         .find('button')
-        .map(child => child.prop('children'));
+        .map((child) => child.prop('children'));
       expect(titles).toEqual(['foo', DEFAULT_GROUP_ID]);
 
-      const knobs = wrapper.find(PropForm).map(propForm => propForm.prop('knobs'));
+      const knobs = wrapper.find(PropForm).map((propForm) => propForm.prop('knobs'));
       // there are props with no groupId so Other should also have its own PropForm
       expect(knobs.length).toEqual(titles.length);
       expect(knobs).toMatchSnapshot();

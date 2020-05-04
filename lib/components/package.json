@@ -1,6 +1,6 @@
 {
   "name": "@storybook/components",
-  "version": "6.0.0-alpha.1",
+  "version": "6.0.0-beta.1",
   "description": "Core Storybook Components",
   "keywords": [
     "storybook"
@@ -15,43 +15,50 @@
     "directory": "lib/components"
   },
   "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts"
+    "*.d.ts",
+    "ts3.5/**/*"
   ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/client-logger": "6.0.0-alpha.1",
-    "@storybook/theming": "6.0.0-alpha.1",
+    "@storybook/client-logger": "6.0.0-beta.1",
+    "@storybook/csf": "0.0.1",
+    "@storybook/theming": "6.0.0-beta.1",
+    "@types/overlayscrollbars": "^1.9.0",
+    "@types/react-color": "^3.0.1",
+    "@types/react-syntax-highlighter": "11.0.4",
     "@types/react-textarea-autosize": "^4.3.3",
     "core-js": "^3.0.1",
+    "fast-deep-equal": "^3.1.1",
     "global": "^4.3.2",
     "lodash": "^4.17.15",
     "markdown-to-jsx": "^6.9.1",
     "memoizerific": "^1.11.3",
-    "polished": "^3.3.1",
+    "overlayscrollbars": "^1.10.2",
+    "overlayscrollbars-react": "^0.2.1",
+    "polished": "^3.4.4",
     "popper.js": "^1.14.7",
-    "prop-types": "^15.7.2",
     "react": "^16.8.3",
+    "react-color": "^2.17.0",
     "react-dom": "^16.8.3",
-    "react-focus-lock": "^2.1.0",
     "react-helmet-async": "^1.0.2",
-    "react-popper-tooltip": "^2.8.3",
+    "react-popper-tooltip": "^2.11.0",
+    "react-select": "^3.0.8",
     "react-syntax-highlighter": "^11.0.2",
     "react-textarea-autosize": "^7.1.0",
-    "simplebar-react": "^1.0.0-alpha.6",
-    "ts-dedent": "^1.1.0"
+    "ts-dedent": "^1.1.1"
   },
   "devDependencies": {
-    "@types/react-syntax-highlighter": "^11.0.2",
+    "css": "^2.2.4",
     "enzyme": "^3.9.0",
-    "jest": "^24.7.1",
+    "jest": "^25.5.2",
     "jest-enzyme": "^7.0.2"
   },
   "peerDependencies": {
@@ -61,5 +68,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff"
+  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
+  "typesVersions": {
+    "<=3.5": {
+      "*": [
+        "ts3.5/*"
+      ]
+    }
+  }
 }

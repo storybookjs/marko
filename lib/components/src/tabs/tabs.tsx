@@ -7,8 +7,8 @@ import React, {
   MouseEvent,
   ReactNode,
 } from 'react';
-import PropTypes from 'prop-types';
 import { styled } from '@storybook/theming';
+import { sanitize } from '@storybook/csf';
 
 import { Placeholder } from '../placeholder/placeholder';
 import { FlexBar } from '../bar/bar';
@@ -30,6 +30,7 @@ const Wrapper = styled.div<WrapperProps>(
           border: `1px solid ${theme.appBorderColor}`,
           borderRadius: theme.appBorderRadius,
           overflow: 'hidden',
+          boxSizing: 'border-box',
         }
       : {},
   ({ absolute }) =>
@@ -56,6 +57,7 @@ export const TabBar = styled.div({
 
 export interface ContentProps {
   absolute?: boolean;
+  bordered?: boolean;
 }
 
 const Content = styled.div<ContentProps>(
@@ -65,25 +67,32 @@ const Content = styled.div<ContentProps>(
   },
   ({ theme }) => ({
     fontSize: theme.typography.size.s2 - 1,
+    background: theme.background.content,
   }),
-  ({ absolute }) =>
+  ({ bordered, theme }) =>
+    bordered
+      ? {
+          borderRadius: `0 0 ${theme.appBorderRadius - 1}px ${theme.appBorderRadius - 1}px`,
+        }
+      : {},
+  ({ absolute, bordered }) =>
     absolute
       ? {
-          height: 'calc(100% - 40px)',
+          height: `calc(100% - ${bordered ? 42 : 40}px)`,
 
           position: 'absolute',
-          left: 0,
-          right: 0,
-          bottom: 0,
-          top: 40,
+          left: 0 + (bordered ? 1 : 0),
+          right: 0 + (bordered ? 1 : 0),
+          bottom: 0 + (bordered ? 1 : 0),
+          top: 40 + (bordered ? 1 : 0),
           overflow: 'auto',
           [`& > *:first-child${ignoreSsrWarning}`]: {
             position: 'absolute',
-            left: 0,
-            right: 0,
-            bottom: 0,
-            top: 0,
-            height: '100%',
+            left: 0 + (bordered ? 1 : 0),
+            right: 0 + (bordered ? 1 : 0),
+            bottom: 0 + (bordered ? 1 : 0),
+            top: 0 + (bordered ? 1 : 0),
+            height: `calc(100% - ${bordered ? 2 : 0}px)`,
             overflow: 'auto',
           },
         }
@@ -108,9 +117,7 @@ export const TabWrapper: FunctionComponent<TabWrapperProps> = ({ active, render,
   <VisuallyHidden active={active}>{render ? render() : children}</VisuallyHidden>
 );
 
-export const panelProps = {
-  active: PropTypes.bool,
-};
+export const panelProps = {};
 
 const childrenToList = (children: any, selected: string) =>
   Children.toArray(children).map(
@@ -139,7 +146,7 @@ export interface TabsProps {
   selected?: string;
   actions?: {
     onSelect: (id: string) => void;
-  };
+  } & Record<string, any>;
   backgroundColor?: string;
   absolute?: boolean;
   bordered?: boolean;
@@ -153,26 +160,30 @@ export const Tabs: FunctionComponent<TabsProps> = memo(
       <Wrapper absolute={absolute} bordered={bordered} id={htmlId}>
         <FlexBar border backgroundColor={backgroundColor}>
           <TabBar role="tablist">
-            {list.map(({ title, id, active, color }) => (
-              <TabButton
-                type="button"
-                key={id}
-                active={active}
-                textColor={color}
-                onClick={(e: MouseEvent) => {
-                  e.preventDefault();
-                  actions.onSelect(id);
-                }}
-                role="tab"
-                className={`tabbutton ${active ? 'tabbutton-active' : ''}`}
-              >
-                {typeof title === 'function' ? title() : title}
-              </TabButton>
-            ))}
+            {list.map(({ title, id, active, color }) => {
+              const tabTitle = typeof title === 'function' ? title() : title;
+              return (
+                <TabButton
+                  id={`tabbutton-${sanitize(tabTitle)}`}
+                  className={`tabbutton ${active ? 'tabbutton-active' : ''}`}
+                  type="button"
+                  key={id}
+                  active={active}
+                  textColor={color}
+                  onClick={(e: MouseEvent) => {
+                    e.preventDefault();
+                    actions.onSelect(id);
+                  }}
+                  role="tab"
+                >
+                  {tabTitle}
+                </TabButton>
+              );
+            })}
           </TabBar>
           {tools ? <Fragment>{tools}</Fragment> : null}
         </FlexBar>
-        <Content absolute={absolute} tabIndex={0}>
+        <Content id="panel-tab-content" bordered={bordered} absolute={absolute} tabIndex={0}>
           {list.map(({ id, active, render }) => render({ key: id, active }))}
         </Content>
       </Wrapper>
@@ -224,6 +235,10 @@ export class TabsState extends Component<TabsStateProps, TabsStateState> {
     };
   }
 
+  handlers = {
+    onSelect: (id: string) => this.setState({ selected: id }),
+  };
+
   render() {
     const { bordered = false, absolute = false, children, backgroundColor } = this.props;
     const { selected } = this.state;
@@ -233,9 +248,7 @@ export class TabsState extends Component<TabsStateProps, TabsStateState> {
         absolute={absolute}
         selected={selected}
         backgroundColor={backgroundColor}
-        actions={{
-          onSelect: id => this.setState({ selected: id }),
-        }}
+        actions={this.handlers}
       >
         {children}
       </Tabs>

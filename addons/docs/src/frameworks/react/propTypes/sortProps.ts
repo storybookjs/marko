@@ -1,6 +1,5 @@
 import { PropDef } from '@storybook/components';
-import { isNil } from 'lodash';
-import { Component } from '../../../blocks/shared';
+import { Component } from '../../../blocks/types';
 
 // react-docgen doesn't returned the props in the order they were defined in the "propTypes" object of the component.
 // This function re-order them by their original definition order.
@@ -11,10 +10,10 @@ export function keepOriginalDefinitionOrder(
   // eslint-disable-next-line react/forbid-foreign-prop-types
   const { propTypes } = component;
 
-  if (!isNil(propTypes)) {
+  if (propTypes != null) {
     return Object.keys(propTypes)
-      .map(x => extractedProps.find(y => y.name === x))
-      .filter(x => x);
+      .map((x) => extractedProps.find((y) => y.name === x))
+      .filter((x) => x);
   }
 
   return extractedProps;

@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import Markdown from 'markdown-to-jsx';
-import { isNil } from 'lodash';
 import { transparentize } from 'polished';
 import { styled } from '@storybook/theming';
 import { PropDef } from './PropDef';
@@ -24,6 +23,14 @@ const Description = styled.div(({ theme }) => ({
   '&&': {
     p: {
       margin: '0 0 10px 0',
+    },
+
+    a: {
+      textDecoration: 'underline',
+
+      '&:hover': {
+        textDecoration: 'none',
+      },
     },
   },
 
@@ -55,7 +62,7 @@ const TypeWithJsDoc = styled.div<{ hasDescription: boolean }>(({ theme, hasDescr
 export const PropRow: FC<PropRowProps> = ({
   row: { name, type, required, description, defaultValue, jsDocTags },
 }) => {
-  const hasDescription = !isNil(description) && description !== '';
+  const hasDescription = description != null && description !== '';
 
   return (
     <tr>
@@ -69,7 +76,7 @@ export const PropRow: FC<PropRowProps> = ({
             <Markdown>{description}</Markdown>
           </Description>
         )}
-        {!isNil(jsDocTags) ? (
+        {jsDocTags != null ? (
           <>
             <TypeWithJsDoc hasDescription={hasDescription}>
               <PropValue value={type} />

@@ -1,7 +1,9 @@
-import { Module } from '../index';
+import { ModuleFn } from '../index';
 
 export interface Notification {
   id: string;
+  link: string;
+  content: string;
   onClear?: () => void;
 }
 
@@ -14,9 +16,9 @@ export interface SubAPI {
   clearNotification: (id: string) => void;
 }
 
-export default function({ store }: Module) {
-  const api = {
-    addNotification: (notification: Notification) => {
+export const init: ModuleFn = ({ store }) => {
+  const api: SubAPI = {
+    addNotification: (notification) => {
       // Get rid of it if already exists
       api.clearNotification(notification.id);
 
@@ -25,12 +27,12 @@ export default function({ store }: Module) {
       store.setState({ notifications: [...notifications, notification] });
     },
 
-    clearNotification: (id: string) => {
+    clearNotification: (id) => {
       const { notifications } = store.getState();
 
-      store.setState({ notifications: notifications.filter((n: Notification) => n.id !== id) });
+      store.setState({ notifications: notifications.filter((n) => n.id !== id) });
 
-      const notification = notifications.find((n: Notification) => n.id === id);
+      const notification = notifications.find((n) => n.id === id);
       if (notification && notification.onClear) {
         notification.onClear();
       }
@@ -40,4 +42,4 @@ export default function({ store }: Module) {
   const state: SubState = { notifications: [] };
 
   return { api, state };
-}
+};

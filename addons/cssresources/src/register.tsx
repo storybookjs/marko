@@ -4,7 +4,7 @@ import { addons, types } from '@storybook/addons';
 import { ADDON_ID, PANEL_ID, PARAM_KEY } from './constants';
 import { CssResourcePanel } from './css-resource-panel';
 
-addons.register(ADDON_ID, api => {
+addons.register(ADDON_ID, (api) => {
   // Need to cast as any as it's not matching Addon type, to investigate
   addons.add(PANEL_ID, {
     type: types.PANEL,

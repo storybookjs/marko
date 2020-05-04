@@ -4,23 +4,21 @@ on: [push]
 
 jobs:
   build:
-
-    name: Test on node ${{ matrix.node_version }} and ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+    name: Core Unit Tests
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/setup-node@v1
       with:
         node-version: '10.x'
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Cache node modules
       uses: actions/cache@v1
       with:
         path: node_modules
-        key: ${{ runner.OS }}-build-${{ hashFiles('**/yarn.lock') }}
+        key: build-v2-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
-          ${{ runner.OS }}-build-${{ env.cache-name }}-
-          ${{ runner.OS }}-build-
-          ${{ runner.OS }}-
+          build-v2-${{ env.cache-name }}-
+          build-v2-
     - name: install, bootstrap
       run: |
         yarn bootstrap --core

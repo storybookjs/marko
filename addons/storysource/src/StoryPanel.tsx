@@ -10,6 +10,7 @@ import {
 } from '@storybook/components';
 
 import { SourceBlock, LocationsMap } from '@storybook/source-loader';
+import { Story } from '@storybook/api/dist/lib/stories';
 
 const StyledStoryLink = styled(Link)<{ to: string; key: string }>(({ theme }) => ({
   display: 'block',
@@ -45,27 +46,19 @@ interface SourceParams {
   source: string;
   locationsMap: LocationsMap;
 }
-export interface StoryData {
-  id: string;
-  kind?: string;
-  parameters?: {
-    storySource?: SourceParams;
-    mdxSource?: string;
-  };
-}
 export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
   const [state, setState] = React.useState<SourceParams & { currentLocation?: SourceBlock }>({
     source: 'loading source...',
     locationsMap: {},
   });
 
-  const story: StoryData | undefined = api.getCurrentStoryData();
+  const story: Story | undefined = api.getCurrentStoryData() as Story;
   const selectedStoryRef = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     if (story) {
       const {
         parameters: {
-          mdxSource = '',
+          // @ts-ignore
           storySource: { source, locationsMap } = { source: '', locationsMap: {} },
         } = {},
       } = story;
@@ -77,7 +70,7 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
             })
           ]
         : undefined;
-      setState({ source: source || mdxSource, locationsMap, currentLocation });
+      setState({ source, locationsMap, currentLocation });
     }
   }, [story ? story.id : null]);
   React.useEffect(() => {
@@ -104,7 +97,8 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
     useInlineStyles,
     location,
     id,
-  }: SyntaxHighlighterRendererProps & { location: SourceBlock; id: string }) => {
+    refId,
+  }: SyntaxHighlighterRendererProps & { location: SourceBlock; id: string; refId?: string }) => {
     const first = location.startLoc.line - 1;
     const last = location.endLoc.line;
 
@@ -112,7 +106,7 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
     const storySource = createPart({ rows: storyRows, stylesheet, useInlineStyles });
     const storyKey = `${first}-${last}`;
 
-    if (location && currentLocation && areLocationsEqual(location, currentLocation)) {
+    if (currentLocation && areLocationsEqual(location, currentLocation)) {
       return (
         <SelectedStoryHighlight key={storyKey} ref={selectedStoryRef}>
           {storySource}
@@ -120,7 +114,7 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
       );
     }
     return (
-      <StyledStoryLink to={`/story/${id}`} key={storyKey}>
+      <StyledStoryLink to={refId ? `/story/${refId}_${id}` : `/story/${id}`} key={storyKey}>
         {storySource}
       </StyledStoryLink>
     );
@@ -130,16 +124,16 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
     const parts = [];
     let lastRow = 0;
 
-    Object.keys(locationsMap).forEach(key => {
+    Object.keys(locationsMap).forEach((key) => {
       const location = locationsMap[key];
       const first = location.startLoc.line - 1;
       const last = location.endLoc.line;
-      const { kind } = story;
-      // source loader ids are differnet from story id
+      const { kind, refId } = story;
+      // source loader ids are different from story id
       const sourceIdParts = key.split('--');
       const id = api.storyId(kind, sourceIdParts[sourceIdParts.length - 1]);
       const start = createPart({ rows: rows.slice(lastRow, first), stylesheet, useInlineStyles });
-      const storyPart = createStoryPart({ rows, stylesheet, useInlineStyles, location, id });
+      const storyPart = createStoryPart({ rows, stylesheet, useInlineStyles, location, id, refId });
 
       parts.push(start);
       parts.push(storyPart);

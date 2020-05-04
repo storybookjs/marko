@@ -65,7 +65,7 @@ export const AllKnobs = () => {
       today: { default: date('Today', new Date('Jan 20 2017 GMT+0')) },
       // this is necessary, because we cant use arrays/objects directly in vue prop default values
       // a factory function is required, but we need to make sure the knob is only called once
-      items: { default: (items => () => items)(array('Items', ['Laptop', 'Book', 'Whiskey'])) },
+      items: { default: ((items) => () => items)(array('Items', ['Laptop', 'Book', 'Whiskey'])) },
       nice: { default: boolean('Nice', true) },
     },
     data: () => ({

@@ -92,8 +92,8 @@ export const INITIAL_VIEWPORTS: ViewportMap = {
   galaxys9: {
     name: 'Galaxy S9',
     styles: {
-      height: '1480px',
-      width: '720px',
+      height: '740px',
+      width: '360px',
     },
     type: 'mobile',
   },

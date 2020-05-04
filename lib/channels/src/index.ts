@@ -1,3 +1,6 @@
+import deprecate from 'util-deprecate';
+import dedent from 'ts-dedent';
+
 export type ChannelHandler = (event: ChannelEvent) => void;
 
 export interface ChannelTransport {
@@ -13,8 +16,6 @@ export interface ChannelEvent {
 
 export interface Listener {
   (...args: any[]): void;
-
-  ignorePeer?: boolean;
 }
 
 interface EventsKeyValue {
@@ -28,9 +29,7 @@ interface ChannelArgs {
 
 const generateRandomId = () => {
   // generates a random 13 character string
-  return Math.random()
-    .toString(16)
-    .slice(2);
+  return Math.random().toString(16).slice(2);
 };
 
 export class Channel {
@@ -48,7 +47,7 @@ export class Channel {
     this.isAsync = async;
     if (transport) {
       this.transport = transport;
-      this.transport.setHandler(event => this.handleEvent(event));
+      this.transport.setHandler((event) => this.handleEvent(event));
     }
   }
 
@@ -61,11 +60,14 @@ export class Channel {
     this.events[eventName].push(listener);
   }
 
-  addPeerListener(eventName: string, listener: Listener) {
-    const peerListener = listener;
-    peerListener.ignorePeer = true;
-    this.addListener(eventName, peerListener);
-  }
+  addPeerListener = deprecate(
+    (eventName: string, listener: Listener) => {
+      this.addListener(eventName, listener);
+    },
+    dedent`
+      channel.addPeerListener is deprecated
+    `
+  );
 
   emit(eventName: string, ...args: any) {
     const event: ChannelEvent = { type: eventName, args, from: this.sender };
@@ -78,7 +80,7 @@ export class Channel {
       if (this.transport) {
         this.transport.send(event, options);
       }
-      this.handleEvent(event, true);
+      this.handleEvent(event);
     };
 
     if (this.isAsync) {
@@ -123,7 +125,7 @@ export class Channel {
   removeListener(eventName: string, listener: Listener) {
     const listeners = this.listeners(eventName);
     if (listeners) {
-      this.events[eventName] = listeners.filter(l => l !== listener);
+      this.events[eventName] = listeners.filter((l) => l !== listener);
     }
   }
 
@@ -135,10 +137,12 @@ export class Channel {
     this.removeListener(eventName, listener);
   }
 
-  private handleEvent(event: ChannelEvent, isPeer = false) {
+  private handleEvent(event: ChannelEvent) {
     const listeners = this.listeners(event.type);
-    if (listeners && (isPeer || event.from !== this.sender)) {
-      listeners.forEach(fn => !(isPeer && fn.ignorePeer) && fn(...event.args));
+    if (listeners && listeners.length) {
+      listeners.forEach((fn) => {
+        fn.apply(event, event.args);
+      });
     }
     this.data[event.type] = event.args;
   }

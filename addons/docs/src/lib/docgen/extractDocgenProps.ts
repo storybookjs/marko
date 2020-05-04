@@ -1,6 +1,5 @@
-import { isNil } from 'lodash';
 import { PropDef } from '@storybook/components';
-import { Component } from '../../blocks/shared';
+import { Component } from '../../blocks/types';
 import { ExtractedJsDoc, parseJsDoc } from '../jsdocParser';
 import { DocgenInfo, TypeSystem } from './types';
 import { getDocgenSection, isValidDocgenSection, getDocgenDescription } from './utils';
@@ -16,15 +15,15 @@ export interface ExtractedProp {
 export type ExtractProps = (component: Component, section: string) => ExtractedProp[];
 
 const getTypeSystem = (docgenInfo: DocgenInfo): TypeSystem => {
-  if (!isNil(docgenInfo.type)) {
+  if (docgenInfo.type != null) {
     return TypeSystem.JAVASCRIPT;
   }
 
-  if (!isNil(docgenInfo.flowType)) {
+  if (docgenInfo.flowType != null) {
     return TypeSystem.FLOW;
   }
 
-  if (!isNil(docgenInfo.tsType)) {
+  if (docgenInfo.tsType != null) {
     return TypeSystem.TYPESCRIPT;
   }
 
@@ -46,10 +45,10 @@ export const extractComponentSectionObject = (docgenSection: any) => {
   const createPropDef = getPropDefFactory(typeSystem);
 
   return docgenPropsKeys
-    .map(propName => {
+    .map((propName) => {
       const docgenInfo = docgenSection[propName];
 
-      return !isNil(docgenInfo)
+      return docgenInfo != null
         ? extractProp(propName, docgenInfo, typeSystem, createPropDef)
         : null;
     })
@@ -93,5 +92,5 @@ function extractProp(
 }
 
 export function extractComponentDescription(component?: Component): string {
-  return !isNil(component) && getDocgenDescription(component);
+  return component != null && getDocgenDescription(component);
 }

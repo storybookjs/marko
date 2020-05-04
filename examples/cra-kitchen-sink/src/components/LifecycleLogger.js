@@ -19,7 +19,9 @@ class LifecycleLogger extends Component {
     log('componentDidMount');
   }
 
+  // deepscan-disable-next-line
   getSnapshotBeforeUpdate() {
+    // deepscan-disable-next-line
     log('getSnapshotBeforeUpdate');
   }
 

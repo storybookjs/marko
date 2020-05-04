@@ -13,7 +13,7 @@ function createDocgenInfo({ flowType, ...others }: Partial<DocgenInfo>): DocgenI
 
 describe('type', () => {
   ['string', 'number', 'boolean', 'any', 'void', 'Object', 'String', 'MyClass', 'literal'].forEach(
-    x => {
+    (x) => {
       it(`should support ${x}`, () => {
         const docgenInfo = createDocgenInfo({
           flowType: { name: x },
@@ -27,7 +27,7 @@ describe('type', () => {
     }
   );
 
-  ['Array', 'Class', 'MyClass'].forEach(x => {
+  ['Array', 'Class', 'MyClass'].forEach((x) => {
     it(`should support untyped ${x}`, () => {
       const docgenInfo = createDocgenInfo({
         flowType: { name: x },

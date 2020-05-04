@@ -36,10 +36,6 @@ export const BuiltFromTagsAndTemplate = () => ({
 
 BuiltFromTagsAndTemplate.story = {
   name: 'built from tags and template',
-  parameters: {
-    notes:
-      'WARN : the tag file root element must have exactly the same name (or else you will see nothing)',
-  },
 };
 
 export const TagsTemplateAndTagConstructorAtOnce = () => ({
@@ -65,9 +61,6 @@ export const BuiltFromThePrecompilation = () => mount('anothertest', {});
 
 BuiltFromThePrecompilation.story = {
   name: 'built from the precompilation',
-  parameters: {
-    notes: 'WARN, only works in lower case, never upper case with precompiled templates',
-  },
 };
 
 export const TheMountInstructionIsNotNecessary = () => ({ tagName: 'anothertest', opts: {} });

@@ -1,19 +1,15 @@
-import * as React from 'react';
-import * as rawComponents from './typography/DocumentFormatting';
+import { createElement, ElementType } from 'react';
+
+import { components as rawComponents } from './typography/DocumentFormatting';
 
 export * from './typography/DocumentFormatting';
 
-export const components = Object.entries(rawComponents).reduce(
-  (acc, [k, V]) => ({
-    ...acc,
-    [k.toLowerCase()]: ({ className, ...rest }: { className: string }) => {
-      return (
-        <V
-          {...rest}
-          className={`sbdocs sbdocs-${k.toLowerCase()}${className ? ` ${className}` : ''}`}
-        />
-      );
-    },
-  }),
-  {}
-);
+export { rawComponents as components };
+
+const resetComponents: Record<string, ElementType> = {};
+
+Object.keys(rawComponents).forEach((key) => {
+  resetComponents[key] = (props: any) => createElement(key, props);
+});
+
+export { resetComponents };

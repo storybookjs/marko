@@ -1,10 +1,10 @@
 import fs from 'fs';
 import { logger } from '@storybook/node-logger';
 
-type PresetOptions = {
+interface PresetOptions {
   backgrounds?: any;
   viewport?: any;
-};
+}
 
 let packageJson: any = {};
 if (fs.existsSync('./package.json')) {
@@ -24,9 +24,9 @@ const makeAddon = (key: string) => `@storybook/addon-${key}`;
 
 export function managerEntries(entry: any[] = [], options: PresetOptions = {}) {
   const registerAddons = ['backgrounds', 'viewport']
-    .filter(key => (options as any)[key] !== false)
-    .map(key => makeAddon(key))
-    .filter(addon => !isInstalled(addon))
-    .map(addon => `${addon}/register`);
+    .filter((key) => (options as any)[key] !== false)
+    .map((key) => makeAddon(key))
+    .filter((addon) => !isInstalled(addon))
+    .map((addon) => require.resolve(`${addon}/register`));
   return [...entry, ...registerAddons];
 }

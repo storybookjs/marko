@@ -1,0 +1,1020 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`angular component properties doc-button 1`] = `
+Object {
+  "classes": Array [],
+  "components": Array [
+    Object {
+      "accessors": Object {
+        "inputValue": Object {
+          "getSignature": Object {
+            "description": "<p>Getter for <code>inputValue</code>. </p>
+",
+            "line": 102,
+            "name": "inputValue",
+            "returnType": "",
+            "type": "",
+          },
+          "name": "inputValue",
+          "setSignature": Object {
+            "args": Array [
+              Object {
+                "name": "value",
+                "type": "string",
+              },
+            ],
+            "description": "<p>Setter for <code>inputValue</code> that is also an <code>@Input</code>. </p>
+",
+            "jsdoctags": Array [
+              Object {
+                "name": "value",
+                "tagName": Object {
+                  "text": "param",
+                },
+                "type": "string",
+              },
+            ],
+            "line": 97,
+            "name": "inputValue",
+            "returnType": "void",
+            "type": "void",
+          },
+        },
+        "item": Object {
+          "name": "item",
+          "setSignature": Object {
+            "args": Array [
+              Object {
+                "name": "item",
+                "type": "[]",
+              },
+            ],
+            "jsdoctags": Array [
+              Object {
+                "name": "item",
+                "tagName": Object {
+                  "text": "param",
+                },
+                "type": "[]",
+              },
+            ],
+            "line": 182,
+            "name": "item",
+            "returnType": "void",
+            "type": "void",
+          },
+        },
+        "value": Object {
+          "getSignature": Object {
+            "description": "<p>Get the private value. </p>
+",
+            "line": 141,
+            "name": "value",
+            "returnType": "string | number",
+            "type": "",
+          },
+          "name": "value",
+          "setSignature": Object {
+            "args": Array [
+              Object {
+                "name": "value",
+                "type": "",
+              },
+            ],
+            "description": "<p>Set the private value. </p>
+",
+            "jsdoctags": Array [
+              Object {
+                "name": "value",
+                "tagName": Object {
+                  "text": "param",
+                },
+                "type": "",
+              },
+            ],
+            "line": 136,
+            "name": "value",
+            "returnType": "void",
+            "type": "void",
+          },
+        },
+      },
+      "assetsDirs": Array [],
+      "description": "<p>This is a simple button that demonstrates various JSDoc handling in Storybook Docs for Angular.</p>
+<p>It supports <a href=\\"https://en.wikipedia.org/wiki/Markdown\\">markdown</a>, so you can embed formatted text,
+like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
+<blockquote>
+<p>How you like dem apples?! It&#39;s never been easier to document all your components.</p>
+</blockquote>
+",
+      "encapsulation": Array [],
+      "entryComponents": Array [],
+      "file": "addons/docs/src/frameworks/angular/__testfixtures__/doc-button/input.ts",
+      "hostBindings": Array [
+        Object {
+          "defaultValue": "false",
+          "line": 111,
+          "name": "class.focused",
+        },
+      ],
+      "hostListeners": Array [
+        Object {
+          "args": Array [
+            Object {
+              "name": "btn",
+              "type": "",
+            },
+          ],
+          "argsDecorator": Array [
+            "$event.target",
+          ],
+          "line": 107,
+          "name": "click",
+        },
+      ],
+      "id": "component-InputComponent-8088cb533b6defa9d43d10841b59ce18",
+      "inputs": Array [],
+      "inputsClass": Array [
+        Object {
+          "defaultValue": "'secondary'",
+          "description": "<p>Appearance style of the button. </p>
+",
+          "line": 46,
+          "name": "appearance",
+          "type": "\\"primary\\" | \\"secondary\\"",
+        },
+        Object {
+          "description": "<p>Setter for <code>inputValue</code> that is also an <code>@Input</code>. </p>
+",
+          "line": 97,
+          "name": "inputValue",
+          "type": "string",
+        },
+        Object {
+          "defaultValue": "false",
+          "description": "<p>Sets the button to a disabled state. </p>
+",
+          "line": 50,
+          "name": "isDisabled",
+        },
+        Object {
+          "line": 182,
+          "name": "item",
+          "type": "[]",
+        },
+        Object {
+          "description": "<p>The inner text of the button.</p>
+",
+          "line": 58,
+          "name": "label",
+          "type": "string",
+        },
+        Object {
+          "line": 179,
+          "name": "showKeyAlias",
+          "type": "",
+        },
+        Object {
+          "defaultValue": "'medium'",
+          "description": "<p>Size of the button. </p>
+",
+          "line": 62,
+          "name": "size",
+          "type": "ButtonSize",
+        },
+        Object {
+          "defaultValue": "false",
+          "description": "<p>Some input you shouldn&#39;t use.</p>
+",
+          "line": 70,
+          "name": "somethingYouShouldNotUse",
+        },
+      ],
+      "jsdoctags": Array [
+        Object {
+          "atToken": Object {
+            "end": 787,
+            "flags": 0,
+            "kind": 57,
+            "pos": 786,
+          },
+          "comment": "Hello world",
+          "end": 794,
+          "flags": 0,
+          "kind": 288,
+          "pos": 786,
+          "tagName": Object {
+            "end": 793,
+            "escapedText": "string",
+            "flags": 0,
+            "pos": 787,
+          },
+        },
+        Object {
+          "atToken": Object {
+            "end": 810,
+            "flags": 0,
+            "kind": 57,
+            "pos": 809,
+          },
+          "comment": "[Example](http://example.com)",
+          "end": 815,
+          "flags": 0,
+          "kind": 288,
+          "pos": 809,
+          "tagName": Object {
+            "end": 814,
+            "escapedText": "link",
+            "flags": 0,
+            "pos": 810,
+          },
+        },
+        Object {
+          "atToken": Object {
+            "end": 849,
+            "flags": 0,
+            "kind": 57,
+            "pos": 848,
+          },
+          "comment": "\`ThingThing\`",
+          "end": 854,
+          "flags": 0,
+          "kind": 288,
+          "pos": 848,
+          "tagName": Object {
+            "end": 853,
+            "escapedText": "code",
+            "flags": 0,
+            "pos": 849,
+          },
+        },
+        Object {
+          "atToken": Object {
+            "end": 871,
+            "flags": 0,
+            "kind": 57,
+            "pos": 870,
+          },
+          "comment": "<span class=\\"badge\\">aaa</span>",
+          "end": 876,
+          "flags": 0,
+          "kind": 288,
+          "pos": 870,
+          "tagName": Object {
+            "end": 875,
+            "escapedText": "html",
+            "flags": 0,
+            "pos": 871,
+          },
+        },
+      ],
+      "methodsClass": Array [
+        Object {
+          "args": Array [
+            Object {
+              "name": "x",
+              "type": "number",
+            },
+            Object {
+              "name": "y",
+              "type": "string | number",
+            },
+          ],
+          "description": "<p>An internal calculation method which adds <code>x</code> and <code>y</code> together.</p>
+",
+          "jsdoctags": Array [
+            Object {
+              "comment": "<p>Some number you&#39;d like to use.</p>
+",
+              "name": Object {
+                "end": 3219,
+                "escapedText": "x",
+                "flags": 0,
+                "pos": 3218,
+              },
+              "tagName": Object {
+                "end": 3217,
+                "escapedText": "param",
+                "flags": 0,
+                "pos": 3212,
+              },
+              "type": "number",
+            },
+            Object {
+              "comment": "<p>Some other number or string you&#39;d like to use, will have <code>parseInt()</code> applied before calculation.</p>
+",
+              "name": Object {
+                "end": 3264,
+                "escapedText": "y",
+                "flags": 0,
+                "pos": 3263,
+              },
+              "tagName": Object {
+                "end": 3262,
+                "escapedText": "param",
+                "flags": 0,
+                "pos": 3257,
+              },
+              "type": "string | number",
+            },
+          ],
+          "line": 151,
+          "modifierKind": Array [
+            114,
+          ],
+          "name": "calc",
+          "optional": false,
+          "returnType": "number",
+          "typeParameters": Array [],
+        },
+        Object {
+          "args": Array [
+            Object {
+              "name": "password",
+              "type": "string",
+            },
+          ],
+          "description": "<p>A private method.</p>
+",
+          "jsdoctags": Array [
+            Object {
+              "comment": "<p>Some <code>password</code>.</p>
+",
+              "name": Object {
+                "end": 3780,
+                "escapedText": "password",
+                "flags": 0,
+                "pos": 3772,
+              },
+              "tagName": Object {
+                "end": 3771,
+                "escapedText": "param",
+                "flags": 0,
+                "pos": 3766,
+              },
+              "type": "string",
+            },
+          ],
+          "line": 174,
+          "modifierKind": Array [
+            112,
+          ],
+          "name": "privateMethod",
+          "optional": false,
+          "returnType": "void",
+          "typeParameters": Array [],
+        },
+        Object {
+          "args": Array [
+            Object {
+              "name": "id",
+              "optional": true,
+              "type": "number",
+            },
+          ],
+          "description": "<p>A protected method.</p>
+",
+          "jsdoctags": Array [
+            Object {
+              "comment": "<p>Some <code>id</code>.</p>
+",
+              "name": Object {
+                "end": 3639,
+                "escapedText": "id",
+                "flags": 0,
+                "pos": 3637,
+              },
+              "optional": true,
+              "tagName": Object {
+                "end": 3636,
+                "escapedText": "param",
+                "flags": 0,
+                "pos": 3631,
+              },
+              "type": "number",
+            },
+          ],
+          "line": 165,
+          "modifierKind": Array [
+            113,
+          ],
+          "name": "protectedMethod",
+          "optional": false,
+          "returnType": "void",
+          "typeParameters": Array [],
+        },
+        Object {
+          "args": Array [
+            Object {
+              "name": "things",
+              "type": "ISomeInterface",
+            },
+          ],
+          "description": "<p>A public method using an interface. </p>
+",
+          "jsdoctags": Array [
+            Object {
+              "name": "things",
+              "tagName": Object {
+                "text": "param",
+              },
+              "type": "ISomeInterface",
+            },
+          ],
+          "line": 156,
+          "modifierKind": Array [
+            114,
+          ],
+          "name": "publicMethod",
+          "optional": false,
+          "returnType": "void",
+          "typeParameters": Array [],
+        },
+      ],
+      "name": "InputComponent",
+      "outputs": Array [],
+      "outputsClass": Array [
+        Object {
+          "defaultValue": "new EventEmitter<Event>()",
+          "description": "<p>Handler to be called when the button is clicked by a user.</p>
+<p>Will also block the emission of the event if <code>isDisabled</code> is true.</p>
+",
+          "line": 78,
+          "name": "onClick",
+          "type": "EventEmitter",
+        },
+      ],
+      "propertiesClass": Array [
+        Object {
+          "defaultValue": "'some value'",
+          "description": "",
+          "line": 93,
+          "modifierKind": Array [
+            112,
+          ],
+          "name": "_inputValue",
+          "optional": false,
+          "type": "string",
+        },
+        Object {
+          "defaultValue": "'Private hello'",
+          "description": "<p>Private value. </p>
+",
+          "line": 133,
+          "modifierKind": Array [
+            112,
+          ],
+          "name": "_value",
+          "optional": false,
+          "type": "string",
+        },
+        Object {
+          "decorators": Array [
+            Object {
+              "name": "ViewChild",
+              "stringifiedArguments": "'buttonRef', {static: false}",
+            },
+          ],
+          "description": "",
+          "line": 42,
+          "name": "buttonRef",
+          "optional": false,
+          "type": "ElementRef",
+        },
+        Object {
+          "defaultValue": "'Public hello'",
+          "description": "<p>Public value. </p>
+",
+          "line": 130,
+          "modifierKind": Array [
+            114,
+          ],
+          "name": "internalProperty",
+          "optional": false,
+          "type": "string",
+        },
+        Object {
+          "description": "",
+          "line": 186,
+          "modifierKind": Array [
+            114,
+          ],
+          "name": "processedItem",
+          "optional": false,
+          "type": "T[]",
+        },
+      ],
+      "providers": Array [],
+      "rawdescription": "This is a simple button that demonstrates various JSDoc handling in Storybook Docs for Angular.
+
+It supports [markdown](https://en.wikipedia.org/wiki/Markdown), so you can embed formatted text,
+like **bold**, _italic_, and \`inline code\`.
+
+> How you like dem apples?! It's never been easier to document all your components.",
+      "selector": "doc-button",
+      "sourceCode": "import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+  HostListener,
+  HostBinding,
+  ElementRef,
+} from '@angular/core';
+
+export const exportedConstant = 'An exported constant';
+
+export type ButtonSize = 'small' | 'medium' | 'large' | 'xlarge';
+
+export interface ISomeInterface {
+  one: string;
+  two: boolean;
+  three: any[];
+}
+
+/**
+ * This is a simple button that demonstrates various JSDoc handling in Storybook Docs for Angular.
+ *
+ * It supports [markdown](https://en.wikipedia.org/wiki/Markdown), so you can embed formatted text,
+ * like **bold**, _italic_, and \`inline code\`.
+ *
+ * > How you like dem apples?! It's never been easier to document all your components.
+ *
+ * @string Hello world
+ * @link [Example](http://example.com)
+ * @code \`ThingThing\`
+ * @html <span class=\\"badge\\">aaa</span>
+ */
+@Component({
+  selector: 'doc-button',
+})
+export class InputComponent<T> {
+  @ViewChild('buttonRef', { static: false }) buttonRef: ElementRef;
+
+  /** Appearance style of the button. */
+  @Input()
+  public appearance: 'primary' | 'secondary' = 'secondary';
+
+  /** Sets the button to a disabled state. */
+  @Input()
+  public isDisabled = false;
+
+  /**
+   * The inner text of the button.
+   *
+   * @required
+   */
+  @Input()
+  public label: string;
+
+  /** Size of the button. */
+  @Input()
+  public size?: ButtonSize = 'medium';
+
+  /**
+   * Some input you shouldn't use.
+   *
+   * @deprecated
+   */
+  @Input()
+  public somethingYouShouldNotUse = false;
+
+  /**
+   * Handler to be called when the button is clicked by a user.
+   *
+   * Will also block the emission of the event if \`isDisabled\` is true.
+   */
+  @Output()
+  public onClick = new EventEmitter<Event>();
+
+  /**
+   * This is an internal method that we don't want to document and have added the \`ignore\` annoation to.
+   *
+   * @ignore
+   */
+  public handleClick(event: Event) {
+    event.stopPropagation();
+
+    if (!this.isDisabled) {
+      this.onClick.emit(event);
+    }
+  }
+
+  private _inputValue = 'some value';
+
+  /** Setter for \`inputValue\` that is also an \`@Input\`. */
+  @Input()
+  public set inputValue(value: string) {
+    this._inputValue = value;
+  }
+
+  /** Getter for \`inputValue\`. */
+  public get inputValue() {
+    return this._inputValue;
+  }
+
+  @HostListener('click', ['$event.target'])
+  onClickListener(btn) {
+    console.log('button', btn);
+  }
+
+  @HostBinding('class.focused') focus = false;
+
+  /**
+   * Returns all the CSS classes for the button.
+   *
+   * @ignore
+   */
+  public get classes(): string[] {
+    return [this.appearance, this.size]
+      .filter((_class) => !!_class)
+      .map((_class) => \`btn-\${_class}\`);
+  }
+
+  /**
+   * @ignore
+   */
+  public ignoredProperty = 'Ignore me';
+
+  /** Public value. */
+  public internalProperty = 'Public hello';
+
+  /** Private value. */
+  private _value = 'Private hello';
+
+  /** Set the private value. */
+  public set value(value: string | number) {
+    this._value = \`\${value}\`;
+  }
+
+  /** Get the private value. */
+  public get value(): string | number {
+    return this._value;
+  }
+
+  /**
+   * An internal calculation method which adds \`x\` and \`y\` together.
+   *
+   * @param x Some number you'd like to use.
+   * @param y Some other number or string you'd like to use, will have \`parseInt()\` applied before calculation.
+   */
+  public calc(x: number, y: string | number): number {
+    return x + parseInt(\`\${y}\`, 10);
+  }
+
+  /** A public method using an interface. */
+  public publicMethod(things: ISomeInterface) {
+    console.log(things);
+  }
+
+  /**
+   * A protected method.
+   *
+   * @param id Some \`id\`.
+   */
+  protected protectedMethod(id?: number) {
+    console.log(id);
+  }
+
+  /**
+   * A private method.
+   *
+   * @param password Some \`password\`.
+   */
+  private privateMethod(password: string) {
+    console.log(password);
+  }
+
+  @Input('showKeyAlias')
+  public showKey: keyof T;
+
+  @Input()
+  public set item(item: T[]) {
+    this.processedItem = item;
+  }
+
+  public processedItem: T[];
+}
+",
+      "styleUrls": Array [],
+      "styleUrlsData": "",
+      "styles": Array [],
+      "stylesData": "",
+      "templateUrl": Array [],
+      "type": "component",
+      "viewProviders": Array [],
+    },
+  ],
+  "coverage": Object {
+    "count": 22,
+    "files": Array [
+      Object {
+        "coverageCount": "14/21",
+        "coveragePercent": 66,
+        "filePath": "addons/docs/src/frameworks/angular/__testfixtures__/doc-button/input.ts",
+        "linktype": "component",
+        "name": "InputComponent",
+        "status": "good",
+        "type": "component",
+      },
+      Object {
+        "coverageCount": "0/4",
+        "coveragePercent": 0,
+        "filePath": "addons/docs/src/frameworks/angular/__testfixtures__/doc-button/input.ts",
+        "linktype": "interface",
+        "name": "ISomeInterface",
+        "status": "low",
+        "type": "interface",
+      },
+      Object {
+        "coverageCount": "0/1",
+        "coveragePercent": 0,
+        "filePath": "addons/docs/src/frameworks/angular/__testfixtures__/doc-button/input.ts",
+        "linksubtype": "variable",
+        "linktype": "miscellaneous",
+        "name": "exportedConstant",
+        "status": "low",
+        "type": "variable",
+      },
+    ],
+    "status": "low",
+  },
+  "directives": Array [],
+  "injectables": Array [],
+  "interfaces": Array [
+    Object {
+      "file": "addons/docs/src/frameworks/angular/__testfixtures__/doc-button/input.ts",
+      "id": "interface-ISomeInterface-8088cb533b6defa9d43d10841b59ce18",
+      "indexSignatures": Array [],
+      "kind": 150,
+      "methods": Array [],
+      "name": "ISomeInterface",
+      "properties": Array [
+        Object {
+          "description": "",
+          "line": 20,
+          "name": "one",
+          "optional": false,
+          "type": "string",
+        },
+        Object {
+          "description": "",
+          "line": 22,
+          "name": "three",
+          "optional": false,
+          "type": "any[]",
+        },
+        Object {
+          "description": "",
+          "line": 21,
+          "name": "two",
+          "optional": false,
+          "type": "boolean",
+        },
+      ],
+      "sourceCode": "import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+  HostListener,
+  HostBinding,
+  ElementRef,
+} from '@angular/core';
+
+export const exportedConstant = 'An exported constant';
+
+export type ButtonSize = 'small' | 'medium' | 'large' | 'xlarge';
+
+export interface ISomeInterface {
+  one: string;
+  two: boolean;
+  three: any[];
+}
+
+/**
+ * This is a simple button that demonstrates various JSDoc handling in Storybook Docs for Angular.
+ *
+ * It supports [markdown](https://en.wikipedia.org/wiki/Markdown), so you can embed formatted text,
+ * like **bold**, _italic_, and \`inline code\`.
+ *
+ * > How you like dem apples?! It's never been easier to document all your components.
+ *
+ * @string Hello world
+ * @link [Example](http://example.com)
+ * @code \`ThingThing\`
+ * @html <span class=\\"badge\\">aaa</span>
+ */
+@Component({
+  selector: 'doc-button',
+})
+export class InputComponent<T> {
+  @ViewChild('buttonRef', { static: false }) buttonRef: ElementRef;
+
+  /** Appearance style of the button. */
+  @Input()
+  public appearance: 'primary' | 'secondary' = 'secondary';
+
+  /** Sets the button to a disabled state. */
+  @Input()
+  public isDisabled = false;
+
+  /**
+   * The inner text of the button.
+   *
+   * @required
+   */
+  @Input()
+  public label: string;
+
+  /** Size of the button. */
+  @Input()
+  public size?: ButtonSize = 'medium';
+
+  /**
+   * Some input you shouldn't use.
+   *
+   * @deprecated
+   */
+  @Input()
+  public somethingYouShouldNotUse = false;
+
+  /**
+   * Handler to be called when the button is clicked by a user.
+   *
+   * Will also block the emission of the event if \`isDisabled\` is true.
+   */
+  @Output()
+  public onClick = new EventEmitter<Event>();
+
+  /**
+   * This is an internal method that we don't want to document and have added the \`ignore\` annoation to.
+   *
+   * @ignore
+   */
+  public handleClick(event: Event) {
+    event.stopPropagation();
+
+    if (!this.isDisabled) {
+      this.onClick.emit(event);
+    }
+  }
+
+  private _inputValue = 'some value';
+
+  /** Setter for \`inputValue\` that is also an \`@Input\`. */
+  @Input()
+  public set inputValue(value: string) {
+    this._inputValue = value;
+  }
+
+  /** Getter for \`inputValue\`. */
+  public get inputValue() {
+    return this._inputValue;
+  }
+
+  @HostListener('click', ['$event.target'])
+  onClickListener(btn) {
+    console.log('button', btn);
+  }
+
+  @HostBinding('class.focused') focus = false;
+
+  /**
+   * Returns all the CSS classes for the button.
+   *
+   * @ignore
+   */
+  public get classes(): string[] {
+    return [this.appearance, this.size]
+      .filter((_class) => !!_class)
+      .map((_class) => \`btn-\${_class}\`);
+  }
+
+  /**
+   * @ignore
+   */
+  public ignoredProperty = 'Ignore me';
+
+  /** Public value. */
+  public internalProperty = 'Public hello';
+
+  /** Private value. */
+  private _value = 'Private hello';
+
+  /** Set the private value. */
+  public set value(value: string | number) {
+    this._value = \`\${value}\`;
+  }
+
+  /** Get the private value. */
+  public get value(): string | number {
+    return this._value;
+  }
+
+  /**
+   * An internal calculation method which adds \`x\` and \`y\` together.
+   *
+   * @param x Some number you'd like to use.
+   * @param y Some other number or string you'd like to use, will have \`parseInt()\` applied before calculation.
+   */
+  public calc(x: number, y: string | number): number {
+    return x + parseInt(\`\${y}\`, 10);
+  }
+
+  /** A public method using an interface. */
+  public publicMethod(things: ISomeInterface) {
+    console.log(things);
+  }
+
+  /**
+   * A protected method.
+   *
+   * @param id Some \`id\`.
+   */
+  protected protectedMethod(id?: number) {
+    console.log(id);
+  }
+
+  /**
+   * A private method.
+   *
+   * @param password Some \`password\`.
+   */
+  private privateMethod(password: string) {
+    console.log(password);
+  }
+
+  @Input('showKeyAlias')
+  public showKey: keyof T;
+
+  @Input()
+  public set item(item: T[]) {
+    this.processedItem = item;
+  }
+
+  public processedItem: T[];
+}
+",
+      "type": "interface",
+    },
+  ],
+  "miscellaneous": Object {
+    "enumerations": Array [],
+    "functions": Array [],
+    "groupedEnumerations": Object {},
+    "groupedFunctions": Object {},
+    "groupedTypeAliases": Object {
+      "addons/docs/src/frameworks/angular/__testfixtures__/doc-button/input.ts": Array [
+        Object {
+          "ctype": "miscellaneous",
+          "description": "",
+          "file": "addons/docs/src/frameworks/angular/__testfixtures__/doc-button/input.ts",
+          "kind": 168,
+          "name": "ButtonSize",
+          "rawtype": "\\"small\\" | \\"medium\\" | \\"large\\" | \\"xlarge\\"",
+          "subtype": "typealias",
+        },
+      ],
+    },
+    "groupedVariables": Object {
+      "addons/docs/src/frameworks/angular/__testfixtures__/doc-button/input.ts": Array [
+        Object {
+          "ctype": "miscellaneous",
+          "defaultValue": "'An exported constant'",
+          "file": "addons/docs/src/frameworks/angular/__testfixtures__/doc-button/input.ts",
+          "name": "exportedConstant",
+          "subtype": "variable",
+          "type": "string",
+        },
+      ],
+    },
+    "typealiases": Array [
+      Object {
+        "ctype": "miscellaneous",
+        "description": "",
+        "file": "addons/docs/src/frameworks/angular/__testfixtures__/doc-button/input.ts",
+        "kind": 168,
+        "name": "ButtonSize",
+        "rawtype": "\\"small\\" | \\"medium\\" | \\"large\\" | \\"xlarge\\"",
+        "subtype": "typealias",
+      },
+    ],
+    "variables": Array [
+      Object {
+        "ctype": "miscellaneous",
+        "defaultValue": "'An exported constant'",
+        "file": "addons/docs/src/frameworks/angular/__testfixtures__/doc-button/input.ts",
+        "name": "exportedConstant",
+        "subtype": "variable",
+        "type": "string",
+      },
+    ],
+  },
+  "modules": Array [],
+  "pipes": Array [],
+  "routes": Array [],
+}
+`;

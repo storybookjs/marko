@@ -59,7 +59,7 @@ const list = Object.keys(icons).sort() as IconKey[];
 storiesOf('Basics/Icon', module)
   .add('labels', () => (
     <List>
-      {list.map(key => (
+      {list.map((key) => (
         <Item key={key}>
           <Icons icon={key} /> <Meta>{key}</Meta>
         </Item>
@@ -68,7 +68,7 @@ storiesOf('Basics/Icon', module)
   ))
   .add('no labels', () => (
     <List>
-      {list.map(key => (
+      {list.map((key) => (
         <Item minimal key={key}>
           <Icons icon={key} />
         </Item>

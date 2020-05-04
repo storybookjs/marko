@@ -2,7 +2,7 @@
 
 import { PropDef } from '@storybook/components';
 import React from 'react';
-import { Component } from '../../../blocks/shared';
+import { Component } from '../../../blocks/types';
 import { extractComponentProps, DocgenInfo, DocgenPropDefaultValue } from '../../../lib/docgen';
 import { enhanceTypeScriptProp } from './handleProp';
 
@@ -278,7 +278,7 @@ describe('enhanceTypeScriptProp', () => {
         { type: 'number', defaultProp: 1 },
         { type: 'boolean', defaultProp: true },
         { type: 'symbol', defaultProp: Symbol('hey!') },
-      ].forEach(x => {
+      ].forEach((x) => {
         it(`should support ${x.type}`, () => {
           const component = createTestComponent(null);
 
@@ -432,7 +432,7 @@ describe('enhanceTypeScriptProp', () => {
         expect(defaultValue.detail.replace(/\s/g, '')).toBe(expectedDetail.replace(/\s/g, ''));
       });
 
-      ['element', 'elementType'].forEach(x => {
+      ['element', 'elementType'].forEach((x) => {
         it(`should support inlined React class component for ${x}`, () => {
           const component = createTestComponent(null, x);
 

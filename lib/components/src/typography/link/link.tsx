@@ -193,7 +193,7 @@ export const Link: FunctionComponent<LinkProps & AProps> = ({
   ...rest
 }) => {
   return (
-    <A {...rest} onClick={cancel ? e => cancelled(e, onClick) : onClick} className={className}>
+    <A {...rest} onClick={cancel ? (e) => cancelled(e, onClick) : onClick} className={className}>
       <LinkInner withArrow={withArrow} containsIcon={containsIcon}>
         {children}
         {withArrow && <Icons icon="arrowright" />}

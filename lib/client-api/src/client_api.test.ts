@@ -5,13 +5,12 @@ import ClientApi from './client_api';
 import ConfigApi from './config_api';
 import StoryStore from './story_store';
 
-const getContext = (() => decorateStory => {
+const getContext = (clientApiOptions = {}) => {
   const channel = mockChannel();
   addons.setChannel(channel);
   const storyStore = new StoryStore({ channel });
-  const clientApi = new ClientApi({ storyStore, decorateStory });
-  const { clearDecorators } = clientApi;
-  const configApi = new ConfigApi({ clearDecorators, storyStore, channel, clientApi });
+  const clientApi = new ClientApi({ storyStore, ...clientApiOptions });
+  const configApi = new ConfigApi({ storyStore });
 
   return {
     configApi,
@@ -19,21 +18,16 @@ const getContext = (() => decorateStory => {
     channel,
     clientApi,
   };
-})();
+};
 
 jest.mock('@storybook/client-logger', () => ({
   logger: { warn: jest.fn(), log: jest.fn() },
 }));
 
 describe('preview.client_api', () => {
-  afterEach(() => {
-    const { clientApi } = getContext(undefined);
-    clientApi.clearDecorators();
-    clientApi.clearParameters();
-  });
   describe('setAddon', () => {
     it('should register addons', () => {
-      const { clientApi } = getContext(undefined);
+      const { clientApi } = getContext();
       let data;
 
       clientApi.setAddon({
@@ -47,7 +41,7 @@ describe('preview.client_api', () => {
     });
 
     it('should not remove previous addons', () => {
-      const { clientApi } = getContext(undefined);
+      const { clientApi } = getContext();
       const data = [];
 
       clientApi.setAddon({
@@ -62,15 +56,12 @@ describe('preview.client_api', () => {
         },
       });
 
-      clientApi
-        .storiesOf('none', module)
-        .aa()
-        .bb();
+      clientApi.storiesOf('none', module).aa().bb();
       expect(data).toEqual(['foo', 'bar']);
     });
 
     it('should call with the clientApi context', () => {
-      const { clientApi } = getContext(undefined);
+      const { clientApi } = getContext();
       let data;
 
       clientApi.setAddon({
@@ -84,7 +75,7 @@ describe('preview.client_api', () => {
     });
 
     it('should be able to access addons added previously', () => {
-      const { clientApi } = getContext(undefined);
+      const { clientApi } = getContext();
       let data;
 
       clientApi.setAddon({
@@ -104,7 +95,7 @@ describe('preview.client_api', () => {
     });
 
     it('should be able to access the current kind', () => {
-      const { clientApi } = getContext(undefined);
+      const { clientApi } = getContext();
       const kind = 'dfdwf3e3';
       let data;
 
@@ -121,26 +112,26 @@ describe('preview.client_api', () => {
 
   describe('addParameters', () => {
     it('should add parameters', () => {
-      const { clientApi, storyStore } = getContext(undefined);
+      const { clientApi, storyStore } = getContext();
       const { storiesOf } = clientApi;
 
       clientApi.addParameters({ a: 1 });
-      storiesOf('kind', module).add('name', ({ parameters }) => parameters);
+      storiesOf('kind', module).add('name', (_args, { parameters }) => parameters);
 
       const result = storyStore.fromId('kind--name').storyFn();
       // @ts-ignore
-      const { docs, fileName, options, ...rest } = result;
+      const { docs, fileName, options, argTypes, ...rest } = result;
 
       expect(rest).toEqual({ a: 1 });
     });
 
     it('should merge options', () => {
-      const { clientApi, storyStore } = getContext(undefined);
+      const { clientApi, storyStore } = getContext();
       const { storiesOf } = clientApi;
 
       clientApi.addParameters({ options: { a: '1' } });
       clientApi.addParameters({ options: { b: '2' } });
-      storiesOf('kind', module).add('name', ({ parameters }) => parameters);
+      storiesOf('kind', module).add('name', (_args, { parameters }) => parameters);
 
       // @ts-ignore
       const {
@@ -151,12 +142,12 @@ describe('preview.client_api', () => {
     });
 
     it('should override specific properties in options', () => {
-      const { clientApi, storyStore } = getContext(undefined);
+      const { clientApi, storyStore } = getContext();
       const { storiesOf } = clientApi;
 
       clientApi.addParameters({ backgrounds: ['value'], options: { a: '1', b: '3' } });
       clientApi.addParameters({ options: { a: '2' } });
-      storiesOf('kind', module).add('name', ({ parameters }) => parameters);
+      storiesOf('kind', module).add('name', (_args, { parameters }) => parameters);
 
       // @ts-ignore
       const {
@@ -169,12 +160,12 @@ describe('preview.client_api', () => {
     });
 
     it('should replace top level properties and override specific properties in options', () => {
-      const { clientApi, storyStore } = getContext(undefined);
+      const { clientApi, storyStore } = getContext();
       const { storiesOf } = clientApi;
 
       clientApi.addParameters({ backgrounds: ['value'], options: { a: '1', b: '3' } });
       clientApi.addParameters({ backgrounds: [], options: { a: '2' } });
-      storiesOf('kind', module).add('name', ({ parameters }) => parameters);
+      storiesOf('kind', module).add('name', (_args, { parameters }) => parameters);
 
       // @ts-ignore
       const {
@@ -187,12 +178,12 @@ describe('preview.client_api', () => {
     });
 
     it('should deep merge in options', () => {
-      const { clientApi, storyStore } = getContext(undefined);
+      const { clientApi, storyStore } = getContext();
       const { storiesOf } = clientApi;
 
       clientApi.addParameters({ options: { a: '1', b: '2', theming: { c: '3' } } });
       clientApi.addParameters({ options: { theming: { c: '4', d: '5' } } });
-      storiesOf('kind', module).add('name', ({ parameters }) => parameters);
+      storiesOf('kind', module).add('name', (_args, { parameters }) => parameters);
 
       // @ts-ignore
       const {
@@ -208,10 +199,10 @@ describe('preview.client_api', () => {
       const {
         clientApi: { storiesOf },
         storyStore,
-      } = getContext(undefined);
+      } = getContext();
 
       storiesOf('kind', module)
-        .addDecorator(fn => `aa-${fn()}`)
+        .addDecorator((fn) => `aa-${fn()}`)
         .add('name', () => 'Hello');
 
       expect(storyStore.fromId('kind--name').storyFn()).toBe('aa-Hello');
@@ -221,9 +212,9 @@ describe('preview.client_api', () => {
       const {
         clientApi: { addDecorator, storiesOf },
         storyStore,
-      } = getContext(undefined);
+      } = getContext();
 
-      addDecorator(fn => `bb-${fn()}`);
+      addDecorator((fn) => `bb-${fn()}`);
 
       storiesOf('kind', module).add('name', () => 'Hello');
       const f = storyStore.fromId('x');
@@ -235,12 +226,12 @@ describe('preview.client_api', () => {
       const {
         clientApi: { addDecorator, storiesOf },
         storyStore,
-      } = getContext(undefined);
+      } = getContext();
 
-      addDecorator(fn => `aa-${fn()}`);
+      addDecorator((fn) => `aa-${fn()}`);
 
       storiesOf('kind', module)
-        .addDecorator(fn => `bb-${fn()}`)
+        .addDecorator((fn) => `bb-${fn()}`)
         .add('name', () => 'Hello');
 
       expect(storyStore.fromId('kind--name').storyFn()).toBe('aa-bb-Hello');
@@ -250,11 +241,11 @@ describe('preview.client_api', () => {
       const {
         clientApi: { storiesOf },
         storyStore,
-      } = getContext(undefined);
+      } = getContext();
 
       storiesOf('kind', module)
-        .addDecorator(fn => `aa-${fn()}`)
-        .add('name', c => `${c.kind}-${c.name}`);
+        .addDecorator((fn) => `aa-${fn()}`)
+        .add('name', (_args, c) => `${c.kind}-${c.name}`);
 
       const result = storyStore.fromId('kind--name').storyFn();
       expect(result).toBe(`aa-kind-name`);
@@ -264,7 +255,7 @@ describe('preview.client_api', () => {
       const {
         clientApi: { storiesOf },
         storyStore,
-      } = getContext(undefined);
+      } = getContext();
 
       storiesOf('kind', module)
         .addDecorator((fn, { kind, name }) => `${kind}-${name}-${fn()}`)
@@ -277,7 +268,7 @@ describe('preview.client_api', () => {
 
   describe('clearDecorators', () => {
     it('should remove all global decorators', () => {
-      const { clientApi, storyStore } = getContext(undefined);
+      const { clientApi, storyStore } = getContext();
       const { storiesOf } = clientApi;
 
       clientApi.addDecorator(() => 'foo');
@@ -294,7 +285,7 @@ describe('preview.client_api', () => {
     it('should transform the storybook to an array with filenames', () => {
       const {
         clientApi: { getStorybook, storiesOf },
-      } = getContext(undefined);
+      } = getContext();
 
       let book;
 
@@ -347,7 +338,7 @@ describe('preview.client_api', () => {
       it('returns values set via parameters', () => {
         const {
           clientApi: { getSeparators, storiesOf, addParameters },
-        } = getContext(undefined);
+        } = getContext();
 
         const options = { hierarchySeparator: /a/, hierarchyRootSeparator: 'b' };
         addParameters({ options });
@@ -358,7 +349,7 @@ describe('preview.client_api', () => {
       it('returns old defaults if kind uses old separators', () => {
         const {
           clientApi: { getSeparators, storiesOf },
-        } = getContext(undefined);
+        } = getContext();
 
         storiesOf('kind|1', module).add('name 1', () => '1');
         expect(getSeparators()).toEqual({
@@ -370,7 +361,7 @@ describe('preview.client_api', () => {
       it('returns new values if showRoots is set', () => {
         const {
           clientApi: { getSeparators, storiesOf, addParameters },
-        } = getContext(undefined);
+        } = getContext();
         addParameters({ options: { showRoots: false } });
 
         storiesOf('kind|1', module).add('name 1', () => '1');
@@ -380,7 +371,7 @@ describe('preview.client_api', () => {
       it('returns new values if kind does not use old separators', () => {
         const {
           clientApi: { getSeparators, storiesOf },
-        } = getContext(undefined);
+        } = getContext();
 
         storiesOf('kind/1', module).add('name 1', () => '1');
         expect(getSeparators()).toEqual({ hierarchySeparator: '/' });
@@ -390,10 +381,10 @@ describe('preview.client_api', () => {
     it('reads filename from module', () => {
       const {
         clientApi: { getStorybook, storiesOf },
-      } = getContext(undefined);
+      } = getContext();
 
       const fn = jest.fn();
-      storiesOf('kind', { id: 'foo.js' }).add('name', fn);
+      storiesOf('kind', { id: 'foo.js' } as NodeModule).add('name', fn);
 
       const storybook = getStorybook();
 
@@ -414,10 +405,10 @@ describe('preview.client_api', () => {
     it('should stringify ids from module', () => {
       const {
         clientApi: { getStorybook, storiesOf },
-      } = getContext(undefined);
+      } = getContext();
 
       const fn = jest.fn();
-      storiesOf('kind', { id: 1211 }).add('name', fn);
+      storiesOf('kind', { id: 1211 } as NodeModule).add('name', fn);
 
       const storybook = getStorybook();
 
@@ -446,7 +437,7 @@ describe('preview.client_api', () => {
           this.callbacks.push(fn);
         },
         reload() {
-          this.callbacks.forEach(fn => fn());
+          this.callbacks.forEach((fn) => fn());
         },
       };
     }
@@ -455,14 +446,14 @@ describe('preview.client_api', () => {
       const {
         storyStore,
         clientApi: { storiesOf },
-      } = getContext(undefined);
-      const module = new MockModule();
+      } = getContext();
+      const mod = new MockModule();
 
       expect(storyStore.getRevision()).toEqual(0);
 
-      storiesOf('kind', module);
+      storiesOf('kind', (mod as unknown) as NodeModule);
 
-      module.hot.reload();
+      mod.hot.reload();
 
       expect(storyStore.getRevision()).toEqual(1);
     });
@@ -470,14 +461,14 @@ describe('preview.client_api', () => {
     it('should replace a kind when the module reloads', () => {
       const {
         clientApi: { storiesOf, getStorybook },
-      } = getContext(undefined);
-      const module = new MockModule();
+      } = getContext();
+      const mod = new MockModule();
 
       const stories = [jest.fn(), jest.fn()];
 
       expect(getStorybook()).toEqual([]);
 
-      storiesOf('kind', module).add('story', stories[0]);
+      storiesOf('kind', (mod as unknown) as NodeModule).add('story', stories[0]);
 
       const firstStorybook = getStorybook();
       expect(firstStorybook).toEqual([
@@ -491,7 +482,7 @@ describe('preview.client_api', () => {
       firstStorybook[0].stories[0].render();
       expect(stories[0]).toHaveBeenCalled();
 
-      module.hot.reload();
+      mod.hot.reload();
       expect(getStorybook()).toEqual([]);
 
       storiesOf('kind', module).add('story', stories[1]);
@@ -512,41 +503,82 @@ describe('preview.client_api', () => {
     it('should maintain kind order when the module reloads', async () => {
       const {
         clientApi: { storiesOf, getStorybook },
+        storyStore,
         channel,
-      } = getContext(undefined);
+      } = getContext();
       const module0 = new MockModule();
       const module1 = new MockModule();
       const module2 = new MockModule();
-      channel.emit = jest.fn();
+
+      const mockChannelEmit = jest.fn();
+      channel.emit = mockChannelEmit;
 
       expect(getStorybook()).toEqual([]);
 
-      storiesOf('kind0', module0).add('story0-docs-only', jest.fn(), { docsOnly: true });
-      storiesOf('kind1', module1).add('story1', jest.fn());
-      storiesOf('kind2', module2).add('story2', jest.fn());
+      storyStore.startConfiguring();
+      storiesOf('kind0', (module0 as unknown) as NodeModule).add('story0-docs-only', jest.fn(), {
+        docsOnly: true,
+      });
+      storiesOf('kind1', (module1 as unknown) as NodeModule).add('story1', jest.fn());
+      storiesOf('kind2', (module2 as unknown) as NodeModule).add('story2', jest.fn());
+      storyStore.finishConfiguring();
 
-      // storyStore debounces so we need to wait for the next tick
-      await new Promise(r => setTimeout(r, 0));
-
-      let [event, args] = channel.emit.mock.calls[0];
+      let [event, args] = mockChannelEmit.mock.calls[0];
       expect(event).toEqual(Events.SET_STORIES);
-      expect(Object.values(args.stories).map(v => v.kind)).toEqual(['kind0', 'kind1', 'kind2']);
-      expect(getStorybook().map(story => story.kind)).toEqual(['kind1', 'kind2']);
+      expect(Object.values(args.stories as [{ kind: string }]).map((v) => v.kind)).toEqual([
+        'kind0',
+        'kind1',
+        'kind2',
+      ]);
+      expect(getStorybook().map((story) => story.kind)).toEqual(['kind1', 'kind2']);
 
-      channel.emit.mockClear();
+      mockChannelEmit.mockClear();
 
       // simulate an HMR of kind1, which would cause it to go to the end
       // if the original order is not maintainaed
       module1.hot.reload();
-      storiesOf('kind1', module1).add('story1', jest.fn());
+      storyStore.startConfiguring();
+      storiesOf('kind1', (module1 as unknown) as NodeModule).add('story1', jest.fn());
+      storyStore.finishConfiguring();
 
-      await new Promise(r => setTimeout(r, 0));
       // eslint-disable-next-line prefer-destructuring
-      [event, args] = channel.emit.mock.calls[0];
+      [event, args] = mockChannelEmit.mock.calls[0];
 
       expect(event).toEqual(Events.SET_STORIES);
-      expect(Object.values(args.stories).map(v => v.kind)).toEqual(['kind0', 'kind1', 'kind2']);
-      expect(getStorybook().map(story => story.kind)).toEqual(['kind1', 'kind2']);
+      expect(Object.values(args.stories as [{ kind: string }]).map((v) => v.kind)).toEqual([
+        'kind0',
+        'kind1',
+        'kind2',
+      ]);
+      expect(getStorybook().map((story) => story.kind)).toEqual(['kind1', 'kind2']);
+    });
+
+    it('should call `module.hot.dispose` inside add and soriesOf by default', () => {
+      const mod = (new MockModule() as unknown) as NodeModule;
+      const mockHotDispose = jest.fn();
+      mod.hot.dispose = mockHotDispose;
+
+      const {
+        clientApi: { storiesOf, getStorybook },
+      } = getContext();
+
+      storiesOf('kind', mod).add('story', jest.fn());
+
+      expect(mockHotDispose.mock.calls.length).toEqual(2);
+    });
+
+    it('should not call `module.hot.dispose` inside add when noStoryModuleAddMethodHotDispose is true', () => {
+      const mod = (new MockModule() as unknown) as NodeModule;
+      const mockHotDispose = jest.fn();
+      mod.hot.dispose = mockHotDispose;
+
+      const {
+        clientApi: { storiesOf, getStorybook },
+      } = getContext({ noStoryModuleAddMethodHotDispose: true });
+
+      storiesOf('kind', mod).add('story', jest.fn());
+
+      expect(mockHotDispose.mock.calls.length).toEqual(1);
     });
   });
 
@@ -555,7 +587,7 @@ describe('preview.client_api', () => {
       const {
         storyStore,
         clientApi: { storiesOf, addParameters },
-      } = getContext(undefined);
+      } = getContext();
 
       addParameters({ a: 'global', b: 'global', c: 'global' });
 
@@ -569,8 +601,7 @@ describe('preview.client_api', () => {
         b: 'kind',
         c: 'story',
         fileName: expect.any(String),
-        options: expect.any(Object),
-        docs: expect.any(Object),
+        argTypes: {},
       });
     });
 
@@ -578,7 +609,7 @@ describe('preview.client_api', () => {
       const {
         storyStore,
         clientApi: { storiesOf, addParameters },
-      } = getContext(undefined);
+      } = getContext();
 
       addParameters({
         addon1: 'global string value',
@@ -587,8 +618,6 @@ describe('preview.client_api', () => {
           global: true,
           sub: { global: true },
         },
-        options: expect.any(Object),
-        docs: expect.any(Object),
       });
 
       storiesOf('kind', module)
@@ -625,8 +654,7 @@ describe('preview.client_api', () => {
           },
         },
         fileName: expect.any(String),
-        options: expect.any(Object),
-        docs: expect.any(Object),
+        argTypes: {},
       });
     });
   });
@@ -638,7 +666,7 @@ describe('preview.client_api', () => {
 
         const {
           clientApi: { storiesOf, getStorybook },
-        } = getContext(undefined);
+        } = getContext();
 
         expect(getStorybook()).toEqual([]);
 
@@ -652,12 +680,7 @@ describe('preview.client_api', () => {
           expect(entry.stories).toHaveLength(1);
           expect(entry.stories[0].name).toBe('story');
 
-          // v3 returns the same function we passed in
-          if (jest.isMockFunction(entry.stories[0].render)) {
-            expect(entry.stories[0].render).toBe(stories[0]);
-          } else {
-            expect(entry.stories[0].render()).toBe('story1');
-          }
+          expect(entry.stories[0].render()).toBe('story1');
         }
 
         storiesOf('kind', module).add('story', stories[1]);
@@ -674,12 +697,7 @@ describe('preview.client_api', () => {
           expect(entry.stories).toHaveLength(1);
           expect(entry.stories[0].name).toBe('story');
 
-          // v3 returns the same function we passed in
-          if (jest.isMockFunction(entry.stories[0].render)) {
-            expect(entry.stories[0].render).toBe(stories[0]);
-          } else {
-            expect(entry.stories[0].render()).toBe('story2');
-          }
+          expect(entry.stories[0].render()).toBe('story2');
         }
       });
     });

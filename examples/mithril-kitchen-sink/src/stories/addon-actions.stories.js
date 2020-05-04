@@ -32,7 +32,7 @@ Story3.story = { name: 'Multiple actions, object' };
 export const Story4 = () => ({
   view: () => (
     <Button
-      onclick={e => {
+      onclick={(e) => {
         e.preventDefault();
         action('log2')(e.target);
       }}

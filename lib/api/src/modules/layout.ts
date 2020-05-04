@@ -1,18 +1,23 @@
-import { document } from 'global';
+import { DOCS_MODE, document } from 'global';
+
 import pick from 'lodash/pick';
 
-import deprecate from 'util-deprecate';
 import deepEqual from 'fast-deep-equal';
 
 import { themes, ThemeVars } from '@storybook/theming';
 import merge from '../lib/merge';
-import { State } from '../index';
-import Store from '../store';
-import { Provider } from '../init-provider-api';
+import { State, ModuleFn } from '../index';
 
 export type PanelPositions = 'bottom' | 'right';
+export type ActiveTabsType = 'sidebar' | 'canvas' | 'addons';
+export const ActiveTabs = {
+  SIDEBAR: 'sidebar' as 'sidebar',
+  CANVAS: 'canvas' as 'canvas',
+  ADDONS: 'addons' as 'addons',
+};
 
 export interface Layout {
+  initialActive: ActiveTabsType;
   isFullscreen: boolean;
   showPanel: boolean;
   panelPosition: PanelPositions;
@@ -45,11 +50,8 @@ export interface SubAPI {
 }
 
 type PartialSubState = Partial<SubState>;
-type PartialThemeVars = Partial<ThemeVars>;
-type PartialLayout = Partial<Layout>;
-type PartialUI = Partial<UI>;
 
-interface Options extends ThemeVars {
+export interface UIOptions {
   name?: string;
   url?: string;
   goFullScreen: boolean;
@@ -60,84 +62,15 @@ interface Options extends ThemeVars {
   selectedPanel?: string;
 }
 
-interface OptionsMap {
-  [key: string]: string;
-}
-
-const deprecatedThemeOptions: {
-  name: 'theme.brandTitle';
-  url: 'theme.brandUrl';
-} = {
-  name: 'theme.brandTitle',
-  url: 'theme.brandUrl',
-};
-
-const deprecatedLayoutOptions: {
-  goFullScreen: 'isFullscreen';
-  showStoriesPanel: 'showNav';
-  showAddonPanel: 'showPanel';
-  addonPanelInRight: 'panelPosition';
-} = {
-  goFullScreen: 'isFullscreen',
-  showStoriesPanel: 'showNav',
-  showAddonPanel: 'showPanel',
-  addonPanelInRight: 'panelPosition',
-};
-
-const deprecationMessage = (optionsMap: OptionsMap, prefix = '') =>
-  `The options { ${Object.keys(optionsMap).join(', ')} } are deprecated -- use ${
-    prefix ? `${prefix}'s` : ''
-  } { ${Object.values(optionsMap).join(', ')} } instead.`;
-
-const applyDeprecatedThemeOptions = deprecate(({ name, url, theme }: Options): PartialThemeVars => {
-  const { brandTitle, brandUrl, brandImage }: PartialThemeVars = theme || {};
-  return {
-    brandTitle: brandTitle || name,
-    brandUrl: brandUrl || url,
-    brandImage: brandImage || null,
-  };
-}, deprecationMessage(deprecatedThemeOptions));
-
-const applyDeprecatedLayoutOptions = deprecate((options: Options): PartialLayout => {
-  const layoutUpdate: PartialLayout = {};
-
-  ['goFullScreen', 'showStoriesPanel', 'showAddonPanel'].forEach(
-    (option: 'goFullScreen' | 'showStoriesPanel' | 'showAddonPanel') => {
-      const v = options[option];
-      if (typeof v !== 'undefined') {
-        const key = deprecatedLayoutOptions[option];
-        layoutUpdate[key] = v;
-      }
-    }
-  );
-  if (options.addonPanelInRight) {
-    layoutUpdate.panelPosition = 'right';
-  }
-  return layoutUpdate;
-}, deprecationMessage(deprecatedLayoutOptions));
-
-const checkDeprecatedThemeOptions = (options: Options) => {
-  if (Object.keys(deprecatedThemeOptions).find(v => v in options)) {
-    return applyDeprecatedThemeOptions(options);
-  }
-  return {};
-};
-
-const checkDeprecatedLayoutOptions = (options: Options) => {
-  if (Object.keys(deprecatedLayoutOptions).find(v => v in options)) {
-    return applyDeprecatedLayoutOptions(options);
-  }
-  return {};
-};
-
-const initial: SubState = {
+const defaultState: SubState = {
   ui: {
     enableShortcuts: true,
     sidebarAnimations: true,
     docsMode: false,
   },
   layout: {
-    isToolshown: true,
+    initialActive: ActiveTabs.SIDEBAR,
+    isToolshown: !DOCS_MODE,
     isFullscreen: false,
     showPanel: true,
     showNav: true,
@@ -153,8 +86,7 @@ export const focusableUIElements = {
   storyPanelRoot: 'storybook-panel-root',
 };
 
-let hasSetOptions = false;
-export default function({ store, provider }: { store: Store; provider: Provider }) {
+export const init: ModuleFn = ({ store, provider }) => {
   const api = {
     toggleFullscreen(toggled?: boolean) {
       return store.setState(
@@ -274,37 +206,27 @@ export default function({ store, provider }: { store: Store; provider: Provider 
       const { theme, selectedPanel, ...options } = provider.getConfig();
 
       return {
-        ...initial,
+        ...defaultState,
         layout: {
-          ...initial.layout,
-          ...pick(options, Object.keys(initial.layout)),
-          ...checkDeprecatedLayoutOptions(options),
+          ...defaultState.layout,
+          ...pick(options, Object.keys(defaultState.layout)),
         },
         ui: {
-          ...initial.ui,
-          ...pick(options, Object.keys(initial.ui)),
+          ...defaultState.ui,
+          ...pick(options, Object.keys(defaultState.ui)),
         },
-        selectedPanel: selectedPanel || initial.selectedPanel,
-        theme: theme || initial.theme,
+        selectedPanel: selectedPanel || defaultState.selectedPanel,
+        theme: theme || defaultState.theme,
       };
     },
 
     setOptions: (options: any) => {
-      // The very first time the user sets their options, we don't consider what is in the store.
-      // At this point in time, what is in the store is what we *persisted*. We did that in order
-      // to avoid a FOUC (e.g. initial rendering the wrong theme while we waited for the stories to load)
-      // However, we don't want to have a memory about these things, otherwise we see bugs like the
-      // user setting a name for their storybook, persisting it, then never being able to unset it
-      // without clearing localstorage. See https://github.com/storybookjs/storybook/issues/5857
-      const { layout, ui, selectedPanel, theme } = hasSetOptions
-        ? store.getState()
-        : api.getInitialOptions();
+      const { layout, ui, selectedPanel, theme } = store.getState();
 
       if (options) {
         const updatedLayout = {
           ...layout,
           ...pick(options, Object.keys(layout)),
-          ...checkDeprecatedLayoutOptions(options),
         };
 
         const updatedUi = {
@@ -315,7 +237,6 @@ export default function({ store, provider }: { store: Store; provider: Provider 
         const updatedTheme = {
           ...theme,
           ...options.theme,
-          ...checkDeprecatedThemeOptions(options),
         };
 
         const modification: PartialSubState = {};
@@ -326,9 +247,6 @@ export default function({ store, provider }: { store: Store; provider: Provider 
         if (!deepEqual(layout, updatedLayout)) {
           modification.layout = updatedLayout;
         }
-        if (!deepEqual(theme, updatedTheme)) {
-          modification.theme = updatedTheme;
-        }
         if (options.selectedPanel && !deepEqual(selectedPanel, options.selectedPanel)) {
           modification.selectedPanel = options.selectedPanel;
         }
@@ -336,13 +254,14 @@ export default function({ store, provider }: { store: Store; provider: Provider 
         if (Object.keys(modification).length) {
           store.setState(modification, { persistence: 'permanent' });
         }
-
-        hasSetOptions = true;
+        if (!deepEqual(theme, updatedTheme)) {
+          store.setState({ theme: updatedTheme });
+        }
       }
     },
   };
 
-  const persisted = pick(store.getState(), 'layout', 'ui', 'selectedPanel', 'theme');
+  const persisted = pick(store.getState(), 'layout', 'ui', 'selectedPanel');
 
   return { api, state: merge(api.getInitialOptions(), persisted) };
-}
+};

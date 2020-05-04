@@ -3,7 +3,7 @@ import MyButton from './Button.vue';
 export default {
   title: 'Custom/Decorator for Vue',
   decorators: [
-    storyFn => {
+    (storyFn) => {
       // Decorated with story-function
       const WrapButton = storyFn({ customContext: 52, parameters: { customParameter: 42 } });
       return {
@@ -30,7 +30,7 @@ export const Template = () => ({
   template: '<my-button>MyButton with template</my-button>',
 });
 
-export const WithData = ({ parameters: { fileName, ...parameters }, hooks, ...rest }) => ({
+export const WithData = (_args, { parameters: { fileName, ...parameters }, hooks, ...rest }) => ({
   template: `<pre v-pre>${JSON.stringify({ ...rest, parameters }, null, 2)}</pre>`,
 });
 

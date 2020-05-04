@@ -1,5 +1,4 @@
 import React from 'react';
-import { values } from 'lodash';
 
 import Homepage from '../components/Homepage';
 import Header from '../components/Header';
@@ -24,7 +23,7 @@ import exampleData from './_examples.yml';
 
 export default {
   'Homepage.page': (
-    <Homepage featuredStorybooks={docsData.featuredStorybooks} users={values(users)} />
+    <Homepage featuredStorybooks={docsData.featuredStorybooks} users={Object.values(users)} />
   ),
   'Homepage.header': <Header />,
   'Homepage.heading': <Heading />,
@@ -32,7 +31,7 @@ export default {
   'Homepage.built-for': <Platforms />,
   'Homepage.main-links': <MainLinks />,
   'Homepage.featured-storybooks': <Featured featuredStorybooks={docsData.featuredStorybooks} />,
-  'Homepage.used-by': <UsedBy users={values(users)} />,
+  'Homepage.used-by': <UsedBy users={Object.values(users)} />,
   'Homepage.footer': <Footer />,
   'Docs.page': (
     <Docs
@@ -60,7 +59,7 @@ export default {
       selectedItem={docsData.selectedItem.id}
     />
   ),
-  'Grid.grid-item': <GridItem {...values(exampleData)[0]} />,
-  'Grid.grid': <Grid items={values(exampleData)} columnWidth={300} />,
-  'Grid.examples': <Examples items={values(exampleData)} />,
+  'Grid.grid-item': <GridItem {...Object.values(exampleData)[0]} />,
+  'Grid.grid': <Grid items={Object.values(exampleData)} columnWidth={300} />,
+  'Grid.examples': <Examples items={Object.values(exampleData)} />,
 };

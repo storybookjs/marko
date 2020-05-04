@@ -43,19 +43,11 @@ do
     yarn sb init --skip-install --yes
     ;;
   mdx)
-    if [[ $dir =~ (react_native*|angular-cli-v6|ember-cli|marko|meteor|mithril|riot|react_babel_6) ]]
+    if [[ $dir =~ (react_native*|angular-cli-v6|ember-cli|marko|meteor|mithril|riot) ]]
     then
       yarn sb init --skip-install --yes
     else
       yarn sb init --skip-install --yes --story-format mdx
-    fi
-    ;;
-  csf-ts)
-    if [[ $dir =~ (react_scripts_ts) ]]
-    then
-      yarn sb init --skip-install --yes --story-format csf-ts
-    else
-      yarn sb init --skip-install --yes
     fi
     ;;
   esac

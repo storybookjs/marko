@@ -6,8 +6,8 @@ const sm = require('sitemap');
 
 function pagesToSitemap(pages) {
   return pages
-    .filter(p => !!p.path)
-    .map(p => ({
+    .filter((p) => !!p.path)
+    .map((p) => ({
       url: p.path,
       changefreq: 'daily',
       priority: 0.7,
@@ -100,7 +100,7 @@ module.exports = {
     }
 
     // Create pages.
-    result.data.allMarkdownRemark.edges.forEach(edge => {
+    result.data.allMarkdownRemark.edges.forEach((edge) => {
       createPage({
         path: edge.node.fields.slug, // required
         component: template,

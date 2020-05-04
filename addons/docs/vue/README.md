@@ -2,7 +2,7 @@
   <img src="../docs/media/vue-hero.png" width="100%" />
 </center>
 
-# Storybook Docs for Vue
+<h1>Storybook Docs for Vue</h1>
 
 > migration guide: This page documents the method to configure storybook introduced recently in 5.3.0, consult the [migration guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) if you want to migrate to this format of configuring storybook.
 
@@ -11,9 +11,10 @@ Storybook Docs transforms your Storybook stories into world-class component docu
 To learn more about Storybook Docs, read the [general documentation](../README.md). To learn the Vue specifics, read on!
 
 - [Installation](#installation)
+- [Preset options](#preset-options)
 - [DocsPage](#docspage)
 - [MDX](#mdx)
-- [Inline stories](#inline-stories)
+- [Inline Stories](#inline-stories)
 - [More resources](#more-resources)
 
 ## Installation
@@ -32,11 +33,36 @@ module.exports = {
 };
 ```
 
+## Preset options
+
+The `addon-docs` preset for Vue has a configuration option that can be used to configure [`vue-docgen-api`](https://github.com/vue-styleguidist/vue-styleguidist/tree/dev/packages/vue-docgen-api), a tool which extracts information from Vue components. Here's an example of how to use the preset with options for Vue app:
+
+```js
+const path = require('path');
+
+module.exports = {
+  addons: [
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        vueDocgenOptions: {
+          alias: {
+            '@': path.resolve(__dirname, '../'),
+          },
+        },
+      },
+    },
+  ],
+};
+```
+
+The `vueDocgenOptions` is an object for configuring `vue-docgen-api`. See [`vue-docgen-api`'s docs](https://github.com/vue-styleguidist/vue-styleguidist/tree/dev/packages/vue-docgen-api#options-docgenoptions) for available configuration options.
+
 ## DocsPage
 
 When you [install docs](#installation) you should get basic [DocsPage](../docs/docspage.md) documentation automagically for all your stories, available in the `Docs` tab of the Storybook UI.
 
-Props tables for your components requires a few more steps. Docs for Vue relies on [Addon-vue-info](https://github.com/pocka/storybook-addon-vue-info)'s loader. It supports `props`, `events`, and `slots` as first class prop types.
+Props tables for your components requires a few more steps. Docs for Vue relies on [`vue-docgen-loader`](https://github.com/pocka/vue-docgen-loader). It supports `props`, `events`, and `slots` as first class prop types.
 
 Finally, be sure to fill in the `component` field in your story metadata:
 
@@ -106,7 +132,7 @@ Yes, it's redundant to declare `component` twice. [Coming soon](https://github.c
 
 Storybook Docs renders all Vue stories inside IFrames, with a default height of `60px` (configurable using the `docs.iframeHeight` story parameter).
 
-Starting in 5.3, you can also render stories inline, and in 6.0 this will become the default behavior. To render inline, update `.storybook/preview.js`:
+Starting in 5.3, you can also render stories inline, and in 6.0 this has become the default behavior. To render inline, update `.storybook/preview.js`:
 
 ```js
 import { addParameters } from '@storybook/vue';
@@ -122,7 +148,6 @@ addParameters({
 
 Want to learn more? Here are some more articles on Storybook Docs:
 
-- References: [DocsPage](../docs/docspage.md) / [MDX](../docs/mdx.md) / [FAQ](../docs/faq.md) / [Recipes](../docs/recipes.md) / [Theming](../docs/theming.md)
-- Vision: [Storybook Docs sneak peak](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a)
-- Announcement: [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf)
+- References: [DocsPage](../docs/docspage.md) / [MDX](../docs/mdx.md) / [FAQ](../docs/faq.md) / [Recipes](../docs/recipes.md) / [Theming](../docs/theming.md) / [Props](../docs/props-tables.md)
+- Announcements: [Vision](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a) / [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf) / [MDX](https://medium.com/storybookjs/rich-docs-with-storybook-mdx-61bc145ae7bc) / [Framework support](https://medium.com/storybookjs/storybook-docs-for-new-frameworks-b1f6090ee0ea)
 - Example: [Storybook Design System](https://github.com/storybookjs/design-system)

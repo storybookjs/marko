@@ -3,7 +3,7 @@
 import m from 'mithril';
 
 const Main = {
-  view: vnode => (
+  view: (vnode) => (
     <article
       style={{
         padding: 15,
@@ -18,11 +18,11 @@ const Main = {
 };
 
 const Title = {
-  view: vnode => <h1>{vnode.children}</h1>,
+  view: (vnode) => <h1>{vnode.children}</h1>,
 };
 
 const Note = {
-  view: vnode => (
+  view: (vnode) => (
     <p
       style={{
         opacity: 0.5,
@@ -34,7 +34,7 @@ const Note = {
 };
 
 const InlineCode = {
-  view: vnode => (
+  view: (vnode) => (
     <code
       style={{
         fontSize: '15px',
@@ -52,7 +52,7 @@ const InlineCode = {
 };
 
 const Link = {
-  view: vnode => (
+  view: (vnode) => (
     <a
       style={{
         color: '#1474f3',
@@ -68,7 +68,7 @@ const Link = {
 };
 
 const NavButton = {
-  view: vnode => (
+  view: (vnode) => (
     <button
       type="button"
       style={{
@@ -88,7 +88,7 @@ const NavButton = {
 };
 
 const Welcome = {
-  view: vnode => (
+  view: (vnode) => (
     <Main>
       <Title>Welcome to storybook</Title>
       <p>This is a UI component dev environment for your app.</p>
@@ -109,7 +109,7 @@ const Welcome = {
         You can also edit those components and see changes right away.
         <br />
         (Try editing the <InlineCode>Button</InlineCode> stories located at&nbsp;
-        <InlineCode>src/stories/index.js</InlineCode>
+        <InlineCode>src/stories/1-Button.stories.js</InlineCode>
         .)
       </p>
       <p>

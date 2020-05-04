@@ -26,7 +26,7 @@ const ItemLoader = ({ isLoading, items }) => {
   }
   return (
     <ul>
-      {items.map(i => (
+      {items.map((i) => (
         <li key={i}>{i}</li>
       ))}
     </ul>
@@ -114,7 +114,7 @@ export const TweaksStaticValues = () => {
       <p>My wallet contains: ${dollars.toFixed(2)}</p>
       <p>In my backpack, I have:</p>
       <ul>
-        {items.map(item => (
+        {items.map((item) => (
           <li key={item}>{item}</li>
         ))}
       </ul>
@@ -204,7 +204,7 @@ export const TweaksStaticValuesOrganizedInGroups = () => {
       <p>Other Fruit: {otherFruit}</p>
       <p>Items:</p>
       <ul>
-        {items.map(item => (
+        {items.map((item) => (
           <li key={`${item}`}>{item}</li>
         ))}
       </ul>
@@ -308,19 +308,19 @@ export const OptionsKnob = () => {
       <p>Month: {optionSelect}</p>
       <p>Fruit:</p>
       <ul>
-        {optionsMultiSelect.map(item => (
+        {optionsMultiSelect.map((item) => (
           <li key={item}>{item}</li>
         ))}
       </ul>
       <p>Vegetables:</p>
       <ul>
-        {optionsCheck.map(item => (
+        {optionsCheck.map((item) => (
           <li key={item}>{item}</li>
         ))}
       </ul>
       <p>Dairy:</p>
       <ul>
-        {optionsInlineCheck.map(item => (
+        {optionsInlineCheck.map((item) => (
           <li key={item}>{item}</li>
         ))}
       </ul>

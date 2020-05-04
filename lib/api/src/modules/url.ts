@@ -2,7 +2,8 @@ import { navigate as navigateRouter, NavigateOptions } from '@reach/router';
 import { queryFromLocation } from '@storybook/router';
 import { toId } from '@storybook/csf';
 
-import { Module } from '../index';
+import { NAVIGATE_URL } from '@storybook/core-events';
+import { ModuleArgs, ModuleFn } from '../index';
 import { PanelPositions } from './layout';
 
 interface Additions {
@@ -14,6 +15,10 @@ interface Additions {
   viewMode?: string;
 }
 
+export interface SubState {
+  customQueryParams: QueryParams;
+}
+
 // Initialize the state based on the URL.
 // NOTE:
 //   Although we don't change the URL when you change the state, we do support setting initial state
@@ -23,7 +28,10 @@ interface Additions {
 //     - nav: 0/1 -- show or hide the story list
 //
 //   We also support legacy URLs from storybook <5
-const initialUrlSupport = ({ navigate, state: { location, path, viewMode, storyId } }: Module) => {
+const initialUrlSupport = ({
+  navigate,
+  state: { location, path, viewMode, storyId },
+}: ModuleArgs) => {
   const addition: Additions = {};
   const query = queryFromLocation(location);
   let selectedPanel;
@@ -105,9 +113,9 @@ export interface SubAPI {
   setQueryParams: (input: QueryParams) => void;
 }
 
-export default function({ store, navigate, state, provider, ...rest }: Module) {
+export const init: ModuleFn = ({ store, navigate, state, provider, fullAPI, ...rest }) => {
   const api: SubAPI = {
-    getQueryParam: key => {
+    getQueryParam: (key) => {
       const { customQueryParams } = store.getState();
       if (customQueryParams) {
         return customQueryParams[key];
@@ -146,8 +154,15 @@ export default function({ store, navigate, state, provider, ...rest }: Module) {
     },
   };
 
+  const initModule = () => {
+    fullAPI.on(NAVIGATE_URL, (url: string, options: { [k: string]: any }) => {
+      fullAPI.navigateUrl(url, options);
+    });
+  };
+
   return {
     api,
-    state: initialUrlSupport({ store, navigate, state, provider, ...rest }),
+    state: initialUrlSupport({ store, navigate, state, provider, fullAPI, ...rest }),
+    init: initModule,
   };
-}
+};

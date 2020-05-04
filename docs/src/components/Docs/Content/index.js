@@ -20,11 +20,11 @@ const DocsContent = ({ title, content, editUrl, ...rest }) => (
       <div className="markdown">
         <ThemeProvider theme={convert(create({ base: 'light' }))}>
           {parse(content, {
-            replace: domNode => {
+            replace: (domNode) => {
               if (
                 domNode.name === 'pre' &&
                 domNode.children.find(
-                  n => n.name === 'code' && n.attribs.class && n.attribs.class.match(/^language-/)
+                  (n) => n.name === 'code' && n.attribs.class && n.attribs.class.match(/^language-/)
                 )
               ) {
                 const language = domNode.children[0].attribs.class.replace('language-', '');

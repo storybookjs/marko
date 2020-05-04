@@ -14,8 +14,8 @@ interface ButtonProps {
 export const ButtonReactFC: React.FC<ButtonProps> = ({ onClick, children }) => (
   <button onClick={onClick}>{children}</button>
 );
-// @ts-ignore
 ButtonReactFC.defaultProps = {
+  // @ts-ignore
   onClick: null,
 };
 
@@ -25,8 +25,8 @@ ButtonReactFC.defaultProps = {
 export const ButtonFC: FC<ButtonProps> = ({ onClick, children }) => (
   <button onClick={onClick}>{children}</button>
 );
-// @ts-ignore
 ButtonFC.defaultProps = {
+  // @ts-ignore
   onClick: null,
 };
 
@@ -36,7 +36,7 @@ ButtonFC.defaultProps = {
 export const ButtonFunctionComponent: FunctionComponent<ButtonProps> = ({ onClick, children }) => (
   <button onClick={onClick}>{children}</button>
 );
-// @ts-ignore
 ButtonFunctionComponent.defaultProps = {
+  // @ts-ignore
   onClick: null,
 };

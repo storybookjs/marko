@@ -8,7 +8,7 @@ const createChannel = () => {
   addons.getChannel.mockReturnValue(channel);
   return channel;
 };
-const getChannelData = channel => channel.emit.mock.calls[0][1].data.args;
+const getChannelData = (channel) => channel.emit.mock.calls[0][1].data.args;
 
 describe('Action', () => {
   it('with one argument', () => {

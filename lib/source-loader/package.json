@@ -1,6 +1,6 @@
 {
   "name": "@storybook/source-loader",
-  "version": "6.0.0-alpha.1",
+  "version": "6.0.0-beta.1",
   "description": "Source loader",
   "keywords": [
     "lib",
@@ -16,28 +16,32 @@
     "directory": "lib/source-loader"
   },
   "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts"
+    "*.d.ts",
+    "ts3.5/**/*"
   ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-alpha.1",
-    "@storybook/client-logger": "6.0.0-alpha.1",
+    "@storybook/addons": "6.0.0-beta.1",
+    "@storybook/client-logger": "6.0.0-beta.1",
     "@storybook/csf": "0.0.1",
     "core-js": "^3.0.1",
     "estraverse": "^4.2.0",
     "global": "^4.3.2",
-    "loader-utils": "^1.2.3",
-    "prettier": "^1.16.4",
-    "prop-types": "^15.7.2",
+    "loader-utils": "^2.0.0",
+    "prettier": "^2.0.5",
     "regenerator-runtime": "^0.13.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"

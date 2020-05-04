@@ -1,12 +1,4 @@
-import { StoryFn } from '@storybook/addons'; // eslint-disable-line
-
-export interface RenderMainArgs {
-  storyFn: StoryFn<any>;
-  selectedKind: string;
-  selectedStory: string;
-  showMain: () => void;
-  showError: (args: ShowErrorArgs) => void;
-}
+export { RenderContext } from '@storybook/core';
 
 export interface ShowErrorArgs {
   title: string;

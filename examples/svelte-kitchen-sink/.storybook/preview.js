@@ -1,4 +1,7 @@
-import { addDecorator } from '@storybook/svelte';
-import { withA11y } from '@storybook/addon-a11y';
+import { addParameters } from '@storybook/svelte';
 
-addDecorator(withA11y);
+addParameters({
+  docs: {
+    iframeHeight: 300,
+  },
+});

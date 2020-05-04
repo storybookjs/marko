@@ -25,6 +25,11 @@ export const defaultStyle = () => (
         'rgba(102,191,60,.3)',
       ]}
     />
+    <ColorItem
+      title="gradient"
+      subtitle="Grayscale"
+      colors={['linear-gradient(to right,white,black)']}
+    />
   </ColorPalette>
 );
 
@@ -49,6 +54,13 @@ export const NamedColors = () => (
         Apple80: 'rgba(102,191,60,.8)',
         Apple60: 'rgba(102,191,60,.6)',
         Apple30: 'rgba(102,191,60,.3)',
+      }}
+    />
+    <ColorItem
+      title="gradient"
+      subtitle="Grayscale"
+      colors={{
+        Gradient: 'linear-gradient(to right,white,black)',
       }}
     />
   </ColorPalette>

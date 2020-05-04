@@ -1,85 +1,106 @@
-import React, { FunctionComponent, useContext } from 'react';
-import { isNil } from 'lodash';
-
+/* eslint-disable no-underscore-dangle */
+import React, { FC, useContext, useEffect, useState, useCallback } from 'react';
+import mapValues from 'lodash/mapValues';
+import pickBy from 'lodash/pickBy';
 import {
-  PropsTable,
-  PropsTableError,
-  PropsTableProps,
-  PropsTableRowsProps,
-  PropsTableSectionsProps,
-  PropDef,
-  TabsState,
+  ArgsTable,
+  ArgsTableProps,
+  ArgsTableError,
+  ArgTypes,
+  TabbedArgsTable,
 } from '@storybook/components';
+import { Args } from '@storybook/addons';
+import { StoryStore } from '@storybook/client-api';
+import Events from '@storybook/core-events';
+
 import { DocsContext, DocsContextProps } from './DocsContext';
-import { Component, PropsSlot, CURRENT_SELECTION } from './shared';
-import { getComponentName } from './utils';
+import { Component, CURRENT_SELECTION, PRIMARY_STORY } from './types';
+import { getComponentName, getDocsStories } from './utils';
+import { ArgTypesExtractor } from '../lib/docgen/types';
+import { lookupStoryId } from './Story';
 
-import { PropsExtractor } from '../lib/docgen/types';
-import { extractProps as reactExtractProps } from '../frameworks/react/extractProps';
-import { extractProps as vueExtractProps } from '../frameworks/vue/extractProps';
+type PropDescriptor = string[] | RegExp;
 
-interface PropsProps {
-  exclude?: string[];
-  of?: '.' | Component;
-  components?: {
-    [label: string]: Component;
-  };
-  slot?: PropsSlot;
+interface BaseProps {
+  include?: PropDescriptor;
+  exclude?: PropDescriptor;
 }
 
-// FIXME: remove in SB6.0 & require config
-const inferPropsExtractor = (framework: string): PropsExtractor | null => {
-  switch (framework) {
-    case 'react':
-      return reactExtractProps;
-    case 'vue':
-      return vueExtractProps;
-    default:
-      return null;
-  }
+type OfProps = BaseProps & {
+  of: '.' | Component;
 };
 
-const filterRows = (rows: PropDef[], exclude: string[]) =>
-  rows && rows.filter((row: PropDef) => !exclude.includes(row.name));
+type ComponentsProps = BaseProps & {
+  components: {
+    [label: string]: Component;
+  };
+};
 
-export const getComponentProps = (
-  component: Component,
-  { exclude }: PropsProps,
-  { parameters }: DocsContextProps
-): PropsTableProps => {
-  if (!component) {
-    return null;
+type StoryProps = BaseProps & {
+  story: '.' | string;
+  showComponents?: boolean;
+};
+
+type PropsProps = BaseProps | OfProps | ComponentsProps | StoryProps;
+
+const useArgs = (storyId: string, storyStore: StoryStore): [Args, (args: Args) => void] => {
+  const story = storyStore.fromId(storyId);
+  if (!story) {
+    throw new Error(`Unknown story: ${storyId}`);
   }
-  try {
-    const params = parameters || {};
-    const { framework = null } = params;
 
-    const { extractProps = inferPropsExtractor(framework) }: { extractProps: PropsExtractor } =
-      params.docs || {};
-    if (!extractProps) {
-      throw new Error(PropsTableError.PROPS_UNSUPPORTED);
-    }
-    let props = extractProps(component);
-    if (!isNil(exclude)) {
-      const { rows } = props as PropsTableRowsProps;
-      const { sections } = props as PropsTableSectionsProps;
-      if (rows) {
-        props = { rows: filterRows(rows, exclude) };
-      } else if (sections) {
-        Object.keys(sections).forEach(section => {
-          sections[section] = filterRows(sections[section], exclude);
-        });
+  const { args: initialArgs } = story;
+  const [args, setArgs] = useState(initialArgs);
+  useEffect(() => {
+    const cb = (changedId: string, newArgs: Args) => {
+      if (changedId === storyId) {
+        setArgs(newArgs);
       }
-    }
+    };
+    storyStore._channel.on(Events.STORY_ARGS_UPDATED, cb);
+    return () => storyStore._channel.off(Events.STORY_ARGS_UPDATED, cb);
+  }, [storyId]);
+  const updateArgs = useCallback((newArgs) => storyStore.updateStoryArgs(storyId, newArgs), [
+    storyId,
+  ]);
+  return [args, updateArgs];
+};
 
-    return props;
-  } catch (err) {
-    return { error: err.message };
+const matches = (name: string, descriptor: PropDescriptor) =>
+  Array.isArray(descriptor) ? descriptor.includes(name) : name.match(descriptor);
+
+const filterArgTypes = (argTypes: ArgTypes, include?: PropDescriptor, exclude?: PropDescriptor) => {
+  if (!include && !exclude) {
+    return argTypes;
   }
+  return (
+    argTypes &&
+    pickBy(argTypes, (argType, key) => {
+      const name = argType.name || key;
+      return (!include || matches(name, include)) && (!exclude || !matches(name, exclude));
+    })
+  );
+};
+
+export const extractComponentArgTypes = (
+  component: Component,
+  { parameters }: DocsContextProps,
+  include?: PropDescriptor,
+  exclude?: PropDescriptor
+): ArgTypes => {
+  const params = parameters || {};
+  const { extractArgTypes }: { extractArgTypes: ArgTypesExtractor } = params.docs || {};
+  if (!extractArgTypes) {
+    throw new Error(ArgsTableError.ARGS_UNSUPPORTED);
+  }
+  let argTypes = extractArgTypes(component);
+  argTypes = filterArgTypes(argTypes, include, exclude);
+
+  return argTypes;
 };
 
 export const getComponent = (props: PropsProps = {}, context: DocsContextProps): Component => {
-  const { of } = props;
+  const { of } = props as OfProps;
   const { parameters = {} } = context;
   const { component } = parameters;
 
@@ -88,60 +109,127 @@ export const getComponent = (props: PropsProps = {}, context: DocsContextProps):
     if (of === CURRENT_SELECTION) {
       return null;
     }
-    throw new Error(PropsTableError.NO_COMPONENT);
+    throw new Error(ArgsTableError.NO_COMPONENT);
   }
   return target;
 };
 
-const PropsContainer: FunctionComponent<PropsProps> = props => {
+const addComponentTabs = (
+  tabs: Record<string, ArgsTableProps>,
+  components: Record<string, Component>,
+  context: DocsContextProps,
+  include?: PropDescriptor,
+  exclude?: PropDescriptor
+) => ({
+  ...tabs,
+  ...mapValues(components, (comp) => ({
+    rows: extractComponentArgTypes(comp, context, include, exclude),
+  })),
+});
+
+export const StoryTable: FC<StoryProps & { components: Record<string, Component> }> = (props) => {
   const context = useContext(DocsContext);
-  const { slot, components } = props;
+  const {
+    id: currentId,
+    parameters: { argTypes },
+    storyStore,
+  } = context;
+  const { story, showComponents, components, include, exclude } = props;
+  let storyArgTypes;
+  try {
+    let storyId;
+    switch (story) {
+      case CURRENT_SELECTION: {
+        storyId = currentId;
+        storyArgTypes = argTypes;
+        break;
+      }
+      case PRIMARY_STORY: {
+        const primaryStory = getDocsStories(context)[0];
+        storyId = primaryStory.id;
+        storyArgTypes = primaryStory.parameters.argTypes;
+        break;
+      }
+      default: {
+        storyId = lookupStoryId(story, context);
+        const data = storyStore.fromId(storyId);
+        storyArgTypes = data.parameters.argTypes;
+      }
+    }
+    storyArgTypes = filterArgTypes(storyArgTypes, include, exclude);
+
+    // This code handles three cases:
+    //  1. the story has args, in which case we want to show controls for the story
+    //  2. the story has args, and the user specifies showComponents, in which case
+    //     we want to show controls for the primary component AND show props for each component
+    //  3. the story has NO args, in which case we want to show props for each component
+
+    // eslint-disable-next-line prefer-const
+    let [args, updateArgs] = useArgs(storyId, storyStore);
+    let tabs = { Story: { rows: storyArgTypes, args, updateArgs } } as Record<
+      string,
+      ArgsTableProps
+    >;
+    const storyHasArgsWithControls =
+      !storyArgTypes || !Object.values(storyArgTypes).find((v) => !!v?.control);
+    if (storyHasArgsWithControls) {
+      updateArgs = null;
+      tabs = {};
+    }
+
+    // Use the dynamically generated component tabs if there are no controls
+    if (showComponents || !storyHasArgsWithControls) {
+      tabs = addComponentTabs(tabs, components, context, include, exclude);
+    }
+
+    return <TabbedArgsTable tabs={tabs} />;
+  } catch (err) {
+    return <ArgsTable error={err.message} />;
+  }
+};
+
+export const ComponentsTable: FC<ComponentsProps> = (props) => {
+  const context = useContext(DocsContext);
+  const { components, include, exclude } = props;
+
+  const tabs = addComponentTabs({}, components, context, include, exclude);
+  return <TabbedArgsTable tabs={tabs} />;
+};
+
+export const Props: FC<PropsProps> = (props) => {
+  const context = useContext(DocsContext);
   const {
     parameters: { subcomponents },
   } = context;
 
+  const { include, exclude, components } = props as ComponentsProps;
+  const { story } = props as StoryProps;
+
   let allComponents = components;
-  if (!allComponents) {
-    const main = getComponent(props, context);
+  const main = getComponent(props, context);
+
+  if (!allComponents && main) {
     const mainLabel = getComponentName(main);
-    const mainProps = slot ? slot(context, main) : getComponentProps(main, props, context);
-
-    if (!subcomponents || typeof subcomponents !== 'object') {
-      return mainProps && <PropsTable {...mainProps} />;
-    }
-
     allComponents = { [mainLabel]: main, ...subcomponents };
   }
 
-  const tabs: { label: string; table: PropsTableProps }[] = [];
-  Object.entries(allComponents).forEach(([label, component]) => {
-    tabs.push({
-      label,
-      table: slot ? slot(context, component) : getComponentProps(component, props, context),
-    });
-  });
+  if (story) {
+    return <StoryTable {...(props as StoryProps)} components={allComponents} />;
+  }
 
-  return (
-    <TabsState>
-      {tabs.map(({ label, table }) => {
-        if (!table) {
-          return null;
-        }
-        const id = `prop_table_div_${label}`;
-        return (
-          <div key={id} id={id} title={label}>
-            {({ active }: { active: boolean }) =>
-              active ? <PropsTable key={`prop_table_${label}`} {...table} /> : null
-            }
-          </div>
-        );
-      })}
-    </TabsState>
-  );
+  if (!components && !subcomponents) {
+    let mainProps;
+    try {
+      mainProps = { rows: extractComponentArgTypes(main, context, include, exclude) };
+    } catch (err) {
+      mainProps = { error: err.message };
+    }
+    return <ArgsTable {...mainProps} />;
+  }
+
+  return <ComponentsTable {...(props as ComponentsProps)} components={allComponents} />;
 };
 
-PropsContainer.defaultProps = {
-  of: '.',
+Props.defaultProps = {
+  of: CURRENT_SELECTION,
 };
-
-export { PropsContainer as Props };

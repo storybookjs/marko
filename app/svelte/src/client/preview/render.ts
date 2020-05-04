@@ -1,6 +1,7 @@
+import { detach, insert, noop } from 'svelte/internal';
 import { document } from 'global';
 import dedent from 'ts-dedent';
-import { MountViewArgs, RenderMainArgs } from './types';
+import { MountViewArgs, RenderContext } from './types';
 
 type Component = any;
 
@@ -14,6 +15,32 @@ function cleanUpPreviousStory() {
   previousComponent = null;
 }
 
+function createSlotFn(element: any) {
+  return [
+    function createSlot() {
+      return {
+        c: noop,
+        m: function mount(target: any, anchor: any) {
+          insert(target, element, anchor);
+        },
+        d: function destroy(detaching: boolean) {
+          if (detaching) {
+            detach(element);
+          }
+        },
+        l: noop,
+      };
+    },
+  ];
+}
+
+function createSlots(slots: Record<string, any>): Record<string, any> {
+  return Object.entries(slots).reduce((acc, [slotName, element]) => {
+    acc[slotName] = createSlotFn(element);
+    return acc;
+  }, {} as Record<string, any>);
+}
+
 function mountView({ Component, target, props, on, Wrapper, WrapperData }: MountViewArgs) {
   let component: Component;
 
@@ -23,8 +50,11 @@ function mountView({ Component, target, props, on, Wrapper, WrapperData }: Mount
 
     const wrapper = new Wrapper({
       target,
-      slots: { default: fragment },
-      props: WrapperData || {},
+      props: {
+        ...WrapperData,
+        $$slots: createSlots({ default: fragment }),
+        $$scope: {},
+      },
     });
     component.$on('destroy', () => {
       wrapper.$destroy(true);
@@ -35,7 +65,7 @@ function mountView({ Component, target, props, on, Wrapper, WrapperData }: Mount
 
   if (on) {
     // Attach svelte event listeners.
-    Object.keys(on).forEach(eventName => {
+    Object.keys(on).forEach((eventName) => {
       component.$on(eventName, on[eventName]);
     });
   }
@@ -43,13 +73,7 @@ function mountView({ Component, target, props, on, Wrapper, WrapperData }: Mount
   previousComponent = component;
 }
 
-export default function render({
-  storyFn,
-  selectedKind,
-  selectedStory,
-  showMain,
-  showError,
-}: RenderMainArgs) {
+export default function render({ storyFn, kind, name, showMain, showError }: RenderContext) {
   const {
     /** @type {SvelteComponent} */
     Component,
@@ -67,7 +91,7 @@ export default function render({
 
   if (!DefaultCompatComponent) {
     showError({
-      title: `Expecting a Svelte component from the story: "${selectedStory}" of "${selectedKind}".`,
+      title: `Expecting a Svelte component from the story: "${name}" of "${kind}".`,
       description: dedent`
         Did you forget to return the Svelte component configuration from the story?
         Use "() => ({ Component: YourComponent, data: {} })"

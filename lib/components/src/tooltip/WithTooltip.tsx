@@ -1,7 +1,5 @@
 import React, { FunctionComponent, ReactNode, useState, useEffect } from 'react';
 import { styled } from '@storybook/theming';
-import { logger } from '@storybook/client-logger';
-// import { withState, lifecycle } from 'recompose';
 import { document } from 'global';
 
 import TooltipTrigger from 'react-popper-tooltip';
@@ -11,11 +9,11 @@ import { Tooltip } from './Tooltip';
 // A target that doesn't speak popper
 const TargetContainer = styled.div<{ mode: string }>`
   display: inline-block;
-  cursor: ${props => (props.mode === 'hover' ? 'default' : 'pointer')};
+  cursor: ${(props) => (props.mode === 'hover' ? 'default' : 'pointer')};
 `;
 
 const TargetSvgContainer = styled.g<{ mode: string }>`
-  cursor: ${props => (props.mode === 'hover' ? 'default' : 'pointer')};
+  cursor: ${(props) => (props.mode === 'hover' ? 'default' : 'pointer')};
 `;
 
 interface WithHideFn {
@@ -100,9 +98,11 @@ WithTooltipPure.defaultProps = {
   tooltipShown: false,
 };
 
-const WithToolTipState: FunctionComponent<WithTooltipPureProps & {
-  startOpen?: boolean;
-}> = ({ startOpen, ...rest }) => {
+const WithToolTipState: FunctionComponent<
+  WithTooltipPureProps & {
+    startOpen?: boolean;
+  }
+> = ({ startOpen, ...rest }) => {
   const [tooltipShown, onVisibilityChange] = useState(startOpen || false);
 
   useEffect(() => {
@@ -112,7 +112,7 @@ const WithToolTipState: FunctionComponent<WithTooltipPureProps & {
     // Find all iframes on the screen and bind to clicks inside them (waiting until the iframe is ready)
     const iframes: HTMLIFrameElement[] = Array.from(document.getElementsByTagName('iframe'));
     const unbinders: (() => void)[] = [];
-    iframes.forEach(iframe => {
+    iframes.forEach((iframe) => {
       const bind = () => {
         try {
           if (iframe.contentWindow.document) {
@@ -121,12 +121,12 @@ const WithToolTipState: FunctionComponent<WithTooltipPureProps & {
               try {
                 iframe.contentWindow.document.removeEventListener('click', hide);
               } catch (e) {
-                logger.warn('Removing a click listener from iframe failed: ', e);
+                // logger.debug('Removing a click listener from iframe failed: ', e);
               }
             });
           }
         } catch (e) {
-          logger.warn('Adding a click listener to iframe failed: ', e);
+          // logger.debug('Adding a click listener to iframe failed: ', e);
         }
       };
 
@@ -139,7 +139,7 @@ const WithToolTipState: FunctionComponent<WithTooltipPureProps & {
 
     return () => {
       document.removeEventListener('keydown', hide);
-      unbinders.forEach(unbind => {
+      unbinders.forEach((unbind) => {
         unbind();
       });
     };

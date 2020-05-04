@@ -87,6 +87,7 @@ Storybook Docs supports all view layers that Storybook supports except for React
 | Source            |   +   |  +  |    +    |   +   |       +        |  +   |   +    |   +    |  +   |    +    |   +   |
 | Notes / Info      |   +   |  +  |    +    |   +   |       +        |  +   |   +    |   +    |  +   |    +    |   +   |
 | Props table       |   +   |  +  |    +    |   +   |       +        |      |        |        |      |         |       |
+| Props controls    |   +   |  +  |         |       |                |      |        |        |      |         |       |
 | Description       |   +   |  +  |    +    |   +   |       +        |      |        |        |      |         |       |
 | Inline stories    |   +   |  +  |         |       |       +        |      |        |        |      |         |       |
 
@@ -138,6 +139,7 @@ Add the following to your Jest configuration:
 - [Angular](./angular)
 - [Ember](./ember)
 - [Web Components](./web-components)
+- [Common setup (all other frameworks)](./common)
 
 ## Preset options
 
@@ -164,7 +166,7 @@ The `configureJSX` option is useful when you're writing your docs in MDX and you
 
 ## Manual configuration
 
-If you don't want to use the preset, and prefer to configure "the long way" add the following configuration to `.storybook/main.js` (see comments inline for explanation):
+We recommend using the preset, which should work out of the box. If you don't want to use the preset, and prefer to configure "the long way" add the following configuration to `.storybook/main.js` (see comments inline for explanation):
 
 ```js
 const createCompiler = require('@storybook/addon-docs/mdx-compiler-plugin');
@@ -174,7 +176,7 @@ module.exports = {
   //    will configure everything with a preset)
   addons: ['@storybook/addon-docs/register'],
   // 2. manually configure webpack, since you're not using the preset
-  webpackFinal: async config => {
+  webpackFinal: async (config) => {
     config.module.rules.push({
       // 2a. Load `.stories.mdx` / `.story.mdx` files as CSF and generate
       //     the docs page from the markdown
@@ -208,7 +210,7 @@ module.exports = {
 };
 ```
 
-Finally, you'll need to set up DocsPage in `.storybook/preview.js`:
+You'll also need to set up the docs parameter in `.storybook/preview.js`. This includes the `DocsPage` for rendering the page, a container, and various configuration options, such as `extractComponentDescription` for manually extracting a component description:
 
 ```js
 import { addParameters } from '@storybook/react';
@@ -235,7 +237,6 @@ Install the preset with care. If you've already configured Typescript manually, 
 
 Want to learn more? Here are some more articles on Storybook Docs:
 
-- References: [DocsPage](./docs/docspage.md) / [MDX](./docs/mdx.md) / [FAQ](./docs/faq.md) / [Recipes](./docs/recipes.md) / [Theming](./docs/theming.md)
-- Vision: [Storybook Docs sneak peak](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a)
-- Announcement: [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf)
+- References: [DocsPage](./docs/docspage.md) / [MDX](./docs/mdx.md) / [FAQ](./docs/faq.md) / [Recipes](./docs/recipes.md) / [Theming](./docs/theming.md) / [Props](./docs/props-tables.md)
+- Announcements: [Vision](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a) / [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf) / [MDX](https://medium.com/storybookjs/rich-docs-with-storybook-mdx-61bc145ae7bc) / [Framework support](https://medium.com/storybookjs/storybook-docs-for-new-frameworks-b1f6090ee0ea)
 - Example: [Storybook Design System](https://github.com/storybookjs/design-system)

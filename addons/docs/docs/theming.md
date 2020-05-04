@@ -1,26 +1,39 @@
-# Storybook Docs Theming
+<h1>Storybook Docs Theming</h1>
 
 [Storybook Docs](../README.md) is themable! There are three different levels of theming, just to keep things interesting:
 
 - [Storybook theming](#storybook-theming)
 - [CSS escape hatches](#css-escape-hatches)
 - [MDX component overrides](#mdx-component-overrides)
+- [More resources](#more-resources)
 
 ## Storybook theming
 
-Storybook theming is the **recommended way** to theme your docs. If you update your storybook theme according to [the documentation](https://storybook.js.org/docs/configurations/theming/), Storybook Docs should adapt in reasonable ways.
+Storybook theming is the **recommended way** to theme your docs. Docs uses the same theme system as [Storybook UI](https://storybook.js.org/docs/configurations/theming/), but is themed independently from the main UI.
 
-For example, here's how to change your docs (and Storybook) to the dark theme, by modifying `.storybook/preview.js`:
+Supposing you have a Storybook theme defined for the main UI in `.storybook/manager.js`:
 
 ```js
-import { addParameters } from '@storybook/react';
+import { addons } from '@storybook/addons';
+// or a custom theme
 import { themes } from '@storybook/theming';
 
-addParameters({
-  options: {
+addons.setConfig({
+  theme: themes.dark,
+});
+```
+
+Here's how you'd specify the same theme for docs in `.storybook/preview.js`:
+
+```js
+import { themes } from '@storybook/theming';
+
+// or global addParameters
+export const parameters = {
+  docs: {
     theme: themes.dark,
   },
-});
+};
 ```
 
 ## CSS escape hatches
@@ -60,7 +73,7 @@ addParameters({
 });
 ```
 
-You can even override a Storybook *block* component.
+You can even override a Storybook _block_ component.
 
 Here's how you might insert a custom `<Preview />` block:
 
@@ -78,10 +91,7 @@ addParameters({
 
 ## More resources
 
-Want to learn more? Here are some more articles on Storybook Docs:
-
-- References: [README](../README.md) / [DocsPage](docspage.md) / [MDX](mdx.md) / [FAQ](faq.md) / [Recipes](recipes.md)
-- Vision: [Storybook Docs sneak peak](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a)
-- Announcement: [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf)
+- References: [README](../README.md) / [DocsPage](docspage.md) / [MDX](mdx.md) / [FAQ](faq.md) / [Recipes](recipes.md) / [Theming](theming.md) / [Props](props-tables.md)
+- Framework-specific docs: [React](../react/README.md) / [Vue](../vue/README.md) / [Angular](../angular/README.md) / [Web components](../web-components/README.md) / [Ember](../ember/README.md)
+- Announcements: [Vision](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a) / [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf) / [MDX](https://medium.com/storybookjs/rich-docs-with-storybook-mdx-61bc145ae7bc) / [Framework support](https://medium.com/storybookjs/storybook-docs-for-new-frameworks-b1f6090ee0ea)
 - Example: [Storybook Design System](https://github.com/storybookjs/design-system)
-- [Technical preview guide](https://docs.google.com/document/d/1un6YX7xDKEKl5-MVb-egnOYN8dynb5Hf7mq0hipk8JE/edit?usp=sharing)

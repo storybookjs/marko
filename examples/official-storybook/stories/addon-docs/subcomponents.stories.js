@@ -9,8 +9,8 @@ export default {
   subcomponents: { DocgenButton },
 };
 
-export const basic = () => (
-  <ButtonGroup>
+export const Basic = () => (
+  <ButtonGroup background="#eee">
     <DocgenButton label="foo" />
     <DocgenButton label="bar" />
   </ButtonGroup>

@@ -46,7 +46,9 @@ type StringAlias = string;
 type NumberAlias = number;
 type AliasesIntersection = StringAlias & NumberAlias;
 type AliasesUnion = StringAlias | NumberAlias;
-type GenericAlias<T> = { value: T };
+interface GenericAlias<T> {
+  value: T;
+}
 
 interface TypeScriptPropsProps {
   any: any;
@@ -128,5 +130,6 @@ interface TypeScriptHtmlComponentProps {
   text: string;
 }
 
-export const TypeScriptHtmlComponent: FC<React.HTMLAttributes<HTMLDivElement> &
-  TypeScriptHtmlComponentProps> = () => <div>My HTML component</div>;
+export const TypeScriptHtmlComponent: FC<
+  React.HTMLAttributes<HTMLDivElement> & TypeScriptHtmlComponentProps
+> = () => <div>My HTML component</div>;

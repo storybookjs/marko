@@ -7,17 +7,19 @@ import {
   navigate,
   LocationProvider,
   RouteComponentProps,
+  LocationContext,
   NavigateFn,
 } from '@reach/router';
 import { ToggleVisibility } from './visibility';
-import { queryFromString, parsePath, getMatch } from './utils';
+import { queryFromString, parsePath, getMatch, StoryData } from './utils';
 
-interface Other {
-  viewMode?: string;
-  storyId?: string;
+interface Other extends StoryData {
+  path: string;
 }
 
-export type RenderData = RouteComponentProps & Other;
+export type RenderData = Pick<LocationContext, 'location'> &
+  Partial<Pick<LocationContext, 'navigate'>> &
+  Other;
 
 interface MatchingData {
   match: null | { path: string };
@@ -33,12 +35,12 @@ interface QueryMatchProps {
 }
 interface RouteProps {
   path: string;
-  startsWith: boolean;
-  hideOnly: boolean;
-  children: (renderData: RenderData) => ReactNode;
+  startsWith?: boolean;
+  hideOnly?: boolean;
+  children: ReactNode;
 }
 
-interface QueryLinkProps {
+export interface QueryLinkProps {
   to: string;
   children: ReactNode;
 }
@@ -62,15 +64,16 @@ const QueryLocation = ({ children }: QueryLocationProps) => (
   <Location>
     {({ location }: RouteComponentProps): ReactNode => {
       const { path } = queryFromString(location.search);
-      const { viewMode, storyId } = parsePath(path);
-      return children({ path, location, navigate: queryNavigate, viewMode, storyId });
+      const { viewMode, storyId, refId } = parsePath(path);
+
+      return children({ path, location, navigate: queryNavigate, viewMode, storyId, refId });
     }}
   </Location>
 );
 QueryLocation.displayName = 'QueryLocation';
 
 // A render-prop component for rendering when a certain path is hit.
-// It's immensly similar to `Location` but it receives an addition data property: `match`.
+// It's immensely similar to `Location` but it receives an addition data property: `match`.
 // match has a truethy value when the path is hit.
 const QueryMatch = ({ children, path: targetPath, startsWith = false }: QueryMatchProps) => (
   <QueryLocation>

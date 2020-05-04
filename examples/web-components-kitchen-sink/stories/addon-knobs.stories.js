@@ -84,11 +84,7 @@ export const Story4 = () => {
       <p>${stockMessage}</p>
       <p>Also, I have:</p>
       <ul>
-        ${items.map(
-          item => html`
-            <li>${item}</li>
-          `
-        )}
+        ${items.map((item) => html` <li>${item}</li> `)}
       </ul>
       <p>${salutation}</p>
     </div>

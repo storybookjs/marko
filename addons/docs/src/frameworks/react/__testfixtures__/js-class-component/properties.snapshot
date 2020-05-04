@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`react component properties js-class-component 1`] = `
+Object {
+  "rows": Array [
+    Object {
+      "defaultValue": null,
+      "description": "PropTypes description",
+      "name": "children",
+      "required": true,
+      "sbType": Object {
+        "name": "other",
+        "value": "node",
+      },
+      "type": Object {
+        "detail": undefined,
+        "summary": "node",
+      },
+    },
+  ],
+}
+`;
