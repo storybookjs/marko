@@ -14,9 +14,9 @@ npm i -D @storybook/addon-backgrounds
 
 ## Configuration
 
-Then create a file called `main.js` in your storybook config.
+If it doesn't exist yet, create a file called `main.js` in your storybook config.
 
-Add following content to it:
+Add the following content to it:
 
 ```js
 module.exports = {
@@ -26,18 +26,29 @@ module.exports = {
 
 ## Usage
 
-Then write your stories like this:
+Backgrounds requires two parameters: 
+* `default` - matches the **name** of the value which will be selected by default.
+* `values`  - an array of elements containing name and value (with a valid css color e.g. HEX, RGBA, etc.)
 
-```js
+Write your stories like this:
+
+```jsx
 import React from 'react';
 
+/*
+ * Button.stories.js
+ * Applies backgrounds to the Stories 
+ */
 export default {
   title: 'Button',
   parameters: {
-    backgrounds: [
-      { name: 'twitter', value: '#00aced', default: true },
-      { name: 'facebook', value: '#3b5998' },
-    ]
+    backgrounds: {
+      default: 'twitter',
+      values: [
+        { name: 'twitter', value: '#00aced' },
+        { name: 'facebook', value: '#3b5998' },
+      ],
+    },
   },
 };
 
@@ -52,16 +63,19 @@ You can add the backgrounds to all stories with `addParameters` in `.storybook/p
 import { addParameters } from '@storybook/react'; // <- or your storybook framework
 
 addParameters({
-  backgrounds: [
-    { name: 'twitter', value: '#00aced', default: true },
-    { name: 'facebook', value: '#3b5998' },
-  ],
+  backgrounds: {
+    default: 'twitter',
+    values: [
+      { name: 'twitter', value: '#00aced' },
+      { name: 'facebook', value: '#3b5998' },
+    ],
+  },
 });
 ```
 
 If you want to override backgrounds for a single story or group of stories, pass the `backgrounds` parameter:
 
-```js
+```jsx
 import React from 'react';
 
 export default {
@@ -71,39 +85,39 @@ export default {
 export const defaultView = () => (
   <button>Click me</button>
 );
+
 defaultView.story = {
   parameters: {
-    backgrounds: [
-      { name: 'red', value: 'rgba(255, 0, 0)' },
-    ],
-  },
+    backgrounds: {
+      default: 'red',
+      values: [
+        { name: 'red', value: 'rgba(255, 0, 0)' },
+      ],
+    },
+  }
 };
 ```
 
-If you don't want to use backgrounds for a story, you can set the `backgrounds` parameter to `[]`, or use `{ disable: true }` to skip the addon:
+If you don't want to use backgrounds for a story, you can set the `backgrounds` parameter to `{ disable: true }` to skip the addon:
 
-```js
+```jsx
 import React from 'react';
 
+/*
+ * Button.stories.js
+ * Disables backgrounds for one Story 
+ */
 export default {
   title: 'Button',
 }
 
-export const noBackgrounds = () => (
-  <button>Click me</button>
-);
-noBackgrounds.story = {
-  parameters: {
-    backgrounds: [],
-  },
-};
-
 export const disabledBackgrounds = () => (
   <button>Click me</button>
 );
+
 disabledBackgrounds.story = {
   parameters: {
-    backgrounds: { disabled: true },
+    backgrounds: { disable: true },
   },
 };
 ```
