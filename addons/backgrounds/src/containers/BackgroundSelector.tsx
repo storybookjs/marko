@@ -121,7 +121,7 @@ const getBackgroundsConfig = ({ api, state }: Combo): BackgroundsConfig => {
 
   if (Array.isArray(backgroundsParameter)) {
     logger.warn(
-      'Addon Backgrounds api has changed in Storybook 6.0. Please refer to the migration guide.'
+      'Addon Backgrounds api has changed in Storybook 6.0. Please refer to the migration guide: https://github.com/storybookjs/storybook/blob/next/MIGRATION.md'
     );
   }
 
