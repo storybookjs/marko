@@ -5,10 +5,13 @@ import '../demo-wc-card.js';
 export default {
   title: 'Addons/Backgrounds',
   parameters: {
-    backgrounds: [
-      { name: 'light', value: '#eeeeee' },
-      { name: 'dark', value: '#222222', default: true },
-    ],
+    backgrounds: {
+      default: 'dark',
+      values: [
+        { name: 'light', value: '#eeeeee' },
+        { name: 'dark', value: '#222222' },
+      ],
+    },
   },
 };
 
