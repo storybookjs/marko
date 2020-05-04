@@ -25,3 +25,18 @@ export const Null = () => {
     </>
   );
 };
+
+export const ValidatedAsArray = () => {
+  const [value, setValue] = useState([]);
+  return (
+    <>
+      <ObjectControl
+        name="object"
+        value={value}
+        onChange={(name, newVal) => setValue(newVal)}
+        validator={(obj: any) => Array.isArray(obj)}
+      />
+      <p>{value && JSON.stringify(value)}</p>
+    </>
+  );
+};
