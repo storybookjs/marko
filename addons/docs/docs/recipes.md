@@ -290,7 +290,11 @@ import { Meta, DocsContainer } from '@storybook/addon-docs/blocks';
       ),
     },
   }}
-/>;
+/>
+
+# Title
+
+Rest of your file...
 ```
 
 ## More resources
