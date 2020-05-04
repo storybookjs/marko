@@ -32,9 +32,9 @@ export const ValidatedAsArray = () => {
     <>
       <ObjectControl
         name="object"
+        argType={{ type: { name: 'array' } }}
         value={value}
         onChange={(name, newVal) => setValue(newVal)}
-        validator={(obj: any) => Array.isArray(obj)}
       />
       <p>{value && JSON.stringify(value)}</p>
     </>

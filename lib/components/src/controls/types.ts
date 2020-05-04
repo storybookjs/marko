@@ -1,8 +1,11 @@
+import { ArgType } from '../blocks';
+
 /* eslint-disable @typescript-eslint/no-empty-interface */
 export interface ControlProps<T> {
   name: string;
   value: T;
   defaultValue?: T;
+  argType?: ArgType;
   onChange: (name: string, value: T) => T | void;
 }
 
@@ -30,9 +33,7 @@ export interface NumberConfig {
 export type RangeConfig = NumberConfig;
 
 export type ObjectValue = any;
-export interface ObjectConfig {
-  validator?: (obj: any) => boolean;
-}
+export interface ObjectConfig {}
 
 export type OptionsSingleSelection = any;
 export type OptionsMultiSelection = any[];
