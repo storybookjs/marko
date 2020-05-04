@@ -113,21 +113,9 @@
 
 Starting in 6.0, the backgrounds addon now receives an object instead of an array as parameter, with a property to define the default background.
 
-Consider the following example of its usage in both `preview.js` and `Button.stories.js`:
+Consider the following example of its usage in `Button.stories.js`:
 ```jsx
-// preview.js
-import { addParameters } from '@storybook/react'; // <- or your storybook framework
-
-addParameters({
-  backgrounds: [
-    { name: 'twitter', value: '#00aced', default: true },
-    { name: 'facebook', value: '#3b5998' },
-  ],
-});
-
 // Button.stories.js
-import React from 'react';
-
 export default {
   title: 'Button',
   parameters: {
@@ -141,22 +129,7 @@ export default {
 
 Here's an updated version of the example, using the new api:
 ```jsx
-// preview.js
-import { addParameters } from '@storybook/react'; // <- or your storybook framework
-
-addParameters({
-  backgrounds: {
-    default: 'twitter',
-    values: [
-      { name: 'twitter', value: '#00aced' },
-      { name: 'facebook', value: '#3b5998' },
-    ],
-  },
-});
-
 // Button.stories.js
-import React from 'react';
-
 export default {
   title: 'Button',
   parameters: {
