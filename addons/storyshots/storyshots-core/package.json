@@ -32,7 +32,7 @@
     "storybook": "start-storybook -p 6006"
   },
   "dependencies": {
-    "@jest/transform": "^25.2.4",
+    "@jest/transform": "^26.0.0",
     "@storybook/addons": "6.0.0-beta.2",
     "@storybook/client-api": "6.0.0-beta.2",
     "@storybook/core": "6.0.0-beta.2",
