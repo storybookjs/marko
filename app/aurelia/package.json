@@ -1,0 +1,58 @@
+{
+  "name": "@storybook/aurelia",
+  "version": "6.0.0-beta.2",
+  "description": "Storybook for Aurelia: Develop Aurelia Components in isolation with Hot Reloading.",
+  "keywords": [
+    "storybook"
+  ],
+  "homepage": "https://github.com/storybookjs/storybook/tree/master/app/aurelia",
+  "bugs": {
+    "url": "https://github.com/storybookjs/storybook/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/storybookjs/storybook.git",
+    "directory": "app/aurelia"
+  },
+  "license": "MIT",
+  "main": "dist/client/index.js",
+  "types": "dist/client/index.d.ts",
+  "bin": {
+    "build-storybook": "./bin/build.js",
+    "start-storybook": "./bin/index.js",
+    "storybook-server": "./bin/index.js"
+  },
+  "scripts": {
+    "prepare": "node ../../scripts/prepare.js"
+  },
+  "dependencies": {
+    "@storybook/addon-knobs": "6.0.0-beta.2",
+    "@storybook/addons": "6.0.0-beta.2",
+    "@storybook/core": "6.0.0-beta.2",
+    "@storybook/node-logger": "6.0.0-beta.2",
+    "fork-ts-checker-webpack-plugin": "^4.0.3",
+    "global": "^4.3.2",
+    "ts-loader": "^6.0.1",
+    "webpack": "^4.33.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.0",
+    "@types/webpack-env": "^1.15.1",
+    "css-loader": "^3.0.0",
+    "file-loader": "^4.2.0",
+    "html-webpack-plugin": "^3.0.0",
+    "htmlhint": "^0.11.0",
+    "node-sass": "^4.12.0",
+    "rimraf": "^2.0.0",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^0.23.0",
+    "typescript": "latest",
+    "webpack": "^4.33.0"
+  },
+  "peerDependencies": {
+    "aurelia": "dev"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
