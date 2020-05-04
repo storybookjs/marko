@@ -57,12 +57,10 @@ export const defaultView = () => (
 );
 ```
 
-You can add the backgrounds to all stories with `addParameters` in `.storybook/preview.js`:
+You can add the backgrounds to all stories by using `parameters` in `.storybook/preview.js`:
 
 ```js
-import { addParameters } from '@storybook/react'; // <- or your storybook framework
-
-addParameters({
+export const parameters = {
   backgrounds: {
     default: 'twitter',
     values: [
@@ -70,7 +68,7 @@ addParameters({
       { name: 'facebook', value: '#3b5998' },
     ],
   },
-});
+};
 ```
 
 If you want to override backgrounds for a single story or group of stories, pass the `backgrounds` parameter:
@@ -96,6 +94,26 @@ defaultView.story = {
     },
   }
 };
+```
+
+Once you have defined backgrounds for your stories (as can be seen in the examples above), you can set a default background per story by passing the `default` property using a name from the available backgrounds:
+```jsx
+import React from 'react';
+
+/*
+ * Button.stories.js
+ * Applies default background to the Stories 
+ */
+export default {
+  title: 'Button',
+  parameters: {
+    backgrounds: { default: 'twitter' },
+  },
+}
+
+export const twitterColorSelected = () => (
+  <button>Click me</button>
+);
 ```
 
 If you don't want to use backgrounds for a story, you can set the `backgrounds` parameter to `{ disable: true }` to skip the addon:
