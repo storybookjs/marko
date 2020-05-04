@@ -6,7 +6,7 @@ import { MemoButton } from '../../components/MemoButton';
 
 <Meta title="Addons/Docs/props" component={ButtonGroup} />
 
-export const FooBar = ({ foo, bar } = {}) => (
+export const FooBar = ({ foo, bar, baz } = {}) => (
   <table>
     <tr>
       <td>Foo</td>
@@ -15,6 +15,10 @@ export const FooBar = ({ foo, bar } = {}) => (
     <tr>
       <td>Bar</td>
       <td>{bar}</td>
+    </tr>
+    <tr>
+      <td>Baz</td>
+      <td>{baz && baz.toString()}</td>
     </tr>
   </table>
 );
@@ -27,10 +31,16 @@ export const FooBar = ({ foo, bar } = {}) => (
     args={{
       foo: false,
       bar: '',
+      baz: ['a', 'b'],
     }}
     argTypes={{
       foo: { name: 'foo', type: { name: 'boolean' }, description: 'foo description' },
       bar: { name: 'bar', type: { name: 'string' }, description: 'bar description' },
+      baz: {
+        name: 'baz',
+        type: { name: 'array', value: { name: 'string' } },
+        description: 'baz description',
+      },
     }}
   >
     {(args) => <FooBar {...args} />}

@@ -16,7 +16,7 @@ const inferType = (value?: any): SBType => {
   if (Array.isArray(value)) {
     const childType: SBType =
       value.length > 0 ? inferType(value[0]) : { name: 'other', value: 'unknown' };
-    return { name: 'array', value: [childType] };
+    return { name: 'array', value: childType };
   }
   if (value) {
     const fieldTypes = mapValues(value, (field) => inferType(field));

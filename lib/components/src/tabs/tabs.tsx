@@ -67,6 +67,7 @@ const Content = styled.div<ContentProps>(
   },
   ({ theme }) => ({
     fontSize: theme.typography.size.s2 - 1,
+    background: theme.background.content,
   }),
   ({ bordered, theme }) =>
     bordered

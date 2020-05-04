@@ -15,7 +15,11 @@ const runWebComponentsAnalyzer = (inputPath: string) => {
     stdio: 'inherit',
   });
   const output = fs.readFileSync(customElementsFile, 'utf8');
-  removeCallback();
+  try {
+    removeCallback();
+  } catch (e) {
+    //
+  }
   return output;
 };
 

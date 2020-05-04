@@ -55,11 +55,9 @@ const includeStory = (story: StoreItem, options: StoryOptions = { includeDocsOnl
   return !isStoryDocsOnly(story.parameters);
 };
 
-const inJest = () => process.env.JEST_WORKER_ID !== undefined;
-
 const checkGlobalArgs = (parameters: Parameters) => {
   const { globalArgs, globalArgTypes } = parameters;
-  if ((globalArgs || globalArgTypes) && !inJest()) {
+  if (globalArgs || globalArgTypes) {
     logger.error(
       'Global args/argTypes can only be set globally',
       JSON.stringify({
@@ -75,7 +73,9 @@ const checkStorySort = (parameters: Parameters) => {
   if (options?.storySort) logger.error('The storySort option parameter can only be set globally');
 };
 
-type AllowUnsafeOption = { allowUnsafe?: boolean };
+interface AllowUnsafeOption {
+  allowUnsafe?: boolean;
+}
 
 const toExtracted = <T>(obj: T) =>
   Object.entries(obj).reduce((acc, [key, value]) => {

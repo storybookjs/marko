@@ -1,10 +1,11 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import createCompiler from '@storybook/addon-docs/mdx-compiler-plugin';
 import path from 'path';
 import remarkSlug from 'remark-slug';
 import remarkExternalLinks from 'remark-external-links';
 
 import { DllReferencePlugin } from 'webpack';
+
+// @ts-ignore
+import createCompiler from '../../mdx/mdx-compiler-plugin';
 
 const coreDirName = path.dirname(require.resolve('@storybook/core/package.json'));
 const context = path.join(coreDirName, '../../node_modules');
@@ -65,7 +66,7 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
           include: new RegExp(`node_modules\\${path.sep}acorn-jsx`),
           use: [
             {
-              loader: 'babel-loader',
+              loader: require.resolve('babel-loader'),
               options: {
                 presets: [[require.resolve('@babel/preset-env'), { modules: 'commonjs' }]],
               },
@@ -76,11 +77,11 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
           test: /\.(stories|story).mdx$/,
           use: [
             {
-              loader: 'babel-loader',
+              loader: require.resolve('babel-loader'),
               options: createBabelOptions(babelOptions, configureJSX),
             },
             {
-              loader: '@mdx-js/loader',
+              loader: require.resolve('@mdx-js/loader'),
               options: {
                 compilers: [createCompiler(options)],
                 ...mdxLoaderOptions,
@@ -93,11 +94,11 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
           exclude: /\.(stories|story).mdx$/,
           use: [
             {
-              loader: 'babel-loader',
+              loader: require.resolve('babel-loader'),
               options: createBabelOptions(babelOptions, configureJSX),
             },
             {
-              loader: '@mdx-js/loader',
+              loader: require.resolve('@mdx-js/loader'),
               options: mdxLoaderOptions,
             },
           ],
@@ -111,7 +112,7 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
     result.plugins.push(
       new DllReferencePlugin({
         context,
-        manifest: path.join(coreDirName, 'dll', 'storybook_docs-manifest.json'),
+        manifest: require.resolve('@storybook/core/dll/storybook_docs-manifest.json'),
       })
     );
   }
