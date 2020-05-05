@@ -138,7 +138,7 @@ const getBackgroundsConfig = ({ api, state }: Combo): BackgroundsConfig => {
 
   return {
     disable: false,
-    backgrounds: backgroundsParameter.values,
+    backgrounds: backgroundsParameter?.values,
     selectedBackground: selectedBackgroundValue,
     defaultBackgroundName: backgroundsParameter?.default,
   };
