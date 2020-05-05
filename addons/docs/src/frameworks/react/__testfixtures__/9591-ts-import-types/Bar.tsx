@@ -1,3 +1,3 @@
-export type BarProps = {
+export interface BarProps {
   foo?: string;
-};
+}

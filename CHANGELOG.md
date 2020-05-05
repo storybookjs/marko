@@ -1,3 +1,61 @@
+## 6.0.0-beta.2 (May 4, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix broken props logic for no-args stories ([#10633](https://github.com/storybookjs/storybook/pull/10633))
+- Addon-docs: Fix custom source manual override ([#10632](https://github.com/storybookjs/storybook/pull/10632))
+- Addon-docs: Fix MDX stories with multiple children ([#9531](https://github.com/storybookjs/storybook/pull/9531))
+- Addon-docs: Fix object array in Props ([#10621](https://github.com/storybookjs/storybook/pull/10621))
+- Actions: Fix import of `uuid` ([#10625](https://github.com/storybookjs/storybook/pull/10625))
+
+### Maintenance
+
+- Core: Fix Args test to not use different code path ([#10607](https://github.com/storybookjs/storybook/pull/10607))
+
+## 6.0.0-beta.1 (May 2, 2020)
+
+### Features
+
+- CLI: Add automatic detection for svelte ([#10623](https://github.com/storybookjs/storybook/pull/10623))
+
+### Bug Fixes
+
+- Addon-docs: Fix no-props logic in Source block ([#10619](https://github.com/storybookjs/storybook/pull/10619))
+- Props: Fix subcomponents ([#10608](https://github.com/storybookjs/storybook/pull/10608))
+
+### Maintenance
+
+- Yarn 2: Fix dependencies issues for compatibility ([#10613](https://github.com/storybookjs/storybook/pull/10613))
+- CLI: Fix cli when working with Yarn 2 and Node 10 ([#10550](https://github.com/storybookjs/storybook/pull/10550))
+
+## 6.0.0-beta.0 (April 29, 2020)
+
+Storybook 6.0 is in beta. 🎉🎉🎉
+
+Hundreds of improvements and fixes, including:
+
+- **Args** - Dynamic story data with automatic prop controls and actions.
+- **Composition** - Compose storybooks for better documentation, performance, and multi-framework support.
+- **Server** - Enabling Storybook for Rails and other server-side components.
+- **Yarn 2** - Supporting next generation package management.
+
+Track the release in the Github: [Storybook 6.0 Release 🏆](https://github.com/storybookjs/storybook/issues/9311)
+
+## 6.0.0-alpha.46 (April 29, 2020)
+
+### Breaking Changes
+
+- Core: Normalize parameters in store/channel ([#10373](https://github.com/storybookjs/storybook/pull/10373))
+- React: Remove deprecated CRA preset ([#10571](https://github.com/storybookjs/storybook/pull/10571))
+
+### Features
+
+- Addon-docs: Props controls for Vue ([#10559](https://github.com/storybookjs/storybook/pull/10559))
+
+### Bug Fixes
+
+- Addon-docs: Add subcomponents prop to Meta block ([#10573](https://github.com/storybookjs/storybook/pull/10573))
+
 ## 6.0.0-alpha.45 (April 28, 2020)
 
 ## Breaking changes

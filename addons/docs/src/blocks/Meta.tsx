@@ -3,12 +3,14 @@ import { document } from 'global';
 import { Anchor } from './Anchor';
 import { DocsContext, DocsContextProps } from './DocsContext';
 import { getDocsStories } from './utils';
+import { Component } from './types';
 
 type Decorator = (...args: any) => any;
 
 interface MetaProps {
   title: string;
-  component?: any;
+  component?: Component;
+  subcomponents: Record<string, Component>;
   decorators?: [Decorator];
   parameters?: any;
 }

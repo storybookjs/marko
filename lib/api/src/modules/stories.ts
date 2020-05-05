@@ -5,21 +5,24 @@ import {
   UPDATE_STORY_ARGS,
   STORY_ARGS_UPDATED,
   STORY_CHANGED,
-  SET_STORIES,
   SELECT_STORY,
+  SET_STORIES,
 } from '@storybook/core-events';
 
 import { logger } from '@storybook/client-logger';
 import {
+  denormalizeStoryParameters,
   transformStoriesRawToStoriesHash,
   StoriesHash,
   Story,
   Group,
-  StoriesRaw,
+  SetStoriesPayload,
   StoryId,
   isStory,
   Root,
   isRoot,
+  StoriesRaw,
+  SetStoriesPayloadV2,
 } from '../lib/stories';
 
 import { Args, ModuleFn } from '../index';
@@ -302,30 +305,36 @@ export const init: ModuleFn = ({
       }
     });
 
-    fullAPI.on(SET_STORIES, function handleSetStories(data: { stories: StoriesRaw }) {
+    fullAPI.on(SET_STORIES, function handleSetStories(data: SetStoriesPayload) {
       // the event originates from an iframe, event.source is the iframe's location origin + pathname
-      const { storyId } = store.getState();
       const { source }: { source: string } = this;
       const [sourceType, sourceLocation] = getSourceType(source);
+
+      // TODO: what is the mechanism where we warn here?
+      if (data.v && data.v > 2)
+        // eslint-disable-next-line no-console
+        console.warn(`Received SET_STORIES event with version ${data.v}, we'll try and handle it`);
+
+      const stories = data.v
+        ? denormalizeStoryParameters(data as SetStoriesPayloadV2)
+        : data.stories;
 
       switch (sourceType) {
         // if it's a local source, we do nothing special
         case 'local': {
-          fullAPI.setStories(data.stories);
-          const options = storyId
-            ? fullAPI.getParameters(storyId, 'options')
-            : fullAPI.getParameters(Object.keys(data.stories)[0], 'options');
-          fullAPI.setOptions(options);
+          if (!data.v) throw new Error('Unexpected legacy SET_STORIES event from local source');
+
+          fullAPI.setStories(stories);
+
+          fullAPI.setOptions((data as SetStoriesPayloadV2).globalParameters.options);
           break;
         }
 
         // if it's a ref, we need to map the incoming stories to a prefixed version, so it cannot conflict with others
         case 'external': {
           const ref = fullAPI.findRef(sourceLocation);
-
           if (ref) {
-            console.log('ref2', ref);
-            fullAPI.setRef(ref.id, { ...ref, ...data }, true);
+            fullAPI.setRef(ref.id, { ...ref, ...data, stories }, true);
             break;
           }
         }

@@ -55,7 +55,7 @@ export class PostmsgTransport {
    * @param event
    */
   send(event: ChannelEvent, options?: any): Promise<any> {
-    let depth = 15;
+    let depth = 25;
     let allowFunction = true;
     let target;
 

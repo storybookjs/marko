@@ -87,6 +87,7 @@ Storybook Docs supports all view layers that Storybook supports except for React
 | Source            |   +   |  +  |    +    |   +   |       +        |  +   |   +    |   +    |  +   |    +    |   +   |
 | Notes / Info      |   +   |  +  |    +    |   +   |       +        |  +   |   +    |   +    |  +   |    +    |   +   |
 | Props table       |   +   |  +  |    +    |   +   |       +        |      |        |        |      |         |       |
+| Props controls    |   +   |  +  |         |       |                |      |        |        |      |         |       |
 | Description       |   +   |  +  |    +    |   +   |       +        |      |        |        |      |         |       |
 | Inline stories    |   +   |  +  |         |       |       +        |      |        |        |      |         |       |
 
@@ -138,6 +139,7 @@ Add the following to your Jest configuration:
 - [Angular](./angular)
 - [Ember](./ember)
 - [Web Components](./web-components)
+- [Common setup (all other frameworks)](./common)
 
 ## Preset options
 

@@ -1,13 +1,14 @@
 import deprecate from 'util-deprecate';
 import dedent from 'ts-dedent';
 import { sanitize, parseKind } from '@storybook/csf';
+import { mapValues } from 'lodash';
 
-import { Args } from '../index';
+import { StoryId, StoryKind, Args, Parameters, combineParameters } from '../index';
 import merge from './merge';
 import { Provider } from '../modules/provider';
 import { ViewMode } from '../modules/addons';
 
-export type StoryId = string;
+export { StoryId };
 
 export interface Root {
   id: StoryId;
@@ -48,7 +49,7 @@ export interface Story {
   depth: number;
   parent: StoryId;
   name: string;
-  kind: string;
+  kind: StoryKind;
   refId?: string;
   children?: StoryId[];
   isComponent: boolean;
@@ -73,7 +74,7 @@ export interface StoryInput {
   id: StoryId;
   name: string;
   refId?: string;
-  kind: string;
+  kind: StoryKind;
   children: string[];
   parameters: {
     fileName: string;
@@ -101,6 +102,20 @@ export type GroupsList = (Root | Group)[];
 
 export interface StoriesRaw {
   [id: string]: StoryInput;
+}
+
+export interface SetStoriesPayload {
+  v?: number;
+  stories: StoriesRaw;
+}
+
+export interface SetStoriesPayloadV2 extends SetStoriesPayload {
+  v: 2;
+  globalParameters: Parameters;
+  kindParameters: {
+    [kind: string]: Parameters;
+  };
+  stories: StoriesRaw;
 }
 
 const warnUsingHierarchySeparatorsAndShowRoots = deprecate(
@@ -134,6 +149,21 @@ const toGroup = (name: string) => ({
   name,
   id: toKey(name),
 });
+
+export const denormalizeStoryParameters = ({
+  globalParameters,
+  kindParameters,
+  stories,
+}: SetStoriesPayloadV2): StoriesRaw => {
+  return mapValues(stories, (storyData) => ({
+    ...storyData,
+    parameters: combineParameters(
+      globalParameters,
+      kindParameters[storyData.kind],
+      (storyData.parameters as unknown) as Parameters
+    ),
+  }));
+};
 
 export const transformStoriesRawToStoriesHash = (
   input: StoriesRaw,

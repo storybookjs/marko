@@ -424,7 +424,9 @@ describe('storybook type system', () => {
         type NumberAlias = number;
         type AliasesIntersection = StringAlias & NumberAlias;
         type AliasesUnion = StringAlias | NumberAlias;
-        type GenericAlias<T> = { value: T };
+        interface GenericAlias<T> {
+          value: T;
+        }
         interface Props {
           typeAlias: StringAlias;
           aliasesIntersection: AliasesIntersection;
@@ -464,13 +466,9 @@ describe('storybook type system', () => {
             ]
           },
           "genericAlias": {
-            "raw": "{ value: T }",
-            "name": "object",
-            "value": {
-              "value": {
-                "name": "string"
-              }
-            }
+            "raw": "GenericAlias<string>",
+            "name": "other",
+            "value": "GenericAlias"
           }
         }
       `);

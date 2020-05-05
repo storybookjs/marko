@@ -32,7 +32,7 @@ export const ArgControl: FC<ArgControlProps> = ({ row, arg, updateArgs }) => {
     return <>-</>;
   }
 
-  const props = { name, value: arg, onChange };
+  const props = { name, argType: row, value: arg, onChange };
   switch (control.type) {
     case 'array':
       return <ArrayControl {...props} {...control} />;

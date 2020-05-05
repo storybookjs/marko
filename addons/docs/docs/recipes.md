@@ -15,6 +15,7 @@
   - [MDX Stories](#mdx-stories)
 - [Controlling a story's view mode](#controlling-a-storys-view-mode)
 - [Customizing source snippets](#customizing-source-snippets)
+- [Overwriting docs container](#overwriting-docs-container)
 - [More resources](#more-resources)
 
 ## Component Story Format (CSF) with DocsPage
@@ -266,6 +267,35 @@ export const parameters = {
 ```
 
 These two methods are complementary. The former is useful for story-specific, and the latter is useful for global formatting.
+
+## Overwriting docs container
+
+What happens if you want to add some wrapper for your MDX page, or add some other kind of React context?
+
+When you're writing stories you can do this by adding a [decorator](https://storybook.js.org/docs/basics/writing-stories/#decorators), but when you're adding arbitrary JSX to your MDX documentation outside of a `<Story>` block, decorators no longer apply, and you need to use the `docs.container` parameter.
+
+The closest Docs equivalent of a decorator is the `container`, a wrapper element that is rendered around the page that is being rendered. Here's an example of adding a solid red border around the page. It uses Storybook's default page container (that sets up various contexts and other magic) and then inserts its own logic between that container and the contents of the page:
+
+```js
+import { Meta, DocsContainer } from '@storybook/addon-docs/blocks';
+
+<Meta
+  title="Addons/Docs/container-override"
+  parameters={{
+    docs: {
+      container: ({ children, context }) => (
+        <DocsContainer context={context}>
+          <div style={{ border: '5px solid red' }}>{children}</div>
+        </DocsContainer>
+      ),
+    },
+  }}
+/>
+
+# Title
+
+Rest of your file...
+```
 
 ## More resources
 

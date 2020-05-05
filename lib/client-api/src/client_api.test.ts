@@ -120,7 +120,7 @@ describe('preview.client_api', () => {
 
       const result = storyStore.fromId('kind--name').storyFn();
       // @ts-ignore
-      const { docs, fileName, options, ...rest } = result;
+      const { docs, fileName, options, argTypes, ...rest } = result;
 
       expect(rest).toEqual({ a: 1 });
     });
@@ -601,6 +601,7 @@ describe('preview.client_api', () => {
         b: 'kind',
         c: 'story',
         fileName: expect.any(String),
+        argTypes: {},
       });
     });
 
@@ -653,6 +654,7 @@ describe('preview.client_api', () => {
           },
         },
         fileName: expect.any(String),
+        argTypes: {},
       });
     });
   });
