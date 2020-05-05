@@ -157,11 +157,11 @@ export default class StoryStore {
     this.pushToManager();
     if (this._channel) this._channel.emit(Events.RENDER_CURRENT_STORY);
 
-    const storyIds = Object.keys(this._stories);
-    if (storyIds.length) {
+    const [firstStory] = Object.values(this._stories);
+    if (firstStory) {
       const {
         parameters: { globalArgs: initialGlobalArgs, globalArgTypes },
-      } = this.fromId(storyIds[0]);
+      } = this.mergeAdditionalDataToStory(firstStory);
 
       const defaultGlobalArgs: Args = globalArgTypes
         ? Object.entries(globalArgTypes as Record<string, { defaultValue: any }>).reduce(
@@ -419,11 +419,7 @@ export default class StoryStore {
         return null;
       }
 
-      return {
-        ...data,
-        parameters: this.combineStoryParameters(data.parameters, data.kind),
-        globalArgs: this._globalArgs,
-      };
+      return this.mergeAdditionalDataToStory(data);
     } catch (e) {
       logger.warn('failed to get story:', this._stories);
       logger.error(e);
@@ -431,12 +427,11 @@ export default class StoryStore {
     }
   };
 
-  raw(options?: StoryOptions) {
+  raw(options?: StoryOptions): PublishedStoreItem[] {
     return Object.values(this._stories)
       .filter((i) => !!i.getDecorated)
       .filter((i) => includeStory(i, options))
-      .map(({ id }) => this.fromId(id))
-      .filter(Boolean);
+      .map((i) => this.mergeAdditionalDataToStory(i));
   }
 
   extract(options: StoryOptions & { normalizeParameters?: boolean } = {}) {
@@ -571,5 +566,13 @@ export default class StoryStore {
         return kinds;
       }, {})
     ).sort((s1, s2) => this._kinds[s1.kind].order - this._kinds[s2.kind].order);
+  }
+
+  private mergeAdditionalDataToStory(story: StoreItem): PublishedStoreItem {
+    return {
+      ...story,
+      parameters: this.combineStoryParameters(story.parameters, story.kind),
+      globalArgs: this._globalArgs,
+    };
   }
 }
