@@ -107,6 +107,7 @@ export interface StoriesRaw {
 export interface SetStoriesPayload {
   v?: number;
   stories: StoriesRaw;
+  error?: Error;
 }
 
 export interface SetStoriesPayloadV2 extends SetStoriesPayload {
@@ -115,7 +116,6 @@ export interface SetStoriesPayloadV2 extends SetStoriesPayload {
   kindParameters: {
     [kind: string]: Parameters;
   };
-  stories: StoriesRaw;
 }
 
 const warnUsingHierarchySeparatorsAndShowRoots = deprecate(
