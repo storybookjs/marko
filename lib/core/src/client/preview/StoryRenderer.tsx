@@ -90,6 +90,7 @@ export class StoryRenderer {
       this.channel.on(Events.STORY_ARGS_UPDATED, () => this.forceReRender());
       this.channel.on(Events.GLOBAL_ARGS_UPDATED, () => this.forceReRender());
       this.channel.on(Events.FORCE_RE_RENDER, () => this.forceReRender());
+      this.channel.on(Events.STORY_ERRORED, (err) => this.showErrorDisplay(err));
     }
   }
 

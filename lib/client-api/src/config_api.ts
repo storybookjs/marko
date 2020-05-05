@@ -27,6 +27,7 @@ export default class ConfigApi {
       this._storyStore.finishConfiguring();
     } catch (err) {
       this._storyStore.setError(err);
+      this._storyStore.failConfiguring(err);
     }
 
     if (module.hot) {
