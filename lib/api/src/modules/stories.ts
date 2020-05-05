@@ -7,6 +7,7 @@ import {
   STORY_CHANGED,
   SELECT_STORY,
   SET_STORIES,
+  CURRENT_STORY_WAS_SET,
 } from '@storybook/core-events';
 
 import { logger } from '@storybook/client-logger';
@@ -38,6 +39,7 @@ export interface SubState {
   storyId: StoryId;
   viewMode: ViewMode;
   storiesConfigured: boolean;
+  storiesFailed?: Error;
 }
 
 export interface SubAPI {
@@ -49,7 +51,7 @@ export interface SubAPI {
     obj?: { ref?: string; viewMode?: ViewMode }
   ) => void;
   getCurrentStoryData: () => Story | Group;
-  setStories: (stories: StoriesRaw) => Promise<void>;
+  setStories: (stories: StoriesRaw, failed?: Error) => Promise<void>;
   jumpToComponent: (direction: Direction) => void;
   jumpToStory: (direction: Direction) => void;
   getData: (storyId: StoryId, refId?: string) => Story | Group;
@@ -216,7 +218,7 @@ export const init: ModuleFn = ({
         api.selectStory(result, undefined, { ref: refId });
       }
     },
-    setStories: async (input) => {
+    setStories: async (input, error) => {
       // Now create storiesHash by reordering the above by group
       const existing = store.getState().storiesHash;
       const hash = transformStoriesRawToStoriesHash(input, existing, {
@@ -226,6 +228,7 @@ export const init: ModuleFn = ({
       await store.setState({
         storiesHash: hash,
         storiesConfigured: true,
+        storiesFailed: error,
       });
 
       const { refId } = store.getState();
@@ -324,7 +327,7 @@ export const init: ModuleFn = ({
         case 'local': {
           if (!data.v) throw new Error('Unexpected legacy SET_STORIES event from local source');
 
-          fullAPI.setStories(stories);
+          fullAPI.setStories(stories, data.error);
 
           fullAPI.setOptions((data as SetStoriesPayloadV2).globalParameters.options);
           break;
@@ -381,6 +384,38 @@ export const init: ModuleFn = ({
       const { storiesHash } = store.getState();
       (storiesHash[id] as Story).args = args;
       store.setState({ storiesHash });
+    });
+
+    fullAPI.on(CURRENT_STORY_WAS_SET, function handleSetStory({ storyId, viewMode }) {
+      // the event originates from an iframe, event.source is the iframe's location origin + pathname
+      const { source }: { source: string } = this;
+
+      const [sourceType, sourceLocation] = getSourceType(source);
+
+      switch (sourceType) {
+        case 'local': {
+          if (!store.getState().storiesConfigured) {
+            store.setState({ storiesConfigured: true });
+          }
+
+          break;
+        }
+
+        // if it's a ref, we need to map the incoming stories to a prefixed version, so it cannot conflict with others
+        case 'external': {
+          const ref = fullAPI.findRef(sourceLocation);
+          if (ref && !ref.ready) {
+            fullAPI.changeRefState(ref.id, true);
+            break;
+          }
+        }
+
+        // if we couldn't find the source, something risky happened, we ignore the input, and log a warning
+        default: {
+          logger.warn('received a SET_STORIES frame that was not configured as a ref');
+          break;
+        }
+      }
     });
   };
 
