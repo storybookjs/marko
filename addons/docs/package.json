@@ -111,7 +111,7 @@
     "require-from-string": "^2.0.2",
     "rxjs": "^6.5.4",
     "styled-components": "^5.0.1",
-    "terser-webpack-plugin": "^2.3.6",
+    "terser-webpack-plugin": "^3.0.0",
     "tmp": "^0.2.1",
     "tslib": "^1.11.1",
     "web-component-analyzer": "^1.0.3",
