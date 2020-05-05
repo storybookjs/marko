@@ -793,16 +793,18 @@ describe('preview.story_store', () => {
     });
   });
 
-  describe('RENDER_CURRENT_STORY', () => {
+  describe('STORY_ERRORED', () => {
     it('is emitted when setError is called', () => {
       const onRenderCurrentStory = jest.fn();
-      channel.on(Events.RENDER_CURRENT_STORY, onRenderCurrentStory);
+      channel.on(Events.STORY_ERRORED, onRenderCurrentStory);
       const store = new StoryStore({ channel });
 
       store.setError(new Error('Something is bad!') as ErrorLike);
       expect(onRenderCurrentStory).toHaveBeenCalled();
     });
+  });
 
+  describe('RENDER_CURRENT_STORY', () => {
     it('is NOT emitted when setSelection is called during configuration', () => {
       const onRenderCurrentStory = jest.fn();
       channel.on(Events.RENDER_CURRENT_STORY, onRenderCurrentStory);
