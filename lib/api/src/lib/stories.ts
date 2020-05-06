@@ -107,11 +107,11 @@ export interface StoriesRaw {
 export interface SetStoriesPayload {
   v?: number;
   stories: StoriesRaw;
-  error?: Error;
 }
 
 export interface SetStoriesPayloadV2 extends SetStoriesPayload {
   v: 2;
+  error?: Error;
   globalParameters: Parameters;
   kindParameters: {
     [kind: string]: Parameters;
