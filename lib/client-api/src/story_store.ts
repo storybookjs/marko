@@ -157,35 +157,30 @@ export default class StoryStore {
     this.pushToManager();
     if (this._channel) this._channel.emit(Events.RENDER_CURRENT_STORY);
 
-    const [firstStory] = Object.values(this._stories);
-    if (firstStory) {
-      const {
-        parameters: { globalArgs: initialGlobalArgs, globalArgTypes },
-      } = this.mergeAdditionalDataToStory(firstStory);
+    const { globalArgs: initialGlobalArgs, globalArgTypes } = this._globalMetadata.parameters;
 
-      const defaultGlobalArgs: Args = globalArgTypes
-        ? Object.entries(globalArgTypes as Record<string, { defaultValue: any }>).reduce(
-            (acc, [arg, { defaultValue }]) => {
-              if (defaultValue) acc[arg] = defaultValue;
-              return acc;
-            },
-            {} as Args
-          )
-        : {};
+    const defaultGlobalArgs: Args = globalArgTypes
+      ? Object.entries(globalArgTypes as Record<string, { defaultValue: any }>).reduce(
+          (acc, [arg, { defaultValue }]) => {
+            if (defaultValue) acc[arg] = defaultValue;
+            return acc;
+          },
+          {} as Args
+        )
+      : {};
 
-      // To deal with HMR, we consider the previous value of global args, and:
-      //   1. Remove any keys that are not in the new parameter
-      //   2. Preference any keys that were already set
-      //   3. Use any new keys from the new parameter
-      this._globalArgs = Object.entries(this._globalArgs || {}).reduce(
-        (acc, [key, previousValue]) => {
-          if (acc[key]) acc[key] = previousValue;
+    // To deal with HMR, we consider the previous value of global args, and:
+    //   1. Remove any keys that are not in the new parameter
+    //   2. Preference any keys that were already set
+    //   3. Use any new keys from the new parameter
+    this._globalArgs = Object.entries(this._globalArgs || {}).reduce(
+      (acc, [key, previousValue]) => {
+        if (acc[key]) acc[key] = previousValue;
 
-          return acc;
-        },
-        { ...defaultGlobalArgs, ...initialGlobalArgs }
-      );
-    }
+        return acc;
+      },
+      { ...defaultGlobalArgs, ...initialGlobalArgs }
+    );
   }
 
   addGlobalMetadata({ parameters, decorators }: StoryMetadata) {
