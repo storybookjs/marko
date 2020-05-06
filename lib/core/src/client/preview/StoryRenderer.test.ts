@@ -103,6 +103,7 @@ describe('core.preview.StoryRenderer', () => {
       const { render, storyStore, renderer } = prepareRenderer();
       const err = { message: 'message', stack: 'stack' };
       storyStore.setError(err);
+      storyStore.finishConfiguring();
 
       expect(render).not.toHaveBeenCalled();
       expect(renderer.showErrorDisplay).toHaveBeenCalledWith(err);

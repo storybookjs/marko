@@ -794,6 +794,16 @@ describe('preview.story_store', () => {
   });
 
   describe('RENDER_CURRENT_STORY', () => {
+    it('is emitted when setError is called', () => {
+      const onRenderCurrentStory = jest.fn();
+      channel.on(Events.RENDER_CURRENT_STORY, onRenderCurrentStory);
+      const store = new StoryStore({ channel });
+
+      store.setError(new Error('Something is bad!') as ErrorLike);
+      store.finishConfiguring();
+      expect(onRenderCurrentStory).toHaveBeenCalled();
+    });
+
     it('is NOT emitted when setSelection is called during configuration', () => {
       const onRenderCurrentStory = jest.fn();
       channel.on(Events.RENDER_CURRENT_STORY, onRenderCurrentStory);
