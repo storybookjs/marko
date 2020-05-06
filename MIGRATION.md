@@ -1,6 +1,7 @@
 <h1>Migration</h1>
 
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
+  - [Backgrounds addon has a new API](#backgrounds-addon-has-a-new-api)
   - [CRA preset removed](#cra-preset-removed)
   - [Args passed as first argument to story](#args-passed-as-first-argument-to-story)
   - [Docs theme separated](#docs-theme-separated)
@@ -107,6 +108,41 @@
   - [Deprecated embedded addons](#deprecated-embedded-addons)
 
 ## From version 5.3.x to 6.0.x
+
+### Backgrounds addon has a new api
+
+Starting in 6.0, the backgrounds addon now receives an object instead of an array as parameter, with a property to define the default background.
+
+Consider the following example of its usage in `Button.stories.js`:
+```jsx
+// Button.stories.js
+export default {
+  title: 'Button',
+  parameters: {
+    backgrounds: [
+      { name: 'twitter', value: '#00aced', default: true },
+      { name: 'facebook', value: '#3b5998' },
+    ],
+  },
+};
+```
+
+Here's an updated version of the example, using the new api:
+```jsx
+// Button.stories.js
+export default {
+  title: 'Button',
+  parameters: {
+    backgrounds: {
+      default: 'twitter',
+      values: [
+        { name: 'twitter', value: '#00aced' },
+        { name: 'facebook', value: '#3b5998' },
+      ],
+    },
+  },
+};
+```
 
 ### CRA preset removed
 
