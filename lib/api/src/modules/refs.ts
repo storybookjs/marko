@@ -97,7 +97,7 @@ export const init: ModuleFn = ({ store, provider }) => {
 
       api.checkRef(ref);
     },
-    changeRefReady: (id, ready) => {
+    changeRefState: (id, ready) => {
       const refs = api.getRefs();
       store.setState({
         refs: {
