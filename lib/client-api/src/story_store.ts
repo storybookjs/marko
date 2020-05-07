@@ -160,35 +160,30 @@ export default class StoryStore {
       this._channel.emit(Events.RENDER_CURRENT_STORY);
     }
 
-    const storyIds = Object.keys(this._stories);
-    if (storyIds.length) {
-      const {
-        parameters: { globalArgs: initialGlobalArgs, globalArgTypes },
-      } = this.fromId(storyIds[0]);
+    const { globalArgs: initialGlobalArgs, globalArgTypes } = this._globalMetadata.parameters;
 
-      const defaultGlobalArgs: Args = globalArgTypes
-        ? Object.entries(globalArgTypes as Record<string, { defaultValue: any }>).reduce(
-            (acc, [arg, { defaultValue }]) => {
-              if (defaultValue) acc[arg] = defaultValue;
-              return acc;
-            },
-            {} as Args
-          )
-        : {};
+    const defaultGlobalArgs: Args = globalArgTypes
+      ? Object.entries(globalArgTypes as Record<string, { defaultValue: any }>).reduce(
+          (acc, [arg, { defaultValue }]) => {
+            if (defaultValue) acc[arg] = defaultValue;
+            return acc;
+          },
+          {} as Args
+        )
+      : {};
 
-      // To deal with HMR, we consider the previous value of global args, and:
-      //   1. Remove any keys that are not in the new parameter
-      //   2. Preference any keys that were already set
-      //   3. Use any new keys from the new parameter
-      this._globalArgs = Object.entries(this._globalArgs || {}).reduce(
-        (acc, [key, previousValue]) => {
-          if (acc[key]) acc[key] = previousValue;
+    // To deal with HMR, we consider the previous value of global args, and:
+    //   1. Remove any keys that are not in the new parameter
+    //   2. Preference any keys that were already set
+    //   3. Use any new keys from the new parameter
+    this._globalArgs = Object.entries(this._globalArgs || {}).reduce(
+      (acc, [key, previousValue]) => {
+        if (acc[key]) acc[key] = previousValue;
 
-          return acc;
-        },
-        { ...defaultGlobalArgs, ...initialGlobalArgs }
-      );
-    }
+        return acc;
+      },
+      { ...defaultGlobalArgs, ...initialGlobalArgs }
+    );
   }
 
   addGlobalMetadata({ parameters, decorators }: StoryMetadata) {
@@ -422,11 +417,7 @@ export default class StoryStore {
         return null;
       }
 
-      return {
-        ...data,
-        parameters: this.combineStoryParameters(data.parameters, data.kind),
-        globalArgs: this._globalArgs,
-      };
+      return this.mergeAdditionalDataToStory(data);
     } catch (e) {
       logger.warn('failed to get story:', this._stories);
       logger.error(e);
@@ -434,11 +425,11 @@ export default class StoryStore {
     }
   };
 
-  raw(options?: StoryOptions) {
+  raw(options?: StoryOptions): PublishedStoreItem[] {
     return Object.values(this._stories)
       .filter((i) => !!i.getDecorated)
       .filter((i) => includeStory(i, options))
-      .map(({ id }) => this.fromId(id));
+      .map((i) => this.mergeAdditionalDataToStory(i));
   }
 
   extract(options: StoryOptions & { normalizeParameters?: boolean } = {}) {
@@ -583,5 +574,13 @@ export default class StoryStore {
         return kinds;
       }, {})
     ).sort((s1, s2) => this._kinds[s1.kind].order - this._kinds[s2.kind].order);
+  }
+
+  private mergeAdditionalDataToStory(story: StoreItem): PublishedStoreItem {
+    return {
+      ...story,
+      parameters: this.combineStoryParameters(story.parameters, story.kind),
+      globalArgs: this._globalArgs,
+    };
   }
 }

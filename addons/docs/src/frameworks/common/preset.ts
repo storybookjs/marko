@@ -8,7 +8,10 @@ import { DllReferencePlugin } from 'webpack';
 import createCompiler from '../../mdx/mdx-compiler-plugin';
 
 const coreDirName = path.dirname(require.resolve('@storybook/core/package.json'));
-const context = path.join(coreDirName, '../../node_modules');
+// TODO: improve node_modules detection
+const context = coreDirName.includes('node_modules')
+  ? path.join(coreDirName, '../../') // Real life case, already in node_modules
+  : path.join(coreDirName, '../../node_modules'); // SB Monorepo
 
 function createBabelOptions(babelOptions?: any, configureJSX?: boolean) {
   if (!configureJSX) {

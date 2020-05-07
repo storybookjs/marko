@@ -95,6 +95,9 @@ export const darkWithRefs = () => (
 
 darkWithRefs.story = {
   parameters: {
-    backgrounds: [{ name: 'dark', value: '#222222', default: true }],
+    backgrounds: {
+      default: 'dark',
+      values: [{ name: 'dark', value: '#222222', default: true }],
+    },
   },
 };

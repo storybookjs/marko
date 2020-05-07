@@ -8,14 +8,14 @@ function test(options: StoryshotsOptions): boolean {
 }
 
 function load(options: StoryshotsOptions) {
-  const storybook = require.requireActual('@storybook/react');
+  const storybook = jest.requireActual('@storybook/react');
 
   configure({ ...options, storybook });
 
   return {
     framework: 'react' as const,
-    renderTree: require.requireActual('./renderTree').default,
-    renderShallowTree: require.requireActual('./renderShallowTree').default,
+    renderTree: jest.requireActual('./renderTree').default,
+    renderShallowTree: jest.requireActual('./renderShallowTree').default,
     storybook,
   };
 }
