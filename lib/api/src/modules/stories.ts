@@ -391,38 +391,6 @@ export const init: ModuleFn = ({
       (storiesHash[id] as Story).args = args;
       store.setState({ storiesHash });
     });
-
-    fullAPI.on(CURRENT_STORY_WAS_SET, function handleSetStory({ storyId, viewMode }) {
-      // the event originates from an iframe, event.source is the iframe's location origin + pathname
-      const { source }: { source: string } = this;
-
-      const [sourceType, sourceLocation] = getSourceType(source);
-
-      switch (sourceType) {
-        case 'local': {
-          if (!store.getState().storiesConfigured) {
-            store.setState({ storiesConfigured: true });
-          }
-
-          break;
-        }
-
-        // if it's a ref, we need to map the incoming stories to a prefixed version, so it cannot conflict with others
-        case 'external': {
-          const ref = fullAPI.findRef(sourceLocation);
-          if (ref && !ref.ready) {
-            fullAPI.changeRefState(ref.id, true);
-            break;
-          }
-        }
-
-        // if we couldn't find the source, something risky happened, we ignore the input, and log a warning
-        default: {
-          logger.warn('received a SET_STORIES frame that was not configured as a ref');
-          break;
-        }
-      }
-    });
   };
 
   return {
