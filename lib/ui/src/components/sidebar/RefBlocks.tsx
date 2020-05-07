@@ -220,6 +220,24 @@ export const ErrorBlock: FunctionComponent<{ error: Error }> = ({ error }) => (
   </Contained>
 );
 
+export const EmptyBlock: FunctionComponent = () => (
+  <Contained>
+    <Spaced>
+      <Text>Ow now! something went wrong loading this storybook</Text>
+      <WithTooltip
+        trigger="click"
+        closeOnClick={false}
+        tooltip={<ErrorDisplay>There was no error, but there were no stories loaded</ErrorDisplay>}
+      >
+        <Button small gray>
+          <Icons icon="doclist" />
+          View error
+        </Button>
+      </WithTooltip>
+    </Spaced>
+  </Contained>
+);
+
 export const LoaderBlock: FunctionComponent<{ isMain: boolean }> = ({ isMain }) => (
   <Contained>
     <Loader size={isMain ? 17 : 5} />

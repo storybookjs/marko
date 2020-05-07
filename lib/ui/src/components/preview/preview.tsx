@@ -61,8 +61,7 @@ const createCanvas = (id: string, baseUrl = 'iframe.html', withLoader = true): A
           ]);
 
           const isLoading = !!(
-            (!story && !storiesFailed) ||
-            (!story && storiesConfigured === false) ||
+            (!story && !(storiesFailed || storiesConfigured)) ||
             (story && refId && refs[refId] && !refs[refId].ready)
           );
 
