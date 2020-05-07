@@ -1,3 +1,19 @@
+## 6.0.0-beta.3 (May 7, 2020)
+
+### Breaking Changes
+
+- Addon-backgrounds: Simplified parameters API ([#10634](https://github.com/storybookjs/storybook/pull/10634))
+
+### Bug Fixes
+
+- Core: Fix `globalArgs` initialization from global parameters ([#10566](https://github.com/storybookjs/storybook/pull/10566))
+- Core: Fix DLL context for IE11 ([#106444]https://github.com/storybookjs/storybook/pull/10644))
+
+### Dependency Upgrades
+
+- Addon-storyshots: Upgrade to jest 26 ([#10642](https://github.com/storybookjs/storybook/pull/10642))
+- Bump terser-webpack-plugin from 2.3.6 to 3.0.0 ([#10650](https://github.com/storybookjs/storybook/pull/10650))
+
 ## 6.0.0-beta.2 (May 4, 2020)
 
 ### Bug Fixes

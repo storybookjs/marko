@@ -297,6 +297,33 @@ import { Meta, DocsContainer } from '@storybook/addon-docs/blocks';
 Rest of your file...
 ```
 
+This is especially useful if you are using `styled-components` and need to wrap your JSX with a `ThemeProvider` to have access to your theme:
+
+```js
+import { Meta, DocsContainer } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components'
+import { theme } from '../path/to/theme'
+
+<Meta
+  title="Addons/Docs/container-override"
+  parameters={{
+    docs: {
+      container: ({ children, context }) => (
+        <DocsContainer context={context}>
+          <ThemeProvider theme={theme}>
+            {children}
+          </ThemeProvider>
+        </DocsContainer>
+      ),
+    },
+  }}
+/>
+
+# Title
+
+Rest of your file...
+```
+
 ## More resources
 
 - References: [README](../README.md) / [DocsPage](docspage.md) / [MDX](mdx.md) / [FAQ](faq.md) / [Recipes](recipes.md) / [Theming](theming.md) / [Props](props-tables.md)
