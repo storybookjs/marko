@@ -81,7 +81,7 @@ export const simple = () => (
   <Sidebar storiesConfigured menu={menu} stories={stories} storyId={storyId} refs={{}} />
 );
 export const isLoading = () => (
-  <Sidebar storiesConfigured={false} menu={menu} stories={stories} isLoading refs={{}} />
+  <Sidebar storiesConfigured={false} menu={menu} stories={{}} isLoading refs={{}} />
 );
 export const isEmpty = () => (
   <Sidebar storiesConfigured menu={menu} stories={{}} isLoading refs={{}} />
