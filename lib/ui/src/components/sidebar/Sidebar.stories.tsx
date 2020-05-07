@@ -83,6 +83,9 @@ export const simple = () => (
 export const isLoading = () => (
   <Sidebar storiesConfigured={false} menu={menu} stories={stories} isLoading refs={{}} />
 );
+export const isEmpty = () => (
+  <Sidebar storiesConfigured menu={menu} stories={{}} isLoading refs={{}} />
+);
 export const withRefs = () => (
   <Sidebar storiesConfigured menu={menu} stories={stories} isLoading refs={refs} />
 );
