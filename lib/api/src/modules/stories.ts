@@ -7,7 +7,6 @@ import {
   STORY_CHANGED,
   SELECT_STORY,
   SET_STORIES,
-  CURRENT_STORY_WAS_SET,
 } from '@storybook/core-events';
 
 import { logger } from '@storybook/client-logger';
