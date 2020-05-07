@@ -43,4 +43,10 @@ Or, you can export your storybook into the docs directory and use it as the root
 
 To deploy your Storybook project to Vercel, all that's required is to connect your [Git repository](https://vercel.com/docs/v2/git-integrations) and import the project. The build command, project directory, and project type will be automatically detected upon import.
 
+If you are working with more than just a Storybook project in your repository, and just want to build Storybook for your deployment, be sure to set the `build` script in the `package.json` file to the following:
+
+```
+`"build": "build-storybook -c .storybook -o build"`
+```
+
 Once imported, a deployment will be created. From now on, every time you `git push`, a new [Preview Deployment](https://vercel.com/docs/v2/platform/deployments#preview) will be created. If pushing or merging to the default branch, a [Production Deployment](https://vercel.com/docs/v2/platform/deployments#production) will be triggered.
