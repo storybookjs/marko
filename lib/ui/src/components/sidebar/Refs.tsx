@@ -96,7 +96,7 @@ export const Ref: FunctionComponent<RefType & RefProps> = (ref) => {
           {type === 'auth' && <AuthBlock id={ref.id} authUrl={authUrl} />}
           {type === 'error' && <ErrorBlock error={error} />}
           {type === 'loading' && <LoaderBlock isMain={isMain} />}
-          {type === 'empty' && <EmptyBlock />}
+          {type === 'empty' && <EmptyBlock isMain={isMain} />}
           {type === 'ready' && (
             <ContentBlock {...{ others, dataSet, selectedSet, expandedSet, roots }} />
           )}

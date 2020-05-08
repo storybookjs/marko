@@ -40,6 +40,10 @@ const Text = styled.p(({ theme }) => ({
   margin: 0,
 }));
 
+const RedIcon = styled(Icons)(({ theme }) => ({
+  color: theme.color.negative,
+}));
+
 const Head: FunctionComponent<ListitemProps> = (props) => {
   const api = useStorybookApi();
   const { setExpanded, expandedSet } = useContext(ExpanderContext);
@@ -220,21 +224,42 @@ export const ErrorBlock: FunctionComponent<{ error: Error }> = ({ error }) => (
   </Contained>
 );
 
-export const EmptyBlock: FunctionComponent = () => (
+const FlexSpaced = styled(Spaced)({
+  display: 'flex',
+});
+const WideSpaced = styled(Spaced)({
+  flex: 1,
+});
+
+export const EmptyBlock: FunctionComponent<any> = ({ isMain }) => (
   <Contained>
-    <Spaced>
-      <Text>Ow now! something went wrong loading this storybook</Text>
-      <WithTooltip
-        trigger="click"
-        closeOnClick={false}
-        tooltip={<ErrorDisplay>There was no error, but there were no stories loaded</ErrorDisplay>}
-      >
-        <Button small gray>
-          <Icons icon="doclist" />
-          View error
-        </Button>
-      </WithTooltip>
-    </Spaced>
+    <FlexSpaced col={1}>
+      <WideSpaced>
+        {/*  */}
+        <div>
+          <Text>
+            <strong>Ow now! {isMain ? 'Your storybook' : 'this ref'} is empty!</strong>
+          </Text>
+        </div>
+        {isMain ? (
+          <Fragment>
+            <div>
+              <Text>
+                Perhaps the glob specified in <code>main.js</code> found no files?
+              </Text>
+            </div>
+            <div>
+              <Text>Or your story-files don't define any stories?</Text>
+            </div>
+          </Fragment>
+        ) : (
+          <div>
+            <Text>This ref defined no stories</Text>
+          </div>
+        )}
+      </WideSpaced>
+      <RedIcon icon="info" width={14} height={14} />
+    </FlexSpaced>
   </Contained>
 );
 
