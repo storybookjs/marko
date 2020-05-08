@@ -821,6 +821,8 @@ After a few iterations, this approach seems to be working. However, there are a 
 
 We'll update this section as we find more problem cases. If you have a `core-js` problem, please file an issue (preferably with a repro), and we'll do our best to get you sorted.
 
+__Update__: [corejs-upgrade-webpack-plugin](https://github.com/ndelangen/corejs-upgrade-webpack-plugin) has been removed again after running into further issues as described in [https://github.com/storybookjs/storybook/issues/7445](https://github.com/storybookjs/storybook/issues/7445).
+
 ## From version 5.0.1 to 5.0.2
 
 ### Deprecate webpack extend mode

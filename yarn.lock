@@ -10766,7 +10766,7 @@ core-js@^2.4.0, core-js@^2.5.0, core-js@^2.6.5:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
   integrity sha512-5wjnpaT/3dV+XB4borEsnAYQchn00XSgTAWKDkEqv+K8KevjbzmofK6hfJ9TZIlpj2N0xQpazy7PiRQiWHqzWg==
 
-core-js@^3.0.1, core-js@^3.0.4, core-js@^3.5.0, core-js@^3.6.4:
+core-js@^3.0.1, core-js@^3.0.4, core-js@^3.5.0:
   version "3.6.5"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.6.5.tgz#7395dc273af37fb2e50e9bd3d9fe841285231d1a"
   integrity sha512-vZVEEwZoIsI+vPEuoF9Iqf5H7/M3eeQqWlQnYa8FSKKePuYTf5MWnxb5SDAzCa60b3JBRS5g9b+Dq7b1y/RCrA==
@@ -10782,16 +10782,6 @@ core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
   integrity sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
-
-corejs-upgrade-webpack-plugin@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/corejs-upgrade-webpack-plugin/-/corejs-upgrade-webpack-plugin-4.0.1.tgz#c29d61099418b77f17a8b57066d8f71abcbb64c1"
-  integrity sha512-hQl/FyyCuo9pQloW2zNaRpb2GZBb4JaULICUArLDR3O4bPqDZHAXbVov1O+UEfKPb9lqXrRL1miDIXZVO3AN9Q==
-  dependencies:
-    babel-runtime "^6.26.0"
-    core-js "^3.6.4"
-    resolve-from "^5.0.0"
-    webpack "^4.42.1"
 
 cors@^2.8.5, cors@latest:
   version "2.8.5"
@@ -32727,7 +32717,7 @@ webpack@4.42.0:
     watchpack "^1.6.0"
     webpack-sources "^1.4.1"
 
-webpack@^4.27.1, webpack@^4.33.0, webpack@^4.38.0, webpack@^4.41.2, webpack@^4.41.4, webpack@^4.42.1, webpack@^4.43.0:
+webpack@^4.27.1, webpack@^4.33.0, webpack@^4.38.0, webpack@^4.41.2, webpack@^4.41.4, webpack@^4.43.0:
   version "4.43.0"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.43.0.tgz#c48547b11d563224c561dad1172c8aa0b8a678e6"
   integrity sha512-GW1LjnPipFW2Y78OOab8NJlCflB7EFskMih2AHdvjbpKMeDJqEgSx24cXXXiPS65+WSwVyxtDsJH6jGX2czy+g==
