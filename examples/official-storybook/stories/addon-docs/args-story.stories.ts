@@ -1,4 +1,3 @@
-import React from 'react';
 import { argsStory } from '@storybook/react';
 import { DocgenButton } from '../../components/DocgenButton';
 
