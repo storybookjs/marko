@@ -166,7 +166,6 @@
     "commander": "^5.1.0",
     "concurrently": "^5.2.0",
     "core-js": "^3.0.1",
-    "corejs-upgrade-webpack-plugin": "^4.0.1",
     "cross-env": "^7.0.0",
     "danger": "^10.1.1",
     "del": "^5.1.0",
