@@ -161,7 +161,7 @@ export const inGroups = () => {
   const generalGroupId = 'general info';
 
   const name = text("Name", "James", personalGroupId);
-  const age = number("Age", 35, personalGroupId);
+  const age = number("Age", 35, {min: 0, max: 99}, personalGroupId);
   const message = text("Hello!", 35, generalGroupId);
   const content = `
     I am ${name} and I'm ${age} years old.
@@ -369,7 +369,7 @@ const arrayOfObjects = [
 ];
 const defaultValue = arrayOfObjects[0];
 const groupId = 'GROUP-ID3';
-const value = select(label, options, defaultValue, groupId);
+const value = select(label, arrayOfObjects, defaultValue, groupId);
 ```
 
 ### radio buttons
