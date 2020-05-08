@@ -2,6 +2,7 @@
   "name": "aurelia-kitchen-sink",
   "version": "6.0.0-beta.3",
   "description": "An Aurelia client application.",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "???"
