@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /* eslint-disable global-require, no-octal-escape */
 const childProcess = require('child_process');
 

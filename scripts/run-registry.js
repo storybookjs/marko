@@ -1,51 +1,52 @@
-#!/usr/bin/env node -r esm
-import { spawn, exec } from 'child_process';
-import inquirer from 'inquirer';
+import { exec } from 'child_process';
 import chalk from 'chalk';
+import path from 'path';
+import program from 'commander';
 import detectFreePort from 'detect-port';
 import dedent from 'ts-dedent';
 import fs from 'fs';
-
+import yaml from 'js-yaml';
 import nodeCleanup from 'node-cleanup';
+
+import startVerdaccioServer from 'verdaccio';
+import pLimit from 'p-limit';
+import { listOfPackages } from './utils/list-packages';
+
+program
+  .option('-O, --open', 'keep process open')
+  .option('-P, --publish', 'should publish packages')
+  .option('-p, --port <port>', 'port to run https server on');
+
+program.parse(process.argv);
 
 const logger = console;
 
-const freePort = (port) => detectFreePort(port);
-
-let verdaccioProcess;
+const freePort = (port) => port || detectFreePort(port);
 
 const startVerdaccio = (port) => {
   let resolved = false;
   return Promise.race([
-    new Promise((res) => {
-      verdaccioProcess = spawn('npx', [
-        'verdaccio@4.0.1',
-        '-c',
-        'scripts/verdaccio.yaml',
-        '-l',
-        port,
-      ]);
-      verdaccioProcess.stdout.on('data', (data) => {
-        if (!resolved && data && data.toString().match(/http address/)) {
-          const [url] = data.toString().match(/(http:.*\d\/)/);
-          res(url);
+    new Promise((resolve) => {
+      const cache = path.join(__dirname, '..', '.verdaccio-cache');
+      const config = {
+        ...yaml.safeLoad(fs.readFileSync(path.join(__dirname, 'verdaccio.yaml'), 'utf8')),
+        self_path: cache,
+      };
+
+      const onReady = (webServer) => {
+        webServer.listen(port, () => {
           resolved = true;
-        }
-        fs.appendFile('verdaccio.log', data, (err) => {
-          if (err) {
-            throw err;
-          }
+          resolve(webServer);
         });
-      });
+      };
+
+      startVerdaccioServer(config, 6000, cache, '1.0.0', 'verdaccio', onReady);
     }),
     new Promise((res, rej) => {
       setTimeout(() => {
         if (!resolved) {
-          rej(new Error(`TIMEOUT - verdaccio didn't start within 60s`));
-
           resolved = true;
-
-          verdaccioProcess.kill();
+          rej(new Error(`TIMEOUT - verdaccio didn't start within 60s`));
         }
       }, 60000);
     }),
@@ -65,14 +66,6 @@ const registryUrl = (command, url) =>
 
 const registriesUrl = (yarnUrl, npmUrl) =>
   Promise.all([registryUrl('yarn', yarnUrl), registryUrl('npm', npmUrl || yarnUrl)]);
-
-nodeCleanup(() => {
-  try {
-    verdaccioProcess.kill();
-  } catch (e) {
-    //
-  }
-});
 
 const applyRegistriesUrl = (yarnUrl, npmUrl, originalYarnUrl, originalNpmUrl) => {
   logger.log(`↪️  changing system config`);
@@ -107,102 +100,35 @@ const currentVersion = async () => {
   return version;
 };
 
-const publish = (packages, url) =>
-  packages.reduce((acc, { name, location }) => {
-    return acc.then(() => {
-      return new Promise((res, rej) => {
-        logger.log(`🛫 publishing ${name} (${location})`);
-        const command = `cd ${location} && npm publish --registry ${url} --force --access restricted`;
-        exec(command, (e) => {
-          if (e) {
-            rej(e);
-          } else {
-            logger.log(`🛬 successful publish of ${name}!`);
-            res();
-          }
-        });
-      });
-    });
-  }, Promise.resolve());
+const publish = (packages, url) => {
+  const limit = pLimit(3);
 
-const listOfPackages = () =>
-  new Promise((res, rej) => {
-    const command = `./node_modules/.bin/lerna list --json`;
-    exec(command, (e, result) => {
-      if (e) {
-        rej(e);
-      } else {
-        const data = JSON.parse(result.toString().trim());
-        res(data);
-      }
-    });
-  });
-
-const askForPermission = () =>
-  inquirer
-    .prompt([
-      {
-        type: 'confirm',
-        message: `${chalk.red('BE WARNED')} do you want to change your ${chalk.underline(
-          'system'
-        )} default registry to the temp verdacio registry?`,
-        name: 'sure',
-      },
-    ])
-    .then(({ sure }) => sure);
-
-const askForReset = () =>
-  inquirer
-    .prompt([
-      {
-        type: 'confirm',
-        message: `${chalk.red(
-          'THIS IS BAD'
-        )} looks like something bad happened, OR you're already using a local registry, shall we reset to the default registry https://registry.npmjs.org/ ?`,
-        name: 'sure',
-      },
-    ])
-    .then(({ sure }) => {
-      if (sure) {
-        logger.log(`↩️ changing system config`);
-        return registriesUrl('https://registry.npmjs.org/');
-      }
-      return process.exit(1);
-    });
-
-const askForPublish = (packages, url, version) =>
-  inquirer
-    .prompt([
-      {
-        type: 'confirm',
-        message: `${chalk.green('READY TO PUBLISH')} shall we kick off a publish?`,
-        name: 'sure',
-      },
-    ])
-    .then(({ sure }) => {
-      if (sure) {
-        logger.log(`🚀 publishing version ${version}`);
-        return publish(packages, url).then(() => askForPublish(packages, url, version));
-      }
-      return false;
-    });
-
-const askForSubset = (packages) =>
-  inquirer
-    .prompt([
-      {
-        type: 'checkbox',
-        message: 'which packages?',
-        name: 'subset',
-        pageSize: packages.length,
-        choices: packages.map((p) => ({ name: p.name, checked: true })),
-      },
-    ])
-    .then(({ subset }) => packages.filter((p) => subset.includes(p.name)));
+  return Promise.all(
+    packages.map(({ name, location }) =>
+      limit(
+        () =>
+          new Promise((res, rej) => {
+            logger.log(`🛫 publishing ${name} (${location})`);
+            const command = `cd ${location} && npm publish --registry ${url} --force --access restricted`;
+            exec(command, (e) => {
+              if (e) {
+                rej(e);
+              } else {
+                logger.log(`🛬 successful publish of ${name}!`);
+                res();
+              }
+            });
+          })
+      )
+    )
+  );
+};
 
 const run = async () => {
-  const port = await freePort(4873);
+  const port = await freePort(program.port);
   logger.log(`🌏 found a open port: ${port}`);
+
+  const verdaccioUrl = `http://localhost:${port}`;
 
   logger.log(`🔖 reading current registry settings`);
   let [originalYarnRegistryUrl, originalNpmRegistryUrl] = await registriesUrl();
@@ -210,17 +136,15 @@ const run = async () => {
     originalYarnRegistryUrl.includes('localhost') ||
     originalNpmRegistryUrl.includes('localhost')
   ) {
-    await askForReset();
     originalYarnRegistryUrl = 'https://registry.npmjs.org/';
     originalNpmRegistryUrl = 'https://registry.npmjs.org/';
   }
 
   logger.log(`📐 reading version of storybook`);
   logger.log(`🚛 listing storybook packages`);
-  logger.log(`🎬 starting verdaccio (this takes ±20 seconds, so be patient)`);
+  logger.log(`🎬 starting verdaccio (this takes ±5 seconds, so be patient)`);
 
-  const [shouldOverwrite, verdaccioUrl, packages, version] = await Promise.all([
-    askForPermission(),
+  const [verdaccioServer, packages, version] = await Promise.all([
     startVerdaccio(port),
     listOfPackages(),
     currentVersion(),
@@ -228,52 +152,27 @@ const run = async () => {
 
   logger.log(`🌿 verdaccio running on ${verdaccioUrl}`);
 
-  if (shouldOverwrite) {
-    logger.log(dedent`
-      You have chosen to change your system's default registry url. If this process fails for some reason and doesn't exit correctly, you may be stuck with a npm/yarn config that's broken.
-      To fix this you can revert back to the registry urls you had before by running:
+  await applyRegistriesUrl(
+    verdaccioUrl,
+    verdaccioUrl,
+    originalYarnRegistryUrl,
+    originalNpmRegistryUrl
+  );
 
-      > npm config set registry ${originalNpmRegistryUrl}
-      > yarn config set registry ${originalYarnRegistryUrl}
-
-      You can now use regular install procedure anywhere on your machine and the storybook packages will be installed from this local registry
-
-      The registry url is: ${verdaccioUrl}
-    `);
-  } else {
-    logger.log(dedent`
-      You have chosen to NOT change your system's default registry url. 
-
-      The registry is running locally, but you'll need to add a npm/yarn config file in your project in that points to the registry.
-      Here's a documentation for npm: https://docs.npmjs.com/files/npmrc
-      Yarn is able to read this file as well
-
-      The registry url is: ${verdaccioUrl}
-    `);
-  }
-
-  if (shouldOverwrite) {
-    await applyRegistriesUrl(
-      verdaccioUrl,
-      verdaccioUrl,
-      originalYarnRegistryUrl,
-      originalNpmRegistryUrl
-    );
-  }
-
-  await addUser(verdaccioUrl);
+  // await addUser(verdaccioUrl);
 
   logger.log(`📦 found ${packages.length} storybook packages at version ${chalk.blue(version)}`);
 
-  const subset = await askForSubset(packages);
+  if (program.publish) {
+    await publish(packages, verdaccioUrl);
+  }
 
-  await askForPublish(subset, verdaccioUrl, version);
-
-  logger.log(dedent`
-    The verdaccio registry will now be terminated (this can take ±15 seconds, please be patient)
-  `);
-
-  verdaccioProcess.kill();
+  if (!program.open) {
+    verdaccioServer.close();
+  }
 };
 
-run();
+run().catch((e) => {
+  logger.error(e);
+  process.exit(1);
+});

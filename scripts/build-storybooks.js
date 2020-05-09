@@ -1,15 +1,9 @@
-#!/usr/bin/env node
+import { spawn } from 'child_process';
+import { promisify } from 'util';
+import { readdir as readdirRaw, writeFile as writeFileRaw, readFileSync } from 'fs';
+import { join } from 'path';
 
-const { spawn } = require('child_process');
-const { promisify } = require('util');
-const {
-  readdir: readdirRaw,
-  readFile: readFileRaw,
-  writeFile: writeFileRaw,
-  statSync,
-  readFileSync,
-} = require('fs');
-const { join } = require('path');
+import { getDeployables } from './utils/list-examples';
 
 const readdir = promisify(readdirRaw);
 const writeFile = promisify(writeFileRaw);
@@ -34,19 +28,6 @@ const exec = async (command, args = [], options = {}) =>
         reject();
       });
   });
-
-const getDeployables = (files) => {
-  return files.filter((f) => {
-    const packageJsonLocation = p(['examples', f, 'package.json']);
-    let stats = null;
-    try {
-      stats = statSync(packageJsonLocation);
-    } catch (e) {
-      // the folder had no package.json, we'll ignore
-    }
-    return stats && stats.isFile() && hasBuildScript(packageJsonLocation);
-  });
-};
 
 const hasBuildScript = (l) => {
   const text = readFileSync(l, 'utf8');
@@ -158,7 +139,7 @@ const run = async () => {
   const offset = step * a;
 
   const list = examples.slice().splice(offset, step);
-  const deployables = getDeployables(list);
+  const deployables = getDeployables(list, hasBuildScript);
 
   if (deployables.length) {
     logger.log(`will build: ${deployables.join(', ')}`);

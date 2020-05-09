@@ -3,7 +3,7 @@
 /* eslint-disable global-require */
 const { resolve } = require('path');
 const terminalSize = require('window-size');
-const { checkDependenciesAndRun, spawn } = require('./cli-utils');
+const { checkDependenciesAndRun, spawn } = require('./utils/cli-utils');
 
 const getStorybookPackages = () => {
   const listCommand = spawn(`lerna list`, {
@@ -146,8 +146,8 @@ function run() {
             const baseWatchCommand = `lerna exec --scope "${glob}" -- cross-env-shell node ${resolve(
               __dirname
             )}`;
-            const watchTsc = `${baseWatchCommand}/watch-tsc.js`;
-            const watchBabel = `${baseWatchCommand}/watch-babel.js`;
+            const watchTsc = `${baseWatchCommand}/utils/watch-tsc.js`;
+            const watchBabel = `${baseWatchCommand}/utils/watch-babel.js`;
             const command = `concurrently --kill-others "${watchTsc}" "${watchBabel}"`;
             spawn(command);
           };
