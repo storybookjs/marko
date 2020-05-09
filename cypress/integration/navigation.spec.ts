@@ -1,9 +1,8 @@
-/* eslint-disable jest/expect-expect */
-import { visitExample } from '../helper';
+import { visit } from '../helper';
 
 describe('Navigation', () => {
   before(() => {
-    visitExample('official-storybook');
+    visit('official-storybook');
   });
 
   it('should search navigation item', () => {
@@ -23,15 +22,15 @@ describe('Navigation', () => {
 
 describe('Routing', () => {
   it('should navigate to story addons-a11y-basebutton--default', () => {
-    visitExample('official-storybook');
+    visit('official-storybook');
 
     cy.get('#addons-a11y-basebutton--label').click();
     cy.url().should('include', 'path=/story/addons-a11y-basebutton--label');
   });
 
   it('should directly visit a certain story and render correctly', () => {
-    visitExample('official-storybook', '?path=/story/addons-a11y-basebutton--label');
+    visit('official-storybook/?path=/story/addons-a11y-basebutton--label');
 
-    cy.preview().should('contain.text', 'Testing the a11y addon');
+    cy.getStoryElement().should('contain.text', 'Testing the a11y addon');
   });
 });
