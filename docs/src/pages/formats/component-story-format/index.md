@@ -119,7 +119,7 @@ export default {
 }
 
 export const simpleData = { foo: 1, bar: 'baz' };
-export const complexData = { foo: 1, { bar: 'baz', baz: someData }};
+export const complexData = { foo: 1, bar: { baz: someData } };
 
 export const SimpleStory = () => <MyComponent data={simpleData} />;
 export const ComplexStory = () => <MyComponent data={complexData} />;
