@@ -1,5 +1,6 @@
 <my-button>
-  <button class="buttonStyles" onClick="{ onClick }">
+  <button class="buttonStyles" onclick={ onClick }>
+    {opts.content}
     <yield/>
   </button>
 
@@ -16,9 +17,8 @@
   </style>
 
   <script>
-    onClick(e){
-      return (this.opts.callback ||
-        (() => { console.log('clicked') })).bind(this, e)
+    this.onClick = this.opts.onClick || function(e){
+      console.log('clicked', e)
     }
   </script>
 </my-button>
