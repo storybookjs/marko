@@ -33,8 +33,8 @@ const layouts = {
   },
   fullscreen: {
     margin: 0,
-    padding: 'initial',
-    display: 'initial',
+    padding: 0,
+    display: 'block',
     justifyContent: 'initial',
     alignItems: 'initial',
     minHeight: 'initial',
@@ -43,7 +43,7 @@ const layouts = {
   padded: {
     margin: 0,
     padding: '1rem',
-    display: 'initial',
+    display: 'block',
     justifyContent: 'initial',
     alignItems: 'initial',
     minHeight: 'initial',
