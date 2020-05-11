@@ -1,3 +1,25 @@
+## 6.0.0-beta.5 (May 11, 2020)
+
+### Bug Fixes
+
+- Core: Fix error handling on load ([#10659](https://github.com/storybookjs/storybook/pull/10659))
+
+### Maintenance
+
+- Storyshots: Change reference for jest-preset-angular/build/setupJest ([#10699](https://github.com/storybookjs/storybook/pull/10699))
+- CLI: Remove CRA fixtures from Yarn 2 tests run ([#10720](https://github.com/storybookjs/storybook/pull/10720))
+- Fix: Set private package on Aurelia example ([#10688](https://github.com/storybookjs/storybook/pull/10688))
+
+## 6.0.0-beta.4 (May 8, 2020)
+
+### Features
+
+- React: Add `argsStory` convenience function ([#10685](https://github.com/storybookjs/storybook/pull/10685))
+
+### Dependency Upgrades
+
+- Build: Upgrade jest to 26 ([#10669](https://github.com/storybookjs/storybook/pull/10669))
+
 ## 6.0.0-beta.3 (May 7, 2020)
 
 ### Breaking Changes
