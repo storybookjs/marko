@@ -38,6 +38,7 @@ export interface SubState {
   storyId: StoryId;
   viewMode: ViewMode;
   storiesConfigured: boolean;
+  storiesFailed?: Error;
 }
 
 export interface SubAPI {
@@ -49,7 +50,7 @@ export interface SubAPI {
     obj?: { ref?: string; viewMode?: ViewMode }
   ) => void;
   getCurrentStoryData: () => Story | Group;
-  setStories: (stories: StoriesRaw) => Promise<void>;
+  setStories: (stories: StoriesRaw, failed?: Error) => Promise<void>;
   jumpToComponent: (direction: Direction) => void;
   jumpToStory: (direction: Direction) => void;
   getData: (storyId: StoryId, refId?: string) => Story | Group;
@@ -216,7 +217,7 @@ export const init: ModuleFn = ({
         api.selectStory(result, undefined, { ref: refId });
       }
     },
-    setStories: async (input) => {
+    setStories: async (input, error) => {
       // Now create storiesHash by reordering the above by group
       const existing = store.getState().storiesHash;
       const hash = transformStoriesRawToStoriesHash(input, existing, {
@@ -226,6 +227,7 @@ export const init: ModuleFn = ({
       await store.setState({
         storiesHash: hash,
         storiesConfigured: true,
+        storiesFailed: error,
       });
 
       const { refId } = store.getState();
@@ -311,20 +313,26 @@ export const init: ModuleFn = ({
       const [sourceType, sourceLocation] = getSourceType(source);
 
       // TODO: what is the mechanism where we warn here?
-      if (data.v && data.v > 2)
+      if (data.v && data.v > 2) {
         // eslint-disable-next-line no-console
         console.warn(`Received SET_STORIES event with version ${data.v}, we'll try and handle it`);
+      }
 
       const stories = data.v
         ? denormalizeStoryParameters(data as SetStoriesPayloadV2)
         : data.stories;
 
+      // @ts-ignore
+      const error = data.error || undefined;
+
       switch (sourceType) {
         // if it's a local source, we do nothing special
         case 'local': {
-          if (!data.v) throw new Error('Unexpected legacy SET_STORIES event from local source');
+          if (!data.v) {
+            throw new Error('Unexpected legacy SET_STORIES event from local source');
+          }
 
-          fullAPI.setStories(stories);
+          fullAPI.setStories(stories, error);
 
           fullAPI.setOptions((data as SetStoriesPayloadV2).globalParameters.options);
           break;

@@ -800,6 +800,7 @@ describe('preview.story_store', () => {
       const store = new StoryStore({ channel });
 
       store.setError(new Error('Something is bad!') as ErrorLike);
+      store.finishConfiguring();
       expect(onRenderCurrentStory).toHaveBeenCalled();
     });
 
