@@ -155,7 +155,10 @@ export default class StoryStore {
   finishConfiguring() {
     this._configuring = false;
     this.pushToManager();
-    if (this._channel) this._channel.emit(Events.RENDER_CURRENT_STORY);
+
+    if (this._channel) {
+      this._channel.emit(Events.RENDER_CURRENT_STORY);
+    }
 
     const { globalArgs: initialGlobalArgs, globalArgTypes } = this._globalMetadata.parameters;
 
@@ -472,7 +475,6 @@ export default class StoryStore {
 
   setError = (err: ErrorLike) => {
     this._error = err;
-    if (this._channel) this._channel.emit(Events.RENDER_CURRENT_STORY);
   };
 
   getError = (): ErrorLike | undefined => this._error;
@@ -485,7 +487,9 @@ export default class StoryStore {
 
       // If the selection is set while configuration is in process, we are guaranteed
       // we'll emit RENDER_CURRENT_STORY at the end of the process, so we shouldn't do it now.
-      if (!this._configuring) this._channel.emit(Events.RENDER_CURRENT_STORY);
+      if (!this._configuring) {
+        this._channel.emit(Events.RENDER_CURRENT_STORY);
+      }
     }
   }
 
@@ -495,6 +499,7 @@ export default class StoryStore {
     return {
       v: 2,
       globalParameters: this._globalMetadata.parameters,
+      error: this.getError(),
       kindParameters: mapValues(this._kinds, (metadata) => metadata.parameters),
       stories: this.extract({ includeDocsOnly: true, normalizeParameters: true }),
     };

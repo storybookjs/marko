@@ -132,6 +132,8 @@ const Sidebar: FunctionComponent<{}> = React.memo(() => {
       storyId,
       layout: { isFullscreen, showPanel, showNav },
       storiesHash,
+      storiesConfigured,
+      storiesFailed,
       refs,
     } = state;
 
@@ -148,6 +150,8 @@ const Sidebar: FunctionComponent<{}> = React.memo(() => {
       title: name,
       url,
       stories,
+      storiesFailed,
+      storiesConfigured,
       refs,
       storyId,
       viewMode,
