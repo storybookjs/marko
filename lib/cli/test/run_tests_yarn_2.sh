@@ -30,8 +30,6 @@ mkdir $test_folder
 # copy some files from fixtures directory, the goal is to test that CLI is running well with Yarn 2 not to have all framework covered (especially because some are not compatible with Yarn 2 yet)
 cp -r $fixtures_dir/react $test_folder/react
 cp -r $fixtures_dir/react_babelrc_js $test_folder/react_babelrc_js
-cp -r $fixtures_dir/react_scripts_ts $test_folder/react_scripts_ts
-cp -r $fixtures_dir/react_scripts_v2 $test_folder/react_scripts_v2
 cp -r $fixtures_dir/webpack_react $test_folder/webpack_react
 cd $test_folder
 
@@ -45,9 +43,6 @@ do
   # Do some magic to make Yarn 2 work inside a Yarn 1 monorepo
   unset YARN_WRAP_OUTPUT
   touch yarn.lock
-
-  # Use a global cache to avoid fetching the same dep multiple times across all fixtures
-  echo "enableGlobalCache: true" >> .yarnrc.yml
 
   # Transform `package.json`:
   #   - add `@storybook/cli` dep to be able to do `yarn sb init` with Yarn 2
