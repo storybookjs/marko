@@ -23,9 +23,10 @@
   - [Story Store immutable outside of configuration](#story-store-immutable-outside-of-configuration)
   - [Improved story source handling](#improved-story-source-handling)
   - [6.0 Addon API changes](#60-addon-api-changes)
-    - [Actions Addon uses parameters](#actions-addon-uses-parameters)
+    - [Actions addon uses parameters](#actions-addon-uses-parameters)
     - [Removed action decorator APIs](#removed-action-decorator-apis)
     - [Removed withA11y decorator](#removed-witha11y-decorator)
+    - [Essentials addon disables differently](#essentials-addon-disables-differently)
   - [6.0 Deprecations](#60-deprecations)
     - [Deprecated addon-info, addon-notes](#deprecated-addon-info-addon-notes)
     - [Deprecated addon-contexts](#deprecated-addon-contexts)
@@ -470,7 +471,7 @@ The MDX analog:
 
 ### 6.0 Addon API changes
 
-#### Actions Addon uses parameters
+#### Actions addon uses parameters
 
 Leveraging the new preset `@storybook/addon-actions` uses parameters to pass action options. If you previously had:
 
@@ -514,6 +515,10 @@ addParameters({
   }
 };
 ```
+
+#### Essentials addon disables differently
+
+In 6.0, `addon-essentials` doesn't configure addons if the user has already configured them in `main.js`. In 5.3 it previously checked to see whether the package had been installed in `package.json` to disable configuration. The new setup is preferably because now users' can install essential packages and import from them without disabling their configuration.
 
 ### 6.0 Deprecations
 
