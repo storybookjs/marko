@@ -9,7 +9,7 @@ Storybook Background Addon can be used to change background colors inside the pr
 ## Installation
 
 ```sh
-npm i -D @storybook/addon-backgrounds
+yarn add @storybook/addon-backgrounds --dev
 ```
 
 ## Configuration
