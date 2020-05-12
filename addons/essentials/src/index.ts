@@ -22,11 +22,15 @@ const isInstalled = (addon: string) => {
 
 const makeAddon = (key: string) => `@storybook/addon-${key}`;
 
-export function managerEntries(entry: any[] = [], options: PresetOptions = {}) {
-  const registerAddons = ['backgrounds', 'viewport']
+const makeAddons = (keys: string[], suffix: string, options: PresetOptions) =>
+  keys
     .filter((key) => (options as any)[key] !== false)
     .map((key) => makeAddon(key))
     .filter((addon) => !isInstalled(addon))
-    .map((addon) => require.resolve(`${addon}/register`));
-  return [...entry, ...registerAddons];
+    .map((addon) => require.resolve(`${addon}/${suffix}`));
+
+export function addons(options: PresetOptions = {}) {
+  const presetAddons = makeAddons(['docs'], 'preset', options);
+  const registerAddons = makeAddons(['backgrounds', 'viewport'], 'register', options);
+  return [...presetAddons, ...registerAddons];
 }
