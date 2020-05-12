@@ -26,10 +26,11 @@
     - [Actions Addon uses parameters](#actions-addon-uses-parameters)
     - [Removed action decorator APIs](#removed-action-decorator-apis)
     - [Removed withA11y decorator](#removed-witha11y-decorator)
-  - [6.0 Deprecated addons](#60-deprecated-addons)
+  - [6.0 Deprecations](#60-deprecations)
     - [Deprecated addon-info, addon-notes](#deprecated-addon-info-addon-notes)
     - [Deprecated addon-contexts](#deprecated-addon-contexts)
     - [Removed addon-centered](#removed-addon-centered)
+    - [Deprecated polymer](#deprecated-polymer)
 - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
   - [To main.js configuration](#to-mainjs-configuration)
     - [Using main.js](#using-mainjs)
@@ -514,9 +515,9 @@ addParameters({
 };
 ```
 
-### 6.0 Deprecated addons
+### 6.0 Deprecations
 
-We've deprecated the following addons in 6.0: `addon-info`, `addon-notes`, `addon-contexts`, `addon-centered`.
+We've deprecated the following in 6.0: `addon-info`, `addon-notes`, `addon-contexts`, `addon-centered`, `polymer`.
 
 #### Deprecated addon-info, addon-notes
 
@@ -544,6 +545,10 @@ MyStory.story = {
 ```
 
 Other possible values are: `padded` (default) and `fullscreen`.
+
+#### Deprecated polymer
+
+We've deprecated `@storybook/polymer` and are focusing on `@storybook/web-components`. If you use Polymer and are interested in maintaining it, please get in touch on [our Discord](https://discordapp.com/invite/UUt2PJb).
 
 ## From version 5.2.x to 5.3.x
 
@@ -821,7 +826,7 @@ After a few iterations, this approach seems to be working. However, there are a 
 
 We'll update this section as we find more problem cases. If you have a `core-js` problem, please file an issue (preferably with a repro), and we'll do our best to get you sorted.
 
-__Update__: [corejs-upgrade-webpack-plugin](https://github.com/ndelangen/corejs-upgrade-webpack-plugin) has been removed again after running into further issues as described in [https://github.com/storybookjs/storybook/issues/7445](https://github.com/storybookjs/storybook/issues/7445).
+**Update**: [corejs-upgrade-webpack-plugin](https://github.com/ndelangen/corejs-upgrade-webpack-plugin) has been removed again after running into further issues as described in [https://github.com/storybookjs/storybook/issues/7445](https://github.com/storybookjs/storybook/issues/7445).
 
 ## From version 5.0.1 to 5.0.2
 

@@ -7,7 +7,12 @@ export type Item = StoriesHash[keyof StoriesHash];
 export type DataSet = Record<string, Item>;
 export type FilteredType = 'filtered' | 'unfiltered';
 
-export const getType = (isLoading: boolean, isAuthRequired: boolean, isError: boolean) => {
+export const getType = (
+  isLoading: boolean,
+  isAuthRequired: boolean,
+  isError: boolean,
+  isEmpty: boolean
+) => {
   if (isAuthRequired) {
     return 'auth';
   }
@@ -16,6 +21,9 @@ export const getType = (isLoading: boolean, isAuthRequired: boolean, isError: bo
   }
   if (isLoading) {
     return 'loading';
+  }
+  if (isEmpty) {
+    return 'empty';
   }
   return 'ready';
 };
