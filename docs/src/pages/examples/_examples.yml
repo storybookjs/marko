@@ -200,6 +200,7 @@ bbc:
 pxblue:
   thumbnail: pxblue.png
   title: Power Xpert Blue
-  description: A design system for Eaton applications, including component libraries for React, Angular, and React Native.
+  description: A design system for Eaton applications, including component libraries for React, Angular, and React Native
   demo: https://pxblue-components.github.io/
   source: https://github.com/pxblue/react-component-library/tree/master/demos/storybook
+  site: https://pxblue.github.io
