@@ -8,7 +8,9 @@ Each addon is documented and maintained by the core team and will be upgraded al
 
 Storybook essentials includes the following addons. Addons can be disabled and re-configured as [described below](#configuration):
 
+- [Actions](https://github.com/storybookjs/storybook/tree/next/addons/actions)
 - [Backgrounds](https://github.com/storybookjs/storybook/tree/next/addons/backgrounds)
+- [Docs](https://github.com/storybookjs/storybook/tree/next/addons/docs)
 - [Viewport](https://github.com/storybookjs/storybook/tree/next/addons/viewport)
 - [Docs](https://github.com/storybookjs/storybook/tree/next/addons/docs)
 
@@ -49,4 +51,4 @@ module.exports = {
 };
 ```
 
-Valid addon keys include: `backgrounds`, `viewport`, `docs`.
+Valid addon keys include: `actions`, `backgrounds`, `docs`, `viewport`.

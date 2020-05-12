@@ -28,6 +28,7 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
+    "@storybook/addon-actions": "6.0.0-beta.5",
     "@storybook/addon-backgrounds": "6.0.0-beta.5",
     "@storybook/addon-docs": "6.0.0-beta.5",
     "@storybook/addon-viewport": "6.0.0-beta.5",
