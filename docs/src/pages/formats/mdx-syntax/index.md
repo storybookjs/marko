@@ -61,7 +61,7 @@ For example, here's the story from `Checkbox` example above, rewritten in CSF:
 ```js
 import React from 'react';
 import { Checkbox } from './Checkbox';
-export default { title: "MDX/Checkbox" component: Checkbox };
+export default { title: "MDX/Checkbox", component: Checkbox };
 export const allCheckboxes = () => (
   <form>
     <Checkbox id="Unchecked" label="Unchecked" />
