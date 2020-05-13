@@ -25,6 +25,7 @@ export interface SubAPI {
   getRefs: () => Refs;
   checkRef: (ref: SetRefData) => Promise<void>;
   changeRefVersion: (id: string, url: string) => void;
+  changeRefState: (id: string, ready: boolean) => void;
 }
 
 export type Mapper = (ref: ComposedRef, story: StoryInput) => StoryInput;
@@ -95,6 +96,15 @@ export const init: ModuleFn = ({ store, provider }) => {
       const ref = { ...previous, stories: {}, url } as SetRefData;
 
       api.checkRef(ref);
+    },
+    changeRefState: (id, ready) => {
+      const refs = api.getRefs();
+      store.setState({
+        refs: {
+          ...refs,
+          [id]: { ...refs[id], ready },
+        },
+      });
     },
     checkRef: async (ref) => {
       const { id, url } = ref;

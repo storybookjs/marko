@@ -1,7 +1,7 @@
 import React, { Fragment, FunctionComponent, useMemo, useEffect } from 'react';
-import merge from '@storybook/api/dist/lib/merge';
 import { Helmet } from 'react-helmet-async';
 
+import merge from '@storybook/api/dist/lib/merge';
 import { API, Consumer, Combo } from '@storybook/api';
 import { SET_CURRENT_STORY } from '@storybook/core-events';
 import addons, { types, Addon } from '@storybook/addons';
@@ -28,6 +28,8 @@ const canvasMapper = ({ state, api }: Combo) => ({
   queryParams: state.customQueryParams,
   getElements: api.getElements,
   story: api.getData(state.storyId, state.refId),
+  storiesConfigured: state.storiesConfigured,
+  storiesFailed: state.storiesFailed,
   refs: state.refs,
   active: !!(state.viewMode && state.viewMode.match(/^(story|docs)$/)),
 });
@@ -49,6 +51,8 @@ const createCanvas = (id: string, baseUrl = 'iframe.html', withLoader = true): A
           viewMode,
           queryParams,
           getElements,
+          storiesConfigured,
+          storiesFailed,
           active,
         }) => {
           const wrappers = useMemo(() => [...defaultWrappers, ...getWrappers(getElements)], [
@@ -57,8 +61,8 @@ const createCanvas = (id: string, baseUrl = 'iframe.html', withLoader = true): A
           ]);
 
           const isLoading = !!(
-            (storyId && !story) ||
-            (story && story.refId && refs[refId] && !refs[refId].ready)
+            (!story && !(storiesFailed || storiesConfigured)) ||
+            (story && refId && refs[refId] && !refs[refId].ready)
           );
 
           return (
@@ -66,7 +70,11 @@ const createCanvas = (id: string, baseUrl = 'iframe.html', withLoader = true): A
               {({ value: scale }) => {
                 return (
                   <>
-                    {withLoader && isLoading && <Loader id="preview-loader" role="progressbar" />}
+                    {withLoader && isLoading && (
+                      <S.LoaderWrapper>
+                        <Loader id="preview-loader" role="progressbar" />
+                      </S.LoaderWrapper>
+                    )}
                     <ApplyWrappers
                       id={id}
                       storyId={storyId}

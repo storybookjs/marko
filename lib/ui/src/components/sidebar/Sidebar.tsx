@@ -47,6 +47,8 @@ const Hr = styled.hr(({ theme }) => ({
 
 export interface SidebarProps {
   stories: StoriesHash;
+  storiesConfigured: boolean;
+  storiesFailed?: Error;
   refs: State['refs'];
   menu: any[];
   storyId?: string;
@@ -75,10 +77,22 @@ const useSearchResults = (refsList: [string, RefType][], filter: string) => {
   return { total: refsTotal || 0, list: refsLengths };
 };
 
-const useCombination = (stories: StoriesHash, refs: Refs) => {
+const useCombination = (
+  stories: StoriesHash,
+  ready: boolean,
+  error: Error | undefined,
+  refs: Refs
+) => {
   const merged = useMemo<Refs>(
     () => ({
-      storybook_internal: { stories, title: null, id: 'storybook_internal', url: 'iframe.html' },
+      storybook_internal: {
+        stories,
+        title: null,
+        id: 'storybook_internal',
+        url: 'iframe.html',
+        ready,
+        error,
+      },
       ...refs,
     }),
     [refs, stories]
@@ -90,12 +104,14 @@ const useCombination = (stories: StoriesHash, refs: Refs) => {
 const Sidebar: FunctionComponent<SidebarProps> = ({
   storyId,
   stories,
+  storiesConfigured,
+  storiesFailed,
   menu,
   menuHighlighted = false,
   refs = {},
 }) => {
   const [filter, setFilter] = useFilterState('');
-  const combined = useCombination(stories, refs);
+  const combined = useCombination(stories, storiesConfigured, storiesFailed, refs);
   const { total, list } = useSearchResults(combined, filter);
 
   const resultLess = total === 0 && filter;

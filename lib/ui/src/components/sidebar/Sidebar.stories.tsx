@@ -77,13 +77,22 @@ const refs = {
   },
 };
 
-export const simple = () => <Sidebar menu={menu} stories={stories} storyId={storyId} refs={{}} />;
-export const isLoading = () => <Sidebar menu={menu} stories={{}} isLoading refs={{}} />;
-export const withRefs = () => <Sidebar menu={menu} stories={stories} isLoading refs={refs} />;
+export const simple = () => (
+  <Sidebar storiesConfigured menu={menu} stories={stories} storyId={storyId} refs={{}} />
+);
+export const isLoading = () => (
+  <Sidebar storiesConfigured={false} menu={menu} stories={{}} isLoading refs={{}} />
+);
+export const isEmpty = () => (
+  <Sidebar storiesConfigured menu={menu} stories={{}} isLoading refs={{}} />
+);
+export const withRefs = () => (
+  <Sidebar storiesConfigured menu={menu} stories={stories} isLoading refs={refs} />
+);
 
 export const darkWithRefs = () => (
   <ThemeProvider theme={ensureTheme(themes.dark)}>
-    <Sidebar menu={menu} stories={stories} isLoading refs={refs} />
+    <Sidebar storiesConfigured menu={menu} stories={stories} isLoading refs={refs} />
   </ThemeProvider>
 );
 
