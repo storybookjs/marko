@@ -24,10 +24,10 @@ export default class ConfigApi {
       loaders();
 
       this._storyStore.clearError();
-      this._storyStore.finishConfiguring();
     } catch (err) {
       this._storyStore.setError(err);
     }
+    this._storyStore.finishConfiguring();
 
     if (module.hot) {
       module.hot.accept();

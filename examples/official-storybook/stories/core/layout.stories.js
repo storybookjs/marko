@@ -30,4 +30,4 @@ export const CenteredInline = () => <Box display="inline-block">centered</Box>;
 CenteredInline.story = { parameters: { layout: 'centered' } };
 
 export const Invalid = () => <Box>invalid layout value</Box>;
-CenteredInline.story = { parameters: { layout: '!invalid!' } };
+Invalid.story = { parameters: { layout: '!invalid!' } };
