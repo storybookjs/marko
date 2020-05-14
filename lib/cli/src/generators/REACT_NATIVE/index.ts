@@ -9,8 +9,14 @@ import {
   installDependencies,
   copyTemplate,
 } from '../../helpers';
+import { NpmOptions } from '../../NpmOptions';
+import { GeneratorOptions } from '../../GeneratorOptions';
 
-export default async (npmOptions, installServer, { storyFormat }) => {
+export default async (
+  npmOptions: NpmOptions,
+  installServer: boolean,
+  { storyFormat }: GeneratorOptions
+) => {
   const [storybookVersion, addonsVersion, actionsVersion, linksVersion] = await getVersions(
     npmOptions,
     '@storybook/react-native',
