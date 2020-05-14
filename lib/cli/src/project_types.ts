@@ -50,6 +50,19 @@ export const SUPPORTED_FRAMEWORKS = [
   'rax',
 ];
 
+type TemplateConfiguration = {
+  // TODO: Improve typing, preset type is an union of all values of PROJECT_TYPES
+  preset: string;
+  dependencies?: string[];
+  peerDependencies?: string[];
+  files?: string[];
+  matcherFunction: (params: {
+    dependencies: boolean[];
+    files: boolean[];
+    peerDependencies: boolean[];
+  }) => boolean;
+};
+
 /**
  * Configuration objects to match a storybook preset template.
  *
@@ -69,7 +82,7 @@ export const SUPPORTED_FRAMEWORKS = [
  *   },
  * }
  */
-export const supportedTemplates = [
+export const supportedTemplates: TemplateConfiguration[] = [
   {
     preset: PROJECT_TYPES.METEOR,
     files: ['.meteor'],
