@@ -38,18 +38,15 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add('preview', {}, () => {
-  return cy.get(`#storybook-preview-iframe`).then({ timeout: 10000 }, (iframe) => {
+  return cy.get(`#storybook-preview-iframe`).then({ timeout: 20000 }, (iframe) => {
     const content = iframe[0].contentDocument;
     const element = content !== null ? content.documentElement : null;
 
     return cy
-      .wrap(iframe)
+      .get(iframe, { timeout: 20000 })
       .should(() => {
         expect(element).not.null;
-
-        if (element !== null) {
-          expect(element.querySelector('#root > *')).not.null;
-        }
+        expect(element.querySelector('#root')).not.null;
       })
       .then(() => {
         return element.querySelector('#root');

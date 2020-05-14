@@ -11,7 +11,7 @@ CSF is supported in all frameworks except React Native, where you should use the
 
 ## Default export
 
-The default export defines metadata about your component, including the `component` itself, its `title` (where it will show up in the [navigation UI story hierarchy](../../basics/writing-stories/#story-hierarchy)), [decorators](../../basics/writing-stories/#decorators), and [parameters](../../basics/writing-stories/#parameters). `title` should be unique, i.e. not re-used across files.
+The default export defines metadata about your component, including the `component` itself, its `title` (where it will show up in the [navigation UI story hierarchy](../../basics/writing-stories/#story-hierarchy)), [decorators](../../basics/writing-stories/#decorators), and [parameters](../../basics/writing-stories/#parameters). The `component` field is optional (but encouraged!), and is used by addons for automatic prop table generation and display of other component metadata. `title` should be unique, i.e. not re-used across files.
 
 ```js
 import MyComponent from './MyComponent';
@@ -65,6 +65,48 @@ Simple.story = {
   parameters: { ... }
 };
 ```
+
+## Args story inputs
+
+Starting in SB 6.0, stories accept named inputs called Args. Args are dynamic data that are provided (and possibly updated by) Storybook and its addons.
+
+Consider Storybook’s ["hello world" example](https://storybook.js.org/docs/basics/writing-stories/#basic-story) of a text button that logs its click events:
+
+```js
+import { action } from '@storybook/addon-actions';
+import { Button } from './Button';
+
+export default { title: 'Button', component: Button };
+export const Text = () => <Button label=’Hello’ onClick={action(‘clicked’)} />;
+```
+
+Now consider the same example, re-written with args:
+
+```js
+export const Text = ({ label, onClick }) => <Button label={label} onClick={onClick} />;
+Text.story = {
+  args: {
+    label: 'Hello',
+    onClick: action('clicked'),
+  },
+};
+```
+
+At first blush this might seem no better than the original example. However, if we add the [Docs addon](https://github.com/storybookjs/storybook/tree/master/addons/docs) and configure the [Actions addon](https://github.com/storybookjs/storybook/tree/master/addons/actions) appropriately, we can write:
+
+```js
+export const Text = ({ label, onClick }) => <Button label={label} onClick={onClick} />;
+```
+
+Or even more simply:
+
+```js
+export const Text = (args) => <Button {...args} />;
+```
+
+Not only are these versions shorter and easier to write than their no-args counterparts, but they are also more portable since the code doesn't depend on the actions addon specifically.
+
+For more information on setting up [Docs](https://github.com/storybookjs/storybook/tree/master/addons/docs) and [Actions](https://github.com/storybookjs/storybook/tree/master/addons/actions), see their respective documentation.
 
 ## Storybook Export vs Name Handling
 

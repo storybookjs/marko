@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
-import { styled } from '@storybook/theming';
+import { styled, ignoreSsrWarning } from '@storybook/theming';
 import { opacify, transparentize, darken, lighten } from 'polished';
 import { PropRow, PropRowProps } from './PropRow';
 import { SectionRow, SectionRowProps } from './SectionRow';
-import { PropDef, PropType, PropDefaultValue, PropSummaryValue } from './PropDef';
+import { PropDef } from './PropDef';
 import { EmptyBlock } from '../EmptyBlock';
 import { ResetWrapper } from '../../typography/DocumentFormatting';
 
@@ -79,20 +79,20 @@ export const Table = styled.table<{}>(({ theme }) => ({
     marginLeft: 1,
     marginRight: 1,
 
-    'tr:first-child': {
-      'td:first-child, th:first-child': {
+    [`tr:first-child${ignoreSsrWarning}`]: {
+      [`td:first-child${ignoreSsrWarning}, th:first-child${ignoreSsrWarning}`]: {
         borderTopLeftRadius: theme.appBorderRadius,
       },
-      'td:last-child, th:last-child': {
+      [`td:last-child${ignoreSsrWarning}, th:last-child${ignoreSsrWarning}`]: {
         borderTopRightRadius: theme.appBorderRadius,
       },
     },
 
-    'tr:last-child': {
-      'td:first-child, th:first-child': {
+    [`tr:last-child${ignoreSsrWarning}`]: {
+      [`td:first-child${ignoreSsrWarning}, th:first-child${ignoreSsrWarning}`]: {
         borderBottomLeftRadius: theme.appBorderRadius,
       },
-      'td:last-child, th:last-child': {
+      [`td:last-child${ignoreSsrWarning}, th:last-child${ignoreSsrWarning}`]: {
         borderBottomRightRadius: theme.appBorderRadius,
       },
     },
@@ -212,4 +212,4 @@ const PropsTable: FC<PropsTableProps> = (props) => {
   );
 };
 
-export { PropsTable, PropDef, PropType, PropDefaultValue, PropSummaryValue };
+export { PropsTable, PropDef };

@@ -82,7 +82,6 @@ Let's throw in a crazy table, because why not?
 | [actions](addons/actions)         |         +          |                +                 |       +        |           +            |           +            |        +         |         +          |          +           |        +         |         +          |          +           |
 | [backgrounds](addons/backgrounds) |         +          |                \*                |       +        |           +            |           +            |        +         |         +          |          +           |        +         |         +          |          +           |
 | [centered](addons/centered)       |         +          |                                  |       +        |           +            |           +            |        +         |                    |          +           |                  |         +          |          +           |
-| [contexts](addons/contexts)       |         +          |                                  |       +        |                        |                        |                  |                    |                      |                  |                    |          +           |
 
 ## Code
 

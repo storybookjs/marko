@@ -27,6 +27,7 @@ const ArgUpdater = ({ args, updateArgs }) => {
 
 export default {
   title: 'Core/Global Args',
+  parameters: { passArgsFirst: false },
   decorators: [
     (story) => {
       const [globalArgs, updateGlobalArgs] = useGlobalArgs();

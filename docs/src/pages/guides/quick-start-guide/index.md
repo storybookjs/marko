@@ -52,5 +52,6 @@ To learn more about what the Storybook CLI command `sb init` command does, have 
 - [Ember](/guides/guide-ember/)
 - [Riot](/guides/guide-riot/)
 - [Preact](/guides/guide-preact/)
+- [Web Components](/guides/guide-web-components/)
 
 A step-by-step tutorial is available at [Learn Storybook](https://www.learnstorybook.com).

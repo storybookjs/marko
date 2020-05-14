@@ -11,6 +11,9 @@ Object {
       "description": "",
       "name": "color",
       "required": false,
+      "sbType": Object {
+        "name": "string",
+      },
       "type": Object {
         "detail": undefined,
         "summary": "string",

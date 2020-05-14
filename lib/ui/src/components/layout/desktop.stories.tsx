@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import { withKnobs, boolean, number } from '@storybook/addon-knobs';
 import { DecoratorFn } from '@storybook/react';
 
-import { isChromatic } from 'storybook-chromatic/isChromatic';
+import { isChromatic } from 'chromatic/isChromatic';
 
 import { Desktop, DesktopProps } from './desktop';
 
@@ -13,6 +13,7 @@ import { mockProps, realProps, MockPage } from './app.mockdata';
 export default {
   title: 'UI/Layout/Desktop',
   component: Desktop,
+  parameters: { passArgsFirst: false },
   decorators: [
     withKnobs,
     ((StoryFn, c) => {

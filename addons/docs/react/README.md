@@ -2,7 +2,7 @@
   <img src="../docs/media/docspage-hero.png" width="100%" />
 </center>
 
-# Storybook Docs for React
+<h1>Storybook Docs for React</h1>
 
 > migration guide: This page documents the method to configure storybook introduced recently in 5.3.0, consult the [migration guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) if you want to migrate to this format of configuring storybook.
 
@@ -13,7 +13,7 @@ To learn more about Storybook Docs, read the [general documentation](../README.m
 - [Installation](#installation)
 - [DocsPage](#docspage)
 - [MDX](#mdx)
-- [Inline stories](#inline-stories)
+- [Inline Stories](#inline-stories)
 - [More resources](#more-resources)
 
 ## Installation
@@ -116,7 +116,6 @@ addParameters({
 
 Want to learn more? Here are some more articles on Storybook Docs:
 
-- References: [DocsPage](../docs/docspage.md) / [MDX](../docs/mdx.md) / [FAQ](../docs/faq.md) / [Recipes](../docs/recipes.md) / [Theming](../docs/theming.md)
-- Vision: [Storybook Docs sneak peak](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a)
-- Announcement: [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf)
+- References: [DocsPage](../docs/docspage.md) / [MDX](../docs/mdx.md) / [FAQ](../docs/faq.md) / [Recipes](../docs/recipes.md) / [Theming](../docs/theming.md) / [Props](../docs/props-tables.md)
+- Announcements: [Vision](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a) / [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf) / [MDX](https://medium.com/storybookjs/rich-docs-with-storybook-mdx-61bc145ae7bc) / [Framework support](https://medium.com/storybookjs/storybook-docs-for-new-frameworks-b1f6090ee0ea)
 - Example: [Storybook Design System](https://github.com/storybookjs/design-system)

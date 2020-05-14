@@ -3,7 +3,7 @@
 exports[`Storyshots Button Rounded 1`] = `
 <button
   class="button rounded"
-  style="color: rgb(66, 185, 131); border-color: #42b983;"
+  style="color: rgb(255, 0, 0); border-color: #f00;"
 >
   A Button with rounded edges!
 </button>

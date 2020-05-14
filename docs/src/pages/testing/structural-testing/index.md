@@ -27,10 +27,13 @@ If things are not the same, we can do two things:
 [StoryShots](https://github.com/storybookjs/storybook/tree/master/addons/storyshots) is our integration between Storybook and Jest Snapshot Testing.
 
 To use StoryShots, first make sure you are inside a Storybook-enabled repo (make sure it has few stories).
-Then, install StoryShots into your app with:
+
+Then, install StoryShots and any necessary [framework-specific peer dependencies](https://github.com/storybookjs/storybook/blob/next/addons/storyshots/storyshots-core/README.md).
+
+For instance if you're testing a react project:
 
 ```sh
-npm i -D @storybook/addon-storyshots
+npm i -D @storybook/addon-storyshots react-test-renderer
 ```
 
 Then, assuming you are using Jest for testing, you can create a test file `storyshots.test.js` that contains the following:

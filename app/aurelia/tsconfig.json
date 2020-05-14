@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "outDir": "dist",
+    "types": [
+      "webpack-env"
+    ],
+    "rootDir": "./src",
+    "resolveJsonModule": true
+  }
+}

@@ -1,24 +1,28 @@
+/* eslint-disable no-fallthrough */
 import { DOCS_MODE } from 'global';
 import { toId, sanitize } from '@storybook/csf';
 import {
   UPDATE_STORY_ARGS,
   STORY_ARGS_UPDATED,
   STORY_CHANGED,
-  SET_STORIES,
   SELECT_STORY,
+  SET_STORIES,
 } from '@storybook/core-events';
 
 import { logger } from '@storybook/client-logger';
 import {
+  denormalizeStoryParameters,
   transformStoriesRawToStoriesHash,
   StoriesHash,
   Story,
   Group,
-  StoriesRaw,
+  SetStoriesPayload,
   StoryId,
   isStory,
   Root,
   isRoot,
+  StoriesRaw,
+  SetStoriesPayloadV2,
 } from '../lib/stories';
 
 import { Args, ModuleFn } from '../index';
@@ -34,6 +38,7 @@ export interface SubState {
   storyId: StoryId;
   viewMode: ViewMode;
   storiesConfigured: boolean;
+  storiesFailed?: Error;
 }
 
 export interface SubAPI {
@@ -45,7 +50,7 @@ export interface SubAPI {
     obj?: { ref?: string; viewMode?: ViewMode }
   ) => void;
   getCurrentStoryData: () => Story | Group;
-  setStories: (stories: StoriesRaw) => Promise<void>;
+  setStories: (stories: StoriesRaw, failed?: Error) => Promise<void>;
   jumpToComponent: (direction: Direction) => void;
   jumpToStory: (direction: Direction) => void;
   getData: (storyId: StoryId, refId?: string) => Story | Group;
@@ -212,7 +217,7 @@ export const init: ModuleFn = ({
         api.selectStory(result, undefined, { ref: refId });
       }
     },
-    setStories: async (input) => {
+    setStories: async (input, error) => {
       // Now create storiesHash by reordering the above by group
       const existing = store.getState().storiesHash;
       const hash = transformStoriesRawToStoriesHash(input, existing, {
@@ -222,6 +227,7 @@ export const init: ModuleFn = ({
       await store.setState({
         storiesHash: hash,
         storiesConfigured: true,
+        storiesFailed: error,
       });
 
       const { refId } = store.getState();
@@ -239,14 +245,16 @@ export const init: ModuleFn = ({
         refs,
       } = store.getState();
 
-      const viewMode = viewModeFromArgs || viewModeFromState;
-
       const hash = ref ? refs[ref].stories : storiesHash;
 
       if (!story) {
         const s = hash[kindOrId] || hash[sanitize(kindOrId)];
         // eslint-disable-next-line no-nested-ternary
         const id = s ? (s.children ? s.children[0] : s.id) : kindOrId;
+        const viewMode =
+          viewModeFromArgs || (s && s.parameters.viewMode)
+            ? s.parameters.viewMode
+            : viewModeFromState;
         const p = s && s.refId ? `/${viewMode}/${s.refId}_${id}` : `/${viewMode}/${id}`;
 
         navigate(p);
@@ -288,7 +296,7 @@ export const init: ModuleFn = ({
   const initModule = () => {
     fullAPI.on(STORY_CHANGED, function handleStoryChange(storyId: string) {
       const { source }: { source: string } = this;
-      const sourceType = getSourceType(source);
+      const [sourceType] = getSourceType(source);
 
       if (sourceType === 'local') {
         const options = fullAPI.getCurrentParameter('options');
@@ -299,28 +307,44 @@ export const init: ModuleFn = ({
       }
     });
 
-    fullAPI.on(SET_STORIES, function handleSetStories(data: { stories: StoriesRaw }) {
+    fullAPI.on(SET_STORIES, function handleSetStories(data: SetStoriesPayload) {
       // the event originates from an iframe, event.source is the iframe's location origin + pathname
-      const { storyId } = store.getState();
       const { source }: { source: string } = this;
-      const sourceType = getSourceType(source);
+      const [sourceType, sourceLocation] = getSourceType(source);
+
+      // TODO: what is the mechanism where we warn here?
+      if (data.v && data.v > 2) {
+        // eslint-disable-next-line no-console
+        console.warn(`Received SET_STORIES event with version ${data.v}, we'll try and handle it`);
+      }
+
+      const stories = data.v
+        ? denormalizeStoryParameters(data as SetStoriesPayloadV2)
+        : data.stories;
+
+      // @ts-ignore
+      const error = data.error || undefined;
 
       switch (sourceType) {
         // if it's a local source, we do nothing special
         case 'local': {
-          fullAPI.setStories(data.stories);
-          const options = storyId
-            ? fullAPI.getParameters(storyId, 'options')
-            : fullAPI.getParameters(Object.keys(data.stories)[0], 'options');
-          fullAPI.setOptions(options);
+          if (!data.v) {
+            throw new Error('Unexpected legacy SET_STORIES event from local source');
+          }
+
+          fullAPI.setStories(stories, error);
+
+          fullAPI.setOptions((data as SetStoriesPayloadV2).globalParameters.options);
           break;
         }
 
         // if it's a ref, we need to map the incoming stories to a prefixed version, so it cannot conflict with others
         case 'external': {
-          const ref = fullAPI.findRef(source);
-          fullAPI.setRef(ref.id, { ...ref, ...data }, true);
-          break;
+          const ref = fullAPI.findRef(sourceLocation);
+          if (ref) {
+            fullAPI.setRef(ref.id, { ...ref, ...data, stories }, true);
+            break;
+          }
         }
 
         // if we couldn't find the source, something risky happened, we ignore the input, and log a warning
@@ -341,7 +365,7 @@ export const init: ModuleFn = ({
       [k: string]: any;
     }) {
       const { source }: { source: string } = this;
-      const sourceType = getSourceType(source);
+      const [sourceType, sourceLocation] = getSourceType(source);
 
       switch (sourceType) {
         case 'local': {
@@ -350,7 +374,7 @@ export const init: ModuleFn = ({
         }
 
         case 'external': {
-          const ref = fullAPI.findRef(source);
+          const ref = fullAPI.findRef(sourceLocation);
           fullAPI.selectStory(kind, story, { ...rest, ref: ref.id });
           break;
         }

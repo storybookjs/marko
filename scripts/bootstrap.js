@@ -81,7 +81,10 @@ function run() {
       defaultValue: false,
       option: '--install',
       command: () => {
-        spawn('yarn install --ignore-optional --network-concurrency 8');
+        const command = process.env.CI
+          ? 'yarn install --network-concurrency 8'
+          : 'yarn install --ignore-optional --network-concurrency 8';
+        spawn(command);
       },
       order: 1,
     }),

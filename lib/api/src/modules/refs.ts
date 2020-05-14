@@ -25,6 +25,7 @@ export interface SubAPI {
   getRefs: () => Refs;
   checkRef: (ref: SetRefData) => Promise<void>;
   changeRefVersion: (id: string, url: string) => void;
+  changeRefState: (id: string, ready: boolean) => void;
 }
 
 export type Mapper = (ref: ComposedRef, story: StoryInput) => StoryInput;
@@ -44,13 +45,23 @@ export type Refs = Record<string, ComposedRef>;
 export type RefId = string;
 export type RefUrl = string;
 
-export const getSourceType = (source: string) => {
-  const { origin, pathname } = location;
+// eslint-disable-next-line no-useless-escape
+const findFilename = /(\/((?:[^\/]+?)\.[^\/]+?)|\/)$/;
 
-  if (source === origin || source === `${origin + pathname}iframe.html`) {
-    return 'local';
+export const getSourceType = (source: string) => {
+  const { origin: localOrigin, pathname: localPathname } = location;
+  const { origin: sourceOrigin, pathname: sourcePathname } = new URL(source);
+
+  const localFull = `${localOrigin + localPathname}`.replace(findFilename, '');
+  const sourceFull = `${sourceOrigin + sourcePathname}`.replace(findFilename, '');
+
+  if (localFull === sourceFull) {
+    return ['local', sourceFull];
   }
-  return 'external';
+  if (source) {
+    return ['external', sourceFull];
+  }
+  return [null, null];
 };
 
 export const defaultMapper: Mapper = (b, a) => {
@@ -78,13 +89,22 @@ export const init: ModuleFn = ({ store, provider }) => {
     findRef: (source) => {
       const refs = api.getRefs();
 
-      return Object.values(refs).find(({ url }) => `${url}/iframe.html`.match(source));
+      return Object.values(refs).find(({ url }) => url.match(source));
     },
     changeRefVersion: (id, url) => {
       const previous = api.getRefs()[id];
       const ref = { ...previous, stories: {}, url } as SetRefData;
 
       api.checkRef(ref);
+    },
+    changeRefState: (id, ready) => {
+      const refs = api.getRefs();
+      store.setState({
+        refs: {
+          ...refs,
+          [id]: { ...refs[id], ready },
+        },
+      });
     },
     checkRef: async (ref) => {
       const { id, url } = ref;
@@ -152,6 +172,7 @@ export const init: ModuleFn = ({ store, provider }) => {
   };
 
   const refs = provider.getConfig().refs || {};
+
   const initialState: SubState['refs'] = refs;
 
   Object.entries(refs).forEach(([k, v]) => {

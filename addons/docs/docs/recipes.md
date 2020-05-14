@@ -15,6 +15,7 @@
   - [MDX Stories](#mdx-stories)
 - [Controlling a story's view mode](#controlling-a-storys-view-mode)
 - [Customizing source snippets](#customizing-source-snippets)
+- [Overwriting docs container](#overwriting-docs-container)
 - [More resources](#more-resources)
 
 ## Component Story Format (CSF) with DocsPage
@@ -59,7 +60,7 @@ basic.story = {
 
 ```md
 import { Meta, Story } from '@storybook/addon-docs/blocks';
-import * as stories from './Button.stories.js';
+import \* as stories from './Button.stories.js';
 import { SomeComponent } from 'path/to/SomeComponent';
 
 <Meta title="Demo/Button" component={Button} />
@@ -138,8 +139,8 @@ const loadFn = () => {
   const req = require.context('../src', true, /\.stories\.js$/);
   return req
     .keys()
-    .map(fname => req(fname))
-    .filter(exp => !!exp.default);
+    .map((fname) => req(fname))
+    .filter((exp) => !!exp.default);
 };
 
 configure(loadFn, module);
@@ -251,13 +252,13 @@ Example.story = {
 };
 ```
 
-Alternatively, you can provide a function in the `docs.formatSource` parameter. For example, the following snippet in `.storybook/preview.js` globally removes the arrow at the beginning of a function that returns a string:
+Alternatively, you can provide a function in the `docs.transformSource` parameter. For example, the following snippet in `.storybook/preview.js` globally removes the arrow at the beginning of a function that returns a string:
 
 ```js
 const SOURCE_REGEX = /^\(\) => `(.*)`$/;
 export const parameters = {
   docs: {
-    formatSource: (src, storyId) => {
+    transformSource: (src, storyId) => {
       const match = SOURCE_REGEX.exec(src);
       return match ? match[1] : src;
     },
@@ -267,9 +268,65 @@ export const parameters = {
 
 These two methods are complementary. The former is useful for story-specific, and the latter is useful for global formatting.
 
+## Overwriting docs container
+
+What happens if you want to add some wrapper for your MDX page, or add some other kind of React context?
+
+When you're writing stories you can do this by adding a [decorator](https://storybook.js.org/docs/basics/writing-stories/#decorators), but when you're adding arbitrary JSX to your MDX documentation outside of a `<Story>` block, decorators no longer apply, and you need to use the `docs.container` parameter.
+
+The closest Docs equivalent of a decorator is the `container`, a wrapper element that is rendered around the page that is being rendered. Here's an example of adding a solid red border around the page. It uses Storybook's default page container (that sets up various contexts and other magic) and then inserts its own logic between that container and the contents of the page:
+
+```js
+import { Meta, DocsContainer } from '@storybook/addon-docs/blocks';
+
+<Meta
+  title="Addons/Docs/container-override"
+  parameters={{
+    docs: {
+      container: ({ children, context }) => (
+        <DocsContainer context={context}>
+          <div style={{ border: '5px solid red' }}>{children}</div>
+        </DocsContainer>
+      ),
+    },
+  }}
+/>
+
+# Title
+
+Rest of your file...
+```
+
+This is especially useful if you are using `styled-components` and need to wrap your JSX with a `ThemeProvider` to have access to your theme:
+
+```js
+import { Meta, DocsContainer } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components'
+import { theme } from '../path/to/theme'
+
+<Meta
+  title="Addons/Docs/container-override"
+  parameters={{
+    docs: {
+      container: ({ children, context }) => (
+        <DocsContainer context={context}>
+          <ThemeProvider theme={theme}>
+            {children}
+          </ThemeProvider>
+        </DocsContainer>
+      ),
+    },
+  }}
+/>
+
+# Title
+
+Rest of your file...
+```
+
 ## More resources
 
-- References: [README](../README.md) / [DocsPage](docspage.md) / [MDX](mdx.md) / [FAQ](faq.md) / [Recipes](recipes.md) / [Theming](theming.md)
+- References: [README](../README.md) / [DocsPage](docspage.md) / [MDX](mdx.md) / [FAQ](faq.md) / [Recipes](recipes.md) / [Theming](theming.md) / [Props](props-tables.md)
 - Framework-specific docs: [React](../react/README.md) / [Vue](../vue/README.md) / [Angular](../angular/README.md) / [Web components](../web-components/README.md) / [Ember](../ember/README.md)
 - Announcements: [Vision](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a) / [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf) / [MDX](https://medium.com/storybookjs/rich-docs-with-storybook-mdx-61bc145ae7bc) / [Framework support](https://medium.com/storybookjs/storybook-docs-for-new-frameworks-b1f6090ee0ea)
 - Example: [Storybook Design System](https://github.com/storybookjs/design-system)

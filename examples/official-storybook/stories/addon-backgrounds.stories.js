@@ -6,13 +6,16 @@ export default {
   title: 'Addons/Backgrounds',
 
   parameters: {
-    backgrounds: [
-      { name: 'white', value: '#ffffff' },
-      { name: 'light', value: '#eeeeee' },
-      { name: 'gray', value: '#cccccc' },
-      { name: 'dark', value: '#222222', default: true },
-      { name: 'black', value: '#000000' },
-    ],
+    backgrounds: {
+      default: 'dark',
+      values: [
+        { name: 'white', value: '#ffffff' },
+        { name: 'light', value: '#eeeeee' },
+        { name: 'gray', value: '#cccccc' },
+        { name: 'dark', value: '#222222' },
+        { name: 'black', value: '#000000' },
+      ],
+    },
   },
 };
 
@@ -34,29 +37,22 @@ export const Overridden = () => <BaseButton label="This one should have differen
 
 Overridden.story = {
   parameters: {
-    backgrounds: [
-      { name: 'pink', value: 'hotpink' },
-      { name: 'blue', value: 'deepskyblue', default: true },
-    ],
-  },
-};
-
-export const DisabledVia = () => <BaseButton label="This one should not use backgrounds" />;
-
-DisabledVia.story = {
-  name: 'disabled via []',
-
-  parameters: {
-    backgrounds: [],
+    backgrounds: {
+      default: 'blue',
+      values: [
+        { name: 'pink', value: 'hotpink' },
+        { name: 'blue', value: 'deepskyblue' },
+      ],
+    },
   },
 };
 
 export const SkippedViaDisableTrue = () => (
-  <BaseButton label="This one should not use backgrounds either" />
+  <BaseButton label="This one should not use backgrounds" />
 );
 
 SkippedViaDisableTrue.story = {
-  name: 'skipped via disable:true',
+  name: 'skipped via disable: true',
 
   parameters: {
     backgrounds: { disable: true },

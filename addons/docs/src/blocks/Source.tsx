@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Source, SourceProps as PureSourceProps, SourceError } from '@storybook/components';
 import { DocsContext, DocsContextProps } from './DocsContext';
 import { CURRENT_SELECTION } from './types';
+import { enhanceSource } from './enhanceSource';
 
 interface CommonProps {
   language?: string;
@@ -34,12 +35,14 @@ export const getSourceProps = (
 
   let source = codeProps.code; // prefer user-specified code
   if (!source) {
-    const targetId = singleProps.id === CURRENT_SELECTION ? currentId : singleProps.id;
+    const targetId =
+      singleProps.id === CURRENT_SELECTION || !singleProps.id ? currentId : singleProps.id;
     const targetIds = multiProps.ids || [targetId];
     source = targetIds
       .map((sourceId) => {
         const data = storyStore.fromId(sourceId);
-        return data?.parameters?.docs?.source?.code || '';
+        const enhanced = data && (enhanceSource(data) || data.parameters);
+        return enhanced?.docs?.source?.code || '';
       })
       .join('\n\n');
   }
