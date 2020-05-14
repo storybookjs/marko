@@ -5,7 +5,7 @@ import express from 'express';
 import getPort from 'get-port';
 import { logger } from '@storybook/node-logger';
 
-const read = async (url) => {
+const read = async (url: string) => {
   const browser = await usePuppeteerBrowser();
   const page = await browser.newPage();
 
@@ -17,10 +17,10 @@ const read = async (url) => {
   const data = JSON.parse(
     await page.evaluate(async () => {
       // eslint-disable-next-line no-undef
-      const d = window.__STORYBOOK_STORY_STORE__.extract();
+      const d = (window as any).__STORYBOOK_STORY_STORE__.extract();
 
       const result = Object.entries(d).reduce(
-        (acc, [k, v]) => ({
+        (acc, [k, v]: [string, any]) => ({
           ...acc,
           [k]: {
             ...v,
@@ -48,7 +48,7 @@ const read = async (url) => {
   return data;
 };
 
-const useLocation = async (input) => {
+const useLocation: (input: string) => Promise<[string, () => void]> = async (input: string) => {
   if (input.match(/^http/)) {
     return [input, async () => {}];
   }
@@ -74,7 +74,7 @@ const useLocation = async (input) => {
   });
 };
 
-const usePuppeteerBrowser = async () => {
+const usePuppeteerBrowser: () => Promise<puppeteerCore.Browser> = async () => {
   const args = ['--no-sandbox ', '--disable-setuid-sandbox'];
   try {
     return await puppeteerCore.launch({ args });
@@ -85,13 +85,13 @@ const usePuppeteerBrowser = async () => {
       // eslint-disable-next-line global-require
       require('child_process').exec(
         `node ${require.resolve(path.join('puppeteer-core', 'install.js'))}`,
-        (error) => (error ? reject(error) : resolve(puppeteerCore.launch({ args })))
+        (error: any) => (error ? reject(error) : resolve(puppeteerCore.launch({ args })))
       );
     });
   }
 };
 
-export async function extract(input, targetPath) {
+export async function extract(input: string, targetPath: string) {
   if (input && targetPath) {
     const [location, exit] = await useLocation(input);
 
