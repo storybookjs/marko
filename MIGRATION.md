@@ -1,14 +1,17 @@
 <h1>Migration</h1>
 
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
+  - [Backgrounds addon has a new api](#backgrounds-addon-has-a-new-api)
   - [CRA preset removed](#cra-preset-removed)
   - [Args passed as first argument to story](#args-passed-as-first-argument-to-story)
-  - [Docs theme separated](#docs-theme-separated)
-  - [DocsPage slots removed](#docspage-slots-removed)
-  - [React prop tables with Typescript](#react-prop-tables-with-typescript)
-    - [React.FC interfaces](#reactfc-interfaces)
-    - [Imported types](#imported-types)
-    - [Rolling back](#rolling-back)
+  - [6.0 Docs breaking changes](#60-docs-breaking-changes)
+    - [Remove framework-specific docs presets](#remove-framework-specific-docs-presets)
+    - [Docs theme separated](#docs-theme-separated)
+    - [DocsPage slots removed](#docspage-slots-removed)
+    - [React prop tables with Typescript](#react-prop-tables-with-typescript)
+      - [React.FC interfaces](#reactfc-interfaces)
+      - [Imported types](#imported-types)
+      - [Rolling back](#rolling-back)
   - [New addon presets](#new-addon-presets)
   - [Removed Deprecated APIs](#removed-deprecated-apis)
   - [New setStories event](#new-setstories-event)
@@ -20,13 +23,15 @@
   - [Story Store immutable outside of configuration](#story-store-immutable-outside-of-configuration)
   - [Improved story source handling](#improved-story-source-handling)
   - [6.0 Addon API changes](#60-addon-api-changes)
-    - [Actions Addon uses parameters](#actions-addon-uses-parameters)
+    - [Actions addon uses parameters](#actions-addon-uses-parameters)
     - [Removed action decorator APIs](#removed-action-decorator-apis)
     - [Removed withA11y decorator](#removed-witha11y-decorator)
-  - [6.0 Deprecated addons](#60-deprecated-addons)
+    - [Essentials addon disables differently](#essentials-addon-disables-differently)
+  - [6.0 Deprecations](#60-deprecations)
     - [Deprecated addon-info, addon-notes](#deprecated-addon-info-addon-notes)
     - [Deprecated addon-contexts](#deprecated-addon-contexts)
     - [Removed addon-centered](#removed-addon-centered)
+    - [Deprecated polymer](#deprecated-polymer)
 - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
   - [To main.js configuration](#to-mainjs-configuration)
     - [Using main.js](#using-mainjs)
@@ -108,6 +113,43 @@
 
 ## From version 5.3.x to 6.0.x
 
+### Backgrounds addon has a new api
+
+Starting in 6.0, the backgrounds addon now receives an object instead of an array as parameter, with a property to define the default background.
+
+Consider the following example of its usage in `Button.stories.js`:
+
+```jsx
+// Button.stories.js
+export default {
+  title: 'Button',
+  parameters: {
+    backgrounds: [
+      { name: 'twitter', value: '#00aced', default: true },
+      { name: 'facebook', value: '#3b5998' },
+    ],
+  },
+};
+```
+
+Here's an updated version of the example, using the new api:
+
+```jsx
+// Button.stories.js
+export default {
+  title: 'Button',
+  parameters: {
+    backgrounds: {
+      default: 'twitter',
+      values: [
+        { name: 'twitter', value: '#00aced' },
+        { name: 'facebook', value: '#3b5998' },
+      ],
+    },
+  },
+};
+```
+
 ### CRA preset removed
 
 The built-in create-react-app preset, which was [previously deprecated](#create-react-app-preset), has been fully removed.
@@ -140,13 +182,19 @@ export const parameters = {
 };
 ```
 
-### Docs theme separated
+### 6.0 Docs breaking changes
+
+#### Remove framework-specific docs presets
+
+In SB 5.2, each framework had its own preset, e.g. `@storybook/addon-docs/react/preset`. In 5.3 we [unified this into a single preset](#unified-docs-preset): `@storybook/addon-docs/preset`. In 6.0 we've removed the deprecated preset.
+
+#### Docs theme separated
 
 In 6.0, you should theme Storybook Docs with the `docs.theme` parameter.
 
 In 5.x, the Storybook UI and Storybook Docs were themed using the same theme object. However, in 5.3 we introduced a new API, `addons.setConfig`, which improved UI theming but broke Docs theming. Rather than trying to keep the two unified, we introduced a separate theming mechanism for docs, `docs.theme`. [Read about Docs theming here](https://github.com/storybookjs/storybook/blob/next/addons/docs/docs/theming.md#storybook-theming).
 
-### DocsPage slots removed
+#### DocsPage slots removed
 
 In SB5.2, we introduced the concept of [DocsPage slots](https://github.com/storybookjs/storybook/blob/0de8575eab73bfd5c5c7ba5fe33e53a49b92db3a/addons/docs/docs/docspage.md#docspage-slots) for customizing the DocsPage.
 
@@ -165,7 +213,7 @@ These mechanisms are superior to slots, so we've removed slots in 6.0. For each 
 | Props       | `propsSlot`       | `docs.extractProps` parameter                |
 | Stories     | `storiesSlot`     | Custom DocsPage                              |
 
-### React prop tables with Typescript
+#### React prop tables with Typescript
 
 Starting in 6.0 we are changing our recommended setup for extracting prop tables in `addon-docs` for React projects using TypeScript.
 
@@ -182,7 +230,7 @@ The Babel-based `react-docgen` version is the default in:
 
 We will be updating this section with migration information as we collect information from our users, and fixing issues as they come up throughout the 6.0 prerelease process. We are cataloging known issues [here](https://github.com/storybookjs/storybook/blob/next/addons/docs/docs/props-tables.md#known-limitations).
 
-#### React.FC interfaces
+##### React.FC interfaces
 
 The biggest known issue is https://github.com/reactjs/react-docgen/issues/387, which means that the following common pattern **DOESN'T WORK**:
 
@@ -200,7 +248,7 @@ const MyComponent: FC<IProps> = ({ ... }: IProps) => ...
 
 Please upvote https://github.com/reactjs/react-docgen/issues/387 if this is affecting your productivity, or better yet, submit a fix!
 
-#### Imported types
+##### Imported types
 
 Another major issue is support for imported types.
 
@@ -215,7 +263,7 @@ const MyComponent: FC<NewType> = ...
 This isn't an issue with `RDTL` so unfortunately it gets worse with `react-docgen`.
 There's an open PR for this https://github.com/reactjs/react-docgen/pull/352 which you can upvote if it affects you.
 
-#### Rolling back
+##### Rolling back
 
 In the meantime, if you're not ready to make the move you have two options:
 
@@ -423,7 +471,7 @@ The MDX analog:
 
 ### 6.0 Addon API changes
 
-#### Actions Addon uses parameters
+#### Actions addon uses parameters
 
 Leveraging the new preset `@storybook/addon-actions` uses parameters to pass action options. If you previously had:
 
@@ -468,9 +516,13 @@ addParameters({
 };
 ```
 
-### 6.0 Deprecated addons
+#### Essentials addon disables differently
 
-We've deprecated the following addons in 6.0: `addon-info`, `addon-notes`, `addon-contexts`, `addon-centered`.
+In 6.0, `addon-essentials` doesn't configure addons if the user has already configured them in `main.js`. In 5.3 it previously checked to see whether the package had been installed in `package.json` to disable configuration. The new setup is preferably because now users' can install essential packages and import from them without disabling their configuration.
+
+### 6.0 Deprecations
+
+We've deprecated the following in 6.0: `addon-info`, `addon-notes`, `addon-contexts`, `addon-centered`, `polymer`.
 
 #### Deprecated addon-info, addon-notes
 
@@ -498,6 +550,10 @@ MyStory.story = {
 ```
 
 Other possible values are: `padded` (default) and `fullscreen`.
+
+#### Deprecated polymer
+
+We've deprecated `@storybook/polymer` and are focusing on `@storybook/web-components`. If you use Polymer and are interested in maintaining it, please get in touch on [our Discord](https://discordapp.com/invite/UUt2PJb).
 
 ## From version 5.2.x to 5.3.x
 
@@ -774,6 +830,8 @@ After a few iterations, this approach seems to be working. However, there are a 
 - If your app uses `babel-polyfill`, try to remove it
 
 We'll update this section as we find more problem cases. If you have a `core-js` problem, please file an issue (preferably with a repro), and we'll do our best to get you sorted.
+
+**Update**: [corejs-upgrade-webpack-plugin](https://github.com/ndelangen/corejs-upgrade-webpack-plugin) has been removed again after running into further issues as described in [https://github.com/storybookjs/storybook/issues/7445](https://github.com/storybookjs/storybook/issues/7445).
 
 ## From version 5.0.1 to 5.0.2
 

@@ -7,7 +7,7 @@ const parse = (value: string, separator: string): ArrayValue =>
   !value || value.trim() === '' ? [] : value.split(separator);
 
 const format = (value: ArrayValue, separator: string) => {
-  return value ? value.join(separator) : '';
+  return value && Array.isArray(value) ? value.join(separator) : '';
 };
 
 export type ArrayProps = ControlProps<ArrayValue> & ArrayConfig;

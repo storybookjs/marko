@@ -9,10 +9,13 @@ storiesOf('Addon/Background', module)
     })
   )
   .addParameters({
-    backgrounds: [
-      { name: 'twitter', value: '#00aced', default: true },
-      { name: 'facebook', value: '#3b5998' },
-    ],
+    backgrounds: {
+      default: 'twitter',
+      values: [
+        { name: 'twitter', value: '#00aced' },
+        { name: 'facebook', value: '#3b5998' },
+      ],
+    },
   })
   .add('background component', () => ({
     component: AppComponent,

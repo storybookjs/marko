@@ -177,7 +177,7 @@ Typically, when you use Storybook MDX, you define stories in the MDX documentati
 
 If you don't define stories in your MDX, you can write MDX documentation and associate it with an existing story, or embed that MDX as its own documentation node in your Storybook's navigation.
 
-If you don't define a `Meta`, you can write Markdown and associate with an existing story. See ["CSF Stories with MDX Docs"](recipes.md#csf-stories-with-mdx-docs).
+If you don't define a `Meta`, you can write Markdown and associate with an existing story. See ["CSF Stories with MDX Docs"](https://github.com/storybookjs/storybook/blob/master/addons/docs/docs/recipes.md#csf-stories-with-mdx-docs).
 
 To get a "documentation-only story", in your UI, define a `<Meta>` as you normally would, but don't define any stories. It will show up in your UI as a documentation node:
 
@@ -189,12 +189,12 @@ To get a "documentation-only story", in your UI, define a `<Meta>` as you normal
 
 Unless you use a custom webpack configuration, all of your `MDX` files should have the suffix `*.stories.mdx`. This tells Storybook to apply its special processing to the `<Meta>` and `<Story>` elements in the file.
 
-Be sure to update your Storybook config file to load `.stories.mdx` stories, as per the [`addon-docs` installation instructions](../README.md#installation).
+Be sure to update your Storybook config file to load `.stories.mdx` stories, as per the [`addon-docs` installation instructions](https://github.com/storybookjs/storybook/tree/master/addons/docs#installation).
 
 ## More resources
 
 For more information:
 
 - [Component Story Format (CSF)](../component-story-format/)
-- [Storybook Docs](https://github.com/storybookjs/storybook/blob/next/addons/docs/)]
+- [Storybook Docs](https://github.com/storybookjs/storybook/blob/next/addons/docs/)
 - [Rich docs with Storybook MDX](https://medium.com/storybookjs/rich-docs-with-storybook-mdx-61bc145ae7bc)

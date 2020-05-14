@@ -3,13 +3,23 @@ import memoize from 'memoizerific';
 
 import { Combo, Consumer, API } from '@storybook/api';
 import { Global, Theme } from '@storybook/theming';
+import { logger } from '@storybook/client-logger';
 
 import { Icons, IconButton, WithTooltip, TooltipLinkList } from '@storybook/components';
 
-import { PARAM_KEY, EVENTS } from '../constants';
+import { PARAM_KEY as BACKGROUNDS_PARAM_KEY, EVENTS } from '../constants';
 import { ColorIcon } from '../components/ColorIcon';
 
-interface Item {
+interface GlobalState {
+  name: string | undefined;
+  selected: string | undefined;
+}
+
+interface Props {
+  api: API;
+}
+
+interface BackgroundSelectorItem {
   id: string;
   title: string;
   onClick: () => void;
@@ -17,10 +27,22 @@ interface Item {
   right?: ReactElement;
 }
 
-interface Input {
+interface Background {
   name: string;
   value: string;
-  default?: boolean;
+}
+
+interface BackgroundsParameter {
+  default?: string;
+  disable?: boolean;
+  values: Background[];
+}
+
+interface BackgroundsConfig {
+  backgrounds: Background[] | null;
+  selectedBackground: string | null;
+  defaultBackgroundName: string | null;
+  disable: boolean;
 }
 
 const iframeId = 'storybook-preview-iframe';
@@ -32,7 +54,7 @@ const createBackgroundSelectorItem = memoize(1000)(
     value: string,
     hasSwatch: boolean,
     change: (arg: { selected: string; name: string }) => void
-  ): Item => ({
+  ): BackgroundSelectorItem => ({
     id: id || name,
     title: name,
     onClick: () => {
@@ -43,85 +65,114 @@ const createBackgroundSelectorItem = memoize(1000)(
   })
 );
 
-const getSelectedBackgroundColor = (list: Input[], currentSelectedValue: string): string => {
-  if (!list.length) {
+const getDisplayedItems = memoize(10)(
+  (
+    backgrounds: Background[],
+    selectedBackgroundColor: string | null,
+    change: (arg: { selected: string; name: string }) => void
+  ) => {
+    const backgroundSelectorItems = backgrounds.map(({ name, value }) =>
+      createBackgroundSelectorItem(null, name, value, true, change)
+    );
+
+    if (selectedBackgroundColor !== 'transparent') {
+      return [
+        createBackgroundSelectorItem('reset', 'Clear background', 'transparent', null, change),
+        ...backgroundSelectorItems,
+      ];
+    }
+
+    return backgroundSelectorItems;
+  }
+);
+
+const getSelectedBackgroundColor = (
+  backgrounds: Background[] = [],
+  currentSelectedValue: string,
+  defaultName: string
+): string => {
+  if (currentSelectedValue === 'transparent') {
     return 'transparent';
   }
 
-  if (currentSelectedValue === 'transparent') {
+  if (backgrounds.find((background) => background.value === currentSelectedValue)) {
     return currentSelectedValue;
   }
 
-  if (list.find((i) => i.value === currentSelectedValue)) {
-    return currentSelectedValue;
+  const defaultBackground = backgrounds.find((background) => background.name === defaultName);
+  if (defaultBackground) {
+    return defaultBackground.value;
   }
 
-  if (list.find((i) => i.default)) {
-    return list.find((i) => i.default).value;
+  if (defaultName) {
+    const availableColors = backgrounds.map((background) => background.name).join(', ');
+    logger.warn(
+      `Backgrounds Addon: could not find the default color "${defaultName}".
+      These are the available colors for your story based on your configuration: ${availableColors}`
+    );
   }
 
   return 'transparent';
 };
 
-const mapper = ({ api, state }: Combo): { items: Input[]; selected: string | null } => {
-  const list = api.getCurrentParameter<Input[]>(PARAM_KEY);
-  const selected = state.addons[PARAM_KEY] || null;
+const getBackgroundsConfig = ({ api, state }: Combo): BackgroundsConfig => {
+  const backgroundsParameter = api.getCurrentParameter<BackgroundsParameter>(BACKGROUNDS_PARAM_KEY);
+  const selectedBackgroundValue = state.addons[BACKGROUNDS_PARAM_KEY] || null;
 
-  return { items: list || [], selected };
-};
-
-const getDisplayedItems = memoize(10)(
-  (
-    list: Input[],
-    selected: string | null,
-    change: (arg: { selected: string; name: string }) => void
-  ) => {
-    let availableBackgroundSelectorItems: Item[] = [];
-
-    if (selected !== 'transparent') {
-      availableBackgroundSelectorItems.push(
-        createBackgroundSelectorItem('reset', 'Clear background', 'transparent', null, change)
-      );
-    }
-
-    if (list.length) {
-      availableBackgroundSelectorItems = [
-        ...availableBackgroundSelectorItems,
-        ...list.map(({ name, value }) =>
-          createBackgroundSelectorItem(null, name, value, true, change)
-        ),
-      ];
-    }
-
-    return availableBackgroundSelectorItems;
+  if (Array.isArray(backgroundsParameter)) {
+    logger.warn(
+      'Addon Backgrounds api has changed in Storybook 6.0. Please refer to the migration guide: https://github.com/storybookjs/storybook/blob/next/MIGRATION.md'
+    );
   }
-);
 
-interface GlobalState {
-  name: string | undefined;
-  selected: string | undefined;
-}
+  const isBackgroundsEmpty = !backgroundsParameter?.values?.length;
+  if (backgroundsParameter?.disable || isBackgroundsEmpty) {
+    // other null properties are necessary to keep the same return shape for Consumer memoization
+    return {
+      disable: true,
+      backgrounds: null,
+      selectedBackground: null,
+      defaultBackgroundName: null,
+    };
+  }
 
-interface Props {
-  api: API;
-}
+  return {
+    disable: false,
+    backgrounds: backgroundsParameter?.values,
+    selectedBackground: selectedBackgroundValue,
+    defaultBackgroundName: backgroundsParameter?.default,
+  };
+};
 
 export class BackgroundSelector extends Component<Props> {
   change = ({ selected, name }: GlobalState) => {
     const { api } = this.props;
     if (typeof selected === 'string') {
-      api.setAddonState<string>(PARAM_KEY, selected);
+      api.setAddonState<string>(BACKGROUNDS_PARAM_KEY, selected);
     }
     api.emit(EVENTS.UPDATE, { selected, name });
   };
 
   render() {
     return (
-      <Consumer filter={mapper}>
-        {({ items, selected }: ReturnType<typeof mapper>) => {
-          const selectedBackgroundColor = getSelectedBackgroundColor(items, selected);
+      <Consumer filter={getBackgroundsConfig}>
+        {({
+          disable,
+          backgrounds,
+          selectedBackground,
+          defaultBackgroundName,
+        }: BackgroundsConfig) => {
+          if (disable) {
+            return null;
+          }
 
-          return items.length ? (
+          const selectedBackgroundColor = getSelectedBackgroundColor(
+            backgrounds,
+            selectedBackground,
+            defaultBackgroundName
+          );
+
+          return (
             <Fragment>
               {selectedBackgroundColor ? (
                 <Global
@@ -138,26 +189,26 @@ export class BackgroundSelector extends Component<Props> {
               <WithTooltip
                 placement="top"
                 trigger="click"
+                closeOnClick
                 tooltip={({ onHide }) => (
                   <TooltipLinkList
-                    links={getDisplayedItems(items, selectedBackgroundColor, (i) => {
+                    links={getDisplayedItems(backgrounds, selectedBackgroundColor, (i) => {
                       this.change(i);
                       onHide();
                     })}
                   />
                 )}
-                closeOnClick
               >
                 <IconButton
                   key="background"
-                  active={selectedBackgroundColor !== 'transparent'}
                   title="Change the background of the preview"
+                  active={selectedBackgroundColor !== 'transparent'}
                 >
                   <Icons icon="photo" />
                 </IconButton>
               </WithTooltip>
             </Fragment>
-          ) : null;
+          );
         }}
       </Consumer>
     );
