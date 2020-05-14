@@ -73,10 +73,8 @@ export const Ref: FunctionComponent<RefType & RefProps> = (ref) => {
 
   const isLoadingMain = !ref.ready && isMain;
   const isLoadingInjected = ref.startInjected && !ref.ready;
-  const isLoadingLazy =
-    !isLoadingMain && !isLoadingInjected && ref.startInjected !== false && !isMain;
 
-  const isLoading = isLoadingMain || isLoadingInjected || isLoadingLazy;
+  const isLoading = isLoadingMain || isLoadingInjected;
   const isError = !!error;
   const isEmpty = !isLoading && length === 0;
   const isAuthRequired = !!authUrl;
