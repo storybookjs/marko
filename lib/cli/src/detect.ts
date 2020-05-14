@@ -6,14 +6,15 @@ import {
   supportedTemplates,
   SUPPORTED_FRAMEWORKS,
   SUPPORTED_LANGUAGES,
+  TemplateConfiguration,
 } from './project_types';
-import { getBowerJson, getPackageJson } from './helpers';
+import { getBowerJson, getPackageJson, PackageJson } from './helpers';
 
-const hasDependency = (packageJson, name) => {
+const hasDependency = (packageJson: PackageJson, name: string) => {
   return !!packageJson.dependencies?.[name] || !!packageJson.devDependencies?.[name];
 };
 
-const hasPeerDependency = (packageJson, name) => {
+const hasPeerDependency = (packageJson: PackageJson, name: string) => {
   return !!packageJson.peerDependencies?.[name];
 };
 
@@ -34,7 +35,7 @@ const hasPeerDependency = (packageJson, name) => {
  *   },
  * });
  */
-const getFrameworkPreset = (packageJson, framework) => {
+const getFrameworkPreset = (packageJson: PackageJson, framework: TemplateConfiguration) => {
   const matches = {
     dependencies: [false],
     peerDependencies: [false],
@@ -66,7 +67,7 @@ export function detectFrameworkPreset(packageJson = {}) {
   return result ? result.preset : PROJECT_TYPES.UNDETECTED;
 }
 
-export function isStorybookInstalled(dependencies, force) {
+export function isStorybookInstalled(dependencies: PackageJson, force?: boolean) {
   if (!dependencies) {
     return false;
   }
@@ -75,7 +76,7 @@ export function isStorybookInstalled(dependencies, force) {
     if (
       SUPPORTED_FRAMEWORKS.reduce(
         (storybookPresent, framework) =>
-          storybookPresent || dependencies.devDependencies[`@storybook/${framework}`],
+          storybookPresent || !!dependencies.devDependencies[`@storybook/${framework}`],
         false
       )
     ) {
@@ -107,7 +108,7 @@ export function detectLanguage() {
   return language;
 }
 
-export function detect(options = {}) {
+export function detect(options: { force?: boolean; html?: boolean } = {}) {
   const packageJson = getPackageJson();
   const bowerJson = getBowerJson();
 

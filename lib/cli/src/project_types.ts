@@ -50,7 +50,7 @@ export const SUPPORTED_FRAMEWORKS = [
   'rax',
 ];
 
-type TemplateConfiguration = {
+export type TemplateConfiguration = {
   // TODO: Improve typing, preset type is an union of all values of PROJECT_TYPES
   preset: string;
   dependencies?: string[];

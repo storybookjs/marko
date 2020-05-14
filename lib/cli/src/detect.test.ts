@@ -209,18 +209,18 @@ const MOCK_FRAMEWORK_FILES = [
 
 describe('Detect', () => {
   it(`should return type HTML if html option is passed`, () => {
-    getPackageJson.mockImplementation(() => true);
+    (getPackageJson as jest.Mock).mockImplementation(() => true);
     expect(detect({ html: true })).toBe(PROJECT_TYPES.HTML);
   });
 
   it(`should return type UNDETECTED if neither packageJson or bowerJson exist`, () => {
-    getPackageJson.mockImplementation(() => false);
-    getBowerJson.mockImplementation(() => false);
+    (getPackageJson as jest.Mock).mockImplementation(() => false);
+    (getBowerJson as jest.Mock).mockImplementation(() => false);
     expect(detect()).toBe(PROJECT_TYPES.UNDETECTED);
   });
 
   it(`should return language typescript if the dependency is present`, () => {
-    getPackageJson.mockImplementation(() => ({
+    (getPackageJson as jest.Mock).mockImplementation(() => ({
       dependencies: {
         typescript: '1.0.0',
       },
@@ -229,7 +229,7 @@ describe('Detect', () => {
   });
 
   it(`should return language javascript by default`, () => {
-    getPackageJson.mockImplementation(() => true);
+    (getPackageJson as jest.Mock).mockImplementation(() => true);
     expect(detectLanguage()).toBe(SUPPORTED_LANGUAGES.JAVASCRIPT);
   });
 
@@ -286,7 +286,7 @@ describe('Detect', () => {
 
     MOCK_FRAMEWORK_FILES.forEach((structure) => {
       it(`${structure.name}`, () => {
-        fs.existsSync.mockImplementation((filePath) => {
+        (fs.existsSync as jest.Mock).mockImplementation((filePath) => {
           return Object.keys(structure.files).includes(filePath);
         });
 
@@ -306,7 +306,7 @@ describe('Detect', () => {
         '/node_modules/.bin/react-scripts': 'file content',
       };
 
-      fs.existsSync.mockImplementation((filePath) => {
+      (fs.existsSync as jest.Mock).mockImplementation((filePath) => {
         return Object.keys(forkedReactScriptsConfig).includes(filePath);
       });
 

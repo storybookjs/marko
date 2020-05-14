@@ -20,6 +20,7 @@ const logger = console;
 export type PackageJson = {
   dependencies?: Record<string, string>;
   devDependencies?: Record<string, string>;
+  peerDependencies?: Record<string, string>;
 };
 
 // TODO: Extract this type
