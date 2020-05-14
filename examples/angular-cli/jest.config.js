@@ -4,9 +4,9 @@ module.exports = {
   preset: 'jest-preset-angular',
   ...config,
   globals: {
-    __TRANSFORM_HTML__: true,
     'ts-jest': {
-      tsConfigFile: '<rootDir>/examples/angular-cli/src/tsconfig.spec.json',
+      tsConfig: '<rootDir>/examples/angular-cli/src/tsconfig.spec.json',
+      stringifyContentPathRegex: '\\.html$',
     },
   },
   roots: [__dirname],
@@ -18,4 +18,9 @@ module.exports = {
     '^.+\\.mdx$': '@storybook/addon-docs/jest-transform-mdx',
   },
   moduleFileExtensions: [...config.moduleFileExtensions, 'html'],
+  snapshotSerializers: [
+    'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
+    'jest-preset-angular/build/AngularSnapshotSerializer.js',
+    'jest-preset-angular/build/HTMLCommentSerializer.js',
+  ],
 };
