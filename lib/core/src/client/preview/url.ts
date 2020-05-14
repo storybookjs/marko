@@ -80,12 +80,6 @@ export const initializePath = (storyStore: StoryStore) => {
     viewMode = 'story';
   }
 
-  if (Array.isArray(storyId)) {
-    [storyId] = storyId;
-  }
-  if (Array.isArray(viewMode)) {
-    [viewMode] = viewMode;
-  }
   if (!storyId) {
     storyId = getIdFromLegacyQuery(query, storyStore);
     if (storyId) {
