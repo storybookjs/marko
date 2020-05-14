@@ -4,7 +4,7 @@ import { styled } from '@storybook/theming';
 import { ExpanderContext, useDataset } from './Tree/State';
 import { Expander } from './Tree/ListItem';
 import { RefIndicator } from './RefIndicator';
-import { AuthBlock, ErrorBlock, LoaderBlock, ContentBlock } from './RefBlocks';
+import { AuthBlock, ErrorBlock, LoaderBlock, ContentBlock, EmptyBlock } from './RefBlocks';
 import { getType, RefType } from './RefHelpers';
 
 export interface RefProps {
@@ -69,12 +69,13 @@ export const Ref: FunctionComponent<RefType & RefProps> = (ref) => {
 
   const combo = useMemo(() => ({ setExpanded, expandedSet }), [setExpanded, expandedSet]);
 
-  const isLoading = !length;
   const isMain = key === 'storybook_internal';
+  const isLoading = length === 0 && !ref.ready;
   const isError = !!error;
+  const isEmpty = !isLoading && length === 0;
   const isAuthRequired = !!authUrl;
 
-  const type = getType(isLoading, isAuthRequired, isError);
+  const type = getType(isLoading, isAuthRequired, isError, isEmpty);
 
   return isHidden ? null : (
     <ExpanderContext.Provider value={combo}>
@@ -95,6 +96,7 @@ export const Ref: FunctionComponent<RefType & RefProps> = (ref) => {
           {type === 'auth' && <AuthBlock id={ref.id} authUrl={authUrl} />}
           {type === 'error' && <ErrorBlock error={error} />}
           {type === 'loading' && <LoaderBlock isMain={isMain} />}
+          {type === 'empty' && <EmptyBlock isMain={isMain} />}
           {type === 'ready' && (
             <ContentBlock {...{ others, dataSet, selectedSet, expandedSet, roots }} />
           )}
