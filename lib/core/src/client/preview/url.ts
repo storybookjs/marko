@@ -76,7 +76,7 @@ export const initializePath = (storyStore: StoryStore) => {
   let storyId = getFirstString(query.id);
   let viewMode = getFirstString(query.viewMode) as ViewMode;
 
-  if (!viewMode.match(/docs|story/)) {
+  if (viewMode && !viewMode.match(/docs|story/)) {
     viewMode = 'story';
   }
 
