@@ -91,7 +91,7 @@ export function getBowerJson() {
   return JSON.parse(jsonContent);
 }
 
-export function readFileAsJson(jsonPath: string, allowComments: boolean) {
+export function readFileAsJson(jsonPath: string, allowComments?: boolean) {
   const filePath = path.resolve(jsonPath);
   if (!fs.existsSync(filePath)) {
     return false;

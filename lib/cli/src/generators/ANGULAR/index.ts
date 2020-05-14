@@ -15,8 +15,10 @@ import {
   copyTemplate,
 } from '../../helpers';
 import { STORY_FORMAT } from '../../project_types';
+import { NpmOptions } from '../../NpmOptions';
+import { GeneratorOptions } from '../../GeneratorOptions';
 
-async function addDependencies(npmOptions, { storyFormat }) {
+async function addDependencies(npmOptions: NpmOptions, { storyFormat }: GeneratorOptions) {
   const packages = [
     '@storybook/angular',
     '@storybook/addon-actions',
@@ -62,7 +64,7 @@ function editAngularAppTsConfig() {
   writeFileAsJson(getAngularAppTsConfigPath(), tsConfigJson);
 }
 
-export default async (npmOptions, { storyFormat }) => {
+export default async (npmOptions: NpmOptions, { storyFormat }: GeneratorOptions) => {
   if (!isDefaultProjectSet()) {
     throw new Error(
       'Could not find a default project in your Angular workspace.\nSet a defaultProject in your angular.json and re-run the installation.'

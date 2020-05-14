@@ -2,6 +2,10 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { readFileAsJson, writeFileAsJson } from '../../helpers';
 
+type TsConfig = {
+  extends: string;
+};
+
 export function getAngularAppTsConfigPath() {
   const angularJson = readFileAsJson('angular.json', true);
   const { defaultProject } = angularJson;
@@ -23,14 +27,14 @@ export function getAngularAppTsConfigJson() {
   return readFileAsJson(tsConfigPath, true);
 }
 
-function setStorybookTsconfigExtendsPath(tsconfigJson) {
+function setStorybookTsconfigExtendsPath(tsconfigJson: TsConfig) {
   const angularProjectTsConfigPath = getAngularAppTsConfigPath();
   const newTsconfigJson = { ...tsconfigJson };
   newTsconfigJson.extends = `../${angularProjectTsConfigPath}`;
   return newTsconfigJson;
 }
 
-export function editStorybookTsConfig(tsconfigPath) {
+export function editStorybookTsConfig(tsconfigPath: string) {
   let tsConfigJson;
   try {
     tsConfigJson = readFileAsJson(tsconfigPath);
