@@ -25,7 +25,7 @@ Storybook Docs automatically generates props tables for components in supported 
 
 ## Usage
 
-For framework-specific setup instructions, see the framework's README: [React](../../react/README.md), [Vue](../../vue/README.md), [Angular](../../angular/README.md), [Web Components](../../web-components/README.md), [Ember](../../ember/README.md).
+For framework-specific setup instructions, see the framework's README: [React](../react/README.md), [Vue](../vue/README.md), [Angular](../angular/README.md), [Web Components](../web-components/README.md), [Ember](../ember/README.md).
 
 To use the props table in [DocsPage](./docspage.md), simply export a component property on your stories metadata:
 
