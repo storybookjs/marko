@@ -1,23 +1,19 @@
 import fse from 'fs-extra';
 import path from 'path';
-import { npmInit } from '../../npm_init';
 import {
   getVersion,
-  getPackageJson,
   writePackageJson,
   getBabelDependencies,
   installDependencies,
+  retrievePackageJson,
 } from '../../helpers';
+import { NpmOptions } from '../../NpmOptions';
 
-export default async (npmOptions) => {
+export default async (npmOptions: NpmOptions) => {
   const storybookVersion = await getVersion(npmOptions, '@storybook/marionette');
   fse.copySync(path.resolve(__dirname, 'template/'), '.', { overwrite: true });
 
-  let packageJson = getPackageJson();
-  if (!packageJson) {
-    await npmInit();
-    packageJson = getPackageJson();
-  }
+  const packageJson = await retrievePackageJson();
 
   packageJson.dependencies = packageJson.dependencies || {};
   packageJson.devDependencies = packageJson.devDependencies || {};
@@ -30,7 +26,7 @@ export default async (npmOptions) => {
 
   const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
 
-  installDependencies(npmOptions, [
+  installDependencies({ ...npmOptions, packageJson }, [
     `@storybook/marionette@${storybookVersion}`,
     ...babelDependencies,
   ]);
