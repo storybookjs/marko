@@ -9,8 +9,10 @@ import {
   copyTemplate,
 } from '../../helpers';
 import { STORY_FORMAT } from '../../project_types';
+import { NpmOptions } from '../../NpmOptions';
+import { GeneratorOptions } from '../../GeneratorOptions';
 
-export default async (npmOptions, { storyFormat }) => {
+export default async (npmOptions: NpmOptions, { storyFormat }: GeneratorOptions) => {
   const packages = [
     '@storybook/react',
     '@storybook/preset-create-react-app',
