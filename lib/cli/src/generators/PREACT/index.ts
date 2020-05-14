@@ -6,8 +6,10 @@ import {
   installDependencies,
   copyTemplate,
 } from '../../helpers';
+import { NpmOptions } from '../../NpmOptions';
+import { GeneratorOptions } from '../../GeneratorOptions';
 
-export default async (npmOptions, { storyFormat }) => {
+export default async (npmOptions: NpmOptions, { storyFormat }: GeneratorOptions) => {
   const [storybookVersion, actionsVersion, linksVersion, addonsVersion] = await getVersions(
     npmOptions,
     '@storybook/preact',
