@@ -1,10 +1,10 @@
-import { sync as spawnSync } from 'cross-spawn';
+import { sync } from 'cross-spawn';
 import path from 'path';
 import findUp from 'find-up';
 
 export function hasYarn() {
-  const yarnAvailable = spawnSync('yarn', ['--version'], { silent: true });
-  const npmAvailable = spawnSync('npm', ['--version'], { silent: true });
+  const yarnAvailable = sync('yarn', ['--version']);
+  const npmAvailable = sync('npm', ['--version']);
 
   const lockFile = findUp.sync(['yarn.lock', 'package-lock.json']);
   const hasYarnLock = lockFile && path.basename(lockFile) === 'yarn.lock';

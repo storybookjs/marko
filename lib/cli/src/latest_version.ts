@@ -10,14 +10,19 @@ import { satisfies } from 'semver';
  * @param {Object} constraint Version range to use to constraint the returned version
  * @return {Promise<string>} Promise resolved with a version
  */
-export async function latestVersion(npmOptions, packageName, constraint) {
-  let versions;
+export async function latestVersion(
+  npmOptions: { useYarn: boolean },
+  packageName: string,
+  constraint?: any
+): Promise<string> {
+  let versions: string | string[];
 
   // TODO: Refactor things to hide the package manager details:
   // Create a `PackageManager` interface that expose some functions like `version`, `add` etc
   // and then create classes that handle the npm/yarn/yarn2 specific behavior
   if (npmOptions.useYarn) {
-    const yarnVersion = sync('yarn', ['--version'], { silent: true })
+    const yarnVersion = sync('yarn', ['--version'])
+      // @ts-ignore
       .output.toString('utf8')
       .replace(/,/g, '')
       .replace(/"/g, '');
@@ -32,10 +37,10 @@ export async function latestVersion(npmOptions, packageName, constraint) {
   }
 
   if (!constraint) {
-    return versions;
+    return versions as string;
   }
 
-  return versions.reverse().find((version) => satisfies(version, constraint));
+  return (versions as string[]).reverse().find((version) => satisfies(version, constraint));
 }
 
 /**
@@ -45,7 +50,7 @@ export async function latestVersion(npmOptions, packageName, constraint) {
  * @param {Object} constraint Version range to use to constraint the returned version
  * @returns {Promise<string|Array<string>>} versions  Promise resolved with a version or an array of versions
  */
-function spawnVersionsWithNpm(packageName, constraint) {
+function spawnVersionsWithNpm(packageName: string, constraint: any): Promise<string | string[]> {
   return new Promise((resolve, reject) => {
     const command = spawn(
       'npm',
@@ -54,8 +59,6 @@ function spawnVersionsWithNpm(packageName, constraint) {
         cwd: process.cwd(),
         env: process.env,
         stdio: 'pipe',
-        encoding: 'utf-8',
-        silent: true,
       }
     );
 
@@ -81,7 +84,7 @@ function spawnVersionsWithNpm(packageName, constraint) {
  * @param {Object} constraint Version range to use to constraint the returned version
  * @returns {Promise<string|Array<string>>} versions  Promise resolved with a version or an array of versions
  */
-function spawnVersionsWithYarn(packageName, constraint) {
+function spawnVersionsWithYarn(packageName: string, constraint: any): Promise<string | string[]> {
   return new Promise((resolve, reject) => {
     const command = spawn(
       'yarn',
@@ -90,8 +93,6 @@ function spawnVersionsWithYarn(packageName, constraint) {
         cwd: process.cwd(),
         env: process.env,
         stdio: 'pipe',
-        encoding: 'utf-8',
-        silent: true,
       }
     );
 
@@ -122,7 +123,10 @@ function spawnVersionsWithYarn(packageName, constraint) {
  * @param {Object} constraint Version range to use to constraint the returned version
  * @returns {Promise<string|Array<string>>} versions  Promise resolved with a version or an array of versions
  */
-async function spawnVersionsWithYarn2(packageName, constraint) {
+async function spawnVersionsWithYarn2(
+  packageName: string,
+  constraint: any
+): Promise<string | string[]> {
   const field = constraint ? 'versions' : 'version';
 
   const commandResult = sync('yarn', ['npm', 'info', packageName, '--fields', field, '--json'], {
@@ -130,7 +134,6 @@ async function spawnVersionsWithYarn2(packageName, constraint) {
     env: process.env,
     stdio: 'pipe',
     encoding: 'utf-8',
-    silent: true,
   });
 
   if (commandResult.status !== 0) {
