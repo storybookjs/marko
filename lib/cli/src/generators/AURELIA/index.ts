@@ -8,6 +8,8 @@ import {
   copyTemplate,
   readFileAsJson,
 } from '../../helpers';
+import { NpmOptions } from '../../NpmOptions';
+import { GeneratorOptions } from '../../GeneratorOptions';
 
 function addStorybookExcludeGlobToTsConfig() {
   const tsConfigJson = readFileAsJson('tsconfig.json', true);
@@ -25,7 +27,7 @@ function addStorybookExcludeGlobToTsConfig() {
   writeFileAsJson('tsconfig.json', tsConfigJson);
 }
 
-export default async (npmOptions, { storyFormat = 'csf' }) => {
+export default async (npmOptions: NpmOptions, { storyFormat = 'csf' }: GeneratorOptions) => {
   copyTemplate(__dirname, storyFormat);
   const packages = [
     '@storybook/aurelia',
@@ -54,5 +56,5 @@ export default async (npmOptions, { storyFormat = 'csf' }) => {
   writePackageJson(packageJson);
   addStorybookExcludeGlobToTsConfig();
   const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
-  installDependencies(npmOptions, [...versionedPackages, ...babelDependencies]);
+  installDependencies({ ...npmOptions, packageJson }, [...versionedPackages, ...babelDependencies]);
 };
