@@ -92,9 +92,9 @@ Storybook Docs supports all view layers that Storybook supports except for React
 
 Want to add enhanced features to your favorite framework? Check out this [dev guide](./docs/multiframework.md)
 
-### Be sure to check framework specific installation needs
+## Framework specific installation needs
 
-- [React](./react) (covered here)
+- [React](./react) (covered below)
 - [Vue](./vue)
 - [Angular](./angular)
 - [Ember](./ember)
