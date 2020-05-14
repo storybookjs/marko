@@ -49,9 +49,7 @@
     "fork-ts-checker-webpack-plugin": "^4.0.3",
     "react-docgen-typescript-loader": "^3.7.2",
     "react-moment-proptypes": "^1.7.0",
-    "ts-node": "~8.9.1",
-    "tslint": "^6.1.2",
-    "tslint-config-airbnb": "^5.11.1"
+    "ts-node": "~8.9.1"
   },
   "storybook": {
     "chromatic": {

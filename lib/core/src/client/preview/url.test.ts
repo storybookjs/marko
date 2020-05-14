@@ -99,13 +99,23 @@ describe('url', () => {
     const store: unknown = { getRawStory };
     it('should handle id queries', () => {
       document.location.search = '?id=story--id';
-      expect(initializePath(store as StoryStore)).toEqual({ storyId: 'story--id' });
+      expect(initializePath(store as StoryStore)).toEqual({
+        storyId: 'story--id',
+        viewMode: 'story',
+      });
       expect(history.replaceState).not.toHaveBeenCalled();
     });
     it('should redirect legacy queries', () => {
       document.location.search = '?selectedKind=kind&selectedStory=story';
-      expect(initializePath(store as StoryStore)).toEqual({ storyId: 'kind--story' });
-      expect(history.replaceState).toHaveBeenCalledWith({}, '', 'pathname?id=kind--story');
+      expect(initializePath(store as StoryStore)).toEqual({
+        storyId: 'kind--story',
+        viewMode: 'story',
+      });
+      expect(history.replaceState).toHaveBeenCalledWith(
+        {},
+        '',
+        'pathname?id=kind--story&viewMode=story'
+      );
     });
   });
 });
