@@ -6,7 +6,7 @@ module.exports = {
   globals: {
     __TRANSFORM_HTML__: true,
     'ts-jest': {
-      tsConfigFile: '<rootDir>/examples/angular-cli/src/tsconfig.spec.json',
+      tsConfig: '<rootDir>/examples/angular-cli/src/tsconfig.spec.json',
     },
   },
   roots: [__dirname],
