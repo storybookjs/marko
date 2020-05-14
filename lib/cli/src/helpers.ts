@@ -17,7 +17,7 @@ const { version, devDependencies } = require('../package.json');
 const logger = console;
 
 // TODO: Extract this type
-type PackageJson = {
+export type PackageJson = {
   dependencies?: Record<string, string>;
   devDependencies?: Record<string, string>;
 };
