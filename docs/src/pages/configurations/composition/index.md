@@ -97,10 +97,10 @@ You can add a 'mapper' to storybook that will be used to transform the received 
 import { addons } from '@storybook/addons';
 
 addons.setConfig({
-  mapper: (ref, story) => {
+  storyMapper: (ref, story) => {
     return { ...a, kind: a.kind.replace('|', '/') };
   }
 });
 ```
 
-You can remove stories by returning `undefined`.
+You can remove stories by returning `null`.
