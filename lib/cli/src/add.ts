@@ -3,7 +3,8 @@ import fs from 'fs';
 import { sync as spawnSync } from 'cross-spawn';
 import { hasYarn } from './has_yarn';
 import { latestVersion } from './latest_version';
-import { commandLog, getPackageJson, PackageJson } from './helpers';
+import { commandLog, getPackageJson } from './helpers';
+import { PackageJson } from './PackageJson';
 
 const logger = console;
 export const storybookAddonScope = '@storybook/addon-';

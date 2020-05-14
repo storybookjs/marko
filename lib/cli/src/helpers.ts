@@ -10,26 +10,13 @@ import stripJsonComments from 'strip-json-comments';
 import { latestVersion } from './latest_version';
 import { npmInit } from './npm_init';
 import { STORY_FORMAT } from './project_types';
+import { PackageJson } from './PackageJson';
+import { NpmOptions } from './NpmOptions';
 
 // Cannot be `import` as it's not under TS root dir
 const { version, devDependencies } = require('../package.json');
 
 const logger = console;
-
-// TODO: Extract this type
-export type PackageJson = {
-  dependencies?: Record<string, string>;
-  devDependencies?: Record<string, string>;
-  peerDependencies?: Record<string, string>;
-};
-
-// TODO: Extract this type
-type NpmOptions = {
-  useYarn: boolean;
-  skipInstall?: boolean;
-  installAsDevDependencies: boolean;
-  packageJson: PackageJson;
-};
 
 export async function getVersion(npmOptions: NpmOptions, packageName: string, constraint?: any) {
   let current;
@@ -217,21 +204,24 @@ export function installDepsFromPackageJson(options: NpmOptions) {
 /**
  * Add dependencies to a project using `yarn add` or `npm install`.
  *
- * @param {Object} npmOptions contains `useYarn`, `runInstall` and `installAsDevDependencies` which we use to determine how we install packages.
+ * @param {Object} options contains `useYarn`, `runInstall` and `installAsDevDependencies` which we use to determine how we install packages.
  * @param {Array} dependencies contains a list of packages to add.
  * @example
- * installDependencies(npmOptions, [
+ * installDependencies(options, [
  *   `@storybook/react@${storybookVersion}`,
  *   `@storybook/addon-actions@${actionsVersion}`,
  *   `@storybook/addon-links@${linksVersion}`,
  *   `@storybook/addons@${addonsVersion}`,
  * ]);
  */
-export function installDependencies(npmOptions: NpmOptions, dependencies: string[]) {
-  const { skipInstall } = npmOptions;
+export function installDependencies(
+  options: NpmOptions & { packageJson: PackageJson },
+  dependencies: string[]
+) {
+  const { skipInstall } = options;
 
   if (skipInstall) {
-    const { packageJson } = npmOptions;
+    const { packageJson } = options;
 
     const dependenciesMap = dependencies.reduce((acc, dep) => {
       const idx = dep.lastIndexOf('@');
@@ -241,7 +231,7 @@ export function installDependencies(npmOptions: NpmOptions, dependencies: string
       return { ...acc, [packageName]: packageVersion };
     }, {});
 
-    if (npmOptions.installAsDevDependencies) {
+    if (options.installAsDevDependencies) {
       packageJson.devDependencies = {
         ...packageJson.devDependencies,
         ...dependenciesMap,
@@ -255,12 +245,12 @@ export function installDependencies(npmOptions: NpmOptions, dependencies: string
 
     writePackageJson(packageJson);
   } else {
-    const spawnCommand = npmOptions.useYarn ? 'yarn' : 'npm';
-    const installCommand = npmOptions.useYarn ? 'add' : 'install';
+    const spawnCommand = options.useYarn ? 'yarn' : 'npm';
+    const installCommand = options.useYarn ? 'add' : 'install';
 
     const installArgs = [installCommand, ...dependencies];
 
-    if (npmOptions.installAsDevDependencies) {
+    if (options.installAsDevDependencies) {
       installArgs.push('-D');
     }
 

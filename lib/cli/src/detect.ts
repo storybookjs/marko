@@ -8,7 +8,8 @@ import {
   SUPPORTED_LANGUAGES,
   TemplateConfiguration,
 } from './project_types';
-import { getBowerJson, getPackageJson, PackageJson } from './helpers';
+import { getBowerJson, getPackageJson } from './helpers';
+import { PackageJson } from './PackageJson';
 
 const hasDependency = (packageJson: PackageJson, name: string) => {
   return !!packageJson.dependencies?.[name] || !!packageJson.devDependencies?.[name];
