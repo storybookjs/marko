@@ -1,3 +1,48 @@
+## 6.0.0-beta.6 (May 12, 2020)
+
+### Breaking Changes
+
+- Essentials: Update configuration heuristics for main.js ([#10737](https://github.com/storybookjs/storybook/pull/10737))
+
+### Features
+
+- Essentials: Add addon-actions ([#10748](https://github.com/storybookjs/storybook/pull/10748))
+- Essentials: Add addon-docs ([#10729](https://github.com/storybookjs/storybook/pull/10729))
+
+### Bug Fixes
+
+- UI: Reset layout properties when switching stories ([#10643](https://github.com/storybookjs/storybook/pull/10643))
+
+### Maintenance
+
+- CLI: react stories homogenization ([#10711](https://github.com/storybookjs/storybook/pull/10711))
+- CLI: vue stories homogenization ([#10708](https://github.com/storybookjs/storybook/pull/10708))
+- CLI: webpack react stories homogenization ([#10709](https://github.com/storybookjs/storybook/pull/10709))
+- CLI: svelte stories homogenization ([#10704](https://github.com/storybookjs/storybook/pull/10704))
+- CLI: react-scripts stories homogenization ([#10710](https://github.com/storybookjs/storybook/pull/10710))
+- CLI: mithril stories homogenization ([#10707](https://github.com/storybookjs/storybook/pull/10707))
+- CLI: rax stories homogenization ([#10706](https://github.com/storybookjs/storybook/pull/10706))
+- CLI: riot stories homogenization ([#10715](https://github.com/storybookjs/storybook/pull/10715))
+- CLI: ember stories homogenization ([#10713](https://github.com/storybookjs/storybook/pull/10713))
+- CLI: preact stories homogenization ([#10712](https://github.com/storybookjs/storybook/pull/10712))
+- CLI: sfc_vue stories homogenization ([#10714](https://github.com/storybookjs/storybook/pull/10714))
+
+### Dependency Upgrades
+
+- Revert "Change reference for jest-preset-angular/build/setupJest as per migration guide" ([#10727](https://github.com/storybookjs/storybook/pull/10727))
+
+## 6.0.0-beta.5 (May 11, 2020)
+
+### Bug Fixes
+
+- Core: Fix error handling on load ([#10659](https://github.com/storybookjs/storybook/pull/10659))
+
+### Maintenance
+
+- Storyshots: Change reference for jest-preset-angular/build/setupJest ([#10699](https://github.com/storybookjs/storybook/pull/10699))
+- CLI: Remove CRA fixtures from Yarn 2 tests run ([#10720](https://github.com/storybookjs/storybook/pull/10720))
+- Fix: Set private package on Aurelia example ([#10688](https://github.com/storybookjs/storybook/pull/10688))
+
 ## 6.0.0-beta.4 (May 8, 2020)
 
 ### Features

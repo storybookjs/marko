@@ -1,32 +1,40 @@
-import fs from 'fs';
+import path from 'path';
 import { logger } from '@storybook/node-logger';
 
 interface PresetOptions {
+  configDir?: string;
   backgrounds?: any;
   viewport?: any;
+  docs?: any;
 }
 
-let packageJson: any = {};
-if (fs.existsSync('./package.json')) {
+const requireMain = (configDir: string) => {
+  let main = {};
+  const mainFile = path.join(process.cwd(), configDir, 'main');
   try {
-    packageJson = JSON.parse(fs.readFileSync('./package.json').toString());
+    // eslint-disable-next-line global-require,import/no-dynamic-require
+    main = require(mainFile);
   } catch (err) {
-    logger.error(`Error reading package.json: ${err.message}`);
+    logger.warn(`Unable to find main.js: ${mainFile}`);
   }
-}
-
-const isInstalled = (addon: string) => {
-  const { dependencies, devDependencies } = packageJson;
-  return (dependencies && dependencies[addon]) || (devDependencies && devDependencies[addon]);
+  return main;
 };
 
-const makeAddon = (key: string) => `@storybook/addon-${key}`;
+export function addons(options: PresetOptions = {}) {
+  const checkInstalled = (addon: string, main: any) => {
+    const existingAddon = main.addons?.find((entry: string | { name: string }) => {
+      const name = typeof entry === 'string' ? entry : entry.name;
+      return name?.startsWith(addon);
+    });
+    if (existingAddon) {
+      logger.warn(`Found existing addon ${JSON.stringify(existingAddon)}, skipping.`);
+    }
+    return !!existingAddon;
+  };
 
-export function managerEntries(entry: any[] = [], options: PresetOptions = {}) {
-  const registerAddons = ['backgrounds', 'viewport']
+  const main = requireMain(options.configDir);
+  return ['actions', 'docs', 'backgrounds', 'viewport']
     .filter((key) => (options as any)[key] !== false)
-    .map((key) => makeAddon(key))
-    .filter((addon) => !isInstalled(addon))
-    .map((addon) => require.resolve(`${addon}/register`));
-  return [...entry, ...registerAddons];
+    .map((key) => `@storybook/addon-${key}`)
+    .filter((addon) => !checkInstalled(addon, main));
 }

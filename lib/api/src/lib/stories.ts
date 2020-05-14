@@ -111,11 +111,11 @@ export interface SetStoriesPayload {
 
 export interface SetStoriesPayloadV2 extends SetStoriesPayload {
   v: 2;
+  error?: Error;
   globalParameters: Parameters;
   kindParameters: {
     [kind: string]: Parameters;
   };
-  stories: StoriesRaw;
 }
 
 const warnUsingHierarchySeparatorsAndShowRoots = deprecate(
