@@ -26,7 +26,7 @@ describe('Helpers', () => {
     it(`should fall back to ${STORY_FORMAT.CSF} 
         in case ${STORY_FORMAT.CSF_TYPESCRIPT} is not available`, () => {
       const csfDirectory = `template-${STORY_FORMAT.CSF}/`;
-      fs.existsSync.mockImplementation((filePath) => {
+      (fs.existsSync as jest.Mock).mockImplementation((filePath) => {
         return filePath === csfDirectory;
       });
       helpers.copyTemplate('', STORY_FORMAT.CSF_TYPESCRIPT);
@@ -37,7 +37,7 @@ describe('Helpers', () => {
 
     it(`should use ${STORY_FORMAT.CSF_TYPESCRIPT} if it is available`, () => {
       const csfDirectory = `template-${STORY_FORMAT.CSF_TYPESCRIPT}/`;
-      fs.existsSync.mockImplementation((filePath) => {
+      (fs.existsSync as jest.Mock).mockImplementation((filePath) => {
         return filePath === csfDirectory;
       });
       helpers.copyTemplate('', STORY_FORMAT.CSF_TYPESCRIPT);

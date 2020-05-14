@@ -8,13 +8,29 @@ import { gt, satisfies } from 'semver';
 import stripJsonComments from 'strip-json-comments';
 
 import { latestVersion } from './latest_version';
-import { version, devDependencies } from '../package.json';
 import { npmInit } from './npm_init';
 import { STORY_FORMAT } from './project_types';
 
+// Cannot be `import` as it's not under TS root dir
+const { version, devDependencies } = require('../package.json');
+
 const logger = console;
 
-export async function getVersion(npmOptions, packageName, constraint) {
+// TODO: Extract this type
+type PackageJson = {
+  dependencies?: Record<string, string>;
+  devDependencies?: Record<string, string>;
+};
+
+// TODO: Extract this type
+type NpmOptions = {
+  useYarn: boolean;
+  skipInstall?: boolean;
+  installAsDevDependencies: boolean;
+  packageJson: PackageJson;
+};
+
+export async function getVersion(npmOptions: NpmOptions, packageName: string, constraint?: any) {
   let current;
   if (packageName === '@storybook/cli') {
     current = version;
@@ -42,11 +58,11 @@ export async function getVersion(npmOptions, packageName, constraint) {
   return `^${versionToUse}`;
 }
 
-export function getVersions(npmOptions, ...packageNames) {
+export function getVersions(npmOptions: NpmOptions, ...packageNames: string[]) {
   return Promise.all(packageNames.map((packageName) => getVersion(npmOptions, packageName)));
 }
 
-export function getVersionedPackages(npmOptions, ...packageNames) {
+export function getVersionedPackages(npmOptions: NpmOptions, ...packageNames: string[]) {
   return Promise.all(
     packageNames.map(
       async (packageName) => `${packageName}@${await getVersion(npmOptions, packageName)}`
@@ -87,7 +103,7 @@ export function getBowerJson() {
   return JSON.parse(jsonContent);
 }
 
-export function readFileAsJson(jsonPath, allowComments) {
+export function readFileAsJson(jsonPath: string, allowComments: boolean) {
   const filePath = path.resolve(jsonPath);
   if (!fs.existsSync(filePath)) {
     return false;
@@ -98,7 +114,7 @@ export function readFileAsJson(jsonPath, allowComments) {
   return JSON.parse(jsonContent);
 }
 
-export const writeFileAsJson = (jsonPath, content) => {
+export const writeFileAsJson = (jsonPath: string, content: unknown) => {
   const filePath = path.resolve(jsonPath);
   if (!fs.existsSync(filePath)) {
     return false;
@@ -108,17 +124,17 @@ export const writeFileAsJson = (jsonPath, content) => {
   return true;
 };
 
-export function writePackageJson(packageJson) {
+export function writePackageJson(packageJson: object) {
   const content = `${JSON.stringify(packageJson, null, 2)}\n`;
   const packageJsonPath = path.resolve('package.json');
 
   fs.writeFileSync(packageJsonPath, content, 'utf8');
 }
 
-export const commandLog = (message) => {
+export const commandLog = (message: string) => {
   process.stdout.write(chalk.cyan(' • ') + message);
 
-  return (errorMessage, errorInfo) => {
+  return (errorMessage?: string, errorInfo?: string) => {
     if (errorMessage) {
       process.stdout.write(`. ${chalk.red('✖')}\n`);
       logger.error(`\n     ${chalk.red(errorMessage)}`);
@@ -139,7 +155,7 @@ export const commandLog = (message) => {
   };
 };
 
-export function paddedLog(message) {
+export function paddedLog(message: string) {
   const newMessage = message
     .split('\n')
     .map((line) => `    ${line}`)
@@ -148,7 +164,7 @@ export function paddedLog(message) {
   logger.log(newMessage);
 }
 
-export function getChars(char, amount) {
+export function getChars(char: string, amount: number) {
   let line = '';
   for (let lc = 0; lc < amount; lc += 1) {
     line += char;
@@ -157,7 +173,7 @@ export function getChars(char, amount) {
   return line;
 }
 
-export function codeLog(codeLines, leftPadAmount) {
+export function codeLog(codeLines: string[], leftPadAmount?: number) {
   let maxLength = 0;
   const newLines = codeLines.map((line) => {
     maxLength = line.length > maxLength ? line.length : maxLength;
@@ -176,7 +192,7 @@ export function codeLog(codeLines, leftPadAmount) {
   logger.log(finalResult);
 }
 
-export function installDepsFromPackageJson(options) {
+export function installDepsFromPackageJson(options: NpmOptions) {
   let done = commandLog('Preparing to install dependencies');
   done();
   logger.log();
@@ -210,7 +226,7 @@ export function installDepsFromPackageJson(options) {
  *   `@storybook/addons@${addonsVersion}`,
  * ]);
  */
-export function installDependencies(npmOptions, dependencies) {
+export function installDependencies(npmOptions: NpmOptions, dependencies: string[]) {
   const { skipInstall } = npmOptions;
 
   if (skipInstall) {
@@ -272,7 +288,7 @@ export function installDependencies(npmOptions, dependencies) {
  *   ...babelDependencies,
  * ]);
  */
-export async function getBabelDependencies(npmOptions, packageJson) {
+export async function getBabelDependencies(npmOptions: NpmOptions, packageJson: PackageJson) {
   const dependenciesToAdd = [];
   let babelLoaderVersion = '^8.0.0-0';
 
@@ -308,13 +324,18 @@ export async function getBabelDependencies(npmOptions, packageJson) {
   return dependenciesToAdd;
 }
 
-export function addToDevDependenciesIfNotPresent(packageJson, name, packageVersion) {
+export function addToDevDependenciesIfNotPresent(
+  packageJson: PackageJson,
+  name: string,
+  packageVersion: string
+) {
   if (!packageJson.dependencies[name] && !packageJson.devDependencies[name]) {
     packageJson.devDependencies[name] = packageVersion;
   }
 }
 
-export function copyTemplate(templateRoot, storyFormat) {
+// TODO: Improve typings of storyFormat
+export function copyTemplate(templateRoot: string, storyFormat: string) {
   const templateDir = path.resolve(templateRoot, `template-${storyFormat}/`);
   if (!fs.existsSync(templateDir)) {
     // Fallback to CSF plain first, in case format is typescript but template is not available.
