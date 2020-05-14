@@ -13,7 +13,7 @@ Storybook composition is a feature that allows you to compose multiple storybook
 
 ## Composing a storybook
 
-To compose another storybook into your, all you need is the URL of storybook.
+To compose another storybook into yours, all you need is the URL of storybook.
 
 Here's how you do it:
 
