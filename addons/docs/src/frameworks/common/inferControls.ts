@@ -4,13 +4,22 @@ import { Control } from '@storybook/components';
 import { SBEnumType } from '../../lib/sbtypes';
 
 const inferControl = (argType: ArgType): Control => {
-  if (!argType.type) {
+  const { type } = argType;
+  if (!type) {
     // console.log('no sbtype', { argType });
     return null;
   }
-  switch (argType.type.name) {
-    case 'array':
+  switch (type.name) {
+    case 'array': {
+      const { value } = type;
+      if (value?.name && ['object', 'other'].includes(value.name)) {
+        return {
+          type: 'object',
+          validator: (obj: any) => Array.isArray(obj),
+        };
+      }
       return { type: 'array' };
+    }
     case 'boolean':
       return { type: 'boolean' };
     case 'string':
@@ -18,7 +27,7 @@ const inferControl = (argType: ArgType): Control => {
     case 'number':
       return { type: 'number' };
     case 'enum': {
-      const { value } = argType.type as SBEnumType;
+      const { value } = type as SBEnumType;
       return { type: 'options', controlType: 'select', options: value };
     }
     case 'function':

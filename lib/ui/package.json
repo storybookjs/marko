@@ -1,6 +1,6 @@
 {
   "name": "@storybook/ui",
-  "version": "6.0.0-beta.0",
+  "version": "6.0.0-beta.6",
   "description": "Core Storybook UI",
   "keywords": [
     "storybook"
@@ -29,14 +29,14 @@
   },
   "dependencies": {
     "@emotion/core": "^10.0.20",
-    "@storybook/addons": "6.0.0-beta.0",
-    "@storybook/api": "6.0.0-beta.0",
-    "@storybook/channels": "6.0.0-beta.0",
-    "@storybook/client-logger": "6.0.0-beta.0",
-    "@storybook/components": "6.0.0-beta.0",
-    "@storybook/core-events": "6.0.0-beta.0",
-    "@storybook/router": "6.0.0-beta.0",
-    "@storybook/theming": "6.0.0-beta.0",
+    "@storybook/addons": "6.0.0-beta.6",
+    "@storybook/api": "6.0.0-beta.6",
+    "@storybook/channels": "6.0.0-beta.6",
+    "@storybook/client-logger": "6.0.0-beta.6",
+    "@storybook/components": "6.0.0-beta.6",
+    "@storybook/core-events": "6.0.0-beta.6",
+    "@storybook/router": "6.0.0-beta.6",
+    "@storybook/theming": "6.0.0-beta.6",
     "@types/markdown-to-jsx": "^6.9.1",
     "@types/rfdc": "^1.1.0",
     "copy-to-clipboard": "^3.0.8",
@@ -62,20 +62,19 @@
     "rfdc": "^1.1.4",
     "semver": "^7.3.2",
     "store2": "^2.7.1",
-    "telejson": "^3.2.0"
+    "telejson": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
-    "@storybook/addon-actions": "6.0.0-beta.0",
-    "@storybook/addon-knobs": "6.0.0-beta.0",
-    "@storybook/react": "6.0.0-beta.0",
-    "@testing-library/react": "^10.0.1",
+    "@babel/core": "^7.9.6",
+    "@storybook/addon-actions": "6.0.0-beta.6",
+    "@storybook/addon-knobs": "6.0.0-beta.6",
+    "@storybook/react": "6.0.0-beta.6",
+    "@testing-library/react": "^10.0.3",
     "babel-loader": "^8.0.6",
-    "corejs-upgrade-webpack-plugin": "^4.0.1",
+    "chromatic": "^4.0.2",
     "enzyme": "^3.11.0",
     "flush-promises": "^1.0.2",
-    "storybook-chromatic": "^3.5.0",
-    "terser-webpack-plugin": "^2.3.4",
+    "terser-webpack-plugin": "^3.0.0",
     "webpack": "^4.33.0"
   },
   "publishConfig": {

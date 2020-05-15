@@ -8,10 +8,13 @@ export default {
   title: 'Addons/Backgrounds',
 
   parameters: {
-    backgrounds: [
-      { name: 'twitter', value: '#00aced' },
-      { name: 'facebook', value: '#3b5998', default: true },
-    ],
+    backgrounds: {
+      default: 'facebook',
+      values: [
+        { name: 'twitter', value: '#00aced' },
+        { name: 'facebook', value: '#3b5998' },
+      ],
+    },
   },
 };
 

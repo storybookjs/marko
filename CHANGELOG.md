@@ -1,3 +1,104 @@
+## 6.0.0-beta.6 (May 12, 2020)
+
+### Breaking Changes
+
+- Essentials: Update configuration heuristics for main.js ([#10737](https://github.com/storybookjs/storybook/pull/10737))
+
+### Features
+
+- Essentials: Add addon-actions ([#10748](https://github.com/storybookjs/storybook/pull/10748))
+- Essentials: Add addon-docs ([#10729](https://github.com/storybookjs/storybook/pull/10729))
+
+### Bug Fixes
+
+- UI: Reset layout properties when switching stories ([#10643](https://github.com/storybookjs/storybook/pull/10643))
+
+### Maintenance
+
+- CLI: react stories homogenization ([#10711](https://github.com/storybookjs/storybook/pull/10711))
+- CLI: vue stories homogenization ([#10708](https://github.com/storybookjs/storybook/pull/10708))
+- CLI: webpack react stories homogenization ([#10709](https://github.com/storybookjs/storybook/pull/10709))
+- CLI: svelte stories homogenization ([#10704](https://github.com/storybookjs/storybook/pull/10704))
+- CLI: react-scripts stories homogenization ([#10710](https://github.com/storybookjs/storybook/pull/10710))
+- CLI: mithril stories homogenization ([#10707](https://github.com/storybookjs/storybook/pull/10707))
+- CLI: rax stories homogenization ([#10706](https://github.com/storybookjs/storybook/pull/10706))
+- CLI: riot stories homogenization ([#10715](https://github.com/storybookjs/storybook/pull/10715))
+- CLI: ember stories homogenization ([#10713](https://github.com/storybookjs/storybook/pull/10713))
+- CLI: preact stories homogenization ([#10712](https://github.com/storybookjs/storybook/pull/10712))
+- CLI: sfc_vue stories homogenization ([#10714](https://github.com/storybookjs/storybook/pull/10714))
+
+### Dependency Upgrades
+
+- Revert "Change reference for jest-preset-angular/build/setupJest as per migration guide" ([#10727](https://github.com/storybookjs/storybook/pull/10727))
+
+## 6.0.0-beta.5 (May 11, 2020)
+
+### Bug Fixes
+
+- Core: Fix error handling on load ([#10659](https://github.com/storybookjs/storybook/pull/10659))
+
+### Maintenance
+
+- Storyshots: Change reference for jest-preset-angular/build/setupJest ([#10699](https://github.com/storybookjs/storybook/pull/10699))
+- CLI: Remove CRA fixtures from Yarn 2 tests run ([#10720](https://github.com/storybookjs/storybook/pull/10720))
+- Fix: Set private package on Aurelia example ([#10688](https://github.com/storybookjs/storybook/pull/10688))
+
+## 6.0.0-beta.4 (May 8, 2020)
+
+### Features
+
+- React: Add `argsStory` convenience function ([#10685](https://github.com/storybookjs/storybook/pull/10685))
+
+### Dependency Upgrades
+
+- Build: Upgrade jest to 26 ([#10669](https://github.com/storybookjs/storybook/pull/10669))
+
+## 6.0.0-beta.3 (May 7, 2020)
+
+### Breaking Changes
+
+- Addon-backgrounds: Simplified parameters API ([#10634](https://github.com/storybookjs/storybook/pull/10634))
+
+### Bug Fixes
+
+- Core: Fix `globalArgs` initialization from global parameters ([#10566](https://github.com/storybookjs/storybook/pull/10566))
+- Core: Fix DLL context for IE11 ([#106444]https://github.com/storybookjs/storybook/pull/10644))
+
+### Dependency Upgrades
+
+- Addon-storyshots: Upgrade to jest 26 ([#10642](https://github.com/storybookjs/storybook/pull/10642))
+- Bump terser-webpack-plugin from 2.3.6 to 3.0.0 ([#10650](https://github.com/storybookjs/storybook/pull/10650))
+
+## 6.0.0-beta.2 (May 4, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix broken props logic for no-args stories ([#10633](https://github.com/storybookjs/storybook/pull/10633))
+- Addon-docs: Fix custom source manual override ([#10632](https://github.com/storybookjs/storybook/pull/10632))
+- Addon-docs: Fix MDX stories with multiple children ([#9531](https://github.com/storybookjs/storybook/pull/9531))
+- Addon-docs: Fix object array in Props ([#10621](https://github.com/storybookjs/storybook/pull/10621))
+- Actions: Fix import of `uuid` ([#10625](https://github.com/storybookjs/storybook/pull/10625))
+
+### Maintenance
+
+- Core: Fix Args test to not use different code path ([#10607](https://github.com/storybookjs/storybook/pull/10607))
+
+## 6.0.0-beta.1 (May 2, 2020)
+
+### Features
+
+- CLI: Add automatic detection for svelte ([#10623](https://github.com/storybookjs/storybook/pull/10623))
+
+### Bug Fixes
+
+- Addon-docs: Fix no-props logic in Source block ([#10619](https://github.com/storybookjs/storybook/pull/10619))
+- Props: Fix subcomponents ([#10608](https://github.com/storybookjs/storybook/pull/10608))
+
+### Maintenance
+
+- Yarn 2: Fix dependencies issues for compatibility ([#10613](https://github.com/storybookjs/storybook/pull/10613))
+- CLI: Fix cli when working with Yarn 2 and Node 10 ([#10550](https://github.com/storybookjs/storybook/pull/10550))
+
 ## 6.0.0-beta.0 (April 29, 2020)
 
 Storybook 6.0 is in beta. 🎉🎉🎉

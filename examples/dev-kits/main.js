@@ -4,9 +4,9 @@ module.exports = {
     ember: {
       id: 'ember',
       title: 'Ember',
-      url: 'https://deploy-preview-9210--storybookjs.netlify.app/ember-cli',
+      url: 'https://next--storybookjs.netlify.app/ember-cli',
     },
-    cra: 'https://deploy-preview-9210--storybookjs.netlify.app/cra-ts-kitchen-sink',
+    cra: 'https://next--storybookjs.netlify.app/cra-ts-kitchen-sink',
   },
   webpack: async (config) => ({
     ...config,

@@ -79,6 +79,7 @@ export const url = {
     mithril: `${docsUrl}/guides/guide-mithril/`,
     marko: `${docsUrl}/guides/guide-marko/`,
     riot: `${docsUrl}/guides/guide-riot/`,
+    webComponents: `${docsUrl}/guides/guide-web-components/`,
   },
 
   // Official addons

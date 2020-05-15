@@ -70,4 +70,5 @@ export const {
   SHARED_STATE_CHANGED,
   SHARED_STATE_SET,
   NAVIGATE_URL,
+  CURRENT_STORY_WAS_SET,
 } = events;

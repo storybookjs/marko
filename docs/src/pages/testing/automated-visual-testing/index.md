@@ -40,6 +40,7 @@ Here are some in alphabetical order:
 
 - [Applitools](https://applitools.com/storybook)
 - [Chromatic](https://www.chromaticqa.com) made by Storybook maintainers
+- [Creevey](https://github.com/wKich/creevey)
 - [Happo](https://happo.io)
 - [Loki](https://loki.js.org/)
 - [Percy](https://docs.percy.io/docs/storybook-for-react)
