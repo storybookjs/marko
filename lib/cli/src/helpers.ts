@@ -122,7 +122,8 @@ export function writePackageJson(packageJson: object) {
 export const commandLog = (message: string) => {
   process.stdout.write(chalk.cyan(' • ') + message);
 
-  return (errorMessage?: string, errorInfo?: string) => {
+  // Need `void` to be able to use this function in a then of a Promise<void>
+  return (errorMessage?: string | void, errorInfo?: string) => {
     if (errorMessage) {
       process.stdout.write(`. ${chalk.red('✖')}\n`);
       logger.error(`\n     ${chalk.red(errorMessage)}`);

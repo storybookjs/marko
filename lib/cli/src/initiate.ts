@@ -1,4 +1,4 @@
-import updateNotifier from 'update-notifier';
+import { UpdateNotifier, IPackage } from 'update-notifier';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
 import { detect, isStorybookInstalled, detectLanguage } from './detect';
@@ -38,7 +38,22 @@ import raxGenerator from './generators/RAX';
 
 const logger = console;
 
-const installStorybook = (projectType, options) => {
+type CommandOptions = {
+  useNpm?: boolean;
+  type?: any;
+  force?: any;
+  html?: boolean;
+  skipInstall?: boolean;
+  storyFormat?: string;
+  parser?: string;
+  yes?: boolean;
+};
+
+const installStorybook = (
+  // TODO: Improve typings using PROJECT_TYPES
+  projectType: string,
+  options: CommandOptions
+): Promise<void> => {
   const useYarn = Boolean(options.useNpm !== true) && hasYarn();
 
   const npmOptions = {
@@ -74,7 +89,7 @@ const installStorybook = (projectType, options) => {
   const REACT_NATIVE_DISCUSSION =
     'https://github.com/storybookjs/storybook/blob/master/app/react-native/docs/manual-setup.md';
 
-  const runGenerator = () => {
+  const runGenerator: () => Promise<void> = () => {
     switch (projectType) {
       case PROJECT_TYPES.ALREADY_HAS_STORYBOOK:
         logger.log();
@@ -105,7 +120,7 @@ const installStorybook = (projectType, options) => {
       case PROJECT_TYPES.REACT_NATIVE: {
         return (options.yes
           ? Promise.resolve({ server: true })
-          : inquirer.prompt([
+          : (inquirer.prompt([
               {
                 type: 'confirm',
                 name: 'server',
@@ -113,7 +128,7 @@ const installStorybook = (projectType, options) => {
                   'Do you want to install dependencies necessary to run storybook server? You can manually do it later by install @storybook/react-native-server',
                 default: false,
               },
-            ])
+            ]) as Promise<{ server: boolean }>)
         )
           .then(({ server }) => reactNativeGenerator(npmOptions, server, generatorOptions))
           .then(commandLog('Adding storybook support to your "React Native" app'))
@@ -227,7 +242,7 @@ const installStorybook = (projectType, options) => {
   });
 };
 
-const projectTypeInquirer = async (options) => {
+const projectTypeInquirer = async (options: { yes?: boolean }) => {
   const manualAnswer = options.yes
     ? true
     : await inquirer.prompt([
@@ -239,7 +254,7 @@ const projectTypeInquirer = async (options) => {
         },
       ]);
 
-  if (manualAnswer.manual) {
+  if (manualAnswer !== true && manualAnswer.manual) {
     const frameworkAnswer = await inquirer.prompt([
       {
         type: 'list',
@@ -253,12 +268,12 @@ const projectTypeInquirer = async (options) => {
   return Promise.resolve();
 };
 
-export default function (options, pkg) {
+export default function (options: CommandOptions, pkg: IPackage): Promise<void> {
   const welcomeMessage = 'sb init - the simplest way to add a storybook to your project.';
   logger.log(chalk.inverse(`\n ${welcomeMessage} \n`));
 
   // Update notify code.
-  updateNotifier({
+  new UpdateNotifier({
     pkg,
     updateCheckInterval: 1000 * 60 * 60, // every hour (we could increase this later on.)
   }).notify();
