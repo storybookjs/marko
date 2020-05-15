@@ -26,8 +26,8 @@ export interface PreviewProps {
 }
 
 const ChildrenContainer = styled.div<PreviewProps & { zoom: number }>(
-  ({ isColumn }) => ({
-    display: 'flex',
+  ({ isColumn, columns }) => ({
+    display: isColumn || !columns ? 'block' : 'flex',
     position: 'relative',
     flexWrap: 'wrap',
     padding: '30px 20px',
@@ -35,10 +35,17 @@ const ChildrenContainer = styled.div<PreviewProps & { zoom: number }>(
     flexDirection: isColumn ? 'column' : 'row',
     margin: -10,
 
-    '> *': {
-      margin: '10px !important',
-      maxWidth: '100%',
-    },
+    '& > *': isColumn
+      ? {
+          border: '10px solid transparent!important',
+          width: '100%',
+          display: 'block',
+        }
+      : {
+          border: '10px solid transparent!important',
+          maxWidth: '100%',
+          display: 'inline-block',
+        },
   }),
   ({ zoom }) => ({
     '> *': {
@@ -46,9 +53,7 @@ const ChildrenContainer = styled.div<PreviewProps & { zoom: number }>(
     },
   }),
   ({ columns }) =>
-    columns && columns > 1
-      ? { '> *': { minWidth: `calc(100% / ${columns} - 20px)` } }
-      : { '> *': { flex: 1 } }
+    columns && columns > 1 ? { '> *': { minWidth: `calc(100% / ${columns} - 20px)` } } : {}
 );
 
 const StyledSource = styled(Source)<{}>(({ theme }) => ({
@@ -184,9 +189,9 @@ const Preview: FunctionComponent<PreviewProps> = ({
           <ChildrenContainer isColumn={isColumn} columns={columns} zoom={scale}>
             {Array.isArray(children) ? (
               // eslint-disable-next-line react/no-array-index-key
-              children.map((child, i) => <Fragment key={i}>{child}</Fragment>)
+              children.map((child, i) => <div key={i}>{child}</div>)
             ) : (
-              <>{children}</>
+              <div>{children}</div>
             )}
           </ChildrenContainer>
           {withSource && <ActionBar actionItems={[actionItem]} />}
