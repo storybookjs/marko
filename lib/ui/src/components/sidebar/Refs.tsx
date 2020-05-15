@@ -70,7 +70,11 @@ export const Ref: FunctionComponent<RefType & RefProps> = (ref) => {
   const combo = useMemo(() => ({ setExpanded, expandedSet }), [setExpanded, expandedSet]);
 
   const isMain = key === 'storybook_internal';
-  const isLoading = length === 0 && !ref.ready;
+
+  const isLoadingMain = !ref.ready && isMain;
+  const isLoadingInjected = ref.startInjected && !ref.ready;
+
+  const isLoading = isLoadingMain || isLoadingInjected;
   const isError = !!error;
   const isEmpty = !isLoading && length === 0;
   const isAuthRequired = !!authUrl;
