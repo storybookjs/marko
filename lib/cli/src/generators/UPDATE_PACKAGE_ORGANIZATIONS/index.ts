@@ -3,22 +3,29 @@ import path from 'path';
 import { sync as spawnSync } from 'cross-spawn';
 import { packageNames } from '@storybook/codemod';
 import {
+  getBabelDependencies,
+  getPackageJson,
   getVersion,
   getVersions,
-  getBabelDependencies,
   installDependencies,
-  getPackageJson,
   writePackageJson,
 } from '../../helpers';
+import { PackageJson } from '../../PackageJson';
+import { NpmOptions } from '../../NpmOptions';
 
-async function updatePackage(devDependencies, oldName, newName, npmOptions) {
+async function updatePackage(
+  devDependencies: PackageJson['devDependencies'],
+  oldName: string,
+  newName: string,
+  npmOptions: NpmOptions
+) {
   if (devDependencies[oldName]) {
     delete devDependencies[oldName];
     devDependencies[newName] = await getVersion(npmOptions, newName);
   }
 }
 
-async function updatePackageJson(npmOptions) {
+async function updatePackageJson(npmOptions: NpmOptions) {
   const packageJson = getPackageJson();
   const { devDependencies } = packageJson;
 
@@ -51,7 +58,7 @@ async function updatePackageJson(npmOptions) {
   }
 }
 
-function updateSourceCode(parser) {
+function updateSourceCode(parser: string) {
   const jscodeshiftPath = path.dirname(require.resolve('jscodeshift'));
   const jscodeshiftCommand = path.join(jscodeshiftPath, 'bin', 'jscodeshift.sh');
 
@@ -69,7 +76,7 @@ function updateSourceCode(parser) {
   });
 }
 
-export default async (parser, npmOptions) => {
+export default async (parser: string, npmOptions: NpmOptions) => {
   await updatePackageJson(npmOptions);
   updateSourceCode(parser);
 };
