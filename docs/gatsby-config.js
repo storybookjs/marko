@@ -41,6 +41,7 @@ module.exports = {
         '/configurations/serving-static-files/',
         '/configurations/env-vars/',
         '/configurations/theming/',
+        '/configurations/composition/',
         '/configurations/cli-options/',
         '/configurations/standalone-options/',
       ],
