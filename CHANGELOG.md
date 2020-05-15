@@ -1,3 +1,27 @@
+## 6.0.0-beta.7 (May 15, 2020)
+
+### Breaking changes
+
+- Cleanup: Remove support for babel-loader < 8 ([#10781](https://github.com/storybookjs/storybook/pull/10781))
+
+### Features
+
+- Composition: Zero-config composition from dependencies ([#10753](https://github.com/storybookjs/storybook/pull/10753))
+
+### Bug Fixes
+
+- Core: Detect local addons for windows machine ([#10786](https://github.com/storybookjs/storybook/pull/10786))
+- Composition: Rename `mapper` to `storyMapper` and fix loading bugs ([#10780](https://github.com/storybookjs/storybook/pull/10780))
+
+### Maintenance
+
+- CLI: HTML stories homogenization ([#10705](https://github.com/storybookjs/storybook/pull/10705))
+- CLI: web-components stories homogenization ([#10703](https://github.com/storybookjs/storybook/pull/10703))
+
+### Dependency Upgrades
+
+- Update jest-preset-angular to 8.2.0 ([#10778](https://github.com/storybookjs/storybook/pull/10778))
+
 ## 6.0.0-beta.6 (May 12, 2020)
 
 ### Breaking Changes
