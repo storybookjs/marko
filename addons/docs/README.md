@@ -92,7 +92,15 @@ Storybook Docs supports all view layers that Storybook supports except for React
 
 Want to add enhanced features to your favorite framework? Check out this [dev guide](./docs/multiframework.md)
 
-## Installation
+## Framework specific installation needs
+
+- [React](./react) (covered below)
+- [Vue](./vue)
+- [Angular](./angular)
+- [Ember](./ember)
+- [Web Components](./web-components)
+
+## Installation in React
 
 First add the package. Make sure that the versions for your `@storybook/*` packages match:
 
@@ -128,14 +136,6 @@ Add the following to your Jest configuration:
   }
 }
 ```
-
-### Be sure to check framework specific installation needs
-
-- [React](./react) (covered here)
-- [Vue](./vue)
-- [Angular](./angular)
-- [Ember](./ember)
-- [Web Components](./web-components)
 
 ## Preset options
 
