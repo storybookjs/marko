@@ -26,10 +26,11 @@ export const setPath = ({ storyId, viewMode }: { storyId: StoryId; viewMode: Vie
 };
 
 // todo add proper types
-export const getIdFromLegacyQuery = (
-  { path, selectedKind, selectedStory }: any,
-  storyStore: StoryStore
-) => {
+export const getIdFromLegacyQuery = (query: qs.ParsedQs, storyStore: StoryStore) => {
+  const path = getFirstString(query.path);
+  const selectedKind = getFirstString(query.selectedKind);
+  const selectedStory = getFirstString(query.selectedStory);
+
   if (path) {
     return pathToId(path);
   }
@@ -52,9 +53,33 @@ export const parseQueryParameters = (search: string) => {
   return id;
 };
 
+type ValueOf<T> = T[keyof T];
+const isObject = (val: Record<string, any>) =>
+  val != null && typeof val === 'object' && Array.isArray(val) === false;
+
+const getFirstString = (v: ValueOf<qs.ParsedQs>): string | void => {
+  if (typeof v === 'string') {
+    return v;
+  }
+  if (Array.isArray(v)) {
+    return getFirstString(v[0]);
+  }
+  if (isObject(v)) {
+    // @ts-ignore
+    return getFirstString(Object.values(v));
+  }
+  return undefined;
+};
+
 export const initializePath = (storyStore: StoryStore) => {
   const query = qs.parse(document.location.search, { ignoreQueryPrefix: true });
-  let { id: storyId, viewMode } = query; // eslint-disable-line prefer-const
+  let storyId = getFirstString(query.id);
+  let viewMode = getFirstString(query.viewMode) as ViewMode;
+
+  if (typeof viewMode !== 'string' || !viewMode.match(/docs|story/)) {
+    viewMode = 'story';
+  }
+
   if (!storyId) {
     storyId = getIdFromLegacyQuery(query, storyStore);
     if (storyId) {

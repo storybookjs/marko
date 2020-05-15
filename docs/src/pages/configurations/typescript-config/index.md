@@ -228,7 +228,6 @@ You will need to set up some scripts - these may help:
     "copy-woff2-to-lib": "cpx \"./src/**/*.woff2\" ./build/lib",
     "copy-svg-to-lib": "cpx \"./src/**/*.svg\" ./build/lib",
     "copy-png-to-lib": "cpx \"./src/**/*.png\" ./build/lib",
-    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'"
   },
 ```
 
