@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-/* tslint:disable:no-console */
 const path = require('path');
 const shell = require('shelljs');
 const chalk = require('chalk');
