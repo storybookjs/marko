@@ -209,7 +209,7 @@ addDecorator(storyFn => <div style={{ textAlign: 'center' }}>{storyFn()}</div>);
 > var decoratorVueJsx = () => ({ render() { return <div style={{ textAlign: 'center' }}><story/></div>} })
 > addDecorator(decoratorVueJsx)
 >
-> var decoratorVueTemplate = () => { return { template: `<div style="text-align:center"><story/></div>` }
+> var decoratorVueTemplate = () => ({ template: `<div style="text-align:center"><story/></div>` })
 > addDecorator(decoratorVueTemplate)
 > ```
 
