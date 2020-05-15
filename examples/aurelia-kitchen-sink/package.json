@@ -11,9 +11,6 @@
   "scripts": {
     "build": "rimraf dist && webpack --env production",
     "build-storybook": "build-storybook -s dist",
-    "lint": "npm run lint:js && npm run lint:html",
-    "lint:html": "htmlhint -c .htmlhintrc src",
-    "lint:js": "tslint --project tsconfig.json",
     "now-build": "node ../../scripts/bootstrap --core && yarn run build-storybook --quiet",
     "start": "webpack-dev-server",
     "storybook": "start-storybook -p 9009 -s dist"
@@ -50,7 +47,6 @@
     "sass-loader": "^8.0.0",
     "style-loader": "^0.23.0",
     "ts-loader": "^6.0.0",
-    "tslint": "^5.0.0",
     "typescript": "^3.0.0",
     "webpack": "^4.41.2"
   }
