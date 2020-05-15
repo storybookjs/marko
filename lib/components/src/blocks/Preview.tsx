@@ -1,12 +1,20 @@
-import React, { Children, FunctionComponent, ReactElement, ReactNode, useState } from 'react';
-import { styled } from '@storybook/theming';
+import React, {
+  Children,
+  FunctionComponent,
+  ReactElement,
+  ReactNode,
+  useState,
+  Fragment,
+} from 'react';
 import { darken } from 'polished';
+import { styled } from '@storybook/theming';
 import { logger } from '@storybook/client-logger';
 
 import { getBlockBackgroundStyle } from './BlockBackgroundStyles';
 import { Source, SourceProps } from './Source';
 import { ActionBar, ActionItem } from '../ActionBar/ActionBar';
 import { Toolbar } from './Toolbar';
+import { ZoomContext } from './ZoomContext';
 
 export interface PreviewProps {
   isColumn?: boolean;
@@ -17,20 +25,31 @@ export interface PreviewProps {
   className?: string;
 }
 
-const ChildrenContainer = styled.div<PreviewProps>(({ isColumn, columns }) => ({
-  display: 'flex',
-  position: 'relative',
-  flexWrap: 'wrap',
-  padding: '10px 20px 30px 20px',
-  overflow: 'auto',
-  flexDirection: isColumn ? 'column' : 'row',
+const ChildrenContainer = styled.div<PreviewProps & { zoom: number }>(
+  ({ isColumn }) => ({
+    display: 'flex',
+    position: 'relative',
+    flexWrap: 'wrap',
+    padding: '30px 20px',
+    overflow: 'auto',
+    flexDirection: isColumn ? 'column' : 'row',
+    margin: -10,
 
-  '> *': {
-    flex: columns ? `1 1 calc(100%/${columns} - 20px)` : `1 1 0%`,
-    marginTop: 20,
-    maxWidth: '100%',
-  },
-}));
+    '> *': {
+      margin: '10px !important',
+      maxWidth: '100%',
+    },
+  }),
+  ({ zoom }) => ({
+    '> *': {
+      zoom: 1 / zoom,
+    },
+  }),
+  ({ columns }) =>
+    columns && columns > 1
+      ? { '> *': { minWidth: `calc(100% / ${columns} - 20px)` } }
+      : { '> *': { flex: 1 } }
+);
 
 const StyledSource = styled(Source)<{}>(({ theme }) => ({
   margin: 0,
@@ -107,29 +126,17 @@ function getStoryId(children: ReactNode) {
   return null;
 }
 
-const Relative = styled.div({
-  position: 'relative',
-});
-
-const Scale = styled.div<{ scale: number }>(
-  {
-    position: 'relative',
-  },
-  ({ scale }) =>
-    scale
-      ? {
-          transform: `scale(${1 / scale})`,
-          transformOrigin: 'top left',
-        }
-      : {}
-);
-
 const PositionedToolbar = styled(Toolbar)({
   position: 'absolute',
   top: 0,
   left: 0,
   right: 0,
   height: 40,
+});
+
+const Relative = styled.div({
+  overflow: 'hidden',
+  position: 'relative',
 });
 
 /**
@@ -156,6 +163,7 @@ const Preview: FunctionComponent<PreviewProps> = ({
     logger.warn('Cannot use toolbar with multiple preview children, disabling');
   }
   const showToolbar = withToolbar && !Array.isArray(children);
+
   return (
     <PreviewContainer
       {...{ withSource, withToolbar: showToolbar }}
@@ -171,16 +179,19 @@ const Preview: FunctionComponent<PreviewProps> = ({
           baseUrl="./iframe.html"
         />
       )}
-      <Relative>
-        <ChildrenContainer isColumn={isColumn} columns={columns}>
-          {Array.isArray(children) ? (
-            children.map((child, i) => <div key={i.toString()}>{child}</div>)
-          ) : (
-            <Scale scale={scale}>{children}</Scale>
-          )}
-        </ChildrenContainer>
-        {withSource && <ActionBar actionItems={[actionItem]} />}
-      </Relative>
+      <ZoomContext.Provider value={{ scale }}>
+        <Relative>
+          <ChildrenContainer isColumn={isColumn} columns={columns} zoom={scale}>
+            {Array.isArray(children) ? (
+              // eslint-disable-next-line react/no-array-index-key
+              children.map((child, i) => <Fragment key={i}>{child}</Fragment>)
+            ) : (
+              <>{children}</>
+            )}
+          </ChildrenContainer>
+          {withSource && <ActionBar actionItems={[actionItem]} />}
+        </Relative>
+      </ZoomContext.Provider>
       {withSource && source}
     </PreviewContainer>
   );
