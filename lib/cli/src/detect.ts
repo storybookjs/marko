@@ -2,11 +2,12 @@ import path from 'path';
 import fs from 'fs';
 
 import {
-  PROJECT_TYPES,
+  ProjectType,
   supportedTemplates,
   SUPPORTED_FRAMEWORKS,
   SUPPORTED_LANGUAGES,
   TemplateConfiguration,
+  TemplateMatcher,
 } from './project_types';
 import { getBowerJson, getPackageJson } from './helpers';
 import { PackageJson } from './PackageJson';
@@ -19,25 +20,11 @@ const hasPeerDependency = (packageJson: PackageJson, name: string) => {
   return !!packageJson.peerDependencies?.[name];
 };
 
-/**
- * Returns a framework preset based on a given configuration.
- *
- * @param {Object} packageJson contains `dependencies`, `devDependencies`
- * and/or `peerDependencies` which we use to get installed packages.
- * @param {Object} framework contains a configuration of a framework preset.
- * Refer to supportedTemplates in project_types.js for more info.
- * @returns a preset name like PROJECT_TYPES.REACT, or null if not found.
- * @example
- * getFrameworkPreset(packageJson,  * {
- *   preset: PROJECT_TYPES.REACT,
- *   dependencies: ['react'],
- *   matcherFunction: ({ dependencies }) => {
- *     return dependencies.every(Boolean);
- *   },
- * });
- */
-const getFrameworkPreset = (packageJson: PackageJson, framework: TemplateConfiguration) => {
-  const matches = {
+const getFrameworkPreset = (
+  packageJson: PackageJson,
+  framework: TemplateConfiguration
+): ProjectType | null => {
+  const matcher: TemplateMatcher = {
     dependencies: [false],
     peerDependencies: [false],
     files: [false],
@@ -46,18 +33,18 @@ const getFrameworkPreset = (packageJson: PackageJson, framework: TemplateConfigu
   const { preset, files, dependencies, peerDependencies, matcherFunction } = framework;
 
   if (Array.isArray(dependencies) && dependencies.length > 0) {
-    matches.dependencies = dependencies.map((name) => hasDependency(packageJson, name));
+    matcher.dependencies = dependencies.map((name) => hasDependency(packageJson, name));
   }
 
   if (Array.isArray(peerDependencies) && peerDependencies.length > 0) {
-    matches.peerDependencies = peerDependencies.map((name) => hasPeerDependency(packageJson, name));
+    matcher.peerDependencies = peerDependencies.map((name) => hasPeerDependency(packageJson, name));
   }
 
   if (Array.isArray(files) && files.length > 0) {
-    matches.files = files.map((name) => fs.existsSync(path.join(process.cwd(), name)));
+    matcher.files = files.map((name) => fs.existsSync(path.join(process.cwd(), name)));
   }
 
-  return matcherFunction(matches) ? preset : null;
+  return matcherFunction(matcher) ? preset : null;
 };
 
 export function detectFrameworkPreset(packageJson = {}) {
@@ -65,7 +52,7 @@ export function detectFrameworkPreset(packageJson = {}) {
     return getFrameworkPreset(packageJson, framework) !== null;
   });
 
-  return result ? result.preset : PROJECT_TYPES.UNDETECTED;
+  return result ? result.preset : ProjectType.UNDETECTED;
 }
 
 export function isStorybookInstalled(dependencies: PackageJson, force?: boolean) {
@@ -81,14 +68,14 @@ export function isStorybookInstalled(dependencies: PackageJson, force?: boolean)
         false
       )
     ) {
-      return PROJECT_TYPES.ALREADY_HAS_STORYBOOK;
+      return ProjectType.ALREADY_HAS_STORYBOOK;
     }
 
     if (
       dependencies.devDependencies['@kadira/storybook'] ||
       dependencies.devDependencies['@kadira/react-native-storybook']
     ) {
-      return PROJECT_TYPES.UPDATE_PACKAGE_ORGANIZATIONS;
+      return ProjectType.UPDATE_PACKAGE_ORGANIZATIONS;
     }
   }
   return false;
@@ -114,7 +101,7 @@ export function detect(options: { force?: boolean; html?: boolean } = {}) {
   const bowerJson = getBowerJson();
 
   if (!packageJson && !bowerJson) {
-    return PROJECT_TYPES.UNDETECTED;
+    return ProjectType.UNDETECTED;
   }
 
   const storyBookInstalled = isStorybookInstalled(packageJson, options.force);
@@ -123,7 +110,7 @@ export function detect(options: { force?: boolean; html?: boolean } = {}) {
   }
 
   if (options.html) {
-    return PROJECT_TYPES.HTML;
+    return ProjectType.HTML;
   }
 
   return detectFrameworkPreset(packageJson || bowerJson);

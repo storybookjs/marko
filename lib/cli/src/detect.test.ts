@@ -2,7 +2,7 @@ import fs from 'fs';
 
 import { getBowerJson, getPackageJson } from './helpers';
 import { isStorybookInstalled, detectFrameworkPreset, detect, detectLanguage } from './detect';
-import { PROJECT_TYPES, SUPPORTED_FRAMEWORKS, SUPPORTED_LANGUAGES } from './project_types';
+import { ProjectType, SUPPORTED_FRAMEWORKS, SUPPORTED_LANGUAGES } from './project_types';
 
 jest.mock('./helpers', () => ({
   getBowerJson: jest.fn(),
@@ -20,13 +20,13 @@ jest.mock('path', () => ({
 
 const MOCK_FRAMEWORK_FILES = [
   {
-    name: PROJECT_TYPES.METEOR,
+    name: ProjectType.METEOR,
     files: {
       '.meteor': 'file content',
     },
   },
   {
-    name: PROJECT_TYPES.SFC_VUE,
+    name: ProjectType.SFC_VUE,
     files: {
       'package.json': {
         dependencies: {
@@ -39,7 +39,7 @@ const MOCK_FRAMEWORK_FILES = [
     },
   },
   {
-    name: PROJECT_TYPES.VUE,
+    name: ProjectType.VUE,
     files: {
       'package.json': {
         dependencies: {
@@ -49,7 +49,7 @@ const MOCK_FRAMEWORK_FILES = [
     },
   },
   {
-    name: PROJECT_TYPES.EMBER,
+    name: ProjectType.EMBER,
     files: {
       'package.json': {
         devDependencies: {
@@ -59,7 +59,7 @@ const MOCK_FRAMEWORK_FILES = [
     },
   },
   {
-    name: PROJECT_TYPES.REACT_PROJECT,
+    name: ProjectType.REACT_PROJECT,
     files: {
       'package.json': {
         peerDependencies: {
@@ -69,7 +69,7 @@ const MOCK_FRAMEWORK_FILES = [
     },
   },
   {
-    name: PROJECT_TYPES.REACT_NATIVE,
+    name: ProjectType.REACT_NATIVE,
     files: {
       'package.json': {
         dependencies: {
@@ -82,7 +82,7 @@ const MOCK_FRAMEWORK_FILES = [
     },
   },
   {
-    name: PROJECT_TYPES.REACT_SCRIPTS,
+    name: ProjectType.REACT_SCRIPTS,
     files: {
       'package.json': {
         devDependencies: {
@@ -92,7 +92,7 @@ const MOCK_FRAMEWORK_FILES = [
     },
   },
   {
-    name: PROJECT_TYPES.WEBPACK_REACT,
+    name: ProjectType.WEBPACK_REACT,
     files: {
       'package.json': {
         dependencies: {
@@ -105,7 +105,7 @@ const MOCK_FRAMEWORK_FILES = [
     },
   },
   {
-    name: PROJECT_TYPES.REACT,
+    name: ProjectType.REACT,
     files: {
       'package.json': {
         dependencies: {
@@ -115,7 +115,7 @@ const MOCK_FRAMEWORK_FILES = [
     },
   },
   {
-    name: PROJECT_TYPES.ANGULAR,
+    name: ProjectType.ANGULAR,
     files: {
       'package.json': {
         dependencies: {
@@ -125,7 +125,7 @@ const MOCK_FRAMEWORK_FILES = [
     },
   },
   {
-    name: PROJECT_TYPES.WEB_COMPONENTS,
+    name: ProjectType.WEB_COMPONENTS,
     files: {
       'package.json': {
         dependencies: {
@@ -135,7 +135,7 @@ const MOCK_FRAMEWORK_FILES = [
     },
   },
   {
-    name: PROJECT_TYPES.MITHRIL,
+    name: ProjectType.MITHRIL,
     files: {
       'package.json': {
         dependencies: {
@@ -145,7 +145,7 @@ const MOCK_FRAMEWORK_FILES = [
     },
   },
   {
-    name: PROJECT_TYPES.MARIONETTE,
+    name: ProjectType.MARIONETTE,
     files: {
       'package.json': {
         dependencies: {
@@ -155,7 +155,7 @@ const MOCK_FRAMEWORK_FILES = [
     },
   },
   {
-    name: PROJECT_TYPES.MARKO,
+    name: ProjectType.MARKO,
     files: {
       'package.json': {
         dependencies: {
@@ -165,7 +165,7 @@ const MOCK_FRAMEWORK_FILES = [
     },
   },
   {
-    name: PROJECT_TYPES.RIOT,
+    name: ProjectType.RIOT,
     files: {
       'package.json': {
         dependencies: {
@@ -175,7 +175,7 @@ const MOCK_FRAMEWORK_FILES = [
     },
   },
   {
-    name: PROJECT_TYPES.PREACT,
+    name: ProjectType.PREACT,
     files: {
       'package.json': {
         dependencies: {
@@ -185,7 +185,7 @@ const MOCK_FRAMEWORK_FILES = [
     },
   },
   {
-    name: PROJECT_TYPES.SVELTE,
+    name: ProjectType.SVELTE,
     files: {
       'package.json': {
         dependencies: {
@@ -195,7 +195,7 @@ const MOCK_FRAMEWORK_FILES = [
     },
   },
   {
-    name: PROJECT_TYPES.RAX,
+    name: ProjectType.RAX,
     files: {
       '.rax': 'file content',
       'package.json': {
@@ -210,13 +210,13 @@ const MOCK_FRAMEWORK_FILES = [
 describe('Detect', () => {
   it(`should return type HTML if html option is passed`, () => {
     (getPackageJson as jest.Mock).mockImplementation(() => true);
-    expect(detect({ html: true })).toBe(PROJECT_TYPES.HTML);
+    expect(detect({ html: true })).toBe(ProjectType.HTML);
   });
 
   it(`should return type UNDETECTED if neither packageJson or bowerJson exist`, () => {
     (getPackageJson as jest.Mock).mockImplementation(() => false);
     (getBowerJson as jest.Mock).mockImplementation(() => false);
-    expect(detect()).toBe(PROJECT_TYPES.UNDETECTED);
+    expect(detect()).toBe(ProjectType.UNDETECTED);
   });
 
   it(`should return language typescript if the dependency is present`, () => {
@@ -267,7 +267,7 @@ describe('Detect', () => {
         isStorybookInstalled({
           devDependencies: { '@storybook/react': '4.0.0-alpha.21' },
         })
-      ).toBe(PROJECT_TYPES.ALREADY_HAS_STORYBOOK);
+      ).toBe(ProjectType.ALREADY_HAS_STORYBOOK);
     });
 
     it('UPDATE_PACKAGE_ORGANIZATIONS if legacy lib is detected', () => {
@@ -275,7 +275,7 @@ describe('Detect', () => {
         isStorybookInstalled({
           devDependencies: { '@kadira/storybook': '4.0.0-alpha.21' },
         })
-      ).toBe(PROJECT_TYPES.UPDATE_PACKAGE_ORGANIZATIONS);
+      ).toBe(ProjectType.UPDATE_PACKAGE_ORGANIZATIONS);
     });
   });
 
@@ -298,7 +298,7 @@ describe('Detect', () => {
 
     it(`UNDETECTED for unknown frameworks`, () => {
       const result = detectFrameworkPreset();
-      expect(result).toBe(PROJECT_TYPES.UNDETECTED);
+      expect(result).toBe(ProjectType.UNDETECTED);
     });
 
     it('REACT_SCRIPTS for custom react scripts config', () => {
@@ -311,7 +311,7 @@ describe('Detect', () => {
       });
 
       const result = detectFrameworkPreset();
-      expect(result).toBe(PROJECT_TYPES.REACT_SCRIPTS);
+      expect(result).toBe(ProjectType.REACT_SCRIPTS);
     });
   });
 });
