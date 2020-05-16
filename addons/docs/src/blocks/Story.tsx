@@ -66,7 +66,7 @@ export const getStoryProps = (props: StoryProps, context: DocsContextProps): Pur
     iframeHeight = undefined,
     prepareForInline = undefined,
   } = docs;
-  const { storyFn = undefined, name: storyName = undefined } = data || {};
+  const { storyFn = undefined, name: storyName = undefined } = data;
 
   const storyIsInline = typeof inline === 'boolean' ? inline : inlineStories;
   if (storyIsInline && !prepareForInline && framework !== 'react') {

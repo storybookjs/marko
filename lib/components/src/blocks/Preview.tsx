@@ -1,14 +1,6 @@
-import React, {
-  Children,
-  FunctionComponent,
-  ReactElement,
-  ReactNode,
-  useState,
-  Fragment,
-} from 'react';
+import React, { Children, FunctionComponent, ReactElement, ReactNode, useState } from 'react';
 import { darken } from 'polished';
 import { styled } from '@storybook/theming';
-import { logger } from '@storybook/client-logger';
 
 import { getBlockBackgroundStyle } from './BlockBackgroundStyles';
 import { Source, SourceProps } from './Source';
