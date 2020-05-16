@@ -1,24 +1,44 @@
+import { Meta, Preview, Story } from '@storybook/addon-docs/blocks';
 import { Button } from '@storybook/react/demo';
 
 <Meta
   title="Core/Layout MDX"
   component={Button}
   id="core-layout-mdx"
-  decorators={[storyFn => <div style={{ backgroundColor: 'yellow' }}>{storyFn()}</div>]}
+  decorators={[(storyFn) => <div style={{ backgroundColor: 'yellow' }}>{storyFn()}</div>]}
 />
 
-# Selected
+# Layout parameter
 
-<Preview>
+This tests Storybook's built-in `layout` parameter, both as its applied in the canvas, and also how it's handled by the `Preview` block in `addon-docs`.
+
+## Default
+
+<Preview withToolbar>
   <Story name="defaultValue">
     <Button>Hello world</Button>
   </Story>
+</Preview>
+
+## Padded
+
+<Preview withToolbar>
   <Story name="padded" parameters={{ layout: 'padded' }}>
     <Button>Hello world</Button>
   </Story>
+</Preview>
+
+## Fullscreen
+
+<Preview withToolbar>
   <Story name="fullscreen" parameters={{ layout: 'fullscreen' }}>
     <Button>Hello world</Button>
   </Story>
+</Preview>
+
+## Centered
+
+<Preview withToolbar>
   <Story name="centered" parameters={{ layout: 'centered' }}>
     <Button>Hello world</Button>
   </Story>
