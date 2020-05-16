@@ -1,4 +1,5 @@
+import { StoryFormat } from './project_types';
+
 export type GeneratorOptions = {
-  // TODO: Make this type more strict
-  storyFormat: string;
+  storyFormat: StoryFormat;
 };

@@ -2,7 +2,7 @@ import fs from 'fs';
 import fse from 'fs-extra';
 
 import * as helpers from './helpers';
-import { STORY_FORMAT } from './project_types';
+import { StoryFormat } from './project_types';
 
 jest.mock('fs', () => ({
   existsSync: jest.fn(),
@@ -23,24 +23,24 @@ jest.mock('./npm_init', () => ({
 
 describe('Helpers', () => {
   describe('copyTemplate', () => {
-    it(`should fall back to ${STORY_FORMAT.CSF} 
-        in case ${STORY_FORMAT.CSF_TYPESCRIPT} is not available`, () => {
-      const csfDirectory = `template-${STORY_FORMAT.CSF}/`;
+    it(`should fall back to ${StoryFormat.CSF} 
+        in case ${StoryFormat.CSF_TYPESCRIPT} is not available`, () => {
+      const csfDirectory = `template-${StoryFormat.CSF}/`;
       (fs.existsSync as jest.Mock).mockImplementation((filePath) => {
         return filePath === csfDirectory;
       });
-      helpers.copyTemplate('', STORY_FORMAT.CSF_TYPESCRIPT);
+      helpers.copyTemplate('', StoryFormat.CSF_TYPESCRIPT);
 
       const copySyncSpy = jest.spyOn(fse, 'copySync');
       expect(copySyncSpy).toHaveBeenCalledWith(csfDirectory, expect.anything(), expect.anything());
     });
 
-    it(`should use ${STORY_FORMAT.CSF_TYPESCRIPT} if it is available`, () => {
-      const csfDirectory = `template-${STORY_FORMAT.CSF_TYPESCRIPT}/`;
+    it(`should use ${StoryFormat.CSF_TYPESCRIPT} if it is available`, () => {
+      const csfDirectory = `template-${StoryFormat.CSF_TYPESCRIPT}/`;
       (fs.existsSync as jest.Mock).mockImplementation((filePath) => {
         return filePath === csfDirectory;
       });
-      helpers.copyTemplate('', STORY_FORMAT.CSF_TYPESCRIPT);
+      helpers.copyTemplate('', StoryFormat.CSF_TYPESCRIPT);
 
       const copySyncSpy = jest.spyOn(fse, 'copySync');
       expect(copySyncSpy).toHaveBeenCalledWith(csfDirectory, expect.anything(), expect.anything());

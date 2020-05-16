@@ -14,7 +14,7 @@ import {
   writeFileAsJson,
   copyTemplate,
 } from '../../helpers';
-import { STORY_FORMAT } from '../../project_types';
+import { StoryFormat } from '../../project_types';
 import { NpmOptions } from '../../NpmOptions';
 import { GeneratorOptions } from '../../GeneratorOptions';
 
@@ -26,7 +26,7 @@ async function addDependencies(npmOptions: NpmOptions, { storyFormat }: Generato
     '@storybook/addons',
   ];
 
-  if (storyFormat === STORY_FORMAT.MDX) {
+  if (storyFormat === StoryFormat.MDX) {
     packages.push('@storybook/addon-docs');
   }
 

@@ -6,7 +6,7 @@ import {
   installDependencies,
   copyTemplate,
 } from '../../helpers';
-import { STORY_FORMAT } from '../../project_types';
+import { StoryFormat } from '../../project_types';
 import { NpmOptions } from '../../NpmOptions';
 import { GeneratorOptions } from '../../GeneratorOptions';
 
@@ -17,7 +17,7 @@ export default async (npmOptions: NpmOptions, { storyFormat }: GeneratorOptions)
     '@storybook/addon-links',
     '@storybook/addons',
   ];
-  if (storyFormat === STORY_FORMAT.MDX) {
+  if (storyFormat === StoryFormat.MDX) {
     packages.push('@storybook/addon-docs');
   }
   const versionedPackages = await getVersionedPackages(npmOptions, ...packages);

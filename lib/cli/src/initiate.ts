@@ -6,7 +6,7 @@ import { hasYarn } from './has_yarn';
 import {
   installableProjectTypes,
   ProjectType,
-  STORY_FORMAT,
+  StoryFormat,
   SUPPORTED_LANGUAGES,
 } from './project_types';
 import {
@@ -60,8 +60,8 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
 
   const defaultStoryFormat =
     detectLanguage() === SUPPORTED_LANGUAGES.TYPESCRIPT
-      ? STORY_FORMAT.CSF_TYPESCRIPT
-      : STORY_FORMAT.CSF;
+      ? StoryFormat.CSF_TYPESCRIPT
+      : StoryFormat.CSF;
 
   const generatorOptions = {
     storyFormat: options.storyFormat || defaultStoryFormat,

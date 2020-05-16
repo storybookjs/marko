@@ -54,11 +54,11 @@ export const SUPPORTED_FRAMEWORKS: SupportedFrameworks[] = [
   'rax',
 ];
 
-export const STORY_FORMAT = {
-  CSF: 'csf',
-  CSF_TYPESCRIPT: 'csf-ts',
-  MDX: 'mdx',
-};
+export enum StoryFormat {
+  CSF = 'csf',
+  CSF_TYPESCRIPT = 'csf-ts',
+  MDX = 'mdx',
+}
 
 export const SUPPORTED_LANGUAGES = {
   JAVASCRIPT: 'javascript',

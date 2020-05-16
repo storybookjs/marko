@@ -9,7 +9,7 @@ import stripJsonComments from 'strip-json-comments';
 
 import { latestVersion } from './latest_version';
 import { npmInit } from './npm_init';
-import { STORY_FORMAT } from './project_types';
+import { StoryFormat } from './project_types';
 import { PackageJson } from './PackageJson';
 import { NpmOptions } from './NpmOptions';
 
@@ -326,13 +326,12 @@ export function addToDevDependenciesIfNotPresent(
   }
 }
 
-// TODO: Improve typings of storyFormat
-export function copyTemplate(templateRoot: string, storyFormat: string) {
+export function copyTemplate(templateRoot: string, storyFormat: StoryFormat) {
   const templateDir = path.resolve(templateRoot, `template-${storyFormat}/`);
   if (!fs.existsSync(templateDir)) {
     // Fallback to CSF plain first, in case format is typescript but template is not available.
-    if (storyFormat === STORY_FORMAT.CSF_TYPESCRIPT) {
-      copyTemplate(templateRoot, STORY_FORMAT.CSF);
+    if (storyFormat === StoryFormat.CSF_TYPESCRIPT) {
+      copyTemplate(templateRoot, StoryFormat.CSF);
       return;
     }
 
