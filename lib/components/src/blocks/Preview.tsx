@@ -1,4 +1,11 @@
-import React, { Children, FunctionComponent, ReactElement, ReactNode, useState } from 'react';
+import React, {
+  Children,
+  FunctionComponent,
+  ReactElement,
+  ReactNode,
+  useState,
+  cloneElement,
+} from 'react';
 import { darken } from 'polished';
 import { styled } from '@storybook/theming';
 
@@ -17,29 +24,47 @@ export interface PreviewProps {
   className?: string;
 }
 
-const ChildrenContainer = styled.div<PreviewProps & { zoom: number }>(
+type layout = 'padded' | 'fullscreen' | 'centered';
+
+const ChildrenContainer = styled.div<PreviewProps & { zoom: number; layout: layout }>(
   ({ isColumn, columns }) => ({
     display: isColumn || !columns ? 'block' : 'flex',
     position: 'relative',
     flexWrap: 'wrap',
-    padding: '30px 20px',
     overflow: 'auto',
     flexDirection: isColumn ? 'column' : 'row',
-    margin: -10,
 
     '& > *': isColumn
       ? {
-          border: '10px solid transparent!important',
           width: '100%',
           display: 'block',
         }
       : {
-          border: '10px solid transparent!important',
           maxWidth: '100%',
           display: 'inline-block',
         },
   }),
-  ({ zoom }) => ({
+  ({ layout = 'padded' }) =>
+    layout === 'centered' || layout === 'padded'
+      ? {
+          padding: '30px 20px',
+          margin: -10,
+          '& > *': {
+            border: '10px solid transparent!important',
+          },
+        }
+      : {},
+  ({ layout = 'padded' }) =>
+    layout === 'centered'
+      ? {
+          display: 'flex',
+          justifyContent: 'center',
+          justifyItems: 'center',
+          alignContent: 'center',
+          alignItems: 'center',
+        }
+      : {},
+  ({ zoom = 1 }) => ({
     '> *': {
       zoom: 1 / zoom,
     },
@@ -136,6 +161,18 @@ const Relative = styled.div({
   position: 'relative',
 });
 
+const getLayout = (children: ReactElement[]) => {
+  return children.reduce((result, c) => {
+    if (result) {
+      return result;
+    }
+    if (typeof c === 'string' || typeof c === 'number') {
+      return 'padded';
+    }
+    return (c.props && c.props.parameters && c.props.parameters.layout) || 'padded';
+  }, undefined);
+};
+
 /**
  * A preview component for showing one or more component `Story`
  * items. The preview also shows the source for the component
@@ -154,10 +191,17 @@ const Preview: FunctionComponent<PreviewProps> = ({
   const [expanded, setExpanded] = useState(isExpanded);
   const { source, actionItem } = getSource(withSource, expanded, setExpanded);
   const [scale, setScale] = useState(1);
-  const previewClasses = className ? `${className} sbdocs sbdocs-preview` : 'sbdocs sbdocs-preview';
+  const previewClasses = [className].concat(['sbdocs', 'sbdocs-preview']);
+
+  // @ts-ignore
+  const layout = getLayout(Children.count(children) === 1 ? [children] : children);
 
   return (
-    <PreviewContainer {...{ withSource, withToolbar }} {...props} className={previewClasses}>
+    <PreviewContainer
+      {...{ withSource, withToolbar }}
+      {...props}
+      className={previewClasses.join(' ')}
+    >
       {withToolbar && (
         <PositionedToolbar
           border
@@ -169,7 +213,7 @@ const Preview: FunctionComponent<PreviewProps> = ({
       )}
       <ZoomContext.Provider value={{ scale }}>
         <Relative>
-          <ChildrenContainer isColumn={isColumn} columns={columns} zoom={scale}>
+          <ChildrenContainer isColumn={isColumn} columns={columns} zoom={scale} layout={layout}>
             {Array.isArray(children) ? (
               // eslint-disable-next-line react/no-array-index-key
               children.map((child, i) => <div key={i}>{child}</div>)
