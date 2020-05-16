@@ -5,7 +5,7 @@ import {
   ProjectType,
   supportedTemplates,
   SUPPORTED_FRAMEWORKS,
-  SUPPORTED_LANGUAGES,
+  SupportedLanguage,
   TemplateConfiguration,
   TemplateMatcher,
 } from './project_types';
@@ -82,7 +82,7 @@ export function isStorybookInstalled(dependencies: PackageJson, force?: boolean)
 }
 
 export function detectLanguage() {
-  let language = SUPPORTED_LANGUAGES.JAVASCRIPT;
+  let language = SupportedLanguage.JAVASCRIPT;
   const packageJson = getPackageJson();
   const bowerJson = getBowerJson();
   if (!packageJson && !bowerJson) {
@@ -90,7 +90,7 @@ export function detectLanguage() {
   }
 
   if (hasDependency(packageJson || bowerJson, 'typescript')) {
-    language = SUPPORTED_LANGUAGES.TYPESCRIPT;
+    language = SupportedLanguage.TYPESCRIPT;
   }
 
   return language;

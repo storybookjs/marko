@@ -2,7 +2,7 @@ import fs from 'fs';
 
 import { getBowerJson, getPackageJson } from './helpers';
 import { isStorybookInstalled, detectFrameworkPreset, detect, detectLanguage } from './detect';
-import { ProjectType, SUPPORTED_FRAMEWORKS, SUPPORTED_LANGUAGES } from './project_types';
+import { ProjectType, SUPPORTED_FRAMEWORKS, SupportedLanguage } from './project_types';
 
 jest.mock('./helpers', () => ({
   getBowerJson: jest.fn(),
@@ -225,12 +225,12 @@ describe('Detect', () => {
         typescript: '1.0.0',
       },
     }));
-    expect(detectLanguage()).toBe(SUPPORTED_LANGUAGES.TYPESCRIPT);
+    expect(detectLanguage()).toBe(SupportedLanguage.TYPESCRIPT);
   });
 
   it(`should return language javascript by default`, () => {
     (getPackageJson as jest.Mock).mockImplementation(() => true);
-    expect(detectLanguage()).toBe(SUPPORTED_LANGUAGES.JAVASCRIPT);
+    expect(detectLanguage()).toBe(SupportedLanguage.JAVASCRIPT);
   });
 
   describe('isStorybookInstalled should return', () => {

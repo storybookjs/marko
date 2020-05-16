@@ -7,7 +7,7 @@ import {
   installableProjectTypes,
   ProjectType,
   StoryFormat,
-  SUPPORTED_LANGUAGES,
+  SupportedLanguage,
 } from './project_types';
 import {
   commandLog,
@@ -59,7 +59,7 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
   };
 
   const defaultStoryFormat =
-    detectLanguage() === SUPPORTED_LANGUAGES.TYPESCRIPT
+    detectLanguage() === SupportedLanguage.TYPESCRIPT
       ? StoryFormat.CSF_TYPESCRIPT
       : StoryFormat.CSF;
 

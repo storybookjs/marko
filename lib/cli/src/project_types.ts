@@ -60,10 +60,10 @@ export enum StoryFormat {
   MDX = 'mdx',
 }
 
-export const SUPPORTED_LANGUAGES = {
-  JAVASCRIPT: 'javascript',
-  TYPESCRIPT: 'typescript',
-};
+export enum SupportedLanguage {
+  JAVASCRIPT = 'javascript',
+  TYPESCRIPT = 'typescript',
+}
 
 export type TemplateMatcher = {
   files?: boolean[];
