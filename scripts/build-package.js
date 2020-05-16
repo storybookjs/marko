@@ -143,7 +143,7 @@ function run() {
 
         if (watchMode) {
           const runWatchMode = () => {
-            const baseWatchCommand = `lerna exec --scope "${glob}" -- cross-env-shell node ${resolve(
+            const baseWatchCommand = `lerna exec --scope "${glob}" --parallel -- cross-env-shell node ${resolve(
               __dirname
             )}`;
             const watchTsc = `${baseWatchCommand}/watch-tsc.js`;
