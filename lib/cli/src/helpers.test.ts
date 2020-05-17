@@ -47,7 +47,7 @@ describe('Helpers', () => {
     });
 
     it(`should throw an error for unsupported story format`, () => {
-      const storyFormat = 'non-existent-format';
+      const storyFormat = 'non-existent-format' as StoryFormat;
       const expectedMessage = `Unsupported story format: ${storyFormat}`;
       expect(() => {
         helpers.copyTemplate('', storyFormat);
