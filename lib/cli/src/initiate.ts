@@ -44,7 +44,7 @@ type CommandOptions = {
   force?: any;
   html?: boolean;
   skipInstall?: boolean;
-  storyFormat?: string;
+  storyFormat?: StoryFormat;
   parser?: string;
   yes?: boolean;
 };
