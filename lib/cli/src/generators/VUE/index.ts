@@ -9,10 +9,9 @@ import {
   copyTemplate,
 } from '../../helpers';
 import { StoryFormat } from '../../project_types';
-import { NpmOptions } from '../../NpmOptions';
-import { GeneratorOptions } from '../../GeneratorOptions';
+import { Generator } from '../Generator';
 
-export default async (npmOptions: NpmOptions, { storyFormat }: GeneratorOptions) => {
+const generator: Generator = async (npmOptions, { storyFormat }) => {
   const packages = [
     '@storybook/vue',
     '@storybook/addon-actions',
@@ -59,3 +58,5 @@ export default async (npmOptions: NpmOptions, { storyFormat }: GeneratorOptions)
   // see: https://github.com/storybookjs/storybook/issues/4475#issuecomment-432141296
   installDependencies({ ...npmOptions, packageJson }, [...versionedPackages, ...babelDependencies]);
 };
+
+export default generator;

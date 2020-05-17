@@ -6,10 +6,9 @@ import {
   installDependencies,
   copyTemplate,
 } from '../../helpers';
-import { NpmOptions } from '../../NpmOptions';
-import { GeneratorOptions } from '../../GeneratorOptions';
+import { Generator } from '../Generator';
 
-export default async (npmOptions: NpmOptions, { storyFormat }: GeneratorOptions) => {
+const generator: Generator = async (npmOptions, { storyFormat }) => {
   const [storybookVersion, addonActionVersion, addonKnobsVersion] = await getVersions(
     npmOptions,
     '@storybook/marko',
@@ -39,3 +38,5 @@ export default async (npmOptions: NpmOptions, { storyFormat }: GeneratorOptions)
     ...babelDependencies,
   ]);
 };
+
+export default generator;

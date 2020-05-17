@@ -180,7 +180,7 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
           .then(end);
 
       case ProjectType.MARIONETTE:
-        return marionetteGenerator(npmOptions)
+        return marionetteGenerator(npmOptions, generatorOptions)
           .then(commandLog('Adding storybook support to your "Marionette.js" app'))
           .then(end);
 

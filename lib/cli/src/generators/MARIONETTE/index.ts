@@ -7,9 +7,9 @@ import {
   installDependencies,
   retrievePackageJson,
 } from '../../helpers';
-import { NpmOptions } from '../../NpmOptions';
+import { Generator } from '../Generator';
 
-export default async (npmOptions: NpmOptions) => {
+const generator: Generator = async (npmOptions) => {
   const storybookVersion = await getVersion(npmOptions, '@storybook/marionette');
   fse.copySync(path.resolve(__dirname, 'template/'), '.', { overwrite: true });
 
@@ -31,3 +31,5 @@ export default async (npmOptions: NpmOptions) => {
     ...babelDependencies,
   ]);
 };
+
+export default generator;

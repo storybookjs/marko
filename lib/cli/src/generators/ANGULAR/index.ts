@@ -16,7 +16,7 @@ import {
 } from '../../helpers';
 import { StoryFormat } from '../../project_types';
 import { NpmOptions } from '../../NpmOptions';
-import { GeneratorOptions } from '../../GeneratorOptions';
+import { Generator, GeneratorOptions } from '../Generator';
 
 async function addDependencies(npmOptions: NpmOptions, { storyFormat }: GeneratorOptions) {
   const packages = [
@@ -64,7 +64,7 @@ function editAngularAppTsConfig() {
   writeFileAsJson(getAngularAppTsConfigPath(), tsConfigJson);
 }
 
-export default async (npmOptions: NpmOptions, { storyFormat }: GeneratorOptions) => {
+const generator: Generator = async (npmOptions, { storyFormat }) => {
   if (!isDefaultProjectSet()) {
     throw new Error(
       'Could not find a default project in your Angular workspace.\nSet a defaultProject in your angular.json and re-run the installation.'
@@ -77,3 +77,5 @@ export default async (npmOptions: NpmOptions, { storyFormat }: GeneratorOptions)
   editAngularAppTsConfig();
   editStorybookTsConfig(path.resolve('./.storybook/tsconfig.json'));
 };
+
+export default generator;
