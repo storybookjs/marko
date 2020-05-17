@@ -46,7 +46,9 @@
     "global": "^4.3.2",
     "lodash": "^4.17.15",
     "react-sizeme": "^2.5.2",
-    "regenerator-runtime": "^0.13.3"
+    "regenerator-runtime": "^0.13.3",
+    "ts-dedent": "^1.1.1",
+    "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
     "@testing-library/react": "^10.0.4",
