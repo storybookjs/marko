@@ -10,6 +10,7 @@ import {
 } from '../../helpers';
 import { NpmOptions } from '../../NpmOptions';
 import { GeneratorOptions } from '../../GeneratorOptions';
+import { StoryFormat } from '../../project_types';
 
 function addStorybookExcludeGlobToTsConfig() {
   const tsConfigJson = readFileAsJson('tsconfig.json', true);
@@ -27,7 +28,10 @@ function addStorybookExcludeGlobToTsConfig() {
   writeFileAsJson('tsconfig.json', tsConfigJson);
 }
 
-export default async (npmOptions: NpmOptions, { storyFormat = 'csf' }: GeneratorOptions) => {
+export default async (
+  npmOptions: NpmOptions,
+  { storyFormat = StoryFormat.CSF }: GeneratorOptions
+) => {
   copyTemplate(__dirname, storyFormat);
   const packages = [
     '@storybook/aurelia',
