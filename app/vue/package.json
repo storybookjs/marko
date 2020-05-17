@@ -57,6 +57,7 @@
     "css-loader": "*",
     "react": "*",
     "react-dom": "*",
+    "ts-loader": "^7.0.4",
     "vue": "^2.6.8",
     "vue-loader": "^15.7.0",
     "vue-template-compiler": "^2.6.8"
