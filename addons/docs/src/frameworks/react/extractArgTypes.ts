@@ -24,7 +24,7 @@ export const extractArgTypes: ArgTypesExtractor = (component) => {
           table: {
             type,
             jsDocTags,
-            defaultValue,
+            defaultValue: defaultSummary,
           },
         };
         return acc;
