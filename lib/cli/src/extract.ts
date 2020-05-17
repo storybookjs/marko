@@ -17,7 +17,7 @@ const read = async (url: string) => {
   const data = JSON.parse(
     await page.evaluate(async () => {
       // eslint-disable-next-line no-undef
-      const d = (window as any).__STORYBOOK_STORY_STORE__.extract();
+      const d = window.__STORYBOOK_STORY_STORE__.extract();
 
       const result = Object.entries(d).reduce(
         (acc, [k, v]: [string, any]) => ({
