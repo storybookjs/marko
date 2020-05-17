@@ -12,10 +12,17 @@ export const extractArgTypes: ArgTypesExtractor = (component) => {
     const { rows } = props as PropsTableRowsProps;
     if (rows) {
       return rows.reduce((acc: ArgTypes, row: PropDef) => {
-        const { type, sbType, defaultValue, jsDocTags, required } = row;
+        const { type, sbType, defaultValue: defaultSummary, jsDocTags, required } = row;
+        let defaultValue = defaultSummary && trim(defaultSummary.detail || defaultSummary.summary);
+        try {
+          // eslint-disable-next-line no-eval
+          defaultValue = eval(defaultValue);
+          // eslint-disable-next-line no-empty
+        } catch {}
+
         acc[row.name] = {
           ...row,
-          defaultValue: defaultValue && trim(defaultValue.detail || defaultValue.summary),
+          defaultValue,
           type: { required, ...sbType },
           table: {
             type,
