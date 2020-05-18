@@ -1,3 +1,17 @@
+## 6.0.0-beta.8 (May 17, 2020)
+
+### Features
+
+* Addon-toolbars: Show tool icons for all viewModes ([#10810](https://github.com/storybookjs/storybook/pull/10810))
+
+### Bug Fixes
+
+* Addon-docs: Eval argTypes default value ([#10812](https://github.com/storybookjs/storybook/pull/10812))
+
+### Maintenance
+
+* Scripts: parallel execution on build package scripts ([#10808](https://github.com/storybookjs/storybook/pull/10808))
+
 ## 6.0.0-beta.7 (May 15, 2020)
 
 ### Breaking changes
