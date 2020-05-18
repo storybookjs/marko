@@ -1,11 +1,4 @@
-import React, {
-  Children,
-  FunctionComponent,
-  ReactElement,
-  ReactNode,
-  useState,
-  cloneElement,
-} from 'react';
+import React, { Children, FunctionComponent, ReactElement, ReactNode, useState } from 'react';
 import { darken } from 'polished';
 import { styled } from '@storybook/theming';
 
