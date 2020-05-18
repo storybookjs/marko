@@ -20,6 +20,7 @@
   "files": [
     "dist/**/*",
     "dll/**/*",
+    "types/**/*",
     "README.md",
     "*.js",
     "*.d.ts",

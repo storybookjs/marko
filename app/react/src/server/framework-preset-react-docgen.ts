@@ -1,15 +1,27 @@
 import { TransformOptions } from '@babel/core';
 import { Configuration } from 'webpack';
+import type { StorybookOptions } from '@storybook/core/types';
+
+const DEFAULT_DOCGEN = 'react-docgen-typescript';
+
+const getDocgen = (typescriptOptions: StorybookOptions['typescriptOptions']) => {
+  const docgen = typescriptOptions?.reactDocgen;
+  return typeof docgen === 'undefined' ? DEFAULT_DOCGEN : docgen;
+};
 
 export function babel(
   config: TransformOptions,
-  { typescript: { docgen = 'react-docgen-typescript' } = {} } = {}
+  { typescriptOptions }: StorybookOptions = { typescriptOptions: {} }
 ) {
+  const reactDocgen = getDocgen(typescriptOptions);
+  if (!reactDocgen) {
+    return config;
+  }
   return {
     ...config,
     overrides: [
       {
-        test: docgen === 'react-docgen' ? /\.(mjs|tsx?|jsx?)$/ : /\.(mjs|jsx?)$/,
+        test: reactDocgen === 'react-docgen' ? /\.(mjs|tsx?|jsx?)$/ : /\.(mjs|jsx?)$/,
         plugins: [
           [
             require.resolve('babel-plugin-react-docgen'),
@@ -25,9 +37,10 @@ export function babel(
 
 export function webpackFinal(
   config: Configuration,
-  { typescript: { docgen = 'react-docgen-typescript' } } = { typescript: {} }
+  { typescriptOptions }: StorybookOptions = { typescriptOptions: {} }
 ) {
-  if (docgen !== 'react-docgen-typescript') return config;
+  const reactDocgen = getDocgen(typescriptOptions);
+  if (reactDocgen !== 'react-docgen-typescript') return config;
   return {
     ...config,
     module: {
@@ -35,7 +48,14 @@ export function webpackFinal(
       rules: [
         ...config.module.rules,
         {
-          loader: require.resolve('react-docgen-typescript-loader'),
+          test: /\.tsx?$/,
+          // include: path.resolve(__dirname, "../src"),
+          use: [
+            {
+              loader: require.resolve('react-docgen-typescript-loader'),
+              options: typescriptOptions?.reactDocgenTypescriptOptions,
+            },
+          ],
         },
       ],
     },
