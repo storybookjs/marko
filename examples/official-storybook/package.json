@@ -17,6 +17,7 @@
     "@storybook/addon-a11y": "6.0.0-beta.8",
     "@storybook/addon-actions": "6.0.0-beta.8",
     "@storybook/addon-backgrounds": "6.0.0-beta.8",
+    "@storybook/addon-controls": "6.0.0-beta.8",
     "@storybook/addon-cssresources": "6.0.0-beta.8",
     "@storybook/addon-design-assets": "6.0.0-beta.8",
     "@storybook/addon-docs": "6.0.0-beta.8",
