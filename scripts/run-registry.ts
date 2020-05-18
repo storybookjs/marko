@@ -21,9 +21,9 @@ program.parse(process.argv);
 
 const logger = console;
 
-const freePort = (port) => port || detectFreePort(port);
+const freePort = (port?: number) => port || detectFreePort(port);
 
-const startVerdaccio = (port) => {
+const startVerdaccio = (port: number) => {
   let resolved = false;
   return Promise.race([
     new Promise((resolve) => {
@@ -52,7 +52,7 @@ const startVerdaccio = (port) => {
     }),
   ]);
 };
-const registryUrl = (command, url) =>
+const registryUrl = (command: string, url: string) =>
   new Promise((res, rej) => {
     const args = url ? ['config', 'set', 'registry', url] : ['config', 'get', 'registry'];
     exec(`${command} ${args.join(' ')}`, (e, stdout) => {
@@ -64,10 +64,15 @@ const registryUrl = (command, url) =>
     });
   });
 
-const registriesUrl = (yarnUrl, npmUrl) =>
+const registriesUrl = (yarnUrl: string, npmUrl: string) =>
   Promise.all([registryUrl('yarn', yarnUrl), registryUrl('npm', npmUrl || yarnUrl)]);
 
-const applyRegistriesUrl = (yarnUrl, npmUrl, originalYarnUrl, originalNpmUrl) => {
+const applyRegistriesUrl = (
+  yarnUrl: string,
+  npmUrl: string,
+  originalYarnUrl: string,
+  originalNpmUrl: string
+) => {
   logger.log(`↪️  changing system config`);
   nodeCleanup(() => {
     registriesUrl(originalYarnUrl, originalNpmUrl);
@@ -82,7 +87,7 @@ const applyRegistriesUrl = (yarnUrl, npmUrl, originalYarnUrl, originalNpmUrl) =>
   return registriesUrl(yarnUrl, npmUrl);
 };
 
-const addUser = (url) =>
+const addUser = (url: string) =>
   new Promise((res, rej) => {
     logger.log(`👤 add temp user to verdaccio`);
 
@@ -100,7 +105,7 @@ const currentVersion = async () => {
   return version;
 };
 
-const publish = (packages, url) => {
+const publish = (packages: { name: string; location: string }[], url: string) => {
   const limit = pLimit(3);
 
   return Promise.all(

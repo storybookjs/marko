@@ -7,6 +7,8 @@ import pLimit from 'p-limit';
 import shell from 'shelljs';
 import { serve } from './utils/serve';
 import { exec } from './utils/command';
+// @ts-ignore
+import { listOfPackages } from './utils/list-packages';
 
 import * as configs from './run-e2e-config';
 
@@ -94,6 +96,16 @@ const initStorybook = async ({ cwd, autoDetect = true, name }: Options) => {
   }
 };
 
+const setResolutions = async ({ cwd }: Options) => {
+  const packages = (await listOfPackages()) as { name: string; version: string }[];
+
+  await packages.reduce(async (acc, { name, version }) => {
+    await acc;
+    logger.info(`🎨 Setting up yarn resolutions for @storybook/${name}`);
+    await exec(`yarn set resolutions ${name}/${version}`, { cwd });
+  }, Promise.resolve());
+};
+
 const addRequiredDeps = async ({ cwd, additionalDeps }: Options) => {
   logger.info(`🌍 Adding needed deps & installing all deps`);
   try {
@@ -166,6 +178,9 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
     logger.log();
 
     await initStorybook(options);
+    logger.log();
+
+    await setResolutions(options);
     logger.log();
 
     await addRequiredDeps(options);

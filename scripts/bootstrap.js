@@ -134,7 +134,7 @@ function run() {
       defaultValue: false,
       option: '--reg',
       command: () => {
-        spawn('./scripts/run-registry.js --publish --open');
+        spawn('yarn local-registry --publish --open');
       },
       order: 11,
     }),
