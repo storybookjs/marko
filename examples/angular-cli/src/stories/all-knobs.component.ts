@@ -1,8 +1,6 @@
 /* eslint-disable no-useless-constructor */
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
-const logger = console;
-
 @Component({
   selector: 'storybook-simple-knobs-component',
   template: `

@@ -1,4 +1,4 @@
-import { statSync, readFileSync } from 'fs';
+import { statSync } from 'fs';
 import { join } from 'path';
 
 const p = (l) => join(__dirname, '..', '..', ...l);
