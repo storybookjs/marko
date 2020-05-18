@@ -7,9 +7,7 @@ import markdownSample from './DocumentFormattingSample.md';
 export default {
   component: DocumentWrapper,
   title: 'Basics/DocumentFormatting',
-  decorators: [
-    (storyFn: any) => <div style={{ width: '600px', background: 'white' }}>{storyFn()}</div>,
-  ],
+  decorators: [(storyFn: any) => <div style={{ width: '600px' }}>{storyFn()}</div>],
 };
 
 export const withMarkdown = () => (
