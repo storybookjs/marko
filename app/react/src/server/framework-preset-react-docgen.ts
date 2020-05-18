@@ -5,7 +5,7 @@ type Docgen = 'react-docgen' | 'react-docgen-typescript';
 interface TypescriptOptions {
   typescriptOptions?: { docgen?: Docgen };
 }
-const DEFAULT_DOCGEN = 'react-docgen-typescript';
+const DEFAULT_DOCGEN = 'react-docgen';
 
 export function babel(
   config: TransformOptions,
