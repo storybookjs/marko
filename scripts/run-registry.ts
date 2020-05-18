@@ -10,7 +10,7 @@ import nodeCleanup from 'node-cleanup';
 
 import startVerdaccioServer from 'verdaccio';
 import pLimit from 'p-limit';
-import { listOfPackages } from './utils/list-packages';
+import { listOfPackages, Package } from './utils/list-packages';
 
 program
   .option('-O, --open', 'keep process open')
@@ -42,7 +42,7 @@ const startVerdaccio = (port: number) => {
 
       startVerdaccioServer(config, 6000, cache, '1.0.0', 'verdaccio', onReady);
     }),
-    new Promise((res, rej) => {
+    new Promise((_, rej) => {
       setTimeout(() => {
         if (!resolved) {
           resolved = true;
@@ -149,7 +149,7 @@ const run = async () => {
   logger.log(`🚛 listing storybook packages`);
   logger.log(`🎬 starting verdaccio (this takes ±5 seconds, so be patient)`);
 
-  const [verdaccioServer, packages, version] = await Promise.all([
+  const [verdaccioServer, packages, version] = await Promise.all<any, Package[], string>([
     startVerdaccio(port),
     listOfPackages(),
     currentVersion(),

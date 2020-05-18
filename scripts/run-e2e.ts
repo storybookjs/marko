@@ -30,10 +30,6 @@ export interface Options extends Parameters {
   cwd?: string;
 }
 
-interface Tasks {
-  addRequiredDeps(options: Options): Promise<void>;
-}
-
 const rootDir = path.join(__dirname, '..');
 const siblingDir = path.join(__dirname, '..', '..', 'storybook-e2e-testing');
 
@@ -98,6 +94,7 @@ const initStorybook = async ({ cwd, autoDetect = true, name }: Options) => {
 
 const setResolutions = async ({ cwd }: Options) => {
   const packages = await listOfPackages();
+
   await packages.reduce(async (acc, { name, version }) => {
     await acc;
     logger.info(`🎨 Setting up yarn resolutions for @storybook/${name}`);
