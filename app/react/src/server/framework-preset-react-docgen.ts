@@ -1,22 +1,27 @@
 import { TransformOptions } from '@babel/core';
 import { Configuration } from 'webpack';
+import type { StorybookOptions } from '@storybook/core/types';
 
-type Docgen = 'react-docgen' | 'react-docgen-typescript';
-interface TypescriptOptions {
-  typescriptOptions?: { docgen?: Docgen };
-}
-const DEFAULT_DOCGEN = 'react-docgen';
+const DEFAULT_DOCGEN = 'react-docgen-typescript';
+
+const getDocgen = (typescriptOptions: StorybookOptions['typescriptOptions']) => {
+  const docgen = typescriptOptions?.reactDocgen;
+  return typeof docgen === 'undefined' ? DEFAULT_DOCGEN : docgen;
+};
 
 export function babel(
   config: TransformOptions,
-  { typescriptOptions }: TypescriptOptions = { typescriptOptions: {} }
+  { typescriptOptions }: StorybookOptions = { typescriptOptions: {} }
 ) {
-  const docgen = typescriptOptions?.docgen || DEFAULT_DOCGEN;
+  const reactDocgen = getDocgen(typescriptOptions);
+  if (!reactDocgen) {
+    return config;
+  }
   return {
     ...config,
     overrides: [
       {
-        test: docgen === 'react-docgen' ? /\.(mjs|tsx?|jsx?)$/ : /\.(mjs|jsx?)$/,
+        test: reactDocgen === 'react-docgen' ? /\.(mjs|tsx?|jsx?)$/ : /\.(mjs|jsx?)$/,
         plugins: [
           [
             require.resolve('babel-plugin-react-docgen'),
@@ -32,10 +37,10 @@ export function babel(
 
 export function webpackFinal(
   config: Configuration,
-  { typescriptOptions }: TypescriptOptions = { typescriptOptions: {} }
+  { typescriptOptions }: StorybookOptions = { typescriptOptions: {} }
 ) {
-  const docgen = typescriptOptions?.docgen || DEFAULT_DOCGEN;
-  if (docgen !== 'react-docgen-typescript') return config;
+  const reactDocgen = getDocgen(typescriptOptions);
+  if (reactDocgen !== 'react-docgen-typescript') return config;
   return {
     ...config,
     module: {
@@ -43,7 +48,14 @@ export function webpackFinal(
       rules: [
         ...config.module.rules,
         {
-          loader: require.resolve('react-docgen-typescript-loader'),
+          test: /\.tsx?$/,
+          // include: path.resolve(__dirname, "../src"),
+          use: [
+            {
+              loader: require.resolve('react-docgen-typescript-loader'),
+              options: typescriptOptions?.reactDocgenTypescriptOptions,
+            },
+          ],
         },
       ],
     },

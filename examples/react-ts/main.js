@@ -4,6 +4,9 @@ module.exports = {
   typescript: {
     check: true,
     checkOptions: {},
-    docgen: 'react-docgen',
+    reactDocgen: 'react-docgen-typescript',
+    reactDocgenTypescriptOptions: {
+      propFilter: (prop) => ['label', 'disabled'].includes(prop.name),
+    },
   },
 };
