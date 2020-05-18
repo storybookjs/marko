@@ -33,7 +33,7 @@ const startVerdaccio = (port: number) => {
         self_path: cache,
       };
 
-      const onReady = (webServer) => {
+      const onReady = (webServer: any) => {
         webServer.listen(port, () => {
           resolved = true;
           resolve(webServer);
@@ -52,8 +52,8 @@ const startVerdaccio = (port: number) => {
     }),
   ]);
 };
-const registryUrl = (command: string, url: string) =>
-  new Promise((res, rej) => {
+const registryUrl = (command: string, url?: string) =>
+  new Promise<string>((res, rej) => {
     const args = url ? ['config', 'set', 'registry', url] : ['config', 'get', 'registry'];
     exec(`${command} ${args.join(' ')}`, (e, stdout) => {
       if (e) {
@@ -64,7 +64,7 @@ const registryUrl = (command: string, url: string) =>
     });
   });
 
-const registriesUrl = (yarnUrl: string, npmUrl: string) =>
+const registriesUrl = (yarnUrl?: string, npmUrl?: string) =>
   Promise.all([registryUrl('yarn', yarnUrl), registryUrl('npm', npmUrl || yarnUrl)]);
 
 const applyRegistriesUrl = (
