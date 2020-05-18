@@ -1,10 +1,17 @@
 import { TransformOptions } from '@babel/core';
 import { Configuration } from 'webpack';
 
+type Docgen = 'react-docgen' | 'react-docgen-typescript';
+interface TypescriptOptions {
+  typescriptOptions?: { docgen?: Docgen };
+}
+const DEFAULT_DOCGEN = 'react-docgen-typescript';
+
 export function babel(
   config: TransformOptions,
-  { typescript: { docgen = 'react-docgen-typescript' } = {} } = {}
+  { typescriptOptions }: TypescriptOptions = { typescriptOptions: {} }
 ) {
+  const docgen = typescriptOptions?.docgen || DEFAULT_DOCGEN;
   return {
     ...config,
     overrides: [
@@ -23,9 +30,11 @@ export function babel(
   };
 }
 
-export function webpackFinal(config: Configuration, { typescript } = { typescript: {} }) {
-  // @ts-ignore
-  const docgen = typescript?.docgen || 'react-docgen-typescript';
+export function webpackFinal(
+  config: Configuration,
+  { typescriptOptions }: TypescriptOptions = { typescriptOptions: {} }
+) {
+  const docgen = typescriptOptions?.docgen || DEFAULT_DOCGEN;
   if (docgen !== 'react-docgen-typescript') return config;
   return {
     ...config,
