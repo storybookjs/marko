@@ -18,7 +18,7 @@ describe('framework-preset-react-docgen', () => {
       presets: ['env', 'foo-preset'],
       overrides: [
         {
-          test: /\.(mjs|jsx?)$/,
+          test: /\.(mjs|tsx?|jsx?)$/,
           plugins: [
             [
               babelPluginReactDocgenPath,
