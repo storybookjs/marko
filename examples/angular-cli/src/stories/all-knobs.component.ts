@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-constructor */
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
 const logger = console;
@@ -48,14 +49,14 @@ export class AllKnobsComponent implements OnChanges, OnInit {
   nice;
 
   constructor() {
-    logger.debug('constructor');
+    // logger.debug('constructor');
   }
 
   ngOnInit(): void {
-    logger.debug('on init, user component');
+    // logger.debug('on init, user component');
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    logger.debug(changes);
+    // logger.debug(changes);
   }
 }

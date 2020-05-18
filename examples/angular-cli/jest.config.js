@@ -1,13 +1,13 @@
 const path = require('path');
 const config = require('../../jest.config');
 
-const projectDir = path.resolve('../../');
+const projectDir = path.join(__dirname, '../../');
 
 module.exports = {
   preset: 'jest-preset-angular',
   globals: {
     'ts-jest': {
-      tsConfig: 'src/tsconfig.spec.json',
+      tsConfig: path.join(__dirname, 'src/tsconfig.spec.json'),
       stringifyContentPathRegex: '\\.html$',
     },
   },
