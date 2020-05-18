@@ -97,8 +97,7 @@ const initStorybook = async ({ cwd, autoDetect = true, name }: Options) => {
 };
 
 const setResolutions = async ({ cwd }: Options) => {
-  const packages = (await listOfPackages()) as { name: string; version: string }[];
-
+  const packages = await listOfPackages();
   await packages.reduce(async (acc, { name, version }) => {
     await acc;
     logger.info(`🎨 Setting up yarn resolutions for @storybook/${name}`);
