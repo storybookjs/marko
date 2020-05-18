@@ -3,7 +3,7 @@ import { Channel } from '@storybook/channels';
 import { ThemeVars } from '@storybook/theming';
 
 import { API, State, ModuleFn } from '../index';
-import { Mapper, Refs } from './refs';
+import { StoryMapper, Refs } from './refs';
 import { UIOptions } from './layout';
 
 type IframeRenderer = (
@@ -22,7 +22,7 @@ export interface Provider {
   getConfig(): {
     theme?: ThemeVars;
     refs?: Refs;
-    mapper?: Mapper;
+    StoryMapper?: StoryMapper;
     [k: string]: any;
   } & Partial<UIOptions>;
   [key: string]: any;
