@@ -97,8 +97,8 @@ const setResolutions = async ({ cwd }: Options) => {
 
   await packages.reduce(async (acc, { name, version }) => {
     await acc;
-    logger.info(`🎨 Setting up yarn resolutions for @storybook/${name}`);
-    await exec(`yarn set resolutions ${name}/${version}`, { cwd });
+    logger.info(`💫 Setting up yarn resolutions for @storybook/${name}`);
+    await exec(`yarn set resolution ${name}/${version}`, { cwd });
   }, Promise.resolve());
 };
 
