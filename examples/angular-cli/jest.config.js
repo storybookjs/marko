@@ -13,8 +13,8 @@ module.exports = {
   transform: {
     '^.+\\.stories\\.[jt]sx?$': '@storybook/addon-storyshots/injectFileName',
     '^.+[/\\\\].storybook[/\\\\]config\\.ts$': '<rootDir>/scripts/utils/jest-transform-ts.js',
-    '^.+\\.(ts|js|html)$': 'ts-jest',
     '^.+\\.jsx?$': '<rootDir>/scripts/utils/jest-transform-js.js',
+    '^.+\\.(ts|js|html)$': 'ts-jest',
     '^.+\\.mdx$': '@storybook/addon-docs/jest-transform-mdx',
   },
   moduleFileExtensions: [...config.moduleFileExtensions, 'html'],
