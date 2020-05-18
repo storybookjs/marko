@@ -23,10 +23,9 @@ export function babel(
   };
 }
 
-export function webpackFinal(
-  config: Configuration,
-  { typescript: { docgen = 'react-docgen-typescript' } } = { typescript: {} }
-) {
+export function webpackFinal(config: Configuration, { typescript } = { typescript: {} }) {
+  // @ts-ignore
+  const docgen = typescript?.docgen || 'react-docgen-typescript';
   if (docgen !== 'react-docgen-typescript') return config;
   return {
     ...config,
