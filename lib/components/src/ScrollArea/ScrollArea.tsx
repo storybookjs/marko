@@ -1,7 +1,7 @@
 import React, { Fragment, FunctionComponent } from 'react';
 import { styled, Global } from '@storybook/theming';
 
-import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
+import { OverlayScrollbarsComponent } from './OverlayScrollbarsComponent';
 import { getScrollAreaStyles } from './ScrollAreaStyles';
 
 export interface ScrollProps {
