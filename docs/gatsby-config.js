@@ -27,6 +27,7 @@ module.exports = {
         '/guides/guide-riot/',
         '/guides/guide-svelte/',
         '/guides/guide-preact/',
+        '/guides/guide-web-components/',
       ],
       configurations: [
         '/configurations/overview/',
@@ -40,6 +41,7 @@ module.exports = {
         '/configurations/serving-static-files/',
         '/configurations/env-vars/',
         '/configurations/theming/',
+        '/configurations/composition/',
         '/configurations/cli-options/',
         '/configurations/standalone-options/',
       ],

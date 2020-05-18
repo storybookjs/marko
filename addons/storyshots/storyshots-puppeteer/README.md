@@ -93,12 +93,14 @@ You might use `getGotoOptions` to specify options when the storybook is navigati
 
 ```js
 import initStoryshots from '@storybook/addon-storyshots';
-import { imageSnapshot } from '@storybook/addon-storyshots-puppeteer';
+import { puppeteerTest } from '@storybook/addon-storyshots-puppeteer';
+
 const getGotoOptions = ({ context, url }) => {
   return {
     waitUntil: 'networkidle0',
   };
 };
+
 initStoryshots({
   suite: 'Puppeteer storyshots',
   test: puppeteerTest({ storybookUrl: 'http://localhost:6006', getGotoOptions }),
@@ -220,7 +222,7 @@ Runs [Axe](https://www.deque.com/axe/) accessibility checks and verifies that th
 import initStoryshots from '@storybook/addon-storyshots';
 import { axeTest } from '@storybook/addon-storyshots-puppeteer';
 
-axeTest({ suite: 'A11y checks', test: axeTest() });
+initStoryshots({ suite: 'A11y checks', test: axeTest() });
 ```
 
 For configuration, it uses the same `story.parameters.a11y` parameter as [`@storybook/addon-a11y`](https://github.com/storybookjs/storybook/tree/next/addons/a11y#parameters)

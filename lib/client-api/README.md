@@ -46,16 +46,16 @@ Changing the args cause the story to be re-rendered with the new set of args.
 
 ### Using args in a story
 
-By default, args are passed to a story in the context; like parameters, they are available as `context.args`.
-
-```js
-const YourStory = ({ args: { x, y }}) => /* render your story using `x` and `y` */
-```
-
-If you set the `parameters.options.passArgsFirst` option on a story, then the args will be passed to the story as first argument and the context as second:
+By default (starting in 6.0) the args will be passed to the story as first argument and the context as second:
 
 ```js
 const YourStory = ({ x, y } /*, context*/) => /* render your story using `x` and `y` */
+```
+
+If you set the `parameters.options.passArgsFirst` option on a story to false, args are passed to a story in the context, preserving the pre-6.0 story API; like parameters, they are available as `context.args`.
+
+```js
+const YourStory = ({ args: { x, y }}) => /* render your story using `x` and `y` */
 ```
 
 ### Arg types and values

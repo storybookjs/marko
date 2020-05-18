@@ -128,7 +128,7 @@ const Sidebar: FunctionComponent<SidebarProps> = ({
 
           <Fragment>
             {combined.map(([k, v], index) => {
-              const isHidden = filter && !list[index];
+              const isHidden = !!(filter && !list[index]);
 
               return (
                 <Fragment key={k}>
