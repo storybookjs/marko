@@ -137,7 +137,7 @@ This is the same kind of data that gets filled in automatically in the [auto-gen
 
 If you're already using [Storybook Knobs](https://github.com/storybookjs/storybook/tree/master/addons/knobs) you should consider migrating to Controls.
 
-'re probably using it for something that can be satisfied by one of the two previous cases, or [manually-configured args](#manually-configured-args).
+You're probably using it for something that can be satisfied by one of the two previous cases, or [manually-configured args](#manually-configured-args).
 
 Let's consider a few different knobs-based stories.
 
