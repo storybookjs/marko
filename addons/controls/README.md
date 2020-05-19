@@ -43,7 +43,7 @@ If you're installing it into an existing project that uses `addon-knobs`, you mi
 
 ## Installation
 
-In the first version, Controls requires that you're [Storybook Docs](https://github.com/storybookjs/storybook/tree/master/addons/docs). If you're not using it already, please install that first.
+In the first version, Controls requires that you're using [Storybook Docs](https://github.com/storybookjs/storybook/tree/master/addons/docs). If you're not using it already, please install that first.
 
 Next, install the package:
 
