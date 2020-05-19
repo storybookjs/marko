@@ -4,7 +4,7 @@ import { DocgenButton } from '../../components/DocgenButton';
 export default {
   title: 'Addons/Docs/ArgsStory',
   component: DocgenButton,
-  parameters: { chromatic: { disable: true } },
+  parameters: { controls: { compact: true }, chromatic: { disable: true } },
 };
 
 export const One = argsStory({ label: 'One' });

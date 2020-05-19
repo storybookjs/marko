@@ -1,9 +1,14 @@
 import React, { FC } from 'react';
 import { ArgsTable } from '@storybook/components';
-import { useArgs, useArgTypes } from '@storybook/api';
+import { useArgs, useArgTypes, useParameter } from '@storybook/api';
+
+interface ControlsParameters {
+  compact?: boolean;
+}
 
 export const ControlsPanel: FC = () => {
   const [args, updateArgs] = useArgs();
   const rows = useArgTypes();
-  return <ArgsTable compact {...{ rows, args, updateArgs }} />;
+  const { compact } = useParameter<ControlsParameters>('controls', { compact: true });
+  return <ArgsTable {...{ compact, rows, args, updateArgs }} />;
 };
