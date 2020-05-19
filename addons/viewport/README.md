@@ -53,6 +53,12 @@ Options can take a object with the following keys:
 
 Setting this property to, let say `iphone6`, will make `iPhone 6` the default device/viewport for all stories. Default is `'responsive'` which fills 100% of the preview area.
 
+### disable : Boolean
+
+---
+
+Disable viewport addon per component, story or global.
+
 ### viewports : Object
 
 ---
@@ -97,14 +103,19 @@ Parameters can be configured for a whole set of stories or a single story via th
 export default {
   title: 'Stories',
   parameters: {
-    viewport: { defaultViewport: 'iphone6' },
+    viewport: { 
+      viewports: INITIAL_VIEWPORTS,
+      defaultViewport: 'iphone6' 
+    },
   };
 };
 
 export const myStory = () => <div />;
 myStory.story = {
   parameters: {
-    viewport: { defaultViewport: 'iphonex' },
+    viewport: { 
+      defaultViewport: 'iphonex' 
+    },
   },
 };
 ```

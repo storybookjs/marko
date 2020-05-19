@@ -15,6 +15,12 @@ It's possible to theme Storybook globally.
 
 We've created two basic themes that look good out of the box: "normal" (a light theme) and "dark" (a dark theme). Unless you've set your preferred color scheme as dark Storybook will use the light theme as default.
 
+Make sure you have installed `@storybook/addons` and `@storybook/theming` packages.
+```sh
+npm install @storybook/addons --save-dev
+npm install @storybook/theming --save-dev
+```
+
 As an example, you can tell Storybook to use the "dark" theme by modifying `.storybook/manager.js`:
 
 ```js

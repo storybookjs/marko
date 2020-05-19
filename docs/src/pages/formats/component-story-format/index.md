@@ -11,7 +11,7 @@ CSF is supported in all frameworks except React Native, where you should use the
 
 ## Default export
 
-The default export defines metadata about your component, including the `component` itself, its `title` (where it will show up in the [navigation UI story hierarchy](../../basics/writing-stories/#story-hierarchy)), [decorators](../../basics/writing-stories/#decorators), and [parameters](../../basics/writing-stories/#parameters). `title` should be unique, i.e. not re-used across files.
+The default export defines metadata about your component, including the `component` itself, its `title` (where it will show up in the [navigation UI story hierarchy](../../basics/writing-stories/#story-hierarchy)), [decorators](../../basics/writing-stories/#decorators), and [parameters](../../basics/writing-stories/#parameters). The `component` field is optional (but encouraged!), and is used by addons for automatic prop table generation and display of other component metadata. `title` should be unique, i.e. not re-used across files.
 
 ```js
 import MyComponent from './MyComponent';
@@ -119,7 +119,7 @@ export default {
 }
 
 export const simpleData = { foo: 1, bar: 'baz' };
-export const complexData = { foo: 1, { bar: 'baz', baz: someData }};
+export const complexData = { foo: 1, bar: { baz: someData } };
 
 export const SimpleStory = () => <MyComponent data={simpleData} />;
 export const ComplexStory = () => <MyComponent data={complexData} />;
