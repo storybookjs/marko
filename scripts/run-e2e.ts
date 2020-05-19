@@ -191,7 +191,7 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
     await initStorybook(options);
     logger.log();
 
-    await setResolutions(options);
+    await setResolutions();
     logger.log();
 
     await addRequiredDeps(options);
