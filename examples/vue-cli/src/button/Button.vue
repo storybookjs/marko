@@ -9,7 +9,7 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
-import { ButtonSize, ButtonSizes } from './types';
+import { ButtonSize } from './types';
 
 /**
  * This is a very nice button. It comes in three sizes!
@@ -32,7 +32,7 @@ export default class Button extends Vue {
   border-radius: 3px;
 
   &.size-small {
-    font-size: .8em;
+    font-size: 0.8em;
   }
   &.size-big {
     font-size: 1.5em;
