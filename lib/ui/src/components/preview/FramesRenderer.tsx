@@ -43,6 +43,9 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
   useEffect(() => {
     const newFrames = Object.values(refs)
       .filter((r) => {
+        if (r.error) {
+          return false;
+        }
         if (r.startInjected) {
           return true;
         }

@@ -127,7 +127,7 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
         return false;
       };
 
-      const [stories, metadata] = await Promise.all([
+      const [stories, metadata, iframe] = await Promise.all([
         fetch(`${url}/stories.json`, {
           headers: {
             Accept: 'application/json',
@@ -145,6 +145,14 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
         })
           .catch(() => false)
           .then(handler),
+        fetch(`${url}/iframe.html`, {
+          credentials: 'include',
+        }).then(
+          () => ({}),
+          (error: Error) => ({
+            error,
+          })
+        ),
       ]);
 
       api.setRef(id, {
@@ -152,6 +160,7 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
         url,
         ...(stories || {}),
         ...(metadata || {}),
+        ...(iframe || {}),
         startInjected: !stories && !metadata,
       });
     },

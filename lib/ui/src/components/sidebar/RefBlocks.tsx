@@ -111,8 +111,18 @@ const ErrorDetail = styled.em(({ theme }) => ({
 const firstLineRegex = /(Error): (.*)\n/;
 const linesRegex = /at (?:(.*) )?\(?(.+)\)?/;
 const ErrorFormatter: FunctionComponent<{ error: Error }> = ({ error }) => {
+  if (!error || !error.stack) {
+    return <Fragment>this error has no stack</Fragment>;
+  }
+
   const input = error.stack.toString();
-  const [, type, name] = input.match(firstLineRegex);
+  const match = input.match(firstLineRegex);
+
+  if (!match) {
+    return <Fragment>{input}</Fragment>;
+  }
+
+  const [, type, name] = match;
 
   const rawLines = input.split(/\n/).slice(1);
   const [, ...lines] = rawLines
