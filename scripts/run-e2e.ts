@@ -1,7 +1,6 @@
 /* eslint-disable no-irregular-whitespace */
 import path from 'path';
-import fs from 'fs';
-import { remove, ensureDir, pathExists, writeFile, readJSON } from 'fs-extra';
+import { remove, ensureDir, pathExists, writeFile, readJSON, writeJSON } from 'fs-extra';
 import { prompt } from 'enquirer';
 import pLimit from 'p-limit';
 
@@ -95,10 +94,12 @@ const initStorybook = async ({ cwd, autoDetect = true, name }: Options) => {
 
 // Verdaccio doesn't resolve *
 // So we set resolutions manually in package.json
-const setResolutions = async () => {
+const setResolutions = async ({ cwd }: Options) => {
+  logger.info(`🔒 Setting yarn resolutions`);
+
   const packages = await listOfPackages();
 
-  const packageJsonPath = path.resolve('../package.json');
+  const packageJsonPath = path.resolve(cwd, 'package.json');
   const packageJson = await readJSON(packageJsonPath, { encoding: 'utf8' });
 
   packageJson.resolutions = {
@@ -112,8 +113,7 @@ const setResolutions = async () => {
     ),
   };
 
-  const content = `${JSON.stringify(packageJson, null, 2)}\n`;
-  fs.writeFileSync(packageJsonPath, content, 'utf8');
+  await writeJSON(packageJsonPath, packageJson, { encoding: 'utf8', spaces: 2 });
 };
 
 const addRequiredDeps = async ({ cwd, additionalDeps }: Options) => {
@@ -190,7 +190,7 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
     await initStorybook(options);
     logger.log();
 
-    await setResolutions();
+    await setResolutions(options);
     logger.log();
 
     await addRequiredDeps(options);
