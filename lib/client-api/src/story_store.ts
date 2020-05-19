@@ -184,6 +184,9 @@ export default class StoryStore {
       },
       { ...defaultGlobalArgs, ...initialGlobalArgs }
     );
+    if (this._channel) {
+      this._channel.emit(Events.GLOBAL_ARGS_UPDATED, this._globalArgs);
+    }
   }
 
   addGlobalMetadata({ parameters, decorators }: StoryMetadata) {

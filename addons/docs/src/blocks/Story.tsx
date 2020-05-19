@@ -1,13 +1,15 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { FunctionComponent, ReactNode, ComponentProps } from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { resetComponents } from '@storybook/components/html';
-import { Story as PureStory, StoryProps as PureStoryProps } from '@storybook/components';
+import { Story as PureStory } from '@storybook/components';
 import { toId, storyNameFromExport } from '@storybook/csf';
 import { CURRENT_SELECTION } from './types';
 
 import { DocsContext, DocsContextProps } from './DocsContext';
 
 export const storyBlockIdFromId = (storyId: string) => `story--${storyId}`;
+
+type PureStoryProps = ComponentProps<typeof PureStory>;
 
 interface CommonProps {
   height?: string;
@@ -48,14 +50,13 @@ export const getStoryProps = (props: StoryProps, context: DocsContextProps): Pur
   const { name } = props as StoryDefProps;
   const inputId = id === CURRENT_SELECTION ? context.id : id;
   const previewId = inputId || lookupStoryId(name, context);
+  const data = context.storyStore.fromId(previewId) || {};
 
   const { height, inline } = props;
-  const data = context.storyStore.fromId(previewId);
-  const { framework = null } = (data && data.parameters) || {};
+  const { parameters = {}, docs = {} } = data;
+  const { framework = null } = parameters;
 
-  const docsParam = (data && data.parameters && data.parameters.docs) || {};
-
-  if (docsParam.disable) {
+  if (docs.disable) {
     return null;
   }
 
@@ -64,8 +65,8 @@ export const getStoryProps = (props: StoryProps, context: DocsContextProps): Pur
     inlineStories = inferInlineStories(framework),
     iframeHeight = undefined,
     prepareForInline = undefined,
-  } = docsParam;
-  const { storyFn = undefined, name: storyName = undefined } = data || {};
+  } = docs;
+  const { storyFn = undefined, name: storyName = undefined } = data;
 
   const storyIsInline = typeof inline === 'boolean' ? inline : inlineStories;
   if (storyIsInline && !prepareForInline && framework !== 'react') {
@@ -75,6 +76,7 @@ export const getStoryProps = (props: StoryProps, context: DocsContextProps): Pur
   }
 
   return {
+    parameters,
     inline: storyIsInline,
     id: previewId,
     storyFn: prepareForInline && storyFn ? () => prepareForInline(storyFn) : storyFn,

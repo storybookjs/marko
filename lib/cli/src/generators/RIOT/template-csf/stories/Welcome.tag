@@ -1,6 +1,6 @@
 <welcome>
   <div class="main">
-    <h1>Welcome to STORYBOOK</h1>
+    <h1>Welcome to storybook</h1>
     <p>
       This is a UI component dev environment for your app.
     </p>

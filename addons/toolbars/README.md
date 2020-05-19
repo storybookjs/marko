@@ -1,5 +1,5 @@
 <center>
-  <img src="https://github.com/storybookjs/storybook/blob/next/addons/toolbars/docs/hero.gif" width="100%" />
+  <img src="https://raw.githubusercontent.com/storybookjs/storybook/next/addons/toolbars/docs/hero.gif" width="100%" />
 </center>
 
 <h1>Storybook Addon Toolbars</h1>

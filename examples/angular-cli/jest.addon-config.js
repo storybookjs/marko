@@ -1,6 +1,6 @@
-const config = require('./jest.config.js');
+const base = require('./jest.config.js');
 
 module.exports = {
-  ...config,
+  ...base,
   testPathIgnorePatterns: ['/node_modules/', '/storybook-static/', 'angularshots.test.js', 'dist'],
 };

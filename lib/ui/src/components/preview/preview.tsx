@@ -149,7 +149,7 @@ const Preview: FunctionComponent<PreviewProps> = (props) => {
   const tabs = useTabs(previewId, baseUrl, withLoader, getElements, story);
 
   useEffect(() => {
-    if (story) {
+    if (story && viewMode && viewMode.match(/docs|story/)) {
       const { refId, id } = story;
       api.emit(SET_CURRENT_STORY, {
         storyId: id,
