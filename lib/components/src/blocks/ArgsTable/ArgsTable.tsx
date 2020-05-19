@@ -7,7 +7,7 @@ import { ArgTypes, Args } from './types';
 import { EmptyBlock } from '../EmptyBlock';
 import { ResetWrapper } from '../../typography/DocumentFormatting';
 
-export const TableWrapper = styled.table<{}>(({ theme }) => ({
+export const TableWrapper = styled.table<{ compact?: boolean }>(({ theme, compact }) => ({
   '&&': {
     // Resets for cascading/system styles
     borderCollapse: 'collapse',
@@ -40,7 +40,7 @@ export const TableWrapper = styled.table<{}>(({ theme }) => ({
 
     'th:last-of-type, td:last-of-type': {
       paddingRight: 20,
-      width: '20%',
+      ...(compact ? null : { width: '20%' }),
     },
 
     th: {
@@ -137,6 +137,7 @@ export interface ArgsTableRowProps {
   rows: ArgTypes;
   args?: Args;
   updateArgs?: (args: Args) => void;
+  compact?: boolean;
 }
 
 export interface ArgsTableErrorProps {
@@ -151,8 +152,8 @@ const ArgsTableRow: FC<RowProps> = (props) => {
   if (section) {
     return <SectionRow {...{ section, updateArgs }} />;
   }
-  const { row, arg } = props as ArgRowProps;
-  return <ArgRow {...{ row, arg, updateArgs }} />;
+  const { row, arg, compact } = props as ArgRowProps;
+  return <ArgRow {...{ row, arg, updateArgs, compact }} />;
 };
 
 /**
@@ -165,7 +166,7 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
     return <EmptyBlock>{error}</EmptyBlock>;
   }
 
-  const { rows, args, updateArgs } = props as ArgsTableRowProps;
+  const { rows, args, updateArgs, compact } = props as ArgsTableRowProps;
 
   const ungroupedRows: ArgTypes = {};
   const categoryRows: Record<string, ArgTypes> = {};
@@ -208,18 +209,18 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
   }
   return (
     <ResetWrapper>
-      <TableWrapper className="docblock-propstable">
+      <TableWrapper compact={compact} className="docblock-propstable">
         <thead className="docblock-propstable-head">
           <tr>
             <th>Name</th>
-            <th>Description</th>
-            <th>Default</th>
+            {compact ? null : <th>Description</th>}
+            {compact ? null : <th>Default</th>}
             {updateArgs ? <th>Control</th> : null}
           </tr>
         </thead>
         <tbody className="docblock-propstable-body">
           {allRows.map((row) => (
-            <ArgsTableRow key={row.key} {...row.value} />
+            <ArgsTableRow compact={compact} key={row.key} {...row.value} />
           ))}
         </tbody>
       </TableWrapper>
