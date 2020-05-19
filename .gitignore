@@ -2,8 +2,6 @@ node_modules
 *.log
 .idea
 *.iml
-.vscode/*
-!.vscode/launch.json
 *.sw*
 npm-shrinkwrap.json
 dist
@@ -11,7 +9,6 @@ ts3.5
 .tern-port
 *.DS_Store
 .cache
-junit.xml
 coverage/
 *.lerna_backup
 build
@@ -27,13 +24,10 @@ integration/__image_snapshots__/__diff_output__
 /examples/cra-kitchen-sink/src/__image_snapshots__/__diff_output__/
 lib/*.jar
 lib/**/dll
-.expo/packager-info.json
-scripts/storage
-htpasswd
 /false
-storybook-out
 /addons/docs/common/config-*
 built-storybooks
 cypress/videos
 cypress/screenshots
 examples/ember-cli/ember-output
+.verdaccio-cache
