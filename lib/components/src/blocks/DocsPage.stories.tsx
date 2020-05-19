@@ -9,6 +9,9 @@ import * as descriptionStories from './Description.stories';
 export default {
   title: 'Docs/DocsPage',
   component: DocsWrapper,
+  parameters: {
+    layout: 'fullscreen',
+  },
   decorators: [
     (storyFn) => (
       <DocsWrapper>
