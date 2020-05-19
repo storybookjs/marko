@@ -128,10 +128,21 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
       };
 
       const [stories, metadata] = await Promise.all([
-        fetch(`${url}/stories.json`)
+        fetch(`${url}/stories.json`, {
+          headers: {
+            Accept: 'application/json',
+          },
+          credentials: 'include',
+        })
           .catch(() => false)
           .then(handler),
-        fetch(`${url}/metadata.json`)
+        fetch(`${url}/metadata.json`, {
+          headers: {
+            Accept: 'application/json',
+          },
+          credentials: 'include',
+          cache: 'no-cache',
+        })
           .catch(() => false)
           .then(handler),
       ]);
