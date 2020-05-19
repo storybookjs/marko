@@ -1,7 +1,7 @@
 /* eslint-disable no-irregular-whitespace */
 import path from 'path';
 import fs from 'fs';
-import { remove, ensureDir, pathExists, writeFile } from 'fs-extra';
+import { remove, ensureDir, pathExists, writeFile, readJSON } from 'fs-extra';
 import { prompt } from 'enquirer';
 import pLimit from 'p-limit';
 
@@ -98,9 +98,8 @@ const initStorybook = async ({ cwd, autoDetect = true, name }: Options) => {
 const setResolutions = async () => {
   const packages = await listOfPackages();
 
-  const packageJsonPath = path.resolve('../../package.json');
-  const jsonContent = fs.readFileSync(packageJsonPath, 'utf8');
-  const packageJson = JSON.parse(jsonContent);
+  const packageJsonPath = path.resolve('../package.json');
+  const packageJson = await readJSON(packageJsonPath, { encoding: 'utf8' });
 
   packageJson.resolutions = {
     ...packageJson.resolutions,
