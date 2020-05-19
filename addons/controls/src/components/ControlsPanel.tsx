@@ -3,12 +3,12 @@ import { ArgsTable } from '@storybook/components';
 import { useArgs, useArgTypes, useParameter } from '@storybook/api';
 
 interface ControlsParameters {
-  compact?: boolean;
+  expanded?: boolean;
 }
 
 export const ControlsPanel: FC = () => {
   const [args, updateArgs] = useArgs();
   const rows = useArgTypes();
-  const { compact } = useParameter<ControlsParameters>('controls', { compact: true });
-  return <ArgsTable {...{ compact, rows, args, updateArgs }} />;
+  const { expanded } = useParameter<ControlsParameters>('controls', {});
+  return <ArgsTable {...{ compact: !expanded, rows, args, updateArgs }} />;
 };
