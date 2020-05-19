@@ -10,7 +10,9 @@ describe('framework-preset-react-docgen', () => {
       plugins: ['foo-plugin'],
     };
 
-    const config = preset.babel(babelConfig);
+    const config = preset.babel(babelConfig, {
+      typescriptOptions: { check: false, reactDocgen: 'react-docgen' },
+    });
 
     expect(config).toEqual({
       babelrc: false,
@@ -18,7 +20,7 @@ describe('framework-preset-react-docgen', () => {
       presets: ['env', 'foo-preset'],
       overrides: [
         {
-          test: /\.(mjs|jsx?)$/,
+          test: /\.(mjs|tsx?|jsx?)$/,
           plugins: [
             [
               babelPluginReactDocgenPath,
