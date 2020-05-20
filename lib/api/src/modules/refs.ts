@@ -53,7 +53,7 @@ const allSettled = (promises: Promise<any>[]) =>
   Promise.all(
     promises.map((promise, i) =>
       promise.then(
-        (r) => r.ok,
+        (r) => (r.ok ? r : false),
         () => false
       )
     )
@@ -124,32 +124,36 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
     checkRef: async (ref) => {
       const { id, url } = ref;
 
-      const handler = async (response: Response) => {
-        if (response) {
-          const { ok } = response;
-
-          if (ok) {
-            return response.json().catch((error: Error) => ({ error }));
-          }
-        } else {
-          logger.warn('an auto-injected ref threw a cors-error');
-        }
-
-        return false;
-      };
-
       const loadedData: { error?: Error; stories?: StoriesRaw } = {};
 
-      const [included, omitted] = await allSettled([
-        fetch(`${url}/iframe.html`, {
+      const [included, omitted, iframe] = await allSettled([
+        fetch(`${url}/stories.json`, {
+          headers: {
+            Accept: 'application/json',
+          },
           credentials: 'include',
+        }),
+        fetch(`${url}/stories.json`, {
+          headers: {
+            Accept: 'application/json',
+          },
+          credentials: 'omit',
         }),
         fetch(`${url}/iframe.html`, {
           credentials: 'omit',
         }),
       ]);
 
-      if (!included && !omitted) {
+      const handle = async (request: Promise<Response> | false) => {
+        if (request) {
+          return Promise.resolve(request)
+            .then((response) => (response.ok ? response.json() : {}))
+            .catch((error) => ({ error }));
+        }
+        return {};
+      };
+
+      if (!included && !omitted && !iframe) {
         loadedData.error = {
           message: dedent`
             Error: Loading of ref failed
@@ -157,8 +161,8 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
 
             URL: ${url}
 
-            Tried to load this ref without and with credentials,
-            but there's likely a CORS error happening.
+            We weren't able to load the above URL,
+            it's possible a CORS error happened.
 
             Please check your dev-tools network tab.
           `,
@@ -167,23 +171,16 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
         const credentials = !omitted ? 'include' : 'omit';
 
         const [stories, metadata] = await Promise.all([
-          fetch(`${url}/stories.json`, {
-            headers: {
-              Accept: 'application/json',
-            },
-            credentials,
-          })
-            .catch(() => false)
-            .then(handler),
-          fetch(`${url}/metadata.json`, {
-            headers: {
-              Accept: 'application/json',
-            },
-            credentials,
-            cache: 'no-cache',
-          })
-            .catch(() => false)
-            .then(handler),
+          handle(omitted || included),
+          handle(
+            fetch(`${url}/metadata.json`, {
+              headers: {
+                Accept: 'application/json',
+              },
+              credentials,
+              cache: 'no-cache',
+            })
+          ),
         ]);
 
         Object.assign(loadedData, { ...stories, ...metadata });
