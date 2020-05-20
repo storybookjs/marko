@@ -162,7 +162,7 @@ export const RefIndicator = forwardRef<
                 <ReadyMessage {...{ url: ref.url, componentCount, leafCount }} />
               )}
 
-              {ref.startInjected ? (
+              {ref.type === 'auto-inject' ? (
                 <Fragment>
                   <Hr />
                   <PerformanceDegradedMessage />

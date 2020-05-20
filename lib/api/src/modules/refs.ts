@@ -1,5 +1,6 @@
 import { location, fetch } from 'global';
 import { logger } from '@storybook/client-logger';
+import dedent from 'ts-dedent';
 import {
   transformStoriesRawToStoriesHash,
   StoriesRaw,
@@ -33,7 +34,7 @@ export interface ComposedRef {
   id: string;
   title?: string;
   url: string;
-  startInjected?: boolean;
+  type?: 'auto-inject' | 'unknown' | 'lazy';
   stories: StoriesHash;
   versions?: Versions;
   authUrl?: string;
@@ -47,6 +48,16 @@ export type RefUrl = string;
 
 // eslint-disable-next-line no-useless-escape
 const findFilename = /(\/((?:[^\/]+?)\.[^\/]+?)|\/)$/;
+
+const allSettled = (promises: Promise<any>[]) =>
+  Promise.all(
+    promises.map((promise, i) =>
+      promise.then(
+        (r) => r.ok,
+        () => false
+      )
+    )
+  );
 
 export const getSourceType = (source: string) => {
   const { origin: localOrigin, pathname: localPathname } = location;
@@ -127,41 +138,62 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
         return false;
       };
 
-      const [stories, metadata, iframe] = await Promise.all([
-        fetch(`${url}/stories.json`, {
-          headers: {
-            Accept: 'application/json',
-          },
-          credentials: 'include',
-        })
-          .catch(() => false)
-          .then(handler),
-        fetch(`${url}/metadata.json`, {
-          headers: {
-            Accept: 'application/json',
-          },
-          credentials: 'include',
-          cache: 'no-cache',
-        })
-          .catch(() => false)
-          .then(handler),
+      const loadedData: { error?: Error; stories?: StoriesRaw } = {};
+
+      const [included, omitted] = await allSettled([
         fetch(`${url}/iframe.html`, {
           credentials: 'include',
-        }).then(
-          () => ({}),
-          (error: Error) => ({
-            error,
-          })
-        ),
+        }),
+        fetch(`${url}/iframe.html`, {
+          credentials: 'omit',
+        }),
       ]);
+
+      if (!included && !omitted) {
+        loadedData.error = {
+          message: dedent`
+            Error: Loading of ref failed
+              at fetch (lib/api/src/modules/refs.ts)
+
+            URL: ${url}
+
+            Tried to load this ref without and with credentials,
+            but there's likely a CORS error happening.
+
+            Please check your dev-tools network tab.
+          `,
+        } as Error;
+      } else {
+        const credentials = !omitted ? 'include' : 'omit';
+
+        const [stories, metadata] = await Promise.all([
+          fetch(`${url}/stories.json`, {
+            headers: {
+              Accept: 'application/json',
+            },
+            credentials,
+          })
+            .catch(() => false)
+            .then(handler),
+          fetch(`${url}/metadata.json`, {
+            headers: {
+              Accept: 'application/json',
+            },
+            credentials,
+            cache: 'no-cache',
+          })
+            .catch(() => false)
+            .then(handler),
+        ]);
+
+        Object.assign(loadedData, { ...stories, ...metadata });
+      }
 
       api.setRef(id, {
         id,
         url,
-        ...(stories || {}),
-        ...(metadata || {}),
-        ...(iframe || {}),
-        startInjected: !stories && !metadata,
+        ...loadedData,
+        type: !loadedData.stories ? 'auto-inject' : 'lazy',
       });
     },
 
@@ -195,6 +227,11 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
   const refs = provider.getConfig().refs || {};
 
   const initialState: SubState['refs'] = refs;
+
+  Object.values(refs).forEach((r) => {
+    // eslint-disable-next-line no-param-reassign
+    r.type = 'unknown';
+  });
 
   Object.entries(refs).forEach(([k, v]) => {
     api.checkRef(v as SetRefData);

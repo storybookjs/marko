@@ -72,9 +72,9 @@ export const Ref: FunctionComponent<RefType & RefProps> = (ref) => {
   const isMain = key === 'storybook_internal';
 
   const isLoadingMain = !ref.ready && isMain;
-  const isLoadingInjected = ref.startInjected && !ref.ready;
+  const isLoadingInjected = ref.type === 'auto-inject' && !ref.ready;
 
-  const isLoading = isLoadingMain || isLoadingInjected;
+  const isLoading = isLoadingMain || isLoadingInjected || ref.type === 'unknown';
   const isError = !!error;
   const isEmpty = !isLoading && length === 0;
   const isAuthRequired = !!authUrl;

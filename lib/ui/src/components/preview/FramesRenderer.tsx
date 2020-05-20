@@ -46,7 +46,7 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
         if (r.error) {
           return false;
         }
-        if (r.startInjected) {
+        if (r.type === 'auto-inject') {
           return true;
         }
         if (story && r.id === story.refId) {
