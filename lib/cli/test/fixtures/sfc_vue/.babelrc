@@ -5,8 +5,7 @@
       "targets": {
         "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
       }
-    }],
-    "babel-preset-vue"
+    }]
   ],
   "plugins": ["@babel/plugin-transform-runtime"],
   "env": {

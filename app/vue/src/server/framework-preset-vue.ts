@@ -38,3 +38,10 @@ export function webpack(config: Configuration) {
     },
   };
 }
+
+export function babelDefault(config: any) {
+  return {
+    ...config,
+    presets: [...config.presets, require.resolve('babel-preset-vue')],
+  };
+}
