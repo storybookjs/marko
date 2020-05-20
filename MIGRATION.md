@@ -1,6 +1,7 @@
 <h1>Migration</h1>
 
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
+  - [Zero config typescript](#zero-config-typescript)
   - [Backgrounds addon has a new api](#backgrounds-addon-has-a-new-api)
   - [CRA preset removed](#cra-preset-removed)
   - [Args passed as first argument to story](#args-passed-as-first-argument-to-story)
@@ -112,6 +113,12 @@
   - [Deprecated embedded addons](#deprecated-embedded-addons)
 
 ## From version 5.3.x to 6.0.x
+
+### Zero config typescript
+
+Storybook has built-in Typescript support in 6.0. That means you should remove your complex Typescript configurations from your `.storybook` config. We've tried to pick sensible defaults that work out of the box, especially for nice prop table generation in `@storybook/addon-docs`.
+
+To migrate from an old setup, we recommend deleting any typescript-specific webpack/babel configurations in your project. If you want to override the defaults, see the [typescript configuration docs](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/configurations/typescript-config/index.md).
 
 ### Backgrounds addon has a new api
 
