@@ -125,8 +125,6 @@ const ErrorFormatter: FunctionComponent<{ error: Error }> = ({ error }) => {
     return <Fragment>{input}</Fragment>;
   }
 
-  console.log();
-
   const [, type, name] = match;
 
   const rawLines = input.split(/\n/).slice(1);
