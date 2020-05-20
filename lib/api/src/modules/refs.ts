@@ -1,5 +1,4 @@
 import { location, fetch } from 'global';
-import { logger } from '@storybook/client-logger';
 import dedent from 'ts-dedent';
 import {
   transformStoriesRawToStoriesHash,

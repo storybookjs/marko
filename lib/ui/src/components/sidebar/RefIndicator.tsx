@@ -1,11 +1,4 @@
-import React, {
-  FunctionComponent,
-  useMemo,
-  Fragment,
-  ComponentProps,
-  useCallback,
-  forwardRef,
-} from 'react';
+import React, { FunctionComponent, useMemo, ComponentProps, useCallback, forwardRef } from 'react';
 
 import { Icons, WithTooltip, Spaced, TooltipLinkList } from '@storybook/components';
 import { styled } from '@storybook/theming';
@@ -34,13 +27,6 @@ const IndicatorPlacement = styled.aside(
   }),
   ({ theme }) => ({ color: theme.color.mediumdark })
 );
-
-const Hr = styled.hr(({ theme }) => ({
-  border: '0 none',
-  height: 0,
-  marginBottom: 0,
-  borderTop: `1px solid ${theme.color.mediumlight}`,
-}));
 
 const IndicatorIcon: FunctionComponent<IndicatorIconProps> = ({ type }) => {
   let icon: ComponentProps<typeof Icons>['icon'];
