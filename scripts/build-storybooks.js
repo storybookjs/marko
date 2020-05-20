@@ -144,7 +144,7 @@ const run = async () => {
     logger.log(
       `will build: ${deployables.join(', ')} (${
         deployables.length
-      } total - offset: ${offset} | step: ${step} | index: ${a} | total: ${b} | length: ${length})`
+      } total - offset: ${offset} | step: ${step} | length: ${length} | node_index: ${a} | total: ${b} |)`
     );
     await handleExamples(deployables);
   }
