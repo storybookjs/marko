@@ -1,5 +1,6 @@
+const base = require('./jest.config.js');
+
 module.exports = {
-  preset: 'jest-preset-angular',
+  ...base,
   testPathIgnorePatterns: ['/node_modules/', '/storybook-static/', 'angularshots.test.js', 'dist'],
-  setupFilesAfterEnv: ['./jest-config/setup.ts'],
 };

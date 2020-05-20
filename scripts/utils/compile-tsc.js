@@ -4,8 +4,8 @@ const path = require('path');
 const shell = require('shelljs');
 
 function getCommand(watch) {
-  const tsc = path.join(__dirname, '..', 'node_modules', '.bin', 'tsc');
-  const downlevelDts = path.join(__dirname, '..', 'node_modules', '.bin', 'downlevel-dts');
+  const tsc = path.join(__dirname, '..', '..', 'node_modules', '.bin', 'tsc');
+  const downlevelDts = path.join(__dirname, '..', '..', 'node_modules', '.bin', 'downlevel-dts');
 
   const args = ['--outDir ./dist', '--listEmittedFiles true'];
 

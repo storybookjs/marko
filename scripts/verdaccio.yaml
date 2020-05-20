@@ -1,8 +1,14 @@
-storage: ./storage
+storage: .verdaccio-cache
 
 auth:
-  htpasswd:
-    file: ./htpasswd
+  auth-memory:
+    users:
+      foo:
+        name: foo
+        password: s3cret
+      bar:
+        name: bar
+        password: s3cret
 
 uplinks:
   npmjs:
@@ -16,6 +22,16 @@ packages:
     publish: $all
     proxy: npmjs
   '@storybook/react-stubber':
+    access: $all
+    publish: $all
+    proxy: npmjs
+
+  # storybook's packages not hosted in this monorepo
+  '@storybook/csf':
+    access: $all
+    publish: $all
+    proxy: npmjs
+  '@storybook/preset-*':
     access: $all
     publish: $all
     proxy: npmjs
@@ -45,4 +61,4 @@ packages:
     proxy: npmjs
 
 logs:
-  - {type: stdout, format: pretty, level: http}
+  - { type: stdout, format: pretty, level: warn }
