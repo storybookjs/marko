@@ -156,25 +156,12 @@ export const RefIndicator = forwardRef<
         tooltip={
           <MessageWrapper>
             <Spaced row={0}>
-              {state === 'loading' ? (
-                <LoadingMessage url={ref.url} />
-              ) : (
+              {state === 'loading' && <LoadingMessage url={ref.url} />}
+              {state === 'ready' && (
                 <ReadyMessage {...{ url: ref.url, componentCount, leafCount }} />
               )}
-
-              {ref.type === 'auto-inject' ? (
-                <Fragment>
-                  <Hr />
-                  <PerformanceDegradedMessage />
-                </Fragment>
-              ) : null}
-
-              {state === 'error' ? (
-                <Fragment>
-                  <Hr />
-                  <ErrorOccurredMessage />
-                </Fragment>
-              ) : null}
+              {ref.type === 'auto-inject' && state !== 'error' && <PerformanceDegradedMessage />}
+              {state === 'error' && <ErrorOccurredMessage />}
             </Spaced>
           </MessageWrapper>
         }
