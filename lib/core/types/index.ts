@@ -51,11 +51,8 @@ export interface TypescriptOptions {
   check: boolean;
   /**
    * Configures `fork-ts-checker-webpack-plugin`
-   *
-   * @default
-   * @see https://github.com/storybookjs/storybook/blob/next/lib/core/src/server/config/defaults.js#L4-L6
    */
-  checkOptions: ForkTsCheckerWebpackPlugin['options'];
+  checkOptions?: ForkTsCheckerWebpackPlugin['options'];
   /**
    * Sets the type of Docgen when working with React and TypeScript
    *
@@ -64,6 +61,9 @@ export interface TypescriptOptions {
   reactDocgen: 'react-docgen-typescript' | 'react-docgen' | false;
   /**
    * Configures `react-docgen-typescript-loader`
+   *
+   * @default
+   * @see https://github.com/storybookjs/storybook/blob/next/lib/core/src/server/config/defaults.js#L4-L6
    */
-  reactDocgenTypescriptOptions?: LoaderOptions;
+  reactDocgenTypescriptOptions: LoaderOptions;
 }
