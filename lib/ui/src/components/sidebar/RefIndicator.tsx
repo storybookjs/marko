@@ -11,12 +11,12 @@ import { Icons, WithTooltip, Spaced, TooltipLinkList } from '@storybook/componen
 import { styled } from '@storybook/theming';
 import { useStorybookApi } from '@storybook/api';
 
-import { getType, RefType } from './RefHelpers';
+import { getStateType, RefType } from './RefHelpers';
 import { MenuItemIcon } from './Menu';
 
 export type ClickHandler = ComponentProps<typeof TooltipLinkList>['links'][number]['onClick'];
 export interface IndicatorIconProps {
-  type: ReturnType<typeof getType>;
+  type: ReturnType<typeof getStateType>;
 }
 export interface CurrentVersionProps {
   url: string;
@@ -132,9 +132,9 @@ const CurrentVersion: FunctionComponent<CurrentVersionProps> = ({ url, versions 
 export const RefIndicator = forwardRef<
   HTMLElement,
   RefType & {
-    type: ReturnType<typeof getType>;
+    state: ReturnType<typeof getStateType>;
   }
->(({ type, ...ref }, forwardedRef) => {
+>(({ state, ...ref }, forwardedRef) => {
   const api = useStorybookApi();
   const list = useMemo(() => Object.values(ref.stories || {}), [ref.stories]);
   const componentCount = useMemo(() => list.filter((v) => v.isComponent).length, [list]);
@@ -156,7 +156,7 @@ export const RefIndicator = forwardRef<
         tooltip={
           <MessageWrapper>
             <Spaced row={0}>
-              {type === 'loading' ? (
+              {state === 'loading' ? (
                 <LoadingMessage url={ref.url} />
               ) : (
                 <ReadyMessage {...{ url: ref.url, componentCount, leafCount }} />
@@ -169,7 +169,7 @@ export const RefIndicator = forwardRef<
                 </Fragment>
               ) : null}
 
-              {type === 'error' ? (
+              {state === 'error' ? (
                 <Fragment>
                   <Hr />
                   <ErrorOccurredMessage />
@@ -179,7 +179,7 @@ export const RefIndicator = forwardRef<
           </MessageWrapper>
         }
       >
-        <IndicatorIcon type={type} />
+        <IndicatorIcon type={state} />
       </WithTooltip>
 
       {ref.versions ? (
