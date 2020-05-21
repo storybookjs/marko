@@ -1,8 +1,9 @@
 import type ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import type LoaderOptions from 'react-docgen-typescript-loader/dist/LoaderOptions';
+import { Configuration } from 'webpack';
 
 /**
- * The interface for Storybook configuration in `main.js` files.
+ * The interface for Storybook configuration in `main.ts` files.
  */
 export interface StorybookConfig {
   /**
@@ -10,7 +11,7 @@ export interface StorybookConfig {
    *
    * @example `['@storybook/addon-essentials']`
    */
-  addons: string[];
+  addons?: string[];
   /**
    * Tells Storybook where to find stories.
    *
@@ -21,12 +22,20 @@ export interface StorybookConfig {
    * Controls how Storybook hanldes TypeScript files.
    */
   typescript?: Partial<TypescriptOptions>;
+  /**
+   * Modify or return a custom Webpack config.
+   */
+  webpackFinal?: (
+    config: Configuration,
+    options: StorybookOptions
+  ) => Configuration | Promise<Configuration>;
 }
 
 /**
  * The internal options object, used by Storybook frameworks and adddons.
  */
 export interface StorybookOptions {
+  configType: 'DEVELOPMENT' | 'PRODUCTION';
   typescriptOptions: TypescriptOptions;
 }
 
@@ -52,6 +61,9 @@ export interface TypescriptOptions {
   reactDocgen: 'react-docgen-typescript' | 'react-docgen' | false;
   /**
    * Configures `react-docgen-typescript-loader`
+   *
+   * @default
+   * @see https://github.com/storybookjs/storybook/blob/next/lib/core/src/server/config/defaults.js#L4-L6
    */
-  reactDocgenTypescriptOptions?: LoaderOptions;
+  reactDocgenTypescriptOptions: LoaderOptions;
 }

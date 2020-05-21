@@ -1,16 +1,51 @@
+## 6.0.0-beta.12 (May 21, 2020)
+
+### Breaking Changes
+
+- Core: Zero-config TypeScript loading ([#10813](https://github.com/storybookjs/storybook/pull/10813))
+
+## 6.0.0-beta.11 (May 21, 2020)
+
+Failed publish
+
+## 6.0.0-beta.10 (May 21, 2020)
+
+Failed publish
+
+## 6.0.0-beta.9 (May 21, 2020)
+
+### Bug Fixes
+
+- UI: Avoid full refresh when on some tab changes ([#10838](https://github.com/storybookjs/storybook/pull/10838))
+- Composition: Fix refs not authenticating ([#10819](https://github.com/storybookjs/storybook/pull/10819))
+- Core: Fix global args initial state for addon-toolbars ([#10833](https://github.com/storybookjs/storybook/pull/10833))
+- Addon-a11y: Add deprecated withA11y ([#10814](https://github.com/storybookjs/storybook/pull/10814))
+- Core: Transpile minimum node_modules ([#10725](https://github.com/storybookjs/storybook/pull/10725))
+- UI: Change default view to Canvas on mobile ([#10818](https://github.com/storybookjs/storybook/pull/10818))
+- Docs: Improve Preview zoom handling ([#10801](https://github.com/storybookjs/storybook/pull/10801))
+
+### Maintenance
+
+- CI: example overhaul clean ([#10702](https://github.com/storybookjs/storybook/pull/10702))
+- CLI: Migrate CLI to TypeScript ([#10802](https://github.com/storybookjs/storybook/pull/10802))
+
+### Dependency Upgrades
+
+- Upgrade and add some missing dependencies in core, router, api ([#10825](https://github.com/storybookjs/storybook/pull/10825))
+
 ## 6.0.0-beta.8 (May 17, 2020)
 
 ### Features
 
-* Addon-toolbars: Show tool icons for all viewModes ([#10810](https://github.com/storybookjs/storybook/pull/10810))
+- Addon-toolbars: Show tool icons for all viewModes ([#10810](https://github.com/storybookjs/storybook/pull/10810))
 
 ### Bug Fixes
 
-* Addon-docs: Eval argTypes default value ([#10812](https://github.com/storybookjs/storybook/pull/10812))
+- Addon-docs: Eval argTypes default value ([#10812](https://github.com/storybookjs/storybook/pull/10812))
 
 ### Maintenance
 
-* Scripts: parallel execution on build package scripts ([#10808](https://github.com/storybookjs/storybook/pull/10808))
+- Scripts: parallel execution on build package scripts ([#10808](https://github.com/storybookjs/storybook/pull/10808))
 
 ## 6.0.0-beta.7 (May 15, 2020)
 
