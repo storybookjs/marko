@@ -1,4 +1,4 @@
-import { bindable, customElement } from 'aurelia';
+import { bindable } from 'aurelia';
 
 export class CoolButton {
   @bindable text: string;
