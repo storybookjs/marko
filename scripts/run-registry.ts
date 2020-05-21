@@ -8,7 +8,6 @@ import fs from 'fs';
 import yaml from 'js-yaml';
 import nodeCleanup from 'node-cleanup';
 
-// eslint-disable-next-line import/no-unresolved
 import startVerdaccioServer from 'verdaccio';
 import pLimit from 'p-limit';
 import { listOfPackages, Package } from './utils/list-packages';
