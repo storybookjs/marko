@@ -5,7 +5,7 @@ module.exports = {
   roots: [__dirname],
   transform: {
     ...config.transform,
-    '.*\\.(svelte)$': '<rootDir>/scripts/svelte-transform',
+    '.*\\.(svelte)$': '<rootDir>/scripts/utils/jest-transform-svelte',
   },
   moduleFileExtensions: [...config.moduleFileExtensions, 'svelte'],
 };
