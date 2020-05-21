@@ -21,9 +21,6 @@
     "promise-polyfill": "^8.1.3"
   },
   "devDependencies": {
-    "@aurelia/debug": "^0.6.0",
-    "@aurelia/jit-html-browser": "^0.6.0",
-    "@aurelia/runtime": "^0.6.0",
     "@aurelia/webpack-loader": "dev",
     "@storybook/addon-a11y": "6.0.0-beta.9",
     "@storybook/addon-actions": "6.0.0-beta.9",
