@@ -14,6 +14,18 @@ export function webpack(config: Configuration) {
           loader: require.resolve('vue-loader'),
           options: {},
         },
+        {
+          test: /\.tsx?$/,
+          use: [
+            {
+              loader: require.resolve('ts-loader'),
+              options: {
+                transpileOnly: true,
+                appendTsSuffixTo: [/\.vue$/],
+              },
+            },
+          ],
+        },
       ],
     },
     resolve: {
