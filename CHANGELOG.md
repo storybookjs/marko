@@ -1,3 +1,9 @@
+## 6.0.0-beta.10 (May 21, 2020)
+
+### Breaking Changes
+
+- Core: Zero-config TypeScript loading ([#10813](https://github.com/storybookjs/storybook/pull/10813))
+
 ## 6.0.0-beta.9 (May 21, 2020)
 
 ### Bug Fixes
