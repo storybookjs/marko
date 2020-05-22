@@ -4047,16 +4047,18 @@
     pretty-hrtime "^1.0.3"
     regenerator-runtime "^0.13.3"
 
-"@storybook/preset-create-react-app@^2.1.1":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@storybook/preset-create-react-app/-/preset-create-react-app-2.1.2.tgz#7fd563768c5a4441ce8550e117cc435722e772fe"
-  integrity sha512-bynFJDAVDzyfu+NEPXYMNUBRxm6ib4FgPBWComW+f+ULVWDjv8Mmq5qKMI/vPhixXAvffYRt9HB49V0f8kFxiw==
+"@storybook/preset-create-react-app@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@storybook/preset-create-react-app/-/preset-create-react-app-3.0.0.tgz#3c75c63f796ffe79293fe7f971a240307ecefb89"
+  integrity sha512-l0yA+HvmjdmTW4c+/dm0n7/CfVaNQKmwRnVuUVF0UAKXEX51wZ/0oX3zALOSUYW9CctOEnJwPETllbepBUEdOg==
   dependencies:
     "@storybook/node-logger" "*"
-    "@types/babel__core" "^7.1.6"
-    "@types/webpack" "^4.41.7"
+    "@types/babel__core" "^7.1.7"
+    "@types/webpack" "^4.41.13"
+    babel-plugin-react-docgen "^4.1.0"
     pnp-webpack-plugin "^1.6.4"
-    semver "^7.1.3"
+    react-docgen-typescript-loader "^3.7.2"
+    semver "^7.3.2"
 
 "@storybook/preset-scss@^1.0.2":
   version "1.0.2"
@@ -4394,7 +4396,7 @@
   resolved "https://registry.yarnpkg.com/@types/babel-types/-/babel-types-7.0.7.tgz#667eb1640e8039436028055737d2b9986ee336e3"
   integrity sha512-dBtBbrc+qTHy1WdfHYjBwRln4+LWqASWakLHsWHR2NWHIFkv4W3O070IGoGLEBrJBvct3r0L1BUPuvURi7kYUQ==
 
-"@types/babel__core@^7.1.0", "@types/babel__core@^7.1.6", "@types/babel__core@^7.1.7":
+"@types/babel__core@^7.1.0", "@types/babel__core@^7.1.7":
   version "7.1.7"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.7.tgz#1dacad8840364a57c98d0dd4855c6dd3752c6b89"
   integrity sha512-RL62NqSFPCDK2FM1pSDH0scHpJvsXtZNiYlMB73DgPBaG1E38ZYVL+ei5EkWRbr+KC4YNiAUNBnRj+bgwpgjMw==
@@ -4720,7 +4722,7 @@
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.150.tgz#649fe44684c3f1fcb6164d943c5a61977e8cf0bd"
   integrity sha512-kMNLM5JBcasgYscD9x/Gvr6lTAv2NVgsKtet/hm93qMyf/D1pt+7jeEZklKJKxMVmXjxbRVQQGfqDSfipYCO6w==
 
-"@types/markdown-to-jsx@^6.9.1":
+"@types/markdown-to-jsx@^6.11.0":
   version "6.11.0"
   resolved "https://registry.yarnpkg.com/@types/markdown-to-jsx/-/markdown-to-jsx-6.11.0.tgz#a19e458a9415763859f2c92c4c5b07a80bea8c14"
   integrity sha512-OFFHQ3LK+g8lSfwdqjXBbrGFdgH/MYXhzIYSOJ5xapT++eEhRx7wOfY3xxtktVtQyQtsB7Wljs7IDGgKfurm2A==
@@ -5113,7 +5115,7 @@
     "@types/source-list-map" "*"
     source-map "^0.6.1"
 
-"@types/webpack@^4.41.12", "@types/webpack@^4.41.7", "@types/webpack@^4.41.8", "@types/webpack@^4.41.9":
+"@types/webpack@^4.41.12", "@types/webpack@^4.41.13", "@types/webpack@^4.41.8", "@types/webpack@^4.41.9":
   version "4.41.13"
   resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.41.13.tgz#988d114c8913d039b8a0e0502a7fe4f1f84f3d5e"
   integrity sha512-RYmIHOWSxnTTa765N6jJBVE45pd2SYNblEYshVDduLw6RhocazNmRzE5/ytvBD8IkDMH6DI+bcrqxh8NILimBA==
@@ -22009,10 +22011,10 @@ markdown-table@^2.0.0:
   dependencies:
     repeat-string "^1.0.0"
 
-markdown-to-jsx@^6.9.1, markdown-to-jsx@^6.9.3:
-  version "6.11.1"
-  resolved "https://registry.yarnpkg.com/markdown-to-jsx/-/markdown-to-jsx-6.11.1.tgz#3931612cfffaa5fd6610ecf2a4055eccccb98fa8"
-  integrity sha512-FdtDAv8d9/tjyHxdCvWZxxOgK2icwzBkTq/dPk+XlQ2B+DYDcwE89FWGzT92erXQ0CQR/bQbpNK3loNYhYL70g==
+markdown-to-jsx@^6.11.4:
+  version "6.11.4"
+  resolved "https://registry.yarnpkg.com/markdown-to-jsx/-/markdown-to-jsx-6.11.4.tgz#b4528b1ab668aef7fe61c1535c27e837819392c5"
+  integrity sha512-3lRCD5Sh+tfA52iGgfs/XZiw33f7fFX9Bn55aNnVNUd2GzLDkOWyKYYD8Yju2B1Vn+feiEdgJs8T6Tg0xNokPw==
   dependencies:
     prop-types "^15.6.2"
     unquote "^1.1.0"

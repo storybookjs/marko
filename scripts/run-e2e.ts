@@ -212,10 +212,12 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
     }));
   }
 
-  await runCypress(options, 'http://localhost:4000', open);
-  logger.log();
-
-  server.close();
+  try {
+    await runCypress(options, 'http://localhost:4000', open);
+    logger.log();
+  } finally {
+    server.close();
+  }
 };
 
 // Run tests!
