@@ -117,11 +117,21 @@
 
 ### Correct globs in main.js
 
-In 5.3 we introduced the `main.js` file with an `entries` property. This property was documented as a "glob" pattern. This was our intention, however the implementation allowed for non valid globs to be specified and work. In fact we promoted invalid globs in our documentation and CLI templates.
+In 5.3 we introduced the `main.js` file with an `stories` property. This property was documented as a "glob" pattern. This was our intention, however the implementation allowed for non valid globs to be specified and work. In fact we promoted invalid globs in our documentation and CLI templates.
 
 We've corrected this, the CLI templates have been changed to valid globs.
 
-We've also changed the code that resolves these globs, so that invalid globs will log a warning. They will break in the future, so if you see this warning, please ensue you're specifying a valid glob.
+We've also changed the code that resolves these globs, so that invalid globs will log a warning. They will break in the future, so if you see this warning, please ensure you're specifying a valid glob.
+
+Example of an **invalid** glob:
+```
+stories: ['./**/*.stories.(ts|js)']
+```
+
+Example of an **valid** glob:
+```
+stories: ['./**/*.stories.@(ts|js)']
+```
 
 ### Zero config typescript
 
