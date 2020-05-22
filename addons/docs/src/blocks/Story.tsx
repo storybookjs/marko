@@ -27,15 +27,6 @@ type StoryRefProps = {
 
 export type StoryProps = StoryDefProps | StoryRefProps;
 
-const inferInlineStories = (framework: string): boolean => {
-  switch (framework) {
-    case 'react':
-      return true;
-    default:
-      return false;
-  }
-};
-
 export const lookupStoryId = (
   storyName: string,
   { mdxStoryNameToKey, mdxComponentMeta }: DocsContextProps
@@ -53,23 +44,17 @@ export const getStoryProps = (props: StoryProps, context: DocsContextProps): Pur
   const data = context.storyStore.fromId(previewId) || {};
 
   const { height, inline } = props;
-  const { parameters = {}, docs = {} } = data;
-  const { framework = null } = parameters;
+  const { storyFn = undefined, name: storyName = undefined, parameters = {} } = data;
+  const { docs = {} } = parameters;
 
   if (docs.disable) {
     return null;
   }
 
-  // prefer props, then global options, then framework-inferred values
-  const {
-    inlineStories = inferInlineStories(framework),
-    iframeHeight = undefined,
-    prepareForInline = undefined,
-  } = docs;
-  const { storyFn = undefined, name: storyName = undefined } = data;
-
+  // prefer block props, then story parameters defined by the framework-specific settings and optionally overriden by users
+  const { inlineStories = false, iframeHeight = 100, prepareForInline } = docs;
   const storyIsInline = typeof inline === 'boolean' ? inline : inlineStories;
-  if (storyIsInline && !prepareForInline && framework !== 'react') {
+  if (storyIsInline && !prepareForInline) {
     throw new Error(
       `Story '${storyName}' is set to render inline, but no 'prepareForInline' function is implemented in your docs configuration!`
     );
