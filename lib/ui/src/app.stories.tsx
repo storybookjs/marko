@@ -7,6 +7,9 @@ import Provider from './provider';
 export default {
   title: 'UI/App',
   component: App,
+  parameters: {
+    layout: 'fullscreen',
+  },
 };
 
 export const Default = () => <App provider={(new FakeProvider() as unknown) as Provider} />;
