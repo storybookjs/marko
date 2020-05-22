@@ -49,10 +49,10 @@ function getTsConfigOptions(tsConfigPath: Path) {
 export function getAngularCliConfig(dirToSearch: string) {
   const possibleConfigNames = ['angular.json', 'workspace.json'];
   const possibleConfigPaths = possibleConfigNames
-    .map(name => path.join(dirToSearch, name))
+    .map((name) => path.join(dirToSearch, name))
 
   const validIndex = possibleConfigPaths
-    .findIndex(configPath => fs.existsSync(configPath));
+    .findIndex((configPath) => fs.existsSync(configPath));
 
   if (validIndex === -1) {
     logger.error(`Could not find angular.json using ${possibleConfigPaths[0]}`);
