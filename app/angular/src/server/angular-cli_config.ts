@@ -47,14 +47,19 @@ function getTsConfigOptions(tsConfigPath: Path) {
 }
 
 export function getAngularCliConfig(dirToSearch: string) {
-  const fname = path.join(dirToSearch, 'angular.json');
+  const possibleConfigNames = ['angular.json', 'workspace.json'];
+  const possibleConfigPaths = possibleConfigNames
+    .map(name => path.join(dirToSearch, name))
 
-  if (!fs.existsSync(fname)) {
-    logger.error(`Could not find angular.json using ${fname}`);
+  const validIndex = possibleConfigPaths
+    .findIndex(configPath => fs.existsSync(configPath));
+
+  if (validIndex === -1) {
+    logger.error(`Could not find angular.json using ${possibleConfigPaths[0]}`);
     return undefined;
   }
 
-  return JSON.parse(stripJsonComments(fs.readFileSync(fname, 'utf8')));
+  return JSON.parse(stripJsonComments(fs.readFileSync(possibleConfigPaths[validIndex], 'utf8')));
 }
 
 export function getLeadingAngularCliProject(ngCliConfig: any) {
