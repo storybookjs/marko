@@ -2,6 +2,7 @@
 
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
   - [Zero config typescript](#zero-config-typescript)
+  - [Correct globs in main.js](#correct-globs-in-main-js)
   - [Backgrounds addon has a new api](#backgrounds-addon-has-a-new-api)
   - [CRA preset removed](#cra-preset-removed)
   - [Args passed as first argument to story](#args-passed-as-first-argument-to-story)
@@ -113,6 +114,14 @@
   - [Deprecated embedded addons](#deprecated-embedded-addons)
 
 ## From version 5.3.x to 6.0.x
+
+### Correct globs in main.js
+
+In 5.3 we introduced the `main.js` file with an `entries` property. This property was documented as a "glob" pattern. This was our intention, however the implementation allowed for non valid globs to be specified and work. In fact we promoted invalid globs in our documentation and CLI templates.
+
+We've corrected this, the CLI templates have been changed to valid globs.
+
+We've also changed the code that resolves these globs, so that invalid globs will log a warning. They will break in the future, so if you see this warning, please ensue you're specifying a valid glob.
 
 ### Zero config typescript
 
