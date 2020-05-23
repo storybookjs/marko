@@ -794,14 +794,14 @@ describe('preview.story_store', () => {
   });
 
   describe('RENDER_CURRENT_STORY', () => {
-    it('is emitted when setError is called', () => {
+    it('is NOT emitted when setError is called', () => {
       const onRenderCurrentStory = jest.fn();
       channel.on(Events.RENDER_CURRENT_STORY, onRenderCurrentStory);
       const store = new StoryStore({ channel });
 
       store.setError(new Error('Something is bad!') as ErrorLike);
       store.finishConfiguring();
-      expect(onRenderCurrentStory).toHaveBeenCalled();
+      expect(onRenderCurrentStory).not.toHaveBeenCalled();
     });
 
     it('is NOT emitted when setSelection is called during configuration', () => {
@@ -813,13 +813,13 @@ describe('preview.story_store', () => {
       expect(onRenderCurrentStory).not.toHaveBeenCalled();
     });
 
-    it('is emitted when configuration ends', () => {
+    it('is NOT emitted when configuration ends', () => {
       const onRenderCurrentStory = jest.fn();
       channel.on(Events.RENDER_CURRENT_STORY, onRenderCurrentStory);
       const store = new StoryStore({ channel });
 
       store.finishConfiguring();
-      expect(onRenderCurrentStory).toHaveBeenCalled();
+      expect(onRenderCurrentStory).not.toHaveBeenCalled();
     });
 
     it('is emitted when setSelection is called outside of configuration', () => {
@@ -831,6 +831,27 @@ describe('preview.story_store', () => {
       onRenderCurrentStory.mockClear();
       store.setSelection({ storyId: 'a--1', viewMode: 'story' });
       expect(onRenderCurrentStory).toHaveBeenCalled();
+    });
+  });
+
+  describe('GLOBAL_ARGS_UPDATED', () => {
+    it('is emitted when setError is called', () => {
+      const onGlobalArgsUpdated = jest.fn();
+      channel.on(Events.GLOBAL_ARGS_UPDATED, onGlobalArgsUpdated);
+      const store = new StoryStore({ channel });
+
+      store.setError(new Error('Something is bad!') as ErrorLike);
+      store.finishConfiguring();
+      expect(onGlobalArgsUpdated).toHaveBeenCalled();
+    });
+
+    it('is emitted when configuration ends', () => {
+      const onGlobalArgsUpdated = jest.fn();
+      channel.on(Events.GLOBAL_ARGS_UPDATED, onGlobalArgsUpdated);
+      const store = new StoryStore({ channel });
+
+      store.finishConfiguring();
+      expect(onGlobalArgsUpdated).toHaveBeenCalled();
     });
   });
 });
