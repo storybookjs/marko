@@ -43,16 +43,14 @@ Each `.add` call takes a story name, a story function that returns a renderable 
 Global decorators and parameters are specified in the Storybook config:
 
 ```js
-addDecorator(storyFn => <blink>{storyFn()}</blink>);
+addDecorator((storyFn) => <blink>{storyFn()}</blink>);
 addParameters({ foo: 1 });
 ```
 
 Component-level decorators and parameters are supported as chained API calls:
 
 ```js
-storiesOf('Button', module)
-  .addDecorator(withKnobs)
-  .addParameters({ notes: someNotes });
+storiesOf('Button', module).addDecorator(withKnobs).addParameters({ notes: someNotes });
 ```
 
 Story-level parameters are provided as a third argument to `.add`:
@@ -71,7 +69,7 @@ And finally, story-level decorators are provided via parameters:
 storiesOf('Button', module).add(
   'with text',
   () => <Button onClick={action('clicked')}>Hello Button</Button>,
-  { decorators: withA11y }
+  { decorators: [withKnobs] }
 );
 ```
 
