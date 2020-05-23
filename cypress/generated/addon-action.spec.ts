@@ -8,16 +8,16 @@ describe('addon-action', () => {
 
   it('should trigger an action', () => {
     // click on the button
-    cy.get('#button--with-some-emoji-and-action').click();
+    cy.get('#button--text-with-action').click();
 
     // assert url changes
-    cy.url().should('include', 'path=/story/button--with-some-emoji-and-action');
+    cy.url().should('include', 'path=/story/button--text-with-action');
 
     // check for selected element
-    cy.get('#button--with-some-emoji-and-action').should('have.class', 'selected');
+    cy.get('#button--text-with-action').should('have.class', 'selected');
 
     // check for content
-    cy.getStoryElement().find('button').click();
+    cy.getStoryElement().contains('Trigger Action').click();
 
     // click on addon
     clickAddon('Actions');

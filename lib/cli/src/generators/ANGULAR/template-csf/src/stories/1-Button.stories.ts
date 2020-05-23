@@ -26,16 +26,16 @@ Emoji.story = {
   parameters: { notes: 'My notes on a button with emojis' },
 };
 
-export const WithSomeEmojiAndAction = () => ({
+export const TextWithAction = () => ({
   component: Button,
   props: {
-    text: '😀 😎 👍 💯',
-    onClick: action('This was clicked OMG'),
+    text: 'Trigger Action',
+    onClick: action('This was clicked'),
   },
 });
 
-WithSomeEmojiAndAction.story = {
-  name: 'with some emoji and action',
+TextWithAction.story = {
+  name: 'With an action',
   parameters: { notes: 'My notes on a button with emojis' },
 };
 
