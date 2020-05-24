@@ -1,3 +1,13 @@
+## 5.3.19 (May 24, 2020)
+
+### Bug Fixes
+
+- UI: Fix search stories ([#10539](https://github.com/storybookjs/storybook/pull/10539))
+
+### Security
+
+- Upgrade markdown-to-jsx to 6.11.4 ([#10873](https://github.com/storybookjs/storybook/pull/10873))
+
 ## 5.3.18 (March 31, 2020)
 
 ### Bug Fixes
