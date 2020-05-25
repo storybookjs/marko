@@ -17,6 +17,4 @@ export const Story1 = () => ({
   Component: ButtonView,
 });
 
-Story1.story = {
-  name: 'story 1',
-};
+Story1.storyName = 'story 1';

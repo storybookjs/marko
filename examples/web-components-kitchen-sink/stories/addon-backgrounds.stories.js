@@ -18,7 +18,7 @@ export default {
 export const Story1 = () => html`
   <demo-wc-card>You should be able to switch backgrounds for this story</demo-wc-card>
 `;
-Story1.story = { name: 'story 1' };
+Story1.storyName = 'story 1';
 
 export const Story2 = () => html` <demo-wc-card back-side>This one too!</demo-wc-card> `;
-Story2.story = { name: 'story 2' };
+Story2.storyName = 'story 2';

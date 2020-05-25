@@ -13,9 +13,7 @@ export const WithText = () => (
   </button>
 );
 
-WithText.story = {
-  name: 'with text',
-};
+WithText.storyName = 'with text';
 
 export const WithSomeEmoji = () => (
   <button onClick={action('clicked')} type="button">
@@ -25,6 +23,4 @@ export const WithSomeEmoji = () => (
   </button>
 );
 
-WithSomeEmoji.story = {
-  name: 'with some emoji',
-};
+WithSomeEmoji.storyName = 'with some emoji';

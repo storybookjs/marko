@@ -104,9 +104,7 @@ export const AllKnobs = () => {
   };
 };
 
-AllKnobs.story = {
-  name: 'All knobs',
-};
+AllKnobs.storyName = 'All knobs';
 
 export const XssSafety = () => ({
   props: {
@@ -115,6 +113,4 @@ export const XssSafety = () => ({
   template: '<div v-html="text"></div>',
 });
 
-XssSafety.story = {
-  name: 'XSS safety',
-};
+XssSafety.storyName = 'XSS safety';

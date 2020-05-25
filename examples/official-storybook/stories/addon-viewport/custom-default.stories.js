@@ -33,14 +33,14 @@ export const OverriddenViaWithViewportParameterizedDecorator = () => (
     I respect my parents but I should be looking good on <b>iPad</b>.
   </Panel>
 );
-OverriddenViaWithViewportParameterizedDecorator.story = {
-  name: 'Overridden via "withViewport" parameterized decorator',
-  parameters: { viewport: { defaultViewport: 'ipad' } },
+OverriddenViaWithViewportParameterizedDecorator.storyName =
+  'Overridden via "withViewport" parameterized decorator';
+OverriddenViaWithViewportParameterizedDecorator.parameters = {
+  viewport: { defaultViewport: 'ipad' },
 };
 
 export const Disabled = () => <Panel>There should be no viewport selector in the toolbar</Panel>;
-Disabled.story = {
-  parameters: {
-    viewport: { disable: true },
-  },
+
+Disabled.parameters = {
+  viewport: { disable: true },
 };

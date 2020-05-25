@@ -10,6 +10,4 @@ export default {
 
 export const FullApp = () => <App />;
 
-FullApp.story = {
-  name: 'full app',
-};
+FullApp.storyName = 'full app';

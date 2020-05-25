@@ -33,71 +33,63 @@ export default {
 export const defDocsPage = () => <div>Default docs page</div>;
 
 export const smallDocsPage = () => <div>Just primary story, </div>;
-smallDocsPage.story = {
-  parameters: {
-    docs: {
-      page: () => (
-        <>
-          <Title />
-          <Primary />
-        </>
-      ),
-    },
+
+smallDocsPage.parameters = {
+  docs: {
+    page: () => (
+      <>
+        <Title />
+        <Primary />
+      </>
+    ),
   },
 };
 
 export const checkBoxProps = () => <div>Primary props displayed with a check box </div>;
-checkBoxProps.story = {
-  parameters: {
-    docs: {
-      page: () => {
-        const [showProps, setShowProps] = React.useState(false);
-        return (
-          <>
-            <Title />
-            <Subtitle />
-            <Description />
-            <Primary />
-            <label>
-              <input
-                type="checkbox"
-                checked={showProps}
-                onChange={() => setShowProps(!showProps)}
-              />
-              <span>display props</span>
-            </label>
-            {showProps && <Props />}
-          </>
-        );
-      },
+
+checkBoxProps.parameters = {
+  docs: {
+    page: () => {
+      const [showProps, setShowProps] = React.useState(false);
+      return (
+        <>
+          <Title />
+          <Subtitle />
+          <Description />
+          <Primary />
+          <label>
+            <input type="checkbox" checked={showProps} onChange={() => setShowProps(!showProps)} />
+            <span>display props</span>
+          </label>
+          {showProps && <Props />}
+        </>
+      );
     },
   },
 };
 
 export const customLabels = () => <div>Display custom title, Subtitle, Description</div>;
-customLabels.story = {
-  parameters: {
-    docs: {
-      page: () => (
-        <>
-          <Title>Custom title</Title>
-          <Subtitle>Custom sub title</Subtitle>
-          <Description>Custom description</Description>
-          <Primary />
-          <Props />
-          <Stories title="Custom stories title" />
-        </>
-      ),
-    },
+
+customLabels.parameters = {
+  docs: {
+    page: () => (
+      <>
+        <Title>Custom title</Title>
+        <Subtitle>Custom sub title</Subtitle>
+        <Description>Custom description</Description>
+        <Primary />
+        <Props />
+        <Stories title="Custom stories title" />
+      </>
+    ),
   },
 };
 
 export const customStoriesFilter = () => <div>Displays ALL stories (not excluding first one)</div>;
-customStoriesFilter.story = {
-  parameters: {
-    docs: {
-      page: () => <Stories includePrimary />,
-    },
+
+customStoriesFilter.parameters = {
+  docs: {
+    page: () => <Stories includePrimary />,
   },
 };
 
@@ -109,52 +101,51 @@ export const multipleComponents = () => (
   </ButtonGroup>
 );
 
-multipleComponents.story = {
-  name: 'Many Components',
-  parameters: {
-    component: ButtonGroup,
-    subcomponents: {
-      SubGroup,
-      'Docgen Button': DocgenButton,
-      'Base Button': BaseButton,
-    },
-    docs: {
-      page: () => (
-        <>
-          <Title />
-          <Subtitle />
-          <Description />
-          <Primary name="Many Components" />
-          <Props />
-        </>
-      ),
-    },
+multipleComponents.storyName = 'Many Components';
+
+multipleComponents.parameters = {
+  component: ButtonGroup,
+  subcomponents: {
+    SubGroup,
+    'Docgen Button': DocgenButton,
+    'Base Button': BaseButton,
+  },
+  docs: {
+    page: () => (
+      <>
+        <Title />
+        <Subtitle />
+        <Description />
+        <Primary name="Many Components" />
+        <Props />
+      </>
+    ),
   },
 };
 
 export const componentsProps = () => <div>Display multiple prop tables in tabs</div>;
-componentsProps.story = {
-  subcomponents: {
-    'Docgen Button': DocgenButton,
-    'Base Button': BaseButton,
-  },
-  parameters: {
-    docs: {
-      page: () => (
-        <>
-          <Title>Multiple prop tables</Title>
-          <Description>
-            Here's what happens when your component has some related components
-          </Description>
-          <Props
-            components={{
-              'ButtonGroup Custom': ButtonGroup,
-              'Docgen Button': DocgenButton,
-              'Base Button': BaseButton,
-            }}
-          />
-        </>
-      ),
-    },
+
+componentsProps.subcomponents = {
+  'Docgen Button': DocgenButton,
+  'Base Button': BaseButton,
+};
+
+componentsProps.parameters = {
+  docs: {
+    page: () => (
+      <>
+        <Title>Multiple prop tables</Title>
+        <Description>
+          Here's what happens when your component has some related components
+        </Description>
+        <Props
+          components={{
+            'ButtonGroup Custom': ButtonGroup,
+            'Docgen Button': DocgenButton,
+            'Base Button': BaseButton,
+          }}
+        />
+      </>
+    ),
   },
 };
