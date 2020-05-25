@@ -164,7 +164,6 @@
     "babel-plugin-emotion": "^10.0.20",
     "babel-plugin-macros": "^2.7.0",
     "babel-plugin-require-context-hook": "^1.0.0",
-    "babel-preset-vue": "^2.0.2",
     "chalk": "^4.0.0",
     "chromatic": "^4.0.2",
     "codecov": "^3.5.0",
