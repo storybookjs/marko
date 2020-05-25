@@ -10,7 +10,5 @@ export const ComponentWithSeparateTemplate = () => ({
   props: {},
 });
 
-ComponentWithSeparateTemplate.story = {
-  name: 'Component with separate template',
-  parameters: { docs: { iframeHeight: 400 } },
-};
+ComponentWithSeparateTemplate.storyName = 'Component with separate template';
+ComponentWithSeparateTemplate.parameters = { docs: { iframeHeight: 400 } };
