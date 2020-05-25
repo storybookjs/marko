@@ -150,6 +150,6 @@ export const yarn2Cra: Parameters = {
   generator: [
     `yarn set version 2`,
     `yarn dlx create-react-app@{{version}} {{name}}-v{{version}}`,
+    `yarn add core-js -D`, // Temporary fix
   ].join(' && '),
-  additionalDeps: ['core-js'], // Temporary solution.
 };
