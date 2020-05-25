@@ -151,4 +151,5 @@ export const yarn2Cra: Parameters = {
     `yarn set version 2`,
     `yarn dlx create-react-app@{{version}} {{name}}-v{{version}}`,
   ].join(' && '),
+  additionalDeps: ['core-js'], // Temporary solution.
 };
