@@ -95,7 +95,7 @@ addons.register(ADDON_ID, api => {
 });
 ```
 
-### register the addon
+#### Register the addon
 
 within `.storybook/main.js`:
 
@@ -105,10 +105,37 @@ module.exports = {
 }
 ```
 
-Now restart/rebuild storybook and the addon should show up!
+Now restart/rebuild storybook and the addon should show up!  
 When changing stories, the addon's onStoryChange method will be invoked with the new storyId.
 
-#### Note:
+#### TSX Addons
+
+When your addon needs additional typing or you want to keep it locally, you can register it within `.storybook/manager.tsx`
+and import there your TSX components to be compiled by webpack, not requiring an external package nor an additional build step.
+
+```tsx
+// manager.tsx
+
+import React from 'react';
+import { addons } from '@storybook/addons';
+import { AddonPanel } from '@storybook/components';
+import { ADDON_ID, PARAM_KEY, PANEL_ID, MyPanel } from './MyAddon';
+
+addons.register(ADDON_ID, api => {
+  addons.addPanel(PANEL_ID, {
+    title: 'My Addon',
+    paramKey: PARAM_KEY,
+    render: ({ active, key }) => (
+      <AddonPanel active={active} key={key}>
+        <MyPanel />
+      </AddonPanel>
+    ),
+  });
+});
+```
+
+#### Note
+
 If you get an error similar to:
 
 ```
@@ -128,7 +155,8 @@ It is likely because you do not have a `.babelrc` file or do not have it configu
 If we want to create a more complex addon, one that wraps the component being rendered for example, there are a few more steps.
 Essentially you can start communicating from and to the manager using the storybook API.
 
-Now we need to create two files, `register.js` and `index.js,`. `register.js` will be loaded by the manager (the outer frame) and `index.js` will be loaded in the iframe/preview. If you want your addon to be framework agnostic, THIS is the file where you need to be careful about that.
+Now we need to create two files, `register.js` and `index.js,`.  
+`register.js` will be loaded by the manager (the outer frame) and `index.js` will be loaded in the iframe/preview. If you want your addon to be framework agnostic, THIS is the file where you need to be careful about that.
 
 ## Creating a decorator
 
@@ -266,7 +294,7 @@ defaultView.story = {
 ### Disabling an addon panel
 
 It's possible to disable an addon panel for a particular story.
- 
+
 To offer that capability, you need to pass the paramKey when you register the panel
 ```js
 addons.register(ADDON_ID, () => {

@@ -1,3 +1,5 @@
+import type { StorybookConfig } from '@storybook/core/types';
+
 module.exports = {
   stories: [
     // FIXME: Breaks e2e tests './intro.stories.mdx',
@@ -74,4 +76,4 @@ module.exports = {
       extensions: [...(config.resolve.extensions || []), '.ts', '.tsx'],
     },
   }),
-};
+} as StorybookConfig;

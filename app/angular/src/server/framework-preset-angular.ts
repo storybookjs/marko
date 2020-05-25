@@ -51,7 +51,6 @@ export function webpack(
     },
     resolve: {
       ...config.resolve,
-      extensions: ['.ts', '.tsx', ...config.resolve.extensions],
     },
     plugins: [
       ...config.plugins,

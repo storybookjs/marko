@@ -1,16 +1,80 @@
+## 5.3.19 (May 24, 2020)
+
+### Bug Fixes
+
+- UI: Fix search stories ([#10539](https://github.com/storybookjs/storybook/pull/10539))
+
+### Security
+
+- Upgrade markdown-to-jsx to 6.11.4 ([#10873](https://github.com/storybookjs/storybook/pull/10873))
+
+## 6.0.0-beta.13 (May 23, 2020)
+
+### Bug Fixes
+
+- Core: Fix ts/tsx resolution in the manager ([#10886](https://github.com/storybookjs/storybook/pull/10886))
+- Core: Fix typo in projectRoot node_modules detection ([#10848](https://github.com/storybookjs/storybook/pull/10848))
+- Addon-docs: Fix story inline rendering ([#10875](https://github.com/storybookjs/storybook/pull/10875))
+- Core: Fix CRA filter for built-in webpack settings ([#10861](https://github.com/storybookjs/storybook/pull/10861))
+- Addon-docs: Fix react forwardRefs with destructured props ([#10864](https://github.com/storybookjs/storybook/pull/10864))
+
+### Maintenance
+
+- React: Upgrade preset-create-react-app in examples ([#10867](https://github.com/storybookjs/storybook/pull/10867))
+- Core: Close server when e2e test failed ([#10868](https://github.com/storybookjs/storybook/pull/10868))
+
+### Dependency Upgrades
+
+- Upgrade markdown-to-jsx to 6.11.4 ([#10873](https://github.com/storybookjs/storybook/pull/10873))
+
+## 6.0.0-beta.12 (May 21, 2020)
+
+### Breaking Changes
+
+- Core: Zero-config TypeScript loading ([#10813](https://github.com/storybookjs/storybook/pull/10813))
+
+## 6.0.0-beta.11 (May 21, 2020)
+
+Failed publish
+
+## 6.0.0-beta.10 (May 21, 2020)
+
+Failed publish
+
+## 6.0.0-beta.9 (May 21, 2020)
+
+### Bug Fixes
+
+- UI: Avoid full refresh when on some tab changes ([#10838](https://github.com/storybookjs/storybook/pull/10838))
+- Composition: Fix refs not authenticating ([#10819](https://github.com/storybookjs/storybook/pull/10819))
+- Core: Fix global args initial state for addon-toolbars ([#10833](https://github.com/storybookjs/storybook/pull/10833))
+- Addon-a11y: Add deprecated withA11y ([#10814](https://github.com/storybookjs/storybook/pull/10814))
+- Core: Transpile minimum node_modules ([#10725](https://github.com/storybookjs/storybook/pull/10725))
+- UI: Change default view to Canvas on mobile ([#10818](https://github.com/storybookjs/storybook/pull/10818))
+- Docs: Improve Preview zoom handling ([#10801](https://github.com/storybookjs/storybook/pull/10801))
+
+### Maintenance
+
+- CI: example overhaul clean ([#10702](https://github.com/storybookjs/storybook/pull/10702))
+- CLI: Migrate CLI to TypeScript ([#10802](https://github.com/storybookjs/storybook/pull/10802))
+
+### Dependency Upgrades
+
+- Upgrade and add some missing dependencies in core, router, api ([#10825](https://github.com/storybookjs/storybook/pull/10825))
+
 ## 6.0.0-beta.8 (May 17, 2020)
 
 ### Features
 
-* Addon-toolbars: Show tool icons for all viewModes ([#10810](https://github.com/storybookjs/storybook/pull/10810))
+- Addon-toolbars: Show tool icons for all viewModes ([#10810](https://github.com/storybookjs/storybook/pull/10810))
 
 ### Bug Fixes
 
-* Addon-docs: Eval argTypes default value ([#10812](https://github.com/storybookjs/storybook/pull/10812))
+- Addon-docs: Eval argTypes default value ([#10812](https://github.com/storybookjs/storybook/pull/10812))
 
 ### Maintenance
 
-* Scripts: parallel execution on build package scripts ([#10808](https://github.com/storybookjs/storybook/pull/10808))
+- Scripts: parallel execution on build package scripts ([#10808](https://github.com/storybookjs/storybook/pull/10808))
 
 ## 6.0.0-beta.7 (May 15, 2020)
 
