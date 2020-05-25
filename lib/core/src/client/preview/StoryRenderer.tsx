@@ -120,14 +120,14 @@ export class StoryRenderer {
     const { storyId, viewMode: urlViewMode } = storyStore.getSelection();
 
     const data = storyStore.fromId(storyId);
-    const { kind, id, parameters = {} } = data || {};
+    const { kind, id, parameters = {}, getDecorated } = data || {};
     const { docsOnly, layout } = parameters;
 
     const metadata: RenderMetadata = {
       id,
       kind,
       viewMode: docsOnly ? 'docs' : urlViewMode,
-      getDecorated: data.getDecorated,
+      getDecorated,
     };
 
     this.applyLayout(layout);
@@ -174,7 +174,7 @@ export class StoryRenderer {
     }
 
     // If we are rendering something new (as opposed to re-rendering the same or first story), emit
-    if (!forceRender && previousMetadata && !implementationChanged) {
+    if (previousMetadata && (storyChanged || kindChanged || viewModeChanged)) {
       this.channel.emit(Events.STORY_CHANGED, metadata.id);
     }
 

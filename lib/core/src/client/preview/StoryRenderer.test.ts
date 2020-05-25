@@ -1,3 +1,4 @@
+// a
 import { StoryStore, defaultDecorateStory } from '@storybook/client-api';
 import createChannel from '@storybook/channel-postmessage';
 import {
@@ -249,6 +250,7 @@ describe('core.preview.StoryRenderer', () => {
         kind: 'a',
         name: '1',
         viewMode: 'story',
+        getDecorated: expect.any(Function),
       });
     });
     it('does re-render the current story if it has not changed if forceRender is true', () => {
