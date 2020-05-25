@@ -113,7 +113,7 @@ export const riot: Parameters = {
 export const sfcVue: Parameters = {
   name: 'sfcVue',
   version: 'latest',
-  generator: fromDeps('vue', 'vue-loader', 'babel-preset-vue', 'vue-template-compiler'),
+  generator: fromDeps('vue', 'vue-loader', 'vue-template-compiler'),
   additionalDeps: ['react', 'react-dom'],
 };
 

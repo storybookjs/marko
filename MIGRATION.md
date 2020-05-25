@@ -15,6 +15,7 @@
       - [Imported types](#imported-types)
       - [Rolling back](#rolling-back)
   - [New addon presets](#new-addon-presets)
+  - [Removed babel-preset-vue from Vue preset](#removed-babel-preset-vue-from-vue-preset)
   - [Removed Deprecated APIs](#removed-deprecated-apis)
   - [New setStories event](#new-setstories-event)
   - [Client API changes](#client-api-changes)
@@ -378,6 +379,23 @@ MyNonCheckedStory.story = {
   },
 };
 ```
+
+### Removed babel-preset-vue from Vue preset
+
+`babel-preset-vue` is not included by default anymore when using Storybook with Vue.
+This preset is outdated and [caused problems](https://github.com/storybookjs/storybook/issues/4475) with more modern setups.
+
+If you have an older Vue setup that relied on this preset, make sure it is included in your babel config
+(install `babel-preset-vue` and add it to the presets).
+
+```json
+{
+  "presets": ["babel-preset-vue"]
+}
+```
+
+However, please take a moment to review why this preset is necessary in your setup.
+One usecase used to be to enable JSX in your stories. For this case, we recommend to use `@vue/babel-preset-jsx` instead.
 
 ### Removed Deprecated APIs
 

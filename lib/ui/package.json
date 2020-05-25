@@ -1,6 +1,6 @@
 {
   "name": "@storybook/ui",
-  "version": "6.0.0-beta.13",
+  "version": "6.0.0-beta.14",
   "description": "Core Storybook UI",
   "keywords": [
     "storybook"
@@ -29,14 +29,14 @@
   },
   "dependencies": {
     "@emotion/core": "^10.0.20",
-    "@storybook/addons": "6.0.0-beta.13",
-    "@storybook/api": "6.0.0-beta.13",
-    "@storybook/channels": "6.0.0-beta.13",
-    "@storybook/client-logger": "6.0.0-beta.13",
-    "@storybook/components": "6.0.0-beta.13",
-    "@storybook/core-events": "6.0.0-beta.13",
-    "@storybook/router": "6.0.0-beta.13",
-    "@storybook/theming": "6.0.0-beta.13",
+    "@storybook/addons": "6.0.0-beta.14",
+    "@storybook/api": "6.0.0-beta.14",
+    "@storybook/channels": "6.0.0-beta.14",
+    "@storybook/client-logger": "6.0.0-beta.14",
+    "@storybook/components": "6.0.0-beta.14",
+    "@storybook/core-events": "6.0.0-beta.14",
+    "@storybook/router": "6.0.0-beta.14",
+    "@storybook/theming": "6.0.0-beta.14",
     "@types/markdown-to-jsx": "^6.11.0",
     "@types/rfdc": "^1.1.0",
     "copy-to-clipboard": "^3.0.8",
@@ -66,9 +66,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
-    "@storybook/addon-actions": "6.0.0-beta.13",
-    "@storybook/addon-knobs": "6.0.0-beta.13",
-    "@storybook/react": "6.0.0-beta.13",
+    "@storybook/addon-actions": "6.0.0-beta.14",
+    "@storybook/addon-knobs": "6.0.0-beta.14",
+    "@storybook/react": "6.0.0-beta.14",
     "@testing-library/react": "^10.0.3",
     "babel-loader": "^8.0.6",
     "chromatic": "^4.0.2",
