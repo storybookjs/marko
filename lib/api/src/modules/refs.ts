@@ -130,15 +130,18 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
           headers: {
             Accept: 'application/json',
           },
+          redirect: 'manual',
           credentials: 'include',
         }),
         fetch(`${url}/stories.json`, {
           headers: {
             Accept: 'application/json',
           },
+          redirect: 'manual',
           credentials: 'omit',
         }),
         fetch(`${url}/iframe.html`, {
+          redirect: 'manual',
           credentials: 'omit',
         }),
       ]);
@@ -157,16 +160,16 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
           message: dedent`
             Error: Loading of ref failed
               at fetch (lib/api/src/modules/refs.ts)
-
+            
             URL: ${url}
-
+            
             We weren't able to load the above URL,
             it's possible a CORS error happened.
-
+            
             Please check your dev-tools network tab.
           `,
         } as Error;
-      } else {
+      } else if (omitted || included) {
         const credentials = !omitted ? 'include' : 'omit';
 
         const [stories, metadata] = await Promise.all([
@@ -176,6 +179,7 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
               headers: {
                 Accept: 'application/json',
               },
+              redirect: 'manual',
               credentials,
               cache: 'no-cache',
             })
