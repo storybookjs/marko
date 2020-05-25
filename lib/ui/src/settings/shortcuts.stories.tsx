@@ -51,4 +51,4 @@ export default {
 };
 
 export const defaults = () => <ShortcutsScreen shortcutKeys={defaultShortcuts} {...actions} />;
-defaults.story = { name: 'default shortcuts' };
+defaults.storyName = 'default shortcuts';

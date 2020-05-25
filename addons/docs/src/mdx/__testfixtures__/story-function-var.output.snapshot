@@ -37,9 +37,8 @@ function MDXContent({ components, ...props }) {
 MDXContent.isMDXComponent = true;
 
 export const basic = assertIsFn(basicFn);
-basic.story = {};
-basic.story.name = 'basic';
-basic.story.parameters = { storySource: { source: 'basicFn' } };
+basic.storyName = 'basic';
+basic.parameters = { storySource: { source: 'basicFn' } };
 
 const componentMeta = { title: 'story-function-var', includeStories: ['basic'] };
 

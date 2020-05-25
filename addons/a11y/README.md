@@ -40,10 +40,8 @@ If you wish to selectively disable `a11y` checks for a subset of stories, you ca
 
 ```js
 export const MyNonCheckedStory = () => <SomeComponent />;
-MyNonCheckedStory.story = {
-  parameters: {
-    a11y: { disable: true },
-  },
+MyNonCheckedStory.parameters = {
+  a11y: { disable: true },
 };
 ```
 

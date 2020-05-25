@@ -11,10 +11,8 @@ export const Log = () => {
 
   return <span>See action logger</span>;
 };
-Log.story = {
-  parameters: {
-    options: {
-      panel: 'storybook/actions/panel',
-    },
+Log.parameters = {
+  options: {
+    panel: 'storybook/actions/panel',
   },
 };

@@ -7,7 +7,7 @@ import { CoolButton } from '../cool-button/cool-button';
 import 'bootstrap/scss/bootstrap.scss';
 
 type StoryType = StoryFn<Partial<StoryFnAureliaReturnType>> & {
-  story: { name: string };
+  storyName: string;
 };
 
 export default {
@@ -22,15 +22,9 @@ export const SimpleCoolButtonStory: StoryType = () => ({
     buttonText: text('Button Text', 'Aurelia Rocks!'),
   },
 });
-
-SimpleCoolButtonStory.story = {
-  name: 'Cool Button Story',
-};
+SimpleCoolButtonStory.storyName = 'Cool Button Story';
 
 export const AutoGenerateStory: StoryType = () => ({
   customElement: CoolButton,
 });
-
-AutoGenerateStory.story = {
-  name: 'Auto Generate Knobs Story',
-};
+AutoGenerateStory.storyName = 'Auto Generate Knobs Story';

@@ -195,8 +195,8 @@ For `DocsPage`, you need to update the parameter locally in a story:
 
 ```ts
 export const basic = () => ...
-basic.story = {
-  parameters: { docs: { iframeHeight: 400 } }
+basic.parameters = {
+  docs: { iframeHeight: 400 }
 }
 ```
 

@@ -10,6 +10,4 @@ export const ToStorybook = () => ({
   props: {},
 });
 
-ToStorybook.story = {
-  name: 'to Storybook',
-};
+ToStorybook.storyName = 'to Storybook';
