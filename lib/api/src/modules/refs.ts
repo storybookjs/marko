@@ -142,6 +142,7 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
         }),
         fetch(`${url}/iframe.html`, {
           redirect: 'manual',
+          cors: 'no-cors',
           credentials: 'omit',
         }),
       ]);
