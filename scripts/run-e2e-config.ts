@@ -148,7 +148,7 @@ export const yarn2Cra: Parameters = {
   name: 'yarn-2-cra',
   version: 'latest',
   generator: [
-    `yarn set version latest`,
+    `yarn set version berry`,
     `yarn dlx create-react-app@{{version}} {{name}}-v{{version}}`,
     `yarn add core-js -D`, // Temporary fix
   ].join(' && '),
