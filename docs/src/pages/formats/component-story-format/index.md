@@ -52,18 +52,16 @@ someName1_2_3_4 -> 'Some Name 1 2 3 4'
 
 It's recommended to start export names with a capital letter.
 
-Story functions can be annotated with a `story` object to define story-level [decorators](../../basics/writing-stories/#decorators) and [parameters](../../basics/writing-stories/#parameters), and also to define the `name` of the story.
+Story functions can be annotated with a few different fields to define story-level [decorators](../../basics/writing-stories/#decorators) and [parameters](../../basics/writing-stories/#parameters), and also to define the `storyName` of the story.
 
-The `name` is useful if you want to use names with special characters, names that correspond to restricted keywords in Javascript, or names that collide with other variables in the file. If it's not specified, the export name will be used instead.
+The `storyName` is useful if you want to use names with special characters, names that correspond to restricted keywords in Javascript, or names that collide with other variables in the file. If it's not specified, the export name will be used instead.
 
 ```jsx
 export const Simple = () => <MyComponent />;
 
-Simple.story = {
-  name: 'So simple!',
-  decorators: [ ... ],
-  parameters: { ... }
-};
+Simple.storyName = 'So simple!';
+Simple.decorators = [ ... ];
+Simple.parameters = { ... };
 ```
 
 ## Args story inputs
@@ -84,11 +82,9 @@ Now consider the same example, re-written with args:
 
 ```js
 export const Text = ({ label, onClick }) => <Button label={label} onClick={onClick} />;
-Text.story = {
-  args: {
-    label: 'Hello',
-    onClick: action('clicked'),
-  },
+Text.args = {
+  label: 'Hello',
+  onClick: action('clicked'),
 };
 ```
 

@@ -148,20 +148,18 @@ export const Batch = ({ labels, padding }) => (
 In this case, the args are basically unrelated to the underlying component's props, and are instead related to the individual story. To generate a prop table for the story, you can configure the Story's metadata:
 
 ```js
-Batch.story = {
-  argTypes: {
-    labels: {
-      description: 'A comma-separated list of labels to display',
-      defaultValue: 'a,b,c',
-      control: { type: 'array' }
-    }
-    padding: {
-      description: 'The padding to space out labels int he story',
-      defaultValue: 4,
-      control: { type: 'range', min: 0, max: 20, step: 2 },
-    }
-  }
-}
+Batch.argTypes = {
+  labels: {
+    description: 'A comma-separated list of labels to display',
+    defaultValue: 'a,b,c',
+    control: { type: 'array' },
+  },
+  padding: {
+    description: 'The padding to space out labels int he story',
+    defaultValue: 4,
+    control: { type: 'range', min: 0, max: 20, step: 2 },
+  },
+};
 ```
 
 In this case, the user-specified `argTypes` are not a subset of the component's props, so Storybook shows ONLY the user-specified `argTypes`, and shows the component's props (without controls) in a separate tab.

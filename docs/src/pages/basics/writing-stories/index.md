@@ -159,7 +159,7 @@ import { configure } from '@storybook/react';
 const loaderFn = () => {
   const allExports = [require('./welcome.stories.js')];
   const req = require.context('../src/components', true, /\.stories\.js$/);
-  req.keys().forEach(fname => allExports.push(req(fname)));
+  req.keys().forEach((fname) => allExports.push(req(fname)));
   return allExports;
 };
 
@@ -180,7 +180,7 @@ const loaderFn = () => {
 
   // dynamic loading, unavailable in react-native
   const req = require.context('../src/components', true, /\.stories\.js$/);
-  req.keys().forEach(fname => req(fname));
+  req.keys().forEach((fname) => req(fname));
 };
 
 configure(loaderFn, module);
@@ -200,17 +200,25 @@ Here is an example of a global decorator which centers every story in the `.stor
 import React from 'react';
 import { addDecorator } from '@storybook/react';
 
-addDecorator(storyFn => <div style={{ textAlign: 'center' }}>{storyFn()}</div>);
+addDecorator((storyFn) => <div style={{ textAlign: 'center' }}>{storyFn()}</div>);
 ```
 
 > \* In Vue projects you have to use the special component `<story/>` instead of the function parameter `storyFn` that is used in React projects, even if you are using JSX, for example:
 >
 > ```jsx
-> var decoratorVueJsx = () => ({ render() { return <div style={{ textAlign: 'center' }}><story/></div>} })
-> addDecorator(decoratorVueJsx)
+> var decoratorVueJsx = () => ({
+>   render() {
+>     return (
+>       <div style={{ textAlign: 'center' }}>
+>         <story />
+>       </div>
+>     );
+>   },
+> });
+> addDecorator(decoratorVueJsx);
 >
-> var decoratorVueTemplate = () => ({ template: `<div style="text-align:center"><story/></div>` })
-> addDecorator(decoratorVueTemplate)
+> var decoratorVueTemplate = () => ({ template: `<div style="text-align:center"><story/></div>` });
+> addDecorator(decoratorVueTemplate);
 > ```
 
 And here's an example of component/local decorators. The component decorator wraps all the stories in a yellow frame, and the story decorator wraps a single story in an additional red frame.
@@ -221,14 +229,12 @@ import MyComponent from './MyComponent';
 
 export default {
   title: 'MyComponent',
-  decorators: [storyFn => <div style={{ backgroundColor: 'yellow' }}>{storyFn()}</div>],
+  decorators: [(storyFn) => <div style={{ backgroundColor: 'yellow' }}>{storyFn()}</div>],
 };
 
 export const normal = () => <MyComponent />;
 export const special = () => <MyComponent text="The Boss" />;
-special.story = {
-  decorators: [storyFn => <div style={{ border: '5px solid red' }}>{storyFn()}</div>],
-};
+special.decorators = [(storyFn) => <div style={{ border: '5px solid red' }}>{storyFn()}</div>];
 ```
 
 Decorators are not only for story formatting, they are generally useful for any kind of context needed by a story.
@@ -270,8 +276,8 @@ export default {
 export const small = () => <MyComponent text="small" />;
 export const medium = () => <MyComponent text="medium" />;
 export const special = () => <MyComponent text="The Boss" />;
-special.story = {
-  parameters: { notes: specialNotes },
+special.parameters = {
+  notes: specialNotes,
 };
 ```
 
@@ -283,8 +289,8 @@ By default, search results will show up based on the file name of your stories. 
 
 ```jsx
 export const callout = () => <Callout>Some children</Callout>;
-callout.story = {
-  parameters: { notes: 'popover tooltip' },
+callout.parameters = {
+  notes: 'popover tooltip',
 };
 ```
 
@@ -378,9 +384,7 @@ export default {
 };
 
 export const Baz = () => <MyComponent />;
-Baz.story = {
-  name: 'Moo',
-};
+Baz.storyName = 'Moo';
 ```
 
 Storybook will prioritize the `id` over the title for ID generation, if provided, and will prioritize the `story.name` over the export key for display.
