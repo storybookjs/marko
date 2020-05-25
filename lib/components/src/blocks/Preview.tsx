@@ -43,6 +43,7 @@ const ChildrenContainer = styled.div<PreviewProps & { zoom: number; layout: layo
           padding: '30px 20px',
           margin: -10,
           '& > *': {
+            width: 'auto',
             border: '10px solid transparent!important',
           },
         }
