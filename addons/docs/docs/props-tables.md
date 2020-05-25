@@ -7,20 +7,13 @@
 Storybook Docs automatically generates props tables for components in supported frameworks. This document is a consolidated summary of prop tables, provides instructions for reporting bugs, and list known limitations for each framework.
 
 - [Usage](#usage)
-- [Args Controls](#args-controls)
+- [Controls](#controls)
   - [DocsPage](#docspage)
   - [MDX](#mdx)
   - [Controls customization](#controls-customization)
   - [Rows customization](#rows-customization)
 - [Reporting a bug](#reporting-a-bug)
 - [Known limitations](#known-limitations)
-  - [React](#react)
-    - [Fully support React.FC](#fully-support-reactfc)
-    - [Imported types](#imported-types)
-  - [Vue](#vue)
-  - [Angular](#angular)
-  - [Web components](#web-components)
-  - [Ember](#ember)
 - [More resources](#more-resources)
 
 ## Usage
@@ -52,9 +45,9 @@ import { MyComponent } from './MyComponent';
 <Props of={MyComponent} />
 ```
 
-## Args Controls
+## Controls
 
-Starting in SB 6.0, the `Props` block has built-in controls (formerly known as "knobs") for editing stories dynamically.
+Starting in SB 6.0, the `Props` block has built-in `Controls` (formerly known as "knobs") for editing stories dynamically.
 
 <center>
   <img src="./media/args-controls.gif" width="100%" />
@@ -197,57 +190,13 @@ If the problem appears to be an issue with the sub-package, please file an issue
 
 This package relies on a variety of sub-packages to extract property information from components. Many of the bugs in this package correspond to bugs in a sub-package. Since we don't maintain the sub-packages, the best we can do for now is (1) document these limitations, (2) provide clean reproductions to the sub-package, (3) optionally provide PRs to those packages to fix the problems.
 
-### React
-
-SB Docs for React uses `babel-plugin-react-docgen`/`react-docgen` for both JS PropTypes prop tables and, as of 6.0, TypeScript-driven props tables.
-
-#### Fully support React.FC
-
-The biggest known issue is https://github.com/reactjs/react-docgen/issues/387, which means that the following common pattern **DOESN'T WORK**:
-
-```tsx
-import React, { FC } from 'react';
-interface IProps { ... };
-const MyComponent: FC<IProps> = ({ ... }) => ...
-```
-
-The following workaround is needed:
-
-```tsx
-const MyComponent: FC<IProps> = ({ ... }: IProps) => ...
-```
-
-Please upvote https://github.com/reactjs/react-docgen/issues/387 if this is affecting your productivity, or better yet, submit a fix!
-
-#### Imported types
-
-Another major issue is support for imported types.
-
-```js
-import React, { FC } from 'react';
-import SomeType from './someFile';
-
-type NewType = SomeType & { foo: string };
-const MyComponent: FC<NewType> = ...
-```
-
-This was also an issue in RDTL so it doesn't get worse with `react-docgen`. There's an open PR for this https://github.com/reactjs/react-docgen/pull/352 which you can upvote if it affects you.
-
-### Vue
-
-SB Docs for Vue uses `vue-docgen-loader`/`vue-docgen-api` for SFC and JSX components.
-
-### Angular
-
-SB Docs for Angular uses `compodoc` for prop table information.
-
-### Web components
-
-SB Docs for Web-components uses `custom-elements.json` for prop table information.
-
-### Ember
-
-SB Docs for Ember uses `yui-doc` for prop table information.
+| Framework      | Underlying library                       | Docs                                             | Open issues                                                                                                                                                        |
+| -------------- | ---------------------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| React          | `react-docgen` `react-docgen-typescript` | [Docs](../react/README.md#props-tables)          | [Open issues](https://github.com/storybookjs/storybook/issues?q=is%3Aopen+is%3Aissue+label%3A%22block%3A+props%22+label%3Abug+label%3A%22app%3A+react%22)          |
+| Vue            | `vue-docgen-api`                         | [Docs](../vue/README.md#props-tables)            | [Open issues](https://github.com/storybookjs/storybook/issues?q=is%3Aopen+is%3Aissue+label%3A%22block%3A+props%22+label%3Abug+label%3A%22app%3A+vue%22)            |
+| Angular        | `compodoc`                               | [Docs](../angular/README.md#props-tables)        | [Open issues](https://github.com/storybookjs/storybook/issues?q=is%3Aopen+is%3Aissue+label%3A%22block%3A+props%22+label%3Abug+label%3A%22app%3A+angular%22)        |
+| Web-components | `custom-elements.json`                   | [Docs](../web-components/README.md#props-tables) | [Open issues](https://github.com/storybookjs/storybook/issues?q=is%3Aopen+is%3Aissue+label%3A%22block%3A+props%22+label%3Abug+label%3A%22app%3A+web-components%22) |
+| Ember          | `yui-doc`                                | [Docs](../ember/README.md#props-tables)          | [Open issues](https://github.com/storybookjs/storybook/issues?q=is%3Aopen+is%3Aissue+label%3A%22block%3A+props%22+label%3Abug+label%3A%22app%3A+ember%22)          |
 
 ## More resources
 

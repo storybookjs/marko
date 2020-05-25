@@ -1,3 +1,32 @@
+## 5.3.19 (May 24, 2020)
+
+### Bug Fixes
+
+- UI: Fix search stories ([#10539](https://github.com/storybookjs/storybook/pull/10539))
+
+### Security
+
+- Upgrade markdown-to-jsx to 6.11.4 ([#10873](https://github.com/storybookjs/storybook/pull/10873))
+
+## 6.0.0-beta.13 (May 23, 2020)
+
+### Bug Fixes
+
+- Core: Fix ts/tsx resolution in the manager ([#10886](https://github.com/storybookjs/storybook/pull/10886))
+- Core: Fix typo in projectRoot node_modules detection ([#10848](https://github.com/storybookjs/storybook/pull/10848))
+- Addon-docs: Fix story inline rendering ([#10875](https://github.com/storybookjs/storybook/pull/10875))
+- Core: Fix CRA filter for built-in webpack settings ([#10861](https://github.com/storybookjs/storybook/pull/10861))
+- Addon-docs: Fix react forwardRefs with destructured props ([#10864](https://github.com/storybookjs/storybook/pull/10864))
+
+### Maintenance
+
+- React: Upgrade preset-create-react-app in examples ([#10867](https://github.com/storybookjs/storybook/pull/10867))
+- Core: Close server when e2e test failed ([#10868](https://github.com/storybookjs/storybook/pull/10868))
+
+### Dependency Upgrades
+
+- Upgrade markdown-to-jsx to 6.11.4 ([#10873](https://github.com/storybookjs/storybook/pull/10873))
+
 ## 6.0.0-beta.12 (May 21, 2020)
 
 ### Breaking Changes

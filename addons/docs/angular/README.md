@@ -12,6 +12,7 @@ To learn more about Storybook Docs, read the [general documentation](../README.m
 
 - [Installation](#installation)
 - [DocsPage](#docspage)
+- [Props tables](#props-tables)
 - [MDX](#mdx)
 - [IFrame height](#iframe-height)
 - [More resources](#more-resources)
@@ -36,7 +37,9 @@ module.exports = {
 
 When you [install docs](#installation) you should get basic [DocsPage](../docs/docspage.md) documentation automagically for all your stories, available in the `Docs` tab of the Storybook UI.
 
-Props tables for your components requires a few more steps. Docs for Angular relies on [Compodoc](https://compodoc.app/), the excellent API documentation tool. It supports `inputs`, `outputs`, `properties`, `methods`, `view/content child/children` as first class prop types.
+## Props tables
+
+Getting [Props tables](../docs/props-tables.md) for your components requires a few more steps. Docs for Angular relies on [Compodoc](https://compodoc.app/), the excellent API documentation tool. It supports `inputs`, `outputs`, `properties`, `methods`, `view/content child/children` as first class prop types.
 
 To get this, you'll first need to install Compodoc:
 

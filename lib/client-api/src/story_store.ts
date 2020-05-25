@@ -156,10 +156,6 @@ export default class StoryStore {
     this._configuring = false;
     this.pushToManager();
 
-    if (this._channel) {
-      this._channel.emit(Events.RENDER_CURRENT_STORY);
-    }
-
     const { globalArgs: initialGlobalArgs, globalArgTypes } = this._globalMetadata.parameters;
 
     const defaultGlobalArgs: Args = globalArgTypes
