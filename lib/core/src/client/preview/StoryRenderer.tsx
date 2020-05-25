@@ -99,7 +99,7 @@ export class StoryRenderer {
     if (this.channel) {
       this.channel.on(Events.RENDER_CURRENT_STORY, () => this.renderCurrentStory(false));
       this.channel.on(Events.STORY_ARGS_UPDATED, () => this.forceReRender());
-      // this.channel.on(Events.GLOBAL_ARGS_UPDATED, () => this.forceReRender());
+      this.channel.on(Events.GLOBAL_ARGS_UPDATED, () => this.forceReRender());
       this.channel.on(Events.FORCE_RE_RENDER, () => this.forceReRender());
     }
   }
@@ -155,7 +155,6 @@ export class StoryRenderer {
     const { forceRender, name } = context;
 
     const { previousMetadata, storyStore } = this;
-    console.log('renderStoryIfChanged', { previousMetadata, metadata, context });
 
     const storyChanged = !previousMetadata || previousMetadata.id !== metadata.id;
     // getDecorated is a function that returns a decorated story function. It'll change whenever the story
@@ -164,8 +163,6 @@ export class StoryRenderer {
       !previousMetadata || previousMetadata.getDecorated !== metadata.getDecorated;
     const viewModeChanged = !previousMetadata || previousMetadata.viewMode !== metadata.viewMode;
     const kindChanged = !previousMetadata || previousMetadata.kind !== metadata.kind;
-
-    console.log({ forceRender, storyChanged, implementationChanged, viewModeChanged, kindChanged });
 
     // Don't re-render the story if nothing has changed to justify it
     if (!forceRender && !storyChanged && !implementationChanged && !viewModeChanged) {
@@ -279,11 +276,9 @@ export class StoryRenderer {
   }
 
   renderStory({ context, context: { id, getDecorated } }: { context: RenderContext }) {
-    console.log('renderStory', context);
     if (getDecorated) {
       (async () => {
         try {
-          console.log('calling render');
           await this.render(context);
           this.channel.emit(Events.STORY_RENDERED, id);
         } catch (err) {
