@@ -87,7 +87,7 @@ export const rax: Parameters = {
 export const react: Parameters = {
   name: 'react',
   version: 'latest',
-  generator: fromDeps('react'),
+  generator: fromDeps('react', 'react-dom'),
 };
 
 // export const reactNative: Parameters = {
@@ -141,7 +141,7 @@ export const web_components: Parameters = {
 export const webpackReact: Parameters = {
   name: 'webpackReact',
   version: 'latest',
-  generator: fromDeps('react', 'webpack'),
+  generator: fromDeps('react', 'react-dom', 'webpack'),
 };
 
 export const yarn2Cra: Parameters = {
