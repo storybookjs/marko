@@ -33,7 +33,6 @@ function makeMocks() {
   const configApi = ({ configure: (x: Function) => x() } as unknown) as ConfigApi;
   const storyStore = ({
     removeStoryKind: jest.fn(),
-    incrementRevision: jest.fn(),
   } as unknown) as StoryStore;
   const clientApi = ({
     storiesOf: jest.fn().mockImplementation(() => ({
@@ -290,7 +289,6 @@ describe('core.preview.loadCsf', () => {
     configure(makeRequireContext(secondInput), mod, 'react');
 
     expect(storyStore.removeStoryKind).not.toHaveBeenCalled();
-    expect(storyStore.incrementRevision).not.toHaveBeenCalled();
     expect(mockedStoriesOf).toHaveBeenCalledWith('b', true);
   });
 
@@ -324,7 +322,6 @@ describe('core.preview.loadCsf', () => {
     configure(makeRequireContext(secondInput), mod, 'react');
 
     expect(storyStore.removeStoryKind).toHaveBeenCalledWith('b');
-    expect(storyStore.incrementRevision).toHaveBeenCalled();
     expect(mockedStoriesOf).not.toHaveBeenCalled();
   });
 
@@ -367,7 +364,6 @@ describe('core.preview.loadCsf', () => {
 
     expect(storyStore.removeStoryKind).toHaveBeenCalledTimes(1);
     expect(storyStore.removeStoryKind).toHaveBeenCalledWith('a');
-    expect(storyStore.incrementRevision).toHaveBeenCalled();
     expect(mockedStoriesOf).toHaveBeenCalledWith('a', true);
   });
 
