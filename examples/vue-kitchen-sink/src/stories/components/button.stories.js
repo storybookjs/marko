@@ -12,11 +12,9 @@ export const Rounded = (args) => ({
     return args;
   },
 });
-Rounded.story = {
-  argTypes: {
-    rounded: { defaultValue: true },
-    color: { control: { type: 'color' }, defaultValue: '#f00' },
-  },
+Rounded.argTypes = {
+  rounded: { defaultValue: true },
+  color: { control: { type: 'color' }, defaultValue: '#f00' },
 };
 
 export const Square = () => ({

@@ -13,8 +13,6 @@ export const ButtonWithProps = (args: any) => ({
     return args;
   },
 });
-ButtonWithProps.story = {
-  argTypes: {
-    size: { control: { type: 'options', options: ButtonSizes } },
-  },
+ButtonWithProps.argTypes = {
+  size: { control: { type: 'options', options: ButtonSizes } },
 };

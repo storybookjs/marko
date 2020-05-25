@@ -12,9 +12,7 @@ export default {
 
 export const WithText = () => <Button onclick={action('clicked')}>Hello Button</Button>;
 
-WithText.story = {
-  name: 'with text',
-};
+WithText.storyName = 'with text';
 
 export const WithSomeEmoji = () => (
   <Button onclick={action('clicked')}>
@@ -24,6 +22,4 @@ export const WithSomeEmoji = () => (
   </Button>
 );
 
-WithSomeEmoji.story = {
-  name: 'with some emoji',
-};
+WithSomeEmoji.storyName = 'with some emoji';

@@ -51,8 +51,8 @@ export default {
 };
 
 export const basic = () => <Button>Basic</Button>;
-basic.story = {
-  parameters: { foo: 'bar' },
+basic.parameters = {
+  foo: 'bar',
 };
 ```
 
@@ -199,7 +199,7 @@ User defines stories in CSF and renders docs using DocsPage, but wishes to exclu
 
 ```js
 export const foo = () => <Button>foo</Button>;
-foo.story = { parameters: { docs: { disable: true } } };
+foo.parameters = { docs: { disable: true } };
 ```
 
 ### MDX Stories
@@ -220,11 +220,9 @@ Based on user feedback, it's also possible to control the view mode for an indiv
 
 ```js
 export const Foo = () => <Component />;
-Foo.story = {
-  parameters: {
-    // reset the view mode to "story" whenever the user navigates to this story
-    viewMode: 'story',
-  },
+Foo.parameters = {
+  // reset the view mode to "story" whenever the user navigates to this story
+  viewMode: 'story',
 };
 ```
 
@@ -245,10 +243,8 @@ If you override the `docs.source.code` parameter, the `Source` block will render
 
 ```js
 const Example = () => <Button />;
-Example.story = {
-  parameters: {
-    docs: { source: { code: 'some arbitrary string' } },
-  },
+Example.parameters = {
+  docs: { source: { code: 'some arbitrary string' } },
 };
 ```
 

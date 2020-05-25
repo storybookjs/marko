@@ -1,6 +1,7 @@
 <h1>Migration</h1>
 
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
+  - [Hoisted CSF annotations](#hoisted-csf-annotations)
   - [Zero config typescript](#zero-config-typescript)
   - [Backgrounds addon has a new api](#backgrounds-addon-has-a-new-api)
   - [CRA preset removed](#cra-preset-removed)
@@ -113,6 +114,42 @@
   - [Deprecated embedded addons](#deprecated-embedded-addons)
 
 ## From version 5.3.x to 6.0.x
+
+### Hoisted CSF annotations
+
+Storybook 6 introduces hoisted CSF annotations and deprecates the `StoryFn.story` object-style annotation.
+
+In 5.x CSF, you would annotate a story like this:
+
+```js
+export const Basic = () => <Button />
+Basic.story = {
+  name: 'foo',
+  parameters: { ... },
+  decorators: [ ... ],
+};
+```
+
+In 6.0 CSF this becomes:
+
+```js
+export const Basic = () => <Button />
+Basic.storyName = 'foo';
+Basic.parameters = { ... };
+Basic.decorators = [ ... ];
+```
+
+1. The new syntax is slightly more compact/ergonomic compared the the old one
+2. Similar to React's `displayName`, `propTypes`, `defaultProps` annotations
+3. We're introducing a new feature, [Storybook Args](https://docs.google.com/document/d/1Mhp1UFRCKCsN8pjlfPdz8ZdisgjNXeMXpXvGoALjxYM/edit?usp=sharing), where the new syntax will be significantly more ergonomic
+
+To help you upgrade your stories, we've crated a codemod:
+
+```
+npx @storybook/cli@next migrate csf-hoist-story-annotations --glob="**/*.stories.js"
+```
+
+For more information, [see the documentation](https://github.com/storybookjs/storybook/blob/next/lib/codemod/README.md#csf-hoist-story-annotations).
 
 ### Zero config typescript
 

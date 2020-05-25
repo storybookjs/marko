@@ -74,11 +74,11 @@ const PANEL_ID = `${ADDON_ID}/panel`;
 
 const MyPanel = () => {
   const value = useParameter(PARAM_KEY, null);
-  const item = value ? value.data : "";
+  const item = value ? value.data : '';
   return <div>{item}</div>;
-}
+};
 
-addons.register(ADDON_ID, api => {
+addons.register(ADDON_ID, (api) => {
   const render = ({ active, key }) => (
     <AddonPanel active={active} key={key}>
       <MyPanel />
@@ -101,8 +101,8 @@ within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: ['path/to/addon']
-}
+  addons: ['path/to/addon'],
+};
 ```
 
 Now restart/rebuild storybook and the addon should show up!  
@@ -121,7 +121,7 @@ import { addons } from '@storybook/addons';
 import { AddonPanel } from '@storybook/components';
 import { ADDON_ID, PARAM_KEY, PANEL_ID, MyPanel } from './MyAddon';
 
-addons.register(ADDON_ID, api => {
+addons.register(ADDON_ID, (api) => {
   addons.addPanel(PANEL_ID, {
     title: 'My Addon',
     paramKey: PARAM_KEY,
@@ -182,8 +182,8 @@ export default makeDecorator({
     // we can also add subscriptions here using channel.on('eventName', callback);
 
     return getStory(context);
-  }
-})
+  },
+});
 ```
 
 In this case, our component can access something called the channel. It lets us communicate with the panel (in the manager).
@@ -206,15 +206,19 @@ import { AddonPanel } from '@storybook/components';
 
 const MyPanel = () => {
   const emit = useChannel({
-    STORY_RENDERED: id => { /* do something */ },
-    'my/customEvent': () => { /* so something */ },
+    STORY_RENDERED: (id) => {
+      /* do something */
+    },
+    'my/customEvent': () => {
+      /* so something */
+    },
   });
 
   return <button onClick={() => emit('my/otherEvent')}>click to emit</button>;
-}
+};
 
 // Register the addon with a unique name.
-addons.register('my/addon', api => {
+addons.register('my/addon', (api) => {
   // Also need to set a unique name to the panel.
   addons.addPanel('my/addon/panel', {
     title: 'My Addon',
@@ -245,12 +249,8 @@ A great way of preserving state even when your component is unmounted is using t
 export const Panel = () => {
   const [state, setState] = useAddonState('my/addon-id', 'initial state');
 
-  return (
-    <button onClick={() => setState('a new value')}>
-      the state = "{state}"
-    </button>
-  );
-}
+  return <button onClick={() => setState('a new value')}>the state = "{state}"</button>;
+};
 ```
 
 This will store your addon's state into storybook core state, and so when your component gets unmounted & remounted, the state will be restored.
@@ -263,8 +263,8 @@ within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: ['path/to/addon']
-}
+  addons: ['path/to/addon'],
+};
 ```
 
 Then you need to start using the decorator:
@@ -281,13 +281,9 @@ export default {
   decorators: [withMyAddon],
 };
 
-export const defaultView = () => (
-  <Button>Hello Button</Button>
-);
-defaultView.story = {
-  parameters: {
-    myParameter: { data: 'awesome' },
-  },
+export const defaultView = () => <Button>Hello Button</Button>;
+defaultView.parameters = {
+  myParameter: { data: 'awesome' },
 };
 ```
 
@@ -296,6 +292,7 @@ defaultView.story = {
 It's possible to disable an addon panel for a particular story.
 
 To offer that capability, you need to pass the paramKey when you register the panel
+
 ```js
 addons.register(ADDON_ID, () => {
   addons.add(PANEL_ID, {
@@ -321,7 +318,6 @@ export default {
     myAddon: { disable: true },
   },
 };
-
 ```
 
 ## Styling your addon

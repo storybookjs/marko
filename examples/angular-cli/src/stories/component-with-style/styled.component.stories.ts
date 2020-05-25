@@ -8,6 +8,4 @@ export const ComponentWithStyles = () => ({
   component: StyledComponent,
 });
 
-ComponentWithStyles.story = {
-  name: 'Component with styles',
-};
+ComponentWithStyles.storyName = 'Component with styles';

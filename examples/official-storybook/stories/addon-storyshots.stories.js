@@ -21,16 +21,15 @@ export const block = () => {
     </Block>
   );
 };
-block.story = {
-  name: 'Block story',
-  parameters: {
-    async puppeteerTest(page) {
-      const element = await page.$('[data-test-block]');
-      await element.hover();
-      const textContent = await element.getProperty('textContent');
-      const text = await textContent.jsonValue();
-      // eslint-disable-next-line jest/no-standalone-expect
-      expect(text).toBe('I am hovered');
-    },
+block.storyName = 'Block story';
+
+block.parameters = {
+  async puppeteerTest(page) {
+    const element = await page.$('[data-test-block]');
+    await element.hover();
+    const textContent = await element.getProperty('textContent');
+    const text = await textContent.jsonValue();
+    // eslint-disable-next-line jest/no-standalone-expect
+    expect(text).toBe('I am hovered');
   },
 };

@@ -11,13 +11,12 @@ const ForwardedButton = React.forwardRef((props = { label: '' }, ref) => (
   <DocgenButton ref={ref} {...props} />
 ));
 export const DisplaysCorrectly = () => <ForwardedButton label="hello" />;
-DisplaysCorrectly.story = { name: 'Displays forwarded ref components correctly (default props)' };
+DisplaysCorrectly.storyName = 'Displays forwarded ref components correctly (default props)';
 
 // eslint-disable-next-line react/prop-types
 const ForwardedDestructuredButton = React.forwardRef(({ label = '', ...props }, ref) => (
   <DocgenButton ref={ref} label={label} {...props} />
 ));
 export const AlsoDisplaysCorrectly = () => <ForwardedDestructuredButton label="hello" />;
-AlsoDisplaysCorrectly.story = {
-  name: 'Displays forwarded ref components correctly (destructured props)',
-};
+AlsoDisplaysCorrectly.storyName =
+  'Displays forwarded ref components correctly (destructured props)';
