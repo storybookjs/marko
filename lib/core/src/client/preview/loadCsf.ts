@@ -131,6 +131,7 @@ const loadStories = (
         const storyFn = exports[key];
         const { story } = storyFn;
         if (story) {
+          logger.debug('deprecated story', story);
           deprecate(
             () => {},
             dedent`
