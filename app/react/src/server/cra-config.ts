@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import semver from 'semver';
+import semver from '@storybook/semver';
 import { logger } from '@storybook/node-logger';
 
 const appDirectory = fs.realpathSync(process.cwd());

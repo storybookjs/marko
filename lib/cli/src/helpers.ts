@@ -4,7 +4,7 @@ import fs from 'fs';
 import fse from 'fs-extra';
 import chalk from 'chalk';
 import { sync as spawnSync } from 'cross-spawn';
-import { gt, satisfies } from 'semver';
+import { gt, satisfies } from '@storybook/semver';
 import stripJsonComments from 'strip-json-comments';
 
 import { latestVersion } from './latest_version';
