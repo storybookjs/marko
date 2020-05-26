@@ -88,7 +88,7 @@ interface ButtonProps {
 export const Button = ({ label = 'FIXME' }: ButtonProps) => <button>{label}</button>;
 ```
 
-And here's a simple story that shows that Button component:
+And here's a story that shows that Button component:
 
 ```jsx
 import React from 'react';
@@ -106,7 +106,7 @@ After installing the controls addon, you'll see a new tab that shows the compone
 
 ### Auto-generated args
 
-To upgrade your story to an Args story, simply modify it to accept an args object. **NOTE:** you may need to refresh the browser at this point.
+To upgrade your story to an Args story, modify it to accept an args object. **NOTE:** you may need to refresh the browser at this point.
 
 ```jsx
 export const Basic = (args) => {
@@ -121,7 +121,7 @@ Now you'll see auto-generated controls in the `Controls` tab, and you can see th
   <img src="./docs/media/addon-controls-args-logging.png" width="100%" />
 </center>
 
-Since the args directly matches the `Button`'s props, we can simply pass it into the args directly:
+Since the args directly matches the `Button`'s props, we can pass it into the args directly:
 
 ```jsx
 export const Basic = (args) => <Button {...args} />;
@@ -261,7 +261,7 @@ export const VeryLongLabel = (args) => <Button {...args} />;
 VeryLongLabel.args = { label: 'this is a very long string', background: '#ff0' };
 ```
 
-This works, but it repeats code. What we really want is to reuse the `Basic` story, but simply create a different initial state. In Storybook we do this idiomatically for Args stories:
+This works, but it repeats code. What we want is to reuse the `Basic` story, but with a different initial state. In Storybook we do this idiomatically for Args stories:
 
 ```jsx
 export const VeryLongLabel = Basic.bind();
