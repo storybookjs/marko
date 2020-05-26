@@ -14,8 +14,10 @@ if (LOGLEVEL) {
   console.setLevel(LOGLEVEL);
 }
 
-// eslint-disable-next-line no-underscore-dangle
-window.__STORYBOOK_LOGGER = console;
+if (window) {
+  // eslint-disable-next-line no-underscore-dangle
+  window.__STORYBOOK_LOGGER = console;
+}
 
 export const pretty = (type: 'trace' | 'debug' | 'info' | 'warn' | 'error') => (
   ...args: string[]
