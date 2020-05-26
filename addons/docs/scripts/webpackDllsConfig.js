@@ -2,6 +2,10 @@ import path from 'path';
 import { ProgressPlugin, DllPlugin } from 'webpack';
 import TerserPlugin from 'terser-webpack-plugin';
 
+// eslint-disable-next-line import/no-extraneous-dependencies
+import uiPaths from '@storybook/ui/paths';
+import themingPaths from '@storybook/theming/paths';
+
 const resolveLocal = (dir) => path.join(__dirname, dir);
 
 const r = resolveLocal('../../../node_modules');
@@ -50,6 +54,11 @@ export default ({ entry, provided = [] }) => ({
   resolve: {
     extensions: ['.mjs', '.js', '.jsx', '.json'],
     modules: [path.join(__dirname, '../../../node_modules')],
+    alias: {
+      ...themingPaths,
+      ...uiPaths,
+      semver: require.resolve('@storybook/semver'),
+    },
   },
 
   plugins: [
