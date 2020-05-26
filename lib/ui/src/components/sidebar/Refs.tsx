@@ -4,8 +4,8 @@ import { styled } from '@storybook/theming';
 import { ExpanderContext, useDataset } from './Tree/State';
 import { Expander } from './Tree/ListItem';
 import { RefIndicator } from './RefIndicator';
-import { AuthBlock, ErrorBlock, LoaderBlock, ContentBlock } from './RefBlocks';
-import { getType, RefType } from './RefHelpers';
+import { AuthBlock, ErrorBlock, LoaderBlock, ContentBlock, EmptyBlock } from './RefBlocks';
+import { getStateType, RefType } from './RefHelpers';
 
 export interface RefProps {
   storyId: string;
@@ -69,12 +69,17 @@ export const Ref: FunctionComponent<RefType & RefProps> = (ref) => {
 
   const combo = useMemo(() => ({ setExpanded, expandedSet }), [setExpanded, expandedSet]);
 
-  const isLoading = !length;
   const isMain = key === 'storybook_internal';
+
+  const isLoadingMain = !ref.ready && isMain;
+  const isLoadingInjected = ref.type === 'auto-inject' && !ref.ready;
+
+  const isLoading = isLoadingMain || isLoadingInjected || ref.type === 'unknown';
   const isError = !!error;
+  const isEmpty = !isLoading && length === 0;
   const isAuthRequired = !!authUrl;
 
-  const type = getType(isLoading, isAuthRequired, isError);
+  const state = getStateType(isLoading, isAuthRequired, isError, isEmpty);
 
   return isHidden ? null : (
     <ExpanderContext.Provider value={combo}>
@@ -87,15 +92,16 @@ export const Ref: FunctionComponent<RefType & RefProps> = (ref) => {
         >
           <Expander className="sidebar-ref-expander" depth={0} isExpanded={isExpanded} />
           <RefTitle title={title}>{title}</RefTitle>
-          <RefIndicator {...ref} type={type} ref={indicatorRef} />
+          <RefIndicator {...ref} state={state} ref={indicatorRef} />
         </RefHead>
       )}
       {isExpanded && (
         <Wrapper data-title={title} isMain={isMain}>
-          {type === 'auth' && <AuthBlock id={ref.id} authUrl={authUrl} />}
-          {type === 'error' && <ErrorBlock error={error} />}
-          {type === 'loading' && <LoaderBlock isMain={isMain} />}
-          {type === 'ready' && (
+          {state === 'auth' && <AuthBlock id={ref.id} authUrl={authUrl} />}
+          {state === 'error' && <ErrorBlock error={error} />}
+          {state === 'loading' && <LoaderBlock isMain={isMain} />}
+          {state === 'empty' && <EmptyBlock isMain={isMain} />}
+          {state === 'ready' && (
             <ContentBlock {...{ others, dataSet, selectedSet, expandedSet, roots }} />
           )}
         </Wrapper>

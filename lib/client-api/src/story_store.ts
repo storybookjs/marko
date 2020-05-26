@@ -55,11 +55,9 @@ const includeStory = (story: StoreItem, options: StoryOptions = { includeDocsOnl
   return !isStoryDocsOnly(story.parameters);
 };
 
-const inJest = () => process.env.JEST_WORKER_ID !== undefined;
-
 const checkGlobalArgs = (parameters: Parameters) => {
   const { globalArgs, globalArgTypes } = parameters;
-  if ((globalArgs || globalArgTypes) && !inJest()) {
+  if (globalArgs || globalArgTypes) {
     logger.error(
       'Global args/argTypes can only be set globally',
       JSON.stringify({
@@ -157,36 +155,33 @@ export default class StoryStore {
   finishConfiguring() {
     this._configuring = false;
     this.pushToManager();
-    if (this._channel) this._channel.emit(Events.RENDER_CURRENT_STORY);
 
-    const storyIds = Object.keys(this._stories);
-    if (storyIds.length) {
-      const {
-        parameters: { globalArgs: initialGlobalArgs, globalArgTypes },
-      } = this.fromId(storyIds[0]);
+    const { globalArgs: initialGlobalArgs, globalArgTypes } = this._globalMetadata.parameters;
 
-      const defaultGlobalArgs: Args = globalArgTypes
-        ? Object.entries(globalArgTypes as Record<string, { defaultValue: any }>).reduce(
-            (acc, [arg, { defaultValue }]) => {
-              if (defaultValue) acc[arg] = defaultValue;
-              return acc;
-            },
-            {} as Args
-          )
-        : {};
+    const defaultGlobalArgs: Args = globalArgTypes
+      ? Object.entries(globalArgTypes as Record<string, { defaultValue: any }>).reduce(
+          (acc, [arg, { defaultValue }]) => {
+            if (defaultValue) acc[arg] = defaultValue;
+            return acc;
+          },
+          {} as Args
+        )
+      : {};
 
-      // To deal with HMR, we consider the previous value of global args, and:
-      //   1. Remove any keys that are not in the new parameter
-      //   2. Preference any keys that were already set
-      //   3. Use any new keys from the new parameter
-      this._globalArgs = Object.entries(this._globalArgs || {}).reduce(
-        (acc, [key, previousValue]) => {
-          if (acc[key]) acc[key] = previousValue;
+    // To deal with HMR, we consider the previous value of global args, and:
+    //   1. Remove any keys that are not in the new parameter
+    //   2. Preference any keys that were already set
+    //   3. Use any new keys from the new parameter
+    this._globalArgs = Object.entries(this._globalArgs || {}).reduce(
+      (acc, [key, previousValue]) => {
+        if (acc[key]) acc[key] = previousValue;
 
-          return acc;
-        },
-        { ...defaultGlobalArgs, ...initialGlobalArgs }
-      );
+        return acc;
+      },
+      { ...defaultGlobalArgs, ...initialGlobalArgs }
+    );
+    if (this._channel) {
+      this._channel.emit(Events.GLOBAL_ARGS_UPDATED, this._globalArgs);
     }
   }
 
@@ -421,11 +416,7 @@ export default class StoryStore {
         return null;
       }
 
-      return {
-        ...data,
-        parameters: this.combineStoryParameters(data.parameters, data.kind),
-        globalArgs: this._globalArgs,
-      };
+      return this.mergeAdditionalDataToStory(data);
     } catch (e) {
       logger.warn('failed to get story:', this._stories);
       logger.error(e);
@@ -433,11 +424,11 @@ export default class StoryStore {
     }
   };
 
-  raw(options?: StoryOptions) {
+  raw(options?: StoryOptions): PublishedStoreItem[] {
     return Object.values(this._stories)
       .filter((i) => !!i.getDecorated)
       .filter((i) => includeStory(i, options))
-      .map(({ id }) => this.fromId(id));
+      .map((i) => this.mergeAdditionalDataToStory(i));
   }
 
   extract(options: StoryOptions & { normalizeParameters?: boolean } = {}) {
@@ -483,7 +474,6 @@ export default class StoryStore {
 
   setError = (err: ErrorLike) => {
     this._error = err;
-    if (this._channel) this._channel.emit(Events.RENDER_CURRENT_STORY);
   };
 
   getError = (): ErrorLike | undefined => this._error;
@@ -496,7 +486,9 @@ export default class StoryStore {
 
       // If the selection is set while configuration is in process, we are guaranteed
       // we'll emit RENDER_CURRENT_STORY at the end of the process, so we shouldn't do it now.
-      if (!this._configuring) this._channel.emit(Events.RENDER_CURRENT_STORY);
+      if (!this._configuring) {
+        this._channel.emit(Events.RENDER_CURRENT_STORY);
+      }
     }
   }
 
@@ -506,6 +498,7 @@ export default class StoryStore {
     return {
       v: 2,
       globalParameters: this._globalMetadata.parameters,
+      error: this.getError(),
       kindParameters: mapValues(this._kinds, (metadata) => metadata.parameters),
       stories: this.extract({ includeDocsOnly: true, normalizeParameters: true }),
     };
@@ -572,5 +565,13 @@ export default class StoryStore {
         return kinds;
       }, {})
     ).sort((s1, s2) => this._kinds[s1.kind].order - this._kinds[s2.kind].order);
+  }
+
+  private mergeAdditionalDataToStory(story: StoreItem): PublishedStoreItem {
+    return {
+      ...story,
+      parameters: this.combineStoryParameters(story.parameters, story.kind),
+      globalArgs: this._globalArgs,
+    };
   }
 }

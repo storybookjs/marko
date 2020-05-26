@@ -23,9 +23,7 @@ export const Simple = () => ({
   },
 });
 
-Simple.story = {
-  name: 'Simple',
-};
+Simple.storyName = 'Simple';
 
 export const WithKnobsStory = () => {
   const name = text('name', 'Dynamic knob');
@@ -38,7 +36,5 @@ export const WithKnobsStory = () => {
   };
 };
 
-WithKnobsStory.story = {
-  name: 'With knobs',
-  decorators: [withKnobs],
-};
+WithKnobsStory.storyName = 'With knobs';
+WithKnobsStory.decorators = [withKnobs];

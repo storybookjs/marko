@@ -1,6 +1,6 @@
 import { document } from 'global';
 
-const riotForStorybook = require.requireActual('@storybook/riot');
+const riotForStorybook = jest.requireActual('@storybook/riot');
 
 function bootstrapADocumentAndReturnANode() {
   const rootElement = document.createElement('div');

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/components",
-  "version": "6.0.0-beta.0",
+  "version": "6.0.0-beta.14",
   "description": "Core Storybook Components",
   "keywords": [
     "storybook"
@@ -28,9 +28,9 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/client-logger": "6.0.0-beta.0",
+    "@storybook/client-logger": "6.0.0-beta.14",
     "@storybook/csf": "0.0.1",
-    "@storybook/theming": "6.0.0-beta.0",
+    "@storybook/theming": "6.0.0-beta.14",
     "@types/overlayscrollbars": "^1.9.0",
     "@types/react-color": "^3.0.1",
     "@types/react-syntax-highlighter": "11.0.4",
@@ -39,7 +39,7 @@
     "fast-deep-equal": "^3.1.1",
     "global": "^4.3.2",
     "lodash": "^4.17.15",
-    "markdown-to-jsx": "^6.9.1",
+    "markdown-to-jsx": "^6.11.4",
     "memoizerific": "^1.11.3",
     "overlayscrollbars": "^1.10.2",
     "overlayscrollbars-react": "^0.2.1",
@@ -51,14 +51,14 @@
     "react-helmet-async": "^1.0.2",
     "react-popper-tooltip": "^2.11.0",
     "react-select": "^3.0.8",
-    "react-syntax-highlighter": "^11.0.2",
+    "react-syntax-highlighter": "^12.2.1",
     "react-textarea-autosize": "^7.1.0",
     "ts-dedent": "^1.1.1"
   },
   "devDependencies": {
     "css": "^2.2.4",
     "enzyme": "^3.9.0",
-    "jest": "^25.5.2",
+    "jest": "^26.0.0",
     "jest-enzyme": "^7.0.2"
   },
   "peerDependencies": {

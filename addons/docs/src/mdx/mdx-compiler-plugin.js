@@ -61,50 +61,56 @@ function genStoryExport(ast, context) {
   const statements = [];
   const storyKey = getStoryKey(storyName, context.counter);
 
-  let body = ast.children.find((n) => n.type !== 'JSXText');
+  const bodyNodes = ast.children.filter((n) => n.type !== 'JSXText');
   let storyCode = null;
-
-  if (!body) {
+  let storyVal = null;
+  if (!bodyNodes.length) {
     // plain text node
     const { code } = generate(ast.children[0], {});
     storyCode = `'${code}'`;
+    storyVal = `() => (
+      ${storyCode}
+    )`;
   } else {
-    if (body.type === 'JSXExpressionContainer') {
-      // FIXME: handle fragments
-      body = body.expression;
+    const bodyParts = bodyNodes.map((bodyNode) => {
+      const body = bodyNode.type === 'JSXExpressionContainer' ? bodyNode.expression : bodyNode;
+      const { code } = generate(body, {});
+      return { code, body };
+    });
+    // if we have more than two children
+    // 1. Add line breaks
+    // 2. Enclose in <> ... </>
+    storyCode = bodyParts.map(({ code }) => code).join('\n');
+    const storyReactCode = bodyParts.length > 1 ? `<>\n${storyCode}\n</>` : storyCode;
+    // keep track if an indentifier or function call
+    // avoid breaking change for 5.3
+    switch (bodyParts.length === 1 && bodyParts[0].body.type) {
+      // We don't know what type the identifier is, but this code
+      // assumes it's a function from CSF. Let's see who complains!
+      case 'Identifier':
+        storyVal = `assertIsFn(${storyCode})`;
+        break;
+      case 'ArrowFunctionExpression':
+        storyVal = `(${storyCode})`;
+        break;
+      default:
+        storyVal = `() => (
+          ${storyReactCode}
+        )`;
+        break;
     }
-    const { code } = generate(body, {});
-    storyCode = code;
-  }
-
-  let storyVal = null;
-  switch (body && body.type) {
-    // We don't know what type the identifier is, but this code
-    // assumes it's a function from CSF. Let's see who complains!
-    case 'Identifier':
-      storyVal = `assertIsFn(${storyCode})`;
-      break;
-    case 'ArrowFunctionExpression':
-      storyVal = `(${storyCode})`;
-      break;
-    default:
-      storyVal = `() => (
-        ${storyCode}
-      )`;
-      break;
   }
 
   statements.push(`export const ${storyKey} = ${storyVal};`);
-  statements.push(`${storyKey}.story = {};`);
 
   // always preserve the name, since CSF exports can get modified by displayName
-  statements.push(`${storyKey}.story.name = '${storyName}';`);
+  statements.push(`${storyKey}.storyName = '${storyName}';`);
 
   const argTypes = genAttribute('argTypes', ast.openingElement);
-  if (argTypes) statements.push(`${storyKey}.story.argTypes = ${argTypes};`);
+  if (argTypes) statements.push(`${storyKey}.argTypes = ${argTypes};`);
 
   const args = genAttribute('args', ast.openingElement);
-  if (args) statements.push(`${storyKey}.story.args = ${args};`);
+  if (args) statements.push(`${storyKey}.args = ${args};`);
 
   let parameters = getAttr(ast.openingElement, 'parameters');
   parameters = parameters && parameters.expression;
@@ -112,16 +118,16 @@ function genStoryExport(ast, context) {
   const sourceParam = `storySource: { source: '${source}' }`;
   if (parameters) {
     const { code: params } = generate(parameters, {});
-    statements.push(`${storyKey}.story.parameters = { ${sourceParam}, ...${params} };`);
+    statements.push(`${storyKey}.parameters = { ${sourceParam}, ...${params} };`);
   } else {
-    statements.push(`${storyKey}.story.parameters = { ${sourceParam} };`);
+    statements.push(`${storyKey}.parameters = { ${sourceParam} };`);
   }
 
   let decorators = getAttr(ast.openingElement, 'decorators');
   decorators = decorators && decorators.expression;
   if (decorators) {
     const { code: decos } = generate(decorators, {});
-    statements.push(`${storyKey}.story.decorators = ${decos};`);
+    statements.push(`${storyKey}.decorators = ${decos};`);
   }
 
   // eslint-disable-next-line no-param-reassign
@@ -329,7 +335,7 @@ function extractExports(node, options) {
   if (metaExport) {
     if (!storyExports.length) {
       storyExports.push('export const __page = () => { throw new Error("Docs-only story"); };');
-      storyExports.push('__page.story = { parameters: { docsOnly: true } };');
+      storyExports.push('__page.parameters = { docsOnly: true };');
       includeStories.push('__page');
     }
   } else {

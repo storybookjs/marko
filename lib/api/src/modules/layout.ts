@@ -69,7 +69,7 @@ const defaultState: SubState = {
     docsMode: false,
   },
   layout: {
-    initialActive: ActiveTabs.SIDEBAR,
+    initialActive: ActiveTabs.CANVAS,
     isToolshown: !DOCS_MODE,
     isFullscreen: false,
     showPanel: true,

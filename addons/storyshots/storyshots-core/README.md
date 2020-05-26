@@ -33,29 +33,28 @@ Now run your Jest test command. (Usually, `npm test`.) Then you can see all of y
 
 ![Screenshot](https://raw.githubusercontent.com/storybookjs/storybook/HEAD/addons/storyshots/storyshots-core/docs/storyshots.png)
 
-
 ## Configure your app for Jest
+
 In many cases, for example Create React App, it's already configured for Jest. You need to create a filename with the extension `.test.js`.
 
 If you still need to configure jest you can use the resources mentioned below:
 
--   [Getting Started - Jest Official Documentation](https://facebook.github.io/jest/docs/en/getting-started.html)
--   [Javascript Testing with Jest - Egghead](https://egghead.io/lessons/javascript-test-javascript-with-jest). ***paid content***
+- [Getting Started - Jest Official Documentation](https://facebook.github.io/jest/docs/en/getting-started.html)
+- [Javascript Testing with Jest - Egghead](https://egghead.io/lessons/javascript-test-javascript-with-jest). **_paid content_**
 
 > Note: If you use React 16, you'll need to follow [these additional instructions](https://github.com/facebook/react/issues/9102#issuecomment-283873039).
 >
-> Note: Make sure you have added the ```json``` extension to ```moduleFileExtensions``` in ```jest.config.json```. If this is missing it leads to the [following error](https://github.com/storybookjs/storybook/issues/3728): ```Cannot find module 'spdx-license-ids' from 'scan.js'```.
+> Note: Make sure you have added the `json` extension to `moduleFileExtensions` in `jest.config.json`. If this is missing it leads to the [following error](https://github.com/storybookjs/storybook/issues/3728): `Cannot find module 'spdx-license-ids' from 'scan.js'`.
 >
-> Note: Please make sure you are using ```jsdom``` as the testEnvironment on your jest config file.
-
+> Note: Please make sure you are using `jsdom` as the testEnvironment on your jest config file.
 
 ### Configure Jest to work with Webpack's [require.context()](https://webpack.js.org/guides/dependency-management/#require-context)
 
 **NOTE**: if you are using Storybook 5.3's `main.js` to list story files, this is no longer needed.
 
-Sometimes it's useful to configure Storybook with Webpack's require.context feature. You could be loading stories [one of two ways](https://storybook.js.org/docs/basics/writing-stories/#loading-stories). 
+Sometimes it's useful to configure Storybook with Webpack's require.context feature. You could be loading stories [one of two ways](https://storybook.js.org/docs/basics/writing-stories/#loading-stories).
 
-1) If you're using the `storiesOf` API, you can integrate it this way:
+1. If you're using the `storiesOf` API, you can integrate it this way:
 
 ```js
 import { configure } from '@storybook/react';
@@ -63,13 +62,13 @@ import { configure } from '@storybook/react';
 const req = require.context('../stories', true, /\.stories\.js$/); // <- import all the stories at once
 
 function loadStories() {
-  req.keys().forEach(filename => req(filename));
+  req.keys().forEach((filename) => req(filename));
 }
 
 configure(loadStories, module);
 ```
 
-2) If you're using Component Story Format (CSF), you'll integrate it like so:
+2. If you're using Component Story Format (CSF), you'll integrate it like so:
 
 ```js
 import { configure } from '@storybook/react';
@@ -77,7 +76,7 @@ import { configure } from '@storybook/react';
 const req = require.context('../stories', true, /\.stories\.js$/); // <- import all the stories at once
 
 configure(req, module);
-``` 
+```
 
 The problem here is that it will work only during the build with webpack,
 other tools may lack this feature. Since Storyshot is running under Jest,
@@ -100,11 +99,13 @@ Next, it needs to be registered and loaded before each test. To register it, cre
 import registerRequireContextHook from 'babel-plugin-require-context-hook/register';
 registerRequireContextHook();
 ```
+
 That file needs to be added as a setup file for Jest. To do that, add (or create) a property in Jest's config called [`setupFiles`](https://jestjs.io/docs/en/configuration.html#setupfiles-array). Add the file name and path to this array.
 
 ```json
 setupFiles: ['<rootDir>/.jest/register-context.js']
 ```
+
 Finally, add the plugin to `.babelrc`:
 
 ```json
@@ -118,6 +119,7 @@ Finally, add the plugin to `.babelrc`:
   }
 }
 ```
+
 The plugin is only added to the test environment otherwise it could replace webpack's version of it.
 
 #### Option 2: Macro
@@ -138,6 +140,7 @@ const req = requireContext('../stories', true, /\.stories\.js$/);
 ```
 
 ### Configure Jest for React
+
 StoryShots addon for React is dependent on [react-test-renderer](https://github.com/facebook/react/tree/master/packages/react-test-renderer), but
 [doesn't](#deps-issue) install it, so you need to install it separately.
 
@@ -146,6 +149,7 @@ yarn add react-test-renderer --dev
 ```
 
 ### Configure Jest for Angular
+
 StoryShots addon for Angular is dependent on [jest-preset-angular](https://github.com/thymikee/jest-preset-angular), but
 [doesn't](#deps-issue) install it, so you need to install it separately.
 
@@ -155,6 +159,7 @@ yarn add jest-preset-angular
 
 If you already use Jest for testing your angular app - probably you already have the needed jest configuration.
 Anyway you can add these lines to your jest config:
+
 ```js
 module.exports = {
   globals: {
@@ -167,7 +172,9 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node', '.html'],
 };
 ```
+
 ### Configure Jest for Vue
+
 StoryShots addon for Vue is dependent on [jest-vue-preprocessor](https://github.com/vire/jest-vue-preprocessor), but
 [doesn't](#deps-issue) install it, so you need to install it separately.
 
@@ -177,20 +184,20 @@ yarn add jest-vue-preprocessor
 
 If you already use Jest for testing your vue app - probably you already have the needed jest configuration.
 Anyway you can add these lines to your jest config:
+
 ```js
 module.exports = {
   transform: {
     '^.+\\.jsx?$': 'babel-jest',
     '.*\\.(vue)$': '<rootDir>/node_modules/jest-vue-preprocessor',
   },
-  transformIgnorePatterns: [
-    '/node_modules/(?!(@storybook/.*\\.vue$))',
-  ],
+  transformIgnorePatterns: ['/node_modules/(?!(@storybook/.*\\.vue$))'],
   moduleFileExtensions: ['vue', 'js', 'jsx', 'json', 'node'],
 };
 ```
 
 ### Configure Jest for Preact
+
 StoryShots addon for Preact is dependent on [preact-render-to-json](https://github.com/nathancahill/preact-render-to-json), but
 [doesn't](#deps-issue) install it, so you need to install it separately.
 
@@ -200,7 +207,7 @@ yarn add preact-render-to-json --dev
 
 ### Configure Jest for MDX Docs Add-On Stories
 
-If using the [Docs add-on](../../docs/README.md) with 
+If using the [Docs add-on](../../docs/README.md) with
 [MDX stories](../../docs/docs/mdx.md) you will need
 to configure Jest to transform MDX stories into something Storyshots can understand:
 
@@ -216,6 +223,7 @@ Add the following to your Jest configuration:
 ```
 
 ### <a name="deps-issue"></a>Why don't we install dependencies of each framework ?
+
 Storyshots addon is currently supporting React, Angular and Vue. Each framework needs its own packages to be integrated with Jest. We don't want people that use only React will need to bring other dependencies that do not make sense for them.
 
 `dependencies` - will installed an exact version of the particular dep - Storyshots can work with different versions of the same framework (let's say React v16 and React v15), that have to be compatible with a version of its plugin (react-test-renderer).
@@ -238,34 +246,33 @@ out elements that rely on refs, you will have to use the
 Here is an example of how to specify the `createNodeMock` option in Storyshots:
 
 ```js
-import initStoryshots, { snapshotWithOptions } from '@storybook/addon-storyshots'
-import TextareaThatUsesRefs from '../component/TextareaThatUsesRefs'
+import initStoryshots, { snapshotWithOptions } from '@storybook/addon-storyshots';
+import TextareaThatUsesRefs from '../component/TextareaThatUsesRefs';
 
 initStoryshots({
   test: snapshotWithOptions({
     createNodeMock: (element) => {
       if (element.type === TextareaThatUsesRefs) {
-        return document.createElement('textarea')
+        return document.createElement('textarea');
       }
     },
   }),
-})
+});
 ```
 
 Provide a function to have story-specific options:
 
-
 ```js
 initStoryshots({
-  test: snapshotWithOptions(story =>({
+  test: snapshotWithOptions((story) => ({
     createNodeMock: (element) => {
-      if(story.name == 'foobar') {
-        return null
+      if (story.name == 'foobar') {
+        return null;
       }
-      return element
+      return element;
     },
   })),
-})
+});
 ```
 
 ### StoryShots for async rendered components
@@ -280,28 +287,28 @@ Add _stories of UserForm_ in the file: UserForm.story.jsx
 
 ```jsx
 /* global module */
-import React from "react";
-import { QueryRenderer } from "react-relay";
-import { storiesOf } from "@storybook/react";
+import React from 'react';
+import { QueryRenderer } from 'react-relay';
+import { storiesOf } from '@storybook/react';
 
 // Use the same queries used in YOUR app routes
-import { newUserFormQuery, editUserFormQuery } from "app/routes";
-import UserFormContainer from "app/users/UserForm";
+import { newUserFormQuery, editUserFormQuery } from 'app/routes';
+import UserFormContainer from 'app/users/UserForm';
 
 // YOUR function to generate a Relay Environment mock.
 // See https://github.com/1stdibs/relay-mock-network-layer for more info
-import getEnvironment from "test/support/relay-environment-mock";
+import getEnvironment from 'test/support/relay-environment-mock';
 
 // User test data YOU generated for your tests
-import { user } from "test/support/data/index";
+import { user } from 'test/support/data/index';
 
 // Use this function to return a new Environment for each story
 const Environment = () =>
   getEnvironment({
     mocks: {
-      Node: () => ({ __typename: "User" }),
-      User: () => user
-    }
+      Node: () => ({ __typename: 'User' }),
+      User: () => user,
+    },
   });
 
 /**
@@ -328,23 +335,23 @@ const renderStory = (query, environment, variables = {}) => (
   />
 );
 
-storiesOf("users/UserForm", module)
-  .add("New User", () => {
+storiesOf('users/UserForm', module)
+  .add('New User', () => {
     const environment = new Environment();
     return renderStory(newUserFormQuery, environment);
   })
-  .add("Editing User", () => {
+  .add('Editing User', () => {
     const environment = new Environment();
     return renderStory(editUserFormQuery, environment, { id: user.id });
-  })
+  });
 ```
 
 Then, init Storyshots for async component in the file: StoryShots.test.js
 
 ```jsx
-import initStoryshots, { Stories2SnapsConverter } from "@storybook/addon-storyshots";
-import { mount } from "enzyme";
-import toJson from "enzyme-to-json";
+import initStoryshots, { Stories2SnapsConverter } from '@storybook/addon-storyshots';
+import { mount } from 'enzyme';
+import toJson from 'enzyme-to-json';
 
 // Runner
 initStoryshots({
@@ -352,7 +359,7 @@ initStoryshots({
   test: ({
     story,
     context,
-    done // --> callback passed to test method when asyncJest option is true
+    done, // --> callback passed to test method when asyncJest option is true
   }) => {
     const converter = new Stories2SnapsConverter();
     const snapshotFilename = converter.getSnapshotFileName(context);
@@ -371,12 +378,12 @@ initStoryshots({
       }
 
       done();
-    }, waitTime)
+    }, waitTime);
   },
   // other options here
 });
-
 ```
+
 NOTICE that When using the `asyncJest: true` option, you also must specify a `test` method that calls the `done()` callback.
 
 This is a really powerful technique to write stories of Relay components because it integrates data fetching with component rendering. So instead of passing data props manually, we can let Relay do the job for us as it does in our application.
@@ -405,8 +412,8 @@ initStoryshots({
 
 By default, Storyshots assumes the config directory path for your project as below:
 
--   Storybook for React: `.storybook`
--   Storybook for React Native: `storybook`
+- Storybook for React: `.storybook`
+- Storybook for React Native: `storybook`
 
 If you are using a different config directory path, you could change it like this:
 
@@ -414,7 +421,7 @@ If you are using a different config directory path, you could change it like thi
 import initStoryshots from '@storybook/addon-storyshots';
 
 initStoryshots({
-  configPath: '.my-storybook-config-dir'
+  configPath: '.my-storybook-config-dir',
 });
 ```
 
@@ -433,14 +440,13 @@ original one. It also may be useful for separating tests to different test confi
 
 ```js
 initStoryshots({
-  configPath: '.my-storybook-config-dir/testConfig1.js'
+  configPath: '.my-storybook-config-dir/testConfig1.js',
 });
 
 initStoryshots({
-  configPath: '.my-storybook-config-dir/testConfig2.js'
+  configPath: '.my-storybook-config-dir/testConfig2.js',
 });
 ```
-
 
 ### `suite`
 
@@ -450,7 +456,7 @@ By default, Storyshots groups stories inside a Jest test suite called "Storyshot
 import initStoryshots from '@storybook/addon-storyshots';
 
 initStoryshots({
-  suite: 'MyStoryshots'
+  suite: 'MyStoryshots',
 });
 ```
 
@@ -462,7 +468,7 @@ If you'd like to only run a subset of the stories for your snapshot tests based 
 import initStoryshots from '@storybook/addon-storyshots';
 
 initStoryshots({
-  storyKindRegex: /^MyComponent$/
+  storyKindRegex: /^MyComponent$/,
 });
 ```
 
@@ -474,7 +480,7 @@ If you want to run all stories except stories of a specific kind, you can write 
 import initStoryshots from '@storybook/addon-storyshots';
 
 initStoryshots({
-  storyKindRegex:/^((?!.*?DontTest).)*$/
+  storyKindRegex: /^((?!.*?DontTest).)*$/,
 });
 ```
 
@@ -489,7 +495,7 @@ If you'd like to only run a subset of the stories for your snapshot tests based 
 import initStoryshots from '@storybook/addon-storyshots';
 
 initStoryshots({
-  storyNameRegex: /buttons/
+  storyNameRegex: /buttons/,
 });
 ```
 
@@ -533,7 +539,6 @@ initStoryshots({
 If you are using enzyme, you need to make sure jest knows how to serialize rendered components.
 For that, you can pass an enzyme-compatible snapshotSerializer (like [enzyme-to-json](https://github.com/adriantoine/enzyme-to-json), [jest-serializer-enzyme](https://github.com/rogeliog/jest-serializer-enzyme) etc.) with the `snapshotSerializer` option (see below).
 
-
 ### `snapshotSerializers`
 
 Pass an array of snapshotSerializers to the jest runtime that serializes your story (such as enzyme-to-json).
@@ -549,8 +554,9 @@ initStoryshots({
 ```
 
 This option needs to be set if either:
-* the multiSnapshot function is used to create multiple snapshot files (i.e. one per story), since it ignores any serializers specified in your jest config.
-* serializers not specified in your jest config should be used when snapshotting stories.
+
+- the multiSnapshot function is used to create multiple snapshot files (i.e. one per story), since it ignores any serializers specified in your jest config.
+- serializers not specified in your jest config should be used when snapshotting stories.
 
 ### `serializer` (deprecated)
 
@@ -569,6 +575,7 @@ initStoryshots({
 This option only needs to be set if the default `snapshotSerializers` is not set in your jest config.
 
 ### `stories2snapsConverter`
+
 This parameter should be an instance of the [`Stories2SnapsConverter`](src/Stories2SnapsConverter.js) (or a derived from it) Class that is used to convert story-file name to snapshot-file name and vice versa.
 
 By default, the instance of this class is created with these default options:
@@ -592,7 +599,6 @@ initStoryshots({
     storiesExtensions: ['.foo'],
   }),
 });
-
 ```
 
 ## Exports
@@ -620,6 +626,7 @@ Like the default, but allows you to specify a set of options for the renderer, j
 
 Like `snapshotWithOptions`, but generate a separate snapshot file for each stories file rather than a single monolithic file (as is the convention in Jest). This makes it dramatically easier to review changes. If you'd like the benefit of separate snapshot files, but don't have custom options to pass, you can pass an empty object.
 If you use [Component Story Format](https://storybook.js.org/docs/formats/component-story-format/), you may also need to add an additional Jest transform to automate detecting story file names:
+
 ```js
 // jest.config.js
 module.exports = {
@@ -670,14 +677,13 @@ initStoryshots({
     if (snapshotFileName) {
       expect(toJson(shallowTree)).toMatchSpecificSnapshot(snapshotFileName);
     }
-  }
+  },
 });
 ```
 
 ### `asyncJest`
 
 Enables Jest `done()` callback in the StoryShots tests for async testing. See [StoryShots for async rendered components](#storyshots-for-async-rendered-components) for more info.
-
 
 ## Story Parameters
 
@@ -689,10 +695,8 @@ Some stories are difficult or impossible to snapshot, such as those covering com
 export const Exception = () => {
   throw new Error('storyFn threw an error! WHOOPS');
 };
-Exception.story = {
-  name: 'story throws exception',
-  parameters: {
-    storyshots: { disable: true },
-  },
+Exception.storyName = 'story throws exception';
+Exception.parameters = {
+  storyshots: { disable: true },
 };
 ```

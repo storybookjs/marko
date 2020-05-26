@@ -12,21 +12,15 @@ export const BuiltWithTag = () =>
   tag('test', '<div>simple test ({ opts.value })</div>', '', '', () => {}) &&
   mount('test', { value: 'with a parameter' });
 
-BuiltWithTag.story = {
-  name: 'built with tag',
-};
+BuiltWithTag.storyName = 'built with tag';
 
 export const BuiltAsString = () => ({ tags: ['<test><div>simple test</div></test>'] });
 
-BuiltAsString.story = {
-  name: 'built as string',
-};
+BuiltAsString.storyName = 'built as string';
 
 export const BuiltFromRawImport = () => simpleTestCompiled;
 
-BuiltFromRawImport.story = {
-  name: 'built from raw import',
-};
+BuiltFromRawImport.storyName = 'built from raw import';
 
 export const BuiltFromTagsAndTemplate = () => ({
   tags: [{ content: SimpleTestRaw, boundAs: 'mustBeUniquePlease' }],
@@ -34,9 +28,7 @@ export const BuiltFromTagsAndTemplate = () => ({
     '<SimpleTest test={ "with a parameter" } value={"value is mapped to riotValue"}></SimpleTest>',
 });
 
-BuiltFromTagsAndTemplate.story = {
-  name: 'built from tags and template',
-};
+BuiltFromTagsAndTemplate.storyName = 'built from tags and template';
 
 export const TagsTemplateAndTagConstructorAtOnce = () => ({
   tags: [
@@ -53,24 +45,16 @@ export const TagsTemplateAndTagConstructorAtOnce = () => ({
   },
 });
 
-TagsTemplateAndTagConstructorAtOnce.story = {
-  name: 'tags, template and tagConstructor at once',
-};
+TagsTemplateAndTagConstructorAtOnce.storyName = 'tags, template and tagConstructor at once';
 
 export const BuiltFromThePrecompilation = () => mount('anothertest', {});
 
-BuiltFromThePrecompilation.story = {
-  name: 'built from the precompilation',
-};
+BuiltFromThePrecompilation.storyName = 'built from the precompilation';
 
 export const TheMountInstructionIsNotNecessary = () => ({ tagName: 'anothertest', opts: {} });
 
-TheMountInstructionIsNotNecessary.story = {
-  name: 'the mount instruction is not necessary',
-};
+TheMountInstructionIsNotNecessary.storyName = 'the mount instruction is not necessary';
 
 export const TheOptsValueIsNotNecessary = () => ({ tagName: 'anothertest' });
 
-TheOptsValueIsNotNecessary.story = {
-  name: 'the opts value is not necessary',
-};
+TheOptsValueIsNotNecessary.storyName = 'the opts value is not necessary';

@@ -14,6 +14,18 @@ export function webpack(config: Configuration) {
           loader: require.resolve('vue-loader'),
           options: {},
         },
+        {
+          test: /\.tsx?$/,
+          use: [
+            {
+              loader: require.resolve('ts-loader'),
+              options: {
+                transpileOnly: true,
+                appendTsSuffixTo: [/\.vue$/],
+              },
+            },
+          ],
+        },
       ],
     },
     resolve: {
@@ -24,12 +36,5 @@ export function webpack(config: Configuration) {
         vue$: require.resolve('vue/dist/vue.esm.js'),
       },
     },
-  };
-}
-
-export function babelDefault(config: any) {
-  return {
-    ...config,
-    presets: [...config.presets, require.resolve('babel-preset-vue')],
   };
 }

@@ -40,6 +40,10 @@ const Text = styled.p(({ theme }) => ({
   margin: 0,
 }));
 
+const RedIcon = styled(Icons)(({ theme }) => ({
+  color: theme.color.negative,
+}));
+
 const Head: FunctionComponent<ListitemProps> = (props) => {
   const api = useStorybookApi();
   const { setExpanded, expandedSet } = useContext(ExpanderContext);
@@ -107,8 +111,21 @@ const ErrorDetail = styled.em(({ theme }) => ({
 const firstLineRegex = /(Error): (.*)\n/;
 const linesRegex = /at (?:(.*) )?\(?(.+)\)?/;
 const ErrorFormatter: FunctionComponent<{ error: Error }> = ({ error }) => {
+  if (!error) {
+    return <Fragment>this error has no stack or message</Fragment>;
+  }
+  if (!error.stack) {
+    return <Fragment>{error.message || 'this error has no stack or message'}</Fragment>;
+  }
+
   const input = error.stack.toString();
-  const [, type, name] = input.match(firstLineRegex);
+  const match = input.match(firstLineRegex);
+
+  if (!match) {
+    return <Fragment>{input}</Fragment>;
+  }
+
+  const [, type, name] = match;
 
   const rawLines = input.split(/\n/).slice(1);
   const [, ...lines] = rawLines
@@ -201,7 +218,7 @@ export const AuthBlock: FunctionComponent<{ authUrl: string; id: string }> = ({ 
 export const ErrorBlock: FunctionComponent<{ error: Error }> = ({ error }) => (
   <Contained>
     <Spaced>
-      <Text>Ow now! something went wrong loading this storybook</Text>
+      <Text>Ow no! something went wrong loading this storybook</Text>
       <WithTooltip
         trigger="click"
         closeOnClick={false}
@@ -217,6 +234,45 @@ export const ErrorBlock: FunctionComponent<{ error: Error }> = ({ error }) => (
         </Button>
       </WithTooltip>
     </Spaced>
+  </Contained>
+);
+
+const FlexSpaced = styled(Spaced)({
+  display: 'flex',
+});
+const WideSpaced = styled(Spaced)({
+  flex: 1,
+});
+
+export const EmptyBlock: FunctionComponent<any> = ({ isMain }) => (
+  <Contained>
+    <FlexSpaced col={1}>
+      <WideSpaced>
+        {/*  */}
+        <div>
+          <Text>
+            <strong>Ow now! {isMain ? 'Your storybook' : 'this ref'} is empty!</strong>
+          </Text>
+        </div>
+        {isMain ? (
+          <Fragment>
+            <div>
+              <Text>
+                Perhaps the glob specified in <code>main.js</code> found no files?
+              </Text>
+            </div>
+            <div>
+              <Text>Or your story-files don't define any stories?</Text>
+            </div>
+          </Fragment>
+        ) : (
+          <div>
+            <Text>This ref defined no stories</Text>
+          </div>
+        )}
+      </WideSpaced>
+      <RedIcon icon="info" width={14} height={14} />
+    </FlexSpaced>
   </Contained>
 );
 

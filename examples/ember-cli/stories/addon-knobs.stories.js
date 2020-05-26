@@ -34,6 +34,4 @@ export const WithText = () => ({
   },
 });
 
-WithText.story = {
-  name: 'with text',
-};
+WithText.storyName = 'with text';

@@ -1,4 +1,3 @@
-// foo
 import createChannel from '@storybook/channel-postmessage';
 import { toId } from '@storybook/csf';
 import addons, { mockChannel } from '@storybook/addons';
@@ -228,13 +227,17 @@ describe('preview.story_store', () => {
   describe('globalArgs', () => {
     it('is initialized to the value stored in parameters.globalArgs on the first story', () => {
       const store = new StoryStore({ channel });
-      addStoryToStore(store, 'a', '1', () => 0, {
-        globalArgs: {
-          arg1: 'arg1',
-          arg2: 2,
-          arg3: { complex: { object: ['type'] } },
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          globalArgs: {
+            arg1: 'arg1',
+            arg2: 2,
+            arg3: { complex: { object: ['type'] } },
+          },
         },
       });
+      addStoryToStore(store, 'a', '1', () => 0);
       store.finishConfiguring();
       expect(store.getRawStory('a', '1').globalArgs).toEqual({
         arg1: 'arg1',
@@ -245,16 +248,20 @@ describe('preview.story_store', () => {
 
     it('is initialized to the default values stored in parameters.globalArgsTypes on the first story', () => {
       const store = new StoryStore({ channel });
-      addStoryToStore(store, 'a', '1', () => 0, {
-        globalArgs: {
-          arg1: 'arg1',
-          arg2: 2,
-        },
-        globalArgTypes: {
-          arg2: { defaultValue: 'arg2' },
-          arg3: { defaultValue: { complex: { object: ['type'] } } },
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          globalArgs: {
+            arg1: 'arg1',
+            arg2: 2,
+          },
+          globalArgTypes: {
+            arg2: { defaultValue: 'arg2' },
+            arg3: { defaultValue: { complex: { object: ['type'] } } },
+          },
         },
       });
+      addStoryToStore(store, 'a', '1', () => 0);
       store.finishConfiguring();
       expect(store.getRawStory('a', '1').globalArgs).toEqual({
         arg1: 'arg1',
@@ -266,30 +273,38 @@ describe('preview.story_store', () => {
     it('on HMR it sensibly re-initializes with memory', () => {
       const store = new StoryStore({ channel });
       addons.setChannel(channel);
-      addStoryToStore(store, 'a', '1', () => 0, {
-        globalArgs: {
-          arg1: 'arg1',
-          arg2: 2,
-          arg3: { complex: { object: ['type'] } },
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          globalArgs: {
+            arg1: 'arg1',
+            arg2: 2,
+            arg3: { complex: { object: ['type'] } },
+          },
         },
       });
+      addStoryToStore(store, 'a', '1', () => 0);
       store.finishConfiguring();
 
       // HMR
       store.startConfiguring();
-      store.removeStoryKind('a');
-      addStoryToStore(store, 'a', '1', () => 0, {
-        globalArgs: {
-          arg2: 2,
-          // Although we have changed the default there is no way to tell that the user didn't change
-          // it themselves
-          arg3: { complex: { object: ['changed'] } },
-          arg4: 'new',
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          globalArgs: {
+            arg2: 2,
+            // Although we have changed the default there is no way to tell that the user didn't change
+            // it themselves
+            arg3: { complex: { object: ['changed'] } },
+            arg4: 'new',
+          },
         },
       });
       store.finishConfiguring();
 
       expect(store.getRawStory('a', '1').globalArgs).toEqual({
+        // You cannot remove a global arg in HMR currently
+        arg1: 'arg1',
         arg2: 2,
         arg3: { complex: { object: ['type'] } },
         arg4: 'new',
@@ -779,13 +794,14 @@ describe('preview.story_store', () => {
   });
 
   describe('RENDER_CURRENT_STORY', () => {
-    it('is emitted when setError is called', () => {
+    it('is NOT emitted when setError is called', () => {
       const onRenderCurrentStory = jest.fn();
       channel.on(Events.RENDER_CURRENT_STORY, onRenderCurrentStory);
       const store = new StoryStore({ channel });
 
       store.setError(new Error('Something is bad!') as ErrorLike);
-      expect(onRenderCurrentStory).toHaveBeenCalled();
+      store.finishConfiguring();
+      expect(onRenderCurrentStory).not.toHaveBeenCalled();
     });
 
     it('is NOT emitted when setSelection is called during configuration', () => {
@@ -797,13 +813,13 @@ describe('preview.story_store', () => {
       expect(onRenderCurrentStory).not.toHaveBeenCalled();
     });
 
-    it('is emitted when configuration ends', () => {
+    it('is NOT emitted when configuration ends', () => {
       const onRenderCurrentStory = jest.fn();
       channel.on(Events.RENDER_CURRENT_STORY, onRenderCurrentStory);
       const store = new StoryStore({ channel });
 
       store.finishConfiguring();
-      expect(onRenderCurrentStory).toHaveBeenCalled();
+      expect(onRenderCurrentStory).not.toHaveBeenCalled();
     });
 
     it('is emitted when setSelection is called outside of configuration', () => {
@@ -815,6 +831,27 @@ describe('preview.story_store', () => {
       onRenderCurrentStory.mockClear();
       store.setSelection({ storyId: 'a--1', viewMode: 'story' });
       expect(onRenderCurrentStory).toHaveBeenCalled();
+    });
+  });
+
+  describe('GLOBAL_ARGS_UPDATED', () => {
+    it('is emitted when setError is called', () => {
+      const onGlobalArgsUpdated = jest.fn();
+      channel.on(Events.GLOBAL_ARGS_UPDATED, onGlobalArgsUpdated);
+      const store = new StoryStore({ channel });
+
+      store.setError(new Error('Something is bad!') as ErrorLike);
+      store.finishConfiguring();
+      expect(onGlobalArgsUpdated).toHaveBeenCalled();
+    });
+
+    it('is emitted when configuration ends', () => {
+      const onGlobalArgsUpdated = jest.fn();
+      channel.on(Events.GLOBAL_ARGS_UPDATED, onGlobalArgsUpdated);
+      const store = new StoryStore({ channel });
+
+      store.finishConfiguring();
+      expect(onGlobalArgsUpdated).toHaveBeenCalled();
     });
   });
 });

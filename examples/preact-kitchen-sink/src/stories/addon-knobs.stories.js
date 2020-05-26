@@ -73,6 +73,4 @@ export const AllKnobs = () => {
   );
 };
 
-AllKnobs.story = {
-  name: 'All knobs',
-};
+AllKnobs.storyName = 'All knobs';
