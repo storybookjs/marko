@@ -1,5 +1,5 @@
 <center>
-  <img src="./docs/media/addon-controls-hero.gif" width="80%" />
+  <img src="https://raw.githubusercontent.com/storybookjs/storybook/next/addons/controls/docs/media/addon-controls-hero.gif" width="80%" />
 </center>
 
 <h1>Storybook Controls</h1>
@@ -93,7 +93,7 @@ export const Basic = () => <Button label="hello" />;
 After installing the controls addon, you'll see a new tab that shows the component's props, but it doesn't show controls because the story doesn't use args. That's not very useful, but we'll fix that momentarily.
 
 <center>
-  <img src="./docs/media/addon-controls-install.png" width="80%" />
+  <img src="https://raw.githubusercontent.com/storybookjs/storybook/next/addons/controls/docs/media/addon-controls-install.png" width="80%" />
 </center>
 
 ### Auto-generated args
@@ -110,7 +110,7 @@ export const Basic = (args) => {
 Now you'll see auto-generated controls in the `Controls` tab, and you can see the `args` data updating as you edit the values in the UI:
 
 <center>
-  <img src="./docs/media/addon-controls-args-logging.png" width="80%" />
+  <img src="https://raw.githubusercontent.com/storybookjs/storybook/next/addons/controls/docs/media/addon-controls-args-logging.png" width="80%" />
 </center>
 
 Since the args directly matches the `Button`'s props, we can pass it into the args directly:
@@ -122,7 +122,7 @@ export const Basic = (args) => <Button {...args} />;
 This generates an interactive UI:
 
 <center>
-  <img src="./docs/media/addon-controls-args-no-annotation.png" width="80%" />
+  <img src="https://raw.githubusercontent.com/storybookjs/storybook/next/addons/controls/docs/media/addon-controls-args-no-annotation.png" width="80%" />
 </center>
 
 Unfortunately this uses the default values specified in the component, and not the label `hello`, which is what we wanted. To address this, we add an `args` annotation to the story, which specifies the initial values:
@@ -135,13 +135,13 @@ Basic.args = { label: 'hello' };
 Now we're back where we started, but we have a fully interactive story!
 
 <center>
-  <img src="./docs/media/addon-controls-args-annotated.png" width="80%" />
+  <img src="https://raw.githubusercontent.com/storybookjs/storybook/next/addons/controls/docs/media/addon-controls-args-annotated.png" width="80%" />
 </center>
 
 And this fully interactive story is also available in the `Docs` tab of Storybook:
 
 <center>
-  <img src="./docs/media/addon-controls-args-docs.png" width="80%" />
+  <img src="https://raw.githubusercontent.com/storybookjs/storybook/next/addons/controls/docs/media/addon-controls-args-docs.png" width="80%" />
 </center>
 
 ### Custom controls args
@@ -171,7 +171,7 @@ Basic.args = { label: 'hello', background: '#ff0' };
 This generates the following `Controls` UI:
 
 <center>
-  <img src="./docs/media/addon-controls-args-background-string.png" width="80%" />
+  <img src="https://raw.githubusercontent.com/storybookjs/storybook/next/addons/controls/docs/media/addon-controls-args-background-string.png" width="80%" />
 </center>
 
 This works as long as you type a valid string into the auto-generated text control, but it's certainly is not the best UI for picking a color.
@@ -197,7 +197,7 @@ Basic.args = { label: 'hello', background: '#ff0' };
 This generates the following UI, which is what we wanted in the first place:
 
 <center>
-  <img src="./docs/media/addon-controls-args-background-color.png" width="80%" />
+  <img src="https://raw.githubusercontent.com/storybookjs/storybook/next/addons/controls/docs/media/addon-controls-args-background-color.png" width="80%" />
 </center>
 
 ### Fully custom args
@@ -223,7 +223,7 @@ Reflow.args = { count: 3, label: 'reflow' };
 This generates the following UI:
 
 <center>
-  <img src="./docs/media/addon-controls-args-reflow.png" width="80%" />
+  <img src="https://raw.githubusercontent.com/storybookjs/storybook/next/addons/controls/docs/media/addon-controls-args-reflow.png" width="80%" />
 </center>
 
 Storybook has inferred the control to be a numeric input based on the initial value of the `count` arg. As we did above, we can also specify a custom control [as we did above](#custom-controls). Only this time since it's story specific we can do it at the story level:
@@ -239,7 +239,7 @@ Reflow.argTypes = {
 This generates the following UI with a custom range slider:
 
 <center>
-  <img src="./docs/media/addon-controls-args-reflow-slider.png" width="80%" />
+  <img src="https://raw.githubusercontent.com/storybookjs/storybook/next/addons/controls/docs/media/addon-controls-args-reflow-slider.png" width="80%" />
 </center>
 
 ### Template stories
@@ -268,7 +268,7 @@ VeryLongLabel.args = { ...Basic.args, label: 'this is a very long string' };
 ```
 
 <center>
-  <img src="./docs/media/addon-controls-args-template.png" width="80%" />
+  <img src="https://raw.githubusercontent.com/storybookjs/storybook/next/addons/controls/docs/media/addon-controls-args-template.png" width="80%" />
 </center>
 
 ## Configuration
@@ -322,7 +322,7 @@ export const parameters = {
 And here's what the resulting UI looks like:
 
 <center>
-  <img src="./docs/media/addon-controls-expanded.png" width="80%" />
+  <img src="https://raw.githubusercontent.com/storybookjs/storybook/next/addons/controls/docs/media/addon-controls-expanded.png" width="80%" />
 </center>
 
 ## Framework support
