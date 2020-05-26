@@ -73,8 +73,8 @@ within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: ['@storybook/addon-jest']
-}
+  addons: ['@storybook/addon-jest'],
+};
 ```
 
 ## Usage
@@ -92,13 +92,9 @@ export default {
   decorators: [withTests({ results })],
 };
 
-export const defaultView = () => (
-  <div>Jest results in storybook</div>
-);
-defaultView.story = {
-  parameters: {
-    jest: ['MyComponent.test.js', 'MyOtherComponent.test.js'],
-  },
+export const defaultView = () => <div>Jest results in storybook</div>;
+defaultView.parameters = {
+  jest: ['MyComponent.test.js', 'MyOtherComponent.test.js'],
 };
 ```
 
@@ -126,13 +122,9 @@ export default {
   title: 'MyComponent',
 };
 
-export const defaultView = () => (
-  <div>Jest results in storybook</div>
-);
-defaultView.story = {
-  parameters: {
-    jest: ['MyComponent.test.js', 'MyOtherComponent.test.js'],
-  },
+export const defaultView = () => <div>Jest results in storybook</div>;
+defaultView.parameters = {
+  jest: ['MyComponent.test.js', 'MyOtherComponent.test.js'],
 };
 ```
 
@@ -147,13 +139,9 @@ export default {
   title: 'MyComponent',
 };
 
-export const defaultView = () => (
-  <div>Jest results in storybook</div>
-);
-defaultView.story = {
-  parameters: {
-    jest: { disable: true },
-  },
+export const defaultView = () => <div>Jest results in storybook</div>;
+defaultView.parameters = {
+  jest: { disable: true },
 };
 ```
 

@@ -15,6 +15,4 @@ export const Disabled = () => hbs`<button disabled>Testing the a11y addon</butto
 export const InvalidContrast = () =>
   hbs`<button style="color: black; background-color: brown;">Testing the a11y addon</button>`;
 
-InvalidContrast.story = {
-  name: 'Invalid contrast',
-};
+InvalidContrast.storyName = 'Invalid contrast';

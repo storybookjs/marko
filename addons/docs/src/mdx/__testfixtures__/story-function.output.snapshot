@@ -39,9 +39,8 @@ export const functionStory = () => {
   btn.addEventListener('click', action('Click'));
   return btn;
 };
-functionStory.story = {};
-functionStory.story.name = 'function';
-functionStory.story.parameters = {
+functionStory.storyName = 'function';
+functionStory.parameters = {
   storySource: {
     source:
       \\"() => {\\\\n  const btn = document.createElement('button');\\\\n  btn.innerHTML = 'Hello Button';\\\\n  btn.addEventListener('click', action('Click'));\\\\n  return btn;\\\\n}\\",

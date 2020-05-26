@@ -20,7 +20,7 @@ export interface PreviewProps {
 type layout = 'padded' | 'fullscreen' | 'centered';
 
 const ChildrenContainer = styled.div<PreviewProps & { zoom: number; layout: layout }>(
-  ({ isColumn, columns }) => ({
+  ({ isColumn, columns, layout }) => ({
     display: isColumn || !columns ? 'block' : 'flex',
     position: 'relative',
     flexWrap: 'wrap',
@@ -29,11 +29,11 @@ const ChildrenContainer = styled.div<PreviewProps & { zoom: number; layout: layo
 
     '& > *': isColumn
       ? {
-          width: '100%',
+          width: layout !== 'fullscreen' ? 'calc(100% - 20px)' : '100%',
           display: 'block',
         }
       : {
-          maxWidth: '100%',
+          maxWidth: layout !== 'fullscreen' ? 'calc(100% - 20px)' : '100%',
           display: 'inline-block',
         },
   }),
@@ -43,6 +43,7 @@ const ChildrenContainer = styled.div<PreviewProps & { zoom: number; layout: layo
           padding: '30px 20px',
           margin: -10,
           '& > *': {
+            width: 'auto',
             border: '10px solid transparent!important',
           },
         }
@@ -154,7 +155,7 @@ const Relative = styled.div({
   position: 'relative',
 });
 
-const getLayout = (children: ReactElement[]) => {
+const getLayout = (children: ReactElement[]): layout => {
   return children.reduce((result, c) => {
     if (result) {
       return result;
@@ -206,7 +207,12 @@ const Preview: FunctionComponent<PreviewProps> = ({
       )}
       <ZoomContext.Provider value={{ scale }}>
         <Relative>
-          <ChildrenContainer isColumn={isColumn} columns={columns} zoom={scale} layout={layout}>
+          <ChildrenContainer
+            isColumn={isColumn || !Array.isArray(children)}
+            columns={columns}
+            zoom={scale}
+            layout={layout}
+          >
             {Array.isArray(children) ? (
               // eslint-disable-next-line react/no-array-index-key
               children.map((child, i) => <div key={i}>{child}</div>)

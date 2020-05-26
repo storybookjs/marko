@@ -14,6 +14,5 @@ export const ClassSpecifiedComponentWithOnPushAndKnobs = () => ({
   },
 });
 
-ClassSpecifiedComponentWithOnPushAndKnobs.story = {
-  name: 'Class-specified component with OnPush and Knobs',
-};
+ClassSpecifiedComponentWithOnPushAndKnobs.storyName =
+  'Class-specified component with OnPush and Knobs';

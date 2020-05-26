@@ -29,9 +29,7 @@ export const Combined1 = () => ({
   },
 });
 
-Combined1.story = {
-  name: 'Combined 1',
-};
+Combined1.storyName = 'Combined 1';
 
 export const Combined2 = () => ({
   template: `<storybook-simple-token-component [name]="name | customPipe"></storybook-simple-token-component>`,
@@ -43,6 +41,4 @@ export const Combined2 = () => ({
   },
 });
 
-Combined2.story = {
-  name: 'Combined 2',
-};
+Combined2.storyName = 'Combined 2';

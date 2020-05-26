@@ -18,9 +18,7 @@ export const RenderComponent = () => ({
   },
 });
 
-RenderComponent.story = {
-  name: 'render + component',
-};
+RenderComponent.storyName = 'render + component';
 
 export const Template = () => ({
   template: `
@@ -35,9 +33,7 @@ export const TemplateComponent = () => ({
   template: '<my-button>MyButton rendered in a template</my-button>',
 });
 
-TemplateComponent.story = {
-  name: 'template + component',
-};
+TemplateComponent.storyName = 'template + component';
 
 export const TemplateMethods = () => ({
   components: { MyButton },
@@ -51,9 +47,7 @@ export const TemplateMethods = () => ({
   },
 });
 
-TemplateMethods.story = {
-  name: 'template + methods',
-};
+TemplateMethods.storyName = 'template + methods';
 
 export const JSX = () => ({
   components: { MyButton },
@@ -82,9 +76,7 @@ export const VuexActions = () => ({
   },
 });
 
-VuexActions.story = {
-  name: 'vuex + actions',
-};
+VuexActions.storyName = 'vuex + actions';
 
 export const WhateverYouWant = () => ({
   components: { MyButton },
@@ -105,9 +97,7 @@ export const WhateverYouWant = () => ({
   },
 });
 
-WhateverYouWant.story = {
-  name: 'whatever you want',
-};
+WhateverYouWant.storyName = 'whatever you want';
 
 export const PreRegisteredComponent = () => ({
   /* By pre-registering component in config.js,
@@ -120,6 +110,4 @@ export const PreRegisteredComponent = () => ({
       </p>`,
 });
 
-PreRegisteredComponent.story = {
-  name: 'pre-registered component',
-};
+PreRegisteredComponent.storyName = 'pre-registered component';

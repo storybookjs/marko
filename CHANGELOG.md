@@ -1,3 +1,68 @@
+## 6.0.0-beta.14 (May 25, 2020)
+
+### Breaking Changes
+
+- CSF: Hoist story annotation object ([#10907](https://github.com/storybookjs/storybook/pull/10907))
+- Vue: Remove babel-preset-vue ([#10909](https://github.com/storybookjs/storybook/pull/10909))
+
+### Features
+
+- Angular: Support `workspace.json` in nx workspace ([#10881](https://github.com/storybookjs/storybook/pull/10881))
+
+### Bug Fixes
+
+- Addon-docs: Fix single item width in Preview block ([#10877](https://github.com/storybookjs/storybook/pull/10877))
+- UI: Center toolbar icon buttons ([#10897](https://github.com/storybookjs/storybook/pull/10897))
+- Core: Fix double rendering on startup ([#10892](https://github.com/storybookjs/storybook/pull/10892))
+
+### Maintenance
+
+- Core: Use dedicated loader for es6 modules ([#10783](https://github.com/storybookjs/storybook/pull/10783))
+- Core: Fix yarn test command on windows ([#10904](https://github.com/storybookjs/storybook/pull/10904))
+
+## 5.3.19 (May 24, 2020)
+
+### Bug Fixes
+
+- UI: Fix search stories ([#10539](https://github.com/storybookjs/storybook/pull/10539))
+
+### Security
+
+- Upgrade markdown-to-jsx to 6.11.4 ([#10873](https://github.com/storybookjs/storybook/pull/10873))
+
+## 6.0.0-beta.13 (May 23, 2020)
+
+### Bug Fixes
+
+- Core: Fix ts/tsx resolution in the manager ([#10886](https://github.com/storybookjs/storybook/pull/10886))
+- Core: Fix typo in projectRoot node_modules detection ([#10848](https://github.com/storybookjs/storybook/pull/10848))
+- Addon-docs: Fix story inline rendering ([#10875](https://github.com/storybookjs/storybook/pull/10875))
+- Core: Fix CRA filter for built-in webpack settings ([#10861](https://github.com/storybookjs/storybook/pull/10861))
+- Addon-docs: Fix react forwardRefs with destructured props ([#10864](https://github.com/storybookjs/storybook/pull/10864))
+
+### Maintenance
+
+- React: Upgrade preset-create-react-app in examples ([#10867](https://github.com/storybookjs/storybook/pull/10867))
+- Core: Close server when e2e test failed ([#10868](https://github.com/storybookjs/storybook/pull/10868))
+
+### Dependency Upgrades
+
+- Upgrade markdown-to-jsx to 6.11.4 ([#10873](https://github.com/storybookjs/storybook/pull/10873))
+
+## 6.0.0-beta.12 (May 21, 2020)
+
+### Breaking Changes
+
+- Core: Zero-config TypeScript loading ([#10813](https://github.com/storybookjs/storybook/pull/10813))
+
+## 6.0.0-beta.11 (May 21, 2020)
+
+Failed publish
+
+## 6.0.0-beta.10 (May 21, 2020)
+
+Failed publish
+
 ## 6.0.0-beta.9 (May 21, 2020)
 
 ### Bug Fixes

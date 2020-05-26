@@ -17,7 +17,6 @@ const generator: Generator = async (npmOptions, { storyFormat }) => {
     '@storybook/addon-actions',
     '@storybook/addon-links',
     '@storybook/addons',
-    'babel-preset-vue',
     '@babel/core',
   ];
   if (storyFormat === StoryFormat.MDX) {
@@ -53,9 +52,6 @@ const generator: Generator = async (npmOptions, { storyFormat }) => {
   writePackageJson(packageJson);
 
   const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
-
-  // We should probably just not even be using babel-preset-vue directly
-  // see: https://github.com/storybookjs/storybook/issues/4475#issuecomment-432141296
   installDependencies({ ...npmOptions, packageJson }, [...versionedPackages, ...babelDependencies]);
 };
 

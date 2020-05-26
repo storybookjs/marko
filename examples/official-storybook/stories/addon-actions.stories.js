@@ -19,11 +19,9 @@ export const ArgTypesExample = ({ onClick, onFocus }) => (
   <Button {...{ onClick, onFocus }}>Hello World</Button>
 );
 
-ArgTypesExample.story = {
-  argTypes: {
-    onClick: { action: 'clicked!' },
-    onFocus: { action: true },
-  },
+ArgTypesExample.argTypes = {
+  onClick: { action: 'clicked!' },
+  onFocus: { action: true },
 };
 
 export const ArgTypesRegexExample = (args, context) => {
@@ -35,24 +33,18 @@ export const ArgTypesRegexExample = (args, context) => {
   );
 };
 
-ArgTypesRegexExample.story = {
-  parameters: { actions: { argTypesRegex: '^on.*' } },
-  argTypes: { someFunction: {}, onClick: {}, onFocus: {} },
-};
+ArgTypesRegexExample.parameters = { actions: { argTypesRegex: '^on.*' } };
+ArgTypesRegexExample.argTypes = { someFunction: {}, onClick: {}, onFocus: {} };
 
 export const BasicExample = () => <Button onClick={action('hello-world')}>Hello World</Button>;
 
-BasicExample.story = {
-  name: 'Basic example',
-};
+BasicExample.storyName = 'Basic example';
 
 export const MultipleActions = () => (
   <Button {...actions('onClick', 'onMouseOver')}>Hello World</Button>
 );
 
-MultipleActions.story = {
-  name: 'Multiple actions',
-};
+MultipleActions.storyName = 'Multiple actions';
 
 export const MultipleActionsConfig = () => (
   <Button {...actions('onClick', 'onMouseOver', { clearOnStoryChange: false })}>
@@ -60,17 +52,13 @@ export const MultipleActionsConfig = () => (
   </Button>
 );
 
-MultipleActionsConfig.story = {
-  name: 'Multiple actions + config',
-};
+MultipleActionsConfig.storyName = 'Multiple actions + config';
 
 export const MultipleActionsAsObject = () => (
   <Button {...actions({ onClick: 'clicked', onMouseOver: 'hovered' })}>Hello World</Button>
 );
 
-MultipleActionsAsObject.story = {
-  name: 'Multiple actions as object',
-};
+MultipleActionsAsObject.storyName = 'Multiple actions as object';
 
 export const MultipleActionsObjectConfig = () => (
   <Button
@@ -80,9 +68,7 @@ export const MultipleActionsObjectConfig = () => (
   </Button>
 );
 
-MultipleActionsObjectConfig.story = {
-  name: 'Multiple actions, object + config',
-};
+MultipleActionsObjectConfig.storyName = 'Multiple actions, object + config';
 
 export const CircularPayload = () => {
   const circular = { foo: {} };
@@ -90,15 +76,11 @@ export const CircularPayload = () => {
   return <Button onClick={() => action('circular')(circular)}>Circular Payload</Button>;
 };
 
-CircularPayload.story = {
-  name: 'Circular Payload',
-};
+CircularPayload.storyName = 'Circular Payload';
 
 export const ReservedKeywordAsName = () => <Button onClick={action('delete')}>Delete</Button>;
 
-ReservedKeywordAsName.story = {
-  name: 'Reserved keyword as name',
-};
+ReservedKeywordAsName.storyName = 'Reserved keyword as name';
 
 export const AllTypes = () => {
   function A() {}
@@ -166,9 +148,7 @@ export const AllTypes = () => {
   );
 };
 
-AllTypes.story = {
-  name: 'All types',
-};
+AllTypes.storyName = 'All types';
 
 export const ConfigureActionsDepth = () => {
   configureActions({
@@ -191,9 +171,7 @@ export const PersistingTheActionLogger = () => (
   </Fragment>
 );
 
-PersistingTheActionLogger.story = {
-  name: 'Persisting the action logger',
-};
+PersistingTheActionLogger.storyName = 'Persisting the action logger';
 
 export const LimitActionOutput = () => {
   configureActions({
@@ -207,18 +185,14 @@ export const LimitActionOutput = () => {
     </Fragment>
   );
 };
-LimitActionOutput.story = {
-  name: 'Limit Action Output',
-};
+LimitActionOutput.storyName = 'Limit Action Output';
 
 export const SkippedViaDisableTrue = () => (
   <Button onClick={action('hello-world')}>Hello World</Button>
 );
 
-SkippedViaDisableTrue.story = {
-  name: 'skipped via disable:true',
+SkippedViaDisableTrue.storyName = 'skipped via disable:true';
 
-  parameters: {
-    actions: { disable: true },
-  },
+SkippedViaDisableTrue.parameters = {
+  actions: { disable: true },
 };

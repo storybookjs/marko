@@ -22,9 +22,7 @@ export const Emoji = () => ({
   },
 });
 
-Emoji.story = {
-  parameters: { notes: 'My notes on a button with emojis' },
-};
+Emoji.parameters = { notes: 'My notes on a button with emojis' };
 
 export const WithSomeEmojiAndAction = () => ({
   component: Button,
@@ -34,10 +32,8 @@ export const WithSomeEmojiAndAction = () => ({
   },
 });
 
-WithSomeEmojiAndAction.story = {
-  name: 'with some emoji and action',
-  parameters: { notes: 'My notes on a button with emojis' },
-};
+WithSomeEmojiAndAction.storyName = 'with some emoji and action';
+WithSomeEmojiAndAction.parameters = { notes: 'My notes on a button with emojis' };
 
 export const ButtonWithLinkToAnotherStory = () => ({
   component: Button,
@@ -47,6 +43,4 @@ export const ButtonWithLinkToAnotherStory = () => ({
   },
 });
 
-ButtonWithLinkToAnotherStory.story = {
-  name: 'button with link to another story',
-};
+ButtonWithLinkToAnotherStory.storyName = 'button with link to another story';

@@ -5,7 +5,7 @@ import { RequireContext } from './types';
 import { loadCsf } from './loadCsf';
 
 jest.mock('@storybook/client-logger', () => ({
-  logger: { warn: jest.fn() },
+  logger: { warn: jest.fn(), debug: jest.fn() },
 }));
 
 let cbs: ((data: any) => void)[];
@@ -74,7 +74,7 @@ describe('core.preview.loadCsf', () => {
           title: 'b',
         },
         1: () => 0,
-        2: Object.assign(() => 0, { story: { name: 'two' } }),
+        2: Object.assign(() => 0, { storyName: 'two' }),
       },
     };
     configure(makeRequireContext(input), mod, 'react');
@@ -228,7 +228,7 @@ describe('core.preview.loadCsf', () => {
     expect(aApi.addDecorator).toHaveBeenCalledWith(decorator);
   });
 
-  it('allows setting story parameters and decorators, and args/argTypes', () => {
+  it('deprecates setting story parameters and decorators, and args/argTypes with story object', () => {
     const { configure, clientApi } = makeMocks();
 
     const decorator = jest.fn();
@@ -239,11 +239,43 @@ describe('core.preview.loadCsf', () => {
         },
         x: Object.assign(() => 0, {
           story: {
+            name: 'CustomName',
             parameters: { x: 'y' },
             decorators: [decorator],
             args: { b: 1 },
             argTypes: { b: 'string' },
           },
+        }),
+      },
+    };
+    configure(makeRequireContext(input), mod, 'react');
+
+    const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
+    const aApi = mockedStoriesOf.mock.results[0].value;
+    expect(aApi.add).toHaveBeenCalledWith('CustomName', input.a.x, {
+      x: 'y',
+      decorators: [decorator],
+      __id: 'a--x',
+      args: { b: 1 },
+      argTypes: { b: 'string' },
+    });
+    expect(logger.debug).toHaveBeenCalled();
+  });
+
+  it('allows setting story parameters and decorators, and args/argTypes', () => {
+    const { configure, clientApi } = makeMocks();
+
+    const decorator = jest.fn();
+    const input = {
+      a: {
+        default: {
+          title: 'a',
+        },
+        x: Object.assign(() => 0, {
+          parameters: { x: 'y' },
+          decorators: [decorator],
+          args: { b: 1 },
+          argTypes: { b: 'string' },
         }),
       },
     };
@@ -258,6 +290,7 @@ describe('core.preview.loadCsf', () => {
       args: { b: 1 },
       argTypes: { b: 'string' },
     });
+    expect(logger.debug).not.toHaveBeenCalled();
   });
 
   it('handles HMR correctly when adding stories', () => {

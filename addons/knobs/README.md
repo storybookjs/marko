@@ -23,35 +23,34 @@ within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: ['@storybook/addon-knobs']
-}
+  addons: ['@storybook/addon-knobs'],
+};
 ```
 
 Now, write your stories with Knobs.
 
 ### With React
+
 ```js
-import React from "react";
-import { withKnobs, text, boolean, number } from "@storybook/addon-knobs";
+import React from 'react';
+import { withKnobs, text, boolean, number } from '@storybook/addon-knobs';
 
 export default {
-  title: "Storybook Knobs",
-  decorators: [withKnobs]
+  title: 'Storybook Knobs',
+  decorators: [withKnobs],
 };
 // Add the `withKnobs` decorator to add knobs support to your stories.
 // You can also configure `withKnobs` as a global decorator.
 
 // Knobs for React props
 export const withAButton = () => (
-  <button disabled={boolean("Disabled", false)}>
-    {text("Label", "Hello Storybook")}
-  </button>
+  <button disabled={boolean('Disabled', false)}>{text('Label', 'Hello Storybook')}</button>
 );
 
 // Knobs as dynamic variables.
 export const asDynamicVariables = () => {
-  const name = text("Name", "James");
-  const age = number("Age", 35);
+  const name = text('Name', 'James');
+  const age = number('Age', 35);
   const content = `I am ${name} and I'm ${age} years old.`;
 
   return <div>{content}</div>;
@@ -59,7 +58,9 @@ export const asDynamicVariables = () => {
 ```
 
 ### With Vue.js
+
 MyButton.story.js:
+
 ```js
 import { storiesOf } from '@storybook/vue';
 import { withKnobs, text, boolean } from '@storybook/addon-knobs';
@@ -67,8 +68,8 @@ import { withKnobs, text, boolean } from '@storybook/addon-knobs';
 import MyButton from './MyButton.vue';
 
 export default {
-  title: "Storybook Knobs",
-  decorators: [withKnobs]
+  title: 'Storybook Knobs',
+  decorators: [withKnobs],
 };
 
 // Assign `props` to the story's component, calling
@@ -80,17 +81,18 @@ export const exampleWithKnobs = () => ({
   components: { MyButton },
   props: {
     isDisabled: {
-      default: boolean('Disabled', false)
+      default: boolean('Disabled', false),
     },
     text: {
-      default: text('Text', 'Hello Storybook')
-    }
+      default: text('Text', 'Hello Storybook'),
+    },
   },
-  template: `<MyButton :isDisabled="isDisabled">{{ text }}</MyButton>`
+  template: `<MyButton :isDisabled="isDisabled">{{ text }}</MyButton>`,
 });
 ```
 
 MyButton.vue:
+
 ```vue
 <template>
   <button :disabled="isDisabled">
@@ -103,14 +105,15 @@ export default {
   props: {
     isDisabled: {
       type: Boolean,
-      default: false
-    }
-  }
-}
+      default: false,
+    },
+  },
+};
 </script>
 ```
 
 ### With Angular
+
 ```js
 import { storiesOf } from '@storybook/angular';
 import { boolean, number, text, withKnobs } from '@storybook/addon-knobs';
@@ -118,8 +121,8 @@ import { boolean, number, text, withKnobs } from '@storybook/addon-knobs';
 import { Button } from '@storybook/angular/demo';
 
 export default {
-  title: "Storybook Knobs",
-  decorators: [withKnobs]
+  title: 'Storybook Knobs',
+  decorators: [withKnobs],
 };
 
 export const withKnobs = () => ({
@@ -131,6 +134,7 @@ export const withKnobs = () => ({
 ```
 
 ### With Ember
+
 ```js
 import { withKnobs, text, boolean } from '@storybook/addon-knobs';
 import { hbs } from 'ember-cli-htmlbars';
@@ -160,9 +164,9 @@ export const inGroups = () => {
   const personalGroupId = 'personal info';
   const generalGroupId = 'general info';
 
-  const name = text("Name", "James", personalGroupId);
-  const age = number("Age", 35, {min: 0, max: 99}, personalGroupId);
-  const message = text("Hello!", 35, generalGroupId);
+  const name = text('Name', 'James', personalGroupId);
+  const age = number('Age', 35, { min: 0, max: 99 }, personalGroupId);
+  const message = text('Hello!', 35, generalGroupId);
   const content = `
     I am ${name} and I'm ${age} years old.
     ${message}
@@ -245,10 +249,10 @@ import { number } from '@storybook/addon-knobs';
 const label = 'Temperature';
 const defaultValue = 73;
 const options = {
-   range: true,
-   min: 60,
-   max: 90,
-   step: 1,
+  range: true,
+  min: 60,
+  max: 90,
+  step: 1,
 };
 const groupId = 'GROUP-ID1';
 
@@ -345,7 +349,7 @@ Options can also be an array:
 ```js
 import { select } from '@storybook/addon-knobs';
 const label = 'Cats';
-const options = ['linus', 'eleanor', 'lover']
+const options = ['linus', 'eleanor', 'lover'];
 const defaultValue = 'eleanor';
 const groupId = 'GROUP-ID2';
 const value = select(label, options, defaultValue, groupId);
@@ -393,7 +397,7 @@ const value = radios(label, options, defaultValue, groupId);
 
 ### options
 
-Configurable UI for selecting a value from a set of options. 
+Configurable UI for selecting a value from a set of options.
 
 ```js
 import { optionsKnob as options } from '@storybook/addon-knobs';
@@ -406,13 +410,15 @@ const valuesObj = {
 };
 const defaultValue = 'kiwi';
 const optionsObj = {
-  display: 'inline-radio'
+  display: 'inline-radio',
 };
 const groupId = 'GROUP-ID1';
 
 const value = options(label, valuesObj, defaultValue, optionsObj, groupId);
 ```
+
 > The display property for `optionsObj` accepts:
+>
 > - `radio`
 > - `inline-radio`
 > - `check`
@@ -459,8 +465,8 @@ If your component needs the date in a different form you can wrap the `date` fun
 
 ```js
 function myDateKnob(name, defaultValue) {
-  const stringTimestamp = date(name, defaultValue)
-  return new Date(stringTimestamp)
+  const stringTimestamp = date(name, defaultValue);
+  return new Date(stringTimestamp);
 }
 ```
 
@@ -494,20 +500,16 @@ export default {
   decorators: [withKnobs],
 };
 
-export const defaultView = () => (
-  <div />
-);
-defaultView.story = {
-  parameters: {
-    knobs: {
-      // Doesn't emit events while user is typing.
-      timestamps: true,
+export const defaultView = () => <div />;
+defaultView.parameters = {
+  knobs: {
+    // Doesn't emit events while user is typing.
+    timestamps: true,
 
-      // Escapes strings to be safe for inserting as innerHTML. This option is true by default. It's safe to set it to `false` with frameworks like React which do escaping on their side.
-      // You can still set it to false, but it's strongly discouraged to set to true in cases when you host your storybook on some route of your main site or web app.
-      escapeHTML: true,
-    }
-  }
+    // Escapes strings to be safe for inserting as innerHTML. This option is true by default. It's safe to set it to `false` with frameworks like React which do escaping on their side.
+    // You can still set it to false, but it's strongly discouraged to set to true in cases when you host your storybook on some route of your main site or web app.
+    escapeHTML: true,
+  },
 };
 ```
 
@@ -518,9 +520,8 @@ If you are using Typescript, make sure you have the type definitions installed f
 - node
 - react
 
-You can install them using: (*assuming you are using Typescript >2.0.*)
+You can install them using: (_assuming you are using Typescript >2.0._)
 
 ```sh
 yarn add @types/node @types/react --dev
 ```
-
