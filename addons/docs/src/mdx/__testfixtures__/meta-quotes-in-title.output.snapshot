@@ -32,7 +32,7 @@ export const __page = () => {
   throw new Error('Docs-only story');
 };
 
-__page.story = { parameters: { docsOnly: true } };
+__page.parameters = { docsOnly: true };
 
 const componentMeta = { title: \\"Addons/Docs/what's in a title?\\", includeStories: ['__page'] };
 

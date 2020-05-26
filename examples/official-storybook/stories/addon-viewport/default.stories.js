@@ -15,4 +15,4 @@ export default {
 export const DefaultFn = () => (
   <Panel>I don't have problems being rendered using the default viewport.</Panel>
 );
-DefaultFn.story = { name: 'default' };
+DefaultFn.storyName = 'default';

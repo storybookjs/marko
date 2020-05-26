@@ -1,6 +1,7 @@
 <h1>Migration</h1>
 
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
+  - [Hoisted CSF annotations](#hoisted-csf-annotations)
   - [Zero config typescript](#zero-config-typescript)
   - [Backgrounds addon has a new api](#backgrounds-addon-has-a-new-api)
   - [CRA preset removed](#cra-preset-removed)
@@ -14,6 +15,7 @@
       - [Imported types](#imported-types)
       - [Rolling back](#rolling-back)
   - [New addon presets](#new-addon-presets)
+  - [Removed babel-preset-vue from Vue preset](#removed-babel-preset-vue-from-vue-preset)
   - [Removed Deprecated APIs](#removed-deprecated-apis)
   - [New setStories event](#new-setstories-event)
   - [Client API changes](#client-api-changes)
@@ -113,6 +115,42 @@
   - [Deprecated embedded addons](#deprecated-embedded-addons)
 
 ## From version 5.3.x to 6.0.x
+
+### Hoisted CSF annotations
+
+Storybook 6 introduces hoisted CSF annotations and deprecates the `StoryFn.story` object-style annotation.
+
+In 5.x CSF, you would annotate a story like this:
+
+```js
+export const Basic = () => <Button />
+Basic.story = {
+  name: 'foo',
+  parameters: { ... },
+  decorators: [ ... ],
+};
+```
+
+In 6.0 CSF this becomes:
+
+```js
+export const Basic = () => <Button />
+Basic.storyName = 'foo';
+Basic.parameters = { ... };
+Basic.decorators = [ ... ];
+```
+
+1. The new syntax is slightly more compact/ergonomic compared the the old one
+2. Similar to React's `displayName`, `propTypes`, `defaultProps` annotations
+3. We're introducing a new feature, [Storybook Args](https://docs.google.com/document/d/1Mhp1UFRCKCsN8pjlfPdz8ZdisgjNXeMXpXvGoALjxYM/edit?usp=sharing), where the new syntax will be significantly more ergonomic
+
+To help you upgrade your stories, we've crated a codemod:
+
+```
+npx @storybook/cli@next migrate csf-hoist-story-annotations --glob="**/*.stories.js"
+```
+
+For more information, [see the documentation](https://github.com/storybookjs/storybook/blob/next/lib/codemod/README.md#csf-hoist-story-annotations).
 
 ### Zero config typescript
 
@@ -341,6 +379,23 @@ MyNonCheckedStory.story = {
   },
 };
 ```
+
+### Removed babel-preset-vue from Vue preset
+
+`babel-preset-vue` is not included by default anymore when using Storybook with Vue.
+This preset is outdated and [caused problems](https://github.com/storybookjs/storybook/issues/4475) with more modern setups.
+
+If you have an older Vue setup that relied on this preset, make sure it is included in your babel config
+(install `babel-preset-vue` and add it to the presets).
+
+```json
+{
+  "presets": ["babel-preset-vue"]
+}
+```
+
+However, please take a moment to review why this preset is necessary in your setup.
+One usecase used to be to enable JSX in your stories. For this case, we recommend to use `@vue/babel-preset-jsx` instead.
 
 ### Removed Deprecated APIs
 

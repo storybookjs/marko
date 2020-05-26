@@ -39,9 +39,8 @@ export const multipleChildren = () => (
     <p>Hello Child #2</p>
   </>
 );
-multipleChildren.story = {};
-multipleChildren.story.name = 'multiple children';
-multipleChildren.story.parameters = {
+multipleChildren.storyName = 'multiple children';
+multipleChildren.parameters = {
   storySource: { source: '<p>Hello Child #1</p>\\\\n<p>Hello Child #2</p>' },
 };
 

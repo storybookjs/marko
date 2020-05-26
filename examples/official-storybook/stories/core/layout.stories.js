@@ -12,22 +12,22 @@ export default {
 export const Default = () => <Box>padded by default</Box>;
 
 export const PaddedBlock = () => <Box>padded</Box>;
-PaddedBlock.story = { parameters: { layout: 'padded' } };
+PaddedBlock.parameters = { layout: 'padded' };
 
 export const PaddedInline = () => <Box display="inline-block">padded</Box>;
-PaddedInline.story = { parameters: { layout: 'padded' } };
+PaddedInline.parameters = { layout: 'padded' };
 
 export const FullscreenBlock = () => <Box>fullscreen</Box>;
-FullscreenBlock.story = { parameters: { layout: 'fullscreen' } };
+FullscreenBlock.parameters = { layout: 'fullscreen' };
 
 export const FullscreenInline = () => <Box display="inline-block">fullscreen</Box>;
-FullscreenInline.story = { parameters: { layout: 'fullscreen' } };
+FullscreenInline.parameters = { layout: 'fullscreen' };
 
 export const CenteredBlock = () => <Box>centered</Box>;
-CenteredBlock.story = { parameters: { layout: 'centered' } };
+CenteredBlock.parameters = { layout: 'centered' };
 
 export const CenteredInline = () => <Box display="inline-block">centered</Box>;
-CenteredInline.story = { parameters: { layout: 'centered' } };
+CenteredInline.parameters = { layout: 'centered' };
 
 export const Invalid = () => <Box>invalid layout value</Box>;
-Invalid.story = { parameters: { layout: '!invalid!' } };
+Invalid.parameters = { layout: '!invalid!' };

@@ -122,11 +122,9 @@ export const darkWithRefs = () => (
   </ThemeProvider>
 );
 
-darkWithRefs.story = {
-  parameters: {
-    backgrounds: {
-      default: 'dark',
-      values: [{ name: 'dark', value: '#222222', default: true }],
-    },
+darkWithRefs.parameters = {
+  backgrounds: {
+    default: 'dark',
+    values: [{ name: 'dark', value: '#222222', default: true }],
   },
 };

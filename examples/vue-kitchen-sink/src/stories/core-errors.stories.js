@@ -6,6 +6,6 @@ export default {
 export const throwsError = () => {
   throw new Error('foo');
 };
-throwsError.story = { parameters: { storyshots: { disable: true } } };
+throwsError.parameters = { storyshots: { disable: true } };
 
 export const nullError = () => null;

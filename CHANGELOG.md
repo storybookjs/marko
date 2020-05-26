@@ -1,3 +1,25 @@
+## 6.0.0-beta.14 (May 25, 2020)
+
+### Breaking Changes
+
+- CSF: Hoist story annotation object ([#10907](https://github.com/storybookjs/storybook/pull/10907))
+- Vue: Remove babel-preset-vue ([#10909](https://github.com/storybookjs/storybook/pull/10909))
+
+### Features
+
+- Angular: Support `workspace.json` in nx workspace ([#10881](https://github.com/storybookjs/storybook/pull/10881))
+
+### Bug Fixes
+
+- Addon-docs: Fix single item width in Preview block ([#10877](https://github.com/storybookjs/storybook/pull/10877))
+- UI: Center toolbar icon buttons ([#10897](https://github.com/storybookjs/storybook/pull/10897))
+- Core: Fix double rendering on startup ([#10892](https://github.com/storybookjs/storybook/pull/10892))
+
+### Maintenance
+
+- Core: Use dedicated loader for es6 modules ([#10783](https://github.com/storybookjs/storybook/pull/10783))
+- Core: Fix yarn test command on windows ([#10904](https://github.com/storybookjs/storybook/pull/10904))
+
 ## 5.3.19 (May 24, 2020)
 
 ### Bug Fixes
