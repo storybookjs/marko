@@ -7,7 +7,7 @@ export type Item = StoriesHash[keyof StoriesHash];
 export type DataSet = Record<string, Item>;
 export type FilteredType = 'filtered' | 'unfiltered';
 
-export const getType = (
+export const getStateType = (
   isLoading: boolean,
   isAuthRequired: boolean,
   isError: boolean,
