@@ -32,7 +32,7 @@ Controls replaces [Storybook Knobs](https://github.com/storybookjs/storybook/tre
 - [Configuration](#configuration)
   - [Control annotations](#control-annotations)
   - [Parameters](#parameters)
-    - [Show property documentation](#show-property-documentation)
+    - [Expanded: show property documentation](#expanded-show-property-documentation)
 - [Framework support](#framework-support)
 - [FAQs](#faqs)
   - [How will this replace addon-knobs?](#how-will-this-replace-addon-knobs)
@@ -305,9 +305,9 @@ Here is the full list of available controls:
 
 Controls supports the following configuration parameters, either [globally or on a per-story basis](https://storybook.js.org/docs/basics/writing-stories/#parameters):
 
-- [expanded](#expanded)
+- [Expanded: show property documentation](#expanded-show-property-documentation)
 
-#### Show property documentation
+#### Expanded: show property documentation
 
 Since Controls is built on the same engine as Storybook Docs, it can also show property documentation alongside your controls using the `expanded` parameter (defaults to `false`).
 
