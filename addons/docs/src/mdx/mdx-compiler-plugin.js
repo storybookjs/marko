@@ -102,16 +102,15 @@ function genStoryExport(ast, context) {
   }
 
   statements.push(`export const ${storyKey} = ${storyVal};`);
-  statements.push(`${storyKey}.story = {};`);
 
   // always preserve the name, since CSF exports can get modified by displayName
-  statements.push(`${storyKey}.story.name = '${storyName}';`);
+  statements.push(`${storyKey}.storyName = '${storyName}';`);
 
   const argTypes = genAttribute('argTypes', ast.openingElement);
-  if (argTypes) statements.push(`${storyKey}.story.argTypes = ${argTypes};`);
+  if (argTypes) statements.push(`${storyKey}.argTypes = ${argTypes};`);
 
   const args = genAttribute('args', ast.openingElement);
-  if (args) statements.push(`${storyKey}.story.args = ${args};`);
+  if (args) statements.push(`${storyKey}.args = ${args};`);
 
   let parameters = getAttr(ast.openingElement, 'parameters');
   parameters = parameters && parameters.expression;
@@ -119,16 +118,16 @@ function genStoryExport(ast, context) {
   const sourceParam = `storySource: { source: '${source}' }`;
   if (parameters) {
     const { code: params } = generate(parameters, {});
-    statements.push(`${storyKey}.story.parameters = { ${sourceParam}, ...${params} };`);
+    statements.push(`${storyKey}.parameters = { ${sourceParam}, ...${params} };`);
   } else {
-    statements.push(`${storyKey}.story.parameters = { ${sourceParam} };`);
+    statements.push(`${storyKey}.parameters = { ${sourceParam} };`);
   }
 
   let decorators = getAttr(ast.openingElement, 'decorators');
   decorators = decorators && decorators.expression;
   if (decorators) {
     const { code: decos } = generate(decorators, {});
-    statements.push(`${storyKey}.story.decorators = ${decos};`);
+    statements.push(`${storyKey}.decorators = ${decos};`);
   }
 
   // eslint-disable-next-line no-param-reassign
@@ -336,7 +335,7 @@ function extractExports(node, options) {
   if (metaExport) {
     if (!storyExports.length) {
       storyExports.push('export const __page = () => { throw new Error("Docs-only story"); };');
-      storyExports.push('__page.story = { parameters: { docsOnly: true } };');
+      storyExports.push('__page.parameters = { docsOnly: true };');
       includeStories.push('__page');
     }
   } else {

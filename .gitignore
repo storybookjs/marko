@@ -31,3 +31,4 @@ cypress/videos
 cypress/screenshots
 examples/ember-cli/ember-output
 .verdaccio-cache
+tsconfig.tsbuildinfo

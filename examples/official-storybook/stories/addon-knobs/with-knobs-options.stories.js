@@ -11,6 +11,4 @@ export default {
 };
 
 export const AcceptsOptions = () => <div>{text('Rendered string', '<h1>Hello</h1>')}</div>;
-AcceptsOptions.story = {
-  name: 'accepts options',
-};
+AcceptsOptions.storyName = 'accepts options';

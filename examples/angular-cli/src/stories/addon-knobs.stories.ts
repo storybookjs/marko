@@ -53,9 +53,7 @@ export const Simple = () => {
   };
 };
 
-Simple.story = {
-  name: 'Simple',
-};
+Simple.storyName = 'Simple';
 
 export const AllKnobs = () => {
   const name = text('name', 'Jane');
@@ -101,14 +99,10 @@ export const AllKnobs = () => {
   };
 };
 
-AllKnobs.story = {
-  name: 'All knobs',
-};
+AllKnobs.storyName = 'All knobs';
 
 export const XssSafety = () => ({
   template: text('Rendered string', '<img src=x onerror="alert(\'XSS Attack\')" >'),
 });
 
-XssSafety.story = {
-  name: 'XSS safety',
-};
+XssSafety.storyName = 'XSS safety';

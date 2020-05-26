@@ -13,6 +13,7 @@ To learn more about Storybook Docs, read the [general documentation](../README.m
 - [Installation](#installation)
 - [Preset options](#preset-options)
 - [DocsPage](#docspage)
+- [Props tables](#props-tables)
 - [MDX](#mdx)
 - [Inline Stories](#inline-stories)
 - [More resources](#more-resources)
@@ -62,7 +63,9 @@ The `vueDocgenOptions` is an object for configuring `vue-docgen-api`. See [`vue-
 
 When you [install docs](#installation) you should get basic [DocsPage](../docs/docspage.md) documentation automagically for all your stories, available in the `Docs` tab of the Storybook UI.
 
-Props tables for your components requires a few more steps. Docs for Vue relies on [`vue-docgen-loader`](https://github.com/pocka/vue-docgen-loader). It supports `props`, `events`, and `slots` as first class prop types.
+## Props tables
+
+Getting [Props tables](../docs/props-tables.md) for your components requires a few more steps. Docs for Vue relies on [`vue-docgen-loader`](https://github.com/pocka/vue-docgen-loader). It supports `props`, `events`, and `slots` as first class prop types.
 
 Finally, be sure to fill in the `component` field in your story metadata:
 

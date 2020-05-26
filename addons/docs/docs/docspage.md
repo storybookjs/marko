@@ -110,8 +110,8 @@ export default {
 import { Button } from './Button';
 // export default { ... }
 export const basic => () => <Button>Basic</Button>
-basic.story = {
-  parameters: { docs: { page: null } }
+basic.parameters = {
+  docs: { page: null }
 }
 ```
 

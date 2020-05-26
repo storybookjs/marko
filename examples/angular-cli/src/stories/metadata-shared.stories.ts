@@ -28,14 +28,10 @@ export const Shared1 = () => ({
   },
 });
 
-Shared1.story = {
-  name: 'Shared 1',
-};
+Shared1.storyName = 'Shared 1';
 
 export const Shared2 = () => ({
   template: `<storybook-simple-token-component></storybook-simple-token-component>`,
 });
 
-Shared2.story = {
-  name: 'Shared 2',
-};
+Shared2.storyName = 'Shared 2';

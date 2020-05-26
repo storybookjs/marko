@@ -16,6 +16,4 @@ export const GoToWelcome = () =>
     handleClick: linkTo('Welcome', 'Welcome'),
   });
 
-GoToWelcome.story = {
-  name: 'Go to welcome',
-};
+GoToWelcome.storyName = 'Go to welcome';

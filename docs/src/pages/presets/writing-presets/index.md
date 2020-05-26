@@ -42,13 +42,13 @@ The babel functions `babel`, `babelDefault`, and `managerBabel` all configure ba
 
 All functions take a [Babel configuration object](https://babeljs.io/docs/en/configuration) as their argument and can modify it or return a new object.
 
-For example, Storybook's Vue support uses presets internally and here's how it configures babel:
+For example, Storybook's Mihtril support uses plugins internally and here's how it configures babel:
 
 ```js
-export function babelDefault(config) {
+export function babelDefault(config: TransformOptions) {
   return {
     ...config,
-    presets: [...config.presets, require.resolve('babel-preset-vue')],
+    plugins: [...config.plugins, require.resolve('@babel/plugin-transform-react-jsx')],
   };
 }
 ```
