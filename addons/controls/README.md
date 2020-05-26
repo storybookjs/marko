@@ -1,52 +1,42 @@
 <center>
-  <img src="./docs/media/addon-controls-hero.gif" width="100%" />
+  <img src="./docs/media/addon-controls-hero.gif" width="80%" />
 </center>
 
 <h1>Storybook Controls</h1>
 
-Storybook Controls is UI to interactively edit your component stories. Stories written for controls are:
+Storybook Controls gives you UI to interact with a component's inputs dynamically, without needing to code. It creates an addon panel next to your component examples ("stories"), so you can edit them live.
+
+It does not require any modification to your components, and stories for controls are:
 
 - **Convenient.** Auto-generate controls based on [React/Vue/Angular/etc.](#framework-support) components.
 - **Portable.** Reuse your interactive stories in documentation, tests, and even in designs.
-- **Rich.** Customize the controls and interactive data to suit your exact use case.
+- **Rich.** Customize the controls and interactive data to suit your exact needs.
 
-Controls are built on top of [Storybook Args](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/formats/component-story-format/index.md#args-story-inputs), so you can reuse them in other contexts:
+Controls are built on top of [Storybook Args](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/formats/component-story-format/index.md#args-story-inputs), which is an open, standards-based format that enable stories to be reused in a variety of contexts.
 
 - **Documentation.** 100% compatible with [Storybook Docs](https://github.com/storybookjs/storybook/tree/next/addons/docs).
 - **Testing.** Import stories directly into your [Jest](https://jestjs.io/) tests.
-- **Ecosystem.** Reuse stories in design/development tools that support [Component Story Format](https://medium.com/storybookjs/component-story-format-66f4c32366df).
+- **Ecosystem.** Reuse stories in design/development tools that support it.
 
 Controls replaces [Storybook Knobs](https://github.com/storybookjs/storybook/tree/master/addons/knobs). It incorporates lessons from years of supporting Knobs on tens of thousands of projects and dozens of different frameworks. We couldn't incrementally fix knobs, so we built a better version.
 
 <h2>Contents</h2>
 
-- [Get started](#get-started)
 - [Installation](#installation)
 - [Writing stories](#writing-stories)
-  - [No args](#no-args)
+  - [Getting started](#getting-started)
   - [Auto-generated args](#auto-generated-args)
   - [Custom controls args](#custom-controls-args)
   - [Fully custom args](#fully-custom-args)
   - [Template stories](#template-stories)
-- [Migrating from knobs](#migrating-from-knobs)
-  - [Knobs to auto-generated args](#knobs-to-auto-generated-args)
-  - [Knobs to manually-configured args](#knobs-to-manually-configured-args)
 - [Configuration](#configuration)
-  - [Control annotation](#control-annotation)
+  - [Control annotations](#control-annotations)
   - [Parameters](#parameters)
-    - [expanded](#expanded)
+    - [Show property documentation](#show-property-documentation)
 - [Framework support](#framework-support)
 - [FAQs](#faqs)
   - [How will this replace addon-knobs?](#how-will-this-replace-addon-knobs)
-
-## Get started
-
-To get started with `addon-controls`:
-
-1. [Install the addon](#installation)
-2. [Write a story that uses Args](#writing-stories)
-3. [(optional) Configure the addon](#configuration)
-4. [(optional) Migrate knobs stories](#migrating-from-knobs)
+  - [How do I migrate from addon-knobs?](#how-do-i-migrate-from-addon-knobs)
 
 ## Installation
 
@@ -71,11 +61,13 @@ module.exports = {
 
 ## Writing stories
 
-Once the addon is installed you should see a `Controls` tab in the addons panel.
+Let's see how to write stories that automatically generate controls based on your component properties.
 
-Controls are only available for stories that make use of [Storybook Args](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/formats/component-story-format/index.md#args-story-inputs), so to get interactive controls, you need to upgrade your stories.
+Controls is built on [Storybook Args](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/formats/component-story-format/index.md#args-story-inputs), which is a small, backwards-compatible change to Storybook's [Component Story Format](https://medium.com/storybookjs/component-story-format-66f4c32366df).
 
-### No args
+This section is a step-by-step walkthrough for how to upgrade your stories. It takes you from a starting point of the traditional "no args" stories, to auto-generated args, to auto-generated args with custom controls, to fully custom args if you need them.
+
+### Getting started
 
 Let's start with the following component/story combination, which should look familiar if you're coming from an older version of Storybook.
 
@@ -101,7 +93,7 @@ export const Basic = () => <Button label="hello" />;
 After installing the controls addon, you'll see a new tab that shows the component's props, but it doesn't show controls because the story doesn't use args. That's not very useful, but we'll fix that momentarily.
 
 <center>
-  <img src="./docs/media/addon-controls-install.png" width="100%" />
+  <img src="./docs/media/addon-controls-install.png" width="80%" />
 </center>
 
 ### Auto-generated args
@@ -118,7 +110,7 @@ export const Basic = (args) => {
 Now you'll see auto-generated controls in the `Controls` tab, and you can see the `args` data updating as you edit the values in the UI:
 
 <center>
-  <img src="./docs/media/addon-controls-args-logging.png" width="100%" />
+  <img src="./docs/media/addon-controls-args-logging.png" width="80%" />
 </center>
 
 Since the args directly matches the `Button`'s props, we can pass it into the args directly:
@@ -130,7 +122,7 @@ export const Basic = (args) => <Button {...args} />;
 This generates an interactive UI:
 
 <center>
-  <img src="./docs/media/addon-controls-args-no-annotation.png" width="100%" />
+  <img src="./docs/media/addon-controls-args-no-annotation.png" width="80%" />
 </center>
 
 Unfortunately this uses the default values specified in the component, and not the label `hello`, which is what we wanted. To address this, we add an `args` annotation to the story, which specifies the initial values:
@@ -143,13 +135,13 @@ Basic.args = { label: 'hello' };
 Now we're back where we started, but we have a fully interactive story!
 
 <center>
-  <img src="./docs/media/addon-controls-args-annotated.png" width="100%" />
+  <img src="./docs/media/addon-controls-args-annotated.png" width="80%" />
 </center>
 
 And this fully interactive story is also available in the `Docs` tab of Storybook:
 
 <center>
-  <img src="./docs/media/addon-controls-args-docs.png" width="100%" />
+  <img src="./docs/media/addon-controls-args-docs.png" width="80%" />
 </center>
 
 ### Custom controls args
@@ -179,7 +171,7 @@ Basic.args = { label: 'hello', background: '#ff0' };
 This generates the following `Controls` UI:
 
 <center>
-  <img src="./docs/media/addon-controls-args-background-string.png" width="100%" />
+  <img src="./docs/media/addon-controls-args-background-string.png" width="80%" />
 </center>
 
 This works as long as you type a valid string into the auto-generated text control, but it's certainly is not the best UI for picking a color.
@@ -205,7 +197,7 @@ Basic.args = { label: 'hello', background: '#ff0' };
 This generates the following UI, which is what we wanted in the first place:
 
 <center>
-  <img src="./docs/media/addon-controls-args-background-color.png" width="100%" />
+  <img src="./docs/media/addon-controls-args-background-color.png" width="80%" />
 </center>
 
 ### Fully custom args
@@ -231,7 +223,7 @@ Reflow.args = { count: 3, label: 'reflow' };
 This generates the following UI:
 
 <center>
-  <img src="./docs/media/addon-controls-args-background-reflow.png" width="100%" />
+  <img src="./docs/media/addon-controls-args-reflow.png" width="80%" />
 </center>
 
 Storybook has inferred the control to be a numeric input based on the initial value of the `count` arg. As we did above, we can also specify a custom control [as we did above](#custom-controls). Only this time since it's story specific we can do it at the story level:
@@ -247,7 +239,7 @@ Reflow.argTypes = {
 This generates the following UI with a custom range slider:
 
 <center>
-  <img src="./docs/media/addon-controls-args-background-reflow-slider.png" width="100%" />
+  <img src="./docs/media/addon-controls-args-reflow-slider.png" width="80%" />
 </center>
 
 ### Template stories
@@ -276,74 +268,17 @@ VeryLongLabel.args = { ...Basic.args, label: 'this is a very long string' };
 ```
 
 <center>
-  <img src="./docs/media/addon-controls-args-template.png" width="100%" />
+  <img src="./docs/media/addon-controls-args-template.png" width="80%" />
 </center>
-
-## Migrating from knobs
-
-If you're already using [Storybook Knobs](https://github.com/storybookjs/storybook/tree/master/addons/knobs) you should consider migrating to Controls.
-
-You're probably using it for something that can be satisfied by one of the cases [described above](#writing-stories).
-
-Let's walk through two examples: migrating [knobs to auto-generated args](#knobs-to-custom-args) and [knobs to custom args](#knobs-to-custom-args).
-
-### Knobs to auto-generated args
-
-First, let's consider a knobs version of a basic story that fills in the props for a component:
-
-```jsx
-import { text } from '@storybook/addon-knobs';
-import { Button } from './Button';
-
-export const Basic = () => <Button label={text('Label', 'hello')} />;
-```
-
-This fills in the Button's label based on a knob, which is exactly the [auto-generated](#auto-generated-args) use case above. So we can rewrite it using auto-generated args:
-
-```jsx
-export const Basic = (args) => <Button {...args} />;
-Basic.args = { label: 'hello' };
-```
-
-### Knobs to manually-configured args
-
-Similarly, we can also consider a story that uses knob inputs to change its behavior:
-
-```jsx
-import range from 'lodash/range';
-import { number, text } from '@storybook/addon-knobs';
-
-export const Reflow = () => {
-  const count = number('Count', 10, { min: 0, max: 100, range: true });
-  const label = number('Label', 'reflow');
-  return (
-    <>
-      {range(count).map((i) => (
-        <Button label={`button ${i}`} />
-      ))}
-    </>
-  );
-};
-```
-
-And again, as above, this can be rewritten using [fully custom args](#fully-custom-args):
-
-```jsx
-export const Reflow = ({ count, label, ...args }) => (
-  <>{range(count).map((i) => <Button label={`${label} ${i}` {...args}} />)}</>
-);
-Reflow.args = { count: 3, label: 'reflow' };
-Reflow.argTypes = { count: { control: { type: 'range', min: 0, max: 20 } } };
-```
 
 ## Configuration
 
 The controls addon can be configured in two ways:
 
-- Individual controls can be configured via [control annotation](#control-annotation),
+- Individual controls can be configured via [control annotations](#control-annotations),
 - The addon's appearance can be configured via [parameters](#parameters).
 
-### Control annotation
+### Control annotations
 
 As shown above in the [custom control args](#custom-controls-args) and [fully custom args](#fully-custom-args) sections, you can configure controls via a "control" annotation in the `argTypes` field of either a component or story.
 
@@ -372,7 +307,7 @@ Controls supports the following configuration parameters, either [globally or on
 
 - [expanded](#expanded)
 
-#### expanded
+#### Show property documentation
 
 Since Controls is built on the same engine as Storybook Docs, it can also show property documentation alongside your controls using the `expanded` parameter (defaults to `false`).
 
@@ -387,7 +322,7 @@ export const parameters = {
 And here's what the resulting UI looks like:
 
 <center>
-  <img src="./docs/media/addon-controls-expanded.png" width="100%" />
+  <img src="./docs/media/addon-controls-expanded.png" width="80%" />
 </center>
 
 ## Framework support
@@ -417,3 +352,60 @@ Addon-knobs is one of Storybook's most popular addons with over 1M weekly downlo
 Therefore, rather than deprecating addon-knobs immediately, we will continue to release knobs with the Storybook core distribution until 7.0. This will give us time to improve Controls based on user feedback, and also give knobs users ample time to migrate.
 
 If you are somehow tied to knobs or prefer the knobs interface, we are happy to take on maintainers for the knobs project. If this interests you, hop on our [Discord](https://discord.gg/UUt2PJb).
+
+### How do I migrate from addon-knobs?
+
+If you're already using [Storybook Knobs](https://github.com/storybookjs/storybook/tree/master/addons/knobs) you should consider migrating to Controls.
+
+You're probably using it for something that can be satisfied by one of the cases [described above](#writing-stories).
+
+Let's walk through two examples: migrating [knobs to auto-generated args](#knobs-to-custom-args) and [knobs to custom args](#knobs-to-custom-args).
+
+<h4>Knobs to auto-generated args</h4>
+
+First, let's consider a knobs version of a basic story that fills in the props for a component:
+
+```jsx
+import { text } from '@storybook/addon-knobs';
+import { Button } from './Button';
+
+export const Basic = () => <Button label={text('Label', 'hello')} />;
+```
+
+This fills in the Button's label based on a knob, which is exactly the [auto-generated](#auto-generated-args) use case above. So we can rewrite it using auto-generated args:
+
+```jsx
+export const Basic = (args) => <Button {...args} />;
+Basic.args = { label: 'hello' };
+```
+
+<h4>Knobs to manually-configured args</h4>
+
+Similarly, we can also consider a story that uses knob inputs to change its behavior:
+
+```jsx
+import range from 'lodash/range';
+import { number, text } from '@storybook/addon-knobs';
+
+export const Reflow = () => {
+  const count = number('Count', 10, { min: 0, max: 100, range: true });
+  const label = number('Label', 'reflow');
+  return (
+    <>
+      {range(count).map((i) => (
+        <Button label={`button ${i}`} />
+      ))}
+    </>
+  );
+};
+```
+
+And again, as above, this can be rewritten using [fully custom args](#fully-custom-args):
+
+```jsx
+export const Reflow = ({ count, label, ...args }) => (
+  <>{range(count).map((i) => <Button label={`${label} ${i}` {...args}} />)}</>
+);
+Reflow.args = { count: 3, label: 'reflow' };
+Reflow.argTypes = { count: { control: { type: 'range', min: 0, max: 20 } } };
+```
