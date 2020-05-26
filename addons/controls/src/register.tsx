@@ -3,10 +3,10 @@ import addons, { types } from '@storybook/addons';
 import { AddonPanel } from '@storybook/components';
 import { API } from '@storybook/api';
 import { ControlsPanel } from './components/ControlsPanel';
-import { ID } from './constants';
+import { ADDON_ID } from './constants';
 
-addons.register(ID, (api: API) => {
-  addons.addPanel(ID, {
+addons.register(ADDON_ID, (api: API) => {
+  addons.addPanel(ADDON_ID, {
     title: 'Controls',
     type: types.PANEL,
     render: ({ active }) => {
@@ -15,6 +15,7 @@ addons.register(ID, (api: API) => {
       }
       return (
         <AddonPanel active={active}>
+          {false}
           <ControlsPanel />
         </AddonPanel>
       );
