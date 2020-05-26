@@ -12,6 +12,7 @@ export interface ArgRowProps {
   row: TableArgType;
   arg: any;
   updateArgs?: (args: Args) => void;
+  compact?: boolean;
 }
 
 const Name = styled.span({ fontWeight: 'bold' });
@@ -55,7 +56,7 @@ const TypeWithJsDoc = styled.div<{ hasDescription: boolean }>(({ theme, hasDescr
 }));
 
 export const ArgRow: FC<ArgRowProps> = (props) => {
-  const { row, updateArgs } = props;
+  const { row, updateArgs, compact } = props;
   const { name, description } = row;
   const table = (row.table || {}) as TableAnnotation;
   const type = table.type || row.type;
@@ -69,28 +70,32 @@ export const ArgRow: FC<ArgRowProps> = (props) => {
         <Name>{name}</Name>
         {required ? <Required title="Required">*</Required> : null}
       </td>
-      <td>
-        {hasDescription && (
-          <Description>
-            <Markdown>{description}</Markdown>
-          </Description>
-        )}
-        {table.jsDocTags != null ? (
-          <>
-            <TypeWithJsDoc hasDescription={hasDescription}>
+      {compact ? null : (
+        <td>
+          {hasDescription && (
+            <Description>
+              <Markdown>{description}</Markdown>
+            </Description>
+          )}
+          {table.jsDocTags != null ? (
+            <>
+              <TypeWithJsDoc hasDescription={hasDescription}>
+                <ArgValue value={type} />
+              </TypeWithJsDoc>
+              <ArgJsDoc tags={table.jsDocTags} />
+            </>
+          ) : (
+            <Type hasDescription={hasDescription}>
               <ArgValue value={type} />
-            </TypeWithJsDoc>
-            <ArgJsDoc tags={table.jsDocTags} />
-          </>
-        ) : (
-          <Type hasDescription={hasDescription}>
-            <ArgValue value={type} />
-          </Type>
-        )}
-      </td>
-      <td>
-        <ArgValue value={defaultValue} />
-      </td>
+            </Type>
+          )}
+        </td>
+      )}
+      {compact ? null : (
+        <td>
+          <ArgValue value={defaultValue} />
+        </td>
+      )}
       {updateArgs ? (
         <td>
           <ArgControl {...(props as ArgControlProps)} />
