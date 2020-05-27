@@ -10,4 +10,4 @@ export const Basic = (args) => ({
   component: ButtonComponent,
   props: args,
 });
-Basic.args = { label: 'Args test' };
+Basic.args = { label: 'Args test', isDisabled: false };
