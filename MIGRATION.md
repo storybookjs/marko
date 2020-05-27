@@ -172,7 +172,7 @@ Example of an **invalid** glob:
 stories: ['./**/*.stories.(ts|js)']
 ```
 
-Example of an **valid** glob:
+Example of a **valid** glob:
 ```
 stories: ['./**/*.stories.@(ts|js)']
 ```
