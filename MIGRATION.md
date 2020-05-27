@@ -161,7 +161,7 @@ To migrate from an old setup, we recommend deleting any typescript-specific webp
 
 ### Correct globs in main.js
 
-In 5.3 we introduced the `main.js` file with an `stories` property. This property was documented as a "glob" pattern. This was our intention, however the implementation allowed for non valid globs to be specified and work. In fact we promoted invalid globs in our documentation and CLI templates.
+In 5.3 we introduced the `main.js` file with a `stories` property. This property was documented as a "glob" pattern. This was our intention, however the implementation allowed for non valid globs to be specified and work. In fact, we promoted invalid globs in our documentation and CLI templates.
 
 We've corrected this, the CLI templates have been changed to use valid globs.
 
