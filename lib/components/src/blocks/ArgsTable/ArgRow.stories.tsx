@@ -1,4 +1,5 @@
 import React from 'react';
+import { action } from '@storybook/addon-actions';
 import { ArgRow } from './ArgRow';
 import { TableWrapper } from './ArgsTable';
 import { ResetWrapper } from '../../typography/DocumentFormatting';
@@ -22,6 +23,7 @@ export const stringType = {
   name: 'someString',
   description: 'someString description',
   type: { required: true },
+  control: { type: 'text' },
   table: {
     type: { summary: 'string' },
     defaultValue: { summary: 'fixme' },
@@ -115,12 +117,20 @@ export const markdownType = {
   },
 };
 
-export const string = () => <ArgRow row={stringType} />;
-export const longName = () => <ArgRow row={longNameType} />;
-export const longDesc = () => <ArgRow row={longDescType} />;
-export const number = () => <ArgRow row={numberType} />;
-export const objectOf = () => <ArgRow row={objectType} />;
-export const arrayOf = () => <ArgRow row={arrayType} />;
-export const complexObject = () => <ArgRow row={complexType} />;
-export const func = () => <ArgRow row={funcType} />;
-export const markdown = () => <ArgRow row={markdownType} />;
+const withArgs = {
+  arg: 'string value',
+  updateArgs: action('updateArgs'),
+};
+
+export const String = () => <ArgRow row={stringType} />;
+export const LongName = () => <ArgRow row={longNameType} />;
+export const LongDesc = () => <ArgRow row={longDescType} />;
+export const Number = () => <ArgRow row={numberType} />;
+export const ObjectOf = () => <ArgRow row={objectType} />;
+export const ArrayOf = () => <ArgRow row={arrayType} />;
+export const ComplexObject = () => <ArgRow row={complexType} />;
+export const Func = () => <ArgRow row={funcType} />;
+export const Markdown = () => <ArgRow row={markdownType} />;
+export const StringCompact = () => <ArgRow compact row={stringType} />;
+export const Args = () => <ArgRow row={stringType} {...withArgs} />;
+export const ArgsCompact = () => <ArgRow compact row={stringType} {...withArgs} />;

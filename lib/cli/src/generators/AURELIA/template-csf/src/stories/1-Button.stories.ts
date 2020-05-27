@@ -24,16 +24,16 @@ export const Emoji = () => ({
 
 Emoji.parameters = { notes: 'My notes on a button with emojis' };
 
-export const WithSomeEmojiAndAction = () => ({
+export const TextWithAction = () => ({
   component: Button,
   props: {
-    text: '😀 😎 👍 💯',
-    onClick: action('This was clicked OMG'),
+    text: 'Trigger Action',
+    onClick: action('This was clicked'),
   },
 });
 
-WithSomeEmojiAndAction.storyName = 'with some emoji and action';
-WithSomeEmojiAndAction.parameters = { notes: 'My notes on a button with emojis' };
+TextWithAction.storyName = 'With an action';
+TextWithAction.parameters = { notes: 'My notes on a button with emojis' };
 
 export const ButtonWithLinkToAnotherStory = () => ({
   component: Button,

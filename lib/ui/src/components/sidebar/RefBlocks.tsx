@@ -111,8 +111,21 @@ const ErrorDetail = styled.em(({ theme }) => ({
 const firstLineRegex = /(Error): (.*)\n/;
 const linesRegex = /at (?:(.*) )?\(?(.+)\)?/;
 const ErrorFormatter: FunctionComponent<{ error: Error }> = ({ error }) => {
+  if (!error) {
+    return <Fragment>this error has no stack or message</Fragment>;
+  }
+  if (!error.stack) {
+    return <Fragment>{error.message || 'this error has no stack or message'}</Fragment>;
+  }
+
   const input = error.stack.toString();
-  const [, type, name] = input.match(firstLineRegex);
+  const match = input.match(firstLineRegex);
+
+  if (!match) {
+    return <Fragment>{input}</Fragment>;
+  }
+
+  const [, type, name] = match;
 
   const rawLines = input.split(/\n/).slice(1);
   const [, ...lines] = rawLines
@@ -205,7 +218,7 @@ export const AuthBlock: FunctionComponent<{ authUrl: string; id: string }> = ({ 
 export const ErrorBlock: FunctionComponent<{ error: Error }> = ({ error }) => (
   <Contained>
     <Spaced>
-      <Text>Ow now! something went wrong loading this storybook</Text>
+      <Text>Ow no! something went wrong loading this storybook</Text>
       <WithTooltip
         trigger="click"
         closeOnClick={false}

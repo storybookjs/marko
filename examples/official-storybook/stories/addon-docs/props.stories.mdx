@@ -1,10 +1,15 @@
 import { Meta, Preview, Story, Props } from '@storybook/addon-docs/blocks';
+import range from 'lodash/range';
 import { DocgenButton } from '../../components/DocgenButton';
 import { ButtonGroup, SubGroup } from '../../components/ButtonGroup';
 import { ForwardRefButton } from '../../components/ForwardRefButton';
 import { MemoButton } from '../../components/MemoButton';
 
-<Meta title="Addons/Docs/props" component={ButtonGroup} />
+<Meta
+  title="Addons/Docs/props"
+  component={ButtonGroup}
+  parameters={{ controls: { expanded: false } }}
+/>
 
 export const FooBar = ({ foo, bar, baz } = {}) => (
   <table>
@@ -72,7 +77,12 @@ export const FooBar = ({ foo, bar, baz } = {}) => (
 ## Component Story
 
 <Preview>
-  <Story name="Component" argTypes={{ background: { control: { type: 'color' } } }}>
+  <Story
+    name="Component"
+    argTypes={{
+      background: { control: { type: 'color' } },
+    }}
+  >
     {({ background, children }) => {
       const contents = children && children.length > 0 ? children : <DocgenButton label="child" />;
       return <ButtonGroup background={background}>{contents}</ButtonGroup>;
@@ -87,12 +97,28 @@ export const FooBar = ({ foo, bar, baz } = {}) => (
 <Preview>
   <Story
     name="Controls"
+    args={{
+      background: '#ff0',
+      label: 'apple',
+      count: 5,
+    }}
     argTypes={{
-      foo: { control: { type: 'range' } },
-      bar: { control: { type: 'options', options: ['a', 'b', 'c'] } },
+      count: { control: { type: 'range', min: 0, max: 10 } },
+      label: {
+        control: { type: 'options', options: ['apple', 'banana', 'cherry'] },
+      },
+      background: { control: { type: 'color' } },
     }}
   >
-    {(args) => <FooBar {...args} />}
+    {({ background, label, count }) => {
+      return (
+        <ButtonGroup background={background}>
+          {range(count).map((i) => (
+            <DocgenButton label={`${label} ${i}`} />
+          ))}
+        </ButtonGroup>
+      );
+    }}
   </Story>
 </Preview>
 

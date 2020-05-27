@@ -1,0 +1,46 @@
+{
+  "name": "@storybook/addon-controls",
+  "version": "6.0.0-beta.15",
+  "description": "Controls for component properties",
+  "keywords": [
+    "addon",
+    "storybook",
+    "knobs",
+    "controls",
+    "properties"
+  ],
+  "homepage": "https://github.com/storybookjs/storybook/tree/next/addons/controls",
+  "bugs": {
+    "url": "https://github.com/storybookjs/storybook/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/storybookjs/storybook.git",
+    "directory": "addons/controls"
+  },
+  "license": "MIT",
+  "main": "dist/register.js",
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "*.js",
+    "*.d.ts"
+  ],
+  "scripts": {
+    "prepare": "node ../../scripts/prepare.js"
+  },
+  "dependencies": {
+    "@storybook/addons": "6.0.0-beta.15",
+    "@storybook/api": "6.0.0-beta.15",
+    "@storybook/client-api": "6.0.0-beta.15",
+    "@storybook/components": "6.0.0-beta.15",
+    "core-js": "^3.0.1"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-dom": "*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

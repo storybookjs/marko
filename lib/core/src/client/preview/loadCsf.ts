@@ -52,9 +52,6 @@ const loadStories = (
       storyStore.removeStoryKind(exp.default.title);
     }
   });
-  if (removed.length > 0) {
-    storyStore.incrementRevision();
-  }
 
   const added = Array.from(currentExports.keys()).filter((exp) => !previousExports.has(exp));
 

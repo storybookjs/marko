@@ -10,7 +10,7 @@ The Toolbars addon controls global story rendering options from Storybook's tool
 - set your components' internationalization (i18n) locale
 - configure just about anything in Storybook that makes use of a global variable
 
-Toolbars is implemented using Storybook Args (SB6.0+): dynamic variables that trigger a story re-render when they are set.
+Toolbars is built on top of [Storybook Args](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/formats/component-story-format/index.md#args-story-inputs) (SB6.0+): dynamic variables that trigger a story re-render when they are set.
 
 - [Get started](#get-started)
   - [Installation](#installation)
@@ -166,16 +166,16 @@ const getCaptionForLocale = (locale) => {
   }
 }
 
-export const StoryWithLocale = ({ globalArgs: { locale } }) => {
+export const StoryWithLocale = (args, { globalArgs: { locale } }) => {
   const caption = getCaptionForLocale(locale);
-  return <>{caption}</>
+  return <>{caption}</>;
 };
 ```
 
-**NOTE:** In Storybook 6.0, if you set the global option `passArgsFirst`, the story context is passes as the second argument:
+**NOTE:** In Storybook 6.0, if you set the global option `passArgsFirst: false` for backwards compatibility, the story context is passes as the second argument:
 
 ```js
-export const StoryWithLocale = (args, { globalArgs: { locale } }) => {
+export const StoryWithLocale = ({ globalArgs: { locale } }) => {
   const caption = getCaptionForLocale(locale);
   return <>{caption}</>;
 };
