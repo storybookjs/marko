@@ -1,3 +1,13 @@
+## 6.0.0-beta.16 (May 28, 2020)
+
+### Bug Fixes
+
+* Core: Add missing babel plugin ([#10941](https://github.com/storybookjs/storybook/pull/10941))
+
+### Maintenance
+
+* CI: Stabilize E2E tests ([#10888](https://github.com/storybookjs/storybook/pull/10888))
+
 ## 6.0.0-beta.15 (May 27, 2020)
 
 ### Features
