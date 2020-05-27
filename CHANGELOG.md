@@ -1,3 +1,18 @@
+## 6.0.0-beta.15 (May 27, 2020)
+
+### Features
+
+- Addon-Controls: Next-generation knobs ([#10834](https://github.com/storybookjs/storybook/pull/10834))
+
+### Bug Fixes
+
+- Core: Avoid re-render on HMR of other stories ([#10908](https://github.com/storybookjs/storybook/pull/10908))
+- Core: Fix auth for refs ([#10845](https://github.com/storybookjs/storybook/pull/10845))
+
+### Dependency Upgrades
+
+- Bump react-syntax-highlighter from 11.0.2 to 12.2.1 ([#10919](https://github.com/storybookjs/storybook/pull/10919))
+
 ## 6.0.0-beta.14 (May 25, 2020)
 
 ### Breaking Changes

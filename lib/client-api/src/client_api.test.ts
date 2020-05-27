@@ -442,22 +442,6 @@ describe('preview.client_api', () => {
       };
     }
 
-    it('should increment store revision when the module reloads', () => {
-      const {
-        storyStore,
-        clientApi: { storiesOf },
-      } = getContext();
-      const mod = new MockModule();
-
-      expect(storyStore.getRevision()).toEqual(0);
-
-      storiesOf('kind', (mod as unknown) as NodeModule);
-
-      mod.hot.reload();
-
-      expect(storyStore.getRevision()).toEqual(1);
-    });
-
     it('should replace a kind when the module reloads', () => {
       const {
         clientApi: { storiesOf, getStorybook },
