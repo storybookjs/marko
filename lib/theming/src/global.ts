@@ -32,7 +32,7 @@ export const createReset = memoize(1)(
     },
 
     'button, input, textarea, select': {
-      outline: 'none',
+      // outline: 'none',
       fontFamily: 'inherit',
       fontSize: 'inherit',
       boxSizing: 'border-box',
