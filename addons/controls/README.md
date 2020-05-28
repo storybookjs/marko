@@ -331,9 +331,9 @@ And here's what the resulting UI looks like:
 | -------------- | :----: | :------------: |
 | React          |   +    |       +        |
 | Vue            |   +    |       +        |
-| Angular        |   +    |       #        |
+| Angular        |   +    |       +        |
 | Ember          |   +    |       #        |
-| Web components |   +    |       #        |
+| Web components |   +    |       +        |
 | HTML           |   +    |                |
 | Svelte         |   +    |                |
 | Preact         |   +    |                |
