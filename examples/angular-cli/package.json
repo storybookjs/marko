@@ -40,6 +40,7 @@
     "@storybook/addon-a11y": "6.0.0-beta.16",
     "@storybook/addon-actions": "6.0.0-beta.16",
     "@storybook/addon-backgrounds": "6.0.0-beta.16",
+    "@storybook/addon-controls": "6.0.0-beta.16",
     "@storybook/addon-docs": "6.0.0-beta.16",
     "@storybook/addon-jest": "6.0.0-beta.16",
     "@storybook/addon-knobs": "6.0.0-beta.16",
