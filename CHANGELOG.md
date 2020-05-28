@@ -1,3 +1,10 @@
+## 6.0.0-beta.17 (May 28, 2020)
+
+### Features
+
+* Addon-controls: Angular support ([#10946](https://github.com/storybookjs/storybook/pull/10946))
+* Addon-controls: Web-components support ([#10953](https://github.com/storybookjs/storybook/pull/10953))
+
 ## 6.0.0-beta.16 (May 28, 2020)
 
 ### Bug Fixes
