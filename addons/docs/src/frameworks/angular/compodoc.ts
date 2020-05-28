@@ -3,6 +3,8 @@
 
 import { PropDef } from '@storybook/components';
 import { ArgType, ArgTypes } from '@storybook/api';
+import { logger } from '@storybook/client-logger';
+import { string } from 'prop-types';
 import { Argument, CompodocJson, Component, Method, Property, Directive } from './types';
 
 type Sections = Record<string, PropDef[]>;
@@ -90,6 +92,46 @@ const displaySignature = (item: Method): string => {
   return `(${args.join(', ')}) => ${item.returnType}`;
 };
 
+const extractTypeFromValue = (defaultValue: any) => {
+  const valueType = typeof defaultValue;
+  return defaultValue || valueType === 'boolean' ? valueType : null;
+};
+
+const extractEnumValues = (compodocType: any) => {
+  if (typeof compodocType !== 'string' || compodocType.indexOf('|') === -1) {
+    return null;
+  }
+  return compodocType.split('|').map((value) => JSON.parse(value));
+};
+
+export const extractType = (property: Property, defaultValue: any) => {
+  const compodocType = property.type || extractTypeFromValue(defaultValue);
+  switch (compodocType) {
+    case 'string':
+    case 'boolean':
+    case 'number':
+      return { name: compodocType };
+    case undefined:
+    case null:
+      return { name: 'void' };
+    default: {
+      const enumValues = extractEnumValues(compodocType);
+      return enumValues ? { name: 'enum', value: enumValues } : { name: 'object' };
+    }
+  }
+};
+
+const extractDefaultValue = (property: Property) => {
+  try {
+    // eslint-disable-next-line no-eval
+    const value = eval(property.defaultValue);
+    return value;
+  } catch (err) {
+    logger.info(`Error extracting ${property.name}: $ {property.defaultValue}`);
+    return undefined;
+  }
+};
+
 export const extractArgTypesFromData = (componentData: Directive) => {
   const sectionToItems: Record<string, ArgType[]> = {};
   const compodocClasses = ['propertiesClass', 'methodsClass', 'inputsClass', 'outputsClass'];
@@ -99,10 +141,16 @@ export const extractArgTypesFromData = (componentData: Directive) => {
     const data = componentData[key] || [];
     data.forEach((item: Method | Property) => {
       const section = mapItemToSection(key, item);
+      const defaultValue = isMethod(item) ? undefined : extractDefaultValue(item as Property);
+      const type =
+        isMethod(item) || section !== 'inputs'
+          ? { name: 'void' }
+          : extractType(item as Property, defaultValue);
       const argType = {
         name: item.name,
         description: item.description,
-        defaultValue: { summary: isMethod(item) ? '' : item.defaultValue },
+        defaultValue,
+        type,
         table: {
           category: section,
           type: {
