@@ -252,7 +252,7 @@ storiesOf('Addons|Info.GitHub issues', module).add(
 
 exports[`inject-decorator positive - angular calculates "adds" map 1`] = `
 Object {
-  "custom-ng-content--default": Object {
+  "default": Object {
     "endBody": Object {
       "col": 2,
       "line": 15,
@@ -292,7 +292,28 @@ storiesOf('Custom|ng-content', module).addParameters({ storySource: { source: __
 "
 `;
 
-exports[`inject-decorator positive - flow calculates "adds" map 1`] = `Object {}`;
+exports[`inject-decorator positive - flow calculates "adds" map 1`] = `
+Object {
+  "flow-class": Object {
+    "endBody": Object {
+      "col": 70,
+      "line": 35,
+    },
+    "endLoc": Object {
+      "col": 70,
+      "line": 35,
+    },
+    "startBody": Object {
+      "col": 26,
+      "line": 35,
+    },
+    "startLoc": Object {
+      "col": 12,
+      "line": 35,
+    },
+  },
+}
+`;
 
 exports[`inject-decorator positive - flow injects stories decorator after the all "storiesOf" functions 1`] = `
 "// @flow
@@ -335,7 +356,7 @@ stories.add('Flow Class', withInfo('Lorum Ipsum Nem')(() => <Table />));
 
 exports[`inject-decorator positive - ts calculates "adds" map 1`] = `
 Object {
-  "ngrx-store--with-component": Object {
+  "with-component": Object {
     "endBody": Object {
       "col": 3,
       "line": 32,
@@ -393,25 +414,7 @@ storiesOf('ngrx|Store', module).addParameters({ storySource: { source: __STORY__
 
 exports[`inject-decorator positive calculates "adds" map 1`] = `
 Object {
-  "addons-info-decorator--use-info-as-story-decorator": Object {
-    "endBody": Object {
-      "col": 73,
-      "line": 137,
-    },
-    "endLoc": Object {
-      "col": 73,
-      "line": 137,
-    },
-    "startBody": Object {
-      "col": 38,
-      "line": 137,
-    },
-    "startLoc": Object {
-      "col": 7,
-      "line": 137,
-    },
-  },
-  "addons-info-github-issues--1814": Object {
+  "1814": Object {
     "endBody": Object {
       "col": 4,
       "line": 152,
@@ -429,169 +432,7 @@ Object {
       "line": 146,
     },
   },
-  "addons-info-markdown--displays-markdown-in-description": Object {
-    "endBody": Object {
-      "col": 96,
-      "line": 44,
-    },
-    "endLoc": Object {
-      "col": 96,
-      "line": 44,
-    },
-    "startBody": Object {
-      "col": 2,
-      "line": 44,
-    },
-    "startLoc": Object {
-      "col": 2,
-      "line": 43,
-    },
-  },
-  "addons-info-options-header--shows-or-hides-info-addon-header": Object {
-    "endBody": Object {
-      "col": 41,
-      "line": 60,
-    },
-    "endLoc": Object {
-      "col": 41,
-      "line": 60,
-    },
-    "startBody": Object {
-      "col": 2,
-      "line": 57,
-    },
-    "startLoc": Object {
-      "col": 2,
-      "line": 56,
-    },
-  },
-  "addons-info-options-inline--inlines-component-inside-story": Object {
-    "endBody": Object {
-      "col": 41,
-      "line": 52,
-    },
-    "endLoc": Object {
-      "col": 41,
-      "line": 52,
-    },
-    "startBody": Object {
-      "col": 2,
-      "line": 49,
-    },
-    "startLoc": Object {
-      "col": 2,
-      "line": 48,
-    },
-  },
-  "addons-info-options-proptables--shows-additional-component-prop-tables": Object {
-    "endBody": Object {
-      "col": 41,
-      "line": 76,
-    },
-    "endLoc": Object {
-      "col": 41,
-      "line": 76,
-    },
-    "startBody": Object {
-      "col": 2,
-      "line": 73,
-    },
-    "startLoc": Object {
-      "col": 2,
-      "line": 72,
-    },
-  },
-  "addons-info-options-proptablesexclude--exclude-component-from-prop-tables": Object {
-    "endBody": Object {
-      "col": 4,
-      "line": 89,
-    },
-    "endLoc": Object {
-      "col": 4,
-      "line": 89,
-    },
-    "startBody": Object {
-      "col": 2,
-      "line": 81,
-    },
-    "startLoc": Object {
-      "col": 2,
-      "line": 80,
-    },
-  },
-  "addons-info-options-source--shows-or-hides-info-addon-source": Object {
-    "endBody": Object {
-      "col": 41,
-      "line": 68,
-    },
-    "endLoc": Object {
-      "col": 41,
-      "line": 68,
-    },
-    "startBody": Object {
-      "col": 2,
-      "line": 65,
-    },
-    "startLoc": Object {
-      "col": 2,
-      "line": 64,
-    },
-  },
-  "addons-info-options-styles--extend-info-styles-with-an-object": Object {
-    "endBody": Object {
-      "col": 43,
-      "line": 108,
-    },
-    "endLoc": Object {
-      "col": 43,
-      "line": 108,
-    },
-    "startBody": Object {
-      "col": 4,
-      "line": 95,
-    },
-    "startLoc": Object {
-      "col": 4,
-      "line": 94,
-    },
-  },
-  "addons-info-options-styles--full-control-over-styles-using-a-function": Object {
-    "endBody": Object {
-      "col": 43,
-      "line": 123,
-    },
-    "endLoc": Object {
-      "col": 43,
-      "line": 123,
-    },
-    "startBody": Object {
-      "col": 4,
-      "line": 112,
-    },
-    "startLoc": Object {
-      "col": 4,
-      "line": 111,
-    },
-  },
-  "addons-info-options-tablecomponent--use-a-custom-component-for-the-table": Object {
-    "endBody": Object {
-      "col": 41,
-      "line": 130,
-    },
-    "endLoc": Object {
-      "col": 41,
-      "line": 130,
-    },
-    "startBody": Object {
-      "col": 2,
-      "line": 128,
-    },
-    "startLoc": Object {
-      "col": 2,
-      "line": 127,
-    },
-  },
-  "addons-info-react-docgen--comments-from-component-declaration": Object {
+  "comments-from-component-declaration": Object {
     "endBody": Object {
       "col": 70,
       "line": 28,
@@ -609,7 +450,7 @@ Object {
       "line": 25,
     },
   },
-  "addons-info-react-docgen--comments-from-flow-declarations": Object {
+  "comments-from-flow-declarations": Object {
     "endBody": Object {
       "col": 85,
       "line": 22,
@@ -627,7 +468,7 @@ Object {
       "line": 19,
     },
   },
-  "addons-info-react-docgen--comments-from-proptype-declarations": Object {
+  "comments-from-proptype-declarations": Object {
     "endBody": Object {
       "col": 79,
       "line": 16,
@@ -643,6 +484,186 @@ Object {
     "startLoc": Object {
       "col": 4,
       "line": 13,
+    },
+  },
+  "displays-markdown-in-description": Object {
+    "endBody": Object {
+      "col": 96,
+      "line": 44,
+    },
+    "endLoc": Object {
+      "col": 96,
+      "line": 44,
+    },
+    "startBody": Object {
+      "col": 2,
+      "line": 44,
+    },
+    "startLoc": Object {
+      "col": 2,
+      "line": 43,
+    },
+  },
+  "exclude-component-from-prop-tables": Object {
+    "endBody": Object {
+      "col": 4,
+      "line": 89,
+    },
+    "endLoc": Object {
+      "col": 4,
+      "line": 89,
+    },
+    "startBody": Object {
+      "col": 2,
+      "line": 81,
+    },
+    "startLoc": Object {
+      "col": 2,
+      "line": 80,
+    },
+  },
+  "extend-info-styles-with-an-object": Object {
+    "endBody": Object {
+      "col": 43,
+      "line": 108,
+    },
+    "endLoc": Object {
+      "col": 43,
+      "line": 108,
+    },
+    "startBody": Object {
+      "col": 4,
+      "line": 95,
+    },
+    "startLoc": Object {
+      "col": 4,
+      "line": 94,
+    },
+  },
+  "full-control-over-styles-using-a-function": Object {
+    "endBody": Object {
+      "col": 43,
+      "line": 123,
+    },
+    "endLoc": Object {
+      "col": 43,
+      "line": 123,
+    },
+    "startBody": Object {
+      "col": 4,
+      "line": 112,
+    },
+    "startLoc": Object {
+      "col": 4,
+      "line": 111,
+    },
+  },
+  "inlines-component-inside-story": Object {
+    "endBody": Object {
+      "col": 41,
+      "line": 52,
+    },
+    "endLoc": Object {
+      "col": 41,
+      "line": 52,
+    },
+    "startBody": Object {
+      "col": 2,
+      "line": 49,
+    },
+    "startLoc": Object {
+      "col": 2,
+      "line": 48,
+    },
+  },
+  "shows-additional-component-prop-tables": Object {
+    "endBody": Object {
+      "col": 41,
+      "line": 76,
+    },
+    "endLoc": Object {
+      "col": 41,
+      "line": 76,
+    },
+    "startBody": Object {
+      "col": 2,
+      "line": 73,
+    },
+    "startLoc": Object {
+      "col": 2,
+      "line": 72,
+    },
+  },
+  "shows-or-hides-info-addon-header": Object {
+    "endBody": Object {
+      "col": 41,
+      "line": 60,
+    },
+    "endLoc": Object {
+      "col": 41,
+      "line": 60,
+    },
+    "startBody": Object {
+      "col": 2,
+      "line": 57,
+    },
+    "startLoc": Object {
+      "col": 2,
+      "line": 56,
+    },
+  },
+  "shows-or-hides-info-addon-source": Object {
+    "endBody": Object {
+      "col": 41,
+      "line": 68,
+    },
+    "endLoc": Object {
+      "col": 41,
+      "line": 68,
+    },
+    "startBody": Object {
+      "col": 2,
+      "line": 65,
+    },
+    "startLoc": Object {
+      "col": 2,
+      "line": 64,
+    },
+  },
+  "use-a-custom-component-for-the-table": Object {
+    "endBody": Object {
+      "col": 41,
+      "line": 130,
+    },
+    "endLoc": Object {
+      "col": 41,
+      "line": 130,
+    },
+    "startBody": Object {
+      "col": 2,
+      "line": 128,
+    },
+    "startLoc": Object {
+      "col": 2,
+      "line": 127,
+    },
+  },
+  "use-info-as-story-decorator": Object {
+    "endBody": Object {
+      "col": 73,
+      "line": 137,
+    },
+    "endLoc": Object {
+      "col": 73,
+      "line": 137,
+    },
+    "startBody": Object {
+      "col": 38,
+      "line": 137,
+    },
+    "startLoc": Object {
+      "col": 7,
+      "line": 137,
     },
   },
 }
