@@ -29,7 +29,7 @@ describe('web-components component properties', () => {
   // https://github.com/Polymer/lit-html/issues/516
   jest.mock('lit-html', () => {});
   // eslint-disable-next-line global-require
-  const { extractPropsFromElements } = require('./custom-elements');
+  const { extractArgTypesFromElements } = require('./custom-elements');
 
   const fixturesDir = path.join(__dirname, '__testfixtures__');
   fs.readdirSync(fixturesDir, { withFileTypes: true }).forEach((testEntry) => {
@@ -52,7 +52,7 @@ describe('web-components component properties', () => {
           );
 
           // snapshot the properties
-          const properties = extractPropsFromElements('input', customElements);
+          const properties = extractArgTypesFromElements('input', customElements);
           expect(properties).toMatchSpecificSnapshot(path.join(testDir, 'properties.snapshot'));
         });
       }
