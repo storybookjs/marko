@@ -1,20 +1,32 @@
 import globBase from 'glob-base';
 import { makeRe } from 'micromatch';
+import deprecate from 'util-deprecate';
+import dedent from 'ts-dedent';
 
 // LEGACY support for bad glob patterns we had in SB 5 - remove in SB7
-const fixBadGlob = (val) => {
+const fixBadGlob = deprecate(
+  (match: RegExpMatchArray) => {
+    return match.input.replace(match[1], `@${match[1]}`);
+  },
+  dedent`
+    You're specified an invalid glob, we've attempted to fix it, please ensure the glob you specify is a valid glob
+  `
+);
+const detectBadGlob = (val: string) => {
   const match = val.match(/\.(\([^)]+\))/);
 
   if (match) {
-    return match.input.replace(match[1], `@${match[1]}`);
+    return fixBadGlob(match);
   }
 
   return val;
 };
 
-const isObject = (val) => val != null && typeof val === 'object' && Array.isArray(val) === false;
-export const toRequireContext = (input) => {
-  const fixedInput = fixBadGlob(input);
+const isObject = (val: Record<string, any>) =>
+  val != null && typeof val === 'object' && Array.isArray(val) === false;
+
+export const toRequireContext = (input: any) => {
+  const fixedInput = detectBadGlob(input);
   switch (true) {
     case typeof input === 'string': {
       const { base, glob } = globBase(fixedInput);
@@ -43,7 +55,7 @@ export const toRequireContext = (input) => {
   }
 };
 
-export const toRequireContextString = (input) => {
+export const toRequireContextString = (input: any) => {
   const { path: p, recursive: r, match: m } = toRequireContext(input);
 
   const result = `require.context('${p}', ${r}, /${m}/)`;
