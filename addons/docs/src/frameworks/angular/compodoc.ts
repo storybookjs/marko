@@ -4,6 +4,7 @@
 import { PropDef } from '@storybook/components';
 import { ArgType, ArgTypes } from '@storybook/api';
 import { logger } from '@storybook/client-logger';
+import { string } from 'prop-types';
 import { Argument, CompodocJson, Component, Method, Property, Directive } from './types';
 
 type Sections = Record<string, PropDef[]>;
@@ -91,15 +92,32 @@ const displaySignature = (item: Method): string => {
   return `(${args.join(', ')}) => ${item.returnType}`;
 };
 
-const extractType = (property: Property, defaultValue: any) => {
-  switch (property.type || typeof defaultValue) {
+const extractTypeFromValue = (defaultValue: any) => {
+  const valueType = typeof defaultValue;
+  return defaultValue || valueType === 'boolean' ? valueType : null;
+};
+
+const extractEnumValues = (compodocType: any) => {
+  if (typeof compodocType !== 'string' || compodocType.indexOf('|') === -1) {
+    return null;
+  }
+  return compodocType.split('|').map((value) => JSON.parse(value));
+};
+
+export const extractType = (property: Property, defaultValue: any) => {
+  const compodocType = property.type || extractTypeFromValue(defaultValue);
+  switch (compodocType) {
     case 'string':
     case 'boolean':
     case 'number':
-    case 'object':
-      return { name: property.type };
-    default:
+      return { name: compodocType };
+    case undefined:
+    case null:
       return { name: 'void' };
+    default: {
+      const enumValues = extractEnumValues(compodocType);
+      return enumValues ? { name: 'enum', value: enumValues } : { name: 'object' };
+    }
   }
 };
 
