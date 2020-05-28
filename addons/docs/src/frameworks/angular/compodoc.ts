@@ -127,7 +127,7 @@ const extractDefaultValue = (property: Property) => {
     const value = eval(property.defaultValue);
     return value;
   } catch (err) {
-    logger.warn(`Error extracting ${property.name}: $ {property.defaultValue}`);
+    logger.info(`Error extracting ${property.name}: $ {property.defaultValue}`);
     return undefined;
   }
 };
