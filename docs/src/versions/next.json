@@ -1,1 +1,1 @@
-{"version":"6.0.0-beta.16","info":{"plain":"### Bug Fixes\n\n* Core: Add missing babel plugin ([#10941](https://github.com/storybookjs/storybook/pull/10941))\n\n### Maintenance\n\n* CI: Stabilize E2E tests ([#10888](https://github.com/storybookjs/storybook/pull/10888))"}}
+{"version":"6.0.0-beta.17","info":{"plain":"### Features\n\n* Addon-controls: Angular support ([#10946](https://github.com/storybookjs/storybook/pull/10946))\n* Addon-controls: Web-components support ([#10953](https://github.com/storybookjs/storybook/pull/10953))"}}
