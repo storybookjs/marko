@@ -178,6 +178,9 @@ export default class StoryStore {
     );
 
     this.pushToManager();
+    if (this._channel) {
+      this._channel.emit(Events.RENDER_CURRENT_STORY);
+    }
   }
 
   addGlobalMetadata({ parameters, decorators }: StoryMetadata) {
