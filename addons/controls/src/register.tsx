@@ -9,13 +9,12 @@ addons.register(ADDON_ID, (api: API) => {
   addons.addPanel(ADDON_ID, {
     title: 'Controls',
     type: types.PANEL,
-    render: ({ active }) => {
+    render: ({ key, active }) => {
       if (!active || !api.getCurrentStoryData()) {
         return null;
       }
       return (
-        <AddonPanel active={active}>
-          {false}
+        <AddonPanel key={key} active={active}>
           <ControlsPanel />
         </AddonPanel>
       );
