@@ -1,3 +1,13 @@
+## 6.0.0-beta.19 (May 30, 2020)
+
+### Features
+
+* Addon-controls: Add warning to controls tab on no-args story ([#10986](https://github.com/storybookjs/storybook/pull/10986))
+
+### Bug Fixes
+
+* Addon-docs: Handle JSON.parse exception for Angular union types ([#10984](https://github.com/storybookjs/storybook/pull/10984))
+
 ## 6.0.0-beta.18 (May 29, 2020)
 
 ### Bug Fixes
