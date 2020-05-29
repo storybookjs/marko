@@ -274,13 +274,18 @@ if (frameworkArgs.length > 0) {
 const perform = () => {
   const limit = pLimit(1);
   const narrowedConfigs = Object.values(e2eConfigs);
-  const [a, b] = [+process.env.CIRCLE_NODE_INDEX || 0, +process.env.CIRCLE_NODE_TOTAL || 1];
-  const step = Math.ceil(narrowedConfigs.length / b);
-  const offset = step * a;
+  const nodeIndex = +process.env.CIRCLE_NODE_INDEX || 0;
+  const numberOfNodes = +process.env.CIRCLE_NODE_TOTAL || 1;
 
-  const list = narrowedConfigs.slice().splice(offset, step);
+  const list = narrowedConfigs.filter((_, index) => {
+    return index % numberOfNodes === nodeIndex;
+  });
 
-  logger.info(`📑 Assigning jobs ${list.map((c) => c.name).join(', ')} to node ${a} (on ${b})`);
+  logger.info(
+    `📑 Assigning jobs ${list
+      .map((c) => c.name)
+      .join(', ')} to node ${nodeIndex} (on ${numberOfNodes})`
+  );
 
   return Promise.all(list.map((config) => limit(() => runE2E(config))));
 };
