@@ -1,3 +1,4 @@
+//
 import createChannel from '@storybook/channel-postmessage';
 import { toId } from '@storybook/csf';
 import addons, { mockChannel } from '@storybook/addons';
@@ -666,7 +667,44 @@ describe('preview.story_store', () => {
       store.finishConfiguring();
       expect(onSetStories).toHaveBeenCalledWith({
         v: 2,
+        globalArgs: {},
         globalParameters: {},
+        kindParameters: { a: {} },
+        stories: {
+          'a--1': expect.objectContaining({
+            id: 'a--1',
+          }),
+        },
+      });
+    });
+
+    it('correctly emits globalArgs with SET_STORIES', () => {
+      const onSetStories = jest.fn();
+      channel.on(Events.SET_STORIES, onSetStories);
+      const store = new StoryStore({ channel });
+
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          globalArgTypes: {
+            arg1: { defaultValue: 'arg1' },
+          },
+        },
+      });
+
+      addStoryToStore(store, 'a', '1', () => 0);
+      expect(onSetStories).not.toHaveBeenCalled();
+
+      store.finishConfiguring();
+      expect(onSetStories).toHaveBeenCalledWith({
+        v: 2,
+        globalArgs: { arg1: 'arg1' },
+        globalParameters: {
+          // NOTE: Currently globalArg[Types] are emitted as parameters but this may not remain
+          globalArgTypes: {
+            arg1: { defaultValue: 'arg1' },
+          },
+        },
         kindParameters: { a: {} },
         stories: {
           'a--1': expect.objectContaining({
@@ -684,6 +722,7 @@ describe('preview.story_store', () => {
       store.finishConfiguring();
       expect(onSetStories).toHaveBeenCalledWith({
         v: 2,
+        globalArgs: {},
         globalParameters: {},
         kindParameters: {},
         stories: {},
@@ -703,6 +742,7 @@ describe('preview.story_store', () => {
 
       expect(onSetStories).toHaveBeenCalledWith({
         v: 2,
+        globalArgs: {},
         globalParameters: {},
         kindParameters: { a: {} },
         stories: {
@@ -735,6 +775,7 @@ describe('preview.story_store', () => {
 
       expect(onSetStories).toHaveBeenCalledWith({
         v: 2,
+        globalArgs: {},
         globalParameters: {},
         kindParameters: { 'kind-1': {} },
         stories: {
@@ -770,6 +811,7 @@ describe('preview.story_store', () => {
 
       expect(onSetStories).toHaveBeenCalledWith({
         v: 2,
+        globalArgs: {},
         globalParameters: {},
         kindParameters: { 'kind-1': {}, 'kind-2': {} },
         stories: {
@@ -794,13 +836,12 @@ describe('preview.story_store', () => {
   });
 
   describe('RENDER_CURRENT_STORY', () => {
-    it('is NOT emitted when setError is called', () => {
+    it('is NOT emitted when setError is called during configuration', () => {
       const onRenderCurrentStory = jest.fn();
       channel.on(Events.RENDER_CURRENT_STORY, onRenderCurrentStory);
       const store = new StoryStore({ channel });
 
       store.setError(new Error('Something is bad!') as ErrorLike);
-      store.finishConfiguring();
       expect(onRenderCurrentStory).not.toHaveBeenCalled();
     });
 
@@ -813,13 +854,13 @@ describe('preview.story_store', () => {
       expect(onRenderCurrentStory).not.toHaveBeenCalled();
     });
 
-    it('is NOT emitted when configuration ends', () => {
+    it('is emitted when configuration ends', () => {
       const onRenderCurrentStory = jest.fn();
       channel.on(Events.RENDER_CURRENT_STORY, onRenderCurrentStory);
       const store = new StoryStore({ channel });
 
       store.finishConfiguring();
-      expect(onRenderCurrentStory).not.toHaveBeenCalled();
+      expect(onRenderCurrentStory).toHaveBeenCalled();
     });
 
     it('is emitted when setSelection is called outside of configuration', () => {
@@ -831,27 +872,6 @@ describe('preview.story_store', () => {
       onRenderCurrentStory.mockClear();
       store.setSelection({ storyId: 'a--1', viewMode: 'story' });
       expect(onRenderCurrentStory).toHaveBeenCalled();
-    });
-  });
-
-  describe('GLOBAL_ARGS_UPDATED', () => {
-    it('is emitted when setError is called', () => {
-      const onGlobalArgsUpdated = jest.fn();
-      channel.on(Events.GLOBAL_ARGS_UPDATED, onGlobalArgsUpdated);
-      const store = new StoryStore({ channel });
-
-      store.setError(new Error('Something is bad!') as ErrorLike);
-      store.finishConfiguring();
-      expect(onGlobalArgsUpdated).toHaveBeenCalled();
-    });
-
-    it('is emitted when configuration ends', () => {
-      const onGlobalArgsUpdated = jest.fn();
-      channel.on(Events.GLOBAL_ARGS_UPDATED, onGlobalArgsUpdated);
-      const store = new StoryStore({ channel });
-
-      store.finishConfiguring();
-      expect(onGlobalArgsUpdated).toHaveBeenCalled();
     });
   });
 });
