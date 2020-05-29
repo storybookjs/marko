@@ -24,13 +24,17 @@ const loadStories = (
   if (reqs) {
     reqs.forEach((req) => {
       req.keys().forEach((filename: string) => {
-        const fileExports = req(filename);
-        currentExports.set(
-          fileExports,
-          // todo discuss: types infer that this is RequireContext; no checks needed?
-          // NOTE: turns out `babel-plugin-require-context-hook` doesn't implement this (yet)
-          typeof req.resolve === 'function' ? req.resolve(filename) : null
-        );
+        try {
+          const fileExports = req(filename);
+          currentExports.set(
+            fileExports,
+            // todo discuss: types infer that this is RequireContext; no checks needed?
+            // NOTE: turns out `babel-plugin-require-context-hook` doesn't implement this (yet)
+            typeof req.resolve === 'function' ? req.resolve(filename) : null
+          );
+        } catch (error) {
+          logger.warn(`Unexpected error: ${error}`);
+        }
       });
     });
   } else {
