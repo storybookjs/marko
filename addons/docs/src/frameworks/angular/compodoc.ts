@@ -101,7 +101,12 @@ const extractEnumValues = (compodocType: any) => {
   if (typeof compodocType !== 'string' || compodocType.indexOf('|') === -1) {
     return null;
   }
-  return compodocType.split('|').map((value) => JSON.parse(value));
+
+  try {
+    return compodocType.split('|').map((value) => JSON.parse(value));
+  } catch (e) {
+    return null;
+  }
 };
 
 export const extractType = (property: Property, defaultValue: any) => {
@@ -127,7 +132,7 @@ const extractDefaultValue = (property: Property) => {
     const value = eval(property.defaultValue);
     return value;
   } catch (err) {
-    logger.info(`Error extracting ${property.name}: $ {property.defaultValue}`);
+    logger.debug(`Error extracting ${property.name}: ${property.defaultValue}`);
     return undefined;
   }
 };
