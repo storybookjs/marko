@@ -1,3 +1,35 @@
+## 6.0.0-beta.17 (May 28, 2020)
+
+### Features
+
+* Addon-controls: Angular support ([#10946](https://github.com/storybookjs/storybook/pull/10946))
+* Addon-controls: Web-components support ([#10953](https://github.com/storybookjs/storybook/pull/10953))
+
+## 6.0.0-beta.16 (May 28, 2020)
+
+### Bug Fixes
+
+* Core: Add missing babel plugin ([#10941](https://github.com/storybookjs/storybook/pull/10941))
+
+### Maintenance
+
+* CI: Stabilize E2E tests ([#10888](https://github.com/storybookjs/storybook/pull/10888))
+
+## 6.0.0-beta.15 (May 27, 2020)
+
+### Features
+
+- Addon-Controls: Next-generation knobs ([#10834](https://github.com/storybookjs/storybook/pull/10834))
+
+### Bug Fixes
+
+- Core: Avoid re-render on HMR of other stories ([#10908](https://github.com/storybookjs/storybook/pull/10908))
+- Core: Fix auth for refs ([#10845](https://github.com/storybookjs/storybook/pull/10845))
+
+### Dependency Upgrades
+
+- Bump react-syntax-highlighter from 11.0.2 to 12.2.1 ([#10919](https://github.com/storybookjs/storybook/pull/10919))
+
 ## 6.0.0-beta.14 (May 25, 2020)
 
 ### Breaking Changes

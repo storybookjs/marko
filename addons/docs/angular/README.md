@@ -106,7 +106,7 @@ Then update your `.storybook/main.js` to make sure you load MDX files:
 
 ```ts
 module.exports = {
-  stories: ['../src/stories/**/*.stories.(js|ts|mdx)'],
+  stories: ['../src/stories/**/*.stories.@(js|ts|mdx)'],
 };
 ```
 
