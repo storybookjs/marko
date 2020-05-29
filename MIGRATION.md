@@ -3,6 +3,7 @@
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
   - [Hoisted CSF annotations](#hoisted-csf-annotations)
   - [Zero config typescript](#zero-config-typescript)
+  - [Correct globs in main.js](#correct-globs-in-main-js)
   - [Backgrounds addon has a new api](#backgrounds-addon-has-a-new-api)
   - [CRA preset removed](#cra-preset-removed)
   - [Args passed as first argument to story](#args-passed-as-first-argument-to-story)
@@ -157,6 +158,24 @@ For more information, [see the documentation](https://github.com/storybookjs/sto
 Storybook has built-in Typescript support in 6.0. That means you should remove your complex Typescript configurations from your `.storybook` config. We've tried to pick sensible defaults that work out of the box, especially for nice prop table generation in `@storybook/addon-docs`.
 
 To migrate from an old setup, we recommend deleting any typescript-specific webpack/babel configurations in your project. If you want to override the defaults, see the [typescript configuration docs](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/configurations/typescript-config/index.md).
+
+### Correct globs in main.js
+
+In 5.3 we introduced the `main.js` file with a `stories` property. This property was documented as a "glob" pattern. This was our intention, however the implementation allowed for non valid globs to be specified and work. In fact, we promoted invalid globs in our documentation and CLI templates.
+
+We've corrected this, the CLI templates have been changed to use valid globs.
+
+We've also changed the code that resolves these globs, so that invalid globs will log a warning. They will break in the future, so if you see this warning, please ensure you're specifying a valid glob.
+
+Example of an **invalid** glob:
+```
+stories: ['./**/*.stories.(ts|js)']
+```
+
+Example of a **valid** glob:
+```
+stories: ['./**/*.stories.@(ts|js)']
+```
 
 ### Backgrounds addon has a new api
 
