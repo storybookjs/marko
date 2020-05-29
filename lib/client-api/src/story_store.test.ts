@@ -1,3 +1,4 @@
+//
 import createChannel from '@storybook/channel-postmessage';
 import { toId } from '@storybook/csf';
 import addons, { mockChannel } from '@storybook/addons';
@@ -835,13 +836,12 @@ describe('preview.story_store', () => {
   });
 
   describe('RENDER_CURRENT_STORY', () => {
-    it('is NOT emitted when setError is called', () => {
+    it('is NOT emitted when setError is called during configuration', () => {
       const onRenderCurrentStory = jest.fn();
       channel.on(Events.RENDER_CURRENT_STORY, onRenderCurrentStory);
       const store = new StoryStore({ channel });
 
       store.setError(new Error('Something is bad!') as ErrorLike);
-      store.finishConfiguring();
       expect(onRenderCurrentStory).not.toHaveBeenCalled();
     });
 
@@ -854,13 +854,13 @@ describe('preview.story_store', () => {
       expect(onRenderCurrentStory).not.toHaveBeenCalled();
     });
 
-    it('is NOT emitted when configuration ends', () => {
+    it('is emitted when configuration ends', () => {
       const onRenderCurrentStory = jest.fn();
       channel.on(Events.RENDER_CURRENT_STORY, onRenderCurrentStory);
       const store = new StoryStore({ channel });
 
       store.finishConfiguring();
-      expect(onRenderCurrentStory).not.toHaveBeenCalled();
+      expect(onRenderCurrentStory).toHaveBeenCalled();
     });
 
     it('is emitted when setSelection is called outside of configuration', () => {
