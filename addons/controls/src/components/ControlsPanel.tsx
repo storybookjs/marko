@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { styled } from '@storybook/theming';
 import { ArgsTable, Link } from '@storybook/components';
 import { useArgs, useArgTypes, useParameter } from '@storybook/api';
+import { PARAM_KEY } from '../constants';
 
 interface ControlsParameters {
   expanded?: boolean;
@@ -28,7 +29,7 @@ const NoControlsWarning = () => (
 export const ControlsPanel: FC = () => {
   const [args, updateArgs] = useArgs();
   const rows = useArgTypes();
-  const { expanded } = useParameter<ControlsParameters>('controls', {});
+  const { expanded } = useParameter<ControlsParameters>(PARAM_KEY, {});
   const hasControls = Object.values(rows).filter((argType) => argType?.control?.type).length > 0;
   return (
     <>
