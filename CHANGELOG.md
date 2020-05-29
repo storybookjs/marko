@@ -1,3 +1,13 @@
+## 6.0.0-beta.18 (May 29, 2020)
+
+### Bug Fixes
+
+* Core: Fix HMR for navigation sidebar in UI ([#10981](https://github.com/storybookjs/storybook/pull/10981))
+* Core: Fix `register.tsx` as manager code in preset heuristic ([#10980](https://github.com/storybookjs/storybook/pull/10980))
+* Core: Send global args with set stories ([#10910](https://github.com/storybookjs/storybook/pull/10910))
+* Core: Log swallowed errors when requiring stories ([#10974](https://github.com/storybookjs/storybook/pull/10974))
+* Core: Support valid globs ([#10926](https://github.com/storybookjs/storybook/pull/10926))
+
 ## 6.0.0-beta.17 (May 28, 2020)
 
 ### Features
