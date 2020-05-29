@@ -85,7 +85,7 @@ const initStorybook = async ({ cwd, autoDetect = true, name }: Options) => {
   logger.info(`🎨 Initializing Storybook with @storybook/cli`);
   try {
     const type = autoDetect ? '' : `--type ${name}`;
-    await exec(`npx -p @storybook/cli sb init --skip-install --yes ${type}`, { cwd });
+    await exec(`npx -p @storybook/cli sb init --yes ${type}`, { cwd });
   } catch (e) {
     logger.error(`🚨 Storybook initialization failed`);
     throw e;
@@ -187,10 +187,10 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
     await generate({ ...options, cwd: siblingDir });
     logger.log();
 
-    await initStorybook(options);
+    await setResolutions(options);
     logger.log();
 
-    await setResolutions(options);
+    await initStorybook(options);
     logger.log();
 
     await addRequiredDeps(options);
