@@ -152,3 +152,13 @@ export const yarn2Cra: Parameters = {
     `yarn dlx create-react-app@{{version}} {{name}}-v{{version}}`,
   ].join(' && '),
 };
+
+export const reactInYarnWorkspace: Parameters = {
+  name: 'reactInYarnWorkspace',
+  version: 'latest',
+  generator: [
+    'cd {{name}}-v{{version}}',
+    'echo "{ \\"name\\": \\"workspace-root\\", \\"private\\": true, \\"workspaces\\": [] }" > package.json',
+    `yarn add react react-dom --silent -W`,
+  ].join(' && '),
+};
