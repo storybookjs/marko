@@ -4,10 +4,13 @@ import { PTType } from './types';
 import { SBType } from '../types';
 import { trimQuotes } from '../utils';
 
+const SIGNATURE_REGEXP = /^\(.*\) => /;
+
 export const convert = (type: PTType): SBType | any => {
   const { name, raw, computed, value } = type;
   const base: any = {};
   if (typeof raw !== 'undefined') base.raw = raw;
+
   switch (name) {
     case 'enum': {
       const values = computed ? value : value.map((v: PTType) => trimQuotes(v.value));
@@ -40,6 +43,7 @@ export const convert = (type: PTType): SBType | any => {
     case 'elementType':
     default:
       const otherVal = value ? `${name}(${value})` : name;
-      return { ...base, name: 'other', value: otherVal };
+      const otherName = SIGNATURE_REGEXP.test(name) ? 'function' : 'other';
+      return { ...base, name: otherName, value: otherVal };
   }
 };
