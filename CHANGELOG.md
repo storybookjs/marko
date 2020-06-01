@@ -1,39 +1,51 @@
+## 6.0.0-beta.20 (June 1, 2020)
+
+### Bug Fixes
+
+- Addon-controls: Fix `options` control types ([#11003](https://github.com/storybookjs/storybook/pull/11003))
+- Addon-controls: Fix no-control handling ([#11001](https://github.com/storybookjs/storybook/pull/11001))
+- Addon-docs: Fix function argType inference in react-docgen-typescript ([#10997](https://github.com/storybookjs/storybook/pull/10997))
+
+### Maintenance
+
+- Addon-controls/a11y: Fix PARAM_KEY export for consistency ([#10988](https://github.com/storybookjs/storybook/pull/10988))
+
 ## 6.0.0-beta.19 (May 30, 2020)
 
 ### Features
 
-* Addon-controls: Add warning to controls tab on no-args story ([#10986](https://github.com/storybookjs/storybook/pull/10986))
+- Addon-controls: Add warning to controls tab on no-args story ([#10986](https://github.com/storybookjs/storybook/pull/10986))
 
 ### Bug Fixes
 
-* Addon-docs: Handle JSON.parse exception for Angular union types ([#10984](https://github.com/storybookjs/storybook/pull/10984))
+- Addon-docs: Handle JSON.parse exception for Angular union types ([#10984](https://github.com/storybookjs/storybook/pull/10984))
 
 ## 6.0.0-beta.18 (May 29, 2020)
 
 ### Bug Fixes
 
-* Core: Fix HMR for navigation sidebar in UI ([#10981](https://github.com/storybookjs/storybook/pull/10981))
-* Core: Fix `register.tsx` as manager code in preset heuristic ([#10980](https://github.com/storybookjs/storybook/pull/10980))
-* Core: Send global args with set stories ([#10910](https://github.com/storybookjs/storybook/pull/10910))
-* Core: Log swallowed errors when requiring stories ([#10974](https://github.com/storybookjs/storybook/pull/10974))
-* Core: Support valid globs ([#10926](https://github.com/storybookjs/storybook/pull/10926))
+- Core: Fix HMR for navigation sidebar in UI ([#10981](https://github.com/storybookjs/storybook/pull/10981))
+- Core: Fix `register.tsx` as manager code in preset heuristic ([#10980](https://github.com/storybookjs/storybook/pull/10980))
+- Core: Send global args with set stories ([#10910](https://github.com/storybookjs/storybook/pull/10910))
+- Core: Log swallowed errors when requiring stories ([#10974](https://github.com/storybookjs/storybook/pull/10974))
+- Core: Support valid globs ([#10926](https://github.com/storybookjs/storybook/pull/10926))
 
 ## 6.0.0-beta.17 (May 28, 2020)
 
 ### Features
 
-* Addon-controls: Angular support ([#10946](https://github.com/storybookjs/storybook/pull/10946))
-* Addon-controls: Web-components support ([#10953](https://github.com/storybookjs/storybook/pull/10953))
+- Addon-controls: Angular support ([#10946](https://github.com/storybookjs/storybook/pull/10946))
+- Addon-controls: Web-components support ([#10953](https://github.com/storybookjs/storybook/pull/10953))
 
 ## 6.0.0-beta.16 (May 28, 2020)
 
 ### Bug Fixes
 
-* Core: Add missing babel plugin ([#10941](https://github.com/storybookjs/storybook/pull/10941))
+- Core: Add missing babel plugin ([#10941](https://github.com/storybookjs/storybook/pull/10941))
 
 ### Maintenance
 
-* CI: Stabilize E2E tests ([#10888](https://github.com/storybookjs/storybook/pull/10888))
+- CI: Stabilize E2E tests ([#10888](https://github.com/storybookjs/storybook/pull/10888))
 
 ## 6.0.0-beta.15 (May 27, 2020)
 
