@@ -18,6 +18,8 @@ export interface ArgControlProps {
   updateArgs: (args: Args) => void;
 }
 
+const NoControl = () => <>-</>;
+
 export const ArgControl: FC<ArgControlProps> = ({ row, arg, updateArgs }) => {
   const { name, control } = row;
   const onChange = useCallback(
@@ -28,12 +30,8 @@ export const ArgControl: FC<ArgControlProps> = ({ row, arg, updateArgs }) => {
     [updateArgs, name]
   );
 
-  if (!control) {
-    return <>-</>;
-  }
-
   const props = { name, argType: row, value: arg, onChange };
-  switch (control.type) {
+  switch (control?.type) {
     case 'array':
       return <ArrayControl {...props} {...control} />;
     case 'boolean':
@@ -53,6 +51,6 @@ export const ArgControl: FC<ArgControlProps> = ({ row, arg, updateArgs }) => {
     case 'text':
       return <TextControl {...props} {...control} />;
     default:
-      return null;
+      return <NoControl />;
   }
 };
