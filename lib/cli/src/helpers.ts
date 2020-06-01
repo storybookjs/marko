@@ -255,6 +255,10 @@ export function installDependencies(
       installArgs.push('-D');
     }
 
+    if (options.useYarn) {
+      installArgs.push('--ignore-workspace-root-check');
+    }
+
     const dependencyResult = spawnSync(spawnCommand, installArgs, {
       stdio: 'inherit',
     });
