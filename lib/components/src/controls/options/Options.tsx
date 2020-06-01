@@ -17,19 +17,19 @@ const normalizeOptions = (options: Options) => {
 
 export type OptionsProps = ControlProps<OptionsSelection> & OptionsConfig;
 export const OptionsControl: FC<OptionsProps> = (props) => {
-  const { controlType, options } = props;
+  const { type = 'select', options } = props;
   const normalized = { ...props, options: normalizeOptions(options) };
-  switch (controlType || 'select') {
+  switch (type) {
     case 'check':
     case 'inline-check':
-      return <CheckboxControl {...normalized} isInline={controlType === 'inline-check'} />;
+      return <CheckboxControl {...normalized} isInline={type === 'inline-check'} />;
     case 'radio':
     case 'inline-radio':
-      return <RadioControl {...normalized} isInline={controlType === 'inline-radio'} />;
+      return <RadioControl {...normalized} isInline={type === 'inline-radio'} />;
     case 'select':
     case 'multi-select':
-      return <SelectControl {...normalized} isMulti={controlType === 'multi-select'} />;
+      return <SelectControl {...normalized} isMulti={type === 'multi-select'} />;
     default:
-      throw new Error(`Unknown options type: ${controlType}`);
+      throw new Error(`Unknown options type: ${type}`);
   }
 };

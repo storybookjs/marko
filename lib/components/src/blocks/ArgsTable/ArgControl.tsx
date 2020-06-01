@@ -44,8 +44,13 @@ export const ArgControl: FC<ArgControlProps> = ({ row, arg, updateArgs }) => {
       return <NumberControl {...props} {...control} />;
     case 'object':
       return <ObjectControl {...props} {...control} />;
-    case 'options':
-      return <OptionsControl {...props} {...control} />;
+    case 'check':
+    case 'inline-check':
+    case 'radio':
+    case 'inline-radio':
+    case 'select':
+    case 'multi-select':
+      return <OptionsControl {...props} {...control} controlType={control.type} />;
     case 'range':
       return <RangeControl {...props} {...control} />;
     case 'text':

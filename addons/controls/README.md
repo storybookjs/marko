@@ -290,16 +290,43 @@ Here is the full list of available controls:
 | **boolean** | boolean      | checkbox input                                                 | -              |
 | **number**  | number       | a numberic text box input                                      | min, max, step |
 |             | range        | a range slider input                                           | min, max, step |
-| **object**  | object       | json editor text input                                         |                |
-| **options** | radio        | radio buttons input                                            |                |
-|             | inline-radio | inline radio buttons input                                     |                |
-|             | check        | multi-select checkbox input                                    |                |
-|             | inline-check | multi-select inline checkbox input                             |                |
-|             | select       | select dropdown input                                          |                |
-|             | multi-select | multi-select dropdown input                                    |                |
+| **object**  | object       | json editor text input                                         | -              |
+| **enum**    | radio        | radio buttons input                                            | options        |
+|             | inline-radio | inline radio buttons input                                     | options        |
+|             | check        | multi-select checkbox input                                    | options        |
+|             | inline-check | multi-select inline checkbox input                             | options        |
+|             | select       | select dropdown input                                          | options        |
+|             | multi-select | multi-select dropdown input                                    | options        |
 | **string**  | text         | simple text input                                              | -              |
 |             | color        | color picker input that assumes strings are color values       | -              |
 |             | date         | date picker input                                              | -              |
+
+Example customizing a control for an `enum` data type (defaults to `select` control type):
+
+```js
+export default {
+  title: 'Widget',
+  component: Widget,
+  argTypes: {
+    loadingState: {
+      type: 'inline-radio',
+      options: ['loading', 'error', 'ready'],
+    },
+  },
+};
+```
+
+Example customizing a `number` data type (defaults to `number` control type):
+
+```js
+export default {
+  title: 'Gizmo',
+  component: Gizmo,
+  argTypes: {
+    width: { type: 'range', min: 400, max: 1200, step: 50 };
+  },
+};
+```
 
 ### Parameters
 
