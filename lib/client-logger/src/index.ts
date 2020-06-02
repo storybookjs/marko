@@ -1,14 +1,27 @@
-const { console } = global;
+import { window, LOGLEVEL } from 'global';
+import console from 'loglevel';
 
 export const logger = {
+  trace: (message: any, ...rest: any[]): void => console.trace(message, ...rest),
   debug: (message: any, ...rest: any[]): void => console.debug(message, ...rest),
-  log: (message: any, ...rest: any[]): void => console.log(message, ...rest),
+  log: (message: any, ...rest: any[]): void => window.console.log(message, ...rest),
   info: (message: any, ...rest: any[]): void => console.info(message, ...rest),
   warn: (message: any, ...rest: any[]): void => console.warn(message, ...rest),
   error: (message: any, ...rest: any[]): void => console.error(message, ...rest),
 };
 
-export const pretty = (type: keyof typeof logger) => (...args: string[]) => {
+if (LOGLEVEL) {
+  console.setLevel(LOGLEVEL);
+}
+
+if (window) {
+  // eslint-disable-next-line no-underscore-dangle
+  window.__STORYBOOK_LOGGER = console;
+}
+
+export const pretty = (type: 'trace' | 'debug' | 'info' | 'warn' | 'error') => (
+  ...args: string[]
+) => {
   const argArray = [];
 
   if (args.length) {
@@ -34,8 +47,8 @@ export const pretty = (type: keyof typeof logger) => (...args: string[]) => {
   console[type].apply(console, argArray);
 };
 
+pretty.trace = pretty('trace');
 pretty.debug = pretty('debug');
-pretty.log = pretty('log');
 pretty.info = pretty('info');
 pretty.warn = pretty('warn');
 pretty.error = pretty('error');
