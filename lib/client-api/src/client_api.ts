@@ -6,6 +6,7 @@ import { toId } from '@storybook/csf';
 import {
   ClientApiParams,
   DecoratorFunction,
+  LoaderFunction,
   ClientApiAddons,
   StoryApi,
   ArgTypesEnhancer,
@@ -153,6 +154,7 @@ export default class ClientApi {
       kind: kind.toString(),
       add: () => api,
       addDecorator: () => api,
+      addLoader: () => api,
       addParameters: () => api,
     };
 
@@ -210,7 +212,14 @@ export default class ClientApi {
         throw new Error(`You cannot add a decorator after the first story for a kind.
 Read more here: https://github.com/storybookjs/storybook/blob/master/MIGRATION.md#can-no-longer-add-decorators-parameters-after-stories`);
 
-      this._storyStore.addKindMetadata(kind, { decorators: [decorator], parameters: [] });
+      this._storyStore.addKindMetadata(kind, { decorators: [decorator] });
+      return api;
+    };
+
+    api.addLoader = (loader: LoaderFunction) => {
+      if (hasAdded) throw new Error(`You cannot add a loader after the first story for a kind.`);
+
+      this._storyStore.addKindMetadata(kind, { loaders: [loader] });
       return api;
     };
 
@@ -219,7 +228,7 @@ Read more here: https://github.com/storybookjs/storybook/blob/master/MIGRATION.m
         throw new Error(`You cannot add parameters after the first story for a kind.
 Read more here: https://github.com/storybookjs/storybook/blob/master/MIGRATION.md#can-no-longer-add-decorators-parameters-after-stories`);
 
-      this._storyStore.addKindMetadata(kind, { decorators: [], parameters });
+      this._storyStore.addKindMetadata(kind, { parameters });
       return api;
     };
 

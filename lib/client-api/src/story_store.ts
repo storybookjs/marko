@@ -117,7 +117,7 @@ export default class StoryStore {
     this._configuring = true;
 
     this._globalArgs = {};
-    this._globalMetadata = { parameters: {}, decorators: [] };
+    this._globalMetadata = { parameters: {}, decorators: [], loaders: [] };
     this._kinds = {};
     this._stories = {};
     this._argTypesEnhancers = [];
@@ -183,7 +183,7 @@ export default class StoryStore {
     }
   }
 
-  addGlobalMetadata({ parameters, decorators }: StoryMetadata) {
+  addGlobalMetadata({ parameters = {}, decorators = [], loaders = [] }: StoryMetadata) {
     if (parameters) {
       const { args, argTypes } = parameters;
       if (args || argTypes)
@@ -197,6 +197,7 @@ export default class StoryStore {
     this._globalMetadata.parameters = combineParameters(globalParameters, parameters);
 
     this._globalMetadata.decorators.push(...decorators);
+    this._globalMetadata.loaders.push(...loaders);
   }
 
   clearGlobalDecorators() {
@@ -209,11 +210,12 @@ export default class StoryStore {
         order: Object.keys(this._kinds).length,
         parameters: {},
         decorators: [],
+        loaders: [],
       };
     }
   }
 
-  addKindMetadata(kind: string, { parameters, decorators }: StoryMetadata) {
+  addKindMetadata(kind: string, { parameters = {}, decorators = [], loaders = [] }: StoryMetadata) {
     this.ensureKind(kind);
     if (parameters) {
       checkGlobalArgs(parameters);
@@ -222,6 +224,7 @@ export default class StoryStore {
     this._kinds[kind].parameters = combineParameters(this._kinds[kind].parameters, parameters);
 
     this._kinds[kind].decorators.push(...decorators);
+    this._kinds[kind].loaders.push(...loaders);
   }
 
   addArgTypesEnhancer(argTypesEnhancer: ArgTypesEnhancer) {
@@ -294,6 +297,11 @@ export default class StoryStore {
       ...kindMetadata.decorators,
       ...this._globalMetadata.decorators,
     ];
+    const loaders = [
+      // ...storyLoaders,
+      ...kindMetadata.loaders,
+      ...this._globalMetadata.loaders,
+    ];
 
     const finalStoryFn = (context: StoryContext) => {
       const { passArgsFirst } = context.parameters;
@@ -328,16 +336,31 @@ export default class StoryStore {
 
     const storyParametersWithArgTypes = { ...storyParameters, argTypes };
 
-    const storyFn: LegacyStoryFn = (runtimeContext: StoryContext) =>
-      getDecorated()({
-        ...identification,
-        ...runtimeContext,
-        // Calculate "combined" parameters at render time (NOTE: for perf we could just use combinedParameters from above?)
-        parameters: this.combineStoryParameters(storyParametersWithArgTypes, kind),
-        hooks,
-        args: _stories[id].args,
-        globalArgs: this._globalArgs,
-      });
+    const augmentContextAtRuntime = (runtimeContext: StoryContext) => ({
+      ...identification,
+      ...runtimeContext,
+      // Calculate "combined" parameters at render time (NOTE: for perf we could just use combinedParameters from above?)
+      parameters: this.combineStoryParameters(storyParametersWithArgTypes, kind),
+      hooks,
+      args: _stories[id].args,
+      globalArgs: this._globalArgs,
+    });
+
+    // For frameworks that need to separate loading + rendering, we provide storyFnWithoutLoaders + loaders
+    const storyFnWithoutLoaders: LegacyStoryFn = (runtimeContext: StoryContext) =>
+      getDecorated()(augmentContextAtRuntime(runtimeContext));
+
+    // Async story function that self-loads
+    const applyLoaders = async (runtimeContext: StoryContext) => {
+      const context = augmentContextAtRuntime(runtimeContext);
+      const loadedContexts = await Promise.all(loaders.map((loader) => loader(context)));
+      return combineParameters(context, ...loadedContexts);
+    };
+
+    const storyFn = async (runtimeContext: StoryContext) => {
+      const loadedContext = await applyLoaders(runtimeContext);
+      return getDecorated()(loadedContext);
+    };
 
     // Pull out parameters.args.$ || .argTypes.$.defaultValue into initialArgs
     const initialArgs: Args = combinedParameters.args;
@@ -354,6 +377,9 @@ export default class StoryStore {
       hooks,
       getDecorated,
       getOriginal,
+      loaders,
+      applyLoaders,
+      storyFnWithoutLoaders,
       storyFn,
 
       parameters: { ...storyParameters, argTypes },

@@ -48,17 +48,20 @@ class ErrorBoundary extends Component<{
 }
 
 export default async function renderMain({
-  storyFn,
+  applyLoaders,
+  storyFnWithoutLoaders,
   showMain,
   showException,
   forceRender,
 }: RenderContext) {
+  const loadedContext = await applyLoaders();
+
   // storyFn has context bound in by now so can be treated as a function component with no args
-  const StoryFn = storyFn as FunctionComponent;
+  const StoryFn = storyFnWithoutLoaders as FunctionComponent;
 
   const element = (
     <ErrorBoundary showMain={showMain} showException={showException}>
-      <StoryFn />
+      <StoryFn {...(loadedContext as any)} />
     </ErrorBoundary>
   );
 

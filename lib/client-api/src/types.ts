@@ -7,6 +7,7 @@ import {
   ArgTypes,
   StoryApi,
   DecoratorFunction,
+  LoaderFunction,
   DecorateStoryFunction,
   StoryContext,
 } from '@storybook/addons';
@@ -22,6 +23,7 @@ export interface ErrorLike {
 export interface StoryMetadata {
   parameters: Parameters;
   decorators: DecoratorFunction[];
+  loaders: LoaderFunction[];
 }
 export type ArgTypesEnhancer = (context: StoryContext) => ArgTypes;
 
@@ -29,13 +31,16 @@ export type AddStoryArgs = StoryIdentifier & {
   storyFn: StoryFn<any>;
   parameters?: Parameters;
   decorators?: DecoratorFunction[];
+  loaders?: LoaderFunction[];
 };
 
 export type StoreItem = StoryIdentifier & {
   parameters: Parameters;
   getDecorated: () => StoryFn<any>;
   getOriginal: () => StoryFn<any>;
+  applyLoaders: () => RenderContext;
   storyFn: StoryFn<any>;
+  storyFnWithoutLoaders: StoryFn<any>;
   hooks: HooksContext;
   args: Args;
 };

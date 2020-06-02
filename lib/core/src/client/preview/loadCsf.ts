@@ -91,6 +91,7 @@ const loadStories = (
       id: componentId,
       parameters: kindParameters,
       decorators: kindDecorators,
+      loaders: kindLoaders = [],
       component,
       subcomponents,
       args: kindArgs,
@@ -114,6 +115,10 @@ const loadStories = (
     // todo add type
     (kindDecorators || []).forEach((decorator: any) => {
       kind.addDecorator(decorator);
+    });
+
+    kindLoaders.forEach((loader: any) => {
+      kind.addLoader(loader);
     });
 
     const storyExports = Object.keys(exports);

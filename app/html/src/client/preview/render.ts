@@ -4,7 +4,7 @@ import { RenderContext } from './types';
 
 const rootElement = document.getElementById('root');
 
-export default function renderMain({
+export default async function renderMain({
   storyFn,
   kind,
   name,
@@ -12,8 +12,7 @@ export default function renderMain({
   showError,
   forceRender,
 }: RenderContext) {
-  const element = storyFn();
-
+  const element = await storyFn();
   showMain();
   if (typeof element === 'string') {
     rootElement.innerHTML = element;
