@@ -4,8 +4,17 @@
 import { PropDef } from '@storybook/components';
 import { ArgType, ArgTypes } from '@storybook/api';
 import { logger } from '@storybook/client-logger';
-import { string } from 'prop-types';
-import { Argument, CompodocJson, Component, Method, Property, Directive } from './types';
+import {
+  Argument,
+  Class,
+  CompodocJson,
+  Component,
+  Injectable,
+  Method,
+  Pipe,
+  Property,
+  Directive,
+} from './types';
 
 type Sections = Record<string, PropDef[]>;
 
@@ -54,12 +63,14 @@ const mapPropertyToSection = (key: string, item: Property) => {
 
 const mapItemToSection = (key: string, item: Method | Property): string => {
   switch (key) {
+    case 'methods':
     case 'methodsClass':
       return 'methods';
     case 'inputsClass':
       return 'inputs';
     case 'outputsClass':
       return 'outputs';
+    case 'properties':
     case 'propertiesClass':
       if (isMethod(item)) {
         throw new Error("Cannot be of type Method if key === 'propertiesClass'");
@@ -72,7 +83,10 @@ const mapItemToSection = (key: string, item: Method | Property): string => {
 
 export const findComponentByName = (name: string, compodocJson: CompodocJson) =>
   compodocJson.components.find((c: Component) => c.name === name) ||
-  compodocJson.directives.find((c: Directive) => c.name === name);
+  compodocJson.directives.find((c: Directive) => c.name === name) ||
+  compodocJson.pipes.find((c: Pipe) => c.name === name) ||
+  compodocJson.injectables.find((c: Injectable) => c.name === name) ||
+  compodocJson.classes.find((c: Class) => c.name === name);
 
 const getComponentData = (component: Component | Directive) => {
   if (!component) {
@@ -137,13 +151,21 @@ const extractDefaultValue = (property: Property) => {
   }
 };
 
-export const extractArgTypesFromData = (componentData: Directive) => {
+export const extractArgTypesFromData = (componentData: Class | Directive | Injectable | Pipe) => {
   const sectionToItems: Record<string, ArgType[]> = {};
-  const compodocClasses = ['propertiesClass', 'methodsClass', 'inputsClass', 'outputsClass'];
-  type COMPODOC_CLASS = 'propertiesClass' | 'methodsClass' | 'inputsClass' | 'outputsClass';
+  const compodocClasses = ['component', 'directive'].includes(componentData.type)
+    ? ['propertiesClass', 'methodsClass', 'inputsClass', 'outputsClass']
+    : ['properties', 'methods'];
+  type COMPODOC_CLASS =
+    | 'properties'
+    | 'methods'
+    | 'propertiesClass'
+    | 'methodsClass'
+    | 'inputsClass'
+    | 'outputsClass';
 
   compodocClasses.forEach((key: COMPODOC_CLASS) => {
-    const data = componentData[key] || [];
+    const data = (componentData as any)[key] || [];
     data.forEach((item: Method | Property) => {
       const section = mapItemToSection(key, item);
       const defaultValue = isMethod(item) ? undefined : extractDefaultValue(item as Property);
@@ -205,5 +227,5 @@ export const extractComponentDescription = (component: Component | Directive) =>
   if (!componentData) {
     return null;
   }
-  return componentData.rawdescription;
+  return componentData.rawdescription || componentData.description;
 };
