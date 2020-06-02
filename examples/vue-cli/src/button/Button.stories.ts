@@ -14,5 +14,5 @@ export const ButtonWithProps = (args: any) => ({
   },
 });
 ButtonWithProps.argTypes = {
-  size: { control: { type: 'options', options: ButtonSizes } },
+  size: { control: { type: 'select', options: ButtonSizes } },
 };
