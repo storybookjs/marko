@@ -8,7 +8,6 @@ export {
   getStorybook,
   raw,
   forceReRender,
-  argsStory,
 } from './preview';
 
 if (module && module.hot && module.hot.decline) {
