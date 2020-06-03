@@ -44,11 +44,11 @@
     "ts-dedent": "^1.1.1"
   },
   "devDependencies": {
-    "preact": "^8.4.2"
+    "preact": "^10.4.0"
   },
   "peerDependencies": {
     "@babel/core": "*",
-    "preact": "^8.4.2",
+    "preact": "^10.0.0",
     "react": "*",
     "react-dom": "*"
   },
