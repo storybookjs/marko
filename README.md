@@ -166,7 +166,7 @@ In order to continue improving your experience, we have to eventually deprecate 
 
 If you're using info/notes, we highly recommend you to migrate to [docs](addons/docs/) instead, and [here is a guide](addons/docs/docs/recipes.md#migrating-from-notesinfo-addons) to help you.
 
-If you're using contexts, we highly recommend you to migrate to [toolbars](https://github.com/storybookjs/storybook/tree/next/addons/toolbars) and [here is a guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-addon-contexts) to help you
+If you're using contexts, we highly recommend you to migrate to [toolbars](https://github.com/storybookjs/storybook/tree/next/addons/toolbars) and [here is a guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-addon-contexts) to help you.
 
 ## Badges & Presentation materials
 
