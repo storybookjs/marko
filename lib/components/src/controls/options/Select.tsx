@@ -12,16 +12,21 @@ const OptionsSelect = styled.select({
 type SelectConfig = NormalizedOptionsConfig & { isMulti: boolean };
 type SelectProps = ControlProps<OptionsSelection> & SelectConfig;
 
+const NO_SELECTION = 'Select...';
+
 const SingleSelect: FC<SelectProps> = ({ name, value, options, onChange }) => {
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     onChange(name, options[e.currentTarget.value]);
   };
-  const selection = selectedKey(value, options);
+  const selection = selectedKey(value, options) || NO_SELECTION;
 
   return (
     <OptionsSelect value={selection} onChange={handleChange}>
+      <option key="no-selection" disabled>
+        {NO_SELECTION}
+      </option>
       {Object.keys(options).map((key) => (
-        <option>{key}</option>
+        <option key={key}>{key}</option>
       ))}
     </OptionsSelect>
   );
