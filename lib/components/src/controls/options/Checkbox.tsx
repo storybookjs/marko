@@ -38,7 +38,7 @@ export const CheckboxControl: FC<CheckboxProps> = ({
   isInline,
 }) => {
   const initial = selectedKeys(value, options);
-  const [selected, setSelected] = useState(initial || []);
+  const [selected, setSelected] = useState(initial);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const option = (e.target as HTMLInputElement).value;

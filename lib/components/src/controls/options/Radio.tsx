@@ -1,7 +1,7 @@
-import React, { FC, Validator } from 'react';
+import React, { FC } from 'react';
 import { styled } from '@storybook/theming';
 import { ControlProps, OptionsSingleSelection, NormalizedOptionsConfig } from '../types';
-import { selectedKey, selectedKeys } from './helpers';
+import { selectedKey } from './helpers';
 
 const RadiosWrapper = styled.div<{ isInline: boolean }>(({ isInline }) =>
   isInline

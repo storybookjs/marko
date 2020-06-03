@@ -44,7 +44,7 @@ const MultiSelect: FC<SelectProps> = ({ name, value, options, onChange }) => {
   return (
     <OptionsSelect multiple value={selection} onChange={handleChange}>
       {Object.keys(options).map((key) => (
-        <option>{key}</option>
+        <option key={key}>{key}</option>
       ))}
     </OptionsSelect>
   );
