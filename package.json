@@ -230,7 +230,7 @@
     "remark-lint": "^7.0.0",
     "remark-preset-lint-recommended": "^4.0.0",
     "riot-jest-transformer": "^2.0.0",
-    "semver": "^7.3.2",
+    "@storybook/semver": "^7.3.2",
     "serve-static": "^1.14.1",
     "shelljs": "^0.8.4",
     "shx": "^0.3.2",

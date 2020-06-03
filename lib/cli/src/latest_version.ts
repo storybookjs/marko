@@ -1,5 +1,5 @@
 import { spawn, sync } from 'cross-spawn';
-import { satisfies } from 'semver';
+import { satisfies } from '@storybook/semver';
 
 /**
  * Get the latest version of the package available on npmjs.com.
