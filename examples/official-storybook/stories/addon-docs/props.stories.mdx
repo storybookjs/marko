@@ -11,20 +11,14 @@ import { MemoButton } from '../../components/MemoButton';
   parameters={{ controls: { expanded: false } }}
 />
 
-export const FooBar = ({ foo, bar, baz } = {}) => (
+export const ArgsDisplay = (args = {}) => (
   <table>
-    <tr>
-      <td>Foo</td>
-      <td>{foo && foo.toString()}</td>
-    </tr>
-    <tr>
-      <td>Bar</td>
-      <td>{bar}</td>
-    </tr>
-    <tr>
-      <td>Baz</td>
-      <td>{baz && baz.toString()}</td>
-    </tr>
+    {Object.entries(args).map(([key, val]) => (
+      <tr>
+        <td>{key}</td>
+        <td>{val && val.toString()}</td>
+      </tr>
+    ))}
   </table>
 );
 
@@ -34,21 +28,45 @@ export const FooBar = ({ foo, bar, baz } = {}) => (
   <Story
     name="ArgTypes"
     args={{
-      foo: false,
-      bar: '',
-      baz: ['a', 'b'],
+      boolArg: true,
+      stringArg: 'overwritten',
+      arrayArg: ['a', 'b'],
     }}
     argTypes={{
-      foo: { name: 'foo', type: { name: 'boolean' }, description: 'foo description' },
-      bar: { name: 'bar', type: { name: 'string' }, description: 'bar description' },
-      baz: {
-        name: 'baz',
+      boolArg: { name: 'boolArg', type: { name: 'boolean' }, description: 'bool description' },
+      stringArg: {
+        name: 'stringArg',
+        type: { name: 'string' },
+        description: 'bar description',
+        defaultValue: 'bar default',
+        table: {
+          defaultValue: {
+            summary: 'bar def',
+            detail: 'some long bar default',
+          },
+        },
+      },
+      arrayArg: {
+        name: 'arrayArg',
         type: { name: 'array', value: { name: 'string' } },
         description: 'baz description',
       },
+      selectArg: {
+        name: 'selectArg',
+        type: { name: 'enum' },
+        defaultValue: 2,
+        control: {
+          type: 'select',
+          options: {
+            a: 1,
+            b: 2,
+            c: 3,
+          },
+        },
+      },
     }}
   >
-    {(args) => <FooBar {...args} />}
+    {(args) => <ArgsDisplay {...args} />}
   </Story>
 </Preview>
 
@@ -68,7 +86,7 @@ export const FooBar = ({ foo, bar, baz } = {}) => (
       bar: '',
     }}
   >
-    {(args) => <FooBar {...args} />}
+    {(args) => <ArgsDisplay {...args} />}
   </Story>
 </Preview>
 
