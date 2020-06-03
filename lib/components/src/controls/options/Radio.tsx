@@ -1,6 +1,7 @@
-import React, { FC, Validator } from 'react';
+import React, { FC } from 'react';
 import { styled } from '@storybook/theming';
 import { ControlProps, OptionsSingleSelection, NormalizedOptionsConfig } from '../types';
+import { selectedKey } from './helpers';
 
 const RadiosWrapper = styled.div<{ isInline: boolean }>(({ isInline }) =>
   isInline
@@ -24,20 +25,20 @@ const RadioLabel = styled.label({
 type RadioConfig = NormalizedOptionsConfig & { isInline: boolean };
 type RadioProps = ControlProps<OptionsSingleSelection> & RadioConfig;
 export const RadioControl: FC<RadioProps> = ({ name, options, value, onChange, isInline }) => {
+  const selection = selectedKey(value, options);
   return (
     <RadiosWrapper isInline={isInline}>
       {Object.keys(options).map((key) => {
         const id = `${name}-${key}`;
-        const optionValue = options[key];
         return (
           <div key={id}>
             <input
               type="radio"
               id={id}
               name={name}
-              value={optionValue || undefined}
-              onChange={(e) => onChange(name, e.target.value)}
-              checked={optionValue === value}
+              value={key}
+              onChange={(e) => onChange(name, options[e.currentTarget.value])}
+              checked={key === selection}
             />
             <RadioLabel htmlFor={id}>{key}</RadioLabel>
           </div>

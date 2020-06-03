@@ -1,41 +1,55 @@
-import React, { FC } from 'react';
-import ReactSelect from 'react-select';
+import React, { FC, ChangeEvent } from 'react';
 import { styled } from '@storybook/theming';
 import { ControlProps, OptionsSelection, NormalizedOptionsConfig } from '../types';
+import { selectedKey, selectedKeys, selectedValues } from './helpers';
 
-// TODO: Apply the Storybook theme to react-select
-const OptionsSelect = styled(ReactSelect)({
+const OptionsSelect = styled.select({
   width: '100%',
   maxWidth: '300px',
   color: 'black',
 });
 
-interface OptionsItem {
-  value: any;
-  label: string;
-}
-type ReactSelectOnChangeFn = { (v: OptionsItem): void } | { (v: OptionsItem[]): void };
-
 type SelectConfig = NormalizedOptionsConfig & { isMulti: boolean };
 type SelectProps = ControlProps<OptionsSelection> & SelectConfig;
-export const SelectControl: FC<SelectProps> = ({ name, value, options, onChange, isMulti }) => {
-  // const optionsIndex = options.findIndex(i => i.value === value);
-  // let defaultValue: typeof options | typeof options[0] = options[optionsIndex];
-  const selectOptions = Object.entries(options).reduce((acc, [key, val]) => {
-    acc.push({ label: key, value: val });
-    return acc;
-  }, []);
 
-  const handleChange: ReactSelectOnChangeFn = isMulti
-    ? (values: OptionsItem[]) => onChange(name, values && values.map((item) => item.value))
-    : (e: OptionsItem) => onChange(name, e.value);
+const NO_SELECTION = 'Select...';
+
+const SingleSelect: FC<SelectProps> = ({ name, value, options, onChange }) => {
+  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    onChange(name, options[e.currentTarget.value]);
+  };
+  const selection = selectedKey(value, options) || NO_SELECTION;
 
   return (
-    <OptionsSelect
-      defaultValue={value}
-      options={selectOptions}
-      isMulti={isMulti}
-      onChange={handleChange}
-    />
+    <OptionsSelect value={selection} onChange={handleChange}>
+      <option key="no-selection" disabled>
+        {NO_SELECTION}
+      </option>
+      {Object.keys(options).map((key) => (
+        <option key={key}>{key}</option>
+      ))}
+    </OptionsSelect>
   );
 };
+
+const MultiSelect: FC<SelectProps> = ({ name, value, options, onChange }) => {
+  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const selection = Array.from(e.currentTarget.options)
+      .filter((option) => option.selected)
+      .map((option) => option.value);
+    onChange(name, selectedValues(selection, options));
+  };
+  const selection = selectedKeys(value, options);
+
+  return (
+    <OptionsSelect multiple value={selection} onChange={handleChange}>
+      {Object.keys(options).map((key) => (
+        <option key={key}>{key}</option>
+      ))}
+    </OptionsSelect>
+  );
+};
+
+export const SelectControl: FC<SelectProps> = (props) =>
+  // eslint-disable-next-line react/destructuring-assignment
+  props.isMulti ? <MultiSelect {...props} /> : <SingleSelect {...props} />;
