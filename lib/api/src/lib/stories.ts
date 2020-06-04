@@ -1,7 +1,7 @@
 import deprecate from 'util-deprecate';
 import dedent from 'ts-dedent';
 import { sanitize, parseKind } from '@storybook/csf';
-import { mapValues } from 'lodash';
+import mapValues from 'lodash/mapValues';
 
 import { StoryId, StoryKind, Args, Parameters, combineParameters } from '../index';
 import merge from './merge';
