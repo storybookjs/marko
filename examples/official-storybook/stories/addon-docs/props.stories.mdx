@@ -13,12 +13,14 @@ import { MemoButton } from '../../components/MemoButton';
 
 export const ArgsDisplay = (args = {}) => (
   <table>
-    {Object.entries(args).map(([key, val]) => (
-      <tr>
-        <td>{key}</td>
-        <td>{val && val.toString()}</td>
-      </tr>
-    ))}
+    <tbody>
+      {Object.entries(args).map(([key, val]) => (
+        <tr key={key}>
+          <td>{key}</td>
+          <td>{val && val.toString()}</td>
+        </tr>
+      ))}
+    </tbody>
   </table>
 );
 
