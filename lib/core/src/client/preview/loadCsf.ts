@@ -142,7 +142,7 @@ const loadStories = (
         const storyFn = exports[key];
         const { story } = storyFn;
         if (story) {
-          console.log('deprecated story', story);
+          logger.debug('deprecated story', story);
           deprecatedStoryAnnotationWarning();
         }
 
