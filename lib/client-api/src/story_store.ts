@@ -2,7 +2,7 @@
 import memoize from 'memoizerific';
 import dedent from 'ts-dedent';
 import stable from 'stable';
-import { mapValues } from 'lodash';
+import mapValues from 'lodash/mapValues';
 
 import { Channel } from '@storybook/channels';
 import Events from '@storybook/core-events';
@@ -151,7 +151,6 @@ export default class StoryStore {
 
   finishConfiguring() {
     this._configuring = false;
-    this.pushToManager();
 
     const { globalArgs: initialGlobalArgs, globalArgTypes } = this._globalMetadata.parameters;
 
@@ -177,8 +176,10 @@ export default class StoryStore {
       },
       { ...defaultGlobalArgs, ...initialGlobalArgs }
     );
+
+    this.pushToManager();
     if (this._channel) {
-      this._channel.emit(Events.GLOBAL_ARGS_UPDATED, this._globalArgs);
+      this._channel.emit(Events.RENDER_CURRENT_STORY);
     }
   }
 
@@ -495,6 +496,7 @@ export default class StoryStore {
     return {
       v: 2,
       globalParameters: this._globalMetadata.parameters,
+      globalArgs: this._globalArgs,
       error: this.getError(),
       kindParameters: mapValues(this._kinds, (metadata) => metadata.parameters),
       stories: this.extract({ includeDocsOnly: true, normalizeParameters: true }),

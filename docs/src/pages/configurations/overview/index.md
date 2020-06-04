@@ -26,6 +26,8 @@ module.exports = {
 
 `stories` is a list of [glob](https://www.npmjs.com/package/glob) patterns that tells where your stories are located, relative to the configuration file.
 
+`logLevel` is a setting that tells storybook to only log to a specific level. Options are: `trace`, `debug`, `info`, `warn`, `error` and `silent`.
+
 The `addons` field can refer to traditional [addons](../../addons/introduction), but it can also include [presets](/docs/presets/introduction/), which are able to extend the config further.
 
 ### `main.js` is a  Preset

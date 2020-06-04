@@ -18,7 +18,7 @@ const argsTableProps = (component: Component) => {
 
 const ArgsStory = ({ component }: any) => {
   const { rows } = argsTableProps(component);
-  const initialArgs = mapValues(rows, () => null) as Args;
+  const initialArgs = mapValues(rows, (argType) => argType.defaultValue) as Args;
 
   const [args, setArgs] = useState(initialArgs);
   return (

@@ -85,7 +85,7 @@ const initStorybook = async ({ cwd, autoDetect = true, name }: Options) => {
   logger.info(`🎨 Initializing Storybook with @storybook/cli`);
   try {
     const type = autoDetect ? '' : `--type ${name}`;
-    await exec(`npx -p @storybook/cli sb init --skip-install --yes ${type}`, { cwd });
+    await exec(`npx -p @storybook/cli sb init --yes ${type}`, { cwd });
   } catch (e) {
     logger.error(`🚨 Storybook initialization failed`);
     throw e;
@@ -187,10 +187,10 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
     await generate({ ...options, cwd: siblingDir });
     logger.log();
 
-    await initStorybook(options);
+    await setResolutions(options);
     logger.log();
 
-    await setResolutions(options);
+    await initStorybook(options);
     logger.log();
 
     await addRequiredDeps(options);
@@ -274,13 +274,18 @@ if (frameworkArgs.length > 0) {
 const perform = () => {
   const limit = pLimit(1);
   const narrowedConfigs = Object.values(e2eConfigs);
-  const [a, b] = [+process.env.CIRCLE_NODE_INDEX || 0, +process.env.CIRCLE_NODE_TOTAL || 1];
-  const step = Math.ceil(narrowedConfigs.length / b);
-  const offset = step * a;
+  const nodeIndex = +process.env.CIRCLE_NODE_INDEX || 0;
+  const numberOfNodes = +process.env.CIRCLE_NODE_TOTAL || 1;
 
-  const list = narrowedConfigs.slice().splice(offset, step);
+  const list = narrowedConfigs.filter((_, index) => {
+    return index % numberOfNodes === nodeIndex;
+  });
 
-  logger.info(`📑 Assigning jobs ${list.map((c) => c.name).join(', ')} to node ${a} (on ${b})`);
+  logger.info(
+    `📑 Assigning jobs ${list
+      .map((c) => c.name)
+      .join(', ')} to node ${nodeIndex} (on ${numberOfNodes})`
+  );
 
   return Promise.all(list.map((config) => limit(() => runE2E(config))));
 };

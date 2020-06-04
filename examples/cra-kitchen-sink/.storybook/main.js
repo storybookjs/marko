@@ -15,5 +15,5 @@ module.exports = {
     '@storybook/addon-a11y',
     '@storybook/addon-jest',
   ],
-  stories: ['../src/stories/**/*.stories.(js|mdx)'],
+  stories: ['../src/stories/**/*.stories.@(js|mdx)'],
 };
