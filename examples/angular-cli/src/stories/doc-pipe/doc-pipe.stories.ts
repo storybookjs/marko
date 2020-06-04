@@ -3,7 +3,10 @@ import { DocPipe } from './doc-pipe.pipe';
 export default {
   title: 'DocPipe',
   component: DocPipe,
-  parameters: { docs: { iframeHeight: 120 } },
+  parameters: {
+    docs: { iframeHeight: 120 },
+    controls: { hideNoControlsWarning: true },
+  },
 };
 
 const modules = {

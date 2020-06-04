@@ -349,6 +349,7 @@ export default {
 Controls supports the following configuration parameters, either [globally or on a per-story basis](https://storybook.js.org/docs/basics/writing-stories/#parameters):
 
 - [Expanded: show property documentation](#expanded-show-property-documentation)
+- [Hide NoControls warning](#hide-nocontrols-warning)
 
 #### Expanded: show property documentation
 
@@ -367,6 +368,16 @@ And here's what the resulting UI looks like:
 <center>
   <img src="https://raw.githubusercontent.com/storybookjs/storybook/next/addons/controls/docs/media/addon-controls-expanded.png" width="80%" />
 </center>
+
+#### Hide NoControls warning
+
+If you don't plan to handle the control args inside your Story, you can remove the warning with:
+
+```jsx
+Basic.parameters = {
+  controls: { hideNoControlsWarning: true },
+};
+```
 
 ## Framework support
 

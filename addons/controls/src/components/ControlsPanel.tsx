@@ -6,6 +6,7 @@ import { PARAM_KEY } from '../constants';
 
 interface ControlsParameters {
   expanded?: boolean;
+  hideNoControlsWarning?: boolean;
 }
 
 const NoControlsWrapper = styled.div(({ theme }) => ({
@@ -15,7 +16,7 @@ const NoControlsWrapper = styled.div(({ theme }) => ({
 
 const NoControlsWarning = () => (
   <NoControlsWrapper>
-    No controls found for this component.&nbsp;
+    This story is not configured to handle controls.&nbsp;
     <Link
       href="https://github.com/storybookjs/storybook/blob/next/addons/controls/README.md#writing-stories"
       target="_blank"
@@ -29,11 +30,14 @@ const NoControlsWarning = () => (
 export const ControlsPanel: FC = () => {
   const [args, updateArgs] = useArgs();
   const rows = useArgTypes();
-  const { expanded } = useParameter<ControlsParameters>(PARAM_KEY, {});
+  const { expanded, hideNoControlsWarning = false } = useParameter<ControlsParameters>(
+    PARAM_KEY,
+    {}
+  );
   const hasControls = Object.values(rows).filter((argType) => argType?.control?.type).length > 0;
   return (
     <>
-      {hasControls ? null : <NoControlsWarning />}
+      {hasControls || hideNoControlsWarning ? null : <NoControlsWarning />}
       <ArgsTable {...{ compact: !expanded && hasControls, rows, args, updateArgs }} />
     </>
   );
