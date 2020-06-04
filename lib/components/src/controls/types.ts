@@ -51,12 +51,11 @@ export type OptionsControlType =
 
 export interface OptionsConfig {
   options: Options;
-  controlType: OptionsControlType;
+  type: OptionsControlType;
 }
 
 export interface NormalizedOptionsConfig {
   options: OptionsObject;
-  controlType: OptionsControlType;
 }
 
 export type TextValue = string;

@@ -21,6 +21,10 @@ jest.mock('./npm_init', () => ({
   npmInit: jest.fn(),
 }));
 
+jest.mock('./has_yarn', () => ({
+  hasYarn2: jest.fn(() => false),
+}));
+
 describe('Helpers', () => {
   describe('copyTemplate', () => {
     it(`should fall back to ${StoryFormat.CSF} 

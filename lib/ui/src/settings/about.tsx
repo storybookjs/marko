@@ -1,5 +1,5 @@
 import React, { Fragment, FunctionComponent, SyntheticEvent } from 'react';
-import semver from 'semver';
+import semver from '@storybook/semver';
 import { styled } from '@storybook/theming';
 import { State } from '@storybook/api';
 import { GlobalHotKeys } from 'react-hotkeys';

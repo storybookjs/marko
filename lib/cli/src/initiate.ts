@@ -35,6 +35,7 @@ import riotGenerator from './generators/RIOT';
 import preactGenerator from './generators/PREACT';
 import svelteGenerator from './generators/SVELTE';
 import raxGenerator from './generators/RAX';
+import { warn } from './warn';
 
 const logger = console;
 
@@ -58,10 +59,11 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
     skipInstall: options.skipInstall,
   };
 
-  const defaultStoryFormat =
-    detectLanguage() === SupportedLanguage.TYPESCRIPT
-      ? StoryFormat.CSF_TYPESCRIPT
-      : StoryFormat.CSF;
+  const hasTSDependency = detectLanguage() === SupportedLanguage.TYPESCRIPT;
+
+  warn({ hasTSDependency });
+
+  const defaultStoryFormat = hasTSDependency ? StoryFormat.CSF_TYPESCRIPT : StoryFormat.CSF;
 
   const generatorOptions = {
     storyFormat: options.storyFormat || defaultStoryFormat,

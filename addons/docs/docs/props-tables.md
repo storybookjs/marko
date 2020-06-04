@@ -7,11 +7,11 @@
 Storybook Docs automatically generates props tables for components in supported frameworks. This document is a consolidated summary of prop tables, provides instructions for reporting bugs, and list known limitations for each framework.
 
 - [Usage](#usage)
-- [Controls](#controls)
   - [DocsPage](#docspage)
   - [MDX](#mdx)
-  - [Controls customization](#controls-customization)
-  - [Rows customization](#rows-customization)
+- [Controls](#controls)
+- [Customization](#customization)
+  - [Customizing ArgTypes](#customizing-argtypes)
 - [Reporting a bug](#reporting-a-bug)
 - [Known limitations](#known-limitations)
 - [More resources](#more-resources)
@@ -19,6 +19,8 @@ Storybook Docs automatically generates props tables for components in supported 
 ## Usage
 
 For framework-specific setup instructions, see the framework's README: [React](../react/README.md), [Vue](../vue/README.md), [Angular](../angular/README.md), [Web Components](../web-components/README.md), [Ember](../ember/README.md).
+
+### DocsPage
 
 To use the props table in [DocsPage](./docspage.md), simply export a component property on your stories metadata:
 
@@ -32,6 +34,8 @@ export default {
 };
 // stories etc...
 ```
+
+### MDX
 
 To use the props table in [MDX](./mdx.md), use the `Props` block:
 
@@ -50,14 +54,14 @@ import { MyComponent } from './MyComponent';
 Starting in SB 6.0, the `Props` block has built-in `Controls` (formerly known as "knobs") for editing stories dynamically.
 
 <center>
-  <img src="./media/args-controls.gif" width="100%" />
+  <img src="./media/args-controls.gif" width="80%" />
 </center>
 
-These controls are implemented appear automatically in the props table when your story accepts [Storybook Args](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/formats/component-story-format/index.md#args-story-inputs) as its input.
+<br/>
 
-### DocsPage
+These controls are implemented appear automatically in the props table when your story accepts [Storybook Args](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/formats/component-story-format/index.md#args-story-inputs) as its input. This is done slightly differently depending on whether you're using `DocsPage` or `MDX`.
 
-In DocsPage, simply write your story to consume args and the auto-generated props table will display controls in the right-most column:
+**DocsPage.** In [DocsPage](./docspage.md), simply write your story to consume args and the auto-generated props table will display controls in the right-most column:
 
 ```js
 export default {
@@ -65,104 +69,132 @@ export default {
   component: MyComponent,
 };
 
-export const Controls = (args) => <MyComponent {...args} />;
+export const WithControls = (args) => <MyComponent {...args} />;
 ```
 
-These controls can be [customized](#controls-customization) if the defaults don't meet your needs.
-
-### MDX
-
-In [MDX](./mdx.md), the `Props` controls are more configurable than in DocsPage. In order to show controls, `Props` must be a function of a story, not a component:
+**MDX.** In [MDX](./mdx.md), the `Props` controls are more configurable than in DocsPage. In order to show controls, `Props` must be a function of a story, not a component:
 
 ```js
-<Story name="Controls">
+<Story name="WithControls">
   {args => <MyComponent {...args} />}
 </Story>
 
 <Props story="Controls" />
 ```
 
-### Controls customization
+For a very detailed walkthrough of how to write stories that use controls, see the [addon-controls README](https://github.com/storybookjs/storybook/blob/next/addons/controls/README.md#writing-stories).
 
-Under the hood, props tables are rendered from an internal data structure called `ArgTypes`. When you declare a story's `component` metadata, Docs automatically extracts `ArgTypes` based on the component's properties. We can customize this by editing the `argTypes` metadata.
+## Customization
 
-For example, consider a `Label` component that accepts a `background` color:
+Props tables are automatically inferred from your components and stories, but sometimes it's useful to customize the results.
+
+Props tables are rendered from an internal data structure called `ArgTypes`. When you declare a story's `component` metadata, Docs automatically extracts `ArgTypes` based on the component's properties.
+
+You can can customize what's shown in the props table by [customizing the `ArgTypes` data](#customizing-argtypes). This is currently available for `DocsPage` and `<Props story="xxx">` construct, but not for the `<Props of={component} />` construct,
+
+### Customizing ArgTypes
+
+> **NOTE:** This API is experimental and may change outside of the typical semver release cycle
+
+When you declare a `component` in for your `DocsPage` [as described above](#docspage) or use the `<Props story="xxx" />` construct [in MDX](#controls), the props table shows the `story.argTypes` that gets extracted by Storybook.
+
+Consider the following input:
 
 ```js
+// Button.js
 import React from 'react';
 import PropTypes from 'prop-types';
+export const Button = ({ label }) => <button>{label}</button>;
+Button.propTypes = {
+  /** demo description */
+  label: PropTypes.string,
+};
+Button.defaultProps = {
+  label: 'Hello',
+};
 
-export const Label = ({ label, borderWidth, background }) => <div style={{ borderWidth, background }}>{label}</div>;
-Label.propTypes = {
-  label: PropTypes.string;
-  borderWidth: PropTypes.number;
-  background: PropTypes.string;
+// Button.stories.js
+export default { title: 'Button', component: Button };
+```
+
+This generates the equivalent of following in-memory data structure for the `Button` component:
+
+```js
+const argTypes = {
+  label: {
+    name: 'label',
+    type: { name: 'string', required: false },
+    defaultValue: 'Hello',
+    description: 'demo description',
+    table: {
+      type: { summary: 'string' },
+      defaultValue: { summary: 'Hello' },
+    }
+    control: {
+      type: 'text'
+    }
+  }
 }
 ```
 
-Given this input, the Docs addon will show a text editor for the `background` and a numeric input for the `borderWidth` prop:
+In this `ArgTypes` data structure, `name`, `type`, `defaultValue`, and `description` are standard fields in all `ArgTypes` (analogous to `PropTypes` in React). The `table` and `control` fields are addon-specific annotations. So, for example, the `table` annotation provides extra information to customize how `label` gets rendered, and the `control` annotation provides extra information for the control for editing the property.
 
-<center>
-  <img src="./media/props-tables-controls-uncustomized.png" width="100%" />
-</center>
-
-But suppose we prefer to show a color picker for `background` and a numeric input for `borderWidth`. We can customize this in the story metadata's `argTypes` field (at the component OR story level):
+As a user, you can customize the prop table by selectively overriding these values. Consider the following modification to `Button.stories.js` from above:
 
 ```js
 export default {
-  title: 'Label',
-  component: Label,
+  title: 'Button',
+  component: Button,
   argTypes: {
-    background: { control: { type: 'color' } },
-    borderWidth: { control: { type: 'range', min: 0, max: 6 } },
-  },
+    label: {
+      description: 'overwritten description',
+      table: {
+        type: { summary: 'something short' detail: 'something really really long' },
+      },
+      control: {
+        type: null
+      }
+    }
+  }
 };
 ```
 
-This generates the following custom UI:
-
-<center>
-  <img src="./media/props-tables-controls-customized.png" width="100%" />
-</center>
-
-Support controls include `array`, `boolean`, `color`, `date`, `range`, `object`, `text`, as well as a number of different options controls: `radio`, `inline-radio`, `check`, `inline-check`, `select`, `multi-select`.
-
-To see the full list of configuration options, see the [typescript type defintions](https://github.com/storybookjs/storybook/blob/next/lib/components/src/controls/types.ts).
-
-### Rows customization
-
-In addition to customizing [controls](#controls-customization), it's also possible to customize `Props` fields, such as description, or even the rows themselves.
-
-Consider the following story for the `Label` component from in the previous section:
+These values--`description`, `table.type`, and `controls.type`--get merged over the defaults that are extracted by Storybook. The final merged values would be:
 
 ```js
-export const Batch = ({ labels, padding }) => (
-  <div style={{ padding }}>
-    {labels.map((label) => (
-      <Label key={label} label={label} />
-    ))}
-  </div>
-);
+const argTypes = {
+  label: {
+    name: 'label',
+    type: { name: 'string', required: false },
+    defaultValue: 'Hello',
+    description: 'overwritten description',
+    table: {
+      type: { summary: 'something short' detail: 'something really really long' },
+      defaultValue: { summary: 'Hello' },
+    }
+    control: {
+      type: null
+    }
+  }
+}
 ```
 
-In this case, the args are basically unrelated to the underlying component's props, and are instead related to the individual story. To generate a prop table for the story, you can configure the Story's metadata:
+This would render a row with a modified description, a type display with a dropdown that shows the detail, and no control.
 
-```js
-Batch.argTypes = {
-  labels: {
-    description: 'A comma-separated list of labels to display',
-    defaultValue: 'a,b,c',
-    control: { type: 'array' },
-  },
-  padding: {
-    description: 'The padding to space out labels int he story',
-    defaultValue: 4,
-    control: { type: 'range', min: 0, max: 20, step: 2 },
-  },
-};
-```
+Controls customization has an entire section in the [`addon-controls` README](https://github.com/storybookjs/storybook/blob/next/addons/controls/README.md#configuration).
 
-In this case, the user-specified `argTypes` are not a subset of the component's props, so Storybook shows ONLY the user-specified `argTypes`, and shows the component's props (without controls) in a separate tab.
+Here are the possible customizations for the rest of the prop table:
+
+| Field                        | Description                                                                                                               |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `name`                       | The name of the property                                                                                                  |
+| `type.required`              | Whether or not the property is required                                                                                   |
+| `description`                | A markdown description for the property                                                                                   |
+| `table.type.summary`         | A short version of the type                                                                                               |
+| `table.type.detail`          | A longer version of the type (if it's a complex type)                                                                     |
+| `table.defaultValue.summary` | A short version of the default value                                                                                      |
+| `table.defaultValue.detail`  | A longer version of the default value (if it's a complex value)                                                           |
+| `control`                    | See [`addon-controls` README](https://github.com/storybookjs/storybook/blob/next/addons/controls/README.md#configuration) |
 
 ## Reporting a bug
 
@@ -170,7 +202,7 @@ Extracting component properties from source is a tricky problem with thousands o
 
 If you're seeing a problem with your prop table, here's what to do.
 
-First, look to see if there's already a test case that corresponds to your situation. If there is, it should be documented in the [Known Limitations](#known-limitations) section above. There should also be one or more corresponding test fixtures contained in this package. For example, if you are using React, look under the directory `./src/frameworks/react/__testfixtures__`.
+First, look to see if there's already a test case that corresponds to your situation. If there is, it should be documented in the [Known Limitations](#known-limitations) section below. There should also be one or more corresponding test fixtures contained in this package. For example, if you are using React, look under the directory `./src/frameworks/react/__testfixtures__`.
 
 If your problem is not already represented here, do the following:
 

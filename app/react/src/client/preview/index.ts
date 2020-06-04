@@ -34,5 +34,3 @@ export const setAddon: ClientApi['setAddon'] = api.clientApi.setAddon;
 export const forceReRender: ClientApi['forceReRender'] = api.forceReRender;
 export const getStorybook: ClientApi['getStorybook'] = api.clientApi.getStorybook;
 export const raw: ClientApi['raw'] = api.clientApi.raw;
-
-export { argsStory } from './argsStory';

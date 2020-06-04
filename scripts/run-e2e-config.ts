@@ -149,6 +149,20 @@ export const yarn2Cra: Parameters = {
   version: 'latest',
   generator: [
     `yarn set version 2`,
+    // ⚠️ Need to set registry because Yarn 2 is not using the conf of Yarn 1
+    `yarn config set npmScopes --json '{ "storybook": { "npmRegistryServer": "http://localhost:6000/" } }'`,
+    // Some required magic to be able to fetch deps from local registry
+    `yarn config set unsafeHttpWhitelist --json '["localhost"]'`,
     `yarn dlx create-react-app@{{version}} {{name}}-v{{version}}`,
+  ].join(' && '),
+};
+
+export const reactInYarnWorkspace: Parameters = {
+  name: 'reactInYarnWorkspace',
+  version: 'latest',
+  generator: [
+    'cd {{name}}-v{{version}}',
+    'echo "{ \\"name\\": \\"workspace-root\\", \\"private\\": true, \\"workspaces\\": [] }" > package.json',
+    `yarn add react react-dom --silent -W`,
   ].join(' && '),
 };

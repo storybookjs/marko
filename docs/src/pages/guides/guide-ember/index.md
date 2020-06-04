@@ -60,7 +60,7 @@ To do that, create a file at `.storybook/main.js` with the following content:
 
 ```js
 module.exports = {
-  stories: ['../app/**/*.stories.[tj]s'],
+  stories: ['../app/**/*.stories.@(ts|js)'],
 };
 ```
 

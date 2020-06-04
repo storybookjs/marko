@@ -28,7 +28,7 @@ export const TextWithAction = () => ({
   component: Button,
   props: {
     text: 'Trigger Action',
-    onClick: action('This was clicked'),
+    onClick: () => action('This was clicked')(),
   },
 });
 
