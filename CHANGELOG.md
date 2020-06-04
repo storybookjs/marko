@@ -1,3 +1,25 @@
+## 6.0.0-beta.21 (June 4, 2020)
+
+### Breaking Changes
+
+- Preact: Update Preact version ([#10978](https://github.com/storybookjs/storybook/pull/10978))
+
+### Features
+
+- Addon-docs: Angular ArgTypes for pipes, injectables, classes ([#11016](https://github.com/storybookjs/storybook/pull/11016))
+- TypeScript: Add warning for setup issues and fix Babel config ([#10998](https://github.com/storybookjs/storybook/pull/10998))
+- Core: Add logLevel preset property to filter logging ([#10370](https://github.com/storybookjs/storybook/pull/10370))
+
+### Bug Fixes
+
+- Addon-controls: Fix initialization logic; remove react-select ([#11024](https://github.com/storybookjs/storybook/pull/11024))
+- CLI: Fix `sb init` in Yarn workspace environment ([#10985](https://github.com/storybookjs/storybook/pull/10985))
+
+### Maintenance
+
+- React: Remove argsStory helper function ([#11036](https://github.com/storybookjs/storybook/pull/11036))
+- Addon-controls: Remove residual options-type controls ([#11015](https://github.com/storybookjs/storybook/pull/11015))
+
 ## 6.0.0-beta.20 (June 1, 2020)
 
 ### Bug Fixes
