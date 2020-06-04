@@ -54,7 +54,7 @@ Then you'll need to configure Compodoc to generate a `documentation.json` file. 
   ...
   "scripts": {
     "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
-    "storybook": "npm run docs:json && start-storybook -p 9008 -s src/assets",
+    "storybook": "npm run docs:json && start-storybook -p 6006 -s src/assets",
     ...
   },
 }
