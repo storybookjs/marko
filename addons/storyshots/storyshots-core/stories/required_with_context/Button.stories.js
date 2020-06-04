@@ -21,6 +21,4 @@ export const withSomeEmoji = () => (
   </Button>
 );
 
-withSomeEmoji.story = {
-  name: 'with some emoji',
-};
+withSomeEmoji.storyName = 'with some emoji';

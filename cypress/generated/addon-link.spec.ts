@@ -17,7 +17,7 @@ describe('addon-link', () => {
     cy.get('#button--button-with-link-to-another-story').should('have.class', 'selected');
 
     // check for content
-    cy.getStoryElement().find('button').click();
+    cy.getStoryElement().contains('Go to Welcome Story').click();
 
     // assert url changes
     cy.url().should('include', 'path=/story/welcome--to-storybook');

@@ -43,7 +43,10 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
   useEffect(() => {
     const newFrames = Object.values(refs)
       .filter((r) => {
-        if (r.startInjected) {
+        if (r.error) {
+          return false;
+        }
+        if (r.type === 'auto-inject') {
           return true;
         }
         if (story && r.id === story.refId) {

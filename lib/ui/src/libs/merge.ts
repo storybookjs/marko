@@ -16,7 +16,7 @@ export default (a: any, b: any) =>
       return objValue;
     }
     if (Array.isArray(objValue)) {
-      logger.log(['the types mismatch, picking', objValue]);
+      logger.debug('Merge types mismatch', { picking: objValue, over: srcValue });
       return objValue;
     }
     return undefined;

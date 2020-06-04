@@ -145,7 +145,6 @@ export default class ClientApi {
         // and be handled by the HMR.allow in config_api, leading to a re-run of configuration.
         // So configuration is about to happen--we can skip the safety check.
         _storyStore.removeStoryKind(kind, { allowUnsafe: true });
-        _storyStore.incrementRevision();
       });
     }
 
@@ -184,7 +183,6 @@ export default class ClientApi {
           const { _storyStore } = this;
           // See note about allowUnsafe above
           _storyStore.remove(id, { allowUnsafe: true });
-          _storyStore.incrementRevision();
         });
       }
 

@@ -53,11 +53,11 @@ npm install @storybook/vue --save-dev
 
 ### Add peer dependencies
 
-Make sure that you have `vue`, `vue-loader`, `vue-template-compiler`, `@babel/core`, `babel-loader` and `babel-preset-vue` in your dependencies as well, because we list these as a peer dependencies:
+Make sure that you have `vue`, `vue-loader`, `vue-template-compiler`, `@babel/core`, and `babel-loader` in your dependencies as well, because we list these as a peer dependencies:
 
 ```sh
 npm install vue --save
-npm install vue-loader vue-template-compiler @babel/core babel-loader babel-preset-vue --save-dev
+npm install vue-loader vue-template-compiler @babel/core babel-loader --save-dev
 ```
 
 ## Step 2: Add npm scripts
@@ -81,7 +81,7 @@ To do that, create a file at `.storybook/main.js` with the following content:
 
 ```js
 module.exports = {
-  stories: ['../src/**/*.stories.[tj]s'],
+  stories: ['../src/**/*.stories.@(ts|js)'],
 };
 ```
 

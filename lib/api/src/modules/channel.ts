@@ -22,8 +22,8 @@ export const init: ModuleFn = ({ provider }) => {
       return () => provider.channel.removeListener(type, cb);
     },
     off: (type, cb) => provider.channel.removeListener(type, cb),
-    emit: (type, event) => provider.channel.emit(type, event),
-    once: (type, event) => provider.channel.once(type, event),
+    once: (type, cb) => provider.channel.once(type, cb),
+    emit: (type, ...args) => provider.channel.emit(type, ...args),
 
     collapseAll: () => {
       provider.channel.emit(STORIES_COLLAPSE_ALL, {});

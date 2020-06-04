@@ -17,6 +17,8 @@ jest.mock('global', () => ({
       kind: 'kind',
     })),
   },
+  window: global,
+  __STORYBOOK_LOGGER: console,
   __STORYBOOK_CLIENT_API__: {
     raw: jest.fn(() => [
       {

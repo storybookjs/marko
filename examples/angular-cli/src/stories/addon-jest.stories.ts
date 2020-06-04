@@ -18,10 +18,8 @@ export const AppComponentWithJestTests = () => ({
   props: {},
 });
 
-AppComponentWithJestTests.story = {
-  name: 'app.component with jest tests',
+AppComponentWithJestTests.storyName = 'app.component with jest tests';
 
-  parameters: {
-    jest: 'app.component',
-  },
+AppComponentWithJestTests.parameters = {
+  jest: 'app.component',
 };

@@ -1,3 +1,154 @@
+## 6.0.0-beta.21 (June 4, 2020)
+
+### Breaking Changes
+
+- Preact: Update Preact version ([#10978](https://github.com/storybookjs/storybook/pull/10978))
+
+### Features
+
+- Addon-docs: Angular ArgTypes for pipes, injectables, classes ([#11016](https://github.com/storybookjs/storybook/pull/11016))
+- TypeScript: Add warning for setup issues and fix Babel config ([#10998](https://github.com/storybookjs/storybook/pull/10998))
+- Core: Add logLevel preset property to filter logging ([#10370](https://github.com/storybookjs/storybook/pull/10370))
+
+### Bug Fixes
+
+- Addon-controls: Fix initialization logic; remove react-select ([#11024](https://github.com/storybookjs/storybook/pull/11024))
+- CLI: Fix `sb init` in Yarn workspace environment ([#10985](https://github.com/storybookjs/storybook/pull/10985))
+
+### Maintenance
+
+- React: Remove argsStory helper function ([#11036](https://github.com/storybookjs/storybook/pull/11036))
+- Addon-controls: Remove residual options-type controls ([#11015](https://github.com/storybookjs/storybook/pull/11015))
+
+## 6.0.0-beta.20 (June 1, 2020)
+
+### Bug Fixes
+
+- Addon-controls: Fix `options` control types ([#11003](https://github.com/storybookjs/storybook/pull/11003))
+- Addon-controls: Fix no-control handling ([#11001](https://github.com/storybookjs/storybook/pull/11001))
+- Addon-docs: Fix function argType inference in react-docgen-typescript ([#10997](https://github.com/storybookjs/storybook/pull/10997))
+
+### Maintenance
+
+- Addon-controls/a11y: Fix PARAM_KEY export for consistency ([#10988](https://github.com/storybookjs/storybook/pull/10988))
+
+## 6.0.0-beta.19 (May 30, 2020)
+
+### Features
+
+- Addon-controls: Add warning to controls tab on no-args story ([#10986](https://github.com/storybookjs/storybook/pull/10986))
+
+### Bug Fixes
+
+- Addon-docs: Handle JSON.parse exception for Angular union types ([#10984](https://github.com/storybookjs/storybook/pull/10984))
+
+## 6.0.0-beta.18 (May 29, 2020)
+
+### Bug Fixes
+
+- Core: Fix HMR for navigation sidebar in UI ([#10981](https://github.com/storybookjs/storybook/pull/10981))
+- Core: Fix `register.tsx` as manager code in preset heuristic ([#10980](https://github.com/storybookjs/storybook/pull/10980))
+- Core: Send global args with set stories ([#10910](https://github.com/storybookjs/storybook/pull/10910))
+- Core: Log swallowed errors when requiring stories ([#10974](https://github.com/storybookjs/storybook/pull/10974))
+- Core: Support valid globs ([#10926](https://github.com/storybookjs/storybook/pull/10926))
+
+## 6.0.0-beta.17 (May 28, 2020)
+
+### Features
+
+- Addon-controls: Angular support ([#10946](https://github.com/storybookjs/storybook/pull/10946))
+- Addon-controls: Web-components support ([#10953](https://github.com/storybookjs/storybook/pull/10953))
+
+## 6.0.0-beta.16 (May 28, 2020)
+
+### Bug Fixes
+
+- Core: Add missing babel plugin ([#10941](https://github.com/storybookjs/storybook/pull/10941))
+
+### Maintenance
+
+- CI: Stabilize E2E tests ([#10888](https://github.com/storybookjs/storybook/pull/10888))
+
+## 6.0.0-beta.15 (May 27, 2020)
+
+### Features
+
+- Addon-Controls: Next-generation knobs ([#10834](https://github.com/storybookjs/storybook/pull/10834))
+
+### Bug Fixes
+
+- Core: Avoid re-render on HMR of other stories ([#10908](https://github.com/storybookjs/storybook/pull/10908))
+- Core: Fix auth for refs ([#10845](https://github.com/storybookjs/storybook/pull/10845))
+
+### Dependency Upgrades
+
+- Bump react-syntax-highlighter from 11.0.2 to 12.2.1 ([#10919](https://github.com/storybookjs/storybook/pull/10919))
+
+## 6.0.0-beta.14 (May 25, 2020)
+
+### Breaking Changes
+
+- CSF: Hoist story annotation object ([#10907](https://github.com/storybookjs/storybook/pull/10907))
+- Vue: Remove babel-preset-vue ([#10909](https://github.com/storybookjs/storybook/pull/10909))
+
+### Features
+
+- Angular: Support `workspace.json` in nx workspace ([#10881](https://github.com/storybookjs/storybook/pull/10881))
+
+### Bug Fixes
+
+- Addon-docs: Fix single item width in Preview block ([#10877](https://github.com/storybookjs/storybook/pull/10877))
+- UI: Center toolbar icon buttons ([#10897](https://github.com/storybookjs/storybook/pull/10897))
+- Core: Fix double rendering on startup ([#10892](https://github.com/storybookjs/storybook/pull/10892))
+
+### Maintenance
+
+- Core: Use dedicated loader for es6 modules ([#10783](https://github.com/storybookjs/storybook/pull/10783))
+- Core: Fix yarn test command on windows ([#10904](https://github.com/storybookjs/storybook/pull/10904))
+
+## 5.3.19 (May 24, 2020)
+
+### Bug Fixes
+
+- UI: Fix search stories ([#10539](https://github.com/storybookjs/storybook/pull/10539))
+
+### Security
+
+- Upgrade markdown-to-jsx to 6.11.4 ([#10873](https://github.com/storybookjs/storybook/pull/10873))
+
+## 6.0.0-beta.13 (May 23, 2020)
+
+### Bug Fixes
+
+- Core: Fix ts/tsx resolution in the manager ([#10886](https://github.com/storybookjs/storybook/pull/10886))
+- Core: Fix typo in projectRoot node_modules detection ([#10848](https://github.com/storybookjs/storybook/pull/10848))
+- Addon-docs: Fix story inline rendering ([#10875](https://github.com/storybookjs/storybook/pull/10875))
+- Core: Fix CRA filter for built-in webpack settings ([#10861](https://github.com/storybookjs/storybook/pull/10861))
+- Addon-docs: Fix react forwardRefs with destructured props ([#10864](https://github.com/storybookjs/storybook/pull/10864))
+
+### Maintenance
+
+- React: Upgrade preset-create-react-app in examples ([#10867](https://github.com/storybookjs/storybook/pull/10867))
+- Core: Close server when e2e test failed ([#10868](https://github.com/storybookjs/storybook/pull/10868))
+
+### Dependency Upgrades
+
+- Upgrade markdown-to-jsx to 6.11.4 ([#10873](https://github.com/storybookjs/storybook/pull/10873))
+
+## 6.0.0-beta.12 (May 21, 2020)
+
+### Breaking Changes
+
+- Core: Zero-config TypeScript loading ([#10813](https://github.com/storybookjs/storybook/pull/10813))
+
+## 6.0.0-beta.11 (May 21, 2020)
+
+Failed publish
+
+## 6.0.0-beta.10 (May 21, 2020)
+
+Failed publish
+
 ## 6.0.0-beta.9 (May 21, 2020)
 
 ### Bug Fixes
