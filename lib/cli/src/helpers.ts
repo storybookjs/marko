@@ -12,6 +12,7 @@ import { npmInit } from './npm_init';
 import { StoryFormat } from './project_types';
 import { PackageJson } from './PackageJson';
 import { NpmOptions } from './NpmOptions';
+import { hasYarn2 } from './has_yarn';
 
 // Cannot be `import` as it's not under TS root dir
 const { version, devDependencies } = require('../package.json');
@@ -253,6 +254,10 @@ export function installDependencies(
 
     if (options.installAsDevDependencies) {
       installArgs.push('-D');
+    }
+
+    if (options.useYarn && !hasYarn2()) {
+      installArgs.push('--ignore-workspace-root-check');
     }
 
     const dependencyResult = spawnSync(spawnCommand, installArgs, {

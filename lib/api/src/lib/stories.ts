@@ -112,6 +112,7 @@ export interface SetStoriesPayload {
 export interface SetStoriesPayloadV2 extends SetStoriesPayload {
   v: 2;
   error?: Error;
+  globalArgs: Args;
   globalParameters: Parameters;
   kindParameters: {
     [kind: string]: Parameters;
@@ -298,7 +299,7 @@ export const transformStoriesRawToStoriesHash = (
     return acc;
   }
 
-  return Object.values(storiesHashOutOfOrder).reduce(addItem, { ...base });
+  return Object.values(storiesHashOutOfOrder).reduce(addItem, {});
 };
 
 export type Item = StoriesHash[keyof StoriesHash];

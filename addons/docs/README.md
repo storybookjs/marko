@@ -113,7 +113,7 @@ Then add the following to your `.storybook/main.js`:
 
 ```js
 module.exports = {
-  stories: ['../src/**/*.stories.(js|mdx)'],
+  stories: ['../src/**/*.stories.@(js|mdx)'],
   addons: ['@storybook/addon-docs'],
 };
 ```

@@ -242,6 +242,22 @@ This generates the following UI with a custom range slider:
   <img src="https://raw.githubusercontent.com/storybookjs/storybook/next/addons/controls/docs/media/addon-controls-args-reflow-slider.png" width="80%" />
 </center>
 
+<h4>Angular</h4>
+
+To achieve this within an angular-cli build.
+
+```jsx
+export const Reflow = ({ count, label, ...args }) => ({
+  props: {
+    label: label,
+    count: [...Array(count).keys()]
+  },
+  template: `<Button *ngFor="let i of count">{{label}} {{i}}</Button>`
+ }
+);
+Reflow.args = { count: 3, label: 'reflow' };
+```
+
 ### Template stories
 
 Suppose you've created the `Basic` story from above, but now we want to create a second story with a different state, such as how the button renders with the label is really long.
@@ -290,16 +306,43 @@ Here is the full list of available controls:
 | **boolean** | boolean      | checkbox input                                                 | -              |
 | **number**  | number       | a numberic text box input                                      | min, max, step |
 |             | range        | a range slider input                                           | min, max, step |
-| **object**  | object       | json editor text input                                         |                |
-| **options** | radio        | radio buttons input                                            |                |
-|             | inline-radio | inline radio buttons input                                     |                |
-|             | check        | multi-select checkbox input                                    |                |
-|             | inline-check | multi-select inline checkbox input                             |                |
-|             | select       | select dropdown input                                          |                |
-|             | multi-select | multi-select dropdown input                                    |                |
+| **object**  | object       | json editor text input                                         | -              |
+| **enum**    | radio        | radio buttons input                                            | options        |
+|             | inline-radio | inline radio buttons input                                     | options        |
+|             | check        | multi-select checkbox input                                    | options        |
+|             | inline-check | multi-select inline checkbox input                             | options        |
+|             | select       | select dropdown input                                          | options        |
+|             | multi-select | multi-select dropdown input                                    | options        |
 | **string**  | text         | simple text input                                              | -              |
 |             | color        | color picker input that assumes strings are color values       | -              |
 |             | date         | date picker input                                              | -              |
+
+Example customizing a control for an `enum` data type (defaults to `select` control type):
+
+```js
+export default {
+  title: 'Widget',
+  component: Widget,
+  argTypes: {
+    loadingState: {
+      type: 'inline-radio',
+      options: ['loading', 'error', 'ready'],
+    },
+  },
+};
+```
+
+Example customizing a `number` data type (defaults to `number` control type):
+
+```js
+export default {
+  title: 'Gizmo',
+  component: Gizmo,
+  argTypes: {
+    width: { type: 'range', min: 400, max: 1200, step: 50 };
+  },
+};
+```
 
 ### Parameters
 
@@ -331,9 +374,9 @@ And here's what the resulting UI looks like:
 | -------------- | :----: | :------------: |
 | React          |   +    |       +        |
 | Vue            |   +    |       +        |
-| Angular        |   +    |       #        |
+| Angular        |   +    |       +        |
 | Ember          |   +    |       #        |
-| Web components |   +    |       #        |
+| Web components |   +    |       +        |
 | HTML           |   +    |                |
 | Svelte         |   +    |                |
 | Preact         |   +    |                |

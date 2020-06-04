@@ -18,7 +18,7 @@ describe('preview', () => {
       () =>
         ({
           document: undefined,
-          window: undefined,
+          window: {},
         } as any)
     );
     const api = require('.');

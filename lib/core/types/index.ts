@@ -15,11 +15,11 @@ export interface StorybookConfig {
   /**
    * Tells Storybook where to find stories.
    *
-   * @example `['./src/*.stories.(j|t)sx?']`
+   * @example `['./src/*.stories.@(j|t)sx?']`
    */
   stories: string[];
   /**
-   * Controls how Storybook hanldes TypeScript files.
+   * Controls how Storybook handles TypeScript files.
    */
   typescript?: Partial<TypescriptOptions>;
   /**
@@ -32,7 +32,7 @@ export interface StorybookConfig {
 }
 
 /**
- * The internal options object, used by Storybook frameworks and adddons.
+ * The internal options object, used by Storybook frameworks and addons.
  */
 export interface StorybookOptions {
   configType: 'DEVELOPMENT' | 'PRODUCTION';

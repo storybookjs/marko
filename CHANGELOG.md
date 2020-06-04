@@ -1,3 +1,74 @@
+## 6.0.0-beta.21 (June 4, 2020)
+
+### Breaking Changes
+
+- Preact: Update Preact version ([#10978](https://github.com/storybookjs/storybook/pull/10978))
+
+### Features
+
+- Addon-docs: Angular ArgTypes for pipes, injectables, classes ([#11016](https://github.com/storybookjs/storybook/pull/11016))
+- TypeScript: Add warning for setup issues and fix Babel config ([#10998](https://github.com/storybookjs/storybook/pull/10998))
+- Core: Add logLevel preset property to filter logging ([#10370](https://github.com/storybookjs/storybook/pull/10370))
+
+### Bug Fixes
+
+- Addon-controls: Fix initialization logic; remove react-select ([#11024](https://github.com/storybookjs/storybook/pull/11024))
+- CLI: Fix `sb init` in Yarn workspace environment ([#10985](https://github.com/storybookjs/storybook/pull/10985))
+
+### Maintenance
+
+- React: Remove argsStory helper function ([#11036](https://github.com/storybookjs/storybook/pull/11036))
+- Addon-controls: Remove residual options-type controls ([#11015](https://github.com/storybookjs/storybook/pull/11015))
+
+## 6.0.0-beta.20 (June 1, 2020)
+
+### Bug Fixes
+
+- Addon-controls: Fix `options` control types ([#11003](https://github.com/storybookjs/storybook/pull/11003))
+- Addon-controls: Fix no-control handling ([#11001](https://github.com/storybookjs/storybook/pull/11001))
+- Addon-docs: Fix function argType inference in react-docgen-typescript ([#10997](https://github.com/storybookjs/storybook/pull/10997))
+
+### Maintenance
+
+- Addon-controls/a11y: Fix PARAM_KEY export for consistency ([#10988](https://github.com/storybookjs/storybook/pull/10988))
+
+## 6.0.0-beta.19 (May 30, 2020)
+
+### Features
+
+- Addon-controls: Add warning to controls tab on no-args story ([#10986](https://github.com/storybookjs/storybook/pull/10986))
+
+### Bug Fixes
+
+- Addon-docs: Handle JSON.parse exception for Angular union types ([#10984](https://github.com/storybookjs/storybook/pull/10984))
+
+## 6.0.0-beta.18 (May 29, 2020)
+
+### Bug Fixes
+
+- Core: Fix HMR for navigation sidebar in UI ([#10981](https://github.com/storybookjs/storybook/pull/10981))
+- Core: Fix `register.tsx` as manager code in preset heuristic ([#10980](https://github.com/storybookjs/storybook/pull/10980))
+- Core: Send global args with set stories ([#10910](https://github.com/storybookjs/storybook/pull/10910))
+- Core: Log swallowed errors when requiring stories ([#10974](https://github.com/storybookjs/storybook/pull/10974))
+- Core: Support valid globs ([#10926](https://github.com/storybookjs/storybook/pull/10926))
+
+## 6.0.0-beta.17 (May 28, 2020)
+
+### Features
+
+- Addon-controls: Angular support ([#10946](https://github.com/storybookjs/storybook/pull/10946))
+- Addon-controls: Web-components support ([#10953](https://github.com/storybookjs/storybook/pull/10953))
+
+## 6.0.0-beta.16 (May 28, 2020)
+
+### Bug Fixes
+
+- Core: Add missing babel plugin ([#10941](https://github.com/storybookjs/storybook/pull/10941))
+
+### Maintenance
+
+- CI: Stabilize E2E tests ([#10888](https://github.com/storybookjs/storybook/pull/10888))
+
 ## 6.0.0-beta.15 (May 27, 2020)
 
 ### Features
