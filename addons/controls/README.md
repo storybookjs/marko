@@ -242,7 +242,7 @@ This generates the following UI with a custom range slider:
   <img src="https://raw.githubusercontent.com/storybookjs/storybook/next/addons/controls/docs/media/addon-controls-args-reflow-slider.png" width="80%" />
 </center>
 
-### Angular
+<h4>Angular</h4>
 
 To achieve this within an angular-cli build.
 
