@@ -1,5 +1,6 @@
 import { spawn, sync } from 'cross-spawn';
-import { satisfies } from 'semver';
+import { satisfies } from '@storybook/semver';
+import { hasYarn2 } from './has_yarn';
 
 /**
  * Get the latest version of the package available on npmjs.com.
@@ -21,16 +22,10 @@ export async function latestVersion(
   // Create a `PackageManager` interface that expose some functions like `version`, `add` etc
   // and then create classes that handle the npm/yarn/yarn2 specific behavior
   if (npmOptions.useYarn) {
-    const yarnVersion = sync('yarn', ['--version'])
-      // @ts-ignore
-      .output.toString('utf8')
-      .replace(/,/g, '')
-      .replace(/"/g, '');
-
-    if (/^1\.+/.test(yarnVersion)) {
-      versions = await spawnVersionsWithYarn(packageName, constraint);
-    } else {
+    if (hasYarn2()) {
       versions = await spawnVersionsWithYarn2(packageName, constraint);
+    } else {
+      versions = await spawnVersionsWithYarn(packageName, constraint);
     }
   } else {
     versions = await spawnVersionsWithNpm(packageName, constraint);

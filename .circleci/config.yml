@@ -105,7 +105,7 @@ jobs:
             - .verdaccio-cache
   examples-v2:
     docker:
-      - image: cypress/included:4.5.0
+      - image: cypress/included:4.7.0
         environment:
           TERM: xterm
     working_directory: /tmp/storybook
@@ -135,7 +135,7 @@ jobs:
           destination: cypress
   examples-v2-yarn-2:
     docker:
-      - image: cypress/included:4.5.0
+      - image: cypress/included:4.7.0
         environment:
           TERM: xterm
     working_directory: /tmp/storybook
@@ -166,7 +166,7 @@ jobs:
   e2e:
     working_directory: /tmp/storybook
     docker:
-      - image: cypress/included:4.5.0
+      - image: cypress/included:4.7.0
         environment:
           TERM: xterm
     steps:
@@ -347,9 +347,9 @@ workflows:
       - examples-v2:
           requires:
             - publish
-      # - examples-v2-yarn-2:
-      #     requires:
-      #       - publish
+      - examples-v2-yarn-2:
+          requires:
+            - publish
   deploy:
     jobs:
       - docs
