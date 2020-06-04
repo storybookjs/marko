@@ -155,7 +155,7 @@ You can interleave your own components to customize the auto-generated contents 
 
 ## Story file names
 
-Unless you use a custom webpack configuration, all of your story files should have the suffix `*.stories.[jt]sx?`, e.g. `"Badge.stories.js"`, `"Badge.stories.tsx"`, etc.
+Unless you use a custom webpack configuration, all of your story files should have the suffix `*.stories.@(j|t)sx?`, e.g. `"Badge.stories.js"`, `"Badge.stories.tsx"`, etc.
 
 The docs preset assumes this naming convention for its `source-loader` setup. If you want to use a different naming convention, you'll need a [manual configuration](../README.md#manual-configuration).
 
