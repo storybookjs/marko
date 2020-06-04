@@ -6,6 +6,16 @@ import deprecate from 'util-deprecate';
 
 import { Loadable, LoaderFunction, RequireContext } from './types';
 
+const deprecatedStoryAnnotationWarning = deprecate(
+  () => {},
+  dedent`
+    CSF .story annotations deprecated; annotate story functions directly:
+    - StoryFn.story.name => StoryFn.storyName
+    - StoryFn.story.(parameters|decorators) => StoryFn.(parameters|decorators)
+    See https://github.com/storybookjs/storybook/issues/10906 for details and codemod.
+`
+);
+
 let previousExports = new Map<any, string>();
 const loadStories = (
   loadable: Loadable,
@@ -24,13 +34,17 @@ const loadStories = (
   if (reqs) {
     reqs.forEach((req) => {
       req.keys().forEach((filename: string) => {
-        const fileExports = req(filename);
-        currentExports.set(
-          fileExports,
-          // todo discuss: types infer that this is RequireContext; no checks needed?
-          // NOTE: turns out `babel-plugin-require-context-hook` doesn't implement this (yet)
-          typeof req.resolve === 'function' ? req.resolve(filename) : filename
-        );
+        try {
+          const fileExports = req(filename);
+          currentExports.set(
+            fileExports,
+            // todo discuss: types infer that this is RequireContext; no checks needed?
+            // NOTE: turns out `babel-plugin-require-context-hook` doesn't implement this (yet)
+            typeof req.resolve === 'function' ? req.resolve(filename) : filename
+          );
+        } catch (error) {
+          logger.warn(`Unexpected error: ${error}`);
+        }
       });
     });
   } else {
@@ -52,9 +66,6 @@ const loadStories = (
       storyStore.removeStoryKind(exp.default.title);
     }
   });
-  if (removed.length > 0) {
-    storyStore.incrementRevision();
-  }
 
   const added = Array.from(currentExports.keys()).filter((exp) => !previousExports.has(exp));
 
@@ -132,15 +143,7 @@ const loadStories = (
         const { story } = storyFn;
         if (story) {
           logger.debug('deprecated story', story);
-          deprecate(
-            () => {},
-            dedent`
-              CSF .story annotations deprecated; annotate story functions directly:
-              - StoryFn.story.name => StoryFn.storyName
-              - StoryFn.story.(parameters|decorators) => StoryFn.(parameters|decorators)
-              See https://github.com/storybookjs/storybook/issues/10906 for details and codemod.
-          `
-          )();
+          deprecatedStoryAnnotationWarning();
         }
 
         // storyFn.x takes precedence over storyFn.story.x, but

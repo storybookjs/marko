@@ -1,5 +1,5 @@
 import { VERSIONCHECK } from 'global';
-import semver from 'semver';
+import semver from '@storybook/semver';
 import memoize from 'memoizerific';
 
 import { version as currentVersion } from '../version';

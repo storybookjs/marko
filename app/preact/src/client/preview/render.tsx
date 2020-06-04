@@ -3,7 +3,6 @@ import { document } from 'global';
 import dedent from 'ts-dedent';
 import { RenderContext } from './types';
 
-let renderedStory: Element;
 const rootElement = document ? document.getElementById('root') : null;
 
 export default function renderMain({ storyFn, kind, name, showMain, showError }: RenderContext) {
@@ -20,9 +19,9 @@ export default function renderMain({ storyFn, kind, name, showMain, showError }:
     return;
   }
 
-  render(null, rootElement, renderedStory);
+  render(null, rootElement);
 
   showMain();
 
-  renderedStory = render(element, rootElement);
+  render(element, rootElement);
 }

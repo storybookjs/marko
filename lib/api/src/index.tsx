@@ -9,7 +9,7 @@ import React, {
   useMemo,
   useRef,
 } from 'react';
-import { mergeWith } from 'lodash';
+import mergeWith from 'lodash/mergeWith';
 
 import {
   STORY_CHANGED,
@@ -410,13 +410,12 @@ export function useAddonState<S>(addonId: string, defaultState?: S) {
 }
 
 export function useArgs(): [Args, (newArgs: Args) => void] {
-  const {
-    api: { getCurrentStoryData, updateStoryArgs },
-  } = useStorybookApi();
+  const { getCurrentStoryData, updateStoryArgs } = useStorybookApi();
 
-  const { id, args } = getCurrentStoryData();
+  const data = getCurrentStoryData();
+  const args = isStory(data) ? data.args : {};
 
-  return [args, (newArgs: Args) => updateStoryArgs(id, newArgs)];
+  return [args, (newArgs: Args) => updateStoryArgs(data.id, newArgs)];
 }
 
 export function useGlobalArgs(): [Args, (newGlobalArgs: Args) => void] {
