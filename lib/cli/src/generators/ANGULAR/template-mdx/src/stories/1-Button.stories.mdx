@@ -33,7 +33,7 @@ This `Button` document defines a few stories:
     component: Button,
     props: {
       text: '😀 😎 👍 💯',
-      onClick: action('This was clicked'),
+      onClick: () => action('This was clicked')(),
     },
   }}
 </Story>

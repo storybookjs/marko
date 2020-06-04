@@ -2,7 +2,7 @@
 import memoize from 'memoizerific';
 import dedent from 'ts-dedent';
 import stable from 'stable';
-import { mapValues } from 'lodash';
+import mapValues from 'lodash/mapValues';
 
 import { Channel } from '@storybook/channels';
 import Events from '@storybook/core-events';
