@@ -4,7 +4,7 @@ import fs from 'fs';
 import fse from 'fs-extra';
 import chalk from 'chalk';
 import { sync as spawnSync } from 'cross-spawn';
-import { gt, satisfies } from 'semver';
+import { gt, satisfies } from '@storybook/semver';
 import stripJsonComments from 'strip-json-comments';
 
 import { latestVersion } from './latest_version';
@@ -12,6 +12,7 @@ import { npmInit } from './npm_init';
 import { StoryFormat } from './project_types';
 import { PackageJson } from './PackageJson';
 import { NpmOptions } from './NpmOptions';
+import { hasYarn2 } from './has_yarn';
 
 // Cannot be `import` as it's not under TS root dir
 const { version, devDependencies } = require('../package.json');
@@ -255,7 +256,7 @@ export function installDependencies(
       installArgs.push('-D');
     }
 
-    if (options.useYarn) {
+    if (options.useYarn && !hasYarn2()) {
       installArgs.push('--ignore-workspace-root-check');
     }
 
