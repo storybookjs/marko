@@ -35,6 +35,7 @@ const realSidebarProps: SidebarProps = {
   stories: mockDataset.withRoot,
   menu: [],
   refs: {},
+  storiesConfigured: true,
 };
 
 const PlaceholderBlock = styled.div(({ color }) => ({

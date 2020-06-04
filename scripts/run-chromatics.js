@@ -1,18 +1,12 @@
-#!/usr/bin/env node
+import { spawn } from 'child_process';
+import { promisify } from 'util';
 
-const { spawn } = require('child_process');
-const { promisify } = require('util');
-const {
-  readdir: readdirRaw,
-  readFile: readFileRaw,
-  writeFile: writeFileRaw,
-  statSync,
-  readFileSync,
-} = require('fs');
-const { join } = require('path');
+import { readdir as readdirRaw, readFileSync } from 'fs';
+import { join } from 'path';
+
+import { getDeployables } from './utils/list-examples';
 
 const readdir = promisify(readdirRaw);
-const writeFile = promisify(writeFileRaw);
 
 const p = (l) => join(__dirname, '..', ...l);
 const logger = console;
@@ -35,25 +29,16 @@ const exec = async (command, args = [], options = {}) =>
       });
   });
 
-const getDeployables = (files) => {
-  return files.filter((f) => {
-    const packageJsonLocation = p(['examples', f, 'package.json']);
-    let stats = null;
-    try {
-      stats = statSync(packageJsonLocation);
-    } catch (e) {
-      // the folder had no package.json, we'll ignore
-    }
-
-    return stats && stats.isFile() && hasChromaticAppCode(packageJsonLocation);
-  });
-};
-
 const hasChromaticAppCode = (l) => {
   const text = readFileSync(l, 'utf8');
   const json = JSON.parse(text);
 
-  return !!(json && json.storybook && json.storybook.chromatic && json.storybook.chromatic.appCode);
+  return !!(
+    json &&
+    json.storybook &&
+    json.storybook.chromatic &&
+    json.storybook.chromatic.projectToken
+  );
 };
 
 const handleExamples = async (deployables) => {
@@ -64,18 +49,18 @@ const handleExamples = async (deployables) => {
     const cwd = p([]);
     const {
       storybook: {
-        chromatic: { appCode },
+        chromatic: { projectToken },
       },
     } = JSON.parse(readFileSync(p(['examples', d, 'package.json'])));
 
-    if (appCode) {
+    if (projectToken) {
       await exec(
         `yarn`,
         [
           'chromatic',
           `--storybook-build-dir="${out}"`,
           '--exit-zero-on-changes',
-          `--app-code="${appCode}"`,
+          `--project-token="${projectToken}"`,
         ],
         { cwd }
       );
@@ -100,7 +85,7 @@ const run = async () => {
   const offset = step * a;
 
   const list = examples.slice().splice(offset, step);
-  const deployables = getDeployables(list);
+  const deployables = getDeployables(list, hasChromaticAppCode);
 
   if (deployables.length) {
     logger.log(`will build: ${deployables.join(', ')}`);

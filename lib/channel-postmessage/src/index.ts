@@ -55,7 +55,7 @@ export class PostmsgTransport {
    * @param event
    */
   send(event: ChannelEvent, options?: any): Promise<any> {
-    let depth = 15;
+    let depth = 25;
     let allowFunction = true;
     let target;
 
@@ -170,8 +170,13 @@ export class PostmsgTransport {
           ? `<span style="color: #FF4785">${event.type}</span>`
           : `<span style="color: #FFAE00">${event.type}</span>`;
 
-        event.source =
-          source || this.config.page === 'preview' ? rawEvent.origin : getEventSourceUrl(rawEvent);
+        if (source) {
+          const { origin, pathname } = new URL(source, document.location);
+          event.source = origin + pathname;
+        } else {
+          event.source =
+            this.config.page === 'preview' ? rawEvent.origin : getEventSourceUrl(rawEvent);
+        }
 
         if (!event.source) {
           pretty.error(

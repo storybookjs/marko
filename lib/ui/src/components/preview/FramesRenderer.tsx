@@ -4,14 +4,7 @@ import { IFrame } from './iframe';
 import { FramesRendererProps } from './utils/types';
 import { stringifyQueryParams } from './utils/stringifyQueryParams';
 
-const getActive = (
-  refId: FramesRendererProps['refId'],
-  storyId: FramesRendererProps['storyId']
-) => {
-  if (storyId === '*') {
-    return undefined;
-  }
-
+const getActive = (refId: FramesRendererProps['refId']) => {
   if (refId) {
     return `storybook-ref-${refId}`;
   }
@@ -30,7 +23,7 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
   storyId,
 }) => {
   const stringifiedQueryParams = stringifyQueryParams(queryParams);
-  const active = getActive(refId, storyId);
+  const active = getActive(refId);
 
   const styles = useMemo<CSSObject>(() => {
     return {
@@ -41,7 +34,7 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
         visibility: 'visible',
       },
     };
-  }, [refs]);
+  }, []);
 
   const [frames, setFrames] = useState<Record<string, string>>({
     'storybook-preview-iframe': `${baseUrl}?id=${storyId}&viewMode=${viewMode}${stringifiedQueryParams}`,
@@ -50,7 +43,10 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
   useEffect(() => {
     const newFrames = Object.values(refs)
       .filter((r) => {
-        if (r.startInjected) {
+        if (r.error) {
+          return false;
+        }
+        if (r.type === 'auto-inject') {
           return true;
         }
         if (story && r.id === story.refId) {

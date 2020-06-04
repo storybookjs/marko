@@ -9,12 +9,13 @@ import React, {
   useMemo,
   useRef,
 } from 'react';
+import mergeWith from 'lodash/mergeWith';
 
 import {
-  SET_STORIES,
   STORY_CHANGED,
   SHARED_STATE_CHANGED,
   SHARED_STATE_SET,
+  SET_STORIES,
 } from '@storybook/core-events';
 import { RenderData as RouterData } from '@storybook/router';
 import { Listener } from '@storybook/channels';
@@ -93,9 +94,14 @@ export type ManagerProviderProps = RouterData &
     children: ReactNode | ((props: Combo) => ReactNode);
   };
 
+// These types are duplicated in addons.
+export type StoryId = string;
+export type StoryKind = string;
+
 export interface Args {
   [key: string]: any;
 }
+
 export interface ArgType {
   name?: string;
   description?: string;
@@ -106,6 +112,19 @@ export interface ArgType {
 export interface ArgTypes {
   [key: string]: ArgType;
 }
+
+export interface Parameters {
+  [key: string]: any;
+}
+
+// This is duplicated from @storybook/client-api for the reasons mentioned in lib-addons/types.js
+export const combineParameters = (...parameterSets: Parameters[]) =>
+  mergeWith({}, ...parameterSets, (objValue: any, srcValue: any) => {
+    // Treat arrays as scalars:
+    if (Array.isArray(srcValue)) return srcValue;
+
+    return undefined;
+  });
 
 export type ModuleFn = (m: ModuleArgs) => Module;
 
@@ -391,13 +410,12 @@ export function useAddonState<S>(addonId: string, defaultState?: S) {
 }
 
 export function useArgs(): [Args, (newArgs: Args) => void] {
-  const {
-    api: { getCurrentStoryData, updateStoryArgs },
-  } = useStorybookApi();
+  const { getCurrentStoryData, updateStoryArgs } = useStorybookApi();
 
-  const { id, args } = getCurrentStoryData();
+  const data = getCurrentStoryData();
+  const args = isStory(data) ? data.args : {};
 
-  return [args, (newArgs: Args) => updateStoryArgs(id, newArgs)];
+  return [args, (newArgs: Args) => updateStoryArgs(data.id, newArgs)];
 }
 
 export function useGlobalArgs(): [Args, (newGlobalArgs: Args) => void] {

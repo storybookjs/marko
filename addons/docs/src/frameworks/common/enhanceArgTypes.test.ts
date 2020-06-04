@@ -136,18 +136,17 @@ describe('enhanceArgTypes', () => {
         it('options', () => {
           expect(
             enhance({
-              argType: { control: { type: 'options', options: [1, 2], controlType: 'radio' } },
+              argType: { control: { type: 'radio', options: [1, 2] } },
             }).input
           ).toMatchInlineSnapshot(`
             {
               "name": "input",
               "control": {
-                "type": "options",
+                "type": "radio",
                 "options": [
                   1,
                   2
-                ],
-                "controlType": "radio"
+                ]
               }
             }
           `);

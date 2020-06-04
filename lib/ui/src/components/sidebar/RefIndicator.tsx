@@ -1,15 +1,15 @@
-import React, { FunctionComponent, useMemo, Fragment, ComponentProps, useCallback } from 'react';
+import React, { FunctionComponent, useMemo, ComponentProps, useCallback, forwardRef } from 'react';
 
 import { Icons, WithTooltip, Spaced, TooltipLinkList } from '@storybook/components';
 import { styled } from '@storybook/theming';
 import { useStorybookApi } from '@storybook/api';
 
-import { getType, RefType } from './RefHelpers';
+import { getStateType, RefType } from './RefHelpers';
 import { MenuItemIcon } from './Menu';
 
 export type ClickHandler = ComponentProps<typeof TooltipLinkList>['links'][number]['onClick'];
 export interface IndicatorIconProps {
-  type: ReturnType<typeof getType>;
+  type: ReturnType<typeof getStateType>;
 }
 export interface CurrentVersionProps {
   url: string;
@@ -27,13 +27,6 @@ const IndicatorPlacement = styled.aside(
   }),
   ({ theme }) => ({ color: theme.color.mediumdark })
 );
-
-const Hr = styled.hr(({ theme }) => ({
-  border: '0 none',
-  height: 0,
-  marginBottom: 0,
-  borderTop: `1px solid ${theme.color.mediumlight}`,
-}));
 
 const IndicatorIcon: FunctionComponent<IndicatorIconProps> = ({ type }) => {
   let icon: ComponentProps<typeof Icons>['icon'];
@@ -122,11 +115,12 @@ const CurrentVersion: FunctionComponent<CurrentVersionProps> = ({ url, versions 
   );
 };
 
-export const RefIndicator: FunctionComponent<
+export const RefIndicator = forwardRef<
+  HTMLElement,
   RefType & {
-    type: ReturnType<typeof getType>;
+    state: ReturnType<typeof getStateType>;
   }
-> = ({ type, ...ref }) => {
+>(({ state, ...ref }, forwardedRef) => {
   const api = useStorybookApi();
   const list = useMemo(() => Object.values(ref.stories || {}), [ref.stories]);
   const componentCount = useMemo(() => list.filter((v) => v.isComponent).length, [list]);
@@ -141,37 +135,24 @@ export const RefIndicator: FunctionComponent<
   );
 
   return (
-    <IndicatorPlacement>
+    <IndicatorPlacement ref={forwardedRef}>
       <WithTooltip
         placement="bottom-start"
         trigger="click"
         tooltip={
           <MessageWrapper>
             <Spaced row={0}>
-              {type === 'loading' ? (
-                <LoadingMessage url={ref.url} />
-              ) : (
+              {state === 'loading' && <LoadingMessage url={ref.url} />}
+              {state === 'ready' && (
                 <ReadyMessage {...{ url: ref.url, componentCount, leafCount }} />
               )}
-
-              {ref.startInjected ? (
-                <Fragment>
-                  <Hr />
-                  <PerformanceDegradedMessage />
-                </Fragment>
-              ) : null}
-
-              {type === 'error' ? (
-                <Fragment>
-                  <Hr />
-                  <ErrorOccurredMessage />
-                </Fragment>
-              ) : null}
+              {ref.type === 'auto-inject' && state !== 'error' && <PerformanceDegradedMessage />}
+              {state === 'error' && <ErrorOccurredMessage />}
             </Spaced>
           </MessageWrapper>
         }
       >
-        <IndicatorIcon type={type} />
+        <IndicatorIcon type={state} />
       </WithTooltip>
 
       {ref.versions ? (
@@ -195,7 +176,7 @@ export const RefIndicator: FunctionComponent<
       ) : null}
     </IndicatorPlacement>
   );
-};
+});
 
 const PerformanceDegradedMessage: FunctionComponent = () => (
   <Message href="https://storybook.js.org" target="_blank">

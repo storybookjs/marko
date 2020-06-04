@@ -8,6 +8,7 @@ import React, {
   ReactNode,
 } from 'react';
 import { styled } from '@storybook/theming';
+import { sanitize } from '@storybook/csf';
 
 import { Placeholder } from '../placeholder/placeholder';
 import { FlexBar } from '../bar/bar';
@@ -66,6 +67,7 @@ const Content = styled.div<ContentProps>(
   },
   ({ theme }) => ({
     fontSize: theme.typography.size.s2 - 1,
+    background: theme.background.content,
   }),
   ({ bordered, theme }) =>
     bordered
@@ -158,26 +160,30 @@ export const Tabs: FunctionComponent<TabsProps> = memo(
       <Wrapper absolute={absolute} bordered={bordered} id={htmlId}>
         <FlexBar border backgroundColor={backgroundColor}>
           <TabBar role="tablist">
-            {list.map(({ title, id, active, color }) => (
-              <TabButton
-                type="button"
-                key={id}
-                active={active}
-                textColor={color}
-                onClick={(e: MouseEvent) => {
-                  e.preventDefault();
-                  actions.onSelect(id);
-                }}
-                role="tab"
-                className={`tabbutton ${active ? 'tabbutton-active' : ''}`}
-              >
-                {typeof title === 'function' ? title() : title}
-              </TabButton>
-            ))}
+            {list.map(({ title, id, active, color }) => {
+              const tabTitle = typeof title === 'function' ? title() : title;
+              return (
+                <TabButton
+                  id={`tabbutton-${sanitize(tabTitle)}`}
+                  className={`tabbutton ${active ? 'tabbutton-active' : ''}`}
+                  type="button"
+                  key={id}
+                  active={active}
+                  textColor={color}
+                  onClick={(e: MouseEvent) => {
+                    e.preventDefault();
+                    actions.onSelect(id);
+                  }}
+                  role="tab"
+                >
+                  {tabTitle}
+                </TabButton>
+              );
+            })}
           </TabBar>
           {tools ? <Fragment>{tools}</Fragment> : null}
         </FlexBar>
-        <Content bordered={bordered} absolute={absolute} tabIndex={0}>
+        <Content id="panel-tab-content" bordered={bordered} absolute={absolute} tabIndex={0}>
           {list.map(({ id, active, render }) => render({ key: id, active }))}
         </Content>
       </Wrapper>

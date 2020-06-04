@@ -1,22 +1,28 @@
+const path = require('path');
 const config = require('../../jest.config');
+
+const projectDir = path.join(__dirname, '../../');
 
 module.exports = {
   preset: 'jest-preset-angular',
-  ...config,
   globals: {
-    __TRANSFORM_HTML__: true,
     'ts-jest': {
-      tsConfigFile: '<rootDir>/examples/angular-cli/src/tsconfig.spec.json',
+      tsConfig: path.join(__dirname, 'src/tsconfig.spec.json'),
+      stringifyContentPathRegex: '\\.html$',
     },
   },
   roots: [__dirname],
   transform: {
     '^.+\\.stories\\.[jt]sx?$': '@storybook/addon-storyshots/injectFileName',
-    '^.+\\.jsx?$': '<rootDir>/scripts/babel-jest.js',
-    '^.+[/\\\\].storybook[/\\\\]config\\.ts$': '<rootDir>/scripts/jest-ts-babel.js',
-    '^.+\\.html$': '<rootDir>/node_modules/jest-preset-angular/preprocessor.js',
-    '^.+\\.ts$': '<rootDir>/node_modules/jest-preset-angular/preprocessor.js',
+    '^.+\\.(ts|html)$': 'ts-jest',
+    '^.+\\.jsx?$': path.join(projectDir, 'scripts/utils/jest-transform-js.js'),
     '^.+\\.mdx$': '@storybook/addon-docs/jest-transform-mdx',
   },
   moduleFileExtensions: [...config.moduleFileExtensions, 'html'],
+  snapshotSerializers: [
+    'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
+    'jest-preset-angular/build/AngularSnapshotSerializer.js',
+    'jest-preset-angular/build/HTMLCommentSerializer.js',
+  ],
+  setupFilesAfterEnv: ['./jest-config/setup.ts'],
 };

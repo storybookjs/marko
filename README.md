@@ -137,7 +137,6 @@ For additional help, join us [in our Discord](https://discord.gg/sMFvFsG) or [Sl
 | [a11y](addons/a11y/)                        | Test components for user accessibility in Storybook                        |
 | [actions](addons/actions/)                  | Log actions as users interact with components in the Storybook UI          |
 | [backgrounds](addons/backgrounds/)          | Let users choose backgrounds in the Storybook UI                           |
-| [contexts](addons/contexts/)                | Interactively inject component contexts for stories in the Storybook UI    |
 | [cssresources](addons/cssresources/)        | Dynamically add/remove css resources to the component iframe               |
 | [design assets](addons/design-assets/)      | View images, videos, weblinks alongside your story                         |
 | [docs](addons/docs/)                        | Add high quality documentation to your components                          |
@@ -161,10 +160,13 @@ See [Addon / Framework Support Table](ADDONS_SUPPORT.md)
 | ------------------------------------------- | -------------------------------------------------------------------------- |
 | [info](https://github.com/storybookjs/storybook/tree/master/addons/info)                                        | Annotate stories with extra component usage information                    |
 | [notes](https://github.com/storybookjs/storybook/tree/master/addons/notes)                                       | Annotate Storybook stories with notes                                      |
+| [contexts](https://github.com/storybookjs/storybook/tree/master/addons/contexts)                                       | Addon for driving your components under dynamic contexts                                      |
 
 In order to continue improving your experience, we have to eventually deprecate certain addons in favor of new, better tools.
 
 If you're using info/notes, we highly recommend you to migrate to [docs](addons/docs/) instead, and [here is a guide](addons/docs/docs/recipes.md#migrating-from-notesinfo-addons) to help you.
+
+If you're using contexts, we highly recommend you to migrate to [toolbars](https://github.com/storybookjs/storybook/tree/next/addons/toolbars) and [here is a guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-addon-contexts) to help you.
 
 ## Badges & Presentation materials
 

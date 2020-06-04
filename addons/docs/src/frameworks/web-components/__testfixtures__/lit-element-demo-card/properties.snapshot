@@ -2,138 +2,158 @@
 
 exports[`web-components component properties lit-element-demo-card 1`] = `
 Object {
-  "sections": Object {
-    "attributes": Array [
-      Object {
-        "defaultValue": Object {
-          "summary": "false",
-        },
-        "description": "Indicates that the back of the card is shown",
-        "name": "back-side",
-        "required": "",
-        "type": Object {
-          "summary": "boolean",
-        },
+  "": Object {
+    "description": "This is an unnamed slot (the default slot)",
+    "name": "",
+    "required": false,
+    "table": Object {
+      "category": "slots",
+      "defaultValue": Object {
+        "summary": undefined,
       },
-      Object {
-        "defaultValue": Object {
-          "summary": "\\"Your Message\\"",
-        },
-        "description": "Header message",
-        "name": "header",
-        "required": "",
-        "type": Object {
-          "summary": "string",
-        },
+      "type": Object {
+        "summary": undefined,
       },
-      Object {
-        "defaultValue": Object {
-          "summary": "[]",
-        },
-        "description": "Data rows",
-        "name": "rows",
-        "required": "",
-        "type": Object {
-          "summary": "object",
-        },
+    },
+    "type": Object {
+      "name": "void",
+    },
+  },
+  "--demo-wc-card-back-color": Object {
+    "description": "Font color for back",
+    "name": "--demo-wc-card-back-color",
+    "required": false,
+    "table": Object {
+      "category": "css",
+      "defaultValue": Object {
+        "summary": undefined,
       },
-    ],
-    "css": Array [
-      Object {
-        "defaultValue": Object {
-          "summary": undefined,
-        },
-        "description": "Header font size",
-        "name": "--demo-wc-card-header-font-size",
-        "required": "",
-        "type": Object {
-          "summary": undefined,
-        },
+      "type": Object {
+        "summary": undefined,
       },
-      Object {
-        "defaultValue": Object {
-          "summary": undefined,
-        },
-        "description": "Font color for front",
-        "name": "--demo-wc-card-front-color",
-        "required": "",
-        "type": Object {
-          "summary": undefined,
-        },
+    },
+    "type": Object {
+      "name": "void",
+    },
+  },
+  "--demo-wc-card-front-color": Object {
+    "description": "Font color for front",
+    "name": "--demo-wc-card-front-color",
+    "required": false,
+    "table": Object {
+      "category": "css",
+      "defaultValue": Object {
+        "summary": undefined,
       },
-      Object {
-        "defaultValue": Object {
-          "summary": undefined,
-        },
-        "description": "Font color for back",
-        "name": "--demo-wc-card-back-color",
-        "required": "",
-        "type": Object {
-          "summary": undefined,
-        },
+      "type": Object {
+        "summary": undefined,
       },
-    ],
-    "events": Array [
-      Object {
-        "defaultValue": Object {
-          "summary": undefined,
-        },
-        "description": "Fires whenever it switches between front/back",
-        "name": "side-changed",
-        "required": "",
-        "type": Object {
-          "summary": undefined,
-        },
+    },
+    "type": Object {
+      "name": "void",
+    },
+  },
+  "--demo-wc-card-header-font-size": Object {
+    "description": "Header font size",
+    "name": "--demo-wc-card-header-font-size",
+    "required": false,
+    "table": Object {
+      "category": "css",
+      "defaultValue": Object {
+        "summary": undefined,
       },
-    ],
-    "properties": Array [
-      Object {
-        "defaultValue": Object {
-          "summary": "false",
-        },
-        "description": "Indicates that the back of the card is shown",
-        "name": "backSide",
-        "required": "",
-        "type": Object {
-          "summary": "boolean",
-        },
+      "type": Object {
+        "summary": undefined,
       },
-      Object {
-        "defaultValue": Object {
-          "summary": "\\"Your Message\\"",
-        },
-        "description": "Header message",
-        "name": "header",
-        "required": "",
-        "type": Object {
-          "summary": "string",
-        },
+    },
+    "type": Object {
+      "name": "void",
+    },
+  },
+  "back-side": Object {
+    "description": "Indicates that the back of the card is shown",
+    "name": "back-side",
+    "required": false,
+    "table": Object {
+      "category": "attributes",
+      "defaultValue": Object {
+        "summary": "false",
       },
-      Object {
-        "defaultValue": Object {
-          "summary": "[]",
-        },
-        "description": "Data rows",
-        "name": "rows",
-        "required": "",
-        "type": Object {
-          "summary": "object",
-        },
+      "type": Object {
+        "summary": "boolean",
       },
-    ],
-    "slots": Array [
-      Object {
-        "defaultValue": Object {
-          "summary": undefined,
-        },
-        "description": "This is an unnamed slot (the default slot)",
-        "name": "",
-        "required": "",
-        "type": Object {
-          "summary": undefined,
-        },
+    },
+    "type": Object {
+      "name": "void",
+    },
+  },
+  "backSide": Object {
+    "description": "Indicates that the back of the card is shown",
+    "name": "backSide",
+    "required": false,
+    "table": Object {
+      "category": "properties",
+      "defaultValue": Object {
+        "summary": "false",
       },
-    ],
+      "type": Object {
+        "summary": "boolean",
+      },
+    },
+    "type": Object {
+      "name": "boolean",
+    },
+  },
+  "header": Object {
+    "description": "Header message",
+    "name": "header",
+    "required": false,
+    "table": Object {
+      "category": "properties",
+      "defaultValue": Object {
+        "summary": "\\"Your Message\\"",
+      },
+      "type": Object {
+        "summary": "string",
+      },
+    },
+    "type": Object {
+      "name": "string",
+    },
+  },
+  "rows": Object {
+    "description": "Data rows",
+    "name": "rows",
+    "required": false,
+    "table": Object {
+      "category": "properties",
+      "defaultValue": Object {
+        "summary": "[]",
+      },
+      "type": Object {
+        "summary": "object",
+      },
+    },
+    "type": Object {
+      "name": "object",
+    },
+  },
+  "side-changed": Object {
+    "description": "Fires whenever it switches between front/back",
+    "name": "side-changed",
+    "required": false,
+    "table": Object {
+      "category": "events",
+      "defaultValue": Object {
+        "summary": undefined,
+      },
+      "type": Object {
+        "summary": undefined,
+      },
+    },
+    "type": Object {
+      "name": "void",
+    },
   },
 }
 `;

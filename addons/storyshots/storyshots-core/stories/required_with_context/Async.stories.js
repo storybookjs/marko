@@ -31,6 +31,4 @@ export default {
 };
 
 export const withTimeout = () => <AsyncTestComponent />;
-withTimeout.story = {
-  name: `with ${TIMEOUT}ms timeout simulating async operation`,
-};
+withTimeout.storyName = `with ${TIMEOUT}ms timeout simulating async operation`;

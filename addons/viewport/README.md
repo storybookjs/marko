@@ -35,7 +35,7 @@ You should now be able to see the viewport addon icon in the the toolbar at the 
 The viewport addon is configured by story parameters with the `viewport` key. To configure globally, import `addParameters` from your app layer in your `preview.js` file.
 
 ```js
-import { addParameters } from '@storybook/react';
+import { addParameters } from '@storybook/client-api';
 
 addParameters({
   viewport: {
@@ -103,14 +103,17 @@ Parameters can be configured for a whole set of stories or a single story via th
 export default {
   title: 'Stories',
   parameters: {
-    viewport: { defaultViewport: 'iphone6' },
+    viewport: {
+      viewports: INITIAL_VIEWPORTS,
+      defaultViewport: 'iphone6'
+    },
   };
 };
 
 export const myStory = () => <div />;
-myStory.story = {
-  parameters: {
-    viewport: { defaultViewport: 'iphonex' },
+myStory.parameters = {
+  viewport: {
+    defaultViewport: 'iphonex'
   },
 };
 ```
@@ -122,7 +125,7 @@ myStory.story = {
 The default viewports being used is [`MINIMAL_VIEWPORTS`](src/defaults.ts). If you'd like to use a more granular list of devices, you can use [`INITIAL_VIEWPORTS`](src/defaults.ts) like so in your `.storybook/preview.js` file.
 
 ```js
-import { addParameters } from '@storybook/react';
+import { addParameters } from '@storybook/client-api';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 
 addParameters({
@@ -137,7 +140,7 @@ addParameters({
 This will replace all previous devices with `Kindle Fire 2` and `Kindle Fire HD` by calling `addParameters` with the two devices as `viewports` in `.storybook/preview.js` file.
 
 ```js
-import { addParameters } from '@storybook/react';
+import { addParameters } from '@storybook/client-api';
 
 const customViewports = {
   kindleFire2: {

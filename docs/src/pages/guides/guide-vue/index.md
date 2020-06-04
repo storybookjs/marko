@@ -3,6 +3,31 @@ id: 'guide-vue'
 title: 'Storybook for Vue'
 ---
 
+---
+**NOTE**
+
+[Vue.js devtools] [browser extension support is in the works] but not yet available!
+<details markdown>
+<summary>See workarounds…</summary>
+
+- In Firefox:
+  1. Open the story you wish to inspect.
+  2. Right-click anywhere in the story and select This Frame → Open Frame in New Tab. devtools should now work correctly in the new tab.
+
+- In Chromium / Chrome:
+  1. Open the story you wish to inspect.
+  2. Right-click anywhere in the story and select View frame source which will open in a new tab. E.g., `view-source:http://localhost:6006/iframe.html?id=components-fancybutton--button&viewMode=story`.
+  3. Remove the `view-source:` scheme from the URL in the address bar to load just the frame. devtools should now work correctly.
+
+- Launch the standalone Vue.js devtools app via `npx -p @vue/devtools vue-devtools` and add (or create) `<script src="//localhost:8098"></script>` to `.storybook/preview-head.html`. Now run Storybook and devtools should connect.
+
+</details>
+
+[Vue.js devtools]: https://github.com/vuejs/vue-devtools
+[browser extension support is in the works]: https://github.com/storybookjs/storybook/issues/1708
+
+---
+
 ## Automatic setup
 
 You may have tried to use our quick start guide to setup your project for Storybook.
@@ -28,11 +53,11 @@ npm install @storybook/vue --save-dev
 
 ### Add peer dependencies
 
-Make sure that you have `vue`, `vue-loader`, `vue-template-compiler`, `@babel/core`, `babel-loader` and `babel-preset-vue` in your dependencies as well, because we list these as a peer dependencies:
+Make sure that you have `vue`, `vue-loader`, `vue-template-compiler`, `@babel/core`, and `babel-loader` in your dependencies as well, because we list these as a peer dependencies:
 
 ```sh
 npm install vue --save
-npm install vue-loader vue-template-compiler @babel/core babel-loader babel-preset-vue --save-dev
+npm install vue-loader vue-template-compiler @babel/core babel-loader --save-dev
 ```
 
 ## Step 2: Add npm scripts
@@ -56,7 +81,7 @@ To do that, create a file at `.storybook/main.js` with the following content:
 
 ```js
 module.exports = {
-  stories: ['../src/**/*.stories.[tj]s'],
+  stories: ['../src/**/*.stories.@(ts|js)'],
 };
 ```
 

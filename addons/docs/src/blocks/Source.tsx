@@ -35,12 +35,13 @@ export const getSourceProps = (
 
   let source = codeProps.code; // prefer user-specified code
   if (!source) {
-    const targetId = singleProps.id === CURRENT_SELECTION ? currentId : singleProps.id;
+    const targetId =
+      singleProps.id === CURRENT_SELECTION || !singleProps.id ? currentId : singleProps.id;
     const targetIds = multiProps.ids || [targetId];
     source = targetIds
       .map((sourceId) => {
         const data = storyStore.fromId(sourceId);
-        const enhanced = data && enhanceSource(data);
+        const enhanced = data && (enhanceSource(data) || data.parameters);
         return enhanced?.docs?.source?.code || '';
       })
       .join('\n\n');

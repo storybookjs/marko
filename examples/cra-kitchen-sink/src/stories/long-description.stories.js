@@ -7,4 +7,4 @@ export default {
 };
 
 export const Story1 = () => <Button onClick={action('clicked')}>Hello Button</Button>;
-Story1.story = { name: 'with text' };
+Story1.storyName = 'with text';

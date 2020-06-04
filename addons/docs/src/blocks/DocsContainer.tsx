@@ -12,7 +12,7 @@ import { storyBlockIdFromId } from './Story';
 import { CodeOrSourceMdx, AnchorMdx, HeadersMdx } from './mdx';
 import { scrollToElement } from './utils';
 
-interface DocsContainerProps {
+export interface DocsContainerProps {
   context: DocsContextProps;
 }
 

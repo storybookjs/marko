@@ -1,2 +1,3 @@
 declare module 'global';
-declare module 'storybook-chromatic/isChromatic';
+declare module 'chromatic/isChromatic';
+declare module '@storybook/semver';

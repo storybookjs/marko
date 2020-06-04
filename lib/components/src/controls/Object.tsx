@@ -2,6 +2,7 @@ import React, { FC, ChangeEvent, useState, useCallback } from 'react';
 import deepEqual from 'fast-deep-equal';
 import { Form } from '../form';
 import { ControlProps, ObjectValue, ObjectConfig } from './types';
+import { ArgType } from '../blocks';
 
 const format = (value: any) => (value ? JSON.stringify(value) : '');
 
@@ -10,8 +11,15 @@ const parse = (value: string) => {
   return trimmed ? JSON.parse(trimmed) : {};
 };
 
+const validate = (value: any, argType: ArgType) => {
+  if (argType && argType.type.name === 'array') {
+    return Array.isArray(value);
+  }
+  return true;
+};
+
 export type ObjectProps = ControlProps<ObjectValue> & ObjectConfig;
-export const ObjectControl: FC<ObjectProps> = ({ name, value, onChange }) => {
+export const ObjectControl: FC<ObjectProps> = ({ name, argType, value, onChange }) => {
   const [valid, setValid] = useState(true);
   const [text, setText] = useState(format(value));
 
@@ -19,10 +27,11 @@ export const ObjectControl: FC<ObjectProps> = ({ name, value, onChange }) => {
     (e: ChangeEvent<HTMLTextAreaElement>) => {
       try {
         const newVal = parse(e.target.value);
-        if (!deepEqual(value, newVal)) {
+        const newValid = validate(newVal, argType);
+        if (newValid && !deepEqual(value, newVal)) {
           onChange(name, newVal);
         }
-        setValid(true);
+        setValid(newValid);
       } catch (err) {
         setValid(false);
       }

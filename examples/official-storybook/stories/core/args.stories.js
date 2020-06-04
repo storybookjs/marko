@@ -27,9 +27,6 @@ const ArgUpdater = ({ args, updateArgs }) => {
 
 export default {
   title: 'Core/Args',
-  parameters: {
-    passArgsFirst: true,
-  },
   decorators: [
     (story) => {
       const [args, updateArgs] = useArgs();
@@ -53,9 +50,7 @@ export const PassedToStory = (inputArgs) => {
   );
 };
 
-PassedToStory.story = {
-  argTypes: { name: { defaultValue: 'initial' } },
-};
+PassedToStory.argTypes = { name: { defaultValue: 'initial' } };
 
 PassedToStory.propTypes = {
   args: PropTypes.shape({}).isRequired,
