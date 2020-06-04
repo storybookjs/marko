@@ -28,9 +28,7 @@ export const DefaultStory = () => ({
   ],
 });
 
-DefaultStory.story = {
-  name: 'Default',
-};
+DefaultStory.storyName = 'Default';
 
 export const WithKnobsStory = () => ({
   template: `<storybook-button-component [text]="text" (onClick)="onClick($event)"></storybook-button-component>`,
@@ -48,7 +46,5 @@ export const WithKnobsStory = () => ({
   ],
 });
 
-WithKnobsStory.story = {
-  name: 'With Knobs',
-  decorators: [withKnobs],
-};
+WithKnobsStory.storyName = 'With Knobs';
+WithKnobsStory.decorators = [withKnobs];

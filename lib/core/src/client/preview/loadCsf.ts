@@ -2,8 +2,19 @@ import { ConfigApi, ClientApi, StoryStore } from '@storybook/client-api';
 import { isExportStory, storyNameFromExport, toId } from '@storybook/csf';
 import { logger } from '@storybook/client-logger';
 import dedent from 'ts-dedent';
+import deprecate from 'util-deprecate';
 
 import { Loadable, LoaderFunction, RequireContext } from './types';
+
+const deprecatedStoryAnnotationWarning = deprecate(
+  () => {},
+  dedent`
+    CSF .story annotations deprecated; annotate story functions directly:
+    - StoryFn.story.name => StoryFn.storyName
+    - StoryFn.story.(parameters|decorators) => StoryFn.(parameters|decorators)
+    See https://github.com/storybookjs/storybook/issues/10906 for details and codemod.
+`
+);
 
 let previousExports = new Map<any, string>();
 const loadStories = (
@@ -23,13 +34,17 @@ const loadStories = (
   if (reqs) {
     reqs.forEach((req) => {
       req.keys().forEach((filename: string) => {
-        const fileExports = req(filename);
-        currentExports.set(
-          fileExports,
-          // todo discuss: types infer that this is RequireContext; no checks needed?
-          // NOTE: turns out `babel-plugin-require-context-hook` doesn't implement this (yet)
-          typeof req.resolve === 'function' ? req.resolve(filename) : null
-        );
+        try {
+          const fileExports = req(filename);
+          currentExports.set(
+            fileExports,
+            // todo discuss: types infer that this is RequireContext; no checks needed?
+            // NOTE: turns out `babel-plugin-require-context-hook` doesn't implement this (yet)
+            typeof req.resolve === 'function' ? req.resolve(filename) : null
+          );
+        } catch (error) {
+          logger.warn(`Unexpected error: ${error}`);
+        }
       });
     });
   } else {
@@ -51,9 +66,6 @@ const loadStories = (
       storyStore.removeStoryKind(exp.default.title);
     }
   });
-  if (removed.length > 0) {
-    storyStore.incrementRevision();
-  }
 
   const added = Array.from(currentExports.keys()).filter((exp) => !previousExports.has(exp));
 
@@ -117,8 +129,10 @@ const loadStories = (
     const storyExports = Object.keys(exports);
     if (storyExports.length === 0) {
       logger.warn(
-        dedent`Found a story file for "${kindName}" but no exported stories.
-        Check the docs for reference: https://storybook.js.org/docs/formats/component-story-format/`
+        dedent`
+          Found a story file for "${kindName}" but no exported stories.
+          Check the docs for reference: https://storybook.js.org/docs/formats/component-story-format/
+        `
       );
       return;
     }
@@ -126,7 +140,22 @@ const loadStories = (
     storyExports.forEach((key) => {
       if (isExportStory(key, meta)) {
         const storyFn = exports[key];
-        const { name, parameters, decorators, args, argTypes } = storyFn.story || {};
+        const { story } = storyFn;
+        if (story) {
+          logger.debug('deprecated story', story);
+          deprecatedStoryAnnotationWarning();
+        }
+
+        // storyFn.x takes precedence over storyFn.story.x, but
+        // mixtures are supported
+        const {
+          storyName = story?.name,
+          parameters = story?.parameters,
+          decorators = story?.decorators,
+          args = story?.args,
+          argTypes = story?.argTypes,
+        } = storyFn;
+
         const decoratorParams = decorators ? { decorators } : null;
         const exportName = storyNameFromExport(key);
         const idParams = { __id: toId(componentId || kindName, exportName) };
@@ -138,7 +167,7 @@ const loadStories = (
           args,
           argTypes,
         };
-        kind.add(name || exportName, storyFn, storyParams);
+        kind.add(storyName || exportName, storyFn, storyParams);
       }
     });
   });

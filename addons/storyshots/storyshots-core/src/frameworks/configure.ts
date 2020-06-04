@@ -53,8 +53,10 @@ function getConfigPathParts(input: string): Output {
       output.stories = stories.map(
         (pattern: string | { path: string; recursive: boolean; match: string }) => {
           const { path: basePath, recursive, match } = toRequireContext(pattern);
+          const regex = new RegExp(match);
+
           // eslint-disable-next-line no-underscore-dangle
-          return global.__requireContext(configDir, basePath, recursive, match);
+          return global.__requireContext(configDir, basePath, recursive, regex);
         }
       );
     }

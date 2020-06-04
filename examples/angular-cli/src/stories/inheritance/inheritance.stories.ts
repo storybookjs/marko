@@ -13,9 +13,7 @@ export const IconButton = () => ({
   },
 });
 
-IconButton.story = {
-  name: 'icon button',
-};
+IconButton.storyName = 'icon button';
 
 export const BaseButton = () => ({
   component: BaseButtonComponent,
@@ -24,6 +22,4 @@ export const BaseButton = () => ({
   },
 });
 
-BaseButton.story = {
-  name: 'base button',
-};
+BaseButton.storyName = 'base button';

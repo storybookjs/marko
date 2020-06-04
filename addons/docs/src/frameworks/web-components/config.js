@@ -3,11 +3,11 @@
 import { addParameters } from '@storybook/client-api';
 import React from 'react';
 import { render } from 'lit-html';
-import { extractProps, extractComponentDescription } from './custom-elements';
+import { extractArgTypes, extractComponentDescription } from './custom-elements';
 
 addParameters({
   docs: {
-    extractProps,
+    extractArgTypes,
     extractComponentDescription,
     inlineStories: true,
     prepareForInline: (storyFn) => {

@@ -1,5 +1,5 @@
 import { location, fetch } from 'global';
-import { logger } from '@storybook/client-logger';
+import dedent from 'ts-dedent';
 import {
   transformStoriesRawToStoriesHash,
   StoriesRaw,
@@ -33,7 +33,7 @@ export interface ComposedRef {
   id: string;
   title?: string;
   url: string;
-  startInjected?: boolean;
+  type?: 'auto-inject' | 'unknown' | 'lazy';
   stories: StoriesHash;
   versions?: Versions;
   authUrl?: string;
@@ -47,6 +47,16 @@ export type RefUrl = string;
 
 // eslint-disable-next-line no-useless-escape
 const findFilename = /(\/((?:[^\/]+?)\.[^\/]+?)|\/)$/;
+
+const allSettled = (promises: Promise<any>[]) =>
+  Promise.all(
+    promises.map((promise, i) =>
+      promise.then(
+        (r) => (r.ok ? r : false),
+        () => false
+      )
+    )
+  );
 
 export const getSourceType = (source: string) => {
   const { origin: localOrigin, pathname: localPathname } = location;
@@ -113,46 +123,78 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
     checkRef: async (ref) => {
       const { id, url } = ref;
 
-      const handler = async (response: Response) => {
-        if (response) {
-          const { ok } = response;
+      const loadedData: { error?: Error; stories?: StoriesRaw } = {};
 
-          if (ok) {
-            return response.json().catch((error: Error) => ({ error }));
-          }
-        } else {
-          logger.warn('an auto-injected ref threw a cors-error');
-        }
-
-        return false;
-      };
-
-      const [stories, metadata] = await Promise.all([
+      const [included, omitted, iframe] = await allSettled([
         fetch(`${url}/stories.json`, {
           headers: {
             Accept: 'application/json',
           },
+          redirect: 'manual',
           credentials: 'include',
-        })
-          .catch(() => false)
-          .then(handler),
-        fetch(`${url}/metadata.json`, {
+        }),
+        fetch(`${url}/stories.json`, {
           headers: {
             Accept: 'application/json',
           },
-          credentials: 'include',
-          cache: 'no-cache',
-        })
-          .catch(() => false)
-          .then(handler),
+          redirect: 'manual',
+          credentials: 'omit',
+        }),
+        fetch(`${url}/iframe.html`, {
+          redirect: 'manual',
+          cors: 'no-cors',
+          credentials: 'omit',
+        }),
       ]);
+
+      const handle = async (request: Promise<Response> | false) => {
+        if (request) {
+          return Promise.resolve(request)
+            .then((response) => (response.ok ? response.json() : {}))
+            .catch((error) => ({ error }));
+        }
+        return {};
+      };
+
+      if (!included && !omitted && !iframe) {
+        loadedData.error = {
+          message: dedent`
+            Error: Loading of ref failed
+              at fetch (lib/api/src/modules/refs.ts)
+            
+            URL: ${url}
+            
+            We weren't able to load the above URL,
+            it's possible a CORS error happened.
+            
+            Please check your dev-tools network tab.
+          `,
+        } as Error;
+      } else if (omitted || included) {
+        const credentials = !omitted ? 'include' : 'omit';
+
+        const [stories, metadata] = await Promise.all([
+          handle(omitted || included),
+          handle(
+            fetch(`${url}/metadata.json`, {
+              headers: {
+                Accept: 'application/json',
+              },
+              redirect: 'manual',
+              credentials,
+              cache: 'no-cache',
+            })
+          ),
+        ]);
+
+        Object.assign(loadedData, { ...stories, ...metadata });
+      }
 
       api.setRef(id, {
         id,
         url,
-        ...(stories || {}),
-        ...(metadata || {}),
-        startInjected: !stories && !metadata,
+        ...loadedData,
+        type: !loadedData.stories ? 'auto-inject' : 'lazy',
       });
     },
 
@@ -186,6 +228,11 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
   const refs = provider.getConfig().refs || {};
 
   const initialState: SubState['refs'] = refs;
+
+  Object.values(refs).forEach((r) => {
+    // eslint-disable-next-line no-param-reassign
+    r.type = 'unknown';
+  });
 
   Object.entries(refs).forEach(([k, v]) => {
     api.checkRef(v as SetRefData);

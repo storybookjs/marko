@@ -44,7 +44,7 @@ Then update your `.storybook/main.js` to make sure you load MDX files:
 
 ```js
 module.exports = {
-  stories: ['../src/stories/**/*.stories.(js|mdx)'],
+  stories: ['../src/stories/**/*.stories.@(js|mdx)'],
 };
 ```
 
@@ -80,8 +80,8 @@ For `DocsPage`, you need to update the parameter locally in a story:
 
 ```ts
 export const basic = () => ...
-basic.story = {
-  parameters: { docs: { iframeHeight: 400 } }
+basic.parameters = {
+  docs: { iframeHeight: 400 }
 }
 ```
 

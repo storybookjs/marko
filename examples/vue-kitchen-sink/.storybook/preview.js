@@ -7,7 +7,6 @@ Vue.component('my-button', MyButton);
 Vue.use(Vuex);
 
 export const parameters = {
-  passArgsFirst: true,
   docs: {
     iframeHeight: '60px',
   },

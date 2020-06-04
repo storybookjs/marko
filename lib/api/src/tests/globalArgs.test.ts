@@ -1,5 +1,5 @@
 import EventEmitter from 'event-emitter';
-import { UPDATE_GLOBAL_ARGS, GLOBAL_ARGS_UPDATED } from '@storybook/core-events';
+import { SET_STORIES, UPDATE_GLOBAL_ARGS, GLOBAL_ARGS_UPDATED } from '@storybook/core-events';
 
 import { ModuleArgs, API } from '../index';
 import { init as initModule, SubAPI } from '../modules/globalArgs';
@@ -18,6 +18,21 @@ describe('stories API', () => {
   it('sets a sensible initialState', () => {
     const store = createMockStore();
     const { state } = initModule(({ store } as unknown) as ModuleArgs);
+
+    expect(state).toEqual({
+      globalArgs: {},
+    });
+  });
+
+  it('set global args on SET_STORIES', () => {
+    const api = EventEmitter();
+    const store = createMockStore();
+    const { state, init } = initModule(({ store, fullAPI: api } as unknown) as ModuleArgs);
+    store.setState(state);
+    init();
+
+    api.emit(SET_STORIES, { globalArgs: { a: 'b' } });
+    expect(store.getState()).toEqual({ globalArgs: { a: 'b' } });
 
     expect(state).toEqual({
       globalArgs: {},

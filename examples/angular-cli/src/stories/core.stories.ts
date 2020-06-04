@@ -22,7 +22,5 @@ export const PassedToStory = (_args, { parameters: { fileName, ...parameters } }
   },
 });
 
-PassedToStory.story = {
-  name: 'passed to story',
-  parameters: { storyParameter },
-};
+PassedToStory.storyName = 'passed to story';
+PassedToStory.parameters = { storyParameter };

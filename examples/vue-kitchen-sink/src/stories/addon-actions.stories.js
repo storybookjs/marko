@@ -11,9 +11,7 @@ export const ActionOnly = () => ({
   },
 });
 
-ActionOnly.story = {
-  name: 'Action only',
-};
+ActionOnly.storyName = 'Action only';
 
 export const MultipleActions = () => ({
   template:
@@ -21,9 +19,7 @@ export const MultipleActions = () => ({
   methods: actions('click', 'doubleclick'),
 });
 
-MultipleActions.story = {
-  name: 'Multiple actions',
-};
+MultipleActions.storyName = 'Multiple actions';
 
 export const MultipleActionsObject = () => ({
   template:
@@ -31,9 +27,7 @@ export const MultipleActionsObject = () => ({
   methods: actions({ click: 'clicked', doubleclick: 'double clicked' }),
 });
 
-MultipleActionsObject.story = {
-  name: 'Multiple actions, object',
-};
+MultipleActionsObject.storyName = 'Multiple actions, object';
 
 export const ActionAndMethod = () => ({
   template: '<my-button @click="log">Click me to log the action</my-button>',
@@ -45,6 +39,4 @@ export const ActionAndMethod = () => ({
   },
 });
 
-ActionAndMethod.story = {
-  name: 'Action and method',
-};
+ActionAndMethod.storyName = 'Action and method';

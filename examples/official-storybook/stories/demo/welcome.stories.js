@@ -11,6 +11,4 @@ export default {
 // - 'other-demo-buttonmdx--with-text'
 // - 'Other/Demo/ButtonMdx'
 export const ToStorybook = () => <Welcome showApp={linkTo('Other/Demo/Button')} />;
-ToStorybook.story = {
-  name: 'to Storybook',
-};
+ToStorybook.storyName = 'to Storybook';

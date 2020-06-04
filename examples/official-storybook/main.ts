@@ -3,9 +3,9 @@ import type { StorybookConfig } from '@storybook/core/types';
 module.exports = {
   stories: [
     // FIXME: Breaks e2e tests './intro.stories.mdx',
-    '../../lib/ui/src/**/*.stories.(js|tsx|mdx)',
-    '../../lib/components/src/**/*.stories.(js|tsx|mdx)',
-    './stories/**/*.stories.(js|ts|tsx|mdx)',
+    '../../lib/ui/src/**/*.stories.@(js|tsx|mdx)',
+    '../../lib/components/src/**/*.stories.@(js|tsx|mdx)',
+    './stories/**/*.stories.@(js|ts|tsx|mdx)',
     './../../addons/docs/**/*.stories.tsx',
   ],
   addons: [
@@ -16,6 +16,7 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-events',
     '@storybook/addon-knobs',
+    '@storybook/addon-controls',
     '@storybook/addon-cssresources',
     '@storybook/addon-backgrounds',
     '@storybook/addon-a11y',

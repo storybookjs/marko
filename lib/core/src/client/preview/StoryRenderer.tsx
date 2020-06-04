@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { document } from 'global';
 import AnsiToHtml from 'ansi-to-html';
 
-import { StoryId, StoryKind, ViewMode, Channel } from '@storybook/addons';
+import { StoryId, StoryKind, StoryFn, ViewMode, Channel } from '@storybook/addons';
 import Events from '@storybook/core-events';
 import { logger } from '@storybook/client-logger';
 import { StoryStore } from '@storybook/client-api';
@@ -15,8 +15,8 @@ import { RenderStoryFunction, RenderContext } from './types';
 interface RenderMetadata {
   id: StoryId;
   kind: StoryKind;
-  revision: number;
   viewMode: ViewMode;
+  getDecorated: () => StoryFn<any>;
 }
 
 type Layout = keyof typeof layouts;
@@ -120,14 +120,14 @@ export class StoryRenderer {
     const { storyId, viewMode: urlViewMode } = storyStore.getSelection();
 
     const data = storyStore.fromId(storyId);
-    const { kind, id, parameters = {} } = data || {};
+    const { kind, id, parameters = {}, getDecorated } = data || {};
     const { docsOnly, layout } = parameters;
 
     const metadata: RenderMetadata = {
       id,
       kind,
       viewMode: docsOnly ? 'docs' : urlViewMode,
-      revision: storyStore.getRevision(),
+      getDecorated,
     };
 
     this.applyLayout(layout);
@@ -157,12 +157,15 @@ export class StoryRenderer {
     const { previousMetadata, storyStore } = this;
 
     const storyChanged = !previousMetadata || previousMetadata.id !== metadata.id;
-    const revisionChanged = !previousMetadata || previousMetadata.revision !== metadata.revision;
+    // getDecorated is a function that returns a decorated story function. It'll change whenever the story
+    // is reloaded into the store, which means the module the story was defined in was HMR-ed.
+    const implementationChanged =
+      !previousMetadata || previousMetadata.getDecorated !== metadata.getDecorated;
     const viewModeChanged = !previousMetadata || previousMetadata.viewMode !== metadata.viewMode;
     const kindChanged = !previousMetadata || previousMetadata.kind !== metadata.kind;
 
     // Don't re-render the story if nothing has changed to justify it
-    if (!forceRender && !storyChanged && !revisionChanged && !viewModeChanged) {
+    if (!forceRender && !storyChanged && !implementationChanged && !viewModeChanged) {
       this.channel.emit(Events.STORY_UNCHANGED, {
         ...metadata,
         name,
@@ -171,7 +174,7 @@ export class StoryRenderer {
     }
 
     // If we are rendering something new (as opposed to re-rendering the same or first story), emit
-    if (!forceRender && previousMetadata && !revisionChanged) {
+    if (previousMetadata && (storyChanged || kindChanged || viewModeChanged)) {
       this.channel.emit(Events.STORY_CHANGED, metadata.id);
     }
 

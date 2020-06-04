@@ -21,10 +21,7 @@ within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: [
-    '@storybook/addon-actions',
-    '@storybook/addon-knobs',
-  ],
+  addons: ['@storybook/addon-actions', '@storybook/addon-knobs'],
 };
 ```
 
@@ -58,10 +55,8 @@ export const buttonWithEmoji = () => (
     </span>
   </Button>
 );
-buttonWithEmoji.story = {
-  parameters: {
-    notes: 'A small component',
-  },
+buttonWithEmoji.parameters = {
+  notes: 'A small component',
 };
 ```
 
@@ -89,10 +84,8 @@ export const buttonWithEmoji = () => (
     </span>
   </Button>
 );
-buttonWithEmoji.story = {
-  parameters: {
-    notes: { disabled: true }
-  }
+buttonWithEmoji.parameters = {
+  notes: { disabled: true },
 };
 ```
 
