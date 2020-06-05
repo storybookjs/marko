@@ -52,9 +52,9 @@ export default async function render({
   let { template } = element;
   if (element.customElement) {
     const def = CustomElement.getDefinition(element.customElement);
-    template = `<${def.name} ${Object.keys(def.bindables).map(
-      (key) => `${def.bindables[key].attribute}.bind="${def.bindables[key].property}" `
-    )}  ></${def.name}>`;
+    template = `<${def.name} ${Object.keys(def.bindables)
+      .map((key) => `${def.bindables[key].attribute}.bind="${def.bindables[key].property}" `)
+      .join(' ')}  ></${def.name}>`;
     previousAurelia.register(element.customElement);
   }
 

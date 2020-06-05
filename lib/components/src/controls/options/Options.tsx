@@ -16,7 +16,7 @@ import { ControlProps, OptionsSelection, OptionsConfig, Options } from '../types
 const normalizeOptions = (options: Options) => {
   if (Array.isArray(options)) {
     return options.reduce((acc, item) => {
-      acc[item.toString()] = item;
+      acc[String(item)] = item;
       return acc;
     }, {});
   }
