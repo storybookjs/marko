@@ -216,15 +216,15 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
     await generate({ ...options, cwd: siblingDir });
     logger.log();
 
+    await setResolutions(options);
+    logger.log();
+
     if (options.typescript) {
       await addTypescript(options);
       logger.log();
     }
 
     await initStorybook(options);
-    logger.log();
-
-    await setResolutions(options);
     logger.log();
 
     await addRequiredDeps(options);
