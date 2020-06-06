@@ -7,4 +7,5 @@ export type SupportedFramework =
   | 'react-native'
   | 'svelte'
   | 'vue'
+  | 'web-components'
   | 'rax';
