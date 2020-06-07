@@ -1,5 +1,4 @@
 import {
-  getVersion,
   writePackageJson,
   getBabelDependencies,
   addToDevDependenciesIfNotPresent,
@@ -38,7 +37,7 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
     addToDevDependenciesIfNotPresent(
       packageJson,
       '@babel/core',
-      await getVersion(npmOptions, '@babel/core')
+      await packageManager.getVersion(npmOptions, '@babel/core')
     );
   }
 
@@ -48,7 +47,7 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
 
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
+  const babelDependencies = await getBabelDependencies(packageManager, npmOptions, packageJson);
   packageManager.addDependencies({ ...npmOptions, packageJson }, [
     ...versionedPackages,
     ...babelDependencies,

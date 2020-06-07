@@ -1,10 +1,15 @@
 import path from 'path';
 import fs from 'fs';
-import { commandLog, getVersion, writePackageJson } from '../helpers';
+import chalk from 'chalk';
+import { gt, satisfies } from '@storybook/semver';
+import { commandLog, writePackageJson } from '../helpers';
 import { PackageJson } from '../PackageJson';
 import { NpmOptions } from '../NpmOptions';
+import { latestVersion } from '../latest_version';
 
 const logger = console;
+// Cannot be `import` as it's not under TS root dir
+const { version, devDependencies } = require('../../package.json');
 
 export abstract class JsPackageManager {
   public abstract initPackageJson(): void;
@@ -113,7 +118,7 @@ export abstract class JsPackageManager {
   ): Promise<string[]> {
     return Promise.all(
       packageNames.map(
-        async (packageName) => `${packageName}@${await getVersion(npmOptions, packageName)}`
+        async (packageName) => `${packageName}@${await this.getVersion(npmOptions, packageName)}`
       )
     );
   }
@@ -126,7 +131,39 @@ export abstract class JsPackageManager {
    * @param packageNames
    */
   public getVersions(npmOptions: NpmOptions, ...packageNames: string[]): Promise<string[]> {
-    return Promise.all(packageNames.map((packageName) => getVersion(npmOptions, packageName)));
+    return Promise.all(packageNames.map((packageName) => this.getVersion(npmOptions, packageName)));
+  }
+
+  public async getVersion(
+    npmOptions: NpmOptions,
+    packageName: string,
+    constraint?: string
+  ): Promise<string> {
+    let current;
+    if (packageName === '@storybook/cli') {
+      current = version;
+    } else if (/storybook/.test(packageName)) {
+      current = devDependencies[packageName];
+    }
+
+    let latest;
+    try {
+      latest = await latestVersion(npmOptions, packageName, constraint);
+    } catch (e) {
+      if (current) {
+        logger.warn(`\n     ${chalk.yellow(e.message)}`);
+        return current;
+      }
+
+      logger.error(`\n     ${chalk.red(e.message)}`);
+      process.exit(1);
+    }
+
+    const versionToUse =
+      current && (!constraint || satisfies(current, constraint)) && gt(current, latest)
+        ? current
+        : latest;
+    return `^${versionToUse}`;
   }
 
   protected abstract runInstall(): { status: number };

@@ -2,12 +2,13 @@
 import path from 'path';
 import { sync as spawnSync } from 'cross-spawn';
 import { packageNames } from '@storybook/codemod';
-import { getBabelDependencies, getPackageJson, getVersion, writePackageJson } from '../../helpers';
+import { getBabelDependencies, getPackageJson, writePackageJson } from '../../helpers';
 import { PackageJson } from '../../PackageJson';
 import { NpmOptions } from '../../NpmOptions';
 import { JsPackageManager } from '../../js-package-manager';
 
 async function updatePackage(
+  packageManager: JsPackageManager,
   devDependencies: PackageJson['devDependencies'],
   oldName: string,
   newName: string,
@@ -15,7 +16,7 @@ async function updatePackage(
 ) {
   if (devDependencies[oldName]) {
     delete devDependencies[oldName];
-    devDependencies[newName] = await getVersion(npmOptions, newName);
+    devDependencies[newName] = await packageManager.getVersion(npmOptions, newName);
   }
 }
 
@@ -35,7 +36,7 @@ async function updatePackageJson(packageManager: JsPackageManager, npmOptions: N
   await Promise.all(
     Object.keys(packageNames).map((oldName) => {
       const newName = packageNames[oldName];
-      return updatePackage(devDependencies, oldName, newName, npmOptions);
+      return updatePackage(packageManager, devDependencies, oldName, newName, npmOptions);
     })
   );
 
@@ -45,7 +46,7 @@ async function updatePackageJson(packageManager: JsPackageManager, npmOptions: N
 
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
+  const babelDependencies = await getBabelDependencies(packageManager, npmOptions, packageJson);
 
   if (babelDependencies.length > 0) {
     packageManager.addDependencies({ ...npmOptions, packageJson }, babelDependencies);

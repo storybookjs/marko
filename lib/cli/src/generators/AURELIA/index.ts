@@ -55,7 +55,7 @@ const generator: Generator = async (
   packageJson.scripts['build-storybook'] = 'build-storybook';
   writePackageJson(packageJson);
   addStorybookExcludeGlobToTsConfig();
-  const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
+  const babelDependencies = await getBabelDependencies(packageManager, npmOptions, packageJson);
   packageManager.addDependencies({ ...npmOptions, packageJson }, [
     ...versionedPackages,
     ...babelDependencies,
