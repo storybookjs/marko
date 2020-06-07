@@ -24,16 +24,20 @@ const ArgsStory = ({ component }: any) => {
   return (
     <>
       <table>
-        <tr>
-          <th>key</th>
-          <th>val</th>
-        </tr>
-        {Object.entries(args).map(([key, val]) => (
-          <tr key={key}>
-            <td>{key}</td>
-            <td>{JSON.stringify(val, null, 2)}</td>
+        <thead>
+          <tr>
+            <th>key</th>
+            <th>val</th>
           </tr>
-        ))}
+        </thead>
+        <tbody>
+          {Object.entries(args).map(([key, val]) => (
+            <tr key={key}>
+              <td>{key}</td>
+              <td>{JSON.stringify(val, null, 2)}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
       <ArgsTable rows={rows} args={args} updateArgs={(val) => setArgs({ ...args, ...val })} />
     </>
