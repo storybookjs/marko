@@ -94,7 +94,7 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
         return Promise.resolve();
 
       case ProjectType.UPDATE_PACKAGE_ORGANIZATIONS:
-        return updateOrganisationsGenerator(options.parser, npmOptions)
+        return updateOrganisationsGenerator(packageManager, options.parser, npmOptions)
           .then(() => null) // commmandLog doesn't like to see output
           .then(commandLog('Upgrading your project to the new storybook packages.'))
           .then(end);

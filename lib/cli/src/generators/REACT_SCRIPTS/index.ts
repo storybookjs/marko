@@ -4,7 +4,6 @@ import {
   getVersionedPackages,
   writePackageJson,
   getBabelDependencies,
-  installDependencies,
   copyTemplate,
 } from '../../helpers';
 import { StoryFormat } from '../../project_types';
@@ -46,7 +45,10 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
 
   const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
 
-  installDependencies({ ...npmOptions, packageJson }, [...versionedPackages, ...babelDependencies]);
+  packageManager.addDependencies({ ...npmOptions, packageJson }, [
+    ...versionedPackages,
+    ...babelDependencies,
+  ]);
 };
 
 export default generator;

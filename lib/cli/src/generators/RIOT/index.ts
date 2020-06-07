@@ -1,10 +1,4 @@
-import {
-  getVersions,
-  writePackageJson,
-  getBabelDependencies,
-  installDependencies,
-  copyTemplate,
-} from '../../helpers';
+import { getVersions, writePackageJson, getBabelDependencies, copyTemplate } from '../../helpers';
 import { Generator } from '../Generator';
 
 const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
@@ -50,7 +44,10 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
 
   const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
 
-  installDependencies({ ...npmOptions, packageJson }, [...dependencies, ...babelDependencies]);
+  packageManager.addDependencies({ ...npmOptions, packageJson }, [
+    ...dependencies,
+    ...babelDependencies,
+  ]);
 };
 
 export default generator;

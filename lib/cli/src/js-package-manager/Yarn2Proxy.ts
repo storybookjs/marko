@@ -19,4 +19,17 @@ export class Yarn2Proxy extends JsPackageManager {
   protected runInstall(): { status: number } {
     return spawnSync('yarn', { stdio: 'inherit' });
   }
+
+  protected runAddDeps(
+    dependencies: string[],
+    installAsDevDependencies: boolean
+  ): { status: number } {
+    const args = ['add', ...dependencies];
+
+    if (installAsDevDependencies) {
+      args.push('-D');
+    }
+
+    return spawnSync('yarn', args, { stdio: 'inherit' });
+  }
 }

@@ -1,11 +1,6 @@
 import fse from 'fs-extra';
 import path from 'path';
-import {
-  getVersion,
-  writePackageJson,
-  getBabelDependencies,
-  installDependencies,
-} from '../../helpers';
+import { getVersion, writePackageJson, getBabelDependencies } from '../../helpers';
 import { Generator } from '../Generator';
 
 const generator: Generator = async (packageManager, npmOptions) => {
@@ -25,7 +20,7 @@ const generator: Generator = async (packageManager, npmOptions) => {
 
   const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
 
-  installDependencies({ ...npmOptions, packageJson }, [
+  packageManager.addDependencies({ ...npmOptions, packageJson }, [
     `@storybook/marionette@${storybookVersion}`,
     ...babelDependencies,
   ]);

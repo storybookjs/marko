@@ -5,7 +5,6 @@ import {
   writePackageJson,
   paddedLog,
   getBabelDependencies,
-  installDependencies,
   copyTemplate,
 } from '../../helpers';
 import { NpmOptions } from '../../NpmOptions';
@@ -78,5 +77,8 @@ export default async (
 
   const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
 
-  installDependencies({ ...npmOptions, packageJson }, [...devDependencies, ...babelDependencies]);
+  packageManager.addDependencies({ ...npmOptions, packageJson }, [
+    ...devDependencies,
+    ...babelDependencies,
+  ]);
 };

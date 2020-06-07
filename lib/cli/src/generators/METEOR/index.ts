@@ -1,12 +1,6 @@
 import fs from 'fs';
 import JSON5 from 'json5';
-import {
-  getVersions,
-  writePackageJson,
-  getBabelDependencies,
-  installDependencies,
-  copyTemplate,
-} from '../../helpers';
+import { getVersions, writePackageJson, getBabelDependencies, copyTemplate } from '../../helpers';
 import { Generator } from '../Generator';
 
 const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
@@ -86,13 +80,16 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
   }
 
   if (dependencies.length > 0) {
-    installDependencies(
+    packageManager.addDependencies(
       { ...npmOptions, packageJson, installAsDevDependencies: false },
       dependencies
     );
   }
 
-  installDependencies({ ...npmOptions, packageJson }, [...devDependencies, ...babelDependencies]);
+  packageManager.addDependencies({ ...npmOptions, packageJson }, [
+    ...devDependencies,
+    ...babelDependencies,
+  ]);
 };
 
 export default generator;

@@ -7,11 +7,11 @@ import {
   getPackageJson,
   getVersion,
   getVersions,
-  installDependencies,
   writePackageJson,
 } from '../../helpers';
 import { PackageJson } from '../../PackageJson';
 import { NpmOptions } from '../../NpmOptions';
+import { JsPackageManager } from '../../js-package-manager';
 
 async function updatePackage(
   devDependencies: PackageJson['devDependencies'],
@@ -25,7 +25,7 @@ async function updatePackage(
   }
 }
 
-async function updatePackageJson(npmOptions: NpmOptions) {
+async function updatePackageJson(packageManager: JsPackageManager, npmOptions: NpmOptions) {
   const packageJson = getPackageJson();
   const { devDependencies } = packageJson;
 
@@ -54,7 +54,7 @@ async function updatePackageJson(npmOptions: NpmOptions) {
   const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
 
   if (babelDependencies.length > 0) {
-    installDependencies({ ...npmOptions, packageJson }, babelDependencies);
+    packageManager.addDependencies({ ...npmOptions, packageJson }, babelDependencies);
   }
 }
 
@@ -76,7 +76,7 @@ function updateSourceCode(parser: string) {
   });
 }
 
-export default async (parser: string, npmOptions: NpmOptions) => {
-  await updatePackageJson(npmOptions);
+export default async (packageManager: JsPackageManager, parser: string, npmOptions: NpmOptions) => {
+  await updatePackageJson(packageManager, npmOptions);
   updateSourceCode(parser);
 };

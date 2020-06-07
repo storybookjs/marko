@@ -3,7 +3,6 @@ import path from 'path';
 import fs from 'fs';
 import fse from 'fs-extra';
 import chalk from 'chalk';
-import { sync as spawnSync } from 'cross-spawn';
 import { gt, satisfies } from '@storybook/semver';
 import stripJsonComments from 'strip-json-comments';
 
@@ -11,7 +10,6 @@ import { latestVersion } from './latest_version';
 import { StoryFormat } from './project_types';
 import { PackageJson } from './PackageJson';
 import { NpmOptions } from './NpmOptions';
-import { hasYarn2 } from './has_yarn';
 
 // Cannot be `import` as it's not under TS root dir
 const { version, devDependencies } = require('../package.json');
@@ -166,75 +164,6 @@ export function codeLog(codeLines: string[], leftPadAmount?: number) {
     .join('\n');
 
   logger.log(finalResult);
-}
-
-/**
- * Add dependencies to a project using `yarn add` or `npm install`.
- *
- * @param {Object} options contains `useYarn`, `runInstall` and `installAsDevDependencies` which we use to determine how we install packages.
- * @param {Array} dependencies contains a list of packages to add.
- * @example
- * installDependencies(options, [
- *   `@storybook/react@${storybookVersion}`,
- *   `@storybook/addon-actions@${actionsVersion}`,
- *   `@storybook/addon-links@${linksVersion}`,
- *   `@storybook/addons@${addonsVersion}`,
- * ]);
- */
-export function installDependencies(
-  options: NpmOptions & { packageJson: PackageJson },
-  dependencies: string[]
-) {
-  const { skipInstall } = options;
-
-  if (skipInstall) {
-    const { packageJson } = options;
-
-    const dependenciesMap = dependencies.reduce((acc, dep) => {
-      const idx = dep.lastIndexOf('@');
-      const packageName = dep.slice(0, idx);
-      const packageVersion = dep.slice(idx + 1);
-
-      return { ...acc, [packageName]: packageVersion };
-    }, {});
-
-    if (options.installAsDevDependencies) {
-      packageJson.devDependencies = {
-        ...packageJson.devDependencies,
-        ...dependenciesMap,
-      };
-    } else {
-      packageJson.dependencies = {
-        ...packageJson.dependencies,
-        ...dependenciesMap,
-      };
-    }
-
-    writePackageJson(packageJson);
-  } else {
-    const spawnCommand = options.useYarn ? 'yarn' : 'npm';
-    const installCommand = options.useYarn ? 'add' : 'install';
-
-    const installArgs = [installCommand, ...dependencies];
-
-    if (options.installAsDevDependencies) {
-      installArgs.push('-D');
-    }
-
-    if (options.useYarn && !hasYarn2()) {
-      installArgs.push('--ignore-workspace-root-check');
-    }
-
-    const dependencyResult = spawnSync(spawnCommand, installArgs, {
-      stdio: 'inherit',
-    });
-
-    if (dependencyResult.status !== 0) {
-      logger.error('An error occurred while installing dependencies.');
-      logger.log(dependencyResult);
-      process.exit(1);
-    }
-  }
 }
 
 /**

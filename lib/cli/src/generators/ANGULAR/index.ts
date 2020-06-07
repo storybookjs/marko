@@ -9,7 +9,6 @@ import {
   getVersionedPackages,
   writePackageJson,
   getBabelDependencies,
-  installDependencies,
   writeFileAsJson,
   copyTemplate,
 } from '../../helpers';
@@ -49,7 +48,10 @@ async function addDependencies(
 
   const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
 
-  installDependencies({ ...npmOptions, packageJson }, [...versionedPackages, ...babelDependencies]);
+  packageManager.addDependencies({ ...npmOptions, packageJson }, [
+    ...versionedPackages,
+    ...babelDependencies,
+  ]);
 }
 
 function editAngularAppTsConfig() {

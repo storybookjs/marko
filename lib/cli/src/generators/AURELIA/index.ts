@@ -2,7 +2,6 @@ import {
   getVersionedPackages,
   writePackageJson,
   getBabelDependencies,
-  installDependencies,
   writeFileAsJson,
   copyTemplate,
   readFileAsJson,
@@ -58,7 +57,10 @@ const generator: Generator = async (
   writePackageJson(packageJson);
   addStorybookExcludeGlobToTsConfig();
   const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
-  installDependencies({ ...npmOptions, packageJson }, [...versionedPackages, ...babelDependencies]);
+  packageManager.addDependencies({ ...npmOptions, packageJson }, [
+    ...versionedPackages,
+    ...babelDependencies,
+  ]);
 };
 
 export default generator;

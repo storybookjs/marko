@@ -1,11 +1,6 @@
 import fse from 'fs-extra';
 import path from 'path';
-import {
-  getVersionedPackages,
-  writePackageJson,
-  getBabelDependencies,
-  installDependencies,
-} from '../../helpers';
+import { getVersionedPackages, writePackageJson, getBabelDependencies } from '../../helpers';
 import { StoryFormat } from '../../project_types';
 import { Generator } from '../Generator';
 
@@ -38,7 +33,10 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
 
   const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
 
-  installDependencies({ ...npmOptions, packageJson }, [...versionedPackages, ...babelDependencies]);
+  packageManager.addDependencies({ ...npmOptions, packageJson }, [
+    ...versionedPackages,
+    ...babelDependencies,
+  ]);
 };
 
 export default generator;
