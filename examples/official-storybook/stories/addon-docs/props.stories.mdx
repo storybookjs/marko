@@ -104,7 +104,8 @@ export const ArgsDisplay = (args = {}) => (
     }}
   >
     {({ background, children }) => {
-      const contents = children && children.length > 0 ? children : <DocgenButton label="child" />;
+      const contents =
+        children && children.length > 0 ? children : [<DocgenButton key="child" label="child" />];
       return <ButtonGroup background={background}>{contents}</ButtonGroup>;
     }}
   </Story>
@@ -134,7 +135,7 @@ export const ArgsDisplay = (args = {}) => (
       return (
         <ButtonGroup background={background}>
           {range(count).map((i) => (
-            <DocgenButton label={`${label} ${i}`} />
+            <DocgenButton key={i} label={`${label} ${i}`} />
           ))}
         </ButtonGroup>
       );
