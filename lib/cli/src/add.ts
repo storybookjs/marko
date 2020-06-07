@@ -1,7 +1,6 @@
 import path from 'path';
 import fs from 'fs';
 import { sync as spawnSync } from 'cross-spawn';
-import { hasYarn } from './has_yarn';
 import { commandLog, getPackageJson } from './helpers';
 import { PackageJson } from './PackageJson';
 import { JsPackageManager, JsPackageManagerFactory } from './js-package-manager';
@@ -46,29 +45,22 @@ export const getPackageArg = (
 };
 
 const installAddon = (
+  packageManager: JsPackageManager,
   addonName: string,
-  npmOptions: { useYarn: boolean },
   isOfficialAddon: boolean
 ) => {
   const prepareDone = commandLog(`Preparing to install the ${addonName} Storybook addon`);
   prepareDone();
   logger.log();
 
-  let result;
   const packageArg = getPackageArg(addonName, isOfficialAddon, getPackageJson());
-  if (npmOptions.useYarn) {
-    result = spawnSync('yarn', ['add', packageArg, '--dev'], {
-      stdio: 'inherit',
-    });
-  } else {
-    result = spawnSync('npm', ['install', packageArg, '--save-dev'], {
-      stdio: 'inherit',
-    });
-  }
 
   logger.log();
   const installDone = commandLog(`Installing the ${addonName} Storybook addon`);
-  if (result.status !== 0) {
+
+  try {
+    packageManager.addDependencies({}, [packageArg]);
+  } catch (e) {
     installDone(
       `Something went wrong installing the addon: "${getPackageName(addonName, isOfficialAddon)}"`
     );
@@ -145,11 +137,6 @@ export async function add(
   addonName: string,
   options: { useNpm: boolean; skipPostinstall: boolean }
 ) {
-  const useYarn = Boolean(options.useNpm !== true) && hasYarn();
-  const npmOptions = {
-    useYarn,
-  };
-
   const packageManager = JsPackageManagerFactory.getPackageManager(options.useNpm);
 
   const addonCheckDone = commandLog(`Verifying that ${addonName} is an addon`);
@@ -161,7 +148,7 @@ export async function add(
     }
   }
   addonCheckDone();
-  installAddon(addonName, npmOptions, isOfficialAddon);
+  installAddon(packageManager, addonName, isOfficialAddon);
   if (!options.skipPostinstall) {
     await postinstallAddon(addonName, isOfficialAddon);
   }

@@ -17,10 +17,6 @@ jest.mock('path', () => ({
   resolve: jest.fn((_, p) => p),
 }));
 
-jest.mock('./has_yarn', () => ({
-  hasYarn2: jest.fn(() => false),
-}));
-
 describe('Helpers', () => {
   describe('copyTemplate', () => {
     it(`should fall back to ${StoryFormat.CSF} 

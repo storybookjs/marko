@@ -63,7 +63,7 @@ export abstract class JsPackageManager {
     options: {
       skipInstall?: boolean;
       installAsDevDependencies?: boolean;
-      packageJson: PackageJson;
+      packageJson?: PackageJson;
     },
     dependencies: string[]
   ): void {
