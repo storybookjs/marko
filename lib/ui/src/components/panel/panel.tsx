@@ -10,7 +10,7 @@ const DesktopOnlyIconButton = styled(IconButton)({
 });
 
 export interface SafeTabProps {
-  title: string;
+  title: () => string | string;
   id: string;
 }
 
