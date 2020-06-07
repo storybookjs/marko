@@ -1,6 +1,6 @@
 import fse from 'fs-extra';
 import path from 'path';
-import { getVersionedPackages, writePackageJson, getBabelDependencies } from '../../helpers';
+import { writePackageJson, getBabelDependencies } from '../../helpers';
 import { StoryFormat } from '../../project_types';
 import { Generator } from '../Generator';
 
@@ -12,7 +12,7 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
     'lit-html',
   ];
 
-  const versionedPackages = await getVersionedPackages(npmOptions, ...packages);
+  const versionedPackages = await packageManager.getVersionedPackages(npmOptions, ...packages);
 
   fse.copySync(path.resolve(__dirname, 'template/'), '.', { overwrite: true });
 

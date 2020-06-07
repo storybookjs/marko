@@ -1,5 +1,4 @@
 import {
-  getVersionedPackages,
   writePackageJson,
   getBabelDependencies,
   writeFileAsJson,
@@ -47,7 +46,7 @@ const generator: Generator = async (
     packages.push('@storybook/addon-docs');
   }
 
-  const versionedPackages = await getVersionedPackages(npmOptions, ...packages);
+  const versionedPackages = await packageManager.getVersionedPackages(npmOptions, ...packages);
   const packageJson = packageManager.retrievePackageJson();
   packageJson.dependencies = packageJson.dependencies || {};
   packageJson.devDependencies = packageJson.devDependencies || {};

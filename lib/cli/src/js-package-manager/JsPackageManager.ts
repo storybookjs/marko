@@ -1,7 +1,8 @@
 import path from 'path';
 import fs from 'fs';
-import { commandLog, writePackageJson } from '../helpers';
+import { commandLog, getVersion, writePackageJson } from '../helpers';
 import { PackageJson } from '../PackageJson';
+import { NpmOptions } from '../NpmOptions';
 
 const logger = console;
 
@@ -98,6 +99,23 @@ export abstract class JsPackageManager {
         process.exit(1);
       }
     }
+  }
+
+  /**
+   * Return an array of strings matching following format: `<package_name>@<package_latest_version>`
+   *
+   * @param npmOptions
+   * @param packageNames
+   */
+  public getVersionedPackages(
+    npmOptions: NpmOptions,
+    ...packageNames: string[]
+  ): Promise<string[]> {
+    return Promise.all(
+      packageNames.map(
+        async (packageName) => `${packageName}@${await getVersion(npmOptions, packageName)}`
+      )
+    );
   }
 
   protected abstract runInstall(): { status: number };

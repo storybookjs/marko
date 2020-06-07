@@ -1,9 +1,4 @@
-import {
-  getVersionedPackages,
-  writePackageJson,
-  getBabelDependencies,
-  copyTemplate,
-} from '../../helpers';
+import { writePackageJson, getBabelDependencies, copyTemplate } from '../../helpers';
 import { StoryFormat } from '../../project_types';
 import { Generator } from '../Generator';
 
@@ -18,7 +13,7 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
     packages.push('@storybook/addon-docs');
   }
 
-  const versionedPackages = await getVersionedPackages(npmOptions, ...packages);
+  const versionedPackages = await packageManager.getVersionedPackages(npmOptions, ...packages);
 
   copyTemplate(__dirname, storyFormat);
 

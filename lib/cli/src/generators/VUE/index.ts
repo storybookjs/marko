@@ -1,6 +1,5 @@
 import {
   getVersion,
-  getVersionedPackages,
   writePackageJson,
   getBabelDependencies,
   addToDevDependenciesIfNotPresent,
@@ -20,7 +19,7 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
   if (storyFormat === StoryFormat.MDX) {
     packages.push('@storybook/addon-docs');
   }
-  const versionedPackages = await getVersionedPackages(npmOptions, ...packages);
+  const versionedPackages = await packageManager.getVersionedPackages(npmOptions, ...packages);
 
   copyTemplate(__dirname, storyFormat);
 

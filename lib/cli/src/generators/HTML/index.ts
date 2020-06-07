@@ -1,16 +1,11 @@
-import {
-  getVersionedPackages,
-  writePackageJson,
-  getBabelDependencies,
-  copyTemplate,
-} from '../../helpers';
+import { writePackageJson, getBabelDependencies, copyTemplate } from '../../helpers';
 import { StoryFormat } from '../../project_types';
 import { Generator } from '../Generator';
 
 const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
   const packages = ['@storybook/html', '@storybook/addon-actions', '@storybook/addon-links'];
 
-  const versionedPackages = await getVersionedPackages(npmOptions, ...packages);
+  const versionedPackages = await packageManager.getVersionedPackages(npmOptions, ...packages);
   if (storyFormat === StoryFormat.MDX) {
     packages.push('@storybook/addon-docs');
   }

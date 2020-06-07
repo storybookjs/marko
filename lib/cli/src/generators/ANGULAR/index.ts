@@ -6,7 +6,6 @@ import {
   getAngularAppTsConfigPath,
 } from './angular-helpers';
 import {
-  getVersionedPackages,
   writePackageJson,
   getBabelDependencies,
   writeFileAsJson,
@@ -33,7 +32,7 @@ async function addDependencies(
     packages.push('@storybook/addon-docs');
   }
 
-  const versionedPackages = await getVersionedPackages(npmOptions, ...packages);
+  const versionedPackages = await packageManager.getVersionedPackages(npmOptions, ...packages);
 
   const packageJson = packageManager.retrievePackageJson();
 

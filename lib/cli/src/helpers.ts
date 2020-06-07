@@ -48,14 +48,6 @@ export function getVersions(npmOptions: NpmOptions, ...packageNames: string[]) {
   return Promise.all(packageNames.map((packageName) => getVersion(npmOptions, packageName)));
 }
 
-export function getVersionedPackages(npmOptions: NpmOptions, ...packageNames: string[]) {
-  return Promise.all(
-    packageNames.map(
-      async (packageName) => `${packageName}@${await getVersion(npmOptions, packageName)}`
-    )
-  );
-}
-
 export function getPackageJson() {
   const packageJsonPath = path.resolve('package.json');
   if (!fs.existsSync(packageJsonPath)) {
