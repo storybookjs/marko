@@ -1,4 +1,4 @@
-import React, { Component, Fragment, ReactElement, ReactNode } from 'react';
+import React, { Component, Fragment, ReactElement } from 'react';
 import { styled } from '@storybook/theming';
 import { Tabs, Icons, IconButton } from '@storybook/components';
 
