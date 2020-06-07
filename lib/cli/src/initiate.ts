@@ -9,13 +9,7 @@ import {
   StoryFormat,
   SupportedLanguage,
 } from './project_types';
-import {
-  commandLog,
-  codeLog,
-  paddedLog,
-  installDepsFromPackageJson,
-  getPackageJson,
-} from './helpers';
+import { commandLog, codeLog, paddedLog, getPackageJson } from './helpers';
 import angularGenerator from './generators/ANGULAR';
 import emberGenerator from './generators/EMBER';
 import meteorGenerator from './generators/METEOR';
@@ -37,6 +31,7 @@ import svelteGenerator from './generators/SVELTE';
 import raxGenerator from './generators/RAX';
 import { warn } from './warn';
 import { JsPackageManagerFactory } from './js-package-manager/JsPackageManagerFactory';
+import { NpmOptions } from './NpmOptions';
 
 const logger = console;
 
@@ -54,7 +49,7 @@ type CommandOptions = {
 const installStorybook = (projectType: ProjectType, options: CommandOptions): Promise<void> => {
   const packageManager = JsPackageManagerFactory.getPackageManager(options.useNpm);
 
-  const npmOptions = {
+  const npmOptions: NpmOptions = {
     useYarn: Boolean(options.useNpm !== true) && hasYarn(),
     installAsDevDependencies: true,
     skipInstall: options.skipInstall,
@@ -72,7 +67,7 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
 
   const end = () => {
     if (!options.skipInstall) {
-      installDepsFromPackageJson(npmOptions);
+      packageManager.installDependencies();
     }
 
     logger.log('\nTo run your storybook, type:\n');

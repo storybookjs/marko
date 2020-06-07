@@ -182,27 +182,6 @@ export function codeLog(codeLines: string[], leftPadAmount?: number) {
   logger.log(finalResult);
 }
 
-export function installDepsFromPackageJson(options: NpmOptions) {
-  let done = commandLog('Preparing to install dependencies');
-  done();
-  logger.log();
-
-  let result;
-  if (options.useYarn) {
-    result = spawnSync('yarn', { stdio: 'inherit' });
-  } else {
-    result = spawnSync('npm', ['install'], { stdio: 'inherit' });
-  }
-
-  logger.log();
-  done = commandLog('Installing dependencies');
-  if (result.status !== 0) {
-    done('An error occurred while installing dependencies.');
-    process.exit(1);
-  }
-  done();
-}
-
 /**
  * Add dependencies to a project using `yarn add` or `npm install`.
  *

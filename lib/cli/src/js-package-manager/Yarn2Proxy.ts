@@ -1,9 +1,9 @@
-import spawn from 'cross-spawn';
+import { sync as spawnSync } from 'cross-spawn';
 import { JsPackageManager } from './JsPackageManager';
 
 export class Yarn2Proxy extends JsPackageManager {
   initPackageJson() {
-    const results = spawn.sync('yarn', ['init'], {
+    const results = spawnSync('yarn', ['init'], {
       cwd: process.cwd(),
       env: process.env,
       stdio: 'pipe',
@@ -14,5 +14,9 @@ export class Yarn2Proxy extends JsPackageManager {
 
   getRunStorybookCommand(): string {
     return 'yarn storybook';
+  }
+
+  protected runInstall(): { status: number } {
+    return spawnSync('yarn', { stdio: 'inherit' });
   }
 }

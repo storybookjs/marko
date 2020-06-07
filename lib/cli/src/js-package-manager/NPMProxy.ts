@@ -1,9 +1,9 @@
-import spawn from 'cross-spawn';
+import { sync as spawnSync } from 'cross-spawn';
 import { JsPackageManager } from './JsPackageManager';
 
 export class NPMProxy extends JsPackageManager {
   initPackageJson() {
-    const results = spawn.sync('npm', ['init', '-y'], {
+    const results = spawnSync('npm', ['init', '-y'], {
       cwd: process.cwd(),
       env: process.env,
       stdio: 'pipe',
@@ -14,5 +14,9 @@ export class NPMProxy extends JsPackageManager {
 
   getRunStorybookCommand(): string {
     return 'npm run storybook';
+  }
+
+  protected runInstall(): { status: number } {
+    return spawnSync('npm', ['install'], { stdio: 'inherit' });
   }
 }
