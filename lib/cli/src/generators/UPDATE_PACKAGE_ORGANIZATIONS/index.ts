@@ -11,12 +11,11 @@ async function updatePackage(
   packageManager: JsPackageManager,
   devDependencies: PackageJson['devDependencies'],
   oldName: string,
-  newName: string,
-  npmOptions: NpmOptions
+  newName: string
 ) {
   if (devDependencies[oldName]) {
     delete devDependencies[oldName];
-    devDependencies[newName] = await packageManager.getVersion(npmOptions, newName);
+    devDependencies[newName] = await packageManager.getVersion(newName);
   }
 }
 
@@ -25,7 +24,6 @@ async function updatePackageJson(packageManager: JsPackageManager, npmOptions: N
   const { devDependencies } = packageJson;
 
   const [actionsVersion, linksVersion] = await packageManager.getVersions(
-    npmOptions,
     '@storybook/addon-actions',
     '@storybook/addon-links'
   );
@@ -36,7 +34,7 @@ async function updatePackageJson(packageManager: JsPackageManager, npmOptions: N
   await Promise.all(
     Object.keys(packageNames).map((oldName) => {
       const newName = packageNames[oldName];
-      return updatePackage(packageManager, devDependencies, oldName, newName, npmOptions);
+      return updatePackage(packageManager, devDependencies, oldName, newName);
     })
   );
 
@@ -46,7 +44,7 @@ async function updatePackageJson(packageManager: JsPackageManager, npmOptions: N
 
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(packageManager, npmOptions, packageJson);
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 
   if (babelDependencies.length > 0) {
     packageManager.addDependencies({ ...npmOptions, packageJson }, babelDependencies);

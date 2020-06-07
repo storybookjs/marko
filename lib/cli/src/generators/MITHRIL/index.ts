@@ -9,7 +9,6 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
     knobsVersion,
     addonsVersion,
   ] = await packageManager.getVersions(
-    npmOptions,
     '@storybook/mithril',
     '@storybook/addon-actions',
     '@storybook/addon-links',
@@ -30,7 +29,7 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
 
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(packageManager, npmOptions, packageJson);
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 
   packageManager.addDependencies({ ...npmOptions, packageJson }, [
     `@storybook/mithril@${storybookVersion}`,

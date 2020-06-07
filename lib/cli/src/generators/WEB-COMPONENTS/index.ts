@@ -12,7 +12,7 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
     'lit-html',
   ];
 
-  const versionedPackages = await packageManager.getVersionedPackages(npmOptions, ...packages);
+  const versionedPackages = await packageManager.getVersionedPackages(...packages);
 
   fse.copySync(path.resolve(__dirname, 'template/'), '.', { overwrite: true });
 
@@ -31,7 +31,7 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
 
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(packageManager, npmOptions, packageJson);
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 
   packageManager.addDependencies({ ...npmOptions, packageJson }, [
     ...versionedPackages,

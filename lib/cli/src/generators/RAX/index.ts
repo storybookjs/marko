@@ -9,7 +9,6 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
     addonsVersion,
     latestRaxVersion,
   ] = await packageManager.getVersions(
-    npmOptions,
     '@storybook/rax',
     '@storybook/addon-actions',
     '@storybook/addon-links',
@@ -41,7 +40,7 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
 
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(packageManager, npmOptions, packageJson);
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 
   packageManager.addDependencies({ ...npmOptions, packageJson }, [
     `@storybook/rax@${storybookVersion}`,

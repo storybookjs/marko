@@ -8,7 +8,6 @@ import stripJsonComments from 'strip-json-comments';
 
 import { StoryFormat } from './project_types';
 import { PackageJson } from './PackageJson';
-import { NpmOptions } from './NpmOptions';
 import { JsPackageManager } from './js-package-manager';
 
 const logger = console;
@@ -125,7 +124,6 @@ export function codeLog(codeLines: string[], leftPadAmount?: number) {
 
 /**
  * Detect if any babel dependencies need to be added to the project
- * @param {Object} npmOptions Passed along to `latestVersion` and `getVersion`
  * @param {Object} packageJson The current package.json so we can inspect its contents
  * @returns {Array} Contains the packages and versions that need to be installed
  * @example
@@ -138,7 +136,6 @@ export function codeLog(codeLines: string[], leftPadAmount?: number) {
  */
 export async function getBabelDependencies(
   packageManager: JsPackageManager,
-  npmOptions: NpmOptions,
   packageJson: PackageJson
 ) {
   const dependenciesToAdd = [];
@@ -149,12 +146,11 @@ export async function getBabelDependencies(
 
   if (!babelCoreVersion) {
     if (!packageJson.dependencies['@babel/core'] && !packageJson.devDependencies['@babel/core']) {
-      const babelCoreInstallVersion = await packageManager.getVersion(npmOptions, '@babel/core');
+      const babelCoreInstallVersion = await packageManager.getVersion('@babel/core');
       dependenciesToAdd.push(`@babel/core@${babelCoreInstallVersion}`);
     }
   } else {
     const latestCompatibleBabelVersion = await packageManager.latestVersion(
-      npmOptions,
       'babel-core',
       babelCoreVersion
     );
@@ -166,7 +162,6 @@ export async function getBabelDependencies(
 
   if (!packageJson.dependencies['babel-loader'] && !packageJson.devDependencies['babel-loader']) {
     const babelLoaderInstallVersion = await packageManager.getVersion(
-      npmOptions,
       'babel-loader',
       babelLoaderVersion
     );

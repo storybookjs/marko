@@ -15,7 +15,6 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
     presetEnvVersion,
     presetReactVersion,
   ] = await packageManager.getVersions(
-    npmOptions,
     '@storybook/react',
     '@storybook/addon-actions',
     '@storybook/addon-links',
@@ -68,7 +67,7 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
 
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(packageManager, npmOptions, packageJson);
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 
   // add react packages.
   const dependencies = [];

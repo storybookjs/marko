@@ -2,7 +2,6 @@ import { UpdateNotifier, IPackage } from 'update-notifier';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
 import { detect, isStorybookInstalled, detectLanguage } from './detect';
-import { hasYarn } from './has_yarn';
 import {
   installableProjectTypes,
   ProjectType,
@@ -50,7 +49,6 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
   const packageManager = JsPackageManagerFactory.getPackageManager(options.useNpm);
 
   const npmOptions: NpmOptions = {
-    useYarn: Boolean(options.useNpm !== true) && hasYarn(),
     installAsDevDependencies: true,
     skipInstall: options.skipInstall,
   };

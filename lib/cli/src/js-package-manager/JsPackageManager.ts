@@ -4,7 +4,6 @@ import chalk from 'chalk';
 import { gt, satisfies } from '@storybook/semver';
 import { commandLog, writePackageJson } from '../helpers';
 import { PackageJson } from '../PackageJson';
-import { NpmOptions } from '../NpmOptions';
 
 const logger = console;
 // Cannot be `import` as it's not under TS root dir
@@ -108,16 +107,12 @@ export abstract class JsPackageManager {
   /**
    * Return an array of strings matching following format: `<package_name>@<package_latest_version>`
    *
-   * @param npmOptions
    * @param packageNames
    */
-  public getVersionedPackages(
-    npmOptions: NpmOptions,
-    ...packageNames: string[]
-  ): Promise<string[]> {
+  public getVersionedPackages(...packageNames: string[]): Promise<string[]> {
     return Promise.all(
       packageNames.map(
-        async (packageName) => `${packageName}@${await this.getVersion(npmOptions, packageName)}`
+        async (packageName) => `${packageName}@${await this.getVersion(packageName)}`
       )
     );
   }
@@ -126,18 +121,13 @@ export abstract class JsPackageManager {
    * Return an array of string standing for the latest version of the input packages.
    * To be able to identify which version goes with which package the order of the input array is keep.
    *
-   * @param npmOptions
    * @param packageNames
    */
-  public getVersions(npmOptions: NpmOptions, ...packageNames: string[]): Promise<string[]> {
-    return Promise.all(packageNames.map((packageName) => this.getVersion(npmOptions, packageName)));
+  public getVersions(...packageNames: string[]): Promise<string[]> {
+    return Promise.all(packageNames.map((packageName) => this.getVersion(packageName)));
   }
 
-  public async getVersion(
-    npmOptions: NpmOptions,
-    packageName: string,
-    constraint?: string
-  ): Promise<string> {
+  public async getVersion(packageName: string, constraint?: string): Promise<string> {
     let current;
     if (packageName === '@storybook/cli') {
       current = storybookCLIVersion;
@@ -147,7 +137,7 @@ export abstract class JsPackageManager {
 
     let latest;
     try {
-      latest = await this.latestVersion(npmOptions, packageName, constraint);
+      latest = await this.latestVersion(packageName, constraint);
     } catch (e) {
       if (current) {
         logger.warn(`\n     ${chalk.yellow(e.message)}`);
@@ -169,16 +159,10 @@ export abstract class JsPackageManager {
    * Get the latest version of the package available on npmjs.com.
    * If constraint is set then it returns a version satisfying it, otherwise the latest version available is returned.
    *
-   * @param npmOptions Object containing a `useYarn: boolean` attribute
    * @param packageName Name of the package
    * @param constraint Version range to use to constraint the returned version
    */
-  public async latestVersion(
-    // @ts-ignore
-    npmOptions: { useYarn: boolean },
-    packageName: string,
-    constraint?: string
-  ): Promise<string> {
+  public async latestVersion(packageName: string, constraint?: string): Promise<string> {
     if (!constraint) {
       return this.runGetVersions(packageName, false);
     }

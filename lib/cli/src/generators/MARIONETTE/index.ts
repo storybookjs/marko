@@ -4,7 +4,7 @@ import { writePackageJson, getBabelDependencies } from '../../helpers';
 import { Generator } from '../Generator';
 
 const generator: Generator = async (packageManager, npmOptions) => {
-  const storybookVersion = await packageManager.getVersion(npmOptions, '@storybook/marionette');
+  const storybookVersion = await packageManager.getVersion('@storybook/marionette');
   fse.copySync(path.resolve(__dirname, 'template/'), '.', { overwrite: true });
 
   const packageJson = packageManager.retrievePackageJson();
@@ -18,7 +18,7 @@ const generator: Generator = async (packageManager, npmOptions) => {
 
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(packageManager, npmOptions, packageJson);
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 
   packageManager.addDependencies({ ...npmOptions, packageJson }, [
     `@storybook/marionette@${storybookVersion}`,

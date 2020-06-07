@@ -5,7 +5,7 @@ import { Generator } from '../Generator';
 const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
   const packages = ['@storybook/html', '@storybook/addon-actions', '@storybook/addon-links'];
 
-  const versionedPackages = await packageManager.getVersionedPackages(npmOptions, ...packages);
+  const versionedPackages = await packageManager.getVersionedPackages(...packages);
   if (storyFormat === StoryFormat.MDX) {
     packages.push('@storybook/addon-docs');
   }
@@ -23,7 +23,7 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
 
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(packageManager, npmOptions, packageJson);
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 
   packageManager.addDependencies({ ...npmOptions, packageJson }, [
     ...versionedPackages,

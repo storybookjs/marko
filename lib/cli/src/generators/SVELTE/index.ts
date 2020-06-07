@@ -10,7 +10,6 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
     svelte,
     svelteLoader,
   ] = await packageManager.getVersions(
-    npmOptions,
     '@storybook/svelte',
     '@storybook/addon-actions',
     '@storybook/addon-links',
@@ -32,7 +31,7 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
 
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(packageManager, npmOptions, packageJson);
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 
   packageManager.addDependencies({ ...npmOptions, packageJson }, [
     `@storybook/svelte@${storybookVersion}`,

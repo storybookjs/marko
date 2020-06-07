@@ -18,7 +18,7 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
   if (storyFormat === StoryFormat.MDX) {
     packages.push('@storybook/addon-docs');
   }
-  const versionedPackages = await packageManager.getVersionedPackages(npmOptions, ...packages);
+  const versionedPackages = await packageManager.getVersionedPackages(...packages);
 
   copyTemplate(__dirname, storyFormat);
 
@@ -37,7 +37,7 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
     addToDevDependenciesIfNotPresent(
       packageJson,
       '@babel/core',
-      await packageManager.getVersion(npmOptions, '@babel/core')
+      await packageManager.getVersion('@babel/core')
     );
   }
 
@@ -47,7 +47,7 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
 
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(packageManager, npmOptions, packageJson);
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
   packageManager.addDependencies({ ...npmOptions, packageJson }, [
     ...versionedPackages,
     ...babelDependencies,

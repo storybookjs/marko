@@ -8,7 +8,6 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
     linksVersion,
     addonsVersion,
   ] = await packageManager.getVersions(
-    npmOptions,
     '@storybook/preact',
     '@storybook/addon-actions',
     '@storybook/addon-links',
@@ -28,7 +27,7 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
 
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(packageManager, npmOptions, packageJson);
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 
   packageManager.addDependencies({ ...npmOptions, packageJson }, [
     `@storybook/preact@${storybookVersion}`,

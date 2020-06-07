@@ -46,7 +46,7 @@ const generator: Generator = async (
     packages.push('@storybook/addon-docs');
   }
 
-  const versionedPackages = await packageManager.getVersionedPackages(npmOptions, ...packages);
+  const versionedPackages = await packageManager.getVersionedPackages(...packages);
   const packageJson = packageManager.retrievePackageJson();
   packageJson.dependencies = packageJson.dependencies || {};
   packageJson.devDependencies = packageJson.devDependencies || {};
@@ -55,7 +55,7 @@ const generator: Generator = async (
   packageJson.scripts['build-storybook'] = 'build-storybook';
   writePackageJson(packageJson);
   addStorybookExcludeGlobToTsConfig();
-  const babelDependencies = await getBabelDependencies(packageManager, npmOptions, packageJson);
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
   packageManager.addDependencies({ ...npmOptions, packageJson }, [
     ...versionedPackages,
     ...babelDependencies,

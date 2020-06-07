@@ -9,7 +9,6 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
     addonsVersion,
     tagLoaderVersion,
   ] = await packageManager.getVersions(
-    npmOptions,
     '@storybook/riot',
     '@storybook/addon-actions',
     '@storybook/addon-links',
@@ -42,7 +41,7 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
 
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(packageManager, npmOptions, packageJson);
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 
   packageManager.addDependencies({ ...npmOptions, packageJson }, [
     ...dependencies,

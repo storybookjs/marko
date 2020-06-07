@@ -14,13 +14,3 @@ export function hasYarn() {
   }
   return false;
 }
-
-export function hasYarn2() {
-  const yarnVersion = sync('yarn', ['--version'])
-    // @ts-ignore
-    .output.toString('utf8')
-    .replace(/,/g, '')
-    .replace(/"/g, '');
-
-  return !/^1\.+/.test(yarnVersion);
-}

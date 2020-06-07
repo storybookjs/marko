@@ -32,7 +32,7 @@ async function addDependencies(
     packages.push('@storybook/addon-docs');
   }
 
-  const versionedPackages = await packageManager.getVersionedPackages(npmOptions, ...packages);
+  const versionedPackages = await packageManager.getVersionedPackages(...packages);
 
   const packageJson = packageManager.retrievePackageJson();
 
@@ -45,7 +45,7 @@ async function addDependencies(
 
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(packageManager, npmOptions, packageJson);
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 
   packageManager.addDependencies({ ...npmOptions, packageJson }, [
     ...versionedPackages,

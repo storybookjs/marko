@@ -7,7 +7,6 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
     addonActionVersion,
     addonKnobsVersion,
   ] = await packageManager.getVersions(
-    npmOptions,
     '@storybook/marko',
     '@storybook/addon-actions',
     '@storybook/addon-knobs'
@@ -26,7 +25,7 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
 
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(packageManager, npmOptions, packageJson);
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 
   packageManager.addDependencies({ ...npmOptions, packageJson }, [
     `@storybook/marko@${storybookVersion}`,

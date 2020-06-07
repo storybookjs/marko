@@ -17,7 +17,6 @@ export default async (
     actionsVersion,
     linksVersion,
   ] = await packageManager.getVersions(
-    npmOptions,
     '@storybook/react-native',
     '@storybook/addons',
     '@storybook/addon-actions',
@@ -74,7 +73,7 @@ export default async (
 
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(packageManager, npmOptions, packageJson);
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 
   packageManager.addDependencies({ ...npmOptions, packageJson }, [
     ...devDependencies,
