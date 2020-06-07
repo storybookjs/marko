@@ -9,5 +9,5 @@ export function createTitleListener(api: API): () => string {
     knobsCount = Object.keys(knobs).length;
   });
 
-  return () => `Knobs (${knobsCount})`;
+  return () => (knobsCount === 0 ? 'Knobs' : `Knobs (${knobsCount})`);
 }
