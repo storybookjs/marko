@@ -8,7 +8,7 @@ import {
 } from '../../helpers';
 import { Generator } from '../Generator';
 
-const generator: Generator = async (npmOptions, { storyFormat }) => {
+const generator: Generator = async (_packageManager, npmOptions, { storyFormat }) => {
   const [storybookVersion, addonActionVersion, addonKnobsVersion] = await getVersions(
     npmOptions,
     '@storybook/marko',

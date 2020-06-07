@@ -9,7 +9,7 @@ import {
 } from '../../helpers';
 import { Generator } from '../Generator';
 
-const generator: Generator = async (npmOptions) => {
+const generator: Generator = async (_packageManager, npmOptions) => {
   const storybookVersion = await getVersion(npmOptions, '@storybook/marionette');
   fse.copySync(path.resolve(__dirname, 'template/'), '.', { overwrite: true });
 

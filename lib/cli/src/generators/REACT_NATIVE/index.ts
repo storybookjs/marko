@@ -11,8 +11,10 @@ import {
 } from '../../helpers';
 import { NpmOptions } from '../../NpmOptions';
 import { GeneratorOptions } from '../Generator';
+import { JsPackageManager } from '../../js-package-manager';
 
 export default async (
+  _packageManager: JsPackageManager,
   npmOptions: NpmOptions,
   installServer: boolean,
   { storyFormat }: GeneratorOptions

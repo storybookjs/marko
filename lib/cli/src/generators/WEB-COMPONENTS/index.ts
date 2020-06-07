@@ -10,7 +10,7 @@ import {
 import { StoryFormat } from '../../project_types';
 import { Generator } from '../Generator';
 
-const generator: Generator = async (npmOptions, { storyFormat }) => {
+const generator: Generator = async (_packageManager, npmOptions, { storyFormat }) => {
   const packages = [
     '@storybook/web-components',
     '@storybook/addon-actions',
