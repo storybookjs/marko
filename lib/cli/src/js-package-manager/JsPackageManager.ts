@@ -3,7 +3,7 @@ import fs from 'fs';
 import chalk from 'chalk';
 import { gt, satisfies } from '@storybook/semver';
 import { commandLog, writePackageJson } from '../helpers';
-import { PackageJson } from '../PackageJson';
+import { PackageJson } from './PackageJson';
 
 const logger = console;
 // Cannot be `import` as it's not under TS root dir

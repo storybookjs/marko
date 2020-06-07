@@ -10,7 +10,7 @@ import {
   TemplateMatcher,
 } from './project_types';
 import { getBowerJson, getPackageJson } from './helpers';
-import { PackageJson } from './PackageJson';
+import { PackageJson } from './js-package-manager/PackageJson';
 
 const hasDependency = (packageJson: PackageJson, name: string) => {
   return !!packageJson.dependencies?.[name] || !!packageJson.devDependencies?.[name];

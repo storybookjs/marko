@@ -7,7 +7,7 @@ import { satisfies } from '@storybook/semver';
 import stripJsonComments from 'strip-json-comments';
 
 import { StoryFormat } from './project_types';
-import { PackageJson } from './PackageJson';
+import { PackageJson } from './js-package-manager/PackageJson';
 import { JsPackageManager } from './js-package-manager';
 
 const logger = console;
