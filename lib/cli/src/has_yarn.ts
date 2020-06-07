@@ -9,7 +9,7 @@ export function hasYarn() {
   const lockFile = findUp.sync(['yarn.lock', 'package-lock.json']);
   const hasYarnLock = lockFile && path.basename(lockFile) === 'yarn.lock';
 
-  if (yarnAvailable.status === 0 && (hasYarnLock || npmAvailable.status !== 0)) {
+  if (yarnAvailable && yarnAvailable.status === 0 && (hasYarnLock || npmAvailable.status !== 0)) {
     return true;
   }
   return false;
