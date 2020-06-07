@@ -34,10 +34,6 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
   packageJson.dependencies['rax-text'] = packageJson.dependencies['rax-text'] || raxVersion;
   packageJson.dependencies['rax-view'] = packageJson.dependencies['rax-view'] || raxVersion;
 
-  packageJson.scripts = packageJson.scripts || {};
-  packageJson.scripts.storybook = 'start-storybook -p 6006';
-  packageJson.scripts['build-storybook'] = 'build-storybook';
-
   writePackageJson(packageJson);
 
   const babelDependencies = await getBabelDependencies(packageManager, packageJson);
@@ -49,6 +45,8 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
     `@storybook/addons@${addonsVersion}`,
     ...babelDependencies,
   ]);
+
+  packageManager.addStorybookCommandInScripts();
 };
 
 export default generator;

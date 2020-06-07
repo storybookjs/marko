@@ -32,12 +32,9 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
   if (
     !packageJson.devDependencies['riot-tag-loader'] &&
     !packageJson.dependencies['riot-tag-loader']
-  )
+  ) {
     dependencies.push(`riot-tag-loader@${tagLoaderVersion}`);
-
-  packageJson.scripts = packageJson.scripts || {};
-  packageJson.scripts.storybook = 'start-storybook -p 6006';
-  packageJson.scripts['build-storybook'] = 'build-storybook';
+  }
 
   writePackageJson(packageJson);
 
@@ -47,6 +44,8 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
     ...dependencies,
     ...babelDependencies,
   ]);
+
+  packageManager.addStorybookCommandInScripts();
 };
 
 export default generator;

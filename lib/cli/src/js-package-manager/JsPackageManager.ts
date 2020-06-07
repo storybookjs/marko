@@ -173,6 +173,28 @@ export abstract class JsPackageManager {
     return versions.reverse().find((version) => satisfies(version, constraint));
   }
 
+  public addStorybookCommandInScripts(options?: { port: number; staticFolder?: string }) {
+    const packageJson = this.retrievePackageJson();
+
+    const sbPort = options?.port ?? 6006;
+    const storybookCmd = options?.staticFolder
+      ? `start-storybook -p ${sbPort} -s ${options.staticFolder}`
+      : `start-storybook -p ${sbPort}`;
+
+    const buildStorybookCmd = options?.staticFolder
+      ? `build-storybook -s ${options.staticFolder}`
+      : 'build-storybook';
+
+    writePackageJson({
+      ...packageJson,
+      scripts: {
+        ...packageJson.scripts,
+        storybook: storybookCmd,
+        'build-storybook': buildStorybookCmd,
+      },
+    });
+  }
+
   protected abstract runInstall(): { status: number };
 
   protected abstract runAddDeps(

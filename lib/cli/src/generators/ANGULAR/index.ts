@@ -39,10 +39,6 @@ async function addDependencies(
   packageJson.dependencies = packageJson.dependencies || {};
   packageJson.devDependencies = packageJson.devDependencies || {};
 
-  packageJson.scripts = packageJson.scripts || {};
-  packageJson.scripts.storybook = 'start-storybook -p 6006';
-  packageJson.scripts['build-storybook'] = 'build-storybook';
-
   writePackageJson(packageJson);
 
   const babelDependencies = await getBabelDependencies(packageManager, packageJson);
@@ -51,6 +47,8 @@ async function addDependencies(
     ...versionedPackages,
     ...babelDependencies,
   ]);
+
+  packageManager.addStorybookCommandInScripts();
 }
 
 function editAngularAppTsConfig() {

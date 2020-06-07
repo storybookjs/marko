@@ -27,14 +27,6 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
   packageJson.dependencies = packageJson.dependencies || {};
   packageJson.devDependencies = packageJson.devDependencies || {};
 
-  packageJson.scripts = {
-    ...packageJson.scripts,
-    ...{
-      storybook: 'start-storybook -p 6006 -s dist',
-      'build-storybook': 'build-storybook -s dist',
-    },
-  };
-
   writePackageJson(packageJson);
 
   const babelDependencies = await getBabelDependencies(packageManager, packageJson);
@@ -48,6 +40,8 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
     `babel-plugin-htmlbars-inline-precompile@${babelPluginHtmlBarsInlinePrecompileVersion}`,
     ...babelDependencies,
   ]);
+
+  packageManager.addStorybookCommandInScripts();
 };
 
 export default generator;

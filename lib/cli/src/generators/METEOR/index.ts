@@ -31,7 +31,6 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
   const packageJson = packageManager.retrievePackageJson();
 
   packageJson.devDependencies = packageJson.devDependencies || {};
-  packageJson.scripts = packageJson.scripts || {};
   packageJson.dependencies = packageJson.dependencies || {};
 
   const devDependencies = [
@@ -62,9 +61,6 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
 
   fs.writeFileSync('.babelrc', JSON.stringify(babelrc, null, 2), 'utf8');
 
-  packageJson.scripts.storybook = 'start-storybook -p 6006';
-  packageJson.scripts['build-storybook'] = 'build-storybook';
-
   writePackageJson(packageJson);
 
   const babelDependencies = await getBabelDependencies(packageManager, packageJson);
@@ -89,6 +85,8 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
     ...devDependencies,
     ...babelDependencies,
   ]);
+
+  packageManager.addStorybookCommandInScripts();
 };
 
 export default generator;

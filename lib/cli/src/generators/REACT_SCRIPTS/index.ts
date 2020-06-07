@@ -26,16 +26,6 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
   packageJson.dependencies = packageJson.dependencies || {};
   packageJson.devDependencies = packageJson.devDependencies || {};
 
-  packageJson.scripts = packageJson.scripts || {};
-  packageJson.scripts.storybook = 'start-storybook -p 9009';
-  packageJson.scripts['build-storybook'] = 'build-storybook';
-
-  if (fs.existsSync(path.resolve('./public'))) {
-    // has a public folder and add support to it.
-    packageJson.scripts.storybook += ' -s public';
-    packageJson.scripts['build-storybook'] += ' -s public';
-  }
-
   writePackageJson(packageJson);
 
   const babelDependencies = await getBabelDependencies(packageManager, packageJson);
@@ -44,6 +34,11 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
     ...versionedPackages,
     ...babelDependencies,
   ]);
+
+  packageManager.addStorybookCommandInScripts({
+    port: 9009,
+    staticFolder: fs.existsSync(path.resolve('./public')) ? 'public' : undefined,
+  });
 };
 
 export default generator;
