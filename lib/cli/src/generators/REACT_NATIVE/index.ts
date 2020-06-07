@@ -1,12 +1,6 @@
 import shell from 'shelljs';
 import chalk from 'chalk';
-import {
-  getVersions,
-  writePackageJson,
-  paddedLog,
-  getBabelDependencies,
-  copyTemplate,
-} from '../../helpers';
+import { writePackageJson, paddedLog, getBabelDependencies, copyTemplate } from '../../helpers';
 import { NpmOptions } from '../../NpmOptions';
 import { GeneratorOptions } from '../Generator';
 import { JsPackageManager } from '../../js-package-manager';
@@ -17,7 +11,12 @@ export default async (
   installServer: boolean,
   { storyFormat }: GeneratorOptions
 ) => {
-  const [storybookVersion, addonsVersion, actionsVersion, linksVersion] = await getVersions(
+  const [
+    storybookVersion,
+    addonsVersion,
+    actionsVersion,
+    linksVersion,
+  ] = await packageManager.getVersions(
     npmOptions,
     '@storybook/react-native',
     '@storybook/addons',

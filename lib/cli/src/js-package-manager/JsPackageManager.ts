@@ -118,6 +118,17 @@ export abstract class JsPackageManager {
     );
   }
 
+  /**
+   * Return an array of string standing for the latest version of the input packages.
+   * To be able to identify which version goes with which package the order of the input array is keep.
+   *
+   * @param npmOptions
+   * @param packageNames
+   */
+  public getVersions(npmOptions: NpmOptions, ...packageNames: string[]): Promise<string[]> {
+    return Promise.all(packageNames.map((packageName) => getVersion(npmOptions, packageName)));
+  }
+
   protected abstract runInstall(): { status: number };
 
   protected abstract runAddDeps(

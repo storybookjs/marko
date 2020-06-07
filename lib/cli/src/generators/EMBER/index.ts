@@ -1,4 +1,4 @@
-import { getVersions, writePackageJson, getBabelDependencies, copyTemplate } from '../../helpers';
+import { writePackageJson, getBabelDependencies, copyTemplate } from '../../helpers';
 import { Generator } from '../Generator';
 
 const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
@@ -9,7 +9,7 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
     linksVersion,
     actionsVersion,
     addonsVersion,
-  ] = await getVersions(
+  ] = await packageManager.getVersions(
     npmOptions,
     '@storybook/ember',
     // babel-plugin-ember-modules-api-polyfill is a peerDep of @storybook/ember

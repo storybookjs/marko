@@ -1,8 +1,13 @@
-import { getVersions, writePackageJson, getBabelDependencies, copyTemplate } from '../../helpers';
+import { writePackageJson, getBabelDependencies, copyTemplate } from '../../helpers';
 import { Generator } from '../Generator';
 
 const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
-  const [storybookVersion, actionsVersion, linksVersion, addonsVersion] = await getVersions(
+  const [
+    storybookVersion,
+    actionsVersion,
+    linksVersion,
+    addonsVersion,
+  ] = await packageManager.getVersions(
     npmOptions,
     '@storybook/preact',
     '@storybook/addon-actions',

@@ -2,13 +2,7 @@
 import path from 'path';
 import { sync as spawnSync } from 'cross-spawn';
 import { packageNames } from '@storybook/codemod';
-import {
-  getBabelDependencies,
-  getPackageJson,
-  getVersion,
-  getVersions,
-  writePackageJson,
-} from '../../helpers';
+import { getBabelDependencies, getPackageJson, getVersion, writePackageJson } from '../../helpers';
 import { PackageJson } from '../../PackageJson';
 import { NpmOptions } from '../../NpmOptions';
 import { JsPackageManager } from '../../js-package-manager';
@@ -29,7 +23,7 @@ async function updatePackageJson(packageManager: JsPackageManager, npmOptions: N
   const packageJson = getPackageJson();
   const { devDependencies } = packageJson;
 
-  const [actionsVersion, linksVersion] = await getVersions(
+  const [actionsVersion, linksVersion] = await packageManager.getVersions(
     npmOptions,
     '@storybook/addon-actions',
     '@storybook/addon-links'

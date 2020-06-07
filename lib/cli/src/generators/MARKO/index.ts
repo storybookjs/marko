@@ -1,8 +1,12 @@
-import { getVersions, writePackageJson, getBabelDependencies, copyTemplate } from '../../helpers';
+import { writePackageJson, getBabelDependencies, copyTemplate } from '../../helpers';
 import { Generator } from '../Generator';
 
 const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
-  const [storybookVersion, addonActionVersion, addonKnobsVersion] = await getVersions(
+  const [
+    storybookVersion,
+    addonActionVersion,
+    addonKnobsVersion,
+  ] = await packageManager.getVersions(
     npmOptions,
     '@storybook/marko',
     '@storybook/addon-actions',

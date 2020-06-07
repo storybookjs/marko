@@ -1,4 +1,4 @@
-import { getVersions, writePackageJson, getBabelDependencies, copyTemplate } from '../../helpers';
+import { writePackageJson, getBabelDependencies, copyTemplate } from '../../helpers';
 import { Generator } from '../Generator';
 
 const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
@@ -8,7 +8,7 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
     linksVersion,
     addonsVersion,
     tagLoaderVersion,
-  ] = await getVersions(
+  ] = await packageManager.getVersions(
     npmOptions,
     '@storybook/riot',
     '@storybook/addon-actions',

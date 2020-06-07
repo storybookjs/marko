@@ -1,4 +1,4 @@
-import { getVersions, writePackageJson, getBabelDependencies, copyTemplate } from '../../helpers';
+import { writePackageJson, getBabelDependencies, copyTemplate } from '../../helpers';
 import { Generator } from '../Generator';
 
 const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
@@ -9,7 +9,7 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
     addonsVersion,
     svelte,
     svelteLoader,
-  ] = await getVersions(
+  ] = await packageManager.getVersions(
     npmOptions,
     '@storybook/svelte',
     '@storybook/addon-actions',

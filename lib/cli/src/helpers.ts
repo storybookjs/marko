@@ -44,10 +44,6 @@ export async function getVersion(npmOptions: NpmOptions, packageName: string, co
   return `^${versionToUse}`;
 }
 
-export function getVersions(npmOptions: NpmOptions, ...packageNames: string[]) {
-  return Promise.all(packageNames.map((packageName) => getVersion(npmOptions, packageName)));
-}
-
 export function getPackageJson() {
   const packageJsonPath = path.resolve('package.json');
   if (!fs.existsSync(packageJsonPath)) {

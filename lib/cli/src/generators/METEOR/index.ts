@@ -1,6 +1,6 @@
 import fs from 'fs';
 import JSON5 from 'json5';
-import { getVersions, writePackageJson, getBabelDependencies, copyTemplate } from '../../helpers';
+import { writePackageJson, getBabelDependencies, copyTemplate } from '../../helpers';
 import { Generator } from '../Generator';
 
 const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
@@ -14,7 +14,7 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
     reactDomVersion,
     presetEnvVersion,
     presetReactVersion,
-  ] = await getVersions(
+  ] = await packageManager.getVersions(
     npmOptions,
     '@storybook/react',
     '@storybook/addon-actions',
