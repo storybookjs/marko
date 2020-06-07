@@ -5,11 +5,10 @@ import { gt, satisfies } from '@storybook/semver';
 import { commandLog, writePackageJson } from '../helpers';
 import { PackageJson } from '../PackageJson';
 import { NpmOptions } from '../NpmOptions';
-import { latestVersion } from '../latest_version';
 
 const logger = console;
 // Cannot be `import` as it's not under TS root dir
-const { version, devDependencies } = require('../../package.json');
+const { storybookCLIVersion, devDependencies } = require('../../package.json');
 
 export abstract class JsPackageManager {
   public abstract initPackageJson(): void;
@@ -141,14 +140,14 @@ export abstract class JsPackageManager {
   ): Promise<string> {
     let current;
     if (packageName === '@storybook/cli') {
-      current = version;
+      current = storybookCLIVersion;
     } else if (/storybook/.test(packageName)) {
       current = devDependencies[packageName];
     }
 
     let latest;
     try {
-      latest = await latestVersion(npmOptions, packageName, constraint);
+      latest = await this.latestVersion(npmOptions, packageName, constraint);
     } catch (e) {
       if (current) {
         logger.warn(`\n     ${chalk.yellow(e.message)}`);
@@ -166,12 +165,48 @@ export abstract class JsPackageManager {
     return `^${versionToUse}`;
   }
 
+  /**
+   * Get the latest version of the package available on npmjs.com.
+   * If constraint is set then it returns a version satisfying it, otherwise the latest version available is returned.
+   *
+   * @param npmOptions Object containing a `useYarn: boolean` attribute
+   * @param packageName Name of the package
+   * @param constraint Version range to use to constraint the returned version
+   */
+  public async latestVersion(
+    // @ts-ignore
+    npmOptions: { useYarn: boolean },
+    packageName: string,
+    constraint?: string
+  ): Promise<string> {
+    if (!constraint) {
+      return this.runGetVersions(packageName, false);
+    }
+
+    const versions = await this.runGetVersions(packageName, true);
+
+    // Get the latest version satisfying the constraint
+    return versions.reverse().find((version) => satisfies(version, constraint));
+  }
+
   protected abstract runInstall(): { status: number };
 
   protected abstract runAddDeps(
     dependencies: string[],
     installAsDevDependencies: boolean
   ): { status: number };
+
+  /**
+   * Get the latest or all versions of the input package available on npmjs.com
+   *
+   * @param packageName Name of the package
+   * @param fetchAllVersions Should return
+   */
+  protected abstract runGetVersions<T extends boolean>(
+    packageName: string,
+    fetchAllVersions: T
+  ): // Use generic and conditional type to force `string[]` if fetchAllVersions is true and `string` if false
+  Promise<T extends true ? string[] : string>;
 
   private static getPackageJson(): PackageJson | false {
     const packageJsonPath = path.resolve('package.json');

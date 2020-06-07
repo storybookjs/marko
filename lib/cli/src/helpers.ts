@@ -6,7 +6,6 @@ import chalk from 'chalk';
 import { satisfies } from '@storybook/semver';
 import stripJsonComments from 'strip-json-comments';
 
-import { latestVersion } from './latest_version';
 import { StoryFormat } from './project_types';
 import { PackageJson } from './PackageJson';
 import { NpmOptions } from './NpmOptions';
@@ -154,7 +153,7 @@ export async function getBabelDependencies(
       dependenciesToAdd.push(`@babel/core@${babelCoreInstallVersion}`);
     }
   } else {
-    const latestCompatibleBabelVersion = await latestVersion(
+    const latestCompatibleBabelVersion = await packageManager.latestVersion(
       npmOptions,
       'babel-core',
       babelCoreVersion

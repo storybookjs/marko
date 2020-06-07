@@ -2,29 +2,33 @@ import path from 'path';
 import fs from 'fs';
 import { sync as spawnSync } from 'cross-spawn';
 import { hasYarn } from './has_yarn';
-import { latestVersion } from './latest_version';
 import { commandLog, getPackageJson } from './helpers';
 import { PackageJson } from './PackageJson';
+import { JsPackageManager, JsPackageManagerFactory } from './js-package-manager';
 
 const logger = console;
 export const storybookAddonScope = '@storybook/addon-';
 
 const isAddon = async (
+  packageManager: JsPackageManager,
   name: string,
   npmOptions: {
     useYarn: boolean;
   }
 ) => {
   try {
-    await latestVersion(npmOptions, name);
+    await packageManager.latestVersion(npmOptions, name);
     return true;
   } catch (e) {
     return false;
   }
 };
 
-const isStorybookAddon = async (name: string, npmOptions: { useYarn: boolean }) =>
-  isAddon(`${storybookAddonScope}${name}`, npmOptions);
+const isStorybookAddon = async (
+  packageManager: JsPackageManager,
+  name: string,
+  npmOptions: { useYarn: boolean }
+) => isAddon(packageManager, `${storybookAddonScope}${name}`, npmOptions);
 
 export const getPackageName = (addonName: string, isOfficialAddon: boolean) =>
   isOfficialAddon ? storybookAddonScope + addonName : addonName;
@@ -154,10 +158,13 @@ export async function add(
   const npmOptions = {
     useYarn,
   };
+
+  const packageManager = JsPackageManagerFactory.getPackageManager(options.useNpm);
+
   const addonCheckDone = commandLog(`Verifying that ${addonName} is an addon`);
-  const isOfficialAddon = await isStorybookAddon(addonName, npmOptions);
+  const isOfficialAddon = await isStorybookAddon(packageManager, addonName, npmOptions);
   if (!isOfficialAddon) {
-    if (!(await isAddon(addonName, npmOptions))) {
+    if (!(await isAddon(packageManager, addonName, npmOptions))) {
       addonCheckDone(`The provided package was not a Storybook addon: ${addonName}.`);
       return;
     }

@@ -32,4 +32,34 @@ export class Yarn1Proxy extends JsPackageManager {
 
     return spawnSync('yarn', args, { stdio: 'inherit' });
   }
+
+  protected runGetVersions<T extends boolean>(
+    packageName: string,
+    fetchAllVersions: T
+  ): Promise<T extends true ? string[] : string> {
+    const commandResult = spawnSync(
+      'yarn',
+      ['info', packageName, fetchAllVersions ? 'versions' : 'version', '--json'],
+      {
+        cwd: process.cwd(),
+        env: process.env,
+        stdio: 'pipe',
+        encoding: 'utf-8',
+      }
+    );
+
+    if (commandResult.status !== 0) {
+      throw new Error(commandResult.stderr.toString());
+    }
+
+    try {
+      const parsedOutput = JSON.parse(commandResult.stdout.toString());
+      if (parsedOutput.type === 'inspect') {
+        return parsedOutput.data;
+      }
+      throw new Error(`Unable to find versions of ${packageName} using yarn`);
+    } catch (e) {
+      throw new Error(`Unable to find versions of ${packageName} using yarn`);
+    }
+  }
 }
