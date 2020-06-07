@@ -2,7 +2,6 @@ import shell from 'shelljs';
 import chalk from 'chalk';
 import {
   getVersions,
-  retrievePackageJson,
   writePackageJson,
   paddedLog,
   getBabelDependencies,
@@ -14,7 +13,7 @@ import { GeneratorOptions } from '../Generator';
 import { JsPackageManager } from '../../js-package-manager';
 
 export default async (
-  _packageManager: JsPackageManager,
+  packageManager: JsPackageManager,
   npmOptions: NpmOptions,
   installServer: boolean,
   { storyFormat }: GeneratorOptions
@@ -47,7 +46,7 @@ export default async (
     }
   }
 
-  const packageJson = await retrievePackageJson();
+  const packageJson = packageManager.retrievePackageJson();
 
   packageJson.dependencies = packageJson.dependencies || {};
   packageJson.devDependencies = packageJson.devDependencies || {};

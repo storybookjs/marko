@@ -2,7 +2,6 @@ import fse from 'fs-extra';
 import path from 'path';
 import {
   getVersionedPackages,
-  retrievePackageJson,
   writePackageJson,
   getBabelDependencies,
   installDependencies,
@@ -10,7 +9,7 @@ import {
 import { StoryFormat } from '../../project_types';
 import { Generator } from '../Generator';
 
-const generator: Generator = async (_packageManager, npmOptions, { storyFormat }) => {
+const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
   const packages = [
     '@storybook/web-components',
     '@storybook/addon-actions',
@@ -26,7 +25,7 @@ const generator: Generator = async (_packageManager, npmOptions, { storyFormat }
     // TODO: handle adding of docs mode
   }
 
-  const packageJson = await retrievePackageJson();
+  const packageJson = packageManager.retrievePackageJson();
 
   packageJson.dependencies = packageJson.dependencies || {};
   packageJson.devDependencies = packageJson.devDependencies || {};

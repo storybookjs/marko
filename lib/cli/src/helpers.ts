@@ -8,7 +8,6 @@ import { gt, satisfies } from '@storybook/semver';
 import stripJsonComments from 'strip-json-comments';
 
 import { latestVersion } from './latest_version';
-import { npmInit } from './npm_init';
 import { StoryFormat } from './project_types';
 import { PackageJson } from './PackageJson';
 import { NpmOptions } from './NpmOptions';
@@ -67,19 +66,6 @@ export function getPackageJson() {
 
   const jsonContent = fs.readFileSync(packageJsonPath, 'utf8');
   return JSON.parse(jsonContent);
-}
-
-export async function retrievePackageJson() {
-  const existing = getPackageJson();
-  if (existing) {
-    return existing;
-  }
-
-  // npmInit will create a new package.json file
-  npmInit();
-
-  // read the newly created package.json file
-  return getPackageJson() || {};
 }
 
 export function getBowerJson() {

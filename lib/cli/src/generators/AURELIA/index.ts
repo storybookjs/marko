@@ -3,7 +3,6 @@ import {
   writePackageJson,
   getBabelDependencies,
   installDependencies,
-  getPackageJson,
   writeFileAsJson,
   copyTemplate,
   readFileAsJson,
@@ -27,7 +26,7 @@ function addStorybookExcludeGlobToTsConfig() {
   writeFileAsJson('tsconfig.json', tsConfigJson);
 }
 const generator: Generator = async (
-  _packageManager,
+  packageManager,
   npmOptions,
   { storyFormat = StoryFormat.CSF }
 ) => {
@@ -50,7 +49,7 @@ const generator: Generator = async (
   }
 
   const versionedPackages = await getVersionedPackages(npmOptions, ...packages);
-  const packageJson = getPackageJson();
+  const packageJson = packageManager.retrievePackageJson();
   packageJson.dependencies = packageJson.dependencies || {};
   packageJson.devDependencies = packageJson.devDependencies || {};
   packageJson.scripts = packageJson.scripts || {};

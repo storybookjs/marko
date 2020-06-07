@@ -1,7 +1,6 @@
 import path from 'path';
 import fs from 'fs';
 import {
-  retrievePackageJson,
   getVersionedPackages,
   writePackageJson,
   getBabelDependencies,
@@ -11,7 +10,7 @@ import {
 import { StoryFormat } from '../../project_types';
 import { Generator } from '../Generator';
 
-const generator: Generator = async (_packageManager, npmOptions, { storyFormat }) => {
+const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
   const packages = [
     '@storybook/react',
     '@storybook/preset-create-react-app',
@@ -28,7 +27,7 @@ const generator: Generator = async (_packageManager, npmOptions, { storyFormat }
 
   copyTemplate(__dirname, storyFormat);
 
-  const packageJson = await retrievePackageJson();
+  const packageJson = packageManager.retrievePackageJson();
 
   packageJson.dependencies = packageJson.dependencies || {};
   packageJson.devDependencies = packageJson.devDependencies || {};

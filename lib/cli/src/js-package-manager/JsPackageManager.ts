@@ -1,4 +1,7 @@
+import path from 'path';
+import fs from 'fs';
 import { commandLog } from '../helpers';
+import { PackageJson } from '../PackageJson';
 
 const logger = console;
 
@@ -23,5 +26,28 @@ export abstract class JsPackageManager {
     done();
   }
 
+  public retrievePackageJson(): PackageJson {
+    const existing = JsPackageManager.getPackageJson();
+    if (existing) {
+      return existing;
+    }
+
+    // It will create a new package.json file
+    this.initPackageJson();
+
+    // read the newly created package.json file
+    return JsPackageManager.getPackageJson() || {};
+  }
+
   protected abstract runInstall(): { status: number };
+
+  private static getPackageJson(): PackageJson | false {
+    const packageJsonPath = path.resolve('package.json');
+    if (!fs.existsSync(packageJsonPath)) {
+      return false;
+    }
+
+    const jsonContent = fs.readFileSync(packageJsonPath, 'utf8');
+    return JSON.parse(jsonContent);
+  }
 }

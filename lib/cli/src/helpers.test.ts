@@ -17,10 +17,6 @@ jest.mock('path', () => ({
   resolve: jest.fn((_, p) => p),
 }));
 
-jest.mock('./npm_init', () => ({
-  npmInit: jest.fn(),
-}));
-
 jest.mock('./has_yarn', () => ({
   hasYarn2: jest.fn(() => false),
 }));

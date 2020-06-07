@@ -2,7 +2,6 @@ import fs from 'fs';
 import JSON5 from 'json5';
 import {
   getVersions,
-  retrievePackageJson,
   writePackageJson,
   getBabelDependencies,
   installDependencies,
@@ -10,7 +9,7 @@ import {
 } from '../../helpers';
 import { Generator } from '../Generator';
 
-const generator: Generator = async (_packageManager, npmOptions, { storyFormat }) => {
+const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
   const [
     storybookVersion,
     actionsVersion,
@@ -36,7 +35,7 @@ const generator: Generator = async (_packageManager, npmOptions, { storyFormat }
 
   copyTemplate(__dirname, storyFormat);
 
-  const packageJson = await retrievePackageJson();
+  const packageJson = packageManager.retrievePackageJson();
 
   packageJson.devDependencies = packageJson.devDependencies || {};
   packageJson.scripts = packageJson.scripts || {};

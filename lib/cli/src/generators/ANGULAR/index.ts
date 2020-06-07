@@ -6,7 +6,6 @@ import {
   getAngularAppTsConfigPath,
 } from './angular-helpers';
 import {
-  retrievePackageJson,
   getVersionedPackages,
   writePackageJson,
   getBabelDependencies,
@@ -17,8 +16,13 @@ import {
 import { StoryFormat } from '../../project_types';
 import { NpmOptions } from '../../NpmOptions';
 import { Generator, GeneratorOptions } from '../Generator';
+import { JsPackageManager } from '../../js-package-manager';
 
-async function addDependencies(npmOptions: NpmOptions, { storyFormat }: GeneratorOptions) {
+async function addDependencies(
+  packageManager: JsPackageManager,
+  npmOptions: NpmOptions,
+  { storyFormat }: GeneratorOptions
+) {
   const packages = [
     '@storybook/angular',
     '@storybook/addon-actions',
@@ -32,7 +36,7 @@ async function addDependencies(npmOptions: NpmOptions, { storyFormat }: Generato
 
   const versionedPackages = await getVersionedPackages(npmOptions, ...packages);
 
-  const packageJson = await retrievePackageJson();
+  const packageJson = packageManager.retrievePackageJson();
 
   packageJson.dependencies = packageJson.dependencies || {};
   packageJson.devDependencies = packageJson.devDependencies || {};
@@ -64,7 +68,7 @@ function editAngularAppTsConfig() {
   writeFileAsJson(getAngularAppTsConfigPath(), tsConfigJson);
 }
 
-const generator: Generator = async (_packageManager, npmOptions, { storyFormat }) => {
+const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
   if (!isDefaultProjectSet()) {
     throw new Error(
       'Could not find a default project in your Angular workspace.\nSet a defaultProject in your angular.json and re-run the installation.'
@@ -73,7 +77,7 @@ const generator: Generator = async (_packageManager, npmOptions, { storyFormat }
 
   copyTemplate(__dirname, storyFormat);
 
-  await addDependencies(npmOptions, { storyFormat });
+  await addDependencies(packageManager, npmOptions, { storyFormat });
   editAngularAppTsConfig();
   editStorybookTsConfig(path.resolve('./.storybook/tsconfig.json'));
 };
