@@ -15,15 +15,22 @@ import * as configs from './run-e2e-config';
 const logger = console;
 
 export interface Parameters {
+  /** E2E configuration name */
   name: string;
+  /** framework version */
   version: string;
+  /** CLI to bootstrap the project */
   generator: string;
+  /** Use storybook framework detection */
   autoDetect?: boolean;
+  /** Pre-build hook */
   preBuildCommand?: string;
   /** When cli complains when folder already exists */
   ensureDir?: boolean;
   /** Dependencies to add before building Storybook */
   additionalDeps?: string[];
+  /** Add typescript dependency and creates a tsconfig.json file */
+  typescript?: boolean;
 }
 
 export interface Options extends Parameters {
@@ -134,6 +141,28 @@ const addRequiredDeps = async ({ cwd, additionalDeps }: Options) => {
   }
 };
 
+const addTypescript = async ({ cwd }: Options) => {
+  logger.info(`👮🏻 Adding typescript and tsconfig.json`);
+  try {
+    await exec(`yarn add -D typescript@latest`, { cwd });
+    const tsConfig = {
+      compilerOptions: {
+        baseUrl: '.',
+        esModuleInterop: true,
+        jsx: 'preserve',
+        skipLibCheck: true,
+        strict: true,
+      },
+      include: ['src/*'],
+    };
+    const tsConfigJsonPath = path.resolve(cwd, 'tsconfig.json');
+    await writeJSON(tsConfigJsonPath, tsConfig, { encoding: 'utf8', spaces: 2 });
+  } catch (e) {
+    logger.error(`🚨 Creating tsconfig.json failed`);
+    throw e;
+  }
+};
+
 const buildStorybook = async ({ cwd, preBuildCommand }: Options) => {
   logger.info(`👷 Building Storybook`);
   try {
@@ -189,6 +218,11 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
 
     await setResolutions(options);
     logger.log();
+
+    if (options.typescript) {
+      await addTypescript(options);
+      logger.log();
+    }
 
     await initStorybook(options);
     logger.log();

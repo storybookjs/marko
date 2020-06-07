@@ -90,6 +90,13 @@ export const react: Parameters = {
   generator: fromDeps('react', 'react-dom'),
 };
 
+export const reactTypescript: Parameters = {
+  name: 'react-typescript',
+  version: 'latest',
+  generator: fromDeps('react'),
+  typescript: true,
+};
+
 // export const reactNative: Parameters = {
 //   name: 'reactNative',
 //   version: 'latest',
