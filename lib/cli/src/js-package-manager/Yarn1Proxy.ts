@@ -11,4 +11,8 @@ export class Yarn1Proxy extends JsPackageManager {
     });
     return results.stdout;
   }
+
+  getRunStorybookCommand(): string {
+    return 'yarn storybook';
+  }
 }

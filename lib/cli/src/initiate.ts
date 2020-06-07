@@ -36,6 +36,7 @@ import preactGenerator from './generators/PREACT';
 import svelteGenerator from './generators/SVELTE';
 import raxGenerator from './generators/RAX';
 import { warn } from './warn';
+import { JsPackageManagerFactory } from './js-package-manager/JsPackageManagerFactory';
 
 const logger = console;
 
@@ -51,10 +52,10 @@ type CommandOptions = {
 };
 
 const installStorybook = (projectType: ProjectType, options: CommandOptions): Promise<void> => {
-  const useYarn = Boolean(options.useNpm !== true) && hasYarn();
+  const packageManager = JsPackageManagerFactory.getPackageManager(options.useNpm);
 
   const npmOptions = {
-    useYarn,
+    useYarn: Boolean(options.useNpm !== true) && hasYarn(),
     installAsDevDependencies: true,
     skipInstall: options.skipInstall,
   };
@@ -69,15 +70,13 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
     storyFormat: options.storyFormat || defaultStoryFormat,
   };
 
-  const runStorybookCommand = useYarn ? 'yarn storybook' : 'npm run storybook';
-
   const end = () => {
     if (!options.skipInstall) {
       installDepsFromPackageJson(npmOptions);
     }
 
     logger.log('\nTo run your storybook, type:\n');
-    codeLog([runStorybookCommand]);
+    codeLog([packageManager.getRunStorybookCommand()]);
     logger.log('\nFor more information visit:', chalk.cyan('https://storybook.js.org'));
 
     // Add a new line for the clear visibility.

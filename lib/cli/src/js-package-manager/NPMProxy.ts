@@ -11,4 +11,8 @@ export class NPMProxy extends JsPackageManager {
     });
     return results.stdout;
   }
+
+  getRunStorybookCommand(): string {
+    return 'npm run storybook';
+  }
 }
