@@ -24,17 +24,18 @@ export class Yarn1Proxy extends JsPackageManager {
     }
   }
 
-  protected runAddDeps(
-    dependencies: string[],
-    installAsDevDependencies: boolean
-  ): { status: number } {
+  protected runAddDeps(dependencies: string[], installAsDevDependencies: boolean): void {
     const args = ['add', '--ignore-workspace-root-check', ...dependencies];
 
     if (installAsDevDependencies) {
       args.push('-D');
     }
 
-    return spawnSync('yarn', args, { stdio: 'inherit' });
+    const commandResult = spawnSync('yarn', args, { stdio: 'inherit' });
+
+    if (commandResult.status !== 0) {
+      throw new Error(commandResult.stderr.toString());
+    }
   }
 
   protected runGetVersions<T extends boolean>(

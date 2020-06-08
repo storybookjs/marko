@@ -24,17 +24,18 @@ export class NPMProxy extends JsPackageManager {
     }
   }
 
-  protected runAddDeps(
-    dependencies: string[],
-    installAsDevDependencies: boolean
-  ): { status: number } {
+  protected runAddDeps(dependencies: string[], installAsDevDependencies: boolean): void {
     const args = ['install', ...dependencies];
 
     if (installAsDevDependencies) {
       args.push('-D');
     }
 
-    return spawnSync('npm', args, { stdio: 'inherit' });
+    const commandResult = spawnSync('npm', args, { stdio: 'inherit' });
+
+    if (commandResult.status !== 0) {
+      throw new Error(commandResult.stderr.toString());
+    }
   }
 
   protected runGetVersions<T extends boolean>(

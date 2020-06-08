@@ -95,11 +95,11 @@ export abstract class JsPackageManager {
 
       writePackageJson(packageJson);
     } else {
-      const dependencyResult = this.runAddDeps(dependencies, options.installAsDevDependencies);
-
-      if (dependencyResult.status !== 0) {
+      try {
+        this.runAddDeps(dependencies, options.installAsDevDependencies);
+      } catch (e) {
         logger.error('An error occurred while installing dependencies.');
-        logger.log(dependencyResult);
+        logger.log(e.message);
         process.exit(1);
       }
     }
@@ -198,10 +198,7 @@ export abstract class JsPackageManager {
 
   protected abstract runInstall(): void;
 
-  protected abstract runAddDeps(
-    dependencies: string[],
-    installAsDevDependencies: boolean
-  ): { status: number };
+  protected abstract runAddDeps(dependencies: string[], installAsDevDependencies: boolean): void;
 
   /**
    * Get the latest or all versions of the input package available on npmjs.com
