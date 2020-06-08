@@ -16,8 +16,12 @@ export class NPMProxy extends JsPackageManager {
     return 'npm run storybook';
   }
 
-  protected runInstall(): { status: number } {
-    return spawnSync('npm', ['install'], { stdio: 'inherit' });
+  protected runInstall(): void {
+    const commandResult = spawnSync('npm', ['install'], { stdio: 'inherit' });
+
+    if (commandResult.status !== 0) {
+      throw new Error(commandResult.stderr.toString());
+    }
   }
 
   protected runAddDeps(

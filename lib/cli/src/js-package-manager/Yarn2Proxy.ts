@@ -16,8 +16,12 @@ export class Yarn2Proxy extends JsPackageManager {
     return 'yarn storybook';
   }
 
-  protected runInstall(): { status: number } {
-    return spawnSync('yarn', { stdio: 'inherit' });
+  protected runInstall(): void {
+    const commandResult = spawnSync('yarn', { stdio: 'inherit' });
+
+    if (commandResult.status !== 0) {
+      throw new Error(commandResult.stderr.toString());
+    }
   }
 
   protected runAddDeps(

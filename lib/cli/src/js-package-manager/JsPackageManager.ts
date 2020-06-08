@@ -22,11 +22,12 @@ export abstract class JsPackageManager {
     done();
     logger.log();
 
-    const result = this.runInstall();
-
     logger.log();
     done = commandLog('Installing dependencies');
-    if (result.status !== 0) {
+
+    try {
+      this.runInstall();
+    } catch (e) {
       done('An error occurred while installing dependencies.');
       process.exit(1);
     }
@@ -195,7 +196,7 @@ export abstract class JsPackageManager {
     });
   }
 
-  protected abstract runInstall(): { status: number };
+  protected abstract runInstall(): void;
 
   protected abstract runAddDeps(
     dependencies: string[],
