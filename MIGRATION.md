@@ -154,7 +154,9 @@ For more information, [see the documentation](https://github.com/storybookjs/sto
 
 Storybook has built-in Typescript support in 6.0. That means you should remove your complex Typescript configurations from your `.storybook` config. We've tried to pick sensible defaults that work out of the box, especially for nice prop table generation in `@storybook/addon-docs`.
 
-To migrate from an old setup, we recommend deleting any typescript-specific webpack/babel configurations in your project. If you want to override the defaults, see the [typescript configuration docs](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/configurations/typescript-config/index.md).
+To migrate from an old setup, we recommend deleting any typescript-specific webpack/babel configurations in your project. You should also remove `@storybook/preset-typescript`, which is superceded by the built-in configuration.
+
+If you want to override the defaults, see the [typescript configuration docs](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/configurations/typescript-config/index.md).
 
 ### Correct globs in main.js
 
