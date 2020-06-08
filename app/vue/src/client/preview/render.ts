@@ -44,10 +44,8 @@ export default function render({
 
   showMain();
 
-  // at component creation || refresh by HMR
-  if (!root[COMPONENT] || !forceRender) {
-    root[COMPONENT] = element;
-  }
+  // always refresh the component
+  root[COMPONENT] = element;
 
   // @ts-ignore https://github.com/storybookjs/storybook/pull/7578#discussion_r307986139
   root[VALUES] = element.options[VALUES];
