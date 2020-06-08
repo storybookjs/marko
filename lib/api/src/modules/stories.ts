@@ -71,40 +71,6 @@ export const init: ModuleFn = ({
   storyId: initialStoryId,
   viewMode: initialViewMode,
 }) => {
-  const setInitialStory = () => {
-    const { storyId, viewMode, storiesHash } = store.getState();
-    const story = api.getData(storyId);
-
-    if (viewMode === 'settings' || viewMode === 'page') {
-      return;
-    }
-
-    if (storyId && storyId.match(/--\*$/)) {
-      const idStart = storyId.slice(0, -1); // drop the * at the end
-      const firstKindLeaf = Object.values(storiesHash).find(
-        (s: Story | Group) => !s.children && s.id.substring(0, idStart.length) === idStart
-      );
-
-      if (viewMode && firstKindLeaf) {
-        api.selectStory(firstKindLeaf.id, undefined, {});
-      }
-    } else if (!storyId || storyId === '*' || !story) {
-      // when there's no storyId or the storyId item doesn't exist
-      // we pick the first leaf and navigate
-      const firstLeaf = Object.values(storiesHash).find((s: Story | Group) => !s.children);
-
-      if (viewMode && firstLeaf) {
-        api.selectStory(firstLeaf.id, undefined, {});
-      }
-    } else if (story && !story.isLeaf) {
-      // When story exists but if it is not the leaf story, it finds the proper
-      // leaf story from any depth.
-      const firstLeafStoryId = api.findLeafStoryId(storiesHash, storyId);
-
-      api.selectStory(firstLeafStoryId, undefined, {});
-    }
-  };
-
   const api: SubAPI = {
     storyId: toId,
     getData: (storyId, refId) => {
@@ -229,12 +195,6 @@ export const init: ModuleFn = ({
         storiesConfigured: true,
         storiesFailed: error,
       });
-
-      const { refId } = store.getState();
-
-      if (!refId) {
-        setInitialStory();
-      }
     },
     selectStory: (kindOrId, story = undefined, options = {}) => {
       const { ref, viewMode: viewModeFromArgs } = options;
