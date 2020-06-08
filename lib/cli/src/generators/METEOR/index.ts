@@ -1,7 +1,8 @@
 import fs from 'fs';
 import JSON5 from 'json5';
-import { writePackageJson, getBabelDependencies, copyTemplate } from '../../helpers';
+import { getBabelDependencies, copyTemplate } from '../../helpers';
 import { Generator } from '../Generator';
+import { writePackageJson } from '../../js-package-manager';
 
 const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
   const [

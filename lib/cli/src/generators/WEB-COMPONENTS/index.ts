@@ -1,8 +1,9 @@
 import fse from 'fs-extra';
 import path from 'path';
-import { writePackageJson, getBabelDependencies } from '../../helpers';
+import { getBabelDependencies } from '../../helpers';
 import { StoryFormat } from '../../project_types';
 import { Generator } from '../Generator';
+import { writePackageJson } from '../../js-package-manager';
 
 const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
   const packages = [

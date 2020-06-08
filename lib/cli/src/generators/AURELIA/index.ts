@@ -1,12 +1,7 @@
-import {
-  writePackageJson,
-  getBabelDependencies,
-  writeFileAsJson,
-  copyTemplate,
-  readFileAsJson,
-} from '../../helpers';
+import { getBabelDependencies, writeFileAsJson, copyTemplate, readFileAsJson } from '../../helpers';
 import { Generator } from '../Generator';
 import { StoryFormat } from '../../project_types';
+import { writePackageJson } from '../../js-package-manager';
 
 function addStorybookExcludeGlobToTsConfig() {
   const tsConfigJson = readFileAsJson('tsconfig.json', true);

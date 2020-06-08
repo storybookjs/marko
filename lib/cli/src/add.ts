@@ -1,9 +1,8 @@
 import path from 'path';
 import fs from 'fs';
 import { sync as spawnSync } from 'cross-spawn';
-import { commandLog, getPackageJson } from './helpers';
-import { PackageJson } from './js-package-manager/PackageJson';
-import { JsPackageManager, JsPackageManagerFactory } from './js-package-manager';
+import { commandLog } from './helpers';
+import { JsPackageManager, JsPackageManagerFactory, PackageJson } from './js-package-manager';
 
 const logger = console;
 export const storybookAddonScope = '@storybook/addon-';
@@ -53,7 +52,11 @@ const installAddon = (
   prepareDone();
   logger.log();
 
-  const packageArg = getPackageArg(addonName, isOfficialAddon, getPackageJson());
+  const packageArg = getPackageArg(
+    addonName,
+    isOfficialAddon,
+    packageManager.retrievePackageJson()
+  );
 
   logger.log();
   const installDone = commandLog(`Installing the ${addonName} Storybook addon`);

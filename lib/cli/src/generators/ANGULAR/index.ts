@@ -5,16 +5,11 @@ import {
   getAngularAppTsConfigJson,
   getAngularAppTsConfigPath,
 } from './angular-helpers';
-import {
-  writePackageJson,
-  getBabelDependencies,
-  writeFileAsJson,
-  copyTemplate,
-} from '../../helpers';
+import { getBabelDependencies, writeFileAsJson, copyTemplate } from '../../helpers';
 import { StoryFormat } from '../../project_types';
 import { NpmOptions } from '../../NpmOptions';
 import { Generator, GeneratorOptions } from '../Generator';
-import { JsPackageManager } from '../../js-package-manager';
+import { JsPackageManager, writePackageJson } from '../../js-package-manager';
 
 async function addDependencies(
   packageManager: JsPackageManager,

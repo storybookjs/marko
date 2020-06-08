@@ -1,10 +1,9 @@
-import path from 'path';
-import fs from 'fs';
 import chalk from 'chalk';
 import { gt, satisfies } from '@storybook/semver';
 import { sync as spawnSync } from 'cross-spawn';
-import { commandLog, writePackageJson } from '../helpers';
+import { commandLog } from '../helpers';
 import { PackageJson } from './PackageJson';
+import { readPackageJson, writePackageJson } from './PackageJsonHelper';
 
 const logger = console;
 // Cannot be `import` as it's not under TS root dir
@@ -36,7 +35,7 @@ export abstract class JsPackageManager {
   }
 
   public retrievePackageJson(): PackageJson {
-    const existing = JsPackageManager.getPackageJson();
+    const existing = readPackageJson();
     if (existing) {
       return existing;
     }
@@ -45,7 +44,7 @@ export abstract class JsPackageManager {
     this.initPackageJson();
 
     // read the newly created package.json file
-    return JsPackageManager.getPackageJson() || {};
+    return readPackageJson() || {};
   }
 
   /**
@@ -212,16 +211,6 @@ export abstract class JsPackageManager {
     fetchAllVersions: T
   ): // Use generic and conditional type to force `string[]` if fetchAllVersions is true and `string` if false
   Promise<T extends true ? string[] : string>;
-
-  private static getPackageJson(): PackageJson | false {
-    const packageJsonPath = path.resolve('package.json');
-    if (!fs.existsSync(packageJsonPath)) {
-      return false;
-    }
-
-    const jsonContent = fs.readFileSync(packageJsonPath, 'utf8');
-    return JSON.parse(jsonContent);
-  }
 
   public executeCommand(command: string, args: string[], stdio?: 'pipe' | 'inherit'): string {
     const commandResult = spawnSync(command, args, {

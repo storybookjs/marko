@@ -7,20 +7,9 @@ import { satisfies } from '@storybook/semver';
 import stripJsonComments from 'strip-json-comments';
 
 import { StoryFormat } from './project_types';
-import { PackageJson } from './js-package-manager/PackageJson';
-import { JsPackageManager } from './js-package-manager';
+import { JsPackageManager, PackageJson } from './js-package-manager';
 
 const logger = console;
-
-export function getPackageJson() {
-  const packageJsonPath = path.resolve('package.json');
-  if (!fs.existsSync(packageJsonPath)) {
-    return false;
-  }
-
-  const jsonContent = fs.readFileSync(packageJsonPath, 'utf8');
-  return JSON.parse(jsonContent);
-}
 
 export function getBowerJson() {
   const bowerJsonPath = path.resolve('bower.json');
@@ -52,13 +41,6 @@ export const writeFileAsJson = (jsonPath: string, content: unknown) => {
   fs.writeFileSync(filePath, `${JSON.stringify(content, null, 2)}\n`);
   return true;
 };
-
-export function writePackageJson(packageJson: object) {
-  const content = `${JSON.stringify(packageJson, null, 2)}\n`;
-  const packageJsonPath = path.resolve('package.json');
-
-  fs.writeFileSync(packageJsonPath, content, 'utf8');
-}
 
 export const commandLog = (message: string) => {
   process.stdout.write(chalk.cyan(' • ') + message);

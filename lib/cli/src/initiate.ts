@@ -8,7 +8,7 @@ import {
   StoryFormat,
   SupportedLanguage,
 } from './project_types';
-import { commandLog, codeLog, paddedLog, getPackageJson } from './helpers';
+import { commandLog, codeLog, paddedLog } from './helpers';
 import angularGenerator from './generators/ANGULAR';
 import emberGenerator from './generators/EMBER';
 import meteorGenerator from './generators/METEOR';
@@ -29,7 +29,7 @@ import preactGenerator from './generators/PREACT';
 import svelteGenerator from './generators/SVELTE';
 import raxGenerator from './generators/RAX';
 import { warn } from './warn';
-import { JsPackageManagerFactory } from './js-package-manager';
+import { JsPackageManagerFactory, readPackageJson } from './js-package-manager';
 import { NpmOptions } from './NpmOptions';
 
 const logger = console;
@@ -280,7 +280,7 @@ export default function (options: CommandOptions, pkg: IPackage): Promise<void> 
   try {
     if (projectTypeProvided) {
       if (installableProjectTypes.includes(options.type)) {
-        const storybookInstalled = isStorybookInstalled(getPackageJson(), options.force);
+        const storybookInstalled = isStorybookInstalled(readPackageJson(), options.force);
         projectType = storybookInstalled
           ? ProjectType.ALREADY_HAS_STORYBOOK
           : options.type.toUpperCase();

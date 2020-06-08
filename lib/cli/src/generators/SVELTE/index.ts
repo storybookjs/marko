@@ -1,5 +1,6 @@
-import { writePackageJson, getBabelDependencies, copyTemplate } from '../../helpers';
+import { getBabelDependencies, copyTemplate } from '../../helpers';
 import { Generator } from '../Generator';
+import { writePackageJson } from '../../js-package-manager';
 
 const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
   const [

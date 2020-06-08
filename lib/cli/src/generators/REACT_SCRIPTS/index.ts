@@ -1,8 +1,9 @@
 import path from 'path';
 import fs from 'fs';
-import { writePackageJson, getBabelDependencies, copyTemplate } from '../../helpers';
+import { getBabelDependencies, copyTemplate } from '../../helpers';
 import { StoryFormat } from '../../project_types';
 import { Generator } from '../Generator';
+import { writePackageJson } from '../../js-package-manager';
 
 const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
   const packages = [
