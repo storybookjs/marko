@@ -1,15 +1,8 @@
-import { sync as spawnSync } from 'cross-spawn';
 import { JsPackageManager } from './JsPackageManager';
 
 export class NPMProxy extends JsPackageManager {
   initPackageJson() {
-    const results = spawnSync('npm', ['init', '-y'], {
-      cwd: process.cwd(),
-      env: process.env,
-      stdio: 'pipe',
-      encoding: 'utf-8',
-    });
-    return results.stdout;
+    return this.executeCommand('npm', ['init', '-y']);
   }
 
   getRunStorybookCommand(): string {
@@ -17,48 +10,29 @@ export class NPMProxy extends JsPackageManager {
   }
 
   protected runInstall(): void {
-    const commandResult = spawnSync('npm', ['install'], { stdio: 'inherit' });
-
-    if (commandResult.status !== 0) {
-      throw new Error(commandResult.stderr.toString());
-    }
+    this.executeCommand('npm', ['install'], 'inherit');
   }
 
   protected runAddDeps(dependencies: string[], installAsDevDependencies: boolean): void {
-    const args = ['install', ...dependencies];
+    let args = [...dependencies];
 
     if (installAsDevDependencies) {
-      args.push('-D');
+      args = ['-D', ...args];
     }
 
-    const commandResult = spawnSync('npm', args, { stdio: 'inherit' });
-
-    if (commandResult.status !== 0) {
-      throw new Error(commandResult.stderr.toString());
-    }
+    this.executeCommand('npm', ['install', ...args], 'inherit');
   }
 
   protected runGetVersions<T extends boolean>(
     packageName: string,
     fetchAllVersions: T
   ): Promise<T extends true ? string[] : string> {
-    const commandResult = spawnSync(
-      'npm',
-      ['info', packageName, fetchAllVersions ? 'versions' : 'version', '--json'],
-      {
-        cwd: process.cwd(),
-        env: process.env,
-        stdio: 'pipe',
-        encoding: 'utf-8',
-      }
-    );
+    const args = [fetchAllVersions ? 'versions' : 'version', '--json'];
 
-    if (commandResult.status !== 0) {
-      throw new Error(commandResult.stderr.toString());
-    }
+    const commandResult = this.executeCommand('npm', ['info', packageName, ...args]);
 
     try {
-      const parsedOutput = JSON.parse(commandResult.stdout.toString());
+      const parsedOutput = JSON.parse(commandResult);
 
       if (parsedOutput.error) {
         // FIXME: improve error handling

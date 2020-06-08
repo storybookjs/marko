@@ -1,15 +1,8 @@
-import { sync as spawnSync } from 'cross-spawn';
 import { JsPackageManager } from './JsPackageManager';
 
 export class Yarn1Proxy extends JsPackageManager {
   initPackageJson() {
-    const results = spawnSync('yarn', ['init', '-y'], {
-      cwd: process.cwd(),
-      env: process.env,
-      stdio: 'pipe',
-      encoding: 'utf-8',
-    });
-    return results.stdout;
+    return this.executeCommand('yarn', ['init', '-y']);
   }
 
   getRunStorybookCommand(): string {
@@ -17,48 +10,29 @@ export class Yarn1Proxy extends JsPackageManager {
   }
 
   protected runInstall(): void {
-    const commandResult = spawnSync('yarn', { stdio: 'inherit' });
-
-    if (commandResult.status !== 0) {
-      throw new Error(commandResult.stderr.toString());
-    }
+    this.executeCommand('yarn', [], 'inherit');
   }
 
   protected runAddDeps(dependencies: string[], installAsDevDependencies: boolean): void {
-    const args = ['add', '--ignore-workspace-root-check', ...dependencies];
+    let args = ['--ignore-workspace-root-check', ...dependencies];
 
     if (installAsDevDependencies) {
-      args.push('-D');
+      args = ['-D', ...args];
     }
 
-    const commandResult = spawnSync('yarn', args, { stdio: 'inherit' });
-
-    if (commandResult.status !== 0) {
-      throw new Error(commandResult.stderr.toString());
-    }
+    this.executeCommand('yarn', ['add', ...args], 'inherit');
   }
 
   protected runGetVersions<T extends boolean>(
     packageName: string,
     fetchAllVersions: T
   ): Promise<T extends true ? string[] : string> {
-    const commandResult = spawnSync(
-      'yarn',
-      ['info', packageName, fetchAllVersions ? 'versions' : 'version', '--json'],
-      {
-        cwd: process.cwd(),
-        env: process.env,
-        stdio: 'pipe',
-        encoding: 'utf-8',
-      }
-    );
+    const args = [fetchAllVersions ? 'versions' : 'version', '--json'];
 
-    if (commandResult.status !== 0) {
-      throw new Error(commandResult.stderr.toString());
-    }
+    const commandResult = this.executeCommand('yarn', ['info', packageName, ...args]);
 
     try {
-      const parsedOutput = JSON.parse(commandResult.stdout.toString());
+      const parsedOutput = JSON.parse(commandResult);
       if (parsedOutput.type === 'inspect') {
         return parsedOutput.data;
       }

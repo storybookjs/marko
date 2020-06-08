@@ -1,45 +1,81 @@
-import { sync } from 'cross-spawn';
-import dedent from 'ts-dedent';
 import { NPMProxy } from './NPMProxy';
 
-jest.mock('cross-spawn');
-const syncMock = sync as jest.Mock;
-
 describe('NPM Proxy', () => {
-  const npmProxy = new NPMProxy();
+  let npmProxy: NPMProxy;
+
+  beforeEach(() => {
+    npmProxy = new NPMProxy();
+  });
 
   describe('initPackageJson', () => {
-    it('should call spawn.sync and return console output', () => {
-      const consoleOutput = dedent`Wrote to /Users/johndoe/Documents/package.json:
-                                  {
-                                    "name": "toto",
-                                    "version": "1.0.0",
-                                    "description": "",
-                                    "main": "index.js",
-                                    "scripts": {
-                                      "test": "echo \\"Error: no test specified\\" && exit 1"
-                                    },
-                                    "keywords": [],
-                                    "author": "",
-                                    "license": "ISC"
-                                  }`;
+    it('should run `npm init -y`', () => {
+      const executeCommandSpy = jest.spyOn(npmProxy, 'executeCommand').mockReturnValue('');
 
-      syncMock.mockReturnValueOnce({ stdout: consoleOutput });
+      npmProxy.initPackageJson();
 
-      const result = npmProxy.initPackageJson();
+      expect(executeCommandSpy).toHaveBeenCalledWith('npm', ['init', '-y']);
+    });
+  });
 
-      expect(syncMock).toHaveBeenCalledWith(
+  describe('installDependencies', () => {
+    it('should run `npm install`', () => {
+      const executeCommandSpy = jest.spyOn(npmProxy, 'executeCommand').mockReturnValue('');
+
+      npmProxy.installDependencies();
+
+      expect(executeCommandSpy).toHaveBeenCalledWith('npm', ['install'], expect.any(String));
+    });
+  });
+
+  describe('addDependencies', () => {
+    it('with devDep it should run `npm install -D @storybook/addons`', () => {
+      const executeCommandSpy = jest.spyOn(npmProxy, 'executeCommand').mockReturnValue('');
+
+      npmProxy.addDependencies({ installAsDevDependencies: true }, ['@storybook/addons']);
+
+      expect(executeCommandSpy).toHaveBeenCalledWith(
         'npm',
-        ['init', '-y'],
-        expect.objectContaining({
-          cwd: process.cwd(),
-          env: process.env,
-          stdio: 'pipe',
-          encoding: 'utf-8',
-        })
+        ['install', '-D', '@storybook/addons'],
+        expect.any(String)
       );
+    });
+  });
 
-      expect(result).toEqual(expect.any(String));
+  describe('latestVersion', () => {
+    it('without contraint it returns the latest version', async () => {
+      const executeCommandSpy = jest.spyOn(npmProxy, 'executeCommand').mockReturnValue('"5.3.19"');
+
+      const version = await npmProxy.latestVersion('@storybook/addons');
+
+      expect(executeCommandSpy).toHaveBeenCalledWith('npm', [
+        'info',
+        '@storybook/addons',
+        'version',
+        '--json',
+      ]);
+      expect(version).toEqual('5.3.19');
+    });
+
+    it('with contraint it returns the latest version satisfying the constraint', async () => {
+      const executeCommandSpy = jest
+        .spyOn(npmProxy, 'executeCommand')
+        .mockReturnValue('["4.25.3","5.3.19","6.0.0-beta.23"]');
+
+      const version = await npmProxy.latestVersion('@storybook/addons', '5.X');
+
+      expect(executeCommandSpy).toHaveBeenCalledWith('npm', [
+        'info',
+        '@storybook/addons',
+        'versions',
+        '--json',
+      ]);
+      expect(version).toEqual('5.3.19');
+    });
+
+    it('throws an error if command output is not a valid JSON', async () => {
+      jest.spyOn(npmProxy, 'executeCommand').mockReturnValue('NOT A JSON');
+
+      await expect(npmProxy.latestVersion('@storybook/addons')).rejects.toThrow();
     });
   });
 });

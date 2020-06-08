@@ -1,37 +1,83 @@
-import { sync } from 'cross-spawn';
-import dedent from 'ts-dedent';
 import { Yarn1Proxy } from './Yarn1Proxy';
 
-jest.mock('cross-spawn');
-const syncMock = sync as jest.Mock;
+describe('Yarn 1 Proxy', () => {
+  let yarn1Proxy: Yarn1Proxy;
 
-describe('Yarn Proxy', () => {
-  const yarnProxy = new Yarn1Proxy();
+  beforeEach(() => {
+    yarn1Proxy = new Yarn1Proxy();
+  });
 
   describe('initPackageJson', () => {
-    it('should call spawn.sync and return console output', () => {
-      const consoleOutput = dedent`
-                              yarn init v1.22.4
-                              warning The yes flag has been set. This will automatically answer yes to all questions, which may have security implications.
-                              success Saved package.json
-                              ✨  Done in 0.02s.`;
+    it('should run `yarn init -y`', () => {
+      const executeCommandSpy = jest.spyOn(yarn1Proxy, 'executeCommand').mockReturnValue('');
 
-      syncMock.mockReturnValueOnce({ stdout: consoleOutput });
+      yarn1Proxy.initPackageJson();
 
-      const result = yarnProxy.initPackageJson();
+      expect(executeCommandSpy).toHaveBeenCalledWith('yarn', ['init', '-y']);
+    });
+  });
 
-      expect(syncMock).toHaveBeenCalledWith(
+  describe('installDependencies', () => {
+    it('should run `yarn`', () => {
+      const executeCommandSpy = jest.spyOn(yarn1Proxy, 'executeCommand').mockReturnValue('');
+
+      yarn1Proxy.installDependencies();
+
+      expect(executeCommandSpy).toHaveBeenCalledWith('yarn', [], expect.any(String));
+    });
+  });
+
+  describe('addDependencies', () => {
+    it('with devDep it should run `yarn install -D --ignore-workspace-root-check @storybook/addons`', () => {
+      const executeCommandSpy = jest.spyOn(yarn1Proxy, 'executeCommand').mockReturnValue('');
+
+      yarn1Proxy.addDependencies({ installAsDevDependencies: true }, ['@storybook/addons']);
+
+      expect(executeCommandSpy).toHaveBeenCalledWith(
         'yarn',
-        ['init', '-y'],
-        expect.objectContaining({
-          cwd: process.cwd(),
-          env: process.env,
-          stdio: 'pipe',
-          encoding: 'utf-8',
-        })
+        ['add', '-D', '--ignore-workspace-root-check', '@storybook/addons'],
+        expect.any(String)
       );
+    });
+  });
 
-      expect(result).toEqual(expect.any(String));
+  describe('latestVersion', () => {
+    it('without contraint it returns the latest version', async () => {
+      const executeCommandSpy = jest
+        .spyOn(yarn1Proxy, 'executeCommand')
+        .mockReturnValue('{"type":"inspect","data":"5.3.19"}');
+
+      const version = await yarn1Proxy.latestVersion('@storybook/addons');
+
+      expect(executeCommandSpy).toHaveBeenCalledWith('yarn', [
+        'info',
+        '@storybook/addons',
+        'version',
+        '--json',
+      ]);
+      expect(version).toEqual('5.3.19');
+    });
+
+    it('with contraint it returns the latest version satisfying the constraint', async () => {
+      const executeCommandSpy = jest
+        .spyOn(yarn1Proxy, 'executeCommand')
+        .mockReturnValue('{"type":"inspect","data":["4.25.3","5.3.19","6.0.0-beta.23"]}');
+
+      const version = await yarn1Proxy.latestVersion('@storybook/addons', '5.X');
+
+      expect(executeCommandSpy).toHaveBeenCalledWith('yarn', [
+        'info',
+        '@storybook/addons',
+        'versions',
+        '--json',
+      ]);
+      expect(version).toEqual('5.3.19');
+    });
+
+    it('throws an error if command output is not a valid JSON', async () => {
+      jest.spyOn(yarn1Proxy, 'executeCommand').mockReturnValue('NOT A JSON');
+
+      await expect(yarn1Proxy.latestVersion('@storybook/addons')).rejects.toThrow();
     });
   });
 });

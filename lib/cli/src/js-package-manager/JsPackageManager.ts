@@ -2,6 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import chalk from 'chalk';
 import { gt, satisfies } from '@storybook/semver';
+import { sync as spawnSync } from 'cross-spawn';
 import { commandLog, writePackageJson } from '../helpers';
 import { PackageJson } from './PackageJson';
 
@@ -220,5 +221,18 @@ export abstract class JsPackageManager {
 
     const jsonContent = fs.readFileSync(packageJsonPath, 'utf8');
     return JSON.parse(jsonContent);
+  }
+
+  public executeCommand(command: string, args: string[], stdio?: 'pipe' | 'inherit'): string {
+    const commandResult = spawnSync(command, args, {
+      stdio: stdio ?? 'pipe',
+      encoding: 'utf-8',
+    });
+
+    if (commandResult.status !== 0) {
+      throw new Error(commandResult.stderr ?? '');
+    }
+
+    return commandResult.stdout ?? '';
   }
 }

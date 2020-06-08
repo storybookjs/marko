@@ -1,15 +1,8 @@
-import { sync as spawnSync } from 'cross-spawn';
 import { JsPackageManager } from './JsPackageManager';
 
 export class Yarn2Proxy extends JsPackageManager {
   initPackageJson() {
-    const results = spawnSync('yarn', ['init'], {
-      cwd: process.cwd(),
-      env: process.env,
-      stdio: 'pipe',
-      encoding: 'utf-8',
-    });
-    return results.stdout;
+    return this.executeCommand('yarn', ['init']);
   }
 
   getRunStorybookCommand(): string {
@@ -17,25 +10,17 @@ export class Yarn2Proxy extends JsPackageManager {
   }
 
   protected runInstall(): void {
-    const commandResult = spawnSync('yarn', { stdio: 'inherit' });
-
-    if (commandResult.status !== 0) {
-      throw new Error(commandResult.stderr.toString());
-    }
+    this.executeCommand('yarn', [], 'inherit');
   }
 
   protected runAddDeps(dependencies: string[], installAsDevDependencies: boolean): void {
-    const args = ['add', ...dependencies];
+    let args = [...dependencies];
 
     if (installAsDevDependencies) {
-      args.push('-D');
+      args = ['-D', ...args];
     }
 
-    const commandResult = spawnSync('yarn', args, { stdio: 'inherit' });
-
-    if (commandResult.status !== 0) {
-      throw new Error(commandResult.stderr.toString());
-    }
+    this.executeCommand('yarn', ['add', ...args], 'inherit');
   }
 
   protected runGetVersions<T extends boolean>(
@@ -43,24 +28,12 @@ export class Yarn2Proxy extends JsPackageManager {
     fetchAllVersions: T
   ): Promise<T extends true ? string[] : string> {
     const field = fetchAllVersions ? 'versions' : 'version';
+    const args = ['--fields', field, '--json'];
 
-    const commandResult = spawnSync(
-      'yarn',
-      ['npm', 'info', packageName, '--fields', field, '--json'],
-      {
-        cwd: process.cwd(),
-        env: process.env,
-        stdio: 'pipe',
-        encoding: 'utf-8',
-      }
-    );
-
-    if (commandResult.status !== 0) {
-      throw new Error(commandResult.stderr.toString());
-    }
+    const commandResult = this.executeCommand('yarn', ['npm', 'info', packageName, ...args]);
 
     try {
-      const parsedOutput = JSON.parse(commandResult.stdout.toString());
+      const parsedOutput = JSON.parse(commandResult);
       return parsedOutput[field];
     } catch (e) {
       throw new Error(`Unable to find versions of ${packageName} using yarn 2`);
