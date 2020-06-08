@@ -2,7 +2,7 @@ import type { StorybookConfig } from '@storybook/core/types';
 
 module.exports = {
   stories: ['./src/*.stories.*'],
-  addons: ['@storybook/addon-essentials'],
+  addons: ['@storybook/addon-essentials', '@storybook/addon-controls'],
   typescript: {
     check: true,
     checkOptions: {},
