@@ -45,7 +45,7 @@ export default function render({
   showMain();
 
   // at component creation || refresh by HMR
-  if (!root[COMPONENT] || !forceRender) {
+  if (!root[COMPONENT] || forceRender) {
     root[COMPONENT] = element;
   }
 
