@@ -7,7 +7,7 @@ import { satisfies } from '@storybook/semver';
 import stripJsonComments from 'strip-json-comments';
 
 import { StoryFormat } from './project_types';
-import { JsPackageManager, PackageJson } from './js-package-manager';
+import { JsPackageManager, PackageJson, PackageJsonWithDepsAndDevDeps } from './js-package-manager';
 
 const logger = console;
 
@@ -118,7 +118,7 @@ export function codeLog(codeLines: string[], leftPadAmount?: number) {
  */
 export async function getBabelDependencies(
   packageManager: JsPackageManager,
-  packageJson: PackageJson
+  packageJson: PackageJsonWithDepsAndDevDeps
 ) {
   const dependenciesToAdd = [];
   let babelLoaderVersion = '^8.0.0-0';

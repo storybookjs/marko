@@ -4,3 +4,6 @@ export type PackageJson = {
   peerDependencies?: Record<string, string>;
   scripts?: Record<string, string>;
 };
+
+export type PackageJsonWithDepsAndDevDeps = PackageJson &
+  Required<Pick<PackageJson, 'dependencies' | 'devDependencies'>>;

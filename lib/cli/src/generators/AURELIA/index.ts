@@ -1,7 +1,6 @@
 import { getBabelDependencies, writeFileAsJson, copyTemplate, readFileAsJson } from '../../helpers';
 import { Generator } from '../Generator';
 import { StoryFormat } from '../../project_types';
-import { writePackageJson } from '../../js-package-manager';
 
 function addStorybookExcludeGlobToTsConfig() {
   const tsConfigJson = readFileAsJson('tsconfig.json', true);
@@ -43,9 +42,6 @@ const generator: Generator = async (
 
   const versionedPackages = await packageManager.getVersionedPackages(...packages);
   const packageJson = packageManager.retrievePackageJson();
-  packageJson.dependencies = packageJson.dependencies || {};
-  packageJson.devDependencies = packageJson.devDependencies || {};
-  writePackageJson(packageJson);
   addStorybookExcludeGlobToTsConfig();
   const babelDependencies = await getBabelDependencies(packageManager, packageJson);
   packageManager.addDependencies({ ...npmOptions, packageJson }, [

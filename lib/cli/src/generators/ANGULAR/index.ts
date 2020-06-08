@@ -9,7 +9,7 @@ import { getBabelDependencies, writeFileAsJson, copyTemplate } from '../../helpe
 import { StoryFormat } from '../../project_types';
 import { NpmOptions } from '../../NpmOptions';
 import { Generator, GeneratorOptions } from '../Generator';
-import { JsPackageManager, writePackageJson } from '../../js-package-manager';
+import { JsPackageManager } from '../../js-package-manager';
 
 async function addDependencies(
   packageManager: JsPackageManager,
@@ -30,11 +30,6 @@ async function addDependencies(
   const versionedPackages = await packageManager.getVersionedPackages(...packages);
 
   const packageJson = packageManager.retrievePackageJson();
-
-  packageJson.dependencies = packageJson.dependencies || {};
-  packageJson.devDependencies = packageJson.devDependencies || {};
-
-  writePackageJson(packageJson);
 
   const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 

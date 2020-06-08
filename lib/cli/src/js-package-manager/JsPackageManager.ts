@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import { gt, satisfies } from '@storybook/semver';
 import { sync as spawnSync } from 'cross-spawn';
 import { commandLog } from '../helpers';
-import { PackageJson } from './PackageJson';
+import { PackageJson, PackageJsonWithDepsAndDevDeps } from './PackageJson';
 import { readPackageJson, writePackageJson } from './PackageJsonHelper';
 
 const logger = console;
@@ -34,17 +34,21 @@ export abstract class JsPackageManager {
     done();
   }
 
-  public retrievePackageJson(): PackageJson {
-    const existing = readPackageJson();
-    if (existing) {
-      return existing;
+  public retrievePackageJson(): PackageJsonWithDepsAndDevDeps {
+    let packageJson = readPackageJson();
+    if (!packageJson) {
+      // It will create a new package.json file
+      this.initPackageJson();
+
+      // read the newly created package.json file
+      packageJson = readPackageJson() || {};
     }
 
-    // It will create a new package.json file
-    this.initPackageJson();
-
-    // read the newly created package.json file
-    return readPackageJson() || {};
+    return {
+      ...packageJson,
+      dependencies: { ...packageJson.dependencies },
+      devDependencies: { ...packageJson.devDependencies },
+    };
   }
 
   /**

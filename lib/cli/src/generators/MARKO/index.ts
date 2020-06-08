@@ -1,6 +1,5 @@
 import { getBabelDependencies, copyTemplate } from '../../helpers';
 import { Generator } from '../Generator';
-import { writePackageJson } from '../../js-package-manager';
 
 const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
   const [
@@ -16,11 +15,6 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
   copyTemplate(__dirname, storyFormat);
 
   const packageJson = packageManager.retrievePackageJson();
-
-  packageJson.dependencies = packageJson.dependencies || {};
-  packageJson.devDependencies = packageJson.devDependencies || {};
-
-  writePackageJson(packageJson);
 
   const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 

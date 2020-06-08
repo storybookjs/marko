@@ -31,9 +31,6 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
 
   const packageJson = packageManager.retrievePackageJson();
 
-  packageJson.devDependencies = packageJson.devDependencies || {};
-  packageJson.dependencies = packageJson.dependencies || {};
-
   const devDependencies = [
     `@storybook/react@${storybookVersion}`,
     `@storybook/addon-actions@${actionsVersion}`,

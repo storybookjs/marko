@@ -24,9 +24,6 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
 
   const packageJson = packageManager.retrievePackageJson();
 
-  packageJson.dependencies = packageJson.dependencies || {};
-  packageJson.devDependencies = packageJson.devDependencies || {};
-
   const packageBabelCoreVersion =
     packageJson.dependencies['babel-core'] || packageJson.devDependencies['babel-core'];
 
