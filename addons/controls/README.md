@@ -242,7 +242,14 @@ This generates the following UI with a custom range slider:
   <img src="https://raw.githubusercontent.com/storybookjs/storybook/next/addons/controls/docs/media/addon-controls-args-reflow-slider.png" width="80%" />
 </center>
 
-<h4>Angular</h4>
+**Note:** If you add an `ArgType` that is not part of the component, Storybook will *only* use your argTypes definitions.  
+If you want to merge new controls with the existing component properties, you must enable this parameter:
+
+```jsx
+  docs: { forceExtractedArgTypes: true },
+```
+
+#### Angular
 
 To achieve this within an angular-cli build.
 
