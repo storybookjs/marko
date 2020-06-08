@@ -8,8 +8,6 @@ import { Channel } from '@storybook/channels';
 import Events from '@storybook/core-events';
 import { logger } from '@storybook/client-logger';
 import {
-  StoryId,
-  ViewMode,
   Comparator,
   Parameters,
   Args,
@@ -28,15 +26,12 @@ import {
   ErrorLike,
   GetStorybookKind,
   ArgTypesEnhancer,
+  StoreSelectionSpecifier,
+  StoreSelection,
 } from './types';
 import { HooksContext } from './hooks';
 import storySort from './storySort';
 import { combineParameters } from './parameters';
-
-interface Selection {
-  storyId: StoryId;
-  viewMode: ViewMode;
-}
 
 interface StoryOptions {
   includeDocsOnly?: boolean;
@@ -110,7 +105,9 @@ export default class StoryStore {
 
   _argTypesEnhancers: ArgTypesEnhancer[];
 
-  _selection: Selection;
+  _selectionSpecifier?: StoreSelectionSpecifier;
+
+  _selection?: StoreSelection;
 
   constructor(params: { channel: Channel }) {
     // Assume we are configuring until we hear otherwise
@@ -121,7 +118,6 @@ export default class StoryStore {
     this._kinds = {};
     this._stories = {};
     this._argTypesEnhancers = [];
-    this._selection = {} as any;
     this._error = undefined;
     this._channel = params.channel;
 
@@ -177,10 +173,39 @@ export default class StoryStore {
       { ...defaultGlobalArgs, ...initialGlobalArgs }
     );
 
-    this.pushToManager();
-    if (this._channel) {
-      this._channel.emit(Events.RENDER_CURRENT_STORY);
+    // Set the current selection based on the current selection specifier, if set
+    if (this._selectionSpecifier) {
+      const { storySpecifier, viewMode } = this._selectionSpecifier;
+      if (storySpecifier === '*') {
+        // '*' means select the first story. If there is non, we have no selection.
+        const firstStory = Object.values(this._stories)[0];
+        if (firstStory) {
+          this.setSelection({ storyId: firstStory.id, viewMode });
+        } else {
+          this.setSelection(null);
+        }
+      } else if (typeof storySpecifier === 'string') {
+        // We don't check the storyId actually exists in the store, we just set the selection
+        this.setSelection({ storyId: storySpecifier, viewMode });
+      } else {
+        // Try and find a story matching the name/kind, setting no selection if they don't exist.
+        const { name, kind } = storySpecifier;
+        const story = this.getRawStory(kind, name);
+        if (story) {
+          this.setSelection({ storyId: story.id, viewMode });
+        } else {
+          this.setSelection(null);
+        }
+      }
+
+      // Clear the specifier so we don't search again on HMR
+      this._selectionSpecifier = null;
+    } else {
+      // No specifier so explicitly set no selection
+      this.setSelection(null);
     }
+
+    this.pushToManager();
   }
 
   addGlobalMetadata({ parameters, decorators }: StoryMetadata) {
@@ -476,21 +501,19 @@ export default class StoryStore {
 
   getError = (): ErrorLike | undefined => this._error;
 
-  setSelection(selection: Selection): void {
+  setSelectionSpecifier(selectionSpecifier: StoreSelectionSpecifier): void {
+    this._selectionSpecifier = selectionSpecifier;
+  }
+
+  setSelection(selection: StoreSelection): void {
     this._selection = selection;
 
     if (this._channel) {
       this._channel.emit(Events.CURRENT_STORY_WAS_SET, this._selection);
-
-      // If the selection is set while configuration is in process, we are guaranteed
-      // we'll emit RENDER_CURRENT_STORY at the end of the process, so we shouldn't do it now.
-      if (!this._configuring) {
-        this._channel.emit(Events.RENDER_CURRENT_STORY);
-      }
     }
   }
 
-  getSelection = (): Selection => this._selection;
+  getSelection = (): StoreSelection => this._selection;
 
   getDataForManager = () => {
     return {
