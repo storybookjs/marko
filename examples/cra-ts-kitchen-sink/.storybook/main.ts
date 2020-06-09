@@ -26,4 +26,13 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-a11y',
   ],
+  webpackFinal: (config) => {
+    // add monorepo root as a valid directory to import modules from
+    config.resolve.plugins.forEach((p) => {
+      if (Array.isArray(p.appSrcs)) {
+        p.appSrcs.push(path.join(__dirname, '..', '..', '..'));
+      }
+    });
+    return config;
+  },
 };

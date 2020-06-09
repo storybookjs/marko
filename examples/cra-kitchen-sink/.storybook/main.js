@@ -1,6 +1,8 @@
+const path = require('path');
+
 module.exports = {
   addons: [
-    // '@storybook/preset-create-react-app',
+    '@storybook/preset-create-react-app',
     {
       name: '@storybook/addon-docs/preset',
       options: {
@@ -16,4 +18,13 @@ module.exports = {
     '@storybook/addon-jest',
   ],
   stories: ['../src/stories/**/*.stories.@(js|mdx)'],
+  webpackFinal: (config) => {
+    // add monorepo root as a valid directory to import modules from
+    config.resolve.plugins.forEach((p) => {
+      if (Array.isArray(p.appSrcs)) {
+        p.appSrcs.push(path.join(__dirname, '..', '..', '..'));
+      }
+    });
+    return config;
+  },
 };

@@ -1,7 +1,9 @@
+const path = require('path');
+
 module.exports = {
   stories: ['../src/**/*.stories.tsx'],
   addons: [
-    // '@storybook/preset-create-react-app',
+    '@storybook/preset-create-react-app',
     {
       name: '@storybook/addon-essentials',
       options: {
@@ -9,4 +11,13 @@ module.exports = {
       },
     },
   ],
+  webpackFinal: (config) => {
+    // add monorepo root as a valid directory to import modules from
+    config.resolve.plugins.forEach((p) => {
+      if (Array.isArray(p.appSrcs)) {
+        p.appSrcs.push(path.join(__dirname, '..', '..', '..'));
+      }
+    });
+    return config;
+  },
 };
