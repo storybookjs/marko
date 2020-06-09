@@ -7,6 +7,7 @@ import {
   STORY_CHANGED,
   SELECT_STORY,
   SET_STORIES,
+  CURRENT_STORY_WAS_SET,
 } from '@storybook/core-events';
 
 import { logger } from '@storybook/client-logger';
@@ -254,6 +255,20 @@ export const init: ModuleFn = ({
   };
 
   const initModule = () => {
+    // On initial load, the local iframe will select the first story (or other "selection specifier")
+    // and emit CURRENT_STORY_WAS_SET with the id. We need to ensure we respond to this change.
+    // Later when we change story via the manager (or SELECT_STORY below), we'll already be at the
+    // correct path before CURRENT_STORY_WAS_SET is emitted, so this is less important (the navigate is a no-op)
+    // Note this is the case for refs also.
+    fullAPI.on(CURRENT_STORY_WAS_SET, function handleCurrentStoryWasSet({ storyId, viewMode }) {
+      const { source }: { source: string } = this;
+      const [sourceType] = getSourceType(source);
+
+      if (sourceType === 'local') {
+        navigate(`/${viewMode}/${storyId}`);
+      }
+    });
+
     fullAPI.on(STORY_CHANGED, function handleStoryChange(storyId: string) {
       const { source }: { source: string } = this;
       const [sourceType] = getSourceType(source);
