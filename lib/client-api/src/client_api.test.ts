@@ -507,7 +507,7 @@ describe('preview.client_api', () => {
       storiesOf('kind2', (module2 as unknown) as NodeModule).add('story2', jest.fn());
       storyStore.finishConfiguring();
 
-      let [event, args] = mockChannelEmit.mock.calls[0];
+      let [event, args] = mockChannelEmit.mock.calls[1];
       expect(event).toEqual(Events.SET_STORIES);
       expect(Object.values(args.stories as [{ kind: string }]).map((v) => v.kind)).toEqual([
         'kind0',
@@ -526,7 +526,7 @@ describe('preview.client_api', () => {
       storyStore.finishConfiguring();
 
       // eslint-disable-next-line prefer-destructuring
-      [event, args] = mockChannelEmit.mock.calls[0];
+      [event, args] = mockChannelEmit.mock.calls[1];
 
       expect(event).toEqual(Events.SET_STORIES);
       expect(Object.values(args.stories as [{ kind: string }]).map((v) => v.kind)).toEqual([
