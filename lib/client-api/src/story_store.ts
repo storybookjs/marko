@@ -68,6 +68,24 @@ const checkStorySort = (parameters: Parameters) => {
   if (options?.storySort) logger.error('The storySort option parameter can only be set globally');
 };
 
+const getSortedStories = memoize(1)(
+  (storiesData: StoreData, kindOrder: Record<StoryKind, number>, storySortParameter) => {
+    const stories = Object.entries(storiesData);
+    if (storySortParameter) {
+      let sortFn: Comparator<any>;
+      if (typeof storySortParameter === 'function') {
+        sortFn = storySortParameter;
+      } else {
+        sortFn = storySort(storySortParameter);
+      }
+      stable.inplace(stories, sortFn);
+    } else {
+      stable.inplace(stories, (s1, s2) => kindOrder[s1[1].kind] - kindOrder[s2[1].kind]);
+    }
+    return stories.map(([id, s]) => s);
+  }
+);
+
 interface AllowUnsafeOption {
   allowUnsafe?: boolean;
 }
@@ -173,36 +191,30 @@ export default class StoryStore {
       { ...defaultGlobalArgs, ...initialGlobalArgs }
     );
 
-    // Set the current selection based on the current selection specifier, if set
-    if (this._selectionSpecifier) {
+    // Set the current selection based on the current selection specifier, if selection is not yet set
+    const stories = this.sortedStories();
+    let foundStory;
+    if (this._selectionSpecifier && !this._selection) {
       const { storySpecifier, viewMode } = this._selectionSpecifier;
       if (storySpecifier === '*') {
-        // '*' means select the first story. If there is non, we have no selection.
-        const firstStory = Object.values(this._stories)[0];
-        if (firstStory) {
-          this.setSelection({ storyId: firstStory.id, viewMode });
-        } else {
-          this.setSelection(null);
-        }
+        // '*' means select the first story. If there is none, we have no selection.
+        [foundStory] = stories;
       } else if (typeof storySpecifier === 'string') {
-        // We don't check the storyId actually exists in the store, we just set the selection
-        this.setSelection({ storyId: storySpecifier, viewMode });
+        foundStory = Object.values(stories).find((s) => s.id.startsWith(storySpecifier));
       } else {
         // Try and find a story matching the name/kind, setting no selection if they don't exist.
         const { name, kind } = storySpecifier;
-        const story = this.getRawStory(kind, name);
-        if (story) {
-          this.setSelection({ storyId: story.id, viewMode });
-        } else {
-          this.setSelection(null);
-        }
+        foundStory = this.getRawStory(kind, name);
       }
 
-      // Clear the specifier so we don't search again on HMR
-      this._selectionSpecifier = null;
-    } else {
-      // No specifier so explicitly set no selection
-      this.setSelection(null);
+      if (foundStory) {
+        this.setSelection({ storyId: foundStory.id, viewMode });
+      }
+    }
+
+    // If we didn't find a story matching the speficier, we always want to emit CURRENT_STORY_WAS_SET anyway
+    if (!foundStory) {
+      this._channel.emit(Events.CURRENT_STORY_WAS_SET, this._selection);
     }
 
     this.pushToManager();
@@ -454,37 +466,30 @@ export default class StoryStore {
       .map((i) => this.mergeAdditionalDataToStory(i));
   }
 
-  extract(options: StoryOptions & { normalizeParameters?: boolean } = {}) {
-    const stories = Object.entries(this._stories);
-
+  sortedStories(): StoreItem[] {
+    // NOTE: when kinds are HMR'ed they get temporarily removed from the `_stories` array
+    // and thus lose order. However `_kinds[x].order` preservers the original load order
+    const kindOrder = mapValues(this._kinds, ({ order }) => order);
     const storySortParameter = this._globalMetadata.parameters?.options?.storySort;
-    if (storySortParameter) {
-      let sortFn: Comparator<any>;
-      if (typeof storySortParameter === 'function') {
-        sortFn = storySortParameter;
-      } else {
-        sortFn = storySort(storySortParameter);
-      }
-      stable.inplace(stories, sortFn);
-    } else {
-      // NOTE: when kinds are HMR'ed they get temporarily removed from the `_stories` array
-      // and thus lose order. However `_kindOrder` preservers the original load order
-      stable.inplace(
-        stories,
-        (s1, s2) => this._kinds[s1[1].kind].order - this._kinds[s2[1].kind].order
-      );
-    }
+    return getSortedStories(this._stories, kindOrder, storySortParameter);
+  }
+
+  extract(options: StoryOptions & { normalizeParameters?: boolean } = {}) {
+    const stories = this.sortedStories();
 
     // removes function values from all stories so they are safe to transport over the channel
-    return stories.reduce((acc, [id, story]) => {
+    return stories.reduce((acc, story) => {
       if (!includeStory(story, options)) return acc;
 
       const extracted = toExtracted(story);
-      if (options.normalizeParameters) return Object.assign(acc, { [id]: extracted });
+      if (options.normalizeParameters) return Object.assign(acc, { [story.id]: extracted });
 
-      const { parameters, kind } = extracted as { parameters: Parameters; kind: StoryKind };
+      const { parameters, kind } = extracted as {
+        parameters: Parameters;
+        kind: StoryKind;
+      };
       return Object.assign(acc, {
-        [id]: Object.assign(extracted, {
+        [story.id]: Object.assign(extracted, {
           parameters: this.combineStoryParameters(parameters, kind),
         }),
       });
