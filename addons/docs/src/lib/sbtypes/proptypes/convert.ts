@@ -43,8 +43,7 @@ export const convert = (type: PTType): SBType | any => {
     case 'elementType':
     default: {
       if (name?.indexOf('|') > 0) {
-        // react-docgen-typescript-loader doesn't always produce proper
-        // enum types, possibly due to https://github.com/strothj/react-docgen-typescript-loader/issues/81
+        // react-docgen-typescript-plugin doesn't always produce proper
         // this hack tries to parse out values from the string and should be
         // removed when RDTL gets a little smarter about this
         try {

@@ -47,7 +47,7 @@
     "enzyme-adapter-react-16": "^1.9.1",
     "enzyme-to-json": "^3.4.1",
     "fork-ts-checker-webpack-plugin": "^4.0.3",
-    "react-docgen-typescript-loader": "^3.7.2",
+    "react-docgen-typescript-plugin": "^0.0.2",
     "react-moment-proptypes": "^1.7.0",
     "ts-node": "~8.9.1"
   },
