@@ -1,8 +1,8 @@
-import { PropsTableProps } from '@storybook/components';
 import { ArgTypes } from '@storybook/api';
+import { PropDef } from './PropDef';
 import { Component } from '../../blocks/types';
 
-export type PropsExtractor = (component: Component) => PropsTableProps | null;
+export type PropsExtractor = (component: Component) => { rows?: PropDef[] } | null;
 
 export type ArgTypesExtractor = (component: Component) => ArgTypes | null;
 
@@ -49,3 +49,5 @@ export enum TypeSystem {
   TYPESCRIPT = 'TypeScript',
   UNKNOWN = 'Unknown',
 }
+
+export { PropDef };

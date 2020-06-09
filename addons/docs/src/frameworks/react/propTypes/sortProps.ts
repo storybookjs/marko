@@ -1,4 +1,4 @@
-import { PropDef } from '@storybook/components';
+import { PropDef } from '../../../lib/docgen';
 import { Component } from '../../../blocks/types';
 
 // react-docgen doesn't returned the props in the order they were defined in the "propTypes" object of the component.
