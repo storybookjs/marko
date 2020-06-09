@@ -1,5 +1,6 @@
 module.exports = {
   stories: ['./stories/*.*'],
+  logLevel: 'debug',
   refs: {
     ember: {
       id: 'ember',

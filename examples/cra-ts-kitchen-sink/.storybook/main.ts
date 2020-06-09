@@ -3,6 +3,7 @@ const path = require('path');
 
 module.exports = {
   stories: ['../src/**/*.stories.@(mdx|tsx|ts|jsx|js)'],
+  logLevel: 'debug',
   addons: [
     {
       name: '@storybook/preset-create-react-app',
