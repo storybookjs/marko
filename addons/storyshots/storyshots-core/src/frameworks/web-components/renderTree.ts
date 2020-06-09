@@ -2,13 +2,10 @@ import { document, Node } from 'global';
 
 function getRenderedTree(story: { render: () => any }) {
   const component = story.render();
-
-  if (component instanceof Node) {
-    return component;
-  }
+  const componentContent = component.getHTML ? component.getHTML() : component;
 
   const section: HTMLElement = document.createElement('section');
-  section.innerHTML = component;
+  section.innerHTML = componentContent;
 
   if (section.childElementCount > 1) {
     return section;
