@@ -1,74 +1,64 @@
 import React from 'react';
-import { Title, Subtitle, DocsWrapper, DocsContent } from './DocsPage';
-import * as storyStories from './Story.stories';
-import * as previewStories from './Preview.stories';
-import * as propsTableStories from './PropsTable/PropsTable.stories';
-import * as sourceStories from './Source.stories';
-import * as descriptionStories from './Description.stories';
+import { Title, Subtitle, DocsPageWrapper } from './DocsPage';
+import * as Story from './Story.stories';
+import * as Preview from './Preview.stories';
+import * as ArgsTable from './ArgsTable/ArgsTable.stories';
+import * as Source from './Source.stories';
+import * as Description from './Description.stories';
 
 export default {
   title: 'Docs/DocsPage',
-  component: DocsWrapper,
+  component: DocsPageWrapper,
   parameters: {
     layout: 'fullscreen',
   },
-  decorators: [
-    (storyFn) => (
-      <DocsWrapper>
-        <DocsContent>{storyFn()}</DocsContent>
-      </DocsWrapper>
-    ),
-  ],
 };
-
-export const withSubtitle = () => (
-  <>
+export const WithSubtitle = () => (
+  <DocsPageWrapper>
     <Title>DocsPage</Title>
     <Subtitle>
       What the DocsPage looks like. Meant to be QAed in Canvas tab not in Docs tab.
     </Subtitle>
-    {descriptionStories.text()}
-    {previewStories.single()}
-    {propsTableStories.normal()}
-    {sourceStories.jsx()}
-  </>
-);
-withSubtitle.storyName = 'with subtitle';
-
-export const empty = () => (
-  <>
-    {storyStories.error()}
-    {propsTableStories.error()}
-    {sourceStories.sourceUnavailable()}
-  </>
+    <Description.Text {...Description.Text.args} />
+    <Preview.Single {...Preview.Single.args} />
+    <ArgsTable.Normal {...ArgsTable.Normal.args} />
+    <Source.JSX {...Source.JSX.args} />
+  </DocsPageWrapper>
 );
 
-export const noText = () => (
-  <>
+export const Empty = () => (
+  <DocsPageWrapper>
+    <Story.Error {...Story.Error.args} />
+    <ArgsTable.Error {...ArgsTable.Error.args} />
+    <Source.SourceUnavailable {...Source.SourceUnavailable.args} />
+  </DocsPageWrapper>
+);
+
+export const NoText = () => (
+  <DocsPageWrapper>
     <Title>no text</Title>
-    {previewStories.single()}
-    {propsTableStories.normal()}
-    {sourceStories.jsx()}
-  </>
+    <Preview.Single {...Preview.Single.args} />
+    <ArgsTable.Normal {...ArgsTable.Normal.args} />
+    <Source.JSX {...Source.JSX.args} />
+  </DocsPageWrapper>
 );
-noText.storyName = 'no text';
 
-export const text = () => (
-  <>
+export const Text = () => (
+  <DocsPageWrapper>
     <Title>Sensorium</Title>
-    {descriptionStories.text()}
-    {previewStories.single()}
-    {propsTableStories.normal()}
-    {sourceStories.jsx()}
-  </>
+    <Description.Text {...Description.Text.args} />
+    <Preview.Single {...Preview.Single.args} />
+    <ArgsTable.Normal {...ArgsTable.Normal.args} />
+    <Source.JSX {...Source.JSX.args} />
+  </DocsPageWrapper>
 );
 
-export const markdown = () => (
-  <>
+export const Markdown = () => (
+  <DocsPageWrapper>
     <Title>markdown</Title>
-    {descriptionStories.markdown()}
-    {previewStories.single()}
-    {propsTableStories.normal()}
-    {sourceStories.jsx()}
-  </>
+    <Description.Markdown />
+    <Preview.Single {...Preview.Single.args} />
+    <ArgsTable.Normal {...ArgsTable.Normal.args} />
+    <Source.JSX {...Source.JSX.args} />
+  </DocsPageWrapper>
 );

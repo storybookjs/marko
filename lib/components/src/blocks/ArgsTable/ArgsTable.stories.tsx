@@ -10,9 +10,16 @@ export default {
 const propsSection = { category: 'props ' };
 const eventsSection = { category: 'events ' };
 
-export const Normal = () => <ArgsTable rows={{ stringType, numberType }} />;
+export const Normal = (args) => <ArgsTable {...args} />;
+Normal.args = {
+  rows: { stringType, numberType },
+};
 
-export const Compact = () => <ArgsTable compact rows={{ stringType, numberType }} />;
+export const Compact = (args) => <ArgsTable {...args} />;
+Compact.args = {
+  ...Normal.args,
+  compact: true,
+};
 
 const sectionRows = {
   a: { ...stringType, table: { ...stringType.table, ...propsSection } },
@@ -20,10 +27,21 @@ const sectionRows = {
   c: { ...stringType, table: { ...stringType.table, ...eventsSection } },
 };
 
-export const Sections = () => <ArgsTable rows={sectionRows} />;
+export const Sections = (args) => <ArgsTable {...args} />;
+Sections.args = {
+  rows: sectionRows,
+};
 
-export const SectionsCompact = () => <ArgsTable compact rows={sectionRows} />;
+export const SectionsCompact = (args) => <ArgsTable {...args} />;
+SectionsCompact.args = {
+  ...Sections.args,
+  compact: true,
+};
 
-export const Error = () => <ArgsTable error={ArgsTableError.NO_COMPONENT} />;
+export const Error = (args) => <ArgsTable {...args} />;
+Error.args = {
+  error: ArgsTableError.NO_COMPONENT,
+};
 
-export const Empty = () => <ArgsTable rows={{}} />;
+export const Empty = (args) => <ArgsTable {...args} />;
+Empty.args = { rows: {} };
