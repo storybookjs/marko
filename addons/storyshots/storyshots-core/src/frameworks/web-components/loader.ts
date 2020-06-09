@@ -18,7 +18,7 @@ function load(options: StoryshotsOptions) {
     framework: 'web-components' as const,
     renderTree: jest.requireActual('./renderTree').default,
     renderShallowTree: () => {
-      throw new Error('Shallow renderer is not supported for HTML');
+      throw new Error('Shallow renderer is not supported for web-components');
     },
     storybook,
   };
