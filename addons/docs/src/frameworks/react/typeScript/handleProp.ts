@@ -1,5 +1,4 @@
-import { PropDef } from '@storybook/components';
-import { ExtractedProp } from '../../../lib/docgen';
+import { PropDef, ExtractedProp } from '../../../lib/docgen';
 import { createDefaultValue, createDefaultValueFromRawDefaultProp } from '../lib/defaultValues';
 
 export function enhanceTypeScriptProp(extractedProp: ExtractedProp, rawDefaultProp?: any): PropDef {

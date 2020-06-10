@@ -1,10 +1,11 @@
-import { PropDefaultValue, PropDef } from '@storybook/components';
+import { PropDefaultValue } from '@storybook/components';
 import isPlainObject from 'lodash/isPlainObject';
 import isFunction from 'lodash/isFunction';
 import isString from 'lodash/isString';
 // @ts-ignore
 import reactElementToJSXString from 'react-element-to-jsx-string';
 import { createSummaryValue, isTooLongForDefaultValueSummary } from '../../../../lib';
+import { PropDef } from '../../../../lib/docgen';
 import { inspectValue, InspectionFunction } from '../inspection';
 import { generateObject } from './generateObject';
 import { generateArray } from './generateArray';

@@ -1,5 +1,5 @@
-import { PropDef, PropDefaultValue } from '@storybook/components';
-import { TypeSystem, DocgenInfo, DocgenType, DocgenPropDefaultValue } from './types';
+import { PropDefaultValue } from '@storybook/components';
+import { PropDef, TypeSystem, DocgenInfo, DocgenType, DocgenPropDefaultValue } from './types';
 import { JsDocParsingResult } from '../jsdocParser';
 import { createSummaryValue } from '../utils';
 import { createFlowPropDef } from './flow/createPropDef';

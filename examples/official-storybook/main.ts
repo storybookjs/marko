@@ -59,7 +59,6 @@ module.exports = {
                   '@babel/plugin-syntax-dynamic-import',
                   ['babel-plugin-emotion', { sourceMap: true, autoLabel: true }],
                   'babel-plugin-macros',
-                  '@babel/plugin-transform-react-constant-elements',
                   'babel-plugin-add-react-displayname',
                   [
                     'babel-plugin-react-docgen',
