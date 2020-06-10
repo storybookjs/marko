@@ -1,5 +1,6 @@
 import { history, document } from 'global';
 import qs from 'qs';
+import deprecate from 'util-deprecate';
 import { StoreSelectionSpecifier, StoreSelection } from '@storybook/client-api';
 import { StoryId, ViewMode } from '@storybook/addons';
 
@@ -52,6 +53,12 @@ const getFirstString = (v: ValueOf<qs.ParsedQs>): string | void => {
   return undefined;
 };
 
+const deprecatedLegacyQuery = deprecate(
+  () => 0,
+  `URL formats with \`selectedKind\` and \`selectedName\` query parameters are deprecated. 
+Use \`id=$storyId\` instead. 
+See https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-url-structure`
+);
 export const getSelectionSpecifierFromPath: () => StoreSelectionSpecifier = () => {
   const query = qs.parse(document.location.search, { ignoreQueryPrefix: true });
 
@@ -72,6 +79,7 @@ export const getSelectionSpecifierFromPath: () => StoreSelectionSpecifier = () =
   const name = getFirstString(query.selectedStory);
 
   if (kind && name) {
+    deprecatedLegacyQuery();
     return { storySpecifier: { kind, name }, viewMode };
   }
   return null;
