@@ -51,9 +51,3 @@ SourceUnavailable.args = {
   error: SourceError.SOURCE_UNAVAILABLE,
   format: false,
 };
-
-// For story-reuse, need a better way to do this
-JSX.defaultProps = JSX.args;
-CSS.defaultProps = CSS.args;
-NoStory.defaultProps = NoStory.args;
-SourceUnavailable.defaultProps = SourceUnavailable.args;

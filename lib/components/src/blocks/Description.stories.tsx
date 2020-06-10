@@ -17,13 +17,8 @@ export const Text = (args) => {
 Text.args = {
   markdown: textCaption,
 };
-Text.defaultProps = Text.args;
 
 export const Markdown = (args) => <Description {...args} />;
 Markdown.args = {
   markdown: markdownCaption,
 };
-
-// For story-reuse, need a better way to do this
-Text.defaultProps = Text.args;
-Markdown.defaultProps = Markdown.args;

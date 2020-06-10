@@ -51,11 +51,3 @@ Error.args = {
 
 export const Empty = (args) => <ArgsTable {...args} />;
 Empty.args = { rows: {} };
-
-// For story-reuse, need a better way to do this
-Normal.defaultProps = Normal.args;
-Compact.defaultProps = Compact.args;
-Sections.defaultProps = Sections.args;
-SectionsCompact.defaultProps = SectionsCompact.args;
-Error.defaultProps = Error.args;
-Empty.defaultProps = Empty.args;
