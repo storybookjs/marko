@@ -3,7 +3,7 @@ import { StoryStore, defaultDecorateStory } from '@storybook/client-api';
 import createChannel from '@storybook/channel-postmessage';
 import {
   FORCE_RE_RENDER,
-  RENDER_CURRENT_STORY,
+  CURRENT_STORY_WAS_SET,
   STORY_ERRORED,
   STORY_THREW_EXCEPTION,
   STORY_MISSING,
@@ -387,11 +387,11 @@ describe('core.preview.StoryRenderer', () => {
   });
 
   describe('event handling', () => {
-    it('renders on RENDER_CURRENT_STORY', () => {
+    it('renders on CURRENT_STORY_WAS_SET', () => {
       const { channel, renderer } = prepareRenderer();
       renderer.renderCurrentStory = jest.fn();
 
-      channel.emit(RENDER_CURRENT_STORY);
+      channel.emit(CURRENT_STORY_WAS_SET);
       expect(renderer.renderCurrentStory).toHaveBeenCalledWith(false);
     });
 
