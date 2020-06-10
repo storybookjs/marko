@@ -1,7 +1,12 @@
 import PropTypes from 'prop-types';
 import { isForwardRef, isMemo } from 'react-is';
-import { PropDef } from '@storybook/components';
-import { hasDocgen, extractComponentProps, PropsExtractor, TypeSystem } from '../../lib/docgen';
+import {
+  PropDef,
+  hasDocgen,
+  extractComponentProps,
+  PropsExtractor,
+  TypeSystem,
+} from '../../lib/docgen';
 import { Component } from '../../blocks/types';
 import { enhancePropTypesProps } from './propTypes/handleProp';
 import { enhanceTypeScriptProps } from './typeScript/handleProp';

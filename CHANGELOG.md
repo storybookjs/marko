@@ -1,3 +1,18 @@
+## 6.0.0-beta.23 (June 8, 2020)
+
+### Features
+
+- Addon-docs: Add `docs.forceExtractedArgTypes` parameter ([#11069](https://github.com/storybookjs/storybook/pull/11069))
+
+### Bug Fixes
+
+- Vue: Fix force rendering ([#11076](https://github.com/storybookjs/storybook/pull/11076))
+- Controls: Fix enum extraction for react-docgen-typescript ([#11070](https://github.com/storybookjs/storybook/pull/11070))
+
+### Maintenance
+
+- Core: Zero-config Typescript e2e test ([#10843](https://github.com/storybookjs/storybook/pull/10843))
+
 ## 6.0.0-beta.22 (June 6, 2020)
 
 ### Features

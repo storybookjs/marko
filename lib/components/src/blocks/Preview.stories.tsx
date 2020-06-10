@@ -5,38 +5,38 @@ import { Spaced } from '../spaced/Spaced';
 import { Preview } from './Preview';
 import { Story } from './Story';
 import { Button } from '../Button/Button';
-import * as sourceStories from './Source.stories';
+import * as Source from './Source.stories';
 
 export default {
   title: 'Docs/Preview',
   component: Preview,
 };
 
-export const codeCollapsed = () => (
-  <Preview isExpanded={false} withSource={sourceStories.jsx().props}>
+export const CodeCollapsed = () => (
+  <Preview isExpanded={false} withSource={Source.JSX.args}>
     <Button secondary>Button 1</Button>
   </Preview>
 );
 
-export const codeExpanded = () => (
-  <Preview isExpanded withSource={sourceStories.jsx().props}>
+export const CodeExpanded = () => (
+  <Preview isExpanded withSource={Source.JSX.args}>
     <Button secondary>Button 1</Button>
   </Preview>
 );
 
-export const codeError = () => (
-  <Preview isExpanded withSource={sourceStories.sourceUnavailable().props}>
+export const CodeError = () => (
+  <Preview isExpanded withSource={Source.SourceUnavailable.args}>
     <Button secondary>Button 1</Button>
   </Preview>
 );
 
-export const single = () => (
+export const Single = () => (
   <Preview>
     <Button secondary>Button 1</Button>
   </Preview>
 );
 
-export const row = () => (
+export const Row = () => (
   <Preview>
     <Button secondary>Button 1</Button>
     <Button secondary>Button 2</Button>
@@ -48,7 +48,7 @@ export const row = () => (
   </Preview>
 );
 
-export const column = () => (
+export const Column = () => (
   <Preview isColumn>
     <Button secondary>Button 1</Button>
     <Button secondary>Button 2</Button>
@@ -56,7 +56,7 @@ export const column = () => (
   </Preview>
 );
 
-export const gridWith3Columns = () => (
+export const GridWith3Columns = () => (
   <Preview columns={3}>
     <Button secondary>Button 1</Button>
     <Button secondary>Button 2</Button>
@@ -83,7 +83,7 @@ export const gridWith3Columns = () => (
 
 const buttonFn = () => <Button secondary>Hello Button</Button>;
 
-export const withToolbar = () => (
+export const WithToolbar = () => (
   <Preview withToolbar>
     <Story inline storyFn={buttonFn} title="with toolbar" />
   </Preview>
@@ -94,7 +94,7 @@ const Horizontal = styled((props) => <Spaced col={1} {...props} />)({
   gridTemplateColumns: '100px calc(100vw + 100px) 100px',
 });
 
-export const wide = () => (
+export const Wide = () => (
   <Preview withToolbar>
     <Horizontal>
       <div>START</div>
@@ -104,33 +104,33 @@ export const wide = () => (
   </Preview>
 );
 
-export const withToolbarMulti = () => (
+export const WithToolbarMulti = () => (
   <Preview withToolbar>
     <Story inline storyFn={buttonFn} title="story1" />
     <Story inline storyFn={buttonFn} title="story2" />
   </Preview>
 );
 
-export const withFullscreenSingle = () => (
+export const WithFullscreenSingle = () => (
   <Preview withToolbar>
     <Story inline storyFn={buttonFn} title="story1" parameters={{ layout: 'fullscreen' }} />
   </Preview>
 );
 
-export const withFullscreenMulti = () => (
+export const WithFullscreenMulti = () => (
   <Preview withToolbar>
     <Story inline storyFn={buttonFn} title="story1" parameters={{ layout: 'fullscreen' }} />
     <Story inline storyFn={buttonFn} title="story2" parameters={{ layout: 'fullscreen' }} />
   </Preview>
 );
 
-export const withCenteredSingle = () => (
+export const WithCenteredSingle = () => (
   <Preview withToolbar>
     <Story inline storyFn={buttonFn} title="story1" parameters={{ layout: 'centered' }} />
   </Preview>
 );
 
-export const withCenteredMulti = () => (
+export const WithCenteredMulti = () => (
   <Preview withToolbar>
     <Story inline storyFn={buttonFn} title="story1" parameters={{ layout: 'centered' }} />
     <Story inline storyFn={buttonFn} title="story2" parameters={{ layout: 'centered' }} />

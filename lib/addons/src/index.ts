@@ -15,7 +15,7 @@ export interface RenderOptions {
 }
 
 export interface Addon {
-  title: string;
+  title: (() => string) | string;
   type?: Types;
   id?: string;
   route?: (routeOptions: RouterData) => string;

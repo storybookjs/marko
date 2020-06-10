@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, ReactElement } from 'react';
 import { styled } from '@storybook/theming';
 import { Tabs, Icons, IconButton } from '@storybook/components';
 
@@ -10,9 +10,12 @@ const DesktopOnlyIconButton = styled(IconButton)({
 });
 
 export interface SafeTabProps {
-  title: string;
+  title: (() => string) | string;
   id: string;
+  children: ReactElement;
 }
+
+const SafeTabContent = React.memo<SafeTabProps>(({ children }) => children);
 
 class SafeTab extends Component<SafeTabProps, { hasError: boolean }> {
   constructor(props: SafeTabProps) {
@@ -33,9 +36,9 @@ class SafeTab extends Component<SafeTabProps, { hasError: boolean }> {
       return <h1>Something went wrong.</h1>;
     }
     return (
-      <div id={id} title={title}>
+      <SafeTabContent id={id} title={title}>
         {children}
-      </div>
+      </SafeTabContent>
     );
   }
 }

@@ -13,17 +13,18 @@ const isSubset = (kind: string, subset: object, superset: object) => {
 
 export const enhanceArgTypes: ArgTypesEnhancer = (context) => {
   const { component, argTypes: userArgTypes = {}, docs = {}, args = {} } = context.parameters;
-  const { extractArgTypes } = docs;
+  const { extractArgTypes, forceExtractedArgTypes = false } = docs;
 
   const namedArgTypes = mapValues(userArgTypes, (val, key) => ({ name: key, ...val }));
   const inferredArgTypes = inferArgTypes(args);
   let extractedArgTypes: ArgTypes = extractArgTypes && component ? extractArgTypes(component) : {};
 
   if (
-    (Object.keys(userArgTypes).length > 0 &&
+    !forceExtractedArgTypes &&
+    ((Object.keys(userArgTypes).length > 0 &&
       !isSubset(context.kind, userArgTypes, extractedArgTypes)) ||
-    (Object.keys(inferredArgTypes).length > 0 &&
-      !isSubset(context.kind, inferredArgTypes, extractedArgTypes))
+      (Object.keys(inferredArgTypes).length > 0 &&
+        !isSubset(context.kind, inferredArgTypes, extractedArgTypes)))
   ) {
     extractedArgTypes = {};
   }

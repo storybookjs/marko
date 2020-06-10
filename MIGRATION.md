@@ -12,9 +12,6 @@
     - [Docs theme separated](#docs-theme-separated)
     - [DocsPage slots removed](#docspage-slots-removed)
     - [React prop tables with Typescript](#react-prop-tables-with-typescript)
-      - [React.FC interfaces](#reactfc-interfaces)
-      - [Imported types](#imported-types)
-      - [Rolling back](#rolling-back)
   - [New addon presets](#new-addon-presets)
   - [Removed babel-preset-vue from Vue preset](#removed-babel-preset-vue-from-vue-preset)
   - [Removed Deprecated APIs](#removed-deprecated-apis)
@@ -157,7 +154,9 @@ For more information, [see the documentation](https://github.com/storybookjs/sto
 
 Storybook has built-in Typescript support in 6.0. That means you should remove your complex Typescript configurations from your `.storybook` config. We've tried to pick sensible defaults that work out of the box, especially for nice prop table generation in `@storybook/addon-docs`.
 
-To migrate from an old setup, we recommend deleting any typescript-specific webpack/babel configurations in your project. If you want to override the defaults, see the [typescript configuration docs](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/configurations/typescript-config/index.md).
+To migrate from an old setup, we recommend deleting any typescript-specific webpack/babel configurations in your project. You should also remove `@storybook/preset-typescript`, which is superceded by the built-in configuration.
+
+If you want to override the defaults, see the [typescript configuration docs](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/configurations/typescript-config/index.md).
 
 ### Correct globs in main.js
 
@@ -168,11 +167,13 @@ We've corrected this, the CLI templates have been changed to use valid globs.
 We've also changed the code that resolves these globs, so that invalid globs will log a warning. They will break in the future, so if you see this warning, please ensure you're specifying a valid glob.
 
 Example of an **invalid** glob:
+
 ```
 stories: ['./**/*.stories.(ts|js)']
 ```
 
 Example of a **valid** glob:
+
 ```
 stories: ['./**/*.stories.@(ts|js)']
 ```
@@ -279,80 +280,11 @@ These mechanisms are superior to slots, so we've removed slots in 6.0. For each 
 
 #### React prop tables with Typescript
 
-Starting in 6.0 we are changing our recommended setup for extracting prop tables in `addon-docs` for React projects using TypeScript.
+Props handling in React has changed in 6.0 and should be much less error-prone. This is not a breaking change per se, but documenting the change here since this is an area that has a lot of issues and we've gone back and forth on it.
 
-In earlier versions, we recommended `react-docgen-typescript-loader` (`RDTL`) and bundled it with `@storybook/preset-create-react-app` and `@storybook/preset-typescript` for this reason. We now recommend `babel-plugin-react-docgen`, which is already bundled as part of `@storybook/react`.
+Starting in 6.0, we have [zero-config typescript support](#zero-config-typescript). The out-of-box experience should be much better now, since the default configuration is designed to work well with `addon-docs`.
 
-As a consequence we've removed `RDTL` from the presets, which is a breaking change. We made this change because `react-docgen` now supports TypeScript natively, and fewer dependencies simplifies things for everybody.
-
-The Babel-based `react-docgen` version is the default in:
-
-- `@storybook/preset-create-react-app` @ `^2.1.0`
-- `@storybook/preset-typescript` @ `^3.0.0`
-
-> NOTE: If you're using `preset-create-react-app` you don't need `preset-typescript`!
-
-We will be updating this section with migration information as we collect information from our users, and fixing issues as they come up throughout the 6.0 prerelease process. We are cataloging known issues [here](https://github.com/storybookjs/storybook/blob/next/addons/docs/docs/props-tables.md#known-limitations).
-
-##### React.FC interfaces
-
-The biggest known issue is https://github.com/reactjs/react-docgen/issues/387, which means that the following common pattern **DOESN'T WORK**:
-
-```tsx
-import React, { FC } from 'react';
-interface IProps { ... };
-const MyComponent: FC<IProps> = ({ ... }) => ...
-```
-
-The following workaround is needed:
-
-```tsx
-const MyComponent: FC<IProps> = ({ ... }: IProps) => ...
-```
-
-Please upvote https://github.com/reactjs/react-docgen/issues/387 if this is affecting your productivity, or better yet, submit a fix!
-
-##### Imported types
-
-Another major issue is support for imported types.
-
-```tsx
-import React, { FC } from 'react';
-import SomeType from './someFile';
-
-type NewType = SomeType & { foo: string };
-const MyComponent: FC<NewType> = ...
-```
-
-This isn't an issue with `RDTL` so unfortunately it gets worse with `react-docgen`.
-There's an open PR for this https://github.com/reactjs/react-docgen/pull/352 which you can upvote if it affects you.
-
-##### Rolling back
-
-In the meantime, if you're not ready to make the move you have two options:
-
-1. Pin your to a specific preset version: `preset-create-react-app@1.5.2` or `preset-typescript@1.2.2`
-
-2. OR: Manually configure your setup to add back `react-docgen-typescript-loader`, add the following to your `.storybook/main.js`:
-
-```js
-module.exports = {
-  webpack: async (config, { configType }) => ({
-    ...config,
-    module: {
-      ...config.module,
-      rules: [
-        ...config.module.rules,
-        {
-          test: /\.tsx?$/,
-          loader: require.resolve('react-docgen-typescript-loader'),
-          options: {}, // your options here
-        },
-      ],
-    },
-  }),
-};
-```
+There are also two typescript handling options that can be set in `.storybook/main.js`. `react-docgen-typescript` (default) and `react-docgen`. This is [discussed in detail in the docs](https://github.com/storybookjs/storybook/blob/next/addons/docs/react/README.md#typescript-props-with-react-docgen).
 
 ### New addon presets
 

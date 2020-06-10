@@ -41,9 +41,23 @@ export const convert = (type: PTType): SBType | any => {
     case 'instanceOf':
     case 'element':
     case 'elementType':
-    default:
+    default: {
+      if (name?.indexOf('|') > 0) {
+        // react-docgen-typescript-loader doesn't always produce proper
+        // enum types, possibly due to https://github.com/strothj/react-docgen-typescript-loader/issues/81
+        // this hack tries to parse out values from the string and should be
+        // removed when RDTL gets a little smarter about this
+        try {
+          const literalValues = name.split('|').map((v: string) => JSON.parse(v));
+          return { ...base, name: 'enum', value: literalValues };
+        } catch (err) {
+          // fall through
+        }
+      }
       const otherVal = value ? `${name}(${value})` : name;
       const otherName = SIGNATURE_REGEXP.test(name) ? 'function' : 'other';
+
       return { ...base, name: otherName, value: otherVal };
+    }
   }
 };
