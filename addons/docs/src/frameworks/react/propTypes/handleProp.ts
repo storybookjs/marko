@@ -1,5 +1,4 @@
-import { PropDef } from '@storybook/components';
-import { ExtractedProp } from '../../../lib/docgen';
+import { PropDef, ExtractedProp } from '../../../lib/docgen';
 import { createType } from './createType';
 import { createDefaultValue, createDefaultValueFromRawDefaultProp } from '../lib/defaultValues';
 import { Component } from '../../../blocks/types';

@@ -1,3 +1,5 @@
+// FIXME: this is legacy code that needs to be updated & simplified with ArgType refactor
+
 export interface JsDocParam {
   name: string;
   description?: string;

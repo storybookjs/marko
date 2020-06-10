@@ -96,7 +96,6 @@ The webpack config [is configurable](/configurations/custom-webpack-config#webpa
                 './node_modules/@babel/plugin-syntax-dynamic-import/lib/index.js',
                 [ './node_modules/babel-plugin-emotion/dist/babel-plugin-emotion.cjs.js', { sourceMap: true, autoLabel: true } ],
                 './node_modules/babel-plugin-macros/dist/index.js',
-                './node_modules/@babel/plugin-transform-react-constant-elements/lib/index.js',
                 './node_modules/babel-plugin-add-react-displayname/index.js',
                 [ './node_modules/babel-plugin-react-docgen/lib/index.js', { DOC_GEN_COLLECTION_NAME: 'STORYBOOK_REACT_CLASSES' } ],
               ],

@@ -62,7 +62,6 @@ module.exports = {
         ['@babel/plugin-proposal-class-properties', { loose: true }],
         'babel-plugin-macros',
         ['emotion', { sourceMap: true, autoLabel: true }],
-        '@babel/plugin-transform-react-constant-elements',
         'babel-plugin-add-react-displayname',
       ],
       env: {
