@@ -1,4 +1,5 @@
 import { Component } from 'vue';
+import { Args } from '@storybook/addons';
 
 export { RenderContext } from '@storybook/core';
 
@@ -8,7 +9,7 @@ export interface ShowErrorArgs {
 }
 
 // TODO: some vue expert needs to look at this
-export type StoryFnVueReturnType = string | Component;
+export type StoryFnVueReturnType = string | (Component & { args?: Args });
 
 export interface IStorybookStory {
   name: string;
