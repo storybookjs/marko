@@ -1,17 +1,10 @@
 import path from 'path';
 import fs from 'fs';
-import {
-  retrievePackageJson,
-  getVersionedPackages,
-  writePackageJson,
-  getBabelDependencies,
-  installDependencies,
-  copyTemplate,
-} from '../../helpers';
+import { getBabelDependencies, copyTemplate } from '../../helpers';
 import { StoryFormat } from '../../project_types';
 import { Generator } from '../Generator';
 
-const generator: Generator = async (npmOptions, { storyFormat }) => {
+const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
   const packages = [
     '@storybook/react',
     '@storybook/preset-create-react-app',
@@ -24,30 +17,23 @@ const generator: Generator = async (npmOptions, { storyFormat }) => {
     packages.push('@storybook/addon-docs');
   }
 
-  const versionedPackages = await getVersionedPackages(npmOptions, ...packages);
+  const versionedPackages = await packageManager.getVersionedPackages(...packages);
 
   copyTemplate(__dirname, storyFormat);
 
-  const packageJson = await retrievePackageJson();
+  const packageJson = packageManager.retrievePackageJson();
 
-  packageJson.dependencies = packageJson.dependencies || {};
-  packageJson.devDependencies = packageJson.devDependencies || {};
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 
-  packageJson.scripts = packageJson.scripts || {};
-  packageJson.scripts.storybook = 'start-storybook -p 9009';
-  packageJson.scripts['build-storybook'] = 'build-storybook';
+  packageManager.addDependencies({ ...npmOptions, packageJson }, [
+    ...versionedPackages,
+    ...babelDependencies,
+  ]);
 
-  if (fs.existsSync(path.resolve('./public'))) {
-    // has a public folder and add support to it.
-    packageJson.scripts.storybook += ' -s public';
-    packageJson.scripts['build-storybook'] += ' -s public';
-  }
-
-  writePackageJson(packageJson);
-
-  const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
-
-  installDependencies({ ...npmOptions, packageJson }, [...versionedPackages, ...babelDependencies]);
+  packageManager.addStorybookCommandInScripts({
+    port: 9009,
+    staticFolder: fs.existsSync(path.resolve('./public')) ? 'public' : undefined,
+  });
 };
 
 export default generator;

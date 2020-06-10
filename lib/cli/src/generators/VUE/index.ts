@@ -1,17 +1,13 @@
 import {
-  retrievePackageJson,
-  getVersion,
-  getVersionedPackages,
-  writePackageJson,
   getBabelDependencies,
-  installDependencies,
   addToDevDependenciesIfNotPresent,
   copyTemplate,
 } from '../../helpers';
 import { StoryFormat } from '../../project_types';
 import { Generator } from '../Generator';
+import { writePackageJson } from '../../js-package-manager';
 
-const generator: Generator = async (npmOptions, { storyFormat }) => {
+const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
   const packages = [
     '@storybook/vue',
     '@storybook/addon-actions',
@@ -22,14 +18,11 @@ const generator: Generator = async (npmOptions, { storyFormat }) => {
   if (storyFormat === StoryFormat.MDX) {
     packages.push('@storybook/addon-docs');
   }
-  const versionedPackages = await getVersionedPackages(npmOptions, ...packages);
+  const versionedPackages = await packageManager.getVersionedPackages(...packages);
 
   copyTemplate(__dirname, storyFormat);
 
-  const packageJson = await retrievePackageJson();
-
-  packageJson.dependencies = packageJson.dependencies || {};
-  packageJson.devDependencies = packageJson.devDependencies || {};
+  const packageJson = packageManager.retrievePackageJson();
 
   const packageBabelCoreVersion =
     packageJson.dependencies['babel-core'] || packageJson.devDependencies['babel-core'];
@@ -41,18 +34,19 @@ const generator: Generator = async (npmOptions, { storyFormat }) => {
     addToDevDependenciesIfNotPresent(
       packageJson,
       '@babel/core',
-      await getVersion(npmOptions, '@babel/core')
+      await packageManager.getVersion('@babel/core')
     );
   }
 
-  packageJson.scripts = packageJson.scripts || {};
-  packageJson.scripts.storybook = 'start-storybook -p 6006';
-  packageJson.scripts['build-storybook'] = 'build-storybook';
-
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
-  installDependencies({ ...npmOptions, packageJson }, [...versionedPackages, ...babelDependencies]);
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
+  packageManager.addDependencies({ ...npmOptions, packageJson }, [
+    ...versionedPackages,
+    ...babelDependencies,
+  ]);
+
+  packageManager.addStorybookCommandInScripts();
 };
 
 export default generator;

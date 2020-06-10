@@ -1,35 +1,22 @@
 import fse from 'fs-extra';
 import path from 'path';
-import {
-  getVersion,
-  writePackageJson,
-  getBabelDependencies,
-  installDependencies,
-  retrievePackageJson,
-} from '../../helpers';
+import { getBabelDependencies } from '../../helpers';
 import { Generator } from '../Generator';
 
-const generator: Generator = async (npmOptions) => {
-  const storybookVersion = await getVersion(npmOptions, '@storybook/marionette');
+const generator: Generator = async (packageManager, npmOptions) => {
+  const storybookVersion = await packageManager.getVersion('@storybook/marionette');
   fse.copySync(path.resolve(__dirname, 'template/'), '.', { overwrite: true });
 
-  const packageJson = await retrievePackageJson();
+  const packageJson = packageManager.retrievePackageJson();
 
-  packageJson.dependencies = packageJson.dependencies || {};
-  packageJson.devDependencies = packageJson.devDependencies || {};
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 
-  packageJson.scripts = packageJson.scripts || {};
-  packageJson.scripts.storybook = 'start-storybook -p 6006';
-  packageJson.scripts['build-storybook'] = 'build-storybook';
-
-  writePackageJson(packageJson);
-
-  const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
-
-  installDependencies({ ...npmOptions, packageJson }, [
+  packageManager.addDependencies({ ...npmOptions, packageJson }, [
     `@storybook/marionette@${storybookVersion}`,
     ...babelDependencies,
   ]);
+
+  packageManager.addStorybookCommandInScripts();
 };
 
 export default generator;

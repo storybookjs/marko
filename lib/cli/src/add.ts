@@ -1,30 +1,23 @@
 import path from 'path';
 import fs from 'fs';
 import { sync as spawnSync } from 'cross-spawn';
-import { hasYarn } from './has_yarn';
-import { latestVersion } from './latest_version';
-import { commandLog, getPackageJson } from './helpers';
-import { PackageJson } from './PackageJson';
+import { commandLog } from './helpers';
+import { JsPackageManager, JsPackageManagerFactory, PackageJson } from './js-package-manager';
 
 const logger = console;
 export const storybookAddonScope = '@storybook/addon-';
 
-const isAddon = async (
-  name: string,
-  npmOptions: {
-    useYarn: boolean;
-  }
-) => {
+const isAddon = async (packageManager: JsPackageManager, name: string) => {
   try {
-    await latestVersion(npmOptions, name);
+    await packageManager.latestVersion(name);
     return true;
   } catch (e) {
     return false;
   }
 };
 
-const isStorybookAddon = async (name: string, npmOptions: { useYarn: boolean }) =>
-  isAddon(`${storybookAddonScope}${name}`, npmOptions);
+const isStorybookAddon = async (packageManager: JsPackageManager, name: string) =>
+  isAddon(packageManager, `${storybookAddonScope}${name}`);
 
 export const getPackageName = (addonName: string, isOfficialAddon: boolean) =>
   isOfficialAddon ? storybookAddonScope + addonName : addonName;
@@ -51,29 +44,26 @@ export const getPackageArg = (
 };
 
 const installAddon = (
+  packageManager: JsPackageManager,
   addonName: string,
-  npmOptions: { useYarn: boolean },
   isOfficialAddon: boolean
 ) => {
   const prepareDone = commandLog(`Preparing to install the ${addonName} Storybook addon`);
   prepareDone();
   logger.log();
 
-  let result;
-  const packageArg = getPackageArg(addonName, isOfficialAddon, getPackageJson());
-  if (npmOptions.useYarn) {
-    result = spawnSync('yarn', ['add', packageArg, '--dev'], {
-      stdio: 'inherit',
-    });
-  } else {
-    result = spawnSync('npm', ['install', packageArg, '--save-dev'], {
-      stdio: 'inherit',
-    });
-  }
+  const packageArg = getPackageArg(
+    addonName,
+    isOfficialAddon,
+    packageManager.retrievePackageJson()
+  );
 
   logger.log();
   const installDone = commandLog(`Installing the ${addonName} Storybook addon`);
-  if (result.status !== 0) {
+
+  try {
+    packageManager.addDependencies({}, [packageArg]);
+  } catch (e) {
     installDone(
       `Something went wrong installing the addon: "${getPackageName(addonName, isOfficialAddon)}"`
     );
@@ -150,20 +140,18 @@ export async function add(
   addonName: string,
   options: { useNpm: boolean; skipPostinstall: boolean }
 ) {
-  const useYarn = Boolean(options.useNpm !== true) && hasYarn();
-  const npmOptions = {
-    useYarn,
-  };
+  const packageManager = JsPackageManagerFactory.getPackageManager(options.useNpm);
+
   const addonCheckDone = commandLog(`Verifying that ${addonName} is an addon`);
-  const isOfficialAddon = await isStorybookAddon(addonName, npmOptions);
+  const isOfficialAddon = await isStorybookAddon(packageManager, addonName);
   if (!isOfficialAddon) {
-    if (!(await isAddon(addonName, npmOptions))) {
+    if (!(await isAddon(packageManager, addonName))) {
       addonCheckDone(`The provided package was not a Storybook addon: ${addonName}.`);
       return;
     }
   }
   addonCheckDone();
-  installAddon(addonName, npmOptions, isOfficialAddon);
+  installAddon(packageManager, addonName, isOfficialAddon);
   if (!options.skipPostinstall) {
     await postinstallAddon(addonName, isOfficialAddon);
   }
