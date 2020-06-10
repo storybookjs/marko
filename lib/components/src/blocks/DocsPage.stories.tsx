@@ -19,46 +19,46 @@ export const WithSubtitle = () => (
     <Subtitle>
       What the DocsPage looks like. Meant to be QAed in Canvas tab not in Docs tab.
     </Subtitle>
-    <Description.Text {...Description.Text.args} />
-    <Preview.Single {...Preview.Single.args} />
-    <ArgsTable.Normal {...ArgsTable.Normal.args} />
-    <Source.JSX {...Source.JSX.args} />
+    <Description.Text />
+    <Preview.Single />
+    <ArgsTable.Normal />
+    <Source.JSX />
   </DocsPageWrapper>
 );
 
 export const Empty = () => (
   <DocsPageWrapper>
-    <Story.Error {...Story.Error.args} />
-    <ArgsTable.Error {...ArgsTable.Error.args} />
-    <Source.SourceUnavailable {...Source.SourceUnavailable.args} />
+    <Story.Error />
+    <ArgsTable.Error />
+    <Source.SourceUnavailable />
   </DocsPageWrapper>
 );
 
 export const NoText = () => (
   <DocsPageWrapper>
     <Title>no text</Title>
-    <Preview.Single {...Preview.Single.args} />
-    <ArgsTable.Normal {...ArgsTable.Normal.args} />
-    <Source.JSX {...Source.JSX.args} />
+    <Preview.Single />
+    <ArgsTable.Normal />
+    <Source.JSX />
   </DocsPageWrapper>
 );
 
 export const Text = () => (
   <DocsPageWrapper>
     <Title>Sensorium</Title>
-    <Description.Text {...Description.Text.args} />
-    <Preview.Single {...Preview.Single.args} />
-    <ArgsTable.Normal {...ArgsTable.Normal.args} />
-    <Source.JSX {...Source.JSX.args} />
+    <Description.Text />
+    <Preview.Single />
+    <ArgsTable.Normal />
+    <Source.JSX />
   </DocsPageWrapper>
 );
 
 export const Markdown = () => (
   <DocsPageWrapper>
     <Title>markdown</Title>
-    <Description.Markdown {...Description.Markdown.args} />
-    <Preview.Single {...Preview.Single.args} />
-    <ArgsTable.Normal {...ArgsTable.Normal.args} />
-    <Source.JSX {...Source.JSX.args} />
+    <Description.Markdown />
+    <Preview.Single />
+    <ArgsTable.Normal />
+    <Source.JSX />
   </DocsPageWrapper>
 );

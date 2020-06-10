@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArgsTable, ArgsTableError } from './ArgsTable';
-import { stringType, numberType } from './ArgRow.stories';
+import * as ArgRow from './ArgRow.stories';
 
 export default {
   component: ArgsTable,
@@ -10,12 +10,18 @@ export default {
 const propsSection = { category: 'props ' };
 const eventsSection = { category: 'events ' };
 
-export const Normal = (args) => <ArgsTable {...args} />;
+const stringType = ArgRow.String.args.row;
+const numberType = ArgRow.Number.args.row;
+
+export const Normal = (args = Normal.args) => <ArgsTable {...args} />;
 Normal.args = {
-  rows: { stringType, numberType },
+  rows: {
+    stringType,
+    numberType,
+  },
 };
 
-export const Compact = (args) => <ArgsTable {...args} />;
+export const Compact = (args = Compact.args) => <ArgsTable {...args} />;
 Compact.args = {
   ...Normal.args,
   compact: true,
@@ -27,21 +33,21 @@ const sectionRows = {
   c: { ...stringType, table: { ...stringType.table, ...eventsSection } },
 };
 
-export const Sections = (args) => <ArgsTable {...args} />;
+export const Sections = (args = Sections.args) => <ArgsTable {...args} />;
 Sections.args = {
   rows: sectionRows,
 };
 
-export const SectionsCompact = (args) => <ArgsTable {...args} />;
+export const SectionsCompact = (args = SectionsCompact.args) => <ArgsTable {...args} />;
 SectionsCompact.args = {
   ...Sections.args,
   compact: true,
 };
 
-export const Error = (args) => <ArgsTable {...args} />;
+export const Error = (args = Error.args) => <ArgsTable {...args} />;
 Error.args = {
   error: ArgsTableError.NO_COMPONENT,
 };
 
-export const Empty = (args) => <ArgsTable {...args} />;
+export const Empty = (args = Empty.args) => <ArgsTable {...args} />;
 Empty.args = { rows: {} };
