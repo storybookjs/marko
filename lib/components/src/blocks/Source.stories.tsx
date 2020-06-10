@@ -12,7 +12,12 @@ const jsxCode = `
 </MyComponent>
 `;
 
-export const jsx = () => <Source code={jsxCode} language="jsx" format={false} />;
+export const JSX = (args) => <Source {...args} />;
+JSX.args = {
+  code: jsxCode,
+  language: 'jsx',
+  format: false,
+};
 
 const cssCode = `
 @-webkit-keyframes blinker {
@@ -28,10 +33,21 @@ const cssCode = `
 }
 `;
 
-export const css = () => <Source code={cssCode} language="css" format={false} />;
+export const CSS = (args) => <Source {...args} />;
+CSS.args = {
+  code: cssCode,
+  language: 'css',
+  format: false,
+};
 
-export const noStory = () => <Source error={SourceError.NO_STORY} format={false} />;
+export const NoStory = (args) => <Source {...args} />;
+NoStory.args = {
+  error: SourceError.NO_STORY,
+  format: false,
+};
 
-export const sourceUnavailable = () => (
-  <Source error={SourceError.SOURCE_UNAVAILABLE} format={false} />
-);
+export const SourceUnavailable = (args) => <Source {...args} />;
+SourceUnavailable.args = {
+  error: SourceError.SOURCE_UNAVAILABLE,
+  format: false,
+};
