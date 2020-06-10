@@ -2,6 +2,7 @@
 import Vue, { VueConstructor, ComponentOptions } from 'vue';
 import { start } from '@storybook/core/client';
 import {
+  Args,
   ClientStoryApi,
   StoryFn,
   DecoratorFunction,
@@ -13,7 +14,7 @@ import './globals';
 import { IStorybookSection, StoryFnVueReturnType } from './types';
 
 import render, { VALUES } from './render';
-import { extractProps } from './util';
+import { extractProps, propsFromArgs } from './util';
 
 export const WRAPS = 'STORYBOOK_WRAPS';
 
@@ -26,7 +27,11 @@ function prepare(
   if (typeof rawStory === 'string') {
     story = { template: rawStory };
   } else if (rawStory != null) {
-    story = rawStory as ComponentOptions<Vue>;
+    const { args, props } = rawStory as ComponentOptions<Vue> & { args: Args };
+    story = {
+      ...rawStory,
+      props: { ...propsFromArgs(args), ...props },
+    } as ComponentOptions<Vue>;
   } else {
     return null;
   }

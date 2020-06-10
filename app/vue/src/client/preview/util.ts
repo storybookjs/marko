@@ -1,4 +1,5 @@
 import { VueConstructor } from 'vue';
+import { Args } from '@storybook/addons';
 
 function getType(fn: Function) {
   const match = fn && fn.toString().match(/^\s*function (\w+)/);
@@ -21,3 +22,11 @@ export function extractProps(component: VueConstructor) {
     .map(([name, prop]) => ({ [name]: resolveDefault(prop) }))
     .reduce((wrap, prop) => ({ ...wrap, ...prop }), {});
 }
+
+export const propsFromArgs = (args: Args) => {
+  if (!args) return {};
+  return Object.entries(args).reduce((acc, [key, val]) => {
+    acc[key] = { default: val };
+    return acc;
+  }, {} as any);
+};
