@@ -122,15 +122,54 @@ const withArgs = {
   updateArgs: action('updateArgs'),
 };
 
-export const String = () => <ArgRow row={stringType} />;
-export const LongName = () => <ArgRow row={longNameType} />;
-export const LongDesc = () => <ArgRow row={longDescType} />;
-export const Number = () => <ArgRow row={numberType} />;
-export const ObjectOf = () => <ArgRow row={objectType} />;
-export const ArrayOf = () => <ArgRow row={arrayType} />;
-export const ComplexObject = () => <ArgRow row={complexType} />;
-export const Func = () => <ArgRow row={funcType} />;
-export const Markdown = () => <ArgRow row={markdownType} />;
-export const StringCompact = () => <ArgRow compact row={stringType} />;
-export const Args = () => <ArgRow row={stringType} {...withArgs} />;
-export const ArgsCompact = () => <ArgRow compact row={stringType} {...withArgs} />;
+export const String = (args) => <ArgRow {...args} />;
+String.args = {
+  row: stringType,
+};
+export const LongName = (args) => <ArgRow {...args} />;
+LongName.args = {
+  row: longNameType,
+};
+export const LongDesc = (args) => <ArgRow {...args} />;
+LongDesc.args = {
+  row: longDescType,
+};
+export const Number = (args) => <ArgRow {...args} />;
+Number.args = {
+  row: numberType,
+};
+export const ObjectOf = (args) => <ArgRow {...args} />;
+ObjectOf.args = {
+  row: objectType,
+};
+export const ArrayOf = (args) => <ArgRow {...args} />;
+ArrayOf.args = {
+  row: arrayType,
+};
+export const ComplexObject = (args) => <ArgRow {...args} />;
+ComplexObject.args = {
+  row: complexType,
+};
+export const Func = (args) => <ArgRow {...args} />;
+Func.args = {
+  row: funcType,
+};
+export const Markdown = (args) => <ArgRow {...args} />;
+Markdown.args = {
+  row: markdownType,
+};
+export const StringCompact = (args) => <ArgRow {...args} />;
+StringCompact.args = {
+  ...String.args,
+  compact: true,
+};
+export const Args = (args) => <ArgRow {...args} />;
+Args.args = {
+  ...String.args,
+  ...withArgs,
+};
+export const ArgsCompact = (args) => <ArgRow {...args} />;
+ArgsCompact.args = {
+  ...Args.args,
+  compact: true,
+};

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FC } from 'react';
 import { styled, Theme } from '@storybook/theming';
 import { transparentize } from 'polished';
 
@@ -54,7 +54,7 @@ export const DocsWrapper = styled.div<{}>(({ theme }) => ({
   [`@media (min-width: ${breakpoint}px)`]: {},
 }));
 
-export const DocsPageWrapper: FunctionComponent = ({ children }) => (
+export const DocsPageWrapper: FC = ({ children }) => (
   <DocsWrapper>
     <DocsContent>{children}</DocsContent>
   </DocsWrapper>
