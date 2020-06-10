@@ -12,7 +12,7 @@ const jsxCode = `
 </MyComponent>
 `;
 
-export const JSX = (args = JSX.args) => <Source {...args} />;
+export const JSX = (args) => <Source {...args} />;
 JSX.args = {
   code: jsxCode,
   language: 'jsx',
@@ -33,21 +33,27 @@ const cssCode = `
 }
 `;
 
-export const CSS = (args = CSS.args) => <Source {...args} />;
+export const CSS = (args) => <Source {...args} />;
 CSS.args = {
   code: cssCode,
   language: 'css',
   format: false,
 };
 
-export const NoStory = (args = NoStory.args) => <Source {...args} />;
+export const NoStory = (args) => <Source {...args} />;
 NoStory.args = {
   error: SourceError.NO_STORY,
   format: false,
 };
 
-export const SourceUnavailable = (args = SourceUnavailable.args) => <Source {...args} />;
+export const SourceUnavailable = (args) => <Source {...args} />;
 SourceUnavailable.args = {
   error: SourceError.SOURCE_UNAVAILABLE,
   format: false,
 };
+
+// For story-reuse, need a better way to do this
+JSX.defaultProps = JSX.args;
+CSS.defaultProps = CSS.args;
+NoStory.defaultProps = NoStory.args;
+SourceUnavailable.defaultProps = SourceUnavailable.args;
