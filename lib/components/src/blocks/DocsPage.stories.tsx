@@ -56,7 +56,7 @@ export const Text = () => (
 export const Markdown = () => (
   <DocsPageWrapper>
     <Title>markdown</Title>
-    <Description.Markdown />
+    <Description.Markdown {...Description.Markdown.args} />
     <Preview.Single {...Preview.Single.args} />
     <ArgsTable.Normal {...ArgsTable.Normal.args} />
     <Source.JSX {...Source.JSX.args} />
