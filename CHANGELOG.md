@@ -1,3 +1,9 @@
+## 6.0.0-beta.25 (June 11, 2020)
+
+### Bug Fixes
+
+- Composition: Fix auto refs when there are no specified refs ([#11057](https://github.com/storybookjs/storybook/pull/11057))
+
 ## 6.0.0-beta.24 (June 11, 2020)
 
 ### Breaking Changes
