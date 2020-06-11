@@ -1,4 +1,3 @@
-import { propsFromArgs } from '@storybook/vue';
 import MyButton from '../Button.vue';
 
 export default {

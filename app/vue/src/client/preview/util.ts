@@ -1,5 +1,4 @@
 import { VueConstructor } from 'vue';
-import { Args } from '@storybook/addons';
 
 function getType(fn: Function) {
   const match = fn && fn.toString().match(/^\s*function (\w+)/);

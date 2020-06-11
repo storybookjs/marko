@@ -2,7 +2,6 @@
 import Vue, { VueConstructor, ComponentOptions } from 'vue';
 import { start } from '@storybook/core/client';
 import {
-  Args,
   ClientStoryApi,
   StoryFn,
   DecoratorFunction,

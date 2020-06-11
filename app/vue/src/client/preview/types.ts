@@ -9,7 +9,7 @@ export interface ShowErrorArgs {
 }
 
 // TODO: some vue expert needs to look at this
-export type StoryFnVueReturnType = string | (Component & { args?: Args });
+export type StoryFnVueReturnType = string | Component;
 
 export interface IStorybookStory {
   name: string;
