@@ -6,7 +6,7 @@ import {
   getAngularAppTsConfigPath,
 } from './angular-helpers';
 import { writeFileAsJson, copyTemplate } from '../../helpers';
-import { baseGenerator, Generator } from '../generator';
+import { baseGenerator, Generator } from '../baseGenerator';
 
 function editAngularAppTsConfig() {
   const tsConfigJson = getAngularAppTsConfigJson();

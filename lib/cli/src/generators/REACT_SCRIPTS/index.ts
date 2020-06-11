@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 
-import { baseGenerator, Generator } from '../generator';
+import { baseGenerator, Generator } from '../baseGenerator';
 import { copyTemplate } from '../../helpers';
 import { StoryFormat } from '../../project_types';
 

@@ -1,4 +1,4 @@
-import { baseGenerator, Generator } from '../generator';
+import { baseGenerator, Generator } from '../baseGenerator';
 import { StoryFormat } from '../../project_types';
 import { copyTemplate } from '../../helpers';
 

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import JSON5 from 'json5';
-import { baseGenerator, Generator } from '../generator';
+import { baseGenerator, Generator } from '../baseGenerator';
 
 const generator: Generator = async (packageManager, npmOptions, options) => {
   baseGenerator(packageManager, npmOptions, options, 'react', {

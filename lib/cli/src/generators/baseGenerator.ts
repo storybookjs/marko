@@ -67,13 +67,18 @@ export async function baseGenerator(
     ...addonsPeerDeps,
   ].filter(Boolean);
   const versionedPackages = await packageManager.getVersionedPackages(...packages);
-  console.log('versionedPackages', versionedPackages);
+
   configure([...addons, ...extraAddons]);
   if (addComponents) {
     copyComponents(framework, language);
   }
 
   const packageJson = packageManager.retrievePackageJson();
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
+  packageManager.addDependencies({ ...npmOptions, packageJson }, [
+    ...versionedPackages,
+    ...babelDependencies,
+  ]);
 
   if (addScripts) {
     packageManager.addStorybookCommandInScripts({
@@ -81,9 +86,4 @@ export async function baseGenerator(
       staticFolder: staticDir,
     });
   }
-  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
-  packageManager.addDependencies({ ...npmOptions, packageJson }, [
-    ...versionedPackages,
-    ...babelDependencies,
-  ]);
 }
