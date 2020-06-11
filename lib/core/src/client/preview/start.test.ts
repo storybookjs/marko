@@ -1,5 +1,4 @@
 import { document, window } from 'global';
-import Events from '@storybook/core-events';
 
 import start from './start';
 
