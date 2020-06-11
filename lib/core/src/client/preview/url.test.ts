@@ -1,7 +1,5 @@
 import { history, document } from 'global';
 
-import { StoryStore } from '@storybook/client-api';
-
 import { pathToId, setPath, parseQueryParameters, getSelectionSpecifierFromPath } from './url';
 
 jest.mock('global', () => ({
