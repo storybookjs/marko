@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   stories: ['../src/stories/**/*.stories.@(js|mdx)'],
   logLevel: 'debug',
@@ -17,4 +19,13 @@ module.exports = {
     '@storybook/addon-a11y',
     '@storybook/addon-jest',
   ],
+  webpackFinal: (config) => {
+    // add monorepo root as a valid directory to import modules from
+    config.resolve.plugins.forEach((p) => {
+      if (Array.isArray(p.appSrcs)) {
+        p.appSrcs.push(path.join(__dirname, '..', '..', '..'));
+      }
+    });
+    return config;
+  },
 };
