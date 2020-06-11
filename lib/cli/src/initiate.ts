@@ -2,20 +2,13 @@ import { UpdateNotifier, IPackage } from 'update-notifier';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
 import { detect, isStorybookInstalled, detectLanguage } from './detect';
-import { hasYarn } from './has_yarn';
 import {
   installableProjectTypes,
   ProjectType,
   StoryFormat,
   SupportedLanguage,
 } from './project_types';
-import {
-  commandLog,
-  codeLog,
-  paddedLog,
-  installDepsFromPackageJson,
-  getPackageJson,
-} from './helpers';
+import { commandLog, codeLog, paddedLog } from './helpers';
 import angularGenerator from './generators/ANGULAR';
 import emberGenerator from './generators/EMBER';
 import meteorGenerator from './generators/METEOR';
@@ -36,6 +29,8 @@ import preactGenerator from './generators/PREACT';
 import svelteGenerator from './generators/SVELTE';
 import raxGenerator from './generators/RAX';
 import { warn } from './warn';
+import { JsPackageManagerFactory, readPackageJson } from './js-package-manager';
+import { NpmOptions } from './NpmOptions';
 
 const logger = console;
 
@@ -51,10 +46,9 @@ type CommandOptions = {
 };
 
 const installStorybook = (projectType: ProjectType, options: CommandOptions): Promise<void> => {
-  const useYarn = Boolean(options.useNpm !== true) && hasYarn();
+  const packageManager = JsPackageManagerFactory.getPackageManager(options.useNpm);
 
-  const npmOptions = {
-    useYarn,
+  const npmOptions: NpmOptions = {
     installAsDevDependencies: true,
     skipInstall: options.skipInstall,
   };
@@ -69,15 +63,13 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
     storyFormat: options.storyFormat || defaultStoryFormat,
   };
 
-  const runStorybookCommand = useYarn ? 'yarn storybook' : 'npm run storybook';
-
   const end = () => {
     if (!options.skipInstall) {
-      installDepsFromPackageJson(npmOptions);
+      packageManager.installDependencies();
     }
 
     logger.log('\nTo run your storybook, type:\n');
-    codeLog([runStorybookCommand]);
+    codeLog([packageManager.getRunStorybookCommand()]);
     logger.log('\nFor more information visit:', chalk.cyan('https://storybook.js.org'));
 
     // Add a new line for the clear visibility.
@@ -100,18 +92,18 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
         return Promise.resolve();
 
       case ProjectType.UPDATE_PACKAGE_ORGANIZATIONS:
-        return updateOrganisationsGenerator(options.parser, npmOptions)
+        return updateOrganisationsGenerator(packageManager, options.parser, npmOptions)
           .then(() => null) // commmandLog doesn't like to see output
           .then(commandLog('Upgrading your project to the new storybook packages.'))
           .then(end);
 
       case ProjectType.REACT_SCRIPTS:
-        return reactScriptsGenerator(npmOptions, generatorOptions)
+        return reactScriptsGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding storybook support to your "Create React App" based project'))
           .then(end);
 
       case ProjectType.REACT:
-        return reactGenerator(npmOptions, generatorOptions)
+        return reactGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding storybook support to your "React" app'))
           .then(end);
 
@@ -128,7 +120,9 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
               },
             ]) as Promise<{ server: boolean }>)
         )
-          .then(({ server }) => reactNativeGenerator(npmOptions, server, generatorOptions))
+          .then(({ server }) =>
+            reactNativeGenerator(packageManager, npmOptions, server, generatorOptions)
+          )
           .then(commandLog('Adding storybook support to your "React Native" app'))
           .then(end)
           .then(() => {
@@ -142,82 +136,82 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
       }
 
       case ProjectType.METEOR:
-        return meteorGenerator(npmOptions, generatorOptions)
+        return meteorGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding storybook support to your "Meteor" app'))
           .then(end);
 
       case ProjectType.WEBPACK_REACT:
-        return webpackReactGenerator(npmOptions, generatorOptions)
+        return webpackReactGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding storybook support to your "Webpack React" app'))
           .then(end);
 
       case ProjectType.REACT_PROJECT:
-        return reactGenerator(npmOptions, generatorOptions)
+        return reactGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding storybook support to your "React" library'))
           .then(end);
 
       case ProjectType.SFC_VUE:
-        return sfcVueGenerator(npmOptions, generatorOptions)
+        return sfcVueGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding storybook support to your "Single File Components Vue" app'))
           .then(end);
 
       case ProjectType.VUE:
-        return vueGenerator(npmOptions, generatorOptions)
+        return vueGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding storybook support to your "Vue" app'))
           .then(end);
 
       case ProjectType.ANGULAR:
-        return angularGenerator(npmOptions, generatorOptions)
+        return angularGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding storybook support to your "Angular" app'))
           .then(end);
 
       case ProjectType.EMBER:
-        return emberGenerator(npmOptions, generatorOptions)
+        return emberGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding storybook support to your "Ember" app'))
           .then(end);
 
       case ProjectType.MITHRIL:
-        return mithrilGenerator(npmOptions, generatorOptions)
+        return mithrilGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding storybook support to your "Mithril" app'))
           .then(end);
 
       case ProjectType.MARIONETTE:
-        return marionetteGenerator(npmOptions, generatorOptions)
+        return marionetteGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding storybook support to your "Marionette.js" app'))
           .then(end);
 
       case ProjectType.MARKO:
-        return markoGenerator(npmOptions, generatorOptions)
+        return markoGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding storybook support to your "Marko" app'))
           .then(end);
 
       case ProjectType.HTML:
-        return htmlGenerator(npmOptions, generatorOptions)
+        return htmlGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding storybook support to your "HTML" app'))
           .then(end);
 
       case ProjectType.WEB_COMPONENTS:
-        return webComponentsGenerator(npmOptions, generatorOptions)
+        return webComponentsGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding storybook support to your "web components" app'))
           .then(end);
 
       case ProjectType.RIOT:
-        return riotGenerator(npmOptions, generatorOptions)
+        return riotGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding storybook support to your "riot.js" app'))
           .then(end);
 
       case ProjectType.PREACT:
-        return preactGenerator(npmOptions, generatorOptions)
+        return preactGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding storybook support to your "Preact" app'))
           .then(end);
 
       case ProjectType.SVELTE:
-        return svelteGenerator(npmOptions, generatorOptions)
+        return svelteGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding storybook support to your "Svelte" app'))
           .then(end);
 
       case ProjectType.RAX:
-        return raxGenerator(npmOptions, generatorOptions)
+        return raxGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding storybook support to your "Rax" app'))
           .then(end);
 
@@ -286,7 +280,7 @@ export default function (options: CommandOptions, pkg: IPackage): Promise<void> 
   try {
     if (projectTypeProvided) {
       if (installableProjectTypes.includes(options.type)) {
-        const storybookInstalled = isStorybookInstalled(getPackageJson(), options.force);
+        const storybookInstalled = isStorybookInstalled(readPackageJson(), options.force);
         projectType = storybookInstalled
           ? ProjectType.ALREADY_HAS_STORYBOOK
           : options.type.toUpperCase();

@@ -1,24 +1,22 @@
 import shell from 'shelljs';
 import chalk from 'chalk';
-import {
-  getVersions,
-  retrievePackageJson,
-  writePackageJson,
-  paddedLog,
-  getBabelDependencies,
-  installDependencies,
-  copyTemplate,
-} from '../../helpers';
+import { paddedLog, getBabelDependencies, copyTemplate } from '../../helpers';
 import { NpmOptions } from '../../NpmOptions';
 import { GeneratorOptions } from '../Generator';
+import { JsPackageManager, writePackageJson } from '../../js-package-manager';
 
 export default async (
+  packageManager: JsPackageManager,
   npmOptions: NpmOptions,
   installServer: boolean,
   { storyFormat }: GeneratorOptions
 ) => {
-  const [storybookVersion, addonsVersion, actionsVersion, linksVersion] = await getVersions(
-    npmOptions,
+  const [
+    storybookVersion,
+    addonsVersion,
+    actionsVersion,
+    linksVersion,
+  ] = await packageManager.getVersions(
     '@storybook/react-native',
     '@storybook/addons',
     '@storybook/addon-actions',
@@ -45,7 +43,7 @@ export default async (
     }
   }
 
-  const packageJson = await retrievePackageJson();
+  const packageJson = packageManager.retrievePackageJson();
 
   packageJson.dependencies = packageJson.dependencies || {};
   packageJson.devDependencies = packageJson.devDependencies || {};
@@ -75,7 +73,10 @@ export default async (
 
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 
-  installDependencies({ ...npmOptions, packageJson }, [...devDependencies, ...babelDependencies]);
+  packageManager.addDependencies({ ...npmOptions, packageJson }, [
+    ...devDependencies,
+    ...babelDependencies,
+  ]);
 };

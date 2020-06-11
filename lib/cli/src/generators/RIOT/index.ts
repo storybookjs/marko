@@ -1,22 +1,15 @@
-import {
-  getVersions,
-  retrievePackageJson,
-  writePackageJson,
-  getBabelDependencies,
-  installDependencies,
-  copyTemplate,
-} from '../../helpers';
+import { getBabelDependencies, copyTemplate } from '../../helpers';
 import { Generator } from '../Generator';
+import { writePackageJson } from '../../js-package-manager';
 
-const generator: Generator = async (npmOptions, { storyFormat }) => {
+const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
   const [
     storybookVersion,
     actionsVersion,
     linksVersion,
     addonsVersion,
     tagLoaderVersion,
-  ] = await getVersions(
-    npmOptions,
+  ] = await packageManager.getVersions(
     '@storybook/riot',
     '@storybook/addon-actions',
     '@storybook/addon-links',
@@ -26,7 +19,7 @@ const generator: Generator = async (npmOptions, { storyFormat }) => {
 
   copyTemplate(__dirname, storyFormat);
 
-  const packageJson = await retrievePackageJson();
+  const packageJson = packageManager.retrievePackageJson();
 
   packageJson.dependencies = packageJson.dependencies || {};
   packageJson.devDependencies = packageJson.devDependencies || {};
@@ -40,18 +33,20 @@ const generator: Generator = async (npmOptions, { storyFormat }) => {
   if (
     !packageJson.devDependencies['riot-tag-loader'] &&
     !packageJson.dependencies['riot-tag-loader']
-  )
+  ) {
     dependencies.push(`riot-tag-loader@${tagLoaderVersion}`);
-
-  packageJson.scripts = packageJson.scripts || {};
-  packageJson.scripts.storybook = 'start-storybook -p 6006';
-  packageJson.scripts['build-storybook'] = 'build-storybook';
+  }
 
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 
-  installDependencies({ ...npmOptions, packageJson }, [...dependencies, ...babelDependencies]);
+  packageManager.addDependencies({ ...npmOptions, packageJson }, [
+    ...dependencies,
+    ...babelDependencies,
+  ]);
+
+  packageManager.addStorybookCommandInScripts();
 };
 
 export default generator;

@@ -1,14 +1,7 @@
-import {
-  getVersions,
-  retrievePackageJson,
-  writePackageJson,
-  getBabelDependencies,
-  installDependencies,
-  copyTemplate,
-} from '../../helpers';
+import { getBabelDependencies, copyTemplate } from '../../helpers';
 import { Generator } from '../Generator';
 
-const generator: Generator = async (npmOptions, { storyFormat }) => {
+const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
   const [
     storybookVersion,
     actionsVersion,
@@ -16,8 +9,7 @@ const generator: Generator = async (npmOptions, { storyFormat }) => {
     addonsVersion,
     svelte,
     svelteLoader,
-  ] = await getVersions(
-    npmOptions,
+  ] = await packageManager.getVersions(
     '@storybook/svelte',
     '@storybook/addon-actions',
     '@storybook/addon-links',
@@ -28,20 +20,11 @@ const generator: Generator = async (npmOptions, { storyFormat }) => {
 
   copyTemplate(__dirname, storyFormat);
 
-  const packageJson = await retrievePackageJson();
+  const packageJson = packageManager.retrievePackageJson();
 
-  packageJson.dependencies = packageJson.dependencies || {};
-  packageJson.devDependencies = packageJson.devDependencies || {};
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 
-  packageJson.scripts = packageJson.scripts || {};
-  packageJson.scripts.storybook = 'start-storybook -p 6006';
-  packageJson.scripts['build-storybook'] = 'build-storybook';
-
-  writePackageJson(packageJson);
-
-  const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
-
-  installDependencies({ ...npmOptions, packageJson }, [
+  packageManager.addDependencies({ ...npmOptions, packageJson }, [
     `@storybook/svelte@${storybookVersion}`,
     `@storybook/addon-actions@${actionsVersion}`,
     `@storybook/addon-links@${linksVersion}`,
@@ -50,6 +33,8 @@ const generator: Generator = async (npmOptions, { storyFormat }) => {
     `svelte-loader@${svelteLoader}`,
     ...babelDependencies,
   ]);
+
+  packageManager.addStorybookCommandInScripts();
 };
 
 export default generator;

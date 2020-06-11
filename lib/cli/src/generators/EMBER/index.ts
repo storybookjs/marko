@@ -1,14 +1,7 @@
-import {
-  getVersions,
-  retrievePackageJson,
-  writePackageJson,
-  getBabelDependencies,
-  installDependencies,
-  copyTemplate,
-} from '../../helpers';
+import { getBabelDependencies, copyTemplate } from '../../helpers';
 import { Generator } from '../Generator';
 
-const generator: Generator = async (npmOptions, { storyFormat }) => {
+const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
   const [
     storybookVersion,
     babelPluginEmberModulePolyfillVersion,
@@ -16,8 +9,7 @@ const generator: Generator = async (npmOptions, { storyFormat }) => {
     linksVersion,
     actionsVersion,
     addonsVersion,
-  ] = await getVersions(
-    npmOptions,
+  ] = await packageManager.getVersions(
     '@storybook/ember',
     // babel-plugin-ember-modules-api-polyfill is a peerDep of @storybook/ember
     'babel-plugin-ember-modules-api-polyfill',
@@ -30,24 +22,10 @@ const generator: Generator = async (npmOptions, { storyFormat }) => {
 
   copyTemplate(__dirname, storyFormat);
 
-  const packageJson = await retrievePackageJson();
+  const packageJson = packageManager.retrievePackageJson();
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 
-  packageJson.dependencies = packageJson.dependencies || {};
-  packageJson.devDependencies = packageJson.devDependencies || {};
-
-  packageJson.scripts = {
-    ...packageJson.scripts,
-    ...{
-      storybook: 'start-storybook -p 6006 -s dist',
-      'build-storybook': 'build-storybook -s dist',
-    },
-  };
-
-  writePackageJson(packageJson);
-
-  const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
-
-  installDependencies({ ...npmOptions, packageJson }, [
+  packageManager.addDependencies({ ...npmOptions, packageJson }, [
     `@storybook/ember@${storybookVersion}`,
     `@storybook/addon-actions@${actionsVersion}`,
     `@storybook/addon-links@${linksVersion}`,
@@ -56,6 +34,8 @@ const generator: Generator = async (npmOptions, { storyFormat }) => {
     `babel-plugin-htmlbars-inline-precompile@${babelPluginHtmlBarsInlinePrecompileVersion}`,
     ...babelDependencies,
   ]);
+
+  packageManager.addStorybookCommandInScripts();
 };
 
 export default generator;

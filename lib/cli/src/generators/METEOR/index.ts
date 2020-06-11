@@ -1,16 +1,10 @@
 import fs from 'fs';
 import JSON5 from 'json5';
-import {
-  getVersions,
-  retrievePackageJson,
-  writePackageJson,
-  getBabelDependencies,
-  installDependencies,
-  copyTemplate,
-} from '../../helpers';
+import { getBabelDependencies, copyTemplate } from '../../helpers';
 import { Generator } from '../Generator';
+import { writePackageJson } from '../../js-package-manager';
 
-const generator: Generator = async (npmOptions, { storyFormat }) => {
+const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
   const [
     storybookVersion,
     actionsVersion,
@@ -21,8 +15,7 @@ const generator: Generator = async (npmOptions, { storyFormat }) => {
     reactDomVersion,
     presetEnvVersion,
     presetReactVersion,
-  ] = await getVersions(
-    npmOptions,
+  ] = await packageManager.getVersions(
     '@storybook/react',
     '@storybook/addon-actions',
     '@storybook/addon-links',
@@ -36,11 +29,7 @@ const generator: Generator = async (npmOptions, { storyFormat }) => {
 
   copyTemplate(__dirname, storyFormat);
 
-  const packageJson = await retrievePackageJson();
-
-  packageJson.devDependencies = packageJson.devDependencies || {};
-  packageJson.scripts = packageJson.scripts || {};
-  packageJson.dependencies = packageJson.dependencies || {};
+  const packageJson = packageManager.retrievePackageJson();
 
   const devDependencies = [
     `@storybook/react@${storybookVersion}`,
@@ -70,12 +59,9 @@ const generator: Generator = async (npmOptions, { storyFormat }) => {
 
   fs.writeFileSync('.babelrc', JSON.stringify(babelrc, null, 2), 'utf8');
 
-  packageJson.scripts.storybook = 'start-storybook -p 6006';
-  packageJson.scripts['build-storybook'] = 'build-storybook';
-
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 
   // add react packages.
   const dependencies = [];
@@ -87,13 +73,18 @@ const generator: Generator = async (npmOptions, { storyFormat }) => {
   }
 
   if (dependencies.length > 0) {
-    installDependencies(
+    packageManager.addDependencies(
       { ...npmOptions, packageJson, installAsDevDependencies: false },
       dependencies
     );
   }
 
-  installDependencies({ ...npmOptions, packageJson }, [...devDependencies, ...babelDependencies]);
+  packageManager.addDependencies({ ...npmOptions, packageJson }, [
+    ...devDependencies,
+    ...babelDependencies,
+  ]);
+
+  packageManager.addStorybookCommandInScripts();
 };
 
 export default generator;

@@ -26,6 +26,7 @@ module.exports = {
     '@storybook/addon-toolbars',
     '@storybook/addon-queryparams',
   ],
+  logLevel: 'debug',
   webpackFinal: async (config, { configType }) => ({
     ...config,
     module: {
