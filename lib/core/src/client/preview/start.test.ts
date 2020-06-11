@@ -9,6 +9,7 @@ jest.mock('global', () => ({
   window: {
     __STORYBOOK_CLIENT_API__: undefined,
     addEventListener: jest.fn(),
+    postMessage: jest.fn(),
     location: { search: '' },
     history: { replaceState: jest.fn() },
     matchMedia: jest.fn().mockReturnValue({ matches: false }),
