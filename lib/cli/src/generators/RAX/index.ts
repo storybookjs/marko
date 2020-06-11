@@ -1,22 +1,15 @@
-import {
-  getVersions,
-  retrievePackageJson,
-  writePackageJson,
-  getBabelDependencies,
-  installDependencies,
-  copyTemplate,
-} from '../../helpers';
+import { getBabelDependencies, copyTemplate } from '../../helpers';
 import { Generator } from '../Generator';
+import { writePackageJson } from '../../js-package-manager';
 
-const generator: Generator = async (npmOptions, { storyFormat }) => {
+const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
   const [
     storybookVersion,
     actionsVersion,
     linksVersion,
     addonsVersion,
     latestRaxVersion,
-  ] = await getVersions(
-    npmOptions,
+  ] = await packageManager.getVersions(
     '@storybook/rax',
     '@storybook/addon-actions',
     '@storybook/addon-links',
@@ -26,10 +19,7 @@ const generator: Generator = async (npmOptions, { storyFormat }) => {
 
   copyTemplate(__dirname, storyFormat);
 
-  const packageJson = await retrievePackageJson();
-
-  packageJson.dependencies = packageJson.dependencies || {};
-  packageJson.devDependencies = packageJson.devDependencies || {};
+  const packageJson = packageManager.retrievePackageJson();
 
   const raxVersion = packageJson.dependencies.rax || latestRaxVersion;
 
@@ -42,21 +32,19 @@ const generator: Generator = async (npmOptions, { storyFormat }) => {
   packageJson.dependencies['rax-text'] = packageJson.dependencies['rax-text'] || raxVersion;
   packageJson.dependencies['rax-view'] = packageJson.dependencies['rax-view'] || raxVersion;
 
-  packageJson.scripts = packageJson.scripts || {};
-  packageJson.scripts.storybook = 'start-storybook -p 6006';
-  packageJson.scripts['build-storybook'] = 'build-storybook';
-
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 
-  installDependencies({ ...npmOptions, packageJson }, [
+  packageManager.addDependencies({ ...npmOptions, packageJson }, [
     `@storybook/rax@${storybookVersion}`,
     `@storybook/addon-actions@${actionsVersion}`,
     `@storybook/addon-links@${linksVersion}`,
     `@storybook/addons@${addonsVersion}`,
     ...babelDependencies,
   ]);
+
+  packageManager.addStorybookCommandInScripts();
 };
 
 export default generator;

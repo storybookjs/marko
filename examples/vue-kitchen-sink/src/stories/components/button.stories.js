@@ -6,11 +6,9 @@ export default {
 };
 
 export const Rounded = (args) => ({
+  props: Object.keys(args),
   components: { MyButton },
   template: '<my-button :color="color" :rounded="rounded">A Button with rounded edges</my-button>',
-  data() {
-    return args;
-  },
 });
 Rounded.argTypes = {
   rounded: { defaultValue: true },

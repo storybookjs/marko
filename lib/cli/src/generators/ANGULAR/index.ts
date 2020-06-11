@@ -5,20 +5,17 @@ import {
   getAngularAppTsConfigJson,
   getAngularAppTsConfigPath,
 } from './angular-helpers';
-import {
-  retrievePackageJson,
-  getVersionedPackages,
-  writePackageJson,
-  getBabelDependencies,
-  installDependencies,
-  writeFileAsJson,
-  copyTemplate,
-} from '../../helpers';
+import { getBabelDependencies, writeFileAsJson, copyTemplate } from '../../helpers';
 import { StoryFormat } from '../../project_types';
 import { NpmOptions } from '../../NpmOptions';
 import { Generator, GeneratorOptions } from '../Generator';
+import { JsPackageManager } from '../../js-package-manager';
 
-async function addDependencies(npmOptions: NpmOptions, { storyFormat }: GeneratorOptions) {
+async function addDependencies(
+  packageManager: JsPackageManager,
+  npmOptions: NpmOptions,
+  { storyFormat }: GeneratorOptions
+) {
   const packages = [
     '@storybook/angular',
     '@storybook/addon-actions',
@@ -30,22 +27,18 @@ async function addDependencies(npmOptions: NpmOptions, { storyFormat }: Generato
     packages.push('@storybook/addon-docs');
   }
 
-  const versionedPackages = await getVersionedPackages(npmOptions, ...packages);
+  const versionedPackages = await packageManager.getVersionedPackages(...packages);
 
-  const packageJson = await retrievePackageJson();
+  const packageJson = packageManager.retrievePackageJson();
 
-  packageJson.dependencies = packageJson.dependencies || {};
-  packageJson.devDependencies = packageJson.devDependencies || {};
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 
-  packageJson.scripts = packageJson.scripts || {};
-  packageJson.scripts.storybook = 'start-storybook -p 6006';
-  packageJson.scripts['build-storybook'] = 'build-storybook';
+  packageManager.addDependencies({ ...npmOptions, packageJson }, [
+    ...versionedPackages,
+    ...babelDependencies,
+  ]);
 
-  writePackageJson(packageJson);
-
-  const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
-
-  installDependencies({ ...npmOptions, packageJson }, [...versionedPackages, ...babelDependencies]);
+  packageManager.addStorybookCommandInScripts();
 }
 
 function editAngularAppTsConfig() {
@@ -64,7 +57,7 @@ function editAngularAppTsConfig() {
   writeFileAsJson(getAngularAppTsConfigPath(), tsConfigJson);
 }
 
-const generator: Generator = async (npmOptions, { storyFormat }) => {
+const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
   if (!isDefaultProjectSet()) {
     throw new Error(
       'Could not find a default project in your Angular workspace.\nSet a defaultProject in your angular.json and re-run the installation.'
@@ -73,7 +66,7 @@ const generator: Generator = async (npmOptions, { storyFormat }) => {
 
   copyTemplate(__dirname, storyFormat);
 
-  await addDependencies(npmOptions, { storyFormat });
+  await addDependencies(packageManager, npmOptions, { storyFormat });
   editAngularAppTsConfig();
   editStorybookTsConfig(path.resolve('./.storybook/tsconfig.json'));
 };

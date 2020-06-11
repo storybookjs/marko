@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 /* global window */
 
-import { PropDef } from '@storybook/components';
 import { ArgType, ArgTypes } from '@storybook/api';
 import { logger } from '@storybook/client-logger';
 import {
@@ -15,8 +14,6 @@ import {
   Property,
   Directive,
 } from './types';
-
-type Sections = Record<string, PropDef[]>;
 
 export const isMethod = (methodOrProp: Method | Property): methodOrProp is Method => {
   return (methodOrProp as Method).args !== undefined;

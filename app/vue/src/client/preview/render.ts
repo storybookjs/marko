@@ -22,6 +22,7 @@ export default function render({
   storyFn,
   kind,
   name,
+  args,
   showMain,
   showError,
   showException,
@@ -29,6 +30,9 @@ export default function render({
 }: RenderContext) {
   Vue.config.errorHandler = showException;
 
+  // FIXME: move this into root[COMPONENT] = element
+  // once we get rid of knobs so we don't have to re-create
+  // a new component each time
   const element = storyFn();
 
   if (!element) {
@@ -44,11 +48,13 @@ export default function render({
 
   showMain();
 
-  // always refresh the component
-  root[COMPONENT] = element;
+  // at component creation || refresh by HMR or switching stories
+  if (!root[COMPONENT] || !forceRender) {
+    root[COMPONENT] = element;
+  }
 
-  // @ts-ignore https://github.com/storybookjs/storybook/pull/7578#discussion_r307986139
-  root[VALUES] = element.options[VALUES];
+  // @ts-ignore https://github.com/storybookjs/storrybook/pull/7578#discussion_r307986139
+  root[VALUES] = { ...element.options[VALUES], ...args };
 
   if (!root.$el) {
     root.$mount('#root');
