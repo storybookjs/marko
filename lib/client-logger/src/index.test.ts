@@ -1,4 +1,3 @@
-import mockGlobal from 'global';
 import { logger } from '.';
 
 jest.mock('global', () => ({ ...global, LOGLEVEL: 'debug' }));
