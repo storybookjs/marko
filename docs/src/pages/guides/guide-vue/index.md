@@ -120,7 +120,7 @@ That will load all the stories underneath your `../src` directory that match the
 
 ## Step 4: Write your stories
 
-Now create a `../stories/index.js` file, and write your first story like this:
+Now create a `../src/index.stories.js` file, and write your first story like this:
 
 ```js
 import Vue from 'vue';
