@@ -1,4 +1,4 @@
-import { Welcome } from '@storybook/angular/demo';
+import Welcome from './welcome.component';
 
 export default {
   title: 'Welcome',
