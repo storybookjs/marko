@@ -14,7 +14,7 @@ import './globals';
 import { IStorybookSection, StoryFnVueReturnType } from './types';
 
 import render, { VALUES } from './render';
-import { extractProps, propsFromArgs } from './util';
+import { extractProps } from './util';
 
 export const WRAPS = 'STORYBOOK_WRAPS';
 
@@ -27,11 +27,7 @@ function prepare(
   if (typeof rawStory === 'string') {
     story = { template: rawStory };
   } else if (rawStory != null) {
-    const { args, props } = rawStory as ComponentOptions<Vue> & { args: Args };
-    story = {
-      ...rawStory,
-      props: { ...propsFromArgs(args), ...props },
-    } as ComponentOptions<Vue>;
+    story = rawStory as ComponentOptions<Vue>;
   } else {
     return null;
   }

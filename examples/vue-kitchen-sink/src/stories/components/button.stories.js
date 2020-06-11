@@ -7,10 +7,9 @@ export default {
 };
 
 export const Rounded = (args) => ({
-  args,
+  props: Object.keys(args),
   components: { MyButton },
-  template:
-    '<my-button v-bind:color="color" v-bind:rounded="rounded">A Button with rounded edges</my-button>',
+  template: '<my-button :color="color" :rounded="rounded">A Button with rounded edges</my-button>',
 });
 Rounded.argTypes = {
   rounded: { defaultValue: true },
