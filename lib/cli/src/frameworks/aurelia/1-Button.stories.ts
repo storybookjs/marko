@@ -1,7 +1,7 @@
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
-import { Button } from '@storybook/aurelia/demo';
+import Button from './button';
 
 export default {
   title: 'Button',

@@ -1,4 +1,4 @@
-import { Welcome } from '@storybook/aurelia/demo';
+import Welcome from './welcome';
 
 export default {
   title: 'Welcome',
