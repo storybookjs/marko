@@ -53,7 +53,8 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
     skipInstall: options.skipInstall,
   };
 
-  const hasTSDependency = detectLanguage() === SupportedLanguage.TYPESCRIPT;
+  const language = detectLanguage();
+  const hasTSDependency = language === SupportedLanguage.TYPESCRIPT;
 
   warn({ hasTSDependency });
 
@@ -61,6 +62,7 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
 
   const generatorOptions = {
     storyFormat: options.storyFormat || defaultStoryFormat,
+    language,
   };
 
   const end = () => {
