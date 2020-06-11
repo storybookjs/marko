@@ -1,5 +1,4 @@
 import { Component } from 'vue';
-import { Args } from '@storybook/addons';
 
 export { RenderContext } from '@storybook/core';
 
