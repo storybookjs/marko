@@ -173,9 +173,9 @@ import { addParameters } from '@storybook/vue';
 
 addParameters({
   docs: {
-    prepareForInline: (storyFn) => {
+    prepareForInline: (storyFn, { args }) => {
       const Story = toReact(storyFn());
-      return <Story />;
+      return <Story {...args} />;
     },
   },
 });
