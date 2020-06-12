@@ -8,10 +8,6 @@ export default {
     query: {
       mock: true,
     },
-    // Give the URL enough time to definitely update
-    chromatic: {
-      delay: 1000,
-    },
   },
 };
 
