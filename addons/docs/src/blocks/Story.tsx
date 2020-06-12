@@ -64,7 +64,7 @@ export const getStoryProps = (props: StoryProps, context: DocsContextProps): Pur
     parameters,
     inline: storyIsInline,
     id: previewId,
-    storyFn: prepareForInline && storyFn ? () => prepareForInline(storyFn) : storyFn,
+    storyFn: prepareForInline && storyFn ? () => prepareForInline(storyFn, data) : storyFn,
     height: height || (storyIsInline ? undefined : iframeHeight),
     title: storyName,
   };
