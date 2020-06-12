@@ -27117,12 +27117,14 @@ react-docgen-typescript-loader@^3.7.2:
     loader-utils "^1.2.3"
     react-docgen-typescript "^1.15.0"
 
-react-docgen-typescript-plugin@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/react-docgen-typescript-plugin/-/react-docgen-typescript-plugin-0.0.2.tgz#80aa25b5195cc2be1b21b734becaf71cccfb5208"
-  integrity sha512-8M6bECmvc9T5uW8lBt79+EZC9IYx7fSApWxtWPq7awqPwCecxd2xIay1m/9kBk+DfpShgxU+5fpdviPVBWxtdQ==
+react-docgen-typescript-plugin@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-docgen-typescript-plugin/-/react-docgen-typescript-plugin-0.4.0.tgz#79416e040a7e2c8ece49ded538b6e6661462d46a"
+  integrity sha512-04zRzxpx5BOC0i8QKBH8lNDMuSxZQHH7OVvXwfShaVNd482MnNlf2+MjN6I3vYUhd0X85i3r2KFRFeMS7fOpCA==
   dependencies:
+    debug "^4.1.1"
     endent "^2.0.1"
+    micromatch "^4.0.2"
     react-docgen-typescript "^1.16.6"
     react-docgen-typescript-loader "^3.7.2"
     tslib "^2.0.0"

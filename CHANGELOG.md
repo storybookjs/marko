@@ -1,3 +1,50 @@
+## 6.0.0-beta.26 (June 12, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix Vue args rendering in Docs mode ([#11138](https://github.com/storybookjs/storybook/pull/11138))
+- Typescript: Fix mandatory typescript dependency ([#11140](https://github.com/storybookjs/storybook/pull/11140))
+
+## 6.0.0-beta.25 (June 11, 2020)
+
+### Bug Fixes
+
+- Composition: Fix auto refs when there are no specified refs ([#11057](https://github.com/storybookjs/storybook/pull/11057))
+
+## 6.0.0-beta.24 (June 11, 2020)
+
+### Breaking Changes
+
+- Components: Remove PropsTable, clean ArgsTable stories ([#11105](https://github.com/storybookjs/storybook/pull/11105))
+
+### Features
+
+- React: Switch react-docgen-typescript-loader to react-docgen-typescript-plugin ([#11106](https://github.com/storybookjs/storybook/pull/11106))
+- Vue: Add first-class args support ([#11115](https://github.com/storybookjs/storybook/pull/11115))
+- Core: Add babel plugin for typescript decorators ([#11063](https://github.com/storybookjs/storybook/pull/11063))
+- CLI: Pass --quiet to disable HMR logging in browser console ([#11087](https://github.com/storybookjs/storybook/pull/11087))
+- Addon-knobs: Add number of knobs to tab title ([#11075](https://github.com/storybookjs/storybook/pull/11075))
+
+### Bug Fixes
+
+- Core: Fix package duplication issues by aliasing all storybook packages ([#11092](https://github.com/storybookjs/storybook/pull/11092))
+- hidden) canvas ([#10599](https://github.com/storybookjs/storybook/pull/10599))
+- Core: Fix loglevel filtering ([#11096](https://github.com/storybookjs/storybook/pull/11096))
+- Core: Remove @babel/plugin-transform-react-constant-elements ([#11086](https://github.com/storybookjs/storybook/pull/11086))
+- UI: Fix search in production mode ([#10917](https://github.com/storybookjs/storybook/pull/10917))
+
+### Maintenance
+
+- CLI: Refactor to simplify works with multiple package managers ([#11074](https://github.com/storybookjs/storybook/pull/11074))
+
+### Dependency Upgrades
+
+- chore(deps-dev): bump protractor from 5.4.4 to 7.0.0 ([#10832](https://github.com/storybookjs/storybook/pull/10832))
+- build(deps): [security] bump websocket-extensions from 0.1.3 to 0.1.4 ([#11056](https://github.com/storybookjs/storybook/pull/11056))
+- build(deps): bump @babel/plugin-transform-shorthand-properties from 7.8.3 to 7.10.1 ([#11088](https://github.com/storybookjs/storybook/pull/11088))
+- build(deps-dev): bump tslib from 1.13.0 to 2.0.0 ([#11089](https://github.com/storybookjs/storybook/pull/11089))
+- build(deps-dev): bump @packtracker/webpack-plugin from 2.2.0 to 2.3.0 ([#11091](https://github.com/storybookjs/storybook/pull/11091))
+
 ## 6.0.0-beta.23 (June 8, 2020)
 
 ### Features
