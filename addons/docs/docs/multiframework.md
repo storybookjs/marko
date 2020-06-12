@@ -88,15 +88,15 @@ import toReact from '@egoist/vue-to-react';
 addParameters({
   docs: {
     // `container`, `page`, etc. here
-    prepareForInline: (storyFn) => {
+    prepareForInline: (storyFn, { args }) => {
       const Story = toReact(storyFn());
-      return <Story />;
+      return <Story {...args} />;
     },
   },
 });
 ```
 
-The input is the story function, and the output is a React element, because we render docs pages in react. In the case of Vue, all of the work is done by the `@egoist/vue-to-react` library. If there's no analogous library for your framework, you may need to figure it out yourself!
+The input is the story function and the story context (id, parameters, args, etc.), and the output is a React element, because we render docs pages in react. In the case of Vue, all of the work is done by the `@egoist/vue-to-react` library. If there's no analogous library for your framework, you may need to figure it out yourself!
 
 ## More resources
 
