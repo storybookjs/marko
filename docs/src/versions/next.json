@@ -1,1 +1,1 @@
-{"version":"6.0.0-beta.25","info":{"plain":"### Bug Fixes\n\n- Composition: Fix auto refs when there are no specified refs ([#11057](https://github.com/storybookjs/storybook/pull/11057))"}}
+{"version":"6.0.0-beta.26","info":{"plain":"### Bug Fixes\n\n- Addon-docs: Fix Vue args rendering in Docs mode ([#11138](https://github.com/storybookjs/storybook/pull/11138))\n- Typescript: Fix mandatory typescript dependency ([#11140](https://github.com/storybookjs/storybook/pull/11140))"}}
