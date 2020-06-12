@@ -1,3 +1,10 @@
+## 6.0.0-beta.26 (June 12, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix Vue args rendering in Docs mode ([#11138](https://github.com/storybookjs/storybook/pull/11138))
+- Typescript: Fix mandatory typescript dependency ([#11140](https://github.com/storybookjs/storybook/pull/11140))
+
 ## 6.0.0-beta.25 (June 11, 2020)
 
 ### Bug Fixes
