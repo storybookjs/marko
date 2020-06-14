@@ -150,13 +150,13 @@ export default {
     label: {
       description: 'overwritten description',
       table: {
-        type: { summary: 'something short' detail: 'something really really long' },
+        type: { summary: 'something short', detail: 'something really really long' },
       },
       control: {
-        type: null
-      }
-    }
-  }
+        type: null,
+      },
+    },
+  },
 };
 ```
 
@@ -170,7 +170,7 @@ const argTypes = {
     defaultValue: 'Hello',
     description: 'overwritten description',
     table: {
-      type: { summary: 'something short' detail: 'something really really long' },
+      type: { summary: 'something short', detail: 'something really really long' },
       defaultValue: { summary: 'Hello' },
     }
     control: {
