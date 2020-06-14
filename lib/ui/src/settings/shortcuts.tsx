@@ -2,10 +2,13 @@ import React, { Component, Fragment, SyntheticEvent } from 'react';
 import { styled, keyframes } from '@storybook/theming';
 import { GlobalHotKeys } from 'react-hotkeys';
 
+import {
+  eventToShortcut,
+  shortcutToHumanString,
+  shortcutMatchesShortcut,
+} from '@storybook/api/shortcut';
 import { Form, IconButton, Icons, Tabs } from '@storybook/components';
 import SettingsFooter from './SettingsFooter';
-
-import { eventToShortcut, shortcutToHumanString, shortcutMatchesShortcut } from '../libs/shortcut';
 
 const { Button, Input } = Form;
 
@@ -200,7 +203,10 @@ class ShortcutsScreen extends Component<ShortcutsScreenProps, ShortcutsScreenSta
 
     this.setState({
       activeFeature: focusedInput,
-      shortcutKeys: { ...shortcutKeys, [focusedInput]: { shortcut: null, error: false } },
+      shortcutKeys: {
+        ...shortcutKeys,
+        [focusedInput]: { shortcut: null, error: false },
+      },
     });
   };
 
