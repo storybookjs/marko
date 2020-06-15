@@ -1,6 +1,5 @@
-import { getBabelDependencies, writeFileAsJson, copyTemplate, readFileAsJson } from '../../helpers';
-import { Generator } from '../Generator';
-import { StoryFormat } from '../../project_types';
+import { writeFileAsJson, readFileAsJson, copyTemplate } from '../../helpers';
+import { baseGenerator, Generator } from '../baseGenerator';
 
 function addStorybookExcludeGlobToTsConfig() {
   const tsConfigJson = readFileAsJson('tsconfig.json', true);
@@ -17,39 +16,13 @@ function addStorybookExcludeGlobToTsConfig() {
   tsConfigJson.exclude = [...exclude, glob];
   writeFileAsJson('tsconfig.json', tsConfigJson);
 }
-const generator: Generator = async (
-  packageManager,
-  npmOptions,
-  { storyFormat = StoryFormat.CSF }
-) => {
-  copyTemplate(__dirname, storyFormat);
-  const packages = [
-    '@storybook/aurelia',
-    '@storybook/addon-actions',
-    '@storybook/addon-links',
-    '@storybook/addons',
-    '@storybook/addon-storysource',
-    '@storybook/addon-knobs',
-    '@storybook/addon-options',
-    '@storybook/addon-a11y',
-    '@storybook/addon-backgrounds',
-    'aurelia',
-  ];
 
-  if (storyFormat === 'mdx') {
-    packages.push('@storybook/addon-docs');
-  }
-
-  const versionedPackages = await packageManager.getVersionedPackages(...packages);
-  const packageJson = packageManager.retrievePackageJson();
+const generator: Generator = async (packageManager, npmOptions, options) => {
   addStorybookExcludeGlobToTsConfig();
-  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
-  packageManager.addDependencies({ ...npmOptions, packageJson }, [
-    ...versionedPackages,
-    ...babelDependencies,
-  ]);
-
-  packageManager.addStorybookCommandInScripts();
+  baseGenerator(packageManager, npmOptions, options, 'aurelia', {
+    extraPackages: ['aurelia'],
+  });
+  copyTemplate(__dirname, options.storyFormat);
 };
 
 export default generator;
