@@ -34,7 +34,7 @@ export const ControlsPanel: FC = () => {
     PARAM_KEY,
     {}
   );
-  const hasControls = Object.values(rows).filter((argType) => argType?.control?.type).length > 0;
+  const hasControls = Object.values(rows).filter((argType) => !!argType?.control).length > 0;
   return (
     <>
       {hasControls || hideNoControlsWarning ? null : <NoControlsWarning />}

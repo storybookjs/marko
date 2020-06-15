@@ -4,7 +4,7 @@ export default {
   title: 'Button',
   component: MyButton,
   argTypes: {
-    color: { control: { type: 'color' } },
+    color: { control: 'color' },
   },
 };
 
