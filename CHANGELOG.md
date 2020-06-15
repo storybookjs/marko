@@ -1,3 +1,11 @@
+## 6.0.0-beta.27 (June 14, 2020)
+
+### Maintenance
+
+* UI: Remove unused modules ([#11159](https://github.com/storybookjs/storybook/pull/11159))
+* UI: Remove unused & duplicated code ([#11155](https://github.com/storybookjs/storybook/pull/11155))
+* REMOVE unused dependencies && FIX versions ([#11143](https://github.com/storybookjs/storybook/pull/11143))
+
 ## 6.0.0-beta.26 (June 12, 2020)
 
 ### Bug Fixes

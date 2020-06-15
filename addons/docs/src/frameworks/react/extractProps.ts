@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { isForwardRef, isMemo } from 'react-is';
+import { isMemo } from 'react-is';
 import {
   PropDef,
   hasDocgen,
@@ -30,7 +30,7 @@ function getPropDefs(component: Component, section: string): PropDef[] {
 
   // eslint-disable-next-line react/forbid-foreign-prop-types
   if (!hasDocgen(component) && !component.propTypes) {
-    if (isForwardRef(component) || component.render) {
+    if (component.render) {
       processedComponent = component.render({}).type;
     }
     if (isMemo(component)) {
