@@ -14,6 +14,5 @@ export const normalizeArgTypes = (argTypes: ArgTypes) =>
     const { type, control } = argType;
     if (type) normalized.type = normalizeType(type);
     if (control) normalized.control = normalizeControl(control);
-    console.log({ argType, normalized });
     return normalized;
   });
