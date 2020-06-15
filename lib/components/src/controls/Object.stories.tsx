@@ -32,7 +32,7 @@ export const ValidatedAsArray = () => {
     <>
       <ObjectControl
         name="object"
-        argType={{ type: 'array' }}
+        argType={{ type: { name: 'array' } }}
         value={value}
         onChange={(name, newVal) => setValue(newVal)}
       />
