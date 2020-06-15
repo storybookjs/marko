@@ -14,8 +14,7 @@
 
 - CLI: Colocate stories and components, centralize main.js ([#11136](https://github.com/storybookjs/storybook/pull/11136))
 - Build: Exclude stories from collecting coverage ([#11164](https://github.com/storybookjs/storybook/pull/11164))
-
-* Core: Extend router/utils test set ([#11156](https://github.com/storybookjs/storybook/pull/11156))
+- Core: Extend router/utils test set ([#11156](https://github.com/storybookjs/storybook/pull/11156))
 
 ## 6.0.0-beta.27 (June 14, 2020)
 
