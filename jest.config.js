@@ -70,6 +70,7 @@ module.exports = {
     '/dll/',
     '/__mocks__ /',
     '/__testfixtures__/',
+    '^.*\\.stories\\.[jt]sx?$',
   ],
   globals: {
     DOCS_MODE: false,
