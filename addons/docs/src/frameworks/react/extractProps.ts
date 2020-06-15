@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { isForwardRef, isMemo } from 'react-is';
+import { isMemo } from 'react-is';
 import {
   PropDef,
   hasDocgen,
