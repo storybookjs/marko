@@ -9,7 +9,7 @@ export interface StoryData {
 
 const splitPathRegex = /\/([^/]+)\/(?:(.*)_)?([^/]+)?/;
 
-export const parsePath: (path?: string) => StoryData = memoize(1000)(
+export const parsePath: (path: string | undefined) => StoryData = memoize(1000)(
   (path: string | undefined | null) => {
     const result: StoryData = {
       viewMode: undefined,
@@ -18,12 +18,7 @@ export const parsePath: (path?: string) => StoryData = memoize(1000)(
     };
 
     if (path) {
-      const [, viewMode, refId, storyId] = path.toLowerCase().match(splitPathRegex) || [
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-      ];
+      const [, viewMode, refId, storyId] = path.toLowerCase().match(splitPathRegex) || [];
       if (viewMode) {
         Object.assign(result, {
           viewMode,
@@ -47,13 +42,18 @@ export const queryFromLocation = (location: { search: string }) => queryFromStri
 export const stringifyQuery = (query: Query) =>
   qs.stringify(query, { addQueryPrefix: true, encode: false });
 
-export const getMatch = memoize(1000)((current: string, target: string, startsWith = true) => {
-  const startsWithTarget = current && startsWith && current.startsWith(target);
-  const currentIsTarget = typeof target === 'string' && current === target;
-  const matchTarget = current && target && current.match(target);
+type Match = { path: string };
 
-  if (startsWithTarget || currentIsTarget || matchTarget) {
-    return { path: current };
+export const getMatch = memoize(1000)(
+  (current: string, target: string, startsWith = true): Match | null => {
+    const startsWithTarget = current && startsWith && current.startsWith(target);
+    const currentIsTarget = typeof target === 'string' && current === target;
+    const matchTarget = current && target && current.match(target);
+
+    if (startsWithTarget || currentIsTarget || matchTarget) {
+      return { path: current };
+    }
+
+    return null;
   }
-  return null;
-});
+);
