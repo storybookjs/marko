@@ -1,10 +1,29 @@
+## 6.0.0-beta.28 (June 15, 2020)
+
+### Features
+
+- Addon-docs: Add argTypes type/control shorthand ([#11174](https://github.com/storybookjs/storybook/pull/11174))
+
+### Bug Fixes
+
+- Core: Remove boxSizing to fix weird CSS layouts ([#11175](https://github.com/storybookjs/storybook/pull/11175))
+- Addon-docs: Fix forwardRef & invalid hook call ([#11154](https://github.com/storybookjs/storybook/pull/11154))
+- Client-API: Add @types/qs typings ([#11162](https://github.com/storybookjs/storybook/pull/11162))
+
+### Maintenance
+
+- CLI: Colocate stories and components, centralize main.js ([#11136](https://github.com/storybookjs/storybook/pull/11136))
+- Build: Exclude stories from collecting coverage ([#11164](https://github.com/storybookjs/storybook/pull/11164))
+
+* Core: Extend router/utils test set ([#11156](https://github.com/storybookjs/storybook/pull/11156))
+
 ## 6.0.0-beta.27 (June 14, 2020)
 
 ### Maintenance
 
-* UI: Remove unused modules ([#11159](https://github.com/storybookjs/storybook/pull/11159))
-* UI: Remove unused & duplicated code ([#11155](https://github.com/storybookjs/storybook/pull/11155))
-* REMOVE unused dependencies && FIX versions ([#11143](https://github.com/storybookjs/storybook/pull/11143))
+- UI: Remove unused modules ([#11159](https://github.com/storybookjs/storybook/pull/11159))
+- UI: Remove unused & duplicated code ([#11155](https://github.com/storybookjs/storybook/pull/11155))
+- REMOVE unused dependencies && FIX versions ([#11143](https://github.com/storybookjs/storybook/pull/11143))
 
 ## 6.0.0-beta.26 (June 12, 2020)
 
