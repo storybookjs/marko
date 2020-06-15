@@ -1,24 +1,8 @@
-import { getBabelDependencies, copyTemplate } from '../../helpers';
-import { Generator } from '../Generator';
+import { baseGenerator, Generator } from '../baseGenerator';
 import { writePackageJson } from '../../js-package-manager';
 
-const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
-  const [
-    storybookVersion,
-    actionsVersion,
-    linksVersion,
-    addonsVersion,
-    latestRaxVersion,
-  ] = await packageManager.getVersions(
-    '@storybook/rax',
-    '@storybook/addon-actions',
-    '@storybook/addon-links',
-    '@storybook/addons',
-    'rax'
-  );
-
-  copyTemplate(__dirname, storyFormat);
-
+const generator: Generator = async (packageManager, npmOptions, options) => {
+  const [latestRaxVersion] = await packageManager.getVersions('rax');
   const packageJson = packageManager.retrievePackageJson();
 
   const raxVersion = packageJson.dependencies.rax || latestRaxVersion;
@@ -34,17 +18,9 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
 
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
-
-  packageManager.addDependencies({ ...npmOptions, packageJson }, [
-    `@storybook/rax@${storybookVersion}`,
-    `@storybook/addon-actions@${actionsVersion}`,
-    `@storybook/addon-links@${linksVersion}`,
-    `@storybook/addons@${addonsVersion}`,
-    ...babelDependencies,
-  ]);
-
-  packageManager.addStorybookCommandInScripts();
+  baseGenerator(packageManager, npmOptions, options, 'rax', {
+    extraPackages: ['rax'],
+  });
 };
 
 export default generator;

@@ -1,35 +1,11 @@
-import fse from 'fs-extra';
-import path from 'path';
-import { getBabelDependencies } from '../../helpers';
-import { StoryFormat } from '../../project_types';
-import { Generator } from '../Generator';
+import { baseGenerator, Generator } from '../baseGenerator';
+import { copyTemplate } from '../../helpers';
 
-const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
-  const packages = [
-    '@storybook/web-components',
-    '@storybook/addon-actions',
-    '@storybook/addon-links',
-    'lit-html',
-  ];
-
-  const versionedPackages = await packageManager.getVersionedPackages(...packages);
-
-  fse.copySync(path.resolve(__dirname, 'template/'), '.', { overwrite: true });
-
-  if (storyFormat === StoryFormat.MDX) {
-    // TODO: handle adding of docs mode
-  }
-
-  const packageJson = packageManager.retrievePackageJson();
-
-  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
-
-  packageManager.addDependencies({ ...npmOptions, packageJson }, [
-    ...versionedPackages,
-    ...babelDependencies,
-  ]);
-
-  packageManager.addStorybookCommandInScripts();
+const generator: Generator = async (packageManager, npmOptions, options) => {
+  baseGenerator(packageManager, npmOptions, options, 'web-components', {
+    extraPackages: ['lit-html'],
+  });
+  copyTemplate(__dirname, options.storyFormat);
 };
 
 export default generator;

@@ -1,43 +1,12 @@
 import fs from 'fs';
 import JSON5 from 'json5';
-import { getBabelDependencies, copyTemplate } from '../../helpers';
-import { Generator } from '../Generator';
-import { writePackageJson } from '../../js-package-manager';
+import { baseGenerator, Generator } from '../baseGenerator';
 
-const generator: Generator = async (packageManager, npmOptions, { storyFormat }) => {
-  const [
-    storybookVersion,
-    actionsVersion,
-    linksVersion,
-    knobsVersion,
-    addonsVersion,
-    reactVersion,
-    reactDomVersion,
-    presetEnvVersion,
-    presetReactVersion,
-  ] = await packageManager.getVersions(
-    '@storybook/react',
-    '@storybook/addon-actions',
-    '@storybook/addon-links',
-    '@storybook/addon-knobs',
-    '@storybook/addons',
-    'react',
-    'react-dom',
-    '@babel/preset-env',
-    '@babel/preset-react'
-  );
-
-  copyTemplate(__dirname, storyFormat);
-
-  const packageJson = packageManager.retrievePackageJson();
-
-  const devDependencies = [
-    `@storybook/react@${storybookVersion}`,
-    `@storybook/addon-actions@${actionsVersion}`,
-    `@storybook/addon-links@${linksVersion}`,
-    `@storybook/addon-knobs@${knobsVersion}`,
-    `@storybook/addons@${addonsVersion}`,
-  ];
+const generator: Generator = async (packageManager, npmOptions, options) => {
+  baseGenerator(packageManager, npmOptions, options, 'react', {
+    extraPackages: ['react', 'react-dom', '@babel/preset-env', '@babel/preset-react'],
+    staticDir: 'dist',
+  });
 
   // create or update .babelrc
   let babelrc = null;
@@ -52,39 +21,9 @@ const generator: Generator = async (packageManager, npmOptions, { storyFormat })
         '@babel/preset-react',
       ],
     };
-
-    devDependencies.push(`@babel/preset-env@${presetEnvVersion}`);
-    devDependencies.push(`@babel/preset-react@${presetReactVersion}`);
   }
 
   fs.writeFileSync('.babelrc', JSON.stringify(babelrc, null, 2), 'utf8');
-
-  writePackageJson(packageJson);
-
-  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
-
-  // add react packages.
-  const dependencies = [];
-  if (!packageJson.dependencies.react) {
-    dependencies.push(`react@${reactVersion}`);
-  }
-  if (!packageJson.dependencies['react-dom']) {
-    dependencies.push(`react-dom@${reactDomVersion}`);
-  }
-
-  if (dependencies.length > 0) {
-    packageManager.addDependencies(
-      { ...npmOptions, packageJson, installAsDevDependencies: false },
-      dependencies
-    );
-  }
-
-  packageManager.addDependencies({ ...npmOptions, packageJson }, [
-    ...devDependencies,
-    ...babelDependencies,
-  ]);
-
-  packageManager.addStorybookCommandInScripts();
 };
 
 export default generator;

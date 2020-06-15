@@ -6,7 +6,7 @@ import chalk from 'chalk';
 import { satisfies } from '@storybook/semver';
 import stripJsonComments from 'strip-json-comments';
 
-import { StoryFormat } from './project_types';
+import { StoryFormat, SupportedFrameworks, SupportedLanguage } from './project_types';
 import { JsPackageManager, PackageJson, PackageJsonWithDepsAndDevDeps } from './js-package-manager';
 
 const logger = console;
@@ -165,6 +165,7 @@ export function addToDevDependenciesIfNotPresent(
 
 export function copyTemplate(templateRoot: string, storyFormat: StoryFormat) {
   const templateDir = path.resolve(templateRoot, `template-${storyFormat}/`);
+
   if (!fs.existsSync(templateDir)) {
     // Fallback to CSF plain first, in case format is typescript but template is not available.
     if (storyFormat === StoryFormat.CSF_TYPESCRIPT) {
@@ -175,4 +176,43 @@ export function copyTemplate(templateRoot: string, storyFormat: StoryFormat) {
     throw new Error(`Unsupported story format: ${storyFormat}`);
   }
   fse.copySync(templateDir, '.', { overwrite: true });
+}
+
+export function copyComponents(framework: SupportedFrameworks, language: SupportedLanguage) {
+  const languageFolderMapping: Record<SupportedLanguage, string> = {
+    javascript: 'js',
+    typescript: 'ts',
+  };
+  const componentsPath = () => {
+    const frameworkPath = `frameworks/${framework}`;
+    const languageSpecific = path.resolve(
+      __dirname,
+      `${frameworkPath}/${languageFolderMapping[language]}`
+    );
+    if (fse.existsSync(languageSpecific)) {
+      return languageSpecific;
+    }
+    const jsFallback = path.resolve(
+      __dirname,
+      `${frameworkPath}/${languageFolderMapping.javascript}`
+    );
+    if (fse.existsSync(jsFallback)) {
+      return jsFallback;
+    }
+    const frameworkRootPath = path.resolve(__dirname, frameworkPath);
+    if (fse.existsSync(frameworkRootPath)) {
+      return frameworkRootPath;
+    }
+    throw new Error(`Unsupported framework: ${framework}`);
+  };
+
+  const targetPath = () => {
+    if (fse.existsSync('./src')) {
+      return './src/stories';
+    }
+    return './stories';
+  };
+
+  const destinationPath = targetPath();
+  fse.copySync(componentsPath(), destinationPath, { overwrite: true });
 }
