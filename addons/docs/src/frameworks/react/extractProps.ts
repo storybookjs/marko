@@ -29,13 +29,8 @@ function getPropDefs(component: Component, section: string): PropDef[] {
   let processedComponent = component;
 
   // eslint-disable-next-line react/forbid-foreign-prop-types
-  if (!hasDocgen(component) && !component.propTypes) {
-    if (component.render) {
-      processedComponent = component.render({}).type;
-    }
-    if (isMemo(component)) {
-      processedComponent = component.type().type;
-    }
+  if (!hasDocgen(component) && !component.propTypes && isMemo(component)) {
+    processedComponent = component.type().type;
   }
 
   const extractedProps = extractComponentProps(processedComponent, section);
