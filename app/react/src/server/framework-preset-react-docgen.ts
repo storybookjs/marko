@@ -1,3 +1,4 @@
+import fs from 'fs';
 import type { TransformOptions } from '@babel/core';
 import type { Configuration } from 'webpack';
 import type { StorybookOptions } from '@storybook/core/types';
@@ -28,11 +29,21 @@ export function babel(config: TransformOptions, { typescriptOptions }: Storybook
   };
 }
 
+const tsconfigPath = './tsconfig.json';
+
 export function webpackFinal(config: Configuration, { typescriptOptions }: StorybookOptions) {
-  const { reactDocgen, reactDocgenTypescriptOptions } = typescriptOptions;
+  const { reactDocgen, reactDocgenTypescriptOptions = {} } = typescriptOptions;
 
   if (reactDocgen !== 'react-docgen-typescript') {
     return config;
+  }
+
+  if (
+    !reactDocgenTypescriptOptions.tsconfigPath &&
+    !reactDocgenTypescriptOptions.compilerOptions &&
+    fs.existsSync(tsconfigPath)
+  ) {
+    reactDocgenTypescriptOptions.tsconfigPath = tsconfigPath;
   }
 
   return {
