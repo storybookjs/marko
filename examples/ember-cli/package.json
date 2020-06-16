@@ -19,6 +19,7 @@
     "@storybook/addon-a11y": "6.0.0-beta.29",
     "@storybook/addon-actions": "6.0.0-beta.29",
     "@storybook/addon-backgrounds": "6.0.0-beta.29",
+    "@storybook/addon-controls": "6.0.0-beta.29",
     "@storybook/addon-docs": "6.0.0-beta.29",
     "@storybook/addon-knobs": "6.0.0-beta.29",
     "@storybook/addon-links": "6.0.0-beta.29",
