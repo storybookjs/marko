@@ -14,17 +14,19 @@ const context = coreDirName.includes('node_modules')
   : path.join(coreDirName, '../../node_modules'); // SB Monorepo
 
 function createBabelOptions(babelOptions?: any, configureJSX?: boolean) {
-  if (!configureJSX) {
-    return babelOptions;
-  }
-
+  // for frameworks that are not working with react, we need to configure
+  // the jsx to transpile mdx, for now there will be a flag for that
+  // for more complex solutions we can find alone that we need to add '@babel/plugin-transform-react-jsx'
   const babelPlugins = (babelOptions && babelOptions.plugins) || [];
+  const plugins = configureJSX
+    ? [...babelPlugins, '@babel/plugin-transform-react-jsx']
+    : babelPlugins;
+
   return {
+    // don't use the root babelrc by default (users can override this in babelOptions)
+    babelrc: false,
     ...babelOptions,
-    // for frameworks that are not working with react, we need to configure
-    // the jsx to transpile mdx, for now there will be a flag for that
-    // for more complex solutions we can find alone that we need to add '@babel/plugin-transform-react-jsx'
-    plugins: [...babelPlugins, '@babel/plugin-transform-react-jsx'],
+    plugins,
   };
 }
 
