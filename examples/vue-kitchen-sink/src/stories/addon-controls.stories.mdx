@@ -1,0 +1,50 @@
+import { Meta, Preview, Story } from '@storybook/addon-docs/blocks';
+import MyButton from './Button.vue';
+
+<Meta
+  title="Addon/ControlsMDX"
+  component={MyButton}
+  argTypes={{
+    color: { control: { type: 'color' } },
+  }}
+/>
+
+export const ButtonStory = (args) => ({
+  props: Object.keys(args),
+  components: { MyButton },
+  template: '<my-button :color="color" :rounded="rounded">{{label}}</my-button>',
+});
+
+# Addon-controls in MDX
+
+Controls can also be defined and used in MDX stories.
+
+## Rounded
+
+<Preview>
+  <Story
+    name="Rounded"
+    args={{
+      rounded: true,
+      color: '#f00',
+      label: 'A Button with rounded edges',
+    }}
+  >
+    {ButtonStory.bind({})}
+  </Story>
+</Preview>
+
+## Square
+
+<Preview>
+  <Story
+    name="Square"
+    args={{
+      rounded: false,
+      color: '#00f',
+      label: 'A Button with square edges',
+    }}
+  >
+    {ButtonStory.bind({})}
+  </Story>
+</Preview>

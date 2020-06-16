@@ -2,7 +2,6 @@ import { hbs } from 'ember-cli-htmlbars';
 
 export default {
   title: 'Welcome',
-
   parameters: {
     options: { showPanel: false },
   },
