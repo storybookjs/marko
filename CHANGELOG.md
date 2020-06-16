@@ -1,3 +1,14 @@
+## 6.0.0-beta.29 (June 16, 2020)
+
+### Features
+
+* Addon-docs: Add syntax highlighting to Code and Description blocks ([#11183](https://github.com/storybookjs/storybook/pull/11183))
+
+### Bug Fixes
+
+* MDX: Don't use root babelrc by default ([#11185](https://github.com/storybookjs/storybook/pull/11185))
+* Addon-docs: Fix 'show source' for stories with dynamic title ([#10959](https://github.com/storybookjs/storybook/pull/10959))
+
 ## 6.0.0-beta.28 (June 15, 2020)
 
 ### Features
