@@ -1,13 +1,29 @@
+## 6.0.0-beta.30 (June 16, 2020)
+
+### Features
+
+- MDX: Support function.bind({}) syntax ([#11198](https://github.com/storybookjs/storybook/pull/11198))
+
+### Bug Fixes
+
+- Addon-docs: Remove render preprocessing for react components w/o docgen ([#11195](https://github.com/storybookjs/storybook/pull/11195))
+- Core: Fix addon load order ([#11178](https://github.com/storybookjs/storybook/pull/11178))
+- Core: Add global box-sizing setting. Fixes #10207 ([#11055](https://github.com/storybookjs/storybook/pull/11055))
+
+### Maintenance
+
+- Addon-controls: Add examples to angular, ember, html, svelte, vue, web-components ([#11197](https://github.com/storybookjs/storybook/pull/11197))
+
 ## 6.0.0-beta.29 (June 16, 2020)
 
 ### Features
 
-* Addon-docs: Add syntax highlighting to Code and Description blocks ([#11183](https://github.com/storybookjs/storybook/pull/11183))
+- Addon-docs: Add syntax highlighting to Code and Description blocks ([#11183](https://github.com/storybookjs/storybook/pull/11183))
 
 ### Bug Fixes
 
-* MDX: Don't use root babelrc by default ([#11185](https://github.com/storybookjs/storybook/pull/11185))
-* Addon-docs: Fix 'show source' for stories with dynamic title ([#10959](https://github.com/storybookjs/storybook/pull/10959))
+- MDX: Don't use root babelrc by default ([#11185](https://github.com/storybookjs/storybook/pull/11185))
+- Addon-docs: Fix 'show source' for stories with dynamic title ([#10959](https://github.com/storybookjs/storybook/pull/10959))
 
 ## 6.0.0-beta.28 (June 15, 2020)
 

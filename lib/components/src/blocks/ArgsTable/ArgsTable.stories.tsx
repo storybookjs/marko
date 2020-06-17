@@ -13,7 +13,9 @@ const eventsSection = { category: 'events ' };
 const stringType = ArgRow.String.args.row;
 const numberType = ArgRow.Number.args.row;
 
-export const Normal = (args) => <ArgsTable {...args} />;
+const ArgsTableStory = (args) => <ArgsTable {...args} />;
+
+export const Normal = ArgsTableStory.bind({});
 Normal.args = {
   rows: {
     stringType,
@@ -21,7 +23,7 @@ Normal.args = {
   },
 };
 
-export const Compact = (args) => <ArgsTable {...args} />;
+export const Compact = ArgsTableStory.bind({});
 Compact.args = {
   ...Normal.args,
   compact: true,
@@ -33,21 +35,21 @@ const sectionRows = {
   c: { ...stringType, table: { ...stringType.table, ...eventsSection } },
 };
 
-export const Sections = (args) => <ArgsTable {...args} />;
+export const Sections = ArgsTableStory.bind({});
 Sections.args = {
   rows: sectionRows,
 };
 
-export const SectionsCompact = (args) => <ArgsTable {...args} />;
+export const SectionsCompact = ArgsTableStory.bind({});
 SectionsCompact.args = {
   ...Sections.args,
   compact: true,
 };
 
-export const Error = (args) => <ArgsTable {...args} />;
+export const Error = ArgsTableStory.bind({});
 Error.args = {
   error: ArgsTableError.NO_COMPONENT,
 };
 
-export const Empty = (args) => <ArgsTable {...args} />;
+export const Empty = ArgsTableStory.bind({});
 Empty.args = { rows: {} };

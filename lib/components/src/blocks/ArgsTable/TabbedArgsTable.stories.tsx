@@ -7,10 +7,9 @@ export default {
   title: 'Docs/TabbedArgsTable',
 };
 
-const propsSection = { category: 'props ' };
-const eventsSection = { category: 'events ' };
+const Story = (args) => <TabbedArgsTable {...args} />;
 
-export const Tabs = (args) => <TabbedArgsTable {...args} />;
+export const Tabs = Story.bind({});
 Tabs.args = {
   tabs: {
     Normal: Normal.args,
@@ -19,7 +18,7 @@ Tabs.args = {
   },
 };
 
-export const Empty = Tabs.bind();
+export const Empty = Story.bind({});
 Empty.args = {
   tabs: {},
 };
