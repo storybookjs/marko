@@ -77,7 +77,7 @@ export const Ref: FunctionComponent<RefType & RefProps> = (ref) => {
   const isLoading = isLoadingMain || isLoadingInjected || ref.type === 'unknown';
   const isError = !!error;
   const isEmpty = !isLoading && length === 0;
-  const isAuthRequired = !!loginUrl;
+  const isAuthRequired = !!loginUrl && length === 0;
 
   const state = getStateType(isLoading, isAuthRequired, isError, isEmpty);
 

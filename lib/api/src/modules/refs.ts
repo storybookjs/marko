@@ -15,9 +15,11 @@ export interface SubState {
 
 type Versions = Record<string, string>;
 
-export type SetRefData = Omit<ComposedRef, 'stories'> & {
-  stories?: StoriesRaw;
-};
+export type SetRefData = Partial<
+  Omit<ComposedRef, 'stories'> & {
+    stories?: StoriesRaw;
+  }
+>;
 
 export interface SubAPI {
   findRef: (source: string) => ComposedRef;
@@ -48,12 +50,12 @@ export type RefUrl = string;
 // eslint-disable-next-line no-useless-escape
 const findFilename = /(\/((?:[^\/]+?)\.[^\/]+?)|\/)$/;
 
-const allSettled = (promises: Promise<any>[]) =>
+const allSettled = (promises: Promise<Response>[]): Promise<(Response | false)[]> =>
   Promise.all(
-    promises.map((promise, i) =>
+    promises.map((promise) =>
       promise.then(
-        (r) => (r.ok ? r : false),
-        () => false
+        (r) => (r.ok ? r : (false as const)),
+        () => false as const
       )
     )
   );
@@ -123,7 +125,7 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
     checkRef: async (ref) => {
       const { id, url } = ref;
 
-      const loadedData: { error?: Error; stories?: StoriesRaw } = {};
+      const loadedData: { error?: Error; stories?: StoriesRaw; loginUrl?: string } = {};
 
       const [included, omitted, iframe] = await allSettled([
         fetch(`${url}/stories.json`, {
@@ -144,7 +146,7 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
         }),
       ]);
 
-      const handle = async (request: Promise<Response> | false) => {
+      const handle = async (request: Response | false): Promise<SetRefData> => {
         if (request) {
           return Promise.resolve(request)
             .then((response) => (response.ok ? response.json() : {}))
@@ -168,10 +170,11 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
           `,
         } as Error;
       } else if (omitted || included) {
-        const credentials = !omitted ? 'include' : 'omit';
+        const credentials = included ? 'include' : 'omit';
 
-        const [stories, metadata] = await Promise.all([
-          handle(omitted || included),
+        const [stories, storiesWithAuth, metadata] = await Promise.all([
+          handle(omitted),
+          handle(included),
           handle(
             fetch(`${url}/metadata.json`, {
               headers: {
@@ -180,10 +183,14 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
               credentials,
               cache: 'no-cache',
             })
-          ),
+          ).then((r: SetRefData) => (r?.error?.message === 'Failed to fetch' ? {} : r)),
         ]);
 
-        Object.assign(loadedData, { ...stories, ...metadata });
+        Object.assign(loadedData, { ...stories, ...storiesWithAuth, ...metadata });
+
+        if (storiesWithAuth && !storiesWithAuth.loginUrl) {
+          delete loadedData.loginUrl;
+        }
       }
 
       api.setRef(id, {
