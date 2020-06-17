@@ -36,7 +36,7 @@ export interface ComposedRef {
   type?: 'auto-inject' | 'unknown' | 'lazy';
   stories: StoriesHash;
   versions?: Versions;
-  authUrl?: string;
+  loginUrl?: string;
   ready?: boolean;
   error?: any;
 }
