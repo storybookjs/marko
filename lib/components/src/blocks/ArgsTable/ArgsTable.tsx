@@ -3,7 +3,7 @@ import { styled, ignoreSsrWarning } from '@storybook/theming';
 import { opacify, transparentize, darken, lighten } from 'polished';
 import { ArgRow, ArgRowProps } from './ArgRow';
 import { SectionRow, SectionRowProps } from './SectionRow';
-import { ArgTypes, Args } from './types';
+import { ArgType, ArgTypes, Args } from './types';
 import { EmptyBlock } from '../EmptyBlock';
 import { ResetWrapper } from '../../typography/DocumentFormatting';
 
@@ -145,15 +145,39 @@ export interface ArgsTableErrorProps {
 }
 
 export type ArgsTableProps = ArgsTableRowProps | ArgsTableErrorProps;
-type RowProps = SectionRowProps | ArgRowProps;
 
-const ArgsTableRow: FC<RowProps> = (props) => {
-  const { section, updateArgs } = props as SectionRowProps;
-  if (section) {
-    return <SectionRow {...{ section, updateArgs }} />;
-  }
-  const { row, arg, compact } = props as ArgRowProps;
-  return <ArgRow {...{ row, arg, updateArgs, compact }} />;
+type Rows = ArgType[];
+type Subsection = Rows;
+type Section = {
+  ungrouped: Rows;
+  subsections: Record<string, Subsection>;
+};
+type Sections = {
+  ungrouped: Rows;
+  sections: Record<string, Section>;
+};
+
+const groupRows = (rows: ArgTypes) => {
+  const sections: Sections = { ungrouped: [], sections: {} };
+  if (!rows) return sections;
+
+  Object.entries(rows).forEach(([key, row]) => {
+    const { category, subcategory } = row?.table || {};
+    if (category) {
+      const section = sections.sections[category] || { ungrouped: [], subsections: {} };
+      if (!subcategory) {
+        section.ungrouped.push(row);
+      } else {
+        const subsection = section.subsections[subcategory] || [];
+        subsection.push(row);
+        section.subsections[subcategory] = subsection;
+      }
+      sections.sections[category] = section;
+    } else {
+      sections.ungrouped.push({ key, ...row });
+    }
+  });
+  return sections;
 };
 
 /**
@@ -168,45 +192,17 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
 
   const { rows, args, updateArgs, compact } = props as ArgsTableRowProps;
 
-  const ungroupedRows: ArgTypes = {};
-  const categoryRows: Record<string, ArgTypes> = {};
-  if (rows) {
-    Object.entries(rows).forEach(([key, row]) => {
-      const { table: { category = null } = {} } = row;
-      if (category) {
-        if (!categoryRows[category]) categoryRows[category] = {};
-        categoryRows[category][key] = row;
-      } else {
-        ungroupedRows[key] = row;
-      }
-    });
-  }
+  const groups = groupRows(rows);
 
-  const allRows: { key: string; value: any }[] = [];
-  Object.entries(ungroupedRows).forEach(([key, row]) => {
-    const arg = args && args[key];
-    allRows.push({
-      key,
-      value: { row, arg, updateArgs },
-    });
-  });
-  Object.keys(categoryRows).forEach((category) => {
-    const catRows = categoryRows[category];
-    if (Object.keys(catRows).length > 0) {
-      allRows.push({ key: category, value: { section: category, updateArgs } });
-      Object.entries(catRows).forEach(([key, row]) => {
-        const arg = args && args[key];
-        allRows.push({
-          key: `${category}_${key}`,
-          value: { row, arg, updateArgs },
-        });
-      });
-    }
-  });
-
-  if (allRows.length === 0) {
+  if (Object.keys(groups).length === 0) {
     return <EmptyBlock>No props found for this component</EmptyBlock>;
   }
+
+  let colSpan = 1;
+  if (updateArgs) colSpan += 1;
+  if (!compact) colSpan += 2;
+
+  const common = { updateArgs, compact };
   return (
     <ResetWrapper>
       <TableWrapper compact={compact} className="docblock-propstable">
@@ -219,8 +215,27 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
           </tr>
         </thead>
         <tbody className="docblock-propstable-body">
-          {allRows.map((row) => (
-            <ArgsTableRow compact={compact} key={row.key} {...row.value} />
+          {groups.ungrouped.map((row) => (
+            <ArgRow key={row.key} row={row} arg={args && args[row.key]} {...common} />
+          ))}
+          {Object.entries(groups.sections).map(([category, section]) => (
+            <SectionRow key={category} caption={category} level="section" colSpan={colSpan}>
+              {section.ungrouped.map((row) => (
+                <ArgRow key={row.key} row={row} arg={args && args[row.key]} {...common} />
+              ))}
+              {Object.entries(section.subsections).map(([subcategory, subsection]) => (
+                <SectionRow
+                  key={subcategory}
+                  caption={subcategory}
+                  level="subsection"
+                  colSpan={colSpan}
+                >
+                  {subsection.map((row) => (
+                    <ArgRow key={row.key} row={row} arg={args && args[row.key]} {...common} />
+                  ))}
+                </SectionRow>
+              ))}
+            </SectionRow>
           ))}
         </tbody>
       </TableWrapper>

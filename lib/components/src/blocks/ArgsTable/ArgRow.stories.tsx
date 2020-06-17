@@ -48,6 +48,7 @@ export const numberType = {
     type: { summary: 'number' },
     defaultValue: { summary: '0' },
   },
+  control: { type: 'range' },
 };
 
 export const objectType = {
@@ -57,6 +58,7 @@ export const objectType = {
     type: { summary: 'objectOf(number)' },
     defaultValue: { summary: '{ key: 1 }' },
   },
+  control: { type: 'object' },
 };
 
 export const arrayType = {
@@ -66,6 +68,7 @@ export const arrayType = {
     type: { summary: 'number[]' },
     defaultValue: { summary: '[1, 2, 3]' },
   },
+  control: { type: 'array' },
 };
 
 export const complexType = {
@@ -89,6 +92,7 @@ export const complexType = {
   }]`,
     },
   },
+  control: { type: 'object' },
 };
 
 export const funcType = {
@@ -106,6 +110,7 @@ export const funcType = {
       returns: { description: 'The concatenation of both strings' },
     },
   },
+  control: false,
 };
 
 export const markdownType = {
@@ -115,62 +120,69 @@ export const markdownType = {
   table: {
     type: { summary: 'string' },
   },
+  control: { type: 'text' },
 };
 
-const withArgs = {
-  arg: 'string value',
-  updateArgs: action('updateArgs'),
-};
+const Story = (args) => <ArgRow {...args} />;
 
-const ArgRowStory = (args) => <ArgRow {...args} />;
-
-export const String = ArgRowStory.bind({});
+export const String = Story.bind({});
 String.args = {
   row: stringType,
 };
-export const LongName = ArgRowStory.bind({});
+
+export const LongName = Story.bind({});
 LongName.args = {
   row: longNameType,
 };
-export const LongDesc = ArgRowStory.bind({});
+
+export const LongDesc = Story.bind({});
 LongDesc.args = {
   row: longDescType,
 };
-export const Number = ArgRowStory.bind({});
+
+export const Number = Story.bind({});
 Number.args = {
   row: numberType,
 };
-export const ObjectOf = ArgRowStory.bind({});
+
+export const ObjectOf = Story.bind({});
 ObjectOf.args = {
   row: objectType,
 };
-export const ArrayOf = ArgRowStory.bind({});
+
+export const ArrayOf = Story.bind({});
 ArrayOf.args = {
   row: arrayType,
 };
-export const ComplexObject = ArgRowStory.bind({});
+
+export const ComplexObject = Story.bind({});
 ComplexObject.args = {
   row: complexType,
 };
-export const Func = ArgRowStory.bind({});
+
+export const Func = Story.bind({});
 Func.args = {
   row: funcType,
 };
-export const Markdown = ArgRowStory.bind({});
+
+export const Markdown = Story.bind({});
 Markdown.args = {
   row: markdownType,
 };
-export const StringCompact = ArgRowStory.bind({});
+
+export const StringCompact = Story.bind({});
 StringCompact.args = {
   ...String.args,
   compact: true,
 };
-export const Args = ArgRowStory.bind({});
+
+export const Args = Story.bind({});
 Args.args = {
   ...String.args,
-  ...withArgs,
+  updateArgs: action('updateArgs'),
 };
-export const ArgsCompact = ArgRowStory.bind({});
+
+export const ArgsCompact = Story.bind({});
 ArgsCompact.args = {
   ...Args.args,
   compact: true,
