@@ -6,10 +6,6 @@ import ReactDocgenTypescriptPlugin from 'react-docgen-typescript-plugin';
 export function babel(config: TransformOptions, { typescriptOptions }: StorybookOptions) {
   const { reactDocgen } = typescriptOptions;
 
-  if (!reactDocgen || reactDocgen === 'react-docgen-typescript') {
-    return config;
-  }
-
   return {
     ...config,
     overrides: [
