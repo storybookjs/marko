@@ -36,6 +36,12 @@ Compact.args = {
   compact: true,
 };
 
+export const inAddonPanel = Story.bind({});
+inAddonPanel.args = {
+  ...Normal.args,
+  inAddonPanel: true,
+};
+
 const sectionRows = {
   a: { ...stringType, table: { ...stringType.table, ...propsSection } },
   b: { ...numberType, table: { ...stringType.table, ...propsSection } },
