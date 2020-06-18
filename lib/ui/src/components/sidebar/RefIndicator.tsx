@@ -179,8 +179,7 @@ export const RefIndicator = forwardRef<
               {state === 'ready' && (
                 <ReadyMessage {...{ url: ref.url, componentCount, leafCount }} />
               )}
-              {/* TODO Norbert: Add the auth url below  */}
-              {state === 'auth' && <LoginRequiredMessage url="google.com" />}
+              {state === 'auth' && <LoginRequiredMessage url={ref.loginUrl} />}
               {ref.type === 'auto-inject' && state !== 'error' && <PerformanceDegradedMessage />}
               {state !== 'loading' && <ReadDocsMessage />}
             </Spaced>
@@ -231,15 +230,33 @@ const ReadyMessage: FunctionComponent<{
   </Message>
 );
 
-const LoginRequiredMessage: FunctionComponent<{ url: string }> = ({ url }) => (
-  <Message href={url} target="_blank">
-    <YellowIcon icon="lock" />
-    <div>
-      <MessageTitle>Log in required</MessageTitle>
-      <div>You need to authenticate to view this Storybook's components.</div>
-    </div>
-  </Message>
-);
+const LoginRequiredMessage: FunctionComponent<{ url: string }> = ({ url }) => {
+  const open = useCallback((e) => {
+    e.preventDefault();
+    const childWindow = window.open(url, `storybook_auth_${id}`, 'resizable,scrollbars');
+
+    // poll for window to close
+    const timer = setInterval(() => {
+      if (!childWindow) {
+        // logger.error('unable to access loginUrl window');
+        clearInterval(timer);
+      } else if (childWindow.closed) {
+        clearInterval(timer);
+        window.refresh();
+      }
+    }, 1000);
+  }, []);
+
+  return (
+    <Message onClick={open}>
+      <YellowIcon icon="lock" />
+      <div>
+        <MessageTitle>Log in required</MessageTitle>
+        <div>You need to authenticate to view this Storybook's components.</div>
+      </div>
+    </Message>
+  );
+};
 
 const ReadDocsMessage: FunctionComponent = () => (
   <Message href="https://storybook.js.org" target="_blank">
