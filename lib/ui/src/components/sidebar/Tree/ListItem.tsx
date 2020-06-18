@@ -72,7 +72,7 @@ export const Item = styled.a<{
   ({ theme }) => ({
     position: 'relative',
     textDecoration: 'none',
-    fontSize: theme.typography.size.s2,
+    fontSize: theme.typography.size.s2 - 1,
     lineHeight: '16px',
     paddingTop: 4,
     paddingBottom: 4,
@@ -99,9 +99,10 @@ export const Item = styled.a<{
             theme.base === 'light'
               ? theme.color.defaultText
               : transparentize(0.2, theme.color.defaultText),
-          '&:hover': {
+          '&:hover, &:focus': {
             color: theme.color.defaultText,
             background: theme.background.hoverable,
+            outline: 'none',
           },
         }
 );
