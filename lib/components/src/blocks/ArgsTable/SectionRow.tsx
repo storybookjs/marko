@@ -14,8 +14,8 @@ export interface SectionRowProps {
 
 const ExpanderIcon = styled(Icons)(({ theme }) => ({
   marginRight: 8,
-  // marginLeft: -10,
-  // marginTop: -2, // optical alignment
+  marginLeft: -10,
+  marginTop: -2, // optical alignment
   height: 12,
   width: 12,
   color:
@@ -26,10 +26,15 @@ const ExpanderIcon = styled(Icons)(({ theme }) => ({
   display: 'inline-block',
 }));
 
+const FlexWrapper = styled.span<{}>(({ theme }) => ({
+  display: 'flex',
+  lineHeight: '20px',
+  alignItems: 'center',
+}));
+
 const commonStyles = {
   width: '100%',
-  lineHeight: '24px',
-  layout: 'flex',
+  cursor: 'row-resize',
 };
 
 const Section = styled.td<{}>(({ theme }) => ({
@@ -43,13 +48,23 @@ const Section = styled.td<{}>(({ theme }) => ({
       ? transparentize(0.4, theme.color.defaultText)
       : transparentize(0.6, theme.color.defaultText),
   background: `${theme.background.app} !important`,
+
+  '&:hover': {
+    backgroundColor: `${theme.background.hoverable} !important`,
+    boxShadow: `${theme.color.mediumlight} 0 - 1px 0 0 inset`,
+  },
 }));
 
 const Subsection = styled.td<{}>(({ theme }) => ({
   ...commonStyles,
   fontWeight: theme.typography.weight.bold,
-  fontSize: theme.typography.size.s1 - 1,
+  fontSize: theme.typography.size.s2 - 1,
   background: theme.background.content,
+
+  '&:hover': {
+    backgroundColor: theme.background.hoverable,
+    boxShadow: `${theme.color.mediumlight} 0 - 1px 0 0 inset`,
+  },
 }));
 
 export const SectionRow: FC<SectionRowProps> = ({
@@ -66,8 +81,10 @@ export const SectionRow: FC<SectionRowProps> = ({
     <>
       <tr onClick={(e) => setExpanded(!expanded)}>
         <Level colSpan={colSpan}>
-          <ExpanderIcon icon={icon} />
-          {caption}
+          <FlexWrapper>
+            <ExpanderIcon icon={icon} />
+            {caption}
+          </FlexWrapper>
         </Level>
       </tr>
       {expanded ? children : null}
