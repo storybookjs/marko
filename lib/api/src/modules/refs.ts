@@ -182,18 +182,15 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
               },
               credentials,
               cache: 'no-cache',
-            })
-          ).then((r: SetRefData) => (r?.error?.message === 'Failed to fetch' ? {} : r)),
+            }).catch(() => false)
+          ),
         ]);
 
-        Object.assign(loadedData, { ...stories, ...storiesWithAuth, ...metadata });
-
-        if (storiesWithAuth && !storiesWithAuth.loginUrl) {
-          delete loadedData.loginUrl;
-        }
+        const storiesData = storiesWithAuth && stories?.loginUrl ? storiesWithAuth : stories;
+        Object.assign(loadedData, { ...storiesData, ...metadata });
       }
 
-      api.setRef(id, {
+      await api.setRef(id, {
         id,
         url,
         ...loadedData,
