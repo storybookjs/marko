@@ -15,10 +15,6 @@ export const TableWrapper = styled.table<{ compact?: boolean; inAddonPanel?: boo
       borderCollapse: 'collapse',
       borderSpacing: 0,
       color: theme.color.defaultText,
-      tr: {
-        // border: 'none',
-        // background: 'none',
-      },
 
       'td, th': {
         padding: 0,
