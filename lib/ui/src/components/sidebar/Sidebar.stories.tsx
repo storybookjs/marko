@@ -30,7 +30,7 @@ const refs: Record<string, RefType> = {
   },
   empty: {
     id: 'empty',
-    title: 'It is empty',
+    title: 'It is empty because no stories were loaded',
     url: 'https://example.com',
     ready: false,
     type: 'lazy',
@@ -38,7 +38,7 @@ const refs: Record<string, RefType> = {
   },
   startInjected_unknown: {
     id: 'startInjected_unknown',
-    title: 'It started injected and is ready',
+    title: 'It started injected and is unknown',
     url: 'https://example.com',
     type: 'unknown',
     ready: false,
