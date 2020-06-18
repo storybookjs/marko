@@ -1,4 +1,4 @@
-import { Meta, Preview, Story } from '@storybook/addon-docs/blocks';
+import { Meta, Preview, Story, Props } from '@storybook/addon-docs/blocks';
 import MyButton from './Button.vue';
 
 <Meta
@@ -34,6 +34,8 @@ Controls can also be defined and used in MDX stories.
   </Story>
 </Preview>
 
+<Props story="Rounded" />
+
 ## Square
 
 <Preview>
@@ -48,3 +50,5 @@ Controls can also be defined and used in MDX stories.
     {ButtonStory.bind({})}
   </Story>
 </Preview>
+
+<Props story="Square" />

@@ -1,3 +1,15 @@
+## 6.0.0-beta.31 (June 17, 2020)
+
+### Bug Fixes
+
+- React: Fix react-docgen for JS files ([#11217](https://github.com/storybookjs/storybook/pull/11217))
+- React: Load root tsconfig.json into docgen-typescript if none provided ([#11184](https://github.com/storybookjs/storybook/pull/11184))
+- Composition: Remove manual redirects ([#11196](https://github.com/storybookjs/storybook/pull/11196))
+
+### Dependency Upgrades
+
+- Bump react-draggable from 4.4.2 to 4.4.3 ([#11192](https://github.com/storybookjs/storybook/pull/11192))
+
 ## 6.0.0-beta.30 (June 16, 2020)
 
 ### Features
