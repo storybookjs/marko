@@ -7,7 +7,7 @@ import { ArgType, ArgTypes, Args } from './types';
 import { EmptyBlock } from '../EmptyBlock';
 import { ResetWrapper } from '../../typography/DocumentFormatting';
 
-export const TableWrapper = styled.table<{ compact?: boolean }>(
+export const TableWrapper = styled.table<{ compact?: boolean; expandable: boolean }>(
   ({ theme, compact, expandable }) => ({
     '&&': {
       // Resets for cascading/system styles
@@ -211,11 +211,12 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
   let colSpan = 1;
   if (updateArgs) colSpan += 1;
   if (!compact) colSpan += 2;
+  const expandable = Object.keys(groups.sections).length > 0;
 
   const common = { updateArgs, compact };
   return (
     <ResetWrapper>
-      <TableWrapper compact={compact} className="docblock-propstable">
+      <TableWrapper {...{ compact, expandable }} className="docblock-propstable">
         <thead className="docblock-propstable-head">
           <tr>
             <th>Name</th>
@@ -229,14 +230,14 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
             <ArgRow key={row.key} row={row} arg={args && args[row.key]} {...common} />
           ))}
           {Object.entries(groups.sections).map(([category, section]) => (
-            <SectionRow key={category} caption={category} level="section" colSpan={colSpan}>
+            <SectionRow key={category} label={category} level="section" colSpan={colSpan}>
               {section.ungrouped.map((row) => (
                 <ArgRow key={row.key} row={row} arg={args && args[row.key]} {...common} />
               ))}
               {Object.entries(section.subsections).map(([subcategory, subsection]) => (
                 <SectionRow
                   key={subcategory}
-                  caption={subcategory}
+                  label={subcategory}
                   level="subsection"
                   colSpan={colSpan}
                 >

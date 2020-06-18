@@ -20,10 +20,10 @@ export default {
 const Story = (args) => <SectionRow {...args} />;
 
 export const Section = Story.bind({});
-Section.args = { level: 'section', caption: 'Props' };
+Section.args = { level: 'section', label: 'Props' };
 
 export const Subsection = Story.bind({});
-Subsection.args = { level: 'subsection', caption: 'HTMLElement' };
+Subsection.args = { level: 'subsection', label: 'HTMLElement' };
 
 export const Collapsed = Story.bind({});
 Collapsed.args = { ...Section.args, initialExpanded: false };

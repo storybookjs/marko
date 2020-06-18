@@ -6,7 +6,7 @@ import { Icons } from '../../icon/icon';
 type Level = 'section' | 'subsection';
 
 export interface SectionRowProps {
-  caption: string;
+  label: string;
   level: Level;
   initialExpanded?: boolean;
   colSpan: number;
@@ -69,13 +69,16 @@ const Subsection = styled.td<{}>(({ theme }) => ({
 
 export const SectionRow: FC<SectionRowProps> = ({
   level = 'section',
-  caption,
+  label,
   children,
   initialExpanded = true,
   colSpan = 3,
 }) => {
   const [expanded, setExpanded] = useState(initialExpanded);
   const Level = level === 'subsection' ? Subsection : Section;
+  // @ts-ignore
+  const itemCount = children?.length || 0;
+  const caption = level === 'subsection' ? `${itemCount} items` : '';
   const icon = expanded ? 'arrowdown' : 'arrowright';
   return (
     <>
@@ -83,6 +86,7 @@ export const SectionRow: FC<SectionRowProps> = ({
         <Level colSpan={colSpan}>
           <FlexWrapper>
             <ExpanderIcon icon={icon} />
+            {label}
             {caption}
           </FlexWrapper>
         </Level>
