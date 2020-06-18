@@ -32,12 +32,8 @@ const FlexWrapper = styled.span<{}>(({ theme }) => ({
   alignItems: 'center',
 }));
 
-const commonStyles = {
-  width: '100%',
-};
-
 const Section = styled.td<{}>(({ theme }) => ({
-  ...commonStyles,
+  position: 'relative',
   letterSpacing: '0.35em',
   textTransform: 'uppercase',
   fontWeight: theme.typography.weight.black,
@@ -53,10 +49,14 @@ const Section = styled.td<{}>(({ theme }) => ({
 }));
 
 const Subsection = styled.td<{}>(({ theme }) => ({
-  ...commonStyles,
+  position: 'relative',
   fontWeight: theme.typography.weight.bold,
   fontSize: theme.typography.size.s2 - 1,
   background: theme.background.content,
+}));
+
+const StyledTd = styled.td<{}>(({ theme }) => ({
+  position: 'relative',
 }));
 
 const StyledTr = styled.tr<{}>(({ theme }) => ({
@@ -65,6 +65,25 @@ const StyledTr = styled.tr<{}>(({ theme }) => ({
     boxShadow: `${theme.color.mediumlight} 0 - 1px 0 0 inset`,
     cursor: 'row-resize',
   },
+}));
+
+const ClickIntercept = styled.button<{}>(() => ({
+  // reset button style
+  background: 'none',
+  border: 'none',
+  padding: '0',
+  font: 'inherit',
+
+  // add custom style
+  position: 'absolute',
+  top: 0,
+  bottom: 0,
+  left: 0,
+  right: 0,
+  height: '100%',
+  width: '100%',
+  color: 'transparent',
+  cursor: 'row-resize !important',
 }));
 
 export const SectionRow: FC<SectionRowProps> = ({
@@ -87,14 +106,22 @@ export const SectionRow: FC<SectionRowProps> = ({
 
   return (
     <>
-      <StyledTr onClick={(e) => setExpanded(!expanded)} title={helperText}>
+      <StyledTr title={helperText}>
         <Level colSpan={1}>
+          <ClickIntercept onClick={(e) => setExpanded(!expanded)} tabIndex={0}>
+            {helperText}
+          </ClickIntercept>
           <FlexWrapper>
             <ExpanderIcon icon={icon} />
             {label}
           </FlexWrapper>
         </Level>
-        <td colSpan={colSpan - 1}>{expanded ? null : caption}</td>
+        <StyledTd colSpan={colSpan - 1}>
+          <ClickIntercept onClick={(e) => setExpanded(!expanded)} tabIndex={-1}>
+            {helperText}
+          </ClickIntercept>
+          {expanded ? null : caption}
+        </StyledTd>
       </StyledTr>
       {expanded ? children : null}
     </>
