@@ -34,7 +34,6 @@ const FlexWrapper = styled.span<{}>(({ theme }) => ({
 
 const commonStyles = {
   width: '100%',
-  cursor: 'row-resize',
 };
 
 const Section = styled.td<{}>(({ theme }) => ({
@@ -48,10 +47,8 @@ const Section = styled.td<{}>(({ theme }) => ({
       ? transparentize(0.4, theme.color.defaultText)
       : transparentize(0.6, theme.color.defaultText),
   background: `${theme.background.app} !important`,
-
-  '&:hover': {
-    backgroundColor: `${theme.background.hoverable} !important`,
-    boxShadow: `${theme.color.mediumlight} 0 - 1px 0 0 inset`,
+  '& ~ td': {
+    background: `${theme.background.app} !important`,
   },
 }));
 
@@ -60,10 +57,13 @@ const Subsection = styled.td<{}>(({ theme }) => ({
   fontWeight: theme.typography.weight.bold,
   fontSize: theme.typography.size.s2 - 1,
   background: theme.background.content,
+}));
 
-  '&:hover': {
-    backgroundColor: theme.background.hoverable,
+const StyledTr = styled.tr<{}>(({ theme }) => ({
+  '&:hover > td': {
+    backgroundColor: `${theme.background.hoverable} !important`,
     boxShadow: `${theme.color.mediumlight} 0 - 1px 0 0 inset`,
+    cursor: 'row-resize',
   },
 }));
 
@@ -78,19 +78,24 @@ export const SectionRow: FC<SectionRowProps> = ({
   const Level = level === 'subsection' ? Subsection : Section;
   // @ts-ignore
   const itemCount = children?.length || 0;
-  const caption = level === 'subsection' ? `${itemCount} items` : '';
+  const caption = level === 'subsection' ? `${itemCount} item${itemCount !== 1 ? 's' : ''}` : '';
   const icon = expanded ? 'arrowdown' : 'arrowright';
+
+  const helperText = `${expanded ? 'Hide' : 'Side'} ${
+    level === 'subsection' ? itemCount : label
+  } item${itemCount !== 1 ? 's' : ''}`;
+
   return (
     <>
-      <tr onClick={(e) => setExpanded(!expanded)}>
-        <Level colSpan={colSpan}>
+      <StyledTr onClick={(e) => setExpanded(!expanded)} title={helperText}>
+        <Level colSpan={1}>
           <FlexWrapper>
             <ExpanderIcon icon={icon} />
             {label}
-            {caption}
           </FlexWrapper>
         </Level>
-      </tr>
+        <td colSpan={colSpan - 1}>{expanded ? null : caption}</td>
+      </StyledTr>
       {expanded ? children : null}
     </>
   );
