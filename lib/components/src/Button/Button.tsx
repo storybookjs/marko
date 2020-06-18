@@ -25,7 +25,7 @@ const ButtonWrapper = styled.button<ButtonWrapperProps>(
     cursor: 'pointer',
     display: 'inline-block',
     overflow: 'hidden',
-    padding: small ? '10px 16px' : '13px 20px',
+    padding: small ? '8px 16px' : '13px 20px',
     position: 'relative',
     textAlign: 'center',
     textDecoration: 'none',
@@ -105,7 +105,8 @@ const ButtonWrapper = styled.button<ButtonWrapperProps>(
             boxShadow: 'rgba(0, 0, 0, 0.1) 0 0 0 3em inset',
           },
           '&:focus': {
-            boxShadow: `${rgba(color, 0.4)} 0 1px 9px 2px`,
+            boxShadow: `${rgba(gray ? theme.color.secondary : color, 0.4)} 0 1px 9px 2px`,
+            outline: 'none',
           },
           '&:focus:hover': {
             boxShadow: `${rgba(color, 0.2)} 0 8px 18px 0px`,
@@ -139,7 +140,8 @@ const ButtonWrapper = styled.button<ButtonWrapperProps>(
             background: theme.input.background,
           },
           '&:focus': {
-            boxShadow: `${rgba(theme.color.secondary, 0.4)} 0 0 0 1px inset`,
+            boxShadow: `${rgba(theme.color.secondary, 1)} 0 0 0 1px inset`,
+            outline: 'none',
           },
         }
       : {},
@@ -150,8 +152,9 @@ const ButtonWrapper = styled.button<ButtonWrapperProps>(
           color: transparentize(0.3, theme.color.defaultText),
           background: 'transparent',
 
-          '&:hover': {
+          '&:hover, &:focus': {
             boxShadow: `${transparentize(0.5, theme.color.defaultText)} 0 0 0 1px inset`,
+            outline: 'none',
           },
 
           '&:active': {
