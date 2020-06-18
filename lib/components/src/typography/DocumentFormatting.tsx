@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { styled, CSSObject } from '@storybook/theming';
 import { withReset, withMargin, headerCommon, codeCommon } from './shared';
+import { SyntaxHighlighter } from '../syntaxhighlighter/syntaxhighlighter';
 
 export const H1 = styled.h1<{}>(withReset, headerCommon, ({ theme }) => ({
   fontSize: `${theme.typography.size.l1}px`,
@@ -315,7 +316,7 @@ export const P = styled.p<{}>(withReset, withMargin, ({ theme }) => ({
   '& code': codeCommon({ theme }),
 }));
 
-export const Code = styled.code<{}>(
+const DefaultCodeBlock = styled.code<{}>(
   ({ theme }) => ({
     // from reset
     fontFamily: theme.typography.fonts.mono,
@@ -329,6 +330,16 @@ export const Code = styled.code<{}>(
   }),
   codeCommon
 );
+
+export const Code = ({ className, ...props }: React.ComponentProps<typeof DefaultCodeBlock>) => {
+  const language = (className || '').match(/lang-(\S+)/);
+
+  if (!language) {
+    return <DefaultCodeBlock {...props} className={className} />;
+  }
+
+  return <SyntaxHighlighter bordered copyable language={language[1]} format={false} {...props} />;
+};
 
 export const TT = styled.title<{}>(codeCommon);
 

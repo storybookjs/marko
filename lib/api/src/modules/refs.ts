@@ -130,18 +130,15 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
           headers: {
             Accept: 'application/json',
           },
-          redirect: 'manual',
           credentials: 'include',
         }),
         fetch(`${url}/stories.json`, {
           headers: {
             Accept: 'application/json',
           },
-          redirect: 'manual',
           credentials: 'omit',
         }),
         fetch(`${url}/iframe.html`, {
-          redirect: 'manual',
           cors: 'no-cors',
           credentials: 'omit',
         }),
@@ -180,7 +177,6 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
               headers: {
                 Accept: 'application/json',
               },
-              redirect: 'manual',
               credentials,
               cache: 'no-cache',
             })

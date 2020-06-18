@@ -1,7 +1,6 @@
 export * from './Description';
 export * from './DocsPage';
 export * from './Preview';
-export * from './PropsTable';
 export * from './ArgsTable';
 export * from './Source';
 export * from './Story';

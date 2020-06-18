@@ -1,7 +1,6 @@
-import { PropDef } from '@storybook/components';
 import { Component } from '../../blocks/types';
 import { ExtractedJsDoc, parseJsDoc } from '../jsdocParser';
-import { DocgenInfo, TypeSystem } from './types';
+import { PropDef, DocgenInfo, TypeSystem } from './types';
 import { getDocgenSection, isValidDocgenSection, getDocgenDescription } from './utils';
 import { getPropDefFactory, PropDefFactory } from './createPropDef';
 

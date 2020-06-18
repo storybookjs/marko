@@ -11,7 +11,7 @@ import { MemoButton } from '../../components/MemoButton';
   parameters={{ controls: { expanded: false } }}
 />
 
-export const ArgsDisplay = (args = {}) => (
+export const ArgsStory = (args = {}) => (
   <table>
     <tbody>
       {Object.entries(args).map(([key, val]) => (
@@ -68,7 +68,7 @@ export const ArgsDisplay = (args = {}) => (
       },
     }}
   >
-    {(args) => <ArgsDisplay {...args} />}
+    {ArgsStory.bind({})}
   </Story>
 </Preview>
 
@@ -88,7 +88,7 @@ export const ArgsDisplay = (args = {}) => (
       bar: '',
     }}
   >
-    {(args) => <ArgsDisplay {...args} />}
+    {ArgsStory.bind({})}
   </Story>
 </Preview>
 

@@ -12,7 +12,7 @@ exports[`Storyshots Button Rounded 1`] = `
 exports[`Storyshots Button Square 1`] = `
 <button
   class="button"
-  style="color: rgb(66, 185, 131); border-color: #42b983;"
+  style="color: rgb(0, 0, 255); border-color: #00f;"
 >
   A Button with square edges!
 </button>

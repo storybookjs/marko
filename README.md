@@ -193,8 +193,8 @@ If you're looking for material to use in your presentation about storybook, like
 We welcome contributions to Storybook!
 
 - 📥 Pull requests and 🌟 Stars are always welcome.
-- Read our [contributing guide](CONTRIBUTING.md) to get started.
-  or find us on [Discord](https://discord.gg/sMFvFsG), we're will take the time to guide you
+- Read our [contributing guide](CONTRIBUTING.md) to get started,
+  or find us on [Discord](https://discord.gg/sMFvFsG), we will take the time to guide you
 
 Looking for a first issue to tackle?
 

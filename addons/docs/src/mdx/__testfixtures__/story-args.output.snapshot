@@ -6,7 +6,7 @@ import { assertIsFn, AddContext } from '@storybook/addon-docs/blocks';
 
 import { Button } from '@storybook/react/demo';
 import { Story, Meta } from '@storybook/addon-docs/blocks';
-
+export const ButtonStory = (args) => <Button mdxType=\\"Button\\">Component notes</Button>;
 const makeShortcode = (name) =>
   function MDXDefaultShortcode(props) {
     console.warn(
@@ -17,13 +17,16 @@ const makeShortcode = (name) =>
     return <div {...props} />;
   };
 
-const layoutProps = {};
+const layoutProps = {
+  ButtonStory,
+};
 const MDXLayout = 'wrapper';
 function MDXContent({ components, ...props }) {
   return (
     <MDXLayout {...layoutProps} {...props} components={components} mdxType=\\"MDXLayout\\">
       <Meta title=\\"Button\\" mdxType=\\"Meta\\" />
       <h1>{\`Args\`}</h1>
+
       <Story
         name=\\"component notes\\"
         args={{
@@ -40,7 +43,7 @@ function MDXContent({ components, ...props }) {
         }}
         mdxType=\\"Story\\"
       >
-        <Button mdxType=\\"Button\\">Component notes</Button>
+        {ButtonStory.bind({})}
       </Story>
     </MDXLayout>
   );
@@ -48,7 +51,7 @@ function MDXContent({ components, ...props }) {
 
 MDXContent.isMDXComponent = true;
 
-export const componentNotes = () => <Button>Component notes</Button>;
+export const componentNotes = ButtonStory.bind({});
 componentNotes.storyName = 'component notes';
 componentNotes.argTypes = {
   a: {
@@ -62,7 +65,7 @@ componentNotes.args = {
   a: 1,
   b: 2,
 };
-componentNotes.parameters = { storySource: { source: '<Button>Component notes</Button>' } };
+componentNotes.parameters = { storySource: { source: 'ButtonStory.bind({})' } };
 
 const componentMeta = { title: 'Button', includeStories: ['componentNotes'] };
 

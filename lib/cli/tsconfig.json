@@ -12,5 +12,5 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src/**/*"],
-  "exclude": ["src/**/template*"]
+  "exclude": ["src/**/template*", "src/frameworks/**/*"]
 }

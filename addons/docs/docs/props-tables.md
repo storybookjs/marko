@@ -12,6 +12,7 @@ Storybook Docs automatically generates props tables for components in supported 
 - [Controls](#controls)
 - [Customization](#customization)
   - [Customizing ArgTypes](#customizing-argtypes)
+  - [Custom ArgTypes in MDX](#custom-argtypes-in-mdx)
 - [Reporting a bug](#reporting-a-bug)
 - [Known limitations](#known-limitations)
 - [More resources](#more-resources)
@@ -149,13 +150,13 @@ export default {
     label: {
       description: 'overwritten description',
       table: {
-        type: { summary: 'something short' detail: 'something really really long' },
+        type: { summary: 'something short', detail: 'something really really long' },
       },
       control: {
-        type: null
-      }
-    }
-  }
+        type: null,
+      },
+    },
+  },
 };
 ```
 
@@ -169,7 +170,7 @@ const argTypes = {
     defaultValue: 'Hello',
     description: 'overwritten description',
     table: {
-      type: { summary: 'something short' detail: 'something really really long' },
+      type: { summary: 'something short', detail: 'something really really long' },
       defaultValue: { summary: 'Hello' },
     }
     control: {
@@ -180,6 +181,11 @@ const argTypes = {
 ```
 
 This would render a row with a modified description, a type display with a dropdown that shows the detail, and no control.
+
+> **NOTE:** `@storybook/addon-docs` provide shorthand for common tasks:
+>
+> - `type: 'number'` is shorthand for `type: { name: 'number' }`
+> - `control: 'radio'` is shorthand for `control: { type: 'radio' }`
 
 Controls customization has an entire section in the [`addon-controls` README](https://github.com/storybookjs/storybook/blob/next/addons/controls/README.md#configuration).
 
@@ -195,6 +201,32 @@ Here are the possible customizations for the rest of the prop table:
 | `table.defaultValue.summary` | A short version of the default value                                                                                      |
 | `table.defaultValue.detail`  | A longer version of the default value (if it's a complex value)                                                           |
 | `control`                    | See [`addon-controls` README](https://github.com/storybookjs/storybook/blob/next/addons/controls/README.md#configuration) |
+
+### Custom ArgTypes in MDX
+
+To do the equivalent of the above customization [in MDX](./mdx.md), use the following.
+
+Overriding at the component level:
+
+```jsx
+<Meta
+  title="MyComponent"
+  component={MyComponent}
+  argTypes={{
+    label: { name: 'label' /* ... */ },
+  }}
+/>
+```
+
+And at the story level:
+
+```jsx
+<Story name="some story" argTypes={{
+  label: { name: 'label', ... }
+}}>
+  {/* story contents */}
+</Story>
+```
 
 ## Reporting a bug
 

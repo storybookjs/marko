@@ -122,15 +122,56 @@ const withArgs = {
   updateArgs: action('updateArgs'),
 };
 
-export const String = () => <ArgRow row={stringType} />;
-export const LongName = () => <ArgRow row={longNameType} />;
-export const LongDesc = () => <ArgRow row={longDescType} />;
-export const Number = () => <ArgRow row={numberType} />;
-export const ObjectOf = () => <ArgRow row={objectType} />;
-export const ArrayOf = () => <ArgRow row={arrayType} />;
-export const ComplexObject = () => <ArgRow row={complexType} />;
-export const Func = () => <ArgRow row={funcType} />;
-export const Markdown = () => <ArgRow row={markdownType} />;
-export const StringCompact = () => <ArgRow compact row={stringType} />;
-export const Args = () => <ArgRow row={stringType} {...withArgs} />;
-export const ArgsCompact = () => <ArgRow compact row={stringType} {...withArgs} />;
+const ArgRowStory = (args) => <ArgRow {...args} />;
+
+export const String = ArgRowStory.bind({});
+String.args = {
+  row: stringType,
+};
+export const LongName = ArgRowStory.bind({});
+LongName.args = {
+  row: longNameType,
+};
+export const LongDesc = ArgRowStory.bind({});
+LongDesc.args = {
+  row: longDescType,
+};
+export const Number = ArgRowStory.bind({});
+Number.args = {
+  row: numberType,
+};
+export const ObjectOf = ArgRowStory.bind({});
+ObjectOf.args = {
+  row: objectType,
+};
+export const ArrayOf = ArgRowStory.bind({});
+ArrayOf.args = {
+  row: arrayType,
+};
+export const ComplexObject = ArgRowStory.bind({});
+ComplexObject.args = {
+  row: complexType,
+};
+export const Func = ArgRowStory.bind({});
+Func.args = {
+  row: funcType,
+};
+export const Markdown = ArgRowStory.bind({});
+Markdown.args = {
+  row: markdownType,
+};
+export const StringCompact = ArgRowStory.bind({});
+StringCompact.args = {
+  ...String.args,
+  compact: true,
+};
+export const Args = ArgRowStory.bind({});
+Args.args = {
+  ...String.args,
+  ...withArgs,
+};
+export const ArgsCompact = ArgRowStory.bind({});
+ArgsCompact.args = {
+  ...Args.args,
+  compact: true,
+};

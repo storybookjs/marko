@@ -28,11 +28,13 @@ Controls replaces [Storybook Knobs](https://github.com/storybookjs/storybook/tre
   - [Auto-generated args](#auto-generated-args)
   - [Custom controls args](#custom-controls-args)
   - [Fully custom args](#fully-custom-args)
+    - [Angular](#angular)
   - [Template stories](#template-stories)
 - [Configuration](#configuration)
   - [Control annotations](#control-annotations)
   - [Parameters](#parameters)
     - [Expanded: show property documentation](#expanded-show-property-documentation)
+    - [Hide NoControls warning](#hide-nocontrols-warning)
 - [Framework support](#framework-support)
 - [FAQs](#faqs)
   - [How will this replace addon-knobs?](#how-will-this-replace-addon-knobs)
@@ -186,7 +188,7 @@ export default {
   title: 'Button',
   component: Button,
   argTypes: {
-    background: { control: { type: 'color' } },
+    background: { control: 'color' },
   },
 };
 
@@ -199,6 +201,8 @@ This generates the following UI, which is what we wanted in the first place:
 <center>
   <img src="https://raw.githubusercontent.com/storybookjs/storybook/next/addons/controls/docs/media/addon-controls-args-background-color.png" width="80%" />
 </center>
+
+> **NOTE:** `@storybook/addon-docs` provide shorthand for `type` and `control` fields, so in the previous example, `control: 'color'` is shorthand `control: { type: 'color' }`. Similarly, `type: 'number'` can be written as shorthand for `type: { name: 'number' }`.
 
 ### Fully custom args
 
@@ -242,7 +246,7 @@ This generates the following UI with a custom range slider:
   <img src="https://raw.githubusercontent.com/storybookjs/storybook/next/addons/controls/docs/media/addon-controls-args-reflow-slider.png" width="80%" />
 </center>
 
-**Note:** If you add an `ArgType` that is not part of the component, Storybook will *only* use your argTypes definitions.  
+**Note:** If you add an `ArgType` that is not part of the component, Storybook will _only_ use your argTypes definitions.  
 If you want to merge new controls with the existing component properties, you must enable this parameter:
 
 ```jsx
@@ -257,11 +261,10 @@ To achieve this within an angular-cli build.
 export const Reflow = ({ count, label, ...args }) => ({
   props: {
     label: label,
-    count: [...Array(count).keys()]
+    count: [...Array(count).keys()],
   },
-  template: `<Button *ngFor="let i of count">{{label}} {{i}}</Button>`
- }
-);
+  template: `<Button *ngFor="let i of count">{{label}} {{i}}</Button>`,
+});
 Reflow.args = { count: 3, label: 'reflow' };
 ```
 
@@ -276,17 +279,22 @@ export const VeryLongLabel = (args) => <Button {...args} />;
 VeryLongLabel.args = { label: 'this is a very long string', background: '#ff0' };
 ```
 
-This works, but it repeats code. What we want is to reuse the `Basic` story, but with a different initial state. In Storybook we do this idiomatically for Args stories:
+This works, but it repeats code. What we want is to reuse the `Basic` story, but with a different initial state. In Storybook we do this idiomatically for Args stories by refactoring the first story into a reusable story function and then `.bind`ing it to create a duplicate object on which to hang `args`:
 
 ```jsx
-export const VeryLongLabel = Basic.bind();
+const ButtonStory = (args) => <Button {...args} />;
+
+export const Basic = ButtonStory.bind({});
+Basic.args = { label: 'hello', background: '#ff0' };
+
+export const VeryLongLabel = ButtonStory.bind({});
 VeryLongLabel.args = { label: 'this is a very long string', background: '#ff0' };
 ```
 
 We can even reuse initial args from other stories:
 
 ```jsx
-export const VeryLongLabel = Basic.bind();
+export const VeryLongLabel = ButtonStory.bind({});
 VeryLongLabel.args = { ...Basic.args, label: 'this is a very long string' };
 ```
 

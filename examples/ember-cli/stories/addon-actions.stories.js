@@ -3,7 +3,6 @@ import { action } from '@storybook/addon-actions';
 
 export default {
   title: 'Addon/Actions',
-
   parameters: {
     options: {
       selectedPanel: 'storybook/actions/panel',

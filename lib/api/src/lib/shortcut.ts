@@ -14,7 +14,7 @@ export const isShortcutTaken = (arr1: string[], arr2: string[]): boolean =>
 
 // Map a keyboard event to a keyboard shortcut
 // NOTE: if we change the fields on the event that we need, we'll need to update the serialization in core/preview/start.js
-export const eventToShortcut = (e: Event): KeyCollection | null => {
+export const eventToShortcut = (e: KeyboardEvent): KeyCollection | null => {
   // Meta key only doesn't map to a shortcut
   if (['Meta', 'Alt', 'Control', 'Shift'].includes(e.key)) {
     return null;

@@ -38,7 +38,6 @@ const layouts = {
     justifyContent: 'initial',
     alignItems: 'initial',
     minHeight: 'initial',
-    boxSizing: 'initial',
   },
   padded: {
     margin: 0,
@@ -47,7 +46,6 @@ const layouts = {
     justifyContent: 'initial',
     alignItems: 'initial',
     minHeight: 'initial',
-    boxSizing: 'initial',
   },
 } as const;
 
