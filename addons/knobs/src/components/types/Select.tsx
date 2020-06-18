@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import { Form } from '@storybook/components';
 import { KnobControlConfig, KnobControlProps } from './types';
 
-export type SelectTypeKnobValue = string | number | null | undefined | PropertyKey[];
+export type SelectTypeKnobValue = string | number | boolean | null | undefined | PropertyKey[];
 
 export type SelectTypeOptionsProp<T extends SelectTypeKnobValue = SelectTypeKnobValue> =
   | Record<PropertyKey, T>
   | Record<Extract<T, PropertyKey>, T[keyof T]>
-  | Extract<T, PropertyKey>[]
-  | readonly Extract<T, PropertyKey>[];
+  | T[]
+  | readonly T[];
 
 export interface SelectTypeKnob<T extends SelectTypeKnobValue = SelectTypeKnobValue>
   extends KnobControlConfig<T> {
