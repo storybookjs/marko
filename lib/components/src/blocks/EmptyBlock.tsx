@@ -8,7 +8,6 @@ const Wrapper = styled.div<{}>(withReset, ({ theme }) => ({
   borderRadius: theme.appBorderRadius,
   border: `1px dashed ${theme.appBorderColor}`,
   display: 'flex',
-  fontSize: `${theme.typography.size.s2}px`,
   alignItems: 'center',
   justifyContent: 'center',
   padding: 20,
