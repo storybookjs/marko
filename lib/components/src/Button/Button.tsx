@@ -56,7 +56,7 @@ const ButtonWrapper = styled.button<ButtonWrapperProps>(
       pointerEvents: 'none',
 
       path: {
-        fill: 'currentColor }',
+        fill: 'currentColor',
       },
     },
   }),
@@ -96,7 +96,7 @@ const ButtonWrapper = styled.button<ButtonWrapperProps>(
     return color
       ? {
           background: color,
-          color: gray ? '#333333' : theme.color.inverseText,
+          color: gray ? '#333333' : theme.color.tertiary,
 
           '&:hover': {
             background: darken(0.05, color),
@@ -183,7 +183,7 @@ const ButtonWrapper = styled.button<ButtonWrapperProps>(
           '&:active': {
             background: color,
             boxShadow: `${color} 0 0 0 1px inset`,
-            color: theme.color.lightest,
+            color: theme.color.tertiary,
           },
           '&:focus': {
             boxShadow: `${color} 0 0 0 1px inset, ${rgba(color, 0.4)} 0 1px 9px 2px`,
@@ -219,7 +219,7 @@ const ButtonWrapper = styled.button<ButtonWrapperProps>(
           '&:active': {
             background: color,
             boxShadow: `${color} 0 0 0 1px inset`,
-            color: theme.color.lightest,
+            color: theme.color.tertiary,
           },
           '&:focus': {
             boxShadow: `${color} 0 0 0 1px inset, ${rgba(color, 0.4)} 0 1px 9px 2px`,
