@@ -38,7 +38,9 @@ export const ControlsPanel: FC = () => {
   return (
     <>
       {hasControls || hideNoControlsWarning ? null : <NoControlsWarning />}
-      <ArgsTable {...{ compact: !expanded && hasControls, rows, args, updateArgs }} />
+      <ArgsTable
+        {...{ compact: !expanded && hasControls, rows, args, updateArgs, inAddonPanel: true }}
+      />
     </>
   );
 };
