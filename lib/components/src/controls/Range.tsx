@@ -1,74 +1,63 @@
 import React, { FC, ChangeEvent } from 'react';
 
 import { styled } from '@storybook/theming';
-import { lighten } from 'polished';
+import { lighten, darken, rgba } from 'polished';
 import { ControlProps, NumberValue, RangeConfig } from './types';
 import { parse } from './Number';
 
 type RangeProps = ControlProps<NumberValue | null> & RangeConfig;
 
-const thumbRadius = 8;
-const thumbHeight = 16;
-const thumbWidth = 16;
-const thumbShadowSize = 2;
-const thumbShadowBlur = 3;
-const thumbBorderWidth = 1;
-const thumbBorderColor = 'white';
-
-const trackWidth = '100%';
-const trackHeight = 4;
-const trackShadowSize = 2;
-const trackShadowBlur = 2;
-const trackShadowColor = '#222';
-const trackBorderWidth = 1;
-
-const trackRadius = 5;
-const contrast = '5%';
-
 const RangeInput = styled.input(({ theme }) => ({
-  appearance: 'none',
-  margin: '18px 0',
-  width: '100%',
-  border: 'none',
-
-  // background: 'green',
-
-  // height: 24,
-
-  // borderRadius: theme.appBorderRadius,
-  // color: '#444',
-  // display: 'table-cell',
-  // flexGrow: 1,
+  // Resytled using http://danielstern.ca/range.css/#/
+  '&': {
+    width: '100%',
+    backgroundColor: 'transparent',
+    appearance: 'none',
+  },
 
   '&::-webkit-slider-runnable-track': {
-    width: trackWidth,
-    height: trackHeight,
+    background:
+      theme.base === 'light'
+        ? darken(0.02, theme.input.background)
+        : lighten(0.02, theme.input.background),
+    border: `1px solid ${theme.appBorderColor}`,
+    borderRadius: 6,
+    width: '100%',
+    height: 6,
     cursor: 'pointer',
-    transition: 'all 150ms ease-out',
-
-    background: `${theme.color.medium}`,
-    borderRadius: trackRadius,
-    border: `${trackBorderWidth}px solid ${theme.color.border}`,
   },
 
   '&::-webkit-slider-thumb': {
-    boxShadow: `${thumbShadowSize}px ${thumbShadowSize}px ${thumbShadowBlur}px ${theme.color.border}`,
-    border: `${thumbBorderWidth}px solid ${theme.color.border}`,
-    height: thumbHeight,
-    width: thumbWidth,
-    borderRadius: thumbRadius,
-    background: `${theme.color.lightest}`,
-    cursor: 'pointer',
+    marginTop: '-6px',
+    width: 16,
+    height: 16,
+
+    border: `1px solid ${rgba(theme.color.border, 0.2)}`,
+    borderRadius: '50px',
+    boxShadow: `0 1px 3px 0px ${rgba(theme.color.border, 0.2)}`,
+    cursor: 'grab',
     appearance: 'none',
-    marginTop: -1 * (thumbHeight / 2),
+    background: `${theme.color.lightest}`,
+
+    '&:hover': {
+      background: `${theme.color.lighter}`,
+      transform: 'scale3d(1.1, 1.1, 1.1) translateY(-1px)',
+      transition: 'all 50ms ease-out',
+    },
+
+    '&:active': {
+      background: `${theme.color.lighter}`,
+      transform: 'scale3d(1, 1, 1) translateY(0px)',
+      cursor: 'grabbing',
+    },
   },
 
   '&:focus': {
     outline: 'none',
 
     '&::-webkit-slider-runnable-track': {
-      background: theme.background.app,
-      borderColor: theme.color.secondary,
+      borderColor: rgba(theme.color.secondary, 0.4),
+      background: theme.background.hoverable,
     },
 
     '&::-webkit-slider-thumb': {
@@ -78,61 +67,73 @@ const RangeInput = styled.input(({ theme }) => ({
   },
 
   '&::-moz-range-track': {
-    width: trackWidth,
-    height: trackHeight,
-    cursor: 'pointer',
-
-    background: `${theme.color.medium}`,
-    borderRadius: trackRadius,
-    border: `${trackBorderWidth}px solid ${theme.color.border}`,
-  },
-  '&::-moz-range-thumb': {
-    boxShadow: `${thumbShadowSize}px ${thumbShadowSize}px ${thumbShadowBlur}px ${theme.color.border}`,
-    border: `${thumbBorderWidth}px solid ${theme.color.border}`,
-    height: thumbHeight,
-    width: thumbWidth,
-    borderRadius: thumbRadius,
-    background: `${theme.color.lightest}`,
-    cursor: 'pointer',
-  },
-
-  '&::-ms-track': {
+    background:
+      theme.base === 'light'
+        ? darken(0.02, theme.input.background)
+        : lighten(0.02, theme.input.background),
+    border: '1px solid rgba(0, 0, 0, 0.1)',
+    borderRadius: 6,
     width: '100%',
-    height: '8.4px',
+    height: 6,
     cursor: 'pointer',
-    background: 'transparent',
+    outline: 'none',
+  },
+
+  '&::-moz-range-thumb': {
+    width: 16,
+    height: 16,
+    border: `1px solid ${rgba(theme.color.border, 0.2)}`,
+    borderRadius: '50px',
+    boxShadow: `0 1px 3px 0px ${rgba(theme.color.border, 0.2)}`,
+    cursor: 'grab',
+    background: `${theme.color.lightest}`,
+
+    '&:hover': {
+      background: `${theme.color.lighter}`,
+      transform: 'scale3d(1.1, 1.1, 1.1) translateY(-1px)',
+      transition: 'all 50ms ease-out',
+    },
+
+    '&:active': {
+      background: `${theme.color.lighter}`,
+      transform: 'scale3d(1, 1, 1) translateY(0px)',
+      cursor: 'grabbing',
+    },
+  },
+  '&::-ms-track': {
+    background:
+      theme.base === 'light'
+        ? darken(0.02, theme.input.background)
+        : lighten(0.02, theme.input.background),
     borderColor: 'transparent',
-    borderWidth: '16px 0',
+    borderWidth: '7.3px 0',
     color: 'transparent',
+    width: '100%',
+    height: '6px',
+    cursor: 'pointer',
   },
   '&::-ms-fill-lower': {
-    background: '#2a6495',
-    border: '0.2px solid #010101',
-    bordeRadius: '2.6px',
+    background: '#dadada',
+    border: `1px solid ${theme.appBorderColor}`,
+    borderRadius: 6,
   },
   '&::-ms-fill-upper': {
-    background: '#3071a9',
-    border: '0.2px solid #010101',
-    borderRadius: '2.6px',
+    background: '#dddddd',
+    border: `1px solid ${theme.appBorderColor}`,
+    borderRadius: 6,
   },
-
   '&::-ms-thumb': {
-    boxShadow: `${thumbShadowSize} ${thumbShadowSize} ${thumbShadowBlur} ${theme.color.border}`,
-    border: `${thumbBorderWidth} solid ${theme.color.border}`,
-    height: thumbHeight,
-    width: thumbWidth,
-    borderRadius: thumbRadius,
-    background: theme.appContentBg,
-    cursor: 'pointer',
+    width: 16,
+    height: 16,
+    background: `${theme.color.lightest}`,
+    border: `1px solid ${rgba(theme.color.border, 0.2)}`,
+    borderRadius: 50,
+    cursor: 'grab',
+    marginTop: 0,
   },
-
-  '&:focus::-ms-fill-lower': {
-    background: '#3071a9',
-  },
-
-  '&:focus::-ms-fill-upper': {
-    background: lighten(contrast, theme.color.medium),
-  },
+  '&:focus::-ms-fill-lower': { background: '#dddddd' },
+  '&:focus::-ms-fill-upper': { background: '#e0e0e0' },
+  '@supports (-ms-ime-align:auto)': { 'input[type=range]': { margin: '0' } },
 }));
 
 const RangeLabel = styled.span({
