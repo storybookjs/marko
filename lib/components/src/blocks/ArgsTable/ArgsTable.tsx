@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import { styled, ignoreSsrWarning } from '@storybook/theming';
 import { opacify, transparentize, darken, lighten } from 'polished';
-import { ArgRow, ArgRowProps } from './ArgRow';
-import { SectionRow, SectionRowProps } from './SectionRow';
+import { ArgRow } from './ArgRow';
+import { SectionRow } from './SectionRow';
 import { ArgType, ArgTypes, Args } from './types';
 import { EmptyBlock } from '../EmptyBlock';
 import { Link } from '../../typography/link/link';
@@ -175,7 +175,7 @@ type Sections = {
   sections: Record<string, Section>;
 };
 
-const groupRows = (rows: ArgTypes) => {
+const groupRows = (rows: ArgType) => {
   const sections: Sections = { ungrouped: [], sections: {} };
   if (!rows) return sections;
 

@@ -2,14 +2,14 @@ import React, { FC } from 'react';
 import Markdown from 'markdown-to-jsx';
 import { transparentize } from 'polished';
 import { styled } from '@storybook/theming';
-import { TableArgType, Args, TableAnnotation } from './types';
+import { ArgType, Args, TableAnnotation } from './types';
 import { ArgJsDoc } from './ArgJsDoc';
 import { ArgValue } from './ArgValue';
 import { ArgControl, ArgControlProps } from './ArgControl';
 import { codeCommon } from '../../typography/shared';
 
 export interface ArgRowProps {
-  row: TableArgType;
+  row: ArgType;
   arg: any;
   updateArgs?: (args: Args) => void;
   compact?: boolean;
