@@ -1,3 +1,14 @@
+## 6.0.0-beta.32 (June 19, 2020)
+
+### Bug Fixes
+
+- Addon-knobs: Update select types for undefined, null and boolean ([#11202](https://github.com/storybookjs/storybook/pull/11202))
+
+### Maintenance
+
+- Composition: rename auth url & add tests for modules/refs ([#11215](https://github.com/storybookjs/storybook/pull/11215))
+- Examples: Add design-system to official example ([#11081](https://github.com/storybookjs/storybook/pull/11081))
+
 ## 6.0.0-beta.31 (June 17, 2020)
 
 ### Bug Fixes
