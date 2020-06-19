@@ -8,10 +8,13 @@ const rootElement = document ? document.getElementById('root') : null;
 let renderedStory: Element;
 
 function preactRender(element: StoryFnPreactReturnType | null): void {
-  if (preact.Fragment) {
+  if ((preact as any).Fragment) {
+    // Preact 10 only:
     preact.render(element, rootElement);
+  } else if (element) {
+    renderedStory = (preact.render(element, rootElement) as unknown) as Element;
   } else {
-    renderedStory = (preact.render(element, rootElement, renderedStory) as unknown) as Element;
+    preact.render(element, rootElement, renderedStory);
   }
 }
 
