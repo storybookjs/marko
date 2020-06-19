@@ -100,7 +100,7 @@ const map = (
   return input;
 };
 
-export const init: ModuleFn = ({ store, provider, fullAPI }) => {
+export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true } = {}) => {
   const api: SubAPI = {
     findRef: (source) => {
       const refs = api.getRefs();
@@ -232,9 +232,11 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
     r.type = 'unknown';
   });
 
-  Object.entries(refs).forEach(([k, v]) => {
-    api.checkRef(v as SetRefData);
-  });
+  if (runCheck) {
+    Object.entries(refs).forEach(([k, v]) => {
+      api.checkRef(v as SetRefData);
+    });
+  }
 
   return {
     api,
