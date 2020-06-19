@@ -32,21 +32,22 @@ const RangeInput = styled.input(({ theme }) => ({
     width: 16,
     height: 16,
 
-    border: `1px solid ${rgba(theme.color.border, 0.2)}`,
+    border: `1px solid ${rgba(theme.appBorderColor, 0.2)}`,
     borderRadius: '50px',
-    boxShadow: `0 1px 3px 0px ${rgba(theme.color.border, 0.2)}`,
+    boxShadow: `0 1px 3px 0px ${rgba(theme.appBorderColor, 0.2)}`,
     cursor: 'grab',
     appearance: 'none',
-    background: `${theme.color.lightest}`,
+    background: `${theme.input.background}`,
+    transition: 'all 150ms ease-out',
 
     '&:hover': {
-      background: `${theme.color.lighter}`,
+      background: `${darken(0.05, theme.input.background)}`,
       transform: 'scale3d(1.1, 1.1, 1.1) translateY(-1px)',
       transition: 'all 50ms ease-out',
     },
 
     '&:active': {
-      background: `${theme.color.lighter}`,
+      background: `${theme.input.background}`,
       transform: 'scale3d(1, 1, 1) translateY(0px)',
       cursor: 'grabbing',
     },
@@ -86,16 +87,17 @@ const RangeInput = styled.input(({ theme }) => ({
     borderRadius: '50px',
     boxShadow: `0 1px 3px 0px ${rgba(theme.color.border, 0.2)}`,
     cursor: 'grab',
-    background: `${theme.color.lightest}`,
+    background: `${theme.input.background}`,
+    transition: 'all 150ms ease-out',
 
     '&:hover': {
-      background: `${theme.color.lighter}`,
+      background: `${darken(0.05, theme.input.background)}`,
       transform: 'scale3d(1.1, 1.1, 1.1) translateY(-1px)',
       transition: 'all 50ms ease-out',
     },
 
     '&:active': {
-      background: `${theme.color.lighter}`,
+      background: `${theme.input.background}`,
       transform: 'scale3d(1, 1, 1) translateY(0px)',
       cursor: 'grabbing',
     },
@@ -125,8 +127,8 @@ const RangeInput = styled.input(({ theme }) => ({
   '&::-ms-thumb': {
     width: 16,
     height: 16,
-    background: `${theme.color.lightest}`,
-    border: `1px solid ${rgba(theme.color.border, 0.2)}`,
+    background: `${theme.input.background}`,
+    border: `1px solid ${rgba(theme.appBorderColor, 0.2)}`,
     borderRadius: 50,
     cursor: 'grab',
     marginTop: 0,
