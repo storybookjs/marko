@@ -160,7 +160,10 @@ const ErrorFormatter: FunctionComponent<{ error: Error }> = ({ error }) => {
   );
 };
 
-export const AuthBlock: FunctionComponent<{ authUrl: string; id: string }> = ({ authUrl, id }) => {
+export const AuthBlock: FunctionComponent<{ loginUrl: string; id: string }> = ({
+  loginUrl,
+  id,
+}) => {
   const [isAuthAttempted, setAuthAttempted] = useState(false);
 
   const refresh = useCallback(() => {
@@ -169,12 +172,12 @@ export const AuthBlock: FunctionComponent<{ authUrl: string; id: string }> = ({ 
 
   const open = useCallback((e) => {
     e.preventDefault();
-    const childWindow = window.open(authUrl, `storybook_auth_${id}`, 'resizable,scrollbars');
+    const childWindow = window.open(loginUrl, `storybook_auth_${id}`, 'resizable,scrollbars');
 
     // poll for window to close
     const timer = setInterval(() => {
       if (!childWindow) {
-        logger.error('unable to access authUrl window');
+        logger.error('unable to access loginUrl window');
         clearInterval(timer);
       } else if (childWindow.closed) {
         clearInterval(timer);
@@ -189,8 +192,8 @@ export const AuthBlock: FunctionComponent<{ authUrl: string; id: string }> = ({ 
         {isAuthAttempted ? (
           <Fragment>
             <Text>
-              Authentication on <strong>{authUrl}</strong> seems to have concluded, refresh the page
-              to fetch this storybook
+              Authentication on <strong>{loginUrl}</strong> seems to have concluded, refresh the
+              page to fetch this storybook
             </Text>
             <div>
               <Button small gray onClick={refresh}>

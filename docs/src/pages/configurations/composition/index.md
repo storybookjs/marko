@@ -77,11 +77,11 @@ For an example what this file should look like, see: [here](https://next--storyb
 If you have some authentication layer on your hosted storybook, the composing the storybook will fail. Storybook will show a message in the sidebar if that happens.
 
 
-You can assist the user by creating a `metadata.json` file with a `authUrl` field, and ensure this file **is** loadable (even in the user is not authenticated):
+You can assist the user by creating a `metadata.json` file with a `loginUrl` field, and ensure this file **is** loadable (even in the user is not authenticated):
 
 ```json
 {
-  "authUrl": "https://example.com"
+  "loginUrl": "https://example.com"
 }
 ```
 

@@ -54,7 +54,7 @@ export const Ref: FunctionComponent<RefType & RefProps> = (ref) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const indicatorRef = useRef<HTMLElement>(null);
 
-  const { stories, id: key, title = key, storyId, filter, isHidden = false, authUrl, error } = ref;
+  const { stories, id: key, title = key, storyId, filter, isHidden = false, loginUrl, error } = ref;
   const { dataSet, expandedSet, length, others, roots, setExpanded, selectedSet } = useDataset(
     stories,
     filter,
@@ -77,7 +77,7 @@ export const Ref: FunctionComponent<RefType & RefProps> = (ref) => {
   const isLoading = isLoadingMain || isLoadingInjected || ref.type === 'unknown';
   const isError = !!error;
   const isEmpty = !isLoading && length === 0;
-  const isAuthRequired = !!authUrl;
+  const isAuthRequired = !!loginUrl && length === 0;
 
   const state = getStateType(isLoading, isAuthRequired, isError, isEmpty);
 
@@ -97,7 +97,7 @@ export const Ref: FunctionComponent<RefType & RefProps> = (ref) => {
       )}
       {isExpanded && (
         <Wrapper data-title={title} isMain={isMain}>
-          {state === 'auth' && <AuthBlock id={ref.id} authUrl={authUrl} />}
+          {state === 'auth' && <AuthBlock id={ref.id} loginUrl={loginUrl} />}
           {state === 'error' && <ErrorBlock error={error} />}
           {state === 'loading' && <LoaderBlock isMain={isMain} />}
           {state === 'empty' && <EmptyBlock isMain={isMain} />}
