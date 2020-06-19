@@ -172,9 +172,8 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
       } else if (omitted || included) {
         const credentials = included ? 'include' : 'omit';
 
-        const [stories, storiesWithAuth, metadata] = await Promise.all([
-          handle(omitted),
-          handle(included),
+        const [stories, metadata] = await Promise.all([
+          included ? handle(included) : handle(omitted),
           handle(
             fetch(`${url}/metadata.json`, {
               headers: {
@@ -186,8 +185,7 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
           ),
         ]);
 
-        const storiesData = storiesWithAuth && stories?.loginUrl ? storiesWithAuth : stories;
-        Object.assign(loadedData, { ...storiesData, ...metadata });
+        Object.assign(loadedData, { ...stories, ...metadata });
       }
 
       await api.setRef(id, {
