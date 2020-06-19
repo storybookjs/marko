@@ -36,6 +36,7 @@ We [configure storybook's webpack](/configurations/custom-webpack-config/#full-c
 
 ```js
 module.exports = {
+  stories: ['../src/**/*.stories.tsx'],
   webpackFinal: async config => {
     config.module.rules.push({
       test: /\.(ts|tsx)$/,
