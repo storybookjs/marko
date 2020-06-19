@@ -179,7 +179,7 @@ export const RefIndicator = forwardRef<
               {state === 'ready' && (
                 <ReadyMessage {...{ url: ref.url, componentCount, leafCount }} />
               )}
-              {state === 'auth' && <LoginRequiredMessage url={ref.loginUrl} />}
+              {state === 'auth' && <LoginRequiredMessage {...ref} />}
               {ref.type === 'auto-inject' && state !== 'error' && <PerformanceDegradedMessage />}
               {state !== 'loading' && <ReadDocsMessage />}
             </Spaced>
@@ -230,10 +230,10 @@ const ReadyMessage: FunctionComponent<{
   </Message>
 );
 
-const LoginRequiredMessage: FunctionComponent<{ url: string }> = ({ url }) => {
+const LoginRequiredMessage: FunctionComponent<RefType> = ({ loginUrl, id }) => {
   const open = useCallback((e) => {
     e.preventDefault();
-    const childWindow = window.open(url, `storybook_auth_${id}`, 'resizable,scrollbars');
+    const childWindow = window.open(loginUrl, `storybook_auth_${id}`, 'resizable,scrollbars');
 
     // poll for window to close
     const timer = setInterval(() => {
@@ -242,7 +242,7 @@ const LoginRequiredMessage: FunctionComponent<{ url: string }> = ({ url }) => {
         clearInterval(timer);
       } else if (childWindow.closed) {
         clearInterval(timer);
-        window.refresh();
+        window.document.location.reload();
       }
     }, 1000);
   }, []);
