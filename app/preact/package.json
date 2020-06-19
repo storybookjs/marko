@@ -48,7 +48,7 @@
   },
   "peerDependencies": {
     "@babel/core": "*",
-    "preact": "^10.0.0",
+    "preact": "^8.0.0|^10.0.0",
     "react": "*",
     "react-dom": "*"
   },
