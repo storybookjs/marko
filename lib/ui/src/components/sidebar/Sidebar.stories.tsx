@@ -88,7 +88,7 @@ const refs: Record<string, RefType> = {
     url: 'https://example.com',
     type: 'lazy',
     stories: {},
-    authUrl: 'https://example.com',
+    loginUrl: 'https://example.com',
   },
   long: {
     id: 'long',

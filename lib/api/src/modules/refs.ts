@@ -15,9 +15,11 @@ export interface SubState {
 
 type Versions = Record<string, string>;
 
-export type SetRefData = Omit<ComposedRef, 'stories'> & {
-  stories?: StoriesRaw;
-};
+export type SetRefData = Partial<
+  Omit<ComposedRef, 'stories'> & {
+    stories?: StoriesRaw;
+  }
+>;
 
 export interface SubAPI {
   findRef: (source: string) => ComposedRef;
@@ -36,7 +38,7 @@ export interface ComposedRef {
   type?: 'auto-inject' | 'unknown' | 'lazy';
   stories: StoriesHash;
   versions?: Versions;
-  authUrl?: string;
+  loginUrl?: string;
   ready?: boolean;
   error?: any;
 }
@@ -48,12 +50,12 @@ export type RefUrl = string;
 // eslint-disable-next-line no-useless-escape
 const findFilename = /(\/((?:[^\/]+?)\.[^\/]+?)|\/)$/;
 
-const allSettled = (promises: Promise<any>[]) =>
+const allSettled = (promises: Promise<Response>[]): Promise<(Response | false)[]> =>
   Promise.all(
-    promises.map((promise, i) =>
+    promises.map((promise) =>
       promise.then(
-        (r) => (r.ok ? r : false),
-        () => false
+        (r) => (r.ok ? r : (false as const)),
+        () => false as const
       )
     )
   );
@@ -98,7 +100,7 @@ const map = (
   return input;
 };
 
-export const init: ModuleFn = ({ store, provider, fullAPI }) => {
+export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true } = {}) => {
   const api: SubAPI = {
     findRef: (source) => {
       const refs = api.getRefs();
@@ -123,7 +125,7 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
     checkRef: async (ref) => {
       const { id, url } = ref;
 
-      const loadedData: { error?: Error; stories?: StoriesRaw } = {};
+      const loadedData: { error?: Error; stories?: StoriesRaw; loginUrl?: string } = {};
 
       const [included, omitted, iframe] = await allSettled([
         fetch(`${url}/stories.json`, {
@@ -144,7 +146,7 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
         }),
       ]);
 
-      const handle = async (request: Promise<Response> | false) => {
+      const handle = async (request: Response | false): Promise<SetRefData> => {
         if (request) {
           return Promise.resolve(request)
             .then((response) => (response.ok ? response.json() : {}))
@@ -168,10 +170,10 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
           `,
         } as Error;
       } else if (omitted || included) {
-        const credentials = !omitted ? 'include' : 'omit';
+        const credentials = included ? 'include' : 'omit';
 
         const [stories, metadata] = await Promise.all([
-          handle(omitted || included),
+          included ? handle(included) : handle(omitted),
           handle(
             fetch(`${url}/metadata.json`, {
               headers: {
@@ -179,14 +181,14 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
               },
               credentials,
               cache: 'no-cache',
-            })
+            }).catch(() => false)
           ),
         ]);
 
         Object.assign(loadedData, { ...stories, ...metadata });
       }
 
-      api.setRef(id, {
+      await api.setRef(id, {
         id,
         url,
         ...loadedData,
@@ -230,9 +232,11 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
     r.type = 'unknown';
   });
 
-  Object.entries(refs).forEach(([k, v]) => {
-    api.checkRef(v as SetRefData);
-  });
+  if (runCheck) {
+    Object.entries(refs).forEach(([k, v]) => {
+      api.checkRef(v as SetRefData);
+    });
+  }
 
   return {
     api,
