@@ -42,22 +42,13 @@ inAddonPanel.args = {
   inAddonPanel: true,
 };
 
-const sectionRows = {
-  a: { ...stringType, table: { ...stringType.table, ...propsSection } },
-  b: { ...numberType, table: { ...stringType.table, ...propsSection } },
-  c: { ...stringType, table: { ...stringType.table, ...eventsSection } },
-};
-
-const subsectionRows = {
-  a: { ...stringType, table: { ...stringType.table, ...propsSection, ...componentSubsection } },
-  b: { ...numberType, table: { ...stringType.table, ...propsSection, ...componentSubsection } },
-  c: { ...stringType, table: { ...stringType.table, ...eventsSection, ...componentSubsection } },
-  d: { ...stringType, table: { ...stringType.table, ...eventsSection, ...htmlElementSubsection } },
-};
-
 export const Sections = Story.bind({});
 Sections.args = {
-  rows: sectionRows,
+  rows: {
+    a: { ...stringType, table: { ...stringType.table, ...propsSection } },
+    b: { ...numberType, table: { ...stringType.table, ...propsSection } },
+    c: { ...stringType, table: { ...stringType.table, ...eventsSection } },
+  },
 };
 
 export const SectionsCompact = Story.bind({});
@@ -66,9 +57,48 @@ SectionsCompact.args = {
   compact: true,
 };
 
-export const Subsections = Story.bind({});
-Subsections.args = {
-  rows: subsectionRows,
+export const SectionsAndSubsections = Story.bind({});
+SectionsAndSubsections.args = {
+  rows: {
+    a: { ...stringType, table: { ...stringType.table, ...propsSection, ...componentSubsection } },
+    b: { ...numberType, table: { ...stringType.table, ...propsSection, ...componentSubsection } },
+    c: { ...stringType, table: { ...stringType.table, ...eventsSection, ...componentSubsection } },
+    d: {
+      ...stringType,
+      table: { ...stringType.table, ...eventsSection, ...htmlElementSubsection },
+    },
+  },
+};
+
+export const SubsectionsOnly = Story.bind({});
+SubsectionsOnly.args = {
+  rows: {
+    a: { ...stringType, table: { ...stringType.table, ...componentSubsection } },
+    b: { ...numberType, table: { ...stringType.table, ...componentSubsection } },
+    c: { ...stringType, table: { ...stringType.table, ...componentSubsection } },
+    d: { ...stringType, table: { ...stringType.table, ...htmlElementSubsection } },
+  },
+};
+
+export const AllControls = Story.bind({});
+AllControls.args = {
+  rows: {
+    array: ArgRow.ArrayOf.args.row,
+    boolean: ArgRow.Boolean.args.row,
+    color: ArgRow.Color.args.row,
+    date: ArgRow.Date.args.row,
+    string: ArgRow.String.args.row,
+    number: ArgRow.Number.args.row,
+    range: ArgRow.Number.args.row,
+    radio: ArgRow.Radio.args.row,
+    inlineRadio: ArgRow.InlineRadio.args.row,
+    check: ArgRow.Check.args.row,
+    inlineCheck: ArgRow.InlineCheck.args.row,
+    select: ArgRow.Select.args.row,
+    multiSelect: ArgRow.MultiSelect.args.row,
+    object: ArgRow.ObjectOf.args.row,
+    func: ArgRow.Func.args.row,
+  },
 };
 
 export const Error = Story.bind({});

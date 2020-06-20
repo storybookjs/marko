@@ -43,7 +43,7 @@ export const CheckboxControl: FC<CheckboxProps> = ({
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const option = (e.target as HTMLInputElement).value;
     const updated = [...selected];
-    if (updated.includes(option)) {
+    if (updated?.includes(option)) {
       updated.splice(updated.indexOf(option), 1);
     } else {
       updated.push(option);
@@ -65,7 +65,7 @@ export const CheckboxControl: FC<CheckboxProps> = ({
                 name={name}
                 value={key}
                 onChange={handleChange}
-                checked={selected.includes(key)}
+                checked={selected?.includes(key)}
               />
               <CheckboxLabel htmlFor={id}>{key}</CheckboxLabel>
             </div>
