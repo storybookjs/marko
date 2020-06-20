@@ -20,7 +20,6 @@ export const TableWrapper = styled.table<{ compact?: boolean; inAddonPanel?: boo
         padding: 0,
         border: 'none',
         verticalAlign: 'top',
-        overflow: 'hidden',
         textOverflow: 'ellipsis',
       },
       // End Resets
@@ -44,7 +43,12 @@ export const TableWrapper = styled.table<{ compact?: boolean; inAddonPanel?: boo
 
       'th:last-of-type, td:last-of-type': {
         paddingRight: 20,
-        ...(compact ? null : { width: '20%' }),
+        ...(compact
+          ? null
+          : {
+              minWidth: '15%',
+              maxWidth: '25%',
+            }),
       },
 
       th: {
