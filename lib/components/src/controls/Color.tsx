@@ -41,7 +41,7 @@ export const ColorControl: FC<ColorProps> = ({ name, value, onChange }) => {
       onClick={() => setShowPicker(!showPicker)}
       size="flex"
     >
-      {value && value.toUpperCase()}
+      {value ? value.toUpperCase() : 'Choose color'}
       <Swatch style={{ background: value }} />
       {showPicker ? (
         <Popover>
