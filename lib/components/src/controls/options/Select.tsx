@@ -25,15 +25,11 @@ const OptionsSelect = styled.select(({ theme }) => ({
   },
 
   '&[multiple]': {
-    paddingLeft: 0,
-    paddingRight: 0,
+    padding: 0,
 
     option: {
       display: 'block',
-      paddingLeft: 10,
-      paddingRight: 10,
-      paddingTop: 6,
-      paddingBottom: 6,
+      padding: '6px 10px 6px 10px',
       marginLeft: 1,
       marginRight: 1,
     },
