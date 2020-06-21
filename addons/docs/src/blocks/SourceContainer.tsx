@@ -17,15 +17,24 @@ const ADD_JSX = 'kadira/jsx/add_jsx';
 export const SourceContainer: FC<{}> = ({ children }) => {
   const [sources, setStorySources] = useState<StorySources>({});
   const channel = addons.getChannel();
-  useEffect(() => {
-    const handleAddJSX = (id: StoryId, newJsx: SourceItem) => {
-      if (newJsx !== sources[id]) {
-        const newSources = { ...sources, [id]: newJsx };
-        setStorySources(newSources);
-      }
-    };
 
-    channel.on(ADD_JSX, handleAddJSX);
+  const sourcesRef = React.useRef<StorySources>();
+  const handleAddJSX = (id: StoryId, newJsx: SourceItem) => {
+    if (newJsx !== sources[id]) {
+      const newSources = { ...sources, [id]: newJsx };
+      sourcesRef.current = newSources;
+    }
+  };
+
+  // Bind this early (instead of inside `useEffect`), because the `ADD_JSX` event
+  // is triggered *during* the rendering process, not after
+  channel.on(ADD_JSX, handleAddJSX);
+
+  useEffect(() => {
+    if (sourcesRef.current) {
+      setStorySources(sourcesRef.current);
+    }
+
     return () => channel.off(ADD_JSX, handleAddJSX);
   }, [sources, setStorySources]);
 
