@@ -27,7 +27,8 @@ export const SourceContainer: FC<{}> = ({ children }) => {
   };
 
   // Bind this early (instead of inside `useEffect`), because the `ADD_JSX` event
-  // is triggered *during* the rendering process, not after
+  // is triggered *during* the rendering process, not after. We have to use the ref
+  // to ensure we don't end up calling setState outside the effect though.
   channel.on(ADD_JSX, handleAddJSX);
 
   useEffect(() => {
