@@ -3,7 +3,6 @@ import { addDecorator, addParameters } from '@storybook/react';
 import { Global, ThemeProvider, themes, createReset, convert } from '@storybook/theming';
 import { withCssResources } from '@storybook/addon-cssresources';
 import { DocsPage } from '@storybook/addon-docs/blocks';
-import { jsxDecorator } from 'storybook-addon-jsx';
 
 import addHeadWarning from './head-warning';
 
@@ -36,7 +35,6 @@ const themeDecorator = (storyFn, { globalArgs: { theme } }) => {
   );
 };
 
-addDecorator(jsxDecorator);
 addDecorator(themeDecorator);
 
 addDecorator((storyFn) => (

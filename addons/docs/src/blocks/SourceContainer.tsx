@@ -1,6 +1,7 @@
 import React, { FC, Context, createContext, useEffect, useState } from 'react';
 import { addons } from '@storybook/addons';
 import { StoryId } from '@storybook/api';
+import { SNIPPET_RENDERED } from '../shared';
 
 export type SourceItem = string;
 export type StorySources = Record<StoryId, SourceItem>;
@@ -29,14 +30,14 @@ export const SourceContainer: FC<{}> = ({ children }) => {
   // Bind this early (instead of inside `useEffect`), because the `ADD_JSX` event
   // is triggered *during* the rendering process, not after. We have to use the ref
   // to ensure we don't end up calling setState outside the effect though.
-  channel.on(ADD_JSX, handleAddJSX);
+  channel.on(SNIPPET_RENDERED, handleAddJSX);
 
   useEffect(() => {
     if (sourcesRef.current) {
       setStorySources(sourcesRef.current);
     }
 
-    return () => channel.off(ADD_JSX, handleAddJSX);
+    return () => channel.off(SNIPPET_RENDERED, handleAddJSX);
   }, [sources, setStorySources]);
 
   return <SourceContext.Provider value={{ sources }}>{children}</SourceContext.Provider>;
