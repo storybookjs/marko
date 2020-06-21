@@ -21,7 +21,7 @@ export const SourceContainer: FC<{}> = ({ children }) => {
   const sourcesRef = React.useRef<StorySources>();
   const handleAddJSX = (id: StoryId, newJsx: SourceItem) => {
     if (newJsx !== sources[id]) {
-      const newSources = { ...sources, [id]: newJsx };
+      const newSources = { ...sourcesRef.current, [id]: newJsx };
       sourcesRef.current = newSources;
     }
   };
