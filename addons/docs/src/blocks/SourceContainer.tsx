@@ -16,15 +16,18 @@ const ADD_JSX = 'kadira/jsx/add_jsx';
 
 export const SourceContainer: FC<{}> = ({ children }) => {
   const [sources, setStorySources] = useState<StorySources>({});
-  const handleAddJSX = (id: StoryId, newJsx: SourceItem) => {
-    if (newJsx !== sources[id]) {
-      const newSources = { ...sources, [id]: newJsx };
-      setStorySources(newSources);
-    }
-  };
   const channel = addons.getChannel();
-  channel.on(ADD_JSX, handleAddJSX);
-  useEffect(() => () => channel.off(ADD_JSX, handleAddJSX), []);
+  useEffect(() => {
+    const handleAddJSX = (id: StoryId, newJsx: SourceItem) => {
+      if (newJsx !== sources[id]) {
+        const newSources = { ...sources, [id]: newJsx };
+        setStorySources(newSources);
+      }
+    };
+
+    channel.on(ADD_JSX, handleAddJSX);
+    return () => channel.off(ADD_JSX, handleAddJSX);
+  }, [sources, setStorySources]);
 
   return <SourceContext.Provider value={{ sources }}>{children}</SourceContext.Provider>;
 };
