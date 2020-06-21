@@ -12,7 +12,6 @@ const StyledSyntaxHighlighter = styled(SyntaxHighlighter)<{}>(({ theme }) => ({
   borderRadius: theme.appBorderRadius,
   boxShadow:
     theme.base === 'light' ? 'rgba(0, 0, 0, 0.10) 0 1px 3px 0' : 'rgba(0, 0, 0, 0.20) 0 2px 5px 0',
-
   'pre.hljs': {
     padding: 20,
     background: 'inherit',
@@ -45,7 +44,7 @@ export type SourceProps = SourceErrorProps & SourceCodeProps;
 const Source: FunctionComponent<SourceProps> = (props) => {
   const { error } = props as SourceErrorProps;
   if (error) {
-    return <EmptyBlock {...props}>{error}</EmptyBlock>;
+    return <EmptyBlock>{error}</EmptyBlock>;
   }
 
   const { language, code, dark, format, ...rest } = props as SourceCodeProps;

@@ -13,7 +13,6 @@ const Wrapper = styled.div<{}>(withReset, ({ theme }) => ({
   justifyContent: 'center',
   padding: 20,
   margin: '25px 0 40px',
-
   color:
     theme.base === 'light'
       ? transparentize(0.4, theme.color.defaultText)

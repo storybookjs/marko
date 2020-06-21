@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { jsxDecorator } from 'storybook-addon-jsx';
 
 import MyButton from '../src/stories/Button.vue';
 
@@ -11,3 +12,5 @@ export const parameters = {
     iframeHeight: '60px',
   },
 };
+
+export const decorators = [jsxDecorator];
