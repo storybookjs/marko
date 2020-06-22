@@ -495,6 +495,7 @@ describe('preview.story_store', () => {
 
         expect(store.getSelection()).toEqual({ storyId: 'a--1', viewMode: 'story' });
       });
+
       it('takes into account sorting', () => {
         const store = new StoryStore({ channel });
         store.setSelectionSpecifier({ storySpecifier: '*', viewMode: 'story' });
