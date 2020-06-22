@@ -176,11 +176,12 @@ type Section = {
 };
 type Sections = {
   ungrouped: Rows;
+  ungroupedSubsections: Record<string, Subsection>;
   sections: Record<string, Section>;
 };
 
 const groupRows = (rows: ArgType) => {
-  const sections: Sections = { ungrouped: [], sections: {} };
+  const sections: Sections = { ungrouped: [], ungroupedSubsections: {}, sections: {} };
   if (!rows) return sections;
 
   Object.entries(rows).forEach(([key, row]) => {
@@ -195,6 +196,10 @@ const groupRows = (rows: ArgType) => {
         section.subsections[subcategory] = subsection;
       }
       sections.sections[category] = section;
+    } else if (subcategory) {
+      const subsection = sections.ungroupedSubsections[subcategory] || [];
+      subsection.push(row);
+      sections.ungroupedSubsections[subcategory] = subsection;
     } else {
       sections.ungrouped.push({ key, ...row });
     }
@@ -222,8 +227,13 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
   const { rows, args, updateArgs, compact, inAddonPanel } = props as ArgsTableRowProps;
 
   const groups = groupRows(rows);
+  console.log(groups);
 
-  if (groups.ungrouped.length === 0 && Object.entries(groups.sections).length === 0) {
+  if (
+    groups.ungrouped.length === 0 &&
+    Object.entries(groups.sections).length === 0 &&
+    Object.entries(groups.ungroupedSubsections).length === 0
+  ) {
     return (
       <EmptyBlock>
         No inputs found for this component.&nbsp;
@@ -254,6 +264,20 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
         <tbody className="docblock-argstable-body">
           {groups.ungrouped.map((row) => (
             <ArgRow key={row.key} row={row} arg={args && args[row.key]} {...common} />
+          ))}
+
+          {Object.entries(groups.ungroupedSubsections).map(([subcategory, subsection]) => (
+            <SectionRow key={subcategory} label={subcategory} level="subsection" colSpan={colSpan}>
+              {subsection.map((row) => (
+                <ArgRow
+                  key={row.key}
+                  row={row}
+                  arg={args && args[row.key]}
+                  expandable={expandable}
+                  {...common}
+                />
+              ))}
+            </SectionRow>
           ))}
 
           {Object.entries(groups.sections).map(([category, section]) => (
