@@ -27,6 +27,8 @@ const Label = styled.label(({ theme }) => ({
   },
 
   span: {
+    minWidth: 60,
+    textAlign: 'center',
     fontSize: theme.typography.size.s1,
     fontWeight: theme.typography.weight.bold,
     lineHeight: '1',
