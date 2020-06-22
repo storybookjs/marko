@@ -11,7 +11,9 @@ interface ControlsParameters {
 
 const NoControlsWrapper = styled.div(({ theme }) => ({
   background: theme.background.warning,
-  padding: 20,
+  padding: '10px 15px',
+  lineHeight: '20px',
+  boxShadow: `${theme.appBorderColor} 0 -1px 0 0 inset`,
 }));
 
 const NoControlsWarning = () => (
