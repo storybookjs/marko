@@ -46,7 +46,12 @@ const FlexSpaced = styled.div({
     marginLeft: 0,
   },
 });
-const FlexInput = styled(Form.Input)({ flex: 1 });
+const FlexInput = styled(Form.Input)({
+  flex: 1,
+  '&::-webkit-calendar-picker-indicator': {
+    opacity: 0.5,
+  },
+});
 
 export type DateProps = ControlProps<DateValue> & DateConfig;
 export const DateControl: FC<DateProps> = ({ name, value, onChange }) => {

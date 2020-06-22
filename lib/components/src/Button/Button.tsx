@@ -105,7 +105,8 @@ const ButtonWrapper = styled.button<ButtonWrapperProps>(
             boxShadow: 'rgba(0, 0, 0, 0.1) 0 0 0 3em inset',
           },
           '&:focus': {
-            boxShadow: `${rgba(color, 0.4)} 0 1px 9px 2px`,
+            boxShadow: `${rgba(color, 1)} 0 1px 9px 2px`,
+            outline: 'none',
           },
           '&:focus:hover': {
             boxShadow: `${rgba(color, 0.2)} 0 8px 18px 0px`,
@@ -139,7 +140,8 @@ const ButtonWrapper = styled.button<ButtonWrapperProps>(
             background: theme.input.background,
           },
           '&:focus': {
-            boxShadow: `${rgba(theme.color.secondary, 0.4)} 0 0 0 1px inset`,
+            boxShadow: `${rgba(theme.color.secondary, 1)} 0 0 0 1px inset`,
+            outline: 'none',
           },
         }
       : {},
@@ -184,6 +186,7 @@ const ButtonWrapper = styled.button<ButtonWrapperProps>(
           },
           '&:focus': {
             boxShadow: `${color} 0 0 0 1px inset, ${rgba(color, 0.4)} 0 1px 9px 2px`,
+            outline: 'none',
           },
           '&:focus:hover': {
             boxShadow: `${color} 0 0 0 1px inset, ${rgba(color, 0.2)} 0 8px 18px 0px`,
@@ -220,6 +223,7 @@ const ButtonWrapper = styled.button<ButtonWrapperProps>(
           },
           '&:focus': {
             boxShadow: `${color} 0 0 0 1px inset, ${rgba(color, 0.4)} 0 1px 9px 2px`,
+            outline: 'none',
           },
           '&:focus:hover': {
             boxShadow: `${color} 0 0 0 1px inset, ${rgba(color, 0.2)} 0 8px 18px 0px`,
