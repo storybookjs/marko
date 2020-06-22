@@ -24,6 +24,14 @@ const Label = styled.label(({ theme }) => ({
     border: 'none',
     background: 'transparent',
     cursor: 'pointer',
+
+    '&:focus': {
+      outline: 'none',
+
+      '& ~ span': {
+        boxShadow: `${theme.color.secondary} 0 0 0 1px inset !important`,
+      },
+    },
   },
 
   span: {
