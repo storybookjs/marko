@@ -1,6 +1,7 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { ArgsTable, ArgsTableError } from './ArgsTable';
+import { NoControlsWarning } from './NoControlsWarning';
 import * as ArgRow from './ArgRow.stories';
 
 export default {
@@ -36,10 +37,21 @@ Compact.args = {
   compact: true,
 };
 
-export const inAddonPanel = Story.bind({});
-inAddonPanel.args = {
+export const InAddonPanel = Story.bind({});
+InAddonPanel.args = {
   ...Normal.args,
   inAddonPanel: true,
+};
+
+export const InAddonPanelWithWarning = (args) => (
+  <>
+    <NoControlsWarning />
+    <ArgsTable {...args} />
+  </>
+);
+InAddonPanelWithWarning.args = {
+  ...InAddonPanel.args,
+  updateArgs: null,
 };
 
 export const Sections = Story.bind({});
