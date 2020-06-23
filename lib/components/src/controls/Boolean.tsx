@@ -48,7 +48,7 @@ const Label = styled.label(({ theme }) => ({
     borderRadius: '3em',
 
     boxShadow: `${opacify(0.05, theme.appBorderColor)} 0 0 0 1px inset`,
-    color: opacify(0.7, theme.color.defaultText),
+    color: transparentize(0.4, theme.color.defaultText),
     background: 'transparent',
 
     '&:hover': {
