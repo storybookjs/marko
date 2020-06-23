@@ -30,7 +30,10 @@ const styles = ({ theme }: { theme: Theme }): CSSObject => ({
   lineHeight: '20px',
   padding: '.42em 1em', // 32
 
-  '&:focus': { boxShadow: `${theme.color.secondary} 0 0 0 1px inset` },
+  '&:focus': {
+    boxShadow: `${theme.color.secondary} 0 0 0 1px inset`,
+    outline: 'none',
+  },
   '&[disabled]': {
     cursor: 'not-allowed',
     opacity: 0.5,

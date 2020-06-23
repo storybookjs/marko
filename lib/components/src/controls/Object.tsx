@@ -1,4 +1,6 @@
 import React, { FC, ChangeEvent, useState, useCallback } from 'react';
+import { styled } from '@storybook/theming';
+
 import deepEqual from 'fast-deep-equal';
 import { Form } from '../form';
 import { ControlProps, ObjectValue, ObjectConfig } from './types';
@@ -17,6 +19,10 @@ const validate = (value: any, argType: ArgType) => {
   }
   return true;
 };
+
+const Wrapper = styled.label({
+  display: 'flex',
+});
 
 export type ObjectProps = ControlProps<ObjectValue> & ObjectConfig;
 export const ObjectControl: FC<ObjectProps> = ({ name, argType, value, onChange }) => {
@@ -41,12 +47,15 @@ export const ObjectControl: FC<ObjectProps> = ({ name, argType, value, onChange 
   );
 
   return (
-    <Form.Textarea
-      name={name}
-      valid={valid ? undefined : 'error'}
-      value={text}
-      onChange={handleChange}
-      size="flex"
-    />
+    <Wrapper>
+      <Form.Textarea
+        name={name}
+        valid={valid ? undefined : 'error'}
+        value={text}
+        onChange={handleChange}
+        size="flex"
+        placeholder="Adjust object dynamically"
+      />
+    </Wrapper>
   );
 };
