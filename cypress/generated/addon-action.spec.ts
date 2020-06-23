@@ -1,4 +1,4 @@
-import { visit, clickAddon } from '../helper';
+import { visit } from '../helper';
 
 describe('addon-action', () => {
   before(() => {

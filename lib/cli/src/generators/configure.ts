@@ -19,11 +19,9 @@ function configureMain(addons: string[], custom?: any) {
 function configurePreview() {
   fse.writeFileSync(
     './.storybook/preview.js',
-    `
-  export const parameters = {
-    actions: { argTypesRegex: "^on.*" },
-  }
-  `,
+    `export const parameters = {
+  actions: { argTypesRegex: "^on.*" },
+}`,
     { encoding: 'utf8' }
   );
 }
