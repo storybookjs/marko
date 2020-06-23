@@ -1,7 +1,7 @@
 import { NpmOptions } from '../NpmOptions';
 import { StoryFormat, SupportedLanguage, SupportedFrameworks } from '../project_types';
 import { getBabelDependencies, copyComponents } from '../helpers';
-import configure from './configure';
+import { configure } from './configure';
 import { JsPackageManager } from '../js-package-manager';
 
 export type GeneratorOptions = {
@@ -49,7 +49,7 @@ export async function baseGenerator(
     // If angular skip `docs` because docs is buggy for now (https://github.com/storybookjs/storybook/issues/9103)
     // for others framework add `essentials` i.e. `actions`, `backgrounds`, `docs`, `viewport`
     // API of essentials needs to be clarified whether we need to add dependencies or not
-    framework !== 'angular' && '@storybook/addon-docs',
+    framework !== 'angular' && '@storybook/addon-essentials',
   ].filter(Boolean);
 
   // ⚠️ Some addons have peer deps that must be added too, like '@storybook/addon-docs' => 'react-is'

@@ -47,3 +47,21 @@ Cypress.Commands.add('getStoryElement', {}, () => {
     .should('not.be.empty')
     .then((storyRoot) => cy.wrap(storyRoot, { log: false }));
 });
+
+Cypress.Commands.add('navigateToStory', (kind, name) => {
+  const kindId = kind.replace(' ', '-').toLowerCase();
+  const storyId = name.replace(' ', '-').toLowerCase();
+
+  const storyLinkId = `#${kindId}--${storyId}`;
+  cy.log('navigateToStory');
+  cy.get(`#${kindId}`, { log: false }).click();
+  cy.get(storyLinkId, { log: false }).click();
+
+  // assert url changes
+  cy.url().should('include', `path=/story/${kindId}--${storyId}`);
+  cy.get(storyLinkId).should('have.class', 'selected');
+});
+
+Cypress.Commands.add('viewAddonPanel', (name) => {
+  cy.get(`[role=tablist] button[role=tab]`).contains(name).click();
+});

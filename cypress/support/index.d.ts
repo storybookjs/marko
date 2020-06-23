@@ -10,6 +10,22 @@ declare namespace Cypress {
     getStoryElement(): Chainable<Element>;
 
     /**
+     * Navigate to a story.
+     * 'Storybook Example/Button'
+     *  -  kind: `Storybook Example`
+     *  -  name: `Button`
+     * @param kind Story kind
+     * @param name name of the story
+     */
+    navigateToStory(kind: string, name: string): Chainable<Element>;
+
+    /**
+     * Display addon panel
+     * @param name of the addon
+     */
+    viewAddonPanel(name: string): Chainable<Element>;
+
+    /**
      * Returns the element while logging it.
      */
     console(method: LoggerMethod): Chainable<Element>;
