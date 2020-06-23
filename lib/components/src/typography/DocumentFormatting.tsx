@@ -302,6 +302,12 @@ export const LI = styled.li<{}>(withReset, ({ theme }) => ({
     marginTop: '.25em',
     marginBottom: 0,
   },
+  '& ul': {
+    listStyle: 'disc',
+  },
+  '& ol': {
+    listStyle: 'decimal',
+  },
   '& code': codeCommon({ theme }),
 }));
 
