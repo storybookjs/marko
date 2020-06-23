@@ -1,3 +1,4 @@
+import { document, window } from 'global';
 import React, { FunctionComponent, useMemo, ComponentProps, useCallback, forwardRef } from 'react';
 
 import { Icons, WithTooltip, Spaced, TooltipLinkList } from '@storybook/components';
@@ -238,11 +239,10 @@ const LoginRequiredMessage: FunctionComponent<RefType> = ({ loginUrl, id }) => {
     // poll for window to close
     const timer = setInterval(() => {
       if (!childWindow) {
-        // logger.error('unable to access loginUrl window');
         clearInterval(timer);
       } else if (childWindow.closed) {
         clearInterval(timer);
-        window.document.location.reload();
+        document.location.reload();
       }
     }, 1000);
   }, []);
