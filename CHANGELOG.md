@@ -1,3 +1,18 @@
+## 6.0.0-beta.33 (June 22, 2020)
+
+### Features
+
+- ArgsTable: Add subsections and design cleanup ([#11216](https://github.com/storybookjs/storybook/pull/11216))
+- Core: Improve startup events ([#11080](https://github.com/storybookjs/storybook/pull/11080))
+
+### Bug Fixes
+
+- Preact: Fix Preact 8 compatibility ([#11225](https://github.com/storybookjs/storybook/pull/11225))
+
+### Maintenance
+
+- Core :Add deprecation message for selectedName/Kind urls ([#11111](https://github.com/storybookjs/storybook/pull/11111))
+
 ## 6.0.0-beta.32 (June 19, 2020)
 
 ### Bug Fixes

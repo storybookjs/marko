@@ -122,7 +122,7 @@ export class PostmsgTransport {
 
       return list.length ? list : this.getCurrentFrames();
     }
-    if (window && window.parent) {
+    if (window && window.parent && window.parent !== window) {
       return [window.parent];
     }
 

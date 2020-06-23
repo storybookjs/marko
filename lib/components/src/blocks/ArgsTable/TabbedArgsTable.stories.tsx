@@ -18,6 +18,16 @@ Tabs.args = {
   },
 };
 
+export const TabsInAddonPanel = Story.bind({});
+TabsInAddonPanel.args = {
+  tabs: {
+    Normal: Normal.args,
+    Compact: Compact.args,
+    Sections: Sections.args,
+  },
+  inAddonPanel: true,
+};
+
 export const Empty = Story.bind({});
 Empty.args = {
   tabs: {},
