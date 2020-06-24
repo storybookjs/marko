@@ -178,7 +178,7 @@ export class BackgroundSelector extends Component<Props> {
                 <Global
                   styles={(theme: Theme) => ({
                     [`#${iframeId}`]: {
-                      backgroundColor:
+                      background:
                         selectedBackgroundColor === 'transparent'
                           ? theme.background.content
                           : selectedBackgroundColor,
