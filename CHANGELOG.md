@@ -1,3 +1,17 @@
+## 6.0.0-beta.35 (June 24, 2020)
+
+### Features
+
+* Essentials: Add addon-controls ([#11285](https://github.com/storybookjs/storybook/pull/11285))
+
+### Bug Fixes
+
+* Addon-docs markdown tables right align support ([#11280](https://github.com/storybookjs/storybook/pull/11280))
+
+### Maintenance
+
+* Addon-docs: Simplify argType inference ([#11284](https://github.com/storybookjs/storybook/pull/11284))
+
 ## 6.0.0-beta.34 (June 23, 2020)
 
 ### Features
