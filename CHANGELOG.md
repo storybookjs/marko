@@ -1,3 +1,37 @@
+## 6.0.0-beta.35 (June 24, 2020)
+
+### Features
+
+* Essentials: Add addon-controls ([#11285](https://github.com/storybookjs/storybook/pull/11285))
+
+### Bug Fixes
+
+* Addon-docs markdown tables right align support ([#11280](https://github.com/storybookjs/storybook/pull/11280))
+
+### Maintenance
+
+* Addon-docs: Simplify argType inference ([#11284](https://github.com/storybookjs/storybook/pull/11284))
+
+## 6.0.0-beta.34 (June 23, 2020)
+
+### Features
+
+- Addon-backgrounds: Allow gradients in story preview ([#11265](https://github.com/storybookjs/storybook/pull/11265))
+
+### Bug Fixes
+
+- Core: Fix invalid glob warning for absolute paths ([#11247](https://github.com/storybookjs/storybook/pull/11247))
+
+### Maintenance
+
+- UI: Replace document.execCommand with navigator.clipboard ([#11251](https://github.com/storybookjs/storybook/pull/11251))
+- ArgsTable: Updated Boolean control ([#11263](https://github.com/storybookjs/storybook/pull/11263))
+- Core; Preserve watch output when running dev mode ([#11150](https://github.com/storybookjs/storybook/pull/11150))
+
+### Dependency Upgrades
+
+- Bump lint-staged from 10.2.6 to 10.2.10 ([#11187](https://github.com/storybookjs/storybook/pull/11187))
+
 ## 6.0.0-beta.33 (June 22, 2020)
 
 ### Features

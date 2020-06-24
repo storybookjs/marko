@@ -176,13 +176,11 @@ export const Table = styled.table<{}>(withReset, withMargin, ({ theme }) => ({
   '& tr th': {
     fontWeight: 'bold',
     border: `1px solid ${theme.appBorderColor}`,
-    textAlign: 'left',
     margin: 0,
     padding: '6px 13px',
   },
   '& tr td': {
     border: `1px solid ${theme.appBorderColor}`,
-    textAlign: 'left',
     margin: 0,
     padding: '6px 13px',
   },
