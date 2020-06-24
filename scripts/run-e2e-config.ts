@@ -120,7 +120,8 @@ export const riot: Parameters = {
 export const sfcVue: Parameters = {
   name: 'sfcVue',
   version: 'latest',
-  generator: fromDeps('vue', 'vue-loader', 'vue-template-compiler'),
+  // vue loader relased beta under latest tag. Remove when back to normal
+  generator: fromDeps('vue', 'vue-loader@^15.x', 'vue-template-compiler'),
   additionalDeps: ['react', 'react-dom'],
 };
 
