@@ -16,11 +16,11 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
   refs,
   story,
   scale,
-  viewMode,
+  viewMode = 'story',
   refId,
   queryParams,
   baseUrl,
-  storyId,
+  storyId = '*',
 }) => {
   const stringifiedQueryParams = stringifyQueryParams(queryParams);
   const active = getActive(refId);

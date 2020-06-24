@@ -264,7 +264,7 @@ export const init: ModuleFn = ({
       const { source }: { source: string } = this;
       const [sourceType] = getSourceType(source);
 
-      if (sourceType === 'local') {
+      if (sourceType === 'local' && storyId && viewMode) {
         navigate(`/${viewMode}/${storyId}`);
       }
     });
