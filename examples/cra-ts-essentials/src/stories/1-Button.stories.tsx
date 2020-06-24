@@ -7,7 +7,7 @@ export default {
   argTypes: { onClick: { action: 'clicked' } },
 };
 
-const ButtonStory = (args) => <Button {...args} />;
+const ButtonStory = (args: any) => <Button {...args} />;
 
 export const Text = ButtonStory.bind({});
 Text.args = {
