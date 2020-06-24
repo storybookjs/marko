@@ -195,6 +195,7 @@ const runCypress = async ({ name, version }: Options, location: string, open: bo
     logger.info(`🎉 Storybook is working great with ${name} ${version}!`);
   } catch (e) {
     logger.error(`🚨 E2E tests fails`);
+    logger.info(`🥺 Storybook has some issues with ${name} ${version}!`);
     throw e;
   }
 };
