@@ -31,7 +31,9 @@ Collapsed.args = { ...Section.args, initialExpanded: false };
 export const Nested = () => (
   <SectionRow {...Section.args}>
     <SectionRow {...Subsection.args}>
-      <div>Some content</div>
+      <tr>
+        <td>Some content</td>
+      </tr>
     </SectionRow>
   </SectionRow>
 );
