@@ -13,7 +13,7 @@ export default {
   title: 'Docs/DocsPage',
   component: DocsPageWrapper,
   // The goal of this decorator is to mimic some CSS reset.
-  // Like Tailwind CSS does, for example.
+  // Like Tailwind CSS or Bulma do, for example.
   // https://github.com/tailwindcss/tailwindcss/blob/75e7c10232c95350c0e5fceeb45bd9e57f64b6e9/src/plugins/css/preflight.css#L50
   decorators: [
     (storyFn) => (
