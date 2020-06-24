@@ -308,6 +308,14 @@ describe('enhanceArgTypes', () => {
               "type": {
                 "name": "number"
               }
+            },
+            "foo": {
+              "control": {
+                "type": "number"
+              },
+              "type": {
+                "name": "number"
+              }
             }
           }
         `);
