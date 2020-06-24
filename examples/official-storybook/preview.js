@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import { isChromatic } from 'chromatic';
 import { addDecorator, addParameters } from '@storybook/react';
-import { Global, ThemeProvider, themes, createReset, convert } from '@storybook/theming';
+import { Global, ThemeProvider, themes, createReset, convert, styled } from '@storybook/theming';
 import { withCssResources } from '@storybook/addon-cssresources';
 import { DocsPage } from '@storybook/addon-docs/blocks';
 
@@ -37,12 +38,53 @@ const themeDecorator = (storyFn, { globalArgs: { theme } }) => {
 
 addDecorator(themeDecorator);
 
-addDecorator((storyFn) => (
-  <ThemeProvider theme={convert(themes.light)}>
-    <Global styles={createReset} />
-    {storyFn()}
-  </ThemeProvider>
-));
+const ThemeBlock = styled.div(
+  {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: '50vw',
+    width: '50vw',
+    height: '100vh',
+    bottom: 0,
+    overflow: 'auto',
+    padding: 10,
+  },
+  ({ theme }) => ({
+    background: theme.background.app,
+  }),
+  ({ side }) =>
+    side === 'left'
+      ? {
+          left: 0,
+          right: '50vw',
+        }
+      : {
+          right: 0,
+          left: '50vw',
+        }
+);
+
+addDecorator((storyFn) =>
+  isChromatic ? (
+    <Fragment>
+      <ThemeProvider theme={convert(themes.light)}>
+        <Global styles={createReset} />
+      </ThemeProvider>
+      <ThemeProvider theme={convert(themes.light)}>
+        <ThemeBlock side="left">{storyFn()}</ThemeBlock>
+      </ThemeProvider>
+      <ThemeProvider theme={convert(themes.dark)}>
+        <ThemeBlock side="right">{storyFn()}</ThemeBlock>
+      </ThemeProvider>
+    </Fragment>
+  ) : (
+    <ThemeProvider theme={convert(themes.light)}>
+      <Global styles={createReset} />
+      {storyFn()}
+    </ThemeProvider>
+  )
+);
 
 addParameters({
   a11y: {
