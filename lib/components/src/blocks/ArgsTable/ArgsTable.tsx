@@ -189,16 +189,16 @@ const groupRows = (rows: ArgType) => {
     if (category) {
       const section = sections.sections[category] || { ungrouped: [], subsections: {} };
       if (!subcategory) {
-        section.ungrouped.push(row);
+        section.ungrouped.push({ key, ...row });
       } else {
         const subsection = section.subsections[subcategory] || [];
-        subsection.push(row);
+        subsection.push({ key, ...row });
         section.subsections[subcategory] = subsection;
       }
       sections.sections[category] = section;
     } else if (subcategory) {
       const subsection = sections.ungroupedSubsections[subcategory] || [];
-      subsection.push(row);
+      subsection.push({ key, ...row });
       sections.ungroupedSubsections[subcategory] = subsection;
     } else {
       sections.ungrouped.push({ key, ...row });
@@ -227,7 +227,6 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
   const { rows, args, updateArgs, compact, inAddonPanel } = props as ArgsTableRowProps;
 
   const groups = groupRows(rows);
-  console.log(groups);
 
   if (
     groups.ungrouped.length === 0 &&

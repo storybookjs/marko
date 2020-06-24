@@ -1,6 +1,8 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
+import { styled } from '@storybook/theming';
 import { ArgsTable, ArgsTableError } from './ArgsTable';
+import { NoControlsWarning } from './NoControlsWarning';
 import * as ArgRow from './ArgRow.stories';
 
 export default {
@@ -36,11 +38,29 @@ Compact.args = {
   compact: true,
 };
 
-export const inAddonPanel = Story.bind({});
-inAddonPanel.args = {
+const AddonPanelLayout = styled.div(({ theme }) => ({
+  fontSize: theme.typography.size.s2 - 1,
+  background: theme.background.content,
+}));
+
+export const InAddonPanel = Story.bind({});
+InAddonPanel.args = {
   ...Normal.args,
   inAddonPanel: true,
 };
+InAddonPanel.decorators = [(storyFn) => <AddonPanelLayout>{storyFn()}</AddonPanelLayout>];
+
+export const InAddonPanelWithWarning = (args) => (
+  <>
+    <NoControlsWarning />
+    <ArgsTable {...args} />
+  </>
+);
+InAddonPanelWithWarning.args = {
+  ...InAddonPanel.args,
+  updateArgs: null,
+};
+InAddonPanelWithWarning.decorators = InAddonPanel.decorators;
 
 export const Sections = Story.bind({});
 Sections.args = {
