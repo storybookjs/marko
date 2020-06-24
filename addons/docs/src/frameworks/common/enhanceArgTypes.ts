@@ -4,13 +4,6 @@ import { inferArgTypes } from './inferArgTypes';
 import { inferControls } from './inferControls';
 import { normalizeArgTypes } from './normalizeArgTypes';
 
-const isSubset = (kind: string, subset: object, superset: object) => {
-  const keys = Object.keys(subset);
-  // eslint-disable-next-line no-prototype-builtins
-  const overlap = keys.filter((key) => superset.hasOwnProperty(key));
-  return overlap.length === keys.length;
-};
-
 export const enhanceArgTypes: ArgTypesEnhancer = (context) => {
   const { component, argTypes: userArgTypes = {}, docs = {}, args = {} } = context.parameters;
   const { extractArgTypes } = docs;
