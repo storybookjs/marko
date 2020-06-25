@@ -24,13 +24,11 @@ const Label = styled.label(({ theme }) => ({
     border: 'none',
     background: 'transparent',
     cursor: 'pointer',
+    borderRadius: '3em',
 
     '&:focus': {
       outline: 'none',
-
-      '& ~ span': {
-        boxShadow: `${theme.color.secondary} 0 0 0 1px inset !important`,
-      },
+      boxShadow: `${theme.color.secondary} 0 0 0 1px inset !important`,
     },
   },
 
@@ -82,7 +80,7 @@ const parse = (value: string | null) => value === 'true';
 
 export type BooleanProps = ControlProps<BooleanValue> & BooleanConfig;
 export const BooleanControl: FC<BooleanProps> = ({ name, value, onChange }) => (
-  <Label htmlFor={name}>
+  <Label htmlFor={name} title={value ? 'Change to false' : 'Change to true'}>
     <input
       id={name}
       name={name}
