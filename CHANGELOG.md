@@ -1,16 +1,32 @@
+## 6.0.0-beta.36 (June 25, 2020)
+
+### Features
+
+- Composition: Allow refs versions in config ([#11294](https://github.com/storybookjs/storybook/pull/11294))
+
+### Bug Fixes
+
+- CLI: Fix docs & essentials version on `sb@next init` ([#11303](https://github.com/storybookjs/storybook/pull/11303))
+- Composition: Fix list of versions missing current version ([#11259](https://github.com/storybookjs/storybook/pull/11259))
+- Composition: Fix undefined/undefined in url on init ([#11293](https://github.com/storybookjs/storybook/pull/11293))
+
+### Maintenance
+
+- Essentials example: Fix typescript error ([#11305](https://github.com/storybookjs/storybook/pull/11305))
+
 ## 6.0.0-beta.35 (June 24, 2020)
 
 ### Features
 
-* Essentials: Add addon-controls ([#11285](https://github.com/storybookjs/storybook/pull/11285))
+- Essentials: Add addon-controls ([#11285](https://github.com/storybookjs/storybook/pull/11285))
 
 ### Bug Fixes
 
-* Addon-docs markdown tables right align support ([#11280](https://github.com/storybookjs/storybook/pull/11280))
+- Addon-docs markdown tables right align support ([#11280](https://github.com/storybookjs/storybook/pull/11280))
 
 ### Maintenance
 
-* Addon-docs: Simplify argType inference ([#11284](https://github.com/storybookjs/storybook/pull/11284))
+- Addon-docs: Simplify argType inference ([#11284](https://github.com/storybookjs/storybook/pull/11284))
 
 ## 6.0.0-beta.34 (June 23, 2020)
 
