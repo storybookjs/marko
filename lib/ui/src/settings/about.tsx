@@ -123,89 +123,68 @@ const AboutScreen: FunctionComponent<{
 
   return (
     <GlobalHotKeys handlers={{ CLOSE: onClose }} keyMap={keyMap}>
-      <Tabs
-        absolute
-        selected="about"
-        actions={{ onSelect: () => {} }}
-        tools={
+      <Container>
+        <Header>
+          <StorybookIcon />
+          Storybook {current.version}
+        </Header>
+
+        {updateMessage}
+
+        {latest ? (
           <Fragment>
-            <IconButton
-              onClick={(e: SyntheticEvent) => {
-                e.preventDefault();
-                return onClose();
-              }}
-              title="close"
-            >
-              <Icons icon="close" />
-            </IconButton>
+            <Subheader>
+              <Subheading>{latest.version} Changelog</Subheading>
+              <SubheadingLink
+                secondary
+                href="https://github.com/storybookjs/storybook/blob/next/CHANGELOG.md"
+                withArrow
+                cancel={false}
+                target="_blank"
+              >
+                Read full changelog
+              </SubheadingLink>
+            </Subheader>
+            <DocumentWrapper>
+              <Markdown>{latest.info.plain}</Markdown>
+            </DocumentWrapper>
           </Fragment>
-        }
-      >
-        <div id="about" title="About">
-          <Container>
-            <Header>
-              <StorybookIcon />
-              Storybook {current.version}
-            </Header>
+        ) : (
+          <ErrorMessage>
+            <Link
+              href="https://github.com/storybookjs/storybook/releases"
+              target="_blank"
+              withArrow
+              secondary
+              cancel={false}
+            >
+              Check Storybook's release history
+            </Link>
+          </ErrorMessage>
+        )}
 
-            {updateMessage}
+        {canUpdate && (
+          <Upgrade>
+            <DocumentWrapper>
+              <p>
+                <b>Upgrade all Storybook packages to latest:</b>
+              </p>
+              <SyntaxHighlighter language="bash" copyable padded bordered>
+                npx npm-check-updates '/storybook/' -u && npm install
+              </SyntaxHighlighter>
+              <p>
+                Alternatively, if you're using yarn run the following command, and check all
+                Storybook related packages:
+              </p>
+              <SyntaxHighlighter language="bash" copyable padded bordered>
+                yarn upgrade-interactive --latest
+              </SyntaxHighlighter>
+            </DocumentWrapper>
+          </Upgrade>
+        )}
 
-            {latest ? (
-              <Fragment>
-                <Subheader>
-                  <Subheading>{latest.version} Changelog</Subheading>
-                  <SubheadingLink
-                    secondary
-                    href="https://github.com/storybookjs/storybook/blob/next/CHANGELOG.md"
-                    withArrow
-                    cancel={false}
-                    target="_blank"
-                  >
-                    Read full changelog
-                  </SubheadingLink>
-                </Subheader>
-                <DocumentWrapper>
-                  <Markdown>{latest.info.plain}</Markdown>
-                </DocumentWrapper>
-              </Fragment>
-            ) : (
-              <ErrorMessage>
-                <Link
-                  href="https://github.com/storybookjs/storybook/releases"
-                  target="_blank"
-                  withArrow
-                  secondary
-                  cancel={false}
-                >
-                  Check Storybook's release history
-                </Link>
-              </ErrorMessage>
-            )}
-
-            {canUpdate && (
-              <Upgrade>
-                <DocumentWrapper>
-                  <p>
-                    <b>Upgrade all Storybook packages to latest:</b>
-                  </p>
-                  <SyntaxHighlighter language="bash" copyable padded bordered>
-                    npx npm-check-updates '/storybook/' -u && npm install
-                  </SyntaxHighlighter>
-                  <p>
-                    Alternatively, if you're using yarn run the following command, and check all
-                    Storybook related packages:
-                  </p>
-                  <SyntaxHighlighter language="bash" copyable padded bordered>
-                    yarn upgrade-interactive --latest
-                  </SyntaxHighlighter>
-                </DocumentWrapper>
-              </Upgrade>
-            )}
-
-            <SettingsFooter />
-          </Container>
-        </div>
-      </Tabs>
+        <SettingsFooter />
+      </Container>
     </GlobalHotKeys>
   );
 };

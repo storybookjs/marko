@@ -29,6 +29,8 @@ import * as provider from './modules/provider';
 import * as addons from './modules/addons';
 import * as channel from './modules/channel';
 import * as notifications from './modules/notifications';
+import * as settings from './modules/settings';
+import * as releaseNotes from './modules/release-notes';
 import * as stories from './modules/stories';
 import * as refs from './modules/refs';
 import * as layout from './modules/layout';
@@ -187,6 +189,8 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
       addons,
       layout,
       notifications,
+      settings,
+      releaseNotes,
       shortcuts,
       stories,
       refs,

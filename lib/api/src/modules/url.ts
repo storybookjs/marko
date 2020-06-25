@@ -150,10 +150,14 @@ export const init: ModuleFn = ({ store, navigate, state, provider, fullAPI, ...r
     },
   };
 
-  const initModule = () => {
+  const initModule = async () => {
     fullAPI.on(NAVIGATE_URL, (url: string, options: { [k: string]: any }) => {
       fullAPI.navigateUrl(url, options);
     });
+
+    if (await fullAPI.showReleaseNotesOnLaunch()) {
+      navigate('/settings/release-notes');
+    }
   };
 
   return {

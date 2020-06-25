@@ -20,17 +20,15 @@ class NotificationClearer extends Component<{ api: API; notificationId: string }
 }
 
 export default () => (
-  <Route path="about">
-    <Consumer>
-      {({ api }: Combo) => (
-        <NotificationClearer api={api} notificationId="update">
-          <AboutScreen
-            current={api.getCurrentVersion()}
-            latest={api.getLatestVersion()}
-            onClose={() => history.back()}
-          />
-        </NotificationClearer>
-      )}
-    </Consumer>
-  </Route>
+  <Consumer>
+    {({ api }: Combo) => (
+      <NotificationClearer api={api} notificationId="update">
+        <AboutScreen
+          current={api.getCurrentVersion()}
+          latest={api.getLatestVersion()}
+          onClose={() => history.back()}
+        />
+      </NotificationClearer>
+    )}
+  </Consumer>
 );

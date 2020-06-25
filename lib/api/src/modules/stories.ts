@@ -46,6 +46,7 @@ export interface SubState {
 export interface SubAPI {
   storyId: typeof toId;
   resolveStory: (storyId: StoryId, refsId?: string) => Story | Group | Root;
+  selectFirstStory: () => void;
   selectStory: (
     kindOrId: string,
     story?: string,
@@ -223,6 +224,20 @@ export const init: ModuleFn = ({
         storiesFailed: error,
       });
     },
+    selectFirstStory: () => {
+      const { storiesHash } = store.getState();
+      const lookupList = Object.keys(storiesHash).filter(
+        (k) => !(storiesHash[k].children || Array.isArray(storiesHash[k]))
+      );
+      const firstStory = lookupList[0];
+
+      if (firstStory) {
+        api.selectStory(firstStory);
+        return;
+      }
+
+      navigate('/story/*');
+    },
     selectStory: (kindOrId, story = undefined, options = {}) => {
       const { ref, viewMode: viewModeFromArgs } = options;
       const {
@@ -301,9 +316,14 @@ export const init: ModuleFn = ({
     // Later when we change story via the manager (or SELECT_STORY below), we'll already be at the
     // correct path before CURRENT_STORY_WAS_SET is emitted, so this is less important (the navigate is a no-op)
     // Note this is the case for refs also.
-    fullAPI.on(CURRENT_STORY_WAS_SET, function handleCurrentStoryWasSet({ storyId, viewMode }) {
+    fullAPI.on(CURRENT_STORY_WAS_SET, async function handleCurrentStoryWasSet({
+      storyId,
+      viewMode,
+    }) {
       const { source }: { source: string } = this;
       const [sourceType] = getSourceType(source);
+
+      if (fullAPI.isSettingsScreenActive()) return;
 
       if (sourceType === 'local' && storyId && viewMode) {
         navigate(`/${viewMode}/${storyId}`);
