@@ -123,16 +123,3 @@ export const isEmpty = () => (
 export const withRefs = () => (
   <Sidebar storiesConfigured menu={menu} stories={stories} isLoading refs={refs} />
 );
-
-export const darkWithRefs = () => (
-  <ThemeProvider theme={ensureTheme(themes.dark)}>
-    <Sidebar storiesConfigured menu={menu} stories={stories} isLoading refs={refs} />
-  </ThemeProvider>
-);
-
-darkWithRefs.parameters = {
-  backgrounds: {
-    default: 'dark',
-    values: [{ name: 'dark', value: '#222222', default: true }],
-  },
-};

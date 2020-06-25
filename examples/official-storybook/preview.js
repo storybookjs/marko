@@ -1,7 +1,15 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { isChromatic } from 'chromatic';
 import { addDecorator, addParameters } from '@storybook/react';
-import { Global, ThemeProvider, themes, createReset, convert, styled } from '@storybook/theming';
+import {
+  Global,
+  ThemeProvider,
+  themes,
+  createReset,
+  convert,
+  styled,
+  useTheme,
+} from '@storybook/theming';
 import { withCssResources } from '@storybook/addon-cssresources';
 import { DocsPage } from '@storybook/addon-docs/blocks';
 
@@ -25,18 +33,6 @@ addHeadWarning('preview-head-not-loaded', 'Preview head not loaded');
 addHeadWarning('dotenv-file-not-loaded', 'Dotenv file not loaded');
 
 addDecorator(withCssResources);
-
-const themeDecorator = (storyFn, { globalArgs: { theme } }) => {
-  const selectedTheme = theme === 'dark' ? themes.dark : themes.light;
-  return (
-    <ThemeProvider theme={convert(selectedTheme)}>
-      <Global styles={createReset} />
-      {storyFn()}
-    </ThemeProvider>
-  );
-};
-
-addDecorator(themeDecorator);
 
 const ThemeBlock = styled.div(
   {
@@ -66,26 +62,74 @@ const ThemeBlock = styled.div(
         }
 );
 
-addDecorator((storyFn) =>
-  isChromatic() ? (
-    <Fragment>
-      <ThemeProvider theme={convert(themes.light)}>
-        <Global styles={createReset} />
-      </ThemeProvider>
-      <ThemeProvider theme={convert(themes.light)}>
-        <ThemeBlock side="left">{storyFn()}</ThemeBlock>
-      </ThemeProvider>
-      <ThemeProvider theme={convert(themes.dark)}>
-        <ThemeBlock side="right">{storyFn()}</ThemeBlock>
-      </ThemeProvider>
-    </Fragment>
-  ) : (
-    <ThemeProvider theme={convert(themes.light)}>
-      <Global styles={createReset} />
-      {storyFn()}
-    </ThemeProvider>
-  )
+const ThemeStack = styled.div(
+  {
+    position: 'relative',
+    minHeight: 'calc(50vh - 15px)',
+  },
+  ({ theme }) => ({
+    background: theme.background.app,
+    color: theme.color.defaultText,
+  })
 );
+
+const ThemedSetRoot = () => {
+  const theme = useTheme();
+
+  useEffect(() => {
+    document.body.style.background = theme.background.app;
+    document.body.style.color = theme.defaultText;
+    return () => {
+      //
+    };
+  });
+
+  return null;
+};
+
+addDecorator((storyFn, { globalArgs: { theme = 'light' } }) => {
+  switch (theme) {
+    case 'side-by-side': {
+      return (
+        <Fragment>
+          <ThemeProvider theme={convert(themes.light)}>
+            <Global styles={createReset} />
+          </ThemeProvider>
+          <ThemeProvider theme={convert(themes.light)}>
+            <ThemeBlock side="left">{storyFn()}</ThemeBlock>
+          </ThemeProvider>
+          <ThemeProvider theme={convert(themes.dark)}>
+            <ThemeBlock side="right">{storyFn()}</ThemeBlock>
+          </ThemeProvider>
+        </Fragment>
+      );
+    }
+    case 'stacked': {
+      return (
+        <Fragment>
+          <ThemeProvider theme={convert(themes.light)}>
+            <Global styles={createReset} />
+          </ThemeProvider>
+          <ThemeProvider theme={convert(themes.light)}>
+            <ThemeStack side="left">{storyFn()}</ThemeStack>
+          </ThemeProvider>
+          <ThemeProvider theme={convert(themes.dark)}>
+            <ThemeStack side="right">{storyFn()}</ThemeStack>
+          </ThemeProvider>
+        </Fragment>
+      );
+    }
+    default: {
+      return (
+        <ThemeProvider theme={convert(themes[theme])}>
+          <Global styles={createReset} />
+          <ThemedSetRoot />
+          {storyFn()}
+        </ThemeProvider>
+      );
+    }
+  }
+});
 
 addParameters({
   a11y: {
@@ -98,14 +142,6 @@ addParameters({
   options: {
     storySort: (a, b) =>
       a[1].kind === b[1].kind ? 0 : a[1].id.localeCompare(b[1].id, undefined, { numeric: true }),
-  },
-  backgrounds: {
-    default: 'storybook app',
-    values: [
-      { name: 'storybook app', value: themes.light.appBg },
-      { name: 'light', value: '#eeeeee' },
-      { name: 'dark', value: '#222222' },
-    ],
   },
   docs: {
     theme: themes.light,
@@ -127,13 +163,14 @@ export const globalArgTypes = {
   theme: {
     name: 'Theme',
     description: 'Global theme for components',
-    defaultValue: null,
+    defaultValue: isChromatic() ? 'stacked' : 'light',
     toolbar: {
       icon: 'circlehollow',
-      // items: ['light', 'dark'],
       items: [
         { value: 'light', icon: 'circlehollow', title: 'light' },
         { value: 'dark', icon: 'circle', title: 'dark' },
+        { value: 'side-by-side', icon: 'sidebar', title: 'side by side' },
+        { value: 'stacked', icon: 'bottombar', title: 'stacked' },
       ],
     },
   },
