@@ -102,10 +102,10 @@ const Version = styled.div({
 });
 
 const CurrentVersion: FunctionComponent<CurrentVersionProps> = ({ url, versions }) => {
-  const currentVersionId = useMemo(() => Object.entries(versions).find(([k, v]) => v === url)[0], [
-    url,
-    versions,
-  ]);
+  const currentVersionId = useMemo(() => {
+    const c = Object.entries(versions).find(([k, v]) => v === url);
+    return c && c[0] ? c[0] : 'current';
+  }, [url, versions]);
 
   return (
     <Version>
