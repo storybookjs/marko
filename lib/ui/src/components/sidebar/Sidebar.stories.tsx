@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { ThemeProvider, themes, ensure as ensureTheme } from '@storybook/theming';
 import Sidebar from './Sidebar';
 import { standardData as standardHeaderData } from './Heading.stories';
 import { mockDataset } from './mockdata';

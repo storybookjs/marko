@@ -1,3 +1,4 @@
+import { document } from 'global';
 import React, { Fragment, useEffect } from 'react';
 import { isChromatic } from 'chromatic';
 import { addDecorator, addParameters } from '@storybook/react';
