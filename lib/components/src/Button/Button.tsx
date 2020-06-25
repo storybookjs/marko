@@ -114,7 +114,7 @@ const ButtonWrapper = styled.button<ButtonWrapperProps>(
         }
       : {};
   },
-  ({ theme, tertiary, inForm }) =>
+  ({ theme, tertiary, inForm, small }) =>
     tertiary
       ? {
           background:
@@ -124,6 +124,8 @@ const ButtonWrapper = styled.button<ButtonWrapperProps>(
           color: theme.input.color,
           boxShadow: `${theme.input.border} 0 0 0 1px inset`,
           borderRadius: theme.input.borderRadius,
+
+          ...(inForm && small ? { padding: '10px 16px' } : {}),
 
           '&:hover': {
             background:

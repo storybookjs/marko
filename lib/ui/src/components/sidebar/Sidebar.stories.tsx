@@ -68,6 +68,14 @@ const refs: Record<string, RefType> = {
     stories,
     versions: { '1.0.0': 'https://example.com/v1', '2.0.0': 'https://example.com' },
   },
+  versionsMissingCurrent: {
+    id: 'versions_missing_current',
+    title: 'It has versions',
+    url: 'https://example.com',
+    type: 'lazy',
+    stories,
+    versions: { '1.0.0': 'https://example.com/v1', '2.0.0': 'https://example.com/v2' },
+  },
   error: {
     id: 'error',
     title: 'This has problems',
