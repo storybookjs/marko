@@ -171,7 +171,7 @@ In your `.storybook/preview.ts`:
 import { addDecorator } from '@storybook/angular';
 import { withTests } from '@storybook/addon-jest';
 
-import * as results from '../.jest-test-results.json';
+import results from '../.jest-test-results.json';
 
 addDecorator(
   withTests({

@@ -1,4 +1,6 @@
 /* eslint no-underscore-dangle: 0 */
+import deprecate from 'util-deprecate';
+import dedent from 'ts-dedent';
 import { logger } from '@storybook/client-logger';
 import { StoryFn, Parameters, DecorateStoryFunction } from '@storybook/addons';
 import { toId } from '@storybook/csf';
@@ -65,12 +67,19 @@ export default class ClientApi {
     singleton = this;
   }
 
-  setAddon = (addon: any) => {
-    this._addons = {
-      ...this._addons,
-      ...addon,
-    };
-  };
+  setAddon = deprecate(
+    (addon: any) => {
+      this._addons = {
+        ...this._addons,
+        ...addon,
+      };
+    },
+    dedent`
+      setAddon is deprecated and will be removed in Storybook 7.0
+
+      https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-setaddon
+    `
+  );
 
   getSeparators = () => {
     const { hierarchySeparator, hierarchyRootSeparator, showRoots } =

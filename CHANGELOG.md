@@ -1,3 +1,18 @@
+## 6.0.0-beta.37 (June 26, 2020)
+
+### Breaking Changes
+
+- Core: Deprecate `setAddon` from `storiesOf` API ([#11322](https://github.com/storybookjs/storybook/pull/11322))
+
+### Bug Fixes
+
+- Revert "Core: Fix source-map strategy for production" ([#11320](https://github.com/storybookjs/storybook/pull/11320))
+- Core: Set viewMode to story when navating from non story pages ([#11317](https://github.com/storybookjs/storybook/pull/11317))
+
+### Dependency Upgrades
+
+- Bump react-textarea-autosize to 8.1.1 ([#11319](https://github.com/storybookjs/storybook/pull/11319))
+
 ## 6.0.0-beta.36 (June 25, 2020)
 
 ### Features
