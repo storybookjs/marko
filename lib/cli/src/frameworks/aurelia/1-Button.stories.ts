@@ -18,13 +18,13 @@ const ButtonStory = (args) => ({
 
 export const Text = ButtonStory.bind({});
 Text.args = {
-  children: 'Button',
+  text: 'Button',
   onClick: action('onClick'),
 };
 
 export const Emoji = ButtonStory.bind({});
 Emoji.args = {
-  children: '😀 😎 👍 💯',
+  text: '😀 😎 👍 💯',
 };
 
 export const TextWithAction = () => ({
