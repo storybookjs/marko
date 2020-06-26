@@ -25,6 +25,7 @@
   - [Story Store immutable outside of configuration](#story-store-immutable-outside-of-configuration)
   - [Improved story source handling](#improved-story-source-handling)
   - [6.0 Addon API changes](#60-addon-api-changes)
+    - [Deprecated setAddon](#deprecated-setaddon)
     - [Actions addon uses parameters](#actions-addon-uses-parameters)
     - [Removed action decorator APIs](#removed-action-decorator-apis)
     - [Removed withA11y decorator](#removed-witha11y-decorator)
@@ -489,12 +490,18 @@ The MDX analog:
 
 ### 6.0 Addon API changes
 
+#### Deprecated setAddon
+
+We've deprecated the `setAddon` method of the `storiesOf` API and plan to remove it in 7.0.
+
+Since early versions, Storybook shipped with a `setAddon` API, which allows you to extend `storiesOf` with arbitrary code. We've removed this from all core addons long ago and recommend writing stories in [Component Story Format](https://medium.com/storybookjs/component-story-format-66f4c32366df) rather than using the internal Storybook API.
+
 #### Actions addon uses parameters
 
 Leveraging the new preset `@storybook/addon-actions` uses parameters to pass action options. If you previously had:
 
 ```js
-import { withactions } from `@storybook/addon-actions`;
+import { withActions } from `@storybook/addon-actions`;
 
 export StoryOne = ...;
 StoryOne.story = {
