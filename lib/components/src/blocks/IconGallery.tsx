@@ -7,6 +7,7 @@ import { getBlockBackgroundStyle } from './BlockBackgroundStyles';
 const ItemLabel = styled.div(({ theme }) => ({
   fontFamily: theme.typography.fonts.base,
   fontSize: theme.typography.size.s2,
+  color: theme.color.defaultText,
   marginLeft: 10,
   lineHeight: 1.2,
 }));
