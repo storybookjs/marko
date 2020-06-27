@@ -1,4 +1,5 @@
 import React, { FC, Context, createContext, useEffect, useState } from 'react';
+import deepEqual from 'fast-deep-equal';
 import { addons } from '@storybook/addons';
 import { StoryId } from '@storybook/api';
 import { SNIPPET_RENDERED } from '../shared';
@@ -18,9 +19,9 @@ export const SourceContainer: FC<{}> = ({ children }) => {
   const channel = addons.getChannel();
 
   const sourcesRef = React.useRef<StorySources>();
-  const handleAddJSX = (id: StoryId, newJsx: SourceItem) => {
-    if (newJsx !== sources[id]) {
-      const newSources = { ...sourcesRef.current, [id]: newJsx };
+  const handleSnippetRendered = (id: StoryId, newItem: SourceItem) => {
+    if (newItem !== sources[id]) {
+      const newSources = { ...sourcesRef.current, [id]: newItem };
       sourcesRef.current = newSources;
     }
   };
@@ -28,15 +29,15 @@ export const SourceContainer: FC<{}> = ({ children }) => {
   // Bind this early (instead of inside `useEffect`), because the `SNIPPET_RENDERED` event
   // is triggered *during* the rendering process, not after. We have to use the ref
   // to ensure we don't end up calling setState outside the effect though.
-  channel.on(SNIPPET_RENDERED, handleAddJSX);
+  channel.on(SNIPPET_RENDERED, handleSnippetRendered);
 
   useEffect(() => {
-    if (sourcesRef.current) {
+    if (!deepEqual(sources, sourcesRef.current)) {
       setSources(sourcesRef.current);
     }
 
-    return () => channel.off(SNIPPET_RENDERED, handleAddJSX);
-  }, [sources, setSources]);
+    return () => channel.off(SNIPPET_RENDERED, handleSnippetRendered);
+  });
 
   return <SourceContext.Provider value={{ sources }}>{children}</SourceContext.Provider>;
 };
