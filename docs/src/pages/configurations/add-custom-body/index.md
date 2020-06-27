@@ -25,4 +25,4 @@ That’s it. Storybook will inject these tags to the html body. It is also possi
 
 > **Important**
 >
-> Storybook will inject these tags to the iframe where your components are rendered. So, these won’t be loaded into the main Storybook UI.
+> Storybook will inject these tags to the iframe where your components are rendered. So, these won’t be loaded into the main Storybook UI. Stories are rendered into a div with ID `#main`, regardless of what custom content is added to the page.
