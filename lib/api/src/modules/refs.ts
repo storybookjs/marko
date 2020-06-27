@@ -108,8 +108,8 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
       return Object.values(refs).find(({ url }) => url.match(source));
     },
     changeRefVersion: (id, url) => {
-      const previous = api.getRefs()[id];
-      const ref = { ...previous, stories: {}, url } as SetRefData;
+      const { versions, title } = api.getRefs()[id];
+      const ref = { id, url, versions, title, stories: {} } as SetRefData;
 
       api.checkRef(ref);
     },
@@ -192,6 +192,7 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
         id,
         url,
         ...loadedData,
+        error: loadedData.error,
         type: !loadedData.stories ? 'auto-inject' : 'lazy',
       });
     },

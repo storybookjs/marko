@@ -212,7 +212,7 @@ export default class StoryStore {
       }
     }
 
-    // If we didn't find a story matching the speficier, we always want to emit CURRENT_STORY_WAS_SET anyway
+    // If we didn't find a story matching the specifier, we always want to emit CURRENT_STORY_WAS_SET anyway
     if (!foundStory && this._channel) {
       this._channel.emit(Events.CURRENT_STORY_WAS_SET, this._selection);
     }
