@@ -35,7 +35,7 @@ const applyBeforeRender = (domString: string, options: JSXOptions) => {
 };
 
 /** Apply the users parameters and render the jsx for a story */
-const renderJsx = (code: React.ReactElement, options: Required<JSXOptions>) => {
+export const renderJsx = (code: React.ReactElement, options: JSXOptions) => {
   let renderedJSX = code;
   let Type = renderedJSX.type;
 
@@ -73,7 +73,7 @@ const renderJsx = (code: React.ReactElement, options: Required<JSXOptions>) => {
     Type = renderedJSX.type;
   }
 
-  const ooo =
+  const opts =
     typeof options.displayName === 'string'
       ? {
           ...options,
@@ -82,8 +82,8 @@ const renderJsx = (code: React.ReactElement, options: Required<JSXOptions>) => {
         }
       : options;
 
-  return React.Children.map(code, (c) => {
-    let string = applyBeforeRender(reactElementToJSXString(c, ooo as Options), options);
+  const result = React.Children.map(code, (c) => {
+    let string = applyBeforeRender(reactElementToJSXString(c, opts as Options), options);
     const matches = string.match(/\S+=\\"([^"]*)\\"/g);
 
     if (matches) {
@@ -94,11 +94,13 @@ const renderJsx = (code: React.ReactElement, options: Required<JSXOptions>) => {
 
     return string;
   }).join('\n');
+
+  return result.replace(/function\s+noRefCheck\(\)\s+\{\}/, '() => {}');
 };
 
 const defaultOpts = {
   skip: 0,
-  showFunctions: true,
+  showFunctions: false,
   enableBeautify: true,
 };
 
@@ -121,7 +123,6 @@ export const jsxDecorator = (storyFn: any, context: StoryContext) => {
     }
   } else {
     const rendered = renderJsx(story, options);
-
     if (rendered) {
       jsx = rendered;
     }

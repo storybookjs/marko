@@ -13,10 +13,8 @@ export interface SourceContextProps {
 
 export const SourceContext: Context<SourceContextProps> = createContext({});
 
-const ADD_JSX = 'kadira/jsx/add_jsx';
-
 export const SourceContainer: FC<{}> = ({ children }) => {
-  const [sources, setStorySources] = useState<StorySources>({});
+  const [sources, setSources] = useState<StorySources>({});
   const channel = addons.getChannel();
 
   const sourcesRef = React.useRef<StorySources>();
@@ -27,18 +25,18 @@ export const SourceContainer: FC<{}> = ({ children }) => {
     }
   };
 
-  // Bind this early (instead of inside `useEffect`), because the `ADD_JSX` event
+  // Bind this early (instead of inside `useEffect`), because the `SNIPPET_RENDERED` event
   // is triggered *during* the rendering process, not after. We have to use the ref
   // to ensure we don't end up calling setState outside the effect though.
   channel.on(SNIPPET_RENDERED, handleAddJSX);
 
   useEffect(() => {
     if (sourcesRef.current) {
-      setStorySources(sourcesRef.current);
+      setSources(sourcesRef.current);
     }
 
     return () => channel.off(SNIPPET_RENDERED, handleAddJSX);
-  }, [sources, setStorySources]);
+  }, [sources, setSources]);
 
   return <SourceContext.Provider value={{ sources }}>{children}</SourceContext.Provider>;
 };
