@@ -48,6 +48,7 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
     babelOptions,
     mdxBabelOptions,
     configureJSX = options.framework !== 'react', // if not user-specified
+    transcludeMarkdown = false,
     sourceLoaderOptions = {},
   } = options;
 
@@ -67,12 +68,32 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
       ]
     : [];
 
+  let rules = module.rules || [];
+  if (transcludeMarkdown) {
+    rules = [
+      ...rules.filter((rule: any) => rule.test.toString() !== '/\\.md$/'),
+      {
+        test: /\.md$/,
+        use: [
+          {
+            loader: require.resolve('babel-loader'),
+            options: createBabelOptions({ babelOptions, mdxBabelOptions, configureJSX }),
+          },
+          {
+            loader: require.resolve('@mdx-js/loader'),
+            options: mdxLoaderOptions,
+          },
+        ],
+      },
+    ];
+  }
+
   const result = {
     ...webpackConfig,
     module: {
       ...module,
       rules: [
-        ...(module.rules || []),
+        ...rules,
         {
           test: /\.js$/,
           include: new RegExp(`node_modules\\${path.sep}acorn-jsx`),
