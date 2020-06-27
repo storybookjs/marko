@@ -2,7 +2,7 @@ import React from 'react';
 import reactElementToJSXString, { Options } from 'react-element-to-jsx-string';
 import { html as beautifyHTML } from 'js-beautify';
 
-import { addons, StoryContext, StoryFn, StoryApi, ClientStoryApi } from '@storybook/addons';
+import { addons, StoryContext } from '@storybook/addons';
 import { logger } from '@storybook/client-logger';
 
 import { SNIPPET_RENDERED } from '../../shared';
@@ -36,6 +36,11 @@ const applyBeforeRender = (domString: string, options: JSXOptions) => {
 
 /** Apply the users parameters and render the jsx for a story */
 export const renderJsx = (code: React.ReactElement, options: JSXOptions) => {
+  if (typeof code === 'undefined') {
+    logger.warn('Too many skip or undefined component');
+    return null;
+  }
+
   let renderedJSX = code;
   let Type = renderedJSX.type;
 
@@ -61,11 +66,6 @@ export const renderJsx = (code: React.ReactElement, options: JSXOptions) => {
     } else {
       renderedJSX = renderedJSX.props.children;
     }
-  }
-
-  if (typeof code === 'undefined') {
-    logger.warn('Too many skip or undefined component');
-    return null;
   }
 
   while (typeof Type === 'function' && Type.name === '') {

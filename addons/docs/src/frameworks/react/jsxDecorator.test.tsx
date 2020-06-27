@@ -17,6 +17,7 @@ describe('renderJsx', () => {
     `);
   });
   it('functions', () => {
+    // eslint-disable-next-line no-console
     const onClick = () => console.log('onClick');
     expect(renderJsx(<div onClick={onClick}>hello</div>, {})).toMatchInlineSnapshot(`
       <div onClick={() => {}}>
