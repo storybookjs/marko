@@ -78,4 +78,39 @@ describe('NPM Proxy', () => {
       await expect(npmProxy.latestVersion('@storybook/addons')).rejects.toThrow();
     });
   });
+
+  describe('getVersion', () => {
+    it('with a Storybook package listed in versions.json it returns the version', async () => {
+      // eslint-disable-next-line global-require
+      const storybookAngularVersion = require('../../versions.json')['@storybook/angular'];
+      const executeCommandSpy = jest.spyOn(npmProxy, 'executeCommand').mockReturnValue('"5.3.19"');
+
+      const version = await npmProxy.getVersion('@storybook/angular');
+
+      expect(executeCommandSpy).toHaveBeenCalledWith('npm', [
+        'info',
+        '@storybook/angular',
+        'version',
+        '--json',
+      ]);
+      expect(version).toEqual(`^${storybookAngularVersion}`);
+    });
+
+    it('with a Storybook package not listed in versions.json it returns the latest version', async () => {
+      const packageVersion = '5.3.19';
+      const executeCommandSpy = jest
+        .spyOn(npmProxy, 'executeCommand')
+        .mockReturnValue(`"${packageVersion}"`);
+
+      const version = await npmProxy.getVersion('@storybook/react-native');
+
+      expect(executeCommandSpy).toHaveBeenCalledWith('npm', [
+        'info',
+        '@storybook/react-native',
+        'version',
+        '--json',
+      ]);
+      expect(version).toEqual(`^${packageVersion}`);
+    });
+  });
 });
