@@ -32,10 +32,10 @@
     "versions.json"
   ],
   "scripts": {
-    "prepare": "node ../../scripts/prepare.js && node -r esm ./scripts/generate-app-versions.js",
+    "prepare": "node ../../scripts/prepare.js && node -r esm ./scripts/generate-sb-packages-versions.js",
     "test": "cd test && ./run_tests.sh",
     "test-yarn-2": "cd test && ./run_tests_yarn_2.sh",
-    "postversion": "node -r esm ./scripts/generate-app-versions.js"
+    "postversion": "node -r esm ./scripts/generate-sb-packages-versions.js"
   },
   "dependencies": {
     "@babel/core": "^7.9.6",
