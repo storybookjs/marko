@@ -247,7 +247,7 @@ Decorators are not only for story formatting, they are generally useful for any 
 
 Parameters are custom metadata for a story. Like decorators, they can also be hierarchically applied: globally, at the component level, or locally at the story level.
 
-Here's an example where we are annotating our stories with [Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) notes using parameters, to be displayed in the [Notes addon](https://github.com/storybookjs/storybook/tree/next/addons/notes).
+Here's an example where we are annotating our stories with [Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) notes using parameters, to be displayed in the [Notes addon](https://github.com/storybookjs/deprecated-addons/tree/master/addons/notes).
 
 We first apply some notes globally in the `.storybook/preview.js`.
 
