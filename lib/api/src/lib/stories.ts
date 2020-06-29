@@ -58,7 +58,6 @@ export interface Story {
   parameters?: {
     fileName: string;
     options: {
-      showRoots?: boolean;
       [optionName: string]: any;
     };
     docsOnly?: boolean;
@@ -77,7 +76,6 @@ export interface StoryInput {
   parameters: {
     fileName: string;
     options: {
-      showRoots?: boolean;
       [optionName: string]: any;
     };
     docsOnly?: boolean;

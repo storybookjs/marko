@@ -78,7 +78,6 @@ export type StorySortParameter = Comparator<any> | StorySortObjectParameter;
 
 export interface OptionsParameter extends Object {
   storySort?: StorySortParameter;
-  showRoots?: boolean;
   theme?: {
     base: string;
     brandTitle?: string;
