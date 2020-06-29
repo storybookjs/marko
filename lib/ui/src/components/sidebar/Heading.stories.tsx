@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThemeProvider, useTheme } from '@storybook/theming';
+import { ThemeProvider, useTheme, Theme } from '@storybook/theming';
 import { action } from '@storybook/addon-actions';
 
 import { Heading } from './Heading';
@@ -35,7 +35,7 @@ export const menuHighlighted = () => <Heading menuHighlighted menu={menuItems} /
 export const standardData = { menu: menuItems };
 
 export const standard = () => {
-  const theme = useTheme();
+  const theme = useTheme() as Theme;
   return (
     <ThemeProvider
       theme={{
@@ -53,7 +53,7 @@ export const standard = () => {
 };
 
 export const standardNoLink = () => {
-  const theme = useTheme();
+  const theme = useTheme() as Theme;
   return (
     <ThemeProvider
       theme={{
@@ -71,7 +71,7 @@ export const standardNoLink = () => {
 };
 
 export const linkAndText = () => {
-  const theme = useTheme();
+  const theme = useTheme() as Theme;
   return (
     <ThemeProvider
       theme={{
@@ -89,7 +89,7 @@ export const linkAndText = () => {
 };
 
 export const onlyText = () => {
-  const theme = useTheme();
+  const theme = useTheme() as Theme;
   return (
     <ThemeProvider
       theme={{
@@ -107,7 +107,7 @@ export const onlyText = () => {
 };
 
 export const longText = () => {
-  const theme = useTheme();
+  const theme = useTheme() as Theme;
   return (
     <ThemeProvider
       theme={{
@@ -125,7 +125,7 @@ export const longText = () => {
 };
 
 export const customBrandImage = () => {
-  const theme = useTheme();
+  const theme = useTheme() as Theme;
   return (
     <ThemeProvider
       theme={{
