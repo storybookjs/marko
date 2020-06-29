@@ -1,5 +1,4 @@
 import React, { useContext, FunctionComponent } from 'react';
-import { parseKind } from '@storybook/csf';
 import { Title as PureTitle } from '@storybook/components';
 import { DocsContext, DocsContextProps } from './DocsContext';
 
