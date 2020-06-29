@@ -96,7 +96,11 @@ const configureYarn2 = async ({ cwd }: Options) => {
 };
 
 const generate = async ({ cwd, name, version, generator }: Options) => {
-  const command = generator.replace(/{{name}}/g, name).replace(/{{version}}/g, version);
+  let command = generator.replace(/{{name}}/g, name).replace(/{{version}}/g, version);
+  if (useYarn2) {
+    command = command.replace(/npx/g, `yarn dlx`);
+  }
+
   logger.info(`🏗  Bootstrapping ${name} project`);
   logger.debug(command);
 
