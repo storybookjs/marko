@@ -1,5 +1,5 @@
 import React, { FC, ChangeEvent } from 'react';
-import { styled } from '@storybook/theming';
+import { styled, CSSObject } from '@storybook/theming';
 import { ControlProps, OptionsSelection, NormalizedOptionsConfig } from '../types';
 import { selectedKey, selectedKeys, selectedValues } from './helpers';
 import { Icons } from '../../icon/icon';
