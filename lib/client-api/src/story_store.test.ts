@@ -2,6 +2,7 @@ import createChannel from '@storybook/channel-postmessage';
 import { toId } from '@storybook/csf';
 import addons, { mockChannel } from '@storybook/addons';
 import Events from '@storybook/core-events';
+import store2 from 'store2';
 
 import StoryStore from './story_store';
 import { defaultDecorateStory } from './decorators';
@@ -13,6 +14,8 @@ jest.mock('@storybook/node-logger', () => ({
     error: jest.fn(),
   },
 }));
+
+jest.mock('store2');
 
 let channel;
 beforeEach(() => {
@@ -285,6 +288,14 @@ describe('preview.story_store', () => {
       });
     });
 
+    it('it sets session storage on initialization', () => {
+      (store2.session.set as any).mockClear();
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0);
+      store.finishConfiguring();
+      expect(store2.session.set).toHaveBeenCalled();
+    });
+
     it('on HMR it sensibly re-initializes with memory', () => {
       const store = new StoryStore({ channel });
       addons.setChannel(channel);
@@ -318,8 +329,43 @@ describe('preview.story_store', () => {
       store.finishConfiguring();
 
       expect(store.getRawStory('a', '1').globalArgs).toEqual({
-        // You cannot remove a global arg in HMR currently
+        // You cannot remove a global arg in HMR currently, because you cannot remove the
+        // parameter (see https://github.com/storybookjs/storybook/issues/10005)
         arg1: 'arg1',
+        arg2: 2,
+        arg3: { complex: { object: ['type'] } },
+        arg4: 'new',
+      });
+    });
+
+    it('it sensibly re-initializes with memory based on session storage', () => {
+      (store2.session.get as any).mockReturnValueOnce({
+        globalArgs: {
+          arg1: 'arg1',
+          arg2: 2,
+          arg3: { complex: { object: ['type'] } },
+        },
+      });
+
+      const store = new StoryStore({ channel });
+      addons.setChannel(channel);
+
+      addStoryToStore(store, 'a', '1', () => 0);
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          globalArgs: {
+            arg2: 2,
+            // Although we have changed the default there is no way to tell that the user didn't change
+            // it themselves
+            arg3: { complex: { object: ['changed'] } },
+            arg4: 'new',
+          },
+        },
+      });
+      store.finishConfiguring();
+
+      expect(store.getRawStory('a', '1').globalArgs).toEqual({
         arg2: 2,
         arg3: { complex: { object: ['type'] } },
         arg4: 'new',
@@ -336,6 +382,15 @@ describe('preview.story_store', () => {
 
       store.updateGlobalArgs({ baz: 'bing' });
       expect(store.getRawStory('a', '1').globalArgs).toEqual({ foo: 'bar', baz: 'bing' });
+    });
+
+    it('updateGlobalArgs sets session storage', () => {
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0);
+
+      (store2.session.set as any).mockClear();
+      store.updateGlobalArgs({ foo: 'bar' });
+      expect(store2.session.set).toHaveBeenCalled();
     });
 
     it('is passed to the story in the context', () => {

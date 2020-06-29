@@ -3,6 +3,7 @@ import memoize from 'memoizerific';
 import dedent from 'ts-dedent';
 import stable from 'stable';
 import mapValues from 'lodash/mapValues';
+import store, { StoreAPI } from 'store2';
 
 import { Channel } from '@storybook/channels';
 import Events from '@storybook/core-events';
@@ -38,6 +39,8 @@ interface StoryOptions {
 }
 
 type KindMetadata = StoryMetadata & { order: number };
+
+const STORAGE_KEY = '@storybook/preview/store';
 
 const isStoryDocsOnly = (parameters?: Parameters) => {
   return parameters && parameters.docsOnly;
@@ -131,7 +134,9 @@ export default class StoryStore {
     // Assume we are configuring until we hear otherwise
     this._configuring = true;
 
-    this._globalArgs = {};
+    // We store global args in session storage. Note that when we finish
+    // configuring below we will ensure we only use values here that make sense
+    this._globalArgs = store.session.get(STORAGE_KEY)?.globalArgs || {};
     this._globalMetadata = { parameters: {}, decorators: [] };
     this._kinds = {};
     this._stories = {};
@@ -163,6 +168,11 @@ export default class StoryStore {
     this._configuring = true;
   }
 
+  storeGlobalArgs() {
+    // Store the global args on the session
+    store.session.set(STORAGE_KEY, { globalArgs: this._globalArgs });
+  }
+
   finishConfiguring() {
     this._configuring = false;
 
@@ -178,7 +188,7 @@ export default class StoryStore {
         )
       : {};
 
-    // To deal with HMR, we consider the previous value of global args, and:
+    // To deal with HMR & persistence, we consider the previous value of global args, and:
     //   1. Remove any keys that are not in the new parameter
     //   2. Preference any keys that were already set
     //   3. Use any new keys from the new parameter
@@ -190,6 +200,7 @@ export default class StoryStore {
       },
       { ...defaultGlobalArgs, ...initialGlobalArgs }
     );
+    this.storeGlobalArgs();
 
     // Set the current selection based on the current selection specifier, if selection is not yet set
     const stories = this.sortedStories();
@@ -432,6 +443,7 @@ export default class StoryStore {
 
   updateGlobalArgs(newGlobalArgs: Args) {
     this._globalArgs = { ...this._globalArgs, ...newGlobalArgs };
+    this.storeGlobalArgs();
     this._channel.emit(Events.GLOBAL_ARGS_UPDATED, this._globalArgs);
   }
 
