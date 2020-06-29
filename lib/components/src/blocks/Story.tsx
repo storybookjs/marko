@@ -1,4 +1,5 @@
 import React, { createElement, ElementType, FunctionComponent, Fragment } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Parameters } from '@storybook/api';
@@ -34,12 +35,16 @@ type IFrameStoryProps = CommonProps;
 
 type StoryProps = InlineStoryProps | IFrameStoryProps;
 
-const InlineStory: FunctionComponent<InlineStoryProps> = ({ storyFn, height, id }) => (
+const InlineStory: FunctionComponent<InlineStoryProps> = ({ storyFn, height, id = uuidv4() }) => (
   <Fragment>
-    {height ? <style>{`#story--${id} { min-height: ${height} }`}</style> : null}
-    <Fragment>
-      {storyFn ? createElement(storyFn) : <EmptyBlock>{MISSING_STORY(id)}</EmptyBlock>}
-    </Fragment>
+    {height ? (
+      <style>{`.sbdocs .story--${id} { min-height: ${height}; transform: translateZ(0); overflow: auto;`}</style>
+    ) : null}
+    <div className={`story--${id}`}>
+      <Fragment>
+        {storyFn ? createElement(storyFn) : <EmptyBlock>{MISSING_STORY(id)}</EmptyBlock>}
+      </Fragment>
+    </div>
   </Fragment>
 );
 
@@ -78,7 +83,6 @@ const Story: FunctionComponent<StoryProps & { inline: boolean; error?: StoryErro
   ...props
 }) => {
   const { id, title, height } = props;
-
   if (error) {
     return <EmptyBlock>{error}</EmptyBlock>;
   }
