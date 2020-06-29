@@ -88,7 +88,7 @@ const ThemedSetRoot = () => {
   return null;
 };
 
-addDecorator((storyFn, { globalArgs: { theme = 'light' } }) => {
+addDecorator((StoryFn, { globalArgs: { theme = 'light' } }) => {
   switch (theme) {
     case 'side-by-side': {
       return (
@@ -97,10 +97,14 @@ addDecorator((storyFn, { globalArgs: { theme = 'light' } }) => {
             <Global styles={createReset} />
           </ThemeProvider>
           <ThemeProvider theme={convert(themes.light)}>
-            <ThemeBlock side="left">{storyFn()}</ThemeBlock>
+            <ThemeBlock side="left">
+              <StoryFn />
+            </ThemeBlock>
           </ThemeProvider>
           <ThemeProvider theme={convert(themes.dark)}>
-            <ThemeBlock side="right">{storyFn()}</ThemeBlock>
+            <ThemeBlock side="right">
+              <StoryFn />
+            </ThemeBlock>
           </ThemeProvider>
         </Fragment>
       );
@@ -112,10 +116,14 @@ addDecorator((storyFn, { globalArgs: { theme = 'light' } }) => {
             <Global styles={createReset} />
           </ThemeProvider>
           <ThemeProvider theme={convert(themes.light)}>
-            <ThemeStack side="left">{storyFn()}</ThemeStack>
+            <ThemeStack side="left">
+              <StoryFn />
+            </ThemeStack>
           </ThemeProvider>
           <ThemeProvider theme={convert(themes.dark)}>
-            <ThemeStack side="right">{storyFn()}</ThemeStack>
+            <ThemeStack side="right">
+              <StoryFn />
+            </ThemeStack>
           </ThemeProvider>
         </Fragment>
       );
@@ -125,7 +133,7 @@ addDecorator((storyFn, { globalArgs: { theme = 'light' } }) => {
         <ThemeProvider theme={convert(themes[theme])}>
           <Global styles={createReset} />
           <ThemedSetRoot />
-          {storyFn()}
+          <StoryFn />
         </ThemeProvider>
       );
     }
