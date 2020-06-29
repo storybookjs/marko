@@ -19,9 +19,27 @@ const baseAngular: Parameters = {
   additionalDeps: ['react', 'react-dom'],
 };
 
+export const angularv6: Parameters = {
+  ...baseAngular,
+  version: 'v6-lts',
+  additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
+};
+
 export const angularv7: Parameters = {
   ...baseAngular,
   version: 'v7-lts',
+  additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
+};
+
+export const angularv8: Parameters = {
+  ...baseAngular,
+  version: 'v8-lts',
+  additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
+};
+
+export const angularv9: Parameters = {
+  ...baseAngular,
+  version: 'v9-lts',
   additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
 };
 
