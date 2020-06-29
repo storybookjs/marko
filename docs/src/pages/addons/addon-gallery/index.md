@@ -26,7 +26,7 @@ With links you can link stories together. With that, you can build demos and pro
 Knobs allow you to edit React props dynamically using the Storybook UI.
 You can also use Knobs as dynamic variables inside your stories.
 
-### [Notes](https://github.com/storybookjs/storybook/tree/master/addons/notes)
+### [Notes](https://github.com/storybookjs/deprecated-addons/tree/master/addons/notes)
 
 With this addon, you can write notes for each story in your component. This is pretty useful when you are working with a team.
 
