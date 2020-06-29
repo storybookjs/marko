@@ -9,7 +9,7 @@ const fromDeps = (...args: string[]): string =>
     .filter(Boolean)
     .join(' && ');
 
-export const angular: Parameters = {
+const baseAngular: Parameters = {
   name: 'angular',
   version: 'latest',
   generator: [
@@ -18,6 +18,14 @@ export const angular: Parameters = {
   ].join(' && '),
   additionalDeps: ['react', 'react-dom'],
 };
+
+export const angularv7: Parameters = {
+  ...baseAngular,
+  version: 'v7-lts',
+  additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
+};
+
+export const angular: Parameters = baseAngular;
 
 // TODO: not working yet, help needed
 // export const ember: Parameters = {
