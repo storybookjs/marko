@@ -158,7 +158,7 @@ See [Addon / Framework Support Table](ADDONS_SUPPORT.md)
 
 | Addons                                      |                                                                            |
 | ------------------------------------------- | -------------------------------------------------------------------------- |
-| [info](https://github.com/storybookjs/storybook/tree/master/addons/info)                                        | Annotate stories with extra component usage information                    |
+| [info](https://github.com/storybookjs/deprecated-addons/tree/master/addons/info)                                        | Annotate stories with extra component usage information                    |
 | [notes](https://github.com/storybookjs/storybook/tree/master/addons/notes)                                       | Annotate Storybook stories with notes                                      |
 | [contexts](https://github.com/storybookjs/storybook/tree/master/addons/contexts)                                       | Addon for driving your components under dynamic contexts                                      |
 
