@@ -9,7 +9,6 @@ const theme = create({
 });
 
 addons.setConfig({
-  showRoots: true,
   panelPosition: 'bottom',
   theme,
 });
