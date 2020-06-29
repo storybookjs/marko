@@ -3,7 +3,7 @@ import memoize from 'memoizerific';
 import dedent from 'ts-dedent';
 import stable from 'stable';
 import mapValues from 'lodash/mapValues';
-import store, { StoreAPI } from 'store2';
+import store from 'store2';
 
 import { Channel } from '@storybook/channels';
 import Events from '@storybook/core-events';
