@@ -5,6 +5,7 @@ import { prompt } from 'enquirer';
 import pLimit from 'p-limit';
 
 import shell from 'shelljs';
+import program from 'commander';
 import { serve } from './utils/serve';
 import { exec } from './utils/command';
 // @ts-ignore
@@ -70,9 +71,28 @@ const cleanDirectory = async ({ cwd }: Options): Promise<void> => {
   await remove(cwd);
   await remove(path.join(siblingDir, 'node_modules'));
 
-  // TODO: Move this somewhere else
-  //   Remove Yarn 2 specific stuffs generated
-  await shell.rm('-rf', [path.join(siblingDir, '.yarn'), path.join(siblingDir, '.yarnrc.yml')]);
+  if (useYarn2) {
+    await shell.rm('-rf', [path.join(siblingDir, '.yarn'), path.join(siblingDir, '.yarnrc.yml')]);
+  }
+};
+
+const configureYarn2 = async ({ cwd }: Options) => {
+  const command = [
+    `yarn set version 2`,
+    // ⚠️ Need to set registry because Yarn 2 is not using the conf of Yarn 1
+    `yarn config set npmScopes --json '{ "storybook": { "npmRegistryServer": "http://localhost:6000/" } }'`,
+    // Some required magic to be able to fetch deps from local registry
+    `yarn config set unsafeHttpWhitelist --json '["localhost"]'`,
+  ].join(' && ');
+  logger.info(`🎛 Configuring Yarn 2`);
+  logger.debug(command);
+
+  try {
+    await exec(command, { cwd });
+  } catch (e) {
+    logger.error(`🚨 Configuring Yarn 2 failed`);
+    throw e;
+  }
 };
 
 const generate = async ({ cwd, name, version, generator }: Options) => {
@@ -214,6 +234,10 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
   logger.log();
 
   if (!(await prepareDirectory(options))) {
+    if (useYarn2) {
+      await configureYarn2({ ...options, cwd: siblingDir });
+    }
+
     await generate({ ...options, cwd: siblingDir });
     logger.log();
 
@@ -287,7 +311,11 @@ const runE2E = (parameters: Parameters) =>
       process.exitCode = 1;
     });
 
-const frameworkArgs = process.argv.slice(2);
+program.option('--use-yarn-2', 'Run tests using Yarn 2 instead of Yarn 1 + npx', false);
+program.parse(process.argv);
+
+const { useYarn2, args: frameworkArgs } = program;
+
 const typedConfigs: { [key: string]: Parameters } = configs;
 let e2eConfigs: { [key: string]: Parameters } = {};
 

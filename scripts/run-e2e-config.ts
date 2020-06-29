@@ -180,14 +180,7 @@ export const webpack_react: Parameters = {
 export const yarn_2_cra: Parameters = {
   name: 'yarn_2_cra',
   version: 'latest',
-  generator: [
-    `yarn set version 2`,
-    // ⚠️ Need to set registry because Yarn 2 is not using the conf of Yarn 1
-    `yarn config set npmScopes --json '{ "storybook": { "npmRegistryServer": "http://localhost:6000/" } }'`,
-    // Some required magic to be able to fetch deps from local registry
-    `yarn config set unsafeHttpWhitelist --json '["localhost"]'`,
-    `yarn dlx create-react-app@{{version}} {{name}}-v{{version}}`,
-  ].join(' && '),
+  generator: `yarn dlx create-react-app@{{version}} {{name}}-v{{version}}`,
 };
 
 export const react_in_yarn_workspace: Parameters = {
