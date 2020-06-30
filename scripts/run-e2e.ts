@@ -78,7 +78,7 @@ const cleanDirectory = async ({ cwd }: Options): Promise<void> => {
 
 const configureYarn2 = async ({ cwd }: Options) => {
   const command = [
-    `yarn set version 2`,
+    `yarn set version berry`,
     // ⚠️ Need to set registry because Yarn 2 is not using the conf of Yarn 1
     `yarn config set npmScopes --json '{ "storybook": { "npmRegistryServer": "http://localhost:6000/" } }'`,
     // Some required magic to be able to fetch deps from local registry
