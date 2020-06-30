@@ -246,7 +246,7 @@ export const ErrorBlock: FunctionComponent<{ error: Error }> = ({ error }) => (
             View error <Icons icon="arrowdown" />
           </Link>
         </WithTooltip>{' '}
-        <Link withArrow href="https://storybook.js.org/docs">
+        <Link withArrow href="https://storybook.js.org/docs" cancel={false} target="_blank">
           View docs
         </Link>
       </Text>
