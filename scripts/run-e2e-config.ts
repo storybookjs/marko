@@ -116,8 +116,8 @@ export const react: Parameters = {
   generator: fromDeps('react', 'react-dom'),
 };
 
-export const reactTypescript: Parameters = {
-  name: 'react-typescript',
+export const react_typescript: Parameters = {
+  name: 'react_typescript',
   version: 'latest',
   generator: fromDeps('react'),
   typescript: true,
@@ -171,14 +171,14 @@ export const web_components: Parameters = {
   additionalDeps: ['react', 'react-dom'],
 };
 
-export const webpackReact: Parameters = {
-  name: 'webpackReact',
+export const webpack_react: Parameters = {
+  name: 'webpack_react',
   version: 'latest',
   generator: fromDeps('react', 'react-dom', 'webpack'),
 };
 
-export const yarn2Cra: Parameters = {
-  name: 'yarn2Cra',
+export const yarn_2_cra: Parameters = {
+  name: 'yarn_2_cra',
   version: 'latest',
   generator: [
     `yarn set version 2`,
@@ -190,8 +190,8 @@ export const yarn2Cra: Parameters = {
   ].join(' && '),
 };
 
-export const reactInYarnWorkspace: Parameters = {
-  name: 'reactInYarnWorkspace',
+export const react_in_yarn_workspace: Parameters = {
+  name: 'react_in_yarn_workspace',
   version: 'latest',
   generator: [
     'cd {{name}}-v{{version}}',
