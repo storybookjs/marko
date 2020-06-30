@@ -14,14 +14,14 @@ export default {
   parameters: { passArgsFirst: false },
   decorators: [
     withKnobs,
-    ((StoryFn, c) => {
+    ((storyFn, c) => {
       const mocked = boolean('mock', true);
 
       const props = {
         ...(mocked ? mockProps : realProps),
       };
 
-      return <StoryFn props={props} {...c} />;
+      return storyFn({ props, ...c });
     }) as DecoratorFn,
   ],
 };
