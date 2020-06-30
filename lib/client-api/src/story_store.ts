@@ -181,15 +181,12 @@ export default class StoryStore {
       globalArgTypes = {},
     } = this._globalMetadata.parameters;
 
-    const defaultGlobalArgs: Args = globalArgTypes
-      ? Object.entries(globalArgTypes as Record<string, { defaultValue: any }>).reduce(
-          (acc, [arg, { defaultValue }]) => {
-            if (defaultValue) acc[arg] = defaultValue;
-            return acc;
-          },
-          {} as Args
-        )
-      : {};
+    const defaultGlobalArgs: Args = Object.entries(
+      globalArgTypes as Record<string, { defaultValue: any }>
+    ).reduce((acc, [arg, { defaultValue }]) => {
+      if (defaultValue) acc[arg] = defaultValue;
+      return acc;
+    }, {} as Args);
 
     const allowedGlobalArgs = new Set([
       ...Object.keys(initialGlobalArgs),
