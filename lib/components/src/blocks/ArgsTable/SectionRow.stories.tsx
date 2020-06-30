@@ -32,7 +32,7 @@ export const Nested = () => (
   <SectionRow {...Section.args}>
     <SectionRow {...Subsection.args}>
       <tr>
-        <td>Some content</td>
+        <td colSpan={2}>Some content</td>
       </tr>
     </SectionRow>
   </SectionRow>

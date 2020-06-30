@@ -96,7 +96,7 @@ const ButtonWrapper = styled.button<ButtonWrapperProps>(
     return color
       ? {
           background: color,
-          color: gray ? '#333333' : theme.color.tertiary,
+          color: gray ? theme.color.darkest : theme.color.lightest,
 
           '&:hover': {
             background: darken(0.05, color),

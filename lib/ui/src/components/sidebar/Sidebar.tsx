@@ -12,21 +12,16 @@ import { filteredLength } from './Tree/utils';
 import { Ref } from './Refs';
 import { RefType, Refs } from './RefHelpers';
 
-const Container = styled.nav(
-  {
-    position: 'absolute',
-    zIndex: 1,
-    left: 0,
-    top: 0,
-    bottom: 0,
-    right: 0,
-    width: '100%',
-    height: '100%',
-  },
-  ({ theme }) => ({
-    color: theme.color.darker,
-  })
-);
+const Container = styled.nav({
+  position: 'absolute',
+  zIndex: 1,
+  left: 0,
+  top: 0,
+  bottom: 0,
+  right: 0,
+  width: '100%',
+  height: '100%',
+});
 
 const StyledSpaced = styled(Spaced)({
   paddingBottom: '2.5rem',
