@@ -212,10 +212,18 @@ export const init: ModuleFn = ({
         const s = hash[kindOrId] || hash[sanitize(kindOrId)];
         // eslint-disable-next-line no-nested-ternary
         const id = s ? (s.children ? s.children[0] : s.id) : kindOrId;
-        const viewMode =
+        let viewMode =
           viewModeFromArgs || (s && s.parameters.viewMode)
             ? s.parameters.viewMode
             : viewModeFromState;
+
+        // In some cases, the viewMode could be something other than docs/story
+        // ('settings', for example) and therefore we should make sure we go back
+        // to the 'story' viewMode when navigating away from those pages.
+        if (!viewMode.match(/docs|story/)) {
+          viewMode = 'story';
+        }
+
         const p = s && s.refId ? `/${viewMode}/${s.refId}_${id}` : `/${viewMode}/${id}`;
 
         navigate(p);
@@ -264,7 +272,7 @@ export const init: ModuleFn = ({
       const { source }: { source: string } = this;
       const [sourceType] = getSourceType(source);
 
-      if (sourceType === 'local') {
+      if (sourceType === 'local' && storyId && viewMode) {
         navigate(`/${viewMode}/${storyId}`);
       }
     });

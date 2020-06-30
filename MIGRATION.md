@@ -17,6 +17,7 @@
   - [Removed Deprecated APIs](#removed-deprecated-apis)
   - [New setStories event](#new-setstories-event)
   - [Removed renderCurrentStory event](#removed-rendercurrentstory-event)
+  - [Removed hierarchy separators](#removed-hierarchy-separators)
   - [Client API changes](#client-api-changes)
     - [Removed Legacy Story APIs](#removed-legacy-story-apis)
     - [Can no longer add decorators/parameters after stories](#can-no-longer-add-decoratorsparameters-after-stories)
@@ -25,6 +26,7 @@
   - [Story Store immutable outside of configuration](#story-store-immutable-outside-of-configuration)
   - [Improved story source handling](#improved-story-source-handling)
   - [6.0 Addon API changes](#60-addon-api-changes)
+    - [Deprecated setAddon](#deprecated-setaddon)
     - [Actions addon uses parameters](#actions-addon-uses-parameters)
     - [Removed action decorator APIs](#removed-action-decorator-apis)
     - [Removed withA11y decorator](#removed-witha11y-decorator)
@@ -390,6 +392,26 @@ const parameters = combineParameters(
 
 The story store no longer emits `renderCurrentStory`/`RENDER_CURRENT_STORY` to tell the renderer to render the story. Instead it emits a new declarative `CURRENT_STORY_WAS_SET` (in response to the existing `SET_CURRENT_STORY`) which is used to decide to render.
 
+### Removed hierarchy separators
+
+We've removed the ability to specify the hierarchy separators (how you control the grouping of story kinds in the sidebar). From Storybook 6.0 we have a single separator `/`, which cannot be configured.
+
+If you are currently using using custom separators, we encourage you to migrate to using `/` as the sole separator. If you are using `|` or `.` as a separator currently, we provide a codemod, [`upgrade-hierarchy-separators`](https://github.com/storybookjs/storybook/blob/next/lib/codemod/README.md#upgrade-hierarchy-separators), that can be used to rename all your components.
+
+```
+yarn sb migrate upgrade-hierarchy-separators --glob="*.stories.js"
+```
+
+We also now default to showing "roots", which are non-expandable groupings in the sidebar for the top-level groups. If you'd like to disable this, set the `showRoots` option in `.storybook/manager.js`:
+
+```js
+import addons from '@storybook/addons';
+
+addons.setConfig({
+  showRoots: false,
+});
+```
+
 ### Client API changes
 
 #### Removed Legacy Story APIs
@@ -489,12 +511,18 @@ The MDX analog:
 
 ### 6.0 Addon API changes
 
+#### Deprecated setAddon
+
+We've deprecated the `setAddon` method of the `storiesOf` API and plan to remove it in 7.0.
+
+Since early versions, Storybook shipped with a `setAddon` API, which allows you to extend `storiesOf` with arbitrary code. We've removed this from all core addons long ago and recommend writing stories in [Component Story Format](https://medium.com/storybookjs/component-story-format-66f4c32366df) rather than using the internal Storybook API.
+
 #### Actions addon uses parameters
 
 Leveraging the new preset `@storybook/addon-actions` uses parameters to pass action options. If you previously had:
 
 ```js
-import { withactions } from `@storybook/addon-actions`;
+import { withActions } from `@storybook/addon-actions`;
 
 export StoryOne = ...;
 StoryOne.story = {

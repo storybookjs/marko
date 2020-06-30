@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-events",
-  "version": "6.0.0-beta.35",
+  "version": "6.0.0-beta.37",
   "description": "Add events to your Storybook stories.",
   "keywords": [
     "addon",
@@ -31,18 +31,18 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-beta.35",
-    "@storybook/api": "6.0.0-beta.35",
-    "@storybook/client-api": "6.0.0-beta.35",
-    "@storybook/core-events": "6.0.0-beta.35",
-    "@storybook/theming": "6.0.0-beta.35",
+    "@storybook/addons": "6.0.0-beta.37",
+    "@storybook/api": "6.0.0-beta.37",
+    "@storybook/client-api": "6.0.0-beta.37",
+    "@storybook/core-events": "6.0.0-beta.37",
+    "@storybook/theming": "6.0.0-beta.37",
     "core-js": "^3.0.1",
     "format-json": "^1.0.3",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "react": "^16.8.3",
     "react-lifecycles-compat": "^3.0.4",
-    "react-textarea-autosize": "^8.0.1",
+    "react-textarea-autosize": "^8.1.1",
     "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
