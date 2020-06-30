@@ -18,6 +18,14 @@ const storyId = '1-12-121';
 export const simpleData = { menu, stories, storyId };
 export const loadingData = { menu, stories: {} };
 
+const error: Error = (() => {
+  try {
+    throw new Error('There was a severe problem');
+  } catch (e) {
+    return e;
+  }
+})();
+
 const refs: Record<string, RefType> = {
   optimized: {
     id: 'optimized',
@@ -81,13 +89,7 @@ const refs: Record<string, RefType> = {
     url: 'https://example.com',
     type: 'lazy',
     stories: {},
-    error: (() => {
-      try {
-        throw new Error('There was a severe problem');
-      } catch (e) {
-        return e;
-      }
-    })(),
+    error,
   },
   auth: {
     id: 'Authentication',
@@ -125,6 +127,6 @@ export const Versions = () => <Ref {...refs.versions} storyId="" filter="" isHid
 export const VersionsMissingCurrent = () => (
   <Ref {...refs.versionsMissingCurrent} storyId="" filter="" isHidden={false} />
 );
-export const Error = () => <Ref {...refs.error} storyId="" filter="" isHidden={false} />;
+export const Errored = () => <Ref {...refs.error} storyId="" filter="" isHidden={false} />;
 export const Auth = () => <Ref {...refs.auth} storyId="" filter="" isHidden={false} />;
 export const Long = () => <Ref {...refs.long} storyId="" filter="" isHidden={false} />;
