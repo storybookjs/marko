@@ -23,6 +23,10 @@ const Container = styled.nav({
   height: '100%',
 });
 
+const StyledSpaced = styled(Spaced)({
+  paddingBottom: '2.5rem',
+});
+
 const CustomScrollArea = styled(ScrollArea)({
   '&&&&& .os-scrollbar-handle:before': {
     left: -12,
@@ -37,7 +41,7 @@ const Hr = styled.hr(({ theme }) => ({
   border: '0 none',
   height: 0,
   marginBottom: 0,
-  borderTop: `1px solid ${theme.color.mediumlight}`,
+  borderTop: `1px solid ${theme.appBorderColor}`,
 }));
 
 export interface SidebarProps {
@@ -114,7 +118,7 @@ const Sidebar: FunctionComponent<SidebarProps> = ({
   return (
     <Container className="container sidebar-container">
       <CustomScrollArea vertical>
-        <Spaced row={2}>
+        <StyledSpaced row={1.6}>
           <Heading className="sidebar-header" menuHighlighted={menuHighlighted} menu={menu} />
 
           <Search key="filter" onChange={setFilter} />
@@ -133,7 +137,7 @@ const Sidebar: FunctionComponent<SidebarProps> = ({
               );
             })}
           </Fragment>
-        </Spaced>
+        </StyledSpaced>
       </CustomScrollArea>
     </Container>
   );
