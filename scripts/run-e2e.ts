@@ -293,16 +293,15 @@ let e2eConfigs: { [key: string]: Parameters } = {};
 if (frameworkArgs.length > 0) {
   // eslint-disable-next-line no-restricted-syntax
   for (const [framework, version = 'latest'] of frameworkArgs.map((arg) => arg.split('@'))) {
-    e2eConfigs[framework] = {
-      ...typedConfigs[framework],
-      version,
-    };
+    e2eConfigs[`${framework}-${version}`] = Object.values(typedConfigs).find(
+      (c) => c.name === framework && c.version === version
+    );
   }
 } else {
   e2eConfigs = typedConfigs;
   // FIXME: For now Yarn 2 E2E tests must be run by explicitly call `yarn test:e2e-framework yarn2Cra@latest`
   //   Because it is telling Yarn to use version 2
-  delete e2eConfigs.yarn2Cra;
+  delete e2eConfigs.yarn_2_cra;
 }
 
 const perform = () => {
