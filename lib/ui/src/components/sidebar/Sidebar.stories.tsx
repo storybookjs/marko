@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { ThemeProvider, themes, ensure as ensureTheme } from '@storybook/theming';
 import Sidebar from './Sidebar';
 import { standardData as standardHeaderData } from './Heading.stories';
 import { mockDataset } from './mockdata';
@@ -123,16 +122,3 @@ export const isEmpty = () => (
 export const withRefs = () => (
   <Sidebar storiesConfigured menu={menu} stories={stories} isLoading refs={refs} />
 );
-
-export const darkWithRefs = () => (
-  <ThemeProvider theme={ensureTheme(themes.dark)}>
-    <Sidebar storiesConfigured menu={menu} stories={stories} isLoading refs={refs} />
-  </ThemeProvider>
-);
-
-darkWithRefs.parameters = {
-  backgrounds: {
-    default: 'dark',
-    values: [{ name: 'dark', value: '#222222', default: true }],
-  },
-};
