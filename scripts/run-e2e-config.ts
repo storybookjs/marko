@@ -178,7 +178,7 @@ export const webpackReact: Parameters = {
 };
 
 export const yarn2Cra: Parameters = {
-  name: 'yarn-2-cra',
+  name: 'yarn2Cra',
   version: 'latest',
   generator: [
     `yarn set version 2`,
