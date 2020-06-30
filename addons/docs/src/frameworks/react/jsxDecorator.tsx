@@ -42,7 +42,7 @@ export const renderJsx = (code: React.ReactElement, options: JSXOptions) => {
   }
 
   let renderedJSX = code;
-  let Type = renderedJSX.type;
+  const Type = renderedJSX.type;
 
   for (let i = 0; i < options.skip; i += 1) {
     if (typeof renderedJSX === 'undefined') {
@@ -66,11 +66,6 @@ export const renderJsx = (code: React.ReactElement, options: JSXOptions) => {
     } else {
       renderedJSX = renderedJSX.props.children;
     }
-  }
-
-  while (typeof Type === 'function' && Type.name === '') {
-    renderedJSX = <Type {...renderedJSX.props} />;
-    Type = renderedJSX.type;
   }
 
   const opts =
@@ -117,17 +112,9 @@ export const jsxDecorator = (storyFn: any, context: StoryContext) => {
   } as Required<JSXOptions>;
 
   let jsx = '';
-  if (story.template) {
-    if (options.enableBeautify) {
-      jsx = beautifyHTML(story.template, options);
-    } else {
-      jsx = story.template;
-    }
-  } else {
-    const rendered = renderJsx(story, options);
-    if (rendered) {
-      jsx = rendered;
-    }
+  const rendered = renderJsx(story, options);
+  if (rendered) {
+    jsx = rendered;
   }
 
   channel.emit(SNIPPET_RENDERED, (context || {}).id, jsx);
