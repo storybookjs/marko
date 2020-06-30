@@ -1,4 +1,4 @@
-import React, { FunctionComponent, MouseEvent, useMemo, useState, useRef } from 'react';
+import React, { FunctionComponent, useMemo, useState, useRef, useCallback } from 'react';
 import { styled } from '@storybook/theming';
 import { transparentize } from 'polished';
 
@@ -74,11 +74,9 @@ export const Ref: FunctionComponent<RefType & RefProps> = (ref) => {
     storyId
   );
 
-  const handleClick = ({ target }: MouseEvent) => {
-    // Don't fire if the click is from the indicator.
-    if (target === indicatorRef.current || indicatorRef.current?.contains(target as Node)) return;
+  const handleClick = useCallback(() => {
     setIsExpanded(!isExpanded);
-  };
+  }, [isExpanded]);
 
   const combo = useMemo(() => ({ setExpanded, expandedSet }), [setExpanded, expandedSet]);
 
@@ -100,11 +98,16 @@ export const Ref: FunctionComponent<RefType & RefProps> = (ref) => {
         <RefHead
           aria-label={`${isExpanded ? 'Hide' : 'Show'} ${title} stories`}
           aria-expanded={isExpanded}
-          type="button"
-          onClick={handleClick}
         >
-          <Expander className="sidebar-ref-expander" depth={0} isExpanded={isExpanded} />
-          <RefTitle title={title}>{title}</RefTitle>
+          <Expander
+            onClick={handleClick}
+            className="sidebar-ref-expander"
+            depth={0}
+            isExpanded={isExpanded}
+          />
+          <RefTitle onClick={handleClick} title={title}>
+            {title}
+          </RefTitle>
           <RefIndicator {...ref} state={state} ref={indicatorRef} />
         </RefHead>
       )}
