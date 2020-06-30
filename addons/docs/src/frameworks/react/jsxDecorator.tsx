@@ -83,7 +83,9 @@ export const renderJsx = (code: React.ReactElement, options: JSXOptions) => {
       : options;
 
   const result = React.Children.map(code, (c) => {
-    let string = applyBeforeRender(reactElementToJSXString(c, opts as Options), options);
+    // @ts-ignore FIXME: workaround react-element-to-jsx-string
+    const child = typeof c === 'number' ? c.toString() : c;
+    let string = applyBeforeRender(reactElementToJSXString(child, opts as Options), options);
     const matches = string.match(/\S+=\\"([^"]*)\\"/g);
 
     if (matches) {
