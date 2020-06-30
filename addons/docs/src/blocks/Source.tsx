@@ -8,7 +8,7 @@ import { DocsContext, DocsContextProps } from './DocsContext';
 import { SourceContext, SourceContextProps } from './SourceContainer';
 import { CURRENT_SELECTION } from './types';
 
-// FIXME: import { enhanceSource } from './enhanceSource';
+import { enhanceSource } from './enhanceSource';
 
 interface CommonProps {
   language?: string;
@@ -37,7 +37,7 @@ export const getSourceProps = (
   docsContext: DocsContextProps,
   sourceContext: SourceContextProps
 ): PureSourceProps => {
-  const { id: currentId } = docsContext;
+  const { id: currentId, storyStore } = docsContext;
   const { sources } = sourceContext;
 
   const codeProps = props as CodeProps;
@@ -51,11 +51,15 @@ export const getSourceProps = (
     const targetIds = multiProps.ids || [targetId];
     source = targetIds
       .map((sourceId) => {
-        // FIXME: restore enhanceSource
-        // const data = storyStore.fromId(sourceId);
-        // const enhanced = data && (enhanceSource(data) || data.parameters);
-        // return enhanced?.docs?.source?.code || '';
-        return sources[sourceId] || '';
+        if (sources) {
+          return sources[sourceId];
+        }
+        if (storyStore) {
+          const data = storyStore.fromId(sourceId);
+          const enhanced = data && (enhanceSource(data) || data.parameters);
+          return enhanced?.docs?.source?.code || '';
+        }
+        return '';
       })
       .join('\n\n');
   }
