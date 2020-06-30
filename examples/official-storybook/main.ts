@@ -9,7 +9,10 @@ module.exports = {
     './../../addons/docs/**/*.stories.tsx',
   ],
   addons: [
-    '@storybook/addon-docs',
+    {
+      name: '@storybook/addon-docs',
+      options: { transcludeMarkdown: true },
+    },
     '@storybook/addon-storysource',
     '@storybook/addon-design-assets',
     '@storybook/addon-actions',

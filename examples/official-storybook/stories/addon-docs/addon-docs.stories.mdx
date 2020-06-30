@@ -13,12 +13,17 @@ import { action } from '@storybook/addon-actions';
 import { Button } from '@storybook/react/demo';
 import FlowTypeButton from '../../components/FlowTypeButton';
 import { DocgenButton } from '../../components/DocgenButton';
+import MdNotes from '../notes/notes.md';
+import MdxNotes from '../notes/notes.mdx';
 
 <Meta
   title="Addons/Docs/mdx"
   component={Button}
   id="addons-docs-mdx-id"
-  decorators={[storyFn => <div style={{ backgroundColor: 'yellow' }}>{storyFn()}</div>, withKnobs]}
+  decorators={[
+    (storyFn) => <div style={{ backgroundColor: 'yellow' }}>{storyFn()}</div>,
+    withKnobs,
+  ]}
   parameters={{ notes: 'component notes' }}
 />
 
@@ -33,6 +38,16 @@ import { DocgenButton } from '../../components/DocgenButton';
 <Preview>
   <Story id="nonexistent-story" />
 </Preview>
+
+## Transclusion
+
+### Markdown
+
+<MdNotes />
+
+### MDX
+
+<MdxNotes />
 
 ## A random color ColorPalette
 
@@ -88,7 +103,10 @@ export const nonStory2 = () => <Button>Not a story</Button>; // another one
   <>This is an iframe!</>
 </Story>
 
-<Story name="decorator story" decorators={[storyFn => <div style={{ backgroundColor: 'pink' }}>{storyFn()}</div>]}>
+<Story
+  name="decorator story"
+  decorators={[(storyFn) => <div style={{ backgroundColor: 'pink' }}>{storyFn()}</div>]}
+>
   <>Story decorators</>
 </Story>
 
@@ -150,11 +168,11 @@ Flow types are not officially supported
   <Button>This souldn't show up in docs page</Button>
 </Story>
 
-
 ## Story with multiple children
+
 <Preview>
   <Story name="story multiple children">
     <p>Hello Child #1</p>
     <p>Hello Child #2</p>
   </Story>
-</Preview>  
+</Preview>
