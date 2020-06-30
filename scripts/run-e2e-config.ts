@@ -25,6 +25,12 @@ export const angularv7: Parameters = {
   additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
 };
 
+export const angularv8: Parameters = {
+  ...baseAngular,
+  version: 'v8-lts',
+  additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
+};
+
 export const angular: Parameters = baseAngular;
 
 // TODO: not working yet, help needed
