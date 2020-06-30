@@ -41,7 +41,7 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
   const {
     babelOptions,
     configureJSX = options.framework !== 'react', // if not user-specified
-    sourceLoaderOptions = options.framework === 'react' || {},
+    sourceLoaderOptions = options.framework === 'react' ? null : {},
   } = options;
 
   const mdxLoaderOptions = {
