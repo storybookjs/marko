@@ -1,6 +1,5 @@
 import React from 'react';
 import reactElementToJSXString, { Options } from 'react-element-to-jsx-string';
-import { html as beautifyHTML } from 'js-beautify';
 
 import { addons, StoryContext } from '@storybook/addons';
 import { logger } from '@storybook/client-logger';
@@ -12,7 +11,7 @@ type VueComponent = {
   template?: string;
 };
 
-interface JSXOptions extends HTMLBeautifyOptions {
+interface JSXOptions {
   /** How many wrappers to skip when rendering the jsx */
   skip?: number;
   /** Whether to show the function in the jsx tab */
