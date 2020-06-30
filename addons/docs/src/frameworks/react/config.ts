@@ -1,6 +1,7 @@
 import { StoryFn } from '@storybook/addons';
 import { extractArgTypes } from './extractArgTypes';
 import { extractComponentDescription } from '../../lib/docgen';
+import { jsxDecorator } from './jsxDecorator';
 
 export const parameters = {
   docs: {
@@ -11,3 +12,5 @@ export const parameters = {
     extractComponentDescription,
   },
 };
+
+export const decorators = [jsxDecorator];
