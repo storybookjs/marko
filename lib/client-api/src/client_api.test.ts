@@ -334,50 +334,6 @@ describe('preview.client_api', () => {
       ]);
     });
 
-    describe('getSeparators', () => {
-      it('returns values set via parameters', () => {
-        const {
-          clientApi: { getSeparators, storiesOf, addParameters },
-        } = getContext();
-
-        const options = { hierarchySeparator: /a/, hierarchyRootSeparator: 'b' };
-        addParameters({ options });
-        storiesOf('kind 1', module).add('name 1', () => '1');
-        expect(getSeparators()).toEqual(options);
-      });
-
-      it('returns old defaults if kind uses old separators', () => {
-        const {
-          clientApi: { getSeparators, storiesOf },
-        } = getContext();
-
-        storiesOf('kind|1', module).add('name 1', () => '1');
-        expect(getSeparators()).toEqual({
-          hierarchySeparator: /\/|\./,
-          hierarchyRootSeparator: '|',
-        });
-      });
-
-      it('returns new values if showRoots is set', () => {
-        const {
-          clientApi: { getSeparators, storiesOf, addParameters },
-        } = getContext();
-        addParameters({ options: { showRoots: false } });
-
-        storiesOf('kind|1', module).add('name 1', () => '1');
-        expect(getSeparators()).toEqual({ hierarchySeparator: '/' });
-      });
-
-      it('returns new values if kind does not use old separators', () => {
-        const {
-          clientApi: { getSeparators, storiesOf },
-        } = getContext();
-
-        storiesOf('kind/1', module).add('name 1', () => '1');
-        expect(getSeparators()).toEqual({ hierarchySeparator: '/' });
-      });
-    });
-
     it('reads filename from module', () => {
       const {
         clientApi: { getStorybook, storiesOf },

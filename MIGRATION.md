@@ -17,6 +17,7 @@
   - [Removed Deprecated APIs](#removed-deprecated-apis)
   - [New setStories event](#new-setstories-event)
   - [Removed renderCurrentStory event](#removed-rendercurrentstory-event)
+  - [Removed hierarchy separators](#removed-hierarchy-separators)
   - [Client API changes](#client-api-changes)
     - [Removed Legacy Story APIs](#removed-legacy-story-apis)
     - [Can no longer add decorators/parameters after stories](#can-no-longer-add-decoratorsparameters-after-stories)
@@ -390,6 +391,26 @@ const parameters = combineParameters(
 ### Removed renderCurrentStory event
 
 The story store no longer emits `renderCurrentStory`/`RENDER_CURRENT_STORY` to tell the renderer to render the story. Instead it emits a new declarative `CURRENT_STORY_WAS_SET` (in response to the existing `SET_CURRENT_STORY`) which is used to decide to render.
+
+### Removed hierarchy separators
+
+We've removed the ability to specify the hierarchy separators (how you control the grouping of story kinds in the sidebar). From Storybook 6.0 we have a single separator `/`, which cannot be configured.
+
+If you are currently using using custom separators, we encourage you to migrate to using `/` as the sole separator. If you are using `|` or `.` as a separator currently, we provide a codemod, [`upgrade-hierarchy-separators`](https://github.com/storybookjs/storybook/blob/next/lib/codemod/README.md#upgrade-hierarchy-separators), that can be used to rename all your components.
+
+```
+yarn sb migrate upgrade-hierarchy-separators --glob="*.stories.js"
+```
+
+We also now default to showing "roots", which are non-expandable groupings in the sidebar for the top-level groups. If you'd like to disable this, set the `showRoots` option in `.storybook/manager.js`:
+
+```js
+import addons from '@storybook/addons';
+
+addons.setConfig({
+  showRoots: false,
+});
+```
 
 ### Client API changes
 

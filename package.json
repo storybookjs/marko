@@ -165,7 +165,7 @@
     "babel-plugin-macros": "^2.7.0",
     "babel-plugin-require-context-hook": "^1.0.0",
     "chalk": "^4.0.0",
-    "chromatic": "^4.0.2",
+    "chromatic": "^5.0.0",
     "codecov": "^3.5.0",
     "codelyzer": "^5.0.0",
     "commander": "^5.1.0",

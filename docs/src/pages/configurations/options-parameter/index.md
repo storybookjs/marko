@@ -86,7 +86,7 @@ export const parameters = {
      * display the top-level grouping as a "root" in the sidebar
      * @type {Boolean}
      */
-    showRoots: false,
+    showRoots: true,
   },
 });
 ```

@@ -71,7 +71,7 @@ const Label = styled.label(({ theme }) => ({
   'input:checked ~ span:first-of-type, input:not(:checked) ~ span:last-of-type': {
     background: `${opacify(0.05, theme.appBorderColor)}`,
     boxShadow: `transparent 0 0 0 1px inset`,
-    color: theme.color.darkest,
+    color: theme.color.defaultText,
   },
 }));
 

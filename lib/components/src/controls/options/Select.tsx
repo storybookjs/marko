@@ -1,35 +1,58 @@
 import React, { FC, ChangeEvent } from 'react';
-import { styled } from '@storybook/theming';
+import { styled, CSSObject } from '@storybook/theming';
 import { ControlProps, OptionsSelection, NormalizedOptionsConfig } from '../types';
 import { selectedKey, selectedKeys, selectedValues } from './helpers';
 import { Icons } from '../../icon/icon';
 
-const OptionsSelect = styled.select(({ theme }) => ({
-  // Resets
+const styleResets: CSSObject = {
+  // resets
   appearance: 'none',
-  border: '0',
-  lineHeight: '20px',
-  padding: '6px 10px 6px 10px',
+  border: '0 none',
+  boxSizing: 'inherit',
+  display: ' block',
+  margin: ' 0',
+  background: 'transparent',
+  padding: 0,
+  fontSize: 'inherit',
   position: 'relative',
-  outline: 'none',
-  width: '100%',
-  overflow: 'auto',
-  // end resets
+};
 
+const OptionsSelect = styled.select(({ theme }) => ({
+  ...styleResets,
+
+  position: 'relative',
+  padding: '6px 10px',
+  width: '100%',
+
+  color: theme.input.color || 'inherit',
+  background: theme.input.background,
   borderRadius: theme.input.borderRadius,
-  fontSize: theme.typography.size.s2 - 1,
   boxShadow: `${theme.input.border} 0 0 0 1px inset`,
+
+  fontSize: theme.typography.size.s2 - 1,
+  lineHeight: '20px',
 
   '&:focus': {
     boxShadow: `${theme.color.secondary} 0 0 0 1px inset`,
+    outline: 'none',
+  },
+
+  '&[disabled]': {
+    cursor: 'not-allowed',
+    opacity: 0.5,
+  },
+
+  '::placeholder': {
+    color: theme.color.mediumdark,
   },
 
   '&[multiple]': {
+    overflow: 'auto',
     padding: 0,
 
     option: {
       display: 'block',
-      padding: '6px 10px 6px 10px',
+      padding: '6px 10px',
       marginLeft: 1,
       marginRight: 1,
     },

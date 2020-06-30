@@ -81,31 +81,6 @@ export default class ClientApi {
     `
   );
 
-  getSeparators = () => {
-    const { hierarchySeparator, hierarchyRootSeparator, showRoots } =
-      this._storyStore._globalMetadata.parameters.options || {};
-
-    // Note these checks will be removed in 6.0, leaving this much simpler
-    if (
-      typeof hierarchySeparator !== 'undefined' ||
-      typeof hierarchyRootSeparator !== 'undefined'
-    ) {
-      return { hierarchySeparator, hierarchyRootSeparator };
-    }
-    if (
-      typeof showRoots === 'undefined' &&
-      this.store()
-        .getStoryKinds()
-        .some((kind) => kind.match(/\.|\|/))
-    ) {
-      return {
-        hierarchyRootSeparator: '|',
-        hierarchySeparator: /\/|\./,
-      };
-    }
-    return { hierarchySeparator: '/' };
-  };
-
   addDecorator = (decorator: DecoratorFunction) => {
     this._storyStore.addGlobalMetadata({ decorators: [decorator], parameters: {} });
   };

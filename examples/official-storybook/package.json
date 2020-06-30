@@ -41,7 +41,7 @@
     "@storybook/react": "6.0.0-beta.37",
     "@storybook/source-loader": "6.0.0-beta.37",
     "@storybook/theming": "6.0.0-beta.37",
-    "chromatic": "^4.0.2",
+    "chromatic": "^5.0.0",
     "cors": "^2.8.5",
     "cross-env": "^7.0.0",
     "enzyme-to-json": "^3.4.1",
