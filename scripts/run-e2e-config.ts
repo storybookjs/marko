@@ -3,8 +3,11 @@ import { Parameters } from './run-e2e';
 const fromDeps = (...args: string[]): string =>
   [
     'cd {{name}}-v{{version}}',
+    // Create `yarn.lock` to force Yarn to consider adding deps in this directory
+    // and not look for a yarn workspace in parent directory
+    'touch yarn.lock',
     'yarn init --yes',
-    args.length && `yarn add ${args.join(' ')} --silent`,
+    args.length && `yarn add ${args.join(' ')}`,
   ]
     .filter(Boolean)
     .join(' && ');
