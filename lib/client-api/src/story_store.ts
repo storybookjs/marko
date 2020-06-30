@@ -176,7 +176,10 @@ export default class StoryStore {
   finishConfiguring() {
     this._configuring = false;
 
-    const { globalArgs: initialGlobalArgs, globalArgTypes } = this._globalMetadata.parameters;
+    const {
+      globalArgs: initialGlobalArgs = {},
+      globalArgTypes = {},
+    } = this._globalMetadata.parameters;
 
     const defaultGlobalArgs: Args = globalArgTypes
       ? Object.entries(globalArgTypes as Record<string, { defaultValue: any }>).reduce(
@@ -188,13 +191,18 @@ export default class StoryStore {
         )
       : {};
 
+    const allowedGlobalArgs = new Set([
+      ...Object.keys(initialGlobalArgs),
+      ...Object.keys(globalArgTypes),
+    ]);
+
     // To deal with HMR & persistence, we consider the previous value of global args, and:
     //   1. Remove any keys that are not in the new parameter
     //   2. Preference any keys that were already set
     //   3. Use any new keys from the new parameter
     this._globalArgs = Object.entries(this._globalArgs || {}).reduce(
       (acc, [key, previousValue]) => {
-        if (acc[key]) acc[key] = previousValue;
+        if (allowedGlobalArgs.has(key)) acc[key] = previousValue;
 
         return acc;
       },

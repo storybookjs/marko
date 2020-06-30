@@ -282,6 +282,7 @@ describe('preview.story_store', () => {
       addStoryToStore(store, 'a', '1', () => 0);
       store.finishConfiguring();
       expect(store.getRawStory('a', '1').globalArgs).toEqual({
+        // NOTE: we keep arg1, even though it doesn't have a globalArgType
         arg1: 'arg1',
         arg2: 2,
         arg3: { complex: { object: ['type'] } },
@@ -305,12 +306,26 @@ describe('preview.story_store', () => {
           globalArgs: {
             arg1: 'arg1',
             arg2: 2,
-            arg3: { complex: { object: ['type'] } },
+            arg4: 4,
+          },
+          globalArgTypes: {
+            arg2: { defaultValue: 'arg2' },
+            arg3: { defaultValue: { complex: { object: ['type'] } } },
+            arg4: {},
           },
         },
       });
       addStoryToStore(store, 'a', '1', () => 0);
       store.finishConfiguring();
+
+      expect(store.getRawStory('a', '1').globalArgs).toEqual({
+        // We keep arg1, even though it doesn't have a globalArgType, as it is set in globalArgs
+        arg1: 'arg1',
+        // We use the value of arg2 that was set in globalArgs
+        arg2: 2,
+        arg3: { complex: { object: ['type'] } },
+        arg4: 4,
+      });
 
       // HMR
       store.startConfiguring();
@@ -318,11 +333,15 @@ describe('preview.story_store', () => {
         decorators: [],
         parameters: {
           globalArgs: {
-            arg2: 2,
-            // Although we have changed the default there is no way to tell that the user didn't change
-            // it themselves
-            arg3: { complex: { object: ['changed'] } },
-            arg4: 'new',
+            arg2: 3,
+          },
+          globalArgTypes: {
+            arg2: { defaultValue: 'arg2' },
+            arg3: { defautlValue: { complex: { object: ['changed'] } } },
+            // XXX: note this currently wouldn't fail because parameters.globalArgs.arg4 isn't cleared
+            // due to #10005, see below
+            arg4: {}, // has no default value set but we need to make sure we don't lose it
+            arg5: { defaultValue: 'new' },
           },
         },
       });
@@ -332,9 +351,13 @@ describe('preview.story_store', () => {
         // You cannot remove a global arg in HMR currently, because you cannot remove the
         // parameter (see https://github.com/storybookjs/storybook/issues/10005)
         arg1: 'arg1',
+        // We should keep the previous values because we cannot tell if the user changed it or not in the UI
+        // and we don't want to revert to the defaults every HMR
         arg2: 2,
         arg3: { complex: { object: ['type'] } },
-        arg4: 'new',
+        arg4: 4,
+        // We take the new value here as it wasn't defined before
+        arg5: 'new',
       });
     });
 
@@ -344,6 +367,7 @@ describe('preview.story_store', () => {
           arg1: 'arg1',
           arg2: 2,
           arg3: { complex: { object: ['type'] } },
+          arg4: 4,
         },
       });
 
@@ -355,20 +379,26 @@ describe('preview.story_store', () => {
         decorators: [],
         parameters: {
           globalArgs: {
-            arg2: 2,
-            // Although we have changed the default there is no way to tell that the user didn't change
-            // it themselves
-            arg3: { complex: { object: ['changed'] } },
-            arg4: 'new',
+            arg2: 3,
+          },
+          globalArgTypes: {
+            arg2: { defaultValue: 'arg2' },
+            arg3: { defaultValue: { complex: { object: ['changed'] } } },
+            arg4: {}, // has no default value set but we need to make sure we don't lose it
+            arg5: { defaultValue: 'new' },
           },
         },
       });
       store.finishConfiguring();
 
       expect(store.getRawStory('a', '1').globalArgs).toEqual({
+        // We should keep the previous values because we cannot tell if the user changed it or not in the UI
+        // and we don't want to revert to the defaults every HMR
         arg2: 2,
         arg3: { complex: { object: ['type'] } },
-        arg4: 'new',
+        arg4: 4,
+        // We take the new value here as it wasn't defined before
+        arg5: 'new',
       });
     });
 
