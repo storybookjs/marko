@@ -183,6 +183,9 @@ jobs:
       - run:
           name: cypress run
           command: yarn test:e2e
+      - store_artifacts:
+          path: /tmp/storybook/cypress
+          destination: cypress
 
   smoke-tests:
     <<: *defaults
