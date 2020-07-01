@@ -1,6 +1,6 @@
 import deprecate from 'util-deprecate';
 import dedent from 'ts-dedent';
-import { sanitize, parseKind } from '@storybook/csf';
+import { sanitize } from '@storybook/csf';
 import mapValues from 'lodash/mapValues';
 
 import { StoryId, StoryKind, Args, Parameters, combineParameters } from '../index';
@@ -58,9 +58,6 @@ export interface Story {
   parameters?: {
     fileName: string;
     options: {
-      hierarchyRootSeparator?: RegExp;
-      hierarchySeparator?: RegExp;
-      showRoots?: boolean;
       [optionName: string]: any;
     };
     docsOnly?: boolean;
@@ -79,9 +76,6 @@ export interface StoryInput {
   parameters: {
     fileName: string;
     options: {
-      hierarchyRootSeparator: RegExp;
-      hierarchySeparator: RegExp;
-      showRoots?: boolean;
       [optionName: string]: any;
     };
     docsOnly?: boolean;
@@ -119,25 +113,10 @@ export interface SetStoriesPayloadV2 extends SetStoriesPayload {
   };
 }
 
-const warnUsingHierarchySeparatorsAndShowRoots = deprecate(
+const warnChangedDefaultHierarchySeparators = deprecate(
   () => {},
   dedent`
-    You cannot use both the hierarchySeparator/hierarchyRootSeparator and showRoots options.
-  `
-);
-
-const warnRemovingHierarchySeparators = deprecate(
-  () => {},
-  dedent`
-    hierarchySeparator and hierarchyRootSeparator are deprecated and will be removed in Storybook 6.0.
-    Read more about it in the migration guide: https://github.com/storybookjs/storybook/blob/master/MIGRATION.md
-  `
-);
-
-const warnChangingDefaultHierarchySeparators = deprecate(
-  () => {},
-  dedent`
-    The default hierarchy separators are changing in Storybook 6.0.
+    The default hierarchy separators changed in Storybook 6.0.
     '|' and '.' will no longer create a hierarchy, but codemods are available.
     Read more about it in the migration guide: https://github.com/storybookjs/storybook/blob/master/MIGRATION.md
   `
@@ -179,39 +158,21 @@ export const transformStoriesRawToStoriesHash = (
     .filter(Boolean)
     .reduce((acc, item) => {
       const { kind, parameters } = item;
-      const {
-        hierarchyRootSeparator: rootSeparator = undefined,
-        hierarchySeparator: groupSeparator = undefined,
-        showRoots = undefined,
-      } = { ...provider.getConfig(), ...((parameters && parameters.options) || {}) };
+      const { showRoots } = provider.getConfig();
 
-      const usingShowRoots = typeof showRoots !== 'undefined';
+      const setShowRoots = typeof showRoots !== 'undefined';
+      if (anyKindMatchesOldHierarchySeparators && !setShowRoots) {
+        warnChangedDefaultHierarchySeparators();
+      }
 
-      // Kind splitting behavior as per https://github.com/storybookjs/storybook/issues/8793
       let root = '';
       let groups: string[];
-      // 1. If the user has passed separators, use the old behavior but warn them
-      if (typeof rootSeparator !== 'undefined' || typeof groupSeparator !== 'undefined') {
-        warnRemovingHierarchySeparators();
-        if (usingShowRoots) warnUsingHierarchySeparatorsAndShowRoots();
-        ({ root, groups } = parseKind(kind, {
-          rootSeparator: rootSeparator || '|',
-          groupSeparator: groupSeparator || /\/|\./,
-        }));
-
-        // 2. If the user hasn't passed separators, but is using | or . in kinds, use the old behaviour but warn
-      } else if (anyKindMatchesOldHierarchySeparators && !usingShowRoots) {
-        warnChangingDefaultHierarchySeparators();
-        ({ root, groups } = parseKind(kind, { rootSeparator: '|', groupSeparator: /\/|\./ }));
-
-        // 3. If the user passes showRoots, or doesn't match above, do a simpler splitting.
+      const parts: string[] = kind.split('/');
+      // Default showRoots to true if they didn't set it.
+      if ((!setShowRoots || showRoots) && parts.length > 1) {
+        [root, ...groups] = parts;
       } else {
-        const parts: string[] = kind.split('/');
-        if (showRoots && parts.length > 1) {
-          [root, ...groups] = parts;
-        } else {
-          groups = parts;
-        }
+        groups = parts;
       }
 
       const rootAndGroups = []

@@ -22,6 +22,9 @@ const loadStories = (
   framework: string,
   { clientApi, storyStore }: { clientApi: ClientApi; storyStore: StoryStore }
 ) => () => {
+  // Make sure we don't try to define a kind more than once within the same load
+  const loadedKinds = new Set();
+
   let reqs = null;
   // todo discuss / improve type check
   if (Array.isArray(loadable)) {
@@ -106,6 +109,18 @@ const loadStories = (
       args: kindArgs,
       argTypes: kindArgTypes,
     } = meta;
+
+    if (loadedKinds.has(kindName)) {
+      throw new Error(
+        dedent`
+          Duplicate title '${kindName}' used in multiple files; use unique titles or a primary file for '${kindName}' with re-exported stories.
+
+          https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#removed-support-for-duplicate-kinds
+        `
+      );
+    }
+    loadedKinds.add(kindName);
+
     // We pass true here to avoid the warning about HMR. It's cool clientApi, we got this
     // todo discuss: TS now wants a NodeModule; should we fix this differently?
     const kind = clientApi.storiesOf(kindName, true as any);

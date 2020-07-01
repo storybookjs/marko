@@ -2,35 +2,27 @@
 import path from 'path';
 import { sync as spawnSync } from 'cross-spawn';
 import { packageNames } from '@storybook/codemod';
-import {
-  getBabelDependencies,
-  getPackageJson,
-  getVersion,
-  getVersions,
-  installDependencies,
-  writePackageJson,
-} from '../../helpers';
-import { PackageJson } from '../../PackageJson';
+import { getBabelDependencies } from '../../helpers';
 import { NpmOptions } from '../../NpmOptions';
+import { JsPackageManager, PackageJson, writePackageJson } from '../../js-package-manager';
 
 async function updatePackage(
+  packageManager: JsPackageManager,
   devDependencies: PackageJson['devDependencies'],
   oldName: string,
-  newName: string,
-  npmOptions: NpmOptions
+  newName: string
 ) {
   if (devDependencies[oldName]) {
     delete devDependencies[oldName];
-    devDependencies[newName] = await getVersion(npmOptions, newName);
+    devDependencies[newName] = await packageManager.getVersion(newName);
   }
 }
 
-async function updatePackageJson(npmOptions: NpmOptions) {
-  const packageJson = getPackageJson();
+async function updatePackageJson(packageManager: JsPackageManager, npmOptions: NpmOptions) {
+  const packageJson = packageManager.retrievePackageJson();
   const { devDependencies } = packageJson;
 
-  const [actionsVersion, linksVersion] = await getVersions(
-    npmOptions,
+  const [actionsVersion, linksVersion] = await packageManager.getVersions(
     '@storybook/addon-actions',
     '@storybook/addon-links'
   );
@@ -41,7 +33,7 @@ async function updatePackageJson(npmOptions: NpmOptions) {
   await Promise.all(
     Object.keys(packageNames).map((oldName) => {
       const newName = packageNames[oldName];
-      return updatePackage(devDependencies, oldName, newName, npmOptions);
+      return updatePackage(packageManager, devDependencies, oldName, newName);
     })
   );
 
@@ -51,10 +43,10 @@ async function updatePackageJson(npmOptions: NpmOptions) {
 
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
 
   if (babelDependencies.length > 0) {
-    installDependencies({ ...npmOptions, packageJson }, babelDependencies);
+    packageManager.addDependencies({ ...npmOptions, packageJson }, babelDependencies);
   }
 }
 
@@ -76,7 +68,7 @@ function updateSourceCode(parser: string) {
   });
 }
 
-export default async (parser: string, npmOptions: NpmOptions) => {
-  await updatePackageJson(npmOptions);
+export default async (packageManager: JsPackageManager, parser: string, npmOptions: NpmOptions) => {
+  await updatePackageJson(packageManager, npmOptions);
   updateSourceCode(parser);
 };

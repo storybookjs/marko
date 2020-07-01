@@ -1,5 +1,9 @@
 import {
   Addon,
+  StoryId,
+  StoryName,
+  StoryKind,
+  ViewMode,
   StoryIdentifier,
   StoryFn,
   Parameters,
@@ -24,6 +28,18 @@ export interface StoryMetadata {
   decorators: DecoratorFunction[];
 }
 export type ArgTypesEnhancer = (context: StoryContext) => ArgTypes;
+
+type StorySpecifier = StoryId | { name: StoryName; kind: StoryKind } | '*';
+
+export interface StoreSelectionSpecifier {
+  storySpecifier: StorySpecifier;
+  viewMode: ViewMode;
+}
+
+export interface StoreSelection {
+  storyId: StoryId;
+  viewMode: ViewMode;
+}
 
 export type AddStoryArgs = StoryIdentifier & {
   storyFn: StoryFn<any>;

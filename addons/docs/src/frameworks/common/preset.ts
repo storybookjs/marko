@@ -13,18 +13,26 @@ const context = coreDirName.includes('node_modules')
   ? path.join(coreDirName, '../../') // Real life case, already in node_modules
   : path.join(coreDirName, '../../node_modules'); // SB Monorepo
 
-function createBabelOptions(babelOptions?: any, configureJSX?: boolean) {
-  if (!configureJSX) {
-    return babelOptions;
-  }
+// for frameworks that are not working with react, we need to configure
+// the jsx to transpile mdx, for now there will be a flag for that
+// for more complex solutions we can find alone that we need to add '@babel/plugin-transform-react-jsx'
+type BabelParams = {
+  babelOptions?: any;
+  mdxBabelOptions?: any;
+  configureJSX?: boolean;
+};
+function createBabelOptions({ babelOptions, mdxBabelOptions, configureJSX }: BabelParams) {
+  const babelPlugins = mdxBabelOptions?.plugins || babelOptions?.plugins || [];
+  const plugins = configureJSX
+    ? [...babelPlugins, '@babel/plugin-transform-react-jsx']
+    : babelPlugins;
 
-  const babelPlugins = (babelOptions && babelOptions.plugins) || [];
   return {
+    // don't use the root babelrc by default (users can override this in mdxBabelOptions)
+    babelrc: false,
     ...babelOptions,
-    // for frameworks that are not working with react, we need to configure
-    // the jsx to transpile mdx, for now there will be a flag for that
-    // for more complex solutions we can find alone that we need to add '@babel/plugin-transform-react-jsx'
-    plugins: [...babelPlugins, '@babel/plugin-transform-react-jsx'],
+    ...mdxBabelOptions,
+    plugins,
   };
 }
 
@@ -38,8 +46,10 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
   // also, these babel options are chained with other presets.
   const {
     babelOptions,
+    mdxBabelOptions,
     configureJSX = options.framework !== 'react', // if not user-specified
-    sourceLoaderOptions = {},
+    sourceLoaderOptions = options.framework === 'react' ? null : {},
+    transcludeMarkdown = false,
   } = options;
 
   const mdxLoaderOptions = {
@@ -58,12 +68,32 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
       ]
     : [];
 
+  let rules = module.rules || [];
+  if (transcludeMarkdown) {
+    rules = [
+      ...rules.filter((rule: any) => rule.test.toString() !== '/\\.md$/'),
+      {
+        test: /\.md$/,
+        use: [
+          {
+            loader: require.resolve('babel-loader'),
+            options: createBabelOptions({ babelOptions, mdxBabelOptions, configureJSX }),
+          },
+          {
+            loader: require.resolve('@mdx-js/loader'),
+            options: mdxLoaderOptions,
+          },
+        ],
+      },
+    ];
+  }
+
   const result = {
     ...webpackConfig,
     module: {
       ...module,
       rules: [
-        ...(module.rules || []),
+        ...rules,
         {
           test: /\.js$/,
           include: new RegExp(`node_modules\\${path.sep}acorn-jsx`),
@@ -81,7 +111,7 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
           use: [
             {
               loader: require.resolve('babel-loader'),
-              options: createBabelOptions(babelOptions, configureJSX),
+              options: createBabelOptions({ babelOptions, mdxBabelOptions, configureJSX }),
             },
             {
               loader: require.resolve('@mdx-js/loader'),
@@ -98,7 +128,7 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
           use: [
             {
               loader: require.resolve('babel-loader'),
-              options: createBabelOptions(babelOptions, configureJSX),
+              options: createBabelOptions({ babelOptions, mdxBabelOptions, configureJSX }),
             },
             {
               loader: require.resolve('@mdx-js/loader'),

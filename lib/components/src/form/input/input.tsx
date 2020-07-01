@@ -28,9 +28,12 @@ const styles = ({ theme }: { theme: Theme }): CSSObject => ({
   borderRadius: theme.input.borderRadius,
   fontSize: theme.typography.size.s2 - 1,
   lineHeight: '20px',
-  padding: '.42em 1em', // 32
+  padding: '6px 10px', // 32
 
-  '&:focus': { boxShadow: `${theme.color.secondary} 0 0 0 1px inset` },
+  '&:focus': {
+    boxShadow: `${theme.color.secondary} 0 0 0 1px inset`,
+    outline: 'none',
+  },
   '&[disabled]': {
     cursor: 'not-allowed',
     opacity: 0.5,

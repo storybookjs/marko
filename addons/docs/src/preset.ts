@@ -7,6 +7,9 @@ const getFrameworkPresets = (framework: string) => {
   }
 };
 
-module.exports = ({ framework }: any) => {
-  return [require.resolve('./frameworks/common/preset'), ...getFrameworkPresets(framework)];
+module.exports = (storybookOptions: any, presetOptions: any) => {
+  return [
+    { name: require.resolve('./frameworks/common/preset'), options: presetOptions },
+    ...getFrameworkPresets(storybookOptions.framework),
+  ];
 };

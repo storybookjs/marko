@@ -334,50 +334,6 @@ describe('preview.client_api', () => {
       ]);
     });
 
-    describe('getSeparators', () => {
-      it('returns values set via parameters', () => {
-        const {
-          clientApi: { getSeparators, storiesOf, addParameters },
-        } = getContext();
-
-        const options = { hierarchySeparator: /a/, hierarchyRootSeparator: 'b' };
-        addParameters({ options });
-        storiesOf('kind 1', module).add('name 1', () => '1');
-        expect(getSeparators()).toEqual(options);
-      });
-
-      it('returns old defaults if kind uses old separators', () => {
-        const {
-          clientApi: { getSeparators, storiesOf },
-        } = getContext();
-
-        storiesOf('kind|1', module).add('name 1', () => '1');
-        expect(getSeparators()).toEqual({
-          hierarchySeparator: /\/|\./,
-          hierarchyRootSeparator: '|',
-        });
-      });
-
-      it('returns new values if showRoots is set', () => {
-        const {
-          clientApi: { getSeparators, storiesOf, addParameters },
-        } = getContext();
-        addParameters({ options: { showRoots: false } });
-
-        storiesOf('kind|1', module).add('name 1', () => '1');
-        expect(getSeparators()).toEqual({ hierarchySeparator: '/' });
-      });
-
-      it('returns new values if kind does not use old separators', () => {
-        const {
-          clientApi: { getSeparators, storiesOf },
-        } = getContext();
-
-        storiesOf('kind/1', module).add('name 1', () => '1');
-        expect(getSeparators()).toEqual({ hierarchySeparator: '/' });
-      });
-    });
-
     it('reads filename from module', () => {
       const {
         clientApi: { getStorybook, storiesOf },
@@ -507,7 +463,7 @@ describe('preview.client_api', () => {
       storiesOf('kind2', (module2 as unknown) as NodeModule).add('story2', jest.fn());
       storyStore.finishConfiguring();
 
-      let [event, args] = mockChannelEmit.mock.calls[0];
+      let [event, args] = mockChannelEmit.mock.calls[1];
       expect(event).toEqual(Events.SET_STORIES);
       expect(Object.values(args.stories as [{ kind: string }]).map((v) => v.kind)).toEqual([
         'kind0',
@@ -526,7 +482,7 @@ describe('preview.client_api', () => {
       storyStore.finishConfiguring();
 
       // eslint-disable-next-line prefer-destructuring
-      [event, args] = mockChannelEmit.mock.calls[0];
+      [event, args] = mockChannelEmit.mock.calls[1];
 
       expect(event).toEqual(Events.SET_STORIES);
       expect(Object.values(args.stories as [{ kind: string }]).map((v) => v.kind)).toEqual([

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/client-logger",
-  "version": "6.0.0-beta.23",
+  "version": "6.0.0-beta.38",
   "description": "",
   "keywords": [
     "storybook"
@@ -29,8 +29,7 @@
   },
   "dependencies": {
     "core-js": "^3.0.1",
-    "global": "^4.3.2",
-    "loglevel": "^1.6.7"
+    "global": "^4.3.2"
   },
   "publishConfig": {
     "access": "public"

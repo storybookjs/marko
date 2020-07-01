@@ -10,20 +10,6 @@ import {
 import { addons } from './index';
 import { StoryGetter, StoryContext, Args } from './types';
 
-interface StoryStore {
-  fromId: (
-    id: string
-  ) => {
-    parameters: {
-      [parameterKey: string]: any;
-    };
-  };
-  getSelection: () => {
-    storyId: string;
-    viewMode: string;
-  };
-}
-
 interface Hook {
   name: string;
   memoizedState?: any;

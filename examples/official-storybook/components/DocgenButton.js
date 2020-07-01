@@ -17,6 +17,14 @@ import PropTypes from 'prop-types';
  *  * `"email"` An email address.
  *  * `"tel"` A phone or fax number. Shows the phone number keypad on
  *      mobile keyboards.
+ *
+ * Here is a test for code blocks
+ *
+ * ```jsx
+ * const Foo = () => (
+ *  <div>foo</div>
+ * );
+ * ```
  */
 export const DocgenButton = ({ disabled, label, onClick }) => (
   <button type="button" disabled={disabled} onClick={onClick}>

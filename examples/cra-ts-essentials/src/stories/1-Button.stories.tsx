@@ -1,22 +1,20 @@
 import React from 'react';
-import { action } from '@storybook/addon-actions';
 import { Button } from '@storybook/react/demo';
-import { text } from '@storybook/addon-knobs';
 
 export default {
   title: 'Button',
   component: Button,
+  argTypes: { onClick: { action: 'clicked' } },
 };
 
-// eslint-disable-next-line no-underscore-dangle
-export const _text = () => (
-  <Button onClick={action('clicked')}>{text('label', 'testing knobs')}</Button>
-);
+const ButtonStory = (args: any) => <Button {...args} />;
 
-export const emoji = () => (
-  <Button onClick={action('clicked')}>
-    <span role="img" aria-label="so cool">
-      😀 😎 👍 💯
-    </span>
-  </Button>
-);
+export const Text = ButtonStory.bind({});
+Text.args = {
+  children: 'Hello button',
+};
+
+export const Emoji = ButtonStory.bind({});
+Emoji.args = {
+  children: '😀 😎 👍 💯',
+};

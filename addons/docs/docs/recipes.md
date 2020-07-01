@@ -44,11 +44,12 @@ Perhaps you want to write your stories in CSF, but document them in MDX? Here's 
 import React from 'react';
 import { Button } from './Button';
 
-export default {
-  title: 'Demo/Button',
-  component: Button,
-  includeStories: [], // or don't load this file at all
-};
+// NOTE: no default export since `Button.stories.mdx` is the story file for `Button` now
+//
+// export default {
+//   title: 'Demo/Button',
+//   component: Button,
+// };
 
 export const basic = () => <Button>Basic</Button>;
 basic.parameters = {
@@ -60,7 +61,7 @@ basic.parameters = {
 
 ```md
 import { Meta, Story } from '@storybook/addon-docs/blocks';
-import \* as stories from './Button.stories.js';
+import * as stories from './Button.stories.js';
 import { SomeComponent } from 'path/to/SomeComponent';
 
 <Meta title="Demo/Button" component={Button} />

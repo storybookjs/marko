@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import { Badge } from '@storybook/components';
 import { API } from '@storybook/api';
 
-import { shortcutToHumanString } from '../libs/shortcut';
+import { shortcutToHumanString } from '@storybook/api/shortcut';
 import { MenuItemIcon } from '../components/sidebar/Menu';
 
 const focusableUIElements = {

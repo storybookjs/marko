@@ -36,17 +36,25 @@ const formatTime = (value: Date | number) => {
   return `${hours}:${minutes}`;
 };
 
-const FlexSpaced = styled.div({
+const FlexSpaced = styled.div(({ theme }) => ({
   flex: 1,
   display: 'flex',
-  '&& > *': {
+
+  input: {
     marginLeft: 10,
+    flex: 1,
+    height: 32, // hardcode height bc Chromium bug https://bugs.chromium.org/p/chromium/issues/detail?id=417606
+
+    '&::-webkit-calendar-picker-indicator': {
+      opacity: 0.5,
+      height: 12,
+      filter: theme.base === 'light' ? undefined : 'invert(1)',
+    },
   },
-  '&& > *:first-of-type': {
+  'input:first-of-type': {
     marginLeft: 0,
   },
-});
-const FlexInput = styled(Form.Input)({ flex: 1 });
+}));
 
 export type DateProps = ControlProps<DateValue> & DateConfig;
 export const DateControl: FC<DateProps> = ({ name, value, onChange }) => {
@@ -87,7 +95,7 @@ export const DateControl: FC<DateProps> = ({ name, value, onChange }) => {
 
   return (
     <FlexSpaced>
-      <FlexInput
+      <Form.Input
         type="date"
         max="9999-12-31" // I do this because of a rendering bug in chrome
         ref={dateRef as RefObject<HTMLInputElement>}
@@ -95,7 +103,7 @@ export const DateControl: FC<DateProps> = ({ name, value, onChange }) => {
         name={`${name}date`}
         onChange={onDateChange}
       />
-      <FlexInput
+      <Form.Input
         type="time"
         id={`${name}time`}
         name={`${name}time`}

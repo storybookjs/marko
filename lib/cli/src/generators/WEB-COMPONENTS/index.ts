@@ -1,45 +1,11 @@
-import fse from 'fs-extra';
-import path from 'path';
-import {
-  getVersionedPackages,
-  retrievePackageJson,
-  writePackageJson,
-  getBabelDependencies,
-  installDependencies,
-} from '../../helpers';
-import { StoryFormat } from '../../project_types';
-import { Generator } from '../Generator';
+import { baseGenerator, Generator } from '../baseGenerator';
+import { copyTemplate } from '../../helpers';
 
-const generator: Generator = async (npmOptions, { storyFormat }) => {
-  const packages = [
-    '@storybook/web-components',
-    '@storybook/addon-actions',
-    '@storybook/addon-links',
-    'lit-html',
-  ];
-
-  const versionedPackages = await getVersionedPackages(npmOptions, ...packages);
-
-  fse.copySync(path.resolve(__dirname, 'template/'), '.', { overwrite: true });
-
-  if (storyFormat === StoryFormat.MDX) {
-    // TODO: handle adding of docs mode
-  }
-
-  const packageJson = await retrievePackageJson();
-
-  packageJson.dependencies = packageJson.dependencies || {};
-  packageJson.devDependencies = packageJson.devDependencies || {};
-
-  packageJson.scripts = packageJson.scripts || {};
-  packageJson.scripts.storybook = 'start-storybook -p 6006';
-  packageJson.scripts['build-storybook'] = 'build-storybook';
-
-  writePackageJson(packageJson);
-
-  const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
-
-  installDependencies({ ...npmOptions, packageJson }, [...versionedPackages, ...babelDependencies]);
+const generator: Generator = async (packageManager, npmOptions, options) => {
+  baseGenerator(packageManager, npmOptions, options, 'web-components', {
+    extraPackages: ['lit-html'],
+  });
+  copyTemplate(__dirname, options.storyFormat);
 };
 
 export default generator;

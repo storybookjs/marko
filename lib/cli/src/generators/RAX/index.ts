@@ -1,35 +1,9 @@
-import {
-  getVersions,
-  retrievePackageJson,
-  writePackageJson,
-  getBabelDependencies,
-  installDependencies,
-  copyTemplate,
-} from '../../helpers';
-import { Generator } from '../Generator';
+import { baseGenerator, Generator } from '../baseGenerator';
+import { writePackageJson } from '../../js-package-manager';
 
-const generator: Generator = async (npmOptions, { storyFormat }) => {
-  const [
-    storybookVersion,
-    actionsVersion,
-    linksVersion,
-    addonsVersion,
-    latestRaxVersion,
-  ] = await getVersions(
-    npmOptions,
-    '@storybook/rax',
-    '@storybook/addon-actions',
-    '@storybook/addon-links',
-    '@storybook/addons',
-    'rax'
-  );
-
-  copyTemplate(__dirname, storyFormat);
-
-  const packageJson = await retrievePackageJson();
-
-  packageJson.dependencies = packageJson.dependencies || {};
-  packageJson.devDependencies = packageJson.devDependencies || {};
+const generator: Generator = async (packageManager, npmOptions, options) => {
+  const [latestRaxVersion] = await packageManager.getVersions('rax');
+  const packageJson = packageManager.retrievePackageJson();
 
   const raxVersion = packageJson.dependencies.rax || latestRaxVersion;
 
@@ -42,21 +16,11 @@ const generator: Generator = async (npmOptions, { storyFormat }) => {
   packageJson.dependencies['rax-text'] = packageJson.dependencies['rax-text'] || raxVersion;
   packageJson.dependencies['rax-view'] = packageJson.dependencies['rax-view'] || raxVersion;
 
-  packageJson.scripts = packageJson.scripts || {};
-  packageJson.scripts.storybook = 'start-storybook -p 6006';
-  packageJson.scripts['build-storybook'] = 'build-storybook';
-
   writePackageJson(packageJson);
 
-  const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
-
-  installDependencies({ ...npmOptions, packageJson }, [
-    `@storybook/rax@${storybookVersion}`,
-    `@storybook/addon-actions@${actionsVersion}`,
-    `@storybook/addon-links@${linksVersion}`,
-    `@storybook/addons@${addonsVersion}`,
-    ...babelDependencies,
-  ]);
+  baseGenerator(packageManager, npmOptions, options, 'rax', {
+    extraPackages: ['rax'],
+  });
 };
 
 export default generator;

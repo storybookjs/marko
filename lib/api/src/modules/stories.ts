@@ -7,6 +7,7 @@ import {
   STORY_CHANGED,
   SELECT_STORY,
   SET_STORIES,
+  CURRENT_STORY_WAS_SET,
 } from '@storybook/core-events';
 
 import { logger } from '@storybook/client-logger';
@@ -71,40 +72,6 @@ export const init: ModuleFn = ({
   storyId: initialStoryId,
   viewMode: initialViewMode,
 }) => {
-  const setInitialStory = () => {
-    const { storyId, viewMode, storiesHash } = store.getState();
-    const story = api.getData(storyId);
-
-    if (viewMode === 'settings' || viewMode === 'page') {
-      return;
-    }
-
-    if (storyId && storyId.match(/--\*$/)) {
-      const idStart = storyId.slice(0, -1); // drop the * at the end
-      const firstKindLeaf = Object.values(storiesHash).find(
-        (s: Story | Group) => !s.children && s.id.substring(0, idStart.length) === idStart
-      );
-
-      if (viewMode && firstKindLeaf) {
-        api.selectStory(firstKindLeaf.id, undefined, {});
-      }
-    } else if (!storyId || storyId === '*' || !story) {
-      // when there's no storyId or the storyId item doesn't exist
-      // we pick the first leaf and navigate
-      const firstLeaf = Object.values(storiesHash).find((s: Story | Group) => !s.children);
-
-      if (viewMode && firstLeaf) {
-        api.selectStory(firstLeaf.id, undefined, {});
-      }
-    } else if (story && !story.isLeaf) {
-      // When story exists but if it is not the leaf story, it finds the proper
-      // leaf story from any depth.
-      const firstLeafStoryId = api.findLeafStoryId(storiesHash, storyId);
-
-      api.selectStory(firstLeafStoryId, undefined, {});
-    }
-  };
-
   const api: SubAPI = {
     storyId: toId,
     getData: (storyId, refId) => {
@@ -229,12 +196,6 @@ export const init: ModuleFn = ({
         storiesConfigured: true,
         storiesFailed: error,
       });
-
-      const { refId } = store.getState();
-
-      if (!refId) {
-        setInitialStory();
-      }
     },
     selectStory: (kindOrId, story = undefined, options = {}) => {
       const { ref, viewMode: viewModeFromArgs } = options;
@@ -251,10 +212,18 @@ export const init: ModuleFn = ({
         const s = hash[kindOrId] || hash[sanitize(kindOrId)];
         // eslint-disable-next-line no-nested-ternary
         const id = s ? (s.children ? s.children[0] : s.id) : kindOrId;
-        const viewMode =
+        let viewMode =
           viewModeFromArgs || (s && s.parameters.viewMode)
             ? s.parameters.viewMode
             : viewModeFromState;
+
+        // In some cases, the viewMode could be something other than docs/story
+        // ('settings', for example) and therefore we should make sure we go back
+        // to the 'story' viewMode when navigating away from those pages.
+        if (!viewMode.match(/docs|story/)) {
+          viewMode = 'story';
+        }
+
         const p = s && s.refId ? `/${viewMode}/${s.refId}_${id}` : `/${viewMode}/${id}`;
 
         navigate(p);
@@ -294,6 +263,20 @@ export const init: ModuleFn = ({
   };
 
   const initModule = () => {
+    // On initial load, the local iframe will select the first story (or other "selection specifier")
+    // and emit CURRENT_STORY_WAS_SET with the id. We need to ensure we respond to this change.
+    // Later when we change story via the manager (or SELECT_STORY below), we'll already be at the
+    // correct path before CURRENT_STORY_WAS_SET is emitted, so this is less important (the navigate is a no-op)
+    // Note this is the case for refs also.
+    fullAPI.on(CURRENT_STORY_WAS_SET, function handleCurrentStoryWasSet({ storyId, viewMode }) {
+      const { source }: { source: string } = this;
+      const [sourceType] = getSourceType(source);
+
+      if (sourceType === 'local' && storyId && viewMode) {
+        navigate(`/${viewMode}/${storyId}`);
+      }
+    });
+
     fullAPI.on(STORY_CHANGED, function handleStoryChange(storyId: string) {
       const { source }: { source: string } = this;
       const [sourceType] = getSourceType(source);

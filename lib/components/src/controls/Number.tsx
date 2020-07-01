@@ -1,7 +1,12 @@
 import React, { FC, ChangeEvent } from 'react';
+import { styled } from '@storybook/theming';
 
 import { Form } from '../form';
 import { ControlProps, NumberValue, NumberConfig } from './types';
+
+const Wrapper = styled.label({
+  display: 'flex',
+});
 
 type NumberProps = ControlProps<NumberValue | null> & NumberConfig;
 
@@ -18,15 +23,18 @@ export const NumberControl: FC<NumberProps> = ({ name, value, onChange, min, max
   };
 
   return (
-    <Form.Input
-      value={value}
-      type="number"
-      name={name}
-      min={min}
-      max={max}
-      step={step}
-      onChange={handleChange}
-      size="flex"
-    />
+    <Wrapper>
+      <Form.Input
+        value={value}
+        type="number"
+        name={name}
+        min={min}
+        max={max}
+        step={step}
+        onChange={handleChange}
+        size="flex"
+        placeholder="Adjust number dynamically"
+      />
+    </Wrapper>
   );
 };

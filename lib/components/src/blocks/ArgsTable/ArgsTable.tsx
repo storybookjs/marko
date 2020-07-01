@@ -1,135 +1,156 @@
 import React, { FC } from 'react';
 import { styled, ignoreSsrWarning } from '@storybook/theming';
 import { opacify, transparentize, darken, lighten } from 'polished';
-import { ArgRow, ArgRowProps } from './ArgRow';
-import { SectionRow, SectionRowProps } from './SectionRow';
-import { ArgTypes, Args } from './types';
+import { ArgRow } from './ArgRow';
+import { SectionRow } from './SectionRow';
+import { ArgType, ArgTypes, Args } from './types';
 import { EmptyBlock } from '../EmptyBlock';
+import { Link } from '../../typography/link/link';
 import { ResetWrapper } from '../../typography/DocumentFormatting';
 
-export const TableWrapper = styled.table<{ compact?: boolean }>(({ theme, compact }) => ({
-  '&&': {
-    // Resets for cascading/system styles
-    borderCollapse: 'collapse',
-    borderSpacing: 0,
-    color: theme.color.defaultText,
-    tr: {
-      border: 'none',
-      background: 'none',
-    },
+export const TableWrapper = styled.table<{ compact?: boolean; inAddonPanel?: boolean }>(
+  ({ theme, compact, inAddonPanel }) => ({
+    '&&': {
+      // Resets for cascading/system styles
+      borderCollapse: 'collapse',
+      borderSpacing: 0,
+      color: theme.color.defaultText,
 
-    'td, th': {
-      padding: 0,
-      border: 'none',
-      verticalAlign: 'top',
-    },
-    // End Resets
-
-    fontSize: theme.typography.size.s2,
-    lineHeight: '20px',
-    textAlign: 'left',
-    width: '100%',
-
-    // Margin collapse
-    marginTop: 25,
-    marginBottom: 40,
-
-    'th:first-of-type, td:first-of-type': {
-      paddingLeft: 20,
-    },
-
-    'th:last-of-type, td:last-of-type': {
-      paddingRight: 20,
-      ...(compact ? null : { width: '20%' }),
-    },
-
-    th: {
-      color:
-        theme.base === 'light'
-          ? transparentize(0.25, theme.color.defaultText)
-          : transparentize(0.45, theme.color.defaultText),
-      paddingTop: 10,
-      paddingBottom: 10,
-
-      '&:not(:first-of-type)': {
-        paddingLeft: 15,
-        paddingRight: 15,
+      'td, th': {
+        padding: 0,
+        border: 'none',
+        verticalAlign: 'top',
+        textOverflow: 'ellipsis',
       },
-    },
+      // End Resets
 
-    td: {
-      paddingTop: '16px',
-      paddingBottom: '16px',
+      fontSize: theme.typography.size.s2 - 1,
+      lineHeight: '20px',
+      textAlign: 'left',
+      width: '100%',
 
-      '&:not(:first-of-type)': {
-        paddingLeft: 15,
-        paddingRight: 15,
+      // Margin collapse
+      marginTop: inAddonPanel ? 0 : 25,
+      marginBottom: inAddonPanel ? 0 : 40,
+
+      'thead th:first-of-type, td:first-of-type': {
+        width: '30%',
       },
 
-      '&:last-of-type': {
+      'th:first-of-type, td:first-of-type': {
+        paddingLeft: 20,
+      },
+
+      'th:last-of-type, td:last-of-type': {
         paddingRight: 20,
+        ...(compact
+          ? null
+          : {
+              minWidth: '15%',
+              maxWidth: '25%',
+            }),
       },
-    },
 
-    // Table "block" styling
-    // Emphasize tbody's background and set borderRadius
-    // Calling out because styling tables is finicky
+      th: {
+        color:
+          theme.base === 'light'
+            ? transparentize(0.25, theme.color.defaultText)
+            : transparentize(0.45, theme.color.defaultText),
+        paddingTop: 10,
+        paddingBottom: 10,
 
-    // Makes border alignment consistent w/other DocBlocks
-    marginLeft: 1,
-    marginRight: 1,
-
-    [`tr:first-child${ignoreSsrWarning}`]: {
-      [`td:first-child${ignoreSsrWarning}, th:first-child${ignoreSsrWarning}`]: {
-        borderTopLeftRadius: theme.appBorderRadius,
-      },
-      [`td:last-child${ignoreSsrWarning}, th:last-child${ignoreSsrWarning}`]: {
-        borderTopRightRadius: theme.appBorderRadius,
-      },
-    },
-
-    [`tr:last-child${ignoreSsrWarning}`]: {
-      [`td:first-child${ignoreSsrWarning}, th:first-child${ignoreSsrWarning}`]: {
-        borderBottomLeftRadius: theme.appBorderRadius,
-      },
-      [`td:last-child${ignoreSsrWarning}, th:last-child${ignoreSsrWarning}`]: {
-        borderBottomRightRadius: theme.appBorderRadius,
-      },
-    },
-
-    tbody: {
-      // slightly different than the other DocBlock shadows to account for table styling gymnastics
-      boxShadow:
-        theme.base === 'light'
-          ? `rgba(0, 0, 0, 0.10) 0 1px 3px 1px,
-          ${transparentize(0.035, theme.appBorderColor)} 0 0 0 1px`
-          : `rgba(0, 0, 0, 0.20) 0 2px 5px 1px,
-          ${opacify(0.05, theme.appBorderColor)} 0 0 0 1px`,
-      borderRadius: theme.appBorderRadius,
-
-      tr: {
-        background: 'transparent',
-        overflow: 'hidden',
-        [`&:not(:first-child${ignoreSsrWarning})`]: {
-          borderTopWidth: 1,
-          borderTopStyle: 'solid',
-          borderTopColor:
-            theme.base === 'light'
-              ? darken(0.1, theme.background.content)
-              : lighten(0.05, theme.background.content),
+        '&:not(:first-of-type)': {
+          paddingLeft: 15,
+          paddingRight: 15,
         },
       },
 
       td: {
-        background: theme.background.content,
+        paddingTop: '10px',
+        paddingBottom: '10px',
+
+        '&:not(:first-of-type)': {
+          paddingLeft: 15,
+          paddingRight: 15,
+        },
+
+        '&:last-of-type': {
+          paddingRight: 20,
+        },
       },
+
+      // Table "block" styling
+      // Emphasize tbody's background and set borderRadius
+      // Calling out because styling tables is finicky
+
+      // Makes border alignment consistent w/other DocBlocks
+      marginLeft: inAddonPanel ? 0 : 1,
+      marginRight: inAddonPanel ? 0 : 1,
+
+      [`tr:first-child${ignoreSsrWarning}`]: {
+        [`td:first-child${ignoreSsrWarning}, th:first-child${ignoreSsrWarning}`]: {
+          borderTopLeftRadius: inAddonPanel ? 0 : theme.appBorderRadius,
+        },
+        [`td:last-child${ignoreSsrWarning}, th:last-child${ignoreSsrWarning}`]: {
+          borderTopRightRadius: inAddonPanel ? 0 : theme.appBorderRadius,
+        },
+      },
+
+      [`tr:last-child${ignoreSsrWarning}`]: {
+        [`td:first-child${ignoreSsrWarning}, th:first-child${ignoreSsrWarning}`]: {
+          borderBottomLeftRadius: inAddonPanel ? 0 : theme.appBorderRadius,
+        },
+        [`td:last-child${ignoreSsrWarning}, th:last-child${ignoreSsrWarning}`]: {
+          borderBottomRightRadius: inAddonPanel ? 0 : theme.appBorderRadius,
+        },
+      },
+
+      tbody: {
+        // slightly different than the other DocBlock shadows to account for table styling gymnastics
+        boxShadow:
+          !inAddonPanel &&
+          (theme.base === 'light'
+            ? `rgba(0, 0, 0, 0.10) 0 1px 3px 1px,
+          ${transparentize(0.035, theme.appBorderColor)} 0 0 0 1px`
+            : `rgba(0, 0, 0, 0.20) 0 2px 5px 1px,
+          ${opacify(0.05, theme.appBorderColor)} 0 0 0 1px`),
+        borderRadius: theme.appBorderRadius,
+
+        tr: {
+          background: 'transparent',
+          overflow: 'hidden',
+          ...(inAddonPanel
+            ? {
+                borderTopWidth: 1,
+                borderTopStyle: 'solid',
+                borderTopColor:
+                  theme.base === 'light'
+                    ? darken(0.1, theme.background.content)
+                    : lighten(0.05, theme.background.content),
+              }
+            : {
+                [`&:not(:first-child${ignoreSsrWarning})`]: {
+                  borderTopWidth: 1,
+                  borderTopStyle: 'solid',
+                  borderTopColor:
+                    theme.base === 'light'
+                      ? darken(0.1, theme.background.content)
+                      : lighten(0.05, theme.background.content),
+                },
+              }),
+        },
+
+        td: {
+          background: theme.background.content,
+        },
+      },
+      // End finicky table styling
     },
-    // End finicky table styling
-  },
-}));
+  })
+);
 
 export enum ArgsTableError {
-  NO_COMPONENT = 'No component found',
+  NO_COMPONENT = 'No component found.',
   ARGS_UNSUPPORTED = 'Args unsupported. See Args documentation for your framework.',
 }
 
@@ -138,6 +159,7 @@ export interface ArgsTableRowProps {
   args?: Args;
   updateArgs?: (args: Args) => void;
   compact?: boolean;
+  inAddonPanel?: boolean;
 }
 
 export interface ArgsTableErrorProps {
@@ -145,15 +167,44 @@ export interface ArgsTableErrorProps {
 }
 
 export type ArgsTableProps = ArgsTableRowProps | ArgsTableErrorProps;
-type RowProps = SectionRowProps | ArgRowProps;
 
-const ArgsTableRow: FC<RowProps> = (props) => {
-  const { section, updateArgs } = props as SectionRowProps;
-  if (section) {
-    return <SectionRow {...{ section, updateArgs }} />;
-  }
-  const { row, arg, compact } = props as ArgRowProps;
-  return <ArgRow {...{ row, arg, updateArgs, compact }} />;
+type Rows = ArgType[];
+type Subsection = Rows;
+type Section = {
+  ungrouped: Rows;
+  subsections: Record<string, Subsection>;
+};
+type Sections = {
+  ungrouped: Rows;
+  ungroupedSubsections: Record<string, Subsection>;
+  sections: Record<string, Section>;
+};
+
+const groupRows = (rows: ArgType) => {
+  const sections: Sections = { ungrouped: [], ungroupedSubsections: {}, sections: {} };
+  if (!rows) return sections;
+
+  Object.entries(rows).forEach(([key, row]) => {
+    const { category, subcategory } = row?.table || {};
+    if (category) {
+      const section = sections.sections[category] || { ungrouped: [], subsections: {} };
+      if (!subcategory) {
+        section.ungrouped.push({ key, ...row });
+      } else {
+        const subsection = section.subsections[subcategory] || [];
+        subsection.push({ key, ...row });
+        section.subsections[subcategory] = subsection;
+      }
+      sections.sections[category] = section;
+    } else if (subcategory) {
+      const subsection = sections.ungroupedSubsections[subcategory] || [];
+      subsection.push({ key, ...row });
+      sections.ungroupedSubsections[subcategory] = subsection;
+    } else {
+      sections.ungrouped.push({ key, ...row });
+    }
+  });
+  return sections;
 };
 
 /**
@@ -163,54 +214,45 @@ const ArgsTableRow: FC<RowProps> = (props) => {
 export const ArgsTable: FC<ArgsTableProps> = (props) => {
   const { error } = props as ArgsTableErrorProps;
   if (error) {
-    return <EmptyBlock>{error}</EmptyBlock>;
+    return (
+      <EmptyBlock>
+        {error}&nbsp;
+        <Link href="http://storybook.js.org/docs/" target="_blank" withArrow>
+          Read the docs
+        </Link>
+      </EmptyBlock>
+    );
   }
 
-  const { rows, args, updateArgs, compact } = props as ArgsTableRowProps;
+  const { rows, args, updateArgs, compact, inAddonPanel } = props as ArgsTableRowProps;
 
-  const ungroupedRows: ArgTypes = {};
-  const categoryRows: Record<string, ArgTypes> = {};
-  if (rows) {
-    Object.entries(rows).forEach(([key, row]) => {
-      const { table: { category = null } = {} } = row;
-      if (category) {
-        if (!categoryRows[category]) categoryRows[category] = {};
-        categoryRows[category][key] = row;
-      } else {
-        ungroupedRows[key] = row;
-      }
-    });
+  const groups = groupRows(rows);
+
+  if (
+    groups.ungrouped.length === 0 &&
+    Object.entries(groups.sections).length === 0 &&
+    Object.entries(groups.ungroupedSubsections).length === 0
+  ) {
+    return (
+      <EmptyBlock>
+        No inputs found for this component.&nbsp;
+        <Link href="http://storybook.js.org/docs/" target="_blank" withArrow>
+          Read the docs
+        </Link>
+      </EmptyBlock>
+    );
   }
 
-  const allRows: { key: string; value: any }[] = [];
-  Object.entries(ungroupedRows).forEach(([key, row]) => {
-    const arg = args && args[key];
-    allRows.push({
-      key,
-      value: { row, arg, updateArgs },
-    });
-  });
-  Object.keys(categoryRows).forEach((category) => {
-    const catRows = categoryRows[category];
-    if (Object.keys(catRows).length > 0) {
-      allRows.push({ key: category, value: { section: category, updateArgs } });
-      Object.entries(catRows).forEach(([key, row]) => {
-        const arg = args && args[key];
-        allRows.push({
-          key: `${category}_${key}`,
-          value: { row, arg, updateArgs },
-        });
-      });
-    }
-  });
+  let colSpan = 1;
+  if (updateArgs) colSpan += 1;
+  if (!compact) colSpan += 2;
+  const expandable = Object.keys(groups.sections).length > 0;
 
-  if (allRows.length === 0) {
-    return <EmptyBlock>No props found for this component</EmptyBlock>;
-  }
+  const common = { updateArgs, compact, inAddonPanel };
   return (
     <ResetWrapper>
-      <TableWrapper compact={compact} className="docblock-propstable">
-        <thead className="docblock-propstable-head">
+      <TableWrapper {...{ compact, inAddonPanel }} className="docblock-argstable">
+        <thead className="docblock-argstable-head">
           <tr>
             <th>Name</th>
             {compact ? null : <th>Description</th>}
@@ -218,9 +260,49 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
             {updateArgs ? <th>Control</th> : null}
           </tr>
         </thead>
-        <tbody className="docblock-propstable-body">
-          {allRows.map((row) => (
-            <ArgsTableRow compact={compact} key={row.key} {...row.value} />
+        <tbody className="docblock-argstable-body">
+          {groups.ungrouped.map((row) => (
+            <ArgRow key={row.key} row={row} arg={args && args[row.key]} {...common} />
+          ))}
+
+          {Object.entries(groups.ungroupedSubsections).map(([subcategory, subsection]) => (
+            <SectionRow key={subcategory} label={subcategory} level="subsection" colSpan={colSpan}>
+              {subsection.map((row) => (
+                <ArgRow
+                  key={row.key}
+                  row={row}
+                  arg={args && args[row.key]}
+                  expandable={expandable}
+                  {...common}
+                />
+              ))}
+            </SectionRow>
+          ))}
+
+          {Object.entries(groups.sections).map(([category, section]) => (
+            <SectionRow key={category} label={category} level="section" colSpan={colSpan}>
+              {section.ungrouped.map((row) => (
+                <ArgRow key={row.key} row={row} arg={args && args[row.key]} {...common} />
+              ))}
+              {Object.entries(section.subsections).map(([subcategory, subsection]) => (
+                <SectionRow
+                  key={subcategory}
+                  label={subcategory}
+                  level="subsection"
+                  colSpan={colSpan}
+                >
+                  {subsection.map((row) => (
+                    <ArgRow
+                      key={row.key}
+                      row={row}
+                      arg={args && args[row.key]}
+                      expandable={expandable}
+                      {...common}
+                    />
+                  ))}
+                </SectionRow>
+              ))}
+            </SectionRow>
           ))}
         </tbody>
       </TableWrapper>

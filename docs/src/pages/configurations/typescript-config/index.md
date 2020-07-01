@@ -18,7 +18,7 @@ Each framework uses the base configuration unless otherwise specified:
 
 - **Angular** ignores the base and uses `ts-loader` and `ngx-template-loader`.
 - **Vue** ignores the uses `ts-loader` and applies it to both `.tsx?` and `.vue` files.
-- **React** adds `react-docgen-typescript-loader` the base.
+- **React** adds `react-docgen-typescript-plugin` the base.
 
 ## Main.js configuration
 
@@ -42,12 +42,12 @@ module.exports = {
 
 And here are the meaning of each field:
 
-| Field                            | Framework | Description                                                                                  | Type                                                                     |
-| -------------------------------- | --------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| **check**                        | All       | optionally run `fork-ts-checker-webpack-plugin`                                              | `boolean`                                                                |
-| **checkOptions**                 | All       | Options to pass to `fork-ts-checker-webpack-plugin` if it's enabled                          | [See docs](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin) |
-| **reactDocgen**                  | React     | which variant docgen processor to run                                                        | `'react-docgen-typescript' | 'react-docgen' | false`                     |
-| **reactDocgenTypescriptOptions** | React     | Options to pass to `react-docgen-typescript-loader` if `react-docgen-typescript` is enabled. | [See docs](https://github.com/strothj/react-docgen-typescript-loader)    |
+| Field                            | Framework | Description                                                                                  | Type                                                                          |
+| -------------------------------- | --------- | -------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| **check**                        | All       | optionally run `fork-ts-checker-webpack-plugin`                                              | `boolean`                                                                     |
+| **checkOptions**                 | All       | Options to pass to `fork-ts-checker-webpack-plugin` if it's enabled                          | [See docs](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin)      |
+| **reactDocgen**                  | React     | which variant docgen processor to run                                                        | `'react-docgen-typescript' | 'react-docgen' | false`                          |
+| **reactDocgenTypescriptOptions** | React     | Options to pass to `react-docgen-typescript-plugin` if `react-docgen-typescript` is enabled. | [See docs](https://github.com/hipstersmoothie/react-docgen-typescript-plugin) |
 
 ## Manual configuration
 

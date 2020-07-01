@@ -1,5 +1,6 @@
-import React, { FunctionComponent, MouseEvent, useMemo, useState, useRef } from 'react';
+import React, { FunctionComponent, useMemo, useState, useRef, useCallback } from 'react';
 import { styled } from '@storybook/theming';
+import { transparentize } from 'polished';
 
 import { ExpanderContext, useDataset } from './Tree/State';
 import { Expander } from './Tree/ListItem';
@@ -13,59 +14,69 @@ export interface RefProps {
   isHidden: boolean;
 }
 
-const RefHead = styled.button({
-  alignItems: 'center',
-  background: 'transparent',
+const RefHead = styled.button(({ theme }) => ({
+  // Reset button
   border: 'none',
   boxSizing: 'content-box',
   cursor: 'pointer',
-  display: 'flex',
-  marginLeft: -20,
-  padding: 0,
-  paddingLeft: 20,
   position: 'relative',
   textAlign: 'left',
+
+  fontWeight: theme.typography.weight.black,
+  fontSize: theme.typography.size.s2 - 1,
+
+  // Similar to ListItem.tsx
+  textDecoration: 'none',
+  lineHeight: '16px',
+  paddingTop: 4,
+  paddingBottom: 4,
+  paddingRight: theme.layoutMargin * 2,
+  paddingLeft: 20, // 1px more padding than ListItem for optical correction
+  display: 'flex',
+  alignItems: 'center',
+  background: 'transparent',
+
+  marginLeft: -20,
   width: '100%',
-});
 
-const RefTitle = styled.header(({ theme }) => ({
-  fontWeight: theme.typography.weight.bold,
-  fontSize: theme.typography.size.s2,
-  color: theme.color.darkest,
+  color:
+    theme.base === 'light' ? theme.color.defaultText : transparentize(0.2, theme.color.defaultText),
+  '&:hover, &:focus': {
+    outline: 'none',
+    color: theme.color.defaultText,
+    background: theme.background.hoverable,
+  },
+}));
 
-  flex: 1,
-  height: 24,
+const RefTitle = styled.span(({ theme }) => ({
+  display: 'block',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
-  paddingRight: theme.layoutMargin,
+  flex: 1,
   overflow: 'hidden',
-
-  lineHeight: '24px',
 }));
 
 const Wrapper = styled.div<{ isMain: boolean }>(({ isMain }) => ({
   position: 'relative',
   marginLeft: -20,
   marginRight: -20,
-  marginTop: isMain ? undefined : 4,
+  marginTop: isMain ? undefined : 0,
 }));
 
 export const Ref: FunctionComponent<RefType & RefProps> = (ref) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const indicatorRef = useRef<HTMLElement>(null);
 
-  const { stories, id: key, title = key, storyId, filter, isHidden = false, authUrl, error } = ref;
+  const { stories, id: key, title = key, storyId, filter, isHidden = false, loginUrl, error } = ref;
   const { dataSet, expandedSet, length, others, roots, setExpanded, selectedSet } = useDataset(
     stories,
     filter,
     storyId
   );
 
-  const handleClick = ({ target }: MouseEvent) => {
-    // Don't fire if the click is from the indicator.
-    if (target === indicatorRef.current || indicatorRef.current?.contains(target as Node)) return;
+  const handleClick = useCallback(() => {
     setIsExpanded(!isExpanded);
-  };
+  }, [isExpanded]);
 
   const combo = useMemo(() => ({ setExpanded, expandedSet }), [setExpanded, expandedSet]);
 
@@ -77,7 +88,7 @@ export const Ref: FunctionComponent<RefType & RefProps> = (ref) => {
   const isLoading = isLoadingMain || isLoadingInjected || ref.type === 'unknown';
   const isError = !!error;
   const isEmpty = !isLoading && length === 0;
-  const isAuthRequired = !!authUrl;
+  const isAuthRequired = !!loginUrl && length === 0;
 
   const state = getStateType(isLoading, isAuthRequired, isError, isEmpty);
 
@@ -87,17 +98,22 @@ export const Ref: FunctionComponent<RefType & RefProps> = (ref) => {
         <RefHead
           aria-label={`${isExpanded ? 'Hide' : 'Show'} ${title} stories`}
           aria-expanded={isExpanded}
-          type="button"
-          onClick={handleClick}
         >
-          <Expander className="sidebar-ref-expander" depth={0} isExpanded={isExpanded} />
-          <RefTitle title={title}>{title}</RefTitle>
+          <Expander
+            onClick={handleClick}
+            className="sidebar-ref-expander"
+            depth={0}
+            isExpanded={isExpanded}
+          />
+          <RefTitle onClick={handleClick} title={title}>
+            {title}
+          </RefTitle>
           <RefIndicator {...ref} state={state} ref={indicatorRef} />
         </RefHead>
       )}
       {isExpanded && (
         <Wrapper data-title={title} isMain={isMain}>
-          {state === 'auth' && <AuthBlock id={ref.id} authUrl={authUrl} />}
+          {state === 'auth' && <AuthBlock id={ref.id} loginUrl={loginUrl} />}
           {state === 'error' && <ErrorBlock error={error} />}
           {state === 'loading' && <LoaderBlock isMain={isMain} />}
           {state === 'empty' && <EmptyBlock isMain={isMain} />}
