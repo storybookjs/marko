@@ -1,4 +1,4 @@
-import React, { FunctionComponent, HTMLAttributes } from 'react';
+import React, { FC } from 'react';
 
 const styles = {
   border: '1px solid #eee',
@@ -10,8 +10,10 @@ const styles = {
   margin: 10,
 };
 
-export type ButtonProps = HTMLAttributes<HTMLButtonElement>;
-export const Button: FunctionComponent<ButtonProps> = ({ children, onClick }: ButtonProps) => (
+export interface ButtonProps {
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+}
+export const Button: FC<ButtonProps> = ({ children, onClick }) => (
   <button onClick={onClick} style={styles} type="button">
     {children}
   </button>

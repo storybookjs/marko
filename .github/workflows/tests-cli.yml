@@ -17,6 +17,9 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '10.x'
+    - name: increase filewatcher limit
+      run: |
+        echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
     - uses: actions/checkout@v2
     - name: Cache node modules
       uses: actions/cache@v1
@@ -55,17 +58,3 @@ jobs:
       run: |
         cd lib/cli
         yarn test-yarn-2
-  latest-cra:
-    name: Latest CRA
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '10.x'
-    - uses: actions/checkout@v2
-    - name: install, bootstrap
-      run: |
-        yarn bootstrap --core
-    - name: latest-cra
-      run: |
-        yarn test-latest-cra

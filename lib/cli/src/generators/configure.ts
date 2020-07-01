@@ -1,6 +1,6 @@
 import fse from 'fs-extra';
 
-function mainConfigurationGenerator(addons: string[], custom?: any) {
+function configureMain(addons: string[], custom?: any) {
   const hasSrc = fse.existsSync('./src');
 
   const config = {
@@ -16,4 +16,18 @@ function mainConfigurationGenerator(addons: string[], custom?: any) {
   fse.writeFileSync('./.storybook/main.js', stringified, { encoding: 'utf8' });
 }
 
-export default mainConfigurationGenerator;
+function configurePreview() {
+  fse.writeFileSync(
+    './.storybook/preview.js',
+    `export const parameters = {
+  actions: { argTypesRegex: "^on.*" },
+}`,
+    { encoding: 'utf8' }
+  );
+}
+
+export function configure(addons: string[], custom?: any) {
+  fse.ensureDirSync('./.storybook');
+  configureMain(addons, custom);
+  configurePreview();
+}

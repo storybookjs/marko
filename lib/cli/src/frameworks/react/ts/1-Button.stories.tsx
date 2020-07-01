@@ -1,34 +1,30 @@
 import React from 'react';
-import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
-import { Button } from './Button';
+import { Button, ButtonProps } from './Button';
 
 export default {
   title: 'Button',
   component: Button,
 };
 
-export const Text = () => <Button onClick={action('clicked')}>Hello Button</Button>;
+const ButtonStory = (args: ButtonProps) => <Button {...args} />;
 
-export const Emoji = () => (
-  <Button onClick={action('clicked')}>
+export const Text = ButtonStory.bind({});
+Text.args = {
+  children: 'Button',
+};
+
+export const Emoji = ButtonStory.bind({});
+Emoji.args = {
+  children: (
     <span role="img" aria-label="so cool">
       😀 😎 👍 💯
     </span>
-  </Button>
-);
-
+  ),
+};
 Emoji.parameters = { notes: 'My notes on a button with emojis' };
-
-export const TextWithAction = () => (
-  <Button onClick={() => action('This was clicked')()}>Trigger Action</Button>
-);
-
-TextWithAction.storyName = 'With an action';
-TextWithAction.parameters = { notes: 'My notes on a button with emojis' };
 
 export const ButtonWithLinkToAnotherStory = () => (
   <Button onClick={linkTo('Welcome')}>Go to Welcome Story</Button>
 );
-
 ButtonWithLinkToAnotherStory.storyName = 'button with link to another story';
