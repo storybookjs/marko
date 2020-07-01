@@ -1,12 +1,19 @@
-import React, { FunctionComponent } from 'react';
-import { Source, SourceProps as PureSourceProps, SourceError } from '@storybook/components';
+import React, { FC, useContext } from 'react';
+import {
+  Source as PureSource,
+  SourceError,
+  SourceProps as PureSourceProps,
+} from '@storybook/components';
 import { DocsContext, DocsContextProps } from './DocsContext';
+import { SourceContext, SourceContextProps } from './SourceContainer';
 import { CURRENT_SELECTION } from './types';
+
 import { enhanceSource } from './enhanceSource';
 
 interface CommonProps {
   language?: string;
   dark?: boolean;
+  code?: string;
 }
 
 type SingleSourceProps = {
@@ -27,8 +34,12 @@ type SourceProps = SingleSourceProps | MultiSourceProps | CodeProps | NoneProps;
 
 export const getSourceProps = (
   props: SourceProps,
-  { id: currentId, storyStore }: DocsContextProps
+  docsContext: DocsContextProps,
+  sourceContext: SourceContextProps
 ): PureSourceProps => {
+  const { id: currentId, storyStore } = docsContext;
+  const { sources } = sourceContext;
+
   const codeProps = props as CodeProps;
   const singleProps = props as SingleSourceProps;
   const multiProps = props as MultiSourceProps;
@@ -40,9 +51,15 @@ export const getSourceProps = (
     const targetIds = multiProps.ids || [targetId];
     source = targetIds
       .map((sourceId) => {
-        const data = storyStore.fromId(sourceId);
-        const enhanced = data && (enhanceSource(data) || data.parameters);
-        return enhanced?.docs?.source?.code || '';
+        if (sources) {
+          return sources[sourceId];
+        }
+        if (storyStore) {
+          const data = storyStore.fromId(sourceId);
+          const enhanced = data && (enhanceSource(data) || data.parameters);
+          return enhanced?.docs?.source?.code || '';
+        }
+        return '';
       })
       .join('\n\n');
   }
@@ -56,13 +73,9 @@ export const getSourceProps = (
  * or the source for a story if `storyId` is provided, or
  * the source for the current story if nothing is provided.
  */
-const SourceContainer: FunctionComponent<SourceProps> = (props) => (
-  <DocsContext.Consumer>
-    {(context) => {
-      const sourceProps = getSourceProps(props, context);
-      return <Source {...sourceProps} />;
-    }}
-  </DocsContext.Consumer>
-);
-
-export { SourceContainer as Source };
+export const Source: FC<SourceProps> = (props) => {
+  const sourceContext = useContext(SourceContext);
+  const docsContext = useContext(DocsContext);
+  const sourceProps = getSourceProps(props, docsContext, sourceContext);
+  return <PureSource {...sourceProps} />;
+};

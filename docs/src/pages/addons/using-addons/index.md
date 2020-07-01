@@ -9,7 +9,7 @@ Storybook comes with a variety of "core" addons developed and maintained alongsi
 
 Here's how to do it.
 
-We are going to use an addon called [Notes](https://github.com/storybookjs/storybook/tree/master/addons/notes). Basically, it allows you to write notes for your stories.
+We are going to use an addon called [Notes](https://github.com/storybookjs/deprecated-addons/tree/master/addons/notes). Basically, it allows you to write notes for your stories.
 
 First, we need to install the addons:
 
