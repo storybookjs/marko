@@ -8,10 +8,11 @@ import React, {
   ComponentProps,
 } from 'react';
 
-import { Icons, WithTooltip, Spaced, Button } from '@storybook/components';
+import { Icons, WithTooltip, Spaced, Button, Link } from '@storybook/components';
 import { logger } from '@storybook/client-logger';
 import { useStorybookApi } from '@storybook/api';
 import { styled } from '@storybook/theming';
+import { transparentize } from 'polished';
 import { Location } from '@storybook/router';
 
 import { Tree } from './Tree/Tree';
@@ -31,17 +32,24 @@ const RootHeading = styled.div(({ theme }) => ({
   fontWeight: theme.typography.weight.black,
   fontSize: theme.typography.size.s1 - 1,
   lineHeight: '24px',
-  color: theme.color.mediumdark,
+  color: transparentize(0.5, theme.color.defaultText),
   margin: '0 20px',
 }));
 
 const Text = styled.p(({ theme }) => ({
   fontSize: theme.typography.size.s2 - 1,
+  lineHeight: '20px',
   margin: 0,
-}));
 
-const RedIcon = styled(Icons)(({ theme }) => ({
-  color: theme.color.negative,
+  code: {
+    fontSize: theme.typography.size.s1,
+  },
+
+  ul: {
+    paddingLeft: 20,
+    marginTop: 8,
+    marginBottom: 8,
+  },
 }));
 
 const Head: FunctionComponent<ListitemProps> = (props) => {
@@ -112,10 +120,10 @@ const firstLineRegex = /(Error): (.*)\n/;
 const linesRegex = /at (?:(.*) )?\(?(.+)\)?/;
 const ErrorFormatter: FunctionComponent<{ error: Error }> = ({ error }) => {
   if (!error) {
-    return <Fragment>this error has no stack or message</Fragment>;
+    return <Fragment>This error has no stack or message</Fragment>;
   }
   if (!error.stack) {
-    return <Fragment>{error.message || 'this error has no stack or message'}</Fragment>;
+    return <Fragment>{error.message || 'This error has no stack or message'}</Fragment>;
   }
 
   const input = error.stack.toString();
@@ -192,23 +200,23 @@ export const AuthBlock: FunctionComponent<{ loginUrl: string; id: string }> = ({
         {isAuthAttempted ? (
           <Fragment>
             <Text>
-              Authentication on <strong>{loginUrl}</strong> seems to have concluded, refresh the
-              page to fetch this storybook
+              Authentication on <strong>{loginUrl}</strong> concluded. Refresh the page to fetch
+              this Storybook.
             </Text>
             <div>
               <Button small gray onClick={refresh}>
                 <Icons icon="sync" />
-                Refresh the page
+                Refresh now
               </Button>
             </div>
           </Fragment>
         ) : (
           <Fragment>
-            <Text>Browse this secure storybook</Text>
+            <Text>Browse this secure Storybook</Text>
             <div>
               <Button small gray onClick={open}>
                 <Icons icon="lock" />
-                Login
+                Log in
               </Button>
             </div>
           </Fragment>
@@ -221,21 +229,27 @@ export const AuthBlock: FunctionComponent<{ loginUrl: string; id: string }> = ({
 export const ErrorBlock: FunctionComponent<{ error: Error }> = ({ error }) => (
   <Contained>
     <Spaced>
-      <Text>Ow no! something went wrong loading this storybook</Text>
-      <WithTooltip
-        trigger="click"
-        closeOnClick={false}
-        tooltip={
-          <ErrorDisplay>
-            <ErrorFormatter error={error} />
-          </ErrorDisplay>
-        }
-      >
-        <Button small gray>
-          <Icons icon="doclist" />
-          View error
-        </Button>
-      </WithTooltip>
+      <Text>
+        Oh no! Something went wrong loading this Storybook.
+        <br />
+        <WithTooltip
+          trigger="click"
+          closeOnClick={false}
+          tooltip={
+            <ErrorDisplay>
+              <ErrorFormatter error={error} />
+            </ErrorDisplay>
+          }
+        >
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+          <Link isButton>
+            View error <Icons icon="arrowdown" />
+          </Link>
+        </WithTooltip>{' '}
+        <Link withArrow href="https://storybook.js.org/docs" cancel={false} target="_blank">
+          View docs
+        </Link>
+      </Text>
     </Spaced>
   </Contained>
 );
@@ -251,30 +265,22 @@ export const EmptyBlock: FunctionComponent<any> = ({ isMain }) => (
   <Contained>
     <FlexSpaced col={1}>
       <WideSpaced>
-        {/*  */}
-        <div>
-          <Text>
-            <strong>Ow now! {isMain ? 'Your storybook' : 'this ref'} is empty!</strong>
-          </Text>
-        </div>
-        {isMain ? (
-          <Fragment>
-            <div>
-              <Text>
-                Perhaps the glob specified in <code>main.js</code> found no files?
-              </Text>
-            </div>
-            <div>
-              <Text>Or your story-files don't define any stories?</Text>
-            </div>
-          </Fragment>
-        ) : (
-          <div>
-            <Text>This ref defined no stories</Text>
-          </div>
-        )}
+        <Text>
+          {isMain ? (
+            <>
+              Oh no! Your Storybook is empty. Possible reasons why:
+              <ul>
+                <li>
+                  The glob specified in <code>main.js</code> isn't correct.
+                </li>
+                <li>No stories are defined in your story files.</li>
+              </ul>{' '}
+            </>
+          ) : (
+            <>Yikes! Something went wrong loading these stories.</>
+          )}
+        </Text>
       </WideSpaced>
-      <RedIcon icon="info" width={14} height={14} />
     </FlexSpaced>
   </Contained>
 );

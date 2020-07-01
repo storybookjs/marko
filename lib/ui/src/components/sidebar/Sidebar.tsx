@@ -12,21 +12,20 @@ import { filteredLength } from './Tree/utils';
 import { Ref } from './Refs';
 import { RefType, Refs } from './RefHelpers';
 
-const Container = styled.nav(
-  {
-    position: 'absolute',
-    zIndex: 1,
-    left: 0,
-    top: 0,
-    bottom: 0,
-    right: 0,
-    width: '100%',
-    height: '100%',
-  },
-  ({ theme }) => ({
-    color: theme.color.darker,
-  })
-);
+const Container = styled.nav({
+  position: 'absolute',
+  zIndex: 1,
+  left: 0,
+  top: 0,
+  bottom: 0,
+  right: 0,
+  width: '100%',
+  height: '100%',
+});
+
+const StyledSpaced = styled(Spaced)({
+  paddingBottom: '2.5rem',
+});
 
 const CustomScrollArea = styled(ScrollArea)({
   '&&&&& .os-scrollbar-handle:before': {
@@ -42,7 +41,7 @@ const Hr = styled.hr(({ theme }) => ({
   border: '0 none',
   height: 0,
   marginBottom: 0,
-  borderTop: `1px solid ${theme.color.mediumlight}`,
+  borderTop: `1px solid ${theme.appBorderColor}`,
 }));
 
 export interface SidebarProps {
@@ -119,7 +118,7 @@ const Sidebar: FunctionComponent<SidebarProps> = ({
   return (
     <Container className="container sidebar-container">
       <CustomScrollArea vertical>
-        <Spaced row={2}>
+        <StyledSpaced row={1.6}>
           <Heading className="sidebar-header" menuHighlighted={menuHighlighted} menu={menu} />
 
           <Search key="filter" onChange={setFilter} />
@@ -138,7 +137,7 @@ const Sidebar: FunctionComponent<SidebarProps> = ({
               );
             })}
           </Fragment>
-        </Spaced>
+        </StyledSpaced>
       </CustomScrollArea>
     </Container>
   );

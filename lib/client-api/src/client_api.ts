@@ -1,4 +1,6 @@
 /* eslint no-underscore-dangle: 0 */
+import deprecate from 'util-deprecate';
+import dedent from 'ts-dedent';
 import { logger } from '@storybook/client-logger';
 import { StoryFn, Parameters, DecorateStoryFunction } from '@storybook/addons';
 import { toId } from '@storybook/csf';
@@ -65,37 +67,19 @@ export default class ClientApi {
     singleton = this;
   }
 
-  setAddon = (addon: any) => {
-    this._addons = {
-      ...this._addons,
-      ...addon,
-    };
-  };
-
-  getSeparators = () => {
-    const { hierarchySeparator, hierarchyRootSeparator, showRoots } =
-      this._storyStore._globalMetadata.parameters.options || {};
-
-    // Note these checks will be removed in 6.0, leaving this much simpler
-    if (
-      typeof hierarchySeparator !== 'undefined' ||
-      typeof hierarchyRootSeparator !== 'undefined'
-    ) {
-      return { hierarchySeparator, hierarchyRootSeparator };
-    }
-    if (
-      typeof showRoots === 'undefined' &&
-      this.store()
-        .getStoryKinds()
-        .some((kind) => kind.match(/\.|\|/))
-    ) {
-      return {
-        hierarchyRootSeparator: '|',
-        hierarchySeparator: /\/|\./,
+  setAddon = deprecate(
+    (addon: any) => {
+      this._addons = {
+        ...this._addons,
+        ...addon,
       };
-    }
-    return { hierarchySeparator: '/' };
-  };
+    },
+    dedent`
+      setAddon is deprecated and will be removed in Storybook 7.0
+
+      https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-setaddon
+    `
+  );
 
   addDecorator = (decorator: DecoratorFunction) => {
     this._storyStore.addGlobalMetadata({ decorators: [decorator], parameters: {} });

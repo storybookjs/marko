@@ -117,7 +117,11 @@ export const SectionRow: FC<SectionRowProps> = ({
           </FlexWrapper>
         </Level>
         <StyledTd colSpan={colSpan - 1}>
-          <ClickIntercept onClick={(e) => setExpanded(!expanded)} tabIndex={-1}>
+          <ClickIntercept
+            onClick={(e) => setExpanded(!expanded)}
+            tabIndex={-1}
+            style={{ outline: 'none' }}
+          >
             {helperText}
           </ClickIntercept>
           {expanded ? null : caption}

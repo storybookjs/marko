@@ -1,7 +1,9 @@
+import { document, window } from 'global';
 import React, { FunctionComponent, useMemo, ComponentProps, useCallback, forwardRef } from 'react';
 
 import { Icons, WithTooltip, Spaced, TooltipLinkList } from '@storybook/components';
 import { styled } from '@storybook/theming';
+import { transparentize } from 'polished';
 import { useStorybookApi } from '@storybook/api';
 
 import { getStateType, RefType } from './RefHelpers';
@@ -16,42 +18,54 @@ export interface CurrentVersionProps {
   versions: RefType['versions'];
 }
 
-const IndicatorPlacement = styled.aside(
-  ({ theme }) => ({
-    height: 14,
-    display: 'flex',
+const IndicatorPlacement = styled.aside(({ theme }) => ({
+  height: 16,
 
-    '& > * + *': {
-      marginLeft: theme.layoutMargin,
+  display: 'flex',
+  alignItems: 'center',
+
+  '& > * + *': {
+    marginLeft: theme.layoutMargin,
+  },
+}));
+
+const IndicatorClickTarget = styled.span(({ theme }) => ({
+  height: 16,
+  width: 16,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+
+  svg: {
+    height: 12,
+    width: 12,
+    transition: 'all 150ms ease-out',
+    color:
+      theme.base === 'light'
+        ? transparentize(0.3, theme.color.defaultText)
+        : transparentize(0.6, theme.color.defaultText),
+
+    '&:hover': {
+      color: theme.barSelectedColor,
     },
-  }),
-  ({ theme }) => ({ color: theme.color.mediumdark })
-);
+  },
+}));
 
-const IndicatorIcon: FunctionComponent<IndicatorIconProps> = ({ type }) => {
-  let icon: ComponentProps<typeof Icons>['icon'];
-
-  switch (true) {
-    case type === 'error': {
-      icon = 'alert';
-      break;
-    }
-    default: {
-      icon = 'globe';
-    }
-  }
-
-  return <Icons width="14" height="14" icon={icon} />;
-};
+const MessageTitle = styled.span(({ theme }) => ({
+  fontWeight: theme.typography.weight.bold,
+}));
 
 const Message = styled.a(({ theme }) => ({
   textDecoration: 'none',
-  lineHeight: '18px',
-  padding: 10,
+  lineHeight: '16px',
+  padding: 15,
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'flex-start',
-  color: theme.color.darker,
+  color: theme.color.defaultText,
+  '&:not(:last-child)': {
+    borderBottom: `1px solid ${theme.appBorderColor}`,
+  },
   '&:hover': {
     background: theme.background.hoverable,
     color: theme.color.darker,
@@ -69,8 +83,9 @@ const Message = styled.a(({ theme }) => ({
     flex: 1,
   },
   '& > svg': {
-    marginTop: 5,
-    width: 20,
+    marginTop: 3,
+    width: 16,
+    height: 16,
     marginRight: 10,
     flex: 'unset',
   },
@@ -91,26 +106,44 @@ const YellowIcon = styled(Icons)(({ theme }) => ({
   color: theme.color.gold,
 }));
 
-const Version = styled.div({
+const RedIcon = styled(Icons)(({ theme }) => ({
+  color: theme.color.negative,
+}));
+
+const GreenIcon = styled(Icons)(({ theme }) => ({
+  color: theme.color.green,
+}));
+
+const Version = styled.div(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  fontSize: 11,
+  fontSize: theme.typography.size.s1,
+  fontWeight: theme.typography.weight.regular,
+  color:
+    theme.base === 'light'
+      ? transparentize(0.3, theme.color.defaultText)
+      : transparentize(0.6, theme.color.defaultText),
 
   '& > * + *': {
     marginLeft: 4,
   },
-});
+
+  svg: {
+    height: 10,
+    width: 10,
+  },
+}));
 
 const CurrentVersion: FunctionComponent<CurrentVersionProps> = ({ url, versions }) => {
-  const currentVersionId = useMemo(() => Object.entries(versions).find(([k, v]) => v === url)[0], [
-    url,
-    versions,
-  ]);
+  const currentVersionId = useMemo(() => {
+    const c = Object.entries(versions).find(([k, v]) => v === url);
+    return c && c[0] ? c[0] : 'current';
+  }, [url, versions]);
 
   return (
     <Version>
       <span>{currentVersionId}</span>
-      <Icons width="12" height="12" icon="chevrondown" />
+      <Icons icon="chevrondown" />
     </Version>
   );
 };
@@ -143,16 +176,20 @@ export const RefIndicator = forwardRef<
           <MessageWrapper>
             <Spaced row={0}>
               {state === 'loading' && <LoadingMessage url={ref.url} />}
+              {(state === 'error' || state === 'empty') && <ErrorOccurredMessage url={ref.url} />}
               {state === 'ready' && (
                 <ReadyMessage {...{ url: ref.url, componentCount, leafCount }} />
               )}
+              {state === 'auth' && <LoginRequiredMessage {...ref} />}
               {ref.type === 'auto-inject' && state !== 'error' && <PerformanceDegradedMessage />}
-              {state === 'error' && <ErrorOccurredMessage />}
+              {state !== 'loading' && <ReadDocsMessage />}
             </Spaced>
           </MessageWrapper>
         }
       >
-        <IndicatorIcon type={state} />
+        <IndicatorClickTarget>
+          <Icons icon="globe" />
+        </IndicatorClickTarget>
       </WithTooltip>
 
       {ref.versions ? (
@@ -178,26 +215,6 @@ export const RefIndicator = forwardRef<
   );
 });
 
-const PerformanceDegradedMessage: FunctionComponent = () => (
-  <Message href="https://storybook.js.org" target="_blank">
-    <YellowIcon icon="lightning" />
-    <div>
-      <strong>Reduce lag</strong>
-      <div>Learn how to speed up Storybook Composition performance</div>
-    </div>
-  </Message>
-);
-
-const ErrorOccurredMessage: FunctionComponent = () => (
-  <Message href="https://storybook.js.org" target="_blank">
-    <YellowIcon icon="book" />
-    <div>
-      <strong>A problem occurred</strong>
-      <div>Explore the documentation</div>
-    </div>
-  </Message>
-);
-
 const ReadyMessage: FunctionComponent<{
   url: string;
   componentCount: number;
@@ -206,10 +223,57 @@ const ReadyMessage: FunctionComponent<{
   <Message href={url} target="_blank">
     <BlueIcon icon="globe" />
     <div>
-      <strong>View external storybook</strong>
+      <MessageTitle>View external Storybook</MessageTitle>
       <div>
-        Explore {componentCount} components and {leafCount} stories in a new browser tab
+        Explore {componentCount} components and {leafCount} stories in a new browser tab.
       </div>
+    </div>
+  </Message>
+);
+
+const LoginRequiredMessage: FunctionComponent<RefType> = ({ loginUrl, id }) => {
+  const open = useCallback((e) => {
+    e.preventDefault();
+    const childWindow = window.open(loginUrl, `storybook_auth_${id}`, 'resizable,scrollbars');
+
+    // poll for window to close
+    const timer = setInterval(() => {
+      if (!childWindow) {
+        clearInterval(timer);
+      } else if (childWindow.closed) {
+        clearInterval(timer);
+        document.location.reload();
+      }
+    }, 1000);
+  }, []);
+
+  return (
+    <Message onClick={open}>
+      <YellowIcon icon="lock" />
+      <div>
+        <MessageTitle>Log in required</MessageTitle>
+        <div>You need to authenticate to view this Storybook's components.</div>
+      </div>
+    </Message>
+  );
+};
+
+const ReadDocsMessage: FunctionComponent = () => (
+  <Message href="https://storybook.js.org" target="_blank">
+    <GreenIcon icon="document" />
+    <div>
+      <MessageTitle>Read Composition docs</MessageTitle>
+      <div>Learn how to combine multiple Storybooks into one.</div>
+    </div>
+  </Message>
+);
+
+const ErrorOccurredMessage: FunctionComponent<{ url: string }> = ({ url }) => (
+  <Message href={url} target="_blank">
+    <RedIcon icon="alert" />
+    <div>
+      <MessageTitle>Something went wrong</MessageTitle>
+      <div>This external Storybook didn't load. Debug it in a new tab now.</div>
     </div>
   </Message>
 );
@@ -218,8 +282,18 @@ const LoadingMessage: FunctionComponent<{ url: string }> = ({ url }) => (
   <Message href={url} target="_blank">
     <BlueIcon icon="time" />
     <div>
-      <strong>Please wait</strong>
-      <div>This storybook is being loaded, explore in a new browser tab</div>
+      <MessageTitle>Please wait</MessageTitle>
+      <div>This Storybook is loading.</div>
+    </div>
+  </Message>
+);
+
+const PerformanceDegradedMessage: FunctionComponent = () => (
+  <Message href="https://storybook.js.org/docs" target="_blank">
+    <YellowIcon icon="lightning" />
+    <div>
+      <MessageTitle>Reduce lag</MessageTitle>
+      <div>Learn how to speed up Composition performance.</div>
     </div>
   </Message>
 );
