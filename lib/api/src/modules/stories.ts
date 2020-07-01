@@ -27,7 +27,7 @@ import {
 } from '../lib/stories';
 
 import { Args, ModuleFn } from '../index';
-import { getSourceType } from './refs';
+import { getSourceType, ComposedRef } from './refs';
 
 type Direction = -1 | 1;
 type ParameterName = string;
@@ -72,6 +72,61 @@ export const init: ModuleFn = ({
   storyId: initialStoryId,
   viewMode: initialViewMode,
 }) => {
+  interface Meta {
+    ref?: ComposedRef;
+    source?: string;
+    sourceType?: 'local' | 'external';
+    refId?: string;
+    v?: number;
+    type: string;
+  }
+
+  function createEventHandlerWithRefSupport<T = { v?: number }>(
+    callback: (data: T, meta: Meta) => void
+  ) {
+    function handle(data: T) {
+      const { source, refId, type }: Meta = this;
+      const [sourceType, sourceLocation] = getSourceType(source);
+      // @ts-ignore
+      const v = data.v || this.v;
+
+      if (v > 2) {
+        // eslint-disable-next-line no-console
+        console.warn(`Received ${this.type} event with version ${v}, we'll try and handle it`);
+      }
+
+      const ref =
+        refId && fullAPI.getRefs()[refId]
+          ? fullAPI.getRefs()[refId]
+          : fullAPI.findRef(sourceLocation);
+
+      const meta = {
+        v,
+        source,
+        sourceLocation,
+        refId,
+        ref,
+        type,
+      };
+
+      switch (true) {
+        case typeof refId === 'string':
+        case sourceType === 'local':
+        case sourceType === 'external': {
+          callback(data, meta);
+          break;
+        }
+
+        // if we couldn't find the source, something risky happened, we ignore the input, and log a warning
+        default: {
+          logger.warn(`Received a ${this.type} frame that was not configured as a ref`);
+          break;
+        }
+      }
+    }
+    return handle;
+  }
+
   const api: SubAPI = {
     storyId: toId,
     getData: (storyId, refId) => {
@@ -268,105 +323,63 @@ export const init: ModuleFn = ({
     // Later when we change story via the manager (or SELECT_STORY below), we'll already be at the
     // correct path before CURRENT_STORY_WAS_SET is emitted, so this is less important (the navigate is a no-op)
     // Note this is the case for refs also.
-    fullAPI.on(CURRENT_STORY_WAS_SET, function handleCurrentStoryWasSet({ storyId, viewMode }) {
-      const { source }: { source: string } = this;
-      const [sourceType] = getSourceType(source);
-
-      if (sourceType === 'local' && storyId && viewMode) {
-        navigate(`/${viewMode}/${storyId}`);
-      }
-    });
-
-    fullAPI.on(STORY_CHANGED, function handleStoryChange(storyId: string) {
-      const { source }: { source: string } = this;
-      const [sourceType] = getSourceType(source);
-
-      if (sourceType === 'local') {
-        const options = fullAPI.getCurrentParameter('options');
-
-        if (options) {
-          fullAPI.setOptions(options);
+    fullAPI.on(
+      CURRENT_STORY_WAS_SET,
+      createEventHandlerWithRefSupport<{ storyId: string; viewMode: ViewMode; [k: string]: any }>(
+        ({ storyId, viewMode }, { sourceType }) => {
+          if (sourceType === 'local' && storyId && viewMode) {
+            navigate(`/${viewMode}/${storyId}`);
+          }
         }
-      }
-    });
+      )
+    );
 
-    fullAPI.on(SET_STORIES, function handleSetStories(data: SetStoriesPayload) {
-      // the event originates from an iframe, event.source is the iframe's location origin + pathname
-      const { source }: { source: string } = this;
-      const [sourceType, sourceLocation] = getSourceType(source);
+    fullAPI.on(
+      STORY_CHANGED,
+      createEventHandlerWithRefSupport((storyId, { sourceType }) => {
+        if (sourceType === 'local') {
+          const options = fullAPI.getCurrentParameter('options');
 
-      // TODO: what is the mechanism where we warn here?
-      if (data.v && data.v > 2) {
-        // eslint-disable-next-line no-console
-        console.warn(`Received SET_STORIES event with version ${data.v}, we'll try and handle it`);
-      }
+          if (options) {
+            fullAPI.setOptions(options);
+          }
+        }
+      })
+    );
 
-      const stories = data.v
-        ? denormalizeStoryParameters(data as SetStoriesPayloadV2)
-        : data.stories;
+    fullAPI.on(
+      SET_STORIES,
+      createEventHandlerWithRefSupport<SetStoriesPayloadV2>((data, { ref }) => {
+        const error = data.error || undefined;
+        const stories = data.v ? denormalizeStoryParameters(data) : data.stories;
 
-      // @ts-ignore
-      const error = data.error || undefined;
-
-      switch (sourceType) {
-        // if it's a local source, we do nothing special
-        case 'local': {
+        if (!ref) {
           if (!data.v) {
             throw new Error('Unexpected legacy SET_STORIES event from local source');
           }
 
           fullAPI.setStories(stories, error);
-
-          fullAPI.setOptions((data as SetStoriesPayloadV2).globalParameters.options);
-          break;
+          fullAPI.setOptions(data.globalParameters.options);
+        } else {
+          fullAPI.setRef(ref.id, { ...ref, ...data, stories }, true);
         }
+      })
+    );
 
-        // if it's a ref, we need to map the incoming stories to a prefixed version, so it cannot conflict with others
-        case 'external': {
-          const ref = fullAPI.findRef(sourceLocation);
-          if (ref) {
-            fullAPI.setRef(ref.id, { ...ref, ...data, stories }, true);
-            break;
-          }
-        }
-
-        // if we couldn't find the source, something risky happened, we ignore the input, and log a warning
-        default: {
-          logger.warn('received a SET_STORIES frame that was not configured as a ref');
-          break;
-        }
-      }
-    });
-
-    fullAPI.on(SELECT_STORY, function selectStoryHandler({
-      kind,
-      story,
-      ...rest
-    }: {
-      kind: string;
-      story: string;
-      [k: string]: any;
-    }) {
-      const { source }: { source: string } = this;
-      const [sourceType, sourceLocation] = getSourceType(source);
-
-      switch (sourceType) {
-        case 'local': {
+    fullAPI.on(
+      SELECT_STORY,
+      createEventHandlerWithRefSupport<{
+        kind: string;
+        story: string;
+        viewMode: ViewMode;
+      }>(({ kind, story, ...rest }, { ref }) => {
+        if (!ref) {
           fullAPI.selectStory(kind, story, rest);
-          break;
-        }
-
-        case 'external': {
-          const ref = fullAPI.findRef(sourceLocation);
+        } else {
           fullAPI.selectStory(kind, story, { ...rest, ref: ref.id });
-          break;
         }
-        default: {
-          logger.warn('received a SET_STORIES frame that was not configured as a ref');
-          break;
-        }
-      }
-    });
+      })
+    );
 
     fullAPI.on(STORY_ARGS_UPDATED, (id: StoryId, args: Args) => {
       const { storiesHash } = store.getState();
