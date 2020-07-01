@@ -14,6 +14,16 @@ interface BufferedEvent {
   reject: (reason?: any) => void;
 }
 
+const getQueryObject = () => {
+  return window.document.location.search
+    .substr(1)
+    .split('&')
+    .reduce((acc, s) => {
+      const [k, v] = s.split('=');
+      return Object.assign(acc, { [k]: v || true });
+    }, {});
+};
+
 export const KEY = 'storybook-channel';
 
 // TODO: we should export a method for opening child windows here and keep track of em.
@@ -72,7 +82,12 @@ export class PostmsgTransport {
     const frames = this.getFrames(target);
 
     const data = stringify(
-      { key: KEY, event, source: document.location.origin + document.location.pathname },
+      {
+        key: KEY,
+        event,
+        source: document.location.origin + document.location.pathname,
+        refId: getQueryObject().refId,
+      },
       { maxDepth: depth, allowFunction }
     );
 
@@ -158,7 +173,8 @@ export class PostmsgTransport {
   private handleEvent(rawEvent: MessageEvent): void {
     try {
       const { data } = rawEvent;
-      const { key, event, source } = typeof data === 'string' && isJSON(data) ? parse(data) : data;
+      const { key, event, refId, source } =
+        typeof data === 'string' && isJSON(data) ? parse(data) : data;
 
       if (key === KEY) {
         const pageString =
@@ -169,6 +185,10 @@ export class PostmsgTransport {
         const eventString = Object.values(EVENTS).includes(event.type)
           ? `<span style="color: #FF4785">${event.type}</span>`
           : `<span style="color: #FFAE00">${event.type}</span>`;
+
+        if (refId) {
+          event.refId = refId;
+        }
 
         if (source) {
           const { origin, pathname } = new URL(source, document.location);
