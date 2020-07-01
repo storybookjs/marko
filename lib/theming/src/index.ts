@@ -4,7 +4,6 @@ import { Theme } from './types';
 export const styled = emotionStyled as CreateStyled<Theme>;
 
 export * from './base';
-export * from './animation';
 export * from './types';
 
 export * from '@emotion/core';
