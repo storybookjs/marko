@@ -88,7 +88,7 @@ const ThemedSetRoot = () => {
   return null;
 };
 
-addDecorator((StoryFn, { globalArgs: { theme = 'light' } }) => {
+addDecorator((StoryFn, { globals: { theme = 'light' } }) => {
   switch (theme) {
     case 'side-by-side': {
       return (
@@ -162,11 +162,11 @@ export const parameters = {
   exportedParameter: 'exportedParameter',
 };
 
-export const globalArgs = {
+export const globals = {
   foo: 'fooValue',
 };
 
-export const globalArgTypes = {
+export const globalTypes = {
   foo: { defaultValue: 'fooDefaultValue' },
   bar: { defaultValue: 'barDefaultValue' },
   theme: {

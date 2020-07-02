@@ -20,8 +20,8 @@ enum events {
   // The values of a stories args just changed
   STORY_ARGS_UPDATED = 'storyArgsUpdated',
   // As above
-  UPDATE_GLOBAL_ARGS = 'updateGlobalArgs',
-  GLOBAL_ARGS_UPDATED = 'globalArgsUpdated',
+  UPDATE_GLOBALS = 'updateGlobals',
+  GLOBALS_UPDATED = 'globalsUpdated',
   REGISTER_SUBSCRIPTION = 'registerSubscription',
   // Tell the manager that the user pressed a key in the preview
   PREVIEW_KEYDOWN = 'previewKeydown',
@@ -53,8 +53,8 @@ export const {
   STORY_THREW_EXCEPTION,
   UPDATE_STORY_ARGS,
   STORY_ARGS_UPDATED,
-  UPDATE_GLOBAL_ARGS,
-  GLOBAL_ARGS_UPDATED,
+  UPDATE_GLOBALS,
+  GLOBALS_UPDATED,
   REGISTER_SUBSCRIPTION,
   PREVIEW_KEYDOWN,
   SELECT_STORY,

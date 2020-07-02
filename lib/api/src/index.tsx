@@ -35,7 +35,7 @@ import * as layout from './modules/layout';
 import * as shortcuts from './modules/shortcuts';
 import * as url from './modules/url';
 import * as version from './modules/versions';
-import * as globalArgs from './modules/globalArgs';
+import * as globals from './modules/globals';
 
 const { ActiveTabs } = layout;
 
@@ -58,7 +58,7 @@ export type State = layout.SubState &
   version.SubState &
   url.SubState &
   shortcuts.SubState &
-  globalArgs.SubState &
+  globals.SubState &
   RouterData &
   Other;
 
@@ -67,7 +67,7 @@ export type API = addons.SubAPI &
   provider.SubAPI &
   stories.SubAPI &
   refs.SubAPI &
-  globalArgs.SubAPI &
+  globals.SubAPI &
   layout.SubAPI &
   notifications.SubAPI &
   shortcuts.SubAPI &
@@ -190,7 +190,7 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
       shortcuts,
       stories,
       refs,
-      globalArgs,
+      globals,
       url,
       version,
     ].map((m) => m.init({ ...routeData, ...apiData, state: this.state, fullAPI: this.api }));
@@ -418,19 +418,19 @@ export function useArgs(): [Args, (newArgs: Args) => void] {
   return [args, (newArgs: Args) => updateStoryArgs(data.id, newArgs)];
 }
 
-export function useGlobalArgs(): [Args, (newGlobalArgs: Args) => void] {
+export function useGlobals(): [Args, (newGlobals: Args) => void] {
   const {
-    state: { globalArgs: oldGlobalArgs },
-    api: { updateGlobalArgs },
+    state: { globals: oldGlobals },
+    api: { updateGlobals },
   } = useContext(ManagerContext);
 
-  return [oldGlobalArgs, updateGlobalArgs];
+  return [oldGlobals, updateGlobals];
 }
 
 export function useArgTypes(): ArgTypes {
   return useParameter<ArgTypes>('argTypes', {});
 }
 
-export function useGlobalArgTypes(): ArgTypes {
-  return useParameter<ArgTypes>('globalArgTypes', {});
+export function useGlobalTypes(): ArgTypes {
+  return useParameter<ArgTypes>('globalTypes', {});
 }

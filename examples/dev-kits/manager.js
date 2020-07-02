@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { Button } from '@storybook/react/demo';
 import { addons } from '@storybook/addons';
-import { useAddonState, useGlobalArgs } from '@storybook/api';
+import { useAddonState, useGlobals } from '@storybook/api';
 import { themes } from '@storybook/theming';
 import { AddonPanel } from '@storybook/components';
 
@@ -52,9 +52,9 @@ addons.addPanel('useAddonState', {
   render: StatePanel,
 });
 
-const GlobalArgsPanel = ({ active, key }) => {
-  const [globalArgs, updateGlobalArgs] = useGlobalArgs();
-  const [globalArgsInput, updateGlobalArgsInput] = useState(JSON.stringify(globalArgs));
+const GlobalsPanel = ({ active, key }) => {
+  const [globals, updateGlobals] = useGlobals();
+  const [globalsInput, updateGlobalsInput] = useState(JSON.stringify(globals));
   return (
     <AddonPanel key={key} active={active}>
       <div>
@@ -63,13 +63,10 @@ const GlobalArgsPanel = ({ active, key }) => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            updateGlobalArgs(JSON.parse(globalArgsInput));
+            updateGlobals(JSON.parse(globalsInput));
           }}
         >
-          <textarea
-            value={globalArgsInput}
-            onChange={(e) => updateGlobalArgsInput(e.target.value)}
-          />
+          <textarea value={globalsInput} onChange={(e) => updateGlobalsInput(e.target.value)} />
           <br />
           <button type="submit">Change</button>
         </form>
@@ -78,13 +75,13 @@ const GlobalArgsPanel = ({ active, key }) => {
   );
 };
 
-GlobalArgsPanel.propTypes = {
+GlobalsPanel.propTypes = {
   active: PropTypes.bool.isRequired,
   key: PropTypes.string.isRequired,
 };
 
-addons.addPanel('useGlobalArgs', {
-  id: 'useGlobalArgs',
-  title: 'useGlobalArgs',
-  render: GlobalArgsPanel,
+addons.addPanel('useGlobals', {
+  id: 'useGlobals',
+  title: 'useGlobals',
+  render: GlobalsPanel,
 });
