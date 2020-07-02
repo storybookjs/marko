@@ -98,20 +98,21 @@ export interface StoriesRaw {
   [id: string]: StoryInput;
 }
 
-export interface SetStoriesPayload {
-  v?: number;
-  stories: StoriesRaw;
-}
-
-export interface SetStoriesPayloadV2 extends SetStoriesPayload {
-  v: 2;
-  error?: Error;
-  globals: Args;
-  globalParameters: Parameters;
-  kindParameters: {
-    [kind: string]: Parameters;
-  };
-}
+export type SetStoriesPayload =
+  | {
+      v: 2;
+      error?: Error;
+      globals: Args;
+      globalParameters: Parameters;
+      stories: StoriesRaw;
+      kindParameters: {
+        [kind: string]: Parameters;
+      };
+    }
+  | ({
+      v?: number;
+      stories: StoriesRaw;
+    } & Record<string, never>);
 
 const warnChangedDefaultHierarchySeparators = deprecate(
   () => {},
@@ -134,7 +135,7 @@ export const denormalizeStoryParameters = ({
   globalParameters,
   kindParameters,
   stories,
-}: SetStoriesPayloadV2): StoriesRaw => {
+}: SetStoriesPayload): StoriesRaw => {
   return mapValues(stories, (storyData) => ({
     ...storyData,
     parameters: combineParameters(
@@ -147,7 +148,6 @@ export const denormalizeStoryParameters = ({
 
 export const transformStoriesRawToStoriesHash = (
   input: StoriesRaw,
-  base: StoriesHash,
   { provider }: { provider: Provider }
 ): StoriesHash => {
   const anyKindMatchesOldHierarchySeparators = Object.values(input)

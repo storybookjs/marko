@@ -17,13 +17,12 @@ import {
   StoriesHash,
   Story,
   Group,
-  SetStoriesPayload,
   StoryId,
   isStory,
   Root,
   isRoot,
   StoriesRaw,
-  SetStoriesPayloadV2,
+  SetStoriesPayload,
 } from '../lib/stories';
 
 import { Args, ModuleFn } from '../index';
@@ -86,7 +85,7 @@ export const init: ModuleFn = ({
   ) {
     function handle(data: T) {
       const { source, refId, type }: Meta = this;
-      const [sourceType, sourceLocation] = getSourceType(source);
+      const [sourceType, sourceLocation] = getSourceType(source, refId);
       // @ts-ignore
       const v = data.v || this.v;
 
@@ -349,7 +348,7 @@ export const init: ModuleFn = ({
 
     fullAPI.on(
       SET_STORIES,
-      createEventHandlerWithRefSupport<SetStoriesPayloadV2>((data, { ref }) => {
+      createEventHandlerWithRefSupport<SetStoriesPayload>((data, { ref }) => {
         const error = data.error || undefined;
         const stories = data.v ? denormalizeStoryParameters(data) : data.stories;
 
