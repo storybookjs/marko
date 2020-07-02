@@ -14,8 +14,8 @@ interface BufferedEvent {
   reject: (reason?: any) => void;
 }
 
-const getQueryObject = () => {
-  return window.document.location.search
+const getQueryObject = (): Record<string, string & { refId?: string }> => {
+  return (window.document.location.search as string)
     .substr(1)
     .split('&')
     .reduce((acc, s) => {
