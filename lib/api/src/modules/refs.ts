@@ -60,7 +60,7 @@ const allSettled = (promises: Promise<Response>[]): Promise<(Response | false)[]
     )
   );
 
-export const getSourceType = (source: string) => {
+export const getSourceType = (source: string, refId: string) => {
   const { origin: localOrigin, pathname: localPathname } = location;
   const { origin: sourceOrigin, pathname: sourcePathname } = new URL(source);
 
@@ -70,7 +70,7 @@ export const getSourceType = (source: string) => {
   if (localFull === sourceFull) {
     return ['local', sourceFull];
   }
-  if (source) {
+  if (refId || source) {
     return ['external', sourceFull];
   }
   return [null, null];
