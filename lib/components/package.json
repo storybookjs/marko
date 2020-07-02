@@ -37,6 +37,7 @@
     "core-js": "^3.0.1",
     "fast-deep-equal": "^3.1.1",
     "global": "^4.3.2",
+    "lodash": "^4.17.15",
     "markdown-to-jsx": "^6.11.4",
     "memoizerific": "^1.11.3",
     "overlayscrollbars": "^1.10.2",
