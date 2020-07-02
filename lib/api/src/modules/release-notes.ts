@@ -1,7 +1,7 @@
 import { RELEASE_NOTES_DATA } from 'global';
 import memoize from 'memoizerific';
 
-import { ModuleFn, State } from '../index';
+import { ModuleFn } from '../index';
 
 export interface ReleaseNotes {
   success?: boolean;
@@ -21,40 +21,38 @@ const getReleaseNotesData = memoize(1)(
 
 export interface SubAPI {
   releaseNotesVersion: () => string;
-  showReleaseNotesOnLaunch: () => Promise<boolean>;
+  setDidViewReleaseNotes: () => void;
+  showReleaseNotesOnLaunch: () => boolean;
 }
 
-export const init: ModuleFn = ({ fullAPI, store }) => {
-  let initStoreState: Promise<State[]>;
+export const init: ModuleFn = ({ store }) => {
   const releaseNotesData = getReleaseNotesData();
+  const getReleaseNotesViewed = () => {
+    const { releaseNotesViewed: persistedReleaseNotesViewed } = store.getState();
+    return persistedReleaseNotesViewed || [];
+  };
 
   const api: SubAPI = {
     releaseNotesVersion: () => releaseNotesData.currentVersion,
-    showReleaseNotesOnLaunch: async () => {
-      // Make sure any consumers of this function's return value have waited for
-      // this module's state to have been setup. Otherwise, it may be called
-      // before the store state is set and therefore have inaccurate data.
-      await initStoreState;
-      const { showReleaseNotesOnLaunch } = store.getState();
+    setDidViewReleaseNotes: () => {
+      const releaseNotesViewed = getReleaseNotesViewed();
+
+      if (!releaseNotesViewed.includes(releaseNotesData.currentVersion)) {
+        store.setState(
+          { releaseNotesViewed: [...releaseNotesViewed, releaseNotesData.currentVersion] },
+          { persistence: 'permanent' }
+        );
+      }
+    },
+    showReleaseNotesOnLaunch: () => {
+      const releaseNotesViewed = getReleaseNotesViewed();
+      const didViewReleaseNotes = releaseNotesViewed.includes(releaseNotesData.currentVersion);
+      const showReleaseNotesOnLaunch = releaseNotesData.showOnFirstLaunch && !didViewReleaseNotes;
       return showReleaseNotesOnLaunch;
     },
   };
 
-  const initModule = () => {
-    const { releaseNotesViewed: persistedReleaseNotesViewed } = store.getState();
-    let releaseNotesViewed = persistedReleaseNotesViewed || [];
-    const didViewReleaseNotes = releaseNotesViewed.includes(releaseNotesData.currentVersion);
-    const showReleaseNotesOnLaunch = releaseNotesData.showOnFirstLaunch && !didViewReleaseNotes;
-
-    if (showReleaseNotesOnLaunch) {
-      releaseNotesViewed = [...releaseNotesViewed, releaseNotesData.currentVersion];
-    }
-
-    initStoreState = Promise.all([
-      store.setState({ showReleaseNotesOnLaunch }),
-      store.setState({ releaseNotesViewed }, { persistence: 'permanent' }),
-    ]);
-  };
+  const initModule = () => {};
 
   return { init: initModule, api };
 };

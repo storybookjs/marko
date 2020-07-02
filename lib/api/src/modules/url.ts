@@ -150,13 +150,13 @@ export const init: ModuleFn = ({ store, navigate, state, provider, fullAPI, ...r
     },
   };
 
-  const initModule = async () => {
+  const initModule = () => {
     fullAPI.on(NAVIGATE_URL, (url: string, options: { [k: string]: any }) => {
       fullAPI.navigateUrl(url, options);
     });
 
-    if (await fullAPI.showReleaseNotesOnLaunch()) {
-      navigate('/settings/release-notes');
+    if (fullAPI.showReleaseNotesOnLaunch()) {
+      setTimeout(() => navigate('/settings/release-notes', { replace: true }), 1);
     }
   };
 
