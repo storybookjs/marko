@@ -107,14 +107,14 @@ Global args are args that are "global" across all stories. They are used for thi
 
 ### Initial values of global args
 
-To set initial values of global args, set the `parameters.globalArgs` parameters. Addons can use parameter enhancers (see above) to do this.
+To set initial values of global args, set the `parameters.globals` parameters. Addons can use parameter enhancers (see above) to do this.
 
 ### Using global args in an addon
 
-Similar to args, global args are syncronized to the manager and can be accessed via the `useGlobalArgs` hook.
+Similar to args, global args are syncronized to the manager and can be accessed via the `useGlobals` hook.
 
 ```js
-import { useGlobalArgs } from '@storybook/client-api'; // or '@storybook/api'
+import { useGlobals } from '@storybook/client-api'; // or '@storybook/api'
 
-const [globalArgs, updateGlobalArgs] = useGlobalArgs();
+const [globals, updateGlobals] = useGlobals();
 ```
