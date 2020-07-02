@@ -1,6 +1,6 @@
 import { navigate as navigateRouter, NavigateOptions } from '@reach/router';
 import { queryFromLocation } from '@storybook/router';
-import { toId } from '@storybook/csf';
+import { toId, sanitize } from '@storybook/csf';
 
 import { NAVIGATE_URL } from '@storybook/core-events';
 import { ModuleArgs, ModuleFn } from '../index';
@@ -29,8 +29,7 @@ export interface SubState {
 //
 //   We also support legacy URLs from storybook <5
 const initialUrlSupport = ({
-  navigate,
-  state: { location, path, viewMode, storyId },
+  state: { location, path, viewMode, storyId: storyIdFromUrl },
 }: ModuleArgs) => {
   const addition: Additions = {};
   const query = queryFromLocation(location);
@@ -79,18 +78,15 @@ const initialUrlSupport = ({
     selectedPanel = addonPanel;
   }
 
-  if (selectedKind && selectedStory) {
-    const id = toId(selectedKind, selectedStory);
-    setTimeout(() => navigate(`/${viewMode}/${id}`, { replace: true }), 1);
-  } else if (selectedKind) {
-    // Create a "storyId" of the form `kind-sanitized--*`
-    const standInId = toId(selectedKind, 'star').replace(/star$/, '*');
-    setTimeout(() => navigate(`/${viewMode}/${standInId}`, { replace: true }), 1);
-  } else if (!queryPath || queryPath === '/') {
-    setTimeout(() => navigate(`/${viewMode}/*`, { replace: true }), 1);
-  } else if (Object.keys(query).length > 1) {
-    // remove other queries
-    setTimeout(() => navigate(`${queryPath}`, { replace: true }), 1);
+  // If the user hasn't set the storyId on the URL, we support legacy URLs (selectedKind/selectedStory)
+  // NOTE: this "storyId" can just be a prefix of a storyId, really it is a storyIdSpecifier.
+  let storyId = storyIdFromUrl;
+  if (!storyId) {
+    if (selectedKind && selectedStory) {
+      storyId = toId(selectedKind, selectedStory);
+    } else if (selectedKind) {
+      storyId = sanitize(selectedKind);
+    }
   }
 
   return { viewMode, layout: addition, selectedPanel, location, path, customQueryParams, storyId };
