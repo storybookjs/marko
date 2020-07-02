@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { useGlobalArgs } from '@storybook/client-api';
+import { useGlobals } from '@storybook/client-api';
 
 // eslint-disable-next-line react/prop-types
 const ArgUpdater = ({ args, updateArgs }) => {
@@ -30,40 +30,40 @@ export default {
   parameters: { passArgsFirst: false },
   decorators: [
     (story) => {
-      const [globalArgs, updateGlobalArgs] = useGlobalArgs();
+      const [globals, updateGlobals] = useGlobals();
 
       return (
         <>
           {story()}
-          <ArgUpdater args={globalArgs} updateArgs={updateGlobalArgs} />
+          <ArgUpdater args={globals} updateArgs={updateGlobals} />
         </>
       );
     },
   ],
 };
 
-export const PassedToStory = ({ globalArgs }) => {
+export const PassedToStory = ({ globals }) => {
   return (
     <div>
       <h3>Global args:</h3>
-      <pre>{JSON.stringify(globalArgs)}</pre>
+      <pre>{JSON.stringify(globals)}</pre>
     </div>
   );
 };
 
 PassedToStory.propTypes = {
-  globalArgs: PropTypes.shape({}).isRequired,
+  globals: PropTypes.shape({}).isRequired,
 };
 
-export const SecondStory = ({ globalArgs }) => {
+export const SecondStory = ({ globals }) => {
   return (
     <div>
       <h3>Global args (2):</h3>
-      <pre>{JSON.stringify(globalArgs)}</pre>
+      <pre>{JSON.stringify(globals)}</pre>
     </div>
   );
 };
 
 SecondStory.propTypes = {
-  globalArgs: PropTypes.shape({}).isRequired,
+  globals: PropTypes.shape({}).isRequired,
 };
