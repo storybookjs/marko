@@ -27,7 +27,7 @@ import {
   SetStoriesPayloadV2,
 } from '../lib/stories';
 
-import { Args, ModuleFn, useAddonState } from '../index';
+import { Args, ModuleFn } from '../index';
 import { getSourceType } from './refs';
 
 type Direction = -1 | 1;
