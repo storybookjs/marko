@@ -226,17 +226,16 @@ export const init: ModuleFn = ({
     },
     selectFirstStory: () => {
       const { storiesHash } = store.getState();
-      const lookupList = Object.keys(storiesHash).filter(
+      const firstStory = Object.keys(storiesHash).find(
         (k) => !(storiesHash[k].children || Array.isArray(storiesHash[k]))
       );
-      const firstStory = lookupList[0];
 
       if (firstStory) {
         api.selectStory(firstStory);
         return;
       }
 
-      navigate('/story/*');
+      navigate('/');
     },
     selectStory: (kindOrId, story = undefined, options = {}) => {
       const { ref, viewMode: viewModeFromArgs } = options;
