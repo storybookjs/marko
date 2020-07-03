@@ -28,7 +28,7 @@ const Container = process.env.XSTORYBOOK_EXAMPLE_APP ? React.StrictMode : React.
 
 export interface RootProps {
   provider: Provider;
-  history: History;
+  history?: History;
 }
 
 export const Root: FunctionComponent<RootProps> = ({ provider, history }) => (
