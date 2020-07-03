@@ -85,7 +85,6 @@ export class PostmsgTransport {
       {
         key: KEY,
         event,
-        source: document.location.origin + document.location.pathname,
         refId: getQueryObject().refId,
       },
       { maxDepth: depth, allowFunction }
@@ -173,8 +172,7 @@ export class PostmsgTransport {
   private handleEvent(rawEvent: MessageEvent): void {
     try {
       const { data } = rawEvent;
-      const { key, event, refId, source } =
-        typeof data === 'string' && isJSON(data) ? parse(data) : data;
+      const { key, event, refId } = typeof data === 'string' && isJSON(data) ? parse(data) : data;
 
       if (key === KEY) {
         const pageString =
@@ -190,13 +188,8 @@ export class PostmsgTransport {
           event.refId = refId;
         }
 
-        if (source) {
-          const { origin, pathname } = new URL(source, document.location);
-          event.source = origin + pathname;
-        } else {
-          event.source =
-            this.config.page === 'preview' ? rawEvent.origin : getEventSourceUrl(rawEvent);
-        }
+        event.source =
+          this.config.page === 'preview' ? rawEvent.origin : getEventSourceUrl(rawEvent);
 
         if (!event.source) {
           pretty.error(
