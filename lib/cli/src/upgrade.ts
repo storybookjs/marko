@@ -34,14 +34,19 @@ export const isCorePackage = (pkg: string) =>
   !pkg.startsWith('@storybook/preset-') &&
   !excludeList.includes(pkg);
 
-const deprecatedList = [
-  '@storybook/addon-notes',
-  '@storybook/addon-info',
-  '@storybook/addon-contexts',
-  '@storybook/addon-options',
-  '@storybook/addon-centered',
+const deprecatedPackages = [
+  {
+    minVersion: '6.0.0-alpha.0',
+    url: 'https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#60-deprecations',
+    deprecations: [
+      '@storybook/addon-notes',
+      '@storybook/addon-info',
+      '@storybook/addon-contexts',
+      '@storybook/addon-options',
+      '@storybook/addon-centered',
+    ],
+  },
 ];
-export const isDeprecatedPackage = (pkg: string) => deprecatedList.includes(pkg);
 
 const formatPackage = (pkg: Package) => `${pkg.package}@${pkg.version}`;
 
@@ -70,16 +75,16 @@ export const checkVersionConsistency = () => {
     warnPackages(outdated);
   }
 
-  if (semver.gt(latestVersion, '5.4.0')) {
-    const deprecated = storybookPackages.filter((pkg) => isDeprecatedPackage(pkg.package));
-    if (deprecated.length > 0) {
-      logger.warn(`Found ${deprecated.length} deprecated packages`);
-      logger.warn(
-        'See https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#60-deprecations'
-      );
-      warnPackages(deprecated);
+  deprecatedPackages.forEach(({ minVersion, url, deprecations }) => {
+    if (semver.gte(latestVersion, minVersion)) {
+      const deprecated = storybookPackages.filter((pkg) => deprecations.includes(pkg.package));
+      if (deprecated.length > 0) {
+        logger.warn(`Found ${deprecated.length} deprecated packages since ${minVersion}`);
+        logger.warn(`See ${url}`);
+        warnPackages(deprecated);
+      }
     }
-  }
+  });
 };
 
 type Options = { prerelease: boolean; skipCheck: boolean; useNpm: boolean; dryRun: boolean };
