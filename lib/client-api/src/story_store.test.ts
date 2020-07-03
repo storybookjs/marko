@@ -456,10 +456,12 @@ describe('preview.story_store', () => {
       addStoryToStore(store, 'a', '1', () => 0);
 
       store.updateGlobals({ foo: 'bar' });
-      expect(onGlobalsChangedChannel).toHaveBeenCalledWith({ foo: 'bar' });
+      expect(onGlobalsChangedChannel).toHaveBeenCalledWith({ globals: { foo: 'bar' } });
 
       store.updateGlobals({ baz: 'bing' });
-      expect(onGlobalsChangedChannel).toHaveBeenCalledWith({ foo: 'bar', baz: 'bing' });
+      expect(onGlobalsChangedChannel).toHaveBeenCalledWith({
+        globals: { foo: 'bar', baz: 'bing' },
+      });
     });
 
     it('should update if the UPDATE_GLOBALS event is received', () => {
@@ -467,7 +469,7 @@ describe('preview.story_store', () => {
       const store = new StoryStore({ channel: testChannel });
       addStoryToStore(store, 'a', '1', () => 0);
 
-      testChannel.emit(Events.UPDATE_GLOBALS, { foo: 'bar' });
+      testChannel.emit(Events.UPDATE_GLOBALS, { globals: { foo: 'bar' } });
 
       expect(store.getRawStory('a', '1').globals).toEqual({ foo: 'bar' });
     });
