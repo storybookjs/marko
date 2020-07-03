@@ -451,7 +451,7 @@ export default class StoryStore {
     const { args } = this._stories[id];
     this._stories[id].args = { ...args, ...newArgs };
 
-    this._channel.emit(Events.STORY_ARGS_UPDATED, id, this._stories[id].args);
+    this._channel.emit(Events.STORY_ARGS_UPDATED, { storyId: id, args: this._stories[id].args });
   }
 
   fromId = (id: string): PublishedStoreItem | null => {
