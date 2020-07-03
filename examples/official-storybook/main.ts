@@ -8,9 +8,6 @@ module.exports = {
     './stories/**/*.stories.@(js|ts|tsx|mdx)',
     './../../addons/docs/**/*.stories.tsx',
   ],
-  refs: {
-    'cra-ts-essentials': 'http://localhost:9009',
-  },
   addons: [
     {
       name: '@storybook/addon-docs',
