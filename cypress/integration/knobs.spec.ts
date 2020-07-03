@@ -12,6 +12,7 @@ describe('Knobs', () => {
 
     cy.getStoryElement()
       .console('info')
+      .wait(3000)
       .find('p')
       .eq(0)
       .should('contain.text', 'My name is John Doe');
