@@ -1,7 +1,5 @@
 import React from 'react';
 import { createMemorySource, createHistory } from '@reach/router';
-import { LocationProvider } from '@storybook/router';
-import { DecoratorFn } from '@storybook/react';
 
 import { Root as App } from './index';
 import { PrettyFakeProvider, FakeProvider } from './FakeProvider';
