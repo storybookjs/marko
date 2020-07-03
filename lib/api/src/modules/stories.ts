@@ -79,7 +79,10 @@ To change this setting, use \`addons.setConfig\`. See https://github.com/storybo
   );
   return acc;
 }, {} as Record<string, () => void>);
-function checkDeprecatedOptionParameters(options: Record<string, any>) {
+function checkDeprecatedOptionParameters(options?: Record<string, any>) {
+  if (!options) {
+    return;
+  }
   Object.keys(options).forEach((option: string) => {
     if (deprecatedOptionsParameterWarnings[option]) {
       deprecatedOptionsParameterWarnings[option]();
