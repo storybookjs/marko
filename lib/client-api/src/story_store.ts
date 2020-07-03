@@ -155,8 +155,10 @@ export default class StoryStore {
       this.setSelection({ storyId, viewMode })
     );
 
-    this._channel.on(Events.UPDATE_STORY_ARGS, (id: string, newArgs: Args) =>
-      this.updateStoryArgs(id, newArgs)
+    this._channel.on(
+      Events.UPDATE_STORY_ARGS,
+      ({ storyId, updatedArgs }: { storyId: string; updatedArgs: Args }) =>
+        this.updateStoryArgs(storyId, updatedArgs)
     );
 
     this._channel.on(Events.UPDATE_GLOBALS, (newGlobals: Args) => this.updateGlobals(newGlobals));
