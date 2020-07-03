@@ -32,8 +32,9 @@ export const SourceContainer: FC<{}> = ({ children }) => {
   channel.on(SNIPPET_RENDERED, handleSnippetRendered);
 
   useEffect(() => {
-    if (!deepEqual(sources, sourcesRef.current)) {
-      setSources(sourcesRef.current || {});
+    const current = sourcesRef.current || {};
+    if (!deepEqual(sources, current)) {
+      setSources(current);
     }
 
     return () => channel.off(SNIPPET_RENDERED, handleSnippetRendered);
