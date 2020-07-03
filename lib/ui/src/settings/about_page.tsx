@@ -1,5 +1,5 @@
 import { history } from 'global';
-import React, { Component } from 'react';
+import React, { Component, FunctionComponent } from 'react';
 
 import { Route } from '@storybook/router';
 import { Consumer, API, Combo } from '@storybook/api';
@@ -19,16 +19,18 @@ class NotificationClearer extends Component<{ api: API; notificationId: string }
   }
 }
 
-export default () => (
+const AboutPage: FunctionComponent<{ onClose: () => void }> = ({ onClose }) => (
   <Consumer>
     {({ api }: Combo) => (
       <NotificationClearer api={api} notificationId="update">
         <AboutScreen
           current={api.getCurrentVersion()}
           latest={api.getLatestVersion()}
-          onClose={() => history.back()}
+          onClose={onClose}
         />
       </NotificationClearer>
     )}
   </Consumer>
 );
+
+export { AboutPage as default };

@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { color, styled, typography } from '@storybook/theming';
 import { Icons, Loader } from '@storybook/components';
+import { GlobalHotKeys } from 'react-hotkeys';
 
 export const Centered = styled.div({
   top: '50%',
@@ -50,9 +51,14 @@ const MaxWaitTimeMessaging: FunctionComponent = () => (
   </Centered>
 );
 
+const keyMap = {
+  CLOSE: 'escape',
+};
+
 interface ReleaseNotesProps {
   didHitMaxWaitTime: boolean;
   isLoaded: boolean;
+  onClose: () => void;
   setLoaded: (isLoaded: boolean) => void;
   version: string;
 }
@@ -60,10 +66,11 @@ interface ReleaseNotesProps {
 const PureReleaseNotes: FunctionComponent<ReleaseNotesProps> = ({
   didHitMaxWaitTime,
   isLoaded,
+  onClose,
   setLoaded,
   version,
 }) => (
-  <>
+  <GlobalHotKeys handlers={{ CLOSE: onClose }} keyMap={keyMap}>
     {!isLoaded && !didHitMaxWaitTime && <ReleaseNotesLoader />}
     {didHitMaxWaitTime ? (
       <MaxWaitTimeMessaging />
@@ -75,7 +82,7 @@ const PureReleaseNotes: FunctionComponent<ReleaseNotesProps> = ({
         title={`Release notes for Storybook version ${version}`}
       />
     )}
-  </>
+  </GlobalHotKeys>
 );
 
 const MAX_WAIT_TIME = 10000; // 10 seconds
@@ -90,7 +97,7 @@ const ReleaseNotes: FunctionComponent<Omit<
   useEffect(() => {
     const timer = setTimeout(() => !isLoaded && setDidHitMaxWaitTime(true), MAX_WAIT_TIME);
     return () => clearTimeout(timer);
-  });
+  }, []);
 
   return (
     <PureReleaseNotes

@@ -1,11 +1,11 @@
 import { history } from 'global';
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 
 import { Consumer } from '@storybook/api';
 
 import ShortcutsScreen from './shortcuts';
 
-export default () => (
+const ShortcutsPage: FunctionComponent<{ onClose: () => void }> = ({ onClose }) => (
   <Consumer>
     {({
       api: { getShortcutKeys, setShortcut, restoreDefaultShortcut, restoreAllDefaultShortcuts },
@@ -13,8 +13,10 @@ export default () => (
       <ShortcutsScreen
         shortcutKeys={getShortcutKeys()}
         {...{ setShortcut, restoreDefaultShortcut, restoreAllDefaultShortcuts }}
-        onClose={() => history.back()}
+        onClose={onClose}
       />
     )}
   </Consumer>
 );
+
+export { ShortcutsPage as default };

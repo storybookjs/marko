@@ -46,19 +46,19 @@ const PureSettingsPages: FunctionComponent<PureSettingsPagesProps> = ({
     >
       <div id={ABOUT} title="About">
         <Route path={ABOUT}>
-          <AboutPage key={ABOUT} />
+          <AboutPage key={ABOUT} onClose={onClose} />
         </Route>
       </div>
 
       <div id={RELEASE_NOTES} title="Release notes">
         <Route path={RELEASE_NOTES}>
-          <ReleaseNotesPage key={RELEASE_NOTES} />
+          <ReleaseNotesPage key={RELEASE_NOTES} onClose={onClose} />
         </Route>
       </div>
 
       <div id={SHORTCUTS} title="Keyboard shortcuts">
         <Route path={SHORTCUTS}>
-          <ShortcutsPage key={SHORTCUTS} />
+          <ShortcutsPage key={SHORTCUTS} onClose={onClose} />
         </Route>
       </div>
     </Tabs>
