@@ -20,7 +20,7 @@ export default {
     ((StoryFn, c) => (
       <LocationProvider
         key="location.provider"
-        history={createHistory(createMemorySource('/?path=/story/storyId'))}
+        history={createHistory(createMemorySource('/?path=/story/story--id'))}
       >
         <Location key="location.consumer">
           {(locationData) => (
