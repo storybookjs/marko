@@ -8,11 +8,11 @@ export type SourceItem = string;
 export type StorySources = Record<StoryId, SourceItem>;
 
 export interface SourceContextProps {
-  sources?: StorySources;
+  sources: StorySources;
   setSource?: (id: StoryId, item: SourceItem) => void;
 }
 
-export const SourceContext: Context<SourceContextProps> = createContext({});
+export const SourceContext: Context<SourceContextProps> = createContext({ sources: {} });
 
 export const SourceContainer: FC<{}> = ({ children }) => {
   const [sources, setSources] = useState<StorySources>({});
@@ -33,7 +33,7 @@ export const SourceContainer: FC<{}> = ({ children }) => {
 
   useEffect(() => {
     if (!deepEqual(sources, sourcesRef.current)) {
-      setSources(sourcesRef.current);
+      setSources(sourcesRef.current || {});
     }
 
     return () => channel.off(SNIPPET_RENDERED, handleSnippetRendered);

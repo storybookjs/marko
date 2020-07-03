@@ -51,9 +51,8 @@ export const getSourceProps = (
     const targetIds = multiProps.ids || [targetId];
     source = targetIds
       .map((sourceId) => {
-        if (sources) {
-          return sources[sourceId];
-        }
+        const snippet = sources && sources[sourceId];
+        if (snippet) return snippet;
         if (storyStore) {
           const data = storyStore.fromId(sourceId);
           const enhanced = data && (enhanceSource(data) || data.parameters);
