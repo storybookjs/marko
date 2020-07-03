@@ -13,19 +13,18 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  decorators: [
-    ((StoryFn, c) => (
-      <LocationProvider
-        key="location.provider"
-        history={createHistory(createMemorySource('/?path=/story/story--id'))}
-      >
-        <StoryFn {...c} />
-      </LocationProvider>
-    )) as DecoratorFn,
-  ],
 };
 
-export const Default = () => <App provider={(new FakeProvider() as unknown) as Provider} />;
-export const LoadingState = () => (
-  <App provider={(new PrettyFakeProvider() as unknown) as Provider} />
-);
+const Story = (args: React.ComponentProps<typeof App>) => <App {...args} />;
+
+export const Default = Story.bind({});
+Default.args = {
+  provider: (new FakeProvider() as unknown) as Provider,
+  history: createHistory(createMemorySource('/?path=/story/story--id')),
+};
+
+export const LoadingState = Story.bind({});
+LoadingState.args = {
+  ...Default.args,
+  provider: (new PrettyFakeProvider() as unknown) as Provider,
+};
