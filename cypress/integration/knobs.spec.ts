@@ -1,3 +1,4 @@
+/* eslint-disable cypress/no-unnecessary-waiting */
 import { clickAddon, visit } from '../helper';
 
 describe('Knobs', () => {
