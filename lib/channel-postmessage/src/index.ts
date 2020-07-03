@@ -3,6 +3,7 @@ import * as EVENTS from '@storybook/core-events';
 import Channel, { ChannelEvent, ChannelHandler } from '@storybook/channels';
 import { logger, pretty } from '@storybook/client-logger';
 import { isJSON, parse, stringify } from 'telejson';
+import qs from 'qs';
 
 interface Config {
   page: 'manager' | 'preview';
@@ -13,16 +14,6 @@ interface BufferedEvent {
   resolve: (value?: any) => void;
   reject: (reason?: any) => void;
 }
-
-const getQueryObject = (): Record<string, string & { refId?: string }> => {
-  return (window.document.location.search as string)
-    .substr(1)
-    .split('&')
-    .reduce((acc, s) => {
-      const [k, v] = s.split('=');
-      return Object.assign(acc, { [k]: v || true });
-    }, {});
-};
 
 export const KEY = 'storybook-channel';
 
@@ -81,11 +72,13 @@ export class PostmsgTransport {
 
     const frames = this.getFrames(target);
 
+    const query = qs.parse(location.search, { ignoreQueryPrefix: true });
+
     const data = stringify(
       {
         key: KEY,
         event,
-        refId: getQueryObject().refId,
+        refId: query.refId,
       },
       { maxDepth: depth, allowFunction }
     );
