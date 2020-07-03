@@ -63,6 +63,16 @@ export interface SubAPI {
   findLeafStoryId(StoriesHash: StoriesHash, storyId: StoryId): StoryId;
 }
 
+interface Meta {
+  ref?: ComposedRef;
+  source?: string;
+  sourceType?: 'local' | 'external';
+  sourceLocation?: string;
+  refId?: string;
+  v?: number;
+  type: string;
+}
+
 export const init: ModuleFn = ({
   fullAPI,
   store,
@@ -71,61 +81,6 @@ export const init: ModuleFn = ({
   storyId: initialStoryId,
   viewMode: initialViewMode,
 }) => {
-  interface Meta {
-    ref?: ComposedRef;
-    source?: string;
-    sourceType?: 'local' | 'external';
-    refId?: string;
-    v?: number;
-    type: string;
-  }
-
-  function createEventHandlerWithRefSupport<T = { v?: number }>(
-    callback: (data: T, meta: Meta) => void
-  ) {
-    function handle(data: T) {
-      const { source, refId, type }: Meta = this;
-      const [sourceType, sourceLocation] = getSourceType(source, refId);
-      // @ts-ignore
-      const v = data.v || this.v;
-
-      if (v > 2) {
-        // eslint-disable-next-line no-console
-        console.warn(`Received ${this.type} event with version ${v}, we'll try and handle it`);
-      }
-
-      const ref =
-        refId && fullAPI.getRefs()[refId]
-          ? fullAPI.getRefs()[refId]
-          : fullAPI.findRef(sourceLocation);
-
-      const meta = {
-        v,
-        source,
-        sourceLocation,
-        refId,
-        ref,
-        type,
-      };
-
-      switch (true) {
-        case typeof refId === 'string':
-        case sourceType === 'local':
-        case sourceType === 'external': {
-          callback(data, meta);
-          break;
-        }
-
-        // if we couldn't find the source, something risky happened, we ignore the input, and log a warning
-        default: {
-          logger.warn(`Received a ${this.type} frame that was not configured as a ref`);
-          break;
-        }
-      }
-    }
-    return handle;
-  }
-
   const api: SubAPI = {
     storyId: toId,
     getData: (storyId, refId) => {
@@ -316,69 +271,106 @@ export const init: ModuleFn = ({
     },
   };
 
+  const getEventMetadata = (context: Meta) => {
+    const { source, refId, type } = context;
+    const [sourceType, sourceLocation] = getSourceType(source, refId);
+
+    const ref =
+      refId && fullAPI.getRefs()[refId]
+        ? fullAPI.getRefs()[refId]
+        : fullAPI.findRef(sourceLocation);
+
+    const meta = {
+      source,
+      sourceType,
+      sourceLocation,
+      refId,
+      ref,
+      type,
+    };
+
+    switch (true) {
+      case typeof refId === 'string':
+      case sourceType === 'local':
+      case sourceType === 'external': {
+        return meta;
+      }
+
+      // if we couldn't find the source, something risky happened, we ignore the input, and log a warning
+      default: {
+        logger.warn(`Received a ${type} frame that was not configured as a ref`);
+        return null;
+      }
+    }
+  };
+
   const initModule = () => {
     // On initial load, the local iframe will select the first story (or other "selection specifier")
     // and emit CURRENT_STORY_WAS_SET with the id. We need to ensure we respond to this change.
     // Later when we change story via the manager (or SELECT_STORY below), we'll already be at the
     // correct path before CURRENT_STORY_WAS_SET is emitted, so this is less important (the navigate is a no-op)
     // Note this is the case for refs also.
-    fullAPI.on(
-      CURRENT_STORY_WAS_SET,
-      createEventHandlerWithRefSupport<{ storyId: string; viewMode: ViewMode; [k: string]: any }>(
-        ({ storyId, viewMode }, { sourceType }) => {
-          if (sourceType === 'local' && storyId && viewMode) {
-            navigate(`/${viewMode}/${storyId}`);
-          }
+    fullAPI.on(CURRENT_STORY_WAS_SET, function handler({
+      storyId,
+      viewMode,
+    }: {
+      storyId: string;
+      viewMode: ViewMode;
+      [k: string]: any;
+    }) {
+      const { sourceType } = getEventMetadata(this);
+
+      if (sourceType === 'local' && storyId && viewMode) {
+        navigate(`/${viewMode}/${storyId}`);
+      }
+    });
+
+    fullAPI.on(STORY_CHANGED, function handler() {
+      const { sourceType } = getEventMetadata(this);
+
+      if (sourceType === 'local') {
+        const options = fullAPI.getCurrentParameter('options');
+
+        if (options) {
+          fullAPI.setOptions(options);
         }
-      )
-    );
+      }
+    });
 
-    fullAPI.on(
-      STORY_CHANGED,
-      createEventHandlerWithRefSupport((storyId, { sourceType }) => {
-        if (sourceType === 'local') {
-          const options = fullAPI.getCurrentParameter('options');
+    fullAPI.on(SET_STORIES, function handler(data: SetStoriesPayload) {
+      const { ref } = getEventMetadata(this);
+      const error = data.error || undefined;
+      const stories = data.v ? denormalizeStoryParameters(data) : data.stories;
 
-          if (options) {
-            fullAPI.setOptions(options);
-          }
+      if (!ref) {
+        if (!data.v) {
+          throw new Error('Unexpected legacy SET_STORIES event from local source');
         }
-      })
-    );
 
-    fullAPI.on(
-      SET_STORIES,
-      createEventHandlerWithRefSupport<SetStoriesPayload>((data, { ref }) => {
-        const error = data.error || undefined;
-        const stories = data.v ? denormalizeStoryParameters(data) : data.stories;
+        fullAPI.setStories(stories, error);
+        fullAPI.setOptions(data.globalParameters.options);
+      } else {
+        fullAPI.setRef(ref.id, { ...ref, ...data, stories }, true);
+      }
+    });
 
-        if (!ref) {
-          if (!data.v) {
-            throw new Error('Unexpected legacy SET_STORIES event from local source');
-          }
+    fullAPI.on(SELECT_STORY, function handler({
+      kind,
+      story,
+      ...rest
+    }: {
+      kind: string;
+      story: string;
+      viewMode: ViewMode;
+    }) {
+      const { ref } = getEventMetadata(this);
 
-          fullAPI.setStories(stories, error);
-          fullAPI.setOptions(data.globalParameters.options);
-        } else {
-          fullAPI.setRef(ref.id, { ...ref, ...data, stories }, true);
-        }
-      })
-    );
-
-    fullAPI.on(
-      SELECT_STORY,
-      createEventHandlerWithRefSupport<{
-        kind: string;
-        story: string;
-        viewMode: ViewMode;
-      }>(({ kind, story, ...rest }, { ref }) => {
-        if (!ref) {
-          fullAPI.selectStory(kind, story, rest);
-        } else {
-          fullAPI.selectStory(kind, story, { ...rest, ref: ref.id });
-        }
-      })
-    );
+      if (!ref) {
+        fullAPI.selectStory(kind, story, rest);
+      } else {
+        fullAPI.selectStory(kind, story, { ...rest, ref: ref.id });
+      }
+    });
 
     fullAPI.on(STORY_ARGS_UPDATED, (id: StoryId, args: Args) => {
       const { storiesHash } = store.getState();
