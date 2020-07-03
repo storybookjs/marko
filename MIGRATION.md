@@ -26,6 +26,7 @@
   - [Story Store immutable outside of configuration](#story-store-immutable-outside-of-configuration)
   - [Improved story source handling](#improved-story-source-handling)
   - [6.0 Addon API changes](#60-addon-api-changes)
+    - [Consistent local addon paths in main.js](#consistent-local-addon-paths-in-mainjs)
     - [Deprecated setAddon](#deprecated-setaddon)
     - [Actions addon uses parameters](#actions-addon-uses-parameters)
     - [Removed action decorator APIs](#removed-action-decorator-apis)
@@ -510,6 +511,24 @@ The MDX analog:
 ```
 
 ### 6.0 Addon API changes
+
+#### Consistent local addon paths in main.js
+
+If you use `.storybook/main.js` config and have locally-defined addons in your project, you need to update your file paths.
+
+In 5.3, `addons` paths were relative to the project root, which was inconsistent with `stories` paths, which were relative to the `.storybook` folder. In 6.0, addon paths are now relative to the config folder.
+
+So, for example, if you had:
+
+```js
+module.exports = { addons: ['./.storybook/my-local-addon/register'] };
+```
+
+You'd need to update this to:
+
+```js
+module.exports = { addons: ['./my-local-addon/register'] };
+```
 
 #### Deprecated setAddon
 
