@@ -6,23 +6,26 @@ import Button from './button';
 export default {
   title: 'Button',
   component: Button,
+  argTypes: {
+    text: { control: 'text' },
+  },
 };
 
-export const Text = () => ({
+const ButtonStory = (args) => ({
   component: Button,
-  props: {
-    text: 'Hello Button',
-  },
+  props: args,
 });
 
-export const Emoji = () => ({
-  component: Button,
-  props: {
-    text: '😀 😎 👍 💯',
-  },
-});
+export const Text = ButtonStory.bind({});
+Text.args = {
+  text: 'Button',
+  onClick: action('onClick'),
+};
 
-Emoji.parameters = { notes: 'My notes on a button with emojis' };
+export const Emoji = ButtonStory.bind({});
+Emoji.args = {
+  text: '😀 😎 👍 💯',
+};
 
 export const TextWithAction = () => ({
   component: Button,

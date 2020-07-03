@@ -40,6 +40,7 @@ Controls replaces [Storybook Knobs](https://github.com/storybookjs/storybook/tre
   - [How will this replace addon-knobs?](#how-will-this-replace-addon-knobs)
   - [How do I migrate from addon-knobs?](#how-do-i-migrate-from-addon-knobs)
   - [My controls aren't being auto-generated. What should I do?](#my-controls-arent-being-auto-generated-what-should-i-do)
+  - [How can I disable controls for certain fields on a particular story?](#how-can-i-disable-controls-for-certain-fields-on-a-particular-story)
 
 ## Installation
 
@@ -505,3 +506,26 @@ Basic.args = {
 The `argTypes` annotation (which can also be applied to individual stories if needed), gives Storybook the hints it needs to generate controls in these unsupported cases. See [control annotations](#control-annotations) for a full list of control types.
 
 It's also possible that your Storybook is misconfigured. If you think this might be the case, please search through Storybook's [Github issues](https://github.com/storybookjs/storybook/issues), and file a new issue if you don't find one that matches your use case.
+
+### How can I disable controls for certain fields on a particular story?
+
+The `argTypes` annotation annotation can be used to hide controls for a particular row, or even hide rows.
+
+Suppose you have a `Button` component with `borderWidth` and `label` properties (auto-generated or otherwise) and you want to hide the `borderWidth` row completely and disable controls for the `label` row on a specific story. Here's how you'd do that:
+
+```js
+import { Button } from 'button';
+
+export default {
+  title: 'Button',
+  component: Button,
+};
+
+export const CustomControls = (args) => <Button {...args} />;
+CustomControls.argTypes = {
+  borderWidth: { table: { disable: true } },
+  label: { control: { disable: true } },
+};
+```
+
+Like [story parameters](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/basics/writing-stories/index.md#parameters), `args` and `argTypes` annotations are hierarchically merged, so story-level annotations overwrite component-level annotations.

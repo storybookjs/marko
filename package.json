@@ -1,6 +1,6 @@
 {
   "name": "@storybook/root",
-  "version": "6.0.0-beta.38",
+  "version": "6.0.0-beta.39",
   "private": true,
   "description": "Storybook is an open source tool for developing UI components in isolation for React, Vue and Angular. It makes building stunning UIs organized and efficient.",
   "keywords": [
@@ -74,7 +74,6 @@
     "serve-storybooks": "http-server ./built-storybooks -p 8001",
     "start": "yarn --cwd examples/official-storybook storybook",
     "test": "node ./scripts/test.js",
-    "test-latest-cra": "yarn --prefix --cwd lib/cli run test-latest-cra",
     "test:cli": "npm --prefix lib/cli run test",
     "test:e2e": "cypress run",
     "test:e2e-framework": "ts-node --project=./scripts/tsconfig.json ./scripts/run-e2e.ts",

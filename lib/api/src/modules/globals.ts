@@ -1,32 +1,30 @@
-import { SET_STORIES, UPDATE_GLOBAL_ARGS, GLOBAL_ARGS_UPDATED } from '@storybook/core-events';
+import { SET_STORIES, UPDATE_GLOBALS, GLOBALS_UPDATED } from '@storybook/core-events';
 import { Args, ModuleFn } from '../index';
 import { SetStoriesPayloadV2 } from '../lib/stories';
 
 export interface SubState {
-  globalArgs: Args;
+  globals: Args;
 }
 
 export interface SubAPI {
-  updateGlobalArgs: (newGlobalArgs: Args) => void;
+  updateGlobals: (newGlobals: Args) => void;
 }
 
 export const init: ModuleFn = ({ store, fullAPI }) => {
   const api: SubAPI = {
-    updateGlobalArgs(newGlobalArgs) {
-      fullAPI.emit(UPDATE_GLOBAL_ARGS, newGlobalArgs);
+    updateGlobals(newGlobals) {
+      fullAPI.emit(UPDATE_GLOBALS, newGlobals);
     },
   };
 
   const state: SubState = {
     // Currently global args always start empty. TODO -- should this be set on the channel at init time?
-    globalArgs: {},
+    globals: {},
   };
 
   const initModule = () => {
-    fullAPI.on(GLOBAL_ARGS_UPDATED, (globalArgs: Args) => store.setState({ globalArgs }));
-    fullAPI.on(SET_STORIES, ({ globalArgs }: SetStoriesPayloadV2) =>
-      store.setState({ globalArgs })
-    );
+    fullAPI.on(GLOBALS_UPDATED, (globals: Args) => store.setState({ globals }));
+    fullAPI.on(SET_STORIES, ({ globals }: SetStoriesPayloadV2) => store.setState({ globals }));
   };
 
   return {

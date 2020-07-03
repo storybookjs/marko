@@ -19,6 +19,7 @@
   - [Removed renderCurrentStory event](#removed-rendercurrentstory-event)
   - [Removed hierarchy separators](#removed-hierarchy-separators)
   - [Client API changes](#client-api-changes)
+    - [Removed support for duplicate kinds](#removed-support-for-duplicate-kinds)
     - [Removed Legacy Story APIs](#removed-legacy-story-apis)
     - [Can no longer add decorators/parameters after stories](#can-no-longer-add-decoratorsparameters-after-stories)
     - [Changed Parameter Handling](#changed-parameter-handling)
@@ -37,6 +38,7 @@
     - [Deprecated addon-contexts](#deprecated-addon-contexts)
     - [Removed addon-centered](#removed-addon-centered)
     - [Deprecated polymer](#deprecated-polymer)
+    - [Deprecated immutable options parameters](#deprecated-immutable-options-parameters)
 - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
   - [To main.js configuration](#to-mainjs-configuration)
     - [Using main.js](#using-mainjs)
@@ -415,6 +417,29 @@ addons.setConfig({
 
 ### Client API changes
 
+#### Removed support for duplicate kinds
+
+In 6.0 we removed the ability to split a kind's (component's) stories into multiple files because it was causing issues in hot module reloading (HMR).
+
+If you had N stories that contained `export default { title: 'foo/bar' }` (or the MDX equivalent `<Meta title="foo/bar">`), Storybook will now throw the error `Duplicate title '${kindName}' used in multiple files`.
+
+To split a component's stories into multiple files, e.g. for the `foo/bar` example above:
+
+- Create a single file with the `export default { title: 'foo/bar' }` export, which is the primary file
+- Comment out or delete the default export from the other files
+- Re-export the stories from the other files in the primary file
+
+So the primary example might look like:
+
+```js
+export default { title: 'foo/bar' };
+export * from './Bar1.stories'
+export * from './Bar2.stories'
+export * from './Bar3.stories'
+
+export const SomeStory = () => ...;
+```
+
 #### Removed Legacy Story APIs
 
 In 6.0 we removed a set of APIs from the underlying `StoryStore` (which wasn't publicly accessible):
@@ -619,6 +644,21 @@ Other possible values are: `padded` (default) and `fullscreen`.
 #### Deprecated polymer
 
 We've deprecated `@storybook/polymer` and are focusing on `@storybook/web-components`. If you use Polymer and are interested in maintaining it, please get in touch on [our Discord](https://discordapp.com/invite/UUt2PJb).
+
+#### Deprecated immutable options parameters
+
+The UI options `sidebarAnimations`, `enableShortcuts`, `theme`, `showRoots` should not be changed on a per-story basis, and as such there is no reason to set them via parameters.
+
+You should use `addon.setConfig` to set them:
+
+```js
+// in .storybook/manager.js
+import addons from '@storybook/addons';
+
+addons.setConfig({
+  showRoots: false,
+});
+```
 
 ## From version 5.2.x to 5.3.x
 

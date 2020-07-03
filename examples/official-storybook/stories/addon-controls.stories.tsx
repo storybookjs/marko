@@ -18,3 +18,9 @@ Action.args = {
   children: 'hmmm',
   type: 'action',
 };
+
+export const CustomControls = Story.bind({});
+CustomControls.argTypes = {
+  children: { table: { disable: true } },
+  type: { control: { disable: true } },
+};

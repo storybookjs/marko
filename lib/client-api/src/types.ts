@@ -57,7 +57,7 @@ export type StoreItem = StoryIdentifier & {
 };
 
 export type PublishedStoreItem = StoreItem & {
-  globalArgs: Args;
+  globals: Args;
 };
 
 export interface StoreData {

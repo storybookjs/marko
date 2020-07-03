@@ -25,8 +25,8 @@ const read = async (url: string) => {
           [k]: {
             ...v,
             parameters: {
-              globalArgs: v.parameters.globalArgs,
-              globalArgTypes: v.parameters.globalArgTypes,
+              globals: v.parameters.globals,
+              globalTypes: v.parameters.globalTypes,
               options: v.parameters.options,
               args: v.parameters.args,
               argTypes: v.parameters.argTypes,

@@ -8,19 +8,21 @@ export default {
   component: Button,
 };
 
-export const Text = () => ({
+const ButtonStory = (args: Button) => ({
   component: Button,
-  props: {
-    text: 'Hello Button',
-  },
+  props: args,
 });
 
-export const Emoji = () => ({
-  component: Button,
-  props: {
-    text: '😀 😎 👍 💯',
-  },
-});
+export const Text = ButtonStory.bind({});
+Text.args = {
+  text: 'Button',
+  onClick: action('onClick'),
+};
+
+export const Emoji = ButtonStory.bind({});
+Emoji.args = {
+  text: '😀 😎 👍 💯',
+};
 
 Emoji.parameters = { notes: 'My notes on a button with emojis' };
 
