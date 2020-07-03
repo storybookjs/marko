@@ -7,6 +7,7 @@ import initiate from './initiate';
 import { add } from './add';
 import { migrate } from './migrate';
 import { extract } from './extract';
+import { upgrade } from './upgrade';
 
 // Cannot be `import` as it's not under TS root dir
 const pkg = require('../package.json');
@@ -31,6 +32,15 @@ program
   .option('-N --use-npm', 'Use NPM to build the Storybook server')
   .option('-s --skip-postinstall', 'Skip package specific postinstall config modifications')
   .action((addonName, options) => add(addonName, options));
+
+program
+  .command('upgrade')
+  .description('Upgrade your storybook packages to the latest')
+  .option('-N --use-npm', 'Use NPM to build the Storybook server')
+  .option('-n --dry-run', 'Only check for upgrades, do not install')
+  .option('-p --prerelease', 'Upgrade to the pre-release packages')
+  .option('-s --skip-check', 'Skip postinstall version consistency checks')
+  .action((options) => upgrade(options));
 
 program
   .command('info')
