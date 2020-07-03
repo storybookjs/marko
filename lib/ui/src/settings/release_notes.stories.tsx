@@ -9,7 +9,7 @@ export default {
   title: 'UI/Settings/ReleaseNotes',
 };
 
-const actions = makeActions('setLoaded');
+const actions = makeActions('setLoaded', 'onClose');
 
 const VERSION = '6.0.0';
 
