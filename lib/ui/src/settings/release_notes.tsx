@@ -97,7 +97,7 @@ const ReleaseNotes: FunctionComponent<Omit<
   useEffect(() => {
     const timer = setTimeout(() => !isLoaded && setDidHitMaxWaitTime(true), MAX_WAIT_TIME);
     return () => clearTimeout(timer);
-  }, []);
+  }, [isLoaded]);
 
   return (
     <PureReleaseNotes
