@@ -20,15 +20,32 @@ import { defaultDecorateStory } from './decorators';
 // relevant framework instanciates them via `start.js`. The good news is this happens right away.
 let singleton: ClientApi;
 
-export const addDecorator = (decorator: DecoratorFunction) => {
+const addDecoratorDeprecationWarning = deprecate(
+  () => {},
+  `\`addDecorator\` is deprecated, and will be removed in Storybook 7.0.
+Instead, use \`export const decorators = [];\` in your \`preview.js\`.
+Read more at https://github.com/storybookjs/storybook/MIGRATION.md#deprecated-addparameters-and-adddecorator).`
+);
+export const addDecorator = (decorator: DecoratorFunction, deprecationWarning = true) => {
   if (!singleton)
     throw new Error(`Singleton client API not yet initialized, cannot call addDecorator`);
 
+  if (deprecationWarning) addDecoratorDeprecationWarning();
+
   singleton.addDecorator(decorator);
 };
-export const addParameters = (parameters: Parameters) => {
+
+const addParametersDeprecationWarning = deprecate(
+  () => {},
+  `\`addParameters\` is deprecated, and will be removed in Storybook 7.0.
+Instead, use \`export const parameters = {};\` in your \`preview.js\`.
+Read more at https://github.com/storybookjs/storybook/MIGRATION.md#deprecated-addparameters-and-adddecorator).`
+);
+export const addParameters = (parameters: Parameters, deprecationWarning = true) => {
   if (!singleton)
     throw new Error(`Singleton client API not yet initialized, cannot call addParameters`);
+
+  if (deprecationWarning) addParametersDeprecationWarning();
 
   singleton.addParameters(parameters);
 };

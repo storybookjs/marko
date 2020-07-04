@@ -38,6 +38,7 @@
     - [Removed addon-centered](#removed-addon-centered)
     - [Deprecated polymer](#deprecated-polymer)
     - [Deprecated immutable options parameters](#deprecated-immutable-options-parameters)
+    - [Deprecated addParameters and addDecorator](#deprecated-addparameters-and-adddecorator)
 - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
   - [To main.js configuration](#to-mainjs-configuration)
     - [Using main.js](#using-mainjs)
@@ -466,6 +467,8 @@ export StoryOne = ...;
 StoryOne.story = { parameters: { ...commonParameters, other: 'things' } };
 ```
 
+> NOTE: also the use of `addParameters` and `addDecorators` at arbitrary points is also deprecated, see [the deprecation warning](#deprecated-addparameters-and-adddecorator).
+
 #### Changed Parameter Handling
 
 There have been a few rationalizations of parameter handling in 6.0 to make things more predictable and fit better with the intention of parameters:
@@ -640,6 +643,12 @@ addons.setConfig({
   showRoots: false,
 });
 ```
+
+#### Deprecated addParameters and addDecorator
+
+The `addParameters` and `addDecorator` APIs to add global decorators and parameters, exported by the various frameworks (e.g. `@storybook/react`) and `@storybook/client` are now deprecated.
+
+Instead, use `export const parameters = {};` and `export const decorators = [];` in your `.storybook/preview.js`. Addon authors similarly should use such an export in a `previewEntry` file.
 
 ## From version 5.2.x to 5.3.x
 
