@@ -38,7 +38,7 @@ type ComponentsProps = BaseProps & {
 
 type StoryProps = BaseProps & {
   story: '.' | string;
-  showComponents?: boolean;
+  showComponent?: boolean;
 };
 
 type PropsProps = BaseProps | OfProps | ComponentsProps | StoryProps;
@@ -134,7 +134,7 @@ export const StoryTable: FC<StoryProps & { components: Record<string, Component>
     parameters: { argTypes },
     storyStore,
   } = context;
-  const { story, showComponents, components, include, exclude } = props;
+  const { story, components, include, exclude } = props;
   let storyArgTypes;
   try {
     let storyId;
@@ -158,12 +158,6 @@ export const StoryTable: FC<StoryProps & { components: Record<string, Component>
     }
     storyArgTypes = filterArgTypes(storyArgTypes, include, exclude);
 
-    // This code handles three cases:
-    //  1. the story has args, in which case we want to show controls for the story
-    //  2. the story has args, and the user specifies showComponents, in which case
-    //     we want to show controls for the primary component AND show props for each component
-    //  3. the story has NO args, in which case we want to show props for each component
-
     // eslint-disable-next-line prefer-const
     let [args, updateArgs] = useArgs(storyId, storyStore);
     let tabs = { Story: { rows: storyArgTypes, args, updateArgs } } as Record<
@@ -180,10 +174,7 @@ export const StoryTable: FC<StoryProps & { components: Record<string, Component>
       tabs = {};
     }
 
-    if (showComponents || !storyHasArgsWithControls) {
-      tabs = addComponentTabs(tabs, components, context, include, exclude);
-    }
-
+    tabs = addComponentTabs(tabs, components, context, include, exclude);
     return <TabbedArgsTable tabs={tabs} />;
   } catch (err) {
     return <ArgsTable error={err.message} />;
@@ -205,14 +196,17 @@ export const Props: FC<PropsProps> = (props) => {
   } = context;
 
   const { include, exclude, components } = props as ComponentsProps;
-  const { story } = props as StoryProps;
+  const { story, showComponent } = props as StoryProps;
 
   let allComponents = components;
   const main = getComponent(props, context);
 
-  if (!allComponents && main) {
-    const mainLabel = getComponentName(main);
-    allComponents = { [mainLabel]: main, ...subcomponents };
+  const mainLabel = getComponentName(main);
+  if (!allComponents) {
+    if (!story || showComponent) {
+      allComponents = { [mainLabel]: main };
+    }
+    allComponents = { ...allComponents, ...subcomponents };
   }
 
   if (story) {
