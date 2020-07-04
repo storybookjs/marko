@@ -13,16 +13,14 @@ export default {
   },
 };
 
+const history = createHistory(createMemorySource('/?path=/story/story--id'));
+
 const Story = (args: React.ComponentProps<typeof App>) => <App {...args} />;
 
-export const Default = Story.bind({});
-Default.args = {
-  provider: (new FakeProvider() as unknown) as Provider,
-  history: createHistory(createMemorySource('/?path=/story/story--id')),
-};
+export const Default = () => (
+  <App provider={(new FakeProvider() as unknown) as Provider} history={history} />
+);
 
-export const LoadingState = Story.bind({});
-LoadingState.args = {
-  ...Default.args,
-  provider: (new PrettyFakeProvider() as unknown) as Provider,
-};
+export const LoadingState = () => (
+  <App provider={(new PrettyFakeProvider() as unknown) as Provider} history={history} />
+);
