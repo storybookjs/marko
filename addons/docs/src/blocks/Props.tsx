@@ -203,10 +203,8 @@ export const Props: FC<PropsProps> = (props) => {
 
   const mainLabel = getComponentName(main);
   if (!allComponents) {
-    if (!story || showComponent) {
-      allComponents = { [mainLabel]: main };
-    }
-    allComponents = { ...allComponents, ...subcomponents };
+    allComponents =
+      !story || showComponent ? { [mainLabel]: main, ...subcomponents } : subcomponents;
   }
 
   if (story) {
