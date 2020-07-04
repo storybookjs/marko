@@ -37,6 +37,7 @@
     - [Deprecated addon-contexts](#deprecated-addon-contexts)
     - [Removed addon-centered](#removed-addon-centered)
     - [Deprecated polymer](#deprecated-polymer)
+    - [Deprecated immutable options parameters](#deprecated-immutable-options-parameters)
 - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
   - [To main.js configuration](#to-mainjs-configuration)
     - [Using main.js](#using-mainjs)
@@ -624,6 +625,21 @@ Other possible values are: `padded` (default) and `fullscreen`.
 #### Deprecated polymer
 
 We've deprecated `@storybook/polymer` and are focusing on `@storybook/web-components`. If you use Polymer and are interested in maintaining it, please get in touch on [our Discord](https://discordapp.com/invite/UUt2PJb).
+
+#### Deprecated immutable options parameters
+
+The UI options `sidebarAnimations`, `enableShortcuts`, `theme`, `showRoots` should not be changed on a per-story basis, and as such there is no reason to set them via parameters.
+
+You should use `addon.setConfig` to set them:
+
+```js
+// in .storybook/manager.js
+import addons from '@storybook/addons';
+
+addons.setConfig({
+  showRoots: false,
+});
+```
 
 ## From version 5.2.x to 5.3.x
 

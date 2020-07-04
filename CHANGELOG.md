@@ -1,3 +1,14 @@
+## 6.0.0-beta.40 (July 4, 2020)
+
+### Features
+
+- CLI: Add upgrade utility with version consistency check ([#11396](https://github.com/storybookjs/storybook/pull/11396))
+
+### Maintenance
+
+- Build: Fix CI breaks ([#11410](https://github.com/storybookjs/storybook/pull/11410))
+- Core: Deprecate immutable options as parameters ([#11387](https://github.com/storybookjs/storybook/pull/11387))
+
 ## 6.0.0-beta.39 (July 2, 2020)
 
 ### Breaking Changes
