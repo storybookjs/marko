@@ -41,7 +41,7 @@ export const ButtonWithLinkToAnotherStory = () => ({
   component: Button,
   props: {
     text: 'Go to Welcome Story',
-    onClick: linkTo('Welcome'),
+    onClick: linkTo('example-introduction--page'),
   },
 });
 
