@@ -9,6 +9,10 @@ export class Yarn1Proxy extends JsPackageManager {
     return 'yarn storybook';
   }
 
+  getRunCommand(command: string): string {
+    return `yarn ${command}`;
+  }
+
   protected runInstall(): void {
     this.executeCommand('yarn', [], 'inherit');
   }

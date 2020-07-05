@@ -9,6 +9,10 @@ export class NPMProxy extends JsPackageManager {
     return 'npm run storybook';
   }
 
+  getRunCommand(command: string): string {
+    return `npm run ${command}`;
+  }
+
   protected runInstall(): void {
     this.executeCommand('npm', ['install'], 'inherit');
   }
