@@ -1,6 +1,8 @@
 import { JsPackageManager } from './JsPackageManager';
 
 export class Yarn1Proxy extends JsPackageManager {
+  type: 'yarn';
+
   initPackageJson() {
     return this.executeCommand('yarn', ['init', '-y']);
   }

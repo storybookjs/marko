@@ -10,6 +10,8 @@ const logger = console;
 const { storybookCLIVersion, devDependencies } = require('../../package.json');
 
 export abstract class JsPackageManager {
+  public abstract type: 'npm' | 'yarn' | 'yarn2';
+
   public abstract initPackageJson(): void;
 
   public abstract getRunStorybookCommand(): string;
