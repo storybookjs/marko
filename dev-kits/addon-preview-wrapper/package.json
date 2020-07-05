@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-preview-wrapper",
-  "version": "6.0.0-beta.40",
+  "version": "6.0.0-beta.42",
   "description": "preview wrapper addon for storybook",
   "keywords": [
     "addon",
@@ -24,13 +24,13 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-beta.40",
+    "@storybook/addons": "6.0.0-beta.42",
     "react": "^16.8.3"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "0ba27c4d5bb416cbb4e6719a1a03c6c31c1f0372",
+  "gitHead": "8b5427577af0a22c9a9b291ea7d8a3e96c3d12e0",
   "typesVersions": {
     "<=3.5": {
       "*": [

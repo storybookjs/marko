@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-actions",
-  "version": "6.0.0-beta.40",
+  "version": "6.0.0-beta.42",
   "description": "Action Logger addon for storybook",
   "keywords": [
     "storybook"
@@ -28,12 +28,12 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-beta.40",
-    "@storybook/api": "6.0.0-beta.40",
-    "@storybook/client-api": "6.0.0-beta.40",
-    "@storybook/components": "6.0.0-beta.40",
-    "@storybook/core-events": "6.0.0-beta.40",
-    "@storybook/theming": "6.0.0-beta.40",
+    "@storybook/addons": "6.0.0-beta.42",
+    "@storybook/api": "6.0.0-beta.42",
+    "@storybook/client-api": "6.0.0-beta.42",
+    "@storybook/components": "6.0.0-beta.42",
+    "@storybook/core-events": "6.0.0-beta.42",
+    "@storybook/theming": "6.0.0-beta.42",
     "core-js": "^3.0.1",
     "fast-deep-equal": "^3.1.1",
     "global": "^4.3.2",
@@ -58,7 +58,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "0ba27c4d5bb416cbb4e6719a1a03c6c31c1f0372",
+  "gitHead": "8b5427577af0a22c9a9b291ea7d8a3e96c3d12e0",
   "typesVersions": {
     "<=3.5": {
       "*": [
