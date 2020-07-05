@@ -30,8 +30,10 @@ export const ArgControl: FC<ArgControlProps> = ({ row, arg, updateArgs }) => {
     [updateArgs, name]
   );
 
+  if (!control || control.disable) return <NoControl />;
+
   const props = { name, argType: row, value: arg, onChange };
-  switch (control?.type) {
+  switch (control.type) {
     case 'array':
       return <ArrayControl {...props} {...control} />;
     case 'boolean':

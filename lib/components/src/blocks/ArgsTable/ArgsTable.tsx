@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import pickBy from 'lodash/pickBy';
 import { styled, ignoreSsrWarning } from '@storybook/theming';
 import { opacify, transparentize, darken, lighten } from 'polished';
 import { ArgRow } from './ArgRow';
@@ -226,7 +227,7 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
 
   const { rows, args, updateArgs, compact, inAddonPanel } = props as ArgsTableRowProps;
 
-  const groups = groupRows(rows);
+  const groups = groupRows(pickBy(rows, (row) => !row?.table?.disable));
 
   if (
     groups.ungrouped.length === 0 &&

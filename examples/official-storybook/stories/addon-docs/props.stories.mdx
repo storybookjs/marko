@@ -8,6 +8,7 @@ import { MemoButton } from '../../components/MemoButton';
 <Meta
   title="Addons/Docs/props"
   component={ButtonGroup}
+  subcomponents={{ SubGroup }}
   parameters={{ controls: { expanded: false } }}
 />
 
@@ -35,7 +36,12 @@ export const ArgsStory = (args = {}) => (
       arrayArg: ['a', 'b'],
     }}
     argTypes={{
-      boolArg: { name: 'boolArg', type: { name: 'boolean' }, description: 'bool description' },
+      boolArg: {
+        name: 'boolArg',
+        type: { name: 'boolean' },
+        description: 'bool description',
+        control: 'boolean',
+      },
       stringArg: {
         name: 'stringArg',
         type: { name: 'string' },
@@ -47,11 +53,13 @@ export const ArgsStory = (args = {}) => (
             detail: 'some long bar default',
           },
         },
+        control: 'text',
       },
       arrayArg: {
         name: 'arrayArg',
         type: { name: 'array', value: { name: 'string' } },
         description: 'baz description',
+        control: 'array',
       },
       selectArg: {
         name: 'selectArg',
@@ -74,9 +82,9 @@ export const ArgsStory = (args = {}) => (
 
 <Props story="ArgTypes" />
 
-## ArgTypes w/ Components
+## ArgTypes w/ Component
 
-<Props story="ArgTypes" showComponents />
+<Props story="ArgTypes" showComponent />
 
 ## Args
 

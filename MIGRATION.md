@@ -37,6 +37,8 @@
     - [Deprecated addon-contexts](#deprecated-addon-contexts)
     - [Removed addon-centered](#removed-addon-centered)
     - [Deprecated polymer](#deprecated-polymer)
+    - [Deprecated immutable options parameters](#deprecated-immutable-options-parameters)
+    - [Deprecated addParameters and addDecorator](#deprecated-addparameters-and-adddecorator)
 - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
   - [To main.js configuration](#to-mainjs-configuration)
     - [Using main.js](#using-mainjs)
@@ -465,6 +467,8 @@ export StoryOne = ...;
 StoryOne.story = { parameters: { ...commonParameters, other: 'things' } };
 ```
 
+> NOTE: also the use of `addParameters` and `addDecorator` at arbitrary points is also deprecated, see [the deprecation warning](#deprecated-addparameters-and-adddecorator).
+
 #### Changed Parameter Handling
 
 There have been a few rationalizations of parameter handling in 6.0 to make things more predictable and fit better with the intention of parameters:
@@ -624,6 +628,27 @@ Other possible values are: `padded` (default) and `fullscreen`.
 #### Deprecated polymer
 
 We've deprecated `@storybook/polymer` and are focusing on `@storybook/web-components`. If you use Polymer and are interested in maintaining it, please get in touch on [our Discord](https://discordapp.com/invite/UUt2PJb).
+
+#### Deprecated immutable options parameters
+
+The UI options `sidebarAnimations`, `enableShortcuts`, `theme`, `showRoots` should not be changed on a per-story basis, and as such there is no reason to set them via parameters.
+
+You should use `addon.setConfig` to set them:
+
+```js
+// in .storybook/manager.js
+import addons from '@storybook/addons';
+
+addons.setConfig({
+  showRoots: false,
+});
+```
+
+#### Deprecated addParameters and addDecorator
+
+The `addParameters` and `addDecorator` APIs to add global decorators and parameters, exported by the various frameworks (e.g. `@storybook/react`) and `@storybook/client` are now deprecated.
+
+Instead, use `export const parameters = {};` and `export const decorators = [];` in your `.storybook/preview.js`. Addon authors similarly should use such an export in a `previewEntry` file.
 
 ## From version 5.2.x to 5.3.x
 
