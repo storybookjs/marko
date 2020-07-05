@@ -467,7 +467,7 @@ export StoryOne = ...;
 StoryOne.story = { parameters: { ...commonParameters, other: 'things' } };
 ```
 
-> NOTE: also the use of `addParameters` and `addDecorators` at arbitrary points is also deprecated, see [the deprecation warning](#deprecated-addparameters-and-adddecorator).
+> NOTE: also the use of `addParameters` and `addDecorator` at arbitrary points is also deprecated, see [the deprecation warning](#deprecated-addparameters-and-adddecorator).
 
 #### Changed Parameter Handling
 
