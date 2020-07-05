@@ -78,13 +78,13 @@ describe('Helpers', () => {
       expect(copySyncSpy).toHaveBeenNthCalledWith(
         1,
         expectedDirectory,
-        './src/stories',
+        './stories',
         expect.anything()
       );
       expect(copySyncSpy).toHaveBeenNthCalledWith(
         2,
         'frameworks/common',
-        './src/stories',
+        './stories',
         expect.anything()
       );
     }
