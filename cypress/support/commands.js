@@ -42,11 +42,11 @@ Cypress.Commands.add('visitStorybook', () => {
   return cy
     .clearLocalStorage()
     .visit(`${host}/?path=/story/example-introduction--page`)
-    .get(`#storybook-preview-iframe`, { log: false })
+    .get(`#storybook-preview-iframe`, { log: false, timeout: 15000 })
     .its('0.contentDocument.body', { log: false })
     .should('not.be.empty')
     .then((body) => cy.wrap(body, { log: false }))
-    .find('#docs-root', { log: false })
+    .find('#docs-root', { log: false, timeout: 15000 })
     .should('not.be.empty');
 });
 
