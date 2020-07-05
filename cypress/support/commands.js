@@ -36,16 +36,18 @@ Cypress.Commands.add(
   }
 );
 
-Cypress.Commands.add('visitStorybook', (route = '') => {
+Cypress.Commands.add('visitStorybook', () => {
   cy.log('visitStorybook');
   const host = Cypress.env('location') || 'http://localhost:8001';
   return cy
     .clearLocalStorage()
-    .visit(`${host}/${route}`)
-    .get(`#storybook-preview-iframe`)
-    .then({ timeout: 15000 }, (iframe) => {
-      return cy.wrap(iframe, { timeout: 10000 }).should('not.be.empty');
-    });
+    .visit(`${host}/?path=/story/example-introduction--page`)
+    .get(`#storybook-preview-iframe`, { log: false })
+    .its('0.contentDocument.body', { log: false })
+    .should('not.be.empty')
+    .then((body) => cy.wrap(body, { log: false }))
+    .find('#docs-root', { log: false })
+    .should('not.be.empty');
 });
 
 Cypress.Commands.add('getStoryElement', {}, () => {
@@ -73,16 +75,17 @@ Cypress.Commands.add('getDocsElement', {}, () => {
 });
 
 Cypress.Commands.add('navigateToStory', (kind, name) => {
-  const kindId = kind.replace(' ', '-').toLowerCase();
-  const storyId = name.replace(' ', '-').toLowerCase();
+  const kindId = kind.replace(/ /g, '-').toLowerCase();
+  const storyId = name.replace(/ /g, '-').toLowerCase();
 
   const storyLinkId = `#${kindId}--${storyId}`;
-  cy.log('navigateToStory');
+  cy.log(`navigateToStory ${kind} ${name}`);
 
   if (name !== 'page') {
-    cy.get(`#${kindId}`, { log: false }).click();
+    // Section can be collapsed, click twice ensure expansion
+    cy.get(`#${kindId}`).click();
   }
-  cy.get(storyLinkId, { log: false }).click();
+  cy.get(storyLinkId).click();
 
   // assert url changes
   cy.url().should('include', `path=/story/${kindId}--${storyId}`);
