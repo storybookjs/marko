@@ -1,8 +1,6 @@
-import { visit } from '../helper';
-
 describe('Basic Flow', () => {
   before(() => {
-    visit();
+    cy.visitStorybook();
   });
 
   it('should load welcome flow', () => {

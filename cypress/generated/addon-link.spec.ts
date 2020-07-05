@@ -1,8 +1,6 @@
-import { visit, clickAddon } from '../helper';
-
 describe('addon-link', () => {
   before(() => {
-    visit();
+    cy.visitStorybook();
     cy.get('#button').click();
   });
 
@@ -20,6 +18,6 @@ describe('addon-link', () => {
     cy.getStoryElement().contains('Go to Welcome Story').click();
 
     // assert url changes
-    cy.url().should('include', 'path=/story/welcome--to-storybook');
+    cy.url().should('include', 'path=/story/example-introduction--page');
   });
 });

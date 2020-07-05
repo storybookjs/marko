@@ -36,6 +36,16 @@ Cypress.Commands.add(
   }
 );
 
+Cypress.Commands.add('visitStorybook', (route = '') => {
+  cy.log('visitStorybook');
+  const host = Cypress.env('location') || 'http://localhost:8001';
+  return cy
+    .clearLocalStorage()
+    .visit(`${host}/${route}`)
+    .get(`#storybook-preview-iframe`)
+    .should('not.be.empty');
+});
+
 Cypress.Commands.add('getStoryElement', {}, () => {
   cy.log('getStoryElement');
   return cy
