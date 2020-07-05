@@ -43,7 +43,9 @@ Cypress.Commands.add('visitStorybook', (route = '') => {
     .clearLocalStorage()
     .visit(`${host}/${route}`)
     .get(`#storybook-preview-iframe`)
-    .should('not.be.empty');
+    .then({ timeout: 15000 }, (iframe) => {
+      return cy.wrap(iframe, { timeout: 10000 }).should('not.be.empty');
+    });
 });
 
 Cypress.Commands.add('getStoryElement', {}, () => {

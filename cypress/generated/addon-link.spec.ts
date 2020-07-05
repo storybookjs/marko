@@ -1,12 +1,10 @@
 describe('addon-link', () => {
   before(() => {
     cy.visitStorybook();
-    cy.get('#button').click();
   });
 
   it('should redirect to another story', () => {
-    // click on the button
-    cy.get('#button--button-with-link-to-another-story').click();
+    cy.navigateToStory('button', 'button-with-link-to-another-story');
 
     // assert url changes
     cy.url().should('include', 'path=/story/button--button-with-link-to-another-story');
