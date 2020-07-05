@@ -48,13 +48,28 @@ Cypress.Commands.add('getStoryElement', {}, () => {
     .then((storyRoot) => cy.wrap(storyRoot, { log: false }));
 });
 
+Cypress.Commands.add('getDocsElement', {}, () => {
+  cy.log('getDocsElement');
+  return cy
+    .get(`#storybook-preview-iframe`, { log: false })
+    .its('0.contentDocument.body', { log: false })
+    .should('not.be.empty')
+    .then((body) => cy.wrap(body, { log: false }))
+    .find('#docs-root', { log: false })
+    .should('not.be.empty')
+    .then((storyRoot) => cy.wrap(storyRoot, { log: false }));
+});
+
 Cypress.Commands.add('navigateToStory', (kind, name) => {
   const kindId = kind.replace(' ', '-').toLowerCase();
   const storyId = name.replace(' ', '-').toLowerCase();
 
   const storyLinkId = `#${kindId}--${storyId}`;
   cy.log('navigateToStory');
-  cy.get(`#${kindId}`, { log: false }).click();
+
+  if (name !== 'page') {
+    cy.get(`#${kindId}`, { log: false }).click();
+  }
   cy.get(storyLinkId, { log: false }).click();
 
   // assert url changes

@@ -8,6 +8,10 @@ declare namespace Cypress {
      * Custom command to select the DOM element of a story in the canvas tab.
      */
     getStoryElement(): Chainable<Element>;
+    /**
+     * Custom command to select the DOM element of a docs story in the canvas tab.
+     */
+    getDocsElement(): Chainable<Element>;
 
     /**
      * Navigate to a story.
