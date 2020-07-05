@@ -24,6 +24,7 @@ export type SetRefData = Partial<
 export interface SubAPI {
   findRef: (source: string) => ComposedRef;
   setRef: (id: string, data: SetRefData, ready?: boolean) => void;
+  updateRef: (id: string, ref: ComposedRefUpdate) => void;
   getRefs: () => Refs;
   checkRef: (ref: SetRefData) => Promise<void>;
   changeRefVersion: (id: string, url: string) => void;
@@ -37,6 +38,15 @@ export interface ComposedRef {
   url: string;
   type?: 'auto-inject' | 'unknown' | 'lazy';
   stories: StoriesHash;
+  versions?: Versions;
+  loginUrl?: string;
+  ready?: boolean;
+  error?: any;
+}
+export interface ComposedRefUpdate {
+  title?: string;
+  type?: 'auto-inject' | 'unknown' | 'lazy';
+  stories?: StoriesHash;
   versions?: Versions;
   loginUrl?: string;
   ready?: boolean;
@@ -213,12 +223,15 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
           )
         : undefined;
 
-      const result = { ...ref, stories: after, ...rest, ready };
+      api.updateRef(id, { stories: after, ...rest, ready });
+    },
 
+    updateRef: (id, data) => {
+      const { [id]: ref, ...refs } = api.getRefs();
       store.setState({
         refs: {
-          ...api.getRefs(),
-          [id]: result,
+          ...refs,
+          [id]: { ...ref, ...data },
         },
       });
     },

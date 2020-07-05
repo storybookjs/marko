@@ -423,10 +423,9 @@ export const init: ModuleFn = ({
           break;
         }
         case 'external': {
-          const refs = fullAPI.getRefs();
-          const ref = fullAPI.findRef(sourceLocation);
-          (ref.stories[storyId] as Story).args = args;
-          store.setState({ refs: { ...refs, [ref.id]: ref } });
+          const { id: refId, stories } = fullAPI.findRef(sourceLocation);
+          (stories[storyId] as Story).args = args;
+          fullAPI.updateRef(refId, { stories });
           break;
         }
         default: {
