@@ -15,8 +15,6 @@ export default {
 
 const history = createHistory(createMemorySource('/?path=/story/story--id'));
 
-const Story = (args: React.ComponentProps<typeof App>) => <App {...args} />;
-
 export const Default = () => (
   <App provider={(new FakeProvider() as unknown) as Provider} history={history} />
 );
