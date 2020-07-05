@@ -1,3 +1,13 @@
+## 6.0.0-beta.42 (July 5, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix Props subcomponents regression ([#11420](https://github.com/storybookjs/storybook/pull/11420))
+
+### Maintenance
+
+- Core: Deprecate `addParameters` and `addDecorator` ([#11417](https://github.com/storybookjs/storybook/pull/11417))
+
 ## 6.0.0-beta.41 (July 4, 2020)
 
 ### Bug Fixes
