@@ -1,3 +1,13 @@
+## 6.0.0-beta.43 (July 5, 2020)
+
+### Features
+
+- Composition: Ignore globals from non-local refs ([#11407](https://github.com/storybookjs/storybook/pull/11407))
+
+### Maintenance
+
+- Core: Remove manager redirects on boot ([#11390](https://github.com/storybookjs/storybook/pull/11390))
+
 ## 6.0.0-beta.42 (July 5, 2020)
 
 ### Bug Fixes
