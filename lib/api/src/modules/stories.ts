@@ -61,7 +61,7 @@ export interface SubAPI {
     parameterName?: ParameterName
   ) => Story['parameters'] | any;
   getCurrentParameter<S>(parameterName?: ParameterName): S;
-  updateStoryArgs(id: StoryId, newArgs: Args): void;
+  updateStoryArgs(story: Story, newArgs: Args): void;
   findLeafStoryId(StoriesHash: StoriesHash, storyId: StoryId): StoryId;
 }
 
@@ -283,8 +283,15 @@ export const init: ModuleFn = ({
       const childStoryId = storiesHash[storyId].children[0];
       return api.findLeafStoryId(storiesHash, childStoryId);
     },
-    updateStoryArgs: (id, newArgs) => {
-      fullAPI.emit(UPDATE_STORY_ARGS, id, newArgs);
+    updateStoryArgs: (story, updatedArgs) => {
+      const { id: storyId, refId } = story;
+      fullAPI.emit(UPDATE_STORY_ARGS, {
+        storyId,
+        updatedArgs,
+        options: {
+          target: refId ? `storybook-ref-${refId}` : 'storybook-preview-iframe',
+        },
+      });
     },
   };
 
@@ -397,10 +404,35 @@ export const init: ModuleFn = ({
       }
     });
 
-    fullAPI.on(STORY_ARGS_UPDATED, (id: StoryId, args: Args) => {
-      const { storiesHash } = store.getState();
-      (storiesHash[id] as Story).args = args;
-      store.setState({ storiesHash });
+    fullAPI.on(STORY_ARGS_UPDATED, function handleStoryArgsUpdated({
+      storyId,
+      args,
+    }: {
+      storyId: StoryId;
+      args: Args;
+    }) {
+      // the event originates from an iframe, event.source is the iframe's location origin + pathname
+      const { source }: { source: string } = this;
+      const [sourceType, sourceLocation] = getSourceType(source);
+
+      switch (sourceType) {
+        case 'local': {
+          const { storiesHash } = store.getState();
+          (storiesHash[storyId] as Story).args = args;
+          store.setState({ storiesHash });
+          break;
+        }
+        case 'external': {
+          const { id: refId, stories } = fullAPI.findRef(sourceLocation);
+          (stories[storyId] as Story).args = args;
+          fullAPI.updateRef(refId, { stories });
+          break;
+        }
+        default: {
+          logger.warn('received a STORY_ARGS_UPDATED frame that was not configured as a ref');
+          break;
+        }
+      }
     });
   };
 

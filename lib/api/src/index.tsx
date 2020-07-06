@@ -415,7 +415,7 @@ export function useArgs(): [Args, (newArgs: Args) => void] {
   const data = getCurrentStoryData();
   const args = isStory(data) ? data.args : {};
 
-  return [args, (newArgs: Args) => updateStoryArgs(data.id, newArgs)];
+  return [args, (newArgs: Args) => updateStoryArgs(data as Story, newArgs)];
 }
 
 export function useGlobals(): [Args, (newGlobals: Args) => void] {

@@ -155,8 +155,10 @@ export default class StoryStore {
       this.setSelection({ storyId, viewMode })
     );
 
-    this._channel.on(Events.UPDATE_STORY_ARGS, (id: string, newArgs: Args) =>
-      this.updateStoryArgs(id, newArgs)
+    this._channel.on(
+      Events.UPDATE_STORY_ARGS,
+      ({ storyId, updatedArgs }: { storyId: string; updatedArgs: Args }) =>
+        this.updateStoryArgs(storyId, updatedArgs)
     );
 
     this._channel.on(Events.UPDATE_GLOBALS, ({ globals }: { globals: Args }) =>
@@ -451,7 +453,7 @@ export default class StoryStore {
     const { args } = this._stories[id];
     this._stories[id].args = { ...args, ...newArgs };
 
-    this._channel.emit(Events.STORY_ARGS_UPDATED, id, this._stories[id].args);
+    this._channel.emit(Events.STORY_ARGS_UPDATED, { storyId: id, args: this._stories[id].args });
   }
 
   fromId = (id: string): PublishedStoreItem | null => {
