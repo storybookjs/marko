@@ -55,7 +55,7 @@ const keyMap = {
   CLOSE: 'escape',
 };
 
-interface ReleaseNotesProps {
+export interface ReleaseNotesProps {
   didHitMaxWaitTime: boolean;
   isLoaded: boolean;
   onClose: () => void;
