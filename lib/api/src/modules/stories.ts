@@ -9,6 +9,7 @@ import {
   SET_STORIES,
   CURRENT_STORY_WAS_SET,
 } from '@storybook/core-events';
+import deprecate from 'util-deprecate';
 
 import { logger } from '@storybook/client-logger';
 import {
@@ -71,6 +72,31 @@ interface Meta {
   refId?: string;
   v?: number;
   type: string;
+}
+
+const deprecatedOptionsParameterWarnings: Record<string, () => void> = [
+  'sidebarAnimations',
+  'enableShortcuts',
+  'theme',
+  'showRoots',
+].reduce((acc, option: string) => {
+  acc[option] = deprecate(
+    () => {},
+    `parameters.options.${option} is deprecated and will be removed in Storybook 7.0.
+To change this setting, use \`addons.setConfig\`. See https://github.com/storybookjs/storybook/MIGRATION.md#deprecated-immutable-options-parameters
+  `
+  );
+  return acc;
+}, {} as Record<string, () => void>);
+function checkDeprecatedOptionParameters(options?: Record<string, any>) {
+  if (!options) {
+    return;
+  }
+  Object.keys(options).forEach((option: string) => {
+    if (deprecatedOptionsParameterWarnings[option]) {
+      deprecatedOptionsParameterWarnings[option]();
+    }
+  });
 }
 
 export const init: ModuleFn = ({
@@ -195,8 +221,7 @@ export const init: ModuleFn = ({
     },
     setStories: async (input, error) => {
       // Now create storiesHash by reordering the above by group
-      const existing = store.getState().storiesHash;
-      const hash = transformStoriesRawToStoriesHash(input, existing, {
+      const hash = transformStoriesRawToStoriesHash(input, {
         provider,
       });
 
@@ -332,6 +357,7 @@ export const init: ModuleFn = ({
         const options = fullAPI.getCurrentParameter('options');
 
         if (options) {
+          checkDeprecatedOptionParameters(options);
           fullAPI.setOptions(options);
         }
       }
@@ -348,7 +374,9 @@ export const init: ModuleFn = ({
         }
 
         fullAPI.setStories(stories, error);
-        fullAPI.setOptions(data.globalParameters.options);
+        const { options } = data.globalParameters;
+        checkDeprecatedOptionParameters(options);
+        fullAPI.setOptions(options);
       } else {
         fullAPI.setRef(ref.id, { ...ref, ...data, stories }, true);
       }

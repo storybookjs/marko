@@ -1,10 +1,8 @@
 import { DOCS_MODE, document } from 'global';
-
 import pick from 'lodash/pick';
-
 import deepEqual from 'fast-deep-equal';
-
 import { themes, ThemeVars } from '@storybook/theming';
+
 import merge from '../lib/merge';
 import { State, ModuleFn } from '../index';
 

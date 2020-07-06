@@ -1,3 +1,41 @@
+## 6.0.0-beta.43 (July 5, 2020)
+
+### Features
+
+- Composition: Ignore globals from non-local refs ([#11407](https://github.com/storybookjs/storybook/pull/11407))
+
+### Maintenance
+
+- Core: Remove manager redirects on boot ([#11390](https://github.com/storybookjs/storybook/pull/11390))
+
+## 6.0.0-beta.42 (July 5, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix Props subcomponents regression ([#11420](https://github.com/storybookjs/storybook/pull/11420))
+
+### Maintenance
+
+- Core: Deprecate `addParameters` and `addDecorator` ([#11417](https://github.com/storybookjs/storybook/pull/11417))
+
+## 6.0.0-beta.41 (July 4, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix subcomponents display logic ([#11415](https://github.com/storybookjs/storybook/pull/11415))
+- Addon-docs: Fix Source rendering corner case ([#11414](https://github.com/storybookjs/storybook/pull/11414))
+
+## 6.0.0-beta.40 (July 4, 2020)
+
+### Features
+
+- CLI: Add upgrade utility with version consistency check ([#11396](https://github.com/storybookjs/storybook/pull/11396))
+
+### Maintenance
+
+- Build: Fix CI breaks ([#11410](https://github.com/storybookjs/storybook/pull/11410))
+- Core: Deprecate immutable options as parameters ([#11387](https://github.com/storybookjs/storybook/pull/11387))
+
 ## 6.0.0-beta.39 (July 2, 2020)
 
 ### Breaking Changes
