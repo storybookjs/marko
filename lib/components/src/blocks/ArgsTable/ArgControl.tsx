@@ -45,31 +45,31 @@ export const ArgControl: FC<ArgControlProps> = ({ row, arg, updateArgs }) => {
 
   if (!control || control.disable) return <NoControl />;
 
-  const rest = { name, argType: row, value: boxedValue.value, onChange, onBlur, onFocus };
+  const props = { name, argType: row, value: boxedValue.value, onChange, onBlur, onFocus };
   switch (control.type) {
     case 'array':
-      return <ArrayControl {...rest} {...control} />;
+      return <ArrayControl {...props} {...control} />;
     case 'boolean':
-      return <BooleanControl {...rest} {...control} />;
+      return <BooleanControl {...props} {...control} />;
     case 'color':
-      return <ColorControl {...rest} {...control} />;
+      return <ColorControl {...props} {...control} />;
     case 'date':
-      return <DateControl {...rest} {...control} />;
+      return <DateControl {...props} {...control} />;
     case 'number':
-      return <NumberControl {...rest} {...control} />;
+      return <NumberControl {...props} {...control} />;
     case 'object':
-      return <ObjectControl {...rest} {...control} />;
+      return <ObjectControl {...props} {...control} />;
     case 'check':
     case 'inline-check':
     case 'radio':
     case 'inline-radio':
     case 'select':
     case 'multi-select':
-      return <OptionsControl {...rest} {...control} controlType={control.type} />;
+      return <OptionsControl {...props} {...control} controlType={control.type} />;
     case 'range':
-      return <RangeControl {...rest} {...control} />;
+      return <RangeControl {...props} {...control} />;
     case 'text':
-      return <TextControl {...rest} {...control} />;
+      return <TextControl {...props} {...control} />;
     default:
       return <NoControl />;
   }
