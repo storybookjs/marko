@@ -16,7 +16,15 @@ const Wrapper = styled.label({
 });
 
 export type ArrayProps = ControlProps<ArrayValue> & ArrayConfig;
-export const ArrayControl: FC<ArrayProps> = ({ name, value, onChange, separator = ',' }) => {
+export const ArrayControl: FC<ArrayProps> = ({
+  name,
+  value,
+  onChange,
+  argType,
+  separator = ',',
+  onBlur,
+  onFocus,
+}) => {
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLTextAreaElement>): void => {
       const { value: newVal } = e.target;
@@ -29,11 +37,11 @@ export const ArrayControl: FC<ArrayProps> = ({ name, value, onChange, separator 
     <Wrapper>
       <Form.Textarea
         id={name}
-        name={name}
         value={format(value, separator)}
         onChange={handleChange}
         size="flex"
         placeholder="Adjust array dynamically"
+        {...{ name, onBlur, onFocus }}
       />
     </Wrapper>
   );

@@ -10,7 +10,7 @@ const Wrapper = styled.label({
   display: 'flex',
 });
 
-export const TextControl: FC<TextProps> = ({ name, value, onChange }) => {
+export const TextControl: FC<TextProps> = ({ name, value, onChange, onFocus, onBlur }) => {
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     onChange(name, event.target.value);
   };
@@ -18,11 +18,10 @@ export const TextControl: FC<TextProps> = ({ name, value, onChange }) => {
     <Wrapper>
       <Form.Textarea
         id={name}
-        name={name}
-        value={value}
         onChange={handleChange}
         size="flex"
         placeholder="Adjust string dynamically"
+        {...{ name, value, onFocus, onBlur }}
       />
     </Wrapper>
   );

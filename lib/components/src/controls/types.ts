@@ -7,6 +7,8 @@ export interface ControlProps<T> {
   defaultValue?: T;
   argType?: ArgType;
   onChange: (name: string, value: T) => T | void;
+  onFocus?: (evt: any) => void;
+  onBlur?: (evt: any) => void;
 }
 
 export type ArrayValue = string[] | readonly string[];
