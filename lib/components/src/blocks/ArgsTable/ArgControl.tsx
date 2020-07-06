@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState, useRef, useEffect } from 'react';
+import React, { FC, useCallback, useState, useEffect } from 'react';
 import { Args, ArgType } from './types';
 import {
   ArrayControl,
@@ -20,8 +20,7 @@ export interface ArgControlProps {
 
 const NoControl = () => <>-</>;
 
-export const ArgControl: FC<ArgControlProps> = (props) => {
-  const { row, arg, updateArgs } = props;
+export const ArgControl: FC<ArgControlProps> = ({ row, arg, updateArgs }) => {
   const { name, control } = row;
 
   const [isFocused, setFocused] = useState(false);
