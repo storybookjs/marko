@@ -208,7 +208,7 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
       const ref = api.getRefs()[id];
       const after = stories
         ? addRefIds(
-            transformStoriesRawToStoriesHash(map(stories, ref, { storyMapper }), {}, { provider }),
+            transformStoriesRawToStoriesHash(map(stories, ref, { storyMapper }), { provider }),
             ref
           )
         : undefined;
