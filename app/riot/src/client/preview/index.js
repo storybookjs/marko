@@ -18,7 +18,7 @@ export const {
 
 const framework = 'riot';
 export const storiesOf = (...args) => clientApi.storiesOf(...args).addParameters({ framework });
-export const configure = (...args) => coreConfigure(...args, framework);
+export const configure = (...args) => coreConfigure(framework, ...args);
 
 const mount = vendorMount.bind(riot, '#root');
 const compileNow = unboundCompileNow.bind(null, tag2);
