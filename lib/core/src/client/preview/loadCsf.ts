@@ -189,6 +189,12 @@ const loadStories = (
   previousExports = currentExports;
 };
 
+const configureDeprecationWarning = deprecate(
+  () => {},
+  `\`configure()\` is deprecated and will be removed in Storybook 7.0. 
+Please use the \`stories\` field of \`main.js\` to load stories.
+Read more at https://github.com/storybookjs/storybook/MIGRATE.md#deprecated-configure`
+);
 let loaded = false;
 export const loadCsf = ({
   clientApi,
@@ -209,7 +215,11 @@ export const loadCsf = ({
    * @param {*} m - ES module object for hot-module-reloading (HMR)
    * @param {boolean} showDeprecationWarning - show the deprecation warning (default true)
    */
-  (loadable: Loadable, m: NodeModule, framework: string) => {
+  (framework: string, loadable: Loadable, m: NodeModule, showDeprecationWarning = true) => {
+    if (showDeprecationWarning) {
+      configureDeprecationWarning();
+    }
+
     if (typeof m === 'string') {
       throw new Error(
         `Invalid module '${m}'. Did you forget to pass \`module\` as the second argument to \`configure\`"?`

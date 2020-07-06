@@ -39,6 +39,7 @@
     - [Deprecated polymer](#deprecated-polymer)
     - [Deprecated immutable options parameters](#deprecated-immutable-options-parameters)
     - [Deprecated addParameters and addDecorator](#deprecated-addparameters-and-adddecorator)
+    - [Deprecated configure](#deprecated-configure)
 - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
   - [To main.js configuration](#to-mainjs-configuration)
     - [Using main.js](#using-mainjs)
@@ -649,6 +650,32 @@ addons.setConfig({
 The `addParameters` and `addDecorator` APIs to add global decorators and parameters, exported by the various frameworks (e.g. `@storybook/react`) and `@storybook/client` are now deprecated.
 
 Instead, use `export const parameters = {};` and `export const decorators = [];` in your `.storybook/preview.js`. Addon authors similarly should use such an export in a `previewEntry` file.
+
+#### Deprecated configure
+
+The `configure` API to load stories from `preview.js`, exported by the various frameworks (e.g. `@storybook/react`) is now deprecated.
+
+To load stories, use the `stories` field in `main.js`. You can pass a glob or array of globs to load stories like so:
+
+```js
+// in .storybook/main.js
+module.exports = {
+  stories: ['../src/**/*.stories.js'],
+};
+```
+
+You can also pass an array of single file names if you want to be careful about loading files:
+
+```js
+// in .storybook/main.js
+module.exports = {
+  stories: [
+    '../src/components/Button.stories.js',
+    '../src/components/Table.stories.js',
+    '../src/components/Page.stories.js',
+  ],
+};
+```
 
 ## From version 5.2.x to 5.3.x
 
