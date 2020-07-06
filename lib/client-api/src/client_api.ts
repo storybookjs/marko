@@ -92,7 +92,7 @@ export default class ClientApi {
       };
     },
     dedent`
-      setAddon is deprecated and will be removed in Storybook 7.0
+      \`setAddon\` is deprecated and will be removed in Storybook 7.0.
 
       https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-setaddon
     `
@@ -101,6 +101,17 @@ export default class ClientApi {
   addDecorator = (decorator: DecoratorFunction) => {
     this._storyStore.addGlobalMetadata({ decorators: [decorator], parameters: {} });
   };
+
+  clearDecorators = deprecate(
+    () => {
+      this._storyStore.clearGlobalDecorators();
+    },
+    dedent`
+      \`clearDecorators\` is deprecated and will be removed in Storybook 7.0.
+
+      https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-cleardecorators
+    `
+  );
 
   addParameters = (parameters: Parameters) => {
     this._storyStore.addGlobalMetadata({ decorators: [], parameters });

@@ -39,6 +39,7 @@
     - [Deprecated polymer](#deprecated-polymer)
     - [Deprecated immutable options parameters](#deprecated-immutable-options-parameters)
     - [Deprecated addParameters and addDecorator](#deprecated-addparameters-and-adddecorator)
+    - [Deprecated clearDecorators](#deprecated-cleardecorators)
     - [Deprecated configure](#deprecated-configure)
 - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
   - [To main.js configuration](#to-mainjs-configuration)
@@ -650,6 +651,10 @@ addons.setConfig({
 The `addParameters` and `addDecorator` APIs to add global decorators and parameters, exported by the various frameworks (e.g. `@storybook/react`) and `@storybook/client` are now deprecated.
 
 Instead, use `export const parameters = {};` and `export const decorators = [];` in your `.storybook/preview.js`. Addon authors similarly should use such an export in a `previewEntry` file.
+
+#### Deprecated clearDecorators
+
+Similarly, `clearDecorators`, exported by the various frameworks (e.g. `@storybook/react`) is deprecated.
 
 #### Deprecated configure
 
