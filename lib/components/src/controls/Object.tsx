@@ -25,7 +25,14 @@ const Wrapper = styled.label({
 });
 
 export type ObjectProps = ControlProps<ObjectValue> & ObjectConfig;
-export const ObjectControl: FC<ObjectProps> = ({ name, argType, value, onChange }) => {
+export const ObjectControl: FC<ObjectProps> = ({
+  name,
+  argType,
+  value,
+  onChange,
+  onBlur,
+  onFocus,
+}) => {
   const [valid, setValid] = useState(true);
   const [text, setText] = useState(format(value));
 
@@ -49,12 +56,12 @@ export const ObjectControl: FC<ObjectProps> = ({ name, argType, value, onChange 
   return (
     <Wrapper>
       <Form.Textarea
-        name={name}
         valid={valid ? undefined : 'error'}
         value={text}
         onChange={handleChange}
         size="flex"
         placeholder="Adjust object dynamically"
+        {...{ name, onBlur, onFocus }}
       />
     </Wrapper>
   );

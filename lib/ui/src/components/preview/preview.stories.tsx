@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Provider as ManagerProvider, Combo, Consumer } from '@storybook/api';
+import { createMemorySource, createHistory } from '@reach/router';
 import { Location, LocationProvider } from '@storybook/router';
 import { ThemeProvider, ensure as ensureTheme, themes } from '@storybook/theming';
 
@@ -17,7 +18,10 @@ export default {
   component: Preview,
   decorators: [
     ((StoryFn, c) => (
-      <LocationProvider key="location.provider">
+      <LocationProvider
+        key="location.provider"
+        history={createHistory(createMemorySource('/?path=/story/story--id'))}
+      >
         <Location key="location.consumer">
           {(locationData) => (
             <ManagerProvider key="manager" provider={provider} {...locationData} docsMode={false}>

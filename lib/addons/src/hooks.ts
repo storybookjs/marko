@@ -420,7 +420,7 @@ export function useGlobals(): [Args, (newGlobals: Args) => void] {
   const { globals } = useStoryContext();
 
   const updateGlobals = useCallback(
-    (newGlobals: Args) => channel.emit(UPDATE_GLOBALS, newGlobals),
+    (newGlobals: Args) => channel.emit(UPDATE_GLOBALS, { globals: newGlobals }),
     [channel]
   );
 
