@@ -50,7 +50,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "99a191894a936ad0476117d857ca0387f2cd5afd",
+  "gitHead": "d5df9d126f8862293ce5a0dd9dd13cb50ea6c588",
   "typesVersions": {
     "<=3.5": {
       "*": [
