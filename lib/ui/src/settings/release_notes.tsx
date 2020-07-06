@@ -63,7 +63,7 @@ interface ReleaseNotesProps {
   version: string;
 }
 
-const PureReleaseNotes: FunctionComponent<ReleaseNotesProps> = ({
+const PureReleaseNotesScreen: FunctionComponent<ReleaseNotesProps> = ({
   didHitMaxWaitTime,
   isLoaded,
   onClose,
@@ -87,7 +87,7 @@ const PureReleaseNotes: FunctionComponent<ReleaseNotesProps> = ({
 
 const MAX_WAIT_TIME = 10000; // 10 seconds
 
-const ReleaseNotes: FunctionComponent<Omit<
+const ReleaseNotesScreen: FunctionComponent<Omit<
   ReleaseNotesProps,
   'isLoaded' | 'setLoaded' | 'didHitMaxWaitTime'
 >> = (props) => {
@@ -100,7 +100,7 @@ const ReleaseNotes: FunctionComponent<Omit<
   }, [isLoaded]);
 
   return (
-    <PureReleaseNotes
+    <PureReleaseNotesScreen
       didHitMaxWaitTime={didHitMaxWaitTime}
       isLoaded={isLoaded}
       setLoaded={setLoaded}
@@ -109,4 +109,4 @@ const ReleaseNotes: FunctionComponent<Omit<
   );
 };
 
-export { ReleaseNotes as default, PureReleaseNotes };
+export { ReleaseNotesScreen, PureReleaseNotesScreen };

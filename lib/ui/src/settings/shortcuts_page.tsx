@@ -3,7 +3,7 @@ import React, { FunctionComponent } from 'react';
 
 import { Consumer } from '@storybook/api';
 
-import ShortcutsScreen from './shortcuts';
+import { ShortcutsScreen } from './shortcuts';
 
 const ShortcutsPage: FunctionComponent<{ onClose: () => void }> = ({ onClose }) => (
   <Consumer>
@@ -19,4 +19,4 @@ const ShortcutsPage: FunctionComponent<{ onClose: () => void }> = ({ onClose }) 
   </Consumer>
 );
 
-export { ShortcutsPage as default };
+export { ShortcutsPage };

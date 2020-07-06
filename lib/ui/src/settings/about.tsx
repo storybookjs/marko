@@ -189,4 +189,4 @@ const AboutScreen: FunctionComponent<{
   );
 };
 
-export { AboutScreen as default };
+export { AboutScreen };

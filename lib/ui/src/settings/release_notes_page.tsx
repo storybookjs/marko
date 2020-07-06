@@ -1,7 +1,7 @@
 import { useStorybookApi } from '@storybook/api';
 import React, { FunctionComponent, useEffect } from 'react';
 
-import ReleaseNotesScreen from './release_notes';
+import { ReleaseNotesScreen } from './release_notes';
 
 const ReleaseNotesPage: FunctionComponent<{ onClose: () => void }> = ({ onClose }) => {
   const api = useStorybookApi();
@@ -13,4 +13,4 @@ const ReleaseNotesPage: FunctionComponent<{ onClose: () => void }> = ({ onClose 
   return <ReleaseNotesScreen onClose={onClose} version={api.releaseNotesVersion()} />;
 };
 
-export { ReleaseNotesPage as default };
+export { ReleaseNotesPage };

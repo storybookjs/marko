@@ -1,11 +1,11 @@
-import React, { FunctionComponent, SyntheticEvent, useEffect, useState } from 'react';
+import React, { FunctionComponent, SyntheticEvent } from 'react';
 import { Tabs, IconButton, Icons } from '@storybook/components';
 import { useStorybookApi } from '@storybook/api';
 import { Location, Route } from '@storybook/router';
 import { styled } from '@storybook/theming';
-import AboutPage from './about_page';
-import ReleaseNotesPage from './release_notes_page';
-import ShortcutsPage from './shortcuts_page';
+import { AboutPage } from './about_page';
+import { ReleaseNotesPage } from './release_notes_page';
+import { ShortcutsPage } from './shortcuts_page';
 
 const ABOUT = 'about';
 const SHORTCUTS = 'shortcuts';

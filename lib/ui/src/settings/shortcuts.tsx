@@ -1,4 +1,4 @@
-import React, { Component, Fragment, SyntheticEvent } from 'react';
+import React, { Component } from 'react';
 import { styled, keyframes } from '@storybook/theming';
 import { GlobalHotKeys } from 'react-hotkeys';
 
@@ -7,7 +7,7 @@ import {
   shortcutToHumanString,
   shortcutMatchesShortcut,
 } from '@storybook/api/shortcut';
-import { Form, IconButton, Icons, Tabs } from '@storybook/components';
+import { Form, Icons } from '@storybook/components';
 import SettingsFooter from './SettingsFooter';
 
 const { Button, Input } = Form;
@@ -322,4 +322,4 @@ class ShortcutsScreen extends Component<ShortcutsScreenProps, ShortcutsScreenSta
   }
 }
 
-export default ShortcutsScreen;
+export { ShortcutsScreen };
