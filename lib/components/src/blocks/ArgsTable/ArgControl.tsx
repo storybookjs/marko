@@ -25,40 +25,28 @@ export const ArgControl: FC<ArgControlProps> = (props) => {
   const { name, control } = row;
 
   const [isFocused, setFocused] = useState(false);
-  const [value, setValue] = useState(arg);
+  // box because arg can be a fn (e.g. actions) and useState calls fn's
+  const [boxedValue, setBoxedValue] = useState({ value: arg });
 
-  const lastProps = useRef(props);
   useEffect(() => {
-    lastProps.current = props;
-    if (!isFocused) {
-      setValue(props.arg);
-    }
-  });
+    if (!isFocused) setBoxedValue({ value: arg });
+  }, [isFocused, arg]);
 
   const onChange = useCallback(
     (argName: string, argVal: any) => {
-      setValue(argVal);
+      setBoxedValue({ value: argVal });
       updateArgs({ [name]: argVal });
       return argVal;
     },
     [updateArgs, name]
   );
 
-  const onBlur = useCallback(() => {
-    setFocused(false);
-    const lastValue = lastProps.current.arg;
-    if (lastValue !== value) {
-      setValue(lastValue);
-    }
-  }, [name]);
-
-  const onFocus = useCallback(() => {
-    setFocused(true);
-  }, [name]);
+  const onBlur = useCallback(() => setFocused(false), []);
+  const onFocus = useCallback(() => setFocused(true), []);
 
   if (!control || control.disable) return <NoControl />;
 
-  const rest = { name, argType: row, value, onChange, onBlur, onFocus };
+  const rest = { name, argType: row, value: boxedValue.value, onChange, onBlur, onFocus };
   switch (control.type) {
     case 'array':
       return <ArrayControl {...rest} {...control} />;
