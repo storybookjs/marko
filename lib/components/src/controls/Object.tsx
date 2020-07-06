@@ -1,4 +1,4 @@
-import React, { FC, ChangeEvent, useState, useCallback } from 'react';
+import React, { FC, ChangeEvent, useState, useCallback, useEffect } from 'react';
 import { styled } from '@storybook/theming';
 
 import deepEqual from 'fast-deep-equal';
@@ -35,6 +35,11 @@ export const ObjectControl: FC<ObjectProps> = ({
 }) => {
   const [valid, setValid] = useState(true);
   const [text, setText] = useState(format(value));
+
+  useEffect(() => {
+    const newText = format(value);
+    if (text !== newText) setText(newText);
+  }, [value]);
 
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLTextAreaElement>) => {
