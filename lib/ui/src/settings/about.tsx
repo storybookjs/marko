@@ -1,19 +1,11 @@
-import React, { Fragment, FunctionComponent, SyntheticEvent } from 'react';
+import React, { Fragment, FunctionComponent } from 'react';
 import semver from '@storybook/semver';
 import { styled } from '@storybook/theming';
 import { State } from '@storybook/api';
 import { GlobalHotKeys } from 'react-hotkeys';
 import Markdown from 'markdown-to-jsx';
 
-import {
-  StorybookIcon,
-  SyntaxHighlighter,
-  IconButton,
-  Icons,
-  Tabs,
-  Link,
-  DocumentWrapper,
-} from '@storybook/components';
+import { StorybookIcon, SyntaxHighlighter, Link, DocumentWrapper } from '@storybook/components';
 
 import SettingsFooter from './SettingsFooter';
 

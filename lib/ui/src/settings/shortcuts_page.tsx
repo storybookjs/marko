@@ -1,4 +1,3 @@
-import { history } from 'global';
 import React, { FunctionComponent } from 'react';
 
 import { Consumer } from '@storybook/api';
