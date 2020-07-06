@@ -1,4 +1,3 @@
-/* eslint-disable no-fallthrough */
 import { DOCS_MODE } from 'global';
 import { toId, sanitize } from '@storybook/csf';
 import {
