@@ -204,9 +204,10 @@ export const loadCsf = ({
    * file and process its named exports as stories. If not, assume it's an old-style
    * storiesof file and require it.
    *
+   * @param {*} framework - name of framework in use, e.g. "react"
    * @param {*} loadable a require.context `req`, an array of `req`s, or a loader function that returns void or an array of exports
    * @param {*} m - ES module object for hot-module-reloading (HMR)
-   * @param {*} framework - name of framework in use, e.g. "react"
+   * @param {boolean} showDeprecationWarning - show the deprecation warning (default true)
    */
   (loadable: Loadable, m: NodeModule, framework: string) => {
     if (typeof m === 'string') {
