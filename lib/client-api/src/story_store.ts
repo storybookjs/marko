@@ -246,10 +246,6 @@ export default class StoryStore {
     this._globalMetadata.decorators.push(...decorators);
   }
 
-  clearGlobalDecorators() {
-    this._globalMetadata.decorators = [];
-  }
-
   ensureKind(kind: string) {
     if (!this._kinds[kind]) {
       this._kinds[kind] = {

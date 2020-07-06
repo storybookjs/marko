@@ -110,10 +110,6 @@ export default class ClientApi {
     this._storyStore.addArgTypesEnhancer(enhancer);
   };
 
-  clearDecorators = () => {
-    this._storyStore.clearGlobalDecorators();
-  };
-
   // what are the occasions that "m" is a boolean vs an obj
   storiesOf = <StoryFnReturnType = unknown>(
     kind: string,
