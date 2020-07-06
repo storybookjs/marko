@@ -1,3 +1,19 @@
+## 6.0.0-beta.44 (July 6, 2020)
+
+### Breaking Changes
+
+- Core: Consistent file paths for locally-defined addons ([#11368](https://github.com/storybookjs/storybook/pull/11368))
+
+### Features
+
+- Composition: Ensure args get sent to the right ref ([#11401](https://github.com/storybookjs/storybook/pull/11401))
+- Core: Deprecate configure and clearDecorators ([#11431](https://github.com/storybookjs/storybook/pull/11431))
+
+### Bug Fixes
+
+- Controls: Fix object control for story switching ([#11432](https://github.com/storybookjs/storybook/pull/11432))
+- Controls: Fix interaction lag & CJK input ([#11430](https://github.com/storybookjs/storybook/pull/11430))
+
 ## 6.0.0-beta.43 (July 5, 2020)
 
 ### Features
