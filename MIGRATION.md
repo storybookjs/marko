@@ -301,7 +301,7 @@ In Storybook 5.3 we introduced a declarative [main.js configuration](#to-mainjs-
 
 This breaking change currently applies to: `addon-a11y`, `addon-actions`, `addon-knobs`, `addon-links`, `addon-queryparams`.
 
-Consider the following `main.js` config for the accessibility addon, `addon-knobs`:
+Consider the following `main.js` config for `addon-knobs`:
 
 ```js
 module.exports = {
