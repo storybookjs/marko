@@ -10,7 +10,7 @@ import {
 } from '@storybook/core-events';
 import deprecate from 'util-deprecate';
 
-import { logger } from '@storybook/client-logger';
+import { getEventMetadata } from '../lib/events';
 import {
   denormalizeStoryParameters,
   transformStoriesRawToStoriesHash,
@@ -26,7 +26,7 @@ import {
 } from '../lib/stories';
 
 import { Args, ModuleFn } from '../index';
-import { getSourceType, ComposedRef } from './refs';
+import { ComposedRef } from './refs';
 
 type Direction = -1 | 1;
 type ParameterName = string;
@@ -295,39 +295,6 @@ export const init: ModuleFn = ({
     },
   };
 
-  const getEventMetadata = (context: Meta) => {
-    const { source, refId, type } = context;
-    const [sourceType, sourceLocation] = getSourceType(source, refId);
-
-    const ref =
-      refId && fullAPI.getRefs()[refId]
-        ? fullAPI.getRefs()[refId]
-        : fullAPI.findRef(sourceLocation);
-
-    const meta = {
-      source,
-      sourceType,
-      sourceLocation,
-      refId,
-      ref,
-      type,
-    };
-
-    switch (true) {
-      case typeof refId === 'string':
-      case sourceType === 'local':
-      case sourceType === 'external': {
-        return meta;
-      }
-
-      // if we couldn't find the source, something risky happened, we ignore the input, and log a warning
-      default: {
-        logger.warn(`Received a ${type} frame that was not configured as a ref`);
-        return null;
-      }
-    }
-  };
-
   const initModule = () => {
     // On initial load, the local iframe will select the first story (or other "selection specifier")
     // and emit CURRENT_STORY_WAS_SET with the id. We need to ensure we respond to this change.
@@ -342,7 +309,7 @@ export const init: ModuleFn = ({
       viewMode: ViewMode;
       [k: string]: any;
     }) {
-      const { sourceType } = getEventMetadata(this);
+      const { sourceType } = getEventMetadata(this, fullAPI);
 
       if (sourceType === 'local' && storyId && viewMode) {
         navigate(`/${viewMode}/${storyId}`);
@@ -350,7 +317,7 @@ export const init: ModuleFn = ({
     });
 
     fullAPI.on(STORY_CHANGED, function handler() {
-      const { sourceType } = getEventMetadata(this);
+      const { sourceType } = getEventMetadata(this, fullAPI);
 
       if (sourceType === 'local') {
         const options = fullAPI.getCurrentParameter('options');
@@ -363,7 +330,7 @@ export const init: ModuleFn = ({
     });
 
     fullAPI.on(SET_STORIES, function handler(data: SetStoriesPayload) {
-      const { ref } = getEventMetadata(this);
+      const { ref } = getEventMetadata(this, fullAPI);
       const error = data.error || undefined;
       const stories = data.v ? denormalizeStoryParameters(data) : data.stories;
 
@@ -390,7 +357,7 @@ export const init: ModuleFn = ({
       story: string;
       viewMode: ViewMode;
     }) {
-      const { ref } = getEventMetadata(this);
+      const { ref } = getEventMetadata(this, fullAPI);
 
       if (!ref) {
         fullAPI.selectStory(kind, story, rest);

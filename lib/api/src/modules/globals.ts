@@ -4,7 +4,7 @@ import { logger } from '@storybook/client-logger';
 import { Args, ModuleFn } from '../index';
 
 import { SetStoriesPayload } from '../lib/stories';
-import { getSourceType, ComposedRef } from './refs';
+import { getEventMetadata } from '../lib/events';
 
 export interface SubState {
   globals: Args;
@@ -12,16 +12,6 @@ export interface SubState {
 
 export interface SubAPI {
   updateGlobals: (newGlobals: Args) => void;
-}
-
-interface Meta {
-  ref?: ComposedRef;
-  source?: string;
-  sourceType?: 'local' | 'external';
-  sourceLocation?: string;
-  refId?: string;
-  v?: number;
-  type: string;
 }
 
 export const init: ModuleFn = ({ store, fullAPI }) => {
@@ -42,42 +32,9 @@ export const init: ModuleFn = ({ store, fullAPI }) => {
     globals: {},
   };
 
-  const getEventMetadata = (context: Meta) => {
-    const { source, refId, type } = context;
-    const [sourceType, sourceLocation] = getSourceType(source, refId);
-
-    const ref =
-      refId && fullAPI.getRefs()[refId]
-        ? fullAPI.getRefs()[refId]
-        : fullAPI.findRef(sourceLocation);
-
-    const meta = {
-      source,
-      sourceType,
-      sourceLocation,
-      refId,
-      ref,
-      type,
-    };
-
-    switch (true) {
-      case typeof refId === 'string':
-      case sourceType === 'local':
-      case sourceType === 'external': {
-        return meta;
-      }
-
-      // if we couldn't find the source, something risky happened, we ignore the input, and log a warning
-      default: {
-        logger.warn(`Received a ${type} frame that was not configured as a ref`);
-        return null;
-      }
-    }
-  };
-
   const initModule = () => {
     fullAPI.on(GLOBALS_UPDATED, function handleGlobalsUpdated({ globals }: { globals: Args }) {
-      const { ref } = getEventMetadata(this);
+      const { ref } = getEventMetadata(this, fullAPI);
 
       if (!ref) {
         store.setState({ globals });
@@ -88,7 +45,7 @@ export const init: ModuleFn = ({ store, fullAPI }) => {
       }
     });
     fullAPI.on(SET_STORIES, function handleSetStories({ globals }: SetStoriesPayload) {
-      const { ref } = getEventMetadata(this);
+      const { ref } = getEventMetadata(this, fullAPI);
 
       if (!ref) {
         store.setState({ globals });
