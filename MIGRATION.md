@@ -12,6 +12,7 @@
     - [Docs theme separated](#docs-theme-separated)
     - [DocsPage slots removed](#docspage-slots-removed)
     - [React prop tables with Typescript](#react-prop-tables-with-typescript)
+    - [ConfigureJSX true by default in React](#configurejsx-true-by-default-in-react)
   - [New addon presets](#new-addon-presets)
   - [Removed babel-preset-vue from Vue preset](#removed-babel-preset-vue-from-vue-preset)
   - [Removed Deprecated APIs](#removed-deprecated-apis)
@@ -294,6 +295,23 @@ Props handling in React has changed in 6.0 and should be much less error-prone. 
 Starting in 6.0, we have [zero-config typescript support](#zero-config-typescript). The out-of-box experience should be much better now, since the default configuration is designed to work well with `addon-docs`.
 
 There are also two typescript handling options that can be set in `.storybook/main.js`. `react-docgen-typescript` (default) and `react-docgen`. This is [discussed in detail in the docs](https://github.com/storybookjs/storybook/blob/next/addons/docs/react/README.md#typescript-props-with-react-docgen).
+
+#### ConfigureJSX true by default in React
+
+In SB 6.0, the Storybook Docs preset option `configureJSX` is now set to `true` for all React projects. It was previously `false` by default for React only in 5.x). This `configureJSX` option adds `@babel/plugin-transform-react-jsx`, to process the output of the MDX compiler, which should be a safe change for all projects.
+
+If you need to restore the old JSX handling behavior, you can configure `.storybook/main.js`:
+
+```js
+module.exports = {
+  addons: [
+    {
+      name: '@storybook/addon-docs',
+      options: { configureJSX: false },
+    },
+  ],
+};
+```
 
 ### New addon presets
 
