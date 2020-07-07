@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-a11y",
-  "version": "6.0.0-beta.44",
+  "version": "6.0.0-beta.45",
   "description": "a11y addon for storybook",
   "keywords": [
     "a11y",
@@ -33,14 +33,14 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-beta.44",
-    "@storybook/api": "6.0.0-beta.44",
-    "@storybook/channels": "6.0.0-beta.44",
-    "@storybook/client-api": "6.0.0-beta.44",
-    "@storybook/client-logger": "6.0.0-beta.44",
-    "@storybook/components": "6.0.0-beta.44",
-    "@storybook/core-events": "6.0.0-beta.44",
-    "@storybook/theming": "6.0.0-beta.44",
+    "@storybook/addons": "6.0.0-beta.45",
+    "@storybook/api": "6.0.0-beta.45",
+    "@storybook/channels": "6.0.0-beta.45",
+    "@storybook/client-api": "6.0.0-beta.45",
+    "@storybook/client-logger": "6.0.0-beta.45",
+    "@storybook/components": "6.0.0-beta.45",
+    "@storybook/core-events": "6.0.0-beta.45",
+    "@storybook/theming": "6.0.0-beta.45",
     "axe-core": "^3.5.2",
     "core-js": "^3.0.1",
     "global": "^4.3.2",

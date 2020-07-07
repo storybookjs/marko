@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-essentials",
-  "version": "6.0.0-beta.44",
+  "version": "6.0.0-beta.45",
   "description": "Curated addons to bring out the best of Storybook",
   "keywords": [
     "addon",
@@ -28,14 +28,14 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addon-actions": "6.0.0-beta.44",
-    "@storybook/addon-backgrounds": "6.0.0-beta.44",
-    "@storybook/addon-controls": "6.0.0-beta.44",
-    "@storybook/addon-docs": "6.0.0-beta.44",
-    "@storybook/addon-viewport": "6.0.0-beta.44",
-    "@storybook/addons": "6.0.0-beta.44",
-    "@storybook/api": "6.0.0-beta.44",
-    "@storybook/node-logger": "6.0.0-beta.44",
+    "@storybook/addon-actions": "6.0.0-beta.45",
+    "@storybook/addon-backgrounds": "6.0.0-beta.45",
+    "@storybook/addon-controls": "6.0.0-beta.45",
+    "@storybook/addon-docs": "6.0.0-beta.45",
+    "@storybook/addon-viewport": "6.0.0-beta.45",
+    "@storybook/addons": "6.0.0-beta.45",
+    "@storybook/api": "6.0.0-beta.45",
+    "@storybook/node-logger": "6.0.0-beta.45",
     "core-js": "^3.0.1",
     "regenerator-runtime": "^0.13.3",
     "ts-dedent": "^1.1.1"
