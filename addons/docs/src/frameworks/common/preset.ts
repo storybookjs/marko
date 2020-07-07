@@ -23,10 +23,11 @@ type BabelParams = {
 };
 function createBabelOptions({ babelOptions, mdxBabelOptions, configureJSX }: BabelParams) {
   const babelPlugins = mdxBabelOptions?.plugins || babelOptions?.plugins || [];
-  const plugins = configureJSX
-    ? [...babelPlugins, '@babel/plugin-transform-react-jsx']
-    : babelPlugins;
-
+  const jsxPlugin = [
+    '@babel/plugin-transform-react-jsx',
+    { pragma: 'React.createElement', pragmaFrag: 'React.Fragment' },
+  ];
+  const plugins = configureJSX ? [...babelPlugins, jsxPlugin] : babelPlugins;
   return {
     // don't use the root babelrc by default (users can override this in mdxBabelOptions)
     babelrc: false,
