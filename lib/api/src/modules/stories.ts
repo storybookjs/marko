@@ -380,27 +380,16 @@ export const init: ModuleFn = ({
       storyId: StoryId;
       args: Args;
     }) {
-      // the event originates from an iframe, event.source is the iframe's location origin + pathname
-      const { source }: { source: string } = this;
-      const [sourceType, sourceLocation] = getSourceType(source);
+      const { ref } = getEventMetadata(this, fullAPI);
 
-      switch (sourceType) {
-        case 'local': {
-          const { storiesHash } = store.getState();
-          (storiesHash[storyId] as Story).args = args;
-          store.setState({ storiesHash });
-          break;
-        }
-        case 'external': {
-          const { id: refId, stories } = fullAPI.findRef(sourceLocation);
-          (stories[storyId] as Story).args = args;
-          fullAPI.updateRef(refId, { stories });
-          break;
-        }
-        default: {
-          logger.warn('received a STORY_ARGS_UPDATED frame that was not configured as a ref');
-          break;
-        }
+      if (!ref) {
+        const { storiesHash } = store.getState();
+        (storiesHash[storyId] as Story).args = args;
+        store.setState({ storiesHash });
+      } else {
+        const { id: refId, stories } = ref;
+        (stories[storyId] as Story).args = args;
+        fullAPI.updateRef(refId, { stories });
       }
     });
   };
