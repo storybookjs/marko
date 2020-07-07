@@ -11,7 +11,7 @@ jest.mock('@storybook/client-logger');
 const mockLocation = jest.fn();
 class LocalEventEmitter extends EventEmitter {
   on(event, callback) {
-    return super.on(event, (...args) => callback.apply({ source: mockLocation() }, args));
+    return super.on(event, (...args) => callback.apply({ refId: mockLocation() }, args));
   }
 }
 
@@ -40,7 +40,7 @@ describe('stories API', () => {
   });
 
   it('set global args on SET_STORIES', () => {
-    const api = new LocalEventEmitter();
+    const api = Object.assign(new LocalEventEmitter(), { findRef: jest.fn() });
     const store = createMockStore();
     const { state, init } = initModule(({ store, fullAPI: api } as unknown) as ModuleArgs);
     store.setState(state);
@@ -55,7 +55,7 @@ describe('stories API', () => {
   });
 
   it('ignores SET_STORIES from other refs', () => {
-    const api = new LocalEventEmitter();
+    const api = Object.assign(new LocalEventEmitter(), { findRef: jest.fn() });
     const store = createMockStore();
     const { state, init } = initModule(({ store, fullAPI: api } as unknown) as ModuleArgs);
     store.setState(state);
@@ -67,7 +67,7 @@ describe('stories API', () => {
   });
 
   it('updates the state when the preview emits GLOBALS_UPDATED', () => {
-    const api = new LocalEventEmitter();
+    const api = Object.assign(new LocalEventEmitter(), { findRef: jest.fn() });
     const store = createMockStore();
     const { state, init } = initModule(({ store, fullAPI: api } as unknown) as ModuleArgs);
     store.setState(state);
@@ -86,7 +86,7 @@ describe('stories API', () => {
   });
 
   it('ignores GLOBALS_UPDATED from other refs', () => {
-    const api = new LocalEventEmitter();
+    const api = Object.assign(new LocalEventEmitter(), { findRef: jest.fn() });
     const store = createMockStore();
     const { state, init } = initModule(({ store, fullAPI: api } as unknown) as ModuleArgs);
     store.setState(state);
