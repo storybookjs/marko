@@ -407,7 +407,7 @@ export function useArgs(): [Args, (newArgs: Args) => void] {
   const { id: storyId, args } = useStoryContext();
 
   const updateArgs = useCallback(
-    (newArgs: Args) => channel.emit(UPDATE_STORY_ARGS, storyId, newArgs),
+    (updatedArgs: Args) => channel.emit(UPDATE_STORY_ARGS, { storyId, updatedArgs }),
     [channel, storyId]
   );
 

@@ -92,7 +92,7 @@ export default class ClientApi {
       };
     },
     dedent`
-      setAddon is deprecated and will be removed in Storybook 7.0
+      \`setAddon\` is deprecated and will be removed in Storybook 7.0.
 
       https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-setaddon
     `
@@ -102,16 +102,23 @@ export default class ClientApi {
     this._storyStore.addGlobalMetadata({ decorators: [decorator], parameters: {} });
   };
 
+  clearDecorators = deprecate(
+    () => {
+      this._storyStore.clearGlobalDecorators();
+    },
+    dedent`
+      \`clearDecorators\` is deprecated and will be removed in Storybook 7.0.
+
+      https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-cleardecorators
+    `
+  );
+
   addParameters = (parameters: Parameters) => {
     this._storyStore.addGlobalMetadata({ decorators: [], parameters });
   };
 
   addArgTypesEnhancer = (enhancer: ArgTypesEnhancer) => {
     this._storyStore.addArgTypesEnhancer(enhancer);
-  };
-
-  clearDecorators = () => {
-    this._storyStore.clearGlobalDecorators();
   };
 
   // what are the occasions that "m" is a boolean vs an obj

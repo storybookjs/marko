@@ -190,10 +190,13 @@ describe('preview.story_store', () => {
       addStoryToStore(store, 'a', '1', () => 0);
 
       store.updateStoryArgs('a--1', { foo: 'bar' });
-      expect(onArgsChangedChannel).toHaveBeenCalledWith('a--1', { foo: 'bar' });
+      expect(onArgsChangedChannel).toHaveBeenCalledWith({ storyId: 'a--1', args: { foo: 'bar' } });
 
       store.updateStoryArgs('a--1', { baz: 'bing' });
-      expect(onArgsChangedChannel).toHaveBeenCalledWith('a--1', { foo: 'bar', baz: 'bing' });
+      expect(onArgsChangedChannel).toHaveBeenCalledWith({
+        storyId: 'a--1',
+        args: { foo: 'bar', baz: 'bing' },
+      });
     });
 
     it('should update if the UPDATE_STORY_ARGS event is received', () => {
@@ -201,7 +204,7 @@ describe('preview.story_store', () => {
       const store = new StoryStore({ channel: testChannel });
       addStoryToStore(store, 'a', '1', () => 0);
 
-      testChannel.emit(Events.UPDATE_STORY_ARGS, 'a--1', { foo: 'bar' });
+      testChannel.emit(Events.UPDATE_STORY_ARGS, { storyId: 'a--1', updatedArgs: { foo: 'bar' } });
 
       expect(store.getRawStory('a', '1').args).toEqual({ foo: 'bar' });
     });

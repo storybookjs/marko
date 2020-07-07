@@ -1,1 +1,1 @@
-{"version":"6.0.0-beta.43","info":{"plain":"### Features\n\n- Composition: Ignore globals from non-local refs ([#11407](https://github.com/storybookjs/storybook/pull/11407))\n\n### Maintenance\n\n- Core: Remove manager redirects on boot ([#11390](https://github.com/storybookjs/storybook/pull/11390))"}}
+{"version":"6.0.0-beta.45","info":{"plain":"### Bug Fixes\n\n- Addon-docs: Fix babel JSX handling in MDX ([#11448](https://github.com/storybookjs/storybook/pull/11448))"}}
