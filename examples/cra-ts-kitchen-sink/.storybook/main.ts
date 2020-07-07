@@ -27,6 +27,8 @@ module.exports = {
     '@storybook/addon-actions',
     '@storybook/addon-links',
     '@storybook/addon-a11y',
+    './localAddon/register.tsx',
+    './localAddon/preset.ts',
   ],
   webpackFinal: (config: Configuration) => {
     // add monorepo root as a valid directory to import modules from

@@ -57,7 +57,7 @@ const FlexSpaced = styled.div(({ theme }) => ({
 }));
 
 export type DateProps = ControlProps<DateValue> & DateConfig;
-export const DateControl: FC<DateProps> = ({ name, value, onChange }) => {
+export const DateControl: FC<DateProps> = ({ name, value, onChange, onFocus, onBlur }) => {
   const [valid, setValid] = useState(true);
   const dateRef = useRef<HTMLInputElement>();
   const timeRef = useRef<HTMLInputElement>();
@@ -102,6 +102,7 @@ export const DateControl: FC<DateProps> = ({ name, value, onChange }) => {
         id={`${name}date`}
         name={`${name}date`}
         onChange={onDateChange}
+        {...{ onFocus, onBlur }}
       />
       <Form.Input
         type="time"
@@ -109,6 +110,7 @@ export const DateControl: FC<DateProps> = ({ name, value, onChange }) => {
         name={`${name}time`}
         ref={timeRef as RefObject<HTMLInputElement>}
         onChange={onTimeChange}
+        {...{ onFocus, onBlur }}
       />
       {!valid ? <div>invalid</div> : null}
     </FlexSpaced>

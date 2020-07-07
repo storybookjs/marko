@@ -127,14 +127,16 @@ const addComponentTabs = (
   })),
 });
 
-export const StoryTable: FC<StoryProps & { components: Record<string, Component> }> = (props) => {
+export const StoryTable: FC<
+  StoryProps & { component: Component; subcomponents: Record<string, Component> }
+> = (props) => {
   const context = useContext(DocsContext);
   const {
     id: currentId,
     parameters: { argTypes },
     storyStore,
   } = context;
-  const { story, components, include, exclude } = props;
+  const { story, component, subcomponents, showComponent, include, exclude } = props;
   let storyArgTypes;
   try {
     let storyId;
@@ -174,7 +176,14 @@ export const StoryTable: FC<StoryProps & { components: Record<string, Component>
       tabs = {};
     }
 
-    tabs = addComponentTabs(tabs, components, context, include, exclude);
+    if (component && (!storyHasArgsWithControls || showComponent)) {
+      const mainLabel = getComponentName(component);
+      tabs = addComponentTabs(tabs, { [mainLabel]: component }, context, include, exclude);
+    }
+
+    if (subcomponents) {
+      tabs = addComponentTabs(tabs, subcomponents, context, include, exclude);
+    }
     return <TabbedArgsTable tabs={tabs} />;
   } catch (err) {
     return <ArgsTable error={err.message} />;
@@ -196,19 +205,11 @@ export const Props: FC<PropsProps> = (props) => {
   } = context;
 
   const { include, exclude, components } = props as ComponentsProps;
-  const { story, showComponent } = props as StoryProps;
+  const { story } = props as StoryProps;
 
-  let allComponents = components;
   const main = getComponent(props, context);
-
-  const mainLabel = getComponentName(main);
-  if (!allComponents) {
-    allComponents =
-      !story || showComponent ? { [mainLabel]: main, ...subcomponents } : subcomponents;
-  }
-
   if (story) {
-    return <StoryTable {...(props as StoryProps)} components={allComponents} />;
+    return <StoryTable {...(props as StoryProps)} component={main} subcomponents={subcomponents} />;
   }
 
   if (!components && !subcomponents) {
@@ -221,7 +222,13 @@ export const Props: FC<PropsProps> = (props) => {
     return <ArgsTable {...mainProps} />;
   }
 
-  return <ComponentsTable {...(props as ComponentsProps)} components={allComponents} />;
+  const mainLabel = getComponentName(main);
+  return (
+    <ComponentsTable
+      {...(props as ComponentsProps)}
+      components={{ [mainLabel]: main, ...subcomponents }}
+    />
+  );
 };
 
 Props.defaultProps = {

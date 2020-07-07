@@ -158,6 +158,8 @@ export const RangeControl: FC<RangeProps> = ({
   min = 0,
   max = 100,
   step = 1,
+  onBlur,
+  onFocus,
 }) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(name, parse(event.target.value));
@@ -166,13 +168,9 @@ export const RangeControl: FC<RangeProps> = ({
     <RangeWrapper>
       <RangeLabel>{min}</RangeLabel>
       <RangeInput
-        value={value}
         type="range"
-        name={name}
-        min={min}
-        max={max}
-        step={step}
         onChange={handleChange}
+        {...{ name, value, min, max, step, onFocus, onBlur }}
       />
       <RangeLabel>{`${value} / ${max}`}</RangeLabel>
     </RangeWrapper>
