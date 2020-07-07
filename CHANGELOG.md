@@ -1,3 +1,9 @@
+## 6.0.0-beta.45 (July 7, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix babel JSX handling in MDX ([#11448](https://github.com/storybookjs/storybook/pull/11448))
+
 ## 6.0.0-beta.44 (July 6, 2020)
 
 ### Breaking Changes
