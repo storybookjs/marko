@@ -1,10 +1,11 @@
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 import { SET_STORIES, UPDATE_GLOBALS, GLOBALS_UPDATED } from '@storybook/core-events';
-import { logger } from '@storybook/client-logger';
 
-import { getEventMetadata } from '../lib/events';
 import { ModuleArgs, API } from '../index';
 import { init as initModule, SubAPI } from '../modules/globals';
+
+const { logger } = require('@storybook/client-logger');
+const { getEventMetadata } = require('../lib/events');
 
 jest.mock('@storybook/client-logger');
 jest.mock('../lib/events');
