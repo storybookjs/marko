@@ -3,6 +3,9 @@
 - [Migration](#migration)
   - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
     - [To main.js configuration](#to-mainjs-configuration)
+      - [Using main.js](#using-mainjs)
+      - [Using preview.js](#using-previewjs)
+      - [Using manager.js](#using-managerjs)
     - [Create React App preset](#create-react-app-preset)
     - [Description doc block](#description-doc-block)
     - [React Native Async Storage](#react-native-async-storage)
@@ -214,7 +217,7 @@ yarn sb migrate upgrade-hierarchy-separators --glob="*.stories.js"
 If you were using `|` and wish to keep the "root" behavior, use the `showRoots: true` option to re-enable roots:
 
 ```js
-addParameters({ 
+addParameters({
   options: {
     showRoots: true,
   },
@@ -226,13 +229,14 @@ NOTE: it is no longer possible to have some stories with roots and others withou
 ### Addon StoryShots Puppeteer uses external puppeteer
 
 To give you more control on the Chrome version used when running StoryShots Puppeteer, `puppeteer` is no more included in the addon dependencies. So you can now pick the version of `puppeteer` you want and set it in your project.
- 
+
 If you want the latest version available just run:
+
 ```sh
 yarn add puppeteer --dev
 OR
 npm install puppeteer --save-dev
-``` 
+```
 
 ## From version 5.1.x to 5.2.x
 
@@ -411,7 +415,7 @@ var sortedModules = modules.slice().sort((a, b) => {
 });
 
 // execute them
-sortedModules.forEach(key => {
+sortedModules.forEach((key) => {
   context(key);
 });
 ```
@@ -955,7 +959,7 @@ Here's an example of using Notes and Info in 3.2 with the new API.
 storiesOf('composition', module).add(
   'new addons api',
   withInfo('see Notes panel for composition info')(
-    withNotes({ text: 'Composition: Info(Notes())' })(context => (
+    withNotes({ text: 'Composition: Info(Notes())' })((context) => (
       <MyComponent name={context.story} />
     ))
   )

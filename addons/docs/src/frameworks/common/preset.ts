@@ -9,12 +9,16 @@ function createBabelOptions(babelOptions?: any, configureJSX?: boolean) {
   }
 
   const babelPlugins = (babelOptions && babelOptions.plugins) || [];
+  const jsxPlugin = [
+    '@babel/plugin-transform-react-jsx',
+    { pragma: 'React.createElement', pragmaFrag: 'React.Fragment' },
+  ];
   return {
     ...babelOptions,
     // for frameworks that are not working with react, we need to configure
     // the jsx to transpile mdx, for now there will be a flag for that
     // for more complex solutions we can find alone that we need to add '@babel/plugin-transform-react-jsx'
-    plugins: [...babelPlugins, '@babel/plugin-transform-react-jsx'],
+    plugins: [...babelPlugins, jsxPlugin],
   };
 }
 
@@ -22,11 +26,7 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
   const { module = {} } = webpackConfig;
   // it will reuse babel options that are already in use in storybook
   // also, these babel options are chained with other presets.
-  const {
-    babelOptions,
-    configureJSX = options.framework !== 'react', // if not user-specified
-    sourceLoaderOptions = {},
-  } = options;
+  const { babelOptions, configureJSX = true, sourceLoaderOptions = {} } = options;
 
   const mdxLoaderOptions = {
     remarkPlugins: [remarkSlug, remarkExternalLinks],
