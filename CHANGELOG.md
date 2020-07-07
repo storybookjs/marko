@@ -1,3 +1,10 @@
+## 5.3.20 (July 7, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix babel JSX handling in MDX ([#11448](https://github.com/storybookjs/storybook/pull/11448))
+- Revert "Fix: Search stories" ([#10916](https://github.com/storybookjs/storybook/pull/10916))
+
 ## 5.3.19 (May 24, 2020)
 
 ### Bug Fixes
