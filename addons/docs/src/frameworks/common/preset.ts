@@ -43,8 +43,6 @@ export const webpackDlls = (dlls: string[], options: any) => {
 
 export function webpack(webpackConfig: any = {}, options: any = {}) {
   const { module = {} } = webpackConfig;
-
-  const configuredFrameworks = ['react', 'preact', 'mithril'];
   // it will reuse babel options that are already in use in storybook
   // also, these babel options are chained with other presets.
   const {

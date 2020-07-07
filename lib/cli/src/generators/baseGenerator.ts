@@ -43,17 +43,6 @@ export async function baseGenerator(
     ...options,
   };
 
-  const yarn2Dependencies =
-    packageManager.type === 'yarn2'
-      ? [
-          '@storybook/addon-actions',
-          '@storybook/addon-backgrounds',
-          '@storybook/addon-controls',
-          '@storybook/addon-docs',
-          '@storybook/addon-viewport',
-        ]
-      : [];
-
   const addons = [
     '@storybook/addon-links',
     '@storybook/addon-actions',
@@ -67,7 +56,6 @@ export async function baseGenerator(
     ...extraAddons,
     // ⚠️ Some addons have peer deps that must be added too, like '@storybook/addon-docs' => 'react-is'
     'react-is',
-    ...yarn2Dependencies,
   ].filter(Boolean);
   const versionedPackages = await packageManager.getVersionedPackages(...packages);
 

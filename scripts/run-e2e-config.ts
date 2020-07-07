@@ -134,8 +134,6 @@ export const cra: Parameters = {
   name: 'cra',
   version: 'latest',
   generator: 'npx create-react-app@{{version}} {{name}}-v{{version}}',
-  // Issues with 7.10.4. To remove later ?
-  additionalDeps: ['@babel/core@7.10.2'],
 };
 
 // TODO: there is a compatibility issue with riot@4
@@ -163,7 +161,7 @@ export const vue: Parameters = {
   name: 'vue',
   version: 'latest',
   generator: `npx @vue/cli@{{version}} create {{name}}-v{{version}} --default --packageManager=yarn --no-git --force`,
-  additionalDeps: ['react', 'react-dom', '@babel/core@7.10.2'],
+  additionalDeps: ['react', 'react-dom'],
 };
 
 export const web_components: Parameters = {
