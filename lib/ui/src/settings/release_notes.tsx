@@ -31,7 +31,10 @@ export const Iframe = styled.iframe({
   height: '100%',
 });
 
-const getIframeUrl = (version: string) => `https://storybook.js.org/release-notes/${version}`;
+const getIframeUrl = (version: string) => {
+  const [major, minor] = version.split('.');
+  return `https://storybook.js.org/releases/iframe/${major}.${minor}`;
+};
 
 const ReleaseNotesLoader: FunctionComponent = () => (
   <Centered>
