@@ -1,11 +1,10 @@
 import React from 'react';
 import toReact from '@egoist/vue-to-react';
 import { StoryFn, StoryContext } from '@storybook/addons';
-import { addParameters } from '@storybook/client-api';
 import { extractArgTypes } from './extractArgTypes';
 import { extractComponentDescription } from '../../lib/docgen';
 
-addParameters({
+export const parameters = {
   docs: {
     inlineStories: true,
     prepareForInline: (storyFn: StoryFn, { args }: StoryContext) => {
@@ -15,4 +14,4 @@ addParameters({
     extractArgTypes,
     extractComponentDescription,
   },
-});
+};
