@@ -18,10 +18,13 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
   scale,
   viewMode = 'story',
   refId,
-  queryParams,
+  queryParams = {},
   baseUrl,
   storyId = '*',
 }) => {
+  if (refs[refId]?.version) {
+    queryParams.version = refs[refId]?.version;
+  }
   const stringifiedQueryParams = stringifyQueryParams(queryParams);
   const active = getActive(refId);
 

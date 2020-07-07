@@ -40,6 +40,7 @@ export interface ComposedRef {
   stories: StoriesHash;
   versions?: Versions;
   loginUrl?: string;
+  version?: string;
   ready?: boolean;
   error?: any;
 }
@@ -49,6 +50,7 @@ export interface ComposedRefUpdate {
   stories?: StoriesHash;
   versions?: Versions;
   loginUrl?: string;
+  version?: string;
   ready?: boolean;
   error?: any;
 }
@@ -133,24 +135,29 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
       });
     },
     checkRef: async (ref) => {
-      const { id, url } = ref;
+      const { id, url, version } = ref;
 
       const loadedData: { error?: Error; stories?: StoriesRaw; loginUrl?: string } = {};
+      const query = version
+        ? `?${Object.entries({ version })
+            .map(([k, v]) => `${k}=${v}`)
+            .join('&')}`
+        : '';
 
       const [included, omitted, iframe] = await allSettled([
-        fetch(`${url}/stories.json`, {
+        fetch(`${url}/stories.json${query}`, {
           headers: {
             Accept: 'application/json',
           },
           credentials: 'include',
         }),
-        fetch(`${url}/stories.json`, {
+        fetch(`${url}/stories.json${query}`, {
           headers: {
             Accept: 'application/json',
           },
           credentials: 'omit',
         }),
-        fetch(`${url}/iframe.html`, {
+        fetch(`${url}/iframe.html${query}`, {
           cors: 'no-cors',
           credentials: 'omit',
         }),
@@ -185,7 +192,7 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
         const [stories, metadata] = await Promise.all([
           included ? handle(included) : handle(omitted),
           handle(
-            fetch(`${url}/metadata.json`, {
+            fetch(`${url}/metadata.json${query}`, {
               headers: {
                 Accept: 'application/json',
               },
