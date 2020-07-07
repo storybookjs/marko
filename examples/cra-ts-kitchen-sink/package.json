@@ -48,7 +48,7 @@
     "enzyme-to-json": "^3.4.1",
     "fork-ts-checker-webpack-plugin": "^4.0.3",
     "react-moment-proptypes": "^1.7.0",
-    "ts-node": "~8.9.1"
+    "ts-node": "^8.10.2"
   },
   "storybook": {
     "chromatic": {
