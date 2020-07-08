@@ -1,3 +1,21 @@
+## 6.0.0-beta.46 (July 8, 2020)
+
+### Breaking Changes
+
+- Addon-backgrounds: Zero config defaults ([#11460](https://github.com/storybookjs/storybook/pull/11460))
+
+### Features
+
+- Composition: Add version query to composed ref ([#11447](https://github.com/storybookjs/storybook/pull/11447))
+- UI: Add version release notes ([#11360](https://github.com/storybookjs/storybook/pull/11360))
+
+### Maintenance
+
+- Addon-controls: Add addon-docs check on startup ([#11458](https://github.com/storybookjs/storybook/pull/11458))
+- Addon-docs: Remove deprecated addParameters calls ([#11455](https://github.com/storybookjs/storybook/pull/11455))
+- Composition: Change event source to ref ([#11392](https://github.com/storybookjs/storybook/pull/11392))
+- Fix Yarn 2 compatibility in CLI and Essentials ([#11444](https://github.com/storybookjs/storybook/pull/11444))
+
 ## 6.0.0-beta.45 (July 7, 2020)
 
 ### Bug Fixes
