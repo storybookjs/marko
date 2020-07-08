@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-docs",
-  "version": "6.0.0-beta.44",
+  "version": "6.0.0-beta.45",
   "description": "Superior documentation for your components",
   "keywords": [
     "addon",
@@ -48,18 +48,18 @@
     "@mdx-js/loader": "^1.5.1",
     "@mdx-js/mdx": "^1.5.1",
     "@mdx-js/react": "^1.5.1",
-    "@storybook/addons": "6.0.0-beta.44",
-    "@storybook/api": "6.0.0-beta.44",
-    "@storybook/client-api": "6.0.0-beta.44",
-    "@storybook/client-logger": "6.0.0-beta.44",
-    "@storybook/components": "6.0.0-beta.44",
-    "@storybook/core": "6.0.0-beta.44",
-    "@storybook/core-events": "6.0.0-beta.44",
+    "@storybook/addons": "6.0.0-beta.45",
+    "@storybook/api": "6.0.0-beta.45",
+    "@storybook/client-api": "6.0.0-beta.45",
+    "@storybook/client-logger": "6.0.0-beta.45",
+    "@storybook/components": "6.0.0-beta.45",
+    "@storybook/core": "6.0.0-beta.45",
+    "@storybook/core-events": "6.0.0-beta.45",
     "@storybook/csf": "0.0.1",
-    "@storybook/node-logger": "6.0.0-beta.44",
-    "@storybook/postinstall": "6.0.0-beta.44",
-    "@storybook/source-loader": "6.0.0-beta.44",
-    "@storybook/theming": "6.0.0-beta.44",
+    "@storybook/node-logger": "6.0.0-beta.45",
+    "@storybook/postinstall": "6.0.0-beta.45",
+    "@storybook/source-loader": "6.0.0-beta.45",
+    "@storybook/theming": "6.0.0-beta.45",
     "acorn": "^7.1.0",
     "acorn-jsx": "^5.1.0",
     "acorn-walk": "^7.0.0",
@@ -86,8 +86,8 @@
     "@babel/core": "^7.9.6",
     "@emotion/core": "^10.0.20",
     "@emotion/styled": "^10.0.17",
-    "@storybook/react": "6.0.0-beta.44",
-    "@storybook/web-components": "6.0.0-beta.44",
+    "@storybook/react": "6.0.0-beta.45",
+    "@storybook/web-components": "6.0.0-beta.45",
     "@types/cross-spawn": "^6.0.1",
     "@types/doctrine": "^0.0.3",
     "@types/enzyme": "^3.10.3",
@@ -139,7 +139,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "d5df9d126f8862293ce5a0dd9dd13cb50ea6c588",
+  "gitHead": "f03eb04a2ad4bf14c762419e9c960a8906a0bba8",
   "typesVersions": {
     "<=3.5": {
       "*": [

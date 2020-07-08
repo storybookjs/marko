@@ -1,10 +1,9 @@
-import { addParameters } from '@storybook/client-api';
 import { extractArgTypes, extractComponentDescription } from './jsondoc';
 
-addParameters({
+export const parameters = {
   docs: {
     iframeHeight: 80,
     extractArgTypes,
     extractComponentDescription,
   },
-});
+};
