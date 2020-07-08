@@ -138,11 +138,7 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
       const { id, url, version } = ref;
 
       const loadedData: { error?: Error; stories?: StoriesRaw; loginUrl?: string } = {};
-      const query = version
-        ? `?${Object.entries({ version })
-            .map(([k, v]) => `${k}=${v}`)
-            .join('&')}`
-        : '';
+      const query = version ? `?version=${version}` : '';
 
       const [included, omitted, iframe] = await allSettled([
         fetch(`${url}/stories.json${query}`, {
