@@ -29,6 +29,8 @@ import * as provider from './modules/provider';
 import * as addons from './modules/addons';
 import * as channel from './modules/channel';
 import * as notifications from './modules/notifications';
+import * as settings from './modules/settings';
+import * as releaseNotes from './modules/release-notes';
 import * as stories from './modules/stories';
 import * as refs from './modules/refs';
 import * as layout from './modules/layout';
@@ -187,6 +189,8 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
       addons,
       layout,
       notifications,
+      settings,
+      releaseNotes,
       shortcuts,
       stories,
       refs,
@@ -220,16 +224,6 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
     return null;
   };
 
-  componentDidMount() {
-    // Now every module has had a chance to set its API, call init on each module which gives it
-    // a chance to do things that call other modules' APIs.
-    this.modules.forEach(({ init }) => {
-      if (init) {
-        init();
-      }
-    });
-  }
-
   shouldComponentUpdate(nextProps: ManagerProviderProps, nextState: State) {
     const prevState = this.state;
     const prevProps = this.props;
@@ -243,6 +237,16 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
     return false;
   }
 
+  initModules = () => {
+    // Now every module has had a chance to set its API, call init on each module which gives it
+    // a chance to do things that call other modules' APIs.
+    this.modules.forEach(({ init }) => {
+      if (init) {
+        init();
+      }
+    });
+  };
+
   render() {
     const { children } = this.props;
     const value = {
@@ -251,12 +255,27 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
     };
 
     return (
-      <ManagerContext.Provider value={value}>
-        <ManagerConsumer>{children}</ManagerConsumer>
-      </ManagerContext.Provider>
+      <EffectOnMount effect={this.initModules}>
+        <ManagerContext.Provider value={value}>
+          <ManagerConsumer>{children}</ManagerConsumer>
+        </ManagerContext.Provider>
+      </EffectOnMount>
     );
   }
 }
+
+// EffectOnMount exists to work around a bug in Reach Router where calling
+// navigate inside of componentDidMount (as could happen when we call init on any
+// of our modules) does not cause Reach Router's LocationProvider to update with
+// the correct path. Calling navigate inside on an effect does not have the
+// same problem. See https://github.com/reach/router/issues/404
+const EffectOnMount: FunctionComponent<{
+  children: ReactElement;
+  effect: () => void;
+}> = ({ children, effect }) => {
+  React.useEffect(effect, []);
+  return children;
+};
 
 interface ManagerConsumerProps<P = unknown> {
   filter?: (combo: Combo) => P;

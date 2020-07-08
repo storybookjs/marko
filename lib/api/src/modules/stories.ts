@@ -44,6 +44,7 @@ export interface SubState {
 export interface SubAPI {
   storyId: typeof toId;
   resolveStory: (storyId: StoryId, refsId?: string) => Story | Group | Root;
+  selectFirstStory: () => void;
   selectStory: (
     kindOrId: string,
     story?: string,
@@ -230,6 +231,19 @@ export const init: ModuleFn = ({
         storiesFailed: error,
       });
     },
+    selectFirstStory: () => {
+      const { storiesHash } = store.getState();
+      const firstStory = Object.keys(storiesHash).find(
+        (k) => !(storiesHash[k].children || Array.isArray(storiesHash[k]))
+      );
+
+      if (firstStory) {
+        api.selectStory(firstStory);
+        return;
+      }
+
+      navigate('/');
+    },
     selectStory: (kindOrId, story = undefined, options = {}) => {
       const { ref, viewMode: viewModeFromArgs } = options;
       const {
@@ -317,6 +331,8 @@ export const init: ModuleFn = ({
       [k: string]: any;
     }) {
       const { sourceType } = getEventMetadata(this, fullAPI);
+
+      if (fullAPI.isSettingsScreenActive()) return;
 
       if (sourceType === 'local' && storyId && viewMode) {
         navigate(`/${viewMode}/${storyId}`);

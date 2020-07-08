@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 
 import { Badge } from '@storybook/components';
 import { API } from '@storybook/api';
+import { color } from '@storybook/theming';
 
 import { shortcutToHumanString } from '@storybook/api/shortcut';
 import { MenuItemIcon } from '../components/sidebar/Menu';
@@ -23,6 +24,39 @@ export const useMenu = (
   enableShortcuts: boolean
 ) => {
   const shortcutKeys = api.getShortcutKeys();
+
+  const about = useMemo(
+    () => ({
+      id: 'about',
+      title: 'About your Storybook',
+      onClick: () => api.navigateToSettingsPage('/settings/about'),
+      right: api.versionUpdateAvailable() && <Badge status="positive">Update</Badge>,
+      left: <MenuItemIcon />,
+    }),
+    [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
+  );
+
+  const releaseNotes = useMemo(
+    () => ({
+      id: 'release-notes',
+      title: 'Release notes',
+      onClick: () => api.navigateToSettingsPage('/settings/release-notes'),
+      left: <MenuItemIcon />,
+    }),
+    [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
+  );
+
+  const shortcuts = useMemo(
+    () => ({
+      id: 'shortcuts',
+      title: 'Keyboard shortcuts',
+      onClick: () => api.navigateToSettingsPage('/settings/shortcuts'),
+      right: shortcutToHumanStringIfEnabled(shortcutKeys.shortcutsPage, enableShortcuts),
+      left: <MenuItemIcon />,
+      style: { borderBottom: `4px solid ${color.mediumlight}` },
+    }),
+    [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
+  );
 
   const sidebarToggle = useMemo(
     () => ({
@@ -123,28 +157,6 @@ export const useMenu = (
     [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
   );
 
-  const about = useMemo(
-    () => ({
-      id: 'about',
-      title: 'About your Storybook',
-      onClick: () => api.navigate('/settings/about'),
-      right: api.versionUpdateAvailable() && <Badge status="positive">Update</Badge>,
-      left: <MenuItemIcon />,
-    }),
-    [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
-  );
-
-  const shortcuts = useMemo(
-    () => ({
-      id: 'shortcuts',
-      title: 'Keyboard shortcuts',
-      onClick: () => api.navigate('/settings/shortcuts'),
-      right: shortcutToHumanStringIfEnabled(shortcutKeys.shortcutsPage, enableShortcuts),
-      left: <MenuItemIcon />,
-    }),
-    [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
-  );
-
   const collapse = useMemo(
     () => ({
       id: 'collapse',
@@ -158,6 +170,9 @@ export const useMenu = (
 
   return useMemo(
     () => [
+      about,
+      releaseNotes,
+      shortcuts,
       sidebarToggle,
       addonsToggle,
       addonsOrientationToggle,
@@ -167,11 +182,12 @@ export const useMenu = (
       down,
       prev,
       next,
-      about,
-      shortcuts,
       collapse,
     ],
     [
+      about,
+      releaseNotes,
+      shortcuts,
       sidebarToggle,
       addonsToggle,
       addonsOrientationToggle,
@@ -181,8 +197,6 @@ export const useMenu = (
       down,
       prev,
       next,
-      about,
-      shortcuts,
       collapse,
     ]
   );
