@@ -34,7 +34,7 @@
     "@types/jest-image-snapshot": "^2.8.0",
     "@wordpress/jest-puppeteer-axe": "^1.5.0",
     "core-js": "^3.0.1",
-    "jest-image-snapshot": "^3.0.1",
+    "jest-image-snapshot": "^4.0.2",
     "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
