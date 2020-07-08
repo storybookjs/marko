@@ -3,6 +3,7 @@ import * as EVENTS from '@storybook/core-events';
 import Channel, { ChannelEvent, ChannelHandler } from '@storybook/channels';
 import { logger, pretty } from '@storybook/client-logger';
 import { isJSON, parse, stringify } from 'telejson';
+import qs from 'qs';
 
 interface Config {
   page: 'manager' | 'preview';
@@ -71,8 +72,14 @@ export class PostmsgTransport {
 
     const frames = this.getFrames(target);
 
+    const query = qs.parse(location.search, { ignoreQueryPrefix: true });
+
     const data = stringify(
-      { key: KEY, event, source: document.location.origin + document.location.pathname },
+      {
+        key: KEY,
+        event,
+        refId: query.refId,
+      },
       { maxDepth: depth, allowFunction }
     );
 
@@ -158,7 +165,7 @@ export class PostmsgTransport {
   private handleEvent(rawEvent: MessageEvent): void {
     try {
       const { data } = rawEvent;
-      const { key, event, source } = typeof data === 'string' && isJSON(data) ? parse(data) : data;
+      const { key, event, refId } = typeof data === 'string' && isJSON(data) ? parse(data) : data;
 
       if (key === KEY) {
         const pageString =
@@ -170,13 +177,12 @@ export class PostmsgTransport {
           ? `<span style="color: #FF4785">${event.type}</span>`
           : `<span style="color: #FFAE00">${event.type}</span>`;
 
-        if (source) {
-          const { origin, pathname } = new URL(source, document.location);
-          event.source = origin + pathname;
-        } else {
-          event.source =
-            this.config.page === 'preview' ? rawEvent.origin : getEventSourceUrl(rawEvent);
+        if (refId) {
+          event.refId = refId;
         }
+
+        event.source =
+          this.config.page === 'preview' ? rawEvent.origin : getEventSourceUrl(rawEvent);
 
         if (!event.source) {
           pretty.error(

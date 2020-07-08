@@ -70,7 +70,7 @@ const allSettled = (promises: Promise<Response>[]): Promise<(Response | false)[]
     )
   );
 
-export const getSourceType = (source: string) => {
+export const getSourceType = (source: string, refId: string) => {
   const { origin: localOrigin, pathname: localPathname } = location;
   const { origin: sourceOrigin, pathname: sourcePathname } = new URL(source);
 
@@ -80,7 +80,7 @@ export const getSourceType = (source: string) => {
   if (localFull === sourceFull) {
     return ['local', sourceFull];
   }
-  if (source) {
+  if (refId || source) {
     return ['external', sourceFull];
   }
   return [null, null];
@@ -218,7 +218,7 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
       const ref = api.getRefs()[id];
       const after = stories
         ? addRefIds(
-            transformStoriesRawToStoriesHash(map(stories, ref, { storyMapper }), {}, { provider }),
+            transformStoriesRawToStoriesHash(map(stories, ref, { storyMapper }), { provider }),
             ref
           )
         : undefined;
