@@ -11,22 +11,22 @@ export default {
   },
 };
 
-const Story = (args) => <Button {...args} />;
+const Template = (args) => <Button {...args} />;
 
-export const Basic = Story.bind({});
+export const Basic = Template.bind({});
 Basic.args = {
   children: 'basic',
   somethingElse: { a: 2 },
 };
 
-export const Action = Story.bind({});
+export const Action = Template.bind({});
 Action.args = {
   children: 'hmmm',
   type: 'action',
   somethingElse: { a: 4 },
 };
 
-export const CustomControls = Story.bind({});
+export const CustomControls = Template.bind({});
 CustomControls.argTypes = {
   children: { table: { disable: true } },
   type: { control: { disable: true } },
