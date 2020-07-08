@@ -18,11 +18,15 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
   scale,
   viewMode = 'story',
   refId,
-  queryParams,
+  queryParams = {},
   baseUrl,
   storyId = '*',
 }) => {
-  const stringifiedQueryParams = stringifyQueryParams(queryParams);
+  const version = refs[refId]?.version;
+  const stringifiedQueryParams = stringifyQueryParams({
+    ...queryParams,
+    ...(version && { version }),
+  });
   const active = getActive(refId);
 
   const styles = useMemo<CSSObject>(() => {
