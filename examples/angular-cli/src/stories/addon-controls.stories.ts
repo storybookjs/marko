@@ -6,13 +6,13 @@ export default {
   parameters: { docs: { iframeHeight: 120 } },
 };
 
-const ButtonStory = (args) => ({
+const Template = (args) => ({
   component: ButtonComponent,
   props: args,
 });
 
-export const Basic = ButtonStory.bind({});
+export const Basic = Template.bind({});
 Basic.args = { label: 'Args test', isDisabled: false };
 
-export const Disabled = ButtonStory.bind({});
+export const Disabled = Template.bind({});
 Disabled.args = { label: 'Disabled', isDisabled: true };

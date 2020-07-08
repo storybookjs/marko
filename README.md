@@ -65,18 +65,18 @@ Storybook comes with a lot of [addons](https://storybook.js.org/addons/introduct
 
 ## Table of contents
 
-- 🚀[Getting Started](#getting-started)
-- 📒[Projects](#projects)
-  - 🛠[Supported Frameworks & Examples](#supported-frameworks)
-  - 🚇[Sub Projects](#sub-projects)
+- 🚀 [Getting Started](#getting-started)
+- 📒 [Projects](#projects)
+  - 🛠 [Supported Frameworks & Examples](#supported-frameworks)
+  - 🚇[ Sub Projects](#sub-projects)
   - 🔗[Addons](#addons)
-- 🏅[Badges & Presentation materials](#badges--presentation-materials)
-- 👥[Community](#community)
-- 👏[Contributing](#contributing)
-  - 👨‍💻[Development scripts](#development-scripts)
-  - 💵[Backers](#backers)
-  - 💸[Sponsors](#sponsors)
-- :memo:[License](#license)
+- 🏅 [Badges & Presentation materials](#badges--presentation-materials)
+- 👥 [Community](#community)
+- 👏 [Contributing](#contributing)
+  - 👨‍💻 [Development scripts](#development-scripts)
+  - 💵 [Backers](#backers)
+  - 💸 [Sponsors](#sponsors)
+- :memo: [License](#license)
 
 ## Getting Started
 

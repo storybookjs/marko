@@ -4,7 +4,6 @@
   - [Hoisted CSF annotations](#hoisted-csf-annotations)
   - [Zero config typescript](#zero-config-typescript)
   - [Correct globs in main.js](#correct-globs-in-mainjs)
-  - [Backgrounds addon has a new api](#backgrounds-addon-has-a-new-api)
   - [CRA preset removed](#cra-preset-removed)
   - [Args passed as first argument to story](#args-passed-as-first-argument-to-story)
   - [6.0 Docs breaking changes](#60-docs-breaking-changes)
@@ -34,6 +33,7 @@
     - [Removed action decorator APIs](#removed-action-decorator-apis)
     - [Removed withA11y decorator](#removed-witha11y-decorator)
     - [Essentials addon disables differently](#essentials-addon-disables-differently)
+    - [Backgrounds addon has a new api](#backgrounds-addon-has-a-new-api)
   - [6.0 Deprecations](#60-deprecations)
     - [Deprecated addon-info, addon-notes](#deprecated-addon-info-addon-notes)
     - [Deprecated addon-contexts](#deprecated-addon-contexts)
@@ -186,43 +186,6 @@ Example of a **valid** glob:
 
 ```
 stories: ['./**/*.stories.@(ts|js)']
-```
-
-### Backgrounds addon has a new api
-
-Starting in 6.0, the backgrounds addon now receives an object instead of an array as parameter, with a property to define the default background.
-
-Consider the following example of its usage in `Button.stories.js`:
-
-```jsx
-// Button.stories.js
-export default {
-  title: 'Button',
-  parameters: {
-    backgrounds: [
-      { name: 'twitter', value: '#00aced', default: true },
-      { name: 'facebook', value: '#3b5998' },
-    ],
-  },
-};
-```
-
-Here's an updated version of the example, using the new api:
-
-```jsx
-// Button.stories.js
-export default {
-  title: 'Button',
-  parameters: {
-    backgrounds: {
-      default: 'twitter',
-      values: [
-        { name: 'twitter', value: '#00aced' },
-        { name: 'facebook', value: '#3b5998' },
-      ],
-    },
-  },
-};
 ```
 
 ### CRA preset removed
@@ -632,6 +595,48 @@ addParameters({
 #### Essentials addon disables differently
 
 In 6.0, `addon-essentials` doesn't configure addons if the user has already configured them in `main.js`. In 5.3 it previously checked to see whether the package had been installed in `package.json` to disable configuration. The new setup is preferably because now users' can install essential packages and import from them without disabling their configuration.
+
+#### Backgrounds addon has a new api
+
+Starting in 6.0, the backgrounds addon now receives an object instead of an array as parameter, with a property to define the default background.
+
+Consider the following example of its usage in `Button.stories.js`:
+
+```jsx
+// Button.stories.js
+export default {
+  title: 'Button',
+  parameters: {
+    backgrounds: [
+      { name: 'twitter', value: '#00aced', default: true },
+      { name: 'facebook', value: '#3b5998' },
+    ],
+  },
+};
+```
+
+Here's an updated version of the example, using the new api:
+
+```jsx
+// Button.stories.js
+export default {
+  title: 'Button',
+  parameters: {
+    backgrounds: {
+      default: 'twitter',
+      values: [
+        { name: 'twitter', value: '#00aced' },
+        { name: 'facebook', value: '#3b5998' },
+      ],
+    },
+  },
+};
+```
+
+In addition, backgrounds now ships with the following defaults:
+
+- no selected background (transparent)
+- light/dark options
 
 ### 6.0 Deprecations
 

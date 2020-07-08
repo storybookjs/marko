@@ -8,18 +8,18 @@ export default {
   },
 };
 
-const ButtonStory = (args) => ({
+const Template = (args) => ({
   Component: ButtonView,
   props: args,
 });
 
-export const Rounded = ButtonStory.bind({});
+export const Rounded = Template.bind({});
 Rounded.args = {
   rounded: true,
   message: 'Rounded text',
 };
 
-export const Square = ButtonStory.bind({});
+export const Square = Template.bind({});
 Square.args = {
   rounded: false,
   message: 'Squared text',

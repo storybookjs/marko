@@ -1,6 +1,7 @@
-import { ensureDocsBeforeControls } from './ensureDocsBeforeControls';
+export function config(entry: any[] = []) {
+  return [...entry, require.resolve('./defaultParameters')];
+}
 
 export function managerEntries(entry: any[] = [], options: any) {
-  ensureDocsBeforeControls(options.configDir);
   return [...entry, require.resolve('../register')];
 }

@@ -8,20 +8,20 @@ export default {
   },
 };
 
-const ButtonStory = (args) => ({
+const Template = (args) => ({
   props: Object.keys(args),
   components: { MyButton },
   template: '<my-button :color="color" :rounded="rounded">{{label}}</my-button>',
 });
 
-export const Rounded = ButtonStory.bind({});
+export const Rounded = Template.bind({});
 Rounded.args = {
   rounded: true,
   color: '#f00',
   label: 'A Button with rounded edges',
 };
 
-export const Square = ButtonStory.bind({});
+export const Square = Template.bind({});
 Square.args = {
   rounded: false,
   color: '#00f',
