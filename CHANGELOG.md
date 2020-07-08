@@ -1,3 +1,13 @@
+## 6.0.0-rc.0 (July 8, 2020)
+
+[Storybook 6.0](https://github.com/storybookjs/storybook/issues/9311) is stabilizing! It brings loads of component dev and documentation improvements to your favorite workshop:
+
+- [Args](https://docs.google.com/document/d/1Mhp1UFRCKCsN8pjlfPdz8ZdisgjNXeMXpXvGoALjxYM/edit#heading=h.6mdg0tp8crgj) - next-gen dynamic component examples
+  - ([controls](https://github.com/storybookjs/storybook/pull/10834) / [runtime](https://github.com/storybookjs/storybook/pull/10014) / [actions](https://github.com/storybookjs/storybook/pull/10029) / [toolbars](https://github.com/storybookjs/storybook/pull/10028) / [docs controls](https://github.com/storybookjs/storybook/pull/10354))
+- [Composition](https://github.com/storybookjs/storybook/pull/9210) - compose multiple storybooks into one
+- [Zero-config Typescript](https://github.com/storybookjs/storybook/pull/10813) - pre-configured for all frameworks, easy customization
+- [Yarn 2 support](https://github.com/storybookjs/storybook/issues/9527) - next generation package management
+
 ## 6.0.0-beta.46 (July 8, 2020)
 
 ### Breaking Changes
