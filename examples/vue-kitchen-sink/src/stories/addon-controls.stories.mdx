@@ -9,7 +9,7 @@ import MyButton from './Button.vue';
   }}
 />
 
-export const ButtonStory = (args) => ({
+export const Template = (args) => ({
   props: Object.keys(args),
   components: { MyButton },
   template: '<my-button :color="color" :rounded="rounded">{{label}}</my-button>',
@@ -30,7 +30,7 @@ Controls can also be defined and used in MDX stories.
       label: 'A Button with rounded edges',
     }}
   >
-    {ButtonStory.bind({})}
+    {Template.bind({})}
   </Story>
 </Preview>
 
@@ -47,7 +47,7 @@ Controls can also be defined and used in MDX stories.
       label: 'A Button with square edges',
     }}
   >
-    {ButtonStory.bind({})}
+    {Template.bind({})}
   </Story>
 </Preview>
 

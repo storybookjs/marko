@@ -11,18 +11,18 @@ export default {
   },
 };
 
-const ButtonStory = (args) => ({
+const Template = (args) => ({
   component: Button,
   props: args,
 });
 
-export const Text = ButtonStory.bind({});
+export const Text = Template.bind({});
 Text.args = {
   text: 'Button',
   onClick: action('onClick'),
 };
 
-export const Emoji = ButtonStory.bind({});
+export const Emoji = Template.bind({});
 Emoji.args = {
   text: '😀 😎 👍 💯',
 };

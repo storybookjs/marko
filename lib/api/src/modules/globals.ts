@@ -2,8 +2,9 @@ import { SET_STORIES, UPDATE_GLOBALS, GLOBALS_UPDATED } from '@storybook/core-ev
 import { logger } from '@storybook/client-logger';
 
 import { Args, ModuleFn } from '../index';
-import { SetStoriesPayloadV2 } from '../lib/stories';
-import { getSourceType } from './refs';
+
+import { SetStoriesPayload } from '../lib/stories';
+import { getEventMetadata } from '../lib/events';
 
 export interface SubState {
   globals: Args;
@@ -33,43 +34,23 @@ export const init: ModuleFn = ({ store, fullAPI }) => {
 
   const initModule = () => {
     fullAPI.on(GLOBALS_UPDATED, function handleGlobalsUpdated({ globals }: { globals: Args }) {
-      const { source }: { source: string } = this;
-      const [sourceType] = getSourceType(source);
+      const { ref } = getEventMetadata(this, fullAPI);
 
-      switch (sourceType) {
-        case 'local': {
-          store.setState({ globals });
-          break;
-        }
-        case 'external': {
-          logger.warn(
-            'received a GLOBALS_UPDATED from a non-local ref. This is not currently supported.'
-          );
-          break;
-        }
-        default: {
-          logger.warn('received a SET_STORIES frame that was not configured as a ref');
-        }
+      if (!ref) {
+        store.setState({ globals });
+      } else {
+        logger.warn(
+          'received a GLOBALS_UPDATED from a non-local ref. This is not currently supported.'
+        );
       }
     });
-    fullAPI.on(SET_STORIES, function handleSetStories({ globals }: SetStoriesPayloadV2) {
-      const { source }: { source: string } = this;
-      const [sourceType] = getSourceType(source);
+    fullAPI.on(SET_STORIES, function handleSetStories({ globals }: SetStoriesPayload) {
+      const { ref } = getEventMetadata(this, fullAPI);
 
-      switch (sourceType) {
-        case 'local': {
-          store.setState({ globals });
-          break;
-        }
-        case 'external': {
-          if (Object.keys(globals).length > 0) {
-            logger.warn('received globals from a non-local ref. This is not currently supported.');
-          }
-          break;
-        }
-        default: {
-          // This is already going to be warned about in stories.ts
-        }
+      if (!ref) {
+        store.setState({ globals });
+      } else if (Object.keys(globals).length > 0) {
+        logger.warn('received globals from a non-local ref. This is not currently supported.');
       }
     });
   };

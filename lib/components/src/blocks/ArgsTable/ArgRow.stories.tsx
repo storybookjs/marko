@@ -18,13 +18,13 @@ export default {
   ],
 };
 
-const Story = (args) => <ArgRow {...args} />;
+const Template = (args) => <ArgRow {...args} />;
 
 const baseArgs = {
   updateArgs: action('updateArgs'),
 };
 
-export const String = Story.bind({});
+export const String = Template.bind({});
 String.args = {
   ...baseArgs,
   row: {
@@ -39,7 +39,7 @@ String.args = {
   },
 };
 
-export const LongName = Story.bind({});
+export const LongName = Template.bind({});
 LongName.args = {
   ...baseArgs,
   row: {
@@ -48,7 +48,7 @@ LongName.args = {
   },
 };
 
-export const LongDesc = Story.bind({});
+export const LongDesc = Template.bind({});
 LongDesc.args = {
   ...baseArgs,
   row: {
@@ -57,7 +57,7 @@ LongDesc.args = {
   },
 };
 
-export const Boolean = Story.bind({});
+export const Boolean = Template.bind({});
 Boolean.args = {
   ...baseArgs,
   row: {
@@ -72,7 +72,7 @@ Boolean.args = {
   },
 };
 
-export const Color = Story.bind({});
+export const Color = Template.bind({});
 Color.args = {
   ...baseArgs,
   row: {
@@ -84,7 +84,7 @@ Color.args = {
   },
 };
 
-export const Date = Story.bind({});
+export const Date = Template.bind({});
 Date.args = {
   ...baseArgs,
   row: {
@@ -95,7 +95,7 @@ Date.args = {
   },
 };
 
-export const Number = Story.bind({});
+export const Number = Template.bind({});
 Number.args = {
   ...baseArgs,
   row: {
@@ -110,7 +110,7 @@ Number.args = {
   },
 };
 
-export const Range = Story.bind({});
+export const Range = Template.bind({});
 Range.args = {
   ...baseArgs,
   row: {
@@ -119,7 +119,7 @@ Range.args = {
   },
 };
 
-export const Radio = Story.bind({});
+export const Radio = Template.bind({});
 Radio.args = {
   ...baseArgs,
   row: {
@@ -129,7 +129,7 @@ Radio.args = {
   },
 };
 
-export const InlineRadio = Story.bind({});
+export const InlineRadio = Template.bind({});
 InlineRadio.args = {
   ...baseArgs,
   row: {
@@ -138,7 +138,7 @@ InlineRadio.args = {
   },
 };
 
-export const Check = Story.bind({});
+export const Check = Template.bind({});
 Check.args = {
   ...baseArgs,
   row: {
@@ -147,7 +147,7 @@ Check.args = {
   },
 };
 
-export const InlineCheck = Story.bind({});
+export const InlineCheck = Template.bind({});
 InlineCheck.args = {
   ...baseArgs,
   row: {
@@ -156,7 +156,7 @@ InlineCheck.args = {
   },
 };
 
-export const Select = Story.bind({});
+export const Select = Template.bind({});
 Select.args = {
   ...baseArgs,
   row: {
@@ -165,7 +165,7 @@ Select.args = {
   },
 };
 
-export const MultiSelect = Story.bind({});
+export const MultiSelect = Template.bind({});
 MultiSelect.args = {
   ...baseArgs,
   row: {
@@ -174,7 +174,7 @@ MultiSelect.args = {
   },
 };
 
-export const ObjectOf = Story.bind({});
+export const ObjectOf = Template.bind({});
 ObjectOf.args = {
   ...baseArgs,
   row: {
@@ -188,7 +188,7 @@ ObjectOf.args = {
   },
 };
 
-export const ArrayOf = Story.bind({});
+export const ArrayOf = Template.bind({});
 ArrayOf.args = {
   ...baseArgs,
   row: {
@@ -202,7 +202,7 @@ ArrayOf.args = {
   },
 };
 
-export const ComplexObject = Story.bind({});
+export const ComplexObject = Template.bind({});
 ComplexObject.args = {
   ...baseArgs,
   row: {
@@ -230,7 +230,7 @@ ComplexObject.args = {
   },
 };
 
-export const Func = Story.bind({});
+export const Func = Template.bind({});
 Func.args = {
   ...baseArgs,
   row: {
@@ -252,7 +252,7 @@ Func.args = {
   },
 };
 
-export const Markdown = Story.bind({});
+export const Markdown = Template.bind({});
 Markdown.args = {
   ...baseArgs,
   row: {
@@ -266,18 +266,18 @@ Markdown.args = {
   },
 };
 
-export const StringCompact = Story.bind({});
+export const StringCompact = Template.bind({});
 StringCompact.args = {
   ...String.args,
   compact: true,
 };
 
-export const StringNoControls = Story.bind({});
+export const StringNoControls = Template.bind({});
 StringNoControls.args = {
   row: String.args.row,
 };
 
-export const StringNoControlsCompact = Story.bind({});
+export const StringNoControlsCompact = Template.bind({});
 StringNoControlsCompact.args = {
   row: String.args.row,
   compact: true,

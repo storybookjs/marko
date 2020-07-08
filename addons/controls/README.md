@@ -279,19 +279,19 @@ VeryLongLabel.args = { label: 'this is a very long string', background: '#ff0' }
 This works, but it repeats code. What we want is to reuse the `Basic` story, but with a different initial state. In Storybook we do this idiomatically for Args stories by refactoring the first story into a reusable story function and then `.bind`ing it to create a duplicate object on which to hang `args`:
 
 ```jsx
-const ButtonStory = (args) => <Button {...args} />;
+const Template = (args) => <Button {...args} />;
 
-export const Basic = ButtonStory.bind({});
+export const Basic = Template.bind({});
 Basic.args = { label: 'hello', background: '#ff0' };
 
-export const VeryLongLabel = ButtonStory.bind({});
+export const VeryLongLabel = Template.bind({});
 VeryLongLabel.args = { label: 'this is a very long string', background: '#ff0' };
 ```
 
 We can even reuse initial args from other stories:
 
 ```jsx
-export const VeryLongLabel = ButtonStory.bind({});
+export const VeryLongLabel = Template.bind({});
 VeryLongLabel.args = { ...Basic.args, label: 'this is a very long string' };
 ```
 
