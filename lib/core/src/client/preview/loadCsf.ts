@@ -23,7 +23,7 @@ const duplicateKindWarning = deprecate(
   dedent`
     Duplicate title used in multiple files; use unique titles or a primary file for a component with re-exported stories.
 
-    https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#removed-support-for-duplicate-kinds
+    https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-support-for-duplicate-kinds
   `
 );
 
