@@ -19,7 +19,7 @@
   - [Removed renderCurrentStory event](#removed-rendercurrentstory-event)
   - [Removed hierarchy separators](#removed-hierarchy-separators)
   - [Client API changes](#client-api-changes)
-    - [Removed support for duplicate kinds](#removed-support-for-duplicate-kinds)
+    - [Deprecated support for duplicate kinds](#deprecated-support-for-duplicate-kinds)
     - [Removed Legacy Story APIs](#removed-legacy-story-apis)
     - [Can no longer add decorators/parameters after stories](#can-no-longer-add-decoratorsparameters-after-stories)
     - [Changed Parameter Handling](#changed-parameter-handling)
@@ -401,11 +401,11 @@ addons.setConfig({
 
 ### Client API changes
 
-#### Removed support for duplicate kinds
+#### Deprecated support for duplicate kinds
 
-In 6.0 we removed the ability to split a kind's (component's) stories into multiple files because it was causing issues in hot module reloading (HMR).
+In 6.0 we deprecated the ability to split a kind's (component's) stories into multiple files because it was causing issues in hot module reloading (HMR). It will likely be removed completely in 7.0.
 
-If you had N stories that contained `export default { title: 'foo/bar' }` (or the MDX equivalent `<Meta title="foo/bar">`), Storybook will now throw the error `Duplicate title '${kindName}' used in multiple files`.
+If you had N stories that contained `export default { title: 'foo/bar' }` (or the MDX equivalent `<Meta title="foo/bar">`), Storybook will now raise the warning `Duplicate title '${kindName}' used in multiple files`.
 
 To split a component's stories into multiple files, e.g. for the `foo/bar` example above:
 
