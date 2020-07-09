@@ -1,12 +1,12 @@
 module.exports = {
   toc: [
     {
-      section: 'Get Started',
+      title: 'Get Started',
       prefix: 'get-started',
       pages: ['introduction', 'install', 'whats-a-story', 'browse-stories', 'setup', 'conclusion'],
     },
     {
-      section: 'Writing Stories',
+      title: 'Writing Stories',
       prefix: 'writing-stories',
       pages: [
         'introduction',
@@ -17,7 +17,7 @@ module.exports = {
       ],
     },
     {
-      section: 'Writing Docs',
+      title: 'Writing Docs',
       prefix: 'writing-docs',
       pages: ['introduction', 'docs-page', 'mdx', 'doc-blocks'],
     },
