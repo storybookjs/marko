@@ -10,9 +10,13 @@ const logger = console;
 const { storybookCLIVersion, devDependencies } = require('../../package.json');
 
 export abstract class JsPackageManager {
+  public abstract type: 'npm' | 'yarn' | 'yarn2';
+
   public abstract initPackageJson(): void;
 
   public abstract getRunStorybookCommand(): string;
+
+  public abstract getRunCommand(command: string): string;
 
   /**
    * Install dependencies listed in `package.json`
@@ -178,9 +182,11 @@ export abstract class JsPackageManager {
     return versions.reverse().find((version) => satisfies(version, constraint));
   }
 
-  public addStorybookCommandInScripts(options?: { port: number; staticFolder?: string }) {
-    const packageJson = this.retrievePackageJson();
-
+  public addStorybookCommandInScripts(options?: {
+    port: number;
+    staticFolder?: string;
+    preCommand?: string;
+  }) {
     const sbPort = options?.port ?? 6006;
     const storybookCmd = options?.staticFolder
       ? `start-storybook -p ${sbPort} -s ${options.staticFolder}`
@@ -190,12 +196,20 @@ export abstract class JsPackageManager {
       ? `build-storybook -s ${options.staticFolder}`
       : 'build-storybook';
 
+    const preCommand = options.preCommand ? this.getRunCommand(options.preCommand) : undefined;
+    this.addScripts({
+      storybook: [preCommand, storybookCmd].filter(Boolean).join(' && '),
+      'build-storybook': [preCommand, buildStorybookCmd].filter(Boolean).join(' && '),
+    });
+  }
+
+  public addScripts(scripts: Record<string, string>) {
+    const packageJson = this.retrievePackageJson();
     writePackageJson({
       ...packageJson,
       scripts: {
         ...packageJson.scripts,
-        storybook: storybookCmd,
-        'build-storybook': buildStorybookCmd,
+        ...scripts,
       },
     });
   }

@@ -1,12 +1,18 @@
 import { JsPackageManager } from './JsPackageManager';
 
 export class NPMProxy extends JsPackageManager {
+  type: 'npm';
+
   initPackageJson() {
     return this.executeCommand('npm', ['init', '-y']);
   }
 
   getRunStorybookCommand(): string {
     return 'npm run storybook';
+  }
+
+  getRunCommand(command: string): string {
+    return `npm run ${command}`;
   }
 
   protected runInstall(): void {

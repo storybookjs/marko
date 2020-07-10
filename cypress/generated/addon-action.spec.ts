@@ -1,8 +1,6 @@
-import { visit } from '../helper';
-
 describe('addon-action', () => {
   before(() => {
-    visit();
+    cy.visitStorybook();
   });
 
   it('should trigger an action', () => {

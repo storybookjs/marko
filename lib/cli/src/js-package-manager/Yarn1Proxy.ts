@@ -1,12 +1,18 @@
 import { JsPackageManager } from './JsPackageManager';
 
 export class Yarn1Proxy extends JsPackageManager {
+  type: 'yarn';
+
   initPackageJson() {
     return this.executeCommand('yarn', ['init', '-y']);
   }
 
   getRunStorybookCommand(): string {
     return 'yarn storybook';
+  }
+
+  getRunCommand(command: string): string {
+    return `yarn ${command}`;
   }
 
   protected runInstall(): void {
