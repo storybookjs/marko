@@ -1,3 +1,17 @@
+## 6.0.0-rc.2 (July 10, 2020)
+
+### Bug Fixes
+
+- UI: Fix menu alignment regression ([#11469](https://github.com/storybookjs/storybook/pull/11469))
+- Composition: Fix syntax on `no-cors` ([#11491](https://github.com/storybookjs/storybook/pull/11491))
+- Addon-docs: Fix MDX handling to ignore babel.config.js ([#11495](https://github.com/storybookjs/storybook/pull/11495))
+- UI: Increase max-height of menu tooltip so scrollbars don't appear ([#11471](https://github.com/storybookjs/storybook/pull/11471))
+
+### Maintenance
+
+- CLI: Add common welcome MDX and cleanup ([#11422](https://github.com/storybookjs/storybook/pull/11422))
+- CSF: Deprecate duplicate titles rather than forbid them ([#11476](https://github.com/storybookjs/storybook/pull/11476))
+
 ## 6.0.0-rc.1 (July 9, 2020)
 
 ### Bug Fixes
