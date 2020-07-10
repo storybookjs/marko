@@ -192,7 +192,7 @@ export const RefIndicator = forwardRef<
         </IndicatorClickTarget>
       </WithTooltip>
 
-      {ref.versions ? (
+      {ref.versions && Object.keys(ref.versions).length ? (
         <WithTooltip
           placement="bottom-start"
           trigger="click"
