@@ -16,6 +16,17 @@ const deprecatedStoryAnnotationWarning = deprecate(
 `
 );
 
+const duplicateKindWarning = deprecate(
+  (kindName: string) => {
+    logger.warn(`Duplicate title: '${kindName}'`);
+  },
+  dedent`
+    Duplicate title used in multiple files; use unique titles or a primary file for a component with re-exported stories.
+
+    https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-support-for-duplicate-kinds
+  `
+);
+
 let previousExports = new Map<any, string>();
 const loadStories = (
   loadable: Loadable,
@@ -111,13 +122,7 @@ const loadStories = (
     } = meta;
 
     if (loadedKinds.has(kindName)) {
-      throw new Error(
-        dedent`
-          Duplicate title '${kindName}' used in multiple files; use unique titles or a primary file for '${kindName}' with re-exported stories.
-
-          https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#removed-support-for-duplicate-kinds
-        `
-      );
+      duplicateKindWarning(kindName);
     }
     loadedKinds.add(kindName);
 

@@ -25,6 +25,11 @@ export const workingStory = () => (
     scale={1.0}
   />
 );
+workingStory.story = {
+  parameters: {
+    chromatic: { delay: 300 },
+  },
+};
 
 export const missingStory = () => (
   <IFrame
