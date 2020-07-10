@@ -31,6 +31,7 @@ function createBabelOptions({ babelOptions, mdxBabelOptions, configureJSX }: Bab
   return {
     // don't use the root babelrc by default (users can override this in mdxBabelOptions)
     babelrc: false,
+    configFile: false,
     ...babelOptions,
     ...mdxBabelOptions,
     plugins,
