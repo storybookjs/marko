@@ -24,4 +24,4 @@ If you want a guided tutorial through building a simple application with Storybo
 
 If you want to just learn the basics and APIs of Storybook, read on!
 
-> > [Get started installing Storybook into your project](./install.md)
+> > [Get started installing Storybook into your project](./install.md#heading)
