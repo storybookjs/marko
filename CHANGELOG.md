@@ -1,3 +1,10 @@
+## 6.0.0-rc.3 (July 11, 2020)
+
+### Bug Fixes
+
+- Composition: Don't show versions dropdown if there are no versions ([#11497](https://github.com/storybookjs/storybook/pull/11497))
+- Addon-docs: Remove undefined for optional values in Typescript Props ([#11503](https://github.com/storybookjs/storybook/pull/11503))
+
 ## 6.0.0-rc.2 (July 10, 2020)
 
 ### Bug Fixes

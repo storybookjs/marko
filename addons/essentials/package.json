@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-essentials",
-  "version": "6.0.0-rc.2",
+  "version": "6.0.0-rc.3",
   "description": "Curated addons to bring out the best of Storybook",
   "keywords": [
     "addon",
@@ -28,14 +28,14 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addon-actions": "6.0.0-rc.2",
-    "@storybook/addon-backgrounds": "6.0.0-rc.2",
-    "@storybook/addon-controls": "6.0.0-rc.2",
-    "@storybook/addon-docs": "6.0.0-rc.2",
-    "@storybook/addon-viewport": "6.0.0-rc.2",
-    "@storybook/addons": "6.0.0-rc.2",
-    "@storybook/api": "6.0.0-rc.2",
-    "@storybook/node-logger": "6.0.0-rc.2",
+    "@storybook/addon-actions": "6.0.0-rc.3",
+    "@storybook/addon-backgrounds": "6.0.0-rc.3",
+    "@storybook/addon-controls": "6.0.0-rc.3",
+    "@storybook/addon-docs": "6.0.0-rc.3",
+    "@storybook/addon-viewport": "6.0.0-rc.3",
+    "@storybook/addons": "6.0.0-rc.3",
+    "@storybook/api": "6.0.0-rc.3",
+    "@storybook/node-logger": "6.0.0-rc.3",
     "core-js": "^3.0.1",
     "regenerator-runtime": "^0.13.3",
     "ts-dedent": "^1.1.1"
@@ -53,7 +53,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "1e8d1b0d027007f7aba09d8e6ba50de77c60e94b",
+  "gitHead": "d7b8606ca3b871c91ad321b407c0bbbe0475dd56",
   "typesVersions": {
     "<=3.5": {
       "*": [

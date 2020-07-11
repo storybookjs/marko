@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-decorator",
-  "version": "6.0.0-rc.2",
+  "version": "6.0.0-rc.3",
   "description": "decorator addon for storybook",
   "keywords": [
     "addon",
@@ -24,15 +24,15 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-rc.2",
-    "@storybook/client-api": "6.0.0-rc.2",
+    "@storybook/addons": "6.0.0-rc.3",
+    "@storybook/client-api": "6.0.0-rc.3",
     "core-js": "^3.0.1",
     "global": "^4.4.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "1e8d1b0d027007f7aba09d8e6ba50de77c60e94b",
+  "gitHead": "d7b8606ca3b871c91ad321b407c0bbbe0475dd56",
   "typesVersions": {
     "<=3.5": {
       "*": [

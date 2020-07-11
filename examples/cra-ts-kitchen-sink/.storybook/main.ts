@@ -7,22 +7,7 @@ module.exports = {
   stories: ['../src/**/*.stories.@(mdx|tsx|ts|jsx|js)'],
   logLevel: 'debug',
   addons: [
-    {
-      name: '@storybook/preset-create-react-app',
-      options: {
-        tsDocgenLoaderOptions: {
-          tsconfigPath: path.resolve(__dirname, '../tsconfig.json'),
-          shouldExtractLiteralValuesFromEnum: true,
-          propFilter: (prop: any) => {
-            if (prop.parent) {
-              return !prop.parent.fileName.includes('node_modules/@types/react/');
-            }
-
-            return true;
-          },
-        },
-      },
-    },
+    '@storybook/preset-create-react-app',
     '@storybook/addon-docs',
     '@storybook/addon-actions',
     '@storybook/addon-links',
