@@ -10,7 +10,7 @@ const logger = console;
 const storybookPackagesVersions = require('../../versions.json');
 
 export abstract class JsPackageManager {
-  public abstract type: 'npm' | 'yarn' | 'yarn2';
+  public abstract readonly type: 'npm' | 'yarn1' | 'yarn2';
 
   public abstract initPackageJson(): void;
 

@@ -7,6 +7,10 @@ describe('NPM Proxy', () => {
     npmProxy = new NPMProxy();
   });
 
+  it('type should be npm', () => {
+    expect(npmProxy.type).toEqual('npm');
+  });
+
   describe('initPackageJson', () => {
     it('should run `npm init -y`', () => {
       const executeCommandSpy = jest.spyOn(npmProxy, 'executeCommand').mockReturnValue('');

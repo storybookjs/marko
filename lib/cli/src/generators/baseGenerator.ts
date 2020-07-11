@@ -49,11 +49,15 @@ export async function baseGenerator(
     '@storybook/addon-essentials',
   ];
 
+  const yarn2Dependencies =
+    packageManager.type === 'yarn2' ? ['@storybook/addon-docs', '@mdx-js/react'] : [];
+
   const packages = [
     `@storybook/${framework}`,
     ...addons,
     ...extraPackages,
     ...extraAddons,
+    ...yarn2Dependencies,
     // ⚠️ Some addons have peer deps that must be added too, like '@storybook/addon-docs' => 'react-is'
     'react-is',
   ].filter(Boolean);
