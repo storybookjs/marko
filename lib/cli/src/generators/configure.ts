@@ -18,7 +18,7 @@ function configureMain(addons: string[], custom?: any) {
 function configurePreview(framework: SupportedFrameworks) {
   const parameters = `
 export const parameters = {
-  actions: { argTypesRegex: "^on.*" },
+  actions: { argTypesRegex: "^on[A-Z].*" },
 }`;
 
   const preview =
