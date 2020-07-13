@@ -12,6 +12,7 @@ export interface ClientApi extends ClientStoryApi<unknown> {
   getStorybook: ClientApiThing['getStorybook'];
   setAddon: ClientApiThing['setAddon'];
   raw: ClientApiThing['raw'];
+  addArgTypesEnhancer: ClientApiThing['addArgTypesEnhancer'];
 }
 
 export interface Loader {
