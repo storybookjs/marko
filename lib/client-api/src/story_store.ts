@@ -163,8 +163,8 @@ export default class StoryStore {
 
     this._channel.on(
       Events.RESET_STORY_ARGS,
-      ({ storyId, argName }: { storyId: string; argName?: string }) =>
-        this.resetStoryArgs(storyId, argName)
+      ({ storyId, argNames }: { storyId: string; argNames?: string }) =>
+        this.resetStoryArgs(storyId, argNames)
     );
 
     this._channel.on(Events.UPDATE_GLOBALS, ({ globals }: { globals: Args }) =>
@@ -464,12 +464,12 @@ export default class StoryStore {
     this._channel.emit(Events.STORY_ARGS_UPDATED, { storyId: id, args: this._stories[id].args });
   }
 
-  resetStoryArgs(id: string, argName?: string) {
+  resetStoryArgs(id: string, argNames?: string) {
     if (!this._stories[id]) throw new Error(`No story for id ${id}`);
     const { args, initialArgs } = this._stories[id];
 
     this._stories[id].args = { ...args }; // Make a copy to avoid problems
-    (argName ? [argName] : Object.keys(args)).forEach((name) => {
+    (argNames || Object.keys(args)).forEach((name) => {
       // We overwrite like this to ensure we can reset to falsey values
       this._stories[id].args[name] = initialArgs[name];
     });

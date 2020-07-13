@@ -252,7 +252,7 @@ describe('preview.story_store', () => {
       store.updateStoryArgs('a--1', { foo: 'bar', bar: 'baz' });
       expect(store.getRawStory('a', '1').args).toEqual({ foo: 'bar', bar: 'baz' });
 
-      store.resetStoryArgs('a--1', 'foo');
+      store.resetStoryArgs('a--1', ['foo']);
       expect(store.getRawStory('a', '1').args).toEqual({ bar: 'baz' });
     });
 
@@ -293,7 +293,7 @@ describe('preview.story_store', () => {
 
       store.updateStoryArgs('a--1', { foo: 'bar', bar: 'baz' });
 
-      testChannel.emit(Events.RESET_STORY_ARGS, { storyId: 'a--1', argName: 'foo' });
+      testChannel.emit(Events.RESET_STORY_ARGS, { storyId: 'a--1', argNames: ['foo'] });
       expect(store.getRawStory('a', '1').args).toEqual({ bar: 'baz' });
 
       testChannel.emit(Events.RESET_STORY_ARGS, { storyId: 'a--1' });

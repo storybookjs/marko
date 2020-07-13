@@ -315,11 +315,11 @@ export const init: ModuleFn = ({
         },
       });
     },
-    resetStoryArgs: (story, argName?: string) => {
+    resetStoryArgs: (story, argNames?: [string]) => {
       const { id: storyId, refId } = story;
       fullAPI.emit(RESET_STORY_ARGS, {
         storyId,
-        argName,
+        argNames,
         options: {
           target: refId ? `storybook-ref-${refId}` : 'storybook-preview-iframe',
         },
