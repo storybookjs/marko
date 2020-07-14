@@ -39,7 +39,7 @@ export const toRequireContext = (input: any) => {
         // webpack's require.context matches against paths starting `./`
         // Globs starting `**` require special treatment due to the regex they
         // produce, specifically a negative look-ahead
-        const match = ['^\\.', glob.startsWith('**') ? '' : '/', source.substring(1)].join('');
+        const match = ['^\\.', glob.startsWith('**') ? '' : '\\/', source.substring(1)].join('');
 
         return { path: base, recursive, match };
       }
