@@ -46,14 +46,14 @@ describe('Basic CLI', () => {
     it('should load and display logged in', () => {
       cy.navigateToStory('example-header', 'logged-in');
       cy.getStoryElement().find('header').should('contain.text', 'Acme');
-      cy.getStoryElement().find('button').should('have.text', 'Log out');
+      cy.getStoryElement().find('button').should('contain.text', 'Log out');
     });
 
     it('should load and display logged out', () => {
       cy.navigateToStory('example-header', 'logged-out');
       cy.getStoryElement().find('header').should('contain.text', 'Acme');
-      cy.getStoryElement().find('button').first().should('have.text', 'Log in');
-      cy.getStoryElement().find('button').last().should('have.text', 'Sign up');
+      cy.getStoryElement().find('button').first().should('contain.text', 'Log in');
+      cy.getStoryElement().find('button').last().should('contain.text', 'Sign up');
     });
   });
 
@@ -61,15 +61,15 @@ describe('Basic CLI', () => {
     it('should load and display logged in', () => {
       cy.navigateToStory('example-page', 'logged-in');
       cy.getStoryElement().find('header').should('contain.text', 'Acme');
-      cy.getStoryElement().find('button').should('have.text', 'Log out');
+      cy.getStoryElement().find('button').should('contain.text', 'Log out');
       cy.getStoryElement().should('contain.text', 'Pages in Storybook');
     });
 
     it('should load and display logged out', () => {
       cy.navigateToStory('example-page', 'logged-out');
       cy.getStoryElement().should('contain.text', 'Acme');
-      cy.getStoryElement().find('button').first().should('have.text', 'Log in');
-      cy.getStoryElement().find('button').last().should('have.text', 'Sign up');
+      cy.getStoryElement().find('button').first().should('contain.text', 'Log in');
+      cy.getStoryElement().find('button').last().should('contain.text', 'Sign up');
       cy.getStoryElement().should('contain.text', 'Pages in Storybook');
     });
   });
