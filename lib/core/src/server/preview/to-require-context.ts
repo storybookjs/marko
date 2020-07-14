@@ -31,7 +31,7 @@ export const toRequireContext = (input: any) => {
     case typeof input === 'string': {
       const { base, glob } = globBase(fixedInput);
 
-      const recursive = glob.startsWith('**');
+      const recursive = glob.includes('**') || glob.split('/').length > 2;
       const indicator = glob.replace(/^(\*\*\/)*/, '');
       const regex = makeRe(indicator, { fastpaths: false, noglobstar: false, bash: true });
       const { source } = regex;
