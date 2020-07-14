@@ -1,7 +1,7 @@
 import { DOCS_MODE } from 'global';
 import rfdc from 'rfdc';
 import React, { useMemo, useState, useEffect } from 'react';
-import { isRoot, Story, StoriesHash } from '@storybook/api';
+import { isRoot as isRootFn, Story, StoriesHash } from '@storybook/api';
 import { toFiltered, getMains, getParents } from './utils';
 import { BooleanSet, FilteredType, Item, DataSet } from '../RefHelpers';
 
@@ -236,7 +236,7 @@ export const useDataset = (storiesHash: DataSet = {}, filter: string, storyId: s
   const topLevel = useMemo(
     () =>
       Object.values(filteredSet).filter(
-        (i) => (i.depth === 0 && !isRoot(i)) || (!isRoot(i) && isRoot(filteredSet[i.parent]))
+        (i) => (i.depth === 0 && !isRootFn(i)) || (!isRootFn(i) && isRootFn(filteredSet[i.parent]))
       ),
     [filteredSet]
   );
@@ -253,7 +253,7 @@ export const useDataset = (storiesHash: DataSet = {}, filter: string, storyId: s
     () =>
       getMains(filteredSet).reduce(
         (acc, item) => {
-          return isRoot(item)
+          return isRootFn(item)
             ? { ...acc, roots: [...acc.roots, item] }
             : { ...acc, others: [...acc.others, item] };
         },
