@@ -26,7 +26,7 @@ module.exports = {
 
 `stories` is a list of [glob](https://www.npmjs.com/package/glob) patterns that tells where your stories are located, relative to the configuration file.
 
-The `addons` field can refer to traditional [addons](../../addons/introduction), but it can also include [presets](/docs/presets/introduction/), which are able to extend the config further.
+The `addons` field can refer to traditional [addons](../../addons/introduction), but it can also include [presets](../../presets/introduction/), which are able to extend the config further.
 
 ### `main.js` is a  Preset
 The `main.js` file is actually a preset! So if you know how to configure storybook, then you know how to write a preset, and vice-versa!
