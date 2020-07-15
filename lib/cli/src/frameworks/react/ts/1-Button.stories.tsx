@@ -7,14 +7,14 @@ export default {
   component: Button,
 };
 
-const ButtonStory = (args: ButtonProps) => <Button {...args} />;
+const Template = (args: ButtonProps) => <Button {...args} />;
 
-export const Text = ButtonStory.bind({});
+export const Text = Template.bind({});
 Text.args = {
   children: 'Button',
 };
 
-export const Emoji = ButtonStory.bind({});
+export const Emoji = Template.bind({});
 Emoji.args = {
   children: (
     <span role="img" aria-label="so cool">
@@ -25,6 +25,6 @@ Emoji.args = {
 Emoji.parameters = { notes: 'My notes on a button with emojis' };
 
 export const ButtonWithLinkToAnotherStory = () => (
-  <Button onClick={linkTo('Welcome')}>Go to Welcome Story</Button>
+  <Button onClick={linkTo('example-introduction--page')}>Go to Welcome Story</Button>
 );
 ButtonWithLinkToAnotherStory.storyName = 'button with link to another story';

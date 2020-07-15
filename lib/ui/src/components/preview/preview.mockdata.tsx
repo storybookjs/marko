@@ -23,7 +23,7 @@ export const previewProps: PreviewProps = {
         : []) as API['getElements'],
   } as any) as API,
   story: {
-    id: 'storyId',
+    id: 'story--id',
     depth: 1,
     isComponent: false,
     isLeaf: true,

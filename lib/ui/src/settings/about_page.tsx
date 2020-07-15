@@ -1,10 +1,8 @@
-import { history } from 'global';
-import React, { Component } from 'react';
+import React, { Component, FunctionComponent } from 'react';
 
-import { Route } from '@storybook/router';
 import { Consumer, API, Combo } from '@storybook/api';
 
-import AboutScreen from './about';
+import { AboutScreen } from './about';
 
 // Clear a notification on mount. This could be exported by core/notifications.js perhaps?
 class NotificationClearer extends Component<{ api: API; notificationId: string }> {
@@ -19,18 +17,18 @@ class NotificationClearer extends Component<{ api: API; notificationId: string }
   }
 }
 
-export default () => (
-  <Route path="about">
-    <Consumer>
-      {({ api }: Combo) => (
-        <NotificationClearer api={api} notificationId="update">
-          <AboutScreen
-            current={api.getCurrentVersion()}
-            latest={api.getLatestVersion()}
-            onClose={() => history.back()}
-          />
-        </NotificationClearer>
-      )}
-    </Consumer>
-  </Route>
+const AboutPage: FunctionComponent<{ onClose: () => void }> = ({ onClose }) => (
+  <Consumer>
+    {({ api }: Combo) => (
+      <NotificationClearer api={api} notificationId="update">
+        <AboutScreen
+          current={api.getCurrentVersion()}
+          latest={api.getLatestVersion()}
+          onClose={onClose}
+        />
+      </NotificationClearer>
+    )}
+  </Consumer>
 );
+
+export { AboutPage };

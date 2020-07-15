@@ -11,7 +11,7 @@ const defaultContext: StoryContext = {
   kind: 'unspecified',
   parameters: {},
   args: {},
-  globalArgs: {},
+  globals: {},
 };
 
 export const defaultDecorateStory = (storyFn: StoryFn, decorators: DecoratorFunction[]) =>

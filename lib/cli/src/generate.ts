@@ -7,6 +7,7 @@ import initiate from './initiate';
 import { add } from './add';
 import { migrate } from './migrate';
 import { extract } from './extract';
+import { upgrade } from './upgrade';
 
 // Cannot be `import` as it's not under TS root dir
 const pkg = require('../package.json');
@@ -16,7 +17,7 @@ const logger = console;
 program
   .command('init')
   .description('Initialize Storybook into your project.')
-  .option('-f --force', 'Force add storybook')
+  .option('-f --force', 'Force add Storybook')
   .option('-s --skip-install', 'Skip installing deps')
   .option('-N --use-npm', 'Use npm to install deps')
   .option('-p --parser <babel | babylon | flow | ts | tsx>', 'jscodeshift parser')
@@ -31,6 +32,15 @@ program
   .option('-N --use-npm', 'Use NPM to build the Storybook server')
   .option('-s --skip-postinstall', 'Skip package specific postinstall config modifications')
   .action((addonName, options) => add(addonName, options));
+
+program
+  .command('upgrade')
+  .description('Upgrade your Storybook packages to the latest')
+  .option('-N --use-npm', 'Use NPM to build the Storybook server')
+  .option('-n --dry-run', 'Only check for upgrades, do not install')
+  .option('-p --prerelease', 'Upgrade to the pre-release packages')
+  .option('-s --skip-check', 'Skip postinstall version consistency checks')
+  .action((options) => upgrade(options));
 
 program
   .command('info')
@@ -50,7 +60,7 @@ program
 
 program
   .command('migrate [migration]')
-  .description('Run a storybook codemod migration on your source files')
+  .description('Run a Storybook codemod migration on your source files')
   .option('-l --list', 'List available migrations')
   .option('-g --glob <glob>', 'Glob for files upon which to apply the migration', '**/*.js')
   .option('-p --parser <babel | babylon | flow | ts | tsx>', 'jscodeshift parser')
