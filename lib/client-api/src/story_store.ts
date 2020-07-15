@@ -464,7 +464,7 @@ export default class StoryStore {
     this._channel.emit(Events.STORY_ARGS_UPDATED, { storyId: id, args: this._stories[id].args });
   }
 
-  resetStoryArgs(id: string, argNames?: string) {
+  resetStoryArgs(id: string, argNames?: string[]) {
     if (!this._stories[id]) throw new Error(`No story for id ${id}`);
     const { args, initialArgs } = this._stories[id];
 
