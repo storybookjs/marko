@@ -9,8 +9,8 @@ import MyButton from './Button.vue';
   }}
 />
 
-export const Template = (args) => ({
-  props: Object.keys(args),
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
   components: { MyButton },
   template: '<my-button :color="color" :rounded="rounded">{{label}}</my-button>',
 });

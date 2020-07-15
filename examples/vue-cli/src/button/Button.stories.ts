@@ -9,10 +9,10 @@ export default {
   },
 };
 
-export const ButtonWithProps = (args: any) => ({
+export const ButtonWithProps = (args: any, { argTypes }: any) => ({
   components: { Button },
   template: '<Button :size="size">Button text</Button>',
-  props: Object.keys(args),
+  props: Object.keys(argTypes),
 });
 ButtonWithProps.args = {
   size: 'big',
