@@ -66,7 +66,7 @@ const useArgs = (
   const updateArgs = useCallback((newArgs) => storyStore.updateStoryArgs(storyId, newArgs), [
     storyId,
   ]);
-  const resetArgs = useCallback(() => storyStore.updateStoryArgs(storyId, initialArgs), [storyId]);
+  const resetArgs = useCallback((argNames?: string[]) => storyStore.resetStoryArgs(storyId, argNames), [storyId]);
   return [args, updateArgs, resetArgs];
 };
 
