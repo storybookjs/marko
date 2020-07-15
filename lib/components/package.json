@@ -1,6 +1,6 @@
 {
   "name": "@storybook/components",
-  "version": "6.0.0-rc.3",
+  "version": "6.0.0-rc.5",
   "description": "Core Storybook Components",
   "keywords": [
     "storybook"
@@ -28,9 +28,9 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/client-logger": "6.0.0-rc.3",
+    "@storybook/client-logger": "6.0.0-rc.5",
     "@storybook/csf": "0.0.1",
-    "@storybook/theming": "6.0.0-rc.3",
+    "@storybook/theming": "6.0.0-rc.5",
     "@types/overlayscrollbars": "^1.9.0",
     "@types/react-color": "^3.0.1",
     "@types/react-syntax-highlighter": "11.0.4",
@@ -64,7 +64,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "d7b8606ca3b871c91ad321b407c0bbbe0475dd56",
+  "gitHead": "747ced532b90bf7a6fd9d5289d9338d25064e764",
   "typesVersions": {
     "<=3.5": {
       "*": [
