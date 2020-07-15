@@ -306,11 +306,7 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
                 <ControlHeadingWrapper>
                   Control{' '}
                   {resetArgs && (
-                    <ResetButton
-                      onClick={() => resetArgs()}
-                      title="Reset controls"
-                      inAddonPanel={inAddonPanel}
-                    >
+                    <ResetButton onClick={() => resetArgs()} title="Reset controls">
                       <Icons icon="sync" aria-hidden />
                     </ResetButton>
                   )}
