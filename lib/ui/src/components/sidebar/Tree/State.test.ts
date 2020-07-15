@@ -1,5 +1,5 @@
 import { StoriesHash } from '@storybook/api';
-import { collapseDocsOnlyStories, collapseAllStories } from './sidebar';
+import { collapseDocsOnlyStories, collapseAllStories } from './State';
 
 type Item = StoriesHash[keyof StoriesHash];
 

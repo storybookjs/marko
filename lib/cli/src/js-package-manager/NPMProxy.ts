@@ -1,7 +1,7 @@
 import { JsPackageManager } from './JsPackageManager';
 
 export class NPMProxy extends JsPackageManager {
-  type: 'npm';
+  readonly type = 'npm';
 
   initPackageJson() {
     return this.executeCommand('npm', ['init', '-y']);
