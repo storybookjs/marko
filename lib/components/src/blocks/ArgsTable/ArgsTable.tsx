@@ -8,6 +8,7 @@ import { ArgType, ArgTypes, Args } from './types';
 import { EmptyBlock } from '../EmptyBlock';
 import { Link } from '../../typography/link/link';
 import { ResetWrapper } from '../../typography/DocumentFormatting';
+import { ActionBar } from '../../ActionBar/ActionBar';
 
 export const TableWrapper = styled.table<{ compact?: boolean; inAddonPanel?: boolean }>(
   ({ theme, compact, inAddonPanel }) => ({
@@ -159,6 +160,7 @@ export interface ArgsTableRowProps {
   rows: ArgTypes;
   args?: Args;
   updateArgs?: (args: Args) => void;
+  resetArgs?: (argNames?: string[]) => void;
   compact?: boolean;
   inAddonPanel?: boolean;
 }
@@ -225,7 +227,7 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
     );
   }
 
-  const { rows, args, updateArgs, compact, inAddonPanel } = props as ArgsTableRowProps;
+  const { rows, args, updateArgs, resetArgs, compact, inAddonPanel } = props as ArgsTableRowProps;
 
   const groups = groupRows(pickBy(rows, (row) => !row?.table?.disable));
 
@@ -307,6 +309,7 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
           ))}
         </tbody>
       </TableWrapper>
+      {resetArgs && <ActionBar actionItems={[{ title: 'Reset', onClick: () => resetArgs() }]} />}
     </ResetWrapper>
   );
 };
