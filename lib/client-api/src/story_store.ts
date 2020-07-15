@@ -163,7 +163,7 @@ export default class StoryStore {
 
     this._channel.on(
       Events.RESET_STORY_ARGS,
-      ({ storyId, argNames }: { storyId: string; argNames?: string }) =>
+      ({ storyId, argNames }: { storyId: string; argNames?: string[] }) =>
         this.resetStoryArgs(storyId, argNames)
     );
 
