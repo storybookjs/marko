@@ -195,9 +195,7 @@ module.exports = {
             modules: true, // to support files with '.module.scss' extenstions.
           },
         },
-        {
-          loader: 'sass-loader',
-        },
+        'sass-loader',
       ],
     })
 
