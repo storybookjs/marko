@@ -53,7 +53,7 @@ export const PassedToStory = (inputArgs) => {
   );
 };
 
-PassedToStory.argTypes = { name: { defaultValue: 'initial' } };
+PassedToStory.argTypes = { name: { defaultValue: 'initial', control: 'text' } };
 
 PassedToStory.propTypes = {
   args: PropTypes.shape({}).isRequired,

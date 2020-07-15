@@ -52,9 +52,9 @@ const useArgs = (storyId: string, storyStore: StoryStore): [Args, (args: Args) =
   const { args: initialArgs } = story;
   const [args, setArgs] = useState(initialArgs);
   useEffect(() => {
-    const cb = (changedId: string, newArgs: Args) => {
-      if (changedId === storyId) {
-        setArgs(newArgs);
+    const cb = (changed: { storyId: string; args: Args }) => {
+      if (changed.storyId === storyId) {
+        setArgs(changed.args);
       }
     };
     storyStore._channel.on(Events.STORY_ARGS_UPDATED, cb);
