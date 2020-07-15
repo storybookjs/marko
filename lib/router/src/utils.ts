@@ -18,7 +18,7 @@ export const parsePath: (path: string | undefined) => StoryData = memoize(1000)(
     };
 
     if (path) {
-      const [, viewMode, refId, storyId] = path.toLowercase().match(splitPathRegex) || [];
+      const [, viewMode, refId, storyId] = path.toLowerCase().match(splitPathRegex) || [];
       if (viewMode) {
         Object.assign(result, {
           viewMode,
