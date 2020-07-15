@@ -7,11 +7,6 @@ import Header from './header.component';
 export default {
   title: 'Example/Header',
   component: Header,
-  argTypes: {
-    onLogin: { action: 'onLogin' },
-    onLogout: { action: 'onLogout' },
-    onCreateAccount: { action: 'onCreateAccount' },
-  },
   decorators: [
     moduleMetadata({
       declarations: [Button],

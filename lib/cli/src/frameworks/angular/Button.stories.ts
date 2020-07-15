@@ -5,7 +5,6 @@ export default {
   component: Button,
   argTypes: {
     backgroundColor: { control: 'color' },
-    onClick: { action: 'onClick' },
   },
 };
 

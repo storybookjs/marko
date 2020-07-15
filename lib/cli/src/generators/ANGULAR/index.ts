@@ -41,7 +41,7 @@ const generator: Generator = async (packageManager, npmOptions, options) => {
 
   // edit scripts to generate docs
   packageManager.addScripts({
-    'docs:json': 'compodoc -p ./tsconfig.json -e json -d .',
+    'docs:json': 'compodoc -p ./tsconfig.base.json -e json -d .',
   });
   packageManager.addStorybookCommandInScripts({
     port: 6006,
