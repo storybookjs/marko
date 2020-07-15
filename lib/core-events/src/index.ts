@@ -19,6 +19,8 @@ enum events {
   UPDATE_STORY_ARGS = 'updateStoryArgs',
   // The values of a stories args just changed
   STORY_ARGS_UPDATED = 'storyArgsUpdated',
+  // Reset either a single arg of a story all args of a story
+  RESET_STORY_ARGS = 'resetStoryArgs',
   // As above
   UPDATE_GLOBALS = 'updateGlobals',
   GLOBALS_UPDATED = 'globalsUpdated',
@@ -53,6 +55,7 @@ export const {
   STORY_THREW_EXCEPTION,
   UPDATE_STORY_ARGS,
   STORY_ARGS_UPDATED,
+  RESET_STORY_ARGS,
   UPDATE_GLOBALS,
   GLOBALS_UPDATED,
   REGISTER_SUBSCRIPTION,
