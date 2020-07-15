@@ -1,4 +1,4 @@
-## 6.0.0-rc.4 (July 15, 2020)
+## 6.0.0-rc.5 (July 15, 2020)
 
 ### Features
 
@@ -15,6 +15,10 @@
 
 - Core: Add `argTypes` to `StoryContext` ([#11558](https://github.com/storybookjs/storybook/pull/11558))
 - CLI: Improve Storybook packages version management ([#11342](https://github.com/storybookjs/storybook/pull/11342))
+
+## 6.0.0-rc.4 (July 15, 2020)
+
+NPM publish failed
 
 ## 6.0.0-rc.3 (July 11, 2020)
 
