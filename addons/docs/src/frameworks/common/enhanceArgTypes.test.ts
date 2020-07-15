@@ -35,6 +35,7 @@ const enhance = ({
       },
     },
     args: {},
+    argTypes: {},
     globals: {},
   };
   return enhanceArgTypes(context);

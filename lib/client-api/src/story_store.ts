@@ -375,6 +375,7 @@ export default class StoryStore {
           storyFn: original,
           parameters: accumlatedParameters,
           args: {},
+          argTypes: {},
           globals: {},
         }),
       }),
@@ -391,6 +392,7 @@ export default class StoryStore {
         parameters: this.combineStoryParameters(storyParametersWithArgTypes, kind),
         hooks,
         args: _stories[id].args,
+        argTypes,
         globals: this._globals,
       });
 
@@ -414,6 +416,7 @@ export default class StoryStore {
 
       parameters: { ...storyParameters, argTypes },
       args: initialArgs,
+      argTypes,
       initialArgs,
     };
   }

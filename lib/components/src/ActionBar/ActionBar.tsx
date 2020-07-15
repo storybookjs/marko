@@ -9,7 +9,6 @@ const Container = styled.div<{}>(({ theme }) => ({
   maxWidth: '100%',
   display: 'flex',
   background: theme.background.content,
-  zIndex: 1,
 }));
 
 export const ActionButton = styled.button<{ disabled: boolean }>(
