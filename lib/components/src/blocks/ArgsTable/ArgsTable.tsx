@@ -9,7 +9,6 @@ import { ArgType, ArgTypes, Args } from './types';
 import { EmptyBlock } from '../EmptyBlock';
 import { Link } from '../../typography/link/link';
 import { ResetWrapper } from '../../typography/DocumentFormatting';
-import { ActionBar } from '../../ActionBar/ActionBar';
 
 export const TableWrapper = styled.table<{ compact?: boolean; inAddonPanel?: boolean }>(
   ({ theme, compact, inAddonPanel }) => ({
