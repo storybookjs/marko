@@ -54,6 +54,7 @@ exports[`Storyshots Custom/Decorator for Vue With Data 1`] = `
     "__id": "custom-decorator-for-vue--with-data"
   },
   "args": {},
+  "argTypes": {},
   "globals": {},
   "customContext": 52
 }
