@@ -90,6 +90,10 @@ Cypress.Commands.add('navigateToStory', (kind, name) => {
   // assert url changes
   cy.url().should('include', `path=/story/${kindId}--${storyId}`);
   cy.get(storyLinkId).should('have.class', 'selected');
+
+  // A pause is good when switching stories
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(50);
 });
 
 Cypress.Commands.add('viewAddonPanel', (name) => {

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-a11y",
-  "version": "6.0.0-rc.3",
+  "version": "6.0.0-rc.8",
   "description": "a11y addon for storybook",
   "keywords": [
     "a11y",
@@ -33,14 +33,14 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-rc.3",
-    "@storybook/api": "6.0.0-rc.3",
-    "@storybook/channels": "6.0.0-rc.3",
-    "@storybook/client-api": "6.0.0-rc.3",
-    "@storybook/client-logger": "6.0.0-rc.3",
-    "@storybook/components": "6.0.0-rc.3",
-    "@storybook/core-events": "6.0.0-rc.3",
-    "@storybook/theming": "6.0.0-rc.3",
+    "@storybook/addons": "6.0.0-rc.8",
+    "@storybook/api": "6.0.0-rc.8",
+    "@storybook/channels": "6.0.0-rc.8",
+    "@storybook/client-api": "6.0.0-rc.8",
+    "@storybook/client-logger": "6.0.0-rc.8",
+    "@storybook/components": "6.0.0-rc.8",
+    "@storybook/core-events": "6.0.0-rc.8",
+    "@storybook/theming": "6.0.0-rc.8",
     "axe-core": "^3.5.2",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
@@ -63,7 +63,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "d7b8606ca3b871c91ad321b407c0bbbe0475dd56",
+  "gitHead": "eab66aa5f27498c4326e37087185048ad224dbd6",
   "typesVersions": {
     "<=3.5": {
       "*": [
