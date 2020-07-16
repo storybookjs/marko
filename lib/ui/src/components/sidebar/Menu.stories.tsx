@@ -16,21 +16,19 @@ export default {
   ],
 };
 
-export const Items = () => (
-  <TooltipLinkList
-    links={[
-      { title: 'has icon', left: <MenuItemIcon icon="check" />, id: 'icon' },
-      {
-        title: 'has imgSrc',
-        left: <MenuItemIcon imgSrc="https://via.placeholder.com/20" />,
-        id: 'img',
-      },
-      { title: 'has neither', left: <MenuItemIcon />, id: 'non' },
-    ]}
-  />
-);
+const fakemenu = [
+  { title: 'has icon', left: <MenuItemIcon icon="check" />, id: 'icon' },
+  {
+    title: 'has imgSrc',
+    left: <MenuItemIcon imgSrc="https://via.placeholder.com/20" />,
+    id: 'img',
+  },
+  { title: 'has neither', left: <MenuItemIcon />, id: 'non' },
+];
 
-export const Real = () => <SidebarMenu menu={[]} isHighlighted />;
+export const Items = () => <TooltipLinkList links={fakemenu} />;
+
+export const Real = () => <SidebarMenu menu={fakemenu} isHighlighted />;
 
 export const Expanded = () => {
   const menu = useMenu(
