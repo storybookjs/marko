@@ -55,9 +55,7 @@ export const useMenu = (
       right: shortcutToHumanStringIfEnabled(shortcutKeys.shortcutsPage, enableShortcuts),
       left: <MenuItemIcon />,
       style: {
-        borderBottom: `4px solid ${
-          theme.base === 'light' ? theme.color.mediumlight : darken(theme.color.darkest)
-        }`,
+        borderBottom: `4px solid ${theme.appBorderColor}`,
       },
     }),
     [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
