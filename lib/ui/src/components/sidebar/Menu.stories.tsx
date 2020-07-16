@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, FunctionComponent } from 'react';
 
 import { WithTooltip, TooltipLinkList, Icons } from '@storybook/components';
 import { MenuItemIcon, SidebarMenu, MenuButton, SidebarMenuList } from './Menu';
@@ -8,7 +8,7 @@ export default {
   component: MenuItemIcon,
   title: 'UI/Sidebar/Menu',
   decorators: [
-    (StoryFn) => (
+    (StoryFn: FunctionComponent) => (
       <Fragment>
         <StoryFn />
       </Fragment>
