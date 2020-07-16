@@ -1,3 +1,18 @@
+## 6.0.0-rc.6 (July 16, 2020)
+
+### Features
+
+- CLI: Component-driven React / Vue / Angular / Preact / Svelte templates ([#11505](https://github.com/storybookjs/storybook/pull/11505))
+- Addon-controls: Add reset UI to ArgsTable ([#11550](https://github.com/storybookjs/storybook/pull/11550))
+
+### Bug Fixes
+
+- Addon-docs: Fix Vue argTypes default values ([#11534](https://github.com/storybookjs/storybook/pull/11534))
+
+### Maintenance
+
+- Core: Move basic argType inference out of addon-docs and into core ([#11561](https://github.com/storybookjs/storybook/pull/11561))
+
 ## 6.0.0-rc.5 (July 15, 2020)
 
 ### Features
