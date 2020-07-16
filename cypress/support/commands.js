@@ -36,6 +36,20 @@ Cypress.Commands.add(
   }
 );
 
+Cypress.Commands.add('visitStorybook', () => {
+  cy.log('visitStorybook');
+  const host = Cypress.env('location') || 'http://localhost:8001';
+  return cy
+    .clearLocalStorage()
+    .visit(`${host}/?path=/story/example-introduction--page`)
+    .get(`#storybook-preview-iframe`, { log: false })
+    .its('0.contentDocument.body', { log: false })
+    .should('not.be.empty')
+    .then((body) => cy.wrap(body, { log: false }))
+    .find('#docs-root', { log: false })
+    .should('not.be.empty');
+});
+
 Cypress.Commands.add('getStoryElement', {}, () => {
   cy.log('getStoryElement');
   return cy
@@ -48,14 +62,30 @@ Cypress.Commands.add('getStoryElement', {}, () => {
     .then((storyRoot) => cy.wrap(storyRoot, { log: false }));
 });
 
+Cypress.Commands.add('getDocsElement', {}, () => {
+  cy.log('getDocsElement');
+  return cy
+    .get(`#storybook-preview-iframe`, { log: false })
+    .its('0.contentDocument.body', { log: false })
+    .should('not.be.empty')
+    .then((body) => cy.wrap(body, { log: false }))
+    .find('#docs-root', { log: false })
+    .should('not.be.empty')
+    .then((storyRoot) => cy.wrap(storyRoot, { log: false }));
+});
+
 Cypress.Commands.add('navigateToStory', (kind, name) => {
-  const kindId = kind.replace(' ', '-').toLowerCase();
-  const storyId = name.replace(' ', '-').toLowerCase();
+  const kindId = kind.replace(/ /g, '-').toLowerCase();
+  const storyId = name.replace(/ /g, '-').toLowerCase();
 
   const storyLinkId = `#${kindId}--${storyId}`;
-  cy.log('navigateToStory');
-  cy.get(`#${kindId}`, { log: false }).click();
-  cy.get(storyLinkId, { log: false }).click();
+  cy.log(`navigateToStory ${kind} ${name}`);
+
+  if (name !== 'page') {
+    // Section can be collapsed, click twice ensure expansion
+    cy.get(`#${kindId}`).click();
+  }
+  cy.get(storyLinkId).click();
 
   // assert url changes
   cy.url().should('include', `path=/story/${kindId}--${storyId}`);

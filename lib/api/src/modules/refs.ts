@@ -154,7 +154,7 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
           credentials: 'omit',
         }),
         fetch(`${url}/iframe.html${query}`, {
-          cors: 'no-cors',
+          mode: 'no-cors',
           credentials: 'omit',
         }),
       ]);

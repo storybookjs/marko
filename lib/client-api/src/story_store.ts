@@ -161,6 +161,12 @@ export default class StoryStore {
         this.updateStoryArgs(storyId, updatedArgs)
     );
 
+    this._channel.on(
+      Events.RESET_STORY_ARGS,
+      ({ storyId, argNames }: { storyId: string; argNames?: string[] }) =>
+        this.resetStoryArgs(storyId, argNames)
+    );
+
     this._channel.on(Events.UPDATE_GLOBALS, ({ globals }: { globals: Args }) =>
       this.updateGlobals(globals)
     );
@@ -369,6 +375,7 @@ export default class StoryStore {
           storyFn: original,
           parameters: accumlatedParameters,
           args: {},
+          argTypes: {},
           globals: {},
         }),
       }),
@@ -385,11 +392,12 @@ export default class StoryStore {
         parameters: this.combineStoryParameters(storyParametersWithArgTypes, kind),
         hooks,
         args: _stories[id].args,
+        argTypes,
         globals: this._globals,
       });
 
     // Pull out parameters.args.$ || .argTypes.$.defaultValue into initialArgs
-    const initialArgs: Args = combinedParameters.args;
+    const passedArgs: Args = combinedParameters.args;
     const defaultArgs: Args = Object.entries(
       argTypes as Record<string, { defaultValue: any }>
     ).reduce((acc, [arg, { defaultValue }]) => {
@@ -397,6 +405,7 @@ export default class StoryStore {
       return acc;
     }, {} as Args);
 
+    const initialArgs = { ...defaultArgs, ...passedArgs };
     _stories[id] = {
       ...identification,
 
@@ -406,7 +415,9 @@ export default class StoryStore {
       storyFn,
 
       parameters: { ...storyParameters, argTypes },
-      args: { ...defaultArgs, ...initialArgs },
+      args: initialArgs,
+      argTypes,
+      initialArgs,
     };
   }
 
@@ -452,6 +463,19 @@ export default class StoryStore {
     if (!this._stories[id]) throw new Error(`No story for id ${id}`);
     const { args } = this._stories[id];
     this._stories[id].args = { ...args, ...newArgs };
+
+    this._channel.emit(Events.STORY_ARGS_UPDATED, { storyId: id, args: this._stories[id].args });
+  }
+
+  resetStoryArgs(id: string, argNames?: string[]) {
+    if (!this._stories[id]) throw new Error(`No story for id ${id}`);
+    const { args, initialArgs } = this._stories[id];
+
+    this._stories[id].args = { ...args }; // Make a copy to avoid problems
+    (argNames || Object.keys(args)).forEach((name) => {
+      // We overwrite like this to ensure we can reset to falsey values
+      this._stories[id].args[name] = initialArgs[name];
+    });
 
     this._channel.emit(Events.STORY_ARGS_UPDATED, { storyId: id, args: this._stories[id].args });
   }

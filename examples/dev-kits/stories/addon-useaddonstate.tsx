@@ -3,7 +3,7 @@ import { Button } from '@storybook/react/demo';
 import { useAddonState } from '@storybook/client-api';
 
 export default {
-  title: 'addons|useAddonState',
+  title: 'addons/useAddonState',
 };
 
 export const managerDefault = () => {

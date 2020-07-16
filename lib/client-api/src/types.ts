@@ -54,6 +54,8 @@ export type StoreItem = StoryIdentifier & {
   storyFn: StoryFn<any>;
   hooks: HooksContext;
   args: Args;
+  initialArgs: Args;
+  argTypes: ArgTypes;
 };
 
 export type PublishedStoreItem = StoreItem & {

@@ -19,7 +19,6 @@
   - [Removed renderCurrentStory event](#removed-rendercurrentstory-event)
   - [Removed hierarchy separators](#removed-hierarchy-separators)
   - [Client API changes](#client-api-changes)
-    - [Removed support for duplicate kinds](#removed-support-for-duplicate-kinds)
     - [Removed Legacy Story APIs](#removed-legacy-story-apis)
     - [Can no longer add decorators/parameters after stories](#can-no-longer-add-decoratorsparameters-after-stories)
     - [Changed Parameter Handling](#changed-parameter-handling)
@@ -43,6 +42,7 @@
     - [Deprecated addParameters and addDecorator](#deprecated-addparameters-and-adddecorator)
     - [Deprecated clearDecorators](#deprecated-cleardecorators)
     - [Deprecated configure](#deprecated-configure)
+    - [Deprecated support for duplicate kinds](#deprecated-support-for-duplicate-kinds)
 - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
   - [To main.js configuration](#to-mainjs-configuration)
     - [Using main.js](#using-mainjs)
@@ -383,10 +383,10 @@ The story store no longer emits `renderCurrentStory`/`RENDER_CURRENT_STORY` to t
 
 We've removed the ability to specify the hierarchy separators (how you control the grouping of story kinds in the sidebar). From Storybook 6.0 we have a single separator `/`, which cannot be configured.
 
-If you are currently using using custom separators, we encourage you to migrate to using `/` as the sole separator. If you are using `|` or `.` as a separator currently, we provide a codemod, [`upgrade-hierarchy-separators`](https://github.com/storybookjs/storybook/blob/next/lib/codemod/README.md#upgrade-hierarchy-separators), that can be used to rename all your components.
+If you are currently using using custom separators, we encourage you to migrate to using `/` as the sole separator. If you are using `|` or `.` as a separator currently, we provide a codemod, [`upgrade-hierarchy-separators`](https://github.com/storybookjs/storybook/blob/next/lib/codemod/README.md#upgrade-hierarchy-separators), that can be used to rename your components. **Note: the codemod will not work for `.mdx` components, you will need to make the changes by hand.**
 
 ```
-yarn sb migrate upgrade-hierarchy-separators --glob="*.stories.js"
+npx sb@next migrate upgrade-hierarchy-separators --glob="*/**/*.stories.@(tsx|jsx|ts|js)"
 ```
 
 We also now default to showing "roots", which are non-expandable groupings in the sidebar for the top-level groups. If you'd like to disable this, set the `showRoots` option in `.storybook/manager.js`:
@@ -400,29 +400,6 @@ addons.setConfig({
 ```
 
 ### Client API changes
-
-#### Removed support for duplicate kinds
-
-In 6.0 we removed the ability to split a kind's (component's) stories into multiple files because it was causing issues in hot module reloading (HMR).
-
-If you had N stories that contained `export default { title: 'foo/bar' }` (or the MDX equivalent `<Meta title="foo/bar">`), Storybook will now throw the error `Duplicate title '${kindName}' used in multiple files`.
-
-To split a component's stories into multiple files, e.g. for the `foo/bar` example above:
-
-- Create a single file with the `export default { title: 'foo/bar' }` export, which is the primary file
-- Comment out or delete the default export from the other files
-- Re-export the stories from the other files in the primary file
-
-So the primary example might look like:
-
-```js
-export default { title: 'foo/bar' };
-export * from './Bar1.stories'
-export * from './Bar2.stories'
-export * from './Bar3.stories'
-
-export const SomeStory = () => ...;
-```
 
 #### Removed Legacy Story APIs
 
@@ -722,6 +699,29 @@ module.exports = {
     '../src/components/Page.stories.js',
   ],
 };
+```
+
+#### Deprecated support for duplicate kinds
+
+In 6.0 we deprecated the ability to split a kind's (component's) stories into multiple files because it was causing issues in hot module reloading (HMR). It will likely be removed completely in 7.0.
+
+If you had N stories that contained `export default { title: 'foo/bar' }` (or the MDX equivalent `<Meta title="foo/bar">`), Storybook will now raise the warning `Duplicate title '${kindName}' used in multiple files`.
+
+To split a component's stories into multiple files, e.g. for the `foo/bar` example above:
+
+- Create a single file with the `export default { title: 'foo/bar' }` export, which is the primary file
+- Comment out or delete the default export from the other files
+- Re-export the stories from the other files in the primary file
+
+So the primary example might look like:
+
+```js
+export default { title: 'foo/bar' };
+export * from './Bar1.stories'
+export * from './Bar2.stories'
+export * from './Bar3.stories'
+
+export const SomeStory = () => ...;
 ```
 
 ## From version 5.2.x to 5.3.x

@@ -5,7 +5,7 @@ export function babelDefault(config: TransformOptions) {
     ...config,
     plugins: [
       ...config.plugins,
-      [require.resolve('@babel/plugin-transform-react-jsx'), { pragma: 'h' }],
+      [require.resolve('@babel/plugin-transform-react-jsx'), { pragma: 'h' }, 'preset'],
     ],
   };
 }

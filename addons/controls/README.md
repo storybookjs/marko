@@ -337,8 +337,7 @@ export default {
   component: Widget,
   argTypes: {
     loadingState: {
-      type: 'inline-radio',
-      options: ['loading', 'error', 'ready'],
+      control: { type: 'inline-radio', options: ['loading', 'error', 'ready'] },
     },
   },
 };
@@ -351,7 +350,9 @@ export default {
   title: 'Gizmo',
   component: Gizmo,
   argTypes: {
-    width: { type: 'range', min: 400, max: 1200, step: 50 };
+    width: {
+      control: { type: 'range', min: 400, max: 1200, step: 50 },
+    },
   },
 };
 ```
@@ -473,7 +474,9 @@ export const Reflow = ({ count, label, ...args }) => (
   <>{range(count).map((i) => <Button label={`${label} ${i}` {...args}} />)}</>
 );
 Reflow.args = { count: 3, label: 'reflow' };
-Reflow.argTypes = { count: { control: { type: 'range', min: 0, max: 20 } } };
+Reflow.argTypes = {
+  count: { control: { type: 'range', min: 0, max: 20 } }
+};
 ```
 
 ### My controls aren't being auto-generated. What should I do?

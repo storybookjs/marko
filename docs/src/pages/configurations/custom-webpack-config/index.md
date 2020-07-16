@@ -186,10 +186,18 @@ module.exports = {
 
     // Make whatever fine-grained changes you need
     config.module.rules.push({
-      test: /\.scss$/,
-      use: ['style-loader', 'css-loader', 'sass-loader'],
-      include: path.resolve(__dirname, '../'),
-    });
+      test: /.scss$/,
+      loader: [
+        'style-loader',
+        {
+          loader: 'css-loader',
+          options: {
+            modules: true, // to support files with '.module.scss' extenstions.
+          },
+        },
+        'sass-loader',
+      ],
+    })
 
     // Return the altered config
     return config;

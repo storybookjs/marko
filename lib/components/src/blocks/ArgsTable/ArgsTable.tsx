@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import pickBy from 'lodash/pickBy';
 import { styled, ignoreSsrWarning } from '@storybook/theming';
 import { opacify, transparentize, darken, lighten } from 'polished';
+import { Icons } from '../../icon/icon';
 import { ArgRow } from './ArgRow';
 import { SectionRow } from './SectionRow';
 import { ArgType, ArgTypes, Args } from './types';
@@ -59,11 +60,8 @@ export const TableWrapper = styled.table<{ compact?: boolean; inAddonPanel?: boo
             : transparentize(0.45, theme.color.defaultText),
         paddingTop: 10,
         paddingBottom: 10,
-
-        '&:not(:first-of-type)': {
-          paddingLeft: 15,
-          paddingRight: 15,
-        },
+        paddingLeft: 15,
+        paddingRight: 15,
       },
 
       td: {
@@ -150,6 +148,46 @@ export const TableWrapper = styled.table<{ compact?: boolean; inAddonPanel?: boo
   })
 );
 
+const ResetButton = styled.button(({ theme }) => ({
+  border: 0,
+  borderRadius: '3em',
+  cursor: 'pointer',
+  display: 'inline-block',
+  overflow: 'hidden',
+  padding: '3px 8px',
+  transition: 'all 150ms ease-out',
+  verticalAlign: 'top',
+  userSelect: 'none',
+  margin: 0,
+
+  backgroundColor: theme.base === 'light' ? '#EAF3FC' : theme.color.border,
+  boxShadow:
+    theme.base === 'light'
+      ? `${theme.color.border} 0 0 0 1px inset`
+      : `${theme.color.darker}  0 0 0 1px inset`,
+  color: theme.color.secondary,
+
+  '&:hover': {
+    background: theme.base === 'light' ? darken(0.03, '#EAF3FC') : opacify(0.1, theme.color.border),
+  },
+
+  '&:focus': {
+    boxShadow: `${theme.color.secondary} 0 0 0 1px inset`,
+    outline: 'none',
+  },
+
+  svg: {
+    display: 'block',
+    height: 14,
+    width: 14,
+  },
+}));
+
+const ControlHeadingWrapper = styled.span({
+  display: 'flex',
+  justifyContent: 'space-between',
+});
+
 export enum ArgsTableError {
   NO_COMPONENT = 'No component found.',
   ARGS_UNSUPPORTED = 'Args unsupported. See Args documentation for your framework.',
@@ -159,6 +197,7 @@ export interface ArgsTableRowProps {
   rows: ArgTypes;
   args?: Args;
   updateArgs?: (args: Args) => void;
+  resetArgs?: (argNames?: string[]) => void;
   compact?: boolean;
   inAddonPanel?: boolean;
 }
@@ -225,7 +264,7 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
     );
   }
 
-  const { rows, args, updateArgs, compact, inAddonPanel } = props as ArgsTableRowProps;
+  const { rows, args, updateArgs, resetArgs, compact, inAddonPanel } = props as ArgsTableRowProps;
 
   const groups = groupRows(pickBy(rows, (row) => !row?.table?.disable));
 
@@ -258,7 +297,18 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
             <th>Name</th>
             {compact ? null : <th>Description</th>}
             {compact ? null : <th>Default</th>}
-            {updateArgs ? <th>Control</th> : null}
+            {updateArgs ? (
+              <th>
+                <ControlHeadingWrapper>
+                  Control{' '}
+                  {resetArgs && (
+                    <ResetButton onClick={() => resetArgs()} title="Reset controls">
+                      <Icons icon="sync" aria-hidden />
+                    </ResetButton>
+                  )}
+                </ControlHeadingWrapper>
+              </th>
+            ) : null}
           </tr>
         </thead>
         <tbody className="docblock-argstable-body">

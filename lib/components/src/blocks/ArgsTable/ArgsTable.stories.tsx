@@ -10,6 +10,7 @@ export default {
   title: 'Docs/ArgsTable',
   args: {
     updateArgs: action('updateArgs'),
+    resetArgs: action('resetArgs'),
   },
 };
 

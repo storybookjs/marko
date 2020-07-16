@@ -46,29 +46,24 @@ export async function baseGenerator(
   const addons = [
     '@storybook/addon-links',
     '@storybook/addon-actions',
-    // If angular skip `docs` because docs is buggy for now (https://github.com/storybookjs/storybook/issues/9103)
-    // for others framework add `essentials` i.e. `actions`, `backgrounds`, `docs`, `viewport`
-    // API of essentials needs to be clarified whether we need to add dependencies or not
-    framework !== 'angular' && '@storybook/addon-essentials',
-  ].filter(Boolean);
+    '@storybook/addon-essentials',
+  ];
 
-  // ⚠️ Some addons have peer deps that must be added too, like '@storybook/addon-docs' => 'react-is'
-  const addonsPeerDeps = addons.some(
-    (addon) => addon === '@storybook/addon-essentials' || addon === '@storybook/addon-docs'
-  )
-    ? ['react-is']
-    : [];
+  const yarn2Dependencies =
+    packageManager.type === 'yarn2' ? ['@storybook/addon-docs', '@mdx-js/react'] : [];
 
   const packages = [
     `@storybook/${framework}`,
     ...addons,
     ...extraPackages,
     ...extraAddons,
-    ...addonsPeerDeps,
+    ...yarn2Dependencies,
+    // ⚠️ Some addons have peer deps that must be added too, like '@storybook/addon-docs' => 'react-is'
+    'react-is',
   ].filter(Boolean);
   const versionedPackages = await packageManager.getVersionedPackages(...packages);
 
-  configure([...addons, ...extraAddons]);
+  configure(framework, [...addons, ...extraAddons]);
   if (addComponents) {
     copyComponents(framework, language);
   }
