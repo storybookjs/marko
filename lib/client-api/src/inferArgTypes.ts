@@ -1,6 +1,6 @@
 import mapValues from 'lodash/mapValues';
-import { Args, ArgTypes } from '@storybook/addons';
-import { SBType } from '../../lib/sbtypes';
+import { SBType, ArgTypesEnhancer } from './types';
+import { combineParameters } from './parameters';
 
 const inferType = (value?: any): SBType => {
   const type = typeof value;
@@ -25,12 +25,14 @@ const inferType = (value?: any): SBType => {
   return { name: 'other', value: 'unknown' };
 };
 
-export const inferArgTypes = (args: Args): ArgTypes => {
-  if (!args) return {};
-  return mapValues(args, (arg, name) => {
+export const inferArgTypes: ArgTypesEnhancer = (context) => {
+  const { argTypes: userArgTypes = {}, args = {} } = context.parameters;
+  if (!args) return userArgTypes;
+  const argTypes = mapValues(args, (arg, name) => {
     if (arg !== null && typeof arg !== 'undefined') {
       return { name, type: inferType(arg) };
     }
     return undefined;
   });
+  return combineParameters(argTypes, userArgTypes);
 };

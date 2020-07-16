@@ -1,7 +1,7 @@
 import { ArgTypes } from '@storybook/api';
 import { ArgTypesExtractor, hasDocgen, extractComponentProps } from '../../lib/docgen';
-import { convert } from '../../lib/sbtypes';
-import { trimQuotes } from '../../lib/sbtypes/utils';
+import { convert } from '../../lib/convert';
+import { trimQuotes } from '../../lib/convert/utils';
 
 const SECTIONS = ['props', 'events', 'slots'];
 
