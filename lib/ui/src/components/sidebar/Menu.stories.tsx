@@ -34,6 +34,7 @@ export const Real = () => <SidebarMenu menu={[]} isHighlighted />;
 
 export const Expanded = () => {
   const menu = useMenu(
+    // @ts-ignore
     { getShortcutKeys: () => ({}), versionUpdateAvailable: () => false },
     false,
     false,
