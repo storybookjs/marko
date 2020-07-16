@@ -155,6 +155,22 @@ describe('preview.story_store', () => {
       });
     });
 
+    it('automatically infers argTypes based on args', () => {
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0, {
+        args: {
+          arg1: 3,
+          arg2: 'foo',
+          arg3: false,
+        },
+      });
+      expect(store.getRawStory('a', '1').argTypes).toEqual({
+        arg1: { name: 'arg1', type: { name: 'number' } },
+        arg2: { name: 'arg2', type: { name: 'string' } },
+        arg3: { name: 'arg3', type: { name: 'boolean' } },
+      });
+    });
+
     it('updateStoryArgs changes the args of a story, per-key', () => {
       const store = new StoryStore({ channel });
       addStoryToStore(store, 'a', '1', () => 0);

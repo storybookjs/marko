@@ -33,6 +33,7 @@ import {
 import { HooksContext } from './hooks';
 import storySort from './storySort';
 import { combineParameters } from './parameters';
+import { inferArgTypes } from './inferArgTypes';
 
 interface StoryOptions {
   includeDocsOnly?: boolean;
@@ -140,7 +141,7 @@ export default class StoryStore {
     this._globalMetadata = { parameters: {}, decorators: [] };
     this._kinds = {};
     this._stories = {};
-    this._argTypesEnhancers = [];
+    this._argTypesEnhancers = [inferArgTypes];
     this._error = undefined;
     this._channel = params.channel;
 
