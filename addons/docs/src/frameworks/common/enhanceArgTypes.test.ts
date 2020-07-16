@@ -82,12 +82,6 @@ describe('enhanceArgTypes', () => {
         });
       });
 
-      describe('args processing moved to core', () => {
-        it('number', () => {
-          expect(enhance({ arg: 5 }).input).toBeUndefined();
-        });
-      });
-
       describe('extraction from component', () => {
         it('number', () => {
           expect(
