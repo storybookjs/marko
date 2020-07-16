@@ -36,7 +36,7 @@ const Side = styled.div<SideProps>(
 Side.displayName = 'Side';
 
 export const Bar = styled(({ children, className }) => (
-  <ScrollArea horizontal className={className}>
+  <ScrollArea horizontal vertical={false} className={className}>
     {children}
   </ScrollArea>
 ))(
@@ -45,8 +45,9 @@ export const Bar = styled(({ children, className }) => (
     width: '100%',
     height: 40,
     flexShrink: 0,
+    overflow: 'auto',
+    overflowY: 'hidden',
   }),
-
   ({ theme, border }) =>
     border
       ? {
@@ -65,7 +66,6 @@ const BarInner = styled.div<{ bgColor: string }>(({ bgColor }) => ({
   flexShrink: 0,
   height: 40,
   backgroundColor: bgColor || '',
-  overflowX: 'auto',
 }));
 
 export interface FlexBarProps {
