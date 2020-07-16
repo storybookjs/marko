@@ -35,6 +35,7 @@ const enhance = ({
       },
     },
     args: {},
+    argTypes: {},
     globals: {},
   };
   return enhanceArgTypes(context);
@@ -68,22 +69,6 @@ describe('enhanceArgTypes', () => {
               argType: { type: { name: 'number' } },
             }).input
           ).toMatchInlineSnapshot(`
-            {
-              "control": {
-                "type": "number"
-              },
-              "name": "input",
-              "type": {
-                "name": "number"
-              }
-            }
-          `);
-        });
-      });
-
-      describe('args input', () => {
-        it('number', () => {
-          expect(enhance({ arg: 5 }).input).toMatchInlineSnapshot(`
             {
               "control": {
                 "type": "number"
@@ -204,7 +189,6 @@ describe('enhanceArgTypes', () => {
             "control": {
               "type": "text"
             },
-            "name": "input",
             "type": {
               "name": "string"
             }
@@ -221,15 +205,12 @@ describe('enhanceArgTypes', () => {
           }).input
         ).toMatchInlineSnapshot(`
           {
+            "name": "input",
+            "defaultValue": 5,
             "control": {
               "type": "range",
               "step": 50
-            },
-            "name": "input",
-            "type": {
-              "name": "number"
-            },
-            "defaultValue": 5
+            }
           }
         `);
       });
@@ -243,13 +224,7 @@ describe('enhanceArgTypes', () => {
         ).toMatchInlineSnapshot(`
           {
             "input": {
-              "control": {
-                "type": "number"
-              },
-              "name": "input",
-              "type": {
-                "name": "number"
-              }
+              "name": "input"
             },
             "foo": {
               "control": {
@@ -300,19 +275,19 @@ describe('enhanceArgTypes', () => {
           })
         ).toMatchInlineSnapshot(`
           {
+            "foo": {
+              "control": {
+                "type": "number"
+              },
+              "type": {
+                "name": "number"
+              }
+            },
             "input": {
               "control": {
                 "type": "number"
               },
               "name": "input",
-              "type": {
-                "name": "number"
-              }
-            },
-            "foo": {
-              "control": {
-                "type": "number"
-              },
               "type": {
                 "name": "number"
               }

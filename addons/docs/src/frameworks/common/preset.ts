@@ -24,7 +24,7 @@ type BabelParams = {
 function createBabelOptions({ babelOptions, mdxBabelOptions, configureJSX }: BabelParams) {
   const babelPlugins = mdxBabelOptions?.plugins || babelOptions?.plugins || [];
   const jsxPlugin = [
-    '@babel/plugin-transform-react-jsx',
+    require.resolve('@babel/plugin-transform-react-jsx'),
     { pragma: 'React.createElement', pragmaFrag: 'React.Fragment' },
   ];
   const plugins = configureJSX ? [...babelPlugins, jsxPlugin] : babelPlugins;
