@@ -4,7 +4,7 @@ import { transformSync } from '@babel/core';
 import requireFromString from 'require-from-string';
 import fs from 'fs';
 
-import { convert } from './convert';
+import { convert } from './index';
 import { normalizeNewlines } from '../utils';
 
 expect.addSnapshotSerializer({

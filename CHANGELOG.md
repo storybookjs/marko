@@ -1,3 +1,48 @@
+## 6.0.0-rc.8 (July 16, 2020)
+
+### Features
+
+- CLI: Component-driven React / Vue / Angular / Preact / Svelte templates ([#11505](https://github.com/storybookjs/storybook/pull/11505))
+- Addon-controls: Add reset UI to ArgsTable ([#11550](https://github.com/storybookjs/storybook/pull/11550))
+
+### Bug Fixes
+
+- Addon-docs: Fix Vue argTypes default values ([#11534](https://github.com/storybookjs/storybook/pull/11534))
+
+### Maintenance
+
+- Core: Move basic argType inference out of addon-docs and into core ([#11561](https://github.com/storybookjs/storybook/pull/11561))
+
+## 6.0.0-rc.7 (July 16, 2020)
+
+NPM publish failed
+
+## 6.0.0-rc.6 (July 16, 2020)
+
+NPM publish failed
+
+## 6.0.0-rc.5 (July 15, 2020)
+
+### Features
+
+- Core: Add args reset API ([#11519](https://github.com/storybookjs/storybook/pull/11519))
+
+### Bug Fixes
+
+- Addon-docs: Make Meta block subcomponents optional ([#11556](https://github.com/storybookjs/storybook/pull/11556))
+- UI: Remove z-index on ActionBar ([#11502](https://github.com/storybookjs/storybook/pull/11502))
+- Composition: Fix docs-only story handling for composed storybooks ([#11537](https://github.com/storybookjs/storybook/pull/11537))
+- Addon-Docs: Fix ArgsTable controls on Docs tab ([#11552](https://github.com/storybookjs/storybook/pull/11552))
+
+### Maintenance
+
+- Core: Add `argTypes` to `StoryContext` ([#11558](https://github.com/storybookjs/storybook/pull/11558))
+- CLI: Improve Storybook packages version management ([#11342](https://github.com/storybookjs/storybook/pull/11342))
+
+## 6.0.0-rc.4 (July 15, 2020)
+
+NPM publish failed
+
 ## 6.0.0-rc.3 (July 11, 2020)
 
 ### Bug Fixes

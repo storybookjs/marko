@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
+import { SBType } from '@storybook/client-api';
 import { TSType, TSSigType } from './types';
-import { SBType } from '../types';
 
 const convertSig = (type: TSSigType) => {
   switch (type.type) {

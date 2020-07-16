@@ -155,6 +155,22 @@ describe('preview.story_store', () => {
       });
     });
 
+    it('automatically infers argTypes based on args', () => {
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0, {
+        args: {
+          arg1: 3,
+          arg2: 'foo',
+          arg3: false,
+        },
+      });
+      expect(store.getRawStory('a', '1').argTypes).toEqual({
+        arg1: { name: 'arg1', type: { name: 'number' } },
+        arg2: { name: 'arg2', type: { name: 'string' } },
+        arg3: { name: 'arg3', type: { name: 'boolean' } },
+      });
+    });
+
     it('updateStoryArgs changes the args of a story, per-key', () => {
       const store = new StoryStore({ channel });
       addStoryToStore(store, 'a', '1', () => 0);
@@ -242,6 +258,62 @@ describe('preview.story_store', () => {
           parameters: expect.objectContaining({}),
         })
       );
+    });
+
+    it('resetStoryArgs resets a single arg', () => {
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0);
+      expect(store.getRawStory('a', '1').args).toEqual({});
+
+      store.updateStoryArgs('a--1', { foo: 'bar', bar: 'baz' });
+      expect(store.getRawStory('a', '1').args).toEqual({ foo: 'bar', bar: 'baz' });
+
+      store.resetStoryArgs('a--1', ['foo']);
+      expect(store.getRawStory('a', '1').args).toEqual({ bar: 'baz' });
+    });
+
+    it('resetStoryArgs resets all args', () => {
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0);
+      expect(store.getRawStory('a', '1').args).toEqual({});
+
+      store.updateStoryArgs('a--1', { foo: 'bar', bar: 'baz' });
+      expect(store.getRawStory('a', '1').args).toEqual({ foo: 'bar', bar: 'baz' });
+
+      store.resetStoryArgs('a--1');
+      expect(store.getRawStory('a', '1').args).toEqual({});
+    });
+
+    it('resetStoryArgs emits STORY_ARGS_UPDATED', () => {
+      const onArgsChangedChannel = jest.fn();
+      const testChannel = mockChannel();
+      testChannel.on(Events.STORY_ARGS_UPDATED, onArgsChangedChannel);
+
+      const store = new StoryStore({ channel: testChannel });
+      addStoryToStore(store, 'a', '1', () => 0);
+
+      store.updateStoryArgs('a--1', { foo: 'bar' });
+      expect(onArgsChangedChannel).toHaveBeenCalledWith({ storyId: 'a--1', args: { foo: 'bar' } });
+
+      store.resetStoryArgs('a--1');
+      expect(onArgsChangedChannel).toHaveBeenCalledWith({
+        storyId: 'a--1',
+        args: {},
+      });
+    });
+
+    it('should reset if the RESET_STORY_ARGS event is received', () => {
+      const testChannel = mockChannel();
+      const store = new StoryStore({ channel: testChannel });
+      addStoryToStore(store, 'a', '1', () => 0);
+
+      store.updateStoryArgs('a--1', { foo: 'bar', bar: 'baz' });
+
+      testChannel.emit(Events.RESET_STORY_ARGS, { storyId: 'a--1', argNames: ['foo'] });
+      expect(store.getRawStory('a', '1').args).toEqual({ bar: 'baz' });
+
+      testChannel.emit(Events.RESET_STORY_ARGS, { storyId: 'a--1' });
+      expect(store.getRawStory('a', '1').args).toEqual({});
     });
   });
 

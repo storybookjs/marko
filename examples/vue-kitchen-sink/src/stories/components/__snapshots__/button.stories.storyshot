@@ -6,6 +6,7 @@ exports[`Storyshots Button Rounded 1`] = `
   style="color: rgb(255, 0, 0); border-color: #f00;"
 >
   A Button with rounded edges!
+
 </button>
 `;
 
@@ -15,5 +16,6 @@ exports[`Storyshots Button Square 1`] = `
   style="color: rgb(0, 0, 255); border-color: #00f;"
 >
   A Button with square edges!
+
 </button>
 `;

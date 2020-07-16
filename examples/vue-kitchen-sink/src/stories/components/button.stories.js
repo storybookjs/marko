@@ -8,8 +8,8 @@ export default {
   },
 };
 
-const Template = (args) => ({
-  props: Object.keys(args),
+const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
   components: { MyButton },
   template: '<my-button :color="color" :rounded="rounded">{{label}}</my-button>',
 });

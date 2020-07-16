@@ -2,6 +2,7 @@ import { DOCS_MODE } from 'global';
 import { toId, sanitize } from '@storybook/csf';
 import {
   UPDATE_STORY_ARGS,
+  RESET_STORY_ARGS,
   STORY_ARGS_UPDATED,
   STORY_CHANGED,
   SELECT_STORY,
@@ -61,6 +62,7 @@ export interface SubAPI {
   ) => Story['parameters'] | any;
   getCurrentParameter<S>(parameterName?: ParameterName): S;
   updateStoryArgs(story: Story, newArgs: Args): void;
+  resetStoryArgs: (story: Story, argNames?: [string]) => void;
   findLeafStoryId(StoriesHash: StoriesHash, storyId: StoryId): StoryId;
 }
 
@@ -309,6 +311,16 @@ export const init: ModuleFn = ({
       fullAPI.emit(UPDATE_STORY_ARGS, {
         storyId,
         updatedArgs,
+        options: {
+          target: refId ? `storybook-ref-${refId}` : 'storybook-preview-iframe',
+        },
+      });
+    },
+    resetStoryArgs: (story, argNames?: [string]) => {
+      const { id: storyId, refId } = story;
+      fullAPI.emit(RESET_STORY_ARGS, {
+        storyId,
+        argNames,
         options: {
           target: refId ? `storybook-ref-${refId}` : 'storybook-preview-iframe',
         },

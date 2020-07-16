@@ -17,7 +17,7 @@ const logger = console;
 program
   .command('init')
   .description('Initialize Storybook into your project.')
-  .option('-f --force', 'Force add storybook')
+  .option('-f --force', 'Force add Storybook')
   .option('-s --skip-install', 'Skip installing deps')
   .option('-N --use-npm', 'Use npm to install deps')
   .option('-p --parser <babel | babylon | flow | ts | tsx>', 'jscodeshift parser')
@@ -35,7 +35,7 @@ program
 
 program
   .command('upgrade')
-  .description('Upgrade your storybook packages to the latest')
+  .description('Upgrade your Storybook packages to the latest')
   .option('-N --use-npm', 'Use NPM to build the Storybook server')
   .option('-n --dry-run', 'Only check for upgrades, do not install')
   .option('-p --prerelease', 'Upgrade to the pre-release packages')
@@ -60,7 +60,7 @@ program
 
 program
   .command('migrate [migration]')
-  .description('Run a storybook codemod migration on your source files')
+  .description('Run a Storybook codemod migration on your source files')
   .option('-l --list', 'List available migrations')
   .option('-g --glob <glob>', 'Glob for files upon which to apply the migration', '**/*.js')
   .option('-p --parser <babel | babylon | flow | ts | tsx>', 'jscodeshift parser')
