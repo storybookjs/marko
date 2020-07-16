@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 
 import { Badge } from '@storybook/components';
 import { API } from '@storybook/api';
-import { useTheme, Theme, darken } from '@storybook/theming';
+import { useTheme, Theme } from '@storybook/theming';
 
 import { shortcutToHumanString } from '@storybook/api/shortcut';
 import { MenuItemIcon } from '../components/sidebar/Menu';
