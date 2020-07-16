@@ -10,7 +10,7 @@ interface ControlsParameters {
 }
 
 export const ControlsPanel: FC = () => {
-  const [args, updateArgs] = useArgs();
+  const [args, updateArgs, resetArgs] = useArgs();
   const rows = useArgTypes();
   const { expanded, hideNoControlsWarning = false } = useParameter<ControlsParameters>(
     PARAM_KEY,
@@ -21,7 +21,14 @@ export const ControlsPanel: FC = () => {
     <>
       {hasControls || hideNoControlsWarning ? null : <NoControlsWarning />}
       <ArgsTable
-        {...{ compact: !expanded && hasControls, rows, args, updateArgs, inAddonPanel: true }}
+        {...{
+          compact: !expanded && hasControls,
+          rows,
+          args,
+          updateArgs,
+          resetArgs,
+          inAddonPanel: true,
+        }}
       />
     </>
   );
