@@ -1,5 +1,13 @@
 import fs from 'fs';
-import { basename, dirname, normalize, relative, resolve, Path, getSystemPath } from '@angular-devkit/core';
+import {
+  basename,
+  dirname,
+  normalize,
+  relative,
+  resolve,
+  Path,
+  getSystemPath
+} from '@angular-devkit/core';
 import {
   getCommonConfig,
   getStylesConfig,
