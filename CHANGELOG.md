@@ -1,4 +1,4 @@
-## 6.0.0-rc.6 (July 16, 2020)
+## 6.0.0-rc.7 (July 16, 2020)
 
 ### Features
 
@@ -12,6 +12,10 @@
 ### Maintenance
 
 - Core: Move basic argType inference out of addon-docs and into core ([#11561](https://github.com/storybookjs/storybook/pull/11561))
+
+## 6.0.0-rc.6 (July 16, 2020)
+
+NPM publish failed
 
 ## 6.0.0-rc.5 (July 15, 2020)
 
