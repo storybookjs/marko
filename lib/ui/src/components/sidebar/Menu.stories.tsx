@@ -1,6 +1,7 @@
 import React, { Fragment, FunctionComponent } from 'react';
 
 import { WithTooltip, TooltipLinkList, Icons } from '@storybook/components';
+import { styled } from '@storybook/theming';
 import { MenuItemIcon, SidebarMenu, MenuButton, SidebarMenuList } from './Menu';
 import { useMenu } from '../../containers/menu';
 
@@ -30,6 +31,12 @@ export const Items = () => <TooltipLinkList links={fakemenu} />;
 
 export const Real = () => <SidebarMenu menu={fakemenu} isHighlighted />;
 
+const DoubleThemeRenderingHack = styled.div({
+  '#root > div:first-child > &': {
+    textAlign: 'right',
+  },
+});
+
 export const Expanded = () => {
   const menu = useMenu(
     // @ts-ignore
@@ -40,16 +47,18 @@ export const Expanded = () => {
     false
   );
   return (
-    <WithTooltip
-      placement="top"
-      trigger="click"
-      closeOnClick
-      startOpen
-      tooltip={({ onHide }) => <SidebarMenuList onHide={onHide} menu={menu} />}
-    >
-      <MenuButton outline small containsIcon highlighted={false} title="Shortcuts">
-        <Icons icon="ellipsis" />
-      </MenuButton>
-    </WithTooltip>
+    <DoubleThemeRenderingHack>
+      <WithTooltip
+        placement="top"
+        trigger="click"
+        closeOnClick
+        startOpen
+        tooltip={({ onHide }) => <SidebarMenuList onHide={onHide} menu={menu} />}
+      >
+        <MenuButton outline small containsIcon highlighted={false} title="Shortcuts">
+          <Icons icon="ellipsis" />
+        </MenuButton>
+      </WithTooltip>
+    </DoubleThemeRenderingHack>
   );
 };
