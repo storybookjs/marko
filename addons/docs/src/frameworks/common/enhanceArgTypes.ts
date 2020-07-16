@@ -4,7 +4,7 @@ import { inferControls } from './inferControls';
 import { normalizeArgTypes } from './normalizeArgTypes';
 
 export const enhanceArgTypes: ArgTypesEnhancer = (context) => {
-  const { component, argTypes: userArgTypes = {}, docs = {}, args = {} } = context.parameters;
+  const { component, argTypes: userArgTypes = {}, docs = {} } = context.parameters;
   const { extractArgTypes } = docs;
 
   const normalizedArgTypes = normalizeArgTypes(userArgTypes);
