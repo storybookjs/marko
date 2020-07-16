@@ -23,7 +23,7 @@ Rounded.args = {
 
 export const Square = Template.bind({});
 Square.args = {
-  // rounded: false, test out default value
+  rounded: false,
   color: '#00f',
   label: 'A Button with square edges',
 };
