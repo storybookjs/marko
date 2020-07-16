@@ -316,7 +316,7 @@ Here is the full list of available controls:
 | ----------- | ------------ | -------------------------------------------------------------- | -------------- |
 | **array**   | array        | serialize array into a comma-separated string inside a textbox | separator      |
 | **boolean** | boolean      | checkbox input                                                 | -              |
-| **number**  | number       | a numberic text box input                                      | min, max, step |
+| **number**  | number       | a numeric text box input                                       | min, max, step |
 |             | range        | a range slider input                                           | min, max, step |
 | **object**  | object       | json editor text input                                         | -              |
 | **enum**    | radio        | radio buttons input                                            | options        |
