@@ -1,7 +1,7 @@
 import mapValues from 'lodash/mapValues';
 import { ArgTypes, ArgType } from '@storybook/addons';
 import { Control } from '@storybook/components';
-import { SBEnumType } from '../../lib/sbtypes';
+import { SBEnumType } from '@storybook/client-api';
 
 const inferControl = (argType: ArgType): Control => {
   const { type } = argType;
