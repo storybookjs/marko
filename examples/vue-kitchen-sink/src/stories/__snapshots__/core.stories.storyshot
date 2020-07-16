@@ -5,6 +5,9 @@ exports[`Storyshots Core/Parameters passed to story 1`] = `
   Parameters are 
   <pre>
     {
+  "docs": {
+    "iframeHeight": "60px"
+  },
   "globalParameter": "globalParameter",
   "framework": "vue",
   "chapterParameter": "chapterParameter",
