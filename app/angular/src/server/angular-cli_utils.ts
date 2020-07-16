@@ -6,7 +6,7 @@ import {
   relative,
   resolve,
   Path,
-  getSystemPath
+  getSystemPath,
 } from '@angular-devkit/core';
 import {
   getCommonConfig,
