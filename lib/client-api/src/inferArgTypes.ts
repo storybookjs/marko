@@ -1,11 +1,6 @@
 import mapValues from 'lodash/mapValues';
-import { ArgTypesEnhancer } from './types';
+import { SBType, ArgTypesEnhancer } from './types';
 import { combineParameters } from './parameters';
-
-type SBType = {
-  name: string;
-  value?: string | SBType | SBType[] | Record<string, SBType>;
-};
 
 const inferType = (value?: any): SBType => {
   const type = typeof value;
