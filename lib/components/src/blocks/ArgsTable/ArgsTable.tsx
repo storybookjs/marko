@@ -60,11 +60,8 @@ export const TableWrapper = styled.table<{ compact?: boolean; inAddonPanel?: boo
             : transparentize(0.45, theme.color.defaultText),
         paddingTop: 10,
         paddingBottom: 10,
-
-        '&:not(:first-of-type)': {
-          paddingLeft: 15,
-          paddingRight: 15,
-        },
+        paddingLeft: 15,
+        paddingRight: 15,
       },
 
       td: {
