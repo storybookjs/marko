@@ -514,12 +514,7 @@ export default class StoryStore {
     // and thus lose order. However `_kinds[x].order` preservers the original load order
     const kindOrder = mapValues(this._kinds, ({ order }) => order);
     const storySortParameter = this._globalMetadata.parameters?.options?.storySort;
-    const orderedIds = getSortedStoryIds(
-      denormalizedStories,
-      kindOrder,
-      storySortParameter,
-      options
-    );
+    const orderedIds = getSortedStoryIds(denormalizedStories, kindOrder, storySortParameter);
 
     const storiesToReturn = options.normalizeParameters ? this._stories : denormalizedStories;
     return orderedIds.map((id) => storiesToReturn[id]);
