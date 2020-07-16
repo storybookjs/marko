@@ -167,7 +167,7 @@ export const useMenu = (
       id: 'collapse',
       title: 'Collapse all',
       onClick: () => api.collapseAll(),
-      right: shortcutToHumanString(shortcutKeys.collapseAll),
+      right: enableShortcuts ? shortcutToHumanString(shortcutKeys.collapseAll) : '',
       left: <MenuItemIcon />,
     }),
     [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
