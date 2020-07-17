@@ -1,3 +1,13 @@
+## 6.0.0-rc.9 (July 17, 2020)
+
+### Bug Fixes
+
+- Addon-controls: Fix no-args warning if argTypes are used ([#11598](https://github.com/storybookjs/storybook/pull/11598))
+- Core: Pass denormalized stories to the sort function ([#11572](https://github.com/storybookjs/storybook/pull/11572))
+- Addon-docs: Fix Vue inline rendering with Args and decorators ([#11594](https://github.com/storybookjs/storybook/pull/11594))
+- Composition: Fix missing refId on getData calls ([#11541](https://github.com/storybookjs/storybook/pull/11541))
+- UI: Fix scrollbars in flexbar ([#11579](https://github.com/storybookjs/storybook/pull/11579))
+
 ## 6.0.0-rc.8 (July 16, 2020)
 
 ### Features
