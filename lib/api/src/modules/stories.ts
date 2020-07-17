@@ -144,12 +144,7 @@ export const init: ModuleFn = ({
     },
     getCurrentParameter: (parameterName) => {
       const { storyId, refId } = store.getState();
-      const parameters = api.getParameters({ storyId, refId }, parameterName);
-
-      if (parameters) {
-        return parameters;
-      }
-      return undefined;
+      return api.getParameters({ storyId, refId }, parameterName);
     },
     jumpToComponent: (direction) => {
       const { storiesHash, storyId, refs, refId } = store.getState();

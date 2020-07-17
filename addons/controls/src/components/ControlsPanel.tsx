@@ -12,6 +12,7 @@ interface ControlsParameters {
 export const ControlsPanel: FC = () => {
   const [args, updateArgs, resetArgs] = useArgs();
   const rows = useArgTypes();
+  const isArgsStory = useParameter<boolean>('__isArgsStory', false);
   const { expanded, hideNoControlsWarning = false } = useParameter<ControlsParameters>(
     PARAM_KEY,
     {}
@@ -19,7 +20,7 @@ export const ControlsPanel: FC = () => {
   const hasControls = Object.values(rows).filter((argType) => !!argType?.control).length > 0;
   return (
     <>
-      {hasControls || hideNoControlsWarning ? null : <NoControlsWarning />}
+      {(hasControls && isArgsStory) || hideNoControlsWarning ? null : <NoControlsWarning />}
       <ArgsTable
         {...{
           compact: !expanded && hasControls,

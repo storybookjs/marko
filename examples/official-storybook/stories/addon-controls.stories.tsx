@@ -31,3 +31,5 @@ CustomControls.argTypes = {
   children: { table: { disable: true } },
   type: { control: { disable: true } },
 };
+
+export const NoArgs = () => <Button>no args</Button>;

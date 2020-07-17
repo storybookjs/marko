@@ -352,10 +352,8 @@ export default class StoryStore {
     ];
 
     const finalStoryFn = (context: StoryContext) => {
-      const { passArgsFirst } = context.parameters;
-      return passArgsFirst || typeof passArgsFirst === 'undefined'
-        ? (original as ArgsStoryFn)(context.args, context)
-        : original(context);
+      const { passArgsFirst = true } = context.parameters;
+      return passArgsFirst ? (original as ArgsStoryFn)(context.args, context) : original(context);
     };
 
     // lazily decorate the story when it's loaded
@@ -367,6 +365,10 @@ export default class StoryStore {
 
     // We need the combined parameters now in order to calculate argTypes, but we won't keep them
     const combinedParameters = this.combineStoryParameters(storyParameters, kind);
+
+    // storyFn is not available in manager, so we record whether the storyFn accepts args
+    const { passArgsFirst = true } = combinedParameters;
+    const __isArgsStory = passArgsFirst && original.length > 0;
 
     const { argTypes = {} } = this._argTypesEnhancers.reduce(
       (accumlatedParameters: Parameters, enhancer) => ({
@@ -380,10 +382,10 @@ export default class StoryStore {
           globals: {},
         }),
       }),
-      combinedParameters
+      { __isArgsStory, ...combinedParameters }
     );
 
-    const storyParametersWithArgTypes = { ...storyParameters, argTypes };
+    const storyParametersWithArgTypes = { ...storyParameters, argTypes, __isArgsStory };
 
     const storyFn: LegacyStoryFn = (runtimeContext: StoryContext) =>
       getDecorated()({
@@ -415,7 +417,7 @@ export default class StoryStore {
       getOriginal,
       storyFn,
 
-      parameters: { ...storyParameters, argTypes },
+      parameters: storyParametersWithArgTypes,
       args: initialArgs,
       argTypes,
       initialArgs,
