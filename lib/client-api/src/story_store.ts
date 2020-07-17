@@ -352,10 +352,8 @@ export default class StoryStore {
     ];
 
     const finalStoryFn = (context: StoryContext) => {
-      const { passArgsFirst } = context.parameters;
-      return passArgsFirst || typeof passArgsFirst === 'undefined'
-        ? (original as ArgsStoryFn)(context.args, context)
-        : original(context);
+      const { passArgsFirst = true } = context.parameters;
+      return passArgsFirst ? (original as ArgsStoryFn)(context.args, context) : original(context);
     };
 
     // lazily decorate the story when it's loaded
@@ -367,6 +365,14 @@ export default class StoryStore {
 
     // We need the combined parameters now in order to calculate argTypes, but we won't keep them
     const combinedParameters = this.combineStoryParameters(storyParameters, kind);
+
+    // We are going to make various UI changes in both the manager and the preview
+    // based on whether it's an "args story", i.e. whether the story accepts a first
+    // argument which is an `Args` object. Here we store it as a parameter on every story
+    // for convenience, but we preface it with `__` to denote that it's an internal API
+    // and that users probably shouldn't look at it.
+    const { passArgsFirst = true } = combinedParameters;
+    const __isArgsStory = passArgsFirst && original.length > 0;
 
     const { argTypes = {} } = this._argTypesEnhancers.reduce(
       (accumlatedParameters: Parameters, enhancer) => ({
@@ -380,10 +386,10 @@ export default class StoryStore {
           globals: {},
         }),
       }),
-      combinedParameters
+      { __isArgsStory, ...combinedParameters }
     );
 
-    const storyParametersWithArgTypes = { ...storyParameters, argTypes };
+    const storyParametersWithArgTypes = { ...storyParameters, argTypes, __isArgsStory };
 
     const storyFn: LegacyStoryFn = (runtimeContext: StoryContext) =>
       getDecorated()({
@@ -415,7 +421,7 @@ export default class StoryStore {
       getOriginal,
       storyFn,
 
-      parameters: { ...storyParameters, argTypes },
+      parameters: storyParametersWithArgTypes,
       args: initialArgs,
       argTypes,
       initialArgs,
