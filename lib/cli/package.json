@@ -1,6 +1,6 @@
 {
   "name": "@storybook/cli",
-  "version": "6.0.0-rc.8",
+  "version": "6.0.0-rc.9",
   "description": "Storybook's CLI - easiest method of adding storybook to your projects",
   "keywords": [
     "cli",
@@ -40,8 +40,8 @@
   "dependencies": {
     "@babel/core": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
-    "@storybook/codemod": "6.0.0-rc.8",
-    "@storybook/node-logger": "6.0.0-rc.8",
+    "@storybook/codemod": "6.0.0-rc.9",
+    "@storybook/node-logger": "6.0.0-rc.9",
     "@storybook/semver": "^7.3.2",
     "chalk": "^4.0.0",
     "commander": "^5.0.0",
