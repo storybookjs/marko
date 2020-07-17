@@ -144,7 +144,9 @@ export const init: ModuleFn = ({
     },
     getCurrentParameter: (parameterName) => {
       const { storyId, refId } = store.getState();
-      return api.getParameters({ storyId, refId }, parameterName);
+      const parameters = api.getParameters({ storyId, refId }, parameterName);
+      // FIXME I don't know why this is needed
+      return parameters || undefined;
     },
     jumpToComponent: (direction) => {
       const { storiesHash, storyId, refs, refId } = store.getState();
