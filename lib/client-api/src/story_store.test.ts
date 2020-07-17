@@ -938,6 +938,39 @@ describe('preview.story_store', () => {
         'c--1',
       ]);
     });
+
+    it('denormalizes parameters before passing to sort', () => {
+      const store = new StoryStore({ channel });
+      const storySort = jest.fn();
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          options: {
+            storySort,
+          },
+          global: 'global',
+        },
+      });
+      store.addKindMetadata('a', { parameters: { kind: 'kind' }, decorators: [] });
+      addStoryToStore(store, 'a', '1', () => 0, { story: '1' });
+      addStoryToStore(store, 'a', '2', () => 0, { story: '2' });
+      const extracted = store.extract();
+
+      expect(storySort).toHaveBeenCalledWith(
+        [
+          'a--1',
+          expect.objectContaining({
+            parameters: expect.objectContaining({ global: 'global', kind: 'kind', story: '1' }),
+          }),
+        ],
+        [
+          'a--2',
+          expect.objectContaining({
+            parameters: expect.objectContaining({ global: 'global', kind: 'kind', story: '2' }),
+          }),
+        ]
+      );
+    });
   });
 
   describe('configuration', () => {

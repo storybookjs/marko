@@ -72,7 +72,7 @@ const checkStorySort = (parameters: Parameters) => {
   if (options?.storySort) logger.error('The storySort option parameter can only be set globally');
 };
 
-const getSortedStories = memoize(1)(
+const getSortedStoryIds = memoize(1)(
   (storiesData: StoreData, kindOrder: Record<StoryKind, number>, storySortParameter) => {
     const stories = Object.entries(storiesData);
     if (storySortParameter) {
@@ -86,7 +86,7 @@ const getSortedStories = memoize(1)(
     } else {
       stable.inplace(stories, (s1, s2) => kindOrder[s1[1].kind] - kindOrder[s2[1].kind]);
     }
-    return stories.map(([id, s]) => s);
+    return stories.map(([id, s]) => id);
   }
 );
 
@@ -504,33 +504,32 @@ export default class StoryStore {
       .map((i) => this.mergeAdditionalDataToStory(i));
   }
 
-  sortedStories(): StoreItem[] {
+  sortedStories(options: { normalizeParameters?: boolean } = {}): StoreItem[] {
+    // We need to pass the stories with denormalized parameters to the sort function (see #11010)
+    const denormalizedStories = mapValues(this._stories, (story) => ({
+      ...story,
+      parameters: this.combineStoryParameters(story.parameters, story.kind),
+    }));
+
     // NOTE: when kinds are HMR'ed they get temporarily removed from the `_stories` array
     // and thus lose order. However `_kinds[x].order` preservers the original load order
     const kindOrder = mapValues(this._kinds, ({ order }) => order);
     const storySortParameter = this._globalMetadata.parameters?.options?.storySort;
-    return getSortedStories(this._stories, kindOrder, storySortParameter);
+    const orderedIds = getSortedStoryIds(denormalizedStories, kindOrder, storySortParameter);
+
+    const storiesToReturn = options.normalizeParameters ? this._stories : denormalizedStories;
+    return orderedIds.map((id) => storiesToReturn[id]);
   }
 
   extract(options: StoryOptions & { normalizeParameters?: boolean } = {}) {
-    const stories = this.sortedStories();
+    const { normalizeParameters } = options;
+    const stories = this.sortedStories({ normalizeParameters });
 
     // removes function values from all stories so they are safe to transport over the channel
     return stories.reduce((acc, story) => {
       if (!includeStory(story, options)) return acc;
 
-      const extracted = toExtracted(story);
-      if (options.normalizeParameters) return Object.assign(acc, { [story.id]: extracted });
-
-      const { parameters, kind } = extracted as {
-        parameters: Parameters;
-        kind: StoryKind;
-      };
-      return Object.assign(acc, {
-        [story.id]: Object.assign(extracted, {
-          parameters: this.combineStoryParameters(parameters, kind),
-        }),
-      });
+      return Object.assign(acc, { [story.id]: toExtracted(story) });
     }, {});
   }
 
