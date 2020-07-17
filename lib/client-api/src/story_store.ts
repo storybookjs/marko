@@ -3,6 +3,7 @@ import memoize from 'memoizerific';
 import dedent from 'ts-dedent';
 import stable from 'stable';
 import mapValues from 'lodash/mapValues';
+import pick from 'lodash/pick';
 import store from 'store2';
 
 import { Channel } from '@storybook/channels';
@@ -566,6 +567,35 @@ export default class StoryStore {
       error: this.getError(),
       kindParameters: mapValues(this._kinds, (metadata) => metadata.parameters),
       stories: this.extract({ includeDocsOnly: true, normalizeParameters: true }),
+    };
+  };
+
+  getStoriesJsonData = () => {
+    const value = this.getDataForManager();
+    const allowed = ['fileName', 'docsOnly', 'framework', '__id'];
+
+    return {
+      v: 2,
+      globalParameters: pick(value.globalParameters, allowed),
+      kindParameters: Object.entries(value.kindParameters).reduce(
+        (acc, [k, v]) => ({
+          ...acc,
+          [k]: pick(v, allowed),
+        }),
+        {}
+      ),
+      stories: Object.entries(value.stories).reduce(
+        (acc, [k, v]) => ({
+          ...acc,
+          // @ts-ignore
+          [k]: {
+            ...pick(v, ['id', 'name', 'kind', 'story']),
+            // @ts-ignore
+            parameters: pick(v.parameters, allowed),
+          },
+        }),
+        {}
+      ),
     };
   };
 
