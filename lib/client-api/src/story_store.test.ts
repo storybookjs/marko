@@ -577,7 +577,7 @@ describe('preview.story_store', () => {
   });
 
   describe('argTypesEnhancer', () => {
-    it('records whether the given story processes args', () => {
+    it('records when the given story processes args', () => {
       const store = new StoryStore({ channel });
 
       const enhancer = jest.fn((context) => ({ ...context.parameters.argTypes, c: 'd' }));

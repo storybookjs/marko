@@ -366,7 +366,11 @@ export default class StoryStore {
     // We need the combined parameters now in order to calculate argTypes, but we won't keep them
     const combinedParameters = this.combineStoryParameters(storyParameters, kind);
 
-    // storyFn is not available in manager, so we record whether the storyFn accepts args
+    // We are going to make various UI changes in both the manager and the preview
+    // based on whether it's an "args story", i.e. whether the story accepts a first
+    // argument which is an `Args` object. Here we store it as a parameter on every story
+    // for convenience, but we preface it with `__` to denote that it's an internal API
+    // and that users probably shouldn't look at it.
     const { passArgsFirst = true } = combinedParameters;
     const __isArgsStory = passArgsFirst && original.length > 0;
 
