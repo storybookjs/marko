@@ -4,7 +4,7 @@ import Vue from 'vue';
 import { StoryFn, StoryContext } from '@storybook/addons';
 
 // Inspired by https://github.com/egoist/vue-to-react,
-// modified to handled
+// modified to store args as props in the root store
 
 // FIXME get this from @storybook/vue
 const COMPONENT = 'STORYBOOK_COMPONENT';
