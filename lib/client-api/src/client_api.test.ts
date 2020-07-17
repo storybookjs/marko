@@ -120,7 +120,7 @@ describe('preview.client_api', () => {
 
       const result = storyStore.fromId('kind--name').storyFn();
       // @ts-ignore
-      const { docs, fileName, options, argTypes, ...rest } = result;
+      const { docs, fileName, options, argTypes, __isArgsStory, ...rest } = result;
 
       expect(rest).toEqual({ a: 1 });
     });
@@ -540,6 +540,7 @@ describe('preview.client_api', () => {
         a: 'global',
         b: 'kind',
         c: 'story',
+        __isArgsStory: false,
         fileName: expect.any(String),
         argTypes: {},
       });
@@ -593,6 +594,7 @@ describe('preview.client_api', () => {
             local: true,
           },
         },
+        __isArgsStory: false,
         fileName: expect.any(String),
         argTypes: {},
       });

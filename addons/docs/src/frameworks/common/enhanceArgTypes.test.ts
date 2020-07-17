@@ -10,20 +10,20 @@ const enhance = ({
   argType,
   arg,
   extractedArgTypes,
-  storyFn = (args: Args) => 0,
+  isArgsStory = true,
 }: {
   argType?: ArgType;
   arg?: any;
   extractedArgTypes?: ArgTypes;
-  storyFn?: any;
+  isArgsStory?: boolean;
 }) => {
   const context = {
     id: 'foo--bar',
     kind: 'foo',
     name: 'bar',
-    storyFn,
     parameters: {
       component: 'dummy',
+      __isArgsStory: isArgsStory,
       docs: {
         extractArgTypes: extractedArgTypes && (() => extractedArgTypes),
       },
@@ -47,7 +47,7 @@ describe('enhanceArgTypes', () => {
       expect(
         enhance({
           argType: { foo: 'unmodified', type: { name: 'number' } },
-          storyFn: () => 0,
+          isArgsStory: false,
         }).input
       ).toMatchInlineSnapshot(`
         {
