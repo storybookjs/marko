@@ -1,4 +1,4 @@
-import { ArgType, ArgTypes, Args } from '@storybook/api';
+import { ArgType, ArgTypes } from '@storybook/api';
 import { enhanceArgTypes } from './enhanceArgTypes';
 
 expect.addSnapshotSerializer({
