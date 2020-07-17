@@ -145,7 +145,8 @@ export const init: ModuleFn = ({
     getCurrentParameter: (parameterName) => {
       const { storyId, refId } = store.getState();
       const parameters = api.getParameters({ storyId, refId }, parameterName);
-      // FIXME I don't know why this is needed
+      // FIXME Returning falsey parameters breaks a bunch of toolbars code,
+      // so this strange logic needs to be here until various client code is updated.
       return parameters || undefined;
     },
     jumpToComponent: (direction) => {
