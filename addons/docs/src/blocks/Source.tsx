@@ -90,7 +90,7 @@ const getSnippet = (
     }
 
     // otherwise, use the source code logic
-    const enhanced = data && (enhanceSource(data) || data.parameters);
+    const enhanced = enhanceSource(data) || data.parameters;
     return enhanced?.docs?.source?.code || '';
   }
   // Fallback if we can't get the story data for this story

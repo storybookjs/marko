@@ -9,7 +9,7 @@ export default {
     type: { control: 'text' },
   },
   parameters: {
-    chromatic: { enabled: false },
+    chromatic: { disable: true },
   },
 };
 
