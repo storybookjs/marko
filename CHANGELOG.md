@@ -1,3 +1,9 @@
+## 6.0.0-rc.10 (July 18, 2020)
+
+### Features
+
+- Addon-docs: Automatic source selection based on story type ([#11601](https://github.com/storybookjs/storybook/pull/11601))
+
 ## 6.0.0-rc.9 (July 17, 2020)
 
 ### Bug Fixes
