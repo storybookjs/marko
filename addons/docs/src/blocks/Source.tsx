@@ -70,32 +70,33 @@ const getSnippet = (
   const data = storyStore?.fromId(storyId);
 
   if (data) {
-    const { parameters } = data;
-    // eslint-disable-next-line no-underscore-dangle
-    const isArgsStory = parameters.__isArgsStory;
-    const type = parameters.docs?.source?.type || SourceType.AUTO;
-
-    // if user has hard-coded the snippet, that takes precedence
-    const userCode = parameters.docs?.source?.code;
-    if (userCode) return userCode;
-
-    // if user has explicitly set this as dynamic, use snippet
-    if (type === SourceType.DYNAMIC) {
-      return snippet || '';
-    }
-
-    // if this is an args story and there's a snippet
-    if (type === SourceType.AUTO && snippet && isArgsStory) {
-      return snippet;
-    }
-
-    // otherwise, use the source code logic
-    const enhanced = enhanceSource(data) || data.parameters;
-    return enhanced?.docs?.source?.code || '';
+    // Fallback if we can't get the story data for this story
+    logger.warn(`Unable to find source for story ID '${storyId}'`);
+    return snippet || '';
   }
-  // Fallback if we can't get the story data for this story
-  logger.warn(`Unable to find source for story ID '${storyId}'`);
-  return snippet || '';
+
+  const { parameters } = data;
+  // eslint-disable-next-line no-underscore-dangle
+  const isArgsStory = parameters.__isArgsStory;
+  const type = parameters.docs?.source?.type || SourceType.AUTO;
+
+  // if user has hard-coded the snippet, that takes precedence
+  const userCode = parameters.docs?.source?.code;
+  if (userCode) return userCode;
+
+  // if user has explicitly set this as dynamic, use snippet
+  if (type === SourceType.DYNAMIC) {
+    return snippet || '';
+  }
+
+  // if this is an args story and there's a snippet
+  if (type === SourceType.AUTO && snippet && isArgsStory) {
+    return snippet;
+  }
+
+  // otherwise, use the source code logic
+  const enhanced = enhanceSource(data) || data.parameters;
+  return enhanced?.docs?.source?.code || '';
 };
 
 export const getSourceProps = (
