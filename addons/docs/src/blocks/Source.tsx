@@ -69,7 +69,7 @@ const getSnippet = (
   const snippet = sources && sources[storyId];
   const data = storyStore?.fromId(storyId);
 
-  if (data) {
+  if (!data) {
     // Fallback if we can't get the story data for this story
     logger.warn(`Unable to find source for story ID '${storyId}'`);
     return snippet || '';
