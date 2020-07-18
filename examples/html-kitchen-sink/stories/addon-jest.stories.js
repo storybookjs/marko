@@ -7,4 +7,6 @@ export default {
 };
 
 export const WithTests = () => 'This story shows test results';
-WithTests.parameters = { jest: 'addon-jest' };
+WithTests.story = {
+  parameters: { jest: 'addon-jest' },
+};
