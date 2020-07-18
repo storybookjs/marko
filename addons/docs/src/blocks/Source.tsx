@@ -75,14 +75,21 @@ const getSnippet = (
     const isArgsStory = parameters.__isArgsStory;
     const type = parameters.docs?.source?.type || SourceType.AUTO;
 
-    // if user has explicitly set this as a dynamic story, or this is an args story and there's a snippet
-    if (
-      type === SourceType.DYNAMIC ||
-      (type === SourceType.AUTO && snippet && isArgsStory && !parameters.docs?.source?.code)
-    ) {
+    // if user has hard-coded the snippet, that takes precedence
+    const userCode = parameters.docs?.source?.code;
+    if (userCode) return userCode;
+
+    // if user has explicitly set this as dynamic, use snippet
+    if (type === SourceType.DYNAMIC) {
       return snippet || '';
     }
 
+    // if this is an args story and there's a snippet
+    if (type === SourceType.AUTO && snippet && isArgsStory) {
+      return snippet;
+    }
+
+    // otherwise, use the source code logic
     const enhanced = data && (enhanceSource(data) || data.parameters);
     return enhanced?.docs?.source?.code || '';
   }
