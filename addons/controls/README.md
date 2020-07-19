@@ -326,7 +326,7 @@ Here is the full list of available controls:
 |             | select       | select dropdown input                                          | options        |
 |             | multi-select | multi-select dropdown input                                    | options        |
 | **string**  | text         | simple text input                                              | -              |
-|             | color        | color picker input that assumes strings are color values       | -              |
+|             | color        | color picker input that assumes strings are color values       | presetColors   |
 |             | date         | date picker input                                              | -              |
 
 Example customizing a control for an `enum` data type (defaults to `select` control type):
@@ -352,6 +352,20 @@ export default {
   argTypes: {
     width: {
       control: { type: 'range', min: 400, max: 1200, step: 50 },
+    },
+  },
+};
+```
+
+Example customizing a `color` data type:
+
+```js
+export default {
+  title: 'Button',
+  component: Button,
+  argTypes: {
+    backgroundColor: {
+      control: { type: 'color', presetColors: ['#FFF', '#000', '#AAA'] },
     },
   },
 };
