@@ -56,7 +56,14 @@ export const ColorControl: FC<ColorProps> = ({
       {value ? value.toUpperCase() : 'Choose color'}
       <Swatch style={{ background: value }} />
       {showPicker ? (
-        <Popover onClick={(e: MouseEvent) => e.stopPropagation()}>
+        <Popover
+          onClick={(e: MouseEvent) => {
+            // @ts-ignore
+            if (e.target.tagName === 'INPUT') {
+              e.stopPropagation();
+            }
+          }}
+        >
           <SketchPicker
             color={value}
             onChange={(color: ColorResult) => onChange(name, format(color))}

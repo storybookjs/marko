@@ -13,7 +13,7 @@ export const Basic = () => {
   return <ColorControl name="Color" value={value} onChange={(name, newVal) => setValue(newVal)} />;
 };
 
-export const withPresetColors = () => {
+export const WithPresetColors = () => {
   const [value, setValue] = useState('#ff0');
   return (
     <ColorControl
