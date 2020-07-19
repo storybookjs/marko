@@ -51,7 +51,6 @@ export const ColorControl: FC<ColorProps> = ({
           setShowPicker(!showPicker);
         }
       }}
-      onBlur={() => setShowPicker(!showPicker)}
       size="flex"
     >
       {value ? value.toUpperCase() : 'Choose color'}
