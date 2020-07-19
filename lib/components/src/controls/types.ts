@@ -20,7 +20,9 @@ export type BooleanValue = boolean;
 export interface BooleanConfig {}
 
 export type ColorValue = string;
-export interface ColorConfig {}
+export interface ColorConfig {
+  presetColors?: string[];
+}
 
 export type DateValue = Date | number;
 export interface DateConfig {}

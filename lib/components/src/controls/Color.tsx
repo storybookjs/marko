@@ -30,7 +30,14 @@ const format = (color: ColorResult) =>
   `rgba(${color.rgb.r},${color.rgb.g},${color.rgb.b},${color.rgb.a})`;
 
 export type ColorProps = ControlProps<ColorValue> & ColorConfig;
-export const ColorControl: FC<ColorProps> = ({ name, value, onChange, onFocus, onBlur }) => {
+export const ColorControl: FC<ColorProps> = ({
+  name,
+  value,
+  onChange,
+  onFocus,
+  onBlur,
+  presetColors,
+}) => {
   const [showPicker, setShowPicker] = useState(false);
 
   return (
@@ -48,7 +55,7 @@ export const ColorControl: FC<ColorProps> = ({ name, value, onChange, onFocus, o
           <SketchPicker
             color={value}
             onChange={(color: ColorResult) => onChange(name, format(color))}
-            {...{ onFocus, onBlur }}
+            {...{ onFocus, onBlur, presetColors }}
           />
         </Popover>
       ) : null}
