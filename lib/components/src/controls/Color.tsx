@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, MouseEvent, KeyboardEvent } from 'react';
 import { SketchPicker, ColorResult } from 'react-color';
 
 import { styled } from '@storybook/theming';
@@ -46,12 +46,18 @@ export const ColorControl: FC<ColorProps> = ({
       type="button"
       name={name}
       onClick={() => setShowPicker(!showPicker)}
+      onKeyDown={(e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+          setShowPicker(!showPicker);
+        }
+      }}
+      onBlur={() => setShowPicker(!showPicker)}
       size="flex"
     >
       {value ? value.toUpperCase() : 'Choose color'}
       <Swatch style={{ background: value }} />
       {showPicker ? (
-        <Popover>
+        <Popover onClick={(e: MouseEvent) => e.stopPropagation()}>
           <SketchPicker
             color={value}
             onChange={(color: ColorResult) => onChange(name, format(color))}
