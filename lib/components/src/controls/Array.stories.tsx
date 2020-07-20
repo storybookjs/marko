@@ -23,4 +23,4 @@ const Template = (initialValue: any) => {
 
 export const Basic = () => Template(['Bat', 'Cat', 'Rat']);
 
-export const Undefined = () => Template.bind(undefined);
+export const Undefined = () => Template(undefined);

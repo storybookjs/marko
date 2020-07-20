@@ -153,7 +153,7 @@ const RangeWrapper = styled.div({
 
 export const RangeControl: FC<RangeProps> = ({
   name,
-  value = 50,
+  value,
   onChange,
   min = 0,
   max = 100,
