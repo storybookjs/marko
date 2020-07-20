@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { initial } from 'lodash';
 import { RangeControl } from './Range';
 
 export default {
@@ -7,7 +6,7 @@ export default {
   component: RangeControl,
 };
 
-export const Template = (initialValue?: number) => {
+const Template = (initialValue?: number) => {
   const [value, setValue] = useState(initialValue);
   return (
     <>
