@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-
 import { useArgs } from '@storybook/client-api';
 
 // eslint-disable-next-line react/prop-types
@@ -44,17 +42,25 @@ export default {
   ],
 };
 
-export const PassedToStory = (inputArgs) => {
+const Template = (args) => {
   return (
     <div>
       <h3>Input args:</h3>
-      <pre>{JSON.stringify(inputArgs)}</pre>
+      <pre>{JSON.stringify(args)}</pre>
     </div>
   );
 };
 
+export const PassedToStory = Template.bind({});
+
 PassedToStory.argTypes = { name: { defaultValue: 'initial', control: 'text' } };
 
-PassedToStory.propTypes = {
-  args: PropTypes.shape({}).isRequired,
+export const OtherValues = Template.bind({});
+
+OtherValues.argTypes = { name: { control: 'text' } };
+
+export const DifferentSet = Template.bind({});
+DifferentSet.args = {
+  foo: 'bar',
+  bar: 2,
 };
