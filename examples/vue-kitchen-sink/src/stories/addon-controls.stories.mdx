@@ -1,5 +1,6 @@
 import { Meta, Preview, Story, Props } from '@storybook/addon-docs/blocks';
 import MyButton from './Button.vue';
+import InfoButton from './components/InfoButton.vue';
 
 <Meta
   title="Addon/ControlsMDX"
@@ -52,3 +53,7 @@ Controls can also be defined and used in MDX stories.
 </Preview>
 
 <Props story="Square" />
+
+## Multiple components
+
+<Props components={{ MyButton, InfoButton }} />

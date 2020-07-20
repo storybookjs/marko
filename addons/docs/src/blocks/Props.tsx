@@ -230,6 +230,10 @@ export const Props: FC<PropsProps> = (props) => {
     return <ArgsTable {...mainProps} />;
   }
 
+  if (components) {
+    return <ComponentsTable {...(props as ComponentsProps)} components={components} />;
+  }
+
   const mainLabel = getComponentName(main);
   return (
     <ComponentsTable
