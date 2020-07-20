@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-
 import { useArgs } from '@storybook/client-api';
 
 // eslint-disable-next-line react/prop-types

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { initial } from 'lodash';
 import { RangeControl } from './Range';
 
 export default {
@@ -6,8 +7,8 @@ export default {
   component: RangeControl,
 };
 
-export const Basic = () => {
-  const [value, setValue] = useState(10);
+export const Template = (initialValue?: number) => {
+  const [value, setValue] = useState(initialValue);
   return (
     <>
       <RangeControl
@@ -22,3 +23,7 @@ export const Basic = () => {
     </>
   );
 };
+
+export const Basic = () => Template(10);
+
+export const Undefined = () => Template(undefined);

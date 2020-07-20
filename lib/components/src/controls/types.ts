@@ -3,7 +3,7 @@ import { ArgType } from '../blocks';
 /* eslint-disable @typescript-eslint/no-empty-interface */
 export interface ControlProps<T> {
   name: string;
-  value: T;
+  value?: T;
   defaultValue?: T;
   argType?: ArgType;
   onChange: (name: string, value: T) => T | void;

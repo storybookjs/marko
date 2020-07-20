@@ -6,22 +6,21 @@ export default {
   component: ArrayControl,
 };
 
-export const Basic = () => {
-  const [value, setValue] = useState(['Bat', 'Cat', 'Rat']);
+const Template = (initialValue: any) => {
+  const [value, setValue] = useState(initialValue);
   return (
     <>
-      <ArrayControl name="array" value={value} onChange={(name, newVal) => setValue(newVal)} />
+      <ArrayControl
+        name="array"
+        value={value}
+        onChange={(name, newVal) => setValue(newVal)}
+        separator=","
+      />
       <ul>{value && value.map((item) => <li key={item}>{item}</li>)}</ul>
     </>
   );
 };
 
-export const Null = () => {
-  const [value, setValue] = useState(null);
-  return (
-    <>
-      <ArrayControl name="array" value={value} onChange={(name, newVal) => setValue(newVal)} />
-      <ul>{value && value.map((item) => <li key={item}>{item}</li>)}</ul>
-    </>
-  );
-};
+export const Basic = () => Template(['Bat', 'Cat', 'Rat']);
+
+export const Undefined = () => Template.bind(undefined);
