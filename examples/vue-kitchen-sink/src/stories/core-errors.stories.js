@@ -1,5 +1,5 @@
 export default {
-  title: 'Core|Errors',
+  title: 'Core/Errors',
   parameters: { chromatic: { disable: true } },
 };
 
