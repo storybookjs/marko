@@ -12,7 +12,7 @@ const deprecatedStoryAnnotationWarning = deprecate(
     CSF .story annotations deprecated; annotate story functions directly:
     - StoryFn.story.name => StoryFn.storyName
     - StoryFn.story.(parameters|decorators) => StoryFn.(parameters|decorators)
-    See https://github.com/storybookjs/storybook/issues/10906 for details and codemod.
+    See https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#hoisted-csf-annotations for details and codemod.
 `
 );
 
