@@ -236,7 +236,7 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
     name,
     version,
     ...rest,
-    cwd: path.join(siblingDir, `${name}-v${version}`),
+    cwd: path.join(siblingDir, `${name}-${version}`),
   };
 
   logger.info(`🏃‍♀️ Starting for ${name} ${version}`);
@@ -296,7 +296,7 @@ const runE2E = (parameters: Parameters) =>
     .then(async () => {
       if (!process.env.CI) {
         const { name, version } = parameters;
-        const cwd = path.join(siblingDir, `${name}-v${version}`);
+        const cwd = path.join(siblingDir, `${name}-${version}`);
 
         const { cleanup } = await prompt({
           type: 'confirm',
