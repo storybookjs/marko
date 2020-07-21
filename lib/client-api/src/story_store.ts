@@ -577,30 +577,16 @@ export default class StoryStore {
 
   getStoriesJsonData = () => {
     const value = this.getDataForManager();
-    const allowed = ['fileName', 'docsOnly', 'framework', '__id'];
+    const allowed = ['fileName', 'docsOnly', 'framework', '__id', '__isArgsStory'];
 
     return {
       v: 2,
       globalParameters: pick(value.globalParameters, allowed),
-      kindParameters: Object.entries(value.kindParameters).reduce(
-        (acc, [k, v]) => ({
-          ...acc,
-          [k]: pick(v, allowed),
-        }),
-        {}
-      ),
-      stories: Object.entries(value.stories).reduce(
-        (acc, [k, v]) => ({
-          ...acc,
-          // @ts-ignore
-          [k]: {
-            ...pick(v, ['id', 'name', 'kind', 'story']),
-            // @ts-ignore
-            parameters: pick(v.parameters, allowed),
-          },
-        }),
-        {}
-      ),
+      kindParameters: mapValues(value.kindParameters, (v) => pick(v, allowed)),
+      stories: mapValues(value.stories, (v: any) => ({
+        ...pick(v, ['id', 'name', 'kind', 'story']),
+        parameters: pick(v.parameters, allowed),
+      })),
     };
   };
 
@@ -633,7 +619,7 @@ export default class StoryStore {
     this.getStoriesForKind(kind).map((story) => this.cleanHooks(story.id));
   }
 
-  // This API is a reimplementation of Storybook's original getStorybook() API.
+  // This API is a re-implementation of Storybook's original getStorybook() API.
   // As such it may not behave *exactly* the same, but aims to. Some notes:
   //  - It is *NOT* sorted by the user's sort function, but remains sorted in "insertion order"
   //  - It does not include docs-only stories

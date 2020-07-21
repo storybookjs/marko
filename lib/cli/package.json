@@ -63,6 +63,7 @@
     "update-notifier": "^4.0.0"
   },
   "devDependencies": {
+    "@storybook/client-api": "6.0.0-rc.12",
     "@types/cross-spawn": "^6.0.1",
     "@types/inquirer": "^6.5.0",
     "@types/puppeteer-core": "^2.0.0",
