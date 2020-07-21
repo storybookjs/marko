@@ -33,6 +33,20 @@ Now run your Jest test command. (Usually, `npm test`.) Then you can see all of y
 
 ![Screenshot](https://raw.githubusercontent.com/storybookjs/storybook/HEAD/addons/storyshots/storyshots-core/docs/storyshots.png)
 
+### Testing stories that rely on addon-added decorators
+
+If you have stories in your Storybook that can only render inside a decorator (for instance the [`apollo-storybook-decorator`](https://github.com/abhiaiyer91/apollo-storybook-decorator)), you'll need to ensure those decorators are applied in Storyshots.
+
+If you export those decorators from your `.storybook/preview.js` then Storyshots will apply those decorators for you in the same way that Storybook does. However if the addon _automatically_ adds the decorator for you (which is a new feature in Storybook 6.0), you will find the decorator does not get added in Storyshots. This is a limitation in Storyshots currently.
+
+To ensure such decorators get added, simply ensure you export them from `.storybook/preview.js`:
+
+```js
+import addonDecorator from 'some-addon';
+
+export const decorators = [addonDecorator];
+```
+
 ## Configure your app for Jest
 
 In many cases, for example Create React App, it's already configured for Jest. You need to create a filename with the extension `.test.js`.
