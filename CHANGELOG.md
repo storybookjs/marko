@@ -1,3 +1,33 @@
+## 6.0.0-rc.12 (July 20, 2020)
+
+### Bug Fixes
+
+- Addon-controls: Fix undefined args handling ([#11619](https://github.com/storybookjs/storybook/pull/11619))
+- UI: Fix the color of the menu separator ([#11564](https://github.com/storybookjs/storybook/pull/11564))
+- Storyshots: Don't show `configure` deprecation warning ([#11611](https://github.com/storybookjs/storybook/pull/11611))
+- Addon-docs: Fix Props `components` input ([#11612](https://github.com/storybookjs/storybook/pull/11612))
+
+### Maintenance
+
+- Examples: Remove deprecated hierarchy separators ([#11615](https://github.com/storybookjs/storybook/pull/11615))
+- Hoist CSF `.story` annotations ([#11617](https://github.com/storybookjs/storybook/pull/11617))
+
+## 6.0.0-rc.11 (July 19, 2020)
+
+### Features
+
+- Addon-controls: Expose `presetColors` for the color control ([#11606](https://github.com/storybookjs/storybook/pull/11606))
+
+### Bug Fixes
+
+- Addon-docs: Fix Vue defaultValue in props table ([#11603](https://github.com/storybookjs/storybook/pull/11603))
+
+## 6.0.0-rc.10 (July 18, 2020)
+
+### Features
+
+- Addon-docs: Automatic source selection based on story type ([#11601](https://github.com/storybookjs/storybook/pull/11601))
+
 ## 6.0.0-rc.9 (July 17, 2020)
 
 ### Bug Fixes

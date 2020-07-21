@@ -86,7 +86,7 @@ function configure(
   });
 
   if (stories && stories.length) {
-    storybook.configure(stories, false);
+    storybook.configure(stories, false, false);
   }
 }
 
