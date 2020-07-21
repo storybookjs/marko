@@ -260,7 +260,7 @@ export const init: ModuleFn = ({
         // eslint-disable-next-line no-nested-ternary
         const id = s ? (s.children ? s.children[0] : s.id) : kindOrId;
         let viewMode =
-          viewModeFromArgs || (s && s.parameters.viewMode)
+          s && !isRoot(s) && (viewModeFromArgs || s.parameters.viewMode)
             ? s.parameters.viewMode
             : viewModeFromState;
 
