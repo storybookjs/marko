@@ -1,3 +1,12 @@
+## 6.0.0-rc.13 (July 21, 2020)
+
+### Bug Fixes
+
+- Core: Improve translation of globs for main.js stories ([#11531](https://github.com/storybookjs/storybook/pull/11531))
+- Core: Optimize `storiesHash` by removing unused parameters ([#11624](https://github.com/storybookjs/storybook/pull/11624))
+- Composition: Fix docs-only stories in composed refs ([#11584](https://github.com/storybookjs/storybook/pull/11584))
+- CLI: Generate `docs:json` command dynamically for Angular project ([#11622](https://github.com/storybookjs/storybook/pull/11622))
+
 ## 6.0.0-rc.12 (July 20, 2020)
 
 ### Bug Fixes
