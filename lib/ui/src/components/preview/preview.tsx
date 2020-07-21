@@ -124,7 +124,7 @@ const useTabs = (
   }, [getElements]);
 
   return useMemo(() => {
-    if (story && story.parameters) {
+    if (story?.parameters) {
       return filterTabs([canvas, ...tabsFromConfig], story.parameters);
     }
 
