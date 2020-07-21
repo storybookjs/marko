@@ -17,7 +17,6 @@ const baseProps: ComponentProps<typeof ListItem> = {
   isSelected: false,
   kind: 'foo',
   name: 'bar',
-  parameters: {},
   refId: '',
 };
 

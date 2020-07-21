@@ -3,6 +3,7 @@ import { ReactElement } from 'react';
 import { WindowLocation } from '@reach/router';
 import { ModuleFn } from '../index';
 import { Options } from '../store';
+import { isStory } from '../lib/stories';
 
 export type ViewMode = 'story' | 'info' | 'settings' | 'page' | undefined | string;
 
@@ -94,7 +95,7 @@ export const init: ModuleFn = ({ provider, store, fullAPI }) => {
       const { storyId } = store.getState();
       const story = fullAPI.getData(storyId);
 
-      if (!allPanels || !story) {
+      if (!allPanels || !story || !isStory(story)) {
         return allPanels;
       }
 

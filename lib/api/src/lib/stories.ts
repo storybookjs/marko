@@ -19,11 +19,6 @@ export interface Root {
   isComponent: false;
   isRoot: true;
   isLeaf: false;
-  // MDX stories are "Group" type
-  parameters?: {
-    docsOnly?: boolean;
-    [k: string]: any;
-  };
 }
 
 export interface Group {
@@ -36,11 +31,10 @@ export interface Group {
   isComponent: boolean;
   isRoot: false;
   isLeaf: false;
-  // MDX stories are "Group" type
+  // MDX docs-only stories are "Group" type
   parameters?: {
     docsOnly?: boolean;
     viewMode?: ViewMode;
-    [parameterName: string]: any;
   };
 }
 
@@ -203,7 +197,6 @@ export const transformStoriesRawToStoriesHash = (
               isComponent: false,
               isLeaf: false,
               isRoot: true,
-              parameters,
             };
             return soFar.concat([result]);
           }
@@ -216,7 +209,10 @@ export const transformStoriesRawToStoriesHash = (
             isComponent: false,
             isLeaf: false,
             isRoot: false,
-            parameters,
+            parameters: {
+              docsOnly: parameters?.docsOnly,
+              viewMode: parameters?.viewMode,
+            },
           };
           return soFar.concat([result]);
         }, [] as GroupsList);
