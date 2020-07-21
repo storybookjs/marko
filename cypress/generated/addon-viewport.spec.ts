@@ -4,7 +4,7 @@ describe('addon-viewport', () => {
   });
 
   it('should have viewport button in the toolbar', () => {
-    cy.navigateToStory('button', 'Text');
+    cy.navigateToStory('example-button', 'Primary');
 
     // Click on viewport button and select small mobile
     cy.get('[title="Change the size of the preview"]').click();
