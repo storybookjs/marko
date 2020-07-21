@@ -31,14 +31,15 @@ export const toRequireContext = (input: any) => {
     case typeof input === 'string': {
       const { base, glob } = globBase(fixedInput);
 
-      const recursive = glob.startsWith('**');
-      const indicator = glob.replace(/^(\*\*\/)*/, '');
-      const regex = makeRe(indicator, { fastpaths: false, noglobstar: false, bash: true });
+      const recursive = glob.includes('**') || glob.split('/').length > 2;
+      const regex = makeRe(glob, { fastpaths: false, noglobstar: false, bash: false });
       const { source } = regex;
 
       if (source.startsWith('^')) {
-        // prepended '^' char causes webpack require.context to fail
-        const match = source.substring(1);
+        // webpack's require.context matches against paths starting `./`
+        // Globs starting `**` require special treatment due to the regex they
+        // produce, specifically a negative look-ahead
+        const match = ['^\\.', glob.startsWith('**') ? '' : '\\/', source.substring(1)].join('');
 
         return { path: base, recursive, match };
       }
