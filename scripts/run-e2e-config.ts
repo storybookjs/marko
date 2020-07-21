@@ -140,11 +140,11 @@ export const cra: Parameters = {
 };
 
 // TODO: there is a compatibility issue with riot@4
-export const riot: Parameters = {
-  name: 'riot',
-  version: '3',
-  generator: fromDeps('riot@3', 'riot-compiler@3', 'riot-tmpl@3'),
-};
+// export const riot: Parameters = {
+//   name: 'riot',
+//   version: '3',
+//   generator: fromDeps('riot@3', 'riot-compiler@3', 'riot-tmpl@3'),
+// };
 
 export const sfcVue: Parameters = {
   name: 'sfcVue',
