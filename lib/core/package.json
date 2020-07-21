@@ -110,6 +110,8 @@
     "pretty-hrtime": "^1.0.3",
     "qs": "^6.6.0",
     "raw-loader": "^4.0.1",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
     "react-dev-utils": "^10.0.0",
     "regenerator-runtime": "^0.13.3",
     "resolve-from": "^5.0.0",
@@ -129,11 +131,6 @@
   },
   "devDependencies": {
     "mock-fs": "^4.12.0"
-  },
-  "peerDependencies": {
-    "@babel/core": "*",
-    "react": "*",
-    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"

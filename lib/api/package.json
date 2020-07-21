@@ -43,6 +43,7 @@
     "lodash": "^4.17.15",
     "memoizerific": "^1.11.3",
     "react": "^16.8.3",
+    "react-dom": "^16.8.3",
     "regenerator-runtime": "^0.13.3",
     "store2": "^2.7.1",
     "telejson": "^4.0.0",
@@ -54,9 +55,6 @@
     "@types/semver": "^7.1.0",
     "flush-promises": "^1.0.2",
     "qs": "^6.6.0"
-  },
-  "peerDependencies": {
-    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"
