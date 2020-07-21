@@ -116,7 +116,12 @@ const initStorybook = async ({ cwd, autoDetect = true, name }: Options) => {
   logger.info(`🎨 Initializing Storybook with @storybook/cli`);
   try {
     const type = autoDetect ? '' : `--type ${name}`;
-    await exec(`npx -p @storybook/cli sb init --yes ${type}`, { cwd });
+
+    const sbCLICommand = useLocalSbCli
+      ? 'node ../../storybook/lib/cli/dist/generate'
+      : 'npx -p @storybook/cli sb';
+
+    await exec(`${sbCLICommand} init --yes ${type}`, { cwd });
   } catch (e) {
     logger.error(`🚨 Storybook initialization failed`);
     throw e;
@@ -318,9 +323,14 @@ const runE2E = (parameters: Parameters) =>
     });
 
 program.option('--use-yarn-2', 'Run tests using Yarn 2 instead of Yarn 1 + npx', false);
+program.option(
+  '--use-local-sb-cli',
+  'Run tests using local @storybook/cli package (⚠️ Be sure @storybook/cli is properly build as it will not be rebuild before running the tests)',
+  false
+);
 program.parse(process.argv);
 
-const { useYarn2, args: frameworkArgs } = program;
+const { useYarn2, useLocalSbCli, args: frameworkArgs } = program;
 
 const typedConfigs: { [key: string]: Parameters } = configs;
 let e2eConfigs: { [key: string]: Parameters } = {};
