@@ -4,24 +4,26 @@ title: 'Introduction'
 
 Storybook is a tool for UI development. It makes development faster and easier by isolating components. This allows you to work on one component at a time. You can develop entire UIs without needing to start up a complex dev stack, force certain data into your database or navigate around your application.
 
-![This is a test image](./test-image.png)
-
-<SS>
+<div style="background-color:#F8FAFC">
+ TODO: add required image per 6.0 doc and spreadsheet 
+</div>
 
 Use Storybook to build small atomic components and complex pages in your web application. If it is a UI, you can build it with Storybook.
 
-<SSs>
+<div style="background-color:#F8FAFC">
+ TODO: add required image per 6.0 doc and assets spreadsheet
+</div>
 
-Storybook helps you document components for reuse and automatically visually test your components to prevent bugs. Extend Storybook with an ecosystem of addons that help you do things like fine tune responsive layouts or verify accessibility.
+Storybook helps you **document** components for reuse and automatically **visually test** your components to prevent bugs. Extend Storybook with an ecosystem of **addons** that help you do things like fine tune responsive layouts or verify accessibility.
 
-Storybook integrates with many popular JavaScript UI frameworks and (experimentally) supports server-rendered component frameworks such as Ruby on Rails.
+Storybook integrates with many popular JavaScript UI frameworks and (experimentally) supports server-rendered component frameworks such as [Ruby on Rails](https://rubyonrails.org/).
 
 ## Learning resources
 
-If you want to learn more about the component-driven approach that Storybook enables, this blog post is a good place to start.
+If you want to learn more about the component-driven approach that Storybook enables, this [site](http://componentdriven.org) is a good place to start.
 
-If you want a guided tutorial through building a simple application with Storybook in your framework and language, LearnStorybook has your back.
+If you want a guided tutorial through building a simple application with Storybook in your framework and language, [LearnStorybook](https://www.learnstorybook.com/) has your back.
 
 If you want to just learn the basics and APIs of Storybook, read on!
 
-> > [Get started installing Storybook into your project](./install.md#heading)
+> > [Get started installing Storybook into your project](./install.md)
