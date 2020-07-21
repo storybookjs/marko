@@ -107,6 +107,33 @@ describe('preview.story_store', () => {
     });
   });
 
+  describe('getStoriesJsonData', () => {
+    it('produces stories objects with normalized metadata', () => {
+      const store = new StoryStore({ channel });
+
+      store.addGlobalMetadata({ parameters: { global: 'global' }, decorators: [] });
+
+      store.addKindMetadata('a', { parameters: { kind: 'kind' }, decorators: [] });
+
+      addStoryToStore(store, 'a', '1', () => 0, { story: 'story' });
+
+      const { v, globalParameters, kindParameters, stories } = store.getStoriesJsonData();
+
+      expect(v).toBe(2);
+      expect(globalParameters).toEqual({});
+      expect(kindParameters).toEqual({ a: {} });
+      expect(kindParameters.a).toEqual({});
+
+      expect(Object.keys(stories)).toEqual(['a--1']);
+      expect(stories['a--1']).toMatchObject({
+        id: 'a--1',
+        kind: 'a',
+        name: '1',
+        parameters: { __isArgsStory: false },
+      });
+    });
+  });
+
   describe('getRawStory', () => {
     it('produces a story with inherited decorators applied', () => {
       const store = new StoryStore({ channel });

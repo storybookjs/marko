@@ -3,6 +3,7 @@ import memoize from 'memoizerific';
 import dedent from 'ts-dedent';
 import stable from 'stable';
 import mapValues from 'lodash/mapValues';
+import pick from 'lodash/pick';
 import store from 'store2';
 
 import { Channel } from '@storybook/channels';
@@ -574,6 +575,21 @@ export default class StoryStore {
     };
   };
 
+  getStoriesJsonData = () => {
+    const value = this.getDataForManager();
+    const allowed = ['fileName', 'docsOnly', 'framework', '__id', '__isArgsStory'];
+
+    return {
+      v: 2,
+      globalParameters: pick(value.globalParameters, allowed),
+      kindParameters: mapValues(value.kindParameters, (v) => pick(v, allowed)),
+      stories: mapValues(value.stories, (v: any) => ({
+        ...pick(v, ['id', 'name', 'kind', 'story']),
+        parameters: pick(v.parameters, allowed),
+      })),
+    };
+  };
+
   pushToManager = () => {
     if (this._channel) {
       // send to the parent frame.
@@ -603,7 +619,7 @@ export default class StoryStore {
     this.getStoriesForKind(kind).map((story) => this.cleanHooks(story.id));
   }
 
-  // This API is a reimplementation of Storybook's original getStorybook() API.
+  // This API is a re-implementation of Storybook's original getStorybook() API.
   // As such it may not behave *exactly* the same, but aims to. Some notes:
   //  - It is *NOT* sorted by the user's sort function, but remains sorted in "insertion order"
   //  - It does not include docs-only stories
