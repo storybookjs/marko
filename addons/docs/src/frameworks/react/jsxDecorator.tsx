@@ -97,10 +97,16 @@ const defaultOpts = {
 
 export const skipJsxRender = (context: StoryContext) => {
   const { parameters } = context;
-  const sourceParams = parameters?.docs?.source;
+  const sourceParams = parameters.docs?.source;
+
+  // always render if the user forces it
   if (sourceParams?.type === SourceType.DYNAMIC) {
     return false;
   }
+
+  // never render if the user is forcing the block to render code, or
+  // if the user provides code, or if it's not an args story.
+
   // eslint-disable-next-line no-underscore-dangle
   return !parameters.__isArgsStory || sourceParams?.code || sourceParams?.type === SourceType.CODE;
 };
@@ -108,6 +114,8 @@ export const skipJsxRender = (context: StoryContext) => {
 export const jsxDecorator = (storyFn: any, context: StoryContext) => {
   const story = storyFn();
 
+  // We only need to render JSX if the source block is actually going to
+  // consume it. Otherwise it's just slowing us down.
   if (skipJsxRender(context)) {
     return story;
   }
