@@ -41,11 +41,9 @@
     "graphql": "^15.0.0",
     "prop-types": "^15.7.2",
     "regenerator-runtime": "^0.13.3",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
     "webpack": "^4.43.0"
-  },
-  "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"

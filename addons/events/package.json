@@ -41,16 +41,13 @@
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "react": "^16.8.3",
+    "react-dom": "^16.8.3",
     "react-lifecycles-compat": "^3.0.4",
     "react-textarea-autosize": "^8.1.1",
     "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
     "@types/webpack-env": "^1.15.2"
-  },
-  "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"

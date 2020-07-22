@@ -38,6 +38,9 @@
     "@storybook/node-logger": "6.0.0-rc.13",
     "core-js": "^3.0.1",
     "regenerator-runtime": "^0.13.3",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "react-is": "^16.8.0",
     "ts-dedent": "^1.1.1"
   },
   "devDependencies": {
@@ -45,10 +48,7 @@
     "@types/webpack-env": "^1.15.2"
   },
   "peerDependencies": {
-    "babel-loader": "^8.0.0",
-    "react": "^16.8.0",
-    "react-dom": "*",
-    "react-is": "^16.8.0"
+    "babel-loader": "^8.0.0"
   },
   "publishConfig": {
     "access": "public"

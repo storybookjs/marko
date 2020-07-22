@@ -121,9 +121,6 @@
   "peerDependencies": {
     "@babel/core": "^7.0.0-0",
     "babel-loader": "^8.0.0",
-    "react": ">=16.3.0",
-    "react-dom": "*",
-    "react-is": "^16.8.0",
     "vue": "^2.6.10",
     "webpack": ">=4"
   },

@@ -39,11 +39,9 @@
     "global": "^4.3.2",
     "memoizerific": "^1.11.3",
     "prop-types": "^15.7.2",
-    "regenerator-runtime": "^0.13.3"
-  },
-  "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
+    "regenerator-runtime": "^0.13.3",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3"
   },
   "publishConfig": {
     "access": "public"
