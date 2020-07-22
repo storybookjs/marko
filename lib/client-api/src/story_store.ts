@@ -257,9 +257,9 @@ export default class StoryStore {
 
     decorators.forEach((decorator) => {
       if (this._globalMetadata.decorators.includes(decorator)) {
-        this._globalMetadata.decorators.push(decorator);
-      } else {
         logger.warn('You tried to add a duplicate decorator, this is not expected', decorator);
+      } else {
+        this._globalMetadata.decorators.push(decorator);
       }
     });
   }
