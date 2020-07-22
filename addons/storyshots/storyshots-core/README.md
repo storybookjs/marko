@@ -39,7 +39,7 @@ If you have stories in your Storybook that can only render inside a decorator (f
 
 If you export those decorators from your `.storybook/preview.js` then Storyshots will apply those decorators for you in the same way that Storybook does. However if the addon _automatically_ adds the decorator for you (which is a new feature in Storybook 6.0), you will find the decorator does not get added in Storyshots. This is a limitation in Storyshots currently.
 
-To ensure such decorators get added, simply ensure you export them from `.storybook/preview.js`:
+To ensure such decorators get added, export them from `.storybook/preview.js`:
 
 ```js
 import addonDecorator from 'some-addon';
