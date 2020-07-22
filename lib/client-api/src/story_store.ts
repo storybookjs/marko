@@ -255,7 +255,13 @@ export default class StoryStore {
 
     this._globalMetadata.parameters = combineParameters(globalParameters, parameters);
 
-    this._globalMetadata.decorators.push(...decorators);
+    decorators.forEach((decorator) => {
+      if (this._globalMetadata.decorators.includes(decorator)) {
+        this._globalMetadata.decorators.push(decorator);
+      } else {
+        logger.warn('You tried to add a duplicate decorator, this is not expected', decorator);
+      }
+    });
   }
 
   clearGlobalDecorators() {
