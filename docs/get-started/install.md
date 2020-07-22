@@ -29,8 +29,8 @@ npx storybook
 
 It will start Storybook locally and output the address. Depending on your system configuration, it will automatically open the address in a new browser tab and you'll be greeted by a welcome screen. In that screen there are some noteworthy items:
 
-- A collection of usefull links for more in depth configuration and customization options you have at your disposal.
-- A collection of usefull links for you to expand our Storybook knowledge and get involved with ever growing Storybook community.
+- A collection of useful links for more in depth configuration and customization options you have at your disposal.
+- A second set of links for you to expand your Storybook knowledge and get involved with the ever growing Storybook community.
 - A few example stories to get you started.
 
 <div style="background-color:#F8FAFC">

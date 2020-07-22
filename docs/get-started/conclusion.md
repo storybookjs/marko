@@ -8,5 +8,5 @@ If you’d like to learn workflows for building app UIs with Storybook, check ou
 
 What to learn next:
 
-- Write stories
-- Write component docs
+- [Write stories](../writing-stories/introduction)
+- [Write component docs](../writing-docs/introduction)

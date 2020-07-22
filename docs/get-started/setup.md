@@ -7,20 +7,21 @@ Now that you’ve learned about what stories are and how to browse stories, let�
 ```js
 // YourComponent.stories.js
 
-import { YourComponent } from ‘./YourComponent’;
+import { YourComponent } from './YourComponent';
 
 // This default export determines where you story goes in the story list
 export default {
   component: YourComponent,
-  title: ‘YourComponent’,
+  title: 'YourComponent',
 }
 
-const Story = (args) => <YourComponent {...args} />;
+const Template = (args) => <YourComponent {...args} />;
 
-export FirstStory = Story.bind({})
+export const FirstStory = Template.bind({});
+
 FirstStory.args = {
   /* the args you need here will depend on your component */
-}
+};
 ```
 
 Go to your Storybook to view the rendered component. It’s OK if it looks a bit unusual right now.
@@ -52,20 +53,20 @@ If you see errors on the CLI when you run the `yarn storybook` command. It’s l
 If Storybook builds but you see an error immediately when connecting to it in the browser, then chances are one of your input files is not compiling/transpiling correctly to be interpreted by the browser. Storybook supports modern browsers and IE11, but you may need to check the Babel and webpack settings (see above) to ensure your component code works correctly.
 
 
-<h4 id="story-context" name="story-context">Story context</h4>
+### Story context
 
 If a particular story has a problem rendering, often it means your component expects a certain environment is available to the component. 
 
 A common frontend pattern is for components to assume that they render in a certain “context” with parent components higher up the rendering hierarchy (for instance theme providers)
 
-Use [decorators](../writing-stories/decorators) to “wrap” every story in the necessary context providers. [`.storybook/preview.js`](../writing-stories/decorators#global-decorators) allows you to customize how components render in Canvas, the preview iframe. In this decorator example, we wrap every component rendered in Storybook with `ThemeProvider`
+Use [decorators](../writing-stories/decorators) to “wrap” every story in the necessary context providers. [`.storybook/preview.js`](../configure/overview#configure-story-rendering) allows you to customize how components render in Canvas, the preview iframe. In this decorator example, we wrap every component rendered in Storybook with `ThemeProvider`.
 
 ```js
 // .storybook/preview.js
 
-import { ThemeProvider } from ‘styled-components’;
+import { ThemeProvider } from 'styled-components';
 export const decorators = [
-  (Story) => <ThemeProvider theme=”default”><Story/></ThemeProvider>,
+  (Story) => <ThemeProvider theme="default"><Story/></ThemeProvider>,
 ];
 
 ```
@@ -90,7 +91,7 @@ Theme users may need to add a decorator to `.storybook/preview.js`, [see above](
 TODO:ask tom/dom for angular special import
 </div>
 
-Storybook supports import CSS files in your components directly. But in some cases you may need to [tweak the webpack config](../configure/integration#Webpack). Angular components require [a special import](locate-angular-special-import).
+Storybook supports import CSS files in your components directly. But in some cases you may need to [tweak the webpack config](../configure/integration#Webpack). Angular components require [a special import](../configure/integration#importing-css-files).
 
 
 #### Global imported styles

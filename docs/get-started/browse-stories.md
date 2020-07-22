@@ -36,13 +36,13 @@ The toolbar is customizable. You can use [globals](../essentials/toolbars-and-gl
 
 ### Addons
 
-Addons are plugins that extend Storybooks core functionality. You can find them in the addons panel, a reserved place in the Storybook UI below the Canvas. Each tab shows the generated metadata, logs, or static analysis for the selected story by the addon.
+Addons are plugins that extend Storybook's core functionality. You can find them in the addons panel, a reserved place in the Storybook UI below the Canvas. Each tab shows the generated metadata, logs, or static analysis for the selected story by the addon.
 
 <div style="background-color:#F8FAFC">
 TODO: add required gif per 6.0 doc and assets spreadsheet (Image of the addon tabs (probably with Controls))
 </div>
 
-- **Source** displays the source code of the currently rendered story.
+- **Source** displays the source code of the currently rendered story. (to be determined)
 - **Controls** allows you to dynamically interact with a component’s args (inputs). Experiment with alternate configurations of the component to discover edge cases.
 - **Actions** help you verify interactions produce the correct outputs via callbacks. For instance if you view the “Logged In” story of the Header component, we can verify that clicking the “Log out” button triggers the `onLogout` callback, which would be provided by the component that made use of the Header.
 
@@ -52,4 +52,4 @@ TODO: add required gif per 6.0 doc and assets spreadsheet (Image of the addon ta
 
 Storybook is extensible. Our rich ecosystem of addons helps you test, document, and optimize your stories. You can also create an addon to satisfy your workflow requirements. Read more in the [addons section](../api/addons).
 
-> > [Next lets get your components rendering in Storybook so you can use it to supercharge your component development.](./setup.md)
+> > [Next let's get your components rendering in Storybook so you can use it to supercharge your component development.](./setup.md)
