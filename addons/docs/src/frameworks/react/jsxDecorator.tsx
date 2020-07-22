@@ -4,12 +4,7 @@ import reactElementToJSXString, { Options } from 'react-element-to-jsx-string';
 import { addons, StoryContext } from '@storybook/addons';
 import { logger } from '@storybook/client-logger';
 
-import { SNIPPET_RENDERED } from '../../shared';
-
-type VueComponent = {
-  /** The template for the Vue component */
-  template?: string;
-};
+import { SourceType, SNIPPET_RENDERED } from '../../shared';
 
 interface JSXOptions {
   /** How many wrappers to skip when rendering the jsx */
@@ -100,8 +95,22 @@ const defaultOpts = {
   enableBeautify: true,
 };
 
+export const skipJsxRender = (context: StoryContext) => {
+  const { parameters } = context;
+  const sourceParams = parameters?.docs?.source;
+  if (sourceParams?.type === SourceType.DYNAMIC) {
+    return false;
+  }
+  // eslint-disable-next-line no-underscore-dangle
+  return !parameters.__isArgsStory || sourceParams?.code || sourceParams?.type === SourceType.CODE;
+};
+
 export const jsxDecorator = (storyFn: any, context: StoryContext) => {
-  const story: ReturnType<typeof storyFn> & VueComponent = storyFn();
+  const story = storyFn();
+
+  if (skipJsxRender(context)) {
+    return story;
+  }
 
   const channel = addons.getChannel();
 
