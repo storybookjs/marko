@@ -783,6 +783,17 @@ describe('preview.story_store', () => {
 
         expect(store.getSelection()).toEqual(undefined);
       });
+
+      // See #11571
+      it('does NOT select an earlier story that this story id is a prefix of', () => {
+        const store = new StoryStore({ channel });
+        store.setSelectionSpecifier({ storySpecifier: 'a--3', viewMode: 'story' });
+        addStoryToStore(store, 'a', '31', () => 0);
+        addStoryToStore(store, 'a', '3', () => 0);
+        store.finishConfiguring();
+
+        expect(store.getSelection()).toEqual({ storyId: 'a--3', viewMode: 'story' });
+      });
     });
 
     describe('if you use no specifier', () => {
