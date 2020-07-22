@@ -50,7 +50,7 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
     babelOptions,
     mdxBabelOptions,
     configureJSX = true,
-    sourceLoaderOptions = options.framework === 'react' ? null : {},
+    sourceLoaderOptions = {},
     transcludeMarkdown = false,
   } = options;
 
