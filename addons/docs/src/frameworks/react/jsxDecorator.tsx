@@ -4,12 +4,7 @@ import reactElementToJSXString, { Options } from 'react-element-to-jsx-string';
 import { addons, StoryContext } from '@storybook/addons';
 import { logger } from '@storybook/client-logger';
 
-import { SNIPPET_RENDERED } from '../../shared';
-
-type VueComponent = {
-  /** The template for the Vue component */
-  template?: string;
-};
+import { SourceType, SNIPPET_RENDERED } from '../../shared';
 
 interface JSXOptions {
   /** How many wrappers to skip when rendering the jsx */
@@ -100,14 +95,34 @@ const defaultOpts = {
   enableBeautify: true,
 };
 
+export const skipJsxRender = (context: StoryContext) => {
+  const sourceParams = context?.parameters.docs?.source;
+  const isArgsStory = context?.parameters.__isArgsStory;
+
+  // always render if the user forces it
+  if (sourceParams?.type === SourceType.DYNAMIC) {
+    return false;
+  }
+
+  // never render if the user is forcing the block to render code, or
+  // if the user provides code, or if it's not an args story.
+  return !isArgsStory || sourceParams?.code || sourceParams?.type === SourceType.CODE;
+};
+
 export const jsxDecorator = (storyFn: any, context: StoryContext) => {
-  const story: ReturnType<typeof storyFn> & VueComponent = storyFn();
+  const story = storyFn();
+
+  // We only need to render JSX if the source block is actually going to
+  // consume it. Otherwise it's just slowing us down.
+  if (skipJsxRender(context)) {
+    return story;
+  }
 
   const channel = addons.getChannel();
 
   const options = {
     ...defaultOpts,
-    ...((context && context.parameters.jsx) || {}),
+    ...(context?.parameters.jsx || {}),
   } as Required<JSXOptions>;
 
   let jsx = '';

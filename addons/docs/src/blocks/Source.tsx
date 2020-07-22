@@ -10,31 +10,9 @@ import { logger } from '@storybook/client-logger';
 import { DocsContext, DocsContextProps } from './DocsContext';
 import { SourceContext, SourceContextProps } from './SourceContainer';
 import { CURRENT_SELECTION } from './types';
+import { SourceType } from '../shared';
 
 import { enhanceSource } from './enhanceSource';
-
-enum SourceType {
-  /**
-   * AUTO is the default
-   *
-   * Use the CODE logic if:
-   * - the user has set a custom source snippet in `docs.source.code` story parameter
-   * - the story is not an args-based story
-   *
-   * Use the DYNAMIC rendered snippet if the story is an args story
-   */
-  AUTO = 'auto',
-
-  /**
-   * Render the code extracted by source-loader
-   */
-  CODE = 'code',
-
-  /**
-   * Render dynamically-rendered source snippet from the story's virtual DOM (currently React only)
-   */
-  DYNAMIC = 'dynamic',
-}
 
 interface CommonProps {
   language?: string;
