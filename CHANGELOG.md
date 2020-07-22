@@ -1,3 +1,17 @@
+## 6.0.0-rc.14 (July 22, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Re-enable source-loader by default ([#11650](https://github.com/storybookjs/storybook/pull/11650))
+- Core: Remove duplicate decorators and warn ([#11643](https://github.com/storybookjs/storybook/pull/11643))
+- Storyshots: Fix metadata (parameters/decorators) handling ([#11518](https://github.com/storybookjs/storybook/pull/11518))
+- Addon-docs: Skip dynamic source rendering when not needed ([#11640](https://github.com/storybookjs/storybook/pull/11640))
+- Core: Fix prefix redirect ([#11637](https://github.com/storybookjs/storybook/pull/11637))
+
+### Maintenance
+
+- Core: Log message length on channel message ([#11646](https://github.com/storybookjs/storybook/pull/11646))
+
 ## 6.0.0-rc.13 (July 21, 2020)
 
 ### Bug Fixes
