@@ -189,8 +189,8 @@ const Template = (args) => <List {...args} />
 In such cases, it makes sense to render something a different function for each story:
 
 ```js
-import List from ‘./List’
-import ListItem from ‘./ListItem’
+import List from './List'
+import ListItem from './ListItem'
 export default {
   component: List,
   title: 'List',

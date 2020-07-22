@@ -79,10 +79,6 @@ export default {
 
 ### Global decorators
 
-<div style="background-color:#F8FAFC">
-TODO: Further vet if the  link [`.storybook/preview.js`] below should point upwards to “Context” for mocking block or somewhere else
-</div>
-
 We can also set a decorator for **all stories** via the `decorators` export of your [`.storybook/preview.js`](../configure/overview#configure-story-rendering) file (this is the file where you configure all stories):
 
 ```js

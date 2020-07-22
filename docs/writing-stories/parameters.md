@@ -39,10 +39,6 @@ export default {
 
 ### Global parameters
 
-<div>
-TODO: ask tom/dom for a bit more clarification about the preview.js file
-</div>
-
 We can also set the parameters for **all stories** via the `parameters` export of your [`.storybook/preview.js`](../configure/overview#configure-story-rendering) file (this is the file where you configure all stories):
 
 ```js
