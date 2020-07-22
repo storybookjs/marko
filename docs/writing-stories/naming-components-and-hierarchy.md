@@ -16,7 +16,7 @@ Yields this:
 
 <div style="background-color:#F8FAFC">
 TODO: per screenshot spreadsheet add image Default ordering of Button with the placement
-<div>
+</div>
 
 
 ### Grouping
@@ -27,16 +27,15 @@ It is also possible to group related components in an expandable interface in or
 // Button.stories.js
 
 export default {
-  title: ‘Design System/Atoms/Button’
+  title: 'Design System/Atoms/Button'
 }
 ```
-
 
 ```js
 // Checkbox.stories.js
 
 export default {
-  title: ‘Design System/Atoms/Checkbox’
+  title: 'Design System/Atoms/Checkbox'
 }
 ```
 
@@ -46,7 +45,7 @@ Yields this:
 
 TODO: per screenshot spreadsheet add image Show Button ordering/grouping with Design System/Atoms/Button title
 
-<div>
+</div>
 
 ### Roots
 
@@ -61,6 +60,8 @@ By default, stories are sorted in the order in which they were imported. This ca
 The most powerful method of sorting is to provide a function to `storySort`. Any custom sorting can be achieved with this method.
 
 ```js
+// .storybook/preview.js
+
 export const parameters = {
   options: {
     storySort: (a, b) =>
@@ -72,27 +73,31 @@ export const parameters = {
 The `storySort` can also accept a configuration object.
 
 ```js
+// .storybook/preview.js
 
-export parameters = {
+export const parameters = {
   options: {
     storySort: {
-      method: 'alphabetical', // Optional, defaults to 'configure'.
-      order: ['Intro', 'Components'], // Optional, defaults to [].
-      locales: 'en-US', // Optional, defaults to system locale.
+      method: '',
+      order: [], 
+      locales: '', 
     },
   },
 };
 ```
-<div>
-TODO: ask tom/dom if we could add table here that could be further expanded
-</div>
+
+| Field         | Type          | Description                                            | Required | Default Value          |Example                  |
+| ------------- |:-------------:|:------------------------------------------------------:|:--------:|:----------------------:|:-----------------------:|
+| **method**    | String        |Tells Storybook in which order the stories are displayed|No        |Storybook configuration |`'alphabetical'`         |
+| **order**     | Array         |The stories to be show, ordered by supplied name        |No        |Empty Array `[]`        |`['Intro', 'Components']`|
+| **locales**   | String?       |The locale required to be displayed                     |No        |System locale           |`en-US`                  |
 
 To sort your stories alphabetically, set `method` to `'alphabetical'` and optionally set the `locales` string. To sort your stories using a custom list, use the `order` array; stories that don't match an item in the `order` list will appear after the items in the list.
 
 The `order` array can accept a nested array in order to sort 2nd-level story kinds. For example:
 
 ```js
-export parameters = {
+export const parameters = {
   options: {
     storySort: {
       order: ['Intro', 'Pages', ['Home', 'Login', 'Admin'], 'Components'],

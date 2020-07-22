@@ -19,24 +19,22 @@ The args object can be defined at the story and component level (see below). It 
 To define the args of a single story, use the `args` CSF story key:
 
 ```js
-export const Primary = Story.bind({});
+export const Primary = Template.bind({});
+
 Primary.args = {
   primary: true,
-  label: ‘Primary’,
+  label: 'Primary',
 }
 ```
 
-<div style="background-color:#F8FAFC">
-TODO: ask dom/tom for clarity on the reuse link location
-</div>
-
-These args will only apply to the story for which they are attached, although you can [reuse](locate-where-points-at) them via JavaScript object reuse:
+These args will only apply to the story for which they are attached, although you can [reuse](../workflows/build-pages-with-storybook#args-composition-for-presentational-screens) them via JavaScript object reuse:
 
 ```js
-export const PrimaryLongName = Story.bind({});
+export const PrimaryLongName = Template.bind({});
+
 PrimaryLongName.args = {
   ...Primary.args,
-  label: ‘Primary with a really long name’,
+  label: 'Primary with a really long name',
 }
 ```
 
@@ -48,9 +46,9 @@ In the above example, we use the [object spread](https://developer.mozilla.org/e
 You can also define args at the component level; such args will apply to all stories of the component unless they are overwritten. To do so, use the `args` key of the `default` CSF export:
 
 ```js
-import Button from ‘./Button’;
+import Button from './Button';
 export default {
-  title: “Button”,
+  title: "Button",
   component: Button,
   args: {
     // Now all Button stories will be primary.
@@ -68,7 +66,7 @@ You can separate the arguments to a story to compose in other stories. Here’s 
 const Primary = ButtonStory.bind({});
 Primary.args = {
   primary: true,
-  label: ‘Button’,
+  label: 'Button',
 }
 
 const Secondary = ButtonStory.bind({});
@@ -88,16 +86,16 @@ Args are useful when writing stories for composite components that are assembled
 ```js
 /// Page.stories.js
 
-import Page from ‘./Page’;
+import Page from './Page';
 import * as Header from './Header.stories';
 
 export const default {
   component: Page,
-  title: ‘Page’,
+  title: 'Page',
 };
 
-const Story = (args) => <Page {...args} />
-export const LoggedIn = Story.bind({});
+const Template = (args) => <Page {...args} />
+export const LoggedIn = Template.bind({});
 LoggedIn.args = {
   ...Header.LoggedIn.args,
 };
@@ -108,17 +106,26 @@ LoggedIn.args = {
 If you are [writing an addon](../api/addons#getting-started) that wants to read or update args, use the `useArgs` hook exported by `@storybook/api`:
 
 ```js
-import { useArgs } from ‘@storybook/api’;
-const [args, updateArgs] = useArgs();
+
+import { useArgs } from '@storybook/api';
+
+const [args, updateArgs,resetArgs] = useArgs();
+
 // To update one or more args:
-updateArgs({ key: ‘value’ });
+updateArgs({ key: 'value' });
+
+// To reset one (or more) args:
+resetArgs(argNames:['key']);
+
+// To reset all args
+resetArgs();
 ```
 
 #### parameters.passArgsFirst
 
 In Storybook 6+, we pass the args as the first argument to the story function. The second argument is the “context” which contains things like the story parameters etc.
 
-In Storybook 5 and before we passed the context as the first argument. If you’d like to revert to that functionality set the `parameters.passArgsFirst` parameter in `.storybook/preview.js`:
+In Storybook 5 and before we passed the context as the first argument. If you’d like to revert to that functionality set the `parameters.passArgsFirst` parameter in [`.storybook/preview.js`](../configure/overview#configure-story-rendering):
 
 ```js
 export const parameter = { passArgsFirst : false }.

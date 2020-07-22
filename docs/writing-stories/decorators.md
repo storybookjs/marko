@@ -17,7 +17,7 @@ TODO: per screenshot spreadsheet add Image of Component Story without margins
 ```js
 export default {
   component: TextComponent,
-  decorators: [(Story) => <div style={{ margin: ‘3em’ }}><Story/></div>]
+  decorators: [(Story) => <div style={{ margin: '3em' }}><Story/></div>]
 }
 ```
 
@@ -28,12 +28,12 @@ TODO: per screenshot spreadsheet add Image of Component Story with margins
 
 ### “Context” for mocking
 
-Some libraries require components higher up in the component hierarchy to render properly. For example in Styled Components, a `ThemeProvider` is required if your components make use of themes. Add a single global decorator that add this context to to all stories in __preview.js__ :
+Some libraries require components higher up in the component hierarchy to render properly. For example in Styled Components, a `ThemeProvider` is required if your components make use of themes. Add a single global decorator that add this context to to all stories in [`.storybook/preview.js`](../configure/overview#configure-story-rendering):
 
 ```js
 // .storybook/preview.js
 
-import { ThemeProvider } from ‘styled-components’;
+import { ThemeProvider } from 'styled-components';
 export const decorators = [
   (Story) => <ThemeProvider theme=”default”><Story/></ThemeProvider>,
 ];
@@ -58,7 +58,7 @@ To define a decorator for a single story, use the `decorators` key on a named ex
 
 ```js
 export const Primary = …
-Primary.decorators = [(Story) => <div style={{ margin: ‘3em’ }}><Story/></div>]
+Primary.decorators = [(Story) => <div style={{ margin: '3em' }}><Story/></div>]
 ```
 
 This is useful to ensure that the story remains a “pure” rendering of the component under test and any extra HTML or components you need to add don’t pollute that. In particular the [Source](../writing-docs/docs-blocks#source) docblock works best when you do this.
@@ -69,11 +69,11 @@ This is useful to ensure that the story remains a “pure” rendering of the co
 To define a decorator for all stories of a component, use the `decorators` key of the default CSF export:
 
 ```js
-import Button from ‘./Button’;
+import Button from './Button';
 export default {
-  title: “Button”,
+  title: "Button",
   component: Button,
-  decorators:  [(Story) => <div style={{ margin: ‘3em’ }}><Story/></div>]
+  decorators:  [(Story) => <div style={{ margin: '3em' }}><Story/></div>]
 };
 ```
 
@@ -83,10 +83,10 @@ export default {
 TODO: Further vet if the  link [`.storybook/preview.js`] below should point upwards to “Context” for mocking block or somewhere else
 </div>
 
-We can also set a decorator for **all stories** via the `decorators` export of your [`.storybook/preview.js`](locate-preview.js) file (this is the file where you configure all stories):
+We can also set a decorator for **all stories** via the `decorators` export of your [`.storybook/preview.js`](../configure/overview#configure-story-rendering) file (this is the file where you configure all stories):
 
 ```js
-export const decorators = [(Story) => <div style={{ margin: ‘3em’ }}><Story/></div>]
+export const decorators = [(Story) => <div style={{ margin: '3em' }}><Story/></div>]
 ```
 
 ### Decorator Inheritance

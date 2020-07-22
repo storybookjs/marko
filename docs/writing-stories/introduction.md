@@ -31,7 +31,7 @@ The default export metadata controls how Storybook lists your stories and provid
 import { Button } from './Button';
 
 export default {
-  title: ‘Components/Button’,
+  title: 'Components/Button',
   component: Button,
 }
 ```
@@ -45,10 +45,10 @@ Use the named exports of a CSF file to define your component’s stories. Here�
 
 import { Button } from './Button';
 export default {
-  title: ‘Components/YourComponent’,
+  title: 'Components/YourComponent',
   component: YourComponent,
 }
-export const Primary = () => <Button primary label=”Button” />;
+export const Primary = () => <Button primary label="Button" />;
 
 ```
 
@@ -59,9 +59,9 @@ A story is a function that describes how to render a component. You can have mul
 ```js
 // Button.stories.js
 
-export const Primary = () => <Button background="#ff0" label=”Button” />;
-export const Secondary = () => <Button background="#ff0" label=”😄👍😍💯” />;
-export const Tertiary = () => <Button background="#ff0" label=”📚📕📈🤓” />
+export const Primary = () => <Button background="#ff0" label="Button" />;
+export const Secondary = () => <Button background="#ff0" label=”😄👍😍💯" />;
+export const Tertiary = () => <Button background="#ff0" label="📚📕📈🤓" />;
 
 ```
 
@@ -73,19 +73,19 @@ Refine this pattern by defining a master template for a component’s stories th
 
 ```js
 // We create a “template” of how args map to rendering
-const Story = (args) => <Button {...args} />;
+const Template = (args) => <Button {...args} />;
 
 // Each story then reuses that template
-export const Primary = Story.bind({});
-Primary.args = { background="#ff0",  label: ‘Button’ };
-export const Secondary = Story.bind({});
-Secondary.args = {  ...Primary.args,  label: ‘😄👍😍💯’,};
+export const Primary = Template.bind({});
+Primary.args = { background="#ff0",  label: 'Button' };
+export const Secondary = Template.bind({});
+Secondary.args = {  ...Primary.args,  label: '😄👍😍💯',};
 
-export const Tertiary = Story.bind({});
-Tertiary.args = {  ...Primary.args,  label: ‘📚📕📈🤓’,};
+export const Tertiary = Template.bind({});
+Tertiary.args = {  ...Primary.args,  label: '📚📕📈🤓',};
 ```
 
-The template is reused across stories. Story.bind({}) makes a copy of the function which reduces code duplication. Similarly,`...Primary.args` makes a copy of the data, reducing data duplication.
+The template is reused across stories. Template.bind({}) makes a copy of the function which reduces code duplication. Similarly,`...Primary.args` makes a copy of the data, reducing data duplication.
 
 What’s more, you can import args to reuse when writing stories for other components. This is useful when you’re building composite components. For example, if we make a `ButtonGroup`component, we might remix two `Button` stories.
 
@@ -95,15 +95,15 @@ What’s more, you can import args to reuse when writing stories for other compo
 import { ButtonGroup } from '../ButtonGroup';
 import { Primary, Secondary } from '../Button.stories';
 export default {
-  title: ‘ButtonGroup’,
+  title: 'ButtonGroup',
   component: ButtonGroup,
 }
-const Story = (args) => <ButtonGroup {...args} />
+const Template = (args) => <ButtonGroup {...args} />
 
-export const Pair = Story.bind({});
+export const Pair = Template.bind({});
 Pair.args = {
   buttons: [ Primary.args, Secondary.args ],
-  orientation: ‘horizontal’,
+  orientation: 'horizontal',
 };
 ```
 When Button’s signature changes, you only need to change Button’s stories to reflect the new schema. ButtonGroup’s stories will automatically be updated. This pattern allows you to reuse your data definitions up and down your component hierarchy, making your stories more maintainable.
@@ -112,13 +112,13 @@ That’s not all! Each of the args from the story function are live editable usi
 
 <div style="background-color:#F8FAFC">
 TODO: per screenshot spreadsheet add GIF of controls in action
-<div>
+</div>
 
 Addons can enhance args. For instance, [Actions](../essentials/actions) auto detects which args are callbacks and appends a logging function to them. That way interactions (like clicks) get logged in the actions panel.
 
 <div style="background-color:#F8FAFC">
 TODO: per screenshot spreadsheet add GIF of actions in action
-<div>
+</div>
 
 #### Using parameters
 
@@ -129,16 +129,16 @@ For instance, suppose you wanted to test your Button component against a differe
 ```js
 // Button.stories.js
 
-import Button from ‘./Button’;
-export {
-  title: ‘Button’,
+import Button from './Button';
+export default {
+  title: 'Button',
   component: Button,
   parameters: {
     backgrounds: {
       values: [
-         { name: ‘red’, value: ‘#f00’, },
-         { name: ‘green’, value: ‘#0f0’, },
-         { name: ‘blue’, value: ‘#00f’, },
+         { name: 'red', value: '#f00', },
+         { name: 'green', value: '#0f0', },
+         { name: 'blue', value: '#00f', },
       ]
     }
   }
@@ -146,7 +146,7 @@ export {
 ```
 <div style="background-color:#F8FAFC">
 TODO: per screenshot spreadsheet add Image of the story with the params
-<div>
+</div>
 
 This parameter would instruct the backgrounds addon to reconfigure itself whenever a Button story is selected. Most addons are configured via a parameter-based API and can be influenced at a [global](./parameters#global-parameters), [component](./parameters#component-parameters) and [story](./parameters#story-parameters) level.
 
@@ -160,18 +160,15 @@ A simple example is adding padding to a component’s stories. Accomplish this u
 ```js
 // Button.stories.js
 
-import Button from ‘./Button’;
-export {
-  title: ‘Button’,
+import Button from './Button';
+export default {
+  title: 'Button',
   component: Button,
-  decorators: [(Story) => <div style={{ padding: ‘3em’ }}><Story /></div>]
+  decorators: [(Story) => <div style={{ padding: '3em' }}><Story /></div>]
 }
 ```
-<div style="background-color:#F8FAFC">
-TODO: a little more clarification on where these two links ("can be more complex" and "addons") below will point to
-<div>
 
-Decorators [can be more complex]() and are often provided by [addons](). You can also configure decorators at the [story](./decorators#story-decorators), [component](./decorators#component-decorators) and [global](./decorators#global-decorators) level.
+Decorators [can be more complex](./decorators#context-for-mocking) and are often provided by [addons](../configure/user-interface#storybook-addons). You can also configure decorators at the [story](./decorators#story-decorators), [component](./decorators#component-decorators) and [global](./decorators#global-decorators) level.
 
 
 ### Stories for two or more components
@@ -179,10 +176,10 @@ Decorators [can be more complex]() and are often provided by [addons](). You can
 When building design systems or component libraries, you may have two or more components that are designed to work together. For instance, if you have a parent `List` component, it may require child `ListItem` components.
 
 ```js
-import List from ‘./List’
+import List from './List'
 export default {
   component: List,
-  title: ‘List’,
+  title: 'List',
 };
 
 // Always an empty list, not super interesting
@@ -196,7 +193,7 @@ import List from ‘./List’
 import ListItem from ‘./ListItem’
 export default {
   component: List,
-  title: ‘List’,
+  title: 'List',
 };
 
 export const Empty = (args) => <List {...args} />;
@@ -219,7 +216,7 @@ export const ManyItems = (args) => (
 You can also reuse stories from the child `ListItem` in your `List` component. That’s easier to maintain because you don’t have to keep the identical story definitions up to date in multiple places.
 
 ```js
-import { Selected, Unselected } from ‘./ListItem.stories’;
+import { Selected, Unselected } from './ListItem.stories';
 export const ManyItems = (args) => (
   <List {...args}>
     <Selected {...Selected.args} />
