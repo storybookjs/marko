@@ -191,10 +191,11 @@ export class PostmsgTransport {
 
           return;
         }
+        const message = `${pageString} received ${eventString} (${data.length})`;
         pretty.debug(
           location.origin !== event.source
-            ? `${pageString} received ${eventString}`
-            : `${pageString} received ${eventString} <span style="color: gray">(on ${location.origin} from ${event.source})</span>`,
+            ? message
+            : `${message} <span style="color: gray">(on ${location.origin} from ${event.source})</span>`,
           ...event.args
         );
 
