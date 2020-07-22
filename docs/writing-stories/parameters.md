@@ -12,8 +12,18 @@ We can set a parameter for a single story with the `parameters` key on a CSF exp
 
 ```js
 export const Primary = Template.bind({});
-Primary.args = …
-Primary.parameters = { backgrounds: … };
+Primary.args ={
+  primary: true,
+  label: 'Button',
+}
+Primary.parameters = { 
+  backgrounds:{
+    values: [
+      { name: 'red', value: '#f00', },
+      { name: 'green', value: '#0f0', },
+    ],
+  }
+};
 ```
 
 ### Component parameters
