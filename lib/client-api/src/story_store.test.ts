@@ -748,6 +748,17 @@ describe('preview.story_store', () => {
         expect(store.getSelection()).toEqual({ storyId: 'g2-a--1', viewMode: 'story' });
       });
 
+      // Making sure the fix #11571 doesn't break this
+      it('selects the first story if there are two stories in the group of different lengths', () => {
+        const store = new StoryStore({ channel });
+        store.setSelectionSpecifier({ storySpecifier: 'a', viewMode: 'story' });
+        addStoryToStore(store, 'a', 'long-long-long', () => 0);
+        addStoryToStore(store, 'a', 'short', () => 0);
+        store.finishConfiguring();
+
+        expect(store.getSelection()).toEqual({ storyId: 'a--long-long-long', viewMode: 'story' });
+      });
+
       it('selects nothing if the component or group does not exist', () => {
         const store = new StoryStore({ channel });
         store.setSelectionSpecifier({ storySpecifier: 'c', viewMode: 'story' });

@@ -220,9 +220,12 @@ export default class StoryStore {
         // '*' means select the first story. If there is none, we have no selection.
         [foundStory] = stories;
       } else if (typeof storySpecifier === 'string') {
-        // Find the story with the shortest id that matches the specifier (see #11571)
-        const foundStories = Object.values(stories).filter((s) => s.id.startsWith(storySpecifier));
-        [foundStory] = foundStories.sort((a, b) => a.id.length - b.id.length);
+        // Find the story with the exact id that matches the specifier (see #11571)
+        foundStory = Object.values(stories).find((s) => s.id === storySpecifier);
+        if (!foundStory) {
+          // Fallback to the first story that starts with the specifier
+          foundStory = Object.values(stories).find((s) => s.id.startsWith(storySpecifier));
+        }
       } else {
         // Try and find a story matching the name/kind, setting no selection if they don't exist.
         const { name, kind } = storySpecifier;
