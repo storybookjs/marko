@@ -17709,6 +17709,13 @@ is-regex@^1.0.3, is-regex@^1.0.4, is-regex@^1.0.5:
   dependencies:
     has "^1.0.3"
 
+is-regex@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/is-regex/-/is-regex-1.1.0.tgz#ece38e389e490df0dc21caea2bd596f987f767ff"
+  integrity sha512-iI97M8KTWID2la5uYXlkbSDQIg4F6o1sYboZKKTDpnDQMLtUL86zxhgDet3Q2SriaYsyGqZ6Mn2SjbRKeLHdqw==
+  dependencies:
+    has-symbols "^1.0.1"
+
 is-regexp@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/is-regexp/-/is-regexp-1.0.0.tgz#fd2d883545c46bac5a633e7b9a09e87fa2cb5069"
@@ -21138,6 +21145,11 @@ lodash@4.17.15, "lodash@>=3.5 <5", lodash@^4.0.0, lodash@^4.0.1, lodash@^4.15.0,
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
+
+lodash@^4.17.19:
+  version "4.17.19"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
+  integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
 
 log-symbols@3.0.0, log-symbols@^3.0.0:
   version "3.0.0"
@@ -30238,6 +30250,20 @@ telejson@^4.0.0:
     is-symbol "^1.0.3"
     isobject "^4.0.0"
     lodash "^4.17.15"
+    memoizerific "^1.11.3"
+
+telejson@^4.0.1-0:
+  version "4.0.1-0"
+  resolved "https://registry.yarnpkg.com/telejson/-/telejson-4.0.1-0.tgz#a8b7bbf5434e6ce6eb35865c9773c43500de3b47"
+  integrity sha512-M2tr8iWQnd/xVobS2tFxcY3oT+aBbI0/Z1c+fuO7jiQr3qI3x/YMLD0qODPSUxOcidXA0EdELRRta47nvJLbbA==
+  dependencies:
+    "@types/is-function" "^1.0.0"
+    global "^4.4.0"
+    is-function "^1.0.2"
+    is-regex "^1.1.0"
+    is-symbol "^1.0.3"
+    isobject "^4.0.0"
+    lodash "^4.17.19"
     memoizerific "^1.11.3"
 
 temp-dir@^1.0.0:

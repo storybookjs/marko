@@ -31,7 +31,7 @@
     "@storybook/channels": "6.0.0-rc.14",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
-    "telejson": "^4.0.0"
+    "telejson": "^4.0.1"
   },
   "publishConfig": {
     "access": "public"

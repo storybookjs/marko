@@ -34,7 +34,7 @@
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "qs": "^6.6.0",
-    "telejson": "^4.0.0"
+    "telejson": "^4.0.1"
   },
   "publishConfig": {
     "access": "public"
