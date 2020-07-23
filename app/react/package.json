@@ -50,7 +50,7 @@
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "react-dev-utils": "^10.0.0",
-    "react-docgen-typescript-plugin": "^0.5.1",
+    "react-docgen-typescript-plugin": "^0.5.2",
     "regenerator-runtime": "^0.13.3",
     "ts-dedent": "^1.1.1",
     "webpack": "^4.43.0"
