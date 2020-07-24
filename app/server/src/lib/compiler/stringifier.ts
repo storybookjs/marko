@@ -65,20 +65,17 @@ export function stringifyStory(story: StorybookStory): string {
 
   const optionsString = stringifyObject({ name, ...options }, 0, true);
 
-  const stronyStrings = [
+  const storyStrings = [
     `export const ${storyId} = ${storyFn};`,
     `${storyId}.storyName = '${name}';`,
   ];
 
-  // if (decorators && decorators.length > 0) {
-  //   stronyStrings.push(`${storyId}.decorators = [${decorators.join(',')}];`);
-  // }
   Object.keys(options).forEach((key) => {
-    stronyStrings.push(`${storyId}.${key} = ${stringifyObject(options[key])};`);
+    storyStrings.push(`${storyId}.${key} = ${stringifyObject(options[key])};`);
   });
-  stronyStrings.push('');
+  storyStrings.push('');
 
-  return stronyStrings.join('\n');
+  return storyStrings.join('\n');
 }
 
 export function stringifySection(section: StorybookSection): string {
