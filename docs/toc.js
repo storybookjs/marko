@@ -21,5 +21,10 @@ module.exports = {
       prefix: 'writing-docs',
       pages: ['introduction', 'docs-page', 'mdx', 'doc-blocks'],
     },
+    {
+      title: 'Essentials',
+      prefix:'essentials',
+      pages:['introduction','controls','actions','viewports','backgrounds','toolbars-and-globals']
+    },
   ],
 };
