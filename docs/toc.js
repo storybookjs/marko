@@ -21,5 +21,10 @@ module.exports = {
       prefix: 'writing-docs',
       pages: ['introduction', 'docs-page', 'mdx', 'doc-blocks'],
     },
+    {
+      title: 'Configure',
+      prefix: 'configure',
+      pages: ['overview', 'integration', 'story-rendering', 'user-interface'],
+    }
   ],
 };
