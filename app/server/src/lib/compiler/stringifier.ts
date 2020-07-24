@@ -60,17 +60,25 @@ export function stringifyDefault(section: StorybookSection): string {
 }
 
 export function stringifyStory(story: StorybookStory): string {
-  const { name, storyFn, decorators, ...options } = story;
+  const { name, storyFn, ...options } = story;
   const storyId = identifier(name);
 
-  const decoratorsString = stringifyDecorators(decorators);
   const optionsString = stringifyObject({ name, ...options }, 0, true);
 
-  let storyString = '';
-  if (decoratorsString.length > 0 || optionsString.length > 0) {
-    storyString = `${storyId}.story = {${decoratorsString}${optionsString}\n};\n`;
-  }
-  return `export const ${storyId} = ${storyFn};\n${storyString}`;
+  const stronyStrings = [
+    `export const ${storyId} = ${storyFn};`,
+    `${storyId}.storyName = '${name}';`,
+  ];
+
+  // if (decorators && decorators.length > 0) {
+  //   stronyStrings.push(`${storyId}.decorators = [${decorators.join(',')}];`);
+  // }
+  Object.keys(options).forEach((key) => {
+    stronyStrings.push(`${storyId}.${key} = ${stringifyObject(options[key])};`);
+  });
+  stronyStrings.push('');
+
+  return stronyStrings.join('\n');
 }
 
 export function stringifySection(section: StorybookSection): string {
@@ -80,6 +88,5 @@ export function stringifySection(section: StorybookSection): string {
     ...section.stories.map((story) => stringifyStory(story)),
   ].join('\n');
 
-  // console.log('sectionString:\n', sectionString);
   return sectionString;
 }

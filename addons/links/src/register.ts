@@ -3,6 +3,7 @@ import addons from '@storybook/addons';
 import EVENTS, { ADDON_ID } from './constants';
 
 addons.register(ADDON_ID, (api) => {
+  console.log('links register');
   const channel = addons.getChannel();
 
   channel.on(EVENTS.REQUEST, ({ kind, name }) => {

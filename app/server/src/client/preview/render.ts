@@ -13,7 +13,6 @@ let fetchStoryHtml: FetchStoryHtmlType = async (url, path, params) => {
 };
 
 export async function renderMain({
-  storyFn,
   id,
   kind,
   name,
@@ -21,8 +20,19 @@ export async function renderMain({
   showError,
   forceRender,
   parameters,
+  storyFn,
+  args,
+  argTypes,
 }: RenderContext) {
-  const storyParams = storyFn();
+  storyFn();
+  const storyParams = { ...args };
+
+  Object.keys(argTypes).forEach((key: string) => {
+    const argType = argTypes[key];
+    if (argType.control && argType.control.type.toLowerCase() === 'date') {
+      storyParams[key] = new Date(storyParams[key]).toISOString();
+    }
+  });
 
   const {
     server: { url, id: storyId, params },
