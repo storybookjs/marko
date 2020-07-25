@@ -131,7 +131,7 @@ Here's a list of the configuration options available.
 | **title**     | String        |The main text of the title                                    |Yes       |
 | **left**      | String        |A string that gets shown in left side of the menu             |No        |
 | **right**     | String        |A string that gets shown in right side of the menu            |No        |
-| **icon**      | String        An icon that gets shown in the toolbar if this item is selected|No        |
+| **icon**      | String        |An icon that gets shown in the toolbar if this item is selected|No        |
 
 <!-- 
 The previous section shows the common case. There are two advanced use cases:
