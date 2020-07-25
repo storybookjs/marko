@@ -21,5 +21,10 @@ module.exports = {
       prefix: 'writing-docs',
       pages: ['introduction', 'docs-page', 'mdx', 'doc-blocks'],
     },
+    {
+      title: 'API',
+      prefix:'api',
+      pages:['stories','addons','new-frameworks','cli-options','frameworks-feature-support']
+    },
   ],
 };
