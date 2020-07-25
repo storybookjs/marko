@@ -36,7 +36,6 @@
     "@storybook/components": "6.0.0-rc.14",
     "@storybook/core-events": "6.0.0-rc.14",
     "@storybook/theming": "6.0.0-rc.14",
-    "@types/react-color": "^3.0.1",
     "copy-to-clipboard": "^3.0.8",
     "core-js": "^3.0.1",
     "escape-html": "^1.0.3",
@@ -53,6 +52,7 @@
   "devDependencies": {
     "@types/enzyme": "^3.10.5",
     "@types/escape-html": "0.0.20",
+    "@types/react-color": "^3.0.1",
     "@types/react-lifecycles-compat": "^3.0.1",
     "@types/react-select": "^3.0.12",
     "@types/webpack-env": "^1.15.2",
