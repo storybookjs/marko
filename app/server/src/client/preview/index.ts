@@ -2,7 +2,7 @@ import { start } from '@storybook/core/client';
 import { ClientStoryApi, Loadable } from '@storybook/addons';
 
 import './globals';
-import { renderMain as render, setFetchStoryHtml } from './render';
+import { renderMain as render } from './render';
 import { StoryFnServerReturnType, IStorybookSection, ConfigureOptionsArgs } from './types';
 
 const framework = 'server';
@@ -24,14 +24,7 @@ export const storiesOf: ClientApi['storiesOf'] = (kind, m) => {
   });
 };
 
-const setRenderFetchAndConfigure: ClientApi['configure'] = (...args) => {
-  // if (args.fetchStoryHtml) {
-  //   setFetchStoryHtml(args.fetchStoryHtml);
-  // }
-  api.configure(framework, ...args);
-};
-
-export const configure: ClientApi['configure'] = setRenderFetchAndConfigure;
+export const configure: ClientApi['configure'] = (...args) => api.configure(framework, ...args);
 export const {
   addDecorator,
   addParameters,

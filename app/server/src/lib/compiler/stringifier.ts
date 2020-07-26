@@ -63,8 +63,6 @@ export function stringifyStory(story: StorybookStory): string {
   const { name, storyFn, ...options } = story;
   const storyId = identifier(name);
 
-  const optionsString = stringifyObject({ name, ...options }, 0, true);
-
   const storyStrings = [
     `export const ${storyId} = ${storyFn};`,
     `${storyId}.storyName = '${name}';`,

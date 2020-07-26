@@ -1,15 +1,41 @@
 import { document, fetch, Node } from 'global';
 import dedent from 'ts-dedent';
+import { Args, ArgTypes } from '@storybook/api';
 import { RenderContext, FetchStoryHtmlType } from './types';
 
 const rootElement = document.getElementById('root');
 
-let fetchStoryHtml: FetchStoryHtmlType = async (url, path, params) => {
+const defaultFetchStoryHtml: FetchStoryHtmlType = async (url, path, params) => {
   const fetchUrl = new URL(`${url}/${path}`);
   fetchUrl.search = new URLSearchParams(params).toString();
 
   const response = await fetch(fetchUrl);
   return response.text();
+};
+
+const buildStoryArgs = (args: Args, argTypes: ArgTypes) => {
+  const storyArgs = { ...args };
+
+  Object.keys(argTypes).forEach((key: string) => {
+    const argType = argTypes[key];
+    const { control } = argType;
+    const controlType = control && control.type.toLowerCase();
+    switch (controlType) {
+      case 'date':
+        // For cross framework & language support we pick a consistent representation of Dates as strings
+        storyArgs[key] = new Date(storyArgs[key]).toISOString();
+        break;
+      case 'array': {
+        // use the supplied separator when seriazlizing an array as a string
+        const separator = control.separator || ',';
+        storyArgs[key] = storyArgs[key].join(separator);
+        break;
+      }
+      default:
+    }
+  });
+
+  return storyArgs;
 };
 
 export async function renderMain({
@@ -24,22 +50,16 @@ export async function renderMain({
   args,
   argTypes,
 }: RenderContext) {
+  // Some addons wrap the storyFn so we need to call it even though Server doesn't need the answer
   storyFn();
-  const storyParams = { ...args };
-
-  Object.keys(argTypes).forEach((key: string) => {
-    const argType = argTypes[key];
-    if (argType.control && argType.control.type.toLowerCase() === 'date') {
-      storyParams[key] = new Date(storyParams[key]).toISOString();
-    }
-  });
+  const storyArgs = buildStoryArgs(args, argTypes);
 
   const {
-    server: { url, id: storyId, params },
+    server: { url, id: storyId, fetchStoryHtml = defaultFetchStoryHtml, params },
   } = parameters;
 
   const fetchId = storyId || id;
-  const fetchParams = { ...params, ...storyParams };
+  const fetchParams = { ...params, ...storyArgs };
   const element = await fetchStoryHtml(url, fetchId, fetchParams);
 
   showMain();
@@ -63,9 +83,3 @@ export async function renderMain({
     });
   }
 }
-
-export const setFetchStoryHtml: any = (fetchHtml: FetchStoryHtmlType) => {
-  if (fetchHtml !== undefined) {
-    fetchStoryHtml = fetchHtml;
-  }
-};
