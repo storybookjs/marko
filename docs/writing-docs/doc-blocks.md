@@ -102,17 +102,12 @@ export default {
 
 This would render a row with a modified description, a type display with a dropdown that shows the detail, and no control.
 
-<div style="background-color:#F8FAFC">
-TODO: ask tom about this and how we can improve.
+If you find yourself writing the same definition over and over again, Storybook provides some convenient shorthands, that help you streamline your work.
 
-My read on this is that we come from null that shows no control. But we have some shorthands that help the reader to show something.
+For instance you can use:
 
-Probably we could add this as a aside, or give it more emphasis
-</div>
-
-> Storybook provides shorthand for common tasks:
-> type: 'number' is shorthand for type: { name: 'number' }
-> control: 'radio' is shorthand for control: { type: 'radio' }
+- `number`, which is shorthand for `type:{name :'number'}`
+- `radio`, which is a shorhand for `control: {type: 'radio' }`
 
 ##### MDX
 
