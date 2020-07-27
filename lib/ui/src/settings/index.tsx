@@ -1,6 +1,6 @@
 import React, { FunctionComponent, SyntheticEvent, Fragment } from 'react';
 import { IconButton, Icons, FlexBar, TabBar, TabButton, ScrollArea } from '@storybook/components';
-import { useStorybookApi, API, useStorybookState } from '@storybook/api';
+import { useStorybookApi } from '@storybook/api';
 import { Location, Route } from '@storybook/router';
 import { styled } from '@storybook/theming';
 import { GlobalHotKeys } from 'react-hotkeys';
