@@ -411,7 +411,17 @@ To do so, Storybook uses various static analysis tools depending on your framewo
 TODO: further vet this item
 </div>
 
-> If you are using React, Storybook uses …, [read details], [open issues]. 
+- React 
+    - [react-docgen](https://github.com/reactjs/react-docgen)
+    - [react-docgen-typescript](https://github.com/styleguidist/react-docgen-typescript)
+- Vue
+    - [vue-docgen-api](https://github.com/vue-styleguidist/vue-styleguidist/tree/dev/packages/vue-docgen-api)
+- Angular
+    - [compodoc](https://compodoc.app/)
+- WebComponents
+    - [custom-element.json](https://github.com/webcomponents/custom-elements-json)
+- Ember
+    - [YUI doc](https://github.com/ember-learn/ember-cli-addon-docs-yuidoc#documenting-components)
 
 The format of the generated argType will look something like:
 

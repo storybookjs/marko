@@ -164,4 +164,4 @@ window.STORYBOOK_ENV = ‘vue’;
 TODO: need location on the render function for the frameworks
 </div>
 
-The `start` function abstracts all of Storybook’s framework-independent client-side (browser) code, and it takes the render function we defined above. For examples of render functions, see [React](), [Vue](), [Web-components]() in the Storybook monorepo.
+The `start` function abstracts all of Storybook’s framework-independent client-side (browser) code, and it takes the render function we defined above. For examples of render functions, see [React](https://github.com/storybookjs/storybook/blob/next/app/react/src/client/preview/render.tsx), [Vue](https://github.com/storybookjs/storybook/blob/next/app/vue/src/client/preview/render.ts),[Angular](https://github.com/storybookjs/storybook/blob/next/app/angular/src/client/preview/render.ts) [Web-components](https://github.com/storybookjs/storybook/blob/next/app/web-components/src/client/preview/render.ts) in the Storybook monorepo.
