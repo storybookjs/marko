@@ -4,11 +4,7 @@ title: 'Doc Blocks'
 
 Doc Blocks are the building blocks of Storybook documentation pages. By default, [DocsPage](./docs-page) uses a combination of the below blocks to build a page for each of your components automatically. 
 
-<div style="background-color:#F8FAFC">
-TODO: add "many available" when it's available
-</div>
-
-Also, custom [addons](../configure/user-interface#storybook-addons) can provide their own doc blocks, and there are [many available](soon-available).
+Also, custom [addons](../configure/user-interface#storybook-addons) can provide their own doc blocks, and there are many available.
 
 ### ArgsTable
 
