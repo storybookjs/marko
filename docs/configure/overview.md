@@ -25,7 +25,7 @@ The `main.js` configuration file is a [preset](../presets/introduction) and as s
 - `stories` - a glob that indicates the [location of your story files](#configure-story-loading), relative to `main.js`.
 - `addons` - a list of the [addons](/addons) you are using.
 - `webpackFinal` - custom [webpack configuration](./integration#extending-storybooks-webpack-config).
-- `babel` - custom [babel configuration](integration#babel).
+- `babel` - custom [babel configuration](./integration#babel).
 
 ### Configure story loading
 
