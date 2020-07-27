@@ -43,10 +43,6 @@ We have a `global` defined, let's wire it up! We can consume our new `theme` glo
 
 For example, suppose you are using `styled-components`. You can add a theme provider decorator to your [`.storybook/preview.js`](../configure/overview#configure-story-rendering) config:
 
-<div style="background-color:#F8FAFC">
-TODO: ask tom/michael if this needs to be typescript or can be js like below. as we've been showing this in js and ts is added without warning
-</div>
-
 ```js
 // .storybook/preview.js
 
