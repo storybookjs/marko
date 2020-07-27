@@ -4,7 +4,7 @@ import { Consumer } from '@storybook/api';
 
 import { ShortcutsScreen } from './shortcuts';
 
-const ShortcutsPage: FunctionComponent<{ onClose: () => void }> = ({ onClose }) => (
+const ShortcutsPage: FunctionComponent<{}> = () => (
   <Consumer>
     {({
       api: { getShortcutKeys, setShortcut, restoreDefaultShortcut, restoreAllDefaultShortcuts },
@@ -12,7 +12,6 @@ const ShortcutsPage: FunctionComponent<{ onClose: () => void }> = ({ onClose }) 
       <ShortcutsScreen
         shortcutKeys={getShortcutKeys()}
         {...{ setShortcut, restoreDefaultShortcut, restoreAllDefaultShortcuts }}
-        onClose={onClose}
       />
     )}
   </Consumer>
