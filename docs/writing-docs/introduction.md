@@ -20,5 +20,5 @@ In both cases, you’ll use [Doc Blocks](./docs-blocks) as the building blocks t
 TODO: ask tom if this is the proper place for the advanced
 </div>
 
-Docs is autoconfigured to work out of the box in most use cases. In some cases you may need or want to tweak the configuration. Read more about it in the [ADVANCED README](./docs-page#remixing-docspage-using-doc-blocks).
+Docs is autoconfigured to work out of the box in most use cases. In some cases you may need or want to tweak the configuration. Read more about it in the [ADVANCED README](../../addons/docs/ADVANCED-README.md).
 

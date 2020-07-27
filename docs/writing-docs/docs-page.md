@@ -156,7 +156,7 @@ Unless you use a custom [webpack configuration](../configure/integration#extendi
 
 DocsPage displays all the stories of a component in one page. You have the option of rendering those stories inline or in an iframe. 
 
-By default, we render React and Vue stories inline. Stories from other supported frameworks will render in an `<iframe>`by default. 
+By default, we render React and Vue stories inline. Stories from other supported frameworks will render in an `<iframe>` by default. 
 
 The iframe creates a clean separation between your code and Storybook’s UI. But using an iframe has disadvantages. You have to explicitly set the height of iframe stories or you’ll see a scroll bar. And certain dev tools might not work right.
 
@@ -164,7 +164,7 @@ Render your framework’s stories inline using two docs configuration options in
 
 Setting `inlineStories` to `true` tells Storybook to stop putting your stories in an iframe. The `prepareForInline` accepts a function that transforms story content from your given framework to something React can render (Storybook’s UI is built in React). 
 
-Different frameworks will need to approach this in different ways. Angular, for example, might convert its story content into a custom element (you can read about that here). 
+Different frameworks will need to approach this in different ways. Angular, for example, might convert its story content into a custom element (you can read about that [here](https://angular.io/guide/elements)). 
 
 Here’s an example of how to render Vue stories inline. The following docs config block uses `prepareForInline` along with an effect hook provided by [@egoist/vue-to-react](https://github.com/egoist/vue-to-react).
 

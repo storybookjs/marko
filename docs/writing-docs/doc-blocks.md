@@ -5,10 +5,10 @@ title: 'Doc Blocks'
 Doc Blocks are the building blocks of Storybook documentation pages. By default, [DocsPage](./docs-page) uses a combination of the below blocks to build a page for each of your components automatically. 
 
 <div style="background-color:#F8FAFC">
-TODO: ask tom about both links below to where they should point to.
+TODO: add "many available" when it's available
 </div>
 
-Also, custom [addons] can provide their own doc blocks, and there are [many available].
+Also, custom [addons](../configure/user-interface#storybook-addons) can provide their own doc blocks, and there are [many available](soon-available).
 
 ### ArgsTable
 
@@ -264,11 +264,8 @@ Stories (component examples) are the basic building blocks in Storybook. In Stor
 In DocsPage a `Story` block is generated for each story in your [CSF] file, wrapped with a `Preview` wrapper that gives it a toolbar on top (in the case of the first “primary” story) and a source code preview underneath.
 
 #### MDX
-<div>
-TODO: ask tom about Preview link for clarity.
-</div>
 
-In MDX, the `Story` block is not only a way of displaying stories, but also the primary way to define them. Storybook looks for `Story` instances with the `name` prop, either defined at the top level of the document, or directly beneath a [Preview](locate-preview) block defined at the top level:
+In MDX, the `Story` block is not only a way of displaying stories, but also the primary way to define them. Storybook looks for `Story` instances with the `name` prop, either defined at the top level of the document, or directly beneath a [Preview](#preview) block defined at the top level:
 
 ```js
 import { Story } from '@storybook/addon-docs/blocks';
@@ -302,12 +299,7 @@ In Storybook’s Canvas, all stories are rendered in the [Preview iframe] for is
 
 ### Preview
 
-<div>
-TODO: ask tom about Source link for clarity, as me i know that the source shows ad hoc the story file content. But another reader might not know.
-</div>
-
-
-Storybook Docs’ `Preview` block is a wrapper that provides a toolbar for interacting with its contents, and also also provides [Source](locate-source) snippets automatically.
+Storybook Docs’ `Preview` block is a wrapper that provides a toolbar for interacting with its contents, and also also provides [Source](#Source) snippets automatically.
 
 <divs tyle="background-color:#F8FAFC">
 TODO:add image per screenshot requirements (mention of a image in the SB 6.0 doc (needs to be vetted))
@@ -363,7 +355,7 @@ import { MyComponent } from './MyComponent';
 TODO: ask tom about Source link for clarity, as me i know that the source shows ad hoc the story file content. But another reader might not know.
 </div>
 
-This renders the JSX content exactly as it would if you’d placed it directly in the MDX, but it also inserts the source snippet in a [Source](locate-source) block beneath the block.
+This renders the JSX content exactly as it would if you’d placed it directly in the MDX, but it also inserts the source snippet in a [Source](#source) block beneath the block.
 
 <div style="background-color:#F8FAFC">
 TODO:add image per screenshot requirements (mention of a image in the SB 6.0 doc (needs to be vetted))
