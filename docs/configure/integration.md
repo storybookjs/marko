@@ -12,7 +12,7 @@ The value should be an async function that receives a webpack config and eventua
 
 #### Default configuration
 
-By default, Storybooks webpack configuration will allow you to:
+By default, Storybook's webpack configuration will allow you to:
 
 - Import Images and other static files
 
@@ -170,16 +170,12 @@ module.exports = {
 };
 ```
 
-<div style="background-color:#F8FAFC">
-TODO: vet SEE DOCS link
-</div>
-
 |Field	                         |Framework	    |Description	                                                                          |Type      |
 |:-------------------------------|:------------:|:---------------------------------------------------------------------------------------:|:--------:|
-|**check**                       |All	        |optionally run fork-ts-checker-webpack-plugin	                                          |boolean   |
-|**checkOptions**	             |All	        |Options to pass to fork-ts-checker-webpack-plugin if it's enabled	                      |See docs  |
-|**reactDocgen**	             |React	        |which variant docgen processor to run	`'react-docgen-typescript'                        |N/A       |
-|**reactDocgenTypescriptOptions**|React	        |Options to pass to react-docgen-typescript-plugin if react-docgen-typescript is enabled. |See docs  |
+|**check**                       |All	          |optionally run fork-ts-checker-webpack-plugin	                                          |boolean   |
+|**checkOptions**	               |All	          |Options to pass to fork-ts-checker-webpack-plugin if it's enabled	                      |[See docs](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin)  |
+|**reactDocgen**	               |React	        |which variant docgen processor to run	`'react-docgen-typescript'                        |N/A       |
+|**reactDocgenTypescriptOptions**|React	        |Options to pass to react-docgen-typescript-plugin if react-docgen-typescript is enabled. |[See docs](https://github.com/hipstersmoothie/react-docgen-typescript-plugin)  |
 
 
 
@@ -192,10 +188,6 @@ There are many ways to include CSS in a web application, and correspondingly the
 CSS-in-JS libraries are designed to use basic JavaScript. They often work in Storybook without any extra configuration. Some libraries expect components to be rendered in a specific rendering “context” (such as to provide themes) and you may need to add a [global decorator](../writing-stories/decorators#global-decorators) to supply it.
 
 #### Importing CSS files
-
-<div style="">
-TODO: check note on sb-storybook-6_0_more_feedback.txt for this
-</div>
 
 If your component files import their own CSS, Storybook’s webpack config will work unmodified with some exceptions:
 
@@ -212,7 +204,7 @@ To use your CSS in all stories, you simply import it in [`.storybook/preview.js`
 
 #### Adding webfonts
 
-If you need webfonts to be available, you may need to add some code to the [`.storybook/preview-head.html`](./story-rendering#adding-to-head) file. We recommend including any assets with your Storybook if possible, in which case you likely want to configure the [static file location](../api/cli-options).
+If you need webfonts to be available, you may need to add some code to the [`.storybook/preview-head.html`](./story-rendering#adding-to-head) file. We recommend including any assets with your Storybook if possible, in which case you likely want to configure the [static file location](#serving-static-files-via-storybook).
 
 ### Images and assets
 

@@ -22,7 +22,7 @@ module.exports = {
 
 The `main.js` configuration file is a [preset](../presets/introduction) and as such has a powerful interface, but the key fields within it are:
 
-- `stories` - a glob that indicates the [location of your story files](locate-story-files), relative to `main.js`.
+- `stories` - a glob that indicates the [location of your story files](#configure-story-loading), relative to `main.js`.
 - `addons` - a list of the [addons](/addons) you are using.
 - `webpackFinal` - custom [webpack configuration](./integration#extending-storybooks-webpack-config).
 - `babel` - custom [babel configuration](integration#babel).

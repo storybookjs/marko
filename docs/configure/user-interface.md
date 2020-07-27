@@ -164,7 +164,7 @@ addons.setConfig({
 });
 ```
 
-The `storybook/theming` package is built using TypeScript, so this should help create a valid theme for typescript users. The types are part of the package itself.
+The `@storybook/theming` package is built using TypeScript, so this should help create a valid theme for typescript users. The types are part of the package itself.
 
 Many theme variables are optional, the `base` property is NOT. This is a perfectly valid theme:
 
@@ -293,8 +293,8 @@ Finally, addons can affect the build setup of Storybook by injecting their own w
 There are many, many Storybook addons, but they can be roughly categorized into three areas:
 
 - Essential addons are core-team developed addons that are considered core to the out-of-the-box user experience of Storybook and thus ship by default with new Storybook installations.
-- Core addons are the addons that are developed by the core team with efforts made to keep them in sync with the development of Storybook itself, and to make sure they are written in idiomatic ways as templates for other addons. They can be found within the Storybook monorepo,
-- Community addons are addons written by the massive Storybook community. They can be found on our website, GitHub, and npm.
+- Core addons are the addons that are developed by the core team with efforts made to keep them in sync with the development of Storybook itself, and to make sure they are written in idiomatic ways as templates for other addons. They can be found within the [Storybook monorepo](https://github.com/storybookjs/storybook/tree/next/addons).
+- Community addons are addons written by the massive Storybook community. They can be found on our [website](/addons), [GitHub](https://github.com/), and [npm](https://www.npmjs.com/).
 
 ### Sidebar & URLs
 
@@ -304,7 +304,7 @@ Storybook’s sidebar lists all your stories grouped by component. When you have
 TODO: add image mentioned in the SB 6.0 needs to be further vetted
 </div>
 
-Usually it is a good idea to use a nesting scheme that mirrors the filesystem path of the components. So if you have a file `components/modals/Alert.js` you might name the CSF file `components/modals/Alert.stories.js` and tile it “Components/Modals/Alert”.
+Usually it is a good idea to use a nesting scheme that mirrors the filesystem path of the components. So if you have a file `components/modals/Alert.js` you might name the CSF file `components/modals/Alert.stories.js` and title it “Components/Modals/Alert”.
 
 #### Roots
 
