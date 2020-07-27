@@ -21,5 +21,22 @@ module.exports = {
       prefix: 'writing-docs',
       pages: ['introduction', 'docs-page', 'mdx', 'doc-blocks'],
     },
+    {
+      title:'Workflows',
+      prefix:'workflows',
+      pages:[
+        'publish-storybook',
+        'build-pages-with-storybook',
+        'stories-for-multiple-components',
+        'testing-with-storybook',
+        'unit-testing',
+        'visual-testing',
+        'interaction-testing',
+        'snapshot-testing',
+        'storybook-composition',
+        'package-composition'
+
+      ]
+    }
   ],
 };
