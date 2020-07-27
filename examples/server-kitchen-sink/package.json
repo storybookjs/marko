@@ -17,7 +17,7 @@
     "@storybook/addon-a11y": "6.0.0-rc.14",
     "@storybook/addon-actions": "6.0.0-rc.14",
     "@storybook/addon-backgrounds": "6.0.0-rc.14",
-    "@storybook/addon-knobs": "6.0.0-rc.14",
+    "@storybook/addon-controls": "6.0.0-rc.14",
     "@storybook/addon-links": "6.0.0-rc.14",
     "@storybook/node-logger": "6.0.0-rc.14",
     "@storybook/server": "6.0.0-rc.14",

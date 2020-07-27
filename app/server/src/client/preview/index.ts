@@ -2,14 +2,14 @@ import { start } from '@storybook/core/client';
 import { ClientStoryApi, Loadable } from '@storybook/addons';
 
 import './globals';
-import { renderMain as render, setFetchStoryHtml } from './render';
+import { renderMain as render } from './render';
 import { StoryFnServerReturnType, IStorybookSection, ConfigureOptionsArgs } from './types';
 
 const framework = 'server';
 
 interface ClientApi extends ClientStoryApi<StoryFnServerReturnType> {
   setAddon(addon: any): void;
-  configure(loader: Loadable, module: NodeModule, options?: ConfigureOptionsArgs): void;
+  configure(loader: Loadable, module: NodeModule): void;
   getStorybook(): IStorybookSection[];
   clearDecorators(): void;
   forceReRender(): void;
@@ -24,14 +24,7 @@ export const storiesOf: ClientApi['storiesOf'] = (kind, m) => {
   });
 };
 
-const setRenderFetchAndConfigure: ClientApi['configure'] = (loader, module, options) => {
-  if (options && options.fetchStoryHtml) {
-    setFetchStoryHtml(options.fetchStoryHtml);
-  }
-  api.configure(loader, module, framework);
-};
-
-export const configure: ClientApi['configure'] = setRenderFetchAndConfigure;
+export const configure: ClientApi['configure'] = (...args) => api.configure(framework, ...args);
 export const {
   addDecorator,
   addParameters,
