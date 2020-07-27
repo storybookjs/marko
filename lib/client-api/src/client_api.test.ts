@@ -222,6 +222,22 @@ describe('preview.client_api', () => {
       expect(storyStore.fromId('kind--name').storyFn()).toBe('bb-Hello');
     });
 
+    it('should not add global decorators twice', () => {
+      const {
+        clientApi: { addDecorator, storiesOf },
+        storyStore,
+      } = getContext();
+
+      const decorator = (fn) => `bb-${fn()}`;
+      addDecorator(decorator);
+      addDecorator(decorator); // this one is ignored
+
+      storiesOf('kind', module).add('name', () => 'Hello');
+      const f = storyStore.fromId('x');
+
+      expect(storyStore.fromId('kind--name').storyFn()).toBe('bb-Hello');
+    });
+
     it('should utilize both decorators at once', () => {
       const {
         clientApi: { addDecorator, storiesOf },

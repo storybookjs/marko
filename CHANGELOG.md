@@ -1,3 +1,39 @@
+## 6.0.0-rc.15 (July 27, 2020)
+
+### Features
+
+- Server: Update to 6.0 APIs and support Controls ([#11680](https://github.com/storybookjs/storybook/pull/11680))
+
+### Bug Fixes
+
+- Addon-Storysource: Fix broken source when there's no story ([#11679](https://github.com/storybookjs/storybook/pull/11679))
+- Angular: Use system path when checking if asset is a directory ([#11472](https://github.com/storybookjs/storybook/pull/11472))
+- Composition: Fix composition of older storybooks ([#11673](https://github.com/storybookjs/storybook/pull/11673))
+- Core: Fix existing behavior with story prefixes ([#11660](https://github.com/storybookjs/storybook/pull/11660))
+- Core: Fix webpack recursion in mainjs glob processing logic ([#11647](https://github.com/storybookjs/storybook/pull/11647))
+
+### Maintenance
+
+- Addon-knobs: Move `@types/react-color` to devDeps ([#11690](https://github.com/storybookjs/storybook/pull/11690))
+
+### Dependency Upgrades
+
+- Bump react-docgen-typescript-plugin to 0.5.2 ([#11658](https://github.com/storybookjs/storybook/pull/11658))
+
+## 6.0.0-rc.14 (July 22, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Re-enable source-loader by default ([#11650](https://github.com/storybookjs/storybook/pull/11650))
+- Core: Remove duplicate decorators and warn ([#11643](https://github.com/storybookjs/storybook/pull/11643))
+- Storyshots: Fix metadata (parameters/decorators) handling ([#11518](https://github.com/storybookjs/storybook/pull/11518))
+- Addon-docs: Skip dynamic source rendering when not needed ([#11640](https://github.com/storybookjs/storybook/pull/11640))
+- Core: Fix prefix redirect ([#11637](https://github.com/storybookjs/storybook/pull/11637))
+
+### Maintenance
+
+- Core: Log message length on channel message ([#11646](https://github.com/storybookjs/storybook/pull/11646))
+
 ## 6.0.0-rc.13 (July 21, 2020)
 
 ### Bug Fixes

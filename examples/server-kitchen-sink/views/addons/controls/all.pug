@@ -4,7 +4,7 @@
 - salutation = nice ? 'Nice to meet you!' : 'Leave me alone!';
 - dateOptions = { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' };
 - style = `border: 2px dotted ${colour}; padding: 8px 22px; border-radius: 8px`;
-- today = new Date(parseInt(today, 10));
+- today = new Date(today);
 - items = items.split(',');
 
 div(style=`${style}`)
