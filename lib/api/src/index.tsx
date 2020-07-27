@@ -29,13 +29,15 @@ import * as provider from './modules/provider';
 import * as addons from './modules/addons';
 import * as channel from './modules/channel';
 import * as notifications from './modules/notifications';
+import * as settings from './modules/settings';
+import * as releaseNotes from './modules/release-notes';
 import * as stories from './modules/stories';
 import * as refs from './modules/refs';
 import * as layout from './modules/layout';
 import * as shortcuts from './modules/shortcuts';
 import * as url from './modules/url';
 import * as version from './modules/versions';
-import * as globalArgs from './modules/globalArgs';
+import * as globals from './modules/globals';
 
 const { ActiveTabs } = layout;
 
@@ -58,7 +60,7 @@ export type State = layout.SubState &
   version.SubState &
   url.SubState &
   shortcuts.SubState &
-  globalArgs.SubState &
+  globals.SubState &
   RouterData &
   Other;
 
@@ -67,7 +69,7 @@ export type API = addons.SubAPI &
   provider.SubAPI &
   stories.SubAPI &
   refs.SubAPI &
-  globalArgs.SubAPI &
+  globals.SubAPI &
   layout.SubAPI &
   notifications.SubAPI &
   shortcuts.SubAPI &
@@ -187,10 +189,12 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
       addons,
       layout,
       notifications,
+      settings,
+      releaseNotes,
       shortcuts,
       stories,
       refs,
-      globalArgs,
+      globals,
       url,
       version,
     ].map((m) => m.init({ ...routeData, ...apiData, state: this.state, fullAPI: this.api }));
@@ -220,16 +224,6 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
     return null;
   };
 
-  componentDidMount() {
-    // Now every module has had a chance to set its API, call init on each module which gives it
-    // a chance to do things that call other modules' APIs.
-    this.modules.forEach(({ init }) => {
-      if (init) {
-        init();
-      }
-    });
-  }
-
   shouldComponentUpdate(nextProps: ManagerProviderProps, nextState: State) {
     const prevState = this.state;
     const prevProps = this.props;
@@ -243,6 +237,16 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
     return false;
   }
 
+  initModules = () => {
+    // Now every module has had a chance to set its API, call init on each module which gives it
+    // a chance to do things that call other modules' APIs.
+    this.modules.forEach(({ init }) => {
+      if (init) {
+        init();
+      }
+    });
+  };
+
   render() {
     const { children } = this.props;
     const value = {
@@ -251,12 +255,27 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
     };
 
     return (
-      <ManagerContext.Provider value={value}>
-        <ManagerConsumer>{children}</ManagerConsumer>
-      </ManagerContext.Provider>
+      <EffectOnMount effect={this.initModules}>
+        <ManagerContext.Provider value={value}>
+          <ManagerConsumer>{children}</ManagerConsumer>
+        </ManagerContext.Provider>
+      </EffectOnMount>
     );
   }
 }
+
+// EffectOnMount exists to work around a bug in Reach Router where calling
+// navigate inside of componentDidMount (as could happen when we call init on any
+// of our modules) does not cause Reach Router's LocationProvider to update with
+// the correct path. Calling navigate inside on an effect does not have the
+// same problem. See https://github.com/reach/router/issues/404
+const EffectOnMount: FunctionComponent<{
+  children: ReactElement;
+  effect: () => void;
+}> = ({ children, effect }) => {
+  React.useEffect(effect, []);
+  return children;
+};
 
 interface ManagerConsumerProps<P = unknown> {
   filter?: (combo: Combo) => P;
@@ -409,28 +428,32 @@ export function useAddonState<S>(addonId: string, defaultState?: S) {
   return useSharedState<S>(addonId, defaultState);
 }
 
-export function useArgs(): [Args, (newArgs: Args) => void] {
-  const { getCurrentStoryData, updateStoryArgs } = useStorybookApi();
+export function useArgs(): [Args, (newArgs: Args) => void, (argNames?: [string]) => void] {
+  const { getCurrentStoryData, updateStoryArgs, resetStoryArgs } = useStorybookApi();
 
   const data = getCurrentStoryData();
   const args = isStory(data) ? data.args : {};
 
-  return [args, (newArgs: Args) => updateStoryArgs(data.id, newArgs)];
+  return [
+    args,
+    (newArgs: Args) => updateStoryArgs(data as Story, newArgs),
+    (argNames?: [string]) => resetStoryArgs(data as Story, argNames),
+  ];
 }
 
-export function useGlobalArgs(): [Args, (newGlobalArgs: Args) => void] {
+export function useGlobals(): [Args, (newGlobals: Args) => void] {
   const {
-    state: { globalArgs: oldGlobalArgs },
-    api: { updateGlobalArgs },
+    state: { globals: oldGlobals },
+    api: { updateGlobals },
   } = useContext(ManagerContext);
 
-  return [oldGlobalArgs, updateGlobalArgs];
+  return [oldGlobals, updateGlobals];
 }
 
 export function useArgTypes(): ArgTypes {
   return useParameter<ArgTypes>('argTypes', {});
 }
 
-export function useGlobalArgTypes(): ArgTypes {
-  return useParameter<ArgTypes>('globalArgTypes', {});
+export function useGlobalTypes(): ArgTypes {
+  return useParameter<ArgTypes>('globalTypes', {});
 }

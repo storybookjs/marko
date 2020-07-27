@@ -22,7 +22,7 @@ interface ClientApi extends ClientStoryApi<StoryFnMithrilReturnType> {
 export const storiesOf: ClientApi['storiesOf'] = (kind, m) =>
   (clientApi.storiesOf(kind, m) as ReturnType<ClientApi['storiesOf']>).addParameters({ framework });
 
-export const configure: ClientApi['configure'] = (...args) => coreConfigure(...args, framework);
+export const configure: ClientApi['configure'] = (...args) => coreConfigure(framework, ...args);
 
 export const { setAddon } = clientApi;
 export const { addDecorator } = clientApi;

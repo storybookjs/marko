@@ -1,4 +1,4 @@
-import React, { Component, Fragment, SyntheticEvent } from 'react';
+import React, { Component } from 'react';
 import { styled, keyframes } from '@storybook/theming';
 import { GlobalHotKeys } from 'react-hotkeys';
 
@@ -7,7 +7,7 @@ import {
   shortcutToHumanString,
   shortcutMatchesShortcut,
 } from '@storybook/api/shortcut';
-import { Form, IconButton, Icons, Tabs } from '@storybook/components';
+import { Form, Icons } from '@storybook/components';
 import SettingsFooter from './SettingsFooter';
 
 const { Button, Input } = Form;
@@ -307,39 +307,19 @@ class ShortcutsScreen extends Component<ShortcutsScreenProps, ShortcutsScreenSta
     const layout = this.renderKeyForm();
     return (
       <GlobalHotKeys handlers={{ CLOSE: onClose }} keyMap={keyMap}>
-        <Tabs
-          absolute
-          selected="shortcuts"
-          actions={{ onSelect: () => {} }}
-          tools={
-            <Fragment>
-              <IconButton
-                onClick={(e: SyntheticEvent) => {
-                  e.preventDefault();
-                  return onClose();
-                }}
-              >
-                <Icons icon="close" />
-              </IconButton>
-            </Fragment>
-          }
-        >
-          <div id="shortcuts" title="Keyboard Shortcuts">
-            <Container>
-              <Header>Keyboard shortcuts</Header>
+        <Container>
+          <Header>Keyboard shortcuts</Header>
 
-              {layout}
-              <Button tertiary small id="restoreDefaultsHotkeys" onClick={this.restoreDefaults}>
-                Restore defaults
-              </Button>
+          {layout}
+          <Button tertiary small id="restoreDefaultsHotkeys" onClick={this.restoreDefaults}>
+            Restore defaults
+          </Button>
 
-              <SettingsFooter />
-            </Container>
-          </div>
-        </Tabs>
+          <SettingsFooter />
+        </Container>
       </GlobalHotKeys>
     );
   }
 }
 
-export default ShortcutsScreen;
+export { ShortcutsScreen };

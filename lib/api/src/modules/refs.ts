@@ -24,6 +24,7 @@ export type SetRefData = Partial<
 export interface SubAPI {
   findRef: (source: string) => ComposedRef;
   setRef: (id: string, data: SetRefData, ready?: boolean) => void;
+  updateRef: (id: string, ref: ComposedRefUpdate) => void;
   getRefs: () => Refs;
   checkRef: (ref: SetRefData) => Promise<void>;
   changeRefVersion: (id: string, url: string) => void;
@@ -39,6 +40,17 @@ export interface ComposedRef {
   stories: StoriesHash;
   versions?: Versions;
   loginUrl?: string;
+  version?: string;
+  ready?: boolean;
+  error?: any;
+}
+export interface ComposedRefUpdate {
+  title?: string;
+  type?: 'auto-inject' | 'unknown' | 'lazy';
+  stories?: StoriesHash;
+  versions?: Versions;
+  loginUrl?: string;
+  version?: string;
   ready?: boolean;
   error?: any;
 }
@@ -60,7 +72,7 @@ const allSettled = (promises: Promise<Response>[]): Promise<(Response | false)[]
     )
   );
 
-export const getSourceType = (source: string) => {
+export const getSourceType = (source: string, refId: string) => {
   const { origin: localOrigin, pathname: localPathname } = location;
   const { origin: sourceOrigin, pathname: sourcePathname } = new URL(source);
 
@@ -70,7 +82,7 @@ export const getSourceType = (source: string) => {
   if (localFull === sourceFull) {
     return ['local', sourceFull];
   }
-  if (source) {
+  if (refId || source) {
     return ['external', sourceFull];
   }
   return [null, null];
@@ -114,34 +126,35 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
       api.checkRef(ref);
     },
     changeRefState: (id, ready) => {
-      const refs = api.getRefs();
+      const { [id]: ref, ...updated } = api.getRefs();
+
+      updated[id] = { ...ref, ready };
+
       store.setState({
-        refs: {
-          ...refs,
-          [id]: { ...refs[id], ready },
-        },
+        refs: updated,
       });
     },
     checkRef: async (ref) => {
-      const { id, url } = ref;
+      const { id, url, version } = ref;
 
       const loadedData: { error?: Error; stories?: StoriesRaw; loginUrl?: string } = {};
+      const query = version ? `?version=${version}` : '';
 
       const [included, omitted, iframe] = await allSettled([
-        fetch(`${url}/stories.json`, {
+        fetch(`${url}/stories.json${query}`, {
           headers: {
             Accept: 'application/json',
           },
           credentials: 'include',
         }),
-        fetch(`${url}/stories.json`, {
+        fetch(`${url}/stories.json${query}`, {
           headers: {
             Accept: 'application/json',
           },
           credentials: 'omit',
         }),
-        fetch(`${url}/iframe.html`, {
-          cors: 'no-cors',
+        fetch(`${url}/iframe.html${query}`, {
+          mode: 'no-cors',
           credentials: 'omit',
         }),
       ]);
@@ -175,7 +188,7 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
         const [stories, metadata] = await Promise.all([
           included ? handle(included) : handle(omitted),
           handle(
-            fetch(`${url}/metadata.json`, {
+            fetch(`${url}/metadata.json${query}`, {
               headers: {
                 Accept: 'application/json',
               },
@@ -208,18 +221,21 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
       const ref = api.getRefs()[id];
       const after = stories
         ? addRefIds(
-            transformStoriesRawToStoriesHash(map(stories, ref, { storyMapper }), {}, { provider }),
+            transformStoriesRawToStoriesHash(map(stories, ref, { storyMapper }), { provider }),
             ref
           )
         : undefined;
 
-      const result = { ...ref, stories: after, ...rest, ready };
+      api.updateRef(id, { stories: after, ...rest, ready });
+    },
+
+    updateRef: (id, data) => {
+      const { [id]: ref, ...updated } = api.getRefs();
+
+      updated[id] = { ...ref, ...data };
 
       store.setState({
-        refs: {
-          ...api.getRefs(),
-          [id]: result,
-        },
+        refs: updated,
       });
     },
   };

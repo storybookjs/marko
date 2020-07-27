@@ -303,9 +303,9 @@ export const LI = styled.li<{}>(withReset, ({ theme }) => ({
   '& code': codeCommon({ theme }),
 }));
 
-export const UL = styled.ul<{}>(withReset, withMargin, listCommon, {});
+export const UL = styled.ul<{}>(withReset, withMargin, { ...listCommon, listStyle: 'disc' });
 
-export const OL = styled.ol<{}>(withReset, withMargin, listCommon);
+export const OL = styled.ol<{}>(withReset, withMargin, { ...listCommon, listStyle: 'decimal' });
 
 export const P = styled.p<{}>(withReset, withMargin, ({ theme }) => ({
   fontSize: theme.typography.size.s2,

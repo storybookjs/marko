@@ -41,10 +41,8 @@ export const MenuItemIcon = ({ icon, imgSrc }: ListItemIconProps) => {
   return <Placeholder />;
 };
 
-const MenuButton = styled(Button)<MenuButtonProps>(({ highlighted, theme }) => ({
-  position: 'absolute',
-  right: 0,
-  top: 0,
+export const MenuButton = styled(Button)<MenuButtonProps>(({ highlighted, theme }) => ({
+  position: 'relative',
   overflow: 'visible',
   padding: 7,
 
@@ -64,7 +62,7 @@ const MenuButton = styled(Button)<MenuButtonProps>(({ highlighted, theme }) => (
 
 type ClickHandler = ComponentProps<typeof TooltipLinkList>['links'][number]['onClick'];
 
-const SidebarMenuList: FunctionComponent<{
+export const SidebarMenuList: FunctionComponent<{
   menu: MenuList;
   onHide: () => void;
 }> = ({ menu, onHide }) => {

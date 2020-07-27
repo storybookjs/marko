@@ -6,12 +6,13 @@ import { SupportedFramework } from './SupportedFramework';
 export type RenderTree = (story: any, context?: any, options?: any) => any;
 
 export interface ClientApi extends ClientStoryApi<unknown> {
-  configure(loader: Loadable, module: NodeModule | false): void;
+  configure(loader: Loadable, module: NodeModule | false, showDeprecationWarning?: boolean): void;
   forceReRender(): void;
   clearDecorators: ClientApiThing['clearDecorators'];
   getStorybook: ClientApiThing['getStorybook'];
   setAddon: ClientApiThing['setAddon'];
   raw: ClientApiThing['raw'];
+  addArgTypesEnhancer: ClientApiThing['addArgTypesEnhancer'];
 }
 
 export interface Loader {

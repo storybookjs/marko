@@ -18,14 +18,14 @@ The group looked like tall, exotic grazing animals, swaying gracefully and uncon
 He stared at the clinic, Molly took him to the Tank War, mouth touched with hot gold as a gliding cursor struck sparks from the wall of a skyscraper canyon. 
 `;
 
-const Story = (args) => <Description {...args} />;
+const Template = (args) => <Description {...args} />;
 
-export const Text = Story.bind({});
+export const Text = Template.bind({});
 Text.args = {
   markdown: textCaption,
 };
 
-export const Markdown = Story.bind({});
+export const Markdown = Template.bind({});
 Markdown.args = {
   markdown: markdownCaption,
 };

@@ -7,9 +7,9 @@ export default {
   title: 'Docs/TabbedArgsTable',
 };
 
-const Story = (args) => <TabbedArgsTable {...args} />;
+const Template = (args) => <TabbedArgsTable {...args} />;
 
-export const Tabs = Story.bind({});
+export const Tabs = Template.bind({});
 Tabs.args = {
   tabs: {
     Normal: Normal.args,
@@ -18,7 +18,7 @@ Tabs.args = {
   },
 };
 
-export const TabsInAddonPanel = Story.bind({});
+export const TabsInAddonPanel = Template.bind({});
 TabsInAddonPanel.args = {
   tabs: {
     Normal: Normal.args,
@@ -28,7 +28,7 @@ TabsInAddonPanel.args = {
   inAddonPanel: true,
 };
 
-export const Empty = Story.bind({});
+export const Empty = Template.bind({});
 Empty.args = {
   tabs: {},
 };

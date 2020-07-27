@@ -6,7 +6,8 @@ const emptyContext: StoryContext = {
   kind: 'foo',
   name: 'bar',
   args: {},
-  globalArgs: {},
+  argTypes: {},
+  globals: {},
   parameters: {},
 };
 

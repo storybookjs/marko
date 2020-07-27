@@ -56,7 +56,8 @@ export type StoryContext = StoryIdentifier & {
   [key: string]: any;
   parameters: Parameters;
   args: Args;
-  globalArgs: Args;
+  argTypes: ArgTypes;
+  globals: Args;
   hooks?: HooksContext;
 };
 

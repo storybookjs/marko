@@ -6,8 +6,8 @@ export default {
   component: RangeControl,
 };
 
-export const Basic = () => {
-  const [value, setValue] = useState(10);
+const Template = (initialValue?: number) => {
+  const [value, setValue] = useState(initialValue);
   return (
     <>
       <RangeControl
@@ -22,3 +22,7 @@ export const Basic = () => {
     </>
   );
 };
+
+export const Basic = () => Template(10);
+
+export const Undefined = () => Template(undefined);

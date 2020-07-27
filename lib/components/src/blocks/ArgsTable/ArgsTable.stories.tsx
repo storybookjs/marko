@@ -10,6 +10,7 @@ export default {
   title: 'Docs/ArgsTable',
   args: {
     updateArgs: action('updateArgs'),
+    resetArgs: action('resetArgs'),
   },
 };
 
@@ -22,9 +23,9 @@ const htmlElementSubsection = { subcategory: 'HTMLElement' };
 const stringType = ArgRow.String.args.row;
 const numberType = ArgRow.Number.args.row;
 
-const Story = (args) => <ArgsTable {...args} />;
+const Template = (args) => <ArgsTable {...args} />;
 
-export const Normal = Story.bind({});
+export const Normal = Template.bind({});
 Normal.args = {
   rows: {
     stringType,
@@ -32,7 +33,7 @@ Normal.args = {
   },
 };
 
-export const Compact = Story.bind({});
+export const Compact = Template.bind({});
 Compact.args = {
   ...Normal.args,
   compact: true,
@@ -43,7 +44,7 @@ const AddonPanelLayout = styled.div(({ theme }) => ({
   background: theme.background.content,
 }));
 
-export const InAddonPanel = Story.bind({});
+export const InAddonPanel = Template.bind({});
 InAddonPanel.args = {
   ...Normal.args,
   inAddonPanel: true,
@@ -62,7 +63,7 @@ InAddonPanelWithWarning.args = {
 };
 InAddonPanelWithWarning.decorators = InAddonPanel.decorators;
 
-export const Sections = Story.bind({});
+export const Sections = Template.bind({});
 Sections.args = {
   rows: {
     a: { ...stringType, table: { ...stringType.table, ...propsSection } },
@@ -71,13 +72,13 @@ Sections.args = {
   },
 };
 
-export const SectionsCompact = Story.bind({});
+export const SectionsCompact = Template.bind({});
 SectionsCompact.args = {
   ...Sections.args,
   compact: true,
 };
 
-export const SectionsAndSubsections = Story.bind({});
+export const SectionsAndSubsections = Template.bind({});
 SectionsAndSubsections.args = {
   rows: {
     a: { ...stringType, table: { ...stringType.table, ...propsSection, ...componentSubsection } },
@@ -90,7 +91,7 @@ SectionsAndSubsections.args = {
   },
 };
 
-export const SubsectionsOnly = Story.bind({});
+export const SubsectionsOnly = Template.bind({});
 SubsectionsOnly.args = {
   rows: {
     a: { ...stringType, table: { ...stringType.table, ...componentSubsection } },
@@ -100,7 +101,7 @@ SubsectionsOnly.args = {
   },
 };
 
-export const AllControls = Story.bind({});
+export const AllControls = Template.bind({});
 AllControls.args = {
   rows: {
     array: ArgRow.ArrayOf.args.row,
@@ -121,10 +122,10 @@ AllControls.args = {
   },
 };
 
-export const Error = Story.bind({});
+export const Error = Template.bind({});
 Error.args = {
   error: ArgsTableError.NO_COMPONENT,
 };
 
-export const Empty = Story.bind({});
+export const Empty = Template.bind({});
 Empty.args = { rows: {} };
