@@ -8,10 +8,6 @@ TODO: CLEANUP comments once this is vetted.
 
 A major strength of Storybook are [addons](/addons/) that extend Storybook’s UI and behaviour. There are many third-party addons as well as “official” addons developed by the Storybook core team. Storybook ships by default with a set of “essential” addons that add to the initial user experience.
 
-<div style="background-color:#F8FAFC">
-TODO: ask tom/dom for feedback on this. The list was included just to let readers know as we're not telling which addons are essentials out of the box. Also if link to docs is ok(pointed it to the docs section)
-</div>
-
 - [Actions](./actions)
 - [Backgrounds](./backgrounds)
 - [Controls](./controls)

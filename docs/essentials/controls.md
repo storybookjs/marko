@@ -16,11 +16,7 @@ It does not require any modification to your components, and stories for control
 
 To use the controls addon, you need to write your stories using [args](../writing-stories/args). Storybook will automatically generate controls based on your args and what it can infer about your component; but you can configure the controls further using [argTypes](../api/stories#argtypes), see below.
 
-<div style="background-color:#F8FAFC">
-ask tom/dom/michael for the link of the migration guide.
-</div>
-
-> If you have written stories in the older pre-Storybook 6 style, you may want to read the [args&controls migration guide] to help understand how to convert your stories for args.
+> If you have written stories in the older pre-Storybook 6 style, you may want to read the [args&controls migration guide](https://medium.com/storybookjs/storybook-6-migration-guide-200346241bb5) to help understand how to convert your stories for args.
 
 ### Choosing the control type
 
@@ -68,11 +64,7 @@ TODO add same image used in the SB 6.0 docs color picker opened
 
 ### Fully custom args
 
-<div style="background-color:#F8FAFC">
-ask tom for location of complex stories link
-</div>
-
-Up until now, we've only used auto-generated controls based on the component we're writing stories for. If we are writing [complex stories](locate-complex-stories) we may want to add controls for args that aren’t part of the component.
+Up until now, we've only used auto-generated controls based on the component we're writing stories for. If we are writing [complex stories](../workflows/stories-for-multiple-components) we may want to add controls for args that aren’t part of the component.
 
 ```js
 // Table.stories.js
@@ -94,11 +86,8 @@ Numeric.args = {
 
 By default, Storybook will add controls for all args that:
 
-<div style="background-color:#F8FAFC">
-TODO: check if the link to the framework support is correct.
-</div>
+- It infers from the component definition [if your framework supports it](https://github.com/storybookjs/storybook/blob/next/addons/controls/README.md#framework-support).
 
-- It infers from the component definition [if your framework supports it](https://github.com/storybookjs/storybook/tree/next/addons/controls#framework-support)
 - Appear in the list of args for your story.
 
 You can determine the control by using `argTypes` in each case.
@@ -135,8 +124,6 @@ Here is the full list of available controls you can use:
 
 If you need to customize a control to use a enum data type in your story, for instance the `inline-radio` you can do it like so:
 
-<!-- Example customizing a control for an enum data type (defaults to select control type): -->
-
 ```js
 export default {
   title: 'Widget',
@@ -155,9 +142,9 @@ If you don't provide a specific one, it defaults to select control type.
 
 If you need to customize a control for a number data type in your story, you can do it like so:
 
-<!-- Example customizing a number data type (defaults to number control type): -->
-
 ```js
+// Gizmo.story.js
+
 export default {
   title: 'Gizmo',
   component: Gizmo,
@@ -170,7 +157,6 @@ export default {
 <div class="aside">
 If you don't provide a specific one, it defaults to  number control type.
 </div>
-
 
 #### Parameters
 

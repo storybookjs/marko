@@ -73,8 +73,4 @@ This will bind a standard HTML event handler to the outermost HTML element rende
 
 ### Advanced / Legacy Usage
 
-<div style="background-color:#F8FAFC">
-TODO: ask about the advanced readme link
-</div>
-
-There are also some older ways to use actions as documented in the [advanced README](locate-advanced-readme).
+There are also some older ways to use actions as documented in the [advanced README](../addons/actions/ADVANCED-README.md).
