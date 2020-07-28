@@ -117,10 +117,8 @@ module.exports = {
   // your Storybook configuration
 
   webpackFinal: config => {
-    config.resolve = {
-       alias: { 'fetch': '../__mocks__/fetch.js' },
-     };
-     return config;
+    config.resolve.alias.fetch = '../__mocks__/fetch.js'
+    return config;
    }
 };
 ```

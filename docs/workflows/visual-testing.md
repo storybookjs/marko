@@ -15,9 +15,8 @@ Storybook is a fantastic tool for visual testing because every story is essentia
 
 > Visual vs snapshot tests. Snapshot tests compare the rendered markup of every story against known baselines. When used to test how things look, snapshot tests generate a lot of false positives because code changes don’t always yield visual changes.
 
-<div style="background-color:#F8FAFC">
-TODO: gif of visual testing (mentioned SB 6.0)
-</div>
+
+![Visually testing a component in Storybook](./component-visual-testing.gif)
 
 There are [many tools](https://github.com/mojoaxel/awesome-regression-testing) for visual testing. Storybook uses [Chromatic](https://www.chromatic.com), a visual testing service made by Storybook maintainers to run tests in the cloud across browsers. 
 

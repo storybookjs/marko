@@ -8,9 +8,7 @@ A story records a way your component can be used. That means your complete set o
 
 The simplest testing method is manual. [Publish](./publish-storybook) your Storybook or run it locally, then look at every story to verify its appearance and behavior. This is appropriate for smaller Storybooks. 
 
-<div style="background-color:#F8FAFC">
-TODO: add gif of manually verifying a story
-</div>
+![Changing stories with Storybook](./storybook-switch-stories.gif)
 
 As you add more stories, manual testing becomes infeasible. We recommend automating testing to catch bugs and regressions. A complete Storybook testing strategy combines the following techniques to balance coverage, accuracy, and maintainability:
 

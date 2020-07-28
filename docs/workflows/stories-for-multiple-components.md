@@ -26,9 +26,7 @@ export const OneItem = (args) => (
 ```
 Note that by adding `subcomponents` to the default export, we get an extra pane on the ArgsTable, listing the props of `ListItem`:
 
-<div style="background-color:#F8FAFC">
-TODO: mention of a gif in the SB 6.0 doc (needs to be vetted) here
-</div>
+![Storybook story with subcomponent argstable](./argstable-subcomponents.png)
 
 The downside of the above approach is that it does not take advantage of Storybook [Args](../writing-stories/args) meaning:
 

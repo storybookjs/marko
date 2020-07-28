@@ -8,10 +8,6 @@ Storybook is a convenient tool for snapshot testing because every story is essen
 
 > Snapshot vs visual tests. Visual tests take screenshots of stories and compare them against known baselines. When used to test appearance, visual tests are often a more robust solution than snapshot tests because verifying markup doesn’t test for visual changes.
 
-<div style="background-color:#F8FAFC">
-todo: gif snapshot testing sb 6_0 docs
-</div>
-
 Storyshots is an [official addon](https://github.com/storybookjs/storybook/tree/master/addons/storyshots/storyshots-core) that enables snapshot testing. It’s powered by Jest so you’ll need to [install that](https://jestjs.io/docs/en/getting-started) first. Continue on if you already have Jest.
 
 Install the addon. **Make sure** the version of Storyshots and your project’s Storybook version are identical.
@@ -39,7 +35,7 @@ yarn test storybook.test.js
 ```
 
 <div style="background-color:#F8FAFC">
-TODO: clarify this note
+TODO: ask for clarification on this note below. What extra steps?
 </div>
 
 > If you are loading stories via `.storybook/main.js`, you will need to follow some more steps to ensure Jest finds them.
@@ -47,15 +43,11 @@ TODO: clarify this note
 
 This will create an initial set of snapshots inside your Storybook config directory.
 
-<div style="background-color:#F8FAFC">
-TODO: add image of test output
-</div>
+![Successfull snapshot tests](./storyshots-pass.png)
 
 When you make changes to your components or stories, run the test again to identify the changes to the rendered markup.
 
-<div style="background-color:#F8FAFC">
-TODO: add image of test approval
-</div>
+![Failing snapshots](./storyshots-fail.png)
 
 If the changes are intentional we can accept them as new baselines. If the changes are bugs, fix the underlying code then run the snapshot tests again.
 

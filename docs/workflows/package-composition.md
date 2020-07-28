@@ -9,15 +9,12 @@ For example, if you use a design system package, its stories can appear alongsid
 ### For package consumers
 
 <div style="background-color:#F8FAFC">
-TODO: vet link for composition support.
+TODO: vet this item, supports link where should be pointed at
 </div>
 
 Composition happens automatically if the package [supports](locate-support-composition) it. When you install the package, Storybook will load its stories alongside your own. 
 
-<div style="background-color:#F8FAFC">
-TODO: add image of package composition
-</div>
-
+![Package composition workflow](./package-composition.png)
 
 #### Configuring
 
@@ -36,14 +33,12 @@ module.exports = {
 #### Changing versions
 
 <div style="background-color:#F8FAFC">
-TODO: vet configuration link below
+TODO: vet this item, configuration link where should be pointed at
 </div>
 
 Change the version of the composed Storybook to see how the library evolves. This requires [configuration](locate-configuration) from the package author.
 
-<div style="background-color:#F8FAFC">
-TODO: add image mentioned in SB 6.0 needs to be further vetted
-</div>
+![Package composition workflow](./composition-versioning.png)
 
 ### For package authors
 
@@ -78,10 +73,6 @@ For example, for Chromatic, you might do:
 In this example `xyz123` is your project’s id. Storybook will automatically compose in the Storybook published to that project corresponding to the version the user has installed.
 
 #### Providing a version section
-
-<div style="background-color:#F8FAFC">
-TODO: vet choose from link below
-</div>
 
 Similarly, if you're using a [CHP level 1 service](#chp-level-1) (such as chromatic.com) for hosting, you can provide a list of versions for the user to [choose from](#changing-versions) to experiment with other versions of your package.
 

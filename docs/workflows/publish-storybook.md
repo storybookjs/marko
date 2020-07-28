@@ -24,9 +24,12 @@ Once your Storybook is built as a static web app it can be deployed to any stati
 
 We also maintain [`storybook-deployer`](https://github.com/storybookjs/storybook-deployer) to deploy to GitHub pages or AWS S3.
 
-<div style="background-color:#F8FAFC">
-TODO: gif of Publish Storybook (mentioned SB 6.0)
-</div>
+<video autoPlay muted playsInline loop>
+  <source
+    src="storybook-publish-review-optimized.mp4"
+    type="video/mp4"
+  />
+</video>
 
 ### Review with your team
 
@@ -40,9 +43,7 @@ A common method to ask for review is to paste a link to the published Storybook 
 
 If you publish your Storybook to Chromatic, you can use the [UI Review](locate-ui-review) feature to automatically scan your PRs for new and updated stories. That makes it easy to identify what changed and give feedback.
 
-<div <div style="background-color:#F8FAFC">
-TODO: add image of Chromatic review process
-</div>
+![Storybook publishing workflow](./workflow-publish.png)
 
 ### Reference external Storybooks
 
@@ -53,9 +54,7 @@ Storybook allows you to browse components from any Storybook published online in
 - 🛠 Frontend platform can audit how components are used across projects.
 
 
-<div style="background-color:#F8FAFC">
-TODO: add screenshot mentioned in SB 6.0 needs to be further vetted
-</div>
+![Storybook reference external](./reference-external-storybooks-composition.jpg)
 
 Toggle between multiple versions of Storybook to see how components change between versions. This is useful for design system package authors who maintain many versions at once.
 

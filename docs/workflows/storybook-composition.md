@@ -8,9 +8,7 @@ It’s made for teams who adopt Storybook in multiple projects but can’t ensur
 
 You can compose any Storybook [published online](./publish-storybook) or running locally no matter the view layer, tech stack, or dependencies. 
 
-<div style="background-color:#F8FAFC">
-TODO: add image of storybook composition
-</div>
+![Storybook composition](./combine-storybooks.png)
 
 ### Compose published Storybooks
 
@@ -21,7 +19,7 @@ In your [`storybook/main.js`](../configure/overview#configure-story-rendering) f
 module.exports={
   // your Storybook configuration
   refs: {
-   design-system: { 
+   'design-system': { 
      title: "Storybook Design System", 
      url: "https://5ccbc373887ca40020446347-yldsqjoxzb.chromatic.com"
    }
