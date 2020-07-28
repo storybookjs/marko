@@ -50,7 +50,7 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
     babelOptions,
     mdxBabelOptions,
     configureJSX = true,
-    sourceLoaderOptions = {},
+    sourceLoaderOptions = { injectParameters: true },
     transcludeMarkdown = false,
   } = options;
 
