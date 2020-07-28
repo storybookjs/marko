@@ -174,7 +174,7 @@ export const useMenu = (
   return useMemo(
     () => [
       about,
-      releaseNotes,
+      ...(api.releaseNotesVersion() ? [releaseNotes] : []),
       shortcuts,
       sidebarToggle,
       addonsToggle,
@@ -189,7 +189,7 @@ export const useMenu = (
     ],
     [
       about,
-      releaseNotes,
+      ...(api.releaseNotesVersion() ? [releaseNotes] : []),
       shortcuts,
       sidebarToggle,
       addonsToggle,

@@ -2,16 +2,11 @@ import React, { Fragment, FunctionComponent } from 'react';
 import semver from '@storybook/semver';
 import { styled } from '@storybook/theming';
 import { State } from '@storybook/api';
-import { GlobalHotKeys } from 'react-hotkeys';
 import Markdown from 'markdown-to-jsx';
 
 import { StorybookIcon, SyntaxHighlighter, Link, DocumentWrapper } from '@storybook/components';
 
 import SettingsFooter from './SettingsFooter';
-
-const keyMap = {
-  CLOSE: 'escape',
-};
 
 const Header = styled.header(({ theme }) => ({
   marginBottom: 20,
@@ -88,8 +83,7 @@ const Container = styled.div({
 const AboutScreen: FunctionComponent<{
   latest: State['versions']['latest'];
   current: State['versions']['current'];
-  onClose: (e?: KeyboardEvent) => void;
-}> = ({ latest = null, current, onClose }) => {
+}> = ({ latest = null, current }) => {
   const canUpdate = latest && semver.gt(latest.version, current.version);
 
   let updateMessage;
@@ -114,70 +108,68 @@ const AboutScreen: FunctionComponent<{
   }
 
   return (
-    <GlobalHotKeys handlers={{ CLOSE: onClose }} keyMap={keyMap}>
-      <Container>
-        <Header>
-          <StorybookIcon />
-          Storybook {current.version}
-        </Header>
+    <Container>
+      <Header>
+        <StorybookIcon />
+        Storybook {current.version}
+      </Header>
 
-        {updateMessage}
+      {updateMessage}
 
-        {latest ? (
-          <Fragment>
-            <Subheader>
-              <Subheading>{latest.version} Changelog</Subheading>
-              <SubheadingLink
-                secondary
-                href="https://github.com/storybookjs/storybook/blob/next/CHANGELOG.md"
-                withArrow
-                cancel={false}
-                target="_blank"
-              >
-                Read full changelog
-              </SubheadingLink>
-            </Subheader>
-            <DocumentWrapper>
-              <Markdown>{latest.info.plain}</Markdown>
-            </DocumentWrapper>
-          </Fragment>
-        ) : (
-          <ErrorMessage>
-            <Link
-              href="https://github.com/storybookjs/storybook/releases"
-              target="_blank"
-              withArrow
+      {latest ? (
+        <Fragment>
+          <Subheader>
+            <Subheading>{latest.version} Changelog</Subheading>
+            <SubheadingLink
               secondary
+              href="https://github.com/storybookjs/storybook/blob/next/CHANGELOG.md"
+              withArrow
               cancel={false}
+              target="_blank"
             >
-              Check Storybook's release history
-            </Link>
-          </ErrorMessage>
-        )}
+              Read full changelog
+            </SubheadingLink>
+          </Subheader>
+          <DocumentWrapper>
+            <Markdown>{latest.info.plain}</Markdown>
+          </DocumentWrapper>
+        </Fragment>
+      ) : (
+        <ErrorMessage>
+          <Link
+            href="https://github.com/storybookjs/storybook/releases"
+            target="_blank"
+            withArrow
+            secondary
+            cancel={false}
+          >
+            Check Storybook's release history
+          </Link>
+        </ErrorMessage>
+      )}
 
-        {canUpdate && (
-          <Upgrade>
-            <DocumentWrapper>
-              <p>
-                <b>Upgrade all Storybook packages to latest:</b>
-              </p>
-              <SyntaxHighlighter language="bash" copyable padded bordered>
-                npx npm-check-updates '/storybook/' -u && npm install
-              </SyntaxHighlighter>
-              <p>
-                Alternatively, if you're using yarn run the following command, and check all
-                Storybook related packages:
-              </p>
-              <SyntaxHighlighter language="bash" copyable padded bordered>
-                yarn upgrade-interactive --latest
-              </SyntaxHighlighter>
-            </DocumentWrapper>
-          </Upgrade>
-        )}
+      {canUpdate && (
+        <Upgrade>
+          <DocumentWrapper>
+            <p>
+              <b>Upgrade all Storybook packages to latest:</b>
+            </p>
+            <SyntaxHighlighter language="bash" copyable padded bordered>
+              npx npm-check-updates '/storybook/' -u && npm install
+            </SyntaxHighlighter>
+            <p>
+              Alternatively, if you're using yarn run the following command, and check all Storybook
+              related packages:
+            </p>
+            <SyntaxHighlighter language="bash" copyable padded bordered>
+              yarn upgrade-interactive --latest
+            </SyntaxHighlighter>
+          </DocumentWrapper>
+        </Upgrade>
+      )}
 
-        <SettingsFooter />
-      </Container>
-    </GlobalHotKeys>
+      <SettingsFooter />
+    </Container>
   );
 };
 
