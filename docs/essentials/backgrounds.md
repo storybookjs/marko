@@ -2,18 +2,16 @@
 title: 'Backgrounds'
 ---
 
-
-<div style="background-color:#F8FAFC">
-TODO: CLEANUP comments once this is vetted.
-</div>
-
 The backgrounds toolbar item allows you to adjust the background that your story is rendered on via Storybook’s UI:
 
-<div style="background-color:#F8FAFC">
-TODO: add Gif mentioned in the SB 6.0 needs to be further vetted
-</div>
+<video autoPlay muted playsInline loop>
+  <source
+    src="addon-backgrounds-optimized.mp4"
+    type="video/mp4"
+  />
+</video>
 
-## Configuration
+### Configuration
 
 By default the background toolbar presents you with either a light and a dark background.
 

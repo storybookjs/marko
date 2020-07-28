@@ -4,11 +4,14 @@ title: 'Viewports'
 
 The Viewports Essential toolbar item allows you to adjust the viewport your story is rendered in via Storybook’s UI:
 
-<div style="background-color:#F8FAFC">
-TODO: add Gif mentioned in the SB 6.0 needs to be further vetted
-</div>
+<video autoPlay muted playsInline loop>
+  <source
+    src="addon-viewports-optimized.mp4"
+    type="video/mp4"
+  />
+</video>
 
-## Configuration
+### Configuration
 
 By default, you are presented with a set of common viewports. 
 
@@ -173,7 +176,7 @@ export const parameters = {
 };
 ```
 
-## Configuring per component or story
+### Configuring per component or story
 
 There are cases where it's not effective for you to use a certain visual viewport on a global scale and you need it to adjust it to a individual story.
 

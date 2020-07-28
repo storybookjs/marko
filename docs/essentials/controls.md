@@ -2,9 +2,12 @@
 title: 'Controls'
 ---
 
-<div style="background-color:#F8FAFC">
-TODO add same gif used in the SB 6.0 docs
-</div>
+<video autoPlay muted playsInline loop>
+  <source
+    src="addon-controls-optimized.mp4"
+    type="video/mp4"
+  />
+</video>
 
 Storybook Controls gives you a graphical UI to interact with a component's arguments dynamically, without needing to code. It creates an addon panel next to your component examples ("stories"), so you can edit them live.
 
@@ -35,9 +38,7 @@ Red.args = {
 
 By default, Storybook will render a free text input for the `backgroundColor` arg:
 
-<div style="background-color:#F8FAFC">
-TODO add same image used in the SB 6.0 docs with highlighted background control
-</div>
+![Essential addon Controls using a string](./addon-controls-args-background-string.png)
 
 This works as long as you type a valid string into the auto-generated text control, but it's not the best UI for picking a color. Let’s replace it with Storybook’s color picker component.
 
@@ -58,9 +59,7 @@ export default {
 
 This replaces the input with a color picker leading to a more intuitive developer experience.
 
-<div style="background-color:#F8FAFC">
-TODO add same image used in the SB 6.0 docs color picker opened
-</div>
+![Essential Control addon with a color picker](./addon-controls-args-background-color.png)
 
 ### Fully custom args
 
@@ -163,10 +162,13 @@ If you don't provide a specific one, it defaults to  number control type.
 Controls supports the following configuration [parameters](../writing-stories/parameters), either globally or on a per-story basis:
 
 <div style="background-color:#F8FAFC">
-Ask tom about this item=> Expanded: show property documentation
+TODO: vet locate customized link and ask about props table link
 </div>
 
-Since Controls is built on the same engine as Storybook Docs, it can also show property documentation alongside your controls using the expanded parameter (defaults to false). This means you embed a complete [Props table](locate-props-table) doc block in the controls pane. The description and default value rendering can be [customized](locate-customized) in the same way as the doc block.
+<details>
+<summary>Show property documentation</summary>
+
+Since Controls is built on the same engine as Storybook Docs, it can also show property documentation alongside your controls using the expanded parameter (defaults to false). This means you embed a complete [Props table](locate-props-table) doc block in the controls pane. The description and default value rendering can be [customized](#fully-custom-args) in the same way as the doc block.
 
 To enable expanded mode globally, add the following to [`.storybook/preview.js`](../configure/overview#configure-story-rendering):
 
@@ -179,9 +181,9 @@ export const parameters = {
 ```
 And here's what the resulting UI looks like:
 
-<div style="">
-TODO: add same image used in the SB 6.0 docs with highlighted control
-</div>
+![Controls addon expanded](./addon-controls-expanded.png)
+
+</details>
 
 #### Hide NoControls warning
 

@@ -4,10 +4,7 @@ title: 'Actions'
 
 The actions addon is used to display data received by event handler (callback) args in your stories.
 
-<div style="background-color:#F8FAFC">
-TODO: add same image used in the SB 6.0 docs with the ui and the action logger with some action information
-</div>
-
+![Essential Actions addon usage](./addon-actions-screenshot.png)
 
 ### Action Args
 
@@ -18,7 +15,7 @@ Actions works via supplying special Storybook-generated “action” args to you
 You can use [argTypes](../api/stories#argtypes) to tell Storybook that an arg to your story should be an action. Usually it makes sense to do this at the component level (although it can be done per story):
 
 ```js
-// Button.stories.j
+// Button.stories.js
 
 import Button from './button';
 
@@ -30,9 +27,12 @@ export default {
 
 When Storybook sees this argType it will create an arg that is set to a special “action” callback. If your component calls this arg (based on user interaction) the event will show up in the action panel:
 
-<div style="background-color:#F8FAFC">
-TODO: add Gif mentioned in the SB 6.0 needs to be further vetted
-</div>
+<video autoPlay muted playsInline loop>
+  <source
+    src="addon-actions-optimized.mp4"
+    type="video/mp4"
+  />
+</video>
 
 #### Automatically matching args
 
@@ -58,6 +58,7 @@ export default {
 It is also possible to detect if your component is emitting the correct HTML events using the `parameters.actions.handles` [parameter](../writing-stories/parameters). 
 
 ```js
+// Button.stories.js
 import Button from './button';
 
 export default {

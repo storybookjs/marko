@@ -4,7 +4,7 @@ title: 'Toolbars & globals'
 
 By default, Storybook ships with toolbar items to control the [viewport](./viewport) and [background](./backgrounds) the story renders in. You can also create your own toolbar items which control special “globals” which you can then read to create [decorators](../writing-stories/decorators) to control story rendering.
 
-## Globals
+### Globals
 
 Globals in Storybook represent “global” (as in not story-specific) inputs to the rendering of the story. As they aren’t specific to the story, they aren’t passed in the `args` argument to the story function (although they are accessible as `context.globals`), but typically you use them in decorators which apply to all stories.
 
@@ -12,7 +12,7 @@ When the globals change, the story re-renders and the decorators rerun with the 
 
 Let’s see how.
 
-## Global Types and the toolbar annotation
+### Global Types and the toolbar annotation
 
 Storybook has a simple, declarative syntax for configuring toolbar menus. In your [`.storybook/preview.js`](../configure/overview#configure-story-rendering), you can add your own toolbars by creating `globalTypes` with a `toolbar` annotation: 
 
@@ -60,7 +60,7 @@ const withThemeProvider=(Story,context)=>{
 export const decorators = [withThemeProvider];
 ```
 
-## Advanced usage
+### Advanced usage
 
 So far we've managed to create and consume a global inside Storybook. 
 
