@@ -8,15 +8,13 @@ The title of the component you export in the `default` export controls the name 
 
 // Button.stories.js
 export default {
-  title: ‘Button’
+  title: 'Button'
 }
 ```
 
 Yields this:
 
-<div style="background-color:#F8FAFC">
-TODO: per screenshot spreadsheet add image Default ordering of Button with the placement
-</div>
+![Stories hierarchy without paths](./naming-hierarchy-no-path.png)
 
 
 ### Grouping
@@ -41,11 +39,7 @@ export default {
 
 Yields this:
 
-<div style="background-color:#F8FAFC">
-
-TODO: per screenshot spreadsheet add image Show Button ordering/grouping with Design System/Atoms/Button title
-
-</div>
+![Stories hierarchy with paths](./naming-hierarchy-with-path.png)
 
 ### Roots
 
@@ -90,7 +84,7 @@ export const parameters = {
 | ------------- |:-------------:|:------------------------------------------------------:|:--------:|:----------------------:|:-----------------------:|
 | **method**    | String        |Tells Storybook in which order the stories are displayed|No        |Storybook configuration |`'alphabetical'`         |
 | **order**     | Array         |The stories to be show, ordered by supplied name        |No        |Empty Array `[]`        |`['Intro', 'Components']`|
-| **locales**   | String?       |The locale required to be displayed                     |No        |System locale           |`en-US`                  |
+| **locales**   | String        |The locale required to be displayed                     |No        |System locale           |`en-US`                  |
 
 To sort your stories alphabetically, set `method` to `'alphabetical'` and optionally set the `locales` string. To sort your stories using a custom list, use the `order` array; stories that don't match an item in the `order` list will appear after the items in the list.
 

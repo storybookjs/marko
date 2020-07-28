@@ -110,15 +110,21 @@ When Button’s signature changes, you only need to change Button’s stories to
 
 That’s not all! Each of the args from the story function are live editable using Storybook’s [controls](../essentials/controls) panel. This means your team can dynamically change components in Storybook to stress test and find edge cases.
 
-<div style="background-color:#F8FAFC">
-TODO: per screenshot spreadsheet add GIF of controls in action
-</div>
+<video autoPlay muted playsInline loop>
+  <source
+    src="addon-controls-demo-optimized.mp4"
+    type="video/mp4"
+  />
+</video>
 
 Addons can enhance args. For instance, [Actions](../essentials/actions) auto detects which args are callbacks and appends a logging function to them. That way interactions (like clicks) get logged in the actions panel.
 
-<div style="background-color:#F8FAFC">
-TODO: per screenshot spreadsheet add GIF of actions in action
-</div>
+<video autoPlay muted playsInline loop>
+  <source
+    src="addon-actions-demo-optimized.mp4"
+    type="video/mp4"
+  />
+</video>
 
 #### Using parameters
 
@@ -144,9 +150,8 @@ export default {
   }
 }
 ```
-<div style="background-color:#F8FAFC">
-TODO: per screenshot spreadsheet add Image of the story with the params
-</div>
+
+![Background colors parameter](./parameters-background-colors.png)
 
 This parameter would instruct the backgrounds addon to reconfigure itself whenever a Button story is selected. Most addons are configured via a parameter-based API and can be influenced at a [global](./parameters#global-parameters), [component](./parameters#component-parameters) and [story](./parameters#story-parameters) level.
 

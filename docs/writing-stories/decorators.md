@@ -10,9 +10,7 @@ When writing stories, decorators are typically used to wrap stories with extra m
 
 Some components require a “harness” to render in a useful way. For instance if a component runs right up to its edges, you might want to space it inside Storybook. Use a decorator to add spacing for all stories of the component.
 
-<div style="background-color:#F8FAFC">
-TODO: per screenshot spreadsheet add Image of Component Story without margins
-</div>
+![Story without padding](./decorators-no-padding.png)
 
 ```js
 export default {
@@ -21,9 +19,8 @@ export default {
 }
 ```
 
-<div style="background-color:#F8FAFC">
-TODO: per screenshot spreadsheet add Image of Component Story with margins
-</div>
+![Story with padding](./decorators-padding.png)
+
 
 
 ### “Context” for mocking

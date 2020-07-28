@@ -76,10 +76,6 @@ Secondary.args = {
 }
 ```
 
-<div style="background-color:#F8FAFC">
-needs to be vetted with frontpage and gatsby
-</div>
-
 > Note that if you are doing the above often, you may want to consider using [component-level args](#component-args).
 
 Args are useful when writing stories for composite components that are assembled from other components. Composite components often pass their arguments unchanged to their child components, and similarly their stories can be compositions of their child components stories. With args, you can directly compose the arguments:
@@ -101,35 +97,40 @@ LoggedIn.args = {
   ...Header.LoggedIn.args,
 };
 ```
+<details>
+<summary>Using args in addons</summary>
 
-### Using args in addons
+  If you are [writing an addon](../api/addons#getting-started) that wants to read or update args, use the `useArgs` hook exported by `@storybook/api`:
 
-If you are [writing an addon](../api/addons#getting-started) that wants to read or update args, use the `useArgs` hook exported by `@storybook/api`:
+  ```js
 
-```js
+  import { useArgs } from '@storybook/api';
 
-import { useArgs } from '@storybook/api';
+  const [args, updateArgs,resetArgs] = useArgs();
 
-const [args, updateArgs,resetArgs] = useArgs();
+  // To update one or more args:
+  updateArgs({ key: 'value' });
 
-// To update one or more args:
-updateArgs({ key: 'value' });
+  // To reset one (or more) args:
+  resetArgs(argNames:['key']);
 
-// To reset one (or more) args:
-resetArgs(argNames:['key']);
+  // To reset all args
+  resetArgs();
+  ```
 
-// To reset all args
-resetArgs();
-```
+</details>
 
-#### parameters.passArgsFirst
 
-In Storybook 6+, we pass the args as the first argument to the story function. The second argument is the “context” which contains things like the story parameters etc.
+ 
+<details>
+<summary>parameters.passArgsFirst</summary>
+  In Storybook 6+, we pass the args as the first argument to the story function. The second argument is the “context” which contains things like the story parameters etc.
 
-In Storybook 5 and before we passed the context as the first argument. If you’d like to revert to that functionality set the `parameters.passArgsFirst` parameter in [`.storybook/preview.js`](../configure/overview#configure-story-rendering):
+  In Storybook 5 and before we passed the context as the first argument. If you’d like to revert to that functionality set the `parameters.passArgsFirst` parameter in [`.storybook/preview.js`](../configure/overview#configure-story-rendering):
 
-```js
-export const parameter = { passArgsFirst : false }.
-```
+  ```js
+  export const parameter = { passArgsFirst : false }.
+  ```
 
-> Note that `args` is still available as a key on the context.
+  > Note that `args` is still available as a key on the context.
+</details>
