@@ -20,9 +20,9 @@ module.exports = {
 }
 ```
 
-The `main.js` configuration file is a [preset](../presets/introduction) and as such has a powerful interface, but the key fields within it are:
+The `main.js` configuration file is a [preset](../api/addons#addon-presets) and as such has a powerful interface, but the key fields within it are:
 
-- `stories` - a glob that indicates the [location of your story files](#configure-story-loading), relative to `main.js`.
+- `stories` - a array of globs that indicates the [location of your story files](#configure-story-loading), relative to `main.js`.
 - `addons` - a list of the [addons](/addons) you are using.
 - `webpackFinal` - custom [webpack configuration](./integration#extending-storybooks-webpack-config).
 - `babel` - custom [babel configuration](./integration#babel).
@@ -39,6 +39,16 @@ By default Storybook will load stories from your project based on a glob (patter
 ```
 
 If you want to use a different naming convention, you can alter the glob, using the syntax supported by [micromatch](https://github.com/micromatch/micromatch#extended-globbing).
+
+For example if you wanted to pull both `.md` and `.js` files from the `my-project/src/components` directory, you could write:
+
+```js
+// .storybook/main.js
+
+module.exports = {
+  stories: ['../my-project/src/components/*.@(js|md)'],
+};
+```
 
 ### Configure story rendering
 

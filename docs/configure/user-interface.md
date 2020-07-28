@@ -278,11 +278,13 @@ Addons have been a part of Storybook since the very beginning and are so integra
 
 #### Addon features
 
+<div>
+todo:vet links here
+</div>
+
 The most obvious thing addons affect in Storybook is the UI of Storybook itself. Within the UI the [toolbar]() and [addons panel]() are the two chief places addons will appear. 
 
-<div style="background-color:#F8FAFC">
-TODO: add image mentioned in the SB 6.0 needs to be further vetted
-</div>
+![Storybook addons locations](./addon-locations.jpg)
 
 Addons can also hook into the rendering of your story in the preview pane via injecting their own [decorators](../writing-stories/decorators).
 
@@ -300,9 +302,7 @@ There are many, many Storybook addons, but they can be roughly categorized into 
 
 Storybook’s sidebar lists all your stories grouped by component. When you have a lot of components you may wish to also group those components also. To do so, you can add the “/” separator to the “title” of your CSF file and Storybook will group the stories into groups based on common prefixes:
 
-<div style="background-color:#F8FAFC">
-TODO: add image mentioned in the SB 6.0 needs to be further vetted
-</div>
+![Storybook sidebar anatomy](./sidebar-anatomy.jpg)
 
 Usually it is a good idea to use a nesting scheme that mirrors the filesystem path of the components. So if you have a file `components/modals/Alert.js` you might name the CSF file `components/modals/Alert.stories.js` and title it “Components/Modals/Alert”.
 
@@ -310,9 +310,7 @@ Usually it is a good idea to use a nesting scheme that mirrors the filesystem pa
 
 By default Storybook will treat your highest level of groups as “roots”--which are displayed in the UI as “sections” of the hierarchy. Lower level groups are displayed as expandable items in the hierarchy:
 
-<div style="background-color:#F8FAFC">
-TODO: add image mentioned in the SB 6.0 needs to be further vetted
-</div>
+![Storybook sidebar story roots](./sidebar-roots.jpg)
 
 If you’d prefer all groups to be expandable, you can set the showRoots option to false in  [`./storybook/manager.js`](./overview#configure-story-rendering):
 
