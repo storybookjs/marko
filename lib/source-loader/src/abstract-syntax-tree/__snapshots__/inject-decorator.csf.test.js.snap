@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`inject-decorator injectParameters - ts - csf includes storySource parameter in the default exported object 1`] = `
+exports[`inject-decorator injectStoryParameters - ts - csf includes storySource parameter in the default exported object 1`] = `
 "
 
 
