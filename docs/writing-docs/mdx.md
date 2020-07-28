@@ -1,10 +1,13 @@
 ---
-title:'MDX'
+title: 'MDX'
 ---
 
 MDX is a standard file format that combines Markdown with JSX. This means you can use Markdown’s terse syntax (such as # heading) for your documentation, write stories that compile to our component story format, and freely embed JSX component blocks at any point in the file. All at once.
 
 In addition, you can write pure documentation pages in MDX and add them to Storybook alongside your stories.
+
+![MDX simple example result](./mdx-hero.png)
+
 
 ### Basic example
 
@@ -45,10 +48,9 @@ export const Template = (args) => <Checkbox {...args} />
    </Story>
 </Preview>
 ```
+And here's how that's rendered in Storybook:
 
-<div style="background-color:#F8FAFC">
-TODO: add image per screenshot requirements (image of basic example of checkbox with mdx)
-</div>
+![MDX simple example result](./mdx-simple.png)
 
 As you can see there's a lot going on here. We're writing Markdown, we're writing JSX, and we're also defining Storybook stories that are drop-in compatible with the entire Storybook ecosystem.
 
@@ -151,9 +153,7 @@ with unique URLs which is great for review and testing.
 
 And here's how that gets rendered in Storybook:
 
-<div style="background-color:#F8FAFC">
-TODO: add image per screenshot requirements (image to match the code showed (usage of the badge component))
-</div>
+![MDX page](./mdx-page.png)
 
 
 ### Embedding stories
@@ -199,17 +199,11 @@ Typically, when you use Storybook MDX, you define stories in the MDX and documen
 
 If you don't define stories in your MDX, you can write MDX documentation and associate it with an existing story, or embed that MDX as its own documentation node in your Storybook's navigation.
 
-<div style="background-color:#F8FAFC">
-TODO: ask tom about the "CSF Stories with MDX Docs" link if that's where it should be pointing
-</div>
-
 If you don't define a Meta, you can write Markdown and associate with an existing story. See ["CSF Stories with MDX Docs"](https://github.com/storybookjs/storybook/blob/master/addons/docs/docs/recipes.md#csf-stories-with-mdx-docs).
 
 To get a "documentation-only story", in your UI, define a `<Meta>` as you normally would, but don't define any stories. It will show up in your UI as a documentation node:
 
-<div style="background-color:#F8FAFC">
-TODO:add image per screenshot requirements (Screenshot to match documentation (check if the mdx shown is the default one for Storybook 6))
-</div>
+![MDX docs only story](./mdx-documentation-only.png)
 
 ### MDX file names
 

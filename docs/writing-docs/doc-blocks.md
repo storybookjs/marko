@@ -10,9 +10,12 @@ Also, custom [addons](../configure/user-interface#storybook-addons) can provide 
 
 Storybook Docs automatically generates component props tables for components in supported frameworks. These tables list the [args](../writing-stories/args) of the component, and even integrate with [controls](../essentials/controls) to allow you to change the args of the currently rendered story.
 
-<div style="background-color:#F8FAFC">
-TODO:add image per screenshot requirements (Use the same gif present in the SB 6.0 doc)
-</div>
+<video autoPlay muted playsInline loop>
+  <source
+    src="addon-controls-docs-optimized.mp4"
+    type="video/mp4"
+  />
+</video>
 
 #### DocsPage
 
@@ -140,17 +143,11 @@ The controls inside a props table are configured in exactly the same way as the 
 
 Storybook Docs displays a story’s source code using the `Source` block. The snippet has built-in syntax highlighting and can be copied with the click of a button.
 
-<div style="background-color:#F8FAFC">
-TODO:add image per screenshot requirements (mention of a image in the SB 6.0 doc (needs to be vetted))
-</div>
+![Docs blocks with source](./docblock-source.png)
 
 #### DocsPage
 
 In DocsPage, the `Source` block appears automatically within each story’s [Preview] block.
-
-<div style="background-color:#F8FAFC">
-TODO:add image per screenshot requirements (mention of a image in the SB 6.0 doc (needs to be vetted))
-</div>
 
 To customize the source snippet that’s displayed for a story, set the `docs.source.code` parameter:
 
@@ -173,7 +170,7 @@ You can also use the `Source` block in MDX. It accepts either a story ID or `cod
 
 ```js
 import { Source } from '@storybook/addon-docs/blocks';
-Import dedent from 'ts-dedent';
+import dedent from 'ts-dedent';
 
 <Source
   language='css'
@@ -189,21 +186,15 @@ Import dedent from 'ts-dedent';
 
 Storybook Docs shows a component’s description extracted from the source code or based on a user-provided string.
 
-<div style="background-color:#F8FAFC">
-TODO:add image per screenshot requirements (mention of a image in the SB 6.0 doc (needs to be vetted))
-</div>
+![Docs blocks with description](./docblock-description.png)
 
 #### DocsPage
 
 <div style="background-color:#F8FAFC">
-TODO: left it for now ask feedback tom/shillman on this based on [pr](https://github.com/storybookjs/storybook/issues/11441)
+TODO: waiting to be vetted
 </div>
 
 In DocsPage, a component’s description is shown at the top of the page. For [supported frameworks], the component description is automatically extracted from a docgen component above the component in its source code. It can also be set by the `docs.description` parameter.
-
-<div style="background-color:#F8FAFC">
-TODO:add image per screenshot requirements (mention of a image in the SB 6.0 doc (needs to be vetted))
-</div>
 
 ```js
 
@@ -250,6 +241,8 @@ import { Button } from './Button';
 
 Stories (component examples) are the basic building blocks in Storybook. In Storybook Docs, stories are rendered in the `Story` block.
 
+![Docs blocks with stories](./docblock-story.png)
+
 #### DocsPage
 
 In DocsPage a `Story` block is generated for each story in your [CSF] file, wrapped with a `Preview` wrapper that gives it a toolbar on top (in the case of the first “primary” story) and a source code preview underneath.
@@ -280,7 +273,7 @@ import { Story } from '@storybook/addon-docs/blocks';
 
 #### Inline rendering
 
-<div>
+<div style="background-color:#F8FAFC">
 TODO: ask tom/michael about the preview iframe. as we've been calling it canvas so far and now move to preview.
 And also inline rendering support location
 </div>
@@ -292,17 +285,13 @@ In Storybook’s Canvas, all stories are rendered in the [Preview iframe] for is
 
 Storybook Docs’ `Preview` block is a wrapper that provides a toolbar for interacting with its contents, and also also provides [Source](#Source) snippets automatically.
 
-<divs tyle="background-color:#F8FAFC">
-TODO:add image per screenshot requirements (mention of a image in the SB 6.0 doc (needs to be vetted))
-</div>
+![Docs block with a story preview](./docblock-preview.png)
 
 #### DocsPage
 
 In DocsPage, every story is wrapped in a `Preview` block. The first story on the page is called the _primary_, and it has a toolbar. The other stories are also wrapped with `Previews`, but there is no toolbar by default.
 
-<div style="background-color:#F8FAFC">
-TODO:add image per screenshot requirements (mention of a image in the SB 6.0 doc (needs to be vetted))
-</div>
+![Docs blocks preview toolbar](./docblock-preview-toolbar.png)
 
 #### MDX
 
@@ -328,10 +317,6 @@ export const Template = (args) => <Badge {...args } />
 </Preview>
 ```
 
-<div style="background-color:#F8FAFC">
-TODO:add image per screenshot requirements (mention of a image in the SB 6.0 doc (needs to be vetted))
-</div>
-
 You can also place non-story content inside a `Preview` block:
 
 ```js
@@ -342,12 +327,5 @@ import { MyComponent } from './MyComponent';
   <MyComponent />
 </Preview>
 ```
-<div>
-TODO: ask tom about Source link for clarity, as me i know that the source shows ad hoc the story file content. But another reader might not know.
-</div>
 
 This renders the JSX content exactly as it would if you’d placed it directly in the MDX, but it also inserts the source snippet in a [Source](#source) block beneath the block.
-
-<div style="background-color:#F8FAFC">
-TODO:add image per screenshot requirements (mention of a image in the SB 6.0 doc (needs to be vetted))
-</div>

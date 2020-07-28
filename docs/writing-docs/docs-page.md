@@ -38,9 +38,7 @@ export default {
 };
 ```
 
-<div style="background-color:#F8FAFC">
-TODO: add image per screenshot requirements (Image of subcomponents)
-</div>
+![Subcomponents in Docs Page](./docspage-subcomponents.png)
 
 Subcomponent prop tables will show up in a tabbed interface along with the primary component. The tab titles will correspond to the keys of the subcomponents object.
 
