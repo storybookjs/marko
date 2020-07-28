@@ -1,7 +1,6 @@
 import { document } from 'global';
 import React, { Fragment, useEffect } from 'react';
-import { isChromatic } from 'chromatic';
-import { addDecorator, addParameters } from '@storybook/react';
+import isChromatic from 'chromatic/isChromatic';
 import {
   Global,
   ThemeProvider,
@@ -32,8 +31,6 @@ if (process.env.NODE_ENV === 'development') {
 
 addHeadWarning('preview-head-not-loaded', 'Preview head not loaded');
 addHeadWarning('dotenv-file-not-loaded', 'Dotenv file not loaded');
-
-addDecorator(withCssResources);
 
 const ThemeBlock = styled.div(
   {
@@ -88,59 +85,63 @@ const ThemedSetRoot = () => {
   return null;
 };
 
-addDecorator((StoryFn, { globals: { theme = 'light' } }) => {
-  switch (theme) {
-    case 'side-by-side': {
-      return (
-        <Fragment>
-          <ThemeProvider theme={convert(themes.light)}>
+export const decorators = [
+  withCssResources,
+  (StoryFn, { globals: { theme = 'light' } }) => {
+    switch (theme) {
+      case 'side-by-side': {
+        return (
+          <Fragment>
+            <ThemeProvider theme={convert(themes.light)}>
+              <Global styles={createReset} />
+            </ThemeProvider>
+            <ThemeProvider theme={convert(themes.light)}>
+              <ThemeBlock side="left">
+                <StoryFn />
+              </ThemeBlock>
+            </ThemeProvider>
+            <ThemeProvider theme={convert(themes.dark)}>
+              <ThemeBlock side="right">
+                <StoryFn />
+              </ThemeBlock>
+            </ThemeProvider>
+          </Fragment>
+        );
+      }
+      case 'stacked': {
+        return (
+          <Fragment>
+            <ThemeProvider theme={convert(themes.light)}>
+              <Global styles={createReset} />
+            </ThemeProvider>
+            <ThemeProvider theme={convert(themes.light)}>
+              <ThemeStack side="left">
+                <StoryFn />
+              </ThemeStack>
+            </ThemeProvider>
+            <ThemeProvider theme={convert(themes.dark)}>
+              <ThemeStack side="right">
+                <StoryFn />
+              </ThemeStack>
+            </ThemeProvider>
+          </Fragment>
+        );
+      }
+      default: {
+        return (
+          <ThemeProvider theme={convert(themes[theme])}>
             <Global styles={createReset} />
+            <ThemedSetRoot />
+            <StoryFn />
           </ThemeProvider>
-          <ThemeProvider theme={convert(themes.light)}>
-            <ThemeBlock side="left">
-              <StoryFn />
-            </ThemeBlock>
-          </ThemeProvider>
-          <ThemeProvider theme={convert(themes.dark)}>
-            <ThemeBlock side="right">
-              <StoryFn />
-            </ThemeBlock>
-          </ThemeProvider>
-        </Fragment>
-      );
+        );
+      }
     }
-    case 'stacked': {
-      return (
-        <Fragment>
-          <ThemeProvider theme={convert(themes.light)}>
-            <Global styles={createReset} />
-          </ThemeProvider>
-          <ThemeProvider theme={convert(themes.light)}>
-            <ThemeStack side="left">
-              <StoryFn />
-            </ThemeStack>
-          </ThemeProvider>
-          <ThemeProvider theme={convert(themes.dark)}>
-            <ThemeStack side="right">
-              <StoryFn />
-            </ThemeStack>
-          </ThemeProvider>
-        </Fragment>
-      );
-    }
-    default: {
-      return (
-        <ThemeProvider theme={convert(themes[theme])}>
-          <Global styles={createReset} />
-          <ThemedSetRoot />
-          <StoryFn />
-        </ThemeProvider>
-      );
-    }
-  }
-});
+  },
+];
 
-addParameters({
+export const parameters = {
+  exportedParameter: 'exportedParameter',
   a11y: {
     config: {},
     options: {
@@ -156,10 +157,6 @@ addParameters({
     theme: themes.light,
     page: () => <DocsPage subtitleSlot={({ kind }) => `Subtitle: ${kind}`} />,
   },
-});
-
-export const parameters = {
-  exportedParameter: 'exportedParameter',
 };
 
 export const globals = {

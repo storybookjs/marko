@@ -107,6 +107,33 @@ describe('preview.story_store', () => {
     });
   });
 
+  describe('getStoriesJsonData', () => {
+    it('produces stories objects with normalized metadata', () => {
+      const store = new StoryStore({ channel });
+
+      store.addGlobalMetadata({ parameters: { global: 'global' }, decorators: [] });
+
+      store.addKindMetadata('a', { parameters: { kind: 'kind' }, decorators: [] });
+
+      addStoryToStore(store, 'a', '1', () => 0, { story: 'story' });
+
+      const { v, globalParameters, kindParameters, stories } = store.getStoriesJsonData();
+
+      expect(v).toBe(2);
+      expect(globalParameters).toEqual({});
+      expect(kindParameters).toEqual({ a: {} });
+      expect(kindParameters.a).toEqual({});
+
+      expect(Object.keys(stories)).toEqual(['a--1']);
+      expect(stories['a--1']).toMatchObject({
+        id: 'a--1',
+        kind: 'a',
+        name: '1',
+        parameters: { __isArgsStory: false },
+      });
+    });
+  });
+
   describe('getRawStory', () => {
     it('produces a story with inherited decorators applied', () => {
       const store = new StoryStore({ channel });
@@ -155,6 +182,22 @@ describe('preview.story_store', () => {
       });
     });
 
+    it('automatically infers argTypes based on args', () => {
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0, {
+        args: {
+          arg1: 3,
+          arg2: 'foo',
+          arg3: false,
+        },
+      });
+      expect(store.getRawStory('a', '1').argTypes).toEqual({
+        arg1: { name: 'arg1', type: { name: 'number' } },
+        arg2: { name: 'arg2', type: { name: 'string' } },
+        arg3: { name: 'arg3', type: { name: 'boolean' } },
+      });
+    });
+
     it('updateStoryArgs changes the args of a story, per-key', () => {
       const store = new StoryStore({ channel });
       addStoryToStore(store, 'a', '1', () => 0);
@@ -190,10 +233,13 @@ describe('preview.story_store', () => {
       addStoryToStore(store, 'a', '1', () => 0);
 
       store.updateStoryArgs('a--1', { foo: 'bar' });
-      expect(onArgsChangedChannel).toHaveBeenCalledWith('a--1', { foo: 'bar' });
+      expect(onArgsChangedChannel).toHaveBeenCalledWith({ storyId: 'a--1', args: { foo: 'bar' } });
 
       store.updateStoryArgs('a--1', { baz: 'bing' });
-      expect(onArgsChangedChannel).toHaveBeenCalledWith('a--1', { foo: 'bar', baz: 'bing' });
+      expect(onArgsChangedChannel).toHaveBeenCalledWith({
+        storyId: 'a--1',
+        args: { foo: 'bar', baz: 'bing' },
+      });
     });
 
     it('should update if the UPDATE_STORY_ARGS event is received', () => {
@@ -201,7 +247,7 @@ describe('preview.story_store', () => {
       const store = new StoryStore({ channel: testChannel });
       addStoryToStore(store, 'a', '1', () => 0);
 
-      testChannel.emit(Events.UPDATE_STORY_ARGS, 'a--1', { foo: 'bar' });
+      testChannel.emit(Events.UPDATE_STORY_ARGS, { storyId: 'a--1', updatedArgs: { foo: 'bar' } });
 
       expect(store.getRawStory('a', '1').args).toEqual({ foo: 'bar' });
     });
@@ -239,6 +285,62 @@ describe('preview.story_store', () => {
           parameters: expect.objectContaining({}),
         })
       );
+    });
+
+    it('resetStoryArgs resets a single arg', () => {
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0);
+      expect(store.getRawStory('a', '1').args).toEqual({});
+
+      store.updateStoryArgs('a--1', { foo: 'bar', bar: 'baz' });
+      expect(store.getRawStory('a', '1').args).toEqual({ foo: 'bar', bar: 'baz' });
+
+      store.resetStoryArgs('a--1', ['foo']);
+      expect(store.getRawStory('a', '1').args).toEqual({ bar: 'baz' });
+    });
+
+    it('resetStoryArgs resets all args', () => {
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0);
+      expect(store.getRawStory('a', '1').args).toEqual({});
+
+      store.updateStoryArgs('a--1', { foo: 'bar', bar: 'baz' });
+      expect(store.getRawStory('a', '1').args).toEqual({ foo: 'bar', bar: 'baz' });
+
+      store.resetStoryArgs('a--1');
+      expect(store.getRawStory('a', '1').args).toEqual({});
+    });
+
+    it('resetStoryArgs emits STORY_ARGS_UPDATED', () => {
+      const onArgsChangedChannel = jest.fn();
+      const testChannel = mockChannel();
+      testChannel.on(Events.STORY_ARGS_UPDATED, onArgsChangedChannel);
+
+      const store = new StoryStore({ channel: testChannel });
+      addStoryToStore(store, 'a', '1', () => 0);
+
+      store.updateStoryArgs('a--1', { foo: 'bar' });
+      expect(onArgsChangedChannel).toHaveBeenCalledWith({ storyId: 'a--1', args: { foo: 'bar' } });
+
+      store.resetStoryArgs('a--1');
+      expect(onArgsChangedChannel).toHaveBeenCalledWith({
+        storyId: 'a--1',
+        args: {},
+      });
+    });
+
+    it('should reset if the RESET_STORY_ARGS event is received', () => {
+      const testChannel = mockChannel();
+      const store = new StoryStore({ channel: testChannel });
+      addStoryToStore(store, 'a', '1', () => 0);
+
+      store.updateStoryArgs('a--1', { foo: 'bar', bar: 'baz' });
+
+      testChannel.emit(Events.RESET_STORY_ARGS, { storyId: 'a--1', argNames: ['foo'] });
+      expect(store.getRawStory('a', '1').args).toEqual({ bar: 'baz' });
+
+      testChannel.emit(Events.RESET_STORY_ARGS, { storyId: 'a--1' });
+      expect(store.getRawStory('a', '1').args).toEqual({});
     });
   });
 
@@ -456,10 +558,12 @@ describe('preview.story_store', () => {
       addStoryToStore(store, 'a', '1', () => 0);
 
       store.updateGlobals({ foo: 'bar' });
-      expect(onGlobalsChangedChannel).toHaveBeenCalledWith({ foo: 'bar' });
+      expect(onGlobalsChangedChannel).toHaveBeenCalledWith({ globals: { foo: 'bar' } });
 
       store.updateGlobals({ baz: 'bing' });
-      expect(onGlobalsChangedChannel).toHaveBeenCalledWith({ foo: 'bar', baz: 'bing' });
+      expect(onGlobalsChangedChannel).toHaveBeenCalledWith({
+        globals: { foo: 'bar', baz: 'bing' },
+      });
     });
 
     it('should update if the UPDATE_GLOBALS event is received', () => {
@@ -467,7 +571,7 @@ describe('preview.story_store', () => {
       const store = new StoryStore({ channel: testChannel });
       addStoryToStore(store, 'a', '1', () => 0);
 
-      testChannel.emit(Events.UPDATE_GLOBALS, { foo: 'bar' });
+      testChannel.emit(Events.UPDATE_GLOBALS, { globals: { foo: 'bar' } });
 
       expect(store.getRawStory('a', '1').globals).toEqual({ foo: 'bar' });
     });
@@ -500,6 +604,20 @@ describe('preview.story_store', () => {
   });
 
   describe('argTypesEnhancer', () => {
+    it('records when the given story processes args', () => {
+      const store = new StoryStore({ channel });
+
+      const enhancer = jest.fn((context) => ({ ...context.parameters.argTypes, c: 'd' }));
+      store.addArgTypesEnhancer(enhancer);
+
+      addStoryToStore(store, 'a', '1', (args: any) => 0, { argTypes: { a: 'b' } });
+
+      expect(enhancer).toHaveBeenCalledWith(
+        expect.objectContaining({ parameters: { __isArgsStory: true, argTypes: { a: 'b' } } })
+      );
+      expect(store.getRawStory('a', '1').parameters.argTypes).toEqual({ a: 'b', c: 'd' });
+    });
+
     it('allows you to alter argTypes when stories are added', () => {
       const store = new StoryStore({ channel });
 
@@ -509,7 +627,7 @@ describe('preview.story_store', () => {
       addStoryToStore(store, 'a', '1', () => 0, { argTypes: { a: 'b' } });
 
       expect(enhancer).toHaveBeenCalledWith(
-        expect.objectContaining({ parameters: { argTypes: { a: 'b' } } })
+        expect.objectContaining({ parameters: { __isArgsStory: false, argTypes: { a: 'b' } } })
       );
       expect(store.getRawStory('a', '1').parameters.argTypes).toEqual({ a: 'b', c: 'd' });
     });
@@ -525,10 +643,12 @@ describe('preview.story_store', () => {
       addStoryToStore(store, 'a', '1', () => 0, { argTypes: { a: 'b' } });
 
       expect(firstEnhancer).toHaveBeenCalledWith(
-        expect.objectContaining({ parameters: { argTypes: { a: 'b' } } })
+        expect.objectContaining({ parameters: { __isArgsStory: false, argTypes: { a: 'b' } } })
       );
       expect(secondEnhancer).toHaveBeenCalledWith(
-        expect.objectContaining({ parameters: { argTypes: { a: 'b', c: 'd' } } })
+        expect.objectContaining({
+          parameters: { __isArgsStory: false, argTypes: { a: 'b', c: 'd' } },
+        })
       );
       expect(store.getRawStory('a', '1').parameters.argTypes).toEqual({ a: 'b', c: 'd', e: 'f' });
     });
@@ -542,7 +662,7 @@ describe('preview.story_store', () => {
       addStoryToStore(store, 'a', '1', () => 0, { argTypes: { a: 'b' } });
 
       expect(enhancer).toHaveBeenCalledWith(
-        expect.objectContaining({ parameters: { argTypes: { a: 'b' } } })
+        expect.objectContaining({ parameters: { __isArgsStory: false, argTypes: { a: 'b' } } })
       );
       expect(store.getRawStory('a', '1').parameters.argTypes).toEqual({ c: 'd' });
     });
@@ -561,7 +681,7 @@ describe('preview.story_store', () => {
 
       addStoryToStore(store, 'a', '1', () => 0, { argTypes: { e: 'f' } });
       expect(enhancer).toHaveBeenCalledWith(
-        expect.objectContaining({ parameters: { argTypes: { e: 'f' } } })
+        expect.objectContaining({ parameters: { __isArgsStory: false, argTypes: { e: 'f' } } })
       );
       expect(store.getRawStory('a', '1').parameters.argTypes).toEqual({ e: 'f', c: 'd' });
     });
@@ -628,6 +748,17 @@ describe('preview.story_store', () => {
         expect(store.getSelection()).toEqual({ storyId: 'g2-a--1', viewMode: 'story' });
       });
 
+      // Making sure the fix #11571 doesn't break this
+      it('selects the first story if there are two stories in the group of different lengths', () => {
+        const store = new StoryStore({ channel });
+        store.setSelectionSpecifier({ storySpecifier: 'a', viewMode: 'story' });
+        addStoryToStore(store, 'a', 'long-long-long', () => 0);
+        addStoryToStore(store, 'a', 'short', () => 0);
+        store.finishConfiguring();
+
+        expect(store.getSelection()).toEqual({ storyId: 'a--long-long-long', viewMode: 'story' });
+      });
+
       it('selects nothing if the component or group does not exist', () => {
         const store = new StoryStore({ channel });
         store.setSelectionSpecifier({ storySpecifier: 'c', viewMode: 'story' });
@@ -662,6 +793,17 @@ describe('preview.story_store', () => {
         store.finishConfiguring();
 
         expect(store.getSelection()).toEqual(undefined);
+      });
+
+      // See #11571
+      it('does NOT select an earlier story that this story id is a prefix of', () => {
+        const store = new StoryStore({ channel });
+        store.setSelectionSpecifier({ storySpecifier: 'a--3', viewMode: 'story' });
+        addStoryToStore(store, 'a', '31', () => 0);
+        addStoryToStore(store, 'a', '3', () => 0);
+        store.finishConfiguring();
+
+        expect(store.getSelection()).toEqual({ storyId: 'a--3', viewMode: 'story' });
       });
     });
 
@@ -860,6 +1002,39 @@ describe('preview.story_store', () => {
         'a-b--1',
         'c--1',
       ]);
+    });
+
+    it('denormalizes parameters before passing to sort', () => {
+      const store = new StoryStore({ channel });
+      const storySort = jest.fn();
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          options: {
+            storySort,
+          },
+          global: 'global',
+        },
+      });
+      store.addKindMetadata('a', { parameters: { kind: 'kind' }, decorators: [] });
+      addStoryToStore(store, 'a', '1', () => 0, { story: '1' });
+      addStoryToStore(store, 'a', '2', () => 0, { story: '2' });
+      const extracted = store.extract();
+
+      expect(storySort).toHaveBeenCalledWith(
+        [
+          'a--1',
+          expect.objectContaining({
+            parameters: expect.objectContaining({ global: 'global', kind: 'kind', story: '1' }),
+          }),
+        ],
+        [
+          'a--2',
+          expect.objectContaining({
+            parameters: expect.objectContaining({ global: 'global', kind: 'kind', story: '2' }),
+          }),
+        ]
+      );
     });
   });
 

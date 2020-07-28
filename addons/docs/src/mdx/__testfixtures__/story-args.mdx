@@ -5,12 +5,12 @@ import { Story, Meta } from '@storybook/addon-docs/blocks';
 
 # Args
 
-export const ButtonStory = (args) => <Button>Component notes</Button>;
+export const Template = (args) => <Button>Component notes</Button>;
 
 <Story
   name="component notes"
   args={{ a: 1, b: 2 }}
   argTypes={{ a: { name: 'A' }, b: { name: 'B' } }}
 >
-  {ButtonStory.bind({})}
+  {Template.bind({})}
 </Story>

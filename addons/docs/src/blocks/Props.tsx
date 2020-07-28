@@ -38,12 +38,15 @@ type ComponentsProps = BaseProps & {
 
 type StoryProps = BaseProps & {
   story: '.' | string;
-  showComponents?: boolean;
+  showComponent?: boolean;
 };
 
 type PropsProps = BaseProps | OfProps | ComponentsProps | StoryProps;
 
-const useArgs = (storyId: string, storyStore: StoryStore): [Args, (args: Args) => void] => {
+const useArgs = (
+  storyId: string,
+  storyStore: StoryStore
+): [Args, (args: Args) => void, (argNames?: string[]) => void] => {
   const story = storyStore.fromId(storyId);
   if (!story) {
     throw new Error(`Unknown story: ${storyId}`);
@@ -52,9 +55,9 @@ const useArgs = (storyId: string, storyStore: StoryStore): [Args, (args: Args) =
   const { args: initialArgs } = story;
   const [args, setArgs] = useState(initialArgs);
   useEffect(() => {
-    const cb = (changedId: string, newArgs: Args) => {
-      if (changedId === storyId) {
-        setArgs(newArgs);
+    const cb = (changed: { storyId: string; args: Args }) => {
+      if (changed.storyId === storyId) {
+        setArgs(changed.args);
       }
     };
     storyStore._channel.on(Events.STORY_ARGS_UPDATED, cb);
@@ -63,7 +66,11 @@ const useArgs = (storyId: string, storyStore: StoryStore): [Args, (args: Args) =
   const updateArgs = useCallback((newArgs) => storyStore.updateStoryArgs(storyId, newArgs), [
     storyId,
   ]);
-  return [args, updateArgs];
+  const resetArgs = useCallback(
+    (argNames?: string[]) => storyStore.resetStoryArgs(storyId, argNames),
+    [storyId]
+  );
+  return [args, updateArgs, resetArgs];
 };
 
 const matches = (name: string, descriptor: PropDescriptor) =>
@@ -127,14 +134,16 @@ const addComponentTabs = (
   })),
 });
 
-export const StoryTable: FC<StoryProps & { components: Record<string, Component> }> = (props) => {
+export const StoryTable: FC<
+  StoryProps & { component: Component; subcomponents: Record<string, Component> }
+> = (props) => {
   const context = useContext(DocsContext);
   const {
     id: currentId,
     parameters: { argTypes },
     storyStore,
   } = context;
-  const { story, showComponents, components, include, exclude } = props;
+  const { story, component, subcomponents, showComponent, include, exclude } = props;
   let storyArgTypes;
   try {
     let storyId;
@@ -158,15 +167,9 @@ export const StoryTable: FC<StoryProps & { components: Record<string, Component>
     }
     storyArgTypes = filterArgTypes(storyArgTypes, include, exclude);
 
-    // This code handles three cases:
-    //  1. the story has args, in which case we want to show controls for the story
-    //  2. the story has args, and the user specifies showComponents, in which case
-    //     we want to show controls for the primary component AND show props for each component
-    //  3. the story has NO args, in which case we want to show props for each component
-
     // eslint-disable-next-line prefer-const
-    let [args, updateArgs] = useArgs(storyId, storyStore);
-    let tabs = { Story: { rows: storyArgTypes, args, updateArgs } } as Record<
+    let [args, updateArgs, resetArgs] = useArgs(storyId, storyStore);
+    let tabs = { Story: { rows: storyArgTypes, args, updateArgs, resetArgs } } as Record<
       string,
       ArgsTableProps
     >;
@@ -177,13 +180,18 @@ export const StoryTable: FC<StoryProps & { components: Record<string, Component>
 
     if (!storyHasArgsWithControls) {
       updateArgs = null;
+      resetArgs = null;
       tabs = {};
     }
 
-    if (showComponents || !storyHasArgsWithControls) {
-      tabs = addComponentTabs(tabs, components, context, include, exclude);
+    if (component && (!storyHasArgsWithControls || showComponent)) {
+      const mainLabel = getComponentName(component);
+      tabs = addComponentTabs(tabs, { [mainLabel]: component }, context, include, exclude);
     }
 
+    if (subcomponents) {
+      tabs = addComponentTabs(tabs, subcomponents, context, include, exclude);
+    }
     return <TabbedArgsTable tabs={tabs} />;
   } catch (err) {
     return <ArgsTable error={err.message} />;
@@ -207,16 +215,9 @@ export const Props: FC<PropsProps> = (props) => {
   const { include, exclude, components } = props as ComponentsProps;
   const { story } = props as StoryProps;
 
-  let allComponents = components;
   const main = getComponent(props, context);
-
-  if (!allComponents && main) {
-    const mainLabel = getComponentName(main);
-    allComponents = { [mainLabel]: main, ...subcomponents };
-  }
-
   if (story) {
-    return <StoryTable {...(props as StoryProps)} components={allComponents} />;
+    return <StoryTable {...(props as StoryProps)} component={main} subcomponents={subcomponents} />;
   }
 
   if (!components && !subcomponents) {
@@ -229,7 +230,17 @@ export const Props: FC<PropsProps> = (props) => {
     return <ArgsTable {...mainProps} />;
   }
 
-  return <ComponentsTable {...(props as ComponentsProps)} components={allComponents} />;
+  if (components) {
+    return <ComponentsTable {...(props as ComponentsProps)} components={components} />;
+  }
+
+  const mainLabel = getComponentName(main);
+  return (
+    <ComponentsTable
+      {...(props as ComponentsProps)}
+      components={{ [mainLabel]: main, ...subcomponents }}
+    />
+  );
 };
 
 Props.defaultProps = {

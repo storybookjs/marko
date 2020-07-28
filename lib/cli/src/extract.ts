@@ -17,28 +17,7 @@ const read = async (url: string) => {
   const data = JSON.parse(
     await page.evaluate(async () => {
       // eslint-disable-next-line no-undef
-      const d = window.__STORYBOOK_STORY_STORE__.extract();
-
-      const result = Object.entries(d).reduce(
-        (acc, [k, v]: [string, any]) => ({
-          ...acc,
-          [k]: {
-            ...v,
-            parameters: {
-              globals: v.parameters.globals,
-              globalTypes: v.parameters.globalTypes,
-              options: v.parameters.options,
-              args: v.parameters.args,
-              argTypes: v.parameters.argTypes,
-              framework: v.parameters.framework,
-              fileName: v.parameters.fileName,
-              docsOnly: v.parameters.docsOnly,
-            },
-          },
-        }),
-        {}
-      );
-      return JSON.stringify(result, null, 2);
+      return JSON.stringify(window.__STORYBOOK_STORY_STORE__.getStoriesJsonData(), null, 2);
     })
   );
 
@@ -95,9 +74,9 @@ export async function extract(input: string, targetPath: string) {
   if (input && targetPath) {
     const [location, exit] = await useLocation(input);
 
-    const stories = await read(location);
+    const data = await read(location);
 
-    await writeFile(targetPath, JSON.stringify({ stories }, null, 2));
+    await writeFile(targetPath, JSON.stringify(data, null, 2));
 
     await exit();
   } else {

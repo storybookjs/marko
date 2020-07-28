@@ -6,13 +6,11 @@ export default {
   title: 'Welcome',
 };
 
-export const Welcome = () => {};
-Welcome.story = {
-  name: 'Welcome',
-  parameters: {
-    server: {
-      id: 'welcome/welcome'
-    }
+export const Welcome = (args) => {};
+Welcome.storyName = 'Welcome';
+Welcome.parameters = {
+  server: {
+    id: 'welcome/welcome'
   }
 };
 "

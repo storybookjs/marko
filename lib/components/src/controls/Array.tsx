@@ -7,7 +7,7 @@ import { ControlProps, ArrayValue, ArrayConfig } from './types';
 const parse = (value: string, separator: string): ArrayValue =>
   !value || value.trim() === '' ? [] : value.split(separator);
 
-const format = (value: ArrayValue, separator: string) => {
+const format = (value: ArrayValue | undefined, separator: string) => {
   return value && Array.isArray(value) ? value.join(separator) : '';
 };
 
@@ -16,7 +16,14 @@ const Wrapper = styled.label({
 });
 
 export type ArrayProps = ControlProps<ArrayValue> & ArrayConfig;
-export const ArrayControl: FC<ArrayProps> = ({ name, value, onChange, separator = ',' }) => {
+export const ArrayControl: FC<ArrayProps> = ({
+  name,
+  value,
+  onChange,
+  separator = ',',
+  onBlur,
+  onFocus,
+}) => {
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLTextAreaElement>): void => {
       const { value: newVal } = e.target;
@@ -29,11 +36,11 @@ export const ArrayControl: FC<ArrayProps> = ({ name, value, onChange, separator 
     <Wrapper>
       <Form.Textarea
         id={name}
-        name={name}
         value={format(value, separator)}
         onChange={handleChange}
         size="flex"
         placeholder="Adjust array dynamically"
+        {...{ name, onBlur, onFocus }}
       />
     </Wrapper>
   );

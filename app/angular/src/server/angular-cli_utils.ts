@@ -1,5 +1,13 @@
 import fs from 'fs';
-import { basename, dirname, normalize, relative, resolve, Path } from '@angular-devkit/core';
+import {
+  basename,
+  dirname,
+  normalize,
+  relative,
+  resolve,
+  Path,
+  getSystemPath,
+} from '@angular-devkit/core';
 import {
   getCommonConfig,
   getStylesConfig,
@@ -17,7 +25,7 @@ function isDirectory(assetPath: string) {
 }
 
 function getAssetsParts(resolvedAssetPath: Path, assetPath: Path) {
-  if (isDirectory(resolvedAssetPath)) {
+  if (isDirectory(getSystemPath(resolvedAssetPath))) {
     return {
       glob: '**/*', // Folders get a recursive star glob.
       input: assetPath, // Input directory is their original path.

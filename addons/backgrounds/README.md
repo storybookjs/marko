@@ -31,6 +31,11 @@ Backgrounds requires two parameters:
 - `default` - matches the **name** of the value which will be selected by default.
 - `values` - an array of elements containing name and value (with a valid css color e.g. HEX, RGBA, etc.)
 
+It ships with the following defaults:
+
+- no selected background (transparent)
+- light/dark options in the menu
+
 Write your stories like this:
 
 ```jsx

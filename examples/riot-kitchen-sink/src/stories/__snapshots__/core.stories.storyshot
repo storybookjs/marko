@@ -14,6 +14,7 @@ exports[`Storyshots Core/Parameters passed to story 1`] = `
   "chapterParameter": "chapterParameter",
   "argTypes": {},
   "__id": "core-parameters--passed-to-story",
+  "__isArgsStory": true,
   "storyParameter": "storyParameter",
   "id": "root",
   "dataIs": "parameters"

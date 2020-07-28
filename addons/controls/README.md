@@ -41,6 +41,7 @@ Controls replaces [Storybook Knobs](https://github.com/storybookjs/storybook/tre
   - [How do I migrate from addon-knobs?](#how-do-i-migrate-from-addon-knobs)
   - [My controls aren't being auto-generated. What should I do?](#my-controls-arent-being-auto-generated-what-should-i-do)
   - [How can I disable controls for certain fields on a particular story?](#how-can-i-disable-controls-for-certain-fields-on-a-particular-story)
+  - [How do controls work with MDX?](#how-do-controls-work-with-mdx)
 
 ## Installation
 
@@ -279,19 +280,19 @@ VeryLongLabel.args = { label: 'this is a very long string', background: '#ff0' }
 This works, but it repeats code. What we want is to reuse the `Basic` story, but with a different initial state. In Storybook we do this idiomatically for Args stories by refactoring the first story into a reusable story function and then `.bind`ing it to create a duplicate object on which to hang `args`:
 
 ```jsx
-const ButtonStory = (args) => <Button {...args} />;
+const Template = (args) => <Button {...args} />;
 
-export const Basic = ButtonStory.bind({});
+export const Basic = Template.bind({});
 Basic.args = { label: 'hello', background: '#ff0' };
 
-export const VeryLongLabel = ButtonStory.bind({});
+export const VeryLongLabel = Template.bind({});
 VeryLongLabel.args = { label: 'this is a very long string', background: '#ff0' };
 ```
 
 We can even reuse initial args from other stories:
 
 ```jsx
-export const VeryLongLabel = ButtonStory.bind({});
+export const VeryLongLabel = Template.bind({});
 VeryLongLabel.args = { ...Basic.args, label: 'this is a very long string' };
 ```
 
@@ -316,7 +317,7 @@ Here is the full list of available controls:
 | ----------- | ------------ | -------------------------------------------------------------- | -------------- |
 | **array**   | array        | serialize array into a comma-separated string inside a textbox | separator      |
 | **boolean** | boolean      | checkbox input                                                 | -              |
-| **number**  | number       | a numberic text box input                                      | min, max, step |
+| **number**  | number       | a numeric text box input                                       | min, max, step |
 |             | range        | a range slider input                                           | min, max, step |
 | **object**  | object       | json editor text input                                         | -              |
 | **enum**    | radio        | radio buttons input                                            | options        |
@@ -326,7 +327,7 @@ Here is the full list of available controls:
 |             | select       | select dropdown input                                          | options        |
 |             | multi-select | multi-select dropdown input                                    | options        |
 | **string**  | text         | simple text input                                              | -              |
-|             | color        | color picker input that assumes strings are color values       | -              |
+|             | color        | color picker input that assumes strings are color values       | presetColors   |
 |             | date         | date picker input                                              | -              |
 
 Example customizing a control for an `enum` data type (defaults to `select` control type):
@@ -337,8 +338,7 @@ export default {
   component: Widget,
   argTypes: {
     loadingState: {
-      type: 'inline-radio',
-      options: ['loading', 'error', 'ready'],
+      control: { type: 'inline-radio', options: ['loading', 'error', 'ready'] },
     },
   },
 };
@@ -351,7 +351,23 @@ export default {
   title: 'Gizmo',
   component: Gizmo,
   argTypes: {
-    width: { type: 'range', min: 400, max: 1200, step: 50 };
+    width: {
+      control: { type: 'range', min: 400, max: 1200, step: 50 },
+    },
+  },
+};
+```
+
+Example customizing a `color` data type:
+
+```js
+export default {
+  title: 'Button',
+  component: Button,
+  argTypes: {
+    backgroundColor: {
+      control: { type: 'color', presetColors: ['#FFF', '#000', '#AAA'] },
+    },
   },
 };
 ```
@@ -473,7 +489,9 @@ export const Reflow = ({ count, label, ...args }) => (
   <>{range(count).map((i) => <Button label={`${label} ${i}` {...args}} />)}</>
 );
 Reflow.args = { count: 3, label: 'reflow' };
-Reflow.argTypes = { count: { control: { type: 'range', min: 0, max: 20 } } };
+Reflow.argTypes = {
+  count: { control: { type: 'range', min: 0, max: 20 } }
+};
 ```
 
 ### My controls aren't being auto-generated. What should I do?
@@ -529,3 +547,41 @@ CustomControls.argTypes = {
 ```
 
 Like [story parameters](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/basics/writing-stories/index.md#parameters), `args` and `argTypes` annotations are hierarchically merged, so story-level annotations overwrite component-level annotations.
+
+### How do controls work with MDX?
+
+MDX compiles to component story format (CSF) under the hood, so there's a direct mapping for every example above using the `args` and `argTypes` props.
+
+Consider this example in CSF:
+
+```js
+import { Button } from './Button';
+export default {
+  title: 'Button',
+  component: Button,
+  argTypes: {
+    background: { control: 'color' },
+  },
+};
+
+const Template = (args) => <Button {...args} />;
+export const Basic = Template.bind({});
+Basic.args = { label: 'hello', background: '#ff0' };
+```
+
+Here's the MDX equivalent:
+
+```jsx
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+import { Button } from './Button';
+
+<Meta title="Button" component={Button} argTypes={{ background: { control: 'color' } }} />;
+
+export const Template = (args) => <Button {...args} />;
+
+<Story name="Basic" args={{ label: 'hello', background: '#ff0' }}>
+  {Template.bind({})}
+</Story>;
+```
+
+For more info, see a full [Controls example in MDX for Vue](https://raw.githubusercontent.com/storybookjs/storybook/next/examples/vue-kitchen-sink/src/stories/addon-controls.stories.mdx).

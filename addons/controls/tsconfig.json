@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "rootDir": "./src",
-    "types": ["webpack-env", "jest"]
+    "types": ["webpack-env", "jest", "node"]
   },
   "include": ["src/**/*"],
   "exclude": ["src/**.test.ts"]
