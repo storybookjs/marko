@@ -5,14 +5,19 @@ title: 'Introduction'
 Storybook is a tool for UI development. It makes development faster and easier by isolating components. This allows you to work on one component at a time. You can develop entire UIs without needing to start up a complex dev stack, force certain data into your database or navigate around your application.
 
 <div style="background-color:#F8FAFC">
- TODO: add required image per 6.0 doc and spreadsheet 
+ TODO: check if it runs properly
 </div>
+
+<video autoPlay muted playsInline loop>
+  <source
+    src="storybook-hero-video-optimized.mp4"
+    type="video/mp4"
+  />
+</video>
 
 Use Storybook to build small atomic components and complex pages in your web application. If it is a UI, you can build it with Storybook.
 
-<div style="background-color:#F8FAFC">
- TODO: add required image per 6.0 doc and assets spreadsheet
-</div>
+![Storybook relationship](./storybook-relationship.png)
 
 Storybook helps you **document** components for reuse and automatically **visually test** your components to prevent bugs. Extend Storybook with an ecosystem of **addons** that help you do things like fine tune responsive layouts or verify accessibility.
 

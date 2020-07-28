@@ -19,9 +19,7 @@ import { Button } from './Button';
 export const Primary = () => <Button primary>Button</Button>;
 ```
 
-<div style="background-color:#F8FAFC">
- TODO: add required image per 6.0 doc and spreadsheet (Storybook Primary button story)
-</div>
+![Initial button story](./example-button-noargs.png)
 
 View the rendered `Button` by clicking on it in the Storybook sidebar.
 
@@ -41,9 +39,7 @@ Primary.args = {
 };
 ```
 
-<div style="background-color:#F8FAFC">
- TODO: add required image per 6.0 doc and assets spreadsheet (Storybook Primary button story with controls)
-</div>
+![Button story with args](./example-button-args.png)
 
 Both story examples render the same thing because Storybook feeds the given `args` property into the story during render. But you get timesaving conveniences with args:
 
@@ -59,16 +55,22 @@ Storybook makes it easy to work on one component in one state (aka a story) at a
 
 Update the `label` of the `Primary` story then see your change in Storybook.
 
-<div style="background-color:#F8FAFC">
- TODO: add required gif per 6.0 doc and spreadsheet (Storybook edit Primary button story use hello world text)
-</div>
+
+<video autoPlay muted playsInline loop>
+  <source
+    src="example-button-hot-module-reload-optimized.mp4"
+    type="video/mp4"
+  />
+</video>
 
 Stories are also useful for checking that UI continues to look correct as you make changes. The `Button` component has four stories that show it in different use cases. View those stories now to confirm that your change to `Primary` didn’t introduce unintentional bugs in the other stories.
 
-
-<div style="background-color:#F8FAFC">
- TODO: add required gif per 6.0 doc and assets spreadsheet (Storybook navigation other button stories, to prevent regressions)
-</div>
+<video autoPlay muted playsInline loop>
+  <source
+    src="example-button-browse-stories-optimized.mp4"
+    type="video/mp4"
+  />
+</video>
 
 Checking a component’s stories as you develop helps prevent accidental regressions. Tools that integrate with Storybook can also [automate](..workflows/testing-with-storybook) this for you.
 

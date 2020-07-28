@@ -35,25 +35,24 @@ Storybook comes with a permissive [default configuration](../configure/overview)
 
 Your project may have additional requirements before components can be rendered in isolation. This warrants customizing configuration further. There are three broad categories of configuration you might need. 
 
+<details>
+<summary> Build configuration like webpack and Babel</summary>
+  
+  If you see errors on the CLI when you run the `yarn storybook` command. It’s likely you need to make changes to Storybook’s build configuration. Here are some things to try:
 
-#### Build configuration like webpack and Babel
+  - [Presets](../api/addons#addon-presets) bundle common configurations for various technologies into Storybook. In particular presets exist for Create React App, SCSS and Ant Design.
+  - Specify a custom [Babel configuration](../configure/integration#custom-babel-config) for Storybook. Storybook automatically tries to use your project’s config if it can.
+  - Adjust the [webpack configuration](../configure/integration#Webpack) that Storybook uses. Try patching in your own configuration if needed.
+</details>
 
-<div style="background-color:#F8FAFC">
-TODO: ask dom/tom presets item points to the preset gallery???
-</div>
+<details>
+<summary>Runtime configuration</summary>
+  
+  If Storybook builds but you see an error immediately when connecting to it in the browser, then chances are one of your input files is not compiling/transpiling correctly to be interpreted by the browser. Storybook supports modern browsers and IE11, but you may need to check the Babel and webpack settings (see above) to ensure your component code works correctly.
+</details>
 
-If you see errors on the CLI when you run the `yarn storybook` command. It’s likely you need to make changes to Storybook’s build configuration. Here are some things to try:
-
-- [Presets](../presets/preset-gallery/) bundle common configurations for various technologies into Storybook. In particular presets exist for Create React App, SCSS and Ant Design.
-- Specify a custom [Babel configuration](../configure/integration#custom-babel-config) for Storybook. Storybook automatically tries to use your project’s config if it can.
-- Adjust the [webpack configuration](../configure/integration#Webpack) that Storybook uses. Try patching in your own configuration if needed.
-
-#### Runtime configuration
-
-If Storybook builds but you see an error immediately when connecting to it in the browser, then chances are one of your input files is not compiling/transpiling correctly to be interpreted by the browser. Storybook supports modern browsers and IE11, but you may need to check the Babel and webpack settings (see above) to ensure your component code works correctly.
-
-
-### Story context
+<details id="story-context" name="story-context">
+<summary>Story context</summary>
 
 If a particular story has a problem rendering, often it means your component expects a certain environment is available to the component. 
 
@@ -70,6 +69,8 @@ export const decorators = [
 ];
 
 ```
+</details>
+
 
 ### Render component styles
 
@@ -77,30 +78,31 @@ Storybook isn’t opinionated about how you generate or load CSS. It renders wha
 
 You may have to configure your CSS tooling for Storybook’s rendering environment. Here are some tips on what could help:
 
-
-#### CSS-in-JS like styled components and emotion
+<details>
+<summary>CSS-in-JS like styled components and emotion</summary>
 
 If you are using CSS-in-JS, chances are your styles are working because they’re generated in JavaScript and served alongside each component. 
 
 Theme users may need to add a decorator to `.storybook/preview.js`, [see above](#story-context).
+</details>
 
-
-#### @import CSS into components
-
-<div style="background-color:#F8FAFC">
-TODO:ask tom/dom for angular special import
-</div>
+<details>
+<summary>@import CSS into components</summary>
 
 Storybook supports import CSS files in your components directly. But in some cases you may need to [tweak the webpack config](../configure/integration#Webpack). Angular components require [a special import](../configure/integration#importing-css-files).
+</details>
 
-
-#### Global imported styles
+<details>
+<summary>Global imported styles</summary>
 
 If you have global imported styles, create a file called `.storybook/preview.js` and import the styles there. The styles will be added by Storybook automatically for all stories.
+</details>
 
-#### Add external CSS or fonts in the <head>
+<details>
+<summary>Add external CSS or fonts in the head html element</summary>
 
 Alternatively if you want to inject a CSS link tag to the `<head>` directly (or some other resource like a font link), you can use [`.storybook/preview-head.html`](/configure/story-rendering#adding-to-head) to add arbitrary HTML.
+</details>
 
 
 ### Load assets and resources
