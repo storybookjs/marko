@@ -128,7 +128,7 @@ export class StoryRenderer {
       getDecorated,
     };
 
-    this.applyLayout(layout);
+    this.applyLayout(metadata.viewMode === 'docs' ? 'fullscreen' : layout);
 
     const context: RenderContext = {
       id: storyId, // <- in case data is null, at least we'll know what we tried to render
