@@ -1,11 +1,10 @@
 /* global window */
 /* eslint-disable import/no-extraneous-dependencies */
-import { addParameters } from '@storybook/client-api';
 import React from 'react';
 import { render } from 'lit-html';
 import { extractArgTypes, extractComponentDescription } from './custom-elements';
 
-addParameters({
+export const parameters = {
   docs: {
     extractArgTypes,
     extractComponentDescription,
@@ -29,4 +28,4 @@ addParameters({
       return React.createElement(Story);
     },
   },
-});
+};

@@ -1,17 +1,19 @@
 const path = require('path');
 
 module.exports = {
+  stories: ['../stories/**/*.stories.js'],
+  logLevel: 'debug',
   addons: [
     '@storybook/addon-a11y',
     '@storybook/addon-storysource',
     '@storybook/addon-actions',
     '@storybook/addon-docs',
+    '@storybook/addon-controls',
     '@storybook/addon-links',
     '@storybook/addon-knobs',
     '@storybook/addon-viewport',
     '@storybook/addon-backgrounds',
   ],
-  stories: ['../stories/**/*.stories.js'],
   webpackFinal: async (config) => {
     config.module.rules.push({
       test: [/\.stories\.js$/, /index\.js$/],

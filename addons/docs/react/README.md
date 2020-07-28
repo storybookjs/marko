@@ -144,7 +144,7 @@ Neither option is perfect, so here's everything you should know if you're thinki
 
 | Docgen                  | Build time |
 | ----------------------- | ---------- |
-| react-docgen-typescript | 59s        |
+| react-docgen-typescript | 33s        |
 | react-docgen            | 29s        |
 | none                    | 28s        |
 

@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useGlobalArgTypes } from '@storybook/api';
+import { useGlobalTypes } from '@storybook/api';
 import { Separator } from '@storybook/components';
 
 import { ToolbarArgType } from '../types';
@@ -21,15 +21,15 @@ const normalize = (key: string, argType: ToolbarArgType) => ({
  * A smart component for handling manager-preview interactions.
  */
 export const ToolbarManager: FC = () => {
-  const globalArgTypes = useGlobalArgTypes();
-  const keys = Object.keys(globalArgTypes).filter((key) => !!globalArgTypes[key].toolbar);
+  const globalTypes = useGlobalTypes();
+  const keys = Object.keys(globalTypes).filter((key) => !!globalTypes[key].toolbar);
   if (!keys.length) return null;
 
   return (
     <>
       <Separator />
       {keys.map((key) => {
-        const normalizedConfig = normalize(key, globalArgTypes[key] as ToolbarArgType);
+        const normalizedConfig = normalize(key, globalTypes[key] as ToolbarArgType);
         return <MenuToolbar key={key} id={key} {...normalizedConfig} />;
       })}
     </>

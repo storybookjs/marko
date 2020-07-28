@@ -15,3 +15,13 @@ export const Basic = () => {
     </>
   );
 };
+
+export const Undefined = () => {
+  const [value, setValue] = useState(undefined);
+  return (
+    <>
+      <DateControl name="date" value={value} onChange={(name, newVal) => setValue(newVal)} />
+      <p>{value && new Date(value).toISOString()}</p>
+    </>
+  );
+};

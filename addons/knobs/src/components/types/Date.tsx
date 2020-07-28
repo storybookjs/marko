@@ -78,7 +78,7 @@ export default class DateType extends Component<DateTypeProps, DateTypeState> {
     }
   }
 
-  onDateChange = (e: ChangeEvent<HTMLInputElement>) => {
+  private onDateChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { knob, onChange } = this.props;
     const { state } = this;
 
@@ -99,7 +99,7 @@ export default class DateType extends Component<DateTypeProps, DateTypeState> {
     }
   };
 
-  onTimeChange = (e: ChangeEvent<HTMLInputElement>) => {
+  private onTimeChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { knob, onChange } = this.props;
     const { state } = this;
 

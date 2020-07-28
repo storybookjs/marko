@@ -112,6 +112,14 @@ expectKnobOfType<string>(
   select<ButtonVariant>('select with string enum options', ButtonVariant, ButtonVariant.primary)
 );
 
+expectKnobOfType<string | undefined | null | boolean>(
+  select(
+    'select with an undefined in array',
+    ['Apple', 'Banana', 'Grapes', undefined, null, false] as const,
+    undefined
+  )
+);
+
 expectKnobOfType<string | null>(
   select('select with null option', { a: 'Option', b: null }, null, groupId)
 );

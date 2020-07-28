@@ -1,11 +1,11 @@
-import { PropDef, PropDefaultValue } from '@storybook/components';
-import { TypeSystem, DocgenInfo, DocgenType, DocgenPropDefaultValue } from './types';
+import { PropDefaultValue } from '@storybook/components';
+import { PropDef, TypeSystem, DocgenInfo, DocgenType, DocgenPropDefaultValue } from './types';
 import { JsDocParsingResult } from '../jsdocParser';
 import { createSummaryValue } from '../utils';
 import { createFlowPropDef } from './flow/createPropDef';
 import { isDefaultValueBlacklisted } from './utils/defaultValue';
 import { createTsPropDef } from './typeScript/createPropDef';
-import { convert } from '../sbtypes';
+import { convert } from '../convert';
 
 export type PropDefFactory = (
   propName: string,

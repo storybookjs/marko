@@ -3,23 +3,46 @@ import { styled } from '@storybook/theming';
 import { ControlProps, OptionsSingleSelection, NormalizedOptionsConfig } from '../types';
 import { selectedKey } from './helpers';
 
-const RadiosWrapper = styled.div<{ isInline: boolean }>(({ isInline }) =>
+const Wrapper = styled.div<{ isInline: boolean }>(({ isInline }) =>
   isInline
     ? {
         display: 'flex',
         flexWrap: 'wrap',
-        alignItems: 'center',
-        '> * + *': {
-          marginLeft: 10,
+        alignItems: 'flex-start',
+
+        label: {
+          display: 'inline-flex',
+          marginRight: 15,
         },
       }
-    : {}
+    : {
+        label: {
+          display: 'flex',
+        },
+      }
 );
 
-const RadioLabel = styled.label({
-  padding: '3px 0 3px 5px',
-  lineHeight: '18px',
-  display: 'inline-block',
+const Fieldset = styled.fieldset({
+  border: 0,
+  padding: 0,
+  margin: 0,
+});
+
+const Text = styled.span({});
+
+const Label = styled.label({
+  lineHeight: '20px',
+  alignItems: 'center',
+  marginBottom: 8,
+
+  '&:last-child': {
+    marginBottom: 0,
+  },
+
+  input: {
+    margin: 0,
+    marginRight: 6,
+  },
 });
 
 type RadioConfig = NormalizedOptionsConfig & { isInline: boolean };
@@ -27,11 +50,11 @@ type RadioProps = ControlProps<OptionsSingleSelection> & RadioConfig;
 export const RadioControl: FC<RadioProps> = ({ name, options, value, onChange, isInline }) => {
   const selection = selectedKey(value, options);
   return (
-    <RadiosWrapper isInline={isInline}>
+    <Wrapper isInline={isInline}>
       {Object.keys(options).map((key) => {
         const id = `${name}-${key}`;
         return (
-          <div key={id}>
+          <Label key={id} htmlFor={id}>
             <input
               type="radio"
               id={id}
@@ -40,10 +63,10 @@ export const RadioControl: FC<RadioProps> = ({ name, options, value, onChange, i
               onChange={(e) => onChange(name, options[e.currentTarget.value])}
               checked={key === selection}
             />
-            <RadioLabel htmlFor={id}>{key}</RadioLabel>
-          </div>
+            <Text>{key}</Text>
+          </Label>
         );
       })}
-    </RadiosWrapper>
+    </Wrapper>
   );
 };

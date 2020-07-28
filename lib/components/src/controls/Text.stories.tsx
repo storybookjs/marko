@@ -6,8 +6,8 @@ export default {
   component: TextControl,
 };
 
-export const Basic = () => {
-  const [value, setValue] = useState('Hello text');
+const Template = (initialValue?: string) => {
+  const [value, setValue] = useState(initialValue);
   return (
     <>
       <TextControl name="Text" value={value} onChange={(name, newVal) => setValue(newVal)} />
@@ -15,3 +15,7 @@ export const Basic = () => {
     </>
   );
 };
+
+export const Basic = () => Template('Hello text');
+
+export const Undefined = () => Template(undefined);

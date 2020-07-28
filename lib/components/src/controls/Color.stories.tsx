@@ -6,7 +6,21 @@ export default {
   component: ColorControl,
 };
 
-export const Basic = () => {
-  const [value, setValue] = useState('#ff0');
-  return <ColorControl name="Color" value={value} onChange={(name, newVal) => setValue(newVal)} />;
+const Template = (initialValue?: string, presetColors?: string[]) => {
+  const [value, setValue] = useState(initialValue);
+  return (
+    <ColorControl
+      name="Color"
+      value={value}
+      onChange={(name, newVal) => setValue(newVal)}
+      presetColors={presetColors}
+    />
+  );
 };
+
+export const Basic = () => Template('#ff0');
+
+export const Undefined = () => Template(undefined);
+
+export const WithPresetColors = () =>
+  Template('#ff0', ['#FE4A49', '#FED766', '#009FB7', '#E6E6EA', '#F4F4F8']);

@@ -15,3 +15,13 @@ export const Basic = () => {
     </>
   );
 };
+
+export const Undefined = () => {
+  const [value, setValue] = useState(undefined);
+  return (
+    <>
+      <NumberControl name="number" value={value} onChange={(name, newVal) => setValue(newVal)} />
+      <p>{value}</p>
+    </>
+  );
+};

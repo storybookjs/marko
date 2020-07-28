@@ -1,6 +1,6 @@
 {
   "name": "@storybook/api",
-  "version": "6.0.0-beta.22",
+  "version": "6.0.0-rc.15",
   "description": "Core Storybook API & Context",
   "keywords": [
     "storybook"
@@ -24,17 +24,18 @@
     "ts3.5/**/*"
   ],
   "scripts": {
-    "prepare": "node ./scripts/generateVersion.js && node ../../scripts/prepare.js"
+    "prepare": "node ./scripts/generateVersion.js && node ../../scripts/prepare.js",
+    "postversion": "node ./scripts/generateVersion.js"
   },
   "dependencies": {
     "@reach/router": "^1.3.3",
-    "@storybook/channels": "6.0.0-beta.22",
-    "@storybook/client-logger": "6.0.0-beta.22",
-    "@storybook/core-events": "6.0.0-beta.22",
+    "@storybook/channels": "6.0.0-rc.15",
+    "@storybook/client-logger": "6.0.0-rc.15",
+    "@storybook/core-events": "6.0.0-rc.15",
     "@storybook/csf": "0.0.1",
-    "@storybook/router": "6.0.0-beta.22",
+    "@storybook/router": "6.0.0-rc.15",
     "@storybook/semver": "^7.3.2",
-    "@storybook/theming": "6.0.0-beta.22",
+    "@storybook/theming": "6.0.0-rc.15",
     "@types/reach__router": "^1.3.5",
     "core-js": "^3.0.1",
     "fast-deep-equal": "^3.1.1",
@@ -44,7 +45,7 @@
     "react": "^16.8.3",
     "regenerator-runtime": "^0.13.3",
     "store2": "^2.7.1",
-    "telejson": "^4.0.0",
+    "telejson": "^4.0.1",
     "ts-dedent": "^1.1.1",
     "util-deprecate": "^1.0.2"
   },
@@ -60,7 +61,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
+  "gitHead": "7354abe09cb490f732384d8500f0df8be2707611",
   "typesVersions": {
     "<=3.5": {
       "*": [

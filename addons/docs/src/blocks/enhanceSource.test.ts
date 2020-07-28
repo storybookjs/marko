@@ -6,7 +6,8 @@ const emptyContext: StoryContext = {
   kind: 'foo',
   name: 'bar',
   args: {},
-  globalArgs: {},
+  argTypes: {},
+  globals: {},
   parameters: {},
 };
 
@@ -47,7 +48,7 @@ describe('addon-docs enhanceSource', () => {
         storySource: {
           source: 'storySource.source',
           locationsMap: {
-            'foo--bar': { startBody: { line: 1, col: 5 }, endBody: { line: 1, col: 11 } },
+            bar: { startBody: { line: 1, col: 5 }, endBody: { line: 1, col: 11 } },
           },
         },
       },

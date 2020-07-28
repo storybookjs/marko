@@ -1,8 +1,7 @@
 import React from 'react';
 
-import Markdown from 'markdown-to-jsx';
 import { DocumentWrapper } from './DocumentWrapper';
-import markdownSample from './DocumentFormattingSample.md';
+import MarkdownSample from './DocumentFormattingSample.md';
 
 export default {
   component: DocumentWrapper,
@@ -12,7 +11,7 @@ export default {
 
 export const withMarkdown = () => (
   <DocumentWrapper>
-    <Markdown>{markdownSample}</Markdown>
+    <MarkdownSample />
   </DocumentWrapper>
 );
 

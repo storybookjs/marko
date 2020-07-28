@@ -1,4 +1,4 @@
-import React, { Fragment, FunctionComponent, useMemo, useEffect } from 'react';
+import React, { Fragment, FunctionComponent, useMemo, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import merge from '@storybook/api/dist/lib/merge';
@@ -124,7 +124,7 @@ const useTabs = (
   }, [getElements]);
 
   return useMemo(() => {
-    if (story && story.parameters) {
+    if (story?.parameters) {
       return filterTabs([canvas, ...tabsFromConfig], story.parameters);
     }
 
@@ -143,12 +143,23 @@ const Preview: FunctionComponent<PreviewProps> = (props) => {
     baseUrl,
     withLoader = true,
   } = props;
-  const { isToolshown } = options;
   const { getElements } = api;
 
   const tabs = useTabs(previewId, baseUrl, withLoader, getElements, story);
 
+  const isToolshown =
+    !(viewMode === 'docs' && tabs.filter((t) => !t.hidden).length < 2) && options.isToolshown;
+
+  const initialRender = useRef(true);
   useEffect(() => {
+    // Don't emit the event on first ("real") render, only when story or mode changes
+    if (initialRender.current) {
+      // We initially render without a story set, which isn't all that interesting, let's ignore
+      if (story) {
+        initialRender.current = false;
+      }
+      return;
+    }
     if (story && viewMode && viewMode.match(/docs|story/)) {
       const { refId, id } = story;
       api.emit(SET_CURRENT_STORY, {

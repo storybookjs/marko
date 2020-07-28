@@ -1,14 +1,6 @@
 import { history, document } from 'global';
 
-import { StoryStore } from '@storybook/client-api';
-
-import {
-  pathToId,
-  setPath,
-  getIdFromLegacyQuery,
-  parseQueryParameters,
-  initializePath,
-} from './url';
+import { pathToId, setPath, parseQueryParameters, getSelectionSpecifierFromPath } from './url';
 
 jest.mock('global', () => ({
   history: { replaceState: jest.fn() },
@@ -52,39 +44,6 @@ describe('url', () => {
     });
   });
 
-  describe('getIdFromLegacyQuery', () => {
-    const getRawStory = () => {};
-    const store: unknown = { getRawStory };
-    it('should parse story paths', () => {
-      expect(getIdFromLegacyQuery({ path: '/story/story--id' }, store as StoryStore)).toBe(
-        'story--id'
-      );
-    });
-    it('should use legacy parameters to look up custom story ids', () => {
-      const customStore: unknown = {
-        getRawStory: () => ({ id: 'custom--id' }),
-      };
-      expect(
-        getIdFromLegacyQuery(
-          { selectedKind: 'kind', selectedStory: 'story' },
-          customStore as StoryStore
-        )
-      ).toBe('custom--id');
-    });
-    it('should use fall-back behavior for legacy queries for unknown stories', () => {
-      expect(
-        getIdFromLegacyQuery(
-          { path: null, selectedKind: 'kind', selectedStory: 'story' },
-          store as StoryStore
-        )
-      ).toBe('kind--story');
-    });
-
-    it('should not parse non-queries', () => {
-      expect(getIdFromLegacyQuery({}, store as StoryStore)).toBeUndefined();
-    });
-  });
-
   describe('parseQueryParameters', () => {
     it('should parse id', () => {
       expect(parseQueryParameters('?foo=bar&id=story--id')).toBe('story--id');
@@ -94,28 +53,31 @@ describe('url', () => {
     });
   });
 
-  describe('initializePath', () => {
-    const getRawStory = () => {};
-    const store: unknown = { getRawStory };
+  describe('getSelectionSpecifierFromPath', () => {
+    it('should handle no search', () => {
+      document.location.search = '';
+      expect(getSelectionSpecifierFromPath()).toEqual(null);
+    });
     it('should handle id queries', () => {
       document.location.search = '?id=story--id';
-      expect(initializePath(store as StoryStore)).toEqual({
-        storyId: 'story--id',
+      expect(getSelectionSpecifierFromPath()).toEqual({
+        storySpecifier: 'story--id',
         viewMode: 'story',
       });
-      expect(history.replaceState).not.toHaveBeenCalled();
+    });
+    it('should handle id queries with *', () => {
+      document.location.search = '?id=*';
+      expect(getSelectionSpecifierFromPath()).toEqual({
+        storySpecifier: '*',
+        viewMode: 'story',
+      });
     });
     it('should redirect legacy queries', () => {
       document.location.search = '?selectedKind=kind&selectedStory=story';
-      expect(initializePath(store as StoryStore)).toEqual({
-        storyId: 'kind--story',
+      expect(getSelectionSpecifierFromPath()).toEqual({
+        storySpecifier: { kind: 'kind', name: 'story' },
         viewMode: 'story',
       });
-      expect(history.replaceState).toHaveBeenCalledWith(
-        {},
-        '',
-        'pathname?id=kind--story&viewMode=story'
-      );
     });
   });
 });

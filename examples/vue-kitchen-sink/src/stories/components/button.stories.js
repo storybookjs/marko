@@ -3,21 +3,27 @@ import MyButton from '../Button.vue';
 export default {
   title: 'Button',
   component: MyButton,
-};
-
-export const Rounded = (args) => ({
-  components: { MyButton },
-  template: '<my-button :color="color" :rounded="rounded">A Button with rounded edges</my-button>',
-  data() {
-    return args;
+  argTypes: {
+    color: { control: 'color' },
   },
-});
-Rounded.argTypes = {
-  rounded: { defaultValue: true },
-  color: { control: { type: 'color' }, defaultValue: '#f00' },
 };
 
-export const Square = () => ({
+const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
   components: { MyButton },
-  template: '<my-button :rounded="false">A Button with square edges</my-button>',
+  template: '<my-button :color="color" :rounded="rounded">{{label}}</my-button>',
 });
+
+export const Rounded = Template.bind({});
+Rounded.args = {
+  rounded: true,
+  color: '#f00',
+  label: 'A Button with rounded edges',
+};
+
+export const Square = Template.bind({});
+Square.args = {
+  rounded: false,
+  color: '#00f',
+  label: 'A Button with square edges',
+};

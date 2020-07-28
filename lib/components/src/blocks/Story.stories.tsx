@@ -18,8 +18,8 @@ const buttonHookFn = () => {
   );
 };
 
-export const inline = () => <Story inline storyFn={buttonFn} title="hello button" />;
+export const Inline = () => <Story inline storyFn={buttonFn} title="hello button" />;
 
-export const error = () => <Story error={StoryError.NO_STORY} />;
+export const Error = () => <Story error={StoryError.NO_STORY} />;
 
-export const reactHook = () => <Story inline storyFn={buttonHookFn} title="hello button" />;
+export const ReactHook = () => <Story inline storyFn={buttonHookFn} title="hello button" />;
