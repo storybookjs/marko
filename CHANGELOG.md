@@ -1,3 +1,22 @@
+## 6.0.0-rc.16 (July 28, 2020)
+
+### Features
+
+- Source-loader: Inject source snippets as story parameters ([#11707](https://github.com/storybookjs/storybook/pull/11707))
+- Source-loader: Handle bind expression stories ([#11710](https://github.com/storybookjs/storybook/pull/11710))
+- UI: Add skip to content on panel and story iframe ([#11066](https://github.com/storybookjs/storybook/pull/11066))
+- Addon-storyshots: Add web-component support ([#11064](https://github.com/storybookjs/storybook/pull/11064))
+
+### Bug Fixes
+
+- Addon-docs: Fix docs render layout to always be 'fullscreen' ([#11699](https://github.com/storybookjs/storybook/pull/11699))
+- UI: Fix release notes on prduction builds ([#11700](https://github.com/storybookjs/storybook/pull/11700))
+- Addon-docs: Apply list styles over reset ([#11281](https://github.com/storybookjs/storybook/pull/11281))
+
+### Maintenance
+
+- CLI: Update rax/mithril/web-components templates, rework Yarn2 E2E ([#11354](https://github.com/storybookjs/storybook/pull/11354))
+
 ## 6.0.0-rc.15 (July 27, 2020)
 
 ### Features
