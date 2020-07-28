@@ -5,24 +5,19 @@ title: 'Addons'
 Addons extend Storybook with features and integrations that are not built into the core. Most Storybook features are implemented as addons. For instance: documentation, accessibility testing, interactive controls, and design previews. 
 Storybook’s addon API makes it easy for you to configure and customize Storybook in new ways. There are countless addons made by the community that unlock time-saving workflows.  What addons can do:
 
-- Add a panel to Storybook (like Action Logger).
-- Add a tool to Storybook’s toolbar (like zoom or grid).
-- Add a tab to Storybook (like SB Docs).
-- Interact and communicate with other addons or Storybook UI
-- Change Storybook’s state using its APIs.
-- Navigate within Storybook.
-- Register keyboard shortcuts (coming soon).
+- [Add a panel to Storybook (like Action Logger).](../essentials/actions)
+- [Add a tool to Storybook’s toolbar (like zoom or grid).](../essentials/toolbars-and-globals)
+- [Add a tab to Storybook (like SB Docs).](../writing-docs/introduction)
 
 Browse the [Addon gallery](/addons) to install an existing addon or as inspiration for your own addon. Read on to learn how to make an addon yourself.
 
 ### Storybook basics
 
-Before writing your first addon, let’s take a look at the basics of Storybook’s architecture. While Storybook presents a unified user interface, under the hood it’s divided down the middle into Manager and Preview.
+Before writing your first addon, let’s take a look at the basics of Storybook’s architecture. While Storybook presents a unified user interface, under the hood it’s divided down the middle into **Manager** and **Preview**.
+
 The Manager is the UI where Storybook’s search, navigation, toolbars, and addons are rendered. The Preview area is an iframe where stories are rendered.
 
-<div style="background-color:#F8FAFC">
-TODO: get image to match documentation
-</div>
+![Storybook detailed window](./manager-preview.jpg)
 
 Because Manager and Preview run in separate iframes, they communicate across a communication channel. For example, when you select a story within the Manager, an event is sent across the channel, and the selected story is rendered inside the Preview.
 
@@ -74,7 +69,7 @@ const MyPanel = () => <div>MyAddon</div>;
 addons.register(ADDON_ID, api => {
   addons.add(PANEL_ID, {
     type: types.PANEL,
-    title: ‘My Addon’,
+    title: 'My Addon',
     render: ({ active, key }) => (
       <AddonPanel active={active} key={key}>
         <MyPanel />
@@ -225,8 +220,11 @@ When you are developing your addon as a package, you can’t use npm link to add
 ```
 
 ### Addon presets
+<div style="background-color:#F8FAFC">
+TODO: vet this item, as this should be where the remainder docs will point at when refering to presets correct?
+</div>
 
-[Storybook presets](../presets/introduction) are collections of Storybook configurations that get applied automatically when you create a `/preset.js` entry point in your addon and then list that addon in your project’s [`.storybook/main.js`](../configure/overview#configure-story-rendering) addons field.
+Storybook presets are collections of Storybook configurations that get applied automatically when you create a `/preset.js` entry point in your addon and then list that addon in your project’s [`.storybook/main.js`](../configure/overview#configure-story-rendering) addons field.
 
 Common uses for presets include:
 
@@ -262,8 +260,16 @@ For more information on presets, see the [presets docs](../presets/introduction/
 
 ### Writing presets
 
+<div style="background-color:#F8FAFC">
+TODO: vet this documentation link if it's correct.
+</div>
+
 If you want to learn more how you can write your own presets, read the [documentation](../presets/writing-presets/index)
 
 ### Addons API
+
+<div style="background-color:#F8FAFC">
+TODO: vet this documentation link if it's correct.
+</div>
 
 If you want to expand your knowledge on the Addons API, read the [documentation](/addons/api/index)

@@ -24,7 +24,7 @@ Supporting a new framework in Storybook typically consists of two main aspects:
 
 ### Configuring the server
 
-Storybook has the concept of [presets](../presets/introduction), which are typically babel/webpack configurations for file loading. If your framework has its own file format, e.g. “.vue,” you might need to transform these files into JS files at load time. If you expect every user of your framework to need this, you should add it to the framework. So far every framework added to Storybook has done this, because Storybook’s core configuration is very minimal.
+Storybook has the concept of [presets](./addons#addon-presets), which are typically babel/webpack configurations for file loading. If your framework has its own file format, e.g. “.vue,” you might need to transform these files into JS files at load time. If you expect every user of your framework to need this, you should add it to the framework. So far every framework added to Storybook has done this, because Storybook’s core configuration is very minimal.
 
 #### Package structure
 
@@ -64,17 +64,17 @@ const packageJson = require('../../package.json');
 
 export default {
   packageJson,
-  framework: ‘vue’,
+  framework: 'vue',
   frameworkPresets: [require.resolve('./framework-preset-vue.js')],
 };
 ```
 <div style="background-color:#F8FAFC">
-TODO: VET REACT, VUE,WEB COMPONENTS links below
+TODO: VET Storybook presets, REACT, VUE,WEB COMPONENTS links below
 </div>
 
 The value of the `framework` option (in this case ‘vue’) is something that gets passed to addons and allows them to do special case things for your framework.
 
-The real meat of this file is the framework presets, and these are standard [Storybook presets](../presets/introduction) -- you can look at framework packages in the Storybook monorepo (e.g. [react], [vue], [web-components]) to see examples of framework-specific customizations.
+The real meat of this file is the framework presets, and these are standard [Storybook presets](./addons#addon-presets) -- you can look at framework packages in the Storybook monorepo (e.g. [react](https://github.com/storybookjs/storybook/blob/next/app/react/src/server/options.ts), [vue](https://github.com/storybookjs/storybook/blob/next/app/vue/src/server/options.ts), [web-components](https://github.com/storybookjs/storybook/blob/next/app/web-components/src/server/options.ts)) to see examples of framework-specific customizations.
 
 
 ### Configuring the client
@@ -159,9 +159,5 @@ The globals file typically sets up a single global variable that client-side cod
 import { window } from 'global';
 window.STORYBOOK_ENV = ‘vue’;
 ```
-
-<div style="background-color:#F8FAFC">
-TODO: need location on the render function for the frameworks
-</div>
 
 The `start` function abstracts all of Storybook’s framework-independent client-side (browser) code, and it takes the render function we defined above. For examples of render functions, see [React](https://github.com/storybookjs/storybook/blob/next/app/react/src/client/preview/render.tsx), [Vue](https://github.com/storybookjs/storybook/blob/next/app/vue/src/client/preview/render.ts),[Angular](https://github.com/storybookjs/storybook/blob/next/app/angular/src/client/preview/render.ts) [Web-components](https://github.com/storybookjs/storybook/blob/next/app/web-components/src/client/preview/render.ts) in the Storybook monorepo.

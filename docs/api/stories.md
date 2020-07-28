@@ -7,14 +7,14 @@ title: 'Stories'
 Storybook's Component Story Format (CSF) is the recommended way to [write stories](../writing-stories/introduction) since Storybook 5.2. [Read the announcement](https://medium.com/storybookjs/component-story-format-66f4c32366df) to learn more about how it came to be.
 
 <div style="background-color:#F8FAFC">
-TODO: add advanced readme link and if stories of api needs to be maintained)
+TODO: add advanced readme link added needs to be vetted
 </div>
 
 > If you are writing stories in the older `storiesOf()` syntax, you can find documentation in an [advanced README].
 
 In CSF, stories and component metadata are defined as ES Modules. Every component story file consists of a required **default export** and one or more **named exports**.
 
-CSF is supported in all frameworks except React Native, where you should use the [storiesOf API](../formats/storiesof-api/index) instead.
+CSF is supported in all frameworks except React Native, where you should use the [storiesOf API](https://github.com/storybookjs/storybook/tree/next/lib/core/ADVANCED.md) instead.
 
 #### Default export
 
@@ -391,15 +391,17 @@ Be sure to update your Storybook config file to load `.stories.mdx` stories, as 
 
 > NOTE: This API is experimental and may change outside of the typical semver release cycle
 
+<div style="background-color:#F8FAFC">
+TODO: props table link needs to be vetted.
+</div>
+
 ArgTypes are a first-class feature in Storybook for specifying the behaviour of [Args](../writing-stories/args). By specifying the type of an arg you constrain the values that it can take and can also provide information about args that are not explicitly set (i.e. not required).
 
 You can also use argTypes to “annotate” args with information that is used by addons that make use of those args, for instance to instruct the controls addons to render a color choose for a string-valued arg.
 
-The most concrete realization of argTypes is the [Props Table](props table) doc block. Each row in the table corresponds to a single argType, as well as the current value of that arg.
+The most concrete realization of argTypes is the [Props Table](locate-props-table) doc block. Each row in the table corresponds to a single argType, as well as the current value of that arg.
 
-<div style="background-color:#F8FAFC">
-TODO: image mentioned in SB 6.0 needs to be further vetted
-</div>
+![Storybook infering automatically the argType](./argstable.png)
 
 ## Automatic argType inference
 
@@ -407,9 +409,7 @@ If you are using the Storybook [docs](../writing-docs) addon (installed by defau
 
 To do so, Storybook uses various static analysis tools depending on your framework.
 
-<div style="background-color:#F8FAFC">
-TODO: further vet this item
-</div>
+
 
 - React 
     - [react-docgen](https://github.com/reactjs/react-docgen)
