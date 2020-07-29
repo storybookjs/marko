@@ -2,7 +2,7 @@
 title: 'Doc Blocks'
 ---
 
-Doc Blocks are the building blocks of Storybook documentation pages. By default, [DocsPage](./docs-page) uses a combination of the blocks  below to build a page for each of your components automatically. 
+Doc Blocks are the building blocks of Storybook documentation pages. By default, [DocsPage](./docs-page) uses a combination of the blocks below to build a page for each of your components automatically. 
 
 Custom [addons](../configure/user-interface#storybook-addons) can also provide their own doc blocks.
 
