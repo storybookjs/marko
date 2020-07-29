@@ -1,3 +1,14 @@
+## 6.0.0-rc.17 (July 30, 2020)
+
+### Bug Fixes
+
+- Addon-controls: Fix update logic for argTypes with custom names ([#11704](https://github.com/storybookjs/storybook/pull/11704))
+- Core: Fix HMR ([#11709](https://github.com/storybookjs/storybook/pull/11709))
+- Server: Serialize Object controls as JSON over the wire ([#11703](https://github.com/storybookjs/storybook/pull/11703))
+- Revert #11502: Remove z-index on ActionBar ([#11708](https://github.com/storybookjs/storybook/pull/11708))
+- Revert #11066: Add skip to content on panel and story iframe ([#11718](https://github.com/storybookjs/storybook/pull/11718))
+* UI: Improve treestate performance ([#11725](https://github.com/storybookjs/storybook/pull/11725))
+
 ## 6.0.0-rc.16 (July 28, 2020)
 
 ### Features
