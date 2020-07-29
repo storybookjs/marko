@@ -3,7 +3,6 @@ import { Global, CSSObject } from '@storybook/theming';
 import { IFrame } from './iframe';
 import { FramesRendererProps } from './utils/types';
 import { stringifyQueryParams } from './utils/stringifyQueryParams';
-import { SkipToContent } from '../sidebar/Tree/ListItem';
 
 const getActive = (refId: FramesRendererProps['refId']) => {
   if (refId) {
@@ -75,7 +74,6 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
       <Global styles={styles} />
       {Object.entries(frames).map(([id, src]) => (
         <Fragment key={id}>
-          <SkipToContent href={`#${storyId}`}>Go back to navigation</SkipToContent>
           <IFrame
             active={id === active}
             key={refs[id] ? refs[id].url : id}
