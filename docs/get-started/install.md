@@ -22,7 +22,7 @@ Or any other tooling available.
 
 During its install process, Storybook will look into your project's dependencies and provide you with the best configuration available.
 
-If you want, you can also do this manually through the Storybook CLI. You can use the `--type` flag to tell Storybook to configure itself based value provided.
+If you want, you can also do this manually through the Storybook CLI. You can use the `--type` flag to tell Storybook to configure itself based on the flag.
 
 For instance you can use:
 
@@ -52,10 +52,15 @@ It will start Storybook locally and output the address. Depending on your system
  
 ![Storybook welcome screen](./example-welcome.png)
 
-#### Troubleshooting
 
-If there's an installation problem, check the README for your framework (e.g [Storybook for React](https://github.com/storybookjs/storybook/app/react/README.md) for the detailed instructions)
+<details>
+<summary>Troubleshooting</summary>
+
+If there's an installation problem, check the README for your framework (e.g <a href="https://github.com/storybookjs/storybook/blob/next/app/react/README.md">Storybook for React</a>).
 
 If all else fails, try asking for [help](https://storybook.js.org/support/)
+
+</details>
+
 
 > > [Now that you installed Storybook successfully, let’s take a look at a story that was written for us](./whats-a-story.md)

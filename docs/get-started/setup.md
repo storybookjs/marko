@@ -36,23 +36,23 @@ Storybook comes with a permissive [default configuration](../configure/overview)
 Your project may have additional requirements before components can be rendered in isolation. This warrants customizing configuration further. There are three broad categories of configuration you might need. 
 
 <details>
-<summary> Build configuration like webpack and Babel</summary>
+  <summary>Build configuration like webpack and Babel</summary>
   
   If you see errors on the CLI when you run the `yarn storybook` command. It’s likely you need to make changes to Storybook’s build configuration. Here are some things to try:
 
   - [Presets](../api/addons#addon-presets) bundle common configurations for various technologies into Storybook. In particular presets exist for Create React App, SCSS and Ant Design.
   - Specify a custom [Babel configuration](../configure/integration#custom-babel-config) for Storybook. Storybook automatically tries to use your project’s config if it can.
-  - Adjust the [webpack configuration](../configure/integration#Webpack) that Storybook uses. Try patching in your own configuration if needed.
+  - Adjust the [webpack configuration](../configure/integration#webpack) that Storybook uses. Try patching in your own configuration if needed.
 </details>
 
 <details>
-<summary>Runtime configuration</summary>
+  <summary>Runtime configuration</summary>
   
   If Storybook builds but you see an error immediately when connecting to it in the browser, then chances are one of your input files is not compiling/transpiling correctly to be interpreted by the browser. Storybook supports modern browsers and IE11, but you may need to check the Babel and webpack settings (see above) to ensure your component code works correctly.
 </details>
 
 <details id="story-context" name="story-context">
-<summary>Story context</summary>
+  <summary>Story context</summary>
 
 If a particular story has a problem rendering, often it means your component expects a certain environment is available to the component. 
 
@@ -79,29 +79,33 @@ Storybook isn’t opinionated about how you generate or load CSS. It renders wha
 You may have to configure your CSS tooling for Storybook’s rendering environment. Here are some tips on what could help:
 
 <details>
-<summary>CSS-in-JS like styled components and emotion</summary>
+  <summary>CSS-in-JS like styled components and emotion</summary>
 
 If you are using CSS-in-JS, chances are your styles are working because they’re generated in JavaScript and served alongside each component. 
 
 Theme users may need to add a decorator to `.storybook/preview.js`, [see above](#story-context).
+
 </details>
 
 <details>
-<summary>@import CSS into components</summary>
+  <summary>@import CSS into components</summary>
 
 Storybook supports import CSS files in your components directly. But in some cases you may need to [tweak the webpack config](../configure/integration#Webpack). Angular components require [a special import](../configure/integration#importing-css-files).
+
 </details>
 
 <details>
-<summary>Global imported styles</summary>
+  <summary>Global imported styles</summary>
 
-If you have global imported styles, create a file called `.storybook/preview.js` and import the styles there. The styles will be added by Storybook automatically for all stories.
+If you have global imported styles, create a file called [`.storybook/preview.js`](../configure/overview#configure-story-rendering) and import the styles there. The styles will be added by Storybook automatically for all stories.
+
 </details>
 
 <details>
-<summary>Add external CSS or fonts in the head html element</summary>
+  <summary>Add external CSS or fonts in the &#60head&#62</summary>
 
-Alternatively if you want to inject a CSS link tag to the `<head>` directly (or some other resource like a font link), you can use [`.storybook/preview-head.html`](/configure/story-rendering#adding-to-head) to add arbitrary HTML.
+Alternatively if you want to inject a CSS link tag to the `<head>` directly (or some other resource like a font link), you can use [`.storybook/preview-head.html`](/configure/story-rendering#adding-to-&#60head&#62) to add arbitrary HTML.
+
 </details>
 
 
