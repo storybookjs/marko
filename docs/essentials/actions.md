@@ -2,13 +2,13 @@
 title: 'Actions'
 ---
 
-The actions addon is used to display data received by event handler (callback) args in your stories.
+The actions addon is used to display data received by event handler (callback) arguments in your stories.
 
 ![Essential Actions addon usage](./addon-actions-screenshot.png)
 
 ### Action Args
 
-Actions works via supplying special Storybook-generated “action” args to your stories. There are two ways to get an action arg:
+Actions works via supplying special Storybook-generated “action” arguments (referred to as "args" for short) to your stories. There are two ways to get an action arg:
 
 #### Action argType annotation
 
@@ -70,7 +70,7 @@ export default {
 };
 ```
 
-This will bind a standard HTML event handler to the outermost HTML element rendered by your component and trigger an action when the event is called for a given selector. The format is `<eventname> <selector>`. Selector is optional a defaults to all elements.
+This will bind a standard HTML event handler to the outermost HTML element rendered by your component and trigger an action when the event is called for a given selector. The format is `<eventname> <selector>`. Selector is optional; it defaults to all elements.
 
 ### Advanced / Legacy Usage
 

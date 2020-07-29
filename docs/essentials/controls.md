@@ -11,15 +11,15 @@ title: 'Controls'
 
 Storybook Controls gives you a graphical UI to interact with a component's arguments dynamically, without needing to code. It creates an addon panel next to your component examples ("stories"), so you can edit them live.
 
-It does not require any modification to your components, and stories for controls are:
+Controls does not require any modification to your components. Stories for controls are:
 
 - Convenient. Auto-generate controls based on React/Vue/Angular/etc. components.
 - Portable. Reuse your interactive stories in documentation, tests, and even in designs.
 - Rich. Customize the controls and interactive data to suit your exact needs.
 
-To use the controls addon, you need to write your stories using [args](../writing-stories/args). Storybook will automatically generate controls based on your args and what it can infer about your component; but you can configure the controls further using [argTypes](../api/stories#argtypes), see below.
+To use the Controls addon, you need to write your stories using [args](../writing-stories/args). Storybook will automatically generate UI controls based on your args and what it can infer about your component; but you can configure the controls further using [argTypes](../api/stories#argtypes), see below.
 
-> If you have written stories in the older pre-Storybook 6 style, you may want to read the [args&controls migration guide](https://medium.com/storybookjs/storybook-6-migration-guide-200346241bb5) to help understand how to convert your stories for args.
+> If you have written stories in the older pre-Storybook 6 style, you may want to read the [args & controls migration guide](https://medium.com/storybookjs/storybook-6-migration-guide-200346241bb5) to help understand how to convert your stories for args.
 
 ### Choosing the control type
 
@@ -57,13 +57,13 @@ export default {
 };
 ```
 
-This replaces the input with a color picker leading to a more intuitive developer experience.
+This replaces the input with a color picker for a more intuitive developer experience.
 
 ![Essential Control addon with a color picker](./addon-controls-args-background-color.png)
 
 ### Fully custom args
 
-Up until now, we've only used auto-generated controls based on the component we're writing stories for. If we are writing [complex stories](../workflows/stories-for-multiple-components) we may want to add controls for args that aren’t part of the component.
+Up until now, we only used auto-generated controls based on the component we're writing stories for. If we are writing [complex stories](../workflows/stories-for-multiple-components) we may want to add controls for args that aren’t part of the component.
 
 ```js
 // Table.stories.js
@@ -93,7 +93,7 @@ You can determine the control by using `argTypes` in each case.
 
 ### Configuration
 
-The controls addon can be configured in two ways:
+The Controls addon can be configured in two ways:
 
 - Individual controls can be configured via control annotations.
 - The addon's appearance can be configured via parameters.
@@ -168,7 +168,7 @@ TODO: vet locate customized link and ask about props table link
 <details>
 <summary>Show property documentation</summary>
 
-Since Controls is built on the same engine as Storybook Docs, it can also show property documentation alongside your controls using the expanded parameter (defaults to false). This means you embed a complete [Props table](locate-props-table) doc block in the controls pane. The description and default value rendering can be [customized](#fully-custom-args) in the same way as the doc block.
+Since Controls is built on the same engine as Storybook Docs, it can also show property documentation alongside your controls using the expanded parameter (defaults to false). This means you embed a complete [ArgsTable](../writing-docs/doc-blocks#argstable) doc block in the controls pane. The description and default value rendering can be [customized](#fully-custom-args) in the same way as the doc block.
 
 To enable expanded mode globally, add the following to [`.storybook/preview.js`](../configure/overview#configure-story-rendering):
 

@@ -2,7 +2,7 @@
 title: 'Toolbars & globals'
 ---
 
-By default, Storybook ships with toolbar items to control the [viewport](./viewport) and [background](./backgrounds) the story renders in. You can also create your own toolbar items which control special “globals” which you can then read to create [decorators](../writing-stories/decorators) to control story rendering.
+Storybook ships with toolbar items to control the [viewport](./viewport) and [background](./backgrounds) the story renders in. You can also create your own toolbar items which control special “globals” which you can then read to create [decorators](../writing-stories/decorators) to control story rendering.
 
 ### Globals
 
@@ -143,7 +143,7 @@ export const StoryWithLocale = ({ globals: { locale } }) => {
 
 If you're working on a Storybook addon and you need to retrieve globals. You can do so, The `@storybook/api` package provides a hook for this scenario, you can use the `useGlobals()` hook to retrieve any globals you want. 
 
-Using the ThemeProvider example above, you could expand it to display which current theme is being shown inside a Panel like so:
+Using the ThemeProvider example above, you could expand it to display which current theme is being shown inside a panel like so:
 
 ```js
 // your-addon-register-file.js

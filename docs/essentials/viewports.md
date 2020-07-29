@@ -2,7 +2,7 @@
 title: 'Viewports'
 ---
 
-The Viewports Essential toolbar item allows you to adjust the viewport your story is rendered in via Storybook’s UI:
+The Viewports toolbar item allows you to adjust the dimensions of the iframe your story is rendered in. This makes it easy to develop responsive UIs.
 
 <video autoPlay muted playsInline loop>
   <source
@@ -180,7 +180,7 @@ export const parameters = {
 
 There are cases where it's not effective for you to use a certain visual viewport on a global scale and you need it to adjust it to a individual story.
 
-This Essential's addon allows you to do so. You can change your story through [parameters](../writing-stories/parameters) to include the viewports you need to use for your component. 
+You can change your story through [parameters](../writing-stories/parameters) to include the viewports you need to use for your component.
 
 
 [Parameters](../writing-stories/parameters) can be configured for a whole set of stories or a single story via the standard parameter API: 
