@@ -51,7 +51,7 @@ Your project may have additional requirements before components can be rendered 
   If Storybook builds but you see an error immediately when connecting to it in the browser, then chances are one of your input files is not compiling/transpiling correctly to be interpreted by the browser. Storybook supports modern browsers and IE11, but you may need to check the Babel and webpack settings (see above) to ensure your component code works correctly.
 </details>
 
-<details id="story-context" name="story-context">
+<details id="component-context" name="component-context">
   <summary>Component context</summary>
 
 If a particular story has a problem rendering, often it means your component expects a certain environment is available to the component. 
