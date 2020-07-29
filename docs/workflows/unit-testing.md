@@ -28,5 +28,5 @@ it('renders the button in the primary state’, () => {
 });
 ```
 
-Unit tests are useful for verifying functional aspects of components, but can be brittle and expensive to maintain for every component. We recommend combining unit tests with other testing methods like visual regression testing for comprehensive coverage with less maintenance work.
+Unit tests can be brittle and expensive to maintain for _every_ component. We recommend combining unit tests with other testing methods like [visual regression testing](./visual-testing) for comprehensive coverage with less maintenance work.
 

@@ -2,7 +2,7 @@
 title: 'Publish Storybook'
 ---
 
-Storybook is more than a UI component development tool. Teams also use publish Storybook online to review and collaborate on works in progress. That allows developers, designers, and PMs to check if UI looks right without touching code or needing a local dev environment.
+Storybook is more than a UI component development tool. Teams also publish Storybook online to review and collaborate on works in progress. That allows developers, designers, and PMs to check if UI looks right without touching code or needing a local dev environment.
 
 ### Build Storybook as a static web application
 
@@ -33,21 +33,17 @@ We also maintain [`storybook-deployer`](https://github.com/storybookjs/storybook
 
 ### Review with your team
 
-<div style="background-color:#F8FAFC">
-TODO: vet gather team feedback and ui UI Review link (LSB?)
-</div>
-
-Publishing Storybook as part of the development process makes it quick and easy to [gather team feedback](locate-gather-feedback).
+Publishing Storybook as part of the development process makes it quick and easy to [gather team feedback](https://www.learnstorybook.com/design-systems-for-developers/react/en/review/).
 
 A common method to ask for review is to paste a link to the published Storybook in a pull request or Slack.
 
-If you publish your Storybook to Chromatic, you can use the [UI Review](locate-ui-review) feature to automatically scan your PRs for new and updated stories. That makes it easy to identify what changed and give feedback.
+If you publish your Storybook to Chromatic, you can use the [UI Review](https://www.chromatic.com/features/publish) feature to automatically scan your PRs for new and updated stories. That makes it easy to identify what changed and give feedback.
 
 ![Storybook publishing workflow](./workflow-publish.png)
 
 ### Reference external Storybooks
 
-Storybook allows you to browse components from any Storybook published online inside your local Storybook. It unlocks common workflows that teams often struggle with:
+Storybook allows you to browse components from any [Storybook published online](./storybook-composition) inside your local Storybook. It unlocks common workflows that teams often struggle with:
 
 - 👩‍💻 UI developers can quickly reference prior art without switching between Storybooks.
 - 🎨 Design systems can expand adoption by composing themselves into their users’ Storybooks.

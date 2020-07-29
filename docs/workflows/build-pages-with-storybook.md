@@ -77,7 +77,7 @@ Simple.args = {
 };
 ```
 
-This approach is particularly useful when the various subcomponents export a complex list of different stories, which you can pick and choose to build realistic scenarios for your screen-level stories without repeating yourself. By reusing the data and taking a DRY philosophy, your story maintenance burden is minimal.
+This approach is particularly useful when the various subcomponents export a complex list of different stories, which you can pick and choose to build realistic scenarios for your screen-level stories without repeating yourself. By reusing the data and taking a Don't-Repeat-Yourself(DRY) philosophy, your story maintenance burden is minimal.
 
 ### Mocking connected components
 
@@ -87,7 +87,7 @@ Render a connected component in Storybook by mocking the network requests that i
 
 If you are using a provider that supplies data via the context, you can wrap your story in a decorator that supplies a mocked version of that provider. For example, in the [Screens](https://www.learnstorybook.com/intro-to-storybook/react/en/screen/) chapter of Learn Storybook we mock a Redux provider with mock data.
 
-Additionally there may be addons that supply such providers and nice APIs to set the data they provide. For instance [`storybook-addon-apollo-client`](https://www.npmjs.com/package/storybook-addon-apollo-client) provides this API:
+Additionally, there may be addons that supply such providers and nice APIs to set the data they provide. For instance [`storybook-addon-apollo-client`](https://www.npmjs.com/package/storybook-addon-apollo-client) provides this API:
 
 ```js
 // my-component-with-query.story.js
