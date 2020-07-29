@@ -230,14 +230,15 @@ export const loadCsf = ({
         `Invalid module '${m}'. Did you forget to pass \`module\` as the second argument to \`configure\`"?`
       );
     }
+
     if (m && m.hot && m.hot.dispose) {
       ({ previousExports = new Map() } = m.hot.data || {});
-
       m.hot.dispose((data) => {
         loaded = false;
         // eslint-disable-next-line no-param-reassign
         data.previousExports = previousExports;
       });
+      m.hot.accept();
     }
     if (loaded) {
       logger.warn('Unexpected loaded state. Did you call `load` twice?');
