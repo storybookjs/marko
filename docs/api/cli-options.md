@@ -2,11 +2,9 @@
 title: 'CLI options'
 ---
 
-React Storybook comes with two CLI utilities. They are `start-storybook` and `build-storybook`.
+Storybook comes with two CLI utilities: `start-storybook` and `build-storybook`.
 
-They have some options you can pass to alter the storybook behaviors. We have seen some of them in previous docs.
-
-Here are all those options:
+You can pass these commands the following options to alter Storybook's behavior.
 
 ## For start-storybook
 

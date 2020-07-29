@@ -3,7 +3,7 @@ title: 'Addons'
 ---
 
 Addons extend Storybook with features and integrations that are not built into the core. Most Storybook features are implemented as addons. For instance: documentation, accessibility testing, interactive controls, and design previews. 
-Storybook’s addon API makes it easy for you to configure and customize Storybook in new ways. There are countless addons made by the community that unlock time-saving workflows.  What addons can do:
+The addon API makes it easy for you to configure and customize Storybook in new ways. There are countless addons made by the community that unlock time-saving workflows.  What addons can do:
 
 - [Add a panel to Storybook (like Action Logger).](../essentials/actions)
 - [Add a tool to Storybook’s toolbar (like zoom or grid).](../essentials/toolbars-and-globals)
@@ -19,7 +19,7 @@ The Manager is the UI where Storybook’s search, navigation, toolbars, and addo
 
 ![Storybook detailed window](./manager-preview.jpg)
 
-Because Manager and Preview run in separate iframes, they communicate across a communication channel. For example, when you select a story within the Manager, an event is sent across the channel, and the selected story is rendered inside the Preview.
+Because Manager and Preview run in separate iframes, they communicate across a communication channel. When you select a story within the Manager an event is sent across the channel and the selected story is rendered inside the Preview.
 
 Many of the addon APIs you’ll read about below are abstractions to help make this communication transparent.
 
@@ -98,12 +98,13 @@ const MyPanel = () => {
 
 The new version is made smarter by `useParameter`, which is a [React hook](https://reactjs.org/docs/hooks-intro.html) that updates the parameter value and re-renders the panel every time the story changes.
 
-Storybook’s addons API provides hooks like this so all of that communication can happen behind the scenes and you can focus on your addon functionality.
+The addon API provides hooks like this so all of that communication can happen behind the scenes. That means you can focus on your addon's functionality.
 
 #### Register the addon
 
 Finally, let’s hook it all up. Addons are typically published as standalone packages, but they can also be written locally in an existing Storybook project. We’ll make our addon a local addon.
-In a Storybook project, update your [`.storybook/main.js`](../configure/overview#configure-story-rendering):
+
+Update your [`.storybook/main.js`](../configure/overview#configure-story-rendering):
 
 ```js
 // .storybook/main.js
@@ -133,7 +134,7 @@ It is likely because you do not have a `.babelrc` file or do not have it configu
 }
 ```
  
-Now restart/rebuild storybook and your addon should appear in the addons panel. Furthermore, as you navigate between stories, the parameter displayed should update accordingly.
+Now restart/rebuild Storybook and your addon should appear in the addons panel. Furthermore, as you navigate between stories, the parameter displayed should update accordingly.
 
 
 #### Next steps
@@ -180,12 +181,12 @@ export default {
 
 Storybook uses [Emotion](https://emotion.sh/docs/introduction) for styling, AND we provide a theme which can be set by the user!
 
-We recommend you also use Emotion to style your addon’s components. If you use Emotion, you can use the active storybook theme, which benefits users.
+We recommend you also use Emotion to style your addon’s UI components. That allows you to use the active Storybook theme to deliver a seamless developer experience.
 If you don’t want to use Emotion, you can use inline styles or another css-in-js lib. You can receive the theme as a prop by using the `withTheme` hoc from Emotion. [Read more about theming](../configure/user-interface#theming).
 
 #### Storybook components
 
-You can write your addon UI using any React library, but to make writing addons easier, we’ve published Storybook’s UI components for your reuse as `@storybook/components`. When you use Storybook components you get:
+Addon authors can develop their UIs using any React library. But we recommend using Storybook’s own UI components in `@storybook/components` to build addons faster. When you use Storybook components you get:
 
 - Battled tested off-the-shelf components
 - Storybook native look and feel
@@ -195,7 +196,7 @@ You can check them out in [Storybook’s own storybook](https://storybookjs.netl
 
 #### Packaging
 
-In the example above, we showed how to write a local addon inside an existing Storybook project. To distribute your addon more broadly, you can package the addon into a standalone NPM module.
+In the example above, we showed how to write a local addon inside an existing Storybook project. To distribute your addon for others, package the addon into a standalone NPM module.
 
 For a good template of an addon packaged as an NPM module, check out [@storybook/addon-controls].
 

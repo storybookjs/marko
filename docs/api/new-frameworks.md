@@ -2,7 +2,7 @@
 title: 'Frameworks'
 ---
 
-**One of Storybook’s most powerful aspects is that it’s architected to support any web framework. It supports React, Vue, Angular, Web Components, Svelte and over a dozen others. This work in progress guide helps you get started on adding new framework support for Storybook.**
+Storybook is architected to support diverse web frameworks including React, Vue, Angular, Web Components, Svelte and over a dozen others. This guide helps you get started on adding new framework support for Storybook.
 
 ### Scaffolding a new framework
 
@@ -102,7 +102,7 @@ export const Sample = () => (
 
 In this case, the renderable object is the React element, `<Button .../>`.
 
-In most other frameworks, the renderable object is actually a plain old javascript object. 
+In most other frameworks, the renderable object is actually a plain javascript object. 
 
 Consider the following hypothetical example:
 
