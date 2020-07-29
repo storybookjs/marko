@@ -1,4 +1,4 @@
-## 6.0.0-rc.17 (July 30, 2020)
+## 6.0.0-rc.18 (July 30, 2020)
 
 ### Bug Fixes
 
@@ -8,6 +8,10 @@
 - Revert #11502: Remove z-index on ActionBar ([#11708](https://github.com/storybookjs/storybook/pull/11708))
 - Revert #11066: Add skip to content on panel and story iframe ([#11718](https://github.com/storybookjs/storybook/pull/11718))
 * UI: Improve treestate performance ([#11725](https://github.com/storybookjs/storybook/pull/11725))
+
+## 6.0.0-rc.17 (July 30, 2020)
+
+Failed NPM publish
 
 ## 6.0.0-rc.16 (July 28, 2020)
 
