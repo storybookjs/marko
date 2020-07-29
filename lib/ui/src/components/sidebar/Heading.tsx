@@ -3,7 +3,6 @@ import { styled } from '@storybook/theming';
 
 import { Brand } from './Brand';
 import { SidebarMenu, MenuList } from './Menu';
-import { SkipToContent } from './Tree/ListItem';
 
 export interface HeadingProps {
   menuHighlighted?: boolean;
@@ -40,12 +39,8 @@ export const Heading: FunctionComponent<HeadingProps & ComponentProps<typeof Hea
   menu,
   ...props
 }) => {
-  const selectedStoryId = global.location.href.split('story/')[1];
   return (
     <HeadingWrapper {...props}>
-      {selectedStoryId && (
-        <SkipToContent href={`#${selectedStoryId}`}>Go to selected story</SkipToContent>
-      )}
       <BrandArea>
         <Brand />
       </BrandArea>
