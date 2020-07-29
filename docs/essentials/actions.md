@@ -6,7 +6,7 @@ The actions addon is used to display data received by event handler (callback) a
 
 ![Essential Actions addon usage](./addon-actions-screenshot.png)
 
-### Action Args
+### Action args
 
 Actions works via supplying special Storybook-generated “action” arguments (referred to as "args" for short) to your stories. There are two ways to get an action arg:
 
@@ -50,7 +50,11 @@ export default {
 };
 ```
 
-> NOTE: If you're generating argTypes in using another addon (like [docs](locate-docs), which is the common behavior) you'll need to make sure that the actions addon loads **AFTER** the other addon. You can do this by listing it later in the addons registration code in [`.storybook/main.js`](../configure/overview#configure-story-rendering). This is default in [essentials](./introduction).
+<div class=".aside">
+
+NOTE: If you're generating argTypes in using another addon (like [docs](locate-docs), which is the common behavior) you'll need to make sure that the actions addon loads **AFTER** the other addon. You can do this by listing it later in the addons registration code in [`.storybook/main.js`](../configure/overview#configure-story-rendering). This is default in [essentials](./introduction).
+
+</div>
 
 
 ### Action event handlers
@@ -72,6 +76,6 @@ export default {
 
 This will bind a standard HTML event handler to the outermost HTML element rendered by your component and trigger an action when the event is called for a given selector. The format is `<eventname> <selector>`. Selector is optional; it defaults to all elements.
 
-### Advanced / Legacy Usage
+### Advanced / legacy usage
 
 There are also some older ways to use actions as documented in the [advanced README](../addons/actions/ADVANCED-README.md).

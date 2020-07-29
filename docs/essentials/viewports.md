@@ -44,7 +44,7 @@ The viewports object needs the following keys:
 | **styles**             | Object        |Sets Inline styles to be applied to the story           |`{width:0,height:0}`                       |
 | **type**               | String        |Type of the device (e.g. desktop, mobile, or tablet)    |`desktop`                                  |
 
-### Use Detailed Set of Devices
+### Use detailed set of devices
 
 By default Storybook uses a [minimal set of viewports](https://github.com/storybookjs/storybook/blob/master/addons/viewport/src/defaults.ts#L135) to get you started. But you're not restricted to these, the addon offers a more granular list of devices that you can use.  
 
@@ -66,7 +66,7 @@ Once you start your Storybook, you'll see that now you have a whole different se
 
 See [here](https://github.com/storybookjs/storybook/blob/master/addons/viewport/src/defaults.ts#L3) the complete list of devices and their configurations.
 
-### Add New Devices
+### Add new devices
 
 If you have either a specific viewport, or a list of viewports that you need to use. You can modify your  [`.storybook/preview.js`](../configure/overview#configure-story-rendering) file to include them like so:
 

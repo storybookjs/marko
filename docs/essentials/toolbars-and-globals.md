@@ -12,7 +12,7 @@ When the globals change, the story re-renders and the decorators rerun with the 
 
 Let’s see how.
 
-### Global Types and the toolbar annotation
+### Global types and the toolbar annotation
 
 Storybook has a simple, declarative syntax for configuring toolbar menus. In your [`.storybook/preview.js`](../configure/overview#configure-story-rendering), you can add your own toolbars by creating `globalTypes` with a `toolbar` annotation: 
 
@@ -33,7 +33,11 @@ export const globalTypes = {
 };
 ```
 
-> As globals are *global* you can *only* set `globalTypes` in [`.storybook/preview.js`](../configure/overview#configure-story-rendering).
+<div class=".aside">
+
+As globals are *global* you can *only* set `globalTypes` in [`.storybook/preview.js`](../configure/overview#configure-story-rendering).
+
+</div>
 
 When you start your Storybook, you should see a new dropdown in your toolbar with options `light` and `dark`.
 
@@ -129,7 +133,9 @@ export const StoryWithLocale = (args, { globals: { locale } }) => {
 };
 ```
 
-**NOTE:** In Storybook 6.0, if you set the global option `passArgsFirst: false` for backwards compatibility, the story context is passed as the second argument:
+<div class=".aside">
+
+In Storybook 6.0, if you set the global option `passArgsFirst: false` for backwards compatibility, the story context is passed as the second argument:
 
 ```js
 // your-story.js
@@ -138,6 +144,10 @@ export const StoryWithLocale = ({ globals: { locale } }) => {
   return <>{caption}</>;
 };
 ```
+
+</div>
+
+
 
 ### Consuming globals from within an addon
 
