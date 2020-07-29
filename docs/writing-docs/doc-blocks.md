@@ -52,15 +52,15 @@ import { MyComponent } from './MyComponent';
 
 ArgsTables are automatically inferred from your components and stories, but sometimes it's useful to customize the results.
 
-<div style="background-color:#F8FAFC">
-TODO: ask tom if links are accurate
-</div>
-
 ArgsTables are rendered from an internal data structure called [ArgTypes](../api/stories#argtypes). When you declare a story's component metadata, Docs automatically extracts ArgTypes based on the component's properties.
 
 You can customize what's shown in the ArgsTable by customizing the ArgTypes data. This is currently available for [DocsPage](./docs-page) and `<Props story="xxx">` construct, but not for the `<Props of={component} />` construct.
 
-> NOTE: This API is experimental and may change outside of the typical semver release cycle
+<div class=".aside">
+
+NOTE: This API is experimental and may change outside of the typical semver release cycle
+
+</div>
 
 The API documentation of ArgTypes is detailed in a [separate section](../api/stories#argtypes), but to control the description and default values, use the following fields:
 
@@ -68,7 +68,7 @@ The API documentation of ArgTypes is detailed in a [separate section](../api/sto
 |:-----------------------------|:----------------------------------------------------------------------------------------------:|
 | **name**                     |The name of the property                                                                        |
 | **type.required**            |The stories to be show, ordered by supplied name                                                |
-| **description**              |A markdown description for the property                                                         |
+| **description**              |A Markdown description for the property                                                         |
 |**table.type.summary**        |A short version of the type                                                                     |
 |**table.type.detail**         |A short version of the type                                                                     |
 |**table.defaultValue.summary**|A short version of the type                                                                     |
@@ -105,7 +105,7 @@ If you find yourself writing the same definition over and over again, Storybook 
 
 For instance you can use:
 
-- `number`, which is shorthand for `type:{name: 'number'}`
+- `number`, which is shorthand for `type: {name: 'number'}`
 - `radio`, which is a shorhand for `control: {type: 'radio' }`
 
 ##### MDX
@@ -190,10 +190,6 @@ Storybook Docs shows a component’s description extracted from the source code 
 
 #### DocsPage
 
-<div style="background-color:#F8FAFC">
-TODO: waiting to be vetted
-</div>
-
 In DocsPage, a component’s description is shown at the top of the page. For [supported frameworks](https://github.com/storybookjs/storybook/tree/next/addons/docs#framework-support), the component description is automatically extracted from a docgen component above the component in its source code. It can also be set by the `docs.description` parameter.
 
 ```js
@@ -272,11 +268,6 @@ import { Story } from '@storybook/addon-docs/blocks';
 ```
 
 #### Inline rendering
-
-<div style="background-color:#F8FAFC">
-TODO: ask tom/michael about the preview iframe. as we've been calling it canvas so far and now move to preview.
-And also inline rendering support location
-</div>
 
 In Storybook’s Canvas, all stories are rendered in the [Preview iframe] for isolated development. In Storybook Docs, when [inline rendering is supported by your framework](./docs-page#inline-stories-vs-iframe-stories), inline rendering is used by default for performance and convenience. However, you can force iframe rendering with `docs: { inlineStories: false }` parameter, or `inline={false}` in MDX.
 

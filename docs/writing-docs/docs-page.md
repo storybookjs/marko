@@ -144,13 +144,10 @@ Apply a similar technique to remix the DocsPage at the [story](#story-level), [c
 In addition, you can interleave your own components to customize the auto-generated contents of the page, or pass in different options to the blocks to customize their appearance. Read more about [Doc Blocks](./docs-blocks).
 
 ### Story file names
-<div>
-TODO ask tom/dom for a read on this. I went a bit of restructuring so that this page aligns with the mdx one in terms of wording/flow.
-</div>
 
 Unless you use a custom [webpack configuration](../configure/integration#extending-storybooks-webpack-config), all of your story files should have the suffix `*.stories.@(j|t)sx?`. For example, "Badge.stories.js" or "Badge.stories.tsx". This tells Storybook and its docs preset to display the docs based on the file contents.
 
-### Inline stories vs. Iframe stories
+### Inline stories vs. iframe stories
 
 DocsPage displays all the stories of a component in one page. You have the option of rendering those stories inline or in an iframe. 
 
