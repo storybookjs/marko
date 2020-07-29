@@ -2,7 +2,7 @@
 title: 'MDX'
 ---
 
-MDX is a standard file format that combines Markdown with JSX. This means you can use Markdown’s terse syntax (such as # heading) for your documentation, write stories that compile to our component story format, and freely embed JSX component blocks at any point in the file. All at once.
+MDX is a [standard file format](https://mdxjs.com/) that combines Markdown with JSX. This means you can use Markdown’s terse syntax (such as # heading) for your documentation, write stories that compile to our component story format, and freely embed JSX component blocks at any point in the file. All at once.
 
 In addition, you can write pure documentation pages in MDX and add them to Storybook alongside your stories.
 
@@ -24,7 +24,7 @@ import { Checkbox } from './Checkbox';
 # Checkbox
 
 With `MDX` we can define a story for `Checkbox` right in the middle of our
-markdown documentation.
+Markdown documentation.
 
 export const Template = (args) => <Checkbox {...args} />
 <Preview>
@@ -58,8 +58,7 @@ Let's break it down.
 
 ### MDX-Flavored CSF
 
-MDX-flavored Component Story Format (CSF) includes a collection of components called ["Doc Blocks"](./docs-blocks), that allow Storybook to translate MDX files into Storybook stories. MDX-defined stories are identical to regular Storybook stories, so they can be used with Storybook's entire ecosystem of addons and view layers.
-
+MDX-flavored [Component Story Format (CSF)](../formats/component-story-format/) includes a collection of components called ["Doc Blocks"](./docs-blocks), that allow Storybook to translate MDX files into Storybook stories. MDX-defined stories are identical to regular Storybook stories, so they can be used with Storybook's entire ecosystem of addons and view layers.
 
 For example, here's the first story from the Checkbox example above, rewritten in CSF:
 

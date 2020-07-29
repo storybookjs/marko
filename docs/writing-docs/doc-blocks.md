@@ -2,13 +2,13 @@
 title: 'Doc Blocks'
 ---
 
-Doc Blocks are the building blocks of Storybook documentation pages. By default, [DocsPage](./docs-page) uses a combination of the below blocks to build a page for each of your components automatically. 
+Doc Blocks are the building blocks of Storybook documentation pages. By default, [DocsPage](./docs-page) uses a combination of the blocks  below to build a page for each of your components automatically. 
 
-Also, custom [addons](../configure/user-interface#storybook-addons) can provide their own doc blocks, and there are many available.
+Custom [addons](../configure/user-interface#storybook-addons) can also provide their own doc blocks.
 
 ### ArgsTable
 
-Storybook Docs automatically generates component props tables for components in supported frameworks. These tables list the [args](../writing-stories/args) of the component, and even integrate with [controls](../essentials/controls) to allow you to change the args of the currently rendered story.
+Storybook Docs automatically generates component props tables for components in supported frameworks. These tables list the arguments ([args for short](../writing-stories/args)) of the component, and even integrate with [controls](../essentials/controls) to allow you to change the args of the currently rendered story.
 
 <video autoPlay muted playsInline loop>
   <source
@@ -35,7 +35,7 @@ export default {
 
 #### MDX
 
-To use the props table in MDX, use the Props block:
+To use the ArgsTable in MDX, use the Props block:
 
 ```js
 // MyComponent.stories.mdx
@@ -50,15 +50,15 @@ import { MyComponent } from './MyComponent';
 
 #### Customizing
 
-Props tables are automatically inferred from your components and stories, but sometimes it's useful to customize the results.
+ArgsTables are automatically inferred from your components and stories, but sometimes it's useful to customize the results.
 
 <div style="background-color:#F8FAFC">
 TODO: ask tom if links are accurate
 </div>
 
-Props tables are rendered from an internal data structure called [ArgTypes](../api/stories#argtypes). When you declare a story's component metadata, Docs automatically extracts ArgTypes based on the component's properties.
+ArgsTables are rendered from an internal data structure called [ArgTypes](../api/stories#argtypes). When you declare a story's component metadata, Docs automatically extracts ArgTypes based on the component's properties.
 
-You can customize what's shown in the props table by customizing the ArgTypes data. This is currently available for [DocsPage](locate-docs-page) and `<Props story="xxx">` construct, but not for the `<Props of={component} />` construct.
+You can customize what's shown in the ArgsTable by customizing the ArgTypes data. This is currently available for [DocsPage](locate-docs-page) and `<Props story="xxx">` construct, but not for the `<Props of={component} />` construct.
 
 > NOTE: This API is experimental and may change outside of the typical semver release cycle
 
@@ -137,7 +137,7 @@ To customize argTypes in MDX, you can set an `mdx` prop on the `Meta` or `Story`
 
 #### Controls
 
-The controls inside a props table are configured in exactly the same way as the [controls](../essentials/controls) addon pane. In fact you’ll probably notice the table is very similar! It uses the same component and mechanism behind the scenes.
+The controls inside an ArgsTable are configured in exactly the same way as the [controls](../essentials/controls) addon pane. In fact you’ll probably notice the table is very similar! It uses the same component and mechanism behind the scenes.
 
 ### Source
 
@@ -166,7 +166,7 @@ CustomSource.parameters = {
 
 #### MDX
 
-You can also use the `Source` block in MDX. It accepts either a story ID or `code` snippet the `language` for syntax highlighting:
+You can also use the `Source` block in MDX. It accepts either a story ID or `code` snippet. Use the `language` for syntax highlighting.
 
 ```js
 import { Source } from '@storybook/addon-docs/blocks';
@@ -194,7 +194,7 @@ Storybook Docs shows a component’s description extracted from the source code 
 TODO: waiting to be vetted
 </div>
 
-In DocsPage, a component’s description is shown at the top of the page. For [supported frameworks], the component description is automatically extracted from a docgen component above the component in its source code. It can also be set by the `docs.description` parameter.
+In DocsPage, a component’s description is shown at the top of the page. For [supported frameworks](https://github.com/storybookjs/storybook/tree/next/addons/docs#framework-support), the component description is automatically extracted from a docgen component above the component in its source code. It can also be set by the `docs.description` parameter.
 
 ```js
 
@@ -221,7 +221,7 @@ WithStoryDescription.parameters = {
 
 #### MDX
 
-In MDX, the `Description` shows the component’s description using the same heuristics as the DocsPage. It also accepts a markdown parameter to show any user-provided Markdown string.
+In MDX, the `Description` shows the component’s description using the same heuristics as the DocsPage. It also accepts a `markdown` parameter to show any user-provided Markdown string.
 
 ```js
 
@@ -245,7 +245,7 @@ Stories (component examples) are the basic building blocks in Storybook. In Stor
 
 #### DocsPage
 
-In DocsPage a `Story` block is generated for each story in your [CSF] file, wrapped with a `Preview` wrapper that gives it a toolbar on top (in the case of the first “primary” story) and a source code preview underneath.
+In DocsPage, a `Story` block is generated for each story in your [CSF] file, it's wrapped with a `Preview` wrapper that gives it a toolbar on top (in the case of the first “primary” story) and a source code preview underneath.
 
 #### MDX
 
@@ -278,7 +278,7 @@ TODO: ask tom/michael about the preview iframe. as we've been calling it canvas 
 And also inline rendering support location
 </div>
 
-In Storybook’s Canvas, all stories are rendered in the [Preview iframe] for isolated development. In Storybook Docs, when [inline rendering is supported by your framework](locate-link), inline rendering is used by default for performance and convenience. However, you can force iframe rendering with `docs: { inlineStories: false }` parameter, or `inline={false}` in MDX.
+In Storybook’s Canvas, all stories are rendered in the [Preview iframe] for isolated development. In Storybook Docs, when [inline rendering is supported by your framework](./docs-page#inline-stories-vs-iframe-stories), inline rendering is used by default for performance and convenience. However, you can force iframe rendering with `docs: { inlineStories: false }` parameter, or `inline={false}` in MDX.
 
 
 ### Preview
