@@ -79,7 +79,7 @@ export const DateControl: FC<DateProps> = ({ name, value, onChange, onFocus, onB
     result.setMonth(parsed.getMonth());
     result.setDate(parsed.getDate());
     const time = result.getTime();
-    if (time) onChange(name, time);
+    if (time) onChange(time);
     setValid(!!time);
   };
 
@@ -89,7 +89,7 @@ export const DateControl: FC<DateProps> = ({ name, value, onChange, onFocus, onB
     result.setHours(parsed.getHours());
     result.setMinutes(parsed.getMinutes());
     const time = result.getTime();
-    if (time) onChange(name, time);
+    if (time) onChange(time);
     setValid(!!time);
   };
 

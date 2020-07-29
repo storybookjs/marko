@@ -14,7 +14,7 @@ const format = (value?: TextValue) => value || '';
 
 export const TextControl: FC<TextProps> = ({ name, value, onChange, onFocus, onBlur }) => {
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    onChange(name, event.target.value);
+    onChange(event.target.value);
   };
   return (
     <Wrapper>
