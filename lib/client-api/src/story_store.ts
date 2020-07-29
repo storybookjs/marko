@@ -32,7 +32,7 @@ import {
   StoreSelection,
 } from './types';
 import { HooksContext } from './hooks';
-import storySort from './storySort';
+import { storySort } from './storySort';
 import { combineParameters } from './parameters';
 import { inferArgTypes } from './inferArgTypes';
 
@@ -387,12 +387,12 @@ export default class StoryStore {
     const __isArgsStory = passArgsFirst && original.length > 0;
 
     const { argTypes = {} } = this._argTypesEnhancers.reduce(
-      (accumlatedParameters: Parameters, enhancer) => ({
-        ...accumlatedParameters,
+      (accumulatedParameters: Parameters, enhancer) => ({
+        ...accumulatedParameters,
         argTypes: enhancer({
           ...identification,
           storyFn: original,
-          parameters: accumlatedParameters,
+          parameters: accumulatedParameters,
           args: {},
           argTypes: {},
           globals: {},

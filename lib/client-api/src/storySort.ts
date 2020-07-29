@@ -1,6 +1,6 @@
 import { StorySortObjectParameter, Comparator } from '@storybook/addons';
 
-const storySort = (options: StorySortObjectParameter = {}): Comparator<any> => (
+export const storySort = (options: StorySortObjectParameter = {}): Comparator<any> => (
   a: any,
   b: any
 ): number => {
@@ -73,5 +73,3 @@ const storySort = (options: StorySortObjectParameter = {}): Comparator<any> => (
   /* istanbul ignore next */
   return 0;
 };
-
-export default storySort;
