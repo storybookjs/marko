@@ -1,5 +1,4 @@
 import { DOCS_MODE } from 'global';
-import rfdc from 'rfdc';
 import React, { useMemo, useState, useEffect } from 'react';
 import { isRoot as isRootFn, Story, StoriesHash } from '@storybook/api';
 import { toFiltered, getMains, getParents } from './utils';
@@ -119,8 +118,6 @@ export const collapseDocsOnlyStories = (storiesHash: StoriesHash) => {
   });
   return result;
 };
-
-const clone = rfdc({ circles: true });
 
 export const ExpanderContext = React.createContext<{
   setExpanded: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
