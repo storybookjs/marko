@@ -8,11 +8,7 @@ For example, if you use a design system package, its stories can appear alongsid
 
 ### For package consumers
 
-<div style="background-color:#F8FAFC">
-TODO: vet this item, supports link where should be pointed at
-</div>
-
-Composition happens automatically if the package [supports](locate-support-composition) it. When you install the package, Storybook will load its stories alongside your own. 
+Composition happens automatically if the package [supports](#for-package-authors) it. When you install the package, Storybook will load its stories alongside your own. 
 
 ![Package composition workflow](./package-composition.png)
 
@@ -32,11 +28,7 @@ module.exports = {
 
 #### Changing versions
 
-<div style="background-color:#F8FAFC">
-TODO: vet this item, configuration link where should be pointed at
-</div>
-
-Change the version of the composed Storybook to see how the library evolves. This requires [configuration](locate-configuration) from the package author.
+Change the version of the composed Storybook to see how the library evolves. This requires [configuration](#providing-a-version-section) from the package author.
 
 ![Package composition workflow](./composition-versioning.png)
 
@@ -96,9 +88,6 @@ Examples of such services:
 - [chromatic.com](https://www.chromatic.com/)
 
 #### CHP level 0
-<div style="background-color:#F8FAFC">
- TODO:vet S3 link (mine is defaulting to my locale)
-</div>
 
 The service can serve uploaded Storybooks. There is no special integration with Storybook APIs.
 
