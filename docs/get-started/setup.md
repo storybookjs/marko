@@ -90,7 +90,7 @@ Theme users may need to add a decorator to `.storybook/preview.js`, [see above](
 <details>
   <summary>@import CSS into components</summary>
 
-Storybook allows you to import CSS files in your components directly. But in some cases you may need to [tweak the webpack config](../configure/integration#Webpack). Angular components require [a special import](../configure/integration#importing-css-files).
+Storybook allows you to import CSS files in your components directly. But in some cases you may need to [tweak the webpack config](../configure/integration#webpack). Angular components require [a special import](../configure/integration#importing-css-files).
 
 </details>
 
