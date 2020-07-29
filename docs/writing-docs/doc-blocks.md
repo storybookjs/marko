@@ -58,7 +58,7 @@ TODO: ask tom if links are accurate
 
 ArgsTables are rendered from an internal data structure called [ArgTypes](../api/stories#argtypes). When you declare a story's component metadata, Docs automatically extracts ArgTypes based on the component's properties.
 
-You can customize what's shown in the ArgsTable by customizing the ArgTypes data. This is currently available for [DocsPage](locate-docs-page) and `<Props story="xxx">` construct, but not for the `<Props of={component} />` construct.
+You can customize what's shown in the ArgsTable by customizing the ArgTypes data. This is currently available for [DocsPage](./docs-page) and `<Props story="xxx">` construct, but not for the `<Props of={component} />` construct.
 
 > NOTE: This API is experimental and may change outside of the typical semver release cycle
 
