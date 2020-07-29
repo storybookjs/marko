@@ -7,7 +7,7 @@ In Storybook, your stories render in a special “preview” iframe (Canvas tab)
 
 ### Adding to head html element
 
-If you need to add extra elements to the `head` of the preview, for instance to load static stylesheets, font files, or similar, you can create a file called [`.storybook/preview-head.html`](./overview#configure-story-rendering) and add tags like this:
+If you need to add extra elements to the `head` of the preview iframe, for instance to load static stylesheets, font files, or similar, you can create a file called [`.storybook/preview-head.html`](./overview#configure-story-rendering) and add tags like this:
 
 ```html
 <!--  .storybook/preview-head.html -->
@@ -19,12 +19,12 @@ If you need to add extra elements to the `head` of the preview, for instance to 
 <script>try{ Typekit.load(); } catch(e){ }</script>
 ```
 
-> Storybook will inject these tags to the iframe where your components are rendered. So, these won’t be loaded into the main Storybook UI.
+> Storybook will inject these tags into the _preview iframe_ where your components are rendered not the Storybook application UI.
 
 
 ### Adding to body html element
 
-Sometimes, you may need to add different tags to the HTML body. This is useful for adding some custom content roots.
+Sometimes, you may need to add different tags to the `<body>`. This is useful for adding some custom content roots.
 
 You can accomplish this by creating a file called `preview-body.html` inside your `.storybook` directory and add tags like this:
 
@@ -43,7 +43,5 @@ If using relative sizing in your project (like `rem` or `em`), you may update th
 </style>
 ```
 
-> **Important**
->
-> Storybook will inject these tags to the iframe where your components are rendered. So, these won’t be loaded into the main Storybook UI.
+>  Storybook will inject these tags into the _preview iframe_ where your components are rendered not the Storybook application UI.
 

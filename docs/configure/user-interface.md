@@ -41,13 +41,13 @@ The following table details how to use the API values:
 
 ### Theming
 
-Storybook is theme-able!
+Storybook is theme-able using a lightweight theming API.
 
 #### Global theming
 
 It's possible to theme Storybook globally.
 
-We've created two basic themes that look good out of the box: "normal" (a light theme) and "dark" (a dark theme). Unless you've set your preferred color scheme as dark Storybook will use the light theme as default.
+Storybook includes two themes that look good out of the box: "normal" (a light theme) and "dark" (a dark theme). Unless you've set your preferred color scheme as dark, Storybook will use the light theme as default.
 
 Make sure you have installed [`@storybook/addons`](https://www.npmjs.com/package/@storybook/addons) and [`@storybook/theming`](https://www.npmjs.com/package/@storybook/theming) packages.
 
@@ -164,7 +164,7 @@ addons.setConfig({
 });
 ```
 
-The `@storybook/theming` package is built using TypeScript, so this should help create a valid theme for typescript users. The types are part of the package itself.
+The `@storybook/theming` package is built using TypeScript, so this should help create a valid theme for TypeScript users. The types are part of the package itself.
 
 Many theme variables are optional, the `base` property is NOT. This is a perfectly valid theme:
 
@@ -272,9 +272,9 @@ const Component = styled.div`
 
 ### Storybook addons
 
-A key strength of Storybook is its extensibility. Storybook aims to be your tool of choice for developing components in the browser no matter what choice of UI framework your team has made. Another way that Storybook can fit your team’s development workflow is through addons that allow you to build better and more robust components.
+A key strength of Storybook is its extensibility. Use addons to extend and customize Storybook to fit your team’s development workflow.
 
-Addons have been a part of Storybook since the very beginning and are so integral to the way Storybook works that many of the features described in this documentation are implemented as addons! These addons are installed out of the box with [essentials](../essentials). 
+Addons are  integral to the way Storybook works. Many of Storybook's core features are implemented as addons! These addons are installed out of the box with [essentials](../essentials). 
 
 #### Addon features
 
@@ -282,7 +282,7 @@ Addons have been a part of Storybook since the very beginning and are so integra
 todo:vet links here
 </div>
 
-The most obvious thing addons affect in Storybook is the UI of Storybook itself. Within the UI the [toolbar]() and [addons panel]() are the two chief places addons will appear. 
+The most obvious thing addons affect in Storybook is the UI of Storybook itself. Within the UI the **toolbar** and **addons panel** are the two chief places addons will appear. 
 
 ![Storybook addons locations](./addon-locations.jpg)
 
@@ -294,25 +294,26 @@ Finally, addons can affect the build setup of Storybook by injecting their own w
 
 There are many, many Storybook addons, but they can be roughly categorized into three areas:
 
-- Essential addons are core-team developed addons that are considered core to the out-of-the-box user experience of Storybook and thus ship by default with new Storybook installations.
-- Core addons are the addons that are developed by the core team with efforts made to keep them in sync with the development of Storybook itself, and to make sure they are written in idiomatic ways as templates for other addons. They can be found within the [Storybook monorepo](https://github.com/storybookjs/storybook/tree/next/addons).
+- **Essential** addons are core-team developed addons that are considered a part of the out-of-the-box user experience. These ship by default with new Storybook installations.
+-  **Core** addons are developed by the core team. They are kept in sync with the development of Storybook itself and written in idiomatic ways as templates for other addons. They can be found within the [Storybook monorepo](https://github.com/storybookjs/storybook/tree/next/addons).
+
 - Community addons are addons written by the massive Storybook community. They can be found on our [website](/addons), [GitHub](https://github.com/), and [npm](https://www.npmjs.com/).
 
 ### Sidebar & URLs
 
-Storybook’s sidebar lists all your stories grouped by component. When you have a lot of components you may wish to also group those components also. To do so, you can add the “/” separator to the “title” of your CSF file and Storybook will group the stories into groups based on common prefixes:
+Storybook’s sidebar lists all your stories grouped by component. When you have a lot of components you may wish to also group those components also. To do so, you can add the `/` separator to the `title` of your CSF file and Storybook will group the stories into groups based on common prefixes:
 
 ![Storybook sidebar anatomy](./sidebar-anatomy.jpg)
 
-Usually it is a good idea to use a nesting scheme that mirrors the filesystem path of the components. So if you have a file `components/modals/Alert.js` you might name the CSF file `components/modals/Alert.stories.js` and title it “Components/Modals/Alert”.
+We recommend using a nesting scheme that mirrors the filesystem path of the components. For example, if you have a file `components/modals/Alert.js` name the CSF file `components/modals/Alert.stories.js` and title it `Components/Modals/Alert`.
 
 #### Roots
 
-By default Storybook will treat your highest level of groups as “roots”--which are displayed in the UI as “sections” of the hierarchy. Lower level groups are displayed as expandable items in the hierarchy:
+By default, Storybook will treat your highest level of groups as “roots”--which are displayed in the UI as “sections” of the hierarchy. Lower level groups are displayed as expandable items in the hierarchy:
 
 ![Storybook sidebar story roots](./sidebar-roots.jpg)
 
-If you’d prefer all groups to be expandable, you can set the showRoots option to false in  [`./storybook/manager.js`](./overview#configure-story-rendering):
+If you’d prefer all groups to be expandable, you can set the `showRoots` option to `false` in  [`./storybook/manager.js`](./overview#configure-story-rendering):
 
 ```js
 // ./storybook/manager.js
@@ -382,7 +383,7 @@ console.log(process.env.STORYBOOK_THEME);
 console.log(process.env.STORYBOOK_DATA_KEY);
 ```
 
-You can also access these variables in your custom head/body (see below) using the substitution `%STORYBOOK_X%`, for example: `%STORYBOOK_THEME%` will become `red`.
+You can also access these variables in your custom `<head>`/`<body>` (see below) using the substitution `%STORYBOOK_X%`, for example: `%STORYBOOK_THEME%` will become `red`.
 
 > If using the environment variables as attributes or values in JavaScript, you may need to add quotes, as the value will be inserted directly. e.g. `<link rel="stylesheet" href="%STORYBOOK_STYLE_URL%" />`
 

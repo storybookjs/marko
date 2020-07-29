@@ -145,7 +145,7 @@ The base Typescript configuration uses [`babel-loader`](https://webpack.js.org/l
 Each framework uses the base configuration unless otherwise specified:
 
 - Angular ignores the base and uses `ts-loader` and `ngx-template-loader`.
-- Vue ignores the uses `ts-loader` and applies it to both `.tsx` and `.vue` files.
+- Vue ignores the base and uses `ts-loader` and applies it to both `.tsx` and `.vue` files.
 - React adds `react-docgen-typescript-plugin` to the base.
 
 
@@ -185,7 +185,7 @@ There are many ways to include CSS in a web application, and correspondingly the
 
 #### CSS-in-JS
 
-CSS-in-JS libraries are designed to use basic JavaScript. They often work in Storybook without any extra configuration. Some libraries expect components to be rendered in a specific rendering “context” (such as to provide themes) and you may need to add a [global decorator](../writing-stories/decorators#global-decorators) to supply it.
+CSS-in-JS libraries are designed to use basic JavaScript. They often work in Storybook without any extra configuration. Some libraries expect components to be rendered in a specific rendering “context” (for example, to provide themes) and you may need to add a [global decorator](../writing-stories/decorators#global-decorators) to supply it.
 
 #### Importing CSS files
 

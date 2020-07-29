@@ -29,7 +29,7 @@ The `main.js` configuration file is a [preset](../api/addons#addon-presets) and 
 
 ### Configure story loading
 
-By default Storybook will load stories from your project based on a glob (pattern matching string) in `.storybook/main.js`. By default that matches all files in your project with extension `.stories.js` -- the intention is you would colocate those files with the component they document.
+By default, Storybook will load stories from your project based on a glob (pattern matching string) in `.storybook/main.js` that matches all files in your project with extension `.stories.js`. The intention is you colocate a story file with the component it documents.
 
 ```
 •
@@ -52,7 +52,7 @@ module.exports = {
 
 ### Configure story rendering
 
-To control the way stories are rendered and add global [decorators](../writing-stories/decorators#global-decorators) and [parameters](..writing-stories/parameters#global-parameters), you can create a  `.storybook/preview.js` file. This is loaded in the Canvas tab, the “preview” iframe that renders your components in isolation. Use `preview.js` for global code (such as [CSS imports](../get-started/setup#render-component-styles) or JavaScript mocks) that applies to all stories.
+To control the way stories are rendered and add global [decorators](../writing-stories/decorators#global-decorators) and [parameters](..writing-stories/parameters#global-parameters), create a  `.storybook/preview.js` file. This is loaded in the Canvas tab, the “preview” iframe that renders your components in isolation. Use `preview.js` for global code (such as [CSS imports](../get-started/setup#render-component-styles) or JavaScript mocks) that applies to all stories.
 
 The `preview.js` file can be an ES module and export the following keys: 
 
