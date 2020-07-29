@@ -2,7 +2,7 @@
 title: 'Setup'
 ---
 
-Now that you’ve learned about what stories are and how to browse stories, let’s demo working on one of your components. Pick a simple component from your project, like a Button, and write a `.stories.js` file to go along with it. It might look something like this:
+Now that you’ve learned what stories are and how to browse them, let’s demo working on one of your components. Pick a simple component from your project, like a Button, and write a `.stories.js` file to go along with it. It might look something like this:
 
 ```js
 // YourComponent.stories.js
@@ -52,7 +52,7 @@ Your project may have additional requirements before components can be rendered 
 </details>
 
 <details id="story-context" name="story-context">
-  <summary>Story context</summary>
+  <summary>Component context</summary>
 
 If a particular story has a problem rendering, often it means your component expects a certain environment is available to the component. 
 
@@ -79,18 +79,18 @@ Storybook isn’t opinionated about how you generate or load CSS. It renders wha
 You may have to configure your CSS tooling for Storybook’s rendering environment. Here are some tips on what could help:
 
 <details>
-  <summary>CSS-in-JS like styled components and emotion</summary>
+  <summary>CSS-in-JS like styled-components and Emotion</summary>
 
 If you are using CSS-in-JS, chances are your styles are working because they’re generated in JavaScript and served alongside each component. 
 
-Theme users may need to add a decorator to `.storybook/preview.js`, [see above](#story-context).
+Theme users may need to add a decorator to `.storybook/preview.js`, [see above](#component-context).
 
 </details>
 
 <details>
   <summary>@import CSS into components</summary>
 
-Storybook supports import CSS files in your components directly. But in some cases you may need to [tweak the webpack config](../configure/integration#Webpack). Angular components require [a special import](../configure/integration#importing-css-files).
+Storybook allows you to import CSS files in your components directly. But in some cases you may need to [tweak the webpack config](../configure/integration#Webpack). Angular components require [a special import](../configure/integration#importing-css-files).
 
 </details>
 

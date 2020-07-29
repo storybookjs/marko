@@ -7,28 +7,20 @@ Use the Storybook CLI to install it in a single command. Run this inside your ex
 ```sh
 npx sb init
 ```
-<div style="background-color:#F8FAFC">
-TODO: vet this per feedback (https://github.com/storybookjs/storybook/pull/11632#discussion_r458498081)
 
-</div>
+<details>
 
-Storybook needs to be installed into a project that is already configured. For instance with:
+<summary><code>sb init</code> is not made for empty projects</summary>
+
+Storybook needs to be installed into a project that is already setup with a framework. It will not work on an empty project. There are many ways to bootstrap an app in given framework including:
 
 - 📦 [Create React App](https://reactjs.org/docs/create-a-new-react-app.html)
-- 📦 [Vue Cli](https://cli.vuejs.org/)
+- 📦 [Vue CLI](https://cli.vuejs.org/)
+- Or any other tooling available. 
 
-
-Or any other tooling available. 
+</details>
 
 During its install process, Storybook will look into your project's dependencies and provide you with the best configuration available.
-
-If you want, you can also do this manually through the Storybook CLI. You can use the `--type` flag to tell Storybook to configure itself based on the flag.
-
-For instance you can use:
-
-- `--type react` to setup Storybook with the React configuration options.
-- `--type vue` to setup Storybook with the Vue configuration options.
-- `--type angular` to setup Storybook with the Angular configuration options.
 
 
 The command above will make the following changes to your local environment:
@@ -56,6 +48,16 @@ It will start Storybook locally and output the address. Depending on your system
 <details>
 <summary>Troubleshooting</summary>
 
+You can also setup Storybook manually through the Storybook CLI. 
+
+You can use the `--type` flag to tell Storybook to configure itself based on the flag.
+
+For instance you can use:
+
+- `--type react` to setup Storybook with the React configuration options.
+- `--type vue` to setup Storybook with the Vue configuration options.
+- `--type angular` to setup Storybook with the Angular configuration options.
+
 If there's an installation problem, check the README for your framework (e.g <a href="https://github.com/storybookjs/storybook/blob/next/app/react/README.md">Storybook for React</a>).
 
 If all else fails, try asking for [help](https://storybook.js.org/support/)
@@ -63,4 +65,4 @@ If all else fails, try asking for [help](https://storybook.js.org/support/)
 </details>
 
 
-> > [Now that you installed Storybook successfully, let’s take a look at a story that was written for us](./whats-a-story.md)
+Now that you installed Storybook successfully, let’s take a look at a story that was written for us.
