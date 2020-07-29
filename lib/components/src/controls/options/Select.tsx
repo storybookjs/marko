@@ -89,7 +89,7 @@ const NO_SELECTION = 'Select...';
 
 const SingleSelect: FC<SelectProps> = ({ name, value, options, onChange }) => {
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    onChange(name, options[e.currentTarget.value]);
+    onChange(options[e.currentTarget.value]);
   };
   const selection = selectedKey(value, options) || NO_SELECTION;
 
@@ -113,7 +113,7 @@ const MultiSelect: FC<SelectProps> = ({ name, value, options, onChange }) => {
     const selection = Array.from(e.currentTarget.options)
       .filter((option) => option.selected)
       .map((option) => option.value);
-    onChange(name, selectedValues(selection, options));
+    onChange(selectedValues(selection, options));
   };
   const selection = selectedKeys(value, options);
 

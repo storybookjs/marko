@@ -10,7 +10,7 @@ const Template = (initialValue?: boolean) => {
   const [value, setValue] = useState(initialValue);
   return (
     <>
-      <BooleanControl name="boolean" value={value} onChange={(name, newVal) => setValue(newVal)} />
+      <BooleanControl name="boolean" value={value} onChange={(newVal) => setValue(newVal)} />
       <p>value: {typeof value === 'boolean' ? value.toString() : value}</p>
     </>
   );
