@@ -17,9 +17,9 @@ Button.stories.js | ts
 
 ### Component Story Format
 
-We define stories according to the Component Story Format (CSF), an ES6 module-based standard that is portable between tools and easy to write. 
+We define stories according to the [Component Story Format](../formats/component-story-format) (CSF), an ES6 module-based standard that is portable between tools and easy to write. 
 
-The key ingredients are the **`default` export** that describes the component, and **named exports** that describe the stories.
+The key ingredients are the [**`default` export**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export#Using_the_default_export) that describes the component, and [**named exports**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export#Using_named_exports) that describe the stories.
 
 #### Default export
 
@@ -87,7 +87,7 @@ Tertiary.args = {  ...Primary.args,  label: '📚📕📈🤓',};
 
 The template is reused across stories. Template.bind({}) makes a copy of the function which reduces code duplication. Similarly,`...Primary.args` makes a copy of the data, reducing data duplication.
 
-What’s more, you can import args to reuse when writing stories for other components. This is useful when you’re building composite components. For example, if we make a `ButtonGroup`component, we might remix two `Button` stories.
+What’s more, you can import args to reuse when writing stories for other components. This is useful when you’re building composite components. For example, if we make a `ButtonGroup` story, we might remix two stories from its child component `Button`.
 
 ```js
 // ButtonGroup.stories.js

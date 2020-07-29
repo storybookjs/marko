@@ -34,7 +34,7 @@ We can set the parameters for all stories of a component using the `parameters` 
 import Button from './';
 
 export default {
-  title: “Button”,
+  title: "Button",
   component: Button,
   parameters: {
     backgrounds: {

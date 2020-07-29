@@ -32,11 +32,11 @@ Some libraries require components higher up in the component hierarchy to render
 
 import { ThemeProvider } from 'styled-components';
 export const decorators = [
-  (Story) => <ThemeProvider theme=”default”><Story/></ThemeProvider>,
+  (Story) => <ThemeProvider theme="default"><Story/></ThemeProvider>,
 ];
 ```
 
-In the example above, the theme is hardcoded to a mock value of `”default”` but you may want to vary that value, either on a per-story basis (if it is data you are mocking that is relevant to the other args of the story) or in a user controlled way (for instance to provide a theme switcher).
+In the example above, the theme is hardcoded to a mock value of `default` but you may want to vary that value, either on a per-story basis (if it is data you are mocking that is relevant to the other args of the story) or in a user controlled way (for instance to provide a theme switcher).
 
 The second argument to a decorator function is the **story context** which in particular contains the keys:
 
@@ -47,7 +47,7 @@ The second argument to a decorator function is the **story context** which in pa
 
 #### Using decorators to provide data
 
-If your components are [“connected”] and require side-loaded data to render, you can use decorators to provide that data in a mocked way, without having to refactor your components to take that data as an arg. There are several techniques to achieve this, depending on exactly how you are loading that data -- read more in the [building pages in Storybook](../workflows/build-pages-with-storybook) section.
+If your components are “connected” and require side-loaded data to render, you can use decorators to provide that data in a mocked way, without having to refactor your components to take that data as an arg. There are several techniques to achieve this, depending on exactly how you are loading that data -- read more in the [building pages in Storybook](../workflows/build-pages-with-storybook) section.
 
 ### Story decorators
 

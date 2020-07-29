@@ -19,7 +19,7 @@ Yields this:
 
 ### Grouping
 
-It is also possible to group related components in an expandable interface in order to help with Storybook organization. To do so, use the `’/’` as a separator:
+It is also possible to group related components in an expandable interface in order to help with Storybook organization. To do so, use the `/` as a separator:
 
 ```js
 // Button.stories.js
