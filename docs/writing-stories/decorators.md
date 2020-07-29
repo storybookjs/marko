@@ -82,7 +82,7 @@ We can also set a decorator for **all stories** via the `decorators` export of y
 export const decorators = [(Story) => <div style={{ margin: '3em' }}><Story/></div>]
 ```
 
-### Decorator Inheritance
+### Decorator inheritance
 
 Like parameters, decorators can be defined globally, at the component level and for a single story (as we’ve seen).
 

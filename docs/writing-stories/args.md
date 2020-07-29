@@ -76,7 +76,11 @@ Secondary.args = {
 }
 ```
 
-> Note that if you are doing the above often, you may want to consider using [component-level args](#component-args).
+<div class=".aside">
+
+Note that if you are doing the above often, you may want to consider using [component-level args](#component-args).
+
+</div>
 
 Args are useful when writing stories for composite components that are assembled from other components. Composite components often pass their arguments unchanged to their child components, and similarly their stories can be compositions of their child components stories. With args, you can directly compose the arguments:
 
@@ -124,6 +128,7 @@ LoggedIn.args = {
  
 <details>
 <summary>parameters.passArgsFirst</summary>
+
   In Storybook 6+, we pass the args as the first argument to the story function. The second argument is the “context” which contains things like the story parameters etc.
 
   In Storybook 5 and before we passed the context as the first argument. If you’d like to revert to that functionality set the `parameters.passArgsFirst` parameter in [`.storybook/preview.js`](../configure/overview#configure-story-rendering):
@@ -132,5 +137,9 @@ LoggedIn.args = {
   export const parameter = { passArgsFirst : false }.
   ```
 
-  > Note that `args` is still available as a key on the context.
+  <div class=".aside">
+  
+  Note that `args` is still available as a key on the context.
+  
+  </div>
 </details>
