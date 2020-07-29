@@ -196,10 +196,7 @@ const useFiltered = (dataset: DataSet, filter: string, parents: Item[], storyId:
 
 export const useDataset = (storiesHash: DataSet = {}, filter: string, storyId: string) => {
   const dataset = useMemo(() => {
-    // protect against mutation
-    const copy = clone(storiesHash);
-
-    return DOCS_MODE ? collapseAllStories(copy) : collapseDocsOnlyStories(copy);
+    return DOCS_MODE ? collapseAllStories(storiesHash) : collapseDocsOnlyStories(storiesHash);
   }, [DOCS_MODE, storiesHash]);
 
   const emptyInitial = useMemo(
@@ -209,14 +206,15 @@ export const useDataset = (storiesHash: DataSet = {}, filter: string, storyId: s
     }),
     []
   );
-  const datasetKeys = Object.keys(dataset);
+  const datasetKeys = useMemo(() => Object.keys(dataset), [dataset]);
   const initial = useMemo(() => {
     if (datasetKeys.length) {
       return Object.keys(dataset).reduce(
-        (acc, k) => ({
-          filtered: { ...acc.filtered, [k]: true },
-          unfiltered: { ...acc.unfiltered, [k]: false },
-        }),
+        (acc, k) => {
+          acc.filtered[k] = true;
+          acc.unfiltered[k] = false;
+          return acc;
+        },
         { filtered: {} as BooleanSet, unfiltered: {} as BooleanSet }
       );
     }
@@ -254,8 +252,8 @@ export const useDataset = (storiesHash: DataSet = {}, filter: string, storyId: s
       getMains(filteredSet).reduce(
         (acc, item) => {
           return isRootFn(item)
-            ? { ...acc, roots: [...acc.roots, item] }
-            : { ...acc, others: [...acc.others, item] };
+            ? Object.assign(acc, { roots: [...acc.roots, item] })
+            : Object.assign(acc, { others: [...acc.others, item] });
         },
         { roots: [] as Item[], others: [] as Item[] }
       ),
