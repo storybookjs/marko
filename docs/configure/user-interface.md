@@ -188,9 +188,14 @@ To style these elements, insert style tags into:
 - For Storybook’s UI, use `.storybook/manager-head.html`
 - For Storybook Docs, use `.storybook/preview-head.html`
 
-> Similar to changing the preview’s head tag, `.storybook/manager-head.html` allows you to inject code into the manager side, which can be useful to adding styles for your theme that target Storybook’s HTML.
+<div class=".aside">
 
-> WARNING: we don’t make any guarantees about the structure of Storybook’s HTML and it could change at any time. Consider yourself warned!
+Similar to changing the preview’s head tag, `.storybook/manager-head.html` allows you to inject code into the manager side, which can be useful to adding styles for your theme that target Storybook’s HTML.
+
+WARNING: we don’t make any guarantees about the structure of Storybook’s HTML and it could change at any time. Consider yourself warned!
+
+</div> 
+
 
 ### MDX component overrides
 
@@ -277,10 +282,6 @@ A key strength of Storybook is its extensibility. Use addons to extend and custo
 Addons are integral to the way Storybook works. Many of Storybook's core features are implemented as addons! These addons are installed out of the box with [essentials](../essentials). 
 
 #### Addon features
-
-<div>
-todo:vet links here
-</div>
 
 The most obvious thing addons affect in Storybook is the UI of Storybook itself. Within the UI the **toolbar** and **addons panel** are the two chief places addons will appear. 
 
@@ -385,7 +386,11 @@ console.log(process.env.STORYBOOK_DATA_KEY);
 
 You can also access these variables in your custom `<head>`/`<body>` (see below) using the substitution `%STORYBOOK_X%`, for example: `%STORYBOOK_THEME%` will become `red`.
 
-> If using the environment variables as attributes or values in JavaScript, you may need to add quotes, as the value will be inserted directly. e.g. `<link rel="stylesheet" href="%STORYBOOK_STYLE_URL%" />`
+<div class=".aside">
+
+If using the environment variables as attributes or values in JavaScript, you may need to add quotes, as the value will be inserted directly. e.g. `<link rel="stylesheet" href="%STORYBOOK_STYLE_URL%" />`
+
+</div>
 
 You can also pass these environment variables when you are [building your Storybook](/basics/exporting-storybook) with `build-storybook`.
 Then they'll be hard coded to the static version of your Storybook.

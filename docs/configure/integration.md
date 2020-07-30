@@ -4,7 +4,7 @@ title: 'Integration'
 
 ### Webpack
 
-Storybook displays your components in a custom web application built using [Webpack](https://webpack.js.org/). Webpack is a complex tool but our default configuration is intended to cover off the majority of use cases. There are also [addons](/addons) available that extend the configuration for other common use cases.
+Storybook displays your components in a custom web application built using [webpack](https://webpack.js.org/). Webpack is a complex tool but our default configuration is intended to cover off the majority of use cases. There are also [addons](/addons) available that extend the configuration for other common use cases.
 
 You can customize Storybook's webpack setup by providing a `webpackFinal` field in [`.storybook/main.js`](./overview#configure-your-storybook-project) file.
 
@@ -93,7 +93,7 @@ Finally, if your custom webpack config uses a loader that does not explicitly in
 
 If you're using a non-standard Storybook config directory, you should put `main.js` there instead of `.storybook` and update the `include` path to make sure that it resolves to your project root.
 
-#### Using Your Existing Config
+#### Using your existing config
 
 If you have an existing webpack config for your project and want to reuse this app's configuration, you can import your main webpack config into Storybook's [`.storybook/main.js`](./overview#configure-story-rendering) and merge both:
 
@@ -191,7 +191,7 @@ CSS-in-JS libraries are designed to use basic JavaScript. They often work in Sto
 
 If your component files import their own CSS, Storybook’s webpack config will work unmodified with some exceptions:
 
-- If you are using a CSS precompiler, you may need to add a preset (such as the [SCSS preset](https://github.com/storybookjs/presets/tree/master/packages/preset-scss), or add a loader to Storybook’s Webpack config).
+- If you are using a CSS precompiler, you may need to add a preset (such as the [SCSS preset](https://github.com/storybookjs/presets/tree/master/packages/preset-scss), or add a loader to Storybook’s webpack config).
 - In Angular, you'll need to take special care how you handle CSS:
     - Either [customize your webpack config](#extending-storybooks-webpack-config)
     - Or use syntax to use a inline loader:
@@ -212,7 +212,7 @@ Components often rely on images, videos, and other assets to render as the user 
 
 #### Import assets into stories
 
-You can import any media assets by importing (or requiring) them. This works out of the box with our default config. But, if you are using a custom Webpack config, you’ll need to add the file-loader to handle the required files.
+You can import any media assets by importing (or requiring) them. This works out of the box with our default config. But, if you are using a custom webpack config, you’ll need to add the file-loader to handle the required files.
 
 Afterwards you can use any asset in your stories:
 

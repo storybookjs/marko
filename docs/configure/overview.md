@@ -4,7 +4,11 @@ title: 'Overview'
 
 Storybook is configured via a folder, called `.storybook` which contains various configuration files. 
 
-> Note you can change the folder that Storybook uses by setting the `-c` flag to your `start-storybook` and `build-storybook` scripts.
+<div class=".aside">
+
+Note you can change the folder that Storybook uses by setting the `-c` flag to your `start-storybook` and `build-storybook` scripts.
+
+</div>
 
 
 ### Configure your Storybook project
