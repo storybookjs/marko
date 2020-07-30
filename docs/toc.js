@@ -22,15 +22,16 @@ module.exports = {
       pages: ['introduction', 'docs-page', 'mdx', 'doc-blocks'],
     },
     {
-      title: 'Configure',
-      prefix: 'configure',
-      pages: ['overview', 'integration', 'story-rendering', 'user-interface'],
-
-
       title: 'Essentials',
       prefix:'essentials',
       pages:['introduction','controls','actions','viewports','backgrounds','toolbars-and-globals']
     },
+    {
+      title: 'Configure',
+      prefix: 'configure',
+      pages: ['overview', 'integration', 'story-rendering', 'user-interface'],
+    },
+    {
       title:'Workflows',
       prefix:'workflows',
       pages:[
@@ -44,8 +45,13 @@ module.exports = {
         'snapshot-testing',
         'storybook-composition',
         'package-composition'
-
       ]
-    }
+    },
+    {
+
+      title: 'API',
+      prefix:'api',
+      pages:['stories','addons','new-frameworks','cli-options','frameworks-feature-support']
+    },
   ],
 };

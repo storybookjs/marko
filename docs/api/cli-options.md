@@ -1,0 +1,50 @@
+---
+title: 'CLI options'
+---
+
+Storybook comes with two CLI utilities: `start-storybook` and `build-storybook`.
+
+You can pass these commands the following options to alter Storybook's behavior.
+
+## For start-storybook
+
+```plaintext
+Usage: start-storybook [options]
+
+Options:
+
+--help                        output usage information
+-V, --version                 output the version number
+-p, --port [number]           Port to run Storybook
+-h, --host [string]           Host to run Storybook
+-s, --static-dir <dir-names>  Directory where to load static files from, comma-separated list
+-c, --config-dir [dir-name]   Directory where to load Storybook configurations from
+--https                       Serve Storybook over HTTPS. Note: You must provide your own certificate information.
+--ssl-ca <ca>                 Provide an SSL certificate authority. (Optional with --https, required if using a self-signed certificate)
+--ssl-cert <cert>             Provide an SSL certificate. (Required with --https)
+--ssl-key <key>               Provide an SSL key. (Required with --https)
+--smoke-test                  Exit after successful start
+--ci                          CI mode (skip interactive prompts, don't open browser)
+--quiet                       Suppress verbose build output
+--no-dll                      Do not use dll reference
+--debug-webpack               Display final webpack configurations for debugging purposes
+```
+
+## For build-storybook
+
+```plaintext
+Usage: build-storybook [options]
+
+Options:
+
+-h, --help                    output usage information
+-V, --version                 output the version number
+-s, --static-dir <dir-names>  Directory where to load static files from, comma-separated list
+-o, --output-dir [dir-name]   Directory where to store built files
+-c, --config-dir [dir-name]   Directory where to load Storybook configurations from
+-w, --watch                   Enable watch mode
+--loglevel [level]            Control level of logging during build. Can be one of: [silly, verbose, info (default), warn, error, silent]
+--quiet                       Suppress verbose build output
+--no-dll                      Do not use dll reference
+--debug-webpack               Display final webpack configurations for debugging purposes
+```
