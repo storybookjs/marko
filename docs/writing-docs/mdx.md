@@ -208,7 +208,7 @@ To get a "documentation-only story", in your UI, define a `<Meta>` as you normal
 
 Unless you use a custom [webpack configuration](../configure/integration#extending-storybooks-webpack-config), all of your MDX files should have the suffix `*.stories.mdx`. This tells Storybook to apply its special processing to the `<Meta>` and `<Story>` elements in the file.
 
-<div class=".aside">
+<div class="aside">
 
 Be sure to update [.storybook/main.js](../configure/overview#configure-story-rendering) file to load `.stories.mdx` stories, as per the addon-docs installation instructions.
 

@@ -56,7 +56,7 @@ ArgsTables are rendered from an internal data structure called [ArgTypes](../api
 
 You can customize what's shown in the ArgsTable by customizing the ArgTypes data. This is currently available for [DocsPage](./docs-page) and `<Props story="xxx">` construct, but not for the `<Props of={component} />` construct.
 
-<div class=".aside">
+<div class="aside">
 
 NOTE: This API is experimental and may change outside of the typical semver release cycle
 
