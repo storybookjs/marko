@@ -10,7 +10,11 @@ Storybook's Component Story Format (CSF) is the recommended way to [write storie
 TODO: add advanced readme link added needs to be vetted
 </div>
 
-> If you are writing stories in the older `storiesOf()` syntax, you can find documentation in an [advanced README].
+<div class="aside"
+
+If you are writing stories in the older `storiesOf()` syntax, you can find documentation in an [advanced README].
+
+</div>
 
 In CSF, stories and component metadata are defined as ES Modules. Every component story file consists of a required **default export** and one or more **named exports**.
 
@@ -125,7 +129,7 @@ Not only are these versions shorter and easier to write than their no-args count
 
 For more information on setting up [Docs](../writing-docs/introduction) and [Actions](../essentials/actions), see their respective documentation.
 
-#### Storybook Export vs Name Handling
+#### Storybook export vs name handling
 
 Storybook handles named exports and `story.name` slightly differently. When should you use one vs. the other?
 
@@ -196,11 +200,11 @@ For this specific example the equivalent result can be achieved in a few ways de
 
 ### MDX format
 
-`MDX` is the syntax [Storybook Docs](../writing-docs/introduction) uses to capture long-form markdown documentation and stories in one file. You can also write pure documentation pages in `MDX` and add them to Storybook alongside your stories. [Read the announcement](https://medium.com/storybookjs/rich-docs-with-storybook-mdx-61bc145ae7bc) to learn more about how and why it came to be.
+`MDX` is the syntax [Storybook Docs](../writing-docs/introduction) uses to capture long-form Markdown documentation and stories in one file. You can also write pure documentation pages in `MDX` and add them to Storybook alongside your stories. [Read the announcement](https://medium.com/storybookjs/rich-docs-with-storybook-mdx-61bc145ae7bc) to learn more about how and why it came to be.
 
 #### Basic example
 
-Let's get started with an example that combines markdown with a single story:
+Let's get started with an example that combines Markdown with a single story:
 
 ```js
 import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
@@ -210,8 +214,7 @@ import { Checkbox } from './Checkbox';
 
 # Checkbox
 
-With `MDX` we can define a story for `Checkbox` right in the middle of our
-markdown documentation.
+With `MDX` we can define a story for `Checkbox` right in the middle of our Markdown documentation.
 
 <Preview>
   <Story name="all checkboxes">
@@ -325,12 +328,12 @@ TODO: VET THIS IMAGE.
 
 Suppose you have an existing story and want to embed it into your docs. Here's how to show a story with ID `some--id` (check the browser URL in Storybook v5+ to see a story's ID):
 
-```md
+```js
 import { Story } from "@storybook/addon-docs/blocks";
 
 # Some header
 
-And markdown here
+And Markdown here
 
 <Story id="some--id" />
 ```
@@ -389,7 +392,11 @@ Be sure to update your Storybook config file to load `.stories.mdx` stories, as 
 
 ### ArgTypes
 
-> NOTE: This API is experimental and may change outside of the typical semver release cycle
+<div class="aside">
+
+NOTE: This API is experimental and may change outside of the typical semver release cycle
+
+<div>
 
 <div style="background-color:#F8FAFC">
 TODO: props table link needs to be vetted.
@@ -445,10 +452,13 @@ const argTypes = {
 
 In this ArgTypes data structure, name, type, defaultValue, and description are standard fields in all ArgTypes (analogous to PropTypes in React). The table and control fields are addon-specific annotations. So, for example, the table annotation provides extra information to customize how label gets rendered, and the control annotation provides extra information for the control for editing the property.
 
-> NOTE: @storybook/addon-docs provide shorthand for common tasks:
-> type: 'number' is shorthand for type: { name: 'number' }
-> control: 'radio' is shorthand for control: { type: 'radio' }
+<div class="aside">
 
+ `@storybook/addon-docs` provide shorthand for common tasks:
+- `type: 'number'` is shorthand for type: { name: 'number' }
+- `control: 'radio'` is shorthand for control: { type: 'radio' }
+
+<div>
 
 #### Manual specification
 

@@ -68,9 +68,6 @@ export default {
   frameworkPresets: [require.resolve('./framework-preset-vue.js')],
 };
 ```
-<div style="background-color:#F8FAFC">
-TODO: VET Storybook presets, REACT, VUE,WEB COMPONENTS links below
-</div>
 
 The value of the `framework` option (in this case ‘vue’) is something that gets passed to addons and allows them to do special case things for your framework.
 
@@ -157,7 +154,7 @@ The globals file typically sets up a single global variable that client-side cod
 
 ```js
 import { window } from 'global';
-window.STORYBOOK_ENV = ‘vue’;
+window.STORYBOOK_ENV = 'vue';
 ```
 
 The `start` function abstracts all of Storybook’s framework-independent client-side (browser) code, and it takes the render function we defined above. For examples of render functions, see [React](https://github.com/storybookjs/storybook/blob/next/app/react/src/client/preview/render.tsx), [Vue](https://github.com/storybookjs/storybook/blob/next/app/vue/src/client/preview/render.ts),[Angular](https://github.com/storybookjs/storybook/blob/next/app/angular/src/client/preview/render.ts) [Web-components](https://github.com/storybookjs/storybook/blob/next/app/web-components/src/client/preview/render.ts) in the Storybook monorepo.

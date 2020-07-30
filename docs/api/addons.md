@@ -112,6 +112,7 @@ module.exports = {
   addons: ['path/to/register.js']
 }
 ```
+
 The path can be an absolute location on your file system, or a path relative to your `.storybook` directory (e.g. `./my-addon/register.js` if you defined the addon inside your `.storybook` folder).
 
 If you get an error similar to:
@@ -126,6 +127,7 @@ You may need an appropriate loader to handle this file type.
      }
    }]);
 ```
+
 It is likely because you do not have a `.babelrc` file or do not have it configured with the correct presets:
 
 ```json
