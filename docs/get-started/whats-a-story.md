@@ -46,8 +46,11 @@ Both story examples render the same thing because Storybook feeds the given `arg
 - `Button`s callbacks are logged into the Actions tab. Click to try it.
 - `Button`s arguments are dynamically editable in the Controls tab. Adjust the controls
 
->  Note that `Template.bind({})` is a standard JavaScript technique for making a copy of a function. We copy the `Template` so each exported story can set its own properties on it.
+<div class="aside">
 
+Note that `Template.bind({})` is a standard JavaScript technique for making a copy of a function. We copy the `Template` so each exported story can set its own properties on it.
+
+</div>
 
 ### Edit a story
 
