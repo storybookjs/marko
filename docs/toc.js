@@ -22,6 +22,11 @@ module.exports = {
       pages: ['introduction', 'docs-page', 'mdx', 'doc-blocks'],
     },
     {
+
+      title: 'Essentials',
+      prefix:'essentials',
+      pages:['introduction','controls','actions','viewports','backgrounds','toolbars-and-globals']
+    },
       title:'Workflows',
       prefix:'workflows',
       pages:[
