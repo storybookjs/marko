@@ -612,9 +612,7 @@ export default class StoryStore {
     return Array.from(new Set(this.raw().map((s) => s.kind)));
   }
 
-  getStoriesForKind(kind: string) {
-    return this.raw().filter((story) => story.kind === kind);
-  }
+  getStoriesForKind = (kind: string) => this.raw().filter((story) => story.kind === kind);
 
   getRawStory(kind: string, name: string) {
     return this.getStoriesForKind(kind).find((s) => s.name === name);
