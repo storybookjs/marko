@@ -1,6 +1,7 @@
 import React, { ComponentProps, FunctionComponent, MouseEvent, useState } from 'react';
+import { logger } from '@storybook/client-logger';
 import { styled } from '@storybook/theming';
-import { document, window } from 'global';
+import { navigator, window } from 'global';
 import memoize from 'memoizerific';
 
 import jsx from 'react-syntax-highlighter/dist/cjs/languages/prism/jsx';
@@ -127,20 +128,14 @@ export const SyntaxHighlighter: FunctionComponent<Props> = ({
 
   const onClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const tmp = document.createElement('TEXTAREA');
-    const focus = document.activeElement;
 
-    tmp.value = children;
-
-    document.body.appendChild(tmp);
-    tmp.select();
-    document.execCommand('copy');
-    document.body.removeChild(tmp);
-    focus.focus();
-
-    setCopied(true);
-
-    window.setTimeout(() => setCopied(false), 1500);
+    navigator.clipboard
+      .writeText(children)
+      .then(() => {
+        setCopied(true);
+        window.setTimeout(() => setCopied(false), 1500);
+      })
+      .catch(logger.error);
   };
 
   return children ? (

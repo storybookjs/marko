@@ -17,7 +17,7 @@ When you install [Storybook Docs](../README.md), `DocsPage` is the zero-config d
 
 ## Motivation
 
-`DocsPage` is the successor to [`addon-info`](https://github.com/storybookjs/storybook/tree/next/addons/info), which was one of the most popular Storybook addons despite many limitations.
+`DocsPage` is the successor to [`addon-info`](https://github.com/storybookjs/deprecated-addons/tree/master/addons/info), which was one of the most popular Storybook addons despite many limitations.
 
 Like `addon-info`, `DocsPage` provides sensible defaults, meaning it adds documentation to your existing Storybook without requiring any additional work on your part.
 

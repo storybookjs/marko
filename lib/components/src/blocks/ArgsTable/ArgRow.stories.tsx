@@ -7,7 +7,6 @@ import { ResetWrapper } from '../../typography/DocumentFormatting';
 export default {
   component: ArgRow,
   title: 'Docs/ArgRow',
-  excludeStories: /.*Type$/,
   decorators: [
     (getStory) => (
       <ResetWrapper>
@@ -19,157 +18,278 @@ export default {
   ],
 };
 
-export const stringType = {
-  name: 'someString',
-  description: 'someString description',
-  type: { required: true },
-  control: { type: 'text' },
-  table: {
-    type: { summary: 'string' },
-    defaultValue: { summary: 'fixme' },
-  },
-};
+const Template = (args) => <ArgRow {...args} />;
 
-export const longNameType = {
-  ...stringType,
-  name: 'reallyLongStringThatTakesUpSpace',
-};
-
-export const longDescType = {
-  ...stringType,
-  description: 'really long description that takes up a lot of space. sometimes this happens.',
-};
-
-export const numberType = {
-  name: 'someNumber',
-  description: 'someNumber description',
-  type: { required: false },
-  table: {
-    type: { summary: 'number' },
-    defaultValue: { summary: '0' },
-  },
-};
-
-export const objectType = {
-  name: 'someObject',
-  description: 'A simple `objectOf` propType.',
-  table: {
-    type: { summary: 'objectOf(number)' },
-    defaultValue: { summary: '{ key: 1 }' },
-  },
-};
-
-export const arrayType = {
-  name: 'someArray',
-  description: 'array of a certain type',
-  table: {
-    type: { summary: 'number[]' },
-    defaultValue: { summary: '[1, 2, 3]' },
-  },
-};
-
-export const complexType = {
-  name: 'someComplex',
-  description: 'A very complex `objectOf` propType.',
-  table: {
-    type: {
-      summary: 'object',
-      detail: `[{
-    id: number,
-    func: func,
-    arr: [{ index: number }]
-  }]`,
-    },
-    defaultValue: {
-      summary: 'object',
-      detail: `[{
-    id: 1,
-    func: () => {},
-    arr: [{ index: 1 }]
-  }]`,
-    },
-  },
-};
-
-export const funcType = {
-  name: 'concat',
-  description: 'concat 2 string values.',
-  type: { required: true },
-  table: {
-    type: { summary: '(a: string, b: string) => string' },
-    defaultValue: { summary: 'func', detail: '(a, b) => { return a + b; }' },
-    jsDocTags: {
-      params: [
-        { name: 'a', description: 'The first string' },
-        { name: 'b', description: 'The second string' },
-      ],
-      returns: { description: 'The concatenation of both strings' },
-    },
-  },
-};
-
-export const markdownType = {
-  name: 'someString',
-  description:
-    'A `prop` can *support* __markdown__ syntax. This was ship in ~~5.2~~ 5.3. [Find more info in the storybook docs.](https://storybook.js.org/)',
-  table: {
-    type: { summary: 'string' },
-  },
-};
-
-const withArgs = {
-  arg: 'string value',
+const baseArgs = {
   updateArgs: action('updateArgs'),
 };
 
-export const String = (args) => <ArgRow {...args} />;
+export const String = Template.bind({});
 String.args = {
-  row: stringType,
+  ...baseArgs,
+  row: {
+    key: 'someString',
+    name: 'Some String',
+    description: 'someString description',
+    type: { required: true },
+    control: { type: 'text' },
+    table: {
+      type: { summary: 'string' },
+      defaultValue: { summary: 'fixme' },
+    },
+  },
 };
-export const LongName = (args) => <ArgRow {...args} />;
+
+export const LongName = Template.bind({});
 LongName.args = {
-  row: longNameType,
+  ...baseArgs,
+  row: {
+    ...String.args.row,
+    name: 'Really Long String That Takes Up Space',
+  },
 };
-export const LongDesc = (args) => <ArgRow {...args} />;
+
+export const LongDesc = Template.bind({});
 LongDesc.args = {
-  row: longDescType,
+  ...baseArgs,
+  row: {
+    ...String.args.row,
+    description: 'really long description that takes up a lot of space. sometimes this happens.',
+  },
 };
-export const Number = (args) => <ArgRow {...args} />;
+
+export const Boolean = Template.bind({});
+Boolean.args = {
+  ...baseArgs,
+  row: {
+    key: 'someBoolean',
+    name: 'Some Boolean',
+    description: 'someBoolean description',
+    type: { required: true },
+    control: { type: 'boolean' },
+    table: {
+      type: { summary: 'string' },
+      defaultValue: { summary: 'fixme' },
+    },
+  },
+};
+
+export const Color = Template.bind({});
+Color.args = {
+  ...baseArgs,
+  row: {
+    key: 'someColor',
+    name: 'Some Color',
+    type: { name: 'string' },
+    description: 'someColor description',
+    defaultValue: '#ff0',
+    control: { type: 'color' },
+  },
+};
+
+export const Date = Template.bind({});
+Date.args = {
+  ...baseArgs,
+  row: {
+    key: 'someDate',
+    name: 'Some Date',
+    type: { name: 'string' },
+    description: 'someDate description',
+    control: { type: 'date' },
+  },
+};
+
+export const Number = Template.bind({});
 Number.args = {
-  row: numberType,
+  ...baseArgs,
+  row: {
+    key: 'someNumber',
+    name: 'Some Number',
+    description: 'someNumber description',
+    type: { required: false },
+    table: {
+      type: { summary: 'number' },
+      defaultValue: { summary: '0' },
+    },
+    control: { type: 'number' },
+  },
 };
-export const ObjectOf = (args) => <ArgRow {...args} />;
+
+export const Range = Template.bind({});
+Range.args = {
+  ...baseArgs,
+  row: {
+    ...Number.args.row,
+    control: { type: 'range' },
+  },
+};
+
+export const Radio = Template.bind({});
+Radio.args = {
+  ...baseArgs,
+  row: {
+    key: 'someEnum',
+    name: 'Some Enum',
+    description: 'someEnum description',
+    control: { type: 'radio', options: ['a', 'b', 'c'] },
+  },
+};
+
+export const InlineRadio = Template.bind({});
+InlineRadio.args = {
+  ...baseArgs,
+  row: {
+    ...Radio.args.row,
+    control: { ...Radio.args.row.control, type: 'inline-radio' },
+  },
+};
+
+export const Check = Template.bind({});
+Check.args = {
+  ...baseArgs,
+  row: {
+    ...Radio.args.row,
+    control: { ...Radio.args.row.control, type: 'check' },
+  },
+};
+
+export const InlineCheck = Template.bind({});
+InlineCheck.args = {
+  ...baseArgs,
+  row: {
+    ...Radio.args.row,
+    control: { ...Radio.args.row.control, type: 'inline-check' },
+  },
+};
+
+export const Select = Template.bind({});
+Select.args = {
+  ...baseArgs,
+  row: {
+    ...Radio.args.row,
+    control: { ...Radio.args.row.control, type: 'select' },
+  },
+};
+
+export const MultiSelect = Template.bind({});
+MultiSelect.args = {
+  ...baseArgs,
+  row: {
+    ...Radio.args.row,
+    control: { ...Radio.args.row.control, type: 'multi-select' },
+  },
+};
+
+export const ObjectOf = Template.bind({});
 ObjectOf.args = {
-  row: objectType,
+  ...baseArgs,
+  row: {
+    key: 'someObject',
+    name: 'Some Object',
+    description: 'A simple `objectOf` propType.',
+    table: {
+      type: { summary: 'objectOf(number)' },
+      defaultValue: { summary: '{ key: 1 }' },
+    },
+    control: { type: 'object' },
+  },
 };
-export const ArrayOf = (args) => <ArgRow {...args} />;
+
+export const ArrayOf = Template.bind({});
 ArrayOf.args = {
-  row: arrayType,
+  ...baseArgs,
+  row: {
+    key: 'someArray',
+    name: 'Some Array',
+    description: 'array of a certain type',
+    table: {
+      type: { summary: 'number[]' },
+      defaultValue: { summary: '[1, 2, 3]' },
+    },
+    control: { type: 'array' },
+  },
 };
-export const ComplexObject = (args) => <ArgRow {...args} />;
+
+export const ComplexObject = Template.bind({});
 ComplexObject.args = {
-  row: complexType,
+  ...baseArgs,
+  row: {
+    key: 'someComplex',
+    name: 'Some Complex',
+    description: 'A very complex `objectOf` propType.',
+    table: {
+      type: {
+        summary: 'object',
+        detail: `[{
+      id: number,
+      func: func,
+      arr: [{ index: number }]
+    }]`,
+      },
+      defaultValue: {
+        summary: 'object',
+        detail: `[{
+      id: 1,
+      func: () => {},
+      arr: [{ index: 1 }]
+    }]`,
+      },
+    },
+    control: { type: 'object' },
+  },
 };
-export const Func = (args) => <ArgRow {...args} />;
+
+export const Func = Template.bind({});
 Func.args = {
-  row: funcType,
+  ...baseArgs,
+  row: {
+    key: 'concat',
+    name: 'Concat',
+    description: 'concat 2 string values.',
+    type: { required: true },
+    table: {
+      type: { summary: '(a: string, b: string) => string' },
+      defaultValue: { summary: 'func', detail: '(a, b) => { return a + b; }' },
+      jsDocTags: {
+        params: [
+          { name: 'a', description: 'The first string' },
+          { name: 'b', description: 'The second string' },
+        ],
+        returns: { description: 'The concatenation of both strings' },
+      },
+    },
+    control: false,
+  },
 };
-export const Markdown = (args) => <ArgRow {...args} />;
+
+export const Markdown = Template.bind({});
 Markdown.args = {
-  row: markdownType,
+  ...baseArgs,
+  row: {
+    key: 'someString',
+    name: 'Some String',
+    description:
+      'A `prop` can *support* __markdown__ syntax. This was ship in ~~5.2~~ 5.3. [Find more info in the storybook docs.](https://storybook.js.org/)',
+    table: {
+      type: { summary: 'string' },
+    },
+    control: { type: 'text' },
+  },
 };
-export const StringCompact = (args) => <ArgRow {...args} />;
+
+export const StringCompact = Template.bind({});
 StringCompact.args = {
   ...String.args,
   compact: true,
 };
-export const Args = (args) => <ArgRow {...args} />;
-Args.args = {
-  ...String.args,
-  ...withArgs,
+
+export const StringNoControls = Template.bind({});
+StringNoControls.args = {
+  row: String.args.row,
 };
-export const ArgsCompact = (args) => <ArgRow {...args} />;
-ArgsCompact.args = {
-  ...Args.args,
+
+export const StringNoControlsCompact = Template.bind({});
+StringNoControlsCompact.args = {
+  row: String.args.row,
   compact: true,
 };

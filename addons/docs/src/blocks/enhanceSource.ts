@@ -11,14 +11,20 @@ interface StorySource {
   locationsMap: { [id: string]: { startBody: Location; endBody: Location } };
 }
 
+/**
+ * Replaces full story id name like: story-kind--story-name -> story-name
+ * @param id
+ */
+const storyIdToSanitizedStoryName = (id: string) => id.replace(/^.*?--/, '');
+
 const extract = (targetId: string, { source, locationsMap }: StorySource) => {
   if (!locationsMap) {
     return source;
   }
-  const location = locationsMap[targetId];
 
-  // FIXME: bad locationsMap generated for module export functions whose titles are overridden
-  if (!location) return null;
+  const sanitizedStoryName = storyIdToSanitizedStoryName(targetId);
+  const location = locationsMap[sanitizedStoryName];
+
   const { startBody: start, endBody: end } = location;
   const lines = source.split('\n');
   if (start.line === end.line && lines[start.line - 1] !== undefined) {

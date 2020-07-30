@@ -6,9 +6,11 @@ export const selectedKey = (value: any, options: OptionsObject) => {
 };
 
 export const selectedKeys = (value: any[], options: OptionsObject) =>
-  Object.entries(options)
-    .filter((entry) => value.includes(entry[1]))
-    .map((entry) => entry[0]);
+  value
+    ? Object.entries(options)
+        .filter((entry) => value.includes(entry[1]))
+        .map((entry) => entry[0])
+    : [];
 
 export const selectedValues = (keys: string[], options: OptionsObject) =>
   keys.map((key) => options[key]);

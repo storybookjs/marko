@@ -16,6 +16,7 @@ beforeEach(() => {
     hot: {
       data: {},
       dispose: (cb: (data: any) => void) => cbs.push(cb),
+      accept: jest.fn(),
     },
   } as unknown) as NodeModule;
 });
@@ -76,7 +77,7 @@ describe('core.preview.loadCsf', () => {
         2: Object.assign(() => 0, { storyName: 'two' }),
       },
     };
-    configure(makeRequireContext(input), mod, 'react');
+    configure('react', makeRequireContext(input), mod);
 
     const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
     expect(mockedStoriesOf).toHaveBeenCalledWith('a', true);
@@ -106,7 +107,7 @@ describe('core.preview.loadCsf', () => {
         __namedExportsOrder: ['w', 'x', 'z', 'y'],
       },
     };
-    configure(makeRequireContext(input), mod, 'react');
+    configure('react', makeRequireContext(input), mod);
 
     const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
     const aApi = mockedStoriesOf.mock.results[0].value;
@@ -129,7 +130,7 @@ describe('core.preview.loadCsf', () => {
         w: () => 0,
       },
     };
-    configure(makeRequireContext(input), mod, 'react');
+    configure('react', makeRequireContext(input), mod);
 
     const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
     const aApi = mockedStoriesOf.mock.results[0].value;
@@ -151,7 +152,7 @@ describe('core.preview.loadCsf', () => {
         w: () => 0,
       },
     };
-    configure(makeRequireContext(input), mod, 'react');
+    configure('react', makeRequireContext(input), mod);
 
     const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
     const aApi = mockedStoriesOf.mock.results[0].value;
@@ -170,7 +171,7 @@ describe('core.preview.loadCsf', () => {
         x: () => 0,
       },
     };
-    configure(makeRequireContext(input), mod, 'react');
+    configure('react', makeRequireContext(input), mod);
 
     const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
     const aApi = mockedStoriesOf.mock.results[0].value;
@@ -189,7 +190,7 @@ describe('core.preview.loadCsf', () => {
         },
       },
     };
-    configure(makeRequireContext(input), mod, 'react');
+    configure('react', makeRequireContext(input), mod);
 
     const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
     const aApi = mockedStoriesOf.mock.results[0].value;
@@ -217,7 +218,7 @@ describe('core.preview.loadCsf', () => {
         x: () => 0,
       },
     };
-    configure(makeRequireContext(input), mod, 'react');
+    configure('react', makeRequireContext(input), mod);
 
     const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
     const aApi = mockedStoriesOf.mock.results[0].value;
@@ -247,7 +248,7 @@ describe('core.preview.loadCsf', () => {
         }),
       },
     };
-    configure(makeRequireContext(input), mod, 'react');
+    configure('react', makeRequireContext(input), mod);
 
     const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
     const aApi = mockedStoriesOf.mock.results[0].value;
@@ -278,7 +279,7 @@ describe('core.preview.loadCsf', () => {
         }),
       },
     };
-    configure(makeRequireContext(input), mod, 'react');
+    configure('react', makeRequireContext(input), mod);
 
     const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
     const aApi = mockedStoriesOf.mock.results[0].value;
@@ -303,7 +304,7 @@ describe('core.preview.loadCsf', () => {
         x: () => 0,
       },
     };
-    configure(makeRequireContext(firstInput), mod, 'react');
+    configure('react', makeRequireContext(firstInput), mod);
 
     // HMR dispose callbacks
     doHMRDispose();
@@ -319,7 +320,7 @@ describe('core.preview.loadCsf', () => {
         x: () => 0,
       },
     };
-    configure(makeRequireContext(secondInput), mod, 'react');
+    configure('react', makeRequireContext(secondInput), mod);
 
     expect(storyStore.removeStoryKind).not.toHaveBeenCalled();
     expect(mockedStoriesOf).toHaveBeenCalledWith('b', true);
@@ -342,7 +343,7 @@ describe('core.preview.loadCsf', () => {
         x: () => 0,
       },
     };
-    configure(makeRequireContext(firstInput), mod, 'react');
+    configure('react', makeRequireContext(firstInput), mod);
 
     // HMR dispose callbacks
     doHMRDispose();
@@ -352,7 +353,7 @@ describe('core.preview.loadCsf', () => {
     const secondInput = {
       a: firstInput.a,
     };
-    configure(makeRequireContext(secondInput), mod, 'react');
+    configure('react', makeRequireContext(secondInput), mod);
 
     expect(storyStore.removeStoryKind).toHaveBeenCalledWith('b');
     expect(mockedStoriesOf).not.toHaveBeenCalled();
@@ -376,7 +377,7 @@ describe('core.preview.loadCsf', () => {
         x: () => 0,
       },
     };
-    configure(makeRequireContext(firstInput), mod, 'react');
+    configure('react', makeRequireContext(firstInput), mod);
 
     // HMR dispose callbacks
     doHMRDispose();
@@ -393,7 +394,7 @@ describe('core.preview.loadCsf', () => {
         y: () => 0,
       },
     };
-    configure(makeRequireContext(secondInput), mod, 'react');
+    configure('react', makeRequireContext(secondInput), mod);
 
     expect(storyStore.removeStoryKind).toHaveBeenCalledTimes(1);
     expect(storyStore.removeStoryKind).toHaveBeenCalledWith('a');
@@ -411,7 +412,7 @@ describe('core.preview.loadCsf', () => {
         // no named exports, will not present a story
       },
     };
-    configure(makeRequireContext(input), mod, 'react');
+    configure('react', makeRequireContext(input), mod);
     expect(logger.warn).toHaveBeenCalled();
   });
 
@@ -426,7 +427,7 @@ describe('core.preview.loadCsf', () => {
         x: () => 0,
       },
     };
-    configure(makeRequireContext(input), mod, 'react');
+    configure('react', makeRequireContext(input), mod);
     expect(logger.warn).not.toHaveBeenCalled();
   });
 });

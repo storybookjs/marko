@@ -25,7 +25,7 @@ function getCommand(watch) {
   }
 
   if (watch) {
-    args.push('-w');
+    args.push('-w', '--preserveWatchOutput');
   }
 
   return `${tsc} ${args.join(' ')} && ${downlevelDts} dist ts3.5/dist`;

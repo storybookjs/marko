@@ -1,10 +1,11 @@
-import React, { FunctionComponent, ReactElement, ReactNode, ReactNodeArray } from 'react';
+import React, { FC, ReactElement, ReactNode, ReactNodeArray, useContext } from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { toId, storyNameFromExport } from '@storybook/csf';
 import { resetComponents } from '@storybook/components/html';
 import { Preview as PurePreview, PreviewProps as PurePreviewProps } from '@storybook/components';
-import { getSourceProps } from './Source';
 import { DocsContext, DocsContextProps } from './DocsContext';
+import { SourceContext, SourceContextProps } from './SourceContainer';
+import { getSourceProps } from './Source';
 
 export enum SourceState {
   OPEN = 'open',
@@ -24,7 +25,8 @@ const getPreviewProps = (
     children,
     ...props
   }: PreviewProps & { children?: ReactNode },
-  { mdxStoryNameToKey, mdxComponentMeta, storyStore }: DocsContextProps
+  docsContext: DocsContextProps,
+  sourceContext: SourceContextProps
 ): PurePreviewProps => {
   if (withSource === SourceState.NONE) {
     return props;
@@ -32,13 +34,14 @@ const getPreviewProps = (
   if (mdxSource) {
     return {
       ...props,
-      withSource: getSourceProps({ code: decodeURI(mdxSource) }, { storyStore }),
+      withSource: getSourceProps({ code: decodeURI(mdxSource) }, docsContext, sourceContext),
     };
   }
   const childArray: ReactNodeArray = Array.isArray(children) ? children : [children];
   const stories = childArray.filter(
     (c: ReactElement) => c.props && (c.props.id || c.props.name)
   ) as ReactElement[];
+  const { mdxComponentMeta, mdxStoryNameToKey } = docsContext;
   const targetIds = stories.map(
     (s) =>
       s.props.id ||
@@ -47,7 +50,7 @@ const getPreviewProps = (
         storyNameFromExport(mdxStoryNameToKey[s.props.name])
       )
   );
-  const sourceProps = getSourceProps({ ids: targetIds }, { storyStore });
+  const sourceProps = getSourceProps({ ids: targetIds }, docsContext, sourceContext);
   return {
     ...props, // pass through columns etc.
     withSource: sourceProps,
@@ -55,15 +58,14 @@ const getPreviewProps = (
   };
 };
 
-export const Preview: FunctionComponent<PreviewProps> = (props) => (
-  <DocsContext.Consumer>
-    {(context) => {
-      const previewProps = getPreviewProps(props, context);
-      return (
-        <MDXProvider components={resetComponents}>
-          <PurePreview {...previewProps}>{props.children}</PurePreview>
-        </MDXProvider>
-      );
-    }}
-  </DocsContext.Consumer>
-);
+export const Preview: FC<PreviewProps> = (props) => {
+  const docsContext = useContext(DocsContext);
+  const sourceContext = useContext(SourceContext);
+  const previewProps = getPreviewProps(props, docsContext, sourceContext);
+  const { children } = props;
+  return (
+    <MDXProvider components={resetComponents}>
+      <PurePreview {...previewProps}>{children}</PurePreview>
+    </MDXProvider>
+  );
+};

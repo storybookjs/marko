@@ -84,20 +84,25 @@ function genStoryExport(ast, context) {
     const storyReactCode = bodyParts.length > 1 ? `<>\n${storyCode}\n</>` : storyCode;
     // keep track if an indentifier or function call
     // avoid breaking change for 5.3
-    switch (bodyParts.length === 1 && bodyParts[0].body.type) {
-      // We don't know what type the identifier is, but this code
-      // assumes it's a function from CSF. Let's see who complains!
-      case 'Identifier':
-        storyVal = `assertIsFn(${storyCode})`;
-        break;
-      case 'ArrowFunctionExpression':
-        storyVal = `(${storyCode})`;
-        break;
-      default:
-        storyVal = `() => (
+    const BIND_REGEX = /\.bind\(.*\)/;
+    if (bodyParts.length === 1 && BIND_REGEX.test(bodyParts[0].code)) {
+      storyVal = bodyParts[0].code;
+    } else {
+      switch (bodyParts.length === 1 && bodyParts[0].body.type) {
+        // We don't know what type the identifier is, but this code
+        // assumes it's a function from CSF. Let's see who complains!
+        case 'Identifier':
+          storyVal = `assertIsFn(${storyCode})`;
+          break;
+        case 'ArrowFunctionExpression':
+          storyVal = `(${storyCode})`;
+          break;
+        default:
+          storyVal = `() => (
           ${storyReactCode}
         )`;
-        break;
+          break;
+      }
     }
   }
 

@@ -1,11 +1,8 @@
 import React from 'react';
-import { themes, ThemeProvider, ensure } from '@storybook/theming';
+import { ThemeProvider, useTheme, Theme } from '@storybook/theming';
 import { action } from '@storybook/addon-actions';
 
 import { Heading } from './Heading';
-
-const { light } = themes;
-const theme = ensure(light);
 
 export default {
   component: Heading,
@@ -37,92 +34,110 @@ export const menuHighlighted = () => <Heading menuHighlighted menu={menuItems} /
 
 export const standardData = { menu: menuItems };
 
-export const standard = () => (
-  <ThemeProvider
-    theme={{
-      ...theme,
-      brand: {
-        title: undefined,
-        url: undefined,
-        image: undefined,
-      },
-    }}
-  >
-    <Heading menu={menuItems} />
-  </ThemeProvider>
-);
+export const standard = () => {
+  const theme = useTheme() as Theme;
+  return (
+    <ThemeProvider
+      theme={{
+        ...theme,
+        brand: {
+          title: undefined,
+          url: undefined,
+          image: undefined,
+        },
+      }}
+    >
+      <Heading menu={menuItems} />
+    </ThemeProvider>
+  );
+};
 
-export const standardNoLink = () => (
-  <ThemeProvider
-    theme={{
-      ...theme,
-      brand: {
-        title: undefined,
-        url: null,
-        image: undefined,
-      },
-    }}
-  >
-    <Heading menu={menuItems} />
-  </ThemeProvider>
-);
+export const standardNoLink = () => {
+  const theme = useTheme() as Theme;
+  return (
+    <ThemeProvider
+      theme={{
+        ...theme,
+        brand: {
+          title: undefined,
+          url: null,
+          image: undefined,
+        },
+      }}
+    >
+      <Heading menu={menuItems} />
+    </ThemeProvider>
+  );
+};
 
-export const linkAndText = () => (
-  <ThemeProvider
-    theme={{
-      ...theme,
-      brand: {
-        title: 'My title',
-        url: 'https://example.com',
-        image: null,
-      },
-    }}
-  >
-    <Heading menu={menuItems} />
-  </ThemeProvider>
-);
+export const linkAndText = () => {
+  const theme = useTheme() as Theme;
+  return (
+    <ThemeProvider
+      theme={{
+        ...theme,
+        brand: {
+          title: 'My title',
+          url: 'https://example.com',
+          image: null,
+        },
+      }}
+    >
+      <Heading menu={menuItems} />
+    </ThemeProvider>
+  );
+};
 
-export const onlyText = () => (
-  <ThemeProvider
-    theme={{
-      ...theme,
-      brand: {
-        title: 'My title',
-        url: null,
-        image: null,
-      },
-    }}
-  >
-    <Heading menu={menuItems} />
-  </ThemeProvider>
-);
+export const onlyText = () => {
+  const theme = useTheme() as Theme;
+  return (
+    <ThemeProvider
+      theme={{
+        ...theme,
+        brand: {
+          title: 'My title',
+          url: null,
+          image: null,
+        },
+      }}
+    >
+      <Heading menu={menuItems} />
+    </ThemeProvider>
+  );
+};
 
-export const longText = () => (
-  <ThemeProvider
-    theme={{
-      ...theme,
-      brand: {
-        title: 'My title is way to long to actually fit',
-        url: null,
-        image: null,
-      },
-    }}
-  >
-    <Heading menu={menuItems} />
-  </ThemeProvider>
-);
+export const longText = () => {
+  const theme = useTheme() as Theme;
+  return (
+    <ThemeProvider
+      theme={{
+        ...theme,
+        brand: {
+          title: 'My title is way to long to actually fit',
+          url: null,
+          image: null,
+        },
+      }}
+    >
+      <Heading menu={menuItems} />
+    </ThemeProvider>
+  );
+};
 
-export const customBrandImage = () => (
-  <ThemeProvider
-    theme={{
-      ...theme,
-      brand: {
-        title: 'My Title',
-        url: 'https://example.com',
-        image: 'https://via.placeholder.com/150x22',
-      },
-    }}
-  >
-    <Heading menu={menuItems} />
-  </ThemeProvider>
-);
+export const customBrandImage = () => {
+  const theme = useTheme() as Theme;
+  return (
+    <ThemeProvider
+      theme={{
+        ...theme,
+        brand: {
+          title: 'My Title',
+          url: 'https://example.com',
+          image: 'https://via.placeholder.com/150x22',
+        },
+      }}
+    >
+      <Heading menu={menuItems} />
+    </ThemeProvider>
+  );
+};

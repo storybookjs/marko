@@ -4,7 +4,6 @@
   - [Hoisted CSF annotations](#hoisted-csf-annotations)
   - [Zero config typescript](#zero-config-typescript)
   - [Correct globs in main.js](#correct-globs-in-mainjs)
-  - [Backgrounds addon has a new api](#backgrounds-addon-has-a-new-api)
   - [CRA preset removed](#cra-preset-removed)
   - [Args passed as first argument to story](#args-passed-as-first-argument-to-story)
   - [6.0 Docs breaking changes](#60-docs-breaking-changes)
@@ -12,10 +11,13 @@
     - [Docs theme separated](#docs-theme-separated)
     - [DocsPage slots removed](#docspage-slots-removed)
     - [React prop tables with Typescript](#react-prop-tables-with-typescript)
+    - [ConfigureJSX true by default in React](#configurejsx-true-by-default-in-react)
   - [New addon presets](#new-addon-presets)
   - [Removed babel-preset-vue from Vue preset](#removed-babel-preset-vue-from-vue-preset)
   - [Removed Deprecated APIs](#removed-deprecated-apis)
   - [New setStories event](#new-setstories-event)
+  - [Removed renderCurrentStory event](#removed-rendercurrentstory-event)
+  - [Removed hierarchy separators](#removed-hierarchy-separators)
   - [Client API changes](#client-api-changes)
     - [Removed Legacy Story APIs](#removed-legacy-story-apis)
     - [Can no longer add decorators/parameters after stories](#can-no-longer-add-decoratorsparameters-after-stories)
@@ -24,15 +26,23 @@
   - [Story Store immutable outside of configuration](#story-store-immutable-outside-of-configuration)
   - [Improved story source handling](#improved-story-source-handling)
   - [6.0 Addon API changes](#60-addon-api-changes)
+    - [Consistent local addon paths in main.js](#consistent-local-addon-paths-in-mainjs)
+    - [Deprecated setAddon](#deprecated-setaddon)
     - [Actions addon uses parameters](#actions-addon-uses-parameters)
     - [Removed action decorator APIs](#removed-action-decorator-apis)
     - [Removed withA11y decorator](#removed-witha11y-decorator)
     - [Essentials addon disables differently](#essentials-addon-disables-differently)
+    - [Backgrounds addon has a new api](#backgrounds-addon-has-a-new-api)
   - [6.0 Deprecations](#60-deprecations)
     - [Deprecated addon-info, addon-notes](#deprecated-addon-info-addon-notes)
     - [Deprecated addon-contexts](#deprecated-addon-contexts)
     - [Removed addon-centered](#removed-addon-centered)
     - [Deprecated polymer](#deprecated-polymer)
+    - [Deprecated immutable options parameters](#deprecated-immutable-options-parameters)
+    - [Deprecated addParameters and addDecorator](#deprecated-addparameters-and-adddecorator)
+    - [Deprecated clearDecorators](#deprecated-cleardecorators)
+    - [Deprecated configure](#deprecated-configure)
+    - [Deprecated support for duplicate kinds](#deprecated-support-for-duplicate-kinds)
 - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
   - [To main.js configuration](#to-mainjs-configuration)
     - [Using main.js](#using-mainjs)
@@ -178,43 +188,6 @@ Example of a **valid** glob:
 stories: ['./**/*.stories.@(ts|js)']
 ```
 
-### Backgrounds addon has a new api
-
-Starting in 6.0, the backgrounds addon now receives an object instead of an array as parameter, with a property to define the default background.
-
-Consider the following example of its usage in `Button.stories.js`:
-
-```jsx
-// Button.stories.js
-export default {
-  title: 'Button',
-  parameters: {
-    backgrounds: [
-      { name: 'twitter', value: '#00aced', default: true },
-      { name: 'facebook', value: '#3b5998' },
-    ],
-  },
-};
-```
-
-Here's an updated version of the example, using the new api:
-
-```jsx
-// Button.stories.js
-export default {
-  title: 'Button',
-  parameters: {
-    backgrounds: {
-      default: 'twitter',
-      values: [
-        { name: 'twitter', value: '#00aced' },
-        { name: 'facebook', value: '#3b5998' },
-      ],
-    },
-  },
-};
-```
-
 ### CRA preset removed
 
 The built-in create-react-app preset, which was [previously deprecated](#create-react-app-preset), has been fully removed.
@@ -286,13 +259,30 @@ Starting in 6.0, we have [zero-config typescript support](#zero-config-typescrip
 
 There are also two typescript handling options that can be set in `.storybook/main.js`. `react-docgen-typescript` (default) and `react-docgen`. This is [discussed in detail in the docs](https://github.com/storybookjs/storybook/blob/next/addons/docs/react/README.md#typescript-props-with-react-docgen).
 
+#### ConfigureJSX true by default in React
+
+In SB 6.0, the Storybook Docs preset option `configureJSX` is now set to `true` for all React projects. It was previously `false` by default for React only in 5.x). This `configureJSX` option adds `@babel/plugin-transform-react-jsx`, to process the output of the MDX compiler, which should be a safe change for all projects.
+
+If you need to restore the old JSX handling behavior, you can configure `.storybook/main.js`:
+
+```js
+module.exports = {
+  addons: [
+    {
+      name: '@storybook/addon-docs',
+      options: { configureJSX: false },
+    },
+  ],
+};
+```
+
 ### New addon presets
 
 In Storybook 5.3 we introduced a declarative [main.js configuration](#to-mainjs-configuration), which is now the recommended way to configure Storybook. Part of the change is a simplified syntax for registering addons, which in 6.0 automatically registers many addons _using a preset_, which is a slightly different behavior than in earlier versions.
 
 This breaking change currently applies to: `addon-a11y`, `addon-actions`, `addon-knobs`, `addon-links`, `addon-queryparams`.
 
-Consider the following `main.js` config for the accessibility addon, `addon-knobs`:
+Consider the following `main.js` config for `addon-knobs`:
 
 ```js
 module.exports = {
@@ -385,6 +375,30 @@ const parameters = combineParameters(
 );
 ```
 
+### Removed renderCurrentStory event
+
+The story store no longer emits `renderCurrentStory`/`RENDER_CURRENT_STORY` to tell the renderer to render the story. Instead it emits a new declarative `CURRENT_STORY_WAS_SET` (in response to the existing `SET_CURRENT_STORY`) which is used to decide to render.
+
+### Removed hierarchy separators
+
+We've removed the ability to specify the hierarchy separators (how you control the grouping of story kinds in the sidebar). From Storybook 6.0 we have a single separator `/`, which cannot be configured.
+
+If you are currently using using custom separators, we encourage you to migrate to using `/` as the sole separator. If you are using `|` or `.` as a separator currently, we provide a codemod, [`upgrade-hierarchy-separators`](https://github.com/storybookjs/storybook/blob/next/lib/codemod/README.md#upgrade-hierarchy-separators), that can be used to rename your components. **Note: the codemod will not work for `.mdx` components, you will need to make the changes by hand.**
+
+```
+npx sb@next migrate upgrade-hierarchy-separators --glob="*/**/*.stories.@(tsx|jsx|ts|js)"
+```
+
+We also now default to showing "roots", which are non-expandable groupings in the sidebar for the top-level groups. If you'd like to disable this, set the `showRoots` option in `.storybook/manager.js`:
+
+```js
+import addons from '@storybook/addons';
+
+addons.setConfig({
+  showRoots: false,
+});
+```
+
 ### Client API changes
 
 #### Removed Legacy Story APIs
@@ -413,6 +427,8 @@ const commonParameters = { x: { y: 'z' } };
 export StoryOne = ...;
 StoryOne.story = { parameters: { ...commonParameters, other: 'things' } };
 ```
+
+> NOTE: also the use of `addParameters` and `addDecorator` at arbitrary points is also deprecated, see [the deprecation warning](#deprecated-addparameters-and-adddecorator).
 
 #### Changed Parameter Handling
 
@@ -484,12 +500,36 @@ The MDX analog:
 
 ### 6.0 Addon API changes
 
+#### Consistent local addon paths in main.js
+
+If you use `.storybook/main.js` config and have locally-defined addons in your project, you need to update your file paths.
+
+In 5.3, `addons` paths were relative to the project root, which was inconsistent with `stories` paths, which were relative to the `.storybook` folder. In 6.0, addon paths are now relative to the config folder.
+
+So, for example, if you had:
+
+```js
+module.exports = { addons: ['./.storybook/my-local-addon/register'] };
+```
+
+You'd need to update this to:
+
+```js
+module.exports = { addons: ['./my-local-addon/register'] };
+```
+
+#### Deprecated setAddon
+
+We've deprecated the `setAddon` method of the `storiesOf` API and plan to remove it in 7.0.
+
+Since early versions, Storybook shipped with a `setAddon` API, which allows you to extend `storiesOf` with arbitrary code. We've removed this from all core addons long ago and recommend writing stories in [Component Story Format](https://medium.com/storybookjs/component-story-format-66f4c32366df) rather than using the internal Storybook API.
+
 #### Actions addon uses parameters
 
 Leveraging the new preset `@storybook/addon-actions` uses parameters to pass action options. If you previously had:
 
 ```js
-import { withactions } from `@storybook/addon-actions`;
+import { withActions } from `@storybook/addon-actions`;
 
 export StoryOne = ...;
 StoryOne.story = {
@@ -533,6 +573,48 @@ addParameters({
 
 In 6.0, `addon-essentials` doesn't configure addons if the user has already configured them in `main.js`. In 5.3 it previously checked to see whether the package had been installed in `package.json` to disable configuration. The new setup is preferably because now users' can install essential packages and import from them without disabling their configuration.
 
+#### Backgrounds addon has a new api
+
+Starting in 6.0, the backgrounds addon now receives an object instead of an array as parameter, with a property to define the default background.
+
+Consider the following example of its usage in `Button.stories.js`:
+
+```jsx
+// Button.stories.js
+export default {
+  title: 'Button',
+  parameters: {
+    backgrounds: [
+      { name: 'twitter', value: '#00aced', default: true },
+      { name: 'facebook', value: '#3b5998' },
+    ],
+  },
+};
+```
+
+Here's an updated version of the example, using the new api:
+
+```jsx
+// Button.stories.js
+export default {
+  title: 'Button',
+  parameters: {
+    backgrounds: {
+      default: 'twitter',
+      values: [
+        { name: 'twitter', value: '#00aced' },
+        { name: 'facebook', value: '#3b5998' },
+      ],
+    },
+  },
+};
+```
+
+In addition, backgrounds now ships with the following defaults:
+
+- no selected background (transparent)
+- light/dark options
+
 ### 6.0 Deprecations
 
 We've deprecated the following in 6.0: `addon-info`, `addon-notes`, `addon-contexts`, `addon-centered`, `polymer`.
@@ -568,6 +650,80 @@ Other possible values are: `padded` (default) and `fullscreen`.
 
 We've deprecated `@storybook/polymer` and are focusing on `@storybook/web-components`. If you use Polymer and are interested in maintaining it, please get in touch on [our Discord](https://discordapp.com/invite/UUt2PJb).
 
+#### Deprecated immutable options parameters
+
+The UI options `sidebarAnimations`, `enableShortcuts`, `theme`, `showRoots` should not be changed on a per-story basis, and as such there is no reason to set them via parameters.
+
+You should use `addon.setConfig` to set them:
+
+```js
+// in .storybook/manager.js
+import addons from '@storybook/addons';
+
+addons.setConfig({
+  showRoots: false,
+});
+```
+
+#### Deprecated addParameters and addDecorator
+
+The `addParameters` and `addDecorator` APIs to add global decorators and parameters, exported by the various frameworks (e.g. `@storybook/react`) and `@storybook/client` are now deprecated.
+
+Instead, use `export const parameters = {};` and `export const decorators = [];` in your `.storybook/preview.js`. Addon authors similarly should use such an export in a `previewEntry` file.
+
+#### Deprecated clearDecorators
+
+Similarly, `clearDecorators`, exported by the various frameworks (e.g. `@storybook/react`) is deprecated.
+
+#### Deprecated configure
+
+The `configure` API to load stories from `preview.js`, exported by the various frameworks (e.g. `@storybook/react`) is now deprecated.
+
+To load stories, use the `stories` field in `main.js`. You can pass a glob or array of globs to load stories like so:
+
+```js
+// in .storybook/main.js
+module.exports = {
+  stories: ['../src/**/*.stories.js'],
+};
+```
+
+You can also pass an array of single file names if you want to be careful about loading files:
+
+```js
+// in .storybook/main.js
+module.exports = {
+  stories: [
+    '../src/components/Button.stories.js',
+    '../src/components/Table.stories.js',
+    '../src/components/Page.stories.js',
+  ],
+};
+```
+
+#### Deprecated support for duplicate kinds
+
+In 6.0 we deprecated the ability to split a kind's (component's) stories into multiple files because it was causing issues in hot module reloading (HMR). It will likely be removed completely in 7.0.
+
+If you had N stories that contained `export default { title: 'foo/bar' }` (or the MDX equivalent `<Meta title="foo/bar">`), Storybook will now raise the warning `Duplicate title '${kindName}' used in multiple files`.
+
+To split a component's stories into multiple files, e.g. for the `foo/bar` example above:
+
+- Create a single file with the `export default { title: 'foo/bar' }` export, which is the primary file
+- Comment out or delete the default export from the other files
+- Re-export the stories from the other files in the primary file
+
+So the primary example might look like:
+
+```js
+export default { title: 'foo/bar' };
+export * from './Bar1.stories'
+export * from './Bar2.stories'
+export * from './Bar3.stories'
+
+export const SomeStory = () => ...;
+```
+
 ## From version 5.2.x to 5.3.x
 
 ### To main.js configuration
@@ -601,7 +757,7 @@ If you had a `presets.js` file before you can add the array of presets to the ma
 module.exports = {
   stories: ['../**/*.stories.js'],
   addons: [
-    '@storybook/preset-create-react-app'
+    '@storybook/preset-create-react-app',
     {
       name: '@storybook/addon-docs',
       options: { configureJSX: true }

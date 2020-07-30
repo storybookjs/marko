@@ -12,21 +12,21 @@ const levels: Record<LogLevel, number> = {
 };
 
 const currentLogLevelString: LogLevel = LOGLEVEL as LogLevel;
-const currentLogLevelNumber: number = levels[currentLogLevelString] || 3;
+const currentLogLevelNumber: number = levels[currentLogLevelString] || levels.info;
 
 export const logger = {
   trace: (message: any, ...rest: any[]): void =>
-    currentLogLevelNumber <= 1 && console.trace(message, ...rest),
+    currentLogLevelNumber <= levels.trace && console.trace(message, ...rest),
   debug: (message: any, ...rest: any[]): void =>
-    currentLogLevelNumber <= 2 && console.debug(message, ...rest),
+    currentLogLevelNumber <= levels.debug && console.debug(message, ...rest),
   info: (message: any, ...rest: any[]): void =>
-    currentLogLevelNumber <= 3 && console.info(message, ...rest),
+    currentLogLevelNumber <= levels.info && console.info(message, ...rest),
   warn: (message: any, ...rest: any[]): void =>
-    currentLogLevelNumber <= 4 && console.warn(message, ...rest),
+    currentLogLevelNumber <= levels.warn && console.warn(message, ...rest),
   error: (message: any, ...rest: any[]): void =>
-    currentLogLevelNumber <= 5 && console.error(message, ...rest),
+    currentLogLevelNumber <= levels.error && console.error(message, ...rest),
   log: (message: any, ...rest: any[]): void =>
-    currentLogLevelNumber <= 9 && console.log(message, ...rest),
+    currentLogLevelNumber < levels.silent && console.log(message, ...rest),
 } as const;
 
 export const pretty = (type: keyof typeof logger) => (...args: string[]) => {

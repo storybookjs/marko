@@ -150,13 +150,13 @@ export default {
     label: {
       description: 'overwritten description',
       table: {
-        type: { summary: 'something short' detail: 'something really really long' },
+        type: { summary: 'something short', detail: 'something really really long' },
       },
       control: {
-        type: null
-      }
-    }
-  }
+        type: null,
+      },
+    },
+  },
 };
 ```
 
@@ -170,7 +170,7 @@ const argTypes = {
     defaultValue: 'Hello',
     description: 'overwritten description',
     table: {
-      type: { summary: 'something short' detail: 'something really really long' },
+      type: { summary: 'something short', detail: 'something really really long' },
       defaultValue: { summary: 'Hello' },
     }
     control: {
@@ -181,6 +181,11 @@ const argTypes = {
 ```
 
 This would render a row with a modified description, a type display with a dropdown that shows the detail, and no control.
+
+> **NOTE:** `@storybook/addon-docs` provide shorthand for common tasks:
+>
+> - `type: 'number'` is shorthand for `type: { name: 'number' }`
+> - `control: 'radio'` is shorthand for `control: { type: 'radio' }`
 
 Controls customization has an entire section in the [`addon-controls` README](https://github.com/storybookjs/storybook/blob/next/addons/controls/README.md#configuration).
 

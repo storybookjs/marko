@@ -8,7 +8,7 @@ Sometimes, you may need to add different tags to the HTML body. This is useful f
 You can accomplish this by creating a file called `preview-body.html` inside the Storybook config directory and add tags like this:
 
 ```html
-<div id="custom-root"></div>
+<div id="my-additional-root"></div>
 ```
 
 If using relative sizing in your project (like `rem` or `em`), you may update the base `font-size` by adding a `style` tag to `preview-body.html`:
@@ -25,4 +25,4 @@ That’s it. Storybook will inject these tags to the html body. It is also possi
 
 > **Important**
 >
-> Storybook will inject these tags to the iframe where your components are rendered. So, these won’t be loaded into the main Storybook UI.
+> Storybook will inject these tags to the iframe where your components are rendered. So, these won’t be loaded into the main Storybook UI. Stories are rendered into a div with ID `#main`, regardless of what custom content is added to the page.

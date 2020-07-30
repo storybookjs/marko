@@ -12,6 +12,7 @@ module.exports = {
         configureJSX: true,
       },
     },
+    '@storybook/addon-controls',
     '@storybook/addon-links',
     '@storybook/addon-knobs',
     '@storybook/addon-backgrounds',

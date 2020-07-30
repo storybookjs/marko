@@ -49,10 +49,10 @@ module.exports = {
 
 ### Configure menu UI
 
-Addon-toolbars has a simple, declarative syntax for configuring toolbar menus. You can add toolbars by adding `globalArgTypes` with a `toolbar` annotation, in `.storybook/preview.js`:
+Addon-toolbars has a simple, declarative syntax for configuring toolbar menus. You can add toolbars by adding `globalTypes` with a `toolbar` annotation, in `.storybook/preview.js`:
 
 ```js
-export const globalArgTypes = {
+export const globalTypes = {
   theme: {
     name: 'Theme'
     description: 'Global theme for components',
@@ -70,7 +70,7 @@ You should see a dropdown in your toolbar with options `light` and `dark`.
 
 ### Create a decorator
 
-Now, let's wire it up! We can consume our new `theme` global arg in a decorator using the `context.globalArgs.theme` value.
+Now, let's wire it up! We can consume our new `theme` global arg in a decorator using the `context.globals.theme` value.
 
 For example, suppose you are using `styled-components`. You can add a theme provider decorator to your `.storybook/preview.js` config:
 
@@ -79,9 +79,9 @@ import { ThemeProvider } from 'styled-components';
 import { StoryContext, StoryGetter, StoryWrapper } from '@storybook/addons';
 
 const withThemeProvider: StoryWrapper = (Story: StoryGetter, context: StoryContext) => {
-  // context.globalArgs.theme here will be either 'light' or 'dark'
+  // context.globals.theme here will be either 'light' or 'dark'
   // getTheme being a function retrieving the actual theme object from that value
-  const theme = getTheme(context.globalArgs.theme);
+  const theme = getTheme(context.globals.theme);
 
   return (
     <ThemeProvider theme={theme}>
@@ -129,7 +129,7 @@ type MenuItem {
 Thus if you want to show right-justified flags for an internationalization locale, you might set up the following configuration in `.storybook/preview.js`:
 
 ```js
-export const globalArgTypes = {
+export const globalTypes = {
   locale: {
     name: 'Locale',
     description: 'Internationalization locale',
@@ -152,7 +152,7 @@ export const globalArgTypes = {
 
 The recommended usage, as shown in the examples above, is to consume global args from within a decorator and implement a global setting that applies to all stories. But sometimes it's useful to use toolbar options inside individual stories.
 
-Storybook's `globalArgs` are available via the story context:
+Storybook's `globals` are available via the story context:
 
 ```js
 const getCaptionForLocale = (locale) => {
@@ -166,7 +166,7 @@ const getCaptionForLocale = (locale) => {
   }
 }
 
-export const StoryWithLocale = (args, { globalArgs: { locale } }) => {
+export const StoryWithLocale = (args, { globals: { locale } }) => {
   const caption = getCaptionForLocale(locale);
   return <>{caption}</>;
 };
@@ -175,7 +175,7 @@ export const StoryWithLocale = (args, { globalArgs: { locale } }) => {
 **NOTE:** In Storybook 6.0, if you set the global option `passArgsFirst: false` for backwards compatibility, the story context is passes as the second argument:
 
 ```js
-export const StoryWithLocale = ({ globalArgs: { locale } }) => {
+export const StoryWithLocale = ({ globals: { locale } }) => {
   const caption = getCaptionForLocale(locale);
   return <>{caption}</>;
 };
@@ -183,16 +183,16 @@ export const StoryWithLocale = ({ globalArgs: { locale } }) => {
 
 ### Consuming global args from within an addon
 
-There is a hook available in `@storybook/api` to retrieve the global args: `useGlobalArgs()`
+There is a hook available in `@storybook/api` to retrieve the global args: `useGlobals()`
 
 Following the previous example of the ThemeProvider, if you want for instance to display the current theme inside a Panel:
 
 ```js
-import { useGlobalArgs } from '@storybook/api';
+import { useGlobals } from '@storybook/api';
 import { AddonPanel, Placeholder, Separator, Source, Spaced, Title } from '@storybook/components';
 
 const ThemePanel = props => {
-  const [{ theme: themeName }] = useGlobalArgs();
+  const [{ theme: themeName }] = useGlobals();
   const theme = getTheme(themeName);
 
   return (

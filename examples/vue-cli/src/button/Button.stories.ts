@@ -4,15 +4,16 @@ import { ButtonSizes } from './types';
 export default {
   title: 'Button',
   component: Button,
+  argTypes: {
+    size: { control: { type: 'select', options: ButtonSizes } },
+  },
 };
 
-export const ButtonWithProps = (args: any) => ({
+export const ButtonWithProps = (args: any, { argTypes }: any) => ({
   components: { Button },
   template: '<Button :size="size">Button text</Button>',
-  data() {
-    return args;
-  },
+  props: Object.keys(argTypes),
 });
-ButtonWithProps.argTypes = {
-  size: { control: { type: 'select', options: ButtonSizes } },
+ButtonWithProps.args = {
+  size: 'big',
 };

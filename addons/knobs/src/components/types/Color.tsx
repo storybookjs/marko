@@ -95,7 +95,7 @@ export default class ColorType extends Component<ColorTypeProps, ColorTypeState>
     });
   };
 
-  handleClick = () => {
+  private handleClick = () => {
     const { displayColorPicker } = this.state;
 
     this.setState({
@@ -103,7 +103,7 @@ export default class ColorType extends Component<ColorTypeProps, ColorTypeState>
     });
   };
 
-  handleChange = (color: ColorResult) => {
+  private handleChange = (color: ColorResult) => {
     const { onChange } = this.props;
 
     onChange(`rgba(${color.rgb.r},${color.rgb.g},${color.rgb.b},${color.rgb.a})`);

@@ -24,6 +24,8 @@ If you're using [Create React App](https://create-react-app.dev/) (or a fork of 
 npx -p @storybook/cli sb init --type react_scripts
 ```
 
+If you're using [Gatsby](https://www.gatsbyjs.org/), some added config is required - see [Gatsby's Storybook guide](https://www.gatsbyjs.org/docs/visual-testing-with-storybook/).
+
 Note: You must have a `package.json` in your project or the above commands will fail.
 
 ## Manual setup
