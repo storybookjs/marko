@@ -25,6 +25,27 @@ module.exports = {
       title: 'Configure',
       prefix: 'configure',
       pages: ['overview', 'integration', 'story-rendering', 'user-interface'],
+
+
+      title: 'Essentials',
+      prefix:'essentials',
+      pages:['introduction','controls','actions','viewports','backgrounds','toolbars-and-globals']
+    },
+      title:'Workflows',
+      prefix:'workflows',
+      pages:[
+        'publish-storybook',
+        'build-pages-with-storybook',
+        'stories-for-multiple-components',
+        'testing-with-storybook',
+        'unit-testing',
+        'visual-testing',
+        'interaction-testing',
+        'snapshot-testing',
+        'storybook-composition',
+        'package-composition'
+
+      ]
     }
   ],
 };
