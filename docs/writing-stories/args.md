@@ -76,7 +76,7 @@ Secondary.args = {
 }
 ```
 
-<div class=".aside">
+<div class="aside">
 
 Note that if you are doing the above often, you may want to consider using [component-level args](#component-args).
 
@@ -137,7 +137,7 @@ LoggedIn.args = {
   export const parameter = { passArgsFirst : false }.
   ```
 
-  <div class=".aside">
+  <div class="aside">
   
   Note that `args` is still available as a key on the context.
   
