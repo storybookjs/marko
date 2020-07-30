@@ -50,7 +50,7 @@ export default {
 };
 ```
 
-<div class=".aside">
+<div class="aside">
 
 NOTE: If you're generating argTypes in using another addon (like [docs](locate-docs), which is the common behavior) you'll need to make sure that the actions addon loads **AFTER** the other addon. You can do this by listing it later in the addons registration code in [`.storybook/main.js`](../configure/overview#configure-story-rendering). This is default in [essentials](./introduction).
 

@@ -19,7 +19,7 @@ Controls does not require any modification to your components. Stories for contr
 
 To use the Controls addon, you need to write your stories using [args](../writing-stories/args). Storybook will automatically generate UI controls based on your args and what it can infer about your component; but you can configure the controls further using [argTypes](../api/stories#argtypes), see below.
 
-<div class=".aside">
+<div class="aside">
 
 If you have written stories in the older pre-Storybook 6 style, you may want to read the [args & controls migration guide](https://medium.com/storybookjs/storybook-6-migration-guide-200346241bb5) to help understand how to convert your stories for args.
 
@@ -139,7 +139,7 @@ export default {
   },
 };
 ```
-<div class=".aside">
+<div class="aside">
 If you don't provide a specific one, it defaults to select control type.
 </div>
 
@@ -157,7 +157,7 @@ export default {
 };
 ```
 
-<div class=".aside">
+<div class="aside">
 If you don't provide a specific one, it defaults to  number control type.
 </div>
 

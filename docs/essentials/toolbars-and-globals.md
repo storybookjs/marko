@@ -33,7 +33,7 @@ export const globalTypes = {
 };
 ```
 
-<div class=".aside">
+<div class="aside">
 
 As globals are *global* you can *only* set `globalTypes` in [`.storybook/preview.js`](../configure/overview#configure-story-rendering).
 
@@ -133,7 +133,7 @@ export const StoryWithLocale = (args, { globals: { locale } }) => {
 };
 ```
 
-<div class=".aside">
+<div class="aside">
 
 In Storybook 6.0, if you set the global option `passArgsFirst: false` for backwards compatibility, the story context is passed as the second argument:
 
