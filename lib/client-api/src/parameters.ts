@@ -18,7 +18,7 @@ export const combineParameters = (...parameterSets: Parameters[]) => {
       } else if (isPlainObject(value) && isPlainObject(existing)) {
         // do nothing, we'll handle this later
         mergeKeys[key] = true;
-      } else {
+      } else if (typeof value !== 'undefined') {
         acc[key] = value;
       }
     });
