@@ -7,6 +7,14 @@ export interface SubAPI {
   navigateToSettingsPage: (path: string) => Promise<void>;
 }
 
+export interface Settings {
+  lastTrackedStoryId: string;
+}
+
+export interface SubState {
+  settings: Settings;
+}
+
 export const init: ModuleFn = ({ store, navigate, fullAPI }) => {
   const isSettingsScreenActive = () => {
     const { path } = fullAPI.getUrlState();

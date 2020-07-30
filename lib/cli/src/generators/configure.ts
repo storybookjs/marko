@@ -2,12 +2,10 @@ import fse from 'fs-extra';
 import { SupportedFrameworks } from '../project_types';
 
 function configureMain(addons: string[], custom?: any) {
-  const hasSrc = fse.existsSync('./src');
+  const prefix = fse.existsSync('./src') ? '../src' : '../stories';
 
   const config = {
-    stories: [!hasSrc && '../stories/**/*.stories.*', hasSrc && '../src/**/*.stories.*'].filter(
-      Boolean
-    ),
+    stories: [`${prefix}/**/*.stories.mdx`, `${prefix}/**/*.stories.@(js|jsx|ts|tsx)`],
     addons,
     ...custom,
   };
@@ -20,7 +18,7 @@ function configureMain(addons: string[], custom?: any) {
 function configurePreview(framework: SupportedFrameworks) {
   const parameters = `
 export const parameters = {
-  actions: { argTypesRegex: "^on.*" },
+  actions: { argTypesRegex: "^on[A-Z].*" },
 }`;
 
   const preview =

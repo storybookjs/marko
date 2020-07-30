@@ -5,9 +5,9 @@ export default {
   title: 'Addons/Controls',
   component: Button,
   argTypes: {
-    children: { control: 'text' },
-    type: { control: 'text' },
-    somethingElse: { control: 'object' },
+    children: { control: 'text', name: 'Children' },
+    type: { control: 'text', name: 'Type' },
+    somethingElse: { control: 'object', name: 'Something Else' },
   },
 };
 
@@ -31,3 +31,5 @@ CustomControls.argTypes = {
   children: { table: { disable: true } },
   type: { control: { disable: true } },
 };
+
+export const NoArgs = () => <Button>no args</Button>;

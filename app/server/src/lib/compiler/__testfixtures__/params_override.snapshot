@@ -13,16 +13,14 @@ export default {
   }
 };
 
-export const Override = () => {};
-Override.story = {
-  name: 'Override',
-  parameters: {
-    server: {
-      id: 'params/override',
-      params: {
-        message: 'Hello World',
-        color: 'green'
-      }
+export const Override = (args) => {};
+Override.storyName = 'Override';
+Override.parameters = {
+  server: {
+    id: 'params/override',
+    params: {
+      message: 'Hello World',
+      color: 'green'
     }
   }
 };

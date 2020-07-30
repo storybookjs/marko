@@ -1,4 +1,4 @@
-import storySort from './storySort';
+import { storySort } from './storySort';
 
 describe('preview.storySort', () => {
   const fixture = {

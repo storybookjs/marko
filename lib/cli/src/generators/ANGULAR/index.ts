@@ -4,6 +4,7 @@ import {
   editStorybookTsConfig,
   getAngularAppTsConfigJson,
   getAngularAppTsConfigPath,
+  getBaseTsConfigName,
 } from './angular-helpers';
 import { writeFileAsJson, copyTemplate } from '../../helpers';
 import { baseGenerator, Generator } from '../baseGenerator';
@@ -40,8 +41,9 @@ const generator: Generator = async (packageManager, npmOptions, options) => {
   editStorybookTsConfig(path.resolve('./.storybook/tsconfig.json'));
 
   // edit scripts to generate docs
+  const tsConfigFile = await getBaseTsConfigName();
   packageManager.addScripts({
-    'docs:json': 'compodoc -p ./tsconfig.json -e json -d .',
+    'docs:json': `compodoc -p ./${tsConfigFile} -e json -d .`,
   });
   packageManager.addStorybookCommandInScripts({
     port: 6006,

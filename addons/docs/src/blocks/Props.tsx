@@ -43,7 +43,10 @@ type StoryProps = BaseProps & {
 
 type PropsProps = BaseProps | OfProps | ComponentsProps | StoryProps;
 
-const useArgs = (storyId: string, storyStore: StoryStore): [Args, (args: Args) => void] => {
+const useArgs = (
+  storyId: string,
+  storyStore: StoryStore
+): [Args, (args: Args) => void, (argNames?: string[]) => void] => {
   const story = storyStore.fromId(storyId);
   if (!story) {
     throw new Error(`Unknown story: ${storyId}`);
@@ -52,9 +55,9 @@ const useArgs = (storyId: string, storyStore: StoryStore): [Args, (args: Args) =
   const { args: initialArgs } = story;
   const [args, setArgs] = useState(initialArgs);
   useEffect(() => {
-    const cb = (changedId: string, newArgs: Args) => {
-      if (changedId === storyId) {
-        setArgs(newArgs);
+    const cb = (changed: { storyId: string; args: Args }) => {
+      if (changed.storyId === storyId) {
+        setArgs(changed.args);
       }
     };
     storyStore._channel.on(Events.STORY_ARGS_UPDATED, cb);
@@ -63,7 +66,11 @@ const useArgs = (storyId: string, storyStore: StoryStore): [Args, (args: Args) =
   const updateArgs = useCallback((newArgs) => storyStore.updateStoryArgs(storyId, newArgs), [
     storyId,
   ]);
-  return [args, updateArgs];
+  const resetArgs = useCallback(
+    (argNames?: string[]) => storyStore.resetStoryArgs(storyId, argNames),
+    [storyId]
+  );
+  return [args, updateArgs, resetArgs];
 };
 
 const matches = (name: string, descriptor: PropDescriptor) =>
@@ -161,8 +168,8 @@ export const StoryTable: FC<
     storyArgTypes = filterArgTypes(storyArgTypes, include, exclude);
 
     // eslint-disable-next-line prefer-const
-    let [args, updateArgs] = useArgs(storyId, storyStore);
-    let tabs = { Story: { rows: storyArgTypes, args, updateArgs } } as Record<
+    let [args, updateArgs, resetArgs] = useArgs(storyId, storyStore);
+    let tabs = { Story: { rows: storyArgTypes, args, updateArgs, resetArgs } } as Record<
       string,
       ArgsTableProps
     >;
@@ -173,6 +180,7 @@ export const StoryTable: FC<
 
     if (!storyHasArgsWithControls) {
       updateArgs = null;
+      resetArgs = null;
       tabs = {};
     }
 
@@ -220,6 +228,10 @@ export const Props: FC<PropsProps> = (props) => {
       mainProps = { error: err.message };
     }
     return <ArgsTable {...mainProps} />;
+  }
+
+  if (components) {
+    return <ComponentsTable {...(props as ComponentsProps)} components={components} />;
   }
 
   const mainLabel = getComponentName(main);

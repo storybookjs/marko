@@ -27,5 +27,3 @@ export interface StorybookSection {
   stories: StorybookStory[];
   [x: string]: any;
 }
-
-export type Decorator = (section: StorybookSection) => StorybookSection;

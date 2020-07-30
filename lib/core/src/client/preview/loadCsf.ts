@@ -12,7 +12,7 @@ const deprecatedStoryAnnotationWarning = deprecate(
     CSF .story annotations deprecated; annotate story functions directly:
     - StoryFn.story.name => StoryFn.storyName
     - StoryFn.story.(parameters|decorators) => StoryFn.(parameters|decorators)
-    See https://github.com/storybookjs/storybook/issues/10906 for details and codemod.
+    See https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#hoisted-csf-annotations for details and codemod.
 `
 );
 
@@ -230,14 +230,15 @@ export const loadCsf = ({
         `Invalid module '${m}'. Did you forget to pass \`module\` as the second argument to \`configure\`"?`
       );
     }
+
     if (m && m.hot && m.hot.dispose) {
       ({ previousExports = new Map() } = m.hot.data || {});
-
       m.hot.dispose((data) => {
         loaded = false;
         // eslint-disable-next-line no-param-reassign
         data.previousExports = previousExports;
       });
+      m.hot.accept();
     }
     if (loaded) {
       logger.warn('Unexpected loaded state. Did you call `load` twice?');

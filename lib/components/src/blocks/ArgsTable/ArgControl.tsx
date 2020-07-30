@@ -21,7 +21,7 @@ export interface ArgControlProps {
 const NoControl = () => <>-</>;
 
 export const ArgControl: FC<ArgControlProps> = ({ row, arg, updateArgs }) => {
-  const { name, control } = row;
+  const { key, control } = row;
 
   const [isFocused, setFocused] = useState(false);
   // box because arg can be a fn (e.g. actions) and useState calls fn's
@@ -32,12 +32,12 @@ export const ArgControl: FC<ArgControlProps> = ({ row, arg, updateArgs }) => {
   }, [isFocused, arg]);
 
   const onChange = useCallback(
-    (argName: string, argVal: any) => {
+    (argVal: any) => {
       setBoxedValue({ value: argVal });
-      updateArgs({ [name]: argVal });
+      updateArgs({ [key]: argVal });
       return argVal;
     },
-    [updateArgs, name]
+    [updateArgs, key]
   );
 
   const onBlur = useCallback(() => setFocused(false), []);
@@ -45,7 +45,9 @@ export const ArgControl: FC<ArgControlProps> = ({ row, arg, updateArgs }) => {
 
   if (!control || control.disable) return <NoControl />;
 
-  const props = { name, argType: row, value: boxedValue.value, onChange, onBlur, onFocus };
+  // row.name is a display name and not a suitable DOM input id or name - i might contain whitespace etc.
+  // row.key is a hash key and therefore a much safer choice
+  const props = { name: key, argType: row, value: boxedValue.value, onChange, onBlur, onFocus };
   switch (control.type) {
     case 'array':
       return <ArrayControl {...props} {...control} />;

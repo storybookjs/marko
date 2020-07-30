@@ -47,7 +47,7 @@ export const ObjectControl: FC<ObjectProps> = ({
         const newVal = parse(e.target.value);
         const newValid = validate(newVal, argType);
         if (newValid && !deepEqual(value, newVal)) {
-          onChange(name, newVal);
+          onChange(newVal);
         }
         setValid(newValid);
       } catch (err) {

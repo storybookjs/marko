@@ -7,7 +7,7 @@ import { ControlProps, ArrayValue, ArrayConfig } from './types';
 const parse = (value: string, separator: string): ArrayValue =>
   !value || value.trim() === '' ? [] : value.split(separator);
 
-const format = (value: ArrayValue, separator: string) => {
+const format = (value: ArrayValue | undefined, separator: string) => {
   return value && Array.isArray(value) ? value.join(separator) : '';
 };
 
@@ -20,7 +20,6 @@ export const ArrayControl: FC<ArrayProps> = ({
   name,
   value,
   onChange,
-  argType,
   separator = ',',
   onBlur,
   onFocus,
@@ -28,7 +27,7 @@ export const ArrayControl: FC<ArrayProps> = ({
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLTextAreaElement>): void => {
       const { value: newVal } = e.target;
-      onChange(name, parse(newVal, separator));
+      onChange(parse(newVal, separator));
     },
     [onChange]
   );

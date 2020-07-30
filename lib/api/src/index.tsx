@@ -60,6 +60,8 @@ export type State = layout.SubState &
   version.SubState &
   url.SubState &
   shortcuts.SubState &
+  releaseNotes.SubState &
+  settings.SubState &
   globals.SubState &
   RouterData &
   Other;
@@ -73,6 +75,8 @@ export type API = addons.SubAPI &
   layout.SubAPI &
   notifications.SubAPI &
   shortcuts.SubAPI &
+  releaseNotes.SubAPI &
+  settings.SubAPI &
   version.SubAPI &
   url.SubAPI &
   Other;
@@ -428,13 +432,17 @@ export function useAddonState<S>(addonId: string, defaultState?: S) {
   return useSharedState<S>(addonId, defaultState);
 }
 
-export function useArgs(): [Args, (newArgs: Args) => void] {
-  const { getCurrentStoryData, updateStoryArgs } = useStorybookApi();
+export function useArgs(): [Args, (newArgs: Args) => void, (argNames?: [string]) => void] {
+  const { getCurrentStoryData, updateStoryArgs, resetStoryArgs } = useStorybookApi();
 
   const data = getCurrentStoryData();
   const args = isStory(data) ? data.args : {};
 
-  return [args, (newArgs: Args) => updateStoryArgs(data as Story, newArgs)];
+  return [
+    args,
+    (newArgs: Args) => updateStoryArgs(data as Story, newArgs),
+    (argNames?: [string]) => resetStoryArgs(data as Story, argNames),
+  ];
 }
 
 export function useGlobals(): [Args, (newGlobals: Args) => void] {

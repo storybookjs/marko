@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { withRoundtrip } from '@storybook/addon-roundtrip';
 import { withDecorator } from '@storybook/addon-decorator';
 
-storiesOf('addons|decorator', module)
+storiesOf('addons/decorator', module)
   .addDecorator(withRoundtrip)
   .addDecorator(withDecorator())
   .add('with decorator', () => (

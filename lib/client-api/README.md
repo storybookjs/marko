@@ -36,6 +36,8 @@ However, in some cases it is necessary to set parameters at _load time_ when the
 
 To add a parameter enhancer, call `store.addArgTypesEnhancer(enhancer)` _before_ any stories are loaded (in addon registration or in `preview.js`). As each story is loaded, the enhancer will be called with the full story `context` -- the return value should be an object that will be patched into the Story's `argTypes`.
 
+There is a default enhancer that ensures that each `arg` in a story has a baseline `argType`. This value can be improved by subsequent enhancers, e.g. those provided by `@storybook/addon-docs`.
+
 ## Args
 
 Args are "inputs" to stories.

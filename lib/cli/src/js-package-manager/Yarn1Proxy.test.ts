@@ -7,6 +7,10 @@ describe('Yarn 1 Proxy', () => {
     yarn1Proxy = new Yarn1Proxy();
   });
 
+  it('type should be yarn1', () => {
+    expect(yarn1Proxy.type).toEqual('yarn1');
+  });
+
   describe('initPackageJson', () => {
     it('should run `yarn init -y`', () => {
       const executeCommandSpy = jest.spyOn(yarn1Proxy, 'executeCommand').mockReturnValue('');

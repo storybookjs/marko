@@ -5,7 +5,7 @@ describe('addon-action', () => {
 
   it('should trigger an action', () => {
     // click on the button
-    cy.navigateToStory('button', 'text');
+    cy.navigateToStory('example-button', 'primary');
 
     cy.getStoryElement().contains('Button').click();
     cy.viewAddonPanel('Actions');

@@ -1,5 +1,6 @@
 import { Meta, Preview, Story, Props } from '@storybook/addon-docs/blocks';
 import MyButton from './Button.vue';
+import InfoButton from './components/InfoButton.vue';
 
 <Meta
   title="Addon/ControlsMDX"
@@ -9,8 +10,8 @@ import MyButton from './Button.vue';
   }}
 />
 
-export const Template = (args) => ({
-  props: Object.keys(args),
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
   components: { MyButton },
   template: '<my-button :color="color" :rounded="rounded">{{label}}</my-button>',
 });
@@ -42,7 +43,7 @@ Controls can also be defined and used in MDX stories.
   <Story
     name="Square"
     args={{
-      rounded: false,
+      // rounded: false, test out default value handling
       color: '#00f',
       label: 'A Button with square edges',
     }}
@@ -52,3 +53,7 @@ Controls can also be defined and used in MDX stories.
 </Preview>
 
 <Props story="Square" />
+
+## Multiple components
+
+<Props components={{ MyButton, InfoButton }} />

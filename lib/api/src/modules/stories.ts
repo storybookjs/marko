@@ -2,6 +2,7 @@ import { DOCS_MODE } from 'global';
 import { toId, sanitize } from '@storybook/csf';
 import {
   UPDATE_STORY_ARGS,
+  RESET_STORY_ARGS,
   STORY_ARGS_UPDATED,
   STORY_CHANGED,
   SELECT_STORY,
@@ -61,6 +62,7 @@ export interface SubAPI {
   ) => Story['parameters'] | any;
   getCurrentParameter<S>(parameterName?: ParameterName): S;
   updateStoryArgs(story: Story, newArgs: Args): void;
+  resetStoryArgs: (story: Story, argNames?: [string]) => void;
   findLeafStoryId(StoriesHash: StoriesHash, storyId: StoryId): StoryId;
 }
 
@@ -143,11 +145,9 @@ export const init: ModuleFn = ({
     getCurrentParameter: (parameterName) => {
       const { storyId, refId } = store.getState();
       const parameters = api.getParameters({ storyId, refId }, parameterName);
-
-      if (parameters) {
-        return parameters;
-      }
-      return undefined;
+      // FIXME Returning falsey parameters breaks a bunch of toolbars code,
+      // so this strange logic needs to be here until various client code is updated.
+      return parameters || undefined;
     },
     jumpToComponent: (direction) => {
       const { storiesHash, storyId, refs, refId } = store.getState();
@@ -260,7 +260,7 @@ export const init: ModuleFn = ({
         // eslint-disable-next-line no-nested-ternary
         const id = s ? (s.children ? s.children[0] : s.id) : kindOrId;
         let viewMode =
-          viewModeFromArgs || (s && s.parameters.viewMode)
+          s && !isRoot(s) && (viewModeFromArgs || s.parameters.viewMode)
             ? s.parameters.viewMode
             : viewModeFromState;
 
@@ -309,6 +309,16 @@ export const init: ModuleFn = ({
       fullAPI.emit(UPDATE_STORY_ARGS, {
         storyId,
         updatedArgs,
+        options: {
+          target: refId ? `storybook-ref-${refId}` : 'storybook-preview-iframe',
+        },
+      });
+    },
+    resetStoryArgs: (story, argNames?: [string]) => {
+      const { id: storyId, refId } = story;
+      fullAPI.emit(RESET_STORY_ARGS, {
+        storyId,
+        argNames,
         options: {
           target: refId ? `storybook-ref-${refId}` : 'storybook-preview-iframe',
         },

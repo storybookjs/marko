@@ -2,7 +2,7 @@ import React from 'react';
 import { DocgenButton } from '../../components/DocgenButton';
 
 export default {
-  title: 'Addons|Docs/ForwardRef',
+  title: 'Addons/Docs/ForwardRef',
   component: ForwardedButton,
   parameters: { chromatic: { disable: true } },
 };
