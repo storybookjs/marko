@@ -188,7 +188,7 @@ To style these elements, insert style tags into:
 - For Storybook’s UI, use `.storybook/manager-head.html`
 - For Storybook Docs, use `.storybook/preview-head.html`
 
-<div class=".aside">
+<div class="aside">
 
 Similar to changing the preview’s head tag, `.storybook/manager-head.html` allows you to inject code into the manager side, which can be useful to adding styles for your theme that target Storybook’s HTML.
 
@@ -386,7 +386,7 @@ console.log(process.env.STORYBOOK_DATA_KEY);
 
 You can also access these variables in your custom `<head>`/`<body>` (see below) using the substitution `%STORYBOOK_X%`, for example: `%STORYBOOK_THEME%` will become `red`.
 
-<div class=".aside">
+<div class="aside">
 
 If using the environment variables as attributes or values in JavaScript, you may need to add quotes, as the value will be inserted directly. e.g. `<link rel="stylesheet" href="%STORYBOOK_STYLE_URL%" />`
 
