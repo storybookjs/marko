@@ -108,7 +108,7 @@ LoggedOut.parameters: {
 
 #### Mocking imports
 
-It is also possible to mock imports directly, similar to Jest, using webpack’s aliasing. This is useful if your component makes network requests directly.
+It is also possible to mock imports directly, similar to Jest, using webpack’s aliasing. This is useful if your component makes network requests directly via a library, such as [isomorphic-fetch](https://www.npmjs.com/package/isomorphic-fetch).
 
 
 ```js
@@ -117,13 +117,75 @@ module.exports = {
   // your Storybook configuration
 
   webpackFinal: config => {
-    config.resolve.alias.fetch = '../__mocks__/fetch.js'
+    config.resolve.alias['isomorphic-fetch'] = require.resolve('../__mocks__/isomorphic-fetch.js');
     return config;
    }
 };
 ```
 
-You would still need to write the fetch mock and wire up a decorator to provide results to it based on the current story.
+You would still need to write the fetch mock and wire up a decorator to provide results to it based on the current story. An example of how that might look:
+
+```js
+// __mocks__/isomorphic-fetch.js
+let nextJson;
+export default async function fetch() {
+  if (nextJson) {
+    return {
+      json: () => nextJson,
+    };
+  }
+  nextJson = null;
+}
+
+export function decorator(story, { parameters }) {
+  if (parameters && parameters.fetch) {
+    nextJson = parameters.fetch.json;
+  }
+  return story();
+}
+```
+
+You would then wire it up like so:
+```js
+// .storybook/preview.js
+import { decorator } from '../__mocks/isomorphic-fetch';
+
+// Add the decorator to all stories
+export const decorators = [decorator];
+```
+
+Then to set the value for a specific story you could do (to borrow an example from this [blog post](https://medium.com/@edogc/visual-unit-testing-with-react-storybook-and-fetch-mock-4594d3a281e6)):
+
+```js
+import React from 'react';
+
+import App from './App';
+
+export default {
+  title: 'App',
+  component: App,
+};
+
+const Template = (args) => <App {...args />;
+
+export const Success = Template.bind({});
+Success.parameters = {
+  fetch: {
+    json: {
+      JavaScript: 3390991,
+      'C++': 44974,
+      TypeScript: 15530,
+      CoffeeScript: 12253,
+      Python: 9383,
+      C: 5341,
+      Shell: 5115,
+      HTML: 3420,
+      CSS: 3171,
+      Makefile: 189,
+    }
+  }
+};
+```
 
 #### Specific mocks
 
