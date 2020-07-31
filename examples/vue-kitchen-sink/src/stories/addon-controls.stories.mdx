@@ -1,4 +1,4 @@
-import { Meta, Preview, Story, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs/blocks';
 import MyButton from './Button.vue';
 import InfoButton from './components/InfoButton.vue';
 
@@ -22,7 +22,7 @@ Controls can also be defined and used in MDX stories.
 
 ## Rounded
 
-<Preview>
+<Canvas>
   <Story
     name="Rounded"
     args={{
@@ -33,13 +33,13 @@ Controls can also be defined and used in MDX stories.
   >
     {Template.bind({})}
   </Story>
-</Preview>
+</Canvas>
 
-<Props story="Rounded" />
+<ArgsTable story="Rounded" />
 
 ## Square
 
-<Preview>
+<Canvas>
   <Story
     name="Square"
     args={{
@@ -50,10 +50,10 @@ Controls can also be defined and used in MDX stories.
   >
     {Template.bind({})}
   </Story>
-</Preview>
+</Canvas>
 
-<Props story="Square" />
+<ArgsTable story="Square" />
 
 ## Multiple components
 
-<Props components={{ MyButton, InfoButton }} />
+<ArgsTable components={{ MyButton, InfoButton }} />

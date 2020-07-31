@@ -47,7 +47,7 @@ import { MyComponent } from './MyComponent';
 
 # My Component!
 
-<Props of={MyComponent} />
+<ArgsTable of={MyComponent} />
 ```
 
 ## Controls
@@ -80,7 +80,7 @@ export const WithControls = (args) => <MyComponent {...args} />;
   {args => <MyComponent {...args} />}
 </Story>
 
-<Props story="Controls" />
+<ArgsTable story="Controls" />
 ```
 
 For a very detailed walkthrough of how to write stories that use controls, see the [addon-controls README](https://github.com/storybookjs/storybook/blob/next/addons/controls/README.md#writing-stories).
@@ -91,13 +91,13 @@ Props tables are automatically inferred from your components and stories, but so
 
 Props tables are rendered from an internal data structure called `ArgTypes`. When you declare a story's `component` metadata, Docs automatically extracts `ArgTypes` based on the component's properties.
 
-You can can customize what's shown in the props table by [customizing the `ArgTypes` data](#customizing-argtypes). This is currently available for `DocsPage` and `<Props story="xxx">` construct, but not for the `<Props of={component} />` construct,
+You can can customize what's shown in the props table by [customizing the `ArgTypes` data](#customizing-argtypes). This is currently available for `DocsPage` and `<ArgsTable story="xxx">` construct, but not for the `<ArgsTable of={component} />` construct,
 
 ### Customizing ArgTypes
 
 > **NOTE:** This API is experimental and may change outside of the typical semver release cycle
 
-When you declare a `component` in for your `DocsPage` [as described above](#docspage) or use the `<Props story="xxx" />` construct [in MDX](#controls), the props table shows the `story.argTypes` that gets extracted by Storybook.
+When you declare a `component` in for your `DocsPage` [as described above](#docspage) or use the `<ArgsTable story="xxx" />` construct [in MDX](#controls), the props table shows the `story.argTypes` that gets extracted by Storybook.
 
 Consider the following input:
 

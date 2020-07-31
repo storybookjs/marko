@@ -1,4 +1,4 @@
-import { Meta, Preview, Story, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs/blocks';
 import range from 'lodash/range';
 import { DocgenButton } from '../../components/DocgenButton';
 import { ButtonGroup, SubGroup } from '../../components/ButtonGroup';
@@ -28,7 +28,7 @@ export const Template = (args = {}) => (
 
 ## ArgTypes
 
-<Preview>
+<Canvas>
   <Story
     name="ArgTypes"
     args={{
@@ -79,17 +79,17 @@ export const Template = (args = {}) => (
   >
     {Template.bind({})}
   </Story>
-</Preview>
+</Canvas>
 
-<Props story="ArgTypes" />
+<ArgsTable story="ArgTypes" />
 
 ## ArgTypes w/ Component
 
-<Props story="ArgTypes" showComponent />
+<ArgsTable story="ArgTypes" showComponent />
 
 ## Args
 
-<Preview>
+<Canvas>
   <Story
     name="Args"
     args={{
@@ -99,13 +99,13 @@ export const Template = (args = {}) => (
   >
     {Template.bind({})}
   </Story>
-</Preview>
+</Canvas>
 
-<Props story="Args" />
+<ArgsTable story="Args" />
 
 ## Component Story
 
-<Preview>
+<Canvas>
   <Story
     name="Component"
     argTypes={{
@@ -118,13 +118,13 @@ export const Template = (args = {}) => (
       return <ButtonGroup background={background}>{contents}</ButtonGroup>;
     }}
   </Story>
-</Preview>
+</Canvas>
 
-<Props story="Component" />
+<ArgsTable story="Component" />
 
 ## Controls Story
 
-<Preview>
+<Canvas>
   <Story
     name="Controls"
     args={{
@@ -150,18 +150,18 @@ export const Template = (args = {}) => (
       );
     }}
   </Story>
-</Preview>
+</Canvas>
 
-<Props story="Controls" />
+<ArgsTable story="Controls" />
 
 ## Components
 
-<Props components={{ ButtonGroup, SubGroup }} />
+<ArgsTable components={{ ButtonGroup, SubGroup }} />
 
 ## Component
 
-<Props of={DocgenButton} />
+<ArgsTable of={DocgenButton} />
 
 ## OptionalButton
 
-<Props of={OptionalButton} />
+<ArgsTable of={OptionalButton} />

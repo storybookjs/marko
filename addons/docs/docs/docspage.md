@@ -142,7 +142,7 @@ export default {
           <Subtitle />
           <Description />
           <Primary />
-          <Props />
+          <ArgsTable />
           <Stories />
         </>
       ),
