@@ -108,22 +108,11 @@ LoggedOut.parameters: {
 
 #### Mocking imports
 
-It is also possible to mock imports directly, similar to Jest, using webpack’s aliasing. This is useful if your component makes network requests directly via a library, such as [isomorphic-fetch](https://www.npmjs.com/package/isomorphic-fetch).
+It is also possible to mock imports directly, similar to Jest, using webpack’s aliasing. This is extremely useful if your component makes network requests directly with third-party libraries.
 
+We're going to use [isomorphic-fetch](https://www.npmjs.com/package/isomorphic-fetch) as an example.
 
-```js
-// .storybook/main.js
-module.exports = {
-  // your Storybook configuration
-
-  webpackFinal: config => {
-    config.resolve.alias['isomorphic-fetch'] = require.resolve('../__mocks__/isomorphic-fetch.js');
-    return config;
-   }
-};
-```
-
-You would still need to write the fetch mock and wire up a decorator to provide results to it based on the current story. An example of how that might look:
+Let's start by creating our own mock, which we'll use later with a [decorator](../writing-stories/decorators#global-decorators]. Create a new file called isomorphic-fetch.js inside a directory called `__mocks__` (we'll leave the location to you, don't forget to adjust the imports to your needs) and add the following code inside:
 
 ```js
 // __mocks__/isomorphic-fetch.js
@@ -145,7 +134,22 @@ export function decorator(story, { parameters }) {
 }
 ```
 
-You would then wire it up like so:
+To use the mock in place of the real import, we use [webpack aliasing](https://webpack.js.org/configuration/resolve/#resolvealias):
+
+```js
+// .storybook/main.js
+module.exports = {
+  // your Storybook configuration
+
+  webpackFinal: config => {
+    config.resolve.alias['isomorphic-fetch'] = require.resolve('../__mocks__/isomorphic-fetch.js');
+    return config;
+   }
+};
+```
+
+
+Add the mock you've just implemented to your [storybook/preview.js](../configure/overview.md#configure-story-rendering) (if you don't have it already, you'll need to create the file):
 ```js
 // .storybook/preview.js
 import { decorator } from '../__mocks/isomorphic-fetch';
@@ -154,7 +158,7 @@ import { decorator } from '../__mocks/isomorphic-fetch';
 export const decorators = [decorator];
 ```
 
-Then to set the value for a specific story you could do (to borrow an example from this [blog post](https://medium.com/@edogc/visual-unit-testing-with-react-storybook-and-fetch-mock-4594d3a281e6)):
+Once that configuration is complete, we can set the mock values in a specific story. Let's borrow an example from this [blog post](https://medium.com/@edogc/visual-unit-testing-with-react-storybook-and-fetch-mock-4594d3a281e6):
 
 ```js
 import React from 'react';
