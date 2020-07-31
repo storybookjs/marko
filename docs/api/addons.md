@@ -5,9 +5,9 @@ title: 'Addons'
 Addons extend Storybook with features and integrations that are not built into the core. Most Storybook features are implemented as addons. For instance: documentation, accessibility testing, interactive controls, and design previews. 
 The addon API makes it easy for you to configure and customize Storybook in new ways. There are countless addons made by the community that unlock time-saving workflows.  What addons can do:
 
-- [Add a panel to Storybook (like Action Logger).](../essentials/actions)
-- [Add a tool to Storybook’s toolbar (like zoom or grid).](../essentials/toolbars-and-globals)
-- [Add a tab to Storybook (like SB Docs).](../writing-docs/introduction)
+- [Add a panel to Storybook (like Action Logger).](../essentials/actions.md)
+- [Add a tool to Storybook’s toolbar (like zoom or grid).](../essentials/toolbars-and-globals.md)
+- [Add a tab to Storybook (like SB Docs).](../writing-docs/introduction.md)
 
 Browse the [Addon gallery](/addons) to install an existing addon or as inspiration for your own addon. Read on to learn how to make an addon yourself.
 
@@ -104,7 +104,7 @@ The addon API provides hooks like this so all of that communication can happen b
 
 Finally, let’s hook it all up. Addons are typically published as standalone packages, but they can also be written locally in an existing Storybook project. We’ll make our addon a local addon.
 
-Update your [`.storybook/main.js`](../configure/overview#configure-story-rendering):
+Update your [`.storybook/main.js`](../configure/overview.md#configure-story-rendering):
 
 ```js
 // .storybook/main.js
@@ -184,7 +184,7 @@ export default {
 Storybook uses [Emotion](https://emotion.sh/docs/introduction) for styling, AND we provide a theme which can be set by the user!
 
 We recommend you also use Emotion to style your addon’s UI components. That allows you to use the active Storybook theme to deliver a seamless developer experience.
-If you don’t want to use Emotion, you can use inline styles or another css-in-js lib. You can receive the theme as a prop by using the `withTheme` hoc from Emotion. [Read more about theming](../configure/user-interface#theming).
+If you don’t want to use Emotion, you can use inline styles or another css-in-js lib. You can receive the theme as a prop by using the `withTheme` hoc from Emotion. [Read more about theming](../configure/user-interface.md#theming).
 
 #### Storybook components
 
@@ -227,14 +227,14 @@ When you are developing your addon as a package, you can’t use npm link to add
 TODO: vet this item, as this should be where the remainder docs will point at when refering to presets correct?
 </div>
 
-Storybook presets are collections of Storybook configurations that get applied automatically when you create a `/preset.js` entry point in your addon and then list that addon in your project’s [`.storybook/main.js`](../configure/overview#configure-story-rendering) addons field.
+Storybook presets are collections of Storybook configurations that get applied automatically when you create a `/preset.js` entry point in your addon and then list that addon in your project’s [`.storybook/main.js`](../configure/overview.md#configure-story-rendering) addons field.
 
 Common uses for presets include:
 
 - Register an addon’s `register.js`.
 - Set global parameters for the addon (e.g. [addon-backgrounds](https://github.com/storybookjs/storybook/tree/next/addons/backgrounds)).
 - Add global decorators for the addon (e.g. [addon-a11y](https://github.com/storybookjs/storybook/tree/next/addons/a11y)).
-- Set up webpack customizations for the addon (e.g. [addon-docs](../writing-docs/introduction)).
+- Set up webpack customizations for the addon (e.g. [addon-docs](../writing-docs/introduction.md)).
 
 Here’s an example of typical preset file:
 
@@ -258,6 +258,9 @@ export const parameters = {
   },
 };
 ```
+<div style="background-color:#F8FAFC">
+TODO: vet this documentation link if it's correct.
+</div>
 
 For more information on presets, see the [presets docs](../presets/introduction/index).
 

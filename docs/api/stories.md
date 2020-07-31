@@ -4,7 +4,7 @@ title: 'Stories'
 
 ### Component Story Format (CSF)
 
-Storybook's Component Story Format (CSF) is the recommended way to [write stories](../writing-stories/introduction) since Storybook 5.2. [Read the announcement](https://medium.com/storybookjs/component-story-format-66f4c32366df) to learn more about how it came to be.
+Storybook's Component Story Format (CSF) is the recommended way to [write stories](../writing-stories/introduction.md) since Storybook 5.2. [Read the announcement](https://medium.com/storybookjs/component-story-format-66f4c32366df) to learn more about how it came to be.
 
 <div style="background-color:#F8FAFC">
 TODO: add advanced readme link added needs to be vetted
@@ -22,7 +22,7 @@ CSF is supported in all frameworks except React Native, where you should use the
 
 #### Default export
 
-The default export defines metadata about your component, including the `component` itself, its `title` (where it will show up in the [navigation UI story hierarchy](../writing-stories/docs/writing-stories/naming-components-and-hierarchy#sorting-stories)), [decorators](../writing-stories/decorators), and [parameters](../writing-stories/parameters). 
+The default export defines metadata about your component, including the `component` itself, its `title` (where it will show up in the [navigation UI story hierarchy](../writing-stories/docs/writing-stories/naming-components-and-hierarchy.md#sorting-stories)), [decorators](../writing-stories/decorators.md), and [parameters](../writing-stories/parameters.md). 
 
 The `component` field is optional (but encouraged!), and is used by addons for automatic prop table generation and display of other component metadata. `title` should be unique, i.e. not re-used across files.
 
@@ -38,7 +38,7 @@ export default {
 }
 ```
 
-For more examples, see [writing stories](../writing-stories/introduction).
+For more examples, see [writing stories](../writing-stories/introduction.md).
 
 #### Named story exports
 
@@ -72,7 +72,7 @@ The exported identifiers will be converted to "start case" using Lodash's [start
 It's recommended to start export names with a capital letter.
 
 
-Story functions can be annotated with a few different fields to define story-level [decorators](../writing-stories/decorators) and [parameters](../writing-stories/parameters), and also to define the `storyName` of the story.
+Story functions can be annotated with a few different fields to define story-level [decorators](../writing-stories/decorators.md) and [parameters](../writing-stories/parameters.md), and also to define the `storyName` of the story.
 
 The `storyName` is useful if you want to use names with special characters, names that correspond to restricted keywords in Javascript, or names that collide with other variables in the file. If it's not specified, the export name will be used instead.
 
@@ -89,7 +89,7 @@ Simple.parameters = { ... };
 
 Starting in SB 6.0, stories accept named inputs called Args. Args are dynamic data that are provided (and possibly updated by) Storybook and its addons.
 
-Consider Storybook’s ["Button" example](../writing-stories/introduction#defining-stories) of a text button that logs its click events:
+Consider Storybook’s ["Button" example](../writing-stories/introduction.md#defining-stories) of a text button that logs its click events:
 
 ```js
 // Button.story.js
@@ -127,7 +127,7 @@ export const Text = (args) => <Button {...args} />;
 
 Not only are these versions shorter and easier to write than their no-args counterparts, but they are also more portable since the code doesn't depend on the actions addon specifically.
 
-For more information on setting up [Docs](../writing-docs/introduction) and [Actions](../essentials/actions), see their respective documentation.
+For more information on setting up [Docs](../writing-docs/introduction.md) and [Actions](../essentials/actions.md), see their respective documentation.
 
 #### Storybook export vs name handling
 
@@ -200,7 +200,7 @@ For this specific example the equivalent result can be achieved in a few ways de
 
 ### MDX format
 
-`MDX` is the syntax [Storybook Docs](../writing-docs/introduction) uses to capture long-form Markdown documentation and stories in one file. You can also write pure documentation pages in `MDX` and add them to Storybook alongside your stories. [Read the announcement](https://medium.com/storybookjs/rich-docs-with-storybook-mdx-61bc145ae7bc) to learn more about how and why it came to be.
+`MDX` is the syntax [Storybook Docs](../writing-docs/introduction.md) uses to capture long-form Markdown documentation and stories in one file. You can also write pure documentation pages in `MDX` and add them to Storybook alongside your stories. [Read the announcement](https://medium.com/storybookjs/rich-docs-with-storybook-mdx-61bc145ae7bc) to learn more about how and why it came to be.
 
 #### Basic example
 
@@ -228,13 +228,7 @@ With `MDX` we can define a story for `Checkbox` right in the middle of our Markd
 ```
 And here's how that's rendered in Storybook:
 
-<div style="background-color:#F8FAFC">
-TODO: VET THIS IMAGE.
-</div>
-
-<center>
-  <img src="https://raw.githubusercontent.com/storybookjs/storybook/master/addons/docs/docs/media/mdx-simple.png" width="100%" />
-</center>
+![Show a simple mdx example](./dx-simple.png)
 
 As you can see there's a lot going on here. We're writing Markdown, we're writing JSX, and somehow we're also defining Storybook stories that are drop-in compatible with the entire Storybook ecosystem.
 
@@ -267,7 +261,7 @@ There's a one-to-one mapping from the code in `MDX` to `CSF`, which in turn dire
 
 Now let's look at a more realistic example to see a few more things we can do:
 
-```md
+```js
 import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
 
 import { Badge } from './Badge';
@@ -316,13 +310,7 @@ with unique URLs and isolated snapshot tests.
 
 And here's how that gets rendered in Storybook:
 
-<div style="background-color:#F8FAFC">
-TODO: VET THIS IMAGE.
-</div>
-
-<center>
-  <img src="https://raw.githubusercontent.com/storybookjs/storybook/master/addons/docs/docs/media/mdx-page.png" width="100%" />
-</center>
+![Display mdx page](./mdx-page.png)
 
 ## Embedding stories
 
@@ -342,7 +330,7 @@ You can also use the rest of the MDX features in conjunction with embedding. Tha
 
 ## Decorators and parameters
 
-To add [decorators](../writing-docs/mdx#decorators-and-parameters) and [parameters](../writing-docs/mdx#decorators-and-parameters) in MDX:
+To add [decorators](../writing-docs/mdx.md#decorators-and-parameters) and [parameters](../writing-docs/mdx.md#decorators-and-parameters) in MDX:
 
 ```js
 <Meta
@@ -356,7 +344,7 @@ To add [decorators](../writing-docs/mdx#decorators-and-parameters) and [paramete
 </Story>
 ```
 
-In addition, global decorators work just like before, e.g. adding the following to your [`.storybook/preview.js`](../configure/overview#configure-story-rendering):
+In addition, global decorators work just like before, e.g. adding the following to your [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering):
 
 ```js
 // .storybook/preview.js
@@ -372,17 +360,13 @@ Typically, when you use Storybook MDX, you define stories in the MDX documentati
 
 If you don't define stories in your MDX, you can write MDX documentation and associate it with an existing story, or embed that MDX as its own documentation node in your Storybook's navigation.
 
-If you don't define a `Meta`, you can write Markdown and associate with an existing story. See ["CSF Stories with MDX Docs"](../writing-docs/mdx).
+If you don't define a `Meta`, you can write Markdown and associate with an existing story. See ["CSF Stories with MDX Docs"](../writing-docs/mdx.md).
 
 To get a "documentation-only story", in your UI, define a `<Meta>` as you normally would, but don't define any stories. It will show up in your UI as a documentation node:
 
-<div style="background-color:#F8FAFC">
-TODO: VET THIS IMAGE.
-</div>
 
-<center>
-  <img src="https://raw.githubusercontent.com/storybookjs/storybook/master/addons/docs/docs/media/mdx-documentation-only.png" width="100%" />
-</center>
+![Show documentation](./mdx-documentation-only.png)
+
 
 ## MDX file names
 
@@ -402,17 +386,17 @@ NOTE: This API is experimental and may change outside of the typical semver rele
 TODO: props table link needs to be vetted.
 </div>
 
-ArgTypes are a first-class feature in Storybook for specifying the behaviour of [Args](../writing-stories/args). By specifying the type of an arg you constrain the values that it can take and can also provide information about args that are not explicitly set (i.e. not required).
+ArgTypes are a first-class feature in Storybook for specifying the behaviour of [Args](../writing-stories/args.md). By specifying the type of an arg you constrain the values that it can take and can also provide information about args that are not explicitly set (i.e. not required).
 
 You can also use argTypes to “annotate” args with information that is used by addons that make use of those args, for instance to instruct the controls addons to render a color choose for a string-valued arg.
 
-The most concrete realization of argTypes is the [Props Table](locate-props-table) doc block. Each row in the table corresponds to a single argType, as well as the current value of that arg.
+The most concrete realization of argTypes is the [Args Table](../writing-docs/doc-blocks.md#argstable) doc block. Each row in the table corresponds to a single argType, as well as the current value of that arg.
 
 ![Storybook infering automatically the argType](./argstable.png)
 
 ## Automatic argType inference
 
-If you are using the Storybook [docs](../writing-docs) addon (installed by default as part of [essentials](../essentials/introduction)), then Storybook will infer a set of argTypes for each story based on the `component` specified in the [default export](#default-export) of the CSF file. 
+If you are using the Storybook [docs](../writing-docs.md) addon (installed by default as part of [essentials](../essentials/introduction.md)), then Storybook will infer a set of argTypes for each story based on the `component` specified in the [default export](#default-export) of the CSF file. 
 
 To do so, Storybook uses various static analysis tools depending on your framework.
 

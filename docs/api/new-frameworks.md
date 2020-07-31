@@ -24,7 +24,7 @@ Supporting a new framework in Storybook typically consists of two main aspects:
 
 ### Configuring the server
 
-Storybook has the concept of [presets](./addons#addon-presets), which are typically babel/webpack configurations for file loading. If your framework has its own file format, e.g. “.vue,” you might need to transform these files into JS files at load time. If you expect every user of your framework to need this, you should add it to the framework. So far every framework added to Storybook has done this, because Storybook’s core configuration is very minimal.
+Storybook has the concept of [presets](./addons.md#addon-presets), which are typically babel/webpack configurations for file loading. If your framework has its own file format, e.g. “.vue,” you might need to transform these files into JS files at load time. If you expect every user of your framework to need this, you should add it to the framework. So far every framework added to Storybook has done this, because Storybook’s core configuration is very minimal.
 
 #### Package structure
 
@@ -71,7 +71,7 @@ export default {
 
 The value of the `framework` option (in this case ‘vue’) is something that gets passed to addons and allows them to do special case things for your framework.
 
-The real meat of this file is the framework presets, and these are standard [Storybook presets](./addons#addon-presets) -- you can look at framework packages in the Storybook monorepo (e.g. [react](https://github.com/storybookjs/storybook/blob/next/app/react/src/server/options.ts), [vue](https://github.com/storybookjs/storybook/blob/next/app/vue/src/server/options.ts), [web-components](https://github.com/storybookjs/storybook/blob/next/app/web-components/src/server/options.ts)) to see examples of framework-specific customizations.
+The real meat of this file is the framework presets, and these are standard [Storybook presets](./addons.md#addon-presets) -- you can look at framework packages in the Storybook monorepo (e.g. [react](https://github.com/storybookjs/storybook/blob/next/app/react/src/server/options.ts), [vue](https://github.com/storybookjs/storybook/blob/next/app/vue/src/server/options.ts), [web-components](https://github.com/storybookjs/storybook/blob/next/app/web-components/src/server/options.ts)) to see examples of framework-specific customizations.
 
 
 ### Configuring the client
@@ -139,7 +139,7 @@ export default function renderMain({
 
 #### Package structure
 
-On the client side, the key file is [`src/client/preview.js`](../configure/overview#configure-story-rendering):
+On the client side, the key file is [`src/client/preview.js`](../configure/overview.md#configure-story-rendering):
 
 ```js
 import { start } from '@storybook/core/client';
