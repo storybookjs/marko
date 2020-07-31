@@ -8,6 +8,7 @@
   - [Args passed as first argument to story](#args-passed-as-first-argument-to-story)
   - [6.0 Docs breaking changes](#60-docs-breaking-changes)
     - [Remove framework-specific docs presets](#remove-framework-specific-docs-presets)
+    - [Preview/Props renamed](#previewprops-renamed)
     - [Docs theme separated](#docs-theme-separated)
     - [DocsPage slots removed](#docspage-slots-removed)
     - [React prop tables with Typescript](#react-prop-tables-with-typescript)
@@ -226,6 +227,12 @@ export const parameters = {
 #### Remove framework-specific docs presets
 
 In SB 5.2, each framework had its own preset, e.g. `@storybook/addon-docs/react/preset`. In 5.3 we [unified this into a single preset](#unified-docs-preset): `@storybook/addon-docs/preset`. In 6.0 we've removed the deprecated preset.
+
+#### Preview/Props renamed
+
+In 6.0 we renamed `Preview` to `Canvas`, `Props` to `ArgsTable`.
+
+In addition to the rename, `<Props />` shows the current component, whereas `<ArgsTable />` shows the primary story for the current component. If you want the old behavior, pass `<ArgsTable of='.' />`.
 
 #### Docs theme separated
 

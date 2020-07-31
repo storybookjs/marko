@@ -4,7 +4,7 @@ import { DocsStoryProps } from './types';
 import { Anchor } from './Anchor';
 import { Description } from './Description';
 import { Story } from './Story';
-import { Preview } from './Preview';
+import { Canvas } from './Canvas';
 
 export const DocsStory: FunctionComponent<DocsStoryProps> = ({
   id,
@@ -18,8 +18,8 @@ export const DocsStory: FunctionComponent<DocsStoryProps> = ({
     {expanded && parameters && parameters.docs && parameters.docs.storyDescription && (
       <Description markdown={parameters.docs.storyDescription} />
     )}
-    <Preview withToolbar={withToolbar}>
+    <Canvas withToolbar={withToolbar}>
       <Story id={id} />
-    </Preview>
+    </Canvas>
   </Anchor>
 );

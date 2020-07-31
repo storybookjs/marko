@@ -8,7 +8,7 @@ const jsStringEscape = require('js-string-escape');
 // story in the contents
 
 const STORY_REGEX = /^<Story[\s>]/;
-const PREVIEW_REGEX = /^<Preview[\s>]/;
+const CANVAS_REGEX = /^<(Preview|Canvas)[\s>]/;
 const META_REGEX = /^<Meta[\s>]/;
 const RESERVED = /^(?:do|if|in|for|let|new|try|var|case|else|enum|eval|false|null|this|true|void|with|await|break|catch|class|const|super|throw|while|yield|delete|export|import|public|return|static|switch|typeof|default|extends|finally|package|private|continue|debugger|function|arguments|interface|protected|implements|instanceof)$/;
 
@@ -143,22 +143,20 @@ function genStoryExport(ast, context) {
   };
 }
 
-function genPreviewExports(ast, context) {
-  // console.log('genPreviewExports', JSON.stringify(ast, null, 2));
-
-  const previewExports = {};
+function genCanvasExports(ast, context) {
+  const canvasExports = {};
   for (let i = 0; i < ast.children.length; i += 1) {
     const child = ast.children[i];
     if (child.type === 'JSXElement' && child.openingElement.name.name === 'Story') {
       const storyExport = genStoryExport(child, context);
       if (storyExport) {
-        Object.assign(previewExports, storyExport);
+        Object.assign(canvasExports, storyExport);
         // eslint-disable-next-line no-param-reassign
         context.counter += 1;
       }
     }
   }
-  return previewExports;
+  return canvasExports;
 }
 
 function genMeta(ast, options) {
@@ -210,13 +208,12 @@ function getExports(node, counter, options) {
       const storyExport = genStoryExport(ast, counter);
       return storyExport && { stories: storyExport };
     }
-    if (PREVIEW_REGEX.exec(value)) {
-      // Preview, possibly containing multiple stories
+    if (CANVAS_REGEX.exec(value)) {
+      // Canvas/Preview, possibly containing multiple stories
       const ast = parser.parseExpression(value, { plugins: ['jsx'] });
-      return { stories: genPreviewExports(ast, counter) };
+      return { stories: genCanvasExports(ast, counter) };
     }
     if (META_REGEX.exec(value)) {
-      // Preview, possibly containing multiple stories
       const ast = parser.parseExpression(value, { plugins: ['jsx'] });
       return { meta: genMeta(ast, options) };
     }
@@ -266,11 +263,11 @@ function extractExports(node, options) {
         if (
           ast.openingElement &&
           ast.openingElement.type === 'JSXOpeningElement' &&
-          ast.openingElement.name.name === 'Preview' &&
+          ['Preview', 'Canvas'].includes(ast.openingElement.name.name) &&
           !hasStoryChild(ast)
         ) {
-          const previewAst = ast.openingElement;
-          previewAst.attributes.push({
+          const canvasAst = ast.openingElement;
+          canvasAst.attributes.push({
             type: 'JSXAttribute',
             name: {
               type: 'JSXIdentifier',

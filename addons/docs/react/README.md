@@ -84,7 +84,7 @@ module.exports = {
 Finally, you can create MDX files like this:
 
 ```md
-import { Meta, Story, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable } from '@storybook/addon-docs/blocks';
 import { Button } from './Button';
 
 <Meta title='Button' component={Button} />
@@ -97,9 +97,9 @@ Some **markdown** description, or whatever you want.
   <Button>Label</Button>
 </Story>
 
-## Props
+## ArgsTable
 
-<Props of={Button} />
+<ArgsTable of={Button} />
 ```
 
 ## Inline stories
