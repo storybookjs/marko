@@ -75,7 +75,10 @@ export interface StorySortObjectParameter {
   order?: any[];
   locales?: string;
 }
-export type StorySortParameter = Comparator<any> | StorySortObjectParameter;
+// The `any` here is the story store's `StoreItem` record. Ideally we should probably only
+// pass a defined subset of that full data, but we pass it all so far :shrug:
+export type StorySortComparator = Comparator<[StoryId, any, Parameters, Parameters]>;
+export type StorySortParameter = StorySortComparator | StorySortObjectParameter;
 
 export interface OptionsParameter extends Object {
   storySort?: StorySortParameter;

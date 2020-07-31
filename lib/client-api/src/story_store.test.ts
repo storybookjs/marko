@@ -1004,7 +1004,7 @@ describe('preview.story_store', () => {
       ]);
     });
 
-    it('denormalizes parameters before passing to sort', () => {
+    it('passes kind and global parameters to sort', () => {
       const store = new StoryStore({ channel });
       const storySort = jest.fn();
       store.addGlobalMetadata({
@@ -1025,14 +1025,18 @@ describe('preview.story_store', () => {
         [
           'a--1',
           expect.objectContaining({
-            parameters: expect.objectContaining({ global: 'global', kind: 'kind', story: '1' }),
+            parameters: expect.objectContaining({ story: '1' }),
           }),
+          { kind: 'kind' },
+          expect.objectContaining({ global: 'global' }),
         ],
         [
           'a--2',
           expect.objectContaining({
-            parameters: expect.objectContaining({ global: 'global', kind: 'kind', story: '2' }),
+            parameters: expect.objectContaining({ story: '2' }),
           }),
+          { kind: 'kind' },
+          expect.objectContaining({ global: 'global' }),
         ]
       );
     });
