@@ -18,6 +18,7 @@
   - [New setStories event](#new-setstories-event)
   - [Removed renderCurrentStory event](#removed-rendercurrentstory-event)
   - [Removed hierarchy separators](#removed-hierarchy-separators)
+  - [No longer pass denormalized parameters to storySort](#no-longer-pass-denormalized-parameters-to-storysort)
   - [Client API changes](#client-api-changes)
     - [Removed Legacy Story APIs](#removed-legacy-story-apis)
     - [Can no longer add decorators/parameters after stories](#can-no-longer-add-decoratorsparameters-after-stories)
@@ -399,6 +400,12 @@ addons.setConfig({
 });
 ```
 
+### No longer pass denormalized parameters to storySort
+
+The `storySort` function (set via the `parameters.options.storySort` parameter) previously compared two entries `[storyId, storeItem]`, where `storeItem` included the full "denormalized" set of parameters of the story (i.e. the global, kind and story parameters that applied to that story).
+
+For performance reasons, we now store the parameters uncombined, and so pass the format: `[storyId, storeItem, kindParameters, globalParameters]`.
+
 ### Client API changes
 
 #### Removed Legacy Story APIs
@@ -760,8 +767,8 @@ module.exports = {
     '@storybook/preset-create-react-app',
     {
       name: '@storybook/addon-docs',
-      options: { configureJSX: true }
-    }
+      options: { configureJSX: true },
+    },
   ],
 };
 ```
