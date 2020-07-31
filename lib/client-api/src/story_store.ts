@@ -100,7 +100,10 @@ const toExtracted = <T>(obj: T) =>
     if (typeof value === 'function') {
       return acc;
     }
-    if (key === 'hooks') {
+    // NOTE: We're serializing argTypes twice, at the top-level and also in parameters.
+    // We currently rely on useParameters in the manager, so strip out the top-level argTypes
+    // instead for performance.
+    if (['hooks', 'argTypes'].includes(key)) {
       return acc;
     }
     if (Array.isArray(value)) {
