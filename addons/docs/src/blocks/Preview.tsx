@@ -8,6 +8,6 @@ export const Preview = deprecate(
   dedent`
     Preview doc block has been renamed to Canvas.
 
-    https://github.com/storybookjs/storybook/issues/11696
+    https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#previewprops-renamed
   `
 );

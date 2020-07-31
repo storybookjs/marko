@@ -9,7 +9,7 @@ export const Props = deprecate(
   dedent`
     Props doc block has been renamed to ArgsTable.
 
-    https://github.com/storybookjs/storybook/issues/11696
+    https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#previewprops-renamed
   `
 );
 
