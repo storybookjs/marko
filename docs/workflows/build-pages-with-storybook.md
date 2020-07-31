@@ -18,7 +18,7 @@ It's straightforward to write components to be fully presentational all the way 
 The benefits:
 
 - Easy to write stories once components are in this form.
-- All the data for the story is encoded in the args of the story, which works well with other parts of Storybook's tooling (e.g. [controls](../essentials/controls)).
+- All the data for the story is encoded in the args of the story, which works well with other parts of Storybook's tooling (e.g. [controls](../essentials/controls.md)).
 
 The downsides:
 
@@ -50,7 +50,7 @@ function DocumentScreen({ user, document, subdocuments }) {
 }
 ```
 
-In such cases it is natural to use [args composition](../writing-stories/args#args-composition) to build the stories for the page based on the stories of the sub-components:
+In such cases it is natural to use [args composition](../writing-stories/args.md#args-composition) to build the stories for the page based on the stories of the sub-components:
 
 ```js
 // your-page.story.js
