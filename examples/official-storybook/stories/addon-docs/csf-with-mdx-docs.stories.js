@@ -10,3 +10,9 @@ import { Button } from '@storybook/react/demo';
 // };
 
 export const Basic = () => <Button>Basic</Button>;
+
+export const WithArgs = (args) => <Button {...args} />;
+WithArgs.args = { children: 'with args' };
+
+export const WithTemplate = WithArgs.bind({});
+WithTemplate.args = { children: 'with template' };
