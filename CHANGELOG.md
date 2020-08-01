@@ -1,3 +1,13 @@
+## 6.0.0-rc.21 (August 1, 2020)
+
+### Features
+
+- Addon-docs: Add Story.story for CSF stories with MDX docs ([#11752](https://github.com/storybookjs/storybook/pull/11752))
+
+### Maintenance
+
+- Addon-docs: Rename Preview/Props to Canvas/ArgsTable ([#11744](https://github.com/storybookjs/storybook/pull/11744))
+
 ## 6.0.0-rc.20 (July 31, 2020)
 
 ### Breaking Changes
