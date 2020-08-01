@@ -38,11 +38,11 @@ export default {
 
 ### MDX
 
-To use the props table in [MDX](./mdx.md), use the `Props` block:
+To use the props table in [MDX](./mdx.md), use the `ArgsTable` block:
 
 ```js
 // MyComponent.stories.mdx
-import { Props } from '@storybook/addon-docs/blocks';
+import { ArgsTable } from '@storybook/addon-docs/blocks';
 import { MyComponent } from './MyComponent';
 
 # My Component!
@@ -52,7 +52,7 @@ import { MyComponent } from './MyComponent';
 
 ## Controls
 
-Starting in SB 6.0, the `Props` block has built-in `Controls` (formerly known as "knobs") for editing stories dynamically.
+Starting in SB 6.0, the `ArgsTable` block has built-in `Controls` (formerly known as "knobs") for editing stories dynamically.
 
 <center>
   <img src="./media/args-controls.gif" width="80%" />
@@ -73,7 +73,7 @@ export default {
 export const WithControls = (args) => <MyComponent {...args} />;
 ```
 
-**MDX.** In [MDX](./mdx.md), the `Props` controls are more configurable than in DocsPage. In order to show controls, `Props` must be a function of a story, not a component:
+**MDX.** In [MDX](./mdx.md), the `ArgsTable` controls are more configurable than in DocsPage. In order to show controls, `ArgsTable` must be a function of a story, not a component:
 
 ```js
 <Story name="WithControls">

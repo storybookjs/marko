@@ -126,7 +126,7 @@ import {
   Subtitle,
   Description,
   Primary,
-  Props,
+  ArgsTable,
   Stories,
 } from '@storybook/addon-docs/blocks';
 import { DocgenButton } from '../../components/DocgenButton';
