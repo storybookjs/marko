@@ -47,15 +47,12 @@ do
   unset YARN_WRAP_OUTPUT
   touch yarn.lock
 
-  # Transform `package.json`:
-  #   - add `@storybook/cli` dep to be able to do `yarn sb init` with Yarn 2
-  #   - fill `resolutions` attribute with link to local `@storybook` packages because we can not use Yarn v1 workspace
-  #   directly, this can be rework when the whole monorepo will be migrated to Yarn 2
-  ../../berryfy_package_json.js $PWD/package.json
+  # Link all packages to the local version
+  yarn link -A -r '../../../../..'
 
   echo "Installing dependencies in $dir"
-  # Need to do `yarn install` first to have `@storybook/cli` correctly linked
-  yarn install
+  # Need to install '@storybook/cli' first to have 'yarn sb init' work
+  yarn add @storybook/cli@next -D
 
   echo "Running storybook-cli in $dir"
   case $story_format in
