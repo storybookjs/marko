@@ -79,8 +79,7 @@ function genStoryExport(ast, context) {
   storyId = storyId && storyId.value;
 
   if (!storyId && !storyName && !storyAttr) {
-    const { code: jsx } = generate(ast, {});
-    throw new Error('Expected a Story name, id, or story attribute', jsx);
+    throw new Error('Expected a Story name, id, or story attribute');
   }
 
   // We don't generate exports for story references or the smart "current story"
