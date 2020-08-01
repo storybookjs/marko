@@ -41,22 +41,55 @@ function genAttribute(key, element) {
   return undefined;
 }
 
+function genImportStory(ast, storyDef, storyName, context) {
+  const { code: story } = generate(storyDef.expression, {});
+
+  const storyKey = `${story.split('.').pop()}Story`;
+
+  const statements = [`export const ${storyKey} = ${story};`];
+  if (storyName) {
+    // eslint-disable-next-line no-param-reassign
+    context.storyNameToKey[storyName] = storyKey;
+    statements.push(`${storyKey}.storyName = '${storyName}';`);
+  } else {
+    // eslint-disable-next-line no-param-reassign
+    context.storyNameToKey[storyKey] = storyKey;
+    ast.openingElement.attributes.push({
+      type: 'JSXAttribute',
+      name: {
+        type: 'JSXIdentifier',
+        name: 'name',
+      },
+      value: {
+        type: 'StringLiteral',
+        value: storyKey,
+      },
+    });
+  }
+  return {
+    [storyKey]: statements.join('\n'),
+  };
+}
+
 function genStoryExport(ast, context) {
   let storyName = getAttr(ast.openingElement, 'name');
   let storyId = getAttr(ast.openingElement, 'id');
+  const storyAttr = getAttr(ast.openingElement, 'story');
   storyName = storyName && storyName.value;
   storyId = storyId && storyId.value;
 
-  if (!storyId && !storyName) {
-    throw new Error('Expected a story name or ID attribute');
+  if (!storyId && !storyName && !storyAttr) {
+    throw new Error('Expected a Story name, id, or story attribute');
   }
 
   // We don't generate exports for story references or the smart "current story"
-  if (storyId || !storyName) {
+  if (storyId) {
     return null;
   }
 
-  // console.log('genStoryExport', JSON.stringify(ast, null, 2));
+  if (storyAttr) {
+    return genImportStory(ast, storyAttr, storyName, context);
+  }
 
   const statements = [];
   const storyKey = getStoryKey(storyName, context.counter);
@@ -149,6 +182,8 @@ function genCanvasExports(ast, context) {
     const child = ast.children[i];
     if (child.type === 'JSXElement' && child.openingElement.name.name === 'Story') {
       const storyExport = genStoryExport(child, context);
+      const { code } = generate(child, {});
+      child.value = code;
       if (storyExport) {
         Object.assign(canvasExports, storyExport);
         // eslint-disable-next-line no-param-reassign
@@ -206,6 +241,9 @@ function getExports(node, counter, options) {
       // Single story
       const ast = parser.parseExpression(value, { plugins: ['jsx'] });
       const storyExport = genStoryExport(ast, counter);
+      const { code } = generate(ast, {});
+      // eslint-disable-next-line no-param-reassign
+      node.value = code;
       return storyExport && { stories: storyExport };
     }
     if (CANVAS_REGEX.exec(value)) {
@@ -308,7 +346,6 @@ function extractExports(node, options) {
     }
   });
   // we're overriding default export
-  const defaultJsx = mdxToJsx.toJSX(node, {}, { ...options, skipExport: true });
   const storyExports = [];
   const includeStories = [];
   let metaExport = null;
@@ -345,6 +382,7 @@ function extractExports(node, options) {
   }
   metaExport.includeStories = JSON.stringify(includeStories);
 
+  const defaultJsx = mdxToJsx.toJSX(node, {}, { ...options, skipExport: true });
   const fullJsx = [
     'import { assertIsFn, AddContext } from "@storybook/addon-docs/blocks";',
     defaultJsx,
