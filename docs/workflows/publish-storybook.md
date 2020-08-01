@@ -43,7 +43,7 @@ If you publish your Storybook to Chromatic, you can use the [UI Review](https://
 
 ### Reference external Storybooks
 
-Storybook allows you to browse components from any [Storybook published online](./storybook-composition) inside your local Storybook. It unlocks common workflows that teams often struggle with:
+Storybook allows you to browse components from any [Storybook published online](./storybook-composition.md) inside your local Storybook. It unlocks common workflows that teams often struggle with:
 
 - 👩‍💻 UI developers can quickly reference prior art without switching between Storybooks.
 - 🎨 Design systems can expand adoption by composing themselves into their users’ Storybooks.
@@ -54,4 +54,4 @@ Storybook allows you to browse components from any [Storybook published online](
 
 Toggle between multiple versions of Storybook to see how components change between versions. This is useful for design system package authors who maintain many versions at once.
 
-**Requires** a [CHP level 1](./package-composition#chp-level-1) server (such as [chromatic.com](https://www.chromatic.com/)),
+**Requires** a [CHP level 1](./package-composition.md#chp-level-1) server (such as [chromatic.com](https://www.chromatic.com/)),

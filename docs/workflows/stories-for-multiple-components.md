@@ -2,7 +2,7 @@
 title: 'Stories for multiple components'
 ---
 
-It's useful to write stories that [render two or more components](../writing-stories/introduction#stories-for-two-or-more-components) at once if those components are designed to work together. For example, `ButtonGroups`, `Lists`, and `Page` components. 
+It's useful to write stories that [render two or more components](../writing-stories/introduction.md#stories-for-two-or-more-components) at once if those components are designed to work together. For example, `ButtonGroups`, `Lists`, and `Page` components. 
 
 ```js
 // List.story.js
@@ -28,10 +28,10 @@ Note that by adding `subcomponents` to the default export, we get an extra pane 
 
 ![Storybook story with subcomponent argstable](./argstable-subcomponents.png)
 
-The downside of the above approach is that it does not take advantage of Storybook [Args](../writing-stories/args) meaning:
+The downside of the above approach is that it does not take advantage of Storybook [Args](../writing-stories/args.md) meaning:
 
 1. You cannot change the stories via the controls panel
-2. There is no [args reuse](../writing-stories/introduction#using-args) possible, which makes the stories harder to maintain.
+2. There is no [args reuse](../writing-stories/introduction.md#using-args) possible, which makes the stories harder to maintain.
 
 Let's talk about some techniques you can use to mitigate the above, which are especially useful in more complicated situations.
 
@@ -102,6 +102,9 @@ OneItem.args = { items: [Unchecked.args] };
 
 This approach is a little more complex to setup, but it means you can more easily reuse the `args` to each story in a composite component. It also means that you can alter the args to the component with the Controls addon:
 
-<div style="background-color:#F8FAFC">
-TODO: mention of a gif in the SB 6.0 doc (needs to be vetted)
-</div>
+<video autoPlay muted playsInline loop>
+  <source
+    src="template-component-with-controls-optimized.mp4"
+    type="video/mp4"
+  />
+</video>
