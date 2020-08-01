@@ -39,6 +39,9 @@ do
   echo "Set Yarn 2 in $dir"
   # First command is for Yarn <=1.21, second for Yarn 1.22
   yarn policies set-version berry || yarn set version berry
+  
+  # Disable fallback mode to make sure everything is required correctly
+  yarn config set pnpFallbackMode none
 
   # Do some magic to make Yarn 2 work inside a Yarn 1 monorepo
   unset YARN_WRAP_OUTPUT
