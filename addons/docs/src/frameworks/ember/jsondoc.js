@@ -18,7 +18,8 @@ export const extractArgTypes = (componentName) => {
   if (!componentDoc) {
     return null;
   }
-  const rows = componentDoc.attributes.arguments.map((prop) => {
+  
+  return componentDoc.attributes.arguments.map((prop) => {
     return {
       name: prop.name,
       defaultValue: prop.defaultValue,
@@ -31,7 +32,6 @@ export const extractArgTypes = (componentName) => {
       },
     };
   });
-  return { rows };
 };
 
 export const extractComponentDescription = (componentName) => {
