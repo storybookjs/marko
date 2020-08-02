@@ -13,6 +13,4 @@ export default {
 
 export const toStorybook = () => <Welcome showApp={linkTo('Button')} />;
 
-toStorybook.story = {
-  name: 'to Storybook',
-};
+toStorybook.storyName = 'to Storybook';

@@ -79,6 +79,7 @@ export const url = {
     mithril: `${docsUrl}/guides/guide-mithril/`,
     marko: `${docsUrl}/guides/guide-marko/`,
     riot: `${docsUrl}/guides/guide-riot/`,
+    webComponents: `${docsUrl}/guides/guide-web-components/`,
   },
 
   // Official addons
@@ -86,7 +87,7 @@ export const url = {
     knobs: `${gitHubOrg}/storybook/tree/master/addons/knobs`,
     actions: `${gitHubOrg}/storybook/tree/master/addons/actions`,
     source: `${gitHubOrg}/storybook/tree/master/addons/storysource`,
-    info: `${gitHubOrg}/storybook/tree/master/addons/info`,
+    info: `${gitHubOrg}/deprecated-addons/tree/master/addons/info`,
     viewport: `${gitHubOrg}/storybook/tree/master/addons/viewport`,
     storyshots: `${gitHubOrg}/storybook/tree/master/addons/storyshots`,
     backgrounds: `${gitHubOrg}/storybook/tree/master/addons/backgrounds`,

@@ -4,7 +4,7 @@ import React from 'react';
 import { addDecorator } from '@storybook/react';
 
 addDecorator((s, { kind }) =>
-  kind === 'Core|Decorators' ? (
+  kind === 'Core/Decorators' ? (
     <>
       <p>Global Decorator</p>
       {s()}
@@ -27,13 +27,11 @@ export default {
 };
 
 export const All = () => <p>Story</p>;
-All.story = {
-  decorators: [
-    (s) => (
-      <>
-        <p>Local Decorator</p>
-        {s()}
-      </>
-    ),
-  ],
-};
+All.decorators = [
+  (s) => (
+    <>
+      <p>Local Decorator</p>
+      {s()}
+    </>
+  ),
+];

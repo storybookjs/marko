@@ -8,10 +8,11 @@ import React, {
   ComponentProps,
 } from 'react';
 
-import { Icons, WithTooltip, Spaced, Button } from '@storybook/components';
+import { Icons, WithTooltip, Spaced, Button, Link } from '@storybook/components';
 import { logger } from '@storybook/client-logger';
 import { useStorybookApi } from '@storybook/api';
 import { styled } from '@storybook/theming';
+import { transparentize } from 'polished';
 import { Location } from '@storybook/router';
 
 import { Tree } from './Tree/Tree';
@@ -31,13 +32,24 @@ const RootHeading = styled.div(({ theme }) => ({
   fontWeight: theme.typography.weight.black,
   fontSize: theme.typography.size.s1 - 1,
   lineHeight: '24px',
-  color: theme.color.mediumdark,
+  color: transparentize(0.5, theme.color.defaultText),
   margin: '0 20px',
 }));
 
 const Text = styled.p(({ theme }) => ({
   fontSize: theme.typography.size.s2 - 1,
+  lineHeight: '20px',
   margin: 0,
+
+  code: {
+    fontSize: theme.typography.size.s1,
+  },
+
+  ul: {
+    paddingLeft: 20,
+    marginTop: 8,
+    marginBottom: 8,
+  },
 }));
 
 const Head: FunctionComponent<ListitemProps> = (props) => {
@@ -107,8 +119,21 @@ const ErrorDetail = styled.em(({ theme }) => ({
 const firstLineRegex = /(Error): (.*)\n/;
 const linesRegex = /at (?:(.*) )?\(?(.+)\)?/;
 const ErrorFormatter: FunctionComponent<{ error: Error }> = ({ error }) => {
+  if (!error) {
+    return <Fragment>This error has no stack or message</Fragment>;
+  }
+  if (!error.stack) {
+    return <Fragment>{error.message || 'This error has no stack or message'}</Fragment>;
+  }
+
   const input = error.stack.toString();
-  const [, type, name] = input.match(firstLineRegex);
+  const match = input.match(firstLineRegex);
+
+  if (!match) {
+    return <Fragment>{input}</Fragment>;
+  }
+
+  const [, type, name] = match;
 
   const rawLines = input.split(/\n/).slice(1);
   const [, ...lines] = rawLines
@@ -143,7 +168,10 @@ const ErrorFormatter: FunctionComponent<{ error: Error }> = ({ error }) => {
   );
 };
 
-export const AuthBlock: FunctionComponent<{ authUrl: string; id: string }> = ({ authUrl, id }) => {
+export const AuthBlock: FunctionComponent<{ loginUrl: string; id: string }> = ({
+  loginUrl,
+  id,
+}) => {
   const [isAuthAttempted, setAuthAttempted] = useState(false);
 
   const refresh = useCallback(() => {
@@ -152,12 +180,12 @@ export const AuthBlock: FunctionComponent<{ authUrl: string; id: string }> = ({ 
 
   const open = useCallback((e) => {
     e.preventDefault();
-    const childWindow = window.open(authUrl, `storybook_auth_${id}`, 'resizable,scrollbars');
+    const childWindow = window.open(loginUrl, `storybook_auth_${id}`, 'resizable,scrollbars');
 
     // poll for window to close
     const timer = setInterval(() => {
       if (!childWindow) {
-        logger.error('unable to access authUrl window');
+        logger.error('unable to access loginUrl window');
         clearInterval(timer);
       } else if (childWindow.closed) {
         clearInterval(timer);
@@ -172,23 +200,23 @@ export const AuthBlock: FunctionComponent<{ authUrl: string; id: string }> = ({ 
         {isAuthAttempted ? (
           <Fragment>
             <Text>
-              Authentication on <strong>{authUrl}</strong> seems to have concluded, refresh the page
-              to fetch this storybook
+              Authentication on <strong>{loginUrl}</strong> concluded. Refresh the page to fetch
+              this Storybook.
             </Text>
             <div>
               <Button small gray onClick={refresh}>
                 <Icons icon="sync" />
-                Refresh the page
+                Refresh now
               </Button>
             </div>
           </Fragment>
         ) : (
           <Fragment>
-            <Text>Browse this secure storybook</Text>
+            <Text>Browse this secure Storybook</Text>
             <div>
               <Button small gray onClick={open}>
                 <Icons icon="lock" />
-                Login
+                Log in
               </Button>
             </div>
           </Fragment>
@@ -201,28 +229,65 @@ export const AuthBlock: FunctionComponent<{ authUrl: string; id: string }> = ({ 
 export const ErrorBlock: FunctionComponent<{ error: Error }> = ({ error }) => (
   <Contained>
     <Spaced>
-      <Text>Ow now! something went wrong loading this storybook</Text>
-      <WithTooltip
-        trigger="click"
-        closeOnClick={false}
-        tooltip={
-          <ErrorDisplay>
-            <ErrorFormatter error={error} />
-          </ErrorDisplay>
-        }
-      >
-        <Button small gray>
-          <Icons icon="doclist" />
-          View error
-        </Button>
-      </WithTooltip>
+      <Text>
+        Oh no! Something went wrong loading this Storybook.
+        <br />
+        <WithTooltip
+          trigger="click"
+          closeOnClick={false}
+          tooltip={
+            <ErrorDisplay>
+              <ErrorFormatter error={error} />
+            </ErrorDisplay>
+          }
+        >
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+          <Link isButton>
+            View error <Icons icon="arrowdown" />
+          </Link>
+        </WithTooltip>{' '}
+        <Link withArrow href="https://storybook.js.org/docs" cancel={false} target="_blank">
+          View docs
+        </Link>
+      </Text>
     </Spaced>
+  </Contained>
+);
+
+const FlexSpaced = styled(Spaced)({
+  display: 'flex',
+});
+const WideSpaced = styled(Spaced)({
+  flex: 1,
+});
+
+export const EmptyBlock: FunctionComponent<any> = ({ isMain }) => (
+  <Contained>
+    <FlexSpaced col={1}>
+      <WideSpaced>
+        <Text>
+          {isMain ? (
+            <>
+              Oh no! Your Storybook is empty. Possible reasons why:
+              <ul>
+                <li>
+                  The glob specified in <code>main.js</code> isn't correct.
+                </li>
+                <li>No stories are defined in your story files.</li>
+              </ul>{' '}
+            </>
+          ) : (
+            <>Yikes! Something went wrong loading these stories.</>
+          )}
+        </Text>
+      </WideSpaced>
+    </FlexSpaced>
   </Contained>
 );
 
 export const LoaderBlock: FunctionComponent<{ isMain: boolean }> = ({ isMain }) => (
   <Contained>
-    <Loader size={isMain ? 'multiple' : 'single'} />
+    <Loader size={isMain ? 17 : 5} />
   </Contained>
 );
 

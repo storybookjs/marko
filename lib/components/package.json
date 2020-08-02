@@ -1,6 +1,6 @@
 {
   "name": "@storybook/components",
-  "version": "6.0.0-alpha.41",
+  "version": "6.0.0-rc.21",
   "description": "Core Storybook Components",
   "keywords": [
     "storybook"
@@ -28,36 +28,33 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/client-logger": "6.0.0-alpha.41",
-    "@storybook/theming": "6.0.0-alpha.41",
+    "@storybook/client-logger": "6.0.0-rc.21",
+    "@storybook/csf": "0.0.1",
+    "@storybook/theming": "6.0.0-rc.21",
     "@types/overlayscrollbars": "^1.9.0",
     "@types/react-color": "^3.0.1",
     "@types/react-syntax-highlighter": "11.0.4",
-    "@types/react-textarea-autosize": "^4.3.3",
     "core-js": "^3.0.1",
     "fast-deep-equal": "^3.1.1",
     "global": "^4.3.2",
     "lodash": "^4.17.15",
-    "markdown-to-jsx": "^6.9.1",
+    "markdown-to-jsx": "^6.11.4",
     "memoizerific": "^1.11.3",
     "overlayscrollbars": "^1.10.2",
-    "overlayscrollbars-react": "^0.2.1",
     "polished": "^3.4.4",
     "popper.js": "^1.14.7",
     "react": "^16.8.3",
     "react-color": "^2.17.0",
     "react-dom": "^16.8.3",
-    "react-helmet-async": "^1.0.2",
     "react-popper-tooltip": "^2.11.0",
-    "react-select": "^3.0.8",
-    "react-syntax-highlighter": "^11.0.2",
-    "react-textarea-autosize": "^7.1.0",
+    "react-syntax-highlighter": "^12.2.1",
+    "react-textarea-autosize": "^8.1.1",
     "ts-dedent": "^1.1.1"
   },
   "devDependencies": {
     "css": "^2.2.4",
     "enzyme": "^3.9.0",
-    "jest": "^25.2.4",
+    "jest": "^26.0.0",
     "jest-enzyme": "^7.0.2"
   },
   "peerDependencies": {
@@ -67,7 +64,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
+  "gitHead": "aa7ad3c00f46366cb28205e8fd82689afc4dfbc6",
   "typesVersions": {
     "<=3.5": {
       "*": [

@@ -13,6 +13,4 @@ export const CustomControlValueAccessor = () => ({
   },
 });
 
-CustomControlValueAccessor.story = {
-  name: 'custom ControlValueAccessor',
-};
+CustomControlValueAccessor.storyName = 'custom ControlValueAccessor';

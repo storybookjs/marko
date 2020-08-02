@@ -49,14 +49,12 @@ function MDXContent({ components, ...props }) {
 MDXContent.isMDXComponent = true;
 
 export const componentNotes = () => <Button>Component notes</Button>;
-componentNotes.story = {};
-componentNotes.story.name = 'component notes';
-componentNotes.story.parameters = { storySource: { source: '<Button>Component notes</Button>' } };
+componentNotes.storyName = 'component notes';
+componentNotes.parameters = { storySource: { source: '<Button>Component notes</Button>' } };
 
 export const storyNotes = () => <Button>Story notes</Button>;
-storyNotes.story = {};
-storyNotes.story.name = 'story notes';
-storyNotes.story.parameters = {
+storyNotes.storyName = 'story notes';
+storyNotes.parameters = {
   storySource: { source: '<Button>Story notes</Button>' },
   ...{
     notes: 'story notes',

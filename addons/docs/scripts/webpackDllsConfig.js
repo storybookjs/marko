@@ -1,7 +1,10 @@
 import path from 'path';
 import { ProgressPlugin, DllPlugin } from 'webpack';
 import TerserPlugin from 'terser-webpack-plugin';
-import CoreJSUpgradeWebpackPlugin from 'corejs-upgrade-webpack-plugin';
+
+// eslint-disable-next-line import/no-extraneous-dependencies
+import uiPaths from '@storybook/ui/paths';
+import themingPaths from '@storybook/theming/paths';
 
 const resolveLocal = (dir) => path.join(__dirname, dir);
 
@@ -39,6 +42,7 @@ export default ({ entry, provided = [] }) => ({
                 require.resolve('@babel/plugin-transform-parameters'),
                 require.resolve('@babel/plugin-transform-destructuring'),
                 require.resolve('@babel/plugin-transform-spread'),
+                require.resolve('@babel/plugin-transform-for-of'),
               ],
             },
           },
@@ -50,6 +54,11 @@ export default ({ entry, provided = [] }) => ({
   resolve: {
     extensions: ['.mjs', '.js', '.jsx', '.json'],
     modules: [path.join(__dirname, '../../../node_modules')],
+    alias: {
+      ...themingPaths,
+      ...uiPaths,
+      semver: require.resolve('@storybook/semver'),
+    },
   },
 
   plugins: [
@@ -59,7 +68,6 @@ export default ({ entry, provided = [] }) => ({
       path: `${out}/storybook_docs-manifest.json`,
       name: 'storybook_docs_dll',
     }),
-    new CoreJSUpgradeWebpackPlugin(),
   ],
   optimization: {
     concatenateModules: true,

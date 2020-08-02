@@ -1,7 +1,7 @@
 import { history, document } from 'global';
 import qs from 'qs';
-import { toId } from '@storybook/csf';
-import { StoryStore } from '@storybook/client-api';
+import deprecate from 'util-deprecate';
+import { StoreSelectionSpecifier, StoreSelection } from '@storybook/client-api';
 import { StoryId, ViewMode } from '@storybook/addons';
 
 export function pathToId(path: string) {
@@ -13,7 +13,12 @@ export function pathToId(path: string) {
 }
 
 // todo add proper types
-export const setPath = ({ storyId, viewMode }: { storyId: StoryId; viewMode: ViewMode }) => {
+export const setPath = (selection?: StoreSelection) => {
+  if (!selection) {
+    return;
+  }
+
+  const { storyId, viewMode }: { storyId: StoryId; viewMode: ViewMode } = selection;
   const { path, selectedKind, selectedStory, ...rest } = qs.parse(document.location.search, {
     ignoreQueryPrefix: true,
   });
@@ -25,41 +30,57 @@ export const setPath = ({ storyId, viewMode }: { storyId: StoryId; viewMode: Vie
   history.replaceState({}, '', newPath);
 };
 
-// todo add proper types
-export const getIdFromLegacyQuery = (
-  { path, selectedKind, selectedStory }: any,
-  storyStore: StoryStore
-) => {
-  if (path) {
-    return pathToId(path);
-  }
-  if (selectedKind && selectedStory) {
-    // Look up the story ID inside the story store, since as of 5.3, the
-    // Story ID is not necessarily a direct function of its kind/name.
-    const story = storyStore.getRawStory(selectedKind, selectedStory);
-    if (story) {
-      return story.id;
-    }
-    // this will preserve existing behavior of showing a "not found" screen,
-    // but the inputs will be preserved in the query param to help debugging
-    return toId(selectedKind, selectedStory);
-  }
-  return undefined;
-};
-
 export const parseQueryParameters = (search: string) => {
   const { id } = qs.parse(search, { ignoreQueryPrefix: true });
   return id;
 };
 
-export const initializePath = (storyStore: StoryStore) => {
-  const query = qs.parse(document.location.search, { ignoreQueryPrefix: true });
-  let { id: storyId, viewMode } = query; // eslint-disable-line prefer-const
-  if (!storyId) {
-    storyId = getIdFromLegacyQuery(query, storyStore);
-    if (storyId) {
-      setPath({ storyId, viewMode });
-    }
+type ValueOf<T> = T[keyof T];
+const isObject = (val: Record<string, any>) =>
+  val != null && typeof val === 'object' && Array.isArray(val) === false;
+
+const getFirstString = (v: ValueOf<qs.ParsedQs>): string | void => {
+  if (typeof v === 'string') {
+    return v;
   }
-  return { storyId, viewMode };
+  if (Array.isArray(v)) {
+    return getFirstString(v[0]);
+  }
+  if (isObject(v)) {
+    // @ts-ignore
+    return getFirstString(Object.values(v));
+  }
+  return undefined;
+};
+
+const deprecatedLegacyQuery = deprecate(
+  () => 0,
+  `URL formats with \`selectedKind\` and \`selectedName\` query parameters are deprecated. 
+Use \`id=$storyId\` instead. 
+See https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-url-structure`
+);
+export const getSelectionSpecifierFromPath: () => StoreSelectionSpecifier = () => {
+  const query = qs.parse(document.location.search, { ignoreQueryPrefix: true });
+
+  let viewMode = getFirstString(query.viewMode) as ViewMode;
+  if (typeof viewMode !== 'string' || !viewMode.match(/docs|story/)) {
+    viewMode = 'story';
+  }
+
+  const path = getFirstString(query.path);
+  const storyId = path ? pathToId(path) : getFirstString(query.id);
+
+  if (storyId) {
+    return { storySpecifier: storyId, viewMode };
+  }
+
+  // Legacy URL format
+  const kind = getFirstString(query.selectedKind);
+  const name = getFirstString(query.selectedStory);
+
+  if (kind && name) {
+    deprecatedLegacyQuery();
+    return { storySpecifier: { kind, name }, viewMode };
+  }
+  return null;
 };

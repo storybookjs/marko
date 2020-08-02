@@ -7,7 +7,7 @@ addons.register(ID, (api) =>
   addons.add(ID, {
     title: ID,
     type: types.TOOL,
-    match: ({ viewMode }) => viewMode === 'story',
+    match: () => true,
     render: () => <ToolbarManager />,
   })
 );

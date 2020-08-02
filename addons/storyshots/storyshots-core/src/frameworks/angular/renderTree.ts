@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import AngularSnapshotSerializer from 'jest-preset-angular/AngularSnapshotSerializer';
+import AngularSnapshotSerializer from 'jest-preset-angular/build/AngularSnapshotSerializer';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import HTMLCommentSerializer from 'jest-preset-angular/HTMLCommentSerializer';
+import HTMLCommentSerializer from 'jest-preset-angular/build/HTMLCommentSerializer';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { TestBed } from '@angular/core/testing';
 // eslint-disable-next-line import/no-extraneous-dependencies

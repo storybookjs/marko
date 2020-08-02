@@ -17,24 +17,18 @@ export const WithoutLabel = () => (
     <Form.Input />
   </Form.Field>
 );
-WithoutLabel.story = {
-  name: 'Without Label',
-};
+WithoutLabel.storyName = 'Without Label';
 
 export const WithLabel = () => (
   <Form.Field label={text}>
     <Form.Input id="1" />
   </Form.Field>
 );
-WithLabel.story = {
-  name: 'With label',
-};
+WithLabel.storyName = 'With label';
 
 export const WithPlaceholder = () => (
   <Form.Field label="">
     <Form.Input id="1" placeholder={text} />
   </Form.Field>
 );
-WithPlaceholder.story = {
-  name: 'With placeholder',
-};
+WithPlaceholder.storyName = 'With placeholder';

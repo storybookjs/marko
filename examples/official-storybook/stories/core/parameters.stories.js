@@ -20,7 +20,5 @@ export const Passed = (_args, { parameters: { options, fileName, ...parameters }
     <pre>{JSON.stringify(parameters, null, 2)}</pre>
   </div>
 );
-Passed.story = {
-  name: 'passed to story',
-  parameters: { storyParameter: 'storyParameter' },
-};
+Passed.storyName = 'passed to story';
+Passed.parameters = { storyParameter: 'storyParameter' };

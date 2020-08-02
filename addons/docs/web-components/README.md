@@ -1,4 +1,9 @@
-# Storybook Docs for Web Components
+<h1>Storybook Docs for Web Components</h1>
+
+- [Installation](#installation)
+- [Props tables](#props-tables)
+- [Stories not inline](#stories-not-inline)
+- [More resources](#more-resources)
 
 ## Installation
 
@@ -22,9 +27,9 @@
   };
   ```
 
-### custom-elements.json
+## Props tables
 
-In order to get documentation for web-components you will need to have a [custom-elements.json](https://github.com/webcomponents/custom-elements-json) file.
+In order to get [Props tables](..docs/../../docs/props-tables.md) documentation for web-components you will need to have a [custom-elements.json](https://github.com/webcomponents/custom-elements-json) file.
 
 You can hand write it or better generate it. Depending on the web components sugar you are choosing your milage may vary.
 
@@ -44,7 +49,7 @@ To generate this file with Stencil, add `docs-vscode` to outputTargets in `stenc
 },
 ```
 
-The file looks somewthing like this:
+The file looks something like this:
 
 ```json
 {

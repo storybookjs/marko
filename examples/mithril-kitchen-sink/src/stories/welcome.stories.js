@@ -10,4 +10,4 @@ export default {
 export const Story1 = () => ({
   view: () => m(Welcome, { showApp: linkTo('Button') }),
 });
-Story1.story = { name: 'to Storybook' };
+Story1.storyName = 'to Storybook';

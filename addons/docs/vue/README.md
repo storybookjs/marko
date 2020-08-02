@@ -2,7 +2,7 @@
   <img src="../docs/media/vue-hero.png" width="100%" />
 </center>
 
-# Storybook Docs for Vue
+<h1>Storybook Docs for Vue</h1>
 
 > migration guide: This page documents the method to configure storybook introduced recently in 5.3.0, consult the [migration guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) if you want to migrate to this format of configuring storybook.
 
@@ -10,13 +10,13 @@ Storybook Docs transforms your Storybook stories into world-class component docu
 
 To learn more about Storybook Docs, read the [general documentation](../README.md). To learn the Vue specifics, read on!
 
-- [Storybook Docs for Vue](#storybook-docs-for-vue)
-  - [Installation](#installation)
-  - [Preset options](#preset-options)
-  - [DocsPage](#docspage)
-  - [MDX](#mdx)
-  - [Inline Stories](#inline-stories)
-  - [More resources](#more-resources)
+- [Installation](#installation)
+- [Preset options](#preset-options)
+- [DocsPage](#docspage)
+- [Props tables](#props-tables)
+- [MDX](#mdx)
+- [Inline Stories](#inline-stories)
+- [More resources](#more-resources)
 
 ## Installation
 
@@ -63,7 +63,9 @@ The `vueDocgenOptions` is an object for configuring `vue-docgen-api`. See [`vue-
 
 When you [install docs](#installation) you should get basic [DocsPage](../docs/docspage.md) documentation automagically for all your stories, available in the `Docs` tab of the Storybook UI.
 
-Props tables for your components requires a few more steps. Docs for Vue relies on [`vue-docgen-loader`](https://github.com/pocka/vue-docgen-loader). It supports `props`, `events`, and `slots` as first class prop types.
+## Props tables
+
+Getting [Props tables](../docs/props-tables.md) for your components requires a few more steps. Docs for Vue relies on [`vue-docgen-loader`](https://github.com/pocka/vue-docgen-loader). It supports `props`, `events`, and `slots` as first class prop types.
 
 Finally, be sure to fill in the `component` field in your story metadata:
 
@@ -101,14 +103,14 @@ Then update your `.storybook/main.js` to make sure you load MDX files:
 
 ```js
 module.exports = {
-  stories: ['../src/stories/**/*.stories.(js|mdx)'],
+  stories: ['../src/stories/**/*.stories.@(js|mdx)'],
 };
 ```
 
 Finally, you can create MDX files like this:
 
 ```md
-import { Meta, Story, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable } from '@storybook/addon-docs/blocks';
 import { InfoButton } from './InfoButton.vue';
 
 <Meta title='InfoButton' component={InfoButton} />
@@ -122,9 +124,9 @@ Some **markdown** description, or whatever you want.
   template: '<info-button label="I\'m a button!"/>',
 }}</Story>
 
-## Props
+## ArgsTable
 
-<Props of={InfoButton} />
+<ArgsTable of={InfoButton} />
 ```
 
 Yes, it's redundant to declare `component` twice. [Coming soon](https://github.com/storybookjs/storybook/issues/8685).

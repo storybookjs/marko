@@ -1,8 +1,9 @@
-import { clickAddon, visitExample } from '../helper';
+/* eslint-disable cypress/no-unnecessary-waiting */
+import { clickAddon, visit } from '../helper';
 
 describe('Knobs', () => {
   beforeEach(() => {
-    visitExample('official-storybook', '?path=/story/addons-knobs-withknobs--tweaks-static-values');
+    visit('official-storybook/?path=/story/addons-knobs-withknobs--tweaks-static-values');
   });
 
   it('[text] it should change a string value', () => {
@@ -10,6 +11,11 @@ describe('Knobs', () => {
 
     cy.get('#Name').clear().type('John Doe');
 
-    cy.preview().console('info').find('p').eq(0).should('contain.text', 'My name is John Doe');
+    cy.getStoryElement()
+      .console('info')
+      .wait(3000)
+      .find('p')
+      .eq(0)
+      .should('contain.text', 'My name is John Doe');
   });
 });

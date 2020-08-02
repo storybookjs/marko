@@ -77,6 +77,8 @@ export interface IconButtonProps {
 export const IconButton = styled(ButtonOrLink, { shouldForwardProp: isPropValid })<IconButtonProps>(
   ({ theme }) => ({
     display: 'inline-flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     height: 40,
     background: 'none',
     color: 'inherit',

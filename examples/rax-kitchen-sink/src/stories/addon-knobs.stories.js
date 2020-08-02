@@ -34,9 +34,7 @@ export const WithAButton = () => {
   );
 };
 
-WithAButton.story = {
-  name: 'with a button',
-};
+WithAButton.storyName = 'with a button';
 
 export const AsDynamicVariables = () => {
   const name = text('Name', 'Benjamin Button');
@@ -46,6 +44,4 @@ export const AsDynamicVariables = () => {
   return <Text>{content}</Text>;
 };
 
-AsDynamicVariables.story = {
-  name: 'as dynamic variables',
-};
+AsDynamicVariables.storyName = 'as dynamic variables';

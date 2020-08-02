@@ -10,12 +10,11 @@ export default {
 export const Exception = () => {
   throw new Error('storyFn threw an error! WHOOPS');
 };
-Exception.story = {
-  name: 'story throws exception',
-  parameters: {
-    storyshots: { disable: true },
-    chromatic: { disable: true },
-  },
+Exception.storyName = 'story throws exception';
+
+Exception.parameters = {
+  storyshots: { disable: true },
+  chromatic: { disable: true },
 };
 
 export const badComponent = () => (
@@ -24,19 +23,17 @@ export const badComponent = () => (
     <BadComponent />
   </Fragment>
 );
-badComponent.story = {
-  name: 'story errors - invariant error',
-  parameters: {
-    storyshots: { disable: true },
-    chromatic: { disable: true },
-  },
+badComponent.storyName = 'story errors - invariant error';
+
+badComponent.parameters = {
+  storyshots: { disable: true },
+  chromatic: { disable: true },
 };
 
 export const BadStory = () => badOutput;
-BadStory.story = {
-  name: 'story errors - story un-renderable type',
-  parameters: {
-    storyshots: { disable: true },
-    chromatic: { disable: true },
-  },
+BadStory.storyName = 'story errors - story un-renderable type';
+
+BadStory.parameters = {
+  storyshots: { disable: true },
+  chromatic: { disable: true },
 };

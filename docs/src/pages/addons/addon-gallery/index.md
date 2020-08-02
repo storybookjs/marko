@@ -26,11 +26,11 @@ With links you can link stories together. With that, you can build demos and pro
 Knobs allow you to edit React props dynamically using the Storybook UI.
 You can also use Knobs as dynamic variables inside your stories.
 
-### [Notes](https://github.com/storybookjs/storybook/tree/master/addons/notes)
+### [Notes](https://github.com/storybookjs/deprecated-addons/tree/master/addons/notes)
 
 With this addon, you can write notes for each story in your component. This is pretty useful when you are working with a team.
 
-### [Info](https://github.com/storybookjs/storybook/tree/master/addons/info)
+### [Info](https://github.com/storybookjs/deprecated-addons/tree/master/addons/info)
 
 If you are using Storybook as a style guide, then this addon will help you to build a nice-looking style guide with docs, automatic sample source code with a PropType explorer.
 
@@ -146,9 +146,9 @@ Add ability to customize styles in the story preview area
 
 Embed [Figma](https://figma.com) designs in a storybook panel.
 
-### [State](https://github.com/Sambego/storybook-state)	
+### [State](https://github.com/Sambego/storybook-state)
 
-Manage state inside a story using a store. Update components when this state changes.	
+Manage state inside a story using a store. Update components when this state changes.
 
 ### [State](https://github.com/dump247/storybook-state/)
 
@@ -157,7 +157,7 @@ Wrap the story in a function call to setup state management. The story can modif
 state properties with the provided store. The addon provides a panel to view and
 reset state.
 
-### [State](https://github.com/adierkens/storybook-addon-state)	
+### [State](https://github.com/adierkens/storybook-addon-state)
 
 Store/retrieve arbitrary data. Similar to knobs this doesn't add any additional React wrappers to the story, so any other addons used (prop-types, jsx) aren't effected. Has a React hooks like API.
 
@@ -196,7 +196,3 @@ Display react docgen info. This addon is a drop in replacement for the [@storybo
 ### [storybook-dark-mode](https://github.com/hipstersmoothie/storybook-dark-mode)
 
 Let your users toggle between a dark and light mode.
-
-
-
-

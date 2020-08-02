@@ -2,7 +2,7 @@
   <img src="../docs/media/angular-hero.png" width="100%" />
 </center>
 
-# Storybook Docs for Angular
+<h1>Storybook Docs for Angular</h1>
 
 > migration guide: This page documents the method to configure storybook introduced recently in 5.3.0, consult the [migration guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) if you want to migrate to this format of configuring storybook.
 
@@ -10,12 +10,12 @@ Storybook Docs transforms your Storybook stories into world-class component docu
 
 To learn more about Storybook Docs, read the [general documentation](../README.md). To learn the Angular specifics, read on!
 
-- [Storybook Docs for Angular](#storybook-docs-for-angular)
-  - [Installation](#installation)
-  - [DocsPage](#docspage)
-  - [MDX](#mdx)
-  - [IFrame height](#iframe-height)
-  - [More resources](#more-resources)
+- [Installation](#installation)
+- [DocsPage](#docspage)
+- [Props tables](#props-tables)
+- [MDX](#mdx)
+- [IFrame height](#iframe-height)
+- [More resources](#more-resources)
 
 ## Installation
 
@@ -37,7 +37,9 @@ module.exports = {
 
 When you [install docs](#installation) you should get basic [DocsPage](../docs/docspage.md) documentation automagically for all your stories, available in the `Docs` tab of the Storybook UI.
 
-Props tables for your components requires a few more steps. Docs for Angular relies on [Compodoc](https://compodoc.app/), the excellent API documentation tool. It supports `inputs`, `outputs`, `properties`, `methods`, `view/content child/children` as first class prop types.
+## Props tables
+
+Getting [Props tables](../docs/props-tables.md) for your components requires a few more steps. Docs for Angular relies on [Compodoc](https://compodoc.app/), the excellent API documentation tool. It supports `inputs`, `outputs`, `properties`, `methods`, `view/content child/children` as first class prop types.
 
 To get this, you'll first need to install Compodoc:
 
@@ -52,7 +54,7 @@ Then you'll need to configure Compodoc to generate a `documentation.json` file. 
   ...
   "scripts": {
     "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
-    "storybook": "npm run docs:json && start-storybook -p 9008 -s src/assets",
+    "storybook": "npm run docs:json && start-storybook -p 6006 -s src/assets",
     ...
   },
 }
@@ -104,14 +106,14 @@ Then update your `.storybook/main.js` to make sure you load MDX files:
 
 ```ts
 module.exports = {
-  stories: ['../src/stories/**/*.stories.(js|ts|mdx)'],
+  stories: ['../src/stories/**/*.stories.@(js|ts|mdx)'],
 };
 ```
 
 Finally, you can create MDX files like this:
 
 ```md
-import { Meta, Story, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable } from '@storybook/addon-docs/blocks';
 import { AppComponent } from './app.component';
 
 <Meta title='App Component' component={AppComponent} />
@@ -125,14 +127,57 @@ Some **markdown** description, or whatever you want.
   props: {},
 }}</Story>
 
-## Props
+## ArgsTable
 
-<Props of={AppComponent} />
+<ArgsTable of={AppComponent} />
 ```
 
 Yes, it's redundant to declare `component` twice. [Coming soon](https://github.com/storybookjs/storybook/issues/8673).
 
 Also, to use the `Props` doc block, you need to set up Compodoc, [as described above](#docspage).
+
+When you are using `template`, `moduleMetadata` and/or `addDecorators` with `storiesOf` then you can easily translate your story to MDX, too:
+
+```md
+import { Meta, Story, ArgsTable } from '@storybook/addon-docs/blocks';
+import { CheckboxComponent, RadioButtonComponent } from './my-components';
+import { moduleMetadata } from '@storybook/angular';
+
+<Meta title='Checkbox' decorators={[
+  moduleMetadata({
+    declarations: [CheckboxComponent]
+  })
+]} />
+
+# Basic Checkbox
+
+<Story name='basic check' height='400px'>{{
+  template: `
+    <div class="some-wrapper-with-padding">
+      <my-checkbox [checked]="checked">Some Checkbox</my-checkbox>
+    </div>
+  `,
+  props: {
+    checked: true
+  }
+}}</Story>
+
+# Basic Radiobutton
+
+<Story name='basic radio' height='400px'>{{
+  moduleMetadata: {
+    declarations: [RadioButtonComponent]
+  }
+  template: `
+    <div class="some-wrapper-with-padding">
+      <my-radio-btn [checked]="checked">Some Checkbox</my-radio-btn>
+    </div>
+  `,
+  props: {
+    checked: true
+  }
+}}</Story>
+```
 
 ## IFrame height
 
@@ -150,8 +195,8 @@ For `DocsPage`, you need to update the parameter locally in a story:
 
 ```ts
 export const basic = () => ...
-basic.story = {
-  parameters: { docs: { iframeHeight: 400 } }
+basic.parameters = {
+  docs: { iframeHeight: 400 }
 }
 ```
 

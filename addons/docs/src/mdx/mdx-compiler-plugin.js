@@ -8,7 +8,7 @@ const jsStringEscape = require('js-string-escape');
 // story in the contents
 
 const STORY_REGEX = /^<Story[\s>]/;
-const PREVIEW_REGEX = /^<Preview[\s>]/;
+const CANVAS_REGEX = /^<(Preview|Canvas)[\s>]/;
 const META_REGEX = /^<Meta[\s>]/;
 const RESERVED = /^(?:do|if|in|for|let|new|try|var|case|else|enum|eval|false|null|this|true|void|with|await|break|catch|class|const|super|throw|while|yield|delete|export|import|public|return|static|switch|typeof|default|extends|finally|package|private|continue|debugger|function|arguments|interface|protected|implements|instanceof)$/;
 
@@ -41,70 +41,114 @@ function genAttribute(key, element) {
   return undefined;
 }
 
+function genImportStory(ast, storyDef, storyName, context) {
+  const { code: story } = generate(storyDef.expression, {});
+
+  const storyKey = `${story.split('.').pop()}Story`;
+
+  const statements = [`export const ${storyKey} = ${story};`];
+  if (storyName) {
+    // eslint-disable-next-line no-param-reassign
+    context.storyNameToKey[storyName] = storyKey;
+    statements.push(`${storyKey}.storyName = '${storyName}';`);
+  } else {
+    // eslint-disable-next-line no-param-reassign
+    context.storyNameToKey[storyKey] = storyKey;
+    ast.openingElement.attributes.push({
+      type: 'JSXAttribute',
+      name: {
+        type: 'JSXIdentifier',
+        name: 'name',
+      },
+      value: {
+        type: 'StringLiteral',
+        value: storyKey,
+      },
+    });
+  }
+  return {
+    [storyKey]: statements.join('\n'),
+  };
+}
+
 function genStoryExport(ast, context) {
   let storyName = getAttr(ast.openingElement, 'name');
   let storyId = getAttr(ast.openingElement, 'id');
+  const storyAttr = getAttr(ast.openingElement, 'story');
   storyName = storyName && storyName.value;
   storyId = storyId && storyId.value;
 
-  if (!storyId && !storyName) {
-    throw new Error('Expected a story name or ID attribute');
+  if (!storyId && !storyName && !storyAttr) {
+    throw new Error('Expected a Story name, id, or story attribute');
   }
 
   // We don't generate exports for story references or the smart "current story"
-  if (storyId || !storyName) {
+  if (storyId) {
     return null;
   }
 
-  // console.log('genStoryExport', JSON.stringify(ast, null, 2));
+  if (storyAttr) {
+    return genImportStory(ast, storyAttr, storyName, context);
+  }
 
   const statements = [];
   const storyKey = getStoryKey(storyName, context.counter);
 
-  let body = ast.children.find((n) => n.type !== 'JSXText');
+  const bodyNodes = ast.children.filter((n) => n.type !== 'JSXText');
   let storyCode = null;
-
-  if (!body) {
+  let storyVal = null;
+  if (!bodyNodes.length) {
     // plain text node
     const { code } = generate(ast.children[0], {});
     storyCode = `'${code}'`;
+    storyVal = `() => (
+      ${storyCode}
+    )`;
   } else {
-    if (body.type === 'JSXExpressionContainer') {
-      // FIXME: handle fragments
-      body = body.expression;
+    const bodyParts = bodyNodes.map((bodyNode) => {
+      const body = bodyNode.type === 'JSXExpressionContainer' ? bodyNode.expression : bodyNode;
+      const { code } = generate(body, {});
+      return { code, body };
+    });
+    // if we have more than two children
+    // 1. Add line breaks
+    // 2. Enclose in <> ... </>
+    storyCode = bodyParts.map(({ code }) => code).join('\n');
+    const storyReactCode = bodyParts.length > 1 ? `<>\n${storyCode}\n</>` : storyCode;
+    // keep track if an indentifier or function call
+    // avoid breaking change for 5.3
+    const BIND_REGEX = /\.bind\(.*\)/;
+    if (bodyParts.length === 1 && BIND_REGEX.test(bodyParts[0].code)) {
+      storyVal = bodyParts[0].code;
+    } else {
+      switch (bodyParts.length === 1 && bodyParts[0].body.type) {
+        // We don't know what type the identifier is, but this code
+        // assumes it's a function from CSF. Let's see who complains!
+        case 'Identifier':
+          storyVal = `assertIsFn(${storyCode})`;
+          break;
+        case 'ArrowFunctionExpression':
+          storyVal = `(${storyCode})`;
+          break;
+        default:
+          storyVal = `() => (
+          ${storyReactCode}
+        )`;
+          break;
+      }
     }
-    const { code } = generate(body, {});
-    storyCode = code;
-  }
-
-  let storyVal = null;
-  switch (body && body.type) {
-    // We don't know what type the identifier is, but this code
-    // assumes it's a function from CSF. Let's see who complains!
-    case 'Identifier':
-      storyVal = `assertIsFn(${storyCode})`;
-      break;
-    case 'ArrowFunctionExpression':
-      storyVal = `(${storyCode})`;
-      break;
-    default:
-      storyVal = `() => (
-        ${storyCode}
-      )`;
-      break;
   }
 
   statements.push(`export const ${storyKey} = ${storyVal};`);
-  statements.push(`${storyKey}.story = {};`);
 
   // always preserve the name, since CSF exports can get modified by displayName
-  statements.push(`${storyKey}.story.name = '${storyName}';`);
+  statements.push(`${storyKey}.storyName = '${storyName}';`);
 
   const argTypes = genAttribute('argTypes', ast.openingElement);
-  if (argTypes) statements.push(`${storyKey}.story.argTypes = ${argTypes};`);
+  if (argTypes) statements.push(`${storyKey}.argTypes = ${argTypes};`);
 
   const args = genAttribute('args', ast.openingElement);
-  if (args) statements.push(`${storyKey}.story.args = ${args};`);
+  if (args) statements.push(`${storyKey}.args = ${args};`);
 
   let parameters = getAttr(ast.openingElement, 'parameters');
   parameters = parameters && parameters.expression;
@@ -112,16 +156,16 @@ function genStoryExport(ast, context) {
   const sourceParam = `storySource: { source: '${source}' }`;
   if (parameters) {
     const { code: params } = generate(parameters, {});
-    statements.push(`${storyKey}.story.parameters = { ${sourceParam}, ...${params} };`);
+    statements.push(`${storyKey}.parameters = { ${sourceParam}, ...${params} };`);
   } else {
-    statements.push(`${storyKey}.story.parameters = { ${sourceParam} };`);
+    statements.push(`${storyKey}.parameters = { ${sourceParam} };`);
   }
 
   let decorators = getAttr(ast.openingElement, 'decorators');
   decorators = decorators && decorators.expression;
   if (decorators) {
     const { code: decos } = generate(decorators, {});
-    statements.push(`${storyKey}.story.decorators = ${decos};`);
+    statements.push(`${storyKey}.decorators = ${decos};`);
   }
 
   // eslint-disable-next-line no-param-reassign
@@ -132,22 +176,22 @@ function genStoryExport(ast, context) {
   };
 }
 
-function genPreviewExports(ast, context) {
-  // console.log('genPreviewExports', JSON.stringify(ast, null, 2));
-
-  const previewExports = {};
+function genCanvasExports(ast, context) {
+  const canvasExports = {};
   for (let i = 0; i < ast.children.length; i += 1) {
     const child = ast.children[i];
     if (child.type === 'JSXElement' && child.openingElement.name.name === 'Story') {
       const storyExport = genStoryExport(child, context);
+      const { code } = generate(child, {});
+      child.value = code;
       if (storyExport) {
-        Object.assign(previewExports, storyExport);
+        Object.assign(canvasExports, storyExport);
         // eslint-disable-next-line no-param-reassign
         context.counter += 1;
       }
     }
   }
-  return previewExports;
+  return canvasExports;
 }
 
 function genMeta(ast, options) {
@@ -197,15 +241,17 @@ function getExports(node, counter, options) {
       // Single story
       const ast = parser.parseExpression(value, { plugins: ['jsx'] });
       const storyExport = genStoryExport(ast, counter);
+      const { code } = generate(ast, {});
+      // eslint-disable-next-line no-param-reassign
+      node.value = code;
       return storyExport && { stories: storyExport };
     }
-    if (PREVIEW_REGEX.exec(value)) {
-      // Preview, possibly containing multiple stories
+    if (CANVAS_REGEX.exec(value)) {
+      // Canvas/Preview, possibly containing multiple stories
       const ast = parser.parseExpression(value, { plugins: ['jsx'] });
-      return { stories: genPreviewExports(ast, counter) };
+      return { stories: genCanvasExports(ast, counter) };
     }
     if (META_REGEX.exec(value)) {
-      // Preview, possibly containing multiple stories
       const ast = parser.parseExpression(value, { plugins: ['jsx'] });
       return { meta: genMeta(ast, options) };
     }
@@ -255,11 +301,11 @@ function extractExports(node, options) {
         if (
           ast.openingElement &&
           ast.openingElement.type === 'JSXOpeningElement' &&
-          ast.openingElement.name.name === 'Preview' &&
+          ['Preview', 'Canvas'].includes(ast.openingElement.name.name) &&
           !hasStoryChild(ast)
         ) {
-          const previewAst = ast.openingElement;
-          previewAst.attributes.push({
+          const canvasAst = ast.openingElement;
+          canvasAst.attributes.push({
             type: 'JSXAttribute',
             name: {
               type: 'JSXIdentifier',
@@ -300,7 +346,6 @@ function extractExports(node, options) {
     }
   });
   // we're overriding default export
-  const defaultJsx = mdxToJsx.toJSX(node, {}, { ...options, skipExport: true });
   const storyExports = [];
   const includeStories = [];
   let metaExport = null;
@@ -329,7 +374,7 @@ function extractExports(node, options) {
   if (metaExport) {
     if (!storyExports.length) {
       storyExports.push('export const __page = () => { throw new Error("Docs-only story"); };');
-      storyExports.push('__page.story = { parameters: { docsOnly: true } };');
+      storyExports.push('__page.parameters = { docsOnly: true };');
       includeStories.push('__page');
     }
   } else {
@@ -337,6 +382,7 @@ function extractExports(node, options) {
   }
   metaExport.includeStories = JSON.stringify(includeStories);
 
+  const defaultJsx = mdxToJsx.toJSX(node, {}, { ...options, skipExport: true });
   const fullJsx = [
     'import { assertIsFn, AddContext } from "@storybook/addon-docs/blocks";',
     defaultJsx,

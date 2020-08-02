@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { document } from 'global';
 import AnsiToHtml from 'ansi-to-html';
 
-import { StoryId, StoryKind, ViewMode, Channel } from '@storybook/addons';
+import { StoryId, StoryKind, StoryFn, ViewMode, Channel } from '@storybook/addons';
 import Events from '@storybook/core-events';
 import { logger } from '@storybook/client-logger';
 import { StoryStore } from '@storybook/client-api';
@@ -15,28 +15,37 @@ import { RenderStoryFunction, RenderContext } from './types';
 interface RenderMetadata {
   id: StoryId;
   kind: StoryKind;
-  revision: number;
   viewMode: ViewMode;
+  getDecorated: () => StoryFn<any>;
 }
 
 type Layout = keyof typeof layouts;
 
 const layouts = {
   centered: {
+    margin: 0,
+    padding: '1rem',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     minHeight: '100vh',
-    margin: 0,
-    padding: '1rem',
     boxSizing: 'border-box',
   },
   fullscreen: {
     margin: 0,
+    padding: 0,
+    display: 'block',
+    justifyContent: 'initial',
+    alignItems: 'initial',
+    minHeight: 'initial',
   },
   padded: {
     margin: 0,
     padding: '1rem',
+    display: 'block',
+    justifyContent: 'initial',
+    alignItems: 'initial',
+    minHeight: 'initial',
   },
 } as const;
 
@@ -86,9 +95,9 @@ export class StoryRenderer {
   setupListeners() {
     // Channel can be null in StoryShots
     if (this.channel) {
-      this.channel.on(Events.RENDER_CURRENT_STORY, () => this.renderCurrentStory(false));
+      this.channel.on(Events.CURRENT_STORY_WAS_SET, () => this.renderCurrentStory(false));
       this.channel.on(Events.STORY_ARGS_UPDATED, () => this.forceReRender());
-      this.channel.on(Events.GLOBAL_ARGS_UPDATED, () => this.forceReRender());
+      this.channel.on(Events.GLOBALS_UPDATED, () => this.forceReRender());
       this.channel.on(Events.FORCE_RE_RENDER, () => this.forceReRender());
     }
   }
@@ -106,20 +115,20 @@ export class StoryRenderer {
       return;
     }
 
-    const { storyId, viewMode: urlViewMode } = storyStore.getSelection();
+    const { storyId, viewMode: urlViewMode } = storyStore.getSelection() || {};
 
     const data = storyStore.fromId(storyId);
-    const { kind, id, parameters = {} } = data || {};
+    const { kind, id, parameters = {}, getDecorated } = data || {};
     const { docsOnly, layout } = parameters;
 
     const metadata: RenderMetadata = {
       id,
       kind,
       viewMode: docsOnly ? 'docs' : urlViewMode,
-      revision: storyStore.getRevision(),
+      getDecorated,
     };
 
-    this.applyLayout(layout);
+    this.applyLayout(metadata.viewMode === 'docs' ? 'fullscreen' : layout);
 
     const context: RenderContext = {
       id: storyId, // <- in case data is null, at least we'll know what we tried to render
@@ -146,12 +155,15 @@ export class StoryRenderer {
     const { previousMetadata, storyStore } = this;
 
     const storyChanged = !previousMetadata || previousMetadata.id !== metadata.id;
-    const revisionChanged = !previousMetadata || previousMetadata.revision !== metadata.revision;
+    // getDecorated is a function that returns a decorated story function. It'll change whenever the story
+    // is reloaded into the store, which means the module the story was defined in was HMR-ed.
+    const implementationChanged =
+      !previousMetadata || previousMetadata.getDecorated !== metadata.getDecorated;
     const viewModeChanged = !previousMetadata || previousMetadata.viewMode !== metadata.viewMode;
     const kindChanged = !previousMetadata || previousMetadata.kind !== metadata.kind;
 
     // Don't re-render the story if nothing has changed to justify it
-    if (!forceRender && !storyChanged && !revisionChanged && !viewModeChanged) {
+    if (!forceRender && !storyChanged && !implementationChanged && !viewModeChanged) {
       this.channel.emit(Events.STORY_UNCHANGED, {
         ...metadata,
         name,
@@ -160,7 +172,7 @@ export class StoryRenderer {
     }
 
     // If we are rendering something new (as opposed to re-rendering the same or first story), emit
-    if (!forceRender && previousMetadata && !revisionChanged) {
+    if (previousMetadata && (storyChanged || kindChanged || viewModeChanged)) {
       this.channel.emit(Events.STORY_CHANGED, metadata.id);
     }
 

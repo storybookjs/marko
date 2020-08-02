@@ -5,7 +5,6 @@ import { action } from '@storybook/addon-actions';
 export default {
   title: 'Addon/Knobs',
   decorators: [withKnobs],
-
   parameters: {
     options: { selectedPanel: 'storybookjs/knobs/panel' },
   },
@@ -34,6 +33,4 @@ export const WithText = () => ({
   },
 });
 
-WithText.story = {
-  name: 'with text',
-};
+WithText.storyName = 'with text';

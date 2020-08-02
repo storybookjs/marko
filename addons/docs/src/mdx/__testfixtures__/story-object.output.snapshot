@@ -51,9 +51,8 @@ export const toStorybook = () => ({
     declarations: [Welcome],
   },
 });
-toStorybook.story = {};
-toStorybook.story.name = 'to storybook';
-toStorybook.story.parameters = {
+toStorybook.storyName = 'to storybook';
+toStorybook.parameters = {
   storySource: {
     source:
       '{\\\\n  template: \`<storybook-welcome-component (showApp)=\\"showApp()\\"></storybook-welcome-component>\`,\\\\n  props: {\\\\n    showApp: linkTo(\\\\'Button\\\\')\\\\n  },\\\\n  moduleMetadata: {\\\\n    declarations: [Welcome]\\\\n  }\\\\n}',

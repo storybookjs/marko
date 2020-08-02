@@ -3,6 +3,8 @@
     "plugin:cypress/recommended"
   ],
   "rules": {
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
+    "import/no-extraneous-dependencies": [
+      "error", { "devDependencies": true }
+    ]
   }
 }

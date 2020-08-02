@@ -4,7 +4,7 @@ Brings Jest results in storybook.
 
 [Framework Support](https://github.com/storybookjs/storybook/blob/master/ADDONS_SUPPORT.md)
 
-[![Storybook Jest Addon Demo](https://raw.githubusercontent.com/storybookjs/storybook-addon-jest/master/storybook-addon-jest.gif)](http://storybooks-official.netlify.com/?selectedKind=Addons%7Cjest&selectedStory=withTests&full=0&addons=1&stories=1&panelRight=0&addonPanel=storybook%2Ftests%2Fpanel)
+[![Storybook Jest Addon Demo](https://raw.githubusercontent.com/storybookjs/storybook/next/addons/jest/docs/storybook-addon-jest.gif)](http://storybooks-official.netlify.com/?selectedKind=Addons%7Cjest&selectedStory=withTests&full=0&addons=1&stories=1&panelRight=0&addonPanel=storybook%2Ftests%2Fpanel)
 
 > Checkout the above [Live Storybook](http://storybooks-official.netlify.com/?selectedKind=Addons%7Cjest&selectedStory=withTests&full=0&addons=1&stories=1&panelRight=0&addonPanel=storybook%2Ftests%2Fpanel).
 
@@ -73,8 +73,8 @@ within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: ['@storybook/addon-jest']
-}
+  addons: ['@storybook/addon-jest'],
+};
 ```
 
 ## Usage
@@ -92,13 +92,9 @@ export default {
   decorators: [withTests({ results })],
 };
 
-export const defaultView = () => (
-  <div>Jest results in storybook</div>
-);
-defaultView.story = {
-  parameters: {
-    jest: ['MyComponent.test.js', 'MyOtherComponent.test.js'],
-  },
+export const defaultView = () => <div>Jest results in storybook</div>;
+defaultView.parameters = {
+  jest: ['MyComponent.test.js', 'MyOtherComponent.test.js'],
 };
 ```
 
@@ -126,13 +122,9 @@ export default {
   title: 'MyComponent',
 };
 
-export const defaultView = () => (
-  <div>Jest results in storybook</div>
-);
-defaultView.story = {
-  parameters: {
-    jest: ['MyComponent.test.js', 'MyOtherComponent.test.js'],
-  },
+export const defaultView = () => <div>Jest results in storybook</div>;
+defaultView.parameters = {
+  jest: ['MyComponent.test.js', 'MyOtherComponent.test.js'],
 };
 ```
 
@@ -147,13 +139,9 @@ export default {
   title: 'MyComponent',
 };
 
-export const defaultView = () => (
-  <div>Jest results in storybook</div>
-);
-defaultView.story = {
-  parameters: {
-    jest: { disable: true },
-  },
+export const defaultView = () => <div>Jest results in storybook</div>;
+defaultView.parameters = {
+  jest: { disable: true },
 };
 ```
 
@@ -183,7 +171,7 @@ In your `.storybook/preview.ts`:
 import { addDecorator } from '@storybook/angular';
 import { withTests } from '@storybook/addon-jest';
 
-import * as results from '../.jest-test-results.json';
+import results from '../.jest-test-results.json';
 
 addDecorator(
   withTests({

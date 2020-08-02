@@ -116,15 +116,6 @@ describe('Channel', () => {
     });
   });
 
-  describe('method:addPeerListener', () => {
-    it('should add a listener and set ignorePeer to true', () => {
-      const eventName = 'event1';
-
-      channel.addPeerListener(eventName, jest.fn());
-      expect(channel.listeners(eventName)[0].ignorePeer).toBe(true);
-    });
-  });
-
   describe('method:eventNames', () => {
     it('should return a list of all registered events', () => {
       const eventNames = ['event1', 'event2', 'event3'];

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-essentials",
-  "version": "6.0.0-alpha.41",
+  "version": "6.0.0-rc.21",
   "description": "Curated addons to bring out the best of Storybook",
   "keywords": [
     "addon",
@@ -28,17 +28,21 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addon-backgrounds": "6.0.0-alpha.41",
-    "@storybook/addon-viewport": "6.0.0-alpha.41",
-    "@storybook/addons": "6.0.0-alpha.41",
-    "@storybook/api": "6.0.0-alpha.41",
-    "@storybook/node-logger": "6.0.0-alpha.41",
+    "@storybook/addon-actions": "6.0.0-rc.21",
+    "@storybook/addon-backgrounds": "6.0.0-rc.21",
+    "@storybook/addon-controls": "6.0.0-rc.21",
+    "@storybook/addon-docs": "6.0.0-rc.21",
+    "@storybook/addon-viewport": "6.0.0-rc.21",
+    "@storybook/addons": "6.0.0-rc.21",
+    "@storybook/api": "6.0.0-rc.21",
+    "@storybook/node-logger": "6.0.0-rc.21",
     "core-js": "^3.0.1",
     "regenerator-runtime": "^0.13.3",
     "ts-dedent": "^1.1.1"
   },
   "devDependencies": {
-    "@types/jest": "^25.1.1"
+    "@types/jest": "^25.1.1",
+    "@types/webpack-env": "^1.15.2"
   },
   "peerDependencies": {
     "babel-loader": "^8.0.0",
@@ -49,7 +53,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
+  "gitHead": "aa7ad3c00f46366cb28205e8fd82689afc4dfbc6",
   "typesVersions": {
     "<=3.5": {
       "*": [

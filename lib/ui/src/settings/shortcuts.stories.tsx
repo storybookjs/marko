@@ -2,7 +2,7 @@ import React from 'react';
 import { actions as makeActions } from '@storybook/addon-actions';
 
 import { DecoratorFn } from '@storybook/react';
-import ShortcutsScreen from './shortcuts';
+import { ShortcutsScreen } from './shortcuts';
 
 const defaultShortcuts = {
   fullScreen: ['F'],
@@ -51,4 +51,4 @@ export default {
 };
 
 export const defaults = () => <ShortcutsScreen shortcutKeys={defaultShortcuts} {...actions} />;
-defaults.story = { name: 'default shortcuts' };
+defaults.storyName = 'default shortcuts';

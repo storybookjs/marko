@@ -1,4 +1,3 @@
-/* eslint-disable jest/no-standalone-expect, no-unused-expressions, jest/valid-expect */
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -37,22 +36,66 @@ Cypress.Commands.add(
   }
 );
 
-Cypress.Commands.add('preview', {}, () => {
-  return cy.get(`#storybook-preview-iframe`).then({ timeout: 10000 }, (iframe) => {
-    const content = iframe[0].contentDocument;
-    const element = content !== null ? content.documentElement : null;
+Cypress.Commands.add('visitStorybook', () => {
+  cy.log('visitStorybook');
+  const host = Cypress.env('location') || 'http://localhost:8001';
+  return cy
+    .clearLocalStorage()
+    .visit(`${host}/?path=/story/example-introduction--page`)
+    .get(`#storybook-preview-iframe`, { log: false })
+    .its('0.contentDocument.body', { log: false })
+    .should('not.be.empty')
+    .then((body) => cy.wrap(body, { log: false }))
+    .find('#docs-root', { log: false })
+    .should('not.be.empty');
+});
 
-    return cy
-      .wrap(iframe)
-      .should(() => {
-        expect(element).not.null;
+Cypress.Commands.add('getStoryElement', {}, () => {
+  cy.log('getStoryElement');
+  return cy
+    .get(`#storybook-preview-iframe`, { log: false })
+    .its('0.contentDocument.body', { log: false })
+    .should('not.be.empty')
+    .then((body) => cy.wrap(body, { log: false }))
+    .find('#root', { log: false })
+    .should('not.be.empty')
+    .then((storyRoot) => cy.wrap(storyRoot, { log: false }));
+});
 
-        if (element !== null) {
-          expect(element.querySelector('#root > *')).not.null;
-        }
-      })
-      .then(() => {
-        return element.querySelector('#root');
-      });
-  });
+Cypress.Commands.add('getDocsElement', {}, () => {
+  cy.log('getDocsElement');
+  return cy
+    .get(`#storybook-preview-iframe`, { log: false })
+    .its('0.contentDocument.body', { log: false })
+    .should('not.be.empty')
+    .then((body) => cy.wrap(body, { log: false }))
+    .find('#docs-root', { log: false })
+    .should('not.be.empty')
+    .then((storyRoot) => cy.wrap(storyRoot, { log: false }));
+});
+
+Cypress.Commands.add('navigateToStory', (kind, name) => {
+  const kindId = kind.replace(/ /g, '-').toLowerCase();
+  const storyId = name.replace(/ /g, '-').toLowerCase();
+
+  const storyLinkId = `#${kindId}--${storyId}`;
+  cy.log(`navigateToStory ${kind} ${name}`);
+
+  if (name !== 'page') {
+    // Section can be collapsed, click twice ensure expansion
+    cy.get(`#${kindId}`).click();
+  }
+  cy.get(storyLinkId).click();
+
+  // assert url changes
+  cy.url().should('include', `path=/story/${kindId}--${storyId}`);
+  cy.get(storyLinkId).should('have.class', 'selected');
+
+  // A pause is good when switching stories
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(50);
+});
+
+Cypress.Commands.add('viewAddonPanel', (name) => {
+  cy.get(`[role=tablist] button[role=tab]`).contains(name).click();
 });

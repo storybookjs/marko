@@ -5,6 +5,7 @@ module.exports = {
     {
       files: [
         '**/__tests__/**',
+        'scripts/**',
         '**/__testfixtures__/**',
         '**/*.test.*',
         '**/*.stories.*',
@@ -26,6 +27,7 @@ module.exports = {
       },
     },
     { files: '**/.storybook/config.js', rules: { 'global-require': 'off' } },
+    { files: 'cypress/**', rules: { 'jest/expect-expect': 'off' } },
     {
       files: ['**/*.stories.*'],
       rules: {
@@ -45,6 +47,12 @@ module.exports = {
         'vars-on-top': 'off',
         'no-var': 'off', // this is how typescript works
         'spaced-comment': 'off',
+      },
+    },
+    {
+      files: ['**/mithril/**/*'],
+      rules: {
+        'react/no-unknown-property': 'off', // Need to deactivate otherwise eslint replaces some unknown properties with React ones
       },
     },
   ],

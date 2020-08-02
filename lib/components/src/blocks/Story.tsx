@@ -1,4 +1,8 @@
-import React, { createElement, ElementType, FunctionComponent } from 'react';
+import React, { createElement, ElementType, FunctionComponent, Fragment } from 'react';
+
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Parameters } from '@storybook/api';
+
 import { IFrame } from './IFrame';
 import { EmptyBlock } from './EmptyBlock';
 import { ZoomContext } from './ZoomContext';
@@ -21,48 +25,22 @@ interface CommonProps {
   id: string;
 }
 
-type InlineStoryProps = {
+interface InlineStoryProps extends CommonProps {
+  parameters: Parameters;
   storyFn: ElementType;
-} & CommonProps;
+}
 
 type IFrameStoryProps = CommonProps;
 
-type ErrorProps = {
-  error?: StoryError;
-} & CommonProps;
-
-// How do you XOR properties in typescript?
-export type StoryProps = (InlineStoryProps | IFrameStoryProps | ErrorProps) & {
-  inline: boolean;
-};
-
-const InlineZoomWrapper: FunctionComponent<{ scale: number }> = ({ scale, children }) => {
-  return scale === 1 ? (
-    <>{children}</>
-  ) : (
-    <div style={{ overflow: 'hidden' }}>
-      <div
-        style={{
-          transform: `scale(${1 / scale})`,
-          transformOrigin: 'top left',
-        }}
-      >
-        {children}
-      </div>
-    </div>
-  );
-};
+type StoryProps = InlineStoryProps | IFrameStoryProps;
 
 const InlineStory: FunctionComponent<InlineStoryProps> = ({ storyFn, height, id }) => (
-  <div style={{ height }}>
-    <ZoomContext.Consumer>
-      {({ scale }) => (
-        <InlineZoomWrapper scale={scale}>
-          {storyFn ? createElement(storyFn) : <EmptyBlock>{MISSING_STORY(id)}</EmptyBlock>}
-        </InlineZoomWrapper>
-      )}
-    </ZoomContext.Consumer>
-  </div>
+  <Fragment>
+    {height ? <style>{`#story--${id} { min-height: ${height} }`}</style> : null}
+    <Fragment>
+      {storyFn ? createElement(storyFn) : <EmptyBlock>{MISSING_STORY(id)}</EmptyBlock>}
+    </Fragment>
+  </Fragment>
 );
 
 const IFrameStory: FunctionComponent<IFrameStoryProps> = ({ id, title, height = '500px' }) => (
@@ -90,19 +68,22 @@ const IFrameStory: FunctionComponent<IFrameStoryProps> = ({ id, title, height = 
 );
 
 /**
- * A story element, either renderend inline or in an iframe,
+ * A story element, either rendered inline or in an iframe,
  * with configurable height.
  */
-const Story: FunctionComponent<StoryProps> = (props) => {
-  const { error } = props as ErrorProps;
-  const { storyFn } = props as InlineStoryProps;
-  const { id, inline, title, height } = props;
+const Story: FunctionComponent<StoryProps & { inline: boolean; error?: StoryError }> = ({
+  children,
+  error,
+  inline,
+  ...props
+}) => {
+  const { id, title, height } = props;
 
   if (error) {
     return <EmptyBlock>{error}</EmptyBlock>;
   }
   return inline ? (
-    <InlineStory id={id} storyFn={storyFn} title={title} height={height} />
+    <InlineStory {...(props as InlineStoryProps)} />
   ) : (
     <IFrameStory id={id} title={title} height={height} />
   );

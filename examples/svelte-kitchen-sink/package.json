@@ -1,6 +1,6 @@
 {
   "name": "svelte-example",
-  "version": "6.0.0-alpha.41",
+  "version": "6.0.0-rc.21",
   "private": true,
   "scripts": {
     "build-storybook": "build-storybook -s public",
@@ -10,22 +10,23 @@
     "global": "^4.3.2"
   },
   "devDependencies": {
-    "@storybook/addon-a11y": "6.0.0-alpha.41",
-    "@storybook/addon-actions": "6.0.0-alpha.41",
-    "@storybook/addon-backgrounds": "6.0.0-alpha.41",
-    "@storybook/addon-docs": "6.0.0-alpha.41",
-    "@storybook/addon-knobs": "6.0.0-alpha.41",
-    "@storybook/addon-links": "6.0.0-alpha.41",
-    "@storybook/addon-storyshots": "6.0.0-alpha.41",
-    "@storybook/addon-storysource": "6.0.0-alpha.41",
-    "@storybook/addon-viewport": "6.0.0-alpha.41",
-    "@storybook/addons": "6.0.0-alpha.41",
-    "@storybook/source-loader": "6.0.0-alpha.41",
-    "@storybook/svelte": "6.0.0-alpha.41"
+    "@storybook/addon-a11y": "6.0.0-rc.21",
+    "@storybook/addon-actions": "6.0.0-rc.21",
+    "@storybook/addon-backgrounds": "6.0.0-rc.21",
+    "@storybook/addon-controls": "6.0.0-rc.21",
+    "@storybook/addon-docs": "6.0.0-rc.21",
+    "@storybook/addon-knobs": "6.0.0-rc.21",
+    "@storybook/addon-links": "6.0.0-rc.21",
+    "@storybook/addon-storyshots": "6.0.0-rc.21",
+    "@storybook/addon-storysource": "6.0.0-rc.21",
+    "@storybook/addon-viewport": "6.0.0-rc.21",
+    "@storybook/addons": "6.0.0-rc.21",
+    "@storybook/source-loader": "6.0.0-rc.21",
+    "@storybook/svelte": "6.0.0-rc.21"
   },
   "storybook": {
     "chromatic": {
-      "appCode": "8ob73wgl995"
+      "projectToken": "8ob73wgl995"
     }
   }
 }

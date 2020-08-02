@@ -19,5 +19,4 @@ export const Story1 = () => {
 
   return <Component>Hello Button</Component>;
 };
-
-Story1.story = { name: 'Dynamic import' };
+Story1.storyName = 'Dynamic import';

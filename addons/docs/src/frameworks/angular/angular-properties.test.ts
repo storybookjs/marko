@@ -20,7 +20,11 @@ const runCompodoc = (inputPath: string) => {
     stdio: 'inherit',
   });
   const output = fs.readFileSync(`${tmpDir}/documentation.json`, 'utf8');
-  removeCallback();
+  try {
+    removeCallback();
+  } catch (e) {
+    //
+  }
   return output;
 };
 

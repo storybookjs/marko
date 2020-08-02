@@ -5,7 +5,7 @@ import { Loader } from '../Loader';
 import { StoryshotsOptions } from '../../api/StoryshotsOptions';
 
 function mockRiotToIncludeCompiler() {
-  jest.mock('riot', () => require.requireActual('riot/riot.js'));
+  jest.mock('riot', () => jest.requireActual('riot/riot.js'));
 }
 
 function test(options: StoryshotsOptions): boolean {
@@ -16,13 +16,13 @@ function load(options: StoryshotsOptions) {
   global.STORYBOOK_ENV = 'riot';
   mockRiotToIncludeCompiler();
 
-  const storybook = require.requireActual('@storybook/riot');
+  const storybook = jest.requireActual('@storybook/riot');
 
   configure({ ...options, storybook });
 
   return {
     framework: 'riot' as const,
-    renderTree: require.requireActual('./renderTree').default,
+    renderTree: jest.requireActual('./renderTree').default,
     renderShallowTree: () => {
       throw new Error('Shallow renderer is not supported for riot');
     },

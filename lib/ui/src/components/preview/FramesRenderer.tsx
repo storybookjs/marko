@@ -4,14 +4,7 @@ import { IFrame } from './iframe';
 import { FramesRendererProps } from './utils/types';
 import { stringifyQueryParams } from './utils/stringifyQueryParams';
 
-const getActive = (
-  refId: FramesRendererProps['refId'],
-  storyId: FramesRendererProps['storyId']
-) => {
-  if (storyId === '*') {
-    return undefined;
-  }
-
+const getActive = (refId: FramesRendererProps['refId']) => {
   if (refId) {
     return `storybook-ref-${refId}`;
   }
@@ -23,14 +16,18 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
   refs,
   story,
   scale,
-  viewMode,
+  viewMode = 'story',
   refId,
-  queryParams,
+  queryParams = {},
   baseUrl,
-  storyId,
+  storyId = '*',
 }) => {
-  const stringifiedQueryParams = stringifyQueryParams(queryParams);
-  const active = getActive(refId, storyId);
+  const version = refs[refId]?.version;
+  const stringifiedQueryParams = stringifyQueryParams({
+    ...queryParams,
+    ...(version && { version }),
+  });
+  const active = getActive(refId);
 
   const styles = useMemo<CSSObject>(() => {
     return {
@@ -41,7 +38,7 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
         visibility: 'visible',
       },
     };
-  }, [refs]);
+  }, []);
 
   const [frames, setFrames] = useState<Record<string, string>>({
     'storybook-preview-iframe': `${baseUrl}?id=${storyId}&viewMode=${viewMode}${stringifiedQueryParams}`,
@@ -50,7 +47,10 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
   useEffect(() => {
     const newFrames = Object.values(refs)
       .filter((r) => {
-        if (r.startInjected) {
+        if (r.error) {
+          return false;
+        }
+        if (r.type === 'auto-inject') {
           return true;
         }
         if (story && r.id === story.refId) {
@@ -62,7 +62,7 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
       .reduce((acc, r) => {
         return {
           ...acc,
-          [`storybook-ref-${r.id}`]: `${r.url}/iframe.html?id=${storyId}&viewMode=${viewMode}${stringifiedQueryParams}`,
+          [`storybook-ref-${r.id}`]: `${r.url}/iframe.html?id=${storyId}&viewMode=${viewMode}&refId=${r.id}${stringifiedQueryParams}`,
         };
       }, frames);
 

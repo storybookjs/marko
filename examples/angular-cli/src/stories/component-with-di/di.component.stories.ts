@@ -12,9 +12,7 @@ export const InputsAndInjectDependencies = () => ({
   },
 });
 
-InputsAndInjectDependencies.story = {
-  name: 'inputs and inject dependencies',
-};
+InputsAndInjectDependencies.storyName = 'inputs and inject dependencies';
 
 export const InputsAndInjectDependenciesWithKnobs = () => ({
   component: DiComponent,
@@ -23,7 +21,5 @@ export const InputsAndInjectDependenciesWithKnobs = () => ({
   },
 });
 
-InputsAndInjectDependenciesWithKnobs.story = {
-  name: 'inputs and inject dependencies with knobs',
-  decorators: [withKnobs],
-};
+InputsAndInjectDependenciesWithKnobs.storyName = 'inputs and inject dependencies with knobs';
+InputsAndInjectDependenciesWithKnobs.decorators = [withKnobs];

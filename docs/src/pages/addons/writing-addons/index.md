@@ -74,11 +74,11 @@ const PANEL_ID = `${ADDON_ID}/panel`;
 
 const MyPanel = () => {
   const value = useParameter(PARAM_KEY, null);
-  const item = value ? value.data : "";
+  const item = value ? value.data : '';
   return <div>{item}</div>;
-}
+};
 
-addons.register(ADDON_ID, api => {
+addons.register(ADDON_ID, (api) => {
   const render = ({ active, key }) => (
     <AddonPanel active={active} key={key}>
       <MyPanel />
@@ -95,20 +95,47 @@ addons.register(ADDON_ID, api => {
 });
 ```
 
-### register the addon
+#### Register the addon
 
 within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: ['path/to/addon']
-}
+  addons: ['path/to/addon'],
+};
 ```
 
-Now restart/rebuild storybook and the addon should show up!
+Now restart/rebuild storybook and the addon should show up!  
 When changing stories, the addon's onStoryChange method will be invoked with the new storyId.
 
-#### Note:
+#### TSX Addons
+
+When your addon needs additional typing or you want to keep it locally, you can register it within `.storybook/manager.tsx`
+and import there your TSX components to be compiled by webpack, not requiring an external package nor an additional build step.
+
+```tsx
+// manager.tsx
+
+import React from 'react';
+import { addons } from '@storybook/addons';
+import { AddonPanel } from '@storybook/components';
+import { ADDON_ID, PARAM_KEY, PANEL_ID, MyPanel } from './MyAddon';
+
+addons.register(ADDON_ID, (api) => {
+  addons.addPanel(PANEL_ID, {
+    title: 'My Addon',
+    paramKey: PARAM_KEY,
+    render: ({ active, key }) => (
+      <AddonPanel active={active} key={key}>
+        <MyPanel />
+      </AddonPanel>
+    ),
+  });
+});
+```
+
+#### Note
+
 If you get an error similar to:
 
 ```
@@ -128,7 +155,8 @@ It is likely because you do not have a `.babelrc` file or do not have it configu
 If we want to create a more complex addon, one that wraps the component being rendered for example, there are a few more steps.
 Essentially you can start communicating from and to the manager using the storybook API.
 
-Now we need to create two files, `register.js` and `index.js,`. `register.js` will be loaded by the manager (the outer frame) and `index.js` will be loaded in the iframe/preview. If you want your addon to be framework agnostic, THIS is the file where you need to be careful about that.
+Now we need to create two files, `register.js` and `index.js,`.  
+`register.js` will be loaded by the manager (the outer frame) and `index.js` will be loaded in the iframe/preview. If you want your addon to be framework agnostic, THIS is the file where you need to be careful about that.
 
 ## Creating a decorator
 
@@ -154,8 +182,8 @@ export default makeDecorator({
     // we can also add subscriptions here using channel.on('eventName', callback);
 
     return getStory(context);
-  }
-})
+  },
+});
 ```
 
 In this case, our component can access something called the channel. It lets us communicate with the panel (in the manager).
@@ -178,15 +206,19 @@ import { AddonPanel } from '@storybook/components';
 
 const MyPanel = () => {
   const emit = useChannel({
-    STORY_RENDERED: id => { /* do something */ },
-    'my/customEvent': () => { /* so something */ },
+    STORY_RENDERED: (id) => {
+      /* do something */
+    },
+    'my/customEvent': () => {
+      /* so something */
+    },
   });
 
   return <button onClick={() => emit('my/otherEvent')}>click to emit</button>;
-}
+};
 
 // Register the addon with a unique name.
-addons.register('my/addon', api => {
+addons.register('my/addon', (api) => {
   // Also need to set a unique name to the panel.
   addons.addPanel('my/addon/panel', {
     title: 'My Addon',
@@ -217,12 +249,8 @@ A great way of preserving state even when your component is unmounted is using t
 export const Panel = () => {
   const [state, setState] = useAddonState('my/addon-id', 'initial state');
 
-  return (
-    <button onClick={() => setState('a new value')}>
-      the state = "{state}"
-    </button>
-  );
-}
+  return <button onClick={() => setState('a new value')}>the state = "{state}"</button>;
+};
 ```
 
 This will store your addon's state into storybook core state, and so when your component gets unmounted & remounted, the state will be restored.
@@ -235,8 +263,8 @@ within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: ['path/to/addon']
-}
+  addons: ['path/to/addon'],
+};
 ```
 
 Then you need to start using the decorator:
@@ -253,21 +281,18 @@ export default {
   decorators: [withMyAddon],
 };
 
-export const defaultView = () => (
-  <Button>Hello Button</Button>
-);
-defaultView.story = {
-  parameters: {
-    myParameter: { data: 'awesome' },
-  },
+export const defaultView = () => <Button>Hello Button</Button>;
+defaultView.parameters = {
+  myParameter: { data: 'awesome' },
 };
 ```
 
 ### Disabling an addon panel
 
 It's possible to disable an addon panel for a particular story.
- 
+
 To offer that capability, you need to pass the paramKey when you register the panel
+
 ```js
 addons.register(ADDON_ID, () => {
   addons.add(PANEL_ID, {
@@ -293,7 +318,6 @@ export default {
     myAddon: { disable: true },
   },
 };
-
 ```
 
 ## Styling your addon
@@ -316,7 +340,7 @@ You can learn more about the complete API [here](/addons/api).
 
 ## Packaging
 
-It's possible to package this addon into a NPM module. As an example, have a look at this [package](https://github.com/storybookjs/storybook/tree/master/addons/notes).
+It's possible to package this addon into a NPM module. As an example, have a look at this [package](https://github.com/storybookjs/deprecated-addons/tree/master/addons/notes).
 
 In addition to moving the above code to a NPM module, we've set `react` and `@storybook/addons` as peer dependencies.
 

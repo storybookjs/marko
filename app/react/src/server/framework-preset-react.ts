@@ -8,10 +8,6 @@ export function babelDefault(config: TransformOptions) {
       require.resolve('@babel/preset-react'),
       require.resolve('@babel/preset-flow'),
     ],
-    plugins: [
-      ...(config.plugins || []),
-      require.resolve('@babel/plugin-transform-react-constant-elements'),
-      require.resolve('babel-plugin-add-react-displayname'),
-    ],
+    plugins: [...(config.plugins || []), require.resolve('babel-plugin-add-react-displayname')],
   };
 }

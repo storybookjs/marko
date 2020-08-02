@@ -1,7 +1,7 @@
-import React, { Fragment, FunctionComponent, useMemo, useEffect } from 'react';
-import merge from '@storybook/api/dist/lib/merge';
+import React, { Fragment, FunctionComponent, useMemo, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 
+import merge from '@storybook/api/dist/lib/merge';
 import { API, Consumer, Combo } from '@storybook/api';
 import { SET_CURRENT_STORY } from '@storybook/core-events';
 import addons, { types, Addon } from '@storybook/addons';
@@ -28,6 +28,8 @@ const canvasMapper = ({ state, api }: Combo) => ({
   queryParams: state.customQueryParams,
   getElements: api.getElements,
   story: api.getData(state.storyId, state.refId),
+  storiesConfigured: state.storiesConfigured,
+  storiesFailed: state.storiesFailed,
   refs: state.refs,
   active: !!(state.viewMode && state.viewMode.match(/^(story|docs)$/)),
 });
@@ -49,6 +51,8 @@ const createCanvas = (id: string, baseUrl = 'iframe.html', withLoader = true): A
           viewMode,
           queryParams,
           getElements,
+          storiesConfigured,
+          storiesFailed,
           active,
         }) => {
           const wrappers = useMemo(() => [...defaultWrappers, ...getWrappers(getElements)], [
@@ -57,8 +61,8 @@ const createCanvas = (id: string, baseUrl = 'iframe.html', withLoader = true): A
           ]);
 
           const isLoading = !!(
-            (storyId && !story) ||
-            (story && story.refId && refs[refId] && !refs[refId].ready)
+            (!story && !(storiesFailed || storiesConfigured)) ||
+            (story && refId && refs[refId] && !refs[refId].ready)
           );
 
           return (
@@ -66,7 +70,11 @@ const createCanvas = (id: string, baseUrl = 'iframe.html', withLoader = true): A
               {({ value: scale }) => {
                 return (
                   <>
-                    {withLoader && isLoading && <Loader id="preview-loader" role="progressbar" />}
+                    {withLoader && isLoading && (
+                      <S.LoaderWrapper>
+                        <Loader id="preview-loader" role="progressbar" />
+                      </S.LoaderWrapper>
+                    )}
                     <ApplyWrappers
                       id={id}
                       storyId={storyId}
@@ -116,7 +124,7 @@ const useTabs = (
   }, [getElements]);
 
   return useMemo(() => {
-    if (story && story.parameters) {
+    if (story?.parameters) {
       return filterTabs([canvas, ...tabsFromConfig], story.parameters);
     }
 
@@ -135,13 +143,24 @@ const Preview: FunctionComponent<PreviewProps> = (props) => {
     baseUrl,
     withLoader = true,
   } = props;
-  const { isToolshown } = options;
   const { getElements } = api;
 
   const tabs = useTabs(previewId, baseUrl, withLoader, getElements, story);
 
+  const isToolshown =
+    !(viewMode === 'docs' && tabs.filter((t) => !t.hidden).length < 2) && options.isToolshown;
+
+  const initialRender = useRef(true);
   useEffect(() => {
-    if (story) {
+    // Don't emit the event on first ("real") render, only when story or mode changes
+    if (initialRender.current) {
+      // We initially render without a story set, which isn't all that interesting, let's ignore
+      if (story) {
+        initialRender.current = false;
+      }
+      return;
+    }
+    if (story && viewMode && viewMode.match(/docs|story/)) {
       const { refId, id } = story;
       api.emit(SET_CURRENT_STORY, {
         storyId: id,

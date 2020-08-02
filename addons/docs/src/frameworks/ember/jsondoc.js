@@ -10,7 +10,15 @@ export const getJSONDoc = () => {
 
 export const extractArgTypes = (componentName) => {
   const json = getJSONDoc();
+  if (!(json && json.included)) {
+    return null;
+  }
   const componentDoc = json.included.find((doc) => doc.attributes.name === componentName);
+
+  if (!componentDoc) {
+    return null;
+  }
+  
   return componentDoc.attributes.arguments.map((prop) => {
     return {
       name: prop.name,
@@ -28,10 +36,13 @@ export const extractArgTypes = (componentName) => {
 
 export const extractComponentDescription = (componentName) => {
   const json = getJSONDoc();
+  if (!(json && json.included)) {
+    return null;
+  }
   const componentDoc = json.included.find((doc) => doc.attributes.name === componentName);
 
   if (!componentDoc) {
-    return '';
+    return null;
   }
 
   return componentDoc.attributes.description;

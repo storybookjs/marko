@@ -73,9 +73,7 @@ export const AllKnobs = () => {
   };
 };
 
-AllKnobs.story = {
-  name: 'All knobs',
-};
+AllKnobs.storyName = 'All knobs';
 
 export const XssSafety = () => ({
   tags: [
@@ -87,6 +85,4 @@ export const XssSafety = () => ({
   ],
 });
 
-XssSafety.story = {
-  name: 'XSS safety',
-};
+XssSafety.storyName = 'XSS safety';

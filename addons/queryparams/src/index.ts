@@ -17,10 +17,10 @@ export const withQuery = makeDecorator({
         ? qs.parse(parameters, { ignoreQueryPrefix: true })
         : parameters;
 
-    const newQuery = qs.stringify({ ...currentQuery, ...additionalQuery });
-    const newLocation = location.href.replace(location.search, `?${newQuery}`);
+    const newLocation = new URL(document.location.href);
+    newLocation.search = qs.stringify({ ...currentQuery, ...additionalQuery });
 
-    history.replaceState({}, document.title, newLocation);
+    history.replaceState({}, document.title, newLocation.toString());
 
     return getStory(context);
   },

@@ -14,7 +14,7 @@ export default {
   },
 };
 
-export const PassedToStory = ({ parameters: { fileName, ...parameters } }) => ({
+export const PassedToStory = (_args, { parameters: { fileName, ...parameters } }) => ({
   component: Button,
   props: {
     text: `Parameters are ${JSON.stringify(parameters, null, 2)}`,
@@ -22,7 +22,5 @@ export const PassedToStory = ({ parameters: { fileName, ...parameters } }) => ({
   },
 });
 
-PassedToStory.story = {
-  name: 'passed to story',
-  parameters: { storyParameter },
-};
+PassedToStory.storyName = 'passed to story';
+PassedToStory.parameters = { storyParameter };

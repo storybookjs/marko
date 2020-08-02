@@ -50,14 +50,6 @@ do
       yarn sb init --skip-install --yes --story-format mdx
     fi
     ;;
-  csf-ts)
-    if [[ $dir =~ (react_scripts_ts) ]]
-    then
-      yarn sb init --skip-install --yes --story-format csf-ts
-    else
-      yarn sb init --skip-install --yes
-    fi
-    ;;
   esac
   cd ..
 done

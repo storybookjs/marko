@@ -9,7 +9,7 @@ Storybook comes with a variety of "core" addons developed and maintained alongsi
 
 Here's how to do it.
 
-We are going to use an addon called [Notes](https://github.com/storybookjs/storybook/tree/master/addons/notes). Basically, it allows you to write notes for your stories.
+We are going to use an addon called [Notes](https://github.com/storybookjs/deprecated-addons/tree/master/addons/notes). Basically, it allows you to write notes for your stories.
 
 First, we need to install the addons:
 
@@ -21,10 +21,7 @@ within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: [
-    '@storybook/addon-actions',
-    '@storybook/addon-knobs',
-  ],
+  addons: ['@storybook/addon-actions', '@storybook/addon-knobs'],
 };
 ```
 
@@ -58,10 +55,8 @@ export const buttonWithEmoji = () => (
     </span>
   </Button>
 );
-buttonWithEmoji.story = {
-  parameters: {
-    notes: 'A small component',
-  },
+buttonWithEmoji.parameters = {
+  notes: 'A small component',
 };
 ```
 
@@ -89,10 +84,8 @@ export const buttonWithEmoji = () => (
     </span>
   </Button>
 );
-buttonWithEmoji.story = {
-  parameters: {
-    notes: { disabled: true }
-  }
+buttonWithEmoji.parameters = {
+  notes: { disabled: true },
 };
 ```
 

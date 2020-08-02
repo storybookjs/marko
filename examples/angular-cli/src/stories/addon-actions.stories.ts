@@ -13,9 +13,7 @@ export const ActionOnly = () => ({
   },
 });
 
-ActionOnly.story = {
-  name: 'Action only',
-};
+ActionOnly.storyName = 'Action only';
 
 export const ActionAndMethod = () => ({
   component: Button,
@@ -29,6 +27,4 @@ export const ActionAndMethod = () => ({
   },
 });
 
-ActionAndMethod.story = {
-  name: 'Action and method',
-};
+ActionAndMethod.storyName = 'Action and method';

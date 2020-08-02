@@ -1,7 +1,7 @@
 import React, { Fragment, FunctionComponent } from 'react';
 import { styled, Global } from '@storybook/theming';
 
-import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
+import { OverlayScrollbarsComponent } from './OverlayScrollbarsComponent';
 import { getScrollAreaStyles } from './ScrollAreaStyles';
 
 export interface ScrollProps {
@@ -11,7 +11,7 @@ export interface ScrollProps {
 }
 
 const Scroll = styled(({ vertical, horizontal, ...rest }: ScrollProps) => (
-  <OverlayScrollbarsComponent options={{ scrollbars: { autoHide: 'scroll' } }} {...rest} />
+  <OverlayScrollbarsComponent options={{ scrollbars: { autoHide: 'leave' } }} {...rest} />
 ))<ScrollProps>(
   ({ vertical }) =>
     !vertical

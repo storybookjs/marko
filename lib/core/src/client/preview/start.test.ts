@@ -1,15 +1,16 @@
 import { document, window } from 'global';
-import Events from '@storybook/core-events';
 
 import start from './start';
 
 jest.mock('@storybook/client-logger');
 jest.mock('global', () => ({
   history: { replaceState: jest.fn() },
+  location: { search: '' },
   navigator: { userAgent: 'browser', platform: '' },
   window: {
     __STORYBOOK_CLIENT_API__: undefined,
     addEventListener: jest.fn(),
+    postMessage: jest.fn(),
     location: { search: '' },
     history: { replaceState: jest.fn() },
     matchMedia: jest.fn().mockReturnValue({ matches: false }),
@@ -51,9 +52,7 @@ it('reuses the current client api when the lib is reloaded', () => {
 
   const valueOfClientApi = window.__STORYBOOK_CLIENT_API__;
 
-  const { clientApi: newClientApi, channel } = start(render);
-
-  channel.emit(Events.SET_STORIES, {});
+  const { clientApi: newClientApi } = start(render);
 
   expect(clientApi).toEqual(newClientApi);
   expect(clientApi).toEqual(valueOfClientApi);
@@ -63,31 +62,29 @@ it('calls render when you add a story', () => {
   jest.useFakeTimers();
   const render = jest.fn();
 
-  const { clientApi, configApi, channel } = start(render);
+  const { clientApi, configApi } = start(render);
 
   configApi.configure(() => {
     clientApi.storiesOf('kind', {} as NodeModule).add('story', () => {});
   }, {} as NodeModule);
-
-  channel.emit(Events.SET_STORIES, {});
 
   expect(render).toHaveBeenCalledWith(expect.objectContaining({ kind: 'kind', name: 'story' }));
 });
 
 it('emits an exception and shows error when your story throws', () => {
   jest.useFakeTimers();
-  const render = jest.fn();
+  const render = jest.fn().mockImplementation(() => {
+    throw new Error('Some exception');
+  });
 
-  const { clientApi, configApi, channel } = start(render);
+  const { clientApi, configApi } = start(render);
 
   configApi.configure(() => {
     clientApi.storiesOf('kind', {} as NodeModule).add('story1', () => {});
   }, {} as NodeModule);
 
-  channel.emit(Events.SET_STORIES, {});
-
-  expect(render).not.toHaveBeenCalled();
-  expect(document.body.classList.add).toHaveBeenCalledWith('sb-show-nopreview');
+  expect(render).toHaveBeenCalled();
+  expect(document.body.classList.add).toHaveBeenCalledWith('sb-show-errordisplay');
 });
 
 it('emits an error and shows error when your framework calls showError', () => {
@@ -100,13 +97,11 @@ it('emits an error and shows error when your framework calls showError', () => {
     showError(error);
   });
 
-  const { clientApi, configApi, channel } = start(render);
+  const { clientApi, configApi } = start(render);
 
   configApi.configure(() => {
     clientApi.storiesOf('kind', {} as NodeModule).add('story', () => {});
   }, {} as NodeModule);
-
-  channel.emit(Events.SET_STORIES, {});
 
   expect(render).toHaveBeenCalled();
   expect(document.body.classList.add).toHaveBeenCalledWith('sb-show-errordisplay');

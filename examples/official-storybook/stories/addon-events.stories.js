@@ -77,6 +77,4 @@ export default {
 };
 
 export const logger = () => <Logger emitter={emitter} />;
-logger.story = {
-  name: 'Logger',
-};
+logger.storyName = 'Logger';

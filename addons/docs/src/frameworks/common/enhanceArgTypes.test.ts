@@ -1,4 +1,4 @@
-import { ArgType, ArgTypes, Args } from '@storybook/api';
+import { ArgType, ArgTypes } from '@storybook/api';
 import { enhanceArgTypes } from './enhanceArgTypes';
 
 expect.addSnapshotSerializer({
@@ -10,20 +10,20 @@ const enhance = ({
   argType,
   arg,
   extractedArgTypes,
-  storyFn = (args: Args) => 0,
+  isArgsStory = true,
 }: {
   argType?: ArgType;
   arg?: any;
   extractedArgTypes?: ArgTypes;
-  storyFn?: any;
+  isArgsStory?: boolean;
 }) => {
   const context = {
     id: 'foo--bar',
     kind: 'foo',
     name: 'bar',
-    storyFn,
     parameters: {
       component: 'dummy',
+      __isArgsStory: isArgsStory,
       docs: {
         extractArgTypes: extractedArgTypes && (() => extractedArgTypes),
       },
@@ -35,7 +35,8 @@ const enhance = ({
       },
     },
     args: {},
-    globalArgs: {},
+    argTypes: {},
+    globals: {},
   };
   return enhanceArgTypes(context);
 };
@@ -46,7 +47,7 @@ describe('enhanceArgTypes', () => {
       expect(
         enhance({
           argType: { foo: 'unmodified', type: { name: 'number' } },
-          storyFn: () => 0,
+          isArgsStory: false,
         }).input
       ).toMatchInlineSnapshot(`
         {
@@ -68,22 +69,6 @@ describe('enhanceArgTypes', () => {
               argType: { type: { name: 'number' } },
             }).input
           ).toMatchInlineSnapshot(`
-            {
-              "control": {
-                "type": "number"
-              },
-              "name": "input",
-              "type": {
-                "name": "number"
-              }
-            }
-          `);
-        });
-      });
-
-      describe('args input', () => {
-        it('number', () => {
-          expect(enhance({ arg: 5 }).input).toMatchInlineSnapshot(`
             {
               "control": {
                 "type": "number"
@@ -136,18 +121,17 @@ describe('enhanceArgTypes', () => {
         it('options', () => {
           expect(
             enhance({
-              argType: { control: { type: 'options', options: [1, 2], controlType: 'radio' } },
+              argType: { control: { type: 'radio', options: [1, 2] } },
             }).input
           ).toMatchInlineSnapshot(`
             {
               "name": "input",
               "control": {
-                "type": "options",
+                "type": "radio",
                 "options": [
                   1,
                   2
-                ],
-                "controlType": "radio"
+                ]
               }
             }
           `);
@@ -205,7 +189,6 @@ describe('enhanceArgTypes', () => {
             "control": {
               "type": "text"
             },
-            "name": "input",
             "type": {
               "name": "string"
             }
@@ -222,15 +205,12 @@ describe('enhanceArgTypes', () => {
           }).input
         ).toMatchInlineSnapshot(`
           {
+            "name": "input",
+            "defaultValue": 5,
             "control": {
               "type": "range",
               "step": 50
-            },
-            "name": "input",
-            "type": {
-              "name": "number"
-            },
-            "defaultValue": 5
+            }
           }
         `);
       });
@@ -244,13 +224,7 @@ describe('enhanceArgTypes', () => {
         ).toMatchInlineSnapshot(`
           {
             "input": {
-              "control": {
-                "type": "number"
-              },
-              "name": "input",
-              "type": {
-                "name": "number"
-              }
+              "name": "input"
             },
             "foo": {
               "control": {
@@ -301,6 +275,14 @@ describe('enhanceArgTypes', () => {
           })
         ).toMatchInlineSnapshot(`
           {
+            "foo": {
+              "control": {
+                "type": "number"
+              },
+              "type": {
+                "name": "number"
+              }
+            },
             "input": {
               "control": {
                 "type": "number"

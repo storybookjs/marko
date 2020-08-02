@@ -14,9 +14,7 @@ export const ActionOnViewMethod = () => ({
   },
 });
 
-ActionOnViewMethod.story = {
-  name: 'Action on view method',
-};
+ActionOnViewMethod.storyName = 'Action on view method';
 
 export const ActionOnComponentMethod = () => ({
   Component: Button,
@@ -28,6 +26,4 @@ export const ActionOnComponentMethod = () => ({
   },
 });
 
-ActionOnComponentMethod.story = {
-  name: 'Action on component method',
-};
+ActionOnComponentMethod.storyName = 'Action on component method';

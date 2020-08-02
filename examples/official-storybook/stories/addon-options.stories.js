@@ -8,13 +8,11 @@ export const SettingName = () => (
   <div>This story should have changed the name of the storybook</div>
 );
 
-SettingName.story = {
-  name: 'setting name',
+SettingName.storyName = 'setting name';
 
-  parameters: {
-    options: {
-      name: 'Custom Storybook',
-    },
+SettingName.parameters = {
+  options: {
+    name: 'Custom Storybook',
   },
 };
 
@@ -22,12 +20,10 @@ export const HidingAddonPanel = () => (
   <div>This story should have changed hidden the addons panel</div>
 );
 
-HidingAddonPanel.story = {
-  name: 'hiding addon panel',
+HidingAddonPanel.storyName = 'hiding addon panel';
 
-  parameters: {
-    options: {
-      showPanel: false,
-    },
+HidingAddonPanel.parameters = {
+  options: {
+    showPanel: false,
   },
 };

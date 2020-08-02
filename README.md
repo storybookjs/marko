@@ -65,18 +65,18 @@ Storybook comes with a lot of [addons](https://storybook.js.org/addons/introduct
 
 ## Table of contents
 
-- 🚀[Getting Started](#getting-started)
-- 📒[Projects](#projects)
-  - 🛠[Supported Frameworks & Examples](#supported-frameworks)
-  - 🚇[Sub Projects](#sub-projects)
+- 🚀 [Getting Started](#getting-started)
+- 📒 [Projects](#projects)
+  - 🛠 [Supported Frameworks & Examples](#supported-frameworks)
+  - 🚇[ Sub Projects](#sub-projects)
   - 🔗[Addons](#addons)
-- 🏅[Badges & Presentation materials](#badges--presentation-materials)
-- 👥[Community](#community)
-- 👏[Contributing](#contributing)
-  - 👨‍💻[Development scripts](#development-scripts)
-  - 💵[Backers](#backers)
-  - 💸[Sponsors](#sponsors)
-- :memo:[License](#license)
+- 🏅 [Badges & Presentation materials](#badges--presentation-materials)
+- 👥 [Community](#community)
+- 👏 [Contributing](#contributing)
+  - 👨‍💻 [Development scripts](#development-scripts)
+  - 💵 [Backers](#backers)
+  - 💸 [Sponsors](#sponsors)
+- :memo: [License](#license)
 
 ## Getting Started
 
@@ -137,7 +137,6 @@ For additional help, join us [in our Discord](https://discord.gg/sMFvFsG) or [Sl
 | [a11y](addons/a11y/)                        | Test components for user accessibility in Storybook                        |
 | [actions](addons/actions/)                  | Log actions as users interact with components in the Storybook UI          |
 | [backgrounds](addons/backgrounds/)          | Let users choose backgrounds in the Storybook UI                           |
-| [contexts](addons/contexts/)                | Interactively inject component contexts for stories in the Storybook UI    |
 | [cssresources](addons/cssresources/)        | Dynamically add/remove css resources to the component iframe               |
 | [design assets](addons/design-assets/)      | View images, videos, weblinks alongside your story                         |
 | [docs](addons/docs/)                        | Add high quality documentation to your components                          |
@@ -147,7 +146,6 @@ For additional help, join us [in our Discord](https://discord.gg/sMFvFsG) or [Sl
 | [jest](addons/jest/)                        | View the results of components' unit tests in Storybook                    |
 | [knobs](addons/knobs/)                      | Interactively edit component prop data in the Storybook UI                 |
 | [links](addons/links/)                      | Create links between stories                                               |
-| [options](addons/options/)                  | Customize the Storybook UI in code                                         |
 | [query params](addons/queryparams/)         | Mock query params                                                          |
 | [storyshots](addons/storyshots/)            | Snapshot testing for components in Storybook                               |
 | [storysource](addons/storysource/)          | View the code of your stories within the Storybook UI                      |
@@ -157,14 +155,18 @@ See [Addon / Framework Support Table](ADDONS_SUPPORT.md)
 
 ### Deprecated Addons
 
-| Addons                                      |                                                                            |
-| ------------------------------------------- | -------------------------------------------------------------------------- |
-| [info](https://github.com/storybookjs/storybook/tree/master/addons/info)                                        | Annotate stories with extra component usage information                    |
-| [notes](https://github.com/storybookjs/storybook/tree/master/addons/notes)                                       | Annotate Storybook stories with notes                                      |
+| Addons                                                                             |                                                          |
+| ---------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| [info](https://github.com/storybookjs/deprecated-addons/tree/master/addons/info)   | Annotate stories with extra component usage information  |
+| [notes](https://github.com/storybookjs/deprecated-addons/tree/master/addons/notes) | Annotate Storybook stories with notes                    |
+| [contexts](https://github.com/storybookjs/storybook/tree/master/addons/contexts)   | Addon for driving your components under dynamic contexts |
+| [options](https://github.com/storybookjs/storybook/tree/master/addons/options/)    | Customize the Storybook UI in code                       |
 
 In order to continue improving your experience, we have to eventually deprecate certain addons in favor of new, better tools.
 
 If you're using info/notes, we highly recommend you to migrate to [docs](addons/docs/) instead, and [here is a guide](addons/docs/docs/recipes.md#migrating-from-notesinfo-addons) to help you.
+
+If you're using contexts, we highly recommend you to migrate to [toolbars](https://github.com/storybookjs/storybook/tree/next/addons/toolbars) and [here is a guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-addon-contexts) to help you.
 
 ## Badges & Presentation materials
 
@@ -191,8 +193,8 @@ If you're looking for material to use in your presentation about storybook, like
 We welcome contributions to Storybook!
 
 - 📥 Pull requests and 🌟 Stars are always welcome.
-- Read our [contributing guide](CONTRIBUTING.md) to get started.
-  or find us on [Discord](https://discord.gg/sMFvFsG), we're will take the time to guide you
+- Read our [contributing guide](CONTRIBUTING.md) to get started,
+  or find us on [Discord](https://discord.gg/sMFvFsG), we will take the time to guide you
 
 Looking for a first issue to tackle?
 

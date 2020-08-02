@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { getCustomElements, isValidComponent, isValidMetaData } from '@storybook/web-components';
+import { ArgTypes } from '@storybook/api';
 
 interface TagItem {
   name: string;
@@ -31,49 +32,51 @@ interface Sections {
   css?: any;
 }
 
-function mapData(data: TagItem[]) {
-  return data.map((item) => ({
-    name: item.name,
-    type: { summary: item.type },
-    required: '',
-    description: item.description,
-    defaultValue: { summary: item.default !== undefined ? item.default : item.defaultValue },
-  }));
+function mapData(data: TagItem[], category: string) {
+  return (
+    data &&
+    data.reduce((acc, item) => {
+      const type = category === 'properties' ? { name: item.type } : { name: 'void' };
+      acc[item.name] = {
+        name: item.name,
+        required: false,
+        description: item.description,
+        type,
+        table: {
+          category,
+          type: { summary: item.type },
+          defaultValue: { summary: item.default !== undefined ? item.default : item.defaultValue },
+        },
+      };
+      return acc;
+    }, {} as ArgTypes)
+  );
 }
 
 function isEmpty(obj: object) {
   return Object.entries(obj).length === 0 && obj.constructor === Object;
 }
 
-export const extractPropsFromElements = (tagName: string, customElements: CustomElements) => {
+export const extractArgTypesFromElements = (tagName: string, customElements: CustomElements) => {
   if (!isValidComponent(tagName) || !isValidMetaData(customElements)) {
     return null;
   }
   const metaData = customElements.tags.find(
     (tag) => tag.name.toUpperCase() === tagName.toUpperCase()
   );
-  const sections: Sections = {};
-  if (metaData.attributes) {
-    sections.attributes = mapData(metaData.attributes);
-  }
-  if (metaData.properties) {
-    sections.properties = mapData(metaData.properties);
-  }
-  if (metaData.events) {
-    sections.events = mapData(metaData.events);
-  }
-  if (metaData.slots) {
-    sections.slots = mapData(metaData.slots);
-  }
-  if (metaData.cssProperties) {
-    sections.css = mapData(metaData.cssProperties);
-  }
-  return isEmpty(sections) ? false : { sections };
+  const argTypes = {
+    ...mapData(metaData.attributes, 'attributes'),
+    ...mapData(metaData.properties, 'properties'),
+    ...mapData(metaData.events, 'events'),
+    ...mapData(metaData.slots, 'slots'),
+    ...mapData(metaData.cssProperties, 'css'),
+  };
+  return argTypes;
 };
 
-export const extractProps = (tagName: string) => {
+export const extractArgTypes = (tagName: string) => {
   const customElements: CustomElements = getCustomElements();
-  return extractPropsFromElements(tagName, customElements);
+  return extractArgTypesFromElements(tagName, customElements);
 };
 
 export const extractComponentDescription = (tagName: string) => {

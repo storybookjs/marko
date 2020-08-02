@@ -24,9 +24,7 @@ const image = {
   alt: 'my image',
 };
 
-export const withAnImage = () => (
-  <img src={image.src} alt={image.alt} />
-);
+export const withAnImage = () => <img src={image.src} alt={image.alt} />;
 ```
 
 This is enabled with our [default config](/configurations/default-config). But, if you are using a [custom Webpack config](/configurations/custom-webpack-config), you need to add the [file-loader](https://github.com/webpack/file-loader) into your custom Webpack config.
@@ -55,20 +53,27 @@ export default {
 };
 
 // assume image.png is located in the "public" directory.
-export const withAnImage = () => (
-  <img src="/image.png" alt="my image" />
-);
+export const WithAnImage = () => <img src="/image.png" alt="my image" />;
 ```
 
-> You can also pass a list of directories separated by commas without spaces instead of a single directory.
->
-> ```json
-> {
->   "scripts": {
->     "start-storybook": "start-storybook -s ./public,./static -p 9001"
->   }
-> }
-> ```
+You can also pass a list of directories separated by commas without spaces instead of a single directory.
+
+```json
+{
+  "scripts": {
+    "start-storybook": "start-storybook -s ./public,./static -p 9001"
+  }
+}
+```
+
+A second common setup is where the assets are hosted in a directory, e.g. `/public` and referenced in components like `<img src="/public/image.png" />`. Storybook's static directory behavior doesn't support this well. The workaround is to create a [soft link](https://en.wikipedia.org/wiki/Symbolic_link) in the static directory to itself.
+
+```sh
+cd public
+ln -s . public
+```
+
+We'll provide better built-in [support for this use case](https://github.com/storybookjs/storybook/issues/714) in a future version of Storybook.
 
 ## 3. Via a CDN
 

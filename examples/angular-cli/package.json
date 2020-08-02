@@ -1,6 +1,6 @@
 {
   "name": "angular-cli",
-  "version": "6.0.0-alpha.41",
+  "version": "6.0.0-rc.21",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -27,7 +27,7 @@
     "@angular/platform-browser-dynamic": "^9.1.0",
     "@ngrx/store": "^9.0.0",
     "core-js": "^3.0.1",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.14.0",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.4.0",
     "zone.js": "^0.10.2"
@@ -37,35 +37,36 @@
     "@angular/cli": "^9.1.0",
     "@angular/compiler-cli": "^9.1.0",
     "@compodoc/compodoc": "^1.1.11",
-    "@storybook/addon-a11y": "6.0.0-alpha.41",
-    "@storybook/addon-actions": "6.0.0-alpha.41",
-    "@storybook/addon-backgrounds": "6.0.0-alpha.41",
-    "@storybook/addon-docs": "6.0.0-alpha.41",
-    "@storybook/addon-jest": "6.0.0-alpha.41",
-    "@storybook/addon-knobs": "6.0.0-alpha.41",
-    "@storybook/addon-links": "6.0.0-alpha.41",
-    "@storybook/addon-storyshots": "6.0.0-alpha.41",
-    "@storybook/addon-storysource": "6.0.0-alpha.41",
-    "@storybook/addons": "6.0.0-alpha.41",
-    "@storybook/angular": "6.0.0-alpha.41",
-    "@storybook/source-loader": "6.0.0-alpha.41",
+    "@storybook/addon-a11y": "6.0.0-rc.21",
+    "@storybook/addon-actions": "6.0.0-rc.21",
+    "@storybook/addon-backgrounds": "6.0.0-rc.21",
+    "@storybook/addon-controls": "6.0.0-rc.21",
+    "@storybook/addon-docs": "6.0.0-rc.21",
+    "@storybook/addon-jest": "6.0.0-rc.21",
+    "@storybook/addon-knobs": "6.0.0-rc.21",
+    "@storybook/addon-links": "6.0.0-rc.21",
+    "@storybook/addon-storyshots": "6.0.0-rc.21",
+    "@storybook/addon-storysource": "6.0.0-rc.21",
+    "@storybook/addons": "6.0.0-rc.21",
+    "@storybook/angular": "6.0.0-rc.21",
+    "@storybook/source-loader": "6.0.0-rc.21",
     "@types/core-js": "^2.5.0",
     "@types/jest": "^25.1.1",
-    "@types/node": "^13.9.5",
-    "@types/webpack-env": "^1.15.1",
+    "@types/node": "^14.0.10",
+    "@types/webpack-env": "^1.15.2",
     "babel-plugin-require-context-hook": "^1.0.0",
     "global": "^4.3.2",
     "jasmine-core": "~3.5.0",
-    "jasmine-spec-reporter": "~5.0.1",
-    "jest": "^25.2.4",
-    "jest-preset-angular": "^7.1.0",
-    "protractor": "~5.4.3",
-    "ts-node": "~8.8.1",
+    "jasmine-spec-reporter": "~5.0.2",
+    "jest": "^26.0.0",
+    "jest-preset-angular": "^8.2.0",
+    "protractor": "~7.0.0",
+    "ts-node": "~8.9.1",
     "typescript": "^3.4.0"
   },
   "storybook": {
     "chromatic": {
-      "appCode": "tl92yzsj6w"
+      "projectToken": "tl92yzsj6w"
     }
   }
 }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 /** ButtonGroup component description from docgen */
 export const ButtonGroup = ({ background, children }) => (
-  <div style={{ background }}>{children}</div>
+  <div style={{ padding: 10, background }}>{children}</div>
 );
 
 ButtonGroup.defaultProps = {

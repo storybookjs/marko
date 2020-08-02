@@ -1,13 +1,19 @@
 declare module '@mdx-js/react';
-declare module '@storybook/addon-docs/mdx-compiler-plugin';
-declare module '@storybook/addon-docs/blocks';
 declare module 'global';
-declare module 'react-is';
 declare module '@egoist/vue-to-react';
 declare module 'remark-slug';
 declare module 'remark-external-links';
 declare module 'babel-plugin-react-docgen';
 declare module 'require-from-string';
-declare module 'tmp';
-declare module 'cross-spawn';
 declare module 'styled-components';
+declare module 'acorn-jsx';
+
+declare module 'react-element-to-jsx-string' {
+  export interface Options {
+    showFunctions?: boolean;
+    displayName?(): string;
+    tabStop?: number;
+  }
+
+  export default function render(element: React.ReactNode, options: Options): string;
+}

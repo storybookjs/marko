@@ -1,7 +1,9 @@
 module.exports = {
-  stories: ['../src/stories/**/*.stories.(js|mdx)'],
+  stories: ['../src/stories/**/*.stories.@(js|mdx)'],
+  logLevel: 'debug',
   addons: [
     '@storybook/addon-docs',
+    '@storybook/addon-controls',
     '@storybook/addon-storysource',
     '@storybook/addon-actions',
     '@storybook/addon-links',
@@ -9,6 +11,5 @@ module.exports = {
     '@storybook/addon-viewport',
     '@storybook/addon-backgrounds',
     '@storybook/addon-a11y',
-    '@storybook/addon-contexts',
   ],
 };

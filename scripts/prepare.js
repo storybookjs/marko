@@ -1,12 +1,11 @@
 /* eslint-disable no-console */
-/* tslint:disable:no-console */
 const path = require('path');
 const shell = require('shelljs');
 const chalk = require('chalk');
 const fs = require('fs');
 const log = require('npmlog');
-const { babelify } = require('./compile-babel');
-const { tscfy } = require('./compile-tsc');
+const { babelify } = require('./utils/compile-babel');
+const { tscfy } = require('./utils/compile-tsc');
 
 function getPackageJson() {
   const modulePath = path.resolve('./');
@@ -35,9 +34,16 @@ function cleanup() {
   if (fs.existsSync(path.join(process.cwd(), 'dist'))) {
     const files = shell.find('dist').filter((filePath) => {
       // Do not remove folder
-      // And do not clean anything for @storybook/cli/dist/generators/**/template* because these are the template files
+      // And do not clean anything for:
+      // - @storybook/cli/dist/generators/**/template*
+      // - @storybook/cli/dist/frameworks/*
+      // because these are the template files
       // that will be copied to init SB on users' projects
-      if (fs.lstatSync(filePath).isDirectory() || /generators\/.+\/template.*/.test(filePath)) {
+      if (
+        fs.lstatSync(filePath).isDirectory() ||
+        /generators\/.+\/template.*/.test(filePath) ||
+        /dist\/frameworks\/.*/.test(filePath)
+      ) {
         return false;
       }
 

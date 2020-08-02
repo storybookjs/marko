@@ -5,7 +5,7 @@ import { ModuleFn } from '../index';
 
 export interface SubAPI {
   getChannel: () => Channel;
-  on: (type: string, cb: Listener, peer?: boolean) => () => void;
+  on: (type: string, cb: Listener) => () => void;
   off: (type: string, cb: Listener) => void;
   emit: (type: string, ...args: any[]) => void;
   once: (type: string, cb: Listener) => void;
@@ -16,18 +16,14 @@ export interface SubAPI {
 export const init: ModuleFn = ({ provider }) => {
   const api: SubAPI = {
     getChannel: () => provider.channel,
-    on: (type, cb, peer = true) => {
-      if (peer) {
-        provider.channel.addPeerListener(type, cb);
-      } else {
-        provider.channel.addListener(type, cb);
-      }
+    on: (type, cb) => {
+      provider.channel.addListener(type, cb);
 
       return () => provider.channel.removeListener(type, cb);
     },
     off: (type, cb) => provider.channel.removeListener(type, cb),
-    emit: (type, event) => provider.channel.emit(type, event),
-    once: (type, event) => provider.channel.once(type, event),
+    once: (type, cb) => provider.channel.once(type, cb),
+    emit: (type, ...args) => provider.channel.emit(type, ...args),
 
     collapseAll: () => {
       provider.channel.emit(STORIES_COLLAPSE_ALL, {});

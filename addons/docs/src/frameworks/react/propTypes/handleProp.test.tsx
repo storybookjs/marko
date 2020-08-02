@@ -1,10 +1,14 @@
 /* eslint-disable no-underscore-dangle */
 
-import { PropDef } from '@storybook/components';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Component } from '../../../blocks/types';
-import { extractComponentProps, DocgenInfo, DocgenPropDefaultValue } from '../../../lib/docgen';
+import {
+  PropDef,
+  extractComponentProps,
+  DocgenInfo,
+  DocgenPropDefaultValue,
+} from '../../../lib/docgen';
 import { enhancePropTypesProp, enhancePropTypesProps } from './handleProp';
 
 const DOCGEN_SECTION = 'props';

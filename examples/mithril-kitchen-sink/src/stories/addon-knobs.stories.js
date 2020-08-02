@@ -75,9 +75,9 @@ export const Story2 = () => {
     ),
   };
 };
-Story2.story = { name: 'All knobs' };
+Story2.storyName = 'All knobs';
 
 export const Story3 = () => ({
   view: () => text('Rendered string', '<img src=x onerror="alert(\'XSS Attack\')" >'),
 });
-Story3.story = { name: 'XSS safety' };
+Story3.storyName = 'XSS safety';

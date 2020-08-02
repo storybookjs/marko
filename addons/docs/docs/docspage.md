@@ -17,7 +17,7 @@ When you install [Storybook Docs](../README.md), `DocsPage` is the zero-config d
 
 ## Motivation
 
-`DocsPage` is the successor to [`addon-info`](https://github.com/storybookjs/storybook/tree/next/addons/info), which was one of the most popular Storybook addons despite many limitations.
+`DocsPage` is the successor to [`addon-info`](https://github.com/storybookjs/deprecated-addons/tree/master/addons/info), which was one of the most popular Storybook addons despite many limitations.
 
 Like `addon-info`, `DocsPage` provides sensible defaults, meaning it adds documentation to your existing Storybook without requiring any additional work on your part.
 
@@ -110,8 +110,8 @@ export default {
 import { Button } from './Button';
 // export default { ... }
 export const basic => () => <Button>Basic</Button>
-basic.story = {
-  parameters: { docs: { page: null } }
+basic.parameters = {
+  docs: { page: null }
 }
 ```
 
@@ -126,7 +126,7 @@ import {
   Subtitle,
   Description,
   Primary,
-  Props,
+  ArgsTable,
   Stories,
 } from '@storybook/addon-docs/blocks';
 import { DocgenButton } from '../../components/DocgenButton';
@@ -142,7 +142,7 @@ export default {
           <Subtitle />
           <Description />
           <Primary />
-          <Props />
+          <ArgsTable />
           <Stories />
         </>
       ),
@@ -155,7 +155,7 @@ You can interleave your own components to customize the auto-generated contents 
 
 ## Story file names
 
-Unless you use a custom webpack configuration, all of your story files should have the suffix `*.stories.[jt]sx?`, e.g. `"Badge.stories.js"`, `"Badge.stories.tsx"`, etc.
+Unless you use a custom webpack configuration, all of your story files should have the suffix `*.stories.@(j|t)sx?`, e.g. `"Badge.stories.js"`, `"Badge.stories.tsx"`, etc.
 
 The docs preset assumes this naming convention for its `source-loader` setup. If you want to use a different naming convention, you'll need a [manual configuration](../README.md#manual-configuration).
 
@@ -173,9 +173,9 @@ import { addParameters } from '@storybook/vue';
 
 addParameters({
   docs: {
-    prepareForInline: (storyFn) => {
+    prepareForInline: (storyFn, { args }) => {
       const Story = toReact(storyFn());
-      return <Story />;
+      return <Story {...args} />;
     },
   },
 });

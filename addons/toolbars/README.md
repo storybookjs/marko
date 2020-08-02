@@ -1,5 +1,5 @@
 <center>
-  <img src="https://github.com/storybookjs/storybook/blob/next/addons/toolbars/docs/hero.gif" width="100%" />
+  <img src="https://raw.githubusercontent.com/storybookjs/storybook/next/addons/toolbars/docs/hero.gif" width="100%" />
 </center>
 
 <h1>Storybook Addon Toolbars</h1>
@@ -10,7 +10,7 @@ The Toolbars addon controls global story rendering options from Storybook's tool
 - set your components' internationalization (i18n) locale
 - configure just about anything in Storybook that makes use of a global variable
 
-Toolbars is implemented using Storybook Args (SB6.0+): dynamic variables that trigger a story re-render when they are set.
+Toolbars is built on top of [Storybook Args](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/formats/component-story-format/index.md#args-story-inputs) (SB6.0+): dynamic variables that trigger a story re-render when they are set.
 
 - [Get started](#get-started)
   - [Installation](#installation)
@@ -19,12 +19,17 @@ Toolbars is implemented using Storybook Args (SB6.0+): dynamic variables that tr
 - [Advanced usage](#advanced-usage)
   - [Advanced menu configuration](#advanced-menu-configuration)
   - [Consuming global args from within a story](#consuming-global-args-from-within-a-story)
+  - [Consuming global args from within an addon](#consuming-global-args-from-within-an-addon)
 - [FAQs](#faqs)
   - [How does this compare to `addon-contexts`?](#how-does-this-compare-to-addon-contexts)
 
 ## Get started
 
-To get started with `addon-toolbars`: (1) [install the addon](#installation), (2) [configure the menu UI](#configure-menu-ui), and (3) [Create a decorator to implement custom logic](#create-a-decorator).
+To get started with `addon-toolbars`:
+
+1. [install the addon](#installation),
+2. [configure the menu UI](#configure-menu-ui)
+3. [Create a decorator to implement custom logic](#create-a-decorator).
 
 ### Installation
 
@@ -44,33 +49,48 @@ module.exports = {
 
 ### Configure menu UI
 
-Addon-toolbars has a simple, declarative syntax for configuring toolbar menus. You can add toolbars by adding `globalArgTypes` with a `toolbar` annotation, in `.storybook/preview.js`:
+Addon-toolbars has a simple, declarative syntax for configuring toolbar menus. You can add toolbars by adding `globalTypes` with a `toolbar` annotation, in `.storybook/preview.js`:
 
 ```js
-export const globalArgTypes = {
+export const globalTypes = {
   theme: {
     name: 'Theme'
     description: 'Global theme for components',
     defaultValue: 'light',
-    toolbar: { icon: 'circlehollow', items: ['light','dark'] },
-  }
-}
+    toolbar: {
+      icon: 'circlehollow',
+      // array of plain string values or MenuItem shape (see below)
+      items: ['light', 'dark'],
+    },
+  },
+};
 ```
 
 You should see a dropdown in your toolbar with options `light` and `dark`.
 
 ### Create a decorator
 
-Now, let's wire it up! We can consume our new `theme` global arg in a decorator using the `context.globalArgs.theme` value.
+Now, let's wire it up! We can consume our new `theme` global arg in a decorator using the `context.globals.theme` value.
 
-For example, suppose you are using`styled-components`. You can add a theme provider decorator to your `.storybook/preview.js` config:
+For example, suppose you are using `styled-components`. You can add a theme provider decorator to your `.storybook/preview.js` config:
 
-```js
-const styledComponentsThemeDecorator = (storyFn, { globalArgs: { theme } }) => (
-  <ThemeProvider {...getTheme(theme)}>{storyFn()}</ThemeProvider>
-);
+```ts
+import { ThemeProvider } from 'styled-components';
+import { StoryContext, StoryGetter, StoryWrapper } from '@storybook/addons';
 
-export const decorators = [styledComponentsThemeDecorator];
+const withThemeProvider: StoryWrapper = (Story: StoryGetter, context: StoryContext) => {
+  // context.globals.theme here will be either 'light' or 'dark'
+  // getTheme being a function retrieving the actual theme object from that value
+  const theme = getTheme(context.globals.theme);
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Story {...context} />
+    </ThemeProvider>
+  );
+};
+
+export const decorators = [withThemeProvider];
 ```
 
 ## Advanced usage
@@ -109,21 +129,20 @@ type MenuItem {
 Thus if you want to show right-justified flags for an internationalization locale, you might set up the following configuration in `.storybook/preview.js`:
 
 ```js
-export const globalArgTypes = {
-    locale: {
-      name: 'Locale',
-      description: 'Internationalization locale',
-      defaultValue: 'en',
-      toolbar: {
-        icon: 'globe',
-        items: [
-          { value: 'en', right: '🇺🇸', title: 'English' },
-          { value: 'fr', right: '🇫🇷', title: 'Français' },
-          { value: 'es', right: '🇪🇸', title: 'Español' },
-          { value: 'zh', right: '🇨🇳', title: '中文' },
-          { value: 'kr', right: '🇰🇷', title: '한국어' },
-        ],
-      }
+export const globalTypes = {
+  locale: {
+    name: 'Locale',
+    description: 'Internationalization locale',
+    defaultValue: 'en',
+    toolbar: {
+      icon: 'globe',
+      items: [
+        { value: 'en', right: '🇺🇸', title: 'English' },
+        { value: 'fr', right: '🇫🇷', title: 'Français' },
+        { value: 'es', right: '🇪🇸', title: 'Español' },
+        { value: 'zh', right: '🇨🇳', title: '中文' },
+        { value: 'kr', right: '🇰🇷', title: '한국어' },
+      ],
     },
   },
 };
@@ -133,7 +152,7 @@ export const globalArgTypes = {
 
 The recommended usage, as shown in the examples above, is to consume global args from within a decorator and implement a global setting that applies to all stories. But sometimes it's useful to use toolbar options inside individual stories.
 
-Storybook's `globalArgs` are available via the story context:
+Storybook's `globals` are available via the story context:
 
 ```js
 const getCaptionForLocale = (locale) => {
@@ -147,18 +166,48 @@ const getCaptionForLocale = (locale) => {
   }
 }
 
-export const StoryWithLocale = ({ globalArgs: { locale } }) => {
+export const StoryWithLocale = (args, { globals: { locale } }) => {
   const caption = getCaptionForLocale(locale);
-  return <>{caption}</>
+  return <>{caption}</>;
 };
 ```
 
-**NOTE:** In Storybook 6.0, if you set the global option `passArgsFirst`, the story context is passes as the second argument:
+**NOTE:** In Storybook 6.0, if you set the global option `passArgsFirst: false` for backwards compatibility, the story context is passes as the second argument:
 
 ```js
-export const StoryWithLocale = (args, { globalArgs: { locale } }) => {
+export const StoryWithLocale = ({ globals: { locale } }) => {
   const caption = getCaptionForLocale(locale);
   return <>{caption}</>;
+};
+```
+
+### Consuming global args from within an addon
+
+There is a hook available in `@storybook/api` to retrieve the global args: `useGlobals()`
+
+Following the previous example of the ThemeProvider, if you want for instance to display the current theme inside a Panel:
+
+```js
+import { useGlobals } from '@storybook/api';
+import { AddonPanel, Placeholder, Separator, Source, Spaced, Title } from '@storybook/components';
+
+const ThemePanel = props => {
+  const [{ theme: themeName }] = useGlobals();
+  const theme = getTheme(themeName);
+
+  return (
+    <AddonPanel {...props}>
+      {theme ? (
+        <Spaced row={3} outer={1}>
+          <Title>{theme.name}</Title>
+          <p>The full theme object/p>
+          <Source code={JSON.stringify(theme, null, 2)} language="js" copyable padded showLineNumbers />
+        </Spaced>
+      ) : (
+        <Placeholder>No theme selected</Placeholder>
+      )}
+    </AddonPanel>
+  );
 };
 ```
 

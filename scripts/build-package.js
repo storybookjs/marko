@@ -3,7 +3,7 @@
 /* eslint-disable global-require */
 const { resolve } = require('path');
 const terminalSize = require('window-size');
-const { checkDependenciesAndRun, spawn } = require('./cli-utils');
+const { checkDependenciesAndRun, spawn } = require('./utils/cli-utils');
 
 const getStorybookPackages = () => {
   const listCommand = spawn(`lerna list`, {
@@ -136,40 +136,32 @@ function run() {
           .map((key) => key.suffix)
           .filter(Boolean);
 
-        const glob =
+        let glob =
           packageNames.length > 1
             ? `@storybook/{${packageNames.join(',')}}`
             : `@storybook/${packageNames[0]}`;
 
+        const isAllPackages = process.argv.includes('--all');
+        if (isAllPackages) {
+          glob = '@storybook/*';
+
+          log.warn(
+            'You are building a lot of packages on watch mode. This is an expensive action and might slow your computer down.\nIf this is an issue, run yarn build to filter packages and speed things up!'
+          );
+        }
+
         if (watchMode) {
           const runWatchMode = () => {
-            const baseWatchCommand = `lerna exec --scope "${glob}" -- cross-env-shell node ${resolve(
+            const baseWatchCommand = `lerna exec --scope '${glob}' --parallel -- cross-env-shell node ${resolve(
               __dirname
             )}`;
-            const watchTsc = `${baseWatchCommand}/watch-tsc.js`;
-            const watchBabel = `${baseWatchCommand}/watch-babel.js`;
+            const watchTsc = `${baseWatchCommand}/utils/watch-tsc.js`;
+            const watchBabel = `${baseWatchCommand}/utils/watch-babel.js`;
             const command = `concurrently --kill-others "${watchTsc}" "${watchBabel}"`;
             spawn(command);
           };
 
-          if (packageNames.length < 5) {
-            runWatchMode();
-          } else {
-            inquirer
-              .prompt([
-                {
-                  type: 'confirm',
-                  message:
-                    'You selected a lot of packages on watch mode. This is a very expensive action and might slow your computer down. Do you want to continue?',
-                  name: 'confirmation',
-                },
-              ])
-              .then(({ confirmation }) => {
-                if (confirmation === true) {
-                  runWatchMode();
-                }
-              });
-          }
+          runWatchMode();
         } else {
           spawn(`lerna run prepare --scope "${glob}"`);
         }

@@ -14,9 +14,7 @@ export default {
 };
 
 export const WithText = () => <Button onClick={action('clicked')}>Hello Button</Button>;
-WithText.story = {
-  name: 'with text',
-};
+WithText.storyName = 'with text';
 
 export const WithSomeEmoji = () => (
   <Button onClick={action('clicked')}>
@@ -25,9 +23,7 @@ export const WithSomeEmoji = () => (
     </span>
   </Button>
 );
-WithSomeEmoji.story = {
-  name: 'with some emoji',
-};
+WithSomeEmoji.storyName = 'with some emoji';
 
 export const WithCounter = () => {
   const [counter, setCounter] = useState(0);
@@ -35,11 +31,10 @@ export const WithCounter = () => {
   return <Button onClick={() => setCounter(counter + 1)}>{label}</Button>;
 };
 
-WithCounter.story = {
-  name: 'with counter',
-  parameters: {
-    docs: {
-      storyDescription: 'This demonstrates react hooks working inside stories. Go team! 🚀',
-    },
+WithCounter.storyName = 'with counter';
+
+WithCounter.parameters = {
+  docs: {
+    storyDescription: 'This demonstrates react hooks working inside stories. Go team! 🚀',
   },
 };

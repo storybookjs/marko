@@ -13,6 +13,4 @@ export const ButtonWithLinkToAnotherStory = () => ({
   },
 });
 
-ButtonWithLinkToAnotherStory.story = {
-  name: 'button with link to another story',
-};
+ButtonWithLinkToAnotherStory.storyName = 'button with link to another story';

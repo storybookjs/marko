@@ -81,11 +81,7 @@ export const Item = (props: ItemProps) => {
           {item.description}
         </HeaderBar>
         <HighlightToggleElement>
-          <HighlightToggle
-            toggleId={highlightToggleId}
-            type={type}
-            elementsToHighlight={item.nodes}
-          />
+          <HighlightToggle toggleId={highlightToggleId} elementsToHighlight={item.nodes} />
         </HighlightToggleElement>
       </Wrapper>
       {open ? (

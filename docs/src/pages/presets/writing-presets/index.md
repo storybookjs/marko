@@ -42,13 +42,13 @@ The babel functions `babel`, `babelDefault`, and `managerBabel` all configure ba
 
 All functions take a [Babel configuration object](https://babeljs.io/docs/en/configuration) as their argument and can modify it or return a new object.
 
-For example, Storybook's Vue support uses presets internally and here's how it configures babel:
+For example, Storybook's Mihtril support uses plugins internally and here's how it configures babel:
 
 ```js
-export function babelDefault(config) {
+export function babelDefault(config: TransformOptions) {
   return {
     ...config,
-    presets: [...config.presets, require.resolve('babel-preset-vue')],
+    plugins: [...config.plugins, require.resolve('@babel/plugin-transform-react-jsx')],
   };
 }
 ```
@@ -134,9 +134,9 @@ Entries are the place to register entry points for the preview. For example it c
 
 ## Advanced Configuration
 
-The presets API is also more powerful than the [standard configuration options](../custom-webpack-config/) available in Storybook, so it's also possible to use presets for more advanced configuration without actually publishing a preset yourself.
+The presets API is also more powerful than the [standard configuration options](../configurations/custom-webpack-config/) available in Storybook, so it's also possible to use presets for more advanced configuration without actually publishing a preset yourself.
 
-For example, some users want to configure the webpack for Storybook's UI and addons ([issue](https://github.com/storybookjs/storybook/issues/4995)), but this is not possible using [standard webpack configuration](../custom-webpack-config/) (it used to be possible before SB4.1). However, you can achieve this with a private preset.
+For example, some users want to configure the webpack for Storybook's UI and addons ([issue](https://github.com/storybookjs/storybook/issues/4995)), but this is not possible using [standard webpack configuration](../configurations/custom-webpack-config/) (it used to be possible before SB4.1). However, you can achieve this with a private preset.
 
 If it doesn't exist yet, create a file `.storybook/main.js`:
 

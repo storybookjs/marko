@@ -3,6 +3,9 @@ import { AppComponent } from '../app/app.component';
 export default {
   title: 'App Component',
   component: AppComponent,
+  parameters: {
+    layout: 'fullscreen',
+  },
 };
 
 export const ComponentWithSeparateTemplate = () => ({
@@ -10,7 +13,5 @@ export const ComponentWithSeparateTemplate = () => ({
   props: {},
 });
 
-ComponentWithSeparateTemplate.story = {
-  name: 'Component with separate template',
-  parameters: { docs: { iframeHeight: 400 } },
-};
+ComponentWithSeparateTemplate.storyName = 'Component with separate template';
+ComponentWithSeparateTemplate.parameters = { docs: { iframeHeight: 400 } };

@@ -13,6 +13,4 @@ export const GoToWelcomeView = () => ({
   },
 });
 
-GoToWelcomeView.story = {
-  name: 'Go to welcome view',
-};
+GoToWelcomeView.storyName = 'Go to welcome view';

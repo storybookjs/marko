@@ -23,7 +23,7 @@ export const Story1 = () => (
     </pre>
   </Vertical>
 );
-Story1.story = { name: 'story with 100vh padding 1' };
+Story1.storyName = 'story with 100vh padding 1';
 
 export const Story2 = () => (
   <Vertical>
@@ -35,7 +35,7 @@ export const Story2 = () => (
     </pre>
   </Vertical>
 );
-Story2.story = { name: 'story with 100vh padding 2' };
+Story2.storyName = 'story with 100vh padding 2';
 
 export const Story3 = () => (
   <Horizontal>
@@ -44,7 +44,7 @@ export const Story3 = () => (
     <pre>END</pre>
   </Horizontal>
 );
-Story3.story = { name: 'story with 100vw+' };
+Story3.storyName = 'story with 100vw+';
 
 export const Story4 = () => (
   <Horizontal>
@@ -53,4 +53,4 @@ export const Story4 = () => (
     <pre>END</pre>
   </Horizontal>
 );
-Story4.story = { name: 'story with 100vw+ 2' };
+Story4.storyName = 'story with 100vw+ 2';

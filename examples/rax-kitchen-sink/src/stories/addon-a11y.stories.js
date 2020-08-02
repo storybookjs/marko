@@ -10,9 +10,7 @@ export const Basic = () => <Text>RAX TEXT NODE</Text>;
 
 export const WithStyle = () => <Text style={{ fontSize: 20, color: 'blue' }}>Styled text</Text>;
 
-WithStyle.story = {
-  name: 'with style',
-};
+WithStyle.storyName = 'with style';
 
 export const WithMarkdown = () => (
   <button type="button">
@@ -25,6 +23,4 @@ export const WithMarkdown = () => (
   </button>
 );
 
-WithMarkdown.story = {
-  name: 'with markdown',
-};
+WithMarkdown.storyName = 'with markdown';

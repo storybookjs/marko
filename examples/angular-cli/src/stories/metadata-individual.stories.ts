@@ -21,9 +21,7 @@ export const Individual1 = () => ({
   },
 });
 
-Individual1.story = {
-  name: 'Individual 1',
-};
+Individual1.storyName = 'Individual 1';
 
 export const Individual2 = () => ({
   template: `<storybook-simple-token-component></storybook-simple-token-component>`,
@@ -43,6 +41,4 @@ export const Individual2 = () => ({
   },
 });
 
-Individual2.story = {
-  name: 'Individual 2',
-};
+Individual2.storyName = 'Individual 2';

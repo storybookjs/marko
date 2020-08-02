@@ -5,7 +5,7 @@ import { StorybookLogo } from '@storybook/components';
 
 export const StorybookLogoStyled = styled(StorybookLogo)({
   width: 'auto',
-  height: 22,
+  height: '22px !important',
   display: 'block',
 });
 

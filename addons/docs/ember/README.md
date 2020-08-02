@@ -1,4 +1,4 @@
-# Storybook Docs for Ember
+<h1>Storybook Docs for Ember</h1>
 
 > migration guide: This page documents the method to configure storybook introduced recently in 5.3.0, consult the [migration guide](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) if you want to migrate to this format of configuring storybook.
 
@@ -6,12 +6,12 @@ Storybook Docs transforms your Storybook stories into world-class component docu
 
 To learn more about Storybook Docs, read the [general documentation](../README.md). To learn the Ember specifics, read on!
 
-- [Storybook Docs for Ember](#storybook-docs-for-ember)
-  - [Installation](#installation)
-  - [DocsPage](#docspage)
-  - [MDX](#mdx)
-  - [IFrame height](#iframe-height)
-  - [More resources](#more-resources)
+- [Installation](#installation)
+- [DocsPage](#docspage)
+- [Props tables](#props-tables)
+- [MDX](#mdx)
+- [IFrame height](#iframe-height)
+- [More resources](#more-resources)
 
 ## Installation
 
@@ -33,7 +33,9 @@ module.exports = {
 
 When you [install docs](#installation) you should get basic [DocsPage](../docs/docspage.md) documentation automagically for all your stories, available in the `Docs` tab of the Storybook UI.
 
-Props tables for your components requires a few more steps. Docs for Ember relies on [@storybook/ember-cli-storybook addon](https://github.com/storybookjs/ember-cli-storybook), to extract documentation comments from your component source files. If you're using Storybook with Ember, you should already have this addon installed, you will just need to enable it by adding the following config block in your `ember-cli-build.js` file:
+## Props tables
+
+Getting [Props tables](../docs/props-tables.md) for your components requires a few more steps. Docs for Ember relies on [@storybook/ember-cli-storybook addon](https://github.com/storybookjs/ember-cli-storybook), to extract documentation comments from your component source files. If you're using Storybook with Ember, you should already have this addon installed, you will just need to enable it by adding the following config block in your `ember-cli-build.js` file:
 
 ```js
 let app = new EmberApp(defaults, {
@@ -86,14 +88,14 @@ Then update your `.storybook/main.js` to make sure you load MDX files:
 
 ```js
 module.exports = {
-  stories: ['../src/stories/**/*.stories.(js|mdx)'],
+  stories: ['../src/stories/**/*.stories.@(js|mdx)'],
 };
 ```
 
 Finally, you can create MDX files like this:
 
 ```md
-import { Meta, Story, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable } from '@storybook/addon-docs/blocks';
 import { hbs } from 'ember-cli-htmlbars';
 
 <Meta title='App Component' component='AppComponent' />
@@ -107,9 +109,9 @@ Some **markdown** description, or whatever you want.
 context: { title: "Title" },
 }}</Story>
 
-## Props
+## ArgsTable
 
-<Props of='AppComponent' />
+<ArgsTable of='AppComponent' />
 ```
 
 Yes, it's redundant to declare `component` twice. [Coming soon](https://github.com/storybookjs/storybook/issues/8673).
@@ -132,8 +134,8 @@ For `DocsPage`, you need to update the parameter locally in a story:
 
 ```ts
 export const basic = () => ...
-basic.story = {
-  parameters: { docs: { iframeHeight: 400 } }
+basic.parameters = {
+  docs: { iframeHeight: 400 }
 }
 ```
 

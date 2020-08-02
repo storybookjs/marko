@@ -31,9 +31,9 @@ export interface WrapperProps {
   active: boolean;
 }
 
-export type Wrapper = {
+export interface Wrapper {
   render: FunctionComponent<WrapperProps>;
-};
+}
 
 export interface ApplyWrappersProps {
   wrappers: Wrapper[];

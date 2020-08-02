@@ -70,10 +70,10 @@ function testStorySnapshots(options: StoryshotsOptions = {}) {
         }
         return acc;
       },
-      [] as Array<{
+      [] as {
         kind: string;
         children: any[];
-      }>
+      }[]
     );
 
   if (data.length) {

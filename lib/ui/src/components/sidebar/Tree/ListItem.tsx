@@ -9,7 +9,7 @@ export type ExpanderProps = ComponentProps<'span'> & {
   depth: number;
 };
 
-const Expander = styled.span<ExpanderProps>(
+export const Expander = styled.span<ExpanderProps>(
   ({ theme, depth }) => ({
     position: 'absolute',
     display: 'block',
@@ -72,7 +72,7 @@ export const Item = styled.a<{
   ({ theme }) => ({
     position: 'relative',
     textDecoration: 'none',
-    fontSize: theme.typography.size.s2,
+    fontSize: theme.typography.size.s2 - 1,
     lineHeight: '16px',
     paddingTop: 4,
     paddingBottom: 4,
@@ -99,9 +99,10 @@ export const Item = styled.a<{
             theme.base === 'light'
               ? theme.color.defaultText
               : transparentize(0.2, theme.color.defaultText),
-          '&:hover': {
+          '&:hover, &:focus': {
             color: theme.color.defaultText,
             background: theme.background.hoverable,
+            outline: 'none',
           },
         }
 );
@@ -117,7 +118,6 @@ export type ListItemProps = ComponentProps<typeof Item> & {
   kind: string;
   refId?: string;
   depth: number;
-  parameters: Record<string, any>;
 };
 
 export const ListItem: FunctionComponent<ListItemProps> = ({

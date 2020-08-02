@@ -14,9 +14,7 @@ export const ActionOnly = () =>
     content: 'Click me to log the action',
   });
 
-ActionOnly.story = {
-  name: 'Action only',
-};
+ActionOnly.storyName = 'Action only';
 
 export const MultipleActions = () =>
   mount('my-button', {
@@ -24,6 +22,4 @@ export const MultipleActions = () =>
     content: 'Double Click me to log the action',
   });
 
-MultipleActions.story = {
-  name: 'Multiple actions',
-};
+MultipleActions.storyName = 'Multiple actions';

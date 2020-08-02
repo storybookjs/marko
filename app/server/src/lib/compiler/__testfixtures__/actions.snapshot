@@ -11,20 +11,18 @@ export default {
   }
 };
 
-export const Multiple_actions_config = () => {};
-Multiple_actions_config.story = {
-  name: 'Multiple actions + config',
-  parameters: {
-    actions: [
-      'click',
-      'contextmenu',
-      {
-        clearOnStoryChange: false
-      }
-    ],
-    server: {
-      id: 'addons/actions/story3'
+export const Multiple_actions_config = (args) => {};
+Multiple_actions_config.storyName = 'Multiple actions + config';
+Multiple_actions_config.parameters = {
+  actions: [
+    'click',
+    'contextmenu',
+    {
+      clearOnStoryChange: false
     }
+  ],
+  server: {
+    id: 'addons/actions/story3'
   }
 };
 "

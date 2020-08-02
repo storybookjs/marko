@@ -2,27 +2,32 @@ import { DOCS_MODE } from 'global';
 import { toId, sanitize } from '@storybook/csf';
 import {
   UPDATE_STORY_ARGS,
+  RESET_STORY_ARGS,
   STORY_ARGS_UPDATED,
   STORY_CHANGED,
-  SET_STORIES,
   SELECT_STORY,
+  SET_STORIES,
+  CURRENT_STORY_WAS_SET,
 } from '@storybook/core-events';
+import deprecate from 'util-deprecate';
 
-import { logger } from '@storybook/client-logger';
+import { getEventMetadata } from '../lib/events';
 import {
+  denormalizeStoryParameters,
   transformStoriesRawToStoriesHash,
   StoriesHash,
   Story,
   Group,
-  StoriesRaw,
   StoryId,
   isStory,
   Root,
   isRoot,
+  StoriesRaw,
+  SetStoriesPayload,
 } from '../lib/stories';
 
 import { Args, ModuleFn } from '../index';
-import { getSourceType } from './refs';
+import { ComposedRef } from './refs';
 
 type Direction = -1 | 1;
 type ParameterName = string;
@@ -34,18 +39,20 @@ export interface SubState {
   storyId: StoryId;
   viewMode: ViewMode;
   storiesConfigured: boolean;
+  storiesFailed?: Error;
 }
 
 export interface SubAPI {
   storyId: typeof toId;
   resolveStory: (storyId: StoryId, refsId?: string) => Story | Group | Root;
+  selectFirstStory: () => void;
   selectStory: (
     kindOrId: string,
     story?: string,
     obj?: { ref?: string; viewMode?: ViewMode }
   ) => void;
   getCurrentStoryData: () => Story | Group;
-  setStories: (stories: StoriesRaw) => Promise<void>;
+  setStories: (stories: StoriesRaw, failed?: Error) => Promise<void>;
   jumpToComponent: (direction: Direction) => void;
   jumpToStory: (direction: Direction) => void;
   getData: (storyId: StoryId, refId?: string) => Story | Group;
@@ -54,8 +61,44 @@ export interface SubAPI {
     parameterName?: ParameterName
   ) => Story['parameters'] | any;
   getCurrentParameter<S>(parameterName?: ParameterName): S;
-  updateStoryArgs(id: StoryId, newArgs: Args): void;
+  updateStoryArgs(story: Story, newArgs: Args): void;
+  resetStoryArgs: (story: Story, argNames?: [string]) => void;
   findLeafStoryId(StoriesHash: StoriesHash, storyId: StoryId): StoryId;
+}
+
+interface Meta {
+  ref?: ComposedRef;
+  source?: string;
+  sourceType?: 'local' | 'external';
+  sourceLocation?: string;
+  refId?: string;
+  v?: number;
+  type: string;
+}
+
+const deprecatedOptionsParameterWarnings: Record<string, () => void> = [
+  'sidebarAnimations',
+  'enableShortcuts',
+  'theme',
+  'showRoots',
+].reduce((acc, option: string) => {
+  acc[option] = deprecate(
+    () => {},
+    `parameters.options.${option} is deprecated and will be removed in Storybook 7.0.
+To change this setting, use \`addons.setConfig\`. See https://github.com/storybookjs/storybook/MIGRATION.md#deprecated-immutable-options-parameters
+  `
+  );
+  return acc;
+}, {} as Record<string, () => void>);
+function checkDeprecatedOptionParameters(options?: Record<string, any>) {
+  if (!options) {
+    return;
+  }
+  Object.keys(options).forEach((option: string) => {
+    if (deprecatedOptionsParameterWarnings[option]) {
+      deprecatedOptionsParameterWarnings[option]();
+    }
+  });
 }
 
 export const init: ModuleFn = ({
@@ -66,40 +109,6 @@ export const init: ModuleFn = ({
   storyId: initialStoryId,
   viewMode: initialViewMode,
 }) => {
-  const setInitialStory = () => {
-    const { storyId, viewMode, storiesHash } = store.getState();
-    const story = api.getData(storyId);
-
-    if (viewMode === 'settings' || viewMode === 'page') {
-      return;
-    }
-
-    if (storyId && storyId.match(/--\*$/)) {
-      const idStart = storyId.slice(0, -1); // drop the * at the end
-      const firstKindLeaf = Object.values(storiesHash).find(
-        (s: Story | Group) => !s.children && s.id.substring(0, idStart.length) === idStart
-      );
-
-      if (viewMode && firstKindLeaf) {
-        api.selectStory(firstKindLeaf.id, undefined, {});
-      }
-    } else if (!storyId || storyId === '*' || !story) {
-      // when there's no storyId or the storyId item doesn't exist
-      // we pick the first leaf and navigate
-      const firstLeaf = Object.values(storiesHash).find((s: Story | Group) => !s.children);
-
-      if (viewMode && firstLeaf) {
-        api.selectStory(firstLeaf.id, undefined, {});
-      }
-    } else if (story && !story.isLeaf) {
-      // When story exists but if it is not the leaf story, it finds the proper
-      // leaf story from any depth.
-      const firstLeafStoryId = api.findLeafStoryId(storiesHash, storyId);
-
-      api.selectStory(firstLeafStoryId, undefined, {});
-    }
-  };
-
   const api: SubAPI = {
     storyId: toId,
     getData: (storyId, refId) => {
@@ -136,11 +145,9 @@ export const init: ModuleFn = ({
     getCurrentParameter: (parameterName) => {
       const { storyId, refId } = store.getState();
       const parameters = api.getParameters({ storyId, refId }, parameterName);
-
-      if (parameters) {
-        return parameters;
-      }
-      return undefined;
+      // FIXME Returning falsey parameters breaks a bunch of toolbars code,
+      // so this strange logic needs to be here until various client code is updated.
+      return parameters || undefined;
     },
     jumpToComponent: (direction) => {
       const { storiesHash, storyId, refs, refId } = store.getState();
@@ -212,23 +219,30 @@ export const init: ModuleFn = ({
         api.selectStory(result, undefined, { ref: refId });
       }
     },
-    setStories: async (input) => {
+    setStories: async (input, error) => {
       // Now create storiesHash by reordering the above by group
-      const existing = store.getState().storiesHash;
-      const hash = transformStoriesRawToStoriesHash(input, existing, {
+      const hash = transformStoriesRawToStoriesHash(input, {
         provider,
       });
 
       await store.setState({
         storiesHash: hash,
         storiesConfigured: true,
+        storiesFailed: error,
       });
+    },
+    selectFirstStory: () => {
+      const { storiesHash } = store.getState();
+      const firstStory = Object.keys(storiesHash).find(
+        (k) => !(storiesHash[k].children || Array.isArray(storiesHash[k]))
+      );
 
-      const { refId } = store.getState();
-
-      if (!refId) {
-        setInitialStory();
+      if (firstStory) {
+        api.selectStory(firstStory);
+        return;
       }
+
+      navigate('/');
     },
     selectStory: (kindOrId, story = undefined, options = {}) => {
       const { ref, viewMode: viewModeFromArgs } = options;
@@ -239,14 +253,24 @@ export const init: ModuleFn = ({
         refs,
       } = store.getState();
 
-      const viewMode = viewModeFromArgs || viewModeFromState;
-
       const hash = ref ? refs[ref].stories : storiesHash;
 
       if (!story) {
         const s = hash[kindOrId] || hash[sanitize(kindOrId)];
         // eslint-disable-next-line no-nested-ternary
         const id = s ? (s.children ? s.children[0] : s.id) : kindOrId;
+        let viewMode =
+          s && !isRoot(s) && (viewModeFromArgs || s.parameters.viewMode)
+            ? s.parameters.viewMode
+            : viewModeFromState;
+
+        // In some cases, the viewMode could be something other than docs/story
+        // ('settings', for example) and therefore we should make sure we go back
+        // to the 'story' viewMode when navigating away from those pages.
+        if (!viewMode.match(/docs|story/)) {
+          viewMode = 'story';
+        }
+
         const p = s && s.refId ? `/${viewMode}/${s.refId}_${id}` : `/${viewMode}/${id}`;
 
         navigate(p);
@@ -280,91 +304,119 @@ export const init: ModuleFn = ({
       const childStoryId = storiesHash[storyId].children[0];
       return api.findLeafStoryId(storiesHash, childStoryId);
     },
-    updateStoryArgs: (id, newArgs) => {
-      fullAPI.emit(UPDATE_STORY_ARGS, id, newArgs);
+    updateStoryArgs: (story, updatedArgs) => {
+      const { id: storyId, refId } = story;
+      fullAPI.emit(UPDATE_STORY_ARGS, {
+        storyId,
+        updatedArgs,
+        options: {
+          target: refId ? `storybook-ref-${refId}` : 'storybook-preview-iframe',
+        },
+      });
+    },
+    resetStoryArgs: (story, argNames?: [string]) => {
+      const { id: storyId, refId } = story;
+      fullAPI.emit(RESET_STORY_ARGS, {
+        storyId,
+        argNames,
+        options: {
+          target: refId ? `storybook-ref-${refId}` : 'storybook-preview-iframe',
+        },
+      });
     },
   };
 
   const initModule = () => {
-    fullAPI.on(STORY_CHANGED, function handleStoryChange(storyId: string) {
-      const { source }: { source: string } = this;
-      const sourceType = getSourceType(source);
+    // On initial load, the local iframe will select the first story (or other "selection specifier")
+    // and emit CURRENT_STORY_WAS_SET with the id. We need to ensure we respond to this change.
+    // Later when we change story via the manager (or SELECT_STORY below), we'll already be at the
+    // correct path before CURRENT_STORY_WAS_SET is emitted, so this is less important (the navigate is a no-op)
+    // Note this is the case for refs also.
+    fullAPI.on(CURRENT_STORY_WAS_SET, function handler({
+      storyId,
+      viewMode,
+    }: {
+      storyId: string;
+      viewMode: ViewMode;
+      [k: string]: any;
+    }) {
+      const { sourceType } = getEventMetadata(this, fullAPI);
+
+      if (fullAPI.isSettingsScreenActive()) return;
+
+      if (sourceType === 'local' && storyId && viewMode) {
+        navigate(`/${viewMode}/${storyId}`);
+      }
+    });
+
+    fullAPI.on(STORY_CHANGED, function handler() {
+      const { sourceType } = getEventMetadata(this, fullAPI);
 
       if (sourceType === 'local') {
         const options = fullAPI.getCurrentParameter('options');
 
         if (options) {
+          checkDeprecatedOptionParameters(options);
           fullAPI.setOptions(options);
         }
       }
     });
 
-    fullAPI.on(SET_STORIES, function handleSetStories(data: { stories: StoriesRaw }) {
-      // the event originates from an iframe, event.source is the iframe's location origin + pathname
-      const { storyId } = store.getState();
-      const { source }: { source: string } = this;
-      const sourceType = getSourceType(source);
+    fullAPI.on(SET_STORIES, function handler(data: SetStoriesPayload) {
+      const { ref } = getEventMetadata(this, fullAPI);
+      const error = data.error || undefined;
+      const stories = data.v ? denormalizeStoryParameters(data) : data.stories;
 
-      switch (sourceType) {
-        // if it's a local source, we do nothing special
-        case 'local': {
-          fullAPI.setStories(data.stories);
-          const options = storyId
-            ? fullAPI.getParameters(storyId, 'options')
-            : fullAPI.getParameters(Object.keys(data.stories)[0], 'options');
-          fullAPI.setOptions(options);
-          break;
+      if (!ref) {
+        if (!data.v) {
+          throw new Error('Unexpected legacy SET_STORIES event from local source');
         }
 
-        // if it's a ref, we need to map the incoming stories to a prefixed version, so it cannot conflict with others
-        case 'external': {
-          const ref = fullAPI.findRef(source);
-          fullAPI.setRef(ref.id, { ...ref, ...data }, true);
-          break;
-        }
-
-        // if we couldn't find the source, something risky happened, we ignore the input, and log a warning
-        default: {
-          logger.warn('received a SET_STORIES frame that was not configured as a ref');
-          break;
-        }
+        fullAPI.setStories(stories, error);
+        const { options } = data.globalParameters;
+        checkDeprecatedOptionParameters(options);
+        fullAPI.setOptions(options);
+      } else {
+        fullAPI.setRef(ref.id, { ...ref, ...data, stories }, true);
       }
     });
 
-    fullAPI.on(SELECT_STORY, function selectStoryHandler({
+    fullAPI.on(SELECT_STORY, function handler({
       kind,
       story,
       ...rest
     }: {
       kind: string;
       story: string;
-      [k: string]: any;
+      viewMode: ViewMode;
     }) {
-      const { source }: { source: string } = this;
-      const sourceType = getSourceType(source);
+      const { ref } = getEventMetadata(this, fullAPI);
 
-      switch (sourceType) {
-        case 'local': {
-          fullAPI.selectStory(kind, story, rest);
-          break;
-        }
-
-        case 'external': {
-          const ref = fullAPI.findRef(source);
-          fullAPI.selectStory(kind, story, { ...rest, ref: ref.id });
-          break;
-        }
-        default: {
-          logger.warn('received a SET_STORIES frame that was not configured as a ref');
-          break;
-        }
+      if (!ref) {
+        fullAPI.selectStory(kind, story, rest);
+      } else {
+        fullAPI.selectStory(kind, story, { ...rest, ref: ref.id });
       }
     });
 
-    fullAPI.on(STORY_ARGS_UPDATED, (id: StoryId, args: Args) => {
-      const { storiesHash } = store.getState();
-      (storiesHash[id] as Story).args = args;
-      store.setState({ storiesHash });
+    fullAPI.on(STORY_ARGS_UPDATED, function handleStoryArgsUpdated({
+      storyId,
+      args,
+    }: {
+      storyId: StoryId;
+      args: Args;
+    }) {
+      const { ref } = getEventMetadata(this, fullAPI);
+
+      if (!ref) {
+        const { storiesHash } = store.getState();
+        (storiesHash[storyId] as Story).args = args;
+        store.setState({ storiesHash });
+      } else {
+        const { id: refId, stories } = ref;
+        (stories[storyId] as Story).args = args;
+        fullAPI.updateRef(refId, { stories });
+      }
     });
   };
 

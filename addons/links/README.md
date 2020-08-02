@@ -150,4 +150,4 @@ It accepts all the props the `a` element does, plus `story` and `kind`. It the `
 >Go to Second</LinkTo>
 ```
 
-To implement such a component for another framework, you need to add special handling for `click` event on native `a` element. See [`RoutedLink` sources](https://github.com/storybookjs/storybook/blob/master/lib/components/src/navigation/routed_link.js#L4-L9) for reference. 
+To implement such a component for another framework, you need to add special handling for `click` event on native `a` element. See [`RoutedLink` sources](https://github.com/storybookjs/storybook/blob/master/addons/links/src/react/components/RoutedLink.js#L20-L24) for reference. 

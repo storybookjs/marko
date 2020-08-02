@@ -1,7 +1,7 @@
 import {
   Story,
-  Preview,
-  Props,
+  Canvas,
+  ArgsTable,
   Source,
   Description,
   ColorPalette,
@@ -13,12 +13,17 @@ import { action } from '@storybook/addon-actions';
 import { Button } from '@storybook/react/demo';
 import FlowTypeButton from '../../components/FlowTypeButton';
 import { DocgenButton } from '../../components/DocgenButton';
+import MdNotes from '../notes/notes.md';
+import MdxNotes from '../notes/notes.mdx';
 
 <Meta
   title="Addons/Docs/mdx"
   component={Button}
   id="addons-docs-mdx-id"
-  decorators={[storyFn => <div style={{ backgroundColor: 'yellow' }}>{storyFn()}</div>, withKnobs]}
+  decorators={[
+    (storyFn) => <div style={{ backgroundColor: 'yellow' }}>{storyFn()}</div>,
+    withKnobs,
+  ]}
   parameters={{ notes: 'component notes' }}
 />
 
@@ -28,11 +33,21 @@ import { DocgenButton } from '../../components/DocgenButton';
 
 <Source id="." />
 
-<Props of="." />
+<ArgsTable of="." />
 
-<Preview>
+<Canvas>
   <Story id="nonexistent-story" />
-</Preview>
+</Canvas>
+
+## Transclusion
+
+### Markdown
+
+<MdNotes />
+
+### MDX
+
+<MdxNotes />
 
 ## A random color ColorPalette
 
@@ -64,7 +79,7 @@ export const nonStory1 = 'foo'; // a non-story export
 
 export const nonStory2 = () => <Button>Not a story</Button>; // another one
 
-<Preview>
+<Canvas>
   <Story name="hello story">
     <Button onClick={action('clicked')}>{text('caption', 'hello world')}</Button>
   </Story>
@@ -78,7 +93,7 @@ export const nonStory2 = () => <Button>Not a story</Button>; // another one
     <Button onClick={action('clicked')}>goodbye world</Button>
   </Story>
   <Story name="plaintext">Plain text</Story>
-</Preview>
+</Canvas>
 
 <Story name="solo story">
   <Button onClick={action('clicked')}>solo</Button>
@@ -88,7 +103,10 @@ export const nonStory2 = () => <Button>Not a story</Button>; // another one
   <>This is an iframe!</>
 </Story>
 
-<Story name="decorator story" decorators={[storyFn => <div style={{ backgroundColor: 'pink' }}>{storyFn()}</div>]}>
+<Story
+  name="decorator story"
+  decorators={[(storyFn) => <div style={{ backgroundColor: 'pink' }}>{storyFn()}</div>]}
+>
   <>Story decorators</>
 </Story>
 
@@ -104,15 +122,15 @@ export const nonStory2 = () => <Button>Not a story</Button>; // another one
 
 <Source name="hello story" />
 
-<Preview>
-  <Button onClick={action('clicked')}>view source in preview</Button>
-</Preview>
+<Canvas>
+  <Button onClick={action('clicked')}>view source in Canvas</Button>
+</Canvas>
 
 ## Configurable height
 
-<Preview withToolbar>
+<Canvas withToolbar>
   <Story id="basics-button--all-buttons" height="400px" />
-</Preview>
+</Canvas>
 
 ## Description
 
@@ -120,32 +138,41 @@ export const nonStory2 = () => <Button>Not a story</Button>; // another one
 
 <Description of={DocgenButton} />
 
-## Props
+## ArgsTable
 
 ### Docgen
 
-<Props of={DocgenButton} />
+<ArgsTable of={DocgenButton} />
 
 ### Flow
 
 Flow types are not officially supported
 
-<Props of={FlowTypeButton} />
+<ArgsTable of={FlowTypeButton} />
 
 ### withSource="none"
 
-<Preview withSource="none">
+<Canvas withSource="none">
   <h1>no source</h1>
-</Preview>
+</Canvas>
 
-<Preview withSource="none">
-  <Story name="no source preview">
+<Canvas withSource="none">
+  <Story name="no source Canvas">
     <Button onClick={action('clicked')}>solo</Button>
   </Story>
-</Preview>
+</Canvas>
 
 ## Docs Disable
 
 <Story name="docs disable" parameters={{ docs: { disable: true } }}>
   <Button>This souldn't show up in docs page</Button>
 </Story>
+
+## Story with multiple children
+
+<Canvas>
+  <Story name="story multiple children">
+    <p>Hello Child #1</p>
+    <p>Hello Child #2</p>
+  </Story>
+</Canvas>

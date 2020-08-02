@@ -21,13 +21,6 @@ export interface PropSummaryValue {
 export type PropType = PropSummaryValue;
 export type PropDefaultValue = PropSummaryValue;
 
-export interface ArgType {
-  name?: string;
-  description?: string;
-  defaultValue?: any;
-  [key: string]: any;
-}
-
 export interface TableAnnotation {
   type: PropType;
   jsDocTags?: JsDocTags;
@@ -35,9 +28,12 @@ export interface TableAnnotation {
   category?: string;
 }
 
-export type TableArgType = ArgType & {
-  table: TableAnnotation;
-};
+export interface ArgType {
+  name?: string;
+  description?: string;
+  defaultValue?: any;
+  [key: string]: any;
+}
 
 export interface ArgTypes {
   [key: string]: ArgType;

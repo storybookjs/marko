@@ -1,6 +1,6 @@
 {
   "name": "@storybook/angular",
-  "version": "6.0.0-alpha.41",
+  "version": "6.0.0-rc.21",
   "description": "Storybook for Angular: Develop Angular Components in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -34,22 +34,26 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-alpha.41",
-    "@storybook/core": "6.0.0-alpha.41",
-    "@storybook/node-logger": "6.0.0-alpha.41",
-    "@types/webpack-env": "^1.15.1",
+    "@storybook/addons": "6.0.0-rc.21",
+    "@storybook/core": "6.0.0-rc.21",
+    "@storybook/node-logger": "6.0.0-rc.21",
+    "@types/webpack-env": "^1.15.2",
+    "autoprefixer": "^9.7.6",
     "core-js": "^3.0.1",
     "fork-ts-checker-webpack-plugin": "^4.0.3",
     "global": "^4.3.2",
+    "postcss-loader": "^3.0.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "regenerator-runtime": "^0.13.3",
     "sass-loader": "^8.0.0",
     "strip-json-comments": "^3.0.1",
     "ts-loader": "^6.0.1",
-    "tsconfig-paths-webpack-plugin": "^3.2.0"
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
+    "webpack": "^4.43.0"
   },
   "devDependencies": {
-    "@types/autoprefixer": "^9.4.0",
-    "webpack": "^4.33.0"
+    "@types/autoprefixer": "^9.4.0"
   },
   "peerDependencies": {
     "@angular-devkit/build-angular": ">=0.8.9",
@@ -61,13 +65,8 @@
     "@angular/platform-browser": ">=6.0.0",
     "@angular/platform-browser-dynamic": ">=6.0.0",
     "@babel/core": "*",
-    "autoprefixer": "^8.1.0",
-    "babel-loader": "^7.0.0 || ^8.0.0",
-    "react": "*",
-    "react-dom": "*",
     "rxjs": "^6.0.0",
     "typescript": "^3.4.0",
-    "webpack": "^4.32.0",
     "zone.js": "^0.8.29 || ^0.9.0 || ^0.10.0"
   },
   "engines": {
@@ -76,7 +75,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
+  "gitHead": "aa7ad3c00f46366cb28205e8fd82689afc4dfbc6",
   "typesVersions": {
     "<=3.5": {
       "*": [

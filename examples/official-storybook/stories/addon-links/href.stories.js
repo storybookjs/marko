@@ -7,14 +7,12 @@ export default {
 };
 
 export const Log = () => {
-  hrefTo('Addons|Links.Href', 'log').then((href) => action('URL of this story')(href));
+  hrefTo('Addons/Links/Href', 'log').then((href) => action('URL of this story')(href));
 
   return <span>See action logger</span>;
 };
-Log.story = {
-  parameters: {
-    options: {
-      panel: 'storybook/actions/panel',
-    },
+Log.parameters = {
+  options: {
+    panel: 'storybook/actions/panel',
   },
 };

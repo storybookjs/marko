@@ -15,11 +15,11 @@ export interface PreviewError {
 //   id: string;
 // }
 
-export type RequireContext = {
+export interface RequireContext {
   keys: () => string[];
   (id: string): any;
   resolve(id: string): string;
-};
+}
 export type LoaderFunction = () => void | any[];
 export type Loadable = RequireContext | RequireContext[] | LoaderFunction;
 

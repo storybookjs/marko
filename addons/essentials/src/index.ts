@@ -1,32 +1,62 @@
-import fs from 'fs';
+import path, { join } from 'path';
 import { logger } from '@storybook/node-logger';
 
-type PresetOptions = {
+interface PresetOptions {
+  configDir?: string;
   backgrounds?: any;
   viewport?: any;
-};
-
-let packageJson: any = {};
-if (fs.existsSync('./package.json')) {
-  try {
-    packageJson = JSON.parse(fs.readFileSync('./package.json').toString());
-  } catch (err) {
-    logger.error(`Error reading package.json: ${err.message}`);
-  }
+  docs?: any;
 }
 
-const isInstalled = (addon: string) => {
-  const { dependencies, devDependencies } = packageJson;
-  return (dependencies && dependencies[addon]) || (devDependencies && devDependencies[addon]);
+const requireMain = (configDir: string) => {
+  let main = {};
+  const mainFile = path.join(process.cwd(), configDir, 'main');
+  try {
+    // eslint-disable-next-line global-require,import/no-dynamic-require
+    main = require(mainFile);
+  } catch (err) {
+    logger.warn(`Unable to find main.js: ${mainFile}`);
+  }
+  return main;
 };
 
-const makeAddon = (key: string) => `@storybook/addon-${key}`;
+export function addons(options: PresetOptions = {}) {
+  const checkInstalled = (addon: string, main: any) => {
+    const existingAddon = main.addons?.find((entry: string | { name: string }) => {
+      const name = typeof entry === 'string' ? entry : entry.name;
+      return name?.startsWith(addon);
+    });
+    if (existingAddon) {
+      logger.warn(`Found existing addon ${JSON.stringify(existingAddon)}, skipping.`);
+    }
+    return !!existingAddon;
+  };
 
-export function managerEntries(entry: any[] = [], options: PresetOptions = {}) {
-  const registerAddons = ['backgrounds', 'viewport']
-    .filter((key) => (options as any)[key] !== false)
-    .map((key) => makeAddon(key))
-    .filter((addon) => !isInstalled(addon))
-    .map((addon) => `${addon}/register`);
-  return [...entry, ...registerAddons];
+  const main = requireMain(options.configDir);
+  return (
+    ['actions', 'docs', 'controls', 'backgrounds', 'viewport']
+      .filter((key) => (options as any)[key] !== false)
+      .map((key) => `@storybook/addon-${key}`)
+      .filter((addon) => !checkInstalled(addon, main))
+      // Use `require.resolve` to ensure Yarn PnP compatibility
+      // Files of various addons should be resolved in the context of `addon-essentials` as they are listed as deps here
+      // and not in `@storybook/core` nor in SB user projects. If `@storybook/core` make the require itself Yarn 2 will
+      // throw an error saying that the package to require must be added as a dependency. Doing `require.resolve` will
+      // allow `@storybook/core` to work with absolute path directly, no more require of dep no more issue.
+      // File to load can be `preset.js`, `register.js`, or the package entry point, so we need to check all these cases
+      // as it's done in `lib/core/src/server/presets.js`.
+      .map((addon) => {
+        try {
+          return require.resolve(join(addon, 'preset'));
+          // eslint-disable-next-line no-empty
+        } catch (err) {}
+
+        try {
+          return require.resolve(join(addon, 'register'));
+          // eslint-disable-next-line no-empty
+        } catch (err) {}
+
+        return require.resolve(addon);
+      })
+  );
 }

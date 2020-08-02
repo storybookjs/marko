@@ -11,11 +11,9 @@ export default {
 };
 
 export const Button = () => button;
-Button.story = {
-  parameters: {
-    storySource: {
-      source: `source: ${button}`,
-    },
+Button.parameters = {
+  storySource: {
+    source: `source: ${button}`,
   },
 };
 
@@ -25,6 +23,4 @@ export const SimpleStory = () =>
         This is a fragment of HTML
       </strong>
     </p>`;
-SimpleStory.story = {
-  name: 'Very simple story',
-};
+SimpleStory.storyName = 'Very simple story';

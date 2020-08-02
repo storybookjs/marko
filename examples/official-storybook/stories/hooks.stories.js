@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect, useRef, useState } from '@storybook/client-api';
 
 export default {
-  title: 'Hooks',
+  title: 'Core/Hooks',
 };
 
 export const Checkbox = () => {

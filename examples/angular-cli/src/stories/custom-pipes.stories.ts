@@ -23,9 +23,7 @@ export const Simple = () => ({
   },
 });
 
-Simple.story = {
-  name: 'Simple',
-};
+Simple.storyName = 'Simple';
 
 export const WithKnobsStory = () => ({
   component: NameComponent,
@@ -34,7 +32,5 @@ export const WithKnobsStory = () => ({
   },
 });
 
-WithKnobsStory.story = {
-  name: 'With Knobs',
-  decorators: [withKnobs],
-};
+WithKnobsStory.storyName = 'With Knobs';
+WithKnobsStory.decorators = [withKnobs];

@@ -12,7 +12,7 @@ You can accomplish this by creating a file called `preview-head.html` inside the
 <script>try{ Typekit.load(); } catch(e){ }</script>
 ```
 
-That's it. Storybook will inject these tags.
+That's it. Storybook will inject these tags. It is also possible to use [environment variables](https://storybook.js.org/docs/configurations/env-vars/#usage-in-custom-headbody).
 
 > **Important**
 >

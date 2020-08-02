@@ -5,6 +5,4 @@ export default {
 export const StringOnly = () =>
   '<my-button :rounded="false">A Button with square edges</my-button>';
 
-StringOnly.story = {
-  name: 'string only',
-};
+StringOnly.storyName = 'string only';

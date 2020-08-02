@@ -125,9 +125,7 @@ export const TweaksStaticValues = () => {
     </div>
   );
 };
-TweaksStaticValues.story = {
-  name: 'tweaks static values',
-};
+TweaksStaticValues.storyName = 'tweaks static values';
 
 export const TweaksStaticValuesOrganizedInGroups = () => {
   const GROUP_IDS = {
@@ -212,9 +210,7 @@ export const TweaksStaticValuesOrganizedInGroups = () => {
     </div>
   );
 };
-TweaksStaticValuesOrganizedInGroups.story = {
-  name: 'tweaks static values organized in groups',
-};
+TweaksStaticValuesOrganizedInGroups.storyName = 'tweaks static values organized in groups';
 
 export const DynamicKnobs = () => {
   const showOptional = select('Show optional', ['yes', 'no'], 'yes');
@@ -225,9 +221,7 @@ export const DynamicKnobs = () => {
     </Fragment>
   );
 };
-DynamicKnobs.story = {
-  name: 'dynamic knobs',
-};
+DynamicKnobs.storyName = 'dynamic knobs';
 
 export const ComplexSelect = () => {
   const m = select(
@@ -249,9 +243,7 @@ export const ComplexSelect = () => {
     </pre>
   );
 };
-ComplexSelect.story = {
-  name: 'complex select',
-};
+ComplexSelect.storyName = 'complex select';
 
 export const OptionsKnob = () => {
   const valuesRadio = {
@@ -352,9 +344,7 @@ export const TriggersActionsViaButton = () => {
     </Fragment>
   );
 };
-TriggersActionsViaButton.story = {
-  name: 'triggers actions via button',
-};
+TriggersActionsViaButton.storyName = 'triggers actions via button';
 
 export const ButtonWithReactUseState = () => {
   const [counter, setCounter] = React.useState(0);
@@ -371,20 +361,16 @@ export const XssSafety = () => (
     }}
   />
 );
-XssSafety.story = {
-  name: 'XSS safety',
-};
+XssSafety.storyName = 'XSS safety';
 
 export const AcceptsStoryParameters = () => <div>{text('Rendered string', '<h1>Hello</h1>')}</div>;
-AcceptsStoryParameters.story = {
-  name: 'accepts story parameters',
+AcceptsStoryParameters.storyName = 'accepts story parameters';
 
-  parameters: {
-    knobs: { escapeHTML: false },
-  },
+AcceptsStoryParameters.parameters = {
+  knobs: { escapeHTML: false },
 };
 
 export const WithDuplicateDecorator = () => {
   return text('Text', 'Hello');
 };
-WithDuplicateDecorator.story = { decorators: [withKnobs] };
+WithDuplicateDecorator.decorators = [withKnobs];

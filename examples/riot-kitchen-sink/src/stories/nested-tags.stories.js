@@ -16,9 +16,7 @@ export const ThreeTags = () => ({
   ],
 });
 
-ThreeTags.story = {
-  name: 'Three tags',
-};
+ThreeTags.storyName = 'Three tags';
 
 export const Matriochka = () => ({
   tags: [

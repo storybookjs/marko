@@ -37,22 +37,16 @@ Additionally, you can deploy Storybook directly into GitHub pages with our [stor
 
 Or, you can export your storybook into the docs directory and use it as the root for GitHub pages. Have a look at [this guide](https://github.com/blog/2233-publish-your-project-documentation-with-github-pages) for more information.
 
-## Deploying to Vercel Now
+## Deploying to Vercel
 
-[Vercel Now](https://vercel.com/home) is a cloud platform for websites and serverless APIs, that you can use to deploy your Storybook projects to your personal domain (or a free `.now.sh` suffixed URL).
+[Vercel](https://vercel.com/home) is a cloud platform for hosting static sites and Serverless Functions, that you can use to deploy your Storybook projects to your personal domain (or a free `.now.sh` suffixed URL).
 
-- Install the [Vercel Now CLI](https://github.com/zeit/now):
+To deploy your Storybook project to Vercel, all that's required is to connect your [Git repository](https://vercel.com/docs/v2/git-integrations) and import the project. The build command, project directory, and project type will be automatically detected upon import.
 
-```sh
-npm i -g now
-```
-
-- Configure your `build` script:
+If you are working with more than just a Storybook project in your repository, and just want to build Storybook for your deployment, be sure to set the `build` script in the `package.json` file to the following:
 
 ```
 `"build": "build-storybook -c .storybook -o build"`
 ```
 
-- Execute `now` on your terminal.
-
-[Example project](https://github.com/zeit/now-examples/tree/master/storybook) for reference.
+Once imported, a deployment will be created. From now on, every time you `git push`, a new [Preview Deployment](https://vercel.com/docs/v2/platform/deployments#preview) will be created. If pushing or merging to the default branch, a [Production Deployment](https://vercel.com/docs/v2/platform/deployments#production) will be triggered.

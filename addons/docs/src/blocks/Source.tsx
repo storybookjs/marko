@@ -1,12 +1,23 @@
-import React, { FunctionComponent } from 'react';
-import { Source, SourceProps as PureSourceProps, SourceError } from '@storybook/components';
+import React, { FC, useContext } from 'react';
+import {
+  Source as PureSource,
+  SourceError,
+  SourceProps as PureSourceProps,
+} from '@storybook/components';
+import { StoryId } from '@storybook/api';
+import { logger } from '@storybook/client-logger';
+
 import { DocsContext, DocsContextProps } from './DocsContext';
+import { SourceContext, SourceContextProps } from './SourceContainer';
 import { CURRENT_SELECTION } from './types';
+import { SourceType } from '../shared';
+
 import { enhanceSource } from './enhanceSource';
 
 interface CommonProps {
   language?: string;
   dark?: boolean;
+  code?: string;
 }
 
 type SingleSourceProps = {
@@ -25,24 +36,65 @@ type NoneProps = CommonProps;
 
 type SourceProps = SingleSourceProps | MultiSourceProps | CodeProps | NoneProps;
 
+const getSnippet = (
+  storyId: StoryId,
+  sourceContext: SourceContextProps,
+  docsContext: DocsContextProps
+): string => {
+  const { sources } = sourceContext;
+  const { storyStore } = docsContext;
+
+  const snippet = sources && sources[storyId];
+  const data = storyStore?.fromId(storyId);
+
+  if (!data) {
+    // Fallback if we can't get the story data for this story
+    logger.warn(`Unable to find source for story ID '${storyId}'`);
+    return snippet || '';
+  }
+
+  const { parameters } = data;
+  // eslint-disable-next-line no-underscore-dangle
+  const isArgsStory = parameters.__isArgsStory;
+  const type = parameters.docs?.source?.type || SourceType.AUTO;
+
+  // if user has hard-coded the snippet, that takes precedence
+  const userCode = parameters.docs?.source?.code;
+  if (userCode) return userCode;
+
+  // if user has explicitly set this as dynamic, use snippet
+  if (type === SourceType.DYNAMIC) {
+    return snippet || '';
+  }
+
+  // if this is an args story and there's a snippet
+  if (type === SourceType.AUTO && snippet && isArgsStory) {
+    return snippet;
+  }
+
+  // otherwise, use the source code logic
+  const enhanced = enhanceSource(data) || data.parameters;
+  return enhanced?.docs?.source?.code || '';
+};
+
 export const getSourceProps = (
   props: SourceProps,
-  { id: currentId, storyStore }: DocsContextProps
+  docsContext: DocsContextProps,
+  sourceContext: SourceContextProps
 ): PureSourceProps => {
+  const { id: currentId } = docsContext;
+
   const codeProps = props as CodeProps;
   const singleProps = props as SingleSourceProps;
   const multiProps = props as MultiSourceProps;
 
   let source = codeProps.code; // prefer user-specified code
   if (!source) {
-    const targetId = singleProps.id === CURRENT_SELECTION ? currentId : singleProps.id;
+    const targetId =
+      singleProps.id === CURRENT_SELECTION || !singleProps.id ? currentId : singleProps.id;
     const targetIds = multiProps.ids || [targetId];
     source = targetIds
-      .map((sourceId) => {
-        const data = storyStore.fromId(sourceId);
-        const enhanced = data && enhanceSource(data);
-        return enhanced?.docs?.source?.code || '';
-      })
+      .map((storyId) => getSnippet(storyId, sourceContext, docsContext))
       .join('\n\n');
   }
   return source
@@ -55,13 +107,9 @@ export const getSourceProps = (
  * or the source for a story if `storyId` is provided, or
  * the source for the current story if nothing is provided.
  */
-const SourceContainer: FunctionComponent<SourceProps> = (props) => (
-  <DocsContext.Consumer>
-    {(context) => {
-      const sourceProps = getSourceProps(props, context);
-      return <Source {...sourceProps} />;
-    }}
-  </DocsContext.Consumer>
-);
-
-export { SourceContainer as Source };
+export const Source: FC<SourceProps> = (props) => {
+  const sourceContext = useContext(SourceContext);
+  const docsContext = useContext(DocsContext);
+  const sourceProps = getSourceProps(props, docsContext, sourceContext);
+  return <PureSource {...sourceProps} />;
+};

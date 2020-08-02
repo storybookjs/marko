@@ -14,6 +14,4 @@ export const GoToWelcome = () => (
   <Button onclick={linkTo('Welcome')}>This button links to Welcome</Button>
 );
 
-GoToWelcome.story = {
-  name: 'Go to welcome',
-};
+GoToWelcome.storyName = 'Go to welcome';

@@ -7,25 +7,21 @@
 Storybook Docs automatically generates props tables for components in supported frameworks. This document is a consolidated summary of prop tables, provides instructions for reporting bugs, and list known limitations for each framework.
 
 - [Usage](#usage)
-- [Args Controls](#args-controls)
   - [DocsPage](#docspage)
   - [MDX](#mdx)
-  - [Controls customization](#controls-customization)
-  - [Rows customization](#rows-customization)
+- [Controls](#controls)
+- [Customization](#customization)
+  - [Customizing ArgTypes](#customizing-argtypes)
+  - [Custom ArgTypes in MDX](#custom-argtypes-in-mdx)
 - [Reporting a bug](#reporting-a-bug)
 - [Known limitations](#known-limitations)
-  - [React](#react)
-    - [Fully support React.FC](#fully-support-reactfc)
-    - [Imported types](#imported-types)
-  - [Vue](#vue)
-  - [Angular](#angular)
-  - [Web components](#web-components)
-  - [Ember](#ember)
 - [More resources](#more-resources)
 
 ## Usage
 
-For framework-specific setup instructions, see the framework's README: [React](../../react/README.md), [Vue](../../vue/README.md), [Angular](../../angular/README.md), [Web Components](../../web-components/README.md), [Ember](../../ember/README.md).
+For framework-specific setup instructions, see the framework's README: [React](../react/README.md), [Vue](../vue/README.md), [Angular](../angular/README.md), [Web Components](../web-components/README.md), [Ember](../ember/README.md).
+
+### DocsPage
 
 To use the props table in [DocsPage](./docspage.md), simply export a component property on your stories metadata:
 
@@ -40,31 +36,33 @@ export default {
 // stories etc...
 ```
 
-To use the props table in [MDX](./mdx.md), use the `Props` block:
+### MDX
+
+To use the props table in [MDX](./mdx.md), use the `ArgsTable` block:
 
 ```js
 // MyComponent.stories.mdx
-import { Props } from '@storybook/addon-docs/blocks';
+import { ArgsTable } from '@storybook/addon-docs/blocks';
 import { MyComponent } from './MyComponent';
 
 # My Component!
 
-<Props of={MyComponent} />
+<ArgsTable of={MyComponent} />
 ```
 
-## Args Controls
+## Controls
 
-Starting in SB 6.0, the `Props` block has built-in controls (formerly known as "knobs") for editing stories dynamically.
+Starting in SB 6.0, the `ArgsTable` block has built-in `Controls` (formerly known as "knobs") for editing stories dynamically.
 
 <center>
-  <img src="./media/args-controls.gif" width="100%" />
+  <img src="./media/args-controls.gif" width="80%" />
 </center>
 
-These controls are implemented appear automatically in the props table when your story accepts [Storybook Args](#https://github.com/storybookjs/storybook/blob/next/docs/src/pages/formats/component-story-format/index.md#args-story-inputs) as its input.
+<br/>
 
-### DocsPage
+These controls are implemented appear automatically in the props table when your story accepts [Storybook Args](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/formats/component-story-format/index.md#args-story-inputs) as its input. This is done slightly differently depending on whether you're using `DocsPage` or `MDX`.
 
-In DocsPage, simply write your story to consume args and the auto-generated props table will display controls in the right-most column:
+**DocsPage.** In [DocsPage](./docspage.md), simply write your story to consume args and the auto-generated props table will display controls in the right-most column:
 
 ```js
 export default {
@@ -72,106 +70,163 @@ export default {
   component: MyComponent,
 };
 
-export const Controls = (args) => <MyComponent {...args} />;
+export const WithControls = (args) => <MyComponent {...args} />;
 ```
 
-These controls can be [customized](#controls-customization) if the defaults don't meet your needs.
-
-### MDX
-
-In [MDX](./mdx.md), the `Props` controls are more configurable than in DocsPage. In order to show controls, `Props` must be a function of a story, not a component:
+**MDX.** In [MDX](./mdx.md), the `ArgsTable` controls are more configurable than in DocsPage. In order to show controls, `ArgsTable` must be a function of a story, not a component:
 
 ```js
-<Story name="Controls">
+<Story name="WithControls">
   {args => <MyComponent {...args} />}
 </Story>
 
-<Props story="Controls" />
+<ArgsTable story="Controls" />
 ```
 
-### Controls customization
+For a very detailed walkthrough of how to write stories that use controls, see the [addon-controls README](https://github.com/storybookjs/storybook/blob/next/addons/controls/README.md#writing-stories).
 
-Under the hood, props tables are rendered from an internal data structure called `ArgTypes`. When you declare a story's `component` metadata, Docs automatically extracts `ArgTypes` based on the component's properties. We can customize this by editing the `argTypes` metadata.
+## Customization
 
-For example, consider a `Label` component that accepts a `background` color:
+Props tables are automatically inferred from your components and stories, but sometimes it's useful to customize the results.
+
+Props tables are rendered from an internal data structure called `ArgTypes`. When you declare a story's `component` metadata, Docs automatically extracts `ArgTypes` based on the component's properties.
+
+You can can customize what's shown in the props table by [customizing the `ArgTypes` data](#customizing-argtypes). This is currently available for `DocsPage` and `<ArgsTable story="xxx">` construct, but not for the `<ArgsTable of={component} />` construct,
+
+### Customizing ArgTypes
+
+> **NOTE:** This API is experimental and may change outside of the typical semver release cycle
+
+When you declare a `component` in for your `DocsPage` [as described above](#docspage) or use the `<ArgsTable story="xxx" />` construct [in MDX](#controls), the props table shows the `story.argTypes` that gets extracted by Storybook.
+
+Consider the following input:
 
 ```js
+// Button.js
 import React from 'react';
 import PropTypes from 'prop-types';
-
-export const Label = ({ label, borderWidth, background }) => <div style={{ borderWidth, background }}>{label}</div>;
-Label.propTypes = {
-  label: PropTypes.string;
-  borderWidth: PropTypes.number;
-  background: PropTypes.string;
-}
-```
-
-Given this input, the Docs addon will show a text editor for the `background` and a numeric input for the `borderWidth` prop:
-
-<center>
-  <img src="./media/props-tables-controls-uncustomized.png" width="100%" />
-</center>
-
-But suppose we prefer to show a color picker for `background` and a numeric input for `borderWidth`. We can customize this in the story metadata's `argTypes` field (at the component OR story level):
-
-```js
-export default {
-  title: 'Label',
-  component: Label,
-  argTypes: {
-    background: { control: { type: 'color' } },
-    borderWidth: { control: { type: 'range', min: 0, max: 6 } },
-  },
+export const Button = ({ label }) => <button>{label}</button>;
+Button.propTypes = {
+  /** demo description */
+  label: PropTypes.string,
 };
+Button.defaultProps = {
+  label: 'Hello',
+};
+
+// Button.stories.js
+export default { title: 'Button', component: Button };
 ```
 
-This generates the following custom UI:
-
-<center>
-  <img src="./media/props-tables-controls-customized.png" width="100%" />
-</center>
-
-Support controls include `array`, `boolean`, `color`, `date`, `range`, `object`, `text`, as well as a number of different options controls: `radio`, `inline-radio`, `check`, `inline-check`, `select`, `multi-select`.
-
-To see the full list of configuration options, see the [typescript type defintions](https://github.com/storybookjs/storybook/blob/next/lib/components/src/controls/types.ts).
-
-### Rows customization
-
-In addition to customizing [controls](#controls-customization), it's also possible to customize `Props` fields, such as description, or even the rows themselves.
-
-Consider the following story for the `Label` component from in the previous section:
+This generates the equivalent of following in-memory data structure for the `Button` component:
 
 ```js
-export const Batch = ({ labels, padding }) => (
-  <div style={{ padding }}>
-    {labels.map((label) => (
-      <Label key={label} label={label} />
-    ))}
-  </div>
-);
-```
-
-In this case, the args are basically unrelated to the underlying component's props, and are instead related to the individual story. To generate a prop table for the story, you can configure the Story's metadata:
-
-```js
-Batch.story = {
-  argTypes: {
-    labels: {
-      description: 'A comma-separated list of labels to display',
-      defaultValue: 'a,b,c',
-      control: { type: 'array' }
+const argTypes = {
+  label: {
+    name: 'label',
+    type: { name: 'string', required: false },
+    defaultValue: 'Hello',
+    description: 'demo description',
+    table: {
+      type: { summary: 'string' },
+      defaultValue: { summary: 'Hello' },
     }
-    padding: {
-      description: 'The padding to space out labels int he story',
-      defaultValue: 4,
-      control: { type: 'range', min: 0, max: 20, step: 2 },
+    control: {
+      type: 'text'
     }
   }
 }
 ```
 
-In this case, the user-specified `argTypes` are not a subset of the component's props, so Storybook shows ONLY the user-specified `argTypes`, and shows the component's props (without controls) in a separate tab.
+In this `ArgTypes` data structure, `name`, `type`, `defaultValue`, and `description` are standard fields in all `ArgTypes` (analogous to `PropTypes` in React). The `table` and `control` fields are addon-specific annotations. So, for example, the `table` annotation provides extra information to customize how `label` gets rendered, and the `control` annotation provides extra information for the control for editing the property.
+
+As a user, you can customize the prop table by selectively overriding these values. Consider the following modification to `Button.stories.js` from above:
+
+```js
+export default {
+  title: 'Button',
+  component: Button,
+  argTypes: {
+    label: {
+      description: 'overwritten description',
+      table: {
+        type: { summary: 'something short', detail: 'something really really long' },
+      },
+      control: {
+        type: null,
+      },
+    },
+  },
+};
+```
+
+These values--`description`, `table.type`, and `controls.type`--get merged over the defaults that are extracted by Storybook. The final merged values would be:
+
+```js
+const argTypes = {
+  label: {
+    name: 'label',
+    type: { name: 'string', required: false },
+    defaultValue: 'Hello',
+    description: 'overwritten description',
+    table: {
+      type: { summary: 'something short', detail: 'something really really long' },
+      defaultValue: { summary: 'Hello' },
+    }
+    control: {
+      type: null
+    }
+  }
+}
+```
+
+This would render a row with a modified description, a type display with a dropdown that shows the detail, and no control.
+
+> **NOTE:** `@storybook/addon-docs` provide shorthand for common tasks:
+>
+> - `type: 'number'` is shorthand for `type: { name: 'number' }`
+> - `control: 'radio'` is shorthand for `control: { type: 'radio' }`
+
+Controls customization has an entire section in the [`addon-controls` README](https://github.com/storybookjs/storybook/blob/next/addons/controls/README.md#configuration).
+
+Here are the possible customizations for the rest of the prop table:
+
+| Field                        | Description                                                                                                               |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `name`                       | The name of the property                                                                                                  |
+| `type.required`              | Whether or not the property is required                                                                                   |
+| `description`                | A markdown description for the property                                                                                   |
+| `table.type.summary`         | A short version of the type                                                                                               |
+| `table.type.detail`          | A longer version of the type (if it's a complex type)                                                                     |
+| `table.defaultValue.summary` | A short version of the default value                                                                                      |
+| `table.defaultValue.detail`  | A longer version of the default value (if it's a complex value)                                                           |
+| `control`                    | See [`addon-controls` README](https://github.com/storybookjs/storybook/blob/next/addons/controls/README.md#configuration) |
+
+### Custom ArgTypes in MDX
+
+To do the equivalent of the above customization [in MDX](./mdx.md), use the following.
+
+Overriding at the component level:
+
+```jsx
+<Meta
+  title="MyComponent"
+  component={MyComponent}
+  argTypes={{
+    label: { name: 'label' /* ... */ },
+  }}
+/>
+```
+
+And at the story level:
+
+```jsx
+<Story name="some story" argTypes={{
+  label: { name: 'label', ... }
+}}>
+  {/* story contents */}
+</Story>
+```
 
 ## Reporting a bug
 
@@ -179,7 +234,7 @@ Extracting component properties from source is a tricky problem with thousands o
 
 If you're seeing a problem with your prop table, here's what to do.
 
-First, look to see if there's already a test case that corresponds to your situation. If there is, it should be documented in the [Known Limitations](#known-limitations) section above. There should also be one or more corresponding test fixtures contained in this package. For example, if you are using React, look under the directory `./src/frameworks/react/__testfixtures__`.
+First, look to see if there's already a test case that corresponds to your situation. If there is, it should be documented in the [Known Limitations](#known-limitations) section below. There should also be one or more corresponding test fixtures contained in this package. For example, if you are using React, look under the directory `./src/frameworks/react/__testfixtures__`.
 
 If your problem is not already represented here, do the following:
 
@@ -197,57 +252,13 @@ If the problem appears to be an issue with the sub-package, please file an issue
 
 This package relies on a variety of sub-packages to extract property information from components. Many of the bugs in this package correspond to bugs in a sub-package. Since we don't maintain the sub-packages, the best we can do for now is (1) document these limitations, (2) provide clean reproductions to the sub-package, (3) optionally provide PRs to those packages to fix the problems.
 
-### React
-
-SB Docs for React uses `babel-plugin-react-docgen`/`react-docgen` for both JS PropTypes prop tables and, as of 6.0, TypeScript-driven props tables.
-
-#### Fully support React.FC
-
-The biggest known issue is https://github.com/reactjs/react-docgen/issues/387, which means that the following common pattern **DOESN'T WORK**:
-
-```tsx
-import React, { FC } from 'react';
-interface IProps { ... };
-const MyComponent: FC<IProps> = ({ ... }) => ...
-```
-
-The following workaround is needed:
-
-```tsx
-const MyComponent: FC<IProps> = ({ ... }: IProps) => ...
-```
-
-Please upvote https://github.com/reactjs/react-docgen/issues/387 if this is affecting your productivity, or better yet, submit a fix!
-
-#### Imported types
-
-Another major issue is support for imported types.
-
-```js
-import React, { FC } from 'react';
-import SomeType from './someFile';
-
-type NewType = SomeType & { foo: string };
-const MyComponent: FC<NewType> = ...
-```
-
-This was also an issue in RDTL so it doesn't get worse with `react-docgen`. There's an open PR for this https://github.com/reactjs/react-docgen/pull/352 which you can upvote if it affects you.
-
-### Vue
-
-SB Docs for Vue uses `vue-docgen-loader`/`vue-docgen-api` for SFC and JSX components.
-
-### Angular
-
-SB Docs for Angular uses `compodoc` for prop table information.
-
-### Web components
-
-SB Docs for Web-components uses `custom-elements.json` for prop table information.
-
-### Ember
-
-SB Docs for Ember uses `yui-doc` for prop table information.
+| Framework      | Underlying library                       | Docs                                             | Open issues                                                                                                                                                        |
+| -------------- | ---------------------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| React          | `react-docgen` `react-docgen-typescript` | [Docs](../react/README.md#props-tables)          | [Open issues](https://github.com/storybookjs/storybook/issues?q=is%3Aopen+is%3Aissue+label%3A%22block%3A+props%22+label%3Abug+label%3A%22app%3A+react%22)          |
+| Vue            | `vue-docgen-api`                         | [Docs](../vue/README.md#props-tables)            | [Open issues](https://github.com/storybookjs/storybook/issues?q=is%3Aopen+is%3Aissue+label%3A%22block%3A+props%22+label%3Abug+label%3A%22app%3A+vue%22)            |
+| Angular        | `compodoc`                               | [Docs](../angular/README.md#props-tables)        | [Open issues](https://github.com/storybookjs/storybook/issues?q=is%3Aopen+is%3Aissue+label%3A%22block%3A+props%22+label%3Abug+label%3A%22app%3A+angular%22)        |
+| Web-components | `custom-elements.json`                   | [Docs](../web-components/README.md#props-tables) | [Open issues](https://github.com/storybookjs/storybook/issues?q=is%3Aopen+is%3Aissue+label%3A%22block%3A+props%22+label%3Abug+label%3A%22app%3A+web-components%22) |
+| Ember          | `yui-doc`                                | [Docs](../ember/README.md#props-tables)          | [Open issues](https://github.com/storybookjs/storybook/issues?q=is%3Aopen+is%3Aissue+label%3A%22block%3A+props%22+label%3Abug+label%3A%22app%3A+ember%22)          |
 
 ## More resources
 

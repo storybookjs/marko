@@ -8,11 +8,10 @@ export default {
 };
 
 export const Story1 = () => <Button onClick={action('clicked', { depth: 1 })}>Hello Button</Button>;
-Story1.story = {
-  name: 'with text',
-  parameters: {
-    options: { selectedPanel: 'storybook/actions/panel' },
-  },
+Story1.storyName = 'with text';
+
+Story1.parameters = {
+  options: { selectedPanel: 'storybook/actions/panel' },
 };
 
 export const Story2 = () => (
@@ -22,9 +21,8 @@ export const Story2 = () => (
     </span>
   </Button>
 );
-Story2.story = {
-  name: 'with some emoji',
-  parameters: {
-    options: { selectedPanel: 'storybook/actions/panel' },
-  },
+Story2.storyName = 'with some emoji';
+
+Story2.parameters = {
+  options: { selectedPanel: 'storybook/actions/panel' },
 };

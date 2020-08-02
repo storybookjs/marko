@@ -1,9 +1,8 @@
-import { document } from 'global';
+import { DOCS_MODE, document } from 'global';
 import pick from 'lodash/pick';
-
 import deepEqual from 'fast-deep-equal';
-
 import { themes, ThemeVars } from '@storybook/theming';
+
 import merge from '../lib/merge';
 import { State, ModuleFn } from '../index';
 
@@ -49,8 +48,6 @@ export interface SubAPI {
 }
 
 type PartialSubState = Partial<SubState>;
-type PartialThemeVars = Partial<ThemeVars>;
-type PartialLayout = Partial<Layout>;
 
 export interface UIOptions {
   name?: string;
@@ -63,10 +60,6 @@ export interface UIOptions {
   selectedPanel?: string;
 }
 
-interface OptionsMap {
-  [key: string]: string;
-}
-
 const defaultState: SubState = {
   ui: {
     enableShortcuts: true,
@@ -74,8 +67,8 @@ const defaultState: SubState = {
     docsMode: false,
   },
   layout: {
-    initialActive: ActiveTabs.SIDEBAR,
-    isToolshown: true,
+    initialActive: ActiveTabs.CANVAS,
+    isToolshown: !DOCS_MODE,
     isFullscreen: false,
     showPanel: true,
     showNav: true,

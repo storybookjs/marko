@@ -116,11 +116,11 @@ describe('preview.client_api', () => {
       const { storiesOf } = clientApi;
 
       clientApi.addParameters({ a: 1 });
-      storiesOf('kind', module).add('name', ({ parameters }) => parameters);
+      storiesOf('kind', module).add('name', (_args, { parameters }) => parameters);
 
       const result = storyStore.fromId('kind--name').storyFn();
       // @ts-ignore
-      const { docs, fileName, options, ...rest } = result;
+      const { docs, fileName, options, argTypes, __isArgsStory, ...rest } = result;
 
       expect(rest).toEqual({ a: 1 });
     });
@@ -131,7 +131,7 @@ describe('preview.client_api', () => {
 
       clientApi.addParameters({ options: { a: '1' } });
       clientApi.addParameters({ options: { b: '2' } });
-      storiesOf('kind', module).add('name', ({ parameters }) => parameters);
+      storiesOf('kind', module).add('name', (_args, { parameters }) => parameters);
 
       // @ts-ignore
       const {
@@ -147,7 +147,7 @@ describe('preview.client_api', () => {
 
       clientApi.addParameters({ backgrounds: ['value'], options: { a: '1', b: '3' } });
       clientApi.addParameters({ options: { a: '2' } });
-      storiesOf('kind', module).add('name', ({ parameters }) => parameters);
+      storiesOf('kind', module).add('name', (_args, { parameters }) => parameters);
 
       // @ts-ignore
       const {
@@ -165,7 +165,7 @@ describe('preview.client_api', () => {
 
       clientApi.addParameters({ backgrounds: ['value'], options: { a: '1', b: '3' } });
       clientApi.addParameters({ backgrounds: [], options: { a: '2' } });
-      storiesOf('kind', module).add('name', ({ parameters }) => parameters);
+      storiesOf('kind', module).add('name', (_args, { parameters }) => parameters);
 
       // @ts-ignore
       const {
@@ -183,7 +183,7 @@ describe('preview.client_api', () => {
 
       clientApi.addParameters({ options: { a: '1', b: '2', theming: { c: '3' } } });
       clientApi.addParameters({ options: { theming: { c: '4', d: '5' } } });
-      storiesOf('kind', module).add('name', ({ parameters }) => parameters);
+      storiesOf('kind', module).add('name', (_args, { parameters }) => parameters);
 
       // @ts-ignore
       const {
@@ -222,6 +222,22 @@ describe('preview.client_api', () => {
       expect(storyStore.fromId('kind--name').storyFn()).toBe('bb-Hello');
     });
 
+    it('should not add global decorators twice', () => {
+      const {
+        clientApi: { addDecorator, storiesOf },
+        storyStore,
+      } = getContext();
+
+      const decorator = (fn) => `bb-${fn()}`;
+      addDecorator(decorator);
+      addDecorator(decorator); // this one is ignored
+
+      storiesOf('kind', module).add('name', () => 'Hello');
+      const f = storyStore.fromId('x');
+
+      expect(storyStore.fromId('kind--name').storyFn()).toBe('bb-Hello');
+    });
+
     it('should utilize both decorators at once', () => {
       const {
         clientApi: { addDecorator, storiesOf },
@@ -245,7 +261,7 @@ describe('preview.client_api', () => {
 
       storiesOf('kind', module)
         .addDecorator((fn) => `aa-${fn()}`)
-        .add('name', (c) => `${c.kind}-${c.name}`);
+        .add('name', (_args, c) => `${c.kind}-${c.name}`);
 
       const result = storyStore.fromId('kind--name').storyFn();
       expect(result).toBe(`aa-kind-name`);
@@ -334,50 +350,6 @@ describe('preview.client_api', () => {
       ]);
     });
 
-    describe('getSeparators', () => {
-      it('returns values set via parameters', () => {
-        const {
-          clientApi: { getSeparators, storiesOf, addParameters },
-        } = getContext();
-
-        const options = { hierarchySeparator: /a/, hierarchyRootSeparator: 'b' };
-        addParameters({ options });
-        storiesOf('kind 1', module).add('name 1', () => '1');
-        expect(getSeparators()).toEqual(options);
-      });
-
-      it('returns old defaults if kind uses old separators', () => {
-        const {
-          clientApi: { getSeparators, storiesOf },
-        } = getContext();
-
-        storiesOf('kind|1', module).add('name 1', () => '1');
-        expect(getSeparators()).toEqual({
-          hierarchySeparator: /\/|\./,
-          hierarchyRootSeparator: '|',
-        });
-      });
-
-      it('returns new values if showRoots is set', () => {
-        const {
-          clientApi: { getSeparators, storiesOf, addParameters },
-        } = getContext();
-        addParameters({ options: { showRoots: false } });
-
-        storiesOf('kind|1', module).add('name 1', () => '1');
-        expect(getSeparators()).toEqual({ hierarchySeparator: '/' });
-      });
-
-      it('returns new values if kind does not use old separators', () => {
-        const {
-          clientApi: { getSeparators, storiesOf },
-        } = getContext();
-
-        storiesOf('kind/1', module).add('name 1', () => '1');
-        expect(getSeparators()).toEqual({ hierarchySeparator: '/' });
-      });
-    });
-
     it('reads filename from module', () => {
       const {
         clientApi: { getStorybook, storiesOf },
@@ -441,22 +413,6 @@ describe('preview.client_api', () => {
         },
       };
     }
-
-    it('should increment store revision when the module reloads', () => {
-      const {
-        storyStore,
-        clientApi: { storiesOf },
-      } = getContext();
-      const mod = new MockModule();
-
-      expect(storyStore.getRevision()).toEqual(0);
-
-      storiesOf('kind', (mod as unknown) as NodeModule);
-
-      mod.hot.reload();
-
-      expect(storyStore.getRevision()).toEqual(1);
-    });
 
     it('should replace a kind when the module reloads', () => {
       const {
@@ -523,7 +479,7 @@ describe('preview.client_api', () => {
       storiesOf('kind2', (module2 as unknown) as NodeModule).add('story2', jest.fn());
       storyStore.finishConfiguring();
 
-      let [event, args] = mockChannelEmit.mock.calls[0];
+      let [event, args] = mockChannelEmit.mock.calls[1];
       expect(event).toEqual(Events.SET_STORIES);
       expect(Object.values(args.stories as [{ kind: string }]).map((v) => v.kind)).toEqual([
         'kind0',
@@ -542,7 +498,7 @@ describe('preview.client_api', () => {
       storyStore.finishConfiguring();
 
       // eslint-disable-next-line prefer-destructuring
-      [event, args] = mockChannelEmit.mock.calls[0];
+      [event, args] = mockChannelEmit.mock.calls[1];
 
       expect(event).toEqual(Events.SET_STORIES);
       expect(Object.values(args.stories as [{ kind: string }]).map((v) => v.kind)).toEqual([
@@ -600,7 +556,9 @@ describe('preview.client_api', () => {
         a: 'global',
         b: 'kind',
         c: 'story',
+        __isArgsStory: false,
         fileName: expect.any(String),
+        argTypes: {},
       });
     });
 
@@ -652,7 +610,9 @@ describe('preview.client_api', () => {
             local: true,
           },
         },
+        __isArgsStory: false,
         fileName: expect.any(String),
+        argTypes: {},
       });
     });
   });

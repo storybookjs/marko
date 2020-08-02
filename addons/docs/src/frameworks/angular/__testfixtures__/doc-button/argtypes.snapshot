@@ -3,9 +3,7 @@
 exports[`angular component properties doc-button 1`] = `
 Object {
   "_inputValue": Object {
-    "defaultValue": Object {
-      "summary": "'some value'",
-    },
+    "defaultValue": "some value",
     "description": "",
     "name": "_inputValue",
     "table": Object {
@@ -15,11 +13,12 @@ Object {
         "summary": "string",
       },
     },
+    "type": Object {
+      "name": "void",
+    },
   },
   "_value": Object {
-    "defaultValue": Object {
-      "summary": "'Private hello'",
-    },
+    "defaultValue": "Private hello",
     "description": "<p>Private value. </p>
 ",
     "name": "_value",
@@ -30,11 +29,12 @@ Object {
         "summary": "string",
       },
     },
+    "type": Object {
+      "name": "void",
+    },
   },
   "appearance": Object {
-    "defaultValue": Object {
-      "summary": "'secondary'",
-    },
+    "defaultValue": "secondary",
     "description": "<p>Appearance style of the button. </p>
 ",
     "name": "appearance",
@@ -45,11 +45,16 @@ Object {
         "summary": "\\"primary\\" | \\"secondary\\"",
       },
     },
+    "type": Object {
+      "name": "enum",
+      "value": Array [
+        "primary",
+        "secondary",
+      ],
+    },
   },
   "buttonRef": Object {
-    "defaultValue": Object {
-      "summary": undefined,
-    },
+    "defaultValue": undefined,
     "description": "",
     "name": "buttonRef",
     "table": Object {
@@ -59,11 +64,12 @@ Object {
         "summary": "ElementRef",
       },
     },
+    "type": Object {
+      "name": "void",
+    },
   },
   "calc": Object {
-    "defaultValue": Object {
-      "summary": "",
-    },
+    "defaultValue": undefined,
     "description": "<p>An internal calculation method which adds <code>x</code> and <code>y</code> together.</p>
 ",
     "name": "calc",
@@ -74,11 +80,12 @@ Object {
         "summary": "(x: number, y: string | number) => number",
       },
     },
+    "type": Object {
+      "name": "void",
+    },
   },
   "inputValue": Object {
-    "defaultValue": Object {
-      "summary": undefined,
-    },
+    "defaultValue": undefined,
     "description": "<p>Setter for <code>inputValue</code> that is also an <code>@Input</code>. </p>
 ",
     "name": "inputValue",
@@ -89,11 +96,12 @@ Object {
         "summary": "string",
       },
     },
+    "type": Object {
+      "name": "string",
+    },
   },
   "internalProperty": Object {
-    "defaultValue": Object {
-      "summary": "'Public hello'",
-    },
+    "defaultValue": "Public hello",
     "description": "<p>Public value. </p>
 ",
     "name": "internalProperty",
@@ -104,11 +112,12 @@ Object {
         "summary": "string",
       },
     },
+    "type": Object {
+      "name": "void",
+    },
   },
   "isDisabled": Object {
-    "defaultValue": Object {
-      "summary": "false",
-    },
+    "defaultValue": false,
     "description": "<p>Sets the button to a disabled state. </p>
 ",
     "name": "isDisabled",
@@ -119,11 +128,12 @@ Object {
         "summary": undefined,
       },
     },
+    "type": Object {
+      "name": "boolean",
+    },
   },
   "item": Object {
-    "defaultValue": Object {
-      "summary": undefined,
-    },
+    "defaultValue": undefined,
     "description": undefined,
     "name": "item",
     "table": Object {
@@ -133,11 +143,12 @@ Object {
         "summary": "[]",
       },
     },
+    "type": Object {
+      "name": "object",
+    },
   },
   "label": Object {
-    "defaultValue": Object {
-      "summary": undefined,
-    },
+    "defaultValue": undefined,
     "description": "<p>The inner text of the button.</p>
 ",
     "name": "label",
@@ -148,11 +159,12 @@ Object {
         "summary": "string",
       },
     },
+    "type": Object {
+      "name": "string",
+    },
   },
   "onClick": Object {
-    "defaultValue": Object {
-      "summary": "new EventEmitter<Event>()",
-    },
+    "defaultValue": undefined,
     "description": "<p>Handler to be called when the button is clicked by a user.</p>
 <p>Will also block the emission of the event if <code>isDisabled</code> is true.</p>
 ",
@@ -164,11 +176,12 @@ Object {
         "summary": "EventEmitter",
       },
     },
+    "type": Object {
+      "name": "void",
+    },
   },
   "privateMethod": Object {
-    "defaultValue": Object {
-      "summary": "",
-    },
+    "defaultValue": undefined,
     "description": "<p>A private method.</p>
 ",
     "name": "privateMethod",
@@ -179,11 +192,12 @@ Object {
         "summary": "(password: string) => void",
       },
     },
+    "type": Object {
+      "name": "void",
+    },
   },
   "processedItem": Object {
-    "defaultValue": Object {
-      "summary": undefined,
-    },
+    "defaultValue": undefined,
     "description": "",
     "name": "processedItem",
     "table": Object {
@@ -193,11 +207,12 @@ Object {
         "summary": "T[]",
       },
     },
+    "type": Object {
+      "name": "void",
+    },
   },
   "protectedMethod": Object {
-    "defaultValue": Object {
-      "summary": "",
-    },
+    "defaultValue": undefined,
     "description": "<p>A protected method.</p>
 ",
     "name": "protectedMethod",
@@ -208,11 +223,12 @@ Object {
         "summary": "(id?: number) => void",
       },
     },
+    "type": Object {
+      "name": "void",
+    },
   },
   "publicMethod": Object {
-    "defaultValue": Object {
-      "summary": "",
-    },
+    "defaultValue": undefined,
     "description": "<p>A public method using an interface. </p>
 ",
     "name": "publicMethod",
@@ -223,11 +239,12 @@ Object {
         "summary": "(things: ISomeInterface) => void",
       },
     },
+    "type": Object {
+      "name": "void",
+    },
   },
   "showKeyAlias": Object {
-    "defaultValue": Object {
-      "summary": undefined,
-    },
+    "defaultValue": undefined,
     "description": undefined,
     "name": "showKeyAlias",
     "table": Object {
@@ -237,11 +254,12 @@ Object {
         "summary": "",
       },
     },
+    "type": Object {
+      "name": "void",
+    },
   },
   "size": Object {
-    "defaultValue": Object {
-      "summary": "'medium'",
-    },
+    "defaultValue": "medium",
     "description": "<p>Size of the button. </p>
 ",
     "name": "size",
@@ -252,11 +270,12 @@ Object {
         "summary": "ButtonSize",
       },
     },
+    "type": Object {
+      "name": "object",
+    },
   },
   "somethingYouShouldNotUse": Object {
-    "defaultValue": Object {
-      "summary": "false",
-    },
+    "defaultValue": false,
     "description": "<p>Some input you shouldn&#39;t use.</p>
 ",
     "name": "somethingYouShouldNotUse",
@@ -266,6 +285,9 @@ Object {
         "required": true,
         "summary": undefined,
       },
+    },
+    "type": Object {
+      "name": "boolean",
     },
   },
 }

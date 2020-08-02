@@ -1,6 +1,6 @@
-type QueryParamsOptions = {
+interface QueryParamsOptions {
   addDecorator?: boolean;
-};
+}
 
 export function config(entry: any[] = [], { addDecorator = true }: QueryParamsOptions = {}) {
   const queryParamsConfig = [];

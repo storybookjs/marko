@@ -20,15 +20,11 @@ export const InvalidContrast = () => (
   // FIXME: has no effect on score
   <BaseButton style={{ color: 'black', backgroundColor: 'black' }} label={text} />
 );
-InvalidContrast.story = {
-  name: 'Invalid contrast',
-};
+InvalidContrast.storyName = 'Invalid contrast';
 
 export const delayedRender = () => (
   <DelayedRender>
     <BaseButton label="This button has a delayed render of 1s" />
   </DelayedRender>
 );
-delayedRender.story = {
-  name: 'delayed render',
-};
+delayedRender.storyName = 'delayed render';

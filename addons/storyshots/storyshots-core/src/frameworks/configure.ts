@@ -3,6 +3,8 @@ import path from 'path';
 import { toRequireContext } from '@storybook/core/server';
 import registerRequireContextHook from 'babel-plugin-require-context-hook/register';
 import global from 'global';
+import { ArgTypesEnhancer, DecoratorFunction } from '@storybook/client-api';
+
 import { ClientApi } from './Loader';
 import { StoryshotsOptions } from '../api/StoryshotsOptions';
 
@@ -17,8 +19,8 @@ const isFile = (file: string): boolean => {
 };
 
 interface Output {
-  stories: string[];
-  files: string[];
+  preview?: string;
+  stories?: string[];
 }
 
 const supportedExtensions = ['ts', 'tsx', 'js', 'jsx'];
@@ -39,22 +41,24 @@ function getConfigPathParts(input: string): Output {
   const configDir = path.resolve(input);
 
   if (fs.lstatSync(configDir).isDirectory()) {
-    const output: Output = { files: [], stories: [] };
+    const output: Output = {};
 
     const preview = getPreviewFile(configDir);
     const main = getMainFile(configDir);
 
     if (preview) {
-      output.files.push(preview);
+      output.preview = preview;
     }
     if (main) {
-      const { stories = [] } = require.requireActual(main);
+      const { stories = [] } = jest.requireActual(main);
 
       output.stories = stories.map(
         (pattern: string | { path: string; recursive: boolean; match: string }) => {
           const { path: basePath, recursive, match } = toRequireContext(pattern);
+          const regex = new RegExp(match);
+
           // eslint-disable-next-line no-underscore-dangle
-          return global.__requireContext(configDir, basePath, recursive, match);
+          return global.__requireContext(configDir, basePath, recursive, regex);
         }
       );
     }
@@ -62,7 +66,7 @@ function getConfigPathParts(input: string): Output {
     return output;
   }
 
-  return { files: [configDir], stories: [] };
+  return { preview: configDir };
 }
 
 function configure(
@@ -77,14 +81,29 @@ function configure(
     return;
   }
 
-  const { files, stories } = getConfigPathParts(configPath);
+  const { preview, stories } = getConfigPathParts(configPath);
 
-  files.forEach((f) => {
-    require.requireActual(f);
-  });
+  if (preview) {
+    // This is essentially the same code as lib/core/src/server/preview/virtualModuleEntry.template
+    const { parameters, decorators, globals, globalTypes, argTypesEnhancers } = jest.requireActual(
+      preview
+    );
+
+    if (decorators) {
+      decorators.forEach((decorator: DecoratorFunction) => storybook.addDecorator(decorator));
+    }
+    if (parameters || globals || globalTypes) {
+      storybook.addParameters({ ...parameters, globals, globalTypes });
+    }
+    if (argTypesEnhancers) {
+      argTypesEnhancers.forEach((enhancer: ArgTypesEnhancer) =>
+        storybook.addArgTypesEnhancer(enhancer)
+      );
+    }
+  }
 
   if (stories && stories.length) {
-    storybook.configure(stories, false);
+    storybook.configure(stories, false, false);
   }
 }
 

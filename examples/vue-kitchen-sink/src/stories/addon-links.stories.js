@@ -11,6 +11,4 @@ export const GoToWelcome = () => ({
   },
 });
 
-GoToWelcome.story = {
-  name: 'Go to welcome',
-};
+GoToWelcome.storyName = 'Go to welcome';
