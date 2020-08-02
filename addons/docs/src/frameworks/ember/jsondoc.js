@@ -18,20 +18,21 @@ export const extractArgTypes = (componentName) => {
   if (!componentDoc) {
     return null;
   }
-  
-  return componentDoc.attributes.arguments.map((prop) => {
-    return {
+  return componentDoc.attributes.arguments.reduce((acc, prop) => {
+    acc[prop.name] = {
       name: prop.name,
-      defaultValue: { summary: prop.defaultValue },
+      defaultValue: prop.defaultValue,
       description: prop.description,
       table: {
+        defaultValue: { summary: prop.defaultValue },
         type: {
           summary: prop.type,
           required: prop.tags.length ? prop.tags.some((tag) => tag.name === 'required') : false,
         },
       },
     };
-  });
+    return acc;
+  }, {});
 };
 
 export const extractComponentDescription = (componentName) => {
