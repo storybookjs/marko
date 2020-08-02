@@ -13,6 +13,7 @@
     - [DocsPage slots removed](#docspage-slots-removed)
     - [React prop tables with Typescript](#react-prop-tables-with-typescript)
     - [ConfigureJSX true by default in React](#configurejsx-true-by-default-in-react)
+    - [Docs description parameter](#docs-description-parameter)
   - [New addon presets](#new-addon-presets)
   - [Removed babel-preset-vue from Vue preset](#removed-babel-preset-vue-from-vue-preset)
   - [Removed Deprecated APIs](#removed-deprecated-apis)
@@ -283,6 +284,26 @@ module.exports = {
   ],
 };
 ```
+
+#### Docs description parameter
+
+In 6.0, you can customize a component description using the `docs.description.component` parameter, and a story description using `docs.description.story` parameter.
+
+Example:
+
+```js
+import { Button } from './Button';
+
+export default {
+  title: 'Button'
+  parameters: { docs: { description: { component: 'some component **markdown**' }}}
+}
+
+export const Basic = () => <Button />
+Basic.parameters = { docs: { description: { story: 'some story **markdown**' }}}
+```
+
+In 5.3 you customized a story description with the `docs.storyDescription` parameter. This has been deprecated, and support will be removed in 7.0.
 
 ### New addon presets
 
