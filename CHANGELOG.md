@@ -1,3 +1,21 @@
+## 6.0.0-rc.22 (August 2, 2020)
+
+### Features
+
+- Addon-docs: Add `docs.description` parameter ([#11761](https://github.com/storybookjs/storybook/pull/11761))
+
+### Bug Fixes
+
+- Composition: Fix missing version property in autoref ([#11745](https://github.com/storybookjs/storybook/pull/11745))
+- Addon-a11y: Fix inherited parameters ([#11730](https://github.com/storybookjs/storybook/pull/11730))
+- Addon-docs: Fix Ember args ([#11760](https://github.com/storybookjs/storybook/pull/11760))
+- Addon-Docs: Fix Ember extractArgTypes default value ([#10512](https://github.com/storybookjs/storybook/pull/10512))
+- Addon-Docs: Fix Ember extractArgTypes ([#10525](https://github.com/storybookjs/storybook/pull/10525))
+
+### Dependency Upgrades
+
+- Addon-docs: Make vue-docgen optional peer deps ([#11759](https://github.com/storybookjs/storybook/pull/11759))
+
 ## 6.0.0-rc.21 (August 1, 2020)
 
 ### Features
