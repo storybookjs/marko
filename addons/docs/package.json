@@ -76,9 +76,7 @@
     "remark-external-links": "^6.0.0",
     "remark-slug": "^6.0.0",
     "ts-dedent": "^1.1.1",
-    "util-deprecate": "^1.0.2",
-    "vue-docgen-api": "^4.7.0",
-    "vue-docgen-loader": "^1.4.0"
+    "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
     "@angular/core": "^9.1.0",
@@ -125,10 +123,18 @@
     "react-dom": "*",
     "react-is": "^16.8.0",
     "vue": "^2.6.10",
+    "vue-docgen-api": "^4.29.1",
+    "vue-docgen-loader": "^1.5.0",
     "webpack": ">=4"
   },
   "peerDependenciesMeta": {
     "vue": {
+      "optional": true
+    },
+    "vue-docgen-api": {
+      "optional": true
+    },
+    "vue-docgen-loader": {
       "optional": true
     },
     "webpack": {
