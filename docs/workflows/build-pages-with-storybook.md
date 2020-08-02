@@ -9,7 +9,7 @@ There are many ways to build pages in Storybook. Here are common patterns and so
 - Pure presentational pages.
 - Connected components (e.g. network requests, context, browser environment).
 
-### Pure presentational pages
+## Pure presentational pages
 
 Teams at the BBC, The Guardian, and the Storybook maintainers themselves build pure presentational pages. If you take this approach, you don't need to do anything special to render your pages in Storybook.
 
@@ -79,11 +79,11 @@ Simple.args = {
 
 This approach is particularly useful when the various subcomponents export a complex list of different stories, which you can pick and choose to build realistic scenarios for your screen-level stories without repeating yourself. By reusing the data and taking a Don't-Repeat-Yourself(DRY) philosophy, your story maintenance burden is minimal.
 
-### Mocking connected components
+## Mocking connected components
 
 Render a connected component in Storybook by mocking the network requests that it makes to fetch its data. There are various layers in which you can do that.
 
-#### Mocking providers
+### Mocking providers
 
 If you are using a provider that supplies data via the context, you can wrap your story in a decorator that supplies a mocked version of that provider. For example, in the [Screens](https://www.learnstorybook.com/intro-to-storybook/react/en/screen/) chapter of Learn Storybook we mock a Redux provider with mock data.
 
@@ -106,7 +106,7 @@ LoggedOut.parameters: {
  };
 ```
 
-#### Mocking imports
+### Mocking imports
 
 It is also possible to mock imports directly, similar to Jest, using webpack’s aliasing. This is extremely useful if your component makes network requests directly with third-party libraries.
 
@@ -191,9 +191,150 @@ Success.parameters = {
 };
 ```
 
-#### Specific mocks
+### Specific mocks
 
 Another mocking approach is to use libraries that intercept calls at a lower level. For instance you can use [`fetch-mock`](https://www.npmjs.com/package/fetch-mock) to mock fetch requests specifically, or [`msw`](https://www.npmjs.com/package/msw) to mock all kinds of network traffic.
 
 Similar to the import mocking above, once you have a mock you’ll still want to set the return value of the mock on a per-story basis. Do this in Storybook with a decorator that reads story parameters. 
 
+### Avoiding mocking dependencies
+
+It's possible to mostly avoid mocking the dependencies of connected "container" components entirely through passing them around via props, or React context. However, it necessitates a strict split of container and presentational component logic. For example, if you have a component that is responsible for data fetching logic and rendering DOM, it will need to be mocked as previously described.
+
+It’s common to import and embed container components in amongst presentational components. However, as we discovered earlier, in order to also render them within Storybook, we’ll likely have to mock their dependencies or the imports themselves.
+
+Not only can this quickly grow to become a tedious task, it’s also very difficult to mock container components that use local state. So, a solution to this problem is instead of importing containers directly, instead create a React context that provides the container components. This allows you to freely embed container components as usual, at any level in the component hierarchy without worrying about subsequently mocking their dependencies; since we can simply swap out the containers themselves with their mocked presentational counterpart.
+
+We recommend dividing context containers up over specific pages or views in your app. For example, if you had a `ProfilePage` component, you might set up a file structure as follows:
+
+```
+ProfilePage.js
+ProfilePage.stories.js
+ProfilePageContainer.js
+ProfilePageContext.js
+```
+
+> It’s also often useful to setup a “global” container context, (perhaps named `GlobalContainerContext`) for container components that may be rendered on every page of your app, and adding it to the top level of your application. While it’s possible to place every container within this global context, it should only provide containers that are required globally.
+
+Let’s look at an example implementation of this approach.
+
+First we’ll need to create a React context, and we can name it `ProfilePageContext`. It does nothing more than export a React context:
+
+```js
+import { createContext } from 'react';
+
+const ProfilePageContext = createContext();
+
+export default ProfilePageContext;
+```
+
+`ProfilePage` is our presentational component. It will use the `useContext` hook to retrieve the container components from `ProfilePageContext`:
+
+```js
+import { useContext } from 'react';
+import ProfilePageContext from './ProfilePageContext';
+
+const ProfilePage = ({ name, userId }) => {
+  const { UserPostsContainer, UserFriendsContainer } = useContext(ProfilePageContext);
+
+  return (
+    <div>
+      <h1>{name}</h1>
+      <UserPostsContainer userId={userId} />
+      <UserFriendsContainer userId={userId} />
+    </div>
+  );
+};
+
+export default ProfilePage;
+```
+
+#### Mocking containers in Storybook
+
+In the context of Storybook, instead of providing container components through context, we’ll instead provide their mocked counterparts. In most cases, the mocked versions of these components can often be borrowed directly from their associated stories.
+
+> If the same context applies to all `ProfilePage` stories, we can also use a Storybook decorator, See: https://storybook.js.org/docs/basics/writing-stories/#decorators
+
+```js
+import ProfilePage from './ProfilePage';
+import UserPosts from './UserPosts';
+import { normal as UserFriendsNormal } from './UserFriends.stories';
+
+export default {
+  title: 'ProfilePage',
+};
+
+const ProfilePageProps = {
+  name: 'Jimi Hendrix',
+  userId: '1',
+};
+
+const context = {
+  // We can access the `userId` prop here if required:
+  UserPostsContainer({ userId }) {
+    return <UserPosts {...UserPostsProps} />;
+  },
+  // Most of the time we can simply pass in a story.
+  // In this case we're passing in the `normal` story export
+  // from the `UserFriends` component stories.
+  UserFriendsContainer: UserFriendsNormal,
+};
+
+export const normal = () => {
+  return (
+    <ProfilePageContext.Provider value={context}>
+      <ProfilePage {...ProfilePageProps} />
+    </ProfilePageContext.Provider>
+  );
+};
+```
+
+#### Providing containers to your application
+
+Now, in context of your application, you’ll need to provide `ProfilePage` with all of the container components it requires by wrapping it with `ProfilePageContext.Provider`:
+
+For example, in Next.js, this would be your `pages/profile.js` component.
+
+```js
+import ProfilePageContext from './ProfilePageContext';
+import ProfilePageContainer from './ProfilePageContainer';
+import UserPostsContainer from './UserPostsContainer';
+import UserFriendsContainer from './UserFriendsContainer';
+
+// Ensure that your context value remains referentially equal between each render.
+const context = {
+  UserPostsContainer,
+  UserFriendsContainer,
+};
+
+const AppProfilePage = () => {
+  return (
+    <ProfilePageContext.Provider value={context}>
+      <ProfilePageContainer />
+    </ProfilePageContext.Provider>
+  );
+};
+
+export default AppProfilePage;
+```
+
+#### Mocking global containers in Storybook
+
+If you’ve setup `GlobalContainerContext`, in order to provide context to all stories you’ll need to set up a decorator within Storybook’s `preview.js`. For example:
+
+```js
+import { normal as NavigationNormal } from '../components/Navigation.stories';
+import GlobalContainerContext from '../components/lib/GlobalContainerContext';
+
+const context = {
+  NavigationContainer: NavigationNormal,
+};
+
+const AppDecorator = (storyFn) => {
+  return (
+    <GlobalContainerContext.Provider value={context}>{storyFn()}</GlobalContainerContext.Provider>
+  );
+};
+
+addDecorator(AppDecorator);
+```
