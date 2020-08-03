@@ -10,7 +10,7 @@ const Template = (initialValue: any) => {
   const [value, setValue] = useState(initialValue);
   return (
     <>
-      <ObjectControl name="object" value={value} onChange={(name, newVal) => setValue(newVal)} />
+      <ObjectControl name="object" value={value} onChange={(newVal) => setValue(newVal)} />
       <p>{value && JSON.stringify(value)}</p>
     </>
   );
@@ -30,7 +30,7 @@ export const ValidatedAsArray = () => {
         name="object"
         argType={{ type: { name: 'array' } }}
         value={value}
-        onChange={(name, newVal) => setValue(newVal)}
+        onChange={(newVal) => setValue(newVal)}
       />
       <p>{value && JSON.stringify(value)}</p>
     </>

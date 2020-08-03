@@ -1,3 +1,92 @@
+## 6.0.0-rc.23 (August 3, 2020)
+
+### Bug Fixes
+
+* Source-loader: Fix storiesOf missing `__STORY__` variable ([#11765](https://github.com/storybookjs/storybook/pull/11765))
+
+## 6.0.0-rc.22 (August 2, 2020)
+
+### Features
+
+- Addon-docs: Add `docs.description` parameter ([#11761](https://github.com/storybookjs/storybook/pull/11761))
+
+### Bug Fixes
+
+- Composition: Fix missing version property in autoref ([#11745](https://github.com/storybookjs/storybook/pull/11745))
+- Addon-a11y: Fix inherited parameters ([#11730](https://github.com/storybookjs/storybook/pull/11730))
+- Addon-docs: Fix Ember args ([#11760](https://github.com/storybookjs/storybook/pull/11760))
+- Addon-Docs: Fix Ember extractArgTypes default value ([#10512](https://github.com/storybookjs/storybook/pull/10512))
+- Addon-Docs: Fix Ember extractArgTypes ([#10525](https://github.com/storybookjs/storybook/pull/10525))
+
+### Dependency Upgrades
+
+- Addon-docs: Make vue-docgen optional peer deps ([#11759](https://github.com/storybookjs/storybook/pull/11759))
+
+## 6.0.0-rc.21 (August 1, 2020)
+
+### Features
+
+- Addon-docs: Add Story.story for CSF stories with MDX docs ([#11752](https://github.com/storybookjs/storybook/pull/11752))
+
+### Maintenance
+
+- Addon-docs: Rename Preview/Props to Canvas/ArgsTable ([#11744](https://github.com/storybookjs/storybook/pull/11744))
+
+## 6.0.0-rc.20 (July 31, 2020)
+
+### Breaking Changes
+
+- Core: Pass normalized parameters to the story sort function ([#11743](https://github.com/storybookjs/storybook/pull/11743))
+
+### Bug Fixes
+
+- Core: Dedupe argTypes serialization ([#11740](https://github.com/storybookjs/storybook/pull/11740))
+
+## 6.0.0-rc.19 (July 31, 2020)
+
+### Bug Fixes
+
+- Core: Speed up combineParameters ([#11736](https://github.com/storybookjs/storybook/pull/11736))
+- Addon-docs: Support absolute anchors when deployed at non-root ([#11403](https://github.com/storybookjs/storybook/pull/11403))
+
+### Maintenance
+
+- Args: Add optional scalar test cases for typescript ([#11149](https://github.com/storybookjs/storybook/pull/11149))
+
+## 6.0.0-rc.18 (July 30, 2020)
+
+### Bug Fixes
+
+- Addon-controls: Fix update logic for argTypes with custom names ([#11704](https://github.com/storybookjs/storybook/pull/11704))
+- Core: Fix HMR ([#11709](https://github.com/storybookjs/storybook/pull/11709))
+- Server: Serialize Object controls as JSON over the wire ([#11703](https://github.com/storybookjs/storybook/pull/11703))
+- Revert #11502: Remove z-index on ActionBar ([#11708](https://github.com/storybookjs/storybook/pull/11708))
+- Revert #11066: Add skip to content on panel and story iframe ([#11718](https://github.com/storybookjs/storybook/pull/11718))
+- UI: Improve treestate performance ([#11725](https://github.com/storybookjs/storybook/pull/11725))
+
+## 6.0.0-rc.17 (July 30, 2020)
+
+Failed NPM publish
+
+## 6.0.0-rc.16 (July 28, 2020)
+
+### Features
+
+- Source-loader: Inject source snippets as story parameters ([#11707](https://github.com/storybookjs/storybook/pull/11707))
+- Source-loader: Handle bind expression stories ([#11710](https://github.com/storybookjs/storybook/pull/11710))
+- UI: Add skip to content on panel and story iframe ([#11066](https://github.com/storybookjs/storybook/pull/11066))
+- Addon-storyshots: Add web-component support ([#11064](https://github.com/storybookjs/storybook/pull/11064))
+
+### Bug Fixes
+
+- Addon-docs: Fix docs render layout to always be 'fullscreen' ([#11699](https://github.com/storybookjs/storybook/pull/11699))
+- UI: Fix release notes on prduction builds ([#11700](https://github.com/storybookjs/storybook/pull/11700))
+- Addon-docs: Apply list styles over reset ([#11281](https://github.com/storybookjs/storybook/pull/11281))
+
+### Maintenance
+
+- CLI: Update rax/mithril/web-components templates, rework Yarn2 E2E ([#11354](https://github.com/storybookjs/storybook/pull/11354))
+
 ## 6.0.0-rc.15 (July 27, 2020)
 
 ### Features

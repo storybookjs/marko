@@ -60,6 +60,8 @@ export type State = layout.SubState &
   version.SubState &
   url.SubState &
   shortcuts.SubState &
+  releaseNotes.SubState &
+  settings.SubState &
   globals.SubState &
   RouterData &
   Other;
@@ -73,6 +75,8 @@ export type API = addons.SubAPI &
   layout.SubAPI &
   notifications.SubAPI &
   shortcuts.SubAPI &
+  releaseNotes.SubAPI &
+  settings.SubAPI &
   version.SubAPI &
   url.SubAPI &
   Other;

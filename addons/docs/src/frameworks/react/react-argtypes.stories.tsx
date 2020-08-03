@@ -55,6 +55,7 @@ const typescriptFixtures = [
   'scalars',
   'tuples',
   'unions',
+  'optionals',
 ];
 
 const typescriptStories = storiesOf('ArgTypes/TypeScript', module);

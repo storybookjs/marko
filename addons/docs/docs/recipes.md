@@ -70,7 +70,7 @@ import { SomeComponent } from 'path/to/SomeComponent';
 
 I can define a story with the function imported from CSF:
 
-<Story name="basic">{stories.basic()}</Story>
+<Story story={stories.basic} />
 
 And I can also embed arbitrary markdown & JSX in this file.
 
@@ -80,7 +80,8 @@ And I can also embed arbitrary markdown & JSX in this file.
 What's happening here:
 
 - Your stories are defined in CSF, but because of `includeStories: []`, they are not actually added to Storybook.
-- The MDX file is simply importing stories as functions in the MDX, and other aspects of the CSF file, such as decorators, parameters, and any other metadata should be applied as needed in the MDX from the import.
+- The named story exports are annotated with story-level decorators, parameters, args, and the `<Story story={}>` construct respects this.
+- All component-level decorators, parameters, etc. from `Button.stories` default export must be manually copied over into `<Meta>` if desired.
 
 ## CSF Stories with arbitrary MDX
 

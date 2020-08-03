@@ -24,18 +24,21 @@ const defaultComponents = {
   ...HeadersMdx,
 };
 
+const warnOptionsTheme = deprecate(
+  () => {},
+  dedent`
+    Deprecated parameter: options.theme => docs.theme
+    
+    https://github.com/storybookjs/storybook/blob/next/addons/docs/docs/theming.md#storybook-theming
+`
+);
+
 export const DocsContainer: FunctionComponent<DocsContainerProps> = ({ context, children }) => {
   const { id: storyId = null, parameters = {} } = context || {};
   const { options = {}, docs = {} } = parameters;
   let themeVars = docs.theme;
   if (!themeVars && options.theme) {
-    deprecate(
-      () => {},
-      dedent`
-        options.theme => Deprecated: use  story.parameters.docs.theme instead.
-        See https://github.com/storybookjs/storybook/blob/next/addons/docs/docs/theming.md#storybook-theming for details.
-    `
-    )();
+    warnOptionsTheme();
     themeVars = options.theme;
   }
   const theme = ensureTheme(themeVars);

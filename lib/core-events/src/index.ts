@@ -1,11 +1,13 @@
 enum events {
   CHANNEL_CREATED = 'channelCreated',
+  // When the preview boots, the first story is chosen via a selection specifier
+  STORY_SPECIFIED = 'storySpecified',
+  // Emitted by the preview whenever the list of stories changes (in batches)
+  SET_STORIES = 'setStories',
   // Set the current story selection in the preview
   SET_CURRENT_STORY = 'setCurrentStory',
   // The current story changed due to the above
   CURRENT_STORY_WAS_SET = 'currentStoryWasSet',
-  // Emitted by the preview whenever the list of stories changes (in batches)
-  SET_STORIES = 'setStories',
   // Force the current story to re-render
   FORCE_RE_RENDER = 'forceReRender',
   // The next 6 events are emitted by the StoryRenderer when rendering the current story
@@ -44,8 +46,10 @@ export default events;
 // This is the preferred method
 export const {
   CHANNEL_CREATED,
-  SET_CURRENT_STORY,
+  STORY_SPECIFIED,
   SET_STORIES,
+  SET_CURRENT_STORY,
+  CURRENT_STORY_WAS_SET,
   FORCE_RE_RENDER,
   STORY_CHANGED,
   STORY_UNCHANGED,
@@ -67,5 +71,4 @@ export const {
   SHARED_STATE_CHANGED,
   SHARED_STATE_SET,
   NAVIGATE_URL,
-  CURRENT_STORY_WAS_SET,
 } = events;

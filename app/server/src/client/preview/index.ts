@@ -3,7 +3,7 @@ import { ClientStoryApi, Loadable } from '@storybook/addons';
 
 import './globals';
 import { renderMain as render } from './render';
-import { StoryFnServerReturnType, IStorybookSection, ConfigureOptionsArgs } from './types';
+import { StoryFnServerReturnType, IStorybookSection } from './types';
 
 const framework = 'server';
 

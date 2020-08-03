@@ -1,6 +1,6 @@
 {
   "name": "@storybook/react",
-  "version": "6.0.0-rc.15",
+  "version": "6.0.0-rc.23",
   "description": "Storybook for React: Develop React Component in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -36,9 +36,9 @@
   "dependencies": {
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
-    "@storybook/addons": "6.0.0-rc.15",
-    "@storybook/core": "6.0.0-rc.15",
-    "@storybook/node-logger": "6.0.0-rc.15",
+    "@storybook/addons": "6.0.0-rc.23",
+    "@storybook/core": "6.0.0-rc.23",
+    "@storybook/node-logger": "6.0.0-rc.23",
     "@storybook/semver": "^7.3.2",
     "@svgr/webpack": "^5.4.0",
     "@types/webpack-env": "^1.15.2",
@@ -58,7 +58,7 @@
     "webpack": "^4.43.0"
   },
   "devDependencies": {
-    "@storybook/client-api": "6.0.0-rc.15",
+    "@storybook/client-api": "6.0.0-rc.23",
     "@types/node": "^14.0.10",
     "@types/webpack": "^4.41.12"
   },
@@ -71,7 +71,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "7354abe09cb490f732384d8500f0df8be2707611",
+  "gitHead": "f541dfe245537701a0780393633c5453fb19e740",
   "typesVersions": {
     "<=3.5": {
       "*": [

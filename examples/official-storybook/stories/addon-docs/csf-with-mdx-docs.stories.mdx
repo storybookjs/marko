@@ -1,5 +1,5 @@
-import { Meta, Story } from '@storybook/addon-docs/blocks';
-import { Basic } from './csf-with-mdx-docs.stories';
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs/blocks';
+import * as Csf from './csf-with-mdx-docs.stories';
 
 <Meta title="Addons/Docs/csf-with-mdx-docs" />
 
@@ -7,6 +7,16 @@ import { Basic } from './csf-with-mdx-docs.stories';
 
 I can define a story with the function imported from CSF:
 
-<Story name="Basic button">
-  <Basic />
-</Story>
+<Canvas>
+  <Story name="with args" story={Csf.WithArgs} />
+</Canvas>
+
+<ArgsTable />
+
+<Canvas>
+  <Story name="basic" story={Csf.Basic} />
+</Canvas>
+
+<Canvas>
+  <Story name="with template" story={Csf.WithTemplate} />
+</Canvas>

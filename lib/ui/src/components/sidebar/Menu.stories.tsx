@@ -37,28 +37,50 @@ const DoubleThemeRenderingHack = styled.div({
   },
 });
 
+const ExpandedMenu: FunctionComponent<{ menu: any }> = ({ menu }) => (
+  <DoubleThemeRenderingHack>
+    <WithTooltip
+      placement="top"
+      trigger="click"
+      closeOnClick
+      startOpen
+      tooltip={({ onHide }) => <SidebarMenuList onHide={onHide} menu={menu} />}
+    >
+      <MenuButton outline small containsIcon highlighted={false} title="Shortcuts">
+        <Icons icon="ellipsis" />
+      </MenuButton>
+    </WithTooltip>
+  </DoubleThemeRenderingHack>
+);
+
 export const Expanded = () => {
   const menu = useMenu(
-    // @ts-ignore
-    { getShortcutKeys: () => ({}), versionUpdateAvailable: () => false },
+    {
+      // @ts-ignore
+      getShortcutKeys: () => ({}),
+      versionUpdateAvailable: () => false,
+      releaseNotesVersion: () => '6.0.0',
+    },
     false,
     false,
     false,
     false
   );
-  return (
-    <DoubleThemeRenderingHack>
-      <WithTooltip
-        placement="top"
-        trigger="click"
-        closeOnClick
-        startOpen
-        tooltip={({ onHide }) => <SidebarMenuList onHide={onHide} menu={menu} />}
-      >
-        <MenuButton outline small containsIcon highlighted={false} title="Shortcuts">
-          <Icons icon="ellipsis" />
-        </MenuButton>
-      </WithTooltip>
-    </DoubleThemeRenderingHack>
+  return <ExpandedMenu menu={menu} />;
+};
+
+export const ExpandedWithoutReleaseNotes = () => {
+  const menu = useMenu(
+    {
+      // @ts-ignore
+      getShortcutKeys: () => ({}),
+      versionUpdateAvailable: () => false,
+      releaseNotesVersion: () => undefined,
+    },
+    false,
+    false,
+    false,
+    false
   );
+  return <ExpandedMenu menu={menu} />;
 };

@@ -7,7 +7,7 @@ import {
   STORY_CHANGED,
   SELECT_STORY,
   SET_STORIES,
-  CURRENT_STORY_WAS_SET,
+  STORY_SPECIFIED,
 } from '@storybook/core-events';
 import deprecate from 'util-deprecate';
 
@@ -328,11 +328,8 @@ export const init: ModuleFn = ({
 
   const initModule = () => {
     // On initial load, the local iframe will select the first story (or other "selection specifier")
-    // and emit CURRENT_STORY_WAS_SET with the id. We need to ensure we respond to this change.
-    // Later when we change story via the manager (or SELECT_STORY below), we'll already be at the
-    // correct path before CURRENT_STORY_WAS_SET is emitted, so this is less important (the navigate is a no-op)
-    // Note this is the case for refs also.
-    fullAPI.on(CURRENT_STORY_WAS_SET, function handler({
+    // and emit STORY_SPECIFIED with the id. We need to ensure we respond to this change.
+    fullAPI.on(STORY_SPECIFIED, function handler({
       storyId,
       viewMode,
     }: {
@@ -344,8 +341,13 @@ export const init: ModuleFn = ({
 
       if (fullAPI.isSettingsScreenActive()) return;
 
-      if (sourceType === 'local' && storyId && viewMode) {
-        navigate(`/${viewMode}/${storyId}`);
+      if (sourceType === 'local') {
+        // Special case -- if we are already at the story being specified (i.e. the user started at a given story),
+        // we don't need to change URL. See https://github.com/storybookjs/storybook/issues/11677
+        const state = store.getState();
+        if (state.storyId !== storyId || state.viewMode !== viewMode) {
+          navigate(`/${viewMode}/${storyId}`);
+        }
       }
     });
 

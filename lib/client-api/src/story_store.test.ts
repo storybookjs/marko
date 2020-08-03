@@ -1004,7 +1004,7 @@ describe('preview.story_store', () => {
       ]);
     });
 
-    it('denormalizes parameters before passing to sort', () => {
+    it('passes kind and global parameters to sort', () => {
       const store = new StoryStore({ channel });
       const storySort = jest.fn();
       store.addGlobalMetadata({
@@ -1025,14 +1025,18 @@ describe('preview.story_store', () => {
         [
           'a--1',
           expect.objectContaining({
-            parameters: expect.objectContaining({ global: 'global', kind: 'kind', story: '1' }),
+            parameters: expect.objectContaining({ story: '1' }),
           }),
+          { kind: 'kind' },
+          expect.objectContaining({ global: 'global' }),
         ],
         [
           'a--2',
           expect.objectContaining({
-            parameters: expect.objectContaining({ global: 'global', kind: 'kind', story: '2' }),
+            parameters: expect.objectContaining({ story: '2' }),
           }),
+          { kind: 'kind' },
+          expect.objectContaining({ global: 'global' }),
         ]
       );
     });
@@ -1282,6 +1286,32 @@ describe('preview.story_store', () => {
       onCurrentStoryWasSet.mockClear();
       store.setSelection({ storyId: 'a--1', viewMode: 'story' });
       expect(onCurrentStoryWasSet).toHaveBeenCalled();
+    });
+  });
+
+  describe('STORY_SPECIFIED', () => {
+    it('is emitted when configuration ends if a specifier was set', () => {
+      const onStorySpecified = jest.fn();
+      channel.on(Events.STORY_SPECIFIED, onStorySpecified);
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'kind-1', 'story-1.1', () => 0);
+      store.setSelectionSpecifier({ storySpecifier: '*', viewMode: 'story' });
+
+      store.finishConfiguring();
+      expect(onStorySpecified).toHaveBeenCalled();
+    });
+
+    it('is NOT emitted when setSelection is called', () => {
+      const onStorySpecified = jest.fn();
+      channel.on(Events.STORY_SPECIFIED, onStorySpecified);
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'kind-1', 'story-1.1', () => 0);
+      store.setSelectionSpecifier({ storySpecifier: '*', viewMode: 'story' });
+      store.finishConfiguring();
+
+      onStorySpecified.mockClear();
+      store.setSelection({ storyId: 'a--1', viewMode: 'story' });
+      expect(onStorySpecified).not.toHaveBeenCalled();
     });
   });
 });

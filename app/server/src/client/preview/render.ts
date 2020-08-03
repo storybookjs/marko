@@ -20,17 +20,22 @@ const buildStoryArgs = (args: Args, argTypes: ArgTypes) => {
     const argType = argTypes[key];
     const { control } = argType;
     const controlType = control && control.type.toLowerCase();
+    const argValue = storyArgs[key];
     switch (controlType) {
       case 'date':
         // For cross framework & language support we pick a consistent representation of Dates as strings
-        storyArgs[key] = new Date(storyArgs[key]).toISOString();
+        storyArgs[key] = new Date(argValue).toISOString();
         break;
       case 'array': {
         // use the supplied separator when seriazlizing an array as a string
         const separator = control.separator || ',';
-        storyArgs[key] = storyArgs[key].join(separator);
+        storyArgs[key] = argValue.join(separator);
         break;
       }
+      case 'object':
+        // send objects as JSON strings
+        storyArgs[key] = JSON.stringify(argValue);
+        break;
       default:
     }
   });

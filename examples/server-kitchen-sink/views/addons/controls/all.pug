@@ -6,6 +6,7 @@
 - style = `border: 2px dotted ${colour}; padding: 8px 22px; border-radius: 8px`;
 - today = new Date(today);
 - items = items.split(',');
+- other = JSON.parse(other)
 
 div(style=`${style}`)
   h1 My name is #{name},
@@ -15,4 +16,8 @@ div(style=`${style}`)
   ul 
     each item in items
       li= item
+  p Other things about me: 
+    ul 
+      each key in Object.keys(other)
+        li= `${key}: ${other[key]}`
   p #{salutation}

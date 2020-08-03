@@ -16,6 +16,7 @@ beforeEach(() => {
     hot: {
       data: {},
       dispose: (cb: (data: any) => void) => cbs.push(cb),
+      accept: jest.fn(),
     },
   } as unknown) as NodeModule;
 });

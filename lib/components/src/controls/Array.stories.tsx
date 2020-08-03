@@ -13,7 +13,7 @@ const Template = (initialValue: any) => {
       <ArrayControl
         name="array"
         value={value}
-        onChange={(name, newVal) => setValue(newVal)}
+        onChange={(newVal) => setValue(newVal)}
         separator=","
       />
       <ul>{value && value.map((item) => <li key={item}>{item}</li>)}</ul>

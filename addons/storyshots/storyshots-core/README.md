@@ -219,6 +219,12 @@ StoryShots addon for Preact is dependent on [preact-render-to-json](https://gith
 yarn add preact-render-to-json --dev
 ```
 
+### Configure Jest for Web Components
+
+StoryShots addon for Web Components requires [jsdom](https://github.com/jsdom/jsdom) 16 or later to fully support the
+web component shadow dom. To use jsdom 16 or later you can set the Jest `testEnvironment` configuration key to
+`jest-environment-jsdom-sixteen`. This should work back to Jest 24 and is the default in Jest 26 and later.
+
 ### Configure Jest for MDX Docs Add-On Stories
 
 If using the [Docs add-on](../../docs/README.md) with

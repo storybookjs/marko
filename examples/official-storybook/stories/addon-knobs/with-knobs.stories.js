@@ -374,3 +374,7 @@ export const WithDuplicateDecorator = () => {
   return text('Text', 'Hello');
 };
 WithDuplicateDecorator.decorators = [withKnobs];
+
+export const WithKnobValueToBeEncoded = () => {
+  return text('Text', '10% 20%');
+};

@@ -10,7 +10,7 @@ export const Basic = () => {
   const [value, setValue] = useState(10);
   return (
     <>
-      <NumberControl name="number" value={value} onChange={(name, newVal) => setValue(newVal)} />
+      <NumberControl name="number" value={value} onChange={(newVal) => setValue(newVal)} />
       <p>{value}</p>
     </>
   );
@@ -20,7 +20,7 @@ export const Undefined = () => {
   const [value, setValue] = useState(undefined);
   return (
     <>
-      <NumberControl name="number" value={value} onChange={(name, newVal) => setValue(newVal)} />
+      <NumberControl name="number" value={value} onChange={(newVal) => setValue(newVal)} />
       <p>{value}</p>
     </>
   );

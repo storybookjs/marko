@@ -34,7 +34,8 @@
         "colour": "deeppink",
         "today": "Jan 20 2017 GMT+0",
         "items":  ["Laptop", "Book", "Whiskey"],
-        "nice": true
+        "nice": true,
+        "other": {"hair": "brown", "eyes": "blue"}
       },
       "argTypes": {
         "stock": { "control": { "type": "range", "min": 0, "max": 30, "step": 5} },
