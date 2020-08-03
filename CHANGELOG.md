@@ -1,3 +1,9 @@
+## 6.0.0-rc.23 (August 3, 2020)
+
+### Bug Fixes
+
+* Source-loader: Fix storiesOf missing `__STORY__` variable ([#11765](https://github.com/storybookjs/storybook/pull/11765))
+
 ## 6.0.0-rc.22 (August 2, 2020)
 
 ### Features
