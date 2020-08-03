@@ -92,7 +92,7 @@ const Link: FunctionComponent<any> = ({ href: input, children, ...props }) => {
 };
 
 export const A = styled(Link)<{}>(withReset, ({ theme }) => ({
-  fontSize: theme.typography.size.s2,
+  fontSize: 'inherit',
   lineHeight: '24px',
 
   color: theme.color.secondary,
