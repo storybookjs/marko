@@ -1,8 +1,21 @@
+## 6.0.0-rc.24 (August 3, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix link font size to inherit ([#11770](https://github.com/storybookjs/storybook/pull/11770))
+- Addon-knobs: Fix search params with URI encoding ([#11642](https://github.com/storybookjs/storybook/pull/11642))
+- Core: Add `STORY_SPECIFIED` event for initial selection/URL ([#11766](https://github.com/storybookjs/storybook/pull/11766))
+- Core: Fix handling of initial hashes ([#11767](https://github.com/storybookjs/storybook/pull/11767))
+
+### Documentation
+
+- Core: Fix link to deprecated configure ([#11771](https://github.com/storybookjs/storybook/pull/11771))
+
 ## 6.0.0-rc.23 (August 3, 2020)
 
 ### Bug Fixes
 
-* Source-loader: Fix storiesOf missing `__STORY__` variable ([#11765](https://github.com/storybookjs/storybook/pull/11765))
+- Source-loader: Fix storiesOf missing `__STORY__` variable ([#11765](https://github.com/storybookjs/storybook/pull/11765))
 
 ## 6.0.0-rc.22 (August 2, 2020)
 
