@@ -220,10 +220,12 @@ export default class StoryStore {
 
       if (foundStory) {
         this.setSelection({ storyId: foundStory.id, viewMode });
+        this._channel.emit(Events.STORY_SPECIFIED, { storyId: foundStory.id, viewMode });
       }
     }
 
     // If we didn't find a story matching the specifier, we always want to emit CURRENT_STORY_WAS_SET anyway
+    // in order to tell the StoryRenderer to render something (a "missing story" view)
     if (!foundStory && this._channel) {
       this._channel.emit(Events.CURRENT_STORY_WAS_SET, this._selection);
     }
