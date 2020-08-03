@@ -17,7 +17,7 @@ Controls does not require any modification to your components. Stories for contr
 - Portable. Reuse your interactive stories in documentation, tests, and even in designs.
 - Rich. Customize the controls and interactive data to suit your exact needs.
 
-To use the Controls addon, you need to write your stories using [args](../writing-stories/args). Storybook will automatically generate UI controls based on your args and what it can infer about your component; but you can configure the controls further using [argTypes](../api/stories#argtypes), see below.
+To use the Controls addon, you need to write your stories using [args](../writing-stories/args.md). Storybook will automatically generate UI controls based on your args and what it can infer about your component; but you can configure the controls further using [argTypes](../api/mdx.md#argtypes), see below.
 
 <div class="aside">
 
@@ -46,7 +46,7 @@ By default, Storybook will render a free text input for the `backgroundColor` ar
 
 This works as long as you type a valid string into the auto-generated text control, but it's not the best UI for picking a color. Let’s replace it with Storybook’s color picker component.
 
-We can specify which controls get used by declaring a custom [argType](../api/stories#argtypes) for the `backgroundColor` property. ArgTypes encode basic metadata for args, such as name, description, defaultValue for an arg. These get automatically filled in by Storybook Docs.
+We can specify which controls get used by declaring a custom [argType](../api/mdx.md#argtypes) for the `backgroundColor` property. ArgTypes encode basic metadata for args, such as name, description, defaultValue for an arg. These get automatically filled in by Storybook Docs.
 
 ArgTypes can also contain arbitrary annotations which can be overridden by the user. Since `backgroundColor` is a property of the component, let's put that annotation on the default export.
 
@@ -67,7 +67,7 @@ This replaces the input with a color picker for a more intuitive developer exper
 
 ### Fully custom args
 
-Up until now, we only used auto-generated controls based on the component we're writing stories for. If we are writing [complex stories](../workflows/stories-for-multiple-components) we may want to add controls for args that aren’t part of the component.
+Up until now, we only used auto-generated controls based on the component we're writing stories for. If we are writing [complex stories](../workflows/stories-for-multiple-components.md) we may want to add controls for args that aren’t part of the component.
 
 ```js
 // Table.stories.js
@@ -104,7 +104,7 @@ The Controls addon can be configured in two ways:
 
 #### Annotations
 
-As shown above, you can configure individual controls with the “control" annotation in the [argTypes](../api/stories#argtypes) field of either a component or story.
+As shown above, you can configure individual controls with the “control" annotation in the [argTypes](../api/mdx.md#argtypes) field of either a component or story.
 
 Here is the full list of available controls you can use:
 
@@ -163,14 +163,14 @@ If you don't provide a specific one, it defaults to  number control type.
 
 #### Parameters
 
-Controls supports the following configuration [parameters](../writing-stories/parameters), either globally or on a per-story basis:
+Controls supports the following configuration [parameters](../writing-stories/parameters.md), either globally or on a per-story basis:
 
 <details>
 <summary>Show property documentation</summary>
 
-Since Controls is built on the same engine as Storybook Docs, it can also show property documentation alongside your controls using the expanded parameter (defaults to false). This means you embed a complete [ArgsTable](../writing-docs/doc-blocks#argstable) doc block in the controls pane. The description and default value rendering can be [customized](#fully-custom-args) in the same way as the doc block.
+Since Controls is built on the same engine as Storybook Docs, it can also show property documentation alongside your controls using the expanded parameter (defaults to false). This means you embed a complete [ArgsTable](../writing-docs/doc-blocks.md#argstable) doc block in the controls pane. The description and default value rendering can be [customized](#fully-custom-args) in the same way as the doc block.
 
-To enable expanded mode globally, add the following to [`.storybook/preview.js`](../configure/overview#configure-story-rendering):
+To enable expanded mode globally, add the following to [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering):
 
 ```js
 // .storybook/preview.js
