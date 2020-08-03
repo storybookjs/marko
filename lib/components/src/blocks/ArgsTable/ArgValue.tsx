@@ -19,10 +19,35 @@ interface ArgSummaryProps {
   value: PropSummaryValue;
 }
 
-const Text = styled.span(({ theme }) => ({
+const ITEMS_BEFORE_EXPANSION = 8;
+
+const Summary = styled.div<{ isExpanded?: boolean }>(({ isExpanded }) => ({
+  display: 'flex',
+  flexDirection: isExpanded ? 'column' : 'row',
+  flexWrap: 'wrap',
+  alignItems: 'flex-start',
+  marginBottom: '-4px',
+}));
+
+const Text = styled.span<{}>(codeCommon, ({ theme }) => ({
+  flex: 0,
   fontFamily: theme.typography.fonts.mono,
   fontSize: theme.typography.size.s1,
   wordBreak: 'break-word',
+  margin: 0,
+  marginRight: '4px',
+  marginBottom: '4px',
+  paddingTop: '2px',
+  paddingBottom: '2px',
+  lineHeight: '13px',
+}));
+
+const ExpandButton = styled.button<{}>(({ theme }) => ({
+  fontFamily: theme.typography.fonts.mono,
+  color: theme.color.secondary,
+  marginBottom: '4px',
+  background: 'none',
+  border: 'none',
 }));
 
 const Expandable = styled.div<{}>(codeCommon, ({ theme }) => ({
@@ -72,18 +97,52 @@ const calculateDetailWidth = memoize(1000)((detail: string): string => {
   return `${Math.max(...lines.map((x) => x.length))}ch`;
 });
 
+const uniq = (arr: string[]): string[] =>
+  arr.filter((value, index, self) => self.indexOf(value) === index);
+
+const getSummaryItems = (summary: string) => {
+  if (!summary) return [summary];
+  const splittedItems = summary.split('|');
+  const summaryItems = splittedItems.map((value) => value.trim());
+
+  return uniq(summaryItems);
+};
+
+const renderSummaryItems = (summaryItems: string[], isExpanded = true) => {
+  let items = summaryItems;
+  if (!isExpanded) {
+    items = summaryItems.slice(0, ITEMS_BEFORE_EXPANSION);
+  }
+
+  return items.map((item) => <ArgText key={item} text={item === '' ? '""' : item} />);
+};
+
 const ArgSummary: FC<ArgSummaryProps> = ({ value }) => {
   const { summary, detail } = value;
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  if (summary === undefined || summary === null) return null;
   // summary is used for the default value
   // below check fixes not displaying default values for boolean typescript vars
-  const summaryAsString =
-    summary !== undefined && summary !== null && typeof summary.toString === 'function'
-      ? summary.toString()
-      : summary;
+  const summaryAsString = typeof summary.toString === 'function' ? summary.toString() : summary;
+
   if (detail == null) {
-    return <ArgText text={summaryAsString} />;
+    const summaryItems = getSummaryItems(summaryAsString);
+    const itemsCount = summaryItems.length;
+    const hasManyItems = itemsCount > ITEMS_BEFORE_EXPANSION;
+
+    return hasManyItems ? (
+      <Summary isExpanded={isExpanded}>
+        {renderSummaryItems(summaryItems, isExpanded)}
+        <ExpandButton onClick={() => setIsExpanded(!isExpanded)}>
+          {isExpanded ? 'Show less...' : `Show ${itemsCount - ITEMS_BEFORE_EXPANSION} more...`}
+        </ExpandButton>
+      </Summary>
+    ) : (
+      <Summary>{renderSummaryItems(summaryItems)}</Summary>
+    );
   }
 
   return (
