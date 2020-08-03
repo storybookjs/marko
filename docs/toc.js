@@ -51,7 +51,7 @@ module.exports = {
 
       title: 'API',
       prefix:'api',
-      pages:['stories','addons','new-frameworks','cli-options','frameworks-feature-support']
+      pages:['stories','addons','addons-api','csf','mdx','presets','storiesof','writing-presets','new-frameworks','cli-options','frameworks-feature-support']
     },
   ],
 };
