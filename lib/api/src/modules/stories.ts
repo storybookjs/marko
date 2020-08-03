@@ -342,7 +342,12 @@ export const init: ModuleFn = ({
       if (fullAPI.isSettingsScreenActive()) return;
 
       if (sourceType === 'local') {
-        navigate(`/${viewMode}/${storyId}`);
+        // Special case -- if we are already at the story being specified (i.e. the user started at a given story),
+        // we don't need to change URL. See https://github.com/storybookjs/storybook/issues/11677
+        const state = store.getState();
+        if (state.storyId !== storyId || state.viewMode !== viewMode) {
+          navigate(`/${viewMode}/${storyId}`);
+        }
       }
     });
 
