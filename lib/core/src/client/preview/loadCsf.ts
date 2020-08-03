@@ -198,7 +198,7 @@ const configureDeprecationWarning = deprecate(
   () => {},
   `\`configure()\` is deprecated and will be removed in Storybook 7.0. 
 Please use the \`stories\` field of \`main.js\` to load stories.
-Read more at https://github.com/storybookjs/storybook/MIGRATE.md#deprecated-configure`
+Read more at https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-configure`
 );
 let loaded = false;
 export const loadCsf = ({
