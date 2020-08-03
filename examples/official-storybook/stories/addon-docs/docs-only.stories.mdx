@@ -1,4 +1,4 @@
-import { Meta, Preview } from '@storybook/addon-docs/blocks';
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
 
 <Meta title="Addons/Docs/docs-only" parameters={{ previewTabs: { canvas: { hidden: true } } }} />
 
@@ -8,9 +8,9 @@ This file is a documentation-only MDX file, i.e. it doesn't contain any `<Story>
 
 Therefore, it shows up in the navigation UI as a document icon.
 
-It can, however, still contain a `<Preview>` definition:
+It can, however, still contain a `<Canvas>` definition:
 
-<Preview>
+<Canvas>
   <div>
     <h3>This is a preview block within a documentation-only MDX file</h3>
     <p>
@@ -18,7 +18,7 @@ It can, however, still contain a `<Preview>` definition:
       cases such as documenting a design system.
     </p>
   </div>
-</Preview>
+</Canvas>
 
 <br />
 <br />

@@ -5,9 +5,9 @@ export default {
   title: 'Addons/Controls',
   component: Button,
   argTypes: {
-    children: { control: 'text' },
-    type: { control: 'text' },
-    somethingElse: { control: 'object' },
+    children: { control: 'text', name: 'Children' },
+    type: { control: 'text', name: 'Type' },
+    somethingElse: { control: 'object', name: 'Something Else' },
   },
 };
 

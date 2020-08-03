@@ -1,13 +1,13 @@
 import { Button } from '@storybook/react/demo';
-import { Preview, Story, Meta } from '@storybook/addon-docs/blocks';
+import { Canvas, Story, Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title="Button" component={Button} parameters={{ notes: 'component notes' }} />
 
-# Preview
+# Canvas
 
-Previews can contain normal components, stories, and story references
+Canvases can contain normal components, stories, and story references
 
-<Preview>
+<Canvas>
   <Button>Just a button</Button>
   <Story name="hello button">
     <Button>Hello button</Button>
@@ -16,11 +16,10 @@ Previews can contain normal components, stories, and story references
     <Button>Two</Button>
   </Story>
   <Story id="welcome--welcome" />
-</Preview>
+</Canvas>
 
+Canvas wthout a story
 
-Preview wthout a story
-
-<Preview>
+<Canvas>
   <Button>Just a button</Button>
-</Preview>
+</Canvas>

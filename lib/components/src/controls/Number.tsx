@@ -28,7 +28,7 @@ export const NumberControl: FC<NumberProps> = ({
   onFocus,
 }) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    onChange(name, parse(event.target.value));
+    onChange(parse(event.target.value));
   };
 
   return (

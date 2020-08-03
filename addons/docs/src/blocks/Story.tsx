@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, ComponentProps } from 'react';
+import React, { FunctionComponent, ReactNode, ElementType, ComponentProps } from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { resetComponents } from '@storybook/components/html';
 import { Story as PureStory } from '@storybook/components';
@@ -23,6 +23,11 @@ type StoryDefProps = {
 
 type StoryRefProps = {
   id?: string;
+} & CommonProps;
+
+type StoryImportProps = {
+  name: string;
+  story: ElementType;
 } & CommonProps;
 
 export type StoryProps = StoryDefProps | StoryRefProps;

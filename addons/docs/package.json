@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-docs",
-  "version": "6.0.0-rc.13",
+  "version": "6.0.0-rc.23",
   "description": "Superior documentation for your components",
   "keywords": [
     "addon",
@@ -47,18 +47,18 @@
     "@mdx-js/loader": "^1.5.1",
     "@mdx-js/mdx": "^1.5.1",
     "@mdx-js/react": "^1.5.1",
-    "@storybook/addons": "6.0.0-rc.13",
-    "@storybook/api": "6.0.0-rc.13",
-    "@storybook/client-api": "6.0.0-rc.13",
-    "@storybook/client-logger": "6.0.0-rc.13",
-    "@storybook/components": "6.0.0-rc.13",
-    "@storybook/core": "6.0.0-rc.13",
-    "@storybook/core-events": "6.0.0-rc.13",
+    "@storybook/addons": "6.0.0-rc.23",
+    "@storybook/api": "6.0.0-rc.23",
+    "@storybook/client-api": "6.0.0-rc.23",
+    "@storybook/client-logger": "6.0.0-rc.23",
+    "@storybook/components": "6.0.0-rc.23",
+    "@storybook/core": "6.0.0-rc.23",
+    "@storybook/core-events": "6.0.0-rc.23",
     "@storybook/csf": "0.0.1",
-    "@storybook/node-logger": "6.0.0-rc.13",
-    "@storybook/postinstall": "6.0.0-rc.13",
-    "@storybook/source-loader": "6.0.0-rc.13",
-    "@storybook/theming": "6.0.0-rc.13",
+    "@storybook/node-logger": "6.0.0-rc.23",
+    "@storybook/postinstall": "6.0.0-rc.23",
+    "@storybook/source-loader": "6.0.0-rc.23",
+    "@storybook/theming": "6.0.0-rc.23",
     "acorn": "^7.1.0",
     "acorn-jsx": "^5.1.0",
     "acorn-walk": "^7.0.0",
@@ -76,17 +76,15 @@
     "remark-external-links": "^6.0.0",
     "remark-slug": "^6.0.0",
     "ts-dedent": "^1.1.1",
-    "util-deprecate": "^1.0.2",
-    "vue-docgen-api": "^4.7.0",
-    "vue-docgen-loader": "^1.4.0"
+    "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
     "@angular/core": "^9.1.0",
     "@babel/core": "^7.9.6",
     "@emotion/core": "^10.0.20",
     "@emotion/styled": "^10.0.17",
-    "@storybook/react": "6.0.0-rc.13",
-    "@storybook/web-components": "6.0.0-rc.13",
+    "@storybook/react": "6.0.0-rc.23",
+    "@storybook/web-components": "6.0.0-rc.23",
     "@types/cross-spawn": "^6.0.1",
     "@types/doctrine": "^0.0.3",
     "@types/enzyme": "^3.10.3",
@@ -125,10 +123,18 @@
     "react-dom": "*",
     "react-is": "^16.8.0",
     "vue": "^2.6.10",
+    "vue-docgen-api": "^4.29.1",
+    "vue-docgen-loader": "^1.5.0",
     "webpack": ">=4"
   },
   "peerDependenciesMeta": {
     "vue": {
+      "optional": true
+    },
+    "vue-docgen-api": {
+      "optional": true
+    },
+    "vue-docgen-loader": {
       "optional": true
     },
     "webpack": {
@@ -138,7 +144,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "b5a70c7e64cbc6ebec9454d0dbae7c0eed9db23c",
+  "gitHead": "f541dfe245537701a0780393633c5453fb19e740",
   "typesVersions": {
     "<=3.5": {
       "*": [

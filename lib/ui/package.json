@@ -1,6 +1,6 @@
 {
   "name": "@storybook/ui",
-  "version": "6.0.0-rc.13",
+  "version": "6.0.0-rc.23",
   "description": "Core Storybook UI",
   "keywords": [
     "storybook"
@@ -29,17 +29,16 @@
   },
   "dependencies": {
     "@emotion/core": "^10.0.20",
-    "@storybook/addons": "6.0.0-rc.13",
-    "@storybook/api": "6.0.0-rc.13",
-    "@storybook/channels": "6.0.0-rc.13",
-    "@storybook/client-logger": "6.0.0-rc.13",
-    "@storybook/components": "6.0.0-rc.13",
-    "@storybook/core-events": "6.0.0-rc.13",
-    "@storybook/router": "6.0.0-rc.13",
+    "@storybook/addons": "6.0.0-rc.23",
+    "@storybook/api": "6.0.0-rc.23",
+    "@storybook/channels": "6.0.0-rc.23",
+    "@storybook/client-logger": "6.0.0-rc.23",
+    "@storybook/components": "6.0.0-rc.23",
+    "@storybook/core-events": "6.0.0-rc.23",
+    "@storybook/router": "6.0.0-rc.23",
     "@storybook/semver": "^7.3.2",
-    "@storybook/theming": "6.0.0-rc.13",
+    "@storybook/theming": "6.0.0-rc.23",
     "@types/markdown-to-jsx": "^6.11.0",
-    "@types/rfdc": "^1.1.0",
     "copy-to-clipboard": "^3.0.8",
     "core-js": "^3.0.1",
     "core-js-pure": "^3.0.1",
@@ -59,14 +58,13 @@
     "react-sizeme": "^2.6.7",
     "regenerator-runtime": "^0.13.3",
     "resolve-from": "^5.0.0",
-    "rfdc": "^1.1.4",
     "store2": "^2.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
-    "@storybook/addon-actions": "6.0.0-rc.13",
-    "@storybook/addon-knobs": "6.0.0-rc.13",
-    "@storybook/react": "6.0.0-rc.13",
+    "@storybook/addon-actions": "6.0.0-rc.23",
+    "@storybook/addon-knobs": "6.0.0-rc.23",
+    "@storybook/react": "6.0.0-rc.23",
     "@testing-library/react": "^10.0.3",
     "babel-loader": "^8.0.6",
     "chromatic": "^5.0.0",
@@ -78,7 +76,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "b5a70c7e64cbc6ebec9454d0dbae7c0eed9db23c",
+  "gitHead": "f541dfe245537701a0780393633c5453fb19e740",
   "typesVersions": {
     "<=3.5": {
       "*": [

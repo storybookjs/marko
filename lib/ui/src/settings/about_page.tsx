@@ -1,6 +1,6 @@
 import React, { Component, FunctionComponent } from 'react';
 
-import { Consumer, API, Combo } from '@storybook/api';
+import { API, useStorybookApi } from '@storybook/api';
 
 import { AboutScreen } from './about';
 
@@ -17,18 +17,14 @@ class NotificationClearer extends Component<{ api: API; notificationId: string }
   }
 }
 
-const AboutPage: FunctionComponent<{ onClose: () => void }> = ({ onClose }) => (
-  <Consumer>
-    {({ api }: Combo) => (
-      <NotificationClearer api={api} notificationId="update">
-        <AboutScreen
-          current={api.getCurrentVersion()}
-          latest={api.getLatestVersion()}
-          onClose={onClose}
-        />
-      </NotificationClearer>
-    )}
-  </Consumer>
-);
+const AboutPage: FunctionComponent<{}> = () => {
+  const api = useStorybookApi();
+
+  return (
+    <NotificationClearer api={api} notificationId="update">
+      <AboutScreen current={api.getCurrentVersion()} latest={api.getLatestVersion()} />
+    </NotificationClearer>
+  );
+};
 
 export { AboutPage };

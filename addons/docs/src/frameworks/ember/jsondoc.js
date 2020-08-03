@@ -18,20 +18,21 @@ export const extractArgTypes = (componentName) => {
   if (!componentDoc) {
     return null;
   }
-  const rows = componentDoc.attributes.arguments.map((prop) => {
-    return {
+  return componentDoc.attributes.arguments.reduce((acc, prop) => {
+    acc[prop.name] = {
       name: prop.name,
       defaultValue: prop.defaultValue,
       description: prop.description,
       table: {
+        defaultValue: { summary: prop.defaultValue },
         type: {
           summary: prop.type,
           required: prop.tags.length ? prop.tags.some((tag) => tag.name === 'required') : false,
         },
       },
     };
-  });
-  return { rows };
+    return acc;
+  }, {});
 };
 
 export const extractComponentDescription = (componentName) => {

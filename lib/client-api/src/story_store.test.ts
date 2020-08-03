@@ -748,6 +748,17 @@ describe('preview.story_store', () => {
         expect(store.getSelection()).toEqual({ storyId: 'g2-a--1', viewMode: 'story' });
       });
 
+      // Making sure the fix #11571 doesn't break this
+      it('selects the first story if there are two stories in the group of different lengths', () => {
+        const store = new StoryStore({ channel });
+        store.setSelectionSpecifier({ storySpecifier: 'a', viewMode: 'story' });
+        addStoryToStore(store, 'a', 'long-long-long', () => 0);
+        addStoryToStore(store, 'a', 'short', () => 0);
+        store.finishConfiguring();
+
+        expect(store.getSelection()).toEqual({ storyId: 'a--long-long-long', viewMode: 'story' });
+      });
+
       it('selects nothing if the component or group does not exist', () => {
         const store = new StoryStore({ channel });
         store.setSelectionSpecifier({ storySpecifier: 'c', viewMode: 'story' });
@@ -993,7 +1004,7 @@ describe('preview.story_store', () => {
       ]);
     });
 
-    it('denormalizes parameters before passing to sort', () => {
+    it('passes kind and global parameters to sort', () => {
       const store = new StoryStore({ channel });
       const storySort = jest.fn();
       store.addGlobalMetadata({
@@ -1014,14 +1025,18 @@ describe('preview.story_store', () => {
         [
           'a--1',
           expect.objectContaining({
-            parameters: expect.objectContaining({ global: 'global', kind: 'kind', story: '1' }),
+            parameters: expect.objectContaining({ story: '1' }),
           }),
+          { kind: 'kind' },
+          expect.objectContaining({ global: 'global' }),
         ],
         [
           'a--2',
           expect.objectContaining({
-            parameters: expect.objectContaining({ global: 'global', kind: 'kind', story: '2' }),
+            parameters: expect.objectContaining({ story: '2' }),
           }),
+          { kind: 'kind' },
+          expect.objectContaining({ global: 'global' }),
         ]
       );
     });

@@ -110,7 +110,7 @@ module.exports = {
 Finally, you can create MDX files like this:
 
 ```md
-import { Meta, Story, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable } from '@storybook/addon-docs/blocks';
 import { InfoButton } from './InfoButton.vue';
 
 <Meta title='InfoButton' component={InfoButton} />
@@ -124,9 +124,9 @@ Some **markdown** description, or whatever you want.
   template: '<info-button label="I\'m a button!"/>',
 }}</Story>
 
-## Props
+## ArgsTable
 
-<Props of={InfoButton} />
+<ArgsTable of={InfoButton} />
 ```
 
 Yes, it's redundant to declare `component` twice. [Coming soon](https://github.com/storybookjs/storybook/issues/8685).

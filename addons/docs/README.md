@@ -46,7 +46,7 @@ For more information on how it works, see the [`DocsPage` reference](./docs/docs
 Here's an example file:
 
 ```md
-import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
 import { Checkbox } from './Checkbox';
 
 <Meta title="MDX/Checkbox" component={Checkbox} />
@@ -56,7 +56,7 @@ import { Checkbox } from './Checkbox';
 With `MDX` we can define a story for `Checkbox` right in the middle of our
 markdown documentation.
 
-<Preview>
+<Canvas>
   <Story name="all checkboxes">
     <form>
       <Checkbox id="Unchecked" label="Unchecked" />
@@ -64,7 +64,7 @@ markdown documentation.
       <Checkbox appearance="secondary" id="second" label="Secondary" checked />
     </form>
   </Story>
-</Preview>
+</Canvas>
 ```
 
 And here's how that's rendered in Storybook:

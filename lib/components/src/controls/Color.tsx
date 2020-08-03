@@ -66,7 +66,7 @@ export const ColorControl: FC<ColorProps> = ({
         >
           <SketchPicker
             color={value}
-            onChange={(color: ColorResult) => onChange(name, format(color))}
+            onChange={(color: ColorResult) => onChange(format(color))}
             {...{ onFocus, onBlur, presetColors }}
           />
         </Popover>

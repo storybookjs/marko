@@ -60,17 +60,20 @@ export function stringifyDefault(section: StorybookSection): string {
 }
 
 export function stringifyStory(story: StorybookStory): string {
-  const { name, storyFn, decorators, ...options } = story;
+  const { name, storyFn, ...options } = story;
   const storyId = identifier(name);
 
-  const decoratorsString = stringifyDecorators(decorators);
-  const optionsString = stringifyObject({ name, ...options }, 0, true);
+  const storyStrings = [
+    `export const ${storyId} = ${storyFn};`,
+    `${storyId}.storyName = '${name}';`,
+  ];
 
-  let storyString = '';
-  if (decoratorsString.length > 0 || optionsString.length > 0) {
-    storyString = `${storyId}.story = {${decoratorsString}${optionsString}\n};\n`;
-  }
-  return `export const ${storyId} = ${storyFn};\n${storyString}`;
+  Object.keys(options).forEach((key) => {
+    storyStrings.push(`${storyId}.${key} = ${stringifyObject(options[key])};`);
+  });
+  storyStrings.push('');
+
+  return storyStrings.join('\n');
 }
 
 export function stringifySection(section: StorybookSection): string {
@@ -80,6 +83,5 @@ export function stringifySection(section: StorybookSection): string {
     ...section.stories.map((story) => stringifyStory(story)),
   ].join('\n');
 
-  // console.log('sectionString:\n', sectionString);
   return sectionString;
 }
