@@ -29,7 +29,17 @@ module.exports = {
     {
       title: 'Configure',
       prefix: 'configure',
-      pages: ['overview', 'integration', 'story-rendering', 'user-interface'],
+      pages: [
+        'overview', 
+        'integration', 
+        'story-rendering', 
+        'user-interface',
+        'features-and-behavior',
+        'theming',
+        'sidebar-and-urls',
+        'storybook-addons',
+        'environment-variables'
+      ],
     },
     {
       title:'Workflows',
