@@ -1288,4 +1288,30 @@ describe('preview.story_store', () => {
       expect(onCurrentStoryWasSet).toHaveBeenCalled();
     });
   });
+
+  describe('STORY_SPECIFIED', () => {
+    it('is emitted when configuration ends if a specifier was set', () => {
+      const onStorySpecified = jest.fn();
+      channel.on(Events.STORY_SPECIFIED, onStorySpecified);
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'kind-1', 'story-1.1', () => 0);
+      store.setSelectionSpecifier({ storySpecifier: '*', viewMode: 'story' });
+
+      store.finishConfiguring();
+      expect(onStorySpecified).toHaveBeenCalled();
+    });
+
+    it('is NOT emitted when setSelection is called', () => {
+      const onStorySpecified = jest.fn();
+      channel.on(Events.STORY_SPECIFIED, onStorySpecified);
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'kind-1', 'story-1.1', () => 0);
+      store.setSelectionSpecifier({ storySpecifier: '*', viewMode: 'story' });
+      store.finishConfiguring();
+
+      onStorySpecified.mockClear();
+      store.setSelection({ storyId: 'a--1', viewMode: 'story' });
+      expect(onStorySpecified).not.toHaveBeenCalled();
+    });
+  });
 });
