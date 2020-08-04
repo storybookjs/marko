@@ -11,6 +11,7 @@ const Label = styled.label(({ theme }) => ({
   marginBottom: 8,
   display: 'inline-block',
   position: 'relative',
+  whiteSpace: 'nowrap',
 
   input: {
     appearance: 'none',
