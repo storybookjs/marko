@@ -14,6 +14,7 @@ export interface ArgRowProps {
   updateArgs?: (args: Args) => void;
   compact?: boolean;
   expandable?: boolean;
+  initialExpandedArgs?: boolean;
 }
 
 const Name = styled.span({ fontWeight: 'bold' });
@@ -64,7 +65,7 @@ const StyledTd = styled.td<{ expandable: boolean }>(({ theme, expandable }) => (
 }));
 
 export const ArgRow: FC<ArgRowProps> = (props) => {
-  const { row, updateArgs, compact, expandable } = props;
+  const { row, updateArgs, compact, expandable, initialExpandedArgs } = props;
   const { name, description } = row;
   const table = (row.table || {}) as TableAnnotation;
   const type = table.type || row.type;
@@ -88,20 +89,20 @@ export const ArgRow: FC<ArgRowProps> = (props) => {
           {table.jsDocTags != null ? (
             <>
               <TypeWithJsDoc hasDescription={hasDescription}>
-                <ArgValue value={type} />
+                <ArgValue value={type} initialExpandedArgs={initialExpandedArgs} />
               </TypeWithJsDoc>
               <ArgJsDoc tags={table.jsDocTags} />
             </>
           ) : (
             <Type hasDescription={hasDescription}>
-              <ArgValue value={type} />
+              <ArgValue value={type} initialExpandedArgs={initialExpandedArgs} />
             </Type>
           )}
         </td>
       )}
       {compact ? null : (
         <td>
-          <ArgValue value={defaultValue} />
+          <ArgValue value={defaultValue} initialExpandedArgs={initialExpandedArgs} />
         </td>
       )}
       {updateArgs ? (

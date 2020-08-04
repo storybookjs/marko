@@ -9,6 +9,7 @@ import { codeCommon } from '../../typography/shared';
 
 interface ArgValueProps {
   value?: PropSummaryValue;
+  initialExpandedArgs?: boolean;
 }
 
 interface ArgTextProps {
@@ -17,6 +18,7 @@ interface ArgTextProps {
 
 interface ArgSummaryProps {
   value: PropSummaryValue;
+  initialExpandedArgs?: boolean;
 }
 
 const ITEMS_BEFORE_EXPANSION = 8;
@@ -117,11 +119,11 @@ const renderSummaryItems = (summaryItems: string[], isExpanded = true) => {
   return items.map((item) => <ArgText key={item} text={item === '' ? '""' : item} />);
 };
 
-const ArgSummary: FC<ArgSummaryProps> = ({ value }) => {
+const ArgSummary: FC<ArgSummaryProps> = ({ value, initialExpandedArgs }) => {
   const { summary, detail } = value;
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(initialExpandedArgs || false);
 
   if (summary === undefined || summary === null) return null;
   // summary is used for the default value
@@ -170,6 +172,10 @@ const ArgSummary: FC<ArgSummaryProps> = ({ value }) => {
   );
 };
 
-export const ArgValue: FC<ArgValueProps> = ({ value }) => {
-  return value == null ? <EmptyArg /> : <ArgSummary value={value} />;
+export const ArgValue: FC<ArgValueProps> = ({ value, initialExpandedArgs }) => {
+  return value == null ? (
+    <EmptyArg />
+  ) : (
+    <ArgSummary value={value} initialExpandedArgs={initialExpandedArgs} />
+  );
 };
