@@ -36,11 +36,29 @@ export const TableWrapper = styled.table<{ compact?: boolean; inAddonPanel?: boo
       marginBottom: inAddonPanel ? 0 : 40,
 
       'thead th:first-of-type, td:first-of-type': {
-        width: '30%',
+        // intentionally specify thead here
+        width: '25%',
       },
 
       'th:first-of-type, td:first-of-type': {
         paddingLeft: 20,
+      },
+
+      'th:nth-of-type(2), td:nth-of-type(2)': {
+        ...(compact
+          ? null
+          : {
+              width: '35%',
+            }),
+      },
+
+      'th:nth-of-type(3), td:nth-of-type(3)': {
+        ...(compact
+          ? null
+          : {
+              width: '15%',
+              wordBreak: 'break-all',
+            }),
       },
 
       'th:last-of-type, td:last-of-type': {
@@ -48,8 +66,7 @@ export const TableWrapper = styled.table<{ compact?: boolean; inAddonPanel?: boo
         ...(compact
           ? null
           : {
-              minWidth: '15%',
-              maxWidth: '25%',
+              width: '25%',
             }),
       },
 
