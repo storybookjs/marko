@@ -10,41 +10,44 @@ You can pass these commands the following options to alter Storybook's behavior.
 
 ```plaintext
 Usage: start-storybook [options]
-
-Options:
-
---help                        output usage information
--V, --version                 output the version number
--p, --port [number]           Port to run Storybook
--h, --host [string]           Host to run Storybook
--s, --static-dir <dir-names>  Directory where to load static files from, comma-separated list
--c, --config-dir [dir-name]   Directory where to load Storybook configurations from
---https                       Serve Storybook over HTTPS. Note: You must provide your own certificate information.
---ssl-ca <ca>                 Provide an SSL certificate authority. (Optional with --https, required if using a self-signed certificate)
---ssl-cert <cert>             Provide an SSL certificate. (Required with --https)
---ssl-key <key>               Provide an SSL key. (Required with --https)
---smoke-test                  Exit after successful start
---ci                          CI mode (skip interactive prompts, don't open browser)
---quiet                       Suppress verbose build output
---no-dll                      Do not use dll reference
---debug-webpack               Display final webpack configurations for debugging purposes
 ```
+
+| Options                    |Description               |Example                                                                                                                                                                            |
+|-----------------------------|:------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|--help                       |Output usage information |`start-storybook --help`|
+|-V, --version                |Output the version number|`start-storybook -V`|
+|-p, --port [number]          |Port to run Storybook|`start-storybook -p 9009`|
+|-h, --host [string]          |Host to run Storybook|`start-storybook -h http://my-host.com`|
+|-s, --static-dir <dir-names> |Directory where to load static files from, comma-separated list|`start-storybook -s public`|
+|-c, --config-dir [dir-name]  |Directory where to load Storybook configurations from|`start-storybook -c .storybook`|
+|--https                      |Serve Storybook over HTTPS. Note: You must provide your own certificate information.|`start-storybook --https`|
+|--ssl-ca <ca>                |Provide an SSL certificate authority. (Optional with --https, required if using a self-signed certificate)|`start-storybook --ssl-ca mycertificate`|
+|--ssl-cert <cert>            |Provide an SSL certificate. (Required with --https)|`start-storybook --ssl-cert my-ssl-certificate`|
+|--ssl-key <key>              |Provide an SSL key. (Required with --https)|`start-storybook --ssl-key my-ssl-key`|
+|--smoke-test                 |Exit after successful start|`start-storybook --smoke-test`|
+|--ci                         |CI mode (skip interactive prompts, don't open browser)|`start-storybook --ci`|
+|--quiet                      |Suppress verbose build output|`start-storybook --quiet`|
+|--no-dll                     |Do not use dll reference|`start-storybook --no-dll`|
+|--debug-webpack              |Display final webpack configurations for debugging purposes|`start-storybook --debug-webpack`|
+|--docs                       |Starts Storybook in documentation mode (requires [`@storybook/addon-docs`](https://www.npmjs.com/package/@storybook/addon-docs)), both MDX and CSF stories formats will be rendered as interactive documentation.|`start-storybook --docs`|
+
 
 ## For build-storybook
 
 ```plaintext
 Usage: build-storybook [options]
-
-Options:
-
--h, --help                    output usage information
--V, --version                 output the version number
--s, --static-dir <dir-names>  Directory where to load static files from, comma-separated list
--o, --output-dir [dir-name]   Directory where to store built files
--c, --config-dir [dir-name]   Directory where to load Storybook configurations from
--w, --watch                   Enable watch mode
---loglevel [level]            Control level of logging during build. Can be one of: [silly, verbose, info (default), warn, error, silent]
---quiet                       Suppress verbose build output
---no-dll                      Do not use dll reference
---debug-webpack               Display final webpack configurations for debugging purposes
 ```
+
+| Options                     |Description             |Example                                                                                                                                                                            |
+|-----------------------------|:-----------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|-h, --help                   |Output usage information|`build-storybook --help`|
+|-V, --version                |Output the version number|`build-storybook -V`   |
+|-s, --static-dir <dir-names> |Directory where to load static files from, comma-separated list|`build-storybook -s public`|
+|-o, --output-dir [dir-name]  |Directory where to store built files|`build-storybook -o /my-deployed-storybook`|
+|-c, --config-dir [dir-name]  |Directory where to load Storybook configurations from|`build-storybook -o .storybook`|
+|-w, --watch                  |Enables watch mode|`build-storybook -w`|                                     
+|--loglevel [level]           |Controls level of logging during build. Can be one of: [silly, verbose, info (default), warn, error, silent]| `build-storybook --loglevel warn`|
+|--quiet                      |Suppress verbose build output|`build-storybook --quiet`|
+|--no-dll                     |Do not use dll reference|`build-storybook --no-dll`|
+|--debug-webpack              |Display final webpack configurations for debugging purposes|`build-storybook --debug-webpack`|
+|--docs                       |Builds Storybook in documentation mode (requires [`@storybook/addon-docs`](https://www.npmjs.com/package/@storybook/addon-docs)), both MDX and CSF stories formats will be rendered as interactive documentation|`start-storybook --docs`|
