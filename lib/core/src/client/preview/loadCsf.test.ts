@@ -82,13 +82,14 @@ describe('core.preview.loadCsf', () => {
     const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
     expect(mockedStoriesOf).toHaveBeenCalledWith('a', true);
     const aApi = mockedStoriesOf.mock.results[0].value;
-    expect(aApi.add).toHaveBeenCalledWith('1', input.a[1], { __id: 'a--1' });
-    expect(aApi.add).toHaveBeenCalledWith('2', input.a[2], { __id: 'a--2' });
+    const extras: any = { decorators: [], args: {}, argTypes: {} };
+    expect(aApi.add).toHaveBeenCalledWith('1', input.a[1], { __id: 'a--1', ...extras });
+    expect(aApi.add).toHaveBeenCalledWith('2', input.a[2], { __id: 'a--2', ...extras });
 
     expect(mockedStoriesOf).toHaveBeenCalledWith('b', true);
     const bApi = mockedStoriesOf.mock.results[1].value;
-    expect(bApi.add).toHaveBeenCalledWith('1', input.b[1], { __id: 'b--1' });
-    expect(bApi.add).toHaveBeenCalledWith('two', input.b[2], { __id: 'b--2' });
+    expect(bApi.add).toHaveBeenCalledWith('1', input.b[1], { __id: 'b--1', ...extras });
+    expect(bApi.add).toHaveBeenCalledWith('two', input.b[2], { __id: 'b--2', ...extras });
   });
 
   it('adds stories in the right order if __namedExportsOrder is supplied', () => {
@@ -175,7 +176,12 @@ describe('core.preview.loadCsf', () => {
 
     const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
     const aApi = mockedStoriesOf.mock.results[0].value;
-    expect(aApi.add).toHaveBeenCalledWith('X', input.a.x, { __id: 'random--x' });
+    expect(aApi.add).toHaveBeenCalledWith('X', input.a.x, {
+      __id: 'random--x',
+      decorators: [],
+      args: {},
+      argTypes: {},
+    });
   });
 
   it('sets various parameters on components', () => {

@@ -161,41 +161,27 @@ const loadStories = (
       if (isExportStory(key, meta)) {
         const storyFn = exports[key];
         const { story } = storyFn;
-        const { storyName = story?.name, parameters, decorators, args, argTypes } = storyFn;
-
-        const decoratorParams = decorators ? { decorators } : {};
-        const argsParams = { args, argTypes };
+        const { storyName = story?.name } = storyFn;
 
         // storyFn.x and storyFn.story.x get merged with
         // storyFn.x taking precedence in the merge
-        let deprecatedStoryParams = null;
+        const parameters = { ...story?.parameters, ...storyFn.parameters };
+        const decorators = [...(storyFn.decorators || []), ...(story?.decorators || [])];
+        const args = { ...story?.args, ...storyFn.args };
+        const argTypes = { ...story?.argTypes, ...storyFn.argTypes };
+
         if (story) {
           logger.debug('deprecated story', story);
           deprecatedStoryAnnotationWarning();
-
-          deprecatedStoryParams = story.parameters;
-          if (story.decorators) {
-            decoratorParams.decorators = decoratorParams.decorators
-              ? [...decoratorParams.decorators, ...story.decorators]
-              : story.decorators;
-          }
-          if (story.args) {
-            argsParams.args = { ...story.args, ...argsParams.args };
-          }
-          if (story.argTypes) {
-            argsParams.argTypes = { ...story.argTypes, ...argsParams.argTypes };
-          }
         }
 
         const exportName = storyNameFromExport(key);
-        const idParams = { __id: toId(componentId || kindName, exportName) };
-
         const storyParams = {
-          ...deprecatedStoryParams,
+          __id: toId(componentId || kindName, exportName),
           ...parameters,
-          ...decoratorParams,
-          ...idParams,
-          ...argsParams,
+          decorators,
+          args,
+          argTypes,
         };
         kind.add(storyName || exportName, storyFn, storyParams);
       }
