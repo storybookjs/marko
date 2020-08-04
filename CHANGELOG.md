@@ -1,3 +1,9 @@
+## 6.0.0-rc.26 (August 5, 2020)
+
+### Dependency Upgrades
+
+- Perf: Upgrade telejson ([#11797](https://github.com/storybookjs/storybook/pull/11797))
+
 ## 6.0.0-rc.25 (August 4, 2020)
 
 ### Bug Fixes
