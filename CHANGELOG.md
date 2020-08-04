@@ -1,3 +1,9 @@
+## 6.0.0-rc.25 (August 4, 2020)
+
+### Bug Fixes
+
+- CSF: Fix mixed `.x` and deprecated `.story.x` parameters ([#11781](https://github.com/storybookjs/storybook/pull/11781))
+
 ## 6.0.0-rc.24 (August 3, 2020)
 
 ### Bug Fixes
