@@ -177,8 +177,8 @@ const loadStories = (
 
         const exportName = storyNameFromExport(key);
         const storyParams = {
-          __id: toId(componentId || kindName, exportName),
           ...parameters,
+          __id: toId(componentId || kindName, exportName),
           decorators,
           args,
           argTypes,
