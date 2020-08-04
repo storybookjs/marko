@@ -2,6 +2,10 @@
 title: "What's a Story"
 ---
 
+import buttonStoryReactJS, { metadata as buttonStoryReactJSMeta] } from "../snippets/button-story/react/js.mdx"
+import buttonStoryReactTS, { metadata as buttonStoryReactTSMeta } from "../snippets/button-story/react/ts.mdx"
+import buttonStoryAngularJS, { metadata as buttonStoryAngularJSMeta } from "../snippets/button-story/angular/js.mdx"
+
 **A story captures the rendered state of a UI component**. Developers write multiple stories per component that describe all the “interesting” states a component can support.
 
 The CLI created example components that demonstrate the types of components you can build with Storybook: Button, Header, and Page.
@@ -10,14 +14,13 @@ Each example component has a set of stories that show the states it supports. Yo
 
 Let’s start with the `Button` component. A story is a function that describes how to render the component in question. Here’s how to render `Button` in the “primary” state and export a story called `Primary`.
 
-```js
-// Button.stories.js
-
-import React from 'react';
-import { Button } from './Button';
-
-export const Primary = () => <Button primary>Button</Button>;
-```
+<CodeSnippets
+snippets={[
+{ Snippet: buttonStoryReactJS, metadata: buttonStoryReactJSMeta] },
+{ Snippet: buttonStoryReactTS, metadata: buttonStoryReactTSMeta },
+{ Snippet: buttonStoryAngularJS, metadata: buttonStoryAngularJSMeta },
+]}
+/>
 
 ![Initial button story](./example-button-noargs.png)
 
@@ -57,7 +60,6 @@ Note that `Template.bind({})` is a standard JavaScript technique for making a co
 Storybook makes it easy to work on one component in one state (aka a story) at a time. When you edit the Button code or stories, Storybook will instantly re-render in the browser. No need to manually refresh.
 
 Update the `label` of the `Primary` story then see your change in Storybook.
-
 
 <video autoPlay muted playsInline loop>
   <source
