@@ -18,6 +18,17 @@ Storybook will create a static web application at the path you specify. This can
 npx http-server ./path/to/build
 ```
 
+<div class="aside">
+
+Asides from the `-o` flag, you can also include other flags to build Storybook, for instance if you're using [Docs](../writing-docs/introduction.md), you can append the `--docs` flag and Storybook will build your [MDX](../writing-docs/mdx.md) and [CSF](../writing-stories/introduction.md#component-story-format) stories into a rich and interactive documentation.
+
+You can learn more about these flag options [here](../api/cli-options.md).
+
+
+</div>
+
+
+If you need to build 
 ### Publish Storybook online
 
 Once your Storybook is built as a static web app it can be deployed to any static site hosting services. The Storybook team uses [Chromatic](https://www.chromatic.com/), a free publishing service made by Storybook maintainers that documents, versions, and indexes your UI components securely in the cloud. 
