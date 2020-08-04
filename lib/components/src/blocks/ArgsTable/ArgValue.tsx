@@ -21,12 +21,13 @@ interface ArgSummaryProps {
 
 const Text = styled.span(({ theme }) => ({
   fontFamily: theme.typography.fonts.mono,
-  fontSize: theme.typography.size.s2 - 1,
+  fontSize: theme.typography.size.s1,
 }));
 
 const Expandable = styled.div<{}>(codeCommon, ({ theme }) => ({
   fontFamily: theme.typography.fonts.mono,
   color: theme.color.secondary,
+  fontSize: theme.typography.size.s1, // overrides codeCommon
   margin: 0,
   whiteSpace: 'nowrap',
   display: 'flex',
@@ -40,7 +41,7 @@ const Detail = styled.div<{ width: string }>(({ theme, width }) => ({
   padding: 15,
   // Dont remove the mono fontFamily here even if it seem useless, this is used by the browser to calculate the length of a "ch" unit.
   fontFamily: theme.typography.fonts.mono,
-  fontSize: theme.typography.size.s2 - 1,
+  fontSize: theme.typography.size.s1,
   // Most custom stylesheet will reset the box-sizing to "border-box" and will break the tooltip.
   boxSizing: 'content-box',
 
