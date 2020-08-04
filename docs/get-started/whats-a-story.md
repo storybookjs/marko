@@ -2,7 +2,7 @@
 title: "What's a Story"
 ---
 
-import buttonStoryReactJS, { metadata as buttonStoryReactJSMeta] } from "../snippets/button-story/react/js.mdx"
+import buttonStoryReactJS, { metadata as buttonStoryReactJSMeta } from "../snippets/button-story/react/js.mdx"
 import buttonStoryReactTS, { metadata as buttonStoryReactTSMeta } from "../snippets/button-story/react/ts.mdx"
 import buttonStoryAngularJS, { metadata as buttonStoryAngularJSMeta } from "../snippets/button-story/angular/js.mdx"
 
@@ -16,7 +16,7 @@ Let’s start with the `Button` component. A story is a function that describes 
 
 <CodeSnippets
 snippets={[
-{ Snippet: buttonStoryReactJS, metadata: buttonStoryReactJSMeta] },
+{ Snippet: buttonStoryReactJS, metadata: buttonStoryReactJSMeta },
 { Snippet: buttonStoryReactTS, metadata: buttonStoryReactTSMeta },
 { Snippet: buttonStoryAngularJS, metadata: buttonStoryAngularJSMeta },
 ]}
