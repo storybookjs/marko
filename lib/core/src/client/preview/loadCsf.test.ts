@@ -293,6 +293,45 @@ describe('core.preview.loadCsf', () => {
     expect(logger.debug).not.toHaveBeenCalled();
   });
 
+  it('allows mixing story parameters and decorators, and args/argTypes and deprecated story params', () => {
+    const { configure, clientApi } = makeMocks();
+
+    const decoratorOld = jest.fn();
+    const decoratorNew = jest.fn();
+    const input = {
+      a: {
+        default: {
+          title: 'a',
+        },
+        x: Object.assign(() => 0, {
+          parameters: { x: 'y' },
+          decorators: [decoratorNew],
+          args: { b: 1 },
+          argTypes: { b: 'string' },
+          story: {
+            parameters: { x: 'z', y: 'z' },
+            decorators: [decoratorOld],
+            args: { b: 2, c: 2 },
+            argTypes: { b: 'number', c: 'number' },
+          },
+        }),
+      },
+    };
+    configure('react', makeRequireContext(input), mod);
+
+    const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
+    const aApi = mockedStoriesOf.mock.results[0].value;
+    expect(aApi.add).toHaveBeenCalledWith('X', input.a.x, {
+      x: 'y',
+      y: 'z',
+      decorators: [decoratorNew, decoratorOld],
+      __id: 'a--x',
+      args: { b: 1, c: 2 },
+      argTypes: { b: 'string', c: 'number' },
+    });
+    expect(logger.debug).toHaveBeenCalled();
+  });
+
   it('handles HMR correctly when adding stories', () => {
     const { configure, clientApi, storyStore } = makeMocks();
 
