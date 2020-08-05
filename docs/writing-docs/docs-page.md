@@ -22,19 +22,20 @@ export default {
 
 ### Subcomponents parameter
 
-Sometimes it's useful to document multiple components together. For example, a component library’s List and ListItem components might not make sense without one another. 
+Sometimes it's useful to document multiple components together. For example, a component library’s ButtonGroup and Button components might not make sense without one another. 
 
 DocsPage has the concept of a "primary" component that is defined by the `component` parameter. It also accepts one or more `subcomponents`.
 
 
 ```js
-// List.stories.js
-import { List, ListHeading, ListItem } from './List';
+// ButtonGroup.stories.js
+
+import { Button, ButtonGroup } from './ButtonGroup';
 
 export default {
-  title: 'Path/to/List',
-  component: List,
-  subcomponents: { ListHeading, ListItem },
+  title: 'Path/to/ButtonGroup',
+  component: ButtonGroup,
+  subcomponents: { Button},
 };
 ```
 
@@ -49,7 +50,7 @@ If you want to organize your documentation differently for component groups, we 
 
 Replace DocsPage template with your own for the entire Storybook, a specific component, or a specific story.
 
-Override the `docs.page` [parameter](../writing-stories/parameters):
+Override the `docs.page` [parameter](../writing-stories/parameters.md):
 
 - With null to remove docs.
 - With MDX docs.
@@ -57,7 +58,7 @@ Override the `docs.page` [parameter](../writing-stories/parameters):
 
 #### Story-level
 
-Override the `docs.page` [parameter](../writing-stories/parameters#story-parameters) in the story definition.
+Override the `docs.page` [parameter](../writing-stories/parameters.md#story-parameters) in the story definition.
 
 ```js
 // Button.stories.js
@@ -68,7 +69,7 @@ Primary.parameters = { docs: { page: null } }
 
 #### Component-level
 
-Override the `docs.page` [parameter](../writing-stories/parameters#component-parameters) in the default export of the story file.
+Override the `docs.page` [parameter](../writing-stories/parameters.md#component-parameters) in the default export of the story file.
 
 ```js
 // Button.stories.js
@@ -87,7 +88,7 @@ export default {
 
 #### Global-level
 
-Override the `docs.page` [parameter](../writing-stories/parameters#global-parameters) in [`.storybook/preview.js`](../configure/overview#configure-story-rendering).
+Override the `docs.page` [parameter](../writing-stories/parameters.md#global-parameters) in [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering).
 
 ```js
 // .storybook/preview.js
@@ -141,7 +142,7 @@ export default {
 
 Apply a similar technique to remix the DocsPage at the [story](#story-level), [component](#component-level), or [global](#global-level) level.
 
-In addition, you can interleave your own components to customize the auto-generated contents of the page, or pass in different options to the blocks to customize their appearance. Read more about [Doc Blocks](./docs-blocks).
+In addition, you can interleave your own components to customize the auto-generated contents of the page, or pass in different options to the blocks to customize their appearance. Read more about [Doc Blocks](./doc-blocks.md).
 
 ### Story file names
 
