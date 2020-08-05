@@ -36,7 +36,7 @@ When Storybook sees this argType it will create an arg that is set to a special 
 
 #### Automatically matching args
 
-Another option is to use a parameter to match all [argTypes](../api/mdx.md#argtypes) that match a certain pattern. The following configuration automatically creates actions for each `on` argType (which you can either specify manually or can be [inferred automatically](../api/mdx.md#argtypes)).
+Another option is to use a parameter to match all [argTypes](../api/argtypes.md) that match a certain pattern. The following configuration automatically creates actions for each `on` argType (which you can either specify manually or can be [inferred automatically](../api/argtypes.md#automatic-argtype-inference)).
 
 ```js
 // Button.stories.js
