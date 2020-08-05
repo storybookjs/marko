@@ -89,12 +89,16 @@ export const init: ModuleFn = ({ store, provider }) => {
     toggleFullscreen(toggled?: boolean) {
       return store.setState(
         (state: State) => {
-          const value = typeof toggled === 'boolean' ? toggled : !state.layout.isFullscreen;
+          const { showNav, showPanel } = state.layout;
 
+          const value = typeof toggled === 'boolean' ? toggled : !state.layout.isFullscreen;
+          const shouldShowPanelAndNav = showNav === false && showPanel === false && value === false;
           return {
             layout: {
               ...state.layout,
               isFullscreen: value,
+              showPanel: shouldShowPanelAndNav ? true : showPanel,
+              showNav: shouldShowPanelAndNav ? true : showNav,
             },
           };
         },
