@@ -12,7 +12,7 @@ TODO: vet storiesOf links
 
 <div class="aside"
 
-If you are writing stories in the older [`storiesOf()`](./storiesof.md) syntax, you can find documentation in an [advanced README].
+If you are writing stories in the older `storiesOf()` syntax, you can find documentation in an [advanced README](https://github.com/storybookjs/storybook/tree/next/lib/core/ADVANCED.md).
 
 </div>
 

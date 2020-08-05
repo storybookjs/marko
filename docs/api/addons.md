@@ -260,24 +260,13 @@ export const parameters = {
   },
 };
 ```
-<div style="background-color:#F8FAFC">
-TODO: vet this documentation link if it's correct.
-</div>
 
 For more information on presets, see the [presets docs](./presets.md).
 
 ### Writing presets
 
-<div style="background-color:#F8FAFC">
-TODO: vet this documentation link if it's correct.
-</div>
-
 If you want to learn more how you can write your own presets, read the [documentation](./writing-presets.md)
 
 ### Addons API
-
-<div style="background-color:#F8FAFC">
-TODO: vet this documentation link if it's correct.
-</div>
 
 If you want to expand your knowledge on the Addons API, read the [documentation](./addons-api.md)
