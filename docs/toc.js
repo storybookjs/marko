@@ -48,7 +48,7 @@ module.exports = {
       ]
     },
     {
-
+      title: 'API',
       pathSegment: 'api',
       type: 'menu',
       children:[
