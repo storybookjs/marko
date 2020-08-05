@@ -140,6 +140,12 @@ export const cra: Parameters = {
   generator: 'npx create-react-app@{{version}} {{name}}-{{version}}',
 };
 
+export const cra_typescript: Parameters = {
+  name: 'cra_typescript',
+  version: 'latest',
+  generator: 'npx create-react-app@{{version}} {{name}}-{{version}} --template typescript',
+};
+
 // TODO: there is a compatibility issue with riot@4
 // export const riot: Parameters = {
 //   name: 'riot',

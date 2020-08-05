@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Page } from './Page';
+import { Page, PageProps } from './Page';
 import * as HeaderStories from './Header.stories';
 
 export default {
@@ -8,7 +8,7 @@ export default {
   component: Page,
 };
 
-const Template = (args) => <Page {...args} />;
+const Template = (args: PageProps) => <Page {...args} />;
 
 export const LoggedIn = Template.bind({});
 LoggedIn.args = {
