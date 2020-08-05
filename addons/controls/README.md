@@ -414,7 +414,7 @@ Basic.parameters = {
 | React          |   +    |       +        |
 | Vue            |   +    |       +        |
 | Angular        |   +    |       +        |
-| Ember          |   +    |       #        |
+| Ember          |   +    |       +        |
 | Web components |   +    |       +        |
 | HTML           |   +    |                |
 | Svelte         |   +    |                |
