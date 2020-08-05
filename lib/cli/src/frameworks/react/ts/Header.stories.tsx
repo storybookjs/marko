@@ -1,13 +1,14 @@
 import React from 'react';
+import { Story, Meta } from '@storybook/react/csf';
 
 import { Header, HeaderProps } from './Header';
 
 export default {
   title: 'Example/Header',
   component: Header,
-};
+} as Meta;
 
-const Template = (args: HeaderProps) => <Header {...args} />;
+const Template: Story<HeaderProps> = (args) => <Header {...args} />;
 
 export const LoggedIn = Template.bind({});
 LoggedIn.args = {

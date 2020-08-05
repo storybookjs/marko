@@ -1,4 +1,5 @@
 import React from 'react';
+import { Story, Meta } from '@storybook/react/csf';
 
 import { Button, ButtonProps } from './Button';
 
@@ -8,9 +9,9 @@ export default {
   argTypes: {
     backgroundColor: { control: 'color' },
   },
-};
+} as Meta;
 
-const Template = (args: ButtonProps) => <Button {...args} />;
+const Template: Story<ButtonProps> = (args) => <Button {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {

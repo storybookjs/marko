@@ -5,9 +5,9 @@ import './header.css';
 
 export interface HeaderProps {
   user?: {};
-  onLogin: () => void;
-  onLogout: () => void;
-  onCreateAccount: () => void;
+  onLogin?: () => void;
+  onLogout?: () => void;
+  onCreateAccount?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({ user, onLogin, onLogout, onCreateAccount }) => (
