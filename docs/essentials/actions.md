@@ -12,7 +12,7 @@ Actions works via supplying special Storybook-generated “action” arguments (
 
 #### Action argType annotation
 
-You can use [argTypes](../api/mdx.md#argtypes) to tell Storybook that an arg to your story should be an action. Usually it makes sense to do this at the component level (although it can be done per story):
+You can use [argTypes](../api/argtypes.md) to tell Storybook that an arg to your story should be an action. Usually it makes sense to do this at the component level (although it can be done per story):
 
 ```js
 // Button.stories.js
