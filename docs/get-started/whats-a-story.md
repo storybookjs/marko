@@ -2,15 +2,6 @@
 title: "What's a Story"
 ---
 
-<!-- prettier-ignore-start -->
-
-import * as buttonStoryReactJS from "../snippets/button-story/react/js.mdx"
-import * as buttonStoryReactTS from "../snippets/button-story/react/ts.mdx"
-import * as buttonStoryReactMD from "../snippets/button-story/react/md.mdx"
-import * as buttonStoryAngularJS from "../snippets/button-story/angular/js.mdx"
-
-<!-- prettier-ignore-end -->
-
 **A story captures the rendered state of a UI component**. Developers write multiple stories per component that describe all the “interesting” states a component can support.
 
 The CLI created example components that demonstrate the types of components you can build with Storybook: Button, Header, and Page.
@@ -22,11 +13,11 @@ Let’s start with the `Button` component. A story is a function that describes 
 <!-- prettier-ignore-start -->
 
 <CodeSnippets
-  snippets={[
-    buttonStoryReactJS,
-    buttonStoryReactTS,
-    buttonStoryReactMD,
-    buttonStoryAngularJS,
+  paths={[
+    'react/button-story.js.mdx',
+    'react/button-story.ts.mdx',
+    'react/button-story.md.mdx',
+    'angular/button-story.js.mdx',
   ]}
 />
 
