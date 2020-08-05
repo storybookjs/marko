@@ -233,6 +233,7 @@ export interface ArgsTableRowProps {
   resetArgs?: (argNames?: string[]) => void;
   compact?: boolean;
   inAddonPanel?: boolean;
+  initialExpandedArgs?: boolean;
 }
 
 export interface ArgsTableErrorProps {
@@ -297,7 +298,15 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
     );
   }
 
-  const { rows, args, updateArgs, resetArgs, compact, inAddonPanel } = props as ArgsTableRowProps;
+  const {
+    rows,
+    args,
+    updateArgs,
+    resetArgs,
+    compact,
+    inAddonPanel,
+    initialExpandedArgs,
+  } = props as ArgsTableRowProps;
 
   const groups = groupRows(pickBy(rows, (row) => !row?.table?.disable));
 
@@ -321,7 +330,7 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
   if (!compact) colSpan += 2;
   const expandable = Object.keys(groups.sections).length > 0;
 
-  const common = { updateArgs, compact, inAddonPanel };
+  const common = { updateArgs, compact, inAddonPanel, initialExpandedArgs };
   return (
     <ResetWrapper>
       <TableWrapper {...{ compact, inAddonPanel }} className="docblock-argstable">
