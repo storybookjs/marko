@@ -15,7 +15,7 @@ The backgrounds toolbar item allows you to adjust the background that your story
 
 By default, the background toolbar presents you with a light and dark background.
 
-But you're not restricted to these two backgrounds, you can configure your own set of colors with the `parameters.backgrounds` [parameter](../writing-stories/parameters) in your [`.storybook/preview.js`](../configure/overview#configure-story-rendering):
+But you're not restricted to these two backgrounds, you can configure your own set of colors with the `parameters.backgrounds` [parameter](../writing-stories/parameters.md) in your [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering):
 
 ```js
 //.storybook/preview.js
@@ -36,7 +36,7 @@ backgrounds: {
     }
 ```
 
-You can also set backgrounds on per-story or per-component basis by using [parameter inheritance](../writing-stories/parameters#component-parameters):
+You can also set backgrounds on per-story or per-component basis by using [parameter inheritance](../writing-stories/parameters.md#component-parameters):
 
 ```js
 // Button.stories.js

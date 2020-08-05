@@ -2,13 +2,13 @@
 title: 'Introduction'
 ---
 
-A major strength of Storybook are [addons](/addons/) that extend Storybook’s UI and behaviour. There are many third-party addons as well as “official” addons developed by the Storybook core team. Storybook ships by default with a set of “essential” addons that add to the initial user experience.
+A major strength of Storybook are [addons](/addons/) that extend Storybook’s UI and behavior. There are many third-party addons as well as “official” addons developed by the Storybook core team. Storybook ships by default with a set of “essential” addons that add to the initial user experience.
 
-- [Actions](./actions)
-- [Backgrounds](./backgrounds)
-- [Controls](./controls)
-- [Docs](../writing-docs/introduction)
-- [Viewport](./viewports)
+- [Actions](./actions.md)
+- [Backgrounds](./backgrounds.md)
+- [Controls](./controls.md)
+- [Docs](../writing-docs/introduction.md)
+- [Viewport](./viewports.md)
 
 ### Configuration
 
@@ -20,7 +20,7 @@ When you start Storybook, Essentials will override its configuration with your o
 
 ### Disabling addons
 
-If you need to disable any of the Essential's addons, you can do it by changing your [`.storybook/main.js`](../configure/overview#configure-story-rendering) file.
+If you need to disable any of the Essential's addons, you can do it by changing your [`.storybook/main.js`](../configure/overview.md#configure-story-rendering) file.
 
 As an example, if the background addon wasn't necessary to your work, you would need to make the following change:
 

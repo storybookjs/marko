@@ -15,10 +15,11 @@ The Viewports toolbar item allows you to adjust the dimensions of the iframe you
 
 By default, you are presented with a set of common viewports. 
 
-If you want to change the default set of viewports, you can set the global `parameters.viewport` [parameter](../writing-stories/parameters) in your [`.storybook/preview.js`](../configure/overview#configure-story-rendering):
+If you want to change the default set of viewports, you can set the global `parameters.viewport` [parameter](../writing-stories/parameters.md) in your [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering):
 
 ```js
 // .storybook/preview.js
+
 export const parameters: {
   viewport: {
     viewports: newViewports, // newViewports would be an ViewportMap. (see below for examples)
@@ -48,7 +49,7 @@ The viewports object needs the following keys:
 
 By default Storybook uses a [minimal set of viewports](https://github.com/storybookjs/storybook/blob/master/addons/viewport/src/defaults.ts#L135) to get you started. But you're not restricted to these, the addon offers a more granular list of devices that you can use.  
 
-Change your [`.storybook/preview.js`](../configure/overview#configure-story-rendering) to the following:
+Change your [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering) to the following:
 
 ```js
 // .storybook/preview.js
@@ -68,7 +69,7 @@ See [here](https://github.com/storybookjs/storybook/blob/master/addons/viewport/
 
 ### Add new devices
 
-If you have either a specific viewport, or a list of viewports that you need to use. You can modify your  [`.storybook/preview.js`](../configure/overview#configure-story-rendering) file to include them like so:
+If you have either a specific viewport, or a list of viewports that you need to use. You can modify your  [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering) file to include them like so:
 
 ```js
 //.storybook/preview.js
@@ -143,6 +144,8 @@ export const parameters = {
 This will add both `Kindle Fire 2` and `Kindle Fire HD` to the list of devices. This is achieved by making use of the exported [`MINIMAL_VIEWPORTS`](https://github.com/storybookjs/storybook/blob/master/addons/viewport/src/defaults.ts#L135) property, by merging it with the new ones.
 
 ```js
+//.storybook/preview.js
+
 import {
   INITIAL_VIEWPORTS,
   // or MINIMAL_VIEWPORTS,
@@ -180,10 +183,10 @@ export const parameters = {
 
 There are cases where it's not effective for you to use a certain visual viewport on a global scale and you need it to adjust it to a individual story.
 
-You can change your story through [parameters](../writing-stories/parameters) to include the viewports you need to use for your component.
+You can change your story through [parameters](../writing-stories/parameters.md) to include the viewports you need to use for your component.
 
 
-[Parameters](../writing-stories/parameters) can be configured for a whole set of stories or a single story via the standard parameter API: 
+[Parameters](../writing-stories/parameters.md) can be configured for a whole set of stories or a single story via the standard parameter API: 
 
 ```js
 // my-story.story.js
