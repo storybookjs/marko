@@ -28,7 +28,6 @@ You can learn more about these flag options [here](../api/cli-options.md).
 </div>
 
 
-If you need to build 
 ### Publish Storybook online
 
 Once your Storybook is built as a static web app it can be deployed to any static site hosting services. The Storybook team uses [Chromatic](https://www.chromatic.com/), a free publishing service made by Storybook maintainers that documents, versions, and indexes your UI components securely in the cloud. 
