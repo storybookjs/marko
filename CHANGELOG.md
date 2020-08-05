@@ -1,3 +1,15 @@
+## 6.0.0-rc.27 (August 6, 2020)
+
+### Features
+
+- Addon-docs: Prettier, collapsible values in ArgsTable ([#11768](https://github.com/storybookjs/storybook/pull/11768))
+- Addon-docs: Add inline rendering support for HTML ([#11814](https://github.com/storybookjs/storybook/pull/11814))
+
+### Bug Fixes
+
+- Addon-controls: Fix ArgsTable bugs and styling ([#11805](https://github.com/storybookjs/storybook/pull/11805))
+- Addon-docs: Don't zoom docs content ([#11795](https://github.com/storybookjs/storybook/pull/11795))
+
 ## 6.0.0-rc.26 (August 5, 2020)
 
 ### Dependency Upgrades
