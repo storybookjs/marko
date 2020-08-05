@@ -24,6 +24,7 @@ interface BaseMeta<ComponentType> {
 
 interface BaseStory<Args, StoryFnReturnType> {
   (args: Args, context: StoryContext): StoryFnReturnType;
+  storyName?: string;
 }
 
 // Re-export generic types
