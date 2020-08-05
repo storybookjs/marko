@@ -5,9 +5,9 @@ import './page.css';
 
 export interface PageProps {
   user?: {};
-  onLogin?: () => void;
-  onLogout?: () => void;
-  onCreateAccount?: () => void;
+  onLogin: () => void;
+  onLogout: () => void;
+  onCreateAccount: () => void;
 }
 
 export const Page: React.FC<PageProps> = ({ user, onLogin, onLogout, onCreateAccount }) => (

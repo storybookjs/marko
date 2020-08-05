@@ -1,10 +1,16 @@
 import { Component, FunctionComponent } from 'react';
-import { Args, ArgTypes, Parameters, DecoratorFunction, StoryContext } from '@storybook/addons';
+import {
+  Args as DefaultArgs,
+  ArgTypes,
+  Parameters,
+  DecoratorFunction,
+  StoryContext,
+} from '@storybook/addons';
 import { StoryFnReactReturnType } from './types';
 
 // Base types
-interface Annotations<ArgsType, StoryFnReturnType> {
-  args?: ArgsType;
+interface Annotations<Args, StoryFnReturnType> {
+  args?: Partial<Args>;
   argTypes?: ArgTypes;
   parameters?: Parameters;
   decorators?: DecoratorFunction<StoryFnReturnType>[];
@@ -16,12 +22,12 @@ interface BaseMeta<ComponentType> {
   subcomponents?: Record<string, ComponentType>;
 }
 
-interface BaseStory<ArgsType, StoryFnReturnType> {
-  (args: ArgsType, context: StoryContext): StoryFnReturnType;
+interface BaseStory<Args, StoryFnReturnType> {
+  (args: Args, context: StoryContext): StoryFnReturnType;
 }
 
 // Re-export generic types
-export { Args, ArgTypes, Parameters, StoryContext };
+export { DefaultArgs as Args, ArgTypes, Parameters, StoryContext };
 
 // React specific types
 type ReactComponent = Component | FunctionComponent<any>;
@@ -29,8 +35,8 @@ type ReactReturnType = StoryFnReactReturnType;
 
 export type Decorator = DecoratorFunction<ReactReturnType>;
 
-export type Meta<ArgsType = Args> = BaseMeta<ReactComponent> &
-  Annotations<ArgsType, ReactReturnType>;
+export type Meta<Args = DefaultArgs> = BaseMeta<ReactComponent> &
+  Annotations<Args, ReactReturnType>;
 
-export type Story<ArgsType = Args> = BaseStory<ArgsType, ReactReturnType> &
-  Annotations<ArgsType, ReactReturnType>;
+export type Story<Args = DefaultArgs> = BaseStory<Args, ReactReturnType> &
+  Annotations<Args, ReactReturnType>;
