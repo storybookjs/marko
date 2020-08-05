@@ -134,6 +134,20 @@ export const TableWrapper = styled.table<{ compact?: boolean; inAddonPanel?: boo
           ${opacify(0.05, theme.appBorderColor)} 0 0 0 1px`),
         borderRadius: theme.appBorderRadius,
 
+        // for safari only
+        // CSS hack courtesy of https://stackoverflow.com/questions/16348489/is-there-a-css-hack-for-safari-only-not-chrome
+        '@media not all and (min-resolution:.001dpcm)': {
+          '@supports (-webkit-appearance:none)': {
+            borderWidth: 1,
+            borderStyle: 'solid',
+            borderColor:
+              !inAddonPanel &&
+              (theme.base === 'light'
+                ? transparentize(0.035, theme.appBorderColor)
+                : opacify(0.05, theme.appBorderColor)),
+          },
+        },
+
         tr: {
           background: 'transparent',
           overflow: 'hidden',
