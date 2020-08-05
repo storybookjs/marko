@@ -13,6 +13,8 @@ Some components require a “harness” to render in a useful way. For instance 
 ![Story without padding](./decorators-no-padding.png)
 
 ```js
+// your-component.story.js
+
 export default {
   component: TextComponent,
   decorators: [(Story) => <div style={{ margin: '3em' }}><Story/></div>]
@@ -25,7 +27,7 @@ export default {
 
 ### “Context” for mocking
 
-Some libraries require components higher up in the component hierarchy to render properly. For example in Styled Components, a `ThemeProvider` is required if your components make use of themes. Add a single global decorator that add this context to to all stories in [`.storybook/preview.js`](../configure/overview#configure-story-rendering):
+Some libraries require components higher up in the component hierarchy to render properly. For example in Styled Components, a `ThemeProvider` is required if your components make use of themes. Add a single global decorator that add this context to to all stories in [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering):
 
 ```js
 // .storybook/preview.js
@@ -42,12 +44,12 @@ The second argument to a decorator function is the **story context** which in pa
 
 - `args` - the story arguments. You can use some args in your decorators and drop them in the story implementation itself.
 
-- `globals` - the Storybook-wide [globals](../essentials/toolbars-and-globals#globals). In particular you can use the [toolbars feature](../essentials/toolbars-and-globals#global-types-toolbar-annotations) to allow you to change these values using Storybook’s UI.
+- `globals` - the Storybook-wide [globals](../essentials/toolbars-and-globals.md#globals). In particular you can use the [toolbars feature](../essentials/toolbars-and-globals.md#global-types-toolbar-annotations) to allow you to change these values using Storybook’s UI.
 
 
 #### Using decorators to provide data
 
-If your components are “connected” and require side-loaded data to render, you can use decorators to provide that data in a mocked way, without having to refactor your components to take that data as an arg. There are several techniques to achieve this, depending on exactly how you are loading that data -- read more in the [building pages in Storybook](../workflows/build-pages-with-storybook) section.
+If your components are “connected” and require side-loaded data to render, you can use decorators to provide that data in a mocked way, without having to refactor your components to take that data as an arg. There are several techniques to achieve this, depending on exactly how you are loading that data -- read more in the [building pages in Storybook](../workflows/build-pages-with-storybook.md) section.
 
 ### Story decorators
 
@@ -58,7 +60,7 @@ export const Primary = …
 Primary.decorators = [(Story) => <div style={{ margin: '3em' }}><Story/></div>]
 ```
 
-This is useful to ensure that the story remains a “pure” rendering of the component under test and any extra HTML or components you need to add don’t pollute that. In particular the [Source](../writing-docs/docs-blocks#source) docblock works best when you do this.
+This is useful to ensure that the story remains a “pure” rendering of the component under test and any extra HTML or components you need to add don’t pollute that. In particular the [Source](../writing-docs/doc-blocks.md#source) docblock works best when you do this.
 
 
 ### Component decorators
@@ -76,7 +78,7 @@ export default {
 
 ### Global decorators
 
-We can also set a decorator for **all stories** via the `decorators` export of your [`.storybook/preview.js`](../configure/overview#configure-story-rendering) file (this is the file where you configure all stories):
+We can also set a decorator for **all stories** via the `decorators` export of your [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering.md) file (this is the file where you configure all stories):
 
 ```js
 export const decorators = [(Story) => <div style={{ margin: '3em' }}><Story/></div>]

@@ -23,7 +23,7 @@ export const Primary = () => <Button primary>Button</Button>;
 
 View the rendered `Button` by clicking on it in the Storybook sidebar.
 
-The above story definition can be further improved to take advantage of [Storybook’s “args”](../writing-stories/args) concept. Args describes the arguments to Button in a machine readable way. This unlocks Storybook’s superpower of altering and composing arguments dynamically.
+The above story definition can be further improved to take advantage of [Storybook’s “args”](../writing-stories/args.md) concept. Args describes the arguments to Button in a machine readable way. This unlocks Storybook’s superpower of altering and composing arguments dynamically.
 
 ```js
 // We create a “template” of how args map to rendering
@@ -75,6 +75,6 @@ Stories are also useful for checking that UI continues to look correct as you ma
   />
 </video>
 
-Checking a component’s stories as you develop helps prevent accidental regressions. Tools that integrate with Storybook can also [automate](..workflows/testing-with-storybook) this for you.
+Checking a component’s stories as you develop helps prevent accidental regressions. Tools that integrate with Storybook can also [automate](..workflows/testing-with-storybook.md) this for you.
 
 Now we’ve seen the basic anatomy of a story, let’s see how we use Storybook’s UI to develop stories

@@ -31,7 +31,7 @@ Depending on your technology stack, you also might need to configure the Storybo
 
 ### Configure Storybook for your stack
 
-Storybook comes with a permissive [default configuration](../configure/overview). It attempts to customize itself to fit your setup. But it’s not foolproof. 
+Storybook comes with a permissive [default configuration](../configure/overview.md). It attempts to customize itself to fit your setup. But it’s not foolproof. 
 
 Your project may have additional requirements before components can be rendered in isolation. This warrants customizing configuration further. There are three broad categories of configuration you might need. 
 
@@ -40,9 +40,9 @@ Your project may have additional requirements before components can be rendered 
   
   If you see errors on the CLI when you run the `yarn storybook` command. It’s likely you need to make changes to Storybook’s build configuration. Here are some things to try:
 
-  - [Presets](../api/addons#addon-presets) bundle common configurations for various technologies into Storybook. In particular presets exist for Create React App, SCSS and Ant Design.
-  - Specify a custom [Babel configuration](../configure/integration#custom-babel-config) for Storybook. Storybook automatically tries to use your project’s config if it can.
-  - Adjust the [webpack configuration](../configure/integration#webpack) that Storybook uses. Try patching in your own configuration if needed.
+  - [Presets](../api/presets.md) bundle common configurations for various technologies into Storybook. In particular presets exist for Create React App, SCSS and Ant Design.
+  - Specify a custom [Babel configuration](../configure/integration.md#custom-babel-config) for Storybook. Storybook automatically tries to use your project’s config if it can.
+  - Adjust the [webpack configuration](../configure/integration.md#webpack) that Storybook uses. Try patching in your own configuration if needed.
 </details>
 
 <details>
@@ -58,7 +58,7 @@ If a particular story has a problem rendering, often it means your component exp
 
 A common frontend pattern is for components to assume that they render in a certain “context” with parent components higher up the rendering hierarchy (for instance theme providers)
 
-Use [decorators](../writing-stories/decorators) to “wrap” every story in the necessary context providers. [`.storybook/preview.js`](../configure/overview#configure-story-rendering) allows you to customize how components render in Canvas, the preview iframe. In this decorator example, we wrap every component rendered in Storybook with `ThemeProvider`.
+Use [decorators](../writing-stories/decorators.md) to “wrap” every story in the necessary context providers. [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering) allows you to customize how components render in Canvas, the preview iframe. In this decorator example, we wrap every component rendered in Storybook with `ThemeProvider`.
 
 ```js
 // .storybook/preview.js
@@ -90,21 +90,21 @@ Theme users may need to add a decorator to `.storybook/preview.js`, [see above](
 <details>
   <summary>@import CSS into components</summary>
 
-Storybook allows you to import CSS files in your components directly. But in some cases you may need to [tweak the webpack config](../configure/integration#webpack). Angular components require [a special import](../configure/integration#importing-css-files).
+Storybook allows you to import CSS files in your components directly. But in some cases you may need to [tweak the webpack config](../configure/integration.md#webpack). Angular components require [a special import](../configure/integration.md#importing-css-files).
 
 </details>
 
 <details>
   <summary>Global imported styles</summary>
 
-If you have global imported styles, create a file called [`.storybook/preview.js`](../configure/overview#configure-story-rendering) and import the styles there. The styles will be added by Storybook automatically for all stories.
+If you have global imported styles, create a file called [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering) and import the styles there. The styles will be added by Storybook automatically for all stories.
 
 </details>
 
 <details>
   <summary>Add external CSS or fonts in the &#60head&#62</summary>
 
-Alternatively if you want to inject a CSS link tag to the `<head>` directly (or some other resource like a font link), you can use [`.storybook/preview-head.html`](/configure/story-rendering#adding-to-&#60head&#62) to add arbitrary HTML.
+Alternatively if you want to inject a CSS link tag to the `<head>` directly (or some other resource like a font link), you can use [`.storybook/preview-head.html`](../configure/story-rendering.md#adding-to-&#60head&#62) to add arbitrary HTML.
 
 </details>
 

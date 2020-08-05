@@ -17,7 +17,7 @@ Button.stories.js | ts
 
 ### Component Story Format
 
-We define stories according to the [Component Story Format](../formats/component-story-format) (CSF), an ES6 module-based standard that is portable between tools and easy to write. 
+We define stories according to the [Component Story Format](../api/csf.md) (CSF), an ES6 module-based standard that is portable between tools and easy to write. 
 
 The key ingredients are the [**`default` export**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export#Using_the_default_export) that describes the component, and [**named exports**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export#Using_named_exports) that describe the stories.
 
@@ -51,6 +51,21 @@ export default {
 export const Primary = () => <Button primary label="Button" />;
 
 ```
+
+#### Rename stories 
+
+You can rename any particular story you need. For instance to give it a more clearer name. Here's how you can change the name of the `Primary` story:
+
+```js
+import { Button } from './Button';
+
+export const Primary=()=><Button primary label="Button"/>;
+
+Primary.storyName='I am the primary';
+
+```
+
+Your story will now be show in the sidebar with the text supplied.
 
 ### How to write stories
 
@@ -108,7 +123,7 @@ Pair.args = {
 ```
 When Button’s signature changes, you only need to change Button’s stories to reflect the new schema. ButtonGroup’s stories will automatically be updated. This pattern allows you to reuse your data definitions up and down your component hierarchy, making your stories more maintainable.
 
-That’s not all! Each of the args from the story function are live editable using Storybook’s [controls](../essentials/controls) panel. This means your team can dynamically change components in Storybook to stress test and find edge cases.
+That’s not all! Each of the args from the story function are live editable using Storybook’s [controls](../essentials/controls.md) panel. This means your team can dynamically change components in Storybook to stress test and find edge cases.
 
 <video autoPlay muted playsInline loop>
   <source
@@ -117,7 +132,7 @@ That’s not all! Each of the args from the story function are live editable usi
   />
 </video>
 
-Addons can enhance args. For instance, [Actions](../essentials/actions) auto detects which args are callbacks and appends a logging function to them. That way interactions (like clicks) get logged in the actions panel.
+Addons can enhance args. For instance, [Actions](../essentials/actions.md) auto detects which args are callbacks and appends a logging function to them. That way interactions (like clicks) get logged in the actions panel.
 
 <video autoPlay muted playsInline loop>
   <source
@@ -153,7 +168,7 @@ export default {
 
 ![Background colors parameter](./parameters-background-colors.png)
 
-This parameter would instruct the backgrounds addon to reconfigure itself whenever a Button story is selected. Most addons are configured via a parameter-based API and can be influenced at a [global](./parameters#global-parameters), [component](./parameters#component-parameters) and [story](./parameters#story-parameters) level.
+This parameter would instruct the backgrounds addon to reconfigure itself whenever a Button story is selected. Most addons are configured via a parameter-based API and can be influenced at a [global](./parameters.md#global-parameters), [component](./parameters.md#component-parameters) and [story](./parameters.md#story-parameters) level.
 
 
 #### Using decorators
@@ -173,7 +188,7 @@ export default {
 }
 ```
 
-Decorators [can be more complex](./decorators#context-for-mocking) and are often provided by [addons](../configure/user-interface#storybook-addons). You can also configure decorators at the [story](./decorators#story-decorators), [component](./decorators#component-decorators) and [global](./decorators#global-decorators) level.
+Decorators [can be more complex](./decorators.md#context-for-mocking) and are often provided by [addons](../configure/storybook-addons.md). You can also configure decorators at the [story](./decorators.md#story-decorators), [component](./decorators.md#component-decorators) and [global](./decorators.md#global-decorators) level.
 
 
 ### Stories for two or more components
@@ -233,7 +248,7 @@ export const ManyItems = (args) => (
 
 <div class="aside">
  
- Note that there are disadvantages in writing stories like this as you cannot take full advantage of the args mechanism and composing args as you build more complex composite components. For more discussion, set the [multi component stories](../workflows/stories-for-multiple-components) workflow article.
+ Note that there are disadvantages in writing stories like this as you cannot take full advantage of the args mechanism and composing args as you build more complex composite components. For more discussion, set the [multi component stories](../workflows/stories-for-multiple-components.md) workflow article.
  
  </div>
 
