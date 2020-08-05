@@ -22,6 +22,7 @@ interface ArgSummaryProps {
 const Text = styled.span(({ theme }) => ({
   fontFamily: theme.typography.fonts.mono,
   fontSize: theme.typography.size.s1,
+  wordBreak: 'break-word',
 }));
 
 const Expandable = styled.div<{}>(codeCommon, ({ theme }) => ({

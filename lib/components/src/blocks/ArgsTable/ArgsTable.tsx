@@ -48,16 +48,17 @@ export const TableWrapper = styled.table<{ compact?: boolean; inAddonPanel?: boo
         ...(compact
           ? null
           : {
+              // Description column
               width: '35%',
             }),
       },
 
-      'th:nth-of-type(3), td:nth-of-type(3)': {
+      'td:nth-of-type(3)': {
         ...(compact
           ? null
           : {
+              // Defaults column
               width: '15%',
-              wordBreak: 'break-all',
             }),
       },
 
@@ -66,6 +67,7 @@ export const TableWrapper = styled.table<{ compact?: boolean; inAddonPanel?: boo
         ...(compact
           ? null
           : {
+              // Controls column
               width: '25%',
             }),
       },
