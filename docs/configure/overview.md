@@ -24,12 +24,12 @@ module.exports = {
 }
 ```
 
-The `main.js` configuration file is a [preset](../api/addons#addon-presets) and as such has a powerful interface, but the key fields within it are:
+The `main.js` configuration file is a [preset](../api/presets.md) and as such has a powerful interface, but the key fields within it are:
 
 - `stories` - a array of globs that indicates the [location of your story files](#configure-story-loading), relative to `main.js`.
 - `addons` - a list of the [addons](/addons) you are using.
-- `webpackFinal` - custom [webpack configuration](./integration#extending-storybooks-webpack-config).
-- `babel` - custom [babel configuration](./integration#babel).
+- `webpackFinal` - custom [webpack configuration](./integration.md#extending-storybooks-webpack-config).
+- `babel` - custom [babel configuration](./integration.md#babel).
 
 ### Configure story loading
 
@@ -56,18 +56,18 @@ module.exports = {
 
 ### Configure story rendering
 
-To control the way stories are rendered and add global [decorators](../writing-stories/decorators#global-decorators) and [parameters](..writing-stories/parameters#global-parameters), create a  `.storybook/preview.js` file. This is loaded in the Canvas tab, the “preview” iframe that renders your components in isolation. Use `preview.js` for global code (such as [CSS imports](../get-started/setup#render-component-styles) or JavaScript mocks) that applies to all stories.
+To control the way stories are rendered and add global [decorators](../writing-stories/decorators.md#global-decorators) and [parameters](../writing-stories/parameters.md#global-parameters), create a  `.storybook/preview.js` file. This is loaded in the Canvas tab, the “preview” iframe that renders your components in isolation. Use `preview.js` for global code (such as [CSS imports](../get-started/setup.md#render-component-styles) or JavaScript mocks) that applies to all stories.
 
 The `preview.js` file can be an ES module and export the following keys: 
 
-- `decorators` - an array of global [decorators](../writing-stories/decorators#global-decorators)
-- `parameters` - an object of global [parameters](..writing-stories/parameters#global-parameters)
-- `globalTypes` - definition of [globalTypes](../essentials/toolbars-and-globals#global-types-and-the-toolbar-annotation)
+- `decorators` - an array of global [decorators](../writing-stories/decorators.md#global-decorators)
+- `parameters` - an object of global [parameters](..writing-stories/parameters.md#global-parameters)
+- `globalTypes` - definition of [globalTypes](../essentials/toolbars-and-globals.md#global-types-and-the-toolbar-annotation)
 
-If you’re looking to change how your stories are ordered, read about [sorting stories](../writing-stories/naming-components-and-hierarchy#sorting-stories).
+If you’re looking to change how your stories are ordered, read about [sorting stories](../writing-stories/naming-components-and-hierarchy.md#sorting-stories).
 
 ### Configure Storybook’s UI
 
 To control the behaviour of Storybook’s UI (the **“manager”**), you can create a `.storybook/manager.js` file.
 
-This file does not have a specific API but is the place to set [UI options](./user-interface) and to configure Storybook’s [theme](./user-interface#theming).
+This file does not have a specific API but is the place to set [UI options](./user-interface.md) and to configure Storybook’s [theme](./theming.md).

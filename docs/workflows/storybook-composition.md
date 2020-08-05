@@ -6,13 +6,13 @@ Composition allows you to embed components from any Storybook inside your local 
 
 It’s made for teams who adopt Storybook in multiple projects but can’t ensure that the projects have the same tech stack or share the same repo. 
 
-You can compose any Storybook [published online](./publish-storybook) or running locally no matter the view layer, tech stack, or dependencies. 
+You can compose any Storybook [published online](./publish-storybook.md) or running locally no matter the view layer, tech stack, or dependencies. 
 
 ![Storybook composition](./combine-storybooks.png)
 
 ### Compose published Storybooks
 
-In your [`storybook/main.js`](../configure/overview#configure-story-rendering) file add a `refs` field with information about the reference Storybook. Pass in a URL to a statically built Storybook. 
+In your [`storybook/main.js`](../configure/overview.md#configure-story-rendering) file add a `refs` field with information about the reference Storybook. Pass in a URL to a statically built Storybook. 
 
 ```js
 //.storybook/main.js

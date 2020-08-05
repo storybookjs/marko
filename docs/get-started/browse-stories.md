@@ -34,7 +34,7 @@ Storybook ships with time-saving tools built in. The **toolbar** contains tools 
   />
 </video>
 
-The [“Docs”](../writing-docs/introduction) tab shows auto-generated documentation about components (inferred from the source code). Usage docs are helpful when sharing reusable components with your team. For example, in a design system or component library.
+The [“Docs”](../writing-docs/introduction.md) tab shows auto-generated documentation about components (inferred from the source code). Usage docs are helpful when sharing reusable components with your team. For example, in a design system or component library.
 
 <video autoPlay muted playsInline loop>
   <source
@@ -43,7 +43,7 @@ The [“Docs”](../writing-docs/introduction) tab shows auto-generated document
   />
 </video>
 
-The toolbar is customizable. You can use [globals](../essentials/toolbars-and-globals) to quickly toggle themes and languages. Or install Storybook toolbar [addons](../configure/user-interface#addons-description) from the community to enable advanced workflows.
+The toolbar is customizable. You can use [globals](../essentials/toolbars-and-globals.md) to quickly toggle themes and languages. Or install Storybook toolbar [addons](../configure/storybook-addons.md) from the community to enable advanced workflows.
 
 ### Addons
 
@@ -62,6 +62,6 @@ Addons are plugins that extend Storybook's core functionality. You can find them
   />
 </video>
 
-Storybook is extensible. Our rich ecosystem of addons helps you test, document, and optimize your stories. You can also create an addon to satisfy your workflow requirements. Read more in the [addons section](../api/addons).
+Storybook is extensible. Our rich ecosystem of addons helps you test, document, and optimize your stories. You can also create an addon to satisfy your workflow requirements. Read more in the [addons section](../api/addons.md).
 
 In the next chapter, we'll get your components rendering in Storybook so you can use it to supercharge component development.

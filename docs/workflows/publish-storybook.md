@@ -18,6 +18,16 @@ Storybook will create a static web application at the path you specify. This can
 npx http-server ./path/to/build
 ```
 
+<div class="aside">
+
+Asides from the `-o` flag, you can also include other flags to build Storybook, for instance if you're using [Docs](../writing-docs/introduction.md), you can append the `--docs` flag and Storybook will build your [MDX](../writing-docs/mdx.md) and [CSF](../writing-stories/introduction.md#component-story-format) stories into a rich and interactive documentation.
+
+You can learn more about these flag options [here](../api/cli-options.md).
+
+
+</div>
+
+
 ### Publish Storybook online
 
 Once your Storybook is built as a static web app it can be deployed to any static site hosting services. The Storybook team uses [Chromatic](https://www.chromatic.com/), a free publishing service made by Storybook maintainers that documents, versions, and indexes your UI components securely in the cloud. 
@@ -43,7 +53,7 @@ If you publish your Storybook to Chromatic, you can use the [UI Review](https://
 
 ### Reference external Storybooks
 
-Storybook allows you to browse components from any [Storybook published online](./storybook-composition) inside your local Storybook. It unlocks common workflows that teams often struggle with:
+Storybook allows you to browse components from any [Storybook published online](./storybook-composition.md) inside your local Storybook. It unlocks common workflows that teams often struggle with:
 
 - 👩‍💻 UI developers can quickly reference prior art without switching between Storybooks.
 - 🎨 Design systems can expand adoption by composing themselves into their users’ Storybooks.
@@ -54,4 +64,4 @@ Storybook allows you to browse components from any [Storybook published online](
 
 Toggle between multiple versions of Storybook to see how components change between versions. This is useful for design system package authors who maintain many versions at once.
 
-**Requires** a [CHP level 1](./package-composition#chp-level-1) server (such as [chromatic.com](https://www.chromatic.com/)),
+**Requires** a [CHP level 1](./package-composition.md#chp-level-1) server (such as [chromatic.com](https://www.chromatic.com/)),

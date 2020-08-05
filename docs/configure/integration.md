@@ -6,7 +6,7 @@ title: 'Integration'
 
 Storybook displays your components in a custom web application built using [webpack](https://webpack.js.org/). Webpack is a complex tool but our default configuration is intended to cover off the majority of use cases. There are also [addons](/addons) available that extend the configuration for other common use cases.
 
-You can customize Storybook's webpack setup by providing a `webpackFinal` field in [`.storybook/main.js`](./overview#configure-your-storybook-project) file.
+You can customize Storybook's webpack setup by providing a `webpackFinal` field in [`.storybook/main.js`](./overview.md#configure-your-storybook-project) file.
 
 The value should be an async function that receives a webpack config and eventually returns a webpack config.
 
@@ -40,7 +40,7 @@ yarn storybook --debug-webpack
 
 #### Extending Storybook’s webpack config
 
-To extend the above configuration, use the `webpackFinal` field of [`.storybook/main.js`](./overview#configure-story-rendering).
+To extend the above configuration, use the `webpackFinal` field of [`.storybook/main.js`](./overview.md#configure-story-rendering).
 
 The value should export a `function`, which will receive the default config as its first argument. The second argument is an options object from Storybook, this will have information about where config came from, whether we're in production of development mode etc.
 
@@ -95,7 +95,7 @@ If you're using a non-standard Storybook config directory, you should put `main.
 
 #### Using your existing config
 
-If you have an existing webpack config for your project and want to reuse this app's configuration, you can import your main webpack config into Storybook's [`.storybook/main.js`](./overview#configure-story-rendering) and merge both:
+If you have an existing webpack config for your project and want to reuse this app's configuration, you can import your main webpack config into Storybook's [`.storybook/main.js`](./overview.md#configure-story-rendering) and merge both:
 
 The following code snippet shows how you can replace the loaders from Storybook with the ones from your app's `webpack.config.js`:
 
@@ -151,7 +151,7 @@ Each framework uses the base configuration unless otherwise specified:
 
 #### Main.js configuration
 
-To make it easier to configure Typescript handling, use the `typescript` field in your [`.storybook/main.js`](./overview#configure-story-rendering).
+To make it easier to configure Typescript handling, use the `typescript` field in your [`.storybook/main.js`](./overview.md#configure-story-rendering).
 
 The following code snippets shows the fields for you to use with TypeScript:
 
@@ -170,11 +170,11 @@ module.exports = {
 };
 ```
 
-|Field	                         |Framework	    |Description	                                                                          |Type      |
-|:-------------------------------|:------------:|:---------------------------------------------------------------------------------------:|:--------:|
-|**check**                       |All	          |optionally run fork-ts-checker-webpack-plugin	                                          |boolean   |
-|**checkOptions**	               |All	          |Options to pass to fork-ts-checker-webpack-plugin if it's enabled	                      |[See docs](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin)  |
-|**reactDocgen**	               |React	        |which variant docgen processor to run	`'react-docgen-typescript'                        |N/A       |
+|Field	                         |Framework	    |Description	                                                                            |Type                                                                           |
+|:-------------------------------|:------------:|:---------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------:|
+|**check**                       |All	          |optionally run fork-ts-checker-webpack-plugin	                                          |boolean                                                                        |
+|**checkOptions**	               |All	          |Options to pass to fork-ts-checker-webpack-plugin if it's enabled	                      |[See docs](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin)       |
+|**reactDocgen**	               |React	        |which variant docgen processor to run	`'react-docgen-typescript'                        |N/A                                                                            |
 |**reactDocgenTypescriptOptions**|React	        |Options to pass to react-docgen-typescript-plugin if react-docgen-typescript is enabled. |[See docs](https://github.com/hipstersmoothie/react-docgen-typescript-plugin)  |
 
 
@@ -185,7 +185,7 @@ There are many ways to include CSS in a web application, and correspondingly the
 
 #### CSS-in-JS
 
-CSS-in-JS libraries are designed to use basic JavaScript. They often work in Storybook without any extra configuration. Some libraries expect components to be rendered in a specific rendering “context” (for example, to provide themes) and you may need to add a [global decorator](../writing-stories/decorators#global-decorators) to supply it.
+CSS-in-JS libraries are designed to use basic JavaScript. They often work in Storybook without any extra configuration. Some libraries expect components to be rendered in a specific rendering “context” (for example, to provide themes) and you may need to add a [global decorator](../writing-stories/decorators.md#global-decorators) to supply it.
 
 #### Importing CSS files
 
@@ -200,11 +200,11 @@ If your component files import their own CSS, Storybook’s webpack config will 
         ```
     
 
-To use your CSS in all stories, you simply import it in [`.storybook/preview.js`](./overview#configure-story-rendering)
+To use your CSS in all stories, you simply import it in [`.storybook/preview.js`](./overview.md#configure-story-rendering)
 
 #### Adding webfonts
 
-If you need webfonts to be available, you may need to add some code to the [`.storybook/preview-head.html`](./story-rendering#adding-to-head) file. We recommend including any assets with your Storybook if possible, in which case you likely want to configure the [static file location](#serving-static-files-via-storybook).
+If you need webfonts to be available, you may need to add some code to the [`.storybook/preview-head.html`](./story-rendering.md#adding-to-head) file. We recommend including any assets with your Storybook if possible, in which case you likely want to configure the [static file location](#serving-static-files-via-storybook).
 
 ### Images and assets
 
@@ -255,6 +255,7 @@ Here `./public` is your static directory. Now use it in a component or story lik
 
 ```js
 // your-story-with-asset.story.js
+
 import React from 'react';
 
 export default {
@@ -283,6 +284,7 @@ Upload your files to an online CDN and reference them. In this example we’re u
 
 ```js
 // your-story-with-CDN-asset.story.js
+
 import React from 'react';
 
 export default {
