@@ -32,7 +32,7 @@ function cleanup() {
   // --copy-files option doesn't work with --ignore
   // https://github.com/babel/babel/issues/6226
   if (fs.existsSync(path.join(process.cwd(), 'dist'))) {
-    const inStoryShoots = process.cwd().includes('storyshots'); // This is a helper the exclude storyshots folder from the regex
+    const inStoryshots = process.cwd().includes('storyshots'); // This is a helper the exclude storyshots folder from the regex
     const files = shell.find('dist').filter((filePath) => {
       // Do not remove folder
       // And do not clean anything for:
@@ -44,7 +44,7 @@ function cleanup() {
       if (
         fs.lstatSync(filePath).isDirectory() ||
         /generators\/.+\/template.*/.test(filePath) ||
-        (/dist\/frameworks\/.*/.test(filePath) && !inStoryShoots)
+        (/dist\/frameworks\/.*/.test(filePath) && !inStoryshots)
       ) {
         return false;
       }
