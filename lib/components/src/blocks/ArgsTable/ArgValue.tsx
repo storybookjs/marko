@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
 import { styled } from '@storybook/theming';
 import memoize from 'memoizerific';
+import uniq from 'lodash/uniq';
 import { PropSummaryValue } from './types';
 import { WithTooltipPure } from '../../tooltip/WithTooltip';
 import { Icons } from '../../icon/icon';
@@ -98,9 +99,6 @@ const calculateDetailWidth = memoize(1000)((detail: string): string => {
 
   return `${Math.max(...lines.map((x) => x.length))}ch`;
 });
-
-const uniq = (arr: string[]): string[] =>
-  arr.filter((value, index, self) => self.indexOf(value) === index);
 
 const getSummaryItems = (summary: string) => {
   if (!summary) return [summary];
