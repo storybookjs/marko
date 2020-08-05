@@ -14,6 +14,7 @@
     - [React prop tables with Typescript](#react-prop-tables-with-typescript)
     - [ConfigureJSX true by default in React](#configurejsx-true-by-default-in-react)
     - [Docs description parameter](#docs-description-parameter)
+    - [6.0 Inline stories](#60-inline-stories)
   - [New addon presets](#new-addon-presets)
   - [Removed babel-preset-vue from Vue preset](#removed-babel-preset-vue-from-vue-preset)
   - [Removed Deprecated APIs](#removed-deprecated-apis)
@@ -304,6 +305,12 @@ Basic.parameters = { docs: { description: { story: 'some story **markdown**' }}}
 ```
 
 In 5.3 you customized a story description with the `docs.storyDescription` parameter. This has been deprecated, and support will be removed in 7.0.
+
+#### 6.0 Inline stories
+
+The following frameworks now render stories inline on the Docs tab by default, rather than in an iframe: `react`, `vue`, `web-components`, `html`.
+
+To disable inline rendering, set the `docs.inlineStories` parameter to `false`.
 
 ### New addon presets
 
