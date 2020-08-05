@@ -4,6 +4,7 @@ title: "What's a Story"
 
 import buttonStoryReactJS, { metadata as buttonStoryReactJSMeta } from "../snippets/button-story/react/js.mdx"
 import buttonStoryReactTS, { metadata as buttonStoryReactTSMeta } from "../snippets/button-story/react/ts.mdx"
+import buttonStoryReactMD, { metadata as buttonStoryReactMDMeta } from "../snippets/button-story/react/md.mdx"
 import buttonStoryAngularJS, { metadata as buttonStoryAngularJSMeta } from "../snippets/button-story/angular/js.mdx"
 
 **A story captures the rendered state of a UI component**. Developers write multiple stories per component that describe all the “interesting” states a component can support.
@@ -18,6 +19,7 @@ Let’s start with the `Button` component. A story is a function that describes 
 snippets={[
 { Snippet: buttonStoryReactJS, metadata: buttonStoryReactJSMeta },
 { Snippet: buttonStoryReactTS, metadata: buttonStoryReactTSMeta },
+{ Snippet: buttonStoryReactMD, metadata: buttonStoryReactMDMeta },
 { Snippet: buttonStoryAngularJS, metadata: buttonStoryAngularJSMeta },
 ]}
 />
