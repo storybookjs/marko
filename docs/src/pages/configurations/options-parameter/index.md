@@ -110,7 +110,7 @@ The `storySort` can also accept a configuration object.
 
 ```js
 
-export parameters = {
+export const parameters = {
   options: {
     storySort: {
       method: 'alphabetical', // Optional, defaults to 'configure'.
@@ -126,7 +126,7 @@ To sort your stories alphabetically, set `method` to `'alphabetical'` and option
 The `order` array can accept a nested array in order to sort 2nd-level story kinds. For example:
 
 ```js
-export parameters = {
+export const parameters = {
   options: {
     storySort: {
       order: ['Intro', 'Pages', ['Home', 'Login', 'Admin'], 'Components'],
