@@ -277,8 +277,41 @@ module.exports = {
           type: 'link',
         },
         {
+          pathSegment: 'csf',
+          title: 'Component Story Format',
+          description:'Learn about the Component Story Format API',
+          type: 'bullet-link',
+        },
+        {
+          pathSegment: 'mdx',
+          title: 'MDX syntax',
+          description:'Learn how to add MDX to your Storybook',
+          type: 'bullet-link',
+        },
+        {
+          pathSegment: 'argtypes',
+          title: 'ArgTypes',
+          description:'Learn how to use Argtypes with your Storybook',
+          type: 'bullet-link',
+        },
+        {
           pathSegment: 'addons',
           title: 'Addons',
+          type: 'link',
+        },
+        {
+          pathSegment: 'addons-api',
+          title: 'Addons API',
+          type: 'link',
+        },
+        {
+          pathSegment: 'presets',
+          title: 'Presets',
+          type: 'link',
+        },
+        {
+          pathSegment: 'writing-presets',
+          title: 'Writing your own Storybook Preset',
           type: 'link',
         },
         {

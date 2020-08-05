@@ -5,9 +5,9 @@ title: 'Addons'
 Addons extend Storybook with features and integrations that are not built into the core. Most Storybook features are implemented as addons. For instance: documentation, accessibility testing, interactive controls, and design previews. 
 The addon API makes it easy for you to configure and customize Storybook in new ways. There are countless addons made by the community that unlock time-saving workflows.  What addons can do:
 
-- [Add a panel to Storybook (like Action Logger).](../essentials/actions)
-- [Add a tool to Storybook’s toolbar (like zoom or grid).](../essentials/toolbars-and-globals)
-- [Add a tab to Storybook (like SB Docs).](../writing-docs/introduction)
+- [Add a panel to Storybook (like Action Logger).](../essentials/actions.md)
+- [Add a tool to Storybook’s toolbar (like zoom or grid).](../essentials/toolbars-and-globals.md)
+- [Add a tab to Storybook (like SB Docs).](../writing-docs/introduction.md)
 
 Browse the [Addon gallery](/addons) to install an existing addon or as inspiration for your own addon. Read on to learn how to make an addon yourself.
 
@@ -36,6 +36,7 @@ Let’s write a simple addon for Storybook which:
 Let’s start by writing a story for our addon that exposes a custom parameter. The idea is that our addon will show this parameter in the addon panel.
 
 ```js
+// Button.story.js
 
 import React from 'react';
 import Button from './Button';
@@ -57,7 +58,8 @@ Because we added the story at the component level, the `myAddon` parameter is as
 Now let’s add a panel to Storybook in a file called `register.js`, which is the entry point for addons to register themselves.
 
 ```js
-// register.js
+// .storybook/register.js
+
 import React from 'react';
 import { addons, types } from '@storybook/addons';
 import { AddonPanel } from '@storybook/components';
@@ -86,7 +88,8 @@ This is boilerplate code for any addon that adds a panel to Storybook, and there
 Next, let’s replace the `MyPanel` component from above to show the parameter.
 
 ```js
-// register.js
+// .storybook/register.js
+
 import { useParameter } from '@storybook/api';
 const PARAM_KEY = 'myAddon';
 const MyPanel = () => {
@@ -104,10 +107,11 @@ The addon API provides hooks like this so all of that communication can happen b
 
 Finally, let’s hook it all up. Addons are typically published as standalone packages, but they can also be written locally in an existing Storybook project. We’ll make our addon a local addon.
 
-Update your [`.storybook/main.js`](../configure/overview#configure-story-rendering):
+Update your [`.storybook/main.js`](../configure/overview.md#configure-story-rendering):
 
 ```js
 // .storybook/main.js
+
 module.exports = {
   addons: ['path/to/register.js']
 }
@@ -156,6 +160,8 @@ It’s possible to disable the addon panel for a particular story.
 To make that possible, you need to pass the `paramKey` element when you register the panel:
 
 ```js
+// .storybook/register.js
+
 addons.register(ADDON_ID, () => {
   addons.add(PANEL_ID, {
     type: types.PANEL,
@@ -184,7 +190,7 @@ export default {
 Storybook uses [Emotion](https://emotion.sh/docs/introduction) for styling, AND we provide a theme which can be set by the user!
 
 We recommend you also use Emotion to style your addon’s UI components. That allows you to use the active Storybook theme to deliver a seamless developer experience.
-If you don’t want to use Emotion, you can use inline styles or another css-in-js lib. You can receive the theme as a prop by using the `withTheme` hoc from Emotion. [Read more about theming](../configure/user-interface#theming).
+If you don’t want to use Emotion, you can use inline styles or another css-in-js lib. You can receive the theme as a prop by using the `withTheme` hoc from Emotion. [Read more about theming](../configure/theming.md).
 
 #### Storybook components
 
@@ -223,23 +229,20 @@ When you are developing your addon as a package, you can’t use npm link to add
 ```
 
 ### Addon presets
-<div style="background-color:#F8FAFC">
-TODO: vet this item, as this should be where the remainder docs will point at when refering to presets correct?
-</div>
 
-Storybook presets are collections of Storybook configurations that get applied automatically when you create a `/preset.js` entry point in your addon and then list that addon in your project’s [`.storybook/main.js`](../configure/overview#configure-story-rendering) addons field.
+Storybook presets are collections of Storybook configurations that get applied automatically when you create a `/preset.js` entry point in your addon and then list that addon in your project’s [`.storybook/main.js`](../configure/overview.md#configure-story-rendering) addons field.
 
 Common uses for presets include:
 
 - Register an addon’s `register.js`.
 - Set global parameters for the addon (e.g. [addon-backgrounds](https://github.com/storybookjs/storybook/tree/next/addons/backgrounds)).
 - Add global decorators for the addon (e.g. [addon-a11y](https://github.com/storybookjs/storybook/tree/next/addons/a11y)).
-- Set up webpack customizations for the addon (e.g. [addon-docs](../writing-docs/introduction)).
+- Set up webpack customizations for the addon (e.g. [addon-docs](../writing-docs/introduction.md)).
 
 Here’s an example of typical preset file:
 
 ```js
-// addon-backgrounds preset.js
+//preset.js
 export function config(entry = []) {
   return [...entry, require.resolve('./defaultParameters')];
 }
@@ -248,7 +251,6 @@ export function managerEntries(entries) {
   return [...entries, require.resolve('./register')];
 }
 
-// addon-backgrounds defaultParameters.js
 export const parameters = {
   backgrounds: {
     values: [
@@ -259,20 +261,12 @@ export const parameters = {
 };
 ```
 
-For more information on presets, see the [presets docs](../presets/introduction/index).
+For more information on presets, see the [presets docs](./presets.md).
 
 ### Writing presets
 
-<div style="background-color:#F8FAFC">
-TODO: vet this documentation link if it's correct.
-</div>
-
-If you want to learn more how you can write your own presets, read the [documentation](../presets/writing-presets/index)
+If you want to learn more how you can write your own presets, read the [documentation](./writing-presets.md)
 
 ### Addons API
 
-<div style="background-color:#F8FAFC">
-TODO: vet this documentation link if it's correct.
-</div>
-
-If you want to expand your knowledge on the Addons API, read the [documentation](/addons/api/index)
+If you want to expand your knowledge on the Addons API, read the [documentation](./addons-api.md)
