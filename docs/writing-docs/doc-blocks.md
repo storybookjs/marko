@@ -2,13 +2,17 @@
 title: 'Doc Blocks'
 ---
 
-Doc Blocks are the building blocks of Storybook documentation pages. By default, [DocsPage](./docs-page) uses a combination of the blocks below to build a page for each of your components automatically. 
+<div>
+TODO: vet the canvas changes. Originally it was Preview and now it's Canvas (associated issue https://github.com/storybookjs/storybook/issues/11696)
+</div>
 
-Custom [addons](../configure/user-interface#storybook-addons) can also provide their own doc blocks.
+Doc Blocks are the building blocks of Storybook documentation pages. By default, [DocsPage](./docs-page.md) uses a combination of the blocks below to build a page for each of your components automatically. 
+
+Custom [addons](../configure/user-interface.md#storybook-addons) can also provide their own doc blocks.
 
 ### ArgsTable
 
-Storybook Docs automatically generates component props tables for components in supported frameworks. These tables list the arguments ([args for short](../writing-stories/args)) of the component, and even integrate with [controls](../essentials/controls) to allow you to change the args of the currently rendered story.
+Storybook Docs automatically generates component args tables for components in supported frameworks. These tables list the arguments ([args for short](../writing-stories/args.md)) of the component, and even integrate with [controls](../essentials/controls.md) to allow you to change the args of the currently rendered story.
 
 <video autoPlay muted playsInline loop>
   <source
@@ -17,9 +21,39 @@ Storybook Docs automatically generates component props tables for components in 
   />
 </video>
 
+This is extremely useful, but it can be further expanded. Additional information can be added to the component to better document it:
+
+```js
+// Button.js
+
+import React from 'react';
+import PropTypes from 'prop-types';
+
+export default function Button({isDisabled,content}) {
+  return (
+    <button disabled={isDisabled}>{content}</button>
+  );
+}
+
+Button.propTypes = {
+  /**
+   Checks if the button should be disable
+  */
+  isDisabled: PropTypes.bool.isRequired,
+  /**
+  The display content of the button
+  */
+  content: PropTypes.string.isRequired,
+};
+
+```
+
+By including the additional information, the args table will be updated. Offering a richer experience for any stakeholders involved.
+
+
 #### DocsPage
 
-To use the ArgsTable in [DocsPage](./docspage#component-parameter), export a component property on your stories metadata:
+To use the `ArgsTable` in [DocsPage](./docs-page.md#component-parameter), export a component property on your stories metadata:
 
 ```js
 // MyComponent.stories.js
@@ -35,7 +69,7 @@ export default {
 
 #### MDX
 
-To use the ArgsTable in MDX, use the Props block:
+To use the `ArgsTable` in MDX, use the Props block:
 
 ```js
 // MyComponent.stories.mdx
@@ -50,11 +84,11 @@ import { MyComponent } from './MyComponent';
 
 #### Customizing
 
-ArgsTables are automatically inferred from your components and stories, but sometimes it's useful to customize the results.
+`ArgsTables` are automatically inferred from your components and stories, but sometimes it's useful to customize the results.
 
-ArgsTables are rendered from an internal data structure called [ArgTypes](../api/stories#argtypes). When you declare a story's component metadata, Docs automatically extracts ArgTypes based on the component's properties.
+`ArgsTables` are rendered from an internal data structure called [ArgTypes](../api/mdx.md#argtypes). When you declare a story's component metadata, Docs automatically extracts ArgTypes based on the component's properties.
 
-You can customize what's shown in the ArgsTable by customizing the ArgTypes data. This is currently available for [DocsPage](./docs-page) and `<Props story="xxx">` construct, but not for the `<Props of={component} />` construct.
+You can customize what's shown in the `ArgsTable` by customizing the `ArgTypes` data. This is currently available for [DocsPage](./docs-page.md) and `<Props story="xxx">` construct, but not for the `<Props of={component} />` construct.
 
 <div class="aside">
 
@@ -62,7 +96,7 @@ NOTE: This API is experimental and may change outside of the typical semver rele
 
 </div>
 
-The API documentation of ArgTypes is detailed in a [separate section](../api/stories#argtypes), but to control the description and default values, use the following fields:
+The API documentation of `ArgTypes` is detailed in a [separate section](../api/mdx.md#argtypes), but to control the description and default values, use the following fields:
 
 | Field                        | Description                                                                                    |
 |:-----------------------------|:----------------------------------------------------------------------------------------------:|
@@ -110,7 +144,7 @@ For instance you can use:
 
 ##### MDX
 
-To customize argTypes in MDX, you can set an `mdx` prop on the `Meta` or `Story` components:
+To customize `argTypes` in MDX, you can set an `mdx` prop on the `Meta` or `Story` components:
 
 ```js
 
@@ -137,7 +171,7 @@ To customize argTypes in MDX, you can set an `mdx` prop on the `Meta` or `Story`
 
 #### Controls
 
-The controls inside an ArgsTable are configured in exactly the same way as the [controls](../essentials/controls) addon pane. In fact you’ll probably notice the table is very similar! It uses the same component and mechanism behind the scenes.
+The controls inside an `ArgsTable` are configured in exactly the same way as the [controls](../essentials/controls.md) addon pane. In fact you’ll probably notice the table is very similar! It uses the same component and mechanism behind the scenes.
 
 ### Source
 
@@ -147,7 +181,7 @@ Storybook Docs displays a story’s source code using the `Source` block. The sn
 
 #### DocsPage
 
-In DocsPage, the `Source` block appears automatically within each story’s [Preview] block.
+In DocsPage, the `Source` block appears automatically within each story’s [Canvas](#canvas) block.
 
 To customize the source snippet that’s displayed for a story, set the `docs.source.code` parameter:
 
@@ -241,11 +275,11 @@ Stories (component examples) are the basic building blocks in Storybook. In Stor
 
 #### DocsPage
 
-In DocsPage, a `Story` block is generated for each story in your [CSF] file, it's wrapped with a `Preview` wrapper that gives it a toolbar on top (in the case of the first “primary” story) and a source code preview underneath.
+In DocsPage, a `Story` block is generated for each story in your [CSF](../api/csf.md) file, it's wrapped with a `Canvas` wrapper that gives it a toolbar on top (in the case of the first “primary” story) and a source code preview underneath.
 
 #### MDX
 
-In MDX, the `Story` block is not only a way of displaying stories, but also the primary way to define them. Storybook looks for `Story` instances with the `name` prop, either defined at the top level of the document, or directly beneath a [Preview](#preview) block defined at the top level:
+In MDX, the `Story` block is not only a way of displaying stories, but also the primary way to define them. Storybook looks for `Story` instances with the `name` prop, either defined at the top level of the document, or directly beneath a [Canvas](#canvas) block defined at the top level:
 
 ```js
 import { Story } from '@storybook/addon-docs/blocks';
@@ -269,29 +303,27 @@ import { Story } from '@storybook/addon-docs/blocks';
 
 #### Inline rendering
 
-In Storybook’s Canvas, all stories are rendered in the [Preview iframe] for isolated development. In Storybook Docs, when [inline rendering is supported by your framework](./docs-page#inline-stories-vs-iframe-stories), inline rendering is used by default for performance and convenience. However, you can force iframe rendering with `docs: { inlineStories: false }` parameter, or `inline={false}` in MDX.
+In Storybook’s Canvas, all stories are rendered in the Preview iframe for isolated development. In Storybook Docs, when [inline rendering is supported by your framework](./docs-page.md#inline-stories-vs-iframe-stories), inline rendering is used by default for performance and convenience. However, you can force iframe rendering with `docs: { inlineStories: false }` parameter, or `inline={false}` in MDX.
 
 
-### Preview
+### Canvas
 
-Storybook Docs’ `Preview` block is a wrapper that provides a toolbar for interacting with its contents, and also also provides [Source](#Source) snippets automatically.
+Storybook Docs’ `Canvas` block is a wrapper that provides a toolbar for interacting with its contents, and also also provides [Source](#source) snippets automatically.
 
 ![Docs block with a story preview](./docblock-preview.png)
 
 #### DocsPage
 
-In DocsPage, every story is wrapped in a `Preview` block. The first story on the page is called the _primary_, and it has a toolbar. The other stories are also wrapped with `Previews`, but there is no toolbar by default.
+In DocsPage, every story is wrapped in a `Canvas` block. The first story on the page is called the _primary_, and it has a toolbar. The other stories are also wrapped with `Canvas`, but there is no toolbar by default.
 
 ![Docs blocks preview toolbar](./docblock-preview-toolbar.png)
 
 #### MDX
 
-In MDX, `Preview` is more flexible: in addition to the DocsPage behavior, it can show multiple stories in one, and even show non-story content.
-
-When you 
+In MDX, `Canvas` is more flexible: in addition to the DocsPage behavior, it can show multiple stories in one:
 
 ```js
-import { Preview } from '@storybook/addon-docs/blocks';
+import { Canvas } from '@storybook/addon-docs/blocks';
 
 export const Template = (args) => <Badge {...args } />
 
@@ -308,10 +340,10 @@ export const Template = (args) => <Badge {...args } />
 </Preview>
 ```
 
-You can also place non-story content inside a `Preview` block:
+You can also place non-story content inside a `Canvas` block:
 
 ```js
-import { Preview } from '@storybook/addon-docs/blocks';
+import { Canvas } from '@storybook/addon-docs/blocks';
 import { MyComponent } from './MyComponent';
 <Preview>
   <h2>Some here</h2>

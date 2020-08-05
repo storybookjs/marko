@@ -105,6 +105,11 @@ module.exports = {
           title: 'Docs Blocks',
           type: 'link',
         },
+        {
+          pathSegment: 'build-documentation',
+          title: 'Preview and build Storybook documentation',
+          type: 'link',
+        },
       ],
     },
     {
