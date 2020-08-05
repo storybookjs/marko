@@ -36,11 +36,30 @@ export const TableWrapper = styled.table<{ compact?: boolean; inAddonPanel?: boo
       marginBottom: inAddonPanel ? 0 : 40,
 
       'thead th:first-of-type, td:first-of-type': {
-        width: '30%',
+        // intentionally specify thead here
+        width: '25%',
       },
 
       'th:first-of-type, td:first-of-type': {
         paddingLeft: 20,
+      },
+
+      'th:nth-of-type(2), td:nth-of-type(2)': {
+        ...(compact
+          ? null
+          : {
+              // Description column
+              width: '35%',
+            }),
+      },
+
+      'td:nth-of-type(3)': {
+        ...(compact
+          ? null
+          : {
+              // Defaults column
+              width: '15%',
+            }),
       },
 
       'th:last-of-type, td:last-of-type': {
@@ -48,8 +67,8 @@ export const TableWrapper = styled.table<{ compact?: boolean; inAddonPanel?: boo
         ...(compact
           ? null
           : {
-              minWidth: '15%',
-              maxWidth: '25%',
+              // Controls column
+              width: '25%',
             }),
       },
 
@@ -114,6 +133,20 @@ export const TableWrapper = styled.table<{ compact?: boolean; inAddonPanel?: boo
             : `rgba(0, 0, 0, 0.20) 0 2px 5px 1px,
           ${opacify(0.05, theme.appBorderColor)} 0 0 0 1px`),
         borderRadius: theme.appBorderRadius,
+
+        // for safari only
+        // CSS hack courtesy of https://stackoverflow.com/questions/16348489/is-there-a-css-hack-for-safari-only-not-chrome
+        '@media not all and (min-resolution:.001dpcm)': {
+          '@supports (-webkit-appearance:none)': {
+            borderWidth: 1,
+            borderStyle: 'solid',
+            borderColor:
+              !inAddonPanel &&
+              (theme.base === 'light'
+                ? transparentize(0.035, theme.appBorderColor)
+                : opacify(0.05, theme.appBorderColor)),
+          },
+        },
 
         tr: {
           background: 'transparent',

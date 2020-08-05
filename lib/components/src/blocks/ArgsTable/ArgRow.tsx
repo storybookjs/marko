@@ -29,6 +29,9 @@ const Description = styled.div(({ theme }) => ({
     p: {
       margin: '0 0 10px 0',
     },
+    a: {
+      color: theme.color.secondary,
+    },
   },
 
   code: codeCommon({ theme }),

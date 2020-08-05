@@ -35,7 +35,7 @@ String.args = {
     control: { type: 'text' },
     table: {
       type: { summary: 'string' },
-      defaultValue: { summary: 'fixme' },
+      defaultValue: { summary: 'reallylongstringnospaces' },
     },
   },
 };
