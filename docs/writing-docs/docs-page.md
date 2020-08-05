@@ -41,7 +41,7 @@ export default {
 
 ![Subcomponents in Docs Page](./docspage-subcomponents.png)
 
-Subcomponent ArgsTables will show up in a tabbed interface along with the primary component. The tab titles will correspond to the keys of the subcomponents object.
+Subcomponent `ArgsTables` will show up in a tabbed interface along with the primary component. The tab titles will correspond to the keys of the subcomponents object.
 
 If you want to organize your documentation differently for component groups, we recommend using MDX. It gives you complete control over display and supports any configuration.
 
