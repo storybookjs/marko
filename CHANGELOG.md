@@ -1,3 +1,13 @@
+## 6.0.0-rc.28 (August 6, 2020)
+
+### Bug Fixes
+
+- CLI: Add CSF typings for react stories ([#11811](https://github.com/storybookjs/storybook/pull/11811))
+
+### Dependency Upgrades
+
+- Upgrade telejson to 5.0.1 ([#11824](https://github.com/storybookjs/storybook/pull/11824))
+
 ## 6.0.0-rc.27 (August 6, 2020)
 
 ### Features
