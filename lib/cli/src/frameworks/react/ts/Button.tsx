@@ -29,8 +29,8 @@ export interface ButtonProps {
  */
 export const Button: React.FC<ButtonProps> = ({
   primary = false,
-  backgroundColor = null,
   size = 'medium',
+  backgroundColor,
   label,
   ...props
 }) => {
