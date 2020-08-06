@@ -42,6 +42,7 @@ Your project may have additional requirements before components can be rendered 
 - [Presets](../api/presets.md) bundle common configurations for various technologies into Storybook. In particular presets exist for Create React App, SCSS and Ant Design.
 - Specify a custom [Babel configuration](../configure/integration.md#custom-babel-config) for Storybook. Storybook automatically tries to use your project’s config if it can.
 - Adjust the [webpack configuration](../configure/integration.md#webpack) that Storybook uses. Try patching in your own configuration if needed.
+
 </details>
 
 <details>
