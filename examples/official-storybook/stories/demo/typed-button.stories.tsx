@@ -1,10 +1,17 @@
 import React, { ComponentProps } from 'react';
-import { Meta, Story } from '@storybook/react/csf';
+import { Meta, Story } from '@storybook/react/types-6-0';
 import TsButton from '../../components/TsButton';
 
 export default {
   title: 'Other/Demo/TsButton',
   component: TsButton,
+  decorators: [
+    (StoryFn) => (
+      <>
+        <StoryFn />
+      </>
+    ),
+  ],
 } as Meta;
 
 const Template: Story = (args) => <TsButton {...args} />;
