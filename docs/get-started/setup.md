@@ -4,25 +4,16 @@ title: 'Setup'
 
 Now that you’ve learned what stories are and how to browse them, let’s demo working on one of your components. Pick a simple component from your project, like a Button, and write a `.stories.js` file to go along with it. It might look something like this:
 
-```js
-// YourComponent.stories.js
+<!-- prettier-ignore-start -->
 
-import { YourComponent } from './YourComponent';
+<CodeSnippets
+  paths={[
+    'common/your-component.js.mdx',
+    'common/your-component.ts.mdx',
+  ]}
+/>
 
-// This default export determines where you story goes in the story list
-export default {
-  component: YourComponent,
-  title: 'YourComponent',
-}
-
-const Template = (args) => <YourComponent {...args} />;
-
-export const FirstStory = Template.bind({});
-
-FirstStory.args = {
-  /* the args you need here will depend on your component */
-};
-```
+<!-- prettier-ignore-end -->
 
 Go to your Storybook to view the rendered component. It’s OK if it looks a bit unusual right now.
 
@@ -60,15 +51,15 @@ A common frontend pattern is for components to assume that they render in a cert
 
 Use [decorators](../writing-stories/decorators.md) to “wrap” every story in the necessary context providers. [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering) allows you to customize how components render in Canvas, the preview iframe. In this decorator example, we wrap every component rendered in Storybook with `ThemeProvider`.
 
-```js
-// .storybook/preview.js
+<!-- prettier-ignore-start -->
 
-import { ThemeProvider } from 'styled-components';
-export const decorators = [
-  (Story) => <ThemeProvider theme="default"><Story/></ThemeProvider>,
-];
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-with-styled-components-decorator.js.mdx',
+  ]}
+/>
 
-```
+<!-- prettier-ignore-end -->
 </details>
 
 

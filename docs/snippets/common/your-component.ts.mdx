@@ -1,0 +1,21 @@
+```ts
+// YourComponent.stories.ts
+
+import YourComponent from './your-component.component';
+
+export default {
+  component: YourComponent,
+  title: 'YourComponent',
+};
+
+const Template = (args: YourComponent) => ({
+  component: YourComponent,
+  props: args,
+});
+
+export const FirstStory = Template.bind({});
+FirstStory.args = {
+    /* the args you need here will depend on your component */
+};
+
+```
