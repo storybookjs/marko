@@ -8,7 +8,7 @@ Storybook is architected to support diverse web frameworks including React, Vue,
 
 The first thing to do is scaffold your framework support in its own repo.
 
-We recommend adopting the same project structure as the Storybook monorepo. That structure contains the framework package (“app/<framework>”) and an example app (“examples/<framework>-kitchen-sink”) as well as other associated documentation and configuration as needed.
+We recommend adopting the same project structure as the Storybook monorepo. That structure contains the framework package (`app/<framework>`) and an example app (`examples/<framework>-kitchen-sink`) as well as other associated documentation and configuration as needed.
 
 This may seem like a little more hierarchy than what’s necessary. But because the structure mirrors the way Storybook’s own monorepo is structured, you can reuse Storybook’s tooling and it also makes it easier to move the framework into the Storybook into the monorepo at a later point if that is desirable.
 

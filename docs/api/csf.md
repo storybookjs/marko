@@ -10,7 +10,7 @@ Storybook's Component Story Format (CSF) is the recommended way to [write storie
 TODO: vet storiesOf links
 </div>
 
-<div class="aside"
+<div class="aside">
 
 If you are writing stories in the older `storiesOf()` syntax, you can find documentation in an [advanced README](../../lib/core/ADVANCED.md).
 
@@ -22,7 +22,7 @@ CSF is supported in all frameworks except React Native, where you should use the
 
 #### Default export
 
-The default export defines metadata about your component, including the `component` itself, its `title` (where it will show up in the [navigation UI story hierarchy](../writing-stories/docs/writing-stories/naming-components-and-hierarchy.md#sorting-stories)), [decorators](../writing-stories/decorators.md), and [parameters](../writing-stories/parameters.md). 
+The default export defines metadata about your component, including the `component` itself, its `title` (where it will show up in the [navigation UI story hierarchy](../writing-stories/docs/writing-stories/naming-components-and-hierarchy.md#sorting-stories)), [decorators](../writing-stories/decorators.md), and [parameters](../writing-stories/parameters.md).
 
 The `component` field is optional (but encouraged!), and is used by addons for automatic prop table generation and display of other component metadata. `title` should be unique, i.e. not re-used across files.
 
@@ -49,9 +49,9 @@ With CSF, every named export in the file represents a story function by default.
 import MyComponent from './MyComponent';
 
 export default {
-    title: 'Path/To/MyComponent',
-    component: MyComponent,
-}
+  title: 'Path/To/MyComponent',
+  component: MyComponent,
+};
 
 export const Basic = () => <MyComponent />;
 export const WithProp = () => <MyComponent prop="value" />;
@@ -59,23 +59,19 @@ export const WithProp = () => <MyComponent prop="value" />;
 
 The exported identifiers will be converted to "start case" using Lodash's [startCase](https://lodash.com/docs/#startCase) function. For example:
 
-| Identifier               | Transformation       |
-| ------------------------ |:--------------------:|
-| **name**                 |**Name**              |
-| **someName**             | **Some Name**        |
-| **someNAME**             | **SSome NAME**       |
-| **some_custom_NAME**     | **Some Custom NAME** |
-| **someName1234**         | **ome Name 1 2 3 4** |
-
-
+| Identifier           |    Transformation    |
+| -------------------- | :------------------: |
+| **name**             |       **Name**       |
+| **someName**         |    **Some Name**     |
+| **someNAME**         |    **SSome NAME**    |
+| **some_custom_NAME** | **Some Custom NAME** |
+| **someName1234**     | **ome Name 1 2 3 4** |
 
 It's recommended to start export names with a capital letter.
-
 
 Story functions can be annotated with a few different fields to define story-level [decorators](../writing-stories/decorators.md) and [parameters](../writing-stories/parameters.md), and also to define the `storyName` of the story.
 
 The `storyName` is useful if you want to use names with special characters, names that correspond to restricted keywords in Javascript, or names that collide with other variables in the file. If it's not specified, the export name will be used instead.
-
 
 ```jsx
 // MyComponent.story.js
@@ -99,9 +95,9 @@ Consider Storybook’s ["Button" example](../writing-stories/introduction.md#def
 import { action } from '@storybook/addon-actions';
 import { Button } from './Button';
 
-export default { 
-    title: 'Button', 
-    component: Button 
+export default {
+    title: 'Button',
+    component: Button
 };
 export const Text = () => <Button label=’Hello’ onClick={action('clicked')} />;
 ```

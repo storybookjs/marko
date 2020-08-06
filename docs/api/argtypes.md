@@ -6,8 +6,7 @@ title: 'ArgTypes'
 
 NOTE: This API is experimental and may change outside of the typical semver release cycle
 
-<div>
-
+</div>
 
 ArgTypes are a first-class feature in Storybook for specifying the behaviour of [Args](../writing-stories/args.md). By specifying the type of an arg you constrain the values that it can take and can also provide information about args that are not explicitly set (i.e. not required).
 
@@ -19,23 +18,21 @@ The most concrete realization of argTypes is the [Args Table](../writing-docs/do
 
 ## Automatic argType inference
 
-If you are using the Storybook [docs](../writing-docs/introduction.md) addon (installed by default as part of [essentials](../essentials/introduction.md)), then Storybook will infer a set of argTypes for each story based on the `component` specified in the [default export](#default-export) of the CSF file. 
+If you are using the Storybook [docs](../writing-docs/introduction.md) addon (installed by default as part of [essentials](../essentials/introduction.md)), then Storybook will infer a set of argTypes for each story based on the `component` specified in the [default export](#default-export) of the CSF file.
 
 To do so, Storybook uses various static analysis tools depending on your framework.
 
-
-
-- React 
-    - [react-docgen](https://github.com/reactjs/react-docgen)
-    - [react-docgen-typescript](https://github.com/styleguidist/react-docgen-typescript)
+- React
+  - [react-docgen](https://github.com/reactjs/react-docgen)
+  - [react-docgen-typescript](https://github.com/styleguidist/react-docgen-typescript)
 - Vue
-    - [vue-docgen-api](https://github.com/vue-styleguidist/vue-styleguidist/tree/dev/packages/vue-docgen-api)
+  - [vue-docgen-api](https://github.com/vue-styleguidist/vue-styleguidist/tree/dev/packages/vue-docgen-api)
 - Angular
-    - [compodoc](https://compodoc.app/)
+  - [compodoc](https://compodoc.app/)
 - WebComponents
-    - [custom-element.json](https://github.com/webcomponents/custom-elements-json)
+  - [custom-element.json](https://github.com/webcomponents/custom-elements-json)
 - Ember
-    - [YUI doc](https://github.com/ember-learn/ember-cli-addon-docs-yuidoc#documenting-components)
+  - [YUI doc](https://github.com/ember-learn/ember-cli-addon-docs-yuidoc#documenting-components)
 
 The format of the generated argType will look something like:
 
@@ -61,18 +58,18 @@ In this ArgTypes data structure, name, type, defaultValue, and description are s
 
 <div class="aside">
 
- `@storybook/addon-docs` provide shorthand for common tasks:
+`@storybook/addon-docs` provide shorthand for common tasks:
+
 - `type: 'number'` is shorthand for type: { name: 'number' }
 - `control: 'radio'` is shorthand for control: { type: 'radio' }
 
-<div>
+</div>
 
 #### Manual specification
 
-If you want more control over the props table or any other aspect of using argTypes, you can overwrite the generated argTypes for you component on a per-arg basis. For instance, with the above inferred argTypes and the following default export: 
+If you want more control over the props table or any other aspect of using argTypes, you can overwrite the generated argTypes for you component on a per-arg basis. For instance, with the above inferred argTypes and the following default export:
 
 ```js
-
 export default {
   title: 'Button',
   component: Button,

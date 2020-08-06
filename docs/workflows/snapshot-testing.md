@@ -4,7 +4,7 @@ title: 'Snapshot testing'
 
 Snapshot tests compare the rendered markup of every story against known baselines. It’s an easy way to identify markup changes that trigger rendering errors and warnings.
 
-Storybook is a convenient tool for snapshot testing because every story is essentially a test specification. Any time you write or update a story you get a snapshot test for free. 
+Storybook is a convenient tool for snapshot testing because every story is essentially a test specification. Any time you write or update a story you get a snapshot test for free.
 
 <div class="aside">
 
@@ -35,7 +35,6 @@ You can name the file whatever you like as long as it's picked up by Jest.
 
 </div>
 
-
 Run your first test. Storyshot will recognize all your CSF files (based on [`.storybook/main.js`](../configure/overview.md#configure-story-rendering)) and produces snapshots.
 
 ```shell
@@ -50,8 +49,7 @@ TODO: ask for clarification on this note below. What extra steps?
 
 If you are loading stories via `.storybook/main.js`, you will need to follow some more steps to ensure Jest finds them.
 
-<div>
-
+</div>
 
 This will create an initial set of snapshots inside your Storybook config directory.
 

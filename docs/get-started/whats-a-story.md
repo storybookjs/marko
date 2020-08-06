@@ -10,14 +10,18 @@ Each example component has a set of stories that show the states it supports. Yo
 
 Let’s start with the `Button` component. A story is a function that describes how to render the component in question. Here’s how to render `Button` in the “primary” state and export a story called `Primary`.
 
-```js
-// Button.stories.js
+<!-- prettier-ignore-start -->
 
-import React from 'react';
-import { Button } from './Button';
+<CodeSnippets
+  paths={[
+    'react/button-story.js.mdx',
+    'react/button-story.ts.mdx',
+    'react/button-story.md.mdx',
+    'angular/button-story.js.mdx',
+  ]}
+/>
 
-export const Primary = () => <Button primary>Button</Button>;
-```
+<!-- prettier-ignore-end -->
 
 ![Initial button story](./example-button-noargs.png)
 
@@ -57,7 +61,6 @@ Note that `Template.bind({})` is a standard JavaScript technique for making a co
 Storybook makes it easy to work on one component in one state (aka a story) at a time. When you edit the Button code or stories, Storybook will instantly re-render in the browser. No need to manually refresh.
 
 Update the `label` of the `Primary` story then see your change in Storybook.
-
 
 <video autoPlay muted playsInline loop>
   <source
