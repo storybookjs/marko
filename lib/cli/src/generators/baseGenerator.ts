@@ -43,18 +43,17 @@ export async function baseGenerator(
     ...options,
   };
 
-  const addons = [
-    '@storybook/addon-links',
-    '@storybook/addon-actions',
-    '@storybook/addon-essentials',
-  ];
+  // added to main.js
+  const addons = ['@storybook/addon-links', '@storybook/addon-essentials'];
+  // added to package.json
+  const addonPackages = [...addons, '@storybook/addon-actions'];
 
   const yarn2Dependencies =
     packageManager.type === 'yarn2' ? ['@storybook/addon-docs', '@mdx-js/react'] : [];
 
   const packages = [
     `@storybook/${framework}`,
-    ...addons,
+    ...addonPackages,
     ...extraPackages,
     ...extraAddons,
     ...yarn2Dependencies,

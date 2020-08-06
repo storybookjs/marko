@@ -29,8 +29,8 @@ export interface ButtonProps {
  */
 export const Button: React.FC<ButtonProps> = ({
   primary = false,
-  backgroundColor = null,
   size = 'medium',
+  backgroundColor,
   label,
   ...props
 }) => {
@@ -39,7 +39,7 @@ export const Button: React.FC<ButtonProps> = ({
     <button
       type="button"
       className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
-      style={backgroundColor && { backgroundColor }}
+      style={{ backgroundColor }}
       {...props}
     >
       {label}
