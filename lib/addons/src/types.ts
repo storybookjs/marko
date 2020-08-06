@@ -172,7 +172,7 @@ export interface Annotations<Args, StoryFnReturnType> {
   argTypes?: ArgTypes;
 
   /**
-   * Wrapper components or Storybook decorators that wrap a story.
+   * Custom metadata for a story.
    * @see [Parameters](https://storybook.js.org/docs/basics/writing-stories/#parameters)
    */
   parameters?: Parameters;
