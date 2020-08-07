@@ -28,17 +28,18 @@ const baseAngular: Parameters = {
 //   additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
 // };
 
-export const angularv7: Parameters = {
-  ...baseAngular,
-  version: 'v7-lts',
-  additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
-};
+// TODO: enable back when typings issues are resolved
+// export const angularv7: Parameters = {
+//   ...baseAngular,
+//   version: 'v7-lts',
+//   additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
+// };
 
-export const angularv8: Parameters = {
-  ...baseAngular,
-  version: 'v8-lts',
-  additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
-};
+// export const angularv8: Parameters = {
+//   ...baseAngular,
+//   version: 'v8-lts',
+//   additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
+// };
 
 export const angularv9: Parameters = {
   ...baseAngular,
