@@ -1,3 +1,13 @@
+## 6.0.0-rc.29 (August 7, 2020)
+
+### Features
+
+- CLI: Add CSF types for Angular ([#11825](https://github.com/storybookjs/storybook/pull/11825))
+
+### Bug Fixes
+
+- Core: Fix serialization of `undefined` ([#11829](https://github.com/storybookjs/storybook/pull/11829))
+
 ## 6.0.0-rc.28 (August 6, 2020)
 
 ### Bug Fixes
