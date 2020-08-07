@@ -14,28 +14,24 @@ module.exports = {
           pathSegment: 'install',
           title: 'Install',
           type: 'bullet-link',
-          // DOCSTODO: Update the description
           description: 'Install the Storybook package in your project',
         },
         {
           pathSegment: 'whats-a-story',
           title: "What's a story?",
           type: 'bullet-link',
-          // DOCSTODO: Update the description
-          description: 'Learn the base construct of stories within Storybook',
+          description: 'Learn how to save component examples as stories',
         },
         {
           pathSegment: 'browse-stories',
           title: 'Browse stories',
           type: 'bullet-link',
-          // DOCSTODO: Update the description
           description: 'Learn how to explore your stories within Storybook',
         },
         {
           pathSegment: 'setup',
           title: 'Setup',
           type: 'bullet-link',
-          // DOCSTODO: Update the description
           description:
             'Write your first story & adjust Storybook configuration for your environment',
         },
@@ -43,7 +39,6 @@ module.exports = {
           pathSegment: 'conclusion',
           title: 'Conclusion',
           type: 'bullet-link',
-          // DOCSTODO: Update the description
           description: 'Take your Storybook skills to the next level',
         },
       ],
@@ -279,19 +274,19 @@ module.exports = {
         {
           pathSegment: 'csf',
           title: 'Component Story Format',
-          description:'Learn about the Component Story Format API',
+          description: 'Learn about the Component Story Format API',
           type: 'bullet-link',
         },
         {
           pathSegment: 'mdx',
           title: 'MDX syntax',
-          description:'Learn how to add MDX to your Storybook',
+          description: 'Learn how to add MDX to your Storybook',
           type: 'bullet-link',
         },
         {
           pathSegment: 'argtypes',
           title: 'ArgTypes',
-          description:'Learn how to use Argtypes with your Storybook',
+          description: 'Learn how to use Argtypes with your Storybook',
           type: 'bullet-link',
         },
         {
