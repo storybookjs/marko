@@ -1,0 +1,15 @@
+```ts
+//Button.stories.ts
+
+const Template = (args: Button) => ({
+  component: Button,
+  props: args,
+});
+
+export const Primary = Template.bind({});
+
+Primary.args = {
+  primary: true,
+  label: 'Primary',
+};
+```

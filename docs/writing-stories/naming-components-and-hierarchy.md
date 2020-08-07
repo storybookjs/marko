@@ -4,13 +4,15 @@ title: 'Naming components and hierarchy'
 
 The title of the component you export in the `default` export controls the name shown in the sidebar.
 
-```js
+<!-- prettier-ignore-start -->
 
-// Button.stories.js
-export default {
-  title: 'Button'
-}
-```
+<CodeSnippets
+  paths={[
+    'common/button-story-default-export.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 Yields this:
 
@@ -21,21 +23,25 @@ Yields this:
 
 It is also possible to group related components in an expandable interface in order to help with Storybook organization. To do so, use the `/` as a separator:
 
-```js
-// Button.stories.js
+<!-- prettier-ignore-start -->
 
-export default {
-  title: 'Design System/Atoms/Button'
-}
-```
+<CodeSnippets
+  paths={[
+    'common/button-story-grouped.js.mdx',
+  ]}
+/>
 
-```js
-// Checkbox.stories.js
+<!-- prettier-ignore-end -->
 
-export default {
-  title: 'Design System/Atoms/Checkbox'
-}
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/checkbox-story-grouped.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 Yields this:
 
@@ -53,32 +59,27 @@ By default, stories are sorted in the order in which they were imported. This ca
 
 The most powerful method of sorting is to provide a function to `storySort`. Any custom sorting can be achieved with this method.
 
-```js
-// .storybook/preview.js
+<!-- prettier-ignore-start -->
 
-export const parameters = {
-  options: {
-    storySort: (a, b) =>
-      a[1].kind === b[1].kind ? 0 : a[1].id.localeCompare(b[1].id, undefined, { numeric: true }),
-  },
-};
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-sort-function.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 The `storySort` can also accept a configuration object.
 
-```js
-// .storybook/preview.js
+<!-- prettier-ignore-start -->
 
-export const parameters = {
-  options: {
-    storySort: {
-      method: '',
-      order: [], 
-      locales: '', 
-    },
-  },
-};
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-empty-sort-object.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 | Field         | Type          | Description                                            | Required | Default Value          |Example                  |
 | ------------- |:-------------:|:------------------------------------------------------:|:--------:|:----------------------:|:-----------------------:|
@@ -90,15 +91,15 @@ To sort your stories alphabetically, set `method` to `'alphabetical'` and option
 
 The `order` array can accept a nested array in order to sort 2nd-level story kinds. For example:
 
-```js
-export const parameters = {
-  options: {
-    storySort: {
-      order: ['Intro', 'Pages', ['Home', 'Login', 'Admin'], 'Components'],
-    },
-  },
-};
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-with-ordered-pages.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 Which would result in this story ordering:
 
