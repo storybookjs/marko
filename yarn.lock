@@ -30018,10 +30018,10 @@ teeny-request@6.0.1:
     stream-events "^1.0.5"
     uuid "^3.3.2"
 
-telejson@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/telejson/-/telejson-5.0.1.tgz#64b060ceea658baaa6ccbdd1a9ef5faa494d64ca"
-  integrity sha512-eCMvxmmDHP2tDEskHW9TPDqSTbLz9qjFSAK+7OpyV39CT02H0VBYBnwYfqsjSd+KdJZdbuZXXWX232U0LLyqSw==
+telejson@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/telejson/-/telejson-5.0.2.tgz#ed1e64be250cc1c757a53c19e1740b49832b3d51"
+  integrity sha512-XCrDHGbinczsscs8LXFr9jDhvy37yBk9piB7FJrCfxE8oP66WDkolNMpaBkWYgQqB9dQGBGtTDzGQPedc9KJmw==
   dependencies:
     "@types/is-function" "^1.0.0"
     global "^4.4.0"
