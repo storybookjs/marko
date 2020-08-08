@@ -17,16 +17,15 @@ By default, you are presented with a set of common viewports.
 
 If you want to change the default set of viewports, you can set the global `parameters.viewport` [parameter](../writing-stories/parameters.md) in your [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering):
 
-```js
-// .storybook/preview.js
+<!-- prettier-ignore-start -->
 
-export const parameters: {
-  viewport: {
-    viewports: newViewports, // newViewports would be an ViewportMap. (see below for examples)
-    defaultViewport: 'someDefault',
-  },
-}
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-change-viewports.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 The viewport global can take a object with the following keys:
 
@@ -51,17 +50,15 @@ By default Storybook uses a [minimal set of viewports](https://github.com/storyb
 
 Change your [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering) to the following:
 
-```js
-// .storybook/preview.js
+<!-- prettier-ignore-start -->
 
-import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-granular-viewports.js.mdx',
+  ]}
+/>
 
-export const parameters = {
-  viewport: {
-    viewports: INITIAL_VIEWPORTS,
-  },
-};
-```
+<!-- prettier-ignore-end -->
 
 Once you start your Storybook, you'll see that now you have a whole different set of devices to use.
 
@@ -71,36 +68,27 @@ See [here](https://github.com/storybookjs/storybook/blob/master/addons/viewport/
 
 If you have either a specific viewport, or a list of viewports that you need to use. You can modify your  [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering) file to include them like so:
 
-```js
-//.storybook/preview.js
+<!-- prettier-ignore-start -->
 
-const customViewports = {
-  kindleFire2: {
-    name: 'Kindle Fire 2',
-    styles: {
-      width: '600px',
-      height: '963px',
-    },
-  },
-  kindleFireHD: {
-    name: 'Kindle Fire HD',
-    styles: {
-      width: '533px',
-      height: '801px',
-    },
-  },
-};
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-viewport-add-devices.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 To use them in your Storybook you'll need to make the following change:
 
-```js
-//.storybook/preview.js
+<!-- prettier-ignore-start -->
 
-export const parameters = {
-  viewport: { viewports: customViewports },
-};
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-viewport-use-new-devices.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 Once you start Storybook, you'll see your new viewports and devices.
 
@@ -108,76 +96,17 @@ If you need, you can also add these two to another list of viewports.
 
 For instance, if you wanted to use these two with the minimal set of viewports, you can do it like so:
 
-```js
-//.storybook/preview.js
+<!-- prettier-ignore-start -->
 
-import { MINIMAL_VIEWPORTS} from '@storybook/addon-viewport';
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-merge-viewports.js.mdx',
+  ]}
+/>
 
-const customViewports = {
-  kindleFire2: {
-    name: 'Kindle Fire 2',
-    styles: {
-      width: '600px',
-      height: '963px',
-    },
-  },
-  kindleFireHD: {
-    name: 'Kindle Fire HD',
-    styles: {
-      width: '533px',
-      height: '801px',
-    },
-  },
-};
-
-export const parameters = {
-  viewport: {
-    viewports: {
-       ...MINIMAL_VIEWPORTS,
-      ...customViewports,
-    },
-  },
-};
-```
-
+<!-- prettier-ignore-end -->
 
 This will add both `Kindle Fire 2` and `Kindle Fire HD` to the list of devices. This is achieved by making use of the exported [`MINIMAL_VIEWPORTS`](https://github.com/storybookjs/storybook/blob/master/addons/viewport/src/defaults.ts#L135) property, by merging it with the new ones.
-
-```js
-//.storybook/preview.js
-
-import {
-  INITIAL_VIEWPORTS,
-  // or MINIMAL_VIEWPORTS,
-} from '@storybook/addon-viewport';
-
-const customViewports = {
-  kindleFire2: {
-    name: 'Kindle Fire 2',
-    styles: {
-      width: '600px',
-      height: '963px',
-    },
-  },
-  kindleFireHD: {
-    name: 'Kindle Fire HD',
-    styles: {
-      width: '533px',
-      height: '801px',
-    },
-  },
-};
-
-export const parameters = {
-  viewport: {
-    viewports: {
-      ...INITIAL_VIEWPORTS,
-      // or ...MINIMAL_VIEWPORTS,
-      ...customViewports,
-    },
-  },
-};
-```
 
 ### Configuring per component or story
 
@@ -188,26 +117,12 @@ You can change your story through [parameters](../writing-stories/parameters.md)
 
 [Parameters](../writing-stories/parameters.md) can be configured for a whole set of stories or a single story via the standard parameter API: 
 
-```js
-// my-story.story.js
+<!-- prettier-ignore-start -->
 
-export default {
-  title: 'Stories',
-  parameters: {
-    // the viewports object from the Essentials addon
-    viewport: {
-      // the viewports you want to use
-      viewports: INITIAL_VIEWPORTS,
-      // your own default viewport
-      defaultViewport: 'iphone6'
-    },
-  };
-};
+<CodeSnippets
+  paths={[
+    'common/my-component-story-configure-viewports.js.mdx',
+  ]}
+/>
 
-export const myStory = () => <div />;
-myStory.parameters = {
-  viewport: {
-    defaultViewport: 'iphonex'
-  },
-};
-```
+<!-- prettier-ignore-end -->

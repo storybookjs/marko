@@ -14,16 +14,15 @@ Actions works via supplying special Storybook-generated “action” arguments (
 
 You can use [argTypes](../api/argtypes.md) to tell Storybook that an arg to your story should be an action. Usually it makes sense to do this at the component level (although it can be done per story):
 
-```js
-// Button.stories.js
+<!-- prettier-ignore-start -->
 
-import Button from './button';
+<CodeSnippets
+  paths={[
+    'common/button-story-onclick-action-argtype.js.mdx',
+  ]}
+/>
 
-export default {
-  title: 'Button',
-  argTypes: { onClick: { action: 'clicked' } },
-};
-```
+<!-- prettier-ignore-end -->
 
 When Storybook sees this argType it will create an arg that is set to a special “action” callback. If your component calls this arg (based on user interaction) the event will show up in the action panel:
 
@@ -38,17 +37,15 @@ When Storybook sees this argType it will create an arg that is set to a special 
 
 Another option is to use a parameter to match all [argTypes](../api/argtypes.md) that match a certain pattern. The following configuration automatically creates actions for each `on` argType (which you can either specify manually or can be [inferred automatically](../api/argtypes.md#automatic-argtype-inference)).
 
-```js
-// Button.stories.js
+<!-- prettier-ignore-start -->
 
-import Button from './button';
+<CodeSnippets
+  paths={[
+    'common/button-story-matching-argtypes.js.mdx',
+  ]}
+/>
 
-export default {
-  title: 'Button',
-  component: Button,
-  parameters: { actions: { argTypesRegex: '^on.*' } },
-};
-```
+<!-- prettier-ignore-end -->
 
 <div class="aside">
 
@@ -61,25 +58,18 @@ NOTE: If you're generating argTypes in using another addon (like [docs](../writi
 
 It is also possible to detect if your component is emitting the correct HTML events using the `parameters.actions.handles` [parameter](../writing-stories/parameters.md). 
 
-```js
-// Button.stories.js
-import Button from './button';
+<!-- prettier-ignore-start -->
 
-export default {
-  title: 'Button',
-  parameters: {
-    actions: {
-      handles: ['mouseover', 'click .btn']
-  }
-};
-```
+<CodeSnippets
+  paths={[
+    'common/button-story-action-event-handle.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 This will bind a standard HTML event handler to the outermost HTML element rendered by your component and trigger an action when the event is called for a given selector. The format is `<eventname> <selector>`. Selector is optional; it defaults to all elements.
 
 ### Advanced / legacy usage
-
-<div class="">
-TODO: vet the actions link (advanced readme) status
-</div>
 
 There are also some older ways to use actions as documented in the [advanced README](../addons/actions/ADVANCED-README.md).

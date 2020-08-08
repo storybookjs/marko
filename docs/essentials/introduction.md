@@ -24,17 +24,14 @@ If you need to disable any of the Essential's addons, you can do it by changing 
 
 As an example, if the background addon wasn't necessary to your work, you would need to make the following change:
 
-```js
-// .storybook/main.js
+<!-- prettier-ignore-start -->
 
-module.exports = {
-  addons: [{
-    name: '@storybook/addon-essentials',
-    options: {
-      backgrounds: false,
-    }
-  }]
-};
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-main-disable-addon.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 You can use the following keys for each individual addon: `actions`, `backgrounds`, `controls`, `docs`, `viewport`
