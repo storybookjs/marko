@@ -216,7 +216,7 @@ import dedent from 'ts-dedent';
 />
 ```
 
-#### ⚒️ Description
+### ⚒️ Description
 
 Storybook Docs shows a component’s description extracted from the source code or based on a user-provided string.
 
