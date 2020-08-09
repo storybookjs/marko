@@ -8,6 +8,8 @@ NOTE: This API is experimental and may change outside of the typical semver rele
 
 </div>
 
+<br/>
+
 ArgTypes are a first-class feature in Storybook for specifying the behaviour of [Args](../writing-stories/args.md). By specifying the type of an arg you constrain the values that it can take and can also provide information about args that are not explicitly set (i.e. not required).
 
 You can also use argTypes to “annotate” args with information that is used by addons that make use of those args, for instance to instruct the controls addons to render a color choose for a string-valued arg.

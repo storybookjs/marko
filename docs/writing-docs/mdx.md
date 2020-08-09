@@ -8,8 +8,7 @@ In addition, you can write pure documentation pages in MDX and add them to Story
 
 ![MDX simple example result](./mdx-hero.png)
 
-
-### Basic example
+## Basic example
 
 Let's get started with an example that combines Markdown with a single story:
 
@@ -28,26 +27,27 @@ Markdown documentation.
 
 export const Template = (args) => <Checkbox {...args} />
 <Preview>
-  <Story name="Unchecked" args={{ 
+  <Story name="Unchecked" args={{
       label: 'Unchecked'
     }}>
     {Template.bind({})}
    </Story>
-  <Story name="Checked" args={{ 
-      label: 'Unchecked', 
-      checked: true 
+  <Story name="Checked" args={{
+      label: 'Unchecked',
+      checked: true
     }}>
     {Template.bind({})}
    </Story>
   <Story name="Secondary" args={{
-    label: 'Secondary', 
-    checked: true, 
+    label: 'Secondary',
+    checked: true,
     appearance: 'secondary'
   }}>
     {Template.bind({})}
    </Story>
 </Preview>
 ```
+
 And here's how that's rendered in Storybook:
 
 ![MDX simple example result](./mdx-simple.png)
@@ -56,7 +56,7 @@ As you can see there's a lot going on here. We're writing Markdown, we're writin
 
 Let's break it down.
 
-### MDX-flavored CSF
+## MDX-flavored CSF
 
 MDX-flavored [Component Story Format (CSF)](../api/csf.md) includes a collection of components called ["Doc Blocks"](./doc-blocks.md), that allow Storybook to translate MDX files into Storybook stories. MDX-defined stories are identical to regular Storybook stories, so they can be used with Storybook's entire ecosystem of addons and view layers.
 
@@ -68,11 +68,11 @@ For example, here's the first story from the Checkbox example above, rewritten i
 import React from 'react';
 import { Checkbox } from './Checkbox';
 
-export default { 
-    title: "MDX/Checkbox", 
-    component: Checkbox
+export default {
+  title: 'MDX/Checkbox',
+  component: Checkbox,
 };
-const Template = (args) => <Checkbox {...args} />
+const Template = (args) => <Checkbox {...args} />;
 
 export const Unchecked = Template.bind({});
 Unchecked.args = { label: 'Unchecked' };
@@ -80,7 +80,7 @@ Unchecked.args = { label: 'Unchecked' };
 
 There's a one-to-one mapping from the code in MDX to CSF. As a user, this means your existing Storybook knowledge should translate between the two.
 
-### Writing stories
+## Writing stories
 
 Let's look at a more realistic example to see how MDX works:
 
@@ -100,8 +100,8 @@ export const Template = (args) => <Badge {...args } />
 Let's define a story for our `Badge` component:
 
 <Story name="positive" args={{
-    status: 'positive', 
-    label: 'Positive' 
+    status: 'positive',
+    label: 'Positive'
 }}>
   {Template.bind({})}
 </Story>
@@ -110,7 +110,7 @@ We can drop it in a `Preview` to get a code snippet:
 
 <Preview>
   <Story name="negative" args={{
-      status: 'negative', 
+      status: 'negative',
       label: 'Negative'
   }}>
     {Template.bind({})}
@@ -124,24 +124,24 @@ with unique URLs which is great for review and testing.
 <Preview>
   <Story name="warning" args={{
       status: warning,
-      label: 'Warning' 
+      label: 'Warning'
   }}>
     {Template.bind({})}
   </Story>
   <Story name="neutral" args={{
-      status: 'neutral', 
-      label: 'Neutral' 
+      status: 'neutral',
+      label: 'Neutral'
   }}>
     {Template.bind({})}
   </Story>
   <Story name="error" args={{
-      status: 'error', 
-      label: 'Error' 
+      status: 'error',
+      label: 'Error'
   }}>
     {Template.bind({})}
   </Story>
   <Story name="with icon" args={{
-    status: warning, 
+    status: warning,
     label: (<Icon icon="check" inline /> with icon)
   )}}>
     {Template.bind({})}
@@ -154,8 +154,7 @@ And here's how that gets rendered in Storybook:
 
 ![MDX page](./mdx-page.png)
 
-
-### Embedding stories
+## Embedding stories
 
 Suppose you have an existing story and want to embed it into your docs. Here's how to show a story with ID some--id. Check the browser URL in Storybook v5+ to find a story's ID.
 
@@ -172,7 +171,7 @@ And Markdown here
 
 You can also use the rest of the MDX features in conjunction with embedding. That includes source, preview, and prop tables.
 
-### Decorators and parameters
+## Decorators and parameters
 
 To add decorators and parameters in MDX:
 
@@ -192,7 +191,7 @@ To add decorators and parameters in MDX:
 
 Global parameters and decorators work just like before.
 
-### Documentation-only MDX
+## Documentation-only MDX
 
 Typically, when you use Storybook MDX, you define stories in the MDX and documentation is automatically associated with those stories. But what if you want to write Markdown-style documentation without any stories inside?
 
@@ -204,7 +203,7 @@ To get a "documentation-only story", in your UI, define a `<Meta>` as you normal
 
 ![MDX docs only story](./mdx-documentation-only.png)
 
-### MDX file names
+## MDX file names
 
 Unless you use a custom [webpack configuration](../configure/integration.md#extending-storybooks-webpack-config), all of your MDX files should have the suffix `*.stories.mdx`. This tells Storybook to apply its special processing to the `<Meta>` and `<Story>` elements in the file.
 

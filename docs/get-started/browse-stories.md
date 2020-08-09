@@ -4,7 +4,7 @@ title: 'Browse Stories'
 
 Last chapter we learned that stories correspond with discrete component states. This chapter demonstrates how to use Storybook as a workshop for building components.
 
-### Sidebar and Canvas
+## Sidebar and Canvas
 
 A `*.stories.js` file defines all the stories for a component. Each story has a corresponding sidebar item. When you click on a story it renders in the Canvas, an isolated preview iframe.
 
@@ -17,7 +17,7 @@ A `*.stories.js` file defines all the stories for a component. Each story has a 
 
 Navigate between stories by clicking on them in the sidebar or use keyboard shortcuts (for instance use opt/alt + ◀️ ▶️). Try the sidebar search to find a story by name.
 
-### Toolbar
+## Toolbar
 
 Storybook ships with time-saving tools built in. The **toolbar** contains tools that allow you to adjust how the story renders in the Canvas:
 
@@ -45,7 +45,7 @@ The [“Docs”](../writing-docs/introduction.md) tab shows auto-generated docum
 
 The toolbar is customizable. You can use [globals](../essentials/toolbars-and-globals.md) to quickly toggle themes and languages. Or install Storybook toolbar [addons](../configure/storybook-addons.md) from the community to enable advanced workflows.
 
-### Addons
+## Addons
 
 Addons are plugins that extend Storybook's core functionality. You can find them in the addons panel, a reserved place in the Storybook UI below the Canvas. Each tab shows the generated metadata, logs, or static analysis for the selected story by the addon.
 

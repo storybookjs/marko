@@ -1,16 +1,10 @@
 ---
-title: 'Snapshot testing'
+title: 'Snapshot testing with Storybook'
 ---
 
 Snapshot tests compare the rendered markup of every story against known baselines. It’s an easy way to identify markup changes that trigger rendering errors and warnings.
 
 Storybook is a convenient tool for snapshot testing because every story is essentially a test specification. Any time you write or update a story you get a snapshot test for free.
-
-<div class="aside">
-
-Snapshot vs visual tests. Visual tests take screenshots of stories and compare them against known baselines. When used to test appearance, visual tests are often a more robust solution than snapshot tests because verifying markup doesn’t test for visual changes.
-
-</div>
 
 Storyshots is an [official addon](https://github.com/storybookjs/storybook/tree/master/addons/storyshots/storyshots-core) that enables snapshot testing. It’s powered by Jest so you’ll need to [install that](https://jestjs.io/docs/en/getting-started) first. Continue on if you already have Jest.
 
@@ -62,3 +56,9 @@ When you make changes to your components or stories, run the test again to ident
 If the changes are intentional we can accept them as new baselines. If the changes are bugs, fix the underlying code then run the snapshot tests again.
 
 Storyshots has many options for advanced use cases; read more in the [addon’s documentation](https://github.com/storybookjs/storybook/tree/master/addons/storyshots/storyshots-core).
+
+<div class="aside">
+
+Snapshot vs visual tests. [Visual tests](./visual-testing.md) take screenshots of stories and compare them against known baselines. When used to test appearance, visual tests are often a more robust solution than snapshot tests because verifying markup doesn’t test for visual changes.
+
+</div>

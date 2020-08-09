@@ -1,5 +1,5 @@
 ---
-title: 'Introduction'
+title: 'Essential addons'
 ---
 
 A major strength of Storybook are [addons](/addons/) that extend Storybook’s UI and behavior. There are many third-party addons as well as “official” addons developed by the Storybook core team. Storybook ships by default with a set of “essential” addons that add to the initial user experience.
