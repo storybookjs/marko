@@ -1,8 +1,8 @@
 ---
-title: 'Overview'
+title: 'Configure Storybook'
 ---
 
-Storybook is configured via a folder, called `.storybook` which contains various configuration files. 
+Storybook is configured via a folder, called `.storybook` which contains various configuration files.
 
 <div class="aside">
 
@@ -10,8 +10,7 @@ Note you can change the folder that Storybook uses by setting the `-c` flag to y
 
 </div>
 
-
-### Configure your Storybook project
+## Configure your Storybook project
 
 The main configuration file is `main.js`. This file controls the behaviour of the Storybook server, and so you must restart Storybook’s process when you change it. It contains the following:
 
@@ -20,8 +19,8 @@ The main configuration file is `main.js`. This file controls the behaviour of th
 
 module.exports = {
   stories: ['../src/**/*.stories.(js|mdx)'],
-  addons: ['@storybook/addon-essentials']
-}
+  addons: ['@storybook/addon-essentials'],
+};
 ```
 
 The `main.js` configuration file is a [preset](../api/presets.md) and as such has a powerful interface, but the key fields within it are:
@@ -31,7 +30,7 @@ The `main.js` configuration file is a [preset](../api/presets.md) and as such ha
 - `webpackFinal` - custom [webpack configuration](./integration.md#extending-storybooks-webpack-config).
 - `babel` - custom [babel configuration](./integration.md#babel).
 
-### Configure story loading
+## Configure story loading
 
 By default, Storybook will load stories from your project based on a glob (pattern matching string) in `.storybook/main.js` that matches all files in your project with extension `.stories.js`. The intention is you colocate a story file with the component it documents.
 
@@ -54,11 +53,11 @@ module.exports = {
 };
 ```
 
-### Configure story rendering
+## Configure story rendering
 
-To control the way stories are rendered and add global [decorators](../writing-stories/decorators.md#global-decorators) and [parameters](../writing-stories/parameters.md#global-parameters), create a  `.storybook/preview.js` file. This is loaded in the Canvas tab, the “preview” iframe that renders your components in isolation. Use `preview.js` for global code (such as [CSS imports](../get-started/setup.md#render-component-styles) or JavaScript mocks) that applies to all stories.
+To control the way stories are rendered and add global [decorators](../writing-stories/decorators.md#global-decorators) and [parameters](../writing-stories/parameters.md#global-parameters), create a `.storybook/preview.js` file. This is loaded in the Canvas tab, the “preview” iframe that renders your components in isolation. Use `preview.js` for global code (such as [CSS imports](../get-started/setup.md#render-component-styles) or JavaScript mocks) that applies to all stories.
 
-The `preview.js` file can be an ES module and export the following keys: 
+The `preview.js` file can be an ES module and export the following keys:
 
 - `decorators` - an array of global [decorators](../writing-stories/decorators.md#global-decorators)
 - `parameters` - an object of global [parameters](..writing-stories/parameters.md#global-parameters)
@@ -66,7 +65,7 @@ The `preview.js` file can be an ES module and export the following keys:
 
 If you’re looking to change how your stories are ordered, read about [sorting stories](../writing-stories/naming-components-and-hierarchy.md#sorting-stories).
 
-### Configure Storybook’s UI
+## Configure Storybook’s UI
 
 To control the behaviour of Storybook’s UI (the **“manager”**), you can create a `.storybook/manager.js` file.
 

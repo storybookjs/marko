@@ -4,17 +4,17 @@ title: 'Frameworks'
 
 Storybook is architected to support diverse web frameworks including React, Vue, Angular, Web Components, Svelte and over a dozen others. This guide helps you get started on adding new framework support for Storybook.
 
-### Scaffolding a new framework
+## Scaffolding a new framework
 
 The first thing to do is scaffold your framework support in its own repo.
 
-We recommend adopting the same project structure as the Storybook monorepo. That structure contains the framework package (“app/<framework>”) and an example app (“examples/<framework>-kitchen-sink”) as well as other associated documentation and configuration as needed.
+We recommend adopting the same project structure as the Storybook monorepo. That structure contains the framework package (`app/<framework>`) and an example app (`examples/<framework>-kitchen-sink`) as well as other associated documentation and configuration as needed.
 
 This may seem like a little more hierarchy than what’s necessary. But because the structure mirrors the way Storybook’s own monorepo is structured, you can reuse Storybook’s tooling and it also makes it easier to move the framework into the Storybook into the monorepo at a later point if that is desirable.
 
 We recommend using `@storybook/html` as a starter framework since it’s the simplest one and doesn’t contain any framework-specific oddities. There is a boilerplate to get you started [here](https://github.com/CodeByAlex/storybook-framework-boilerplate):
 
-### Framework architecture
+## Framework architecture
 
 Supporting a new framework in Storybook typically consists of two main aspects:
 
@@ -22,22 +22,21 @@ Supporting a new framework in Storybook typically consists of two main aspects:
 
 2. Configuring the client. The client is the code that runs in the browser. Configuring the client means providing a framework-specific story rendering function.
 
-### Configuring the server
+## Configuring the server
 
 Storybook has the concept of [presets](./addons.md#addon-presets), which are typically babel/webpack configurations for file loading. If your framework has its own file format, e.g. “.vue,” you might need to transform these files into JS files at load time. If you expect every user of your framework to need this, you should add it to the framework. So far every framework added to Storybook has done this, because Storybook’s core configuration is very minimal.
 
-#### Package structure
+### Package structure
 
 To add a framework preset, it’s useful to understand the package structure. Each framework typically exposes two executables in its `package.json`:
 
 ```json
 {
- "bin": {
+  "bin": {
     "start-storybook": "./bin/index.js",
-    "build-storybook": "./bin/build.js",
-  },
+    "build-storybook": "./bin/build.js"
+  }
 }
- 
 ```
 
 These scripts pass an `options` object to `@storybook/core/server`, a library that abstracts all of Storybook’s framework-independent code.
@@ -53,7 +52,7 @@ buildDev(options);
 
 Thus the meat of adding framework presets is filling in that options object.
 
-#### Server options
+### Server options
 
 As described above, the server `options` object does the heavy lifting of configuring the server.
 
@@ -73,12 +72,11 @@ The value of the `framework` option (in this case ‘vue’) is something that g
 
 The real meat of this file is the framework presets, and these are standard [Storybook presets](./addons.md#addon-presets) -- you can look at framework packages in the Storybook monorepo (e.g. [react](https://github.com/storybookjs/storybook/blob/next/app/react/src/server/options.ts), [vue](https://github.com/storybookjs/storybook/blob/next/app/vue/src/server/options.ts), [web-components](https://github.com/storybookjs/storybook/blob/next/app/web-components/src/server/options.ts)) to see examples of framework-specific customizations.
 
-
-### Configuring the client
+## Configuring the client
 
 To configure the client, you must provide a framework specific render function. Before diving into the details, it’s important to understand how user-written stories relate to what is finally rendered on the screen.
 
-#### Renderable objects
+### Renderable objects
 
 Storybook stories are ES6 functions that return a “renderable object.”
 
@@ -87,19 +85,17 @@ Consider the following React story:
 ```js
 // Button.story.js
 import { Button } from './Button';
-export default { 
-    title: 'Button', 
-    component: Button 
-}
+export default {
+  title: 'Button',
+  component: Button,
+};
 
-export const Sample = () => (
-  <Button label='hello button' />
-);
+export const Sample = () => <Button label="hello button" />;
 ```
 
 In this case, the renderable object is the React element, `<Button .../>`.
 
-In most other frameworks, the renderable object is actually a plain javascript object. 
+In most other frameworks, the renderable object is actually a plain javascript object.
 
 Consider the following hypothetical example:
 
@@ -107,37 +103,35 @@ Consider the following hypothetical example:
 // Button.story.js
 
 import { Button } from './Button';
-export default { 
-    title: 'Button', 
-    component: Button 
-}
+export default {
+  title: 'Button',
+  component: Button,
+};
 export const Sample = () => ({
   template: '<button label=:label />',
   data: {
-      label: 'hello button'
-    }
+    label: 'hello button',
+  },
 });
 ```
 
 The design of this “renderable object” is framework-specific, and should ideally match the idioms of that framework.
 
-#### Render function
+### Render function
 
 The frameworks render function is the thing responsible for converting the renderable object into DOM nodes. This is typically of the form:
 
 ```js
 const rootElement = document.getElementById('root');
 
-export default function renderMain({
-  storyFn,
-}: RenderMainArgs) {
+export default function renderMain({ storyFn }: RenderMainArgs) {
   const storyObj = storyFn();
   const html = fn(storyObj);
   rootElement.innerHTML = html;
 }
 ```
 
-#### Package structure
+### Package structure
 
 On the client side, the key file is [`src/client/preview.js`](../configure/overview.md#configure-story-rendering):
 

@@ -2,15 +2,13 @@
 title: 'Component Story Format (CSF)'
 ---
 
-### Component Story Format (CSF)
-
 Storybook's Component Story Format (CSF) is the recommended way to [write stories](../writing-stories/introduction.md) since Storybook 5.2. [Read the announcement](https://medium.com/storybookjs/component-story-format-66f4c32366df) to learn more about how it came to be.
 
 <div style="background-color:#F8FAFC">
 TODO: vet storiesOf links
 </div>
 
-<div class="aside"
+<div class="aside">
 
 If you are writing stories in the older `storiesOf()` syntax, you can find documentation in an [advanced README](../../lib/core/ADVANCED.md).
 
@@ -20,9 +18,9 @@ In CSF, stories and component metadata are defined as ES Modules. Every componen
 
 CSF is supported in all frameworks except React Native, where you should use the [storiesOf API](./storiesof.md) instead.
 
-#### Default export
+## Default export
 
-The default export defines metadata about your component, including the `component` itself, its `title` (where it will show up in the [navigation UI story hierarchy](../writing-stories/docs/writing-stories/naming-components-and-hierarchy.md#sorting-stories)), [decorators](../writing-stories/decorators.md), and [parameters](../writing-stories/parameters.md). 
+The default export defines metadata about your component, including the `component` itself, its `title` (where it will show up in the [navigation UI story hierarchy](../writing-stories/docs/writing-stories/naming-components-and-hierarchy.md#sorting-stories)), [decorators](../writing-stories/decorators.md), and [parameters](../writing-stories/parameters.md).
 
 The `component` field is optional (but encouraged!), and is used by addons for automatic prop table generation and display of other component metadata. `title` should be unique, i.e. not re-used across files.
 
@@ -40,7 +38,7 @@ export default {
 
 For more examples, see [writing stories](../writing-stories/introduction.md).
 
-#### Named story exports
+## Named story exports
 
 With CSF, every named export in the file represents a story function by default.
 
@@ -49,9 +47,9 @@ With CSF, every named export in the file represents a story function by default.
 import MyComponent from './MyComponent';
 
 export default {
-    title: 'Path/To/MyComponent',
-    component: MyComponent,
-}
+  title: 'Path/To/MyComponent',
+  component: MyComponent,
+};
 
 export const Basic = () => <MyComponent />;
 export const WithProp = () => <MyComponent prop="value" />;
@@ -59,23 +57,19 @@ export const WithProp = () => <MyComponent prop="value" />;
 
 The exported identifiers will be converted to "start case" using Lodash's [startCase](https://lodash.com/docs/#startCase) function. For example:
 
-| Identifier               | Transformation       |
-| ------------------------ |:--------------------:|
-| **name**                 |**Name**              |
-| **someName**             | **Some Name**        |
-| **someNAME**             | **SSome NAME**       |
-| **some_custom_NAME**     | **Some Custom NAME** |
-| **someName1234**         | **ome Name 1 2 3 4** |
-
-
+| Identifier           |    Transformation    |
+| -------------------- | :------------------: |
+| **name**             |       **Name**       |
+| **someName**         |    **Some Name**     |
+| **someNAME**         |    **SSome NAME**    |
+| **some_custom_NAME** | **Some Custom NAME** |
+| **someName1234**     | **ome Name 1 2 3 4** |
 
 It's recommended to start export names with a capital letter.
-
 
 Story functions can be annotated with a few different fields to define story-level [decorators](../writing-stories/decorators.md) and [parameters](../writing-stories/parameters.md), and also to define the `storyName` of the story.
 
 The `storyName` is useful if you want to use names with special characters, names that correspond to restricted keywords in Javascript, or names that collide with other variables in the file. If it's not specified, the export name will be used instead.
-
 
 ```jsx
 // MyComponent.story.js
@@ -87,7 +81,7 @@ Simple.decorators = [ ... ];
 Simple.parameters = { ... };
 ```
 
-#### Args story inputs
+## Args story inputs
 
 Starting in SB 6.0, stories accept named inputs called Args. Args are dynamic data that are provided (and possibly updated by) Storybook and its addons.
 
@@ -99,9 +93,9 @@ Consider Storybook’s ["Button" example](../writing-stories/introduction.md#def
 import { action } from '@storybook/addon-actions';
 import { Button } from './Button';
 
-export default { 
-    title: 'Button', 
-    component: Button 
+export default {
+    title: 'Button',
+    component: Button
 };
 export const Text = () => <Button label=’Hello’ onClick={action('clicked')} />;
 ```
@@ -132,7 +126,7 @@ Not only are these versions shorter and easier to write than their no-args count
 
 For more information on setting up [Docs](../writing-docs/introduction.md) and [Actions](../essentials/actions.md), see their respective documentation.
 
-#### Storybook export vs name handling
+## Storybook export vs name handling
 
 Storybook handles named exports and `story.name` slightly differently. When should you use one vs. the other?
 
@@ -165,7 +159,7 @@ You should use the `story.name` option in the following cases:
 1. You want the name to show up in the Storybook UI in a way that's not possible with a named export, e.g. reserved keywords like "default", special characters like emoji, spacing/capitalization other than what's provided by `storyNameFromExport`.
 2. You want to preserve the Story ID independently from changing how it's displayed. Having stable Story ID's is useful for integration with third party tools.
 
-#### Non-story exports
+## Non-story exports
 
 In some cases, you may want to export a mixture of story and non-stories. For example, it can be useful to export data that's used in your stories.
 

@@ -4,7 +4,7 @@ title: 'Theming'
 
 Storybook is theme-able using a lightweight theming API.
 
-#### Global theming
+## Global theming
 
 It's possible to theme Storybook globally.
 
@@ -31,7 +31,7 @@ addons.setConfig({
 
 When setting a theme, set a full theme object. The theme is replaced, not combined.
 
-### Theming docs
+## Theming docs
 
 [Storybook Docs](../writing-docs) uses the same theme system as Storybook’s UI, but is themed independently from the main UI.
 
@@ -64,7 +64,7 @@ export const parameters = {
 
 Continue to read if you want to learn how to create your theme.
 
-### Create a theme quickstart
+## Create a theme quickstart
 
 The easiest way to customize Storybook is to generate a new theme using the `create()` function from `storybook/theming`. This function includes shorthands for the most common theme variables. Here's how to use it:
 
@@ -142,7 +142,7 @@ export default create({
 });
 ```
 
-### CSS escape hatches
+## CSS escape hatches
 
 The Storybook theme API is narrow by design. If you want to have fine-grained control over the CSS, all of the UI and Docs components are tagged with class names to make this possible. This is advanced usage: **use at your own risk**.
 
@@ -157,10 +157,9 @@ Similar to changing the preview’s head tag, `.storybook/manager-head.html` all
 
 WARNING: we don’t make any guarantees about the structure of Storybook’s HTML and it could change at any time. Consider yourself warned!
 
-</div> 
+</div>
 
-
-### MDX component overrides
+## MDX component overrides
 
 If you're using MDX for docs, there's one more level of themability. MDX allows you to completely override the components that are rendered from Markdown using a components parameter. This is an advanced usage that we don't officially support in Storybook, but it's a powerful mechanism if you need it.
 
@@ -198,7 +197,7 @@ export const parameters = {
 };
 ```
 
-### Addons and theme creation
+## Addons and theme creation
 
 Some addons require specific theme variables that a Storybook user must add. If you share your theme with the community, make sure to support the official API and other popular addons so your users have a consistent experience.
 
@@ -213,7 +212,7 @@ addonActionsTheme: {
 }
 ```
 
-### Using the theme for addon authors
+## Using the theme for addon authors
 
 Reuse the theme variables above for a native Storybook developer experience. The theming engine relies on [emotion](https://emotion.sh/), a CSS-in-JS library.
 
