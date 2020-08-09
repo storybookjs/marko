@@ -2,11 +2,9 @@
 title: 'MDX Format'
 ---
 
-### MDX format
-
 `MDX` is the syntax [Storybook Docs](../writing-docs/introduction.md) uses to capture long-form Markdown documentation and stories in one file. You can also write pure documentation pages in `MDX` and add them to Storybook alongside your stories. [Read the announcement](https://medium.com/storybookjs/rich-docs-with-storybook-mdx-61bc145ae7bc) to learn more about how and why it came to be.
 
-#### Basic example
+## Basic example
 
 Let's get started with an example that combines Markdown with a single story:
 
@@ -30,6 +28,7 @@ With `MDX` we can define a story for `Checkbox` right in the middle of our Markd
   </Story>
 </Preview>
 ```
+
 And here's how that's rendered in Storybook:
 
 ![Show a simple mdx example](./mdx-simple.png)
@@ -38,7 +37,7 @@ As you can see there's a lot going on here. We're writing Markdown, we're writin
 
 Let's break it down.
 
-#### MDX-Flavored CSF
+## MDX-Flavored CSF
 
 [MDX](https://mdxjs.com/) is a standard file format that combines Markdown with JSX. This means you can use Markdown’s terse syntax (such as `# heading`) for your documentation, and freely embed JSX component blocks at any point in the file.
 
@@ -61,7 +60,7 @@ export const allCheckboxes = () => (
 
 There's a one-to-one mapping from the code in `MDX` to `CSF`, which in turn directly corresponds to Storybook's internal `storiesOf` API. As a user, this means your existing Storybook knowledge should translate between the three. And technically, this means that the transformations that happen under the hood are simple and predictable.
 
-#### Writing stories
+## Writing stories
 
 Now let's look at a more realistic example to see a few more things we can do:
 
@@ -158,7 +157,7 @@ addDecorator(...);
 addParameters({ ... });
 ```
 
-#### Documentation-only MDX
+## Documentation-only MDX
 
 Typically, when you use Storybook MDX, you define stories in the MDX documentation is automatically associated with those stories. But what if you want to write Markdown-style documentation and have it show up in your Storybook?
 
@@ -168,11 +167,9 @@ If you don't define a `Meta`, you can write Markdown and associate with an exist
 
 To get a "documentation-only story", in your UI, define a `<Meta>` as you normally would, but don't define any stories. It will show up in your UI as a documentation node:
 
-
 ![Show documentation](./mdx-documentation-only.png)
 
-
-### MDX file names
+## MDX file names
 
 Unless you use a custom webpack configuration, all of your `MDX` files should have the suffix `*.stories.mdx`. This tells Storybook to apply its special processing to the `<Meta>` and `<Story>` elements in the file.
 

@@ -10,8 +10,6 @@ This is the core addon API. This is how to get the addon API:
 import { addons } from '@storybook/addons';
 ```
 
-Have a look at the API methods for more details:
-
 ### addons.getChannel()
 
 Get an instance to the channel where you can communicate with the manager and the preview. You can find this in both the addon register code and in your addon’s wrapper component (where used inside a story).
@@ -29,7 +27,7 @@ See how we can use this:
 import { addons } from '@storybook/addons';
 
 // Register the addon with a unique name.
-addons.register('my-organisation/my-addon', api => {});
+addons.register('my-organisation/my-addon', (api) => {});
 ```
 
 Now you'll get an instance to our StorybookAPI. See the [api docs](#storybook-api) for Storybook API regarding using that.
@@ -114,7 +112,7 @@ export const Panel = () => {
   const state = useStorybookState();
 
   return <div>do something with storybook's state</div>;
-}
+};
 ```
 
 Allows full access to the entire storybook state.
@@ -125,14 +123,13 @@ If you use this, remember your component wil be re-rendered a lot, and you may n
 ### useStorybookApi
 
 ```js
-
 // my-addon/register.js
 
 export const Panel = () => {
   const state = useStorybookApi();
 
   return <div>do something with storybook's api</div>;
-}
+};
 ```
 
 Allows full access to the storybook API.
@@ -155,7 +152,7 @@ export const Panel = () => {
       clicking this will emit an event
     </button>
   );
-}
+};
 ```
 
 Allows for both setting subscriptions to events and getting the emitter for emitting custom event unto the channel.
@@ -170,21 +167,13 @@ The messages can be listened for on both the iframe and the manager side.
 export const Panel = () => {
   const [state, setState] = useAddonState('my/addon-id', 'initial state');
 
-  return (
-    <button onClick={() => setState('a new value')}>
-      the state = "{state}"
-    </button>
-  );
-}
+  return <button onClick={() => setState('a new value')}>the state = "{state}"</button>;
+};
 export const Tool = () => {
   const [state, setState] = useAddonState('my/addon-id', 'initial state');
 
-  return (
-    <button onClick={() => setState('a new value')}>
-      the state = "{state}"
-    </button>
-  );
-}
+  return <button onClick={() => setState('a new value')}>the state = "{state}"</button>;
+};
 ```
 
 Extremely useful for addons that need to persist some state.
@@ -209,7 +198,7 @@ export const Panel = () => {
       {value}
     </div>
   );
-}
+};
 ```
 
 This hook gets you the current story's parameter.
@@ -247,7 +236,7 @@ This is how you can select the above story:
 ```js
 // my-addon/register.js
 
-addons.register('my-organisation/my-addon', api => {
+addons.register('my-organisation/my-addon', (api) => {
   api.selectStory('heading', 'withText');
 });
 ```
@@ -259,7 +248,7 @@ Same as `selectStory`, but accepts a story inside current kind as the only param
 ```js
 // my-addon/register.js
 
-addons.register('my-organisation/my-addon', api => {
+addons.register('my-organisation/my-addon', (api) => {
   api.selectInCurrentKind('withText');
 });
 ```
@@ -271,7 +260,7 @@ This method allows you to set query string parameters. You can use that as tempo
 ```js
 // my-addon/register.js
 
-addons.register('my-organisation/my-addon', api => {
+addons.register('my-organisation/my-addon', (api) => {
   api.setQueryParams({
     abc: 'this is abc',
     bbc: 'this is bbc',
@@ -285,11 +274,10 @@ If you need to remove a query param, use `null` for that. For an example, let's 
 
 </div>
 
-
 ```js
 // my-addon/register.js
 
-addons.register('my-organisation/my-addon', api => {
+addons.register('my-organisation/my-addon', (api) => {
   api.setQueryParams({
     bbc: null,
   });
@@ -301,7 +289,7 @@ addons.register('my-organisation/my-addon', api => {
 This method allows you to get a query param set by above API `setQueryParams`. For example, let's say we need to get the bbc query param. Then this how we do it:
 
 ```jsx
-addons.register('my-organisation/my-addon', api => {
+addons.register('my-organisation/my-addon', (api) => {
   api.getQueryParam('bbc');
 });
 ```
@@ -313,7 +301,7 @@ This method allows you to get application url state with some changed params. Fo
 ```js
 // my-addon/register.js
 
-addons.register('my-organisation/my-addon', api => {
+addons.register('my-organisation/my-addon', (api) => {
   const href = api.getUrlState({
     selectedKind: 'kind',
     selectedStory: 'story',
@@ -328,7 +316,7 @@ This method allows you to register a handler function which will be called whene
 ```js
 // my-addon/register.js
 
-addons.register('my-organisation/my-addon', api => {
+addons.register('my-organisation/my-addon', (api) => {
   api.on('some-event', (eventData) => console.log(eventData));
 });
 ```
