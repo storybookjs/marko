@@ -5,6 +5,7 @@
   - [Zero config typescript](#zero-config-typescript)
   - [Correct globs in main.js](#correct-globs-in-mainjs)
   - [CRA preset removed](#cra-preset-removed)
+  - [Core-JS dependency errors](#core-js-dependency-errors)
   - [Args passed as first argument to story](#args-passed-as-first-argument-to-story)
   - [6.0 Docs breaking changes](#60-docs-breaking-changes)
     - [Remove framework-specific docs presets](#remove-framework-specific-docs-presets)
@@ -197,6 +198,22 @@ stories: ['./**/*.stories.@(ts|js)']
 The built-in create-react-app preset, which was [previously deprecated](#create-react-app-preset), has been fully removed.
 
 If you're using CRA and migrating from an earlier Storybook version, please install [`@storybook/preset-create-react-app`](https://github.com/storybookjs/presets/tree/master/packages/preset-create-react-app) if you haven't already.
+
+### Core-JS dependency errors
+
+Some users have experienced `core-js` dependency errors when upgrading to 6.0, such as:
+
+```
+Module not found: Error: Can't resolve 'core-js/modules/web.dom-collections.iterator'
+```
+
+We think this comes from having multiple versions of `core-js` installed, but haven't isolated a good solution (see [#11255](https://github.com/storybookjs/storybook/issues/11255) for discussion).
+
+For now, the workaround is to install `core-js` directly in your project as a dev dependency:
+
+```sh
+npm install core-js@^3.0.1 --save-dev
+```
 
 ### Args passed as first argument to story
 
