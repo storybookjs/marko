@@ -15,14 +15,15 @@ Note you can change the folder that Storybook uses by setting the `-c` flag to y
 
 The main configuration file is `main.js`. This file controls the behaviour of the Storybook server, and so you must restart Storybook’s process when you change it. It contains the following:
 
-```js
-// .storybook/main.js
+<!-- prettier-ignore-start -->
 
-module.exports = {
-  stories: ['../src/**/*.stories.(js|mdx)'],
-  addons: ['@storybook/addon-essentials']
-}
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-main-default-setup.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 The `main.js` configuration file is a [preset](../api/presets.md) and as such has a powerful interface, but the key fields within it are:
 
@@ -46,13 +47,15 @@ If you want to use a different naming convention, you can alter the glob, using 
 
 For example if you wanted to pull both `.md` and `.js` files from the `my-project/src/components` directory, you could write:
 
-```js
-// .storybook/main.js
+<!-- prettier-ignore-start -->
 
-module.exports = {
-  stories: ['../my-project/src/components/*.@(js|md)'],
-};
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-main-js-md-files.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ### Configure story rendering
 
