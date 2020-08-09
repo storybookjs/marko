@@ -8,7 +8,7 @@ Storybook is a convenient tool for snapshot testing because every story is essen
 
 <div class="aside">
 
-Snapshot vs visual tests. Visual tests take screenshots of stories and compare them against known baselines. When used to test appearance, visual tests are often a more robust solution than snapshot tests because verifying markup doesn’t test for visual changes.
+Snapshot vs visual tests. [Visual tests](./visual-testing.md) take screenshots of stories and compare them against known baselines. When used to test appearance, visual tests are often a more robust solution than snapshot tests because verifying markup doesn’t test for visual changes.
 
 </div>
 

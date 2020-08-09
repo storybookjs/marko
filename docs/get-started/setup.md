@@ -1,5 +1,5 @@
 ---
-title: 'Setup'
+title: 'Setup Storybook'
 ---
 
 Now that you’ve learned what stories are and how to browse them, let’s demo working on one of your components. Pick a simple component from your project, like a Button, and write a `.stories.js` file to go along with it. It might look something like this:
