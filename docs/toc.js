@@ -269,24 +269,24 @@ module.exports = {
       type: 'menu',
       children: [
         {
-          pathSegment: 'stories',
           title: 'Stories',
+          pathSegment: 'stories',
           type: 'menu',
           children: [
             {
               pathSegment: 'csf',
               title: 'Component Story Format',
-              description: 'Learn about the Component Story Format API',
+              type: 'link',
             },
             {
               pathSegment: 'mdx',
               title: 'MDX syntax',
-              description: 'Learn how to add MDX to your Storybook',
+              type: 'link',
             },
             {
               pathSegment: 'argtypes',
               title: 'ArgTypes',
-              description: 'Learn how to use Argtypes with your Storybook',
+              type: 'link',
             },
           ],
         },
