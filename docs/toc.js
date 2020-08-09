@@ -210,7 +210,7 @@ module.exports = {
         },
         {
           pathSegment: 'build-pages-with-storybook',
-          title: 'Building pages with Storybook',
+          title: 'Building pages and screens',
           type: 'link',
         },
         {
@@ -324,7 +324,7 @@ module.exports = {
         },
         {
           pathSegment: 'cli-options',
-          title: 'CLI Options',
+          title: 'CLI options',
           type: 'link',
         },
         {
