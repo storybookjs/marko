@@ -165,7 +165,7 @@ module.exports = {
           type: 'link',
         },
         {
-          pathSegment: 'user-interface',
+          pathSegment: '',
           title: 'User interface',
           type: 'menu',
           children: [
@@ -252,7 +252,7 @@ module.exports = {
           ],
         },
         {
-          pathSegment: 'composition',
+          pathSegment: 'storybook-composition',
           title: 'Composition',
           type: 'link',
         },
@@ -270,7 +270,7 @@ module.exports = {
       children: [
         {
           title: 'Stories',
-          pathSegment: 'stories',
+          pathSegment: '',
           type: 'menu',
           children: [
             {
@@ -292,7 +292,7 @@ module.exports = {
         },
         {
           title: 'Addons',
-          pathSegment: 'addons',
+          pathSegment: '',
           type: 'menu',
           children: [
             {
