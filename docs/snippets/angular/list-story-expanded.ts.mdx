@@ -27,12 +27,12 @@ const Template = (args: List) => ({
 
 export const OneItem = Template.bind({});
 OneItem.args = {
-    items:[{}]
+    items:[ListItem]
 };
 
 export const ManyItems = Template.bind({});
 ManyItems.args = {
-    items:[{},{},{}]
+    items:[ListItem,ListItem,ListItem]
 };
 
 ```
