@@ -117,24 +117,25 @@ module.exports = {
           title: 'Introduction',
           type: 'link',
         },
-        {
-          pathSegment: 'controls',
-          title: 'Controls',
-          type: 'link',
-        },
+
         {
           pathSegment: 'actions',
           title: 'Actions',
           type: 'link',
         },
         {
-          pathSegment: 'viewports',
-          title: 'Viewports',
+          pathSegment: 'backgrounds',
+          title: 'Backgrounds',
           type: 'link',
         },
         {
-          pathSegment: 'backgrounds',
-          title: 'Backgrounds',
+          pathSegment: 'controls',
+          title: 'Controls',
+          type: 'link',
+        },
+        {
+          pathSegment: 'viewports',
+          title: 'Viewports',
           type: 'link',
         },
         {
