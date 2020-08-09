@@ -168,26 +168,28 @@ module.exports = {
           pathSegment: 'user-interface',
           title: 'User interface',
           type: 'menu',
-        },
-        {
-          pathSegment: 'features-and-behavior',
-          title: 'Features and behavior',
-          type: 'link',
-        },
-        {
-          pathSegment: 'theming',
-          title: 'Theming',
-          type: 'link',
-        },
-        {
-          pathSegment: 'sidebar-and-urls',
-          title: 'Sidebar & URLS',
-          type: 'link',
-        },
-        {
-          pathSegment: 'storybook-addons',
-          title: 'Storybook Addons',
-          type: 'link',
+          children: [
+            {
+              pathSegment: 'features-and-behavior',
+              title: 'Features and behavior',
+              type: 'link',
+            },
+            {
+              pathSegment: 'theming',
+              title: 'Theming',
+              type: 'link',
+            },
+            {
+              pathSegment: 'sidebar-and-urls',
+              title: 'Sidebar & URLS',
+              type: 'link',
+            },
+            {
+              pathSegment: 'storybook-addons',
+              title: 'Storybook Addons',
+              type: 'link',
+            },
+          ],
         },
         {
           pathSegment: 'environment-variables',
