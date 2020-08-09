@@ -6,7 +6,7 @@ A story captures the rendered state of a UI component. It’s a function that re
 
 Storybook uses the generic term arguments (args for short) when talking about React’s `props`, Vue’s `slots`, Angular’s `@input`, and other similar concepts.
 
-### Where to put stories
+## Where to put stories
 
 A component’s stories are defined in a story file that lives alongside the component file. The story file is for development-only, it won't be included in your production bundle.
 
@@ -15,13 +15,13 @@ Button.js | ts
 Button.stories.js | ts
 ```
 
-### Component Story Format
+## Component Story Format
 
 We define stories according to the [Component Story Format](../api/csf.md) (CSF), an ES6 module-based standard that is portable between tools and easy to write.
 
 The key ingredients are the [**`default` export**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export#Using_the_default_export) that describes the component, and [**named exports**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export#Using_named_exports) that describe the stories.
 
-#### Default export
+### Default export
 
 The default export metadata controls how Storybook lists your stories and provides information used by addons. For example, here’s the default export for a story file `Button.stories.js`:
 
@@ -36,7 +36,7 @@ export default {
 };
 ```
 
-#### Defining stories
+### Defining stories
 
 Use the named exports of a CSF file to define your component’s stories. Here’s how to render `Button` in the “primary” state and export a story called `Primary`.
 
@@ -51,7 +51,7 @@ export default {
 export const Primary = () => <Button primary label="Button" />;
 ```
 
-#### Rename stories
+### Rename stories
 
 You can rename any particular story you need. For instance to give it a more clearer name. Here's how you can change the name of the `Primary` story:
 
@@ -65,7 +65,7 @@ Primary.storyName = 'I am the primary';
 
 Your story will now be show in the sidebar with the text supplied.
 
-### How to write stories
+## How to write stories
 
 A story is a function that describes how to render a component. You can have multiple stories per component. The simplest way to create stories is to render a component with different arguments multiple times.
 
@@ -80,7 +80,7 @@ export const Tertiary = () => <Button background="#ff0" label="📚📕📈🤓"
 
 This is straightforward for components with few stories, but can be repetitive with many stories.
 
-#### Using args
+### Using args
 
 Refine this pattern by defining a master template for a component’s stories that allows you to pass in `args`. This reduces the unique code you’ll need to write and maintain for each story.
 
@@ -140,7 +140,7 @@ Addons can enhance args. For instance, [Actions](../essentials/actions.md) auto 
   />
 </video>
 
-#### Using parameters
+### Using parameters
 
 Parameters are Storybook’s method of defining static metadata for stories. A story’s parameters can be used to provide configuration to various addons at the level of a story or group of stories.
 
@@ -169,7 +169,7 @@ export default {
 
 This parameter would instruct the backgrounds addon to reconfigure itself whenever a Button story is selected. Most addons are configured via a parameter-based API and can be influenced at a [global](./parameters.md#global-parameters), [component](./parameters.md#component-parameters) and [story](./parameters.md#story-parameters) level.
 
-#### Using decorators
+### Using decorators
 
 Decorators are a mechanism to wrap a component in arbitrary markup when rendering a story. Components are often created with assumptions about ‘where’ they render. Your styles might expect a theme or layout wrapper. Or your UI might expect certain context or data providers.
 
@@ -194,7 +194,7 @@ export default {
 
 Decorators [can be more complex](./decorators.md#context-for-mocking) and are often provided by [addons](../configure/storybook-addons.md). You can also configure decorators at the [story](./decorators.md#story-decorators), [component](./decorators.md#component-decorators) and [global](./decorators.md#global-decorators) level.
 
-### Stories for two or more components
+## Stories for two or more components
 
 When building design systems or component libraries, you may have two or more components that are designed to work together. For instance, if you have a parent `List` component, it may require child `ListItem` components.
 

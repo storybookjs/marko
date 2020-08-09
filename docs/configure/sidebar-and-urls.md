@@ -8,13 +8,13 @@ Storybook’s sidebar lists all your stories grouped by component. When you have
 
 We recommend using a nesting scheme that mirrors the filesystem path of the components. For example, if you have a file `components/modals/Alert.js` name the CSF file `components/modals/Alert.stories.js` and title it `Components/Modals/Alert`.
 
-#### Roots
+## Roots
 
 By default, Storybook will treat your highest level of groups as “roots”--which are displayed in the UI as “sections” of the hierarchy. Lower level groups are displayed as expandable items in the hierarchy:
 
 ![Storybook sidebar story roots](./sidebar-roots.jpg)
 
-If you’d prefer all groups to be expandable, you can set the `showRoots` option to `false` in  [`./storybook/manager.js`](./overview.md#configure-story-rendering):
+If you’d prefer all groups to be expandable, you can set the `showRoots` option to `false` in [`./storybook/manager.js`](./overview.md#configure-story-rendering):
 
 ```js
 // ./storybook/manager.js
@@ -23,18 +23,18 @@ import { addons } from `@storybook/addons`;
 addons.setConfig({ showRoots: false });
 ```
 
-#### Generating titles based on `__dirname`
+## Generating titles based on `__dirname`
 
 As a CSF file is a JavaScript file, the exports (including the default export) can be generated dynamically. In particular you can use the `__dirname` variable to generate the title based on the path name (this example uses the paths.macro):
 
 ```js
 import base from 'paths.macro';
 export default {
-  title: `${base}/Component`
-}
+  title: `${base}/Component`,
+};
 ```
 
-#### Permalinking to stories
+## Permalinking to stories
 
 By default, Storybook generates an `id` for each story based on the component title and the story name. This `id` in particular is used in the URL for each story and that URL can serve as a permalink (especially when you [publish](../workflows/publish-storybook.md) your Storybook).
 
