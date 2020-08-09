@@ -73,7 +73,7 @@ Up until now, we only used auto-generated controls based on the component we're 
 
 <CodeSnippets
   paths={[
-    'common/table-story-fully-customize-controls.js.mdx',
+    'react/table-story-fully-customize-controls.js.mdx',
   ]}
 />
 

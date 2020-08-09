@@ -121,7 +121,7 @@ You can change your story through [parameters](../writing-stories/parameters.md)
 
 <CodeSnippets
   paths={[
-    'common/my-component-story-configure-viewports.js.mdx',
+    'react/my-component-story-configure-viewports.js.mdx',
   ]}
 />
 
