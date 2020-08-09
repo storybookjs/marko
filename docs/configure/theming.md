@@ -194,7 +194,7 @@ Use the theme variables in object notation:
 
 <CodeSnippets
   paths={[
-    'common/component-styled-variables-object-notation.js.mdx',
+    'react/component-styled-variables-object-notation.js.mdx',
   ]}
 />
 
@@ -206,7 +206,7 @@ Or with template literals:
 
 <CodeSnippets
   paths={[
-    'common/component-styled-variables-template-literals.js.mdx',
+    'react/component-styled-variables-template-literals.js.mdx',
   ]}
 />
 

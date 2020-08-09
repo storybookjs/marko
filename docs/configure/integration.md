@@ -193,7 +193,7 @@ If your component files import their own CSS, Storybook’s webpack config will 
 
 <CodeSnippets
   paths={[
-    'common/storybook-angular-inline-css-loader.js.mdx',
+    'angular/storybook-angular-inline-css-loader.js.mdx',
   ]}
 />
 
@@ -220,7 +220,7 @@ Afterwards you can use any asset in your stories:
 
 <CodeSnippets
   paths={[
-    'common/component-story-static-asset-with-import.js.mdx',
+    'react/component-story-static-asset-with-import.js.mdx',
   ]}
 />
 
@@ -249,7 +249,7 @@ Here `./public` is your static directory. Now use it in a component or story lik
 
 <CodeSnippets
   paths={[
-    'common/component-story-static-asset-without-import.js.mdx',
+    'react/component-story-static-asset-without-import.js.mdx',
   ]}
 />
 
@@ -275,7 +275,7 @@ Upload your files to an online CDN and reference them. In this example we’re u
 
 <CodeSnippets
   paths={[
-    'common/component-story-static-asset-cdn.js.mdx',
+    'react/component-story-static-asset-cdn.js.mdx',
   ]}
 />
 
