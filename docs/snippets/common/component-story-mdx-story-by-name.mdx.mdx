@@ -1,0 +1,11 @@
+```md
+import { Story } from '@storybook/addon-docs/blocks';
+import { Button } from './Button';
+
+export const Template = (args) => <Button {...args} />;
+
+<Story name="Basic" args={{ label: ‘hello’ }}>
+  {Template.bind({})
+</Story>
+
+```

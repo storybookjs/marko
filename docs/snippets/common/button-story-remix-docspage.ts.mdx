@@ -1,0 +1,36 @@
+```ts
+// Button.stories.ts
+
+import React from 'react';
+
+import { Story, Meta } from '@storybook/react/types-6-0';
+
+import {
+  Title,
+  Subtitle,
+  Description,
+  Primary,
+  Props,
+  Stories,
+} from '@storybook/addon-docs/blocks';
+import { Button, ButtonProps } from './Button';
+
+export default {
+  title: 'Button',
+  component: Button,
+  parameters: {
+    docs: {
+      page: () => (
+        <>
+          <Title />
+          <Subtitle />
+          <Description />
+          <Primary />
+          <Props />
+          <Stories />
+        </>
+      ),
+    },
+  },
+} as Meta;
+```
