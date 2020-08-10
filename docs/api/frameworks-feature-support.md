@@ -10,10 +10,10 @@ Below is a comprehensive table of what’s supported in which framework integrat
 
 Core frameworks have dedicated maintainers or contributors who are responsible for maintaining the integration. As such, you can use most Storybook features in these frameworks.
 
-<FrameworkSupportTable frameworks={['react', 'vue', 'angular', 'web-components', 'html', 'ember']} />
+<FrameworkSupportTable core />
 
 ## Community frameworks
 
 Community frameworks have fewer contributors which means they may not be as up to date as core frameworks. If you use one of these frameworks for your job, please consider contributing to its integration with Storybook.
 
-<FrameworkSupportTable frameworks={['mithril', 'marko', 'svelte', 'riot', 'preact', 'rax']} />
+<FrameworkSupportTable core={false} />
