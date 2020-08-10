@@ -16,23 +16,31 @@ By default, Storybook will treat your highest level of groups as “roots”--wh
 
 If you’d prefer all groups to be expandable, you can set the `showRoots` option to `false` in [`./storybook/manager.js`](./overview.md#configure-story-rendering):
 
-```js
-// ./storybook/manager.js
+<!-- prettier-ignore-start -->
 
-import { addons } from `@storybook/addons`;
-addons.setConfig({ showRoots: false });
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-manager-disable-roots.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ## Generating titles based on `__dirname`
 
 As a CSF file is a JavaScript file, the exports (including the default export) can be generated dynamically. In particular you can use the `__dirname` variable to generate the title based on the path name (this example uses the paths.macro):
 
-```js
-import base from 'paths.macro';
-export default {
-  title: `${base}/Component`,
-};
-```
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/component-story-dynamic-title.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
 
 ## Permalinking to stories
 
@@ -40,30 +48,28 @@ By default, Storybook generates an `id` for each story based on the component ti
 
 Consider the following story:
 
-```js
-// your-story.story.js
+<!-- prettier-ignore-start -->
 
-export default {
-  title: 'Foo/Bar',
-};
+<CodeSnippets
+  paths={[
+    'common/foo-bar-baz-story.js.mdx',
+  ]}
+/>
 
-export const Baz = BarStory.bind({});
-```
+<!-- prettier-ignore-end -->
 
 Storybook's ID-generation logic will give this the `id` `foo-bar--baz`, so the link would be `?path=/story/foo-bar--baz`.
 
 It is possible to manually set the id of a story, which in particular is useful if you want to rename stories without breaking permalinks. Suppose you want to change the position in the hierarchy to `OtherFoo/Bar` and the story name to `Moo`. Here's how to do that:
 
-```js
-// your-story.story.js
+<!-- prettier-ignore-start -->
 
-export default {
-  title: 'OtherFoo/Bar',
-  id: 'Foo/Bar', // or 'foo-bar' if you prefer
-};
+<CodeSnippets
+  paths={[
+    'common/other-foo-bar-story.js.mdx',
+  ]}
+/>
 
-export const Baz = () => BarStory.bind({});
-Baz.storyName = 'Moo';
-```
+<!-- prettier-ignore-end -->
 
 Storybook will prioritize the `id` over the title for ID generation, if provided, and will prioritize the `story.name` over the export key for display.

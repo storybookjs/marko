@@ -18,25 +18,42 @@ By default, Storybook's webpack configuration will allow you to:
 
   You can import images and other local files and have them built into the Storybook:
 
-  ```js
-  // This will include './static/image.png' in the bundle and return a path to be included in a src attribute
-  import imageFile from './static/image.png';
-  ```
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/my-component-story-import-static-asset.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 - Import JSON as JavaScript
 
   You can import `.json` files and have them expanded to a JavaScript object:
 
-  ```js
-  // This will automatically be parsed to the contents of `data.json`
-  import data from './data.json';
-  ```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/my-component-story-import-json.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 If you want to know the exact details of the webpack config, the best way is to run:
 
-```sh
-yarn storybook --debug-webpack
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-run-webpack-config.sh.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ### Extending Storybook’s webpack config
 
@@ -46,30 +63,15 @@ The value should export a `function`, which will receive the default config as i
 
 For example, here's a `.storybook/main.js` to add [Sass](https://sass-lang.com/) support:
 
-```js
-// .storybook/main.js
+<!-- prettier-ignore-start -->
 
-const path = require('path');
+<CodeSnippets
+  paths={[
+    'common/storybook-main-add-sass-config.js.mdx',
+  ]}
+/>
 
-// Export a function. Accept the base config as the only param.
-module.exports = {
-  webpackFinal: async (config, { configType }) => {
-    // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
-    // You can change the configuration based on that.
-    // 'PRODUCTION' is used when building the static version of storybook.
-
-    // Make whatever fine-grained changes you need
-    config.module.rules.push({
-      test: /\.scss$/,
-      use: ['style-loader', 'css-loader', 'sass-loader'],
-      include: path.resolve(__dirname, '../'),
-    });
-
-    // Return the altered config
-    return config;
-  },
-};
-```
+<!-- prettier-ignore-end -->
 
 Storybook uses the config returned from the above function to render your components in Storybook's "preview" iframe. Note that Storybook has a completely separate webpack config for its own UI (also referred to as the "manager"), so the customizations you make only applies to the rendering of your stories, i.e. you can completely replace `config.module.rules` if you want.
 
@@ -80,14 +82,15 @@ Nevertheless, edit `config` with care. Make sure to preserve the following confi
 
 Furthermore, `config` requires the `HtmlWebpackplugin` to generate the preview page, so rather than overwriting `config.plugins` you should probably append to it (or overwrite it with care), see [the following issue](https://github.com/storybookjs/storybook/issues/6020) for examples on how to handle this:
 
-```js
-module.exports = {
-  webpackFinal: (config) => {
-    config.plugins.push(...);
-    return config;
-  },
-}
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-main-simplified-config.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 Finally, if your custom webpack config uses a loader that does not explicitly include specific file extensions via the `test` property, it is necessary to `exclude` the `.ejs` file extension from that loader.
 
@@ -99,19 +102,15 @@ If you have an existing webpack config for your project and want to reuse this a
 
 The following code snippet shows how you can replace the loaders from Storybook with the ones from your app's `webpack.config.js`:
 
-```js
-// .storybook/main.js
-const path = require('path');
+<!-- prettier-ignore-start -->
 
-// your app's webpack.config.js
-const custom = require('../webpack.config.js');
+<CodeSnippets
+  paths={[
+    'common/storybook-main-using-existing-config.js.mdx',
+  ]}
+/>
 
-module.exports = {
-  webpackFinal: (config) => {
-    return { ...config, module: { ...config.module, rules: custom.module.rules } };
-  },
-};
-```
+<!-- prettier-ignore-end -->
 
 ## Babel
 
@@ -153,20 +152,15 @@ To make it easier to configure Typescript handling, use the `typescript` field i
 
 The following code snippets shows the fields for you to use with TypeScript:
 
-```js
-// .storybook/main.js
-module.exports = {
-  typescript: {
-    check: false,
-    checkOptions: {},
-    reactDocgen: 'react-docgen-typescript',
-    reactDocgenTypescriptOptions: {
-      shouldExtractLiteralValuesFromEnum: true,
-      propFilter: (prop) => (prop.parent ? !/node_modules/.test(prop.parent.fileName) : true),
-    },
-  },
-};
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-main-add-ts-config.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 | Field                            | Framework |                                       Description                                        |                                     Type                                      |
 | :------------------------------- | :-------: | :--------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------: |
@@ -189,11 +183,19 @@ If your component files import their own CSS, Storybook’s webpack config will 
 
 - If you are using a CSS precompiler, you may need to add a preset (such as the [SCSS preset](https://github.com/storybookjs/presets/tree/master/packages/preset-scss), or add a loader to Storybook’s webpack config).
 - In Angular, you'll need to take special care how you handle CSS:
-  - Either [customize your webpack config](#extending-storybooks-webpack-config)
-  - Or use syntax to use a inline loader:
-    ```js
-    import '!style-loader!css-loader!./styles.css';
-    ```
+
+    - Either [customize your webpack config](#extending-storybooks-webpack-config)
+    - Or use syntax to use a inline loader:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'angular/storybook-angular-inline-css-loader.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 To use your CSS in all stories, you simply import it in [`.storybook/preview.js`](./overview.md#configure-story-rendering)
 
@@ -211,23 +213,15 @@ You can import any media assets by importing (or requiring) them. This works out
 
 Afterwards you can use any asset in your stories:
 
-```js
-// your-story-with-assets.story.js
+<!-- prettier-ignore-start -->
 
-import React from 'react';
-import imageFile from './static/image.png';
+<CodeSnippets
+  paths={[
+    'react/component-story-static-asset-with-import.js.mdx',
+  ]}
+/>
 
-export default {
-  title: 'img',
-};
-
-const image = {
-  src: imageFile,
-  alt: 'my image',
-};
-
-export const withAnImage = () => <img src={image.src} alt={image.alt} />;
-```
+<!-- prettier-ignore-end -->
 
 ### Serving static files via Storybook
 
@@ -235,57 +229,54 @@ We recommend serving static files via Storybook to ensure that your components a
 
 Configure a directory (or a list of directories) where your assets live when starting Storybook. Use the`-s` flag in your npm script like so:
 
-```json
-{
-  "scripts": {
-    "start-storybook": "start-storybook -s ./public -p 9001"
-  }
-}
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-serve-static-assets-script.json.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 Here `./public` is your static directory. Now use it in a component or story like this.
 
-```js
-// your-story-with-asset.story.js
+<!-- prettier-ignore-start -->
 
-import React from 'react';
+<CodeSnippets
+  paths={[
+    'react/component-story-static-asset-without-import.js.mdx',
+  ]}
+/>
 
-export default {
-  title: 'img',
-};
-
-// assume image.png is located in the "public" directory.
-export const withAnImage = () => <img src="/image.png" alt="my image" />;
-```
+<!-- prettier-ignore-end -->
 
 You can also pass a list of directories separated by commas without spaces instead of a single directory.
 
-```json
-{
-  "scripts": {
-    "start-storybook": "start-storybook -s ./public,./static -p 9001"
-  }
-}
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-serve-static-assets-script-multifolder.json.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ### Reference assets from a CDN
 
 Upload your files to an online CDN and reference them. In this example we’re using a placeholder image service.
 
-```js
-// your-story-with-CDN-asset.story.js
+<!-- prettier-ignore-start -->
 
-import React from 'react';
+<CodeSnippets
+  paths={[
+    'react/component-story-static-asset-cdn.js.mdx',
+  ]}
+/>
 
-export default {
-  title: 'img',
-};
+<!-- prettier-ignore-end -->
 
-// assume image.png is located in the "public" directory.
-export const withAnImage = () => (
-  <img src="https://placehold.it/350x150" alt="My CDN placeholder" />
-);
-```
 
 ### Absolute versus relative paths
 

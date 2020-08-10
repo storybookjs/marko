@@ -12,22 +12,27 @@ Storybook includes two themes that look good out of the box: "normal" (a light t
 
 Make sure you have installed [`@storybook/addons`](https://www.npmjs.com/package/@storybook/addons) and [`@storybook/theming`](https://www.npmjs.com/package/@storybook/theming) packages.
 
-```sh
-npm install @storybook/addons --save-dev
-npm install @storybook/theming --save-dev
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-install-theme-packages.sh.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 As an example, you can tell Storybook to use the "dark" theme by modifying [`.storybook/manager.js`](./overview.md#configure-story-rendering):
 
-```js
-// .storybook/manager.js
-import { addons } from '@storybook/addons';
-import { themes } from '@storybook/theming';
+<!-- prettier-ignore-start -->
 
-addons.setConfig({
-  theme: themes.dark,
-});
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-manager-dark-theme.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 When setting a theme, set a full theme object. The theme is replaced, not combined.
 
@@ -37,30 +42,27 @@ When setting a theme, set a full theme object. The theme is replaced, not combin
 
 Supposing you have a Storybook theme defined for the main UI in [`.storybook/manager.js`](./overview.md#configure-story-rendering):
 
-```js
-// .storybook/manager.js
-import { addons } from '@storybook/addons';
-// or a custom theme
-import { themes } from '@storybook/theming';
+<!-- prettier-ignore-start -->
 
-addons.setConfig({
-  theme: themes.dark,
-});
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-manager-dark-theme.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 Here's how you'd specify the same theme for docs in [`.storybook/preview.js`](./overview.md#configure-story-rendering):
 
-```js
-// .storybook/preview.js
-import { themes } from '@storybook/theming';
+<!-- prettier-ignore-start -->
 
-// or global addParameters
-export const parameters = {
-  docs: {
-    theme: themes.dark,
-  },
-};
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-docs-dark-theme.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 Continue to read if you want to learn how to create your theme.
 
@@ -72,75 +74,41 @@ First create a new file in `.storybook` called `yourTheme.js`.
 
 Next paste the code below and tweak the variables.
 
-```js
-// yourTheme.js
+<!-- prettier-ignore-start -->
 
-import { create } from '@storybook/theming/create';
+<CodeSnippets
+  paths={[
+    'common/your-theme.js.mdx',
+  ]}
+/>
 
-export default create({
-  base: 'light',
-
-  colorPrimary: 'hotpink',
-  colorSecondary: 'deepskyblue',
-
-  // UI
-  appBg: 'white',
-  appContentBg: 'silver',
-  appBorderColor: 'grey',
-  appBorderRadius: 4,
-
-  // Typography
-  fontBase: '"Open Sans", sans-serif',
-  fontCode: 'monospace',
-
-  // Text colors
-  textColor: 'black',
-  textInverseColor: 'rgba(255,255,255,0.9)',
-
-  // Toolbar default and active colors
-  barTextColor: 'silver',
-  barSelectedColor: 'black',
-  barBg: 'hotpink',
-
-  // Form colors
-  inputBg: 'white',
-  inputBorder: 'silver',
-  inputTextColor: 'black',
-  inputBorderRadius: 4,
-
-  brandTitle: 'My custom storybook',
-  brandUrl: 'https://example.com',
-  brandImage: 'https://placehold.it/350x150',
-});
-```
+<!-- prettier-ignore-end -->
 
 Finally, import your theme into [`.storybook/manager.js`](./overview.md#configure-story-rendering) and add it to your Storybook parameters.
 
-```js
-// .storybook/manager.js
+<!-- prettier-ignore-start -->
 
-import { addons } from '@storybook/addons';
-import yourTheme from './yourTheme';
+<CodeSnippets
+  paths={[
+    'common/storybook-manager-custom-theme.js.mdx',
+  ]}
+/>
 
-addons.setConfig({
-  theme: yourTheme,
-});
-```
+<!-- prettier-ignore-end -->
 
 The `@storybook/theming` package is built using TypeScript, so this should help create a valid theme for TypeScript users. The types are part of the package itself.
 
 Many theme variables are optional, the `base` property is NOT. This is a perfectly valid theme:
 
-```ts
-import { create } from '@storybook/theming/create';
+<!-- prettier-ignore-start -->
 
-export default create({
-  base: 'light',
-  brandTitle: 'My custom storybook',
-  brandUrl: 'https://example.com',
-  brandImage: 'https://placehold.it/350x150',
-});
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-theme-example-variables.ts.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ## CSS escape hatches
 
@@ -165,37 +133,29 @@ If you're using MDX for docs, there's one more level of themability. MDX allows 
 
 Here's how you might insert a custom code renderer for `code` blocks on the page, in [`.storybook/preview.js`](./overview.md#configure-story-rendering):
 
-```js
-// .storybook/preview.js
+<!-- prettier-ignore-start -->
 
-import { CodeBlock } from './CodeBlock';
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-custom-code-renderer.js.mdx',
+  ]}
+/>
 
-export const parameters = {
-  docs: {
-    components: {
-      code: CodeBlock,
-    },
-  },
-};
-```
+<!-- prettier-ignore-end -->
 
 You can even override a Storybook block component.
 
-Here's how you might insert a custom `<Preview />` block:
+Here's how you might insert a custom `<Canvas />` block:
 
-```js
-// .storybook/preview.js
+<!-- prettier-ignore-start -->
 
-import { MyPreview } from './MyPreview';
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-custom-canvas.js.mdx',
+  ]}
+/>
 
-export const parameters = {
-  docs: {
-    components: {
-      Preview: MyPreview,
-    },
-  },
-};
-```
+<!-- prettier-ignore-end -->
 
 ## Addons and theme creation
 
@@ -203,37 +163,50 @@ Some addons require specific theme variables that a Storybook user must add. If 
 
 For example, the popular Actions addon uses [react-inspector](https://github.com/xyc/react-inspector/blob/master/src/styles/themes/chromeLight.js) which has themes of its own. Supply additional theme variables to style it like so:
 
-```js
+<!-- prettier-ignore-start -->
 
-addonActionsTheme: {
-  ...chromeLight,
-  BASE_FONT_FAMILY: typography.fonts.mono,
-  BASE_BACKGROUND_COLOR: 'transparent',
-}
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-extended-theme-variables.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ## Using the theme for addon authors
 
 Reuse the theme variables above for a native Storybook developer experience. The theming engine relies on [emotion](https://emotion.sh/), a CSS-in-JS library.
 
-```js
-import { styled } from '@storybook/theming';
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-theming-styled-import.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 Use the theme variables in object notation:
 
-```js
-const Component = styled.div(({ theme }) => ({
-  background: theme.background.app,
-  width: 0,
-}));
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'react/component-styled-variables-object-notation.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 Or with template literals:
 
-```js
-const Component = styled.div`
-  background: `${props => props.theme.background.app}`
-  width: 0;
-`;
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'react/component-styled-variables-template-literals.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->

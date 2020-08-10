@@ -8,19 +8,16 @@ In Storybook, your stories render in a special “preview” iframe (Canvas tab)
 
 If you need to add extra elements to the `head` of the preview iframe, for instance to load static stylesheets, font files, or similar, you can create a file called [`.storybook/preview-head.html`](./overview.md#configure-story-rendering) and add tags like this:
 
-```html
-<!--  .storybook/preview-head.html -->
+<!-- prettier-ignore-start -->
 
-<!-- Pull in static files served from your Static director or the internet -->
-<link rel=”preload” href=”your/font” />
-<!-- Or you can load custom head-tag JavaScript: -->
-<script src="https://use.typekit.net/xxxyyy.js"></script>
-<script>
-  try {
-    Typekit.load();
-  } catch (e) {}
-</script>
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-head-example.html.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
 
 <div class="aside">
 
@@ -34,20 +31,27 @@ Sometimes, you may need to add different tags to the `<body>`. This is useful fo
 
 You can accomplish this by creating a file called `preview-body.html` inside your `.storybook` directory and add tags like this:
 
-```html
-<!--  .storybook/preview-body.html -->
-<div id="custom-root"></div>
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-body-example.html.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 If using relative sizing in your project (like `rem` or `em`), you may update the base `font-size` by adding a `style` tag to `preview-body.html`:
 
-```html
-<style>
-  body {
-    font-size: 15px;
-  }
-</style>
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-body-font-size.html.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 <div class="aside">
 
