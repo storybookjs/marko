@@ -33,8 +33,12 @@ By default, Storybook will choose a control for each arg based on the initial va
 
 <FeatureSnippets
   paths={[
-    'essentials/controls-feature-react.mdx',
-    'essentials/controls-feature-fallback.mdx'
+    'essentials/auto-generated-controls/react.mdx',
+    'essentials/auto-generated-controls/vue.mdx',
+    'essentials/auto-generated-controls/angular.mdx',
+    'essentials/auto-generated-controls/web-components.mdx',
+    'essentials/auto-generated-controls/ember.mdx',
+    'essentials/auto-generated-controls/fallback.mdx',
   ]}
 />
 
@@ -119,22 +123,22 @@ As shown above, you can configure individual controls with the “control" annot
 
 Here is the full list of available controls you can use:
 
-| Data Type   | Control Type |                          Description                           |    Options     |
-| :---------- | :----------: | :------------------------------------------------------------: | :------------: |
+| Data Type   | Control Type | Description                                                    |    Options     |
+| :---------- | :----------: | :------------------------------------------------------------- | :------------: |
 | **array**   |    array     | serialize array into a comma-separated string inside a textbox |   separator    |
-| **boolean** |   boolean    |                         checkbox input                         |       -        |
-| **number**  |    number    |                    a numeric text box input                    | min, max, step |
-|             |    range     |                      a range slider input                      | min, max, step |
-| **object**  |    object    |                     json editor text input                     |       -        |
-| **enum**    |    radio     |                      radio buttons input                       |    options     |
-|             | inline-radio |                   inline radio buttons input                   |    options     |
-|             |    check     |                  multi-select checkbox input                   |    options     |
-|             | inline-check |               multi-select inline checkbox input               |    options     |
-|             |    select    |                     select dropdown input                      |    options     |
-|             | multi-select |                  multi-select dropdown input                   |    options     |
-| **string**  |     text     |                       simple text input                        |       -        |
-|             |    color     |    color picker input that assumes strings are color values    |       -        |
-|             |     date     |                       date picker input                        |       -        |
+| **boolean** |   boolean    | checkbox input                                                 |       -        |
+| **number**  |    number    | a numeric text box input                                       | min, max, step |
+|             |    range     | a range slider input                                           | min, max, step |
+| **object**  |    object    | json editor text input                                         |       -        |
+| **enum**    |    radio     | radio buttons input                                            |    options     |
+|             | inline-radio | inline radio buttons input                                     |    options     |
+|             |    check     | multi-select checkbox input                                    |    options     |
+|             | inline-check | multi-select inline checkbox input                             |    options     |
+|             |    select    | select dropdown input                                          |    options     |
+|             | multi-select | multi-select dropdown input                                    |    options     |
+| **string**  |     text     | simple text input                                              |       -        |
+|             |    color     | color picker input that assumes strings are color values       |       -        |
+|             |     date     | date picker input                                              |       -        |
 
 If you need to customize a control to use a enum data type in your story, for instance the `inline-radio` you can do it like so:
 
