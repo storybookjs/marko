@@ -81,7 +81,7 @@ This approach is particularly useful when the various subcomponents export a com
 
 ## Mocking connected components
 
-IF you need to render a connected component in Storybook, you can mock the network requests that it makes to fetch its data. There are various layers in which you can do that.
+If you need to render a connected component in Storybook, you can mock the network requests that it makes to fetch its data. There are various layers in which you can do that.
 
 ### Mocking providers
 
