@@ -84,26 +84,16 @@ First install storybook:
 
 ```sh
 cd my-react-app
-npx -p @storybook/cli sb init
+npx sb init
 ```
 
 If you'd rather set up your project manually, take a look at our [Slow Start Guide](https://storybook.js.org/basics/slow-start-guide/).
 
 Once it's installed, you can `npm run storybook` and it will run the development server on your local machine, and give you a URL to browse some sample stories.
 
-**Storybook v2.x migration note**:
-If you're using Storybook v2.x and want to shift to 4.x version the easiest way is:
-
-```sh
-cd my-storybook-v2-app
-npx -p @storybook/cli sb init
-```
-
-It runs a codemod to update all package names. Read all migration details in our [Migration Guide](MIGRATION.md)
-
 For full documentation on using Storybook visit: [storybook.js.org](https://storybook.js.org)
 
-For additional help, join us [in our Discord](https://discord.gg/sMFvFsG) or [Slack](https://now-examples-slackin-rrirkqohko.now.sh/)
+For additional help, join us [in our Discord](https://discord.gg/sMFvFsG) or [Slack (legacy)](https://now-examples-slackin-rrirkqohko.now.sh/)
 
 ## Projects
 
@@ -111,19 +101,19 @@ For additional help, join us [in our Discord](https://discord.gg/sMFvFsG) or [Sl
 
 | Framework                        | Demo                                                                        |                                                                                                |
 | -------------------------------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| [React](app/react)               | [v5.3.0](https://storybookjs.netlify.com/official-storybook/?path=/story/*) | [![React](https://img.shields.io/npm/dm/@storybook/react.svg)](app/react)                      |
+| [React](app/react)               | [v6.0.x](https://storybookjs.netlify.com/official-storybook/?path=/story/*) | [![React](https://img.shields.io/npm/dm/@storybook/react.svg)](app/react)                      |
 | [React Native](app/react-native) | -                                                                           | [![React Native](https://img.shields.io/npm/dm/@storybook/react-native.svg)](app/react-native) |
-| [Vue](app/vue)                   | [v5.3.0](https://storybookjs.netlify.com/vue-kitchen-sink/)                 | [![Vue](https://img.shields.io/npm/dm/@storybook/vue.svg)](app/vue)                            |
-| [Angular](app/angular)           | [v5.3.0](https://storybookjs.netlify.com/angular-cli/)                      | [![Angular](https://img.shields.io/npm/dm/@storybook/angular.svg)](app/angular)                |
+| [Vue](app/vue)                   | [v6.0.x](https://storybookjs.netlify.com/vue-kitchen-sink/)                 | [![Vue](https://img.shields.io/npm/dm/@storybook/vue.svg)](app/vue)                            |
+| [Angular](app/angular)           | [v6.0.x](https://storybookjs.netlify.com/angular-cli/)                      | [![Angular](https://img.shields.io/npm/dm/@storybook/angular.svg)](app/angular)                |
 | [Marionette.js](app/marionette)  | -                                                                           | [![Marionette.js](https://img.shields.io/npm/dm/@storybook/marionette.svg)](app/marionette)    |
-| [Mithril](app/mithril)           | [v5.3.0](https://storybookjs.netlify.com/mithril-kitchen-sink/)             | [![Mithril](https://img.shields.io/npm/dm/@storybook/mithril.svg)](app/mithril)                |
-| [Marko](app/marko)               | [v5.3.0](https://storybookjs.netlify.com/marko-cli/)                        | [![Marko](https://img.shields.io/npm/dm/@storybook/marko.svg)](app/marko)                      |
-| [HTML](app/html)                 | [v5.3.0](https://storybookjs.netlify.com/html-kitchen-sink/)                | [![HTML](https://img.shields.io/npm/dm/@storybook/html.svg)](app/html)                         |
-| [Svelte](app/svelte)             | [v5.3.0](https://storybookjs.netlify.com/svelte-kitchen-sink/)              | [![Svelte](https://img.shields.io/npm/dm/@storybook/svelte.svg)](app/svelte)                   |
-| [Riot](app/riot)                 | [v5.3.0](https://storybookjs.netlify.com/riot-kitchen-sink/)                | [![Riot](https://img.shields.io/npm/dm/@storybook/riot.svg)](app/riot)                         |
-| [Ember](app/ember)               | [v5.3.0](https://storybookjs.netlify.com/ember-cli/)                        | [![Ember](https://img.shields.io/npm/dm/@storybook/ember.svg)](app/ember)                      |
-| [Preact](app/preact)             | [v5.3.0](https://storybookjs.netlify.com/preact-kitchen-sink/)              | [![Preact](https://img.shields.io/npm/dm/@storybook/preact.svg)](app/preact)                   |
-| [Rax](app/rax)                   | [v5.3.0](https://storybookjs.netlify.com/rax-kitchen-sink/)                 | [![Rax](https://img.shields.io/npm/dm/@storybook/rax.svg)](app/rax)                            |
+| [Mithril](app/mithril)           | [v6.0.x](https://storybookjs.netlify.com/mithril-kitchen-sink/)             | [![Mithril](https://img.shields.io/npm/dm/@storybook/mithril.svg)](app/mithril)                |
+| [Marko](app/marko)               | [v6.0.x](https://storybookjs.netlify.com/marko-cli/)                        | [![Marko](https://img.shields.io/npm/dm/@storybook/marko.svg)](app/marko)                      |
+| [HTML](app/html)                 | [v6.0.x](https://storybookjs.netlify.com/html-kitchen-sink/)                | [![HTML](https://img.shields.io/npm/dm/@storybook/html.svg)](app/html)                         |
+| [Svelte](app/svelte)             | [v6.0.x](https://storybookjs.netlify.com/svelte-kitchen-sink/)              | [![Svelte](https://img.shields.io/npm/dm/@storybook/svelte.svg)](app/svelte)                   |
+| [Riot](app/riot)                 | [v6.0.x](https://storybookjs.netlify.com/riot-kitchen-sink/)                | [![Riot](https://img.shields.io/npm/dm/@storybook/riot.svg)](app/riot)                         |
+| [Ember](app/ember)               | [v6.0.x](https://storybookjs.netlify.com/ember-cli/)                        | [![Ember](https://img.shields.io/npm/dm/@storybook/ember.svg)](app/ember)                      |
+| [Preact](app/preact)             | [v6.0.x](https://storybookjs.netlify.com/preact-kitchen-sink/)              | [![Preact](https://img.shields.io/npm/dm/@storybook/preact.svg)](app/preact)                   |
+| [Rax](app/rax)                   | [v6.0.x](https://storybookjs.netlify.com/rax-kitchen-sink/)                 | [![Rax](https://img.shields.io/npm/dm/@storybook/rax.svg)](app/rax)                            |
 
 ### Sub Projects
 
@@ -209,18 +199,12 @@ Storybook is organized as a monorepo using [Lerna](https://lerna.js.org/). Usefu
 
 > Installs package dependencies and links packages together - using lerna
 
-#### `yarn run publish`
-
-> Push a release to git and npm
-> will ask for version in interactive mode - using lerna.
-
 #### `yarn lint`
 
 > boolean check if code conforms to linting rules - uses remark & eslint
 
 - `yarn lint:js` - will check js
 - `yarn lint:md` - will check markdown + code samples
-
 - `yarn lint:js --fix` - will automatically fix js
 
 #### `yarn test`
