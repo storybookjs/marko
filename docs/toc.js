@@ -157,7 +157,34 @@ module.exports = {
         {
           pathSegment: 'integration',
           title: 'Integration',
-          type: 'link',
+          type: 'menu',
+          children: [
+            {
+              pathSegment: 'webpack',
+              title: 'Webpack',
+              type: 'link',
+            },
+            {
+              pathSegment: 'babel',
+              title: 'Babel',
+              type: 'link',
+            },
+            {
+              pathSegment: 'typescript',
+              title: 'TypeScript',
+              type: 'link',
+            },
+            {
+              pathSegment: 'styling-and-css',
+              title: 'Styling and CSS',
+              type: 'link',
+            },
+            {
+              pathSegment: 'images-and-assets',
+              title: 'Images and assets',
+              type: 'link',
+            },
+          ],
         },
         {
           pathSegment: 'story-rendering',
