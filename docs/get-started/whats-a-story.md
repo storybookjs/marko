@@ -6,7 +6,7 @@ A story captures the rendered state of a UI component. Developers write multiple
 
 The CLI created example components that demonstrate the types of components you can build with Storybook: Button, Header, and Page.
 
-Each example component has a set of stories that show the states it supports. You can browse the stories in the UI and see the code behind them in files that end with `.stories.js` or `.stories.ts`. The stories are written in Component Story Format (CSF), an ES6 modules-based standard, for writing component examples.
+Each example component has a set of stories that show the states it supports. You can browse the stories in the UI and see the code behind them in files that end with `.stories.js` or `.stories.ts`. The stories are written in Component Story Format (CSF)--an ES6 modules-based standard--for writing component examples.
 
 Let’s start with the `Button` component. A story is a function that describes how to render the component in question. Here’s how to render `Button` in the “primary” state and export a story called `Primary`.
 
@@ -16,7 +16,7 @@ Let’s start with the `Button` component. A story is a function that describes 
   paths={[
     'react/button-story.js.mdx',
     'react/button-story.ts.mdx',
-    'react/button-story.md.mdx',
+    'react/button-story.mdx.mdx',
     'angular/button-story.js.mdx',
   ]}
 />
@@ -80,4 +80,4 @@ Stories are also useful for checking that UI continues to look correct as you ma
 
 Checking a component’s stories as you develop helps prevent accidental regressions. Tools that integrate with Storybook can also [automate](..workflows/testing-with-storybook.md) this for you.
 
-Now we’ve seen the basic anatomy of a story, let’s see how we use Storybook’s UI to develop stories
+Now we’ve seen the basic anatomy of a story, let’s see how we use Storybook’s UI to develop stories.

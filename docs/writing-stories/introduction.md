@@ -17,7 +17,7 @@ Button.stories.js | ts
 
 ## Component Story Format
 
-We define stories according to the [Component Story Format](../api/csf.md) (CSF), an ES6 module-based standard that is portable between tools and easy to write.
+We define stories according to the [Component Story Format](../api/csf.md) (CSF), an ES6 module-based standard that is easy to write and portable between tools.
 
 The key ingredients are the [**`default` export**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export#Using_the_default_export) that describes the component, and [**named exports**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export#Using_named_exports) that describe the stories.
 
@@ -63,7 +63,7 @@ export const Primary = () => <Button primary label="Button" />;
 Primary.storyName = 'I am the primary';
 ```
 
-Your story will now be show in the sidebar with the text supplied.
+Your story will now be show in the sidebar with the given text.
 
 ## How to write stories
 
@@ -91,6 +91,7 @@ const Template = (args) => <Button {...args} />;
 // Each story then reuses that template
 export const Primary = Template.bind({});
 Primary.args = { background="#ff0",  label: 'Button' };
+
 export const Secondary = Template.bind({});
 Secondary.args = {  ...Primary.args,  label: '😄👍😍💯',};
 
@@ -107,10 +108,12 @@ What’s more, you can import args to reuse when writing stories for other compo
 
 import { ButtonGroup } from '../ButtonGroup';
 import { Primary, Secondary } from '../Button.stories';
+
 export default {
   title: 'ButtonGroup',
   component: ButtonGroup,
 };
+
 const Template = (args) => <ButtonGroup {...args} />;
 
 export const Pair = Template.bind({});
@@ -150,6 +153,7 @@ For instance, suppose you wanted to test your Button component against a differe
 // Button.stories.js
 
 import Button from './Button';
+
 export default {
   title: 'Button',
   component: Button,
@@ -179,6 +183,7 @@ A simple example is adding padding to a component’s stories. Accomplish this u
 // Button.stories.js
 
 import Button from './Button';
+
 export default {
   title: 'Button',
   component: Button,
@@ -200,6 +205,7 @@ When building design systems or component libraries, you may have two or more co
 
 ```js
 import List from './List';
+
 export default {
   component: List,
   title: 'List',
@@ -214,9 +220,11 @@ In such cases, it makes sense to render something a different function for each 
 ```js
 import List from './List';
 import ListItem from './ListItem';
+
 export default {
-  component: List,
   title: 'List',
+  component: List,
+  subcomponents: { ListItem },
 };
 
 export const Empty = (args) => <List {...args} />;
@@ -240,6 +248,7 @@ You can also reuse stories from the child `ListItem` in your `List` component. T
 
 ```js
 import { Selected, Unselected } from './ListItem.stories';
+
 export const ManyItems = (args) => (
   <List {...args}>
     <Selected {...Selected.args} />

@@ -8,13 +8,12 @@ Now that you’ve learned what stories are and how to browse them, let’s demo 
 
 <CodeSnippets
   paths={[
-    'common/your-component.js.mdx',
-    'common/your-component.ts.mdx',
+    'react/your-component.js.mdx',
+    'react/your-component.ts.mdx',
   ]}
 />
 
 <!-- prettier-ignore-end -->
-
 
 Go to your Storybook to view the rendered component. It’s OK if it looks a bit unusual right now.
 
