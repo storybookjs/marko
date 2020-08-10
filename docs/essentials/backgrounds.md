@@ -17,64 +17,49 @@ By default, the background toolbar presents you with a light and dark background
 
 But you're not restricted to these two backgrounds, you can configure your own set of colors with the `parameters.backgrounds` [parameter](../writing-stories/parameters.md) in your [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering):
 
-```js
-//.storybook/preview.js
+<!-- prettier-ignore-start -->
 
-export const parameters = {
-backgrounds: {
-    default: 'twitter',
-    values: [
-        { 
-            name: 'twitter', 
-            value: '#00aced'
-        },
-        { 
-            name: 'facebook', 
-            value: '#3b5998' 
-        },
-      ],
-    }
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-configure-background-colors.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 You can also set backgrounds on per-story or per-component basis by using [parameter inheritance](../writing-stories/parameters.md#component-parameters):
 
-```js
-// Button.stories.js
+<!-- prettier-ignore-start -->
 
-// To apply a set of backgrounds to all stories of Button:
-export default {
-  title: 'Button',
-  parameters: {
-    backgrounds: {
-      default: 'twitter',
-      values: [
-        { name: 'twitter', value: '#00aced' },
-        { name: 'facebook', value: '#3b5998' },
-      ],
-    },
-  },
-};
-```
+<CodeSnippets
+  paths={[
+    'common/button-story-configure-backgrounds.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 You can also only override a single key on the background parameter, for instance to set a different default value for a single story:
 
-```js
-// Button.stories.js
+<!-- prettier-ignore-start -->
 
-export const Large = ButtonStory.bind({});
-Large.parameters = {
-  backgrounds: { default: 'facebook' }
-};
-```
+<CodeSnippets
+  paths={[
+    'common/button-story-override-background-color.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 If you want to disable backgrounds in a story, you can do so by setting the `backgrounds` parameter like so:
 
-```js
-// Button.stories.js
+<!-- prettier-ignore-start -->
 
-export const Large = ButtonStory.bind({});
-Large.parameters = {
-  backgrounds: { disable: true }
-};
-```
+<CodeSnippets
+  paths={[
+    'common/button-story-disable-backgrounds.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 

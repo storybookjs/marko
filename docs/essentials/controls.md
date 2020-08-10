@@ -31,14 +31,15 @@ By default, Storybook will choose a control for each arg based on the initial va
 
 For instance, suppose you have a `backgroundColor` arg on your story:
 
-```js
-// Button.stories.js
+<!-- prettier-ignore-start -->
 
-const Red = ButtonStory.bind({});
-Red.args = {
-   backgroundColor: '#e00',
-};
-```
+<CodeSnippets
+  paths={[
+    'common/button-story-controls-red-input.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 By default, Storybook will render a free text input for the `backgroundColor` arg:
 
@@ -50,16 +51,15 @@ We can specify which controls get used by declaring a custom [argType](../api/md
 
 ArgTypes can also contain arbitrary annotations which can be overridden by the user. Since `backgroundColor` is a property of the component, let's put that annotation on the default export.
 
-```js
-import { Button } from './Button';
-export default {
-  title: 'Button',
-  component: Button,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
-};
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/button-story-controls-color-picker.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 This replaces the input with a color picker for a more intuitive developer experience.
 
@@ -69,23 +69,15 @@ This replaces the input with a color picker for a more intuitive developer exper
 
 Up until now, we only used auto-generated controls based on the component we're writing stories for. If we are writing [complex stories](../workflows/stories-for-multiple-components.md) we may want to add controls for args that aren’t part of the component.
 
-```js
-// Table.stories.js
+<!-- prettier-ignore-start -->
 
-const TableStory = ({ data, ...args }) => (
-  <Table {...args} >
-    {data.map(row => (<TR>{row.map(item => <TD>{item}</TD>}</TR>))}
-  </Table>
-)
+<CodeSnippets
+  paths={[
+    'react/table-story-fully-customize-controls.js.mdx',
+  ]}
+/>
 
-export const Numeric = TableStory.bind({});
-Numeric.args = {
-  // This arg is for the story component
-  data: [[1, 2, 3], [4, 5, 6]],
-  // The remaining args get passed to the `Table` component
-  size: 'large',
-}
-```
+<!-- prettier-ignore-end -->
 
 By default, Storybook will add controls for all args that:
 
@@ -127,35 +119,31 @@ Here is the full list of available controls you can use:
 
 If you need to customize a control to use a enum data type in your story, for instance the `inline-radio` you can do it like so:
 
-```js
-export default {
-  title: 'Widget',
-  component: Widget,
-  argTypes: {
-    loadingState: {
-      type: 'inline-radio',
-      options: ['loading', 'error', 'ready'],
-    },
-  },
-};
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/widget-story-controls-enum.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
 <div class="aside">
 If you don't provide a specific one, it defaults to select control type.
 </div>
 
 If you need to customize a control for a number data type in your story, you can do it like so:
 
-```js
-// Gizmo.story.js
+<!-- prettier-ignore-start -->
 
-export default {
-  title: 'Gizmo',
-  component: Gizmo,
-  argTypes: {
-    width: { type: 'range', min: 400, max: 1200, step: 50 };
-  },
-};
-```
+<CodeSnippets
+  paths={[
+    'common/gizmo-story-controls-customization.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 <div class="aside">
 If you don't provide a specific one, it defaults to  number control type.
@@ -172,13 +160,16 @@ Since Controls is built on the same engine as Storybook Docs, it can also show p
 
 To enable expanded mode globally, add the following to [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering):
 
-```js
-// .storybook/preview.js
+<!-- prettier-ignore-start -->
 
-export const parameters = {
-  controls: { expanded: true },
-};
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-expanded-controls.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
 And here's what the resulting UI looks like:
 
 ![Controls addon expanded](./addon-controls-expanded.png)
@@ -189,8 +180,12 @@ And here's what the resulting UI looks like:
 
 If you don't plan to handle the control args inside your Story, you can remove the warning with:
 
-```js
-Basic.parameters = {
-  controls: { hideNoControlsWarning: true },
-};
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/button-story-hide-nocontrols-warning.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->

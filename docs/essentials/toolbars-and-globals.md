@@ -14,22 +14,16 @@ When the globals change, the story re-renders and the decorators rerun with the 
 
 Storybook has a simple, declarative syntax for configuring toolbar menus. In your [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering), you can add your own toolbars by creating `globalTypes` with a `toolbar` annotation:
 
-```js
-// .storybook/preview.js
+<!-- prettier-ignore-start -->
 
-export const globalTypes = {
-  theme: {
-    name: 'Theme'
-    description: 'Global theme for components',
-    defaultValue: 'light',
-    toolbar: {
-      icon: 'circlehollow',
-      // array of plain string values or MenuItem shape (see below)
-      items: ['light', 'dark'],
-    },
-  },
-};
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-configure-globaltypes.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
 
 <div class="aside">
 
@@ -45,22 +39,15 @@ We have a `global` defined, let's wire it up! We can consume our new `theme` glo
 
 For example, suppose you are using `styled-components`. You can add a theme provider decorator to your [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering) config:
 
-```js
-// .storybook/preview.js
+<!-- prettier-ignore-start -->
 
-import { ThemeProvider } from 'styled-components';
-import { StoryContext, StoryGetter, StoryWrapper } from '@storybook/addons';
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-use-global-type.js.mdx',
+  ]}
+/>
 
-const withThemeProvider = (Story, context) => {
-  const theme = getTheme(context.globals.theme);
-  return (
-    <ThemeProvider theme={theme}>
-      <Story {...context} />
-    </ThemeProvider>
-  );
-};
-export const decorators = [withThemeProvider];
-```
+<!-- prettier-ignore-end -->
 
 ### Advanced usage
 
@@ -70,26 +57,15 @@ Now let's take a look at a more complex example. Let's suppose we wanted to impl
 
 In your [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering), add the following:
 
-```js
-// ./storybook/preview.js
-export const globalTypes = {
-  locale: {
-    name: 'Locale',
-    description: 'Internationalization locale',
-    defaultValue: 'en',
-    toolbar: {
-      icon: 'globe',
-      items: [
-        { value: 'en', right: '🇺🇸', title: 'English' },
-        { value: 'fr', right: '🇫🇷', title: 'Français' },
-        { value: 'es', right: '🇪🇸', title: 'Español' },
-        { value: 'zh', right: '🇨🇳', title: '中文' },
-        { value: 'kr', right: '🇰🇷', title: '한국어' },
-      ],
-    },
-  },
-};
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-locales-globaltype.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 By adding the the configuration element `right`, the text will displayed on the right side in the toolbar menu, once you connect it to a decorator.
 
@@ -111,38 +87,29 @@ But we're aware that sometimes it's more useful to use toolbar options in a per-
 
 Using the example above, you can modify any story to retrieve the **Locale** `global` from the story context:
 
-```js
-// your-story.js
+<!-- prettier-ignore-start -->
 
-const getCaptionForLocale = (locale) => {
-  switch(locale) {
-    case 'es': return 'Hola!';
-    case 'fr': return 'Bonjour!';
-    case 'kr': return '안녕하세요!';
-    case 'zh': return '你好!';
-    default:
-      return 'Hello!',
-  }
-}
+<CodeSnippets
+  paths={[
+    'common/my-component-story-use-globaltype.js.mdx',
+  ]}
+/>
 
-export const StoryWithLocale = (args, { globals: { locale } }) => {
-  const caption = getCaptionForLocale(locale);
-  return <>{caption}</>;
-};
-```
+<!-- prettier-ignore-end -->
 
 <div class="aside">
 
 In Storybook 6.0, if you set the global option `passArgsFirst: false` for backwards compatibility, the story context is passed as the second argument:
 
-```js
-// your-story.js
+<!-- prettier-ignore-start -->
 
-export const StoryWithLocale = ({ globals: { locale } }) => {
-  const caption = getCaptionForLocale(locale);
-  return <>{caption}</>;
-};
-```
+<CodeSnippets
+  paths={[
+    'common/my-component-story-use-globaltype-backwards-compat.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 </div>
 
@@ -152,28 +119,12 @@ If you're working on a Storybook addon and you need to retrieve globals. You can
 
 Using the ThemeProvider example above, you could expand it to display which current theme is being shown inside a panel like so:
 
-```js
-// your-addon-register-file.js
+<!-- prettier-ignore-start -->
 
-import { useGlobals } from '@storybook/api';
-import { AddonPanel, Placeholder, Separator, Source, Spaced, Title } from '@storybook/components';
+<CodeSnippets
+  paths={[
+    'common/addon-consume-globaltype.js.mdx',
+  ]}
+/>
 
-const ThemePanel = props => {
-  const [{ theme: themeName }] = useGlobals();
-  const theme = getTheme(themeName);
-
-  return (
-    <AddonPanel {...props}>
-      {theme ? (
-        <Spaced row={3} outer={1}>
-          <Title>{theme.name}</Title>
-          <p>The full theme object/p>
-          <Source code={JSON.stringify(theme, null, 2)} language="js" copyable padded showLineNumbers />
-        </Spaced>
-      ) : (
-        <Placeholder>No theme selected</Placeholder>
-      )}
-    </AddonPanel>
-  );
-};
-```
+<!-- prettier-ignore-end -->
