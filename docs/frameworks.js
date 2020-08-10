@@ -118,27 +118,22 @@ module.exports = {
         {
           name: 'Source',
           unsupported: [],
-          path: '?',
-        },
-        {
-          name: 'Notes/Info',
-          unsupported: ['html', 'riot'],
-          path: '?',
+          path: 'writing-docs/doc-blocks#source',
         },
         {
           name: 'Args Table',
-          supported: ['react', 'vue', 'angular', 'html', 'ember', 'rax'],
+          supported: ['react', 'vue', 'angular', 'html', 'ember', 'web-components'],
           path: 'writing-docs/doc-blocks#argstable',
         },
         {
           name: 'Description',
-          supported: ['react', 'vue', 'angular', 'ember', 'rax'],
-          path: 'FIXME',
+          supported: ['react', 'vue', 'angular', 'ember', 'web-components'],
+          path: 'writing-docs/doc-blocks#description',
         },
         {
           name: 'Inline stories',
-          supported: ['react', 'vue', 'rax'],
-          path: 'FIXME',
+          supported: ['react', 'vue', 'web-components', 'html'],
+          path: 'writing-docs/doc-blocks#inline-rendering',
         },
       ],
     },
