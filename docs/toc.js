@@ -134,8 +134,8 @@ module.exports = {
           type: 'link',
         },
         {
-          pathSegment: 'viewports',
-          title: 'Viewports',
+          pathSegment: 'viewport',
+          title: 'Viewport',
           type: 'link',
         },
         {
