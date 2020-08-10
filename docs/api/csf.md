@@ -4,13 +4,9 @@ title: 'Component Story Format (CSF)'
 
 Storybook's Component Story Format (CSF) is the recommended way to [write stories](../writing-stories/introduction.md) since Storybook 5.2. [Read the announcement](https://medium.com/storybookjs/component-story-format-66f4c32366df) to learn more about how it came to be.
 
-<div style="background-color:#F8FAFC">
-TODO: vet storiesOf links
-</div>
-
 <div class="aside">
 
-If you are writing stories in the older `storiesOf()` syntax, you can find documentation in an [advanced README](../../lib/core/ADVANCED.md).
+If you are writing stories in the older `storiesOf()` syntax, you can find documentation in an [advanced README](../../lib/core/docs/storiesOf.md).
 
 </div>
 

@@ -102,7 +102,7 @@ module.exports = {
         {
           name: 'storiesOf stories',
           unsupported: [],
-          repoPath: 'lib/core/ADVANCED.md',
+          repoPath: 'lib/core/docs/storiesOf.md',
         },
         {
           name: 'Source',
