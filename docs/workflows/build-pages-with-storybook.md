@@ -32,50 +32,29 @@ The downsides:
 
 When you are building screens in this way, it is typical that the inputs of a composite component are a combination of the inputs of the various sub-components it renders. For instance, if your screen renders a page layout (containing details of the current user), a header (describing the document you are looking at), and a list (of the subdocuments), the inputs of the screen may consist of the user, document and subdocuments.
 
-```js
-// your-page.js
+<!-- prettier-ignore-start -->
 
-import React from 'react';
-import PageLayout from './PageLayout';
-import DocumentHeader from './DocumentHeader';
-import DocumentList from './DocumentList';
+<CodeSnippets
+  paths={[
+    'react/simple-page-implementation.js.mdx',
+    'react/simple-page-implementation.ts.mdx'
+  ]}
+/>
 
-function DocumentScreen({ user, document, subdocuments }) {
-  return (
-    <PageLayout user={user}>
-      <DocumentHeader document={document} />
-      <DocumentList documents={subdocuments} />
-    </PageLayout>
-  );
-}
-```
+<!-- prettier-ignore-end -->
 
 In such cases it is natural to use [args composition](../writing-stories/args.md#args-composition) to build the stories for the page based on the stories of the sub-components:
 
-```js
-// your-page.story.js
+<!-- prettier-ignore-start -->
 
-import React from 'react';
-import DocumentScreen from './DocumentScreen';
+<CodeSnippets
+  paths={[
+    'react/page-story-with-args-composition.js.mdx',
+     'react/page-story-with-args-composition.ts.mdx',
+  ]}
+/>
 
-import PageLayout from './PageLayout.stories';
-import DocumentHeader from './DocumentHeader.stories';
-import DocumentList from './DocumentList.stories';
-
-export default {
-  component: DocumentScreen,
-  title: 'DocumentScreen',
-};
-
-const Template = (args) => <DocumentScreen {...args} />;
-
-export const Simple = Template.bind({});
-Simple.args = {
-  user: PageLayout.Simple.user,
-  document: DocumentHeader.Simple.document,
-  subdocuments: DocumentList.Simple.documents,
-};
-```
+<!-- prettier-ignore-end -->
 
 This approach is particularly useful when the various subcomponents export a complex list of different stories, which you can pick and choose to build realistic scenarios for your screen-level stories without repeating yourself. By reusing the data and taking a Don't-Repeat-Yourself(DRY) philosophy, your story maintenance burden is minimal.
 
@@ -89,22 +68,15 @@ If you are using a provider that supplies data via the context, you can wrap you
 
 Additionally, there may be addons that supply such providers and nice APIs to set the data they provide. For instance [`storybook-addon-apollo-client`](https://www.npmjs.com/package/storybook-addon-apollo-client) provides this API:
 
-```js
-// my-component-with-query.story.js
+<!-- prettier-ignore-start -->
 
-import MyComponentThatHasAQuery, {
-  MyQuery,
-} from '../component-that-has-a-query';
+<CodeSnippets
+  paths={[
+    'react/component-story-with-query.js.mdx',
+  ]}
+/>
 
-export const LoggedOut = () => <MyComponentThatHasAQuery />;
-LoggedOut.parameters: {
-    apolloClient: {
-      mocks: [
-        { request: { query: MyQuery }, result: { data: { viewer: null } } },
-      ],
-    },
- };
-```
+<!-- prettier-ignore-end -->
 
 ### Mocking imports
 
@@ -114,82 +86,51 @@ We're going to use [isomorphic-fetch](https://www.npmjs.com/package/isomorphic-f
 
 Let's start by creating our own mock, which we'll use later with a [decorator](../writing-stories/decorators#global-decorators]. Create a new file called isomorphic-fetch.js inside a directory called `__mocks__` (we'll leave the location to you, don't forget to adjust the imports to your needs) and add the following code inside:
 
-```js
-// __mocks__/isomorphic-fetch.js
-let nextJson;
-export default async function fetch() {
-  if (nextJson) {
-    return {
-      json: () => nextJson,
-    };
-  }
-  nextJson = null;
-}
+<!-- prettier-ignore-start -->
 
-export function decorator(story, { parameters }) {
-  if (parameters && parameters.fetch) {
-    nextJson = parameters.fetch.json;
-  }
-  return story();
-}
-```
+<CodeSnippets
+  paths={[
+    'common/isomorphic-fetch-mock.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 To use the mock in place of the real import, we use [webpack aliasing](https://webpack.js.org/configuration/resolve/#resolvealias):
 
-```js
-// .storybook/main.js
-module.exports = {
-  // your Storybook configuration
+<!-- prettier-ignore-start -->
 
-  webpackFinal: (config) => {
-    config.resolve.alias['isomorphic-fetch'] = require.resolve('../__mocks__/isomorphic-fetch.js');
-    return config;
-  },
-};
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-main-with-mock-decorator.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 Add the mock you've just implemented to your [storybook/preview.js](../configure/overview.md#configure-story-rendering) (if you don't have it already, you'll need to create the file):
 
-```js
-// .storybook/preview.js
-import { decorator } from '../__mocks/isomorphic-fetch';
+<!-- prettier-ignore-start -->
 
-// Add the decorator to all stories
-export const decorators = [decorator];
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-with-mock-decorator.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 Once that configuration is complete, we can set the mock values in a specific story. Let's borrow an example from this [blog post](https://medium.com/@edogc/visual-unit-testing-with-react-storybook-and-fetch-mock-4594d3a281e6):
 
-```js
-import React from 'react';
+<!-- prettier-ignore-start -->
 
-import App from './App';
+<CodeSnippets
+  paths={[
+    'react/app-story-with-mock.js.mdx',
+  ]}
+/>
 
-export default {
-  title: 'App',
-  component: App,
-};
-
-const Template = (args) => <App {...args />;
-
-export const Success = Template.bind({});
-Success.parameters = {
-  fetch: {
-    json: {
-      JavaScript: 3390991,
-      'C++': 44974,
-      TypeScript: 15530,
-      CoffeeScript: 12253,
-      Python: 9383,
-      C: 5341,
-      Shell: 5115,
-      HTML: 3420,
-      CSS: 3171,
-      Makefile: 189,
-    }
-  }
-};
-```
+<!-- prettier-ignore-end -->
 
 ### Specific mocks
 

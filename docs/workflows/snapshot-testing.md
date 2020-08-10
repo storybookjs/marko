@@ -16,12 +16,15 @@ yarn add --dev @storybook/addon-storyshots
 
 Configure Storyshots by adding the following test file to your project:
 
-```js
-// storybook.test.js
+<!-- prettier-ignore-start -->
 
-import initStoryshots from '@storybook/addon-storyshots';
-initStoryshots();
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-storyshots-config.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 <div class="aside">
 
@@ -34,10 +37,6 @@ Run your first test. Storyshot will recognize all your CSF files (based on [`.st
 ```shell
 yarn test storybook.test.js
 ```
-
-<div style="background-color:#F8FAFC">
-TODO: ask for clarification on this note below. What extra steps?
-</div>
 
 <div class="aside">
 

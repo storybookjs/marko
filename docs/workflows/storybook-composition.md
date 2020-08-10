@@ -12,38 +12,28 @@ You can compose any Storybook [published online](./publish-storybook.md) or runn
 
 In your [`storybook/main.js`](../configure/overview.md#configure-story-rendering) file add a `refs` field with information about the reference Storybook. Pass in a URL to a statically built Storybook.
 
-```js
-//.storybook/main.js
-module.exports={
-  // your Storybook configuration
-  refs: {
-   'design-system': {
-     title: "Storybook Design System",
-     url: "https://5ccbc373887ca40020446347-yldsqjoxzb.chromatic.com"
-   }
-  }`
-}
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-main-ref-remote.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ## Compose local Storybooks
 
 You can also compose Storybook that are running locally. For instance, if you have a React Storybook and a Angular Storybook running on different ports:
 
-```js
-//.storybook/main.js
-module.exports = {
-  // your Storybook configuration
-  refs: {
-    react: {
-      title: 'React',
-      url: 'http://localhost:7007',
-    },
-    angular: {
-      title: 'Angular',
-      url: 'http://localhost:7008',
-    },
-  },
-};
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-main-ref-local.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 This composes the React and Angular Storybooks into your current Storybook. When either code base changes, hot-module-reload will work perfectly. That enables you to develop both frameworks in sync.

@@ -12,20 +12,14 @@ Additionally, the Storybook framework packages have an export that makes this ea
 
 Here is an example of how you can use it in a testing library:
 
-```js
-// Button.test.js
+<!-- prettier-ignore-start -->
 
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
-import { renderStory } from '@storybook/react/render';
+<CodeSnippets
+  paths={[
+    'react/button-test.js.mdx',
+  ]}
+/>
 
-import { Primary } from './Button.stories';
-
-it('renders the button in the primary state’, () => {
-  render(renderStory(Primary));
-  expect(screen.getByRole('button')).toHaveTextContent(‘Primary’);
-});
-```
+<!-- prettier-ignore-end -->
 
 Unit tests can be brittle and expensive to maintain for _every_ component. We recommend combining unit tests with other testing methods like [visual regression testing](./visual-testing.md) for comprehensive coverage with less maintenance work.

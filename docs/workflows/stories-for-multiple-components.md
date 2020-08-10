@@ -4,26 +4,16 @@ title: 'Stories for multiple components'
 
 It's useful to write stories that [render two or more components](../writing-stories/introduction.md#stories-for-two-or-more-components) at once if those components are designed to work together. For example, `ButtonGroups`, `Lists`, and `Page` components.
 
-```js
-// List.story.js
+<!-- prettier-ignore-start -->
 
-import List from './List';
-import ListItem from './ListItem';
+<CodeSnippets
+  paths={[
+    'react/list-story-with-subcomponents.js.mdx',
+    'react/list-story-with-subcomponents.ts.mdx',
+  ]}
+/>
 
-export default {
-  component: List,
-  subcomponents: [ListItem],
-  title: 'List',
-};
-
-export const Empty = (args) => <List {...args} />;
-
-export const OneItem = (args) => (
-  <List {...args}>
-    <ListItem />
-  </List>
-);
-```
+<!-- prettier-ignore-end -->
 
 Note that by adding `subcomponents` to the default export, we get an extra pane on the ArgsTable, listing the props of `ListItem`:
 
@@ -40,19 +30,16 @@ Let's talk about some techniques you can use to mitigate the above, which are es
 
 The simplest change we can make to the above is to reuse the stories of the `ListItem` in the `List`:
 
-```js
-// List.story.js
+<!-- prettier-ignore-start -->
 
-import List from './List';
-// Instead of importing the ListItem, we import its stories
-import { Unchecked } from './ListItem.stories';
+<CodeSnippets
+  paths={[
+    'react/list-story-unchecked.js.mdx',
+    'react/list-story-unchecked.ts.mdx',
+  ]}
+/>
 
-export const OneItem = (args) => (
-  <List {...args}>
-    <Unchecked {...Unchecked.args} />
-  </List>
-);
-```
+<!-- prettier-ignore-end -->
 
 By rendering the `Unchecked` story with its args, we are able to reuse the input data from the `ListItem` stories in the `List`.
 
@@ -62,16 +49,15 @@ However, we still aren’t using args to control the `ListItem` stories, which m
 
 One way we improve that situation is by pulling the render subcomponent out into a `children` arg:
 
-```js
-// List.story.js
+<!-- prettier-ignore-start -->
 
-const Template = (args) => <List {...args} />;
+<CodeSnippets
+  paths={[
+    'react/list-story-with-unchecked-children.js.mdx',
+  ]}
+/>
 
-export const OneItem = Template.bind({});
-OneItem.args = {
-  children: <Unchecked {...Unchecked.args} />,
-};
-```
+<!-- prettier-ignore-end -->
 
 Now that `children` is an arg, we can potentially reuse it in another story. As things stand (we hope to improve this soon) you cannot edit children in a control yet.
 
@@ -79,28 +65,16 @@ Now that `children` is an arg, we can potentially reuse it in another story. As 
 
 Another option that is more “data”-based is to create a special “story-generating” template component:
 
-```js
-// List.story.js
+<!-- prettier-ignore-start -->
 
-import React from 'react';
-import List from './List';
-import ListItem from './ListItem';
-import { Unchecked } from './ListItem.stories';
+<CodeSnippets
+  paths={[
+    'react/list-story-template.js.mdx',
+    'react/list-story-template.ts.mdx'
+  ]}
+/>
 
-const ListTemplate = ({ items, ...args }) => (
-  <List>
-    {items.map((item) => (
-      <ListItem {...item} />
-    ))}
-  </List>
-);
-
-export const Empty = ListTemplate.bind({});
-Empty.args = { items: [] };
-
-export const OneItem = ListTemplate.bind({});
-OneItem.args = { items: [Unchecked.args] };
-```
+<!-- prettier-ignore-end -->
 
 This approach is a little more complex to setup, but it means you can more easily reuse the `args` to each story in a composite component. It also means that you can alter the args to the component with the Controls addon:
 

@@ -1,0 +1,23 @@
+```js
+// my-component-with-query.stories.js
+
+import MyComponentThatHasAQuery, { MyQuery} from '../component-that-has-a-query';
+
+export const LoggedOut = () => <MyComponentThatHasAQuery />;
+LoggedOut.parameters: {
+  apolloClient: {
+    mocks: [
+      {
+        request: {
+          query: MyQuery,
+        },
+        result: {
+          data: {
+            viewer: null
+          },
+        },
+      },
+    ],
+  },
+ };
+ ```

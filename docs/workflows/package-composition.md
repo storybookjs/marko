@@ -16,15 +16,15 @@ Composition happens automatically if the package [supports](#for-package-authors
 
 If you want to configure how the composed Storybook behaves, you can disable the `ref` element in your [`.storybook/main.js`](../configure/overview.md#configure-story-rendering)
 
-```js
-// .storybook/main.js
+<!-- prettier-ignore-start -->
 
-module.exports = {
-  // your Storybook configuration
-  refs: {
-    'package-name': { disable: true }
-}
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-main-disable-refs.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ### Changing versions
 
