@@ -53,10 +53,9 @@ NOTE: If you're generating argTypes in using another addon (like [docs](../writi
 
 </div>
 
-
 ### Action event handlers
 
-It is also possible to detect if your component is emitting the correct HTML events using the `parameters.actions.handles` [parameter](../writing-stories/parameters.md). 
+It is also possible to detect if your component is emitting the correct HTML events using the `parameters.actions.handles` [parameter](../writing-stories/parameters.md).
 
 <!-- prettier-ignore-start -->
 
@@ -72,4 +71,4 @@ This will bind a standard HTML event handler to the outermost HTML element rende
 
 ### Advanced / legacy usage
 
-There are also some older ways to use actions as documented in the [advanced README](../addons/actions/ADVANCED-README.md).
+There are also some older ways to use actions as documented in the [advanced README](../../addons/actions/ADVANCED.md).
