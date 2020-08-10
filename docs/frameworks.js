@@ -4,6 +4,7 @@ module.exports = {
     'vue',
     'angular',
     'ember',
+    'web-components',
     'html',
     'mithril',
     'marko',
@@ -38,7 +39,7 @@ module.exports = {
         },
         {
           name: 'Controls',
-          supported: ['react', 'vue', 'rax'],
+          supported: ['react', 'vue', 'angular', 'web-components', 'ember'],
           path: 'essentials/controls',
         },
       ],
