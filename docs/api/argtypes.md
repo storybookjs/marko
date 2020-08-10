@@ -8,8 +8,6 @@ NOTE: This API is experimental and may change outside of the typical semver rele
 
 </div>
 
-<br/>
-
 ArgTypes are a first-class feature in Storybook for specifying the behaviour of [Args](../writing-stories/args.md). By specifying the type of an arg you constrain the values that it can take and can also provide information about args that are not explicitly set (i.e. not required).
 
 You can also use argTypes to “annotate” args with information that is used by addons that make use of those args, for instance to instruct the controls addons to render a color choose for a string-valued arg.
@@ -20,7 +18,7 @@ The most concrete realization of argTypes is the [Args Table](../writing-docs/do
 
 ## Automatic argType inference
 
-If you are using the Storybook [docs](../writing-docs/introduction.md) addon (installed by default as part of [essentials](../essentials/introduction.md)), then Storybook will infer a set of argTypes for each story based on the `component` specified in the [default export](#default-export) of the CSF file.
+If you are using the Storybook [docs](../writing-docs/introduction.md) addon (installed by default as part of [essentials](../essentials/introduction.md)), then Storybook will infer a set of argTypes for each story based on the `component` specified in the [default export](./csf.md#default-export) of the CSF file.
 
 To do so, Storybook uses various static analysis tools depending on your framework.
 

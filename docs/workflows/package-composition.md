@@ -79,15 +79,10 @@ The service serves uploaded Storybooks and makes the following available:
 - Support for `/stories.json`
 - Support for `/metadata.json` and the `releases` field.
 
-Examples of such services:
-
-- [chromatic.com](https://www.chromatic.com/)
+Examples of such services: [chromatic.com](https://www.chromatic.com/).
 
 ### CHP level 0
 
 The service can serve uploaded Storybooks. There is no special integration with Storybook APIs.
 
-Examples of such services:
-
-- [Netlify](https://www.netlify.com/)
-- [S3](https://aws.amazon.com/en/s3/)
+Examples of such services: [Netlify](https://www.netlify.com/) and [S3](https://aws.amazon.com/en/s3/).

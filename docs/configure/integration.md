@@ -14,9 +14,9 @@ The value should be an async function that receives a webpack config and eventua
 
 By default, Storybook's webpack configuration will allow you to:
 
-- Import Images and other static files
+#### Import Images and other static files
 
-  You can import images and other local files and have them built into the Storybook:
+You can import images and other local files and have them built into the Storybook:
 
 <!-- prettier-ignore-start -->
 
@@ -28,9 +28,9 @@ By default, Storybook's webpack configuration will allow you to:
 
 <!-- prettier-ignore-end -->
 
-- Import JSON as JavaScript
+#### Import JSON as JavaScript
 
-  You can import `.json` files and have them expanded to a JavaScript object:
+You can import `.json` files and have them expanded to a JavaScript object:
 
 <!-- prettier-ignore-start -->
 
