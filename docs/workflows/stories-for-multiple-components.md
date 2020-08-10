@@ -75,8 +75,10 @@ OneItem.args = {
 
 Now that `children` is an arg, we can potentially reuse it in another story.
 
-<div class="aside"/>
+<div class="aside">
+
 As things stand (we hope to improve this soon) you cannot edit children in a control yet.
+
 </div>
 
 ## Creating a Template Component
