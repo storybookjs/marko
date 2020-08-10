@@ -60,7 +60,7 @@ Let's look at a more realistic example to see how MDX works:
   ]}
 />
 
-<!-- prettier-ignore-end -->s
+<!-- prettier-ignore-end -->
 
 And here's how that gets rendered in Storybook:
 
