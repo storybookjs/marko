@@ -10,8 +10,6 @@ Storybook Viewport Addon allows your stories to be displayed in different sizes 
 
 Viewport is part of [essentials](https://storybook.js.org/docs/react/essentials/introduction) and so is installed in all new Storybooks by default. If you need to add it to your Storybook, you can run:
 
-Install the following npm module:
-
 ```sh
 npm i -D @storybook/addon-viewport
 ```

@@ -14,8 +14,6 @@ The Toolbars addon controls global story rendering options from [Storybook's](ht
 
 Toolbars is part of [essentials](https://storybook.js.org/docs/react/essentials/introduction) and so is installed in all new Storybooks by default. If you need to add it to your Storybook, you can run:
 
-Install the following npm module:
-
 ```sh
 npm i -D @storybook/addon-toolbars
 ```
