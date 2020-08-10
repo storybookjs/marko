@@ -5,16 +5,27 @@ title: 'Environment variables'
 You can use environment variables in Storybook to change its behaviour in different “modes”.
 If you supply an environment variable prefixed with `STORYBOOK_`, it will be available in `process.env`:
 
-```sh
-STORYBOOK_THEME=red STORYBOOK_DATA_KEY=12345 npm run storybook
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-set-environment-variables.sh.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 Then we can access these environment variables anywhere inside our preview JavaScript code like below:
 
-```js
-console.log(process.env.STORYBOOK_THEME);
-console.log(process.env.STORYBOOK_DATA_KEY);
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-read-environment-variables.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 You can also access these variables in your custom `<head>`/`<body>` using the substitution `%STORYBOOK_X%`, for example: `%STORYBOOK_THEME%` will become `red`.
 

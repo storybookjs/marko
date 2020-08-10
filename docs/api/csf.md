@@ -2,8 +2,6 @@
 title: 'Component Story Format (CSF)'
 ---
 
-### Component Story Format (CSF)
-
 Storybook's Component Story Format (CSF) is the recommended way to [write stories](../writing-stories/introduction.md) since Storybook 5.2. [Read the announcement](https://medium.com/storybookjs/component-story-format-66f4c32366df) to learn more about how it came to be.
 
 <div style="background-color:#F8FAFC">
@@ -20,7 +18,7 @@ In CSF, stories and component metadata are defined as ES Modules. Every componen
 
 CSF is supported in all frameworks except React Native, where you should use the [storiesOf API](./storiesof.md) instead.
 
-#### Default export
+## Default export
 
 The default export defines metadata about your component, including the `component` itself, its `title` (where it will show up in the [navigation UI story hierarchy](../writing-stories/docs/writing-stories/naming-components-and-hierarchy.md#sorting-stories)), [decorators](../writing-stories/decorators.md), and [parameters](../writing-stories/parameters.md).
 
@@ -40,7 +38,7 @@ export default {
 
 For more examples, see [writing stories](../writing-stories/introduction.md).
 
-#### Named story exports
+## Named story exports
 
 With CSF, every named export in the file represents a story function by default.
 
@@ -83,7 +81,7 @@ Simple.decorators = [ ... ];
 Simple.parameters = { ... };
 ```
 
-#### Args story inputs
+## Args story inputs
 
 Starting in SB 6.0, stories accept named inputs called Args. Args are dynamic data that are provided (and possibly updated by) Storybook and its addons.
 
@@ -128,7 +126,7 @@ Not only are these versions shorter and easier to write than their no-args count
 
 For more information on setting up [Docs](../writing-docs/introduction.md) and [Actions](../essentials/actions.md), see their respective documentation.
 
-#### Storybook export vs name handling
+## Storybook export vs name handling
 
 Storybook handles named exports and `story.name` slightly differently. When should you use one vs. the other?
 
@@ -161,7 +159,7 @@ You should use the `story.name` option in the following cases:
 1. You want the name to show up in the Storybook UI in a way that's not possible with a named export, e.g. reserved keywords like "default", special characters like emoji, spacing/capitalization other than what's provided by `storyNameFromExport`.
 2. You want to preserve the Story ID independently from changing how it's displayed. Having stable Story ID's is useful for integration with third party tools.
 
-#### Non-story exports
+## Non-story exports
 
 In some cases, you may want to export a mixture of story and non-stories. For example, it can be useful to export data that's used in your stories.
 

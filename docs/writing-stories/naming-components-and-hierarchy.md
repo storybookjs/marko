@@ -18,8 +18,7 @@ Yields this:
 
 ![Stories hierarchy without paths](./naming-hierarchy-no-path.png)
 
-
-### Grouping
+## Grouping
 
 It is also possible to group related components in an expandable interface in order to help with Storybook organization. To do so, use the `/` as a separator:
 
@@ -47,13 +46,13 @@ Yields this:
 
 ![Stories hierarchy with paths](./naming-hierarchy-with-path.png)
 
-### Roots
+## Roots
 
 By default the top-level grouping will be displayed as a “root” in the UI (the all-caps, non expandable grouping in the screenshot above). If you prefer, you can [configure Storybook](..configure/sidebar-and-urls.md#roots) to not show roots.
 
-We recommend naming components according to the file hierarchy. 
+We recommend naming components according to the file hierarchy.
 
-### Sorting stories
+## Sorting stories
 
 By default, stories are sorted in the order in which they were imported. This can be overridden by adding `storySort` to the `options` parameters in your `preview.js` file.
 
@@ -81,11 +80,11 @@ The `storySort` can also accept a configuration object.
 
 <!-- prettier-ignore-end -->
 
-| Field         | Type          | Description                                            | Required | Default Value          |Example                  |
-| ------------- |:-------------:|:------------------------------------------------------:|:--------:|:----------------------:|:-----------------------:|
-| **method**    | String        |Tells Storybook in which order the stories are displayed|No        |Storybook configuration |`'alphabetical'`         |
-| **order**     | Array         |The stories to be show, ordered by supplied name        |No        |Empty Array `[]`        |`['Intro', 'Components']`|
-| **locales**   | String        |The locale required to be displayed                     |No        |System locale           |`en-US`                  |
+| Field       |  Type  |                       Description                        | Required |      Default Value      |          Example          |
+| ----------- | :----: | :------------------------------------------------------: | :------: | :---------------------: | :-----------------------: |
+| **method**  | String | Tells Storybook in which order the stories are displayed |    No    | Storybook configuration |     `'alphabetical'`      |
+| **order**   | Array  |     The stories to be show, ordered by supplied name     |    No    |    Empty Array `[]`     | `['Intro', 'Components']` |
+| **locales** | String |           The locale required to be displayed            |    No    |      System locale      |          `en-US`          |
 
 To sort your stories alphabetically, set `method` to `'alphabetical'` and optionally set the `locales` string. To sort your stories using a custom list, use the `order` array; stories that don't match an item in the `order` list will appear after the items in the list.
 

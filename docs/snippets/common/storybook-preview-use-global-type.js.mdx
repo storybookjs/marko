@@ -1,0 +1,16 @@
+```js
+// .storybook/preview.js
+
+import { ThemeProvider } from 'styled-components';
+import { StoryContext, StoryGetter, StoryWrapper } from '@storybook/addons';
+
+const withThemeProvider=(Story,context)=>{
+  const theme = getTheme(context.globals.theme);
+  return (
+    <ThemeProvider theme={theme}>
+      <Story {...context} />
+    </ThemeProvider>
+  )
+}
+export const decorators = [withThemeProvider];
+```

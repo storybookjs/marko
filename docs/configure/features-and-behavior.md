@@ -4,23 +4,16 @@ title: 'Features and behavior'
 
 To control the layout of Storybook’s UI you can use the `setConfig` addons API in your [`.storybook/manager.js`](./overview.md#configure-story-rendering):
 
-```js
-import { addons } from '@storybook/addons';
+<!-- prettier-ignore-start -->
 
-addons.setConfig({
-  isFullscreen: false,
-  showNav: true,
-  showPanel: true,
-  panelPosition: 'bottom',
-  sidebarAnimations: true,
-  enableShortcuts: true,
-  isToolshown: true,
-  theme: undefined,
-  selectedPanel: undefined,
-  initialActive: 'sidebar',
-  showRoots: false,
-});
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-config-layout.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
 The following table details how to use the API values:
 
 | Name                  | Type          | Description                                                   | Example Value                                  |
