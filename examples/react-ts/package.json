@@ -1,6 +1,6 @@
 {
   "name": "@storybook/example-react-ts",
-  "version": "6.0.0-rc.29",
+  "version": "6.0.0-rc.30",
   "private": true,
   "scripts": {
     "build-storybook": "cross-env STORYBOOK_DISPLAY_WARNING=true DISPLAY_WARNING=true build-storybook -c ./",
@@ -8,9 +8,9 @@
     "storybook": "cross-env STORYBOOK_DISPLAY_WARNING=true DISPLAY_WARNING=true start-storybook -p 9011 -c ./ --no-dll"
   },
   "dependencies": {
-    "@storybook/addon-controls": "6.0.0-rc.29",
-    "@storybook/addon-essentials": "6.0.0-rc.29",
-    "@storybook/react": "6.0.0-rc.29",
+    "@storybook/addon-controls": "6.0.0-rc.30",
+    "@storybook/addon-essentials": "6.0.0-rc.30",
+    "@storybook/react": "6.0.0-rc.30",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "prop-types": "15.7.2",
