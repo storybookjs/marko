@@ -1,0 +1,33 @@
+```js
+import React from 'react';
+
+import {
+  Title,
+  Subtitle,
+  Description,
+  Primary,
+  Props,
+  Stories,
+} from '@storybook/addon-docs/blocks';
+
+import { Button } from './Button';
+
+export default {
+  title: 'Components/Button',
+  component: Button,
+  parameters: {
+    docs: {
+      page: () => (
+        <>
+          <Title />
+          <Subtitle />
+          <Description />
+          <Primary />
+          <Props />
+          <Stories />
+        </>
+      ),
+    },
+  },
+};
+```

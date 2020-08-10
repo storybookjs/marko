@@ -1,18 +1,6 @@
 module.exports = {
-  frameworks: [
-    'react',
-    'vue',
-    'angular',
-    'ember',
-    'web-components',
-    'html',
-    'mithril',
-    'marko',
-    'svelte',
-    'riot',
-    'preact',
-    'rax',
-  ],
+  coreFrameworks: ['react', 'vue', 'angular', 'web-components'],
+  communityFrameworks: ['ember', 'html', 'mithril', 'marko', 'svelte', 'riot', 'preact', 'rax'],
   featureGroups: [
     {
       name: 'Essentials',
@@ -114,7 +102,7 @@ module.exports = {
         {
           name: 'storiesOf stories',
           unsupported: [],
-          repoPath: 'lib/core/ADVANCED.md',
+          repoPath: 'lib/core/docs/storiesOf.md',
         },
         {
           name: 'Source',

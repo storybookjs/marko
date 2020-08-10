@@ -25,43 +25,49 @@ The key ingredients are the [**`default` export**](https://developer.mozilla.org
 
 The default export metadata controls how Storybook lists your stories and provides information used by addons. For example, here’s the default export for a story file `Button.stories.js`:
 
-```js
-// Button.stories.js
+<!-- prettier-ignore-start -->
 
-import { Button } from './Button';
+<CodeSnippets
+  paths={[
+    'react/button-story-default-export-with-component.js.mdx',
+    'react/button-story-default-export-with-component.ts.mdx',
+    'angular/button-story-default-export-with-component.ts.mdx',
+  ]}
+/>
 
-export default {
-  title: 'Components/Button',
-  component: Button,
-};
-```
+<!-- prettier-ignore-end -->
 
 ### Defining stories
 
 Use the named exports of a CSF file to define your component’s stories. Here’s how to render `Button` in the “primary” state and export a story called `Primary`.
 
-```js
-// Button.stories.js
+<!-- prettier-ignore-start -->
 
-import { Button } from './Button';
-export default {
-  title: 'Components/YourComponent',
-  component: YourComponent,
-};
-export const Primary = () => <Button primary label="Button" />;
-```
+<CodeSnippets
+  paths={[
+    'react/button-story.js.mdx',
+    'react/button-story.ts.mdx',
+    'angular/button-story.ts.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ### Rename stories
 
 You can rename any particular story you need. For instance to give it a more clearer name. Here's how you can change the name of the `Primary` story:
 
-```js
-import { Button } from './Button';
+<!-- prettier-ignore-start -->
 
-export const Primary = () => <Button primary label="Button" />;
+<CodeSnippets
+  paths={[
+    'react/button-story-rename-story.js.mdx',
+    'react/button-story-rename-story.ts.mdx',
+    'angular/button-story-rename-story.ts.mdx',
+  ]}
+/>
 
-Primary.storyName = 'I am the primary';
-```
+<!-- prettier-ignore-end -->
 
 Your story will now be show in the sidebar with the given text.
 
@@ -69,14 +75,17 @@ Your story will now be show in the sidebar with the given text.
 
 A story is a function that describes how to render a component. You can have multiple stories per component. The simplest way to create stories is to render a component with different arguments multiple times.
 
-```js
-// Button.stories.js
+<!-- prettier-ignore-start -->
 
-export const Primary = () => <Button background="#ff0" label="Button" />;
-export const Secondary = () => <Button background="#ff0" label=”😄👍😍💯" />;
-export const Tertiary = () => <Button background="#ff0" label="📚📕📈🤓" />;
+<CodeSnippets
+  paths={[
+    'react/button-story-with-emojis.js.mdx',
+    'react/button-story-with-emojis.ts.mdx',
+    'angular/button-story-with-emojis.ts.mdx',
+  ]}
+/>
 
-```
+<!-- prettier-ignore-end -->
 
 This is straightforward for components with few stories, but can be repetitive with many stories.
 
@@ -84,44 +93,33 @@ This is straightforward for components with few stories, but can be repetitive w
 
 Refine this pattern by defining a master template for a component’s stories that allows you to pass in `args`. This reduces the unique code you’ll need to write and maintain for each story.
 
-```js
-// We create a “template” of how args map to rendering
-const Template = (args) => <Button {...args} />;
+<!-- prettier-ignore-start -->
 
-// Each story then reuses that template
-export const Primary = Template.bind({});
-Primary.args = { background="#ff0",  label: 'Button' };
+<CodeSnippets
+  paths={[
+    'react/button-story-using-args.js.mdx',
+    'react/button-story-using-args.ts.mdx',
+    'angular/button-story-using-args.ts.mdx',
+  ]}
+/>
 
-export const Secondary = Template.bind({});
-Secondary.args = {  ...Primary.args,  label: '😄👍😍💯',};
-
-export const Tertiary = Template.bind({});
-Tertiary.args = {  ...Primary.args,  label: '📚📕📈🤓',};
-```
+<!-- prettier-ignore-end -->
 
 The template is reused across stories. Template.bind({}) makes a copy of the function which reduces code duplication. Similarly,`...Primary.args` makes a copy of the data, reducing data duplication.
 
 What’s more, you can import args to reuse when writing stories for other components. This is useful when you’re building composite components. For example, if we make a `ButtonGroup` story, we might remix two stories from its child component `Button`.
 
-```js
-// ButtonGroup.stories.js
+<!-- prettier-ignore-start -->
 
-import { ButtonGroup } from '../ButtonGroup';
-import { Primary, Secondary } from '../Button.stories';
+<CodeSnippets
+  paths={[
+    'react/button-group-story.js.mdx',
+    'react/button-group-story.ts.mdx',
+    'angular/button-group-story.ts.mdx',
+  ]}
+/>
 
-export default {
-  title: 'ButtonGroup',
-  component: ButtonGroup,
-};
-
-const Template = (args) => <ButtonGroup {...args} />;
-
-export const Pair = Template.bind({});
-Pair.args = {
-  buttons: [Primary.args, Secondary.args],
-  orientation: 'horizontal',
-};
-```
+<!-- prettier-ignore-end -->
 
 When Button’s signature changes, you only need to change Button’s stories to reflect the new schema. ButtonGroup’s stories will automatically be updated. This pattern allows you to reuse your data definitions up and down your component hierarchy, making your stories more maintainable.
 
@@ -149,25 +147,17 @@ Parameters are Storybook’s method of defining static metadata for stories. A s
 
 For instance, suppose you wanted to test your Button component against a different set of backgrounds than the other components in your app. You might add a component-level `backgrounds` parameter:
 
-```js
-// Button.stories.js
+<!-- prettier-ignore-start -->
 
-import Button from './Button';
+<CodeSnippets
+  paths={[
+    'react/button-story-with-blue-args.js.mdx',
+    'react/button-story-with-blue-args.ts.mdx',
+    'angular/button-story-with-blue-args.ts.mdx',
+  ]}
+/>
 
-export default {
-  title: 'Button',
-  component: Button,
-  parameters: {
-    backgrounds: {
-      values: [
-        { name: 'red', value: '#f00' },
-        { name: 'green', value: '#0f0' },
-        { name: 'blue', value: '#00f' },
-      ],
-    },
-  },
-};
-```
+<!-- prettier-ignore-end -->
 
 ![Background colors parameter](./parameters-background-colors.png)
 
@@ -179,23 +169,16 @@ Decorators are a mechanism to wrap a component in arbitrary markup when renderin
 
 A simple example is adding padding to a component’s stories. Accomplish this using a decorator that wraps the stories in a `div` with padding, like so:
 
-```js
-// Button.stories.js
+<!-- prettier-ignore-start -->
 
-import Button from './Button';
+<CodeSnippets
+  paths={[
+    'react/button-story-component-decorator.js.mdx',
+    'react/button-story-component-decorator.ts.mdx',
+  ]}
+/>
 
-export default {
-  title: 'Button',
-  component: Button,
-  decorators: [
-    (Story) => (
-      <div style={{ padding: '3em' }}>
-        <Story />
-      </div>
-    ),
-  ],
-};
-```
+<!-- prettier-ignore-end -->
 
 Decorators [can be more complex](./decorators.md#context-for-mocking) and are often provided by [addons](../configure/storybook-addons.md). You can also configure decorators at the [story](./decorators.md#story-decorators), [component](./decorators.md#component-decorators) and [global](./decorators.md#global-decorators) level.
 
@@ -203,60 +186,45 @@ Decorators [can be more complex](./decorators.md#context-for-mocking) and are of
 
 When building design systems or component libraries, you may have two or more components that are designed to work together. For instance, if you have a parent `List` component, it may require child `ListItem` components.
 
-```js
-import List from './List';
+<!-- prettier-ignore-start -->
 
-export default {
-  component: List,
-  title: 'List',
-};
+<CodeSnippets
+  paths={[
+    'react/list-story-starter.js.mdx',
+    'react/list-story-starter.ts.mdx',
+    'angular/list-story-starter.ts.mdx'
+  ]}
+/>
 
-// Always an empty list, not super interesting
-const Template = (args) => <List {...args} />;
-```
+<!-- prettier-ignore-end -->
 
 In such cases, it makes sense to render something a different function for each story:
 
-```js
-import List from './List';
-import ListItem from './ListItem';
+<!-- prettier-ignore-start -->
 
-export default {
-  title: 'List',
-  component: List,
-  subcomponents: { ListItem },
-};
+<CodeSnippets
+  paths={[
+    'react/list-story-expanded.js.mdx',
+    'react/list-story-expanded.ts.mdx',
+    'angular/list-story-expanded.ts.mdx'
+  ]}
+/>
 
-export const Empty = (args) => <List {...args} />;
-
-export const OneItem = (args) => (
-  <List {...args}>
-    <ListItem />
-  </List>
-);
-
-export const ManyItems = (args) => (
-  <List {...args}>
-    <ListItem />
-    <ListItem />
-    <ListItem />
-  </List>
-);
-```
+<!-- prettier-ignore-end -->
 
 You can also reuse stories from the child `ListItem` in your `List` component. That’s easier to maintain because you don’t have to keep the identical story definitions up to date in multiple places.
 
-```js
-import { Selected, Unselected } from './ListItem.stories';
+<!-- prettier-ignore-start -->
 
-export const ManyItems = (args) => (
-  <List {...args}>
-    <Selected {...Selected.args} />
-    <Unselected {...Unselected.args} />
-    <Unselected {...Unselected.args} />
-  </List>
-);
-```
+<CodeSnippets
+  paths={[
+    'react/list-story-reuse-data.js.mdx',
+    'react/list-story-reuse-data.ts.mdx',
+    'angular/list-story-reuse-data.ts.mdx'
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 <div class="aside">
  

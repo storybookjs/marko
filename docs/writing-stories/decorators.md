@@ -12,20 +12,16 @@ Some components require a “harness” to render in a useful way. For instance 
 
 ![Story without padding](./decorators-no-padding.png)
 
-```js
-// your-component.story.js
+<!-- prettier-ignore-start -->
 
-export default {
-  component: TextComponent,
-  decorators: [
-    (Story) => (
-      <div style={{ margin: '3em' }}>
-        <Story />
-      </div>
-    ),
-  ],
-};
-```
+<CodeSnippets
+  paths={[
+    'react/your-component-with-decorator.js.mdx',
+    'react/your-component-with-decorator.ts.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ![Story with padding](./decorators-padding.png)
 
@@ -33,18 +29,15 @@ export default {
 
 Some libraries require components higher up in the component hierarchy to render properly. For example in Styled Components, a `ThemeProvider` is required if your components make use of themes. Add a single global decorator that add this context to to all stories in [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering):
 
-```js
-// .storybook/preview.js
+<!-- prettier-ignore-start -->
 
-import { ThemeProvider } from 'styled-components';
-export const decorators = [
-  (Story) => (
-    <ThemeProvider theme="default">
-      <Story />
-    </ThemeProvider>
-  ),
-];
-```
+<CodeSnippets
+  paths={[
+    'react/storybook-preview-with-styled-components-decorator.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 In the example above, the theme is hardcoded to a mock value of `default` but you may want to vary that value, either on a per-story basis (if it is data you are mocking that is relevant to the other args of the story) or in a user controlled way (for instance to provide a theme switcher).
 
@@ -62,10 +55,16 @@ If your components are “connected” and require side-loaded data to render, y
 
 To define a decorator for a single story, use the `decorators` key on a named export:
 
-```js
-export const Primary = …
-Primary.decorators = [(Story) => <div style={{ margin: '3em' }}><Story/></div>]
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'react/button-story-decorator.js.mdx',
+    'react/button-story-decorator.ts.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 This is useful to ensure that the story remains a “pure” rendering of the component under test and any extra HTML or components you need to add don’t pollute that. In particular the [Source](../writing-docs/doc-blocks.md#source) docblock works best when you do this.
 
@@ -73,34 +72,31 @@ This is useful to ensure that the story remains a “pure” rendering of the co
 
 To define a decorator for all stories of a component, use the `decorators` key of the default CSF export:
 
-```js
-import Button from './Button';
-export default {
-  title: 'Button',
-  component: Button,
-  decorators: [
-    (Story) => (
-      <div style={{ margin: '3em' }}>
-        <Story />
-      </div>
-    ),
-  ],
-};
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'react/button-story-component-decorator.js.mdx',
+    'react/button-story-component-decorator.ts.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ## Global decorators
 
 We can also set a decorator for **all stories** via the `decorators` export of your [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering.md) file (this is the file where you configure all stories):
 
-```js
-export const decorators = [
-  (Story) => (
-    <div style={{ margin: '3em' }}>
-      <Story />
-    </div>
-  ),
-];
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'react/storybook-preview-global-decorator.js.mdx',
+    'react/storybook-preview-global-decorator.ts.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ## Decorator inheritance
 

@@ -34,4 +34,6 @@ As an example, if the background addon wasn't necessary to your work, you would 
 
 <!-- prettier-ignore-end -->
 
-You can use the following keys for each individual addon: `actions`, `backgrounds`, `controls`, `docs`, `viewport`
+<div class="aside">
+  You can use the following keys for each individual addon: `actions`, `backgrounds`, `controls`, `docs`, `viewport`.
+</div>

@@ -10,15 +10,15 @@ The best practice for docs is for each component to have its own set of document
 
 Storybook uses the `component` key in the story file’s default export to extract the component's description and props.
 
-```js
-// Button.stories.js
-import { Button } from './Button';
+<!-- prettier-ignore-start -->
 
-export default {
-  title: 'Storybook Examples/Button',
-  component: Button,
-};
-```
+<CodeSnippets
+  paths={[
+    'common/my-component-story.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ## Subcomponents parameter
 
@@ -26,17 +26,16 @@ Sometimes it's useful to document multiple components together. For example, a c
 
 DocsPage has the concept of a "primary" component that is defined by the `component` parameter. It also accepts one or more `subcomponents`.
 
-```js
-// ButtonGroup.stories.js
+<!-- prettier-ignore-start -->
 
-import { Button, ButtonGroup } from './ButtonGroup';
+<CodeSnippets
+  paths={[
+    'common/button-group-story-subcomponents.js.mdx',
+    'common/button-group-story-subcomponents.ts.mdx'
+  ]}
+/>
 
-export default {
-  title: 'Path/to/ButtonGroup',
-  component: ButtonGroup,
-  subcomponents: { Button },
-};
-```
+<!-- prettier-ignore-end -->
 
 ![Subcomponents in Docs Page](./docspage-subcomponents.png)
 
@@ -58,41 +57,44 @@ Override the `docs.page` [parameter](../writing-stories/parameters.md):
 
 Override the `docs.page` [parameter](../writing-stories/parameters.md#story-parameters) in the story definition.
 
-```js
-// Button.stories.js
+<!-- prettier-ignore-start -->
 
-export const Primary = ButtonStory.bind({});
-Primary.parameters = { docs: { page: null } };
-```
+<CodeSnippets
+  paths={[
+    'common/button-story-disable-docspage.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ### Component-level
 
 Override the `docs.page` [parameter](../writing-stories/parameters.md#component-parameters) in the default export of the story file.
 
-```js
-// Button.stories.js
+<!-- prettier-ignore-start -->
 
-import { Button } from './Button';
-export default {
-  title: 'Storybook Examples/Button',
-  component: Button,
-  parameters: {
-    docs: {
-      page: null,
-    },
-  },
-};
-```
+<CodeSnippets
+  paths={[
+    'common/button-story-disable-docspage-component.js.mdx',
+    'common/button-story-disable-docspage-component.ts.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ### Global-level
 
 Override the `docs.page` [parameter](../writing-stories/parameters.md#global-parameters) in [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering).
 
-```js
-// .storybook/preview.js
+<!-- prettier-ignore-start -->
 
-export const parameters { docs: { page: null } });
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-disable-docspage.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ## Remixing DocsPage using doc blocks
 
@@ -102,41 +104,16 @@ If you want to make minor customizations to the default DocsPage but don’t wan
 
 Here's an example of rebuilding DocsPage for the Button component using doc blocks:
 
-```js
-// Button.stories.js
+<!-- prettier-ignore-start -->
 
-import React from 'react';
+<CodeSnippets
+  paths={[
+    'common/button-story-remix-docspage.js.mdx',
+    'common/button-story-remix-docspage.ts.mdx',
+  ]}
+/>
 
-import {
-  Title,
-  Subtitle,
-  Description,
-  Primary,
-  Props,
-  Stories,
-} from '@storybook/addon-docs/blocks';
-
-import { Button } from './Button';
-
-export default {
-  title: 'Components/Button',
-  component: Button,
-  parameters: {
-    docs: {
-      page: () => (
-        <>
-          <Title />
-          <Subtitle />
-          <Description />
-          <Primary />
-          <Props />
-          <Stories />
-        </>
-      ),
-    },
-  },
-};
-```
+<!-- prettier-ignore-end -->
 
 Apply a similar technique to remix the DocsPage at the [story](#story-level), [component](#component-level), or [global](#global-level) level.
 
@@ -162,22 +139,15 @@ Different frameworks will need to approach this in different ways. Angular, for 
 
 Here’s an example of how to render Vue stories inline. The following docs config block uses `prepareForInline` along with an effect hook provided by [@egoist/vue-to-react](https://github.com/egoist/vue-to-react).
 
-```js
-// .storybook/preview.js
+<!-- prettier-ignore-start -->
 
-import React from 'react';
-import { render } from 'react-dom';
-import toReact from '@egoist/vue-to-react';
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-prepareforinline.js.mdx',
+  ]}
+/>
 
-export const parameters = {
-  docs: {
-    prepareForInline: (storyFn, { args }) => {
-      const Story = toReact(storyFn());
-      return <Story {...args} />;
-    },
-  },
-};
-```
+<!-- prettier-ignore-end -->
 
 With this function, anyone using the docs addon for [@storybook/vue](https://github.com/storybookjs/storybook/tree/master/app/vue) can make their stories render inline, either globally with the inlineStories docs parameter, or on a per-story-basis using the inline prop on the `<Story>` doc block.
 
