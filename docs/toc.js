@@ -155,7 +155,7 @@ module.exports = {
           type: 'link',
         },
         {
-          pathSegment: 'integration',
+          pathSegment: '',
           title: 'Integration',
           type: 'menu',
           children: [
