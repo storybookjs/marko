@@ -23,27 +23,17 @@ Storybook Docs automatically generates component args tables for components in s
 
 This is extremely useful, but it can be further expanded. Additional information can be added to the component to better document it:
 
-```js
-// Button.js
+<!-- prettier-ignore-start -->
 
-import React from 'react';
-import PropTypes from 'prop-types';
+<CodeSnippets
+  paths={[
+    'react/button-component-with-proptypes.js.mdx',
+    'react/button-component-with-proptypes.ts.mdx',
+    'angular/button-component-with-proptypes.ts.mdx'
+  ]}
+/>
 
-export default function Button({ isDisabled, content }) {
-  return <button disabled={isDisabled}>{content}</button>;
-}
-
-Button.propTypes = {
-  /**
-   Checks if the button should be disable
-  */
-  isDisabled: PropTypes.bool.isRequired,
-  /**
-  The display content of the button
-  */
-  content: PropTypes.string.isRequired,
-};
-```
+<!-- prettier-ignore-end -->
 
 By including the additional information, the args table will be updated. Offering a richer experience for any stakeholders involved.
 
@@ -51,32 +41,29 @@ By including the additional information, the args table will be updated. Offerin
 
 To use the `ArgsTable` in [DocsPage](./docs-page.md#component-parameter), export a component property on your stories metadata:
 
-```js
-// MyComponent.stories.js
+<!-- prettier-ignore-start -->
 
-import { MyComponent } from './MyComponent';
+<CodeSnippets
+  paths={[
+    'common/my-component-story.js.mdx',
+  ]}
+/>
 
-export default {
-  title: 'MyComponent',
-  component: MyComponent,
-};
-// your templates and stories
-```
+<!-- prettier-ignore-end -->
 
 ### MDX
 
 To use the `ArgsTable` in MDX, use the Props block:
 
-```js
-// MyComponent.stories.mdx
+<!-- prettier-ignore-start -->
 
-import { Props } from '@storybook/addon-docs/blocks';
-import { MyComponent } from './MyComponent';
+<CodeSnippets
+  paths={[
+    'common/component-story-mdx-argstable-propsblock.mdx.mdx',
+  ]}
+/>
 
-# My Component!
-
-<Props of={MyComponent} />
-```
+<!-- prettier-ignore-end -->
 
 ### Customizing
 
@@ -107,26 +94,15 @@ The API documentation of `ArgTypes` is detailed in a [separate section](../api/m
 
 For instance:
 
-```js
-export default {
-  title: 'Button',
-  component: Button,
-  argTypes: {
-    label: {
-      description: 'overwritten description',
-      table: {
-        type: {
-          summary: 'something short',
-          detail: 'something really really long',
-        },
-      },
-      control: {
-        type: null,
-      },
-    },
-  },
-};
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/component-story-csf-argstable-customization.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 This would render a row with a modified description, a type display with a dropdown that shows the detail, and no control.
 
@@ -141,28 +117,15 @@ For instance you can use:
 
 To customize `argTypes` in MDX, you can set an `mdx` prop on the `Meta` or `Story` components:
 
-```js
+<!-- prettier-ignore-start -->
 
-<Meta
-  title="MyComponent"
-  component={MyComponent}
-  argTypes={{
-    label: {
-        name: 'label',
-        /* other argtypes required */
-    },
-  }}
+<CodeSnippets
+  paths={[
+    'common/component-story-mdx-argtypes.mdx.mdx',
+  ]}
 />
 
-<Story name="some story" argTypes={{
-  label: {
-      name: 'different label',
-      /* other required data */
-    }
-}}>
-  {/* story contents */}
-</Story>
-```
+<!-- prettier-ignore-end -->
 
 ### Controls
 
@@ -180,36 +143,29 @@ In DocsPage, the `Source` block appears automatically within each story’s [Can
 
 To customize the source snippet that’s displayed for a story, set the `docs.source.code` parameter:
 
-```js
+<!-- prettier-ignore-start -->
 
-export const CustomSource = () => Template.bind({});
+<CodeSnippets
+  paths={[
+    'common/component-story-custom-source.js.mdx',
+  ]}
+/>
 
-CustomSource.parameters = {
-  docs: {
-      source: {
-          code: 'Some custom string here';
-      }
-    },
-};
-```
+<!-- prettier-ignore-end -->
 
 ### MDX
 
 You can also use the `Source` block in MDX. It accepts either a story ID or `code` snippet. Use the `language` for syntax highlighting.
 
-```js
-import { Source } from '@storybook/addon-docs/blocks';
-import dedent from 'ts-dedent';
+<!-- prettier-ignore-start -->
 
-<Source
-  language="css"
-  code={dedent`
-     .container {
-       display: grid | inline-grid;
-     }
-  `}
-/>;
-```
+<CodeSnippets
+  paths={[
+    'common/component-story-mdx-dedent.mdx.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ## Description
 
@@ -221,46 +177,29 @@ Storybook Docs shows a component’s description extracted from the source code 
 
 In DocsPage, a component’s description is shown at the top of the page. For [supported frameworks](https://github.com/storybookjs/storybook/tree/next/addons/docs#framework-support), the component description is automatically extracted from a docgen component above the component in its source code. It can also be set by the `docs.description` parameter.
 
-```js
+<!-- prettier-ignore-start -->
 
-export default {
-  title: 'CustomDescription'
-  parameters: {
-    docs: {
-        description: {
-            component: 'some component _markdown_'
-        }
-    },
-  }
-};
+<CodeSnippets
+  paths={[
+    'common/component-story-csf-description.js.mdx',
+  ]}
+/>
 
-export const WithStoryDescription = Template.bind({});
-WithStoryDescription.parameters = {
-  docs: {
-      description: {
-          story: 'some story **markdown**'
-        }
-    },
-};
-```
+<!-- prettier-ignore-end -->
 
 ### MDX
 
 In MDX, the `Description` shows the component’s description using the same heuristics as the DocsPage. It also accepts a `markdown` parameter to show any user-provided Markdown string.
 
-```js
+<!-- prettier-ignore-start -->
 
-import { Description } from '@storybook/addon-docs/blocks';
-import dedent from 'ts-dedent';
-import { Button } from './Button';
+<CodeSnippets
+  paths={[
+    'common/component-story-mdx-description.mdx.mdx',
+  ]}
+/>
 
-<Description of={Button} />
-<Description markdown={dedent`
-  ## Custom description
-
-  Insert fancy markdown here.
-`}/>
-```
+<!-- prettier-ignore-end -->
 
 ## Story
 
@@ -276,24 +215,27 @@ In DocsPage, a `Story` block is generated for each story in your [CSF](../api/cs
 
 In MDX, the `Story` block is not only a way of displaying stories, but also the primary way to define them. Storybook looks for `Story` instances with the `name` prop, either defined at the top level of the document, or directly beneath a [Canvas](#canvas) block defined at the top level:
 
-```js
-import { Story } from '@storybook/addon-docs/blocks';
-import { Button } from './Button';
+<!-- prettier-ignore-start -->
 
-export const Template = (args) => <Button {...args} />;
+<CodeSnippets
+  paths={[
+    'common/component-story-mdx-story-by-name.mdx.mdx',
+  ]}
+/>
 
-<Story name="Basic" args={{ label: ‘hello’ }}>
-  {Template.bind({})
-</Story>
-```
+<!-- prettier-ignore-end -->
 
 You can also reference existing stories in Storybook by ID:
 
-```js
-import { Story } from '@storybook/addon-docs/blocks';
+<!-- prettier-ignore-start -->
 
-<Story id="some-component--some-name" />;
-```
+<CodeSnippets
+  paths={[
+    'common/component-story-mdx-reference-storyid.mdx.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ### Inline rendering
 
@@ -315,33 +257,26 @@ In DocsPage, every story is wrapped in a `Canvas` block. The first story on the 
 
 In MDX, `Canvas` is more flexible: in addition to the DocsPage behavior, it can show multiple stories in one:
 
-```js
-import { Canvas } from '@storybook/addon-docs/blocks';
+<!-- prettier-ignore-start -->
 
-export const Template = (args) => <Badge {...args } />
+<CodeSnippets
+  paths={[
+    'common/mdx-canvas-multiple-stories.mdx.mdx',
+  ]}
+/>
 
-<Preview>
-  <Story name="warning" args={{status: 'warning', label: 'Warning'}}>
-    {Template.bind({})}
-  </Story>
-  <Story name="neutral" args={{status: 'neutral', label: 'Neutral' }}>
-    {Template.bind({})}
-  </Story>
-  <Story name="error" args={{status: 'error', label: 'Error' }}>
-    {Template.bind({})}
-  </Story>
-</Preview>
-```
+<!-- prettier-ignore-end -->
 
 You can also place non-story content inside a `Canvas` block:
 
-```js
-import { Canvas } from '@storybook/addon-docs/blocks';
-import { MyComponent } from './MyComponent';
-<Preview>
-  <h2>Some here</h2>
-  <MyComponent />
-</Preview>;
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/my-component-with-story-content.mdx.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 This renders the JSX content exactly as it would if you’d placed it directly in the MDX, but it also inserts the source snippet in a [Source](#source) block beneath the block.
