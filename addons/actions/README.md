@@ -14,7 +14,7 @@ Actions is part of [essentials](https://storybook.js.org/docs/react/essentials/i
 npm i -D @storybook/addon-actions
 ```
 
-Then, add following content to [`.storybook/main.js`](https://storybook.js.org/docs/react/configure/overview#Configure-your-Storybook-project):
+Then, add following content to [`.storybook/main.js`](https://storybook.js.org/docs/react/configure/overview#configure-your-storybook-project):
 
 ```js
 module.exports = {
