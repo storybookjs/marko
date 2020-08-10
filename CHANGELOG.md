@@ -1,3 +1,13 @@
+## 6.0.0-rc.30 (August 10, 2020)
+
+### Bug Fixes
+
+- Storyshots: Don't ship typescript files in dist ([#11792](https://github.com/storybookjs/storybook/pull/11792))
+
+### Maintenance
+
+- 6.0 documentation overhaul ([#11861](https://github.com/storybookjs/storybook/pull/11861))
+
 ## 6.0.0-rc.29 (August 7, 2020)
 
 ### Features
