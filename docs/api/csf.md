@@ -2,7 +2,7 @@
 title: 'Component Story Format (CSF)'
 ---
 
-Storybook's Component Story Format (CSF) is the recommended way to [write stories](../writing-stories/introduction.md) since Storybook 5.2. [Read the announcement](https://medium.com/storybookjs/component-story-format-66f4c32366df) to learn more about how it came to be.
+Component Story Format (CSF) is the recommended way to [write stories](../writing-stories/introduction.md). It's an [open standard](https://github.com/ComponentDriven/csf) based on ES6 modules that is portable beyond Storybook.
 
 <div class="aside">
 
@@ -10,9 +10,9 @@ If you are writing stories in the older `storiesOf()` syntax, you can find docum
 
 </div>
 
-In CSF, stories and component metadata are defined as ES Modules. Every component story file consists of a required **default export** and one or more **named exports**.
+In CSF, stories and component metadata are defined as ES Modules. Every component story file consists of a required [default export](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export#Using_the_default_export) and one or more [named exports](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export).
 
-CSF is supported in all frameworks except React Native, where you should use the [storiesOf API](./storiesof.md) instead.
+CSF is supported in all frameworks except React Native, where you should use the [storiesOf API](../../lib/core/docs/storiesOf.md) instead.
 
 ## Default export
 
@@ -53,13 +53,13 @@ export const WithProp = () => <MyComponent prop="value" />;
 
 The exported identifiers will be converted to "start case" using Lodash's [startCase](https://lodash.com/docs/#startCase) function. For example:
 
-| Identifier           |    Transformation    |
-| -------------------- | :------------------: |
-| **name**             |       **Name**       |
-| **someName**         |    **Some Name**     |
-| **someNAME**         |    **SSome NAME**    |
-| **some_custom_NAME** | **Some Custom NAME** |
-| **someName1234**     | **ome Name 1 2 3 4** |
+| Identifier       |  Transformation   |
+| ---------------- | :---------------: |
+| name             |       Name        |
+| someName         |     Some Name     |
+| someNAME         |     Some NAME     |
+| some_custom_NAME | Some Custom NAME  |
+| someName1234     | Some Name 1 2 3 4 |
 
 It's recommended to start export names with a capital letter.
 

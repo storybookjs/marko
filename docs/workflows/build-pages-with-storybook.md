@@ -81,7 +81,7 @@ This approach is particularly useful when the various subcomponents export a com
 
 ## Mocking connected components
 
-Render a connected component in Storybook by mocking the network requests that it makes to fetch its data. There are various layers in which you can do that.
+If you need to render a connected component in Storybook, you can mock the network requests that it makes to fetch its data. There are various layers in which you can do that.
 
 ### Mocking providers
 
@@ -108,11 +108,11 @@ LoggedOut.parameters: {
 
 ### Mocking imports
 
-It is also possible to mock imports directly, similar to Jest, using webpack’s aliasing. This is extremely useful if your component makes network requests directly with third-party libraries.
+It is also possible to mock imports directly, as you might in a unit test, using webpack’s aliasing. This is extremely useful if your component makes network requests directly with third-party libraries.
 
 We're going to use [isomorphic-fetch](https://www.npmjs.com/package/isomorphic-fetch) as an example.
 
-Let's start by creating our own mock, which we'll use later with a [decorator](../writing-stories/decorators#global-decorators]. Create a new file called isomorphic-fetch.js inside a directory called `__mocks__` (we'll leave the location to you, don't forget to adjust the imports to your needs) and add the following code inside:
+Let's start by creating our own mock, which we'll use later with a [decorator](../writing-stories/decorators#global-decorators). Create a new file called `isomorphic-fetch.js` inside a directory called `__mocks__` (we'll leave the location to you, don't forget to adjust the imports to your needs) and add the following code inside:
 
 ```js
 // __mocks__/isomorphic-fetch.js
@@ -134,6 +134,8 @@ export function decorator(story, { parameters }) {
 }
 ```
 
+The above code creates a decorator which reads story-specific data off the story's [parameters](../writing-stories/parameters), allowing you to configure the mock on a per-story basis.
+
 To use the mock in place of the real import, we use [webpack aliasing](https://webpack.js.org/configuration/resolve/#resolvealias):
 
 ```js
@@ -148,7 +150,7 @@ module.exports = {
 };
 ```
 
-Add the mock you've just implemented to your [storybook/preview.js](../configure/overview.md#configure-story-rendering) (if you don't have it already, you'll need to create the file):
+Add the decorator you've just implemented to your [storybook/preview.js](../configure/overview.md#configure-story-rendering) (if you don't have it already, you'll need to create the file):
 
 ```js
 // .storybook/preview.js

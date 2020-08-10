@@ -4,11 +4,12 @@ title: 'Essential addons'
 
 A major strength of Storybook are [addons](/addons/) that extend Storybook’s UI and behavior. There are many third-party addons as well as “official” addons developed by the Storybook core team. Storybook ships by default with a set of “essential” addons that add to the initial user experience.
 
-- [Actions](./actions.md)
-- [Backgrounds](./backgrounds.md)
-- [Controls](./controls.md)
 - [Docs](../writing-docs/introduction.md)
+- [Controls](./controls.md)
+- [Actions](./actions.md)
 - [Viewport](./viewports.md)
+- [Backgrounds](./backgrounds.md)
+- [Toolbars](./toolbars.md)
 
 ### Configuration
 
@@ -35,5 +36,7 @@ As an example, if the background addon wasn't necessary to your work, you would 
 <!-- prettier-ignore-end -->
 
 <div class="aside">
-  You can use the following keys for each individual addon: `actions`, `backgrounds`, `controls`, `docs`, `viewport`.
+
+You can use the following keys for each individual addon: `actions`, `backgrounds`, `controls`, `docs`, `viewport`, `toolbars`.
+
 </div>

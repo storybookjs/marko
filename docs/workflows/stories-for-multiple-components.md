@@ -2,7 +2,7 @@
 title: 'Stories for multiple components'
 ---
 
-It's useful to write stories that [render two or more components](../writing-stories/introduction.md#stories-for-two-or-more-components) at once if those components are designed to work together. For example, `ButtonGroups`, `Lists`, and `Page` components.
+It's useful to write stories that [render two or more components](../writing-stories/introduction.md#stories-for-two-or-more-components) at once if those components are designed to work together. For example, `ButtonGroups`, `Lists`, and `Page` components. Here's an example with `List` and `ListItem` components:
 
 ```js
 // List.story.js
@@ -29,7 +29,7 @@ Note that by adding `subcomponents` to the default export, we get an extra pane 
 
 ![Storybook story with subcomponent argstable](./argstable-subcomponents.png)
 
-The downside of the above approach is that it does not take advantage of Storybook [Args](../writing-stories/args.md) meaning:
+The downside of the approach used above, where each story creates its own combination of components, is that it does not take advantage of Storybook [Args](../writing-stories/args.md) meaning:
 
 1. You cannot change the stories via the controls panel
 2. There is no [args reuse](../writing-stories/introduction.md#using-args) possible, which makes the stories harder to maintain.
@@ -60,7 +60,7 @@ However, we still aren’t using args to control the `ListItem` stories, which m
 
 ## Using children as an arg
 
-One way we improve that situation is by pulling the render subcomponent out into a `children` arg:
+One way we improve that situation is by pulling the rendered subcomponent out into a `children` arg:
 
 ```js
 // List.story.js
@@ -73,7 +73,13 @@ OneItem.args = {
 };
 ```
 
-Now that `children` is an arg, we can potentially reuse it in another story. As things stand (we hope to improve this soon) you cannot edit children in a control yet.
+Now that `children` is an arg, we can potentially reuse it in another story.
+
+<div class="aside">
+
+As things stand (we hope to improve this soon) you cannot edit children in a control yet.
+
+</div>
 
 ## Creating a Template Component
 

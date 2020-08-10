@@ -8,8 +8,6 @@ Unit tests are useful for verifying functional aspects of components. They verif
 
 Thanks to the [CSF format](../../formats/component-story-format/), your stories are reusable in unit testing tools. Each [named export](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export) is “renderable” without depending on Storybook. That means your testing framework will also be able to render that story.
 
-Additionally, the Storybook framework packages have an export that makes this easy and doesn’t rely on any other Storybook dependencies.
-
 Here is an example of how you can use it in a testing library:
 
 ```js
@@ -18,12 +16,11 @@ Here is an example of how you can use it in a testing library:
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { renderStory } from '@storybook/react/render';
 
 import { Primary } from './Button.stories';
 
 it('renders the button in the primary state’, () => {
-  render(renderStory(Primary));
+  render(<Primary {...Primary.args} />);
   expect(screen.getByRole('button')).toHaveTextContent(‘Primary’);
 });
 ```

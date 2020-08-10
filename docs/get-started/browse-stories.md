@@ -19,11 +19,11 @@ Navigate between stories by clicking on them in the sidebar or use keyboard shor
 
 ## Toolbar
 
-Storybook ships with time-saving tools built in. The **toolbar** contains tools that allow you to adjust how the story renders in the Canvas:
+Storybook ships with time-saving tools built in. The toolbar contains tools that allow you to adjust how the story renders in the Canvas:
 
 ![Storybook toolbar](./toolbar.png)
 
-- 🔍Zooming visually scales the component so you can check the details.
+- 🔍 Zooming visually scales the component so you can check the details.
 - 🖼 Background changes the rendered background behind your component so you can verify how your component renders in different visual contexts.
 - 📱 Viewport renders the component in a variety of dimensions and orientations. It’s ideal for checking the responsiveness of components.
 
@@ -51,7 +51,6 @@ Addons are plugins that extend Storybook's core functionality. You can find them
 
 ![Storybook addon examples](./addons.png)
 
-- **Source** displays the source code of the currently rendered story. (to be determined)
 - **Controls** allows you to dynamically interact with a component’s args (inputs). Experiment with alternate configurations of the component to discover edge cases.
 - **Actions** help you verify interactions produce the correct outputs via callbacks. For instance if you view the “Logged In” story of the Header component, we can verify that clicking the “Log out” button triggers the `onLogout` callback, which would be provided by the component that made use of the Header.
 

@@ -4,15 +4,9 @@ title: 'Install Storybook'
 
 Use the Storybook CLI to install it in a single command. Run this inside your existing project’s root directory:
 
-<!-- prettier-ignore-start -->
-
-<CodeSnippets
-  paths={[
-    'common/storybook-install.sh.mdx',
-  ]}
-/>
-
-<!-- prettier-ignore-end -->
+```shell
+npx sb init
+```
 
 <details>
 
@@ -47,16 +41,20 @@ Check that everything worked by running:
 
 <!-- prettier-ignore-end -->
 
-It will start Storybook locally and output the address. Depending on your system configuration, it will automatically open the address in a new browser tab and you'll be greeted by a welcome screen. In that screen there are some noteworthy items:
+It will start Storybook locally and output the address. Depending on your system configuration, it will automatically open the address in a new browser tab and you'll be greeted by a welcome screen.
+
+![Storybook welcome screen](./example-welcome.png)
+
+There are some noteworthy items here:
 
 - A collection of useful links for more in depth configuration and customization options you have at your disposal.
 - A second set of links for you to expand your Storybook knowledge and get involved with the ever growing Storybook community.
 - A few example stories to get you started.
 
-![Storybook welcome screen](./example-welcome.png)
+Now that you installed Storybook successfully, let’s take a look at a story that was written for us.
 
 <details>
-<summary>Troubleshooting</summary>
+<summary><h4>Troubleshooting</h4></summary>
 
 You can also setup Storybook manually through the Storybook CLI.
 
@@ -73,5 +71,3 @@ If there's an installation problem, check the README for your framework (e.g <a 
 If all else fails, try asking for [help](https://storybook.js.org/support/)
 
 </details>
-
-Now that you installed Storybook successfully, let’s take a look at a story that was written for us.

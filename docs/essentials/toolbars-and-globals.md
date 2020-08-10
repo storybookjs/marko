@@ -4,13 +4,13 @@ title: 'Toolbars & globals'
 
 Storybook ships with toolbar items to control the [viewport](./viewport.md) and [background](./backgrounds.md) the story renders in. You can also create your own toolbar items which control special “globals” which you can then read to create [decorators](../writing-stories/decorators.md) to control story rendering.
 
-### Globals
+## Globals
 
 Globals in Storybook represent “global” (as in not story-specific) inputs to the rendering of the story. As they aren’t specific to the story, they aren’t passed in the `args` argument to the story function (although they are accessible as `context.globals`), but typically you use them in decorators which apply to all stories.
 
 When the globals change, the story re-renders and the decorators rerun with the new values. The easiest way to change globals is to create a toolbar item for them.
 
-### Global types and the toolbar annotation
+## Global types and the toolbar annotation
 
 Storybook has a simple, declarative syntax for configuring toolbar menus. In your [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering), you can add your own toolbars by creating `globalTypes` with a `toolbar` annotation:
 
@@ -24,7 +24,6 @@ Storybook has a simple, declarative syntax for configuring toolbar menus. In you
 
 <!-- prettier-ignore-end -->
 
-
 <div class="aside">
 
 As globals are _global_ you can _only_ set `globalTypes` in [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering).
@@ -33,7 +32,7 @@ As globals are _global_ you can _only_ set `globalTypes` in [`.storybook/preview
 
 When you start your Storybook, you should see a new dropdown in your toolbar with options `light` and `dark`.
 
-### Create a decorator
+## Create a decorator
 
 We have a `global` defined, let's wire it up! We can consume our new `theme` global in a decorator using the `context.globals.theme` value.
 
@@ -49,7 +48,7 @@ For example, suppose you are using `styled-components`. You can add a theme prov
 
 <!-- prettier-ignore-end -->
 
-### Advanced usage
+## Advanced usage
 
 So far we've managed to create and consume a global inside Storybook.
 
@@ -79,7 +78,7 @@ Here's a list of the configuration options available.
 | **right** | String |       A string that gets shown in right side of the menu        |    No    |
 | **icon**  | String | An icon that gets shown in the toolbar if this item is selected |    No    |
 
-### Consuming globals from within a story
+## Consuming globals from within a story
 
 We recommend consuming globals from within a decorator and define a global setting for all stories.
 
@@ -113,7 +112,7 @@ In Storybook 6.0, if you set the global option `passArgsFirst: false` for backwa
 
 </div>
 
-### Consuming globals from within an addon
+## Consuming globals from within an addon
 
 If you're working on a Storybook addon and you need to retrieve globals. You can do so, The `@storybook/api` package provides a hook for this scenario, you can use the `useGlobals()` hook to retrieve any globals you want.
 
