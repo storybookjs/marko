@@ -4,15 +4,9 @@ title: 'Install Storybook'
 
 Use the Storybook CLI to install it in a single command. Run this inside your existing project’s root directory:
 
-<!-- prettier-ignore-start -->
-
-<CodeSnippets
-  paths={[
-    'common/storybook-install.sh.mdx',
-  ]}
-/>
-
-<!-- prettier-ignore-end -->
+```shell
+npx sb init
+```
 
 <details>
 

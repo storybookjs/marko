@@ -6,7 +6,7 @@ Stories are useful for verifying the known states of a component. But sometimes 
 
 Stories are convenient **starting points** and **harnesses** for interaction tests using end-to-end tools like [Enzyme](https://enzymejs.github.io/enzyme/) and [Cypress](https://www.cypress.io/).
 
-Luckily, this is straightforward. Point your interaction testing tool at Storybook’s isolated iframe [URL for a specific story](../configure/user-interface.md#permalinking-to-stories) then execute the test script as usual. Here’s an example using Cypress:
+Luckily, this is straightforward. Point your interaction testing tool at Storybook’s isolated iframe [URL for a specific story](../configure/sidebar-and-urls.md#permalinking-to-stories) then execute the test script as usual. Here’s an example using Cypress:
 
 ```js
 // My-component_spec.js
