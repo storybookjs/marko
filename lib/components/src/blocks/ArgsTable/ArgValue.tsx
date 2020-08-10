@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
 import { styled } from '@storybook/theming';
 import memoize from 'memoizerific';
+import uniq from 'lodash/uniq';
 import { PropSummaryValue } from './types';
 import { WithTooltipPure } from '../../tooltip/WithTooltip';
 import { Icons } from '../../icon/icon';
@@ -9,6 +10,7 @@ import { codeCommon } from '../../typography/shared';
 
 interface ArgValueProps {
   value?: PropSummaryValue;
+  initialExpandedArgs?: boolean;
 }
 
 interface ArgTextProps {
@@ -17,16 +19,44 @@ interface ArgTextProps {
 
 interface ArgSummaryProps {
   value: PropSummaryValue;
+  initialExpandedArgs?: boolean;
 }
 
-const Text = styled.span(({ theme }) => ({
+const ITEMS_BEFORE_EXPANSION = 8;
+
+const Summary = styled.div<{ isExpanded?: boolean }>(({ isExpanded }) => ({
+  display: 'flex',
+  flexDirection: isExpanded ? 'column' : 'row',
+  flexWrap: 'wrap',
+  alignItems: 'flex-start',
+  marginBottom: '-4px',
+}));
+
+const Text = styled.span<{}>(codeCommon, ({ theme }) => ({
+  flex: 0,
   fontFamily: theme.typography.fonts.mono,
-  fontSize: theme.typography.size.s2 - 1,
+  fontSize: theme.typography.size.s1,
+  wordBreak: 'break-word',
+  margin: 0,
+  marginRight: '4px',
+  marginBottom: '4px',
+  paddingTop: '2px',
+  paddingBottom: '2px',
+  lineHeight: '13px',
+}));
+
+const ExpandButton = styled.button<{}>(({ theme }) => ({
+  fontFamily: theme.typography.fonts.mono,
+  color: theme.color.secondary,
+  marginBottom: '4px',
+  background: 'none',
+  border: 'none',
 }));
 
 const Expandable = styled.div<{}>(codeCommon, ({ theme }) => ({
   fontFamily: theme.typography.fonts.mono,
   color: theme.color.secondary,
+  fontSize: theme.typography.size.s1, // overrides codeCommon
   margin: 0,
   whiteSpace: 'nowrap',
   display: 'flex',
@@ -40,7 +70,7 @@ const Detail = styled.div<{ width: string }>(({ theme, width }) => ({
   padding: 15,
   // Dont remove the mono fontFamily here even if it seem useless, this is used by the browser to calculate the length of a "ch" unit.
   fontFamily: theme.typography.fonts.mono,
-  fontSize: theme.typography.size.s2 - 1,
+  fontSize: theme.typography.size.s1,
   // Most custom stylesheet will reset the box-sizing to "border-box" and will break the tooltip.
   boxSizing: 'content-box',
 
@@ -70,18 +100,49 @@ const calculateDetailWidth = memoize(1000)((detail: string): string => {
   return `${Math.max(...lines.map((x) => x.length))}ch`;
 });
 
-const ArgSummary: FC<ArgSummaryProps> = ({ value }) => {
+const getSummaryItems = (summary: string) => {
+  if (!summary) return [summary];
+  const splittedItems = summary.split('|');
+  const summaryItems = splittedItems.map((value) => value.trim());
+
+  return uniq(summaryItems);
+};
+
+const renderSummaryItems = (summaryItems: string[], isExpanded = true) => {
+  let items = summaryItems;
+  if (!isExpanded) {
+    items = summaryItems.slice(0, ITEMS_BEFORE_EXPANSION);
+  }
+
+  return items.map((item) => <ArgText key={item} text={item === '' ? '""' : item} />);
+};
+
+const ArgSummary: FC<ArgSummaryProps> = ({ value, initialExpandedArgs }) => {
   const { summary, detail } = value;
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(initialExpandedArgs || false);
+
+  if (summary === undefined || summary === null) return null;
   // summary is used for the default value
   // below check fixes not displaying default values for boolean typescript vars
-  const summaryAsString =
-    summary !== undefined && summary !== null && typeof summary.toString === 'function'
-      ? summary.toString()
-      : summary;
+  const summaryAsString = typeof summary.toString === 'function' ? summary.toString() : summary;
+
   if (detail == null) {
-    return <ArgText text={summaryAsString} />;
+    const summaryItems = getSummaryItems(summaryAsString);
+    const itemsCount = summaryItems.length;
+    const hasManyItems = itemsCount > ITEMS_BEFORE_EXPANSION;
+
+    return hasManyItems ? (
+      <Summary isExpanded={isExpanded}>
+        {renderSummaryItems(summaryItems, isExpanded)}
+        <ExpandButton onClick={() => setIsExpanded(!isExpanded)}>
+          {isExpanded ? 'Show less...' : `Show ${itemsCount - ITEMS_BEFORE_EXPANSION} more...`}
+        </ExpandButton>
+      </Summary>
+    ) : (
+      <Summary>{renderSummaryItems(summaryItems)}</Summary>
+    );
   }
 
   return (
@@ -109,6 +170,10 @@ const ArgSummary: FC<ArgSummaryProps> = ({ value }) => {
   );
 };
 
-export const ArgValue: FC<ArgValueProps> = ({ value }) => {
-  return value == null ? <EmptyArg /> : <ArgSummary value={value} />;
+export const ArgValue: FC<ArgValueProps> = ({ value, initialExpandedArgs }) => {
+  return value == null ? (
+    <EmptyArg />
+  ) : (
+    <ArgSummary value={value} initialExpandedArgs={initialExpandedArgs} />
+  );
 };

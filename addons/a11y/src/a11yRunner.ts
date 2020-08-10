@@ -42,8 +42,7 @@ const run = async (storyId: string) => {
 
 /** Returns story parameters or default ones. */
 const getParams = (storyId: string): Setup => {
-  // eslint-disable-next-line no-underscore-dangle
-  const { parameters } = window.__STORYBOOK_STORY_STORE__._stories[storyId] || {};
+  const { parameters } = window.__STORYBOOK_STORY_STORE__.fromId(storyId) || {};
   return (
     parameters.a11y || {
       config: {},

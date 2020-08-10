@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import pickBy from 'lodash/pickBy';
 import { styled, ignoreSsrWarning } from '@storybook/theming';
 import { opacify, transparentize, darken, lighten } from 'polished';
+import { Icons } from '../../icon/icon';
 import { ArgRow } from './ArgRow';
 import { SectionRow } from './SectionRow';
 import { ArgType, ArgTypes, Args } from './types';
@@ -35,11 +36,30 @@ export const TableWrapper = styled.table<{ compact?: boolean; inAddonPanel?: boo
       marginBottom: inAddonPanel ? 0 : 40,
 
       'thead th:first-of-type, td:first-of-type': {
-        width: '30%',
+        // intentionally specify thead here
+        width: '25%',
       },
 
       'th:first-of-type, td:first-of-type': {
         paddingLeft: 20,
+      },
+
+      'th:nth-of-type(2), td:nth-of-type(2)': {
+        ...(compact
+          ? null
+          : {
+              // Description column
+              width: '35%',
+            }),
+      },
+
+      'td:nth-of-type(3)': {
+        ...(compact
+          ? null
+          : {
+              // Defaults column
+              width: '15%',
+            }),
       },
 
       'th:last-of-type, td:last-of-type': {
@@ -47,8 +67,8 @@ export const TableWrapper = styled.table<{ compact?: boolean; inAddonPanel?: boo
         ...(compact
           ? null
           : {
-              minWidth: '15%',
-              maxWidth: '25%',
+              // Controls column
+              width: '25%',
             }),
       },
 
@@ -59,11 +79,8 @@ export const TableWrapper = styled.table<{ compact?: boolean; inAddonPanel?: boo
             : transparentize(0.45, theme.color.defaultText),
         paddingTop: 10,
         paddingBottom: 10,
-
-        '&:not(:first-of-type)': {
-          paddingLeft: 15,
-          paddingRight: 15,
-        },
+        paddingLeft: 15,
+        paddingRight: 15,
       },
 
       td: {
@@ -117,6 +134,20 @@ export const TableWrapper = styled.table<{ compact?: boolean; inAddonPanel?: boo
           ${opacify(0.05, theme.appBorderColor)} 0 0 0 1px`),
         borderRadius: theme.appBorderRadius,
 
+        // for safari only
+        // CSS hack courtesy of https://stackoverflow.com/questions/16348489/is-there-a-css-hack-for-safari-only-not-chrome
+        '@media not all and (min-resolution:.001dpcm)': {
+          '@supports (-webkit-appearance:none)': {
+            borderWidth: 1,
+            borderStyle: 'solid',
+            borderColor:
+              !inAddonPanel &&
+              (theme.base === 'light'
+                ? transparentize(0.035, theme.appBorderColor)
+                : opacify(0.05, theme.appBorderColor)),
+          },
+        },
+
         tr: {
           background: 'transparent',
           overflow: 'hidden',
@@ -150,6 +181,46 @@ export const TableWrapper = styled.table<{ compact?: boolean; inAddonPanel?: boo
   })
 );
 
+const ResetButton = styled.button(({ theme }) => ({
+  border: 0,
+  borderRadius: '3em',
+  cursor: 'pointer',
+  display: 'inline-block',
+  overflow: 'hidden',
+  padding: '3px 8px',
+  transition: 'all 150ms ease-out',
+  verticalAlign: 'top',
+  userSelect: 'none',
+  margin: 0,
+
+  backgroundColor: theme.base === 'light' ? '#EAF3FC' : theme.color.border,
+  boxShadow:
+    theme.base === 'light'
+      ? `${theme.color.border} 0 0 0 1px inset`
+      : `${theme.color.darker}  0 0 0 1px inset`,
+  color: theme.color.secondary,
+
+  '&:hover': {
+    background: theme.base === 'light' ? darken(0.03, '#EAF3FC') : opacify(0.1, theme.color.border),
+  },
+
+  '&:focus': {
+    boxShadow: `${theme.color.secondary} 0 0 0 1px inset`,
+    outline: 'none',
+  },
+
+  svg: {
+    display: 'block',
+    height: 14,
+    width: 14,
+  },
+}));
+
+const ControlHeadingWrapper = styled.span({
+  display: 'flex',
+  justifyContent: 'space-between',
+});
+
 export enum ArgsTableError {
   NO_COMPONENT = 'No component found.',
   ARGS_UNSUPPORTED = 'Args unsupported. See Args documentation for your framework.',
@@ -159,8 +230,10 @@ export interface ArgsTableRowProps {
   rows: ArgTypes;
   args?: Args;
   updateArgs?: (args: Args) => void;
+  resetArgs?: (argNames?: string[]) => void;
   compact?: boolean;
   inAddonPanel?: boolean;
+  initialExpandedArgs?: boolean;
 }
 
 export interface ArgsTableErrorProps {
@@ -225,7 +298,15 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
     );
   }
 
-  const { rows, args, updateArgs, compact, inAddonPanel } = props as ArgsTableRowProps;
+  const {
+    rows,
+    args,
+    updateArgs,
+    resetArgs,
+    compact,
+    inAddonPanel,
+    initialExpandedArgs,
+  } = props as ArgsTableRowProps;
 
   const groups = groupRows(pickBy(rows, (row) => !row?.table?.disable));
 
@@ -249,7 +330,7 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
   if (!compact) colSpan += 2;
   const expandable = Object.keys(groups.sections).length > 0;
 
-  const common = { updateArgs, compact, inAddonPanel };
+  const common = { updateArgs, compact, inAddonPanel, initialExpandedArgs };
   return (
     <ResetWrapper>
       <TableWrapper {...{ compact, inAddonPanel }} className="docblock-argstable">
@@ -258,7 +339,18 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
             <th>Name</th>
             {compact ? null : <th>Description</th>}
             {compact ? null : <th>Default</th>}
-            {updateArgs ? <th>Control</th> : null}
+            {updateArgs ? (
+              <th>
+                <ControlHeadingWrapper>
+                  Control{' '}
+                  {resetArgs && (
+                    <ResetButton onClick={() => resetArgs()} title="Reset controls">
+                      <Icons icon="sync" aria-hidden />
+                    </ResetButton>
+                  )}
+                </ControlHeadingWrapper>
+              </th>
+            ) : null}
           </tr>
         </thead>
         <tbody className="docblock-argstable-body">

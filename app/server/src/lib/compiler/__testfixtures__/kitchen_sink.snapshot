@@ -1,13 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`json-to-csf-compiler kitchen_sink.json 1`] = `
-"import { array, boolean, color, date, number, object, select, text, withKnobs } from '@storybook/addon-knobs';
-
+"
 export default {
   title: 'Kitchen Sink',
-  decorators: [
-    withKnobs
-  ],
   parameters: {
     backgrounds: [
       {
@@ -31,40 +27,33 @@ export default {
   }
 };
 
-export const Heading = () => {
-  return {
-    name: text('Name', 'John Doe'),
-    age: number('Age', 44, {}),
-  };
-};
-Heading.story = {
-  name: 'Heading',
-  parameters: {
-    actions: [
-      'click',
-      'contextmenu',
-      {
-        clearOnStoryChange: false
-      }
-    ],
-    notes: 'My notes on some bold text',
-    server: {
-      id: 'demo/heading',
-      params: {
-        color: 'orange'
-      }
+export const Heading = (args) => {};
+Heading.storyName = 'Heading';
+Heading.parameters = {
+  actions: [
+    'click',
+    'contextmenu',
+    {
+      clearOnStoryChange: false
+    }
+  ],
+  server: {
+    id: 'demo/heading',
+    params: {
+      color: 'orange'
     }
   }
 };
+Heading.args = {
+  name: 'John Doe',
+  age: 44
+};
 
-export const Button = () => {};
-Button.story = {
-  name: 'Button',
-  parameters: {
-    notes: 'My notes on a button',
-    server: {
-      id: 'demo/button'
-    }
+export const Button = (args) => {};
+Button.storyName = 'Button';
+Button.parameters = {
+  server: {
+    id: 'demo/button'
   }
 };
 "

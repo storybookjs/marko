@@ -1,19 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Addon/Controls Rounded 1`] = `
-<button
-  class="button rounded"
-  style="color: rgb(255, 0, 0); border-color: #f00;"
+<div
+  style="background-color: silver; padding: 10px;"
 >
-  A Button with rounded edges!
-</button>
+  <button
+    class="button rounded"
+    style="color: rgb(255, 0, 0); border-color: #f00;"
+  >
+    A Button with rounded edges!
+
+  </button>
+</div>
 `;
 
 exports[`Storyshots Addon/Controls Square 1`] = `
-<button
-  class="button"
-  style="color: rgb(0, 0, 255); border-color: #00f;"
+<div
+  style="background-color: silver; padding: 10px;"
 >
-  A Button with square edges!
-</button>
+  <button
+    class="button"
+    style="color: rgb(0, 0, 255); border-color: #00f;"
+  >
+    A Button with square edges!
+
+  </button>
+</div>
 `;

@@ -2,8 +2,7 @@ module.exports = {
   stories: ['./stories/*.*'],
   logLevel: 'debug',
   refs: {
-    ember: {
-      id: 'ember',
+    Ember: {
       title: 'Ember',
       url: 'https://next--storybookjs.netlify.app/ember-cli',
       versions: {

@@ -59,20 +59,20 @@ export const CheckboxControl: FC<CheckboxProps> = ({
     } else {
       updated.push(option);
     }
-    onChange(name, selectedValues(updated, options));
+    onChange(selectedValues(updated, options));
     setSelected(updated);
   };
 
   return (
     <Wrapper isInline={isInline}>
-      {Object.keys(options).map((key: string) => {
+      {Object.keys(options).map((key) => {
         const id = `${name}-${key}`;
         return (
           <Label key={id} htmlFor={id}>
             <input
               type="checkbox"
               id={id}
-              name={name}
+              name={id}
               value={key}
               onChange={handleChange}
               checked={selected?.includes(key)}

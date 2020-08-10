@@ -69,6 +69,7 @@ const defaultContext: StoryContext = {
   kind: 'unspecified',
   parameters: {},
   args: {},
+  argTypes: {},
   globals: {},
 };
 

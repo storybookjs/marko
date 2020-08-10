@@ -126,12 +126,12 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
       api.checkRef(ref);
     },
     changeRefState: (id, ready) => {
-      const refs = api.getRefs();
+      const { [id]: ref, ...updated } = api.getRefs();
+
+      updated[id] = { ...ref, ready };
+
       store.setState({
-        refs: {
-          ...refs,
-          [id]: { ...refs[id], ready },
-        },
+        refs: updated,
       });
     },
     checkRef: async (ref) => {
@@ -154,7 +154,7 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
           credentials: 'omit',
         }),
         fetch(`${url}/iframe.html${query}`, {
-          cors: 'no-cors',
+          mode: 'no-cors',
           credentials: 'omit',
         }),
       ]);
@@ -230,12 +230,12 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
     },
 
     updateRef: (id, data) => {
-      const { [id]: ref, ...refs } = api.getRefs();
+      const { [id]: ref, ...updated } = api.getRefs();
+
+      updated[id] = { ...ref, ...data };
+
       store.setState({
-        refs: {
-          ...refs,
-          [id]: { ...ref, ...data },
-        },
+        refs: updated,
       });
     },
   };

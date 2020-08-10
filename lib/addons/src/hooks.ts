@@ -5,6 +5,7 @@ import {
   STORY_RENDERED,
   DOCS_RENDERED,
   UPDATE_STORY_ARGS,
+  RESET_STORY_ARGS,
   UPDATE_GLOBALS,
 } from '@storybook/core-events';
 import { addons } from './index';
@@ -402,7 +403,7 @@ export function useParameter<S>(parameterKey: string, defaultValue?: S): S | und
 }
 
 /* Returns current value of story args */
-export function useArgs(): [Args, (newArgs: Args) => void] {
+export function useArgs(): [Args, (newArgs: Args) => void, (argNames?: [string]) => void] {
   const channel = addons.getChannel();
   const { id: storyId, args } = useStoryContext();
 
@@ -411,7 +412,12 @@ export function useArgs(): [Args, (newArgs: Args) => void] {
     [channel, storyId]
   );
 
-  return [args, updateArgs];
+  const resetArgs = useCallback(
+    (argNames?: [string]) => channel.emit(RESET_STORY_ARGS, { storyId, argNames }),
+    [channel, storyId]
+  );
+
+  return [args, updateArgs, resetArgs];
 }
 
 /* Returns current value of global args */

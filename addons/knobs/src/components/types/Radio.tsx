@@ -59,14 +59,14 @@ class RadiosType extends Component<RadiosTypeProps> {
 
   static deserialize = (value: RadiosTypeKnobValue) => value;
 
-  renderRadioButtonList({ options }: RadiosTypeKnob) {
+  private renderRadioButtonList({ options }: RadiosTypeKnob) {
     if (Array.isArray(options)) {
       return options.map((val) => this.renderRadioButton(val, val));
     }
     return Object.keys(options).map((key) => this.renderRadioButton(key, options[key]));
   }
 
-  renderRadioButton(label: string, value: RadiosTypeKnobValue) {
+  private renderRadioButton(label: string, value: RadiosTypeKnobValue) {
     const opts = { label, value };
     const { onChange, knob } = this.props;
     const { name } = knob;

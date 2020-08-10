@@ -11,7 +11,7 @@ export interface ScrollProps {
 }
 
 const Scroll = styled(({ vertical, horizontal, ...rest }: ScrollProps) => (
-  <OverlayScrollbarsComponent options={{ scrollbars: { autoHide: 'scroll' } }} {...rest} />
+  <OverlayScrollbarsComponent options={{ scrollbars: { autoHide: 'leave' } }} {...rest} />
 ))<ScrollProps>(
   ({ vertical }) =>
     !vertical

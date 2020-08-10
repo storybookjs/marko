@@ -8,8 +8,8 @@ title: 'MDX Format'
 
 Let's get started with an example that combines Markdown with a single story:
 
-```js
-import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+```md
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
 import { Checkbox } from './Checkbox';
 
 <Meta title="MDX/Checkbox" component={Checkbox} />
@@ -18,7 +18,7 @@ import { Checkbox } from './Checkbox';
 
 With `MDX` we can define a story for `Checkbox` right in the middle of our Markdown documentation.
 
-<Preview>
+<Canvas>
   <Story name="all checkboxes">
     <form>
       <Checkbox id="Unchecked" label="Unchecked" />
@@ -26,7 +26,7 @@ With `MDX` we can define a story for `Checkbox` right in the middle of our Markd
       <Checkbox appearance="secondary" id="second" label="Secondary" checked />
     </form>
   </Story>
-</Preview>
+</Canvas>
 ```
 
 And here's how that's rendered in Storybook:
@@ -80,19 +80,19 @@ Let's define a story for our `Badge` component:
   <Badge status="positive">Positive</Badge>
 </Story>
 
-We can drop it in a `Preview` to get a code snippet:
+We can drop it in a `Canvas` to get a code snippet:
 
-<Preview>
+<Canvas>
   <Story name="negative">
     <Badge status="negative">Negative</Badge>
   </Story>
-</Preview>
+</Canvas>
 
 We can even preview multiple stories in a block. This
 gets rendered as a group, but defines individual stories
 with unique URLs and isolated snapshot tests.
 
-<Preview>
+<Canvas>
   <Story name="warning">
     <Badge status="warning">Warning</Badge>
   </Story>
@@ -108,7 +108,7 @@ with unique URLs and isolated snapshot tests.
       with icon
     </Badge>
   </Story>
-</Preview>
+</Canvas>
 ```
 
 And here's how that gets rendered in Storybook:
