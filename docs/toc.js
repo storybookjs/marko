@@ -298,7 +298,7 @@ module.exports = {
           children: [
             {
               pathSegment: 'addons',
-              title: 'Addons',
+              title: 'Introduction',
               type: 'link',
             },
             {
