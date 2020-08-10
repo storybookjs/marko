@@ -1,0 +1,13 @@
+```js
+const Primary = ButtonStory.bind({});
+Primary.args = {
+  primary: true,
+  label: 'Button',
+}
+
+const Secondary = ButtonStory.bind({});
+Secondary.args = {
+  ...Primary.args,
+  primary: false,
+}
+```

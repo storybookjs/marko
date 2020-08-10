@@ -1,5 +1,5 @@
 ---
-title: 'Introduction'
+title: 'Essential addons'
 ---
 
 A major strength of Storybook are [addons](/addons/) that extend Storybook’s UI and behavior. There are many third-party addons as well as “official” addons developed by the Storybook core team. Storybook ships by default with a set of “essential” addons that add to the initial user experience.
@@ -24,17 +24,14 @@ If you need to disable any of the Essential's addons, you can do it by changing 
 
 As an example, if the background addon wasn't necessary to your work, you would need to make the following change:
 
-```js
-// .storybook/main.js
+<!-- prettier-ignore-start -->
 
-module.exports = {
-  addons: [{
-    name: '@storybook/addon-essentials',
-    options: {
-      backgrounds: false,
-    }
-  }]
-};
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-main-disable-addon.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 You can use the following keys for each individual addon: `actions`, `backgrounds`, `controls`, `docs`, `viewport`

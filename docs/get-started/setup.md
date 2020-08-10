@@ -1,34 +1,26 @@
 ---
-title: 'Setup'
+title: 'Setup Storybook'
 ---
 
 Now that you’ve learned what stories are and how to browse them, let’s demo working on one of your components. Pick a simple component from your project, like a Button, and write a `.stories.js` file to go along with it. It might look something like this:
 
-```js
-// YourComponent.stories.js
+<!-- prettier-ignore-start -->
 
-import { YourComponent } from './YourComponent';
+<CodeSnippets
+  paths={[
+    'common/your-component.js.mdx',
+    'common/your-component.ts.mdx',
+  ]}
+/>
 
-// This default export determines where you story goes in the story list
-export default {
-  component: YourComponent,
-  title: 'YourComponent',
-};
+<!-- prettier-ignore-end -->
 
-const Template = (args) => <YourComponent {...args} />;
-
-export const FirstStory = Template.bind({});
-
-FirstStory.args = {
-  /* the args you need here will depend on your component */
-};
-```
 
 Go to your Storybook to view the rendered component. It’s OK if it looks a bit unusual right now.
 
 Depending on your technology stack, you also might need to configure the Storybook environment further.
 
-### Configure Storybook for your stack
+## Configure Storybook for your stack
 
 Storybook comes with a permissive [default configuration](../configure/overview.md). It attempts to customize itself to fit your setup. But it’s not foolproof.
 
@@ -60,22 +52,19 @@ A common frontend pattern is for components to assume that they render in a cert
 
 Use [decorators](../writing-stories/decorators.md) to “wrap” every story in the necessary context providers. [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering) allows you to customize how components render in Canvas, the preview iframe. In this decorator example, we wrap every component rendered in Storybook with `ThemeProvider`.
 
-```js
-// .storybook/preview.js
+<!-- prettier-ignore-start -->
 
-import { ThemeProvider } from 'styled-components';
-export const decorators = [
-  (Story) => (
-    <ThemeProvider theme="default">
-      <Story />
-    </ThemeProvider>
-  ),
-];
-```
+<CodeSnippets
+  paths={[
+    'react/storybook-preview-with-styled-components-decorator.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 </details>
 
-### Render component styles
+## Render component styles
 
 Storybook isn’t opinionated about how you generate or load CSS. It renders whatever DOM elements you provide. But sometimes things won’t “look right” out of the box.
 
@@ -111,7 +100,7 @@ Alternatively if you want to inject a CSS link tag to the `<head>` directly (or 
 
 </details>
 
-### Load assets and resources
+## Load assets and resources
 
 If you want to link to static files in your project or stories (e.g. `/fonts/XYZ.woff`), use the `-s path/to/folder` to specify a static folder to serve from when you start up Storybook. To do so, edit the `storybook` and `build-storybook` scripts in `package. json`.
 

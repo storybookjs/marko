@@ -8,8 +8,7 @@ In addition, you can write pure documentation pages in MDX and add them to Story
 
 ![MDX simple example result](./mdx-hero.png)
 
-
-### Basic example
+## Basic example
 
 Let's get started with an example that combines Markdown with a single story:
 
@@ -31,7 +30,7 @@ As you can see there's a lot going on here. We're writing Markdown, we're writin
 
 Let's break it down.
 
-### MDX-flavored CSF
+## MDX-flavored CSF
 
 MDX-flavored [Component Story Format (CSF)](../api/csf.md) includes a collection of components called ["Doc Blocks"](./doc-blocks.md), that allow Storybook to translate MDX files into Storybook stories. MDX-defined stories are identical to regular Storybook stories, so they can be used with Storybook's entire ecosystem of addons and view layers.
 
@@ -49,7 +48,7 @@ For example, here's the first story from the Checkbox example above, rewritten i
 
 There's a one-to-one mapping from the code in MDX to CSF. As a user, this means your existing Storybook knowledge should translate between the two.
 
-### Writing stories
+## Writing stories
 
 Let's look at a more realistic example to see how MDX works:
 
@@ -67,8 +66,7 @@ And here's how that gets rendered in Storybook:
 
 ![MDX page](./mdx-page.png)
 
-
-### Embedding stories
+## Embedding stories
 
 Suppose you have an existing story and want to embed it into your docs. Here's how to show a story with ID some--id. Check the browser URL in Storybook v5+ to find a story's ID.
 
@@ -84,7 +82,7 @@ Suppose you have an existing story and want to embed it into your docs. Here's h
 
 You can also use the rest of the MDX features in conjunction with embedding. That includes source, preview, and prop tables.
 
-### Decorators and parameters
+## Decorators and parameters
 
 To add decorators and parameters in MDX:
 
@@ -100,7 +98,7 @@ To add decorators and parameters in MDX:
 
 Global parameters and decorators work just like before.
 
-### Documentation-only MDX
+## Documentation-only MDX
 
 Typically, when you use Storybook MDX, you define stories in the MDX and documentation is automatically associated with those stories. But what if you want to write Markdown-style documentation without any stories inside?
 
@@ -112,7 +110,7 @@ To get a "documentation-only story", in your UI, define a `<Meta>` as you normal
 
 ![MDX docs only story](./mdx-documentation-only.png)
 
-### MDX file names
+## MDX file names
 
 Unless you use a custom [webpack configuration](../configure/integration.md#extending-storybooks-webpack-config), all of your MDX files should have the suffix `*.stories.mdx`. This tells Storybook to apply its special processing to the `<Meta>` and `<Story>` elements in the file.
 
