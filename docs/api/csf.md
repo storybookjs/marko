@@ -10,7 +10,7 @@ TODO: vet storiesOf links
 
 <div class="aside">
 
-If you are writing stories in the older `storiesOf()` syntax, you can find documentation in an [advanced README](../../lib/core/ADVANCED.md).
+If you are writing stories in the older `storiesOf()` syntax, you can find documentation in an [advanced README](../../lib/core/docs/storiesOf.md).
 
 </div>
 
