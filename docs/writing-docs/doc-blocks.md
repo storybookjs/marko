@@ -6,11 +6,11 @@ title: 'Doc Blocks'
 TODO: vet the canvas changes. Originally it was Preview and now it's Canvas (associated issue https://github.com/storybookjs/storybook/issues/11696)
 </div>
 
-Doc Blocks are the building blocks of Storybook documentation pages. By default, [DocsPage](./docs-page.md) uses a combination of the blocks below to build a page for each of your components automatically. 
+Doc Blocks are the building blocks of Storybook documentation pages. By default, [DocsPage](./docs-page.md) uses a combination of the blocks below to build a page for each of your components automatically.
 
 Custom [addons](../configure/user-interface.md#storybook-addons) can also provide their own doc blocks.
 
-### ArgsTable
+## ArgsTable
 
 Storybook Docs automatically generates component args tables for components in supported frameworks. These tables list the arguments ([args for short](../writing-stories/args.md)) of the component, and even integrate with [controls](../essentials/controls.md) to allow you to change the args of the currently rendered story.
 
@@ -29,10 +29,8 @@ This is extremely useful, but it can be further expanded. Additional information
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Button({isDisabled,content}) {
-  return (
-    <button disabled={isDisabled}>{content}</button>
-  );
+export default function Button({ isDisabled, content }) {
+  return <button disabled={isDisabled}>{content}</button>;
 }
 
 Button.propTypes = {
@@ -45,13 +43,11 @@ Button.propTypes = {
   */
   content: PropTypes.string.isRequired,
 };
-
 ```
 
 By including the additional information, the args table will be updated. Offering a richer experience for any stakeholders involved.
 
-
-#### DocsPage
+### DocsPage
 
 To use the `ArgsTable` in [DocsPage](./docs-page.md#component-parameter), export a component property on your stories metadata:
 
@@ -67,7 +63,7 @@ export default {
 // your templates and stories
 ```
 
-#### MDX
+### MDX
 
 To use the `ArgsTable` in MDX, use the Props block:
 
@@ -82,7 +78,7 @@ import { MyComponent } from './MyComponent';
 <Props of={MyComponent} />
 ```
 
-#### Customizing
+### Customizing
 
 `ArgsTables` are automatically inferred from your components and stories, but sometimes it's useful to customize the results.
 
@@ -98,21 +94,20 @@ NOTE: This API is experimental and may change outside of the typical semver rele
 
 The API documentation of `ArgTypes` is detailed in a [separate section](../api/mdx.md#argtypes), but to control the description and default values, use the following fields:
 
-| Field                        | Description                                                                                    |
-|:-----------------------------|:----------------------------------------------------------------------------------------------:|
-| **name**                     |The name of the property                                                                        |
-| **type.required**            |The stories to be show, ordered by supplied name                                                |
-| **description**              |A Markdown description for the property                                                         |
-|**table.type.summary**        |A short version of the type                                                                     |
-|**table.type.detail**         |A short version of the type                                                                     |
-|**table.defaultValue.summary**|A short version of the type                                                                     |
-|**table.defaultValue.detail** |A short version of the type                                                                     |
-|**control**                   |See [addon-controls README ](https://github.com/storybookjs/storybook/tree/next/addons/controls)|
+| Field                          |                                           Description                                            |
+| :----------------------------- | :----------------------------------------------------------------------------------------------: |
+| **name**                       |                                     The name of the property                                     |
+| **type.required**              |                         The stories to be show, ordered by supplied name                         |
+| **description**                |                             A Markdown description for the property                              |
+| **table.type.summary**         |                                   A short version of the type                                    |
+| **table.type.detail**          |                                   A short version of the type                                    |
+| **table.defaultValue.summary** |                                   A short version of the type                                    |
+| **table.defaultValue.detail**  |                                   A short version of the type                                    |
+| **control**                    | See [addon-controls README ](https://github.com/storybookjs/storybook/tree/next/addons/controls) |
 
 For instance:
 
 ```js
-
 export default {
   title: 'Button',
   component: Button,
@@ -120,9 +115,9 @@ export default {
     label: {
       description: 'overwritten description',
       table: {
-        type: { 
-            summary: 'something short', 
-            detail: 'something really really long' 
+        type: {
+          summary: 'something short',
+          detail: 'something really really long',
         },
       },
       control: {
@@ -142,7 +137,7 @@ For instance you can use:
 - `number`, which is shorthand for `type: {name: 'number'}`
 - `radio`, which is a shorhand for `control: {type: 'radio' }`
 
-##### MDX
+#### MDX
 
 To customize `argTypes` in MDX, you can set an `mdx` prop on the `Meta` or `Story` components:
 
@@ -152,34 +147,34 @@ To customize `argTypes` in MDX, you can set an `mdx` prop on the `Meta` or `Stor
   title="MyComponent"
   component={MyComponent}
   argTypes={{
-    label: { 
+    label: {
         name: 'label',
-        /* other argtypes required */ 
+        /* other argtypes required */
     },
   }}
 />
 
 <Story name="some story" argTypes={{
-  label: { 
-      name: 'different label', 
-      /* other required data */  
+  label: {
+      name: 'different label',
+      /* other required data */
     }
 }}>
   {/* story contents */}
 </Story>
 ```
 
-#### Controls
+### Controls
 
 The controls inside an `ArgsTable` are configured in exactly the same way as the [controls](../essentials/controls.md) addon pane. In fact you’ll probably notice the table is very similar! It uses the same component and mechanism behind the scenes.
 
-### Source
+## Source
 
 Storybook Docs displays a story’s source code using the `Source` block. The snippet has built-in syntax highlighting and can be copied with the click of a button.
 
 ![Docs blocks with source](./docblock-source.png)
 
-#### DocsPage
+### DocsPage
 
 In DocsPage, the `Source` block appears automatically within each story’s [Canvas](#canvas) block.
 
@@ -190,15 +185,15 @@ To customize the source snippet that’s displayed for a story, set the `docs.so
 export const CustomSource = () => Template.bind({});
 
 CustomSource.parameters = {
-  docs: { 
-      source: { 
-          code: 'Some custom string here';  
-      } 
+  docs: {
+      source: {
+          code: 'Some custom string here';
+      }
     },
 };
 ```
 
-#### MDX
+### MDX
 
 You can also use the `Source` block in MDX. It accepts either a story ID or `code` snippet. Use the `language` for syntax highlighting.
 
@@ -207,22 +202,22 @@ import { Source } from '@storybook/addon-docs/blocks';
 import dedent from 'ts-dedent';
 
 <Source
-  language='css'
+  language="css"
   code={dedent`
      .container {
        display: grid | inline-grid;
      }
   `}
-/>
+/>;
 ```
 
-### ⚒️ Description
+## Description
 
 Storybook Docs shows a component’s description extracted from the source code or based on a user-provided string.
 
 ![Docs blocks with description](./docblock-description.png)
 
-#### DocsPage
+### DocsPage
 
 In DocsPage, a component’s description is shown at the top of the page. For [supported frameworks](https://github.com/storybookjs/storybook/tree/next/addons/docs#framework-support), the component description is automatically extracted from a docgen component above the component in its source code. It can also be set by the `docs.description` parameter.
 
@@ -231,25 +226,25 @@ In DocsPage, a component’s description is shown at the top of the page. For [s
 export default {
   title: 'CustomDescription'
   parameters: {
-    docs: { 
-        description: { 
-            component: 'some component _markdown_' 
-        } 
+    docs: {
+        description: {
+            component: 'some component _markdown_'
+        }
     },
   }
 };
 
 export const WithStoryDescription = Template.bind({});
 WithStoryDescription.parameters = {
-  docs: { 
-      description: { 
-          story: 'some story **markdown**' 
-        } 
+  docs: {
+      description: {
+          story: 'some story **markdown**'
+        }
     },
 };
 ```
 
-#### MDX
+### MDX
 
 In MDX, the `Description` shows the component’s description using the same heuristics as the DocsPage. It also accepts a `markdown` parameter to show any user-provided Markdown string.
 
@@ -267,17 +262,17 @@ import { Button } from './Button';
 `}/>
 ```
 
-### Story
+## Story
 
 Stories (component examples) are the basic building blocks in Storybook. In Storybook Docs, stories are rendered in the `Story` block.
 
 ![Docs blocks with stories](./docblock-story.png)
 
-#### DocsPage
+### DocsPage
 
 In DocsPage, a `Story` block is generated for each story in your [CSF](../api/csf.md) file, it's wrapped with a `Canvas` wrapper that gives it a toolbar on top (in the case of the first “primary” story) and a source code preview underneath.
 
-#### MDX
+### MDX
 
 In MDX, the `Story` block is not only a way of displaying stories, but also the primary way to define them. Storybook looks for `Story` instances with the `name` prop, either defined at the top level of the document, or directly beneath a [Canvas](#canvas) block defined at the top level:
 
@@ -295,30 +290,28 @@ export const Template = (args) => <Button {...args} />;
 You can also reference existing stories in Storybook by ID:
 
 ```js
-
 import { Story } from '@storybook/addon-docs/blocks';
 
-<Story id="some-component--some-name" />
+<Story id="some-component--some-name" />;
 ```
 
-#### Inline rendering
+### Inline rendering
 
 In Storybook’s Canvas, all stories are rendered in the Preview iframe for isolated development. In Storybook Docs, when [inline rendering is supported by your framework](./docs-page.md#inline-stories-vs-iframe-stories), inline rendering is used by default for performance and convenience. However, you can force iframe rendering with `docs: { inlineStories: false }` parameter, or `inline={false}` in MDX.
 
-
-### Canvas
+## Canvas
 
 Storybook Docs’ `Canvas` block is a wrapper that provides a toolbar for interacting with its contents, and also also provides [Source](#source) snippets automatically.
 
 ![Docs block with a story preview](./docblock-preview.png)
 
-#### DocsPage
+### DocsPage
 
 In DocsPage, every story is wrapped in a `Canvas` block. The first story on the page is called the _primary_, and it has a toolbar. The other stories are also wrapped with `Canvas`, but there is no toolbar by default.
 
 ![Docs blocks preview toolbar](./docblock-preview-toolbar.png)
 
-#### MDX
+### MDX
 
 In MDX, `Canvas` is more flexible: in addition to the DocsPage behavior, it can show multiple stories in one:
 
@@ -348,7 +341,7 @@ import { MyComponent } from './MyComponent';
 <Preview>
   <h2>Some here</h2>
   <MyComponent />
-</Preview>
+</Preview>;
 ```
 
 This renders the JSX content exactly as it would if you’d placed it directly in the MDX, but it also inserts the source snippet in a [Source](#source) block beneath the block.

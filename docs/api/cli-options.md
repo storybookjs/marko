@@ -4,9 +4,9 @@ title: 'CLI options'
 
 Storybook comes with two CLI utilities: `start-storybook` and `build-storybook`.
 
-You can pass these commands the following options to alter Storybook's behavior.
+Pass these commands the following options to alter Storybook's behavior.
 
-## For start-storybook
+## start-storybook
 
 ```plaintext
 Usage: start-storybook [options]
@@ -31,7 +31,7 @@ Usage: start-storybook [options]
 | --debug-webpack                | Display final webpack configurations for debugging purposes                                                                                    | `start-storybook --debug-webpack`               |
 | --docs                         | Starts Storybook in documentation mode. Learn more about it in [here](../writing-docs/build-documentation.md#preview-storybooks-documentation) | `start-storybook --docs`                        |
 
-## For build-storybook
+## build-storybook
 
 ```plaintext
 Usage: build-storybook [options]

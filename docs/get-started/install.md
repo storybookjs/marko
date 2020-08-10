@@ -1,12 +1,18 @@
 ---
-title: 'Install'
+title: 'Install Storybook'
 ---
 
 Use the Storybook CLI to install it in a single command. Run this inside your existing project’s root directory:
 
-```sh
-npx sb init
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-install.sh.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 <details>
 
@@ -16,12 +22,11 @@ Storybook needs to be installed into a project that is already setup with a fram
 
 - 📦 [Create React App](https://reactjs.org/docs/create-a-new-react-app.html)
 - 📦 [Vue CLI](https://cli.vuejs.org/)
-- Or any other tooling available. 
+- Or any other tooling available.
 
 </details>
 
 During its install process, Storybook will look into your project's dependencies and provide you with the best configuration available.
-
 
 The command above will make the following changes to your local environment:
 
@@ -32,23 +37,28 @@ The command above will make the following changes to your local environment:
 
 Check that everything worked by running:
 
-```sh
-npx storybook
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-execute.sh.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 It will start Storybook locally and output the address. Depending on your system configuration, it will automatically open the address in a new browser tab and you'll be greeted by a welcome screen. In that screen there are some noteworthy items:
 
 - A collection of useful links for more in depth configuration and customization options you have at your disposal.
 - A second set of links for you to expand your Storybook knowledge and get involved with the ever growing Storybook community.
 - A few example stories to get you started.
- 
-![Storybook welcome screen](./example-welcome.png)
 
+![Storybook welcome screen](./example-welcome.png)
 
 <details>
 <summary>Troubleshooting</summary>
 
-You can also setup Storybook manually through the Storybook CLI. 
+You can also setup Storybook manually through the Storybook CLI.
 
 You can use the `--type` flag to tell Storybook to configure itself based on the flag.
 
@@ -63,6 +73,5 @@ If there's an installation problem, check the README for your framework (e.g <a 
 If all else fails, try asking for [help](https://storybook.js.org/support/)
 
 </details>
-
 
 Now that you installed Storybook successfully, let’s take a look at a story that was written for us.

@@ -87,7 +87,7 @@ module.exports = {
         },
         {
           pathSegment: 'docs-page',
-          title: 'Docs Page',
+          title: 'DocsPage',
           type: 'link',
         },
         {
@@ -97,18 +97,18 @@ module.exports = {
         },
         {
           pathSegment: 'doc-blocks',
-          title: 'Docs Blocks',
+          title: 'Doc Blocks',
           type: 'link',
         },
         {
           pathSegment: 'build-documentation',
-          title: 'Preview and build Storybook documentation',
+          title: 'Preview and build docs',
           type: 'link',
         },
       ],
     },
     {
-      title: 'Essentials',
+      title: 'Essential addons',
       pathSegment: 'essentials',
       type: 'menu',
       children: [
@@ -117,24 +117,25 @@ module.exports = {
           title: 'Introduction',
           type: 'link',
         },
-        {
-          pathSegment: 'controls',
-          title: 'Controls',
-          type: 'link',
-        },
+
         {
           pathSegment: 'actions',
           title: 'Actions',
           type: 'link',
         },
         {
-          pathSegment: 'viewports',
-          title: 'Viewports',
+          pathSegment: 'backgrounds',
+          title: 'Backgrounds',
           type: 'link',
         },
         {
-          pathSegment: 'backgrounds',
-          title: 'Backgrounds',
+          pathSegment: 'controls',
+          title: 'Controls',
+          type: 'link',
+        },
+        {
+          pathSegment: 'viewports',
+          title: 'Viewports',
           type: 'link',
         },
         {
@@ -165,29 +166,31 @@ module.exports = {
           type: 'link',
         },
         {
-          pathSegment: 'user-interface',
+          pathSegment: '',
           title: 'User interface',
-          type: 'link',
-        },
-        {
-          pathSegment: 'features-and-behavior',
-          title: 'Features and behavior',
-          type: 'link',
-        },
-        {
-          pathSegment: 'theming',
-          title: 'Theming',
-          type: 'link',
-        },
-        {
-          pathSegment: 'sidebar-and-urls',
-          title: 'Sidebar & URLS',
-          type: 'link',
-        },
-        {
-          pathSegment: 'storybook-addons',
-          title: 'Storybook Addons',
-          type: 'link',
+          type: 'menu',
+          children: [
+            {
+              pathSegment: 'features-and-behavior',
+              title: 'Features and behavior',
+              type: 'link',
+            },
+            {
+              pathSegment: 'theming',
+              title: 'Theming',
+              type: 'link',
+            },
+            {
+              pathSegment: 'sidebar-and-urls',
+              title: 'Sidebar & URLS',
+              type: 'link',
+            },
+            {
+              pathSegment: 'storybook-addons',
+              title: 'Storybook Addons',
+              type: 'link',
+            },
+          ],
         },
         {
           pathSegment: 'environment-variables',
@@ -208,7 +211,7 @@ module.exports = {
         },
         {
           pathSegment: 'build-pages-with-storybook',
-          title: 'Building pages with Storybook',
+          title: 'Building pages and screens',
           type: 'link',
         },
         {
@@ -251,7 +254,7 @@ module.exports = {
         },
         {
           pathSegment: 'storybook-composition',
-          title: 'Storybook Composition',
+          title: 'Composition',
           type: 'link',
         },
         {
@@ -267,47 +270,53 @@ module.exports = {
       type: 'menu',
       children: [
         {
-          pathSegment: 'stories',
           title: 'Stories',
-          type: 'link',
+          pathSegment: '',
+          type: 'menu',
+          children: [
+            {
+              pathSegment: 'csf',
+              title: 'Component Story Format',
+              type: 'link',
+            },
+            {
+              pathSegment: 'mdx',
+              title: 'MDX syntax',
+              type: 'link',
+            },
+            {
+              pathSegment: 'argtypes',
+              title: 'ArgTypes',
+              type: 'link',
+            },
+          ],
         },
         {
-          pathSegment: 'csf',
-          title: 'Component Story Format',
-          description: 'Learn about the Component Story Format API',
-          type: 'bullet-link',
-        },
-        {
-          pathSegment: 'mdx',
-          title: 'MDX syntax',
-          description: 'Learn how to add MDX to your Storybook',
-          type: 'bullet-link',
-        },
-        {
-          pathSegment: 'argtypes',
-          title: 'ArgTypes',
-          description: 'Learn how to use Argtypes with your Storybook',
-          type: 'bullet-link',
-        },
-        {
-          pathSegment: 'addons',
           title: 'Addons',
-          type: 'link',
-        },
-        {
-          pathSegment: 'addons-api',
-          title: 'Addons API',
-          type: 'link',
-        },
-        {
-          pathSegment: 'presets',
-          title: 'Presets',
-          type: 'link',
-        },
-        {
-          pathSegment: 'writing-presets',
-          title: 'Writing your own Storybook Preset',
-          type: 'link',
+          pathSegment: '',
+          type: 'menu',
+          children: [
+            {
+              pathSegment: 'addons',
+              title: 'Addons',
+              type: 'link',
+            },
+            {
+              pathSegment: 'presets',
+              title: 'Presets',
+              type: 'link',
+            },
+            {
+              pathSegment: 'writing-presets',
+              title: 'Writing Presets',
+              type: 'link',
+            },
+            {
+              pathSegment: 'addons-api',
+              title: 'Addons API',
+              type: 'link',
+            },
+          ],
         },
         {
           pathSegment: 'new-frameworks',
@@ -316,7 +325,7 @@ module.exports = {
         },
         {
           pathSegment: 'cli-options',
-          title: 'CLI Options',
+          title: 'CLI options',
           type: 'link',
         },
         {

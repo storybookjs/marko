@@ -3,6 +3,7 @@ module.exports = {
     'react',
     'vue',
     'angular',
+    'ember',
     'html',
     'mithril',
     'marko',
