@@ -52,7 +52,7 @@ Both story examples render the same thing because Storybook feeds the given `arg
 
 <div class="aside">
 
-Note that `Template.bind({})` is a standard JavaScript technique for making a copy of a function. We copy the `Template` so each exported story can set its own properties on it.
+Note that `Template.bind({})` is a [standard JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind) technique for making a copy of a function. We copy the `Template` so each exported story can set its own properties on it.
 
 </div>
 

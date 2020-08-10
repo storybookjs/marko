@@ -4,13 +4,18 @@ title: 'Actions'
 
 The actions addon is used to display data received by event handler (callback) arguments in your stories.
 
-![Essential Actions addon usage](./addon-actions-screenshot.png)
+<video autoPlay muted playsInline loop>
+  <source
+    src="addon-actions-optimized.mp4"
+    type="video/mp4"
+  />
+</video>
 
-### Action args
+## Action args
 
 Actions works via supplying special Storybook-generated “action” arguments (referred to as "args" for short) to your stories. There are two ways to get an action arg:
 
-#### Action argType annotation
+### Action argType annotation
 
 You can use [argTypes](../api/argtypes.md) to tell Storybook that an arg to your story should be an action. Usually it makes sense to do this at the component level (although it can be done per story):
 
@@ -26,14 +31,9 @@ You can use [argTypes](../api/argtypes.md) to tell Storybook that an arg to your
 
 When Storybook sees this argType it will create an arg that is set to a special “action” callback. If your component calls this arg (based on user interaction) the event will show up in the action panel:
 
-<video autoPlay muted playsInline loop>
-  <source
-    src="addon-actions-optimized.mp4"
-    type="video/mp4"
-  />
-</video>
+![Essential Actions addon usage](./addon-actions-screenshot.png)
 
-#### Automatically matching args
+### Automatically matching args
 
 Another option is to use a parameter to match all [argTypes](../api/argtypes.md) that match a certain pattern. The following configuration automatically creates actions for each `on` argType (which you can either specify manually or can be [inferred automatically](../api/argtypes.md#automatic-argtype-inference)).
 
@@ -53,7 +53,7 @@ NOTE: If you're generating argTypes in using another addon (like [docs](../writi
 
 </div>
 
-### Action event handlers
+## Action event handlers
 
 It is also possible to detect if your component is emitting the correct HTML events using the `parameters.actions.handles` [parameter](../writing-stories/parameters.md).
 
@@ -69,6 +69,6 @@ It is also possible to detect if your component is emitting the correct HTML eve
 
 This will bind a standard HTML event handler to the outermost HTML element rendered by your component and trigger an action when the event is called for a given selector. The format is `<eventname> <selector>`. Selector is optional; it defaults to all elements.
 
-### Advanced / legacy usage
+## Advanced / legacy usage
 
 There are also some older ways to use actions as documented in the [advanced README](../../addons/actions/ADVANCED.md).

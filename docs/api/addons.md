@@ -9,7 +9,7 @@ The addon API makes it easy for you to configure and customize Storybook in new 
 - [Add a tool to Storybook’s toolbar (like zoom or grid).](../essentials/toolbars-and-globals.md)
 - [Add a tab to Storybook (like SB Docs).](../writing-docs/introduction.md)
 
-Browse the [Addon gallery](/addons) to install an existing addon or as inspiration for your own addon. Read on to learn how to make an addon yourself.
+Browse the [addon gallery](/addons) to install an existing addon or as inspiration for your own addon. Read on to learn how to make an addon yourself.
 
 ## Storybook basics
 

@@ -26,5 +26,3 @@ If you want to learn more about the component-driven approach that Storybook ena
 If you want a guided tutorial through building a simple application with Storybook in your framework and language, [LearnStorybook](https://www.learnstorybook.com/) has your back.
 
 Read on to learn Storybook basics and API!
-
-Get started installing Storybook into your project
