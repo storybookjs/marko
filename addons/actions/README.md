@@ -6,9 +6,9 @@ Storybook Addon Actions can be used to display data received by event handlers i
 
 ![Screenshot](https://raw.githubusercontent.com/storybookjs/storybook/HEAD/addons/actions/docs/screenshot.png)
 
-## Getting Started
+## Installation
 
-Actions is part of [essentials](https://storybook.js.org/docs/react/essentials/introduction) and so is installed in all new Storybooks by default. If you need to add it to your storybook, you can run:
+Actions is part of [essentials](https://storybook.js.org/docs/react/essentials/introduction) and so is installed in all new Storybooks by default. If you need to add it to your Storybook, you can run:
 
 Install:
 
@@ -16,7 +16,7 @@ Install:
 npm i -D @storybook/addon-actions
 ```
 
-Then, add following content to [`.storybook/main.js`](https://storybook.js.org/docs/react/configure/overview#Configure-your-Storybook-project)
+Then, add following content to [`.storybook/main.js`](https://storybook.js.org/docs/react/configure/overview#Configure-your-Storybook-project):
 
 ```js
 module.exports = {
