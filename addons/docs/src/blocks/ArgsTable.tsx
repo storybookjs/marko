@@ -211,9 +211,7 @@ export const ComponentsTable: FC<ComponentsProps> = (props) => {
 
 export const ArgsTable: FC<ArgsTableProps> = (props) => {
   const context = useContext(DocsContext);
-  const {
-    parameters: { subcomponents },
-  } = context;
+  const { parameters: { subcomponents } = {} } = context;
 
   const { include, exclude, components } = props as ComponentsProps;
   const { story } = props as StoryProps;
