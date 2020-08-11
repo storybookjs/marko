@@ -1,6 +1,6 @@
 {
   "name": "@storybook/api",
-  "version": "6.0.0-rc.30",
+  "version": "6.0.0",
   "description": "Core Storybook API & Context",
   "keywords": [
     "storybook"
@@ -29,13 +29,13 @@
   },
   "dependencies": {
     "@reach/router": "^1.3.3",
-    "@storybook/channels": "6.0.0-rc.30",
-    "@storybook/client-logger": "6.0.0-rc.30",
-    "@storybook/core-events": "6.0.0-rc.30",
+    "@storybook/channels": "6.0.0",
+    "@storybook/client-logger": "6.0.0",
+    "@storybook/core-events": "6.0.0",
     "@storybook/csf": "0.0.1",
-    "@storybook/router": "6.0.0-rc.30",
+    "@storybook/router": "6.0.0",
     "@storybook/semver": "^7.3.2",
-    "@storybook/theming": "6.0.0-rc.30",
+    "@storybook/theming": "6.0.0",
     "@types/reach__router": "^1.3.5",
     "core-js": "^3.0.1",
     "fast-deep-equal": "^3.1.1",
@@ -61,7 +61,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "46bf85714342208cf612aee130f8876ce56ba46b",
+  "gitHead": "b97e2eed2fce5e124eb825e2a3c768cf8e134219",
   "typesVersions": {
     "<=3.5": {
       "*": [
