@@ -12,7 +12,7 @@ We recommend adopting the same project structure as the Storybook monorepo. That
 
 This may seem like a little more hierarchy than what’s necessary. But because the structure mirrors the way Storybook’s own monorepo is structured, you can reuse Storybook’s tooling and it also makes it easier to move the framework into the Storybook into the monorepo at a later point if that is desirable.
 
-We recommend using `@storybook/html` as a starter framework since it’s the simplest one and doesn’t contain any framework-specific oddities. There is a boilerplate to get you started [here](https://github.com/CodeByAlex/storybook-framework-boilerplate):
+We recommend using `@storybook/html` as a starter framework since it’s the simplest one and doesn’t contain any framework-specific oddities. There is a boilerplate to get you started [here](https://github.com/CodeByAlex/storybook-framework-boilerplate).
 
 ## Framework architecture
 
