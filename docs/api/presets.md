@@ -55,8 +55,4 @@ Each preset has its own option and those options should be documented in the pre
 
 ## Go deeper
 
-<div style="">
-TODO: vet presets gallery page link
-</div>
-
-To see what presets are available, see the [preset gallery](/preset-gallery/). To understand more about how presets work and write your own, see [writing presets](./writing-presets.md).
+Storybook-maintained presets are available in the [presets repo](https://github.com/storybookjs/presets). To understand more about how presets work and write your own, see [writing presets](./writing-presets.md).

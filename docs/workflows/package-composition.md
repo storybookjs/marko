@@ -73,25 +73,16 @@ Storybook can communicate with services that host built Storybooks online. This 
 
 ### CHP level 1
 
-<div style="background-color:#F8FAFC">
-TODO: "version=x.y.z query parameter".(vet this)
-</div>
-
 The service serves uploaded Storybooks and makes the following available:
 
-- Versioned endpoints, URLs that resolve to different published Storybooks depending on a version=x.y.z query parameter.
-- Support for /stories.json
-- Support for /metadata.json and the releases field.
+- Versioned endpoints, URLs that resolve to different published Storybooks depending on a `version=x.y.z` query parameter (where `x.y.z` is the released version of the package).
+- Support for `/stories.json`
+- Support for `/metadata.json` and the `releases` field.
 
-Examples of such services:
-
-- [chromatic.com](https://www.chromatic.com/)
+Examples of such services: [chromatic.com](https://www.chromatic.com/).
 
 ### CHP level 0
 
 The service can serve uploaded Storybooks. There is no special integration with Storybook APIs.
 
-Examples of such services:
-
-- [Netlify](https://www.netlify.com/)
-- [S3](https://aws.amazon.com/en/s3/)
+Examples of such services: [Netlify](https://www.netlify.com/) and [S3](https://aws.amazon.com/en/s3/).

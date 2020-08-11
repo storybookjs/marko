@@ -2,7 +2,9 @@
 title: 'Setup Storybook'
 ---
 
-Now that you’ve learned what stories are and how to browse them, let’s demo working on one of your components. Pick a simple component from your project, like a Button, and write a `.stories.js` file to go along with it. It might look something like this:
+Now that you’ve learned what stories are and how to browse them, let’s demo working on one of your components.
+
+Pick a simple component from your project, like a Button, and write a `.stories.js` file to go along with it. It might look something like this:
 
 <!-- prettier-ignore-start -->
 
@@ -26,9 +28,9 @@ Storybook comes with a permissive [default configuration](../configure/overview.
 Your project may have additional requirements before components can be rendered in isolation. This warrants customizing configuration further. There are three broad categories of configuration you might need.
 
 <details>
-  <summary>Build configuration like webpack and Babel</summary>
-  
-  If you see errors on the CLI when you run the `yarn storybook` command. It’s likely you need to make changes to Storybook’s build configuration. Here are some things to try:
+<summary>Build configuration like webpack and Babel</summary>
+
+If you see errors on the CLI when you run the `yarn storybook` command. It’s likely you need to make changes to Storybook’s build configuration. Here are some things to try:
 
 - [Presets](../api/presets.md) bundle common configurations for various technologies into Storybook. In particular presets exist for Create React App, SCSS and Ant Design.
 - Specify a custom [Babel configuration](../configure/integration.md#custom-babel-config) for Storybook. Storybook automatically tries to use your project’s config if it can.
@@ -37,13 +39,14 @@ Your project may have additional requirements before components can be rendered 
 </details>
 
 <details>
-  <summary>Runtime configuration</summary>
-  
-  If Storybook builds but you see an error immediately when connecting to it in the browser, then chances are one of your input files is not compiling/transpiling correctly to be interpreted by the browser. Storybook supports modern browsers and IE11, but you may need to check the Babel and webpack settings (see above) to ensure your component code works correctly.
+<summary>Runtime configuration</summary>
+
+If Storybook builds but you see an error immediately when connecting to it in the browser, then chances are one of your input files is not compiling/transpiling correctly to be interpreted by the browser. Storybook supports modern browsers and IE11, but you may need to check the Babel and webpack settings (see above) to ensure your component code works correctly.
+
 </details>
 
 <details id="component-context" name="component-context">
-  <summary>Component context</summary>
+<summary>Component context</summary>
 
 If a particular story has a problem rendering, often it means your component expects a certain environment is available to the component.
 

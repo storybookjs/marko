@@ -1,8 +1,11 @@
 ```md
+<!-- MyComponent.stories.mdx --->
 
 import { Canvas } from '@storybook/addon-docs/blocks';
 
-export const Template = (args) => <Badge {...args } />
+<!--- This is your Story template function, shown here in React -->
+
+export const Template = (args) => <Badge {...args } />;
 
 <Canvas>
   <Story name="warning" args={{status: 'warning', label: 'Warning'}}>
@@ -15,5 +18,4 @@ export const Template = (args) => <Badge {...args } />
     {Template.bind({})}
   </Story>
 </Canvas>
-
 ```

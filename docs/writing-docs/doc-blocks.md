@@ -2,10 +2,6 @@
 title: 'Doc Blocks'
 ---
 
-<div>
-TODO: vet the canvas changes. Originally it was Preview and now it's Canvas (associated issue https://github.com/storybookjs/storybook/issues/11696)
-</div>
-
 Doc Blocks are the building blocks of Storybook documentation pages. By default, [DocsPage](./docs-page.md) uses a combination of the blocks below to build a page for each of your components automatically.
 
 Custom [addons](../configure/user-interface.md#storybook-addons) can also provide their own doc blocks.

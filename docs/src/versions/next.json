@@ -1,1 +1,0 @@
-{"version":"6.0.0-rc.29","info":{"plain":"### Features\n\n- CLI: Add CSF types for Angular ([#11825](https://github.com/storybookjs/storybook/pull/11825))\n\n### Bug Fixes\n\n- Core: Fix serialization of `undefined` ([#11829](https://github.com/storybookjs/storybook/pull/11829))"}}

@@ -19,7 +19,7 @@ Button.stories.js | ts
 
 We define stories according to the [Component Story Format](../api/csf.md) (CSF), an ES6 module-based standard that is easy to write and portable between tools.
 
-The key ingredients are the [**`default` export**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export#Using_the_default_export) that describes the component, and [**named exports**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export#Using_named_exports) that describe the stories.
+The key ingredients are the [default export](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export#Using_the_default_export) that describes the component, and [named exports](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export#Using_named_exports) that describe the stories.
 
 ### Default export
 
@@ -227,7 +227,7 @@ You can also reuse stories from the child `ListItem` in your `List` component. T
 <!-- prettier-ignore-end -->
 
 <div class="aside">
- 
- Note that there are disadvantages in writing stories like this as you cannot take full advantage of the args mechanism and composing args as you build more complex composite components. For more discussion, set the [multi component stories](../workflows/stories-for-multiple-components.md) workflow article.
- 
- </div>
+
+Note that there are disadvantages in writing stories like this as you cannot take full advantage of the args mechanism and composing args as you build more complex composite components. For more discussion, set the [multi component stories](../workflows/stories-for-multiple-components.md) workflow article.
+
+</div>
