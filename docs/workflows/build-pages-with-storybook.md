@@ -50,7 +50,7 @@ In such cases it is natural to use [args composition](../writing-stories/args.md
 <CodeSnippets
   paths={[
     'react/page-story-with-args-composition.js.mdx',
-     'react/page-story-with-args-composition.ts.mdx',
+    'react/page-story-with-args-composition.ts.mdx',
   ]}
 />
 
@@ -139,3 +139,102 @@ Once that configuration is complete, we can set the mock values in a specific st
 Another mocking approach is to use libraries that intercept calls at a lower level. For instance you can use [`fetch-mock`](https://www.npmjs.com/package/fetch-mock) to mock fetch requests specifically, or [`msw`](https://www.npmjs.com/package/msw) to mock all kinds of network traffic.
 
 Similar to the import mocking above, once you have a mock you’ll still want to set the return value of the mock on a per-story basis. Do this in Storybook with a decorator that reads story parameters.
+
+### Avoiding mocking dependencies
+
+It's possible to mostly avoid mocking the dependencies of connected "container" components entirely through passing them around via props, or React context. However, it necessitates a strict split of container and presentational component logic. For example, if you have a component that is responsible for data fetching logic and rendering DOM, it will need to be mocked as previously described.
+
+It’s common to import and embed container components in amongst presentational components. However, as we discovered earlier, in order to also render them within Storybook, we’ll likely have to mock their dependencies or the imports themselves.
+
+Not only can this quickly grow to become a tedious task, it’s also very difficult to mock container components that use local state. So, a solution to this problem is instead of importing containers directly, instead create a React context that provides the container components. This allows you to freely embed container components as usual, at any level in the component hierarchy without worrying about subsequently mocking their dependencies; since we can simply swap out the containers themselves with their mocked presentational counterpart.
+
+We recommend dividing context containers up over specific pages or views in your app. For example, if you had a `ProfilePage` component, you might set up a file structure as follows:
+
+```
+ProfilePage.js
+ProfilePage.stories.js
+ProfilePageContainer.js
+ProfilePageContext.js
+```
+
+<div class="aside">
+
+It’s also often useful to setup a “global” container context, (perhaps named `GlobalContainerContext`) for container components that may be rendered on every page of your app, and adding it to the top level of your application. While it’s possible to place every container within this global context, it should only provide containers that are required globally.
+
+</div>
+
+Let’s look at an example implementation of this approach.
+
+First we’ll need to create a React context, and we can name it `ProfilePageContext`. It does nothing more than export a React context:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'react/mock-context-create.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+`ProfilePage` is our presentational component. It will use the `useContext` hook to retrieve the container components from `ProfilePageContext`:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'react/mock-context-in-use.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+#### Mocking containers in Storybook
+
+In the context of Storybook, instead of providing container components through context, we’ll instead provide their mocked counterparts. In most cases, the mocked versions of these components can often be borrowed directly from their associated stories.
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'react/mock-context-container.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+<div class="aside">
+
+If the same context applies to all `ProfilePage` stories, we can also use a [decorator](../writing-stories/decorators.md).
+
+</div>
+
+#### Providing containers to your application
+
+Now, in context of your application, you’ll need to provide `ProfilePage` with all of the container components it requires by wrapping it with `ProfilePageContext.Provider`:
+
+For example, in Next.js, this would be your `pages/profile.js` component.
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'react/mock-context-container-provider.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+#### Mocking global containers in Storybook
+
+If you’ve setup `GlobalContainerContext`, in order to provide context to all stories you’ll need to set up a decorator within Storybook’s `preview.js`. For example:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'react/mock-context-container-global.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
