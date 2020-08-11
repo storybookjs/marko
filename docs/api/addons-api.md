@@ -48,7 +48,7 @@ See how you can use this method:
 
 <CodeSnippets
   paths={[
-    'react/storybook-addon-panel-initial.js.mdx',
+    'common/storybook-addon-panel-initial.js.mdx',
   ]}
 />
 

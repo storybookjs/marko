@@ -71,7 +71,7 @@ Next, let’s replace the `MyPanel` component from above to show the parameter.
 
 <CodeSnippets
   paths={[
-    'react/storybook-addon-change-panel.js.mdx',
+    'common/storybook-addon-change-panel.js.mdx',
   ]}
 />
 
@@ -142,7 +142,7 @@ To make that possible, you need to pass the `paramKey` element when you register
 
 <CodeSnippets
   paths={[
-    'react/storybook-addon-disable-addon.js.mdx',
+    'common/storybook-addon-disable-addon.js.mdx',
   ]}
 />
 
