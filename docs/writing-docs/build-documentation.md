@@ -8,15 +8,13 @@ Storybook allows you to create rich and extensive [documentation](./introduction
 
 At any point during your development, you can preview the documentation you've written. Storybook allows you to generate a preview of the final documentation when you use the `--docs` flag. We recommend including it in your `package.json` as a new script:
 
-<!-- prettier-ignore-start -->
-
-<CodeSnippets
-  paths={[
-    'common/storybook-preview-documentation.json.mdx',
-  ]}
-/>
-
-<!-- prettier-ignore-end -->
+```json
+{
+  "scripts": {
+    "storybook-docs": "start-storybook --docs",
+  }
+}
+```
 
 Depending on your configuration, when you execute the `storybook-docs` script. Storybook will be put into documentation mode and will generate a different build.
 
@@ -34,15 +32,13 @@ There's some caveats to this build mode, as to the normal Storybook build:
 
 You can also publish your documentation, the same you would [publish](../workflows/publish-storybook.md) your Storybook. You can use the `--docs` flag with `build-storybook` command. We recommend as well including it as a script in your `package.json` file:
 
-<!-- prettier-ignore-start -->
-
-<CodeSnippets
-  paths={[
-    'common/storybook-build-documentation.json.mdx',
-  ]}
-/>
-
-<!-- prettier-ignore-end -->
+```json
+{
+  "scripts": {
+    "build-storybook-docs": "build-storybook --docs",
+  }
+}
+```
 
 Based on the configuration you have, when the `build-storybook-docs` script is executed, Storybook once again will be put into documentation mode and will generate a different build and output the documentation into the `storybook-static` folder.
 

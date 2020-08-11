@@ -31,15 +31,9 @@ The command above will make the following changes to your local environment:
 
 Check that everything worked by running:
 
-<!-- prettier-ignore-start -->
-
-<CodeSnippets
-  paths={[
-    'common/storybook-execute.sh.mdx',
-  ]}
-/>
-
-<!-- prettier-ignore-end -->
+```shell
+npx storybook
+```
 
 It will start Storybook locally and output the address. Depending on your system configuration, it will automatically open the address in a new browser tab and you'll be greeted by a welcome screen.
 

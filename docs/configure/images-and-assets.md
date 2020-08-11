@@ -26,15 +26,13 @@ We recommend serving static files via Storybook to ensure that your components a
 
 Configure a directory (or a list of directories) where your assets live when starting Storybook. Use the`-s` flag in your npm script like so:
 
-<!-- prettier-ignore-start -->
-
-<CodeSnippets
-  paths={[
-    'common/storybook-serve-static-assets-script.json.mdx',
-  ]}
-/>
-
-<!-- prettier-ignore-end -->
+```json
+{
+    "scripts": {
+        "start-storybook": "start-storybook -s ./public -p 9001"
+    }
+}
+```
 
 Here `./public` is your static directory. Now use it in a component or story like this.
 
@@ -50,15 +48,13 @@ Here `./public` is your static directory. Now use it in a component or story lik
 
 You can also pass a list of directories separated by commas without spaces instead of a single directory.
 
-<!-- prettier-ignore-start -->
-
-<CodeSnippets
-  paths={[
-    'common/storybook-serve-static-assets-script-multifolder.json.mdx',
-  ]}
-/>
-
-<!-- prettier-ignore-end -->
+```json
+{
+    "scripts": {
+        "start-storybook": "start-storybook -s ./public,./static -p 9001"
+    }
+}
+```
 
 ### Reference assets from a CDN
 
