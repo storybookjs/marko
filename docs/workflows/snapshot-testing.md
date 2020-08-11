@@ -16,12 +16,15 @@ npm i -D @storybook/addon-storyshots
 
 Configure Storyshots by adding the following test file to your project:
 
-```js
-// storybook.test.js
+<!-- prettier-ignore-start -->
 
-import initStoryshots from '@storybook/addon-storyshots';
-initStoryshots();
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-storyshots-config.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 <div class="aside">
 

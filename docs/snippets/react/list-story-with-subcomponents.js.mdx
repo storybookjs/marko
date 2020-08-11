@@ -1,0 +1,20 @@
+```js
+// List.stories.js
+
+import List from './List';
+import ListItem from './ListItem';
+
+export default {
+  component: List,
+  subcomponents: [ListItem],
+  title: 'List',
+};
+
+export const Empty = (args) => <List {...args} />;
+
+export const OneItem = (args) => (
+  <List {...args}>
+    <ListItem />
+  </List>
+);
+```

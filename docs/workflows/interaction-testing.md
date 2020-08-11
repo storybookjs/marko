@@ -8,14 +8,12 @@ Stories are convenient **starting points** and **harnesses** for interaction tes
 
 Luckily, this is straightforward. Point your interaction testing tool at Storybook’s isolated iframe [URL for a specific story](../configure/sidebar-and-urls.md#permalinking-to-stories) then execute the test script as usual. Here’s an example using Cypress:
 
-```js
-// My-component_spec.js
+<!-- prettier-ignore-start -->
 
-describe('My Component', () => {
-  it('should respond to click on button with warning', () => {
-	cy.visit('http://localhost:6006/iframe.html?id=my-component--basic-story’);
-	cy.get('#button').click();
-	cy.get('#warning').should('contain.text', 'You need to fill in the form!');
-  });
-})
-```
+<CodeSnippets
+  paths={[
+    'common/component-cypress-test.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
