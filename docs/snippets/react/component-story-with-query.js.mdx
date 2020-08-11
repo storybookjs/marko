@@ -3,7 +3,9 @@
 
 import MyComponentThatHasAQuery, { MyQuery} from '../component-that-has-a-query';
 
-export const LoggedOut = () => <MyComponentThatHasAQuery />;
+const Template=(args)=><MyComponentThatHasAQuery {...args}/>;
+
+export const LoggedOut = () => Template.bind({});
 LoggedOut.parameters: {
   apolloClient: {
     mocks: [
