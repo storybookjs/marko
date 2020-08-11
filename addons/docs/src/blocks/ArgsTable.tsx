@@ -247,5 +247,5 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
 };
 
 ArgsTable.defaultProps = {
-  story: PRIMARY_STORY,
+  of: CURRENT_SELECTION,
 };
