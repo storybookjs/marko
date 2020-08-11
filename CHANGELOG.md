@@ -1,3 +1,10 @@
+## 6.0.1 (August 11, 2020)
+
+### Bug Fixes
+
+- Core: Fix support for main.ts/preview.ts files ([#11885](https://github.com/storybookjs/storybook/pull/11885))
+- Addon-docs: Fix ArgsTable regression ([#11889](https://github.com/storybookjs/storybook/pull/11889))
+
 ## 6.0.0 (August 10, 2020)
 
 Storybook 6.0 is here!

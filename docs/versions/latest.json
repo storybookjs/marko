@@ -1,0 +1,1 @@
+{"version":"6.0.1","info":{"plain":"### Bug Fixes\n\n- Core: Fix support for main.ts/preview.ts files ([#11885](https://github.com/storybookjs/storybook/pull/11885))\n- Addon-docs: Fix ArgsTable regression ([#11889](https://github.com/storybookjs/storybook/pull/11889))"}}
