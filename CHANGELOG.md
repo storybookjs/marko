@@ -1,3 +1,9 @@
+## 6.0.2 (August 11, 2020)
+
+### Bug Fixes
+
+- CLI: Fix csf-hoist-story-annotations codemod for variable default exports ([#11895](https://github.com/storybookjs/storybook/pull/11895))
+
 ## 6.0.1 (August 11, 2020)
 
 ### Bug Fixes
