@@ -108,17 +108,17 @@ The addon config `config` allows you to add extra preview configuration from wit
 
 For example, the Backgrounds preset contains the following code:
 
-```ts
-// preset.ts
-export function config(entry: any[] = []) {
+```js
+// preset.js
+export function config(entry = []) {
   return [...entry, require.resolve('./defaultParameters')];
 }
 ```
 
 Which in turn invokes:
 
-```ts
-// defaultParameters.ts
+```js
+// defaultParameters.js
 export const parameters = {
   backgrounds: {
     values: [
