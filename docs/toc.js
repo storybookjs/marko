@@ -1,7 +1,7 @@
 module.exports = {
   toc: [
     {
-      title: 'Get Started',
+      title: '🚀 Get Started',
       pathSegment: 'get-started',
       type: 'menu',
       children: [
@@ -44,7 +44,7 @@ module.exports = {
       ],
     },
     {
-      title: 'Writing Stories',
+      title: '🖋 Writing Stories',
       pathSegment: 'writing-stories',
       type: 'menu',
       children: [
@@ -76,7 +76,7 @@ module.exports = {
       ],
     },
     {
-      title: 'Writing Docs',
+      title: '📖 Writing Docs',
       pathSegment: 'writing-docs',
       type: 'menu',
       children: [
@@ -108,7 +108,7 @@ module.exports = {
       ],
     },
     {
-      title: 'Essential addons',
+      title: '🧩 Essential addons',
       pathSegment: 'essentials',
       type: 'menu',
       children: [
@@ -145,7 +145,7 @@ module.exports = {
       ],
     },
     {
-      title: 'Configure',
+      title: '⚙️ Configure',
       pathSegment: 'configure',
       type: 'menu',
       children: [
@@ -155,9 +155,36 @@ module.exports = {
           type: 'link',
         },
         {
-          pathSegment: 'integration',
+          pathSegment: '',
           title: 'Integration',
-          type: 'link',
+          type: 'menu',
+          children: [
+            {
+              pathSegment: 'webpack',
+              title: 'Webpack',
+              type: 'link',
+            },
+            {
+              pathSegment: 'babel',
+              title: 'Babel',
+              type: 'link',
+            },
+            {
+              pathSegment: 'typescript',
+              title: 'TypeScript',
+              type: 'link',
+            },
+            {
+              pathSegment: 'styling-and-css',
+              title: 'Styling and CSS',
+              type: 'link',
+            },
+            {
+              pathSegment: 'images-and-assets',
+              title: 'Images and assets',
+              type: 'link',
+            },
+          ],
         },
         {
           pathSegment: 'story-rendering',
@@ -199,7 +226,7 @@ module.exports = {
       ],
     },
     {
-      title: 'Workflows',
+      title: '🔄 Workflows',
       pathSegment: 'workflows',
       type: 'menu',
       children: [
@@ -264,7 +291,7 @@ module.exports = {
       ],
     },
     {
-      title: 'API',
+      title: '🔌 API',
       pathSegment: 'api',
       type: 'menu',
       children: [

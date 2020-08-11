@@ -227,7 +227,7 @@ You can also reuse stories from the child `ListItem` in your `List` component. T
 <!-- prettier-ignore-end -->
 
 <div class="aside">
- 
- Note that there are disadvantages in writing stories like this as you cannot take full advantage of the args mechanism and composing args as you build more complex composite components. For more discussion, set the [multi component stories](../workflows/stories-for-multiple-components.md) workflow article.
- 
- </div>
+
+Note that there are disadvantages in writing stories like this as you cannot take full advantage of the args mechanism and composing args as you build more complex composite components. For more discussion, set the [multi component stories](../workflows/stories-for-multiple-components.md) workflow article.
+
+</div>

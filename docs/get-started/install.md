@@ -31,15 +31,9 @@ The command above will make the following changes to your local environment:
 
 Check that everything worked by running:
 
-<!-- prettier-ignore-start -->
-
-<CodeSnippets
-  paths={[
-    'common/storybook-execute.sh.mdx',
-  ]}
-/>
-
-<!-- prettier-ignore-end -->
+```shell
+npx storybook
+```
 
 It will start Storybook locally and output the address. Depending on your system configuration, it will automatically open the address in a new browser tab and you'll be greeted by a welcome screen.
 
@@ -66,7 +60,26 @@ For instance you can use:
 - `--type vue` to setup Storybook with the Vue configuration options.
 - `--type angular` to setup Storybook with the Angular configuration options.
 
-If there's an installation problem, check the README for your framework (e.g <a href="https://github.com/storybookjs/storybook/blob/next/app/react/README.md">Storybook for React</a>).
+<!-- prettier-ignore-start -->
+
+<FeatureSnippets
+  paths={[
+   'get-started/installation-problems/angular.mdx',
+   'get-started/installation-problems/ember.mdx',
+   'get-started/installation-problems/html.mdx',
+   'get-started/installation-problems/marko.mdx',
+   'get-started/installation-problems/mithril.mdx',
+   'get-started/installation-problems/preact.mdx',
+   'get-started/installation-problems/rax.mdx',
+   'get-started/installation-problems/react.mdx',
+   'get-started/installation-problems/riot.mdx',
+   'get-started/installation-problems/svelte.mdx',
+   'get-started/installation-problems/vue.mdx',
+   'get-started/installation-problems/web-components.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 If all else fails, try asking for [help](https://storybook.js.org/support/)
 

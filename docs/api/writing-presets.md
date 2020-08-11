@@ -2,7 +2,6 @@
 title: 'Writing your own Storybook Preset'
 ---
 
-
 [Storybook presets](./presets.md) are grouped collections of `babel`, `webpack`, and `addons` configurations that support specific use cases in Storybook, such as typescript or MDX support.
 
 This doc covers the [presets API](#presets-api) and how to use the presets mechanism for [advanced configuration](#advanced-configuration).
@@ -95,6 +94,35 @@ This is equivalent to [registering the addon manually](../get-started/browse-sto
 
 <!-- prettier-ignore-end -->
 
+### Preview entries
+
+The addon config `config` allows you to add extra preview configuration from within a preset, for example to add parameters or decorators from an addon.
+
+For example, the Backgrounds preset contains the following code:
+
+```js
+// preset.js
+export function config(entry = []) {
+  return [...entry, require.resolve('./defaultParameters')];
+}
+```
+
+Which in turn invokes:
+
+```js
+// defaultParameters.js
+export const parameters = {
+  backgrounds: {
+    values: [
+      { name: 'light', value: '#F8F8F8' },
+      { name: 'dark', value: '#333333' },
+    ],
+  },
+};
+```
+
+This is equivalent to exporting the `backgrounds` parameter manually in `main.js`.
+
 ### Addons
 
 For users, the name `managerEntries` might be a bit too technical, so instead both users and preset-authors can simply use the property: `addons`:
@@ -174,5 +202,6 @@ and extract the configuration to a new file `./storybook/my-preset.js`:
 />
 
 <!-- prettier-ignore-end -->
+
 
 Place your `my-preset.js` file wherever you want, if you want to share it far and wide you'll want to make it its own package.

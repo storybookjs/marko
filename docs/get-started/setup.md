@@ -29,7 +29,7 @@ Your project may have additional requirements before components can be rendered 
 
 <details>
 <summary>Build configuration like webpack and Babel</summary>
-  
+
 If you see errors on the CLI when you run the `yarn storybook` command. It’s likely you need to make changes to Storybook’s build configuration. Here are some things to try:
 
 - [Presets](../api/presets.md) bundle common configurations for various technologies into Storybook. In particular presets exist for Create React App, SCSS and Ant Design.
@@ -40,7 +40,7 @@ If you see errors on the CLI when you run the `yarn storybook` command. It’s l
 
 <details>
 <summary>Runtime configuration</summary>
-  
+
 If Storybook builds but you see an error immediately when connecting to it in the browser, then chances are one of your input files is not compiling/transpiling correctly to be interpreted by the browser. Storybook supports modern browsers and IE11, but you may need to check the Babel and webpack settings (see above) to ensure your component code works correctly.
 
 </details>
