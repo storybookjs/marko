@@ -74,7 +74,7 @@ Let’s look at the `@storybook/vue`’s options definition:
 
 The value of the `framework` option (in this case ‘vue’) is something that gets passed to addons and allows them to do special case things for your framework.
 
-The real meat of this file is the framework presets, and these are standard [Storybook presets](./addons.md#addon-presets) -- you can look at framework packages in the Storybook monorepo (e.g. [React](https://github.com/storybookjs/storybook/blob/next/app/react/src/server/options.ts), [Vue](https://github.com/storybookjs/storybook/blob/next/app/vue/src/server/options.ts), [Web components](https://github.com/storybookjs/storybook/blob/next/app/web-components/src/server/options.ts)) to see examples of framework-specific customizations.
+The real meat of this file is the framework presets, and these are standard [Storybook presets](./addons.md#addon-presets) -- you can look at framework packages in the Storybook monorepo (e.g. [React](https://github.com/storybookjs/storybook/blob/next/app/react/src/server/options.ts), [Vue](https://github.com/storybookjs/storybook/blob/next/app/vue/src/server/options.ts), [Web Components](https://github.com/storybookjs/storybook/blob/next/app/web-components/src/server/options.ts)) to see examples of framework-specific customizations.
 
 ## Configuring the client
 
