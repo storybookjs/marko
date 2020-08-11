@@ -17,7 +17,6 @@ Let’s start with the `Button` component. A story is a function that describes 
     'react/button-story.js.mdx',
     'react/button-story.ts.mdx',
     'react/button-story.mdx.mdx',
-    'angular/button-story.js.mdx',
   ]}
 />
 
