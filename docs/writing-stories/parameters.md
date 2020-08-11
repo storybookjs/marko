@@ -2,69 +2,75 @@
 title: 'Parameters'
 ---
 
-**Parameters** are a set of static, named metadata about a story, typically used to control the behaviour of Storybook features and addons.
+Parameters are a set of static, named metadata about a story, typically used to control the behavior of Storybook features and addons.
 
 For example, let’s customize the backgrounds addon via a parameter. We’ll use `parameters.backgrounds` to define which backgrounds appear in the backgrounds toolbar when a story is selected.
 
-### Story parameters
+## Story parameters
 
 We can set a parameter for a single story with the `parameters` key on a CSF export:
 
 ```js
+// Button.story.js
+
 export const Primary = Template.bind({});
-Primary.args ={
+Primary.args = {
   primary: true,
   label: 'Button',
-}
-Primary.parameters = { 
-  backgrounds:{
+};
+Primary.parameters = {
+  backgrounds: {
     values: [
-      { name: 'red', value: '#f00', },
-      { name: 'green', value: '#0f0', },
+      { name: 'red', value: '#f00' },
+      { name: 'green', value: '#0f0' },
     ],
-  }
+  },
 };
 ```
 
-### Component parameters
+## Component parameters
 
 We can set the parameters for all stories of a component using the `parameters` key on the default CSF export:
 
 ```js
+// Button.story.js
+
 import Button from './';
 
 export default {
-  title: "Button",
+  title: 'Button',
   component: Button,
   parameters: {
     backgrounds: {
       values: [
-         { name: 'red', value: '#f00', },
-         { name: 'green', value: '#0f0', },
+        { name: 'red', value: '#f00' },
+        { name: 'green', value: '#0f0' },
       ],
-    }
-  }
+    },
+  },
 };
 ```
 
-### Global parameters
+## Global parameters
 
-We can also set the parameters for **all stories** via the `parameters` export of your [`.storybook/preview.js`](../configure/overview#configure-story-rendering) file (this is the file where you configure all stories):
+We can also set the parameters for **all stories** via the `parameters` export of your [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering) file (this is the file where you configure all stories):
 
 ```js
+// Button.story.js
+
 export const parameters = {
   backgrounds: {
     values: [
-         { name: 'red', value: '#f00', },
-         { name: 'green', value: '#0f0', },
+      { name: 'red', value: '#f00' },
+      { name: 'green', value: '#0f0' },
     ],
   },
-}
+};
 ```
 
-Setting a global parameter is a common way to configure addons. With backgrounds, you configure the list of backgrounds that every story can render in. 
+Setting a global parameter is a common way to configure addons. With backgrounds, you configure the list of backgrounds that every story can render in.
 
-### Rules of parameter inheritance
+## Rules of parameter inheritance
 
 The way the global, component and story parameters are combined is:
 
@@ -73,4 +79,4 @@ The way the global, component and story parameters are combined is:
 
 The merging of parameters is important. It means it is possible to override a single specific sub-parameter on a per-story basis but still retain the majority of the parameters defined globally.
 
-If you are defining an API that relies on parameters (e..g an [__addon__](../api/addons#geting-started)) it is a good idea to take this behaviour into account.
+If you are defining an API that relies on parameters (e..g an [**addon**](../api/addons.md)) it is a good idea to take this behavior into account.

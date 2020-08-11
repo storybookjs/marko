@@ -2,79 +2,75 @@
 title: 'Args'
 ---
 
-A story is a component with a set of arguments (props, slots, inputs, etc). “Args” are Storybook’s mechanism for defining those arguments as a first class entity that’s machine readable. This allows Storybook and its addons to live edit components. You *do not* need to change your underlying component code to use args.
+A story is a component with a set of arguments (props, slots, inputs, etc). “Args” are Storybook’s mechanism for defining those arguments as a first class entity that’s machine readable. This allows Storybook and its addons to live edit components. You _do not_ need to change your underlying component code to use args.
 
 When an arg’s value is changed, the component re-renders, allowing you to interact with components in Storybook’s UI via addons that affect args.
 
+Learn how and why to write stories with args [here](./introduction.md#using-args) section. For details on how args work, read on.
 
-Learn how and why to write stories with args [here](./introduction#using-args) section. For details on how args work, read on.
-
-
-### Args object
+## Args object
 
 The args object can be defined at the story and component level (see below). It is an object with string keys, where values can have any type that is allowed to be passed into a component in your framework.
 
-### Story args
+## Story args
 
 To define the args of a single story, use the `args` CSF story key:
 
-```js
-export const Primary = Template.bind({});
+<!-- prettier-ignore-start -->
 
-Primary.args = {
-  primary: true,
-  label: 'Primary',
-}
-```
+<CodeSnippets
+  paths={[
+    'react/button-story-with-args.js.mdx',
+    'react/button-story-with-args.ts.mdx',
+    'angular/button-story-with-args.ts.mdx',
+  ]}
+/>
 
-These args will only apply to the story for which they are attached, although you can [reuse](../workflows/build-pages-with-storybook#args-composition-for-presentational-screens) them via JavaScript object reuse:
+<!-- prettier-ignore-end -->
 
-```js
-export const PrimaryLongName = Template.bind({});
+These args will only apply to the story for which they are attached, although you can [reuse](../workflows/build-pages-with-storybook.md#args-composition-for-presentational-screens) them via JavaScript object reuse:
 
-PrimaryLongName.args = {
-  ...Primary.args,
-  label: 'Primary with a really long name',
-}
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/button-story-primary-long-name.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 In the above example, we use the [object spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) feature of ES 2015.
 
-
-### Component args
+## Component args
 
 You can also define args at the component level; such args will apply to all stories of the component unless they are overwritten. To do so, use the `args` key of the `default` CSF export:
 
-```js
-import Button from './Button';
-export default {
-  title: "Button",
-  component: Button,
-  args: {
-    // Now all Button stories will be primary.
-    primary: true,
-  },
-};
-```
+<!-- prettier-ignore-start -->
 
-### Args composition
+<CodeSnippets
+  paths={[
+    'react/button-story-component-args-primary.js.mdx',
+    'react/button-story-component-args-primary.ts.mdx',
+    'angular/button-story-component-args-primary.ts.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+## Args composition
 
 You can separate the arguments to a story to compose in other stories. Here’s how args can be used in multiple stories for the same component.
 
-```js
+<!-- prettier-ignore-start -->
 
-const Primary = ButtonStory.bind({});
-Primary.args = {
-  primary: true,
-  label: 'Button',
-}
+<CodeSnippets
+  paths={[
+    'common/button-story-primary-composition.js.mdx',
+  ]}
+/>
 
-const Secondary = ButtonStory.bind({});
-Secondary.args = {
-  ...Primary.args,
-  primary: false,
-}
-```
+<!-- prettier-ignore-end -->
 
 <div class="aside">
 
@@ -84,58 +80,51 @@ Note that if you are doing the above often, you may want to consider using [comp
 
 Args are useful when writing stories for composite components that are assembled from other components. Composite components often pass their arguments unchanged to their child components, and similarly their stories can be compositions of their child components stories. With args, you can directly compose the arguments:
 
-```js
-/// Page.stories.js
+<!-- prettier-ignore-start -->
 
-import Page from './Page';
-import * as Header from './Header.stories';
+<CodeSnippets
+  paths={[
+    'react/page-story.js.mdx',
+    'react/page-story.ts.mdx',
+    'angular/page-story.ts.mdx'
+  ]}
+/>
 
-export const default {
-  component: Page,
-  title: 'Page',
-};
+<!-- prettier-ignore-end -->
 
-const Template = (args) => <Page {...args} />
-export const LoggedIn = Template.bind({});
-LoggedIn.args = {
-  ...Header.LoggedIn.args,
-};
-```
 <details>
 <summary>Using args in addons</summary>
 
-  If you are [writing an addon](../api/addons#getting-started) that wants to read or update args, use the `useArgs` hook exported by `@storybook/api`:
+If you are [writing an addon](../api/addons.md) that wants to read or update args, use the `useArgs` hook exported by `@storybook/api`:
 
-  ```js
+<!-- prettier-ignore-start -->
 
-  import { useArgs } from '@storybook/api';
+<CodeSnippets
+  paths={[
+    'common/args-usage-with-addons.js.mdx'
+  ]}
+/>
 
-  const [args, updateArgs,resetArgs] = useArgs();
-
-  // To update one or more args:
-  updateArgs({ key: 'value' });
-
-  // To reset one (or more) args:
-  resetArgs(argNames:['key']);
-
-  // To reset all args
-  resetArgs();
-  ```
+<!-- prettier-ignore-end -->
 
 </details>
 
-
- 
 <details>
 <summary>parameters.passArgsFirst</summary>
 
-  In Storybook 6+, we pass the args as the first argument to the story function. The second argument is the “context” which contains things like the story parameters etc.
+In Storybook 6+, we pass the args as the first argument to the story function. The second argument is the “context” which contains things like the story parameters etc.
 
-  In Storybook 5 and before we passed the context as the first argument. If you’d like to revert to that functionality set the `parameters.passArgsFirst` parameter in [`.storybook/preview.js`](../configure/overview#configure-story-rendering):
+In Storybook 5 and before we passed the context as the first argument. If you’d like to revert to that functionality set the `parameters.passArgsFirst` parameter in [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering):
 
-  ```js
-  export const parameter = { passArgsFirst : false }.
-  ```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets 
+  paths={[
+    'common/storybook-preview-parameters-old-format.js.mdx'
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
   <div class="aside">
   

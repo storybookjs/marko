@@ -20,6 +20,10 @@ jest.mock('path', () => ({
 }));
 
 describe('Helpers', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   describe('copyTemplate', () => {
     it(`should fall back to ${StoryFormat.CSF} 
         in case ${StoryFormat.CSF_TYPESCRIPT} is not available`, () => {
@@ -71,9 +75,16 @@ describe('Helpers', () => {
       helpers.copyComponents('react', language);
 
       const copySyncSpy = jest.spyOn(fse, 'copySync');
-      expect(copySyncSpy).toHaveBeenCalledWith(
+      expect(copySyncSpy).toHaveBeenNthCalledWith(
+        1,
         expectedDirectory,
-        expect.anything(),
+        './stories',
+        expect.anything()
+      );
+      expect(copySyncSpy).toHaveBeenNthCalledWith(
+        2,
+        'frameworks/common',
+        './stories',
         expect.anything()
       );
     }

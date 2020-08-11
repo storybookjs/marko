@@ -5,21 +5,25 @@
   - [Zero config typescript](#zero-config-typescript)
   - [Correct globs in main.js](#correct-globs-in-mainjs)
   - [CRA preset removed](#cra-preset-removed)
+  - [Core-JS dependency errors](#core-js-dependency-errors)
   - [Args passed as first argument to story](#args-passed-as-first-argument-to-story)
   - [6.0 Docs breaking changes](#60-docs-breaking-changes)
     - [Remove framework-specific docs presets](#remove-framework-specific-docs-presets)
+    - [Preview/Props renamed](#previewprops-renamed)
     - [Docs theme separated](#docs-theme-separated)
     - [DocsPage slots removed](#docspage-slots-removed)
     - [React prop tables with Typescript](#react-prop-tables-with-typescript)
     - [ConfigureJSX true by default in React](#configurejsx-true-by-default-in-react)
+    - [Docs description parameter](#docs-description-parameter)
+    - [6.0 Inline stories](#60-inline-stories)
   - [New addon presets](#new-addon-presets)
   - [Removed babel-preset-vue from Vue preset](#removed-babel-preset-vue-from-vue-preset)
   - [Removed Deprecated APIs](#removed-deprecated-apis)
   - [New setStories event](#new-setstories-event)
   - [Removed renderCurrentStory event](#removed-rendercurrentstory-event)
   - [Removed hierarchy separators](#removed-hierarchy-separators)
+  - [No longer pass denormalized parameters to storySort](#no-longer-pass-denormalized-parameters-to-storysort)
   - [Client API changes](#client-api-changes)
-    - [Removed support for duplicate kinds](#removed-support-for-duplicate-kinds)
     - [Removed Legacy Story APIs](#removed-legacy-story-apis)
     - [Can no longer add decorators/parameters after stories](#can-no-longer-add-decoratorsparameters-after-stories)
     - [Changed Parameter Handling](#changed-parameter-handling)
@@ -43,6 +47,7 @@
     - [Deprecated addParameters and addDecorator](#deprecated-addparameters-and-adddecorator)
     - [Deprecated clearDecorators](#deprecated-cleardecorators)
     - [Deprecated configure](#deprecated-configure)
+    - [Deprecated support for duplicate kinds](#deprecated-support-for-duplicate-kinds)
 - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
   - [To main.js configuration](#to-mainjs-configuration)
     - [Using main.js](#using-mainjs)
@@ -194,6 +199,22 @@ The built-in create-react-app preset, which was [previously deprecated](#create-
 
 If you're using CRA and migrating from an earlier Storybook version, please install [`@storybook/preset-create-react-app`](https://github.com/storybookjs/presets/tree/master/packages/preset-create-react-app) if you haven't already.
 
+### Core-JS dependency errors
+
+Some users have experienced `core-js` dependency errors when upgrading to 6.0, such as:
+
+```
+Module not found: Error: Can't resolve 'core-js/modules/web.dom-collections.iterator'
+```
+
+We think this comes from having multiple versions of `core-js` installed, but haven't isolated a good solution (see [#11255](https://github.com/storybookjs/storybook/issues/11255) for discussion).
+
+For now, the workaround is to install `core-js` directly in your project as a dev dependency:
+
+```sh
+npm install core-js@^3.0.1 --save-dev
+```
+
 ### Args passed as first argument to story
 
 Starting in 6.0, the first argument to a story function is an [Args object](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/formats/component-story-format/index.md#args-story-inputs). In 5.3 and earlier, the first argument was a [StoryContext](https://github.com/storybookjs/storybook/blob/next/lib/addons/src/types.ts#L49-L61), and that context is now passed as the second argument by default.
@@ -225,6 +246,10 @@ export const parameters = {
 #### Remove framework-specific docs presets
 
 In SB 5.2, each framework had its own preset, e.g. `@storybook/addon-docs/react/preset`. In 5.3 we [unified this into a single preset](#unified-docs-preset): `@storybook/addon-docs/preset`. In 6.0 we've removed the deprecated preset.
+
+#### Preview/Props renamed
+
+In 6.0 we renamed `Preview` to `Canvas`, `Props` to `ArgsTable`. The change should be otherwise backwards-compatible.
 
 #### Docs theme separated
 
@@ -275,6 +300,32 @@ module.exports = {
   ],
 };
 ```
+
+#### Docs description parameter
+
+In 6.0, you can customize a component description using the `docs.description.component` parameter, and a story description using `docs.description.story` parameter.
+
+Example:
+
+```js
+import { Button } from './Button';
+
+export default {
+  title: 'Button'
+  parameters: { docs: { description: { component: 'some component **markdown**' }}}
+}
+
+export const Basic = () => <Button />
+Basic.parameters = { docs: { description: { story: 'some story **markdown**' }}}
+```
+
+In 5.3 you customized a story description with the `docs.storyDescription` parameter. This has been deprecated, and support will be removed in 7.0.
+
+#### 6.0 Inline stories
+
+The following frameworks now render stories inline on the Docs tab by default, rather than in an iframe: `react`, `vue`, `web-components`, `html`.
+
+To disable inline rendering, set the `docs.inlineStories` parameter to `false`.
 
 ### New addon presets
 
@@ -383,10 +434,10 @@ The story store no longer emits `renderCurrentStory`/`RENDER_CURRENT_STORY` to t
 
 We've removed the ability to specify the hierarchy separators (how you control the grouping of story kinds in the sidebar). From Storybook 6.0 we have a single separator `/`, which cannot be configured.
 
-If you are currently using using custom separators, we encourage you to migrate to using `/` as the sole separator. If you are using `|` or `.` as a separator currently, we provide a codemod, [`upgrade-hierarchy-separators`](https://github.com/storybookjs/storybook/blob/next/lib/codemod/README.md#upgrade-hierarchy-separators), that can be used to rename all your components.
+If you are currently using using custom separators, we encourage you to migrate to using `/` as the sole separator. If you are using `|` or `.` as a separator currently, we provide a codemod, [`upgrade-hierarchy-separators`](https://github.com/storybookjs/storybook/blob/next/lib/codemod/README.md#upgrade-hierarchy-separators), that can be used to rename your components. **Note: the codemod will not work for `.mdx` components, you will need to make the changes by hand.**
 
 ```
-yarn sb migrate upgrade-hierarchy-separators --glob="*.stories.js"
+npx sb@next migrate upgrade-hierarchy-separators --glob="*/**/*.stories.@(tsx|jsx|ts|js)"
 ```
 
 We also now default to showing "roots", which are non-expandable groupings in the sidebar for the top-level groups. If you'd like to disable this, set the `showRoots` option in `.storybook/manager.js`:
@@ -399,30 +450,13 @@ addons.setConfig({
 });
 ```
 
+### No longer pass denormalized parameters to storySort
+
+The `storySort` function (set via the `parameters.options.storySort` parameter) previously compared two entries `[storyId, storeItem]`, where `storeItem` included the full "denormalized" set of parameters of the story (i.e. the global, kind and story parameters that applied to that story).
+
+For performance reasons, we now store the parameters uncombined, and so pass the format: `[storyId, storeItem, kindParameters, globalParameters]`.
+
 ### Client API changes
-
-#### Removed support for duplicate kinds
-
-In 6.0 we removed the ability to split a kind's (component's) stories into multiple files because it was causing issues in hot module reloading (HMR).
-
-If you had N stories that contained `export default { title: 'foo/bar' }` (or the MDX equivalent `<Meta title="foo/bar">`), Storybook will now throw the error `Duplicate title '${kindName}' used in multiple files`.
-
-To split a component's stories into multiple files, e.g. for the `foo/bar` example above:
-
-- Create a single file with the `export default { title: 'foo/bar' }` export, which is the primary file
-- Comment out or delete the default export from the other files
-- Re-export the stories from the other files in the primary file
-
-So the primary example might look like:
-
-```js
-export default { title: 'foo/bar' };
-export * from './Bar1.stories'
-export * from './Bar2.stories'
-export * from './Bar3.stories'
-
-export const SomeStory = () => ...;
-```
 
 #### Removed Legacy Story APIs
 
@@ -692,7 +726,7 @@ addons.setConfig({
 
 The `addParameters` and `addDecorator` APIs to add global decorators and parameters, exported by the various frameworks (e.g. `@storybook/react`) and `@storybook/client` are now deprecated.
 
-Instead, use `export const parameters = {};` and `export const decorators = [];` in your `.storybook/preview.js`. Addon authors similarly should use such an export in a `previewEntry` file.
+Instead, use `export const parameters = {};` and `export const decorators = [];` in your `.storybook/preview.js`. Addon authors similarly should use such an export in a preview entry file (see [Preview entries](https://github.com/storybookjs/storybook/blob/next/docs/api/writing-presets.md#preview-entries)).
 
 #### Deprecated clearDecorators
 
@@ -722,6 +756,29 @@ module.exports = {
     '../src/components/Page.stories.js',
   ],
 };
+```
+
+#### Deprecated support for duplicate kinds
+
+In 6.0 we deprecated the ability to split a kind's (component's) stories into multiple files because it was causing issues in hot module reloading (HMR). It will likely be removed completely in 7.0.
+
+If you had N stories that contained `export default { title: 'foo/bar' }` (or the MDX equivalent `<Meta title="foo/bar">`), Storybook will now raise the warning `Duplicate title '${kindName}' used in multiple files`.
+
+To split a component's stories into multiple files, e.g. for the `foo/bar` example above:
+
+- Create a single file with the `export default { title: 'foo/bar' }` export, which is the primary file
+- Comment out or delete the default export from the other files
+- Re-export the stories from the other files in the primary file
+
+So the primary example might look like:
+
+```js
+export default { title: 'foo/bar' };
+export * from './Bar1.stories'
+export * from './Bar2.stories'
+export * from './Bar3.stories'
+
+export const SomeStory = () => ...;
 ```
 
 ## From version 5.2.x to 5.3.x
@@ -757,11 +814,11 @@ If you had a `presets.js` file before you can add the array of presets to the ma
 module.exports = {
   stories: ['../**/*.stories.js'],
   addons: [
-    '@storybook/preset-create-react-app'
+    '@storybook/preset-create-react-app',
     {
       name: '@storybook/addon-docs',
-      options: { configureJSX: true }
-    }
+      options: { configureJSX: true },
+    },
   ],
 };
 ```

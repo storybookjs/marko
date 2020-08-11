@@ -5,7 +5,7 @@ import { createSummaryValue } from '../utils';
 import { createFlowPropDef } from './flow/createPropDef';
 import { isDefaultValueBlacklisted } from './utils/defaultValue';
 import { createTsPropDef } from './typeScript/createPropDef';
-import { convert } from '../sbtypes';
+import { convert } from '../convert';
 
 export type PropDefFactory = (
   propName: string,

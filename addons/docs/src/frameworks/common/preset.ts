@@ -24,13 +24,14 @@ type BabelParams = {
 function createBabelOptions({ babelOptions, mdxBabelOptions, configureJSX }: BabelParams) {
   const babelPlugins = mdxBabelOptions?.plugins || babelOptions?.plugins || [];
   const jsxPlugin = [
-    '@babel/plugin-transform-react-jsx',
+    require.resolve('@babel/plugin-transform-react-jsx'),
     { pragma: 'React.createElement', pragmaFrag: 'React.Fragment' },
   ];
   const plugins = configureJSX ? [...babelPlugins, jsxPlugin] : babelPlugins;
   return {
     // don't use the root babelrc by default (users can override this in mdxBabelOptions)
     babelrc: false,
+    configFile: false,
     ...babelOptions,
     ...mdxBabelOptions,
     plugins,
@@ -49,7 +50,7 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
     babelOptions,
     mdxBabelOptions,
     configureJSX = true,
-    sourceLoaderOptions = options.framework === 'react' ? null : {},
+    sourceLoaderOptions = { injectStoryParameters: true },
     transcludeMarkdown = false,
   } = options;
 

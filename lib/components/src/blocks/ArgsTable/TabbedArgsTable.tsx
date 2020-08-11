@@ -1,5 +1,4 @@
-import React, { FC, Fragment } from 'react';
-import { styled } from '@storybook/theming';
+import React, { FC } from 'react';
 import { ArgsTable, ArgsTableProps } from './ArgsTable';
 import { TabsState } from '../../tabs/tabs';
 

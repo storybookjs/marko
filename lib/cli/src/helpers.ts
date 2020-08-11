@@ -215,4 +215,5 @@ export function copyComponents(framework: SupportedFrameworks, language: Support
 
   const destinationPath = targetPath();
   fse.copySync(componentsPath(), destinationPath, { overwrite: true });
+  fse.copySync(path.resolve(__dirname, 'frameworks/common'), destinationPath, { overwrite: true });
 }

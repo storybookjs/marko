@@ -1,0 +1,1 @@
+{"version":"6.0.0-rc.30","info":{"plain":"### Bug Fixes\n\n- Storyshots: Don't ship typescript files in dist ([#11792](https://github.com/storybookjs/storybook/pull/11792))\n\n### Maintenance\n\n- 6.0 documentation overhaul ([#11861](https://github.com/storybookjs/storybook/pull/11861))"}}

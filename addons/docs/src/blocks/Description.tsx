@@ -37,8 +37,15 @@ export const getDescriptionProps = (
     return { markdown: children || markdown };
   }
   const { component, notes, info, docs } = parameters;
-  const { extractComponentDescription = noDescription } = docs || {};
+  const { extractComponentDescription = noDescription, description } = docs || {};
   const target = of === CURRENT_SELECTION ? component : of;
+
+  // override component description
+  const componentDescriptionParameter = description?.component;
+  if (componentDescriptionParameter) {
+    return { markdown: componentDescriptionParameter };
+  }
+
   switch (type) {
     case DescriptionType.INFO:
       return { markdown: getInfo(info) };

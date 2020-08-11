@@ -1,0 +1,10 @@
+```js
+// List.stories.js
+
+const Template = (args) => <List {...args} />;
+
+export const OneItem = Template.bind({});
+OneItem.args = {
+  children: <Unchecked {...Unchecked.args} />,
+};
+```

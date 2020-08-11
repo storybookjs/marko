@@ -1,5 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`inject-decorator injectStoryParameters - ts - csf includes storySource parameter in the default exported object 1`] = `
+"
+
+
+Basic.parameters = { storySource: { source: \\"() => (\\\\n  <Button onClick={action(\\\\\\"clicked\\\\\\")}>Hello Button</Button>\\\\n)\\" }, ...Basic.parameters };
+WithParams.parameters = { storySource: { source: \\"() => <Button>WithParams</Button>\\" }, ...WithParams.parameters };
+WithDocsParams.parameters = { storySource: { source: \\"() => <Button>WithDocsParams</Button>\\" }, ...WithDocsParams.parameters };
+WithStorySourceParams.parameters = { storySource: { source: \\"() => <Button>WithStorySourceParams</Button>\\" }, ...WithStorySourceParams.parameters };
+WithTemplate.parameters = { storySource: { source: \\"(args: Args) => <Button {...args} />\\" }, ...WithTemplate.parameters };
+WithEmptyTemplate.parameters = { storySource: { source: \\"(args: Args) => <Button {...args} />\\" }, ...WithEmptyTemplate.parameters };"
+`;
+
 exports[`inject-decorator positive - ts - csf includes storySource parameter in the default exported object 1`] = `
 "import React from \\"react\\";
 import { action } from \\"@storybook/addon-actions\\";

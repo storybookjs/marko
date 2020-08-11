@@ -11,6 +11,7 @@ const Label = styled.label(({ theme }) => ({
   marginBottom: 8,
   display: 'inline-block',
   position: 'relative',
+  whiteSpace: 'nowrap',
 
   input: {
     appearance: 'none',
@@ -84,7 +85,7 @@ export const BooleanControl: FC<BooleanProps> = ({ name, value, onChange, onBlur
     <input
       id={name}
       type="checkbox"
-      onChange={(e) => onChange(name, e.target.checked)}
+      onChange={(e) => onChange(e.target.checked)}
       checked={value}
       {...{ name, onBlur, onFocus }}
     />

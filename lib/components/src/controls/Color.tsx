@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, MouseEvent, KeyboardEvent } from 'react';
 import { SketchPicker, ColorResult } from 'react-color';
 
 import { styled } from '@storybook/theming';
@@ -30,7 +30,14 @@ const format = (color: ColorResult) =>
   `rgba(${color.rgb.r},${color.rgb.g},${color.rgb.b},${color.rgb.a})`;
 
 export type ColorProps = ControlProps<ColorValue> & ColorConfig;
-export const ColorControl: FC<ColorProps> = ({ name, value, onChange, onFocus, onBlur }) => {
+export const ColorControl: FC<ColorProps> = ({
+  name,
+  value,
+  onChange,
+  onFocus,
+  onBlur,
+  presetColors,
+}) => {
   const [showPicker, setShowPicker] = useState(false);
 
   return (
@@ -39,16 +46,28 @@ export const ColorControl: FC<ColorProps> = ({ name, value, onChange, onFocus, o
       type="button"
       name={name}
       onClick={() => setShowPicker(!showPicker)}
+      onKeyDown={(e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+          setShowPicker(!showPicker);
+        }
+      }}
       size="flex"
     >
       {value ? value.toUpperCase() : 'Choose color'}
       <Swatch style={{ background: value }} />
       {showPicker ? (
-        <Popover>
+        <Popover
+          onClick={(e: MouseEvent) => {
+            // @ts-ignore
+            if (e.target.tagName === 'INPUT') {
+              e.stopPropagation();
+            }
+          }}
+        >
           <SketchPicker
             color={value}
-            onChange={(color: ColorResult) => onChange(name, format(color))}
-            {...{ onFocus, onBlur }}
+            onChange={(color: ColorResult) => onChange(format(color))}
+            {...{ onFocus, onBlur, presetColors }}
           />
         </Popover>
       ) : null}

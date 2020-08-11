@@ -12,8 +12,19 @@ const deprecatedStoryAnnotationWarning = deprecate(
     CSF .story annotations deprecated; annotate story functions directly:
     - StoryFn.story.name => StoryFn.storyName
     - StoryFn.story.(parameters|decorators) => StoryFn.(parameters|decorators)
-    See https://github.com/storybookjs/storybook/issues/10906 for details and codemod.
+    See https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#hoisted-csf-annotations for details and codemod.
 `
+);
+
+const duplicateKindWarning = deprecate(
+  (kindName: string) => {
+    logger.warn(`Duplicate title: '${kindName}'`);
+  },
+  dedent`
+    Duplicate title used in multiple files; use unique titles or a primary file for a component with re-exported stories.
+
+    https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-support-for-duplicate-kinds
+  `
 );
 
 let previousExports = new Map<any, string>();
@@ -111,13 +122,7 @@ const loadStories = (
     } = meta;
 
     if (loadedKinds.has(kindName)) {
-      throw new Error(
-        dedent`
-          Duplicate title '${kindName}' used in multiple files; use unique titles or a primary file for '${kindName}' with re-exported stories.
-
-          https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#removed-support-for-duplicate-kinds
-        `
-      );
+      duplicateKindWarning(kindName);
     }
     loadedKinds.add(kindName);
 
@@ -156,29 +161,25 @@ const loadStories = (
       if (isExportStory(key, meta)) {
         const storyFn = exports[key];
         const { story } = storyFn;
+        const { storyName = story?.name } = storyFn;
+
+        // storyFn.x and storyFn.story.x get merged with
+        // storyFn.x taking precedence in the merge
+        const parameters = { ...story?.parameters, ...storyFn.parameters };
+        const decorators = [...(storyFn.decorators || []), ...(story?.decorators || [])];
+        const args = { ...story?.args, ...storyFn.args };
+        const argTypes = { ...story?.argTypes, ...storyFn.argTypes };
+
         if (story) {
           logger.debug('deprecated story', story);
           deprecatedStoryAnnotationWarning();
         }
 
-        // storyFn.x takes precedence over storyFn.story.x, but
-        // mixtures are supported
-        const {
-          storyName = story?.name,
-          parameters = story?.parameters,
-          decorators = story?.decorators,
-          args = story?.args,
-          argTypes = story?.argTypes,
-        } = storyFn;
-
-        const decoratorParams = decorators ? { decorators } : null;
         const exportName = storyNameFromExport(key);
-        const idParams = { __id: toId(componentId || kindName, exportName) };
-
         const storyParams = {
           ...parameters,
-          ...decoratorParams,
-          ...idParams,
+          __id: toId(componentId || kindName, exportName),
+          decorators,
           args,
           argTypes,
         };
@@ -193,7 +194,7 @@ const configureDeprecationWarning = deprecate(
   () => {},
   `\`configure()\` is deprecated and will be removed in Storybook 7.0. 
 Please use the \`stories\` field of \`main.js\` to load stories.
-Read more at https://github.com/storybookjs/storybook/MIGRATE.md#deprecated-configure`
+Read more at https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-configure`
 );
 let loaded = false;
 export const loadCsf = ({
@@ -225,14 +226,15 @@ export const loadCsf = ({
         `Invalid module '${m}'. Did you forget to pass \`module\` as the second argument to \`configure\`"?`
       );
     }
+
     if (m && m.hot && m.hot.dispose) {
       ({ previousExports = new Map() } = m.hot.data || {});
-
       m.hot.dispose((data) => {
         loaded = false;
         // eslint-disable-next-line no-param-reassign
         data.previousExports = previousExports;
       });
+      m.hot.accept();
     }
     if (loaded) {
       logger.warn('Unexpected loaded state. Did you call `load` twice?');

@@ -1,9 +1,9 @@
-import { Meta, Props } from '@storybook/addon-docs/blocks';
+import { Meta, ArgsTable } from '@storybook/addon-docs/blocks';
 import { JsDocProps, FailingJsDocProps } from './jsdoc';
 import { TypeScriptProps } from './jsdoc-ts';
 
 <Meta title="Docgen/jsdoc" />
 
-<Props of={JsDocProps} />
-<Props of={TypeScriptProps} />
-<Props of={FailingJsDocProps} />
+<ArgsTable of={JsDocProps} />
+<ArgsTable of={TypeScriptProps} />
+<ArgsTable of={FailingJsDocProps} />

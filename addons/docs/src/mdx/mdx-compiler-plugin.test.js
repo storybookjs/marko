@@ -40,6 +40,6 @@ describe('docs-mdx-compiler-plugin', () => {
   it('errors on missing story props', async () => {
     await expect(
       generate(path.resolve(__dirname, './__testfixtures__/story-missing-props.mdx'))
-    ).rejects.toThrow('Expected a story name or ID attribute');
+    ).rejects.toThrow('Expected a Story name, id, or story attribute');
   });
 });

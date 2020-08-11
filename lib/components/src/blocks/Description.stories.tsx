@@ -15,7 +15,18 @@ The group looked like tall, exotic grazing animals, swaying gracefully and uncon
 
 ![An image](http://placehold.it/350x150)
 
-He stared at the clinic, Molly took him to the Tank War, mouth touched with hot gold as a gliding cursor struck sparks from the wall of a skyscraper canyon. 
+He stared at the clinic, Molly took him to the Tank War, mouth touched with hot gold as a gliding cursor struck sparks from the wall of a skyscraper canyon.
+`;
+
+const markdownWithLinksCaption = `
+# [Link](https://storybook.js.org/) in heading
+## [Link](https://storybook.js.org/) in heading
+### [Link](https://storybook.js.org/) in heading
+#### [Link](https://storybook.js.org/) in heading
+##### [Link](https://storybook.js.org/) in heading
+###### [Link](https://storybook.js.org/) in heading
+
+He stared at the clinic, [Molly](https://storybook.js.org/) took him to the *[Tank War](https://storybook.js.org/)*, mouth touched with hot gold as a gliding cursor struck sparks from the wall of a **[skyscraper](https://storybook.js.org/)** canyon.
 `;
 
 const Template = (args) => <Description {...args} />;
@@ -28,4 +39,9 @@ Text.args = {
 export const Markdown = Template.bind({});
 Markdown.args = {
   markdown: markdownCaption,
+};
+
+export const MarkdownLinks = Template.bind({});
+MarkdownLinks.args = {
+  markdown: markdownWithLinksCaption,
 };

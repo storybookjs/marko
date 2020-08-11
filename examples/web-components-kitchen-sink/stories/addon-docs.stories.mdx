@@ -1,4 +1,4 @@
-import { Story, Preview, Meta, Props } from '@storybook/addon-docs/blocks';
+import { Story, Canvas, Meta, ArgsTable } from '@storybook/addon-docs/blocks';
 import { action } from '@storybook/addon-actions';
 import { html } from 'lit-html';
 import '../demo-wc-card.js';
@@ -12,16 +12,14 @@ import '../demo-wc-card.js';
 A story can be a simple return of `html`
 
 <Story name="simple" height="220px">
-  {html`
-    <demo-wc-card>Hello World</demo-wc-card>
-  `}
+  {html` <demo-wc-card>Hello World</demo-wc-card> `}
 </Story>
 
 ## API
 
 You can show the api table of a web component at any point in your documentation.
 
-<Props of="demo-wc-card" />
+<ArgsTable of="demo-wc-card" />
 
 ## Function stories
 
@@ -29,7 +27,10 @@ Or a function
 
 <Story name="function" height="220px">
   {() => {
-    const rows = [{ header: 'health', value: '200' }, { header: 'mana', value: '100' }];
+    const rows = [
+      { header: 'health', value: '200' },
+      { header: 'mana', value: '100' },
+    ];
     return html`
       <demo-wc-card back-side .rows=${rows}>
         A card with data on the back
@@ -42,21 +43,19 @@ Or a function
 
 You can also wrap your live demos in a nice little wrapper.
 
-<Preview withToolbar>
+<Canvas withToolbar>
   <Story name="wrapper" height="220px">
-    {html`
-      <demo-wc-card>Hello World</demo-wc-card>
-    `}
+    {html` <demo-wc-card>Hello World</demo-wc-card> `}
   </Story>
-</Preview>
+</Canvas>
 
 ## Story reference
 
 You can also reference an existing story from within your MDX file.
 
-<Preview withToolbar>
+<Canvas withToolbar>
   <Story id="welcome--welcome" height="500px" inline={false} />
-</Preview>
+</Canvas>
 
 ## Stories not inline
 
@@ -80,7 +79,7 @@ or add it to individual stories.
 <Story inline={false} />
 ```
 
-<Preview withToolbar>
+<Canvas withToolbar>
   <Story name="notInline" height="220px">
     {html`
     <style>
@@ -89,4 +88,4 @@ or add it to individual stories.
     <p>Makes all p tags red... so best to not render inline</pd>
   `}
   </Story>
-</Preview>
+</Canvas>

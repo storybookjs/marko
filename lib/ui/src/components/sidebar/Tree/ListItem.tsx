@@ -118,7 +118,6 @@ export type ListItemProps = ComponentProps<typeof Item> & {
   kind: string;
   refId?: string;
   depth: number;
-  parameters: Record<string, any>;
 };
 
 export const ListItem: FunctionComponent<ListItemProps> = ({

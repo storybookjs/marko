@@ -1,8 +1,8 @@
 ---
-title: 'Overview'
+title: 'Configure Storybook'
 ---
 
-Storybook is configured via a folder, called `.storybook` which contains various configuration files. 
+Storybook is configured via a folder, called `.storybook` which contains various configuration files.
 
 <div class="aside">
 
@@ -10,28 +10,28 @@ Note you can change the folder that Storybook uses by setting the `-c` flag to y
 
 </div>
 
-
-### Configure your Storybook project
+## Configure your Storybook project
 
 The main configuration file is `main.js`. This file controls the behaviour of the Storybook server, and so you must restart Storybook’s process when you change it. It contains the following:
 
-```js
-// .storybook/main.js
+<!-- prettier-ignore-start -->
 
-module.exports = {
-  stories: ['../src/**/*.stories.(js|mdx)'],
-  addons: ['@storybook/addon-essentials']
-}
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-main-default-setup.js.mdx',
+  ]}
+/>
 
-The `main.js` configuration file is a [preset](../api/addons#addon-presets) and as such has a powerful interface, but the key fields within it are:
+<!-- prettier-ignore-end -->
+
+The `main.js` configuration file is a [preset](../api/presets.md) and as such has a powerful interface, but the key fields within it are:
 
 - `stories` - a array of globs that indicates the [location of your story files](#configure-story-loading), relative to `main.js`.
 - `addons` - a list of the [addons](/addons) you are using.
-- `webpackFinal` - custom [webpack configuration](./integration#extending-storybooks-webpack-config).
-- `babel` - custom [babel configuration](./integration#babel).
+- `webpackFinal` - custom [webpack configuration](./integration.md#extending-storybooks-webpack-config).
+- `babel` - custom [babel configuration](./integration.md#babel).
 
-### Configure story loading
+## Configure story loading
 
 By default, Storybook will load stories from your project based on a glob (pattern matching string) in `.storybook/main.js` that matches all files in your project with extension `.stories.js`. The intention is you colocate a story file with the component it documents.
 
@@ -46,28 +46,30 @@ If you want to use a different naming convention, you can alter the glob, using 
 
 For example if you wanted to pull both `.md` and `.js` files from the `my-project/src/components` directory, you could write:
 
-```js
-// .storybook/main.js
+<!-- prettier-ignore-start -->
 
-module.exports = {
-  stories: ['../my-project/src/components/*.@(js|md)'],
-};
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-main-js-md-files.js.mdx',
+  ]}
+/>
 
-### Configure story rendering
+<!-- prettier-ignore-end -->
 
-To control the way stories are rendered and add global [decorators](../writing-stories/decorators#global-decorators) and [parameters](..writing-stories/parameters#global-parameters), create a  `.storybook/preview.js` file. This is loaded in the Canvas tab, the “preview” iframe that renders your components in isolation. Use `preview.js` for global code (such as [CSS imports](../get-started/setup#render-component-styles) or JavaScript mocks) that applies to all stories.
+## Configure story rendering
 
-The `preview.js` file can be an ES module and export the following keys: 
+To control the way stories are rendered and add global [decorators](../writing-stories/decorators.md#global-decorators) and [parameters](../writing-stories/parameters.md#global-parameters), create a `.storybook/preview.js` file. This is loaded in the Canvas tab, the “preview” iframe that renders your components in isolation. Use `preview.js` for global code (such as [CSS imports](../get-started/setup.md#render-component-styles) or JavaScript mocks) that applies to all stories.
 
-- `decorators` - an array of global [decorators](../writing-stories/decorators#global-decorators)
-- `parameters` - an object of global [parameters](..writing-stories/parameters#global-parameters)
-- `globalTypes` - definition of [globalTypes](../essentials/toolbars-and-globals#global-types-and-the-toolbar-annotation)
+The `preview.js` file can be an ES module and export the following keys:
 
-If you’re looking to change how your stories are ordered, read about [sorting stories](../writing-stories/naming-components-and-hierarchy#sorting-stories).
+- `decorators` - an array of global [decorators](../writing-stories/decorators.md#global-decorators)
+- `parameters` - an object of global [parameters](..writing-stories/parameters.md#global-parameters)
+- `globalTypes` - definition of [globalTypes](../essentials/toolbars-and-globals.md#global-types-and-the-toolbar-annotation)
 
-### Configure Storybook’s UI
+If you’re looking to change how your stories are ordered, read about [sorting stories](../writing-stories/naming-components-and-hierarchy.md#sorting-stories).
+
+## Configure Storybook’s UI
 
 To control the behaviour of Storybook’s UI (the **“manager”**), you can create a `.storybook/manager.js` file.
 
-This file does not have a specific API but is the place to set [UI options](./user-interface) and to configure Storybook’s [theme](./user-interface#theming).
+This file does not have a specific API but is the place to set [UI options](./user-interface.md) and to configure Storybook’s [theme](./theming.md).

@@ -1,13 +1,11 @@
-import { visit } from '../helper';
-
 describe('addon-action', () => {
   before(() => {
-    visit();
+    cy.visitStorybook();
   });
 
   it('should trigger an action', () => {
     // click on the button
-    cy.navigateToStory('button', 'text');
+    cy.navigateToStory('example-button', 'primary');
 
     cy.getStoryElement().contains('Button').click();
     cy.viewAddonPanel('Actions');

@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 
 import { Badge } from '@storybook/components';
 import { API } from '@storybook/api';
-import { color } from '@storybook/theming';
+import { useTheme, Theme } from '@storybook/theming';
 
 import { shortcutToHumanString } from '@storybook/api/shortcut';
 import { MenuItemIcon } from '../components/sidebar/Menu';
@@ -23,6 +23,7 @@ export const useMenu = (
   showNav: boolean,
   enableShortcuts: boolean
 ) => {
+  const theme = useTheme<Theme>();
   const shortcutKeys = api.getShortcutKeys();
 
   const about = useMemo(
@@ -53,7 +54,9 @@ export const useMenu = (
       onClick: () => api.navigateToSettingsPage('/settings/shortcuts'),
       right: shortcutToHumanStringIfEnabled(shortcutKeys.shortcutsPage, enableShortcuts),
       left: <MenuItemIcon />,
-      style: { borderBottom: `4px solid ${color.mediumlight}` },
+      style: {
+        borderBottom: `4px solid ${theme.appBorderColor}`,
+      },
     }),
     [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
   );
@@ -162,7 +165,7 @@ export const useMenu = (
       id: 'collapse',
       title: 'Collapse all',
       onClick: () => api.collapseAll(),
-      right: shortcutToHumanString(shortcutKeys.collapseAll),
+      right: enableShortcuts ? shortcutToHumanString(shortcutKeys.collapseAll) : '',
       left: <MenuItemIcon />,
     }),
     [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
@@ -171,7 +174,7 @@ export const useMenu = (
   return useMemo(
     () => [
       about,
-      releaseNotes,
+      ...(api.releaseNotesVersion() ? [releaseNotes] : []),
       shortcuts,
       sidebarToggle,
       addonsToggle,
@@ -186,7 +189,7 @@ export const useMenu = (
     ],
     [
       about,
-      releaseNotes,
+      ...(api.releaseNotesVersion() ? [releaseNotes] : []),
       shortcuts,
       sidebarToggle,
       addonsToggle,

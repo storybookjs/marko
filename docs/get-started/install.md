@@ -1,10 +1,10 @@
 ---
-title: 'Install'
+title: 'Install Storybook'
 ---
 
 Use the Storybook CLI to install it in a single command. Run this inside your existing project’s root directory:
 
-```sh
+```shell
 npx sb init
 ```
 
@@ -16,12 +16,11 @@ Storybook needs to be installed into a project that is already setup with a fram
 
 - 📦 [Create React App](https://reactjs.org/docs/create-a-new-react-app.html)
 - 📦 [Vue CLI](https://cli.vuejs.org/)
-- Or any other tooling available. 
+- Or any other tooling available.
 
 </details>
 
 During its install process, Storybook will look into your project's dependencies and provide you with the best configuration available.
-
 
 The command above will make the following changes to your local environment:
 
@@ -32,23 +31,26 @@ The command above will make the following changes to your local environment:
 
 Check that everything worked by running:
 
-```sh
-npx storybook
+```shell
+npm run storybook
 ```
 
-It will start Storybook locally and output the address. Depending on your system configuration, it will automatically open the address in a new browser tab and you'll be greeted by a welcome screen. In that screen there are some noteworthy items:
+It will start Storybook locally and output the address. Depending on your system configuration, it will automatically open the address in a new browser tab and you'll be greeted by a welcome screen.
+
+![Storybook welcome screen](./example-welcome.png)
+
+There are some noteworthy items here:
 
 - A collection of useful links for more in depth configuration and customization options you have at your disposal.
 - A second set of links for you to expand your Storybook knowledge and get involved with the ever growing Storybook community.
 - A few example stories to get you started.
- 
-![Storybook welcome screen](./example-welcome.png)
 
+Now that you installed Storybook successfully, let’s take a look at a story that was written for us.
 
 <details>
-<summary>Troubleshooting</summary>
+<summary><h4>Troubleshooting</h4></summary>
 
-You can also setup Storybook manually through the Storybook CLI. 
+You can also setup Storybook manually through the Storybook CLI.
 
 You can use the `--type` flag to tell Storybook to configure itself based on the flag.
 
@@ -58,11 +60,27 @@ For instance you can use:
 - `--type vue` to setup Storybook with the Vue configuration options.
 - `--type angular` to setup Storybook with the Angular configuration options.
 
-If there's an installation problem, check the README for your framework (e.g <a href="https://github.com/storybookjs/storybook/blob/next/app/react/README.md">Storybook for React</a>).
+<!-- prettier-ignore-start -->
+
+<FeatureSnippets
+  paths={[
+   'get-started/installation-problems/angular.mdx',
+   'get-started/installation-problems/ember.mdx',
+   'get-started/installation-problems/html.mdx',
+   'get-started/installation-problems/marko.mdx',
+   'get-started/installation-problems/mithril.mdx',
+   'get-started/installation-problems/preact.mdx',
+   'get-started/installation-problems/rax.mdx',
+   'get-started/installation-problems/react.mdx',
+   'get-started/installation-problems/riot.mdx',
+   'get-started/installation-problems/svelte.mdx',
+   'get-started/installation-problems/vue.mdx',
+   'get-started/installation-problems/web-components.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 If all else fails, try asking for [help](https://storybook.js.org/support/)
 
 </details>
-
-
-Now that you installed Storybook successfully, let’s take a look at a story that was written for us.
