@@ -50,7 +50,7 @@ In such cases it is natural to use [args composition](../writing-stories/args.md
 <CodeSnippets
   paths={[
     'react/page-story-with-args-composition.js.mdx',
-     'react/page-story-with-args-composition.ts.mdx',
+    'react/page-story-with-args-composition.ts.mdx',
   ]}
 />
 
@@ -157,80 +157,57 @@ ProfilePageContainer.js
 ProfilePageContext.js
 ```
 
-> It’s also often useful to setup a “global” container context, (perhaps named `GlobalContainerContext`) for container components that may be rendered on every page of your app, and adding it to the top level of your application. While it’s possible to place every container within this global context, it should only provide containers that are required globally.
+<div class="aside">
+
+It’s also often useful to setup a “global” container context, (perhaps named `GlobalContainerContext`) for container components that may be rendered on every page of your app, and adding it to the top level of your application. While it’s possible to place every container within this global context, it should only provide containers that are required globally.
+
+</div>
 
 Let’s look at an example implementation of this approach.
 
 First we’ll need to create a React context, and we can name it `ProfilePageContext`. It does nothing more than export a React context:
 
-```js
-import { createContext } from 'react';
+<!-- prettier-ignore-start -->
 
-const ProfilePageContext = createContext();
+<CodeSnippets
+  paths={[
+    'react/mock-context-create.js.mdx',
+  ]}
+/>
 
-export default ProfilePageContext;
-```
+<!-- prettier-ignore-end -->
 
 `ProfilePage` is our presentational component. It will use the `useContext` hook to retrieve the container components from `ProfilePageContext`:
 
-```js
-import { useContext } from 'react';
-import ProfilePageContext from './ProfilePageContext';
+<!-- prettier-ignore-start -->
 
-const ProfilePage = ({ name, userId }) => {
-  const { UserPostsContainer, UserFriendsContainer } = useContext(ProfilePageContext);
+<CodeSnippets
+  paths={[
+    'react/mock-context-in-use.js.mdx',
+  ]}
+/>
 
-  return (
-    <div>
-      <h1>{name}</h1>
-      <UserPostsContainer userId={userId} />
-      <UserFriendsContainer userId={userId} />
-    </div>
-  );
-};
-
-export default ProfilePage;
-```
+<!-- prettier-ignore-end -->
 
 #### Mocking containers in Storybook
 
 In the context of Storybook, instead of providing container components through context, we’ll instead provide their mocked counterparts. In most cases, the mocked versions of these components can often be borrowed directly from their associated stories.
 
-> If the same context applies to all `ProfilePage` stories, we can also use a Storybook decorator, See: https://storybook.js.org/docs/basics/writing-stories/#decorators
+<!-- prettier-ignore-start -->
 
-```js
-import ProfilePage from './ProfilePage';
-import UserPosts from './UserPosts';
-import { normal as UserFriendsNormal } from './UserFriends.stories';
+<CodeSnippets
+  paths={[
+    'react/mock-context-container.js.mdx',
+  ]}
+/>
 
-export default {
-  title: 'ProfilePage',
-};
+<!-- prettier-ignore-end -->
 
-const ProfilePageProps = {
-  name: 'Jimi Hendrix',
-  userId: '1',
-};
+<div class="aside">
 
-const context = {
-  // We can access the `userId` prop here if required:
-  UserPostsContainer({ userId }) {
-    return <UserPosts {...UserPostsProps} />;
-  },
-  // Most of the time we can simply pass in a story.
-  // In this case we're passing in the `normal` story export
-  // from the `UserFriends` component stories.
-  UserFriendsContainer: UserFriendsNormal,
-};
+If the same context applies to all `ProfilePage` stories, we can also use a [decorator](../writing-stories/decorators.md).
 
-export const normal = () => {
-  return (
-    <ProfilePageContext.Provider value={context}>
-      <ProfilePage {...ProfilePageProps} />
-    </ProfilePageContext.Provider>
-  );
-};
-```
+</div>
 
 #### Providing containers to your application
 
@@ -238,46 +215,26 @@ Now, in context of your application, you’ll need to provide `ProfilePage` with
 
 For example, in Next.js, this would be your `pages/profile.js` component.
 
-```js
-import ProfilePageContext from './ProfilePageContext';
-import ProfilePageContainer from './ProfilePageContainer';
-import UserPostsContainer from './UserPostsContainer';
-import UserFriendsContainer from './UserFriendsContainer';
+<!-- prettier-ignore-start -->
 
-// Ensure that your context value remains referentially equal between each render.
-const context = {
-  UserPostsContainer,
-  UserFriendsContainer,
-};
+<CodeSnippets
+  paths={[
+    'react/mock-context-container-provider.js.mdx',
+  ]}
+/>
 
-const AppProfilePage = () => {
-  return (
-    <ProfilePageContext.Provider value={context}>
-      <ProfilePageContainer />
-    </ProfilePageContext.Provider>
-  );
-};
-
-export default AppProfilePage;
-```
+<!-- prettier-ignore-end -->
 
 #### Mocking global containers in Storybook
 
 If you’ve setup `GlobalContainerContext`, in order to provide context to all stories you’ll need to set up a decorator within Storybook’s `preview.js`. For example:
 
-```js
-import { normal as NavigationNormal } from '../components/Navigation.stories';
-import GlobalContainerContext from '../components/lib/GlobalContainerContext';
+<!-- prettier-ignore-start -->
 
-const context = {
-  NavigationContainer: NavigationNormal,
-};
+<CodeSnippets
+  paths={[
+    'react/mock-context-container-global.js.mdx',
+  ]}
+/>
 
-const AppDecorator = (storyFn) => {
-  return (
-    <GlobalContainerContext.Provider value={context}>{storyFn()}</GlobalContainerContext.Provider>
-  );
-};
-
-addDecorator(AppDecorator);
-```
+<!-- prettier-ignore-end -->
