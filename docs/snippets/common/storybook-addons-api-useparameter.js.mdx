@@ -1,0 +1,14 @@
+```js
+// .storybook/my-addon/register.js
+
+export const Panel = () => {
+  const value = useParameter('parameter-key', 'default value');
+
+  return (
+    <div>
+      for the currently selected story, the parameter for "parameter-key" is:
+      {value}
+    </div>
+  );
+};
+```

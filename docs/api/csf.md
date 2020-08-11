@@ -20,17 +20,15 @@ The default export defines metadata about your component, including the `compone
 
 The `component` field is optional (but encouraged!), and is used by addons for automatic prop table generation and display of other component metadata. `title` should be unique, i.e. not re-used across files.
 
-```js
-// MyComponent.story.js
-import MyComponent from './MyComponent';
+<!-- prettier-ignore-start -->
 
-export default {
-  title: 'Path/To/MyComponent',
-  component: MyComponent,
-  decorators: [ ... ],
-  parameters: { ... }
-}
-```
+<CodeSnippets
+  paths={[
+    'common/my-component-story-mandatory-export.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 For more examples, see [writing stories](../writing-stories/introduction.md).
 
@@ -38,18 +36,15 @@ For more examples, see [writing stories](../writing-stories/introduction.md).
 
 With CSF, every named export in the file represents a story function by default.
 
-```js
-// MyComponent.story.js
-import MyComponent from './MyComponent';
+<!-- prettier-ignore-start -->
 
-export default {
-  title: 'Path/To/MyComponent',
-  component: MyComponent,
-};
+<CodeSnippets
+  paths={[
+    'react/my-component-story-basic-and-props.js.mdx',
+  ]}
+/>
 
-export const Basic = () => <MyComponent />;
-export const WithProp = () => <MyComponent prop="value" />;
-```
+<!-- prettier-ignore-end -->
 
 The exported identifiers will be converted to "start case" using Lodash's [startCase](https://lodash.com/docs/#startCase) function. For example:
 
@@ -67,15 +62,15 @@ Story functions can be annotated with a few different fields to define story-lev
 
 The `storyName` is useful if you want to use names with special characters, names that correspond to restricted keywords in Javascript, or names that collide with other variables in the file. If it's not specified, the export name will be used instead.
 
-```jsx
-// MyComponent.story.js
+<!-- prettier-ignore-start -->
 
-export const Simple = () => <MyComponent />;
+<CodeSnippets
+  paths={[
+    'react/my-component-story-with-storyname.js.mdx',
+  ]}
+/>
 
-Simple.storyName = 'So simple!';
-Simple.decorators = [ ... ];
-Simple.parameters = { ... };
-```
+<!-- prettier-ignore-end -->
 
 ## Args story inputs
 
@@ -83,40 +78,51 @@ Starting in SB 6.0, stories accept named inputs called Args. Args are dynamic da
 
 Consider Storybook’s ["Button" example](../writing-stories/introduction.md#defining-stories) of a text button that logs its click events:
 
-```js
-// Button.story.js
+<!-- prettier-ignore-start -->
 
-import { action } from '@storybook/addon-actions';
-import { Button } from './Button';
+<CodeSnippets
+  paths={[
+    'react/button-story-click-handler.js.mdx',
+  ]}
+/>
 
-export default {
-    title: 'Button',
-    component: Button
-};
-export const Text = () => <Button label=’Hello’ onClick={action('clicked')} />;
-```
+<!-- prettier-ignore-end -->
 
 Now consider the same example, re-written with args:
 
-```js
-export const Text = ({ label, onClick }) => <Button label={label} onClick={onClick} />;
-Text.args = {
-  label: 'Hello',
-  onClick: action('clicked'),
-};
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'react/button-story-click-handler-args.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 At first blush this might seem no better than the original example. However, if we add the [Docs addon](https://github.com/storybookjs/storybook/tree/master/addons/docs) and configure the [Actions addon](https://github.com/storybookjs/storybook/tree/master/addons/actions) appropriately, we can write:
 
-```js
-export const Text = ({ label, onClick }) => <Button label={label} onClick={onClick} />;
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'react/button-story-click-handler-simple-docs.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 Or even more simply:
 
-```js
-export const Text = (args) => <Button {...args} />;
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'react/button-story-click-handler-simplificated.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 Not only are these versions shorter and easier to write than their no-args counterparts, but they are also more portable since the code doesn't depend on the actions addon specifically.
 
@@ -132,21 +138,15 @@ If you specify `story.name`, it will be used as the story display name in the UI
 
 If you don't specify `story.name`, the named export will be used to generate the display name. Storybook passes the named export through a `storyNameFromExport` function, which is implemented with `lodash.startCase`:
 
-```js
-it('should format CSF exports with sensible defaults', () => {
-  const testCases = {
-    name: 'Name',
-    someName: 'Some Name',
-    someNAME: 'Some NAME',
-    some_custom_NAME: 'Some Custom NAME',
-    someName1234: 'Some Name 1234',
-    someName1_2_3_4: 'Some Name 1 2 3 4',
-  };
-  Object.entries(testCases).forEach(([key, val]) => {
-    expect(storyNameFromExport(key)).toBe(val);
-  });
-});
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-test-with-storyname.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 When you want to change the name of your story, just rename the CSF export. This will change the name of the story and also change the story's ID and URL.
 
@@ -163,25 +163,15 @@ To make this possible, you can use optional `includeStories` and `excludeStories
 
 Consider the following story file:
 
-```js
-// MyComponent.story.js
+<!-- prettier-ignore-start -->
 
-import React from 'react';
-import MyComponent from './MyComponent';
-import someData from './data.json';
+<CodeSnippets
+  paths={[
+    'react/my-component-story-with-nonstory.js.mdx',
+  ]}
+/>
 
-export default {
-  title: 'MyComponent',
-  component: MyComponent,
-  includeStories: ['SimpleStory', 'ComplexStory']
-}
-
-export const simpleData = { foo: 1, bar: 'baz' };
-export const complexData = { foo: 1, { bar: 'baz', baz: someData }};
-
-export const SimpleStory = () => <MyComponent data={simpleData} />;
-export const ComplexStory = () => <MyComponent data={complexData} />;
-```
+<!-- prettier-ignore-end -->
 
 When Storybook loads this file, it will see all the exports, but it will ignore the data exports and only treat `SimpleStory` and `ComplexStory` as stories.
 

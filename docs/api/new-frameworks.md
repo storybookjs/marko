@@ -43,12 +43,16 @@ These scripts pass an `options` object to `@storybook/core/server`, a library th
 
 For example, here’s the boilerplate to start the dev server in `start-storybook`:
 
-```js
-import { buildDev } from '@storybook/core/server';
-import options from './options';
+<!-- prettier-ignore-start -->
 
-buildDev(options);
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-start-dev-server.ts.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
 
 Thus the meat of adding framework presets is filling in that options object.
 
@@ -58,15 +62,15 @@ As described above, the server `options` object does the heavy lifting of config
 
 Let’s look at the `@storybook/vue`’s options definition:
 
-```js
-const packageJson = require('../../package.json');
+<!-- prettier-ignore-start -->
 
-export default {
-  packageJson,
-  framework: 'vue',
-  frameworkPresets: [require.resolve('./framework-preset-vue.js')],
-};
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-server-options.ts.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 The value of the `framework` option (in this case ‘vue’) is something that gets passed to addons and allows them to do special case things for your framework.
 
@@ -82,16 +86,15 @@ Storybook stories are ES6 functions that return a “renderable object.”
 
 Consider the following React story:
 
-```js
-// Button.story.js
-import { Button } from './Button';
-export default {
-  title: 'Button',
-  component: Button,
-};
+<!-- prettier-ignore-start -->
 
-export const Sample = () => <Button label="hello button" />;
-```
+<CodeSnippets
+  paths={[
+    'react/button-story-with-sample.js.mdx'
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 In this case, the renderable object is the React element, `<Button .../>`.
 
@@ -99,21 +102,15 @@ In most other frameworks, the renderable object is actually a plain javascript o
 
 Consider the following hypothetical example:
 
-```js
-// Button.story.js
+<!-- prettier-ignore-start -->
 
-import { Button } from './Button';
-export default {
-  title: 'Button',
-  component: Button,
-};
-export const Sample = () => ({
-  template: '<button label=:label />',
-  data: {
-    label: 'hello button',
-  },
-});
-```
+<CodeSnippets
+  paths={[
+    'common/button-story-hypothetical-example.js.mdx'
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 The design of this “renderable object” is framework-specific, and should ideally match the idioms of that framework.
 
@@ -121,34 +118,40 @@ The design of this “renderable object” is framework-specific, and should ide
 
 The frameworks render function is the thing responsible for converting the renderable object into DOM nodes. This is typically of the form:
 
-```js
-const rootElement = document.getElementById('root');
+<!-- prettier-ignore-start -->
 
-export default function renderMain({ storyFn }: RenderMainArgs) {
-  const storyObj = storyFn();
-  const html = fn(storyObj);
-  rootElement.innerHTML = html;
-}
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-framework-render-function.js.mdx'
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ### Package structure
 
 On the client side, the key file is [`src/client/preview.js`](../configure/overview.md#configure-story-rendering):
 
-```js
-import { start } from '@storybook/core/client';
-import './globals';
-import render from './render';
-const api = start(render);
+<!-- prettier-ignore-start -->
 
-// the boilerplate code
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-client-preview.ts.mdx'
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 The globals file typically sets up a single global variable that client-side code (such as addon-provided decorators) can refer to if needed to understand which framework its running in:
 
-```js
-import { window } from 'global';
-window.STORYBOOK_ENV = 'vue';
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-client-globals-example-file.ts.mdx'
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 The `start` function abstracts all of Storybook’s framework-independent client-side (browser) code, and it takes the render function we defined above. For examples of render functions, see [React](https://github.com/storybookjs/storybook/blob/next/app/react/src/client/preview/render.tsx), [Vue](https://github.com/storybookjs/storybook/blob/next/app/vue/src/client/preview/render.ts),[Angular](https://github.com/storybookjs/storybook/blob/next/app/angular/src/client/preview/render.ts) [Web-components](https://github.com/storybookjs/storybook/blob/next/app/web-components/src/client/preview/render.ts) in the Storybook monorepo.

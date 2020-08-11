@@ -8,26 +8,15 @@ title: 'MDX Format'
 
 Let's get started with an example that combines Markdown with a single story:
 
-```md
-import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
-import { Checkbox } from './Checkbox';
+<!-- prettier-ignore-start -->
 
-<Meta title="MDX/Checkbox" component={Checkbox} />
+<CodeSnippets
+  paths={[
+    'common/checkbox-story-starter-example.mdx.mdx',
+  ]}
+/>
 
-# Checkbox
-
-With `MDX` we can define a story for `Checkbox` right in the middle of our Markdown documentation.
-
-<Canvas>
-  <Story name="all checkboxes">
-    <form>
-      <Checkbox id="Unchecked" label="Unchecked" />
-      <Checkbox id="Checked" label="Checked" checked />
-      <Checkbox appearance="secondary" id="second" label="Secondary" checked />
-    </form>
-  </Story>
-</Canvas>
-```
+<!-- prettier-ignore-end -->
 
 And here's how that's rendered in Storybook:
 
@@ -45,18 +34,15 @@ MDX-flavored [Component Story Format (CSF)](https://medium.com/storybookjs/compo
 
 For example, here's the story from `Checkbox` example above, rewritten in CSF:
 
-```js
-import React from 'react';
-import { Checkbox } from './Checkbox';
-export default { title: "MDX/Checkbox" component: Checkbox };
-export const allCheckboxes = () => (
-  <form>
-    <Checkbox id="Unchecked" label="Unchecked" />
-    <Checkbox id="Checked" label="Checked" checked />
-    <Checkbox appearance="secondary" id="second" label="Secondary" checked />
-  </form>
-);
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'react/checkbox-story-csf.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 There's a one-to-one mapping from the code in `MDX` to `CSF`, which in turn directly corresponds to Storybook's internal `storiesOf` API. As a user, this means your existing Storybook knowledge should translate between the three. And technically, this means that the transformations that happen under the hood are simple and predictable.
 
@@ -64,52 +50,15 @@ There's a one-to-one mapping from the code in `MDX` to `CSF`, which in turn dire
 
 Now let's look at a more realistic example to see a few more things we can do:
 
-```js
-import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+<!-- prettier-ignore-start -->
 
-import { Badge } from './Badge';
-import { Icon } from './Icon';
+<CodeSnippets
+  paths={[
+    'common/badge-story-starter-example.mdx.mdx',
+  ]}
+/>
 
-<Meta title="MDX/Badge" component={Badge} />
-
-# Badge
-
-Let's define a story for our `Badge` component:
-
-<Story name="positive">
-  <Badge status="positive">Positive</Badge>
-</Story>
-
-We can drop it in a `Canvas` to get a code snippet:
-
-<Canvas>
-  <Story name="negative">
-    <Badge status="negative">Negative</Badge>
-  </Story>
-</Canvas>
-
-We can even preview multiple stories in a block. This
-gets rendered as a group, but defines individual stories
-with unique URLs and isolated snapshot tests.
-
-<Canvas>
-  <Story name="warning">
-    <Badge status="warning">Warning</Badge>
-  </Story>
-  <Story name="neutral">
-    <Badge status="neutral">Neutral</Badge>
-  </Story>
-  <Story name="error">
-    <Badge status="error">Error</Badge>
-  </Story>
-  <Story name="with icon">
-    <Badge status="warning">
-      <Icon icon="check" inline />
-      with icon
-    </Badge>
-  </Story>
-</Canvas>
-```
+<!-- prettier-ignore-end -->
 
 And here's how that gets rendered in Storybook:
 
@@ -119,15 +68,15 @@ And here's how that gets rendered in Storybook:
 
 Suppose you have an existing story and want to embed it into your docs. Here's how to show a story with ID `some--id` (check the browser URL in Storybook v5+ to see a story's ID):
 
-```js
-import { Story } from "@storybook/addon-docs/blocks";
+<!-- prettier-ignore-start -->
 
-# Some header
+<CodeSnippets
+  paths={[
+    'common/component-story-mdx-reference-storyid.mdx.mdx',
+  ]}
+/>
 
-And Markdown here
-
-<Story id="some--id" />
-```
+<!-- prettier-ignore-end -->
 
 You can also use the rest of the MDX features in conjunction with embedding. That includes source, preview, and prop tables.
 
@@ -135,27 +84,27 @@ You can also use the rest of the MDX features in conjunction with embedding. Tha
 
 To add [decorators](../writing-docs/mdx.md#decorators-and-parameters) and [parameters](../writing-docs/mdx.md#decorators-and-parameters) in MDX:
 
-```js
-<Meta
-  title='MyComponent'
-  decorators={[ ... ]}
-  parameters={{ ... }}
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/my-component-story-mdx-with-decorators-params.mdx.mdx',
+  ]}
 />
 
-<Story name="story" decorators={[ ... ]} parameters={{ ... }} >
-...
-</Story>
-```
+<!-- prettier-ignore-end -->
 
 In addition, global decorators work just like before, e.g. adding the following to your [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering):
 
-```js
-// .storybook/preview.js
-import { addDecorator, addParameters } from '@storybook/react';
+<!-- prettier-ignore-start -->
 
-addDecorator(...);
-addParameters({ ... });
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-decorator-params-example.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ## Documentation-only MDX
 

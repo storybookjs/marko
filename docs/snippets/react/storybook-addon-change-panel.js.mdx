@@ -1,0 +1,11 @@
+```js
+// .storybook/my-addon/register.js
+
+import { useParameter } from '@storybook/api';
+const PARAM_KEY = 'myAddon';
+const MyPanel = () => {
+  const value = useParameter(PARAM_KEY, null);
+  const item = value ? value.data : '';
+  return <div>{item}</div>;
+};
+```
