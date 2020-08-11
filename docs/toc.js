@@ -288,6 +288,11 @@ module.exports = {
           title: 'Package Composition',
           type: 'link',
         },
+        {
+          pathSegment: 'faq',
+          title: 'Frequently Asked Questions',
+          type: 'link',
+        },
       ],
     },
     {
