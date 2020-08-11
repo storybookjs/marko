@@ -2,7 +2,6 @@
 title: 'Writing your own Storybook Preset'
 ---
 
-
 [Storybook presets](./presets.md) are grouped collections of `babel`, `webpack`, and `addons` configurations that support specific use cases in Storybook, such as typescript or MDX support.
 
 This doc covers the [presets API](#presets-api) and how to use the presets mechanism for [advanced configuration](#advanced-configuration).
@@ -45,7 +44,6 @@ All functions take a [Babel configuration object](https://babeljs.io/docs/en/con
 For example, Storybook's Mihtril support uses plugins internally and here's how it configures babel:
 
 ```ts
-
 export function babelDefault(config: TransformOptions) {
   return {
     ...config,
@@ -103,6 +101,35 @@ module.exports = {
   managerEntries: ['@storybook/addon-storysource/register'],
 };
 ```
+
+### Preview entries
+
+The addon config `config` allows you to add extra preview configuration from within a preset, for example to add parameters or decorators from an addon.
+
+For example, the Backgrounds preset contains the following code:
+
+```js
+// preset.js
+export function config(entry = []) {
+  return [...entry, require.resolve('./defaultParameters')];
+}
+```
+
+Which in turn invokes:
+
+```js
+// defaultParameters.js
+export const parameters = {
+  backgrounds: {
+    values: [
+      { name: 'light', value: '#F8F8F8' },
+      { name: 'dark', value: '#333333' },
+    ],
+  },
+};
+```
+
+This is equivalent to exporting the `backgrounds` parameter manually in `main.js`.
 
 ### Addons
 
@@ -183,7 +210,6 @@ and extract the configuration to a new file `./storybook/my-preset.js`:
 
 ```js
 // .storybook/my-preset.js
-
 
 module.exports = {
   managerWebpack: async (config, options) => {
