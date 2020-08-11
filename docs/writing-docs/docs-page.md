@@ -121,7 +121,7 @@ In addition, you can interleave your own components to customize the auto-genera
 
 ## Story file names
 
-Unless you use a custom [webpack configuration](../configure/integration#extending-storybooks-webpack-config), all of your story files should have the suffix `*.stories.@(j|t)sx?`. For example, "Badge.stories.js" or "Badge.stories.tsx". This tells Storybook and its docs preset to display the docs based on the file contents.
+Unless you use a custom [webpack configuration](../configure/webpack.md#extending-storybooks-webpack-config), all of your story files should have the suffix `*.stories.@(j|t)sx?`. For example, "Badge.stories.js" or "Badge.stories.tsx". This tells Storybook and its docs preset to display the docs based on the file contents.
 
 ## Inline stories vs. iframe stories
 
