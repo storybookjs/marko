@@ -134,7 +134,7 @@ It's also possible that your Storybook is misconfigured. If you think this might
 
 ### How can I disable controls for certain fields on a particular story?
 
-The `argTypes` annotation annotation can be used to hide controls for a particular row, or even hide rows.
+The `argTypes` annotation can be used to hide controls for a particular row, or even hide rows.
 
 Suppose you have a `Button` component with `borderWidth` and `label` properties (auto-generated or otherwise) and you want to hide the `borderWidth` row completely and disable controls for the `label` row on a specific story. Here's how you'd do that:
 
