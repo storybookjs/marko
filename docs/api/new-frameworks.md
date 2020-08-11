@@ -74,7 +74,7 @@ Let’s look at the `@storybook/vue`’s options definition:
 
 The value of the `framework` option (in this case ‘vue’) is something that gets passed to addons and allows them to do special case things for your framework.
 
-The real meat of this file is the framework presets, and these are standard [Storybook presets](./addons.md#addon-presets) -- you can look at framework packages in the Storybook monorepo (e.g. [react](https://github.com/storybookjs/storybook/blob/next/app/react/src/server/options.ts), [vue](https://github.com/storybookjs/storybook/blob/next/app/vue/src/server/options.ts), [web-components](https://github.com/storybookjs/storybook/blob/next/app/web-components/src/server/options.ts)) to see examples of framework-specific customizations.
+The real meat of this file is the framework presets, and these are standard [Storybook presets](./addons.md#addon-presets) -- you can look at framework packages in the Storybook monorepo (e.g. [React](https://github.com/storybookjs/storybook/blob/next/app/react/src/server/options.ts), [Vue](https://github.com/storybookjs/storybook/blob/next/app/vue/src/server/options.ts), [Web components](https://github.com/storybookjs/storybook/blob/next/app/web-components/src/server/options.ts)) to see examples of framework-specific customizations.
 
 ## Configuring the client
 
@@ -154,4 +154,4 @@ The globals file typically sets up a single global variable that client-side cod
 
 <!-- prettier-ignore-end -->
 
-The `start` function abstracts all of Storybook’s framework-independent client-side (browser) code, and it takes the render function we defined above. For examples of render functions, see [React](https://github.com/storybookjs/storybook/blob/next/app/react/src/client/preview/render.tsx), [Vue](https://github.com/storybookjs/storybook/blob/next/app/vue/src/client/preview/render.ts),[Angular](https://github.com/storybookjs/storybook/blob/next/app/angular/src/client/preview/render.ts) [Web-components](https://github.com/storybookjs/storybook/blob/next/app/web-components/src/client/preview/render.ts) in the Storybook monorepo.
+The `start` function abstracts all of Storybook’s framework-independent client-side (browser) code, and it takes the render function we defined above. For examples of render functions, see [React](https://github.com/storybookjs/storybook/blob/next/app/react/src/client/preview/render.tsx), [Vue](https://github.com/storybookjs/storybook/blob/next/app/vue/src/client/preview/render.ts), [Angular](https://github.com/storybookjs/storybook/blob/next/app/angular/src/client/preview/render.ts) [Web-components](https://github.com/storybookjs/storybook/blob/next/app/web-components/src/client/preview/render.ts) in the Storybook monorepo.
