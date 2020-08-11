@@ -249,9 +249,7 @@ In SB 5.2, each framework had its own preset, e.g. `@storybook/addon-docs/react/
 
 #### Preview/Props renamed
 
-In 6.0 we renamed `Preview` to `Canvas`, `Props` to `ArgsTable`.
-
-In addition to the rename, `<Props />` shows the current component, whereas `<ArgsTable />` shows the primary story for the current component. If you want the old behavior, pass `<ArgsTable of='.' />`.
+In 6.0 we renamed `Preview` to `Canvas`, `Props` to `ArgsTable`. The change should be otherwise backwards-compatible.
 
 #### Docs theme separated
 
