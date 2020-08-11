@@ -6,9 +6,15 @@ title: 'Addons API'
 
 This is the core addon API. This is how to get the addon API:
 
-```jsx
-import { addons } from '@storybook/addons';
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-addons-api-imports.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ### addons.getChannel()
 
@@ -21,14 +27,15 @@ It has a NodeJS [EventEmitter](https://nodejs.org/api/events.html) compatible AP
 This method allows you to register an addon and get the storybook API. You can do this only in the Manager App.
 See how we can use this:
 
-```js
-// my-addon/register.js
+<!-- prettier-ignore-start -->
 
-import { addons } from '@storybook/addons';
+<CodeSnippets
+  paths={[
+    'common/storybook-addons-api-register.js.mdx',
+  ]}
+/>
 
-// Register the addon with a unique name.
-addons.register('my-organisation/my-addon', (api) => {});
-```
+<!-- prettier-ignore-end -->
 
 Now you'll get an instance to our StorybookAPI. See the [api docs](#storybook-api) for Storybook API regarding using that.
 
@@ -37,25 +44,15 @@ Now you'll get an instance to our StorybookAPI. See the [api docs](#storybook-ap
 This method allows you to add a panel to Storybook. (Storybook's Action Logger is a panel). You can do this only in the Manager App.
 See how you can use this method:
 
-```js
-// my-addon/register.js
+<!-- prettier-ignore-start -->
 
-import { addons, types } from '@storybook/addons';
-import { AddonPanel } from '@storybook/components';
+<CodeSnippets
+  paths={[
+    'common/storybook-addon-panel-initial.js.mdx',
+  ]}
+/>
 
-const MyPanel = () => <div>This is a panel.</div>;
-
-// give a unique name for the panel
-addons.add('my-organisation/my-addon/panel', {
-  title: 'My Addon',
-  type: types.PANEL,
-  render: ({ active, key }) => (
-    <AddonPanel active={active} key={key}>
-      <MyPanel />
-    </AddonPanel>
-  ),
-});
-```
+<!-- prettier-ignore-end -->
 
 The render function is called with `active` and `key`.
 
@@ -67,23 +64,15 @@ As you can see, you can set any React Component as the panel. Currently, it's on
 
 The `makeDecorator` API can be used to create decorators in the style of the official addons. Use it like so:
 
-```js
-// my-addon/register.js
+<!-- prettier-ignore-start -->
 
-import { makeDecorator } from '@storybook/addons';
+<CodeSnippets
+  paths={[
+    'common/storybook-addons-api-makedecorator.js.mdx',
+  ]}
+/>
 
-export makeDecorator({
-  name: 'withSomething',
-  parameterName: 'something',
-  wrapper: (storyFn, context, { parameters }) => {
-    // Do something with `parameters`, which are set via { something: ... }
-
-    // Note you may alter the story output if you like, although generally that's
-    // not advised
-    return storyFn(context);
-  }
-})
-```
+<!-- prettier-ignore-end -->
 
 The options to `makeDecorator` are:
 
@@ -107,13 +96,15 @@ Writing addons can be simplified a lot by using these Storybook hooks:
 
 ### useStorybookState
 
-```js
-export const Panel = () => {
-  const state = useStorybookState();
+<!-- prettier-ignore-start -->
 
-  return <div>do something with storybook's state</div>;
-};
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-addons-api-usestorybookstate.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 Allows full access to the entire storybook state.
 Your component will re-render whenever the storybook state changes.
@@ -122,15 +113,15 @@ If you use this, remember your component wil be re-rendered a lot, and you may n
 
 ### useStorybookApi
 
-```js
-// my-addon/register.js
+<!-- prettier-ignore-start -->
 
-export const Panel = () => {
-  const state = useStorybookApi();
+<CodeSnippets
+  paths={[
+    'common/storybook-addons-api-useapi.js.mdx',
+  ]}
+/>
 
-  return <div>do something with storybook's api</div>;
-};
-```
+<!-- prettier-ignore-end -->
 
 Allows full access to the storybook API.
 
@@ -138,22 +129,15 @@ Detail on the storybook api are further down.
 
 ### useChannel
 
-```js
-// my-addon/register.js
+<!-- prettier-ignore-start -->
 
-import { STORY_CHANGED } from '@storybook/core-events';
-export const Panel = () => {
-  const emit = useChannel({
-    STORY_CHANGED: (...args) => console.log(...args),
-  });
+<CodeSnippets
+  paths={[
+    'common/storybook-addons-api-usechannel.js.mdx',
+  ]}
+/>
 
-  return (
-    <button onClick={() => emit('my-event-type', { some: 'data' })}>
-      clicking this will emit an event
-    </button>
-  );
-};
-```
+<!-- prettier-ignore-end -->
 
 Allows for both setting subscriptions to events and getting the emitter for emitting custom event unto the channel.
 
@@ -161,20 +145,15 @@ The messages can be listened for on both the iframe and the manager side.
 
 ### useAddonState
 
-```js
-// my-addon/register.js
+<!-- prettier-ignore-start -->
 
-export const Panel = () => {
-  const [state, setState] = useAddonState('my/addon-id', 'initial state');
+<CodeSnippets
+  paths={[
+    'common/storybook-addons-api-useaddonstate.js.mdx',
+  ]}
+/>
 
-  return <button onClick={() => setState('a new value')}>the state = "{state}"</button>;
-};
-export const Tool = () => {
-  const [state, setState] = useAddonState('my/addon-id', 'initial state');
-
-  return <button onClick={() => setState('a new value')}>the state = "{state}"</button>;
-};
-```
+<!-- prettier-ignore-end -->
 
 Extremely useful for addons that need to persist some state.
 
@@ -186,20 +165,15 @@ With this hook they can all get access to the same bit of state which is persist
 
 ### useParameter
 
-```js
-// my-addon/register.js
+<!-- prettier-ignore-start -->
 
-export const Panel = () => {
-  const value = useParameter('parameter-key', 'default value');
+<CodeSnippets
+  paths={[
+    'common/storybook-addons-api-useparameter.js.mdx',
+  ]}
+/>
 
-  return (
-    <div>
-      for the currently selected story, the parameter for "parameter-key" is:
-      {value}
-    </div>
-  );
-};
-```
+<!-- prettier-ignore-end -->
 
 This hook gets you the current story's parameter.
 
@@ -222,51 +196,55 @@ With this method, you can select a story via an API. This method accepts two par
 
 Let's say you've got a story like this:
 
-```js
-// Heading.story.js
-export default {
-  title: 'heading',
-};
+<!-- prettier-ignore-start -->
 
-export const withText = () => <h1>Hello world</h1>;
-```
+<CodeSnippets
+  paths={[
+    'react/button-story-with-addon-example.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 This is how you can select the above story:
 
-```js
-// my-addon/register.js
+<!-- prettier-ignore-start -->
 
-addons.register('my-organisation/my-addon', (api) => {
-  api.selectStory('heading', 'withText');
-});
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-addons-api-selectstory.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ### api.selectInCurrentKind()
 
 Same as `selectStory`, but accepts a story inside current kind as the only parameter:
 
-```js
-// my-addon/register.js
+<!-- prettier-ignore-start -->
 
-addons.register('my-organisation/my-addon', (api) => {
-  api.selectInCurrentKind('withText');
-});
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-addons-api-selectincurrentkind.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ### api.setQueryParams()
 
 This method allows you to set query string parameters. You can use that as temporary storage for addons. Here's how you set query params.
 
-```js
-// my-addon/register.js
+<!-- prettier-ignore-start -->
 
-addons.register('my-organisation/my-addon', (api) => {
-  api.setQueryParams({
-    abc: 'this is abc',
-    bbc: 'this is bbc',
-  });
-});
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-addons-api-setqueryparams.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 <div class="aside">
 
@@ -274,49 +252,54 @@ If you need to remove a query param, use `null` for that. For an example, let's 
 
 </div>
 
-```js
-// my-addon/register.js
+<!-- prettier-ignore-start -->
 
-addons.register('my-organisation/my-addon', (api) => {
-  api.setQueryParams({
-    bbc: null,
-  });
-});
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-addons-api-disablequeryparams.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ### api.getQueryParam()
 
 This method allows you to get a query param set by above API `setQueryParams`. For example, let's say we need to get the bbc query param. Then this how we do it:
 
-```jsx
-addons.register('my-organisation/my-addon', (api) => {
-  api.getQueryParam('bbc');
-});
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-addons-api-getqueryparam.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ### api.getUrlState(overrideParams)
 
 This method allows you to get application url state with some changed params. For example, if you want to get a link to a particular story:
 
-```js
-// my-addon/register.js
+<!-- prettier-ignore-start -->
 
-addons.register('my-organisation/my-addon', (api) => {
-  const href = api.getUrlState({
-    selectedKind: 'kind',
-    selectedStory: 'story',
-  }).url;
-});
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-addons-api-geturlstate.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ### api.on(eventName, fn)
 
 This method allows you to register a handler function which will be called whenever the user navigates between stories.
 
-```js
-// my-addon/register.js
+<!-- prettier-ignore-start -->
 
-addons.register('my-organisation/my-addon', (api) => {
-  api.on('some-event', (eventData) => console.log(eventData));
-});
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-addons-api-on.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->

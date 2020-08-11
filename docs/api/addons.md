@@ -35,21 +35,15 @@ Let’s write a simple addon for Storybook which:
 
 Let’s start by writing a story for our addon that exposes a custom parameter. The idea is that our addon will show this parameter in the addon panel.
 
-```js
-// Button.story.js
+<!-- prettier-ignore-start -->
 
-import React from 'react';
-import Button from './Button';
-export default {
-  title: 'Button',
-  parameters: {
-    myAddon: {
-      data: 'this data is passed to the addon',
-    },
-  },
-};
-export const Basic = () => <Button>hello</Button>;
-```
+<CodeSnippets
+  paths={[
+    'react/button-story-with-addon-example.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 Because we added the story at the component level, the `myAddon` parameter is associated with all stories defined in the file.
 
@@ -57,29 +51,15 @@ Because we added the story at the component level, the `myAddon` parameter is as
 
 Now let’s add a panel to Storybook in a file called `register.js`, which is the entry point for addons to register themselves.
 
-```js
-// .storybook/register.js
+<!-- prettier-ignore-start -->
 
-import React from 'react';
-import { addons, types } from '@storybook/addons';
-import { AddonPanel } from '@storybook/components';
+<CodeSnippets
+  paths={[
+    'common/storybook-addon-panel-initial.js.mdx',
+  ]}
+/>
 
-const ADDON_ID = 'myaddon';
-const PANEL_ID = `${ADDON_ID}/panel`;
-
-const MyPanel = () => <div>MyAddon</div>;
-addons.register(ADDON_ID, (api) => {
-  addons.add(PANEL_ID, {
-    type: types.PANEL,
-    title: 'My Addon',
-    render: ({ active, key }) => (
-      <AddonPanel active={active} key={key}>
-        <MyPanel />
-      </AddonPanel>
-    ),
-  });
-});
-```
+<!-- prettier-ignore-end -->
 
 This is boilerplate code for any addon that adds a panel to Storybook, and there’s really not much going on here. In this case, we’re just adding a static div that renders when the panel is selected in Storybook’s UI.
 
@@ -87,17 +67,15 @@ This is boilerplate code for any addon that adds a panel to Storybook, and there
 
 Next, let’s replace the `MyPanel` component from above to show the parameter.
 
-```js
-// .storybook/register.js
+<!-- prettier-ignore-start -->
 
-import { useParameter } from '@storybook/api';
-const PARAM_KEY = 'myAddon';
-const MyPanel = () => {
-  const value = useParameter(PARAM_KEY, null);
-  const item = value ? value.data : '';
-  return <div>{item}</div>;
-};
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-addon-change-panel.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 The new version is made smarter by `useParameter`, which is a [React hook](https://reactjs.org/docs/hooks-intro.html) that updates the parameter value and re-renders the panel every time the story changes.
 
@@ -109,13 +87,15 @@ Finally, let’s hook it all up. Addons are typically published as standalone pa
 
 Update your [`.storybook/main.js`](../configure/overview.md#configure-story-rendering):
 
-```js
-// .storybook/main.js
+<!-- prettier-ignore-start -->
 
-module.exports = {
-  addons: ['path/to/register.js'],
-};
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-main-register-addon.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 The path can be an absolute location on your file system, or a path relative to your `.storybook` directory (e.g. `./my-addon/register.js` if you defined the addon inside your `.storybook` folder).
 
@@ -158,32 +138,27 @@ It’s possible to disable the addon panel for a particular story.
 
 To make that possible, you need to pass the `paramKey` element when you register the panel:
 
-```js
-// .storybook/register.js
+<!-- prettier-ignore-start -->
 
-addons.register(ADDON_ID, () => {
-  addons.add(PANEL_ID, {
-    type: types.PANEL,
-    title: 'My Addon',
-    render: () => <div>Addon tab content</div>,
-    paramKey: 'myAddon', // this element
-  });
-});
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-addon-disable-addon.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 Then when adding a story, you can then pass a disabled parameter.
 
-```js
-// Button.story.js
+<!-- prettier-ignore-start -->
 
-import React from 'react';
-export default {
-  title: 'Button',
-  parameters: {
-    myAddon: { disable: true },
-  },
-};
-```
+<CodeSnippets
+  paths={[
+    'react/button-story-disable-addon.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ### Styling your addon
 
@@ -241,25 +216,15 @@ Common uses for presets include:
 
 Here’s an example of typical preset file:
 
-```js
-//preset.js
-export function config(entry = []) {
-  return [...entry, require.resolve('./defaultParameters')];
-}
+<!-- prettier-ignore-start -->
 
-export function managerEntries(entries) {
-  return [...entries, require.resolve('./register')];
-}
+<CodeSnippets
+  paths={[
+    'common/storybook-addon-preset-example.js.mdx',
+  ]}
+/>
 
-export const parameters = {
-  backgrounds: {
-    values: [
-      { name: 'light', value: '#F8F8F8' },
-      { name: 'dark', value: '#333333' },
-    ],
-  },
-};
-```
+<!-- prettier-ignore-end -->
 
 For more information on presets, see the [presets docs](./presets.md).
 

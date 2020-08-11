@@ -12,28 +12,15 @@ A preset is a set of hooks that is called by Storybook on initialization and can
 
 Each configuration has a similar signature, accepting a base configuration object and options, as in this webpack example:
 
-```js
-//.storybook/main.js
+<!-- prettier-ignore-start -->
 
-export async function webpack(baseConfig, options) {
-  // Modify or replace config. Mutating the original reference object can cause unexpected bugs,
-  // so in this example we replace.
-  const { module = {} } = baseConfig;
+<CodeSnippets
+  paths={[
+    'common/storybook-main-webpack-preset-config.js.mdx',
+  ]}
+/>
 
-  return {
-    ...baseConfig,
-    module: {
-      ...module,
-      rules: [
-        ...(module.rules || []),
-        {
-          /* some new loader */
-        },
-      ],
-    },
-  };
-}
-```
+<!-- prettier-ignore-end -->
 
 ### Babel
 
@@ -43,14 +30,15 @@ All functions take a [Babel configuration object](https://babeljs.io/docs/en/con
 
 For example, Storybook's Mihtril support uses plugins internally and here's how it configures babel:
 
-```ts
-export function babelDefault(config: TransformOptions) {
-  return {
-    ...config,
-    plugins: [...config.plugins, require.resolve('@babel/plugin-transform-react-jsx')],
-  };
-}
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-babel-configuration-example.ts.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 - `babel` is applied to the preview config, after it has been initialized by storybook
 - `babelDefault` is applied to the preview config before any user presets have been applied
@@ -64,19 +52,15 @@ All functions take a [webpack4 configuration object](https://webpack.js.org/conf
 
 For example, here is how Storybook automatically adopts `create-react-app`'s configuration if it's installed, where `applyCRAWebpackConfig` is a set of smart heuristics for modifying the input config.
 
-```js
-//.storybook/main.js
+<!-- prettier-ignore-start -->
 
-export function webpackFinal(config, { configDir }) {
-  if (!isReactScriptsInstalled()) {
-    logger.info('=> Using base config because react-scripts is not installed.');
-    return config;
-  }
+<CodeSnippets
+  paths={[
+    'common/storybook-main-webpackfinal-example.js.mdx',
+  ]}
+/>
 
-  logger.info('=> Loading create-react-app config.');
-  return applyCRAWebpackConfig(config, configDir);
-}
-```
+<!-- prettier-ignore-end -->
 
 - `webpack` is applied to the preview config after it has been initialized by storybook
 - `webpackFinal` is applied to the preview config after all user presets have been applied
@@ -88,19 +72,27 @@ The addon config `managerEntries` allows you to add addons to Storybook from wit
 
 For example, the Storysource preset contains the following code:
 
-```js
-export function managerEntries(entry = []) {
-  return [...entry, require.resolve('@storybook/addon-storysource/register')];
-}
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-storysource-manager-entries.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 This is equivalent to [registering the addon manually](../get-started/browse-stories.md#addons) in [`main.js`](../configure/overview.md#configure-story-rendering):
 
-```js
-module.exports = {
-  managerEntries: ['@storybook/addon-storysource/register'],
-};
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-main-use-manager-entries.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ### Preview entries
 
@@ -135,11 +127,15 @@ This is equivalent to exporting the `backgrounds` parameter manually in `main.js
 
 For users, the name `managerEntries` might be a bit too technical, so instead both users and preset-authors can simply use the property: `addons`:
 
-```js
-module.exports = {
-  addons: ['@storybook/addon-storysource'],
-};
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-main-register-storysource-example.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 The array of values can support both references to other presets and addons that should be included into the manager.
 
@@ -149,14 +145,15 @@ If this heuristic is incorrect for an addon you are using, you can explicitly op
 
 Here's what it looks when combining presets and managerEntries in the addons property:
 
-```js
-module.exports = {
-  addons: [
-    '@storybook/addon-storysource/register', // a managerEntry
-    '@storybook/addon-docs/preset', // a preset
-  ],
-};
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-main-register-presets-managerentry.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ### Entries
 
@@ -170,63 +167,41 @@ For example, some users want to configure the webpack for Storybook's UI and add
 
 If it doesn't exist yet, create a file `.storybook/main.js`:
 
-```js
-//.storybook/main.js
+<!-- prettier-ignore-start -->
 
-module.exports = {
-  managerWebpack: async (config, options) => {
-    // update config here
-    return config;
-  },
-  managerBabel: async (config, options) => {
-    // update config here
-    return config;
-  },
-  webpackFinal: async (config, options) => {
-    // change webpack config
-    return config;
-  },
-  babel: async (config, options) => {
-    return config;
-  },
-};
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-main-advanced-config-example.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ## Sharing advanced configuration
 
 Change your `main.js` file to:
 
-```js
-//.storybook/main.js
+<!-- prettier-ignore-start -->
 
-const path = require('path');
+<CodeSnippets
+  paths={[
+    'common/storybook-main-import-preset-config.js.mdx',
+  ]}
+/>
 
-module.exports = {
-  addons: [path.resolve('./.storybook/my-preset')],
-};
-```
+<!-- prettier-ignore-end -->
 
 and extract the configuration to a new file `./storybook/my-preset.js`:
 
-```js
-// .storybook/my-preset.js
+<!-- prettier-ignore-start -->
 
-module.exports = {
-  managerWebpack: async (config, options) => {
-    // update config here
-    return config;
-  },
-  managerBabel: async (config, options) => {
-    // update config here
-    return config;
-  },
-  webpackFinal: async (config, options) => {
-    return config;
-  },
-  babel: async (config, options) => {
-    return config;
-  },
-};
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-preset-full-config-object.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
 
 Place your `my-preset.js` file wherever you want, if you want to share it far and wide you'll want to make it its own package.

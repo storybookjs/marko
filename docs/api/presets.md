@@ -18,11 +18,15 @@ yarn add @storybook/preset-typescript --dev
 
 Then load it in the file `main.js` in your storybook folder (`.storybook` by default):
 
-```js
-module.exports = {
-  addons: ['@storybook/preset-typescript'],
-};
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-main-preset-config.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 That's it. When Storybook starts up, it will configure itself for typescript without any further configuration. For more information, see the Typescript preset [README](https://github.com/storybookjs/presets/tree/master/packages/preset-typescript).
 
@@ -32,22 +36,15 @@ Presets can also take optional parameters. These can be used by the preset itsel
 
 Consider this example:
 
-```js
-const path = require('path');
-module.exports = {
-  addons: [
-    {
-      name: '@storybook/preset-typescript',
-      options: {
-        tsLoaderOptions: {
-          configFile: path.resolve(__dirname, '../tsconfig.json'),
-        },
-        include: [path.resolve(__dirname)],
-      },
-    },
-  ],
-};
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-preset-configuration.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 This configures the typescript loader using the app's `tsconfig.json` and also tells the typescript loader to only be applied to the current directory.
 

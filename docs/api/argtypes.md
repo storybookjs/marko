@@ -36,23 +36,15 @@ To do so, Storybook uses various static analysis tools depending on your framewo
 
 The format of the generated argType will look something like:
 
-```js
-const argTypes = {
-  label: {
-    name: 'label',
-    type: { name: 'string', required: false },
-    defaultValue: 'Hello',
-    description: 'demo description',
-    table: {
-      type: { summary: 'string' },
-      defaultValue: { summary: 'Hello' },
-    }
-    control: {
-      type: 'text'
-    }
-  }
-}
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-generated-argtypes.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 In this ArgTypes data structure, name, type, defaultValue, and description are standard fields in all ArgTypes (analogous to PropTypes in React). The table and control fields are addon-specific annotations. So, for example, the table annotation provides extra information to customize how label gets rendered, and the control annotation provides extra information for the control for editing the property.
 
@@ -69,43 +61,27 @@ In this ArgTypes data structure, name, type, defaultValue, and description are s
 
 If you want more control over the props table or any other aspect of using argTypes, you can overwrite the generated argTypes for you component on a per-arg basis. For instance, with the above inferred argTypes and the following default export:
 
-```js
-export default {
-  title: 'Button',
-  component: Button,
-  argTypes: {
-    label: {
-      description: 'overwritten description',
-      table: {
-        type: { summary: 'something short', detail: 'something really really long' },
-      },
-      control: {
-        type: null,
-      },
-    },
-  },
-};
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-customize-argtypes.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 These values--description, table.type, and controls.type--get merged over the defaults that are extracted by Storybook. The final merged values would be:
 
-```js
-const argTypes = {
-  label: {
-    name: 'label',
-    type: { name: 'string', required: false },
-    defaultValue: 'Hello',
-    description: 'overwritten description',
-    table: {
-      type: { summary: 'something short', detail: 'something really really long' },
-      defaultValue: { summary: 'Hello' },
-    }
-    control: {
-      type: null
-    }
-  }
-}
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-merged-argtypes.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 In particular, this would render a row with a modified description, a type display with a dropdown that shows the detail, and no control.
 
@@ -113,9 +89,12 @@ In particular, this would render a row with a modified description, a type displ
 
 If you want to access the argTypes of the current component inside an addon, you can use the `useArgTypes` hook from the `@storybook/api` package:
 
-```js
-import { useArgTypes } from '@storybook/api';
+<!-- prettier-ignore-start -->
 
-// inside your panel
-const { argTypes } = useArgTypes();
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-argtypes-with-addon.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
