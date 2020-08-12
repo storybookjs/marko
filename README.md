@@ -174,8 +174,8 @@ If you're looking for material to use in your presentation about storybook, like
 
 - Tweeting via [@storybookjs](https://twitter.com/storybookjs)
 - Blogging at [Medium](https://medium.com/storybookjs)
-- Chatting on [Slack](https://now-examples-slackin-rrirkqohko.now.sh/)
-- Discussions on [Discord](https://discord.gg/sMFvFsG)
+- Chatting on [Discord](https://discord.gg/sMFvFsG)
+- Chatting (legacy) on [Slack](https://now-examples-slackin-rrirkqohko.now.sh/)
 - Streaming saved at [Youtube](https://www.youtube.com/channel/UCr7Quur3eIyA_oe8FNYexfg)
 
 ## Contributing
