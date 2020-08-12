@@ -28,7 +28,7 @@ module.exports = {
 
 ## Usage
 
-The usage is documented in the [documentation](https://storybook.js.org/docs/react/essentials/toolbars).
+The usage is documented in the [documentation](https://storybook.js.org/docs/react/essentials/toolbars-and-globals).
 
 ## FAQs
 
