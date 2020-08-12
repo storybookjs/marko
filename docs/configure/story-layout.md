@@ -2,7 +2,7 @@
 title: 'Story layout'
 ---
 
-The `layout`[global parameter](../writing-stories/parameters.md) is a way to configure how stories are rendered in Storybook's UI. 
+The `layout` [global parameter](../writing-stories/parameters.md) allows you to configure how stories are positioned in Storybook's Canvas tab. 
 
 You can add the parameter to your [`./storybook/preview.js`](./overview.md#configure-story-rendering), like so:
 
