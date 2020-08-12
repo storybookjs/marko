@@ -153,7 +153,7 @@ CustomControls.argTypes = {
 };
 ```
 
-Like [story parameters](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/basics/writing-stories/index.md#parameters), `args` and `argTypes` annotations are hierarchically merged, so story-level annotations overwrite component-level annotations.
+Like [story parameters](https://storybook.js.org/docs/react/writing-stories/parameters), `args` and `argTypes` annotations are hierarchically merged, so story-level annotations overwrite component-level annotations.
 
 ### How do controls work with MDX?
 

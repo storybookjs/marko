@@ -81,6 +81,6 @@ For instance you can use:
 
 <!-- prettier-ignore-end -->
 
-If all else fails, try asking for [help](https://storybook.js.org/support/)
+If all else fails, try asking for [help](https://storybook.js.org/support)
 
 </details>

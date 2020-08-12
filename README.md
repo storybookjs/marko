@@ -59,9 +59,9 @@ It allows you to browse a component library, view the different states of each c
 
 Storybook runs outside of your app. This allows you to develop UI components in isolation, which can improve component reuse, testability, and development speed. You can build quickly without having to worry about application-specific dependencies.
 
-Here are some featured examples that you can reference to see how Storybook works: <https://storybook.js.org/examples/>
+Here are some featured examples that you can reference to see how Storybook works: <https://storybook.js.org/docs/examples/>
 
-Storybook comes with a lot of [addons](https://storybook.js.org/addons/introduction/) for component design, documentation, testing, interactivity, and so on. Storybook's API makes it possible to configure and extend in various ways. It has even been extended to support React Native development for mobile.
+Storybook comes with a lot of [addons](https://storybook.js.org/docs/react/configure/storybook-addons) for component design, documentation, testing, interactivity, and so on. Storybook's API makes it possible to configure and extend in various ways. It has even been extended to support React Native development for mobile.
 
 ## Table of contents
 
@@ -87,7 +87,7 @@ cd my-react-app
 npx sb init
 ```
 
-If you'd rather set up your project manually, take a look at our [Slow Start Guide](https://storybook.js.org/basics/slow-start-guide/).
+If you'd rather set up your project manually, take a look at our [Slow Start Guide](https://storybook.js.org/docs/react/configure/overview).
 
 Once it's installed, you can `npm run storybook` and it will run the development server on your local machine, and give you a URL to browse some sample stories.
 

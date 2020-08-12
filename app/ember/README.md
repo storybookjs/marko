@@ -19,11 +19,11 @@ For more information visit: [storybook.js.org](https://storybook.js.org)
 
 ---
 
-Storybook also comes with a lot of [addons](https://storybook.js.org/addons/introduction) and a great API to customize as you wish.
-You can also build a [static version](https://storybook.js.org/basics/exporting-storybook) of your storybook and deploy it anywhere you want.
+Storybook also comes with a lot of [addons](https://storybook.js.org/docs/ember/configure/storybook-addons) and a great API to customize as you wish.
+You can also build a [static version](https://storybook.js.org/docs/ember/workflows/publish-storybook) of your storybook and deploy it anywhere you want.
 
 ## Docs
 
-- [Basics](https://storybook.js.org/basics/introduction)
-- [Configurations](https://storybook.js.org/configurations/default-config)
-- [Addons](https://storybook.js.org/addons/introduction)
+- [Basics](https://storybook.js.org/docs/ember/get-started/introduction)
+- [Configurations](https://storybook.js.org/docs/ember/configure/overview)
+- [Addons](https://storybook.js.org/docs/ember/configure/storybook-addons)
