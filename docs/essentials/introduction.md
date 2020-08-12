@@ -7,9 +7,9 @@ A major strength of Storybook are [addons](/addons/) that extend Storybook’s U
 - [Docs](../writing-docs/introduction.md)
 - [Controls](./controls.md)
 - [Actions](./actions.md)
-- [Viewport](./viewports.md)
+- [Viewport](./viewport.md)
 - [Backgrounds](./backgrounds.md)
-- [Toolbars](./toolbars.md)
+- [Toolbars & globals](./toolbars-and-globals.md)
 
 ### Configuration
 
