@@ -1,1 +1,1 @@
-{"version":"6.0.4","info":{"plain":"### Bug Fixes\n\n- Source-loader: Fix `.add` detection ([#11920](https://github.com/storybookjs/storybook/pull/11920))"}}
+{"version":"6.0.5","info":{"plain":"### Bug Fixes\n\n- CLI: Fix welcome links on Introduction MDX ([#11949](https://github.com/storybookjs/storybook/pull/11949))"}}
