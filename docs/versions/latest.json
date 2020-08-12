@@ -1,1 +1,1 @@
-{"version":"6.0.3","info":{"plain":"### Bug Fixes\n\n- Essentials: Fix missing toolbars addon ([#11910](https://github.com/storybookjs/storybook/pull/11910))"}}
+{"version":"6.0.4","info":{"plain":"### Bug Fixes\n\n- Source-loader: Fix `.add` detection ([#11920](https://github.com/storybookjs/storybook/pull/11920))"}}
