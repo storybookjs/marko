@@ -8,3 +8,4 @@ If you’d like to learn workflows for building app UIs with Storybook, check ou
 
 - [How to write stories](../writing-stories/introduction.md)
 - [How to document components and design systems](../writing-docs/introduction.md)
+- [View example Storybooks from leading companies](./examples.md)
