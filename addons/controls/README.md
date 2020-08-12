@@ -11,7 +11,7 @@
 Controls is part of [essentials](https://storybook.js.org/docs/react/essentials/introduction) and so is installed in all new Storybooks by default. If you need to add it to your Storybook, you can run:
 
 ```sh
-npm i -D @storybook/addon-toolbars
+npm i -D @storybook/addon-controls
 ```
 
 Then, add following content to [`.storybook/main.js`](https://storybook.js.org/docs/react/configure/overview#configure-your-storybook-project):
