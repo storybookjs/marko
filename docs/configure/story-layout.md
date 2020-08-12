@@ -18,7 +18,8 @@ You can add the parameter to your [`./storybook/preview.js`](./overview.md#confi
 
 With the example above, Storybook will center all stories in the UI. Asides from `centered` you can also use:
 
-- `fullscreen`, to emulate a fullscreen environment.
+- `centered`: center the component horizontally and vertically in the Canvas
+- `fullscreen`: allow the component to expand to the full width and height of the Canvas
 - `padded`, for some extra padding.
 
 If you need to use your own styles, or use a more granular approach we recommend using [decorators](../writing-stories/decorators.md) instead.
