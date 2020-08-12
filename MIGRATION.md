@@ -623,7 +623,7 @@ addParameters({
     options: {},
     manual: true,
   }
-};
+});
 ```
 
 #### Essentials addon disables differently
