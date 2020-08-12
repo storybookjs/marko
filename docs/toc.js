@@ -42,7 +42,7 @@ module.exports = {
           description: 'Take your Storybook skills to the next level',
         },
         {
-          title: 'Examples',
+          title: '📚 Examples',
           pathSegment: 'examples',
           type: 'link',
         },
