@@ -66,7 +66,7 @@ If you still need to configure jest you can use the resources mentioned below:
 
 **NOTE**: if you are using Storybook 5.3's `main.js` to list story files, this is no longer needed.
 
-Sometimes it's useful to configure Storybook with Webpack's require.context feature. You could be loading stories [one of two ways](https://storybook.js.org/docs/basics/writing-stories/#loading-stories).
+Sometimes it's useful to configure Storybook with Webpack's require.context feature. You could be loading stories [one of two ways](https://storybook.js.org/docs/react/writing-stories/loading-stories).
 
 1. If you're using the `storiesOf` API, you can integrate it this way:
 
@@ -645,7 +645,7 @@ Like the default, but allows you to specify a set of options for the renderer, j
 ### `multiSnapshotWithOptions(options)`
 
 Like `snapshotWithOptions`, but generate a separate snapshot file for each stories file rather than a single monolithic file (as is the convention in Jest). This makes it dramatically easier to review changes. If you'd like the benefit of separate snapshot files, but don't have custom options to pass, you can pass an empty object.
-If you use [Component Story Format](https://storybook.js.org/docs/formats/component-story-format/), you may also need to add an additional Jest transform to automate detecting story file names:
+If you use [Component Story Format](https://storybook.js.org/docs/react/api/csf), you may also need to add an additional Jest transform to automate detecting story file names:
 
 ```js
 // jest.config.js

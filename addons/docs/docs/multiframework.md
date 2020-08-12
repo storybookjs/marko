@@ -16,7 +16,7 @@ Addon-docs handles this kind of customization by file naming convention. Its [co
 
 For example, consider Storybook Docs for Vue, which needs `vue-docgen-loader` in its webpack config, and also has custom extraction functions for [props tables](#props-tables) and [component descriptions](#component-descriptions).
 
-For webpack configuration, Docs for Vue defines [preset.ts](https://github.com/storybookjs/storybook/blob/next/addons/docs/src/frameworks/vue/preset.ts), which follows the [preset](https://storybook.js.org/docs/presets/introduction) file structure:
+For webpack configuration, Docs for Vue defines [preset.ts](https://github.com/storybookjs/storybook/blob/next/addons/docs/src/frameworks/vue/preset.ts), which follows the [preset](https://storybook.js.org/docs/vue/api/presets) file structure:
 
 ```
 export function webpack(webpackConfig: any = {}, options: any = {}) {
