@@ -6,8 +6,10 @@ export default {
   component: Widget,
   argTypes: {
     loadingState: {
-      type: 'inline-radio',
-      options: ['loading', 'error', 'ready'],
+      control: {
+        type: 'inline-radio',
+        options: ['loading', 'error', 'ready'],
+      },
     },
   },
 };
