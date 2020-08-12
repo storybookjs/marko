@@ -1,3 +1,9 @@
+## 6.0.4 (August 12, 2020)
+
+### Bug Fixes
+
+- Source-loader: Fix `.add` detection ([#11920](https://github.com/storybookjs/storybook/pull/11920))
+
 ## 6.0.3 (August 12, 2020)
 
 ### Bug Fixes
