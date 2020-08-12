@@ -4,7 +4,7 @@ title: 'Presets'
 
 Presets are grouped collections of `babel`, `webpack`, and `addons` configurations that support specific use cases.
 
-For example, to write your stories in Typescript, rather than [manually configuring](../configure/typescript.md) Storybook for TypeScript with individual [Babel](../configure/babel.md#custom-configuration) and [webpack](../configure/webpack.md#extending-storybooks-webpack-config) configs, you can use the [`@storybook/preset-typescript`](https://www.npmjs.com/package/@storybook/preset-typescript) package, which does the heavy lifting for you.
+For example, to use [SCSS](https://sass-lang.com/) styling rather than manually configuring Storybook's [webpack](../configure/webpack.md#extending-storybooks-webpack-config) config, you can use the [`@storybook/preset-scss`](https://www.npmjs.com/package/@storybook/preset-scss) package, which does the heavy lifting for you.
 
 #### Existing presets
 
@@ -19,10 +19,10 @@ Storybook-maintained presets are available in the [presets repo](https://github.
 
 Each preset has its own installation instructions, but the idea of presets is to install an addon and then load its preset.
 
-For example, to get TypeScript support, first install the addon:
+For example, to use SCSS styling, first install the addon and the required dependencies:
 
 ```sh
-yarn add @storybook/preset-typescript --dev
+yarn add -D @storybook/preset-scss css-loader sass-loader style-loader
 ```
 
 Then load it in the file `main.js` in your storybook folder (`.storybook` by default):
@@ -37,7 +37,7 @@ Then load it in the file `main.js` in your storybook folder (`.storybook` by def
 
 <!-- prettier-ignore-end -->
 
-That's it. When Storybook starts up, it will configure itself for typescript without any further configuration. For more information, see the TypeScript preset [README](https://github.com/storybookjs/presets/tree/master/packages/preset-typescript).
+That's it. When Storybook starts up, it will configure itself to use SCSS styling without any further configuration. For more information, see the SCSS preset [README](https://github.com/storybookjs/presets/blob/master/packages/preset-scss/README.md).
 
 ## Preset configuration
 
@@ -55,9 +55,10 @@ Consider this example:
 
 <!-- prettier-ignore-end -->
 
-This configures the TypeScript loader using the app's `tsconfig.json` and also tells the TypeScript loader to only be applied to the current directory.
+This configures the CSS loader to use  modules and how the styling will be defined.
 
 Each preset has its own option and those options should be documented in the preset's README.
+
 
 ## Go deeper
 
