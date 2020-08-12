@@ -41,6 +41,11 @@ module.exports = {
           type: 'bullet-link',
           description: 'Take your Storybook skills to the next level',
         },
+        {
+          title: '📚 Examples',
+          pathSegment: 'examples',
+          type: 'link',
+        },
       ],
     },
     {
