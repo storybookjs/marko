@@ -1,3 +1,9 @@
+## 6.0.3 (August 12, 2020)
+
+### Bug Fixes
+
+- Essentials: Fix missing toolbars addon ([#11910](https://github.com/storybookjs/storybook/pull/11910))
+
 ## 6.0.2 (August 11, 2020)
 
 ### Bug Fixes
