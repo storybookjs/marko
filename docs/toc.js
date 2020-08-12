@@ -366,5 +366,10 @@ module.exports = {
         },
       ],
     },
+    {
+      title: '📚 Examples',
+      pathSegment: 'examples',
+      type: 'link',
+    },
   ],
 };
