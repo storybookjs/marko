@@ -9,7 +9,8 @@ WithParams.parameters = { storySource: { source: \\"() => <Button>WithParams</Bu
 WithDocsParams.parameters = { storySource: { source: \\"() => <Button>WithDocsParams</Button>\\" }, ...WithDocsParams.parameters };
 WithStorySourceParams.parameters = { storySource: { source: \\"() => <Button>WithStorySourceParams</Button>\\" }, ...WithStorySourceParams.parameters };
 WithTemplate.parameters = { storySource: { source: \\"(args: Args) => <Button {...args} />\\" }, ...WithTemplate.parameters };
-WithEmptyTemplate.parameters = { storySource: { source: \\"(args: Args) => <Button {...args} />\\" }, ...WithEmptyTemplate.parameters };"
+WithEmptyTemplate.parameters = { storySource: { source: \\"(args: Args) => <Button {...args} />\\" }, ...WithEmptyTemplate.parameters };
+WithAddFunctionParameters.parameters = { storySource: { source: \\"() => null\\" }, ...WithAddFunctionParameters.parameters };"
 `;
 
 exports[`inject-decorator positive - ts - csf includes storySource parameter in the default exported object 1`] = `
