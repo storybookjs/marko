@@ -111,7 +111,7 @@ The Controls addon can be configured in two ways:
 
 ### Annotation
 
-As shown above, you can configure individual controls with the “control" annotation in the [argTypes](../api/mdx.md#argtypes) field of either a component or story.
+As shown above, you can configure individual controls with the “control" annotation in the [argTypes](../api/argtypes) field of either a component or story.
 
 Here is the full list of available controls you can use:
 
