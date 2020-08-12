@@ -612,18 +612,17 @@ In 6.0 we removed the actions addon decorate API. Actions handles can be configu
 
 In 6.0 we removed the `withA11y` decorator. The code that runs accessibility checks is now directly injected in the preview.
 
-Remove the addon-a11y decorator.
-To configure a11y now, you have to specify configuration using `addParameters`.
+To configure a11y now, you have to specify configuration using story parameters, e.g. in `.storybook/preview.js`:
 
 ```js
-addParameters({
+export const parameters = {
   a11y: {
-    element: "#root",
+    element: '#root',
     config: {},
     options: {},
     manual: true,
-  }
-});
+  },
+};
 ```
 
 #### Essentials addon disables differently
