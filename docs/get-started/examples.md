@@ -8,10 +8,10 @@ This is a curated list of some of Storybooks that power the largest companies fo
 
 ## Storybook team
 
-- [**Official Storybook**](https://next--storybookjs.netlify.app/official-storybook/): Storybook application UI
-- [**Storybook Design System**](https://master--5ccbc373887ca40020446347.chromatic.com/): Reusable components that adhere to Storybook's design language
-- [**Marketing and docs site**](https://master--5be26744d2f6250024a9117d.chromatic.com/): Marketing and docs site for Storybook.
-- [**Learn Storybook**](https://master--5cf841a3f3e3d200208ffc74.chromatic.com/): Tutorial site that has stories for components and pages.
+- [Official Storybook](https://next--storybookjs.netlify.app/official-storybook/): Storybook application UI
+- [Storybook Design System](https://master--5ccbc373887ca40020446347.chromatic.com/): Reusable components that adhere to Storybook's design language
+- [Marketing and docs](https://master--5be26744d2f6250024a9117d.chromatic.com/): Main website that has stories for components and pages.
+- [Learn Storybook](https://master--5cf841a3f3e3d200208ffc74.chromatic.com/): Tutorial site that has stories for components and pages.
 
 ## Websites
 
