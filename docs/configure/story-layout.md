@@ -20,6 +20,6 @@ With the example above, Storybook will center all stories in the UI. Asides from
 
 - `centered`: center the component horizontally and vertically in the Canvas
 - `fullscreen`: allow the component to expand to the full width and height of the Canvas
-- `padded`, for some extra padding.
+- `padded`: Add extra padding around the component
 
 If you need to use your own styles, or use a more granular approach we recommend using [decorators](../writing-stories/decorators.md) instead.
