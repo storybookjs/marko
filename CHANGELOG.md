@@ -1,3 +1,9 @@
+## 6.0.5 (August 13, 2020)
+
+### Bug Fixes
+
+- CLI: Fix welcome links on Introduction MDX ([#11949](https://github.com/storybookjs/storybook/pull/11949))
+
 ## 6.0.4 (August 12, 2020)
 
 ### Bug Fixes
