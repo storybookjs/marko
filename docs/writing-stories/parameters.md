@@ -56,7 +56,7 @@ export default {
 We can also set the parameters for **all stories** via the `parameters` export of your [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering) file (this is the file where you configure all stories):
 
 ```js
-// Button.story.js
+// .storybook/preview.js
 
 export const parameters = {
   backgrounds: {
