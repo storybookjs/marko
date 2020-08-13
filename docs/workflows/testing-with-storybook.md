@@ -14,6 +14,6 @@ As you add more stories, manual testing becomes infeasible. We recommend automat
 
 - Manual tests rely on developers to manually look at a component to verify it for correctness. They help us sanity check a component’s appearance as we build.
 - [Unit tests](./unit-testing.md) verify that the output of a component remains the same given a fixed input. They’re great for testing the functional qualities of a component.
-- [Visual regression tests](./visual-testing.md) capturing screenshots of every story and comparing them against known baselines. They’re great for catching UI appearance bugs. 
-- [Interaction tests](./interaction-testing.md) will render a story and then interact with it in the browser, asserting things about the way it renders and changes.
+- [Visual regression tests](./visual-testing.md) capture screenshots of every story and compare them against known baselines. They’re great for catching UI appearance bugs. 
+- [Interaction tests](./interaction-testing.md) render a story and then interact with it in the browser, asserting things about the way it renders and changes.
 - [Snapshot tests](./snapshot-testing.md) compare the rendered markup of every story against known baselines. This catches markup changes that cause rendering errors and warnings.
