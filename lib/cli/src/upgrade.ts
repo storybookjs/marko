@@ -60,7 +60,8 @@ export const checkVersionConsistency = () => {
     .filter(Boolean)
     .filter((pkg) => isCorePackage(pkg.package));
   if (!storybookPackages.length) {
-    throw new Error('No storybook core packages found!');
+    logger.warn('No storybook core packages found.');
+    logger.warn(`'npm ls | grep storybook' can show if multiple versions are installed.`);
   }
   storybookPackages.sort((a, b) => semver.rcompare(a.version, b.version));
   const latestVersion = storybookPackages[0].version;
