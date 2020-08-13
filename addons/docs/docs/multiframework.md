@@ -3,7 +3,7 @@
 Storybook Docs [provides basic support for all non-RN Storybook view layers](../README.md#framework-support) out of the box. However, some frameworks have been docs-optimized, adding features like automatic props table generation and inline story rendering. This document is a dev guide for how to optimize a new framework in docs.
 
 - [Framework-specific configuration](#framework-specific-configuration)
-- [Props tables](#props-tables)
+- [Arg tables](#arg-tables)
 - [Component descriptions](#component-descriptions)
 - [Inline story rendering](#inline-story-rendering)
 - [More resources](#more-resources)
@@ -33,48 +33,53 @@ This appends `vue-docgen-loader` to the existing configuration, which at this po
 
 For props tables and descriptions, both of which are described in more detail below, it defines a file [config.tsx](https://github.com/storybookjs/storybook/blob/next/addons/docs/src/frameworks/vue/config.tsx).
 
-## Props tables
+## Arg tables
 
-Props tables are enabled by the framework-specific `docs.extractProps` parameter, which extracts a component's props into a common data structure.
+Each framework can auto-generate ArgTables by exporting one or more `ArgType` enhancers, which extracts a component's properties into a common data structure.
 
 Here's how it's done in Vue's framework-specific `preview.js`:
 
 ```js
-import { extractProps } from './extractProps';
+import { enhanceArgTypes } from './enhanceArgTypes';
 
-addParameters({
-  docs: {
-    // `container`, `page`, etc. here
-    extractProps,
-  },
-});
+export const argTypesEnhancers = [enhanceArgTypes];
 ```
 
-The `extractProps`function receives a component as an argument, and returns an object of type [`PropsTableProps`](https://github.com/storybookjs/storybook/blob/next/lib/components/src/blocks/PropsTable/PropsTable.tsx#L147), which can either be an array of `PropDef` rows (React), or a mapping of section name to an array of `PropDef` rows (e.g. `Props`/`Events`/`Slots` in Vue).
+The `enhanceArgTypes`function takes a `StoryContext` (including the story id, parameters, args, argTypes, etc.), and returns an updated [`ArgTypes` object](https://github.com/storybookjs/storybook/blob/master/lib/addons/src/types.ts#L38-L47):
 
 ```ts
-export interface PropDef {
-  name: string;
-  type: any;
-  required: boolean;
+export interface ArgType {
+  name?: string;
   description?: string;
   defaultValue?: any;
+  [key: string]: any;
+}
+
+export interface ArgTypes {
+  [key: string]: ArgType;
 }
 ```
 
-So far, in React and Vue, the implementation of this extraction is as follows:
+For more information on what this generation looks like, see the [controls generation docs](https://github.com/storybookjs/storybook/blob/next/addons/controls/README.md#my-controls-arent-being-auto-generated-what-should-i-do).
+
+For React and Vue, the extraction works as follows:
 
 - A webpack loader is added to the user's config via the preset
 - The loader annotates the component with a field, `__docgenInfo`, which contains some metadata
-- The view-layer specific `extractProps` function translates that metadata into `PropsTableProps`
+- The view-layer specific `enhanceArgTypes` function translates that metadata into `ArgTypes`
 
-However, for your framework you may want to implement this in some other way. There is also an effort to load data from static JSON files for performance [#7942](https://github.com/storybookjs/storybook/issues/7942).
+For Angular, Web components, and Ember, the extraction works as follows:
+
+- Read JSON file in the user's `.storyboook/preview.json` and story it into a global variable
+- The view-layer specific `enhanceArgTypes` function translates that metadata into `ArgTypes`
+
+However, for your framework you may want to implement this in some other way.
 
 ## Component descriptions
 
 Component descriptions are enabled by the `docs.extractComponentDescription` parameter, which extract's a component description (usually from source code comments) into a markdown string.
 
-It follows the pattern of [Props tables](#props-tables) above, only it's even simpler because the function output is simply a string (or null if there no description).
+It follows the pattern of [Arg tables](#arg-tables) above, only it's even simpler because the function output is simply a string (or null if there no description).
 
 ## Inline story rendering
 
