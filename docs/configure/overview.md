@@ -72,4 +72,4 @@ If you’re looking to change how your stories are ordered, read about [sorting 
 
 To control the behaviour of Storybook’s UI (the **“manager”**), you can create a `.storybook/manager.js` file.
 
-This file does not have a specific API but is the place to set [UI options](./user-interface.md) and to configure Storybook’s [theme](./theming.md).
+This file does not have a specific API but is the place to set [UI options](./features-and-behavior.md) and to configure Storybook’s [theme](./theming.md).
