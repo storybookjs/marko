@@ -123,8 +123,8 @@ export default {
 
 export const Basic = (args) => <Button {...args} />;
 Basic.args = {
-  label: 'hello';
-  borderWidth: 1;
+  label: 'hello',
+  borderWidth: 1,
 };
 ```
 
