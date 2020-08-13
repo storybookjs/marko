@@ -79,7 +79,7 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
   };
 
   const REACT_NATIVE_DISCUSSION =
-    'https://github.com/storybookjs/storybook/blob/master/app/react-native/docs/manual-setup.md';
+    'https://github.com/storybookjs/react-native/blob/master/app/react-native/docs/manual-setup.md';
 
   const runGenerator: () => Promise<void> = () => {
     switch (projectType) {
