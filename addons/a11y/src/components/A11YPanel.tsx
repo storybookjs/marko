@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { styled } from '@storybook/theming';
 
@@ -51,13 +51,13 @@ const Centered = styled.span<{}>({
 type Status = 'initial' | 'manual' | 'running' | 'error' | 'ran' | 'ready';
 
 export const A11YPanel: React.FC = () => {
-  const [status, setStatus] = useAddonState<Status>(ADDON_ID, 'initial');
-  const [error, setError] = React.useState<unknown>(undefined);
-  const { setResults, results } = useA11yContext();
-  const { storyId } = useStorybookState();
   const { manual } = useParameter<Pick<A11yParameters, 'manual'>>('a11y', {
     manual: false,
   });
+  const [status, setStatus] = useState<Status>(manual ? 'manual' : 'initial');
+  const [error, setError] = React.useState<unknown>(undefined);
+  const { setResults, results } = useA11yContext();
+  const { storyId } = useStorybookState();
 
   React.useEffect(() => {
     setStatus(manual ? 'manual' : 'initial');
