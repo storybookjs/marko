@@ -8,6 +8,7 @@ import {
   Primary,
   Props,
   Stories,
+  PRIMARY_STORY,
 } from '@storybook/addon-docs/blocks';
 
 import { Button } from './Button';
@@ -23,7 +24,7 @@ export default {
           <Subtitle />
           <Description />
           <Primary />
-          <Props />
+          <ArgsTable story={PRIMARY_STORY} />
           <Stories />
         </>
       ),
