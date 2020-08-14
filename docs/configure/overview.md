@@ -63,7 +63,7 @@ To control the way stories are rendered and add global [decorators](../writing-s
 The `preview.js` file can be an ES module and export the following keys:
 
 - `decorators` - an array of global [decorators](../writing-stories/decorators.md#global-decorators)
-- `parameters` - an object of global [parameters](..writing-stories/parameters.md#global-parameters)
+- `parameters` - an object of global [parameters](../writing-stories/parameters.md#global-parameters)
 - `globalTypes` - definition of [globalTypes](../essentials/toolbars-and-globals.md#global-types-and-the-toolbar-annotation)
 
 If you’re looking to change how your stories are ordered, read about [sorting stories](../writing-stories/naming-components-and-hierarchy.md#sorting-stories).
