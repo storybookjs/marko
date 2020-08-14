@@ -43,6 +43,14 @@ do
   # Disable fallback mode to make sure everything is required correctly
   yarn config set pnpFallbackMode none
 
+  # Undeclared dependencies
+
+  # https://github.com/casesandberg/reactcss/pull/153
+  yarn config set "packageExtensions.reactcss@*.peerDependencies.react" "*"
+
+  # https://github.com/casesandberg/react-color/pull/746
+  yarn config set "packageExtensions.react-color@*.peerDependencies.react" "*"
+
   # Do some magic to make Yarn 2 work inside a Yarn 1 monorepo
   unset YARN_WRAP_OUTPUT
   touch yarn.lock
