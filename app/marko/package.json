@@ -33,7 +33,7 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@marko/webpack": "^2.1.0",
+    "@marko/webpack": "^6.2.8",
     "@storybook/client-logger": "6.0.7",
     "@storybook/core": "6.0.7",
     "core-js": "^3.0.1",
@@ -43,7 +43,7 @@
   },
   "peerDependencies": {
     "@babel/core": "*",
-    "marko": "^4.15.2",
+    "marko": "^4.15.2 || ^5.0.0-next || ^5",
     "react": "*",
     "react-dom": "*",
     "webpack": "^4"
