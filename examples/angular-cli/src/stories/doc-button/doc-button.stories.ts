@@ -1,13 +1,13 @@
-import { ButtonComponent } from './doc-button.component';
+import { DocButtonComponent } from './doc-button.component';
 
 export default {
   title: 'DocButton',
-  component: ButtonComponent,
+  component: DocButtonComponent,
   parameters: { docs: { iframeHeight: 120 } },
 };
 
 export const Basic = (args) => ({
-  component: ButtonComponent,
+  component: DocButtonComponent,
   props: args,
 });
 Basic.args = { label: 'Args test', isDisabled: false };

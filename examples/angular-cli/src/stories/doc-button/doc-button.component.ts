@@ -39,7 +39,7 @@ export interface ISomeInterface {
   templateUrl: './doc-button.component.html',
   styleUrls: ['./doc-button.component.scss'],
 })
-export class ButtonComponent<T> {
+export class DocButtonComponent<T> {
   @ViewChild('buttonRef', { static: false }) buttonRef: ElementRef;
 
   /** Appearance style of the button. */
