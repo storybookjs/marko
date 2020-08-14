@@ -46,7 +46,6 @@
   "scripts": {
     "await-serve-storybooks": "wait-on http://localhost:8001",
     "bootstrap": "node ./scripts/bootstrap.js",
-    "bootstrap:docs": "yarn install --cwd docs",
     "build": "node ./scripts/build-package.js",
     "build-packs": "lerna exec --scope '@storybook/*' -- \\$LERNA_ROOT_PATH/scripts/build-pack.sh \\$LERNA_ROOT_PATH/packs",
     "build-storybooks": "cross-env STORYBOOK_DISPLAY_WARNING=true DISPLAY_WARNING=true node -r esm ./scripts/build-storybooks.js",
@@ -58,8 +57,6 @@
     "dev:babel": "lerna exec --scope @storybook/* --parallel -- cross-env-shell node \\$LERNA_ROOT_PATH/scripts/utils/watch-babel.js",
     "dev:check-types": "tsc --noEmit",
     "dev:tsc": "lerna exec --scope @storybook/* --parallel -- cross-env-shell node \\$LERNA_ROOT_PATH/scripts/utils/watch-tsc.js",
-    "docs:build": "npm --prefix docs run build",
-    "docs:dev": "npm --prefix docs run dev",
     "github-release": "github-release-from-changelog",
     "lint": "yarn lint:js . && yarn lint:md .",
     "lint:js": "cross-env NODE_ENV=production eslint --cache --cache-location=.cache/eslint --ext .js,.jsx,.json,.html,.ts,.tsx,.mjs --report-unused-disable-directives",
