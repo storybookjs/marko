@@ -34,7 +34,7 @@
   "devDependencies": {
     "@hypnosphi/jscodeshift": "^0.6.4",
     "jest": "^26.0.0",
-    "jest-specific-snapshot": "^3.0.0"
+    "jest-specific-snapshot": "^4.0.0"
   },
   "publishConfig": {
     "access": "public"
