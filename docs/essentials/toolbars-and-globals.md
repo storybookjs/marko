@@ -98,7 +98,7 @@ Using the example above, you can modify any story to retrieve the **Locale** `gl
 
 <div class="aside">
 
-In Storybook 6.0, if you set the global option `passArgsFirst: false` for backwards compatibility, the story context is passed as the second argument:
+In Storybook 6.0, if you set the global option `passArgsFirst: false` for backwards compatibility, the story context is passed as the first argument:
 
 <!-- prettier-ignore-start -->
 
