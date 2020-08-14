@@ -5,10 +5,12 @@ import addCssWarning from '../src/cssWarning';
 // @ts-ignore
 import docJson from '../documentation.json';
 // remove ButtonComponent to test #12009
-const filtered = {
-  ...docJson,
-  components: docJson.components.filter((c) => c.name !== 'ButtonComponent'),
-};
+const filtered = !docJson?.components
+  ? docJson
+  : {
+      ...docJson,
+      components: docJson.components.filter((c) => c.name !== 'ButtonComponent'),
+    };
 setCompodocJson(filtered);
 
 addCssWarning();
