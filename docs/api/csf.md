@@ -66,7 +66,7 @@ The `storyName` is useful if you want to use names with special characters, name
 
 <CodeSnippets
   paths={[
-    'react/my-component-story-with-storyname.js.mdx',
+    'common/my-component-story-with-storyname.js.mdx',
   ]}
 />
 
