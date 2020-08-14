@@ -5,12 +5,12 @@ import { styled } from '@storybook/theming';
 import { ActionBar, Icons, ScrollArea } from '@storybook/components';
 
 import { AxeResults } from 'axe-core';
-import { useChannel, useParameter, useStorybookState, useAddonState } from '@storybook/api';
+import { useChannel, useParameter, useStorybookState } from '@storybook/api';
 import { Report } from './Report';
 import { Tabs } from './Tabs';
 
 import { useA11yContext } from './A11yContext';
-import { EVENTS, ADDON_ID } from '../constants';
+import { EVENTS } from '../constants';
 import { A11yParameters } from '../params';
 
 export enum RuleType {
