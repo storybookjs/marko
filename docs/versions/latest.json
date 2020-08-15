@@ -1,1 +1,1 @@
-{"version":"6.0.9","info":{"plain":"### Bug Fixes\n\n- Addon-docs: Fix CSF names importing in MDX ([#12044](https://github.com/storybookjs/storybook/pull/12044))\n\n### Maintenance\n\n- ArgsTable: Error when subcomponents is an array ([#12033](https://github.com/storybookjs/storybook/pull/12033))"}}
+{"version":"6.0.10","info":{"plain":"### Bug Fixes\n\n- Addon-controls: Fix argType inference priority ([#12048](https://github.com/storybookjs/storybook/pull/12048))"}}
