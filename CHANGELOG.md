@@ -1,3 +1,9 @@
+## 6.0.10 (August 15, 2020)
+
+### Bug Fixes
+
+- Addon-controls: Fix argType inference priority ([#12048](https://github.com/storybookjs/storybook/pull/12048))
+
 ## 6.0.9 (August 15, 2020)
 
 ### Bug Fixes
