@@ -4,7 +4,7 @@ exports[`docs-mdx-compiler-plugin csf-imports.mdx 1`] = `
 "/* @jsx mdx */
 import { assertIsFn, AddContext } from '@storybook/addon-docs/blocks';
 
-import { Story, Meta } from '@storybook/addon-docs/blocks';
+import { Story, Meta, Canvas } from '@storybook/addon-docs/blocks';
 import { Welcome, Button } from '@storybook/angular/demo';
 import * as MyStories from './My.stories';
 import { Other } from './Other.stories';
@@ -27,7 +27,9 @@ function MDXContent({ components, ...props }) {
       <Meta title=\\"MDX/CSF imports\\" mdxType=\\"Meta\\" />
       <h1>{\`Stories from CSF imports\`}</h1>
       <Story story={MyStories.Basic} name=\\"BasicStory\\" mdxType=\\"Story\\" />
-      <Story story={Other} name=\\"OtherStory\\" mdxType=\\"Story\\" />
+      <Canvas mdxType=\\"Canvas\\">
+        <Story story={Other} name=\\"OtherStory\\" mdxType=\\"Story\\" />
+      </Canvas>
       <Story name=\\"renamed\\" story={MyStories.Foo} mdxType=\\"Story\\" />
     </MDXLayout>
   );
