@@ -1,4 +1,4 @@
-## 6.0.8 (August 15, 2020)
+## 6.0.9 (August 15, 2020)
 
 ### Bug Fixes
 
@@ -7,6 +7,10 @@
 ### Maintenance
 
 - ArgsTable: Error when subcomponents is an array ([#12033](https://github.com/storybookjs/storybook/pull/12033))
+
+## 6.0.8 (August 15, 2020)
+
+Unpublished
 
 ## 6.0.7 (August 14, 2020)
 
