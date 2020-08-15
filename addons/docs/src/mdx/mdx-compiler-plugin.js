@@ -249,7 +249,14 @@ function getExports(node, counter, options) {
     if (CANVAS_REGEX.exec(value)) {
       // Canvas/Preview, possibly containing multiple stories
       const ast = parser.parseExpression(value, { plugins: ['jsx'] });
-      return { stories: genCanvasExports(ast, counter) };
+
+      const canvasExports = genCanvasExports(ast, counter);
+
+      const { code } = generate(ast, {});
+      // eslint-disable-next-line no-param-reassign
+      node.value = code;
+
+      return { stories: canvasExports };
     }
     if (META_REGEX.exec(value)) {
       const ast = parser.parseExpression(value, { plugins: ['jsx'] });
