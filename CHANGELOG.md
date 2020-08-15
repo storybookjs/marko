@@ -1,3 +1,13 @@
+## 6.0.8 (August 15, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix CSF names importing in MDX ([#12044](https://github.com/storybookjs/storybook/pull/12044))
+
+### Maintenance
+
+- ArgsTable: Error when subcomponents is an array ([#12033](https://github.com/storybookjs/storybook/pull/12033))
+
 ## 6.0.7 (August 14, 2020)
 
 ### Bug Fixes
