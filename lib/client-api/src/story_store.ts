@@ -35,6 +35,7 @@ import {
 import { HooksContext } from './hooks';
 import { storySort } from './storySort';
 import { combineParameters } from './parameters';
+import { ensureArgTypes } from './ensureArgTypes';
 import { inferArgTypes } from './inferArgTypes';
 
 interface StoryOptions {
@@ -128,7 +129,7 @@ export default class StoryStore {
     this._globalMetadata = { parameters: {}, decorators: [] };
     this._kinds = {};
     this._stories = {};
-    this._argTypesEnhancers = [inferArgTypes];
+    this._argTypesEnhancers = [ensureArgTypes];
     this._error = undefined;
     this._channel = params.channel;
 
@@ -374,6 +375,7 @@ export default class StoryStore {
     const { passArgsFirst = true } = combinedParameters;
     const __isArgsStory = passArgsFirst && original.length > 0;
 
+    this._argTypesEnhancers.push(inferArgTypes); // lowest priority
     const { argTypes = {} } = this._argTypesEnhancers.reduce(
       (accumulatedParameters: Parameters, enhancer) => ({
         ...accumulatedParameters,
