@@ -28,9 +28,9 @@ const inferType = (value?: any): SBType => {
 export const inferArgTypes: ArgTypesEnhancer = (context) => {
   const { argTypes: userArgTypes = {}, args = {} } = context.parameters;
   if (!args) return userArgTypes;
-  const argTypes = mapValues(args, (arg, name) => {
+  const argTypes = mapValues(args, (arg) => {
     if (arg !== null && typeof arg !== 'undefined') {
-      return { name, type: inferType(arg) };
+      return { type: inferType(arg) };
     }
     return undefined;
   });
