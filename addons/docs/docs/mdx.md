@@ -79,7 +79,7 @@ There's a one-to-one mapping from the code in `MDX` to `CSF`, which in turn dire
 Now let's look at a more realistic example to see a few more things we can do:
 
 ```md
-import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
 
 import { Badge } from './Badge';
 import { Icon } from './Icon';
