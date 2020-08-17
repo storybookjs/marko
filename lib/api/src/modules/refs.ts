@@ -36,7 +36,7 @@ export interface ComposedRef {
   id: string;
   title?: string;
   url: string;
-  type?: 'auto-inject' | 'unknown' | 'lazy';
+  type?: 'auto-inject' | 'unknown' | 'lazy' | 'server-checked';
   stories: StoriesHash;
   versions?: Versions;
   loginUrl?: string;
@@ -46,7 +46,7 @@ export interface ComposedRef {
 }
 export interface ComposedRefUpdate {
   title?: string;
-  type?: 'auto-inject' | 'unknown' | 'lazy';
+  type?: 'auto-inject' | 'unknown' | 'lazy' | 'server-checked';
   stories?: StoriesHash;
   versions?: Versions;
   loginUrl?: string;
@@ -135,12 +135,12 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
       });
     },
     checkRef: async (ref) => {
-      const { id, url, version } = ref;
+      const { id, url, version, type } = ref;
 
       const loadedData: { error?: Error; stories?: StoriesRaw; loginUrl?: string } = {};
       const query = version ? `?version=${version}` : '';
 
-      const [included, omitted, iframe] = await allSettled([
+      const [included, omitted] = await allSettled([
         fetch(`${url}/stories.json${query}`, {
           headers: {
             Accept: 'application/json',
@@ -151,10 +151,6 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
           headers: {
             Accept: 'application/json',
           },
-          credentials: 'omit',
-        }),
-        fetch(`${url}/iframe.html${query}`, {
-          mode: 'no-cors',
           credentials: 'omit',
         }),
       ]);
@@ -168,7 +164,7 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
         return {};
       };
 
-      if (!included && !omitted && !iframe) {
+      if (!included && !omitted && type !== 'server-checked') {
         loadedData.error = {
           message: dedent`
             Error: Loading of ref failed
@@ -243,11 +239,6 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
   const refs = provider.getConfig().refs || {};
 
   const initialState: SubState['refs'] = refs;
-
-  Object.values(refs).forEach((r) => {
-    // eslint-disable-next-line no-param-reassign
-    r.type = 'unknown';
-  });
 
   if (runCheck) {
     Object.entries(refs).forEach(([k, v]) => {
