@@ -59,7 +59,7 @@ In this ArgTypes data structure, name, type, defaultValue, and description are s
 
 #### Manual specification
 
-If you want more control over the props table or any other aspect of using argTypes, you can overwrite the generated argTypes for you component on a per-arg basis. For instance, with the above inferred argTypes and the following default export:
+If you want more control over the args table or any other aspect of using argTypes, you can overwrite the generated argTypes for you component on a per-arg basis. For instance, with the above inferred argTypes and the following default export:
 
 <!-- prettier-ignore-start -->
 
