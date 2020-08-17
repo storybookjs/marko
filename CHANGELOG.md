@@ -1,3 +1,12 @@
+## 6.0.11 (August 17, 2020)
+
+### Bug Fixes
+
+- Angular: Make CLI templates compatible with TS strict mode ([#12081](https://github.com/storybookjs/storybook/pull/12081))
+- React: Fix CSF component typing ([#12072](https://github.com/storybookjs/storybook/pull/12072))
+- ArgsTable: Fix styles to allow long text to wrap ([#11818](https://github.com/storybookjs/storybook/pull/11818))
+- Addon-docs: Fix main check for absolute config dirs ([#12057](https://github.com/storybookjs/storybook/pull/12057))
+
 ## 6.0.10 (August 15, 2020)
 
 ### Bug Fixes
