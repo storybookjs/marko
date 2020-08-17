@@ -32,7 +32,7 @@ When setting a theme, set a full theme object. The theme is replaced, not combin
 
 ## Theming docs
 
-[Storybook Docs](../writing-docs) uses the same theme system as Storybook’s UI, but is themed independently from the main UI.
+[Storybook Docs](../writing-docs/introduction) uses the same theme system as Storybook’s UI, but is themed independently from the main UI.
 
 Supposing you have a Storybook theme defined for the main UI in [`.storybook/manager.js`](./overview.md#configure-story-rendering):
 
