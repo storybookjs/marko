@@ -1,4 +1,4 @@
-## 6.0.11 (August 17, 2020)
+## 6.0.12 (August 17, 2020)
 
 ### Bug Fixes
 
@@ -6,6 +6,10 @@
 - React: Fix CSF component typing ([#12072](https://github.com/storybookjs/storybook/pull/12072))
 - ArgsTable: Fix styles to allow long text to wrap ([#11818](https://github.com/storybookjs/storybook/pull/11818))
 - Addon-docs: Fix main check for absolute config dirs ([#12057](https://github.com/storybookjs/storybook/pull/12057))
+
+## 6.0.11 (August 17, 2020)
+
+NPM publish failed
 
 ## 6.0.10 (August 15, 2020)
 
