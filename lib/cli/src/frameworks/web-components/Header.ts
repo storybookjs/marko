@@ -1,9 +1,15 @@
 import { html } from 'lit-html';
 
 import { Button } from './Button';
-import './header.css';
 
-export const Header = ({ user, onLogin, onLogout, onCreateAccount }) => html`
+export interface HeaderProps {
+  user: unknown;
+  onLogin: () => void;
+  onLogout: () => void;
+  onCreateAccount: () => void;
+}
+
+export const Header = ({ user, onLogin, onLogout, onCreateAccount }: Partial<HeaderProps>) => html`
   <header>
     <div class="wrapper">
       <div>

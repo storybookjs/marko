@@ -1,10 +1,23 @@
 import { html } from 'lit-html';
-import './button.css';
+
+export interface ButtonProps {
+  primary: boolean;
+  backgroundColor: string;
+  size: string;
+  label: string;
+  onClick: () => void;
+}
 
 /**
  * Primary UI component for user interaction
  */
-export const Button = ({ primary, backgroundColor, size, label, onClick }) => {
+export const Button = ({
+  primary,
+  backgroundColor,
+  size,
+  label,
+  onClick,
+}: Partial<ButtonProps>) => {
   const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
 
   return html`

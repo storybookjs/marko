@@ -1,4 +1,5 @@
-import { Button } from './Button';
+import { Story, Meta } from '@storybook/web-components';
+import { Button, ButtonProps } from './Button';
 
 export default {
   title: 'Example/Button',
@@ -6,9 +7,9 @@ export default {
     backgroundColor: { control: 'color' },
     onClick: { action: 'onClick' },
   },
-};
+} as Meta;
 
-const Template = (args) => Button(args);
+const Template: Story<Partial<ButtonProps>> = (args) => Button(args);
 
 export const Primary = Template.bind({});
 Primary.args = {
