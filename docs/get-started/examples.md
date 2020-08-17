@@ -4,7 +4,7 @@ title: 'Example Storybooks'
 
 Storybook is the world’s most popular component explorer. It's widely adopted by industry giants, startups, and open source projects alike.
 
-This is a curated list of some of Storybooks that power the largest companies for your inspiration.
+This is a curated list of Storybooks for your inspiration.
 
 ## Storybook team
 
