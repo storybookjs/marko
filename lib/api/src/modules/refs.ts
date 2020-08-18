@@ -62,16 +62,6 @@ export type RefUrl = string;
 // eslint-disable-next-line no-useless-escape
 const findFilename = /(\/((?:[^\/]+?)\.[^\/]+?)|\/)$/;
 
-const allSettled = (promises: Promise<Response>[]): Promise<(Response | false)[]> =>
-  Promise.all(
-    promises.map((promise) =>
-      promise.then(
-        (r) => (r.ok ? r : (false as const)),
-        () => false as const
-      )
-    )
-  );
-
 export const getSourceType = (source: string, refId: string) => {
   const { origin: localOrigin, pathname: localPathname } = location;
   const { origin: sourceOrigin, pathname: sourcePathname } = new URL(source);
@@ -96,6 +86,15 @@ const addRefIds = (input: StoriesHash, ref: ComposedRef): StoriesHash => {
   return Object.entries(input).reduce((acc, [id, item]) => {
     return { ...acc, [id]: { ...item, refId: ref.id } };
   }, {} as StoriesHash);
+};
+
+const handle = async (request: Response | false): Promise<SetRefData> => {
+  if (request) {
+    return Promise.resolve(request)
+      .then((response) => (response.ok ? response.json() : {}))
+      .catch((error) => ({ error }));
+  }
+  return {};
 };
 
 const map = (
@@ -138,36 +137,34 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
       const { id, url, version, type } = ref;
       const isPublic = type === 'server-checked';
 
+      // ref's type starts as either 'unknown' or 'server-checked'
+      // "server-checked" happens when we were able to verify the storybook is accessible from node (without cookies)
+      // "unknown" happens if the request was declined of failed (this can happen because the storybook doesn't exists or authentication is required)
+      //
+      // we then make a request for stories.json
+      //
+      // if this request fails when storybook is server-checked we mark the ref as "auto-inject", this is a fallback mechanism for local storybook, legacy storybooks, and storybooks that lack stories.json
+      // if the request fails with type "unknown" we give up and show an error
+      // if the request succeeds we set the ref to 'lazy' type, and show the stories in the sidebar without injecting the iframe first
+      //
+      // then we fetch metadata if the above fetch succeeded
+
       const loadedData: { error?: Error; stories?: StoriesRaw; loginUrl?: string } = {};
       const query = version ? `?version=${version}` : '';
+      const credentials = isPublic ? 'omit' : 'include';
 
-      const [included, omitted] = await allSettled([
-        isPublic
-          ? Promise.resolve(false)
-          : fetch(`${url}/stories.json${query}`, {
-              headers: {
-                Accept: 'application/json',
-              },
-              credentials: 'include',
-            }),
-        fetch(`${url}/stories.json${query}`, {
-          headers: {
-            Accept: 'application/json',
-          },
-          credentials: 'omit',
-        }),
-      ]);
+      // In theory the `/iframe.html` could be private and the `stories.json` could not exist, but in practice
+      // the only private servers we know about (Chromatic) always include `stories.json`. So we can tell
+      // if the ref actually exists by simply checking `stories.json` w/ credentials.
 
-      const handle = async (request: Response | false): Promise<SetRefData> => {
-        if (request) {
-          return Promise.resolve(request)
-            .then((response) => (response.ok ? response.json() : {}))
-            .catch((error) => ({ error }));
-        }
-        return {};
-      };
+      const storiesFetch = await fetch(`${url}/stories.json${query}`, {
+        headers: {
+          Accept: 'application/json',
+        },
+        credentials,
+      });
 
-      if (!included && !omitted && !isPublic) {
+      if (!storiesFetch.ok && !isPublic) {
         loadedData.error = {
           message: dedent`
             Error: Loading of ref failed
@@ -181,11 +178,9 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
             Please check your dev-tools network tab.
           `,
         } as Error;
-      } else if (omitted || included) {
-        const credentials = included ? 'include' : 'omit';
-
+      } else if (storiesFetch.ok) {
         const [stories, metadata] = await Promise.all([
-          included ? handle(included) : handle(omitted),
+          handle(storiesFetch),
           handle(
             fetch(`${url}/metadata.json${query}`, {
               headers: {
