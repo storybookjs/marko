@@ -136,17 +136,20 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
     },
     checkRef: async (ref) => {
       const { id, url, version, type } = ref;
+      const isPublic = type === 'server-checked';
 
       const loadedData: { error?: Error; stories?: StoriesRaw; loginUrl?: string } = {};
       const query = version ? `?version=${version}` : '';
 
       const [included, omitted] = await allSettled([
-        fetch(`${url}/stories.json${query}`, {
-          headers: {
-            Accept: 'application/json',
-          },
-          credentials: 'include',
-        }),
+        isPublic
+          ? Promise.resolve(false)
+          : fetch(`${url}/stories.json${query}`, {
+              headers: {
+                Accept: 'application/json',
+              },
+              credentials: 'include',
+            }),
         fetch(`${url}/stories.json${query}`, {
           headers: {
             Accept: 'application/json',
@@ -164,7 +167,7 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
         return {};
       };
 
-      if (!included && !omitted && type !== 'server-checked') {
+      if (!included && !omitted && !isPublic) {
         loadedData.error = {
           message: dedent`
             Error: Loading of ref failed
