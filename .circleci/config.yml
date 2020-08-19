@@ -267,20 +267,6 @@ jobs:
       - run:
           name: Trigger build
           command: ./scripts/build-frontpage.js
-  docs:
-    <<: *defaults
-    steps:
-      - checkout
-      - run:
-          name: Install dependencies
-          command: |
-            cd docs
-            yarn install
-      - run:
-          name: Build docs
-          command: |
-            cd docs
-            yarn build
   lint:
     <<: *defaults
     steps:
@@ -355,5 +341,4 @@ workflows:
             - publish
   deploy:
     jobs:
-      - docs
       - frontpage

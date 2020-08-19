@@ -1,0 +1,32 @@
+```ts
+// ButtonGroup.stories.ts
+
+import { moduleMetadata } from '@storybook/angular';
+import { CommonModule } from '@angular/common';
+
+import ButtonGroup from './ButtonGroup.component';
+import Button from './button.component';
+import * as ButtonStories from './Button.stories';
+
+export default {
+  title: 'ButtonGroup',
+  component: ButtonGroup,
+  decorators: [
+    moduleMetadata({
+      declarations: [Button],
+      imports: [CommonModule],
+    }),
+  ],
+};
+
+const Template = (args: ButtonGroup) => ({
+  component :ButtonGroup,
+  props: args,
+});
+
+export const Pair = Template.bind({});
+Pair.args = {
+  buttons: [ ...ButtonStories.Primary.args, ...ButtonStories.Secondary.args ],
+  orientation: 'horizontal',
+};
+```

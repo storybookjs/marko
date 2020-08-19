@@ -1,6 +1,6 @@
 {
   "name": "@storybook/postinstall",
-  "version": "6.0.0-rc.29",
+  "version": "6.0.12",
   "description": "Storybook addons postinstall utilities",
   "keywords": [
     "api",
@@ -34,12 +34,12 @@
   "devDependencies": {
     "@hypnosphi/jscodeshift": "^0.6.4",
     "jest": "^26.0.0",
-    "jest-specific-snapshot": "^3.0.0"
+    "jest-specific-snapshot": "^4.0.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "d31e743fc15970ad5722abf4678e03be82bf8b8b",
+  "gitHead": "ebb058e4090f2a697a6f2f16494d57a5e3a553f4",
   "typesVersions": {
     "<=3.5": {
       "*": [

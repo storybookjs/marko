@@ -1,0 +1,38 @@
+```ts
+// List.stories.ts
+
+import { moduleMetadata } from '@storybook/angular';
+import { CommonModule } from '@angular/common';
+
+import List from './list.component';
+import ListItem from './list-item.component'
+
+
+export default {
+  title: 'List',
+  component: List,
+  decorators: [
+    moduleMetadata({
+      declarations: [ListItem],
+      imports: [CommonModule],
+    }),
+  ],
+};
+
+// Always an empty list, not super interesting
+const Template = (args: List) => ({
+  component: List,
+  props: args,
+});
+
+export const OneItem = Template.bind({});
+OneItem.args = {
+    items:[ListItem]
+};
+
+export const ManyItems = Template.bind({});
+ManyItems.args = {
+    items:[ListItem,ListItem,ListItem]
+};
+
+```

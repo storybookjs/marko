@@ -10,7 +10,9 @@ export const enhanceArgTypes: ArgTypesEnhancer = (context) => {
   const normalizedArgTypes = normalizeArgTypes(userArgTypes);
   const namedArgTypes = mapValues(normalizedArgTypes, (val, key) => ({ name: key, ...val }));
   const extractedArgTypes = extractArgTypes && component ? extractArgTypes(component) : {};
-  const withArgTypes = combineParameters(extractedArgTypes, namedArgTypes);
+  const withArgTypes = extractedArgTypes
+    ? combineParameters(extractedArgTypes, namedArgTypes)
+    : namedArgTypes;
 
   if (!__isArgsStory) {
     return withArgTypes;
