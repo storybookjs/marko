@@ -30,10 +30,11 @@ const Summary = styled.div<{ isExpanded?: boolean }>(({ isExpanded }) => ({
   flexWrap: 'wrap',
   alignItems: 'flex-start',
   marginBottom: '-4px',
+  minWidth: 100,
 }));
 
 const Text = styled.span<{}>(codeCommon, ({ theme }) => ({
-  flex: 0,
+  flex: '0 0 auto',
   fontFamily: theme.typography.fonts.mono,
   fontSize: theme.typography.size.s1,
   wordBreak: 'break-word',
@@ -43,6 +44,8 @@ const Text = styled.span<{}>(codeCommon, ({ theme }) => ({
   paddingTop: '2px',
   paddingBottom: '2px',
   lineHeight: '13px',
+  whiteSpace: 'normal',
+  maxWidth: '100%',
 }));
 
 const ExpandButton = styled.button<{}>(({ theme }) => ({

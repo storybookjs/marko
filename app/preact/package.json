@@ -1,6 +1,6 @@
 {
   "name": "@storybook/preact",
-  "version": "6.0.7",
+  "version": "6.0.12",
   "description": "Storybook for Preact: Develop Preact Component in isolation.",
   "keywords": [
     "storybook"
@@ -35,8 +35,8 @@
   },
   "dependencies": {
     "@babel/plugin-transform-react-jsx": "^7.3.0",
-    "@storybook/addons": "6.0.7",
-    "@storybook/core": "6.0.7",
+    "@storybook/addons": "6.0.12",
+    "@storybook/core": "6.0.12",
     "@types/webpack-env": "^1.15.2",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
@@ -58,7 +58,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2ba756b82c1ad607ba5bde77a445a481ccaaf68f",
+  "gitHead": "ebb058e4090f2a697a6f2f16494d57a5e3a553f4",
   "typesVersions": {
     "<=3.5": {
       "*": [

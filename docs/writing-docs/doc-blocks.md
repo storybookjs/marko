@@ -49,13 +49,13 @@ To use the `ArgsTable` in [DocsPage](./docs-page.md#component-parameter), export
 
 ### MDX
 
-To use the `ArgsTable` in MDX, use the Props block:
+To use the `ArgsTable` block in MDX, add the following:
 
 <!-- prettier-ignore-start -->
 
 <CodeSnippets
   paths={[
-    'common/component-story-mdx-argstable-propsblock.mdx.mdx',
+    'common/component-story-mdx-argstable-block.mdx.mdx',
   ]}
 />
 
