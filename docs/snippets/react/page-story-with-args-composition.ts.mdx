@@ -1,7 +1,8 @@
 ```js
-// your-page.stories.js
+// YourPage.stories.js
 
 import React from 'react';
+import { Story, Meta } from '@storybook/react/types-6-0';
 import {DocumentScreen, DocumentScreenProps} from './DocumentScreen';
 
 import PageLayout from './PageLayout.stories';
@@ -11,7 +12,7 @@ import DocumentList from './DocumentList.stories';
 export default {
   component: DocumentScreen,
   title: 'DocumentScreen',
-};
+} as Meta;
 
 const Template: Story<DocumentScreenProps> = (args) => <DocumentScreen {...args} />;
 
