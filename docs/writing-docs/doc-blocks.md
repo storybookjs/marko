@@ -67,7 +67,7 @@ To use the `ArgsTable` block in MDX, add the following:
 
 `ArgsTables` are rendered from an internal data structure called [ArgTypes](../api/mdx.md#argtypes). When you declare a story's component metadata, Docs automatically extracts ArgTypes based on the component's properties.
 
-You can customize what's shown in the `ArgsTable` by customizing the `ArgTypes` data. This is currently available for [DocsPage](./docs-page.md) and `<Props story="xxx">` construct, but not for the `<Props of={component} />` construct.
+You can customize what's shown in the `ArgsTable` by customizing the `ArgTypes` data. This is currently available for [DocsPage](./docs-page.md) and `<ArgsTable story="xxx">` construct, but not for the `<ArgsTable of={component} />` construct.
 
 <div class="aside">
 
