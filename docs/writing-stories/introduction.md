@@ -69,7 +69,7 @@ You can rename any particular story you need. For instance to give it a more cle
 
 <!-- prettier-ignore-end -->
 
-Your story will now be show in the sidebar with the given text.
+Your story will now be shown in the sidebar with the given text.
 
 ## How to write stories
 
