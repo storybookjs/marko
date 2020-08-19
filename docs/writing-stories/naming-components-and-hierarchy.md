@@ -48,7 +48,7 @@ Yields this:
 
 ## Roots
 
-By default the top-level grouping will be displayed as a “root” in the UI (the all-caps, non expandable grouping in the screenshot above). If you prefer, you can [configure Storybook](..configure/sidebar-and-urls.md#roots) to not show roots.
+By default the top-level grouping will be displayed as a “root” in the UI (the all-caps, non expandable grouping in the screenshot above). If you prefer, you can [configure Storybook](../configure/sidebar-and-urls.md#roots) to not show roots.
 
 We recommend naming components according to the file hierarchy.
 
