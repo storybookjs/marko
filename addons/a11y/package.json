@@ -41,7 +41,7 @@
     "@storybook/components": "6.0.13",
     "@storybook/core-events": "6.0.13",
     "@storybook/theming": "6.0.13",
-    "axe-core": "^3.5.2",
+    "axe-core": "^4.0.1",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "lodash": "^4.17.15",
