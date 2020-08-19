@@ -44,16 +44,13 @@ export interface ComposedRef {
   ready?: boolean;
   error?: any;
 }
-export interface ComposedRefUpdate {
-  title?: string;
-  type?: 'auto-inject' | 'unknown' | 'lazy' | 'server-checked';
-  stories?: StoriesHash;
-  versions?: Versions;
-  loginUrl?: string;
-  version?: string;
-  ready?: boolean;
-  error?: any;
-}
+
+export type ComposedRefUpdate = Partial<
+  Pick<
+    ComposedRef,
+    'title' | 'type' | 'stories' | 'versions' | 'loginUrl' | 'version' | 'ready' | 'error'
+  >
+>;
 
 export type Refs = Record<string, ComposedRef>;
 export type RefId = string;
