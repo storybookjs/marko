@@ -141,21 +141,18 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
       const loadedData: { error?: Error; stories?: StoriesRaw; loginUrl?: string } = {};
       const query = version ? `?version=${version}` : '';
 
-      const [included, omitted] = await allSettled([
-        isPublic
-          ? Promise.resolve(false)
-          : fetch(`${url}/stories.json${query}`, {
-              headers: {
-                Accept: 'application/json',
-              },
-              credentials: 'include',
-            }),
-        fetch(`${url}/stories.json${query}`, {
+      // In theory the `/iframe.html` could be private and the `stories.json` could not exist, but in practice
+      // the only private servers we know about (Chromatic) always include `stories.json`. So we can tell
+      // if the ref actually exists by simply checking `stories.json` w/ credentials.
+      const storiesJsonAvailable = 
+        await fetch(`${url}/stories.json${query}`, {
           headers: {
             Accept: 'application/json',
           },
-          credentials: 'omit',
-        }),
+          // If we include credentials the server needs proper CORS headers, so don't include them
+          // unless we know we need them (i.e. initial fetch of `/iframe.html` failed).
+          credentials: isPublic ? 'omit' : 'include',
+        }));
       ]);
 
       const handle = async (request: Response | false): Promise<SetRefData> => {
