@@ -1,3 +1,12 @@
+## 6.0.13 (August 19, 2020)
+
+### Bug Fixes
+
+- Source-loader: Fix default exports of type TSAsExpression ([#12099](https://github.com/storybookjs/storybook/pull/12099))
+- Addon-docs: Fix source code for Template.bind({}) in MDX ([#12107](https://github.com/storybookjs/storybook/pull/12107))
+- Addon-A11y: Fix manual run & timeline ([#12003](https://github.com/storybookjs/storybook/pull/12003))
+- Core: Add frameworkPath to options to support custom frameworks ([#12087](https://github.com/storybookjs/storybook/pull/12087))
+
 ## 6.0.12 (August 17, 2020)
 
 ### Bug Fixes
