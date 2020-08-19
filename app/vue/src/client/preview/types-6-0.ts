@@ -1,4 +1,3 @@
-import { Component } from 'vue';
 import { Args as DefaultArgs, Annotations, BaseMeta, BaseStory } from '@storybook/addons';
 import { StoryFnVueReturnType } from './types';
 
