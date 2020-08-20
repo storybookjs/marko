@@ -26,9 +26,9 @@ function MDXContent({ components, ...props }) {
     <MDXLayout {...layoutProps} {...props} components={components} mdxType=\\"MDXLayout\\">
       <Meta title=\\"MDX/CSF imports\\" mdxType=\\"Meta\\" />
       <h1>{\`Stories from CSF imports\`}</h1>
-      <Story story={MyStories.Basic} name=\\"BasicStory\\" mdxType=\\"Story\\" />
+      <Story story={MyStories.Basic} name=\\"_Basic_\\" mdxType=\\"Story\\" />
       <Canvas mdxType=\\"Canvas\\">
-        <Story story={Other} name=\\"OtherStory\\" mdxType=\\"Story\\" />
+        <Story story={Other} name=\\"_Other_\\" mdxType=\\"Story\\" />
       </Canvas>
       <Story name=\\"renamed\\" story={MyStories.Foo} mdxType=\\"Story\\" />
     </MDXLayout>
@@ -37,23 +37,16 @@ function MDXContent({ components, ...props }) {
 
 MDXContent.isMDXComponent = true;
 
-export const BasicStory = MyStories.Basic;
+export const _Basic_ = MyStories.Basic;
 
-export const OtherStory = Other;
+export const _Other_ = Other;
 
-export const FooStory = MyStories.Foo;
-FooStory.storyName = 'renamed';
+export const _Foo_ = MyStories.Foo;
+_Foo_.storyName = 'renamed';
 
-const componentMeta = {
-  title: 'MDX/CSF imports',
-  includeStories: ['BasicStory', 'OtherStory', 'FooStory'],
-};
+const componentMeta = { title: 'MDX/CSF imports', includeStories: ['_Basic_', '_Other_', '_Foo_'] };
 
-const mdxStoryNameToKey = {
-  BasicStory: 'BasicStory',
-  OtherStory: 'OtherStory',
-  renamed: 'FooStory',
-};
+const mdxStoryNameToKey = { _Basic_: '_Basic_', _Other_: '_Other_', renamed: '_Foo_' };
 
 componentMeta.parameters = componentMeta.parameters || {};
 componentMeta.parameters.docs = {

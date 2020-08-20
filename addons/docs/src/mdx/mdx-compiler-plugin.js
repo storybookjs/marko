@@ -44,7 +44,7 @@ function genAttribute(key, element) {
 function genImportStory(ast, storyDef, storyName, context) {
   const { code: story } = generate(storyDef.expression, {});
 
-  const storyKey = `${story.split('.').pop()}Story`;
+  const storyKey = `_${story.split('.').pop()}_`;
 
   const statements = [`export const ${storyKey} = ${story};`];
   if (storyName) {
