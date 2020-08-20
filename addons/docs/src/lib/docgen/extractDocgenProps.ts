@@ -35,7 +35,7 @@ export const extractComponentSectionArray = (docgenSection: any) => {
 
   return docgenSection.map((item: any) => {
     let sanitizedItem = item;
-    if (item?.type?.elements) {
+    if (item.type?.elements) {
       sanitizedItem = {
         ...item,
         type: {
