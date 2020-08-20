@@ -1,3 +1,15 @@
+## 6.0.14 (August 20, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix MDX IDs from CSF imports ([#12154](https://github.com/storybookjs/storybook/pull/12154))
+- Addon-viewport: Add preset to fix windows import ([#12148](https://github.com/storybookjs/storybook/pull/12148))
+- Composition: Verify refs in node ([#12085](https://github.com/storybookjs/storybook/pull/12085))
+
+### Maintenance
+
+- Build: Update and optimize circleCI Config ([#12118](https://github.com/storybookjs/storybook/pull/12118))
+
 ## 6.0.13 (August 19, 2020)
 
 ### Bug Fixes
