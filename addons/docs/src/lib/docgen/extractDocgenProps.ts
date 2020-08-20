@@ -33,9 +33,10 @@ export const extractComponentSectionArray = (docgenSection: any) => {
   const typeSystem = getTypeSystem(docgenSection[0]);
   const createPropDef = getPropDefFactory(typeSystem);
 
-  return docgenSection
-    .map((item: any) => extractProp(item.name, item, typeSystem, createPropDef))
-    .filter(Boolean);
+  return docgenSection.map((item: any) => {
+    const sanitizedItem = { ...item, value: item.elements };
+    return extractProp(sanitizedItem.name, sanitizedItem, typeSystem, createPropDef);
+  });
 };
 
 export const extractComponentSectionObject = (docgenSection: any) => {
