@@ -1,3 +1,14 @@
+## 6.0.15 (August 20, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix ArgsTable union type handling in Vue/TS ([#12158](https://github.com/storybookjs/storybook/pull/12158))
+- Addon-docs: Fix inline rendering for DOM nodes in HTML ([#12164](https://github.com/storybookjs/storybook/pull/12164))
+
+### Maintenance
+
+- React: Simplify component type for CSF typing ([#12110](https://github.com/storybookjs/storybook/pull/12110))
+
 ## 6.0.14 (August 20, 2020)
 
 ### Bug Fixes
