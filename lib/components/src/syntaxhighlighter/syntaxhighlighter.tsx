@@ -122,6 +122,7 @@ export const SyntaxHighlighter: FunctionComponent<Props> = ({
   padded = false,
   format = true,
   className = null,
+  showLineNumbers = false,
   ...rest
 }) => {
   const [copied, setCopied] = useState(false);
@@ -144,7 +145,8 @@ export const SyntaxHighlighter: FunctionComponent<Props> = ({
         <ReactSyntaxHighlighter
           padded={padded || bordered}
           language={language}
-          showInlineLineNumbers
+          showLineNumbers={showLineNumbers}
+          showInlineLineNumbers={showLineNumbers}
           useInlineStyles={false}
           PreTag={Pre}
           CodeTag={Code}
