@@ -47,6 +47,8 @@ const Text = styled.span<{ simple?: boolean }>(codeCommon, ({ theme, simple = fa
   paddingTop: '2px',
   paddingBottom: '2px',
   lineHeight: '13px',
+  whiteSpace: 'normal',
+  maxWidth: '100%',
   ...(simple && {
     background: 'transparent',
     border: '0 none',

@@ -193,6 +193,11 @@ export const StoryTable: FC<
     }
 
     if (subcomponents) {
+      if (Array.isArray(subcomponents)) {
+        throw new Error(
+          `Unexpected subcomponents array. Expected an object whose keys are tab labels and whose values are components.`
+        );
+      }
       tabs = addComponentTabs(tabs, subcomponents, context, include, exclude);
     }
     return <TabbedArgsTable tabs={tabs} />;
@@ -211,9 +216,7 @@ export const ComponentsTable: FC<ComponentsProps> = (props) => {
 
 export const ArgsTable: FC<ArgsTableProps> = (props) => {
   const context = useContext(DocsContext);
-  const {
-    parameters: { subcomponents },
-  } = context;
+  const { parameters: { subcomponents } = {} } = context;
 
   const { include, exclude, components } = props as ComponentsProps;
   const { story } = props as StoryProps;
@@ -247,5 +250,5 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
 };
 
 ArgsTable.defaultProps = {
-  story: PRIMARY_STORY,
+  of: CURRENT_SELECTION,
 };

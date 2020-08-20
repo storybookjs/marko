@@ -226,7 +226,7 @@ addParameters({
 
 ## TypeScript configuration
 
-As of SB6 [TypeScript is zero-config](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/configurations/typescript-config/index.md) and should work with SB Docs out of the box. For advanced configuration options, refer to the [Props documentation](./docs/props-tables.md).
+As of SB6 [TypeScript is zero-config](https://storybook.js.org/docs/react/configure/typescript) and should work with SB Docs out of the box. For advanced configuration options, refer to the [Props documentation](./docs/props-tables.md).
 
 ## More resources
 

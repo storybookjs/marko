@@ -17,13 +17,13 @@ export default class ButtonComponent {
    * Is this the principal call to action on the page?
    */
   @Input()
-  primary: boolean;
+  primary = false;
 
   /**
    * What background color to use
    */
   @Input()
-  backgroundColor: string;
+  backgroundColor?: string;
 
   /**
    * How large should the button be?
@@ -37,7 +37,7 @@ export default class ButtonComponent {
    * @required
    */
   @Input()
-  label: string;
+  label = 'Button';
 
   /**
    * Optional click handler

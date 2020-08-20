@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-queryparams",
-  "version": "6.0.0-rc.29",
+  "version": "6.0.13",
   "description": "parameter addon for storybook",
   "keywords": [
     "addon",
@@ -30,12 +30,12 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-rc.29",
-    "@storybook/api": "6.0.0-rc.29",
-    "@storybook/client-logger": "6.0.0-rc.29",
-    "@storybook/components": "6.0.0-rc.29",
-    "@storybook/core-events": "6.0.0-rc.29",
-    "@storybook/theming": "6.0.0-rc.29",
+    "@storybook/addons": "6.0.13",
+    "@storybook/api": "6.0.13",
+    "@storybook/client-logger": "6.0.13",
+    "@storybook/components": "6.0.13",
+    "@storybook/core-events": "6.0.13",
+    "@storybook/theming": "6.0.13",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "qs": "^6.6.0",
@@ -52,7 +52,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "d31e743fc15970ad5722abf4678e03be82bf8b8b",
+  "gitHead": "aa75d28f1b85794e343355487171655a71941eec",
   "typesVersions": {
     "<=3.5": {
       "*": [

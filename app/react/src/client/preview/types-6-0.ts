@@ -1,10 +1,10 @@
-import { Component, FunctionComponent } from 'react';
+import { ComponentClass, FunctionComponent } from 'react';
 import { Args as DefaultArgs, Annotations, BaseMeta, BaseStory } from '@storybook/addons';
 import { StoryFnReactReturnType } from './types';
 
 export { Args, ArgTypes, Parameters, StoryContext } from '@storybook/addons';
 
-type ReactComponent = Component | FunctionComponent<any>;
+type ReactComponent = ComponentClass<any> | FunctionComponent<any>;
 type ReactReturnType = StoryFnReactReturnType;
 
 /**

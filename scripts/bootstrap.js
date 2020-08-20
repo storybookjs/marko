@@ -110,15 +110,6 @@ function run() {
       },
       order: 3,
     }),
-    docs: createTask({
-      name: `Documentation ${chalk.gray('(docs)')}`,
-      defaultValue: false,
-      option: '--docs',
-      command: () => {
-        spawn('yarn bootstrap:docs');
-      },
-      order: 6,
-    }),
     packs: createTask({
       name: `Build tarballs of packages ${chalk.gray('(build-packs)')}`,
       defaultValue: false,
@@ -150,7 +141,7 @@ function run() {
   };
 
   const groups = {
-    main: ['core', 'docs'],
+    main: ['core'],
     buildtasks: ['install', 'build', 'dll', 'packs'],
     devtasks: ['dev', 'registry', 'reset'],
   };

@@ -28,3 +28,10 @@ WithTemplate.args = { foo: 'bar' }
 
 export const WithEmptyTemplate = Template.bind();
 WithEmptyTemplate.args = { foo: 'baz' };
+
+export const WithAddFunctionParameters = () => null
+WithAddFunctionParameters.parameters = {
+  foobar: () => {
+    document.addEventListener('foo', () => console.log('bar'))
+  },
+}

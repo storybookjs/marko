@@ -171,7 +171,7 @@ Storybook has built-in Typescript support in 6.0. That means you should remove y
 
 To migrate from an old setup, we recommend deleting any typescript-specific webpack/babel configurations in your project. You should also remove `@storybook/preset-typescript`, which is superceded by the built-in configuration.
 
-If you want to override the defaults, see the [typescript configuration docs](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/configurations/typescript-config/index.md).
+If you want to override the defaults, see the [typescript configuration docs](https://storybook.js.org/docs/react/configure/typescript).
 
 ### Correct globs in main.js
 
@@ -217,7 +217,7 @@ npm install core-js@^3.0.1 --save-dev
 
 ### Args passed as first argument to story
 
-Starting in 6.0, the first argument to a story function is an [Args object](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/formats/component-story-format/index.md#args-story-inputs). In 5.3 and earlier, the first argument was a [StoryContext](https://github.com/storybookjs/storybook/blob/next/lib/addons/src/types.ts#L49-L61), and that context is now passed as the second argument by default.
+Starting in 6.0, the first argument to a story function is an [Args object](https://storybook.js.org/docs/react/api/csf#args-story-inputs). In 5.3 and earlier, the first argument was a [StoryContext](https://github.com/storybookjs/storybook/blob/next/lib/addons/src/types.ts#L49-L61), and that context is now passed as the second argument by default.
 
 This breaking change only affects you if your stories actually use the context, which is not common. If you have any stories that use the context, you can either (1) update your stories, or (2) set a flag to opt-out of new behavior.
 
@@ -249,9 +249,7 @@ In SB 5.2, each framework had its own preset, e.g. `@storybook/addon-docs/react/
 
 #### Preview/Props renamed
 
-In 6.0 we renamed `Preview` to `Canvas`, `Props` to `ArgsTable`.
-
-In addition to the rename, `<Props />` shows the current component, whereas `<ArgsTable />` shows the primary story for the current component. If you want the old behavior, pass `<ArgsTable of='.' />`.
+In 6.0 we renamed `Preview` to `Canvas`, `Props` to `ArgsTable`. The change should be otherwise backwards-compatible.
 
 #### Docs theme separated
 
@@ -614,17 +612,16 @@ In 6.0 we removed the actions addon decorate API. Actions handles can be configu
 
 In 6.0 we removed the `withA11y` decorator. The code that runs accessibility checks is now directly injected in the preview.
 
-Remove the addon-a11y decorator.
-To configure a11y now, you have to specify configuration using `addParameters`.
+To configure a11y now, you have to specify configuration using story parameters, e.g. in `.storybook/preview.js`:
 
 ```js
-addParameters({
+export const parameters = {
   a11y: {
-    element: "#root",
+    element: '#root',
     config: {},
     options: {},
     manual: true,
-  }
+  },
 };
 ```
 
@@ -728,7 +725,7 @@ addons.setConfig({
 
 The `addParameters` and `addDecorator` APIs to add global decorators and parameters, exported by the various frameworks (e.g. `@storybook/react`) and `@storybook/client` are now deprecated.
 
-Instead, use `export const parameters = {};` and `export const decorators = [];` in your `.storybook/preview.js`. Addon authors similarly should use such an export in a `previewEntry` file.
+Instead, use `export const parameters = {};` and `export const decorators = [];` in your `.storybook/preview.js`. Addon authors similarly should use such an export in a preview entry file (see [Preview entries](https://github.com/storybookjs/storybook/blob/next/docs/api/writing-presets.md#preview-entries)).
 
 #### Deprecated clearDecorators
 
@@ -1097,7 +1094,7 @@ module.exports = ({ config }) => ({
 });
 ```
 
-Please refer to the [current custom webpack documentation](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/configurations/custom-webpack-config/index.md) for more information on custom webpack config and to [Issue #6081](https://github.com/storybookjs/storybook/issues/6081) for more information about the change.
+Please refer to the [current custom webpack documentation](https://storybook.js.org/docs/react/configure/webpack) for more information on custom webpack config and to [Issue #6081](https://github.com/storybookjs/storybook/issues/6081) for more information about the change.
 
 ## From version 4.1.x to 5.0.x
 
@@ -1138,11 +1135,11 @@ module.exports = ({ config, mode }) => { config.module.rules.push(...); return c
 
 In contrast, the 4.x configuration function accepted either two or three arguments (`(baseConfig, mode)`, or `(baseConfig, mode, defaultConfig)`). The `config` object in the 5.x signature is equivalent to 4.x's `defaultConfig`.
 
-Please see the [current custom webpack documentation](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/configurations/custom-webpack-config/index.md) for more information on custom webpack config.
+Please see the [current custom webpack documentation](https://storybook.js.org/docs/react/configure/webpack) for more information on custom webpack config.
 
 ### Theming overhaul
 
-Theming has been rewritten in v5. If you used theming in v4, please consult the [theming docs](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/configurations/theming/index.md) to learn about the new API.
+Theming has been rewritten in v5. If you used theming in v4, please consult the [theming docs](https://storybook.js.org/docs/react/configure/theming) to learn about the new API.
 
 ### Story hierarchy defaults
 
@@ -1174,7 +1171,7 @@ addParameters({
 
 ### Options addon deprecated
 
-In 4.x we added story parameters. In 5.x we've deprecated the options addon in favor of [global parameters](./docs/src/pages/configurations/options-parameter/index.md), and we've also renamed some of the options in the process (though we're maintaining backwards compatibility until 6.0).
+In 4.x we added story parameters. In 5.x we've deprecated the options addon in favor of [global parameters](https://storybook.js.org/docs/react/configure/features-and-behavior), and we've also renamed some of the options in the process (though we're maintaining backwards compatibility until 6.0).
 
 Here's an old configuration:
 
@@ -1535,7 +1532,7 @@ The `@storybook/react-native` had built-in addons (`addon-actions` and `addon-li
 
 ### Webpack 4
 
-Storybook now uses webpack 4. If you have a [custom webpack config](https://storybook.js.org/configurations/custom-webpack-config/), make sure that all the loaders and plugins you use support webpack 4.
+Storybook now uses webpack 4. If you have a [custom webpack config](https://storybook.js.org/docs/react/configure/webpack), make sure that all the loaders and plugins you use support webpack 4.
 
 ### Babel 7
 
@@ -1645,7 +1642,7 @@ This was done to support different major versions of babel.
 
 ### Base webpack config now contains vital plugins ([#1775](https://github.com/storybookjs/storybook/pull/1775))
 
-This affects you if you use custom webpack config in [Full Control Mode](https://storybook.js.org/configurations/custom-webpack-config/#full-control-mode) while not preserving the plugins from `storybookBaseConfig`. Before `3.3`, preserving them was a recommendation, but now it [became](https://github.com/storybookjs/storybook/pull/2578) a requirement.
+This affects you if you use custom webpack config in [Full Control Mode](https://storybook.js.org/docs/react/configure/webpack#full-control-mode) while not preserving the plugins from `storybookBaseConfig`. Before `3.3`, preserving them was a recommendation, but now it [became](https://github.com/storybookjs/storybook/pull/2578) a requirement.
 
 ### Refactored Knobs
 
@@ -1715,7 +1712,7 @@ Now we use:
 - `preview-head.html` for including extra content into the preview pane.
 - `manager-head.html` for including extra content into the manager window.
 
-[Read our docs](https://storybook.js.org/configurations/add-custom-head-tags/) for more details.
+[Read our docs](https://storybook.js.org/docs/react/configure/story-rendering#adding-to-head) for more details.
 
 ## From version 2.x.x to 3.x.x
 
