@@ -144,6 +144,7 @@ export const SyntaxHighlighter: FunctionComponent<Props> = ({
         <ReactSyntaxHighlighter
           padded={padded || bordered}
           language={language}
+          showInlineLineNumbers
           useInlineStyles={false}
           PreTag={Pre}
           CodeTag={Code}
