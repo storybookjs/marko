@@ -1,3 +1,9 @@
+## 6.0.16 (August 20, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix Vue ArgsTable sanitizing of item.type.elements to item.type.value ([#12165](https://github.com/storybookjs/storybook/pull/12165))
+
 ## 6.0.15 (August 20, 2020)
 
 ### Bug Fixes
