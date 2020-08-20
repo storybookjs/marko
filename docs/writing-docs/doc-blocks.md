@@ -75,7 +75,7 @@ NOTE: This API is experimental and may change outside of the typical semver rele
 
 </div>
 
-The API documentation of `ArgTypes` is detailed in a [separate section](../api/mdx.md#argtypes), but to control the description and default values, use the following fields:
+The API documentation of `ArgTypes` is detailed in a [separate section](../api/argtypes.md), but to control the description and default values, use the following fields:
 
 | Field                          |                                           Description                                            |
 | :----------------------------- | :----------------------------------------------------------------------------------------------: |
