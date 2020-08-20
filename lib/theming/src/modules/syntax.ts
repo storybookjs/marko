@@ -113,6 +113,8 @@ export const create = ({ colors, mono }: { colors: ColorsHash; mono: string }) =
       fontFamily: mono,
       WebkitFontSmoothing: 'antialiased',
 
+      '&.tag': colorsObjs.red3,
+
       '&.comment': { ...colorsObjs.green1, fontStyle: 'italic' },
       '&.prolog': { ...colorsObjs.green1, fontStyle: 'italic' },
       '&.doctype': { ...colorsObjs.green1, fontStyle: 'italic' },
@@ -151,7 +153,6 @@ export const create = ({ colors, mono }: { colors: ColorsHash; mono: string }) =
 
       '&.class-name': colorsObjs.cyan2,
 
-      '&.tag': colorsObjs.red3,
       '&.selector': colorsObjs.red3,
 
       '&.attr-name': colorsObjs.red4,
