@@ -16,16 +16,16 @@ interface JSXOptions {
   /** Override the display name used for a component */
   displayName?: string | Options['displayName'];
   /** A function ran before the story is rendered */
-  onBeforeRender?(dom: string): string;
+  onBeforeRender?(dom: string, context?: StoryContext): string;
 }
 
 /** Run the user supplied onBeforeRender function if it exists */
-const applyBeforeRender = (domString: string, options: JSXOptions) => {
+const applyBeforeRender = (domString: string, options: JSXOptions, context?: StoryContext) => {
   if (typeof options.onBeforeRender !== 'function') {
     return domString;
   }
 
-  return options.onBeforeRender(domString);
+  return options.onBeforeRender(domString, context);
 };
 
 /** Apply the users parameters and render the jsx for a story */
@@ -74,7 +74,7 @@ export const renderJsx = (code: React.ReactElement, options: JSXOptions) => {
   const result = React.Children.map(code, (c) => {
     // @ts-ignore FIXME: workaround react-element-to-jsx-string
     const child = typeof c === 'number' ? c.toString() : c;
-    let string = applyBeforeRender(reactElementToJSXString(child, opts as Options), options);
+    let string = reactElementToJSXString(child, opts as Options);
     const matches = string.match(/\S+=\\"([^"]*)\\"/g);
 
     if (matches) {
@@ -128,7 +128,7 @@ export const jsxDecorator = (storyFn: any, context: StoryContext) => {
   let jsx = '';
   const rendered = renderJsx(story, options);
   if (rendered) {
-    jsx = rendered;
+    jsx = applyBeforeRender(rendered, options, context);
   }
 
   channel.emit(SNIPPET_RENDERED, (context || {}).id, jsx);
