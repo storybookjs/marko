@@ -28,8 +28,8 @@
   <a href="https://discord.gg/sMFvFsG">
     <img src="https://img.shields.io/badge/discord-join-7289DA.svg?logo=discord&longCache=true&style=flat" />
   </a>
-  <a href="https://now-examples-slackin-rrirkqohko.now.sh/">
-    <img src="https://now-examples-slackin-rrirkqohko.now.sh/badge.svg?logo=slack" alt="Storybook Slack" />
+  <a href="https://storybook.js.org/community/">
+    <img src="https://img.shields.io/badge/storybook-community-join.svg" alt="Storybook Community" />
   </a>
   <a href="#backers">
     <img src="https://opencollective.com/storybook/backers/badge.svg" alt="Backers on Open Collective" />
