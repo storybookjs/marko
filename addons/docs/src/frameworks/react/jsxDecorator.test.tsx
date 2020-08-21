@@ -132,7 +132,7 @@ describe('jsxDecorator', () => {
 
   it('allows the snippet output to be modified by onBeforeRender', () => {
     const storyFn = (args: any) => <div>args story</div>;
-    const onBeforeRender = (dom) => `<p>${dom}</p>`;
+    const onBeforeRender = (dom: string) => `<p>${dom}</p>`;
     const jsx = { onBeforeRender };
     const context = makeContext('args', { __isArgsStory: true, jsx }, {});
     jsxDecorator(storyFn, context);
