@@ -122,9 +122,6 @@ export const create = ({ colors, mono }: { colors: ColorsHash; mono: string }) =
 
       '&.string': colorsObjs.red1,
 
-      '&.punctuation': colorsObjs.gray1,
-      '&.operator': colorsObjs.gray1,
-
       '&.url': colorsObjs.cyan1,
       '&.symbol': colorsObjs.cyan1,
       '&.number': colorsObjs.cyan1,
@@ -136,6 +133,9 @@ export const create = ({ colors, mono }: { colors: ColorsHash; mono: string }) =
       '&.atrule': colorsObjs.blue1,
       '&.keyword': colorsObjs.blue1,
       '&.attr-value': colorsObjs.blue1,
+
+      '&.punctuation': colorsObjs.gray1,
+      '&.operator': colorsObjs.gray1,
 
       '&.function': colorsObjs.gray1,
       '&.deleted': colorsObjs.red2,
