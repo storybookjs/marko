@@ -4,7 +4,7 @@ import { styled } from '@storybook/theming';
 import { Tooltip } from './Tooltip';
 
 // Popper would position the tooltip absolutely. We just need to make sure we are pos:rel
-const mockPopperProps = { style: { position: 'relative', top: 20, left: 20 } };
+const mockPopperProps = { style: { position: 'relative' } };
 
 const Content = styled.div({
   width: '100px',
@@ -16,7 +16,7 @@ const Content = styled.div({
 
 storiesOf('basics/Tooltip/Tooltip', module)
   .add('basic, default', () => (
-    <Tooltip {...mockPopperProps} color="medium">
+    <Tooltip {...mockPopperProps}>
       <Content>Text</Content>
     </Tooltip>
   ))

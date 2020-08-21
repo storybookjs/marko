@@ -25,7 +25,7 @@ export interface WithTooltipPureProps {
   trigger?: 'none' | 'hover' | 'click' | 'right-click';
   closeOnClick?: boolean;
   placement?: Placement;
-  modifiers?: Array<Modifier<any, any>>;
+  modifiers?: Array<Partial<Modifier<string, {}>>>;
   hasChrome?: boolean;
   tooltip: ReactNode | ((p: WithHideFn) => ReactNode);
   children: ReactNode;
@@ -93,7 +93,26 @@ WithTooltipPure.defaultProps = {
   trigger: 'hover',
   closeOnClick: false,
   placement: 'top',
-  modifiers: [],
+  modifiers: [
+    {
+      name: 'preventOverflow',
+      options: {
+        padding: 8,
+      },
+    },
+    {
+      name: 'offset',
+      options: {
+        offset: [8, 8],
+      },
+    },
+    {
+      name: 'arrow',
+      options: {
+        padding: 8,
+      },
+    },
+  ],
   hasChrome: true,
   tooltipShown: false,
 };
