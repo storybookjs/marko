@@ -29,7 +29,7 @@
     <img src="https://img.shields.io/badge/discord-join-7289DA.svg?logo=discord&longCache=true&style=flat" />
   </a>
   <a href="https://storybook.js.org/community/">
-    <img src="https://img.shields.io/badge/storybook-community-join.svg" alt="Storybook Community" />
+    <img src="https://img.shields.io/badge/community-join-4BC424.svg" alt="Storybook Community" />
   </a>
   <a href="#backers">
     <img src="https://opencollective.com/storybook/backers/badge.svg" alt="Backers on Open Collective" />
