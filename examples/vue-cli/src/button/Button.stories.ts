@@ -10,7 +10,7 @@ export default {
   },
 } as Meta;
 
-export const ButtonWithProps: Story = (args: any, { argTypes }: any) => ({
+export const ButtonWithProps: Story = (args, { argTypes }) => ({
   components: { Button },
   template: '<Button :size="size">Button text</Button>',
   props: Object.keys(argTypes),
