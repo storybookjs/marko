@@ -220,7 +220,7 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
 
       case ProjectType.AURELIA:
         return aureliaGenerator(packageManager, npmOptions, generatorOptions)
-          .then(commandLog('Adding Storybook support to your "Rax" app'))
+          .then(commandLog('Adding Storybook support to your "Aurelia" app'))
           .then(end);
 
       default:
