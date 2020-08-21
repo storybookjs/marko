@@ -13,7 +13,7 @@ Storybook includes two themes that look good out of the box: "normal" (a light t
 Make sure you have installed [`@storybook/addons`](https://www.npmjs.com/package/@storybook/addons) and [`@storybook/theming`](https://www.npmjs.com/package/@storybook/theming) packages.
 
 ```sh
-yarn install --dev @storybook/addons @storybook/theming
+yarn add --dev @storybook/addons @storybook/theming
 ```
 
 As an example, you can tell Storybook to use the "dark" theme by modifying [`.storybook/manager.js`](./overview.md#configure-story-rendering):
@@ -32,7 +32,7 @@ When setting a theme, set a full theme object. The theme is replaced, not combin
 
 ## Theming docs
 
-[Storybook Docs](../writing-docs) uses the same theme system as Storybook’s UI, but is themed independently from the main UI.
+[Storybook Docs](../writing-docs/introduction) uses the same theme system as Storybook’s UI, but is themed independently from the main UI.
 
 Supposing you have a Storybook theme defined for the main UI in [`.storybook/manager.js`](./overview.md#configure-story-rendering):
 

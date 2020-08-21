@@ -2,7 +2,7 @@
 title: 'DocsPage'
 ---
 
-When you install [Storybook Docs](https://github.com/storybookjs/storybook/blob/next/addons/docs/README.md), DocsPage is the zero-config default documentation that all stories get out of the box. It aggregates your stories, text descriptions, docgen comments, props tables, and code examples into a single page for each component.
+When you install [Storybook Docs](https://github.com/storybookjs/storybook/blob/next/addons/docs/README.md), DocsPage is the zero-config default documentation that all stories get out of the box. It aggregates your stories, text descriptions, docgen comments, args tables, and code examples into a single page for each component.
 
 The best practice for docs is for each component to have its own set of documentation and stories.
 
@@ -76,7 +76,6 @@ Override the `docs.page` [parameter](../writing-stories/parameters.md#component-
 <CodeSnippets
   paths={[
     'common/button-story-disable-docspage-component.js.mdx',
-    'common/button-story-disable-docspage-component.ts.mdx',
   ]}
 />
 

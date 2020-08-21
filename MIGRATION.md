@@ -14,6 +14,7 @@
     - [DocsPage slots removed](#docspage-slots-removed)
     - [React prop tables with Typescript](#react-prop-tables-with-typescript)
     - [ConfigureJSX true by default in React](#configurejsx-true-by-default-in-react)
+    - [User babelrc disabled by default in MDX](#user-babelrc-disabled-by-default-in-mdx)
     - [Docs description parameter](#docs-description-parameter)
     - [6.0 Inline stories](#60-inline-stories)
   - [New addon presets](#new-addon-presets)
@@ -296,6 +297,23 @@ module.exports = {
     {
       name: '@storybook/addon-docs',
       options: { configureJSX: false },
+    },
+  ],
+};
+```
+
+#### User babelrc disabled by default in MDX
+
+In SB 6.0, the Storybook Docs no longer applies the user's babelrc by default when processing MDX files. It caused lots of hard-to-diagnose bugs.
+
+To restore the old behavior, or pass any MDX-specific babel options, you can configure `.storybook/main.js`:
+
+```js
+module.exports = {
+  addons: [
+    {
+      name: '@storybook/addon-docs',
+      options: { mdxBabelOptions: { babelrc: true, configFile: true } },
     },
   ],
 };

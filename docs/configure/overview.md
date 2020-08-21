@@ -28,8 +28,8 @@ The `main.js` configuration file is a [preset](../api/presets.md) and as such ha
 
 - `stories` - a array of globs that indicates the [location of your story files](#configure-story-loading), relative to `main.js`.
 - `addons` - a list of the [addons](/addons) you are using.
-- `webpackFinal` - custom [webpack configuration](./integration.md#extending-storybooks-webpack-config).
-- `babel` - custom [babel configuration](./integration.md#babel).
+- `webpackFinal` - custom [webpack configuration](./webpack.md#extending-storybooks-webpack-config).
+- `babel` - custom [babel configuration](./babel.md).
 
 ## Configure story loading
 

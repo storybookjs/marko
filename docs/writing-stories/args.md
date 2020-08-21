@@ -6,7 +6,7 @@ A story is a component with a set of arguments (props, slots, inputs, etc). “A
 
 When an arg’s value is changed, the component re-renders, allowing you to interact with components in Storybook’s UI via addons that affect args.
 
-Learn how and why to write stories with args [here](./introduction.md#using-args) section. For details on how args work, read on.
+Learn how and why to write stories in [the introduction](./introduction.md#using-args). For details on how args work, read on.
 
 ## Args object
 

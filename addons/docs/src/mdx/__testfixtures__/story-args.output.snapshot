@@ -65,7 +65,7 @@ componentNotes.args = {
   a: 1,
   b: 2,
 };
-componentNotes.parameters = { storySource: { source: 'Template.bind({})' } };
+componentNotes.parameters = { storySource: { source: 'args => <Button>Component notes</Button>' } };
 
 const componentMeta = { title: 'Button', includeStories: ['componentNotes'] };
 

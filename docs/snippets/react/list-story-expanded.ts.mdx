@@ -1,6 +1,7 @@
 ```ts
-// List.stories.ts
+// List.stories.tsx
 
+import React from 'react';
 import { Story, Meta } from '@storybook/react/types-6-0';
 import { List, ListProps } from './List';
 import { ListItem, ListItemProps } from './ListItem';
@@ -10,7 +11,7 @@ export default {
   title: 'List',
 } as Meta;
 
-export const Empty = : Story<ListProps> = (args) => <List {...args} />;
+export const Empty : Story<ListProps> = (args) => <List {...args} />;
 
 export const OneItem = (args) => (
   <List {...args}>

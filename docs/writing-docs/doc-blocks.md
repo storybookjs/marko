@@ -49,13 +49,13 @@ To use the `ArgsTable` in [DocsPage](./docs-page.md#component-parameter), export
 
 ### MDX
 
-To use the `ArgsTable` in MDX, use the Props block:
+To use the `ArgsTable` block in MDX, add the following:
 
 <!-- prettier-ignore-start -->
 
 <CodeSnippets
   paths={[
-    'common/component-story-mdx-argstable-propsblock.mdx.mdx',
+    'common/component-story-mdx-argstable-block.mdx.mdx',
   ]}
 />
 
@@ -65,9 +65,9 @@ To use the `ArgsTable` in MDX, use the Props block:
 
 `ArgsTables` are automatically inferred from your components and stories, but sometimes it's useful to customize the results.
 
-`ArgsTables` are rendered from an internal data structure called [ArgTypes](../api/mdx.md#argtypes). When you declare a story's component metadata, Docs automatically extracts ArgTypes based on the component's properties.
+`ArgsTables` are rendered from an internal data structure called [ArgTypes](../api/argtypes.md). When you declare a story's component metadata, Docs automatically extracts ArgTypes based on the component's properties.
 
-You can customize what's shown in the `ArgsTable` by customizing the `ArgTypes` data. This is currently available for [DocsPage](./docs-page.md) and `<Props story="xxx">` construct, but not for the `<Props of={component} />` construct.
+You can customize what's shown in the `ArgsTable` by customizing the `ArgTypes` data. This is currently available for [DocsPage](./docs-page.md) and `<ArgsTable story="xxx">` construct, but not for the `<ArgsTable of={component} />` construct.
 
 <div class="aside">
 
@@ -75,7 +75,7 @@ NOTE: This API is experimental and may change outside of the typical semver rele
 
 </div>
 
-The API documentation of `ArgTypes` is detailed in a [separate section](../api/mdx.md#argtypes), but to control the description and default values, use the following fields:
+The API documentation of `ArgTypes` is detailed in a [separate section](../api/argtypes.md), but to control the description and default values, use the following fields:
 
 | Field                          |                                           Description                                            |
 | :----------------------------- | :----------------------------------------------------------------------------------------------: |
