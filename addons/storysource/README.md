@@ -55,5 +55,5 @@ To customize the `source-loader`, pass `loaderOoptions`. Valid configurations ar
 
 ## Theming
 
-Storysource will automatically use the light or dark syntax theme based on your storybook theme. See [Theming Storybook](https://storybook.js.org/docs/configurations/theming/) for more information.
+Storysource will automatically use the light or dark syntax theme based on your storybook theme. See [Theming Storybook](https://storybook.js.org/docs/react/configure/theming) for more information.
 ![Storysource Light/Dark Themes](./docs/theming-light-dark.png)

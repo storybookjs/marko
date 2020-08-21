@@ -34,3 +34,15 @@ EmptyLink.storyName = 'Empty Link';
 export const LinkWithoutHref = () => <a>{`${text}...`}</a>;
 
 LinkWithoutHref.storyName = 'Link without href';
+
+export const Manual = () => <p>I'm a manual run</p>;
+Manual.parameters = {
+  a11y: {
+    manual: true,
+    config: {
+      disableOtherRules: true,
+      rules: [],
+    },
+    options: {},
+  },
+};

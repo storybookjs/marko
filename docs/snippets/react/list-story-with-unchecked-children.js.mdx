@@ -1,0 +1,12 @@
+```js
+// List.stories.js
+
+import React from 'react';
+
+const Template = (args) => <List {...args} />;
+
+export const OneItem = Template.bind({});
+OneItem.args = {
+  children: <Unchecked {...Unchecked.args} />,
+};
+```

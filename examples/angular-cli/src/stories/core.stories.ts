@@ -1,5 +1,6 @@
 import { addParameters } from '@storybook/angular';
 import { Button } from '@storybook/angular/demo';
+import { Story, Meta } from '@storybook/angular/types-6-0';
 
 const globalParameter = 'globalParameter';
 const chapterParameter = 'chapterParameter';
@@ -12,9 +13,9 @@ export default {
   parameters: {
     chapterParameter,
   },
-};
+} as Meta;
 
-export const PassedToStory = (_args, { parameters: { fileName, ...parameters } }) => ({
+export const PassedToStory: Story = (_args, { parameters: { fileName, ...parameters } }) => ({
   component: Button,
   props: {
     text: `Parameters are ${JSON.stringify(parameters, null, 2)}`,

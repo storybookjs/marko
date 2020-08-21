@@ -1,6 +1,6 @@
 {
   "name": "@storybook/client-api",
-  "version": "6.0.0-rc.28",
+  "version": "6.0.16",
   "description": "Storybook Client API",
   "keywords": [
     "storybook"
@@ -28,11 +28,11 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-rc.28",
-    "@storybook/channel-postmessage": "6.0.0-rc.28",
-    "@storybook/channels": "6.0.0-rc.28",
-    "@storybook/client-logger": "6.0.0-rc.28",
-    "@storybook/core-events": "6.0.0-rc.28",
+    "@storybook/addons": "6.0.16",
+    "@storybook/channel-postmessage": "6.0.16",
+    "@storybook/channels": "6.0.16",
+    "@storybook/client-logger": "6.0.16",
+    "@storybook/core-events": "6.0.16",
     "@storybook/csf": "0.0.1",
     "@types/qs": "^6.9.0",
     "@types/webpack-env": "^1.15.2",
@@ -53,7 +53,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "7a8556f396217ebcc5c1b1b91e517efb9941faa8",
+  "gitHead": "f01f03d7f756e32cf6f8cc8c9eff85799d36938c",
   "typesVersions": {
     "<=3.5": {
       "*": [

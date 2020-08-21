@@ -229,7 +229,7 @@ Just like CSF stories we can define `argTypes` to specify the controls used in t
 
 ## Addon compatibility
 
-Storybook also comes with a lot of [addons](https://storybook.js.org/addons/introduction) and a great API to customize as you wish. As some addons assume the story is rendered in JS, they may not work with `@storybook/server` (yet!).
+Storybook also comes with a lot of [addons](https://storybook.js.org/docs/react/configure/storybook-addons) and a great API to customize as you wish. As some addons assume the story is rendered in JS, they may not work with `@storybook/server` (yet!).
 
 Many addons that act on the manager side (such as `backgrounds` and `viewport`) will work out of the box with `@storybook/server` -- you can configure them with parameters written on the server as usual.
 
