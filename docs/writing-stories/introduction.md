@@ -198,7 +198,7 @@ When building design systems or component libraries, you may have two or more co
 
 <!-- prettier-ignore-end -->
 
-In such cases, it makes sense to render something a different function for each story:
+In such cases, it makes sense to render a different function for each story:
 
 <!-- prettier-ignore-start -->
 
