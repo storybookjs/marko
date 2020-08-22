@@ -59,14 +59,14 @@ const AddonPanel = React.memo<{
         <DesktopOnlyIconButton
           key="position"
           onClick={actions.togglePosition}
-          title="Change orientation"
+          title="Change addon orientation [D]"
         >
           <Icons icon={panelPosition === 'bottom' ? 'bottombar' : 'sidebaralt'} />
         </DesktopOnlyIconButton>
         <DesktopOnlyIconButton
           key="visibility"
           onClick={actions.toggleVisibility}
-          title="Hide addons"
+          title="Hide addons [A]"
         >
           <Icons icon="close" />
         </DesktopOnlyIconButton>

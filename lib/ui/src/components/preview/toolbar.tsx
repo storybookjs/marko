@@ -52,7 +52,7 @@ export const fullScreenTool: Addon = {
           <IconButton
             key="full"
             onClick={toggle as any}
-            title={value ? 'Exit full screen' : 'Go full screen'}
+            title={value ? 'Exit full screen [F]' : 'Go full screen [F]'}
           >
             <Icons icon={value ? 'close' : 'expand'} />
           </IconButton>
