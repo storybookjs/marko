@@ -49,6 +49,7 @@
     - [Deprecated clearDecorators](#deprecated-cleardecorators)
     - [Deprecated configure](#deprecated-configure)
     - [Deprecated support for duplicate kinds](#deprecated-support-for-duplicate-kinds)
+    - [Deprecated onBeforeRender](#deprecated-onbeforerender)
 - [From version 5.2.x to 5.3.x](#from-version-52x-to-53x)
   - [To main.js configuration](#to-mainjs-configuration)
     - [Using main.js](#using-mainjs)
@@ -797,6 +798,12 @@ export * from './Bar3.stories'
 
 export const SomeStory = () => ...;
 ```
+
+#### Deprecated onBeforeRender
+
+The `@storybook/addon-docs` previously accepted a `jsx` option called `onBeforeRender`, which was unfortunately named as it was called after the render.
+
+We've renamed it `transformSource` and also allowed it to receive the `StoryContext` in case source rendering requires additional information.
 
 ## From version 5.2.x to 5.3.x
 

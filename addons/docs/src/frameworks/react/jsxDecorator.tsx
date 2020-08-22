@@ -1,5 +1,7 @@
 import React from 'react';
 import reactElementToJSXString, { Options } from 'react-element-to-jsx-string';
+import dedent from 'ts-dedent';
+import deprecate from 'util-deprecate';
 
 import { addons, StoryContext } from '@storybook/addons';
 import { logger } from '@storybook/client-logger';
@@ -15,17 +17,37 @@ interface JSXOptions {
   enableBeautify?: boolean;
   /** Override the display name used for a component */
   displayName?: string | Options['displayName'];
-  /** A function ran before the story is rendered */
-  onBeforeRender?(dom: string, context?: StoryContext): string;
+  /** Deprecated: A function ran after the story is rendered */
+  onBeforeRender?(dom: string): string;
+  /** A function ran after a story is rendered (prefer this over `onBeforeRender`) */
+  transformSource?(dom: string, context?: StoryContext): string;
 }
 
 /** Run the user supplied onBeforeRender function if it exists */
-const applyBeforeRender = (domString: string, options: JSXOptions, context?: StoryContext) => {
+const applyBeforeRender = (domString: string, options: JSXOptions) => {
   if (typeof options.onBeforeRender !== 'function') {
     return domString;
   }
 
-  return options.onBeforeRender(domString, context);
+  const deprecatedOnBeforeRender = deprecate(
+    options.onBeforeRender,
+    dedent`
+      StoryFn.parameters.jsx.onBeforeRender was deprecated.
+      Prefer StoryFn.parameters.jsx.transformSource instead.
+      See https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-onbeforerender for details.
+    `
+  );
+
+  return deprecatedOnBeforeRender(domString);
+};
+
+/** Run the user supplied transformSource function if it exists */
+const applyTransformSource = (domString: string, options: JSXOptions, context?: StoryContext) => {
+  if (typeof options.transformSource !== 'function') {
+    return domString;
+  }
+
+  return options.transformSource(domString, context);
 };
 
 /** Apply the users parameters and render the jsx for a story */
@@ -74,7 +96,7 @@ export const renderJsx = (code: React.ReactElement, options: JSXOptions) => {
   const result = React.Children.map(code, (c) => {
     // @ts-ignore FIXME: workaround react-element-to-jsx-string
     const child = typeof c === 'number' ? c.toString() : c;
-    let string = reactElementToJSXString(child, opts as Options);
+    let string = applyBeforeRender(reactElementToJSXString(child, opts as Options), options);
     const matches = string.match(/\S+=\\"([^"]*)\\"/g);
 
     if (matches) {
@@ -128,7 +150,7 @@ export const jsxDecorator = (storyFn: any, context: StoryContext) => {
   let jsx = '';
   const rendered = renderJsx(story, options);
   if (rendered) {
-    jsx = applyBeforeRender(rendered, options, context);
+    jsx = applyTransformSource(rendered, options, context);
   }
 
   channel.emit(SNIPPET_RENDERED, (context || {}).id, jsx);
