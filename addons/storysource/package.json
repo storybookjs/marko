@@ -39,7 +39,7 @@
     "core-js": "^3.0.1",
     "estraverse": "^4.2.0",
     "loader-utils": "^2.0.0",
-    "prettier": "^2.0.5",
+    "prettier": "~2.0.5",
     "prop-types": "^15.7.2",
     "react": "^16.9.17",
     "react-syntax-highlighter": "^12.2.1",
