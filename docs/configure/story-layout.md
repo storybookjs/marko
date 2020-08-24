@@ -16,6 +16,8 @@ You can add the parameter to your [`./storybook/preview.js`](./overview.md#confi
 
 <!-- prettier-ignore-end -->
 
+![Layout params centered story](./layout-params-story-centered.png)
+
 In the example above, Storybook will center all stories in the UI. `layout` accepts these options:
 
 - `centered`: center the component horizontally and vertically in the Canvas
