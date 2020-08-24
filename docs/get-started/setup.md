@@ -96,7 +96,7 @@ If you have global imported styles, create a file called [`.storybook/preview.js
 </details>
 
 <details>
-  <summary>Add external CSS or fonts in the &#60head&#62</summary>
+  <summary>Add external CSS or fonts in the &lt;head&gt;</summary>
 
 Alternatively if you want to inject a CSS link tag to the `<head>` directly (or some other resource like a font link), you can use [`.storybook/preview-head.html`](../configure/story-rendering.md#adding-to-&#60head&#62) to add arbitrary HTML.
 
