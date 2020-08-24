@@ -197,3 +197,13 @@ export const react_in_yarn_workspace: Parameters = {
     `yarn add react react-dom --silent -W`,
   ].join(' && '),
 };
+
+export const cra_bench: Parameters = {
+  name: 'cra_bench',
+  version: 'latest',
+  generator: [
+    'npx create-react-app@{{version}} {{name}}-{{version}}',
+    'cd {{name}}-{{version}}',
+    "npx @storybook/bench 'npx sb init'",
+  ].join(' && '),
+};
