@@ -1,3 +1,17 @@
+## 6.0.17 (August 25, 2020)
+
+### Bug Fixes
+
+- Addon-essentials: Log info on config override ([#12211](https://github.com/storybookjs/storybook/pull/12211))
+
+### Maintenance
+
+- Build: Remove outdated CLI tests ([#12207](https://github.com/storybookjs/storybook/pull/12207))
+
+### Dependency Upgrades
+
+- Source-loader: Pin prettier to 2.0.x version ([#12226](https://github.com/storybookjs/storybook/pull/12226))
+
 ## 6.0.16 (August 20, 2020)
 
 ### Bug Fixes
