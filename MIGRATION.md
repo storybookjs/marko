@@ -707,7 +707,7 @@ The addon's source code is still available in the [deprecated-addons repo](https
 
 #### Removed addon-centered
 
-In 6.0 we removed the centered addon. Centering is now core feature of storybook, so w no longer need an addon.
+In 6.0 we removed the centered addon. Centering is now core feature of storybook, so we no longer need an addon.
 
 Remove the addon-centered decorator and instead add a `layout` parameter:
 
