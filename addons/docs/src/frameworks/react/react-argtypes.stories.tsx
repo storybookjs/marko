@@ -6,13 +6,11 @@ import { Args } from '@storybook/api';
 import { combineParameters } from '@storybook/client-api';
 
 import { extractArgTypes } from './extractArgTypes';
-import { inferControls } from '../common/inferControls';
 import { Component } from '../../blocks';
 
 const argsTableProps = (component: Component) => {
   const argTypes = extractArgTypes(component);
-  const controls = inferControls(argTypes);
-  const rows = combineParameters(argTypes, controls);
+  const rows = combineParameters(argTypes);
   return { rows };
 };
 
