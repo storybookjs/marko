@@ -1,3 +1,14 @@
+## 6.0.18 (August 26, 2020)
+
+### Bug Fixes
+
+- UI: Fix `disable` parameter to hide addon panel ([#12171](https://github.com/storybookjs/storybook/pull/12171))
+- Addon-controls: Fix controls from args ([#12230](https://github.com/storybookjs/storybook/pull/12230))
+
+### Dependency Upgrades
+
+- Mithril: Add Mithril v2.0.0 to peer dependencies ([#12229](https://github.com/storybookjs/storybook/pull/12229))
+
 ## 6.0.17 (August 25, 2020)
 
 ### Bug Fixes
