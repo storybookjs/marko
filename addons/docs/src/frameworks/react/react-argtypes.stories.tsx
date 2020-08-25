@@ -10,8 +10,8 @@ import { Component } from '../../blocks';
 
 const argsTableProps = (component: Component) => {
   const argTypes = extractArgTypes(component);
-  const context = { __isArgsStory: true, argTypes } as unknown;
-  const rows = inferControls(context as StoryContext);
+  const parameters = { __isArgsStory: true, argTypes };
+  const rows = inferControls(({ parameters } as unknown) as StoryContext);
   return { rows };
 };
 
