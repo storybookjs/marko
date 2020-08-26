@@ -1,3 +1,9 @@
+## 6.0.19 (August 27, 2020)
+
+### Bug Fixes
+
+* UI: Fix eject and copy URLs for composition ([#12233](https://github.com/storybookjs/storybook/pull/12233))
+
 ## 5.3.20 (August 27, 2020)
 
 ### Bug Fixes
