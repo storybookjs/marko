@@ -10,7 +10,7 @@ const branch = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
 
 const branchToHook = {
   master: FRONTPAGE_WEBHOOK,
-  '6.0-docs': FRONTPAGE_WEBHOOK_NEXT, // <- NOTE: change this to `next` when we merge the new docs
+  'next': FRONTPAGE_WEBHOOK_NEXT, // <- NOTE: change this to `next` when we merge the new docs
 };
 
 console.log('build-frontpage');
