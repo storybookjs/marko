@@ -16,7 +16,7 @@
 typescript: ['kroeder', 'gaetanmaisse', 'ndelangen', 'emilio-martinez']
 theming: ['ndelangen', 'domyen']
 cra: ['mrmckeb']
-cli: ['Keraito']
+cli: ['yannbf', 'tooppaaa']
 dependencies: ['ndelangen']
 'babel / webpack': ['ndelangen', 'igor-dv', 'shilman']
 'yarn / npm': ['ndelangen', 'tmeasday']

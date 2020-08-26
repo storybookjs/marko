@@ -37,6 +37,7 @@ import { storySort } from './storySort';
 import { combineParameters } from './parameters';
 import { ensureArgTypes } from './ensureArgTypes';
 import { inferArgTypes } from './inferArgTypes';
+import { inferControls } from './inferControls';
 
 interface StoryOptions {
   includeDocsOnly?: boolean;
@@ -375,7 +376,9 @@ export default class StoryStore {
     const { passArgsFirst = true } = combinedParameters;
     const __isArgsStory = passArgsFirst && original.length > 0;
 
-    this._argTypesEnhancers.push(inferArgTypes); // lowest priority
+    // run at the end
+    this._argTypesEnhancers.push(inferArgTypes);
+    this._argTypesEnhancers.push(inferControls);
     const { argTypes = {} } = this._argTypesEnhancers.reduce(
       (accumulatedParameters: Parameters, enhancer) => ({
         ...accumulatedParameters,
