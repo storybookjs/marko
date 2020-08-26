@@ -1,3 +1,11 @@
+## 5.3.20 (August 27, 2020)
+
+### Bug Fixes
+
+- React-native server: Fix addon tabs ([#10468](https://github.com/storybookjs/storybook/pull/10468))
+- Addon-docs: Fix babel JSX handling in MDX ([#11448](https://github.com/storybookjs/storybook/pull/11448))
+- Revert "Fix: Search stories" ([#10916](https://github.com/storybookjs/storybook/pull/10916))
+
 ## 6.0.18 (August 26, 2020)
 
 ### Bug Fixes
