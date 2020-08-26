@@ -1,7 +1,8 @@
-## 5.3.20 (July 7, 2020)
+## 5.3.20 (August 27, 2020)
 
 ### Bug Fixes
 
+- React-native server: Fix addon tabs ([#10468](https://github.com/storybookjs/storybook/pull/10468))
 - Addon-docs: Fix babel JSX handling in MDX ([#11448](https://github.com/storybookjs/storybook/pull/11448))
 - Revert "Fix: Search stories" ([#10916](https://github.com/storybookjs/storybook/pull/10916))
 
@@ -1506,7 +1507,7 @@ Publish failed
 CSF users: This is potentially a breaking change. If you want to opt-out of the new default display name calculation (`lodash.startCase`) you can add the following to your SB config:
 
 ```js
-addParameters({ options: { makeDisplayName: key => key } });
+addParameters({ options: { makeDisplayName: (key) => key } });
 ```
 
 ### Features
