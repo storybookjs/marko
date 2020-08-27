@@ -58,14 +58,13 @@ export const angular: Parameters = baseAngular;
 //   preBuildCommand: 'ember build',
 // };
 
-// TODO: Example stories used in CLI need to be updated
-// export const html: Parameters = {
-//   name: 'html',
-//   version: 'latest',
-//   generator: fromDeps(),
-//   autoDetect: false,
-//   additionalDeps: ['react', 'react-dom'],
-// };
+export const html: Parameters = {
+  name: 'html',
+  version: 'latest',
+  generator: fromDeps(),
+  autoDetect: false,
+  additionalDeps: ['react', 'react-dom'],
+};
 
 // TODO: broken
 // export const marionette: Parameters = {
