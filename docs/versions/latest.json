@@ -1,1 +1,1 @@
-{"version":"6.0.19","info":{"plain":"### Bug Fixes\n\n* UI: Fix eject and copy URLs for composition ([#12233](https://github.com/storybookjs/storybook/pull/12233))"}}
+{"version":"6.0.20","info":{"plain":"### Bug Fixes\n\n- ArgsTable: Fix union type splitting ([#11868](https://github.com/storybookjs/storybook/pull/11868))\n- CLI: Fix import of Button in react mdx template ([#12252](https://github.com/storybookjs/storybook/pull/12252))"}}
