@@ -1,3 +1,10 @@
+## 6.0.20 (August 28, 2020)
+
+### Bug Fixes
+
+- ArgsTable: Fix union type splitting ([#11868](https://github.com/storybookjs/storybook/pull/11868))
+- CLI: Fix import of Button in react mdx template ([#12252](https://github.com/storybookjs/storybook/pull/12252))
+
 ## 5.3.21 (August 28, 2020)
 
 ### Bug Fixes
