@@ -59,7 +59,6 @@ storiesOf('Button', module).add(
 );
 ```
 
-
 We can set the parameters and decorators for all stories of a component using the `.addParameters` and `.addDecorator` methods. Note that only one `.addParameters` call is needed, where `.addDecorator` needs to be called once for every decorator you add.
 
 ```js
