@@ -229,7 +229,7 @@ export const AuthBlock: FunctionComponent<{ loginUrl: string; id: string }> = ({
 export const ErrorBlock: FunctionComponent<{ error: Error }> = ({ error }) => (
   <Contained>
     <Spaced>
-      <Text>
+      <Text as="div">
         Oh no! Something went wrong loading this Storybook.
         <br />
         <WithTooltip
