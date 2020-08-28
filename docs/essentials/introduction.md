@@ -11,6 +11,27 @@ A major strength of Storybook are [addons](/addons/) that extend Storybook’s U
 - [Backgrounds](./backgrounds.md)
 - [Toolbars & globals](./toolbars-and-globals.md)
 
+<details>
+<summary>Upgraders may need to install and configure essential addons manually.</summary>
+
+Install the addon-essentials package from `npm`.
+
+```shell
+npm install --save-dev @storybook/addon-essentials
+```
+
+Then configure Storybook to use it by modifying the `main.js` configuration file.
+
+```js
+// .storybook/main.js
+
+module.exports = {
+  stories: ['../my-project/src/components/*.@(js|md)'],
+  addons: ['@storybook/addon-essentials'],
+};
+```
+</details>
+
 ### Configuration
 
 Essentials is "zero config”, it comes with a recommended configuration out of the box.
