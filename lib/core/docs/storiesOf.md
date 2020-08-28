@@ -31,6 +31,8 @@ storiesOf('Button', module)
 
 The string argument to `storiesOf` is the component title. If you pass a string like `'Widgets|Button/Button'` it can also be used to position your component's story within Storybook's story hierarchy.
 
+The second argument to `storiesOf` is the module object, the one you might be familiar with from ES5's `module.exports`. Storybook needs a reference to the file/module where your story lives to enable hot-module-replacement. If you do not supply it, you'd need to refresh your browser for every change you make.
+
 Each `.add` call takes a story name, a story function that returns a renderable object (JSX in the case of React), and optionally some parameters, which are described below.
 
 ## Decorators and parameters
