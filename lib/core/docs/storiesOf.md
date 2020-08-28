@@ -31,7 +31,7 @@ storiesOf('Button', module)
 
 The string argument to `storiesOf` is the component title. If you pass a string like `'Widgets|Button/Button'` it can also be used to position your component's story within Storybook's story hierarchy.
 
-The second argument to `storiesOf` is the module object, the one you might be familiar with from ES5's `module.exports`. Storybook needs a reference to the file/module where your story lives to enable hot-module-replacement. If you do not supply it, you'd need to refresh your browser for every change you make.
+The second argument of `storiesOf` is a reference to each story available. Storybook needs it to enable hot-module-replacement. If it's not included you'll need to refresh your browser with each change you make.
 
 Each `.add` call takes a story name, a story function that returns a renderable object (JSX in the case of React), and optionally some parameters, which are described below.
 
@@ -59,7 +59,7 @@ storiesOf('Button', module).add(
 );
 ```
 
-We can set the parameters and decorators for all stories of a component using the `.addParameters` and `.addDecorator` methods. Note that only one `.addParameters` call is needed, where `.addDecorator` needs to be called once for every decorator you add.
+We can control how the component's stories will render with parameters and decorators. You can use as many `.addDecorators` as you need, but you can only use one `.addParameters`, as you can see in the example below:
 
 ```js
 storiesOf('Button', module)
@@ -76,9 +76,7 @@ storiesOf('Button', module)
   ));
 ```
 
-Finally, global parameters for all stories can be set via the parameters export of your `.storybook/previews.js`, see [this page](https://storybook.js.org/docs/react/writing-stories/parameters#global-parameters) for an example.
-
-Global decorators for all stories can be set via the decorators export of your `.storybook/preview.js`, see [this page](https://storybook.js.org/docs/react/writing-stories/decorators#global-decorators) for an example.
+Parameters and decorators can also be used globally, you can define them in your .storybook/preview.js. Take a look [here](https://storybook.js.org/docs/react/writing-stories/parameters#global-parameters) to learn more about global parameters and [here](https://storybook.js.org/docs/react/writing-stories/decorators#global-decorators) for global decorators.
 
 ## Component Story Format migration
 
