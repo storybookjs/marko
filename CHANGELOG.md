@@ -1,3 +1,9 @@
+## 5.3.21 (August 28, 2020)
+
+### Bug Fixes
+
+- Core: Add skip dispose option to ClientApi ([#9868](https://github.com/storybookjs/storybook/pull/9868))
+
 ## 5.3.20 (August 27, 2020)
 
 ### Bug Fixes
