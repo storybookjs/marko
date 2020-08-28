@@ -1,1 +1,1 @@
-{"version":"6.0.16","info":{"plain":"### Bug Fixes\n\n- Addon-docs: Fix Vue ArgsTable sanitizing of item.type.elements to item.type.value ([#12165](https://github.com/storybookjs/storybook/pull/12165))"}}
+{"version":"6.0.20","info":{"plain":"### Bug Fixes\n\n- ArgsTable: Fix union type splitting ([#11868](https://github.com/storybookjs/storybook/pull/11868))\n- CLI: Fix import of Button in react mdx template ([#12252](https://github.com/storybookjs/storybook/pull/12252))"}}
