@@ -1,6 +1,6 @@
 {
   "name": "@storybook/mithril",
-  "version": "5.3.20",
+  "version": "5.3.21",
   "description": "Storybook for Mithril: Develop Mithril Component in isolation.",
   "keywords": [
     "storybook"
@@ -36,8 +36,8 @@
   "dependencies": {
     "@babel/core": "^7.6.2",
     "@babel/plugin-transform-react-jsx": "^7.3.0",
-    "@storybook/addons": "5.3.20",
-    "@storybook/core": "5.3.20",
+    "@storybook/addons": "5.3.21",
+    "@storybook/core": "5.3.21",
     "@types/mithril": "^2.0.0",
     "@types/webpack-env": "^1.15.0",
     "core-js": "^3.0.1",
