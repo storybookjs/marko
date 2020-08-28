@@ -47,7 +47,7 @@ storiesOf('Button', module).add(
 );
 ```
 
-And finally, story-level decorators are provided via parameters:
+Story-level decorators are provided via parameters:
 
 ```js
 storiesOf('Button', module).add(
@@ -56,6 +56,28 @@ storiesOf('Button', module).add(
   { decorators: [withKnobs] }
 );
 ```
+
+
+We can set the parameters and decorators for all stories of a component using the `.addParameters` and `.addDecorator` methods. Note that only one `.addParameters` call is needed, where `.addDecorator` needs to be called once for every decorator you add.
+
+```js
+storiesOf('Button', module)
+  .addParameters({backgrounds: {values: [{name: "red" value: "#f00"}]}})
+  .addDecorator((Story) => <div style={{ margin: '3em' }}><Story/></div>)
+  .addDecorator((Story) => <div style={{ height: '600px' }}><Story/></div>)
+  .add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>)
+  .add('with some emoji', () => (
+    <Button onClick={action('clicked')}>
+      <span role="img" aria-label="so cool">
+        😀 😎 👍 💯
+      </span>
+    </Button>
+  ));
+```
+
+Finally, global parameters for all stories can be set via the parameters export of your `.storybook/previews.js`, see [this page](https://storybook.js.org/docs/react/writing-stories/parameters#global-parameters) for an example.
+
+Global decorators for all stories can be set via the decorators export of your `.storybook/preview.js`, see [this page](https://storybook.js.org/docs/react/writing-stories/decorators#global-decorators) for an example.
 
 ## Component Story Format migration
 
