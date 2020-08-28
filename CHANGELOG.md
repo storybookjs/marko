@@ -1513,7 +1513,7 @@ Publish failed
 CSF users: This is potentially a breaking change. If you want to opt-out of the new default display name calculation (`lodash.startCase`) you can add the following to your SB config:
 
 ```js
-addParameters({ options: { makeDisplayName: (key) => key } });
+addParameters({ options: { makeDisplayName: key => key } });
 ```
 
 ### Features
