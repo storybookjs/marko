@@ -1,4 +1,5 @@
 import React, { Component, Fragment, ReactElement } from 'react';
+import { Consumer, Combo } from '@storybook/api';
 import { styled } from '@storybook/theming';
 import { Tabs, Icons, IconButton } from '@storybook/components';
 
@@ -14,6 +15,16 @@ export interface SafeTabProps {
   id: string;
   children: ReactElement;
 }
+
+const PanelMapper = ({ api }: Combo) => {
+  const { togglePanel, panelPosition } = api.getShortcutKeys();
+  return {
+    shortcuts: {
+      togglePanel,
+      panelPosition,
+    },
+  };
+};
 
 const SafeTabContent = React.memo<SafeTabProps>(({ children }) => children);
 
@@ -50,36 +61,40 @@ const AddonPanel = React.memo<{
   panelPosition?: 'bottom' | 'right';
   absolute?: boolean;
 }>(({ panels, actions, selectedPanel = null, panelPosition = 'right', absolute = true }) => (
-  <Tabs
-    absolute={absolute}
-    selected={selectedPanel}
-    actions={actions}
-    tools={
-      <Fragment>
-        <DesktopOnlyIconButton
-          key="position"
-          onClick={actions.togglePosition}
-          title="Change addon orientation [D]"
-        >
-          <Icons icon={panelPosition === 'bottom' ? 'bottombar' : 'sidebaralt'} />
-        </DesktopOnlyIconButton>
-        <DesktopOnlyIconButton
-          key="visibility"
-          onClick={actions.toggleVisibility}
-          title="Hide addons [A]"
-        >
-          <Icons icon="close" />
-        </DesktopOnlyIconButton>
-      </Fragment>
-    }
-    id="storybook-panel-root"
-  >
-    {Object.entries(panels).map(([k, v]) => (
-      <SafeTab key={k} id={k} title={v.title}>
-        {v.render}
-      </SafeTab>
-    ))}
-  </Tabs>
+  <Consumer filter={PanelMapper}>
+    {({ shortcuts }) => (
+      <Tabs
+        absolute={absolute}
+        selected={selectedPanel}
+        actions={actions}
+        tools={
+          <Fragment>
+            <DesktopOnlyIconButton
+              key="position"
+              onClick={actions.togglePosition}
+              title={`Change addon orientation [${shortcuts.panelPosition}]`}
+            >
+              <Icons icon={panelPosition === 'bottom' ? 'bottombar' : 'sidebaralt'} />
+            </DesktopOnlyIconButton>
+            <DesktopOnlyIconButton
+              key="visibility"
+              onClick={actions.toggleVisibility}
+              title={`Hide addons [${shortcuts.togglePanel}]`}
+            >
+              <Icons icon="close" />
+            </DesktopOnlyIconButton>
+          </Fragment>
+        }
+        id="storybook-panel-root"
+      >
+        {Object.entries(panels).map(([k, v]) => (
+          <SafeTab key={k} id={k} title={v.title}>
+            {v.render}
+          </SafeTab>
+        ))}
+      </Tabs>
+    )}
+  </Consumer>
 ));
 AddonPanel.displayName = 'AddonPanel';
 

@@ -40,6 +40,7 @@ export const Toolbar = styled(Bar)(
 const fullScreenMapper = ({ api, state }: Combo) => ({
   toggle: api.toggleFullscreen,
   value: state.layout.isFullscreen,
+  shortcut: api.getShortcutKeys().fullScreen,
 });
 
 export const fullScreenTool: Addon = {
@@ -47,12 +48,12 @@ export const fullScreenTool: Addon = {
   match: (p) => p.viewMode === 'story',
   render: () => (
     <Consumer filter={fullScreenMapper}>
-      {({ toggle, value }) => (
+      {({ toggle, value, shortcut }) => (
         <S.DesktopOnly>
           <IconButton
             key="full"
             onClick={toggle as any}
-            title={`${value ? 'Exit full screen' : 'Go full screen'} [F]`}
+            title={`${value ? 'Exit full screen' : 'Go full screen'} [${shortcut}]`}
           >
             <Icons icon={value ? 'close' : 'expand'} />
           </IconButton>
