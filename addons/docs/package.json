@@ -75,9 +75,6 @@
     "regenerator-runtime": "^0.13.3",
     "remark-external-links": "^6.0.0",
     "remark-slug": "^6.0.0",
-    "svelte-adapter": "^0.4.0",
-    "svelte-preprocess": "^4.1.2",
-    "sveltedoc-parser": "^3.0.4",
     "ts-dedent": "^1.1.1",
     "util-deprecate": "^1.0.2"
   },
