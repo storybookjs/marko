@@ -4583,6 +4583,11 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
   integrity sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
 
+"@types/pug@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@types/pug/-/pug-2.0.4.tgz#8772fcd0418e3cd2cc171555d73007415051f4b2"
+  integrity sha1-h3L80EGOPNLMFxVV1zAHQVBR9LI=
+
 "@types/puppeteer-core@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/puppeteer-core/-/puppeteer-core-2.0.0.tgz#3b7fbbac53d56b566f5ef096116e1d60d504aa45"
@@ -4705,6 +4710,13 @@
   integrity sha512-8gBudvllD2A/c0CcEX/BivIDorHFt5UI5m46TsNj8DjWCCTTZT74kEe4g+QsY7P/B9WdO98d82zZgXO/RQzu2Q==
   dependencies:
     "@types/glob" "*"
+    "@types/node" "*"
+
+"@types/sass@^1.16.0":
+  version "1.16.0"
+  resolved "https://registry.yarnpkg.com/@types/sass/-/sass-1.16.0.tgz#b41ac1c17fa68ffb57d43e2360486ef526b3d57d"
+  integrity sha512-2XZovu4NwcqmtZtsBR5XYLw18T8cBCnU2USFHTnYLLHz9fkhnoEMoDsqShJIOFsFhn5aJHjweiUUdTrDGujegA==
+  dependencies:
     "@types/node" "*"
 
 "@types/selenium-webdriver@^3.0.0":
@@ -29793,6 +29805,11 @@ supports-hyperlinks@^2.0.0:
     has-flag "^4.0.0"
     supports-color "^7.0.0"
 
+svelte-adapter@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/svelte-adapter/-/svelte-adapter-0.4.0.tgz#9a8f9698365b3e9328c1cd77aa553ead27024a3b"
+  integrity sha512-TIYZ5Zu2Ov3AaHI5BAl/8BBWPmLMSsvdlYpkhaDm4YJkmfZ5Hfn+QcMNaR1akKLG8EXPQ2i0tHMVuOV0hr9WSw==
+
 svelte-dev-helper@^1.1.9:
   version "1.1.9"
   resolved "https://registry.yarnpkg.com/svelte-dev-helper/-/svelte-dev-helper-1.1.9.tgz#7d187db5c6cdbbd64d75a32f91b8998bde3273c3"
@@ -29810,6 +29827,16 @@ svelte-loader@^2.13.4:
   dependencies:
     loader-utils "^1.1.0"
     svelte-dev-helper "^1.1.9"
+
+svelte-preprocess@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/svelte-preprocess/-/svelte-preprocess-4.1.2.tgz#82567bf5f6fdfa44ff42ef82ea32c1ddf3cc6c99"
+  integrity sha512-l665fccStg1W2BlD0MUfFLmbTCd2tIsSvj18IzfyAoJ46sZqqeT8DPuqpNyIJ//zvRZl2g7aHNzqYAH8FOCEqg==
+  dependencies:
+    "@types/pug" "^2.0.4"
+    "@types/sass" "^1.16.0"
+    detect-indent "^6.0.0"
+    strip-indent "^3.0.0"
 
 svelte@^3.18.1:
   version "3.22.3"
