@@ -41,7 +41,9 @@ jobs:
             - app
             - lib
   build:
-    executor: sb_node
+    executor:
+      class: xlarge
+      name: sb_node
     steps:
       - checkout
       - attach_workspace:
@@ -69,7 +71,9 @@ jobs:
           command: |
             yarn run-chromatics
   packtracker:
-    executor: sb_node
+    executor:
+      class: small
+      name: sb_node
     steps:
       - checkout
       - attach_workspace:
@@ -95,7 +99,9 @@ jobs:
           paths:
             - built-storybooks
   publish:
-    executor: sb_node
+    executor:
+      class: xlarge
+      name: sb_node
     steps:
       - checkout
       - attach_workspace:
@@ -108,6 +114,9 @@ jobs:
           paths:
             - .verdaccio-cache
   examples-v2:
+    executor:
+      class: xlarge
+      name: sb_node
     docker:
       - image: cypress/included:4.7.0
         environment:
@@ -192,7 +201,9 @@ jobs:
           destination: cypress
 
   smoke-tests:
-    executor: sb_node
+    executor:
+      class: small
+      name: sb_node
     steps:
       - checkout
       - attach_workspace:
