@@ -1,0 +1,15 @@
+```js
+// Button.stories.js
+
+import React from 'react';
+
+const Template = (args) => <Button {...args} />;
+
+// Each story then reuses that template
+export const Primary = Template.bind({});
+
+Primary.args = {
+  primary: true,
+  label: 'Primary',
+};
+```

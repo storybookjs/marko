@@ -12,6 +12,7 @@ exports[`Storyshots Core/Parameters passed to story 1`] = `
   "globalParameter": "globalParameter",
   "framework": "riot",
   "chapterParameter": "chapterParameter",
+  "args": {},
   "argTypes": {},
   "__id": "core-parameters--passed-to-story",
   "__isArgsStory": true,

@@ -147,6 +147,7 @@ const Preview: FunctionComponent<PreviewProps> = (props) => {
 
   const tabs = useTabs(previewId, baseUrl, withLoader, getElements, story);
 
+  const shouldScale = viewMode === 'story';
   const isToolshown =
     !(viewMode === 'docs' && tabs.filter((t) => !t.hidden).length < 2) && options.isToolshown;
 
@@ -179,7 +180,7 @@ const Preview: FunctionComponent<PreviewProps> = (props) => {
           <title>{description}</title>
         </Helmet>
       )}
-      <ZoomProvider>
+      <ZoomProvider shouldScale={shouldScale}>
         <ToolbarComp key="tools" story={story} api={api} isShown={isToolshown} tabs={tabs} />
         <S.FrameWrap key="frame" offset={isToolshown ? 40 : 0}>
           {tabs.map(({ render: Render, match, ...t }, i) => {

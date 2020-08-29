@@ -1,1 +1,0 @@
-{"version":"6.0.0-rc.23","info":{"plain":"### Bug Fixes\n\n* Source-loader: Fix storiesOf missing `__STORY__` variable ([#11765](https://github.com/storybookjs/storybook/pull/11765))"}}

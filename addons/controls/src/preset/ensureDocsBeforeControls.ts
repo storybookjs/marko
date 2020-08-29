@@ -23,7 +23,10 @@ export const verifyDocsBeforeControls = (addons: Entry[]) => {
 };
 
 export const ensureDocsBeforeControls = (configDir: string) => {
-  const mainFile = path.join(process.cwd(), configDir, 'main');
+  const mainFile = path.isAbsolute(configDir)
+    ? path.join(configDir, 'main')
+    : path.join(process.cwd(), configDir, 'main');
+
   try {
     // eslint-disable-next-line global-require,import/no-dynamic-require
     const main = require(mainFile);

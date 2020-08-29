@@ -161,29 +161,25 @@ const loadStories = (
       if (isExportStory(key, meta)) {
         const storyFn = exports[key];
         const { story } = storyFn;
+        const { storyName = story?.name } = storyFn;
+
+        // storyFn.x and storyFn.story.x get merged with
+        // storyFn.x taking precedence in the merge
+        const parameters = { ...story?.parameters, ...storyFn.parameters };
+        const decorators = [...(storyFn.decorators || []), ...(story?.decorators || [])];
+        const args = { ...story?.args, ...storyFn.args };
+        const argTypes = { ...story?.argTypes, ...storyFn.argTypes };
+
         if (story) {
           logger.debug('deprecated story', story);
           deprecatedStoryAnnotationWarning();
         }
 
-        // storyFn.x takes precedence over storyFn.story.x, but
-        // mixtures are supported
-        const {
-          storyName = story?.name,
-          parameters = story?.parameters,
-          decorators = story?.decorators,
-          args = story?.args,
-          argTypes = story?.argTypes,
-        } = storyFn;
-
-        const decoratorParams = decorators ? { decorators } : null;
         const exportName = storyNameFromExport(key);
-        const idParams = { __id: toId(componentId || kindName, exportName) };
-
         const storyParams = {
           ...parameters,
-          ...decoratorParams,
-          ...idParams,
+          __id: toId(componentId || kindName, exportName),
+          decorators,
           args,
           argTypes,
         };
@@ -198,7 +194,7 @@ const configureDeprecationWarning = deprecate(
   () => {},
   `\`configure()\` is deprecated and will be removed in Storybook 7.0. 
 Please use the \`stories\` field of \`main.js\` to load stories.
-Read more at https://github.com/storybookjs/storybook/MIGRATE.md#deprecated-configure`
+Read more at https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-configure`
 );
 let loaded = false;
 export const loadCsf = ({

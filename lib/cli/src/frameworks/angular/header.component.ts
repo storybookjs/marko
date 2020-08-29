@@ -50,7 +50,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export default class HeaderComponent {
   @Input()
-  user = null;
+  user: unknown = null;
 
   @Output()
   onLogin = new EventEmitter<Event>();

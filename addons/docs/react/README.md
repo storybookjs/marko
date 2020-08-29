@@ -107,13 +107,11 @@ Some **markdown** description, or whatever you want.
 Storybook Docs renders all React stories inline on the page by default. If you want to render stories in an `iframe` so that they are better isolated. To do this, update `.storybook/preview.js`:
 
 ```js
-import { addParameters } from '@storybook/react';
-
-addParameters({
+export const parameters = {
   docs: {
     inlineStories: false,
   },
-});
+};
 ```
 
 ## TypeScript props with `react-docgen`

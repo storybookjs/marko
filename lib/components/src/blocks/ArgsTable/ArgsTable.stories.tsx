@@ -23,6 +23,8 @@ const htmlElementSubsection = { subcategory: 'HTMLElement' };
 const stringType = ArgRow.String.args.row;
 const numberType = ArgRow.Number.args.row;
 
+const longEnumType = ArgRow.LongEnum.args.row;
+
 const Template = (args) => <ArgsTable {...args} />;
 
 export const Normal = Template.bind({});
@@ -129,3 +131,11 @@ Error.args = {
 
 export const Empty = Template.bind({});
 Empty.args = { rows: {} };
+
+export const WithDefaultExpandedArgs = Template.bind({});
+WithDefaultExpandedArgs.args = {
+  rows: {
+    longEnumType,
+  },
+  initialExpandedArgs: true,
+};
