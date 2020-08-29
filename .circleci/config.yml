@@ -25,10 +25,7 @@ jobs:
             - core-dependencies-v5-
       - run:
           name: Install dependencies
-          command: yarn install
-      - run:
-          name: Check that yarn.lock is not corrupted
-          command: yarn repo-dirty-check
+          command: yarn install --frozen-lockfile
       - save_cache:
           name: Cache core dependencies
           key: core-dependencies-v5-{{ checksum "yarn.lock" }}
