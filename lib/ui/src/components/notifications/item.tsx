@@ -1,7 +1,8 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, SyntheticEvent } from 'react';
 import { State } from '@storybook/api';
 import { styled, lighten, darken } from '@storybook/theming';
 import { Link } from '@storybook/router';
+import { IconButton, Icons } from '@storybook/components';
 
 const Notification = styled.div(({ theme }) => ({
   display: 'block',
@@ -16,7 +17,30 @@ const Notification = styled.div(({ theme }) => ({
     theme.base === 'light' ? darken(theme.background.app) : lighten(theme.background.app),
   textDecoration: 'none',
 }));
+
+const DismissButtonWrapper = styled(IconButton)(({ theme }) => ({
+  position: 'absolute',
+  top: '4px',
+  right: '4px',
+  height: '15px',
+  color: theme.color.inverseText,
+}));
+
 const NotificationLink = Notification.withComponent(Link);
+
+const DismissNotificationItem: FunctionComponent<{
+  onClick: () => void;
+}> = ({ onClick }) => (
+  <DismissButtonWrapper
+    title="Dismiss notification"
+    onClick={(e: SyntheticEvent) => {
+      e.preventDefault();
+      onClick();
+    }}
+  >
+    <Icons icon="close" />
+  </DismissButtonWrapper>
+);
 
 export const NotificationItemSpacer = styled.div({
   height: 48,
@@ -24,11 +48,23 @@ export const NotificationItemSpacer = styled.div({
 
 const NotificationItem: FunctionComponent<{
   notification: State['notifications'][0];
-}> = ({ notification: { content, link } }) => {
+  setDismissedNotification: (id: string) => void;
+}> = ({ notification: { content, link, onClear, id }, setDismissedNotification }) => {
+  const dismissNotificationItem = () => {
+    setDismissedNotification(id);
+    onClear();
+  };
+
   return link ? (
-    <NotificationLink to={link}>{content}</NotificationLink>
+    <NotificationLink to={link}>
+      {content}
+      <DismissNotificationItem onClick={dismissNotificationItem} />
+    </NotificationLink>
   ) : (
-    <Notification>{content}</Notification>
+    <Notification>
+      {content}
+      <DismissNotificationItem onClick={dismissNotificationItem} />
+    </Notification>
   );
 };
 
