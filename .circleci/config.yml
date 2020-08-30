@@ -17,7 +17,12 @@ jobs:
   install:
     executor: sb_node
     steps:
-      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - 35:aa:b9:c3:b8:1c:27:1f:02:0a:73:1a:ac:58:77:df
+      - run:
+          name: Clone GitHub repository
+          command: echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config && git clone -b ${CIRCLE_BRANCH} --single-branch --depth=1 git@github.com:storybookjs/storybook.git /tmp/storybook
       - restore_cache:
           name: Restore core dependencies cache
           keys:
@@ -45,7 +50,12 @@ jobs:
       class: xlarge
       name: sb_node
     steps:
-      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - 35:aa:b9:c3:b8:1c:27:1f:02:0a:73:1a:ac:58:77:df
+      - run:
+          name: Clone GitHub repository
+          command: echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config && git clone -b ${CIRCLE_BRANCH} --single-branch --depth=1 git@github.com:storybookjs/storybook.git /tmp/storybook
       - attach_workspace:
           at: .
       - run:
@@ -63,7 +73,12 @@ jobs:
     executor: sb_node
     parallelism: 11
     steps:
-      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - 35:aa:b9:c3:b8:1c:27:1f:02:0a:73:1a:ac:58:77:df
+      - run:
+          name: Clone GitHub repository
+          command: echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config && git clone -b ${CIRCLE_BRANCH} --single-branch --depth=1 git@github.com:storybookjs/storybook.git /tmp/storybook
       - attach_workspace:
           at: .
       - run:
@@ -87,7 +102,12 @@ jobs:
     executor: sb_node
     parallelism: 11
     steps:
-      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - 35:aa:b9:c3:b8:1c:27:1f:02:0a:73:1a:ac:58:77:df
+      - run:
+          name: Clone GitHub repository
+          command: echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config && git clone -b ${CIRCLE_BRANCH} --single-branch --depth=1 git@github.com:storybookjs/storybook.git /tmp/storybook
       - attach_workspace:
           at: .
       - run:
@@ -103,7 +123,12 @@ jobs:
       class: xlarge
       name: sb_node
     steps:
-      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - 35:aa:b9:c3:b8:1c:27:1f:02:0a:73:1a:ac:58:77:df
+      - run:
+          name: Clone GitHub repository
+          command: echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config && git clone -b ${CIRCLE_BRANCH} --single-branch --depth=1 git@github.com:storybookjs/storybook.git /tmp/storybook
       - attach_workspace:
           at: .
       - run:
@@ -124,7 +149,12 @@ jobs:
     working_directory: /tmp/storybook
     parallelism: 10
     steps:
-      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - 35:aa:b9:c3:b8:1c:27:1f:02:0a:73:1a:ac:58:77:df
+      - run:
+          name: Clone GitHub repository
+          command: echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config && git clone -b ${CIRCLE_BRANCH} --single-branch --depth=1 git@github.com:storybookjs/storybook.git /tmp/storybook
       - attach_workspace:
           at: .
       - run:
@@ -154,7 +184,12 @@ jobs:
     working_directory: /tmp/storybook
     # parallelism: 10
     steps:
-      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - 35:aa:b9:c3:b8:1c:27:1f:02:0a:73:1a:ac:58:77:df
+      - run:
+          name: Clone GitHub repository
+          command: echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config && git clone -b ${CIRCLE_BRANCH} --single-branch --depth=1 git@github.com:storybookjs/storybook.git /tmp/storybook
       - attach_workspace:
           at: .
       - run:
@@ -183,7 +218,12 @@ jobs:
         environment:
           TERM: xterm
     steps:
-      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - 35:aa:b9:c3:b8:1c:27:1f:02:0a:73:1a:ac:58:77:df
+      - run:
+          name: Clone GitHub repository
+          command: echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config && git clone -b ${CIRCLE_BRANCH} --single-branch --depth=1 git@github.com:storybookjs/storybook.git /tmp/storybook
       - attach_workspace:
           at: .
       - run:
@@ -205,7 +245,12 @@ jobs:
       class: small
       name: sb_node
     steps:
-      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - 35:aa:b9:c3:b8:1c:27:1f:02:0a:73:1a:ac:58:77:df
+      - run:
+          name: Clone GitHub repository
+          command: echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config && git clone -b ${CIRCLE_BRANCH} --single-branch --depth=1 git@github.com:storybookjs/storybook.git /tmp/storybook
       - attach_workspace:
           at: .
       - run:
@@ -271,7 +316,12 @@ jobs:
   frontpage:
     executor: sb_node
     steps:
-      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - 35:aa:b9:c3:b8:1c:27:1f:02:0a:73:1a:ac:58:77:df
+      - run:
+          name: Clone GitHub repository
+          command: echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config && git clone -b ${CIRCLE_BRANCH} --single-branch --depth=1 git@github.com:storybookjs/storybook.git /tmp/storybook
       - restore_cache:
           name: Restore core dependencies cache
           keys:
@@ -287,7 +337,12 @@ jobs:
       class: small
       name: sb_node
     steps:
-      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - 35:aa:b9:c3:b8:1c:27:1f:02:0a:73:1a:ac:58:77:df
+      - run:
+          name: Clone GitHub repository
+          command: echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config && git clone -b ${CIRCLE_BRANCH} --single-branch --depth=1 git@github.com:storybookjs/storybook.git /tmp/storybook
       - attach_workspace:
           at: .
       - run:
@@ -296,7 +351,12 @@ jobs:
   test:
     executor: sb_node
     steps:
-      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - 35:aa:b9:c3:b8:1c:27:1f:02:0a:73:1a:ac:58:77:df
+      - run:
+          name: Clone GitHub repository
+          command: echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config && git clone -b ${CIRCLE_BRANCH} --single-branch --depth=1 git@github.com:storybookjs/storybook.git /tmp/storybook
       - attach_workspace:
           at: .
       - run:
@@ -311,7 +371,12 @@ jobs:
       class: small
       name: sb_node
     steps:
-      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - 35:aa:b9:c3:b8:1c:27:1f:02:0a:73:1a:ac:58:77:df
+      - run:
+          name: Clone GitHub repository
+          command: echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config && git clone -b ${CIRCLE_BRANCH} --single-branch --depth=1 git@github.com:storybookjs/storybook.git /tmp/storybook
       - attach_workspace:
           at: .
       - run:
