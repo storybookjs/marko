@@ -16,8 +16,10 @@ executors:
     resource_class: <<parameters.class>>
 
 jobs:
-  install:
-    executor: sb_node
+  build:
+    executor:
+      class: xlarge
+      name: sb_node
     steps:
       - add_ssh_keys:
           fingerprints:
@@ -33,6 +35,9 @@ jobs:
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile
+      - run:
+          name: Bootstrap
+          command: yarn bootstrap --core
       - save_cache:
           name: Cache core dependencies
           key: core-dependencies-v5-{{ checksum "yarn.lock" }}
@@ -42,30 +47,6 @@ jobs:
           root: .
           paths:
             - node_modules
-            - examples
-            - addons
-            - dev-kits
-            - app
-            - lib
-  build:
-    executor:
-      class: xlarge
-      name: sb_node
-    steps:
-      - add_ssh_keys:
-          fingerprints:
-            - 35:aa:b9:c3:b8:1c:27:1f:02:0a:73:1a:ac:58:77:df
-      - run:
-          name: Clone GitHub repository
-          command: echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config && git clone -b ${CIRCLE_BRANCH} --single-branch --depth=1 git@github.com:storybookjs/storybook.git /tmp/storybook
-      - attach_workspace:
-          at: .
-      - run:
-          name: Bootstrap
-          command: yarn bootstrap --core
-      - persist_to_workspace:
-          root: .
-          paths:
             - examples
             - addons
             - dev-kits
@@ -388,10 +369,7 @@ jobs:
 workflows:
   test:
     jobs:
-      - install
-      - build:
-          requires:
-            - install
+      - build
       - lint:
           requires:
             - build
