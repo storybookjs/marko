@@ -15,11 +15,12 @@ exports[`Storyshots Addon/Controls Rounded 1`] = `
       Round
        corners
     </strong>
+     
     <br />
      
     
      
-    You clicked
+    Rounded text
     : 
     0
   </button>
@@ -57,11 +58,12 @@ exports[`Storyshots Addon/Controls Square 1`] = `
       Square
        corners
     </strong>
+     
     <br />
      
     
      
-    You clicked
+    Squared text
     : 
     0
   </button>

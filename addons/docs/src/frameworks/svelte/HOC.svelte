@@ -1,11 +1,8 @@
 <script>
   import { onMount } from 'svelte';
 
-
   export let component;
-
   export let props;
-
   let child;
 
   const hash = `svelte mounter ${Math.floor(Math.random() * 100)}`;
