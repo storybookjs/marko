@@ -1,7 +1,6 @@
 <script>
   import { onMount } from 'svelte';
 
-  let greeting = 'Svelte HOC';
 
   export let component;
 
