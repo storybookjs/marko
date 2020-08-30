@@ -94,7 +94,7 @@ function run() {
       option: '--build',
       command: () => {
         log.info(prefix, 'prepare');
-        spawn('lerna run prepare');
+        spawn(`lerna run prepare ${process.env.CI ? '--concurrency 8 --stream' : ''}`);
       },
       order: 2,
     }),
