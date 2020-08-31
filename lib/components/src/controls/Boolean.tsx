@@ -86,7 +86,7 @@ export const BooleanControl: FC<BooleanProps> = ({ name, value, onChange, onBlur
       id={name}
       type="checkbox"
       onChange={(e) => onChange(e.target.checked)}
-      checked={value}
+      checked={value || false}
       {...{ name, onBlur, onFocus }}
     />
     <span>True</span>
