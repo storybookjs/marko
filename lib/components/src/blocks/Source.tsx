@@ -12,7 +12,7 @@ const StyledSyntaxHighlighter = styled(SyntaxHighlighter)<{}>(({ theme }) => ({
   borderRadius: theme.appBorderRadius,
   boxShadow:
     theme.base === 'light' ? 'rgba(0, 0, 0, 0.10) 0 1px 3px 0' : 'rgba(0, 0, 0, 0.20) 0 2px 5px 0',
-  'pre.hljs': {
+  'pre.prismjs': {
     padding: 20,
     background: 'inherit',
   },
