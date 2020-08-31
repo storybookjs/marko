@@ -1,3 +1,18 @@
+## 6.1.0-alpha.1 (August 31, 2020)
+
+### Features
+
+- Components: Add additionalActions prop to Preview block ([#12274](https://github.com/storybookjs/storybook/pull/12274))
+
+### Maintenance
+
+- Addon-docs: Add transformSource for jsxDecorator, deprecated onBeforeRender ([#12178](https://github.com/storybookjs/storybook/pull/12178))
+
+### Dependency Upgrades
+
+- Update the axe version in addon-a11y to 4.0 ([#12150](https://github.com/storybookjs/storybook/pull/12150))
+- Upgrade react-popper-tooltip to 3.1.0 ([#11827](https://github.com/storybookjs/storybook/pull/11827))
+
 ## 6.1.0-alpha.0 (August 31, 2020)
 
 ### Features
