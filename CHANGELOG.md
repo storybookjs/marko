@@ -1,3 +1,25 @@
+## 6.1.0-alpha.0 (August 31, 2020)
+
+### Features
+
+- SyntaxHighlighter: Put formatted code to clipboard ([#11276](https://github.com/storybookjs/storybook/pull/11276))
+- Addon-docs: Add inline rendering for svelte ([#12313](https://github.com/storybookjs/storybook/pull/12313))
+
+### Bug Fixes
+
+- UI: Remove scrolling attribute from iFrame ([#12223](https://github.com/storybookjs/storybook/pull/12223))
+
+### Maintenance
+
+- CLI: Add HTML components and stories ([#12286](https://github.com/storybookjs/storybook/pull/12286))
+- Vue: Add basic CSF types ([#12037](https://github.com/storybookjs/storybook/pull/12037))
+- CLI: Add Aurelia detection ([#12181](https://github.com/storybookjs/storybook/pull/12181))
+- Storyshots: Remove needless iteration testStorySnapshots ([#12321](https://github.com/storybookjs/storybook/pull/12321))
+
+### Dependency Upgrades
+
+- Bump react-syntax-highlighter to 13.2.1 ([#11838](https://github.com/storybookjs/storybook/pull/11838))
+
 ## 6.0.21 (August 31, 2020)
 
 ### Bug Fixes
