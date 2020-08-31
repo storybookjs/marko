@@ -10,6 +10,7 @@ import {
 } from './project_types';
 import { commandLog, codeLog, paddedLog } from './helpers';
 import angularGenerator from './generators/ANGULAR';
+import aureliaGenerator from './generators/AURELIA';
 import emberGenerator from './generators/EMBER';
 import meteorGenerator from './generators/METEOR';
 import reactGenerator from './generators/REACT';
@@ -215,6 +216,11 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
       case ProjectType.RAX:
         return raxGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding Storybook support to your "Rax" app'))
+          .then(end);
+
+      case ProjectType.AURELIA:
+        return aureliaGenerator(packageManager, npmOptions, generatorOptions)
+          .then(commandLog('Adding Storybook support to your "Aurelia" app'))
           .then(end);
 
       default:

@@ -209,6 +209,16 @@ const MOCK_FRAMEWORK_FILES = [
       },
     },
   },
+  {
+    name: ProjectType.AURELIA,
+    files: {
+      'package.json': {
+        dependencies: {
+          'aurelia-bootstrapper': '1.0.0',
+        },
+      },
+    },
+  },
 ];
 
 describe('Detect', () => {

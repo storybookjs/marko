@@ -39,13 +39,7 @@ const run = async (storyId: string) => {
       active = true;
       channel.emit(EVENTS.RUNNING);
 
-      const {
-        element = getElement(),
-        config,
-        options = {
-          restoreScroll: true,
-        },
-      } = input;
+      const { element = getElement(), config, options = {} } = input;
       axe.reset();
       if (config) {
         axe.configure(config);
