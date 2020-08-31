@@ -2,10 +2,7 @@ import ButtonView from './views/ButtonView.svelte';
 
 export default {
   title: 'Addon/Controls',
-  argTypes: {
-    rounded: { type: { name: 'boolean' } },
-    text: { type: { name: 'string' } },
-  },
+  component: ButtonView,
 };
 
 const Template = (args) => ({
@@ -14,13 +11,16 @@ const Template = (args) => ({
 });
 
 export const Rounded = Template.bind({});
-Rounded.args = {
-  rounded: true,
-  text: 'Rounded text',
-};
+// Rounded.args = {
+//   rounded: true,
+//   text: 'Rounded text',
+//   bleh: 'ss',
+// };
 
 export const Square = Template.bind({});
-Square.args = {
-  rounded: false,
-  text: 'Squared text',
-};
+// Square.args = {
+//   rounded: false,
+//   text: 'Squared text',
+// };
+
+export const Test = Template.bind({});
