@@ -58,14 +58,13 @@ export const angular: Parameters = baseAngular;
 //   preBuildCommand: 'ember build',
 // };
 
-// TODO: Example stories used in CLI need to be updated
-// export const html: Parameters = {
-//   name: 'html',
-//   version: 'latest',
-//   generator: fromDeps(),
-//   autoDetect: false,
-//   additionalDeps: ['react', 'react-dom'],
-// };
+export const html: Parameters = {
+  name: 'html',
+  version: 'latest',
+  generator: fromDeps(),
+  autoDetect: false,
+  additionalDeps: ['react', 'react-dom'],
+};
 
 // TODO: broken
 // export const marionette: Parameters = {
@@ -195,5 +194,16 @@ export const react_in_yarn_workspace: Parameters = {
     'cd {{name}}-{{version}}',
     'echo "{ \\"name\\": \\"workspace-root\\", \\"private\\": true, \\"workspaces\\": [] }" > package.json',
     `yarn add react react-dom --silent -W`,
+  ].join(' && '),
+};
+
+// View results at: https://datastudio.google.com/reporting/c34f64ee-400f-4d06-ad4f-5c2133e226da
+export const cra_bench: Parameters = {
+  name: 'cra_bench',
+  version: 'latest',
+  generator: [
+    'npx create-react-app@{{version}} {{name}}-{{version}}',
+    'cd {{name}}-{{version}}',
+    "npx @storybook/bench 'npx sb init' --label cra",
   ].join(' && '),
 };

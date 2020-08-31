@@ -1,5 +1,8 @@
 <h1>Migration</h1>
 
+- [From version 6.0.x to 6.1.0](#from-version-60x-to-610)
+  - [6.1 deprecations](#61-deprecations)
+    - [Deprecated onBeforeRender](#deprecated-onbeforerender)
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
   - [Hoisted CSF annotations](#hoisted-csf-annotations)
   - [Zero config typescript](#zero-config-typescript)
@@ -128,6 +131,16 @@
   - [Webpack upgrade](#webpack-upgrade)
   - [Packages renaming](#packages-renaming)
   - [Deprecated embedded addons](#deprecated-embedded-addons)
+
+## From version 6.0.x to 6.1.0
+
+### 6.1 deprecations
+
+#### Deprecated onBeforeRender
+
+The `@storybook/addon-docs` previously accepted a `jsx` option called `onBeforeRender`, which was unfortunately named as it was called after the render.
+
+We've renamed it `transformSource` and also allowed it to receive the `StoryContext` in case source rendering requires additional information.
 
 ## From version 5.3.x to 6.0.x
 

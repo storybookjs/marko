@@ -1,1 +1,1 @@
-{"version":"6.0.20","info":{"plain":"### Bug Fixes\n\n- ArgsTable: Fix union type splitting ([#11868](https://github.com/storybookjs/storybook/pull/11868))\n- CLI: Fix import of Button in react mdx template ([#12252](https://github.com/storybookjs/storybook/pull/12252))"}}
+{"version":"6.0.21","info":{"plain":"### Bug Fixes\n\n- Addon-controls: Fix uncontrolled to controlled warning for booleans ([#12322](https://github.com/storybookjs/storybook/pull/12322))\n\n### Maintenance\n\n- Build: Add CRA benchmark ([#12209](https://github.com/storybookjs/storybook/pull/12209))"}}
