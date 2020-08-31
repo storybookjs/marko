@@ -124,13 +124,18 @@ export const SyntaxHighlighter: FunctionComponent<Props> = ({
   className = null,
   ...rest
 }) => {
+  if (typeof children !== 'string' || !children.trim()) {
+    return null;
+  }
+
+  const highlightableCode = format ? formatter(children) : children.trim();
   const [copied, setCopied] = useState(false);
 
   const onClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     navigator.clipboard
-      .writeText(children)
+      .writeText(highlightableCode)
       .then(() => {
         setCopied(true);
         window.setTimeout(() => setCopied(false), 1500);
@@ -138,7 +143,7 @@ export const SyntaxHighlighter: FunctionComponent<Props> = ({
       .catch(logger.error);
   };
 
-  return children ? (
+  return (
     <Wrapper bordered={bordered} padded={padded} className={className}>
       <Scroller>
         <ReactSyntaxHighlighter
@@ -150,7 +155,7 @@ export const SyntaxHighlighter: FunctionComponent<Props> = ({
           lineNumberContainerStyle={{}}
           {...rest}
         >
-          {format ? formatter((children as string).trim()) : (children as string).trim()}
+          {highlightableCode}
         </ReactSyntaxHighlighter>
       </Scroller>
 
@@ -158,5 +163,5 @@ export const SyntaxHighlighter: FunctionComponent<Props> = ({
         <ActionBar actionItems={[{ title: copied ? 'Copied' : 'Copy', onClick }]} />
       ) : null}
     </Wrapper>
-  ) : null;
+  );
 };

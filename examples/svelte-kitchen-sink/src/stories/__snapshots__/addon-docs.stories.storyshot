@@ -15,6 +15,7 @@ exports[`Storyshots Addon/Docs rounded 1`] = `
       Round
        corners
     </strong>
+     
     <br />
      
     
@@ -57,6 +58,7 @@ exports[`Storyshots Addon/Docs square 1`] = `
       Square
        corners
     </strong>
+     
     <br />
      
     

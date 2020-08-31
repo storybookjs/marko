@@ -14,7 +14,7 @@ describe('Button Component', () => {
   it('should render `text` property', () => {
     return new Promise((done) => {
       const text = 'Hello world';
-      const expected = `Round corners ${text}`;
+      const expected = `Round corners  ${text}`;
 
       component.$on('afterUpdate', () => {
         const componentText = target.firstChild.textContent.trim();

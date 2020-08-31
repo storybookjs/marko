@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-docs",
-  "version": "6.0.20",
+  "version": "6.0.21",
   "description": "Superior documentation for your components",
   "keywords": [
     "addon",
@@ -47,18 +47,18 @@
     "@mdx-js/loader": "^1.5.1",
     "@mdx-js/mdx": "^1.5.1",
     "@mdx-js/react": "^1.5.1",
-    "@storybook/addons": "6.0.20",
-    "@storybook/api": "6.0.20",
-    "@storybook/client-api": "6.0.20",
-    "@storybook/client-logger": "6.0.20",
-    "@storybook/components": "6.0.20",
-    "@storybook/core": "6.0.20",
-    "@storybook/core-events": "6.0.20",
+    "@storybook/addons": "6.0.21",
+    "@storybook/api": "6.0.21",
+    "@storybook/client-api": "6.0.21",
+    "@storybook/client-logger": "6.0.21",
+    "@storybook/components": "6.0.21",
+    "@storybook/core": "6.0.21",
+    "@storybook/core-events": "6.0.21",
     "@storybook/csf": "0.0.1",
-    "@storybook/node-logger": "6.0.20",
-    "@storybook/postinstall": "6.0.20",
-    "@storybook/source-loader": "6.0.20",
-    "@storybook/theming": "6.0.20",
+    "@storybook/node-logger": "6.0.21",
+    "@storybook/postinstall": "6.0.21",
+    "@storybook/source-loader": "6.0.21",
+    "@storybook/theming": "6.0.21",
     "acorn": "^7.1.0",
     "acorn-jsx": "^5.1.0",
     "acorn-walk": "^7.0.0",
@@ -83,8 +83,8 @@
     "@babel/core": "^7.9.6",
     "@emotion/core": "^10.0.20",
     "@emotion/styled": "^10.0.17",
-    "@storybook/react": "6.0.20",
-    "@storybook/web-components": "6.0.20",
+    "@storybook/react": "6.0.21",
+    "@storybook/web-components": "6.0.21",
     "@types/cross-spawn": "^6.0.1",
     "@types/doctrine": "^0.0.3",
     "@types/enzyme": "^3.10.3",
@@ -144,7 +144,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "d8b9d25b69b8bee488265829beddbd0ebd38fe8f",
+  "gitHead": "fb14a86c1cbf5eb21023bf2021eecdea9c6df83d",
   "typesVersions": {
     "<=3.5": {
       "*": [
