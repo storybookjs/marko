@@ -69,7 +69,7 @@ You can rename any particular story you need. For instance to give it a more cle
 
 <!-- prettier-ignore-end -->
 
-Your story will now be show in the sidebar with the given text.
+Your story will now be shown in the sidebar with the given text.
 
 ## How to write stories
 
@@ -198,7 +198,7 @@ When building design systems or component libraries, you may have two or more co
 
 <!-- prettier-ignore-end -->
 
-In such cases, it makes sense to render something a different function for each story:
+In such cases, it makes sense to render a different function for each story:
 
 <!-- prettier-ignore-start -->
 

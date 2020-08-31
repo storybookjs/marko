@@ -14,6 +14,7 @@
   - [DocsPage](#docspage)
   - [MDX Stories](#mdx-stories)
 - [Controlling a story's view mode](#controlling-a-storys-view-mode)
+- [Reordering Docs tab first](#reordering-docs-tab-first)
 - [Customizing source snippets](#customizing-source-snippets)
 - [Overwriting docs container](#overwriting-docs-container)
 - [More resources](#more-resources)
@@ -228,13 +229,26 @@ Foo.parameters = {
 };
 ```
 
-This can also be applied globally in `preview.js`:
+This can also be applied globally in `.storybook/preview.js`:
 
 ```js
 // always reset the view mode to "docs" whenever the user navigates
-addParameters({
+export const parameters = {
   viewMode: 'docs',
-});
+};
+```
+
+## Reordering Docs tab first
+
+You can configure Storybook's preview tabs with the `previewTabs` story parameter.
+
+Here's how to show the `Docs` tab first for a story (or globally in `.storybook/preview.js`):
+
+```js
+export const Foo = () => <Component />;
+Foo.parameters = {
+  previewTabs: { 'storybook/docs/panel': { index: -1 } },
+};
 ```
 
 ## Customizing source snippets

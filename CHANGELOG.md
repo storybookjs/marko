@@ -1,3 +1,94 @@
+## 6.0.21 (August 31, 2020)
+
+### Bug Fixes
+
+- Addon-controls: Fix uncontrolled to controlled warning for booleans ([#12322](https://github.com/storybookjs/storybook/pull/12322))
+
+### Maintenance
+
+- Build: Add CRA benchmark ([#12209](https://github.com/storybookjs/storybook/pull/12209))
+
+## 6.0.20 (August 28, 2020)
+
+### Bug Fixes
+
+- ArgsTable: Fix union type splitting ([#11868](https://github.com/storybookjs/storybook/pull/11868))
+- CLI: Fix import of Button in react mdx template ([#12252](https://github.com/storybookjs/storybook/pull/12252))
+
+## 5.3.21 (August 28, 2020)
+
+### Bug Fixes
+
+- Core: Add skip dispose option to ClientApi ([#9868](https://github.com/storybookjs/storybook/pull/9868))
+
+## 6.0.19 (August 27, 2020)
+
+### Bug Fixes
+
+- UI: Fix eject and copy URLs for composition ([#12233](https://github.com/storybookjs/storybook/pull/12233))
+
+## 5.3.20 (August 27, 2020)
+
+### Bug Fixes
+
+- React-native server: Fix addon tabs ([#10468](https://github.com/storybookjs/storybook/pull/10468))
+- Addon-docs: Fix babel JSX handling in MDX ([#11448](https://github.com/storybookjs/storybook/pull/11448))
+- Revert "Fix: Search stories" ([#10916](https://github.com/storybookjs/storybook/pull/10916))
+
+## 6.0.18 (August 26, 2020)
+
+### Bug Fixes
+
+- UI: Fix `disable` parameter to hide addon panel ([#12171](https://github.com/storybookjs/storybook/pull/12171))
+- Addon-controls: Fix controls from args ([#12230](https://github.com/storybookjs/storybook/pull/12230))
+
+### Dependency Upgrades
+
+- Mithril: Add Mithril v2.0.0 to peer dependencies ([#12229](https://github.com/storybookjs/storybook/pull/12229))
+
+## 6.0.17 (August 25, 2020)
+
+### Bug Fixes
+
+- Addon-essentials: Log info on config override ([#12211](https://github.com/storybookjs/storybook/pull/12211))
+
+### Maintenance
+
+- Build: Remove outdated CLI tests ([#12207](https://github.com/storybookjs/storybook/pull/12207))
+
+### Dependency Upgrades
+
+- Source-loader: Pin prettier to 2.0.x version ([#12226](https://github.com/storybookjs/storybook/pull/12226))
+
+## 6.0.16 (August 20, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix Vue ArgsTable sanitizing of item.type.elements to item.type.value ([#12165](https://github.com/storybookjs/storybook/pull/12165))
+
+## 6.0.15 (August 20, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix ArgsTable union type handling in Vue/TS ([#12158](https://github.com/storybookjs/storybook/pull/12158))
+- Addon-docs: Fix inline rendering for DOM nodes in HTML ([#12164](https://github.com/storybookjs/storybook/pull/12164))
+
+### Maintenance
+
+- React: Simplify component type for CSF typing ([#12110](https://github.com/storybookjs/storybook/pull/12110))
+
+## 6.0.14 (August 20, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix MDX IDs from CSF imports ([#12154](https://github.com/storybookjs/storybook/pull/12154))
+- Addon-viewport: Add preset to fix windows import ([#12148](https://github.com/storybookjs/storybook/pull/12148))
+- Composition: Verify refs in node ([#12085](https://github.com/storybookjs/storybook/pull/12085))
+
+### Maintenance
+
+- Build: Update and optimize circleCI Config ([#12118](https://github.com/storybookjs/storybook/pull/12118))
+
 ## 6.0.13 (August 19, 2020)
 
 ### Bug Fixes

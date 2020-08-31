@@ -4,7 +4,7 @@ export default {
   title: 'Addon/Controls',
   argTypes: {
     rounded: { type: { name: 'boolean' } },
-    message: { type: { name: 'string' } },
+    text: { type: { name: 'string' } },
   },
 };
 
@@ -16,11 +16,11 @@ const Template = (args) => ({
 export const Rounded = Template.bind({});
 Rounded.args = {
   rounded: true,
-  message: 'Rounded text',
+  text: 'Rounded text',
 };
 
 export const Square = Template.bind({});
 Square.args = {
   rounded: false,
-  message: 'Squared text',
+  text: 'Squared text',
 };

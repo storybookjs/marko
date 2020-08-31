@@ -4,7 +4,7 @@ title: 'Doc Blocks'
 
 Doc Blocks are the building blocks of Storybook documentation pages. By default, [DocsPage](./docs-page.md) uses a combination of the blocks below to build a page for each of your components automatically.
 
-Custom [addons](../configure/user-interface.md#storybook-addons) can also provide their own doc blocks.
+Custom [addons](../configure/storybook-addons.md) can also provide their own doc blocks.
 
 ## ArgsTable
 
@@ -65,7 +65,7 @@ To use the `ArgsTable` block in MDX, add the following:
 
 `ArgsTables` are automatically inferred from your components and stories, but sometimes it's useful to customize the results.
 
-`ArgsTables` are rendered from an internal data structure called [ArgTypes](../api/mdx.md#argtypes). When you declare a story's component metadata, Docs automatically extracts ArgTypes based on the component's properties.
+`ArgsTables` are rendered from an internal data structure called [ArgTypes](../api/argtypes.md). When you declare a story's component metadata, Docs automatically extracts ArgTypes based on the component's properties.
 
 You can customize what's shown in the `ArgsTable` by customizing the `ArgTypes` data. This is currently available for [DocsPage](./docs-page.md) and `<ArgsTable story="xxx">` construct, but not for the `<ArgsTable of={component} />` construct.
 
@@ -75,7 +75,7 @@ NOTE: This API is experimental and may change outside of the typical semver rele
 
 </div>
 
-The API documentation of `ArgTypes` is detailed in a [separate section](../api/mdx.md#argtypes), but to control the description and default values, use the following fields:
+The API documentation of `ArgTypes` is detailed in a [separate section](../api/argtypes.md), but to control the description and default values, use the following fields:
 
 | Field                          |                                           Description                                            |
 | :----------------------------- | :----------------------------------------------------------------------------------------------: |

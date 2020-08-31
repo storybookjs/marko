@@ -27,7 +27,7 @@ export function addons(options: PresetOptions = {}) {
       return name?.startsWith(addon);
     });
     if (existingAddon) {
-      logger.warn(`Found existing addon ${JSON.stringify(existingAddon)}, skipping.`);
+      logger.info(`Found existing addon ${JSON.stringify(existingAddon)}, skipping.`);
     }
     return !!existingAddon;
   };
