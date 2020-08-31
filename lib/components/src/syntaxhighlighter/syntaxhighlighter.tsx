@@ -122,6 +122,7 @@ export const SyntaxHighlighter: FunctionComponent<Props> = ({
   padded = false,
   format = true,
   className = null,
+  showLineNumbers = false,
   ...rest
 }) => {
   if (typeof children !== 'string' || !children.trim()) {
@@ -149,6 +150,8 @@ export const SyntaxHighlighter: FunctionComponent<Props> = ({
         <ReactSyntaxHighlighter
           padded={padded || bordered}
           language={language}
+          showLineNumbers={showLineNumbers}
+          showInlineLineNumbers={showLineNumbers}
           useInlineStyles={false}
           PreTag={Pre}
           CodeTag={Code}
