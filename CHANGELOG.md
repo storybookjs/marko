@@ -1,3 +1,13 @@
+## 6.0.21 (August 31, 2020)
+
+### Bug Fixes
+
+- Addon-controls: Fix uncontrolled to controlled warning for booleans ([#12322](https://github.com/storybookjs/storybook/pull/12322))
+
+### Maintenance
+
+- Build: Add CRA benchmark ([#12209](https://github.com/storybookjs/storybook/pull/12209))
+
 ## 6.0.20 (August 28, 2020)
 
 ### Bug Fixes
