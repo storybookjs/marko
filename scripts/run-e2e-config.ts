@@ -198,12 +198,13 @@ export const react_in_yarn_workspace: Parameters = {
   ].join(' && '),
 };
 
+// View results at: https://datastudio.google.com/reporting/c34f64ee-400f-4d06-ad4f-5c2133e226da
 export const cra_bench: Parameters = {
   name: 'cra_bench',
   version: 'latest',
   generator: [
     'npx create-react-app@{{version}} {{name}}-{{version}}',
     'cd {{name}}-{{version}}',
-    "npx @storybook/bench 'npx sb init' --upload cra",
+    "npx @storybook/bench 'npx sb init' --label cra",
   ].join(' && '),
 };
