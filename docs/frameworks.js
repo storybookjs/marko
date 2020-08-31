@@ -121,7 +121,7 @@ module.exports = {
         },
         {
           name: 'Inline stories',
-          supported: ['react', 'vue', 'web-components', 'html'],
+          supported: ['react', 'vue', 'web-components', 'html', 'svelte'],
           path: 'writing-docs/doc-blocks#inline-rendering',
         },
       ],
