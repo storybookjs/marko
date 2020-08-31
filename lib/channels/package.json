@@ -1,6 +1,6 @@
 {
   "name": "@storybook/channels",
-  "version": "6.0.16",
+  "version": "6.0.21",
   "description": "",
   "keywords": [
     "storybook"
@@ -35,7 +35,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "f01f03d7f756e32cf6f8cc8c9eff85799d36938c",
+  "gitHead": "fb14a86c1cbf5eb21023bf2021eecdea9c6df83d",
   "typesVersions": {
     "<=3.5": {
       "*": [
