@@ -11,16 +11,5 @@ const Template = (args) => ({
 });
 
 export const Rounded = Template.bind({});
-// Rounded.args = {
-//   rounded: true,
-//   text: 'Rounded text',
-//   bleh: 'ss',
-// };
 
 export const Square = Template.bind({});
-// Square.args = {
-//   rounded: false,
-//   text: 'Squared text',
-// };
-
-export const Test = Template.bind({});
