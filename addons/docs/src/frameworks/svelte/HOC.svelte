@@ -15,4 +15,5 @@
   });
 </script>
 
+<svelte:options accessors={true} />
 <div id={hash} />
