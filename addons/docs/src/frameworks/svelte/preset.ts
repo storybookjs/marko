@@ -1,10 +1,13 @@
 import path from 'path';
 
-export function webpackFinal(webpackConfig: any = {}, options: any = {}) {
+import { Configuration } from 'webpack';
+
+export function webpackFinal(webpackConfig: Configuration, options: any = {}) {
   webpackConfig.module.rules.push({
     test: /\.svelte$/,
-    loader: path.resolve('./svelte-docgen-loader'),
-    enforce: 'pre',
+    loader: path.resolve(`${__dirname}/svelte-docgen-loader`),
+    enforce: 'post',
   });
+
   return webpackConfig;
 }

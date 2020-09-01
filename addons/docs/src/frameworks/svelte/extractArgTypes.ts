@@ -8,12 +8,42 @@ const SECTIONS = ['props', 'events', 'slots'];
 
 const trim = (val: any) => (val && typeof val === 'string' ? trimQuotes(val) : val);
 
+type ComponentWithDocgen = {
+  __docgen: {
+    components: [];
+    computed: [];
+    data: [
+      {
+        defaultValue: any;
+        description: string;
+        keywords: [];
+        kind: string;
+        name: string;
+        readonly: boolean;
+        static: boolean;
+        type: { kind: string; text: string; type: string };
+        visibility: string;
+      }
+    ];
+    description: null;
+    events: [];
+    keywords: [];
+    methods: [];
+    name: null;
+    refs: [];
+    slots: [];
+    version: 3;
+  };
+};
+
 export const extractArgTypes: ArgTypesExtractor = (component) => {
+  const item = new component({ props: {} });
+  console.log(item.__docgen);
   const results: ArgTypes = {
     rounded: {
       control: { type: 'boolean' },
       name: 'rounded',
-      description: 'Round the button',
+      description: 'round the button',
       defaultValue: false,
 
       table: {
