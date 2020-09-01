@@ -38,3 +38,4 @@ Learn how leading teams build design systems.
 - [AppNexus Lucid](https://appnexus.github.io/lucid/?path=/docs/documentation-introduction--introduction)
 - [React Pakistan](https://react-pakistan.github.io/react-storybook-composed)
 - [AnyVision UI](http://storybook.anyvision.co/)
+- [Backpack (Skyscanner)](https://backpack.github.io/storybook/)
