@@ -25,7 +25,7 @@ type ComponentWithDocgen = {
     events: [];
     keywords: [];
     methods: [];
-    name: null;
+    name: string;
     refs: [];
     slots: [];
     version: number;
@@ -35,6 +35,7 @@ type ComponentWithDocgen = {
 export const extractArgTypes: ArgTypesExtractor = (component) => {
   const comp: ComponentWithDocgen = new component({ props: {} });
   const docs = comp.__docgen;
+
   const results: ArgTypes = {};
   docs.data.forEach((item) => {
     results[item.name] = {
@@ -50,15 +51,25 @@ export const extractArgTypes: ArgTypesExtractor = (component) => {
       },
     };
   });
+
   return results;
 };
 
 /**
  * Function to convert the type from sveltedoc-parser to a storybook type
  * @param typeName
- *  @returns string
+ * @returns string
  */
 const parseType = (typeName: string) => {
-  if (typeName === 'string') return 'text';
-  return typeName;
+  switch (typeName) {
+    case 'string':
+      return 'text';
+
+    case 'enum':
+      return 'radio';
+    case 'any':
+      return 'object';
+    default:
+      return typeName;
+  }
 };
