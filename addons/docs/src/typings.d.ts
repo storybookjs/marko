@@ -17,3 +17,7 @@ declare module 'react-element-to-jsx-string' {
 
   export default function render(element: React.ReactNode, options: Options): string;
 }
+
+declare module 'sveltedoc-parser' {
+  export function parse(options: any): Promise<any>;
+}

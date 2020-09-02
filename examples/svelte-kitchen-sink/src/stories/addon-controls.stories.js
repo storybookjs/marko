@@ -1,26 +1,38 @@
-import ButtonView from './views/ButtonView.svelte';
+import ControlShowcaseView from './views/ControlShowcaseView.svelte';
 
 export default {
   title: 'Addon/Controls',
+  component: ControlShowcaseView,
   argTypes: {
-    rounded: { type: { name: 'boolean' } },
-    text: { type: { name: 'string' } },
+    range: { defaultValue: 0, control: { type: 'range', min: 0, max: 100 } },
+    loadingState: {
+      control: {
+        type: 'inline-radio',
+        options: ['loading', 'error', 'ready'],
+      },
+    },
+    food: {
+      control: {
+        type: 'inline-check',
+        options: ['apple', 'banana', 'orange'],
+      },
+    },
+    car: {
+      control: {
+        type: 'select',
+        options: ['Truck', 'SUV', 'Tesla'],
+      },
+    },
+    color: {
+      control: 'color',
+    },
+    date: {
+      control: 'date',
+    },
   },
 };
 
-const Template = (args) => ({
-  Component: ButtonView,
+export const ShowCase = (args) => ({
+  Component: ControlShowcaseView,
   props: args,
 });
-
-export const Rounded = Template.bind({});
-Rounded.args = {
-  rounded: true,
-  text: 'Rounded text',
-};
-
-export const Square = Template.bind({});
-Square.args = {
-  rounded: false,
-  text: 'Squared text',
-};
