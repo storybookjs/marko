@@ -1,5 +1,3 @@
-/* eslint-disable no-param-reassign */
-// @ts-ignore
 import svelteDoc from 'sveltedoc-parser';
 
 import * as path from 'path';
@@ -10,6 +8,7 @@ import * as path from 'path';
  */
 export default async function svelteDocgen(source: string) {
   // get filename for source content
+  // eslint-disable-next-line no-underscore-dangle
   const file = path.basename(this._module.resource);
 
   // set SvelteDoc options
