@@ -39,6 +39,7 @@
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "regenerator-runtime": "^0.13.3",
+    "sveltedoc-parser": "^3.0.4",
     "ts-dedent": "^1.1.1"
   },
   "devDependencies": {

@@ -71,7 +71,6 @@
     "js-string-escape": "^1.0.1",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
-    "sveltedoc-parser": "^3.0.4",
     "react-element-to-jsx-string": "^14.3.1",
     "regenerator-runtime": "^0.13.3",
     "remark-external-links": "^6.0.0",
@@ -123,12 +122,16 @@
     "react": ">=16.3.0",
     "react-dom": "*",
     "react-is": "^16.8.0",
+    "sveltedoc-parser": "^3.0.4",
     "vue": "^2.6.10",
     "vue-docgen-api": "^4.29.1",
     "vue-docgen-loader": "^1.5.0",
     "webpack": ">=4"
   },
   "peerDependenciesMeta": {
+    "sveltedoc-parser": {
+      "optional": true
+    },
     "vue": {
       "optional": true
     },
