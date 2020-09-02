@@ -1,6 +1,6 @@
 import { ArgTypes } from '@storybook/api';
 
-import { ArgTypesExtractor, hasDocgen, extractComponentProps } from '../../lib/docgen';
+import { ArgTypesExtractor } from '../../lib/docgen';
 
 type ComponentWithDocgen = {
   __docgen: Docgen;
