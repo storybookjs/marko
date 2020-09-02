@@ -1,5 +1,3 @@
-/* eslint-disable new-cap */
-/* eslint-disable no-underscore-dangle */
 import { ArgTypes } from '@storybook/api';
 
 import { ArgTypesExtractor, hasDocgen, extractComponentProps } from '../../lib/docgen';
@@ -33,7 +31,9 @@ type ComponentWithDocgen = {
 };
 
 export const extractArgTypes: ArgTypesExtractor = (component) => {
+  // eslint-disable-next-line new-cap
   const comp: ComponentWithDocgen = new component({ props: {} });
+  // eslint-disable-next-line no-underscore-dangle
   const docs = comp.__docgen;
 
   const results: ArgTypes = {};
