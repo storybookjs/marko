@@ -43,6 +43,7 @@ Learn how leading teams build design systems.
 - [ShareGate Orbit](https://orbit.sharegate.design/?path=/docs/getting-started-packages--page)
 - [AppNexus Lucid](https://appnexus.github.io/lucid/?path=/docs/documentation-introduction--introduction)
 - [AnyVision UI](http://storybook.anyvision.co/)
+- [Skyscanner Backpack](https://backpack.github.io/storybook/)
 <!-- 
 NOTE for contributors: This is a curated list. Here's what qualifies:
 - Design system or component library
