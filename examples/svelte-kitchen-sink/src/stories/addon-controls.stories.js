@@ -4,7 +4,7 @@ export default {
   title: 'Addon/Controls',
   component: ControlShowcaseView,
   argTypes: {
-    range: { defaultValue: '0', control: { type: 'range', min: 0, max: 100 } },
+    range: { defaultValue: 0, control: { type: 'range', min: 0, max: 100 } },
     loadingState: {
       control: {
         type: 'inline-radio',
