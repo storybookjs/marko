@@ -3,31 +3,33 @@ import { ArgTypes } from '@storybook/api';
 import { ArgTypesExtractor, hasDocgen, extractComponentProps } from '../../lib/docgen';
 
 type ComponentWithDocgen = {
-  __docgen: {
-    components: [];
-    computed: [];
-    data: [
-      {
-        defaultValue: any;
-        description: string;
-        keywords: [];
-        kind: string;
-        name: string;
-        readonly: boolean;
-        static: boolean;
-        type: { kind: string; text: string; type: string };
-        visibility: string;
-      }
-    ];
-    description: null;
-    events: [];
-    keywords: [];
-    methods: [];
-    name: string;
-    refs: [];
-    slots: [];
-    version: number;
-  };
+  __docgen: Docgen;
+};
+
+type Docgen = {
+  components: [];
+  computed: [];
+  data: [
+    {
+      defaultValue: any;
+      description: string;
+      keywords: [];
+      kind: string;
+      name: string;
+      readonly: boolean;
+      static: boolean;
+      type: { kind: string; text: string; type: string };
+      visibility: string;
+    }
+  ];
+  description: null;
+  events: [];
+  keywords: [];
+  methods: [];
+  name: string;
+  refs: [];
+  slots: [];
+  version: number;
 };
 
 export const extractArgTypes: ArgTypesExtractor = (component) => {
@@ -36,6 +38,12 @@ export const extractArgTypes: ArgTypesExtractor = (component) => {
   // eslint-disable-next-line no-underscore-dangle
   const docs = comp.__docgen;
 
+  const results = createArgTypes(docs);
+
+  return results;
+};
+
+export const createArgTypes = (docs: Docgen) => {
   const results: ArgTypes = {};
   docs.data.forEach((item) => {
     results[item.name] = {
