@@ -1,3 +1,21 @@
+## 6.1.0-alpha.2 (September 3, 2020)
+
+### Features
+
+- Addon-docs: Add Controls argument autodetection for svelte ([#12347](https://github.com/storybookjs/storybook/pull/12347))
+
+### Bug Fixes
+
+- Core: Use denormed params of the first story for initial options ([#11938](https://github.com/storybookjs/storybook/pull/11938))
+
+### Maintenance
+
+- Addon-docs: Change 2nd argument of transformSource to the storyContext ([#12265](https://github.com/storybookjs/storybook/pull/12265))
+
+### Dependency Upgrades
+
+- Bump css from 2.2.4 to 3.0.0 ([#12338](https://github.com/storybookjs/storybook/pull/12338))
+
 ## 6.1.0-alpha.1 (August 31, 2020)
 
 ### Features
