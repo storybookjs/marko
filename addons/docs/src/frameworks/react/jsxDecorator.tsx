@@ -90,7 +90,7 @@ export const renderJsx = (code: React.ReactElement, options: JSXOptions) => {
       : {};
 
   const filterDefaults = {
-    filterProps: (value: any, key: string): boolean => value != null,
+    filterProps: (value: any, key: string): boolean => value !== undefined,
   };
 
   const opts = {

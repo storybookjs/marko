@@ -39,7 +39,7 @@ describe('renderJsx', () => {
   });
   it('null values', () => {
     expect(renderJsx(<div className={null}>hello</div>, {})).toMatchInlineSnapshot(`
-      <div>
+      <div className={null}>
         hello
       </div>
     `);
