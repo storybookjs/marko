@@ -32,14 +32,14 @@ describe('renderJsx', () => {
   });
   it('undefined values', () => {
     expect(renderJsx(<div className={undefined}>hello</div>, {})).toMatchInlineSnapshot(`
-      <div className={undefined}>
+      <div>
         hello
       </div>
     `);
   });
   it('null values', () => {
     expect(renderJsx(<div className={null}>hello</div>, {})).toMatchInlineSnapshot(`
-      <div className={null}>
+      <div>
         hello
       </div>
     `);
