@@ -1,4 +1,4 @@
-## 6.1.0-alpha.2 (September 3, 2020)
+## 6.1.0-alpha.3 (September 3, 2020)
 
 ### Features
 
@@ -16,6 +16,10 @@
 ### Dependency Upgrades
 
 - Bump css from 2.2.4 to 3.0.0 ([#12338](https://github.com/storybookjs/storybook/pull/12338))
+
+## 6.1.0-alpha.2 (September 3, 2020)
+
+Failed NPM publish
 
 ## 6.1.0-alpha.1 (August 31, 2020)
 
