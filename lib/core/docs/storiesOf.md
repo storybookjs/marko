@@ -59,7 +59,7 @@ storiesOf('Button', module).add(
 );
 ```
 
-We can control how the component's stories will render with parameters and decorators. You can use as many `.addDecorators` as you need, but you can only use one `.addParameters`, as you can see in the example below:
+We can control how the component's stories will render with parameters and decorators. You can use as many `.addDecorators` as you need (but make sure you add them all before your first story), but you can only use one `.addParameters`, as you can see in the example below:
 
 ```js
 storiesOf('Button', module)
