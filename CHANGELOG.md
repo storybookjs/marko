@@ -10,6 +10,7 @@
 
 ### Maintenance
 
+- Addon-docs: Light refactor of Source block ([#12268](https://github.com/storybookjs/storybook/pull/12268))
 - Addon-docs: Change 2nd argument of transformSource to the storyContext ([#12265](https://github.com/storybookjs/storybook/pull/12265))
 
 ### Dependency Upgrades
