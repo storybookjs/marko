@@ -84,8 +84,8 @@ storiesOf('Basics/SyntaxHighlighter', module)
   ))
   .add('graphql', () => (
     <SyntaxHighlighter language="graphql" copyable={false}>
-      {`query HeroNameAndFriends {
-          hero {
+      {`query HeroNameAndFriends($episode: Episode) {
+          hero(episode: $episode) {
             name
             friends {
               name
