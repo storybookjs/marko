@@ -82,6 +82,19 @@ storiesOf('Basics/SyntaxHighlighter', module)
       `}
     </SyntaxHighlighter>
   ))
+  .add('graphql', () => (
+    <SyntaxHighlighter language="graphql" copyable={false}>
+      {`query HeroNameAndFriends {
+          hero {
+            name
+            friends {
+              name
+            }
+          }
+        }
+      `}
+    </SyntaxHighlighter>
+  ))
   .add('unsupported', () => (
     <SyntaxHighlighter language="C#" bordered copyable>
       {`
