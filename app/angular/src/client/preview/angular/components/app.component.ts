@@ -53,7 +53,7 @@ export class AppComponent implements OnInit, OnDestroy {
       );
 
       this.subscription = this.data.subscribe((newData) => {
-        this.ngZone.run(() => this.setProps(instance, newData))
+        this.ngZone.run(() => this.setProps(instance, newData));
         childChangeDetectorRef.markForCheck();
         // Must detect changes on the current component in order to update any changes in child component's @HostBinding properties (angular/angular#22560)
         this.changeDetectorRef.detectChanges();
