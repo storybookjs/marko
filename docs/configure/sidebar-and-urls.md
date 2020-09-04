@@ -2,7 +2,7 @@
 title: 'Sidebar & URLS'
 ---
 
-Storybook’s sidebar lists all your stories grouped by component. When you have a lot of components you may wish to also group those components also. To do so, you can add the `/` separator to the `title` of your CSF file and Storybook will group the stories into groups based on common prefixes:
+Storybook’s sidebar lists all your stories grouped by component. When you have a lot of components you may wish to also group those components. To do so, you can add the `/` separator to the `title` of your CSF file and Storybook will group the stories into groups based on common prefixes:
 
 ![Storybook sidebar anatomy](./sidebar-anatomy.jpg)
 

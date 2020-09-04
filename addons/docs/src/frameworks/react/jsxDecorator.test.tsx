@@ -129,4 +129,40 @@ describe('jsxDecorator', () => {
     jsxDecorator(storyFn, context);
     expect(mockChannel.emit).not.toHaveBeenCalled();
   });
+
+  // This is deprecated, but still test it
+  it('allows the snippet output to be modified by onBeforeRender', () => {
+    const storyFn = (args: any) => <div>args story</div>;
+    const onBeforeRender = (dom: string) => `<p>${dom}</p>`;
+    const jsx = { onBeforeRender };
+    const context = makeContext('args', { __isArgsStory: true, jsx }, {});
+    jsxDecorator(storyFn, context);
+    expect(mockChannel.emit).toHaveBeenCalledWith(
+      SNIPPET_RENDERED,
+      'jsx-test--args',
+      '<p><div>\n  args story\n</div></p>'
+    );
+  });
+
+  it('allows the snippet output to be modified by transformSource', () => {
+    const storyFn = (args: any) => <div>args story</div>;
+    const transformSource = (dom: string) => `<p>${dom}</p>`;
+    const jsx = { transformSource };
+    const context = makeContext('args', { __isArgsStory: true, jsx }, {});
+    jsxDecorator(storyFn, context);
+    expect(mockChannel.emit).toHaveBeenCalledWith(
+      SNIPPET_RENDERED,
+      'jsx-test--args',
+      '<p><div>\n  args story\n</div></p>'
+    );
+  });
+
+  it('provides the story context to transformSource', () => {
+    const storyFn = (args: any) => <div>args story</div>;
+    const transformSource = jest.fn();
+    const jsx = { transformSource };
+    const context = makeContext('args', { __isArgsStory: true, jsx }, {});
+    jsxDecorator(storyFn, context);
+    expect(transformSource).toHaveBeenCalledWith('<div>\n  args story\n</div>', context);
+  });
 });

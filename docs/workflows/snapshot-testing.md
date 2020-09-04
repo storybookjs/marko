@@ -40,7 +40,7 @@ npx test storybook.test.js
 
 <div class="aside">
 
-If you are loading stories via `.storybook/preview.js` and `require.context()`, you will need to follow some extra steps to ensure Jest finds them. Read more in the [addon documentation](../../addons/storyshots-core/README.md#configure-your-app-for-jest).
+If you are loading stories via `.storybook/preview.js` and `require.context()`, you will need to follow some extra steps to ensure Jest finds them. Read more in the [addon documentation](../../addons/storyshots/storyshots-core/README.md#configure-your-app-for-jest/README.md).
 
 </div>
 

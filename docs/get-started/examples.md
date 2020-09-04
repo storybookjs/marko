@@ -4,7 +4,7 @@ title: 'Example Storybooks'
 
 Storybook is the world’s most popular component explorer. It's widely adopted by industry giants, startups, and open source projects alike.
 
-This is a curated list of some of Storybooks that power the largest companies for your inspiration.
+This is a curated list of Storybooks for your inspiration.
 
 ## Storybook team
 
@@ -19,6 +19,12 @@ See how to build UIs using a [component driven](https://www.componentdriven.org/
 
 - [BBC Psammead](https://bbc.github.io/psammead/?path=/story/components-brand--without-brand-link)
 - [The Guardian](https://master--5dfcbf3012392c0020e7140b.chromatic.com)
+<!-- 
+NOTE for contributors: This is a curated list. Here's what qualifies:
+- Website or app Storybook that illustrates how to build UIs from small components to pages
+- Used in production by a medium/large company or large open source community
+- Must be developed actively
+  -->
 
 ## Design systems and component libraries
 
@@ -36,3 +42,11 @@ Learn how leading teams build design systems.
 - [Reaviz](https://reaviz.io/?path=/story/docs-intro--page)
 - [ShareGate Orbit](https://orbit.sharegate.design/?path=/docs/getting-started-packages--page)
 - [AppNexus Lucid](https://appnexus.github.io/lucid/?path=/docs/documentation-introduction--introduction)
+- [AnyVision UI](http://storybook.anyvision.co/)
+- [Skyscanner Backpack](https://backpack.github.io/storybook/)
+<!-- 
+NOTE for contributors: This is a curated list. Here's what qualifies:
+- Design system or component library
+- Used in production by a medium/large company or large open source community (Grommet, Chakra)
+- Must have greater than 20+ contributors OR 1k+ GitHub stars OR show exceptional use of SB features
+  -->

@@ -76,6 +76,25 @@ The value of the `framework` option (in this case ‘vue’) is something that g
 
 The real meat of this file is the framework presets, and these are standard [Storybook presets](./addons.md#addon-presets) -- you can look at framework packages in the Storybook monorepo (e.g. [React](https://github.com/storybookjs/storybook/blob/next/app/react/src/server/options.ts), [Vue](https://github.com/storybookjs/storybook/blob/next/app/vue/src/server/options.ts), [Web Components](https://github.com/storybookjs/storybook/blob/next/app/web-components/src/server/options.ts)) to see examples of framework-specific customizations.
 
+When developing your own framework that is not published by storybook, you can pass the path to the framework location with the `frameworkPath` key:
+
+```ts
+// my-framework/src/server/options.ts
+
+const packageJson = require('../../package.json');
+
+export default {
+  packageJson,
+  framework: 'my-framework',
+  frameworkPath: '@my-framework/storybook',
+  frameworkPresets: [require.resolve('./framework-preset-my-framework.js')],
+};
+```
+
+Passing a relative path to `frameworkPath` is also possible, just keep in mind that these are resolved from the storybook config directory (`.storybook` by default). 
+
+Make sure the `frameworkPath` ends up at the `dist/client/index.js` file within your framework app.
+
 ## Configuring the client
 
 To configure the client, you must provide a framework specific render function. Before diving into the details, it’s important to understand how user-written stories relate to what is finally rendered on the screen.
