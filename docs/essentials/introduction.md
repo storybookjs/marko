@@ -26,7 +26,6 @@ Then configure Storybook to use it by modifying the `main.js` configuration file
 // .storybook/main.js
 
 module.exports = {
-  stories: ['../my-project/src/components/*.@(js|md)'],
   addons: ['@storybook/addon-essentials'],
 };
 ```
