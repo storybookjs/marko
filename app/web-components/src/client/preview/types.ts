@@ -1,6 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { TemplateResult, SVGTemplateResult } from 'lit-element';
-import { Args as DefaultArgs, Annotations, BaseMeta, BaseStory } from '@storybook/addons';
 
 export { RenderContext } from '@storybook/core';
 export { Args, ArgTypes, Parameters, StoryContext } from '@storybook/addons';
