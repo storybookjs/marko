@@ -4,7 +4,6 @@ import BaseButton from '../components/BaseButton';
 
 export default {
   title: 'Addons/Backgrounds',
-
   parameters: {
     backgrounds: {
       default: 'dark',
@@ -19,18 +18,22 @@ export default {
   },
 };
 
-export const Story1 = () => (
-  <BaseButton label="You should be able to switch backgrounds for this story" />
-);
+const Template = (args) => <BaseButton {...args} />;
 
-Story1.storyName = 'story 1';
+export const Story1 = Template.bind({});
+Story1.args = {
+  label: 'You should be able to switch backgrounds for this story',
+};
 
-export const Story2 = () => <BaseButton label="This one too!" />;
+export const Story2 = Template.bind({});
+Story2.args = {
+  label: 'This one too!',
+};
 
-Story2.storyName = 'story 2';
-
-export const Overridden = () => <BaseButton label="This one should have different backgrounds" />;
-
+export const Overridden = Template.bind({});
+Overridden.args = {
+  label: 'This one should have different backgrounds',
+};
 Overridden.parameters = {
   backgrounds: {
     default: 'blue',
@@ -41,20 +44,41 @@ Overridden.parameters = {
   },
 };
 
-export const SkippedViaDisableTrue = () => (
-  <BaseButton label="This one should not use backgrounds" />
-);
-
-SkippedViaDisableTrue.storyName = 'skipped via disable: true';
-
-SkippedViaDisableTrue.parameters = {
+export const DisabledBackgrounds = Template.bind({});
+DisabledBackgrounds.args = {
+  label: 'This one should not use backgrounds',
+};
+DisabledBackgrounds.parameters = {
   backgrounds: { disable: true },
 };
 
-export const GridCellSize = () => (
-  <BaseButton label="This one should have a different grid cell size" />
-);
+export const DisabledGrid = Template.bind({});
+DisabledGrid.args = {
+  label: 'This one should not use grid',
+};
+DisabledGrid.parameters = {
+  backgrounds: {
+    grid: { disable: true },
+  },
+};
+export const GridCellProperties = Template.bind({});
+GridCellProperties.args = {
+  label: 'This one should have different grid properties',
+};
+GridCellProperties.parameters = {
+  backgrounds: {
+    grid: {
+      cellSize: 10,
+      cellAmount: 4,
+      opacity: 0.2,
+    },
+  },
+};
 
-GridCellSize.parameters = {
-  grid: { cellSize: 10 },
+export const AlignedGridWhenFullScreen = Template.bind({});
+AlignedGridWhenFullScreen.args = {
+  label: 'Grid should have an offset of 0 when in fullscreen',
+};
+AlignedGridWhenFullScreen.parameters = {
+  layout: 'fullscreen',
 };
