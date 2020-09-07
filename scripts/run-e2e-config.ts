@@ -182,6 +182,12 @@ export const web_components: Parameters = {
   additionalDeps: ['react', 'react-dom'],
 };
 
+export const web_components_typescript: Parameters = {
+  ...web_components,
+  name: 'web_components_typescript',
+  typescript: true,
+};
+
 export const webpack_react: Parameters = {
   name: 'webpack_react',
   version: 'latest',
