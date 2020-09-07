@@ -2,14 +2,17 @@ import React, { FunctionComponent, memo } from 'react';
 
 import { useGlobals, useParameter } from '@storybook/api';
 import { Icons, IconButton } from '@storybook/components';
+
 import { PARAM_KEY as BACKGROUNDS_PARAM_KEY } from '../constants';
 
 export const GridSelector: FunctionComponent = memo(() => {
   const [globals, updateGlobals] = useGlobals();
 
-  const { disable } = useParameter(BACKGROUNDS_PARAM_KEY, { disable: true });
+  const { grid } = useParameter(BACKGROUNDS_PARAM_KEY, {
+    grid: { disable: false },
+  });
 
-  if (disable) {
+  if (grid.disable) {
     return null;
   }
 
@@ -20,7 +23,11 @@ export const GridSelector: FunctionComponent = memo(() => {
       key="background"
       active={isActive}
       title="Change the background of the preview"
-      onClick={() => updateGlobals({ [BACKGROUNDS_PARAM_KEY]: { grid: !isActive } })}
+      onClick={() =>
+        updateGlobals({
+          [BACKGROUNDS_PARAM_KEY]: { ...globals[BACKGROUNDS_PARAM_KEY], grid: !isActive },
+        })
+      }
     >
       <Icons icon="grid" />
     </IconButton>
