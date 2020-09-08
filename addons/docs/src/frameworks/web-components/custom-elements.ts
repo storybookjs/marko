@@ -17,6 +17,7 @@ interface Tag {
   attributes?: TagItem[];
   properties?: TagItem[];
   events?: TagItem[];
+  methods?: TagItem[];
   slots?: TagItem[];
   cssProperties?: TagItem[];
 }
@@ -74,6 +75,7 @@ export const extractArgTypesFromElements = (tagName: string, customElements: Cus
       ...mapData(metaData.attributes, 'attributes'),
       ...mapData(metaData.properties, 'properties'),
       ...mapData(metaData.events, 'events'),
+      ...mapData(metaData.methods, 'methods'),
       ...mapData(metaData.slots, 'slots'),
       ...mapData(metaData.cssProperties, 'css'),
     }

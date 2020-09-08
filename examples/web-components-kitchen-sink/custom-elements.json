@@ -46,6 +46,12 @@
           "description": "Fires whenever it switches between front/back"
         }
       ],
+      "methods": [
+        {
+          "name": "testMethod",
+          "description": "Some web component frameworks like Stencil generate extra docs for methods. These are also displayed in the ArgsTable."
+        }
+      ],
       "slots": [
         {
           "name": "",
