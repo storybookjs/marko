@@ -74,6 +74,13 @@ Cypress.Commands.add('getDocsElement', {}, () => {
     .then((storyRoot) => cy.wrap(storyRoot, { log: false }));
 });
 
+Cypress.Commands.add('getCanvasElement', {}, () => {
+  cy.log('getCanvasElement');
+  return cy
+    .get(`#storybook-preview-iframe`, { log: false })
+    .then((iframe) => cy.wrap(iframe, { log: false }));
+});
+
 Cypress.Commands.add('navigateToStory', (kind, name) => {
   const kindId = kind.replace(/ /g, '-').toLowerCase();
   const storyId = name.replace(/ /g, '-').toLowerCase();
