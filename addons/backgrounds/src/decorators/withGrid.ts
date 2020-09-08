@@ -11,7 +11,7 @@ const deprecatedCellSizeWarning = deprecate(
     Backgrounds Addon: The cell size parameter has been changed.
 
     - parameters.grid.cellSize should now be parameters.backgrounds.grid.cellSize
-    See https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#moved-grid-parameter
+    See https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-grid-parameter
   `
 );
 
