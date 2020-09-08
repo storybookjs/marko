@@ -8,6 +8,10 @@ export const previewProps: PreviewProps = {
     on: () => {},
     emit: () => {},
     off: () => {},
+    getShortcutKeys: () => ({
+      togglePanel: 'A',
+      panelPosition: 'B',
+    }),
     getElements: ((type) =>
       type === types.TAB
         ? [
