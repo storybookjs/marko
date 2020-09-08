@@ -22,7 +22,7 @@ export const GridSelector: FunctionComponent = memo(() => {
     <IconButton
       key="background"
       active={isActive}
-      title="Change the background of the preview"
+      title="Apply a grid to the preview"
       onClick={() =>
         updateGlobals({
           [BACKGROUNDS_PARAM_KEY]: { ...globals[BACKGROUNDS_PARAM_KEY], grid: !isActive },
