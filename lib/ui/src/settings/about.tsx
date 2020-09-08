@@ -155,14 +155,7 @@ const AboutScreen: FunctionComponent<{
               <b>Upgrade all Storybook packages to latest:</b>
             </p>
             <SyntaxHighlighter language="bash" copyable padded bordered>
-              npx npm-check-updates '/storybook/' -u && npm install
-            </SyntaxHighlighter>
-            <p>
-              Alternatively, if you're using yarn run the following command, and check all Storybook
-              related packages:
-            </p>
-            <SyntaxHighlighter language="bash" copyable padded bordered>
-              yarn upgrade-interactive --latest
+              npx sb upgrade
             </SyntaxHighlighter>
           </DocumentWrapper>
         </Upgrade>

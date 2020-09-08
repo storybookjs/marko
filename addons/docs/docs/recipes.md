@@ -14,6 +14,7 @@
   - [DocsPage](#docspage)
   - [MDX Stories](#mdx-stories)
 - [Controlling a story's view mode](#controlling-a-storys-view-mode)
+- [Reordering Docs tab first](#reordering-docs-tab-first)
 - [Customizing source snippets](#customizing-source-snippets)
 - [Overwriting docs container](#overwriting-docs-container)
 - [More resources](#more-resources)
@@ -228,13 +229,26 @@ Foo.parameters = {
 };
 ```
 
-This can also be applied globally in `preview.js`:
+This can also be applied globally in `.storybook/preview.js`:
 
 ```js
 // always reset the view mode to "docs" whenever the user navigates
-addParameters({
+export const parameters = {
   viewMode: 'docs',
-});
+};
+```
+
+## Reordering Docs tab first
+
+You can configure Storybook's preview tabs with the `previewTabs` story parameter.
+
+Here's how to show the `Docs` tab first for a story (or globally in `.storybook/preview.js`):
+
+```js
+export const Foo = () => <Component />;
+Foo.parameters = {
+  previewTabs: { 'storybook/docs/panel': { index: -1 } },
+};
 ```
 
 ## Customizing source snippets
@@ -256,7 +270,7 @@ Alternatively, you can provide a function in the `docs.transformSource` paramete
 const SOURCE_REGEX = /^\(\) => `(.*)`$/;
 export const parameters = {
   docs: {
-    transformSource: (src, storyId) => {
+    transformSource: (src, storyContext) => {
       const match = SOURCE_REGEX.exec(src);
       return match ? match[1] : src;
     },
@@ -270,7 +284,7 @@ These two methods are complementary. The former is useful for story-specific, an
 
 What happens if you want to add some wrapper for your MDX page, or add some other kind of React context?
 
-When you're writing stories you can do this by adding a [decorator](https://storybook.js.org/docs/basics/writing-stories/#decorators), but when you're adding arbitrary JSX to your MDX documentation outside of a `<Story>` block, decorators no longer apply, and you need to use the `docs.container` parameter.
+When you're writing stories you can do this by adding a [decorator](https://storybook.js.org/docs/react/writing-stories/decorators), but when you're adding arbitrary JSX to your MDX documentation outside of a `<Story>` block, decorators no longer apply, and you need to use the `docs.container` parameter.
 
 The closest Docs equivalent of a decorator is the `container`, a wrapper element that is rendered around the page that is being rendered. Here's an example of adding a solid red border around the page. It uses Storybook's default page container (that sets up various contexts and other magic) and then inserts its own logic between that container and the contents of the page:
 

@@ -93,7 +93,11 @@ const getComponentData = (component: Component | Directive) => {
   const compodocJson = getCompdocJson();
   checkValidCompodocJson(compodocJson);
   const { name } = component;
-  return findComponentByName(name, compodocJson);
+  const metadata = findComponentByName(name, compodocJson);
+  if (!metadata) {
+    logger.warn(`Component not found in compodoc JSON: '${name}'`);
+  }
+  return metadata;
 };
 
 const displaySignature = (item: Method): string => {
@@ -221,8 +225,5 @@ export const extractArgTypes = (component: Component | Directive) => {
 
 export const extractComponentDescription = (component: Component | Directive) => {
   const componentData = getComponentData(component);
-  if (!componentData) {
-    return null;
-  }
-  return componentData.rawdescription || componentData.description;
+  return componentData && (componentData.rawdescription || componentData.description);
 };

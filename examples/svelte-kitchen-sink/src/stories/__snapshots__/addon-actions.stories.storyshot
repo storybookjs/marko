@@ -11,6 +11,7 @@ exports[`Storyshots Addon/Actions Action on component method 1`] = `
       Round
        corners
     </strong>
+     
     <br />
      
     Custom text
@@ -34,6 +35,7 @@ exports[`Storyshots Addon/Actions Action on view method 1`] = `
       Square
        corners
     </strong>
+     
     <br />
      
     

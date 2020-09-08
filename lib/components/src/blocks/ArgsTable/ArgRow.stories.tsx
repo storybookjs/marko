@@ -262,6 +262,60 @@ Func.args = {
   },
 };
 
+const enumeration =
+  '"search" | "arrow-to-bottom" | "arrow-to-right" | "bell" | "check" | "check-circle"';
+
+export const Enum = Template.bind({});
+Enum.args = {
+  ...baseArgs,
+  row: {
+    key: 'enum',
+    name: 'Some enum',
+    type: { required: true },
+    table: {
+      type: {
+        summary: enumeration,
+      },
+    },
+  },
+};
+
+const long_enumeration =
+  '"search" | "arrow-to-bottom" | "arrow-to-right" | "bell" | "check" | "check-circle" | "chevron-up" | "chevron-down" | "chevron-left" | "chevron-right" | "envelope" | "exchange" | "file" | "file-check" | "file-import" | "file-pdf" | "file-times" | "pencil" | "question" | "question-circle" | "sitemap" | "user" | "times" | "plus" | "exclamation-triangle" | "trash-alt" | "long-arrow-up" | "long-arrow-down" | "long-arrow-left" | "long-arrow-right" | "external-link-alt" | "sticky-note" | "chart-line" | "spinner-third"';
+
+export const LongEnum = Template.bind({});
+LongEnum.args = {
+  ...baseArgs,
+  row: {
+    key: 'longEnum',
+    name: 'Long enum',
+    type: { required: true },
+    table: {
+      type: {
+        summary: long_enumeration,
+      },
+    },
+  },
+};
+
+export const complexUnion =
+  '((a: string | SVGSVGElement) => void) | RefObject<SVGSVGElement | number> | [a|b] | {a|b}';
+
+export const ComplexUnion = Template.bind({});
+ComplexUnion.args = {
+  ...baseArgs,
+  row: {
+    key: 'complexUnion',
+    name: 'Complex',
+    type: { required: true },
+    table: {
+      type: {
+        summary: complexUnion,
+      },
+    },
+  },
+};
+
 export const Markdown = Template.bind({});
 Markdown.args = {
   ...baseArgs,

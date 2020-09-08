@@ -9,7 +9,7 @@
 
 ## Storybook theming
 
-Storybook theming is the **recommended way** to theme your docs. Docs uses the same theme system as [Storybook UI](https://storybook.js.org/docs/configurations/theming/), but is themed independently from the main UI.
+Storybook theming is the **recommended way** to theme your docs. Docs uses the same theme system as [Storybook UI](https://storybook.js.org/docs/react/configure/theming), but is themed independently from the main UI.
 
 Supposing you have a Storybook theme defined for the main UI in `.storybook/manager.js`:
 

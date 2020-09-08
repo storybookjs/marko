@@ -1,0 +1,14 @@
+```ts
+// List.stories.tsx
+
+import React from 'react';
+import * as ListItemStories from './ListItemStories';
+
+export const ManyItems = (args) => (
+  <List {...args}>
+    <Selected {...ListItemStories.Selected.args} />
+    <Unselected {...ListItemStories.Unselected.args} />
+    <Unselected {...ListItemStories.Unselected.args} />
+  </List>
+);
+```

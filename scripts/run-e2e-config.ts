@@ -17,7 +17,7 @@ const baseAngular: Parameters = {
   version: 'latest',
   generator: [
     `yarn add @angular/cli@{{version}} --no-lockfile --non-interactive --silent --no-progress`,
-    `npx ng new {{name}}-{{version}} --routing=true --minimal=true --style=scss --skipInstall=true`,
+    `npx ng new {{name}}-{{version}} --routing=true --minimal=true --style=scss --skipInstall=true --strict`,
   ].join(' && '),
   additionalDeps: ['react', 'react-dom'],
 };
@@ -28,17 +28,18 @@ const baseAngular: Parameters = {
 //   additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
 // };
 
-export const angularv7: Parameters = {
-  ...baseAngular,
-  version: 'v7-lts',
-  additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
-};
+// TODO: enable back when typings issues are resolved
+// export const angularv7: Parameters = {
+//   ...baseAngular,
+//   version: 'v7-lts',
+//   additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
+// };
 
-export const angularv8: Parameters = {
-  ...baseAngular,
-  version: 'v8-lts',
-  additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
-};
+// export const angularv8: Parameters = {
+//   ...baseAngular,
+//   version: 'v8-lts',
+//   additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
+// };
 
 export const angularv9: Parameters = {
   ...baseAngular,
@@ -57,14 +58,13 @@ export const angular: Parameters = baseAngular;
 //   preBuildCommand: 'ember build',
 // };
 
-// TODO: Example stories used in CLI need to be updated
-// export const html: Parameters = {
-//   name: 'html',
-//   version: 'latest',
-//   generator: fromDeps(),
-//   autoDetect: false,
-//   additionalDeps: ['react', 'react-dom'],
-// };
+export const html: Parameters = {
+  name: 'html',
+  version: 'latest',
+  generator: fromDeps(),
+  autoDetect: false,
+  additionalDeps: ['react', 'react-dom'],
+};
 
 // TODO: broken
 // export const marionette: Parameters = {
@@ -140,6 +140,12 @@ export const cra: Parameters = {
   generator: 'npx create-react-app@{{version}} {{name}}-{{version}}',
 };
 
+export const cra_typescript: Parameters = {
+  name: 'cra_typescript',
+  version: 'latest',
+  generator: 'npx create-react-app@{{version}} {{name}}-{{version}} --template typescript',
+};
+
 // TODO: there is a compatibility issue with riot@4
 // export const riot: Parameters = {
 //   name: 'riot',
@@ -188,5 +194,16 @@ export const react_in_yarn_workspace: Parameters = {
     'cd {{name}}-{{version}}',
     'echo "{ \\"name\\": \\"workspace-root\\", \\"private\\": true, \\"workspaces\\": [] }" > package.json',
     `yarn add react react-dom --silent -W`,
+  ].join(' && '),
+};
+
+// View results at: https://datastudio.google.com/reporting/c34f64ee-400f-4d06-ad4f-5c2133e226da
+export const cra_bench: Parameters = {
+  name: 'cra_bench',
+  version: 'latest',
+  generator: [
+    'npx create-react-app@{{version}} {{name}}-{{version}}',
+    'cd {{name}}-{{version}}',
+    "npx @storybook/bench 'npx sb init' --label cra",
   ].join(' && '),
 };

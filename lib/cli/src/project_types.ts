@@ -40,6 +40,7 @@ export enum ProjectType {
   PREACT = 'PREACT',
   SVELTE = 'SVELTE',
   RAX = 'RAX',
+  AURELIA = 'AURELIA',
 }
 
 export const SUPPORTED_FRAMEWORKS: SupportedFrameworks[] = [
@@ -56,6 +57,7 @@ export const SUPPORTED_FRAMEWORKS: SupportedFrameworks[] = [
   'preact',
   'svelte',
   'rax',
+  'aurelia',
 ];
 
 export enum StoryFormat {
@@ -217,6 +219,13 @@ export const supportedTemplates: TemplateConfiguration[] = [
   {
     preset: ProjectType.RAX,
     dependencies: ['rax'],
+    matcherFunction: ({ dependencies }) => {
+      return dependencies.every(Boolean);
+    },
+  },
+  {
+    preset: ProjectType.AURELIA,
+    dependencies: ['aurelia-bootstrapper'],
     matcherFunction: ({ dependencies }) => {
       return dependencies.every(Boolean);
     },

@@ -24,7 +24,6 @@ export const parameters = {
           return React.createElement('div', { ref: this.wrapperRef });
         }
       }
-
       return React.createElement(Story);
     },
   },

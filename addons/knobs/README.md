@@ -400,7 +400,7 @@ const value = radios(label, options, defaultValue, groupId);
 Configurable UI for selecting a value from a set of options.
 
 ```js
-import { optionsKnob as options } from '@storybook/addon-knobs';
+import { optionsKnob } from '@storybook/addon-knobs';
 
 const label = 'Fruits';
 const valuesObj = {
@@ -413,6 +413,15 @@ const optionsObj = {
   display: 'inline-radio',
 };
 const groupId = 'GROUP-ID1';
+
+const value = optionsKnob(label, valuesObj, defaultValue, optionsObj, groupId);
+```
+
+Alternatively you can use this import:
+```
+import { optionsKnob as options } from '@storybook/addon-knobs';
+
+...
 
 const value = options(label, valuesObj, defaultValue, optionsObj, groupId);
 ```

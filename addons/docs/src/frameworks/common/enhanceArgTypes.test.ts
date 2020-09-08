@@ -70,9 +70,6 @@ describe('enhanceArgTypes', () => {
             }).input
           ).toMatchInlineSnapshot(`
             {
-              "control": {
-                "type": "number"
-              },
               "name": "input",
               "type": {
                 "name": "number"
@@ -89,9 +86,6 @@ describe('enhanceArgTypes', () => {
               .input
           ).toMatchInlineSnapshot(`
             {
-              "control": {
-                "type": "number"
-              },
               "name": "input",
               "type": {
                 "name": "number"
@@ -148,9 +142,6 @@ describe('enhanceArgTypes', () => {
           }).input
         ).toMatchInlineSnapshot(`
           {
-            "control": {
-              "type": "number"
-            },
             "type": {
               "name": "number"
             },
@@ -167,9 +158,6 @@ describe('enhanceArgTypes', () => {
           }).input
         ).toMatchInlineSnapshot(`
           {
-            "control": {
-              "type": "number"
-            },
             "name": "input",
             "type": {
               "name": "number"
@@ -186,9 +174,6 @@ describe('enhanceArgTypes', () => {
           }).input
         ).toMatchInlineSnapshot(`
           {
-            "control": {
-              "type": "text"
-            },
             "type": {
               "name": "string"
             }
@@ -227,9 +212,6 @@ describe('enhanceArgTypes', () => {
               "name": "input"
             },
             "foo": {
-              "control": {
-                "type": "number"
-              },
               "type": {
                 "name": "number"
               }
@@ -247,18 +229,12 @@ describe('enhanceArgTypes', () => {
         ).toMatchInlineSnapshot(`
           {
             "input": {
-              "control": {
-                "type": "number"
-              },
               "name": "input",
               "type": {
                 "name": "number"
               }
             },
             "foo": {
-              "control": {
-                "type": "number"
-              },
               "type": {
                 "name": "number"
               }
@@ -276,17 +252,11 @@ describe('enhanceArgTypes', () => {
         ).toMatchInlineSnapshot(`
           {
             "foo": {
-              "control": {
-                "type": "number"
-              },
               "type": {
                 "name": "number"
               }
             },
             "input": {
-              "control": {
-                "type": "number"
-              },
               "name": "input",
               "type": {
                 "name": "number"

@@ -27,14 +27,14 @@ export function addons(options: PresetOptions = {}) {
       return name?.startsWith(addon);
     });
     if (existingAddon) {
-      logger.warn(`Found existing addon ${JSON.stringify(existingAddon)}, skipping.`);
+      logger.info(`Found existing addon ${JSON.stringify(existingAddon)}, skipping.`);
     }
     return !!existingAddon;
   };
 
   const main = requireMain(options.configDir);
   return (
-    ['actions', 'docs', 'controls', 'backgrounds', 'viewport']
+    ['actions', 'docs', 'controls', 'backgrounds', 'viewport', 'toolbars']
       .filter((key) => (options as any)[key] !== false)
       .map((key) => `@storybook/addon-${key}`)
       .filter((addon) => !checkInstalled(addon, main))
