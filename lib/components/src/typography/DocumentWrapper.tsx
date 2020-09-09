@@ -25,14 +25,14 @@ export const DocumentWrapper = styled.div<{}>(({ theme }) => ({
     fontSize: `${theme.typography.size.s2}px`,
     color: theme.color.dark,
   },
-  'pre:not(.hljs)': {
+  'pre:not(.prismjs)': {
     background: 'transparent',
     border: 'none',
     borderRadius: 0,
     padding: 0,
     margin: 0,
   },
-  'pre pre, pre.hljs': {
+  'pre pre, pre.prismjs': {
     padding: 15,
     margin: 0,
     whiteSpace: 'pre-wrap',
@@ -40,7 +40,7 @@ export const DocumentWrapper = styled.div<{}>(({ theme }) => ({
     fontSize: '13px',
     lineHeight: '19px',
   },
-  'pre pre code, pre.hljs code': {
+  'pre pre code, pre.prismjs code': {
     color: 'inherit',
     fontSize: 'inherit',
   },

@@ -9,6 +9,7 @@ This addon is used to show stories source in the addon panel.
 - [Getting Started](#getting-started)
   - [Install using preset](#install-using-preset)
 - [Theming](#theming)
+- [Displaying full source](#displaying-full-source)
 
 ## Getting Started
 
@@ -51,9 +52,49 @@ module.exports = {
 };
 ```
 
-To customize the `source-loader`, pass `loaderOoptions`. Valid configurations are documented in the [`source-loader` README](../../lib/source-loader/README.md#options).
+To customize the `source-loader`, pass `loaderOptions`. Valid configurations are documented in the [`source-loader` README](../../lib/source-loader/README.md#options).
 
 ## Theming
 
 Storysource will automatically use the light or dark syntax theme based on your storybook theme. See [Theming Storybook](https://storybook.js.org/docs/react/configure/theming) for more information.
 ![Storysource Light/Dark Themes](./docs/theming-light-dark.png)
+
+## Displaying full source
+
+Storybook 6.0 introduced an unintentional change to `source-loader, in which only the source of the selected story is shown in the addon. To restore the old behavior, pass the`injectStoryParameters: false` option.
+
+If you're using `addon-docs`:
+
+```js
+module.exports = {
+  addons: [
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        sourceLoaderOptions: {
+          injectStoryParameters: false,
+        },
+      },
+    },
+  ],
+};
+```
+
+If not:
+
+```js
+module.exports = {
+  addons: [
+    {
+      name: '@storybook/addon-storysource',
+      options: {
+        loaderOptions: {
+          injectStoryParameters: false,
+        },
+      },
+    },
+  ],
+};
+```
+
+This bug will be resolved in a future version of the addon.
