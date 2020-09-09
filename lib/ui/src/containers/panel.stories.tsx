@@ -8,6 +8,6 @@ export const AllAddons = () => <div>By default all addon panels are rendered</di
 export const FilteredAddons = () => <div>By default all addon panels are rendered</div>;
 
 FilteredAddons.parameters = {
-  a11y: { disabled: true },
-  actions: { disabled: true },
+  a11y: { disable: true },
+  actions: { disable: true },
 };

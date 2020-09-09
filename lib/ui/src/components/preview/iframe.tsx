@@ -83,7 +83,6 @@ export class IFrame extends Component<IFrameProps & IframeHTMLAttributes<HTMLIFr
       <StyledIframe
         onLoad={() => this.iframe.setAttribute('data-is-loaded', 'true')}
         data-is-storybook={active ? 'true' : 'false'}
-        scrolling="yes"
         id={id}
         title={title}
         src={src}

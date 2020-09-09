@@ -19,12 +19,28 @@ const Arrow = styled.div<ArrowProps>(
     position: 'absolute',
     borderStyle: 'solid',
   },
-  ({ theme, color, placement }) => ({
-    marginBottom: `${match('top', placement, '0', ArrowSpacing)}px`,
-    marginTop: `${match('bottom', placement, '0', ArrowSpacing)}px`,
-    marginRight: `${match('left', placement, '0', ArrowSpacing)}px`,
-    marginLeft: `${match('right', placement, '0', ArrowSpacing)}px`,
+  ({ placement }) => {
+    let x = 0;
+    let y = 0;
 
+    switch (true) {
+      case placement.startsWith('left') || placement.startsWith('right'): {
+        y = 8;
+        break;
+      }
+      case placement.startsWith('top') || placement.startsWith('bottom'): {
+        x = 8;
+        break;
+      }
+      default: {
+        //
+      }
+    }
+
+    const transform = `translate3d(${x}px, ${y}px, 0px)`;
+    return { transform };
+  },
+  ({ theme, color, placement }) => ({
     bottom: `${match('top', placement, ArrowSpacing * -1, 'auto')}px`,
     top: `${match('bottom', placement, ArrowSpacing * -1, 'auto')}px`,
     right: `${match('left', placement, ArrowSpacing * -1, 'auto')}px`,
@@ -82,14 +98,9 @@ const Wrapper = styled.div<WrapperProps>(
     display: hidden ? 'none' : 'inline-block',
     zIndex: 2147483647,
   }),
-  ({ theme, color, hasChrome, placement }) =>
+  ({ theme, color, hasChrome }) =>
     hasChrome
       ? {
-          marginBottom: `${match('top', placement, ArrowSpacing + 2, 0)}px`,
-          marginTop: `${match('bottom', placement, ArrowSpacing + 2, 0)}px`,
-          marginLeft: `${match('right', placement, ArrowSpacing + 2, 0)}px`,
-          marginRight: `${match('left', placement, ArrowSpacing + 2, 0)}px`,
-
           background:
             theme.color[color] || color || theme.base === 'light'
               ? lighten(theme.background.app)
@@ -101,12 +112,7 @@ const Wrapper = styled.div<WrapperProps>(
           borderRadius: theme.appBorderRadius * 2,
           fontSize: theme.typography.size.s1,
         }
-      : {
-          marginBottom: `${match('top', placement, 8, 0)}px`,
-          marginTop: `${match('bottom', placement, 8, 0)}px`,
-          marginLeft: `${match('right', placement, 8, 0)}px`,
-          marginRight: `${match('left', placement, 8, 0)}px`,
-        }
+      : {}
 );
 
 export interface TooltipProps {

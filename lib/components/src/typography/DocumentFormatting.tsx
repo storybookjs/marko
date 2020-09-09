@@ -44,14 +44,14 @@ export const Pre = styled.pre<{}>(withReset, withMargin, ({ theme }) => ({
   borderRadius: 3,
   margin: '1rem 0',
 
-  '&:not(.hljs)': {
+  '&:not(.prismjs)': {
     background: 'transparent',
     border: 'none',
     borderRadius: 0,
     padding: 0,
     margin: 0,
   },
-  '& pre, &.hljs': {
+  '& pre, &.prismjs': {
     padding: 15,
     margin: 0,
     whiteSpace: 'pre-wrap',

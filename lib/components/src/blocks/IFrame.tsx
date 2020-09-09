@@ -46,15 +46,6 @@ export class IFrame extends Component<IFrameProps> {
 
   render() {
     const { id, title, src, allowFullScreen, scale, ...rest } = this.props;
-    return (
-      <iframe
-        scrolling="yes"
-        id={id}
-        title={title}
-        src={src}
-        allowFullScreen={allowFullScreen}
-        {...rest}
-      />
-    );
+    return <iframe id={id} title={title} src={src} allowFullScreen={allowFullScreen} {...rest} />;
   }
 }

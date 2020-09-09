@@ -15,6 +15,7 @@ interface ArgValueProps {
 
 interface ArgTextProps {
   text: string;
+  simple?: boolean;
 }
 
 interface ArgSummaryProps {
@@ -33,19 +34,24 @@ const Summary = styled.div<{ isExpanded?: boolean }>(({ isExpanded }) => ({
   minWidth: 100,
 }));
 
-const Text = styled.span<{}>(codeCommon, ({ theme }) => ({
+const Text = styled.span<{ simple?: boolean }>(codeCommon, ({ theme, simple = false }) => ({
   flex: '0 0 auto',
   fontFamily: theme.typography.fonts.mono,
   fontSize: theme.typography.size.s1,
   wordBreak: 'break-word',
+  whiteSpace: 'normal',
+  maxWidth: '100%',
   margin: 0,
   marginRight: '4px',
   marginBottom: '4px',
   paddingTop: '2px',
   paddingBottom: '2px',
   lineHeight: '13px',
-  whiteSpace: 'normal',
-  maxWidth: '100%',
+  ...(simple && {
+    background: 'transparent',
+    border: '0 none',
+    paddingLeft: 0,
+  }),
 }));
 
 const ExpandButton = styled.button<{}>(({ theme }) => ({
@@ -93,8 +99,8 @@ const EmptyArg = () => {
   return <span>-</span>;
 };
 
-const ArgText: FC<ArgTextProps> = ({ text }) => {
-  return <Text>{text}</Text>;
+const ArgText: FC<ArgTextProps> = ({ text, simple }) => {
+  return <Text simple={simple}>{text}</Text>;
 };
 
 const calculateDetailWidth = memoize(1000)((detail: string): string => {
@@ -132,6 +138,12 @@ const ArgSummary: FC<ArgSummaryProps> = ({ value, initialExpandedArgs }) => {
   const summaryAsString = typeof summary.toString === 'function' ? summary.toString() : summary;
 
   if (detail == null) {
+    const cannotBeSafelySplitted = /[(){}[\]<>]/.test(summaryAsString);
+
+    if (cannotBeSafelySplitted) {
+      return <ArgText text={summaryAsString} simple={summaryAsString.includes('|')} />;
+    }
+
     const summaryItems = getSummaryItems(summaryAsString);
     const itemsCount = summaryItems.length;
     const hasManyItems = itemsCount > ITEMS_BEFORE_EXPANSION;

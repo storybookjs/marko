@@ -1,5 +1,8 @@
 <h1>Migration</h1>
 
+- [From version 6.0.x to 6.1.0](#from-version-60x-to-610)
+  - [6.1 deprecations](#61-deprecations)
+    - [Deprecated onBeforeRender](#deprecated-onbeforerender)
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
   - [Hoisted CSF annotations](#hoisted-csf-annotations)
   - [Zero config typescript](#zero-config-typescript)
@@ -34,6 +37,7 @@
   - [6.0 Addon API changes](#60-addon-api-changes)
     - [Consistent local addon paths in main.js](#consistent-local-addon-paths-in-mainjs)
     - [Deprecated setAddon](#deprecated-setaddon)
+    - [Deprecated disabled parameter](#deprecated-disabled-parameter)
     - [Actions addon uses parameters](#actions-addon-uses-parameters)
     - [Removed action decorator APIs](#removed-action-decorator-apis)
     - [Removed withA11y decorator](#removed-witha11y-decorator)
@@ -127,6 +131,16 @@
   - [Webpack upgrade](#webpack-upgrade)
   - [Packages renaming](#packages-renaming)
   - [Deprecated embedded addons](#deprecated-embedded-addons)
+
+## From version 6.0.x to 6.1.0
+
+### 6.1 deprecations
+
+#### Deprecated onBeforeRender
+
+The `@storybook/addon-docs` previously accepted a `jsx` option called `onBeforeRender`, which was unfortunately named as it was called after the render.
+
+We've renamed it `transformSource` and also allowed it to receive the `StoryContext` in case source rendering requires additional information.
 
 ## From version 5.3.x to 6.0.x
 
@@ -599,6 +613,22 @@ We've deprecated the `setAddon` method of the `storiesOf` API and plan to remove
 
 Since early versions, Storybook shipped with a `setAddon` API, which allows you to extend `storiesOf` with arbitrary code. We've removed this from all core addons long ago and recommend writing stories in [Component Story Format](https://medium.com/storybookjs/component-story-format-66f4c32366df) rather than using the internal Storybook API.
 
+#### Deprecated disabled parameter
+
+Starting in 6.0.17, we've renamed the `disabled` parameter to `disable` to resolve an inconsistency where `disabled` had been used to hide the addon panel, whereas `disable` had been used to disable an addon's execution. Since `disable` was much more widespread in the code, we standardized on that.
+
+So, for example:
+
+```
+Story.parameters = { actions: { disabled: true } }
+```
+
+Should be rewritten as:
+
+```
+Story.parameters = { actions: { disable: true } }
+```
+
 #### Actions addon uses parameters
 
 Leveraging the new preset `@storybook/addon-actions` uses parameters to pass action options. If you previously had:
@@ -707,7 +737,7 @@ The addon's source code is still available in the [deprecated-addons repo](https
 
 #### Removed addon-centered
 
-In 6.0 we removed the centered addon. Centering is now core feature of storybook, so w no longer need an addon.
+In 6.0 we removed the centered addon. Centering is now core feature of storybook, so we no longer need an addon.
 
 Remove the addon-centered decorator and instead add a `layout` parameter:
 
