@@ -1,3 +1,14 @@
+## 6.1.0-alpha.5 (September 10, 2020)
+
+### Features
+
+* Core: Add static dir path mappings ([#12222](https://github.com/storybookjs/storybook/pull/12222))
+
+### Bug Fixes
+
+* Source-loader: Export extract-source in its own entry point ([#12429](https://github.com/storybookjs/storybook/pull/12429))
+* Addon-docs: Prefer flow's union elements over raw values ([#12376](https://github.com/storybookjs/storybook/pull/12376))
+
 ## 6.1.0-alpha.4 (September 8, 2020)
 
 ### Features
