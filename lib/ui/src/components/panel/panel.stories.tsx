@@ -9,7 +9,7 @@ const onSelect = action('onSelect');
 const toggleVisibility = action('toggleVisibility');
 const togglePosition = action('togglePosition');
 
-const shortcuts = { panelPosition: 'A', togglePanel: 'B' } as State['Shortcuts'];
+const shortcuts = { panelPosition: 'A', togglePanel: 'B' } as State['shortcuts'];
 
 export default {
   title: 'UI/Panel',
