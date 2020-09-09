@@ -1,7 +1,7 @@
 import React, { Component, Fragment, ReactElement } from 'react';
 import { styled } from '@storybook/theming';
 import { Tabs, Icons, IconButton } from '@storybook/components';
-import { Shortcuts } from '@storybook/api/dist/modules/shortcuts';
+import { State } from '@storybook/api';
 
 const DesktopOnlyIconButton = styled(IconButton)({
   // Hides full screen icon at mobile breakpoint defined in app.js
@@ -48,7 +48,7 @@ const AddonPanel = React.memo<{
   selectedPanel?: string;
   actions: { onSelect: (id: string) => void } & Record<string, any>;
   panels: Record<string, any>;
-  shortcuts: Shortcuts;
+  shortcuts: State['shortcuts'];
   panelPosition?: 'bottom' | 'right';
   absolute?: boolean;
 }>(
