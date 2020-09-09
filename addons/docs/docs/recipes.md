@@ -270,7 +270,7 @@ Alternatively, you can provide a function in the `docs.transformSource` paramete
 const SOURCE_REGEX = /^\(\) => `(.*)`$/;
 export const parameters = {
   docs: {
-    transformSource: (src, storyId) => {
+    transformSource: (src, storyContext) => {
       const match = SOURCE_REGEX.exec(src);
       return match ? match[1] : src;
     },

@@ -4,6 +4,8 @@ export interface SourceLoc {
 }
 
 export interface SourceBlock {
+  startBody: SourceLoc;
+  endBody: SourceLoc;
   startLoc: SourceLoc;
   endLoc: SourceLoc;
 }

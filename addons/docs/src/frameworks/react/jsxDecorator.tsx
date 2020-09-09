@@ -8,7 +8,7 @@ import { logger } from '@storybook/client-logger';
 
 import { SourceType, SNIPPET_RENDERED } from '../../shared';
 
-interface JSXOptions {
+type JSXOptions = Options & {
   /** How many wrappers to skip when rendering the jsx */
   skip?: number;
   /** Whether to show the function in the jsx tab */
@@ -21,7 +21,7 @@ interface JSXOptions {
   onBeforeRender?(dom: string): string;
   /** A function ran after a story is rendered (prefer this over `onBeforeRender`) */
   transformSource?(dom: string, context?: StoryContext): string;
-}
+};
 
 /** Run the user supplied onBeforeRender function if it exists */
 const applyBeforeRender = (domString: string, options: JSXOptions) => {
@@ -84,14 +84,20 @@ export const renderJsx = (code: React.ReactElement, options: JSXOptions) => {
     }
   }
 
-  const opts =
+  const displayNameDefaults =
     typeof options.displayName === 'string'
-      ? {
-          ...options,
-          showFunctions: true,
-          displayName: () => options.displayName,
-        }
-      : options;
+      ? { showFunctions: true, displayName: () => options.displayName }
+      : {};
+
+  const filterDefaults = {
+    filterProps: (value: any, key: string): boolean => value !== undefined,
+  };
+
+  const opts = {
+    ...displayNameDefaults,
+    ...filterDefaults,
+    ...options,
+  };
 
   const result = React.Children.map(code, (c) => {
     // @ts-ignore FIXME: workaround react-element-to-jsx-string

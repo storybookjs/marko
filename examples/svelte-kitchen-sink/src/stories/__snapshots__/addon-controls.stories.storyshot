@@ -1,54 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Addon/Controls Rounded 1`] = `
+exports[`Storyshots Addon/Controls Show Case 1`] = `
 <section
   class="storybook-snapshot-container"
 >
   <h1>
-    Button view
-  </h1>
-   
-  <button
-    class="button svelte-n2tx93 rounded"
-  >
-    <strong>
-      Round
-       corners
-    </strong>
-     
-    <br />
-     
-    
-     
-    Rounded text
-    : 
-    0
-  </button>
-   
-  <p>
-    A little text to show this is a view.
-  </p>
-   
-  <p>
-    If we need to test components in a Svelte environment, for instance to test slot behaviour,
-  </p>
-   
-  <p>
-    then wrapping the component up in a view
-  </p>
-   
-  <p>
-    made just for the story is the simplest way to achieve this.
-  </p>
-</section>
-`;
-
-exports[`Storyshots Addon/Controls Square 1`] = `
-<section
-  class="storybook-snapshot-container"
->
-  <h1>
-    Button view
+    Control Showcase
   </h1>
    
   <button
@@ -63,25 +20,87 @@ exports[`Storyshots Addon/Controls Square 1`] = `
      
     
      
-    Squared text
+    You clicked
     : 
     0
   </button>
    
-  <p>
-    A little text to show this is a view.
-  </p>
+  <h2>
+    Array Range
+  </h2>
    
-  <p>
-    If we need to test components in a Svelte environment, for instance to test slot behaviour,
-  </p>
+  <div>
+    []
+  </div>
    
-  <p>
-    then wrapping the component up in a view
-  </p>
+  <h2>
+    Progress Bar
+  </h2>
    
-  <p>
-    made just for the story is the simplest way to achieve this.
-  </p>
+  <progress
+    max="100"
+    min="0"
+    step="1"
+    value={0}
+  />
+   
+  <h2>
+    Enum Selectors
+  </h2>
+   
+  <h3>
+    inline radio
+  </h3>
+   
+  <div>
+    <p>
+      Loading State: 
+      loading
+    </p>
+  </div>
+   
+  <h3>
+    inline check
+  </h3>
+   
+  <div>
+    <p>
+      Food Items: 
+      []
+    </p>
+  </div>
+   
+  <h3>
+    inline select
+  </h3>
+   
+  <div>
+    <p>
+      Car choice: 
+      car
+    </p>
+  </div>
+   
+  <h2>
+    Color Picker
+  </h2>
+   
+  <div>
+    <div
+      class="Box svelte-zg433x"
+      style="background-color: rgb(0, 0, 0);"
+    />
+  </div>
+   
+  <h2>
+    Date Picker
+  </h2>
+   
+  <div>
+    <p>
+      Date: 
+      Invalid Date
+    </p>
+  </div>
 </section>
 `;
