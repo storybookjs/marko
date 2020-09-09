@@ -21,10 +21,6 @@ export const previewProps: PreviewProps = {
             } as Addon,
           ]
         : []) as API['getElements'],
-    getShortcutKeys: () => ({
-      togglePanel: 'A',
-      panelPosition: 'B',
-    }),
   } as any) as API,
   story: {
     id: 'story--id',
