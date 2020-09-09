@@ -1,4 +1,5 @@
 import React, { Component, Fragment, ReactElement } from 'react';
+import { shortcutToHumanString } from '@storybook/api/shortcut';
 import { styled } from '@storybook/theming';
 import { Tabs, Icons, IconButton } from '@storybook/components';
 import { State } from '@storybook/api';
@@ -69,14 +70,14 @@ const AddonPanel = React.memo<{
           <DesktopOnlyIconButton
             key="position"
             onClick={actions.togglePosition}
-            title={`Change addon orientation [${shortcuts.panelPosition}]`}
+            title={`Change addon orientation [${shortcutToHumanString(shortcuts.panelPosition)}]`}
           >
             <Icons icon={panelPosition === 'bottom' ? 'bottombar' : 'sidebaralt'} />
           </DesktopOnlyIconButton>
           <DesktopOnlyIconButton
             key="visibility"
             onClick={actions.toggleVisibility}
-            title={`Hide addons [${shortcuts.togglePanel}]`}
+            title={`Hide addons [${shortcutToHumanString(shortcuts.togglePanel)}]`}
           >
             <Icons icon="close" />
           </DesktopOnlyIconButton>

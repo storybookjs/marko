@@ -1,15 +1,11 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-
-import { State } from '@storybook/api';
 import Panel from './panel';
-import { panels } from '../layout/app.mockdata';
+import { panels, shortcuts } from '../layout/app.mockdata';
 
 const onSelect = action('onSelect');
 const toggleVisibility = action('toggleVisibility');
 const togglePosition = action('togglePosition');
-
-const shortcuts = { panelPosition: 'A', togglePanel: 'B' } as State['shortcuts'];
 
 export default {
   title: 'UI/Panel',
