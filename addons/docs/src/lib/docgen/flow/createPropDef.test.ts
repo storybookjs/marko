@@ -269,6 +269,54 @@ describe('type', () => {
     expect(type.summary).toBe('number | string');
   });
 
+  it('should support nested union elements', () => {
+    const docgenInfo = createDocgenInfo({
+      flowType: {
+        name: 'union',
+        raw: '"minimum" | "maximum" | UserSize',
+        elements: [
+          {
+            name: 'literal',
+            value: '"minimum"',
+          },
+          {
+            name: 'literal',
+            value: '"maximum"',
+          },
+          {
+            name: 'union',
+            raw: 'string | number',
+            elements: [
+              {
+                name: 'number',
+              },
+              {
+                name: 'string',
+              },
+            ],
+          },
+        ],
+      },
+    });
+
+    const { type } = createFlowPropDef(PROP_NAME, docgenInfo);
+
+    expect(type.summary).toBe('"minimum" | "maximum" | number | string');
+  });
+
+  it('uses raw union value if elements are missing', () => {
+    const docgenInfo = createDocgenInfo({
+      flowType: {
+        name: 'union',
+        raw: '"minimum" | "maximum" | UserSize',
+      },
+    });
+
+    const { type } = createFlowPropDef(PROP_NAME, docgenInfo);
+
+    expect(type.summary).toBe('"minimum" | "maximum" | UserSize');
+  });
+
   it('should support intersection', () => {
     const docgenInfo = createDocgenInfo({
       flowType: {
