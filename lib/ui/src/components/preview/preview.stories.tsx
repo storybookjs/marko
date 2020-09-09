@@ -44,4 +44,10 @@ export const noTabs = () => (
   </Consumer>
 );
 
-export const withTabs = () => <Preview {...previewProps} />;
+export const withTabs = () => (
+  <Consumer>
+    {({ api }: Combo) => {
+      return <Preview {...previewProps} api={{ ...api, getElements: () => ({}) }} />;
+    }}
+  </Consumer>
+);

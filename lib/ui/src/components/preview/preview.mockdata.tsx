@@ -8,10 +8,6 @@ export const previewProps: PreviewProps = {
     on: () => {},
     emit: () => {},
     off: () => {},
-    getShortcutKeys: () => ({
-      togglePanel: 'A',
-      panelPosition: 'B',
-    }),
     getElements: ((type) =>
       type === types.TAB
         ? [
@@ -25,6 +21,10 @@ export const previewProps: PreviewProps = {
             } as Addon,
           ]
         : []) as API['getElements'],
+    getShortcutKeys: () => ({
+      togglePanel: 'A',
+      panelPosition: 'B',
+    }),
   } as any) as API,
   story: {
     id: 'story--id',
