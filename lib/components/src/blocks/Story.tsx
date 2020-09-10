@@ -34,18 +34,14 @@ type IFrameStoryProps = CommonProps;
 
 type StoryProps = InlineStoryProps | IFrameStoryProps;
 
-const InlineStory: FunctionComponent<InlineStoryProps> = ({
-  storyFn,
-  height,
-  id = Math.round(Math.random() * 1e5),
-}) => (
+const InlineStory: FunctionComponent<InlineStoryProps> = ({ storyFn, height, id }) => (
   <Fragment>
     {height ? (
-      <style>{`.sbdocs .story--${id} { min-height: ${height}; transform: translateZ(0); overflow: auto;`}</style>
+      <style>{`#story--${id} { min-height: ${height}; transform: 'translateZ(0)'; overflow: 'auto' }`}</style>
     ) : null}
-    <div className={`story--${id}`}>
+    <Fragment>
       {storyFn ? createElement(storyFn) : <EmptyBlock>{MISSING_STORY(id)}</EmptyBlock>}
-    </div>
+    </Fragment>
   </Fragment>
 );
 
