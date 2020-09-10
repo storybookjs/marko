@@ -57,7 +57,7 @@ Other options are similar to those in the CLI.
 ```plaintext
 port [number]           Port to run Storybook
 host [string]           Host to run Storybook
-staticDir <dir-names>   Directory where to load static files from, array of strings
+staticDir <dir-names>   Directory where to load static files from, array of string mappings between localDir and remote path
 configDir [dir-name]    Directory where to load Storybook configurations from
 https                   Serve Storybook over HTTPS. Note: You must provide your own certificate information.
 sslCa <ca>              Provide an SSL certificate authority. (Optional with "https", required if using a self-signed certificate)
@@ -71,7 +71,7 @@ quiet                   Suppress verbose build output
 ## For "static" mode:
 
 ```plaintext
-staticDir <dir-names>   Directory where to load static files from, array of strings
+staticDir <dir-names>   Directory where to load static files from, array of strings mappings between localDir and remote path
 outputDir [dir-name]    Directory where to store built files
 configDir [dir-name]    Directory where to load Storybook configurations from
 watch                   Enable watch mode
@@ -87,5 +87,6 @@ storybook({
   mode: 'dev',
   port: 9009,
   configDir: './.storybook',
+  staticDir: ['localDir', 'localDir/images:/images/public']
 });
 ```

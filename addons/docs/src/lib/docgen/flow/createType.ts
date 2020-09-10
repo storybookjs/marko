@@ -7,17 +7,40 @@ enum FlowTypesType {
   SIGNATURE = 'signature',
 }
 
-interface DocgenFlowUnionType extends DocgenFlowType {
-  elements: { name: string; value: string }[];
+interface DocgenFlowUnionElement {
+  name: string;
+  value?: string;
+  elements?: DocgenFlowUnionElement[];
+  raw?: string;
 }
 
-function generateUnion({ name, raw, elements }: DocgenFlowUnionType): PropType {
-  if (raw != null) {
-    return createSummaryValue(raw);
+interface DocgenFlowUnionType extends DocgenFlowType {
+  elements: DocgenFlowUnionElement[];
+}
+
+function generateUnionElement({ name, value, elements, raw }: DocgenFlowUnionElement): string {
+  if (value != null) {
+    return value;
   }
 
   if (elements != null) {
-    return createSummaryValue(elements.map((x) => x.value).join(' | '));
+    return elements.map(generateUnionElement).join(' | ');
+  }
+
+  if (raw != null) {
+    return raw;
+  }
+
+  return name;
+}
+
+function generateUnion({ name, raw, elements }: DocgenFlowUnionType): PropType {
+  if (elements != null) {
+    return createSummaryValue(elements.map(generateUnionElement).join(' | '));
+  }
+
+  if (raw != null) {
+    return createSummaryValue(raw);
   }
 
   return createSummaryValue(name);

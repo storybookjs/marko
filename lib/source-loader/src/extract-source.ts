@@ -1,5 +1,7 @@
 import type { SourceBlock } from './types';
 
+export * from './types';
+
 /**
  * given a location, extract the text from the full source
  */
