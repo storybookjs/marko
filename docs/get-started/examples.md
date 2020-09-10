@@ -44,6 +44,7 @@ Learn how leading teams build design systems.
 - [AppNexus Lucid](https://appnexus.github.io/lucid/?path=/docs/documentation-introduction--introduction)
 - [AnyVision UI](http://storybook.anyvision.co/)
 - [Skyscanner Backpack](https://backpack.github.io/storybook/)
+- [GitLab UI](https://gitlab-org.gitlab.io/gitlab-ui)
 <!-- 
 NOTE for contributors: This is a curated list. Here's what qualifies:
 - Design system or component library
