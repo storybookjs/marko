@@ -1,6 +1,6 @@
 import { combineParameters } from '@storybook/client-api';
 import { StoryContext, Parameters } from '@storybook/addons';
-import { extractSource, LocationsMap } from '@storybook/source-loader';
+import { extractSource, LocationsMap } from '@storybook/source-loader/extract-source';
 
 interface StorySource {
   source: string;
