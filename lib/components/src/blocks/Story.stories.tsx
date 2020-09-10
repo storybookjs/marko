@@ -26,7 +26,7 @@ export const Error = () => <Story error={StoryError.NO_STORY} />;
 export const ReactHook = () => <Story inline storyFn={buttonHookFn} title="hello button" />;
 
 const FixedLayoutExample = styled.div(({ theme }) => ({
-  '&, header, aside, main': {
+  '&, header, aside, main, footer': {
     position: 'fixed',
     top: 0,
     right: 0,
@@ -48,6 +48,11 @@ const FixedLayoutExample = styled.div(({ theme }) => ({
     left: '10rem',
     background: theme.background.negative,
   },
+  footer: {
+    top: 'auto',
+    height: '3rem',
+    background: theme.background.critical,
+  },
 }));
 
 export const CustomHeight = () => (
@@ -59,6 +64,7 @@ export const CustomHeight = () => (
         <header />
         <aside />
         <main />
+        <footer />
       </FixedLayoutExample>
     )}
     height="15rem"
