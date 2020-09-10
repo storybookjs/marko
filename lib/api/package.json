@@ -1,6 +1,6 @@
 {
   "name": "@storybook/api",
-  "version": "6.1.0-alpha.6",
+  "version": "6.1.0-alpha.7",
   "description": "Core Storybook API & Context",
   "keywords": [
     "storybook"
@@ -29,13 +29,13 @@
   },
   "dependencies": {
     "@reach/router": "^1.3.3",
-    "@storybook/channels": "6.1.0-alpha.6",
-    "@storybook/client-logger": "6.1.0-alpha.6",
-    "@storybook/core-events": "6.1.0-alpha.6",
+    "@storybook/channels": "6.1.0-alpha.7",
+    "@storybook/client-logger": "6.1.0-alpha.7",
+    "@storybook/core-events": "6.1.0-alpha.7",
     "@storybook/csf": "0.0.1",
-    "@storybook/router": "6.1.0-alpha.6",
+    "@storybook/router": "6.1.0-alpha.7",
     "@storybook/semver": "^7.3.2",
-    "@storybook/theming": "6.1.0-alpha.6",
+    "@storybook/theming": "6.1.0-alpha.7",
     "@types/reach__router": "^1.3.5",
     "core-js": "^3.0.1",
     "fast-deep-equal": "^3.1.1",
@@ -43,6 +43,7 @@
     "lodash": "^4.17.15",
     "memoizerific": "^1.11.3",
     "react": "^16.8.3",
+    "react-dom": "^16.8.3",
     "regenerator-runtime": "^0.13.3",
     "store2": "^2.7.1",
     "telejson": "^5.0.2",
@@ -55,13 +56,10 @@
     "flush-promises": "^1.0.2",
     "qs": "^6.6.0"
   },
-  "peerDependencies": {
-    "react-dom": "*"
-  },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "f488dd4c7e6f52965db0e54c7f072042765c6477",
+  "gitHead": "c63131f0325d039ec30fe244bfc43ee17ad4fe9e",
   "typesVersions": {
     "<=3.5": {
       "*": [

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/core",
-  "version": "6.1.0-alpha.6",
+  "version": "6.1.0-alpha.7",
   "description": "Storybook framework-agnostic API",
   "keywords": [
     "storybook"
@@ -30,6 +30,7 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
+    "@babel/core": "^7.8.3",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/plugin-proposal-export-default-from": "^7.8.3",
@@ -51,20 +52,20 @@
     "@babel/preset-react": "^7.8.3",
     "@babel/preset-typescript": "^7.9.0",
     "@babel/register": "^7.10.5",
-    "@storybook/addons": "6.1.0-alpha.6",
-    "@storybook/api": "6.1.0-alpha.6",
-    "@storybook/channel-postmessage": "6.1.0-alpha.6",
-    "@storybook/channels": "6.1.0-alpha.6",
-    "@storybook/client-api": "6.1.0-alpha.6",
-    "@storybook/client-logger": "6.1.0-alpha.6",
-    "@storybook/components": "6.1.0-alpha.6",
-    "@storybook/core-events": "6.1.0-alpha.6",
+    "@storybook/addons": "6.1.0-alpha.7",
+    "@storybook/api": "6.1.0-alpha.7",
+    "@storybook/channel-postmessage": "6.1.0-alpha.7",
+    "@storybook/channels": "6.1.0-alpha.7",
+    "@storybook/client-api": "6.1.0-alpha.7",
+    "@storybook/client-logger": "6.1.0-alpha.7",
+    "@storybook/components": "6.1.0-alpha.7",
+    "@storybook/core-events": "6.1.0-alpha.7",
     "@storybook/csf": "0.0.1",
-    "@storybook/node-logger": "6.1.0-alpha.6",
-    "@storybook/router": "6.1.0-alpha.6",
+    "@storybook/node-logger": "6.1.0-alpha.7",
+    "@storybook/router": "6.1.0-alpha.7",
     "@storybook/semver": "^7.3.2",
-    "@storybook/theming": "6.1.0-alpha.6",
-    "@storybook/ui": "6.1.0-alpha.6",
+    "@storybook/theming": "6.1.0-alpha.7",
+    "@storybook/ui": "6.1.0-alpha.7",
     "@types/glob-base": "^0.3.0",
     "@types/micromatch": "^4.0.1",
     "@types/node-fetch": "^2.5.4",
@@ -111,7 +112,9 @@
     "pretty-hrtime": "^1.0.3",
     "qs": "^6.6.0",
     "raw-loader": "^4.0.1",
+    "react": "^16.8.3",
     "react-dev-utils": "^10.0.0",
+    "react-dom": "^16.8.3",
     "regenerator-runtime": "^0.13.3",
     "resolve-from": "^5.0.0",
     "serve-favicon": "^2.5.0",
@@ -131,13 +134,8 @@
   "devDependencies": {
     "mock-fs": "^4.12.0"
   },
-  "peerDependencies": {
-    "@babel/core": "*",
-    "react": "*",
-    "react-dom": "*"
-  },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "f488dd4c7e6f52965db0e54c7f072042765c6477"
+  "gitHead": "c63131f0325d039ec30fe244bfc43ee17ad4fe9e"
 }

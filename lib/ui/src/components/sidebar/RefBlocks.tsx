@@ -36,6 +36,11 @@ const RootHeading = styled.div(({ theme }) => ({
   margin: '0 20px',
 }));
 
+const TextStyle = styled.div(({ theme }) => ({
+  fontSize: theme.typography.size.s2 - 1,
+  lineHeight: '20px',
+  margin: 0,
+}));
 const Text = styled.p(({ theme }) => ({
   fontSize: theme.typography.size.s2 - 1,
   lineHeight: '20px',
@@ -229,7 +234,7 @@ export const AuthBlock: FunctionComponent<{ loginUrl: string; id: string }> = ({
 export const ErrorBlock: FunctionComponent<{ error: Error }> = ({ error }) => (
   <Contained>
     <Spaced>
-      <Text>
+      <TextStyle>
         Oh no! Something went wrong loading this Storybook.
         <br />
         <WithTooltip
@@ -249,7 +254,7 @@ export const ErrorBlock: FunctionComponent<{ error: Error }> = ({ error }) => (
         <Link withArrow href="https://storybook.js.org/docs" cancel={false} target="_blank">
           View docs
         </Link>
-      </Text>
+      </TextStyle>
     </Spaced>
   </Contained>
 );

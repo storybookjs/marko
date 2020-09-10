@@ -79,8 +79,7 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
     logger.log();
   };
 
-  const REACT_NATIVE_DISCUSSION =
-    'https://github.com/storybookjs/react-native/blob/master/app/react-native/docs/manual-setup.md';
+  const REACT_NATIVE_REPO = 'https://github.com/storybookjs/react-native';
 
   const runGenerator: () => Promise<void> = () => {
     switch (projectType) {
@@ -131,9 +130,9 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
           .then(() => {
             logger.log(chalk.red('NOTE: installation is not 100% automated.'));
             logger.log(`To quickly run Storybook, replace contents of your app entry with:\n`);
-            codeLog(["export default from './storybook';"]);
-            logger.log('\n For more in depth setup instructions, see:\n');
-            logger.log(chalk.cyan(REACT_NATIVE_DISCUSSION));
+            codeLog(["export {default} from './storybook';"]);
+            logger.log('\n For more in information, see the github readme:\n');
+            logger.log(chalk.cyan(REACT_NATIVE_REPO));
             logger.log();
           });
       }

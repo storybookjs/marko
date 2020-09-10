@@ -172,7 +172,7 @@ Basic.decorators = [ ... ];
 2. Similar to React's `displayName`, `propTypes`, `defaultProps` annotations
 3. We're introducing a new feature, [Storybook Args](https://docs.google.com/document/d/1Mhp1UFRCKCsN8pjlfPdz8ZdisgjNXeMXpXvGoALjxYM/edit?usp=sharing), where the new syntax will be significantly more ergonomic
 
-To help you upgrade your stories, we've crated a codemod:
+To help you upgrade your stories, we've created a codemod:
 
 ```
 npx @storybook/cli@next migrate csf-hoist-story-annotations --glob="**/*.stories.js"
