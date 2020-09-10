@@ -1,3 +1,19 @@
+## 6.1.0-alpha.7 (September 10, 2020)
+
+### Features
+
+- Components: Add graphql support to SyntaxHighlighter ([#12385](https://github.com/storybookjs/storybook/pull/12385))
+
+### Bug Fixes
+
+- UI: Fix the p > div nesting issue ([#12298](https://github.com/storybookjs/storybook/pull/12298))
+- Addon-docs: Apply transformSource to any SourceType ([#12375](https://github.com/storybookjs/storybook/pull/12375))
+- CLI: Workaround for react native `sb init` ([#12405](https://github.com/storybookjs/storybook/pull/12405))
+
+### Dependency Upgrades
+
+- Core: Change react deps to normal deps ([#11628](https://github.com/storybookjs/storybook/pull/11628))
+
 ## 6.1.0-alpha.6 (September 10, 2020)
 
 ### Features
