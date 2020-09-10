@@ -37,7 +37,7 @@ type StoryProps = InlineStoryProps | IFrameStoryProps;
 const InlineStory: FunctionComponent<InlineStoryProps> = ({ storyFn, height, id }) => (
   <Fragment>
     {height ? (
-      <style>{`#story--story-docs--${id} { min-height: ${height}; transform: 'translateZ(0)'; overflow: 'auto' }`}</style>
+      <style>{`#story--docs-story--${id} { min-height: ${height}; transform: translateZ(0); overflow: auto }`}</style>
     ) : null}
     <Fragment>
       {storyFn ? createElement(storyFn) : <EmptyBlock>{MISSING_STORY(id)}</EmptyBlock>}
@@ -79,7 +79,7 @@ const Story: FunctionComponent<StoryProps & { inline: boolean; error?: StoryErro
   inline,
   ...props
 }) => {
-  const { id, title, height } = props;
+  const { id = Math.round(Math.random() * 1e5), title, height } = props;
 
   if (error) {
     return <EmptyBlock>{error}</EmptyBlock>;
