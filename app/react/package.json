@@ -49,8 +49,10 @@
     "global": "^4.3.2",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
+    "react": "^16.8.3",
     "react-dev-utils": "^10.0.0",
     "react-docgen-typescript-plugin": "^0.5.2",
+    "react-dom": "^16.8.3",
     "regenerator-runtime": "^0.13.3",
     "ts-dedent": "^1.1.1",
     "webpack": "^4.43.0"
@@ -61,9 +63,7 @@
     "@types/webpack": "^4.41.12"
   },
   "peerDependencies": {
-    "@babel/core": "^7.0.1",
-    "react": "*",
-    "react-dom": "*"
+    "@babel/core": "^7.0.1"
   },
   "engines": {
     "node": ">=8.0.0"

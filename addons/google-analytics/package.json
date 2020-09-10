@@ -24,13 +24,10 @@
     "@storybook/core-events": "6.1.0-alpha.6",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
     "react-ga": "^2.5.7",
     "regenerator-runtime": "^0.13.3"
-  },
-  "peerDependencies": {
-    "prop-types": "^15.6.0",
-    "react": "^15.6.2 || ^16.0",
-    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"

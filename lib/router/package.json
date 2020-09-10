@@ -33,11 +33,9 @@
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "memoizerific": "^1.11.3",
-    "qs": "^6.6.0"
-  },
-  "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
+    "qs": "^6.6.0",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3"
   },
   "publishConfig": {
     "access": "public"

@@ -49,8 +49,6 @@
   },
   "peerDependencies": {
     "@babel/core": "*",
-    "react": "*",
-    "react-dom": "*",
     "svelte": "^3.1.0",
     "svelte-loader": "^2.9.1"
   },

@@ -50,9 +50,7 @@
   },
   "peerDependencies": {
     "@babel/core": "*",
-    "mithril": "^1.1.6 || ^2.0.0",
-    "react": "*",
-    "react-dom": "*"
+    "mithril": "^1.1.6 || ^2.0.0"
   },
   "engines": {
     "node": ">=8.0.0"

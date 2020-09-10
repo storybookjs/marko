@@ -57,10 +57,6 @@
     "jest": "^26.0.0",
     "jest-enzyme": "^7.0.2"
   },
-  "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
-  },
   "publishConfig": {
     "access": "public"
   },

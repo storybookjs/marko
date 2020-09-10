@@ -44,8 +44,6 @@
   "peerDependencies": {
     "@babel/core": "*",
     "marko": "^4.15.2",
-    "react": "*",
-    "react-dom": "*",
     "webpack": "^4"
   },
   "engines": {

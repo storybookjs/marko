@@ -30,6 +30,7 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
+    "@babel/core": "^7.8.3",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/plugin-proposal-export-default-from": "^7.8.3",
@@ -111,7 +112,9 @@
     "pretty-hrtime": "^1.0.3",
     "qs": "^6.6.0",
     "raw-loader": "^4.0.1",
+    "react": "^16.8.3",
     "react-dev-utils": "^10.0.0",
+    "react-dom": "^16.8.3",
     "regenerator-runtime": "^0.13.3",
     "resolve-from": "^5.0.0",
     "serve-favicon": "^2.5.0",
@@ -130,11 +133,6 @@
   },
   "devDependencies": {
     "mock-fs": "^4.12.0"
-  },
-  "peerDependencies": {
-    "@babel/core": "*",
-    "react": "*",
-    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"

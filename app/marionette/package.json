@@ -39,8 +39,6 @@
     "@babel/core": "*",
     "backbone": "*",
     "backbone.marionette": "*",
-    "react": "*",
-    "react-dom": "*",
     "underscore": "*"
   },
   "engines": {

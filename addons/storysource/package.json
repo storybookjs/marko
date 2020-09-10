@@ -42,17 +42,13 @@
     "prettier": "~2.0.5",
     "prop-types": "^15.7.2",
     "react": "^16.9.17",
+    "react-dom": "^16.8.3",
     "react-syntax-highlighter": "^13.5.0",
     "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
     "@types/react": "^16.9.27",
     "@types/react-syntax-highlighter": "^11.0.4"
-  },
-  "peerDependencies": {
-    "@storybook/source-loader": "*",
-    "react": "*",
-    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"

@@ -41,6 +41,7 @@
     "polished": "^3.4.4",
     "prop-types": "^15.7.2",
     "react": "^16.8.3",
+    "react-dom": "^16.8.3",
     "react-inspector": "^5.0.1",
     "regenerator-runtime": "^0.13.3",
     "ts-dedent": "^1.1.1",
@@ -51,9 +52,6 @@
     "@types/lodash": "^4.14.150",
     "@types/uuid": "^7.0.3",
     "@types/webpack-env": "^1.15.2"
-  },
-  "peerDependencies": {
-    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"

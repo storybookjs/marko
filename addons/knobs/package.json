@@ -44,7 +44,9 @@
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "qs": "^6.6.0",
+    "react": "^16.8.3",
     "react-color": "^2.17.0",
+    "react-dom": "^16.8.3",
     "react-lifecycles-compat": "^3.0.4",
     "react-select": "^3.0.8",
     "regenerator-runtime": "^0.13.3"
@@ -57,10 +59,6 @@
     "@types/react-select": "^3.0.12",
     "@types/webpack-env": "^1.15.2",
     "enzyme": "^3.11.0"
-  },
-  "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"
