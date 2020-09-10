@@ -44,8 +44,6 @@
     "global": "^4.3.2",
     "postcss-loader": "^3.0.0",
     "raw-loader": "^4.0.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
     "regenerator-runtime": "^0.13.3",
     "sass-loader": "^8.0.0",
     "strip-json-comments": "^3.0.1",
