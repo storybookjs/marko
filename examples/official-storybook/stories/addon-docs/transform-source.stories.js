@@ -11,15 +11,15 @@ export default {
 
 export const code = () => 'StoryType "CODE" story which has source transformed';
 code.parameters = {
-  docs: { source: { type: 'CODE' } },
+  docs: { source: { type: 'code' } },
 };
 
 export const dynamic = () => 'StoryType "DYNAMIC" story which has source transformed';
 dynamic.parameters = {
-  docs: { source: { type: 'DYMANIC' } },
+  docs: { source: { type: 'dynamic' } },
 };
 
 export const auto = () => 'StoryType "AUTO" story which has source transformed';
 dynamic.parameters = {
-  docs: { source: { type: 'AUTO' } },
+  docs: { source: { type: 'auto' } },
 };
