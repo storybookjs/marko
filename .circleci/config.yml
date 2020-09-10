@@ -27,22 +27,12 @@ jobs:
       - run:
           name: Clone GitHub repository
           command: echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config && git clone -b ${CIRCLE_BRANCH} --single-branch --depth=1 git@github.com:storybookjs/storybook.git /tmp/storybook
-      - restore_cache:
-          name: Restore core dependencies cache
-          keys:
-            - core-dependencies-v5-{{ checksum "yarn.lock" }}
-            - core-dependencies-v5-
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile
       - run:
           name: Bootstrap
           command: yarn bootstrap --core
-      - save_cache:
-          name: Cache core dependencies
-          key: core-dependencies-v5-{{ checksum "yarn.lock" }}
-          paths:
-            - node_modules
       - persist_to_workspace:
           root: .
           paths:
