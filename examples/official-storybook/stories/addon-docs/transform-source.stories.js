@@ -21,5 +21,5 @@ dynamic.parameters = {
 
 export const auto = () => 'StoryType "AUTO" story which has source transformed';
 dynamic.parameters = {
-  docs: { storySource: 'AUTO', source: { type: 'AUTO' } },
+  docs: { source: { type: 'AUTO' } },
 };
