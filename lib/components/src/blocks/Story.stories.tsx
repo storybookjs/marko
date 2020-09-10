@@ -53,6 +53,7 @@ const FixedLayoutExample = styled.div(({ theme }) => ({
 export const CustomHeight = () => (
   <Story
     inline
+    id="custom-height"
     storyFn={() => (
       <FixedLayoutExample>
         <header />
