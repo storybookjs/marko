@@ -1,4 +1,4 @@
-## 6.1.0-alpha.5 (September 10, 2020)
+## 6.1.0-alpha.6 (September 10, 2020)
 
 ### Features
 
@@ -9,6 +9,10 @@
 
 - Source-loader: Export extract-source in its own entry point ([#12429](https://github.com/storybookjs/storybook/pull/12429))
 - Addon-docs: Prefer flow's union elements over raw values ([#12376](https://github.com/storybookjs/storybook/pull/12376))
+
+## 6.1.0-alpha.5 (September 10, 2020)
+
+Failed npm publish
 
 ## 6.1.0-alpha.4 (September 8, 2020)
 
