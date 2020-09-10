@@ -66,6 +66,7 @@ export const CustomHeight = () => (
         <footer />
       </FixedLayoutExample>
     )}
+    id="custom-height"
     height="15rem"
     title="Define a custom story height for fixed position context for example"
   />

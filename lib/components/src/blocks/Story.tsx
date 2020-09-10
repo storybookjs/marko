@@ -79,7 +79,7 @@ const Story: FunctionComponent<StoryProps & { inline: boolean; error?: StoryErro
   inline,
   ...props
 }) => {
-  const { id = Math.round(Math.random() * 1e5).toString(), title, height } = props;
+  const { id, title, height } = props;
 
   if (error) {
     return <EmptyBlock>{error}</EmptyBlock>;
