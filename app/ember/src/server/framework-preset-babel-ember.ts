@@ -17,6 +17,8 @@ export function babel(config: Configuration, options: any) {
     options.presetsList.forEach((e: any, index: number) => {
       if (e.preset && e.preset.emberOptions) {
         emberOptions = e.preset.emberOptions;
+        // eslint-disable-next-line no-param-reassign
+        delete options.presetsList[index].preset.emberOptions;
       }
     });
   }
