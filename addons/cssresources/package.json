@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-cssresources",
-  "version": "6.1.0-alpha.3",
+  "version": "6.1.0-alpha.7",
   "description": "A storybook addon to switch between css resources at runtime for your story",
   "keywords": [
     "addon",
@@ -32,30 +32,26 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-alpha.3",
-    "@storybook/api": "6.1.0-alpha.3",
-    "@storybook/components": "6.1.0-alpha.3",
-    "@storybook/core-events": "6.1.0-alpha.3",
-    "@storybook/theming": "6.1.0-alpha.3",
+    "@storybook/addons": "6.1.0-alpha.7",
+    "@storybook/api": "6.1.0-alpha.7",
+    "@storybook/components": "6.1.0-alpha.7",
+    "@storybook/core-events": "6.1.0-alpha.7",
+    "@storybook/theming": "6.1.0-alpha.7",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "react": "^16.8.3",
+    "react-dom": "^16.8.3",
     "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
     "@types/webpack-env": "^1.15.2",
     "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2",
-    "react-dom": "^16.12.0"
-  },
-  "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
+    "enzyme-adapter-react-16": "^1.15.2"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "677dc96dfcd7922bf1a6518882d4dc165d57501f",
+  "gitHead": "c63131f0325d039ec30fe244bfc43ee17ad4fe9e",
   "typesVersions": {
     "<=3.5": {
       "*": [

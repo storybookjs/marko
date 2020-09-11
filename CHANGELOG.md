@@ -1,3 +1,50 @@
+## 6.1.0-alpha.7 (September 10, 2020)
+
+### Features
+
+- Components: Add graphql support to SyntaxHighlighter ([#12385](https://github.com/storybookjs/storybook/pull/12385))
+
+### Bug Fixes
+
+- UI: Fix the p > div nesting issue ([#12298](https://github.com/storybookjs/storybook/pull/12298))
+- Addon-docs: Apply transformSource to any SourceType ([#12375](https://github.com/storybookjs/storybook/pull/12375))
+- CLI: Workaround for react native `sb init` ([#12405](https://github.com/storybookjs/storybook/pull/12405))
+
+### Dependency Upgrades
+
+- Core: Change react deps to normal deps ([#11628](https://github.com/storybookjs/storybook/pull/11628))
+
+## 6.1.0-alpha.6 (September 10, 2020)
+
+### Features
+
+- Core: Add static dir path mappings ([#12222](https://github.com/storybookjs/storybook/pull/12222))
+- Addon-controls: Default to radio control for small enums ([#12436](https://github.com/storybookjs/storybook/pull/12436))
+
+### Bug Fixes
+
+- Source-loader: Export extract-source in its own entry point ([#12429](https://github.com/storybookjs/storybook/pull/12429))
+- Addon-docs: Prefer flow's union elements over raw values ([#12376](https://github.com/storybookjs/storybook/pull/12376))
+
+## 6.1.0-alpha.5 (September 10, 2020)
+
+Failed npm publish
+
+## 6.1.0-alpha.4 (September 8, 2020)
+
+### Features
+
+- Addon-docs: Add Methods to web components ArgsTable ([#12413](https://github.com/storybookjs/storybook/pull/12413))
+
+### Bug Fixes
+
+- Addon-docs: Introduce undefined filtering to jsxDecorator ([#12365](https://github.com/storybookjs/storybook/pull/12365))
+- Addon-docs: Fix missing line-height on TypeSet block ([#12134](https://github.com/storybookjs/storybook/pull/12134))
+
+### Maintenance
+
+- Addon-docs: Reuse extractSource from source-loader ([#12225](https://github.com/storybookjs/storybook/pull/12225))
+
 ## 6.1.0-alpha.3 (September 3, 2020)
 
 ### Features

@@ -30,6 +30,20 @@ describe('renderJsx', () => {
       </div>
     `);
   });
+  it('undefined values', () => {
+    expect(renderJsx(<div className={undefined}>hello</div>, {})).toMatchInlineSnapshot(`
+      <div>
+        hello
+      </div>
+    `);
+  });
+  it('null values', () => {
+    expect(renderJsx(<div className={null}>hello</div>, {})).toMatchInlineSnapshot(`
+      <div className={null}>
+        hello
+      </div>
+    `);
+  });
   it('large objects', () => {
     const obj: Record<string, string> = {};
     range(20).forEach((i) => {
