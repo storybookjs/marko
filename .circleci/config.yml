@@ -145,7 +145,6 @@ jobs:
       - image: cypress/included:4.7.0
         environment:
           TERM: xterm
-          YARN_PNP_FALLBACK_MODE: none
     working_directory: /tmp/storybook
     # parallelism: 10
     steps:
