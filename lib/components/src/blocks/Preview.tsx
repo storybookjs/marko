@@ -88,6 +88,7 @@ const StyledSource = styled(Source)<{}>(({ theme }) => ({
 const PreviewContainer = styled.div<PreviewProps>(
   ({ theme, withSource, isExpanded }) => ({
     position: 'relative',
+    overflow: 'hidden',
     margin: '25px 0 40px',
     ...getBlockBackgroundStyle(theme),
     borderBottomLeftRadius: withSource && isExpanded && 0,

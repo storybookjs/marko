@@ -23,6 +23,7 @@ import MdxNotes from '../notes/notes.mdx';
   component={TsButton}
   id="addons-docs-mdx-id"
   decorators={[
+    (storyFn) => <div style={{ backgroundColor: 'yellow' }}>{storyFn()}</div>,
     withKnobs,
   ]}
   parameters={{ notes: 'component notes' }}
@@ -130,7 +131,7 @@ export const nonStory2 = () => <Button>Not a story</Button>; // another one
 ## Configurable height
 
 <Canvas withToolbar>
-  <Story id="basics-button--all-buttons" inline={true} height="400px" />
+  <Story id="basics-button--all-buttons" height="400px" />
 </Canvas>
 
 export const FixedLayoutExample = styled.div(({ theme }) => ({
@@ -162,6 +163,8 @@ export const FixedLayoutExample = styled.div(({ theme }) => ({
     background: 'green',
   },
 }));
+
+Fixed layout requires custom `height` since it can't be determined.
 
 <Canvas withToolbar>
   <Story name="fixed layout example" height="15rem">
