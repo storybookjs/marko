@@ -45,16 +45,22 @@
     "ts-dedent": "^1.1.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.9.6",
     "@storybook/vue": "6.1.0-alpha.8",
     "@types/jest": "^25.1.1",
     "@types/webpack-env": "^1.15.2"
   },
   "peerDependencies": {
+    "@babel/core": "^7.9.6",
     "@storybook/vue": "6.1.0-alpha.8",
-    "babel-loader": "^8.0.0"
+    "babel-loader": "^8.0.0",
+    "webpack": ">=4"
   },
   "peerDependenciesMeta": {
     "@storybook/vue": {
+      "optional": true
+    },
+    "webpack": {
       "optional": true
     }
   },
