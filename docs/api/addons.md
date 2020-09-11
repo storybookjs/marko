@@ -130,7 +130,7 @@ To dive deeper we recommend [Learn Storybook’s “creating addons”](https://
 
 ## Addon recipes
 
-Once you understand the basics of writing an addons, there are a variety of common enhancements to make your addon better.
+Once you understand the basics of writing an addon, there are a variety of common enhancements to make your addon better.
 
 ### Disabling the addon panel
 
@@ -148,7 +148,7 @@ To make that possible, you need to pass the `paramKey` element when you register
 
 <!-- prettier-ignore-end -->
 
-Then when adding a story, you can then pass a disabled parameter.
+Then when adding a story, you can pass a disabled parameter.
 
 <!-- prettier-ignore-start -->
 
@@ -164,14 +164,14 @@ Then when adding a story, you can then pass a disabled parameter.
 
 Storybook uses [Emotion](https://emotion.sh/docs/introduction) for styling, AND we provide a theme which can be set by the user!
 
-We recommend you also use Emotion to style your addon’s UI components. That allows you to use the active Storybook theme to deliver a seamless developer experience.
+We recommend you also to use Emotion to style your addon’s UI components. That allows you to use the active Storybook theme to deliver a seamless developer experience.
 If you don’t want to use Emotion, you can use inline styles or another css-in-js lib. You can receive the theme as a prop by using the `withTheme` hoc from Emotion. [Read more about theming](../configure/theming.md).
 
 ### Storybook components
 
 Addon authors can develop their UIs using any React library. But we recommend using Storybook’s own UI components in `@storybook/components` to build addons faster. When you use Storybook components you get:
 
-- Battled tested off-the-shelf components
+- Battle-tested off-the-shelf components
 - Storybook native look and feel
 - Built-in support for Storybook theming
 
@@ -181,19 +181,19 @@ You can check them out in [Storybook’s own storybook](https://storybookjs.netl
 
 In the example above, we showed how to write a local addon inside an existing Storybook project. To distribute your addon for others, package the addon into a standalone NPM module.
 
-For a good template of an addon packaged as an NPM module, check out [@storybook/addon-controls].
+For a good template of an addon packaged as an NPM module, check out [@storybook/addon-controls](https://npmjs.com/package/@storybook/addon-controls).
 
 It contains addon code similar to what we’ve written above. It also contains:
 
 - A package.json file that declares the module
 - Peer dependencies of `react` and `@storybook/addons`
-  -A `register.js` file at the root level written as an ES5 modules
+  -A `register.js` file at the root level written as an ES5 module
 - A `src` directory containing the ES6 addon code
 - A `dist` directory containing transpiled ES5 code on publish
 
 Your packaged Storybook addon needs to be written in ES5. If you are using ES6, then you need to transpile it.
 
-When you are developing your addon as a package, you can’t use npm link to add it to your project. Instead add your package as a local dependency into your package.json:
+When you are developing your addon as a package, you can’t use `npm link` to add it to your project. Instead add your package as a local dependency into your package.json:
 
 ```json
 {
@@ -230,7 +230,7 @@ For more information on presets, see the [presets docs](./presets.md).
 
 ## Writing presets
 
-If you want to learn more how you can write your own presets, read the [documentation](./writing-presets.md)
+If you want to learn more about how you can write your own presets, read the [documentation](./writing-presets.md)
 
 ## Addons API
 

@@ -15,7 +15,7 @@ If your component files import their own CSS, Storybook’s webpack config will 
 - If you are using a CSS precompiler, you may need to add a preset (such as the [SCSS preset](https://github.com/storybookjs/presets/tree/master/packages/preset-scss), or add a loader to Storybook’s webpack config).
 - In Angular, you'll need to take special care how you handle CSS:
 
-  - Either [customize your webpack config](#extending-storybooks-webpack-config)
+  - Either [customize your webpack config](./webpack#extending-storybooks-webpack-config)
   - Or use syntax to use a inline loader:
 
 <!-- prettier-ignore-start -->

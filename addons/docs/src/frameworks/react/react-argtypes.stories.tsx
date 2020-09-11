@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import mapValues from 'lodash/mapValues';
-import { storiesOf } from '@storybook/react';
+import { storiesOf, StoryContext } from '@storybook/react';
 import { ArgsTable } from '@storybook/components';
 import { Args } from '@storybook/api';
-import { combineParameters } from '@storybook/client-api';
+import { inferControls } from '@storybook/client-api';
 
 import { extractArgTypes } from './extractArgTypes';
-import { inferControls } from '../common/inferControls';
 import { Component } from '../../blocks';
 
 const argsTableProps = (component: Component) => {
   const argTypes = extractArgTypes(component);
-  const controls = inferControls(argTypes);
-  const rows = combineParameters(argTypes, controls);
+  const parameters = { __isArgsStory: true, argTypes };
+  const rows = inferControls(({ parameters } as unknown) as StoryContext);
   return { rows };
 };
 

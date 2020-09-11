@@ -375,7 +375,7 @@ export const init: ModuleFn = ({
         }
 
         fullAPI.setStories(stories, error);
-        const { options } = data.globalParameters;
+        const options = fullAPI.getCurrentParameter('options');
         checkDeprecatedOptionParameters(options);
         fullAPI.setOptions(options);
       } else {

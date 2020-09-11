@@ -113,15 +113,14 @@ export const create = ({ colors, mono }: { colors: ColorsHash; mono: string }) =
       fontFamily: mono,
       WebkitFontSmoothing: 'antialiased',
 
+      '&.tag': colorsObjs.red3,
+
       '&.comment': { ...colorsObjs.green1, fontStyle: 'italic' },
       '&.prolog': { ...colorsObjs.green1, fontStyle: 'italic' },
       '&.doctype': { ...colorsObjs.green1, fontStyle: 'italic' },
       '&.cdata': { ...colorsObjs.green1, fontStyle: 'italic' },
 
       '&.string': colorsObjs.red1,
-
-      '&.punctuation': colorsObjs.gray1,
-      '&.operator': colorsObjs.gray1,
 
       '&.url': colorsObjs.cyan1,
       '&.symbol': colorsObjs.cyan1,
@@ -134,6 +133,9 @@ export const create = ({ colors, mono }: { colors: ColorsHash; mono: string }) =
       '&.atrule': colorsObjs.blue1,
       '&.keyword': colorsObjs.blue1,
       '&.attr-value': colorsObjs.blue1,
+
+      '&.punctuation': colorsObjs.gray1,
+      '&.operator': colorsObjs.gray1,
 
       '&.function': colorsObjs.gray1,
       '&.deleted': colorsObjs.red2,
@@ -151,7 +153,6 @@ export const create = ({ colors, mono }: { colors: ColorsHash; mono: string }) =
 
       '&.class-name': colorsObjs.cyan2,
 
-      '&.tag': colorsObjs.red3,
       '&.selector': colorsObjs.red3,
 
       '&.attr-name': colorsObjs.red4,

@@ -49,4 +49,4 @@ Usage: build-storybook [options]
 | --quiet                        | Suppress verbose build output                                                                                                                   | `build-storybook --quiet`                   |
 | --no-dll                       | Do not use dll reference                                                                                                                        | `build-storybook --no-dll`                  |
 | --debug-webpack                | Display final webpack configurations for debugging purposes                                                                                     | `build-storybook --debug-webpack`           |
-| --docs                         | Builds Storybook in documentation mode. Learn more about it in [here](../writing-docs/build-documentation.md#publish-storybooks-documentation)) | `start-storybook --docs`                    |
+| --docs                         | Builds Storybook in documentation mode. Learn more about it in [here](../writing-docs/build-documentation.md#publish-storybooks-documentation)) | `build-storybook --docs`                    |

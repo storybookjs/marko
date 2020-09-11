@@ -1,9 +1,9 @@
 import mapValues from 'lodash/mapValues';
-import { ArgTypes, ArgType } from '@storybook/addons';
-import { Control } from '@storybook/components';
-import { SBEnumType } from '@storybook/client-api';
+import { ArgType } from '@storybook/addons';
+import { SBEnumType, ArgTypesEnhancer } from './types';
+import { combineParameters } from './parameters';
 
-const inferControl = (argType: ArgType): Control => {
+const inferControl = (argType: ArgType): any => {
   const { type } = argType;
   if (!type) {
     // console.log('no sbtype', { argType });
@@ -28,6 +28,9 @@ const inferControl = (argType: ArgType): Control => {
       return { type: 'number' };
     case 'enum': {
       const { value } = type as SBEnumType;
+      if (value?.length <= 5) {
+        return { type: 'radio', options: value };
+      }
       return { type: 'select', options: value };
     }
     case 'function':
@@ -39,9 +42,12 @@ const inferControl = (argType: ArgType): Control => {
   }
 };
 
-export const inferControls = (argTypes: ArgTypes): ArgTypes => {
-  return mapValues(argTypes, (argType) => {
+export const inferControls: ArgTypesEnhancer = (context) => {
+  const { __isArgsStory, argTypes } = context.parameters;
+  if (!__isArgsStory) return argTypes;
+  const withControls = mapValues(argTypes, (argType) => {
     const control = argType && argType.type && inferControl(argType);
     return control ? { control } : undefined;
   });
+  return combineParameters(withControls, argTypes);
 };

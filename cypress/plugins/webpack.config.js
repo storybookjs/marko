@@ -9,7 +9,7 @@ module.exports = {
         exclude: [/node_modules/],
         use: [
           {
-            loader: 'ts-loader',
+            loader: require.resolve('ts-loader'),
             options: {
               transpileOnly: true,
             },

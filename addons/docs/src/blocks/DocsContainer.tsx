@@ -65,13 +65,14 @@ export const DocsContainer: FunctionComponent<DocsContainerProps> = ({ context, 
         document.getElementById(storyBlockIdFromId(storyId));
       if (element) {
         const allStories = element.parentElement.querySelectorAll('[id|="anchor-"]');
-        let block = 'start';
+        let scrollTarget = element;
         if (allStories && allStories[0] === element) {
-          block = 'end'; // first story should be shown with the intro content above
+          // Include content above first story
+          scrollTarget = document.getElementById('docs-root');
         }
         // Introducing a delay to ensure scrolling works when it's a full refresh.
         setTimeout(() => {
-          scrollToElement(element, block);
+          scrollToElement(scrollTarget, 'start');
         }, 200);
       }
     }
