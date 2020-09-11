@@ -157,7 +157,13 @@ export const sfcVue: Parameters = {
   name: 'sfcVue',
   version: 'latest',
   generator: fromDeps('vue', 'vue-loader', 'vue-template-compiler'),
-  additionalDeps: ['react', 'react-dom'],
+  additionalDeps: [
+    'react',
+    'react-dom',
+    'webpack',
+    // TODO: remove when https://github.com/storybookjs/storybook/issues/11255 is solved
+    'core-js',
+  ],
 };
 
 export const svelte: Parameters = {
