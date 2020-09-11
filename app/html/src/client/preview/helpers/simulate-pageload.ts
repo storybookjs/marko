@@ -54,7 +54,7 @@ function insertScript($script: any, callback: any, $scriptRoot: any) {
 
 // runs an array of async functions in sequential order
 /* eslint-disable no-param-reassign, no-plusplus */
-function insertScriptsSequentially(scriptsToExecute: any[], callback: any, index: number = 0) {
+function insertScriptsSequentially(scriptsToExecute: any[], callback: any, index = 0) {
   scriptsToExecute[index](() => {
     index++;
     if (index === scriptsToExecute.length) {
