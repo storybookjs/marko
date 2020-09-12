@@ -1,3 +1,18 @@
+## 6.1.0-alpha.9 (September 13, 2020)
+
+### Features
+
+* Storyshots: Allow taking a screenshot of just a specific element ([#12460](https://github.com/storybookjs/storybook/pull/12460))
+
+### Bug Fixes
+
+* CLI: Fix storiesof-to-csf codemod for TypeScript ([#12453](https://github.com/storybookjs/storybook/pull/12453))
+
+### Maintenance
+
+* Addon-docs: Resolve vue-docgen-loader from @storybook/vue ([#12461](https://github.com/storybookjs/storybook/pull/12461))
+* Build: Disable problematic story in Chromatic ([#12457](https://github.com/storybookjs/storybook/pull/12457))
+
 ## 6.1.0-alpha.8 (September 12, 2020)
 
 ### Features
