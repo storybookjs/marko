@@ -87,6 +87,7 @@
     "@emotion/core": "^10.0.20",
     "@emotion/styled": "^10.0.17",
     "@storybook/react": "6.1.0-alpha.8",
+    "@storybook/vue": "6.1.0-alpha.8",
     "@storybook/web-components": "6.1.0-alpha.8",
     "@types/cross-spawn": "^6.0.1",
     "@types/doctrine": "^0.0.3",
@@ -118,24 +119,20 @@
   },
   "peerDependencies": {
     "@babel/core": "^7.0.0-0",
+    "@storybook/vue": "6.1.0-alpha.8",
     "babel-loader": "^8.0.0",
     "sveltedoc-parser": "^3.0.4",
     "vue": "^2.6.10",
-    "vue-docgen-api": "^4.29.1",
-    "vue-docgen-loader": "^1.5.0",
     "webpack": ">=4"
   },
   "peerDependenciesMeta": {
+    "@storybook/vue": {
+      "optional": true
+    },
     "sveltedoc-parser": {
       "optional": true
     },
     "vue": {
-      "optional": true
-    },
-    "vue-docgen-api": {
-      "optional": true
-    },
-    "vue-docgen-loader": {
       "optional": true
     },
     "webpack": {

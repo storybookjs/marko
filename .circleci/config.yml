@@ -166,7 +166,7 @@ jobs:
           command: yarn info @storybook/core
       - run:
           name: run e2e tests
-          command: yarn test:e2e-framework --use-yarn-2 cra
+          command: yarn test:e2e-framework --use-yarn-2 sfcVue cra
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
