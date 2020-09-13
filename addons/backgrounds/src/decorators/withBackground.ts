@@ -1,7 +1,7 @@
 import { StoryFn as StoryFunction, StoryContext, useMemo, useEffect } from '@storybook/addons';
 
 import { PARAM_KEY as BACKGROUNDS_PARAM_KEY } from '../constants';
-import { clearStyles, addStyles, getBackgroundColorByName } from '../helpers';
+import { clearStyles, addBackgroundStyle, getBackgroundColorByName } from '../helpers';
 
 export const withBackground = (StoryFn: StoryFunction, context: StoryContext) => {
   const { globals, parameters } = context;
@@ -31,7 +31,7 @@ export const withBackground = (StoryFn: StoryFunction, context: StoryContext) =>
   const backgroundStyles = useMemo(() => {
     return `
       ${selector} {
-        background-color: ${selectedBackgroundColor} !important;
+        background: ${selectedBackgroundColor} !important;
         transition: background-color 0.3s;
       }
     `;
@@ -48,7 +48,11 @@ export const withBackground = (StoryFn: StoryFunction, context: StoryContext) =>
       return;
     }
 
-    addStyles(selectorId, backgroundStyles);
+    addBackgroundStyle(
+      selectorId,
+      backgroundStyles,
+      context.viewMode === 'docs' ? context.id : null
+    );
   }, [isActive, backgroundStyles, context]);
 
   return StoryFn();

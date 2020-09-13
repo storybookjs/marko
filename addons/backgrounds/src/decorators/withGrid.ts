@@ -2,7 +2,7 @@ import dedent from 'ts-dedent';
 import deprecate from 'util-deprecate';
 import { StoryFn as StoryFunction, StoryContext, useMemo, useEffect } from '@storybook/addons';
 
-import { clearStyles, addStyles } from '../helpers';
+import { clearStyles, addGridStyle } from '../helpers';
 import { PARAM_KEY as BACKGROUNDS_PARAM_KEY } from '../constants';
 
 const deprecatedCellSizeWarning = deprecate(
@@ -20,6 +20,7 @@ export const withGrid = (StoryFn: StoryFunction, context: StoryContext) => {
   const gridParameters = parameters[BACKGROUNDS_PARAM_KEY].grid;
   const isActive = globals[BACKGROUNDS_PARAM_KEY]?.grid === true && gridParameters.disable !== true;
   const { cellAmount, cellSize, opacity } = gridParameters;
+  const isInDocs = context.viewMode === 'docs';
 
   let gridSize: number;
   if (parameters.grid?.cellSize) {
@@ -32,8 +33,8 @@ export const withGrid = (StoryFn: StoryFunction, context: StoryContext) => {
   const isLayoutPadded = parameters.layout === undefined || parameters.layout === 'padded';
   // 16px offset in the grid to account for padded layout
   const defaultOffset = isLayoutPadded ? 16 : 0;
-  const offsetX = gridParameters.offsetX || defaultOffset;
-  const offsetY = gridParameters.offsetY || defaultOffset;
+  const offsetX = gridParameters.offsetX || isInDocs ? 20 : defaultOffset;
+  const offsetY = gridParameters.offsetY || isInDocs ? 20 : defaultOffset;
 
   const gridStyles = useMemo(() => {
     const selector =
@@ -71,7 +72,7 @@ export const withGrid = (StoryFn: StoryFunction, context: StoryContext) => {
       return;
     }
 
-    addStyles(selectorId, gridStyles);
+    addGridStyle(selectorId, gridStyles);
   }, [isActive, gridStyles, context]);
 
   return StoryFn();

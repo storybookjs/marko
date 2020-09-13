@@ -44,6 +44,39 @@ Overridden.parameters = {
   },
 };
 
+export const WithGradient = Template.bind({});
+WithGradient.args = {
+  label: 'This one should have a nice gradient',
+};
+WithGradient.parameters = {
+  backgrounds: {
+    default: 'gradient',
+    values: [
+      {
+        name: 'gradient',
+        value:
+          'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)',
+      },
+    ],
+  },
+};
+
+export const WithImage = Template.bind({});
+WithImage.args = {
+  label: 'This one should have an image background',
+};
+WithImage.parameters = {
+  backgrounds: {
+    default: 'space',
+    values: [
+      {
+        name: 'space',
+        value: 'url(https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_960_720.jpg)',
+      },
+    ],
+  },
+};
+
 export const DisabledBackgrounds = Template.bind({});
 DisabledBackgrounds.args = {
   label: 'This one should not use backgrounds',
