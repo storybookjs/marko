@@ -21,7 +21,7 @@ But you're not restricted to these two backgrounds, you can configure your own s
 
 <CodeSnippets
   paths={[
-    'common/storybook-addon-backgrounds-configure-background-colors.js.mdx',
+    'common/storybook-preview-configure-background-colors.js.mdx',
   ]}
 />
 
