@@ -37,14 +37,6 @@ export function webpackFinal(config: Configuration, { typescriptOptions }: Story
         },
       ],
     },
-    plugins: [
-      ...config.plugins,
-      new webpack.HotModuleReplacementPlugin(),
-      new ReactRefreshWebpackPlugin({
-        overlay: {
-          sockIntegration: 'whm',
-        },
-      }),
-    ],
+    plugins: [...config.plugins, new ReactRefreshWebpackPlugin()],
   };
 }
