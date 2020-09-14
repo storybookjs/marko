@@ -11,6 +11,7 @@ import {
 import { withKnobs, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import { Button } from '@storybook/react/demo';
+import styled from 'styled-components';
 import TsButton from '../../components/TsButton';
 import FlowTypeButton from '../../components/FlowTypeButton';
 import { DocgenButton } from '../../components/DocgenButton';
@@ -131,6 +132,49 @@ export const nonStory2 = () => <Button>Not a story</Button>; // another one
 
 <Canvas withToolbar>
   <Story id="basics-button--all-buttons" height="400px" />
+</Canvas>
+
+export const FixedLayoutExample = styled.div(({ theme }) => ({
+  '&, header, aside, main, footer': {
+    position: 'fixed',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+  },
+  header: {
+    height: '3rem',
+    background: 'red',
+  },
+  'aside, main': {
+    top: '3rem',
+  },
+  aside: {
+    width: '10rem',
+    background: 'coral',
+  },
+  main: {
+    left: '10rem',
+    background: 'yellow',
+  },
+  footer: {
+    top: 'auto',
+    height: '3rem',
+    background: 'green',
+  },
+}));
+
+Fixed layout requires custom `height` since it can't be determined.
+
+<Canvas withToolbar>
+  <Story name="fixed layout example" height="15rem">
+    <FixedLayoutExample>
+      <header />
+      <aside />
+      <main />
+      <footer />
+    </FixedLayoutExample>
+  </Story>
 </Canvas>
 
 ## Description

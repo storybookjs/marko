@@ -85,7 +85,7 @@ basic.parameters = {
 }
 ```
 
-And for `MDX` you can modify it as an attribute on the `Story` element:
+And for `MDX` you can modify it, especially if you work with some components using fixed or sticky positions, as an attribute on the `Story` element:
 
 ```md
 <Story name='basic' height='400px'>{...}</Story>

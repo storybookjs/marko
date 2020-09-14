@@ -1,6 +1,6 @@
 {
   "name": "@storybook/postinstall",
-  "version": "6.1.0-alpha.7",
+  "version": "6.1.0-alpha.9",
   "description": "Storybook addons postinstall utilities",
   "keywords": [
     "api",
@@ -39,7 +39,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c63131f0325d039ec30fe244bfc43ee17ad4fe9e",
+  "gitHead": "91446c812d677e4aa2ff714d4c49015a7c8c9629",
   "typesVersions": {
     "<=3.5": {
       "*": [

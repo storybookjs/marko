@@ -1,3 +1,34 @@
+## 6.1.0-alpha.9 (September 13, 2020)
+
+### Features
+
+* Storyshots: Allow taking a screenshot of just a specific element ([#12460](https://github.com/storybookjs/storybook/pull/12460))
+
+### Bug Fixes
+
+* CLI: Fix storiesof-to-csf codemod for TypeScript ([#12453](https://github.com/storybookjs/storybook/pull/12453))
+
+### Maintenance
+
+* Addon-docs: Resolve vue-docgen-loader from @storybook/vue ([#12461](https://github.com/storybookjs/storybook/pull/12461))
+* Build: Disable problematic story in Chromatic ([#12457](https://github.com/storybookjs/storybook/pull/12457))
+
+## 6.1.0-alpha.8 (September 12, 2020)
+
+### Features
+
+- HTML: Add script tag support ([#12089](https://github.com/storybookjs/storybook/pull/12089))
+- Addon-docs: Fix fixed-position inline stories ([#11350](https://github.com/storybookjs/storybook/pull/11350))
+
+### Bug Fixes
+
+- Core: require.resolve loaders and add missing dependencies ([#12383](https://github.com/storybookjs/storybook/pull/12383))
+- Addon-docs: Fix DocsPage scroll behavior ([#12047](https://github.com/storybookjs/storybook/pull/12047))
+
+### Maintenance
+
+- Core: Fix monorepo compatibility ([#11753](https://github.com/storybookjs/storybook/pull/11753))
+
 ## 6.1.0-alpha.7 (September 10, 2020)
 
 ### Features
