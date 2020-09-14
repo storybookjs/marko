@@ -28,6 +28,9 @@ jobs:
           name: Clone GitHub repository
           command: echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config && git clone -b ${CIRCLE_BRANCH} --single-branch --depth=1 git@github.com:storybookjs/storybook.git /tmp/storybook
       - run:
+          name: Remove examples
+          command: rm -rf examples/
+      - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile
       - run:
@@ -37,7 +40,32 @@ jobs:
           root: .
           paths:
             - node_modules
+            - addons
+            - dev-kits
+            - app
+            - lib
+  bootstrap-examples:
+    executor:
+      class: medium
+      name: sb_node
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - 35:aa:b9:c3:b8:1c:27:1f:02:0a:73:1a:ac:58:77:df
+      - run:
+          name: Clone GitHub repository
+          command: echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config && git clone -b ${CIRCLE_BRANCH} --single-branch --depth=1 git@github.com:storybookjs/storybook.git /tmp/storybook
+      - run:
+          name: Install dependencies
+          command: yarn install --frozen-lockfile
+      - run:
+          name: Bootstrap
+          command: yarn bootstrap --core
+      - persist_to_workspace:
+          root: .
+          paths:
             - examples
+            - node_modules
             - addons
             - dev-kits
             - app
@@ -360,24 +388,25 @@ workflows:
   test:
     jobs:
       - build
+      - bootstrap-examples
       - lint:
           requires:
-            - build
+            - bootstrap-examples
       - examples:
           requires:
-            - build
+            - bootstrap-examples
       - e2e:
           requires:
             - examples
       - smoke-tests:
           requires:
-            - build
+            - bootstrap-examples
       - packtracker:
           requires:
-            - build
+            - bootstrap-examples
       - test:
           requires:
-            - build
+            - bootstrap-examples
       - coverage:
           requires:
             - test
