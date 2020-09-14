@@ -58,18 +58,11 @@ jobs:
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile
-      - run:
-          name: Bootstrap
-          command: yarn bootstrap --core
       - persist_to_workspace:
           root: .
           paths:
             - examples
             - node_modules
-            - addons
-            - dev-kits
-            - app
-            - lib
   chromatic:
     executor: sb_node
     parallelism: 11
@@ -386,11 +379,14 @@ jobs:
           name: Upload coverage
           command: yarn coverage
 
+
 workflows:
   test:
     jobs:
       - build
-      - bootstrap-examples
+      - bootstrap-examples:
+          requires:
+            - build
       - lint:
           requires:
             - bootstrap-examples
