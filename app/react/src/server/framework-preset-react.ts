@@ -16,14 +16,15 @@ export function babelDefault(config: TransformOptions) {
   };
 }
 
-export function webpackFinal(config: Configuration, { typescriptOptions }: StorybookOptions) {
+export function webpackFinal(config: Configuration) {
+  const isDevelopment = config.mode === 'development';
   return {
     ...config,
     module: {
       ...config.module,
       rules: [
         ...config.module.rules,
-        {
+        isDevelopment && {
           test: /\.[jt]sx?$/,
           exclude: /node_modules/,
           use: [
@@ -35,8 +36,8 @@ export function webpackFinal(config: Configuration, { typescriptOptions }: Story
             },
           ],
         },
-      ],
+      ].filter(Boolean),
     },
-    plugins: [...config.plugins, new ReactRefreshWebpackPlugin()],
+    plugins: [...config.plugins, isDevelopment && new ReactRefreshWebpackPlugin()].filter(Boolean),
   };
 }
