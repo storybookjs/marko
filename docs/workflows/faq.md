@@ -34,6 +34,27 @@ module.exports = {
 };
 ```
 
+### How do I setup React Fast Refresh with Storybook?
+
+Fast refresh is an opt-in feature that can be used in Storybook React.
+There are two ways that you can enable it, go ahead and pick one:
+
+* You can set a `FAST_REFRESH` environment variable in your `.env` file:
+```
+FAST_REFRESH=true
+```
+
+* Or you can set the following properties in your `.storybook/main.js` files:
+```js
+module.exports = {
+  reactOptions: {
+    fastRefresh: true,
+  }
+};
+```
+
+**Note: Fast Refresh requires React 16.10 or higher and is only enabled in development mode.**
+
 ### Why is there no addons channel?
 
 A common error is that an addon tries to access the "channel", but the channel is not set. This can happen in a few different cases:
