@@ -110,6 +110,7 @@ const publish = (packages: { name: string; location: string }[], url: string) =>
   const numOfCpus = os.cpus()?.length;
 
   const limit = pLimit((numOfCpus ?? 4) - 1);
+  let i = 0;
 
   return Promise.all(
     packages.map(({ name, location }) =>
@@ -122,7 +123,8 @@ const publish = (packages: { name: string; location: string }[], url: string) =>
               if (e) {
                 rej(e);
               } else {
-                logger.log(`🛬 successful publish of ${name}!`);
+                i += 1;
+                logger.log(`${i}/${packages.length} 🛬 successful publish of ${name}!`);
                 res();
               }
             });
