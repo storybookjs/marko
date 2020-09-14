@@ -1,7 +1,7 @@
 import type { TransformOptions } from '@babel/core';
 import type { Configuration } from 'webpack';
-import type { StorybookOptions } from '@storybook/core/types';
 import ReactDocgenTypescriptPlugin from 'react-docgen-typescript-plugin';
+import type { StorybookOptions } from './types';
 
 export function babel(config: TransformOptions, { typescriptOptions }: StorybookOptions) {
   const { reactDocgen } = typescriptOptions;

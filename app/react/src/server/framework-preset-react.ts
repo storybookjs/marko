@@ -1,8 +1,8 @@
 import { TransformOptions } from '@babel/core';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import type { Configuration } from 'webpack';
-import type { StorybookOptions } from '@storybook/core/types';
-import webpack from 'webpack';
+import { logger } from '@storybook/node-logger';
+import type { StorybookOptions } from './types';
 
 export function babelDefault(config: TransformOptions) {
   return {
@@ -16,15 +16,20 @@ export function babelDefault(config: TransformOptions) {
   };
 }
 
-export function webpackFinal(config: Configuration) {
+export function webpackFinal(config: Configuration, { reactOptions }: StorybookOptions) {
   const isDevelopment = config.mode === 'development';
+  const fastRefreshEnabled =
+    isDevelopment && (reactOptions?.fastRefresh || process.env.FAST_REFRESH === 'true');
+  if (fastRefreshEnabled) {
+    logger.info('=> Using React fast refresh feature.');
+  }
   return {
     ...config,
     module: {
       ...config.module,
       rules: [
         ...config.module.rules,
-        isDevelopment && {
+        fastRefreshEnabled && {
           test: /\.[jt]sx?$/,
           exclude: /node_modules/,
           use: [
@@ -38,6 +43,8 @@ export function webpackFinal(config: Configuration) {
         },
       ].filter(Boolean),
     },
-    plugins: [...config.plugins, isDevelopment && new ReactRefreshWebpackPlugin()].filter(Boolean),
+    plugins: [...config.plugins, fastRefreshEnabled && new ReactRefreshWebpackPlugin()].filter(
+      Boolean
+    ),
   };
 }

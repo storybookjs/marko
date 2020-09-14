@@ -1,4 +1,5 @@
 import * as preset from './framework-preset-react-docgen';
+import type { StorybookOptions } from './types';
 
 describe('framework-preset-react-docgen', () => {
   const babelPluginReactDocgenPath = require.resolve('babel-plugin-react-docgen');
@@ -12,7 +13,7 @@ describe('framework-preset-react-docgen', () => {
 
     const config = preset.babel(babelConfig, {
       typescriptOptions: { check: false, reactDocgen: 'react-docgen' },
-    });
+    } as StorybookOptions);
 
     expect(config).toEqual({
       babelrc: false,
