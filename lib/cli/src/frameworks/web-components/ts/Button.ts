@@ -2,23 +2,31 @@ import { html } from 'lit-html';
 import './button.css';
 
 export interface ButtonProps {
-  primary: boolean;
-  backgroundColor: string;
-  size: string;
+  /**
+   * Is this the principal call to action on the page?
+   */
+  primary?: boolean;
+  /**
+   * What background color to use
+   */
+  backgroundColor?: string;
+  /**
+   * How large should the button be?
+   */
+  size?: 'small' | 'medium' | 'large';
+  /**
+   * Button contents
+   */
   label: string;
-  onClick: () => void;
+  /**
+   * Optional click handler
+   */
+  onClick?: () => void;
 }
-
 /**
  * Primary UI component for user interaction
  */
-export const Button = ({
-  primary,
-  backgroundColor,
-  size,
-  label,
-  onClick,
-}: Partial<ButtonProps>) => {
+export const Button = ({ primary, backgroundColor, size, label, onClick }: ButtonProps) => {
   const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
 
   return html`

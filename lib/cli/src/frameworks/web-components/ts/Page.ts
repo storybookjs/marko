@@ -3,13 +3,13 @@ import { Header } from './Header';
 import './page.css';
 
 export interface PageProps {
-  user: unknown;
+  user?: {};
   onLogin: () => void;
   onLogout: () => void;
   onCreateAccount: () => void;
 }
 
-export const Page = ({ user, onLogin, onLogout, onCreateAccount }: Partial<PageProps>) => html`
+export const Page = ({ user, onLogin, onLogout, onCreateAccount }: PageProps) => html`
   <article>
     ${Header({
       user,
