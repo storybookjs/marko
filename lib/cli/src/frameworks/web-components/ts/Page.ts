@@ -1,5 +1,6 @@
 import { html } from 'lit-html';
 import { Header } from './Header';
+import './page.css';
 
 export interface PageProps {
   user: unknown;

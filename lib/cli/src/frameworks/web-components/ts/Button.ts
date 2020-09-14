@@ -1,4 +1,5 @@
 import { html } from 'lit-html';
+import './button.css';
 
 export interface ButtonProps {
   primary: boolean;
