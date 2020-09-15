@@ -22,6 +22,7 @@ To define the args of a single story, use the `args` CSF story key:
   paths={[
     'react/button-story-with-args.js.mdx',
     'react/button-story-with-args.ts.mdx',
+    'vue/button-story-with-args.js.mdx',
     'angular/button-story-with-args.ts.mdx',
   ]}
 />
