@@ -158,6 +158,7 @@ For instance, suppose you wanted to test your Button component against a differe
   paths={[
     'react/button-story-with-blue-args.js.mdx',
     'react/button-story-with-blue-args.ts.mdx',
+    'vue/button-story-with-blue-args.js.mdx',
     'angular/button-story-with-blue-args.ts.mdx',
   ]}
 />
