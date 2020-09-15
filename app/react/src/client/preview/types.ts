@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import type { StorybookConfig as BaseConfig } from '@storybook/core/types';
+import { StorybookConfig as BaseConfig } from '@storybook/core/types';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 export { RenderContext } from '@storybook/client-api';
