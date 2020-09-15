@@ -181,6 +181,7 @@ A simple example is adding padding to a component’s stories. Accomplish this u
   paths={[
     'react/button-story-component-decorator.js.mdx',
     'react/button-story-component-decorator.ts.mdx',
+    'vue/button-story-component-decorator.js.mdx',
   ]}
 />
 
