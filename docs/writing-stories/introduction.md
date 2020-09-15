@@ -48,6 +48,7 @@ Use the named exports of a CSF file to define your componentâ€™s stories. Hereâ€
   paths={[
     'react/button-story.js.mdx',
     'react/button-story.ts.mdx',
+    'vue/button-story.js.mdx',
     'angular/button-story.ts.mdx',
   ]}
 />
