@@ -64,6 +64,7 @@ You can rename any particular story you need. For instance to give it a more cle
   paths={[
     'react/button-story-rename-story.js.mdx',
     'react/button-story-rename-story.ts.mdx',
+    'vue/button-story-rename-story.js.mdx',
     'angular/button-story-rename-story.ts.mdx',
   ]}
 />
