@@ -31,6 +31,7 @@ The default export metadata controls how Storybook lists your stories and provid
   paths={[
     'react/button-story-default-export-with-component.js.mdx',
     'react/button-story-default-export-with-component.ts.mdx',
+    'vue/button-story-default-export-with-component.js.mdx',
     'angular/button-story-default-export-with-component.ts.mdx',
   ]}
 />
