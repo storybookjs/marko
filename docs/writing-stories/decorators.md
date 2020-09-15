@@ -18,6 +18,7 @@ Some components require a “harness” to render in a useful way. For instance 
   paths={[
     'react/your-component-with-decorator.js.mdx',
     'react/your-component-with-decorator.ts.mdx',
+    'vue/your-component-with-decorator.js.mdx',
   ]}
 />
 
