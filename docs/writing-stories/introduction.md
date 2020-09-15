@@ -84,6 +84,7 @@ A story is a function that describes how to render a component. You can have mul
   paths={[
     'react/button-story-with-emojis.js.mdx',
     'react/button-story-with-emojis.ts.mdx',
+    'vue/button-story-with-emojis.js.mdx',
     'angular/button-story-with-emojis.ts.mdx',
   ]}
 />
