@@ -30,9 +30,9 @@ The following code snippets shows the fields for you to use with TypeScript:
 
 <!-- prettier-ignore-end -->
 
-| Field                            | Framework | Description                                                                              | Type                                                                          |
-| :------------------------------- | :-------- | :--------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------- |
-| **check**                        | All       | Optionally run fork-ts-checker-webpack-plugin                                            | boolean                                                                       |
-| **checkOptions**                 | All       | Options to pass to fork-ts-checker-webpack-plugin if it's enabled                        | [See docs](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin)      |
-| **reactDocgen**                  | React     | Which react docgen processor to run: `react-docgen-typescript`, `react-docgen`, `none`   | string                                                                        |
-| **reactDocgenTypescriptOptions** | React     | Options to pass to react-docgen-typescript-plugin if react-docgen-typescript is enabled. | [See docs](https://github.com/hipstersmoothie/react-docgen-typescript-plugin) |
+| Field                            | Framework | Description                                                                                   | Type                                                                          |
+| :------------------------------- | :-------- | :-------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------- |
+| **check**                        | All       | Optionally run fork-ts-checker-webpack-plugin                                                 | boolean                                                                       |
+| **checkOptions**                 | All       | Options to pass to fork-ts-checker-webpack-plugin if it's enabled                             | [See docs](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin)      |
+| **reactDocgen**                  | React     | Which react docgen processor to run: `"react-docgen-typescript"`, `"react-docgen"`, `false`   | string or false                                                               |
+| **reactDocgenTypescriptOptions** | React     | Options to pass to react-docgen-typescript-plugin if react-docgen-typescript is enabled.      | [See docs](https://github.com/hipstersmoothie/react-docgen-typescript-plugin) |
