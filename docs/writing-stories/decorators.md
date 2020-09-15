@@ -62,6 +62,7 @@ To define a decorator for a single story, use the `decorators` key on a named ex
   paths={[
     'react/button-story-decorator.js.mdx',
     'react/button-story-decorator.ts.mdx',
+    'vue/button-story-decorator.js.mdx',
   ]}
 />
 
