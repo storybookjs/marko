@@ -1,0 +1,29 @@
+```js
+// Button.stories.js
+
+import Button from './Button';
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+
+export default {
+  title: 'Button',
+  parameters: {
+    // the viewports object from the Essentials addon
+    viewport: {
+      // the viewports you want to use
+      viewports: INITIAL_VIEWPORTS,
+      // your own default viewport
+      defaultViewport: 'iphone6',
+    },
+  },
+};
+
+export const Primary = () => ({
+  components: { Button },
+  template: '<Button primary label="Button" />',
+});
+Primary.parameters = {
+  viewport: {
+    defaultViewport: 'iphonex',
+  },
+};
+```
