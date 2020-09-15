@@ -53,6 +53,7 @@ You can also define args at the component level; such args will apply to all sto
   paths={[
     'react/button-story-component-args-primary.js.mdx',
     'react/button-story-component-args-primary.ts.mdx',
+    'vue/button-story-component-args-primary.js.mdx',
     'angular/button-story-component-args-primary.ts.mdx',
   ]}
 />
