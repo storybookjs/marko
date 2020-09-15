@@ -182,13 +182,13 @@ Here's the MDX equivalent:
 import { Meta, Story } from '@storybook/addon-docs/blocks';
 import { Button } from './Button';
 
-<Meta title="Button" component={Button} argTypes={{ background: { control: 'color' } }} />;
+<Meta title="Button" component={Button} argTypes={{ background: { control: 'color' } }} />
 
-export const Template = (args) => <Button {...args} />;
+export const Template = (args) => <Button {...args} />
 
 <Story name="Basic" args={{ label: 'hello', background: '#ff0' }}>
   {Template.bind({})}
-</Story>;
+</Story>
 ```
 
 For more info, see a full [Controls example in MDX for Vue](https://raw.githubusercontent.com/storybookjs/storybook/next/examples/vue-kitchen-sink/src/stories/addon-controls.stories.mdx).
