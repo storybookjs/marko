@@ -103,6 +103,7 @@ Refine this pattern by defining a master template for a component’s stories th
   paths={[
     'react/button-story-using-args.js.mdx',
     'react/button-story-using-args.ts.mdx',
+    'vue/button-story-using-args.js.mdx',
     'angular/button-story-using-args.ts.mdx',
   ]}
 />
