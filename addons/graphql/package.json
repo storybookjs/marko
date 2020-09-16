@@ -23,14 +23,14 @@
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.5/**/*"
+    "ts3.7/**/*"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/plugin-transform-classes": "^7.9.2",
+    "@babel/core": "^7.11.5",
+    "@babel/plugin-transform-classes": "^7.10.4",
     "@storybook/addons": "6.1.0-alpha.10",
     "@storybook/api": "6.1.0-alpha.10",
     "@types/webpack": "^4.41.9",
@@ -50,9 +50,9 @@
   },
   "gitHead": "57798a108e183d97f94fd4cc396e45e1d4b04d23",
   "typesVersions": {
-    "<=3.5": {
+    "<3.8": {
       "*": [
-        "ts3.5/*"
+        "ts3.7/*"
       ]
     }
   }

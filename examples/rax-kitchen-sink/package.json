@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@alib/build-scripts": "^0.1.8",
-    "@babel/preset-react": "^7.7.4",
+    "@babel/preset-react": "^7.10.4",
     "@storybook/addon-a11y": "6.1.0-alpha.10",
     "@storybook/addon-actions": "6.1.0-alpha.10",
     "@storybook/addon-backgrounds": "6.1.0-alpha.10",
