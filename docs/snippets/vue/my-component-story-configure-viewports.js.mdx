@@ -1,11 +1,10 @@
 ```js
-// Button.stories.js
+// MyComponent.stories.js
 
-import Button from './Button';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 
 export default {
-  title: 'Button',
+  title: 'Stories',
   parameters: {
     // the viewports object from the Essentials addon
     viewport: {
@@ -17,11 +16,10 @@ export default {
   },
 };
 
-export const Primary = () => ({
-  components: { Button },
-  template: '<Button primary label="Button" />',
+export const myStory = () => ({
+  template: '<div />',
 });
-Primary.parameters = {
+myStory.parameters = {
   viewport: {
     defaultViewport: 'iphonex',
   },
