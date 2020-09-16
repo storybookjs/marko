@@ -116,7 +116,7 @@ jobs:
             - built-storybooks
   publish:
     executor:
-      class: xlarge
+      class: large
       name: sb_node
     steps:
       - add_ssh_keys:
@@ -136,7 +136,7 @@ jobs:
             - .verdaccio-cache
   examples-v2:
     executor:
-      class: xlarge
+      class: large
       name: sb_node
     docker:
       - image: cypress/included:4.7.0
