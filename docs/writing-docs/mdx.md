@@ -104,7 +104,7 @@ Typically, when you use Storybook MDX, you define stories in the MDX and documen
 
 If you don't define stories in your MDX, you can write MDX documentation and associate it with an existing story, or embed that MDX as its own documentation node in your Storybook's navigation.
 
-If you don't define a Meta, you can write Markdown and associate with an existing story. See ["CSF Stories with MDX Docs"](https://github.com/storybookjs/storybook/blob/master/addons/docs/docs/recipes.md#csf-stories-with-mdx-docs).
+If you don't define a Meta, you can write Markdown and associate with an existing story. See ["CSF Stories with MDX Docs"](../../addons/docs/docs/recipes.md).
 
 To get a "documentation-only story", in your UI, define a `<Meta>` as you normally would, but don't define any stories. It will show up in your UI as a documentation node:
 
