@@ -32,4 +32,4 @@ To use your CSS in all stories, you simply import it in [`.storybook/preview.js`
 
 ### Adding webfonts
 
-If you need webfonts to be available, you may need to add some code to the [`.storybook/preview-head.html`](./story-rendering.md#adding-to-head) file. We recommend including any assets with your Storybook if possible, in which case you likely want to configure the [static file location](#serving-static-files-via-storybook).
+If you need webfonts to be available, you may need to add some code to the [`.storybook/preview-head.html`](./story-rendering.md#adding-to-head) file. We recommend including any assets with your Storybook if possible, in which case you likely want to configure the [static file location](./images-and-assets#serving-static-files-via-storybook).
