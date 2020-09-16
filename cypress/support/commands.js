@@ -81,6 +81,15 @@ Cypress.Commands.add('getCanvasElement', {}, () => {
     .then((iframe) => cy.wrap(iframe, { log: false }));
 });
 
+Cypress.Commands.add('getCanvasBodyElement', {}, () => {
+  cy.log('getCanvasBodyElement');
+  return cy
+    .getCanvasElement()
+    .its('0.contentDocument.body', { log: false })
+    .should('not.be.empty')
+    .then((body) => cy.wrap(body, { log: false }));
+});
+
 Cypress.Commands.add('navigateToStory', (kind, name) => {
   const kindId = kind.replace(/ /g, '-').toLowerCase();
   const storyId = name.replace(/ /g, '-').toLowerCase();

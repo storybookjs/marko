@@ -11,7 +11,7 @@ describe('addon-backgrounds', () => {
     cy.get('[title="Change the background of the preview"]').click();
     cy.get('#dark').click();
 
-    cy.getCanvasElement().should('have.css', 'background-color', 'rgb(51, 51, 51)');
+    cy.getCanvasBodyElement().should('have.css', 'background-color', 'rgb(51, 51, 51)');
   });
 
   it('should apply a grid', () => {
@@ -21,6 +21,6 @@ describe('addon-backgrounds', () => {
     // Toggle grid view
     cy.get('[title="Apply a grid to the preview"]').click();
 
-    cy.getCanvasElement().should('have.css', 'background-image');
+    cy.getCanvasBodyElement().should('have.css', 'background-image');
   });
 });

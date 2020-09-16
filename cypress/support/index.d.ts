@@ -25,6 +25,11 @@ declare namespace Cypress {
     getCanvasElement(): Chainable<Element>;
 
     /**
+     * Custom command to select the DOM element of the body from the preview iframe in the canvas tab.
+     */
+    getCanvasBodyElement(): Chainable<Element>;
+
+    /**
      * Navigate to a story.
      * 'Storybook Example/Button'
      *  -  kind: `Storybook Example`
