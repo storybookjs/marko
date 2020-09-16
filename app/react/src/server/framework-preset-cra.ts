@@ -7,7 +7,7 @@ type Preset = string | { name: string };
 const checkForNewPreset = (presetsList: Preset[]) => {
   const hasNewPreset = presetsList.some((preset: Preset) => {
     const presetName = typeof preset === 'string' ? preset : preset.name;
-    return presetName === '@storybook/preset-create-react-app';
+    return /@storybook(\/|\\)preset-create-react-app/.test(presetName);
   });
 
   if (!hasNewPreset) {

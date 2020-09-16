@@ -76,7 +76,6 @@ Override the `docs.page` [parameter](../writing-stories/parameters.md#component-
 <CodeSnippets
   paths={[
     'common/button-story-disable-docspage-component.js.mdx',
-    'common/button-story-disable-docspage-component.ts.mdx',
   ]}
 />
 

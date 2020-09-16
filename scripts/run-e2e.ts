@@ -83,6 +83,13 @@ const configureYarn2 = async ({ cwd }: Options) => {
     `yarn config set npmScopes --json '{ "storybook": { "npmRegistryServer": "http://localhost:6000/" } }'`,
     // Some required magic to be able to fetch deps from local registry
     `yarn config set unsafeHttpWhitelist --json '["localhost"]'`,
+    // Disable fallback mode to make sure everything is required correctly
+    `yarn config set pnpFallbackMode none`,
+    // Add package extensions
+    // https://github.com/casesandberg/reactcss/pull/153
+    `yarn config set "packageExtensions.reactcss@*.peerDependencies.react" "*"`,
+    // https://github.com/casesandberg/react-color/pull/746
+    `yarn config set "packageExtensions.react-color@*.peerDependencies.react" "*"`,
   ].join(' && ');
   logger.info(`🎛 Configuring Yarn 2`);
   logger.debug(command);

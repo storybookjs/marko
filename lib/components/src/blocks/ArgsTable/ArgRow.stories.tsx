@@ -298,6 +298,24 @@ LongEnum.args = {
   },
 };
 
+export const complexUnion =
+  '((a: string | SVGSVGElement) => void) | RefObject<SVGSVGElement | number> | [a|b] | {a|b}';
+
+export const ComplexUnion = Template.bind({});
+ComplexUnion.args = {
+  ...baseArgs,
+  row: {
+    key: 'complexUnion',
+    name: 'Complex',
+    type: { required: true },
+    table: {
+      type: {
+        summary: complexUnion,
+      },
+    },
+  },
+};
+
 export const Markdown = Template.bind({});
 Markdown.args = {
   ...baseArgs,

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-actions",
-  "version": "6.0.12",
+  "version": "6.1.0-alpha.10",
   "description": "Action Logger addon for storybook",
   "keywords": [
     "storybook"
@@ -28,12 +28,12 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.12",
-    "@storybook/api": "6.0.12",
-    "@storybook/client-api": "6.0.12",
-    "@storybook/components": "6.0.12",
-    "@storybook/core-events": "6.0.12",
-    "@storybook/theming": "6.0.12",
+    "@storybook/addons": "6.1.0-alpha.10",
+    "@storybook/api": "6.1.0-alpha.10",
+    "@storybook/client-api": "6.1.0-alpha.10",
+    "@storybook/components": "6.1.0-alpha.10",
+    "@storybook/core-events": "6.1.0-alpha.10",
+    "@storybook/theming": "6.1.0-alpha.10",
     "core-js": "^3.0.1",
     "fast-deep-equal": "^3.1.1",
     "global": "^4.3.2",
@@ -41,6 +41,7 @@
     "polished": "^3.4.4",
     "prop-types": "^15.7.2",
     "react": "^16.8.3",
+    "react-dom": "^16.8.3",
     "react-inspector": "^5.0.1",
     "regenerator-runtime": "^0.13.3",
     "ts-dedent": "^1.1.1",
@@ -52,13 +53,10 @@
     "@types/uuid": "^7.0.3",
     "@types/webpack-env": "^1.15.2"
   },
-  "peerDependencies": {
-    "react-dom": "*"
-  },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "ebb058e4090f2a697a6f2f16494d57a5e3a553f4",
+  "gitHead": "57798a108e183d97f94fd4cc396e45e1d4b04d23",
   "typesVersions": {
     "<=3.5": {
       "*": [

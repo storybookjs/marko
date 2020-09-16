@@ -1,5 +1,8 @@
 <h1>Migration</h1>
 
+- [From version 6.0.x to 6.1.0](#from-version-60x-to-610)
+  - [6.1 deprecations](#61-deprecations)
+    - [Deprecated onBeforeRender](#deprecated-onbeforerender)
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
   - [Hoisted CSF annotations](#hoisted-csf-annotations)
   - [Zero config typescript](#zero-config-typescript)
@@ -14,6 +17,7 @@
     - [DocsPage slots removed](#docspage-slots-removed)
     - [React prop tables with Typescript](#react-prop-tables-with-typescript)
     - [ConfigureJSX true by default in React](#configurejsx-true-by-default-in-react)
+    - [User babelrc disabled by default in MDX](#user-babelrc-disabled-by-default-in-mdx)
     - [Docs description parameter](#docs-description-parameter)
     - [6.0 Inline stories](#60-inline-stories)
   - [New addon presets](#new-addon-presets)
@@ -33,6 +37,7 @@
   - [6.0 Addon API changes](#60-addon-api-changes)
     - [Consistent local addon paths in main.js](#consistent-local-addon-paths-in-mainjs)
     - [Deprecated setAddon](#deprecated-setaddon)
+    - [Deprecated disabled parameter](#deprecated-disabled-parameter)
     - [Actions addon uses parameters](#actions-addon-uses-parameters)
     - [Removed action decorator APIs](#removed-action-decorator-apis)
     - [Removed withA11y decorator](#removed-witha11y-decorator)
@@ -127,6 +132,16 @@
   - [Packages renaming](#packages-renaming)
   - [Deprecated embedded addons](#deprecated-embedded-addons)
 
+## From version 6.0.x to 6.1.0
+
+### 6.1 deprecations
+
+#### Deprecated onBeforeRender
+
+The `@storybook/addon-docs` previously accepted a `jsx` option called `onBeforeRender`, which was unfortunately named as it was called after the render.
+
+We've renamed it `transformSource` and also allowed it to receive the `StoryContext` in case source rendering requires additional information.
+
 ## From version 5.3.x to 6.0.x
 
 ### Hoisted CSF annotations
@@ -157,7 +172,7 @@ Basic.decorators = [ ... ];
 2. Similar to React's `displayName`, `propTypes`, `defaultProps` annotations
 3. We're introducing a new feature, [Storybook Args](https://docs.google.com/document/d/1Mhp1UFRCKCsN8pjlfPdz8ZdisgjNXeMXpXvGoALjxYM/edit?usp=sharing), where the new syntax will be significantly more ergonomic
 
-To help you upgrade your stories, we've crated a codemod:
+To help you upgrade your stories, we've created a codemod:
 
 ```
 npx @storybook/cli@next migrate csf-hoist-story-annotations --glob="**/*.stories.js"
@@ -263,7 +278,7 @@ In SB5.2, we introduced the concept of [DocsPage slots](https://github.com/story
 
 In 5.3, we introduced `docs.x` story parameters like `docs.prepareForInline` which get filled in by frameworks and can also be overwritten by users, which is a more natural/convenient way to make global customizations.
 
-We also introduced introduced [Custom DocsPage](https://github.com/storybookjs/storybook/blob/next/addons/docs/docs/docspage.md#replacing-docspage), which makes it possible to add/remove/update DocBlocks on the page.
+We also introduced [Custom DocsPage](https://github.com/storybookjs/storybook/blob/next/addons/docs/docs/docspage.md#replacing-docspage), which makes it possible to add/remove/update DocBlocks on the page.
 
 These mechanisms are superior to slots, so we've removed slots in 6.0. For each slot, we provide a migration path here:
 
@@ -296,6 +311,23 @@ module.exports = {
     {
       name: '@storybook/addon-docs',
       options: { configureJSX: false },
+    },
+  ],
+};
+```
+
+#### User babelrc disabled by default in MDX
+
+In SB 6.0, the Storybook Docs no longer applies the user's babelrc by default when processing MDX files. It caused lots of hard-to-diagnose bugs.
+
+To restore the old behavior, or pass any MDX-specific babel options, you can configure `.storybook/main.js`:
+
+```js
+module.exports = {
+  addons: [
+    {
+      name: '@storybook/addon-docs',
+      options: { mdxBabelOptions: { babelrc: true, configFile: true } },
     },
   ],
 };
@@ -434,7 +466,7 @@ The story store no longer emits `renderCurrentStory`/`RENDER_CURRENT_STORY` to t
 
 We've removed the ability to specify the hierarchy separators (how you control the grouping of story kinds in the sidebar). From Storybook 6.0 we have a single separator `/`, which cannot be configured.
 
-If you are currently using using custom separators, we encourage you to migrate to using `/` as the sole separator. If you are using `|` or `.` as a separator currently, we provide a codemod, [`upgrade-hierarchy-separators`](https://github.com/storybookjs/storybook/blob/next/lib/codemod/README.md#upgrade-hierarchy-separators), that can be used to rename your components. **Note: the codemod will not work for `.mdx` components, you will need to make the changes by hand.**
+If you are currently using custom separators, we encourage you to migrate to using `/` as the sole separator. If you are using `|` or `.` as a separator currently, we provide a codemod, [`upgrade-hierarchy-separators`](https://github.com/storybookjs/storybook/blob/next/lib/codemod/README.md#upgrade-hierarchy-separators), that can be used to rename your components. **Note: the codemod will not work for `.mdx` components, you will need to make the changes by hand.**
 
 ```
 npx sb@next migrate upgrade-hierarchy-separators --glob="*/**/*.stories.@(tsx|jsx|ts|js)"
@@ -581,6 +613,22 @@ We've deprecated the `setAddon` method of the `storiesOf` API and plan to remove
 
 Since early versions, Storybook shipped with a `setAddon` API, which allows you to extend `storiesOf` with arbitrary code. We've removed this from all core addons long ago and recommend writing stories in [Component Story Format](https://medium.com/storybookjs/component-story-format-66f4c32366df) rather than using the internal Storybook API.
 
+#### Deprecated disabled parameter
+
+Starting in 6.0.17, we've renamed the `disabled` parameter to `disable` to resolve an inconsistency where `disabled` had been used to hide the addon panel, whereas `disable` had been used to disable an addon's execution. Since `disable` was much more widespread in the code, we standardized on that.
+
+So, for example:
+
+```
+Story.parameters = { actions: { disabled: true } }
+```
+
+Should be rewritten as:
+
+```
+Story.parameters = { actions: { disable: true } }
+```
+
 #### Actions addon uses parameters
 
 Leveraging the new preset `@storybook/addon-actions` uses parameters to pass action options. If you previously had:
@@ -689,7 +737,7 @@ The addon's source code is still available in the [deprecated-addons repo](https
 
 #### Removed addon-centered
 
-In 6.0 we removed the centered addon. Centering is now core feature of storybook, so w no longer need an addon.
+In 6.0 we removed the centered addon. Centering is now core feature of storybook, so we no longer need an addon.
 
 Remove the addon-centered decorator and instead add a `layout` parameter:
 
