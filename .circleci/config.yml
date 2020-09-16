@@ -30,12 +30,22 @@ jobs:
       - run:
           name: Remove examples
           command: rm -rf examples/
+      - restore_cache:
+          name: Restore Yarn cache
+          keys:
+            - build-yarn-cache-v1--{{ checksum "yarn.lock" }}
+            - build-yarn-cache-v1--
       - run:
           name: Install dependencies
-          command: yarn install --frozen-lockfile
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
       - run:
           name: Bootstrap
           command: yarn bootstrap --core
+      - save_cache:
+          name: Save Yarn cache
+          key: build-yarn-cache-v1--{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
       - persist_to_workspace:
           root: .
           paths:

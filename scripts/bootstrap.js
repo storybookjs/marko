@@ -82,7 +82,7 @@ function run() {
       option: '--install',
       command: () => {
         const command = process.env.CI
-          ? 'yarn install --network-concurrency 8'
+          ? 'yarn install --frozen-lockfile --cache-folder ~/.cache/yarn --network-concurrency 8'
           : 'yarn install --ignore-optional --network-concurrency 8';
         spawn(command);
       },
