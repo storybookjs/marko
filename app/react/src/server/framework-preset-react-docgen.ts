@@ -6,6 +6,10 @@ import type { StorybookOptions } from './types';
 export function babel(config: TransformOptions, { typescriptOptions }: StorybookOptions) {
   const { reactDocgen } = typescriptOptions;
 
+  if (reactDocgen === false) {
+    return config;
+  }
+
   return {
     ...config,
     overrides: [
