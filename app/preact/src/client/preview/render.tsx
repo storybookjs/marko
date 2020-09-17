@@ -39,7 +39,7 @@ export default function renderMain({
     return;
   }
 
-  // But forceRender means that it's the same story, so we want too keep the state in that case.
+  // But forceRender means that it's the same story, so we want to keep the state in that case.
   if (!forceRender) {
     preactRender(null);
   }
