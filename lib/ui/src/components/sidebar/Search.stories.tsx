@@ -16,4 +16,4 @@ export const simple = () => <Search {...actions} />;
 
 export const focussed = () => <Search defaultFocussed {...pureActions} />;
 
-export const filledIn = () => <Search defaultValue="Searchstring" {...pureActions} />;
+export const filledIn = () => <Search defaultValue="Search query" {...pureActions} />;

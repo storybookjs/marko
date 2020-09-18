@@ -5,6 +5,7 @@ import { Icons } from '@storybook/components';
 
 export type FilterFieldProps = ComponentProps<'input'>;
 
+export type FocusKeyProps = ComponentProps<'code'>;
 export type CancelButtonProps = ComponentProps<'button'>;
 export type SearchProps = Omit<FilterFieldProps, 'onChange'> & {
   onChange: (arg: string) => void;
@@ -26,20 +27,45 @@ const FilterField = styled.input<FilterFieldProps>(({ theme }) => ({
   padding: 0,
   fontSize: 'inherit',
 
-  '&:-webkit-autofill': { WebkitBoxShadow: `0 0 0 3em ${theme.color.lightest} inset` },
-
-  '::placeholder': {
-    color: theme.color.mediumdark,
+  '&::-ms-clear': {
+    display: 'none',
   },
-
+  '&::-webkit-search-decoration, &::-webkit-search-cancel-button, &::-webkit-search-results-button, &::-webkit-search-results-decoration': {
+    display: 'none',
+  },
+  '&:-webkit-autofill': {
+    WebkitBoxShadow: `0 0 0 3em ${theme.color.lightest} inset`,
+  },
+  '::placeholder': {
+    color: theme.color.dark,
+  },
   '&:placeholder-shown ~ button': {
     // hide cancel button using CSS only
     opacity: 0,
+    pointerEvents: 'none',
   },
+}));
+
+const FocusKey = styled.code<FocusKeyProps>(({ theme }) => ({
+  position: 'absolute',
+  top: 5,
+  right: 12,
+  width: 16,
+  height: 16,
+  zIndex: 1,
+  lineHeight: '17px',
+  textAlign: 'center',
+  fontSize: '11px',
+  background: 'rgba(0,0,0,0.1)',
+  color: theme.color.mediumdark,
+  borderRadius: 2,
+  userSelect: 'none',
+  pointerEvents: 'none',
 }));
 
 const CancelButton = styled.button<CancelButtonProps>(({ theme }) => ({
   border: 0,
+  outline: 0,
   margin: 0,
   padding: 4,
   textDecoration: 'none',
@@ -53,7 +79,7 @@ const CancelButton = styled.button<CancelButtonProps>(({ theme }) => ({
   position: 'absolute',
   top: '50%',
   transform: 'translateY(-50%)',
-  right: 2,
+  right: 12,
 
   '> svg': {
     display: 'block',
@@ -70,40 +96,50 @@ const CancelButton = styled.button<CancelButtonProps>(({ theme }) => ({
 
 const FilterForm = styled.form<FilterFormProps>(({ theme, focussed }) => ({
   transition: 'all 150ms ease-out',
-  borderBottom: '1px solid transparent',
-  borderBottomColor: focussed
-    ? opacify(0.3, theme.appBorderColor)
-    : opacify(0.1, theme.appBorderColor),
+  border: `1px solid transparent`,
+  borderRadius: 28,
+  borderColor: focussed ? theme.color.secondary : theme.color.medium,
+  backgroundColor: focussed ? theme.color.lightest : 'transparent',
   outline: 0,
   position: 'relative',
-  color: theme.input.color,
+  marginLeft: -10,
+  marginRight: -10,
 
   input: {
-    color: theme.input.color,
-    fontSize: theme.typography.size.s2 - 1,
-    lineHeight: '20px',
-    paddingTop: 2,
-    paddingBottom: 2,
-    paddingLeft: 20,
-    paddingRight: 20,
+    color: theme.color.darkest,
+    fontSize: theme.typography.size.s1,
+    lineHeight: '16px',
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 28,
+    paddingRight: 28,
+
+    '&:valid ~ code': {
+      display: 'none',
+    },
   },
 
   '> svg': {
     transition: 'all 150ms ease-out',
     position: 'absolute',
     top: '50%',
+    left: 10,
     height: 12,
     width: 12,
     transform: 'translateY(-50%)',
     zIndex: 1,
 
+    color: focussed ? theme.color.darker : theme.color.mediumdark,
     background: 'transparent',
 
     path: {
       transition: 'all 150ms ease-out',
       fill: 'currentColor',
-      opacity: focussed ? 1 : 0.3,
     },
+  },
+
+  '> code': {
+    display: focussed ? 'none' : 'block',
   },
 }));
 
@@ -124,7 +160,8 @@ export const Search: FunctionComponent<SearchProps> = ({
       onSubmit={(e) => e.preventDefault()}
     >
       <FilterField
-        type="text"
+        required
+        type="search"
         id="storybook-explorer-searchfield"
         onFocus={() => onSetFocussed(true)}
         onBlur={() => onSetFocussed(false)}
@@ -133,10 +170,11 @@ export const Search: FunctionComponent<SearchProps> = ({
         }}
         defaultValue={defaultValue}
         {...props}
-        placeholder={focussed ? 'Type to search...' : 'Press "/" to search...'}
-        aria-label="Search stories"
+        placeholder={focussed ? 'Search components & stories' : 'Press / to search'}
+        aria-label="Search components and stories"
       />
       <Icons icon="search" />
+      <FocusKey>/</FocusKey>
       <CancelButton type="reset" value="reset" title="Clear search">
         <Icons icon="closeAlt" />
       </CancelButton>
