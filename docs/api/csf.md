@@ -184,4 +184,4 @@ For this specific example the equivalent result can be achieved in a few ways de
 - `excludeStories: /.*Data$/`
 - `excludeStories: ['simpleData', 'complexData']`
 
-If you follow the best practice of starting story exports with an uppercae letter, the first option is the recommended solution.
+If you follow the best practice of starting story exports with an uppercase letter (i.e. use UpperCamelCase), the first option is the recommended solution.
