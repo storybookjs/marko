@@ -33,6 +33,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
+  propSubscriptions = new Map<any, { prop: any, sub: Subscription }>();
+
   constructor(
     private cfr: ComponentFactoryResolver,
     private changeDetectorRef: ChangeDetectorRef,
@@ -64,6 +66,13 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+
+    this.propSubscriptions.forEach(v => {
+      if (!v.sub.closed) {
+        v.sub.unsubscribe();
+      }
+    })
+    this.propSubscriptions.clear();
   }
 
   /**
@@ -93,7 +102,7 @@ export class AppComponent implements OnInit, OnDestroy {
           }
         }
       } else if (typeof value === 'function' && key !== 'ngModelChange') {
-        instanceProperty.subscribe(value);
+        this.setPropSubscription(key, instanceProperty, value);
       }
     });
 
@@ -122,5 +131,27 @@ export class AppComponent implements OnInit, OnDestroy {
     if (typeof props.ngModelChange === 'function') {
       instance.registerOnChange(props.ngModelChange);
     }
+  }
+
+  /**
+   * Store ref to subscription for cleanup in 'ngOnDestroy' and check if
+   * observable needs to be resubscribed to, before creating a new subscription.
+   */
+  private setPropSubscription(key: string, instanceProperty: Observable<any>, value: any): void {
+    if (this.propSubscriptions.has(key)) {
+      const v = this.propSubscriptions.get(key);
+      if (v.prop === value) {
+        // Prop hasn't changed, so the existing subscription can stay.
+        return;
+      }
+
+      // Now that the value has changed, unsubscribe from the previous value's subscription.
+      if (!v.sub.closed) {
+        v.sub.unsubscribe();
+      }
+    }
+    
+    const sub = instanceProperty.subscribe(value);
+    this.propSubscriptions.set(key, { prop: value, sub });
   }
 }
