@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
 import { styled } from '@storybook/theming';
-import { opacify, transparentize, lighten } from 'polished';
+import { opacify, transparentize } from 'polished';
 
 import { ControlProps, BooleanValue, BooleanConfig } from './types';
 
