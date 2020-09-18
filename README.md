@@ -42,8 +42,8 @@
   </a>
 </p>
 
-Storybook is a development environment for UI components.
-It allows you to browse a component library, view the different states of each component, and interactively develop and test components.
+[Storybook](https://storybook.js.org) is a development environment for UI components.
+It allows you to browse a component library, view the different states of each component, and interactively develop and test components. Find out more at https://storybook.js.org.
 
 <center>
   <img src="https://raw.githubusercontent.com/storybookjs/storybook/master/media/storybook-intro.gif" width="100%" />
@@ -55,13 +55,6 @@ It allows you to browse a component library, view the different states of each c
   <a href="https://github.com/storybookjs/storybook/blob/next/README.md" title="next"><img alt="next" src="https://img.shields.io/npm/v/@storybook/core/next.svg" /></a>
 </p>
 
-## Intro
-
-Storybook runs outside of your app. This allows you to develop UI components in isolation, which can improve component reuse, testability, and development speed. You can build quickly without having to worry about application-specific dependencies.
-
-Here are some featured examples that you can reference to see how Storybook works: <https://storybook.js.org/docs/examples/>
-
-Storybook comes with a lot of [addons](https://storybook.js.org/docs/react/configure/storybook-addons) for component design, documentation, testing, interactivity, and so on. Storybook's API makes it possible to configure and extend in various ways. It has even been extended to support React Native development for mobile.
 
 ## Table of contents
 
@@ -80,20 +73,21 @@ Storybook comes with a lot of [addons](https://storybook.js.org/docs/react/confi
 
 ## Getting Started
 
-First install storybook:
+Visit [Storybook's website](https://storybook.js.org) to learn more about Storybook, and to get started.
 
-```sh
-cd my-react-app
-npx sb init
-```
+### Documentation
 
-If you'd rather set up your project manually, take a look at our [Slow Start Guide](https://storybook.js.org/docs/react/configure/overview).
+Documentation can be found [Storybook's docs site](https://storybook.js.org/docs).
 
-Once it's installed, you can `npm run storybook` and it will run the development server on your local machine, and give you a URL to browse some sample stories.
+### Examples
 
-For full documentation on using Storybook visit: [storybook.js.org](https://storybook.js.org)
+Here are some featured examples that you can reference to see how Storybook works: <https://storybook.js.org/docs/react/get-started/examples>
 
-For additional help, join us [in our Discord](https://discord.gg/sMFvFsG) or [Slack (legacy)](https://now-examples-slackin-rrirkqohko.now.sh/)
+Storybook comes with a lot of [addons](https://storybook.js.org/docs/react/configure/storybook-addons) for component design, documentation, testing, interactivity, and so on. Storybook's API makes it possible to configure and extend in various ways. It has even been extended to support React Native development for mobile.
+
+### Community
+
+For additional help, join us [in our Discord](https://discord.gg/sMFvFsG) or [Slack (legacy)](https://now-examples-slackin-rrirkqohko.now.sh/).
 
 ## Projects
 
@@ -141,7 +135,7 @@ For additional help, join us [in our Discord](https://discord.gg/sMFvFsG) or [Sl
 | [storysource](addons/storysource/)          | View the code of your stories within the Storybook UI                      |
 | [viewport](addons/viewport/)                | Change display sizes and layouts for responsive components using Storybook |
 
-See [Addon / Framework Support Table](ADDONS_SUPPORT.md)
+See [Addon / Framework Support Table](https://storybook.js.org/docs/react/api/frameworks-feature-support)
 
 ### Deprecated Addons
 
