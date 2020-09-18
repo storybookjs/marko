@@ -11,6 +11,9 @@ export * from './hooks';
 export * from './types';
 export * from './parameters';
 
+// FIXME: for react-argtypes.stories; remove on refactor
+export * from './inferControls';
+
 export {
   ClientApi,
   addDecorator,

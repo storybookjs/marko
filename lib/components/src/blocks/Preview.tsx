@@ -15,6 +15,7 @@ export interface PreviewProps {
   isExpanded?: boolean;
   withToolbar?: boolean;
   className?: string;
+  additionalActions?: ActionItem[];
 }
 
 type layout = 'padded' | 'fullscreen' | 'centered';
@@ -179,6 +180,7 @@ const Preview: FunctionComponent<PreviewProps> = ({
   withSource,
   withToolbar = false,
   isExpanded = false,
+  additionalActions,
   className,
   ...props
 }) => {
@@ -186,6 +188,11 @@ const Preview: FunctionComponent<PreviewProps> = ({
   const { source, actionItem } = getSource(withSource, expanded, setExpanded);
   const [scale, setScale] = useState(1);
   const previewClasses = [className].concat(['sbdocs', 'sbdocs-preview']);
+
+  const defaultActionItems = withSource ? [actionItem] : [];
+  const actionItems = additionalActions
+    ? [...defaultActionItems, ...additionalActions]
+    : defaultActionItems;
 
   // @ts-ignore
   const layout = getLayout(Children.count(children) === 1 ? [children] : children);
@@ -220,7 +227,7 @@ const Preview: FunctionComponent<PreviewProps> = ({
               <div>{children}</div>
             )}
           </ChildrenContainer>
-          {withSource && <ActionBar actionItems={[actionItem]} />}
+          <ActionBar actionItems={actionItems} />
         </Relative>
       </ZoomContext.Provider>
       {withSource && source}

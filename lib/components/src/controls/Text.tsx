@@ -4,25 +4,26 @@ import { styled } from '@storybook/theming';
 import { Form } from '../form';
 import { ControlProps, TextValue, TextConfig } from './types';
 
-export type TextProps = ControlProps<TextValue> & TextConfig;
+export type TextProps = ControlProps<TextValue | undefined> & TextConfig;
 
 const Wrapper = styled.label({
   display: 'flex',
 });
 
-export const TextControl: FC<TextProps> = ({ name, value, onChange }) => {
+const format = (value?: TextValue) => value || '';
+
+export const TextControl: FC<TextProps> = ({ name, value, onChange, onFocus, onBlur }) => {
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    onChange(name, event.target.value);
+    onChange(event.target.value);
   };
   return (
     <Wrapper>
       <Form.Textarea
         id={name}
-        name={name}
-        value={value}
         onChange={handleChange}
         size="flex"
         placeholder="Adjust string dynamically"
+        {...{ name, value: format(value), onFocus, onBlur }}
       />
     </Wrapper>
   );

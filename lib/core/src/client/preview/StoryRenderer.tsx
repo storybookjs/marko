@@ -97,7 +97,7 @@ export class StoryRenderer {
     if (this.channel) {
       this.channel.on(Events.CURRENT_STORY_WAS_SET, () => this.renderCurrentStory(false));
       this.channel.on(Events.STORY_ARGS_UPDATED, () => this.forceReRender());
-      this.channel.on(Events.GLOBAL_ARGS_UPDATED, () => this.forceReRender());
+      this.channel.on(Events.GLOBALS_UPDATED, () => this.forceReRender());
       this.channel.on(Events.FORCE_RE_RENDER, () => this.forceReRender());
     }
   }
@@ -128,7 +128,7 @@ export class StoryRenderer {
       getDecorated,
     };
 
-    this.applyLayout(layout);
+    this.applyLayout(metadata.viewMode === 'docs' ? 'fullscreen' : layout);
 
     const context: RenderContext = {
       id: storyId, // <- in case data is null, at least we'll know what we tried to render

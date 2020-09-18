@@ -4,7 +4,10 @@
     :style="{ color, borderColor: color }"
     :class="{ rounded }"
     @click="onClick"
-    @dblclick="onDoubleClick"><slot/>!</button>
+    @dblclick="onDoubleClick"
+  >
+    <slot />!
+  </button>
 </template>
 
 <script>
@@ -13,7 +16,10 @@
     name: 'Button',
 
     props: {
-      rounded: Boolean,
+      rounded: { 
+        type: Boolean,
+        default: false,
+      },
       color: {
         type: String,
         default: '#42b983'
@@ -42,14 +48,14 @@
 </script>
 
 <style>
-  .rounded {
-    border-radius: 5px;
-  }
+.rounded {
+  border-radius: 5px;
+}
 
-  .button {
-    border: 3px solid;
-    padding: 10px 20px;
-    background-color: white;
-    outline: none;
-  }
+.button {
+  border: 3px solid;
+  padding: 10px 20px;
+  background-color: white;
+  outline: none;
+}
 </style>

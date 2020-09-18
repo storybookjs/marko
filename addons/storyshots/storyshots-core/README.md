@@ -33,6 +33,20 @@ Now run your Jest test command. (Usually, `npm test`.) Then you can see all of y
 
 ![Screenshot](https://raw.githubusercontent.com/storybookjs/storybook/HEAD/addons/storyshots/storyshots-core/docs/storyshots.png)
 
+### Testing stories that rely on addon-added decorators
+
+If you have stories in your Storybook that can only render inside a decorator (for instance the [`apollo-storybook-decorator`](https://github.com/abhiaiyer91/apollo-storybook-decorator)), you'll need to ensure those decorators are applied in Storyshots.
+
+If you export those decorators from your `.storybook/preview.js` then Storyshots will apply those decorators for you in the same way that Storybook does. However if the addon _automatically_ adds the decorator for you (which is a new feature in Storybook 6.0), you will find the decorator does not get added in Storyshots. This is a limitation in Storyshots currently.
+
+To ensure such decorators get added, export them from `.storybook/preview.js`:
+
+```js
+import addonDecorator from 'some-addon';
+
+export const decorators = [addonDecorator];
+```
+
 ## Configure your app for Jest
 
 In many cases, for example Create React App, it's already configured for Jest. You need to create a filename with the extension `.test.js`.
@@ -52,7 +66,7 @@ If you still need to configure jest you can use the resources mentioned below:
 
 **NOTE**: if you are using Storybook 5.3's `main.js` to list story files, this is no longer needed.
 
-Sometimes it's useful to configure Storybook with Webpack's require.context feature. You could be loading stories [one of two ways](https://storybook.js.org/docs/basics/writing-stories/#loading-stories).
+Sometimes it's useful to configure Storybook with Webpack's require.context feature. You could be loading stories [one of two ways](https://storybook.js.org/docs/react/writing-stories/loading-stories).
 
 1. If you're using the `storiesOf` API, you can integrate it this way:
 
@@ -204,6 +218,12 @@ StoryShots addon for Preact is dependent on [preact-render-to-json](https://gith
 ```sh
 yarn add preact-render-to-json --dev
 ```
+
+### Configure Jest for Web Components
+
+StoryShots addon for Web Components requires [jsdom](https://github.com/jsdom/jsdom) 16 or later to fully support the
+web component shadow dom. To use jsdom 16 or later you can set the Jest `testEnvironment` configuration key to
+`jest-environment-jsdom-sixteen`. This should work back to Jest 24 and is the default in Jest 26 and later.
 
 ### Configure Jest for MDX Docs Add-On Stories
 
@@ -625,7 +645,7 @@ Like the default, but allows you to specify a set of options for the renderer, j
 ### `multiSnapshotWithOptions(options)`
 
 Like `snapshotWithOptions`, but generate a separate snapshot file for each stories file rather than a single monolithic file (as is the convention in Jest). This makes it dramatically easier to review changes. If you'd like the benefit of separate snapshot files, but don't have custom options to pass, you can pass an empty object.
-If you use [Component Story Format](https://storybook.js.org/docs/formats/component-story-format/), you may also need to add an additional Jest transform to automate detecting story file names:
+If you use [Component Story Format](https://storybook.js.org/docs/react/api/csf), you may also need to add an additional Jest transform to automate detecting story file names:
 
 ```js
 // jest.config.js

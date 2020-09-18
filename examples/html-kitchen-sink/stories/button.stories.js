@@ -24,3 +24,6 @@ export const Effect = () => {
 
   return '<button id="button">I should be yellow</button>';
 };
+
+export const Script = () =>
+  '<div>JS alert</div><script>alert("hello")</script>';

@@ -5,6 +5,7 @@ import start from './start';
 jest.mock('@storybook/client-logger');
 jest.mock('global', () => ({
   history: { replaceState: jest.fn() },
+  location: { search: '' },
   navigator: { userAgent: 'browser', platform: '' },
   window: {
     __STORYBOOK_CLIENT_API__: undefined,

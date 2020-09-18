@@ -1,0 +1,15 @@
+```js
+// List.stories.js
+
+import React from 'react';
+import List from './List';
+
+// Instead of importing the ListItem, we import its stories
+import { Unchecked } from './ListItem.stories';
+
+export const OneItem = (args) => (
+  <List {...args}>
+    <Unchecked {...Unchecked.args} />
+  </List>
+);
+```

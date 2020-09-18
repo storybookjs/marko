@@ -1,9 +1,8 @@
-import { addParameters } from '@storybook/client-api';
 import { extractArgTypes, extractComponentDescription } from './compodoc';
 
-addParameters({
+export const parameters = {
   docs: {
     extractArgTypes,
     extractComponentDescription,
   },
-});
+};

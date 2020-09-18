@@ -19,11 +19,6 @@ export interface Root {
   isComponent: false;
   isRoot: true;
   isLeaf: false;
-  // MDX stories are "Group" type
-  parameters?: {
-    docsOnly?: boolean;
-    [k: string]: any;
-  };
 }
 
 export interface Group {
@@ -36,11 +31,10 @@ export interface Group {
   isComponent: boolean;
   isRoot: false;
   isLeaf: false;
-  // MDX stories are "Group" type
+  // MDX docs-only stories are "Group" type
   parameters?: {
     docsOnly?: boolean;
     viewMode?: ViewMode;
-    [parameterName: string]: any;
   };
 }
 
@@ -98,20 +92,21 @@ export interface StoriesRaw {
   [id: string]: StoryInput;
 }
 
-export interface SetStoriesPayload {
-  v?: number;
-  stories: StoriesRaw;
-}
-
-export interface SetStoriesPayloadV2 extends SetStoriesPayload {
-  v: 2;
-  error?: Error;
-  globalArgs: Args;
-  globalParameters: Parameters;
-  kindParameters: {
-    [kind: string]: Parameters;
-  };
-}
+export type SetStoriesPayload =
+  | {
+      v: 2;
+      error?: Error;
+      globals: Args;
+      globalParameters: Parameters;
+      stories: StoriesRaw;
+      kindParameters: {
+        [kind: string]: Parameters;
+      };
+    }
+  | ({
+      v?: number;
+      stories: StoriesRaw;
+    } & Record<string, never>);
 
 const warnChangedDefaultHierarchySeparators = deprecate(
   () => {},
@@ -134,7 +129,7 @@ export const denormalizeStoryParameters = ({
   globalParameters,
   kindParameters,
   stories,
-}: SetStoriesPayloadV2): StoriesRaw => {
+}: SetStoriesPayload): StoriesRaw => {
   return mapValues(stories, (storyData) => ({
     ...storyData,
     parameters: combineParameters(
@@ -147,7 +142,6 @@ export const denormalizeStoryParameters = ({
 
 export const transformStoriesRawToStoriesHash = (
   input: StoriesRaw,
-  base: StoriesHash,
   { provider }: { provider: Provider }
 ): StoriesHash => {
   const anyKindMatchesOldHierarchySeparators = Object.values(input)
@@ -203,7 +197,6 @@ export const transformStoriesRawToStoriesHash = (
               isComponent: false,
               isLeaf: false,
               isRoot: true,
-              parameters,
             };
             return soFar.concat([result]);
           }
@@ -216,7 +209,10 @@ export const transformStoriesRawToStoriesHash = (
             isComponent: false,
             isLeaf: false,
             isRoot: false,
-            parameters,
+            parameters: {
+              docsOnly: parameters?.docsOnly,
+              viewMode: parameters?.viewMode,
+            },
           };
           return soFar.concat([result]);
         }, [] as GroupsList);

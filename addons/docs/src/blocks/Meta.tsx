@@ -10,7 +10,7 @@ type Decorator = (...args: any) => any;
 interface MetaProps {
   title: string;
   component?: Component;
-  subcomponents: Record<string, Component>;
+  subcomponents?: Record<string, Component>;
   decorators?: [Decorator];
   parameters?: any;
 }

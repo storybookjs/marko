@@ -18,7 +18,14 @@ function preactRender(element: StoryFnPreactReturnType | null): void {
   }
 }
 
-export default function renderMain({ storyFn, kind, name, showMain, showError }: RenderContext) {
+export default function renderMain({
+  storyFn,
+  kind,
+  name,
+  showMain,
+  showError,
+  forceRender,
+}: RenderContext) {
   const element = storyFn();
 
   if (!element) {
@@ -32,7 +39,10 @@ export default function renderMain({ storyFn, kind, name, showMain, showError }:
     return;
   }
 
-  preactRender(null);
+  // But forceRender means that it's the same story, so we want to keep the state in that case.
+  if (!forceRender) {
+    preactRender(null);
+  }
 
   showMain();
 

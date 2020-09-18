@@ -1,4 +1,4 @@
-import { Props, Meta } from '@storybook/addon-docs/blocks';
+import { ArgsTable, Meta } from '@storybook/addon-docs/blocks';
 import { DocgenButton } from '../../components/DocgenButton';
 
 <Meta title="Addons/Docs/IncludeExclude" />
@@ -7,18 +7,18 @@ import { DocgenButton } from '../../components/DocgenButton';
 
 ### Array
 
-<Props of={DocgenButton} include={['disabled', 'label']} />
+<ArgsTable of={DocgenButton} include={['disabled', 'label']} />
 
 ### Regex
 
-<Props of={DocgenButton} include={/^o.*/} />
+<ArgsTable of={DocgenButton} include={/^o.*/} />
 
 ## Exclude
 
 ### Regex
 
-<Props of={DocgenButton} exclude={/^o.*|^...$/} />
+<ArgsTable of={DocgenButton} exclude={/^o.*|^...$/} />
 
 ## Mixed
 
-<Props of={DocgenButton} include={/^o.*/} exclude={['one', 'obj']} />
+<ArgsTable of={DocgenButton} include={/^o.*/} exclude={['one', 'obj']} />

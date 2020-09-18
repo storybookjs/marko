@@ -50,10 +50,16 @@ function testStorySnapshots(options: StoryshotsOptions = {}) {
 
   const data = storybook
     .raw()
-    .filter(({ name }) => (storyNameRegex ? name.match(storyNameRegex) : true))
-    .filter(({ kind }) => (storyKindRegex ? kind.match(storyKindRegex) : true))
     .reduce(
       (acc, item) => {
+        if (storyNameRegex && !item.name.match(storyNameRegex)) {
+          return acc;
+        }
+
+        if (storyKindRegex && !item.kind.match(storyKindRegex)) {
+          return acc;
+        }
+
         const { kind, storyFn: render, parameters } = item;
         const existing = acc.find((i: any) => i.kind === kind);
         const { fileName } = item.parameters;

@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import mapValues from 'lodash/mapValues';
-import { storiesOf } from '@storybook/react';
+import { storiesOf, StoryContext } from '@storybook/react';
 import { ArgsTable } from '@storybook/components';
 import { Args } from '@storybook/api';
-import { combineParameters } from '@storybook/client-api';
+import { inferControls } from '@storybook/client-api';
 
 import { extractArgTypes } from './extractArgTypes';
-import { inferControls } from '../common/inferControls';
 import { Component } from '../../blocks';
 
 const argsTableProps = (component: Component) => {
   const argTypes = extractArgTypes(component);
-  const controls = inferControls(argTypes);
-  const rows = combineParameters(argTypes, controls);
+  const parameters = { __isArgsStory: true, argTypes };
+  const rows = inferControls(({ parameters } as unknown) as StoryContext);
   return { rows };
 };
 
@@ -55,12 +54,13 @@ const typescriptFixtures = [
   'scalars',
   'tuples',
   'unions',
+  'optionals',
 ];
 
 const typescriptStories = storiesOf('ArgTypes/TypeScript', module);
 typescriptFixtures.forEach((fixture) => {
   // eslint-disable-next-line import/no-dynamic-require, global-require, no-shadow
-  const { Component } = require(`../../lib/sbtypes/__testfixtures__/typescript/${fixture}`);
+  const { Component } = require(`../../lib/convert/__testfixtures__/typescript/${fixture}`);
   typescriptStories.add(fixture, () => <ArgsStory component={Component} />);
 });
 
@@ -69,7 +69,7 @@ const proptypesFixtures = ['arrays', 'enums', 'misc', 'objects', 'react', 'scala
 const proptypesStories = storiesOf('ArgTypes/PropTypes', module);
 proptypesFixtures.forEach((fixture) => {
   // eslint-disable-next-line import/no-dynamic-require, global-require, no-shadow
-  const { Component } = require(`../../lib/sbtypes/__testfixtures__/proptypes/${fixture}`);
+  const { Component } = require(`../../lib/convert/__testfixtures__/proptypes/${fixture}`);
   proptypesStories.add(fixture, () => <ArgsStory component={Component} />);
 });
 

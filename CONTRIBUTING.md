@@ -362,6 +362,12 @@ Save and go to `http://localhost:9011` (or wherever storybook is running)
 
 If you don't see the changes rerun `yarn storybook` again in your sandbox app
 
+### Documentation
+
+The documentation for Storybook is served by the [frontpage](https://github.com/storybookjs/frontpage), but the docs files are in this repository.
+
+To see changes in a development version of the docs, use the "linking" method documented [here](https://github.com/storybookjs/frontpage#docs-content).
+
 ## Release Guide
 
 This section is for Storybook maintainers who will be creating releases. It assumes:

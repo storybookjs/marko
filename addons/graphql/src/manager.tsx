@@ -15,7 +15,7 @@ const GQL: FunctionComponent<GQLProps> = ({ active }) => {
   return active ? (
     <Consumer>
       {({ api, state }: Combo) => {
-        const story = api.getData(state.storyId);
+        const story = api.getData(state.storyId, state.refId);
         const parameters = story
           ? api.getCurrentParameter<{
               query: string;
