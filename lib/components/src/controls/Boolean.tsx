@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
 import { styled } from '@storybook/theming';
-import { opacify, transparentize } from 'polished';
+import { opacify, transparentize, lighten } from 'polished';
 
 import { ControlProps, BooleanValue, BooleanConfig } from './types';
 
@@ -12,6 +12,8 @@ const Label = styled.label(({ theme }) => ({
   display: 'inline-block',
   position: 'relative',
   whiteSpace: 'nowrap',
+  background: `#d9d9d9`,
+  borderRadius: '3em',
 
   input: {
     appearance: 'none',
@@ -42,11 +44,9 @@ const Label = styled.label(({ theme }) => ({
     cursor: 'pointer',
     display: 'inline-block',
     padding: '8px 16px',
-    transition: 'all 150ms ease-out',
     userSelect: 'none',
     borderRadius: '3em',
 
-    boxShadow: `${opacify(0.05, theme.appBorderColor)} 0 0 0 1px inset`,
     color: transparentize(0.4, theme.color.defaultText),
     background: 'transparent',
 
@@ -70,8 +70,9 @@ const Label = styled.label(({ theme }) => ({
   },
 
   'input:checked ~ span:first-of-type, input:not(:checked) ~ span:last-of-type': {
-    background: `${opacify(0.05, theme.appBorderColor)}`,
-    boxShadow: `transparent 0 0 0 1px inset`,
+    background: 'white',
+    borderRadius: '3em',
+    boxShadow: `#d9d9d9 0 0 0 2px inset`,
     color: theme.color.defaultText,
   },
 }));
