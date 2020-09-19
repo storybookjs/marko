@@ -132,7 +132,7 @@ jobs:
             yarn run-chromatics
   packtracker:
     executor:
-      class: small
+      class: medium
       name: sb_node
     steps:
       - checkout
