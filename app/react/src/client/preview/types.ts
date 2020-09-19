@@ -1,14 +1,7 @@
 import { ReactElement } from 'react';
-import { StorybookConfig as BaseConfig } from '@storybook/core/types';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 export { RenderContext } from '@storybook/client-api';
-
-export interface StorybookConfig extends BaseConfig {
-  reactOptions?: {
-    fastRefresh?: boolean;
-  };
-}
 
 export interface ShowErrorArgs {
   title: string;

@@ -11,7 +11,6 @@ export {
 } from './preview';
 
 export * from './preview/types-6-0';
-export type { StorybookConfig } from './preview/types';
 
 if (module && module.hot && module.hot.decline) {
   module.hot.decline();
