@@ -76,6 +76,7 @@ export interface StorySortObjectParameter {
   method?: StorySortMethod;
   order?: any[];
   locales?: string;
+  includeNames?: boolean;
 }
 // The `any` here is the story store's `StoreItem` record. Ideally we should probably only
 // pass a defined subset of that full data, but we pass it all so far :shrug:
