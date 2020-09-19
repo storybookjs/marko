@@ -49,12 +49,40 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - node_modules
             - addons
             - dev-kits
             - app
             - lib
-  bootstrap-examples:
+  install-examples-deps:
+    executor:
+      class: large
+      name: sb_node
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - 35:aa:b9:c3:b8:1c:27:1f:02:0a:73:1a:ac:58:77:df
+      - run:
+          name: Clone GitHub repository
+          command: echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config && git clone -b ${CIRCLE_BRANCH} --single-branch --depth=1 git@github.com:storybookjs/storybook.git /tmp/storybook
+      - restore_cache:
+          name: Restore Yarn cache
+          keys:
+            - install-examples-deps-yarn-cache-v1--{{ checksum "yarn.lock" }}
+            - install-examples-deps-yarn-cache-v1--
+      - run:
+          name: Install dependencies
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+      - save_cache:
+          name: Save Yarn cache
+          key: install-examples-deps-yarn-cache-v1--{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - persist_to_workspace:
+          root: .
+          paths:
+            - examples
+            - node_modules
+  install-e2e-deps:
     executor:
       class: large
       name: sb_node
@@ -66,8 +94,21 @@ jobs:
           name: Clone GitHub repository
           command: echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config && git clone -b ${CIRCLE_BRANCH} --single-branch --depth=1 git@github.com:storybookjs/storybook.git /tmp/storybook
       - run:
+          name: Keep only root package
+          command: rm -rf examples/ && rm -rf addons/ && rm -rf app/ && rm -rf lib/
+      - restore_cache:
+          name: Restore Yarn cache
+          keys:
+            - install-e2e-deps-yarn-cache-v1--{{ checksum "yarn.lock" }}
+            - install-e2e-deps-yarn-cache-v1--
+      - run:
           name: Install dependencies
-          command: yarn install --frozen-lockfile
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+      - save_cache:
+          name: Save Yarn cache
+          key: install-e2e-deps-yarn-cache-v1--{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
       - persist_to_workspace:
           root: .
           paths:
@@ -394,27 +435,31 @@ workflows:
   test:
     jobs:
       - build
-      - bootstrap-examples:
-          requires:
-            - build
+      - install-e2e-deps
+      - install-examples-deps
       - lint:
           requires:
-            - bootstrap-examples
+            - install-examples-deps
+            - build
       - examples:
           requires:
-            - bootstrap-examples
+            - install-examples-deps
+            - build
       - e2e:
           requires:
             - examples
       - smoke-tests:
           requires:
-            - bootstrap-examples
+            - install-examples-deps
+            - build
       - packtracker:
           requires:
-            - bootstrap-examples
+            - install-examples-deps
+            - build
       - test:
           requires:
-            - bootstrap-examples
+            - install-examples-deps
+            - build
       - coverage:
           requires:
             - test
@@ -423,6 +468,7 @@ workflows:
             - examples
       - publish:
           requires:
+            - install-e2e-deps
             - build
       - examples-v2:
           requires:
