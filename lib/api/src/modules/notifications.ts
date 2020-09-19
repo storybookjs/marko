@@ -3,7 +3,11 @@ import { ModuleFn } from '../index';
 export interface Notification {
   id: string;
   link: string;
-  content: string;
+  content: {
+    headline: string;
+    subHeadline?: string;
+  };
+  showBookIcon?: boolean;
   onClear?: () => void;
 }
 

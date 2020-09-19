@@ -31,7 +31,6 @@ const NotificationList: FunctionComponent<{
   const [dismissedNotificationsIds, setDismissedNotificationsWithIds] = React.useState<string[]>(
     []
   );
-
   return (
     <List placement={placement}>
       {notifications.map((notification) =>
