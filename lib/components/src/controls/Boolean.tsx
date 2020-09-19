@@ -11,6 +11,7 @@ const Label = styled.label(({ theme }) => ({
   marginBottom: 8,
   display: 'inline-block',
   position: 'relative',
+  whiteSpace: 'nowrap',
   background: `${opacify(0.05, theme.appBorderColor)}`,
   borderRadius: '3em',
   padding: 1,
