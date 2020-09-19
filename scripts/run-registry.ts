@@ -10,7 +10,8 @@ import nodeCleanup from 'node-cleanup';
 
 import startVerdaccioServer from 'verdaccio';
 import pLimit from 'p-limit';
-import * as os from 'os';
+// @ts-ignore
+import { maxConcurrentTasks } from './utils/concurrency';
 import { listOfPackages, Package } from './utils/list-packages';
 
 program
@@ -107,9 +108,7 @@ const currentVersion = async () => {
 };
 
 const publish = (packages: { name: string; location: string }[], url: string) => {
-  const numOfCpus = os.cpus()?.length;
-
-  const limit = pLimit((numOfCpus ?? 4) - 1);
+  const limit = pLimit(maxConcurrentTasks);
   let i = 0;
 
   return Promise.all(
