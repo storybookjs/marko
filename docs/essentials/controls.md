@@ -96,7 +96,7 @@ Up until now, we only used auto-generated controls based on the component we're 
 
 By default, Storybook will add controls for all args that:
 
-- It infers from the component definition [if your framework supports it](https://github.com/storybookjs/storybook/blob/next/addons/controls/README.md#framework-support).
+- It infers from the component definition [if your framework supports it](../api/frameworks-feature-support.md).
 
 - Appear in the list of args for your story.
 
@@ -145,7 +145,9 @@ If you need to customize a control to use a enum data type in your story, for in
 <!-- prettier-ignore-end -->
 
 <div class="aside">
-If you don't provide a specific one, it defaults to select control type.
+If you don't provide a specific one, it defaults to:
+- a radio type for enums with 5 or less elements
+- a select control type with more than 5 elements
 </div>
 
 If you need to customize a control for a number data type in your story, you can do it like so:
@@ -161,7 +163,7 @@ If you need to customize a control for a number data type in your story, you can
 <!-- prettier-ignore-end -->
 
 <div class="aside">
-If you don't provide a specific one, it defaults to  number control type.
+If you don't provide a specific one, it defaults to the number control type.
 </div>
 
 ### Parameters

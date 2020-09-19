@@ -1,6 +1,6 @@
 {
   "name": "@storybook/router",
-  "version": "6.0.20",
+  "version": "6.1.0-alpha.10",
   "description": "Core Storybook Router",
   "keywords": [
     "storybook"
@@ -33,16 +33,14 @@
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "memoizerific": "^1.11.3",
-    "qs": "^6.6.0"
-  },
-  "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
+    "qs": "^6.6.0",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "d8b9d25b69b8bee488265829beddbd0ebd38fe8f",
+  "gitHead": "57798a108e183d97f94fd4cc396e45e1d4b04d23",
   "typesVersions": {
     "<=3.5": {
       "*": [

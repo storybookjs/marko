@@ -85,7 +85,7 @@ To define a decorator for all stories of a component, use the `decorators` key o
 
 ## Global decorators
 
-We can also set a decorator for **all stories** via the `decorators` export of your [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering.md) file (this is the file where you configure all stories):
+We can also set a decorator for **all stories** via the `decorators` export of your [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering) file (this is the file where you configure all stories):
 
 <!-- prettier-ignore-start -->
 

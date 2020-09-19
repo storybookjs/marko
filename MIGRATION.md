@@ -1,5 +1,8 @@
 <h1>Migration</h1>
 
+- [From version 6.0.x to 6.1.0](#from-version-60x-to-610)
+  - [6.1 deprecations](#61-deprecations)
+    - [Deprecated onBeforeRender](#deprecated-onbeforerender)
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
   - [Hoisted CSF annotations](#hoisted-csf-annotations)
   - [Zero config typescript](#zero-config-typescript)
@@ -129,6 +132,16 @@
   - [Packages renaming](#packages-renaming)
   - [Deprecated embedded addons](#deprecated-embedded-addons)
 
+## From version 6.0.x to 6.1.0
+
+### 6.1 deprecations
+
+#### Deprecated onBeforeRender
+
+The `@storybook/addon-docs` previously accepted a `jsx` option called `onBeforeRender`, which was unfortunately named as it was called after the render.
+
+We've renamed it `transformSource` and also allowed it to receive the `StoryContext` in case source rendering requires additional information.
+
 ## From version 5.3.x to 6.0.x
 
 ### Hoisted CSF annotations
@@ -159,7 +172,7 @@ Basic.decorators = [ ... ];
 2. Similar to React's `displayName`, `propTypes`, `defaultProps` annotations
 3. We're introducing a new feature, [Storybook Args](https://docs.google.com/document/d/1Mhp1UFRCKCsN8pjlfPdz8ZdisgjNXeMXpXvGoALjxYM/edit?usp=sharing), where the new syntax will be significantly more ergonomic
 
-To help you upgrade your stories, we've crated a codemod:
+To help you upgrade your stories, we've created a codemod:
 
 ```
 npx @storybook/cli@next migrate csf-hoist-story-annotations --glob="**/*.stories.js"
@@ -265,7 +278,7 @@ In SB5.2, we introduced the concept of [DocsPage slots](https://github.com/story
 
 In 5.3, we introduced `docs.x` story parameters like `docs.prepareForInline` which get filled in by frameworks and can also be overwritten by users, which is a more natural/convenient way to make global customizations.
 
-We also introduced introduced [Custom DocsPage](https://github.com/storybookjs/storybook/blob/next/addons/docs/docs/docspage.md#replacing-docspage), which makes it possible to add/remove/update DocBlocks on the page.
+We also introduced [Custom DocsPage](https://github.com/storybookjs/storybook/blob/next/addons/docs/docs/docspage.md#replacing-docspage), which makes it possible to add/remove/update DocBlocks on the page.
 
 These mechanisms are superior to slots, so we've removed slots in 6.0. For each slot, we provide a migration path here:
 

@@ -10,6 +10,7 @@ import {
 } from './project_types';
 import { commandLog, codeLog, paddedLog } from './helpers';
 import angularGenerator from './generators/ANGULAR';
+import aureliaGenerator from './generators/AURELIA';
 import emberGenerator from './generators/EMBER';
 import meteorGenerator from './generators/METEOR';
 import reactGenerator from './generators/REACT';
@@ -78,8 +79,7 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
     logger.log();
   };
 
-  const REACT_NATIVE_DISCUSSION =
-    'https://github.com/storybookjs/react-native/blob/master/app/react-native/docs/manual-setup.md';
+  const REACT_NATIVE_REPO = 'https://github.com/storybookjs/react-native';
 
   const runGenerator: () => Promise<void> = () => {
     switch (projectType) {
@@ -130,9 +130,9 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
           .then(() => {
             logger.log(chalk.red('NOTE: installation is not 100% automated.'));
             logger.log(`To quickly run Storybook, replace contents of your app entry with:\n`);
-            codeLog(["export default from './storybook';"]);
-            logger.log('\n For more in depth setup instructions, see:\n');
-            logger.log(chalk.cyan(REACT_NATIVE_DISCUSSION));
+            codeLog(["export {default} from './storybook';"]);
+            logger.log('\n For more in information, see the github readme:\n');
+            logger.log(chalk.cyan(REACT_NATIVE_REPO));
             logger.log();
           });
       }
@@ -215,6 +215,11 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
       case ProjectType.RAX:
         return raxGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding Storybook support to your "Rax" app'))
+          .then(end);
+
+      case ProjectType.AURELIA:
+        return aureliaGenerator(packageManager, npmOptions, generatorOptions)
+          .then(commandLog('Adding Storybook support to your "Aurelia" app'))
           .then(end);
 
       default:
