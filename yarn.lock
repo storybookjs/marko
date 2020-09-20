@@ -13249,13 +13249,13 @@ dotenv@^5.0.0:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-5.0.1.tgz#a5317459bd3d79ab88cff6e44057a6a3fbb1fcef"
   integrity sha512-4As8uPrjfwb7VXC+WnLCbXK7y+Ueb2B3zgNCePYfhxS1PYeaO1YTeplffTEcbfLhvFNGLAz90VvJs9yomG7bow==
 
-downlevel-dts@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/downlevel-dts/-/downlevel-dts-0.4.0.tgz#43f9f649c8b137373d76b4ee396d5a0227c10ddb"
-  integrity sha512-nh5vM3n2pRhPwZqh0iWo5gpItPAYEGEWw9yd0YpI+lO60B7A3A6iJlxDbt7kKVNbqBXKsptL+jwE/Yg5Go66WQ==
+downlevel-dts@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/downlevel-dts/-/downlevel-dts-0.6.0.tgz#1e52db9fa3ad9e3919a36545412f0b41a44289d1"
+  integrity sha512-Jy3ZZcXWPzTn5jJRW5WpdEtIq8+UowWWi5TEBgHHvzw320kouV//2KgVhfcuOpP93KS3UAokTxnZKU4L75kRSQ==
   dependencies:
     shelljs "^0.8.3"
-    typescript "^3.8.0-dev.20200111"
+    typescript "^4.1.0-dev.20200804"
 
 driver-dom@^2.0.0, driver-dom@^2.0.5, driver-dom@^2.0.6:
   version "2.0.9"
@@ -32257,10 +32257,15 @@ typescript@^2.4.2:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
   integrity sha512-Gr4p6nFNaoufRIY4NMdpQRNmgxVIGMs4Fcu/ujdYk3nAZqk7supzBE9idmvfZIlH/Cuj//dvi+019qEue9lV0w==
 
-typescript@^3.2.4, typescript@^3.5.3, typescript@^3.8.0-dev.20200111, typescript@^3.8.3, typescript@^3.9.3:
+typescript@^3.2.4, typescript@^3.5.3, typescript@^3.8.3, typescript@^3.9.3:
   version "3.9.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.3.tgz#d3ac8883a97c26139e42df5e93eeece33d610b8a"
   integrity sha512-D/wqnB2xzNFIcoBG9FG8cXRDjiqSTbG2wd8DMZeQyJlP1vfTkIxH4GKveWaEBYySKIg+USu+E+EDIR47SqnaMQ==
+
+typescript@^4.1.0-dev.20200804:
+  version "4.1.0-dev.20200920"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.0-dev.20200920.tgz#10ee53b47d59f8f9f5393923af2e2afb77be7faf"
+  integrity sha512-bGi57WKSfaYS4FefMMR3a6CcVAc/bmyx+df7EILzSzJk1gd9GSkT/9M2vHPyOEt/IjFBNhyOCB8hQ6PrQoqlFw==
 
 ua-parser-js@^0.7.18:
   version "0.7.21"
