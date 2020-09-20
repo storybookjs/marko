@@ -22,7 +22,7 @@
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.5/**/*"
+    "ts3.4/**/*"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
@@ -47,5 +47,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "38fc33bac608f870dea9215f5ac0657f90bc62ff"
+  "gitHead": "38fc33bac608f870dea9215f5ac0657f90bc62ff",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  }
 }
