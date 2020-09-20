@@ -32,7 +32,7 @@
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.7/**/*"
+    "ts3.4/**/*"
   ],
   "scripts": {
     "createDlls": "node -r esm ./scripts/createDlls.js",
@@ -147,7 +147,7 @@
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.7/*"
+        "ts3.4/*"
       ]
     }
   }

@@ -29,7 +29,7 @@
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.7/**/*"
+    "ts3.4/**/*"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
@@ -58,7 +58,7 @@
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.7/*"
+        "ts3.4/*"
       ]
     }
   }

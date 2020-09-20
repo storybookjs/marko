@@ -28,7 +28,7 @@ function getCommand(watch) {
     args.push('-w', '--preserveWatchOutput');
   }
 
-  return `${tsc} ${args.join(' ')} && ${downlevelDts} dist ts3.7/dist`;
+  return `${tsc} ${args.join(' ')} && ${downlevelDts} dist ts3.4/dist`;
 }
 
 function handleExit(code, stderr, errorCallback) {
