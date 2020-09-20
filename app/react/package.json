@@ -36,6 +36,7 @@
   "dependencies": {
     "@babel/preset-flow": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.2",
     "@storybook/addons": "6.1.0-alpha.11",
     "@storybook/core": "6.1.0-alpha.11",
     "@storybook/node-logger": "6.1.0-alpha.11",
@@ -53,6 +54,7 @@
     "react-dev-utils": "^10.0.0",
     "react-docgen-typescript-plugin": "^0.5.2",
     "react-dom": "^16.8.3",
+    "react-refresh": "^0.8.3",
     "regenerator-runtime": "^0.13.3",
     "ts-dedent": "^1.1.1",
     "webpack": "^4.43.0"
