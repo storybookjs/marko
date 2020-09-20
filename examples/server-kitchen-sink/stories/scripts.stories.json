@@ -1,28 +1,28 @@
 {
-  "title": "CSS",
+  "title": "Html Content/Scripts",
   "stories": [
     {
       "name": "Head Inline",
       "parameters": {
-        "server": { "id": "css/head_inline" }
+        "server": { "id": "scripts/head_inline" }
       }
     },
     {
       "name": "Head Src" ,
       "parameters": {
-        "server": { "id": "css/head_src" }
+        "server": { "id": "scripts/head_src" }
       }
     },
     {
       "name": "Body Inline",
       "parameters": {
-        "server": { "id": "css/body_inline" }
+        "server": { "id": "scripts/body_inline" }
       }
     },
     {
       "name": "Body Src",
       "parameters": {
-        "server": { "id": "css/body_src" }
+        "server": { "id": "scripts/body_src" }
       }
     }
   ]
