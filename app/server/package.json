@@ -36,6 +36,7 @@
   "dependencies": {
     "@storybook/addons": "6.1.0-alpha.11",
     "@storybook/api": "6.1.0-alpha.11",
+    "@storybook/client-api": "6.1.0-alpha.11",
     "@storybook/core": "6.1.0-alpha.11",
     "@storybook/node-logger": "6.1.0-alpha.11",
     "@types/webpack-env": "^1.15.2",
