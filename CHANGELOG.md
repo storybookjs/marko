@@ -1,3 +1,14 @@
+## 6.1.0-alpha.12 (September 21, 2020)
+
+### Features
+
+- React: Add react-refresh ([#12470](https://github.com/storybookjs/storybook/pull/12470))
+- Server: Add support for script tags ([#12522](https://github.com/storybookjs/storybook/pull/12522))
+
+### Dependency Upgrades
+
+- Core: Upgrade babel ([#12499](https://github.com/storybookjs/storybook/pull/12499))
+
 ## 6.1.0-alpha.11 (September 19, 2020)
 
 ### Bug Fixes
