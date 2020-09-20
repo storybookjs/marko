@@ -1,0 +1,3 @@
+function triggerAlert() {
+  alert('hello');
+}

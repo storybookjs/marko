@@ -1,0 +1,29 @@
+{
+  "title": "CSS",
+  "stories": [
+    {
+      "name": "Head Inline",
+      "parameters": {
+        "server": { "id": "css/head_inline" }
+      }
+    },
+    {
+      "name": "Head Src" ,
+      "parameters": {
+        "server": { "id": "css/head_src" }
+      }
+    },
+    {
+      "name": "Body Inline",
+      "parameters": {
+        "server": { "id": "css/body_inline" }
+      }
+    },
+    {
+      "name": "Body Src",
+      "parameters": {
+        "server": { "id": "css/body_src" }
+      }
+    }
+  ]
+}

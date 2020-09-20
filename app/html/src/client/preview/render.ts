@@ -1,7 +1,7 @@
 import { document, Node } from 'global';
 import dedent from 'ts-dedent';
+import { simulatePageLoad, simulateDOMContentLoaded } from '@storybook/client-api';
 import { RenderContext } from './types';
-import { simulatePageLoad, simulateDOMContentLoaded } from './helpers/simulate-pageload';
 
 const rootElement = document.getElementById('root');
 
