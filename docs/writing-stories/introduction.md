@@ -23,7 +23,7 @@ The key ingredients are the [default export](https://developer.mozilla.org/en-US
 
 ### Default export
 
-The default export metadata controls how Storybook lists your stories and provides information used by addons. For example, here’s the default export for a story file `Button.stories.js`:
+The _default_ export metadata controls how Storybook lists your stories and provides information used by addons. For example, here’s the default export for a story file `Button.stories.js`:
 
 <!-- prettier-ignore-start -->
 
@@ -39,7 +39,7 @@ The default export metadata controls how Storybook lists your stories and provid
 
 ### Defining stories
 
-Use the named exports of a CSF file to define your component’s stories. Here’s how to render `Button` in the “primary” state and export a story called `Primary`.
+Use the _named_ exports of a CSF file to define your component’s stories. We recommend you use UpperCamelCase for your story exports. Here’s how to render `Button` in the “primary” state and export a story called `Primary`.
 
 <!-- prettier-ignore-start -->
 

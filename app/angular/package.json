@@ -1,6 +1,6 @@
 {
   "name": "@storybook/angular",
-  "version": "6.1.0-alpha.10",
+  "version": "6.1.0-alpha.11",
   "description": "Storybook for Angular: Develop Angular Components in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -34,9 +34,9 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-alpha.10",
-    "@storybook/core": "6.1.0-alpha.10",
-    "@storybook/node-logger": "6.1.0-alpha.10",
+    "@storybook/addons": "6.1.0-alpha.11",
+    "@storybook/core": "6.1.0-alpha.11",
+    "@storybook/node-logger": "6.1.0-alpha.11",
     "@types/webpack-env": "^1.15.2",
     "autoprefixer": "^9.7.6",
     "core-js": "^3.0.1",
@@ -74,7 +74,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "57798a108e183d97f94fd4cc396e45e1d4b04d23",
+  "gitHead": "38fc33bac608f870dea9215f5ac0657f90bc62ff",
   "typesVersions": {
     "<3.8": {
       "*": [

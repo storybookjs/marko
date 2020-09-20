@@ -177,7 +177,11 @@ When Storybook loads this file, it will see all the exports, but it will ignore 
 
 For this specific example the equivalent result can be achieved in a few ways depending on what's convenient:
 
-- `includeStories: ['SimpleStory', 'ComplexStory']`
+- `includeStories: /^[A-Z]/`
 - `includeStories: /.*Story$/`
-- `excludeStories: ['simpleData', 'complexData']`
+- `includeStories: ['SimpleStory', 'ComplexStory']`
+- `excludeStories: /^[a-z]/`
 - `excludeStories: /.*Data$/`
+- `excludeStories: ['simpleData', 'complexData']`
+
+If you follow the best practice of starting story exports with an uppercase letter (i.e. use UpperCamelCase), the first option is the recommended solution.

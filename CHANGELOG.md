@@ -1,3 +1,13 @@
+## 6.1.0-alpha.11 (September 19, 2020)
+
+### Bug Fixes
+
+- Preact: Keep the story state between rerenders ([#12221](https://github.com/storybookjs/storybook/pull/12221))
+
+### Maintenance
+
+- Addon-controls: Update style of Boolean control ([#12515](https://github.com/storybookjs/storybook/pull/12515))
+
 ## 6.1.0-alpha.10 (September 16, 2020)
 
 ### Features
