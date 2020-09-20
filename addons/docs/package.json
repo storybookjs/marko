@@ -66,7 +66,6 @@
     "doctrine": "^3.0.0",
     "escodegen": "^1.12.0",
     "fast-deep-equal": "^3.1.1",
-    "glob": "^7.1.6",
     "global": "^4.3.2",
     "html-tags": "^3.1.0",
     "js-string-escape": "^1.0.1",
