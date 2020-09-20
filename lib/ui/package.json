@@ -1,6 +1,6 @@
 {
   "name": "@storybook/ui",
-  "version": "6.1.0-alpha.10",
+  "version": "6.1.0-alpha.11",
   "description": "Core Storybook UI",
   "keywords": [
     "storybook"
@@ -21,7 +21,7 @@
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.5/**/*"
+    "ts3.4/**/*"
   ],
   "scripts": {
     "createDlls": "node -r esm ./scripts/createDlls.js",
@@ -29,15 +29,15 @@
   },
   "dependencies": {
     "@emotion/core": "^10.0.20",
-    "@storybook/addons": "6.1.0-alpha.10",
-    "@storybook/api": "6.1.0-alpha.10",
-    "@storybook/channels": "6.1.0-alpha.10",
-    "@storybook/client-logger": "6.1.0-alpha.10",
-    "@storybook/components": "6.1.0-alpha.10",
-    "@storybook/core-events": "6.1.0-alpha.10",
-    "@storybook/router": "6.1.0-alpha.10",
+    "@storybook/addons": "6.1.0-alpha.11",
+    "@storybook/api": "6.1.0-alpha.11",
+    "@storybook/channels": "6.1.0-alpha.11",
+    "@storybook/client-logger": "6.1.0-alpha.11",
+    "@storybook/components": "6.1.0-alpha.11",
+    "@storybook/core-events": "6.1.0-alpha.11",
+    "@storybook/router": "6.1.0-alpha.11",
     "@storybook/semver": "^7.3.2",
-    "@storybook/theming": "6.1.0-alpha.10",
+    "@storybook/theming": "6.1.0-alpha.11",
     "@types/markdown-to-jsx": "^6.11.0",
     "copy-to-clipboard": "^3.0.8",
     "core-js": "^3.0.1",
@@ -61,10 +61,10 @@
     "store2": "^2.7.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@storybook/addon-actions": "6.1.0-alpha.10",
-    "@storybook/addon-knobs": "6.1.0-alpha.10",
-    "@storybook/react": "6.1.0-alpha.10",
+    "@babel/core": "^7.11.5",
+    "@storybook/addon-actions": "6.1.0-alpha.11",
+    "@storybook/addon-knobs": "6.1.0-alpha.11",
+    "@storybook/react": "6.1.0-alpha.11",
     "@testing-library/react": "^10.0.3",
     "babel-loader": "^8.0.6",
     "chromatic": "^5.0.0",
@@ -76,11 +76,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "57798a108e183d97f94fd4cc396e45e1d4b04d23",
+  "gitHead": "38fc33bac608f870dea9215f5ac0657f90bc62ff",
   "typesVersions": {
-    "<=3.5": {
+    "<3.8": {
       "*": [
-        "ts3.5/*"
+        "ts3.4/*"
       ]
     }
   }
