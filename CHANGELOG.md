@@ -1,4 +1,4 @@
-## 6.1.0-alpha.13 (September 22, 2020)
+## 6.1.0-alpha.14 (September 22, 2020)
 
 ### Features
 
@@ -11,6 +11,10 @@
 ### Maintenance
 
 - CLI: Change suggested upgrade command to sb@latest ([#12533](https://github.com/storybookjs/storybook/pull/12533))
+
+## 6.1.0-alpha.13 (September 22, 2020)
+
+Failed NPM publish
 
 ## 6.1.0-alpha.12 (September 21, 2020)
 
