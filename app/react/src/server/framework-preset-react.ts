@@ -1,10 +1,27 @@
 import { TransformOptions } from '@babel/core';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import type { Configuration } from 'webpack';
-import { logger } from '@storybook/node-logger';
-import type { StorybookOptions } from './types';
 
-export function babelDefault(config: TransformOptions) {
+import { logger } from '@storybook/node-logger';
+import type { StorybookOptions } from '@storybook/core/types';
+
+export async function babel(config: TransformOptions, options: StorybookOptions) {
+  const isDevelopment = options.configType === 'DEVELOPMENT';
+  const reactOptions = await options.presets.apply('reactOptions', {}, options);
+  const fastRefreshEnabled =
+    isDevelopment && (reactOptions.fastRefresh || process.env.FAST_REFRESH === 'true');
+
+  if (!fastRefreshEnabled) {
+    return config;
+  }
+
+  return {
+    ...config,
+    plugins: [require.resolve('react-refresh/babel'), ...(config.plugins || [])],
+  };
+}
+
+export async function babelDefault(config: TransformOptions) {
   return {
     ...config,
     presets: [
@@ -16,35 +33,19 @@ export function babelDefault(config: TransformOptions) {
   };
 }
 
-export function webpackFinal(config: Configuration, { reactOptions }: StorybookOptions) {
-  const isDevelopment = config.mode === 'development';
+export async function webpackFinal(config: Configuration, options: StorybookOptions) {
+  const isDevelopment = options.configType === 'DEVELOPMENT';
+  const reactOptions = await options.presets.apply('reactOptions', {}, options);
   const fastRefreshEnabled =
-    isDevelopment && (reactOptions?.fastRefresh || process.env.FAST_REFRESH === 'true');
-  if (fastRefreshEnabled) {
-    logger.info('=> Using React fast refresh feature.');
+    isDevelopment && (reactOptions.fastRefresh || process.env.FAST_REFRESH === 'true');
+
+  if (!fastRefreshEnabled) {
+    return config;
   }
+
+  logger.info('=> Using React fast refresh feature.');
   return {
     ...config,
-    module: {
-      ...config.module,
-      rules: [
-        ...config.module.rules,
-        fastRefreshEnabled && {
-          test: /\.[jt]sx?$/,
-          exclude: /node_modules/,
-          use: [
-            {
-              loader: require.resolve('babel-loader'),
-              options: {
-                plugins: [require.resolve('react-refresh/babel')],
-              },
-            },
-          ],
-        },
-      ].filter(Boolean),
-    },
-    plugins: [...config.plugins, fastRefreshEnabled && new ReactRefreshWebpackPlugin()].filter(
-      Boolean
-    ),
+    plugins: [...(config.plugins || []), new ReactRefreshWebpackPlugin()],
   };
 }

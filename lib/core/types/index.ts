@@ -40,6 +40,7 @@ export interface StorybookOptions {
   configType: 'DEVELOPMENT' | 'PRODUCTION';
   presetsList: Preset[];
   typescriptOptions: TypescriptOptions;
+  [key: string]: any;
 }
 
 /**
