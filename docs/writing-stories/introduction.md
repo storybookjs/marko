@@ -31,6 +31,7 @@ The _default_ export metadata controls how Storybook lists your stories and prov
   paths={[
     'react/button-story-default-export-with-component.js.mdx',
     'react/button-story-default-export-with-component.ts.mdx',
+    'vue/button-story-default-export-with-component.js.mdx',
     'angular/button-story-default-export-with-component.ts.mdx',
   ]}
 />
@@ -47,6 +48,7 @@ Use the _named_ exports of a CSF file to define your component’s stories. We r
   paths={[
     'react/button-story.js.mdx',
     'react/button-story.ts.mdx',
+    'vue/button-story.js.mdx',
     'angular/button-story.ts.mdx',
   ]}
 />
@@ -63,6 +65,7 @@ You can rename any particular story you need. For instance to give it a more cle
   paths={[
     'react/button-story-rename-story.js.mdx',
     'react/button-story-rename-story.ts.mdx',
+    'vue/button-story-rename-story.js.mdx',
     'angular/button-story-rename-story.ts.mdx',
   ]}
 />
@@ -81,6 +84,7 @@ A story is a function that describes how to render a component. You can have mul
   paths={[
     'react/button-story-with-emojis.js.mdx',
     'react/button-story-with-emojis.ts.mdx',
+    'vue/button-story-with-emojis.js.mdx',
     'angular/button-story-with-emojis.ts.mdx',
   ]}
 />
@@ -99,6 +103,7 @@ Refine this pattern by defining a master template for a component’s stories th
   paths={[
     'react/button-story-using-args.js.mdx',
     'react/button-story-using-args.ts.mdx',
+    'vue/button-story-using-args.js.mdx',
     'angular/button-story-using-args.ts.mdx',
   ]}
 />
@@ -153,6 +158,7 @@ For instance, suppose you wanted to test your Button component against a differe
   paths={[
     'react/button-story-with-blue-args.js.mdx',
     'react/button-story-with-blue-args.ts.mdx',
+    'vue/button-story-with-blue-args.js.mdx',
     'angular/button-story-with-blue-args.ts.mdx',
   ]}
 />
@@ -175,6 +181,7 @@ A simple example is adding padding to a component’s stories. Accomplish this u
   paths={[
     'react/button-story-component-decorator.js.mdx',
     'react/button-story-component-decorator.ts.mdx',
+    'vue/button-story-component-decorator.js.mdx',
   ]}
 />
 
