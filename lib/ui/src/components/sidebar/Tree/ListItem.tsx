@@ -14,7 +14,7 @@ export const Expander = styled.span<ExpanderProps>(
     position: 'absolute',
     display: 'block',
     left: 0,
-    top: 9,
+    top: 8,
     width: 0,
     height: 0,
     borderTop: '3.5px solid transparent',
@@ -41,22 +41,23 @@ const Icon = styled(Icons)<IconProps>(
   {
     position: 'relative',
     flex: 'none',
-    width: 10,
-    height: 10,
+    width: 15,
+    height: 15,
+    padding: 1,
     marginRight: 6,
   },
-  ({ icon }) => {
+  ({ theme, icon }) => {
     if (icon === 'folder') {
-      return { color: '#774dd7' };
+      return { color: theme.color.orange };
     }
-    if (icon === 'component') {
-      return { color: '#1ea7fd' };
+    if (icon === 'cpu') {
+      return { color: theme.color.secondary };
     }
     if (icon === 'bookmarkhollow' || (DOCS_MODE && icon === 'document')) {
-      return { color: '#37d5d3' };
+      return { color: theme.color.seafoam };
     }
     if (icon === 'document') {
-      return { color: '#ffae00' };
+      return { color: theme.color.green };
     }
 
     return {};
@@ -72,13 +73,12 @@ export const Item = styled.a<{
   ({ theme }) => ({
     position: 'relative',
     textDecoration: 'none',
-    fontSize: theme.typography.size.s2 - 1,
-    lineHeight: '16px',
+    fontSize: theme.typography.size.s2,
+    lineHeight: '15px',
     paddingTop: 4,
     paddingBottom: 4,
     paddingRight: theme.layoutMargin * 2,
     display: 'flex',
-    alignItems: 'center',
     flex: 1,
     background: 'transparent',
   }),
@@ -139,7 +139,7 @@ export const ListItem: FunctionComponent<ListItemProps> = ({
   } else if (isLeaf) {
     iconName = 'bookmarkhollow';
   } else if (isComponent) {
-    iconName = 'component';
+    iconName = 'cpu';
   } else {
     iconName = 'folder';
   }

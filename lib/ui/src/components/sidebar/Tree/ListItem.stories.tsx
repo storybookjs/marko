@@ -16,14 +16,15 @@ const baseProps: ComponentProps<typeof ListItem> = {
   isExpanded: false,
   isSelected: false,
   kind: 'foo',
-  name: 'bar',
+  name: 'Foo',
   refId: '',
 };
 
 export const Group = () => <ListItem {...baseProps} />;
 export const Component = () => <ListItem {...baseProps} isComponent />;
-export const ComponentExpanded = () => <ListItem {...baseProps} isComponent isExpanded />;
 export const Story = () => <ListItem {...baseProps} isLeaf />;
+export const Document = () => <ListItem {...baseProps} isLeaf isComponent />;
+export const ComponentExpanded = () => <ListItem {...baseProps} isComponent isExpanded />;
 export const StorySelected = () => <ListItem {...baseProps} isLeaf isSelected />;
 export const WithLongName = () => (
   <ListItem
@@ -34,8 +35,8 @@ export const WithLongName = () => (
 export const NestedDepths = () => (
   <Fragment>
     <ListItem {...baseProps} depth={1} />
-    <ListItem {...baseProps} depth={2} />
-    <ListItem {...baseProps} depth={3} />
-    <ListItem {...baseProps} depth={4} />
+    <ListItem {...baseProps} depth={2} name="Bar" isComponent />
+    <ListItem {...baseProps} depth={3} name="Baz" isComponent isLeaf />
+    <ListItem {...baseProps} depth={3} name="Qux" isLeaf />
   </Fragment>
 );
