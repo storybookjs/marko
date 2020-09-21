@@ -37,7 +37,7 @@ const FilterField = styled.input<FilterFieldProps>(({ theme }) => ({
     WebkitBoxShadow: `0 0 0 3em ${theme.color.lightest} inset`,
   },
   '::placeholder': {
-    color: theme.color.dark,
+    color: 'inherit',
   },
   '&:placeholder-shown ~ button': {
     // hide cancel button using CSS only
@@ -95,18 +95,19 @@ const CancelButton = styled.button<CancelButtonProps>(({ theme }) => ({
 }));
 
 const FilterForm = styled.form<FilterFormProps>(({ theme, focussed }) => ({
-  transition: 'all 150ms ease-out',
+  transition: 'all 100ms ease-out',
   border: `1px solid transparent`,
   borderRadius: 28,
-  borderColor: focussed ? theme.color.secondary : theme.color.medium,
-  backgroundColor: focussed ? theme.color.lightest : 'transparent',
+  borderColor: focussed ? theme.color.secondary : theme.appBorderColor,
+  backgroundColor: focussed ? theme.background.bar : 'transparent',
   outline: 0,
   position: 'relative',
   marginLeft: -10,
   marginRight: -10,
 
   input: {
-    color: theme.color.darkest,
+    transition: 'all 100ms ease-out',
+    color: focussed ? theme.color.defaultText : theme.color.mediumdark,
     fontSize: theme.typography.size.s1,
     lineHeight: '16px',
     paddingTop: 5,
@@ -120,7 +121,7 @@ const FilterForm = styled.form<FilterFormProps>(({ theme, focussed }) => ({
   },
 
   '> svg': {
-    transition: 'all 150ms ease-out',
+    transition: 'all 100ms ease-out',
     position: 'absolute',
     top: '50%',
     left: 10,
@@ -129,7 +130,7 @@ const FilterForm = styled.form<FilterFormProps>(({ theme, focussed }) => ({
     transform: 'translateY(-50%)',
     zIndex: 1,
 
-    color: focussed ? theme.color.darker : theme.color.mediumdark,
+    color: focussed ? theme.inputTextColor : theme.color.mediumdark,
     background: 'transparent',
 
     path: {
