@@ -4,7 +4,6 @@ title: 'Doc Blocks'
 
 Doc Blocks are the building blocks of Storybook documentation pages. By default, [DocsPage](./docs-page.md) uses a combination of the blocks below to build a page for each of your components automatically.
 
-
 Custom [addons](../api/addons.md) can also provide their own doc blocks.
 
 ## ArgsTable
@@ -149,6 +148,14 @@ To customize the source snippet that’s displayed for a story, set the `docs.so
 />
 
 <!-- prettier-ignore-end -->
+
+There is also a `docs.source.type` parameter that controls how source is auto-generated. Valid values include:
+
+| Value              | Description                                                                                                         |                   Support                    |
+| :----------------- | :------------------------------------------------------------------------------------------------------------------ | :------------------------------------------: |
+| **auto** (default) | Use `dynamic` snippets if the story is written using [Args](../writing-stories/args) and the framework supports it. |                     All                      |
+| **dynamic**        | Dynamically generated snippet based on the output of the story function, e.g. JSX code for react.                   | [Limited](../api/frameworks-feature-support) |
+| **code**           | Use the raw story source as written in the story file.                                                              |                     All                      |
 
 ### MDX
 

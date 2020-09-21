@@ -6,6 +6,7 @@ Storybook Docs [provides basic support for all non-RN Storybook view layers](../
 - [Arg tables](#arg-tables)
 - [Component descriptions](#component-descriptions)
 - [Inline story rendering](#inline-story-rendering)
+- [Dynamic source rendering](#dynamic-source-rendering)
 - [More resources](#more-resources)
 
 ## Framework-specific configuration
@@ -102,6 +103,47 @@ addParameters({
 ```
 
 The input is the story function and the story context (id, parameters, args, etc.), and the output is a React element, because we render docs pages in react. In the case of Vue, all of the work is done by the `@egoist/vue-to-react` library. If there's no analogous library for your framework, you may need to figure it out yourself!
+
+## Dynamic source rendering
+
+Starting in 6.0 there are several modes of rendering stories in the [Source doc block](https://storybook.js.org/docs/react/writing-docs/doc-blocks#source). The `dynamic` source type renders a snippet based on the output of a story function. For example React
+s `dynamic` snippets are JSX reconstructed based on the React node.
+
+Since this dynamic rendering is framework-specific, it must be added to each framework. Here we dissect the React framework implementation as a reference for implementing this feature in other frameworks.
+
+Here are the key lines of the [React preview config](https://github.com/storybookjs/storybook/blob/next/addons/docs/src/frameworks/react/config.ts):
+
+```ts
+import { jsxDecorator } from './jsxDecorator';
+export const decorators = [jsxDecorator];
+```
+
+This function gets run on every story. Diving into [its implementation](https://github.com/storybookjs/storybook/blob/next/addons/docs/src/frameworks/react/jsxDecorator.tsx):
+
+```ts
+import { addons, StoryContext } from '@storybook/addons';
+import { SNIPPET_RENDERED } from '../../shared';
+
+export const jsxDecorator = (storyFn: any, context: StoryContext) => {
+  const story = storyFn();
+
+  // We only need to render JSX if the source block is actually going to
+  // consume it. Otherwise it's just slowing us down.
+  if (skipJsxRender(context)) {
+    return story;
+  }
+
+  const channel = addons.getChannel();
+
+  const options = {}; // retrieve from story parameters
+  const jsx = renderJsx(story, options);
+  channel.emit(SNIPPET_RENDERED, (context || {}).id, jsx);
+
+  return story;
+};
+```
+
+The `renderJsx` function is a react-specific function that takes the output of a story function and converts it into a framework-appropriate string. The resulting value is emitted on Storybook's channel and subsequently consumed up by the Source block for that story, if one exists.
 
 ## More resources
 
