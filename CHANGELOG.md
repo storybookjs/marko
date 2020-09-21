@@ -1,3 +1,17 @@
+## 6.1.0-alpha.13 (September 22, 2020)
+
+### Features
+
+- Web Components: Add script tag support ([#12509](https://github.com/storybookjs/storybook/pull/12509))
+
+### Bug Fixes
+
+- React: Fix fast refresh ([#12535](https://github.com/storybookjs/storybook/pull/12535))
+
+### Maintenance
+
+- CLI: Change suggested upgrade command to sb@latest ([#12533](https://github.com/storybookjs/storybook/pull/12533))
+
 ## 6.1.0-alpha.12 (September 21, 2020)
 
 ### Features
