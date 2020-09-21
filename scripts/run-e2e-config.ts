@@ -137,7 +137,11 @@ export const react_typescript: Parameters = {
 export const cra: Parameters = {
   name: 'cra',
   version: 'latest',
-  generator: 'npx create-react-app@{{version}} {{name}}-{{version}}',
+  generator: [
+    'npx create-react-app@{{version}} {{name}}-{{version}}',
+    'cd {{name}}-{{version}}',
+    'echo "FAST_REFRESH=true" > .env',
+  ].join(' && '),
 };
 
 export const cra_typescript: Parameters = {
