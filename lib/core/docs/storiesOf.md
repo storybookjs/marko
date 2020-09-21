@@ -31,6 +31,8 @@ storiesOf('Button', module)
 
 The string argument to `storiesOf` is the component title. If you pass a string like `'Widgets|Button/Button'` it can also be used to position your component's story within Storybook's story hierarchy.
 
+The second argument of `storiesOf` is a webpack `module`, which is available on the global (per-file) scope. Storybook needs it to enable hot-module-replacement. If it's not included you'll need to refresh your browser with each change you make.
+
 Each `.add` call takes a story name, a story function that returns a renderable object (JSX in the case of React), and optionally some parameters, which are described below.
 
 ## Decorators and parameters
@@ -47,7 +49,7 @@ storiesOf('Button', module).add(
 );
 ```
 
-And finally, story-level decorators are provided via parameters:
+Story-level decorators are provided via parameters:
 
 ```js
 storiesOf('Button', module).add(
@@ -56,6 +58,25 @@ storiesOf('Button', module).add(
   { decorators: [withKnobs] }
 );
 ```
+
+We can control how the component's stories will render with parameters and decorators. You can use as many `.addDecorators` as you need (but make sure you add them all before your first story), but you can only use one `.addParameters`, as you can see in the example below:
+
+```js
+storiesOf('Button', module)
+  .addParameters({backgrounds: {values: [{name: "red" value: "#f00"}]}})
+  .addDecorator((Story) => <div style={{ margin: '3em' }}><Story/></div>)
+  .addDecorator((Story) => <div style={{ height: '600px' }}><Story/></div>)
+  .add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>)
+  .add('with some emoji', () => (
+    <Button onClick={action('clicked')}>
+      <span role="img" aria-label="so cool">
+        😀 😎 👍 💯
+      </span>
+    </Button>
+  ));
+```
+
+Parameters and decorators can also be used globally, you can define them in your .storybook/preview.js. Take a look [here](https://storybook.js.org/docs/react/writing-stories/parameters#global-parameters) to learn more about global parameters and [here](https://storybook.js.org/docs/react/writing-stories/decorators#global-decorators) for global decorators.
 
 ## Component Story Format migration
 
