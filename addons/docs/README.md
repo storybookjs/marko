@@ -165,7 +165,7 @@ The `configureJSX` option is useful when you're writing your docs in MDX and you
 
 `sourceLoaderOptions` is an object for configuring `@storybook/source-loader`. When set to `null` it tells docs not to run the `source-loader` at all, which can be used as an optimization, or if you're already using `source-loader` in your `main.js`.
 
-The `transcludeMarkdown` option enable mdx files to import `.md` files and render them as a component. Example:
+The `transcludeMarkdown` option enable mdx files to import `.md` files and render them as a component.
 ```mdx
 import { Meta } from '@storybook/addon-docs/blocks';
 import Changelog from '../CHANGELOG.md';
