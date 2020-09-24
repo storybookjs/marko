@@ -106,21 +106,13 @@ The input is the story function and the story context (id, parameters, args, etc
 
 ## Dynamic source rendering
 
-Starting in 6.0 there are several modes of rendering stories in the [Source doc block](https://storybook.js.org/docs/react/writing-docs/doc-blocks#source). The `dynamic` source type renders a snippet based on the output of a story function. For example React
-s `dynamic` snippets are JSX reconstructed based on the React node.
+With the release of Storybook 6.0, we've improved how stories are rendered in the [Source doc block](https://storybook.js.org/docs/react/writing-docs/doc-blocks#source). One of such improvements is the `dynamic` source type, which renders a snippet based on the output the story function. 
 
-Since this dynamic rendering is framework-specific, it must be added to each framework. Here we dissect the React framework implementation as a reference for implementing this feature in other frameworks.
+This dynamic rendering is framework-specific, meaning it needs a custom implementation for each framework.
 
-Here are the key lines of the [React preview config](https://github.com/storybookjs/storybook/blob/next/addons/docs/src/frameworks/react/config.ts):
+Let's take a look at the React framework implementation of `dynamic` snippets as a reference for implementing this feature in other frameworks:
 
-```ts
-import { jsxDecorator } from './jsxDecorator';
-export const decorators = [jsxDecorator];
-```
-
-This function gets run on every story. Diving into [its implementation](https://github.com/storybookjs/storybook/blob/next/addons/docs/src/frameworks/react/jsxDecorator.tsx):
-
-```ts
+```tsx
 import { addons, StoryContext } from '@storybook/addons';
 import { SNIPPET_RENDERED } from '../../shared';
 
@@ -143,7 +135,27 @@ export const jsxDecorator = (storyFn: any, context: StoryContext) => {
 };
 ```
 
-The `renderJsx` function is a react-specific function that takes the output of a story function and converts it into a framework-appropriate string. The resulting value is emitted on Storybook's channel and subsequently consumed up by the Source block for that story, if one exists.
+A few key points from the above snippet:
+
+- The **renderJsx** function call is responsible for transforming the output of a story function into a string specific to the framework (in this case React).
+- The returned snippet string is emitted on Storybook's channel through **channel.emit()** and subsequently consumed up by the Source block for any given story, if it exists.
+
+<div class="aside">
+ To learn more and see how it's implemented in context, check out <a href="https://github.com/storybookjs/storybook/blob/next/addons/docs/src/frameworks/react/jsxDecorator.tsx">the code</a> .
+</div>
+
+Now we need a way to configure how it's displayed in the UI:
+
+```tsx
+import { jsxDecorator } from './jsxDecorator';
+export const decorators = [jsxDecorator];
+```
+
+This configures the `jsxDecorator` to be run on every story. 
+
+<div class="aside">
+ To learn more and see how it's implemented in context, check out <a href="https://github.com/storybookjs/storybook/blob/next/addons/docs/src/frameworks/react/jsxDecorator.tsx">the code</a> .
+</div>
 
 ## More resources
 
