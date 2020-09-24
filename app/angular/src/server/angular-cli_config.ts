@@ -73,7 +73,7 @@ export function getLeadingAngularCliProject(ngCliConfig: any) {
 
   let projectName;
   const firstProjectName = Object.keys(projects)[0];
-  const environmentProjectName = process.env.STORYBOOK_NAME;
+  const environmentProjectName = process.env.STORYBOOK_ANGULAR_PROJECT;
   if (environmentProjectName) {
     projectName = environmentProjectName;
   } else if (projects.storybook) {
