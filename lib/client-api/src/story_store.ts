@@ -406,6 +406,7 @@ export default class StoryStore {
         args: _stories[id].args,
         argTypes,
         globals: this._globals,
+        viewMode: this._selection?.viewMode,
       });
 
     // Pull out parameters.args.$ || .argTypes.$.defaultValue into initialArgs
