@@ -6,6 +6,7 @@ Storybook Docs [provides basic support for all non-RN Storybook view layers](../
 - [Arg tables](#arg-tables)
 - [Component descriptions](#component-descriptions)
 - [Inline story rendering](#inline-story-rendering)
+- [Dynamic source rendering](#dynamic-source-rendering)
 - [More resources](#more-resources)
 
 ## Framework-specific configuration
@@ -102,6 +103,59 @@ addParameters({
 ```
 
 The input is the story function and the story context (id, parameters, args, etc.), and the output is a React element, because we render docs pages in react. In the case of Vue, all of the work is done by the `@egoist/vue-to-react` library. If there's no analogous library for your framework, you may need to figure it out yourself!
+
+## Dynamic source rendering
+
+With the release of Storybook 6.0, we've improved how stories are rendered in the [Source doc block](https://storybook.js.org/docs/react/writing-docs/doc-blocks#source). One of such improvements is the `dynamic` source type, which renders a snippet based on the output the story function. 
+
+This dynamic rendering is framework-specific, meaning it needs a custom implementation for each framework.
+
+Let's take a look at the React framework implementation of `dynamic` snippets as a reference for implementing this feature in other frameworks:
+
+```tsx
+import { addons, StoryContext } from '@storybook/addons';
+import { SNIPPET_RENDERED } from '../../shared';
+
+export const jsxDecorator = (storyFn: any, context: StoryContext) => {
+  const story = storyFn();
+
+  // We only need to render JSX if the source block is actually going to
+  // consume it. Otherwise it's just slowing us down.
+  if (skipJsxRender(context)) {
+    return story;
+  }
+
+  const channel = addons.getChannel();
+
+  const options = {}; // retrieve from story parameters
+  const jsx = renderJsx(story, options);
+  channel.emit(SNIPPET_RENDERED, (context || {}).id, jsx);
+
+  return story;
+};
+```
+
+A few key points from the above snippet:
+
+- The **renderJsx** function call is responsible for transforming the output of a story function into a string specific to the framework (in this case React).
+- The returned snippet string is emitted on Storybook's channel through **channel.emit()** and subsequently consumed up by the Source block for any given story, if it exists.
+
+<div class="aside">
+ To learn more and see how it's implemented in context, check out <a href="https://github.com/storybookjs/storybook/blob/next/addons/docs/src/frameworks/react/jsxDecorator.tsx">the code</a> .
+</div>
+
+Now we need a way to configure how it's displayed in the UI:
+
+```tsx
+import { jsxDecorator } from './jsxDecorator';
+export const decorators = [jsxDecorator];
+```
+
+This configures the `jsxDecorator` to be run on every story. 
+
+<div class="aside">
+ To learn more and see how it's implemented in context, check out <a href="https://github.com/storybookjs/storybook/blob/next/addons/docs/src/frameworks/react/jsxDecorator.tsx">the code</a> .
+</div>
 
 ## More resources
 
