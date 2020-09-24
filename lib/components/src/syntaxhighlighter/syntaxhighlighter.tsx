@@ -1,12 +1,14 @@
 import React, { ComponentProps, FunctionComponent, MouseEvent, useState } from 'react';
+import { logger } from '@storybook/client-logger';
 import { styled } from '@storybook/theming';
-import { document, window } from 'global';
+import { navigator, window } from 'global';
 import memoize from 'memoizerific';
 
 import jsx from 'react-syntax-highlighter/dist/cjs/languages/prism/jsx';
 import bash from 'react-syntax-highlighter/dist/cjs/languages/prism/bash';
 import css from 'react-syntax-highlighter/dist/cjs/languages/prism/css';
 import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json';
+import graphql from 'react-syntax-highlighter/dist/cjs/languages/prism/graphql';
 import html from 'react-syntax-highlighter/dist/cjs/languages/prism/markup';
 import md from 'react-syntax-highlighter/dist/cjs/languages/prism/markdown';
 import yml from 'react-syntax-highlighter/dist/cjs/languages/prism/yaml';
@@ -32,6 +34,7 @@ ReactSyntaxHighlighter.registerLanguage('css', css);
 ReactSyntaxHighlighter.registerLanguage('html', html);
 ReactSyntaxHighlighter.registerLanguage('tsx', tsx);
 ReactSyntaxHighlighter.registerLanguage('typescript', typescript);
+ReactSyntaxHighlighter.registerLanguage('graphql', graphql);
 
 const themedSyntax = memoize(2)((theme) =>
   Object.entries(theme.code || {}).reduce((acc, [key, val]) => ({ ...acc, [`* .${key}`]: val }), {})
@@ -121,41 +124,43 @@ export const SyntaxHighlighter: FunctionComponent<Props> = ({
   padded = false,
   format = true,
   className = null,
+  showLineNumbers = false,
   ...rest
 }) => {
+  if (typeof children !== 'string' || !children.trim()) {
+    return null;
+  }
+
+  const highlightableCode = format ? formatter(children) : children.trim();
   const [copied, setCopied] = useState(false);
 
   const onClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const tmp = document.createElement('TEXTAREA');
-    const focus = document.activeElement;
 
-    tmp.value = children;
-
-    document.body.appendChild(tmp);
-    tmp.select();
-    document.execCommand('copy');
-    document.body.removeChild(tmp);
-    focus.focus();
-
-    setCopied(true);
-
-    window.setTimeout(() => setCopied(false), 1500);
+    navigator.clipboard
+      .writeText(highlightableCode)
+      .then(() => {
+        setCopied(true);
+        window.setTimeout(() => setCopied(false), 1500);
+      })
+      .catch(logger.error);
   };
 
-  return children ? (
+  return (
     <Wrapper bordered={bordered} padded={padded} className={className}>
       <Scroller>
         <ReactSyntaxHighlighter
           padded={padded || bordered}
           language={language}
+          showLineNumbers={showLineNumbers}
+          showInlineLineNumbers={showLineNumbers}
           useInlineStyles={false}
           PreTag={Pre}
           CodeTag={Code}
           lineNumberContainerStyle={{}}
           {...rest}
         >
-          {format ? formatter((children as string).trim()) : (children as string).trim()}
+          {highlightableCode}
         </ReactSyntaxHighlighter>
       </Scroller>
 
@@ -163,5 +168,5 @@ export const SyntaxHighlighter: FunctionComponent<Props> = ({
         <ActionBar actionItems={[{ title: copied ? 'Copied' : 'Copy', onClick }]} />
       ) : null}
     </Wrapper>
-  ) : null;
+  );
 };

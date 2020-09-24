@@ -1,0 +1,18 @@
+```ts
+// Button.stories.ts
+
+// We create a “template” of how args map to rendering
+const Template = (args: Button) => ({
+  component: Button,
+  props: args,
+});
+
+export const Primary = Template.bind({});
+Primary.args = { background: '#ff0', label: 'Button' };
+
+export const Secondary = Template.bind({});
+Secondary.args = { ...Primary.args, label: '😄👍😍💯' };
+
+export const Tertiary = Template.bind({});
+Tertiary.args = { ...Primary.args, label: '📚📕📈🤓' };
+```

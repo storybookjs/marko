@@ -1,6 +1,8 @@
 import type ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-import type LoaderOptions from 'react-docgen-typescript-loader/dist/LoaderOptions';
+import type { PluginOptions } from 'react-docgen-typescript-plugin';
 import { Configuration } from 'webpack';
+
+type Preset = string | { name: string };
 
 /**
  * The interface for Storybook configuration in `main.ts` files.
@@ -36,7 +38,9 @@ export interface StorybookConfig {
  */
 export interface StorybookOptions {
   configType: 'DEVELOPMENT' | 'PRODUCTION';
+  presetsList: Preset[];
   typescriptOptions: TypescriptOptions;
+  [key: string]: any;
 }
 
 /**
@@ -60,10 +64,10 @@ export interface TypescriptOptions {
    */
   reactDocgen: 'react-docgen-typescript' | 'react-docgen' | false;
   /**
-   * Configures `react-docgen-typescript-loader`
+   * Configures `react-docgen-typescript-plugin`
    *
    * @default
    * @see https://github.com/storybookjs/storybook/blob/next/lib/core/src/server/config/defaults.js#L4-L6
    */
-  reactDocgenTypescriptOptions: LoaderOptions;
+  reactDocgenTypescriptOptions: PluginOptions;
 }

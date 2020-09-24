@@ -38,21 +38,21 @@ export default {
 
 ### MDX
 
-To use the props table in [MDX](./mdx.md), use the `Props` block:
+To use the props table in [MDX](./mdx.md), use the `ArgsTable` block:
 
 ```js
 // MyComponent.stories.mdx
-import { Props } from '@storybook/addon-docs/blocks';
+import { ArgsTable } from '@storybook/addon-docs/blocks';
 import { MyComponent } from './MyComponent';
 
 # My Component!
 
-<Props of={MyComponent} />
+<ArgsTable of={MyComponent} />
 ```
 
 ## Controls
 
-Starting in SB 6.0, the `Props` block has built-in `Controls` (formerly known as "knobs") for editing stories dynamically.
+Starting in SB 6.0, the `ArgsTable` block has built-in `Controls` (formerly known as "knobs") for editing stories dynamically.
 
 <center>
   <img src="./media/args-controls.gif" width="80%" />
@@ -60,7 +60,7 @@ Starting in SB 6.0, the `Props` block has built-in `Controls` (formerly known as
 
 <br/>
 
-These controls are implemented appear automatically in the props table when your story accepts [Storybook Args](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/formats/component-story-format/index.md#args-story-inputs) as its input. This is done slightly differently depending on whether you're using `DocsPage` or `MDX`.
+These controls are implemented appear automatically in the props table when your story accepts [Storybook Args](https://storybook.js.org/docs/react/api/csf#args-story-inputs) as its input. This is done slightly differently depending on whether you're using `DocsPage` or `MDX`.
 
 **DocsPage.** In [DocsPage](./docspage.md), simply write your story to consume args and the auto-generated props table will display controls in the right-most column:
 
@@ -73,14 +73,14 @@ export default {
 export const WithControls = (args) => <MyComponent {...args} />;
 ```
 
-**MDX.** In [MDX](./mdx.md), the `Props` controls are more configurable than in DocsPage. In order to show controls, `Props` must be a function of a story, not a component:
+**MDX.** In [MDX](./mdx.md), the `ArgsTable` controls are more configurable than in DocsPage. In order to show controls, `ArgsTable` must be a function of a story, not a component:
 
 ```js
 <Story name="WithControls">
   {args => <MyComponent {...args} />}
 </Story>
 
-<Props story="Controls" />
+<ArgsTable story="Controls" />
 ```
 
 For a very detailed walkthrough of how to write stories that use controls, see the [addon-controls README](https://github.com/storybookjs/storybook/blob/next/addons/controls/README.md#writing-stories).
@@ -91,13 +91,13 @@ Props tables are automatically inferred from your components and stories, but so
 
 Props tables are rendered from an internal data structure called `ArgTypes`. When you declare a story's `component` metadata, Docs automatically extracts `ArgTypes` based on the component's properties.
 
-You can can customize what's shown in the props table by [customizing the `ArgTypes` data](#customizing-argtypes). This is currently available for `DocsPage` and `<Props story="xxx">` construct, but not for the `<Props of={component} />` construct,
+You can can customize what's shown in the props table by [customizing the `ArgTypes` data](#customizing-argtypes). This is currently available for `DocsPage` and `<ArgsTable story="xxx">` construct, but not for the `<ArgsTable of={component} />` construct,
 
 ### Customizing ArgTypes
 
 > **NOTE:** This API is experimental and may change outside of the typical semver release cycle
 
-When you declare a `component` in for your `DocsPage` [as described above](#docspage) or use the `<Props story="xxx" />` construct [in MDX](#controls), the props table shows the `story.argTypes` that gets extracted by Storybook.
+When you declare a `component` in for your `DocsPage` [as described above](#docspage) or use the `<ArgsTable story="xxx" />` construct [in MDX](#controls), the props table shows the `story.argTypes` that gets extracted by Storybook.
 
 Consider the following input:
 
@@ -150,13 +150,13 @@ export default {
     label: {
       description: 'overwritten description',
       table: {
-        type: { summary: 'something short' detail: 'something really really long' },
+        type: { summary: 'something short', detail: 'something really really long' },
       },
       control: {
-        type: null
-      }
-    }
-  }
+        type: null,
+      },
+    },
+  },
 };
 ```
 
@@ -170,7 +170,7 @@ const argTypes = {
     defaultValue: 'Hello',
     description: 'overwritten description',
     table: {
-      type: { summary: 'something short' detail: 'something really really long' },
+      type: { summary: 'something short', detail: 'something really really long' },
       defaultValue: { summary: 'Hello' },
     }
     control: {
@@ -181,6 +181,11 @@ const argTypes = {
 ```
 
 This would render a row with a modified description, a type display with a dropdown that shows the detail, and no control.
+
+> **NOTE:** `@storybook/addon-docs` provide shorthand for common tasks:
+>
+> - `type: 'number'` is shorthand for `type: { name: 'number' }`
+> - `control: 'radio'` is shorthand for `control: { type: 'radio' }`
 
 Controls customization has an entire section in the [`addon-controls` README](https://github.com/storybookjs/storybook/blob/next/addons/controls/README.md#configuration).
 

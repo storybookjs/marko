@@ -1,22 +1,7 @@
-import fse from 'fs-extra';
-import path from 'path';
-import { getBabelDependencies } from '../../helpers';
-import { Generator } from '../Generator';
+import { baseGenerator, Generator } from '../baseGenerator';
 
-const generator: Generator = async (packageManager, npmOptions) => {
-  const storybookVersion = await packageManager.getVersion('@storybook/marionette');
-  fse.copySync(path.resolve(__dirname, 'template/'), '.', { overwrite: true });
-
-  const packageJson = packageManager.retrievePackageJson();
-
-  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
-
-  packageManager.addDependencies({ ...npmOptions, packageJson }, [
-    `@storybook/marionette@${storybookVersion}`,
-    ...babelDependencies,
-  ]);
-
-  packageManager.addStorybookCommandInScripts();
+const generator: Generator = async (packageManager, npmOptions, options) => {
+  await baseGenerator(packageManager, npmOptions, options, 'marionette');
 };
 
 export default generator;

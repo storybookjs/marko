@@ -1,6 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { styled, CSSObject } from '@storybook/theming';
+import { window } from 'global';
 import { withReset, withMargin, headerCommon, codeCommon } from './shared';
+import { SyntaxHighlighter } from '../syntaxhighlighter/syntaxhighlighter';
 
 export const H1 = styled.h1<{}>(withReset, headerCommon, ({ theme }) => ({
   fontSize: `${theme.typography.size.l1}px`,
@@ -42,14 +44,14 @@ export const Pre = styled.pre<{}>(withReset, withMargin, ({ theme }) => ({
   borderRadius: 3,
   margin: '1rem 0',
 
-  '&:not(.hljs)': {
+  '&:not(.prismjs)': {
     background: 'transparent',
     border: 'none',
     borderRadius: 0,
     padding: 0,
     margin: 0,
   },
-  '& pre, &.hljs': {
+  '& pre, &.prismjs': {
     padding: 15,
     margin: 0,
     whiteSpace: 'pre-wrap',
@@ -70,10 +72,16 @@ export const Pre = styled.pre<{}>(withReset, withMargin, ({ theme }) => ({
 }));
 
 const Link: FunctionComponent<any> = ({ href: input, children, ...props }) => {
+  // If storybook is hosted at a non-root path (e.g. `/storybook/`),
+  // the base url needs to be prefixed to storybook paths.
+  let storybookBaseUrl =
+    typeof window !== 'undefined' ? window.parent.document.location.pathname : '/';
+  if (!storybookBaseUrl.endsWith('/')) storybookBaseUrl += '/';
+
   const isStorybookPath = /^\//.test(input);
   const isAnchorUrl = /^#.*/.test(input);
 
-  const href = isStorybookPath ? `/?path=${input}` : input;
+  const href = isStorybookPath ? `${storybookBaseUrl}?path=${input}` : input;
   const target = isAnchorUrl ? '_self' : '_top';
 
   return (
@@ -84,7 +92,7 @@ const Link: FunctionComponent<any> = ({ href: input, children, ...props }) => {
 };
 
 export const A = styled(Link)<{}>(withReset, ({ theme }) => ({
-  fontSize: theme.typography.size.s2,
+  fontSize: 'inherit',
   lineHeight: '24px',
 
   color: theme.color.secondary,
@@ -175,13 +183,11 @@ export const Table = styled.table<{}>(withReset, withMargin, ({ theme }) => ({
   '& tr th': {
     fontWeight: 'bold',
     border: `1px solid ${theme.appBorderColor}`,
-    textAlign: 'left',
     margin: 0,
     padding: '6px 13px',
   },
   '& tr td': {
     border: `1px solid ${theme.appBorderColor}`,
-    textAlign: 'left',
     margin: 0,
     padding: '6px 13px',
   },
@@ -304,9 +310,9 @@ export const LI = styled.li<{}>(withReset, ({ theme }) => ({
   '& code': codeCommon({ theme }),
 }));
 
-export const UL = styled.ul<{}>(withReset, withMargin, listCommon, {});
+export const UL = styled.ul<{}>(withReset, withMargin, { ...listCommon, listStyle: 'disc' });
 
-export const OL = styled.ol<{}>(withReset, withMargin, listCommon);
+export const OL = styled.ol<{}>(withReset, withMargin, { ...listCommon, listStyle: 'decimal' });
 
 export const P = styled.p<{}>(withReset, withMargin, ({ theme }) => ({
   fontSize: theme.typography.size.s2,
@@ -315,7 +321,7 @@ export const P = styled.p<{}>(withReset, withMargin, ({ theme }) => ({
   '& code': codeCommon({ theme }),
 }));
 
-export const Code = styled.code<{}>(
+const DefaultCodeBlock = styled.code<{}>(
   ({ theme }) => ({
     // from reset
     fontFamily: theme.typography.fonts.mono,
@@ -329,6 +335,16 @@ export const Code = styled.code<{}>(
   }),
   codeCommon
 );
+
+export const Code = ({ className, ...props }: React.ComponentProps<typeof DefaultCodeBlock>) => {
+  const language = (className || '').match(/lang-(\S+)/);
+
+  if (!language) {
+    return <DefaultCodeBlock {...props} className={className} />;
+  }
+
+  return <SyntaxHighlighter bordered copyable language={language[1]} format={false} {...props} />;
+};
 
 export const TT = styled.title<{}>(codeCommon);
 

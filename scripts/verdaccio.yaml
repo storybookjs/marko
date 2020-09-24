@@ -35,7 +35,19 @@ packages:
     access: $all
     publish: $all
     proxy: npmjs
+  '@storybook/design-system':
+    access: $all
+    publish: $all
+    proxy: npmjs
   '@storybook/preset-*':
+    access: $all
+    publish: $all
+    proxy: npmjs
+  '@storybook/bench':
+    access: $all
+    publish: $all
+    proxy: npmjs
+  '@storybook/addon-bench':
     access: $all
     publish: $all
     proxy: npmjs

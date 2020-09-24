@@ -12,6 +12,7 @@
     ]
   ],
   "ignore": [
+    "./src/frameworks",
     "./src/generators/**/template",
     "./src/generators/**/template-csf",
     "./src/generators/**/template-csf-ts",

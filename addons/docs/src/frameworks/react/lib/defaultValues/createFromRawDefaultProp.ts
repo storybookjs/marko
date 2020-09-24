@@ -45,7 +45,7 @@ function generateReactObject(rawDefaultProp: any) {
   const { type } = rawDefaultProp;
   const { displayName } = type;
 
-  const jsx = reactElementToJSXString(rawDefaultProp);
+  const jsx = reactElementToJSXString(rawDefaultProp, {});
 
   if (displayName != null) {
     const prettyIdentifier = getPrettyElementIdentifier(displayName);

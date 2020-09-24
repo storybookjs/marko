@@ -2,29 +2,59 @@ import { Parameters } from './run-e2e';
 
 const fromDeps = (...args: string[]): string =>
   [
-    'cd {{name}}-v{{version}}',
+    'cd {{name}}-{{version}}',
+    // Create `yarn.lock` to force Yarn to consider adding deps in this directory
+    // and not look for a yarn workspace in parent directory
+    'touch yarn.lock',
     'yarn init --yes',
-    args.length && `yarn add ${args.join(' ')} --silent`,
+    args.length && `yarn add ${args.join(' ')}`,
   ]
     .filter(Boolean)
     .join(' && ');
 
-export const angular: Parameters = {
+const baseAngular: Parameters = {
   name: 'angular',
   version: 'latest',
   generator: [
     `yarn add @angular/cli@{{version}} --no-lockfile --non-interactive --silent --no-progress`,
-    `npx ng new {{name}}-v{{version}} --routing=true --minimal=true --style=scss --skipInstall=true`,
+    `npx ng new {{name}}-{{version}} --routing=true --minimal=true --style=scss --skipInstall=true --strict`,
   ].join(' && '),
   additionalDeps: ['react', 'react-dom'],
 };
+
+// export const angularv6: Parameters = {
+//   ...baseAngular,
+//   version: 'v6-lts',
+//   additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
+// };
+
+// TODO: enable back when typings issues are resolved
+// export const angularv7: Parameters = {
+//   ...baseAngular,
+//   version: 'v7-lts',
+//   additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
+// };
+
+// export const angularv8: Parameters = {
+//   ...baseAngular,
+//   version: 'v8-lts',
+//   additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
+// };
+
+export const angularv9: Parameters = {
+  ...baseAngular,
+  version: 'v9-lts',
+  additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
+};
+
+export const angular: Parameters = baseAngular;
 
 // TODO: not working yet, help needed
 // export const ember: Parameters = {
 //   name: 'ember',
 //   version: 'latest',
 //   generator:
-//     'npx ember-cli@{{version}} new {{name}}-v{{version}} --skip-git --skip-npm --yarn --skip-bower',
+//     'npx ember-cli@{{version}} new {{name}}-{{version}} --skip-git --skip-npm --yarn --skip-bower',
 //   preBuildCommand: 'ember build',
 // };
 
@@ -50,7 +80,7 @@ export const html: Parameters = {
 // export const marko: Parameters = {
 //   name: 'marko',
 //   version: 'latest',
-//   generator: 'npx marko-cli@{{version}} create {{name}}-v{{version}}',
+//   generator: 'npx marko-cli@{{version}} create {{name}}-{{version}}',
 //   ensureDir: false,
 // };
 
@@ -58,7 +88,7 @@ export const html: Parameters = {
 // export const meteor: Parameters = {
 //   name: 'meteor',
 //   version: 'latest',
-//   generator: 'meteor create {{name}}-v{{version}} --minimal --react',
+//   generator: 'meteor create {{name}}-{{version}} --minimal --react',
 // };
 
 export const mithril: Parameters = {
@@ -72,7 +102,7 @@ export const preact: Parameters = {
   name: 'preact',
   version: 'latest',
   generator:
-    'npx preact-cli@{{version}} create preactjs-templates/default {{name}}-v{{version}} --yarn --install=false --git=false',
+    'npx preact-cli@{{version}} create preactjs-templates/default {{name}}-{{version}} --yarn --install=false --git=false',
   ensureDir: false,
 };
 
@@ -90,8 +120,8 @@ export const react: Parameters = {
   generator: fromDeps('react', 'react-dom'),
 };
 
-export const reactTypescript: Parameters = {
-  name: 'react-typescript',
+export const react_typescript: Parameters = {
+  name: 'react_typescript',
   version: 'latest',
   generator: fromDeps('react'),
   typescript: true,
@@ -100,41 +130,57 @@ export const reactTypescript: Parameters = {
 // export const reactNative: Parameters = {
 //   name: 'reactNative',
 //   version: 'latest',
-//   generator: 'npx expo-cli init {{name}}-v{{version}} --template=bare-minimum --yarn',
+//   generator: 'npx expo-cli init {{name}}-{{version}} --template=bare-minimum --yarn',
 // };
 
 // TODO: issue in @storybook/cli init
 export const cra: Parameters = {
   name: 'cra',
   version: 'latest',
-  generator: 'npx create-react-app@{{version}} {{name}}-v{{version}}',
+  generator: [
+    'npx create-react-app@{{version}} {{name}}-{{version}}',
+    'cd {{name}}-{{version}}',
+    'echo "FAST_REFRESH=true" > .env',
+  ].join(' && '),
+};
+
+export const cra_typescript: Parameters = {
+  name: 'cra_typescript',
+  version: 'latest',
+  generator: 'npx create-react-app@{{version}} {{name}}-{{version}} --template typescript',
 };
 
 // TODO: there is a compatibility issue with riot@4
-export const riot: Parameters = {
-  name: 'riot',
-  version: '3',
-  generator: fromDeps('riot@3', 'riot-compiler@3', 'riot-tmpl@3'),
-};
+// export const riot: Parameters = {
+//   name: 'riot',
+//   version: '3',
+//   generator: fromDeps('riot@3', 'riot-compiler@3', 'riot-tmpl@3'),
+// };
 
 export const sfcVue: Parameters = {
   name: 'sfcVue',
   version: 'latest',
   generator: fromDeps('vue', 'vue-loader', 'vue-template-compiler'),
-  additionalDeps: ['react', 'react-dom'],
+  additionalDeps: [
+    'react',
+    'react-dom',
+    'webpack',
+    // TODO: remove when https://github.com/storybookjs/storybook/issues/11255 is solved
+    'core-js',
+  ],
 };
 
 export const svelte: Parameters = {
   name: 'svelte',
   version: 'latest',
-  generator: 'npx degit sveltejs/template {{name}}-v{{version}}',
+  generator: 'npx degit sveltejs/template {{name}}-{{version}}',
   additionalDeps: ['react', 'react-dom'],
 };
 
 export const vue: Parameters = {
   name: 'vue',
   version: 'latest',
-  generator: `npx @vue/cli@{{version}} create {{name}}-v{{version}} --default --packageManager=yarn --no-git --force`,
+  generator: `npx @vue/cli@{{version}} create {{name}}-{{version}} --default --packageManager=yarn --no-git --force`,
   additionalDeps: ['react', 'react-dom'],
 };
 
@@ -145,31 +191,29 @@ export const web_components: Parameters = {
   additionalDeps: ['react', 'react-dom'],
 };
 
-export const webpackReact: Parameters = {
-  name: 'webpackReact',
+export const webpack_react: Parameters = {
+  name: 'webpack_react',
   version: 'latest',
   generator: fromDeps('react', 'react-dom', 'webpack'),
 };
 
-export const yarn2Cra: Parameters = {
-  name: 'yarn-2-cra',
+export const react_in_yarn_workspace: Parameters = {
+  name: 'react_in_yarn_workspace',
   version: 'latest',
   generator: [
-    `yarn set version 2`,
-    // ⚠️ Need to set registry because Yarn 2 is not using the conf of Yarn 1
-    `yarn config set npmScopes --json '{ "storybook": { "npmRegistryServer": "http://localhost:6000/" } }'`,
-    // Some required magic to be able to fetch deps from local registry
-    `yarn config set unsafeHttpWhitelist --json '["localhost"]'`,
-    `yarn dlx create-react-app@{{version}} {{name}}-v{{version}}`,
+    'cd {{name}}-{{version}}',
+    'echo "{ \\"name\\": \\"workspace-root\\", \\"private\\": true, \\"workspaces\\": [] }" > package.json',
+    `yarn add react react-dom --silent -W`,
   ].join(' && '),
 };
 
-export const reactInYarnWorkspace: Parameters = {
-  name: 'reactInYarnWorkspace',
+// View results at: https://datastudio.google.com/reporting/c34f64ee-400f-4d06-ad4f-5c2133e226da
+export const cra_bench: Parameters = {
+  name: 'cra_bench',
   version: 'latest',
   generator: [
-    'cd {{name}}-v{{version}}',
-    'echo "{ \\"name\\": \\"workspace-root\\", \\"private\\": true, \\"workspaces\\": [] }" > package.json',
-    `yarn add react react-dom --silent -W`,
+    'npx create-react-app@{{version}} {{name}}-{{version}}',
+    'cd {{name}}-{{version}}',
+    "npx @storybook/bench 'npx sb init' --label cra",
   ].join(' && '),
 };

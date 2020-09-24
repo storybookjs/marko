@@ -1,17 +1,19 @@
-import { Meta, Preview, Story, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs/blocks';
 import range from 'lodash/range';
 import { DocgenButton } from '../../components/DocgenButton';
 import { ButtonGroup, SubGroup } from '../../components/ButtonGroup';
 import { ForwardRefButton } from '../../components/ForwardRefButton';
 import { MemoButton } from '../../components/MemoButton';
+import { OptionalButton } from '../../components/OptionalButton';
 
 <Meta
   title="Addons/Docs/props"
   component={ButtonGroup}
+  subcomponents={{ SubGroup }}
   parameters={{ controls: { expanded: false } }}
 />
 
-export const ArgsDisplay = (args = {}) => (
+export const Template = (args) => (
   <table>
     <tbody>
       {Object.entries(args).map(([key, val]) => (
@@ -26,7 +28,7 @@ export const ArgsDisplay = (args = {}) => (
 
 ## ArgTypes
 
-<Preview>
+<Canvas>
   <Story
     name="ArgTypes"
     args={{
@@ -35,7 +37,12 @@ export const ArgsDisplay = (args = {}) => (
       arrayArg: ['a', 'b'],
     }}
     argTypes={{
-      boolArg: { name: 'boolArg', type: { name: 'boolean' }, description: 'bool description' },
+      boolArg: {
+        name: 'boolArg',
+        type: { name: 'boolean' },
+        description: 'bool description',
+        control: 'boolean',
+      },
       stringArg: {
         name: 'stringArg',
         type: { name: 'string' },
@@ -47,11 +54,13 @@ export const ArgsDisplay = (args = {}) => (
             detail: 'some long bar default',
           },
         },
+        control: 'text',
       },
       arrayArg: {
         name: 'arrayArg',
         type: { name: 'array', value: { name: 'string' } },
         description: 'baz description',
+        control: 'array',
       },
       selectArg: {
         name: 'selectArg',
@@ -68,19 +77,19 @@ export const ArgsDisplay = (args = {}) => (
       },
     }}
   >
-    {(args) => <ArgsDisplay {...args} />}
+    {Template.bind({})}
   </Story>
-</Preview>
+</Canvas>
 
-<Props story="ArgTypes" />
+<ArgsTable story="ArgTypes" />
 
-## ArgTypes w/ Components
+## ArgTypes w/ Component
 
-<Props story="ArgTypes" showComponents />
+<ArgsTable story="ArgTypes" showComponent />
 
 ## Args
 
-<Preview>
+<Canvas>
   <Story
     name="Args"
     args={{
@@ -88,15 +97,15 @@ export const ArgsDisplay = (args = {}) => (
       bar: '',
     }}
   >
-    {(args) => <ArgsDisplay {...args} />}
+    {Template.bind({})}
   </Story>
-</Preview>
+</Canvas>
 
-<Props story="Args" />
+<ArgsTable story="Args" />
 
 ## Component Story
 
-<Preview>
+<Canvas>
   <Story
     name="Component"
     argTypes={{
@@ -109,13 +118,13 @@ export const ArgsDisplay = (args = {}) => (
       return <ButtonGroup background={background}>{contents}</ButtonGroup>;
     }}
   </Story>
-</Preview>
+</Canvas>
 
-<Props story="Component" />
+<ArgsTable story="Component" />
 
 ## Controls Story
 
-<Preview>
+<Canvas>
   <Story
     name="Controls"
     args={{
@@ -141,14 +150,18 @@ export const ArgsDisplay = (args = {}) => (
       );
     }}
   </Story>
-</Preview>
+</Canvas>
 
-<Props story="Controls" />
+<ArgsTable story="Controls" />
 
 ## Components
 
-<Props components={{ ButtonGroup, SubGroup }} />
+<ArgsTable components={{ ButtonGroup, SubGroup }} />
 
 ## Component
 
-<Props of={DocgenButton} />
+<ArgsTable of={DocgenButton} />
+
+## OptionalButton
+
+<ArgsTable of={OptionalButton} />

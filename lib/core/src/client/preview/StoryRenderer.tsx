@@ -38,7 +38,6 @@ const layouts = {
     justifyContent: 'initial',
     alignItems: 'initial',
     minHeight: 'initial',
-    boxSizing: 'initial',
   },
   padded: {
     margin: 0,
@@ -47,7 +46,6 @@ const layouts = {
     justifyContent: 'initial',
     alignItems: 'initial',
     minHeight: 'initial',
-    boxSizing: 'initial',
   },
 } as const;
 
@@ -97,9 +95,9 @@ export class StoryRenderer {
   setupListeners() {
     // Channel can be null in StoryShots
     if (this.channel) {
-      this.channel.on(Events.RENDER_CURRENT_STORY, () => this.renderCurrentStory(false));
+      this.channel.on(Events.CURRENT_STORY_WAS_SET, () => this.renderCurrentStory(false));
       this.channel.on(Events.STORY_ARGS_UPDATED, () => this.forceReRender());
-      this.channel.on(Events.GLOBAL_ARGS_UPDATED, () => this.forceReRender());
+      this.channel.on(Events.GLOBALS_UPDATED, () => this.forceReRender());
       this.channel.on(Events.FORCE_RE_RENDER, () => this.forceReRender());
     }
   }
@@ -117,7 +115,7 @@ export class StoryRenderer {
       return;
     }
 
-    const { storyId, viewMode: urlViewMode } = storyStore.getSelection();
+    const { storyId, viewMode: urlViewMode } = storyStore.getSelection() || {};
 
     const data = storyStore.fromId(storyId);
     const { kind, id, parameters = {}, getDecorated } = data || {};
@@ -130,7 +128,7 @@ export class StoryRenderer {
       getDecorated,
     };
 
-    this.applyLayout(layout);
+    this.applyLayout(metadata.viewMode === 'docs' ? 'fullscreen' : layout);
 
     const context: RenderContext = {
       id: storyId, // <- in case data is null, at least we'll know what we tried to render

@@ -1,8 +1,22 @@
-import type { StorybookConfig } from '@storybook/core/types';
+import type { StorybookConfig } from '@storybook/react/types';
 
 module.exports = {
   stories: ['./src/*.stories.*'],
-  addons: ['@storybook/addon-essentials', '@storybook/addon-controls'],
+  logLevel: 'debug',
+  addons: [
+    '@storybook/addon-essentials',
+    '@storybook/addon-controls',
+    '@storybook/addon-storysource',
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        sourceLoaderOptions: {
+          parser: 'typescript',
+          injectStoryParameters: false,
+        },
+      },
+    },
+  ],
   typescript: {
     check: true,
     checkOptions: {},

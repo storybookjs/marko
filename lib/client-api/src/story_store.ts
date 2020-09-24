@@ -3,13 +3,13 @@ import memoize from 'memoizerific';
 import dedent from 'ts-dedent';
 import stable from 'stable';
 import mapValues from 'lodash/mapValues';
+import pick from 'lodash/pick';
+import store from 'store2';
 
 import { Channel } from '@storybook/channels';
 import Events from '@storybook/core-events';
 import { logger } from '@storybook/client-logger';
 import {
-  StoryId,
-  ViewMode,
   Comparator,
   Parameters,
   Args,
@@ -17,6 +17,7 @@ import {
   ArgsStoryFn,
   StoryContext,
   StoryKind,
+  StoryId,
 } from '@storybook/addons';
 import {
   DecoratorFunction,
@@ -28,21 +29,23 @@ import {
   ErrorLike,
   GetStorybookKind,
   ArgTypesEnhancer,
+  StoreSelectionSpecifier,
+  StoreSelection,
 } from './types';
 import { HooksContext } from './hooks';
-import storySort from './storySort';
+import { storySort } from './storySort';
 import { combineParameters } from './parameters';
-
-interface Selection {
-  storyId: StoryId;
-  viewMode: ViewMode;
-}
+import { ensureArgTypes } from './ensureArgTypes';
+import { inferArgTypes } from './inferArgTypes';
+import { inferControls } from './inferControls';
 
 interface StoryOptions {
   includeDocsOnly?: boolean;
 }
 
 type KindMetadata = StoryMetadata & { order: number };
+
+const STORAGE_KEY = '@storybook/preview/store';
 
 const isStoryDocsOnly = (parameters?: Parameters) => {
   return parameters && parameters.docsOnly;
@@ -55,14 +58,14 @@ const includeStory = (story: StoreItem, options: StoryOptions = { includeDocsOnl
   return !isStoryDocsOnly(story.parameters);
 };
 
-const checkGlobalArgs = (parameters: Parameters) => {
-  const { globalArgs, globalArgTypes } = parameters;
-  if (globalArgs || globalArgTypes) {
+const checkGlobals = (parameters: Parameters) => {
+  const { globals, globalTypes } = parameters;
+  if (globals || globalTypes) {
     logger.error(
       'Global args/argTypes can only be set globally',
       JSON.stringify({
-        globalArgs,
-        globalArgTypes,
+        globals,
+        globalTypes,
       })
     );
   }
@@ -82,7 +85,10 @@ const toExtracted = <T>(obj: T) =>
     if (typeof value === 'function') {
       return acc;
     }
-    if (key === 'hooks') {
+    // NOTE: We're serializing argTypes twice, at the top-level and also in parameters.
+    // We currently rely on useParameters in the manager, so strip out the top-level argTypes
+    // instead for performance.
+    if (['hooks', 'argTypes'].includes(key)) {
       return acc;
     }
     if (Array.isArray(value)) {
@@ -98,7 +104,7 @@ export default class StoryStore {
 
   _configuring: boolean;
 
-  _globalArgs: Args;
+  _globals: Args;
 
   _globalMetadata: StoryMetadata;
 
@@ -110,18 +116,21 @@ export default class StoryStore {
 
   _argTypesEnhancers: ArgTypesEnhancer[];
 
-  _selection: Selection;
+  _selectionSpecifier?: StoreSelectionSpecifier;
+
+  _selection?: StoreSelection;
 
   constructor(params: { channel: Channel }) {
     // Assume we are configuring until we hear otherwise
     this._configuring = true;
 
-    this._globalArgs = {};
+    // We store global args in session storage. Note that when we finish
+    // configuring below we will ensure we only use values here that make sense
+    this._globals = store.session.get(STORAGE_KEY)?.globals || {};
     this._globalMetadata = { parameters: {}, decorators: [] };
     this._kinds = {};
     this._stories = {};
-    this._argTypesEnhancers = [];
-    this._selection = {} as any;
+    this._argTypesEnhancers = [ensureArgTypes];
     this._error = undefined;
     this._channel = params.channel;
 
@@ -136,12 +145,20 @@ export default class StoryStore {
       this.setSelection({ storyId, viewMode })
     );
 
-    this._channel.on(Events.UPDATE_STORY_ARGS, (id: string, newArgs: Args) =>
-      this.updateStoryArgs(id, newArgs)
+    this._channel.on(
+      Events.UPDATE_STORY_ARGS,
+      ({ storyId, updatedArgs }: { storyId: string; updatedArgs: Args }) =>
+        this.updateStoryArgs(storyId, updatedArgs)
     );
 
-    this._channel.on(Events.UPDATE_GLOBAL_ARGS, (newGlobalArgs: Args) =>
-      this.updateGlobalArgs(newGlobalArgs)
+    this._channel.on(
+      Events.RESET_STORY_ARGS,
+      ({ storyId, argNames }: { storyId: string; argNames?: string[] }) =>
+        this.resetStoryArgs(storyId, argNames)
+    );
+
+    this._channel.on(Events.UPDATE_GLOBALS, ({ globals }: { globals: Args }) =>
+      this.updateGlobals(globals)
     );
   }
 
@@ -149,38 +166,73 @@ export default class StoryStore {
     this._configuring = true;
   }
 
+  storeGlobals() {
+    // Store the global args on the session
+    store.session.set(STORAGE_KEY, { globals: this._globals });
+  }
+
   finishConfiguring() {
     this._configuring = false;
 
-    const { globalArgs: initialGlobalArgs, globalArgTypes } = this._globalMetadata.parameters;
+    const { globals: initialGlobals = {}, globalTypes = {} } = this._globalMetadata.parameters;
 
-    const defaultGlobalArgs: Args = globalArgTypes
-      ? Object.entries(globalArgTypes as Record<string, { defaultValue: any }>).reduce(
-          (acc, [arg, { defaultValue }]) => {
-            if (defaultValue) acc[arg] = defaultValue;
-            return acc;
-          },
-          {} as Args
-        )
-      : {};
+    const defaultGlobals: Args = Object.entries(
+      globalTypes as Record<string, { defaultValue: any }>
+    ).reduce((acc, [arg, { defaultValue }]) => {
+      if (defaultValue) acc[arg] = defaultValue;
+      return acc;
+    }, {} as Args);
 
-    // To deal with HMR, we consider the previous value of global args, and:
+    const allowedGlobals = new Set([...Object.keys(initialGlobals), ...Object.keys(globalTypes)]);
+
+    // To deal with HMR & persistence, we consider the previous value of global args, and:
     //   1. Remove any keys that are not in the new parameter
     //   2. Preference any keys that were already set
     //   3. Use any new keys from the new parameter
-    this._globalArgs = Object.entries(this._globalArgs || {}).reduce(
+    this._globals = Object.entries(this._globals || {}).reduce(
       (acc, [key, previousValue]) => {
-        if (acc[key]) acc[key] = previousValue;
+        if (allowedGlobals.has(key)) acc[key] = previousValue;
 
         return acc;
       },
-      { ...defaultGlobalArgs, ...initialGlobalArgs }
+      { ...defaultGlobals, ...initialGlobals }
     );
+    this.storeGlobals();
+
+    // Set the current selection based on the current selection specifier, if selection is not yet set
+    const stories = this.sortedStories();
+    let foundStory;
+    if (this._selectionSpecifier && !this._selection) {
+      const { storySpecifier, viewMode } = this._selectionSpecifier;
+      if (storySpecifier === '*') {
+        // '*' means select the first story. If there is none, we have no selection.
+        [foundStory] = stories;
+      } else if (typeof storySpecifier === 'string') {
+        // Find the story with the exact id that matches the specifier (see #11571)
+        foundStory = Object.values(stories).find((s) => s.id === storySpecifier);
+        if (!foundStory) {
+          // Fallback to the first story that starts with the specifier
+          foundStory = Object.values(stories).find((s) => s.id.startsWith(storySpecifier));
+        }
+      } else {
+        // Try and find a story matching the name/kind, setting no selection if they don't exist.
+        const { name, kind } = storySpecifier;
+        foundStory = this.getRawStory(kind, name);
+      }
+
+      if (foundStory) {
+        this.setSelection({ storyId: foundStory.id, viewMode });
+        this._channel.emit(Events.STORY_SPECIFIED, { storyId: foundStory.id, viewMode });
+      }
+    }
+
+    // If we didn't find a story matching the specifier, we always want to emit CURRENT_STORY_WAS_SET anyway
+    // in order to tell the StoryRenderer to render something (a "missing story" view)
+    if (!foundStory && this._channel) {
+      this._channel.emit(Events.CURRENT_STORY_WAS_SET, this._selection);
+    }
 
     this.pushToManager();
-    if (this._channel) {
-      this._channel.emit(Events.RENDER_CURRENT_STORY);
-    }
   }
 
   addGlobalMetadata({ parameters, decorators }: StoryMetadata) {
@@ -196,7 +248,13 @@ export default class StoryStore {
 
     this._globalMetadata.parameters = combineParameters(globalParameters, parameters);
 
-    this._globalMetadata.decorators.push(...decorators);
+    decorators.forEach((decorator) => {
+      if (this._globalMetadata.decorators.includes(decorator)) {
+        logger.warn('You tried to add a duplicate decorator, this is not expected', decorator);
+      } else {
+        this._globalMetadata.decorators.push(decorator);
+      }
+    });
   }
 
   clearGlobalDecorators() {
@@ -216,7 +274,7 @@ export default class StoryStore {
   addKindMetadata(kind: string, { parameters, decorators }: StoryMetadata) {
     this.ensureKind(kind);
     if (parameters) {
-      checkGlobalArgs(parameters);
+      checkGlobals(parameters);
       checkStorySort(parameters);
     }
     this._kinds[kind].parameters = combineParameters(this._kinds[kind].parameters, parameters);
@@ -262,7 +320,7 @@ export default class StoryStore {
       );
 
     if (storyParameters) {
-      checkGlobalArgs(storyParameters);
+      checkGlobals(storyParameters);
       checkStorySort(storyParameters);
     }
 
@@ -296,10 +354,8 @@ export default class StoryStore {
     ];
 
     const finalStoryFn = (context: StoryContext) => {
-      const { passArgsFirst } = context.parameters;
-      return passArgsFirst || typeof passArgsFirst === 'undefined'
-        ? (original as ArgsStoryFn)(context.args, context)
-        : original(context);
+      const { passArgsFirst = true } = context.parameters;
+      return passArgsFirst ? (original as ArgsStoryFn)(context.args, context) : original(context);
     };
 
     // lazily decorate the story when it's loaded
@@ -312,21 +368,33 @@ export default class StoryStore {
     // We need the combined parameters now in order to calculate argTypes, but we won't keep them
     const combinedParameters = this.combineStoryParameters(storyParameters, kind);
 
+    // We are going to make various UI changes in both the manager and the preview
+    // based on whether it's an "args story", i.e. whether the story accepts a first
+    // argument which is an `Args` object. Here we store it as a parameter on every story
+    // for convenience, but we preface it with `__` to denote that it's an internal API
+    // and that users probably shouldn't look at it.
+    const { passArgsFirst = true } = combinedParameters;
+    const __isArgsStory = passArgsFirst && original.length > 0;
+
+    // run at the end
+    this._argTypesEnhancers.push(inferArgTypes);
+    this._argTypesEnhancers.push(inferControls);
     const { argTypes = {} } = this._argTypesEnhancers.reduce(
-      (accumlatedParameters: Parameters, enhancer) => ({
-        ...accumlatedParameters,
+      (accumulatedParameters: Parameters, enhancer) => ({
+        ...accumulatedParameters,
         argTypes: enhancer({
           ...identification,
           storyFn: original,
-          parameters: accumlatedParameters,
+          parameters: accumulatedParameters,
           args: {},
-          globalArgs: {},
+          argTypes: {},
+          globals: {},
         }),
       }),
-      combinedParameters
+      { __isArgsStory, ...combinedParameters }
     );
 
-    const storyParametersWithArgTypes = { ...storyParameters, argTypes };
+    const storyParametersWithArgTypes = { ...storyParameters, argTypes, __isArgsStory };
 
     const storyFn: LegacyStoryFn = (runtimeContext: StoryContext) =>
       getDecorated()({
@@ -336,11 +404,12 @@ export default class StoryStore {
         parameters: this.combineStoryParameters(storyParametersWithArgTypes, kind),
         hooks,
         args: _stories[id].args,
-        globalArgs: this._globalArgs,
+        argTypes,
+        globals: this._globals,
       });
 
     // Pull out parameters.args.$ || .argTypes.$.defaultValue into initialArgs
-    const initialArgs: Args = combinedParameters.args;
+    const passedArgs: Args = combinedParameters.args;
     const defaultArgs: Args = Object.entries(
       argTypes as Record<string, { defaultValue: any }>
     ).reduce((acc, [arg, { defaultValue }]) => {
@@ -348,6 +417,7 @@ export default class StoryStore {
       return acc;
     }, {} as Args);
 
+    const initialArgs = { ...defaultArgs, ...passedArgs };
     _stories[id] = {
       ...identification,
 
@@ -356,8 +426,10 @@ export default class StoryStore {
       getOriginal,
       storyFn,
 
-      parameters: { ...storyParameters, argTypes },
-      args: { ...defaultArgs, ...initialArgs },
+      parameters: storyParametersWithArgTypes,
+      args: initialArgs,
+      argTypes,
+      initialArgs,
     };
   }
 
@@ -393,9 +465,10 @@ export default class StoryStore {
     }, {});
   }
 
-  updateGlobalArgs(newGlobalArgs: Args) {
-    this._globalArgs = { ...this._globalArgs, ...newGlobalArgs };
-    this._channel.emit(Events.GLOBAL_ARGS_UPDATED, this._globalArgs);
+  updateGlobals(newGlobals: Args) {
+    this._globals = { ...this._globals, ...newGlobals };
+    this.storeGlobals();
+    this._channel.emit(Events.GLOBALS_UPDATED, { globals: this._globals });
   }
 
   updateStoryArgs(id: string, newArgs: Args) {
@@ -403,7 +476,20 @@ export default class StoryStore {
     const { args } = this._stories[id];
     this._stories[id].args = { ...args, ...newArgs };
 
-    this._channel.emit(Events.STORY_ARGS_UPDATED, id, this._stories[id].args);
+    this._channel.emit(Events.STORY_ARGS_UPDATED, { storyId: id, args: this._stories[id].args });
+  }
+
+  resetStoryArgs(id: string, argNames?: string[]) {
+    if (!this._stories[id]) throw new Error(`No story for id ${id}`);
+    const { args, initialArgs } = this._stories[id];
+
+    this._stories[id].args = { ...args }; // Make a copy to avoid problems
+    (argNames || Object.keys(args)).forEach((name) => {
+      // We overwrite like this to ensure we can reset to falsey values
+      this._stories[id].args[name] = initialArgs[name];
+    });
+
+    this._channel.emit(Events.STORY_ARGS_UPDATED, { storyId: id, args: this._stories[id].args });
   }
 
   fromId = (id: string): PublishedStoreItem | null => {
@@ -429,10 +515,25 @@ export default class StoryStore {
       .map((i) => this.mergeAdditionalDataToStory(i));
   }
 
-  extract(options: StoryOptions & { normalizeParameters?: boolean } = {}) {
-    const stories = Object.entries(this._stories);
-
+  sortedStories(): StoreItem[] {
+    // NOTE: when kinds are HMR'ed they get temporarily removed from the `_stories` array
+    // and thus lose order. However `_kinds[x].order` preservers the original load order
+    const kindOrder = mapValues(this._kinds, ({ order }) => order);
     const storySortParameter = this._globalMetadata.parameters?.options?.storySort;
+
+    const storyEntries = Object.entries(this._stories);
+    // Add the kind parameters and global parameters to each entry
+    const stories: [
+      StoryId,
+      StoreItem,
+      Parameters,
+      Parameters
+    ][] = storyEntries.map(([id, story]) => [
+      id,
+      story,
+      this._kinds[story.kind].parameters,
+      this._globalMetadata.parameters,
+    ]);
     if (storySortParameter) {
       let sortFn: Comparator<any>;
       if (typeof storySortParameter === 'function') {
@@ -442,24 +543,27 @@ export default class StoryStore {
       }
       stable.inplace(stories, sortFn);
     } else {
-      // NOTE: when kinds are HMR'ed they get temporarily removed from the `_stories` array
-      // and thus lose order. However `_kindOrder` preservers the original load order
-      stable.inplace(
-        stories,
-        (s1, s2) => this._kinds[s1[1].kind].order - this._kinds[s2[1].kind].order
-      );
+      stable.inplace(stories, (s1, s2) => kindOrder[s1[1].kind] - kindOrder[s2[1].kind]);
     }
+    return stories.map(([id, s]) => s);
+  }
+
+  extract(options: StoryOptions & { normalizeParameters?: boolean } = {}) {
+    const stories = this.sortedStories();
 
     // removes function values from all stories so they are safe to transport over the channel
-    return stories.reduce((acc, [id, story]) => {
+    return stories.reduce((acc, story) => {
       if (!includeStory(story, options)) return acc;
 
       const extracted = toExtracted(story);
-      if (options.normalizeParameters) return Object.assign(acc, { [id]: extracted });
+      if (options.normalizeParameters) return Object.assign(acc, { [story.id]: extracted });
 
-      const { parameters, kind } = extracted as { parameters: Parameters; kind: StoryKind };
+      const { parameters, kind } = extracted as {
+        parameters: Parameters;
+        kind: StoryKind;
+      };
       return Object.assign(acc, {
-        [id]: Object.assign(extracted, {
+        [story.id]: Object.assign(extracted, {
           parameters: this.combineStoryParameters(parameters, kind),
         }),
       });
@@ -476,30 +580,43 @@ export default class StoryStore {
 
   getError = (): ErrorLike | undefined => this._error;
 
-  setSelection(selection: Selection): void {
+  setSelectionSpecifier(selectionSpecifier: StoreSelectionSpecifier): void {
+    this._selectionSpecifier = selectionSpecifier;
+  }
+
+  setSelection(selection: StoreSelection): void {
     this._selection = selection;
 
     if (this._channel) {
       this._channel.emit(Events.CURRENT_STORY_WAS_SET, this._selection);
-
-      // If the selection is set while configuration is in process, we are guaranteed
-      // we'll emit RENDER_CURRENT_STORY at the end of the process, so we shouldn't do it now.
-      if (!this._configuring) {
-        this._channel.emit(Events.RENDER_CURRENT_STORY);
-      }
     }
   }
 
-  getSelection = (): Selection => this._selection;
+  getSelection = (): StoreSelection => this._selection;
 
   getDataForManager = () => {
     return {
       v: 2,
       globalParameters: this._globalMetadata.parameters,
-      globalArgs: this._globalArgs,
+      globals: this._globals,
       error: this.getError(),
       kindParameters: mapValues(this._kinds, (metadata) => metadata.parameters),
       stories: this.extract({ includeDocsOnly: true, normalizeParameters: true }),
+    };
+  };
+
+  getStoriesJsonData = () => {
+    const value = this.getDataForManager();
+    const allowed = ['fileName', 'docsOnly', 'framework', '__id', '__isArgsStory'];
+
+    return {
+      v: 2,
+      globalParameters: pick(value.globalParameters, allowed),
+      kindParameters: mapValues(value.kindParameters, (v) => pick(v, allowed)),
+      stories: mapValues(value.stories, (v: any) => ({
+        ...pick(v, ['id', 'name', 'kind', 'story']),
+        parameters: pick(v.parameters, allowed),
+      })),
     };
   };
 
@@ -514,9 +631,7 @@ export default class StoryStore {
     return Array.from(new Set(this.raw().map((s) => s.kind)));
   }
 
-  getStoriesForKind(kind: string) {
-    return this.raw().filter((story) => story.kind === kind);
-  }
+  getStoriesForKind = (kind: string) => this.raw().filter((story) => story.kind === kind);
 
   getRawStory(kind: string, name: string) {
     return this.getStoriesForKind(kind).find((s) => s.name === name);
@@ -532,7 +647,7 @@ export default class StoryStore {
     this.getStoriesForKind(kind).map((story) => this.cleanHooks(story.id));
   }
 
-  // This API is a reimplementation of Storybook's original getStorybook() API.
+  // This API is a re-implementation of Storybook's original getStorybook() API.
   // As such it may not behave *exactly* the same, but aims to. Some notes:
   //  - It is *NOT* sorted by the user's sort function, but remains sorted in "insertion order"
   //  - It does not include docs-only stories
@@ -562,7 +677,7 @@ export default class StoryStore {
     return {
       ...story,
       parameters: this.combineStoryParameters(story.parameters, story.kind),
-      globalArgs: this._globalArgs,
+      globals: this._globals,
     };
   }
 }
