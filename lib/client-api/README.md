@@ -12,6 +12,7 @@ Each story is loaded via the `.add()` API and contains the follow attributes, wh
 - `parameters` - static data about the story, see below.
 - `args` - dynamic inputs to the story, see below.
 - `hooks` - listeners that will rerun when the story changes or is unmounted, see `@storybook/addons`.
+- `viewMode` - property that tells if the story is being rendered in Canvas or Docs tab. Values are `story` for canvas and `docs` for docs.
 
 ## Parameters
 
