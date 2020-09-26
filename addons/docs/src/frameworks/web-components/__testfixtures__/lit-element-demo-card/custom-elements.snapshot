@@ -24,6 +24,16 @@ Object {
           "type": "object",
         },
       ],
+      "cssParts": Array [
+        Object {
+          "description": "Front of the card",
+          "name": "front",
+        },
+        Object {
+          "description": "Back of the card",
+          "name": "back",
+        },
+      ],
       "cssProperties": Array [
         Object {
           "description": "Header font size",
