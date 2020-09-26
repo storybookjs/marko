@@ -1,3 +1,14 @@
+## 6.1.0-alpha.17 (September 26, 2020)
+
+### Features
+
+- Addon-docs: Add CSS Shadow Parts to web-component props table ([#10442](https://github.com/storybookjs/storybook/pull/10442))
+
+### Dependency Upgrades
+
+- [Security] Bump bl from 1.2.2 to 1.2.3 ([#12480](https://github.com/storybookjs/storybook/pull/12480))
+- [Security] Bump node-fetch from 2.6.0 to 2.6.1 ([#12448](https://github.com/storybookjs/storybook/pull/12448))
+
 ## 6.0.22 (September 26, 2020)
 
 ### Bug Fixes
