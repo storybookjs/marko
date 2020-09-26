@@ -47,10 +47,7 @@ function generateElement(
         inferedType as InspectionIdentifiableInferedType
       );
 
-      return createSummaryValue(
-        prettyIdentifier,
-        prettyIdentifier !== defaultValue ? defaultValue : undefined
-      );
+      return createSummaryValue(prettyIdentifier, defaultValue);
     }
   }
 

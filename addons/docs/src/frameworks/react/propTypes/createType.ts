@@ -381,7 +381,7 @@ export function createType(extractedProp: ExtractedProp): PropType {
           }
         }
 
-        return createSummaryValue(short, short !== full ? full : undefined);
+        return createSummaryValue(short, full);
       }
       case PropTypesType.FUNC: {
         const { short, full } = generateType(type, extractedProp);

@@ -50,7 +50,7 @@ function generateReactObject(rawDefaultProp: any) {
   if (displayName != null) {
     const prettyIdentifier = getPrettyElementIdentifier(displayName);
 
-    return createSummaryValue(prettyIdentifier, prettyIdentifier !== jsx ? jsx : undefined);
+    return createSummaryValue(prettyIdentifier, jsx);
   }
 
   if (isString(type)) {
