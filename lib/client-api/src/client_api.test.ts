@@ -509,7 +509,7 @@ describe('preview.client_api', () => {
       expect(getStorybook().map((story) => story.kind)).toEqual(['kind1', 'kind2']);
     });
 
-    it('should call `module.hot.dispose` inside add and soriesOf by default', () => {
+    it('should call `module.hot.dispose` inside add and storiesOf by default', () => {
       const mod = (new MockModule() as unknown) as NodeModule;
       const mockHotDispose = jest.fn();
       mod.hot.dispose = mockHotDispose;
