@@ -6421,7 +6421,7 @@ Fixes 4.0.9
 ### Features
 
 - UI: Accessible success/fail colors ([#4843](https://github.com/storybookjs/storybook/pull/4843))
-- React-native: add option to set keyboarVerticalOffset ([#4862](https://github.com/storybookjs/storybook/pull/4862))
+- React-native: add option to set keyboardVerticalOffset ([#4862](https://github.com/storybookjs/storybook/pull/4862))
 - Addon-CSSResources: new adddon to dynamically add/remove css ([#4622](https://github.com/storybookjs/storybook/pull/4622))
 
 ### Bug Fixes
