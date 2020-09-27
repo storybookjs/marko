@@ -5065,7 +5065,7 @@ NPM publish failed
 
 - Addon-centered: Fix horizontal scrolling overflow ([#6361](https://github.com/storybookjs/storybook/pull/6361))
 - Angular: Support OnPush change detection for class-specified components ([#6360](https://github.com/storybookjs/storybook/pull/6360))
-- Addon-storysource: Reuase clientApi when possible ([#6154](https://github.com/storybookjs/storybook/pull/6154))
+- Addon-storysource: Reuse clientApi when possible ([#6154](https://github.com/storybookjs/storybook/pull/6154))
 
 ### Bug Fixes
 
