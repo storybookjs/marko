@@ -131,7 +131,7 @@ Static parameters can be defined using the `params` story parameter. For example
 
 The Red and Green story HTML will be fetched from the urls `server.url/controls/button?color=red&label=Stopr` and `server.url/controls/button?color=green&label=OK`
 
-Like all story parameters server params can be defined in the default export and overriden in stories.
+Like all story parameters server params can be defined in the default export and overridden in stories.
 
 ```json
 {
@@ -280,7 +280,7 @@ To use actions, use the `parameters.actions.handles` parameter:
 
 ### fetchStoryHtml
 
-For control over how `@storybook/server` fetches Html from the server you can provide a `fetchStoryHtml` function as a parameter. You would typically set this in `.storybook/preview.js` but it's just a regular Storybook parameter so could be overriden at the stories or story level.
+For control over how `@storybook/server` fetches Html from the server you can provide a `fetchStoryHtml` function as a parameter. You would typically set this in `.storybook/preview.js` but it's just a regular Storybook parameter so could be overridden at the stories or story level.
 
 
 ```javascript
