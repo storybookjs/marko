@@ -18,7 +18,7 @@ Each story is loaded via the `.add()` API and contains the follow attributes, wh
 
 The story parameters is a static, serializable object of data that provides details about the story. Those details can be used by addons or Storybook itself to render UI or provide defaults about the story rendering.
 
-Parameters _cannot change_ and are syncronized to the manager once when the story is loaded (note over the lifetime of a development Storybook a story can be loaded several times due to hot module reload, so the parameters technically can change for that reason).
+Parameters _cannot change_ and are synchronized to the manager once when the story is loaded (note over the lifetime of a development Storybook a story can be loaded several times due to hot module reload, so the parameters technically can change for that reason).
 
 Usually addons will read from a single key of `parameters` namespaced by the name of that addon. For instance the configuration of the `backgrounds` addon is driven by the `parameters.backgrounds` namespace.
 
@@ -88,7 +88,7 @@ Then `context.args` will default to `{ primary: true, size: 'large', extra: 'pro
 
 ### Using args in an addon
 
-Args values are automatically syncronized (via the `changeStoryArgs` and `storyArgsChanged` events) between the preview and manager; APIs exist in `lib/api` to read and set args in the manager.
+Args values are automatically synchronized (via the `changeStoryArgs` and `storyArgsChanged` events) between the preview and manager; APIs exist in `lib/api` to read and set args in the manager.
 
 Args need to be serializable -- so currently cannot include callbacks (this may change in a future version).
 
@@ -114,7 +114,7 @@ To set initial values of global args, set the `parameters.globals` parameters. A
 
 ### Using global args in an addon
 
-Similar to args, global args are syncronized to the manager and can be accessed via the `useGlobals` hook.
+Similar to args, global args are synchronized to the manager and can be accessed via the `useGlobals` hook.
 
 ```js
 import { useGlobals } from '@storybook/client-api'; // or '@storybook/api'
