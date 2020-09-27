@@ -103,7 +103,7 @@ const functionResolver: TypeResolver = (rawDefaultProp, propDef) => {
     try {
       inspectionResult = inspectValue(rawDefaultProp.toString());
 
-      const { hasParams, params } = inspectionResult.inferedType as InspectionFunction;
+      const { hasParams, params } = inspectionResult.inferredType as InspectionFunction;
       if (hasParams) {
         // It might be a functional component accepting props.
         if (params.length === 1 && params[0].type === 'ObjectPattern') {
@@ -133,7 +133,7 @@ const functionResolver: TypeResolver = (rawDefaultProp, propDef) => {
       inspectionResult = inspectValue(rawDefaultProp.toString());
     }
 
-    const { hasParams } = inspectionResult.inferedType as InspectionFunction;
+    const { hasParams } = inspectionResult.inferredType as InspectionFunction;
 
     return createSummaryValue(getPrettyFuncIdentifier(funcName, hasParams));
   }

@@ -53,7 +53,7 @@ interface TypeDef {
   short: string;
   compact: string;
   full: string;
-  inferedType?: InspectionType;
+  inferredType?: InspectionType;
 }
 
 function createTypeDef({
@@ -61,20 +61,20 @@ function createTypeDef({
   short,
   compact,
   full,
-  inferedType,
+  inferredType,
 }: {
   name: string;
   short: string;
   compact: string;
   full?: string;
-  inferedType?: InspectionType;
+  inferredType?: InspectionType;
 }): TypeDef {
   return {
     name,
     short,
     compact,
     full: full != null ? full : short,
-    inferedType,
+    inferredType,
   };
 }
 
@@ -112,8 +112,8 @@ function getCaptionForInspectionType(type: InspectionType): string {
 }
 
 function generateTypeFromString(value: string, originalTypeName: string): TypeDef {
-  const { inferedType, ast } = inspectValue(value);
-  const { type } = inferedType;
+  const { inferredType, ast } = inspectValue(value);
+  const { type } = inferredType;
 
   let short;
   let compact;
@@ -126,7 +126,7 @@ function generateTypeFromString(value: string, originalTypeName: string): TypeDe
       compact = value;
       break;
     case InspectionType.OBJECT: {
-      const { depth } = inferedType as InspectionObject;
+      const { depth } = inferredType as InspectionObject;
 
       short = OBJECT_CAPTION;
       compact = depth === 1 ? prettyObject(ast, true) : null;
@@ -134,7 +134,7 @@ function generateTypeFromString(value: string, originalTypeName: string): TypeDe
       break;
     }
     case InspectionType.ELEMENT: {
-      const { identifier } = inferedType as InspectionElement;
+      const { identifier } = inferredType as InspectionElement;
 
       short = identifier != null && !isHtmlTag(identifier) ? identifier : ELEMENT_CAPTION;
       compact = splitIntoLines(value).length === 1 ? value : null;
@@ -142,7 +142,7 @@ function generateTypeFromString(value: string, originalTypeName: string): TypeDe
       break;
     }
     case InspectionType.ARRAY: {
-      const { depth } = inferedType as InspectionArray;
+      const { depth } = inferredType as InspectionArray;
 
       short = ARRAY_CAPTION;
       compact = depth <= 2 ? prettyArray(ast, true) : null;
@@ -161,7 +161,7 @@ function generateTypeFromString(value: string, originalTypeName: string): TypeDe
     short,
     compact,
     full,
-    inferedType: type,
+    inferredType: type,
   });
 }
 
@@ -203,8 +203,8 @@ function generateShape(type: DocgenPropType, extractedProp: ExtractedProp): Type
     .map((key: string) => `${key}: ${generateType(type.value[key], extractedProp).full}`)
     .join(', ');
 
-  const { inferedType, ast } = inspectValue(`{ ${fields} }`);
-  const { depth } = inferedType as InspectionObject;
+  const { inferredType, ast } = inspectValue(`{ ${fields} }`);
+  const { depth } = inferredType as InspectionObject;
 
   return createTypeDef({
     name: PropTypesType.SHAPE,
@@ -305,10 +305,10 @@ function createArrayOfObjectTypeDef(short: string, compact: string, full: string
 }
 
 function generateArray(type: DocgenPropType, extractedProp: ExtractedProp): TypeDef {
-  const { name, short, compact, full, inferedType } = generateType(type.value, extractedProp);
+  const { name, short, compact, full, inferredType } = generateType(type.value, extractedProp);
 
   if (name === PropTypesType.CUSTOM) {
-    if (inferedType === InspectionType.OBJECT) {
+    if (inferredType === InspectionType.OBJECT) {
       return createArrayOfObjectTypeDef(short, compact, full);
     }
   } else if (name === PropTypesType.SHAPE) {

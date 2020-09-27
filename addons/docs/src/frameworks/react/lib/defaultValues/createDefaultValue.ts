@@ -15,12 +15,12 @@ import { generateObject } from './generateObject';
 import { generateArray } from './generateArray';
 import { getPrettyIdentifier } from './prettyIdentifier';
 
-function generateFunc({ inferedType, ast }: InspectionResult): PropDefaultValue {
-  const { identifier } = inferedType as InspectionFunction;
+function generateFunc({ inferredType, ast }: InspectionResult): PropDefaultValue {
+  const { identifier } = inferredType as InspectionFunction;
 
   if (identifier != null) {
     return createSummaryValue(
-      getPrettyIdentifier(inferedType as InspectionIdentifiableInferedType),
+      getPrettyIdentifier(inferredType as InspectionIdentifiableInferedType),
       generateCode(ast)
     );
   }
@@ -38,13 +38,13 @@ function generateElement(
   defaultValue: string,
   inspectionResult: InspectionResult
 ): PropDefaultValue {
-  const { inferedType } = inspectionResult;
-  const { identifier } = inferedType as InspectionElement;
+  const { inferredType } = inspectionResult;
+  const { identifier } = inferredType as InspectionElement;
 
   if (identifier != null) {
     if (!isHtmlTag(identifier)) {
       const prettyIdentifier = getPrettyIdentifier(
-        inferedType as InspectionIdentifiableInferedType
+        inferredType as InspectionIdentifiableInferedType
       );
 
       return createSummaryValue(
@@ -63,7 +63,7 @@ export function createDefaultValue(defaultValue: string): PropDefaultValue {
   try {
     const inspectionResult = inspectValue(defaultValue);
 
-    switch (inspectionResult.inferedType.type) {
+    switch (inspectionResult.inferredType.type) {
       case InspectionType.OBJECT:
         return generateObject(inspectionResult);
       case InspectionType.FUNCTION:
