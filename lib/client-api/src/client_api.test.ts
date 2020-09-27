@@ -491,7 +491,7 @@ describe('preview.client_api', () => {
       mockChannelEmit.mockClear();
 
       // simulate an HMR of kind1, which would cause it to go to the end
-      // if the original order is not maintainaed
+      // if the original order is not maintained
       module1.hot.reload();
       storyStore.startConfiguring();
       storiesOf('kind1', (module1 as unknown) as NodeModule).add('story1', jest.fn());
