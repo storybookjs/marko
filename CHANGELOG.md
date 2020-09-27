@@ -557,7 +557,7 @@ Failed NPM publish
 ### Bug Fixes
 
 - Addon-docs: Fix docs render layout to always be 'fullscreen' ([#11699](https://github.com/storybookjs/storybook/pull/11699))
-- UI: Fix release notes on prduction builds ([#11700](https://github.com/storybookjs/storybook/pull/11700))
+- UI: Fix release notes on production builds ([#11700](https://github.com/storybookjs/storybook/pull/11700))
 - Addon-docs: Apply list styles over reset ([#11281](https://github.com/storybookjs/storybook/pull/11281))
 
 ### Maintenance
