@@ -11881,7 +11881,7 @@ Add some nice development experiment based on suggestion from Dan Abramov.
 
 21-September-2016
 
-- Move the babel config loading logic into a seperate file. [PR469](https://github.com/storybookjs/storybook/pull/469)
+- Move the babel config loading logic into a separate file. [PR469](https://github.com/storybookjs/storybook/pull/469)
 - Update airbnb eslint rules to the latest.
 
 ## v2.15.1
