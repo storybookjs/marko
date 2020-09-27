@@ -145,7 +145,7 @@ describe('enhancePropTypesProp', () => {
             type: {
               name: 'custom',
               raw:
-                'function InlinedFunctionalComponent() {\n  return <div>Inlined FunctionnalComponent!</div>;\n}',
+                'function InlinedFunctionalComponent() {\n  return <div>Inlined FunctionalComponent!</div>;\n}',
             },
           });
 
@@ -154,7 +154,7 @@ describe('enhancePropTypesProp', () => {
           expect(type.summary).toBe('InlinedFunctionalComponent');
 
           const expectedDetail = `function InlinedFunctionalComponent() {
-            return <div>Inlined FunctionnalComponent!</div>;
+            return <div>Inlined FunctionalComponent!</div>;
           }`;
 
           expect(type.detail.replace(/\s/g, '')).toBe(expectedDetail.replace(/\s/g, ''));
@@ -471,7 +471,7 @@ describe('enhancePropTypesProp', () => {
           name: 'enum',
           value: [
             {
-              value: '() => {\n  return <div>FunctionnalComponent!</div>;\n}',
+              value: '() => {\n  return <div>FunctionalComponent!</div>;\n}',
               computed: true,
             },
             {
@@ -488,7 +488,7 @@ describe('enhancePropTypesProp', () => {
       expect(type.summary).toBe('element | ClassComponent');
 
       const expectedDetail = `() => {
-          return <div>FunctionnalComponent!</div>;
+          return <div>FunctionalComponent!</div>;
         } | class ClassComponent extends React.PureComponent {
           render() {
             return <div>ClassComponent!</div>;
@@ -1108,7 +1108,7 @@ describe('enhancePropTypesProp', () => {
     it("should use the name of the React component when it's available", () => {
       const component = createTestComponent(
         createDefaultValue(
-          'function InlinedFunctionalComponent() {\n  return <div>Inlined FunctionnalComponent!</div>;\n}'
+          'function InlinedFunctionalComponent() {\n  return <div>Inlined FunctionalComponent!</div>;\n}'
         )
       );
 
@@ -1117,7 +1117,7 @@ describe('enhancePropTypesProp', () => {
       expect(defaultValue.summary).toBe('<InlinedFunctionalComponent />');
 
       const expectedDetail = `function InlinedFunctionalComponent() {
-        return <div>Inlined FunctionnalComponent!</div>;
+        return <div>Inlined FunctionalComponent!</div>;
       }`;
 
       expect(defaultValue.detail.replace(/\s/g, '')).toBe(expectedDetail.replace(/\s/g, ''));
@@ -1352,7 +1352,7 @@ describe('enhancePropTypesProp', () => {
           const component = createTestComponent(null, x);
 
           const { defaultValue } = extractPropDef(component, () => {
-            return <div>Inlined FunctionnalComponent!</div>;
+            return <div>Inlined FunctionalComponent!</div>;
           });
 
           expect(defaultValue.summary).toBe('element');
@@ -1374,7 +1374,7 @@ describe('enhancePropTypesProp', () => {
           const component = createTestComponent(null, x);
 
           const { defaultValue } = extractPropDef(component, function InlinedFunctionalComponent() {
-            return <div>Inlined FunctionnalComponent!</div>;
+            return <div>Inlined FunctionalComponent!</div>;
           });
 
           expect(defaultValue.summary).toBe('<InlinedFunctionalComponent />');
