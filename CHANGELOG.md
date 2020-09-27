@@ -350,7 +350,7 @@ Unpublished
 
 ### Maintenance
 
-- UI:pdate upgrade command in about section ([#11934](https://github.com/storybookjs/storybook/pull/11934))
+- UI: Update upgrade command in about section ([#11934](https://github.com/storybookjs/storybook/pull/11934))
 - Build: Remove documentation scripts and fix README ([#12015](https://github.com/storybookjs/storybook/pull/12015))
 
 ### Dependency Upgrades
