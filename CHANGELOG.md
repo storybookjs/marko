@@ -11619,7 +11619,7 @@ Allow customConfig to override devtool. [PR668](https://github.com/storybookjs/s
 
 03-January-2017
 
-Fixes issue [#601](https://github.com/storybookjs/storybook/issues/601) where it throws error when introduce a propType with a hypen. Add a [fix](https://github.com/kadirahq/babel-plugin-react-docgen/pull/23) to [`babel-plugin-react-docgen`](https://github.com/kadirahq/babel-plugin-react-docgen) to fix this issue.
+Fixes issue [#601](https://github.com/storybookjs/storybook/issues/601) where it throws error when introduce a propType with a hyphen. Add a [fix](https://github.com/kadirahq/babel-plugin-react-docgen/pull/23) to [`babel-plugin-react-docgen`](https://github.com/kadirahq/babel-plugin-react-docgen) to fix this issue.
 
 This release comes with the updated `babel-plugin-react-docgen`.
 
