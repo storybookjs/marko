@@ -8015,7 +8015,7 @@ Read on for more improvements, fixes. In addition, there are hundreds of depende
 - Fix css warning in angular-cli example [#2789](https://github.com/storybookjs/storybook/pull/2789)
 - Move more things to core [#2788](https://github.com/storybookjs/storybook/pull/2788)
 - Change ng stories dir [#2672](https://github.com/storybookjs/storybook/pull/2672)
-- Only update CLI snapsots on postpublish script, skip smoke tests [#2671](https://github.com/storybookjs/storybook/pull/2671)
+- Only update CLI snapshots on postpublish script, skip smoke tests [#2671](https://github.com/storybookjs/storybook/pull/2671)
 - Fix the timezone for example dates [#2654](https://github.com/storybookjs/storybook/pull/2654)
 - Update prereq yarn install level [#2638](https://github.com/storybookjs/storybook/pull/2638)
 - Separate stories in angular-cli example [#2592](https://github.com/storybookjs/storybook/pull/2592)
@@ -9642,7 +9642,7 @@ In addition to the changes listed here, also contains fixes from [3.3.5](#335) a
 4 PRs
 </summary>
 
-- Only update CLI snapsots on postpublish script, skip smoke tests [#2671](https://github.com/storybookjs/storybook/pull/2671)
+- Only update CLI snapshots on postpublish script, skip smoke tests [#2671](https://github.com/storybookjs/storybook/pull/2671)
 - Fix the timezone for example dates [#2654](https://github.com/storybookjs/storybook/pull/2654)
 - Update prereq yarn install level [#2638](https://github.com/storybookjs/storybook/pull/2638)
 - Separate stories in angular-cli example [#2592](https://github.com/storybookjs/storybook/pull/2592)
