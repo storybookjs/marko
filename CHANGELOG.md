@@ -5202,7 +5202,7 @@ Bump version number (same as 5.0.4, but need to make this `latest` again!)
 
 - UI: Fix tooltip event bindings, logger import ([#6238](https://github.com/storybookjs/storybook/pull/6238))
 - CLI: Fix stories regexp in config.js ([#6180](https://github.com/storybookjs/storybook/pull/6180))
-- Accessibilty: Add missing button titles ([#6124](https://github.com/storybookjs/storybook/pull/6124))
+- Accessibility: Add missing button titles ([#6124](https://github.com/storybookjs/storybook/pull/6124))
 - React: Fix forked CRA support on Windows ([#6236](https://github.com/storybookjs/storybook/pull/6236))
 - Addon-knkobs: Fix color type button z-index ([#6203](https://github.com/storybookjs/storybook/pull/6203))
 - Angular: Fix typo in demo example ([#6193](https://github.com/storybookjs/storybook/pull/6193))
@@ -5306,8 +5306,8 @@ NPM publish failed
 
 ### Bug Fixes
 
-- Accessibilty: Add aria label to search box ([#6131](https://github.com/storybookjs/storybook/pull/6131))
-- Accessibilty: Add missing button titles ([#6124](https://github.com/storybookjs/storybook/pull/6124))
+- Accessibility: Add aria label to search box ([#6131](https://github.com/storybookjs/storybook/pull/6131))
+- Accessibility: Add missing button titles ([#6124](https://github.com/storybookjs/storybook/pull/6124))
 - Addon-cssresources: Fix `STORY_RENDERED` CSS reset ([#6050](https://github.com/storybookjs/storybook/pull/6050))
 
 ### Maintenance
