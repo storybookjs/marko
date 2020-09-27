@@ -287,7 +287,7 @@ For control over how `@storybook/server` fetches Html from the server you can pr
 // .storybook/preview.js
 
 const fetchStoryHtml = async (url, path, params) => {
-  // Custom fetch impelentation
+  // Custom fetch implementation
   // ....
   return html;
 };
