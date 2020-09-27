@@ -5983,7 +5983,7 @@ Bad release
 ### Bug Fixes
 
 - Addon-a11y: RE-ADD deprecated 'configureA11Y' for backwards compatibility ([#5302](https://github.com/storybookjs/storybook/pull/5302))
-- UI: FIX navgition issue for `file://` URLs ([#5295](https://github.com/storybookjs/storybook/pull/5295))
+- UI: FIX navigation issue for `file://` URLs ([#5295](https://github.com/storybookjs/storybook/pull/5295))
 - UI: FIX merge mutation ([#5300](https://github.com/storybookjs/storybook/pull/5300))
 - Core: FIX issue where webpack process would hang when manager build failed ([#5290](https://github.com/storybookjs/storybook/pull/5290))
 
