@@ -140,7 +140,7 @@ function genStoryExport(ast, context) {
     storyCode = bodyParts.map(({ storyCode: code }) => code).join('\n');
     sourceCode = bodyParts.map(({ sourceCode: code }) => code).join('\n');
     const storyReactCode = bodyParts.length > 1 ? `<>\n${storyCode}\n</>` : storyCode;
-    // keep track if an indentifier or function call
+    // keep track if an identifier or function call
     // avoid breaking change for 5.3
     const BIND_REGEX = /\.bind\(.*\)/;
     if (bodyParts.length === 1 && BIND_REGEX.test(bodyParts[0].storyCode)) {
