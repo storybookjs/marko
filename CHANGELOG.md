@@ -11344,7 +11344,7 @@ Plus many more features, documentation improvements, and bugfixes below!
 #### Bug Fixes
 
 - Exit storybook build non-zero on stats errors (e.g. errors in the transpilation pipeline) [#1372](https://github.com/storybookjs/storybook/pull/1372)
-- Fixed regression: CSS entries were not picked up for storybook pages (e.g. when using exract-text-webpack-plugin) [#1363](https://github.com/storybookjs/storybook/pull/1363)
+- Fixed regression: CSS entries were not picked up for storybook pages (e.g. when using extract-text-webpack-plugin) [#1363](https://github.com/storybookjs/storybook/pull/1363)
 
 #### Documentation
 
