@@ -7555,7 +7555,7 @@ Broken release (@storybook/core-events had not been published publicly)
 - Upgraded `gatsby` in `/docs` from "1.9.252" to "1.9.253" [#3478](https://github.com/storybookjs/storybook/pull/3478)
 - Upgrade redux to 4.0.0 [#3470](https://github.com/storybookjs/storybook/pull/3470)
 - Upgrade sass-loader to 7.0.1 & stop bringing node-sass bin to each user [#3467](https://github.com/storybookjs/storybook/pull/3467)
-- Upgrate ts-node to 6.0.0 [#3460](https://github.com/storybookjs/storybook/pull/3460)
+- Upgrade ts-node to 6.0.0 [#3460](https://github.com/storybookjs/storybook/pull/3460)
 - Upgrade to json5@1.0.1 [#3466](https://github.com/storybookjs/storybook/pull/3466)
 - Update webpack-hot-middleware to fix HMR [#3463](https://github.com/storybookjs/storybook/pull/3463)
 
