@@ -10,7 +10,7 @@ The files in `src/client/preview` alongside the `@storybook/client-api` package 
 
 Each framework (e.g. `@storybook/react` / `@storybook/angular` / et al.) initializes the preview by calling into `src/client/preview/start.ts`, passing a `render` function that will be used to render stories.
 
-The `start` module initiaizes all the submodules:
+The `start` module initializes all the submodules:
 
 - `StoryStore` (from `@storybook/client-api`) - stores the stories and their state as well as the current selection or error.
 - `ClientApi` (from `@storybook/client-api`) - provides the entry point for `storiesOf()` API calls; re-exported by each framework.
