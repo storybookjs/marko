@@ -7219,7 +7219,7 @@ NOTE: `3.4.9` publish failed
 #### Features
 
 - addon-info: Use parameters for info addon [#3697](https://github.com/storybookjs/storybook/pull/3697)
-- addon-backgounds: Use parameters for backgrounds addon [#3676](https://github.com/storybookjs/storybook/pull/3676)
+- addon-backgrounds: Use parameters for backgrounds addon [#3676](https://github.com/storybookjs/storybook/pull/3676)
 - storyshots: add renderWithOptions to @addons/storyshots [#3479](https://github.com/storybookjs/storybook/pull/3479)
 - addon-knobs: Make withKnobs accept story parameters [#3675](https://github.com/storybookjs/storybook/pull/3675)
 
