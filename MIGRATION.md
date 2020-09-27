@@ -1455,7 +1455,7 @@ import centered from '@storybook/addon-centered/vue';
 
 Storybook's keyboard shortcuts are updated in 5.0, but they are configurable via the menu so if you want to set them back you can:
 
-| Shorctut               | Old         | New   |
+| Shortcut               | Old         | New   |
 | ---------------------- | ----------- | ----- |
 | Toggle sidebar         | cmd-shift-X | S     |
 | Toggle addons panel    | cmd-shift-Z | A     |
