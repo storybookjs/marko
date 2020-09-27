@@ -107,7 +107,7 @@ If you find yourself writing the same definition over and over again, Storybook 
 For instance you can use:
 
 - `number`, which is shorthand for `type: {name: 'number'}`
-- `radio`, which is a shorhand for `control: {type: 'radio' }`
+- `radio`, which is a shorthand for `control: {type: 'radio' }`
 
 #### MDX
 
