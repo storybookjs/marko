@@ -276,7 +276,7 @@ To use actions, use the `parameters.actions.handles` parameter:
 }
 ```
 
-## Advanced Configuraiton
+## Advanced Configuration
 
 ### fetchStoryHtml
 
