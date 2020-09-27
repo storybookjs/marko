@@ -97,7 +97,7 @@ You need to ensure the route in your server app renders the appropriate HTML whe
 
 ### Passing parameters to the server
 
-Many components are likely to be dynamic - responding to parameters that change their content or appearance. `@storybook\server` has two mechanisms for passing those parameters to the server - `params` and `args`. Parameters defined in this way are appended to the fetch url as query string parameters. The server endpoing is responsible for interpreting those parameters and vary the returned html appropriately
+Many components are likely to be dynamic - responding to parameters that change their content or appearance. `@storybook\server` has two mechanisms for passing those parameters to the server - `params` and `args`. Parameters defined in this way are appended to the fetch url as query string parameters. The server endpoint is responsible for interpreting those parameters and vary the returned html appropriately
 
 #### Constant parameters with `params`
 
