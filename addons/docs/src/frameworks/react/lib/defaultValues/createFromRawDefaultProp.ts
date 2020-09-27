@@ -30,7 +30,7 @@ export function extractFunctionName(func: Function, propName: string): string {
   const { name } = func;
 
   // Comparison with the prop name is to discard inferred function names.
-  if (name !== '' && name !== 'anoynymous' && name !== propName) {
+  if (name !== '' && name !== 'anonymous' && name !== propName) {
     return name;
   }
 
