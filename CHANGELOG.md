@@ -8607,7 +8607,7 @@ Fix publishing options to use exact versions for cross-dependencies per this cha
 
 - Addon-storysource: story source in addon pane [#2885](https://github.com/storybookjs/storybook/pull/2885)
 - Addon Storysource improvements [#3040](https://github.com/storybookjs/storybook/pull/3040)
-- Add moduleMetdata decorator for supplying common Angular metadata [#2959](https://github.com/storybookjs/storybook/pull/2959)
+- Add moduleMetadata decorator for supplying common Angular metadata [#2959](https://github.com/storybookjs/storybook/pull/2959)
 - `Addon Storysource` Add auto scrolling to the selected story [#3025](https://github.com/storybookjs/storybook/pull/3025)
 - Enable groupId option for knobs to be organized into sub panels. [#2661](https://github.com/storybookjs/storybook/pull/2661)
 - Added beforeScreenshot config option to addons/storyshots, to allow testing of components with mounting animations [#2972](https://github.com/storybookjs/storybook/pull/2972)
