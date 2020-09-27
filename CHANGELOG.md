@@ -11458,7 +11458,7 @@ Minor features including a new "events" addon, as well as the usual bugfixes, cl
 #### Dependency Upgrades
 
 - Update babel docgen plugin to generate docs for React.createClass and createReactClass [#1206](https://github.com/storybookjs/storybook/pull/1206)
-- Update `marksy` dependecy due broken 1.1.0 version [#1204](https://github.com/storybookjs/storybook/pull/1204)
+- Update `marksy` dependency due broken 1.1.0 version [#1204](https://github.com/storybookjs/storybook/pull/1204)
 
 ## 3.0.1
 
