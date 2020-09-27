@@ -4608,7 +4608,7 @@ Publish failed
 ### Bug Fixes
 
 - UI: Fix initial bottom panel size ([#6822](https://github.com/storybookjs/storybook/pull/6822))
-- UI: Fix syntaxthighlighter themes ([#6814](https://github.com/storybookjs/storybook/pull/6814))
+- UI: Fix syntaxhighlighter themes ([#6814](https://github.com/storybookjs/storybook/pull/6814))
 - Addon-knobs: Fix Boolean knob (#6366) ([#6830](https://github.com/storybookjs/storybook/pull/6830))
 - Theming: Change lib/theming so it no longer depends on react-inspector ([#6818](https://github.com/storybookjs/storybook/pull/6818))
 - Core: Handle loading `.storybook/babel.config.js` (#6633) ([#6634](https://github.com/storybookjs/storybook/pull/6634))
