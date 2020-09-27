@@ -1799,7 +1799,7 @@ NOTE: `6.0.0-alpha.24` broken due to bad merge. Sorry!
 
 ### Maintenance
 
-- Buidld: Setup TeamCity Cloud ([#9875](https://github.com/storybookjs/storybook/pull/9875))
+- Build: Setup TeamCity Cloud ([#9875](https://github.com/storybookjs/storybook/pull/9875))
 - Tech/improvements ([#10096](https://github.com/storybookjs/storybook/pull/10096))
 - Core: Move event handlers into module init ([#10085](https://github.com/storybookjs/storybook/pull/10085))
 
