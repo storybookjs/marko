@@ -308,4 +308,4 @@ type FetchStoryHtmlType = (url: string, id: string, params: any) => Promise<stri
 
  * url: Server url configured by the `parameters.server.url`
  * id: Id of the story being rendered given by `parameters.server.id`
- * params: Mereged story params `parameters.server.params`and story args
+ * params: Merged story params `parameters.server.params`and story args
