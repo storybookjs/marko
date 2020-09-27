@@ -1719,7 +1719,7 @@ Failed publish
 - Server: Simplify server addons ([#9931](https://github.com/storybookjs/storybook/pull/9931))
 - Core: FIX error of load order when using configure in preview|config.js ([#10159](https://github.com/storybookjs/storybook/pull/10159))
 - Build: Experiment to make CircleCI tests a faster and more stable ([#9969](https://github.com/storybookjs/storybook/pull/9969))
-- Vue: Fix webpack config when excute 'yarn workspace vue-example dev' ([#9704](https://github.com/storybookjs/storybook/pull/9704))
+- Vue: Fix webpack config when execute 'yarn workspace vue-example dev' ([#9704](https://github.com/storybookjs/storybook/pull/9704))
 - Core: Re-enable failing args tests ([#10126](https://github.com/storybookjs/storybook/pull/10126))
 - Build: Add script & parallelization for running chromatic on examples ([#10125](https://github.com/storybookjs/storybook/pull/10125))
 
