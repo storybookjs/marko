@@ -1205,7 +1205,7 @@ sortedModules.forEach((key) => {
 
 ### Webpack config simplification
 
-The API for custom webpack configuration has been simplifed in 5.0, but it's a breaking change. Storybook's "full control mode" for webpack allows you to override the webpack config with a function that returns a configuration object.
+The API for custom webpack configuration has been simplified in 5.0, but it's a breaking change. Storybook's "full control mode" for webpack allows you to override the webpack config with a function that returns a configuration object.
 
 In Storybook 5 there is a single signature for full-control mode that takes a parameters object with the fields `config` and `mode`:
 
