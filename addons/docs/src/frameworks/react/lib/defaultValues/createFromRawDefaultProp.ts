@@ -92,7 +92,7 @@ const functionResolver: TypeResolver = (rawDefaultProp, propDef) => {
   let isElement = false;
   let inspectionResult;
 
-  // Try to display the name of the component. The body of the component is ommited since the code has been transpiled.
+  // Try to display the name of the component. The body of the component is omitted since the code has been transpiled.
   if (isFunction(rawDefaultProp.render)) {
     isElement = true;
   } else if (rawDefaultProp.prototype != null && isFunction(rawDefaultProp.prototype.render)) {
