@@ -5204,7 +5204,7 @@ Bump version number (same as 5.0.4, but need to make this `latest` again!)
 - CLI: Fix stories regexp in config.js ([#6180](https://github.com/storybookjs/storybook/pull/6180))
 - Accessibility: Add missing button titles ([#6124](https://github.com/storybookjs/storybook/pull/6124))
 - React: Fix forked CRA support on Windows ([#6236](https://github.com/storybookjs/storybook/pull/6236))
-- Addon-knkobs: Fix color type button z-index ([#6203](https://github.com/storybookjs/storybook/pull/6203))
+- Addon-knobs: Fix color type button z-index ([#6203](https://github.com/storybookjs/storybook/pull/6203))
 - Angular: Fix typo in demo example ([#6193](https://github.com/storybookjs/storybook/pull/6193))
 - Addon-Info: Restore fonts and color styling ([#6186](https://github.com/storybookjs/storybook/pull/6186))
 - Addon-knobs: Fix ObjectType knob react warning ([#6159](https://github.com/storybookjs/storybook/pull/6159))
@@ -5258,7 +5258,7 @@ NPM publish failed
 
 ### Bug Fixes
 
-- Addon-knkobs: Fix color type button z-index ([#6203](https://github.com/storybookjs/storybook/pull/6203))
+- Addon-knobs: Fix color type button z-index ([#6203](https://github.com/storybookjs/storybook/pull/6203))
 - Angular: Fix typo in demo example ([#6193](https://github.com/storybookjs/storybook/pull/6193))
 - UI: Fix problem with selectedPanel reset ([#6149](https://github.com/storybookjs/storybook/pull/6149))
 
