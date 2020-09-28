@@ -1,9 +1,13 @@
 import { Provider } from '@storybook/ui';
-import addons from '@storybook/addons';
+import addons, { AddonStore, Channel, Types } from '@storybook/addons';
 import createChannel from '@storybook/channel-postmessage';
 import Events from '@storybook/core-events';
 
 export default class ReactProvider extends Provider {
+  private addons: AddonStore;
+
+  private channel: Channel;
+
   constructor() {
     super();
 
@@ -16,15 +20,22 @@ export default class ReactProvider extends Provider {
     this.channel = channel;
   }
 
-  getElements(type) {
+  // FIXME: Overload doesn't match function of super class
+  // @ts-ignore
+  getElements(type: Types) {
     return this.addons.getElements(type);
   }
 
-  getConfig() {
+  // FIXME: Define return type to avoid:
+  // TS4053: Return type of public method from exported class has or is using name 'Config'
+  // @ts-ignore
+  getConfig(): any {
     return this.addons.getConfig();
   }
 
-  handleAPI(api) {
+  // FIXME: Overload doesn't match function of super class
+  // @ts-ignore
+  handleAPI(api: unknown) {
     this.addons.loadAddons(api);
   }
 }

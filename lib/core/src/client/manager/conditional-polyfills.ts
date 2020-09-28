@@ -6,7 +6,7 @@ export const importPolyfills = () => {
   if (!window.fetch) {
     // manually patch window.fetch;
     //    see issue: <https://github.com/developit/unfetch/issues/101#issuecomment-454451035>
-    const patch = ({ default: fetch }) => {
+    const patch = ({ default: fetch }: any) => {
       window.fetch = fetch;
     };
 
