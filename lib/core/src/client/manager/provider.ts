@@ -1,5 +1,5 @@
 import { Provider } from '@storybook/ui';
-import addons, { AddonStore, Channel, Types } from '@storybook/addons';
+import addons, { AddonStore, Channel, Config, Types } from '@storybook/addons';
 import createChannel from '@storybook/channel-postmessage';
 import Events from '@storybook/core-events';
 
@@ -26,10 +26,7 @@ export default class ReactProvider extends Provider {
     return this.addons.getElements(type);
   }
 
-  // FIXME: Define return type to avoid:
-  // TS4053: Return type of public method from exported class has or is using name 'Config'
-  // @ts-ignore
-  getConfig(): any {
+  getConfig(): Config {
     return this.addons.getConfig();
   }
 
