@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 
-export function getMiddleware(configDir) {
+export function getMiddleware(configDir: string) {
   const middlewarePath = path.resolve(configDir, 'middleware.js');
   if (fs.existsSync(middlewarePath)) {
     let middlewareModule = require(middlewarePath); // eslint-disable-line

@@ -14,13 +14,13 @@ function sortExtensions() {
 
 const possibleExtensions = sortExtensions();
 
-export function getInterpretedFile(pathToFile) {
+export function getInterpretedFile(pathToFile: string) {
   return possibleExtensions
     .map((ext) => (pathToFile.endsWith(ext) ? pathToFile : `${pathToFile}${ext}`))
     .find((candidate) => fs.existsSync(candidate));
 }
 
-export function getInterpretedFileWithExt(pathToFile) {
+export function getInterpretedFileWithExt(pathToFile: string) {
   return possibleExtensions
     .map((ext) => ({ path: pathToFile.endsWith(ext) ? pathToFile : `${pathToFile}${ext}`, ext }))
     .find((candidate) => fs.existsSync(candidate.path));

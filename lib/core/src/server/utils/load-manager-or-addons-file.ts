@@ -4,9 +4,7 @@ import dedent from 'ts-dedent';
 
 import { getInterpretedFile } from './interpret-files';
 
-const toArray = (a) => (a ? [a] : a);
-
-export function loadManagerOrAddonsFile({ configDir }) {
+export function loadManagerOrAddonsFile({ configDir }: { configDir: string }) {
   const storybookCustomAddonsPath = getInterpretedFile(path.resolve(configDir, 'addons'));
   const storybookCustomManagerPath = getInterpretedFile(path.resolve(configDir, 'manager'));
 

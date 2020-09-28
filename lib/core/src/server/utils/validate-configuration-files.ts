@@ -13,7 +13,7 @@ const warnLegacyConfigurationFiles = deprecate(
   `
 );
 
-const errorMixingConfigFiles = (first, second, configDir) => {
+const errorMixingConfigFiles = (first: string, second: string, configDir: string) => {
   const firstPath = path.resolve(configDir, first);
   const secondPath = path.resolve(configDir, second);
   throw new Error(dedent`
@@ -25,9 +25,9 @@ const errorMixingConfigFiles = (first, second, configDir) => {
   `);
 };
 
-export default function validateConfigurationFiles(configDir) {
+export default function validateConfigurationFiles(configDir: string) {
   const extensionsPattern = `{${Array.from(boost).join(',')}}`;
-  const exists = (file) =>
+  const exists = (file: string) =>
     !!glob.sync(path.resolve(configDir, `${file}${extensionsPattern}`)).length;
 
   const main = exists('main');

@@ -1,10 +1,10 @@
 import path from 'path';
 import fs from 'fs';
 
-const interpolate = (string, data = {}) =>
+const interpolate = (string: string, data: Record<string, string> = {}) =>
   Object.entries(data).reduce((acc, [k, v]) => acc.replace(new RegExp(`%${k}%`, 'g'), v), string);
 
-export function getPreviewBodyHtml(configDirPath, interpolations) {
+export function getPreviewBodyHtml(configDirPath: string, interpolations?: Record<string, string>) {
   const base = fs.readFileSync(
     path.resolve(__dirname, '../templates/base-preview-body.html'),
     'utf8'
@@ -20,7 +20,7 @@ export function getPreviewBodyHtml(configDirPath, interpolations) {
   return interpolate(result, interpolations);
 }
 
-export function getPreviewHeadHtml(configDirPath, interpolations) {
+export function getPreviewHeadHtml(configDirPath: string, interpolations?: Record<string, string>) {
   const base = fs.readFileSync(
     path.resolve(__dirname, '../templates/base-preview-head.html'),
     'utf8'
@@ -36,7 +36,7 @@ export function getPreviewHeadHtml(configDirPath, interpolations) {
   return interpolate(result, interpolations);
 }
 
-export function getManagerHeadHtml(configDirPath, interpolations) {
+export function getManagerHeadHtml(configDirPath: string, interpolations: Record<string, string>) {
   const base = fs.readFileSync(
     path.resolve(__dirname, '../templates/base-manager-head.html'),
     'utf8'

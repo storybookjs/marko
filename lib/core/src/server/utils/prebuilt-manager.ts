@@ -17,7 +17,13 @@ export const IGNORED_ADDONS = [
   ...DEFAULT_ADDONS,
 ];
 
-export const getPrebuiltDir = async ({ configDir, options }) => {
+export const getPrebuiltDir = async ({
+  configDir,
+  options,
+}: {
+  configDir: string;
+  options: { managerCache?: boolean };
+}) => {
   if (options.managerCache === false) return false;
 
   const prebuiltDir = path.join(__dirname, '../../../prebuilt');
@@ -33,7 +39,7 @@ export const getPrebuiltDir = async ({ configDir, options }) => {
   const { addons, refs, managerBabel, managerWebpack } = serverRequire(mainConfigFile);
   if (!addons || refs || managerBabel || managerWebpack) return false;
   if (DEFAULT_ADDONS.some((addon) => !addons.includes(addon))) return false;
-  if (addons.some((addon) => !IGNORED_ADDONS.includes(addon))) return false;
+  if (addons.some((addon: string) => !IGNORED_ADDONS.includes(addon))) return false;
 
   // Auto refs will not be listed in the config, so we have to verify there aren't any
   const autoRefs = await getAutoRefs({ configDir });

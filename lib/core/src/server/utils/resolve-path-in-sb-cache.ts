@@ -9,7 +9,7 @@ import pkgDir from 'pkg-dir';
  * @param fileOrDirectoryName {string} Name of the file or directory
  * @return {string} Absolute path to the file or directory
  */
-export function resolvePathInStorybookCache(fileOrDirectoryName) {
+export function resolvePathInStorybookCache(fileOrDirectoryName: string) {
   const cwd = process.cwd();
   const projectDir = pkgDir.sync(cwd);
 

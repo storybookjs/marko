@@ -4,7 +4,7 @@ import JSON5 from 'json5';
 
 import { logger } from '@storybook/node-logger';
 
-function removeReactHmre(presets) {
+function removeReactHmre(presets: string[]) {
   const index = presets.indexOf('react-hmre');
   if (index > -1) {
     presets.splice(index, 1);
@@ -12,9 +12,12 @@ function removeReactHmre(presets) {
 }
 
 // Tries to load a .babelrc and returns the parsed object if successful
-function loadFromPath(babelConfigPath) {
+function loadFromPath(babelConfigPath: string) {
   let config;
-  const error = {};
+  const error: {
+    js?: any;
+    json?: any;
+  } = {};
 
   if (fs.existsSync(babelConfigPath)) {
     const content = fs.readFileSync(babelConfigPath, 'utf-8');
@@ -65,7 +68,7 @@ function loadFromPath(babelConfigPath) {
   return config;
 }
 
-export default async function (configDir, getDefaultConfig) {
+export default async function (configDir: string, getDefaultConfig: () => unknown) {
   // Between versions 5.1.0 - 5.1.9 this loaded babel.config.js from the project
   // root, which was an unintentional breaking change. We can add back project support
   // in 6.0.

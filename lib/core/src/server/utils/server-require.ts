@@ -7,7 +7,7 @@ import { getInterpretedFileWithExt } from './interpret-files';
 
 const compilersState = new Map();
 
-function registerCompiler(moduleDescriptor) {
+function registerCompiler(moduleDescriptor: any): number {
   if (!moduleDescriptor) {
     return 0;
   }
@@ -47,7 +47,7 @@ function registerCompiler(moduleDescriptor) {
   return registered;
 }
 
-function interopRequireDefault(filePath) {
+function interopRequireDefault(filePath: string) {
   // eslint-disable-next-line import/no-dynamic-require,global-require
   const result = require(filePath);
 
@@ -57,7 +57,7 @@ function interopRequireDefault(filePath) {
   return isES6DefaultExported ? result.default : result;
 }
 
-function getCandidate(paths) {
+function getCandidate(paths: string[]) {
   for (let i = 0; i < paths.length; i += 1) {
     const candidate = getInterpretedFileWithExt(paths[i]);
 
@@ -69,7 +69,7 @@ function getCandidate(paths) {
   return undefined;
 }
 
-export function serverRequire(filePath) {
+export function serverRequire(filePath: string | string[]) {
   const candidatePath = serverResolve(filePath);
 
   if (!candidatePath) {
@@ -90,7 +90,7 @@ export function serverRequire(filePath) {
   return interopRequireDefault(candidatePath);
 }
 
-export function serverResolve(filePath) {
+export function serverResolve(filePath: string | string[]) {
   const paths = Array.isArray(filePath) ? filePath : [filePath];
   const existingCandidate = getCandidate(paths);
 

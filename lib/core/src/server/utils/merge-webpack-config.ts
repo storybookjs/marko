@@ -1,23 +1,38 @@
-function plugins({ plugins: defaultPlugins = [] }, { plugins: customPlugins = [] }) {
+function plugins<T>(
+  { plugins: defaultPlugins = [] }: { plugins?: T[] },
+  { plugins: customPlugins = [] }: { plugins?: T[] }
+): T[] {
   return [...defaultPlugins, ...customPlugins];
 }
 
-function rules({ rules: defaultRules = [] }, { rules: customRules = [] }) {
+function rules<T>(
+  { rules: defaultRules = [] }: { rules?: T[] },
+  { rules: customRules = [] }: { rules?: T[] }
+): T[] {
   return [...defaultRules, ...customRules];
 }
 
-function extensions({ extensions: defaultExtensions = [] }, { extensions: customExtensions = [] }) {
+function extensions<T>(
+  { extensions: defaultExtensions = [] }: { extensions?: T[] },
+  { extensions: customExtensions = [] }: { extensions?: T[] }
+): T[] {
   return [...defaultExtensions, ...customExtensions];
 }
 
-function alias({ alias: defaultAlias = {} }, { alias: customAlias = {} }) {
+function alias(
+  { alias: defaultAlias = {} }: { alias?: any },
+  { alias: customAlias = {} }: { alias?: any }
+) {
   return {
     ...defaultAlias,
     ...customAlias,
   };
 }
 
-function module({ module: defaultModule = {} }, { module: customModule = {} }) {
+function module(
+  { module: defaultModule = {} }: { module?: any },
+  { module: customModule = {} }: { module?: any }
+) {
   return {
     ...defaultModule,
     ...customModule,
@@ -25,7 +40,10 @@ function module({ module: defaultModule = {} }, { module: customModule = {} }) {
   };
 }
 
-function resolve({ resolve: defaultResolve = {} }, { resolve: customResolve = {} }) {
+function resolve(
+  { resolve: defaultResolve = {} }: { resolve?: any },
+  { resolve: customResolve = {} }: { resolve?: any }
+) {
   return {
     ...defaultResolve,
     ...customResolve,
@@ -35,8 +53,8 @@ function resolve({ resolve: defaultResolve = {} }, { resolve: customResolve = {}
 }
 
 function optimization(
-  { optimization: defaultOptimization = {} },
-  { optimization: customOptimization = {} }
+  { optimization: defaultOptimization = {} }: { optimization?: any },
+  { optimization: customOptimization = {} }: { optimization?: any }
 ) {
   return {
     ...defaultOptimization,
@@ -44,7 +62,7 @@ function optimization(
   };
 }
 
-function mergeConfigs(config, customConfig) {
+function mergeConfigs(config: any, customConfig: any) {
   return {
     // We'll always load our configurations after the custom config.
     // So, we'll always load the stuff we need.

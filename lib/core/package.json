@@ -134,6 +134,8 @@
     "webpack-virtual-modules": "^0.2.2"
   },
   "devDependencies": {
+    "@types/mock-fs": "^4.10.0",
+    "@types/interpret": "^1.1.1",
     "mock-fs": "^4.12.0"
   },
   "peerDependencies": {
