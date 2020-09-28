@@ -20,8 +20,6 @@ export default class ReactProvider extends Provider {
     this.channel = channel;
   }
 
-  // FIXME: Overload doesn't match function of super class
-  // @ts-ignore
   getElements(type: Types) {
     return this.addons.getElements(type);
   }
@@ -30,8 +28,6 @@ export default class ReactProvider extends Provider {
     return this.addons.getConfig();
   }
 
-  // FIXME: Overload doesn't match function of super class
-  // @ts-ignore
   handleAPI(api: unknown) {
     this.addons.loadAddons(api);
   }
