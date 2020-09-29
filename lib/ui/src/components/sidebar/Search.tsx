@@ -140,10 +140,21 @@ const Search: FunctionComponent<{
   const api = useStorybookApi();
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputPlaceholder, setPlaceholder] = useState('Find components');
+  const [allComponents, showAllComponents] = useState(false);
+
+  const selectStory = useCallback(
+    (id: string, refId: string) => {
+      if (api) api.selectStory(id, undefined, { ref: refId !== DEFAULT_REF_ID && refId });
+      inputRef.current.blur();
+      showAllComponents(false);
+    },
+    [api, inputRef, showAllComponents, DEFAULT_REF_ID]
+  );
 
   useEffect(() => {
     const focusSearch = (event: KeyboardEvent) => {
       if (!inputRef.current) return;
+      if (event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) return;
       if (event.key === '/' && inputRef.current !== document.activeElement) {
         inputRef.current.focus();
         event.preventDefault();
@@ -153,7 +164,7 @@ const Search: FunctionComponent<{
     // Keyup prevents slashes from ending up in the input field when held down
     document.addEventListener('keyup', focusSearch);
     return () => document.removeEventListener('keyup', focusSearch);
-  }, []);
+  }, [inputRef]);
 
   const list: ItemWithRefId[] = useMemo(
     () =>
@@ -164,8 +175,6 @@ const Search: FunctionComponent<{
     [dataset]
   );
   const fuse = useMemo(() => new Fuse(list, options), [list]);
-
-  const [allComponents, showAllComponents] = useState(false);
 
   const getResults = useCallback(
     (input: string) => {
@@ -204,9 +213,7 @@ const Search: FunctionComponent<{
       if (type === clickItem || type === keyDownEnter) {
         if (isSearchResult(selectedItem)) {
           const { id, refId } = selectedItem.item;
-          if (api) api.selectStory(id, undefined, { ref: refId !== DEFAULT_REF_ID && refId });
-          inputRef.current.blur();
-          showAllComponents(false);
+          selectStory(id, refId);
           return { inputValue: '' };
         }
         if (isExpandType(selectedItem)) {
@@ -219,7 +226,7 @@ const Search: FunctionComponent<{
       }
       return changes;
     },
-    [api, inputRef, showAllComponents, DEFAULT_REF_ID]
+    [inputRef, selectStory, showAllComponents]
   );
 
   return (
