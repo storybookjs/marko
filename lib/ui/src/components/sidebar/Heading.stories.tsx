@@ -7,17 +7,7 @@ import { Heading } from './Heading';
 export default {
   component: Heading,
   title: 'UI/Sidebar/Heading',
-  decorators: [
-    (storyFn: any) => (
-      <div
-        style={{
-          maxWidth: '240px',
-        }}
-      >
-        {storyFn()}
-      </div>
-    ),
-  ],
+  decorators: [(storyFn: any) => <div style={{ maxWidth: '240px' }}>{storyFn()}</div>],
   excludeStories: /.*Data$/,
   parameters: {
     layout: 'fullscreen',

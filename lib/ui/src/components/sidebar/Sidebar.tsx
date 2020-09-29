@@ -1,16 +1,40 @@
-import React, { FunctionComponent, useMemo, useState, useCallback, Fragment } from 'react';
+/* eslint-env browser */
+
+import React, { FunctionComponent, useEffect, useMemo, useState, useCallback } from 'react';
 
 import { styled } from '@storybook/theming';
-import { ScrollArea, Placeholder, Spaced } from '@storybook/components';
-import { StoriesHash, State } from '@storybook/api';
+import { ScrollArea, Spaced } from '@storybook/components';
+import { StoriesHash, State, isRoot } from '@storybook/api';
 
 import { Heading } from './Heading';
 
-import { Search } from './Search';
-import { filteredLength } from './Tree/utils';
+import Explorer from './Explorer';
+import Search from './Search';
+import SearchResults from './SearchResults';
+import { CombinedDataset, Selection, ItemWithRefId } from './types';
 
-import { Ref } from './Refs';
-import { RefType, Refs } from './RefHelpers';
+import { Refs } from './RefHelpers';
+
+const DEFAULT_REF_ID = 'storybook_internal';
+
+const getLastViewedStoryIds = (): Selection[] => {
+  try {
+    const raw = window.localStorage.getItem('lastViewedStoryIds');
+    const val = typeof raw === 'string' && JSON.parse(raw);
+    if (!val || !Array.isArray(val)) return [];
+    if (!val.some((item) => typeof item === 'object' && item.storyId && item.refId)) return [];
+    return val;
+  } catch (e) {
+    return [];
+  }
+};
+const setLastViewedStoryIds = (items: Selection[]) => {
+  try {
+    window.localStorage.setItem('lastViewedStoryIds', JSON.stringify(items));
+  } catch (e) {
+    //
+  }
+};
 
 const Container = styled.nav({
   position: 'absolute',
@@ -37,57 +61,30 @@ const CustomScrollArea = styled(ScrollArea)({
   padding: 20,
 });
 
-const Hr = styled.hr(({ theme }) => ({
-  border: '0 none',
-  height: 0,
-  marginBottom: 0,
-  borderTop: `1px solid ${theme.appBorderColor}`,
-}));
-
-export interface SidebarProps {
-  stories: StoriesHash;
-  storiesConfigured: boolean;
-  storiesFailed?: Error;
-  refs: State['refs'];
-  menu: any[];
-  storyId?: string;
-  menuHighlighted?: boolean;
-  isLoading?: boolean;
-}
-
-const useFilterState = (initial: string) => {
-  const [state, setState] = useState(initial);
-  const changeFilter = useCallback((value: string) => {
-    setState(value);
-  }, []);
-
-  const value = state.length > 1 ? state : '';
-
-  return [value, changeFilter] as [typeof state, typeof changeFilter];
-};
-
-const useSearchResults = (refsList: [string, RefType][], filter: string) => {
-  const refsLengths = useMemo(
-    () => refsList.map(([k, i]) => filteredLength(i.stories || {}, filter), 0),
-    [refsList, filter]
-  );
-  const refsTotal = useMemo(() => refsLengths.reduce((acc, i) => acc + i, 0), [refsList, filter]);
-
-  return { total: refsTotal || 0, list: refsLengths };
-};
+const Swap = React.memo<{ children: React.ReactNode; condition: boolean }>(
+  ({ children, condition }) => {
+    const [a, b] = React.Children.toArray(children);
+    return (
+      <>
+        <div style={{ display: condition ? 'block' : 'none' }}>{a}</div>
+        <div style={{ display: condition ? 'none' : 'block' }}>{b}</div>
+      </>
+    );
+  }
+);
 
 const useCombination = (
   stories: StoriesHash,
   ready: boolean,
   error: Error | undefined,
   refs: Refs
-) => {
-  const merged = useMemo<Refs>(
+): CombinedDataset => {
+  const hash = useMemo(
     () => ({
-      storybook_internal: {
+      [DEFAULT_REF_ID]: {
         stories,
         title: null,
-        id: 'storybook_internal',
+        id: DEFAULT_REF_ID,
         url: 'iframe.html',
         ready,
         error,
@@ -96,51 +93,98 @@ const useCombination = (
     }),
     [refs, stories]
   );
-
-  return useMemo(() => Object.entries(merged), [merged]);
+  return useMemo(() => ({ hash, entries: Object.entries(hash) }), [hash]);
 };
 
-const Sidebar: FunctionComponent<SidebarProps> = ({
-  storyId,
-  stories,
-  storiesConfigured,
-  storiesFailed,
-  menu,
-  menuHighlighted = false,
-  refs = {},
-}) => {
-  const [filter, setFilter] = useFilterState('');
-  const combined = useCombination(stories, storiesConfigured, storiesFailed, refs);
-  const { total, list } = useSearchResults(combined, filter);
+export interface SidebarProps {
+  stories: StoriesHash;
+  storiesConfigured: boolean;
+  storiesFailed?: Error;
+  refs: State['refs'];
+  menu: any[];
+  storyId: string;
+  refId?: string;
+  menuHighlighted?: boolean;
+}
 
-  const resultLess = total === 0 && filter;
+const Sidebar: FunctionComponent<SidebarProps> = React.memo(
+  ({
+    storyId,
+    refId = DEFAULT_REF_ID,
+    stories,
+    storiesConfigured,
+    storiesFailed,
+    menu,
+    menuHighlighted = false,
+    refs = {},
+  }) => {
+    const selected = useMemo(() => ({ storyId, refId }), [storyId, refId]);
+    const dataset = useCombination(stories, storiesConfigured, storiesFailed, refs);
+    const getPath = useCallback(
+      function getPath(item: ItemWithRefId): string[] {
+        const ref = dataset.hash[item.refId];
+        const parent = !isRoot(item) && item.parent ? ref.stories[item.parent] : null;
+        if (parent) return [...getPath({ refId: item.refId, ...parent }), parent.name];
+        return item.refId === DEFAULT_REF_ID ? [] : [ref.title || ref.id];
+      },
+      [dataset]
+    );
 
-  return (
-    <Container className="container sidebar-container">
-      <CustomScrollArea vertical>
-        <StyledSpaced row={1.6}>
-          <Heading className="sidebar-header" menuHighlighted={menuHighlighted} menu={menu} />
+    const [lastViewed, setLastViewed] = useState(getLastViewedStoryIds);
+    const updateLastViewed = useCallback(
+      (selection: Selection) =>
+        setLastViewed((state: Selection[]) => {
+          const index = state.findIndex(
+            (item) => item.storyId === selection.storyId && item.refId === selection.refId
+          );
+          if (index === 0) return state;
+          const update =
+            index === -1
+              ? [selection, ...state]
+              : [selection, ...state.slice(0, index), ...state.slice(index + 1)];
+          setLastViewedStoryIds(update);
+          return update;
+        }),
+      [setLastViewed]
+    );
 
-          <Search key="filter" onChange={setFilter} />
+    useEffect(() => {
+      updateLastViewed(selected);
+    }, [selected]);
 
-          {resultLess ? <Placeholder>This filter resulted in 0 results</Placeholder> : null}
+    return (
+      <Container className="container sidebar-container">
+        <CustomScrollArea vertical>
+          <StyledSpaced row={1.6}>
+            <Heading className="sidebar-header" menuHighlighted={menuHighlighted} menu={menu} />
 
-          <Fragment>
-            {combined.map(([k, v], index) => {
-              const isHidden = !!(filter && !list[index]);
-
-              return (
-                <Fragment key={k}>
-                  {index === 0 || isHidden ? null : <Hr />}
-                  <Ref {...v} storyId={storyId} filter={filter} isHidden={isHidden} />
-                </Fragment>
-              );
-            })}
-          </Fragment>
-        </StyledSpaced>
-      </CustomScrollArea>
-    </Container>
-  );
-};
+            <Search dataset={dataset} lastViewed={lastViewed} initialQuery="">
+              {({
+                inputValue,
+                inputHasFocus,
+                results,
+                getMenuProps,
+                getItemProps,
+                highlightedIndex,
+              }) => (
+                <Swap condition={!!(inputHasFocus || inputValue)}>
+                  <SearchResults
+                    isSearching={!!inputValue}
+                    results={results}
+                    getPath={getPath}
+                    getMenuProps={getMenuProps}
+                    getItemProps={getItemProps}
+                    highlightedIndex={highlightedIndex}
+                  />
+                  <Explorer dataset={dataset} selected={selected} />
+                </Swap>
+              )}
+            </Search>
+          </StyledSpaced>
+        </CustomScrollArea>
+      </Container>
+    );
+  }
+);
 
 export default Sidebar;

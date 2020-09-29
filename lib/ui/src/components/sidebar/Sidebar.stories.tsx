@@ -13,6 +13,7 @@ export default {
 
 const { menu } = standardHeaderData;
 const stories = mockDataset.withRoot;
+const refId = 'storybook_internal';
 const storyId = '1-12-121';
 
 export const simpleData = { menu, stories, storyId };
@@ -30,14 +31,35 @@ const refs: Record<string, RefType> = {
 };
 
 export const simple = () => (
-  <Sidebar storiesConfigured menu={menu} stories={stories} storyId={storyId} refs={{}} />
+  <Sidebar
+    storiesConfigured
+    menu={menu}
+    stories={stories}
+    storyId={storyId}
+    refId={refId}
+    refs={{}}
+  />
 );
 export const isLoading = () => (
-  <Sidebar storiesConfigured={false} menu={menu} stories={{}} isLoading refs={{}} />
+  <Sidebar
+    storiesConfigured={false}
+    menu={menu}
+    stories={{}}
+    storyId={storyId}
+    refId={refId}
+    refs={{}}
+  />
 );
 export const isEmpty = () => (
-  <Sidebar storiesConfigured menu={menu} stories={{}} isLoading refs={{}} />
+  <Sidebar storiesConfigured menu={menu} stories={{}} storyId={storyId} refId={refId} refs={{}} />
 );
 export const withRefs = () => (
-  <Sidebar storiesConfigured menu={menu} stories={stories} isLoading refs={refs} />
+  <Sidebar
+    storiesConfigured
+    menu={menu}
+    stories={stories}
+    storyId={storyId}
+    refId={refId}
+    refs={refs}
+  />
 );
