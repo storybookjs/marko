@@ -18,6 +18,7 @@ export const Full = () => {
   const [selectedId, setSelectedId] = React.useState(storyId);
   return (
     <Tree
+      isBrowsing
       isMain
       refId={refId}
       data={stories}

@@ -195,6 +195,7 @@ const Container = styled.div<{ hasOrphans: boolean }>((props) => ({
 }));
 
 const Tree = React.memo<{
+  isBrowsing: boolean;
   isMain: boolean;
   refId: string;
   data: StoriesHash;
@@ -202,155 +203,169 @@ const Tree = React.memo<{
   setHighlightedId: (id: string) => void;
   selectedId: string | null;
   onSelectId: (id: string) => void;
-}>(({ isMain, refId, data, highlightedId, setHighlightedId, selectedId, onSelectId }) => {
-  const nodeIds = useMemo(() => Object.keys(data), [data]);
-  const [roots, orphans] = useMemo(
-    () =>
-      nodeIds.reduce<[string[], string[]]>(
-        (acc, id) => {
-          const node = data[id];
-          if (isRoot(node)) acc[0].push(id);
-          else if (!node.parent) acc[1].push(id);
-          return acc;
-        },
-        [[], []]
-      ),
-    [data, nodeIds]
-  );
-  const { orphansFirst, expandableDescendants } = useMemo(() => {
-    return orphans
-      .concat(roots)
-      .reduce<{ orphansFirst: string[]; expandableDescendants: Record<string, string[]> }>(
-        (acc, id) => {
-          const descendantIds = getDescendantIds(data, id);
-          acc.orphansFirst.push(id, ...descendantIds);
-          acc.expandableDescendants[id] = descendantIds.filter((d) => !data[d].isLeaf);
-          return acc;
-        },
-        { orphansFirst: [], expandableDescendants: {} }
-      );
-  }, [data, roots, orphans]);
+}>(
+  ({
+    isBrowsing,
+    isMain,
+    refId,
+    data,
+    highlightedId,
+    setHighlightedId,
+    selectedId,
+    onSelectId,
+  }) => {
+    const nodeIds = useMemo(() => Object.keys(data), [data]);
+    const [roots, orphans] = useMemo(
+      () =>
+        nodeIds.reduce<[string[], string[]]>(
+          (acc, id) => {
+            const node = data[id];
+            if (isRoot(node)) acc[0].push(id);
+            else if (!node.parent) acc[1].push(id);
+            return acc;
+          },
+          [[], []]
+        ),
+      [data, nodeIds]
+    );
+    const { orphansFirst, expandableDescendants } = useMemo(() => {
+      return orphans
+        .concat(roots)
+        .reduce<{ orphansFirst: string[]; expandableDescendants: Record<string, string[]> }>(
+          (acc, id) => {
+            const descendantIds = getDescendantIds(data, id);
+            acc.orphansFirst.push(id, ...descendantIds);
+            acc.expandableDescendants[id] = descendantIds.filter((d) => !data[d].isLeaf);
+            return acc;
+          },
+          { orphansFirst: [], expandableDescendants: {} }
+        );
+    }, [data, roots, orphans]);
 
-  const [expanded, setExpanded] = useReducer<
-    React.Reducer<ExpandedState, ExpandAction>,
-    { data: StoriesHash; highlightedId?: string; roots: string[] }
-  >(
-    (state, { ids, value }) =>
-      ids.reduce((acc, id) => Object.assign(acc, { [id]: value }), { ...state }),
-    { data, highlightedId, roots },
-    initializeExpanded
-  );
+    const [expanded, setExpanded] = useReducer<
+      React.Reducer<ExpandedState, ExpandAction>,
+      { data: StoriesHash; highlightedId?: string; roots: string[] }
+    >(
+      (state, { ids, value }) =>
+        ids.reduce((acc, id) => Object.assign(acc, { [id]: value }), { ...state }),
+      { data, highlightedId, roots },
+      initializeExpanded
+    );
 
-  useEffect(() => {
-    setExpanded({ ids: getAncestorIds(data, selectedId), value: true });
-  }, [data, selectedId]);
+    useEffect(() => {
+      setExpanded({ ids: getAncestorIds(data, selectedId), value: true });
+    }, [data, selectedId]);
 
-  const rootRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const getElementByDataId = (id: string) =>
-      rootRef.current && rootRef.current.querySelector(`[data-id="${id}"]`);
+    const rootRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+      const getElementByDataId = (id: string) =>
+        rootRef.current && rootRef.current.querySelector(`[data-id="${id}"]`);
 
-    const highlightElement = (element: Element) => {
-      setHighlightedId(element.getAttribute('data-id'));
-      const { top, bottom } = element.getBoundingClientRect();
-      const inView =
-        top >= 0 && bottom <= (window.innerHeight || document.documentElement.clientHeight);
-      if (!inView) element.scrollIntoView({ block: 'nearest' });
-    };
+      const highlightElement = (element: Element) => {
+        setHighlightedId(element.getAttribute('data-id'));
+        const { top, bottom } = element.getBoundingClientRect();
+        const inView =
+          top >= 0 && bottom <= (window.innerHeight || document.documentElement.clientHeight);
+        if (!inView) element.scrollIntoView({ block: 'nearest' });
+      };
 
-    const navigateTree = throttle((event) => {
-      if (!event.key || !rootRef || !rootRef.current || !highlightedId) return;
-      if (event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) return;
-      if (!['Enter', ' ', 'ArrowLeft', 'ArrowRight'].includes(event.key)) return;
-      event.preventDefault();
+      const navigateTree = throttle((event) => {
+        if (!isBrowsing || !event.key || !rootRef || !rootRef.current || !highlightedId) return;
+        if (event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) return;
+        if (!['Enter', ' ', 'ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+        event.preventDefault();
 
-      const highlightedElement = getElementByDataId(highlightedId);
-      if (!highlightedElement || highlightedElement.getAttribute('data-ref') !== refId) return;
-      const type = highlightedElement.getAttribute('data-nodetype');
+        const highlightedElement = getElementByDataId(highlightedId);
+        if (!highlightedElement || highlightedElement.getAttribute('data-ref') !== refId) return;
+        const type = highlightedElement.getAttribute('data-nodetype');
 
-      if (['Enter', ' '].includes(event.key) && ['component', 'story', 'document'].includes(type)) {
-        onSelectId(highlightedId);
-      }
+        if (
+          ['Enter', ' '].includes(event.key) &&
+          ['component', 'story', 'document'].includes(type)
+        ) {
+          onSelectId(highlightedId);
+        }
 
-      const isExpanded = highlightedElement.getAttribute('aria-expanded');
+        const isExpanded = highlightedElement.getAttribute('aria-expanded');
 
-      if (event.key === 'ArrowLeft') {
-        if (isExpanded === 'true') {
-          setExpanded({ ids: [highlightedId], value: false });
-        } else {
-          const parentId = highlightedElement.getAttribute('data-parent');
-          if (!parentId) return;
-          const parentElement = getElementByDataId(parentId);
-          if (parentElement && parentElement.getAttribute('data-highlightable') === 'true') {
-            setExpanded({ ids: [parentId], value: false });
-            highlightElement(parentElement);
+        if (event.key === 'ArrowLeft') {
+          if (isExpanded === 'true') {
+            setExpanded({ ids: [highlightedId], value: false });
           } else {
-            setExpanded({
-              ids: getDescendantIds(data, parentId, true),
-              value: false,
-            });
+            const parentId = highlightedElement.getAttribute('data-parent');
+            if (!parentId) return;
+            const parentElement = getElementByDataId(parentId);
+            if (parentElement && parentElement.getAttribute('data-highlightable') === 'true') {
+              setExpanded({ ids: [parentId], value: false });
+              highlightElement(parentElement);
+            } else {
+              setExpanded({
+                ids: getDescendantIds(data, parentId, true),
+                value: false,
+              });
+            }
           }
         }
-      }
 
-      if (event.key === 'ArrowRight') {
-        if (isExpanded === 'false') {
-          setExpanded({ ids: [highlightedId], value: true });
-        } else if (isExpanded === 'true') {
-          setExpanded({ ids: getDescendantIds(data, highlightedId, true), value: true });
+        if (event.key === 'ArrowRight') {
+          if (isExpanded === 'false') {
+            setExpanded({ ids: [highlightedId], value: true });
+          } else if (isExpanded === 'true') {
+            setExpanded({ ids: getDescendantIds(data, highlightedId, true), value: true });
+          }
         }
-      }
-    }, 16);
+      }, 16);
 
-    document.addEventListener('keydown', navigateTree);
-    return () => document.removeEventListener('keydown', navigateTree);
-  }, [data, highlightedId, setHighlightedId]);
+      document.addEventListener('keydown', navigateTree);
+      return () => document.removeEventListener('keydown', navigateTree);
+    }, [data, isBrowsing, highlightedId, setHighlightedId]);
 
-  return (
-    <Container ref={rootRef} hasOrphans={isMain && orphans.length > 0}>
-      {orphansFirst.map((id) => {
-        const node = data[id];
+    return (
+      <Container ref={rootRef} hasOrphans={isMain && orphans.length > 0}>
+        {orphansFirst.map((id) => {
+          const node = data[id];
 
-        if (isRoot(node)) {
-          const descendants = expandableDescendants[node.id];
-          const isFullyExpanded = descendants.every((d: string) => expanded[d]);
+          if (isRoot(node)) {
+            const descendants = expandableDescendants[node.id];
+            const isFullyExpanded = descendants.every((d: string) => expanded[d]);
+            return (
+              <Root
+                key={id}
+                refId={refId}
+                node={node}
+                isOrphan={false}
+                isDisplayed
+                isSelected={selectedId === id}
+                isHighlighted={highlightedId === id}
+                isExpanded={!!expanded[id]}
+                setExpanded={setExpanded}
+                isFullyExpanded={isFullyExpanded}
+                expandableDescendants={descendants}
+                onSelectId={onSelectId}
+              />
+            );
+          }
+
+          const isDisplayed =
+            !node.parent || getAncestorIds(data, node.id).every((a: string) => expanded[a]);
           return (
-            <Root
+            <Node
               key={id}
               refId={refId}
               node={node}
-              isOrphan={false}
-              isDisplayed
+              isOrphan={orphans.some((oid) => id === oid || id.startsWith(`${oid}-`))}
+              isDisplayed={isDisplayed}
               isSelected={selectedId === id}
               isHighlighted={highlightedId === id}
               isExpanded={!!expanded[id]}
               setExpanded={setExpanded}
-              isFullyExpanded={isFullyExpanded}
-              expandableDescendants={descendants}
               onSelectId={onSelectId}
             />
           );
-        }
-
-        const isDisplayed =
-          !node.parent || getAncestorIds(data, node.id).every((a: string) => expanded[a]);
-        return (
-          <Node
-            key={id}
-            refId={refId}
-            node={node}
-            isOrphan={orphans.some((oid) => id === oid || id.startsWith(`${oid}-`))}
-            isDisplayed={isDisplayed}
-            isSelected={selectedId === id}
-            isHighlighted={highlightedId === id}
-            isExpanded={!!expanded[id]}
-            setExpanded={setExpanded}
-            onSelectId={onSelectId}
-          />
-        );
-      })}
-    </Container>
-  );
-});
+        })}
+      </Container>
+    );
+  }
+);
 
 export default Tree;

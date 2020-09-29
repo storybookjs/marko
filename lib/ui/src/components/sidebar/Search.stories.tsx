@@ -1,5 +1,5 @@
 import React from 'react';
-import { isRoot } from '@storybook/api';
+import { isRoot, Provider } from '@storybook/api';
 
 import { stories } from './mockdata.large';
 import Search from './Search';

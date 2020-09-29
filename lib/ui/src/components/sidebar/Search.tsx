@@ -1,27 +1,23 @@
 /* eslint-env browser */
 
+import { useStorybookApi } from '@storybook/api';
 import { styled } from '@storybook/theming';
 import { Icons } from '@storybook/components';
 import Downshift, { DownshiftState, StateChangeOptions } from 'downshift';
 import Fuse, { FuseOptions } from 'fuse.js';
-import React, {
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  useCallback,
-  FunctionComponent,
-  ChangeEvent,
-} from 'react';
+import React, { useEffect, useMemo, useRef, useState, useCallback, FunctionComponent } from 'react';
 
-import { ComposedRef } from '@storybook/api/dist/modules/refs';
+import { DEFAULT_REF_ID } from './Sidebar';
 import {
   ItemWithRefId,
   RawSearchresults,
   DownshiftItem,
   SearchChildrenFn,
   Selection,
+  isSearchResult,
+  isExpandType,
 } from './types';
+import { Refs, RefType } from './RefHelpers';
 
 const options = {
   shouldSort: true,
@@ -137,12 +133,12 @@ const FocusContainer = styled.div({ outline: 0 });
 
 const Search: FunctionComponent<{
   children: SearchChildrenFn;
-  dataset: { hash: Record<string, ComposedRef>; entries: [string, ComposedRef][] };
+  dataset: { hash: Refs; entries: [string, RefType][] };
   lastViewed?: Selection[];
   initialQuery?: string;
 }> = ({ children, dataset, lastViewed = [], initialQuery = '' }) => {
+  const api = useStorybookApi();
   const inputRef = useRef<HTMLInputElement>(null);
-  const [query, setQuery] = useState(initialQuery);
   const [inputPlaceholder, setPlaceholder] = useState('Find components');
 
   useEffect(() => {
@@ -150,11 +146,6 @@ const Search: FunctionComponent<{
       if (!inputRef.current) return;
       if (event.key === '/' && inputRef.current !== document.activeElement) {
         inputRef.current.focus();
-        event.preventDefault();
-      }
-      if (event.key === 'Escape' && inputRef.current === document.activeElement) {
-        inputRef.current.blur();
-        setQuery('');
         event.preventDefault();
       }
     };
@@ -200,26 +191,40 @@ const Search: FunctionComponent<{
     [allComponents, fuse]
   );
 
-  const stateReducer = (
-    state: DownshiftState<DownshiftItem>,
-    changes: StateChangeOptions<DownshiftItem>
-  ) => {
-    const { blurInput, clickItem, keyDownEnter } = Downshift.stateChangeTypes;
-    const { type, inputValue, selectedItem = {} } = changes;
-    if (type === blurInput) return {};
-    if ((type === clickItem || type === keyDownEnter) && 'showAll' in selectedItem) {
-      // selectedItem.showAll();
-      return {};
-    }
-    if (inputValue === '') {
-      showAllComponents(false);
-    }
-    return changes;
-  };
+  const stateReducer = useCallback(
+    (state: DownshiftState<DownshiftItem>, changes: StateChangeOptions<DownshiftItem>) => {
+      const { blurInput, clickItem, keyDownEnter, keyDownEscape } = Downshift.stateChangeTypes;
+      const { type, inputValue, selectedItem = {} } = changes;
+      if (type === blurInput) return {};
+      if (type === keyDownEscape) {
+        inputRef.current.blur();
+        showAllComponents(false);
+        return { inputValue: '' };
+      }
+      if (type === clickItem || type === keyDownEnter) {
+        if (isSearchResult(selectedItem)) {
+          const { id, refId } = selectedItem.item;
+          if (api) api.selectStory(id, undefined, { ref: refId !== DEFAULT_REF_ID && refId });
+          inputRef.current.blur();
+          showAllComponents(false);
+          return { inputValue: '' };
+        }
+        if (isExpandType(selectedItem)) {
+          selectedItem.showAll();
+          return {};
+        }
+      }
+      if (inputValue === '') {
+        showAllComponents(false);
+      }
+      return changes;
+    },
+    [api, inputRef, showAllComponents, DEFAULT_REF_ID]
+  );
 
   return (
     <Downshift<DownshiftItem>
-      initialInputValue={query}
+      initialInputValue={initialQuery}
       stateReducer={stateReducer}
       itemToString={(result) => {
         // @ts-ignore
@@ -228,6 +233,7 @@ const Search: FunctionComponent<{
     >
       {({
         inputValue,
+        clearSelection,
         getInputProps,
         getItemProps,
         getLabelProps,
@@ -259,9 +265,7 @@ const Search: FunctionComponent<{
           ref: inputRef,
           required: true,
           type: 'search',
-          value: query,
           placeholder: inputPlaceholder,
-          onChange: (e: ChangeEvent<HTMLInputElement>) => setQuery(e.target.value),
           onFocus: () => setPlaceholder('Type to find...'),
           onBlur: () => setPlaceholder('Find components'),
         });
@@ -273,7 +277,7 @@ const Search: FunctionComponent<{
               <SearchIcon icon="search" />
               <Input {...inputProps} />
               <FocusKey>/</FocusKey>
-              <ClearIcon icon="cross" onClick={() => setQuery('')} />
+              <ClearIcon icon="cross" onClick={() => clearSelection()} />
             </SearchField>
             <FocusContainer tabIndex={0}>
               {children({

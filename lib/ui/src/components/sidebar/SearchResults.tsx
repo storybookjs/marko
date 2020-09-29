@@ -33,9 +33,10 @@ const Mark = styled.mark(({ theme }) => ({
 }));
 
 const PlusIcon = styled(Icons)(({ theme }) => ({
+  display: 'inline-block',
   width: 10,
   height: 10,
-  marginRight: 6,
+  marginRight: 5,
   color: theme.color.mediumdark,
 }));
 
@@ -98,7 +99,7 @@ const SearchResults: FunctionComponent<{
                 {...result}
                 {...getItemProps({ key: index, index, item: result })}
                 isHighlighted={highlightedIndex === index}
-                style={{ paddingLeft: 23 }}
+                style={{ paddingLeft: 19 }}
               >
                 <PlusIcon icon="plus" />
                 <ShowMore>Show all ({result.totalCount} results)</ShowMore>

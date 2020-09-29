@@ -113,32 +113,56 @@ const refs: Record<string, RefType> = {
 };
 
 export const Optimized = () => (
-  <Ref {...refs.optimized} selectedId="" highlightedId="" setHighlighted={() => {}} />
+  <Ref {...refs.optimized} isBrowsing selectedId="" highlightedId="" setHighlighted={() => {}} />
 );
 export const IsEmpty = () => (
-  <Ref {...refs.empty} selectedId="" highlightedId="" setHighlighted={() => {}} />
+  <Ref {...refs.empty} isBrowsing selectedId="" highlightedId="" setHighlighted={() => {}} />
 );
 export const StartInjectedUnknown = () => (
-  <Ref {...refs.startInjected_unknown} selectedId="" highlightedId="" setHighlighted={() => {}} />
+  <Ref
+    {...refs.startInjected_unknown}
+    isBrowsing
+    selectedId=""
+    highlightedId=""
+    setHighlighted={() => {}}
+  />
 );
 export const StartInjectedLoading = () => (
-  <Ref {...refs.startInjected_loading} selectedId="" highlightedId="" setHighlighted={() => {}} />
+  <Ref
+    {...refs.startInjected_loading}
+    isBrowsing
+    selectedId=""
+    highlightedId=""
+    setHighlighted={() => {}}
+  />
 );
 export const StartInjectedReady = () => (
-  <Ref {...refs.startInjected_ready} selectedId="" highlightedId="" setHighlighted={() => {}} />
+  <Ref
+    {...refs.startInjected_ready}
+    isBrowsing
+    selectedId=""
+    highlightedId=""
+    setHighlighted={() => {}}
+  />
 );
 export const Versions = () => (
-  <Ref {...refs.versions} selectedId="" highlightedId="" setHighlighted={() => {}} />
+  <Ref {...refs.versions} isBrowsing selectedId="" highlightedId="" setHighlighted={() => {}} />
 );
 export const VersionsMissingCurrent = () => (
-  <Ref {...refs.versionsMissingCurrent} selectedId="" highlightedId="" setHighlighted={() => {}} />
+  <Ref
+    {...refs.versionsMissingCurrent}
+    isBrowsing
+    selectedId=""
+    highlightedId=""
+    setHighlighted={() => {}}
+  />
 );
 export const Errored = () => (
-  <Ref {...refs.error} selectedId="" highlightedId="" setHighlighted={() => {}} />
+  <Ref {...refs.error} isBrowsing selectedId="" highlightedId="" setHighlighted={() => {}} />
 );
 export const Auth = () => (
-  <Ref {...refs.auth} selectedId="" highlightedId="" setHighlighted={() => {}} />
+  <Ref {...refs.auth} isBrowsing selectedId="" highlightedId="" setHighlighted={() => {}} />
 );
 export const Long = () => (
-  <Ref {...refs.long} selectedId="" highlightedId="" setHighlighted={() => {}} />
+  <Ref {...refs.long} isBrowsing selectedId="" highlightedId="" setHighlighted={() => {}} />
 );

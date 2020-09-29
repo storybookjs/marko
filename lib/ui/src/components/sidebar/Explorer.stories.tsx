@@ -62,9 +62,17 @@ const withRefs: Record<string, RefType> = {
 };
 
 export const Simple = () => (
-  <Explorer dataset={{ hash: simple, entries: Object.entries(simple) }} selected={selected} />
+  <Explorer
+    dataset={{ hash: simple, entries: Object.entries(simple) }}
+    selected={selected}
+    isBrowsing
+  />
 );
 
 export const WithRefs = () => (
-  <Explorer dataset={{ hash: withRefs, entries: Object.entries(withRefs) }} selected={selected} />
+  <Explorer
+    dataset={{ hash: withRefs, entries: Object.entries(withRefs) }}
+    selected={selected}
+    isBrowsing
+  />
 );

@@ -11,6 +11,7 @@ import { CollapseIcon } from './TreeNode';
 import { Selection } from './types';
 
 export interface RefProps {
+  isBrowsing: boolean;
   selectedId: string | null;
   highlightedId: string | null;
   setHighlighted: (selection: Selection) => void;
@@ -93,6 +94,7 @@ export const Ref: FunctionComponent<RefType & RefProps> = React.memo((props) => 
     stories,
     id: refId,
     title = refId,
+    isBrowsing,
     selectedId,
     highlightedId,
     setHighlighted,
@@ -148,6 +150,7 @@ export const Ref: FunctionComponent<RefType & RefProps> = React.memo((props) => 
           {state === 'empty' && <EmptyBlock isMain={isMain} />}
           {state === 'ready' && (
             <Tree
+              isBrowsing={isBrowsing}
               isMain={isMain}
               refId={refId}
               data={stories}

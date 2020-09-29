@@ -15,7 +15,7 @@ import { CombinedDataset, Selection, ItemWithRefId } from './types';
 
 import { Refs } from './RefHelpers';
 
-const DEFAULT_REF_ID = 'storybook_internal';
+export const DEFAULT_REF_ID = 'storybook_internal';
 
 const getLastViewedStoryIds = (): Selection[] => {
   try {
@@ -158,7 +158,7 @@ const Sidebar: FunctionComponent<SidebarProps> = React.memo(
           <StyledSpaced row={1.6}>
             <Heading className="sidebar-header" menuHighlighted={menuHighlighted} menu={menu} />
 
-            <Search dataset={dataset} lastViewed={lastViewed} initialQuery="">
+            <Search dataset={dataset} lastViewed={lastViewed}>
               {({
                 inputValue,
                 inputHasFocus,
@@ -176,7 +176,11 @@ const Sidebar: FunctionComponent<SidebarProps> = React.memo(
                     getItemProps={getItemProps}
                     highlightedIndex={highlightedIndex}
                   />
-                  <Explorer dataset={dataset} selected={selected} />
+                  <Explorer
+                    dataset={dataset}
+                    selected={selected}
+                    isBrowsing={!inputHasFocus && !inputValue}
+                  />
                 </Swap>
               )}
             </Search>
