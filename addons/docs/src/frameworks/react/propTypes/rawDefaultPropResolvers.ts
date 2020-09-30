@@ -12,12 +12,12 @@ const funcResolver: TypeResolver = (rawDefaultProp, { name, type }) => {
 
   const funcName = extractFunctionName(rawDefaultProp, name);
   if (funcName != null) {
-    // Try to display the name of the component. The body of the component is ommited since the code has been transpiled.
+    // Try to display the name of the component. The body of the component is omitted since the code has been transpiled.
     if (isElement) {
       return createSummaryValue(getPrettyElementIdentifier(funcName));
     }
 
-    const { hasParams } = inspectValue(rawDefaultProp.toString()).inferedType as InspectionFunction;
+    const { hasParams } = inspectValue(rawDefaultProp.toString()).inferredType as InspectionFunction;
 
     return createSummaryValue(getPrettyFuncIdentifier(funcName, hasParams));
   }

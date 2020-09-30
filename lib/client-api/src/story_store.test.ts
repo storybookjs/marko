@@ -439,7 +439,7 @@ describe('preview.story_store', () => {
           },
           globalTypes: {
             arg2: { defaultValue: 'arg2' },
-            arg3: { defautlValue: { complex: { object: ['changed'] } } },
+            arg3: { defaultValue: { complex: { object: ['changed'] } } },
             // XXX: note this currently wouldn't fail because parameters.globals.arg4 isn't cleared
             // due to #10005, see below
             arg4: {}, // has no default value set but we need to make sure we don't lose it

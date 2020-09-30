@@ -30,7 +30,7 @@ export function extractFunctionName(func: Function, propName: string): string {
   const { name } = func;
 
   // Comparison with the prop name is to discard inferred function names.
-  if (name !== '' && name !== 'anoynymous' && name !== propName) {
+  if (name !== '' && name !== 'anonymous' && name !== propName) {
     return name;
   }
 
@@ -92,7 +92,7 @@ const functionResolver: TypeResolver = (rawDefaultProp, propDef) => {
   let isElement = false;
   let inspectionResult;
 
-  // Try to display the name of the component. The body of the component is ommited since the code has been transpiled.
+  // Try to display the name of the component. The body of the component is omitted since the code has been transpiled.
   if (isFunction(rawDefaultProp.render)) {
     isElement = true;
   } else if (rawDefaultProp.prototype != null && isFunction(rawDefaultProp.prototype.render)) {
@@ -103,7 +103,7 @@ const functionResolver: TypeResolver = (rawDefaultProp, propDef) => {
     try {
       inspectionResult = inspectValue(rawDefaultProp.toString());
 
-      const { hasParams, params } = inspectionResult.inferedType as InspectionFunction;
+      const { hasParams, params } = inspectionResult.inferredType as InspectionFunction;
       if (hasParams) {
         // It might be a functional component accepting props.
         if (params.length === 1 && params[0].type === 'ObjectPattern') {
@@ -133,7 +133,7 @@ const functionResolver: TypeResolver = (rawDefaultProp, propDef) => {
       inspectionResult = inspectValue(rawDefaultProp.toString());
     }
 
-    const { hasParams } = inspectionResult.inferedType as InspectionFunction;
+    const { hasParams } = inspectionResult.inferredType as InspectionFunction;
 
     return createSummaryValue(getPrettyFuncIdentifier(funcName, hasParams));
   }

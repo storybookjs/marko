@@ -28,7 +28,7 @@ const buildStoryArgs = (args: Args, argTypes: ArgTypes) => {
         storyArgs[key] = new Date(argValue).toISOString();
         break;
       case 'array': {
-        // use the supplied separator when seriazlizing an array as a string
+        // use the supplied separator when serializing an array as a string
         const separator = control.separator || ',';
         storyArgs[key] = argValue.join(separator);
         break;

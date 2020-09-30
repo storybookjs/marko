@@ -132,7 +132,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
           "name": "click",
         },
       ],
-      "id": "component-InputComponent-8088cb533b6defa9d43d10841b59ce18",
+      "id": "component-InputComponent-14bbde487c28642f97f1f6c94b65ab31",
       "inputs": Array [],
       "inputsClass": Array [
         Object {
@@ -287,16 +287,16 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
               "comment": "<p>Some number you&#39;d like to use.</p>
 ",
               "name": Object {
-                "end": 3219,
+                "end": 3220,
                 "escapedText": "x",
                 "flags": 0,
-                "pos": 3218,
+                "pos": 3219,
               },
               "tagName": Object {
-                "end": 3217,
+                "end": 3218,
                 "escapedText": "param",
                 "flags": 0,
-                "pos": 3212,
+                "pos": 3213,
               },
               "type": "number",
             },
@@ -304,16 +304,16 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
               "comment": "<p>Some other number or string you&#39;d like to use, will have <code>parseInt()</code> applied before calculation.</p>
 ",
               "name": Object {
-                "end": 3264,
+                "end": 3265,
                 "escapedText": "y",
                 "flags": 0,
-                "pos": 3263,
+                "pos": 3264,
               },
               "tagName": Object {
-                "end": 3262,
+                "end": 3263,
                 "escapedText": "param",
                 "flags": 0,
-                "pos": 3257,
+                "pos": 3258,
               },
               "type": "string | number",
             },
@@ -341,16 +341,16 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
               "comment": "<p>Some <code>password</code>.</p>
 ",
               "name": Object {
-                "end": 3780,
+                "end": 3781,
                 "escapedText": "password",
                 "flags": 0,
-                "pos": 3772,
+                "pos": 3773,
               },
               "tagName": Object {
-                "end": 3771,
+                "end": 3772,
                 "escapedText": "param",
                 "flags": 0,
-                "pos": 3766,
+                "pos": 3767,
               },
               "type": "string",
             },
@@ -379,17 +379,17 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
               "comment": "<p>Some <code>id</code>.</p>
 ",
               "name": Object {
-                "end": 3639,
+                "end": 3640,
                 "escapedText": "id",
                 "flags": 0,
-                "pos": 3637,
+                "pos": 3638,
               },
               "optional": true,
               "tagName": Object {
-                "end": 3636,
+                "end": 3637,
                 "escapedText": "param",
                 "flags": 0,
-                "pos": 3631,
+                "pos": 3632,
               },
               "type": "number",
             },
@@ -589,7 +589,7 @@ export class InputComponent<T> {
   public onClick = new EventEmitter<Event>();
 
   /**
-   * This is an internal method that we don't want to document and have added the \`ignore\` annoation to.
+   * This is an internal method that we don't want to document and have added the \`ignore\` annotation to.
    *
    * @ignore
    */
@@ -745,7 +745,7 @@ export class InputComponent<T> {
   "interfaces": Array [
     Object {
       "file": "addons/docs/src/frameworks/angular/__testfixtures__/doc-button/input.ts",
-      "id": "interface-ISomeInterface-8088cb533b6defa9d43d10841b59ce18",
+      "id": "interface-ISomeInterface-14bbde487c28642f97f1f6c94b65ab31",
       "indexSignatures": Array [],
       "kind": 150,
       "methods": Array [],
@@ -850,7 +850,7 @@ export class InputComponent<T> {
   public onClick = new EventEmitter<Event>();
 
   /**
-   * This is an internal method that we don't want to document and have added the \`ignore\` annoation to.
+   * This is an internal method that we don't want to document and have added the \`ignore\` annotation to.
    *
    * @ignore
    */

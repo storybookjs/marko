@@ -60,6 +60,6 @@ export type InspectionIdentifiableInferedType =
   | InspectionElement;
 
 export interface InspectionResult {
-  inferedType: InspectionInferedType;
+  inferredType: InspectionInferedType;
   ast?: any;
 }

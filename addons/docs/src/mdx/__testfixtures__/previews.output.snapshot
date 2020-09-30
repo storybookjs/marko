@@ -42,7 +42,7 @@ function MDXContent({ components, ...props }) {
         </Story>
         <Story id=\\"welcome--welcome\\" mdxType=\\"Story\\" />
       </Canvas>
-      <p>{\`Canvas wthout a story\`}</p>
+      <p>{\`Canvas without a story\`}</p>
       <Canvas mdxSource=\\"%0A%3CButton%3EJust%20a%20button%3C/Button%3E%0A\\" mdxType=\\"Canvas\\">
         <Button mdxType=\\"Button\\">Just a button</Button>
       </Canvas>

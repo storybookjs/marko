@@ -71,7 +71,7 @@ For React and Vue, the extraction works as follows:
 
 For Angular, Web components, and Ember, the extraction works as follows:
 
-- Read JSON file in the user's `.storyboook/preview.json` and story it into a global variable
+- Read JSON file in the user's `.storybook/preview.json` and story it into a global variable
 - The view-layer specific `enhanceArgTypes` function translates that metadata into `ArgTypes`
 
 However, for your framework you may want to implement this in some other way.

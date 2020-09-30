@@ -197,7 +197,7 @@ Our script leaves the local registry running, for **as long as you keep it runni
 If you've made a change to storybook's codebase and would want this change to be reflected in your app:
 
 - Ensure the storybook packages are transpiled, by either having run `yarn dev` or `yarn bootstrap --core`.
-- Go to the terminal where the local regitry is running and press `<Enter>`. This will kick off a new publish.
+- Go to the terminal where the local registry is running and press `<Enter>`. This will kick off a new publish.
 - Run the install procedure again in your local repo, (you may need to clean out node_modules first).
 - Restart your storybook.
 
