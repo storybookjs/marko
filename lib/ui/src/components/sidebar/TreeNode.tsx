@@ -17,16 +17,36 @@ export const CollapseIcon = styled.span<{ isExpanded: boolean }>(({ theme, isExp
   transition: 'transform .1s ease-out',
 }));
 
+const iconColors = {
+  light: {
+    document: DOCS_MODE ? 'secondary' : '#DC9544',
+    bookmarkhollow: 'seafoam',
+    component: 'secondary',
+    folder: 'ultraviolet',
+  },
+  dark: {
+    document: DOCS_MODE ? 'secondary' : '#DC9544',
+    bookmarkhollow: 'seafoam',
+    component: 'secondary',
+    folder: 'primary',
+  },
+};
 const isColor = (theme: Theme, color: string): color is keyof Color => color in theme.color;
-const TypeIcon = styled(Icons)<{ color: string | keyof Color }>(({ theme, color }) => ({
-  width: 12,
-  height: 12,
-  padding: 1,
-  marginTop: 3,
-  marginRight: 5,
-  flex: '0 0 auto',
-  color: isColor(theme, color) ? theme.color[color] : color,
-}));
+const TypeIcon = styled(Icons)(
+  {
+    width: 12,
+    height: 12,
+    padding: 1,
+    marginTop: 3,
+    marginRight: 5,
+    flex: '0 0 auto',
+  },
+  ({ theme, icon }) => {
+    const colors = theme.base === 'dark' ? iconColors.dark : iconColors.light;
+    const color = colors[icon as keyof typeof colors];
+    return { color: isColor(theme, color) ? theme.color[color] : color };
+  }
+);
 
 const BranchNode = styled.button<{
   depth?: number;
@@ -151,7 +171,7 @@ export const ComponentNode: FunctionComponent<ComponentProps<typeof BranchNode>>
 export const DocumentNode: FunctionComponent<ComponentProps<typeof LeafNode>> = React.memo(
   ({ theme, children, ...props }) => (
     <LeafNode tabIndex={-1} {...props}>
-      <TypeIcon icon="document" color={DOCS_MODE ? 'secondary' : '#DC9544'} />
+      <TypeIcon icon="document" />
       {children}
     </LeafNode>
   )
@@ -160,7 +180,7 @@ export const DocumentNode: FunctionComponent<ComponentProps<typeof LeafNode>> = 
 export const StoryNode: FunctionComponent<ComponentProps<typeof LeafNode>> = React.memo(
   ({ theme, children, ...props }) => (
     <LeafNode tabIndex={-1} {...props}>
-      <TypeIcon icon="bookmarkhollow" color="seafoam" />
+      <TypeIcon icon="bookmarkhollow" />
       {children}
     </LeafNode>
   )
