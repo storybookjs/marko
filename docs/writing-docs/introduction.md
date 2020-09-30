@@ -13,7 +13,7 @@ Storybook gives you tools to expand this basic documentation with prose and layo
   />
 </video>
 
-Out of the box, Storybook ships with [DocsPage](./docs-page.md), a documentation template that lists all the stories for a component and associated metadata. It infers metadata values based on source code, types and JSDoc comments. [Customize](./docs-page.md#replacing-docspage) this page to create a new template if you have specific requirements.
+When you install [Storybook Docs](https://github.com/storybookjs/storybook/blob/master/addons/docs/README.md#installation), you can use [DocsPage](./docs-page.md), a documentation template that lists all the stories for a component and associated metadata. It infers metadata values based on source code, types and JSDoc comments. [Customize](./docs-page.md#replacing-docspage) this page to create a new template if you have specific requirements.
 
 You can also create free-form pages for each component using [MDX](./mdx.md), a format for simultaneously documenting components and writing stories.
 
