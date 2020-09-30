@@ -111,9 +111,9 @@ const SearchResults: FunctionComponent<{
   ({ isSearching, results, getPath, getMenuProps, getItemProps, highlightedIndex }) => {
     return (
       <ResultsList {...getMenuProps()}>
-        {results.length > 0 && (
+        {results.length > 0 && !isSearching && (
           <li>
-            <RootNode>{isSearching ? 'Results' : 'Recently opened'}</RootNode>
+            <RootNode>Recently opened</RootNode>
           </li>
         )}
         {results.map((result: DownshiftItem, index) => {
