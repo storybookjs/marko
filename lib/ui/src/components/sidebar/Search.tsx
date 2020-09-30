@@ -31,7 +31,10 @@ const options = {
   distance: 100,
   maxPatternLength: 32,
   minMatchCharLength: 1,
-  keys: ['name', 'path'],
+  keys: [
+    { name: 'name', weight: 0.7 },
+    { name: 'path', weight: 0.3 },
+  ],
 } as FuseOptions<ItemWithRefIdAndPath>;
 
 const ScreenReaderLabel = styled.label({
