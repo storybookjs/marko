@@ -4,6 +4,7 @@
   - [6.1 deprecations](#61-deprecations)
     - [Deprecated onBeforeRender](#deprecated-onbeforerender)
     - [Deprecated grid parameter](#deprecated-grid-parameter)
+    - [Deprecated package-composition disabled parameter](#deprecated-package-composition-disabled-parameter)
 - [From version 5.3.x to 6.0.x](#from-version-53x-to-60x)
   - [Hoisted CSF annotations](#hoisted-csf-annotations)
   - [Zero config typescript](#zero-config-typescript)
@@ -173,6 +174,12 @@ Basic.parameters: {
   }
 },
 ```
+
+#### Deprecated package-composition disabled parameter
+
+Like [Deprecated disabled parameter](#deprecated-disabled-parameter). The `disabled` parameter has been deprecated, please use `disable` instead.
+
+For more information, see the [the related documentation](https://storybook.js.org/docs/react/workflows/package-composition#configuring).
 
 ## From version 5.3.x to 6.0.x
 
