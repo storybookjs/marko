@@ -9,8 +9,8 @@ const FUZZY_SEARCH_THRESHOLD = 0.35;
 export const DEFAULT_REF_ID = 'storybook_internal';
 
 export const storyLink = (storyId: string, refId: string) => {
+  const type = DOCS_MODE ? 'docs' : 'story';
   const refPrefix = refId === DEFAULT_REF_ID ? '' : `${refId}_`;
-  const [, type = 'story'] = document.location.search.match(/path=\/([a-z]+)\//) || [];
   return `${document.location.pathname}?path=/${type}/${refPrefix}${storyId}`;
 };
 
