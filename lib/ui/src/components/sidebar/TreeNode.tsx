@@ -19,13 +19,13 @@ export const CollapseIcon = styled.span<{ isExpanded: boolean }>(({ theme, isExp
 
 const iconColors = {
   light: {
-    document: DOCS_MODE ? 'secondary' : '#DC9544',
+    document: DOCS_MODE ? 'secondary' : '#ff8300',
     bookmarkhollow: 'seafoam',
     component: 'secondary',
     folder: 'ultraviolet',
   },
   dark: {
-    document: DOCS_MODE ? 'secondary' : '#DC9544',
+    document: DOCS_MODE ? 'secondary' : 'gold',
     bookmarkhollow: 'seafoam',
     component: 'secondary',
     folder: 'primary',
