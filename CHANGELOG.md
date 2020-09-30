@@ -1,3 +1,14 @@
+## 6.1.0-alpha.18 (September 30, 2020)
+
+### Bug Fixes
+
+- Composition: Rename `disabled` parameter => `disable` ([#12603](https://github.com/storybookjs/storybook/pull/12603))
+- UI: Fix page title for non-alpha chars ([#12583](https://github.com/storybookjs/storybook/pull/12583))
+
+### Maintenance
+
+- Fix spelling errors ([#12590](https://github.com/storybookjs/storybook/pull/12590))
+
 ## 6.1.0-alpha.17 (September 26, 2020)
 
 ### Features
