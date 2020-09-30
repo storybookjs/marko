@@ -1,5 +1,6 @@
 import { styled, Color, Theme } from '@storybook/theming';
 import { Icons } from '@storybook/components';
+import { DOCS_MODE } from 'global';
 import React, { FunctionComponent, ComponentProps } from 'react';
 
 export const CollapseIcon = styled.span<{ isExpanded: boolean }>(({ theme, isExpanded }) => ({
@@ -149,8 +150,8 @@ export const ComponentNode: FunctionComponent<ComponentProps<typeof BranchNode>>
 
 export const DocumentNode: FunctionComponent<ComponentProps<typeof LeafNode>> = React.memo(
   ({ theme, children, ...props }) => (
-    <LeafNode href="https://github.com/emotion-js/emotion" tabIndex={-1} {...props}>
-      <TypeIcon icon="document" color="#DC9544" />
+    <LeafNode tabIndex={-1} {...props}>
+      <TypeIcon icon="document" color={DOCS_MODE ? 'secondary' : '#DC9544'} />
       {children}
     </LeafNode>
   )

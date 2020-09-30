@@ -1,12 +1,13 @@
 import React from 'react';
-import { isRoot, Provider } from '@storybook/api';
+import { isRoot } from '@storybook/api';
 
 import { stories } from './mockdata.large';
 import Search from './Search';
 import SearchResults from './SearchResults';
 import { ItemWithRefId } from './types';
+import { DEFAULT_REF_ID } from './utils';
 
-const refId = 'storybook_internal';
+const refId = DEFAULT_REF_ID;
 const data = { [refId]: { id: refId, url: '/', stories } };
 const dataset = { hash: data, entries: Object.entries(data) };
 const lastViewed = Object.values(stories)

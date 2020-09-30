@@ -1,10 +1,12 @@
 import { styled } from '@storybook/theming';
 import { Icons } from '@storybook/components';
-import React, { FunctionComponent, ReactNode } from 'react';
+import { DOCS_MODE } from 'global';
+import React, { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
 import { ControllerStateAndHelpers } from 'downshift';
 
-import { ComponentNode, RootNode, NodeLabel, StoryNode } from './TreeNode';
+import { ComponentNode, DocumentNode, NodeLabel, RootNode, StoryNode } from './TreeNode';
 import { Match, DownshiftItem, isExpandType, RawSearchresults, ItemWithRefId } from './types';
+import { storyLink } from './utils';
 
 const ResultsList = styled.ol({
   listStyle: 'none',
@@ -60,8 +62,30 @@ const Highlight: FunctionComponent<{ match?: Match }> = React.memo(({ children, 
 });
 
 const Result: FunctionComponent<
-  RawSearchresults[0] & { path: string[]; icon: string; isHighlighted: boolean }
-> = React.memo(({ item, matches, path, icon, ...props }) => {
+  RawSearchresults[0] & {
+    path: string[];
+    icon: string;
+    isHighlighted: boolean;
+    onClick: MouseEventHandler;
+  }
+> = React.memo(({ item, matches, path, icon, onClick, ...props }) => {
+  if (DOCS_MODE) {
+    const click: MouseEventHandler = (event) => {
+      event.preventDefault();
+      onClick(event);
+    };
+    return (
+      <ResultRow {...props}>
+        <DocumentNode depth={0} onClick={click} href={storyLink(item.id, item.refId)}>
+          <NodeLabel path={path}>
+            <strong>
+              <Highlight match={matches[0]}>{item.name}</Highlight>
+            </strong>
+          </NodeLabel>
+        </DocumentNode>
+      </ResultRow>
+    );
+  }
   const TreeNode = item.isComponent ? ComponentNode : StoryNode;
   return (
     <ResultRow {...props}>

@@ -4,6 +4,7 @@ import Sidebar from './Sidebar';
 import { standardData as standardHeaderData } from './Heading.stories';
 import { mockDataset } from './mockdata';
 import { RefType } from './RefHelpers';
+import { DEFAULT_REF_ID } from './utils';
 
 export default {
   component: Sidebar,
@@ -13,7 +14,7 @@ export default {
 
 const { menu } = standardHeaderData;
 const stories = mockDataset.withRoot;
-const refId = 'storybook_internal';
+const refId = DEFAULT_REF_ID;
 const storyId = '1-12-121';
 
 export const simpleData = { menu, stories, storyId };

@@ -1,5 +1,4 @@
-/* eslint-env browser */
-
+import { window, DOCS_MODE } from 'global';
 import React, { FunctionComponent, useEffect, useMemo, useState, useCallback } from 'react';
 
 import { styled } from '@storybook/theming';
@@ -8,14 +7,14 @@ import { StoriesHash, State, isRoot } from '@storybook/api';
 
 import { Heading } from './Heading';
 
+import { collapseAllStories, collapseDocsOnlyStories } from './data';
 import Explorer from './Explorer';
 import Search from './Search';
 import SearchResults from './SearchResults';
 import { CombinedDataset, Selection, ItemWithRefId } from './types';
+import { DEFAULT_REF_ID } from './utils';
 
 import { Refs } from './RefHelpers';
-
-export const DEFAULT_REF_ID = 'storybook_internal';
 
 const getLastViewedStoryIds = (): Selection[] => {
   try {
@@ -111,7 +110,7 @@ const Sidebar: FunctionComponent<SidebarProps> = React.memo(
   ({
     storyId,
     refId = DEFAULT_REF_ID,
-    stories,
+    stories: storiesHash,
     storiesConfigured,
     storiesFailed,
     menu,
@@ -119,6 +118,10 @@ const Sidebar: FunctionComponent<SidebarProps> = React.memo(
     refs = {},
   }) => {
     const selected = useMemo(() => ({ storyId, refId }), [storyId, refId]);
+    const stories = useMemo(
+      () => (DOCS_MODE ? collapseAllStories : collapseDocsOnlyStories)(storiesHash),
+      [DOCS_MODE, storiesHash]
+    );
     const dataset = useCombination(stories, storiesConfigured, storiesFailed, refs);
     const getPath = useCallback(
       function getPath(item: ItemWithRefId): string[] {

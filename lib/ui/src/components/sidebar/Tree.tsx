@@ -1,48 +1,13 @@
-/* eslint-env browser */
-
 import { StoriesHash, isRoot, isStory } from '@storybook/api';
 import { styled } from '@storybook/theming';
 import { Icons } from '@storybook/components';
 import { transparentize } from 'polished';
-import throttle from 'lodash/throttle';
-import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 
-import { getParents } from './old/utils';
 import { ComponentNode, DocumentNode, GroupNode, RootNode, StoryNode } from './TreeNode';
+import { useExpanded, ExpandAction } from './useExpanded';
 import { Item } from './types';
-
-export const getAncestorIds = (data: StoriesHash, id: string): string[] =>
-  getParents(id, data).map((item) => item.id);
-
-export const getDescendantIds = (data: StoriesHash, id: string, skipLeafs = false): string[] => {
-  const { children = [] } = data[id] || {};
-  return children.reduce((acc, childId) => {
-    if (skipLeafs && data[childId].isLeaf) return acc;
-    acc.push(childId, ...getDescendantIds(data, childId, skipLeafs));
-    return acc;
-  }, []);
-};
-
-type ExpandedState = Record<string, boolean>;
-interface ExpandAction {
-  ids: string[];
-  value: boolean;
-}
-const initializeExpanded = ({
-  data,
-  highlightedId,
-  roots,
-}: {
-  data: StoriesHash;
-  highlightedId?: string;
-  roots: string[];
-}) => {
-  const highlightedAncestors = highlightedId ? getAncestorIds(data, highlightedId) : [];
-  return [...roots, ...highlightedAncestors].reduce<ExpandedState>(
-    (acc, id) => Object.assign(acc, { [id]: true }),
-    {}
-  );
-};
+import { getAncestorIds, getDescendantIds, storyLink } from './utils';
 
 export const Action = styled.button(({ theme }) => ({
   display: 'inline-flex',
@@ -110,7 +75,7 @@ const Node = React.memo<NodeProps>(
       const LeafNode = node.isComponent ? DocumentNode : StoryNode;
       return (
         <LeafNode
-          href={`?path=/story/${node.id}`}
+          href={storyLink(node.id, refId)}
           key={node.id}
           data-id={node.id}
           data-ref={refId}
@@ -214,10 +179,12 @@ const Tree = React.memo<{
     selectedId,
     onSelectId,
   }) => {
-    const nodeIds = useMemo(() => Object.keys(data), [data]);
-    const [roots, orphans] = useMemo(
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    // Find top-level nodes and group them so we can hoist any orphans and expand any roots.
+    const [rootIds, orphanIds] = useMemo(
       () =>
-        nodeIds.reduce<[string[], string[]]>(
+        Object.keys(data).reduce<[string[], string[]]>(
           (acc, id) => {
             const node = data[id];
             if (isRoot(node)) acc[0].push(id);
@@ -226,102 +193,42 @@ const Tree = React.memo<{
           },
           [[], []]
         ),
-      [data, nodeIds]
+      [data]
     );
+
+    // Pull up (hoist) any "orphan" nodes that don't have a root node as ancestor so they get
+    // displayed at the top of the tree, before any root nodes.
+    // Also create a map of expandable descendants for each root/orphan node, which is needed later.
+    // Doing that here is a performance enhancement, as it avoids traversing the tree again later.
     const { orphansFirst, expandableDescendants } = useMemo(() => {
-      return orphans
-        .concat(roots)
+      return orphanIds
+        .concat(rootIds)
         .reduce<{ orphansFirst: string[]; expandableDescendants: Record<string, string[]> }>(
-          (acc, id) => {
-            const descendantIds = getDescendantIds(data, id);
-            acc.orphansFirst.push(id, ...descendantIds);
-            acc.expandableDescendants[id] = descendantIds.filter((d) => !data[d].isLeaf);
+          (acc, nodeId) => {
+            const descendantIds = getDescendantIds(data, nodeId, false);
+            acc.orphansFirst.push(nodeId, ...descendantIds);
+            acc.expandableDescendants[nodeId] = descendantIds.filter((d) => !data[d].isLeaf);
             return acc;
           },
           { orphansFirst: [], expandableDescendants: {} }
         );
-    }, [data, roots, orphans]);
+    }, [data, rootIds, orphanIds]);
 
-    const [expanded, setExpanded] = useReducer<
-      React.Reducer<ExpandedState, ExpandAction>,
-      { data: StoriesHash; highlightedId?: string; roots: string[] }
-    >(
-      (state, { ids, value }) =>
-        ids.reduce((acc, id) => Object.assign(acc, { [id]: value }), { ...state }),
-      { data, highlightedId, roots },
-      initializeExpanded
-    );
-
-    useEffect(() => {
-      setExpanded({ ids: getAncestorIds(data, selectedId), value: true });
-    }, [data, selectedId]);
-
-    const rootRef = useRef<HTMLDivElement>(null);
-    useEffect(() => {
-      const getElementByDataId = (id: string) =>
-        rootRef.current && rootRef.current.querySelector(`[data-id="${id}"]`);
-
-      const highlightElement = (element: Element) => {
-        setHighlightedId(element.getAttribute('data-id'));
-        const { top, bottom } = element.getBoundingClientRect();
-        const inView =
-          top >= 0 && bottom <= (window.innerHeight || document.documentElement.clientHeight);
-        if (!inView) element.scrollIntoView({ block: 'nearest' });
-      };
-
-      const navigateTree = throttle((event) => {
-        if (!isBrowsing || !event.key || !rootRef || !rootRef.current || !highlightedId) return;
-        if (event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) return;
-        if (!['Enter', ' ', 'ArrowLeft', 'ArrowRight'].includes(event.key)) return;
-        event.preventDefault();
-
-        const highlightedElement = getElementByDataId(highlightedId);
-        if (!highlightedElement || highlightedElement.getAttribute('data-ref') !== refId) return;
-        const type = highlightedElement.getAttribute('data-nodetype');
-
-        if (
-          ['Enter', ' '].includes(event.key) &&
-          ['component', 'story', 'document'].includes(type)
-        ) {
-          onSelectId(highlightedId);
-        }
-
-        const isExpanded = highlightedElement.getAttribute('aria-expanded');
-
-        if (event.key === 'ArrowLeft') {
-          if (isExpanded === 'true') {
-            setExpanded({ ids: [highlightedId], value: false });
-          } else {
-            const parentId = highlightedElement.getAttribute('data-parent');
-            if (!parentId) return;
-            const parentElement = getElementByDataId(parentId);
-            if (parentElement && parentElement.getAttribute('data-highlightable') === 'true') {
-              setExpanded({ ids: [parentId], value: false });
-              highlightElement(parentElement);
-            } else {
-              setExpanded({
-                ids: getDescendantIds(data, parentId, true),
-                value: false,
-              });
-            }
-          }
-        }
-
-        if (event.key === 'ArrowRight') {
-          if (isExpanded === 'false') {
-            setExpanded({ ids: [highlightedId], value: true });
-          } else if (isExpanded === 'true') {
-            setExpanded({ ids: getDescendantIds(data, highlightedId, true), value: true });
-          }
-        }
-      }, 16);
-
-      document.addEventListener('keydown', navigateTree);
-      return () => document.removeEventListener('keydown', navigateTree);
-    }, [data, isBrowsing, highlightedId, setHighlightedId]);
+    // Track expanded nodes, keep it in sync with props and enable keyboard shortcuts.
+    const [expanded, setExpanded] = useExpanded({
+      containerRef,
+      isBrowsing, // only enable keyboard shortcuts when tree is visible
+      refId,
+      data,
+      rootIds,
+      highlightedId,
+      setHighlightedId,
+      selectedId,
+      onSelectId,
+    });
 
     return (
-      <Container ref={rootRef} hasOrphans={isMain && orphans.length > 0}>
+      <Container ref={containerRef} hasOrphans={isMain && orphanIds.length > 0}>
         {orphansFirst.map((id) => {
           const node = data[id];
 
@@ -353,7 +260,7 @@ const Tree = React.memo<{
               key={id}
               refId={refId}
               node={node}
-              isOrphan={orphans.some((oid) => id === oid || id.startsWith(`${oid}-`))}
+              isOrphan={orphanIds.some((oid) => id === oid || id.startsWith(`${oid}-`))}
               isDisplayed={isDisplayed}
               isSelected={selectedId === id}
               isHighlighted={highlightedId === id}

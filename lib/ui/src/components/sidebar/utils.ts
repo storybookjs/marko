@@ -1,10 +1,18 @@
 import memoize from 'memoizerific';
 import Fuse from 'fuse.js';
-import { DOCS_MODE } from 'global';
+import { document, window, DOCS_MODE } from 'global';
 import { SyntheticEvent } from 'react';
 import { StoriesHash, isRoot, isStory } from '@storybook/api';
 
 const FUZZY_SEARCH_THRESHOLD = 0.35;
+
+export const DEFAULT_REF_ID = 'storybook_internal';
+
+export const storyLink = (storyId: string, refId: string) => {
+  const refPrefix = refId === DEFAULT_REF_ID ? '' : `${refId}_`;
+  const [, type = 'story'] = document.location.search.match(/path=\/([a-z]+)\//) || [];
+  return `${document.location.pathname}?path=/${type}/${refPrefix}${storyId}`;
+};
 
 export const prevent = (e: SyntheticEvent) => {
   e.preventDefault();
@@ -58,19 +66,25 @@ export const createId = (id: string, prefix: string) => `${prefix}_${id}`;
 export const get = memoize(1000)((id: string, dataset: Dataset) => dataset[id]);
 export const getParent = memoize(1000)((id: string, dataset: Dataset) => {
   const item = get(id, dataset);
-  if (item && !isRoot(item)) {
-    return get(item.parent, dataset);
-  }
-  return undefined;
+  return item && !isRoot(item) ? get(item.parent, dataset) : undefined;
 });
 export const getParents = memoize(1000)((id: string, dataset: Dataset): Item[] => {
   const parent = getParent(id, dataset);
-
-  if (!parent) {
-    return [];
-  }
-  return [parent, ...getParents(parent.id, dataset)];
+  return parent ? [parent, ...getParents(parent.id, dataset)] : [];
 });
+export const getAncestorIds = memoize(1000)((data: StoriesHash, id: string): string[] =>
+  getParents(id, data).map((item) => item.id)
+);
+export const getDescendantIds = memoize(1000)(
+  (data: StoriesHash, id: string, skipLeafs: boolean): string[] => {
+    const { children = [] } = data[id] || {};
+    return children.reduce((acc, childId) => {
+      if (skipLeafs && data[childId].isLeaf) return acc;
+      acc.push(childId, ...getDescendantIds(data, childId, skipLeafs));
+      return acc;
+    }, []);
+  }
+);
 
 export const getMains = memoize(1)((dataset: Dataset) =>
   toList(dataset).filter((m) => m.depth === 0)
@@ -244,4 +258,19 @@ export const toFiltered = (dataset: Dataset, filter: string) => {
 
     return acc;
   }, {} as Dataset);
+};
+
+export function cycle<T>(array: T[], index: number, delta: number): number {
+  let next = index + (delta % array.length);
+  if (next < 0) next = array.length + next;
+  if (next >= array.length) next -= array.length;
+  return next;
+}
+
+export const scrollIntoView = (element: Element, center = false) => {
+  if (!element) return;
+  const { top, bottom } = element.getBoundingClientRect();
+  const isInView =
+    top >= 0 && bottom <= (window.innerHeight || document.documentElement.clientHeight);
+  if (!isInView) element.scrollIntoView({ block: center ? 'center' : 'nearest' });
 };

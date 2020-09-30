@@ -7,7 +7,7 @@ import Downshift, { DownshiftState, StateChangeOptions } from 'downshift';
 import Fuse, { FuseOptions } from 'fuse.js';
 import React, { useEffect, useMemo, useRef, useState, useCallback, FunctionComponent } from 'react';
 
-import { DEFAULT_REF_ID } from './Sidebar';
+import { Refs, RefType } from './RefHelpers';
 import {
   ItemWithRefId,
   RawSearchresults,
@@ -17,7 +17,7 @@ import {
   isSearchResult,
   isExpandType,
 } from './types';
-import { Refs, RefType } from './RefHelpers';
+import { DEFAULT_REF_ID } from './utils';
 
 const options = {
   shouldSort: true,
