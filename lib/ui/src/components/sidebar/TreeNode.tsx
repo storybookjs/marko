@@ -110,19 +110,19 @@ const LeafNode = styled.a<{
   })
 );
 
-const Path = styled.span(({ theme }) => ({
+export const Path = styled.span(({ theme }) => ({
   display: 'grid',
   justifyContent: 'start',
   gridAutoColumns: 'auto',
   gridAutoFlow: 'column',
   color: theme.color.dark,
   fontSize: `${theme.typography.size.s1 - 1}px`,
-  span: {
+  '& > span': {
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
   },
-  'span + span': {
+  '& > span + span': {
     position: 'relative',
     marginLeft: 4,
     paddingLeft: 7,
@@ -185,19 +185,3 @@ export const StoryNode: FunctionComponent<ComponentProps<typeof LeafNode>> = Rea
     </LeafNode>
   )
 );
-
-export const NodeLabel: FunctionComponent<{
-  path: string[];
-}> = React.memo(({ children, path, ...props }) => (
-  <div {...props}>
-    {children}
-    {path && (
-      <Path>
-        {path.map((group, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <span key={index}>{group}</span>
-        ))}
-      </Path>
-    )}
-  </div>
-));

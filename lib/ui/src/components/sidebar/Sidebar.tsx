@@ -3,7 +3,7 @@ import React, { FunctionComponent, useEffect, useMemo, useState, useCallback } f
 
 import { styled } from '@storybook/theming';
 import { ScrollArea, Spaced } from '@storybook/components';
-import { StoriesHash, State, isRoot } from '@storybook/api';
+import { StoriesHash, State } from '@storybook/api';
 
 import { Heading } from './Heading';
 
@@ -11,7 +11,7 @@ import { collapseAllStories, collapseDocsOnlyStories } from './data';
 import Explorer from './Explorer';
 import Search from './Search';
 import SearchResults from './SearchResults';
-import { CombinedDataset, Selection, ItemWithRefId } from './types';
+import { CombinedDataset, Selection } from './types';
 import { DEFAULT_REF_ID } from './utils';
 
 import { Refs } from './RefHelpers';
@@ -123,15 +123,6 @@ const Sidebar: FunctionComponent<SidebarProps> = React.memo(
       [DOCS_MODE, storiesHash]
     );
     const dataset = useCombination(stories, storiesConfigured, storiesFailed, refs);
-    const getPath = useCallback(
-      function getPath(item: ItemWithRefId): string[] {
-        const ref = dataset.hash[item.refId];
-        const parent = !isRoot(item) && item.parent ? ref.stories[item.parent] : null;
-        if (parent) return [...getPath({ refId: item.refId, ...parent }), parent.name];
-        return item.refId === DEFAULT_REF_ID ? [] : [ref.title || ref.id];
-      },
-      [dataset]
-    );
 
     const [lastViewed, setLastViewed] = useState(getLastViewedStoryIds);
     const updateLastViewed = useCallback(
@@ -174,7 +165,6 @@ const Sidebar: FunctionComponent<SidebarProps> = React.memo(
                   <SearchResults
                     isSearching={!!inputValue}
                     results={results}
-                    getPath={getPath}
                     getMenuProps={getMenuProps}
                     getItemProps={getItemProps}
                     highlightedIndex={highlightedIndex}

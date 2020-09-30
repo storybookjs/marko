@@ -4,8 +4,8 @@ import { DOCS_MODE } from 'global';
 import React, { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
 import { ControllerStateAndHelpers } from 'downshift';
 
-import { ComponentNode, DocumentNode, NodeLabel, RootNode, StoryNode } from './TreeNode';
-import { Match, DownshiftItem, isExpandType, RawSearchresults, ItemWithRefId } from './types';
+import { ComponentNode, DocumentNode, Path, RootNode, StoryNode } from './TreeNode';
+import { Match, DownshiftItem, isExpandType, RawSearchresults } from './types';
 import { storyLink } from './utils';
 
 const ResultsList = styled.ol({
@@ -63,12 +63,32 @@ const Highlight: FunctionComponent<{ match?: Match }> = React.memo(({ children, 
 
 const Result: FunctionComponent<
   RawSearchresults[0] & {
-    path: string[];
     icon: string;
     isHighlighted: boolean;
     onClick: MouseEventHandler;
   }
-> = React.memo(({ item, matches, path, icon, onClick, ...props }) => {
+> = React.memo(({ item, matches, icon, onClick, ...props }) => {
+  const nameMatch = matches.find((match: Match) => match.key === 'name');
+  const pathMatches = matches.filter((match: Match) => match.key === 'path');
+  const label = (
+    <div>
+      <strong>
+        <Highlight match={nameMatch}>{item.name}</Highlight>
+      </strong>
+      {item.path && (
+        <Path>
+          {item.path.map((group, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <span key={index}>
+              <Highlight match={pathMatches.find((match: Match) => match.arrayIndex === index)}>
+                {group}
+              </Highlight>
+            </span>
+          ))}
+        </Path>
+      )}
+    </div>
+  );
   if (DOCS_MODE) {
     const click: MouseEventHandler = (event) => {
       event.preventDefault();
@@ -77,11 +97,7 @@ const Result: FunctionComponent<
     return (
       <ResultRow {...props}>
         <DocumentNode depth={0} onClick={click} href={storyLink(item.id, item.refId)}>
-          <NodeLabel path={path}>
-            <strong>
-              <Highlight match={matches[0]}>{item.name}</Highlight>
-            </strong>
-          </NodeLabel>
+          {label}
         </DocumentNode>
       </ResultRow>
     );
@@ -89,12 +105,8 @@ const Result: FunctionComponent<
   const TreeNode = item.isComponent ? ComponentNode : StoryNode;
   return (
     <ResultRow {...props}>
-      <TreeNode isExpanded={false} depth={0}>
-        <NodeLabel path={path}>
-          <strong>
-            <Highlight match={matches[0]}>{item.name}</Highlight>
-          </strong>
-        </NodeLabel>
+      <TreeNode isExpanded={false} depth={0} onClick={onClick}>
+        {label}
       </TreeNode>
     </ResultRow>
   );
@@ -103,48 +115,44 @@ const Result: FunctionComponent<
 const SearchResults: FunctionComponent<{
   isSearching: boolean;
   results: DownshiftItem[];
-  getPath: (item: ItemWithRefId) => string[];
   getMenuProps: ControllerStateAndHelpers<DownshiftItem>['getMenuProps'];
   getItemProps: ControllerStateAndHelpers<DownshiftItem>['getItemProps'];
   highlightedIndex: number | null;
-}> = React.memo(
-  ({ isSearching, results, getPath, getMenuProps, getItemProps, highlightedIndex }) => {
-    return (
-      <ResultsList {...getMenuProps()}>
-        {results.length > 0 && !isSearching && (
-          <li>
-            <RootNode>Recently opened</RootNode>
-          </li>
-        )}
-        {results.map((result: DownshiftItem, index) => {
-          if (isExpandType(result)) {
-            return (
-              <ResultRow
-                {...result}
-                {...getItemProps({ key: index, index, item: result })}
-                isHighlighted={highlightedIndex === index}
-                style={{ paddingLeft: 19 }}
-              >
-                <PlusIcon icon="plus" />
-                <ShowMore>Show all ({result.totalCount} results)</ShowMore>
-              </ResultRow>
-            );
-          }
-
-          const { item } = result;
-          const key = `${item.refId}::${item.id}`;
+}> = React.memo(({ isSearching, results, getMenuProps, getItemProps, highlightedIndex }) => {
+  return (
+    <ResultsList {...getMenuProps()}>
+      {results.length > 0 && !isSearching && (
+        <li>
+          <RootNode>Recently opened</RootNode>
+        </li>
+      )}
+      {results.map((result: DownshiftItem, index) => {
+        if (isExpandType(result)) {
           return (
-            <Result
+            <ResultRow
               {...result}
-              {...getItemProps({ key, index, item: result })}
+              {...getItemProps({ key: index, index, item: result })}
               isHighlighted={highlightedIndex === index}
-              path={getPath(item)}
-            />
+              style={{ paddingLeft: 19 }}
+            >
+              <PlusIcon icon="plus" />
+              <ShowMore>Show all ({result.totalCount} results)</ShowMore>
+            </ResultRow>
           );
-        })}
-      </ResultsList>
-    );
-  }
-);
+        }
+
+        const { item } = result;
+        const key = `${item.refId}::${item.id}`;
+        return (
+          <Result
+            {...result}
+            {...getItemProps({ key, index, item: result })}
+            isHighlighted={highlightedIndex === index}
+          />
+        );
+      })}
+    </ResultsList>
+  );
+});
 
 export default SearchResults;

@@ -1,6 +1,6 @@
 /* eslint-env browser */
 
-import { useStorybookApi } from '@storybook/api';
+import { useStorybookApi, isRoot } from '@storybook/api';
 import { styled } from '@storybook/theming';
 import { Icons } from '@storybook/components';
 import Downshift, { DownshiftState, StateChangeOptions } from 'downshift';
@@ -9,7 +9,8 @@ import React, { useEffect, useMemo, useRef, useState, useCallback, FunctionCompo
 
 import { Refs, RefType } from './RefHelpers';
 import {
-  ItemWithRefId,
+  Item,
+  ItemWithRefIdAndPath,
   RawSearchresults,
   DownshiftItem,
   SearchChildrenFn,
@@ -25,13 +26,13 @@ const options = {
   findAllMatches: true,
   includeScore: true,
   includeMatches: true,
-  threshold: 0.3,
+  threshold: 0.2,
   location: 0,
   distance: 100,
   maxPatternLength: 32,
-  minMatchCharLength: 2,
-  keys: ['name'],
-} as FuseOptions<ItemWithRefId>;
+  minMatchCharLength: 1,
+  keys: ['name', 'path'],
+} as FuseOptions<ItemWithRefIdAndPath>;
 
 const ScreenReaderLabel = styled.label({
   position: 'absolute',
@@ -166,14 +167,27 @@ const Search: FunctionComponent<{
     return () => document.removeEventListener('keyup', focusSearch);
   }, [inputRef]);
 
-  const list: ItemWithRefId[] = useMemo(
-    () =>
-      dataset.entries.reduce((acc: ItemWithRefId[], [refId, { stories }]) => {
-        if (stories) acc.push(...Object.values(stories).map((item) => ({ ...item, refId })));
-        return acc;
-      }, []),
+  const getPath = useCallback(
+    function getPath(item: Item, refId: string): string[] {
+      const ref = dataset.hash[refId];
+      const parent = !isRoot(item) && item.parent ? ref.stories[item.parent] : null;
+      if (parent) return [...getPath(parent, refId), parent.name];
+      return refId === DEFAULT_REF_ID ? [] : [ref.title || ref.id];
+    },
     [dataset]
   );
+  const withRefIdAndPath = useCallback(
+    (item, refId) => ({ ...item, refId, path: getPath(item, refId) }),
+    [getPath]
+  );
+
+  const list: ItemWithRefIdAndPath[] = useMemo(() => {
+    return dataset.entries.reduce((acc: ItemWithRefIdAndPath[], [refId, { stories }]) => {
+      if (stories) acc.push(...Object.values(stories).map((item) => withRefIdAndPath(item, refId)));
+      return acc;
+    }, []);
+  }, [dataset]);
+
   const fuse = useMemo(() => new Fuse(list, options), [list]);
 
   const getResults = useCallback(
@@ -258,10 +272,11 @@ const Search: FunctionComponent<{
               const story = data.stories[storyId];
               const item =
                 story.isLeaf && !story.isComponent && !story.isRoot
-                  ? { refId, ...data.stories[story.parent] }
-                  : { refId, ...story };
-              if (!acc.some((res) => res.item.refId === item.refId && res.item.id === item.id)) {
-                acc.push({ item, matches: [], score: 0 });
+                  ? data.stories[story.parent]
+                  : story;
+              // prevent duplicates
+              if (!acc.some((res) => res.item.refId === refId && res.item.id === item.id)) {
+                acc.push({ item: withRefIdAndPath(item, refId), matches: [], score: 0 });
               }
             }
             return acc;

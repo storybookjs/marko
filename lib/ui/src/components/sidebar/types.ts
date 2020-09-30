@@ -4,7 +4,7 @@ import { RefType } from './RefHelpers';
 
 export type Item = StoriesHash[keyof StoriesHash];
 
-export type ItemWithRefId = Item & { refId: string };
+export type ItemWithRefIdAndPath = Item & { refId: string; path: string[] };
 
 export interface CombinedDataset {
   hash: Record<string, RefType>;
@@ -19,6 +19,8 @@ export interface Selection {
 export interface Match {
   value: string;
   indices: [number, number][];
+  key: 'name' | 'path';
+  arrayIndex: number;
 }
 
 export function isSearchResult(x: any): x is RawSearchresults[0] {
@@ -35,8 +37,8 @@ export interface ExpandType {
 
 export type DownshiftItem = RawSearchresults[0] | ExpandType;
 
-export type RawSearchresults = (Fuse.FuseResultWithMatches<ItemWithRefId> &
-  Fuse.FuseResultWithScore<ItemWithRefId>)[];
+export type RawSearchresults = (Fuse.FuseResultWithMatches<ItemWithRefIdAndPath> &
+  Fuse.FuseResultWithScore<ItemWithRefIdAndPath>)[];
 
 export type SearchChildrenFn = (args: {
   inputValue: string;

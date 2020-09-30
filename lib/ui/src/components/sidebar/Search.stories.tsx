@@ -4,7 +4,7 @@ import { isRoot } from '@storybook/api';
 import { stories } from './mockdata.large';
 import Search from './Search';
 import SearchResults from './SearchResults';
-import { ItemWithRefId } from './types';
+import { ItemWithRefIdAndPath } from './types';
 import { DEFAULT_REF_ID } from './utils';
 
 const refId = DEFAULT_REF_ID;
@@ -14,7 +14,7 @@ const lastViewed = Object.values(stories)
   .filter((item, index) => item.isComponent && index % 20 === 0)
   .map((component) => ({ storyId: component.id, refId }));
 
-function getPath(item: ItemWithRefId): string[] {
+function getPath(item: ItemWithRefIdAndPath): string[] {
   const parent = !isRoot(item) ? stories[item.parent] : null;
   if (parent) return [...getPath({ refId: item.refId, ...parent }), parent.name];
   return [];

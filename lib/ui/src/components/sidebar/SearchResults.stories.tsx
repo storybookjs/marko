@@ -3,7 +3,7 @@ import { isRoot } from '@storybook/api';
 
 import { mockDataset } from './mockdata';
 import SearchResults from './SearchResults';
-import { ItemWithRefId } from './types';
+import { ItemWithRefIdAndPath } from './types';
 
 export default {
   component: SearchResults,
@@ -13,9 +13,9 @@ export default {
 
 const internal = Object.values(mockDataset.withRoot).map((i) => ({ ...i, refId: 'internal' }));
 const composed = Object.values(mockDataset.noRoot).map((i) => ({ ...i, refId: 'composed' }));
-const stories: ItemWithRefId[] = internal.concat(composed);
+const stories: ItemWithRefIdAndPath[] = internal.concat(composed);
 
-function getPath(item: ItemWithRefId): string[] {
+function getPath(item: ItemWithRefIdAndPath): string[] {
   const parent = !isRoot(item)
     ? stories.find((i) => i.id === item.parent && i.refId === item.refId)
     : null;
