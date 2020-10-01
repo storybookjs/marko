@@ -103,7 +103,7 @@ describe('renderJsx', () => {
           'item 18',
           'item 19'
         ]}
-       />	
+       />
     `);
   });
 
