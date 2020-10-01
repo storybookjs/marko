@@ -3,7 +3,7 @@ import React from 'react';
 import { Ref } from './Refs';
 import { standardData as standardHeaderData } from './Heading.stories';
 import { mockDataset } from './mockdata';
-import { RefType } from './RefHelpers';
+import { RefType } from './types';
 
 export default {
   component: Ref,

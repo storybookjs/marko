@@ -6,8 +6,9 @@ import { styled } from '@storybook/theming';
 import { transparentize } from 'polished';
 import { useStorybookApi } from '@storybook/api';
 
-import { getStateType, RefType } from './RefHelpers';
 import { MenuItemIcon } from './Menu';
+import { RefType } from './types';
+import { getStateType } from './utils';
 
 export type ClickHandler = ComponentProps<typeof TooltipLinkList>['links'][number]['onClick'];
 export interface IndicatorIconProps {

@@ -5,7 +5,7 @@ import React, { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
 import { ControllerStateAndHelpers } from 'downshift';
 
 import { ComponentNode, DocumentNode, Path, RootNode, StoryNode } from './TreeNode';
-import { Match, DownshiftItem, isExpandType, RawSearchresults } from './types';
+import { Match, DownshiftItem, isExpandType, SearchResult } from './types';
 import { storyLink } from './utils';
 
 const ResultsList = styled.ol({
@@ -62,11 +62,7 @@ const Highlight: FunctionComponent<{ match?: Match }> = React.memo(({ children, 
 });
 
 const Result: FunctionComponent<
-  RawSearchresults[0] & {
-    icon: string;
-    isHighlighted: boolean;
-    onClick: MouseEventHandler;
-  }
+  SearchResult & { icon: string; isHighlighted: boolean; onClick: MouseEventHandler }
 > = React.memo(({ item, matches, icon, onClick, ...props }) => {
   const nameMatch = matches.find((match: Match) => match.key === 'name');
   const pathMatches = matches.filter((match: Match) => match.key === 'path');

@@ -2,6 +2,7 @@ import React from 'react';
 
 import Tree from './Tree';
 import { stories } from './mockdata.large';
+import { DEFAULT_REF_ID } from './utils';
 
 export default {
   component: Tree,
@@ -9,7 +10,7 @@ export default {
   excludeStories: /.*Data$/,
 };
 
-const refId = 'storybook_internal';
+const refId = DEFAULT_REF_ID;
 const storyId = Object.values(stories).find((story) => story.isLeaf && !story.isComponent).id;
 
 const log = (id: string) => console.log(id);

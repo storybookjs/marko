@@ -11,10 +11,8 @@ import { collapseAllStories, collapseDocsOnlyStories } from './data';
 import Explorer from './Explorer';
 import Search from './Search';
 import SearchResults from './SearchResults';
-import { CombinedDataset, Selection } from './types';
+import { Refs, CombinedDataset, Selection } from './types';
 import { DEFAULT_REF_ID } from './utils';
-
-import { Refs } from './RefHelpers';
 
 const getLastViewedStoryIds = (): Selection[] => {
   try {
@@ -123,6 +121,7 @@ const Sidebar: FunctionComponent<SidebarProps> = React.memo(
       [DOCS_MODE, storiesHash]
     );
     const dataset = useCombination(stories, storiesConfigured, storiesFailed, refs);
+    const isLoading = !dataset.hash[DEFAULT_REF_ID].ready;
 
     const [lastViewed, setLastViewed] = useState(getLastViewedStoryIds);
     const updateLastViewed = useCallback(
@@ -152,7 +151,7 @@ const Sidebar: FunctionComponent<SidebarProps> = React.memo(
           <StyledSpaced row={1.6}>
             <Heading className="sidebar-header" menuHighlighted={menuHighlighted} menu={menu} />
 
-            <Search dataset={dataset} lastViewed={lastViewed}>
+            <Search dataset={dataset} isLoading={isLoading} lastViewed={lastViewed}>
               {({
                 inputValue,
                 inputHasFocus,

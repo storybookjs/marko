@@ -1,9 +1,10 @@
 import React from 'react';
-import { isRoot } from '@storybook/api';
+import { StoriesHash } from '@storybook/api';
 
 import { mockDataset } from './mockdata';
 import SearchResults from './SearchResults';
-import { ItemWithRefIdAndPath } from './types';
+import { CombinedDataset, Refs, SearchItem } from './types';
+import { searchItem } from './utils';
 
 export default {
   component: SearchResults,
@@ -11,17 +12,29 @@ export default {
   includeStories: /^[A-Z]/,
 };
 
-const internal = Object.values(mockDataset.withRoot).map((i) => ({ ...i, refId: 'internal' }));
-const composed = Object.values(mockDataset.noRoot).map((i) => ({ ...i, refId: 'composed' }));
-const stories: ItemWithRefIdAndPath[] = internal.concat(composed);
+const combinedDataset = (stories: StoriesHash, refId: string): CombinedDataset => {
+  const hash: Refs = {
+    [refId]: {
+      stories,
+      title: null,
+      id: refId,
+      url: 'iframe.html',
+      ready: true,
+      error: false,
+    },
+  };
+  return { hash, entries: Object.entries(hash) };
+};
 
-function getPath(item: ItemWithRefIdAndPath): string[] {
-  const parent = !isRoot(item)
-    ? stories.find((i) => i.id === item.parent && i.refId === item.refId)
-    : null;
-  if (parent) return [...getPath({ refId: item.refId, ...parent }), parent.name];
-  return item.refId === 'storybook_internal' ? [] : [item.refId];
-}
+const withRoot = combinedDataset(mockDataset.withRoot, 'internal');
+
+const internal = Object.values(withRoot.hash.internal.stories).map((item) =>
+  searchItem(item, withRoot.hash.internal)
+);
+const composed = Object.values(mockDataset.noRoot).map((item) =>
+  searchItem(item, withRoot.hash.internal)
+);
+const stories: SearchItem[] = internal.concat(composed);
 
 const results = stories
   .filter(({ name }) => name.includes('A2'))
@@ -37,7 +50,6 @@ const recents = stories
 const searching = {
   isSearching: true,
   results,
-  getPath,
   getMenuProps: () => ({}),
   getItemProps: () => ({}),
   highlightedIndex: 0,
@@ -45,7 +57,6 @@ const searching = {
 const lastViewed = {
   isSearching: false,
   results: recents,
-  getPath,
   getMenuProps: () => ({}),
   getItemProps: () => ({}),
   highlightedIndex: 0,

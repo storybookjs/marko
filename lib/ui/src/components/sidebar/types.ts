@@ -1,13 +1,13 @@
-import { StoriesHash } from '@storybook/api';
+import { StoriesHash, State } from '@storybook/api';
 import { ControllerStateAndHelpers } from 'downshift';
-import { RefType } from './RefHelpers';
 
+export type Refs = State['refs'];
+export type RefType = Refs[keyof Refs];
 export type Item = StoriesHash[keyof StoriesHash];
-
-export type ItemWithRefIdAndPath = Item & { refId: string; path: string[] };
+export type Dataset = Record<string, Item>;
 
 export interface CombinedDataset {
-  hash: Record<string, RefType>;
+  hash: Refs;
   entries: [string, RefType][];
 }
 
@@ -23,7 +23,7 @@ export interface Match {
   arrayIndex: number;
 }
 
-export function isSearchResult(x: any): x is RawSearchresults[0] {
+export function isSearchResult(x: any): x is SearchResult {
   return !!x.item;
 }
 export function isExpandType(x: any): x is ExpandType {
@@ -35,10 +35,12 @@ export interface ExpandType {
   totalCount: number;
 }
 
-export type DownshiftItem = RawSearchresults[0] | ExpandType;
+export type SearchItem = Item & { refId: string; path: string[] };
 
-export type RawSearchresults = (Fuse.FuseResultWithMatches<ItemWithRefIdAndPath> &
-  Fuse.FuseResultWithScore<ItemWithRefIdAndPath>)[];
+export type SearchResult = Fuse.FuseResultWithMatches<SearchItem> &
+  Fuse.FuseResultWithScore<SearchItem>;
+
+export type DownshiftItem = SearchResult | ExpandType;
 
 export type SearchChildrenFn = (args: {
   inputValue: string;

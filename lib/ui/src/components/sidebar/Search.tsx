@@ -1,24 +1,23 @@
 /* eslint-env browser */
 
-import { useStorybookApi, isRoot } from '@storybook/api';
+import { useStorybookApi } from '@storybook/api';
 import { styled } from '@storybook/theming';
 import { Icons } from '@storybook/components';
 import Downshift, { DownshiftState, StateChangeOptions } from 'downshift';
 import Fuse, { FuseOptions } from 'fuse.js';
 import React, { useEffect, useMemo, useRef, useState, useCallback, FunctionComponent } from 'react';
 
-import { Refs, RefType } from './RefHelpers';
 import {
-  Item,
-  ItemWithRefIdAndPath,
-  RawSearchresults,
+  CombinedDataset,
+  SearchItem,
+  SearchResult,
   DownshiftItem,
   SearchChildrenFn,
   Selection,
   isSearchResult,
   isExpandType,
 } from './types';
-import { DEFAULT_REF_ID } from './utils';
+import { DEFAULT_REF_ID, searchItem } from './utils';
 
 const options = {
   shouldSort: true,
@@ -35,7 +34,7 @@ const options = {
     { name: 'name', weight: 0.7 },
     { name: 'path', weight: 0.3 },
   ],
-} as FuseOptions<ItemWithRefIdAndPath>;
+} as FuseOptions<SearchItem>;
 
 const ScreenReaderLabel = styled.label({
   position: 'absolute',
@@ -137,10 +136,11 @@ const FocusContainer = styled.div({ outline: 0 });
 
 const Search: FunctionComponent<{
   children: SearchChildrenFn;
-  dataset: { hash: Refs; entries: [string, RefType][] };
+  dataset: CombinedDataset;
+  isLoading?: boolean;
   lastViewed?: Selection[];
   initialQuery?: string;
-}> = ({ children, dataset, lastViewed = [], initialQuery = '' }) => {
+}> = ({ children, dataset, isLoading = false, lastViewed = [], initialQuery = '' }) => {
   const api = useStorybookApi();
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputPlaceholder, setPlaceholder] = useState('Find components');
@@ -157,7 +157,7 @@ const Search: FunctionComponent<{
 
   useEffect(() => {
     const focusSearch = (event: KeyboardEvent) => {
-      if (!inputRef.current) return;
+      if (isLoading || !inputRef.current) return;
       if (event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) return;
       if (event.key === '/' && inputRef.current !== document.activeElement) {
         inputRef.current.focus();
@@ -168,25 +168,13 @@ const Search: FunctionComponent<{
     // Keyup prevents slashes from ending up in the input field when held down
     document.addEventListener('keyup', focusSearch);
     return () => document.removeEventListener('keyup', focusSearch);
-  }, [inputRef]);
+  }, [inputRef, isLoading]);
 
-  const getPath = useCallback(
-    function getPath(item: Item, refId: string): string[] {
-      const ref = dataset.hash[refId];
-      const parent = !isRoot(item) && item.parent ? ref.stories[item.parent] : null;
-      if (parent) return [...getPath(parent, refId), parent.name];
-      return refId === DEFAULT_REF_ID ? [] : [ref.title || ref.id];
-    },
-    [dataset]
-  );
-  const withRefIdAndPath = useCallback(
-    (item, refId) => ({ ...item, refId, path: getPath(item, refId) }),
-    [getPath]
-  );
-
-  const list: ItemWithRefIdAndPath[] = useMemo(() => {
-    return dataset.entries.reduce((acc: ItemWithRefIdAndPath[], [refId, { stories }]) => {
-      if (stories) acc.push(...Object.values(stories).map((item) => withRefIdAndPath(item, refId)));
+  const list: SearchItem[] = useMemo(() => {
+    return dataset.entries.reduce((acc: SearchItem[], [refId, { stories }]) => {
+      if (stories) {
+        acc.push(...Object.values(stories).map((item) => searchItem(item, dataset.hash[refId])));
+      }
       return acc;
     }, []);
   }, [dataset]);
@@ -198,7 +186,7 @@ const Search: FunctionComponent<{
       if (!input) return [];
 
       let results: DownshiftItem[] = [];
-      const componentResults = (fuse.search(input) as RawSearchresults).filter(
+      const componentResults = (fuse.search(input) as SearchResult[]).filter(
         ({ item }) => item.isComponent
       );
 
@@ -279,7 +267,7 @@ const Search: FunctionComponent<{
                   : story;
               // prevent duplicates
               if (!acc.some((res) => res.item.refId === refId && res.item.id === item.id)) {
-                acc.push({ item: withRefIdAndPath(item, refId), matches: [], score: 0 });
+                acc.push({ item: searchItem(item, dataset.hash[refId]), matches: [], score: 0 });
               }
             }
             return acc;

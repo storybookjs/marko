@@ -3,7 +3,7 @@ import React from 'react';
 import Sidebar from './Sidebar';
 import { standardData as standardHeaderData } from './Heading.stories';
 import { mockDataset } from './mockdata';
-import { RefType } from './RefHelpers';
+import { RefType } from './types';
 import { DEFAULT_REF_ID } from './utils';
 
 export default {
@@ -31,7 +31,7 @@ const refs: Record<string, RefType> = {
   },
 };
 
-export const simple = () => (
+export const Simple = () => (
   <Sidebar
     storiesConfigured
     menu={menu}
@@ -41,7 +41,8 @@ export const simple = () => (
     refs={{}}
   />
 );
-export const isLoading = () => (
+
+export const Loading = () => (
   <Sidebar
     storiesConfigured={false}
     menu={menu}
@@ -51,10 +52,12 @@ export const isLoading = () => (
     refs={{}}
   />
 );
-export const isEmpty = () => (
+
+export const Empty = () => (
   <Sidebar storiesConfigured menu={menu} stories={{}} storyId={storyId} refId={refId} refs={{}} />
 );
-export const withRefs = () => (
+
+export const WithRefs = () => (
   <Sidebar
     storiesConfigured
     menu={menu}

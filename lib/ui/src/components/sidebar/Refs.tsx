@@ -4,11 +4,11 @@ import { styled } from '@storybook/theming';
 import { transparentize } from 'polished';
 
 import { AuthBlock, ErrorBlock, LoaderBlock, EmptyBlock } from './RefBlocks';
-import { getStateType, RefType } from './RefHelpers';
 import { RefIndicator } from './RefIndicator';
 import Tree from './Tree';
 import { CollapseIcon } from './TreeNode';
-import { Selection } from './types';
+import { RefType, Selection } from './types';
+import { DEFAULT_REF_ID, getStateType } from './utils';
 
 export interface RefProps {
   isBrowsing: boolean;
@@ -106,7 +106,7 @@ export const Ref: FunctionComponent<RefType & RefProps> = React.memo((props) => 
   const length = useMemo(() => (stories ? Object.keys(stories).length : 0), [stories]);
   const indicatorRef = useRef<HTMLElement>(null);
 
-  const isMain = refId === 'storybook_internal';
+  const isMain = refId === DEFAULT_REF_ID;
 
   const isLoadingMain = !ready && isMain;
   const isLoadingInjected = type === 'auto-inject' && !ready;

@@ -1,10 +1,8 @@
 import React from 'react';
-import { isRoot } from '@storybook/api';
 
 import { stories } from './mockdata.large';
 import Search from './Search';
 import SearchResults from './SearchResults';
-import { ItemWithRefIdAndPath } from './types';
 import { DEFAULT_REF_ID } from './utils';
 
 const refId = DEFAULT_REF_ID;
@@ -13,12 +11,6 @@ const dataset = { hash: data, entries: Object.entries(data) };
 const lastViewed = Object.values(stories)
   .filter((item, index) => item.isComponent && index % 20 === 0)
   .map((component) => ({ storyId: component.id, refId }));
-
-function getPath(item: ItemWithRefIdAndPath): string[] {
-  const parent = !isRoot(item) ? stories[item.parent] : null;
-  if (parent) return [...getPath({ refId: item.refId, ...parent }), parent.name];
-  return [];
-}
 
 export default {
   component: Search,
@@ -39,7 +31,6 @@ export const LastViewed = () => (
       <SearchResults
         isSearching={!!inputValue}
         results={results}
-        getPath={getPath}
         getMenuProps={getMenuProps}
         getItemProps={getItemProps}
         highlightedIndex={highlightedIndex}

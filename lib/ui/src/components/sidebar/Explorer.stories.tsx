@@ -2,7 +2,7 @@ import React from 'react';
 
 import Explorer from './Explorer';
 import { mockDataset } from './mockdata';
-import { RefType } from './RefHelpers';
+import { RefType } from './types';
 
 export default {
   component: Explorer,
