@@ -11,7 +11,7 @@
  *     }, {}), null, 2)
  */
 
-import { Item } from './types';
+import { Dataset } from './types';
 
 export const stories = {
   emails: {
@@ -31,8 +31,13 @@ export const stories = {
     isRoot: true,
   },
   'emails-introduction': {
-    name: 'Introduction',
     id: 'emails-introduction',
+    kind: 'Emails',
+    name: 'Introduction',
+    story: 'Introduction',
+    args: {},
+    argTypes: {},
+    initialArgs: {},
     parent: 'emails',
     depth: 1,
     isComponent: true,
@@ -27371,4 +27376,4 @@ export const stories = {
     isComponent: false,
     isRoot: false,
   },
-} as Record<string, Item>;
+} as Dataset;

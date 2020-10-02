@@ -4,7 +4,7 @@ import { Ref } from './Refs';
 import { CombinedDataset, Selection } from './types';
 import { useHighlighted } from './useHighlighted';
 
-interface ExplorerProps {
+export interface ExplorerProps {
   dataset: CombinedDataset;
   selected: Selection;
   isBrowsing: boolean;
