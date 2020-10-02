@@ -1,7 +1,7 @@
 import { styled } from '@storybook/theming';
 import { Icons } from '@storybook/components';
 import { DOCS_MODE } from 'global';
-import React, { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
+import React, { FunctionComponent, MouseEventHandler, ReactNode, useCallback } from 'react';
 import { ControllerStateAndHelpers } from 'downshift';
 
 import { ComponentNode, DocumentNode, Path, RootNode, StoryNode } from './TreeNode';
@@ -64,6 +64,14 @@ const Highlight: FunctionComponent<{ match?: Match }> = React.memo(({ children, 
 const Result: FunctionComponent<
   SearchResult & { icon: string; isHighlighted: boolean; onClick: MouseEventHandler }
 > = React.memo(({ item, matches, icon, onClick, ...props }) => {
+  const click: MouseEventHandler = useCallback(
+    (event) => {
+      event.preventDefault();
+      onClick(event);
+    },
+    [onClick]
+  );
+
   const nameMatch = matches.find((match: Match) => match.key === 'name');
   const pathMatches = matches.filter((match: Match) => match.key === 'path');
   const label = (
@@ -85,11 +93,8 @@ const Result: FunctionComponent<
       )}
     </div>
   );
+
   if (DOCS_MODE) {
-    const click: MouseEventHandler = (event) => {
-      event.preventDefault();
-      onClick(event);
-    };
     return (
       <ResultRow {...props}>
         <DocumentNode depth={0} onClick={click} href={storyLink(item.id, item.refId)}>
@@ -98,6 +103,7 @@ const Result: FunctionComponent<
       </ResultRow>
     );
   }
+
   const TreeNode = item.isComponent ? ComponentNode : StoryNode;
   return (
     <ResultRow {...props}>
