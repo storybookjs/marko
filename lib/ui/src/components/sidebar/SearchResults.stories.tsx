@@ -12,27 +12,31 @@ export default {
   includeStories: /^[A-Z]/,
 };
 
-const combinedDataset = (stories: StoriesHash, refId: string): CombinedDataset => {
-  const hash: Refs = {
-    [refId]: {
-      stories,
-      title: null,
-      id: refId,
-      url: 'iframe.html',
-      ready: true,
-      error: false,
-    },
-  };
+const combinedDataset = (refs: Record<string, StoriesHash>): CombinedDataset => {
+  const hash: Refs = Object.entries(refs).reduce(
+    (acc, [refId, stories]) =>
+      Object.assign(acc, {
+        [refId]: {
+          stories,
+          title: null,
+          id: refId,
+          url: 'iframe.html',
+          ready: true,
+          error: false,
+        },
+      }),
+    {}
+  );
   return { hash, entries: Object.entries(hash) };
 };
 
-const withRoot = combinedDataset(mockDataset.withRoot, 'internal');
+const dataset = combinedDataset({ internal: mockDataset.withRoot, composed: mockDataset.noRoot });
 
-const internal = Object.values(withRoot.hash.internal.stories).map((item) =>
-  searchItem(item, withRoot.hash.internal)
+const internal = Object.values(dataset.hash.internal.stories).map((item) =>
+  searchItem(item, dataset.hash.internal)
 );
-const composed = Object.values(mockDataset.noRoot).map((item) =>
-  searchItem(item, withRoot.hash.internal)
+const composed = Object.values(dataset.hash.composed.stories).map((item) =>
+  searchItem(item, dataset.hash.composed)
 );
 const stories: SearchItem[] = internal.concat(composed);
 
@@ -47,18 +51,21 @@ const recents = stories
   .filter((item) => item.isComponent) // even though we track stories, we display them grouped by component
   .map((story) => ({ item: story, matches: [], score: 0 }));
 
+// We need this to prevent react key warnings
+const passKey = (props: any = {}) => ({ key: props.key });
+
 const searching = {
   isSearching: true,
   results,
-  getMenuProps: () => ({}),
-  getItemProps: () => ({}),
+  getMenuProps: passKey,
+  getItemProps: passKey,
   highlightedIndex: 0,
 };
 const lastViewed = {
   isSearching: false,
   results: recents,
-  getMenuProps: () => ({}),
-  getItemProps: () => ({}),
+  getMenuProps: passKey,
+  getItemProps: passKey,
   highlightedIndex: 0,
 };
 

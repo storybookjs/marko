@@ -12,7 +12,7 @@ const TextStyle = styled.div(({ theme }) => ({
   lineHeight: '20px',
   margin: 0,
 }));
-const Text = styled.p(({ theme }) => ({
+const Text = styled.div(({ theme }) => ({
   fontSize: theme.typography.size.s2 - 1,
   lineHeight: '20px',
   margin: 0,
@@ -148,11 +148,11 @@ export const AuthBlock: FunctionComponent<{ loginUrl: string; id: string }> = ({
           </Fragment>
         ) : (
           <Fragment>
-            <Text>Browse this secure Storybook</Text>
+            <Text>Sign in to browse this Storybook.</Text>
             <div>
               <Button small gray onClick={open}>
                 <Icons icon="lock" />
-                Log in
+                Sign in
               </Button>
             </div>
           </Fragment>
