@@ -94,7 +94,7 @@ class MyComponent extends Component {
 export const defaultView = () => <MyComponent initialState={} />;
 ```
 
-### Working with community addons
+### Which community addons are compatible with the latest version of Storybook?
 
 Starting with Storybook version 6.0 we've introduced some great features aimed at streamlining your development workflow.
 
