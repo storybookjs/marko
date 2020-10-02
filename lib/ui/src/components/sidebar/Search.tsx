@@ -135,7 +135,7 @@ const ClearIcon = styled(Icons)(({ theme }) => ({
 
 const FocusContainer = styled.div({ outline: 0 });
 
-const Search: FunctionComponent<{
+export const Search: FunctionComponent<{
   children: SearchChildrenFn;
   dataset: CombinedDataset;
   isLoading?: boolean;
@@ -309,5 +309,3 @@ const Search: FunctionComponent<{
     </Downshift>
   );
 };
-
-export default Search;

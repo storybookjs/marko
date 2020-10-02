@@ -8,11 +8,11 @@ import { StoriesHash, State } from '@storybook/api';
 import { Heading } from './Heading';
 
 import { DEFAULT_REF_ID, collapseAllStories, collapseDocsOnlyStories } from './data';
-import Explorer from './Explorer';
-import Search from './Search';
-import SearchResults from './SearchResults';
+import { Explorer } from './Explorer';
+import { Search } from './Search';
+import { SearchResults } from './SearchResults';
 import { Refs, CombinedDataset, Selection } from './types';
-import useLastViewed from './useLastViewed';
+import { useLastViewed } from './useLastViewed';
 
 const Container = styled.nav({
   position: 'absolute',
@@ -85,7 +85,7 @@ export interface SidebarProps {
   menuHighlighted?: boolean;
 }
 
-const Sidebar: FunctionComponent<SidebarProps> = React.memo(
+export const Sidebar: FunctionComponent<SidebarProps> = React.memo(
   ({
     storyId = null,
     refId = DEFAULT_REF_ID,
@@ -142,5 +142,3 @@ const Sidebar: FunctionComponent<SidebarProps> = React.memo(
     );
   }
 );
-
-export default Sidebar;

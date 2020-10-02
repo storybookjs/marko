@@ -10,7 +10,7 @@ export interface ExplorerProps {
   isBrowsing: boolean;
 }
 
-const Explorer: FunctionComponent<ExplorerProps> = React.memo(
+export const Explorer: FunctionComponent<ExplorerProps> = React.memo(
   ({ isBrowsing, dataset, selected }) => {
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -38,5 +38,3 @@ const Explorer: FunctionComponent<ExplorerProps> = React.memo(
     );
   }
 );
-
-export default Explorer;

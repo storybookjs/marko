@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { stories } from './mockdata.large';
-import Search from './Search';
-import SearchResults from './SearchResults';
+import { Search } from './Search';
+import { SearchResults } from './SearchResults';
 import { DEFAULT_REF_ID } from './data';
 
 const refId = DEFAULT_REF_ID;

@@ -23,7 +23,7 @@ const storeLastViewedStoryIds = (items: StoryRef[]) => {
   }
 };
 
-const useLastViewed = (selection: Selection) => {
+export const useLastViewed = (selection: Selection) => {
   const [lastViewed, setLastViewed] = useState(retrieveLastViewedStoryIds);
 
   const updateLastViewed = useCallback(
@@ -49,5 +49,3 @@ const useLastViewed = (selection: Selection) => {
 
   return lastViewed;
 };
-
-export default useLastViewed;

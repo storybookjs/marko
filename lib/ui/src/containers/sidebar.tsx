@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 
 import { Consumer, Combo, StoriesHash } from '@storybook/api';
 
-import SidebarComponent from '../components/sidebar/Sidebar';
+import { Sidebar as SidebarComponent } from '../components/sidebar/Sidebar';
 import { useMenu } from './menu';
 
 export type Item = StoriesHash[keyof StoriesHash];

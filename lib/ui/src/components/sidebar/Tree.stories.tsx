@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Tree from './Tree';
+import { Tree } from './Tree';
 import { stories } from './mockdata.large';
 import { DEFAULT_REF_ID } from './data';
 

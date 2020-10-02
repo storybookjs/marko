@@ -2,7 +2,7 @@ import React from 'react';
 import { StoriesHash } from '@storybook/api';
 
 import { mockDataset } from './mockdata';
-import SearchResults from './SearchResults';
+import { SearchResults } from './SearchResults';
 import { CombinedDataset, Refs, SearchItem } from './types';
 import { searchItem } from './utils';
 

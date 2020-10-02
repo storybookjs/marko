@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Explorer from './Explorer';
+import { Explorer } from './Explorer';
 import { mockDataset } from './mockdata';
 import { RefType } from './types';
 

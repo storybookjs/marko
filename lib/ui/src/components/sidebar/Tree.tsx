@@ -160,7 +160,7 @@ const Container = styled.div<{ hasOrphans: boolean }>((props) => ({
   marginBottom: 20,
 }));
 
-const Tree = React.memo<{
+export const Tree = React.memo<{
   isBrowsing: boolean;
   isMain: boolean;
   refId: string;
@@ -275,5 +275,3 @@ const Tree = React.memo<{
     );
   }
 );
-
-export default Tree;

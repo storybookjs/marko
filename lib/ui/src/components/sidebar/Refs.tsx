@@ -5,7 +5,7 @@ import { transparentize } from 'polished';
 
 import { AuthBlock, ErrorBlock, LoaderBlock, EmptyBlock } from './RefBlocks';
 import { RefIndicator } from './RefIndicator';
-import Tree from './Tree';
+import { Tree } from './Tree';
 import { CollapseIcon } from './TreeNode';
 import { DEFAULT_REF_ID } from './data';
 import { RefType, Selection } from './types';

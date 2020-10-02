@@ -114,7 +114,7 @@ const Result: FunctionComponent<
   );
 });
 
-const SearchResults: FunctionComponent<{
+export const SearchResults: FunctionComponent<{
   isSearching: boolean;
   results: DownshiftItem[];
   getMenuProps: ControllerStateAndHelpers<DownshiftItem>['getMenuProps'];
@@ -156,5 +156,3 @@ const SearchResults: FunctionComponent<{
     </ResultsList>
   );
 });
-
-export default SearchResults;
