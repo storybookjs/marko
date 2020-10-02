@@ -2,7 +2,9 @@
 title: 'Babel'
 ---
 
-Storybook’s webpack config by [default](#default-configuration) sets up [Babel](https://babeljs.io/) for ES6 transpiling. Storybook works with evergreen browsers and IE11 by default.
+Storybook’s webpack config by [default](#default-configuration) sets up [Babel](https://babeljs.io/) for ES6 transpiling. Storybook works with evergreen browsers by default.
+
+If you want to run Storybook in IE11, make sure to remove the `@storybook/addon-docs` addon, as this currently [causes issues in IE11](https://github.com/storybookjs/storybook/issues/8884). It's included in `@storybook/addon-essentials` which we add by default. So, make sure to replace this one with the individual addons you want to have.
 
 Here are some key features of Storybook's Babel configurations.
 
