@@ -1,6 +1,8 @@
 import { Story, StoriesHash } from '@storybook/api';
 import { Item } from './types';
 
+export const DEFAULT_REF_ID = 'storybook_internal';
+
 export const collapseAllStories = (stories: StoriesHash) => {
   // keep track of component IDs that have been rewritten to the ID of their first leaf child
   const componentIdToLeafId: Record<string, string> = {};

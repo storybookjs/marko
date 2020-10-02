@@ -3,8 +3,8 @@ import React from 'react';
 import Sidebar from './Sidebar';
 import { standardData as standardHeaderData } from './Heading.stories';
 import { mockDataset } from './mockdata';
+import { DEFAULT_REF_ID } from './data';
 import { RefType } from './types';
-import { DEFAULT_REF_ID } from './utils';
 
 export default {
   component: Sidebar,

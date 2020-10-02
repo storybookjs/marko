@@ -3,9 +3,8 @@ import { document, window, DOCS_MODE } from 'global';
 import { SyntheticEvent } from 'react';
 import { StoriesHash, isRoot } from '@storybook/api';
 
+import { DEFAULT_REF_ID } from './data';
 import { Item, RefType, Dataset, SearchItem } from './types';
-
-export const DEFAULT_REF_ID = 'storybook_internal';
 
 export const storyLink = (storyId: string, refId: string) => {
   const type = DOCS_MODE ? 'docs' : 'story';

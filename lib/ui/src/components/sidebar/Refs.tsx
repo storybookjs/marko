@@ -7,8 +7,9 @@ import { AuthBlock, ErrorBlock, LoaderBlock, EmptyBlock } from './RefBlocks';
 import { RefIndicator } from './RefIndicator';
 import Tree from './Tree';
 import { CollapseIcon } from './TreeNode';
+import { DEFAULT_REF_ID } from './data';
 import { RefType, Selection } from './types';
-import { DEFAULT_REF_ID, getStateType } from './utils';
+import { getStateType } from './utils';
 
 export interface RefProps {
   isBrowsing: boolean;

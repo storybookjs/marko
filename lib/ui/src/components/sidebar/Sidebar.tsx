@@ -7,13 +7,12 @@ import { StoriesHash, State } from '@storybook/api';
 
 import { Heading } from './Heading';
 
-import { collapseAllStories, collapseDocsOnlyStories } from './data';
+import { DEFAULT_REF_ID, collapseAllStories, collapseDocsOnlyStories } from './data';
 import Explorer from './Explorer';
 import Search from './Search';
 import SearchResults from './SearchResults';
 import { Refs, CombinedDataset, Selection } from './types';
 import useLastViewed from './useLastViewed';
-import { DEFAULT_REF_ID } from './utils';
 
 const Container = styled.nav({
   position: 'absolute',

@@ -2,7 +2,7 @@ import React from 'react';
 
 import Tree from './Tree';
 import { stories } from './mockdata.large';
-import { DEFAULT_REF_ID } from './utils';
+import { DEFAULT_REF_ID } from './data';
 
 export default {
   component: Tree,

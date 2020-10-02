@@ -3,7 +3,7 @@ import React from 'react';
 import { stories } from './mockdata.large';
 import Search from './Search';
 import SearchResults from './SearchResults';
-import { DEFAULT_REF_ID } from './utils';
+import { DEFAULT_REF_ID } from './data';
 
 const refId = DEFAULT_REF_ID;
 const data = { [refId]: { id: refId, url: '/', stories } };

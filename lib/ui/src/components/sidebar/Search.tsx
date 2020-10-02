@@ -7,6 +7,7 @@ import Downshift, { DownshiftState, StateChangeOptions } from 'downshift';
 import Fuse, { FuseOptions } from 'fuse.js';
 import React, { useEffect, useMemo, useRef, useState, useCallback, FunctionComponent } from 'react';
 
+import { DEFAULT_REF_ID } from './data';
 import {
   CombinedDataset,
   SearchItem,
@@ -17,7 +18,7 @@ import {
   isSearchResult,
   isExpandType,
 } from './types';
-import { DEFAULT_REF_ID, searchItem } from './utils';
+import { searchItem } from './utils';
 
 const options = {
   shouldSort: true,
