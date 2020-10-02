@@ -1,5 +1,5 @@
-import { window, DOCS_MODE } from 'global';
-import React, { FunctionComponent, useEffect, useMemo, useState, useCallback } from 'react';
+import { DOCS_MODE } from 'global';
+import React, { FunctionComponent, useMemo } from 'react';
 
 import { styled } from '@storybook/theming';
 import { ScrollArea, Spaced } from '@storybook/components';
@@ -12,26 +12,8 @@ import Explorer from './Explorer';
 import Search from './Search';
 import SearchResults from './SearchResults';
 import { Refs, CombinedDataset, Selection } from './types';
+import useLastViewed from './useLastViewed';
 import { DEFAULT_REF_ID } from './utils';
-
-const getLastViewedStoryIds = (): Selection[] => {
-  try {
-    const raw = window.localStorage.getItem('lastViewedStoryIds');
-    const val = typeof raw === 'string' && JSON.parse(raw);
-    if (!val || !Array.isArray(val)) return [];
-    if (!val.some((item) => typeof item === 'object' && item.storyId && item.refId)) return [];
-    return val;
-  } catch (e) {
-    return [];
-  }
-};
-const setLastViewedStoryIds = (items: Selection[]) => {
-  try {
-    window.localStorage.setItem('lastViewedStoryIds', JSON.stringify(items));
-  } catch (e) {
-    //
-  }
-};
 
 const Container = styled.nav({
   position: 'absolute',
@@ -99,14 +81,14 @@ export interface SidebarProps {
   storiesFailed?: Error;
   refs: State['refs'];
   menu: any[];
-  storyId: string;
+  storyId?: string;
   refId?: string;
   menuHighlighted?: boolean;
 }
 
 const Sidebar: FunctionComponent<SidebarProps> = React.memo(
   ({
-    storyId,
+    storyId = null,
     refId = DEFAULT_REF_ID,
     stories: storiesHash,
     storiesConfigured,
@@ -115,35 +97,14 @@ const Sidebar: FunctionComponent<SidebarProps> = React.memo(
     menuHighlighted = false,
     refs = {},
   }) => {
-    const selected = useMemo(() => ({ storyId, refId }), [storyId, refId]);
+    const selected: Selection = useMemo(() => storyId && { storyId, refId }, [storyId, refId]);
     const stories = useMemo(
       () => (DOCS_MODE ? collapseAllStories : collapseDocsOnlyStories)(storiesHash),
       [DOCS_MODE, storiesHash]
     );
     const dataset = useCombination(stories, storiesConfigured, storiesFailed, refs);
     const isLoading = !dataset.hash[DEFAULT_REF_ID].ready;
-
-    const [lastViewed, setLastViewed] = useState(getLastViewedStoryIds);
-    const updateLastViewed = useCallback(
-      (selection: Selection) =>
-        setLastViewed((state: Selection[]) => {
-          const index = state.findIndex(
-            (item) => item.storyId === selection.storyId && item.refId === selection.refId
-          );
-          if (index === 0) return state;
-          const update =
-            index === -1
-              ? [selection, ...state]
-              : [selection, ...state.slice(0, index), ...state.slice(index + 1)];
-          setLastViewedStoryIds(update);
-          return update;
-        }),
-      [setLastViewed]
-    );
-
-    useEffect(() => {
-      updateLastViewed(selected);
-    }, [selected]);
+    const lastViewed = useLastViewed(selected);
 
     return (
       <Container className="container sidebar-container">

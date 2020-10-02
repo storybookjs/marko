@@ -46,13 +46,15 @@ export const useHighlighted = ({
   useEffect(() => {
     setHighlighted(selected);
     highlightedRef.current = selected;
-    const { storyId, refId } = selected;
-    setTimeout(() => {
-      scrollIntoView(
-        containerRef.current.querySelector(`[data-id="${storyId}"][data-ref="${refId}"]`),
-        true // make sure it's clearly visible by centering it
-      );
-    }, 0);
+    if (selected) {
+      const { storyId, refId } = selected;
+      setTimeout(() => {
+        scrollIntoView(
+          containerRef.current.querySelector(`[data-id="${storyId}"][data-ref="${refId}"]`),
+          true // make sure it's clearly visible by centering it
+        );
+      }, 0);
+    }
   }, [dataset, highlightedRef, selected]);
 
   // Highlight nodes up/down the tree using arrow keys
@@ -67,8 +69,8 @@ export const useHighlighted = ({
         );
         const currentIndex = highlightable.findIndex(
           (el) =>
-            el.getAttribute('data-id') === highlightedRef.current.storyId &&
-            el.getAttribute('data-ref') === highlightedRef.current.refId
+            el.getAttribute('data-id') === highlightedRef.current?.storyId &&
+            el.getAttribute('data-ref') === highlightedRef.current?.refId
         );
         const nextIndex = cycle(highlightable, currentIndex, event.key === 'ArrowUp' ? -1 : 1);
         const didRunAround =
