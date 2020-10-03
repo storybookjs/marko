@@ -1,6 +1,6 @@
 {
   "name": "storybook",
-  "version": "6.0.24",
+  "version": "6.0.25",
   "description": "Storybook CLI",
   "keywords": [
     "storybook"
@@ -23,7 +23,7 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/cli": "6.0.24"
+    "@storybook/cli": "6.0.25"
   },
   "publishConfig": {
     "access": "public"
