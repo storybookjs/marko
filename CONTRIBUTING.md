@@ -303,7 +303,7 @@ If you're working on one or a few packages, for every change that you make, you 
 - Run `yarn build <package-name>` to build that package specifically. \
   For the package name, use its short version. Example: for `@storybook/addon-docs`, run `yarn build addon-docs`.
 - Run `yarn build --all` to build everything.
-- Add `--watch` to run automatically in watch more if you are either building a selection of packages by name or building all.
+- Add `--watch` to run automatically in watch mode if you are either building a selection of packages by name or building all.
   Example: `yarn build core addon-docs --watch` or `yarn build --all --watch`.
 
 ### Working with the kitchen sink apps
