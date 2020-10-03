@@ -6,7 +6,10 @@ const ButtonWithMemo = React.memo((props) => <DocgenButton {...props} />);
 export default {
   title: 'Addons/Docs/ButtonWithMemo',
   component: ButtonWithMemo,
-  parameters: { chromatic: { disable: true } },
+  parameters: {
+    chromatic: { disable: true },
+    docs: { source: { type: 'dynamic' } },
+  },
 };
 
 export const displaysCorrectly = () => <ButtonWithMemo label="Hello World" />;
