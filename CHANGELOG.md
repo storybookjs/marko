@@ -1,3 +1,17 @@
+## 6.0.25 (October 4, 2020)
+
+### Bug Fixes
+
+- CLI: Workaround for react native `sb init` ([#12405](https://github.com/storybookjs/storybook/pull/12405))
+
+## 6.0.24 (October 4, 2020)
+
+Failed NPM publish
+
+## 6.0.23 (October 4, 2020)
+
+Failed NPM publish
+
 ## 6.1.0-alpha.19 (October 3, 2020)
 
 ### Maintenance
