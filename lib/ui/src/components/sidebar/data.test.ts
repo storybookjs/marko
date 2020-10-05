@@ -64,7 +64,7 @@ const b2: Item = {
   isRoot: false,
   isComponent: false,
   parent: 'b',
-  args: [],
+  args: {},
 };
 
 const stories: StoriesHash = { root, a, a1, b, b1, b2 };
