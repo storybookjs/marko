@@ -33,7 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
-  propSubscriptions = new Map<any, { prop: any, sub: Subscription }>();
+  propSubscriptions = new Map<any, { prop: any; sub: Subscription }>();
 
   constructor(
     private cfr: ComponentFactoryResolver,
@@ -67,11 +67,11 @@ export class AppComponent implements OnInit, OnDestroy {
       this.subscription.unsubscribe();
     }
 
-    this.propSubscriptions.forEach(v => {
+    this.propSubscriptions.forEach((v) => {
       if (!v.sub.closed) {
         v.sub.unsubscribe();
       }
-    })
+    });
     this.propSubscriptions.clear();
   }
 
@@ -150,7 +150,7 @@ export class AppComponent implements OnInit, OnDestroy {
         v.sub.unsubscribe();
       }
     }
-    
+
     const sub = instanceProperty.subscribe(value);
     this.propSubscriptions.set(key, { prop: value, sub });
   }

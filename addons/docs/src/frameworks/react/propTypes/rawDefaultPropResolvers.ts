@@ -17,7 +17,8 @@ const funcResolver: TypeResolver = (rawDefaultProp, { name, type }) => {
       return createSummaryValue(getPrettyElementIdentifier(funcName));
     }
 
-    const { hasParams } = inspectValue(rawDefaultProp.toString()).inferredType as InspectionFunction;
+    const { hasParams } = inspectValue(rawDefaultProp.toString())
+      .inferredType as InspectionFunction;
 
     return createSummaryValue(getPrettyFuncIdentifier(funcName, hasParams));
   }

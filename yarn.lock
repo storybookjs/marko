@@ -4382,17 +4382,18 @@
     npmlog "^4.1.2"
     write-file-atomic "^2.3.0"
 
-"@marko/webpack@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@marko/webpack/-/webpack-2.1.0.tgz#2042556c142201b3d05cdee8703b1b44afee089b"
-  integrity sha512-FYaQyZpdCFW07PRy4Yize7WJsxLxGZU+C611SAlanSisTaCGy1bof7V9YuvbddUf5XalmP4T2Qns0XyL2zkdhw==
+"@marko/webpack@^6.2.8":
+  version "6.2.8"
+  resolved "https://registry.yarnpkg.com/@marko/webpack/-/webpack-6.2.8.tgz#d8c0542dcb2b0950b72a06e3d2ff179729e1a02f"
+  integrity sha512-gXoGXKl0vCawIK4KGVg9F5XVYMUKLDTaXxH8i5bQXzdFw+7VfONug0GnKJn8EDUbCgeHS219dS39+igFSbB0dw==
   dependencies:
-    base-x "^3.0.5"
+    base-x "^3.0.7"
+    concat-with-sourcemaps "^1.1.0"
     lasso-modules-client "^2.0.5"
-    loader-utils "^1.2.3"
-    sort-keys "^2.0.0"
+    loader-utils "^1.4.0"
+    sort-keys "^4.0.0"
     tslib "^1.10.0"
-    webpack-virtual-modules "^0.1.10"
+    webpack-virtual-modules "^0.2.1"
 
 "@mdx-js/loader@^1.5.1":
   version "1.6.4"
@@ -8866,7 +8867,7 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
-base-x@^3.0.5:
+base-x@^3.0.7:
   version "3.0.8"
   resolved "https://registry.yarnpkg.com/base-x/-/base-x-3.0.8.tgz#1e1106c2537f0162e8b52474a557ebb09000018d"
   integrity sha512-Rl/1AWP4J/zRrk54hhlxH4drNxPJXYUaKffODVI53/dAsV4t9fBxyxYKAVPU1XBHxYwOWP9h9H0hM2MVw4YfJA==
@@ -11324,6 +11325,13 @@ concat-stream@^2.0.0:
     inherits "^2.0.3"
     readable-stream "^3.0.2"
     typedarray "^0.0.6"
+
+concat-with-sourcemaps@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/concat-with-sourcemaps/-/concat-with-sourcemaps-1.1.0.tgz#d4ea93f05ae25790951b99e7b3b09e3908a4082e"
+  integrity sha512-4gEjHJFT9e+2W/77h/DS5SGUgwDaOwprX8L/gl5+3ixnzkVJJsZWDSelmN3Oilw3LNDZjZV0yqH1hLG3k6nghg==
+  dependencies:
+    source-map "^0.6.1"
 
 concurrently@^5.2.0:
   version "5.2.0"
@@ -30005,6 +30013,13 @@ sort-keys@^2.0.0:
   dependencies:
     is-plain-obj "^1.0.0"
 
+sort-keys@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/sort-keys/-/sort-keys-4.0.0.tgz#56dc5e256637bfe3fec8db0dc57c08b1a2be22d6"
+  integrity sha512-hlJLzrn/VN49uyNkZ8+9b+0q9DjmmYcYOnbMQtpkLrYpPwRApDPZfmqbUfJnAA3sb/nRib+nDot7Zi/1ER1fuA==
+  dependencies:
+    is-plain-obj "^2.0.0"
+
 sort-object-keys@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/sort-object-keys/-/sort-object-keys-1.1.3.tgz#bff833fe85cab147b34742e45863453c1e190b45"
@@ -33697,14 +33712,7 @@ webpack-subresource-integrity@1.4.0:
   dependencies:
     webpack-sources "^1.3.0"
 
-webpack-virtual-modules@^0.1.10:
-  version "0.1.12"
-  resolved "https://registry.yarnpkg.com/webpack-virtual-modules/-/webpack-virtual-modules-0.1.12.tgz#ff6430c1d6f514eff12bae773ec03e5043a81943"
-  integrity sha512-uwVhcpmh7WykpP2fD4T//5DLdMuanPHGXQHCnIrKoRg10GgVNy5z2oAcn26HLF67a6HCSzgc9xar+SMtZhOnXw==
-  dependencies:
-    debug "^3.0.0"
-
-webpack-virtual-modules@^0.2.2:
+webpack-virtual-modules@^0.2.1, webpack-virtual-modules@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/webpack-virtual-modules/-/webpack-virtual-modules-0.2.2.tgz#20863dc3cb6bb2104729fff951fbe14b18bd0299"
   integrity sha512-kDUmfm3BZrei0y+1NTHJInejzxfhtU8eDj2M7OKb2IWrPFAeO1SOH2KuQ68MSZu9IGEHcxbkKKR1v18FrUSOmA==
