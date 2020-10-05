@@ -135,7 +135,8 @@ export const extractType = (property: Property, defaultValue: any) => {
     case null:
       return { name: 'void' };
     default: {
-      const enumValues = extractEnumValues(compodocType);
+      const resolvedType = resolveTypealias(compodocType);
+      const enumValues = extractEnumValues(resolvedType);
       return enumValues ? { name: 'enum', value: enumValues } : { name: 'object' };
     }
   }
@@ -150,6 +151,12 @@ const extractDefaultValue = (property: Property) => {
     logger.debug(`Error extracting ${property.name}: ${property.defaultValue}`);
     return undefined;
   }
+};
+
+const resolveTypealias = (compodocType: string): string => {
+  const compodocJson = getCompodocJson();
+  const typeAlias = compodocJson.miscellaneous.typealiases.find((x) => x.name === compodocType);
+  return typeAlias ? resolveTypealias(typeAlias.rawtype) : compodocType;
 };
 
 export const extractArgTypesFromData = (componentData: Class | Directive | Injectable | Pipe) => {
