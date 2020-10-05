@@ -1,3 +1,19 @@
+## 6.1.0-alpha.20 (October 5, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix exotic React components in Source block ([#12638](https://github.com/storybookjs/storybook/pull/12638))
+- Storyshots: Fix typings of "test"-method ([#12389](https://github.com/storybookjs/storybook/pull/12389))
+- Storyshots: Fix support for test failures in async tests ([#11962](https://github.com/storybookjs/storybook/pull/11962))
+
+### Maintenance
+
+- Storyshots Puppeteer: Fix support for over 1 assertions in async tests ([#12657](https://github.com/storybookjs/storybook/pull/12657))
+
+### Dependency Upgrades
+
+- Marko: Update @marko/webpack and allow Marko 5 peerDepenency ([#12035](https://github.com/storybookjs/storybook/pull/12035))
+
 ## 6.0.25 (October 4, 2020)
 
 ### Bug Fixes
