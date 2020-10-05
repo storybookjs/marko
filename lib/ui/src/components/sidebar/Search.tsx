@@ -17,6 +17,7 @@ import {
   Selection,
   isSearchResult,
   isExpandType,
+  isClearType,
 } from './types';
 import { searchItem } from './utils';
 
@@ -139,9 +140,10 @@ export const Search: FunctionComponent<{
   children: SearchChildrenFn;
   dataset: CombinedDataset;
   isLoading?: boolean;
-  lastViewed?: Selection[];
+  lastViewed: Selection[];
+  clearLastViewed: () => void;
   initialQuery?: string;
-}> = ({ children, dataset, isLoading = false, lastViewed = [], initialQuery = '' }) => {
+}> = ({ children, dataset, isLoading = false, lastViewed, clearLastViewed, initialQuery = '' }) => {
   const api = useStorybookApi();
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputPlaceholder, setPlaceholder] = useState('Find components');
@@ -226,6 +228,10 @@ export const Search: FunctionComponent<{
           selectedItem.showAll();
           return {};
         }
+        if (isClearType(selectedItem)) {
+          selectedItem.clearLastViewed();
+          return {};
+        }
       }
       if (inputValue === '') {
         showAllComponents(false);
@@ -257,7 +263,7 @@ export const Search: FunctionComponent<{
         const input = inputValue ? inputValue.trim() : '';
         let results: DownshiftItem[] = input ? getResults(input) : [];
 
-        if (!input && lastViewed.length) {
+        if (!input && lastViewed && lastViewed.length) {
           results = lastViewed.reduce((acc, { storyId, refId }) => {
             const data = dataset.hash[refId];
             if (data && data.stories && data.stories[storyId]) {
@@ -273,6 +279,9 @@ export const Search: FunctionComponent<{
             }
             return acc;
           }, []);
+          if (results.length > 0) {
+            results.push({ clearLastViewed });
+          }
         }
 
         const inputProps = getInputProps({

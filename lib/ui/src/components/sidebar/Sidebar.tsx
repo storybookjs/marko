@@ -111,7 +111,7 @@ export const Sidebar: FunctionComponent<SidebarProps> = React.memo(
           <StyledSpaced row={1.6}>
             <Heading className="sidebar-header" menuHighlighted={menuHighlighted} menu={menu} />
 
-            <Search dataset={dataset} isLoading={isLoading} lastViewed={lastViewed}>
+            <Search dataset={dataset} isLoading={isLoading} {...lastViewed}>
               {({
                 inputValue,
                 inputHasFocus,

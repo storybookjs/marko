@@ -5,7 +5,7 @@ import React, { FunctionComponent, MouseEventHandler, ReactNode, useCallback } f
 import { ControllerStateAndHelpers } from 'downshift';
 
 import { ComponentNode, DocumentNode, Path, RootNode, StoryNode } from './TreeNode';
-import { Match, DownshiftItem, isExpandType, SearchResult } from './types';
+import { Match, DownshiftItem, isClearType, isExpandType, SearchResult } from './types';
 import { storyLink } from './utils';
 
 const ResultsList = styled.ol({
@@ -24,21 +24,27 @@ const ResultRow = styled.li<{ isHighlighted: boolean }>(({ theme, isHighlighted 
   cursor: 'pointer',
 }));
 
-const ShowMore = styled.span(({ theme }) => ({
-  color: theme.color.mediumdark,
-  fontSize: `${theme.typography.size.s1}px`,
-}));
-
 const Mark = styled.mark(({ theme }) => ({
   background: 'transparent',
   color: theme.color.secondary,
 }));
 
-const PlusIcon = styled(Icons)(({ theme }) => ({
+const ActionRow = styled(ResultRow)({
+  display: 'flex',
+  padding: '5px 19px',
+  alignItems: 'center',
+});
+
+const ActionLabel = styled.span(({ theme }) => ({
+  color: theme.color.mediumdark,
+  fontSize: `${theme.typography.size.s1}px`,
+}));
+
+const ActionIcon = styled(Icons)(({ theme }) => ({
   display: 'inline-block',
   width: 10,
   height: 10,
-  marginRight: 5,
+  marginRight: 6,
   color: theme.color.mediumdark,
 }));
 
@@ -129,17 +135,28 @@ export const SearchResults: FunctionComponent<{
         </li>
       )}
       {results.map((result: DownshiftItem, index) => {
-        if (isExpandType(result)) {
+        if (isClearType(result)) {
           return (
-            <ResultRow
+            <ActionRow
               {...result}
               {...getItemProps({ key: index, index, item: result })}
               isHighlighted={highlightedIndex === index}
-              style={{ paddingLeft: 19 }}
             >
-              <PlusIcon icon="plus" />
-              <ShowMore>Show all ({result.totalCount} results)</ShowMore>
-            </ResultRow>
+              <ActionIcon icon="trash" />
+              <ActionLabel>Clear history</ActionLabel>
+            </ActionRow>
+          );
+        }
+        if (isExpandType(result)) {
+          return (
+            <ActionRow
+              {...result}
+              {...getItemProps({ key: index, index, item: result })}
+              isHighlighted={highlightedIndex === index}
+            >
+              <ActionIcon icon="plus" />
+              <ActionLabel>Show all ({result.totalCount} results)</ActionLabel>
+            </ActionRow>
           );
         }
 

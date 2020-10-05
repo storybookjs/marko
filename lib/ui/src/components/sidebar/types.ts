@@ -25,11 +25,18 @@ export interface Match {
   arrayIndex: number;
 }
 
+export function isClearType(x: any): x is ClearType {
+  return !!x.clearLastViewed;
+}
+export function isExpandType(x: any): x is ExpandType {
+  return !!x.showAll;
+}
 export function isSearchResult(x: any): x is SearchResult {
   return !!x.item;
 }
-export function isExpandType(x: any): x is ExpandType {
-  return !!x.totalCount;
+
+export interface ClearType {
+  clearLastViewed: () => void;
 }
 
 export interface ExpandType {
@@ -42,7 +49,7 @@ export type SearchItem = Item & { refId: string; path: string[] };
 export type SearchResult = Fuse.FuseResultWithMatches<SearchItem> &
   Fuse.FuseResultWithScore<SearchItem>;
 
-export type DownshiftItem = SearchResult | ExpandType;
+export type DownshiftItem = SearchResult | ExpandType | ClearType;
 
 export type SearchChildrenFn = (args: {
   inputValue: string;
