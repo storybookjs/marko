@@ -7,7 +7,6 @@ import { RefType } from './types';
 export default {
   component: Explorer,
   title: 'UI/Sidebar/Explorer',
-  excludeStories: /.*Data$/,
 };
 
 const selected = {
