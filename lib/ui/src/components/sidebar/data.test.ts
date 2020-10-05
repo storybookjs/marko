@@ -53,7 +53,7 @@ const b1: Item = {
   isRoot: false,
   isComponent: false,
   parent: 'b',
-  args: [],
+  args: {},
 };
 const b2: Item = {
   id: 'b2',
