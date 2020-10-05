@@ -106,7 +106,7 @@ describe('collapse all stories', () => {
         isRoot: false,
         isComponent: true,
         isLeaf: true,
-        args: [],
+        args: {},
       },
       b1: {
         id: 'b1',
