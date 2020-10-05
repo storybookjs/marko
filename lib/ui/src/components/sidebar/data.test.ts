@@ -32,7 +32,7 @@ const a1: Item = {
   isComponent: false,
   isRoot: false,
   parent: 'a',
-  args: [],
+  args: {},
 };
 const b: Item = {
   id: 'b',
