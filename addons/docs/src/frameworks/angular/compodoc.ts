@@ -25,7 +25,7 @@ export const setCompodocJson = (compodocJson: CompodocJson) => {
 };
 
 // @ts-ignore
-export const getCompdocJson = (): CompodocJson => window.__STORYBOOK_COMPODOC_JSON__;
+export const getCompodocJson = (): CompodocJson => window.__STORYBOOK_COMPODOC_JSON__;
 
 export const checkValidComponentOrDirective = (component: Component | Directive) => {
   if (!component.name) {
@@ -90,7 +90,7 @@ const getComponentData = (component: Component | Directive) => {
     return null;
   }
   checkValidComponentOrDirective(component);
-  const compodocJson = getCompdocJson();
+  const compodocJson = getCompodocJson();
   checkValidCompodocJson(compodocJson);
   const { name } = component;
   const metadata = findComponentByName(name, compodocJson);
