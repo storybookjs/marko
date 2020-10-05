@@ -1,1 +1,1 @@
-{"version":"6.0.25","info":{"plain":"### Bug Fixes\n\n- CLI: Workaround for react native `sb init` ([#12405](https://github.com/storybookjs/storybook/pull/12405))"}}
+{"version":"6.0.26","info":{"plain":"### Bug Fixes\n\n- Addon-docs: Fix exotic React components in Source block ([#12638](https://github.com/storybookjs/storybook/pull/12638))"}}
