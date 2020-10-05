@@ -1,3 +1,26 @@
+## 6.0.25 (October 4, 2020)
+
+### Bug Fixes
+
+- CLI: Workaround for react native `sb init` ([#12405](https://github.com/storybookjs/storybook/pull/12405))
+
+## 6.0.24 (October 4, 2020)
+
+Failed NPM publish
+
+## 6.0.23 (October 4, 2020)
+
+Failed NPM publish
+
+## 6.1.0-alpha.19 (October 3, 2020)
+
+### Maintenance
+
+- ArgsTable: Remove the "simple" detection for enum types ([#12587](https://github.com/storybookjs/storybook/pull/12587))
+- Addon-docs: Move summary & detail equality check to createSummaryValue ([#12588](https://github.com/storybookjs/storybook/pull/12588))
+- Essentials: Make controls tab show first ([#12652](https://github.com/storybookjs/storybook/pull/12652))
+- Misc: Clean usage and place in the monorepo of some dependencies ([#12653](https://github.com/storybookjs/storybook/pull/12653))
+
 ## 6.1.0-alpha.18 (September 30, 2020)
 
 ### Bug Fixes

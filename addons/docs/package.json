@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-docs",
-  "version": "6.1.0-alpha.18",
+  "version": "6.1.0-alpha.19",
   "description": "Superior documentation for your components",
   "keywords": [
     "addon",
@@ -47,18 +47,18 @@
     "@mdx-js/loader": "^1.5.1",
     "@mdx-js/mdx": "^1.5.1",
     "@mdx-js/react": "^1.5.1",
-    "@storybook/addons": "6.1.0-alpha.18",
-    "@storybook/api": "6.1.0-alpha.18",
-    "@storybook/client-api": "6.1.0-alpha.18",
-    "@storybook/client-logger": "6.1.0-alpha.18",
-    "@storybook/components": "6.1.0-alpha.18",
-    "@storybook/core": "6.1.0-alpha.18",
-    "@storybook/core-events": "6.1.0-alpha.18",
+    "@storybook/addons": "6.1.0-alpha.19",
+    "@storybook/api": "6.1.0-alpha.19",
+    "@storybook/client-api": "6.1.0-alpha.19",
+    "@storybook/client-logger": "6.1.0-alpha.19",
+    "@storybook/components": "6.1.0-alpha.19",
+    "@storybook/core": "6.1.0-alpha.19",
+    "@storybook/core-events": "6.1.0-alpha.19",
     "@storybook/csf": "0.0.1",
-    "@storybook/node-logger": "6.1.0-alpha.18",
-    "@storybook/postinstall": "6.1.0-alpha.18",
-    "@storybook/source-loader": "6.1.0-alpha.18",
-    "@storybook/theming": "6.1.0-alpha.18",
+    "@storybook/node-logger": "6.1.0-alpha.19",
+    "@storybook/postinstall": "6.1.0-alpha.19",
+    "@storybook/source-loader": "6.1.0-alpha.19",
+    "@storybook/theming": "6.1.0-alpha.19",
     "acorn": "^7.1.0",
     "acorn-jsx": "^5.1.0",
     "acorn-walk": "^7.0.0",
@@ -86,9 +86,9 @@
     "@babel/core": "^7.11.5",
     "@emotion/core": "^10.0.20",
     "@emotion/styled": "^10.0.17",
-    "@storybook/react": "6.1.0-alpha.18",
-    "@storybook/vue": "6.1.0-alpha.18",
-    "@storybook/web-components": "6.1.0-alpha.18",
+    "@storybook/react": "6.1.0-alpha.19",
+    "@storybook/vue": "6.1.0-alpha.19",
+    "@storybook/web-components": "6.1.0-alpha.19",
     "@types/cross-spawn": "^6.0.1",
     "@types/doctrine": "^0.0.3",
     "@types/enzyme": "^3.10.3",
@@ -119,7 +119,7 @@
   },
   "peerDependencies": {
     "@babel/core": "^7.11.5",
-    "@storybook/vue": "6.1.0-alpha.18",
+    "@storybook/vue": "6.1.0-alpha.19",
     "babel-loader": "^8.0.0",
     "sveltedoc-parser": "^3.0.4",
     "vue": "^2.6.10",
@@ -142,7 +142,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "7bd08008b5a105726ddab6abc4478f46b5fda95b",
+  "gitHead": "6a3203004afecbcf8fa027d38a6088fd927714b1",
   "typesVersions": {
     "<3.8": {
       "*": [

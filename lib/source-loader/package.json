@@ -1,6 +1,6 @@
 {
   "name": "@storybook/source-loader",
-  "version": "6.1.0-alpha.18",
+  "version": "6.1.0-alpha.19",
   "description": "Source loader",
   "keywords": [
     "lib",
@@ -29,8 +29,8 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-alpha.18",
-    "@storybook/client-logger": "6.1.0-alpha.18",
+    "@storybook/addons": "6.1.0-alpha.19",
+    "@storybook/client-logger": "6.1.0-alpha.19",
     "@storybook/csf": "0.0.1",
     "core-js": "^3.0.1",
     "estraverse": "^4.2.0",
@@ -45,7 +45,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "7bd08008b5a105726ddab6abc4478f46b5fda95b",
+  "gitHead": "6a3203004afecbcf8fa027d38a6088fd927714b1",
   "typesVersions": {
     "<3.8": {
       "*": [

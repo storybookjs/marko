@@ -7,7 +7,8 @@ import { Preview } from '../components/preview/preview';
 
 export type Item = StoriesHash[keyof StoriesHash];
 
-const splitTitleAddExtraSpace = (input: string) => input.split('/').join(' / ').replace(/\s\s/, ' ');
+const splitTitleAddExtraSpace = (input: string) =>
+  input.split('/').join(' / ').replace(/\s\s/, ' ');
 
 const getDescription = (item: Item) => {
   if (isRoot(item)) {
