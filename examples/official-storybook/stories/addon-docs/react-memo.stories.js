@@ -1,7 +1,7 @@
 import React from 'react';
 import { DocgenButton } from '../../components/DocgenButton';
 
-const ButtonWithMemo = React.memo((props) => <DocgenButton {...props} />);
+const ButtonWithMemo = React.memo(DocgenButton);
 
 export default {
   title: 'Addons/Docs/ButtonWithMemo',
@@ -12,5 +12,5 @@ export default {
   },
 };
 
-export const displaysCorrectly = () => <ButtonWithMemo label="Hello World" />;
+export const displaysCorrectly = () => <ButtonWithMemo label="Hello memo World" />;
 displaysCorrectly.storyName = 'Displays components with memo correctly';
