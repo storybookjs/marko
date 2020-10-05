@@ -4,7 +4,7 @@ import { DocgenButton } from '../../components/DocgenButton';
 const ButtonWithMemo = React.memo(DocgenButton);
 
 export default {
-  title: 'Addons/Docs/ButtonWithMemo',
+  title: 'Addons/Docs/Memo',
   component: ButtonWithMemo,
   parameters: {
     chromatic: { disable: true },
