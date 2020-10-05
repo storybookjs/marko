@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-design-assets",
-  "version": "6.1.0-alpha.7",
+  "version": "6.1.0-alpha.19",
   "description": "Design asset preview for storybook",
   "keywords": [
     "addon",
@@ -28,18 +28,18 @@
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.5/**/*"
+    "ts3.4/**/*"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-alpha.7",
-    "@storybook/api": "6.1.0-alpha.7",
-    "@storybook/client-logger": "6.1.0-alpha.7",
-    "@storybook/components": "6.1.0-alpha.7",
-    "@storybook/core-events": "6.1.0-alpha.7",
-    "@storybook/theming": "6.1.0-alpha.7",
+    "@storybook/addons": "6.1.0-alpha.19",
+    "@storybook/api": "6.1.0-alpha.19",
+    "@storybook/client-logger": "6.1.0-alpha.19",
+    "@storybook/components": "6.1.0-alpha.19",
+    "@storybook/core-events": "6.1.0-alpha.19",
+    "@storybook/theming": "6.1.0-alpha.19",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "react": "^16.8.3",
@@ -51,11 +51,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c63131f0325d039ec30fe244bfc43ee17ad4fe9e",
+  "gitHead": "6a3203004afecbcf8fa027d38a6088fd927714b1",
   "typesVersions": {
-    "<=3.5": {
+    "<3.8": {
       "*": [
-        "ts3.5/*"
+        "ts3.4/*"
       ]
     }
   }

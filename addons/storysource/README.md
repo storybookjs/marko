@@ -61,7 +61,7 @@ Storysource will automatically use the light or dark syntax theme based on your 
 
 ## Displaying full source
 
-Storybook 6.0 introduced an unintentional change to `source-loader, in which only the source of the selected story is shown in the addon. To restore the old behavior, pass the`injectStoryParameters: false` option.
+Storybook 6.0 introduced an unintentional change to `source-loader`, in which only the source of the selected story is shown in the addon. To restore the old behavior, pass the`injectStoryParameters: false` option.
 
 If you're using `addon-docs`:
 

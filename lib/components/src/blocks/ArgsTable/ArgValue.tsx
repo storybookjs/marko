@@ -141,7 +141,7 @@ const ArgSummary: FC<ArgSummaryProps> = ({ value, initialExpandedArgs }) => {
     const cannotBeSafelySplitted = /[(){}[\]<>]/.test(summaryAsString);
 
     if (cannotBeSafelySplitted) {
-      return <ArgText text={summaryAsString} simple={summaryAsString.includes('|')} />;
+      return <ArgText text={summaryAsString} />;
     }
 
     const summaryItems = getSummaryItems(summaryAsString);

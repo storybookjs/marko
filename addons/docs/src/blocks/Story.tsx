@@ -56,7 +56,7 @@ export const getStoryProps = (props: StoryProps, context: DocsContextProps): Pur
     return null;
   }
 
-  // prefer block props, then story parameters defined by the framework-specific settings and optionally overriden by users
+  // prefer block props, then story parameters defined by the framework-specific settings and optionally overridden by users
   const { inlineStories = false, iframeHeight = 100, prepareForInline } = docs;
   const storyIsInline = typeof inline === 'boolean' ? inline : inlineStories;
   if (storyIsInline && !prepareForInline) {
