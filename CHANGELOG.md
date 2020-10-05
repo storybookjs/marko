@@ -1,3 +1,9 @@
+## 6.0.26 (October 5, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix exotic React components in Source block ([#12638](https://github.com/storybookjs/storybook/pull/12638))
+
 ## 6.1.0-alpha.20 (October 5, 2020)
 
 ### Bug Fixes
