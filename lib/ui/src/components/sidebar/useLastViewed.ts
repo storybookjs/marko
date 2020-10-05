@@ -1,26 +1,13 @@
-import { window } from 'global';
 import { useCallback, useEffect, useState } from 'react';
+import store from 'store2';
 
 import { Selection, StoryRef } from './types';
 
 const retrieveLastViewedStoryIds = (): StoryRef[] => {
-  try {
-    const raw = window.localStorage.getItem('lastViewedStoryIds');
-    const val = typeof raw === 'string' && JSON.parse(raw);
-    if (!val || !Array.isArray(val)) return [];
-    if (!val.some((item) => typeof item === 'object' && item.storyId && item.refId)) return [];
-    return val;
-  } catch (e) {
-    return [];
-  }
-};
-
-const storeLastViewedStoryIds = (items: StoryRef[]) => {
-  try {
-    window.localStorage.setItem('lastViewedStoryIds', JSON.stringify(items));
-  } catch (e) {
-    // do nothing
-  }
+  const items = store.get('lastViewedStoryIds');
+  if (!items || !Array.isArray(items)) return [];
+  if (!items.some((item) => typeof item === 'object' && item.storyId && item.refId)) return [];
+  return items;
 };
 
 export const useLastViewed = (selection: Selection) => {
@@ -37,7 +24,7 @@ export const useLastViewed = (selection: Selection) => {
           index === -1
             ? [story, ...state]
             : [story, ...state.slice(0, index), ...state.slice(index + 1)];
-        storeLastViewedStoryIds(update);
+        store.set('lastViewedStoryIds', update);
         return update;
       }),
     []
