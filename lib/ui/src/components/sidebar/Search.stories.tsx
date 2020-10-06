@@ -1,9 +1,11 @@
 import React from 'react';
+import { action } from '@storybook/addon-actions';
 
 import { stories } from './mockdata.large';
 import { Search } from './Search';
 import { SearchResults } from './SearchResults';
 import { DEFAULT_REF_ID } from './data';
+import { Selection } from './types';
 
 const refId = DEFAULT_REF_ID;
 const data = { [refId]: { id: refId, url: '/', stories } };
@@ -17,16 +19,22 @@ export default {
   title: 'UI/Sidebar/Search',
 };
 
-export const Simple = () => <Search dataset={dataset}>{() => null}</Search>;
+const baseProps = {
+  dataset,
+  clearLastViewed: action('clear'),
+  lastViewed: [] as Selection[],
+};
+
+export const Simple = () => <Search {...baseProps}>{() => null}</Search>;
 
 export const FilledIn = () => (
-  <Search dataset={dataset} initialQuery="Search query">
+  <Search {...baseProps} initialQuery="Search query">
     {() => null}
   </Search>
 );
 
 export const LastViewed = () => (
-  <Search dataset={dataset} lastViewed={lastViewed}>
+  <Search {...baseProps} lastViewed={lastViewed}>
     {({ inputValue, results, getMenuProps, getItemProps, highlightedIndex }) => (
       <SearchResults
         isSearching={!!inputValue}
