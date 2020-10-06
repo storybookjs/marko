@@ -114,7 +114,7 @@ const extractTypeFromValue = (defaultValue: any) => {
 
 const extractEnumValues = (compodocType: any) => {
   const compodocJson = getCompodocJson();
-  const enumType = compodocJson.miscellaneous.enumerations.find((x) => x.name === compodocType);
+  const enumType = compodocJson?.miscellaneous.enumerations.find((x) => x.name === compodocType);
 
   if (enumType?.childs.every((x) => x.value)) {
     return enumType.childs.map((x) => x.value);
@@ -162,7 +162,7 @@ const extractDefaultValue = (property: Property) => {
 
 const resolveTypealias = (compodocType: string): string => {
   const compodocJson = getCompodocJson();
-  const typeAlias = compodocJson.miscellaneous.typealiases.find((x) => x.name === compodocType);
+  const typeAlias = compodocJson?.miscellaneous.typealiases.find((x) => x.name === compodocType);
   return typeAlias ? resolveTypealias(typeAlias.rawtype) : compodocType;
 };
 

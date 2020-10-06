@@ -1,5 +1,5 @@
-import { extractType } from './compodoc';
-import { Decorator } from './types';
+import { extractType, setCompodocJson } from './compodoc';
+import { CompodocJson, Decorator } from './types';
 
 const makeProperty = (compodocType?: string) => ({
   type: compodocType,
@@ -8,8 +8,96 @@ const makeProperty = (compodocType?: string) => ({
   optional: true,
 });
 
+const getDummyCompodocJson = () => {
+  return {
+    miscellaneous: {
+      typealiases: [
+        {
+          name: 'EnumAlias',
+          ctype: 'miscellaneous',
+          subtype: 'typealias',
+          rawtype: 'EnumNumeric',
+          file: 'src/stories/component-with-enums/enums.component.ts',
+          description: '',
+          kind: 161,
+        },
+        {
+          name: 'TypeAlias',
+          ctype: 'miscellaneous',
+          subtype: 'typealias',
+          rawtype: '"Type Alias 1" | "Type Alias 2" | "Type Alias 3"',
+          file: 'src/stories/component-with-enums/enums.component.ts',
+          description: '',
+          kind: 168,
+        },
+      ],
+      enumerations: [
+        {
+          name: 'EnumNumeric',
+          childs: [
+            {
+              name: 'FIRST',
+            },
+            {
+              name: 'SECOND',
+            },
+            {
+              name: 'THIRD',
+            },
+          ],
+          ctype: 'miscellaneous',
+          subtype: 'enum',
+          description: '<p>Button Priority</p>\n',
+          file: 'src/stories/component-with-enums/enums.component.ts',
+        },
+        {
+          name: 'EnumNumericInitial',
+          childs: [
+            {
+              name: 'UNO',
+              value: '1',
+            },
+            {
+              name: 'DOS',
+            },
+            {
+              name: 'TRES',
+            },
+          ],
+          ctype: 'miscellaneous',
+          subtype: 'enum',
+          description: '',
+          file: 'src/stories/component-with-enums/enums.component.ts',
+        },
+        {
+          name: 'EnumStringValues',
+          childs: [
+            {
+              name: 'PRIMARY',
+              value: 'PRIMARY',
+            },
+            {
+              name: 'SECONDARY',
+              value: 'SECONDARY',
+            },
+            {
+              name: 'TERTIARY',
+              value: 'TERTIARY',
+            },
+          ],
+          ctype: 'miscellaneous',
+          subtype: 'enum',
+          description: '',
+          file: 'src/stories/component-with-enums/enums.component.ts',
+        },
+      ],
+    },
+  } as CompodocJson;
+};
+
 describe('extractType', () => {
   describe('with compodoc type', () => {
+    setCompodocJson(getDummyCompodocJson());
     it.each([
       ['string', { name: 'string' }],
       ['boolean', { name: 'boolean' }],
@@ -21,6 +109,10 @@ describe('extractType', () => {
       ['T[]', { name: 'object' }],
       ['[]', { name: 'object' }],
       ['"primary" | "secondary"', { name: 'enum', value: ['primary', 'secondary'] }],
+      ['TypeAlias', { name: 'enum', value: ['Type Alias 1', 'Type Alias 2', 'Type Alias 3'] }],
+      ['EnumNumeric', { name: 'object' }],
+      ['EnumNumericInitial', { name: 'object' }],
+      ['EnumStringValues', { name: 'enum', value: ['PRIMARY', 'SECONDARY', 'TERTIARY'] }],
     ])('%s', (compodocType, expected) => {
       expect(extractType(makeProperty(compodocType), null)).toEqual(expected);
     });

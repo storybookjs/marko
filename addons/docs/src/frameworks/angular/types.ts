@@ -98,8 +98,8 @@ export interface CompodocJson {
   pipes: Pipe[];
   injectables: Injectable[];
   classes: Class[];
-  miscellaneous: {
-    typealiases: TypeAlias[];
-    enumerations: EnumType[];
+  miscellaneous?: {
+    typealiases?: TypeAlias[];
+    enumerations?: EnumType[];
   };
 }
