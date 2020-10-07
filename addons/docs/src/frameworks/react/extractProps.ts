@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { isMemo } from 'react-is';
 import {
   PropDef,
   hasDocgen,
@@ -10,6 +9,7 @@ import {
 import { Component } from '../../blocks/types';
 import { enhancePropTypesProps } from './propTypes/handleProp';
 import { enhanceTypeScriptProps } from './typeScript/handleProp';
+import { isMemo, isForwardRef } from './lib';
 
 export interface PropDefMap {
   [p: string]: PropDef;
@@ -26,11 +26,13 @@ Object.keys(PropTypes).forEach((typeName) => {
 });
 
 function getPropDefs(component: Component, section: string): PropDef[] {
+  // destructure here so we don't get silly TS errors 🙄
+  // eslint-disable-next-line react/forbid-foreign-prop-types
+  const { render, type, propTypes } = component;
   let processedComponent = component;
 
-  // eslint-disable-next-line react/forbid-foreign-prop-types
-  if (!hasDocgen(component) && !component.propTypes && isMemo(component)) {
-    processedComponent = component.type().type;
+  if ((!hasDocgen(component) || !propTypes) && (isMemo(component) || isForwardRef(component))) {
+    processedComponent = isForwardRef(component) ? render : type;
   }
 
   const extractedProps = extractComponentProps(processedComponent, section);
