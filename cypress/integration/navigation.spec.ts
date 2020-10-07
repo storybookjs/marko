@@ -16,7 +16,7 @@ describe('Navigation', () => {
   it('should display no results after searching a non-existing navigation item', () => {
     cy.get('#storybook-explorer-searchfield').click().clear().type('zzzzzzzzzz');
 
-    cy.get('#storybook-explorer-menu button').should('not.exist');
+    cy.get('#storybook-explorer-menu button').should('be.hidden');
   });
 });
 
