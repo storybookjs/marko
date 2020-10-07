@@ -105,7 +105,7 @@ Cypress.Commands.add('navigateToStory', (kind, name) => {
 
   // assert url changes
   cy.url().should('include', `path=/story/${kindId}--${storyId}`);
-  cy.get(storyLinkId).should('have.class', 'selected');
+  cy.get(storyLinkId).should('have.attr', 'data-selected', 'true');
 
   // A pause is good when switching stories
   // eslint-disable-next-line cypress/no-unnecessary-waiting

@@ -83,6 +83,8 @@ const Node = React.memo<NodeProps>(
           data-item-id={item.id}
           data-parent-id={item.parent}
           data-nodetype={item.isComponent ? 'document' : 'story'}
+          data-selected={isSelected}
+          data-highlighted={isHighlighted}
           data-highlightable={isDisplayed}
           depth={isOrphan ? item.depth : item.depth - 1}
           isSelected={isSelected}
@@ -105,7 +107,7 @@ const Node = React.memo<NodeProps>(
           <Action
             type="button"
             data-action="expand-all"
-            data-expanded={String(isFullyExpanded)}
+            data-expanded={isFullyExpanded}
             onClick={(event) => {
               event.preventDefault();
               setFullyExpanded();
@@ -126,6 +128,7 @@ const Node = React.memo<NodeProps>(
         data-item-id={item.id}
         data-parent-id={item.parent}
         data-nodetype={item.isComponent ? 'component' : 'group'}
+        data-highlighted={isHighlighted}
         data-highlightable={isDisplayed}
         aria-controls={item.children && item.children[0]}
         aria-expanded={isExpanded}
