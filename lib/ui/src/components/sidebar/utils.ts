@@ -86,3 +86,9 @@ export const getStateType = (
       return 'ready';
   }
 };
+
+export const isAncestor = (element?: Element, maybeAncestor?: Element): boolean => {
+  if (!element || !maybeAncestor) return false;
+  if (element === maybeAncestor) return true;
+  return isAncestor(element.parentElement, maybeAncestor);
+};

@@ -3,7 +3,7 @@ import { document } from 'global';
 import throttle from 'lodash/throttle';
 import React, { Dispatch, MutableRefObject, useCallback, useEffect, useReducer } from 'react';
 
-import { getAncestorIds, getDescendantIds, scrollIntoView } from './utils';
+import { isAncestor, getAncestorIds, getDescendantIds, scrollIntoView } from './utils';
 
 export type ExpandedState = Record<string, boolean>;
 
@@ -84,16 +84,22 @@ export const useExpanded = ({
 
   // Expand, collapse or select nodes in the tree using keyboard shortcuts.
   useEffect(() => {
-    const navigateTree = throttle((event) => {
+    const menuElement = document.getElementById('storybook-explorer-menu');
+    const navigateTree = throttle((event: KeyboardEvent) => {
       if (!isBrowsing || !event.key || !containerRef.current || !highlightedItemId) return;
       if (event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) return;
       if (!['Enter', ' ', 'ArrowLeft', 'ArrowRight'].includes(event.key)) return;
-      event.preventDefault();
 
       const highlightedElement = getElementByDataItemId(highlightedItemId);
       if (!highlightedElement || highlightedElement.getAttribute('data-ref-id') !== refId) return;
-      const type = highlightedElement.getAttribute('data-nodetype');
 
+      const target = event.target as Element;
+      if (target.hasAttribute('data-action')) return;
+      if (!isAncestor(menuElement, target) && !isAncestor(target, menuElement)) return;
+
+      event.preventDefault();
+
+      const type = highlightedElement.getAttribute('data-nodetype');
       if (['Enter', ' '].includes(event.key) && ['component', 'story', 'document'].includes(type)) {
         onSelectStoryId(highlightedItemId);
       }

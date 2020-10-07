@@ -11,7 +11,7 @@ import {
 } from 'react';
 
 import { CombinedDataset, Highlight, Selection } from './types';
-import { cycle, scrollIntoView } from './utils';
+import { cycle, isAncestor, scrollIntoView } from './utils';
 
 export interface HighlightedProps {
   containerRef: MutableRefObject<HTMLElement>;
@@ -64,9 +64,14 @@ export const useHighlighted = ({
 
   // Highlight nodes up/down the tree using arrow keys
   useEffect(() => {
+    const menuElement = document.getElementById('storybook-explorer-menu');
     const navigateTree = throttle((event) => {
       if (!isBrowsing || !event.key || !containerRef || !containerRef.current) return;
       if (event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) return;
+
+      const target = event.target as Element;
+      if (!isAncestor(menuElement, target) && !isAncestor(target, menuElement)) return;
+
       if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
         event.preventDefault();
         const highlightable = Array.from(

@@ -104,6 +104,8 @@ const Node = React.memo<NodeProps>(
           {item.name}
           <Action
             type="button"
+            data-action="expand-all"
+            data-expanded={String(isFullyExpanded)}
             onClick={(event) => {
               event.preventDefault();
               setFullyExpanded();
