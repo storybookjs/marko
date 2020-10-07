@@ -5,13 +5,14 @@ interface StoryContextUpdate {
   [key: string]: any;
 }
 
-const defaultContext: StoryContext = {
+export const defaultContext: StoryContext = {
   id: 'unspecified',
   name: 'unspecified',
   kind: 'unspecified',
   parameters: {},
   args: {},
-  globalArgs: {},
+  argTypes: {},
+  globals: {},
 };
 
 export const defaultDecorateStory = (storyFn: StoryFn, decorators: DecoratorFunction[]) =>

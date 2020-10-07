@@ -1,3 +1,4 @@
+import { StoryContext } from '@storybook/addons';
 import { document } from 'global';
 import React, { Component, FunctionComponent, ReactElement, StrictMode } from 'react';
 import ReactDOM from 'react-dom';
@@ -48,13 +49,25 @@ class ErrorBoundary extends Component<{
 }
 
 export default async function renderMain({
+  id,
+  name,
+  kind,
   applyLoaders,
   storyFnWithoutLoaders,
   showMain,
   showException,
   forceRender,
 }: RenderContext) {
-  const loadedContext = await applyLoaders();
+  const runtimeContext = {
+    id,
+    name,
+    kind,
+    parameters: {},
+    args: {},
+    argTypes: {},
+    globals: {},
+  };
+  const loadedContext = await applyLoaders(runtimeContext);
 
   // storyFn has context bound in by now so can be treated as a function component with no args
   const StoryFn = storyFnWithoutLoaders as FunctionComponent;

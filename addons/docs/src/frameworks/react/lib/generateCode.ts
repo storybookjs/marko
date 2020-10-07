@@ -48,7 +48,7 @@ export function generateArrayCode(ast: any, compact = false): string {
 function generateMultilineArrayCode(ast: any): string {
   let result = generateCode(ast);
 
-  // escodegen add extra spacing before the closing bracket of a multile line array with a nested object.
+  // escodegen add extra spacing before the closing bracket of a multiple line array with a nested object.
   // Fix it until a better solution is found.
   if (result.endsWith('  }]')) {
     result = dedent(result);

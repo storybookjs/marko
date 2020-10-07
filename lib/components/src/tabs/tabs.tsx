@@ -183,7 +183,7 @@ export const Tabs: FunctionComponent<TabsProps> = memo(
           </TabBar>
           {tools ? <Fragment>{tools}</Fragment> : null}
         </FlexBar>
-        <Content id="panel-tab-content" bordered={bordered} absolute={absolute} tabIndex={0}>
+        <Content id="panel-tab-content" bordered={bordered} absolute={absolute}>
           {list.map(({ id, active, render }) => render({ key: id, active }))}
         </Content>
       </Wrapper>
@@ -204,10 +204,10 @@ Tabs.displayName = 'Tabs';
   bordered: false,
 };
 
-type FuncChilden = () => void;
+type FuncChildren = () => void;
 
 export interface TabsStateProps {
-  children: (ReactNode | FuncChilden)[];
+  children: (ReactNode | FuncChildren)[];
   initial: string;
   absolute: boolean;
   bordered: boolean;

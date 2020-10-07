@@ -15,13 +15,16 @@ export interface SubState {
 
 type Versions = Record<string, string>;
 
-export type SetRefData = Omit<ComposedRef, 'stories'> & {
-  stories?: StoriesRaw;
-};
+export type SetRefData = Partial<
+  Omit<ComposedRef, 'stories'> & {
+    stories?: StoriesRaw;
+  }
+>;
 
 export interface SubAPI {
   findRef: (source: string) => ComposedRef;
   setRef: (id: string, data: SetRefData, ready?: boolean) => void;
+  updateRef: (id: string, ref: ComposedRefUpdate) => void;
   getRefs: () => Refs;
   checkRef: (ref: SetRefData) => Promise<void>;
   changeRefVersion: (id: string, url: string) => void;
@@ -33,13 +36,21 @@ export interface ComposedRef {
   id: string;
   title?: string;
   url: string;
-  type?: 'auto-inject' | 'unknown' | 'lazy';
+  type?: 'auto-inject' | 'unknown' | 'lazy' | 'server-checked';
   stories: StoriesHash;
   versions?: Versions;
-  authUrl?: string;
+  loginUrl?: string;
+  version?: string;
   ready?: boolean;
   error?: any;
 }
+
+export type ComposedRefUpdate = Partial<
+  Pick<
+    ComposedRef,
+    'title' | 'type' | 'stories' | 'versions' | 'loginUrl' | 'version' | 'ready' | 'error'
+  >
+>;
 
 export type Refs = Record<string, ComposedRef>;
 export type RefId = string;
@@ -48,17 +59,7 @@ export type RefUrl = string;
 // eslint-disable-next-line no-useless-escape
 const findFilename = /(\/((?:[^\/]+?)\.[^\/]+?)|\/)$/;
 
-const allSettled = (promises: Promise<any>[]) =>
-  Promise.all(
-    promises.map((promise, i) =>
-      promise.then(
-        (r) => (r.ok ? r : false),
-        () => false
-      )
-    )
-  );
-
-export const getSourceType = (source: string) => {
+export const getSourceType = (source: string, refId: string) => {
   const { origin: localOrigin, pathname: localPathname } = location;
   const { origin: sourceOrigin, pathname: sourcePathname } = new URL(source);
 
@@ -68,7 +69,7 @@ export const getSourceType = (source: string) => {
   if (localFull === sourceFull) {
     return ['local', sourceFull];
   }
-  if (source) {
+  if (refId || source) {
     return ['external', sourceFull];
   }
   return [null, null];
@@ -82,6 +83,15 @@ const addRefIds = (input: StoriesHash, ref: ComposedRef): StoriesHash => {
   return Object.entries(input).reduce((acc, [id, item]) => {
     return { ...acc, [id]: { ...item, refId: ref.id } };
   }, {} as StoriesHash);
+};
+
+const handle = async (request: Response | false): Promise<SetRefData> => {
+  if (request) {
+    return Promise.resolve(request)
+      .then((response) => (response.ok ? response.json() : {}))
+      .catch((error) => ({ error }));
+  }
+  return {};
 };
 
 const map = (
@@ -98,7 +108,7 @@ const map = (
   return input;
 };
 
-export const init: ModuleFn = ({ store, provider, fullAPI }) => {
+export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true } = {}) => {
   const api: SubAPI = {
     findRef: (source) => {
       const refs = api.getRefs();
@@ -106,57 +116,52 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
       return Object.values(refs).find(({ url }) => url.match(source));
     },
     changeRefVersion: (id, url) => {
-      const previous = api.getRefs()[id];
-      const ref = { ...previous, stories: {}, url } as SetRefData;
+      const { versions, title } = api.getRefs()[id];
+      const ref = { id, url, versions, title, stories: {} } as SetRefData;
 
       api.checkRef(ref);
     },
     changeRefState: (id, ready) => {
-      const refs = api.getRefs();
+      const { [id]: ref, ...updated } = api.getRefs();
+
+      updated[id] = { ...ref, ready };
+
       store.setState({
-        refs: {
-          ...refs,
-          [id]: { ...refs[id], ready },
-        },
+        refs: updated,
       });
     },
     checkRef: async (ref) => {
-      const { id, url } = ref;
+      const { id, url, version, type } = ref;
+      const isPublic = type === 'server-checked';
 
-      const loadedData: { error?: Error; stories?: StoriesRaw } = {};
+      // ref's type starts as either 'unknown' or 'server-checked'
+      // "server-checked" happens when we were able to verify the storybook is accessible from node (without cookies)
+      // "unknown" happens if the request was declined of failed (this can happen because the storybook doesn't exists or authentication is required)
+      //
+      // we then make a request for stories.json
+      //
+      // if this request fails when storybook is server-checked we mark the ref as "auto-inject", this is a fallback mechanism for local storybook, legacy storybooks, and storybooks that lack stories.json
+      // if the request fails with type "unknown" we give up and show an error
+      // if the request succeeds we set the ref to 'lazy' type, and show the stories in the sidebar without injecting the iframe first
+      //
+      // then we fetch metadata if the above fetch succeeded
 
-      const [included, omitted, iframe] = await allSettled([
-        fetch(`${url}/stories.json`, {
-          headers: {
-            Accept: 'application/json',
-          },
-          redirect: 'manual',
-          credentials: 'include',
-        }),
-        fetch(`${url}/stories.json`, {
-          headers: {
-            Accept: 'application/json',
-          },
-          redirect: 'manual',
-          credentials: 'omit',
-        }),
-        fetch(`${url}/iframe.html`, {
-          redirect: 'manual',
-          cors: 'no-cors',
-          credentials: 'omit',
-        }),
-      ]);
+      const loadedData: { error?: Error; stories?: StoriesRaw; loginUrl?: string } = {};
+      const query = version ? `?version=${version}` : '';
+      const credentials = isPublic ? 'omit' : 'include';
 
-      const handle = async (request: Promise<Response> | false) => {
-        if (request) {
-          return Promise.resolve(request)
-            .then((response) => (response.ok ? response.json() : {}))
-            .catch((error) => ({ error }));
-        }
-        return {};
-      };
+      // In theory the `/iframe.html` could be private and the `stories.json` could not exist, but in practice
+      // the only private servers we know about (Chromatic) always include `stories.json`. So we can tell
+      // if the ref actually exists by simply checking `stories.json` w/ credentials.
 
-      if (!included && !omitted && !iframe) {
+      const storiesFetch = await fetch(`${url}/stories.json${query}`, {
+        headers: {
+          Accept: 'application/json',
+        },
+        credentials,
+      });
+
+      if (!storiesFetch.ok && !isPublic) {
         loadedData.error = {
           message: dedent`
             Error: Loading of ref failed
@@ -170,30 +175,28 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
             Please check your dev-tools network tab.
           `,
         } as Error;
-      } else if (omitted || included) {
-        const credentials = !omitted ? 'include' : 'omit';
-
+      } else if (storiesFetch.ok) {
         const [stories, metadata] = await Promise.all([
-          handle(omitted || included),
+          handle(storiesFetch),
           handle(
-            fetch(`${url}/metadata.json`, {
+            fetch(`${url}/metadata.json${query}`, {
               headers: {
                 Accept: 'application/json',
               },
-              redirect: 'manual',
               credentials,
               cache: 'no-cache',
-            })
+            }).catch(() => false)
           ),
         ]);
 
         Object.assign(loadedData, { ...stories, ...metadata });
       }
 
-      api.setRef(id, {
+      await api.setRef(id, {
         id,
         url,
         ...loadedData,
+        error: loadedData.error,
         type: !loadedData.stories ? 'auto-inject' : 'lazy',
       });
     },
@@ -209,18 +212,21 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
       const ref = api.getRefs()[id];
       const after = stories
         ? addRefIds(
-            transformStoriesRawToStoriesHash(map(stories, ref, { storyMapper }), {}, { provider }),
+            transformStoriesRawToStoriesHash(map(stories, ref, { storyMapper }), { provider }),
             ref
           )
         : undefined;
 
-      const result = { ...ref, stories: after, ...rest, ready };
+      api.updateRef(id, { stories: after, ...rest, ready });
+    },
+
+    updateRef: (id, data) => {
+      const { [id]: ref, ...updated } = api.getRefs();
+
+      updated[id] = { ...ref, ...data };
 
       store.setState({
-        refs: {
-          ...api.getRefs(),
-          [id]: result,
-        },
+        refs: updated,
       });
     },
   };
@@ -229,14 +235,11 @@ export const init: ModuleFn = ({ store, provider, fullAPI }) => {
 
   const initialState: SubState['refs'] = refs;
 
-  Object.values(refs).forEach((r) => {
-    // eslint-disable-next-line no-param-reassign
-    r.type = 'unknown';
-  });
-
-  Object.entries(refs).forEach(([k, v]) => {
-    api.checkRef(v as SetRefData);
-  });
+  if (runCheck) {
+    Object.entries(refs).forEach(([k, v]) => {
+      api.checkRef(v as SetRefData);
+    });
+  }
 
   return {
     api,

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-graphql",
-  "version": "6.0.0-beta.20",
+  "version": "6.1.0-alpha.20",
   "description": "Storybook addon to display the GraphiQL IDE",
   "keywords": [
     "addon",
@@ -23,16 +23,16 @@
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.5/**/*"
+    "ts3.4/**/*"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/plugin-transform-classes": "^7.9.2",
-    "@storybook/addons": "6.0.0-beta.20",
-    "@storybook/api": "6.0.0-beta.20",
+    "@babel/core": "^7.11.5",
+    "@babel/plugin-transform-classes": "^7.10.4",
+    "@storybook/addons": "6.1.0-alpha.20",
+    "@storybook/api": "6.1.0-alpha.20",
     "@types/webpack": "^4.41.9",
     "babel-loader": "^8.0.6",
     "core-js": "^3.0.1",
@@ -40,21 +40,19 @@
     "graphiql": "^0.17.5",
     "graphql": "^15.0.0",
     "prop-types": "^15.7.2",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
     "regenerator-runtime": "^0.13.3",
     "webpack": "^4.43.0"
-  },
-  "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
+  "gitHead": "cc1c152e5452d28eabb24330f4ed693cd6782bc1",
   "typesVersions": {
-    "<=3.5": {
+    "<3.8": {
       "*": [
-        "ts3.5/*"
+        "ts3.4/*"
       ]
     }
   }

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/components",
-  "version": "6.0.0-beta.20",
+  "version": "6.1.0-alpha.20",
   "description": "Core Storybook Components",
   "keywords": [
     "storybook"
@@ -22,19 +22,19 @@
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.5/**/*"
+    "ts3.4/**/*"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/client-logger": "6.0.0-beta.20",
+    "@popperjs/core": "^2.4.4",
+    "@storybook/client-logger": "6.1.0-alpha.20",
     "@storybook/csf": "0.0.1",
-    "@storybook/theming": "6.0.0-beta.20",
+    "@storybook/theming": "6.1.0-alpha.20",
     "@types/overlayscrollbars": "^1.9.0",
     "@types/react-color": "^3.0.1",
     "@types/react-syntax-highlighter": "11.0.4",
-    "@types/react-textarea-autosize": "^4.3.3",
     "core-js": "^3.0.1",
     "fast-deep-equal": "^3.1.1",
     "global": "^4.3.2",
@@ -42,37 +42,29 @@
     "markdown-to-jsx": "^6.11.4",
     "memoizerific": "^1.11.3",
     "overlayscrollbars": "^1.10.2",
-    "overlayscrollbars-react": "^0.2.1",
     "polished": "^3.4.4",
-    "popper.js": "^1.14.7",
     "react": "^16.8.3",
     "react-color": "^2.17.0",
     "react-dom": "^16.8.3",
-    "react-helmet-async": "^1.0.2",
-    "react-popper-tooltip": "^2.11.0",
-    "react-select": "^3.0.8",
-    "react-syntax-highlighter": "^12.2.1",
-    "react-textarea-autosize": "^7.1.0",
+    "react-popper-tooltip": "^3.1.0",
+    "react-syntax-highlighter": "^13.5.0",
+    "react-textarea-autosize": "^8.1.1",
     "ts-dedent": "^1.1.1"
   },
   "devDependencies": {
-    "css": "^2.2.4",
+    "css": "^3.0.0",
     "enzyme": "^3.9.0",
     "jest": "^26.0.0",
     "jest-enzyme": "^7.0.2"
   },
-  "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
-  },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
+  "gitHead": "cc1c152e5452d28eabb24330f4ed693cd6782bc1",
   "typesVersions": {
-    "<=3.5": {
+    "<3.8": {
       "*": [
-        "ts3.5/*"
+        "ts3.4/*"
       ]
     }
   }

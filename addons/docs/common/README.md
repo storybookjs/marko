@@ -51,7 +51,7 @@ module.exports = {
 Finally, you can create MDX files like this:
 
 ```md
-import { Meta, Story, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable } from '@storybook/addon-docs/blocks';
 
 <Meta title='App Component' />
 
@@ -85,7 +85,7 @@ basic.parameters = {
 }
 ```
 
-And for `MDX` you can modify it as an attribute on the `Story` element:
+And for `MDX` you can modify it, especially if you work with some components using fixed or sticky positions, as an attribute on the `Story` element:
 
 ```md
 <Story name='basic' height='400px'>{...}</Story>

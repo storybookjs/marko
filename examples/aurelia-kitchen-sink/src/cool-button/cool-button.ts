@@ -1,5 +1,7 @@
-import { bindable } from '@aurelia/runtime';
+import { bindable } from 'aurelia';
 
 export class CoolButton {
   @bindable text: string;
+
+  @bindable buttonType = 'primary';
 }

@@ -152,7 +152,7 @@ defaultView.parameters = {
 
 ## Usage with Angular
 
-Assuming that you have created test files `my.component.spec.ts` and `my-other.comonent.spec.ts`
+Assuming that you have created test files `my.component.spec.ts` and `my-other.component.spec.ts`
 
 Configure Jest with [jest-preset-angular](https://www.npmjs.com/package/jest-preset-angular)
 
@@ -171,7 +171,7 @@ In your `.storybook/preview.ts`:
 import { addDecorator } from '@storybook/angular';
 import { withTests } from '@storybook/addon-jest';
 
-import * as results from '../.jest-test-results.json';
+import results from '../.jest-test-results.json';
 
 addDecorator(
   withTests({

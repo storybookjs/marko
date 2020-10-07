@@ -10,29 +10,40 @@ export const getJSONDoc = () => {
 
 export const extractArgTypes = (componentName) => {
   const json = getJSONDoc();
+  if (!(json && json.included)) {
+    return null;
+  }
   const componentDoc = json.included.find((doc) => doc.attributes.name === componentName);
-  const rows = componentDoc.attributes.arguments.map((prop) => {
-    return {
+
+  if (!componentDoc) {
+    return null;
+  }
+  return componentDoc.attributes.arguments.reduce((acc, prop) => {
+    acc[prop.name] = {
       name: prop.name,
       defaultValue: prop.defaultValue,
       description: prop.description,
       table: {
+        defaultValue: { summary: prop.defaultValue },
         type: {
           summary: prop.type,
           required: prop.tags.length ? prop.tags.some((tag) => tag.name === 'required') : false,
         },
       },
     };
-  });
-  return { rows };
+    return acc;
+  }, {});
 };
 
 export const extractComponentDescription = (componentName) => {
   const json = getJSONDoc();
+  if (!(json && json.included)) {
+    return null;
+  }
   const componentDoc = json.included.find((doc) => doc.attributes.name === componentName);
 
   if (!componentDoc) {
-    return '';
+    return null;
   }
 
   return componentDoc.attributes.description;

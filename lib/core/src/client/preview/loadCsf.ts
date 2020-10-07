@@ -6,12 +6,36 @@ import deprecate from 'util-deprecate';
 
 import { Loadable, LoaderFunction, RequireContext } from './types';
 
+const deprecatedStoryAnnotationWarning = deprecate(
+  () => {},
+  dedent`
+    CSF .story annotations deprecated; annotate story functions directly:
+    - StoryFn.story.name => StoryFn.storyName
+    - StoryFn.story.(parameters|decorators) => StoryFn.(parameters|decorators)
+    See https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#hoisted-csf-annotations for details and codemod.
+`
+);
+
+const duplicateKindWarning = deprecate(
+  (kindName: string) => {
+    logger.warn(`Duplicate title: '${kindName}'`);
+  },
+  dedent`
+    Duplicate title used in multiple files; use unique titles or a primary file for a component with re-exported stories.
+
+    https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-support-for-duplicate-kinds
+  `
+);
+
 let previousExports = new Map<any, string>();
 const loadStories = (
   loadable: Loadable,
   framework: string,
   { clientApi, storyStore }: { clientApi: ClientApi; storyStore: StoryStore }
 ) => () => {
+  // Make sure we don't try to define a kind more than once within the same load
+  const loadedKinds = new Set();
+
   let reqs = null;
   // todo discuss / improve type check
   if (Array.isArray(loadable)) {
@@ -30,7 +54,7 @@ const loadStories = (
             fileExports,
             // todo discuss: types infer that this is RequireContext; no checks needed?
             // NOTE: turns out `babel-plugin-require-context-hook` doesn't implement this (yet)
-            typeof req.resolve === 'function' ? req.resolve(filename) : null
+            typeof req.resolve === 'function' ? req.resolve(filename) : filename
           );
         } catch (error) {
           logger.warn(`Unexpected error: ${error}`);
@@ -97,6 +121,12 @@ const loadStories = (
       args: kindArgs,
       argTypes: kindArgTypes,
     } = meta;
+
+    if (loadedKinds.has(kindName)) {
+      duplicateKindWarning(kindName);
+    }
+    loadedKinds.add(kindName);
+
     // We pass true here to avoid the warning about HMR. It's cool clientApi, we got this
     // todo discuss: TS now wants a NodeModule; should we fix this differently?
     const kind = clientApi.storiesOf(kindName, true as any);
@@ -136,37 +166,25 @@ const loadStories = (
       if (isExportStory(key, meta)) {
         const storyFn = exports[key];
         const { story } = storyFn;
+        const { storyName = story?.name } = storyFn;
+
+        // storyFn.x and storyFn.story.x get merged with
+        // storyFn.x taking precedence in the merge
+        const parameters = { ...story?.parameters, ...storyFn.parameters };
+        const decorators = [...(storyFn.decorators || []), ...(story?.decorators || [])];
+        const args = { ...story?.args, ...storyFn.args };
+        const argTypes = { ...story?.argTypes, ...storyFn.argTypes };
+
         if (story) {
           logger.debug('deprecated story', story);
-          deprecate(
-            () => {},
-            dedent`
-              CSF .story annotations deprecated; annotate story functions directly:
-              - StoryFn.story.name => StoryFn.storyName
-              - StoryFn.story.(parameters|decorators) => StoryFn.(parameters|decorators)
-              See https://github.com/storybookjs/storybook/issues/10906 for details and codemod.
-          `
-          )();
+          deprecatedStoryAnnotationWarning();
         }
 
-        // storyFn.x takes precedence over storyFn.story.x, but
-        // mixtures are supported
-        const {
-          storyName = story?.name,
-          parameters = story?.parameters,
-          decorators = story?.decorators,
-          args = story?.args,
-          argTypes = story?.argTypes,
-        } = storyFn;
-
-        const decoratorParams = decorators ? { decorators } : null;
         const exportName = storyNameFromExport(key);
-        const idParams = { __id: toId(componentId || kindName, exportName) };
-
         const storyParams = {
           ...parameters,
-          ...decoratorParams,
-          ...idParams,
+          __id: toId(componentId || kindName, exportName),
+          decorators,
           args,
           argTypes,
         };
@@ -177,6 +195,12 @@ const loadStories = (
   previousExports = currentExports;
 };
 
+const configureDeprecationWarning = deprecate(
+  () => {},
+  `\`configure()\` is deprecated and will be removed in Storybook 7.0. 
+Please use the \`stories\` field of \`main.js\` to load stories.
+Read more at https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-configure`
+);
 let loaded = false;
 export const loadCsf = ({
   clientApi,
@@ -192,24 +216,30 @@ export const loadCsf = ({
    * file and process its named exports as stories. If not, assume it's an old-style
    * storiesof file and require it.
    *
+   * @param {*} framework - name of framework in use, e.g. "react"
    * @param {*} loadable a require.context `req`, an array of `req`s, or a loader function that returns void or an array of exports
    * @param {*} m - ES module object for hot-module-reloading (HMR)
-   * @param {*} framework - name of framework in use, e.g. "react"
+   * @param {boolean} showDeprecationWarning - show the deprecation warning (default true)
    */
-  (loadable: Loadable, m: NodeModule, framework: string) => {
+  (framework: string, loadable: Loadable, m: NodeModule, showDeprecationWarning = true) => {
+    if (showDeprecationWarning) {
+      configureDeprecationWarning();
+    }
+
     if (typeof m === 'string') {
       throw new Error(
         `Invalid module '${m}'. Did you forget to pass \`module\` as the second argument to \`configure\`"?`
       );
     }
+
     if (m && m.hot && m.hot.dispose) {
       ({ previousExports = new Map() } = m.hot.data || {});
-
       m.hot.dispose((data) => {
         loaded = false;
         // eslint-disable-next-line no-param-reassign
         data.previousExports = previousExports;
       });
+      m.hot.accept();
     }
     if (loaded) {
       logger.warn('Unexpected loaded state. Did you call `load` twice?');

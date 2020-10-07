@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-storysource",
-  "version": "6.0.0-beta.20",
+  "version": "6.1.0-alpha.20",
   "description": "Stories addon for storybook",
   "keywords": [
     "addon",
@@ -23,39 +23,42 @@
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.5/**/*"
+    "ts3.4/**/*"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-beta.20",
-    "@storybook/api": "6.0.0-beta.20",
-    "@storybook/client-logger": "6.0.0-beta.20",
-    "@storybook/components": "6.0.0-beta.20",
-    "@storybook/router": "6.0.0-beta.20",
-    "@storybook/source-loader": "6.0.0-beta.20",
-    "@storybook/theming": "6.0.0-beta.20",
+    "@storybook/addons": "6.1.0-alpha.20",
+    "@storybook/api": "6.1.0-alpha.20",
+    "@storybook/client-logger": "6.1.0-alpha.20",
+    "@storybook/components": "6.1.0-alpha.20",
+    "@storybook/router": "6.1.0-alpha.20",
+    "@storybook/source-loader": "6.1.0-alpha.20",
+    "@storybook/theming": "6.1.0-alpha.20",
     "core-js": "^3.0.1",
     "estraverse": "^4.2.0",
     "loader-utils": "^2.0.0",
-    "prettier": "^2.0.5",
+    "prettier": "~2.0.5",
     "prop-types": "^15.7.2",
     "react": "^16.9.17",
-    "react-syntax-highlighter": "^12.2.1",
+    "react-dom": "^16.8.3",
+    "react-syntax-highlighter": "^13.5.0",
     "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
     "@types/react": "^16.9.27",
     "@types/react-syntax-highlighter": "^11.0.4"
   },
-  "peerDependencies": {
-    "@storybook/source-loader": "*",
-    "react": "*",
-    "react-dom": "*"
-  },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff"
+  "gitHead": "cc1c152e5452d28eabb24330f4ed693cd6782bc1",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  }
 }

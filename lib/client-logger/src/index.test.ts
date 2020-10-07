@@ -1,8 +1,11 @@
 import { logger } from '.';
 
-describe('client-logger', () => {
+jest.mock('global', () => ({ ...global, LOGLEVEL: 'debug' }));
+
+describe('client-logger default LOGLEVEL', () => {
   const initialConsole = { ...global.console };
   beforeEach(() => {
+    global.console.trace = jest.fn();
     global.console.debug = jest.fn();
     global.console.log = jest.fn();
     global.console.info = jest.fn();

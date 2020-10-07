@@ -1,4 +1,4 @@
-import type { StorybookConfig } from '@storybook/core/types';
+import type { StorybookConfig } from '@storybook/react/types';
 
 module.exports = {
   stories: [
@@ -8,8 +8,14 @@ module.exports = {
     './stories/**/*.stories.@(js|ts|tsx|mdx)',
     './../../addons/docs/**/*.stories.tsx',
   ],
+  reactOptions: {
+    fastRefresh: true,
+  },
   addons: [
-    '@storybook/addon-docs',
+    {
+      name: '@storybook/addon-docs',
+      options: { transcludeMarkdown: true },
+    },
     '@storybook/addon-storysource',
     '@storybook/addon-design-assets',
     '@storybook/addon-actions',
@@ -26,6 +32,7 @@ module.exports = {
     '@storybook/addon-toolbars',
     '@storybook/addon-queryparams',
   ],
+  logLevel: 'debug',
   webpackFinal: async (config, { configType }) => ({
     ...config,
     module: {
@@ -58,7 +65,6 @@ module.exports = {
                   '@babel/plugin-syntax-dynamic-import',
                   ['babel-plugin-emotion', { sourceMap: true, autoLabel: true }],
                   'babel-plugin-macros',
-                  '@babel/plugin-transform-react-constant-elements',
                   'babel-plugin-add-react-displayname',
                   [
                     'babel-plugin-react-docgen',

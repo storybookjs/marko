@@ -15,8 +15,12 @@ const app = window.require(`${window.STORYBOOK_NAME}/app`).default.create({
 
 let lastPromise = app.boot();
 let hasRendered = false;
+let isRendering = false;
 
 function render(options: OptionsArgs, el: ElementArgs) {
+  if (isRendering) return;
+  isRendering = true;
+
   const { template, context = {}, element } = options;
 
   if (hasRendered) {
@@ -47,6 +51,7 @@ function render(options: OptionsArgs, el: ElementArgs) {
         component.appendTo(el);
       }
       hasRendered = true;
+      isRendering = false;
 
       return instance;
     });

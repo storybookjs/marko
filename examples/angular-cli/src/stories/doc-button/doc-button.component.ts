@@ -39,7 +39,7 @@ export interface ISomeInterface {
   templateUrl: './doc-button.component.html',
   styleUrls: ['./doc-button.component.scss'],
 })
-export class ButtonComponent<T> {
+export class DocButtonComponent<T> {
   @ViewChild('buttonRef', { static: false }) buttonRef: ElementRef;
 
   /** Appearance style of the button. */
@@ -79,7 +79,7 @@ export class ButtonComponent<T> {
   public onClick = new EventEmitter<Event>();
 
   /**
-   * This is an internal method that we don't want to document and have added the `ignore` annoation to.
+   * This is an internal method that we don't want to document and have added the `ignore` annotation to.
    *
    * @ignore
    */

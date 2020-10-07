@@ -2,8 +2,9 @@ import React, { useMemo } from 'react';
 
 import { Badge } from '@storybook/components';
 import { API } from '@storybook/api';
+import { useTheme, Theme } from '@storybook/theming';
 
-import { shortcutToHumanString } from '../libs/shortcut';
+import { shortcutToHumanString } from '@storybook/api/shortcut';
 import { MenuItemIcon } from '../components/sidebar/Menu';
 
 const focusableUIElements = {
@@ -22,7 +23,43 @@ export const useMenu = (
   showNav: boolean,
   enableShortcuts: boolean
 ) => {
+  const theme = useTheme<Theme>();
   const shortcutKeys = api.getShortcutKeys();
+
+  const about = useMemo(
+    () => ({
+      id: 'about',
+      title: 'About your Storybook',
+      onClick: () => api.navigateToSettingsPage('/settings/about'),
+      right: api.versionUpdateAvailable() && <Badge status="positive">Update</Badge>,
+      left: <MenuItemIcon />,
+    }),
+    [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
+  );
+
+  const releaseNotes = useMemo(
+    () => ({
+      id: 'release-notes',
+      title: 'Release notes',
+      onClick: () => api.navigateToSettingsPage('/settings/release-notes'),
+      left: <MenuItemIcon />,
+    }),
+    [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
+  );
+
+  const shortcuts = useMemo(
+    () => ({
+      id: 'shortcuts',
+      title: 'Keyboard shortcuts',
+      onClick: () => api.navigateToSettingsPage('/settings/shortcuts'),
+      right: shortcutToHumanStringIfEnabled(shortcutKeys.shortcutsPage, enableShortcuts),
+      left: <MenuItemIcon />,
+      style: {
+        borderBottom: `4px solid ${theme.appBorderColor}`,
+      },
+    }),
+    [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
+  );
 
   const sidebarToggle = useMemo(
     () => ({
@@ -123,34 +160,12 @@ export const useMenu = (
     [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
   );
 
-  const about = useMemo(
-    () => ({
-      id: 'about',
-      title: 'About your Storybook',
-      onClick: () => api.navigate('/settings/about'),
-      right: api.versionUpdateAvailable() && <Badge status="positive">Update</Badge>,
-      left: <MenuItemIcon />,
-    }),
-    [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
-  );
-
-  const shortcuts = useMemo(
-    () => ({
-      id: 'shortcuts',
-      title: 'Keyboard shortcuts',
-      onClick: () => api.navigate('/settings/shortcuts'),
-      right: shortcutToHumanStringIfEnabled(shortcutKeys.shortcutsPage, enableShortcuts),
-      left: <MenuItemIcon />,
-    }),
-    [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
-  );
-
   const collapse = useMemo(
     () => ({
       id: 'collapse',
       title: 'Collapse all',
       onClick: () => api.collapseAll(),
-      right: shortcutToHumanString(shortcutKeys.collapseAll),
+      right: enableShortcuts ? shortcutToHumanString(shortcutKeys.collapseAll) : '',
       left: <MenuItemIcon />,
     }),
     [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
@@ -158,6 +173,9 @@ export const useMenu = (
 
   return useMemo(
     () => [
+      about,
+      ...(api.releaseNotesVersion() ? [releaseNotes] : []),
+      shortcuts,
       sidebarToggle,
       addonsToggle,
       addonsOrientationToggle,
@@ -167,11 +185,12 @@ export const useMenu = (
       down,
       prev,
       next,
-      about,
-      shortcuts,
       collapse,
     ],
     [
+      about,
+      ...(api.releaseNotesVersion() ? [releaseNotes] : []),
+      shortcuts,
       sidebarToggle,
       addonsToggle,
       addonsOrientationToggle,
@@ -181,8 +200,6 @@ export const useMenu = (
       down,
       prev,
       next,
-      about,
-      shortcuts,
       collapse,
     ]
   );

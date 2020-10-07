@@ -17,7 +17,7 @@ When you install [Storybook Docs](../README.md), `DocsPage` is the zero-config d
 
 ## Motivation
 
-`DocsPage` is the successor to [`addon-info`](https://github.com/storybookjs/storybook/tree/next/addons/info), which was one of the most popular Storybook addons despite many limitations.
+`DocsPage` is the successor to [`addon-info`](https://github.com/storybookjs/deprecated-addons/tree/master/addons/info), which was one of the most popular Storybook addons despite many limitations.
 
 Like `addon-info`, `DocsPage` provides sensible defaults, meaning it adds documentation to your existing Storybook without requiring any additional work on your part.
 
@@ -34,7 +34,7 @@ However, `DocsPage` brings the following improvements:
 
 Storybook uses `component` to extract the component's description and props, and will rely on it further in future releases. We encourage you to add it to existing stories and use it in all new stories.
 
-Here's how to set the component in [Component Story Format (CSF)](https://storybook.js.org/docs/formats/component-story-format/):
+Here's how to set the component in [Component Story Format (CSF)](https://storybook.js.org/docs/react/api/csf):
 
 ```js
 import { Badge } from './Badge';
@@ -126,7 +126,7 @@ import {
   Subtitle,
   Description,
   Primary,
-  Props,
+  ArgsTable,
   Stories,
 } from '@storybook/addon-docs/blocks';
 import { DocgenButton } from '../../components/DocgenButton';
@@ -142,7 +142,7 @@ export default {
           <Subtitle />
           <Description />
           <Primary />
-          <Props />
+          <ArgsTable />
           <Stories />
         </>
       ),
@@ -173,9 +173,9 @@ import { addParameters } from '@storybook/vue';
 
 addParameters({
   docs: {
-    prepareForInline: (storyFn) => {
+    prepareForInline: (storyFn, { args }) => {
       const Story = toReact(storyFn());
-      return <Story />;
+      return <Story {...args} />;
     },
   },
 });

@@ -12,15 +12,16 @@ export const decorateAction = (_decorators: DecoratorFunction[]) => {
   );
 };
 
+const deprecatedCallback = deprecate(() => {},
+'decorate.* is no longer supported as of Storybook 6.0.');
+
 export const decorate = (_decorators: DecoratorFunction[]) => {
   return deprecate(
     () => {
       return {
-        action: deprecate(() => {}, 'decorate.action is no longer supported as of Storybook 6.0.'),
-        actions: deprecate(() => {},
-        'decorate.actions is no longer supported as of Storybook 6.0.'),
-        withActions: deprecate(() => {},
-        'decorate.withActions is no longer supported as of Storybook 6.0.'),
+        action: deprecatedCallback,
+        actions: deprecatedCallback,
+        withActions: deprecatedCallback,
       };
     },
     dedent`

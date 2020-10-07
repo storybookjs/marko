@@ -1,6 +1,6 @@
 {
   "name": "@storybook/core",
-  "version": "6.0.0-beta.20",
+  "version": "6.1.0-alpha.20",
   "description": "Storybook framework-agnostic API",
   "keywords": [
     "storybook"
@@ -24,42 +24,48 @@
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.5/**/*"
+    "ts3.4/**/*"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/plugin-proposal-export-default-from": "^7.8.3",
-    "@babel/plugin-proposal-object-rest-spread": "^7.9.6",
-    "@babel/plugin-proposal-private-methods": "^7.8.3",
+    "@babel/core": "^7.11.5",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-proposal-decorators": "^7.10.5",
+    "@babel/plugin-proposal-export-default-from": "^7.10.4",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.10.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.11.0",
+    "@babel/plugin-proposal-private-methods": "^7.10.4",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
-    "@babel/plugin-transform-arrow-functions": "^7.8.3",
-    "@babel/plugin-transform-block-scoping": "^7.8.3",
-    "@babel/plugin-transform-classes": "^7.9.5",
-    "@babel/plugin-transform-destructuring": "^7.9.5",
-    "@babel/plugin-transform-for-of": "^7.9.0",
-    "@babel/plugin-transform-parameters": "^7.9.5",
-    "@babel/plugin-transform-react-constant-elements": "^7.9.0",
-    "@babel/plugin-transform-shorthand-properties": "^7.8.3",
-    "@babel/plugin-transform-spread": "^7.8.3",
-    "@babel/plugin-transform-template-literals": "^7.8.3",
-    "@babel/preset-env": "^7.9.6",
-    "@babel/preset-react": "^7.8.3",
-    "@babel/preset-typescript": "^7.9.0",
-    "@babel/register": "^7.8.3",
-    "@storybook/addons": "6.0.0-beta.20",
-    "@storybook/api": "6.0.0-beta.20",
-    "@storybook/channel-postmessage": "6.0.0-beta.20",
-    "@storybook/client-api": "6.0.0-beta.20",
-    "@storybook/client-logger": "6.0.0-beta.20",
-    "@storybook/core-events": "6.0.0-beta.20",
+    "@babel/plugin-transform-arrow-functions": "^7.10.4",
+    "@babel/plugin-transform-block-scoping": "^7.11.1",
+    "@babel/plugin-transform-classes": "^7.10.4",
+    "@babel/plugin-transform-destructuring": "^7.10.4",
+    "@babel/plugin-transform-for-of": "^7.10.4",
+    "@babel/plugin-transform-parameters": "^7.10.5",
+    "@babel/plugin-transform-shorthand-properties": "^7.10.4",
+    "@babel/plugin-transform-spread": "^7.11.0",
+    "@babel/plugin-transform-template-literals": "^7.10.5",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-react": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.4",
+    "@babel/register": "^7.11.5",
+    "@storybook/addons": "6.1.0-alpha.20",
+    "@storybook/api": "6.1.0-alpha.20",
+    "@storybook/channel-postmessage": "6.1.0-alpha.20",
+    "@storybook/channels": "6.1.0-alpha.20",
+    "@storybook/client-api": "6.1.0-alpha.20",
+    "@storybook/client-logger": "6.1.0-alpha.20",
+    "@storybook/components": "6.1.0-alpha.20",
+    "@storybook/core-events": "6.1.0-alpha.20",
     "@storybook/csf": "0.0.1",
-    "@storybook/node-logger": "6.0.0-beta.20",
-    "@storybook/router": "6.0.0-beta.20",
-    "@storybook/theming": "6.0.0-beta.20",
-    "@storybook/ui": "6.0.0-beta.20",
+    "@storybook/node-logger": "6.1.0-alpha.20",
+    "@storybook/router": "6.1.0-alpha.20",
+    "@storybook/semver": "^7.3.2",
+    "@storybook/theming": "6.1.0-alpha.20",
+    "@storybook/ui": "6.1.0-alpha.20",
     "@types/glob-base": "^0.3.0",
     "@types/micromatch": "^4.0.1",
     "@types/node-fetch": "^2.5.4",
@@ -67,7 +73,6 @@
     "ansi-to-html": "^0.6.11",
     "autoprefixer": "^9.7.2",
     "babel-loader": "^8.0.6",
-    "babel-plugin-add-react-displayname": "^0.0.5",
     "babel-plugin-emotion": "^10.0.20",
     "babel-plugin-macros": "^2.8.0",
     "babel-preset-minify": "^0.5.0 || 0.6.0-alpha.5",
@@ -85,7 +90,6 @@
     "express": "^4.17.0",
     "file-loader": "^6.0.0",
     "file-system-cache": "^1.0.5",
-    "find-cache-dir": "^3.0.0",
     "find-up": "^4.1.0",
     "fork-ts-checker-webpack-plugin": "^4.1.4",
     "fs-extra": "^9.0.0",
@@ -108,11 +112,11 @@
     "pretty-hrtime": "^1.0.3",
     "qs": "^6.6.0",
     "raw-loader": "^4.0.1",
+    "react": "^16.8.3",
     "react-dev-utils": "^10.0.0",
+    "react-dom": "^16.8.3",
     "regenerator-runtime": "^0.13.3",
-    "resolve": "^1.17.0",
     "resolve-from": "^5.0.0",
-    "semver": "^7.3.2",
     "serve-favicon": "^2.5.0",
     "shelljs": "^0.8.3",
     "stable": "^0.1.8",
@@ -124,19 +128,22 @@
     "util-deprecate": "^1.0.2",
     "webpack": "^4.43.0",
     "webpack-dev-middleware": "^3.7.0",
+    "webpack-filter-warnings-plugin": "^1.2.1",
     "webpack-hot-middleware": "^2.25.0",
     "webpack-virtual-modules": "^0.2.2"
   },
   "devDependencies": {
     "mock-fs": "^4.12.0"
   },
-  "peerDependencies": {
-    "@babel/core": "*",
-    "react": "*",
-    "react-dom": "*"
-  },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff"
+  "gitHead": "cc1c152e5452d28eabb24330f4ed693cd6782bc1",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  }
 }

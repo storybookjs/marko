@@ -110,15 +110,6 @@ function run() {
       },
       order: 3,
     }),
-    docs: createTask({
-      name: `Documentation ${chalk.gray('(docs)')}`,
-      defaultValue: false,
-      option: '--docs',
-      command: () => {
-        spawn('yarn bootstrap:docs');
-      },
-      order: 6,
-    }),
     packs: createTask({
       name: `Build tarballs of packages ${chalk.gray('(build-packs)')}`,
       defaultValue: false,
@@ -150,7 +141,7 @@ function run() {
   };
 
   const groups = {
-    main: ['core', 'docs'],
+    main: ['core'],
     buildtasks: ['install', 'build', 'dll', 'packs'],
     devtasks: ['dev', 'registry', 'reset'],
   };
@@ -163,7 +154,7 @@ function run() {
     tasks[key].value = program[tasks[key].option.replace('--', '')] || program.all;
   });
 
-  const createSeperator = (input) => `- ${input}${' ---------'.substr(0, 12)}`;
+  const createSeparator = (input) => `- ${input}${' ---------'.substr(0, 12)}`;
 
   const choices = Object.values(groups)
     .map((l) =>
@@ -174,7 +165,7 @@ function run() {
     )
     .reduce(
       (acc, i, k) =>
-        acc.concat(new inquirer.Separator(createSeperator(Object.keys(groups)[k]))).concat(i),
+        acc.concat(new inquirer.Separator(createSeparator(Object.keys(groups)[k]))).concat(i),
       []
     );
 

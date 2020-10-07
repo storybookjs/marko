@@ -1,32 +1,16 @@
-import shell from 'shelljs';
 import chalk from 'chalk';
-import {
-  getVersions,
-  retrievePackageJson,
-  writePackageJson,
-  paddedLog,
-  getBabelDependencies,
-  installDependencies,
-  copyTemplate,
-} from '../../helpers';
+import shell from 'shelljs';
+import { getBabelDependencies, paddedLog, copyTemplate } from '../../helpers';
+import { JsPackageManager } from '../../js-package-manager';
 import { NpmOptions } from '../../NpmOptions';
-import { GeneratorOptions } from '../Generator';
+import { GeneratorOptions } from '../baseGenerator';
 
-export default async (
+const generator = async (
+  packageManager: JsPackageManager,
   npmOptions: NpmOptions,
   installServer: boolean,
-  { storyFormat }: GeneratorOptions
-) => {
-  const [storybookVersion, addonsVersion, actionsVersion, linksVersion] = await getVersions(
-    npmOptions,
-    '@storybook/react-native',
-    '@storybook/addons',
-    '@storybook/addon-actions',
-    '@storybook/addon-links'
-  );
-
-  copyTemplate(__dirname, storyFormat);
-
+  options: GeneratorOptions
+): Promise<void> => {
   // set correct project name on entry files if possible
   const dirname = shell.ls('-d', 'ios/*.xcodeproj').stdout;
 
@@ -35,7 +19,7 @@ export default async (
     const projectName = dirname.slice('ios/'.length, dirname.length - '.xcodeproj'.length - 1);
 
     if (projectName) {
-      shell.sed('-i', '%APP_NAME%', projectName, 'storybook/storybook.js');
+      shell.sed('-i', '%APP_NAME%', projectName, 'storybook/index.js');
     } else {
       paddedLog(
         chalk.red(
@@ -45,37 +29,47 @@ export default async (
     }
   }
 
-  const packageJson = await retrievePackageJson();
+  const packageJson = packageManager.retrievePackageJson();
 
-  packageJson.dependencies = packageJson.dependencies || {};
-  packageJson.devDependencies = packageJson.devDependencies || {};
+  const missingReactDom =
+    !packageJson.dependencies['react-dom'] && !packageJson.devDependencies['react-dom'];
+  const reactVersion = packageJson.dependencies.react;
 
-  const devDependencies = [
-    `@storybook/react-native@${storybookVersion}`,
-    `@storybook/addon-actions@${actionsVersion}`,
-    `@storybook/addon-links@${linksVersion}`,
-    `@storybook/addons@${addonsVersion}`,
+  // should resolve to latest 5.3 version, this is required until react-native storybook supports v6
+  const webAddonsV5 = [
+    '@storybook/addon-links@^5.3',
+    '@storybook/addon-knobs@^5.3',
+    '@storybook/addon-actions@^5.3',
   ];
 
+  const nativeAddons = ['@storybook/addon-ondevice-knobs', '@storybook/addon-ondevice-actions'];
+
+  const packagesToResolve = [
+    ...nativeAddons,
+    '@storybook/react-native',
+    installServer && '@storybook/react-native-server',
+  ].filter(Boolean);
+
+  const resolvedPackages = await packageManager.getVersionedPackages(...packagesToResolve);
+
+  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
+
+  const packages = [
+    ...babelDependencies,
+    ...resolvedPackages,
+    ...webAddonsV5,
+    missingReactDom && reactVersion && `react-dom@${reactVersion}`,
+  ].filter(Boolean);
+
+  packageManager.addDependencies({ ...npmOptions, packageJson }, packages);
+
   if (installServer) {
-    devDependencies.push(`@storybook/react-native-server@${storybookVersion}`);
+    packageManager.addStorybookCommandInScripts({
+      port: 7007,
+    });
   }
 
-  if (!packageJson.dependencies['react-dom'] && !packageJson.devDependencies['react-dom']) {
-    if (packageJson.dependencies.react) {
-      const reactVersion = packageJson.dependencies.react;
-      devDependencies.push(`react-dom@${reactVersion}`);
-    }
-  }
-
-  if (installServer) {
-    packageJson.scripts = packageJson.scripts || {};
-    packageJson.scripts.storybook = 'start-storybook -p 7007';
-  }
-
-  writePackageJson(packageJson);
-
-  const babelDependencies = await getBabelDependencies(npmOptions, packageJson);
-
-  installDependencies({ ...npmOptions, packageJson }, [...devDependencies, ...babelDependencies]);
+  copyTemplate(__dirname, options.storyFormat);
 };
+
+export default generator;

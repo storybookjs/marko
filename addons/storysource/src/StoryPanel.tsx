@@ -9,7 +9,7 @@ import {
   createSyntaxHighlighterElement,
 } from '@storybook/components';
 
-import { SourceBlock, LocationsMap } from '@storybook/source-loader';
+import { SourceBlock, LocationsMap } from '@storybook/source-loader/extract-source';
 import { Story } from '@storybook/api/dist/lib/stories';
 
 const StyledStoryLink = styled(Link)<{ to: string; key: string }>(({ theme }) => ({
@@ -87,7 +87,7 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
         node,
         stylesheet,
         useInlineStyles,
-        key: `code-segement${i}`,
+        key: `code-segment${i}`,
       })
     );
 
@@ -155,7 +155,7 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
   }: SyntaxHighlighterRendererProps): React.ReactNode => {
     // because of the usage of lineRenderer, all lines will be wrapped in a span
     // these spans will receive all classes on them for some reason
-    // which makes colours casecade incorrectly
+    // which makes colours cascade incorrectly
     // this removed that list of classnames
     const myrows = rows.map(({ properties, ...rest }) => ({
       ...rest,
@@ -170,7 +170,7 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
 
     return <span>{parts}</span>;
   };
-  return (
+  return story ? (
     <StyledSyntaxHighlighter
       language="jsx"
       showLineNumbers
@@ -181,5 +181,5 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
     >
       {source}
     </StyledSyntaxHighlighter>
-  );
+  ) : null;
 };

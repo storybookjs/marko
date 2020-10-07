@@ -2,7 +2,6 @@ import { hbs } from 'ember-cli-htmlbars';
 
 export default {
   title: 'Addon/Backgrounds',
-
   parameters: {
     backgrounds: {
       default: 'dark',

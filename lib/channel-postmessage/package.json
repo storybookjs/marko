@@ -1,6 +1,6 @@
 {
   "name": "@storybook/channel-postmessage",
-  "version": "6.0.0-beta.20",
+  "version": "6.1.0-alpha.20",
   "description": "",
   "keywords": [
     "storybook"
@@ -22,27 +22,28 @@
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.5/**/*"
+    "ts3.4/**/*"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/channels": "6.0.0-beta.20",
-    "@storybook/client-logger": "6.0.0-beta.20",
-    "@storybook/core-events": "6.0.0-beta.20",
+    "@storybook/channels": "6.1.0-alpha.20",
+    "@storybook/client-logger": "6.1.0-alpha.20",
+    "@storybook/core-events": "6.1.0-alpha.20",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
-    "telejson": "^4.0.0"
+    "qs": "^6.6.0",
+    "telejson": "^5.0.2"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
+  "gitHead": "cc1c152e5452d28eabb24330f4ed693cd6782bc1",
   "typesVersions": {
-    "<=3.5": {
+    "<3.8": {
       "*": [
-        "ts3.5/*"
+        "ts3.4/*"
       ]
     }
   }

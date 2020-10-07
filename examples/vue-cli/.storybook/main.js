@@ -1,4 +1,10 @@
 module.exports = {
   stories: ['../src/**/*.stories.@(ts|js|mdx)'],
-  addons: ['@storybook/addon-docs', '@storybook/addon-storysource', '@storybook/preset-scss'],
+  logLevel: 'debug',
+  addons: [
+    '@storybook/addon-docs',
+    '@storybook/addon-controls',
+    '@storybook/addon-storysource',
+    '@storybook/preset-scss',
+  ],
 };

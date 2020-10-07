@@ -9,8 +9,8 @@ import {
   TemplateConfiguration,
   TemplateMatcher,
 } from './project_types';
-import { getBowerJson, getPackageJson } from './helpers';
-import { PackageJson } from './PackageJson';
+import { getBowerJson } from './helpers';
+import { PackageJson, readPackageJson } from './js-package-manager';
 
 const hasDependency = (packageJson: PackageJson, name: string) => {
   return !!packageJson.dependencies?.[name] || !!packageJson.devDependencies?.[name];
@@ -55,7 +55,7 @@ export function detectFrameworkPreset(packageJson = {}) {
   return result ? result.preset : ProjectType.UNDETECTED;
 }
 
-export function isStorybookInstalled(dependencies: PackageJson, force?: boolean) {
+export function isStorybookInstalled(dependencies: PackageJson | false, force?: boolean) {
   if (!dependencies) {
     return false;
   }
@@ -83,7 +83,7 @@ export function isStorybookInstalled(dependencies: PackageJson, force?: boolean)
 
 export function detectLanguage() {
   let language = SupportedLanguage.JAVASCRIPT;
-  const packageJson = getPackageJson();
+  const packageJson = readPackageJson();
   const bowerJson = getBowerJson();
   if (!packageJson && !bowerJson) {
     return language;
@@ -97,7 +97,7 @@ export function detectLanguage() {
 }
 
 export function detect(options: { force?: boolean; html?: boolean } = {}) {
-  const packageJson = getPackageJson();
+  const packageJson = readPackageJson();
   const bowerJson = getBowerJson();
 
   if (!packageJson && !bowerJson) {

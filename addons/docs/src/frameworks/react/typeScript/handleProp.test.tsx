@@ -1,9 +1,13 @@
 /* eslint-disable no-underscore-dangle */
 
-import { PropDef } from '@storybook/components';
 import React from 'react';
 import { Component } from '../../../blocks/types';
-import { extractComponentProps, DocgenInfo, DocgenPropDefaultValue } from '../../../lib/docgen';
+import {
+  PropDef,
+  extractComponentProps,
+  DocgenInfo,
+  DocgenPropDefaultValue,
+} from '../../../lib/docgen';
 import { enhanceTypeScriptProp } from './handleProp';
 
 const DOCGEN_SECTION = 'props';
@@ -209,7 +213,7 @@ describe('enhanceTypeScriptProp', () => {
     it("should use the name of the React component when it's available", () => {
       const component = createTestComponent(
         createDefaultValue(
-          'function InlinedFunctionalComponent() {\n  return <div>Inlined FunctionnalComponent!</div>;\n}'
+          'function InlinedFunctionalComponent() {\n  return <div>Inlined FunctionalComponent!</div>;\n}'
         )
       );
 
@@ -218,7 +222,7 @@ describe('enhanceTypeScriptProp', () => {
       expect(defaultValue.summary).toBe('<InlinedFunctionalComponent />');
 
       const expectedDetail = `function InlinedFunctionalComponent() {
-        return <div>Inlined FunctionnalComponent!</div>;
+        return <div>Inlined FunctionalComponent!</div>;
       }`;
 
       expect(defaultValue.detail.replace(/\s/g, '')).toBe(expectedDetail.replace(/\s/g, ''));
@@ -453,7 +457,7 @@ describe('enhanceTypeScriptProp', () => {
           const component = createTestComponent(null, x);
 
           const { defaultValue } = extractPropDef(component, () => {
-            return <div>Inlined FunctionnalComponent!</div>;
+            return <div>Inlined FunctionalComponent!</div>;
           });
 
           expect(defaultValue.summary).toBe('element');
@@ -475,7 +479,7 @@ describe('enhanceTypeScriptProp', () => {
           const component = createTestComponent(null, x);
 
           const { defaultValue } = extractPropDef(component, function InlinedFunctionalComponent() {
-            return <div>Inlined FunctionnalComponent!</div>;
+            return <div>Inlined FunctionalComponent!</div>;
           });
 
           expect(defaultValue.summary).toBe('<InlinedFunctionalComponent />');

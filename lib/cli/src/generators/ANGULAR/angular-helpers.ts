@@ -1,5 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
+import { pathExists } from 'fs-extra';
+
 import { readFileAsJson, writeFileAsJson } from '../../helpers';
 
 type TsConfig = {
@@ -51,4 +53,8 @@ export function editStorybookTsConfig(tsconfigPath: string) {
 export function isDefaultProjectSet() {
   const angularJson = readFileAsJson('angular.json', true);
   return angularJson && !!angularJson.defaultProject;
+}
+
+export async function getBaseTsConfigName() {
+  return (await pathExists('./tsconfig.base.json')) ? 'tsconfig.base.json' : 'tsconfig.json';
 }

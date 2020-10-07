@@ -1,6 +1,6 @@
 {
   "name": "@storybook/react",
-  "version": "6.0.0-beta.20",
+  "version": "6.1.0-alpha.20",
   "description": "Storybook for React: Develop React Component in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -28,18 +28,19 @@
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.5/**/*"
+    "ts3.4/**/*"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@babel/plugin-transform-react-constant-elements": "^7.6.3",
-    "@babel/preset-flow": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
-    "@storybook/addons": "6.0.0-beta.20",
-    "@storybook/core": "6.0.0-beta.20",
-    "@storybook/node-logger": "6.0.0-beta.20",
+    "@babel/preset-flow": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.2",
+    "@storybook/addons": "6.1.0-alpha.20",
+    "@storybook/core": "6.1.0-alpha.20",
+    "@storybook/node-logger": "6.1.0-alpha.20",
+    "@storybook/semver": "^7.3.2",
     "@svgr/webpack": "^5.4.0",
     "@types/webpack-env": "^1.15.2",
     "babel-plugin-add-react-displayname": "^0.0.5",
@@ -49,22 +50,22 @@
     "global": "^4.3.2",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
+    "react": "^16.8.3",
     "react-dev-utils": "^10.0.0",
-    "react-docgen-typescript-loader": "^3.7.2",
+    "react-docgen-typescript-plugin": "^0.6.0",
+    "react-dom": "^16.8.3",
+    "react-refresh": "^0.8.3",
     "regenerator-runtime": "^0.13.3",
-    "semver": "^7.3.2",
     "ts-dedent": "^1.1.1",
     "webpack": "^4.43.0"
   },
   "devDependencies": {
-    "@storybook/client-api": "6.0.0-beta.20",
-    "@types/node": "^13.13.4",
+    "@storybook/client-api": "6.1.0-alpha.20",
+    "@types/node": "^14.0.10",
     "@types/webpack": "^4.41.12"
   },
   "peerDependencies": {
-    "@babel/core": "^7.0.1",
-    "react": "*",
-    "react-dom": "*"
+    "@babel/core": "^7.11.5"
   },
   "engines": {
     "node": ">=8.0.0"
@@ -72,11 +73,14 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
+  "gitHead": "cc1c152e5452d28eabb24330f4ed693cd6782bc1",
   "typesVersions": {
-    "<=3.5": {
+    "<3.8": {
+      "types-6-0": [
+        "ts3.4/dist/client/preview/types-6-0.d.ts"
+      ],
       "*": [
-        "ts3.5/*"
+        "ts3.4/*"
       ]
     }
   }

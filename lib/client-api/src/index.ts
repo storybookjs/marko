@@ -4,12 +4,16 @@ import { combineParameters } from './parameters';
 import StoryStore from './story_store';
 import ConfigApi from './config_api';
 import pathToId from './pathToId';
+import { simulatePageLoad, simulateDOMContentLoaded } from './simulate-pageload';
 
 import { getQueryParams, getQueryParam } from './queryparams';
 
 export * from './hooks';
 export * from './types';
 export * from './parameters';
+
+// FIXME: for react-argtypes.stories; remove on refactor
+export * from './inferControls';
 
 export {
   ClientApi,
@@ -23,4 +27,6 @@ export {
   pathToId,
   getQueryParams,
   getQueryParam,
+  simulatePageLoad,
+  simulateDOMContentLoaded,
 };
