@@ -128,7 +128,7 @@ const ClearIcon = styled(Icons)(({ theme }) => ({
   padding: 4,
   position: 'absolute',
   top: 6,
-  right: 12,
+  right: 8,
   zIndex: 1,
   background: 'rgba(0,0,0,0.1)',
   borderRadius: 16,
