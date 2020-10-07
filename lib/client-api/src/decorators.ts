@@ -5,7 +5,7 @@ interface StoryContextUpdate {
   [key: string]: any;
 }
 
-export const defaultContext: StoryContext = {
+const defaultContext: StoryContext = {
   id: 'unspecified',
   name: 'unspecified',
   kind: 'unspecified',

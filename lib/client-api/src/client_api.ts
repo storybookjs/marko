@@ -114,7 +114,7 @@ export default class ClientApi {
   );
 
   addParameters = (parameters: Parameters) => {
-    this._storyStore.addGlobalMetadata({ decorators: [] });
+    this._storyStore.addGlobalMetadata({ parameters });
   };
 
   addArgTypesEnhancer = (enhancer: ArgTypesEnhancer) => {
