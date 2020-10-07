@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 
 /* eslint-disable global-require */
+
 const { lstatSync, readdirSync } = require('fs');
 const { join } = require('path');
+const { maxConcurrentTasks } = require('./utils/concurrency');
 const { checkDependenciesAndRun, spawn } = require('./utils/cli-utils');
 
 function run() {
@@ -82,8 +84,8 @@ function run() {
       option: '--install',
       command: () => {
         const command = process.env.CI
-          ? 'yarn install --network-concurrency 8'
-          : 'yarn install --ignore-optional --network-concurrency 8';
+          ? `yarn install --frozen-lockfile --cache-folder ~/.cache/yarn --network-concurrency ${maxConcurrentTasks}`
+          : `yarn install --ignore-optional --network-concurrency ${maxConcurrentTasks}`;
         spawn(command);
       },
       order: 1,
@@ -94,7 +96,11 @@ function run() {
       option: '--build',
       command: () => {
         log.info(prefix, 'prepare');
-        spawn('lerna run prepare');
+        spawn(
+          `lerna run prepare ${
+            process.env.CI ? `--concurrency ${maxConcurrentTasks} --stream` : ''
+          }`
+        );
       },
       order: 2,
     }),

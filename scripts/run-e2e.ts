@@ -10,6 +10,8 @@ import { serve } from './utils/serve';
 import { exec } from './utils/command';
 // @ts-ignore
 import { listOfPackages } from './utils/list-packages';
+// @ts-ignore
+import { filterDataForCurrentCircleCINode } from './utils/concurrency';
 
 import * as configs from './run-e2e-config';
 
@@ -367,18 +369,9 @@ if (frameworkArgs.length > 0) {
 const perform = () => {
   const limit = pLimit(1);
   const narrowedConfigs = Object.values(e2eConfigs);
-  const nodeIndex = +process.env.CIRCLE_NODE_INDEX || 0;
-  const numberOfNodes = +process.env.CIRCLE_NODE_TOTAL || 1;
+  const list = filterDataForCurrentCircleCINode(narrowedConfigs) as Parameters[];
 
-  const list = narrowedConfigs.filter((_, index) => {
-    return index % numberOfNodes === nodeIndex;
-  });
-
-  logger.info(
-    `📑 Assigning jobs ${list
-      .map((c) => c.name)
-      .join(', ')} to node ${nodeIndex} (on ${numberOfNodes})`
-  );
+  logger.info(`📑 Will run E2E tests for:${list.map((c) => c.name).join(', ')}`);
 
   return Promise.all(list.map((config) => limit(() => runE2E(config))));
 };
