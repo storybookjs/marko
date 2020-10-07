@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
   selector: 'app-enums',
   templateUrl: './enums.component.html',
 })
-export default class EnumsComponent {
+export class EnumsComponent {
   /** Union Type of string literals */
   @Input() unionType: 'Union A' | 'Union B' | 'Union C';
 

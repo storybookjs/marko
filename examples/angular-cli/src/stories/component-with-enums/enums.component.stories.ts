@@ -1,5 +1,6 @@
 import { Story, Meta } from '@storybook/angular';
-import EnumsComponent, {
+import {
+  EnumsComponent,
   EnumNumeric,
   EnumNumericInitial,
   EnumStringValues,
