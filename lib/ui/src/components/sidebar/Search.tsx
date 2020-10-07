@@ -21,7 +21,7 @@ import {
 } from './types';
 import { searchItem } from './utils';
 
-const MAX_SEARCH_RESULTS = 50;
+const DEFAULT_MAX_SEARCH_RESULTS = 50;
 
 const options = {
   shouldSort: true,
@@ -196,11 +196,12 @@ export const Search: FunctionComponent<{
       );
 
       if (componentResults.length) {
-        results = componentResults.slice(0, allComponents ? 1000 : MAX_SEARCH_RESULTS);
-        if (componentResults.length > MAX_SEARCH_RESULTS && !allComponents) {
+        results = componentResults.slice(0, allComponents ? 1000 : DEFAULT_MAX_SEARCH_RESULTS);
+        if (componentResults.length > DEFAULT_MAX_SEARCH_RESULTS && !allComponents) {
           results.push({
             showAll: () => showAllComponents(true),
             totalCount: componentResults.length,
+            moreCount: componentResults.length - DEFAULT_MAX_SEARCH_RESULTS,
           });
         }
       }

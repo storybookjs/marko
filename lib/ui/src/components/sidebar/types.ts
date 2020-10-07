@@ -42,6 +42,7 @@ export interface ClearType {
 export interface ExpandType {
   showAll: () => void;
   totalCount: number;
+  moreCount: number;
 }
 
 export type SearchItem = Item & { refId: string; path: string[] };

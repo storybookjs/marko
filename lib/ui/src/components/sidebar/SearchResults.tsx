@@ -155,7 +155,7 @@ export const SearchResults: FunctionComponent<{
               isHighlighted={highlightedIndex === index}
             >
               <ActionIcon icon="plus" />
-              <ActionLabel>Show all ({result.totalCount} results)</ActionLabel>
+              <ActionLabel>Show {result.moreCount} more results</ActionLabel>
             </ActionRow>
           );
         }
