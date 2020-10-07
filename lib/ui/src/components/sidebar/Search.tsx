@@ -297,6 +297,7 @@ export const Search: FunctionComponent<{
         }
 
         const inputProps = getInputProps({
+          id: 'storybook-explorer-searchfield',
           ref: inputRef,
           required: true,
           type: 'search',
@@ -314,7 +315,7 @@ export const Search: FunctionComponent<{
               {enableShortcuts && <FocusKey>/</FocusKey>}
               <ClearIcon icon="cross" onClick={() => clearSelection()} />
             </SearchField>
-            <FocusContainer tabIndex={0}>
+            <FocusContainer tabIndex={0} id="storybook-explorer-menu">
               {children({
                 inputValue: input,
                 results,
