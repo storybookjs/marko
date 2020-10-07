@@ -1,16 +1,14 @@
 import React from 'react';
-import { DocgenButton } from '../../components/DocgenButton';
-
-const ButtonWithMemo = React.memo(DocgenButton);
+import { MemoButton } from '../../components/MemoButton';
 
 export default {
   title: 'Addons/Docs/Memo',
-  component: ButtonWithMemo,
+  component: MemoButton,
   parameters: {
     chromatic: { disable: true },
     docs: { source: { type: 'dynamic' } },
   },
 };
 
-export const displaysCorrectly = () => <ButtonWithMemo label="Hello memo World" />;
+export const displaysCorrectly = () => <MemoButton label="Hello memo World" />;
 displaysCorrectly.storyName = 'Displays components with memo correctly';
