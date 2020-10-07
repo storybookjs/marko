@@ -85,25 +85,24 @@ const Result: FunctionComponent<
       <strong>
         <Highlight match={nameMatch}>{item.name}</Highlight>
       </strong>
-      {item.path && (
-        <Path>
-          {item.path.map((group, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <span key={index}>
-              <Highlight match={pathMatches.find((match: Match) => match.arrayIndex === index)}>
-                {group}
-              </Highlight>
-            </span>
-          ))}
-        </Path>
-      )}
+      <Path>
+        {item.path.map((group, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <span key={index}>
+            <Highlight match={pathMatches.find((match: Match) => match.arrayIndex === index)}>
+              {group}
+            </Highlight>
+          </span>
+        ))}
+      </Path>
     </div>
   );
+  const title = `${item.path.join(' / ')} / ${item.name}`;
 
   if (DOCS_MODE) {
     return (
       <ResultRow {...props}>
-        <DocumentNode depth={0} onClick={click} href={storyLink(item.id, item.refId)}>
+        <DocumentNode depth={0} onClick={click} href={storyLink(item.id, item.refId)} title={title}>
           {label}
         </DocumentNode>
       </ResultRow>
@@ -113,7 +112,7 @@ const Result: FunctionComponent<
   const TreeNode = item.isComponent ? ComponentNode : StoryNode;
   return (
     <ResultRow {...props}>
-      <TreeNode isExpanded={false} depth={0} onClick={onClick}>
+      <TreeNode isExpanded={false} depth={0} onClick={onClick} title={title}>
         {label}
       </TreeNode>
     </ResultRow>
