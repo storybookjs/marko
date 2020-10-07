@@ -46,3 +46,9 @@ export const LastViewed = () => (
     )}
   </Search>
 );
+
+export const ShortcutsDisabled = () => (
+  <Search {...baseProps} enableShortcuts={false}>
+    {() => null}
+  </Search>
+);

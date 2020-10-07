@@ -83,6 +83,7 @@ export interface SidebarProps {
   storyId?: string;
   refId?: string;
   menuHighlighted?: boolean;
+  enableShortcuts?: boolean;
 }
 
 export const Sidebar: FunctionComponent<SidebarProps> = React.memo(
@@ -94,6 +95,7 @@ export const Sidebar: FunctionComponent<SidebarProps> = React.memo(
     storiesFailed,
     menu,
     menuHighlighted = false,
+    enableShortcuts = true,
     refs = {},
   }) => {
     const selected: Selection = useMemo(() => storyId && { storyId, refId }, [storyId, refId]);
@@ -111,7 +113,12 @@ export const Sidebar: FunctionComponent<SidebarProps> = React.memo(
           <StyledSpaced row={1.6}>
             <Heading className="sidebar-header" menuHighlighted={menuHighlighted} menu={menu} />
 
-            <Search dataset={dataset} isLoading={isLoading} {...lastViewed}>
+            <Search
+              dataset={dataset}
+              isLoading={isLoading}
+              enableShortcuts={enableShortcuts}
+              {...lastViewed}
+            >
               {({
                 inputValue,
                 inputHasFocus,

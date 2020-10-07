@@ -142,10 +142,19 @@ export const Search: FunctionComponent<{
   children: SearchChildrenFn;
   dataset: CombinedDataset;
   isLoading?: boolean;
+  enableShortcuts?: boolean;
   lastViewed: Selection[];
   clearLastViewed: () => void;
   initialQuery?: string;
-}> = ({ children, dataset, isLoading = false, lastViewed, clearLastViewed, initialQuery = '' }) => {
+}> = ({
+  children,
+  dataset,
+  isLoading = false,
+  enableShortcuts = true,
+  lastViewed,
+  clearLastViewed,
+  initialQuery = '',
+}) => {
   const api = useStorybookApi();
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputPlaceholder, setPlaceholder] = useState('Find components');
@@ -162,7 +171,7 @@ export const Search: FunctionComponent<{
 
   useEffect(() => {
     const focusSearch = (event: KeyboardEvent) => {
-      if (isLoading || !inputRef.current) return;
+      if (!enableShortcuts || isLoading || !inputRef.current) return;
       if (event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) return;
       if (event.key === '/' && inputRef.current !== document.activeElement) {
         inputRef.current.focus();
@@ -173,7 +182,7 @@ export const Search: FunctionComponent<{
     // Keyup prevents slashes from ending up in the input field when held down
     document.addEventListener('keyup', focusSearch);
     return () => document.removeEventListener('keyup', focusSearch);
-  }, [inputRef, isLoading]);
+  }, [inputRef, isLoading, enableShortcuts]);
 
   const list: SearchItem[] = useMemo(() => {
     return dataset.entries.reduce((acc: SearchItem[], [refId, { stories }]) => {
@@ -302,7 +311,7 @@ export const Search: FunctionComponent<{
             <SearchField {...getRootProps({ refKey: '' }, { suppressRefError: true })}>
               <SearchIcon icon="search" />
               <Input {...inputProps} />
-              <FocusKey>/</FocusKey>
+              {enableShortcuts && <FocusKey>/</FocusKey>}
               <ClearIcon icon="cross" onClick={() => clearSelection()} />
             </SearchField>
             <FocusContainer tabIndex={0}>

@@ -35,6 +35,7 @@ const Sidebar: FunctionComponent<{}> = React.memo(() => {
       viewMode,
       menu,
       menuHighlighted: api.versionUpdateAvailable(),
+      enableShortcuts,
     };
   };
   return (
