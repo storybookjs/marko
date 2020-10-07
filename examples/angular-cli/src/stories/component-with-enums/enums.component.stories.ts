@@ -7,18 +7,14 @@ import EnumsComponent, {
 
 export default {
   title: 'Enum Types',
+  component: EnumsComponent,
 } as Meta;
 
-const Template: Story<EnumsComponent> = (args) => ({
+export const Basic: Story = (args) => ({
   component: EnumsComponent,
   props: args,
 });
-
-export const NoDefaults = Template.bind({});
-NoDefaults.args = {};
-
-export const WithDefaults = Template.bind({});
-WithDefaults.args = {
+Basic.args = {
   unionType: 'union a',
   aliasedUnionType: 'Type Alias 1',
   enumNumeric: EnumNumeric.FIRST,
