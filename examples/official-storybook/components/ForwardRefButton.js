@@ -4,8 +4,8 @@ import BaseButton from './BaseButton';
 
 export const ForwardRefButtonInnerPropTypes = forwardRef(BaseButton);
 
-export const ForwardRefButtonOuterPropTypes = forwardRef((props, ref) => (
-  <BaseButton {...props} ref={ref} />
+export const ForwardRefButtonOuterPropTypes = forwardRef(({ label, ...props }, ref) => (
+  <BaseButton label={label} {...props} ref={ref} />
 ));
 
 ForwardRefButtonOuterPropTypes.defaultProps = {
