@@ -153,7 +153,7 @@ export const Search: FunctionComponent<{
 
   const selectStory = useCallback(
     (id: string, refId: string) => {
-      if (api) api.selectStory(id, undefined, { ref: refId !== DEFAULT_REF_ID && refId });
+     api?.selectStory(id, undefined, { ref: refId !== DEFAULT_REF_ID && refId });
       inputRef.current.blur();
       showAllComponents(false);
     },
