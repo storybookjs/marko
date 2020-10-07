@@ -54,9 +54,8 @@ export type StoreItem = StoryIdentifier & {
   parameters: Parameters;
   getDecorated: () => StoryFn<any>;
   getOriginal: () => StoryFn<any>;
-  applyLoaders: (runtimeContext: StoryContext) => Promise<StoryContext>;
+  applyLoaders: () => Promise<StoryContext>;
   storyFn: StoryFn<any>;
-  storyFnWithoutLoaders: StoryFn<any>;
   hooks: HooksContext;
   args: Args;
   initialArgs: Args;
