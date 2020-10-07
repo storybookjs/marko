@@ -127,7 +127,7 @@ export const Path = styled.span(({ theme }) => ({
     marginLeft: 4,
     paddingLeft: 7,
     '&:before': {
-      content: "'›'",
+      content: "'/'",
       position: 'absolute',
       left: 0,
     },
