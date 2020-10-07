@@ -21,6 +21,8 @@ import {
 } from './types';
 import { searchItem } from './utils';
 
+const MAX_SEARCH_RESULTS = 50;
+
 const options = {
   shouldSort: true,
   tokenize: true,
@@ -194,8 +196,8 @@ export const Search: FunctionComponent<{
       );
 
       if (componentResults.length) {
-        results = componentResults.slice(0, allComponents ? 100 : 10);
-        if (componentResults.length > 10 && !allComponents) {
+        results = componentResults.slice(0, allComponents ? 1000 : MAX_SEARCH_RESULTS);
+        if (componentResults.length > MAX_SEARCH_RESULTS && !allComponents) {
           results.push({
             showAll: () => showAllComponents(true),
             totalCount: componentResults.length,
