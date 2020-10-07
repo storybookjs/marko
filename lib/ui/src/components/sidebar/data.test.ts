@@ -152,6 +152,7 @@ describe('collapse all stories', () => {
       isRoot: false,
       parent: 'root',
       children: [],
+      args: {},
     });
   });
 
@@ -185,6 +186,7 @@ describe('collapse all stories', () => {
         isLeaf: true,
         parent: 'root',
         children: [],
+        args: {},
       },
       b1: {
         id: 'b1',
@@ -195,6 +197,7 @@ describe('collapse all stories', () => {
         isComponent: false,
         isRoot: false,
         parent: 'root',
+        args: {},
       },
       root: {
         id: 'root',

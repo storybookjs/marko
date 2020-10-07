@@ -33,6 +33,7 @@ export const collapseAllStories = (stories: StoriesHash) => {
 
     const leafId = leafChildren[0];
     const component = {
+      args: {},
       ...rest,
       id: leafId,
       kind: (stories[leafId] as Story).kind,
@@ -90,6 +91,7 @@ export const collapseDocsOnlyStories = (storiesHash: StoriesHash) => {
       const leafId = componentIdToLeafId[id];
       if (leafId) {
         const collapsed = {
+          args: {},
           ...item,
           id: leafId,
           isLeaf: true,
