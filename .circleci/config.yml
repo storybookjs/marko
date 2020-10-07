@@ -11,55 +11,94 @@ executors:
     working_directory: /tmp/storybook
     docker:
       - image: circleci/node:10-browsers
+        environment:
+          NODE_OPTIONS: --max_old_space_size=4096
     resource_class: <<parameters.class>>
 
 jobs:
-  install:
-    executor: sb_node
+  build:
+    executor:
+      class: large
+      name: sb_node
     steps:
       - checkout
+      - run:
+          name: Remove examples
+          command: rm -rf examples/
       - restore_cache:
-          name: Restore core dependencies cache
+          name: Restore Yarn cache
           keys:
-            - core-dependencies-v5-{{ checksum "yarn.lock" }}
-            - core-dependencies-v5-
+            - build-yarn-cache-v1--{{ checksum "yarn.lock" }}
+            - build-yarn-cache-v1--
       - run:
           name: Install dependencies
-          command: yarn install
-      - run:
-          name: Check that yarn.lock is not corrupted
-          command: yarn repo-dirty-check
-      - save_cache:
-          name: Cache core dependencies
-          key: core-dependencies-v5-{{ checksum "yarn.lock" }}
-          paths:
-            - node_modules
-      - persist_to_workspace:
-          root: .
-          paths:
-            - node_modules
-            - examples
-            - addons
-            - dev-kits
-            - app
-            - lib
-  build:
-    executor: sb_node
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
       - run:
           name: Bootstrap
           command: yarn bootstrap --core
+      - save_cache:
+          name: Save Yarn cache
+          key: build-yarn-cache-v1--{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
       - persist_to_workspace:
           root: .
           paths:
-            - examples
             - addons
             - dev-kits
             - app
             - lib
+  install-examples-deps:
+    executor:
+      class: large
+      name: sb_node
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn cache
+          keys:
+            - install-examples-deps-yarn-cache-v1--{{ checksum "yarn.lock" }}
+            - install-examples-deps-yarn-cache-v1--
+      - run:
+          name: Install dependencies
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+      - save_cache:
+          name: Save Yarn cache
+          key: install-examples-deps-yarn-cache-v1--{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - persist_to_workspace:
+          root: .
+          paths:
+            - examples
+            - node_modules
+  install-e2e-deps:
+    executor:
+      class: large
+      name: sb_node
+    steps:
+      - checkout
+      - run:
+          name: Keep only root package
+          command: rm -rf examples/ && rm -rf addons/ && rm -rf app/ && rm -rf lib/
+      - restore_cache:
+          name: Restore Yarn cache
+          keys:
+            - install-e2e-deps-yarn-cache-v1--{{ checksum "yarn.lock" }}
+            - install-e2e-deps-yarn-cache-v1--
+      - run:
+          name: Install dependencies
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+      - save_cache:
+          name: Save Yarn cache
+          key: install-e2e-deps-yarn-cache-v1--{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - persist_to_workspace:
+          root: .
+          paths:
+            - examples
+            - node_modules
   chromatic:
     executor: sb_node
     parallelism: 11
@@ -72,7 +111,9 @@ jobs:
           command: |
             yarn run-chromatics
   packtracker:
-    executor: sb_node
+    executor:
+      class: medium
+      name: sb_node
     steps:
       - checkout
       - attach_workspace:
@@ -83,7 +124,9 @@ jobs:
             cd examples/official-storybook
             yarn packtracker
   examples:
-    executor: sb_node
+    executor:
+      class: large
+      name: sb_node
     parallelism: 11
     steps:
       - checkout
@@ -98,7 +141,9 @@ jobs:
           paths:
             - built-storybooks
   publish:
-    executor: sb_node
+    executor:
+      class: large
+      name: sb_node
     steps:
       - checkout
       - attach_workspace:
@@ -111,6 +156,9 @@ jobs:
           paths:
             - .verdaccio-cache
   examples-v2:
+    executor:
+      class: large
+      name: sb_node
     docker:
       - image: cypress/included:4.7.0
         environment:
@@ -195,7 +243,9 @@ jobs:
           destination: cypress
 
   smoke-tests:
-    executor: sb_node
+    executor:
+      class: medium
+      name: sb_node
     steps:
       - checkout
       - attach_workspace:
@@ -310,30 +360,35 @@ jobs:
           name: Upload coverage
           command: yarn coverage
 
+
 workflows:
   test:
     jobs:
-      - install
-      - build:
-          requires:
-            - install
+      - build
+      - install-e2e-deps
+      - install-examples-deps
       - lint:
           requires:
+            - install-examples-deps
             - build
       - examples:
           requires:
+            - install-examples-deps
             - build
       - e2e:
           requires:
             - examples
       - smoke-tests:
           requires:
+            - install-examples-deps
             - build
       - packtracker:
           requires:
+            - install-examples-deps
             - build
       - test:
           requires:
+            - install-examples-deps
             - build
       - coverage:
           requires:
@@ -343,6 +398,7 @@ workflows:
             - examples
       - publish:
           requires:
+            - install-e2e-deps
             - build
       - examples-v2:
           requires:
