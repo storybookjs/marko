@@ -6,18 +6,18 @@ import { StoriesHash, isRoot } from '@storybook/api';
 import { DEFAULT_REF_ID } from './data';
 import { Item, RefType, Dataset, SearchItem } from './types';
 
-export const storyLink = (storyId: string, refId: string) => {
+export const createId = (itemId: string, refId?: string) =>
+  !refId || refId === DEFAULT_REF_ID ? itemId : `${refId}_${itemId}`;
+
+export const getLink = (itemId: string, refId?: string) => {
   const type = DOCS_MODE ? 'docs' : 'story';
-  const refPrefix = refId === DEFAULT_REF_ID ? '' : `${refId}_`;
-  return `${document.location.pathname}?path=/${type}/${refPrefix}${storyId}`;
+  return `${document.location.pathname}?path=/${type}/${createId(itemId, refId)}`;
 };
 
 export const prevent = (e: SyntheticEvent) => {
   e.preventDefault();
   return false;
 };
-
-export const createId = (id: string, prefix: string) => `${prefix}_${id}`;
 
 export const get = memoize(1000)((id: string, dataset: Dataset) => dataset[id]);
 export const getParent = memoize(1000)((id: string, dataset: Dataset) => {

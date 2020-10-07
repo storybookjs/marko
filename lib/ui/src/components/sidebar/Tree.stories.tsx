@@ -23,10 +23,10 @@ export const Full = () => {
       isMain
       refId={refId}
       data={stories}
-      highlightedId={storyId}
-      setHighlightedId={log}
-      selectedId={selectedId}
-      onSelectId={setSelectedId}
+      highlightedItemId={storyId}
+      setHighlightedItemId={log}
+      selectedStoryId={selectedId}
+      onSelectStoryId={setSelectedId}
     />
   );
 };

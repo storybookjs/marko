@@ -8,14 +8,14 @@ import { RefIndicator } from './RefIndicator';
 import { Tree } from './Tree';
 import { CollapseIcon } from './TreeNode';
 import { DEFAULT_REF_ID } from './data';
-import { RefType, Selection } from './types';
+import { Highlight, RefType } from './types';
 import { getStateType } from './utils';
 
 export interface RefProps {
   isBrowsing: boolean;
-  selectedId: string | null;
-  highlightedId: string | null;
-  setHighlighted: (selection: Selection) => void;
+  selectedStoryId: string | null;
+  highlightedItemId: string | null;
+  setHighlighted: (highlight: Highlight) => void;
 }
 
 const Wrapper = styled.div<{ isMain: boolean }>(({ isMain }) => ({
@@ -96,8 +96,8 @@ export const Ref: FunctionComponent<RefType & RefProps> = React.memo((props) => 
     id: refId,
     title = refId,
     isBrowsing,
-    selectedId,
-    highlightedId,
+    selectedStoryId,
+    highlightedItemId,
     setHighlighted,
     loginUrl,
     type,
@@ -121,12 +121,12 @@ export const Ref: FunctionComponent<RefType & RefProps> = React.memo((props) => 
   const [isExpanded, setExpanded] = useState<boolean>(true);
   const handleClick = useCallback(() => setExpanded((value) => !value), [setExpanded]);
 
-  const setHighlightedId = useCallback((storyId: string) => setHighlighted({ storyId, refId }), [
+  const setHighlightedItemId = useCallback((itemId: string) => setHighlighted({ itemId, refId }), [
     setHighlighted,
   ]);
 
-  const onSelectId = useCallback(
-    (id: string) => api.selectStory(id, undefined, { ref: !isMain && refId }),
+  const onSelectStoryId = useCallback(
+    (storyId: string) => api && api.selectStory(storyId, undefined, { ref: !isMain && refId }),
     [api, isMain, refId]
   );
   return (
@@ -155,10 +155,10 @@ export const Ref: FunctionComponent<RefType & RefProps> = React.memo((props) => 
               isMain={isMain}
               refId={refId}
               data={stories}
-              selectedId={selectedId}
-              onSelectId={onSelectId}
-              highlightedId={highlightedId}
-              setHighlightedId={setHighlightedId}
+              selectedStoryId={selectedStoryId}
+              onSelectStoryId={onSelectStoryId}
+              highlightedItemId={highlightedItemId}
+              setHighlightedItemId={setHighlightedItemId}
             />
           )}
         </Wrapper>

@@ -10,7 +10,7 @@ import {
   useState,
 } from 'react';
 
-import { CombinedDataset, Selection } from './types';
+import { CombinedDataset, Highlight, Selection } from './types';
 import { cycle, scrollIntoView } from './utils';
 
 export interface HighlightedProps {
@@ -20,22 +20,26 @@ export interface HighlightedProps {
   selected: Selection;
 }
 
+const fromSelection = (selection: Selection): Highlight =>
+  selection ? { itemId: selection.storyId, refId: selection.refId } : null;
+
 export const useHighlighted = ({
   containerRef,
   isBrowsing,
   dataset,
   selected,
-}: HighlightedProps): [Selection, Dispatch<SetStateAction<Selection>>] => {
-  const highlightedRef = useRef<Selection>(selected);
-  const [highlighted, setHighlighted] = useState<Selection>(selected);
+}: HighlightedProps): [Highlight, Dispatch<SetStateAction<Highlight>>] => {
+  const initialHighlight = fromSelection(selected);
+  const highlightedRef = useRef<Highlight>(initialHighlight);
+  const [highlighted, setHighlighted] = useState<Highlight>(initialHighlight);
 
   // Sets the highlighted node and scrolls it into view, using DOM elements as reference
   const highlightElement = useCallback(
     (element: Element, center = false) => {
-      const storyId = element.getAttribute('data-id');
-      const refId = element.getAttribute('data-ref');
-      if (!storyId || !refId) return;
-      highlightedRef.current = { storyId, refId };
+      const itemId = element.getAttribute('data-item-id');
+      const refId = element.getAttribute('data-ref-id');
+      if (!itemId || !refId) return;
+      highlightedRef.current = { itemId, refId };
       setHighlighted(highlightedRef.current);
       scrollIntoView(element, center);
     },
@@ -44,13 +48,14 @@ export const useHighlighted = ({
 
   // Highlight and scroll to the selected story whenever the selection or dataset changes
   useEffect(() => {
-    setHighlighted(selected);
-    highlightedRef.current = selected;
-    if (selected) {
-      const { storyId, refId } = selected;
+    const highlight = fromSelection(selected);
+    setHighlighted(highlight);
+    highlightedRef.current = highlight;
+    if (highlight) {
+      const { itemId, refId } = highlight;
       setTimeout(() => {
         scrollIntoView(
-          containerRef.current.querySelector(`[data-id="${storyId}"][data-ref="${refId}"]`),
+          containerRef.current.querySelector(`[data-item-id="${itemId}"][data-ref-id="${refId}"]`),
           true // make sure it's clearly visible by centering it
         );
       }, 0);
@@ -69,8 +74,8 @@ export const useHighlighted = ({
         );
         const currentIndex = highlightable.findIndex(
           (el) =>
-            el.getAttribute('data-id') === highlightedRef.current?.storyId &&
-            el.getAttribute('data-ref') === highlightedRef.current?.refId
+            el.getAttribute('data-item-id') === highlightedRef.current?.itemId &&
+            el.getAttribute('data-ref-id') === highlightedRef.current?.refId
         );
         const nextIndex = cycle(highlightable, currentIndex, event.key === 'ArrowUp' ? -1 : 1);
         const didRunAround =

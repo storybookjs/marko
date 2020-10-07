@@ -29,8 +29,8 @@ export const Explorer: FunctionComponent<ExplorerProps> = React.memo(
             {...ref}
             key={refId}
             isBrowsing={isBrowsing}
-            selectedId={selected?.refId === ref.id ? selected.storyId : null}
-            highlightedId={highlighted?.refId === ref.id ? highlighted.storyId : null}
+            selectedStoryId={selected?.refId === ref.id ? selected.storyId : null}
+            highlightedItemId={highlighted?.refId === ref.id ? highlighted.itemId : null}
             setHighlighted={setHighlighted}
           />
         ))}

@@ -11,11 +11,16 @@ export interface CombinedDataset {
   entries: [string, RefType][];
 }
 
+export interface ItemRef {
+  itemId: string;
+  refId: string;
+}
 export interface StoryRef {
   storyId: string;
   refId: string;
 }
 
+export type Highlight = ItemRef | null;
 export type Selection = StoryRef | null;
 
 export interface Match {

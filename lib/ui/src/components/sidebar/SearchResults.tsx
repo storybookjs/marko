@@ -6,7 +6,7 @@ import { ControllerStateAndHelpers } from 'downshift';
 
 import { ComponentNode, DocumentNode, Path, RootNode, StoryNode } from './TreeNode';
 import { Match, DownshiftItem, isClearType, isExpandType, SearchResult } from './types';
-import { storyLink } from './utils';
+import { getLink } from './utils';
 
 const ResultsList = styled.ol({
   listStyle: 'none',
@@ -102,7 +102,7 @@ const Result: FunctionComponent<
   if (DOCS_MODE) {
     return (
       <ResultRow {...props}>
-        <DocumentNode depth={0} onClick={click} href={storyLink(item.id, item.refId)} title={title}>
+        <DocumentNode depth={0} onClick={click} href={getLink(item.id, item.refId)} title={title}>
           {label}
         </DocumentNode>
       </ResultRow>
