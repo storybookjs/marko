@@ -110,6 +110,11 @@ module.exports = {
           path: 'writing-docs/doc-blocks#source',
         },
         {
+          name: 'Dynamic source',
+          supported: ['react'],
+          path: 'writing-docs/doc-blocks#source',
+        },
+        {
           name: 'Args Table',
           supported: ['react', 'vue', 'angular', 'html', 'ember', 'web-components'],
           path: 'writing-docs/doc-blocks#argstable',

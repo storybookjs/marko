@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-docs",
-  "version": "6.1.0-alpha.10",
+  "version": "6.1.0-alpha.20",
   "description": "Superior documentation for your components",
   "keywords": [
     "addon",
@@ -32,33 +32,33 @@
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.5/**/*"
+    "ts3.4/**/*"
   ],
   "scripts": {
     "createDlls": "node -r esm ./scripts/createDlls.js",
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@babel/generator": "^7.9.6",
-    "@babel/parser": "^7.9.6",
-    "@babel/plugin-transform-react-jsx": "^7.3.0",
-    "@babel/preset-env": "^7.9.6",
+    "@babel/generator": "^7.11.5",
+    "@babel/parser": "^7.11.5",
+    "@babel/plugin-transform-react-jsx": "^7.10.4",
+    "@babel/preset-env": "^7.11.5",
     "@jest/transform": "^26.0.0",
     "@mdx-js/loader": "^1.5.1",
     "@mdx-js/mdx": "^1.5.1",
     "@mdx-js/react": "^1.5.1",
-    "@storybook/addons": "6.1.0-alpha.10",
-    "@storybook/api": "6.1.0-alpha.10",
-    "@storybook/client-api": "6.1.0-alpha.10",
-    "@storybook/client-logger": "6.1.0-alpha.10",
-    "@storybook/components": "6.1.0-alpha.10",
-    "@storybook/core": "6.1.0-alpha.10",
-    "@storybook/core-events": "6.1.0-alpha.10",
+    "@storybook/addons": "6.1.0-alpha.20",
+    "@storybook/api": "6.1.0-alpha.20",
+    "@storybook/client-api": "6.1.0-alpha.20",
+    "@storybook/client-logger": "6.1.0-alpha.20",
+    "@storybook/components": "6.1.0-alpha.20",
+    "@storybook/core": "6.1.0-alpha.20",
+    "@storybook/core-events": "6.1.0-alpha.20",
     "@storybook/csf": "0.0.1",
-    "@storybook/node-logger": "6.1.0-alpha.10",
-    "@storybook/postinstall": "6.1.0-alpha.10",
-    "@storybook/source-loader": "6.1.0-alpha.10",
-    "@storybook/theming": "6.1.0-alpha.10",
+    "@storybook/node-logger": "6.1.0-alpha.20",
+    "@storybook/postinstall": "6.1.0-alpha.20",
+    "@storybook/source-loader": "6.1.0-alpha.20",
+    "@storybook/theming": "6.1.0-alpha.20",
     "acorn": "^7.1.0",
     "acorn-jsx": "^5.1.0",
     "acorn-walk": "^7.0.0",
@@ -83,12 +83,12 @@
   },
   "devDependencies": {
     "@angular/core": "^9.1.0",
-    "@babel/core": "^7.9.6",
+    "@babel/core": "^7.11.5",
     "@emotion/core": "^10.0.20",
     "@emotion/styled": "^10.0.17",
-    "@storybook/react": "6.1.0-alpha.10",
-    "@storybook/vue": "6.1.0-alpha.10",
-    "@storybook/web-components": "6.1.0-alpha.10",
+    "@storybook/react": "6.1.0-alpha.20",
+    "@storybook/vue": "6.1.0-alpha.20",
+    "@storybook/web-components": "6.1.0-alpha.20",
     "@types/cross-spawn": "^6.0.1",
     "@types/doctrine": "^0.0.3",
     "@types/enzyme": "^3.10.3",
@@ -118,8 +118,8 @@
     "zone.js": "^0.10.2"
   },
   "peerDependencies": {
-    "@babel/core": "^7.0.0-0",
-    "@storybook/vue": "6.1.0-alpha.10",
+    "@babel/core": "^7.11.5",
+    "@storybook/vue": "6.1.0-alpha.20",
     "babel-loader": "^8.0.0",
     "sveltedoc-parser": "^3.0.4",
     "vue": "^2.6.10",
@@ -142,11 +142,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "57798a108e183d97f94fd4cc396e45e1d4b04d23",
+  "gitHead": "cc1c152e5452d28eabb24330f4ed693cd6782bc1",
   "typesVersions": {
-    "<=3.5": {
+    "<3.8": {
       "*": [
-        "ts3.5/*"
+        "ts3.4/*"
       ]
     }
   }

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/riot",
-  "version": "6.1.0-alpha.10",
+  "version": "6.1.0-alpha.20",
   "description": "Storybook for riot.js: View riot snippets in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -28,13 +28,13 @@
     "standalone.js",
     "*.js",
     "*.d.ts",
-    "ts3.5/**/*"
+    "ts3.4/**/*"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/core": "6.1.0-alpha.10",
+    "@storybook/core": "6.1.0-alpha.20",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "raw-loader": "^4.0.1",
@@ -42,10 +42,10 @@
     "ts-dedent": "^1.1.1"
   },
   "devDependencies": {
-    "@babel/plugin-transform-modules-commonjs": "^7.9.6",
-    "@babel/preset-env": "^7.9.6",
-    "@babel/preset-flow": "^7.0.0",
-    "@babel/preset-react": "^7.7.0"
+    "@babel/plugin-transform-modules-commonjs": "^7.10.4",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-flow": "^7.10.4",
+    "@babel/preset-react": "^7.10.4"
   },
   "peerDependencies": {
     "@babel/core": "*",
@@ -61,5 +61,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "57798a108e183d97f94fd4cc396e45e1d4b04d23"
+  "gitHead": "cc1c152e5452d28eabb24330f4ed693cd6782bc1",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  }
 }

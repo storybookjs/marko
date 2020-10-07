@@ -1,4 +1,4 @@
-import type { StorybookConfig } from '@storybook/core/types';
+import type { StorybookConfig } from '@storybook/react/types';
 
 module.exports = {
   stories: ['./src/*.stories.*'],

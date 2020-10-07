@@ -6,12 +6,15 @@ import { opacify, transparentize } from 'polished';
 import { ControlProps, BooleanValue, BooleanConfig } from './types';
 
 const Label = styled.label(({ theme }) => ({
-  lineHeight: '20px',
+  lineHeight: '18px',
   alignItems: 'center',
   marginBottom: 8,
   display: 'inline-block',
   position: 'relative',
   whiteSpace: 'nowrap',
+  background: `${opacify(0.05, theme.appBorderColor)}`,
+  borderRadius: '3em',
+  padding: 1,
 
   input: {
     appearance: 'none',
@@ -34,19 +37,17 @@ const Label = styled.label(({ theme }) => ({
   },
 
   span: {
-    minWidth: 60,
     textAlign: 'center',
     fontSize: theme.typography.size.s1,
     fontWeight: theme.typography.weight.bold,
     lineHeight: '1',
     cursor: 'pointer',
     display: 'inline-block',
-    padding: '8px 16px',
-    transition: 'all 150ms ease-out',
+    padding: '7px 15px',
+    transition: 'all 100ms ease-out',
     userSelect: 'none',
     borderRadius: '3em',
 
-    boxShadow: `${opacify(0.05, theme.appBorderColor)} 0 0 0 1px inset`,
     color: transparentize(0.4, theme.color.defaultText),
     background: 'transparent',
 
@@ -60,19 +61,18 @@ const Label = styled.label(({ theme }) => ({
     },
 
     '&:first-of-type': {
-      borderTopRightRadius: 0,
-      borderBottomRightRadius: 0,
+      paddingRight: 8,
     },
     '&:last-of-type': {
-      borderTopLeftRadius: 0,
-      borderBottomLeftRadius: 0,
+      paddingLeft: 8,
     },
   },
 
   'input:checked ~ span:first-of-type, input:not(:checked) ~ span:last-of-type': {
-    background: `${opacify(0.05, theme.appBorderColor)}`,
-    boxShadow: `transparent 0 0 0 1px inset`,
+    background: theme.background.bar,
+    boxShadow: `${opacify(0.1, theme.appBorderColor)} 0 0 2px`,
     color: theme.color.defaultText,
+    padding: '7px 15px',
   },
 }));
 

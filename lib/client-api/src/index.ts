@@ -4,6 +4,7 @@ import { combineParameters } from './parameters';
 import StoryStore from './story_store';
 import ConfigApi from './config_api';
 import pathToId from './pathToId';
+import { simulatePageLoad, simulateDOMContentLoaded } from './simulate-pageload';
 
 import { getQueryParams, getQueryParam } from './queryparams';
 
@@ -26,4 +27,6 @@ export {
   pathToId,
   getQueryParams,
   getQueryParam,
+  simulatePageLoad,
+  simulateDOMContentLoaded,
 };

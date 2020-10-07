@@ -40,7 +40,8 @@ function generateUnion({ name, raw, elements }: DocgenFlowUnionType): PropType {
   }
 
   if (raw != null) {
-    return createSummaryValue(raw);
+    // Flow Unions can be defined with or without a leading `|` character, so try to remove it.
+    return createSummaryValue(raw.replace(/^\|\s*/, ''));
   }
 
   return createSummaryValue(name);

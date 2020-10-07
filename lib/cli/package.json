@@ -1,6 +1,6 @@
 {
   "name": "@storybook/cli",
-  "version": "6.1.0-alpha.10",
+  "version": "6.1.0-alpha.20",
   "description": "Storybook's CLI - easiest method of adding storybook to your projects",
   "keywords": [
     "cli",
@@ -28,7 +28,7 @@
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.5/**/*",
+    "ts3.4/**/*",
     "versions.json"
   ],
   "scripts": {
@@ -37,10 +37,10 @@
     "postversion": "node -r esm ./scripts/generate-sb-packages-versions.js"
   },
   "dependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/preset-env": "^7.9.6",
-    "@storybook/codemod": "6.1.0-alpha.10",
-    "@storybook/node-logger": "6.1.0-alpha.10",
+    "@babel/core": "^7.11.5",
+    "@babel/preset-env": "^7.11.5",
+    "@storybook/codemod": "6.1.0-alpha.20",
+    "@storybook/node-logger": "6.1.0-alpha.20",
     "@storybook/semver": "^7.3.2",
     "chalk": "^4.0.0",
     "commander": "^5.0.0",
@@ -62,7 +62,7 @@
     "update-notifier": "^4.0.0"
   },
   "devDependencies": {
-    "@storybook/client-api": "6.1.0-alpha.10",
+    "@storybook/client-api": "6.1.0-alpha.20",
     "@types/cross-spawn": "^6.0.1",
     "@types/inquirer": "^6.5.0",
     "@types/puppeteer-core": "^2.0.0",
@@ -76,5 +76,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "57798a108e183d97f94fd4cc396e45e1d4b04d23"
+  "gitHead": "cc1c152e5452d28eabb24330f4ed693cd6782bc1",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  }
 }

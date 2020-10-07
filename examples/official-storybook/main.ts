@@ -1,4 +1,4 @@
-import type { StorybookConfig } from '@storybook/core/types';
+import type { StorybookConfig } from '@storybook/react/types';
 
 module.exports = {
   stories: [
@@ -8,6 +8,9 @@ module.exports = {
     './stories/**/*.stories.@(js|ts|tsx|mdx)',
     './../../addons/docs/**/*.stories.tsx',
   ],
+  reactOptions: {
+    fastRefresh: true,
+  },
   addons: [
     {
       name: '@storybook/addon-docs',

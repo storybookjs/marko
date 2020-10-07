@@ -3,6 +3,9 @@ const path = require('path');
 module.exports = {
   stories: ['../src/stories/**/*.stories.@(js|mdx)'],
   logLevel: 'debug',
+  reactOptions: {
+    fastRefresh: true,
+  },
   addons: [
     '@storybook/preset-create-react-app',
     {

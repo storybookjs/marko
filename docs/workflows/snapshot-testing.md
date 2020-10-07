@@ -46,7 +46,7 @@ If you are loading stories via `.storybook/preview.js` and `require.context()`, 
 
 This will create an initial set of snapshots inside your Storybook config directory.
 
-![Successfull snapshot tests](./storyshots-pass.png)
+![Successful snapshot tests](./storyshots-pass.png)
 
 When you make changes to your components or stories, run the test again to identify the changes to the rendered markup.
 

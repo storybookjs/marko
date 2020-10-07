@@ -1,51 +1,14 @@
-import React, { Component, Fragment, ReactElement } from 'react';
+import React, { FunctionComponent, Fragment, useCallback, useMemo, memo } from 'react';
 import memoize from 'memoizerific';
 
-import { Combo, Consumer, API } from '@storybook/api';
-import { Global, Theme } from '@storybook/theming';
+import { useParameter, useGlobals } from '@storybook/api';
 import { logger } from '@storybook/client-logger';
-
 import { Icons, IconButton, WithTooltip, TooltipLinkList } from '@storybook/components';
 
-import { PARAM_KEY as BACKGROUNDS_PARAM_KEY, EVENTS } from '../constants';
+import { PARAM_KEY as BACKGROUNDS_PARAM_KEY } from '../constants';
 import { ColorIcon } from '../components/ColorIcon';
-
-interface GlobalState {
-  name: string | undefined;
-  selected: string | undefined;
-}
-
-interface Props {
-  api: API;
-}
-
-interface BackgroundSelectorItem {
-  id: string;
-  title: string;
-  onClick: () => void;
-  value: string;
-  right?: ReactElement;
-}
-
-interface Background {
-  name: string;
-  value: string;
-}
-
-interface BackgroundsParameter {
-  default?: string;
-  disable?: boolean;
-  values: Background[];
-}
-
-interface BackgroundsConfig {
-  backgrounds: Background[] | null;
-  selectedBackground: string | null;
-  defaultBackgroundName: string | null;
-  disable: boolean;
-}
-
-const iframeId = 'storybook-preview-iframe';
+import { BackgroundSelectorItem, Background, BackgroundsParameter, GlobalState } from '../types';
+import { getBackgroundColorByName } from '../helpers';
 
 const createBackgroundSelectorItem = memoize(1000)(
   (
@@ -53,7 +16,8 @@ const createBackgroundSelectorItem = memoize(1000)(
     name: string,
     value: string,
     hasSwatch: boolean,
-    change: (arg: { selected: string; name: string }) => void
+    change: (arg: { selected: string; name: string }) => void,
+    active: boolean
   ): BackgroundSelectorItem => ({
     id: id || name,
     title: name,
@@ -62,6 +26,7 @@ const createBackgroundSelectorItem = memoize(1000)(
     },
     value,
     right: hasSwatch ? <ColorIcon background={value} /> : undefined,
+    active,
   })
 );
 
@@ -72,12 +37,26 @@ const getDisplayedItems = memoize(10)(
     change: (arg: { selected: string; name: string }) => void
   ) => {
     const backgroundSelectorItems = backgrounds.map(({ name, value }) =>
-      createBackgroundSelectorItem(null, name, value, true, change)
+      createBackgroundSelectorItem(
+        null,
+        name,
+        value,
+        true,
+        change,
+        value === selectedBackgroundColor
+      )
     );
 
     if (selectedBackgroundColor !== 'transparent') {
       return [
-        createBackgroundSelectorItem('reset', 'Clear background', 'transparent', null, change),
+        createBackgroundSelectorItem(
+          'reset',
+          'Clear background',
+          'transparent',
+          null,
+          change,
+          false
+        ),
         ...backgroundSelectorItems,
       ];
     }
@@ -86,131 +65,78 @@ const getDisplayedItems = memoize(10)(
   }
 );
 
-const getSelectedBackgroundColor = (
-  backgrounds: Background[] = [],
-  currentSelectedValue: string,
-  defaultName: string
-): string => {
-  if (currentSelectedValue === 'transparent') {
-    return 'transparent';
-  }
-
-  if (backgrounds.find((background) => background.value === currentSelectedValue)) {
-    return currentSelectedValue;
-  }
-
-  const defaultBackground = backgrounds.find((background) => background.name === defaultName);
-  if (defaultBackground) {
-    return defaultBackground.value;
-  }
-
-  if (defaultName) {
-    const availableColors = backgrounds.map((background) => background.name).join(', ');
-    logger.warn(
-      `Backgrounds Addon: could not find the default color "${defaultName}".
-      These are the available colors for your story based on your configuration: ${availableColors}`
-    );
-  }
-
-  return 'transparent';
+const DEFAULT_BACKGROUNDS_CONFIG: BackgroundsParameter = {
+  default: null,
+  disable: true,
+  values: [],
 };
 
-const getBackgroundsConfig = ({ api, state }: Combo): BackgroundsConfig => {
-  const backgroundsParameter = api.getCurrentParameter<BackgroundsParameter>(BACKGROUNDS_PARAM_KEY);
-  const selectedBackgroundValue = state.addons[BACKGROUNDS_PARAM_KEY] || null;
+export const BackgroundSelector: FunctionComponent = memo(() => {
+  const backgroundsConfig = useParameter<BackgroundsParameter>(
+    BACKGROUNDS_PARAM_KEY,
+    DEFAULT_BACKGROUNDS_CONFIG
+  );
 
-  if (Array.isArray(backgroundsParameter)) {
+  const [globals, updateGlobals] = useGlobals();
+
+  const globalsBackgroundColor = globals[BACKGROUNDS_PARAM_KEY]?.value;
+
+  const selectedBackgroundColor = useMemo(() => {
+    return getBackgroundColorByName(
+      globalsBackgroundColor,
+      backgroundsConfig.values,
+      backgroundsConfig.default
+    );
+  }, [backgroundsConfig, globalsBackgroundColor]);
+
+  if (Array.isArray(backgroundsConfig)) {
     logger.warn(
       'Addon Backgrounds api has changed in Storybook 6.0. Please refer to the migration guide: https://github.com/storybookjs/storybook/blob/next/MIGRATION.md'
     );
   }
 
-  const isBackgroundsEmpty = !backgroundsParameter?.values?.length;
-  if (backgroundsParameter?.disable || isBackgroundsEmpty) {
-    // other null properties are necessary to keep the same return shape for Consumer memoization
-    return {
-      disable: true,
-      backgrounds: null,
-      selectedBackground: null,
-      defaultBackgroundName: null,
-    };
+  const onBackgroundChange = useCallback(
+    (value: string) => {
+      updateGlobals({ [BACKGROUNDS_PARAM_KEY]: { ...globals[BACKGROUNDS_PARAM_KEY], value } });
+    },
+    [backgroundsConfig, globals, updateGlobals]
+  );
+
+  if (backgroundsConfig.disable) {
+    return null;
   }
 
-  return {
-    disable: false,
-    backgrounds: backgroundsParameter?.values,
-    selectedBackground: selectedBackgroundValue,
-    defaultBackgroundName: backgroundsParameter?.default,
-  };
-};
-
-export class BackgroundSelector extends Component<Props> {
-  change = ({ selected, name }: GlobalState) => {
-    const { api } = this.props;
-    if (typeof selected === 'string') {
-      api.setAddonState<string>(BACKGROUNDS_PARAM_KEY, selected);
-    }
-    api.emit(EVENTS.UPDATE, { selected, name });
-  };
-
-  render() {
-    return (
-      <Consumer filter={getBackgroundsConfig}>
-        {({
-          disable,
-          backgrounds,
-          selectedBackground,
-          defaultBackgroundName,
-        }: BackgroundsConfig) => {
-          if (disable) {
-            return null;
-          }
-
-          const selectedBackgroundColor = getSelectedBackgroundColor(
-            backgrounds,
-            selectedBackground,
-            defaultBackgroundName
-          );
-
+  return (
+    <Fragment>
+      <WithTooltip
+        placement="top"
+        trigger="click"
+        closeOnClick
+        tooltip={({ onHide }) => {
           return (
-            <Fragment>
-              {selectedBackgroundColor ? (
-                <Global
-                  styles={(theme: Theme) => ({
-                    [`#${iframeId}`]: {
-                      background:
-                        selectedBackgroundColor === 'transparent'
-                          ? theme.background.content
-                          : selectedBackgroundColor,
-                    },
-                  })}
-                />
-              ) : null}
-              <WithTooltip
-                placement="top"
-                trigger="click"
-                closeOnClick
-                tooltip={({ onHide }) => (
-                  <TooltipLinkList
-                    links={getDisplayedItems(backgrounds, selectedBackgroundColor, (i) => {
-                      this.change(i);
-                      onHide();
-                    })}
-                  />
-                )}
-              >
-                <IconButton
-                  key="background"
-                  title="Change the background of the preview"
-                  active={selectedBackgroundColor !== 'transparent'}
-                >
-                  <Icons icon="photo" />
-                </IconButton>
-              </WithTooltip>
-            </Fragment>
+            <TooltipLinkList
+              links={getDisplayedItems(
+                backgroundsConfig.values,
+                selectedBackgroundColor,
+                ({ selected }: GlobalState) => {
+                  if (selectedBackgroundColor !== selected) {
+                    onBackgroundChange(selected);
+                  }
+                  onHide();
+                }
+              )}
+            />
           );
         }}
-      </Consumer>
-    );
-  }
-}
+      >
+        <IconButton
+          key="background"
+          title="Change the background of the preview"
+          active={selectedBackgroundColor !== 'transparent'}
+        >
+          <Icons icon="photo" />
+        </IconButton>
+      </WithTooltip>
+    </Fragment>
+  );
+});

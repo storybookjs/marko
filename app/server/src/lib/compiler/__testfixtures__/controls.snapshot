@@ -29,7 +29,7 @@ Simple.args = {
     'baseball'
   ],
   favorite_food: 'Ice Cream',
-  other_thinkgs: {
+  other_things: {
     hair: 'Brown',
     eyes: 'Blue'
   }

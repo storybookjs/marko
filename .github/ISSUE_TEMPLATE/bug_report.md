@@ -23,7 +23,7 @@ If applicable, add screenshots to help explain your problem.
 **Code snippets**
 If applicable, add code samples to help explain your problem.
 
-**System:**
+**System**
 Please paste the results of `npx sb@next info` here.
 
 **Additional context**
