@@ -11,4 +11,4 @@ export default {
 };
 
 export const DisplaysCorrectly = () => <ForwardRefButtonOuterPropTypes label="hello" />;
-DisplaysCorrectly.storyName = 'Displays forwarded ref components correctly';
+DisplaysCorrectly.storyName = 'Displays forward ref component w/ outer propTypes correctly';
