@@ -5,6 +5,7 @@ import stable from 'stable';
 import mapValues from 'lodash/mapValues';
 import pick from 'lodash/pick';
 import store from 'store2';
+import deprecate from 'util-deprecate';
 
 import { Channel } from '@storybook/channels';
 import Events from '@storybook/core-events';
@@ -405,18 +406,25 @@ export default class StoryStore {
 
     const storyParametersWithArgTypes = { ...storyParameters, argTypes, __isArgsStory };
 
-    const storyFn: LegacyStoryFn = (runtimeContext: StoryContext) =>
-      getDecorated()({
-        ...identification,
-        ...runtimeContext,
-        // Calculate "combined" parameters at render time (NOTE: for perf we could just use combinedParameters from above?)
-        parameters: this.combineStoryParameters(storyParametersWithArgTypes, kind),
-        hooks,
-        args: _stories[id].args,
-        argTypes,
-        globals: this._globals,
-        viewMode: this._selection?.viewMode,
-      });
+    const storyFn: LegacyStoryFn = deprecate(
+      (runtimeContext: StoryContext) =>
+        getDecorated()({
+          ...identification,
+          ...runtimeContext,
+          // Calculate "combined" parameters at render time (NOTE: for perf we could just use combinedParameters from above?)
+          parameters: this.combineStoryParameters(storyParametersWithArgTypes, kind),
+          hooks,
+          args: _stories[id].args,
+          argTypes,
+          globals: this._globals,
+          viewMode: this._selection?.viewMode,
+        }),
+      dedent`
+        \`storyFn\` is deprecated and will be removed in Storybook 7.0.
+
+        https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-storyfn
+      `
+    );
 
     const unboundStoryFn: LegacyStoryFn = (context: StoryContext) => getDecorated()(context);
 

@@ -1,7 +1,8 @@
 <h1>Migration</h1>
 
 - [From version 6.0.x to 6.1.0](#from-version-60x-to-610)
-  - [6.1 deprecations](#61-deprecations)
+  - [6.1 deprecations](#6dot1-deprecations)
+    - [Deprecated storyFn](#deprecated-storyfn)
     - [Deprecated onBeforeRender](#deprecated-onbeforerender)
     - [Deprecated grid parameter](#deprecated-grid-parameter)
     - [Deprecated package-composition disabled parameter](#deprecated-package-composition-disabled-parameter)
@@ -12,7 +13,7 @@
   - [CRA preset removed](#cra-preset-removed)
   - [Core-JS dependency errors](#core-js-dependency-errors)
   - [Args passed as first argument to story](#args-passed-as-first-argument-to-story)
-  - [6.0 Docs breaking changes](#60-docs-breaking-changes)
+  - [6.0 Docs breaking changes](#6dot0-docs-breaking-changes)
     - [Remove framework-specific docs presets](#remove-framework-specific-docs-presets)
     - [Preview/Props renamed](#previewprops-renamed)
     - [Docs theme separated](#docs-theme-separated)
@@ -21,7 +22,7 @@
     - [ConfigureJSX true by default in React](#configurejsx-true-by-default-in-react)
     - [User babelrc disabled by default in MDX](#user-babelrc-disabled-by-default-in-mdx)
     - [Docs description parameter](#docs-description-parameter)
-    - [6.0 Inline stories](#60-inline-stories)
+    - [6.0 Inline stories](#6dot0-inline-stories)
   - [New addon presets](#new-addon-presets)
   - [Removed babel-preset-vue from Vue preset](#removed-babel-preset-vue-from-vue-preset)
   - [Removed Deprecated APIs](#removed-deprecated-apis)
@@ -36,7 +37,7 @@
   - [Simplified Render Context](#simplified-render-context)
   - [Story Store immutable outside of configuration](#story-store-immutable-outside-of-configuration)
   - [Improved story source handling](#improved-story-source-handling)
-  - [6.0 Addon API changes](#60-addon-api-changes)
+  - [6.0 Addon API changes](#6dot0-addon-api-changes)
     - [Consistent local addon paths in main.js](#consistent-local-addon-paths-in-mainjs)
     - [Deprecated setAddon](#deprecated-setaddon)
     - [Deprecated disabled parameter](#deprecated-disabled-parameter)
@@ -45,7 +46,7 @@
     - [Removed withA11y decorator](#removed-witha11y-decorator)
     - [Essentials addon disables differently](#essentials-addon-disables-differently)
     - [Backgrounds addon has a new api](#backgrounds-addon-has-a-new-api)
-  - [6.0 Deprecations](#60-deprecations)
+  - [6.0 Deprecations](#6dot0-deprecations)
     - [Deprecated addon-info, addon-notes](#deprecated-addon-info-addon-notes)
     - [Deprecated addon-contexts](#deprecated-addon-contexts)
     - [Removed addon-centered](#removed-addon-centered)
@@ -120,8 +121,8 @@
   - [Addon story parameters](#addon-story-parameters)
 - [From version 3.3.x to 3.4.x](#from-version-33x-to-34x)
 - [From version 3.2.x to 3.3.x](#from-version-32x-to-33x)
-  - [`babel-core` is now a peer dependency (#2494)](#babel-core-is-now-a-peer-dependency-2494)
-  - [Base webpack config now contains vital plugins (#1775)](#base-webpack-config-now-contains-vital-plugins-1775)
+  - [`babel-core` is now a peer dependency #2494](#babel-core-is-now-a-peer-dependency-2494)
+  - [Base webpack config now contains vital plugins #1775](#base-webpack-config-now-contains-vital-plugins-1775)
   - [Refactored Knobs](#refactored-knobs)
 - [From version 3.1.x to 3.2.x](#from-version-31x-to-32x)
   - [Moved TypeScript addons definitions](#moved-typescript-addons-definitions)
@@ -137,6 +138,25 @@
 ## From version 6.0.x to 6.1.0
 
 ### 6.1 deprecations
+
+#### Deprecated storyFn
+
+Each item in the story store contains a field called `storyFn`, which is a fully decorated story that's applied to the denormalized story parameters. Starting in 6.0 we've stopped using this API internally, and have replaced it with a new field called `unboundStoryFn` which, unlike `storyFn`, must passed a story context, typically produced by `applyLoaders`;
+
+Before:
+
+```js
+const { storyFn } = store.fromId('some--id');
+console.log(storyFn());
+```
+
+After:
+
+```js
+const { unboundStoryFn, applyLoaders } = store.fromId('some--id');
+const context = await applyLoaders();
+console.log(unboundStoryFn(context));
+```
 
 #### Deprecated onBeforeRender
 
@@ -1717,7 +1737,7 @@ There are no expected breaking changes in the 3.4.x release, but 3.4 contains a 
 It wasn't expected that there would be any breaking changes in this release, but unfortunately it turned out that there are some. We're revisiting our [release strategy](https://github.com/storybookjs/storybook/blob/master/RELEASES.md) to follow semver more strictly.
 Also read on if you're using `addon-knobs`: we advise an update to your code for efficiency's sake.
 
-### `babel-core` is now a peer dependency ([#2494](https://github.com/storybookjs/storybook/pull/2494))
+### `babel-core` is now a peer dependency #2494
 
 This affects you if you don't use babel in your project. You may need to add `babel-core` as dev dependency:
 
@@ -1727,7 +1747,7 @@ yarn add babel-core --dev
 
 This was done to support different major versions of babel.
 
-### Base webpack config now contains vital plugins ([#1775](https://github.com/storybookjs/storybook/pull/1775))
+### Base webpack config now contains vital plugins #1775
 
 This affects you if you use custom webpack config in [Full Control Mode](https://storybook.js.org/docs/react/configure/webpack#full-control-mode) while not preserving the plugins from `storybookBaseConfig`. Before `3.3`, preserving them was a recommendation, but now it [became](https://github.com/storybookjs/storybook/pull/2578) a requirement.
 
