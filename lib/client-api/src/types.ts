@@ -56,6 +56,7 @@ export type StoreItem = StoryIdentifier & {
   getOriginal: () => StoryFn<any>;
   applyLoaders: () => Promise<StoryContext>;
   storyFn: StoryFn<any>;
+  unboundStoryFn: StoryFn<any>;
   hooks: HooksContext;
   args: Args;
   initialArgs: Args;

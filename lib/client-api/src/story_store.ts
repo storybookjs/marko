@@ -313,6 +313,7 @@ export default class StoryStore {
       storyFn: original,
       parameters: storyParameters = {},
       decorators: storyDecorators = [],
+      loaders: storyLoaders = [],
     }: AddStoryArgs,
     {
       applyDecorators,
@@ -359,11 +360,7 @@ export default class StoryStore {
       ...kindMetadata.decorators,
       ...this._globalMetadata.decorators,
     ];
-    const loaders = [
-      // ...storyLoaders,
-      ...kindMetadata.loaders,
-      ...this._globalMetadata.loaders,
-    ];
+    const loaders = [...storyLoaders, ...kindMetadata.loaders, ...this._globalMetadata.loaders];
 
     const finalStoryFn = (context: StoryContext) => {
       const { passArgsFirst = true } = context.parameters;
@@ -408,7 +405,20 @@ export default class StoryStore {
 
     const storyParametersWithArgTypes = { ...storyParameters, argTypes, __isArgsStory };
 
-    const storyFn: LegacyStoryFn = (context: StoryContext) => getDecorated()(context);
+    const storyFn: LegacyStoryFn = (runtimeContext: StoryContext) =>
+      getDecorated()({
+        ...identification,
+        ...runtimeContext,
+        // Calculate "combined" parameters at render time (NOTE: for perf we could just use combinedParameters from above?)
+        parameters: this.combineStoryParameters(storyParametersWithArgTypes, kind),
+        hooks,
+        args: _stories[id].args,
+        argTypes,
+        globals: this._globals,
+        viewMode: this._selection?.viewMode,
+      });
+
+    const unboundStoryFn: LegacyStoryFn = (context: StoryContext) => getDecorated()(context);
 
     const applyLoaders = async () => {
       const context = {
@@ -443,6 +453,7 @@ export default class StoryStore {
       getOriginal,
       applyLoaders,
       storyFn,
+      unboundStoryFn,
 
       parameters: storyParametersWithArgTypes,
       args: initialArgs,
