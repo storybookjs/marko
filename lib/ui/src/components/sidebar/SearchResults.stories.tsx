@@ -10,6 +10,10 @@ export default {
   component: SearchResults,
   title: 'UI/Sidebar/SearchResults',
   includeStories: /^[A-Z]/,
+  parameters: { layout: 'fullscreen' },
+  decorators: [
+    (storyFn: any) => <div style={{ padding: '0 20px', maxWidth: '230px' }}>{storyFn()}</div>,
+  ],
 };
 
 const combinedDataset = (refs: Record<string, StoriesHash>): CombinedDataset => {

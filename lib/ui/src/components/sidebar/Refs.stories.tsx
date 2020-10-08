@@ -9,6 +9,10 @@ export default {
   component: Ref,
   title: 'UI/Sidebar/Refs',
   excludeStories: /.*Data$/,
+  parameters: { layout: 'fullscreen' },
+  decorators: [
+    (storyFn: any) => <div style={{ padding: '0 20px', maxWidth: '230px' }}>{storyFn()}</div>,
+  ],
 };
 
 const { menu } = standardHeaderData;

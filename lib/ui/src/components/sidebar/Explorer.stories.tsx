@@ -7,6 +7,10 @@ import { RefType } from './types';
 export default {
   component: Explorer,
   title: 'UI/Sidebar/Explorer',
+  parameters: { layout: 'fullscreen' },
+  decorators: [
+    (storyFn: any) => <div style={{ padding: '0 20px', maxWidth: '230px' }}>{storyFn()}</div>,
+  ],
 };
 
 const selected = {

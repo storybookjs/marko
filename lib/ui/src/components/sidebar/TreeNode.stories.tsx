@@ -4,6 +4,7 @@ import { ComponentNode, DocumentNode, GroupNode, StoryNode } from './TreeNode';
 
 export default {
   title: 'UI/Sidebar/TreeNode',
+  parameters: { layout: 'fullscreen' },
 };
 
 export const Types = () => (

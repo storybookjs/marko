@@ -17,6 +17,8 @@ const lastViewed = Object.values(stories)
 export default {
   component: Search,
   title: 'UI/Sidebar/Search',
+  parameters: { layout: 'fullscreen' },
+  decorators: [(storyFn: any) => <div style={{ padding: 20, maxWidth: '230px' }}>{storyFn()}</div>],
 };
 
 const baseProps = {

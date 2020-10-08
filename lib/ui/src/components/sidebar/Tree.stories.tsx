@@ -8,6 +8,8 @@ export default {
   component: Tree,
   title: 'UI/Sidebar/Tree',
   excludeStories: /.*Data$/,
+  parameters: { layout: 'fullscreen' },
+  decorators: [(storyFn: any) => <div style={{ maxWidth: '230px' }}>{storyFn()}</div>],
 };
 
 const refId = DEFAULT_REF_ID;
