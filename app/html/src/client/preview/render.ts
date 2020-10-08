@@ -5,7 +5,7 @@ import { RenderContext } from './types';
 
 const rootElement = document.getElementById('root');
 
-export default async function renderMain({
+export default function renderMain({
   storyFn,
   kind,
   name,

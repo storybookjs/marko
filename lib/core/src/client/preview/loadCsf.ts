@@ -172,6 +172,7 @@ const loadStories = (
         // storyFn.x taking precedence in the merge
         const parameters = { ...story?.parameters, ...storyFn.parameters };
         const decorators = [...(storyFn.decorators || []), ...(story?.decorators || [])];
+        const loaders = [...(storyFn.loaders || []), ...(story?.loaders || [])];
         const args = { ...story?.args, ...storyFn.args };
         const argTypes = { ...story?.argTypes, ...storyFn.argTypes };
 
@@ -185,6 +186,7 @@ const loadStories = (
           ...parameters,
           __id: toId(componentId || kindName, exportName),
           decorators,
+          loaders,
           args,
           argTypes,
         };

@@ -8,3 +8,4 @@ export default {
 export const Story = (args, { loaded }) => (
   <div>Loaded Value is {JSON.stringify(loaded, null, 2)}</div>
 );
+Story.loaders = [async () => ({ storyValue: 3 })];
