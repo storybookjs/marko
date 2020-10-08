@@ -2,7 +2,9 @@ import React from 'react';
 
 export default {
   title: 'Core/Loaders',
-  loaders: [async () => new Promise((r) => setTimeout(() => r({ loadedValue: 7 }), 3000))],
+  loaders: [async () => new Promise((r) => setTimeout(() => r({ kindValue: 7 }), 3000))],
 };
 
-export const Story = (args, { loadedValue }) => <div>Loaded Value is {loadedValue}</div>;
+export const Story = (args, { loaded }) => (
+  <div>Loaded Value is {JSON.stringify(loaded, null, 2)}</div>
+);

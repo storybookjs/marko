@@ -431,8 +431,9 @@ export default class StoryStore {
         globals: this._globals,
         viewMode: this._selection?.viewMode,
       };
-      const loadedContexts = await Promise.all(loaders.map((loader) => loader(context)));
-      return combineParameters(context, ...loadedContexts) as StoryContext;
+      const loadResults = await Promise.all(loaders.map((loader) => loader(context)));
+      const loaded = Object.assign({}, ...loadResults);
+      return combineParameters(context, { loaded }) as StoryContext;
     };
 
     // Pull out parameters.args.$ || .argTypes.$.defaultValue into initialArgs
