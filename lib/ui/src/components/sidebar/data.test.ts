@@ -1,5 +1,5 @@
 import { StoriesHash } from '@storybook/api';
-import { collapseDocsOnlyStories, collapseAllStories } from './State';
+import { collapseDocsOnlyStories, collapseAllStories } from './data';
 
 type Item = StoriesHash[keyof StoriesHash];
 
@@ -32,6 +32,7 @@ const a1: Item = {
   isComponent: false,
   isRoot: false,
   parent: 'a',
+  args: {},
 };
 const b: Item = {
   id: 'b',
@@ -52,6 +53,7 @@ const b1: Item = {
   isRoot: false,
   isComponent: false,
   parent: 'b',
+  args: {},
 };
 const b2: Item = {
   id: 'b2',
@@ -62,6 +64,7 @@ const b2: Item = {
   isRoot: false,
   isComponent: false,
   parent: 'b',
+  args: {},
 };
 
 const stories: StoriesHash = { root, a, a1, b, b1, b2 };
@@ -103,6 +106,7 @@ describe('collapse all stories', () => {
         isRoot: false,
         isComponent: true,
         isLeaf: true,
+        args: {},
       },
       b1: {
         id: 'b1',
@@ -114,6 +118,7 @@ describe('collapse all stories', () => {
         isRoot: false,
         isComponent: true,
         isLeaf: true,
+        args: {},
       },
       root: {
         id: 'root',
@@ -147,6 +152,7 @@ describe('collapse all stories', () => {
       isRoot: false,
       parent: 'root',
       children: [],
+      args: {},
     });
   });
 
@@ -180,6 +186,7 @@ describe('collapse all stories', () => {
         isLeaf: true,
         parent: 'root',
         children: [],
+        args: {},
       },
       b1: {
         id: 'b1',
@@ -190,6 +197,7 @@ describe('collapse all stories', () => {
         isComponent: false,
         isRoot: false,
         parent: 'root',
+        args: {},
       },
       root: {
         id: 'root',

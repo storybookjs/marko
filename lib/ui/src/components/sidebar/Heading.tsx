@@ -29,7 +29,7 @@ const BrandArea = styled.div(({ theme }) => ({
 
 const HeadingWrapper = styled.div({
   display: 'flex',
-  alignItems: 'flex-start',
+  alignItems: 'center',
   justifyContent: 'space-between',
   position: 'relative',
 });

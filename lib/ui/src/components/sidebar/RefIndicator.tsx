@@ -6,8 +6,9 @@ import { styled } from '@storybook/theming';
 import { transparentize } from 'polished';
 import { useStorybookApi } from '@storybook/api';
 
-import { getStateType, RefType } from './RefHelpers';
 import { MenuItemIcon } from './Menu';
+import { RefType } from './types';
+import { getStateType } from './utils';
 
 export type ClickHandler = ComponentProps<typeof TooltipLinkList>['links'][number]['onClick'];
 export interface IndicatorIconProps {
@@ -29,25 +30,36 @@ const IndicatorPlacement = styled.aside(({ theme }) => ({
   },
 }));
 
-const IndicatorClickTarget = styled.span(({ theme }) => ({
-  height: 16,
-  width: 16,
+const IndicatorClickTarget = styled.button(({ theme }) => ({
+  height: 21,
+  width: 21,
+  padding: 0,
+  margin: 0,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  background: 'transparent',
+  outline: 'none',
+  border: '1px solid transparent',
+  borderRadius: '100%',
+  cursor: 'pointer',
+  color:
+    theme.base === 'light'
+      ? transparentize(0.3, theme.color.defaultText)
+      : transparentize(0.6, theme.color.defaultText),
 
+  '&:hover': {
+    color: theme.barSelectedColor,
+  },
+  '&:focus': {
+    color: theme.barSelectedColor,
+    borderColor: theme.color.secondary,
+  },
   svg: {
-    height: 12,
-    width: 12,
+    height: 11,
+    width: 11,
     transition: 'all 150ms ease-out',
-    color:
-      theme.base === 'light'
-        ? transparentize(0.3, theme.color.defaultText)
-        : transparentize(0.6, theme.color.defaultText),
-
-    '&:hover': {
-      color: theme.barSelectedColor,
-    },
+    color: 'inherit',
   },
 }));
 
@@ -148,72 +160,75 @@ const CurrentVersion: FunctionComponent<CurrentVersionProps> = ({ url, versions 
   );
 };
 
-export const RefIndicator = forwardRef<
-  HTMLElement,
-  RefType & {
-    state: ReturnType<typeof getStateType>;
-  }
->(({ state, ...ref }, forwardedRef) => {
-  const api = useStorybookApi();
-  const list = useMemo(() => Object.values(ref.stories || {}), [ref.stories]);
-  const componentCount = useMemo(() => list.filter((v) => v.isComponent).length, [list]);
-  const leafCount = useMemo(() => list.filter((v) => v.isLeaf).length, [list]);
+export const RefIndicator = React.memo(
+  forwardRef<HTMLElement, RefType & { state: ReturnType<typeof getStateType> }>(
+    ({ state, ...ref }, forwardedRef) => {
+      const api = useStorybookApi();
+      const list = useMemo(() => Object.values(ref.stories || {}), [ref.stories]);
+      const componentCount = useMemo(() => list.filter((v) => v.isComponent).length, [list]);
+      const leafCount = useMemo(() => list.filter((v) => v.isLeaf).length, [list]);
 
-  const changeVersion = useCallback(
-    ((event, item) => {
-      event.preventDefault();
-      api.changeRefVersion(ref.id, item.href);
-    }) as ClickHandler,
-    []
-  );
+      const changeVersion = useCallback(
+        ((event, item) => {
+          event.preventDefault();
+          api.changeRefVersion(ref.id, item.href);
+        }) as ClickHandler,
+        []
+      );
 
-  return (
-    <IndicatorPlacement ref={forwardedRef}>
-      <WithTooltip
-        placement="bottom-start"
-        trigger="click"
-        tooltip={
-          <MessageWrapper>
-            <Spaced row={0}>
-              {state === 'loading' && <LoadingMessage url={ref.url} />}
-              {(state === 'error' || state === 'empty') && <ErrorOccurredMessage url={ref.url} />}
-              {state === 'ready' && (
-                <ReadyMessage {...{ url: ref.url, componentCount, leafCount }} />
-              )}
-              {state === 'auth' && <LoginRequiredMessage {...ref} />}
-              {ref.type === 'auto-inject' && state !== 'error' && <PerformanceDegradedMessage />}
-              {state !== 'loading' && <ReadDocsMessage />}
-            </Spaced>
-          </MessageWrapper>
-        }
-      >
-        <IndicatorClickTarget>
-          <Icons icon="globe" />
-        </IndicatorClickTarget>
-      </WithTooltip>
+      return (
+        <IndicatorPlacement ref={forwardedRef}>
+          <WithTooltip
+            placement="bottom-start"
+            trigger="click"
+            tooltip={
+              <MessageWrapper>
+                <Spaced row={0}>
+                  {state === 'loading' && <LoadingMessage url={ref.url} />}
+                  {(state === 'error' || state === 'empty') && (
+                    <ErrorOccurredMessage url={ref.url} />
+                  )}
+                  {state === 'ready' && (
+                    <ReadyMessage {...{ url: ref.url, componentCount, leafCount }} />
+                  )}
+                  {state === 'auth' && <LoginRequiredMessage {...ref} />}
+                  {ref.type === 'auto-inject' && state !== 'error' && (
+                    <PerformanceDegradedMessage />
+                  )}
+                  {state !== 'loading' && <ReadDocsMessage />}
+                </Spaced>
+              </MessageWrapper>
+            }
+          >
+            <IndicatorClickTarget>
+              <Icons icon="globe" />
+            </IndicatorClickTarget>
+          </WithTooltip>
 
-      {ref.versions && Object.keys(ref.versions).length ? (
-        <WithTooltip
-          placement="bottom-start"
-          trigger="click"
-          tooltip={
-            <TooltipLinkList
-              links={Object.entries(ref.versions).map(([id, href]) => ({
-                left: href === ref.url ? <MenuItemIcon icon="check" /> : <span />,
-                id,
-                title: id,
-                href,
-                onClick: changeVersion,
-              }))}
-            />
-          }
-        >
-          <CurrentVersion url={ref.url} versions={ref.versions} />
-        </WithTooltip>
-      ) : null}
-    </IndicatorPlacement>
-  );
-});
+          {ref.versions && Object.keys(ref.versions).length ? (
+            <WithTooltip
+              placement="bottom-start"
+              trigger="click"
+              tooltip={
+                <TooltipLinkList
+                  links={Object.entries(ref.versions).map(([id, href]) => ({
+                    left: href === ref.url ? <MenuItemIcon icon="check" /> : <span />,
+                    id,
+                    title: id,
+                    href,
+                    onClick: changeVersion,
+                  }))}
+                />
+              }
+            >
+              <CurrentVersion url={ref.url} versions={ref.versions} />
+            </WithTooltip>
+          ) : null}
+        </IndicatorPlacement>
+      );
+    }
+  )
+);
 
 const ReadyMessage: FunctionComponent<{
   url: string;
