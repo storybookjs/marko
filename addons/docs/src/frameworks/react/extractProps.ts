@@ -9,7 +9,7 @@ import {
 import { Component } from '../../blocks/types';
 import { enhancePropTypesProps } from './propTypes/handleProp';
 import { enhanceTypeScriptProps } from './typeScript/handleProp';
-import { isMemo, isForwardRef } from './lib';
+import { isMemo } from './lib';
 
 export interface PropDefMap {
   [p: string]: PropDef;
