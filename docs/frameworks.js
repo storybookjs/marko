@@ -72,7 +72,7 @@ module.exports = {
           unsupported: ['marko'],
         },
         {
-          name: 'query-params',
+          name: 'queryparams',
           unsupported: [],
         },
         {
