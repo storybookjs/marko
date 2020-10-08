@@ -132,7 +132,7 @@ const ClearIcon = styled(Icons)(({ theme }) => ({
   zIndex: 1,
   background: 'rgba(0,0,0,0.1)',
   borderRadius: 16,
-  color: theme.textMutedColor,
+  color: theme.color.defaultText,
   cursor: 'pointer',
 }));
 
