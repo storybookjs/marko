@@ -100,7 +100,7 @@ Cypress.Commands.add('navigateToStory', (kind, name) => {
   if (name !== 'page') {
     // Section might be collapsed
     cy.get(`#${kindId}`).then(($item) => {
-      if ($item.getAttribute('aria-expanded') === 'false') $item.click();
+      if ($item.attribute('aria-expanded') === 'false') $item.click();
     });
   }
   cy.get(storyLinkId).click();
