@@ -1,3 +1,21 @@
+## 6.1.0-alpha.21 (October 8, 2020)
+
+### Features
+
+- Sidebar: Better search, keyboard shortcuts, and "recently viewed" ([#12601](https://github.com/storybookjs/storybook/pull/12601))
+- Source-loader: Generate sourcemaps ([#12277](https://github.com/storybookjs/storybook/pull/12277))
+- Core: Add apng support ([#12639](https://github.com/storybookjs/storybook/pull/12639))
+
+### Bug Fixes
+
+- Addon-docs: Fix Memo React components in ArgsTable ([#12686](https://github.com/storybookjs/storybook/pull/12686))
+- Core: Fix babel-loader path resolution ([#12536](https://github.com/storybookjs/storybook/pull/12536))
+
+### Maintenance
+
+- Core: Log which CSF file is failing to load ([#12690](https://github.com/storybookjs/storybook/pull/12690))
+- Build: Speed up CI checks ([#12315](https://github.com/storybookjs/storybook/pull/12315))
+
 ## 6.0.26 (October 5, 2020)
 
 ### Bug Fixes
