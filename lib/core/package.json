@@ -20,8 +20,8 @@
   "files": [
     "dist/**/*",
     "dll/**/*",
+    "prebuilt/**/*",
     "types/**/*",
-    "README.md",
     "*.js",
     "*.d.ts",
     "ts3.4/**/*"
