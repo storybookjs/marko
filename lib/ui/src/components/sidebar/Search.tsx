@@ -57,7 +57,7 @@ const SearchIcon = styled(Icons)(({ theme }) => ({
   left: 10,
   zIndex: 1,
   pointerEvents: 'none',
-  color: theme.color.mediumdark,
+  color: theme.textMutedColor,
 }));
 
 const SearchField = styled.div(({ theme }) => ({
@@ -73,7 +73,7 @@ const Input = styled.input(({ theme }) => ({
   height: 28,
   paddingLeft: 28,
   paddingRight: 28,
-  border: `1px solid ${theme.appBorderColor}`,
+  border: `1px solid ${theme.color.mediumdark}66`,
   background: 'transparent',
   borderRadius: 28,
   fontSize: `${theme.typography.size.s1}px`,
@@ -86,7 +86,7 @@ const Input = styled.input(({ theme }) => ({
     background: theme.barBg,
   },
   '&::placeholder': {
-    color: theme.color.mediumdark,
+    color: theme.textMutedColor,
   },
   '&:valid ~ code, &:focus ~ code': {
     display: 'none',
@@ -116,7 +116,7 @@ const FocusKey = styled.code(({ theme }) => ({
   textAlign: 'center',
   fontSize: '11px',
   background: 'rgba(0,0,0,0.1)',
-  color: theme.color.mediumdark,
+  color: theme.textMutedColor,
   borderRadius: 2,
   userSelect: 'none',
   pointerEvents: 'none',

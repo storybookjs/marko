@@ -12,7 +12,7 @@ export const CollapseIcon = styled.span<{ isExpanded: boolean }>(({ theme, isExp
   marginRight: 5,
   borderTop: '3px solid transparent',
   borderBottom: '3px solid transparent',
-  borderLeft: `3px solid ${theme.color.medium}`,
+  borderLeft: `3px solid ${theme.color.mediumdark}99`,
   transform: isExpanded ? 'rotateZ(90deg)' : 'none',
   transition: 'transform .1s ease-out',
 }));
@@ -88,12 +88,12 @@ const LeafNode = styled.a<{
       };
     if (isHighlighted)
       return {
-        color: 'inherit',
+        color: theme.color.defaultText,
         background: `${theme.color.secondary}22`,
         '&:hover, &:focus': { background: `${theme.color.secondary}22` },
       };
     return {
-      color: 'inherit',
+      color: theme.color.defaultText,
       background: 'transparent',
       '&:hover, &:focus': { background: theme.background.hoverable },
     };
@@ -115,7 +115,7 @@ export const Path = styled.span(({ theme }) => ({
   justifyContent: 'start',
   gridAutoColumns: 'auto',
   gridAutoFlow: 'column',
-  color: theme.color.dark,
+  color: theme.textMutedColor,
   fontSize: `${theme.typography.size.s1 - 1}px`,
   '& > span': {
     whiteSpace: 'nowrap',
