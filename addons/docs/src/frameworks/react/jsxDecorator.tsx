@@ -7,6 +7,8 @@ import { addons, StoryContext } from '@storybook/addons';
 import { logger } from '@storybook/client-logger';
 
 import { SourceType, SNIPPET_RENDERED } from '../../shared';
+import { getDocgenSection } from '../../lib/docgen';
+import { isMemo, isForwardRef } from './lib';
 
 type JSXOptions = Options & {
   /** How many wrappers to skip when rendering the jsx */
@@ -91,10 +93,11 @@ export const renderJsx = (code: React.ReactElement, options: JSXOptions) => {
           // To get exotic component names resolving properly
           displayName: (el: any): string =>
             el.type.displayName ||
+            getDocgenSection(el.type, 'displayName') ||
             (el.type.name !== '_default' ? el.type.name : null) ||
             (typeof el.type === 'function' ? 'No Display Name' : null) ||
-            (el.type.$$typeof === Symbol.for('react.forward_ref') ? el.type.render.name : null) ||
-            (el.type.$$typeof === Symbol.for('react.memo') ? el.type.type.name : null) ||
+            (isForwardRef(el.type) ? el.type.render.name : null) ||
+            (isMemo(el.type) ? el.type.type.name : null) ||
             el.type,
         };
 
