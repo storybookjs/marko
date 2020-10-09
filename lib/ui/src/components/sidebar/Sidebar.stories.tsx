@@ -71,3 +71,14 @@ export const WithRefs = () => (
     refs={refs}
   />
 );
+
+export const LoadingWithRefs = () => (
+  <Sidebar
+    storiesConfigured={false}
+    menu={menu}
+    stories={stories}
+    storyId={storyId}
+    refId={refId}
+    refs={refs}
+  />
+);

@@ -138,6 +138,7 @@ export const Sidebar: FunctionComponent<SidebarProps> = React.memo(
                   <Explorer
                     dataset={dataset}
                     selected={selected}
+                    isLoading={isLoading}
                     isBrowsing={!inputHasFocus && !inputValue}
                   />
                 </Swap>
