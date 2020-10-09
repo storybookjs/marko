@@ -98,14 +98,16 @@ Cypress.Commands.add('navigateToStory', (kind, name) => {
   cy.log(`navigateToStory ${kind} ${name}`);
 
   if (name !== 'page') {
-    // Section can be collapsed, click twice ensure expansion
-    cy.get(`#${kindId}`).click();
+    // Section might be collapsed
+    cy.get(`#${kindId}`).then(($item) => {
+      if ($item.attr('aria-expanded') === 'false') $item.click();
+    });
   }
   cy.get(storyLinkId).click();
 
   // assert url changes
   cy.url().should('include', `path=/story/${kindId}--${storyId}`);
-  cy.get(storyLinkId).should('have.class', 'selected');
+  cy.get(storyLinkId).should('have.attr', 'data-selected', 'true');
 
   // A pause is good when switching stories
   // eslint-disable-next-line cypress/no-unnecessary-waiting

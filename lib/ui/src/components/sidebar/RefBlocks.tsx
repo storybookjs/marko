@@ -1,47 +1,18 @@
 import { window, document } from 'global';
-import React, {
-  FunctionComponent,
-  useState,
-  useCallback,
-  Fragment,
-  useContext,
-  ComponentProps,
-} from 'react';
+import React, { FunctionComponent, useState, useCallback, Fragment } from 'react';
 
 import { Icons, WithTooltip, Spaced, Button, Link } from '@storybook/components';
 import { logger } from '@storybook/client-logger';
-import { useStorybookApi } from '@storybook/api';
 import { styled } from '@storybook/theming';
-import { transparentize } from 'polished';
-import { Location } from '@storybook/router';
 
-import { Tree } from './Tree/Tree';
 import { Loader, Contained } from './Loader';
-import { ListItem } from './Tree/ListItem';
-import { ExpanderContext } from './Tree/State';
-
-import { Item, DataSet, BooleanSet } from './RefHelpers';
-
-export type ListitemProps = ComponentProps<typeof ListItem>;
-
-const Section = styled.section();
-
-const RootHeading = styled.div(({ theme }) => ({
-  letterSpacing: '0.35em',
-  textTransform: 'uppercase',
-  fontWeight: theme.typography.weight.black,
-  fontSize: theme.typography.size.s1 - 1,
-  lineHeight: '24px',
-  color: transparentize(0.5, theme.color.defaultText),
-  margin: '0 20px',
-}));
 
 const TextStyle = styled.div(({ theme }) => ({
   fontSize: theme.typography.size.s2 - 1,
   lineHeight: '20px',
   margin: 0,
 }));
-const Text = styled.p(({ theme }) => ({
+const Text = styled.div(({ theme }) => ({
   fontSize: theme.typography.size.s2 - 1,
   lineHeight: '20px',
   margin: 0,
@@ -56,46 +27,6 @@ const Text = styled.p(({ theme }) => ({
     marginBottom: 8,
   },
 }));
-
-const Head: FunctionComponent<ListitemProps> = (props) => {
-  const api = useStorybookApi();
-  const { setExpanded, expandedSet } = useContext(ExpanderContext);
-  const { id, isComponent, childIds, refId } = props;
-
-  const onClick = useCallback(
-    (e) => {
-      e.preventDefault();
-      if (!expandedSet[id] && isComponent && childIds && childIds.length) {
-        api.selectStory(childIds[0], undefined, { ref: refId });
-      }
-      setExpanded((s) => ({ ...s, [id]: !s[id] }));
-    },
-    [id, expandedSet[id]]
-  );
-  return <ListItem onClick={onClick} {...props} href={`#${id}`} />;
-};
-
-const Leaf: FunctionComponent<ListitemProps> = (props) => {
-  const api = useStorybookApi();
-  const { setExpanded } = useContext(ExpanderContext);
-  const { id, refId } = props;
-  const onClick = useCallback(
-    (e) => {
-      e.preventDefault();
-      api.selectStory(id, undefined, { ref: refId });
-      setExpanded((s) => ({ ...s, [id]: !s[id] }));
-    },
-    [id]
-  );
-
-  return (
-    <Location>
-      {({ viewMode }) => (
-        <ListItem onClick={onClick} {...props} href={`?path=/${viewMode}/${id}`} />
-      )}
-    </Location>
-  );
-};
 
 const ErrorDisplay = styled.pre(
   {
@@ -217,11 +148,11 @@ export const AuthBlock: FunctionComponent<{ loginUrl: string; id: string }> = ({
           </Fragment>
         ) : (
           <Fragment>
-            <Text>Browse this secure Storybook</Text>
+            <Text>Sign in to browse this Storybook.</Text>
             <div>
               <Button small gray onClick={open}>
                 <Icons icon="lock" />
-                Log in
+                Sign in
               </Button>
             </div>
           </Fragment>
@@ -294,55 +225,4 @@ export const LoaderBlock: FunctionComponent<{ isMain: boolean }> = ({ isMain }) 
   <Contained>
     <Loader size={isMain ? 17 : 5} />
   </Contained>
-);
-
-const TreeComponents = {
-  Head,
-  Leaf,
-  Branch: Tree,
-  List: styled.div({}),
-};
-export const ContentBlock: FunctionComponent<{
-  others: Item[];
-  dataSet: DataSet;
-  selectedSet: BooleanSet;
-  expandedSet: BooleanSet;
-  roots: Item[];
-}> = ({ others, dataSet, selectedSet, expandedSet, roots }) => (
-  <Fragment>
-    <Spaced row={1.5}>
-      {others.length ? (
-        <Section data-title="categorized" key="categorized">
-          {others.map(({ id }) => (
-            <Tree
-              key={id}
-              depth={0}
-              dataset={dataSet}
-              selected={selectedSet}
-              expanded={expandedSet}
-              root={id}
-              {...TreeComponents}
-            />
-          ))}
-        </Section>
-      ) : null}
-
-      {roots.map(({ id, name, children }) => (
-        <Section data-title={name} key={id}>
-          <RootHeading className="sidebar-subheading">{name}</RootHeading>
-          {children.map((child) => (
-            <Tree
-              key={child}
-              depth={0}
-              dataset={dataSet}
-              selected={selectedSet}
-              expanded={expandedSet}
-              root={child}
-              {...TreeComponents}
-            />
-          ))}
-        </Section>
-      ))}
-    </Spaced>
-  </Fragment>
 );

@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, FunctionComponent } from 'react';
 
 import { Badge } from '@storybook/components';
 import { API } from '@storybook/api';
-import { useTheme, Theme } from '@storybook/theming';
+import { styled, useTheme, Theme } from '@storybook/theming';
 
 import { shortcutToHumanString } from '@storybook/api/shortcut';
 import { MenuItemIcon } from '../components/sidebar/Menu';
@@ -13,8 +13,30 @@ const focusableUIElements = {
   storyPanelRoot: 'storybook-panel-root',
 };
 
-const shortcutToHumanStringIfEnabled = (shortcuts: string[], enableShortcuts: boolean) =>
-  enableShortcuts ? shortcutToHumanString(shortcuts) : null;
+const Key = styled.code(({ theme }) => ({
+  width: 16,
+  height: 16,
+  lineHeight: '17px',
+  textAlign: 'center',
+  fontSize: '11px',
+  background: 'rgba(0,0,0,0.07)',
+  color: theme.color.defaultText,
+  borderRadius: 2,
+  userSelect: 'none',
+  pointerEvents: 'none',
+  '& + &': {
+    marginLeft: 2,
+  },
+}));
+
+const Shortcut: FunctionComponent<{ keys: string[] }> = ({ keys }) => (
+  <>
+    {keys.map((key, index) => (
+      // eslint-disable-next-line react/no-array-index-key
+      <Key key={index}>{shortcutToHumanString([key])}</Key>
+    ))}
+  </>
+);
 
 export const useMenu = (
   api: API,
@@ -34,7 +56,7 @@ export const useMenu = (
       right: api.versionUpdateAvailable() && <Badge status="positive">Update</Badge>,
       left: <MenuItemIcon />,
     }),
-    [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
+    [api, enableShortcuts, shortcutKeys]
   );
 
   const releaseNotes = useMemo(
@@ -44,7 +66,7 @@ export const useMenu = (
       onClick: () => api.navigateToSettingsPage('/settings/release-notes'),
       left: <MenuItemIcon />,
     }),
-    [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
+    [api, enableShortcuts, shortcutKeys]
   );
 
   const shortcuts = useMemo(
@@ -52,13 +74,13 @@ export const useMenu = (
       id: 'shortcuts',
       title: 'Keyboard shortcuts',
       onClick: () => api.navigateToSettingsPage('/settings/shortcuts'),
-      right: shortcutToHumanStringIfEnabled(shortcutKeys.shortcutsPage, enableShortcuts),
+      right: enableShortcuts ? <Shortcut keys={shortcutKeys.shortcutsPage} /> : null,
       left: <MenuItemIcon />,
       style: {
         borderBottom: `4px solid ${theme.appBorderColor}`,
       },
     }),
-    [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
+    [api, enableShortcuts, shortcutKeys]
   );
 
   const sidebarToggle = useMemo(
@@ -66,10 +88,10 @@ export const useMenu = (
       id: 'S',
       title: 'Show sidebar',
       onClick: () => api.toggleNav(),
-      right: shortcutToHumanStringIfEnabled(shortcutKeys.toggleNav, enableShortcuts),
+      right: enableShortcuts ? <Shortcut keys={shortcutKeys.toggleNav} /> : null,
       left: showNav ? <MenuItemIcon icon="check" /> : <MenuItemIcon />,
     }),
-    [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys, showNav]
+    [api, enableShortcuts, shortcutKeys, showNav]
   );
 
   const addonsToggle = useMemo(
@@ -77,10 +99,10 @@ export const useMenu = (
       id: 'A',
       title: 'Show addons',
       onClick: () => api.togglePanel(),
-      right: shortcutToHumanStringIfEnabled(shortcutKeys.togglePanel, enableShortcuts),
+      right: enableShortcuts ? <Shortcut keys={shortcutKeys.togglePanel} /> : null,
       left: showPanel ? <MenuItemIcon icon="check" /> : <MenuItemIcon />,
     }),
-    [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys, showPanel]
+    [api, enableShortcuts, shortcutKeys, showPanel]
   );
 
   const addonsOrientationToggle = useMemo(
@@ -88,10 +110,10 @@ export const useMenu = (
       id: 'D',
       title: 'Change addons orientation',
       onClick: () => api.togglePanelPosition(),
-      right: shortcutToHumanStringIfEnabled(shortcutKeys.panelPosition, enableShortcuts),
+      right: enableShortcuts ? <Shortcut keys={shortcutKeys.panelPosition} /> : null,
       left: <MenuItemIcon />,
     }),
-    [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
+    [api, enableShortcuts, shortcutKeys]
   );
 
   const fullscreenToggle = useMemo(
@@ -99,10 +121,10 @@ export const useMenu = (
       id: 'F',
       title: 'Go full screen',
       onClick: () => api.toggleFullscreen(),
-      right: shortcutToHumanStringIfEnabled(shortcutKeys.fullScreen, enableShortcuts),
+      right: enableShortcuts ? <Shortcut keys={shortcutKeys.fullScreen} /> : null,
       left: isFullscreen ? 'check' : <MenuItemIcon />,
     }),
-    [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys, isFullscreen]
+    [api, enableShortcuts, shortcutKeys, isFullscreen]
   );
 
   const searchToggle = useMemo(
@@ -110,10 +132,10 @@ export const useMenu = (
       id: '/',
       title: 'Search',
       onClick: () => api.focusOnUIElement(focusableUIElements.storySearchField),
-      right: shortcutToHumanStringIfEnabled(shortcutKeys.search, enableShortcuts),
+      right: enableShortcuts ? <Shortcut keys={shortcutKeys.search} /> : null,
       left: <MenuItemIcon />,
     }),
-    [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
+    [api, enableShortcuts, shortcutKeys]
   );
 
   const up = useMemo(
@@ -121,10 +143,10 @@ export const useMenu = (
       id: 'up',
       title: 'Previous component',
       onClick: () => api.jumpToComponent(-1),
-      right: shortcutToHumanStringIfEnabled(shortcutKeys.prevComponent, enableShortcuts),
+      right: enableShortcuts ? <Shortcut keys={shortcutKeys.prevComponent} /> : null,
       left: <MenuItemIcon />,
     }),
-    [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
+    [api, enableShortcuts, shortcutKeys]
   );
 
   const down = useMemo(
@@ -132,10 +154,10 @@ export const useMenu = (
       id: 'down',
       title: 'Next component',
       onClick: () => api.jumpToComponent(1),
-      right: shortcutToHumanStringIfEnabled(shortcutKeys.nextComponent, enableShortcuts),
+      right: enableShortcuts ? <Shortcut keys={shortcutKeys.nextComponent} /> : null,
       left: <MenuItemIcon />,
     }),
-    [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
+    [api, enableShortcuts, shortcutKeys]
   );
 
   const prev = useMemo(
@@ -143,10 +165,10 @@ export const useMenu = (
       id: 'prev',
       title: 'Previous story',
       onClick: () => api.jumpToStory(-1),
-      right: shortcutToHumanStringIfEnabled(shortcutKeys.prevStory, enableShortcuts),
+      right: enableShortcuts ? <Shortcut keys={shortcutKeys.prevStory} /> : null,
       left: <MenuItemIcon />,
     }),
-    [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
+    [api, enableShortcuts, shortcutKeys]
   );
 
   const next = useMemo(
@@ -154,10 +176,10 @@ export const useMenu = (
       id: 'next',
       title: 'Next story',
       onClick: () => api.jumpToStory(1),
-      right: shortcutToHumanStringIfEnabled(shortcutKeys.nextStory, enableShortcuts),
+      right: enableShortcuts ? <Shortcut keys={shortcutKeys.nextStory} /> : null,
       left: <MenuItemIcon />,
     }),
-    [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
+    [api, enableShortcuts, shortcutKeys]
   );
 
   const collapse = useMemo(
@@ -165,10 +187,10 @@ export const useMenu = (
       id: 'collapse',
       title: 'Collapse all',
       onClick: () => api.collapseAll(),
-      right: enableShortcuts ? shortcutToHumanString(shortcutKeys.collapseAll) : '',
+      right: enableShortcuts ? <Shortcut keys={shortcutKeys.collapseAll} /> : null,
       left: <MenuItemIcon />,
     }),
-    [api, shortcutToHumanStringIfEnabled, enableShortcuts, shortcutKeys]
+    [api, enableShortcuts, shortcutKeys]
   );
 
   return useMemo(
