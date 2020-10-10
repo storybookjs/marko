@@ -1,3 +1,14 @@
+## 6.1.0-alpha.22 (October 10, 2020)
+
+### Features
+
+- Angular: Choose project used by Storybook ([#12565](https://github.com/storybookjs/storybook/pull/12565))
+
+### Bug Fixes
+
+- Composition: Fix incorrect ref type ([#12709](https://github.com/storybookjs/storybook/pull/12709))
+- Addon-knobs: Fix uncontrolled to controlled warning for booleans ([#12719](https://github.com/storybookjs/storybook/pull/12719))
+
 ## 6.1.0-alpha.21 (October 8, 2020)
 
 ### Features
