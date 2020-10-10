@@ -38,7 +38,7 @@ We can also set a loader for **all stories** via the `loaders` export of your [`
 
 <!-- prettier-ignore-end -->
 
-In this example, we load a "current user" that is available as `loaded.currentUser` for all stories in the storybook.
+In this example, we load a "current user" that is available as `loaded.currentUser` for all stories.
 
 ## Loader inheritance
 
@@ -49,3 +49,10 @@ All loaders, defined at all levels that apply to a story will run whenever that 
 - Global loaders, in the order they are defined
 - Component loaders, in the order they are defined
 - Story loaders, in the order they are defined.
+
+## Known limitations
+
+Loaders have the following known limitations:
+
+- They are not yet compatible with the storyshots addon ([#12703](https://github.com/storybookjs/storybook/issues/12703)).
+- They are not yet compatible with inline-rendered stories in Storybook Docs ([#12726](https://github.com/storybookjs/storybook/issues/12726)).
