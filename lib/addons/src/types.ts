@@ -24,7 +24,8 @@ export type ViewMode = 'story' | 'docs';
 export interface Parameters {
   fileName?: string;
   options?: OptionsParameter;
-  layout?: 'centered' | 'fullscreen' | 'padded';
+  /** The layout property defines basic styles added to the preview body where the story is rendered. If you pass 'none', no styles are applied. */
+  layout?: 'centered' | 'fullscreen' | 'padded' | 'none';
   docsOnly?: boolean;
   [key: string]: any;
 }
