@@ -167,12 +167,10 @@ const addRequiredDeps = async ({ cwd, additionalDeps }: Options) => {
     if (additionalDeps && additionalDeps.length > 0) {
       await exec(`yarn add -D ${additionalDeps.join(' ')}`, {
         cwd,
-        silent: true,
       });
     } else {
       await exec(`yarn install`, {
         cwd,
-        silent: true,
       });
     }
   } catch (e) {
