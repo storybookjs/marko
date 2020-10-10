@@ -13,7 +13,13 @@ import {
   STORY_RENDERED,
 } from '@storybook/core-events';
 import { toId } from '@storybook/csf';
-import addons, { StoryKind, StoryName, Parameters } from '@storybook/addons';
+import addons, {
+  StoryFn,
+  StoryKind,
+  StoryName,
+  Parameters,
+  LoaderFunction,
+} from '@storybook/addons';
 import ReactDOM from 'react-dom';
 
 import { StoryRenderer } from './StoryRenderer';
@@ -29,7 +35,7 @@ jest.mock('@storybook/client-logger', () => ({
 }));
 
 function prepareRenderer() {
-  const render = jest.fn();
+  const render = jest.fn(({ storyFn }) => storyFn());
   const channel = createChannel({ page: 'preview' });
   addons.setChannel(channel);
   const storyStore = new StoryStore({ channel: null });
@@ -50,11 +56,13 @@ function addStory(
   storyStore: StoryStore,
   kind: StoryKind,
   name: StoryName,
-  parameters: Parameters = {}
+  parameters: Parameters = {},
+  loaders: LoaderFunction[],
+  storyFn: StoryFn = jest.fn()
 ) {
   const id = toId(kind, name);
   storyStore.addStory(
-    { id, kind, name, storyFn: jest.fn(), parameters },
+    { id, kind, name, storyFn, parameters, loaders },
     {
       applyDecorators: defaultDecorateStory,
     }
@@ -66,10 +74,13 @@ function addAndSelectStory(
   storyStore: StoryStore,
   kind: StoryKind,
   name: StoryName,
-  parameters: Parameters = {}
+  parameters: Parameters = {},
+  loaders: LoaderFunction[] = undefined
 ) {
-  const id = addStory(storyStore, kind, name, parameters);
+  const storyFn = jest.fn();
+  const id = addStory(storyStore, kind, name, parameters, loaders, storyFn);
   storyStore.setSelection({ storyId: id, viewMode: 'story' });
+  return storyFn;
 }
 
 describe('core.preview.StoryRenderer', () => {
@@ -110,6 +121,78 @@ describe('core.preview.StoryRenderer', () => {
     expect(onStoryRendered).toHaveBeenCalledWith('a--1');
   });
 
+  describe('loaders', () => {
+    it('loads data asynchronously and passes to stories', async () => {
+      const { channel, storyStore, renderer } = prepareRenderer();
+
+      const onStoryRendered = jest.fn();
+      channel.on(STORY_RENDERED, onStoryRendered);
+
+      const loaders = [async () => new Promise((r) => setTimeout(() => r({ foo: 7 }), 100))];
+      const storyFn = addAndSelectStory(storyStore, 'a', '1', {}, loaders);
+
+      await renderer.renderCurrentStory(false);
+      expect(storyFn).toHaveBeenCalledWith(
+        {},
+        expect.objectContaining({
+          id: 'a--1',
+          kind: 'a',
+          name: '1',
+          loaded: { foo: 7 },
+        })
+      );
+
+      expect(onStoryRendered).toHaveBeenCalledWith('a--1');
+    });
+    it('later loaders override earlier loaders', async () => {
+      const { channel, storyStore, renderer } = prepareRenderer();
+
+      const onStoryRendered = jest.fn();
+      channel.on(STORY_RENDERED, onStoryRendered);
+
+      const loaders = [
+        async () => new Promise((r) => setTimeout(() => r({ foo: 7 }), 100)),
+        async () => new Promise((r) => setTimeout(() => r({ foo: 3 }), 50)),
+      ];
+      const storyFn = addAndSelectStory(storyStore, 'a', '1', {}, loaders);
+
+      await renderer.renderCurrentStory(false);
+      expect(storyFn).toHaveBeenCalledWith(
+        {},
+        expect.objectContaining({
+          id: 'a--1',
+          kind: 'a',
+          name: '1',
+          loaded: { foo: 3 },
+        })
+      );
+
+      expect(onStoryRendered).toHaveBeenCalledWith('a--1');
+    });
+    it('more specific loaders override more generic loaders', async () => {
+      const { channel, storyStore, renderer } = prepareRenderer();
+
+      const onStoryRendered = jest.fn();
+      channel.on(STORY_RENDERED, onStoryRendered);
+
+      storyStore.addGlobalMetadata({ loaders: [async () => ({ foo: 1, bar: 1, baz: 1 })] });
+      storyStore.addKindMetadata('a', { loaders: [async () => ({ foo: 3, bar: 3 })] });
+      const storyFn = addAndSelectStory(storyStore, 'a', '1', {}, [async () => ({ foo: 5 })]);
+
+      await renderer.renderCurrentStory(false);
+      expect(storyFn).toHaveBeenCalledWith(
+        {},
+        expect.objectContaining({
+          id: 'a--1',
+          kind: 'a',
+          name: '1',
+          loaded: { foo: 5, bar: 3, baz: 1 },
+        })
+      );
+
+      expect(onStoryRendered).toHaveBeenCalledWith('a--1');
+    });
+  });
   describe('errors', () => {
     it('renders an error if a config error is set on the store', async () => {
       const { render, storyStore, renderer } = prepareRenderer();

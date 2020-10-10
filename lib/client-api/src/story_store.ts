@@ -361,7 +361,7 @@ export default class StoryStore {
       ...kindMetadata.decorators,
       ...this._globalMetadata.decorators,
     ];
-    const loaders = [...storyLoaders, ...kindMetadata.loaders, ...this._globalMetadata.loaders];
+    const loaders = [...this._globalMetadata.loaders, ...kindMetadata.loaders, ...storyLoaders];
 
     const finalStoryFn = (context: StoryContext) => {
       const { passArgsFirst = true } = context.parameters;
