@@ -1,0 +1,26 @@
+```ts
+// button.stories.ts
+
+import { ButtonComponent } from './button.component';
+
+// Note: To see the decorator applied to your component's stories you'll need to include the template key with the component's selector.
+
+export const Primary: Story<ButtonComponent> = () => ({
+  component: ButtonComponent,
+  moduleMetadata: {
+    declarations: [ButtonComponent],
+  },
+  template: '<app-button label="Submit"></app-button>',
+});
+
+Primary.decorators = [
+  (storyFunc) => {
+    const story = storyFunc();
+
+    return {
+      ...story,
+      template: `<div style="margin: 3em">${story.template}</div>`,
+    };
+  },
+];
+```
