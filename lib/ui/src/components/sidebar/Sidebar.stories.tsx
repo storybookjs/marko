@@ -1,18 +1,24 @@
 import React from 'react';
 
-import Sidebar from './Sidebar';
+import { Sidebar } from './Sidebar';
 import { standardData as standardHeaderData } from './Heading.stories';
 import { mockDataset } from './mockdata';
-import { RefType } from './RefHelpers';
+import { DEFAULT_REF_ID } from './data';
+import { RefType } from './types';
 
 export default {
   component: Sidebar,
   title: 'UI/Sidebar/Sidebar',
   excludeStories: /.*Data$/,
+  parameters: { layout: 'fullscreen' },
+  decorators: [
+    (storyFn: any) => <div style={{ padding: '0 20px', maxWidth: '230px' }}>{storyFn()}</div>,
+  ],
 };
 
 const { menu } = standardHeaderData;
 const stories = mockDataset.withRoot;
+const refId = DEFAULT_REF_ID;
 const storyId = '1-12-121';
 
 export const simpleData = { menu, stories, storyId };
@@ -29,15 +35,39 @@ const refs: Record<string, RefType> = {
   },
 };
 
-export const simple = () => (
-  <Sidebar storiesConfigured menu={menu} stories={stories} storyId={storyId} refs={{}} />
+export const Simple = () => (
+  <Sidebar
+    storiesConfigured
+    menu={menu}
+    stories={stories}
+    storyId={storyId}
+    refId={refId}
+    refs={{}}
+  />
 );
-export const isLoading = () => (
-  <Sidebar storiesConfigured={false} menu={menu} stories={{}} isLoading refs={{}} />
+
+export const Loading = () => (
+  <Sidebar
+    storiesConfigured={false}
+    menu={menu}
+    stories={{}}
+    storyId={storyId}
+    refId={refId}
+    refs={{}}
+  />
 );
-export const isEmpty = () => (
-  <Sidebar storiesConfigured menu={menu} stories={{}} isLoading refs={{}} />
+
+export const Empty = () => (
+  <Sidebar storiesConfigured menu={menu} stories={{}} storyId={storyId} refId={refId} refs={{}} />
 );
-export const withRefs = () => (
-  <Sidebar storiesConfigured menu={menu} stories={stories} isLoading refs={refs} />
+
+export const WithRefs = () => (
+  <Sidebar
+    storiesConfigured
+    menu={menu}
+    stories={stories}
+    storyId={storyId}
+    refId={refId}
+    refs={refs}
+  />
 );

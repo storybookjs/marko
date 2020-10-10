@@ -16,13 +16,20 @@ export const Img = styled.img({
   maxWidth: '100%',
 });
 
-export const LogoLink = styled.a({
-  display: 'block',
-  width: '100%',
+export const LogoLink = styled.a(({ theme }) => ({
+  display: 'inline-block',
   height: '100%',
+  margin: '-3px -4px',
+  padding: '2px 3px',
+  border: '1px solid transparent',
+  borderRadius: 3,
   color: 'inherit',
   textDecoration: 'none',
-});
+  '&:focus': {
+    outline: 0,
+    borderColor: theme.color.secondary,
+  },
+}));
 
 export const Brand = withTheme(
   ({
