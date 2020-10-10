@@ -7,6 +7,7 @@ import { Filters } from './ColorFilters';
 const iframeId = 'storybook-preview-iframe';
 
 const baseList = [
+  'blurred vision',
   'protanopia',
   'protanomaly',
   'deuteranopia',
@@ -23,6 +24,9 @@ type Filter = typeof baseList[number] | null;
 const getFilter = (filter: Filter) => {
   if (!filter) {
     return 'none';
+  }
+  if (filter === 'blurred vision') {
+    return 'blur(2px)';
   }
   if (filter === 'mono') {
     return 'grayscale(100%)';
@@ -87,7 +91,7 @@ const getColorList = (active: Filter, set: (i: Filter) => void): Link[] => [
   })),
 ];
 
-export const ColorBlindness: FunctionComponent = () => {
+export const VisionDeficiency: FunctionComponent = () => {
   const [filter, setFilter] = useState<Filter>(null);
 
   return (
@@ -114,7 +118,7 @@ export const ColorBlindness: FunctionComponent = () => {
         closeOnClick
         onDoubleClick={() => setFilter(null)}
       >
-        <IconButton key="filter" active={!!filter} title="Color Blindness Emulation">
+        <IconButton key="filter" active={!!filter} title="Vision Deficiency Emulation">
           <Icons icon="mirror" />
         </IconButton>
       </WithTooltip>
