@@ -6,7 +6,7 @@ Storybook has built-in Typescript support, so your Typescript project should wor
 
 ### Default configuration
 
-The base Typescript configuration uses [`babel-loader`](https://webpack.js.org/loaders/babel-loader/) for Typescript transpilation, and optionally [`fork-ts-checker-webpack-plugin`](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin/blob/v4.1.6/README.md#options) for checking.
+The base Typescript configuration uses [`babel-loader`](https://webpack.js.org/loaders/babel-loader/) for Typescript transpilation, and optionally <a href="https://github.com/TypeStrong/fork-ts-checker-webpack-plugin/blob/v4.1.6/README.md#options"><code>fork-ts-checker-webpack-plugin</code></a> for checking.
 
 Each framework uses the base configuration unless otherwise specified:
 
@@ -33,6 +33,6 @@ The following code snippets shows the fields for you to use with TypeScript:
 | Field                            | Framework | Description                                                                                 | Type                                                                                                   |
 | :------------------------------- | :-------- | :------------------------------------------------------------------------------------------ | :----------------------------------------------------------------------------------------------------- |
 | **check**                        | All       | Optionally run fork-ts-checker-webpack-plugin                                               | boolean                                                                                                |
-| **checkOptions**                 | All       | Options to pass to fork-ts-checker-webpack-plugin if it's enabled                           | [See docs](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin/blob/v4.1.6/README.md#options) |
+| **checkOptions**                 | All       | Options to pass to fork-ts-checker-webpack-plugin if it's enabled                           | <a href="https://github.com/TypeStrong/fork-ts-checker-webpack-plugin/blob/v4.1.6/README.md#options">See Docs</a> |
 | **reactDocgen**                  | React     | Which react docgen processor to run: `"react-docgen-typescript"`, `"react-docgen"`, `false` | string or false                                                                                        |
 | **reactDocgenTypescriptOptions** | React     | Options to pass to react-docgen-typescript-plugin if react-docgen-typescript is enabled.    | [See docs](https://github.com/hipstersmoothie/react-docgen-typescript-plugin)                          |
