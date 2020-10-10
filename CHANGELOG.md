@@ -2,7 +2,7 @@
 
 ### Features
 
-- Sidebar: Better search, keyboard shortcuts, and "recently viewed" ([#12601](https://github.com/storybookjs/storybook/pull/12601))
+- Sidebar: Better search, keyboard shortcuts, "recently viewed" ([#12601](https://github.com/storybookjs/storybook/pull/12601))
 - Source-loader: Generate sourcemaps ([#12277](https://github.com/storybookjs/storybook/pull/12277))
 - Core: Add apng support ([#12639](https://github.com/storybookjs/storybook/pull/12639))
 
