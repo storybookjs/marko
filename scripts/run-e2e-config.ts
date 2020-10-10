@@ -17,7 +17,7 @@ const baseAngular: Parameters = {
   version: 'latest',
   generator: [
     `yarn add @angular/cli@{{version}} --no-lockfile --non-interactive --silent --no-progress`,
-    `npx ng new {{name}}-{{version}} --routing=true --minimal=true --style=scss --skipInstall=true --strict`,
+    `yarn ng new {{name}}-{{version}} --routing=true --minimal=true --style=scss --skipInstall=true --strict`,
   ].join(' && '),
   additionalDeps: ['react', 'react-dom'],
 };
