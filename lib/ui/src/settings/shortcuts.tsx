@@ -179,7 +179,7 @@ class ShortcutsScreen extends Component<ShortcutsScreenProps, ShortcutsScreenSta
       return false;
     }
 
-    // Check we don't match any other shortucts
+    // Check we don't match any other shortcuts
     const error = !!Object.entries(shortcutKeys).find(
       ([feature, { shortcut: existingShortcut }]) =>
         feature !== activeFeature &&

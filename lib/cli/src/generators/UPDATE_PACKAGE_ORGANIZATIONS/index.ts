@@ -54,7 +54,7 @@ function updateSourceCode(parser: string) {
   const jscodeshiftPath = path.dirname(require.resolve('jscodeshift'));
   const jscodeshiftCommand = path.join(jscodeshiftPath, 'bin', 'jscodeshift.sh');
 
-  ['update-organisation-name.js', 'move-buildin-addons.js'].forEach((codemod) => {
+  ['update-organisation-name.js', 'move-builtin-addons.js'].forEach((codemod) => {
     const codemodPath = path.join(
       path.dirname(require.resolve('@storybook/codemod')),
       'transforms',

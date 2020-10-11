@@ -5,6 +5,7 @@ import { readdir as readdirRaw, readFileSync } from 'fs';
 import { join } from 'path';
 
 import { getDeployables } from './utils/list-examples';
+import { filterDataForCurrentCircleCINode } from './utils/concurrency';
 
 const readdir = promisify(readdirRaw);
 
@@ -79,28 +80,13 @@ const handleExamples = async (deployables) => {
 const run = async () => {
   const examples = await readdir(p(['examples']));
 
-  const { length } = examples;
-  const [a, b] = [process.env.CIRCLE_NODE_INDEX || 0, process.env.CIRCLE_NODE_TOTAL || 1];
-  const step = Math.ceil(length / b);
-  const offset = step * a;
+  const list = filterDataForCurrentCircleCINode(examples);
 
-  const list = examples.slice().splice(offset, step);
   const deployables = getDeployables(list, hasChromaticAppCode);
 
   if (deployables.length) {
-    logger.log(`will build: ${deployables.join(', ')}`);
+    logger.log(`🖼 Will run chromatics for: ${deployables.join(', ')}`);
     await handleExamples(deployables);
-  }
-
-  if (
-    deployables.length &&
-    (process.env.CIRCLE_NODE_INDEX === undefined ||
-      process.env.CIRCLE_NODE_INDEX === '0' ||
-      process.env.CIRCLE_NODE_INDEX === 0)
-  ) {
-    logger.log('-------');
-    logger.log('✅ done');
-    logger.log('-------');
   }
 };
 

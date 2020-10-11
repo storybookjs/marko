@@ -317,6 +317,32 @@ describe('type', () => {
     expect(type.summary).toBe('"minimum" | "maximum" | UserSize');
   });
 
+  it('removes a leading | if raw union value is used', () => {
+    const docgenInfo = createDocgenInfo({
+      flowType: {
+        name: 'union',
+        raw: '| "minimum" | "maximum" | UserSize',
+      },
+    });
+
+    const { type } = createFlowPropDef(PROP_NAME, docgenInfo);
+
+    expect(type.summary).toBe('"minimum" | "maximum" | UserSize');
+  });
+
+  it('even removes extra spaces after a leading | if raw union value is used', () => {
+    const docgenInfo = createDocgenInfo({
+      flowType: {
+        name: 'union',
+        raw: '|     "minimum" | "maximum" | UserSize',
+      },
+    });
+
+    const { type } = createFlowPropDef(PROP_NAME, docgenInfo);
+
+    expect(type.summary).toBe('"minimum" | "maximum" | UserSize');
+  });
+
   it('should support intersection', () => {
     const docgenInfo = createDocgenInfo({
       flowType: {

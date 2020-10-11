@@ -17,7 +17,7 @@ const baseAngular: Parameters = {
   version: 'latest',
   generator: [
     `yarn add @angular/cli@{{version}} --no-lockfile --non-interactive --silent --no-progress`,
-    `npx ng new {{name}}-{{version}} --routing=true --minimal=true --style=scss --skipInstall=true --strict`,
+    `yarn ng new {{name}}-{{version}} --routing=true --minimal=true --style=scss --skipInstall=true --strict`,
   ].join(' && '),
   additionalDeps: ['react', 'react-dom'],
 };
@@ -137,7 +137,11 @@ export const react_typescript: Parameters = {
 export const cra: Parameters = {
   name: 'cra',
   version: 'latest',
-  generator: 'npx create-react-app@{{version}} {{name}}-{{version}}',
+  generator: [
+    'npx create-react-app@{{version}} {{name}}-{{version}}',
+    'cd {{name}}-{{version}}',
+    'echo "FAST_REFRESH=true" > .env',
+  ].join(' && '),
 };
 
 export const cra_typescript: Parameters = {

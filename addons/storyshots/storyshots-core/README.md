@@ -445,7 +445,7 @@ initStoryshots({
 });
 ```
 
-Or, as a more complex example, if we have a package in our `lerna` project called `app` with the path `./packages/app/src/__tests__/storsyhots.js` and the storybook config directory `./packages/app/.storybook`:
+Or, as a more complex example, if we have a package in our `lerna` project called `app` with the path `./packages/app/src/__tests__/storyshots.js` and the storybook config directory `./packages/app/.storybook`:
 
 ```js
 import path from 'path';

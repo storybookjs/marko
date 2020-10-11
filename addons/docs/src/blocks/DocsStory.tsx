@@ -22,13 +22,18 @@ export const DocsStory: FunctionComponent<DocsStoryProps> = ({
   name,
   expanded = true,
   withToolbar = false,
-  parameters,
+  parameters = {},
 }) => {
-  let description = expanded && parameters?.docs?.description?.story;
-  if (!description) {
-    description = parameters?.docs?.storyDescription;
-    if (description) warnStoryDescription();
+  let description;
+  const { docs } = parameters;
+  if (expanded && docs) {
+    description = docs.description?.story;
+    if (!description) {
+      description = docs.storyDescription;
+      if (description) warnStoryDescription();
+    }
   }
+
   const subheading = expanded && name;
 
   return (

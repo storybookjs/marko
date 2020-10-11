@@ -7,21 +7,11 @@ import { Heading } from './Heading';
 export default {
   component: Heading,
   title: 'UI/Sidebar/Heading',
-  decorators: [
-    (storyFn: any) => (
-      <div
-        style={{
-          maxWidth: '240px',
-        }}
-      >
-        {storyFn()}
-      </div>
-    ),
-  ],
   excludeStories: /.*Data$/,
-  parameters: {
-    layout: 'fullscreen',
-  },
+  parameters: { layout: 'fullscreen' },
+  decorators: [
+    (storyFn: any) => <div style={{ padding: '0 20px', maxWidth: '230px' }}>{storyFn()}</div>,
+  ],
 };
 
 const menuItems = [

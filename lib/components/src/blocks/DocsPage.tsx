@@ -50,6 +50,8 @@ export const DocsWrapper = styled.div<{}>(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   padding: '4rem 20px',
+  minHeight: '100vh',
+  boxSizing: 'border-box',
 
   [`@media (min-width: ${breakpoint}px)`]: {},
 }));

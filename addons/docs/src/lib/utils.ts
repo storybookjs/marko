@@ -12,6 +12,9 @@ export function isTooLongForDefaultValueSummary(value: string): boolean {
 }
 
 export function createSummaryValue(summary: string, detail?: string): PropSummaryValue {
+  if (summary === detail) {
+    return { summary };
+  }
   return { summary, detail };
 }
 

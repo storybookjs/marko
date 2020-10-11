@@ -1,16 +1,18 @@
-import React, { FunctionComponent, useMemo, useState, useCallback, Fragment } from 'react';
+import { DOCS_MODE } from 'global';
+import React, { FunctionComponent, useMemo } from 'react';
 
 import { styled } from '@storybook/theming';
-import { ScrollArea, Placeholder, Spaced } from '@storybook/components';
+import { ScrollArea, Spaced } from '@storybook/components';
 import { StoriesHash, State } from '@storybook/api';
 
 import { Heading } from './Heading';
 
+import { DEFAULT_REF_ID, collapseAllStories, collapseDocsOnlyStories } from './data';
+import { Explorer } from './Explorer';
 import { Search } from './Search';
-import { filteredLength } from './Tree/utils';
-
-import { Ref } from './Refs';
-import { RefType, Refs } from './RefHelpers';
+import { SearchResults } from './SearchResults';
+import { Refs, CombinedDataset, Selection } from './types';
+import { useLastViewed } from './useLastViewed';
 
 const Container = styled.nav({
   position: 'absolute',
@@ -37,57 +39,30 @@ const CustomScrollArea = styled(ScrollArea)({
   padding: 20,
 });
 
-const Hr = styled.hr(({ theme }) => ({
-  border: '0 none',
-  height: 0,
-  marginBottom: 0,
-  borderTop: `1px solid ${theme.appBorderColor}`,
-}));
-
-export interface SidebarProps {
-  stories: StoriesHash;
-  storiesConfigured: boolean;
-  storiesFailed?: Error;
-  refs: State['refs'];
-  menu: any[];
-  storyId?: string;
-  menuHighlighted?: boolean;
-  isLoading?: boolean;
-}
-
-const useFilterState = (initial: string) => {
-  const [state, setState] = useState(initial);
-  const changeFilter = useCallback((value: string) => {
-    setState(value);
-  }, []);
-
-  const value = state.length > 1 ? state : '';
-
-  return [value, changeFilter] as [typeof state, typeof changeFilter];
-};
-
-const useSearchResults = (refsList: [string, RefType][], filter: string) => {
-  const refsLengths = useMemo(
-    () => refsList.map(([k, i]) => filteredLength(i.stories || {}, filter), 0),
-    [refsList, filter]
-  );
-  const refsTotal = useMemo(() => refsLengths.reduce((acc, i) => acc + i, 0), [refsList, filter]);
-
-  return { total: refsTotal || 0, list: refsLengths };
-};
+const Swap = React.memo<{ children: React.ReactNode; condition: boolean }>(
+  ({ children, condition }) => {
+    const [a, b] = React.Children.toArray(children);
+    return (
+      <>
+        <div style={{ display: condition ? 'block' : 'none' }}>{a}</div>
+        <div style={{ display: condition ? 'none' : 'block' }}>{b}</div>
+      </>
+    );
+  }
+);
 
 const useCombination = (
   stories: StoriesHash,
   ready: boolean,
   error: Error | undefined,
   refs: Refs
-) => {
-  const merged = useMemo<Refs>(
+): CombinedDataset => {
+  const hash = useMemo(
     () => ({
-      storybook_internal: {
+      [DEFAULT_REF_ID]: {
         stories,
         title: null,
-        id: 'storybook_internal',
+        id: DEFAULT_REF_ID,
         url: 'iframe.html',
         ready,
         error,
@@ -96,51 +71,81 @@ const useCombination = (
     }),
     [refs, stories]
   );
-
-  return useMemo(() => Object.entries(merged), [merged]);
+  return useMemo(() => ({ hash, entries: Object.entries(hash) }), [hash]);
 };
 
-const Sidebar: FunctionComponent<SidebarProps> = ({
-  storyId,
-  stories,
-  storiesConfigured,
-  storiesFailed,
-  menu,
-  menuHighlighted = false,
-  refs = {},
-}) => {
-  const [filter, setFilter] = useFilterState('');
-  const combined = useCombination(stories, storiesConfigured, storiesFailed, refs);
-  const { total, list } = useSearchResults(combined, filter);
+export interface SidebarProps {
+  stories: StoriesHash;
+  storiesConfigured: boolean;
+  storiesFailed?: Error;
+  refs: State['refs'];
+  menu: any[];
+  storyId?: string;
+  refId?: string;
+  menuHighlighted?: boolean;
+  enableShortcuts?: boolean;
+}
 
-  const resultLess = total === 0 && filter;
+export const Sidebar: FunctionComponent<SidebarProps> = React.memo(
+  ({
+    storyId = null,
+    refId = DEFAULT_REF_ID,
+    stories: storiesHash,
+    storiesConfigured,
+    storiesFailed,
+    menu,
+    menuHighlighted = false,
+    enableShortcuts = true,
+    refs = {},
+  }) => {
+    const selected: Selection = useMemo(() => storyId && { storyId, refId }, [storyId, refId]);
+    const stories = useMemo(
+      () => (DOCS_MODE ? collapseAllStories : collapseDocsOnlyStories)(storiesHash),
+      [DOCS_MODE, storiesHash]
+    );
+    const dataset = useCombination(stories, storiesConfigured, storiesFailed, refs);
+    const isLoading = !dataset.hash[DEFAULT_REF_ID].ready;
+    const lastViewed = useLastViewed(selected);
 
-  return (
-    <Container className="container sidebar-container">
-      <CustomScrollArea vertical>
-        <StyledSpaced row={1.6}>
-          <Heading className="sidebar-header" menuHighlighted={menuHighlighted} menu={menu} />
+    return (
+      <Container className="container sidebar-container">
+        <CustomScrollArea vertical>
+          <StyledSpaced row={1.6}>
+            <Heading className="sidebar-header" menuHighlighted={menuHighlighted} menu={menu} />
 
-          <Search key="filter" onChange={setFilter} />
-
-          {resultLess ? <Placeholder>This filter resulted in 0 results</Placeholder> : null}
-
-          <Fragment>
-            {combined.map(([k, v], index) => {
-              const isHidden = !!(filter && !list[index]);
-
-              return (
-                <Fragment key={k}>
-                  {index === 0 || isHidden ? null : <Hr />}
-                  <Ref {...v} storyId={storyId} filter={filter} isHidden={isHidden} />
-                </Fragment>
-              );
-            })}
-          </Fragment>
-        </StyledSpaced>
-      </CustomScrollArea>
-    </Container>
-  );
-};
-
-export default Sidebar;
+            <Search
+              dataset={dataset}
+              isLoading={isLoading}
+              enableShortcuts={enableShortcuts}
+              {...lastViewed}
+            >
+              {({
+                inputValue,
+                inputHasFocus,
+                results,
+                getMenuProps,
+                getItemProps,
+                highlightedIndex,
+              }) => (
+                <Swap condition={!!(inputHasFocus || inputValue)}>
+                  <SearchResults
+                    isSearching={!!inputValue}
+                    results={results}
+                    getMenuProps={getMenuProps}
+                    getItemProps={getItemProps}
+                    highlightedIndex={highlightedIndex}
+                  />
+                  <Explorer
+                    dataset={dataset}
+                    selected={selected}
+                    isBrowsing={!inputHasFocus && !inputValue}
+                  />
+                </Swap>
+              )}
+            </Search>
+          </StyledSpaced>
+        </CustomScrollArea>
+      </Container>
+    );
+  }
+);

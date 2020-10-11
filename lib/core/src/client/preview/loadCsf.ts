@@ -57,7 +57,7 @@ const loadStories = (
             typeof req.resolve === 'function' ? req.resolve(filename) : filename
           );
         } catch (error) {
-          logger.warn(`Unexpected error: ${error}`);
+          logger.warn(`Unexpected error while loading ${filename}: ${error}`);
         }
       });
     });

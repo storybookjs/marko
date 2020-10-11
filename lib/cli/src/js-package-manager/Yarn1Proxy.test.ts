@@ -46,7 +46,7 @@ describe('Yarn 1 Proxy', () => {
   });
 
   describe('latestVersion', () => {
-    it('without contraint it returns the latest version', async () => {
+    it('without constraint it returns the latest version', async () => {
       const executeCommandSpy = jest
         .spyOn(yarn1Proxy, 'executeCommand')
         .mockReturnValue('{"type":"inspect","data":"5.3.19"}');
@@ -62,7 +62,7 @@ describe('Yarn 1 Proxy', () => {
       expect(version).toEqual('5.3.19');
     });
 
-    it('with contraint it returns the latest version satisfying the constraint', async () => {
+    it('with constraint it returns the latest version satisfying the constraint', async () => {
       const executeCommandSpy = jest
         .spyOn(yarn1Proxy, 'executeCommand')
         .mockReturnValue('{"type":"inspect","data":["4.25.3","5.3.19","6.0.0-beta.23"]}');

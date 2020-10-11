@@ -78,7 +78,7 @@ export class InputComponent<T> {
   public onClick = new EventEmitter<Event>();
 
   /**
-   * This is an internal method that we don't want to document and have added the `ignore` annoation to.
+   * This is an internal method that we don't want to document and have added the `ignore` annotation to.
    *
    * @ignore
    */

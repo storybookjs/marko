@@ -18,6 +18,8 @@ Some components require a “harness” to render in a useful way. For instance 
   paths={[
     'react/your-component-with-decorator.js.mdx',
     'react/your-component-with-decorator.ts.mdx',
+    'vue/your-component-with-decorator.js.mdx',
+    'angular/your-component-with-decorator.ts.mdx',
   ]}
 />
 
@@ -61,6 +63,8 @@ To define a decorator for a single story, use the `decorators` key on a named ex
   paths={[
     'react/button-story-decorator.js.mdx',
     'react/button-story-decorator.ts.mdx',
+    'vue/button-story-decorator.js.mdx',
+    'angular/button-story-decorator.ts.mdx',
   ]}
 />
 
@@ -78,6 +82,8 @@ To define a decorator for all stories of a component, use the `decorators` key o
   paths={[
     'react/button-story-component-decorator.js.mdx',
     'react/button-story-component-decorator.ts.mdx',
+    'vue/button-story-component-decorator.js.mdx',
+    'angular/button-story-component-decorator.ts.mdx',
   ]}
 />
 
@@ -93,6 +99,8 @@ We can also set a decorator for **all stories** via the `decorators` export of y
   paths={[
     'react/storybook-preview-global-decorator.js.mdx',
     'react/storybook-preview-global-decorator.ts.mdx',
+    'vue/storybook-preview-global-decorator.js.mdx',
+    'angular/storybook-preview-global-decorator.ts.mdx',
   ]}
 />
 
