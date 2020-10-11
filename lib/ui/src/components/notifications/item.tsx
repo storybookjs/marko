@@ -68,7 +68,7 @@ const SubHeadline = styled.div(({ theme }) => ({
   lineHeight: 1,
 }));
 
-const truncateLongHeadlines = (headline: string, length = 36) =>
+const truncateLongHeadlines = (headline: string, length = 30) =>
   headline.length > length ? `${headline.substr(0, length - 1)}…` : headline;
 
 const ItemContent: FunctionComponent<Pick<State['notifications'][0], 'icon' | 'content'>> = ({
