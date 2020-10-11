@@ -1,9 +1,10 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, SyntheticEvent } from 'react';
 import { State } from '@storybook/api';
-import { styled } from '@storybook/theming';
 import { Link } from '@storybook/router';
-import ItemContent from './itemContent';
-import DismissNotificationItem from './itemDismiss';
+import { styled } from '@storybook/theming';
+import { Icons, IconButton } from '@storybook/components';
+
+const DEFAULT_ICON_COLOUR = '#66BF3C' as const;
 
 const Notification = styled.div(({ theme }) => ({
   position: 'relative',
@@ -36,6 +37,79 @@ const Notification = styled.div(({ theme }) => ({
 
 const NotificationLink = Notification.withComponent(Link);
 
+const NotificationIconWrapper = styled.div(() => ({
+  display: 'flex',
+  marginRight: 10,
+  alignItems: 'center',
+}));
+
+const NotificationTextWrapper = styled.div(() => ({
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+}));
+
+const Headline = styled.div(({ theme }) => ({
+  display: 'flex',
+  height: '100%',
+  alignItems: 'center',
+  color: theme.base === 'light' ? '#fff' : '#333333',
+  fontSize: 12,
+  lineHeight: '14px',
+  fontWeight: 'bold',
+}));
+
+const SubHeadline = styled.div(({ theme }) => ({
+  color: theme.base === 'light' ? 'rgba(255,255,255,0.7)' : ' #999999',
+  fontSize: 11,
+  fontWeight: 'normal',
+  marginTop: 3,
+  marginRight: 5,
+  lineHeight: 1,
+}));
+
+const truncateLongHeadlines = (headline: string, length = 36) =>
+  headline.length > length ? `${headline.substr(0, length - 1)}…` : headline;
+
+const ItemContent: FunctionComponent<Pick<State['notifications'][0], 'icon' | 'content'>> = ({
+  icon,
+  content: { headline, subHeadline },
+}) => (
+  <>
+    {!icon || (
+      <NotificationIconWrapper>
+        <Icons icon={icon.name} width={14} color={icon.color || DEFAULT_ICON_COLOUR} />
+      </NotificationIconWrapper>
+    )}
+    <NotificationTextWrapper>
+      <Headline title={headline}>{truncateLongHeadlines(headline)}</Headline>
+      {subHeadline && <SubHeadline>{subHeadline}</SubHeadline>}
+    </NotificationTextWrapper>
+  </>
+);
+
+const DismissButtonWrapper = styled(IconButton)(({ theme }) => ({
+  height: '100%',
+  display: 'flex',
+  color: theme.base === 'light' ? 'rgba(255,255,255,0.7)' : ' #999999',
+}));
+
+const DismissNotificationItem: FunctionComponent<{
+  onClick: () => void;
+}> = ({ onClick }) => (
+  <div>
+    <DismissButtonWrapper
+      title="Dismiss notification"
+      onClick={(e: SyntheticEvent) => {
+        e.preventDefault();
+        onClick();
+      }}
+    >
+      <Icons icon="closeAlt" height={12} width={12} />
+    </DismissButtonWrapper>
+  </div>
+);
+
 export const NotificationItemSpacer = styled.div({
   height: 48,
 });
@@ -43,22 +117,19 @@ export const NotificationItemSpacer = styled.div({
 const NotificationItem: FunctionComponent<{
   notification: State['notifications'][0];
   setDismissedNotification: (id: string) => void;
-}> = ({
-  notification: { content, link, onClear, id, showBookIcon = false },
-  setDismissedNotification,
-}) => {
+}> = ({ notification: { content, link, onClear, id, icon }, setDismissedNotification }) => {
   const dismissNotificationItem = () => {
     setDismissedNotification(id);
     onClear();
   };
   return link ? (
     <NotificationLink to={link}>
-      <ItemContent showBookIcon={showBookIcon} content={content} />
+      <ItemContent icon={icon} content={content} />
       <DismissNotificationItem onClick={dismissNotificationItem} />
     </NotificationLink>
   ) : (
     <Notification>
-      <ItemContent showBookIcon={showBookIcon} content={content} />
+      <ItemContent icon={icon} content={content} />
       <DismissNotificationItem onClick={dismissNotificationItem} />
     </Notification>
   );

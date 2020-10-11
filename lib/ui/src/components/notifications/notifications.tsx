@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { State } from '@storybook/api';
 import { styled, CSSObject } from '@storybook/theming';
-
 import NotificationItem from './item';
 
 const List = styled.div<{ placement?: CSSObject }>(

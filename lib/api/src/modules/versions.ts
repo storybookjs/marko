@@ -129,10 +129,10 @@ export const init: ModuleFn = ({ store, mode, fullAPI }) => {
           id: 'update',
           link: '/settings/about',
           content: {
-            headline: `🎉 Storybook ${latestVersion} is available!`,
+            headline: `Storybook ${latestVersion} is available!`,
             subHeadline: `Your current version is: ${versions.current.version}`,
           },
-          showBookIcon: true,
+          icon: 'book',
           onClear() {
             store.setState(
               { dismissedVersionNotification: latestVersion },
