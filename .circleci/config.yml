@@ -200,6 +200,37 @@ jobs:
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
+  examples-v2-cra-bench:
+    executor:
+      class: medium
+      name: sb_node_12
+    working_directory: /tmp/storybook
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Running local registry
+          command: yarn local-registry --port 6000 --open
+          background: true
+      - run:
+          name: Wait for registry
+          command: yarn wait-on http://localhost:6000
+      - run:
+          name: Set registry
+          command: yarn config set registry http://localhost:6000/
+      - run:
+          name: Test local registry
+          command: yarn info @storybook/core
+      - run:
+          name: Install Cypress binary
+          command: yarn cypress install
+      - run:
+          name: Run @storybook/bench on a CRA project
+          command: yarn test:e2e-framework cra_bench
+      - store_artifacts:
+          path: /tmp/storybook/cypress
+          destination: cypress
   examples-v2-angular:
     executor:
       class: medium
@@ -451,6 +482,9 @@ workflows:
           requires:
             - publish
       - examples-v2-yarn-2:
+          requires:
+            - publish
+      - examples-v2-cra-bench:
           requires:
             - publish
   deploy:

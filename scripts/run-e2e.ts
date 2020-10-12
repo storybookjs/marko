@@ -367,6 +367,10 @@ if (frameworkArgs.length > 0) {
   // See https://github.com/storybookjs/storybook/issues/12735
   delete e2eConfigs.angularv9;
   delete e2eConfigs.angular;
+
+  // CRA Bench is a special case of E2E tests, it requires Node 12 as `@storybook/bench` is using `@hapi/hapi@19.2.0`
+  // which itself need Node 12.
+  delete e2eConfigs.cra_bench;
 }
 
 const perform = () => {
