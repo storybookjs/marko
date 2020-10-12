@@ -1,0 +1,14 @@
+```js
+// TodoItem.stories.js
+
+import React from 'react';
+import fetch from 'node-fetch';
+import { TodoItem } from './TodoItem';
+
+export const Primary = (args, { loaded: { todo } }) => <TodoItem {...args} {...todo} />;
+Primary.loaders = [
+  async () => ({
+    todo: (await fetch('https://jsonplaceholder.typicode.com/todos/1')).json(),
+  }),
+];
+```

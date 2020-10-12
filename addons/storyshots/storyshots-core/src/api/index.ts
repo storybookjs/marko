@@ -48,39 +48,37 @@ function testStorySnapshots(options: StoryshotsOptions = {}) {
     stories2snapsConverter,
   };
 
-  const data = storybook
-    .raw()
-    .reduce(
-      (acc, item) => {
-        if (storyNameRegex && !item.name.match(storyNameRegex)) {
-          return acc;
-        }
-
-        if (storyKindRegex && !item.kind.match(storyKindRegex)) {
-          return acc;
-        }
-
-        const { kind, storyFn: render, parameters } = item;
-        const existing = acc.find((i: any) => i.kind === kind);
-        const { fileName } = item.parameters;
-
-        if (!isDisabled(parameters.storyshots)) {
-          if (existing) {
-            existing.children.push({ ...item, render, fileName });
-          } else {
-            acc.push({
-              kind,
-              children: [{ ...item, render, fileName }],
-            });
-          }
-        }
+  const data = storybook.raw().reduce(
+    (acc, item) => {
+      if (storyNameRegex && !item.name.match(storyNameRegex)) {
         return acc;
-      },
-      [] as {
-        kind: string;
-        children: any[];
-      }[]
-    );
+      }
+
+      if (storyKindRegex && !item.kind.match(storyKindRegex)) {
+        return acc;
+      }
+
+      const { kind, storyFn: render, parameters } = item;
+      const existing = acc.find((i: any) => i.kind === kind);
+      const { fileName } = item.parameters;
+
+      if (!isDisabled(parameters.storyshots)) {
+        if (existing) {
+          existing.children.push({ ...item, render, fileName });
+        } else {
+          acc.push({
+            kind,
+            children: [{ ...item, render, fileName }],
+          });
+        }
+      }
+      return acc;
+    },
+    [] as {
+      kind: string;
+      children: any[];
+    }[]
+  );
 
   if (data.length) {
     callTestMethodGlobals(testMethod);

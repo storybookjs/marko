@@ -3,11 +3,11 @@ version: 2.1
 executors:
   sb_node:
     parameters:
-        class:
-          description: The Resource class
-          type: enum
-          enum: ["small", "medium", "large", "xlarge"]
-          default: "medium"
+      class:
+        description: The Resource class
+        type: enum
+        enum: ['small', 'medium', 'large', 'xlarge']
+        default: 'medium'
     working_directory: /tmp/storybook
     docker:
       - image: circleci/node:10-browsers
@@ -359,7 +359,6 @@ jobs:
       - run:
           name: Upload coverage
           command: yarn coverage
-
 
 workflows:
   test:

@@ -74,6 +74,11 @@ module.exports = {
           type: 'link',
         },
         {
+          pathSegment: 'loaders',
+          title: 'Loaders',
+          type: 'link',
+        },
+        {
           pathSegment: 'naming-components-and-hierarchy',
           title: 'Naming components and hierarchy',
           type: 'link',
