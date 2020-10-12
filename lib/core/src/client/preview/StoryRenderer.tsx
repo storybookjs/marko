@@ -106,7 +106,7 @@ export class StoryRenderer {
     this.renderCurrentStory(true);
   }
 
-  renderCurrentStory(forceRender: boolean) {
+  async renderCurrentStory(forceRender: boolean) {
     const { storyStore } = this;
 
     const loadError = storyStore.getError();
@@ -140,10 +140,10 @@ export class StoryRenderer {
       showException: (err: Error) => this.renderException(err),
     };
 
-    this.renderStoryIfChanged({ metadata, context });
+    await this.renderStoryIfChanged({ metadata, context });
   }
 
-  renderStoryIfChanged({
+  async renderStoryIfChanged({
     metadata,
     context,
   }: {
@@ -217,7 +217,7 @@ export class StoryRenderer {
       }
       case 'story':
       default: {
-        this.renderStory({ context });
+        await this.renderStory({ context });
         break;
       }
     }
@@ -273,16 +273,17 @@ export class StoryRenderer {
     document.getElementById('root').removeAttribute('hidden');
   }
 
-  renderStory({ context, context: { id, getDecorated } }: { context: RenderContext }) {
+  async renderStory({ context, context: { id, getDecorated } }: { context: RenderContext }) {
     if (getDecorated) {
-      (async () => {
-        try {
-          await this.render(context);
-          this.channel.emit(Events.STORY_RENDERED, id);
-        } catch (err) {
-          this.renderException(err);
-        }
-      })();
+      try {
+        const { applyLoaders, unboundStoryFn } = context;
+        const storyContext = await applyLoaders();
+        const storyFn = () => unboundStoryFn(storyContext);
+        await this.render({ ...context, storyFn });
+        this.channel.emit(Events.STORY_RENDERED, id);
+      } catch (err) {
+        this.renderException(err);
+      }
     } else {
       this.showNoPreview();
       this.channel.emit(Events.STORY_MISSING, id);
