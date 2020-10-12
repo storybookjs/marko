@@ -1,3 +1,14 @@
+## 6.1.0-alpha.23 (October 12, 2020)
+
+### Features
+
+- Core: Add async loaders ([#12699](https://github.com/storybookjs/storybook/pull/12699))
+- Addon-a11y: Add blurred vision effect ([#12731](https://github.com/storybookjs/storybook/pull/12731))
+
+### Maintenance
+
+- Build: Improve angular e2e tests ([#12723](https://github.com/storybookjs/storybook/pull/12723))
+
 ## 6.1.0-alpha.22 (October 10, 2020)
 
 ### Features
