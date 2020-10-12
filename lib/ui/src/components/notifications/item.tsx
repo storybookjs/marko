@@ -2,7 +2,7 @@ import React, { FunctionComponent, SyntheticEvent } from 'react';
 import { State } from '@storybook/api';
 import { Link } from '@storybook/router';
 import { styled } from '@storybook/theming';
-import { Icons, IconButton } from '@storybook/components';
+import { Icons, IconButton, IconsProps } from '@storybook/components';
 
 const DEFAULT_ICON_COLOUR = '#66BF3C' as const;
 
@@ -78,7 +78,11 @@ const ItemContent: FunctionComponent<Pick<State['notifications'][0], 'icon' | 'c
   <>
     {!icon || (
       <NotificationIconWrapper>
-        <Icons icon={icon.name} width={14} color={icon.color || DEFAULT_ICON_COLOUR} />
+        <Icons
+          icon={icon.name as IconsProps['icon']}
+          width={14}
+          color={icon.color || DEFAULT_ICON_COLOUR}
+        />
       </NotificationIconWrapper>
     )}
     <NotificationTextWrapper>

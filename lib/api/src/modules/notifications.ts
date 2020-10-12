@@ -1,4 +1,3 @@
-import { IconsProps } from '@storybook/components';
 import { ModuleFn } from '../index';
 
 export interface Notification {
@@ -10,7 +9,7 @@ export interface Notification {
   };
 
   icon?: {
-    name: IconsProps['icon'];
+    name: string;
     color?: string;
   };
   onClear?: () => void;
