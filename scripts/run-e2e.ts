@@ -362,6 +362,11 @@ if (frameworkArgs.length > 0) {
   // FIXME: For now Yarn 2 E2E tests must be run by explicitly call `yarn test:e2e-framework yarn2Cra@latest`
   //   Because it is telling Yarn to use version 2
   delete e2eConfigs.yarn_2_cra;
+
+  // FIXME: Angular tests need to be explicitly run because they require Node 12.17+
+  // See https://github.com/storybookjs/storybook/issues/12735
+  delete e2eConfigs.angularv9;
+  delete e2eConfigs.angular;
 }
 
 const perform = () => {
