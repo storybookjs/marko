@@ -172,10 +172,6 @@ jobs:
     executor:
       class: large
       name: sb_node
-    docker:
-      - image: cypress/included:4.7.0
-        environment:
-          TERM: xterm
     working_directory: /tmp/storybook
     parallelism: 10
     steps:
@@ -195,6 +191,9 @@ jobs:
       - run:
           name: test local registry
           command: yarn info @storybook/core
+      - run:
+          name: Install Cypress binary
+          command: yarn cypress install
       - run:
           name: run e2e tests
           command: yarn test:e2e-framework
@@ -234,12 +233,10 @@ jobs:
           path: /tmp/storybook/cypress
           destination: cypress
   examples-v2-yarn-2:
-    docker:
-      - image: cypress/included:4.7.0
-        environment:
-          TERM: xterm
+    executor:
+      class: medium
+      name: sb_node
     working_directory: /tmp/storybook
-    # parallelism: 10
     steps:
       - checkout
       - attach_workspace:
@@ -257,6 +254,9 @@ jobs:
       - run:
           name: test local registry
           command: yarn info @storybook/core
+      - run:
+          name: Install Cypress binary
+          command: yarn cypress install
       - run:
           name: run e2e tests
           command: yarn test:e2e-framework --use-yarn-2 sfcVue cra
