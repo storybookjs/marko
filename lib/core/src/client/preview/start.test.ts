@@ -57,9 +57,9 @@ it('reuses the current client api when the lib is reloaded', () => {
   expect(clientApi).toEqual(valueOfClientApi);
 });
 
-// With async rendering we need to wait for various
-// promises to resolve. Sleeping for 0 ms allows all
-// the async (but instantaneous) calls to run through the
+// With async rendering we need to wait for various promises to resolve.
+// Sleeping for 0 ms allows all the async (but instantaneous) calls to run
+// through the event loop.
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 it('calls render when you add a story', async () => {

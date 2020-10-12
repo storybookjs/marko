@@ -1,7 +1,7 @@
 <h1>Migration</h1>
 
 - [From version 6.0.x to 6.1.0](#from-version-60x-to-610)
-  - [6.1 deprecations](#6dot1-deprecations)
+  - [6.1 deprecations](#61-deprecations)
     - [Deprecated storyFn](#deprecated-storyfn)
     - [Deprecated onBeforeRender](#deprecated-onbeforerender)
     - [Deprecated grid parameter](#deprecated-grid-parameter)
@@ -13,7 +13,7 @@
   - [CRA preset removed](#cra-preset-removed)
   - [Core-JS dependency errors](#core-js-dependency-errors)
   - [Args passed as first argument to story](#args-passed-as-first-argument-to-story)
-  - [6.0 Docs breaking changes](#6dot0-docs-breaking-changes)
+  - [6.0 Docs breaking changes](#60-docs-breaking-changes)
     - [Remove framework-specific docs presets](#remove-framework-specific-docs-presets)
     - [Preview/Props renamed](#previewprops-renamed)
     - [Docs theme separated](#docs-theme-separated)
@@ -22,7 +22,7 @@
     - [ConfigureJSX true by default in React](#configurejsx-true-by-default-in-react)
     - [User babelrc disabled by default in MDX](#user-babelrc-disabled-by-default-in-mdx)
     - [Docs description parameter](#docs-description-parameter)
-    - [6.0 Inline stories](#6dot0-inline-stories)
+    - [6.0 Inline stories](#60-inline-stories)
   - [New addon presets](#new-addon-presets)
   - [Removed babel-preset-vue from Vue preset](#removed-babel-preset-vue-from-vue-preset)
   - [Removed Deprecated APIs](#removed-deprecated-apis)
@@ -37,7 +37,7 @@
   - [Simplified Render Context](#simplified-render-context)
   - [Story Store immutable outside of configuration](#story-store-immutable-outside-of-configuration)
   - [Improved story source handling](#improved-story-source-handling)
-  - [6.0 Addon API changes](#6dot0-addon-api-changes)
+  - [6.0 Addon API changes](#60-addon-api-changes)
     - [Consistent local addon paths in main.js](#consistent-local-addon-paths-in-mainjs)
     - [Deprecated setAddon](#deprecated-setaddon)
     - [Deprecated disabled parameter](#deprecated-disabled-parameter)
@@ -46,7 +46,7 @@
     - [Removed withA11y decorator](#removed-witha11y-decorator)
     - [Essentials addon disables differently](#essentials-addon-disables-differently)
     - [Backgrounds addon has a new api](#backgrounds-addon-has-a-new-api)
-  - [6.0 Deprecations](#6dot0-deprecations)
+  - [6.0 Deprecations](#60-deprecations)
     - [Deprecated addon-info, addon-notes](#deprecated-addon-info-addon-notes)
     - [Deprecated addon-contexts](#deprecated-addon-contexts)
     - [Removed addon-centered](#removed-addon-centered)
@@ -157,6 +157,8 @@ const { unboundStoryFn, applyLoaders } = store.fromId('some--id');
 const context = await applyLoaders();
 console.log(unboundStoryFn(context));
 ```
+
+If you're not using loaders, `storyFn` will work as before. If you are, you'll need to use the new approach.
 
 #### Deprecated onBeforeRender
 

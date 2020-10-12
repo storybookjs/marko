@@ -441,7 +441,7 @@ export default class StoryStore {
       };
       const loadResults = await Promise.all(loaders.map((loader) => loader(context)));
       const loaded = Object.assign({}, ...loadResults);
-      return combineParameters(context, { loaded }) as StoryContext;
+      return { ...context, loaded };
     };
 
     // Pull out parameters.args.$ || .argTypes.$.defaultValue into initialArgs

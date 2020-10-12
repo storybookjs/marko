@@ -4,7 +4,7 @@ title: 'Loaders'
 
 Loaders are asynchronous functions that load data for a story and its [decorators](./decorators.md). A story's loaders run before the story renders, and the loaded data is passed into the story via its render context.
 
-Loaders are typically used to fetch remote API data to be used in a story, although they can be used to load any asset (e.g. lazy-loaded components).
+Loaders can be used to load any asset (e.g. lazy-loaded components), but they are are typically used to fetch remote API data to be used in a story.
 
 ## Fetching API data
 
@@ -44,11 +44,14 @@ In this example, we load a "current user" that is available as `loaded.currentUs
 
 Like parameters, loaders can be defined globally, at the component level and for a single story (as we’ve seen).
 
-All loaders, defined at all levels that apply to a story will run whenever that story is rendered, in the order:
+All loaders, defined at all levels that apply to a story, run before the story is rendered.
 
-- Global loaders, in the order they are defined
-- Component loaders, in the order they are defined
-- Story loaders, in the order they are defined.
+- All loaders run in parallel
+- All results are the `loaded` field in the story context
+- If there are keys that overlap, "later" loaders take precedence (from lowest to highest):
+  - Global loaders, in the order they are defined
+  - Component loaders, in the order they are defined
+  - Story loaders, in the order they are defined
 
 ## Known limitations
 
