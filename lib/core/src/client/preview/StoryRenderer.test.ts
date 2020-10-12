@@ -57,7 +57,7 @@ function addStory(
   kind: StoryKind,
   name: StoryName,
   parameters: Parameters = {},
-  loaders: LoaderFunction[],
+  loaders: LoaderFunction[] = [],
   storyFn: StoryFn = jest.fn()
 ) {
   const id = toId(kind, name);
