@@ -6,6 +6,8 @@ Loaders are asynchronous functions that load data for a story and its [decorator
 
 Loaders can be used to load any asset (e.g. lazy-loaded components), but they are are typically used to fetch remote API data to be used in a story.
 
+> NOTE: [Args](./args.md) are the recommended way to manage story data, and we're building up an ecosystem of tools and techniques around them. Loaders are an advanced feature ("escape hatch") and we only recommend using them if you have a specific need that can't be fulfilled by other means.
+
 ## Fetching API data
 
 Stories are isolated component examples that render internal data that's defined as part of the story or alongside the story as [args](./args.md).
