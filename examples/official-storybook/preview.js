@@ -195,3 +195,5 @@ export const globalTypes = {
     },
   },
 };
+
+export const loaders = [async () => ({ globalValue: 1 })];

@@ -140,7 +140,7 @@ function genStoryExport(ast, context) {
     storyCode = bodyParts.map(({ storyCode: code }) => code).join('\n');
     sourceCode = bodyParts.map(({ sourceCode: code }) => code).join('\n');
     const storyReactCode = bodyParts.length > 1 ? `<>\n${storyCode}\n</>` : storyCode;
-    // keep track if an indentifier or function call
+    // keep track if an identifier or function call
     // avoid breaking change for 5.3
     const BIND_REGEX = /\.bind\(.*\)/;
     if (bodyParts.length === 1 && BIND_REGEX.test(bodyParts[0].storyCode)) {
@@ -193,6 +193,13 @@ function genStoryExport(ast, context) {
     statements.push(`${storyKey}.decorators = ${decos};`);
   }
 
+  let loaders = getAttr(ast.openingElement, 'loaders');
+  loaders = loaders && loaders.expression;
+  if (loaders) {
+    const { code: loaderCode } = generate(loaders, {});
+    statements.push(`${storyKey}.loaders = ${loaderCode};`);
+  }
+
   // eslint-disable-next-line no-param-reassign
   context.storyNameToKey[storyName] = storyKey;
 
@@ -242,6 +249,7 @@ function genMeta(ast, options) {
   id = id && `'${id.value}'`;
   const parameters = genAttribute('parameters', ast.openingElement);
   const decorators = genAttribute('decorators', ast.openingElement);
+  const loaders = genAttribute('loaders', ast.openingElement);
   const component = genAttribute('component', ast.openingElement);
   const subcomponents = genAttribute('subcomponents', ast.openingElement);
   const args = genAttribute('args', ast.openingElement);
@@ -252,6 +260,7 @@ function genMeta(ast, options) {
     id,
     parameters,
     decorators,
+    loaders,
     component,
     subcomponents,
     args,

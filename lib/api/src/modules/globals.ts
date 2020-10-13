@@ -1,5 +1,6 @@
 import { SET_STORIES, UPDATE_GLOBALS, GLOBALS_UPDATED } from '@storybook/core-events';
 import { logger } from '@storybook/client-logger';
+import deepEqual from 'fast-deep-equal';
 
 import { Args, ModuleFn } from '../index';
 
@@ -32,12 +33,21 @@ export const init: ModuleFn = ({ store, fullAPI }) => {
     globals: {},
   };
 
+  const updateGlobals = (globals: Args) => {
+    const currentGlobals = store.getState()?.globals;
+    if (!deepEqual(globals, currentGlobals)) {
+      store.setState({ globals });
+    } else {
+      logger.info('Tried to update globals but the old and new values are equal.');
+    }
+  };
+
   const initModule = () => {
     fullAPI.on(GLOBALS_UPDATED, function handleGlobalsUpdated({ globals }: { globals: Args }) {
       const { ref } = getEventMetadata(this, fullAPI);
 
       if (!ref) {
-        store.setState({ globals });
+        updateGlobals(globals);
       } else {
         logger.warn(
           'received a GLOBALS_UPDATED from a non-local ref. This is not currently supported.'
@@ -48,7 +58,7 @@ export const init: ModuleFn = ({ store, fullAPI }) => {
       const { ref } = getEventMetadata(this, fullAPI);
 
       if (!ref) {
-        store.setState({ globals });
+        updateGlobals(globals);
       } else if (Object.keys(globals).length > 0) {
         logger.warn('received globals from a non-local ref. This is not currently supported.');
       }

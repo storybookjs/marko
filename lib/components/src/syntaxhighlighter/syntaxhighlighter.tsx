@@ -8,6 +8,7 @@ import jsx from 'react-syntax-highlighter/dist/cjs/languages/prism/jsx';
 import bash from 'react-syntax-highlighter/dist/cjs/languages/prism/bash';
 import css from 'react-syntax-highlighter/dist/cjs/languages/prism/css';
 import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json';
+import graphql from 'react-syntax-highlighter/dist/cjs/languages/prism/graphql';
 import html from 'react-syntax-highlighter/dist/cjs/languages/prism/markup';
 import md from 'react-syntax-highlighter/dist/cjs/languages/prism/markdown';
 import yml from 'react-syntax-highlighter/dist/cjs/languages/prism/yaml';
@@ -33,6 +34,7 @@ ReactSyntaxHighlighter.registerLanguage('css', css);
 ReactSyntaxHighlighter.registerLanguage('html', html);
 ReactSyntaxHighlighter.registerLanguage('tsx', tsx);
 ReactSyntaxHighlighter.registerLanguage('typescript', typescript);
+ReactSyntaxHighlighter.registerLanguage('graphql', graphql);
 
 const themedSyntax = memoize(2)((theme) =>
   Object.entries(theme.code || {}).reduce((acc, [key, val]) => ({ ...acc, [`* .${key}`]: val }), {})

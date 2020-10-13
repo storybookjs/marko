@@ -13,7 +13,9 @@ Storybook gives you tools to expand this basic documentation with prose and layo
   />
 </video>
 
-Out of the box, Storybook ships with [DocsPage](./docs-page.md), a documentation template that lists all the stories for a component and associated metadata. It infers metadata values based on source code, types and JSDoc comments. [Customize](./docs-page.md#replacing-docspage) this page to create a new template if you have specific requirements.
+If you're including Storybook in your project for the [first time](../get-started/install.md), we provide you with [DocsPage](./docs-page.md), a documentation template that lists all the stories for a component and associated metadata. It infers metadata values based on source code, types and JSDoc comments. If you need, you can customize this page to create your own custom template.
+
+If you're already using Storybook and you're **updating** to the latest release, we recommend that you install [@storybook/addon-essentials](https://www.npmjs.com/package/@storybook/addon-essentials), to include this and other great features into your project.
 
 You can also create free-form pages for each component using [MDX](./mdx.md), a format for simultaneously documenting components and writing stories.
 

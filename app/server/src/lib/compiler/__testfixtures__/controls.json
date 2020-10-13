@@ -17,7 +17,7 @@
         "pets": 2,
         "sports": ["football", "baseball"],
         "favorite_food": "Ice Cream",
-        "other_thinkgs":  {"hair": "Brown", "eyes": "Blue"}
+        "other_things":  {"hair": "Brown", "eyes": "Blue"}
       },
       "argTypes": {
         "birthday": { "control": { "type": "date" } },

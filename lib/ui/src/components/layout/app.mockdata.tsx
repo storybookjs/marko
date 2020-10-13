@@ -3,7 +3,7 @@ import React, { Component, FunctionComponent } from 'react';
 import { styled } from '@storybook/theming';
 import { Collection } from '@storybook/addons';
 import { State } from '@storybook/api';
-import Sidebar, { SidebarProps } from '../sidebar/Sidebar';
+import { Sidebar, SidebarProps } from '../sidebar/Sidebar';
 import Panel from '../panel/panel';
 import { Preview } from '../preview/preview';
 

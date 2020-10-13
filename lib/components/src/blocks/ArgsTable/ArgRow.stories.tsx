@@ -298,7 +298,7 @@ LongEnum.args = {
   },
 };
 
-export const complexUnion =
+const complexUnion =
   '((a: string | SVGSVGElement) => void) | RefObject<SVGSVGElement | number> | [a|b] | {a|b}';
 
 export const ComplexUnion = Template.bind({});

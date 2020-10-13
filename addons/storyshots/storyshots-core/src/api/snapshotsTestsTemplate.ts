@@ -11,9 +11,9 @@ function snapshotTest({ item, asyncJest, framework, testMethod, testMethodParams
     it(
       name,
       () =>
-        new Promise((done) =>
+        new Promise((resolve, reject) =>
           testMethod({
-            done,
+            done: (error: any) => (error ? reject(error) : resolve()),
             story: item,
             context,
             ...testMethodParams,

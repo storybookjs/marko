@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import deepEqual from 'fast-deep-equal';
 
 import { API } from '@storybook/api';
-import { STORY_RENDERED } from '@storybook/core-events';
+import { STORY_CHANGED } from '@storybook/core-events';
 
 import { ActionLogger as ActionLoggerComponent } from '../../components/ActionLogger';
 import { EVENT_ID } from '../..';
@@ -39,14 +39,14 @@ export default class ActionLogger extends Component<ActionLoggerProps, ActionLog
     const { api } = this.props;
 
     api.on(EVENT_ID, this.addAction);
-    api.on(STORY_RENDERED, this.handleStoryChange);
+    api.on(STORY_CHANGED, this.handleStoryChange);
   }
 
   componentWillUnmount() {
     this.mounted = false;
     const { api } = this.props;
 
-    api.off(STORY_RENDERED, this.handleStoryChange);
+    api.off(STORY_CHANGED, this.handleStoryChange);
     api.off(EVENT_ID, this.addAction);
   }
 

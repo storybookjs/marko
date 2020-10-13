@@ -72,7 +72,7 @@ module.exports = {
           unsupported: ['marko'],
         },
         {
-          name: 'query-params',
+          name: 'queryparams',
           unsupported: [],
         },
         {
@@ -107,6 +107,11 @@ module.exports = {
         {
           name: 'Source',
           unsupported: [],
+          path: 'writing-docs/doc-blocks#source',
+        },
+        {
+          name: 'Dynamic source',
+          supported: ['react'],
           path: 'writing-docs/doc-blocks#source',
         },
         {

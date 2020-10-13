@@ -81,12 +81,12 @@ const getSnippet = (snippet: string, storyContext?: StoryContext): string => {
 
   // if user has explicitly set this as dynamic, use snippet
   if (type === SourceType.DYNAMIC) {
-    return snippet;
+    return parameters.docs?.transformSource?.(snippet, storyContext) || snippet;
   }
 
   // if this is an args story and there's a snippet
   if (type === SourceType.AUTO && snippet && isArgsStory) {
-    return snippet;
+    return parameters.docs?.transformSource?.(snippet, storyContext) || snippet;
   }
 
   // otherwise, use the source code logic

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/source-loader",
-  "version": "6.1.0-alpha.4",
+  "version": "6.1.0-alpha.23",
   "description": "Source loader",
   "keywords": [
     "lib",
@@ -23,14 +23,14 @@
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.5/**/*"
+    "ts3.4/**/*"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-alpha.4",
-    "@storybook/client-logger": "6.1.0-alpha.4",
+    "@storybook/addons": "6.1.0-alpha.23",
+    "@storybook/client-logger": "6.1.0-alpha.23",
     "@storybook/csf": "0.0.1",
     "core-js": "^3.0.1",
     "estraverse": "^4.2.0",
@@ -38,14 +38,20 @@
     "loader-utils": "^2.0.0",
     "lodash": "^4.17.15",
     "prettier": "~2.0.5",
-    "regenerator-runtime": "^0.13.3"
-  },
-  "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "regenerator-runtime": "^0.13.3",
+    "source-map": "^0.7.3"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "d053c5c0c37db26f06fbec7f3ae3afd698fdac54"
+  "gitHead": "1ec9d957eefc851a8353ff46d16612ed98261abf",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  }
 }

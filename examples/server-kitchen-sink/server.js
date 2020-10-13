@@ -9,6 +9,7 @@ const port = process.env.PORT || 8080;
 const app = express();
 app.use(cors());
 app.use(morgan('dev'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 

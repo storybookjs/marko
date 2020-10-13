@@ -106,6 +106,31 @@ describe('renderJsx', () => {
        />
     `);
   });
+
+  it('forwardRef component', () => {
+    const MyExoticComponent = React.forwardRef(function MyExoticComponent(props: any, _ref: any) {
+      return <div>{props.children}</div>;
+    });
+
+    expect(renderJsx(<MyExoticComponent>I'm forwardRef!</MyExoticComponent>, {}))
+      .toMatchInlineSnapshot(`
+        <MyExoticComponent>
+          I'm forwardRef!
+        </MyExoticComponent>
+      `);
+  });
+
+  it('memo component', () => {
+    const MyMemoComponent = React.memo(function MyMemoComponent(props: any) {
+      return <div>{props.children}</div>;
+    });
+
+    expect(renderJsx(<MyMemoComponent>I'm memo!</MyMemoComponent>, {})).toMatchInlineSnapshot(`
+      <MyMemoComponent>
+        I'm memo!
+      </MyMemoComponent>
+    `);
+  });
 });
 
 // @ts-ignore

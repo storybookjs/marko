@@ -19,17 +19,17 @@ export function webpack(config: Configuration) {
             new RegExp(`node_modules(\\/|\\\\)@vaadin(.*)\\.js$`),
           ],
           use: {
-            loader: 'babel-loader',
+            loader: require.resolve('babel-loader'),
             options: {
               plugins: [
-                '@babel/plugin-syntax-dynamic-import',
-                '@babel/plugin-syntax-import-meta',
+                require.resolve('@babel/plugin-syntax-dynamic-import'),
+                require.resolve('@babel/plugin-syntax-import-meta'),
                 // webpack does not support import.meta.url yet, so we rewrite them in babel
-                ['bundled-import-meta', { importStyle: 'baseURI' }],
+                [require.resolve('babel-plugin-bundled-import-meta'), { importStyle: 'baseURI' }],
               ],
               presets: [
                 [
-                  '@babel/preset-env',
+                  require.resolve('@babel/preset-env'),
                   {
                     useBuiltIns: 'entry',
                     corejs: 3,

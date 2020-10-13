@@ -1,0 +1,27 @@
+```js
+// MyComponent.stories.js
+
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+
+export default {
+  title: 'Stories',
+  parameters: {
+    // the viewports object from the Essentials addon
+    viewport: {
+      // the viewports you want to use
+      viewports: INITIAL_VIEWPORTS,
+      // your own default viewport
+      defaultViewport: 'iphone6',
+    },
+  },
+};
+
+export const myStory = () => ({
+  template: '<div />',
+});
+myStory.parameters = {
+  viewport: {
+    defaultViewport: 'iphonex',
+  },
+};
+```

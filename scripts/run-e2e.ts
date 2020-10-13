@@ -10,6 +10,8 @@ import { serve } from './utils/serve';
 import { exec } from './utils/command';
 // @ts-ignore
 import { listOfPackages } from './utils/list-packages';
+// @ts-ignore
+import { filterDataForCurrentCircleCINode } from './utils/concurrency';
 
 import * as configs from './run-e2e-config';
 
@@ -83,6 +85,13 @@ const configureYarn2 = async ({ cwd }: Options) => {
     `yarn config set npmScopes --json '{ "storybook": { "npmRegistryServer": "http://localhost:6000/" } }'`,
     // Some required magic to be able to fetch deps from local registry
     `yarn config set unsafeHttpWhitelist --json '["localhost"]'`,
+    // Disable fallback mode to make sure everything is required correctly
+    `yarn config set pnpFallbackMode none`,
+    // Add package extensions
+    // https://github.com/casesandberg/reactcss/pull/153
+    `yarn config set "packageExtensions.reactcss@*.peerDependencies.react" "*"`,
+    // https://github.com/casesandberg/react-color/pull/746
+    `yarn config set "packageExtensions.react-color@*.peerDependencies.react" "*"`,
   ].join(' && ');
   logger.info(`🎛 Configuring Yarn 2`);
   logger.debug(command);
@@ -158,12 +167,10 @@ const addRequiredDeps = async ({ cwd, additionalDeps }: Options) => {
     if (additionalDeps && additionalDeps.length > 0) {
       await exec(`yarn add -D ${additionalDeps.join(' ')}`, {
         cwd,
-        silent: true,
       });
     } else {
       await exec(`yarn install`, {
         cwd,
-        silent: true,
       });
     }
   } catch (e) {
@@ -239,6 +246,7 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
     cwd: path.join(siblingDir, `${name}-${version}`),
   };
 
+  logger.log();
   logger.info(`🏃‍♀️ Starting for ${name} ${version}`);
   logger.log();
   logger.debug(options);
@@ -291,14 +299,19 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
 };
 
 // Run tests!
-const runE2E = (parameters: Parameters) =>
-  runTests(parameters)
+const runE2E = async (parameters: Parameters) => {
+  const { name, version } = parameters;
+  const cwd = path.join(siblingDir, `${name}-${version}`);
+  if (startWithCleanSlate) {
+    logger.log();
+    logger.info(`♻️  Starting with a clean slate, removing existing ${name} folder`);
+    await cleanDirectory({ ...parameters, cwd });
+  }
+
+  return runTests(parameters)
     .then(async () => {
       if (!process.env.CI) {
-        const { name, version } = parameters;
-        const cwd = path.join(siblingDir, `${name}-${version}`);
-
-        const { cleanup } = await prompt({
+        const { cleanup } = await prompt<{ cleanup: boolean }>({
           type: 'confirm',
           name: 'cleanup',
           message: 'Should perform cleanup?',
@@ -321,7 +334,9 @@ const runE2E = (parameters: Parameters) =>
       logger.log();
       process.exitCode = 1;
     });
+};
 
+program.option('--clean', 'Clean up existing projects before running the tests', false);
 program.option('--use-yarn-2', 'Run tests using Yarn 2 instead of Yarn 1 + npx', false);
 program.option(
   '--use-local-sb-cli',
@@ -330,7 +345,7 @@ program.option(
 );
 program.parse(process.argv);
 
-const { useYarn2, useLocalSbCli, args: frameworkArgs } = program;
+const { useYarn2, useLocalSbCli, clean: startWithCleanSlate, args: frameworkArgs } = program;
 
 const typedConfigs: { [key: string]: Parameters } = configs;
 let e2eConfigs: { [key: string]: Parameters } = {};
@@ -352,18 +367,9 @@ if (frameworkArgs.length > 0) {
 const perform = () => {
   const limit = pLimit(1);
   const narrowedConfigs = Object.values(e2eConfigs);
-  const nodeIndex = +process.env.CIRCLE_NODE_INDEX || 0;
-  const numberOfNodes = +process.env.CIRCLE_NODE_TOTAL || 1;
+  const list = filterDataForCurrentCircleCINode(narrowedConfigs) as Parameters[];
 
-  const list = narrowedConfigs.filter((_, index) => {
-    return index % numberOfNodes === nodeIndex;
-  });
-
-  logger.info(
-    `📑 Assigning jobs ${list
-      .map((c) => c.name)
-      .join(', ')} to node ${nodeIndex} (on ${numberOfNodes})`
-  );
+  logger.info(`📑 Will run E2E tests for:${list.map((c) => c.name).join(', ')}`);
 
   return Promise.all(list.map((config) => limit(() => runE2E(config))));
 };

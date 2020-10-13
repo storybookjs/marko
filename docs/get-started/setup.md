@@ -12,6 +12,7 @@ Pick a simple component from your project, like a Button, and write a `.stories.
   paths={[
     'react/your-component.js.mdx',
     'react/your-component.ts.mdx',
+    'angular/your-component.ts.mdx',
   ]}
 />
 
