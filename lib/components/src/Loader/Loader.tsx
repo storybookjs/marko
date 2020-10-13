@@ -73,6 +73,7 @@ const Ellipsis = styled.span({
   '&::after': {
     content: "'...'",
     animation: `${ellipsis} 1s linear infinite`,
+    animationDelay: '1s',
     display: 'inline-block',
     width: '1em',
     height: 'auto',
@@ -91,28 +92,33 @@ interface LoaderProps {
   size?: number;
 }
 
-export const PureLoader: FunctionComponent<LoaderProps> = ({ progress, size, ...props }) =>
-  progress ? (
-    <ProgressWrapper
-      aria-label="Content is loading..."
-      aria-live="polite"
-      aria-valuemin={0}
-      aria-valuemax={100}
-      aria-valuenow={progress.value * 100}
-      aria-valuetext={progress.message}
-      role="progressbar"
-      {...props}
-    >
-      <ProgressTrack>
-        <ProgressBar style={{ width: `${progress.value * 100}%` }} />
-      </ProgressTrack>
-      <ProgressMessage>
-        {progress.message}
-        {progress.modules && ` ${progress.modules.complete} / ${progress.modules.total} modules`}
-        {progress.value < 1 && <Ellipsis />}
-      </ProgressMessage>
-    </ProgressWrapper>
-  ) : (
+export const PureLoader: FunctionComponent<LoaderProps> = ({ progress, size, ...props }) => {
+  if (progress) {
+    const { value, modules } = progress;
+    let { message } = progress;
+    if (modules) message += ` ${modules.complete} / ${modules.total} modules`;
+    return (
+      <ProgressWrapper
+        aria-label="Content is loading..."
+        aria-live="polite"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={value * 100}
+        aria-valuetext={message}
+        role="progressbar"
+        {...props}
+      >
+        <ProgressTrack>
+          <ProgressBar style={{ width: `${value * 100}%` }} />
+        </ProgressTrack>
+        <ProgressMessage>
+          {message}
+          {value < 1 && <Ellipsis key={message} />}
+        </ProgressMessage>
+      </ProgressWrapper>
+    );
+  }
+  return (
     <LoaderWrapper
       aria-label="Content is loading..."
       aria-live="polite"
@@ -121,6 +127,7 @@ export const PureLoader: FunctionComponent<LoaderProps> = ({ progress, size, ...
       {...props}
     />
   );
+};
 
 export const Loader: FunctionComponent = (props) => {
   const [progress, setProgress] = useState(undefined);
