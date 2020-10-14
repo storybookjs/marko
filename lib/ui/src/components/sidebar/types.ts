@@ -58,9 +58,9 @@ export type SearchResult = Fuse.FuseResultWithMatches<SearchItem> &
 export type DownshiftItem = SearchResult | ExpandType | ClearType;
 
 export type SearchChildrenFn = (args: {
-  inputValue: string;
+  query: string;
   results: DownshiftItem[];
-  inputHasFocus: boolean;
+  isBrowsing: boolean;
   getMenuProps: ControllerStateAndHelpers<DownshiftItem>['getMenuProps'];
   getItemProps: ControllerStateAndHelpers<DownshiftItem>['getItemProps'];
   highlightedIndex: number | null;

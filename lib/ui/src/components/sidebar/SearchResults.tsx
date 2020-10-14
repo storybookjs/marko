@@ -120,15 +120,15 @@ const Result: FunctionComponent<
 });
 
 export const SearchResults: FunctionComponent<{
-  isSearching: boolean;
+  query: string;
   results: DownshiftItem[];
   getMenuProps: ControllerStateAndHelpers<DownshiftItem>['getMenuProps'];
   getItemProps: ControllerStateAndHelpers<DownshiftItem>['getItemProps'];
   highlightedIndex: number | null;
-}> = React.memo(({ isSearching, results, getMenuProps, getItemProps, highlightedIndex }) => {
+}> = React.memo(({ query, results, getMenuProps, getItemProps, highlightedIndex }) => {
   return (
     <ResultsList {...getMenuProps()}>
-      {results.length > 0 && !isSearching && (
+      {results.length > 0 && !query && (
         <li>
           <RootNode>Recently opened</RootNode>
         </li>

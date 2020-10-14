@@ -234,7 +234,7 @@ export const Search: FunctionComponent<{
         if (isSearchResult(selectedItem)) {
           const { id, refId } = selectedItem.item;
           selectStory(id, refId);
-          return { inputValue: '' };
+          return { isOpen: false };
         }
         if (isExpandType(selectedItem)) {
           selectedItem.showAll();
@@ -242,7 +242,8 @@ export const Search: FunctionComponent<{
         }
         if (isClearType(selectedItem)) {
           selectedItem.clearLastViewed();
-          return {};
+          inputRef.current.blur();
+          return { isOpen: false };
         }
       }
       if (inputValue === '') {
@@ -257,12 +258,11 @@ export const Search: FunctionComponent<{
     <Downshift<DownshiftItem>
       initialInputValue={initialQuery}
       stateReducer={stateReducer}
-      itemToString={(result) => {
-        // @ts-ignore
-        return result?.item?.name || '';
-      }}
+      // @ts-ignore
+      itemToString={(result) => result?.item?.name || ''}
     >
       {({
+        isOpen,
         inputValue,
         clearSelection,
         getInputProps,
@@ -317,9 +317,9 @@ export const Search: FunctionComponent<{
             </SearchField>
             <FocusContainer tabIndex={0} id="storybook-explorer-menu">
               {children({
-                inputValue: input,
+                query: input,
                 results,
-                inputHasFocus: document.activeElement === inputRef.current,
+                isBrowsing: !isOpen && document.activeElement !== inputRef.current,
                 getMenuProps,
                 getItemProps,
                 highlightedIndex,
