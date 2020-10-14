@@ -37,9 +37,9 @@ export const FilledIn = () => (
 
 export const LastViewed = () => (
   <Search {...baseProps} lastViewed={lastViewed}>
-    {({ inputValue, results, getMenuProps, getItemProps, highlightedIndex }) => (
+    {({ query, results, getMenuProps, getItemProps, highlightedIndex }) => (
       <SearchResults
-        isSearching={!!inputValue}
+        query={query}
         results={results}
         getMenuProps={getMenuProps}
         getItemProps={getItemProps}
