@@ -21,7 +21,7 @@ import {
 } from './types';
 import { searchItem } from './utils';
 
-const DEFAULT_MAX_SEARCH_RESULTS = 20;
+const DEFAULT_MAX_SEARCH_RESULTS = 200;
 
 const options = {
   shouldSort: true,
