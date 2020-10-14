@@ -73,6 +73,10 @@ class MyComponent extends Component {
 export const defaultView = () => <MyComponent initialState={} />;
 ```
 
+### Why i'm getting errors with react-popper and Storybook?
+
+If you're using the `react-popper` in your own project and you're experiencing issues with Storybook. You can solve them by adding the `--no-dll` command line flag. Take a look at the [cli options page](../api/cli-options.md) to see how you can use the flag in your project.
+
 ### Which community addons are compatible with the latest version of Storybook?
 
 Starting with Storybook version 6.0 we've introduced some great features aimed at streamlining your development workflow.
@@ -80,3 +84,4 @@ Starting with Storybook version 6.0 we've introduced some great features aimed a
 With this we would like to point out that if you plan on using addons created by our fantastic community, you need to take in consideration that some of those addons might be working with a outdated version of Storybook. 
 
 We're actively working in providing a better way to address this situation, but in the meantime we would ask a bit of caution on your end so that you don't run into unexpected problems. Let us know by creating a issue in the [Storybook repo](https://github.com/storybookjs/storybook/issues) so that we can gather information and create a curated list with those addons to help not only you but the rest of the community.
+
