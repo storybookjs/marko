@@ -4,15 +4,17 @@ import ReactDOM from 'react-dom';
 
 import { RenderContext } from './types';
 
+// will be provided by the webpack define plugin
+declare const FRAMEWORK_OPTIONS: {
+  fastRefresh?: boolean;
+  strictMode?: boolean;
+};
+
 const rootEl = document ? document.getElementById('root') : null;
 
 const render = (node: ReactElement, el: Element) =>
   new Promise((resolve) => {
-    ReactDOM.render(
-      process.env.STORYBOOK_EXAMPLE_APP ? <StrictMode>{node}</StrictMode> : node,
-      el,
-      resolve
-    );
+    ReactDOM.render(node, el, resolve);
   });
 
 class ErrorBoundary extends Component<{
@@ -47,6 +49,8 @@ class ErrorBoundary extends Component<{
   }
 }
 
+const Wrapper = FRAMEWORK_OPTIONS.strictMode ? React.StrictMode : React.Fragment;
+
 export default async function renderMain({
   storyFn,
   showMain,
@@ -57,9 +61,11 @@ export default async function renderMain({
   const StoryFn = storyFn as FunctionComponent;
 
   const element = (
-    <ErrorBoundary showMain={showMain} showException={showException}>
-      <StoryFn />
-    </ErrorBoundary>
+    <Wrapper>
+      <ErrorBoundary showMain={showMain} showException={showException}>
+        <StoryFn />
+      </ErrorBoundary>
+    </Wrapper>
   );
 
   // We need to unmount the existing set of components in the DOM node.
