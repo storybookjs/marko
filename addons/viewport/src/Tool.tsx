@@ -133,6 +133,7 @@ export const ViewportTool: FunctionComponent = memo(
       selected: defaultViewport,
       isRotated: false,
     });
+
     const list = toList(viewports);
 
     if (!list.find((i) => i.id === defaultViewport)) {

@@ -393,12 +393,16 @@ export function useSharedState<S>(stateId: string, defaultState?: S) {
     };
     const stateInitializationHandlers = {
       [SET_STORIES]: () => {
-        if (addonStateCache[stateId]) {
+        const currentState = api.getAddonState(stateId);
+        if (currentState) {
+          addonStateCache[stateId] = currentState;
+          api.emit(`${SHARED_STATE_SET}-manager-${stateId}`, currentState);
+        } else if (addonStateCache[stateId]) {
           // this happens when HMR
           setState(addonStateCache[stateId]);
           api.emit(`${SHARED_STATE_SET}-manager-${stateId}`, addonStateCache[stateId]);
         } else if (defaultState !== undefined) {
-          // if not HMR, yet the defaults are form the manager
+          // if not HMR, yet the defaults are from the manager
           setState(defaultState);
           // initialize addonStateCache after first load, so its available for subsequent HMR
           addonStateCache[stateId] = defaultState;
@@ -406,8 +410,10 @@ export function useSharedState<S>(stateId: string, defaultState?: S) {
         }
       },
       [STORY_CHANGED]: () => {
-        if (api.getAddonState(stateId) !== undefined) {
-          api.emit(`${SHARED_STATE_SET}-manager-${stateId}`, api.getAddonState(stateId));
+        const currentState = api.getAddonState(stateId);
+
+        if (currentState !== undefined) {
+          api.emit(`${SHARED_STATE_SET}-manager-${stateId}`, currentState);
         }
       },
     };
