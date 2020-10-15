@@ -159,5 +159,5 @@ We're only covering version 5.3 and 5.0 as they were important milestones for St
 
 
 <div class="aside">
-With the release of version 5.3 we've updated how you can write your stories to a more compact and easier way. It doesn't mean that the <code>storiesOF</code> format has been removed. For the time being we're still supporting it and we have documentation for it. But be advised that this is bound to change in the future.
+With the release of version 5.3 we've updated how you can write your stories to a more compact and easier way. It doesn't mean that the <code>storiesOf</code> format has been removed. For the time being we're still supporting it and we have documentation for it. But be advised that this is bound to change in the future.
 </div>
