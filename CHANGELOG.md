@@ -1,10 +1,48 @@
+## 6.1.0-alpha.24 (October 15, 2020)
+
+### Bug Fixes
+
+- Addon-viewports: Fix initial load state ([#11627](https://github.com/storybookjs/storybook/pull/11627))
+- UI: Fullscreen toggle does not work when all panels are collapsed ([#11810](https://github.com/storybookjs/storybook/pull/11810))
+- Addon-controls: Fix "docs before controls" check ([#12738](https://github.com/storybookjs/storybook/pull/12738))
+
+### Maintenance
+
+- Build: fix E2E tests and rework related CircleCI jobs ([#12746](https://github.com/storybookjs/storybook/pull/12746))
+
+### Dependency Upgrades
+
+- Upgrade babel-plugin-react-docgen ([#12748](https://github.com/storybookjs/storybook/pull/12748))
+
+## 6.1.0-alpha.23 (October 12, 2020)
+
+### Features
+
+- Core: Add async loaders ([#12699](https://github.com/storybookjs/storybook/pull/12699))
+- Addon-a11y: Add blurred vision effect ([#12731](https://github.com/storybookjs/storybook/pull/12731))
+
+### Maintenance
+
+- Build: Improve angular e2e tests ([#12723](https://github.com/storybookjs/storybook/pull/12723))
+
+## 6.1.0-alpha.22 (October 10, 2020)
+
+### Features
+
+- Angular: Choose project used by Storybook ([#12565](https://github.com/storybookjs/storybook/pull/12565))
+
+### Bug Fixes
+
+- Composition: Fix incorrect ref type ([#12709](https://github.com/storybookjs/storybook/pull/12709))
+- Addon-knobs: Fix uncontrolled to controlled warning for booleans ([#12719](https://github.com/storybookjs/storybook/pull/12719))
+
 ## 6.1.0-alpha.21 (October 8, 2020)
 
 ### Features
 
-- Sidebar: Better search, keyboard shortcuts, and "recently viewed" ([#12601](https://github.com/storybookjs/storybook/pull/12601))
+- Sidebar: Better search, keyboard shortcuts, "recently viewed" ([#12601](https://github.com/storybookjs/storybook/pull/12601))
 - Source-loader: Generate sourcemaps ([#12277](https://github.com/storybookjs/storybook/pull/12277))
-- Core: Add apng support ([#12639](https://github.com/storybookjs/storybook/pull/12639))
+- Core: Add APNG support ([#12639](https://github.com/storybookjs/storybook/pull/12639))
 
 ### Bug Fixes
 

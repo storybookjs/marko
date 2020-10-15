@@ -8,7 +8,7 @@ This document describes the pre-6.0 usage of the addon, and as such is no longer
 
 Import the `action` function and use it to create actions handlers. When creating action handlers, provide a **name** to make it easier to identify.
 
-> _Note: Make sure NOT to use reserved words as function names. [issues#29](https://github.com/storybookjs/storybook-addon-actions/issues/29#issuecomment-288274794)_
+> _Note: Be mindful of the choice of the function's name. Avoid using Javascript reserved words such as **default** or **if**, as they will lead into unexpected errors._
 
 ```js
 import { action } from '@storybook/addon-actions';

@@ -1,0 +1,32 @@
+```ts
+// button.stories.ts
+
+import { Meta, Story } from '@storybook/angular';
+import { ButtonComponent } from './button.component';
+
+export default {
+  title: 'Example/Button',
+  component: ButtonComponent,
+  decorators: [
+    (storyFunc) => {
+      const story = storyFunc();
+
+      return {
+        ...story,
+        template: `<div style="margin: 3em">${story.template}</div>`,
+      };
+    },
+  ],
+} as Meta;
+
+// Note:  To see the decorator applied to your component's stories you'll need to include the template key with the component's selector.
+
+const Template: Story<ButtonComponent> = (args: ButtonComponent) => ({
+  component: ButtonComponent,
+  moduleMetadata: {
+    declarations: [ButtonComponent],
+  },
+  props: args,
+  template: '<app-button label="Submit"></app-button>',
+});
+```

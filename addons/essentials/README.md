@@ -39,7 +39,7 @@ If you want to reconfigure an addon, simply install that addon per that addon's 
 
 ## Disabling addons
 
-Yuu can disable any of Essential's addons using the following configuration scheme in `.storybook/main.js`:
+You can disable any of Essential's addons using the following configuration scheme in `.storybook/main.js`:
 
 ```js
 module.exports = {
