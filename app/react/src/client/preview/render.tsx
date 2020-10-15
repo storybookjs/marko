@@ -1,14 +1,8 @@
-import { document } from 'global';
+import { document, FRAMEWORK_OPTIONS } from 'global';
 import React, { Component, FunctionComponent, ReactElement, StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 
 import { RenderContext } from './types';
-
-// will be provided by the webpack define plugin
-declare const FRAMEWORK_OPTIONS: {
-  fastRefresh?: boolean;
-  strictMode?: boolean;
-};
 
 const rootEl = document ? document.getElementById('root') : null;
 
@@ -49,8 +43,7 @@ class ErrorBoundary extends Component<{
   }
 }
 
-const isStrict = process.env.STORYBOOK_EXAMPLE_APP || FRAMEWORK_OPTIONS?.strictMode;
-const Wrapper = isStrict ? React.StrictMode : React.Fragment;
+const Wrapper = FRAMEWORK_OPTIONS?.strictMode ? React.StrictMode : React.Fragment;
 
 export default async function renderMain({
   storyFn,
