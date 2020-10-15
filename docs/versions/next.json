@@ -1,0 +1,1 @@
+{"version":"6.1.0-alpha.23","info":{"plain":"### Features\n\n- Core: Add async loaders ([#12699](https://github.com/storybookjs/storybook/pull/12699))\n- Addon-a11y: Add blurred vision effect ([#12731](https://github.com/storybookjs/storybook/pull/12731))\n\n### Maintenance\n\n- Build: Improve angular e2e tests ([#12723](https://github.com/storybookjs/storybook/pull/12723))"}}

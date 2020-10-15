@@ -13,7 +13,7 @@ const Template = (initialValue?: number) => {
       <RangeControl
         name="range"
         value={value}
-        onChange={(name, newVal) => setValue(newVal)}
+        onChange={(newVal) => setValue(newVal)}
         min={0}
         max={20}
         step={2}

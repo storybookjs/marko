@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, ComponentProps } from 'react';
+import React, { FunctionComponent, ReactNode, ElementType, ComponentProps } from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { resetComponents } from '@storybook/components/html';
 import { Story as PureStory } from '@storybook/components';
@@ -23,6 +23,11 @@ type StoryDefProps = {
 
 type StoryRefProps = {
   id?: string;
+} & CommonProps;
+
+type StoryImportProps = {
+  name: string;
+  story: ElementType;
 } & CommonProps;
 
 export type StoryProps = StoryDefProps | StoryRefProps;
@@ -51,7 +56,7 @@ export const getStoryProps = (props: StoryProps, context: DocsContextProps): Pur
     return null;
   }
 
-  // prefer block props, then story parameters defined by the framework-specific settings and optionally overriden by users
+  // prefer block props, then story parameters defined by the framework-specific settings and optionally overridden by users
   const { inlineStories = false, iframeHeight = 100, prepareForInline } = docs;
   const storyIsInline = typeof inline === 'boolean' ? inline : inlineStories;
   if (storyIsInline && !prepareForInline) {

@@ -32,6 +32,7 @@ function cleanup() {
   // --copy-files option doesn't work with --ignore
   // https://github.com/babel/babel/issues/6226
   if (fs.existsSync(path.join(process.cwd(), 'dist'))) {
+    const inStoryshots = process.cwd().includes('storyshots'); // This is a helper the exclude storyshots folder from the regex
     const files = shell.find('dist').filter((filePath) => {
       // Do not remove folder
       // And do not clean anything for:
@@ -39,10 +40,11 @@ function cleanup() {
       // - @storybook/cli/dist/frameworks/*
       // because these are the template files
       // that will be copied to init SB on users' projects
+
       if (
         fs.lstatSync(filePath).isDirectory() ||
         /generators\/.+\/template.*/.test(filePath) ||
-        /dist\/frameworks\/.*/.test(filePath)
+        (/dist\/frameworks\/.*/.test(filePath) && !inStoryshots)
       ) {
         return false;
       }

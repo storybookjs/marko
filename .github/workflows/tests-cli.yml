@@ -35,26 +35,3 @@ jobs:
     - name: cli
       run: |
         yarn test --cli
-  cli-yarn-2:
-    name: CLI Fixtures with Yarn 2
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '10.x'
-    - uses: actions/checkout@v2
-    - name: Cache node modules
-      uses: actions/cache@v1
-      with:
-        path: node_modules
-        key: build-v2-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          build-v2-${{ env.cache-name }}-
-          build-v2-
-    - name: install, bootstrap
-      run: |
-        yarn bootstrap --core
-    - name: cli with Yarn 2
-      run: |
-        cd lib/cli
-        yarn test-yarn-2

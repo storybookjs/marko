@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 
 /* eslint-disable global-require */
+
 const { lstatSync, readdirSync } = require('fs');
 const { join } = require('path');
+const { maxConcurrentTasks } = require('./utils/concurrency');
 const { checkDependenciesAndRun, spawn } = require('./utils/cli-utils');
 
 function run() {
@@ -82,8 +84,8 @@ function run() {
       option: '--install',
       command: () => {
         const command = process.env.CI
-          ? 'yarn install --network-concurrency 8'
-          : 'yarn install --ignore-optional --network-concurrency 8';
+          ? `yarn install --frozen-lockfile --cache-folder ~/.cache/yarn --network-concurrency ${maxConcurrentTasks}`
+          : `yarn install --ignore-optional --network-concurrency ${maxConcurrentTasks}`;
         spawn(command);
       },
       order: 1,
@@ -94,7 +96,11 @@ function run() {
       option: '--build',
       command: () => {
         log.info(prefix, 'prepare');
-        spawn('lerna run prepare');
+        spawn(
+          `lerna run prepare ${
+            process.env.CI ? `--concurrency ${maxConcurrentTasks} --stream` : ''
+          }`
+        );
       },
       order: 2,
     }),
@@ -109,15 +115,6 @@ function run() {
         }, 5000);
       },
       order: 3,
-    }),
-    docs: createTask({
-      name: `Documentation ${chalk.gray('(docs)')}`,
-      defaultValue: false,
-      option: '--docs',
-      command: () => {
-        spawn('yarn bootstrap:docs');
-      },
-      order: 6,
     }),
     packs: createTask({
       name: `Build tarballs of packages ${chalk.gray('(build-packs)')}`,
@@ -150,7 +147,7 @@ function run() {
   };
 
   const groups = {
-    main: ['core', 'docs'],
+    main: ['core'],
     buildtasks: ['install', 'build', 'dll', 'packs'],
     devtasks: ['dev', 'registry', 'reset'],
   };
@@ -163,7 +160,7 @@ function run() {
     tasks[key].value = program[tasks[key].option.replace('--', '')] || program.all;
   });
 
-  const createSeperator = (input) => `- ${input}${' ---------'.substr(0, 12)}`;
+  const createSeparator = (input) => `- ${input}${' ---------'.substr(0, 12)}`;
 
   const choices = Object.values(groups)
     .map((l) =>
@@ -174,7 +171,7 @@ function run() {
     )
     .reduce(
       (acc, i, k) =>
-        acc.concat(new inquirer.Separator(createSeperator(Object.keys(groups)[k]))).concat(i),
+        acc.concat(new inquirer.Separator(createSeparator(Object.keys(groups)[k]))).concat(i),
       []
     );
 

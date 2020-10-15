@@ -95,7 +95,7 @@ module.exports = {
 Finally, you can create MDX files like this:
 
 ```md
-import { Meta, Story, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable } from '@storybook/addon-docs/blocks';
 import { hbs } from 'ember-cli-htmlbars';
 
 <Meta title='App Component' component='AppComponent' />
@@ -109,9 +109,9 @@ Some **markdown** description, or whatever you want.
 context: { title: "Title" },
 }}</Story>
 
-## Props
+## ArgsTable
 
-<Props of='AppComponent' />
+<ArgsTable of='AppComponent' />
 ```
 
 Yes, it's redundant to declare `component` twice. [Coming soon](https://github.com/storybookjs/storybook/issues/8673).

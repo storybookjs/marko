@@ -1,0 +1,20 @@
+```js
+// Button.stories.tsx
+
+import React from 'react';
+import { Button, ButtonProps } from './Button';
+import { Meta } from '@storybook/react/types-6-0';
+
+export default {
+  title: 'Button',
+  component: Button,
+  parameters: {
+    backgrounds: {
+      values: [
+         { name: 'red', value: '#f00', },
+         { name: 'green', value: '#0f0', },
+      ],
+    }
+  },
+} as Meta;
+```

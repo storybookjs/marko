@@ -305,3 +305,16 @@ initStoryshots({
 ```
 
 `getScreenshotOptions` receives an object `{ context: {kind, story}, url}`. _kind_ is the kind of the story and the _story_ its name. _url_ is the URL the browser will use to screenshot.
+
+To create a screenshot of just a single element (with its children), rather than the page or current viewport, an ElementHandle can be returned from `beforeScreenshot`:
+```js
+import initStoryshots from '@storybook/addon-storyshots';
+import { imageSnapshot } from '@storybook/addon-storyshots-puppeteer';
+
+const beforeScreenshot = (page) => page.$('#root > *');
+
+initStoryshots({
+  suite: 'Image storyshots',
+  test: imageSnapshot({ storybookUrl: 'http://localhost:6006', beforeScreenshot }),
+});
+```

@@ -21,6 +21,7 @@ export interface ThemeVars {
   // Text colors
   textColor?: string;
   textInverseColor?: string;
+  textMutedColor?: string;
 
   // Toolbar default and active colors
   barTextColor?: string;

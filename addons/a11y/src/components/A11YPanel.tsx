@@ -1,16 +1,16 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { styled } from '@storybook/theming';
 
 import { ActionBar, Icons, ScrollArea } from '@storybook/components';
 
 import { AxeResults } from 'axe-core';
-import { useChannel, useParameter, useStorybookState, useAddonState } from '@storybook/api';
+import { useChannel, useParameter, useStorybookState } from '@storybook/api';
 import { Report } from './Report';
 import { Tabs } from './Tabs';
 
 import { useA11yContext } from './A11yContext';
-import { EVENTS, ADDON_ID } from '../constants';
+import { EVENTS } from '../constants';
 import { A11yParameters } from '../params';
 
 export enum RuleType {
@@ -51,13 +51,13 @@ const Centered = styled.span<{}>({
 type Status = 'initial' | 'manual' | 'running' | 'error' | 'ran' | 'ready';
 
 export const A11YPanel: React.FC = () => {
-  const [status, setStatus] = useAddonState<Status>(ADDON_ID, 'initial');
-  const [error, setError] = React.useState<unknown>(undefined);
-  const { setResults, results } = useA11yContext();
-  const { storyId } = useStorybookState();
   const { manual } = useParameter<Pick<A11yParameters, 'manual'>>('a11y', {
     manual: false,
   });
+  const [status, setStatus] = useState<Status>(manual ? 'manual' : 'initial');
+  const [error, setError] = React.useState<unknown>(undefined);
+  const { setResults, results } = useA11yContext();
+  const { storyId } = useStorybookState();
 
   React.useEffect(() => {
     setStatus(manual ? 'manual' : 'initial');

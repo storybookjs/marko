@@ -9,7 +9,7 @@ const fixBadGlob = deprecate(
     return match.input.replace(match[1], `@${match[1]}`);
   },
   dedent`
-    You're specified an invalid glob, we've attempted to fix it, please ensure the glob you specify is a valid glob. See: https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#correct-globs-in-mainjs
+    You have specified an invalid glob, we've attempted to fix it, please ensure that the glob you specify is valid. See: https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#correct-globs-in-mainjs
   `
 );
 const detectBadGlob = (val: string) => {
@@ -31,7 +31,7 @@ export const toRequireContext = (input: any) => {
     case typeof input === 'string': {
       const { base, glob } = globBase(fixedInput);
 
-      const recursive = glob.includes('**') || glob.split('/').length > 2;
+      const recursive = glob.includes('**') || glob.split('/').length > 1;
       const regex = makeRe(glob, { fastpaths: false, noglobstar: false, bash: false });
       const { source } = regex;
 

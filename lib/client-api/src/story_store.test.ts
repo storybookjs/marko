@@ -439,7 +439,7 @@ describe('preview.story_store', () => {
           },
           globalTypes: {
             arg2: { defaultValue: 'arg2' },
-            arg3: { defautlValue: { complex: { object: ['changed'] } } },
+            arg3: { defaultValue: { complex: { object: ['changed'] } } },
             // XXX: note this currently wouldn't fail because parameters.globals.arg4 isn't cleared
             // due to #10005, see below
             arg4: {}, // has no default value set but we need to make sure we don't lose it
@@ -748,6 +748,17 @@ describe('preview.story_store', () => {
         expect(store.getSelection()).toEqual({ storyId: 'g2-a--1', viewMode: 'story' });
       });
 
+      // Making sure the fix #11571 doesn't break this
+      it('selects the first story if there are two stories in the group of different lengths', () => {
+        const store = new StoryStore({ channel });
+        store.setSelectionSpecifier({ storySpecifier: 'a', viewMode: 'story' });
+        addStoryToStore(store, 'a', 'long-long-long', () => 0);
+        addStoryToStore(store, 'a', 'short', () => 0);
+        store.finishConfiguring();
+
+        expect(store.getSelection()).toEqual({ storyId: 'a--long-long-long', viewMode: 'story' });
+      });
+
       it('selects nothing if the component or group does not exist', () => {
         const store = new StoryStore({ channel });
         store.setSelectionSpecifier({ storySpecifier: 'c', viewMode: 'story' });
@@ -782,6 +793,17 @@ describe('preview.story_store', () => {
         store.finishConfiguring();
 
         expect(store.getSelection()).toEqual(undefined);
+      });
+
+      // See #11571
+      it('does NOT select an earlier story that this story id is a prefix of', () => {
+        const store = new StoryStore({ channel });
+        store.setSelectionSpecifier({ storySpecifier: 'a--3', viewMode: 'story' });
+        addStoryToStore(store, 'a', '31', () => 0);
+        addStoryToStore(store, 'a', '3', () => 0);
+        store.finishConfiguring();
+
+        expect(store.getSelection()).toEqual({ storyId: 'a--3', viewMode: 'story' });
       });
     });
 
@@ -982,7 +1004,7 @@ describe('preview.story_store', () => {
       ]);
     });
 
-    it('denormalizes parameters before passing to sort', () => {
+    it('passes kind and global parameters to sort', () => {
       const store = new StoryStore({ channel });
       const storySort = jest.fn();
       store.addGlobalMetadata({
@@ -1003,14 +1025,18 @@ describe('preview.story_store', () => {
         [
           'a--1',
           expect.objectContaining({
-            parameters: expect.objectContaining({ global: 'global', kind: 'kind', story: '1' }),
+            parameters: expect.objectContaining({ story: '1' }),
           }),
+          { kind: 'kind' },
+          expect.objectContaining({ global: 'global' }),
         ],
         [
           'a--2',
           expect.objectContaining({
-            parameters: expect.objectContaining({ global: 'global', kind: 'kind', story: '2' }),
+            parameters: expect.objectContaining({ story: '2' }),
           }),
+          { kind: 'kind' },
+          expect.objectContaining({ global: 'global' }),
         ]
       );
     });
@@ -1260,6 +1286,32 @@ describe('preview.story_store', () => {
       onCurrentStoryWasSet.mockClear();
       store.setSelection({ storyId: 'a--1', viewMode: 'story' });
       expect(onCurrentStoryWasSet).toHaveBeenCalled();
+    });
+  });
+
+  describe('STORY_SPECIFIED', () => {
+    it('is emitted when configuration ends if a specifier was set', () => {
+      const onStorySpecified = jest.fn();
+      channel.on(Events.STORY_SPECIFIED, onStorySpecified);
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'kind-1', 'story-1.1', () => 0);
+      store.setSelectionSpecifier({ storySpecifier: '*', viewMode: 'story' });
+
+      store.finishConfiguring();
+      expect(onStorySpecified).toHaveBeenCalled();
+    });
+
+    it('is NOT emitted when setSelection is called', () => {
+      const onStorySpecified = jest.fn();
+      channel.on(Events.STORY_SPECIFIED, onStorySpecified);
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'kind-1', 'story-1.1', () => 0);
+      store.setSelectionSpecifier({ storySpecifier: '*', viewMode: 'story' });
+      store.finishConfiguring();
+
+      onStorySpecified.mockClear();
+      store.setSelection({ storyId: 'a--1', viewMode: 'story' });
+      expect(onStorySpecified).not.toHaveBeenCalled();
     });
   });
 });

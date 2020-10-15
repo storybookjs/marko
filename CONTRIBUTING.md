@@ -197,7 +197,7 @@ Our script leaves the local registry running, for **as long as you keep it runni
 If you've made a change to storybook's codebase and would want this change to be reflected in your app:
 
 - Ensure the storybook packages are transpiled, by either having run `yarn dev` or `yarn bootstrap --core`.
-- Go to the terminal where the local regitry is running and press `<Enter>`. This will kick off a new publish.
+- Go to the terminal where the local registry is running and press `<Enter>`. This will kick off a new publish.
 - Run the install procedure again in your local repo, (you may need to clean out node_modules first).
 - Restart your storybook.
 
@@ -303,7 +303,7 @@ If you're working on one or a few packages, for every change that you make, you 
 - Run `yarn build <package-name>` to build that package specifically. \
   For the package name, use its short version. Example: for `@storybook/addon-docs`, run `yarn build addon-docs`.
 - Run `yarn build --all` to build everything.
-- Add `--watch` to run automatically in watch more if you are either building a selection of packages by name or building all.
+- Add `--watch` to run automatically in watch mode if you are either building a selection of packages by name or building all.
   Example: `yarn build core addon-docs --watch` or `yarn build --all --watch`.
 
 ### Working with the kitchen sink apps
@@ -361,6 +361,12 @@ You should now have a working storybook dev environment up and running.
 Save and go to `http://localhost:9011` (or wherever storybook is running)
 
 If you don't see the changes rerun `yarn storybook` again in your sandbox app
+
+### Documentation
+
+The documentation for Storybook is served by the [frontpage](https://github.com/storybookjs/frontpage), but the docs files are in this repository.
+
+To see changes in a development version of the docs, use the "linking" method documented [here](https://github.com/storybookjs/frontpage#docs-content).
 
 ## Release Guide
 

@@ -28,13 +28,14 @@ export const String = Template.bind({});
 String.args = {
   ...baseArgs,
   row: {
-    name: 'someString',
+    key: 'someString',
+    name: 'Some String',
     description: 'someString description',
     type: { required: true },
     control: { type: 'text' },
     table: {
       type: { summary: 'string' },
-      defaultValue: { summary: 'fixme' },
+      defaultValue: { summary: 'reallylongstringnospaces' },
     },
   },
 };
@@ -44,7 +45,7 @@ LongName.args = {
   ...baseArgs,
   row: {
     ...String.args.row,
-    name: 'reallyLongStringThatTakesUpSpace',
+    name: 'Really Long String That Takes Up Space',
   },
 };
 
@@ -61,7 +62,8 @@ export const Boolean = Template.bind({});
 Boolean.args = {
   ...baseArgs,
   row: {
-    name: 'someBoolean',
+    key: 'someBoolean',
+    name: 'Some Boolean',
     description: 'someBoolean description',
     type: { required: true },
     control: { type: 'boolean' },
@@ -76,7 +78,8 @@ export const Color = Template.bind({});
 Color.args = {
   ...baseArgs,
   row: {
-    name: 'someColor',
+    key: 'someColor',
+    name: 'Some Color',
     type: { name: 'string' },
     description: 'someColor description',
     defaultValue: '#ff0',
@@ -88,7 +91,8 @@ export const Date = Template.bind({});
 Date.args = {
   ...baseArgs,
   row: {
-    name: 'someDate',
+    key: 'someDate',
+    name: 'Some Date',
     type: { name: 'string' },
     description: 'someDate description',
     control: { type: 'date' },
@@ -99,7 +103,8 @@ export const Number = Template.bind({});
 Number.args = {
   ...baseArgs,
   row: {
-    name: 'someNumber',
+    key: 'someNumber',
+    name: 'Some Number',
     description: 'someNumber description',
     type: { required: false },
     table: {
@@ -123,7 +128,8 @@ export const Radio = Template.bind({});
 Radio.args = {
   ...baseArgs,
   row: {
-    name: 'someEnum',
+    key: 'someEnum',
+    name: 'Some Enum',
     description: 'someEnum description',
     control: { type: 'radio', options: ['a', 'b', 'c'] },
   },
@@ -178,7 +184,8 @@ export const ObjectOf = Template.bind({});
 ObjectOf.args = {
   ...baseArgs,
   row: {
-    name: 'someObject',
+    key: 'someObject',
+    name: 'Some Object',
     description: 'A simple `objectOf` propType.',
     table: {
       type: { summary: 'objectOf(number)' },
@@ -192,7 +199,8 @@ export const ArrayOf = Template.bind({});
 ArrayOf.args = {
   ...baseArgs,
   row: {
-    name: 'someArray',
+    key: 'someArray',
+    name: 'Some Array',
     description: 'array of a certain type',
     table: {
       type: { summary: 'number[]' },
@@ -206,7 +214,8 @@ export const ComplexObject = Template.bind({});
 ComplexObject.args = {
   ...baseArgs,
   row: {
-    name: 'someComplex',
+    key: 'someComplex',
+    name: 'Some Complex',
     description: 'A very complex `objectOf` propType.',
     table: {
       type: {
@@ -234,7 +243,8 @@ export const Func = Template.bind({});
 Func.args = {
   ...baseArgs,
   row: {
-    name: 'concat',
+    key: 'concat',
+    name: 'Concat',
     description: 'concat 2 string values.',
     type: { required: true },
     table: {
@@ -252,11 +262,66 @@ Func.args = {
   },
 };
 
+const enumeration =
+  '"search" | "arrow-to-bottom" | "arrow-to-right" | "bell" | "check" | "check-circle"';
+
+export const Enum = Template.bind({});
+Enum.args = {
+  ...baseArgs,
+  row: {
+    key: 'enum',
+    name: 'Some enum',
+    type: { required: true },
+    table: {
+      type: {
+        summary: enumeration,
+      },
+    },
+  },
+};
+
+const long_enumeration =
+  '"search" | "arrow-to-bottom" | "arrow-to-right" | "bell" | "check" | "check-circle" | "chevron-up" | "chevron-down" | "chevron-left" | "chevron-right" | "envelope" | "exchange" | "file" | "file-check" | "file-import" | "file-pdf" | "file-times" | "pencil" | "question" | "question-circle" | "sitemap" | "user" | "times" | "plus" | "exclamation-triangle" | "trash-alt" | "long-arrow-up" | "long-arrow-down" | "long-arrow-left" | "long-arrow-right" | "external-link-alt" | "sticky-note" | "chart-line" | "spinner-third"';
+
+export const LongEnum = Template.bind({});
+LongEnum.args = {
+  ...baseArgs,
+  row: {
+    key: 'longEnum',
+    name: 'Long enum',
+    type: { required: true },
+    table: {
+      type: {
+        summary: long_enumeration,
+      },
+    },
+  },
+};
+
+const complexUnion =
+  '((a: string | SVGSVGElement) => void) | RefObject<SVGSVGElement | number> | [a|b] | {a|b}';
+
+export const ComplexUnion = Template.bind({});
+ComplexUnion.args = {
+  ...baseArgs,
+  row: {
+    key: 'complexUnion',
+    name: 'Complex',
+    type: { required: true },
+    table: {
+      type: {
+        summary: complexUnion,
+      },
+    },
+  },
+};
+
 export const Markdown = Template.bind({});
 Markdown.args = {
   ...baseArgs,
   row: {
-    name: 'someString',
+    key: 'someString',
+    name: 'Some String',
     description:
       'A `prop` can *support* __markdown__ syntax. This was ship in ~~5.2~~ 5.3. [Find more info in the storybook docs.](https://storybook.js.org/)',
     table: {

@@ -57,7 +57,7 @@ const loadStories = (
             typeof req.resolve === 'function' ? req.resolve(filename) : filename
           );
         } catch (error) {
-          logger.warn(`Unexpected error: ${error}`);
+          logger.warn(`Unexpected error while loading ${filename}: ${error}`);
         }
       });
     });
@@ -115,6 +115,7 @@ const loadStories = (
       id: componentId,
       parameters: kindParameters,
       decorators: kindDecorators,
+      loaders: kindLoaders = [],
       component,
       subcomponents,
       args: kindArgs,
@@ -146,6 +147,10 @@ const loadStories = (
       kind.addDecorator(decorator);
     });
 
+    kindLoaders.forEach((loader: any) => {
+      kind.addLoader(loader);
+    });
+
     const storyExports = Object.keys(exports);
     if (storyExports.length === 0) {
       logger.warn(
@@ -161,29 +166,27 @@ const loadStories = (
       if (isExportStory(key, meta)) {
         const storyFn = exports[key];
         const { story } = storyFn;
+        const { storyName = story?.name } = storyFn;
+
+        // storyFn.x and storyFn.story.x get merged with
+        // storyFn.x taking precedence in the merge
+        const parameters = { ...story?.parameters, ...storyFn.parameters };
+        const decorators = [...(storyFn.decorators || []), ...(story?.decorators || [])];
+        const loaders = [...(storyFn.loaders || []), ...(story?.loaders || [])];
+        const args = { ...story?.args, ...storyFn.args };
+        const argTypes = { ...story?.argTypes, ...storyFn.argTypes };
+
         if (story) {
           logger.debug('deprecated story', story);
           deprecatedStoryAnnotationWarning();
         }
 
-        // storyFn.x takes precedence over storyFn.story.x, but
-        // mixtures are supported
-        const {
-          storyName = story?.name,
-          parameters = story?.parameters,
-          decorators = story?.decorators,
-          args = story?.args,
-          argTypes = story?.argTypes,
-        } = storyFn;
-
-        const decoratorParams = decorators ? { decorators } : null;
         const exportName = storyNameFromExport(key);
-        const idParams = { __id: toId(componentId || kindName, exportName) };
-
         const storyParams = {
           ...parameters,
-          ...decoratorParams,
-          ...idParams,
+          __id: toId(componentId || kindName, exportName),
+          decorators,
+          loaders,
           args,
           argTypes,
         };
@@ -198,7 +201,7 @@ const configureDeprecationWarning = deprecate(
   () => {},
   `\`configure()\` is deprecated and will be removed in Storybook 7.0. 
 Please use the \`stories\` field of \`main.js\` to load stories.
-Read more at https://github.com/storybookjs/storybook/MIGRATE.md#deprecated-configure`
+Read more at https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-configure`
 );
 let loaded = false;
 export const loadCsf = ({
@@ -230,14 +233,15 @@ export const loadCsf = ({
         `Invalid module '${m}'. Did you forget to pass \`module\` as the second argument to \`configure\`"?`
       );
     }
+
     if (m && m.hot && m.hot.dispose) {
       ({ previousExports = new Map() } = m.hot.data || {});
-
       m.hot.dispose((data) => {
         loaded = false;
         // eslint-disable-next-line no-param-reassign
         data.previousExports = previousExports;
       });
+      m.hot.accept();
     }
     if (loaded) {
       logger.warn('Unexpected loaded state. Did you call `load` twice?');

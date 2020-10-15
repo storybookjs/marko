@@ -1,17 +1,16 @@
 import React from 'react';
 import reactElementToJSXString, { Options } from 'react-element-to-jsx-string';
+import dedent from 'ts-dedent';
+import deprecate from 'util-deprecate';
 
 import { addons, StoryContext } from '@storybook/addons';
 import { logger } from '@storybook/client-logger';
 
-import { SNIPPET_RENDERED } from '../../shared';
+import { SourceType, SNIPPET_RENDERED } from '../../shared';
+import { getDocgenSection } from '../../lib/docgen';
+import { isMemo, isForwardRef } from './lib';
 
-type VueComponent = {
-  /** The template for the Vue component */
-  template?: string;
-};
-
-interface JSXOptions {
+type JSXOptions = Options & {
   /** How many wrappers to skip when rendering the jsx */
   skip?: number;
   /** Whether to show the function in the jsx tab */
@@ -20,9 +19,11 @@ interface JSXOptions {
   enableBeautify?: boolean;
   /** Override the display name used for a component */
   displayName?: string | Options['displayName'];
-  /** A function ran before the story is rendered */
+  /** Deprecated: A function ran after the story is rendered */
   onBeforeRender?(dom: string): string;
-}
+  /** A function ran after a story is rendered (prefer this over `onBeforeRender`) */
+  transformSource?(dom: string, context?: StoryContext): string;
+};
 
 /** Run the user supplied onBeforeRender function if it exists */
 const applyBeforeRender = (domString: string, options: JSXOptions) => {
@@ -30,7 +31,25 @@ const applyBeforeRender = (domString: string, options: JSXOptions) => {
     return domString;
   }
 
-  return options.onBeforeRender(domString);
+  const deprecatedOnBeforeRender = deprecate(
+    options.onBeforeRender,
+    dedent`
+      StoryFn.parameters.jsx.onBeforeRender was deprecated.
+      Prefer StoryFn.parameters.jsx.transformSource instead.
+      See https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-onbeforerender for details.
+    `
+  );
+
+  return deprecatedOnBeforeRender(domString);
+};
+
+/** Run the user supplied transformSource function if it exists */
+const applyTransformSource = (domString: string, options: JSXOptions, context?: StoryContext) => {
+  if (typeof options.transformSource !== 'function') {
+    return domString;
+  }
+
+  return options.transformSource(domString, context);
 };
 
 /** Apply the users parameters and render the jsx for a story */
@@ -67,14 +86,30 @@ export const renderJsx = (code: React.ReactElement, options: JSXOptions) => {
     }
   }
 
-  const opts =
+  const displayNameDefaults =
     typeof options.displayName === 'string'
-      ? {
-          ...options,
-          showFunctions: true,
-          displayName: () => options.displayName,
-        }
-      : options;
+      ? { showFunctions: true, displayName: () => options.displayName }
+      : {
+          // To get exotic component names resolving properly
+          displayName: (el: any): string =>
+            el.type.displayName ||
+            getDocgenSection(el.type, 'displayName') ||
+            (el.type.name !== '_default' ? el.type.name : null) ||
+            (typeof el.type === 'function' ? 'No Display Name' : null) ||
+            (isForwardRef(el.type) ? el.type.render.name : null) ||
+            (isMemo(el.type) ? el.type.type.name : null) ||
+            el.type,
+        };
+
+  const filterDefaults = {
+    filterProps: (value: any, key: string): boolean => value !== undefined,
+  };
+
+  const opts = {
+    ...displayNameDefaults,
+    ...filterDefaults,
+    ...options,
+  };
 
   const result = React.Children.map(code, (c) => {
     // @ts-ignore FIXME: workaround react-element-to-jsx-string
@@ -100,20 +135,40 @@ const defaultOpts = {
   enableBeautify: true,
 };
 
+export const skipJsxRender = (context: StoryContext) => {
+  const sourceParams = context?.parameters.docs?.source;
+  const isArgsStory = context?.parameters.__isArgsStory;
+
+  // always render if the user forces it
+  if (sourceParams?.type === SourceType.DYNAMIC) {
+    return false;
+  }
+
+  // never render if the user is forcing the block to render code, or
+  // if the user provides code, or if it's not an args story.
+  return !isArgsStory || sourceParams?.code || sourceParams?.type === SourceType.CODE;
+};
+
 export const jsxDecorator = (storyFn: any, context: StoryContext) => {
-  const story: ReturnType<typeof storyFn> & VueComponent = storyFn();
+  const story = storyFn();
+
+  // We only need to render JSX if the source block is actually going to
+  // consume it. Otherwise it's just slowing us down.
+  if (skipJsxRender(context)) {
+    return story;
+  }
 
   const channel = addons.getChannel();
 
   const options = {
     ...defaultOpts,
-    ...((context && context.parameters.jsx) || {}),
+    ...(context?.parameters.jsx || {}),
   } as Required<JSXOptions>;
 
   let jsx = '';
   const rendered = renderJsx(story, options);
   if (rendered) {
-    jsx = rendered;
+    jsx = applyTransformSource(rendered, options, context);
   }
 
   channel.emit(SNIPPET_RENDERED, (context || {}).id, jsx);

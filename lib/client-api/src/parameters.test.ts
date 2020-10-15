@@ -26,4 +26,8 @@ describe('client-api.parameters', () => {
       },
     });
   });
+
+  it('ignores undefined additions', () => {
+    expect(combineParameters({ a: 1 }, { a: 2 }, { a: undefined })).toEqual({ a: 2 });
+  });
 });

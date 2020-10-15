@@ -3,21 +3,26 @@ import React, { Fragment, Component, FunctionComponent, SyntheticEvent } from 'r
 import { Icons, IconButton, Separator } from '@storybook/components';
 import { Addon } from '@storybook/addons';
 
-const Context = React.createContext({ value: 1, set: (v: number) => {} });
+const initialZoom = 1 as const;
 
-class ZoomProvider extends Component<{}, { value: number }> {
+const Context = React.createContext({ value: initialZoom, set: (v: number) => {} });
+
+class ZoomProvider extends Component<{ shouldScale: boolean }, { value: number }> {
   state = {
-    value: 1,
+    value: initialZoom,
   };
 
   set = (value: number) => this.setState({ value });
 
   render() {
-    const { children } = this.props;
+    const { children, shouldScale } = this.props;
     const { set } = this;
     const { value } = this.state;
-
-    return <Context.Provider value={{ value, set }}>{children}</Context.Provider>;
+    return (
+      <Context.Provider value={{ value: shouldScale ? value : initialZoom, set }}>
+        {children}
+      </Context.Provider>
+    );
   }
 }
 
@@ -59,7 +64,7 @@ export const zoomTool: Addon = {
     <Fragment>
       <ZoomConsumer>
         {({ set, value }) => (
-          <Zoom key="zoom" set={(v: number) => set(value * v)} reset={() => set(1)} />
+          <Zoom key="zoom" set={(v: number) => set(value * v)} reset={() => set(initialZoom)} />
         )}
       </ZoomConsumer>
       <Separator />

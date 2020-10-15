@@ -12,7 +12,7 @@ const Template = (initialValue?: string, presetColors?: string[]) => {
     <ColorControl
       name="Color"
       value={value}
-      onChange={(name, newVal) => setValue(newVal)}
+      onChange={(newVal) => setValue(newVal)}
       presetColors={presetColors}
     />
   );

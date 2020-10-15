@@ -25,6 +25,10 @@ export interface SubAPI {
   showReleaseNotesOnLaunch: () => boolean;
 }
 
+export interface SubState {
+  releaseNotesViewed: string[];
+}
+
 export const init: ModuleFn = ({ store }) => {
   const releaseNotesData = getReleaseNotesData();
   const getReleaseNotesViewed = () => {
@@ -45,6 +49,8 @@ export const init: ModuleFn = ({ store }) => {
       }
     },
     showReleaseNotesOnLaunch: () => {
+      // The currentVersion will only exist for dev builds
+      if (!releaseNotesData.currentVersion) return false;
       const releaseNotesViewed = getReleaseNotesViewed();
       const didViewReleaseNotes = releaseNotesViewed.includes(releaseNotesData.currentVersion);
       const showReleaseNotesOnLaunch = releaseNotesData.showOnFirstLaunch && !didViewReleaseNotes;

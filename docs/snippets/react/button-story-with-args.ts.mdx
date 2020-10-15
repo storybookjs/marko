@@ -1,0 +1,15 @@
+```ts
+// Button.stories.tsx
+
+import React from 'react';
+import { Story } from '@storybook/react/types-6-0';
+
+const Template: Story<ButtonProps> = (args) => <Button {...args} />;
+
+export const Primary = Template.bind({});
+
+Primary.args = {
+  primary: true,
+  label: 'Primary',
+};
+```

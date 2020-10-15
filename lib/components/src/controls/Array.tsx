@@ -27,7 +27,7 @@ export const ArrayControl: FC<ArrayProps> = ({
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLTextAreaElement>): void => {
       const { value: newVal } = e.target;
-      onChange(name, parse(newVal, separator));
+      onChange(parse(newVal, separator));
     },
     [onChange]
   );

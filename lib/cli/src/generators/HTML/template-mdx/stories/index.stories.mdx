@@ -1,4 +1,4 @@
-import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
 
 # HTML MDX Demo
 
@@ -6,16 +6,16 @@ Here's a few sample HTML stories in MDX. Enjoy!
 
 <Meta title="Demo" />
 
-<Preview withToolbar>
+<Canvas withToolbar>
   <Story name="heading">{() => '<h1>Hello World</h1>'}</Story>
-</Preview>
+</Canvas>
 
 <Story name="button">
   {() => {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.innerText = 'Hello Button';
-    btn.addEventListener('click', e => console.log(e));
+    btn.addEventListener('click', (e) => console.log(e));
     return btn;
   }}
 </Story>

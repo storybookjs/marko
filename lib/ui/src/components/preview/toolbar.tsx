@@ -33,7 +33,7 @@ export const Toolbar = styled(Bar)(
     transition: 'transform .2s linear',
   },
   ({ shown }) => ({
-    tranform: shown ? 'translateY(0px)' : 'translateY(-40px)',
+    transform: shown ? 'translateY(0px)' : 'translateY(-40px)',
   })
 );
 

@@ -1,60 +1,106 @@
 version: 2.1
 
-aliases:
-  - &defaults
+executors:
+  sb_node:
+    parameters:
+      class:
+        description: The Resource class
+        type: enum
+        enum: ['small', 'medium', 'large', 'xlarge']
+        default: 'medium'
     working_directory: /tmp/storybook
     docker:
       - image: circleci/node:10-browsers
+        environment:
+          NODE_OPTIONS: --max_old_space_size=4096
+    resource_class: <<parameters.class>>
 
 jobs:
-  install:
-    <<: *defaults
+  build:
+    executor:
+      class: large
+      name: sb_node
     steps:
       - checkout
+      - run:
+          name: Remove examples
+          command: rm -rf examples/
       - restore_cache:
-          name: Restore core dependencies cache
+          name: Restore Yarn cache
           keys:
-            - core-dependencies-v5-{{ checksum "yarn.lock" }}
-            - core-dependencies-v5-
+            - build-yarn-cache-v1--{{ checksum "yarn.lock" }}
+            - build-yarn-cache-v1--
       - run:
           name: Install dependencies
-          command: yarn install
-      - run:
-          name: Check that yarn.lock is not corrupted
-          command: yarn repo-dirty-check
-      - save_cache:
-          name: Cache core dependencies
-          key: core-dependencies-v5-{{ checksum "yarn.lock" }}
-          paths:
-            - node_modules
-      - persist_to_workspace:
-          root: .
-          paths:
-            - node_modules
-            - examples
-            - addons
-            - dev-kits
-            - app
-            - lib
-  build:
-    <<: *defaults
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
       - run:
           name: Bootstrap
           command: yarn bootstrap --core
+      - save_cache:
+          name: Save Yarn cache
+          key: build-yarn-cache-v1--{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
       - persist_to_workspace:
           root: .
           paths:
-            - examples
             - addons
             - dev-kits
             - app
             - lib
+  install-examples-deps:
+    executor:
+      class: large
+      name: sb_node
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn cache
+          keys:
+            - install-examples-deps-yarn-cache-v1--{{ checksum "yarn.lock" }}
+            - install-examples-deps-yarn-cache-v1--
+      - run:
+          name: Install dependencies
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+      - save_cache:
+          name: Save Yarn cache
+          key: install-examples-deps-yarn-cache-v1--{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - persist_to_workspace:
+          root: .
+          paths:
+            - examples
+            - node_modules
+  install-e2e-deps:
+    executor:
+      class: large
+      name: sb_node
+    steps:
+      - checkout
+      - run:
+          name: Keep only root package
+          command: rm -rf examples/ && rm -rf addons/ && rm -rf app/ && rm -rf lib/
+      - restore_cache:
+          name: Restore Yarn cache
+          keys:
+            - install-e2e-deps-yarn-cache-v1--{{ checksum "yarn.lock" }}
+            - install-e2e-deps-yarn-cache-v1--
+      - run:
+          name: Install dependencies
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+      - save_cache:
+          name: Save Yarn cache
+          key: install-e2e-deps-yarn-cache-v1--{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - persist_to_workspace:
+          root: .
+          paths:
+            - examples
+            - node_modules
   chromatic:
-    <<: *defaults
+    executor: sb_node
     parallelism: 11
     steps:
       - checkout
@@ -65,7 +111,9 @@ jobs:
           command: |
             yarn run-chromatics
   packtracker:
-    <<: *defaults
+    executor:
+      class: medium
+      name: sb_node
     steps:
       - checkout
       - attach_workspace:
@@ -76,7 +124,9 @@ jobs:
             cd examples/official-storybook
             yarn packtracker
   examples:
-    <<: *defaults
+    executor:
+      class: large
+      name: sb_node
     parallelism: 11
     steps:
       - checkout
@@ -91,7 +141,9 @@ jobs:
           paths:
             - built-storybooks
   publish:
-    <<: *defaults
+    executor:
+      class: large
+      name: sb_node
     steps:
       - checkout
       - attach_workspace:
@@ -104,6 +156,9 @@ jobs:
           paths:
             - .verdaccio-cache
   examples-v2:
+    executor:
+      class: large
+      name: sb_node
     docker:
       - image: cypress/included:4.7.0
         environment:
@@ -159,7 +214,7 @@ jobs:
           command: yarn info @storybook/core
       - run:
           name: run e2e tests
-          command: yarn test:e2e-framework yarn_2_cra
+          command: yarn test:e2e-framework --use-yarn-2 sfcVue cra
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
@@ -188,7 +243,9 @@ jobs:
           destination: cypress
 
   smoke-tests:
-    <<: *defaults
+    executor:
+      class: medium
+      name: sb_node
     steps:
       - checkout
       - attach_workspace:
@@ -254,7 +311,7 @@ jobs:
             cd examples/cra-react15
             yarn storybook --smoke-test --quiet
   frontpage:
-    <<: *defaults
+    executor: sb_node
     steps:
       - checkout
       - restore_cache:
@@ -267,22 +324,10 @@ jobs:
       - run:
           name: Trigger build
           command: ./scripts/build-frontpage.js
-  docs:
-    <<: *defaults
-    steps:
-      - checkout
-      - run:
-          name: Install dependencies
-          command: |
-            cd docs
-            yarn install
-      - run:
-          name: Build docs
-          command: |
-            cd docs
-            yarn build
   lint:
-    <<: *defaults
+    executor:
+      class: small
+      name: sb_node
     steps:
       - checkout
       - attach_workspace:
@@ -291,7 +336,7 @@ jobs:
           name: Lint
           command: yarn lint
   test:
-    <<: *defaults
+    executor: sb_node
     steps:
       - checkout
       - attach_workspace:
@@ -304,7 +349,9 @@ jobs:
           paths:
             - coverage
   coverage:
-    <<: *defaults
+    executor:
+      class: small
+      name: sb_node
     steps:
       - checkout
       - attach_workspace:
@@ -316,27 +363,31 @@ jobs:
 workflows:
   test:
     jobs:
-      - install
-      - build:
-          requires:
-            - install
+      - build
+      - install-e2e-deps
+      - install-examples-deps
       - lint:
           requires:
+            - install-examples-deps
             - build
       - examples:
           requires:
+            - install-examples-deps
             - build
       - e2e:
           requires:
             - examples
       - smoke-tests:
           requires:
+            - install-examples-deps
             - build
       - packtracker:
           requires:
+            - install-examples-deps
             - build
       - test:
           requires:
+            - install-examples-deps
             - build
       - coverage:
           requires:
@@ -346,6 +397,7 @@ workflows:
             - examples
       - publish:
           requires:
+            - install-e2e-deps
             - build
       - examples-v2:
           requires:
@@ -355,5 +407,4 @@ workflows:
             - publish
   deploy:
     jobs:
-      - docs
       - frontpage

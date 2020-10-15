@@ -1,13 +1,14 @@
-import { ButtonComponent } from './doc-button/doc-button.component';
+import { Story, Meta } from '@storybook/angular/types-6-0';
+import { DocButtonComponent } from './doc-button/doc-button.component';
 
 export default {
   title: 'Addon/Controls',
-  component: ButtonComponent,
+  component: DocButtonComponent,
   parameters: { docs: { iframeHeight: 120 } },
-};
+} as Meta;
 
-const Template = (args) => ({
-  component: ButtonComponent,
+const Template: Story = (args) => ({
+  component: DocButtonComponent,
   props: args,
 });
 
