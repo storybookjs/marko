@@ -3,9 +3,8 @@
 ### Bug Fixes
 
 - Addon-viewports: Fix initial load state ([#11627](https://github.com/storybookjs/storybook/pull/11627))
-
-* UI: Fullscreen toggle does not work when all panels are collapsed ([#11810](https://github.com/storybookjs/storybook/pull/11810))
-* Addon-controls: Fix "docs before controls" check ([#12738](https://github.com/storybookjs/storybook/pull/12738))
+- UI: Fullscreen toggle does not work when all panels are collapsed ([#11810](https://github.com/storybookjs/storybook/pull/11810))
+- Addon-controls: Fix "docs before controls" check ([#12738](https://github.com/storybookjs/storybook/pull/12738))
 
 ### Maintenance
 
