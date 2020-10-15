@@ -1,3 +1,20 @@
+## 6.1.0-alpha.24 (October 15, 2020)
+
+### Bug Fixes
+
+- Addon-viewports: Fix initial load state ([#11627](https://github.com/storybookjs/storybook/pull/11627))
+
+* UI: Fullscreen toggle does not work when all panels are collapsed ([#11810](https://github.com/storybookjs/storybook/pull/11810))
+* Addon-controls: Fix "docs before controls" check ([#12738](https://github.com/storybookjs/storybook/pull/12738))
+
+### Maintenance
+
+- Build: fix E2E tests and rework related CircleCI jobs ([#12746](https://github.com/storybookjs/storybook/pull/12746))
+
+### Dependency Upgrades
+
+- Upgrade babel-plugin-react-docgen ([#12748](https://github.com/storybookjs/storybook/pull/12748))
+
 ## 6.1.0-alpha.23 (October 12, 2020)
 
 ### Features
