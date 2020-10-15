@@ -49,7 +49,8 @@ class ErrorBoundary extends Component<{
   }
 }
 
-const Wrapper = FRAMEWORK_OPTIONS.strictMode ? React.StrictMode : React.Fragment;
+const isStrict = process.env.STORYBOOK_EXAMPLE_APP || FRAMEWORK_OPTIONS?.strictMode;
+const Wrapper = isStrict ? React.StrictMode : React.Fragment;
 
 export default async function renderMain({
   storyFn,
