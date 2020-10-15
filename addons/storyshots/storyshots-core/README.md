@@ -410,6 +410,10 @@ This is a really powerful technique to write stories of Relay components because
 
 Whenever you change your data requirements by adding (and rendering) or (accidentally) deleting fields in your graphql query fragments, you'll get a different snapshot and thus an error in the StoryShot test.
 
+## Using a custom directory
+
+Depending on your project's needs, you can configure the `@storybook/addon-storyshots` to use a custom directory for the snapshots. You can read more about it in the [official docs](https://storybook.js.org/docs/react/workflows/snapshot-testing).
+
 ## Options
 
 ### `config`

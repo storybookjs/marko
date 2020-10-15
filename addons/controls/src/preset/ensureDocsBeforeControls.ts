@@ -36,7 +36,7 @@ export const ensureDocsBeforeControls = (configDir: string) => {
     }
     if (!verifyDocsBeforeControls(main.addons)) {
       logger.warn(dedent`
-        Expected '@storybook/addon-docs' (or essentials) to be listed before '@storybook/addon-controls'. Check your main.js?
+        Expected '@storybook/addon-docs' to be listed before '@storybook/addon-controls' (or '@storybook/addon-essentials'). Check your main.js?
         
         https://github.com/storybookjs/storybook/issues/11442
       `);

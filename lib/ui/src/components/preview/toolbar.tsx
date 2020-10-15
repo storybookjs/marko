@@ -4,6 +4,7 @@ import { styled } from '@storybook/theming';
 
 import { FlexBar, IconButton, Icons, Separator, TabButton, TabBar } from '@storybook/components';
 import { Consumer, Combo, API, Story, Group, State } from '@storybook/api';
+import { shortcutToHumanString } from '@storybook/api/shortcut';
 import { Addon, types } from '@storybook/addons';
 
 import { Location, RenderData } from '@storybook/router';
@@ -40,6 +41,7 @@ export const Toolbar = styled(Bar)(
 const fullScreenMapper = ({ api, state }: Combo) => ({
   toggle: api.toggleFullscreen,
   value: state.layout.isFullscreen,
+  shortcut: shortcutToHumanString(api.getShortcutKeys().fullScreen),
 });
 
 export const fullScreenTool: Addon = {
@@ -47,12 +49,12 @@ export const fullScreenTool: Addon = {
   match: (p) => p.viewMode === 'story',
   render: () => (
     <Consumer filter={fullScreenMapper}>
-      {({ toggle, value }) => (
+      {({ toggle, value, shortcut }) => (
         <S.DesktopOnly>
           <IconButton
             key="full"
             onClick={toggle as any}
-            title={value ? 'Exit full screen' : 'Go full screen'}
+            title={`${value ? 'Exit full screen' : 'Go full screen'} [${shortcut}]`}
           >
             <Icons icon={value ? 'close' : 'expand'} />
           </IconButton>

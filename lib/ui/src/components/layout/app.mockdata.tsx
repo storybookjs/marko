@@ -2,6 +2,7 @@ import { setInterval } from 'global';
 import React, { Component, FunctionComponent } from 'react';
 import { styled } from '@storybook/theming';
 import { Collection } from '@storybook/addons';
+import { State } from '@storybook/api';
 import { Sidebar, SidebarProps } from '../sidebar/Sidebar';
 import Panel from '../panel/panel';
 import { Preview } from '../preview/preview';
@@ -9,6 +10,27 @@ import { Preview } from '../preview/preview';
 import { previewProps } from '../preview/preview.mockdata';
 import { mockDataset } from '../sidebar/mockdata';
 import { DesktopProps } from './desktop';
+
+export const shortcuts: State['shortcuts'] = {
+  fullScreen: ['F'],
+  togglePanel: ['A'],
+  panelPosition: ['D'],
+  toggleNav: ['S'],
+  toolbar: ['T'],
+  search: ['/'],
+  focusNav: ['1'],
+  focusIframe: ['2'],
+  focusPanel: ['3'],
+  prevComponent: ['alt', 'ArrowUp'],
+  nextComponent: ['alt', 'ArrowDown'],
+  prevStory: ['alt', 'ArrowLeft'],
+  nextStory: ['alt', 'ArrowRight'],
+  shortcutsPage: ['ctrl', 'shift', ','],
+  aboutPage: [','],
+  escape: ['escape'],
+  collapseAll: ['ctrl', 'shift', 'ArrowUp'],
+  expandAll: ['ctrl', 'shift', 'ArrowDown'],
+};
 
 export const panels: Collection = {
   test1: {
@@ -148,6 +170,7 @@ export const realProps: DesktopProps = {
       actions={{ onSelect: () => {}, toggleVisibility: () => {}, togglePosition: () => {} }}
       selectedPanel="test2"
       panelPosition="bottom"
+      shortcuts={shortcuts}
       absolute={false}
     />
   ),
