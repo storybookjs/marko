@@ -73,6 +73,19 @@ class MyComponent extends Component {
 export const defaultView = () => <MyComponent initialState={} />;
 ```
 
+
+### Why aren't Controls visible in the Canvas panel but visible in the Docs panel?
+
+If you're adding Storybook's dependencies manually, make sure you to include the [`@storybook/addon-controls`](https://www.npmjs.com/package/@storybook/addon-controls) dependency in your project and reference it in your `.storybook/main.js` as follows:
+
+```js
+// .storybook/main.js
+
+module.exports = {
+  addons: ['@storybook/addon-controls'],
+};
+```
+
 ### Why i'm getting errors with react-popper and Storybook?
 
 If you're using the `react-popper` in your own project and you're experiencing issues with Storybook. You can solve them by adding the `--no-dll` command line flag. Take a look at the [cli options page](../api/cli-options.md) to see how you can use the flag in your project.
