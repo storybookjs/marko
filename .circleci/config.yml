@@ -14,6 +14,19 @@ executors:
         environment:
           NODE_OPTIONS: --max_old_space_size=4096
     resource_class: <<parameters.class>>
+  sb_node_12:
+    parameters:
+      class:
+        description: The Resource class
+        type: enum
+        enum: ['small', 'medium', 'large', 'xlarge']
+        default: 'medium'
+    working_directory: /tmp/storybook
+    docker:
+      - image: circleci/node:12-browsers
+        environment:
+          NODE_OPTIONS: --max_old_space_size=4096
+    resource_class: <<parameters.class>>
 
 jobs:
   build:
@@ -159,10 +172,6 @@ jobs:
     executor:
       class: large
       name: sb_node
-    docker:
-      - image: cypress/included:4.7.0
-        environment:
-          TERM: xterm
     working_directory: /tmp/storybook
     parallelism: 10
     steps:
@@ -183,18 +192,82 @@ jobs:
           name: test local registry
           command: yarn info @storybook/core
       - run:
+          name: Install Cypress binary
+          command: yarn cypress install
+      - run:
           name: run e2e tests
           command: yarn test:e2e-framework
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
-  examples-v2-yarn-2:
-    docker:
-      - image: cypress/included:4.7.0
-        environment:
-          TERM: xterm
+  examples-v2-cra-bench:
+    executor:
+      class: medium
+      name: sb_node_12
     working_directory: /tmp/storybook
-    # parallelism: 10
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Running local registry
+          command: yarn local-registry --port 6000 --open
+          background: true
+      - run:
+          name: Wait for registry
+          command: yarn wait-on http://localhost:6000
+      - run:
+          name: Set registry
+          command: yarn config set registry http://localhost:6000/
+      - run:
+          name: Test local registry
+          command: yarn info @storybook/core
+      - run:
+          name: Install Cypress binary
+          command: yarn cypress install
+      - run:
+          name: Run @storybook/bench on a CRA project
+          command: yarn test:e2e-framework cra_bench
+      - store_artifacts:
+          path: /tmp/storybook/cypress
+          destination: cypress
+  examples-v2-angular:
+    executor:
+      class: medium
+      name: sb_node_12
+    working_directory: /tmp/storybook
+    parallelism: 2
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Running local registry
+          command: yarn local-registry --port 6000 --open
+          background: true
+      - run:
+          name: Wait for registry
+          command: yarn wait-on http://localhost:6000
+      - run:
+          name: Set registry
+          command: yarn config set registry http://localhost:6000/
+      - run:
+          name: Test local registry
+          command: yarn info @storybook/core
+      - run:
+          name: Install Cypress binary
+          command: yarn cypress install
+      - run:
+          name: Run e2e tests
+          command: yarn test:e2e-framework angular@latest angular@v9-lts
+      - store_artifacts:
+          path: /tmp/storybook/cypress
+          destination: cypress
+  examples-v2-yarn-2:
+    executor:
+      class: medium
+      name: sb_node
+    working_directory: /tmp/storybook
     steps:
       - checkout
       - attach_workspace:
@@ -212,6 +285,9 @@ jobs:
       - run:
           name: test local registry
           command: yarn info @storybook/core
+      - run:
+          name: Install Cypress binary
+          command: yarn cypress install
       - run:
           name: run e2e tests
           command: yarn test:e2e-framework --use-yarn-2 sfcVue cra
@@ -402,7 +478,13 @@ workflows:
       - examples-v2:
           requires:
             - publish
+      - examples-v2-angular:
+          requires:
+            - publish
       - examples-v2-yarn-2:
+          requires:
+            - publish
+      - examples-v2-cra-bench:
           requires:
             - publish
   deploy:
