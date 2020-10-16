@@ -1,3 +1,13 @@
+## 6.1.0-alpha.25 (October 16, 2020)
+
+### Features
+
+- React: Add strictMode option ([#12781](https://github.com/storybookjs/storybook/pull/12781))
+
+### Dependency Upgrades
+
+- Bump lodash from 4.17.19 to 4.17.20 ([#12235](https://github.com/storybookjs/storybook/pull/12235))
+
 ## 6.1.0-alpha.24 (October 15, 2020)
 
 ### Bug Fixes
