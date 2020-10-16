@@ -52,7 +52,7 @@
   },
   "peerDependencies": {
     "@babel/core": "^7.9.6",
-    "@storybook/vue": "6.1.0-alpha.24",
+    "@storybook/vue": "6.1.0-alpha.25",
     "babel-loader": "^8.0.0",
     "webpack": ">=4"
   },
