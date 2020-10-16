@@ -54,13 +54,14 @@ export default async function renderMain({
   // storyFn has context bound in by now so can be treated as a function component with no args
   const StoryFn = storyFn as FunctionComponent;
 
-  const element = (
-    <Wrapper>
-      <ErrorBoundary showMain={showMain} showException={showException}>
-        <StoryFn />
-      </ErrorBoundary>
-    </Wrapper>
+  const content = (
+    <ErrorBoundary showMain={showMain} showException={showException}>
+      <StoryFn />
+    </ErrorBoundary>
   );
+
+  // For React 15, StrictMode & Fragment doesn't exists.
+  const element = Wrapper ? <Wrapper>{content}</Wrapper> : content;
 
   // We need to unmount the existing set of components in the DOM node.
   // Otherwise, React may not recreate instances for every story run.
