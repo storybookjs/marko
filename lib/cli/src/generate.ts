@@ -89,11 +89,11 @@ program
     })
   );
 
-program.on('command:*', (args) => {
-  logger.error(' Invalid command: %s.\n See --help for a list of available commands.', args[0]);
+program.on('command:*', ([invalidCmd]) => {
+  logger.error(' Invalid command: %s.\n See --help for a list of available commands.', invalidCmd);
   // eslint-disable-next-line
   const availableCommands = program.commands.map((cmd) => cmd._name);
-  const suggestion = availableCommands.find((cmd) => leven(cmd, args[0]) < 3);
+  const suggestion = availableCommands.find((cmd) => leven(cmd, invalidCmd) < 3);
   if (suggestion) {
     logger.log(`\n Did you mean ${suggestion}?`);
   }
