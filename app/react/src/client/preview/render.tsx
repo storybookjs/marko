@@ -1,5 +1,5 @@
 import { document, FRAMEWORK_OPTIONS } from 'global';
-import React, { Component, FunctionComponent, ReactElement, StrictMode } from 'react';
+import React, { Component, FunctionComponent, ReactElement, StrictMode, Fragment } from 'react';
 import ReactDOM from 'react-dom';
 
 import { RenderContext } from './types';
@@ -43,7 +43,7 @@ class ErrorBoundary extends Component<{
   }
 }
 
-const Wrapper = FRAMEWORK_OPTIONS?.strictMode ? React.StrictMode : React.Fragment;
+const Wrapper = FRAMEWORK_OPTIONS?.strictMode ? StrictMode : Fragment;
 
 export default async function renderMain({
   storyFn,
