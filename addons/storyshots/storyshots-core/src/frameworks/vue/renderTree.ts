@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import Vue from 'vue';
 
 // this is defined in @storybook/vue but not exported,
