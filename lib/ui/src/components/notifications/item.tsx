@@ -3,17 +3,17 @@ import { State } from '@storybook/api';
 import { Link } from '@storybook/router';
 import { styled } from '@storybook/theming';
 import { Icons, IconButton, IconsProps } from '@storybook/components';
+import { transparentize } from 'polished';
 
 const DEFAULT_ICON_COLOUR = '#66BF3C' as const;
 
 const Notification = styled.div(({ theme }) => ({
   position: 'relative',
   display: 'flex',
-  padding: '13px 15px',
+  padding: '15px 15px',
   width: '280px',
   borderRadius: 4,
-  fontSize: theme.typography.size.s1,
-  fontWeight: theme.typography.weight.bold,
+
   background:
     theme.base === 'light'
       ? 'rgba(50,53,71,0.97)'
@@ -21,11 +21,16 @@ const Notification = styled.div(({ theme }) => ({
   boxShadow: `0 2px 5px 0 rgba(0,0,0,0.05), 0 5px 15px 0 rgba(0,0,0,0.1)`,
   color: theme.color.inverseText,
   textDecoration: 'none',
+
+  transition: 'all 150ms ease-out',
+  transform: 'translate3d(0, 0, 0)',
   '&:hover': {
+    transform: 'translate3d(0, -3px, 0)',
     boxShadow:
       '0 1px 3px 0 rgba(30,167,253,0.5), 0 2px 5px 0 rgba(0,0,0,0.05), 0 5px 15px 0 rgba(0,0,0,0.1)',
   },
   '&:active': {
+    transform: 'translate3d(0, 0, 0)',
     boxShadow:
       '0 1px 3px 0 rgba(30,167,253,0.5), 0 2px 5px 0 rgba(0,0,0,0.05), 0 5px 15px 0 rgba(0,0,0,0.1)',
   },
@@ -53,19 +58,16 @@ const Headline = styled.div(({ theme }) => ({
   display: 'flex',
   height: '100%',
   alignItems: 'center',
-  color: theme.base === 'light' ? '#fff' : '#333333',
-  fontSize: 12,
-  lineHeight: '14px',
-  fontWeight: 'bold',
+  fontSize: theme.typography.size.s1,
+  lineHeight: '16px',
+  fontWeight: theme.typography.weight.bold,
 }));
 
 const SubHeadline = styled.div(({ theme }) => ({
-  color: theme.base === 'light' ? 'rgba(255,255,255,0.7)' : ' #999999',
-  fontSize: 11,
-  fontWeight: 'normal',
-  marginTop: 3,
-  marginRight: 5,
-  lineHeight: 1,
+  color: transparentize(0.25, theme.color.inverseText),
+  fontSize: theme.typography.size.s1 - 1,
+  lineHeight: '14px',
+  marginTop: 2,
 }));
 
 const truncateLongHeadlines = (headline: string, length = 30) =>
@@ -80,7 +82,7 @@ const ItemContent: FunctionComponent<Pick<State['notifications'][0], 'icon' | 'c
       <NotificationIconWrapper>
         <Icons
           icon={icon.name as IconsProps['icon']}
-          width={14}
+          width={16}
           color={icon.color || DEFAULT_ICON_COLOUR}
         />
       </NotificationIconWrapper>
