@@ -89,8 +89,7 @@ program
     })
   );
 
-program.command('*', { noHelp: true }).action(() => {
-  const [, , invalidCmd] = process.argv;
+program.on('command:*', ([invalidCmd]) => {
   logger.error(' Invalid command: %s.\n See --help for a list of available commands.', invalidCmd);
   // eslint-disable-next-line
   const availableCommands = program.commands.map((cmd) => cmd._name);
