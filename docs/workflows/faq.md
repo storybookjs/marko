@@ -107,6 +107,14 @@ module.exports = {
 };
 ```
 
+### Why aren't the addons working in a composed Storybook?
+
+Composition is a new feature that we released with version 6.0 and there's still some limitations to it.
+
+For now the addons you're using in a composed Storybook will not work.
+
+We're working on overcoming this limitation, soon you'll be able to use them  as if you working with a non composed Storybook.
+
 ### Why i'm getting errors with react-popper and Storybook?
 
 If you're using the `react-popper` in your own project and you're experiencing issues with Storybook. You can solve them by adding the `--no-dll` command line flag. Take a look at the [cli options page](../api/cli-options.md) to see how you can use the flag in your project.
