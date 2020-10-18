@@ -37,6 +37,15 @@ Usage: start-storybook [options]
 Usage: build-storybook [options]
 ```
 
+<details>
+<summary><h4>Troubleshooting 6.0 Routing Issues</h4></summary>
+
+There is an [open issue (#11958)](https://github.com/storybookjs/storybook/issues/11958) in Storybook 6.0, which causes some built sites to have trouble with routing.
+
+If, after building your site, you cannot change your route using the sidebar, try building the site with the `--no-dll` as outlined [here](https://github.com/storybookjs/storybook/issues/11958#issuecomment-677726048).
+
+</details>
+
 | Options                        | Description                                                                                                                                     | Example                                     |
 | ------------------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------ |
 | -h, --help                     | Output usage information                                                                                                                        | `build-storybook --help`                    |
