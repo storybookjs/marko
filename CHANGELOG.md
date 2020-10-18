@@ -1,3 +1,15 @@
+## 6.1.0-alpha.26 (October 18, 2020)
+
+### Maintenance
+
+- Components: Minor update checking color in Button ([#12800](https://github.com/storybookjs/storybook/pull/12800))
+
+### Dependency Upgrades
+
+- Bump vue-docgen-api to 4.33.1 ([#12808](https://github.com/storybookjs/storybook/pull/12808))
+- Storyshots: Add missing vue peer dependencies ([#12790](https://github.com/storybookjs/storybook/pull/12790))
+- Core/CLI: Update ShellJS dep version ([#12794](https://github.com/storybookjs/storybook/pull/12794))
+
 ## 6.1.0-alpha.25 (October 16, 2020)
 
 ### Features
