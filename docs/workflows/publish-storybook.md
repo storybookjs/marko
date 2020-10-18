@@ -18,6 +18,15 @@ Storybook will create a static web application at the path you specify. This can
 npx http-server ./path/to/build
 ```
 
+<details>
+<summary><h4>Troubleshooting 6.0 Routing Issues</h4></summary>
+
+There is an [open issue (#11958)](https://github.com/storybookjs/storybook/issues/11958) in Storybook 6.0, which causes some built sites to have trouble with routing.
+
+If, after building your site, you cannot change your route using the sidebar, try building the site with the `--no-dll` as outlined [here](https://github.com/storybookjs/storybook/issues/11958#issuecomment-677726048).
+
+</details>
+
 <div class="aside">
 
 Asides from the `-o` flag, you can also include other flags to build Storybook, for instance if you're using [Docs](../writing-docs/introduction.md), you can append the `--docs` flag and Storybook will build your [MDX](../writing-docs/mdx.md) and [CSF](../writing-stories/introduction.md#component-story-format) stories into a rich and interactive documentation.
