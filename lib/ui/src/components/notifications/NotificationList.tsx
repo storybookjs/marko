@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { State } from '@storybook/api';
 import { styled, CSSObject } from '@storybook/theming';
-import NotificationItem from './item';
+import NotificationItem from './NotificationItem';
 
 const List = styled.div<{ placement?: CSSObject }>(
   {
@@ -36,7 +36,7 @@ const NotificationList: FunctionComponent<{
         dismissedNotificationsIds.indexOf(notification.id) === -1 ? (
           <NotificationItem
             key={notification.id}
-            setDismissedNotification={(id: string) =>
+            onDismissNotification={(id: string) =>
               setDismissedNotificationsWithIds([...dismissedNotificationsIds, ...[id]])
             }
             notification={notification}

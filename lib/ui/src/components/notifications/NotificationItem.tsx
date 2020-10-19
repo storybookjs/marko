@@ -57,7 +57,7 @@ const NotificationTextWrapper = styled.div(() => ({
 
 const Headline = styled.div<{ hasIcon: boolean }>(({ theme, hasIcon }) => ({
   height: '100%',
-  width: hasIcon ? 210 : 235,
+  width: hasIcon ? 205 : 230,
   alignItems: 'center',
   whiteSpace: 'nowrap',
   overflow: 'hidden',
@@ -104,14 +104,14 @@ const DismissButtonWrapper = styled(IconButton)(({ theme }) => ({
 }));
 
 const DismissNotificationItem: FunctionComponent<{
-  onClick: () => void;
-}> = ({ onClick }) => (
+  onDismiss: () => void;
+}> = ({ onDismiss }) => (
   <div>
     <DismissButtonWrapper
       title="Dismiss notification"
       onClick={(e: SyntheticEvent) => {
         e.preventDefault();
-        onClick();
+        onDismiss();
       }}
     >
       <Icons icon="closeAlt" height={12} width={12} />
@@ -125,21 +125,21 @@ export const NotificationItemSpacer = styled.div({
 
 const NotificationItem: FunctionComponent<{
   notification: State['notifications'][0];
-  setDismissedNotification: (id: string) => void;
-}> = ({ notification: { content, link, onClear, id, icon }, setDismissedNotification }) => {
+  onDismissNotification: (id: string) => void;
+}> = ({ notification: { content, link, onClear, id, icon }, onDismissNotification }) => {
   const dismissNotificationItem = () => {
-    setDismissedNotification(id);
+    onDismissNotification(id);
     onClear();
   };
   return link ? (
     <NotificationLink to={link}>
       <ItemContent icon={icon} content={content} />
-      <DismissNotificationItem onClick={dismissNotificationItem} />
+      <DismissNotificationItem onDismiss={dismissNotificationItem} />
     </NotificationLink>
   ) : (
     <Notification>
       <ItemContent icon={icon} content={content} />
-      <DismissNotificationItem onClick={dismissNotificationItem} />
+      <DismissNotificationItem onDismiss={dismissNotificationItem} />
     </Notification>
   );
 };
