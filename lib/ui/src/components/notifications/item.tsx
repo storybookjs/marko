@@ -21,7 +21,9 @@ const Notification = styled.div(({ theme }) => ({
   boxShadow: `0 2px 5px 0 rgba(0,0,0,0.05), 0 5px 15px 0 rgba(0,0,0,0.1)`,
   color: theme.color.inverseText,
   textDecoration: 'none',
+}));
 
+const NotificationWithInteractiveStates = styled(Notification)(() => ({
   transition: 'all 150ms ease-out',
   transform: 'translate3d(0, 0, 0)',
   '&:hover': {
@@ -39,8 +41,7 @@ const Notification = styled.div(({ theme }) => ({
       '0 1px 3px 0 rgba(30,167,253,0.5), 0 2px 5px 0 rgba(0,0,0,0.05), 0 5px 15px 0 rgba(0,0,0,0.1)',
   },
 }));
-
-const NotificationLink = Notification.withComponent(Link);
+const NotificationLink = NotificationWithInteractiveStates.withComponent(Link);
 
 const NotificationIconWrapper = styled.div(() => ({
   display: 'flex',
@@ -54,10 +55,13 @@ const NotificationTextWrapper = styled.div(() => ({
   flexDirection: 'column',
 }));
 
-const Headline = styled.div(({ theme }) => ({
-  display: 'flex',
+const Headline = styled.div<{ hasIcon: boolean }>(({ theme, hasIcon }) => ({
   height: '100%',
+  width: hasIcon ? 210 : 235,
   alignItems: 'center',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
   fontSize: theme.typography.size.s1,
   lineHeight: '16px',
   fontWeight: theme.typography.weight.bold,
@@ -69,9 +73,6 @@ const SubHeadline = styled.div(({ theme }) => ({
   lineHeight: '14px',
   marginTop: 2,
 }));
-
-const truncateLongHeadlines = (headline: string, length = 30) =>
-  headline.length > length ? `${headline.substr(0, length - 1)}…` : headline;
 
 const ItemContent: FunctionComponent<Pick<State['notifications'][0], 'icon' | 'content'>> = ({
   icon,
@@ -88,7 +89,9 @@ const ItemContent: FunctionComponent<Pick<State['notifications'][0], 'icon' | 'c
       </NotificationIconWrapper>
     )}
     <NotificationTextWrapper>
-      <Headline title={headline}>{truncateLongHeadlines(headline)}</Headline>
+      <Headline title={headline} hasIcon={!!icon}>
+        {headline}
+      </Headline>
       {subHeadline && <SubHeadline>{subHeadline}</SubHeadline>}
     </NotificationTextWrapper>
   </>
