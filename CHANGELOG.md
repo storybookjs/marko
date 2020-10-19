@@ -1,3 +1,17 @@
+## 6.1.0-alpha.27 (October 19, 2020)
+
+### Features
+
+* Addon-docs: Dynamic source rendering for Vue ([#12812](https://github.com/storybookjs/storybook/pull/12812))
+
+### Bug Fixes
+
+* Core: Pass framework options as global ([#12810](https://github.com/storybookjs/storybook/pull/12810))
+
+### Maintenance
+
+* CLI: Clean up handling of unknown subcommands ([#12799](https://github.com/storybookjs/storybook/pull/12799))
+
 ## 6.1.0-alpha.26 (October 18, 2020)
 
 ### Maintenance
