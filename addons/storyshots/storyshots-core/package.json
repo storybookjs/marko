@@ -69,13 +69,13 @@
     "vue": "*"
   },
   "peerDependenciesMeta": {
-    "@storybook/vue": {
-      "optional": true
-    },
     "jest-preset-angular": {
       "optional": true
     },
     "jest-vue-preprocessor": {
+      "optional": true
+    },
+    "@storybook/vue": {
       "optional": true
     },
     "vue": {
@@ -85,7 +85,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4a32476204e68ccba740d584230caaaac51e7762",
+  "gitHead": "0bbd3237844572f749beb5ed845be83ccbbea85a",
   "typesVersions": {
     "<3.8": {
       "*": [
