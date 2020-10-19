@@ -8,7 +8,7 @@ import Vue from 'vue';
 
 import { SourceType, SNIPPET_RENDERED } from '../../shared';
 
-export const skipJsxRender = (context: StoryContext) => {
+export const skipSourceRender = (context: StoryContext) => {
   const sourceParams = context?.parameters.docs?.source;
   const isArgsStory = context?.parameters.__isArgsStory;
 
@@ -26,7 +26,7 @@ export const sourceDecorator = (storyFn: any, context: StoryContext) => {
   const story = storyFn();
 
   // See ../react/jsxDecorator.tsx
-  if (skipJsxRender(context)) {
+  if (skipSourceRender(context)) {
     return story;
   }
 
