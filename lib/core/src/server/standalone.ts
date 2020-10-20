@@ -1,7 +1,7 @@
 import { buildStaticStandalone } from './build-static';
 import { buildDevStandalone } from './build-dev';
 
-async function build(options = {}, frameworkOptions = {}) {
+async function build(options: any = {}, frameworkOptions: any = {}) {
   const { mode = 'dev' } = options;
 
   const commonOptions = {

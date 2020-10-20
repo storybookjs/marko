@@ -13,7 +13,7 @@ import loadManagerConfig from './manager/manager-config';
 import { logConfig } from './logConfig';
 import { getPrebuiltDir } from './utils/prebuilt-manager';
 
-async function compileManager(managerConfig, managerStartTime) {
+async function compileManager(managerConfig: any, managerStartTime: [number, number]) {
   logger.info('=> Compiling manager..');
 
   return new Promise((resolve, reject) => {
@@ -45,7 +45,7 @@ async function compileManager(managerConfig, managerStartTime) {
   });
 }
 
-async function watchPreview(previewConfig) {
+async function watchPreview(previewConfig: any) {
   logger.info('=> Compiling preview in watch mode..');
 
   return new Promise(() => {
@@ -67,7 +67,7 @@ async function watchPreview(previewConfig) {
   });
 }
 
-async function compilePreview(previewConfig, previewStartTime) {
+async function compilePreview(previewConfig: any, previewStartTime: [number, number]) {
   logger.info('=> Compiling preview..');
 
   return new Promise((resolve, reject) => {
@@ -100,13 +100,14 @@ async function compilePreview(previewConfig, previewStartTime) {
   });
 }
 
-async function copyAllStaticFiles(staticDir, outputDir) {
+async function copyAllStaticFiles(staticDir: any[] | undefined, outputDir: string) {
   if (staticDir && staticDir.length) {
     await Promise.all(
       staticDir.map(async (dir) => {
         const [currentStaticDir, staticEndpoint] = dir.split(':').concat('/');
         const localStaticPath = path.resolve(currentStaticDir);
 
+        // @ts-ignore
         if (await !fs.exists(localStaticPath)) {
           logger.error(`Error: no such directory to load static files: ${localStaticPath}`);
           process.exit(-1);
@@ -118,7 +119,7 @@ async function copyAllStaticFiles(staticDir, outputDir) {
   }
 }
 
-async function buildManager(configType, outputDir, configDir, options) {
+async function buildManager(configType: any, outputDir: string, configDir: string, options: any) {
   logger.info('=> Building manager..');
   const managerStartTime = process.hrtime();
 
@@ -138,7 +139,7 @@ async function buildManager(configType, outputDir, configDir, options) {
   return compileManager(managerConfig, managerStartTime);
 }
 
-async function buildPreview(configType, outputDir, packageJson, options) {
+async function buildPreview(configType: any, outputDir: string, packageJson: any, options: any) {
   const { watch, debugWebpack } = options;
 
   logger.info('=> Building preview..');
@@ -165,7 +166,7 @@ async function buildPreview(configType, outputDir, packageJson, options) {
   return compilePreview(previewConfig, previewStartTime);
 }
 
-export async function buildStaticStandalone(options) {
+export async function buildStaticStandalone(options: any) {
   const { staticDir, configDir, packageJson } = options;
 
   const configType = 'PRODUCTION';
@@ -197,7 +198,7 @@ export async function buildStaticStandalone(options) {
   logger.info(`=> Output directory: ${outputDir}`);
 }
 
-export function buildStatic({ packageJson, ...loadOptions }) {
+export function buildStatic({ packageJson, ...loadOptions }: any) {
   const cliOptions = getProdCli(packageJson);
 
   return buildStaticStandalone({

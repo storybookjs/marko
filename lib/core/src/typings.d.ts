@@ -5,3 +5,5 @@ declare module 'lazy-universal-dotenv';
 declare module 'pnp-webpack-plugin';
 declare module '@storybook/theming/paths';
 declare module '@storybook/ui/paths';
+declare module 'file-system-cache';
+declare module 'better-opn';

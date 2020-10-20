@@ -1,11 +1,11 @@
-function wrapPreset(basePresets) {
+function wrapPreset(basePresets: any): { babel: Function; webpack: Function } {
   return {
-    babel: async (config, args) => basePresets.apply('babel', config, args),
-    webpack: async (config, args) => basePresets.apply('webpack', config, args),
+    babel: async (config: any, args: any) => basePresets.apply('babel', config, args),
+    webpack: async (config: any, args: any) => basePresets.apply('webpack', config, args),
   };
 }
 
-function mockPreset(name, mockPresetObject) {
+function mockPreset(name: string, mockPresetObject: any) {
   jest.mock(name, () => mockPresetObject, { virtual: true });
 }
 
@@ -17,7 +17,7 @@ jest.mock('@storybook/node-logger', () => ({
   },
 }));
 
-jest.mock('resolve-from', () => (l, name) => {
+jest.mock('resolve-from', () => (l: any, name: string) => {
   const KNOWN_FILES = [
     '@storybook/addon-actions/register',
     './local/preset',
@@ -83,11 +83,11 @@ describe('presets', () => {
 
   it('loads and applies presets when they are combined in another preset', async () => {
     mockPreset('preset-foo', {
-      foo: (exec) => exec.concat('foo'),
+      foo: (exec: string[]) => exec.concat('foo'),
     });
 
     mockPreset('preset-bar', {
-      foo: (exec) => exec.concat('bar'),
+      foo: (exec: string[]) => exec.concat('bar'),
     });
 
     mockPreset('preset-got', [
@@ -96,11 +96,11 @@ describe('presets', () => {
     ]);
 
     mockPreset('preset-dracarys', {
-      foo: (exec) => exec.concat('dracarys'),
+      foo: (exec: string[]) => exec.concat('dracarys'),
     });
 
     mockPreset('preset-valar', {
-      foo: (exec, options) => exec.concat(`valar ${options.custom}`),
+      foo: (exec: string[], options: any) => exec.concat(`valar ${options.custom}`),
     });
 
     const getPresets = jest.requireActual('./presets').default;

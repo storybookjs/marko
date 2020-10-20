@@ -3,7 +3,7 @@ import loadPresets from './presets';
 import loadCustomPresets from './common/custom-presets';
 import { typeScriptDefaults } from './config/defaults';
 
-async function getPreviewWebpackConfig(options, presets) {
+async function getPreviewWebpackConfig(options: any, presets: any) {
   const typescriptOptions = await presets.apply('typescript', { ...typeScriptDefaults }, options);
   const babelOptions = await presets.apply('babel', {}, { ...options, typescriptOptions });
   const entries = await presets.apply('entries', [], options);
@@ -24,12 +24,12 @@ async function getPreviewWebpackConfig(options, presets) {
   );
 }
 
-export const filterPresetsConfig = (presetsConfig) =>
+export const filterPresetsConfig = (presetsConfig: any[]) =>
   presetsConfig.filter(
     (preset) => !/@storybook[\\\\/]preset-typescript/.test(preset.name || preset)
   );
 
-export default async (options) => {
+export default async (options: any) => {
   const { corePresets = [], frameworkPresets = [], overridePresets = [], ...restOptions } = options;
 
   const presetsConfig = [
