@@ -2,7 +2,7 @@ import path from 'path';
 import { serverRequire, serverResolve } from '../utils/server-require';
 import validateConfigurationFiles from '../utils/validate-configuration-files';
 
-export default function loadCustomPresets({ configDir }) {
+export default function loadCustomPresets({ configDir }: { configDir: string }) {
   validateConfigurationFiles(configDir);
 
   const presets = serverRequire(path.resolve(configDir, 'presets'));

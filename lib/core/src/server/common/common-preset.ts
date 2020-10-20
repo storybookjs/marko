@@ -2,7 +2,7 @@ import loadCustomBabelConfig from '../utils/load-custom-babel-config';
 
 import babelConfig from './babel';
 
-export const babel = async (_, options) => {
+export const babel = async (_: unknown, options: { configDir: string; presets: any }) => {
   const { configDir, presets } = options;
 
   return loadCustomBabelConfig(configDir, () =>
@@ -10,4 +10,5 @@ export const babel = async (_, options) => {
   );
 };
 
-export const logLevel = (previous, options) => previous || options.loglevel || 'info';
+export const logLevel = (previous: any, options: { loglevel: any }) =>
+  previous || options.loglevel || 'info';
