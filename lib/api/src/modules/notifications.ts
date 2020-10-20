@@ -5,7 +5,7 @@ export interface Notification {
   id: string;
   link: string;
   content: {
-    headline: string | ReactNode;
+    headline: string;
     subHeadline?: string | ReactNode;
   };
 

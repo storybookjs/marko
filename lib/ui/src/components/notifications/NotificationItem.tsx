@@ -13,6 +13,7 @@ const Notification = styled.div(({ theme }) => ({
   padding: 15,
   width: 280,
   borderRadius: 4,
+
   background:
     theme.base === 'light'
       ? 'rgba(50,53,71,0.97)'
