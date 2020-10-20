@@ -26,17 +26,17 @@ const projectRoot = () => {
 export const includePaths = [projectRoot()];
 export const nodeModulesPaths = path.resolve('./node_modules');
 
-const nodePathsToArray = (nodePath) =>
+const nodePathsToArray = (nodePath: string) =>
   nodePath
     .split(process.platform === 'win32' ? ';' : ':')
     .filter(Boolean)
     .map((p) => path.resolve('./', p));
 
 // Load environment variables starts with STORYBOOK_ to the client side.
-export function loadEnv(options = {}) {
+export function loadEnv(options: { production?: boolean } = {}) {
   const defaultNodeEnv = options.production ? 'production' : 'development';
 
-  const env = {
+  const env: Record<string, string> = {
     NODE_ENV: process.env.NODE_ENV || defaultNodeEnv,
     NODE_PATH: process.env.NODE_PATH || '',
     // This is to support CRA's public folder feature.
