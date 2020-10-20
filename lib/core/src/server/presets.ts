@@ -3,10 +3,11 @@ import { join } from 'path';
 import { logger } from '@storybook/node-logger';
 import resolveFrom from 'resolve-from';
 
-const isObject = (val) => val != null && typeof val === 'object' && Array.isArray(val) === false;
-const isFunction = (val) => typeof val === 'function';
+const isObject = (val: unknown): val is Record<string, any> =>
+  val != null && typeof val === 'object' && Array.isArray(val) === false;
+const isFunction = (val: unknown): val is Function => typeof val === 'function';
 
-const resolvePresetFunction = (input, presetOptions, storybookOptions) => {
+const resolvePresetFunction = (input: unknown, presetOptions: any, storybookOptions: any) => {
   if (isFunction(input)) {
     return input({ ...storybookOptions, ...presetOptions });
   }
@@ -33,7 +34,7 @@ const resolvePresetFunction = (input, presetOptions, storybookOptions) => {
  * - { name: '@storybook/addon-docs(/preset)?', options: { ... } }
  *   =>  { type: 'presets', item: { name: '@storybook/addon-docs/preset', options } }
  */
-export const resolveAddonName = (configDir, name) => {
+export const resolveAddonName = (configDir: string, name: string) => {
   let path;
 
   if (name.startsWith('.')) {
@@ -75,7 +76,7 @@ export const resolveAddonName = (configDir, name) => {
   };
 };
 
-const map = ({ configDir }) => (item) => {
+const map = ({ configDir }: { configDir: string }) => (item: any) => {
   try {
     if (isObject(item)) {
       const { name } = resolveAddonName(configDir, item.name);
@@ -98,7 +99,7 @@ const map = ({ configDir }) => (item) => {
   return undefined;
 };
 
-function interopRequireDefault(filePath) {
+function interopRequireDefault(filePath: string) {
   // eslint-disable-next-line global-require,import/no-dynamic-require
   const result = require(filePath);
 
@@ -108,7 +109,7 @@ function interopRequireDefault(filePath) {
   return isES6DefaultExported ? result.default : result;
 }
 
-function getContent(input) {
+function getContent(input: any) {
   if (input.type === 'managerEntries') {
     const { type, name, ...rest } = input;
     return rest;
@@ -118,7 +119,7 @@ function getContent(input) {
   return interopRequireDefault(name);
 }
 
-export function loadPreset(input, level, storybookOptions) {
+export function loadPreset(input: any, level: number, storybookOptions: any): any[] {
   try {
     const name = input.name ? input.name : input;
     const presetOptions = input.options ? input.options : {};
@@ -172,7 +173,7 @@ export function loadPreset(input, level, storybookOptions) {
   }
 }
 
-function loadPresets(presets, level, storybookOptions) {
+function loadPresets(presets: unknown[], level: number, storybookOptions: any) {
   if (!presets || !Array.isArray(presets) || !presets.length) {
     return [];
   }
@@ -187,14 +188,20 @@ function loadPresets(presets, level, storybookOptions) {
   }, []);
 }
 
-function applyPresets(presets, extension, config, args, storybookOptions) {
+function applyPresets(
+  presets: unknown[],
+  extension: any,
+  config: any,
+  args: any,
+  storybookOptions: any
+) {
   const presetResult = new Promise((resolve) => resolve(config));
 
   if (!presets.length) {
     return presetResult;
   }
 
-  return presets.reduce((accumulationPromise, { preset, options }) => {
+  return presets.reduce((accumulationPromise: Promise<unknown>, { preset, options }) => {
     const change = preset[extension];
 
     if (!change) {
@@ -226,11 +233,11 @@ function applyPresets(presets, extension, config, args, storybookOptions) {
   }, presetResult);
 }
 
-function getPresets(presets, storybookOptions = {}) {
+function getPresets(presets: any, storybookOptions: any = {}) {
   const loadedPresets = loadPresets(presets, 0, storybookOptions);
 
   return {
-    apply: async (extension, config, args = {}) =>
+    apply: async (extension: any, config: any, args = {}) =>
       applyPresets(loadedPresets, extension, config, args, storybookOptions),
   };
 }
