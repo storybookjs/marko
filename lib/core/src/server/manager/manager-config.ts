@@ -12,7 +12,7 @@ import loadPresets from '../presets';
 import loadCustomPresets from '../common/custom-presets';
 import { typeScriptDefaults } from '../config/defaults';
 
-export const getAutoRefs = async (options) => {
+export const getAutoRefs = async (options: { configDir: string }) => {
   const location = await findUp('package.json', { cwd: options.configDir });
   const directory = path.dirname(location);
 
@@ -39,15 +39,15 @@ export const getAutoRefs = async (options) => {
   return list.filter(Boolean);
 };
 
-const checkRef = (url) =>
+const checkRef = (url: string) =>
   fetch(`${url}/iframe.html`).then(
     ({ ok }) => ok,
     () => false
   );
 
-const stripTrailingSlash = (url) => url.replace(/\/$/, '');
+const stripTrailingSlash = (url: string) => url.replace(/\/$/, '');
 
-const toTitle = (input) => {
+const toTitle = (input: string) => {
   const result = input
     .replace(/[A-Z]/g, (f) => ` ${f}`)
     .replace(/[-_][A-Z]/gi, (f) => ` ${f.toUpperCase()}`)
@@ -66,7 +66,7 @@ const deprecatedDefinedRefDisabled = deprecate(
   `
 );
 
-async function getManagerWebpackConfig(options, presets) {
+async function getManagerWebpackConfig(options: any, presets: any) {
   const typescriptOptions = await presets.apply('typescript', { ...typeScriptDefaults }, options);
   const babelOptions = await presets.apply('babel', {}, { ...options, typescriptOptions });
 
@@ -74,7 +74,7 @@ async function getManagerWebpackConfig(options, presets) {
   const definedRefs = await presets.apply('refs', undefined, options);
   const entries = await presets.apply('managerEntries', [], options);
 
-  const refs = {};
+  const refs: Record<string, any> = {};
 
   if (autoRefs && autoRefs.length) {
     autoRefs.forEach(({ id, url, title, version }) => {
@@ -88,7 +88,7 @@ async function getManagerWebpackConfig(options, presets) {
   }
 
   if (definedRefs) {
-    Object.entries(definedRefs).forEach(([key, value]) => {
+    Object.entries(definedRefs).forEach(([key, value]: [string, any]) => {
       const { disable, disabled } = value;
 
       if (disable || disabled) {
@@ -130,7 +130,7 @@ async function getManagerWebpackConfig(options, presets) {
   return presets.apply('managerWebpack', {}, { ...options, babelOptions, entries, refs });
 }
 
-export default async (options) => {
+export default async (options: any) => {
   const { corePresets = [], frameworkPresets = [], overridePresets = [], ...restOptions } = options;
 
   const presetsConfig = [
