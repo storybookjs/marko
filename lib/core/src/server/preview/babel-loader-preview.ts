@@ -1,7 +1,7 @@
 import { includePaths } from '../config/utils';
 import { useBaseTsSupport } from '../config/useBaseTsSupport';
 
-export const createBabelLoader = (options, framework) => ({
+export const createBabelLoader = (options: any, framework: string) => ({
   test: useBaseTsSupport(framework) ? /\.(mjs|tsx?|jsx?)$/ : /\.(mjs|jsx?)$/,
   use: [
     {

@@ -22,9 +22,9 @@ import { getPreviewHeadHtml, getPreviewBodyHtml } from '../utils/template';
 import { toRequireContextString } from './to-require-context';
 import { useBaseTsSupport } from '../config/useBaseTsSupport';
 
-const reactPaths = {};
+const reactPaths: Record<string, string> = {};
 
-const storybookPaths = [
+const storybookPaths: Record<string, string> = [
   'addons',
   'addons',
   'api',
@@ -67,7 +67,7 @@ export default async ({
   frameworkPath,
   presets,
   typescriptOptions,
-}) => {
+}: any) => {
   const dlls = await presets.apply('webpackDlls', []);
   const logLevel = await presets.apply('logLevel', undefined);
   const frameworkOptions = await presets.apply(`${framework}Options`, {}, {});
@@ -90,7 +90,7 @@ export default async ({
     // is loaded. That way our client-apis can assume the existence of the API+store
     [frameworkInitEntry]: `import '${frameworkImportPath}';`,
   };
-  entries.forEach((entryFilename) => {
+  entries.forEach((entryFilename: any) => {
     const match = entryFilename.match(/(.*)-generated-(config|other)-entry.js$/);
     if (match) {
       const configFilename = match[1];
@@ -130,7 +130,8 @@ export default async ({
         : null,
       new HtmlWebpackPlugin({
         filename: `iframe.html`,
-        chunksSortMode: 'none',
+        // FIXME: `none` isn't a known option
+        chunksSortMode: 'none' as any,
         alwaysWriteToDisk: true,
         inject: false,
         templateParameters: (compilation, files, options) => ({
@@ -213,7 +214,8 @@ export default async ({
                 mangle: false,
                 keep_fnames: true,
               },
-            }),
+              // FIXME: `cache` isn't a known attribute
+            } as any),
           ]
         : [],
     },
@@ -231,7 +233,7 @@ export default async ({
  * @param bindings {Object} key-value object use to fill the template, `{{key}}` will be replaced by `escaped(value)`
  * @returns {String} Filled template
  */
-const interpolate = (template, bindings) => {
+const interpolate = (template: string, bindings: Record<string, string>) => {
   return Object.entries(bindings).reduce((acc, [k, v]) => {
     const escapedString = v.replace(/\\/g, '/').replace(/\$/g, '$$$');
     return acc.replace(new RegExp(`{{${k}}}`, 'g'), escapedString);

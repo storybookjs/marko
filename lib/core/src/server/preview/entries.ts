@@ -5,7 +5,7 @@ import dedent from 'ts-dedent';
 import glob from 'glob-promise';
 import { loadPreviewOrConfigFile } from '../utils/load-preview-or-config-file';
 
-export const sortEntries = (entries) => {
+export const sortEntries = (entries: string[]) => {
   const isGenerated = /generated-(config|other)-entry/;
   const isGeneratedConfig = /(?:preview|config)\..+-generated-config-entry/;
 
@@ -27,12 +27,12 @@ export const sortEntries = (entries) => {
   });
 };
 
-const getMainConfigs = (options) => {
+const getMainConfigs = (options: { configDir: string }) => {
   const previewPath = loadPreviewOrConfigFile(options);
   return previewPath ? [previewPath] : [];
 };
 
-export async function createPreviewEntry(options) {
+export async function createPreviewEntry(options: { configDir: string; presets: any }) {
   const { configDir, presets } = options;
   const entries = [
     require.resolve('../common/polyfills'),
@@ -41,8 +41,8 @@ export async function createPreviewEntry(options) {
   ];
 
   const configs = getMainConfigs(options);
-  const other = await presets.apply('config', [], options);
-  const stories = await presets.apply('stories', [], options);
+  const other: string[] = await presets.apply('config', [], options);
+  const stories: string[] = await presets.apply('stories', [], options);
 
   if (configs.length > 0) {
     const noun = configs.length === 1 ? 'file' : 'files';
@@ -53,7 +53,7 @@ export async function createPreviewEntry(options) {
   if (other && other.length > 0) {
     const noun = other.length === 1 ? 'file' : 'files';
     logger.info(`=> Loading ${other.length} other ${noun} in "${configDir}"`);
-    entries.push(...other.map((filename) => `${filename}-generated-other-entry.js`));
+    entries.push(...other.map((filename: string) => `${filename}-generated-other-entry.js`));
   }
 
   if (stories && stories.length) {

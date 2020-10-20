@@ -2,12 +2,12 @@ import { logger } from '@storybook/node-logger';
 import loadCustomWebpackConfig from '../utils/load-custom-webpack-config';
 import { createDefaultWebpackConfig } from './base-webpack.config';
 
-async function createFinalDefaultConfig(presets, config, options) {
+async function createFinalDefaultConfig(presets: any, config: any, options: any) {
   const defaultConfig = await createDefaultWebpackConfig(config, options);
   return presets.apply('webpackFinal', defaultConfig, options);
 }
 
-export async function webpack(config, options) {
+export async function webpack(config: any, options: any) {
   const { configDir, configType, presets, webpackConfig } = options;
   const finalDefaultConfig = await createFinalDefaultConfig(presets, config, options);
 

@@ -3,7 +3,10 @@ import findUp from 'find-up';
 import path from 'path';
 import { logger } from '@storybook/node-logger';
 
-export async function createDefaultWebpackConfig(storybookBaseConfig, options) {
+export async function createDefaultWebpackConfig(
+  storybookBaseConfig: any,
+  options: { presetsList: any[] }
+) {
   if (
     options.presetsList.some((preset) =>
       /@storybook(\/|\\)preset-create-react-app/.test(preset.name || preset)
