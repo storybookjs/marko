@@ -1,11 +1,12 @@
+import { ReactNode } from 'react';
 import { ModuleFn } from '../index';
 
 export interface Notification {
   id: string;
   link: string;
   content: {
-    headline: string;
-    subHeadline?: string;
+    headline: string | ReactNode;
+    subHeadline?: string | ReactNode;
   };
 
   icon?: {

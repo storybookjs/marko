@@ -10,10 +10,9 @@ const DEFAULT_ICON_COLOUR = '#66BF3C' as const;
 const Notification = styled.div(({ theme }) => ({
   position: 'relative',
   display: 'flex',
-  padding: '15px 15px',
-  width: '280px',
+  padding: 15,
+  width: 280,
   borderRadius: 4,
-
   background:
     theme.base === 'light'
       ? 'rgba(50,53,71,0.97)'

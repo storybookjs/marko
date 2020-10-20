@@ -26,25 +26,17 @@ const List = styled.div<{ placement?: CSSObject }>(
 const NotificationList: FunctionComponent<{
   placement: CSSObject;
   notifications: State['notifications'];
-}> = ({ notifications, placement = undefined }) => {
-  const [dismissedNotificationsIds, setDismissedNotificationsWithIds] = React.useState<string[]>(
-    []
-  );
-  return (
-    <List placement={placement}>
-      {notifications.map((notification) =>
-        dismissedNotificationsIds.indexOf(notification.id) === -1 ? (
-          <NotificationItem
-            key={notification.id}
-            onDismissNotification={(id: string) =>
-              setDismissedNotificationsWithIds([...dismissedNotificationsIds, ...[id]])
-            }
-            notification={notification}
-          />
-        ) : null
-      )}
-    </List>
-  );
-};
+  clearNotification: (id: string) => void;
+}> = ({ notifications, clearNotification, placement = undefined }) => (
+  <List placement={placement}>
+    {notifications.map((notification) => (
+      <NotificationItem
+        key={notification.id}
+        onDismissNotification={(id: string) => clearNotification(id)}
+        notification={notification}
+      />
+    ))}
+  </List>
+);
 
 export default NotificationList;
