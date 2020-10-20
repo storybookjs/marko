@@ -19,12 +19,9 @@ npx http-server ./path/to/build
 ```
 
 <details>
-<summary><h4>Troubleshooting 6.0 Routing Issues</h4></summary>
+    <summary><h4>Troubleshooting routing issues with Storybook 6.0</h4></summary>
 
-There is an [open issue (#11958)](https://github.com/storybookjs/storybook/issues/11958) in Storybook 6.0, which causes some built sites to have trouble with routing.
-
-If, after building your site, you cannot change your route using the sidebar, try building the site with the `--no-dll` as outlined [here](https://github.com/storybookjs/storybook/issues/11958#issuecomment-677726048).
-
+    After you've built your Storybook following the instructions outlined above, you encounter an issue where you cannot change the route in the sidebar, try building your Storybook with the `--no-dll` flag and see if it solves the problem. If so adjust your `build-storybook` script accordingly to include this flag. Be advised that the build process will run slower than usual.
 </details>
 
 <div class="aside">
