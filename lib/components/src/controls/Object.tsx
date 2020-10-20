@@ -1,72 +1,133 @@
-import React, { FC, ChangeEvent, useState, useCallback, useEffect } from 'react';
-import { styled } from '@storybook/theming';
+import React, { useCallback, useMemo } from 'react';
+import { styled, useTheme, Theme } from '@storybook/theming';
 
-import deepEqual from 'fast-deep-equal';
-import { Form } from '../form';
-import { ControlProps, ObjectValue, ObjectConfig } from './types';
-import { ArgType } from '../blocks';
-
-const format = (value: any) => (value ? JSON.stringify(value) : '');
-
-const parse = (value: string) => {
-  const trimmed = value && value.trim();
-  return trimmed ? JSON.parse(trimmed) : {};
-};
-
-const validate = (value: any, argType: ArgType) => {
-  if (argType && argType.type.name === 'array') {
-    return Array.isArray(value);
-  }
-  return true;
-};
+import { JsonTree, JsonTreeProps } from 'react-editable-json-tree';
+import type { ControlProps, ObjectValue, ObjectConfig } from './types';
 
 const Wrapper = styled.label({
   display: 'flex',
 });
 
-export type ObjectProps = ControlProps<ObjectValue> & ObjectConfig;
-export const ObjectControl: FC<ObjectProps> = ({
-  name,
-  argType,
-  value,
-  onChange,
-  onBlur,
-  onFocus,
-}) => {
-  const [valid, setValid] = useState(true);
-  const [text, setText] = useState(format(value));
+export type ObjectProps = ControlProps<ObjectValue> &
+  ObjectConfig & {
+    theme: any; // TODO: is there a type for this?
+  };
 
-  useEffect(() => {
-    const newText = format(value);
-    if (text !== newText) setText(newText);
-  }, [value]);
+const getCustomStyleFunction: (theme: Theme) => JsonTreeProps['getStyle'] = (theme) => (
+  keyName,
+  data,
+  keyPath,
+  deep,
+  dataType
+) => {
+  const DEFAULT_FONT_SIZE = '13px';
+  const DEFAULT_LINE_HEIGHT = '18px';
+  const DEFAULT_PLUS_COLOR = theme.color.ancillary;
+  const DEFAULT_MINUS_COLOR = theme.color.negative;
+  const DEFAULT_TEXT_COLOR = theme.color.defaultText;
+  const DEFAULT_COLLAPSED_COLOR = theme.color.dark;
+  const DEFAULT_KEY_COLOR = theme.color.secondary; // Bright to invite clicking
 
-  const handleChange = useCallback(
-    (e: ChangeEvent<HTMLTextAreaElement>) => {
-      try {
-        const newVal = parse(e.target.value);
-        const newValid = validate(newVal, argType);
-        if (newValid && !deepEqual(value, newVal)) {
-          onChange(newVal);
-        }
-        setValid(newValid);
-      } catch (err) {
-        setValid(false);
-      }
-      setText(e.target.value);
+  // Based on default styles provided by the library
+  // https://github.com/oxyno-zeta/react-editable-json-tree/blob/master/src/utils/styles.js
+  const objectStyle = {
+    minus: {
+      color: DEFAULT_MINUS_COLOR,
     },
-    [onChange, setValid]
+    plus: {
+      color: DEFAULT_PLUS_COLOR,
+    },
+    collapsed: {
+      color: DEFAULT_COLLAPSED_COLOR,
+    },
+    delimiter: {},
+    ul: {
+      padding: '0px',
+      margin: '0 0 0 25px',
+      listStyle: 'none',
+    },
+    name: {
+      color: DEFAULT_KEY_COLOR,
+      fontSize: DEFAULT_FONT_SIZE,
+      lineHeight: DEFAULT_LINE_HEIGHT,
+    },
+    addForm: {},
+  };
+  const arrayStyle = {
+    minus: {
+      color: DEFAULT_MINUS_COLOR,
+    },
+    plus: {
+      color: DEFAULT_PLUS_COLOR,
+    },
+    collapsed: {
+      color: DEFAULT_COLLAPSED_COLOR,
+    },
+    delimiter: {},
+    ul: {
+      padding: '0px',
+      margin: '0 0 0 25px',
+      listStyle: 'none',
+    },
+    name: {
+      color: DEFAULT_TEXT_COLOR,
+      fontSize: DEFAULT_FONT_SIZE,
+      lineHeight: DEFAULT_LINE_HEIGHT,
+    },
+    addForm: {},
+  };
+  const valueStyle = {
+    minus: {
+      color: DEFAULT_MINUS_COLOR,
+    },
+    editForm: {},
+    value: {
+      color: theme.color.ultraviolet, // something colorful that invites clicking
+      fontSize: DEFAULT_FONT_SIZE,
+      lineHeight: DEFAULT_LINE_HEIGHT,
+    },
+    li: {
+      minHeight: '22px',
+      lineHeight: '22px',
+      outline: '0px',
+    },
+    name: {
+      color: DEFAULT_KEY_COLOR,
+    },
+  };
+
+  switch (dataType) {
+    case 'Object':
+    case 'Error':
+      return objectStyle;
+    case 'Array':
+      return arrayStyle;
+    default:
+      return valueStyle;
+  }
+};
+
+export const ObjectControl: React.FC<ObjectProps> = ({ name, value = {}, onChange }) => {
+  const handleChange = useCallback(
+    (data: ObjectValue) => {
+      onChange(data);
+    },
+    [onChange]
   );
+
+  const theme = useTheme() as Theme;
+
+  const customStyleFunction = useMemo(() => getCustomStyleFunction(theme), [theme]);
 
   return (
     <Wrapper>
-      <Form.Textarea
-        valid={valid ? undefined : 'error'}
-        value={text}
-        onChange={handleChange}
-        size="flex"
-        placeholder="Adjust object dynamically"
-        {...{ name, onBlur, onFocus }}
+      <JsonTree
+        data={value}
+        onFullyUpdate={handleChange}
+        rootName="root"
+        getStyle={customStyleFunction}
+        cancelButtonElement={<button type="submit">cancel</button>}
+        editButtonElement={<button type="submit">edit</button>}
       />
     </Wrapper>
   );
