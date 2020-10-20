@@ -1,11 +1,11 @@
 import deprecate from 'util-deprecate';
 import dedent from 'ts-dedent';
 
-export function parseList(str) {
+export function parseList(str: string) {
   return str.split(',');
 }
 
-export function getEnvConfig(program, configEnv) {
+export function getEnvConfig(program: Record<string, any>, configEnv: Record<string, any>) {
   Object.keys(configEnv).forEach((fieldName) => {
     const envVarName = configEnv[fieldName];
     const envVarValue = process.env[envVarName];
@@ -24,7 +24,11 @@ const warnDLLsDeprecated = deprecate(
   `
 );
 
-export function checkDeprecatedFlags(options) {
+export function checkDeprecatedFlags(options: {
+  dlls?: boolean;
+  uiDll?: boolean;
+  docsDll?: boolean;
+}) {
   if (!options.dlls || options.uiDll || options.docsDll) {
     warnDLLsDeprecated();
   }

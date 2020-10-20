@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import { logger } from '@storybook/node-logger';
 import { parseList, getEnvConfig, checkDeprecatedFlags } from './utils';
 
-function getCLI(packageJson) {
+function getCLI(packageJson: { version: string; name: string }) {
   process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
   program
