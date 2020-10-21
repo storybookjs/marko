@@ -2,6 +2,8 @@
 // YourComponent.stories.tsx
 
 import React, { ComponentProps } from 'react';
+import { Story } from '@storybook/react/types-6-0';
+
 import { YourComponent } from './YourComponent';
 
 // This default export determines where your story goes in the story list
@@ -10,7 +12,9 @@ export default {
   component: YourComponent,
 };
 
-const Template = (args: ComponentProps<typeof YourComponent>) => <YourComponent {...args} />
+const Template: Story<ComponentProps<typeof YourComponent>> = (args) => (
+  <YourComponent {...args} />
+);
 
 export const FirstStory = Template.bind({});
 FirstStory.args = {
