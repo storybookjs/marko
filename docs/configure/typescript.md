@@ -36,3 +36,25 @@ The following code snippets shows the fields for you to use with TypeScript:
 | **checkOptions**                 | All       | Options to pass to fork-ts-checker-webpack-plugin if it's enabled                           | <a href="https://github.com/TypeStrong/fork-ts-checker-webpack-plugin/blob/v4.1.6/README.md#options">See Docs</a> |
 | **reactDocgen**                  | React     | Which react docgen processor to run: `"react-docgen-typescript"`, `"react-docgen"`, `false` | string or false                                                                                        |
 | **reactDocgenTypescriptOptions** | React     | Options to pass to react-docgen-typescript-plugin if react-docgen-typescript is enabled.    | [See docs](https://github.com/hipstersmoothie/react-docgen-typescript-plugin)                          |
+
+
+
+### Overriding the configuration to infer additional props
+
+The configuration provided above will remove any props from any third party libraries.
+
+If it's required you can adjust the configuration and include the extra props.
+
+Adjust the configuration as shown below and any third party props will be displayed as soon as you restart your Storybook.
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-main-extend-ts-config.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+Next time you restart your Storybook the extra props will also be in the UI.
