@@ -109,21 +109,19 @@ yarn lint
 
 It can be immensely helpful to get feedback in your editor, if you're using VsCode, you should install the `eslint` plugin and configure it with these settings:
 
-```plaintext
-"eslint.autoFixOnSave": true,
-"eslint.packageManager": "yarn",
-"eslint.options": {
-  "cache": true,
-  "cacheLocation": ".cache/eslint",
-  "extensions": [".js", ".jsx", ".mjs", ".json", ".ts", ".tsx"]
-},
-"eslint.validate": [
-  "javascript",
-  "javascriptreact",
-  {"language": "typescript", "autoFix": true },
-  {"language": "typescriptreact", "autoFix": true }
-],
-"eslint.alwaysShowStatus": true
+```json
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.packageManager": "yarn",
+  "eslint.options": {
+    "cache": true,
+    "cacheLocation": ".cache/eslint",
+    "extensions": [".js", ".jsx", ".json", ".html", ".ts", ".tsx", ".mjs"]
+  },
+  "eslint.alwaysShowStatus": true
+}
 ```
 
 This should enable auto-fix for all source files, and give linting warnings and errors within your editor.
