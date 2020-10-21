@@ -1,28 +1,30 @@
-function plugins<T>(
-  { plugins: defaultPlugins = [] }: { plugins?: T[] },
-  { plugins: customPlugins = [] }: { plugins?: T[] }
-): T[] {
+import { Configuration, Module, Resolve } from 'webpack';
+
+function plugins(
+  { plugins: defaultPlugins = [] }: Configuration,
+  { plugins: customPlugins = [] }: Configuration
+): Configuration['plugins'] {
   return [...defaultPlugins, ...customPlugins];
 }
 
-function rules<T>(
-  { rules: defaultRules = [] }: { rules?: T[] },
-  { rules: customRules = [] }: { rules?: T[] }
-): T[] {
+function rules(
+  { rules: defaultRules = [] }: Module,
+  { rules: customRules = [] }: Module
+): Module['rules'] {
   return [...defaultRules, ...customRules];
 }
 
-function extensions<T>(
-  { extensions: defaultExtensions = [] }: { extensions?: T[] },
-  { extensions: customExtensions = [] }: { extensions?: T[] }
-): T[] {
+function extensions(
+  { extensions: defaultExtensions = [] }: Resolve,
+  { extensions: customExtensions = [] }: Resolve
+): Resolve['extensions'] {
   return [...defaultExtensions, ...customExtensions];
 }
 
 function alias(
-  { alias: defaultAlias = {} }: { alias?: any },
-  { alias: customAlias = {} }: { alias?: any }
-) {
+  { alias: defaultAlias = {} }: Resolve,
+  { alias: customAlias = {} }: Resolve
+): Resolve['alias'] {
   return {
     ...defaultAlias,
     ...customAlias,
@@ -30,9 +32,9 @@ function alias(
 }
 
 function module(
-  { module: defaultModule = {} }: { module?: any },
-  { module: customModule = {} }: { module?: any }
-) {
+  { module: defaultModule = { rules: [] } }: Configuration,
+  { module: customModule = { rules: [] } }: Configuration
+): Configuration['module'] {
   return {
     ...defaultModule,
     ...customModule,
@@ -41,9 +43,9 @@ function module(
 }
 
 function resolve(
-  { resolve: defaultResolve = {} }: { resolve?: any },
-  { resolve: customResolve = {} }: { resolve?: any }
-) {
+  { resolve: defaultResolve = {} }: Configuration,
+  { resolve: customResolve = {} }: Configuration
+): Configuration['resolve'] {
   return {
     ...defaultResolve,
     ...customResolve,
@@ -53,16 +55,16 @@ function resolve(
 }
 
 function optimization(
-  { optimization: defaultOptimization = {} }: { optimization?: any },
-  { optimization: customOptimization = {} }: { optimization?: any }
-) {
+  { optimization: defaultOptimization = {} }: Configuration,
+  { optimization: customOptimization = {} }: Configuration
+): Configuration['optimization'] {
   return {
     ...defaultOptimization,
     ...customOptimization,
   };
 }
 
-function mergeConfigs(config: any, customConfig: any) {
+export function mergeConfigs(config: Configuration, customConfig: Configuration): Configuration {
   return {
     // We'll always load our configurations after the custom config.
     // So, we'll always load the stuff we need.

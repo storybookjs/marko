@@ -2,14 +2,18 @@
 
 exports[`mergeConfigs merges partial custom config 1`] = `
 Object {
-  "devtool": "source-maps",
+  "devtool": "source-map",
   "entry": Object {
     "bundle": "index.js",
   },
   "module": Object {
     "rules": Array [
-      "r1",
-      "r2",
+      Object {
+        "use": "r1",
+      },
+      Object {
+        "use": "r2",
+      },
     ],
   },
   "optimization": Object {
@@ -31,7 +35,7 @@ Object {
       "A1": "src/B1",
       "A2": "src/B2",
     },
-    "enforceModuleExtension": true,
+    "enforceExtension": true,
     "extensions": Array [
       ".js",
       ".json",
@@ -44,14 +48,18 @@ Object {
 
 exports[`mergeConfigs merges successfully if custom config is empty 1`] = `
 Object {
-  "devtool": "source-maps",
+  "devtool": "source-map",
   "entry": Object {
     "bundle": "index.js",
   },
   "module": Object {
     "rules": Array [
-      "r1",
-      "r2",
+      Object {
+        "use": "r1",
+      },
+      Object {
+        "use": "r2",
+      },
     ],
   },
   "optimization": Object {
@@ -72,7 +80,7 @@ Object {
       "A1": "src/B1",
       "A2": "src/B2",
     },
-    "enforceModuleExtension": true,
+    "enforceExtension": true,
     "extensions": Array [
       ".js",
       ".json",
@@ -83,17 +91,25 @@ Object {
 
 exports[`mergeConfigs merges two full configs in one 1`] = `
 Object {
-  "devtool": "source-maps",
+  "devtool": "source-map",
   "entry": Object {
     "bundle": "index.js",
   },
   "module": Object {
     "noParse": /jquery\\|lodash/,
     "rules": Array [
-      "r1",
-      "r2",
-      "r3",
-      "r4",
+      Object {
+        "use": "r1",
+      },
+      Object {
+        "use": "r2",
+      },
+      Object {
+        "use": "r3",
+      },
+      Object {
+        "use": "r4",
+      },
     ],
   },
   "optimization": Object {
@@ -123,7 +139,6 @@ Object {
       "A4": "src/B4",
     },
     "enforceExtension": false,
-    "enforceModuleExtension": true,
     "extensions": Array [
       ".js",
       ".json",

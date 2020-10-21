@@ -1,7 +1,8 @@
-import mergeConfigs from './merge-webpack-config';
+import { Configuration } from 'webpack';
+import { mergeConfigs } from './merge-webpack-config';
 
-const config = {
-  devtool: 'source-maps',
+const config: Configuration = {
+  devtool: 'source-map',
   entry: {
     bundle: 'index.js',
   },
@@ -9,11 +10,13 @@ const config = {
     filename: '[name].js',
   },
   module: {
-    rules: ['r1', 'r2'],
+    rules: [{ use: 'r1' }, { use: 'r2' }],
   },
+  // For snapshot readability purposes `plugins` attribute doesn't match the correct type
+  // @ts-expect-errors
   plugins: ['p1', 'p2'],
   resolve: {
-    enforceModuleExtension: true,
+    enforceExtension: true,
     extensions: ['.js', '.json'],
     alias: {
       A1: 'src/B1',
@@ -30,7 +33,7 @@ const config = {
 
 describe('mergeConfigs', () => {
   it('merges two full configs in one', () => {
-    const customConfig = {
+    const customConfig: Configuration = {
       profile: true,
       entry: {
         bundle: 'should_not_be_merged.js',
@@ -40,8 +43,10 @@ describe('mergeConfigs', () => {
       },
       module: {
         noParse: /jquery|lodash/,
-        rules: ['r3', 'r4'],
+        rules: [{ use: 'r3' }, { use: 'r4' }],
       },
+      // For snapshot readability purposes `plugins` attribute doesn't match the correct type
+      // @ts-expect-errors
       plugins: ['p3', 'p4'],
       resolve: {
         enforceExtension: false,
@@ -52,6 +57,8 @@ describe('mergeConfigs', () => {
         },
       },
       optimization: {
+        // For snapshot readability purposes `minimizer` attribute doesn't match the correct type
+        // @ts-expect-errors
         minimizer: ['banana'],
       },
     };
@@ -62,7 +69,9 @@ describe('mergeConfigs', () => {
   });
 
   it('merges partial custom config', () => {
-    const customConfig = {
+    const customConfig: Configuration = {
+      // For snapshot readability purposes `plugins` attribute doesn't match the correct type
+      // @ts-expect-errors
       plugins: ['p3'],
       resolve: {
         extensions: ['.ts', '.tsx'],
