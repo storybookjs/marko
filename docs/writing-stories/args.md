@@ -88,7 +88,8 @@ Args are useful when writing stories for composite components that are assembled
   paths={[
     'react/page-story.js.mdx',
     'react/page-story.ts.mdx',
-    'angular/page-story.ts.mdx'
+    'angular/page-story.ts.mdx',
+    'vue/page-story.js.mdx'
   ]}
 />
 
