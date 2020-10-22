@@ -58,3 +58,7 @@ Adjust the configuration as shown below and any third party props will be displa
 <!-- prettier-ignore-end -->
 
 Next time you restart your Storybook the extra props will also be in the UI.
+
+<div class="aside">
+If you run into an issue where the extra props aren't included, check how your component is being exported. If it's using a default export, change it to a named export and the extra props will be included as well.
+</div>
