@@ -46,7 +46,7 @@ const fullScreenMapper = ({ api, state }: Combo) => ({
 
 export const fullScreenTool: Addon = {
   title: 'fullscreen',
-  match: (p) => p.viewMode === 'story',
+  match: (p) => ['story', 'docs'].includes(p.viewMode),
   render: () => (
     <Consumer filter={fullScreenMapper}>
       {({ toggle, value, shortcut }) => (
