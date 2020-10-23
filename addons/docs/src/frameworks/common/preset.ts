@@ -39,7 +39,7 @@ function createBabelOptions({ babelOptions, mdxBabelOptions, configureJSX }: Bab
 }
 
 export const webpackDlls = (dlls: string[], options: any) => {
-  return options.dll ? [...dlls, './sb_dll/storybook_docs_dll.js'] : [];
+  return options.docsDll ? [...dlls, './sb_dll/storybook_docs_dll.js'] : [];
 };
 
 export function webpack(webpackConfig: any = {}, options: any = {}) {
@@ -143,7 +143,7 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
     },
   };
 
-  if (options.dll) {
+  if (options.docsDll) {
     result.plugins.push(
       new DllReferencePlugin({
         context,
