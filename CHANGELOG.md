@@ -1,3 +1,9 @@
+## 6.1.0-alpha.29 (October 23, 2020)
+
+### Bug Fixes
+
+* CLI: Fix intro MDX for React17 ([#12878](https://github.com/storybookjs/storybook/pull/12878))
+
 ## 6.0.27 (October 23, 2020)
 
 ### Bug Fixes
