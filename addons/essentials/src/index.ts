@@ -10,7 +10,10 @@ interface PresetOptions {
 
 const requireMain = (configDir: string) => {
   let main = {};
-  const mainFile = path.join(process.cwd(), configDir, 'main');
+  const absoluteConfigDir = path.isAbsolute(configDir)
+    ? configDir
+    : path.join(process.cwd(), configDir);
+  const mainFile = path.join(absoluteConfigDir, 'main');
   try {
     // eslint-disable-next-line global-require,import/no-dynamic-require
     main = require(mainFile);
