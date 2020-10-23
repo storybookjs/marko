@@ -1,3 +1,17 @@
+## 6.0.27 (October 23, 2020)
+
+### Bug Fixes
+
+- CLI: Fix intro MDX for React17 ([#12878](https://github.com/storybookjs/storybook/pull/12878))
+- Core: Disable Docs DLL by default ([#12874](https://github.com/storybookjs/storybook/pull/12874))
+- Essentials: Fix absolute config dir ([#12873](https://github.com/storybookjs/storybook/pull/12873))
+- Addon-controls: Fix "docs before controls" check ([#12738](https://github.com/storybookjs/storybook/pull/12738))
+- Addon-knobs: Fix uncontrolled to controlled warning for booleans ([#12719](https://github.com/storybookjs/storybook/pull/12719))
+
+### Dependency Upgrades
+
+- Upgrade babel-plugin-react-docgen ([#12748](https://github.com/storybookjs/storybook/pull/12748))
+  
 ## 6.1.0-alpha.28 (October 23, 2020)
 
 ### Bug Fixes
