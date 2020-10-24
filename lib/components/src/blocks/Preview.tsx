@@ -14,6 +14,7 @@ import { Source, SourceProps } from './Source';
 import { ActionBar, ActionItem } from '../ActionBar/ActionBar';
 import { Toolbar } from './Toolbar';
 import { ZoomContext } from './ZoomContext';
+import Zoom from '../Zoom/Zoom';
 
 export interface PreviewProps {
   isColumn?: boolean;
@@ -27,9 +28,7 @@ export interface PreviewProps {
 
 type layout = 'padded' | 'fullscreen' | 'centered';
 
-const ChildrenContainer = styled.div<
-  PreviewProps & { zoom: number; layout: layout; height: number }
->(
+const ChildrenContainer = styled.div<PreviewProps & { layout: layout }>(
   ({ isColumn, columns, layout }) => ({
     display: isColumn || !columns ? 'block' : 'flex',
     position: 'relative',
@@ -47,10 +46,9 @@ const ChildrenContainer = styled.div<
           display: 'inline-block',
         },
   }),
-  ({ height, layout = 'padded' }) =>
+  ({ layout = 'padded' }) =>
     layout === 'centered' || layout === 'padded'
       ? {
-          height: `${height + 50}px`,
           padding: '30px 20px',
           margin: -10,
           '& > *': {
@@ -69,12 +67,6 @@ const ChildrenContainer = styled.div<
           alignItems: 'center',
         }
       : {},
-  ({ zoom = 1 }) => ({
-    '> *': {
-      transformOrigin: 'top left',
-      transform: `scale(${1 / zoom})`,
-    },
-  }),
   ({ columns }) =>
     columns && columns > 1 ? { '> *': { minWidth: `calc(100% / ${columns} - 20px)` } } : {}
 );
@@ -198,15 +190,8 @@ const Preview: FunctionComponent<PreviewProps> = ({
   const [expanded, setExpanded] = useState(isExpanded);
   const { source, actionItem } = getSource(withSource, expanded, setExpanded);
   const [scale, setScale] = useState(1);
-  const [height, setHeight] = useState(0);
   const previewClasses = [className].concat(['sbdocs', 'sbdocs-preview']);
   const componentWrapperRef = React.useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (componentWrapperRef.current) {
-      setHeight(componentWrapperRef.current.getBoundingClientRect().height);
-    }
-  }, [scale, componentWrapperRef.current]);
 
   const defaultActionItems = withSource ? [actionItem] : [];
   const actionItems = additionalActions
@@ -236,18 +221,16 @@ const Preview: FunctionComponent<PreviewProps> = ({
           <ChildrenContainer
             isColumn={isColumn || !Array.isArray(children)}
             columns={columns}
-            zoom={scale}
             layout={layout}
-            height={height}
           >
-            <div ref={componentWrapperRef}>
+            <Zoom scale={scale}>
               {Array.isArray(children) ? (
                 // eslint-disable-next-line react/no-array-index-key
                 children.map((child, i) => <div key={i}>{child}</div>)
               ) : (
                 <div>{children}</div>
               )}
-            </div>
+            </Zoom>
           </ChildrenContainer>
           <ActionBar actionItems={actionItems} />
         </Relative>
