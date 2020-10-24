@@ -1,3 +1,4 @@
+import path from 'path';
 import { TransformOptions } from '@babel/core';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import type { Configuration } from 'webpack';
@@ -21,12 +22,17 @@ export async function babel(config: TransformOptions, options: StorybookOptions)
     plugins: [require.resolve('react-refresh/babel'), ...(config.plugins || [])],
   };
 }
+const storybookReactDirName = path.dirname(require.resolve('@storybook/react/package.json'));
+// TODO: improve node_modules detection
+const context = storybookReactDirName.includes('node_modules')
+  ? path.join(storybookReactDirName, '../../') // Real life case, already in node_modules
+  : path.join(storybookReactDirName, '../../node_modules'); // SB Monorepo
 
 export async function babelDefault(config: TransformOptions) {
   let reactVersion;
   try {
     // eslint-disable-next-line global-require,import/no-dynamic-require
-    const reactPkg = require(require.resolve('react/package.json'));
+    const reactPkg = require(require.resolve('react/package.json', { paths: [context] }));
     reactVersion = reactPkg.version;
   } catch {
     logger.warn('Unable to determine react version');
