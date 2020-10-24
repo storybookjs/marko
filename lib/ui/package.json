@@ -57,7 +57,7 @@
     "react-helmet-async": "^1.0.2",
     "react-hotkeys": "2.0.0",
     "react-sizeme": "^2.6.7",
-    "regenerator-runtime": "^0.13.3",
+    "regenerator-runtime": "^0.13.7",
     "resolve-from": "^5.0.0",
     "store2": "^2.7.1"
   },

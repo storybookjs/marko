@@ -76,7 +76,7 @@
     "react-dom": "^16.8.3",
     "react-element-to-jsx-string": "^14.3.1",
     "react-is": "^16.12.0",
-    "regenerator-runtime": "^0.13.3",
+    "regenerator-runtime": "^0.13.7",
     "remark-external-links": "^6.0.0",
     "remark-slug": "^6.0.0",
     "ts-dedent": "^1.1.1",

@@ -40,7 +40,7 @@
     "prettier": "~2.0.5",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
-    "regenerator-runtime": "^0.13.3",
+    "regenerator-runtime": "^0.13.7",
     "source-map": "^0.7.3"
   },
   "publishConfig": {

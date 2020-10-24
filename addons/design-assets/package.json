@@ -44,7 +44,7 @@
     "global": "^4.3.2",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
-    "regenerator-runtime": "^0.13.3",
+    "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^1.1.1",
     "use-image": "^1.0.3"
   },
