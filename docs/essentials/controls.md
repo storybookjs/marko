@@ -51,6 +51,7 @@ For instance, suppose you have a `backgroundColor` arg on your story:
 <CodeSnippets
   paths={[
     'common/button-story-controls-red-input.js.mdx',
+    'common/button-story-controls-red-input.mdx.mdx',
   ]}
 />
 
@@ -71,6 +72,7 @@ ArgTypes can also contain arbitrary annotations which can be overridden by the u
 <CodeSnippets
   paths={[
     'common/button-story-controls-color-picker.js.mdx',
+    'common/button-story-controls-color-picker.mdx.mdx',
   ]}
 />
 
@@ -89,6 +91,7 @@ Up until now, we only used auto-generated controls based on the component we're 
 <CodeSnippets
   paths={[
     'react/table-story-fully-customize-controls.js.mdx',
+    'react/table-story-fully-customize-controls.mdx.mdx',
   ]}
 />
 
@@ -139,6 +142,7 @@ If you need to customize a control to use a enum data type in your story, for in
 <CodeSnippets
   paths={[
     'common/widget-story-controls-enum.js.mdx',
+    'common/widget-story-controls-enum.mdx.mdx',
   ]}
 />
 
@@ -157,6 +161,7 @@ If you need to customize a control for a number data type in your story, you can
 <CodeSnippets
   paths={[
     'common/gizmo-story-controls-customization.js.mdx',
+    'common/gizmo-story-controls-customization.mdx.mdx',
   ]}
 />
 
@@ -181,7 +186,7 @@ To enable expanded mode globally, add the following to [`.storybook/preview.js`]
 <CodeSnippets
   paths={[
     'common/storybook-preview-expanded-controls.js.mdx',
-  ]}
+    ]}
 />
 
 <!-- prettier-ignore-end -->

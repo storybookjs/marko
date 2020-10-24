@@ -91,6 +91,7 @@ Using the example above, you can modify any story to retrieve the **Locale** `gl
 <CodeSnippets
   paths={[
     'common/my-component-story-use-globaltype.js.mdx',
+    'common/my-component-story-use-globaltype.mdx.mdx',
   ]}
 />
 
