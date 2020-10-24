@@ -39,7 +39,7 @@
     "core-js": "^3.0.1",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
-    "ts-dedent": "^1.1.1"
+    "ts-dedent": "^2.0.0"
   },
   "publishConfig": {
     "access": "public"

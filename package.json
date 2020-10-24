@@ -208,7 +208,7 @@
     "svelte-jest": "^0.3.0",
     "teamcity-service-messages": "^0.1.11",
     "trash": "^6.1.1",
-    "ts-dedent": "^1.1.1",
+    "ts-dedent": "^2.0.0",
     "ts-jest": "^26.1.0",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.3",
