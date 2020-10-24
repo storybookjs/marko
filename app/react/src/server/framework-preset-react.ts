@@ -31,7 +31,8 @@ export async function babelDefault(config: TransformOptions) {
   } catch {
     logger.warn('Unable to determine react version');
   }
-  const presetReactOptions = semver.gte(reactVersion, '16.14.0') ? { runtime: 'automatic' } : {};
+  const presetReactOptions =
+    reactVersion && semver.gte(reactVersion, '16.14.0') ? { runtime: 'automatic' } : {};
   return {
     ...config,
     presets: [
