@@ -39,10 +39,10 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@babel/generator": "^7.11.5",
-    "@babel/parser": "^7.11.5",
-    "@babel/plugin-transform-react-jsx": "^7.10.4",
-    "@babel/preset-env": "^7.11.5",
+    "@babel/core": "^7.12.1",
+    "@babel/parser": "^7.12.3",
+    "@babel/plugin-transform-react-jsx": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
     "@jest/transform": "^26.0.0",
     "@mdx-js/loader": "^1.5.1",
     "@mdx-js/mdx": "^1.5.1",
@@ -84,7 +84,7 @@
   },
   "devDependencies": {
     "@angular/core": "^9.1.0",
-    "@babel/core": "^7.11.5",
+    "@babel/core": "^7.12.3",
     "@emotion/core": "^10.0.20",
     "@emotion/styled": "^10.0.17",
     "@storybook/react": "6.1.0-alpha.29",

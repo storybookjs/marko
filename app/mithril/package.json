@@ -34,8 +34,8 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@babel/core": "^7.11.5",
-    "@babel/plugin-transform-react-jsx": "^7.10.4",
+    "@babel/core": "^7.12.3",
+    "@babel/plugin-transform-react-jsx": "^7.12.1",
     "@storybook/addons": "6.1.0-alpha.29",
     "@storybook/core": "6.1.0-alpha.29",
     "@types/mithril": "^2.0.0",

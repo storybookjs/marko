@@ -14,7 +14,7 @@
     "riot-hot-reload": "^1.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.5",
+    "@babel/core": "^7.12.3",
     "@storybook/addon-a11y": "6.1.0-alpha.29",
     "@storybook/addon-actions": "6.1.0-alpha.29",
     "@storybook/addon-backgrounds": "6.1.0-alpha.29",

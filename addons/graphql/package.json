@@ -29,8 +29,8 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@babel/core": "^7.11.5",
-    "@babel/plugin-transform-classes": "^7.10.4",
+    "@babel/core": "^7.12.3",
+    "@babel/plugin-transform-classes": "^7.12.1",
     "@storybook/addons": "6.1.0-alpha.29",
     "@storybook/api": "6.1.0-alpha.29",
     "@types/webpack": "^4.41.9",
