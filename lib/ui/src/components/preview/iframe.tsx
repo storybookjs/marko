@@ -1,6 +1,6 @@
 import React, { IframeHTMLAttributes } from 'react';
 import { styled } from '@storybook/theming';
-import { Zoom } from '@storybook/components';
+import { ScrollArea, Spaced, Zoom } from '@storybook/components';
 
 const StyledIframe = styled.iframe({
   position: 'absolute',
@@ -23,9 +23,16 @@ export interface IFrameProps {
 }
 
 export function IFrame(props: IFrameProps & IframeHTMLAttributes<HTMLIFrameElement>) {
-  const { active, id, title, src, allowFullScreen, ...rest } = props;
+  const { active, id, title, src, allowFullScreen, scale, ...rest } = props;
   return (
-    <Zoom {...props}>
+    <Zoom
+      id={id}
+      title={title}
+      src={src}
+      allowFullScreen={allowFullScreen}
+      scale={scale}
+      active={active}
+    >
       <StyledIframe
         data-is-storybook={active ? 'true' : 'false'}
         id={id}

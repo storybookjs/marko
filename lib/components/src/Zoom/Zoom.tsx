@@ -1,5 +1,5 @@
 import window from 'global';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from '@storybook/theming';
 import ZoomIFrame, { IZoomIFrameProps } from './ZoomIFrame';
 
@@ -20,8 +20,7 @@ const ZoomArea = styled.div<{ scale: number; height: number }>(({ scale = 1, hei
 
 export type ZoomProps = {
   scale: number;
-  children: ReactElement | ReactElement[] | Element | Element[];
-} & IZoomIFrameProps;
+} & Omit<IZoomIFrameProps, 'supportsCssZoom'>;
 
 export function Zoom({ scale, children, src, title, allowFullScreen, active, id }: ZoomProps) {
   const componentWrapperRef = React.useRef<HTMLDivElement>(null);
