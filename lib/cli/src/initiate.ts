@@ -307,5 +307,11 @@ export default function (options: CommandOptions, pkg: IPackage): Promise<void> 
   }
   done();
 
-  return installStorybook(projectType, options);
+  const cleanOptions = { ...options };
+  if (options.storyFormat === StoryFormat.MDX) {
+    logger.warn('   Using mdx format is deprecated. JS or TS format already embeds mdx stories !');
+    cleanOptions.storyFormat = undefined;
+  }
+
+  return installStorybook(projectType, cleanOptions);
 }
