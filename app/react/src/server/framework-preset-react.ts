@@ -3,7 +3,6 @@ import { TransformOptions } from '@babel/core';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import type { Configuration } from 'webpack';
 
-import semver from '@storybook/semver';
 import { logger } from '@storybook/node-logger';
 import type { StorybookOptions } from '@storybook/core/types';
 
