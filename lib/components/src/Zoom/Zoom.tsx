@@ -20,7 +20,7 @@ const ZoomArea = styled.div<{ scale: number; height: number }>(({ scale = 1, hei
 
 export type ZoomProps = {
   scale: number;
-  children: ReactElement | ReactElement[];
+  children: ReactElement | ReactElement[] | Element | Element[];
 } & IZoomIFrameProps;
 
 export function Zoom({ scale, children, src, title, allowFullScreen, active, id }: ZoomProps) {
