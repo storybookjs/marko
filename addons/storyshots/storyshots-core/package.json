@@ -45,7 +45,7 @@
     "global": "^4.3.2",
     "jest-specific-snapshot": "^4.0.0",
     "pretty-format": "^26.4.0",
-    "react": "^16.8.3",
+    "react": "^16.8.3 || ^17.0.0",
     "react-dom": "^16.8.3",
     "react-test-renderer": "^16.8.3",
     "read-pkg-up": "^7.0.0",
