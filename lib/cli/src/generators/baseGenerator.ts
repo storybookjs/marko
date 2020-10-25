@@ -57,8 +57,6 @@ export async function baseGenerator(
     ...extraPackages,
     ...extraAddons,
     ...yarn2Dependencies,
-    // ⚠️ Some addons have peer deps that must be added too, like '@storybook/addon-docs' => 'react-is'
-    'react-is',
   ].filter(Boolean);
   const versionedPackages = await packageManager.getVersionedPackages(...packages);
 
