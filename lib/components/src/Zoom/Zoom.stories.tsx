@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import Zoom from './Zoom';
 
 export default {
@@ -10,7 +10,7 @@ export default {
     },
   },
 };
-const COMPONENT_TO_INSPECT = (
+const EXAMPLE_COMPONENT = (
   <div
     style={{
       width: 2000,
@@ -21,25 +21,63 @@ const COMPONENT_TO_INSPECT = (
   />
 );
 
+const style: CSSProperties = {
+  width: '500px',
+  height: '500px',
+  border: '2px solid hotpink',
+  position: 'relative',
+};
+
+const EXAMPLE_IFRAME = (
+  <iframe
+    id="iframe"
+    title="UI Panel"
+    src="/iframe.html?id=ui-panel--default&viewMode=story"
+    style={style}
+    allowFullScreen
+  />
+);
+
 const Template = (args) => <Zoom {...args} />;
 
-export const actualSize = Template.bind({});
+export const componentActualSize = Template.bind({});
 
-actualSize.args = {
+componentActualSize.args = {
   scale: 1,
-  children: COMPONENT_TO_INSPECT,
+  children: EXAMPLE_COMPONENT,
 };
 
-export const zoomedIn = Template.bind({});
+export const componentZoomedIn = Template.bind({});
 
-zoomedIn.args = {
-  scale: 0.02,
-  children: COMPONENT_TO_INSPECT,
+componentZoomedIn.args = {
+  scale: 0.7,
+  children: EXAMPLE_COMPONENT,
 };
 
-export const zoomedOut = Template.bind({});
+export const componentZoomedOut = Template.bind({});
 
-zoomedOut.args = {
+componentZoomedOut.args = {
   scale: 30,
-  children: COMPONENT_TO_INSPECT,
+  children: EXAMPLE_COMPONENT,
+};
+
+export const iframeActualSize = Template.bind({});
+
+iframeActualSize.args = {
+  scale: 1,
+  children: EXAMPLE_IFRAME,
+};
+
+export const iframeZoomedIn = Template.bind({});
+
+iframeZoomedIn.args = {
+  scale: 0.7,
+  children: EXAMPLE_IFRAME,
+};
+
+export const iframeZoomedOut = Template.bind({});
+
+iframeZoomedOut.args = {
+  scale: 30,
+  children: EXAMPLE_IFRAME,
 };

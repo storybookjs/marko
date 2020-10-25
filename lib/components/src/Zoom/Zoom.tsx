@@ -1,6 +1,7 @@
 import window from 'global';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { styled } from '@storybook/theming';
+import ZoomIFrame, { IZoomIFrameProps } from './ZoomIFrame';
 
 const browserSupportsCssZoom = (): boolean =>
   window.document.implementation.createHTMLDocument().body.style.zoom !== undefined;
@@ -17,12 +18,12 @@ const ZoomArea = styled.div<{ scale: number; height: number }>(({ scale = 1, hei
       }
 );
 
-export interface IZoomProps {
+export type ZoomProps = {
   scale: number;
   children: ReactElement | ReactElement[];
-}
+} & IZoomIFrameProps;
 
-export default function Zoom({ scale, children }: IZoomProps) {
+export function Zoom({ scale, children, src, title, allowFullScreen, active, id }: ZoomProps) {
   const componentWrapperRef = React.useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
 
@@ -32,9 +33,23 @@ export default function Zoom({ scale, children }: IZoomProps) {
     }
   }, [scale, componentWrapperRef.current]);
 
-  return (
+  return src ? (
+    <ZoomIFrame
+      src={src}
+      title={title}
+      allowFullScreen={allowFullScreen}
+      active={active}
+      supportsCssZoom={browserSupportsCssZoom()}
+      scale={scale}
+      id={id}
+    >
+      {children}
+    </ZoomIFrame>
+  ) : (
     <ZoomArea scale={scale} height={height}>
       <div ref={componentWrapperRef}>{children}</div>
     </ZoomArea>
   );
 }
+
+export default Zoom;
