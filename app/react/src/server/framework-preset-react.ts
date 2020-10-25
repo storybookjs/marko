@@ -28,17 +28,17 @@ const context = storybookReactDirName.includes('node_modules')
   ? path.join(storybookReactDirName, '../../') // Real life case, already in node_modules
   : path.join(storybookReactDirName, '../../node_modules'); // SB Monorepo
 
-export async function babelDefault(config: TransformOptions) {
-  let reactVersion;
+const hasJsxRuntime = () => {
   try {
-    // eslint-disable-next-line global-require,import/no-dynamic-require
-    const reactPkg = require(require.resolve('react/package.json', { paths: [context] }));
-    reactVersion = reactPkg.version;
-  } catch {
-    logger.warn('Unable to determine react version');
+    require.resolve('react/jsx-runtime', { paths: [context] });
+    return true;
+  } catch (e) {
+    return false;
   }
-  const presetReactOptions =
-    reactVersion && semver.gte(reactVersion, '16.14.0') ? { runtime: 'automatic' } : {};
+};
+
+export async function babelDefault(config: TransformOptions) {
+  const presetReactOptions = hasJsxRuntime() ? { runtime: 'automatic' } : {};
   return {
     ...config,
     presets: [
