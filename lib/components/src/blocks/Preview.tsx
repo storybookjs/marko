@@ -1,11 +1,4 @@
-import React, {
-  Children,
-  FunctionComponent,
-  ReactElement,
-  ReactNode,
-  useEffect,
-  useState,
-} from 'react';
+import React, { Children, FunctionComponent, ReactElement, ReactNode, useState } from 'react';
 import { darken } from 'polished';
 import { styled } from '@storybook/theming';
 
@@ -191,7 +184,6 @@ const Preview: FunctionComponent<PreviewProps> = ({
   const { source, actionItem } = getSource(withSource, expanded, setExpanded);
   const [scale, setScale] = useState(1);
   const previewClasses = [className].concat(['sbdocs', 'sbdocs-preview']);
-  const componentWrapperRef = React.useRef<HTMLDivElement>(null);
 
   const defaultActionItems = withSource ? [actionItem] : [];
   const actionItems = additionalActions
