@@ -309,7 +309,7 @@ export default function (options: CommandOptions, pkg: IPackage): Promise<void> 
 
   const cleanOptions = { ...options };
   if (options.storyFormat === StoryFormat.MDX) {
-    logger.warn('   Using mdx format is deprecated. JS or TS format already embeds mdx stories !');
+    logger.warn('   The MDX CLI template is deprecated. The JS and TS templates already include MDX examples!');
     cleanOptions.storyFormat = undefined;
   }
 
