@@ -1,9 +1,14 @@
 import { logger } from '@storybook/node-logger';
+import { Configuration } from 'webpack';
 import loadPresets from './presets';
 import loadCustomPresets from './common/custom-presets';
 import { typeScriptDefaults } from './config/defaults';
+import { PresetConfig, Presets, PresetsOptions, StorybookConfigOptions } from './types';
 
-async function getPreviewWebpackConfig(options: any, presets: any) {
+async function getPreviewWebpackConfig(
+  options: StorybookConfigOptions & { presets: Presets },
+  presets: Presets
+): Promise<Configuration> {
   const typescriptOptions = await presets.apply('typescript', { ...typeScriptDefaults }, options);
   const babelOptions = await presets.apply('babel', {}, { ...options, typescriptOptions });
   const entries = await presets.apply('entries', [], options);
@@ -24,17 +29,20 @@ async function getPreviewWebpackConfig(options: any, presets: any) {
   );
 }
 
-export const filterPresetsConfig = (presetsConfig: any[]) =>
-  presetsConfig.filter(
-    (preset) => !/@storybook[\\\\/]preset-typescript/.test(preset.name || preset)
-  );
-
-export default async (options: any) => {
+export function filterPresetsConfig(presetsConfig: PresetConfig[]): PresetConfig[] {
+  return presetsConfig.filter((preset) => {
+    const presetName = typeof preset === 'string' ? preset : preset.name;
+    return !/@storybook[\\\\/]preset-typescript/.test(presetName);
+  });
+}
+const loadConfig: (
+  options: PresetsOptions & StorybookConfigOptions
+) => Promise<Configuration> = async (options: PresetsOptions & StorybookConfigOptions) => {
   const { corePresets = [], frameworkPresets = [], overridePresets = [], ...restOptions } = options;
 
-  const presetsConfig = [
+  const presetsConfig: PresetConfig[] = [
     ...corePresets,
-    require.resolve('./common/babel-cache-preset.js'),
+    require.resolve('./common/babel-cache-preset'),
     ...frameworkPresets,
     ...loadCustomPresets(options),
     ...overridePresets,
@@ -52,3 +60,5 @@ export default async (options: any) => {
 
   return getPreviewWebpackConfig({ ...restOptions, presets }, presets);
 };
+
+export default loadConfig;

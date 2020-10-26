@@ -1,11 +1,15 @@
+import { Configuration } from 'webpack';
 import { loadManagerOrAddonsFile } from '../utils/load-manager-or-addons-file';
 import createDevConfig from './manager-webpack.config';
 
-export async function managerWebpack(_: unknown, options: any) {
+export async function managerWebpack(_: Configuration, options: any): Promise<Configuration> {
   return createDevConfig(options);
 }
 
-export async function managerEntries(installedAddons: string[] | undefined, options: any) {
+export async function managerEntries(
+  installedAddons: string[],
+  options: { managerEntry: string; configDir: string }
+): Promise<string[]> {
   const { managerEntry = '../../client/manager' } = options;
   const entries = [require.resolve('../common/polyfills')];
 

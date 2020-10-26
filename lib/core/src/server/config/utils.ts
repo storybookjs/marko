@@ -33,7 +33,9 @@ const nodePathsToArray = (nodePath: string) =>
     .map((p) => path.resolve('./', p));
 
 // Load environment variables starts with STORYBOOK_ to the client side.
-export function loadEnv(options: { production?: boolean } = {}) {
+export function loadEnv(
+  options: { production?: boolean } = {}
+): { stringified: Record<string, string>; raw: Record<string, object> } {
   const defaultNodeEnv = options.production ? 'production' : 'development';
 
   const env: Record<string, string> = {
@@ -54,7 +56,7 @@ export function loadEnv(options: { production?: boolean } = {}) {
 
   const base = Object.entries(env).reduce(
     (acc, [k, v]) => Object.assign(acc, { [k]: JSON.stringify(v) }),
-    {}
+    {} as Record<string, string>
   );
 
   const { stringified, raw } = getEnvironment({ nodeEnv: env.NODE_ENV });

@@ -288,6 +288,7 @@ const startPreview = async ({ startTime, options, configType, outputDir }: any) 
     logLevel: 'warn',
     clientLogLevel: 'warning',
     noInfo: true,
+    // @ts-ignore
     ...previewConfig.devServer,
   });
 

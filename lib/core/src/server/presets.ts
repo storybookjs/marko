@@ -2,12 +2,17 @@ import dedent from 'ts-dedent';
 import { join } from 'path';
 import { logger } from '@storybook/node-logger';
 import resolveFrom from 'resolve-from';
+import { LoadedPreset, PresetConfig, Presets, StorybookConfigOptions } from './types';
 
 const isObject = (val: unknown): val is Record<string, any> =>
   val != null && typeof val === 'object' && Array.isArray(val) === false;
 const isFunction = (val: unknown): val is Function => typeof val === 'function';
 
-const resolvePresetFunction = (input: unknown, presetOptions: any, storybookOptions: any) => {
+function resolvePresetFunction<T = any>(
+  input: T[] | Function,
+  presetOptions: any,
+  storybookOptions: StorybookConfigOptions
+): T[] {
   if (isFunction(input)) {
     return input({ ...storybookOptions, ...presetOptions });
   }
@@ -16,7 +21,7 @@ const resolvePresetFunction = (input: unknown, presetOptions: any, storybookOpti
   }
 
   return [];
-};
+}
 
 /**
  * Parse an addon into either a managerEntries or a preset. Throw on invalid input.
@@ -119,9 +124,15 @@ function getContent(input: any) {
   return interopRequireDefault(name);
 }
 
-export function loadPreset(input: any, level: number, storybookOptions: any): any[] {
+export function loadPreset(
+  input: PresetConfig,
+  level: number,
+  storybookOptions: StorybookConfigOptions
+): LoadedPreset[] {
   try {
-    const name = input.name ? input.name : input;
+    // @ts-ignores
+    const name: string = input.name ? input.name : input;
+    // @ts-ignore
     const presetOptions = input.options ? input.options : {};
 
     let contents = getContent(input);
@@ -173,7 +184,11 @@ export function loadPreset(input: any, level: number, storybookOptions: any): an
   }
 }
 
-function loadPresets(presets: unknown[], level: number, storybookOptions: any) {
+function loadPresets(
+  presets: PresetConfig[],
+  level: number,
+  storybookOptions: StorybookConfigOptions
+): LoadedPreset[] {
   if (!presets || !Array.isArray(presets) || !presets.length) {
     return [];
   }
@@ -189,12 +204,12 @@ function loadPresets(presets: unknown[], level: number, storybookOptions: any) {
 }
 
 function applyPresets(
-  presets: unknown[],
-  extension: any,
+  presets: LoadedPreset[],
+  extension: string,
   config: any,
   args: any,
-  storybookOptions: any
-) {
+  storybookOptions: StorybookConfigOptions
+): Promise<any> {
   const presetResult = new Promise((resolve) => resolve(config));
 
   if (!presets.length) {
@@ -211,13 +226,12 @@ function applyPresets(
     if (typeof change === 'function') {
       const extensionFn = change;
       const context = {
-        extensionFn,
         preset,
         combinedOptions: { ...storybookOptions, ...args, ...options, presetsList: presets },
       };
 
       return accumulationPromise.then((newConfig) =>
-        context.extensionFn.call(context.preset, newConfig, context.combinedOptions)
+        extensionFn.call(context.preset, newConfig, context.combinedOptions)
       );
     }
 
@@ -233,11 +247,15 @@ function applyPresets(
   }, presetResult);
 }
 
-function getPresets(presets: any, storybookOptions: any = {}) {
-  const loadedPresets = loadPresets(presets, 0, storybookOptions);
+function getPresets(
+  presets: PresetConfig[],
+  // @ts-ignore
+  storybookOptions: StorybookConfigOptions = {}
+): Presets {
+  const loadedPresets: LoadedPreset[] = loadPresets(presets, 0, storybookOptions);
 
   return {
-    apply: async (extension: any, config: any, args = {}) =>
+    apply: async (extension: string, config: any, args = {}) =>
       applyPresets(loadedPresets, extension, config, args, storybookOptions),
   };
 }
