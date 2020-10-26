@@ -271,6 +271,8 @@ In MDX, `Canvas` is more flexible: in addition to the DocsPage behavior, it can 
 
 <!-- prettier-ignore-end -->
 
+By default, each story will display side by side (css block). You can display stories one above the other by adding `isColumn` property to the Canvas component.
+
 You can also place non-story content inside a `Canvas` block:
 
 <!-- prettier-ignore-start -->

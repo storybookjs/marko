@@ -1,5 +1,5 @@
-import { document } from 'global';
-import React, { Component, FunctionComponent, ReactElement, StrictMode } from 'react';
+import { document, FRAMEWORK_OPTIONS } from 'global';
+import React, { Component, FunctionComponent, ReactElement, StrictMode, Fragment } from 'react';
 import ReactDOM from 'react-dom';
 
 import { RenderContext } from './types';
@@ -8,11 +8,7 @@ const rootEl = document ? document.getElementById('root') : null;
 
 const render = (node: ReactElement, el: Element) =>
   new Promise((resolve) => {
-    ReactDOM.render(
-      process.env.STORYBOOK_EXAMPLE_APP ? <StrictMode>{node}</StrictMode> : node,
-      el,
-      resolve
-    );
+    ReactDOM.render(node, el, resolve);
   });
 
 class ErrorBoundary extends Component<{
@@ -47,6 +43,8 @@ class ErrorBoundary extends Component<{
   }
 }
 
+const Wrapper = FRAMEWORK_OPTIONS?.strictMode ? StrictMode : Fragment;
+
 export default async function renderMain({
   storyFn,
   showMain,
@@ -56,11 +54,14 @@ export default async function renderMain({
   // storyFn has context bound in by now so can be treated as a function component with no args
   const StoryFn = storyFn as FunctionComponent;
 
-  const element = (
+  const content = (
     <ErrorBoundary showMain={showMain} showException={showException}>
       <StoryFn />
     </ErrorBoundary>
   );
+
+  // For React 15, StrictMode & Fragment doesn't exists.
+  const element = Wrapper ? <Wrapper>{content}</Wrapper> : content;
 
   // We need to unmount the existing set of components in the DOM node.
   // Otherwise, React may not recreate instances for every story run.

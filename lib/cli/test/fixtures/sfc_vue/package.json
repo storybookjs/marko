@@ -43,7 +43,7 @@
     "optimize-css-assets-webpack-plugin": "^2.0.0",
     "ora": "^3.2.0",
     "rimraf": "^2.6.3",
-    "shelljs": "^0.8.3",
+    "shelljs": "^0.8.4",
     "url-loader": "^1.1.2",
     "vue-loader": "15.7.0",
     "vue-style-loader": "^4.1.2",

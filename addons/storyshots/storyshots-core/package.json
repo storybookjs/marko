@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-storyshots",
-  "version": "6.1.0-alpha.21",
+  "version": "6.1.0-alpha.29",
   "description": "StoryShots is a Jest Snapshot Testing Addon for Storybook.",
   "keywords": [
     "addon",
@@ -33,9 +33,9 @@
   },
   "dependencies": {
     "@jest/transform": "^26.0.0",
-    "@storybook/addons": "6.1.0-alpha.21",
-    "@storybook/client-api": "6.1.0-alpha.21",
-    "@storybook/core": "6.1.0-alpha.21",
+    "@storybook/addons": "6.1.0-alpha.29",
+    "@storybook/client-api": "6.1.0-alpha.29",
+    "@storybook/core": "6.1.0-alpha.29",
     "@types/glob": "^7.1.1",
     "@types/jest": "^25.1.1",
     "@types/jest-specific-snapshot": "^0.5.3",
@@ -53,8 +53,8 @@
     "ts-dedent": "^1.1.1"
   },
   "devDependencies": {
-    "@storybook/addon-docs": "6.1.0-alpha.21",
-    "@storybook/react": "6.1.0-alpha.21",
+    "@storybook/addon-docs": "6.1.0-alpha.29",
+    "@storybook/react": "6.1.0-alpha.29",
     "babel-loader": "^8.0.6",
     "enzyme": "^3.11.0",
     "enzyme-to-json": "^3.4.1",
@@ -63,8 +63,10 @@
     "jest-vue-preprocessor": "^1.5.0"
   },
   "peerDependencies": {
+    "@storybook/vue": "*",
     "jest-preset-angular": "*",
-    "jest-vue-preprocessor": "*"
+    "jest-vue-preprocessor": "*",
+    "vue": "*"
   },
   "peerDependenciesMeta": {
     "jest-preset-angular": {
@@ -72,12 +74,18 @@
     },
     "jest-vue-preprocessor": {
       "optional": true
+    },
+    "@storybook/vue": {
+      "optional": true
+    },
+    "vue": {
+      "optional": true
     }
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "0ab71655be7c8fd199c9953ffb0b4509e9bf4ec8",
+  "gitHead": "c4c9f9bf50f9280bcaba9825156a43372350cdb9",
   "typesVersions": {
     "<3.8": {
       "*": [

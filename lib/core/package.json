@@ -1,6 +1,6 @@
 {
   "name": "@storybook/core",
-  "version": "6.1.0-alpha.21",
+  "version": "6.1.0-alpha.29",
   "description": "Storybook framework-agnostic API",
   "keywords": [
     "storybook"
@@ -52,20 +52,20 @@
     "@babel/preset-react": "^7.10.4",
     "@babel/preset-typescript": "^7.10.4",
     "@babel/register": "^7.11.5",
-    "@storybook/addons": "6.1.0-alpha.21",
-    "@storybook/api": "6.1.0-alpha.21",
-    "@storybook/channel-postmessage": "6.1.0-alpha.21",
-    "@storybook/channels": "6.1.0-alpha.21",
-    "@storybook/client-api": "6.1.0-alpha.21",
-    "@storybook/client-logger": "6.1.0-alpha.21",
-    "@storybook/components": "6.1.0-alpha.21",
-    "@storybook/core-events": "6.1.0-alpha.21",
+    "@storybook/addons": "6.1.0-alpha.29",
+    "@storybook/api": "6.1.0-alpha.29",
+    "@storybook/channel-postmessage": "6.1.0-alpha.29",
+    "@storybook/channels": "6.1.0-alpha.29",
+    "@storybook/client-api": "6.1.0-alpha.29",
+    "@storybook/client-logger": "6.1.0-alpha.29",
+    "@storybook/components": "6.1.0-alpha.29",
+    "@storybook/core-events": "6.1.0-alpha.29",
     "@storybook/csf": "0.0.1",
-    "@storybook/node-logger": "6.1.0-alpha.21",
-    "@storybook/router": "6.1.0-alpha.21",
+    "@storybook/node-logger": "6.1.0-alpha.29",
+    "@storybook/router": "6.1.0-alpha.29",
     "@storybook/semver": "^7.3.2",
-    "@storybook/theming": "6.1.0-alpha.21",
-    "@storybook/ui": "6.1.0-alpha.21",
+    "@storybook/theming": "6.1.0-alpha.29",
+    "@storybook/ui": "6.1.0-alpha.29",
     "@types/glob-base": "^0.3.0",
     "@types/micromatch": "^4.0.1",
     "@types/node-fetch": "^2.5.4",
@@ -118,7 +118,7 @@
     "regenerator-runtime": "^0.13.3",
     "resolve-from": "^5.0.0",
     "serve-favicon": "^2.5.0",
-    "shelljs": "^0.8.3",
+    "shelljs": "^0.8.4",
     "stable": "^0.1.8",
     "style-loader": "^1.2.1",
     "telejson": "^5.0.2",
@@ -139,7 +139,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "0ab71655be7c8fd199c9953ffb0b4509e9bf4ec8",
+  "gitHead": "c4c9f9bf50f9280bcaba9825156a43372350cdb9",
   "typesVersions": {
     "<3.8": {
       "*": [

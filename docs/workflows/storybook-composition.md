@@ -22,6 +22,10 @@ In your [`storybook/main.js`](../configure/overview.md#configure-story-rendering
 
 <!-- prettier-ignore-end -->
 
+<div class="aside">
+ We would like to point out that there's some limitations to composition. For now addons in composed Storybooks will not work as they do in non composed Storybooks. 
+</div>
+
 ## Compose local Storybooks
 
 You can also compose Storybook that are running locally. For instance, if you have a React Storybook and a Angular Storybook running on different ports:

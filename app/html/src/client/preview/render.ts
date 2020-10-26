@@ -14,7 +14,6 @@ export default function renderMain({
   forceRender,
 }: RenderContext) {
   const element = storyFn();
-
   showMain();
   if (typeof element === 'string') {
     rootElement.innerHTML = element;

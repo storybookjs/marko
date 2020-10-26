@@ -307,5 +307,11 @@ export default function (options: CommandOptions, pkg: IPackage): Promise<void> 
   }
   done();
 
-  return installStorybook(projectType, options);
+  const cleanOptions = { ...options };
+  if (options.storyFormat === StoryFormat.MDX) {
+    logger.warn('   The MDX CLI template is deprecated. The JS and TS templates already include MDX examples!');
+    cleanOptions.storyFormat = undefined;
+  }
+
+  return installStorybook(projectType, cleanOptions);
 }

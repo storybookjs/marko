@@ -17,7 +17,7 @@ const baseAngular: Parameters = {
   version: 'latest',
   generator: [
     `yarn add @angular/cli@{{version}} --no-lockfile --non-interactive --silent --no-progress`,
-    `npx ng new {{name}}-{{version}} --routing=true --minimal=true --style=scss --skipInstall=true --strict`,
+    `yarn ng new {{name}}-{{version}} --routing=true --minimal=true --style=scss --skipInstall=true --strict`,
   ].join(' && '),
   additionalDeps: ['react', 'react-dom'],
 };
@@ -164,7 +164,7 @@ export const sfcVue: Parameters = {
   additionalDeps: [
     'react',
     'react-dom',
-    'webpack',
+    'webpack@webpack-4',
     // TODO: remove when https://github.com/storybookjs/storybook/issues/11255 is solved
     'core-js',
   ],
@@ -194,7 +194,7 @@ export const web_components: Parameters = {
 export const webpack_react: Parameters = {
   name: 'webpack_react',
   version: 'latest',
-  generator: fromDeps('react', 'react-dom', 'webpack'),
+  generator: fromDeps('react', 'react-dom', 'webpack@webpack-4'),
 };
 
 export const react_in_yarn_workspace: Parameters = {

@@ -11,6 +11,7 @@ import {
   ArgTypes,
   StoryApi,
   DecoratorFunction,
+  LoaderFunction,
   DecorateStoryFunction,
   StoryContext,
 } from '@storybook/addons';
@@ -24,8 +25,9 @@ export interface ErrorLike {
 
 // Metadata about a story that can be set at various levels: global, for a kind, or for a single story.
 export interface StoryMetadata {
-  parameters: Parameters;
-  decorators: DecoratorFunction[];
+  parameters?: Parameters;
+  decorators?: DecoratorFunction[];
+  loaders?: LoaderFunction[];
 }
 export type ArgTypesEnhancer = (context: StoryContext) => ArgTypes;
 
@@ -45,13 +47,16 @@ export type AddStoryArgs = StoryIdentifier & {
   storyFn: StoryFn<any>;
   parameters?: Parameters;
   decorators?: DecoratorFunction[];
+  loaders?: LoaderFunction[];
 };
 
 export type StoreItem = StoryIdentifier & {
   parameters: Parameters;
   getDecorated: () => StoryFn<any>;
   getOriginal: () => StoryFn<any>;
+  applyLoaders: () => Promise<StoryContext>;
   storyFn: StoryFn<any>;
+  unboundStoryFn: StoryFn<any>;
   hooks: HooksContext;
   args: Args;
   initialArgs: Args;

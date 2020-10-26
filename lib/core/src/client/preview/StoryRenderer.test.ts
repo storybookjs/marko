@@ -13,7 +13,13 @@ import {
   STORY_RENDERED,
 } from '@storybook/core-events';
 import { toId } from '@storybook/csf';
-import addons, { StoryKind, StoryName, Parameters } from '@storybook/addons';
+import addons, {
+  StoryFn,
+  StoryKind,
+  StoryName,
+  Parameters,
+  LoaderFunction,
+} from '@storybook/addons';
 import ReactDOM from 'react-dom';
 
 import { StoryRenderer } from './StoryRenderer';
@@ -29,10 +35,10 @@ jest.mock('@storybook/client-logger', () => ({
 }));
 
 function prepareRenderer() {
-  const render = jest.fn();
+  const render = jest.fn(({ storyFn }) => storyFn());
   const channel = createChannel({ page: 'preview' });
   addons.setChannel(channel);
-  const storyStore = new StoryStore({ channel });
+  const storyStore = new StoryStore({ channel: null });
   const renderer = new StoryRenderer({ render, channel, storyStore });
 
   // mock out all the dom-touching functions
@@ -50,11 +56,13 @@ function addStory(
   storyStore: StoryStore,
   kind: StoryKind,
   name: StoryName,
-  parameters: Parameters = {}
+  parameters: Parameters = {},
+  loaders: LoaderFunction[] = [],
+  storyFn: StoryFn = jest.fn()
 ) {
   const id = toId(kind, name);
   storyStore.addStory(
-    { id, kind, name, storyFn: jest.fn(), parameters },
+    { id, kind, name, storyFn, parameters, loaders },
     {
       applyDecorators: defaultDecorateStory,
     }
@@ -66,10 +74,13 @@ function addAndSelectStory(
   storyStore: StoryStore,
   kind: StoryKind,
   name: StoryName,
-  parameters: Parameters = {}
+  parameters: Parameters = {},
+  loaders: LoaderFunction[] = undefined
 ) {
-  const id = addStory(storyStore, kind, name, parameters);
+  const storyFn = jest.fn();
+  const id = addStory(storyStore, kind, name, parameters, loaders, storyFn);
   storyStore.setSelection({ storyId: id, viewMode: 'story' });
+  return storyFn;
 }
 
 describe('core.preview.StoryRenderer', () => {
@@ -80,6 +91,8 @@ describe('core.preview.StoryRenderer', () => {
     channel.on(STORY_RENDERED, onStoryRendered);
 
     addAndSelectStory(storyStore, 'a', '1', { p: 'q' });
+
+    await renderer.renderCurrentStory(false);
     expect(render).toHaveBeenCalledWith(
       expect.objectContaining({
         id: 'a--1',
@@ -95,7 +108,7 @@ describe('core.preview.StoryRenderer', () => {
     );
 
     render.mockClear();
-    renderer.renderCurrentStory(true);
+    await renderer.renderCurrentStory(true);
     expect(render).toHaveBeenCalledWith(
       expect.objectContaining({
         forceRender: true,
@@ -108,18 +121,91 @@ describe('core.preview.StoryRenderer', () => {
     expect(onStoryRendered).toHaveBeenCalledWith('a--1');
   });
 
+  describe('loaders', () => {
+    it('loads data asynchronously and passes to stories', async () => {
+      const { channel, storyStore, renderer } = prepareRenderer();
+
+      const onStoryRendered = jest.fn();
+      channel.on(STORY_RENDERED, onStoryRendered);
+
+      const loaders = [async () => new Promise((r) => setTimeout(() => r({ foo: 7 }), 100))];
+      const storyFn = addAndSelectStory(storyStore, 'a', '1', {}, loaders);
+
+      await renderer.renderCurrentStory(false);
+      expect(storyFn).toHaveBeenCalledWith(
+        {},
+        expect.objectContaining({
+          id: 'a--1',
+          kind: 'a',
+          name: '1',
+          loaded: { foo: 7 },
+        })
+      );
+
+      expect(onStoryRendered).toHaveBeenCalledWith('a--1');
+    });
+    it('later loaders override earlier loaders', async () => {
+      const { channel, storyStore, renderer } = prepareRenderer();
+
+      const onStoryRendered = jest.fn();
+      channel.on(STORY_RENDERED, onStoryRendered);
+
+      const loaders = [
+        async () => new Promise((r) => setTimeout(() => r({ foo: 7 }), 100)),
+        async () => new Promise((r) => setTimeout(() => r({ foo: 3 }), 50)),
+      ];
+      const storyFn = addAndSelectStory(storyStore, 'a', '1', {}, loaders);
+
+      await renderer.renderCurrentStory(false);
+      expect(storyFn).toHaveBeenCalledWith(
+        {},
+        expect.objectContaining({
+          id: 'a--1',
+          kind: 'a',
+          name: '1',
+          loaded: { foo: 3 },
+        })
+      );
+
+      expect(onStoryRendered).toHaveBeenCalledWith('a--1');
+    });
+    it('more specific loaders override more generic loaders', async () => {
+      const { channel, storyStore, renderer } = prepareRenderer();
+
+      const onStoryRendered = jest.fn();
+      channel.on(STORY_RENDERED, onStoryRendered);
+
+      storyStore.addGlobalMetadata({ loaders: [async () => ({ foo: 1, bar: 1, baz: 1 })] });
+      storyStore.addKindMetadata('a', { loaders: [async () => ({ foo: 3, bar: 3 })] });
+      const storyFn = addAndSelectStory(storyStore, 'a', '1', {}, [async () => ({ foo: 5 })]);
+
+      await renderer.renderCurrentStory(false);
+      expect(storyFn).toHaveBeenCalledWith(
+        {},
+        expect.objectContaining({
+          id: 'a--1',
+          kind: 'a',
+          name: '1',
+          loaded: { foo: 5, bar: 3, baz: 1 },
+        })
+      );
+
+      expect(onStoryRendered).toHaveBeenCalledWith('a--1');
+    });
+  });
   describe('errors', () => {
-    it('renders an error if a config error is set on the store', () => {
+    it('renders an error if a config error is set on the store', async () => {
       const { render, storyStore, renderer } = prepareRenderer();
       const err = { message: 'message', stack: 'stack' };
       storyStore.setError(err);
       storyStore.finishConfiguring();
+      await renderer.renderCurrentStory(false);
 
       expect(render).not.toHaveBeenCalled();
       expect(renderer.showErrorDisplay).toHaveBeenCalledWith(err);
     });
 
-    it('renders an error if the story calls renderError', () => {
+    it('renders an error if the story calls renderError', async () => {
       const { render, channel, storyStore, renderer } = prepareRenderer();
 
       const onStoryErrored = jest.fn();
@@ -129,6 +215,7 @@ describe('core.preview.StoryRenderer', () => {
       render.mockImplementation(({ showError }) => showError(err));
 
       addAndSelectStory(storyStore, 'a', '1');
+      await renderer.renderCurrentStory(false);
 
       expect(renderer.showErrorDisplay).toHaveBeenCalledWith({
         message: 'title',
@@ -137,7 +224,7 @@ describe('core.preview.StoryRenderer', () => {
       expect(onStoryErrored).toHaveBeenCalledWith(err);
     });
 
-    it('renders an exception if the story calls renderException', () => {
+    it('renders an exception if the story calls renderException', async () => {
       const { render, channel, storyStore, renderer } = prepareRenderer();
 
       const onStoryThrewException = jest.fn();
@@ -147,12 +234,13 @@ describe('core.preview.StoryRenderer', () => {
       render.mockImplementation(({ showException }) => showException(err));
 
       addAndSelectStory(storyStore, 'a', '1');
+      await renderer.renderCurrentStory(false);
 
       expect(renderer.showErrorDisplay).toHaveBeenCalledWith(err);
       expect(onStoryThrewException).toHaveBeenCalledWith(err);
     });
 
-    it('renders an exception if the render function throws', () => {
+    it('renders an exception if the render function throws', async () => {
       const { render, channel, storyStore, renderer } = prepareRenderer();
 
       const onStoryThrewException = jest.fn();
@@ -164,12 +252,13 @@ describe('core.preview.StoryRenderer', () => {
       });
 
       addAndSelectStory(storyStore, 'a', '1');
+      await renderer.renderCurrentStory(false);
 
       expect(renderer.showErrorDisplay).toHaveBeenCalledWith(err);
       expect(onStoryThrewException).toHaveBeenCalledWith(err);
     });
 
-    it('renders an error if the story is missing', () => {
+    it('renders an error if the story is missing', async () => {
       const { render, channel, storyStore, renderer } = prepareRenderer();
 
       const onStoryMissing = jest.fn();
@@ -177,6 +266,7 @@ describe('core.preview.StoryRenderer', () => {
 
       addStory(storyStore, 'a', '1');
       storyStore.setSelection({ storyId: 'b--2', viewMode: 'story' });
+      await renderer.renderCurrentStory(false);
 
       expect(render).not.toHaveBeenCalled();
 
@@ -186,8 +276,8 @@ describe('core.preview.StoryRenderer', () => {
   });
 
   describe('docs mode', () => {
-    it('renders docs and emits when rendering a docs story', () => {
-      const { render, channel, storyStore } = prepareRenderer();
+    it('renders docs and emits when rendering a docs story', async () => {
+      const { render, channel, storyStore, renderer } = prepareRenderer();
 
       const onDocsRendered = jest.fn();
       channel.on(DOCS_RENDERED, onDocsRendered);
@@ -197,6 +287,7 @@ describe('core.preview.StoryRenderer', () => {
 
       addStory(storyStore, 'a', '1');
       storyStore.setSelection({ storyId: 'a--1', viewMode: 'docs' });
+      await renderer.renderCurrentStory(false);
 
       // Although the docs React component may ultimately render the story we are mocking out
       // `react-dom` and just check that *something* is being rendered by react at this point
@@ -204,10 +295,11 @@ describe('core.preview.StoryRenderer', () => {
       expect(onDocsRendered).toHaveBeenCalledWith('a');
     });
 
-    it('hides the root and shows the docs root as well as main when rendering a docs story', () => {
+    it('hides the root and shows the docs root as well as main when rendering a docs story', async () => {
       const { storyStore, renderer } = prepareRenderer();
       addStory(storyStore, 'a', '1');
       storyStore.setSelection({ storyId: 'a--1', viewMode: 'docs' });
+      await renderer.renderCurrentStory(false);
 
       expect(renderer.showDocs).toHaveBeenCalled();
       expect(renderer.showMain).toHaveBeenCalled();
@@ -236,15 +328,16 @@ describe('core.preview.StoryRenderer', () => {
   });
 
   describe('re-rendering behaviour', () => {
-    it('does not re-render if nothing changed', () => {
+    it('does not re-render if nothing changed', async () => {
       const { render, channel, storyStore, renderer } = prepareRenderer();
       addAndSelectStory(storyStore, 'a', '1');
+      await renderer.renderCurrentStory(false);
 
       const onStoryUnchanged = jest.fn();
       channel.on(STORY_UNCHANGED, onStoryUnchanged);
 
       render.mockClear();
-      renderer.renderCurrentStory(false);
+      await renderer.renderCurrentStory(false);
       expect(render).not.toHaveBeenCalled();
       // Not sure why STORY_UNCHANGED is called with all this stuff
       expect(onStoryUnchanged).toHaveBeenCalledWith({
@@ -255,36 +348,40 @@ describe('core.preview.StoryRenderer', () => {
         getDecorated: expect.any(Function),
       });
     });
-    it('does re-render the current story if it has not changed if forceRender is true', () => {
+    it('does re-render the current story if it has not changed if forceRender is true', async () => {
       const { render, channel, storyStore, renderer } = prepareRenderer();
       addAndSelectStory(storyStore, 'a', '1');
+      await renderer.renderCurrentStory(false);
 
       const onStoryChanged = jest.fn();
       channel.on(STORY_CHANGED, onStoryChanged);
 
       render.mockClear();
-      renderer.renderCurrentStory(true);
+      await renderer.renderCurrentStory(true);
       expect(render).toHaveBeenCalled();
 
       expect(onStoryChanged).not.toHaveBeenCalled();
     });
-    it('does re-render if the selected story changes', () => {
-      const { render, channel, storyStore } = prepareRenderer();
+    it('does re-render if the selected story changes', async () => {
+      const { render, channel, storyStore, renderer } = prepareRenderer();
       addStory(storyStore, 'a', '1');
       addAndSelectStory(storyStore, 'a', '2');
+      await renderer.renderCurrentStory(false);
 
       const onStoryChanged = jest.fn();
       channel.on(STORY_CHANGED, onStoryChanged);
 
       render.mockClear();
       storyStore.setSelection({ storyId: 'a--1', viewMode: 'story' });
+      await renderer.renderCurrentStory(false);
       expect(render).toHaveBeenCalled();
 
       expect(onStoryChanged).toHaveBeenCalledWith('a--1');
     });
-    it('does re-render if the story implementation changes', () => {
-      const { render, channel, storyStore } = prepareRenderer();
+    it('does re-render if the story implementation changes', async () => {
+      const { render, channel, storyStore, renderer } = prepareRenderer();
       addAndSelectStory(storyStore, 'a', '1');
+      await renderer.renderCurrentStory(false);
 
       const onStoryChanged = jest.fn();
       channel.on(STORY_CHANGED, onStoryChanged);
@@ -292,80 +389,93 @@ describe('core.preview.StoryRenderer', () => {
       render.mockClear();
       storyStore.removeStoryKind('a');
       addAndSelectStory(storyStore, 'a', '1');
-      expect(render).toHaveBeenCalled();
+      await renderer.renderCurrentStory(false);
 
+      expect(render).toHaveBeenCalled();
       expect(onStoryChanged).not.toHaveBeenCalled();
     });
-    it('does re-render if the view mode changes', () => {
-      const { render, channel, storyStore } = prepareRenderer();
+    it('does re-render if the view mode changes', async () => {
+      const { render, channel, storyStore, renderer } = prepareRenderer();
       addAndSelectStory(storyStore, 'a', '1');
       storyStore.setSelection({ storyId: 'a--1', viewMode: 'docs' });
+      await renderer.renderCurrentStory(false);
 
       const onStoryChanged = jest.fn();
       channel.on(STORY_CHANGED, onStoryChanged);
 
       render.mockClear();
       storyStore.setSelection({ storyId: 'a--1', viewMode: 'story' });
-      expect(render).toHaveBeenCalled();
+      await renderer.renderCurrentStory(false);
 
+      expect(render).toHaveBeenCalled();
       expect(onStoryChanged).toHaveBeenCalledWith('a--1');
     });
   });
 
   describe('hooks', () => {
-    it('cleans up kind hooks when changing kind in docs mode', () => {
-      const { storyStore } = prepareRenderer();
+    it('cleans up kind hooks when changing kind in docs mode', async () => {
+      const { storyStore, renderer } = prepareRenderer();
       addAndSelectStory(storyStore, 'a', '1');
       addAndSelectStory(storyStore, 'b', '1');
       storyStore.setSelection({ storyId: 'a--1', viewMode: 'docs' });
+      await renderer.renderCurrentStory(false);
 
       storyStore.cleanHooksForKind = jest.fn();
 
       storyStore.setSelection({ storyId: 'b--1', viewMode: 'docs' });
+      await renderer.renderCurrentStory(false);
 
       expect(storyStore.cleanHooksForKind).toHaveBeenCalledWith('a');
     });
-    it('does not clean up hooks when changing story but not kind in docs mode', () => {
-      const { storyStore } = prepareRenderer();
+    it('does not clean up hooks when changing story but not kind in docs mode', async () => {
+      const { storyStore, renderer } = prepareRenderer();
       addAndSelectStory(storyStore, 'a', '1');
       addAndSelectStory(storyStore, 'a', '2');
       storyStore.setSelection({ storyId: 'a--1', viewMode: 'docs' });
+      await renderer.renderCurrentStory(false);
 
       storyStore.cleanHooksForKind = jest.fn();
 
       storyStore.setSelection({ storyId: 'a--2', viewMode: 'docs' });
+      await renderer.renderCurrentStory(false);
 
       expect(storyStore.cleanHooksForKind).not.toHaveBeenCalled();
     });
-    it('cleans up kind hooks when changing view mode from docs', () => {
-      const { storyStore } = prepareRenderer();
+    it('cleans up kind hooks when changing view mode from docs', async () => {
+      const { storyStore, renderer } = prepareRenderer();
       addAndSelectStory(storyStore, 'a', '1');
       storyStore.setSelection({ storyId: 'a--1', viewMode: 'docs' });
+      await renderer.renderCurrentStory(false);
 
       storyStore.cleanHooksForKind = jest.fn();
 
       storyStore.setSelection({ storyId: 'a--1', viewMode: 'story' });
+      await renderer.renderCurrentStory(false);
 
       expect(storyStore.cleanHooksForKind).toHaveBeenCalledWith('a');
     });
-    it('cleans up story hooks when changing story in story mode', () => {
-      const { storyStore } = prepareRenderer();
+    it('cleans up story hooks when changing story in story mode', async () => {
+      const { storyStore, renderer } = prepareRenderer();
       addStory(storyStore, 'a', '1');
       addAndSelectStory(storyStore, 'a', '2');
+      await renderer.renderCurrentStory(false);
 
       storyStore.cleanHooks = jest.fn();
 
       storyStore.setSelection({ storyId: 'a--1', viewMode: 'story' });
+      await renderer.renderCurrentStory(false);
 
       expect(storyStore.cleanHooks).toHaveBeenCalledWith('a--2');
     });
-    it('cleans up story hooks when changing view mode from story', () => {
-      const { storyStore } = prepareRenderer();
+    it('cleans up story hooks when changing view mode from story', async () => {
+      const { storyStore, renderer } = prepareRenderer();
       addAndSelectStory(storyStore, 'a', '1');
+      await renderer.renderCurrentStory(false);
 
       storyStore.cleanHooks = jest.fn();
 
       storyStore.setSelection({ storyId: 'a--1', viewMode: 'docs' });
+      await renderer.renderCurrentStory(false);
 
       expect(storyStore.cleanHooks).toHaveBeenCalledWith('a--1');
     });

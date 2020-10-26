@@ -129,6 +129,7 @@ export interface StoryApi<StoryFnReturnType = unknown> {
     parameters?: Parameters
   ) => StoryApi<StoryFnReturnType>;
   addDecorator: (decorator: DecoratorFunction<StoryFnReturnType>) => StoryApi<StoryFnReturnType>;
+  addLoader: (decorator: LoaderFunction) => StoryApi<StoryFnReturnType>;
   addParameters: (parameters: Parameters) => StoryApi<StoryFnReturnType>;
   [k: string]: string | ClientApiReturnFn<StoryFnReturnType>;
 }
@@ -137,6 +138,8 @@ export type DecoratorFunction<StoryFnReturnType = unknown> = (
   fn: StoryFn<StoryFnReturnType>,
   c: StoryContext
 ) => ReturnType<StoryFn<StoryFnReturnType>>;
+
+export type LoaderFunction = (c: StoryContext) => Promise<Record<string, any>>;
 
 export type DecorateStoryFunction<StoryFnReturnType = unknown> = (
   storyFn: StoryFn<StoryFnReturnType>,

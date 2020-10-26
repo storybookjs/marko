@@ -27,7 +27,8 @@ Usage: start-storybook [options]
 | --smoke-test                   | Exit after successful start                                                                                                                    | `start-storybook --smoke-test`                  |
 | --ci                           | CI mode (skip interactive prompts, don't open browser)                                                                                         | `start-storybook --ci`                          |
 | --quiet                        | Suppress verbose build output                                                                                                                  | `start-storybook --quiet`                       |
-| --no-dll                       | Do not use dll reference                                                                                                                       | `start-storybook --no-dll`                      |
+| --no-dll                       | Do not use UI dll reference                                                                                                                    | `start-storybook --no-dll`                      |
+| --docs-dll                     | Use the Docs dll reference (legacy)                                                                                                            | `start-storybook --docs-dll`                    |
 | --debug-webpack                | Display final webpack configurations for debugging purposes                                                                                    | `start-storybook --debug-webpack`               |
 | --docs                         | Starts Storybook in documentation mode. Learn more about it in [here](../writing-docs/build-documentation.md#preview-storybooks-documentation) | `start-storybook --docs`                        |
 
@@ -47,6 +48,7 @@ Usage: build-storybook [options]
 | -w, --watch                    | Enables watch mode                                                                                                                              | `build-storybook -w`                        |
 | --loglevel [level]             | Controls level of logging during build. Can be one of: [silly, verbose, info (default), warn, error, silent]                                    | `build-storybook --loglevel warn`           |
 | --quiet                        | Suppress verbose build output                                                                                                                   | `build-storybook --quiet`                   |
-| --no-dll                       | Do not use dll reference                                                                                                                        | `build-storybook --no-dll`                  |
+| --no-dll                       | Do not use UI dll reference                                                                                                                     | `build-storybook --no-dll`                  |
+| --docs-dll                     | Use Docs dll reference (legacy)                                                                                                                 | `build-storybook --docs-dll`                |
 | --debug-webpack                | Display final webpack configurations for debugging purposes                                                                                     | `build-storybook --debug-webpack`           |
 | --docs                         | Builds Storybook in documentation mode. Learn more about it in [here](../writing-docs/build-documentation.md#publish-storybooks-documentation)) | `build-storybook --docs`                    |

@@ -37,7 +37,7 @@ Then load it in the file `main.js` in your storybook folder (`.storybook` by def
 
 <!-- prettier-ignore-end -->
 
-That's it. When Storybook starts up, it will configure itself to use SCSS styling without any further configuration. For more information, see the SCSS preset [README](https://github.com/storybookjs/presets/blob/master/packages/preset-scss/README.md).
+That's it. When Storybook starts up, it will configure itself to use SCSS styling without any further configuration. For more information, see the SCSS preset [README](https://github.com/storybookjs/presets/blob/master/packages/preset-scss/).
 
 ## Preset configuration
 

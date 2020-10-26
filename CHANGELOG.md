@@ -1,10 +1,120 @@
+## 6.1.0-alpha.29 (October 23, 2020)
+
+### Bug Fixes
+
+* CLI: Fix intro MDX for React17 ([#12878](https://github.com/storybookjs/storybook/pull/12878))
+
+## 6.0.27 (October 23, 2020)
+
+### Bug Fixes
+
+- CLI: Fix intro MDX for React17 ([#12878](https://github.com/storybookjs/storybook/pull/12878))
+- Core: Disable Docs DLL by default ([#12874](https://github.com/storybookjs/storybook/pull/12874))
+- Essentials: Fix absolute config dir ([#12873](https://github.com/storybookjs/storybook/pull/12873))
+- Addon-controls: Fix "docs before controls" check ([#12738](https://github.com/storybookjs/storybook/pull/12738))
+- Addon-knobs: Fix uncontrolled to controlled warning for booleans ([#12719](https://github.com/storybookjs/storybook/pull/12719))
+
+### Dependency Upgrades
+
+- Upgrade babel-plugin-react-docgen ([#12748](https://github.com/storybookjs/storybook/pull/12748))
+  
+## 6.1.0-alpha.28 (October 23, 2020)
+
+### Bug Fixes
+
+- Core: Disable Docs DLL by default ([#12874](https://github.com/storybookjs/storybook/pull/12874))
+- Essentials: Fix absolute config dir ([#12873](https://github.com/storybookjs/storybook/pull/12873))
+- UI: Add close button to version update notification ([#12320](https://github.com/storybookjs/storybook/pull/12320))
+
+### Maintenance
+
+- UI: Add fullscreen mode to docs ([#12861](https://github.com/storybookjs/storybook/pull/12861))
+
+### Dependency Upgrades
+
+- Angular: Update TypeScript peerDep version to support Angular 11 ([#12866](https://github.com/storybookjs/storybook/pull/12866))
+
+## 6.1.0-alpha.27 (October 19, 2020)
+
+### Features
+
+- Addon-docs: Dynamic source rendering for Vue ([#12812](https://github.com/storybookjs/storybook/pull/12812))
+
+### Bug Fixes
+
+- Core: Pass framework options as global ([#12810](https://github.com/storybookjs/storybook/pull/12810))
+
+### Maintenance
+
+- CLI: Clean up handling of unknown subcommands ([#12799](https://github.com/storybookjs/storybook/pull/12799))
+
+## 6.1.0-alpha.26 (October 18, 2020)
+
+### Maintenance
+
+- Components: Minor update checking color in Button ([#12800](https://github.com/storybookjs/storybook/pull/12800))
+
+### Dependency Upgrades
+
+- Bump vue-docgen-api to 4.33.1 ([#12808](https://github.com/storybookjs/storybook/pull/12808))
+- Storyshots: Add missing vue peer dependencies ([#12790](https://github.com/storybookjs/storybook/pull/12790))
+- Core/CLI: Update ShellJS dep version ([#12794](https://github.com/storybookjs/storybook/pull/12794))
+
+## 6.1.0-alpha.25 (October 16, 2020)
+
+### Features
+
+- React: Add strictMode option ([#12781](https://github.com/storybookjs/storybook/pull/12781))
+
+### Dependency Upgrades
+
+- Bump lodash from 4.17.19 to 4.17.20 ([#12235](https://github.com/storybookjs/storybook/pull/12235))
+
+## 6.1.0-alpha.24 (October 15, 2020)
+
+### Bug Fixes
+
+- Addon-viewports: Fix initial load state ([#11627](https://github.com/storybookjs/storybook/pull/11627))
+- UI: Fullscreen toggle does not work when all panels are collapsed ([#11810](https://github.com/storybookjs/storybook/pull/11810))
+- Addon-controls: Fix "docs before controls" check ([#12738](https://github.com/storybookjs/storybook/pull/12738))
+
+### Maintenance
+
+- Build: fix E2E tests and rework related CircleCI jobs ([#12746](https://github.com/storybookjs/storybook/pull/12746))
+
+### Dependency Upgrades
+
+- Upgrade babel-plugin-react-docgen ([#12748](https://github.com/storybookjs/storybook/pull/12748))
+
+## 6.1.0-alpha.23 (October 12, 2020)
+
+### Features
+
+- Core: Add async loaders ([#12699](https://github.com/storybookjs/storybook/pull/12699))
+- Addon-a11y: Add blurred vision effect ([#12731](https://github.com/storybookjs/storybook/pull/12731))
+
+### Maintenance
+
+- Build: Improve angular e2e tests ([#12723](https://github.com/storybookjs/storybook/pull/12723))
+
+## 6.1.0-alpha.22 (October 10, 2020)
+
+### Features
+
+- Angular: Choose project used by Storybook ([#12565](https://github.com/storybookjs/storybook/pull/12565))
+
+### Bug Fixes
+
+- Composition: Fix incorrect ref type ([#12709](https://github.com/storybookjs/storybook/pull/12709))
+- Addon-knobs: Fix uncontrolled to controlled warning for booleans ([#12719](https://github.com/storybookjs/storybook/pull/12719))
+
 ## 6.1.0-alpha.21 (October 8, 2020)
 
 ### Features
 
-- Sidebar: Better search, keyboard shortcuts, and "recently viewed" ([#12601](https://github.com/storybookjs/storybook/pull/12601))
+- Sidebar: Better search, keyboard shortcuts, "recently viewed" ([#12601](https://github.com/storybookjs/storybook/pull/12601))
 - Source-loader: Generate sourcemaps ([#12277](https://github.com/storybookjs/storybook/pull/12277))
-- Core: Add apng support ([#12639](https://github.com/storybookjs/storybook/pull/12639))
+- Core: Add APNG support ([#12639](https://github.com/storybookjs/storybook/pull/12639))
 
 ### Bug Fixes
 
