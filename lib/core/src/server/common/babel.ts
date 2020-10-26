@@ -1,3 +1,5 @@
+import { TransformOptions } from '@babel/core';
+
 export const plugins = [
   require.resolve('@babel/plugin-transform-shorthand-properties'),
   require.resolve('@babel/plugin-transform-block-scoping'),
@@ -39,7 +41,7 @@ export const presets = [
   require.resolve('@babel/preset-typescript'),
 ];
 
-export default () => {
+export const babelConfig: () => TransformOptions = () => {
   return {
     sourceType: 'unambiguous',
     presets: [...presets],

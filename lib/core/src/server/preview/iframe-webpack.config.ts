@@ -15,7 +15,7 @@ import resolveFrom from 'resolve-from';
 import themingPaths from '@storybook/theming/paths';
 
 import { createBabelLoader } from './babel-loader-preview';
-import es6Transpiler from '../common/es6Transpiler';
+import { es6Transpiler } from '../common/es6Transpiler';
 
 import { nodeModulesPaths, loadEnv } from '../config/utils';
 import { getPreviewHeadHtml, getPreviewBodyHtml } from '../utils/template';

@@ -1,6 +1,6 @@
 import path from 'path';
 import fse from 'fs-extra';
-import { DefinePlugin } from 'webpack';
+import { DefinePlugin, Configuration } from 'webpack';
 import Dotenv from 'dotenv-webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
@@ -13,9 +13,9 @@ import uiPaths from '@storybook/ui/paths';
 import { getManagerHeadHtml } from '../utils/template';
 import { loadEnv } from '../config/utils';
 
-import babelLoader from './babel-loader-manager';
+import { babelLoader } from './babel-loader-manager';
 import { resolvePathInStorybookCache } from '../utils/resolve-path-in-sb-cache';
-import es6Transpiler from '../common/es6Transpiler';
+import { es6Transpiler } from '../common/es6Transpiler';
 
 const { version } = require('../../../package.json');
 
@@ -31,7 +31,7 @@ export default async ({
   versionCheck,
   releaseNotesData,
   presets,
-}: any) => {
+}: any): Promise<Configuration> => {
   const { raw, stringified } = loadEnv();
   const logLevel = await presets.apply('logLevel', undefined);
   const isProd = configType === 'PRODUCTION';
@@ -43,6 +43,8 @@ export default async ({
     name: 'manager',
     mode: isProd ? 'production' : 'development',
     bail: isProd,
+    // FIXME: `none` is not a valid option for devtool
+    // @ts-ignore
     devtool: 'none',
     entry: entries,
     output: {

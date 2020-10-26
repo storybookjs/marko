@@ -1,6 +1,6 @@
 import loadCustomBabelConfig from '../utils/load-custom-babel-config';
 
-import babelConfig from './babel';
+import { babelConfig } from './babel';
 
 export const babel = async (_: unknown, options: { configDir: string; presets: any }) => {
   const { configDir, presets } = options;
