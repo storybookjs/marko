@@ -222,34 +222,64 @@ export const Search: FunctionComponent<{
 
   const stateReducer = useCallback(
     (state: DownshiftState<DownshiftItem>, changes: StateChangeOptions<DownshiftItem>) => {
-      const { blurInput, clickItem, keyDownEnter, keyDownEscape } = Downshift.stateChangeTypes;
-      const { type, inputValue, selectedItem = {} } = changes;
-      if (type === blurInput) return {};
-      if (type === keyDownEscape) {
-        inputRef.current.blur();
-        showAllComponents(false);
-        return { inputValue: '' };
-      }
-      if (type === clickItem || type === keyDownEnter) {
-        if (isSearchResult(selectedItem)) {
-          const { id, refId } = selectedItem.item;
-          selectStory(id, refId);
-          return { isOpen: false };
+      switch (changes.type) {
+        case Downshift.stateChangeTypes.blurInput: {
+          return {
+            ...changes,
+            // Prevent clearing the input on blur
+            inputValue: state.inputValue,
+            // Return to the tree view after selecting an item
+            isOpen: state.inputValue && !state.selectedItem,
+            selectedItem: null,
+          };
         }
-        if (isExpandType(selectedItem)) {
-          selectedItem.showAll();
+
+        case Downshift.stateChangeTypes.mouseUp: {
+          // Prevent clearing the input on refocus
           return {};
         }
-        if (isClearType(selectedItem)) {
-          selectedItem.clearLastViewed();
+
+        case Downshift.stateChangeTypes.keyDownEscape: {
+          if (state.inputValue) {
+            // Clear the inputValue, but don't return to the tree view
+            return { ...changes, inputValue: '', isOpen: true, selectedItem: null };
+          }
+          // When pressing escape a second time, blur the input and return to the tree view
           inputRef.current.blur();
-          return { isOpen: false };
+          return { ...changes, isOpen: false, selectedItem: null };
         }
+
+        case Downshift.stateChangeTypes.clickItem:
+        case Downshift.stateChangeTypes.keyDownEnter: {
+          if (isSearchResult(changes.selectedItem)) {
+            const { id, refId } = changes.selectedItem.item;
+            selectStory(id, refId);
+            // Return to the tree view, but keep the input value
+            return { ...changes, inputValue: state.inputValue, isOpen: false };
+          }
+          if (isExpandType(changes.selectedItem)) {
+            changes.selectedItem.showAll();
+            // Downshift should completely ignore this
+            return {};
+          }
+          if (isClearType(changes.selectedItem)) {
+            changes.selectedItem.clearLastViewed();
+            inputRef.current.blur();
+            // Nothing to see anymore, so return to the tree view
+            return { isOpen: false };
+          }
+          return changes;
+        }
+
+        case Downshift.stateChangeTypes.changeInput: {
+          // Reset the "show more" state whenever the input changes
+          showAllComponents(false);
+          return changes;
+        }
+
+        default:
+          return changes;
       }
-      if (inputValue === '') {
-        showAllComponents(false);
-      }
-      return changes;
     },
     [inputRef, selectStory, showAllComponents]
   );
@@ -263,6 +293,7 @@ export const Search: FunctionComponent<{
     >
       {({
         isOpen,
+        openMenu,
         inputValue,
         clearSelection,
         getInputProps,
@@ -302,7 +333,10 @@ export const Search: FunctionComponent<{
           required: true,
           type: 'search',
           placeholder: inputPlaceholder,
-          onFocus: () => setPlaceholder('Type to find...'),
+          onFocus: () => {
+            openMenu();
+            setPlaceholder('Type to find...');
+          },
           onBlur: () => setPlaceholder('Find components'),
         });
 
