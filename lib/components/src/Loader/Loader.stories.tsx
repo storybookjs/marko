@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { PureLoader as Loader } from './Loader';
 
 const withBackground = (storyFn) => (
