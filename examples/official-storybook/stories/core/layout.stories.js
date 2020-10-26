@@ -29,5 +29,8 @@ CenteredBlock.parameters = { layout: 'centered' };
 export const CenteredInline = () => <Box display="inline-block">centered</Box>;
 CenteredInline.parameters = { layout: 'centered' };
 
+export const None = () => <Box>none</Box>;
+None.parameters = { layout: 'none' };
+
 export const Invalid = () => <Box>invalid layout value</Box>;
 Invalid.parameters = { layout: '!invalid!' };
