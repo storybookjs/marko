@@ -1,8 +1,29 @@
+## 6.1.0-alpha.30 (October 26, 2020)
+
+### Features
+
+- Addon-docs: Lazy load iframes ([#12888](https://github.com/storybookjs/storybook/pull/12888))
+
+### Bug Fixes
+
+- React: Allow Storybook packages to use React 17.x ([#12908](https://github.com/storybookjs/storybook/pull/12908))
+- React: Support JSX react transform introduced in 16.14.0 ([#12899](https://github.com/storybookjs/storybook/pull/12899))
+- Addon-viewport: Fill entire iframe width with drop shadow ([#12870](https://github.com/storybookjs/storybook/pull/12870))
+
+### Maintenance
+
+- CLI: Deprecate '--story-format=mdx' option ([#12905](https://github.com/storybookjs/storybook/pull/12905))
+
+### Dependency Upgrades
+
+- Deps: upgrade babel to 7.12 ([#12903](https://github.com/storybookjs/storybook/pull/12903))
+- Addon-docs: Remove react-is dependency ([#12910](https://github.com/storybookjs/storybook/pull/12910))
+
 ## 6.1.0-alpha.29 (October 23, 2020)
 
 ### Bug Fixes
 
-* CLI: Fix intro MDX for React17 ([#12878](https://github.com/storybookjs/storybook/pull/12878))
+- CLI: Fix intro MDX for React17 ([#12878](https://github.com/storybookjs/storybook/pull/12878))
 
 ## 6.0.27 (October 23, 2020)
 
@@ -17,7 +38,7 @@
 ### Dependency Upgrades
 
 - Upgrade babel-plugin-react-docgen ([#12748](https://github.com/storybookjs/storybook/pull/12748))
-  
+
 ## 6.1.0-alpha.28 (October 23, 2020)
 
 ### Bug Fixes
