@@ -72,7 +72,7 @@
     "lodash": "^4.17.15",
     "prettier": "~2.0.5",
     "prop-types": "^15.7.2",
-    "react": "^16.8.3",
+    "react": "^16.8.3 || ^17.0.0",
     "react-dom": "^16.8.3",
     "react-element-to-jsx-string": "^14.3.1",
     "regenerator-runtime": "^0.13.3",
