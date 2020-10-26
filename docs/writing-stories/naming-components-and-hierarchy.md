@@ -83,7 +83,7 @@ The `storySort` can also accept a configuration object.
 | Field       |  Type  |                       Description                        | Required |      Default Value      |          Example          |
 | ----------- | :----: | :------------------------------------------------------: | :------: | :---------------------: | :-----------------------: |
 | **method**  | String | Tells Storybook in which order the stories are displayed |    No    | Storybook configuration |     `'alphabetical'`      |
-| **order**   | Array  |     The stories to be show, ordered by supplied name     |    No    |    Empty Array `[]`     | `['Intro', 'Components']` |
+| **order**   | Array  |     The stories to be shown, ordered by supplied name    |    No    |    Empty Array `[]`     | `['Intro', 'Components']` |
 | **locales** | String |           The locale required to be displayed            |    No    |      System locale      |          `en-US`          |
 
 To sort your stories alphabetically, set `method` to `'alphabetical'` and optionally set the `locales` string. To sort your stories using a custom list, use the `order` array; stories that don't match an item in the `order` list will appear after the items in the list.
