@@ -1,5 +1,5 @@
 import { EventSource } from 'global';
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { ComponentProps, FunctionComponent, useEffect, useState } from 'react';
 import { styled, keyframes } from '@storybook/theming';
 import { rotate360 } from '../shared/animation';
 
@@ -92,7 +92,9 @@ interface LoaderProps {
   size?: number;
 }
 
-export const PureLoader: FunctionComponent<LoaderProps> = ({ progress, size, ...props }) => {
+export const PureLoader: FunctionComponent<
+  LoaderProps & ComponentProps<typeof ProgressWrapper>
+> = ({ progress, size, ...props }) => {
   if (progress) {
     const { value, modules } = progress;
     let { message } = progress;
@@ -129,7 +131,7 @@ export const PureLoader: FunctionComponent<LoaderProps> = ({ progress, size, ...
   );
 };
 
-export const Loader: FunctionComponent = (props) => {
+export const Loader: FunctionComponent<ComponentProps<typeof PureLoader>> = (props) => {
   const [progress, setProgress] = useState(undefined);
 
   useEffect(() => {
