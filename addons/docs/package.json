@@ -79,7 +79,7 @@
     "regenerator-runtime": "^0.13.3",
     "remark-external-links": "^6.0.0",
     "remark-slug": "^6.0.0",
-    "ts-dedent": "^1.1.1",
+    "ts-dedent": "^2.0.0",
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
