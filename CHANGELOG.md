@@ -1,3 +1,15 @@
+## 6.1.0-alpha.31 (October 27, 2020)
+
+### Features
+
+- Search UX improvements ([#12765](https://github.com/storybookjs/storybook/pull/12765))
+- Core: Add new layout style `none` and fix layout styles ([#12727](https://github.com/storybookjs/storybook/pull/12727))
+
+### Dependency Upgrades
+
+- Deps: Upgrade regenerator-runtime to 0.13.7 ([#12902](https://github.com/storybookjs/storybook/pull/12902))
+- Deps: Upgrade ts-dedent to 2.0 ([#12901](https://github.com/storybookjs/storybook/pull/12901))
+
 ## 6.1.0-alpha.30 (October 26, 2020)
 
 ### Features
