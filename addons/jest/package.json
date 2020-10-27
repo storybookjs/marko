@@ -42,7 +42,7 @@
     "@storybook/theming": "6.0.27",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
-    "react": "^16.8.3",
+    "react": "^16.8.3 || ^17.0.0",
     "react-sizeme": "^2.5.2",
     "regenerator-runtime": "^0.13.3",
     "upath": "^1.1.0"
