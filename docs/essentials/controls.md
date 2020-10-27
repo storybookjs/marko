@@ -102,6 +102,35 @@ By default, Storybook will add controls for all args that:
 
 You can determine the control by using `argTypes` in each case.
 
+As they can be complex cases:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'react/component-story-custom-args-complex.js.mdx',
+    'react/component-story-custom-args-complex.ts.mdx',
+    'react/component-story-custom-args-complex.mdx.mdx'
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+
+Or even with certain types of elements, such as icons:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'react/component-story-custom-args-icons.js.mdx',
+    'react/component-story-custom-args-icons.ts.mdx',
+    'react/component-story-custom-args-icons.mdx.mdx'
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
 ## Configuration
 
 The Controls addon can be configured in two ways:
@@ -189,6 +218,38 @@ To enable expanded mode globally, add the following to [`.storybook/preview.js`]
 And here's what the resulting UI looks like:
 
 ![Controls addon expanded](./addon-controls-expanded.png)
+
+### Disable controls for specific properties
+
+Asides from the features already documented here. Controls can also be disabled for individual properties. 
+
+Suppose you want to disable Controls for a property called `foo` in a component's story. The following example illustrates how:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/component-story-disable-controls.js.mdx',
+    'common/component-story-disable-controls.mdx.mdx'
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+Resulting in the following change in Storybook UI:
+
+<video autoPlay muted playsInline loop>
+  <source
+    src="addon-controls-disable-specific-prop.mp4"
+    type="video/mp4"
+  />
+</video>
+
+<div class="aside">
+
+ As with other Storybook properties, such as [decorators](../writing-stories/decorators.md) the same principle can also be applied at a story-level for more granular cases.
+
+</div>
 
 ## Hide NoControls warning
 
