@@ -1,5 +1,5 @@
 import React, { CSSProperties } from 'react';
-import Zoom from './Zoom';
+import { Zoom } from './Zoom';
 
 export default {
   component: Zoom,
@@ -10,7 +10,7 @@ export default {
     },
   },
 };
-const EXAMPLE_COMPONENT = (
+const EXAMPLE_ELEMENT = (
   <div
     style={{
       width: 2000,
@@ -38,46 +38,52 @@ const EXAMPLE_IFRAME = (
   />
 );
 
-const Template = (args) => <Zoom {...args} />;
+const TemplateElement = (args) => <Zoom.Element {...args} />;
 
-export const componentActualSize = Template.bind({});
+export const elementActualSize = TemplateElement.bind({});
 
-componentActualSize.args = {
+elementActualSize.args = {
   scale: 1,
-  children: EXAMPLE_COMPONENT,
+  children: EXAMPLE_ELEMENT,
 };
 
-export const componentZoomedIn = Template.bind({});
+export const elementZoomedIn = TemplateElement.bind({});
 
-componentZoomedIn.args = {
+elementZoomedIn.args = {
   scale: 0.7,
-  children: EXAMPLE_COMPONENT,
+  children: EXAMPLE_ELEMENT,
 };
 
-export const componentZoomedOut = Template.bind({});
+export const elementZoomedOut = TemplateElement.bind({});
 
-componentZoomedOut.args = {
+elementZoomedOut.args = {
   scale: 30,
-  children: EXAMPLE_COMPONENT,
+  children: EXAMPLE_ELEMENT,
 };
+const TemplateIFrame = (args) => <Zoom.IFrame {...args} />;
+export const iFrameActualSize = TemplateIFrame.bind({});
 
-export const iframeActualSize = Template.bind({});
-
-iframeActualSize.args = {
+iFrameActualSize.args = {
   scale: 1,
+  id: 'iframe',
+  active: true,
   children: EXAMPLE_IFRAME,
 };
 
-export const iframeZoomedIn = Template.bind({});
+export const iFrameZoomedIn = TemplateIFrame.bind({});
 
-iframeZoomedIn.args = {
+iFrameZoomedIn.args = {
   scale: 0.7,
+  id: 'iframe',
+  active: true,
   children: EXAMPLE_IFRAME,
 };
 
-export const iframeZoomedOut = Template.bind({});
+export const iFrameZoomedOut = TemplateIFrame.bind({});
 
-iframeZoomedOut.args = {
+iFrameZoomedOut.args = {
   scale: 30,
+  id: 'iframe',
+  active: true,
   children: EXAMPLE_IFRAME,
 };

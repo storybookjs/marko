@@ -1,14 +1,11 @@
 import window from 'global';
 import { Component, ReactElement } from 'react';
+import { browserSupportsCssZoom } from './Zoom';
 
 export type IZoomIFrameProps = {
   id: string;
-  title: string;
-  src: string;
-  allowFullScreen: boolean;
   scale: number;
   active: boolean;
-  supportsCssZoom: boolean;
   children: ReactElement<HTMLIFrameElement>;
 };
 
@@ -25,7 +22,7 @@ export default class ZoomIFrame extends Component<IZoomIFrameProps> {
     const { scale, active } = this.props;
 
     if (scale !== nextProps.scale) {
-      this.setIframeInnerZoom(nextProps.scale, nextProps.supportsCssZoom);
+      this.setIframeInnerZoom(nextProps.scale);
     }
 
     if (active !== nextProps.active) {
@@ -45,9 +42,9 @@ export default class ZoomIFrame extends Component<IZoomIFrameProps> {
     this.iframe.setAttribute('data-is-loaded', 'true');
   }
 
-  setIframeInnerZoom(scale: number, supportsCssZoom: boolean) {
+  setIframeInnerZoom(scale: number) {
     try {
-      if (supportsCssZoom) {
+      if (browserSupportsCssZoom()) {
         Object.assign(this.iframe.contentDocument.body.style, {
           width: `${scale * 100}%`,
           height: `${scale * 100}%`,

@@ -7,7 +7,7 @@ import { Source, SourceProps } from './Source';
 import { ActionBar, ActionItem } from '../ActionBar/ActionBar';
 import { Toolbar } from './Toolbar';
 import { ZoomContext } from './ZoomContext';
-import Zoom from '../Zoom/Zoom';
+import { Zoom } from '../Zoom/Zoom';
 
 export interface PreviewProps {
   isColumn?: boolean;
@@ -215,14 +215,14 @@ const Preview: FunctionComponent<PreviewProps> = ({
             columns={columns}
             layout={layout}
           >
-            <Zoom scale={scale}>
+            <Zoom.Element scale={scale}>
               {Array.isArray(children) ? (
                 // eslint-disable-next-line react/no-array-index-key
                 children.map((child, i) => <div key={i}>{child}</div>)
               ) : (
                 <div>{children}</div>
               )}
-            </Zoom>
+            </Zoom.Element>
           </ChildrenContainer>
           <ActionBar actionItems={actionItems} />
         </Relative>
