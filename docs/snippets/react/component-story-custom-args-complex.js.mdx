@@ -1,0 +1,45 @@
+```js
+// YourComponent.stories.js
+
+import React from 'react';
+
+import { YourComponent } from './your-component'
+
+// a function to apply some computations
+const someFunction = (valuePropertyA, valuePropertyB) => {
+  // makes some computations and returns something
+};
+
+export default {
+  component: YourComponent,
+  title: 'A complex case with a function',
+  // creates specific argTypes with options
+  argTypes: {
+    propertyA: {
+      control: {
+        type: 'select',
+        options: [
+          'Item One', 
+          'Item Two', 
+          'Item Three'
+        ],
+      },
+    },
+    propertyB: {
+      control: {
+        type: 'select',
+        options: [
+          'Another Item One', 
+          'Another Item Two', 
+          'Another Item Three'
+        ],
+      },
+    },
+  },
+};
+
+const Template = ({ propertyA, propertyB, ...rest }) => {
+  const someFunctionResult = someFunction(propertyA, propertyB);
+  return <YourComponent somePoperty={someFunctionResult} {...rest} />;
+};
+```

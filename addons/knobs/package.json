@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-knobs",
-  "version": "6.1.0-alpha.27",
+  "version": "6.1.0-alpha.31",
   "description": "Storybook Addon Prop Editor Component",
   "keywords": [
     "addon",
@@ -29,13 +29,13 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-alpha.27",
-    "@storybook/api": "6.1.0-alpha.27",
-    "@storybook/channels": "6.1.0-alpha.27",
-    "@storybook/client-api": "6.1.0-alpha.27",
-    "@storybook/components": "6.1.0-alpha.27",
-    "@storybook/core-events": "6.1.0-alpha.27",
-    "@storybook/theming": "6.1.0-alpha.27",
+    "@storybook/addons": "6.1.0-alpha.31",
+    "@storybook/api": "6.1.0-alpha.31",
+    "@storybook/channels": "6.1.0-alpha.31",
+    "@storybook/client-api": "6.1.0-alpha.31",
+    "@storybook/components": "6.1.0-alpha.31",
+    "@storybook/core-events": "6.1.0-alpha.31",
+    "@storybook/theming": "6.1.0-alpha.31",
     "copy-to-clipboard": "^3.0.8",
     "core-js": "^3.0.1",
     "escape-html": "^1.0.3",
@@ -44,12 +44,12 @@
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "qs": "^6.6.0",
-    "react": "^16.8.3",
+    "react": "^16.8.3 || ^17.0.0",
     "react-color": "^2.17.0",
     "react-dom": "^16.8.3",
     "react-lifecycles-compat": "^3.0.4",
     "react-select": "^3.0.8",
-    "regenerator-runtime": "^0.13.3"
+    "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
     "@types/enzyme": "^3.10.5",
@@ -63,7 +63,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "0bbd3237844572f749beb5ed845be83ccbbea85a",
+  "gitHead": "f45b4c6fedf0994f7950ee1661592060894d7272",
   "typesVersions": {
     "<3.8": {
       "*": [

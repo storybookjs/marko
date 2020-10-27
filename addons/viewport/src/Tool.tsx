@@ -205,8 +205,7 @@ export const ViewportTool: FunctionComponent = memo(
                   transition: 'width .3s, height .3s',
                   position: 'relative',
                   border: `1px solid black`,
-                  boxShadow:
-                    '0 0 100px 1000px rgba(0,0,0,0.5), 0 4px 8px 0 rgba(0,0,0,0.12), 0 2px 4px 0 rgba(0,0,0,0.08)',
+                  boxShadow: '0 0 100px 100vw rgba(0,0,0,0.5)',
 
                   ...styles,
                 },

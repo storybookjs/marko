@@ -1,9 +1,18 @@
+import { ReactNode } from 'react';
 import { ModuleFn } from '../index';
 
 export interface Notification {
   id: string;
   link: string;
-  content: string;
+  content: {
+    headline: string;
+    subHeadline?: string | ReactNode;
+  };
+
+  icon?: {
+    name: string;
+    color?: string;
+  };
   onClear?: () => void;
 }
 
