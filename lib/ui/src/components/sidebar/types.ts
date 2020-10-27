@@ -31,13 +31,13 @@ export interface Match {
 }
 
 export function isClearType(x: any): x is ClearType {
-  return !!x.clearLastViewed;
+  return !!(x && x.clearLastViewed);
 }
 export function isExpandType(x: any): x is ExpandType {
-  return !!x.showAll;
+  return !!(x && x.showAll);
 }
 export function isSearchResult(x: any): x is SearchResult {
-  return !!x.item;
+  return !!(x && x.item);
 }
 
 export interface ClearType {
@@ -58,9 +58,9 @@ export type SearchResult = Fuse.FuseResultWithMatches<SearchItem> &
 export type DownshiftItem = SearchResult | ExpandType | ClearType;
 
 export type SearchChildrenFn = (args: {
-  inputValue: string;
+  query: string;
   results: DownshiftItem[];
-  inputHasFocus: boolean;
+  isBrowsing: boolean;
   getMenuProps: ControllerStateAndHelpers<DownshiftItem>['getMenuProps'];
   getItemProps: ControllerStateAndHelpers<DownshiftItem>['getItemProps'];
   highlightedIndex: number | null;

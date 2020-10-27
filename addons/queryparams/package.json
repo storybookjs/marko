@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-queryparams",
-  "version": "6.1.0-alpha.29",
+  "version": "6.1.0-alpha.30",
   "description": "parameter addon for storybook",
   "keywords": [
     "addon",
@@ -30,19 +30,19 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-alpha.29",
-    "@storybook/api": "6.1.0-alpha.29",
-    "@storybook/client-logger": "6.1.0-alpha.29",
-    "@storybook/components": "6.1.0-alpha.29",
-    "@storybook/core-events": "6.1.0-alpha.29",
-    "@storybook/theming": "6.1.0-alpha.29",
+    "@storybook/addons": "6.1.0-alpha.30",
+    "@storybook/api": "6.1.0-alpha.30",
+    "@storybook/client-logger": "6.1.0-alpha.30",
+    "@storybook/components": "6.1.0-alpha.30",
+    "@storybook/core-events": "6.1.0-alpha.30",
+    "@storybook/theming": "6.1.0-alpha.30",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "qs": "^6.6.0",
-    "react": "^16.8.3",
+    "react": "^16.8.3 || ^17.0.0",
     "react-dom": "^16.8.3",
     "regenerator-runtime": "^0.13.7",
-    "ts-dedent": "^1.1.1"
+    "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
     "@types/webpack-env": "^1.15.2"
@@ -50,7 +50,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c4c9f9bf50f9280bcaba9825156a43372350cdb9",
+  "gitHead": "f883f080f23e6cd3900bc3de7950180ee5e8b226",
   "typesVersions": {
     "<3.8": {
       "*": [

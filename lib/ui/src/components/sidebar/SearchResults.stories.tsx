@@ -59,14 +59,14 @@ const recents = stories
 const passKey = (props: any = {}) => ({ key: props.key });
 
 const searching = {
-  isSearching: true,
+  query: 'query',
   results,
   getMenuProps: passKey,
   getItemProps: passKey,
   highlightedIndex: 0,
 };
 const lastViewed = {
-  isSearching: false,
+  query: '',
   results: recents,
   getMenuProps: passKey,
   getItemProps: passKey,
