@@ -57,7 +57,7 @@ elementZoomedIn.args = {
 export const elementZoomedOut = TemplateElement.bind({});
 
 elementZoomedOut.args = {
-  scale: 30,
+  scale: 3,
   children: EXAMPLE_ELEMENT,
 };
 const TemplateIFrame = (args) => <Zoom.IFrame {...args} />;
@@ -65,7 +65,6 @@ export const iFrameActualSize = TemplateIFrame.bind({});
 
 iFrameActualSize.args = {
   scale: 1,
-  id: 'iframe',
   active: true,
   children: EXAMPLE_IFRAME,
 };
@@ -74,7 +73,6 @@ export const iFrameZoomedIn = TemplateIFrame.bind({});
 
 iFrameZoomedIn.args = {
   scale: 0.7,
-  id: 'iframe',
   active: true,
   children: EXAMPLE_IFRAME,
 };
@@ -82,8 +80,7 @@ iFrameZoomedIn.args = {
 export const iFrameZoomedOut = TemplateIFrame.bind({});
 
 iFrameZoomedOut.args = {
-  scale: 30,
-  id: 'iframe',
+  scale: 3,
   active: true,
   children: EXAMPLE_IFRAME,
 };

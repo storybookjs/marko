@@ -25,9 +25,10 @@ export interface IFrameProps {
 export function IFrame(props: IFrameProps & IframeHTMLAttributes<HTMLIFrameElement>) {
   const { active, id, title, src, allowFullScreen, scale, ...rest } = props;
   return (
-    <Zoom.IFrame id={id} scale={scale} active={active}>
+    <Zoom.IFrame scale={scale} active={active}>
       <StyledIframe
         data-is-storybook={active ? 'true' : 'false'}
+        onLoad={(e) => e.currentTarget.setAttribute('data-is-loaded', 'true')}
         id={id}
         title={title}
         src={src}

@@ -3,19 +3,16 @@ import { Component, ReactElement } from 'react';
 import { browserSupportsCssZoom } from './Zoom';
 
 export type IZoomIFrameProps = {
-  id: string;
   scale: number;
-  active: boolean;
   children: ReactElement<HTMLIFrameElement>;
+  active?: boolean;
 };
 
 export default class ZoomIFrame extends Component<IZoomIFrameProps> {
   iframe: HTMLIFrameElement = null;
 
   componentDidMount() {
-    const { id } = this.props;
-    this.iframe = window.document.getElementById(id);
-    this.iframe.addEventListener('load', this.setAttributeDataIsLoaded);
+    this.iframe = this.validateAndGetIFrame();
   }
 
   shouldComponentUpdate(nextProps: IZoomIFrameProps) {
@@ -34,26 +31,18 @@ export default class ZoomIFrame extends Component<IZoomIFrameProps> {
     return false;
   }
 
-  componentWillUnmount() {
-    this.iframe.removeEventListener('load', this.setAttributeDataIsLoaded);
-  }
-
-  setAttributeDataIsLoaded() {
-    this.iframe.setAttribute('data-is-loaded', 'true');
-  }
-
   setIframeInnerZoom(scale: number) {
     try {
       if (browserSupportsCssZoom()) {
+        Object.assign(this.iframe.contentDocument.body.style, {
+          zoom: 1 / scale,
+        });
+      } else {
         Object.assign(this.iframe.contentDocument.body.style, {
           width: `${scale * 100}%`,
           height: `${scale * 100}%`,
           transform: `scale(${1 / scale})`,
           transformOrigin: 'top left',
-        });
-      } else {
-        Object.assign(this.iframe.contentDocument.body.style, {
-          zoom: 1 / scale,
         });
       }
     } catch (e) {
@@ -68,6 +57,14 @@ export default class ZoomIFrame extends Component<IZoomIFrameProps> {
       transform: `scale(${1 / scale})`,
       transformOrigin: 'top left',
     });
+  }
+
+  validateAndGetIFrame(): HTMLIFrameElement {
+    const { children } = this.props;
+    if (!children.props.id) {
+      throw new Error(`missing id on Iframe given to ZoomIFrame`);
+    }
+    return window.document.getElementById(children.props.id);
   }
 
   render() {
