@@ -49,7 +49,7 @@
     "react-dom": "^16.8.3",
     "react-test-renderer": "^16.8.3",
     "read-pkg-up": "^7.0.0",
-    "regenerator-runtime": "^0.13.3",
+    "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
@@ -69,13 +69,13 @@
     "vue": "*"
   },
   "peerDependenciesMeta": {
+    "@storybook/vue": {
+      "optional": true
+    },
     "jest-preset-angular": {
       "optional": true
     },
     "jest-vue-preprocessor": {
-      "optional": true
-    },
-    "@storybook/vue": {
       "optional": true
     },
     "vue": {

@@ -38,7 +38,7 @@
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "raw-loader": "^4.0.1",
-    "regenerator-runtime": "^0.13.3",
+    "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
