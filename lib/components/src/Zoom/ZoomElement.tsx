@@ -5,7 +5,9 @@ import { browserSupportsCssZoom } from './Zoom';
 const ZoomElementWrapper = styled.div<{ scale: number; height: number }>(({ scale = 1, height }) =>
   browserSupportsCssZoom()
     ? {
-        zoom: 1 / scale,
+        '> *': {
+          zoom: 1 / scale,
+        },
       }
     : {
         height: height + 50,
