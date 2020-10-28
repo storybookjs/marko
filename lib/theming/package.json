@@ -39,7 +39,7 @@
     "memoizerific": "^1.11.3",
     "polished": "^3.4.4",
     "react": "^16.8.3 || ^17.0.0",
-    "react-dom": "^16.8.3",
+    "react-dom": "^16.8.3 || ^17.0.0",
     "resolve-from": "^5.0.0",
     "ts-dedent": "^2.0.0"
   },

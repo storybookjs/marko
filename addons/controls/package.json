@@ -38,7 +38,7 @@
     "@storybook/theming": "6.1.0-alpha.31",
     "core-js": "^3.0.1",
     "react": "^16.8.3 || ^17.0.0",
-    "react-dom": "^16.8.3",
+    "react-dom": "^16.8.3 || ^17.0.0",
     "ts-dedent": "^2.0.0"
   },
   "publishConfig": {

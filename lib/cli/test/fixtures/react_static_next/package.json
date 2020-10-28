@@ -12,7 +12,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "react": "^16.8.3",
-    "react-dom": "^16.8.3",
+    "react-dom": "^16.8.3 || ^17.0.0",
     "react-hot-loader": "^4.7.2",
     "react-router": "^4.3.1",
     "react-static": "^6.3.6"
