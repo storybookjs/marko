@@ -1,3 +1,8 @@
+## 6.0.28-alpha.0 (October 28, 2020)
+
+- React: Allow Storybook packages to use React 17.x ([#12908](https://github.com/storybookjs/storybook/pull/12908))
+- React: Support JSX react transform introduced in 16.14.0 ([#12899](https://github.com/storybookjs/storybook/pull/12899))
+
 ## 6.0.27 (October 23, 2020)
 
 ### Bug Fixes
