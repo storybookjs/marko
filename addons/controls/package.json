@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-controls",
-  "version": "6.0.28-alpha.2",
+  "version": "6.0.28-alpha.3",
   "description": "Controls for component properties",
   "keywords": [
     "addon",
@@ -30,12 +30,12 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.28-alpha.2",
-    "@storybook/api": "6.0.28-alpha.2",
-    "@storybook/client-api": "6.0.28-alpha.2",
-    "@storybook/components": "6.0.28-alpha.2",
-    "@storybook/node-logger": "6.0.28-alpha.2",
-    "@storybook/theming": "6.0.28-alpha.2",
+    "@storybook/addons": "6.0.28-alpha.3",
+    "@storybook/api": "6.0.28-alpha.3",
+    "@storybook/client-api": "6.0.28-alpha.3",
+    "@storybook/components": "6.0.28-alpha.3",
+    "@storybook/node-logger": "6.0.28-alpha.3",
+    "@storybook/theming": "6.0.28-alpha.3",
     "core-js": "^3.0.1",
     "ts-dedent": "^1.1.1"
   },
