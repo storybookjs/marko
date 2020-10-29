@@ -1,10 +1,10 @@
-import window from 'global';
 import { Component, ReactElement } from 'react';
 import { browserSupportsCssZoom } from './Zoom';
 
 export type IZoomIFrameProps = {
   scale: number;
   children: ReactElement<HTMLIFrameElement>;
+  iFrameRef: React.MutableRefObject<HTMLIFrameElement>;
   active?: boolean;
 };
 
@@ -12,7 +12,8 @@ export default class ZoomIFrame extends Component<IZoomIFrameProps> {
   iframe: HTMLIFrameElement = null;
 
   componentDidMount() {
-    this.iframe = this.validateAndGetIFrame();
+    const { iFrameRef } = this.props;
+    this.iframe = iFrameRef.current;
   }
 
   shouldComponentUpdate(nextProps: IZoomIFrameProps) {
@@ -57,14 +58,6 @@ export default class ZoomIFrame extends Component<IZoomIFrameProps> {
       transform: `scale(${1 / scale})`,
       transformOrigin: 'top left',
     });
-  }
-
-  validateAndGetIFrame(): HTMLIFrameElement {
-    const { children } = this.props;
-    if (!children.props.id) {
-      throw new Error(`missing id on Iframe given to ZoomIFrame`);
-    }
-    return window.document.getElementById(children.props.id);
   }
 
   render() {

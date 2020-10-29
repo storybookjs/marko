@@ -28,16 +28,6 @@ const style: CSSProperties = {
   position: 'relative',
 };
 
-const EXAMPLE_IFRAME = (
-  <iframe
-    id="iframe"
-    title="UI Panel"
-    src="/iframe.html?id=ui-panel--default&viewMode=story"
-    style={style}
-    allowFullScreen
-  />
-);
-
 const TemplateElement = (args) => <Zoom.Element {...args} />;
 
 export const elementActualSize = TemplateElement.bind({});
@@ -60,13 +50,27 @@ elementZoomedOut.args = {
   scale: 3,
   children: EXAMPLE_ELEMENT,
 };
-const TemplateIFrame = (args) => <Zoom.IFrame {...args} />;
+
+const TemplateIFrame = (args) => {
+  const iFrameRef = React.useRef<HTMLIFrameElement>(null);
+  return (
+    <Zoom.IFrame iFrameRef={iFrameRef} {...args}>
+      <iframe
+        id="iframe"
+        title="UI Panel"
+        src="/iframe.html?id=ui-panel--default&viewMode=story"
+        style={style}
+        ref={iFrameRef}
+        allowFullScreen
+      />
+    </Zoom.IFrame>
+  );
+};
 export const iFrameActualSize = TemplateIFrame.bind({});
 
 iFrameActualSize.args = {
   scale: 1,
   active: true,
-  children: EXAMPLE_IFRAME,
 };
 
 export const iFrameZoomedIn = TemplateIFrame.bind({});
@@ -74,7 +78,6 @@ export const iFrameZoomedIn = TemplateIFrame.bind({});
 iFrameZoomedIn.args = {
   scale: 0.7,
   active: true,
-  children: EXAMPLE_IFRAME,
 };
 
 export const iFrameZoomedOut = TemplateIFrame.bind({});
@@ -82,5 +85,4 @@ export const iFrameZoomedOut = TemplateIFrame.bind({});
 iFrameZoomedOut.args = {
   scale: 3,
   active: true,
-  children: EXAMPLE_IFRAME,
 };

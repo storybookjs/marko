@@ -29,7 +29,7 @@ const ChildrenContainer = styled.div<PreviewProps & { layout: layout }>(
     overflow: 'auto',
     flexDirection: isColumn ? 'column' : 'row',
 
-    '& > *': isColumn
+    '& .innerZoomElementWrapper > *': isColumn
       ? {
           width: layout !== 'fullscreen' ? 'calc(100% - 20px)' : '100%',
           display: 'block',
@@ -44,7 +44,7 @@ const ChildrenContainer = styled.div<PreviewProps & { layout: layout }>(
       ? {
           padding: '30px 20px',
           margin: -10,
-          '& > *': {
+          '& .innerZoomElementWrapper > *': {
             width: 'auto',
             border: '10px solid transparent!important',
           },
@@ -61,7 +61,9 @@ const ChildrenContainer = styled.div<PreviewProps & { layout: layout }>(
         }
       : {},
   ({ columns }) =>
-    columns && columns > 1 ? { '> *': { minWidth: `calc(100% / ${columns} - 20px)` } } : {}
+    columns && columns > 1
+      ? { '.innerZoomElementWrapper > *': { minWidth: `calc(100% / ${columns} - 20px)` } }
+      : {}
 );
 
 const StyledSource = styled(Source)<{}>(({ theme }) => ({

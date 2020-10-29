@@ -21,7 +21,7 @@ type ZoomProps = {
 };
 
 export function ZoomElement({ scale, children }: ZoomProps) {
-  const componentWrapperRef = React.useRef<HTMLSpanElement>(null);
+  const componentWrapperRef = React.useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
 
   useEffect(() => {
@@ -32,7 +32,9 @@ export function ZoomElement({ scale, children }: ZoomProps) {
 
   return (
     <ZoomElementWrapper scale={scale} height={height}>
-      {browserSupportsCssZoom() ? children : <span ref={componentWrapperRef}>{children}</span>}
+      <div ref={componentWrapperRef} className="innerZoomElementWrapper">
+        {children}
+      </div>
     </ZoomElementWrapper>
   );
 }

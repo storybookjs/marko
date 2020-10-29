@@ -24,8 +24,9 @@ export interface IFrameProps {
 
 export function IFrame(props: IFrameProps & IframeHTMLAttributes<HTMLIFrameElement>) {
   const { active, id, title, src, allowFullScreen, scale, ...rest } = props;
+  const iFrameRef = React.useRef<HTMLIFrameElement>(null);
   return (
-    <Zoom.IFrame scale={scale} active={active}>
+    <Zoom.IFrame scale={scale} active={active} iFrameRef={iFrameRef}>
       <StyledIframe
         data-is-storybook={active ? 'true' : 'false'}
         onLoad={(e) => e.currentTarget.setAttribute('data-is-loaded', 'true')}
@@ -33,6 +34,7 @@ export function IFrame(props: IFrameProps & IframeHTMLAttributes<HTMLIFrameEleme
         title={title}
         src={src}
         allowFullScreen={allowFullScreen}
+        ref={iFrameRef}
         {...rest}
       />
     </Zoom.IFrame>
