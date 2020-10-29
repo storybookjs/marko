@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "build": "vue-cli-service build",
-    "build-storybook": "build-storybook -s public",
+    "build-storybook": "build-storybook",
     "serve": "vue-cli-service serve",
-    "storybook": "start-storybook -p 9009 -s public"
+    "storybook": "start-storybook -p 9009"
   },
   "dependencies": {
     "core-js": "^3.6.4",
