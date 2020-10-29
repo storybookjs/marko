@@ -32,14 +32,11 @@ export default {
 };
 
 export const InfiniteState = () => <Loader role="progressbar" />;
-InfiniteState.storyName = 'infinite state';
 InfiniteState.decorators = [withBackground];
 
 export const SizeAdjusted = () => <Loader size={64} role="progressbar" />;
-SizeAdjusted.storyName = 'size adjusted';
 SizeAdjusted.decorators = [withBackground];
 
 export const ProgressBar = () => (
   <Loader progress={{ value: 0.3, message: 'Building', modules: { complete: 500, total: 1337 } }} />
 );
-ProgressBar.storyName = 'progress bar';
