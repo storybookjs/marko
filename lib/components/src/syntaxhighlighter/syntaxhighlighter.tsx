@@ -11,6 +11,8 @@ import bash from 'react-syntax-highlighter/dist/cjs/languages/prism/bash';
 // @ts-ignore
 import css from 'react-syntax-highlighter/dist/cjs/languages/prism/css';
 // @ts-ignore
+import jsExtras from 'react-syntax-highlighter/dist/cjs/languages/prism/js-extras';
+// @ts-ignore
 import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json';
 // @ts-ignore
 import graphql from 'react-syntax-highlighter/dist/cjs/languages/prism/graphql';
@@ -36,6 +38,7 @@ import { formatter } from './formatter';
 
 export { createElement as createSyntaxHighlighterElement };
 
+ReactSyntaxHighlighter.registerLanguage('jsextra', jsExtras);
 ReactSyntaxHighlighter.registerLanguage('jsx', jsx);
 ReactSyntaxHighlighter.registerLanguage('json', json);
 ReactSyntaxHighlighter.registerLanguage('yml', yml);
