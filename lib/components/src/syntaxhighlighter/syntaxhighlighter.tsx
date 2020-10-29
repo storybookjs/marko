@@ -4,17 +4,28 @@ import { styled } from '@storybook/theming';
 import { navigator, window } from 'global';
 import memoize from 'memoizerific';
 
+// @ts-ignore
 import jsx from 'react-syntax-highlighter/dist/cjs/languages/prism/jsx';
+// @ts-ignore
 import bash from 'react-syntax-highlighter/dist/cjs/languages/prism/bash';
+// @ts-ignore
 import css from 'react-syntax-highlighter/dist/cjs/languages/prism/css';
+// @ts-ignore
 import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json';
+// @ts-ignore
 import graphql from 'react-syntax-highlighter/dist/cjs/languages/prism/graphql';
+// @ts-ignore
 import html from 'react-syntax-highlighter/dist/cjs/languages/prism/markup';
+// @ts-ignore
 import md from 'react-syntax-highlighter/dist/cjs/languages/prism/markdown';
+// @ts-ignore
 import yml from 'react-syntax-highlighter/dist/cjs/languages/prism/yaml';
+// @ts-ignore
 import tsx from 'react-syntax-highlighter/dist/cjs/languages/prism/tsx';
+// @ts-ignore
 import typescript from 'react-syntax-highlighter/dist/cjs/languages/prism/typescript';
 
+// @ts-ignore
 import ReactSyntaxHighlighter from 'react-syntax-highlighter/dist/cjs/prism-light';
 // @ts-ignore
 import createElement from 'react-syntax-highlighter/dist/cjs/create-element';
