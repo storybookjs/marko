@@ -40,7 +40,6 @@
     "lodash": "^4.17.15",
     "polished": "^3.4.4",
     "prop-types": "^15.7.2",
-    "react": "^16.8.3 || ^17.0.0",
     "react-inspector": "^5.0.1",
     "regenerator-runtime": "^0.13.3",
     "ts-dedent": "^1.1.1",
@@ -53,6 +52,7 @@
     "@types/webpack-env": "^1.15.2"
   },
   "peerDependencies": {
+    "react": "^16.8.3 || ^17.0.0",
     "react-dom": "*"
   },
   "publishConfig": {
