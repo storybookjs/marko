@@ -1,6 +1,6 @@
 {
   "name": "@storybook/root",
-  "version": "6.1.0-alpha.30",
+  "version": "6.1.0-alpha.31",
   "private": true,
   "description": "Storybook is an open source tool for developing UI components in isolation for React, Vue and Angular. It makes building stunning UIs organized and efficient.",
   "keywords": [
@@ -195,7 +195,7 @@
     "react-dom": "^16.8.3",
     "react-test-renderer": "^16.8.3",
     "recursive-copy": "^2.0.10",
-    "regenerator-runtime": "^0.13.3",
+    "regenerator-runtime": "^0.13.7",
     "remark": "^12.0.0",
     "remark-cli": "^8.0.0",
     "remark-lint": "^7.0.0",
@@ -209,7 +209,7 @@
     "svelte-jest": "^0.3.0",
     "teamcity-service-messages": "^0.1.11",
     "trash": "^6.1.1",
-    "ts-dedent": "^1.1.1",
+    "ts-dedent": "^2.0.0",
     "ts-jest": "^26.1.0",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.3",

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/client-api",
-  "version": "6.1.0-alpha.30",
+  "version": "6.1.0-alpha.31",
   "description": "Storybook Client API",
   "keywords": [
     "storybook"
@@ -28,11 +28,11 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-alpha.30",
-    "@storybook/channel-postmessage": "6.1.0-alpha.30",
-    "@storybook/channels": "6.1.0-alpha.30",
-    "@storybook/client-logger": "6.1.0-alpha.30",
-    "@storybook/core-events": "6.1.0-alpha.30",
+    "@storybook/addons": "6.1.0-alpha.31",
+    "@storybook/channel-postmessage": "6.1.0-alpha.31",
+    "@storybook/channels": "6.1.0-alpha.31",
+    "@storybook/client-logger": "6.1.0-alpha.31",
+    "@storybook/core-events": "6.1.0-alpha.31",
     "@storybook/csf": "0.0.1",
     "@types/qs": "^6.9.0",
     "@types/webpack-env": "^1.15.2",
@@ -43,16 +43,16 @@
     "qs": "^6.6.0",
     "react": "^16.8.3 || ^17.0.0",
     "react-dom": "^16.8.3",
-    "regenerator-runtime": "^0.13.3",
+    "regenerator-runtime": "^0.13.7",
     "stable": "^0.1.8",
     "store2": "^2.7.1",
-    "ts-dedent": "^1.1.1",
+    "ts-dedent": "^2.0.0",
     "util-deprecate": "^1.0.2"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c4c9f9bf50f9280bcaba9825156a43372350cdb9",
+  "gitHead": "f45b4c6fedf0994f7950ee1661592060894d7272",
   "typesVersions": {
     "<3.8": {
       "*": [

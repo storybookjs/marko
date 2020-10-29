@@ -1,6 +1,6 @@
 {
   "name": "@storybook/aurelia",
-  "version": "6.1.0-alpha.30",
+  "version": "6.1.0-alpha.31",
   "description": "Storybook for Aurelia: Develop Aurelia Components in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -27,10 +27,10 @@
   },
   "dependencies": {
     "@aurelia/webpack-loader": "^0.7.0",
-    "@storybook/addon-knobs": "6.1.0-alpha.30",
-    "@storybook/addons": "6.1.0-alpha.30",
-    "@storybook/core": "6.1.0-alpha.30",
-    "@storybook/node-logger": "6.1.0-alpha.30",
+    "@storybook/addon-knobs": "6.1.0-alpha.31",
+    "@storybook/addons": "6.1.0-alpha.31",
+    "@storybook/core": "6.1.0-alpha.31",
+    "@storybook/node-logger": "6.1.0-alpha.31",
     "fork-ts-checker-webpack-plugin": "^4.0.3",
     "global": "^4.3.2",
     "ts-loader": "^6.0.1",
@@ -58,5 +58,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c4c9f9bf50f9280bcaba9825156a43372350cdb9"
+  "gitHead": "f45b4c6fedf0994f7950ee1661592060894d7272"
 }

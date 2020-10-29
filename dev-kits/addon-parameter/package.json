@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-parameter",
-  "version": "6.1.0-alpha.30",
+  "version": "6.1.0-alpha.31",
   "description": "parameter addon for storybook",
   "keywords": [
     "addon",
@@ -24,21 +24,21 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-alpha.30",
-    "@storybook/api": "6.1.0-alpha.30",
-    "@storybook/client-logger": "6.1.0-alpha.30",
-    "@storybook/components": "6.1.0-alpha.30",
-    "@storybook/core-events": "6.1.0-alpha.30",
-    "@storybook/theming": "6.1.0-alpha.30",
+    "@storybook/addons": "6.1.0-alpha.31",
+    "@storybook/api": "6.1.0-alpha.31",
+    "@storybook/client-logger": "6.1.0-alpha.31",
+    "@storybook/components": "6.1.0-alpha.31",
+    "@storybook/core-events": "6.1.0-alpha.31",
+    "@storybook/theming": "6.1.0-alpha.31",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "react": "^16.8.3",
-    "ts-dedent": "^1.1.1"
+    "ts-dedent": "^2.0.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c4c9f9bf50f9280bcaba9825156a43372350cdb9",
+  "gitHead": "f45b4c6fedf0994f7950ee1661592060894d7272",
   "typesVersions": {
     "<3.8": {
       "*": [

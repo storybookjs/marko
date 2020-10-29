@@ -120,6 +120,7 @@ You can change your story through [parameters](../writing-stories/parameters.md)
 <CodeSnippets
   paths={[
     'react/my-component-story-configure-viewports.js.mdx',
+    'react/my-component-story-configure-viewports.mdx.mdx',
     'vue/my-component-story-configure-viewports.js.mdx',
   ]}
 />
