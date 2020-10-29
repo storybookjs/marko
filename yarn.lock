@@ -6307,7 +6307,7 @@
     "@types/react-dom" "*"
     "@types/react-transition-group" "*"
 
-"@types/react-syntax-highlighter@11.0.4", "@types/react-syntax-highlighter@^11.0.4":
+"@types/react-syntax-highlighter@11.0.4":
   version "11.0.4"
   resolved "https://registry.yarnpkg.com/@types/react-syntax-highlighter/-/react-syntax-highlighter-11.0.4.tgz#d86d17697db62f98046874f62fdb3e53a0bbc4cd"
   integrity sha512-9GfTo3a0PHwQeTVoqs0g5bS28KkSY48pp5659wA+Dp4MqceDEa8EHBqrllJvvtyusszyJhViUEap0FDvlk/9Zg==
@@ -28553,7 +28553,7 @@ react@^15.4.2:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
-"react@^16.8.3 || ^17.0.0", react@^16.8.3, react@^16.9.17:
+react@^16.8.3, "react@^16.8.3 || ^17.0.0", react@^16.9.17:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
   integrity sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w==
