@@ -15,7 +15,7 @@ import yml from 'react-syntax-highlighter/dist/cjs/languages/prism/yaml';
 import tsx from 'react-syntax-highlighter/dist/cjs/languages/prism/tsx';
 import typescript from 'react-syntax-highlighter/dist/cjs/languages/prism/typescript';
 
-import { PrismLight as ReactSyntaxHighlighter } from 'react-syntax-highlighter';
+import ReactSyntaxHighlighter from 'react-syntax-highlighter/dist/cjs/prism-light';
 // @ts-ignore
 import createElement from 'react-syntax-highlighter/dist/cjs/create-element';
 import { ActionBar } from '../ActionBar/ActionBar';
