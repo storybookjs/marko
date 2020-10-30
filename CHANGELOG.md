@@ -1,3 +1,10 @@
+## 6.1.0-alpha.32 (October 30, 2020)
+
+### Bug Fixes
+
+- CLI: Disable DLL by default in template ([#12954](https://github.com/storybookjs/storybook/pull/12954))
+- Preact: Fix peerDeps version specifier ([#12883](https://github.com/storybookjs/storybook/pull/12883))
+
 ## 6.1.0-alpha.31 (October 27, 2020)
 
 ### Features
