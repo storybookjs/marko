@@ -158,16 +158,18 @@ export const Loader: FunctionComponent<ComponentProps<typeof PureLoader>> = (pro
 
   useEffect(() => {
     const eventSource = new EventSource('/progress');
+    let lastProgress: Progress;
     eventSource.onmessage = (event: any) => {
       try {
-        setProgress(JSON.parse(event.data));
+        lastProgress = JSON.parse(event.data);
+        setProgress(lastProgress);
       } catch (e) {
         setError(e);
         eventSource.close();
       }
     };
     eventSource.onerror = () => {
-      setError(new Error('Connection closed'));
+      if (lastProgress?.value !== 1) setError(new Error('Connection closed'));
       eventSource.close();
     };
     return () => eventSource.close();
