@@ -71,6 +71,7 @@ module.exports = {
     '/__mocks__ /',
     '/__testfixtures__/',
     '^.*\\.stories\\.[jt]sx?$',
+    '/prebuilt/',
   ],
   globals: {
     DOCS_MODE: false,
