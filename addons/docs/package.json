@@ -74,7 +74,7 @@
     "prettier": "~2.0.5",
     "prop-types": "^15.7.2",
     "react": "^16.8.3 || ^17.0.0",
-    "react-dom": "^16.8.3",
+    "react-dom": "^16.8.3 || ^17.0.0",
     "react-element-to-jsx-string": "^14.3.1",
     "regenerator-runtime": "^0.13.7",
     "remark-external-links": "^6.0.0",

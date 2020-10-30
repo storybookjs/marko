@@ -46,7 +46,7 @@
     "global": "^4.3.2",
     "lodash": "^4.17.15",
     "react": "^16.8.3 || ^17.0.0",
-    "react-dom": "^16.8.3",
+    "react-dom": "^16.8.3 || ^17.0.0",
     "react-sizeme": "^2.5.2",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0",
