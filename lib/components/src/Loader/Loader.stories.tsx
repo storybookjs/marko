@@ -40,3 +40,5 @@ SizeAdjusted.decorators = [withBackground];
 export const ProgressBar = () => (
   <Loader progress={{ value: 0.3, message: 'Building', modules: { complete: 500, total: 1337 } }} />
 );
+
+export const ProgressError = () => <Loader error={new Error('Connection closed')} />;

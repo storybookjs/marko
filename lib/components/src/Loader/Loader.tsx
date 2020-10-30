@@ -1,6 +1,7 @@
 import { EventSource } from 'global';
 import React, { ComponentProps, FunctionComponent, useEffect, useState } from 'react';
 import { styled, keyframes } from '@storybook/theming';
+import { Icons } from '../icon/icon';
 import { rotate360 } from '../shared/animation';
 
 const LoaderWrapper = styled.div<{ size?: number }>(({ size = 32 }) => ({
@@ -62,6 +63,11 @@ const ProgressMessage = styled.div(({ theme }) => ({
   color: theme.barTextColor,
 }));
 
+const ErrorIcon = styled(Icons)({
+  width: 20,
+  height: 20,
+});
+
 const ellipsis = keyframes`
   from { content: "..." }
   33% { content: "." }
@@ -80,21 +86,33 @@ const Ellipsis = styled.span({
   },
 });
 
-interface LoaderProps {
-  progress?: {
-    value: number;
-    message: string;
-    modules?: {
-      complete: number;
-      total: number;
-    };
+interface Progress {
+  value: number;
+  message: string;
+  modules?: {
+    complete: number;
+    total: number;
   };
+}
+
+interface LoaderProps {
+  progress?: Progress;
+  error?: Error;
   size?: number;
 }
 
 export const PureLoader: FunctionComponent<
   LoaderProps & ComponentProps<typeof ProgressWrapper>
-> = ({ progress, size, ...props }) => {
+> = ({ progress, error, size, ...props }) => {
+  if (error) {
+    return (
+      <ProgressWrapper aria-label={error.toString()} aria-live="polite" role="status" {...props}>
+        <ErrorIcon icon="alert" />
+        <ProgressMessage>{error.message}</ProgressMessage>
+      </ProgressWrapper>
+    );
+  }
+
   if (progress) {
     const { value, modules } = progress;
     let { message } = progress;
@@ -120,6 +138,7 @@ export const PureLoader: FunctionComponent<
       </ProgressWrapper>
     );
   }
+
   return (
     <LoaderWrapper
       aria-label="Content is loading..."
@@ -133,6 +152,7 @@ export const PureLoader: FunctionComponent<
 
 export const Loader: FunctionComponent<ComponentProps<typeof PureLoader>> = (props) => {
   const [progress, setProgress] = useState(undefined);
+  const [error, setError] = useState(undefined);
 
   useEffect(() => {
     const eventSource = new EventSource('/progress');
@@ -140,11 +160,16 @@ export const Loader: FunctionComponent<ComponentProps<typeof PureLoader>> = (pro
       try {
         setProgress(JSON.parse(event.data));
       } catch (e) {
-        // do nothing
+        setError(e);
+        eventSource.close();
       }
+    };
+    eventSource.onerror = () => {
+      setError(new Error('Connection closed'));
+      eventSource.close();
     };
     return () => eventSource.close();
   }, []);
 
-  return <PureLoader progress={progress} {...props} />;
+  return <PureLoader progress={progress} error={error} {...props} />;
 };
