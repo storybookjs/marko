@@ -157,6 +157,26 @@ describe('preview.story_store', () => {
   });
 
   describe('args', () => {
+    it('composes component-level and story-level args, favoring story-level', () => {
+      const store = new StoryStore({ channel });
+      store.addKindMetadata('a', {
+        parameters: { args: { arg1: 1, arg2: 2, arg3: 3, arg4: { complex: 'object' } } },
+      });
+      addStoryToStore(store, 'a', '1', () => 0, {
+        args: {
+          arg1: 4,
+          arg2: undefined,
+          arg4: { other: 'object ' },
+        },
+      });
+      expect(store.getRawStory('a', '1').args).toEqual({
+        arg1: 4,
+        arg2: undefined,
+        arg3: 3,
+        arg4: { other: 'object ' },
+      });
+    });
+
     it('is initialized to the value stored in parameters.args[name] || parameters.argType[name].defaultValue', () => {
       const store = new StoryStore({ channel });
       addStoryToStore(store, 'a', '1', () => 0, {
