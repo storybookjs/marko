@@ -49,6 +49,7 @@ module.exports = {
   testPathIgnorePatterns: [
     '/node_modules/',
     '/dist/',
+    '/prebuilt/',
     'addon-jest.test.js',
     '/cli/test/',
     '/examples/cra-kitchen-sink/src/*',
@@ -66,12 +67,12 @@ module.exports = {
     '/node_modules/',
     '/cli/test/',
     '/dist/',
+    '/prebuilt/',
     '/generators/',
     '/dll/',
     '/__mocks__ /',
     '/__testfixtures__/',
     '^.*\\.stories\\.[jt]sx?$',
-    '/prebuilt/',
   ],
   globals: {
     DOCS_MODE: false,
