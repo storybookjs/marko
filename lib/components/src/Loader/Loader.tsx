@@ -40,6 +40,7 @@ const ProgressWrapper = styled.div({
 const ProgressTrack = styled.div(({ theme }) => ({
   position: 'relative',
   width: '80%',
+  marginBottom: '0.75rem',
   maxWidth: 300,
   height: 5,
   borderRadius: 5,
@@ -58,15 +59,16 @@ const ProgressBar = styled.div(({ theme }) => ({
 
 const ProgressMessage = styled.div(({ theme }) => ({
   minHeight: '2em',
-  marginTop: '0.75rem',
   fontSize: `${theme.typography.size.s1}px`,
   color: theme.barTextColor,
 }));
 
-const ErrorIcon = styled(Icons)({
+const ErrorIcon = styled(Icons)(({ theme }) => ({
   width: 20,
   height: 20,
-});
+  marginBottom: '0.5rem',
+  color: theme.color.mediumdark,
+}));
 
 const ellipsis = keyframes`
   from { content: "..." }
@@ -107,7 +109,7 @@ export const PureLoader: FunctionComponent<
   if (error) {
     return (
       <ProgressWrapper aria-label={error.toString()} aria-live="polite" role="status" {...props}>
-        <ErrorIcon icon="alert" />
+        <ErrorIcon icon="lightningoff" />
         <ProgressMessage>{error.message}</ProgressMessage>
       </ProgressWrapper>
     );
