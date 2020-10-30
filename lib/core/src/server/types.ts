@@ -1,4 +1,4 @@
-import { Configuration } from 'webpack';
+import { Configuration, Stats } from 'webpack';
 import { TransformOptions } from '@babel/core';
 import { typeScriptDefaults } from './config/defaults';
 
@@ -7,14 +7,14 @@ export interface ManagerWebpackOptions {
   configType?: string;
   docsMode?: boolean;
   entries: string[];
-  refs: any;
+  refs: Record<string, Ref>;
   uiDll: boolean;
-  dll: any;
+  dll: boolean;
   outputDir?: string;
-  cache: any;
+  cache: boolean;
   previewUrl?: string;
-  versionCheck: any;
-  releaseNotesData: any;
+  versionCheck: VersionCheck;
+  releaseNotesData: ReleaseNotesData;
   presets: any;
 }
 
@@ -68,3 +68,50 @@ export type PresetConfig =
       name: string;
       options?: unknown;
     };
+
+export interface Ref {
+  id: string;
+  url: string;
+  title: string;
+  version: string;
+  type?: string;
+}
+
+export interface VersionCheck {
+  success: boolean;
+  data?: any;
+  error?: any;
+  time: number;
+}
+
+export interface ReleaseNotesData {
+  success: boolean;
+  currentVersion: string;
+  showOnFirstLaunch: boolean;
+}
+
+export interface PreviewResult {
+  previewStats: Stats;
+  previewTotalTime: [number, number];
+}
+
+export interface ManagerResult {
+  managerStats: Stats;
+  managerTotalTime: [number, number];
+}
+
+// TODO: this is a generic interface that we can share across multiple SB packages (like @storybook/cli)
+export interface PackageJson {
+  name: string;
+  version: string;
+  dependencies?: Record<string, string>;
+  devDependencies?: Record<string, string>;
+}
+
+// TODO: This could be exported to the outside world and used in `options.ts` file of each `@storybook/APP`
+// like it's described in docs/api/new-frameworks.md
+export interface LoadOptions {
+  packageJson: PackageJson;
+  framework: string;
+  frameworkPresets: string[];
+}

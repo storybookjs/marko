@@ -12,9 +12,9 @@ import { Configuration } from 'webpack';
 import loadPresets from '../presets';
 import loadCustomPresets from '../common/custom-presets';
 import { typeScriptDefaults } from '../config/defaults';
-import { Presets, PresetsOptions, StorybookConfigOptions } from '../types';
+import { Presets, PresetsOptions, Ref, StorybookConfigOptions } from '../types';
 
-export const getAutoRefs = async (options: { configDir: string }) => {
+export const getAutoRefs = async (options: { configDir: string }): Promise<Ref[]> => {
   const location = await findUp('package.json', { cwd: options.configDir });
   const directory = path.dirname(location);
 
@@ -79,7 +79,7 @@ async function getManagerWebpackConfig(
   const definedRefs = await presets.apply('refs', undefined, options);
   const entries = await presets.apply('managerEntries', [], options);
 
-  const refs: Record<string, any> = {};
+  const refs: Record<string, Ref> = {};
 
   if (autoRefs && autoRefs.length) {
     autoRefs.forEach(({ id, url, title, version }) => {

@@ -11,16 +11,18 @@ import prettyTime from 'pretty-hrtime';
 import inquirer from 'inquirer';
 import detectFreePort from 'detect-port';
 
+import { Stats } from 'webpack';
 import { storybookDevServer } from './dev-server';
-import { getDevCli } from './cli';
+import { DevCliOptions, getDevCli } from './cli';
 import { resolvePathInStorybookCache } from './utils/resolve-path-in-sb-cache';
+import { ReleaseNotesData, VersionCheck, PackageJson, LoadOptions } from './types';
 
 const cache = Cache({
   basePath: resolvePathInStorybookCache('dev-server'),
   ns: 'storybook', // Optional. A grouping namespace for items.
 });
 
-const writeStats = async (name: string, stats: any) => {
+const writeStats = async (name: string, stats: Stats) => {
   await fs.writeFile(
     resolvePathInStorybookCache(`public/${name}-stats.json`),
     JSON.stringify(stats.toJson(), null, 2),
@@ -28,13 +30,13 @@ const writeStats = async (name: string, stats: any) => {
   );
 };
 
-const getFreePort = (port: any) =>
+const getFreePort = (port: number) =>
   detectFreePort(port).catch((error) => {
     logger.error(error);
     process.exit(-1);
   });
 
-const updateCheck = async (version: string) => {
+const updateCheck = async (version: string): Promise<VersionCheck> => {
   let result;
   const time = Date.now();
   try {
@@ -63,7 +65,7 @@ const updateCheck = async (version: string) => {
 // For this reason, we convert the actual version of the build here so that
 // every place that relies on this data can reference the version of the
 // release notes that we expect to use.
-const getReleaseNotesVersion = (version: string) => {
+const getReleaseNotesVersion = (version: string): string => {
   const { major, minor } = semver.parse(version);
   const { version: releaseNotesVersion } = semver.coerce(`${major}.${minor}`);
   return releaseNotesVersion;
@@ -79,7 +81,10 @@ const getReleaseNotesFailedState = (version: string) => {
 
 export const RELEASE_NOTES_CACHE_KEY = 'releaseNotesData';
 
-export const getReleaseNotesData = async (currentVersionToParse: any, fileSystemCache: any) => {
+export const getReleaseNotesData = async (
+  currentVersionToParse: string,
+  fileSystemCache: any
+): Promise<ReleaseNotesData> => {
   let result;
   try {
     const fromCache = await fileSystemCache.get('releaseNotesData', []);
@@ -119,7 +124,7 @@ export const getReleaseNotesData = async (currentVersionToParse: any, fileSystem
   return result;
 };
 
-function createUpdateMessage(updateInfo: any, version: any) {
+function createUpdateMessage(updateInfo: VersionCheck, version: string): string {
   let updateMessage;
 
   try {
@@ -143,7 +148,14 @@ function createUpdateMessage(updateInfo: any, version: any) {
   return updateMessage;
 }
 
-function outputStartupInformation(options: any) {
+function outputStartupInformation(options: {
+  updateInfo: VersionCheck;
+  version: string;
+  address: string;
+  networkAddress: string;
+  managerTotalTime: [number, number];
+  previewTotalTime: [number, number];
+}) {
   const {
     updateInfo,
     version,
@@ -206,7 +218,7 @@ function outputStartupInformation(options: any) {
   );
 }
 
-async function outputStats(previewStats: any, managerStats: any) {
+async function outputStats(previewStats: Stats, managerStats: Stats) {
   if (previewStats) {
     await writeStats('preview', previewStats);
   }
@@ -216,7 +228,16 @@ async function outputStats(previewStats: any, managerStats: any) {
   );
 }
 
-export async function buildDevStandalone(options: any) {
+export async function buildDevStandalone(
+  options: DevCliOptions &
+    LoadOptions & {
+      packageJson: PackageJson;
+      ignorePreview: boolean;
+      docsMode: boolean;
+      configDir: string;
+      cache: any;
+    }
+) {
   try {
     const { packageJson, versionUpdates, releaseNotes } = options;
     const { version } = packageJson;
@@ -244,7 +265,9 @@ export async function buildDevStandalone(options: any) {
 
     /* eslint-disable no-param-reassign */
     options.port = port;
+    // @ts-ignore
     options.versionCheck = updateInfo;
+    // @ts-ignore
     options.releaseNotesData = releaseNotesData;
     /* eslint-enable no-param-reassign */
 
@@ -307,14 +330,17 @@ export async function buildDevStandalone(options: any) {
   }
 }
 
-export async function buildDev({ packageJson, ...loadOptions }: any) {
+export async function buildDev({
+  packageJson,
+  ...loadOptions
+}: { packageJson: PackageJson } & LoadOptions) {
   const cliOptions = await getDevCli(packageJson);
 
   await buildDevStandalone({
     ...cliOptions,
     ...loadOptions,
     packageJson,
-    configDir: loadOptions.configDir || cliOptions.configDir || './.storybook',
+    configDir: (loadOptions as any).configDir || cliOptions.configDir || './.storybook',
     ignorePreview: !!cliOptions.previewUrl,
     docsMode: !!cliOptions.docs,
     cache,

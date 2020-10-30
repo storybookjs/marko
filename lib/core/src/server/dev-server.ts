@@ -22,6 +22,7 @@ import loadConfig from './config';
 import loadManagerConfig from './manager/manager-config';
 import { resolvePathInStorybookCache } from './utils/resolve-path-in-sb-cache';
 import { getPrebuiltDir } from './utils/prebuilt-manager';
+import { ManagerResult, PreviewResult } from './types';
 
 const defaultFavIcon = require.resolve('./public/favicon.ico');
 
@@ -193,7 +194,7 @@ const startManager = async ({
   outputDir,
   configDir,
   prebuiltDir,
-}: any) => {
+}: any): Promise<ManagerResult> => {
   let managerConfig;
   if (!prebuiltDir) {
     // this is pretty slow
@@ -224,7 +225,9 @@ const startManager = async ({
   }
 
   if (!managerConfig) {
-    return { managerStats: {}, managerTotalTime: 0 };
+    // FIXME: This object containing default values should match ManagerResult
+    // @ts-ignore
+    return { managerStats: {}, managerTotalTime: 0 } as ManagerResult;
   }
 
   const compiler = webpack(managerConfig);
@@ -255,9 +258,16 @@ const startManager = async ({
   return { managerStats, managerTotalTime: process.hrtime(startTime) };
 };
 
-const startPreview = async ({ startTime, options, configType, outputDir }: any) => {
+const startPreview = async ({
+  startTime,
+  options,
+  configType,
+  outputDir,
+}: any): Promise<PreviewResult> => {
   if (options.ignorePreview) {
-    return { previewStats: {}, previewTotalTime: 0 };
+    // FIXME: This object containing default values should match PreviewResult
+    // @ts-ignore
+    return { previewStats: {}, previewTotalTime: 0 } as PreviewResult;
   }
 
   const previewConfig = await loadConfig({
