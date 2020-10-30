@@ -12,6 +12,7 @@ import { Highlight, RefType } from './types';
 import { getStateType } from './utils';
 
 export interface RefProps {
+  isLoading: boolean;
   isBrowsing: boolean;
   selectedStoryId: string | null;
   highlightedItemId: string | null;
@@ -95,6 +96,7 @@ export const Ref: FunctionComponent<RefType & RefProps> = React.memo((props) => 
     stories,
     id: refId,
     title = refId,
+    isLoading: isLoadingMain,
     isBrowsing,
     selectedStoryId,
     highlightedItemId,
@@ -108,10 +110,7 @@ export const Ref: FunctionComponent<RefType & RefProps> = React.memo((props) => 
   const indicatorRef = useRef<HTMLElement>(null);
 
   const isMain = refId === DEFAULT_REF_ID;
-
-  const isLoadingMain = !ready && isMain;
   const isLoadingInjected = type === 'auto-inject' && !ready;
-
   const isLoading = isLoadingMain || isLoadingInjected || type === 'unknown';
   const isError = !!error;
   const isEmpty = !isLoading && length === 0;

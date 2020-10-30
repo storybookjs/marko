@@ -119,6 +119,7 @@ const refs: Record<string, RefType> = {
 export const Optimized = () => (
   <Ref
     {...refs.optimized}
+    isLoading={false}
     isBrowsing
     selectedStoryId=""
     highlightedItemId=""
@@ -128,6 +129,7 @@ export const Optimized = () => (
 export const IsEmpty = () => (
   <Ref
     {...refs.empty}
+    isLoading={false}
     isBrowsing
     selectedStoryId=""
     highlightedItemId=""
@@ -137,6 +139,7 @@ export const IsEmpty = () => (
 export const StartInjectedUnknown = () => (
   <Ref
     {...refs.startInjected_unknown}
+    isLoading={false}
     isBrowsing
     selectedStoryId=""
     highlightedItemId=""
@@ -146,6 +149,7 @@ export const StartInjectedUnknown = () => (
 export const StartInjectedLoading = () => (
   <Ref
     {...refs.startInjected_loading}
+    isLoading={false}
     isBrowsing
     selectedStoryId=""
     highlightedItemId=""
@@ -155,6 +159,7 @@ export const StartInjectedLoading = () => (
 export const StartInjectedReady = () => (
   <Ref
     {...refs.startInjected_ready}
+    isLoading={false}
     isBrowsing
     selectedStoryId=""
     highlightedItemId=""
@@ -164,6 +169,7 @@ export const StartInjectedReady = () => (
 export const Versions = () => (
   <Ref
     {...refs.versions}
+    isLoading={false}
     isBrowsing
     selectedStoryId=""
     highlightedItemId=""
@@ -173,6 +179,7 @@ export const Versions = () => (
 export const VersionsMissingCurrent = () => (
   <Ref
     {...refs.versionsMissingCurrent}
+    isLoading={false}
     isBrowsing
     selectedStoryId=""
     highlightedItemId=""
@@ -182,6 +189,7 @@ export const VersionsMissingCurrent = () => (
 export const Errored = () => (
   <Ref
     {...refs.error}
+    isLoading={false}
     isBrowsing
     selectedStoryId=""
     highlightedItemId=""
@@ -191,6 +199,7 @@ export const Errored = () => (
 export const Auth = () => (
   <Ref
     {...refs.auth}
+    isLoading={false}
     isBrowsing
     selectedStoryId=""
     highlightedItemId=""
@@ -200,6 +209,7 @@ export const Auth = () => (
 export const Long = () => (
   <Ref
     {...refs.long}
+    isLoading={false}
     isBrowsing
     selectedStoryId=""
     highlightedItemId=""
