@@ -21,8 +21,8 @@
     "@storybook/addons": "6.1.0-alpha.35",
     "@storybook/mithril": "6.1.0-alpha.35",
     "@storybook/source-loader": "6.1.0-alpha.35",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
     "webpack": "^4.33.0"
   },
   "storybook": {

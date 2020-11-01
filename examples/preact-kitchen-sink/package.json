@@ -31,8 +31,8 @@
     "file-loader": "^6.0.0",
     "preact-render-to-json": "^3.6.6",
     "raw-loader": "^4.0.1",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
     "svg-url-loader": "^5.0.0",
     "webpack": "^4.33.0",
     "webpack-dev-server": "^3.8.2"
