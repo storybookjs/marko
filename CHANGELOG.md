@@ -1,17 +1,27 @@
+## 6.1.0-alpha.34 (November 1, 2020)
+
+### Features
+
+- Composition: Append index to ref indicator links ([#12932](https://github.com/storybookjs/storybook/pull/12932))
+
+### Bug Fixes
+
+- UI: Don't listen for progress updates in static builds ([#12966](https://github.com/storybookjs/storybook/pull/12966))
+
 ## 6.1.0-alpha.33 (October 30, 2020)
 
 ### Features
 
-* UI: Instant-on manager ([#12707](https://github.com/storybookjs/storybook/pull/12707))
+- UI: Instant-on manager ([#12707](https://github.com/storybookjs/storybook/pull/12707))
 
 ### Bug Fixes
 
-* Core: Disable UI dll by default ([#12926](https://github.com/storybookjs/storybook/pull/12926))
-* Combine args with basic object spread semantics ([#12958](https://github.com/storybookjs/storybook/pull/12958))
+- Core: Disable UI dll by default ([#12926](https://github.com/storybookjs/storybook/pull/12926))
+- Combine args with basic object spread semantics ([#12958](https://github.com/storybookjs/storybook/pull/12958))
 
 ### Dependency Upgrades
 
-* Core: Allow React-DOM 17.x ([#12937](https://github.com/storybookjs/storybook/pull/12937))
+- Core: Allow React-DOM 17.x ([#12937](https://github.com/storybookjs/storybook/pull/12937))
 
 ## 6.1.0-alpha.32 (October 30, 2020)
 
