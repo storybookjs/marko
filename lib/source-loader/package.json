@@ -38,10 +38,12 @@
     "loader-utils": "^2.0.0",
     "lodash": "^4.17.15",
     "prettier": "~2.0.5",
-    "react": "^16.8.3 || ^17.0.0",
-    "react-dom": "^16.8.3 || ^17.0.0",
     "regenerator-runtime": "^0.13.7",
     "source-map": "^0.7.3"
+  },
+  "peerDependencies": {
+    "react": "15 || 16 || ^17.0.0",
+    "react-dom": "15 || 16 || ^17.0.0"
   },
   "publishConfig": {
     "access": "public"

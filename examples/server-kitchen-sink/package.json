@@ -27,6 +27,8 @@
     "morgan": "^1.9.1",
     "nodemon": "^2.0.2",
     "pug": "^3.0.0",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "safe-identifier": "^0.4.1"
   }
 }

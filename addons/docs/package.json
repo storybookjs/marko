@@ -72,8 +72,6 @@
     "lodash": "^4.17.15",
     "prettier": "~2.0.5",
     "prop-types": "^15.7.2",
-    "react": "^16.8.3 || ^17.0.0",
-    "react-dom": "^16.8.3 || ^17.0.0",
     "react-element-to-jsx-string": "^14.3.1",
     "regenerator-runtime": "^0.13.7",
     "remark-external-links": "^6.0.0",
@@ -119,6 +117,8 @@
     "@babel/core": "^7.11.5",
     "@storybook/vue": "6.1.0-alpha.35",
     "babel-loader": "^8.0.0",
+    "react": "15 || 16 || ^17.0.0",
+    "react-dom": "15 || 16 || ^17.0.0",
     "sveltedoc-parser": "^3.0.4",
     "vue": "^2.6.10",
     "webpack": ">=4"

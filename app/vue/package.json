@@ -57,6 +57,8 @@
     "@babel/core": "*",
     "babel-loader": "^7.0.0 || ^8.0.0",
     "css-loader": "*",
+    "react": "15 || 16 || ^17.0.0",
+    "react-dom": "15 || 16 || ^17.0.0",
     "ts-loader": "^6.2.2",
     "vue": "^2.6.8",
     "vue-loader": "^15.7.0",

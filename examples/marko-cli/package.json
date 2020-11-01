@@ -31,6 +31,8 @@
     "@storybook/marko": "6.1.0-alpha.35",
     "@storybook/source-loader": "6.1.0-alpha.35",
     "prettier": "~2.0.5",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "webpack": "^4.33.0"
   },
   "storybook": {

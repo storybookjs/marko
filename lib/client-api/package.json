@@ -41,13 +41,15 @@
     "lodash": "^4.17.15",
     "memoizerific": "^1.11.3",
     "qs": "^6.6.0",
-    "react": "^16.8.3 || ^17.0.0",
-    "react-dom": "^16.8.3 || ^17.0.0",
     "regenerator-runtime": "^0.13.7",
     "stable": "^0.1.8",
     "store2": "^2.7.1",
     "ts-dedent": "^2.0.0",
     "util-deprecate": "^1.0.2"
+  },
+  "peerDependencies": {
+    "react": "15 || 16 || ^17.0.0",
+    "react-dom": "15 || 16 || ^17.0.0"
   },
   "publishConfig": {
     "access": "public"

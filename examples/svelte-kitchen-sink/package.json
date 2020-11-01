@@ -22,7 +22,9 @@
     "@storybook/addon-viewport": "6.1.0-alpha.35",
     "@storybook/addons": "6.1.0-alpha.35",
     "@storybook/source-loader": "6.1.0-alpha.35",
-    "@storybook/svelte": "6.1.0-alpha.35"
+    "@storybook/svelte": "6.1.0-alpha.35",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0"
   },
   "storybook": {
     "chromatic": {

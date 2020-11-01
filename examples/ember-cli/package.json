@@ -46,6 +46,8 @@
     "ember-resolver": "^7.0.0",
     "ember-source": "~3.19.0",
     "loader.js": "^4.2.3",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.0"
   },

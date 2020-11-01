@@ -37,9 +37,11 @@
     "@storybook/node-logger": "6.1.0-alpha.35",
     "@storybook/theming": "6.1.0-alpha.35",
     "core-js": "^3.0.1",
-    "react": "^16.8.3 || ^17.0.0",
-    "react-dom": "^16.8.3 || ^17.0.0",
     "ts-dedent": "^2.0.0"
+  },
+  "peerDependencies": {
+    "react": "15 || 16 || ^17.0.0",
+    "react-dom": "15 || 16 || ^17.0.0"
   },
   "publishConfig": {
     "access": "public"
