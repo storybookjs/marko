@@ -1,4 +1,4 @@
-import { EventSource } from 'global';
+import { EventSource, CONFIG_TYPE } from 'global';
 import React, { ComponentProps, FunctionComponent, useEffect, useState } from 'react';
 import { styled, keyframes } from '@storybook/theming';
 import { Icons } from '../icon/icon';
@@ -157,8 +157,12 @@ export const Loader: FunctionComponent<ComponentProps<typeof PureLoader>> = (pro
   const [error, setError] = useState(undefined);
 
   useEffect(() => {
+    // Don't listen for progress updates in static builds
+    if (CONFIG_TYPE !== 'DEVELOPMENT') return undefined;
+
     const eventSource = new EventSource('/progress');
     let lastProgress: Progress;
+
     eventSource.onmessage = (event: any) => {
       try {
         lastProgress = JSON.parse(event.data);
@@ -168,10 +172,12 @@ export const Loader: FunctionComponent<ComponentProps<typeof PureLoader>> = (pro
         eventSource.close();
       }
     };
+
     eventSource.onerror = () => {
-      if (lastProgress?.value !== 1) setError(new Error('Connection closed'));
+      if (lastProgress && lastProgress.value !== 1) setError(new Error('Connection closed'));
       eventSource.close();
     };
+
     return () => eventSource.close();
   }, []);
 
