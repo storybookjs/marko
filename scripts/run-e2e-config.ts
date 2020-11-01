@@ -104,6 +104,7 @@ export const preact: Parameters = {
   generator:
     'npx preact-cli@{{version}} create preactjs-templates/default {{name}}-{{version}} --yarn --install=false --git=false',
   ensureDir: false,
+  additionalDeps: ['react', 'react-dom'],
 };
 
 export const rax: Parameters = {
@@ -123,7 +124,7 @@ export const react: Parameters = {
 export const react_typescript: Parameters = {
   name: 'react_typescript',
   version: 'latest',
-  generator: fromDeps('react'),
+  generator: fromDeps('react', 'react-dom'),
   typescript: true,
 };
 
