@@ -5,12 +5,6 @@ import remarkExternalLinks from 'remark-external-links';
 // @ts-ignore
 import createCompiler from '../../mdx/mdx-compiler-plugin';
 
-const coreDirName = path.dirname(require.resolve('@storybook/core/package.json'));
-// TODO: improve node_modules detection
-const context = coreDirName.includes('node_modules')
-  ? path.join(coreDirName, '../../') // Real life case, already in node_modules
-  : path.join(coreDirName, '../../node_modules'); // SB Monorepo
-
 // for frameworks that are not working with react, we need to configure
 // the jsx to transpile mdx, for now there will be a flag for that
 // for more complex solutions we can find alone that we need to add '@babel/plugin-transform-react-jsx'
