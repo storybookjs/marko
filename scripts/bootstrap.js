@@ -65,7 +65,7 @@ function run() {
       command: () => {
         log.info(prefix, 'yarn workspace');
       },
-      pre: ['install', 'build', 'dll'],
+      pre: ['install', 'build', 'manager', 'dll'],
       order: 1,
     }),
     reset: createTask({
@@ -104,6 +104,15 @@ function run() {
       },
       order: 2,
     }),
+    manager: createTask({
+      name: `Generate prebuilt manager UI ${chalk.gray('(manager)')}`,
+      defaultValue: false,
+      option: '--manager',
+      command: () => {
+        spawn('yarn build-manager');
+      },
+      order: 3,
+    }),
     dll: createTask({
       name: `Generate DLL ${chalk.gray('(dll)')}`,
       defaultValue: false,
@@ -114,7 +123,7 @@ function run() {
           spawn('lerna run createDlls --scope "@storybook/ui" --scope "@storybook/addon-docs"');
         }, 5000);
       },
-      order: 3,
+      order: 4,
     }),
     packs: createTask({
       name: `Build tarballs of packages ${chalk.gray('(build-packs)')}`,
@@ -148,7 +157,7 @@ function run() {
 
   const groups = {
     main: ['core'],
-    buildtasks: ['install', 'build', 'dll', 'packs'],
+    buildtasks: ['install', 'build', 'manager', 'dll', 'packs'],
     devtasks: ['dev', 'registry', 'reset'],
   };
 

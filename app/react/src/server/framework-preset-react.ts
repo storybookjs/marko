@@ -59,7 +59,7 @@ export async function webpackFinal(config: Configuration, options: StorybookOpti
     return config;
   }
 
-  logger.info('=> Using React fast refresh feature.');
+  logger.info('=> Using React fast refresh');
   return {
     ...config,
     plugins: [...(config.plugins || []), new ReactRefreshWebpackPlugin()],

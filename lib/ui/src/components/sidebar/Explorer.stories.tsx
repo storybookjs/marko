@@ -68,6 +68,7 @@ export const Simple = () => (
   <Explorer
     dataset={{ hash: simple, entries: Object.entries(simple) }}
     selected={selected}
+    isLoading={false}
     isBrowsing
   />
 );
@@ -76,6 +77,7 @@ export const WithRefs = () => (
   <Explorer
     dataset={{ hash: withRefs, entries: Object.entries(withRefs) }}
     selected={selected}
+    isLoading={false}
     isBrowsing
   />
 );
