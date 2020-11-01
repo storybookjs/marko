@@ -2,6 +2,7 @@
 
 - [From version 6.0.x to 6.1.0](#from-version-60x-to-610)
   - [6.1 deprecations](#61-deprecations)
+    - [Deprecated DLL flags](#deprecated-dll-flags)
     - [Deprecated storyFn](#deprecated-storyfn)
     - [Deprecated onBeforeRender](#deprecated-onbeforerender)
     - [Deprecated grid parameter](#deprecated-grid-parameter)
@@ -138,6 +139,10 @@
 ## From version 6.0.x to 6.1.0
 
 ### 6.1 deprecations
+
+#### Deprecated DLL flags
+
+Earlier versions of Storybook used Webpack DLLs as a performance crutch. In 6.1, we've removed Storybook's built-in DLLs and have deprecated the command-line parameters `--no-dll` and `--ui-dll`. They will be removed in 7.0.
 
 #### Deprecated storyFn
 
