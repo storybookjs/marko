@@ -60,10 +60,9 @@ const createCanvas = (id: string, baseUrl = 'iframe.html', withLoader = true): A
             ...defaultWrappers,
           ]);
 
-          const isLoading = !!(
-            (!story && !(storiesFailed || storiesConfigured)) ||
-            (story && refId && refs[refId] && !refs[refId].ready)
-          );
+          const isLoading = story
+            ? !!refs[refId] && !refs[refId].ready
+            : !storiesFailed && !storiesConfigured;
 
           return (
             <ZoomConsumer>

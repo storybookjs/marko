@@ -121,7 +121,12 @@ export const Sidebar: FunctionComponent<SidebarProps> = React.memo(
             >
               {({ query, results, isBrowsing, getMenuProps, getItemProps, highlightedIndex }) => (
                 <Swap condition={isBrowsing}>
-                  <Explorer dataset={dataset} selected={selected} isBrowsing={isBrowsing} />
+                  <Explorer
+                    dataset={dataset}
+                    selected={selected}
+                    isLoading={isLoading}
+                    isBrowsing={isBrowsing}
+                  />
                   <SearchResults
                     query={query}
                     results={results}

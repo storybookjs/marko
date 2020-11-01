@@ -445,7 +445,10 @@ export default class StoryStore {
     };
 
     // Pull out parameters.args.$ || .argTypes.$.defaultValue into initialArgs
-    const passedArgs: Args = combinedParameters.args;
+    const passedArgs: Args = {
+      ...this._kinds[kind].parameters.args,
+      ...storyParameters.args,
+    };
     const defaultArgs: Args = Object.entries(
       argTypes as Record<string, { defaultValue: any }>
     ).reduce((acc, [arg, { defaultValue }]) => {

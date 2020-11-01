@@ -1,14 +1,14 @@
 {
   "name": "standalone-preview",
-  "version": "6.1.0-alpha.31",
+  "version": "6.1.0-alpha.33",
   "private": true,
   "scripts": {
     "storybook": "parcel ./storybook.html --port 1337"
   },
   "devDependencies": {
-    "@storybook/react": "6.1.0-alpha.31",
+    "@storybook/react": "6.1.0-alpha.33",
     "parcel": "^1.12.3",
     "react": "^16.8.3",
-    "react-dom": "^16.8.3"
+    "react-dom": "^16.8.3 || ^17.0.0"
   }
 }

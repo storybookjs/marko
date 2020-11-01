@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-links",
-  "version": "6.1.0-alpha.31",
+  "version": "6.1.0-alpha.33",
   "description": "Story Links addon for storybook",
   "keywords": [
     "addon",
@@ -29,18 +29,18 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-alpha.31",
-    "@storybook/client-logger": "6.1.0-alpha.31",
-    "@storybook/core-events": "6.1.0-alpha.31",
+    "@storybook/addons": "6.1.0-alpha.33",
+    "@storybook/client-logger": "6.1.0-alpha.33",
+    "@storybook/core-events": "6.1.0-alpha.33",
     "@storybook/csf": "0.0.1",
-    "@storybook/router": "6.1.0-alpha.31",
+    "@storybook/router": "6.1.0-alpha.33",
     "@types/qs": "^6.9.0",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "prop-types": "^15.7.2",
     "qs": "^6.6.0",
     "react": "^16.8.3 || ^17.0.0",
-    "react-dom": "^16.8.3",
+    "react-dom": "^16.8.3 || ^17.0.0",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
@@ -51,7 +51,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "f45b4c6fedf0994f7950ee1661592060894d7272",
+  "gitHead": "a5ee924e01e4e5c9d0170e2a70f8fc8a5825cfbb",
   "typesVersions": {
     "<3.8": {
       "*": [
