@@ -24,7 +24,6 @@
     "ts3.4/**/*"
   ],
   "scripts": {
-    "createDlls": "node -r esm ./scripts/createDlls.js",
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
