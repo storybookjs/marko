@@ -1,6 +1,6 @@
 {
   "name": "mithril-example",
-  "version": "6.1.0-alpha.35",
+  "version": "6.1.0-beta.0",
   "private": true,
   "scripts": {
     "build-storybook": "build-storybook",
@@ -10,19 +10,17 @@
     "mithril": "^1.1.6"
   },
   "devDependencies": {
-    "@storybook/addon-a11y": "6.1.0-alpha.35",
-    "@storybook/addon-actions": "6.1.0-alpha.35",
-    "@storybook/addon-backgrounds": "6.1.0-alpha.35",
-    "@storybook/addon-knobs": "6.1.0-alpha.35",
-    "@storybook/addon-links": "6.1.0-alpha.35",
-    "@storybook/addon-storyshots": "6.1.0-alpha.35",
-    "@storybook/addon-storysource": "6.1.0-alpha.35",
-    "@storybook/addon-viewport": "6.1.0-alpha.35",
-    "@storybook/addons": "6.1.0-alpha.35",
-    "@storybook/mithril": "6.1.0-alpha.35",
-    "@storybook/source-loader": "6.1.0-alpha.35",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
+    "@storybook/addon-a11y": "6.1.0-beta.0",
+    "@storybook/addon-actions": "6.1.0-beta.0",
+    "@storybook/addon-backgrounds": "6.1.0-beta.0",
+    "@storybook/addon-knobs": "6.1.0-beta.0",
+    "@storybook/addon-links": "6.1.0-beta.0",
+    "@storybook/addon-storyshots": "6.1.0-beta.0",
+    "@storybook/addon-storysource": "6.1.0-beta.0",
+    "@storybook/addon-viewport": "6.1.0-beta.0",
+    "@storybook/addons": "6.1.0-beta.0",
+    "@storybook/mithril": "6.1.0-beta.0",
+    "@storybook/source-loader": "6.1.0-beta.0",
     "webpack": "^4.33.0"
   },
   "storybook": {
