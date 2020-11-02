@@ -28,7 +28,7 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@mdx-js/mdx": "^1.5.1",
+    "@mdx-js/mdx": "^1.6.19",
     "@storybook/csf": "0.0.1",
     "@storybook/node-logger": "6.1.0-alpha.34",
     "core-js": "^3.0.1",
