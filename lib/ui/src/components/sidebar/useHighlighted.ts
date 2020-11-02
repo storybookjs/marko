@@ -15,6 +15,7 @@ import { cycle, isAncestor, scrollIntoView } from './utils';
 
 export interface HighlightedProps {
   containerRef: MutableRefObject<HTMLElement>;
+  isLoading: boolean;
   isBrowsing: boolean;
   dataset: CombinedDataset;
   selected: Selection;
@@ -25,6 +26,7 @@ const fromSelection = (selection: Selection): Highlight =>
 
 export const useHighlighted = ({
   containerRef,
+  isLoading,
   isBrowsing,
   dataset,
   selected,
@@ -66,7 +68,7 @@ export const useHighlighted = ({
   useEffect(() => {
     const menuElement = document.getElementById('storybook-explorer-menu');
     const navigateTree = throttle((event) => {
-      if (!isBrowsing || !event.key || !containerRef || !containerRef.current) return;
+      if (isLoading || !isBrowsing || !event.key || !containerRef || !containerRef.current) return;
       if (event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) return;
 
       const target = event.target as Element;
@@ -92,7 +94,7 @@ export const useHighlighted = ({
 
     document.addEventListener('keydown', navigateTree);
     return () => document.removeEventListener('keydown', navigateTree);
-  }, [isBrowsing, highlightedRef, highlightElement]);
+  }, [isLoading, isBrowsing, highlightedRef, highlightElement]);
 
   return [highlighted, setHighlighted];
 };

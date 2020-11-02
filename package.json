@@ -1,6 +1,6 @@
 {
   "name": "@storybook/root",
-  "version": "6.1.0-alpha.31",
+  "version": "6.1.0-alpha.33",
   "private": true,
   "description": "Storybook is an open source tool for developing UI components in isolation for React, Vue and Angular. It makes building stunning UIs organized and efficient.",
   "keywords": [
@@ -47,6 +47,7 @@
     "await-serve-storybooks": "wait-on http://localhost:8001",
     "bootstrap": "node ./scripts/bootstrap.js",
     "build": "node ./scripts/build-package.js",
+    "build-manager": "node ./scripts/build-manager.js",
     "build-packs": "lerna exec --scope '@storybook/*' -- \\$LERNA_ROOT_PATH/scripts/build-pack.sh \\$LERNA_ROOT_PATH/packs",
     "build-storybooks": "cross-env STORYBOOK_DISPLAY_WARNING=true DISPLAY_WARNING=true node -r esm ./scripts/build-storybooks.js",
     "changelog": "pr-log --sloppy --cherry-pick",
@@ -191,7 +192,7 @@
     "prettier": "~2.0.5",
     "raf": "^3.4.0",
     "react": "^16.8.3",
-    "react-dom": "^16.8.3",
+    "react-dom": "^16.8.3 || ^17.0.0",
     "react-test-renderer": "^16.8.3",
     "recursive-copy": "^2.0.10",
     "regenerator-runtime": "^0.13.7",

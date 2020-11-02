@@ -1,3 +1,25 @@
+## 6.1.0-alpha.33 (October 30, 2020)
+
+### Features
+
+* UI: Instant-on manager ([#12707](https://github.com/storybookjs/storybook/pull/12707))
+
+### Bug Fixes
+
+* Core: Disable UI dll by default ([#12926](https://github.com/storybookjs/storybook/pull/12926))
+* Combine args with basic object spread semantics ([#12958](https://github.com/storybookjs/storybook/pull/12958))
+
+### Dependency Upgrades
+
+* Core: Allow React-DOM 17.x ([#12937](https://github.com/storybookjs/storybook/pull/12937))
+
+## 6.1.0-alpha.32 (October 30, 2020)
+
+### Bug Fixes
+
+- CLI: Disable DLL by default in template ([#12954](https://github.com/storybookjs/storybook/pull/12954))
+- Preact: Fix peerDeps version specifier ([#12883](https://github.com/storybookjs/storybook/pull/12883))
+
 ## 6.1.0-alpha.31 (October 27, 2020)
 
 ### Features
