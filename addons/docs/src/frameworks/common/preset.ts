@@ -2,16 +2,8 @@ import path from 'path';
 import remarkSlug from 'remark-slug';
 import remarkExternalLinks from 'remark-external-links';
 
-import { DllReferencePlugin } from 'webpack';
-
 // @ts-ignore
 import createCompiler from '../../mdx/mdx-compiler-plugin';
-
-const coreDirName = path.dirname(require.resolve('@storybook/core/package.json'));
-// TODO: improve node_modules detection
-const context = coreDirName.includes('node_modules')
-  ? path.join(coreDirName, '../../') // Real life case, already in node_modules
-  : path.join(coreDirName, '../../node_modules'); // SB Monorepo
 
 // for frameworks that are not working with react, we need to configure
 // the jsx to transpile mdx, for now there will be a flag for that
@@ -37,10 +29,6 @@ function createBabelOptions({ babelOptions, mdxBabelOptions, configureJSX }: Bab
     plugins,
   };
 }
-
-export const webpackDlls = (dlls: string[], options: any) => {
-  return options.docsDll ? [...dlls, './sb_dll/storybook_docs_dll.js'] : [];
-};
 
 export function webpack(webpackConfig: any = {}, options: any = {}) {
   const { module = {} } = webpackConfig;
@@ -142,15 +130,6 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
       ],
     },
   };
-
-  if (options.docsDll) {
-    result.plugins.push(
-      new DllReferencePlugin({
-        context,
-        manifest: require.resolve('@storybook/core/dll/storybook_docs-manifest.json'),
-      })
-    );
-  }
 
   return result;
 }
