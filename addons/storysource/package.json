@@ -49,8 +49,8 @@
     "@types/react-syntax-highlighter": "^11.0.4"
   },
   "peerDependencies": {
-    "react": "15 || 16 || ^17.0.0",
-    "react-dom": "15 || 16 || ^17.0.0"
+    "react": "^16.8.3 || ^17.0.0",
+    "react-dom": "^16.8.3 || ^17.0.0"
   },
   "publishConfig": {
     "access": "public"
