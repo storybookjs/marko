@@ -44,9 +44,7 @@
     "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
-    "@types/webpack-env": "^1.15.2",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2"
+    "@types/webpack-env": "^1.15.2"
   },
   "publishConfig": {
     "access": "public"

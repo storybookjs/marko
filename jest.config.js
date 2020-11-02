@@ -80,7 +80,7 @@ module.exports = {
   },
   snapshotSerializers: ['jest-emotion', 'enzyme-to-json/serializer', 'jest-serializer-html'],
   coverageDirectory: 'coverage',
-  setupFilesAfterEnv: ['./scripts/jest.init.js'],
+  setupFilesAfterEnv: ['./scripts/jest.init.ts'],
   coverageReporters: ['lcov'],
   testEnvironment: 'jest-environment-jsdom-thirteen',
   setupFiles: ['raf/polyfill'],
