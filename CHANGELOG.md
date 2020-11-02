@@ -1,3 +1,10 @@
+## 6.1.0-alpha.35 (November 2, 2020)
+
+### Maintenance
+
+- Build: Fix bootstrap reset command ([#12976](https://github.com/storybookjs/storybook/pull/12976))
+- Core: Remove webpack DLLs ([#12975](https://github.com/storybookjs/storybook/pull/12975))
+
 ## 6.1.0-alpha.34 (November 1, 2020)
 
 ### Features
