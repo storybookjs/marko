@@ -47,7 +47,7 @@
     "pretty-format": "^26.4.0",
     "react": "^16.8.3 || ^17.0.0",
     "react-dom": "^16.8.3 || ^17.0.0",
-    "react-test-renderer": "^16.8.3",
+    "react-test-renderer": "^16.8.3 || ^17.0.0",
     "read-pkg-up": "^7.0.0",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
