@@ -1,16 +1,124 @@
+## 6.1.0-alpha.35 (November 2, 2020)
+
+### Maintenance
+
+- Build: Fix bootstrap reset command ([#12976](https://github.com/storybookjs/storybook/pull/12976))
+- Core: Remove webpack DLLs ([#12975](https://github.com/storybookjs/storybook/pull/12975))
+
+## 6.1.0-alpha.34 (November 1, 2020)
+
+### Features
+
+- Composition: Append index to ref indicator links ([#12932](https://github.com/storybookjs/storybook/pull/12932))
+
+### Bug Fixes
+
+- UI: Don't listen for progress updates in static builds ([#12966](https://github.com/storybookjs/storybook/pull/12966))
+
+## 6.1.0-alpha.33 (October 30, 2020)
+
+### Features
+
+- UI: Instant-on manager ([#12707](https://github.com/storybookjs/storybook/pull/12707))
+
+### Bug Fixes
+
+- Core: Disable UI dll by default ([#12926](https://github.com/storybookjs/storybook/pull/12926))
+- Combine args with basic object spread semantics ([#12958](https://github.com/storybookjs/storybook/pull/12958))
+
+### Dependency Upgrades
+
+- Core: Allow React-DOM 17.x ([#12937](https://github.com/storybookjs/storybook/pull/12937))
+
+## 6.1.0-alpha.32 (October 30, 2020)
+
+### Bug Fixes
+
+- CLI: Disable DLL by default in template ([#12954](https://github.com/storybookjs/storybook/pull/12954))
+- Preact: Fix peerDeps version specifier ([#12883](https://github.com/storybookjs/storybook/pull/12883))
+
+## 6.1.0-alpha.31 (October 27, 2020)
+
+### Features
+
+- Search UX improvements ([#12765](https://github.com/storybookjs/storybook/pull/12765))
+- Core: Add new layout style `none` and fix layout styles ([#12727](https://github.com/storybookjs/storybook/pull/12727))
+
+### Dependency Upgrades
+
+- Deps: Upgrade regenerator-runtime to 0.13.7 ([#12902](https://github.com/storybookjs/storybook/pull/12902))
+- Deps: Upgrade ts-dedent to 2.0 ([#12901](https://github.com/storybookjs/storybook/pull/12901))
+
+## 6.1.0-alpha.30 (October 26, 2020)
+
+### Features
+
+- Addon-docs: Lazy load iframes ([#12888](https://github.com/storybookjs/storybook/pull/12888))
+
+### Bug Fixes
+
+- React: Allow Storybook packages to use React 17.x ([#12908](https://github.com/storybookjs/storybook/pull/12908))
+- React: Support JSX react transform introduced in 16.14.0 ([#12899](https://github.com/storybookjs/storybook/pull/12899))
+- Addon-viewport: Fill entire iframe width with drop shadow ([#12870](https://github.com/storybookjs/storybook/pull/12870))
+
+### Maintenance
+
+- CLI: Deprecate '--story-format=mdx' option ([#12905](https://github.com/storybookjs/storybook/pull/12905))
+
+### Dependency Upgrades
+
+- Deps: upgrade babel to 7.12 ([#12903](https://github.com/storybookjs/storybook/pull/12903))
+- Addon-docs: Remove react-is dependency ([#12910](https://github.com/storybookjs/storybook/pull/12910))
+
+## 6.1.0-alpha.29 (October 23, 2020)
+
+### Bug Fixes
+
+- CLI: Fix intro MDX for React17 ([#12878](https://github.com/storybookjs/storybook/pull/12878))
+
+## 6.0.27 (October 23, 2020)
+
+### Bug Fixes
+
+- CLI: Fix intro MDX for React17 ([#12878](https://github.com/storybookjs/storybook/pull/12878))
+- Core: Disable Docs DLL by default ([#12874](https://github.com/storybookjs/storybook/pull/12874))
+- Essentials: Fix absolute config dir ([#12873](https://github.com/storybookjs/storybook/pull/12873))
+- Addon-controls: Fix "docs before controls" check ([#12738](https://github.com/storybookjs/storybook/pull/12738))
+- Addon-knobs: Fix uncontrolled to controlled warning for booleans ([#12719](https://github.com/storybookjs/storybook/pull/12719))
+
+### Dependency Upgrades
+
+- Upgrade babel-plugin-react-docgen ([#12748](https://github.com/storybookjs/storybook/pull/12748))
+
+## 6.1.0-alpha.28 (October 23, 2020)
+
+### Bug Fixes
+
+- Core: Disable Docs DLL by default ([#12874](https://github.com/storybookjs/storybook/pull/12874))
+- Essentials: Fix absolute config dir ([#12873](https://github.com/storybookjs/storybook/pull/12873))
+- UI: Add close button to version update notification ([#12320](https://github.com/storybookjs/storybook/pull/12320))
+
+### Maintenance
+
+- UI: Add fullscreen mode to docs ([#12861](https://github.com/storybookjs/storybook/pull/12861))
+
+### Dependency Upgrades
+
+- Angular: Update TypeScript peerDep version to support Angular 11 ([#12866](https://github.com/storybookjs/storybook/pull/12866))
+
 ## 6.1.0-alpha.27 (October 19, 2020)
 
 ### Features
 
-* Addon-docs: Dynamic source rendering for Vue ([#12812](https://github.com/storybookjs/storybook/pull/12812))
+- Addon-docs: Dynamic source rendering for Vue ([#12812](https://github.com/storybookjs/storybook/pull/12812))
 
 ### Bug Fixes
 
-* Core: Pass framework options as global ([#12810](https://github.com/storybookjs/storybook/pull/12810))
+- Core: Pass framework options as global ([#12810](https://github.com/storybookjs/storybook/pull/12810))
 
 ### Maintenance
 
-* CLI: Clean up handling of unknown subcommands ([#12799](https://github.com/storybookjs/storybook/pull/12799))
+- CLI: Clean up handling of unknown subcommands ([#12799](https://github.com/storybookjs/storybook/pull/12799))
 
 ## 6.1.0-alpha.26 (October 18, 2020)
 

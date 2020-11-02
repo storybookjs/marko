@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-a11y",
-  "version": "6.1.0-alpha.27",
+  "version": "6.1.0-alpha.35",
   "description": "a11y addon for storybook",
   "keywords": [
     "a11y",
@@ -33,23 +33,23 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-alpha.27",
-    "@storybook/api": "6.1.0-alpha.27",
-    "@storybook/channels": "6.1.0-alpha.27",
-    "@storybook/client-api": "6.1.0-alpha.27",
-    "@storybook/client-logger": "6.1.0-alpha.27",
-    "@storybook/components": "6.1.0-alpha.27",
-    "@storybook/core-events": "6.1.0-alpha.27",
-    "@storybook/theming": "6.1.0-alpha.27",
+    "@storybook/addons": "6.1.0-alpha.35",
+    "@storybook/api": "6.1.0-alpha.35",
+    "@storybook/channels": "6.1.0-alpha.35",
+    "@storybook/client-api": "6.1.0-alpha.35",
+    "@storybook/client-logger": "6.1.0-alpha.35",
+    "@storybook/components": "6.1.0-alpha.35",
+    "@storybook/core-events": "6.1.0-alpha.35",
+    "@storybook/theming": "6.1.0-alpha.35",
     "axe-core": "^4.0.1",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "lodash": "^4.17.15",
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3",
+    "react": "^16.8.3 || ^17.0.0",
+    "react-dom": "^16.8.3 || ^17.0.0",
     "react-sizeme": "^2.5.2",
-    "regenerator-runtime": "^0.13.3",
-    "ts-dedent": "^1.1.1",
+    "regenerator-runtime": "^0.13.7",
+    "ts-dedent": "^2.0.0",
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
@@ -59,7 +59,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "0bbd3237844572f749beb5ed845be83ccbbea85a",
+  "gitHead": "76bb5211363a4259b9962590a3a5e62a00921b91",
   "typesVersions": {
     "<3.8": {
       "*": [

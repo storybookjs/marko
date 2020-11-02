@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-events",
-  "version": "6.1.0-alpha.27",
+  "version": "6.1.0-alpha.35",
   "description": "Add events to your Storybook stories.",
   "keywords": [
     "addon",
@@ -31,20 +31,20 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-alpha.27",
-    "@storybook/api": "6.1.0-alpha.27",
-    "@storybook/client-api": "6.1.0-alpha.27",
-    "@storybook/core-events": "6.1.0-alpha.27",
-    "@storybook/theming": "6.1.0-alpha.27",
+    "@storybook/addons": "6.1.0-alpha.35",
+    "@storybook/api": "6.1.0-alpha.35",
+    "@storybook/client-api": "6.1.0-alpha.35",
+    "@storybook/core-events": "6.1.0-alpha.35",
+    "@storybook/theming": "6.1.0-alpha.35",
     "core-js": "^3.0.1",
     "format-json": "^1.0.3",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3",
+    "react": "^16.8.3 || ^17.0.0",
+    "react-dom": "^16.8.3 || ^17.0.0",
     "react-lifecycles-compat": "^3.0.4",
     "react-textarea-autosize": "^8.1.1",
-    "regenerator-runtime": "^0.13.3"
+    "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
     "@types/webpack-env": "^1.15.2"
@@ -52,7 +52,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "0bbd3237844572f749beb5ed845be83ccbbea85a",
+  "gitHead": "76bb5211363a4259b9962590a3a5e62a00921b91",
   "typesVersions": {
     "<3.8": {
       "*": [

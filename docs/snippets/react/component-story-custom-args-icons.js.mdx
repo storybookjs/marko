@@ -1,0 +1,31 @@
+```js
+// YourComponent.stories.js
+
+import React from 'react';
+
+import { YourComponent } from './your-component'
+import { IconA, IconB, IconC, IconD, IconE } from './icons';
+
+// Maps the icons to a JSON serializable object to be safely used with the argTypes
+const iconMap = {IconA, IconB, IconC, IconD, IconE };
+
+export default {
+  component: YourComponent,
+  title:'My Story with Icons',
+  argTypes: {
+    // creates a specific argType based on the iconMap object
+    icon: {
+      control: {
+        type: 'select',
+        options: Object.keys(iconMap),
+      },
+    },
+  },
+};
+
+const Template = ({ icon, ...rest }) => {
+  // retrieves the appropriate icon passes it as a component prop
+  const selectedIcon = iconMap[icon];
+  return <YourComponent icon={selectedIcon} {...rest}/>;
+};
+```

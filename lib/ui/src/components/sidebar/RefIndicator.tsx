@@ -235,7 +235,7 @@ const ReadyMessage: FunctionComponent<{
   componentCount: number;
   leafCount: number;
 }> = ({ url, componentCount, leafCount }) => (
-  <Message href={url} target="_blank">
+  <Message href={url.replace(/\/?$/, '/index.html')} target="_blank">
     <BlueIcon icon="globe" />
     <div>
       <MessageTitle>View external Storybook</MessageTitle>
@@ -284,7 +284,7 @@ const ReadDocsMessage: FunctionComponent = () => (
 );
 
 const ErrorOccurredMessage: FunctionComponent<{ url: string }> = ({ url }) => (
-  <Message href={url} target="_blank">
+  <Message href={url.replace(/\/?$/, '/index.html')} target="_blank">
     <RedIcon icon="alert" />
     <div>
       <MessageTitle>Something went wrong</MessageTitle>
@@ -294,7 +294,7 @@ const ErrorOccurredMessage: FunctionComponent<{ url: string }> = ({ url }) => (
 );
 
 const LoadingMessage: FunctionComponent<{ url: string }> = ({ url }) => (
-  <Message href={url} target="_blank">
+  <Message href={url.replace(/\/?$/, '/index.html')} target="_blank">
     <BlueIcon icon="time" />
     <div>
       <MessageTitle>Please wait</MessageTitle>

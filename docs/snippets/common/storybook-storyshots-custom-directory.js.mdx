@@ -1,5 +1,5 @@
 ```js
-// storybook.text.js
+// storybook.test.js
 
 import path from 'path';
 
@@ -18,7 +18,6 @@ const getMatchOptions = ({ context: { fileName }}) => {
 initStoryshots({
     // your own configuration
     test: imageSnapshot({
-        // 
         // invoke the function above here
         getMatchOptions
     })
