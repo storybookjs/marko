@@ -51,12 +51,18 @@
     "@babel/core": "^7.9.6",
     "@storybook/vue": "6.1.0-beta.0",
     "babel-loader": "^8.0.0",
-    "react": "^16.8.3 || ^17.0.0",
-    "react-dom": "^16.8.3 || ^17.0.0",
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0",
     "webpack": ">=4"
   },
   "peerDependenciesMeta": {
     "@storybook/vue": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
       "optional": true
     },
     "webpack": {

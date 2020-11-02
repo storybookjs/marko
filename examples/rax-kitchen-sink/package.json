@@ -36,8 +36,6 @@
     "@storybook/theming": "6.1.0-beta.0",
     "babel-eslint": "^10.0.3",
     "build-plugin-rax-app": "^0.2.0",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
     "stylesheet-loader": "^0.8.0"
   },
   "storybook": {

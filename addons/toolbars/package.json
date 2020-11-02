@@ -37,8 +37,16 @@
     "core-js": "^3.0.1"
   },
   "peerDependencies": {
-    "react": "15 || 16 || ^17.0.0",
-    "react-dom": "15 || 16 || ^17.0.0"
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
   },
   "publishConfig": {
     "access": "public"
