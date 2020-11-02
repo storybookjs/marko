@@ -1,4 +1,5 @@
-import { StoriesHash } from '@storybook/api';
+import { StoriesHash, useStorybookApi } from '@storybook/api';
+import { STORIES_COLLAPSE_ALL, STORIES_EXPAND_ALL } from '@storybook/core-events';
 import { document } from 'global';
 import throttle from 'lodash/throttle';
 import React, { Dispatch, MutableRefObject, useCallback, useEffect, useReducer } from 'react';
@@ -51,6 +52,8 @@ export const useExpanded = ({
   selectedStoryId,
   onSelectStoryId,
 }: ExpandedProps): [Record<string, boolean>, Dispatch<ExpandAction>] => {
+  const api = useStorybookApi();
+
   // Track the set of currently expanded nodes within this tree.
   // Root nodes are expanded by default (and cannot be collapsed).
   const [expanded, setExpanded] = useReducer<
@@ -81,6 +84,23 @@ export const useExpanded = ({
   useEffect(() => {
     setExpanded({ ids: getAncestorIds(data, selectedStoryId), value: true });
   }, [data, selectedStoryId]);
+
+  const collapseAll = useCallback(() => {
+    setExpanded({ ids: Object.keys(data), value: false });
+  }, [data]);
+  const expandAll = useCallback(() => {
+    setExpanded({ ids: Object.keys(data), value: true });
+  }, [data]);
+
+  useEffect(() => {
+    api.on(STORIES_COLLAPSE_ALL, collapseAll);
+    api.on(STORIES_EXPAND_ALL, expandAll);
+
+    return () => {
+      api.off(STORIES_COLLAPSE_ALL, collapseAll);
+      api.off(STORIES_EXPAND_ALL, expandAll);
+    };
+  }, [api, collapseAll, expandAll]);
 
   // Expand, collapse or select nodes in the tree using keyboard shortcuts.
   useEffect(() => {
