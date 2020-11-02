@@ -39,6 +39,8 @@
     "core-js": "^3.0.1",
     "driver-dom": "^2.0.0",
     "global": "^4.3.2",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
@@ -47,9 +49,7 @@
   },
   "peerDependencies": {
     "@babel/core": "*",
-    "rax": "^0.4.0 || ^1.0.0",
-    "react": "15 || 16 || ^17.0.0",
-    "react-dom": "15 || 16 || ^17.0.0"
+    "rax": "^0.4.0 || ^1.0.0"
   },
   "publishConfig": {
     "access": "public"

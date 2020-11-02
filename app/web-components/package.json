@@ -46,6 +46,8 @@
     "babel-plugin-bundled-import-meta": "^0.3.1",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
@@ -55,9 +57,7 @@
   "peerDependencies": {
     "@babel/core": "*",
     "babel-loader": "^7.0.0 || ^8.0.0",
-    "lit-html": "^1.0.0",
-    "react": "15 || 16 || ^17.0.0",
-    "react-dom": "15 || 16 || ^17.0.0"
+    "lit-html": "^1.0.0"
   },
   "engines": {
     "node": ">=8.0.0"

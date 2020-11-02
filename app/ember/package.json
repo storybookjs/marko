@@ -35,6 +35,8 @@
     "@storybook/core": "6.1.0-alpha.35",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
@@ -42,9 +44,7 @@
     "@babel/core": "*",
     "babel-plugin-ember-modules-api-polyfill": "^2.12.0",
     "babel-plugin-htmlbars-inline-precompile": "2 || 3",
-    "ember-source": "^3.16.0",
-    "react": "15 || 16 || ^17.0.0",
-    "react-dom": "15 || 16 || ^17.0.0"
+    "ember-source": "^3.16.0"
   },
   "engines": {
     "node": ">=8.0.0"
