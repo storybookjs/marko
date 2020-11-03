@@ -51,9 +51,7 @@
   },
   "devDependencies": {
     "css": "^3.0.0",
-    "enzyme": "^3.9.0",
-    "jest": "^26.0.0",
-    "jest-enzyme": "^7.0.2"
+    "jest": "^26.0.0"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
