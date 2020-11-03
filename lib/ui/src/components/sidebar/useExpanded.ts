@@ -41,6 +41,8 @@ const initializeExpanded = ({
   );
 };
 
+const noop = () => {};
+
 export const useExpanded = ({
   containerRef,
   isBrowsing,
@@ -93,6 +95,8 @@ export const useExpanded = ({
   }, [data]);
 
   useEffect(() => {
+    if (!api) return noop;
+
     api.on(STORIES_COLLAPSE_ALL, collapseAll);
     api.on(STORIES_EXPAND_ALL, expandAll);
 
