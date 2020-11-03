@@ -43,9 +43,7 @@
     "memoizerific": "^1.11.3",
     "overlayscrollbars": "^1.10.2",
     "polished": "^3.4.4",
-    "react": "^16.8.3 || ^17.0.0",
     "react-color": "^2.17.0",
-    "react-dom": "^16.8.3 || ^17.0.0",
     "react-popper-tooltip": "^3.1.0",
     "react-syntax-highlighter": "^13.5.0",
     "react-textarea-autosize": "^8.1.1",
@@ -56,6 +54,10 @@
     "enzyme": "^3.9.0",
     "jest": "^26.0.0",
     "jest-enzyme": "^7.0.2"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0"
   },
   "publishConfig": {
     "access": "public"

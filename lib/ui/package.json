@@ -50,8 +50,6 @@
     "memoizerific": "^1.11.3",
     "polished": "^3.4.4",
     "qs": "^6.6.0",
-    "react": "^16.8.3 || ^17.0.0",
-    "react-dom": "^16.8.3 || ^17.0.0",
     "react-draggable": "^4.0.3",
     "react-helmet-async": "^1.0.2",
     "react-hotkeys": "2.0.0",
@@ -72,6 +70,10 @@
     "flush-promises": "^1.0.2",
     "terser-webpack-plugin": "^3.0.0",
     "webpack": "^4.33.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0"
   },
   "publishConfig": {
     "access": "public"

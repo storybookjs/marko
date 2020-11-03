@@ -40,10 +40,20 @@
     "graphiql": "^0.17.5",
     "graphql": "^15.0.0",
     "prop-types": "^15.7.2",
-    "react": "^16.8.3 || ^17.0.0",
-    "react-dom": "^16.8.3 || ^17.0.0",
     "regenerator-runtime": "^0.13.7",
     "webpack": "^4.43.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
   },
   "publishConfig": {
     "access": "public"

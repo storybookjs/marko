@@ -32,8 +32,8 @@
     "jest-emotion": "^10.0.17",
     "paths.macro": "^2.0.2",
     "prop-types": "^15.7.2",
-    "react": "^16.8.3 || ^17.0.0",
-    "react-dom": "^16.8.3 || ^17.0.0",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
     "ts-loader": "^6.2.0",
     "uuid": "^8.0.0",
     "webpack": "^4.33.0"
