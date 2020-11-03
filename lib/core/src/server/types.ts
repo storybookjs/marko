@@ -2,6 +2,9 @@ import { Configuration, Stats } from 'webpack';
 import { TransformOptions } from '@babel/core';
 import { typeScriptDefaults } from './config/defaults';
 
+/**
+ * ⚠️ This file contains internal WIP types they MUST NOT be exported outside this package for now!
+ */
 export interface ManagerWebpackOptions {
   configDir: any;
   configType?: string;
