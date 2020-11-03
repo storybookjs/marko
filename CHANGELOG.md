@@ -1,3 +1,10 @@
+## 6.1.0-beta.0 (November 3, 2020)
+
+### Maintenance
+
+- Build: Relax react deps for preview-wrapper-react ([#12988](https://github.com/storybookjs/storybook/pull/12988))
+- Build: Run storybook in react@17 ([#12978](https://github.com/storybookjs/storybook/pull/12978))
+
 ## 6.1.0-alpha.35 (November 2, 2020)
 
 ### Maintenance

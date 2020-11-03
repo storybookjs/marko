@@ -1,1 +1,1 @@
-{"version":"6.1.0-alpha.35","info":{"plain":"### Maintenance\n\n- Build: Fix bootstrap reset command ([#12976](https://github.com/storybookjs/storybook/pull/12976))\n- Core: Remove webpack DLLs ([#12975](https://github.com/storybookjs/storybook/pull/12975))"}}
+{"version":"6.1.0-beta.0","info":{"plain":"### Maintenance\n\n- Build: Relax react deps for preview-wrapper-react ([#12988](https://github.com/storybookjs/storybook/pull/12988))\n- Build: Run storybook in react@17 ([#12978](https://github.com/storybookjs/storybook/pull/12978))"}}
