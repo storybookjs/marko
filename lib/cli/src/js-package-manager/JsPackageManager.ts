@@ -187,14 +187,13 @@ export abstract class JsPackageManager {
     preCommand?: string;
   }) {
     const sbPort = options?.port ?? 6006;
-    const noDll = '--no-dll';
     const storybookCmd = options?.staticFolder
-      ? `start-storybook -p ${sbPort} -s ${options.staticFolder} ${noDll}`
-      : `start-storybook -p ${sbPort} ${noDll}`;
+      ? `start-storybook -p ${sbPort} -s ${options.staticFolder}`
+      : `start-storybook -p ${sbPort}`;
 
     const buildStorybookCmd = options?.staticFolder
-      ? `build-storybook -s ${options.staticFolder} ${noDll}`
-      : `build-storybook ${noDll}`;
+      ? `build-storybook -s ${options.staticFolder}`
+      : `build-storybook`;
 
     const preCommand = options.preCommand ? this.getRunCommand(options.preCommand) : undefined;
     this.addScripts({

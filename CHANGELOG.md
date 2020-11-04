@@ -1,3 +1,34 @@
+## 6.1.0-beta.2 (November 4, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Hide React default props in source block ([#13003](https://github.com/storybookjs/storybook/pull/13003))
+- Addon-docs: Angular empty string now infers to "string" instead of "void" ([#12994](https://github.com/storybookjs/storybook/pull/12994))
+
+### Maintenance
+
+- Components: Add outline icon ([#13002](https://github.com/storybookjs/storybook/pull/13002))
+- Core: Migrate core to TypeScript ([#12839](https://github.com/storybookjs/storybook/pull/12839))
+- Addon-docs: Exclude testfixtures from package ([#12998](https://github.com/storybookjs/storybook/pull/12998))
+
+## 6.1.0-beta.1 (November 3, 2020)
+
+### Bug Fixes
+
+- Components: react-syntaxt-highlighter optimization ([#12948](https://github.com/storybookjs/storybook/pull/12948))
+
+### Maintenance
+
+- Build: Replace enzyme with react-test-library ([#12990](https://github.com/storybookjs/storybook/pull/12990))
+- Core: Move `react` and `react-dom` to peer deps ([#12972](https://github.com/storybookjs/storybook/pull/12972))
+
+## 6.1.0-beta.0 (November 3, 2020)
+
+### Maintenance
+
+- Build: Relax react deps for preview-wrapper-react ([#12988](https://github.com/storybookjs/storybook/pull/12988))
+- Build: Run storybook in react@17 ([#12978](https://github.com/storybookjs/storybook/pull/12978))
+
 ## 6.1.0-alpha.35 (November 2, 2020)
 
 ### Maintenance

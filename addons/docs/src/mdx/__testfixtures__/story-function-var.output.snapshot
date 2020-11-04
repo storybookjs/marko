@@ -1,7 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`docs-mdx-compiler-plugin story-function-var.mdx 1`] = `
-"/* @jsx mdx */
+"/* @jsxRuntime classic */
+/* @jsx mdx */
 import { assertIsFn, AddContext } from '@storybook/addon-docs/blocks';
 
 import { Meta, Story } from '@storybook/addon-docs/blocks';
