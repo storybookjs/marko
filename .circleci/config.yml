@@ -155,7 +155,7 @@ jobs:
             - built-storybooks
   publish:
     executor:
-      class: xlarge
+      class: large
       name: sb_node
     steps:
       - checkout
