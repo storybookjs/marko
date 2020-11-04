@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-docs",
-  "version": "6.1.0-beta.1",
+  "version": "6.1.0-beta.2",
   "description": "Superior documentation for your components",
   "keywords": [
     "addon",
@@ -32,7 +32,8 @@
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.4/**/*"
+    "ts3.4/**/*",
+    "!__testfixtures__"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
@@ -47,18 +48,18 @@
     "@mdx-js/loader": "^1.6.19",
     "@mdx-js/mdx": "^1.6.19",
     "@mdx-js/react": "^1.6.19",
-    "@storybook/addons": "6.1.0-beta.1",
-    "@storybook/api": "6.1.0-beta.1",
-    "@storybook/client-api": "6.1.0-beta.1",
-    "@storybook/client-logger": "6.1.0-beta.1",
-    "@storybook/components": "6.1.0-beta.1",
-    "@storybook/core": "6.1.0-beta.1",
-    "@storybook/core-events": "6.1.0-beta.1",
+    "@storybook/addons": "6.1.0-beta.2",
+    "@storybook/api": "6.1.0-beta.2",
+    "@storybook/client-api": "6.1.0-beta.2",
+    "@storybook/client-logger": "6.1.0-beta.2",
+    "@storybook/components": "6.1.0-beta.2",
+    "@storybook/core": "6.1.0-beta.2",
+    "@storybook/core-events": "6.1.0-beta.2",
     "@storybook/csf": "0.0.1",
-    "@storybook/node-logger": "6.1.0-beta.1",
-    "@storybook/postinstall": "6.1.0-beta.1",
-    "@storybook/source-loader": "6.1.0-beta.1",
-    "@storybook/theming": "6.1.0-beta.1",
+    "@storybook/node-logger": "6.1.0-beta.2",
+    "@storybook/postinstall": "6.1.0-beta.2",
+    "@storybook/source-loader": "6.1.0-beta.2",
+    "@storybook/theming": "6.1.0-beta.2",
     "acorn": "^7.1.0",
     "acorn-jsx": "^5.1.0",
     "acorn-walk": "^7.0.0",
@@ -84,9 +85,9 @@
     "@babel/core": "^7.12.3",
     "@emotion/core": "^10.0.20",
     "@emotion/styled": "^10.0.17",
-    "@storybook/react": "6.1.0-beta.1",
-    "@storybook/vue": "6.1.0-beta.1",
-    "@storybook/web-components": "6.1.0-beta.1",
+    "@storybook/react": "6.1.0-beta.2",
+    "@storybook/vue": "6.1.0-beta.2",
+    "@storybook/web-components": "6.1.0-beta.2",
     "@types/cross-spawn": "^6.0.1",
     "@types/doctrine": "^0.0.3",
     "@types/enzyme": "^3.10.3",
@@ -115,7 +116,7 @@
   },
   "peerDependencies": {
     "@babel/core": "^7.11.5",
-    "@storybook/vue": "6.1.0-beta.1",
+    "@storybook/vue": "6.1.0-beta.2",
     "babel-loader": "^8.0.0",
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0",
@@ -146,7 +147,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "763c233efc86849979db1c4c795035bd58f1ced9",
+  "gitHead": "c67dac2e088847d96e3cfa427432a1b04d4c4389",
   "typesVersions": {
     "<3.8": {
       "*": [

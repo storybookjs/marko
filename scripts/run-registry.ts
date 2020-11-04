@@ -108,6 +108,8 @@ const currentVersion = async () => {
 };
 
 const publish = (packages: { name: string; location: string }[], url: string) => {
+  logger.log(`Publishing packages with a concurrency of ${maxConcurrentTasks}`);
+
   const limit = pLimit(maxConcurrentTasks);
   let i = 0;
 
