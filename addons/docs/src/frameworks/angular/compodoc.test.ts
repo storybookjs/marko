@@ -12,7 +12,6 @@ describe('extractType', () => {
   describe('with compodoc type', () => {
     it.each([
       ['string', { name: 'string' }],
-      ['', { name: 'string' }],
       ['boolean', { name: 'boolean' }],
       ['number', { name: 'number' }],
       ['object', { name: 'object' }],
@@ -30,6 +29,7 @@ describe('extractType', () => {
   describe('without compodoc type', () => {
     it.each([
       ['string', { name: 'string' }],
+      ['', { name: 'string' }],
       [false, { name: 'boolean' }],
       [10, { name: 'number' }],
       [['abc'], { name: 'object' }],
