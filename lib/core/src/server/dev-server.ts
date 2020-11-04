@@ -152,13 +152,9 @@ const useProgressReporting = async (
     response.setHeader('Connection', 'keep-alive');
     response.flushHeaders();
 
-    const close = () => response.end();
-    response.on('close', close);
-
     reportProgress = (progress: any) => {
       if (response.writableEnded) return;
       response.write(`data: ${JSON.stringify(progress)}\n\n`);
-      if (progress.value === 1) close();
     };
   });
 
