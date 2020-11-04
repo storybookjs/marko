@@ -19,7 +19,6 @@ const baseAngular: Parameters = {
     `yarn add @angular/cli@{{version}} --no-lockfile --non-interactive --silent --no-progress`,
     `yarn ng new {{name}}-{{version}} --routing=true --minimal=true --style=scss --skipInstall=true --strict`,
   ].join(' && '),
-  additionalDeps: ['react', 'react-dom'],
 };
 
 // export const angularv6: Parameters = {
@@ -44,7 +43,7 @@ const baseAngular: Parameters = {
 export const angularv9: Parameters = {
   ...baseAngular,
   version: 'v9-lts',
-  additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
+  additionalDeps: ['core-js'],
 };
 
 export const angular: Parameters = baseAngular;
@@ -63,7 +62,6 @@ export const html: Parameters = {
   version: 'latest',
   generator: fromDeps(),
   autoDetect: false,
-  additionalDeps: ['react', 'react-dom'],
 };
 
 // TODO: broken
@@ -95,7 +93,6 @@ export const mithril: Parameters = {
   name: 'mithril',
   version: 'latest',
   generator: fromDeps('mithril@{{version}}'),
-  additionalDeps: ['react', 'react-dom'],
 };
 
 export const preact: Parameters = {
@@ -111,7 +108,6 @@ export const rax: Parameters = {
   version: 'latest',
   // Rax versions are inconsistent 1.1.0-1 for some
   generator: fromDeps('rax', 'rax-image', 'rax-link', 'rax-text', 'rax-view'),
-  additionalDeps: ['react', 'react-dom'],
 };
 
 export const react: Parameters = {
@@ -123,7 +119,7 @@ export const react: Parameters = {
 export const react_typescript: Parameters = {
   name: 'react_typescript',
   version: 'latest',
-  generator: fromDeps('react'),
+  generator: fromDeps('react', 'react-dom'),
   typescript: true,
 };
 
@@ -162,8 +158,6 @@ export const sfcVue: Parameters = {
   version: 'latest',
   generator: fromDeps('vue', 'vue-loader', 'vue-template-compiler'),
   additionalDeps: [
-    'react',
-    'react-dom',
     'webpack@webpack-4',
     // TODO: remove when https://github.com/storybookjs/storybook/issues/11255 is solved
     'core-js',
@@ -174,21 +168,18 @@ export const svelte: Parameters = {
   name: 'svelte',
   version: 'latest',
   generator: 'npx degit sveltejs/template {{name}}-{{version}}',
-  additionalDeps: ['react', 'react-dom'],
 };
 
 export const vue: Parameters = {
   name: 'vue',
   version: 'latest',
   generator: `npx @vue/cli@{{version}} create {{name}}-{{version}} --default --packageManager=yarn --no-git --force`,
-  additionalDeps: ['react', 'react-dom'],
 };
 
 export const web_components: Parameters = {
   name: 'web_components',
   version: 'latest',
   generator: fromDeps('lit-html', 'lit-element'),
-  additionalDeps: ['react', 'react-dom'],
 };
 
 export const webpack_react: Parameters = {

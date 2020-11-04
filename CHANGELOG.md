@@ -1,3 +1,21 @@
+## 6.1.0-beta.1 (November 3, 2020)
+
+### Bug Fixes
+
+- Components: react-syntaxt-highlighter optimization ([#12948](https://github.com/storybookjs/storybook/pull/12948))
+
+### Maintenance
+
+- Build: Replace enzyme with react-test-library ([#12990](https://github.com/storybookjs/storybook/pull/12990))
+- Core: Move `react` and `react-dom` to peer deps ([#12972](https://github.com/storybookjs/storybook/pull/12972))
+
+## 6.1.0-beta.0 (November 3, 2020)
+
+### Maintenance
+
+- Build: Relax react deps for preview-wrapper-react ([#12988](https://github.com/storybookjs/storybook/pull/12988))
+- Build: Run storybook in react@17 ([#12978](https://github.com/storybookjs/storybook/pull/12978))
+
 ## 6.1.0-alpha.35 (November 2, 2020)
 
 ### Maintenance

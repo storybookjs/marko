@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import range from 'lodash/range';
+import PropTypes from 'prop-types';
 import addons, { StoryContext } from '@storybook/addons';
 import { renderJsx, jsxDecorator } from './jsxDecorator';
 import { SNIPPET_RENDERED } from '../../shared';
@@ -129,6 +130,27 @@ describe('renderJsx', () => {
       <MyMemoComponent>
         I'm memo!
       </MyMemoComponent>
+    `);
+  });
+
+  it('should not add default props to string if the prop value has not changed', () => {
+    const Container = ({ className, children }: { className: string; children: string }) => {
+      return <div className={className}>{children}</div>;
+    };
+
+    Container.propTypes = {
+      children: PropTypes.string.isRequired,
+      className: PropTypes.string,
+    };
+
+    Container.defaultProps = {
+      className: 'super-container',
+    };
+
+    expect(renderJsx(<Container>yo dude</Container>, {})).toMatchInlineSnapshot(`
+      <div>
+        yo dude
+      </div>
     `);
   });
 });
