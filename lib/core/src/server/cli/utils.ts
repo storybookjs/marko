@@ -29,7 +29,7 @@ export function checkDeprecatedFlags(options: {
   uiDll?: boolean;
   docsDll?: boolean;
 }) {
-  if (options.dll || options.uiDll || options.docsDll) {
+  if (!options.dll || options.uiDll || options.docsDll) {
     warnDLLsDeprecated();
   }
 }
