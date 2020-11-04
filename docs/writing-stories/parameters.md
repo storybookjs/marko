@@ -79,4 +79,4 @@ The way the global, component and story parameters are combined is:
 
 The merging of parameters is important. It means it is possible to override a single specific sub-parameter on a per-story basis but still retain the majority of the parameters defined globally.
 
-If you are defining an API that relies on parameters (e..g an [**addon**](../api/addons.md)) it is a good idea to take this behavior into account.
+If you are defining an API that relies on parameters (e.g. an [**addon**](../api/addons.md)) it is a good idea to take this behavior into account.
