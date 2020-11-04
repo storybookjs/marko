@@ -12,6 +12,7 @@ describe('extractType', () => {
   describe('with compodoc type', () => {
     it.each([
       ['string', { name: 'string' }],
+      ['', { name: 'string' }],
       ['boolean', { name: 'boolean' }],
       ['number', { name: 'number' }],
       ['object', { name: 'object' }],

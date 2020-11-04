@@ -1,7 +1,6 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
-import { SyntaxHighlighter } from '@storybook/components';
 import { STORY_RENDERED } from '@storybook/core-events';
 import { ThemeProvider, themes, convert } from '@storybook/theming';
 import { API } from '@storybook/api';

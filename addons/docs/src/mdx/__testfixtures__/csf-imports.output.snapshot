@@ -1,23 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`docs-mdx-compiler-plugin csf-imports.mdx 1`] = `
-"/* @jsx mdx */
+"/* @jsxRuntime classic */
+/* @jsx mdx */
 import { assertIsFn, AddContext } from '@storybook/addon-docs/blocks';
 
 import { Story, Meta, Canvas } from '@storybook/addon-docs/blocks';
 import { Welcome, Button } from '@storybook/angular/demo';
 import * as MyStories from './My.stories';
 import { Other } from './Other.stories';
-
-const makeShortcode = (name) =>
-  function MDXDefaultShortcode(props) {
-    console.warn(
-      'Component ' +
-        name +
-        ' was not imported, exported, or provided by MDXProvider as global scope'
-    );
-    return <div {...props} />;
-  };
 
 const layoutProps = {};
 const MDXLayout = 'wrapper';
