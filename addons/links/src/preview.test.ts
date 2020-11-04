@@ -1,7 +1,7 @@
 import addons from '@storybook/addons';
 import { SELECT_STORY } from '@storybook/core-events';
 
-import { __STORYBOOK_STORY_STORE__ } from 'global';
+import { __STORYBOOK_STORY_STORE__, global } from 'global';
 import { linkTo, hrefTo } from './preview';
 
 jest.mock('@storybook/addons');

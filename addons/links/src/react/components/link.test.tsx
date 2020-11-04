@@ -3,6 +3,7 @@ import addons from '@storybook/addons';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { SELECT_STORY } from '@storybook/core-events';
+import { global } from 'global';
 import LinkTo from './link';
 
 jest.mock('@storybook/addons');
