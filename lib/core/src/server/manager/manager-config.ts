@@ -81,24 +81,33 @@ async function getManagerWebpackConfig(
   const typescriptOptions = await presets.apply('typescript', { ...typeScriptDefaults }, options);
   const babelOptions = await presets.apply('babel', {}, { ...options, typescriptOptions });
 
-  const definedRefs: Record<string, any> = await presets.apply('refs', undefined, options);
-  const disabledRefs = Object.entries(definedRefs)
-    .filter(([key, value]) => {
-      const { disable, disabled } = value;
+  const definedRefs: Record<string, any> | undefined = await presets.apply(
+    'refs',
+    undefined,
+    options
+  );
 
-      if (disable || disabled) {
-        if (disabled) {
-          deprecatedDefinedRefDisabled();
+  let disabledRefs: string[] = [];
+  if (definedRefs) {
+    disabledRefs = Object.entries(definedRefs)
+      .filter(([key, value]) => {
+        const { disable, disabled } = value;
+
+        if (disable || disabled) {
+          if (disabled) {
+            deprecatedDefinedRefDisabled();
+          }
+
+          delete definedRefs[key]; // Also delete the ref that is disabled in definedRefs
+
+          return true;
         }
 
-        delete definedRefs[key]; // Also delete the ref that is disabled in definedRefs
+        return false;
+      })
+      .map((ref) => ref[0]);
+  }
 
-        return true;
-      }
-
-      return false;
-    })
-    .map((ref) => ref[0]);
   const autoRefs = await getAutoRefs(options, disabledRefs);
   const entries = await presets.apply('managerEntries', [], options);
 
