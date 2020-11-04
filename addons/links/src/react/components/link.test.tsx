@@ -1,9 +1,8 @@
 import React from 'react';
 import addons from '@storybook/addons';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { SELECT_STORY } from '@storybook/core-events';
-import { global } from 'global';
 import LinkTo from './link';
 
 jest.mock('@storybook/addons');
@@ -15,6 +14,7 @@ jest.mock('global', () => ({
       search: 'search',
     },
   },
+  // @ts-ignore
   window: global,
   __STORYBOOK_STORY_STORE__: {
     getSelection: jest.fn(() => ({ id: 1 })),
@@ -37,12 +37,24 @@ describe('LinkTo', () => {
       const channel = mockChannel() as any;
       mockAddons.getChannel.mockReturnValue(channel);
 
-      const { container } = render(<LinkTo kind="foo" story="bar" />);
+      const { container } = render(
+        <LinkTo kind="foo" story="bar">
+          link
+        </LinkTo>
+      );
 
+      await waitFor(() => {
+        expect(screen.getByText('link')).toHaveAttribute(
+          'href',
+          'originpathname?search=&id=foo--bar'
+        );
+      });
       expect(container.firstChild).toMatchInlineSnapshot(`
         <a
-          href="/"
-        />
+          href="originpathname?search=&id=foo--bar"
+        >
+          link
+        </a>
       `);
     });
   });
