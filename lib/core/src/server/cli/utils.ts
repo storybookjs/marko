@@ -25,11 +25,11 @@ const warnDLLsDeprecated = deprecate(
 );
 
 export function checkDeprecatedFlags(options: {
-  dlls?: boolean;
+  dll?: boolean;
   uiDll?: boolean;
   docsDll?: boolean;
 }) {
-  if (!options.dlls || options.uiDll || options.docsDll) {
+  if (!options.dll || options.uiDll || options.docsDll) {
     warnDLLsDeprecated();
   }
 }
