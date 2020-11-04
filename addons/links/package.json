@@ -43,8 +43,7 @@
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
-    "@types/webpack-env": "^1.15.2",
-    "enzyme": "^3.11.0"
+    "@types/webpack-env": "^1.15.2"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",

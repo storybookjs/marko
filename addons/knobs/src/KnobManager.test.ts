@@ -1,4 +1,3 @@
-import { shallow } from 'enzyme';
 import KnobManager from './KnobManager';
 
 jest.mock('global', () => ({
@@ -27,13 +26,14 @@ describe('KnobManager', () => {
         testManager.knobStore = {
           set: jest.fn(),
           update: jest.fn(),
-          get: () => ({
-            defaultValue: 'default value',
-            name: 'foo',
-            type: 'string',
-            value: 'current value',
-          }),
-        };
+          get: () =>
+            ({
+              defaultValue: 'default value',
+              name: 'foo',
+              type: 'string',
+              value: 'current value',
+            } as any),
+        } as any;
       });
 
       it('should return the existing knob value when types match', () => {
@@ -41,7 +41,7 @@ describe('KnobManager', () => {
           name: 'foo',
           type: 'string',
           value: 'default value',
-        };
+        } as any;
         const knob = testManager.knob('foo', defaultKnob);
         expect(knob).toEqual('current value');
         expect(testManager.knobStore.set).not.toHaveBeenCalled();
@@ -53,8 +53,8 @@ describe('KnobManager', () => {
           type: 'string',
           value: 'default value',
           foo: 'foo',
-        };
-        const knob = testManager.knob('foo', defaultKnob);
+        } as any;
+        testManager.knob('foo', defaultKnob);
         expect(testManager.knobStore.update).toHaveBeenCalledWith(
           'foo',
           expect.objectContaining({ foo: 'foo' })
@@ -66,7 +66,7 @@ describe('KnobManager', () => {
           name: 'foo',
           value: true,
           type: 'boolean',
-        };
+        } as any;
         testManager.knob('foo', defaultKnob);
 
         const newKnob = {
@@ -86,9 +86,9 @@ describe('KnobManager', () => {
         testManager.knobStore = {
           set: jest.fn(),
           get: jest.fn(),
-        };
+        } as any;
 
-        testManager.knobStore.get
+        (testManager.knobStore as any).get
           .mockImplementationOnce(() => undefined)
           .mockImplementationOnce(() => 'normal value');
       });
@@ -97,7 +97,7 @@ describe('KnobManager', () => {
         const defaultKnob = {
           name: 'foo',
           value: 'normal value',
-        };
+        } as any;
         testManager.knob('foo', defaultKnob);
 
         const newKnob = {

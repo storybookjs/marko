@@ -1,6 +1,5 @@
 import path from 'path';
-import { mount } from 'enzyme';
-import toJson from 'enzyme-to-json';
+import { render, screen, waitFor } from '@testing-library/react';
 import initStoryshots, { Stories2SnapsConverter } from '../dist';
 import { TIMEOUT, EXPECTED_VALUE } from './required_with_context/Async.stories';
 
@@ -22,19 +21,17 @@ initStoryshots({
       const storyElement = story.render();
 
       // Mount the component
-      let wrapper = mount(storyElement);
+      const { container } = render(storyElement);
 
       // The Async component should not contain the expected value
-      expect(wrapper.find('AsyncTestComponent').contains(EXPECTED_VALUE)).toBe(false);
+      expect(screen.queryByText(EXPECTED_VALUE)).toBeFalsy();
 
       // wait until the "Async" component is updated
-      setTimeout(() => {
-        // Update the wrapper with the changes in the underlying component
-        wrapper = wrapper.update();
-
-        // Assert the expected value and the corresponding snapshot
-        expect(wrapper.find('AsyncTestComponent').contains(EXPECTED_VALUE)).toBe(true);
-        expect(toJson(wrapper)).toMatchSpecificSnapshot(snapshotFilename);
+      setTimeout(async () => {
+        await waitFor(() => {
+          expect(screen.getByText(EXPECTED_VALUE)).toBeInTheDocument();
+          expect(container.firstChild).toMatchSpecificSnapshot(snapshotFilename);
+        });
 
         // finally mark test as done
         done();
