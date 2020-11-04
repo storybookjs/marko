@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-roundtrip",
-  "version": "6.1.0-beta.1",
+  "version": "6.1.0-beta.2",
   "description": "roundtrip addon for storybook",
   "keywords": [
     "addon",
@@ -24,13 +24,13 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-beta.1",
-    "@storybook/api": "6.1.0-beta.1",
-    "@storybook/client-api": "6.1.0-beta.1",
-    "@storybook/client-logger": "6.1.0-beta.1",
-    "@storybook/components": "6.1.0-beta.1",
-    "@storybook/core-events": "6.1.0-beta.1",
-    "@storybook/theming": "6.1.0-beta.1",
+    "@storybook/addons": "6.1.0-beta.2",
+    "@storybook/api": "6.1.0-beta.2",
+    "@storybook/client-api": "6.1.0-beta.2",
+    "@storybook/client-logger": "6.1.0-beta.2",
+    "@storybook/components": "6.1.0-beta.2",
+    "@storybook/core-events": "6.1.0-beta.2",
+    "@storybook/theming": "6.1.0-beta.2",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "react": "^16.8.0 || ^17.0.0",
@@ -39,7 +39,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "763c233efc86849979db1c4c795035bd58f1ced9",
+  "gitHead": "c67dac2e088847d96e3cfa427432a1b04d4c4389",
   "typesVersions": {
     "<3.8": {
       "*": [

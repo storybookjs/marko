@@ -1,3 +1,16 @@
+## 6.1.0-beta.2 (November 4, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Hide React default props in source block ([#13003](https://github.com/storybookjs/storybook/pull/13003))
+- Addon-docs: Angular empty string now infers to "string" instead of "void" ([#12994](https://github.com/storybookjs/storybook/pull/12994))
+
+### Maintenance
+
+- Components: Add outline icon ([#13002](https://github.com/storybookjs/storybook/pull/13002))
+- Core: Migrate core to TypeScript ([#12839](https://github.com/storybookjs/storybook/pull/12839))
+- Addon-docs: Exclude testfixtures from package ([#12998](https://github.com/storybookjs/storybook/pull/12998))
+
 ## 6.1.0-beta.1 (November 3, 2020)
 
 ### Bug Fixes
