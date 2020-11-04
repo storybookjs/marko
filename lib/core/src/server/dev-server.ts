@@ -174,8 +174,9 @@ const useProgressReporting = async (
         totalModules = total;
       }
     }
+
     if (value === 1) {
-      options.cache.set('modulesCount', totalModules);
+      options.cache?.set('modulesCount', totalModules);
       if (!progress.message) {
         progress.message = `Completed in ${printDuration(startTime)}.`;
       }
@@ -183,7 +184,7 @@ const useProgressReporting = async (
     reportProgress(progress);
   };
 
-  const modulesCount = (await options.cache.get('modulesCount')) || 1000;
+  const modulesCount = (await options.cache?.get('modulesCount')) || 1000;
   new ProgressPlugin({ handler, modulesCount }).apply(compiler);
 };
 
@@ -213,14 +214,14 @@ const startManager = async ({
 
     if (options.managerCache) {
       const configString = stringify(managerConfig);
-      const cachedConfig = await options.cache.get('managerConfig');
-      options.cache.set('managerConfig', configString);
+      const cachedConfig = await options.cache?.get('managerConfig');
+      options.cache?.set('managerConfig', configString);
       if (configString === cachedConfig && (await pathExists(outputDir))) {
         logger.info('=> Using cached manager');
         managerConfig = null;
       }
     } else {
-      options.cache.remove('managerConfig');
+      options.cache?.remove('managerConfig');
     }
   }
 

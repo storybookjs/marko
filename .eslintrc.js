@@ -39,6 +39,8 @@ module.exports = {
       rules: {
         'react/prop-types': 'off', // we should use types
         'no-dupe-class-members': 'off', // this is called overloads in typescript
+        'no-unused-expressions': 'off',
+        '@typescript-eslint/no-unused-expressions': 'error',
       },
     },
     {
