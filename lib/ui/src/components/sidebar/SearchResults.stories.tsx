@@ -58,14 +58,18 @@ const recents = stories
 // We need this to prevent react key warnings
 const passKey = (props: any = {}) => ({ key: props.key });
 
-const searching = {
+export const searching = {
   query: 'query',
   results,
   getMenuProps: passKey,
   getItemProps: passKey,
   highlightedIndex: 0,
 };
-const lastViewed = {
+export const noResults = {
+  ...searching,
+  results: [] as any,
+};
+export const lastViewed = {
   query: '',
   results: recents,
   getMenuProps: passKey,
@@ -74,5 +78,7 @@ const lastViewed = {
 };
 
 export const Searching = () => <SearchResults {...searching} />;
+
+export const NoResults = () => <SearchResults {...noResults} />;
 
 export const LastViewed = () => <SearchResults {...lastViewed} />;

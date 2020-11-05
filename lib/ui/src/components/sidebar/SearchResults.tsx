@@ -24,6 +24,16 @@ const ResultRow = styled.li<{ isHighlighted: boolean }>(({ theme, isHighlighted 
   cursor: 'pointer',
 }));
 
+const NoResults = styled.div(({ theme }) => ({
+  marginTop: 20,
+  textAlign: 'center',
+  fontSize: `${theme.typography.size.s2}px`,
+  color: theme.color.defaultText,
+  small: {
+    color: theme.barTextColor,
+  },
+}));
+
 const Mark = styled.mark(({ theme }) => ({
   background: 'transparent',
   color: theme.color.secondary,
@@ -131,6 +141,15 @@ export const SearchResults: FunctionComponent<{
       {results.length > 0 && !query && (
         <li>
           <RootNode>Recently opened</RootNode>
+        </li>
+      )}
+      {results.length === 0 && query && (
+        <li>
+          <NoResults>
+            <strong>No components found</strong>
+            <br />
+            <small>Find components by name or path.</small>
+          </NoResults>
         </li>
       )}
       {results.map((result: DownshiftItem, index) => {
