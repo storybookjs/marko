@@ -31,7 +31,7 @@
     "@storybook/marko": "6.1.0-beta.2",
     "@storybook/source-loader": "6.1.0-beta.2",
     "prettier": "~2.0.5",
-    "webpack": "^4.33.0"
+    "webpack": "^4.44.2"
   },
   "storybook": {
     "chromatic": {

@@ -55,7 +55,7 @@
     "@types/react-color": "^3.0.1",
     "@types/react-lifecycles-compat": "^3.0.1",
     "@types/react-select": "^3.0.12",
-    "@types/webpack-env": "^1.15.2",
+    "@types/webpack-env": "^1.15.3",
     "enzyme": "^3.11.0"
   },
   "peerDependencies": {

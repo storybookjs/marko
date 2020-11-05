@@ -6711,10 +6711,15 @@
     "@types/serve-static" "*"
     "@types/webpack" "*"
 
-"@types/webpack-env@^1.15.1", "@types/webpack-env@^1.15.2":
+"@types/webpack-env@^1.15.1":
   version "1.15.2"
   resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.15.2.tgz#927997342bb9f4a5185a86e6579a0a18afc33b0a"
   integrity sha512-67ZgZpAlhIICIdfQrB5fnDvaKFcDxpKibxznfYRVAT4mQE41Dido/3Ty+E3xGBmTogc5+0Qb8tWhna+5B8z1iQ==
+
+"@types/webpack-env@^1.15.3":
+  version "1.15.3"
+  resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.15.3.tgz#fb602cd4c2f0b7c0fb857e922075fdf677d25d84"
+  integrity sha512-5oiXqR7kwDGZ6+gmzIO2lTC+QsriNuQXZDWNYRV3l2XRN/zmPgnC21DLSx2D05zvD8vnXW6qUg7JnXZ4I6qLVQ==
 
 "@types/webpack-hot-middleware@^2.25.3":
   version "2.25.3"
@@ -6752,10 +6757,22 @@
     "@types/webpack-sources" "*"
     source-map "^0.6.0"
 
-"@types/webpack@^4.41.12", "@types/webpack@^4.41.13", "@types/webpack@^4.41.8", "@types/webpack@^4.41.9":
+"@types/webpack@^4.41.13", "@types/webpack@^4.41.8":
   version "4.41.13"
   resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.41.13.tgz#988d114c8913d039b8a0e0502a7fe4f1f84f3d5e"
   integrity sha512-RYmIHOWSxnTTa765N6jJBVE45pd2SYNblEYshVDduLw6RhocazNmRzE5/ytvBD8IkDMH6DI+bcrqxh8NILimBA==
+  dependencies:
+    "@types/anymatch" "*"
+    "@types/node" "*"
+    "@types/tapable" "*"
+    "@types/uglify-js" "*"
+    "@types/webpack-sources" "*"
+    source-map "^0.6.0"
+
+"@types/webpack@^4.41.24":
+  version "4.41.24"
+  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.41.24.tgz#75b664abe3d5bcfe54e64313ca3b43e498550422"
+  integrity sha512-1A0MXPwZiMOD3DPMuOKUKcpkdPo8Lq33UGggZ7xio6wJ/jV1dAu5cXDrOfGDnldUroPIRLsr/DT43/GqOA4RFQ==
   dependencies:
     "@types/anymatch" "*"
     "@types/node" "*"
@@ -11687,6 +11704,21 @@ chokidar@^1.4.3:
   optionalDependencies:
     fsevents "^1.0.0"
 
+chokidar@^3.4.1:
+  version "3.4.3"
+  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.4.3.tgz#c1df38231448e45ca4ac588e6c79573ba6a57d5b"
+  integrity sha512-DtM3g7juCXQxFVSNPNByEC2+NImtBuxQQvWlHunpJIS5Ocr0lG306cC7FCi7cEA0fzmybPUIl4txBIobk1gGOQ==
+  dependencies:
+    anymatch "~3.1.1"
+    braces "~3.0.2"
+    glob-parent "~5.1.0"
+    is-binary-path "~2.1.0"
+    is-glob "~4.0.1"
+    normalize-path "~3.0.0"
+    readdirp "~3.5.0"
+  optionalDependencies:
+    fsevents "~2.1.2"
+
 chownr@^1.1.1, chownr@^1.1.2:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.1.4.tgz#6fc9d7b42d32a583596337666e7d08084da2cc6b"
@@ -15098,6 +15130,15 @@ enhanced-resolve@4.1.1, enhanced-resolve@^4.0.0, enhanced-resolve@^4.1.0, enhanc
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/enhanced-resolve/-/enhanced-resolve-4.1.1.tgz#2937e2b8066cd0fe7ce0990a98f0d71a35189f66"
   integrity sha512-98p2zE+rL7/g/DzMHMTF4zZlCgeVdJ7yr6xzEpJRYwFYrGi9ANdn5DnJURg6RpBkyk60XYDnWIv51VfIhfNGuA==
+  dependencies:
+    graceful-fs "^4.1.2"
+    memory-fs "^0.5.0"
+    tapable "^1.0.0"
+
+enhanced-resolve@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/enhanced-resolve/-/enhanced-resolve-4.3.0.tgz#3b806f3bfafc1ec7de69551ef93cca46c1704126"
+  integrity sha512-3e87LvavsdxyoCfGusJnrZ5G8SLPOFeHSNpZI/ATL9a5leXo2k0w6MKnbqhdBad9qTobSfB20Ld7UmgoNbAZkQ==
   dependencies:
     graceful-fs "^4.1.2"
     memory-fs "^0.5.0"
@@ -29212,6 +29253,13 @@ readdirp@~3.4.0:
   dependencies:
     picomatch "^2.2.1"
 
+readdirp@~3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/readdirp/-/readdirp-3.5.0.tgz#9ba74c019b15d365278d2e91bb8c48d7b4d42c9e"
+  integrity sha512-cMhu7c/8rdhkHXWsY+osBhfSy0JikwpHK/5+imo+LpeasTF8ouErHrlYkwT0++njiyuDvc7OFY5T3ukvZ8qmFQ==
+  dependencies:
+    picomatch "^2.2.1"
+
 readjson@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/readjson/-/readjson-2.0.1.tgz#1822964dfd0bc0b49c8f983c192a9dd5309eb9e1"
@@ -34724,6 +34772,17 @@ watchpack@^1.5.0, watchpack@^1.6.0, watchpack@^1.6.1:
     chokidar "^3.4.0"
     watchpack-chokidar2 "^2.0.0"
 
+watchpack@^1.7.4:
+  version "1.7.4"
+  resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.4.tgz#6e9da53b3c80bb2d6508188f5b200410866cd30b"
+  integrity sha512-aWAgTW4MoSJzZPAicljkO1hsi1oKj/RRq/OJQh2PKI2UKL04c2Bs+MBOB+BBABHTXJpf9mCwHN7ANCvYsvY2sg==
+  dependencies:
+    graceful-fs "^4.1.2"
+    neo-async "^2.5.0"
+  optionalDependencies:
+    chokidar "^3.4.1"
+    watchpack-chokidar2 "^2.0.0"
+
 wbuf@^1.1.0, wbuf@^1.7.3:
   version "1.7.3"
   resolved "https://registry.yarnpkg.com/wbuf/-/wbuf-1.7.3.tgz#c1d8d149316d3ea852848895cb6a0bfe887b87df"
@@ -35102,7 +35161,7 @@ webpack@4.42.0:
     watchpack "^1.6.0"
     webpack-sources "^1.4.1"
 
-webpack@^4.0.0, webpack@^4.27.1, webpack@^4.33.0, webpack@^4.38.0, webpack@^4.41.2, webpack@^4.41.4, webpack@^4.43.0:
+webpack@^4.0.0, webpack@^4.27.1, webpack@^4.38.0, webpack@^4.41.4:
   version "4.43.0"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.43.0.tgz#c48547b11d563224c561dad1172c8aa0b8a678e6"
   integrity sha512-GW1LjnPipFW2Y78OOab8NJlCflB7EFskMih2AHdvjbpKMeDJqEgSx24cXXXiPS65+WSwVyxtDsJH6jGX2czy+g==
@@ -35129,6 +35188,35 @@ webpack@^4.0.0, webpack@^4.27.1, webpack@^4.33.0, webpack@^4.38.0, webpack@^4.41
     tapable "^1.1.3"
     terser-webpack-plugin "^1.4.3"
     watchpack "^1.6.1"
+    webpack-sources "^1.4.1"
+
+webpack@^4.44.2:
+  version "4.44.2"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.44.2.tgz#6bfe2b0af055c8b2d1e90ed2cd9363f841266b72"
+  integrity sha512-6KJVGlCxYdISyurpQ0IPTklv+DULv05rs2hseIXer6D7KrUicRDLFb4IUM1S6LUAKypPM/nSiVSuv8jHu1m3/Q==
+  dependencies:
+    "@webassemblyjs/ast" "1.9.0"
+    "@webassemblyjs/helper-module-context" "1.9.0"
+    "@webassemblyjs/wasm-edit" "1.9.0"
+    "@webassemblyjs/wasm-parser" "1.9.0"
+    acorn "^6.4.1"
+    ajv "^6.10.2"
+    ajv-keywords "^3.4.1"
+    chrome-trace-event "^1.0.2"
+    enhanced-resolve "^4.3.0"
+    eslint-scope "^4.0.3"
+    json-parse-better-errors "^1.0.2"
+    loader-runner "^2.4.0"
+    loader-utils "^1.2.3"
+    memory-fs "^0.4.1"
+    micromatch "^3.1.10"
+    mkdirp "^0.5.3"
+    neo-async "^2.6.1"
+    node-libs-browser "^2.2.1"
+    schema-utils "^1.0.0"
+    tapable "^1.1.3"
+    terser-webpack-plugin "^1.4.3"
+    watchpack "^1.7.4"
     webpack-sources "^1.4.1"
 
 websocket-driver@0.6.5:

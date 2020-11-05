@@ -35,7 +35,7 @@
     "svg-url-loader": "^5.0.0",
     "vue-loader": "^15.7.0",
     "vue-style-loader": "^4.1.2",
-    "webpack": "^4.33.0",
+    "webpack": "^4.44.2",
     "webpack-dev-server": "^3.8.2"
   },
   "storybook": {
