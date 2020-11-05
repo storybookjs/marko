@@ -94,8 +94,11 @@ export const useExpanded = ({
       if (!highlightedElement || highlightedElement.getAttribute('data-ref-id') !== refId) return;
 
       const target = event.target as Element;
-      if (target.hasAttribute('data-action')) return;
       if (!isAncestor(menuElement, target) && !isAncestor(target, menuElement)) return;
+      if (target.hasAttribute('data-action')) {
+        if (['Enter', ' '].includes(event.key)) return;
+        (target as HTMLButtonElement).blur();
+      }
 
       event.preventDefault();
 
