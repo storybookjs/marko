@@ -32,6 +32,7 @@ const NoResults = styled.div(({ theme }) => ({
   color: theme.color.defaultText,
   small: {
     color: theme.barTextColor,
+    fontSize: `${theme.typography.size.s1}px`,
   },
 }));
 
