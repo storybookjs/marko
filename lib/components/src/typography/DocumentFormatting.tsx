@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import { styled, CSSObject } from '@storybook/theming';
-import { window } from 'global';
 import { withReset, withMargin, headerCommon, codeCommon } from './shared';
 import { SyntaxHighlighter } from '../syntaxhighlighter/syntaxhighlighter';
 
