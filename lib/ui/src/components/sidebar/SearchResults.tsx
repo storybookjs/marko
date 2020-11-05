@@ -1,11 +1,24 @@
 import { styled } from '@storybook/theming';
 import { Icons } from '@storybook/components';
-import { DOCS_MODE } from 'global';
-import React, { FunctionComponent, MouseEventHandler, ReactNode, useCallback } from 'react';
+import { document, DOCS_MODE } from 'global';
+import React, {
+  FunctionComponent,
+  MouseEventHandler,
+  ReactNode,
+  useCallback,
+  useEffect,
+} from 'react';
 import { ControllerStateAndHelpers } from 'downshift';
 
 import { ComponentNode, DocumentNode, Path, RootNode, StoryNode } from './TreeNode';
-import { Match, DownshiftItem, isClearType, isExpandType, SearchResult } from './types';
+import {
+  Match,
+  DownshiftItem,
+  isCloseType,
+  isClearType,
+  isExpandType,
+  SearchResult,
+} from './types';
 import { getLink } from './utils';
 
 const ResultsList = styled.ol({
@@ -43,11 +56,12 @@ const Mark = styled.mark(({ theme }) => ({
 
 const ActionRow = styled(ResultRow)({
   display: 'flex',
-  padding: '5px 19px',
+  padding: '6px 19px',
   alignItems: 'center',
 });
 
 const ActionLabel = styled.span(({ theme }) => ({
+  flexGrow: 1,
   color: theme.color.mediumdark,
   fontSize: `${theme.typography.size.s1}px`,
 }));
@@ -58,6 +72,19 @@ const ActionIcon = styled(Icons)(({ theme }) => ({
   height: 10,
   marginRight: 6,
   color: theme.color.mediumdark,
+}));
+
+const ActionKey = styled.code(({ theme }) => ({
+  minWidth: 16,
+  height: 16,
+  lineHeight: '17px',
+  textAlign: 'center',
+  fontSize: '11px',
+  background: 'rgba(0,0,0,0.1)',
+  color: theme.textMutedColor,
+  borderRadius: 2,
+  userSelect: 'none',
+  pointerEvents: 'none',
 }));
 
 const Highlight: FunctionComponent<{ match?: Match }> = React.memo(({ children, match }) => {
@@ -134,10 +161,22 @@ const Result: FunctionComponent<
 export const SearchResults: FunctionComponent<{
   query: string;
   results: DownshiftItem[];
+  closeMenu: (cb?: () => void) => void;
   getMenuProps: ControllerStateAndHelpers<DownshiftItem>['getMenuProps'];
   getItemProps: ControllerStateAndHelpers<DownshiftItem>['getItemProps'];
   highlightedIndex: number | null;
-}> = React.memo(({ query, results, getMenuProps, getItemProps, highlightedIndex }) => {
+}> = React.memo(({ query, results, closeMenu, getMenuProps, getItemProps, highlightedIndex }) => {
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      const target = event.target as Element;
+      if (target?.id === 'storybook-explorer-searchfield') return; // handled by downshift
+      closeMenu();
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, []);
+
   return (
     <ResultsList {...getMenuProps()}>
       {results.length > 0 && !query && (
@@ -155,6 +194,19 @@ export const SearchResults: FunctionComponent<{
         </li>
       )}
       {results.map((result: DownshiftItem, index) => {
+        if (isCloseType(result)) {
+          return (
+            <ActionRow
+              {...result}
+              {...getItemProps({ key: index, index, item: result })}
+              isHighlighted={highlightedIndex === index}
+            >
+              <ActionIcon icon="arrowleft" />
+              <ActionLabel>Back</ActionLabel>
+              <ActionKey>Esc</ActionKey>
+            </ActionRow>
+          );
+        }
         if (isClearType(result)) {
           return (
             <ActionRow
