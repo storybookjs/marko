@@ -35,24 +35,30 @@ export const useHighlighted = ({
   const highlightedRef = useRef<Highlight>(initialHighlight);
   const [highlighted, setHighlighted] = useState<Highlight>(initialHighlight);
 
+  const updateHighlighted = useCallback(
+    (highlight) => {
+      highlightedRef.current = highlight;
+      setHighlighted(highlight);
+    },
+    [highlightedRef]
+  );
+
   // Sets the highlighted node and scrolls it into view, using DOM elements as reference
   const highlightElement = useCallback(
     (element: Element, center = false) => {
       const itemId = element.getAttribute('data-item-id');
       const refId = element.getAttribute('data-ref-id');
       if (!itemId || !refId) return;
-      highlightedRef.current = { itemId, refId };
-      setHighlighted(highlightedRef.current);
+      updateHighlighted({ itemId, refId });
       scrollIntoView(element, center);
     },
-    [highlightedRef, setHighlighted]
+    [updateHighlighted]
   );
 
   // Highlight and scroll to the selected story whenever the selection or dataset changes
   useEffect(() => {
     const highlight = fromSelection(selected);
-    setHighlighted(highlight);
-    highlightedRef.current = highlight;
+    updateHighlighted(highlight);
     if (highlight) {
       const { itemId, refId } = highlight;
       setTimeout(() => {
@@ -96,5 +102,5 @@ export const useHighlighted = ({
     return () => document.removeEventListener('keydown', navigateTree);
   }, [isLoading, isBrowsing, highlightedRef, highlightElement]);
 
-  return [highlighted, setHighlighted];
+  return [highlighted, updateHighlighted];
 };
