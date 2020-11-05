@@ -209,5 +209,8 @@ export function buildStatic({ packageJson, ...loadOptions }: any) {
     outputDir: loadOptions.outputDir || cliOptions.outputDir || './storybook-static',
     ignorePreview: !!cliOptions.previewUrl,
     docsMode: !!cliOptions.docs,
+  }).catch((e) => {
+    logger.error(e);
+    process.exit(1);
   });
 }
