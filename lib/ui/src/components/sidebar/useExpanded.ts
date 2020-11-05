@@ -117,11 +117,10 @@ export const useExpanded = ({
           if (!parentId) return;
           const parentElement = getElementByDataItemId(parentId);
           if (parentElement && parentElement.getAttribute('data-highlightable') === 'true') {
-            setExpanded({ ids: [parentId], value: false });
             highlightElement(parentElement);
           } else {
             setExpanded({
-              ids: getDescendantIds(data, parentId, true),
+              ids: getDescendantIds(data, highlightedItemId, true),
               value: false,
             });
           }
