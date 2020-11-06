@@ -203,7 +203,7 @@ export const SearchResults: FunctionComponent<{
             >
               <ActionIcon icon="arrowleft" />
               <ActionLabel>Back to components</ActionLabel>
-              <ActionKey>Esc</ActionKey>
+              <ActionKey>ESC</ActionKey>
             </ActionRow>
           );
         }
