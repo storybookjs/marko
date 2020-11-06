@@ -147,14 +147,23 @@ const useProgressReporting = async (
   }) => void = () => {};
 
   router.get('/progress', (request, response) => {
+    let closed = false;
+    const close = () => {
+      closed = true;
+      response.end();
+    };
+    response.on('close', close);
+
+    if (closed || response.writableEnded) return;
     response.setHeader('Cache-Control', 'no-cache');
     response.setHeader('Content-Type', 'text/event-stream');
     response.setHeader('Connection', 'keep-alive');
     response.flushHeaders();
 
     reportProgress = (progress: any) => {
-      if (response.writableEnded) return;
+      if (closed || response.writableEnded) return;
       response.write(`data: ${JSON.stringify(progress)}\n\n`);
+      if (progress.value === 1) close();
     };
   });
 
