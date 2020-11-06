@@ -205,6 +205,7 @@ describe('preview.story_store', () => {
 
     it('automatically infers argTypes based on args', () => {
       const store = new StoryStore({ channel });
+      store.startConfiguring();
       addStoryToStore(store, 'a', '1', () => 0, {
         args: {
           arg1: 3,
@@ -709,6 +710,7 @@ describe('preview.story_store', () => {
 
     it('automatically infers argTypes from args', () => {
       const store = new StoryStore({ channel });
+      store.startConfiguring();
       addStoryToStore(store, 'a', '1', () => 0, { args: { a: null, b: 'hello', c: 9 } });
       expect(store.getRawStory('a', '1').parameters.argTypes).toMatchInlineSnapshot(`
         Object {
@@ -728,9 +730,9 @@ describe('preview.story_store', () => {
             },
           },
         }
-      `);  
+      `);
     });
-    
+
     it('adds user and default enhancers', () => {
       const store = new StoryStore({ channel });
       expect(store._argTypesEnhancers.length).toBe(1);
