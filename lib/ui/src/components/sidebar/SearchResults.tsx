@@ -202,7 +202,7 @@ export const SearchResults: FunctionComponent<{
               isHighlighted={highlightedIndex === index}
             >
               <ActionIcon icon="arrowleft" />
-              <ActionLabel>Back</ActionLabel>
+              <ActionLabel>Back to components</ActionLabel>
               <ActionKey>Esc</ActionKey>
             </ActionRow>
           );
