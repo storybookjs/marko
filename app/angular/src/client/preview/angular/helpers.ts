@@ -18,13 +18,12 @@ declare global {
 
 let platform: any = null;
 let promises: Promise<NgModuleRef<any>>[] = [];
+let storyData = new ReplaySubject(1);
 
 const moduleClass = class DynamicModule {};
 const componentClass = class DynamicComponent {};
 
 type DynamicComponentType = typeof componentClass;
-
-const storyData = new ReplaySubject(1);
 
 const getModule = (
   declarations: (Type<any> | any[])[],
@@ -33,6 +32,9 @@ const getModule = (
   data: StoryFnAngularReturnType,
   moduleMetadata: NgModuleMetadata
 ) => {
+  // Complete last ReplaySubject and create a new one for the current module
+  storyData.complete();
+  storyData = new ReplaySubject(1);
   storyData.next(data);
 
   const moduleMeta = {
