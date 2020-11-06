@@ -1,3 +1,28 @@
+## 6.1.0-beta.3 (November 6, 2020)
+
+### Features
+
+- Core: Add STORYBOOK environment variable ([#12997](https://github.com/storybookjs/storybook/pull/12997))
+
+### Bug Fixes
+
+- Args: Fix args inference for null values ([#13029](https://github.com/storybookjs/storybook/pull/13029))
+- Core: Dedupe default ArgTypes enhancers ([#13030](https://github.com/storybookjs/storybook/pull/13030))
+- Core: Add catch to end process ([#13018](https://github.com/storybookjs/storybook/pull/13018))
+- UI: Fix icon for addon panel orientation button ([#13026](https://github.com/storybookjs/storybook/pull/13026))
+- Addon-docs: Fix test for Angular type inference ([#13009](https://github.com/storybookjs/storybook/pull/13009))
+- CLI: Fix deprecation check ([#12981](https://github.com/storybookjs/storybook/pull/12981))
+- UI: Restrict layout styles to only apply to a rendered preview area ([#13014](https://github.com/storybookjs/storybook/pull/13014))
+
+### Maintenance
+
+- Build: Add chokidar2 for yarn dev ([#13028](https://github.com/storybookjs/storybook/pull/13028))
+- Build: Remove more enzyme ([#13005](https://github.com/storybookjs/storybook/pull/13005))
+
+### Dependency Upgrades
+
+- Bump webpack to 4.41.24 ([#13019](https://github.com/storybookjs/storybook/pull/13019))
+
 ## 6.1.0-beta.2 (November 4, 2020)
 
 ### Bug Fixes
