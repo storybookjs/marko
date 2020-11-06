@@ -707,6 +707,30 @@ describe('preview.story_store', () => {
       expect(store.getRawStory('a', '1').parameters.argTypes).toEqual({ e: 'f', c: 'd' });
     });
 
+    it('automatically infers argTypes from args', () => {
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0, { args: { a: null, b: 'hello', c: 9 } });
+      expect(store.getRawStory('a', '1').parameters.argTypes).toMatchInlineSnapshot(`
+        Object {
+          "a": Object {
+            "name": "a",
+          },
+          "b": Object {
+            "name": "b",
+            "type": Object {
+              "name": "string",
+            },
+          },
+          "c": Object {
+            "name": "c",
+            "type": Object {
+              "name": "number",
+            },
+          },
+        }
+      `);  
+    });
+    
     it('adds user and default enhancers', () => {
       const store = new StoryStore({ channel });
       expect(store._argTypesEnhancers.length).toBe(1);
