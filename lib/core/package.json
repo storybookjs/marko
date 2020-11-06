@@ -1,6 +1,6 @@
 {
   "name": "@storybook/core",
-  "version": "6.1.0-beta.2",
+  "version": "6.1.0-beta.3",
   "description": "Storybook framework-agnostic API",
   "keywords": [
     "storybook"
@@ -52,20 +52,20 @@
     "@babel/preset-react": "^7.12.1",
     "@babel/preset-typescript": "^7.12.1",
     "@babel/register": "^7.12.1",
-    "@storybook/addons": "6.1.0-beta.2",
-    "@storybook/api": "6.1.0-beta.2",
-    "@storybook/channel-postmessage": "6.1.0-beta.2",
-    "@storybook/channels": "6.1.0-beta.2",
-    "@storybook/client-api": "6.1.0-beta.2",
-    "@storybook/client-logger": "6.1.0-beta.2",
-    "@storybook/components": "6.1.0-beta.2",
-    "@storybook/core-events": "6.1.0-beta.2",
+    "@storybook/addons": "6.1.0-beta.3",
+    "@storybook/api": "6.1.0-beta.3",
+    "@storybook/channel-postmessage": "6.1.0-beta.3",
+    "@storybook/channels": "6.1.0-beta.3",
+    "@storybook/client-api": "6.1.0-beta.3",
+    "@storybook/client-logger": "6.1.0-beta.3",
+    "@storybook/components": "6.1.0-beta.3",
+    "@storybook/core-events": "6.1.0-beta.3",
     "@storybook/csf": "0.0.1",
-    "@storybook/node-logger": "6.1.0-beta.2",
-    "@storybook/router": "6.1.0-beta.2",
+    "@storybook/node-logger": "6.1.0-beta.3",
+    "@storybook/router": "6.1.0-beta.3",
     "@storybook/semver": "^7.3.2",
-    "@storybook/theming": "6.1.0-beta.2",
-    "@storybook/ui": "6.1.0-beta.2",
+    "@storybook/theming": "6.1.0-beta.3",
+    "@storybook/ui": "6.1.0-beta.3",
     "@types/glob-base": "^0.3.0",
     "@types/micromatch": "^4.0.1",
     "@types/node-fetch": "^2.5.4",
@@ -127,7 +127,7 @@
     "unfetch": "^4.1.0",
     "url-loader": "^4.0.0",
     "util-deprecate": "^1.0.2",
-    "webpack": "^4.43.0",
+    "webpack": "^4.44.2",
     "webpack-dev-middleware": "^3.7.0",
     "webpack-filter-warnings-plugin": "^1.2.1",
     "webpack-hot-middleware": "^2.25.0",
@@ -156,7 +156,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c67dac2e088847d96e3cfa427432a1b04d4c4389",
+  "gitHead": "2e11de30450cb6443661568bec770f36b20c42d2",
   "typesVersions": {
     "<3.8": {
       "*": [
