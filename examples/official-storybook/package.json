@@ -60,7 +60,7 @@
     "terser-webpack-plugin": "^3.0.0",
     "ts-loader": "^6.0.0",
     "uuid": "^8.0.0",
-    "webpack": "^4.33.0"
+    "webpack": "^4.44.2"
   },
   "peerDependencies": {
     "puppeteer": "^2.0.0 || ^3.0.0"

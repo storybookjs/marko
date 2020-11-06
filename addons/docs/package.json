@@ -111,7 +111,7 @@
     "tmp": "^0.2.1",
     "tslib": "^2.0.0",
     "web-component-analyzer": "^1.0.3",
-    "webpack": "^4.33.0",
+    "webpack": "^4.44.2",
     "zone.js": "^0.10.2"
   },
   "peerDependencies": {

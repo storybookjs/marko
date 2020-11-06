@@ -129,8 +129,8 @@
     "@types/semver": "^7.1.0",
     "@types/serve-static": "^1.13.3",
     "@types/shelljs": "^0.8.7",
-    "@types/webpack": "^4.41.12",
-    "@types/webpack-env": "^1.15.2",
+    "@types/webpack": "^4.41.24",
+    "@types/webpack-env": "^1.15.3",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^26.0.0",
@@ -213,7 +213,7 @@
     "ts-node": "^8.10.2",
     "typescript": "^3.9.3",
     "wait-on": "^4.0.0",
-    "webpack": "^4.43.0",
+    "webpack": "^4.44.2",
     "window-size": "^1.1.1"
   },
   "optionalDependencies": {

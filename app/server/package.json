@@ -39,7 +39,7 @@
     "@storybook/client-api": "6.1.0-beta.2",
     "@storybook/core": "6.1.0-beta.2",
     "@storybook/node-logger": "6.1.0-beta.2",
-    "@types/webpack-env": "^1.15.2",
+    "@types/webpack-env": "^1.15.3",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "react": "16.13.1",
