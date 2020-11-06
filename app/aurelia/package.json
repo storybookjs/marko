@@ -1,6 +1,6 @@
 {
   "name": "@storybook/aurelia",
-  "version": "6.1.0-beta.2",
+  "version": "6.1.0-beta.3",
   "description": "Storybook for Aurelia: Develop Aurelia Components in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -27,17 +27,17 @@
   },
   "dependencies": {
     "@aurelia/webpack-loader": "^0.7.0",
-    "@storybook/addon-knobs": "6.1.0-beta.2",
-    "@storybook/addons": "6.1.0-beta.2",
-    "@storybook/core": "6.1.0-beta.2",
-    "@storybook/node-logger": "6.1.0-beta.2",
+    "@storybook/addon-knobs": "6.1.0-beta.3",
+    "@storybook/addons": "6.1.0-beta.3",
+    "@storybook/core": "6.1.0-beta.3",
+    "@storybook/node-logger": "6.1.0-beta.3",
     "fork-ts-checker-webpack-plugin": "^4.0.3",
     "global": "^4.3.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "ts-loader": "^6.0.1",
     "url-loader": "^4.1.0",
-    "webpack": "^4.33.0"
+    "webpack": "^4.44.2"
   },
   "devDependencies": {
     "@types/node": "^14.0.10",
@@ -52,7 +52,7 @@
     "sass-loader": "^8.0.0",
     "style-loader": "^0.23.0",
     "typescript": "^3.9.3",
-    "webpack": "^4.33.0"
+    "webpack": "^4.44.2"
   },
   "peerDependencies": {
     "aurelia": "*"
@@ -60,5 +60,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c67dac2e088847d96e3cfa427432a1b04d4c4389"
+  "gitHead": "2e11de30450cb6443661568bec770f36b20c42d2"
 }

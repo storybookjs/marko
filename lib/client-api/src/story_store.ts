@@ -165,6 +165,10 @@ export default class StoryStore {
 
   startConfiguring() {
     this._configuring = true;
+
+    // run these at the end
+    this._argTypesEnhancers.push(inferArgTypes);
+    this._argTypesEnhancers.push(inferControls);
   }
 
   storeGlobals() {
@@ -386,9 +390,6 @@ export default class StoryStore {
     const { passArgsFirst = true } = combinedParameters;
     const __isArgsStory = passArgsFirst && original.length > 0;
 
-    // run at the end
-    this._argTypesEnhancers.push(inferArgTypes);
-    this._argTypesEnhancers.push(inferControls);
     const { argTypes = {} } = this._argTypesEnhancers.reduce(
       (accumulatedParameters: Parameters, enhancer) => ({
         ...accumulatedParameters,

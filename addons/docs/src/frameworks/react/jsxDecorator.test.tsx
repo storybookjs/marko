@@ -148,9 +148,9 @@ describe('renderJsx', () => {
     };
 
     expect(renderJsx(<Container>yo dude</Container>, {})).toMatchInlineSnapshot(`
-      <div>
+      <Container className="super-container">
         yo dude
-      </div>
+      </Container>
     `);
   });
 });
