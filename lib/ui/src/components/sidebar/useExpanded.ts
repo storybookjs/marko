@@ -94,8 +94,11 @@ export const useExpanded = ({
       if (!highlightedElement || highlightedElement.getAttribute('data-ref-id') !== refId) return;
 
       const target = event.target as Element;
-      if (target.hasAttribute('data-action')) return;
       if (!isAncestor(menuElement, target) && !isAncestor(target, menuElement)) return;
+      if (target.hasAttribute('data-action')) {
+        if (['Enter', ' '].includes(event.key)) return;
+        (target as HTMLButtonElement).blur();
+      }
 
       event.preventDefault();
 
@@ -108,21 +111,23 @@ export const useExpanded = ({
 
       if (event.key === 'ArrowLeft') {
         if (isExpanded === 'true') {
+          // The highlighted node is expanded, so we collapse it.
           setExpanded({ ids: [highlightedItemId], value: false });
-        } else {
-          const parentId = highlightedElement.getAttribute('data-parent-id');
-          if (!parentId) return;
-          const parentElement = getElementByDataItemId(parentId);
-          if (parentElement && parentElement.getAttribute('data-highlightable') === 'true') {
-            setExpanded({ ids: [parentId], value: false });
-            highlightElement(parentElement);
-          } else {
-            setExpanded({
-              ids: getDescendantIds(data, parentId, true),
-              value: false,
-            });
-          }
+          return;
         }
+
+        const parentId = highlightedElement.getAttribute('data-parent-id');
+        const parentElement = parentId && getElementByDataItemId(parentId);
+        if (parentElement && parentElement.getAttribute('data-highlightable') === 'true') {
+          // The highlighted node isn't expanded, so we move the highlight to its parent instead.
+          highlightElement(parentElement);
+          return;
+        }
+
+        // The parent can't be highlighted, which means it must be a root.
+        // The highlighted node is already collapsed, so we collapse its descendants.
+        setExpanded({ ids: getDescendantIds(data, highlightedItemId, true), value: false });
+        return;
       }
 
       if (event.key === 'ArrowRight') {
@@ -146,5 +151,13 @@ export const useExpanded = ({
     onSelectStoryId,
   ]);
 
-  return [expanded, setExpanded];
+  const updateExpanded = useCallback(
+    ({ ids, value }) => {
+      setExpanded({ ids, value });
+      if (ids.length === 1) setHighlightedItemId(ids[0]);
+    },
+    [setHighlightedItemId]
+  );
+
+  return [expanded, updateExpanded];
 };

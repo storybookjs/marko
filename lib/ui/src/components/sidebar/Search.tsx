@@ -18,6 +18,7 @@ import {
   isSearchResult,
   isExpandType,
   isClearType,
+  isCloseType,
 } from './types';
 import { searchItem } from './utils';
 
@@ -268,6 +269,11 @@ export const Search: FunctionComponent<{
             // Nothing to see anymore, so return to the tree view
             return { isOpen: false };
           }
+          if (isCloseType(changes.selectedItem)) {
+            inputRef.current.blur();
+            // Return to the tree view
+            return { isOpen: false };
+          }
           return changes;
         }
 
@@ -294,6 +300,7 @@ export const Search: FunctionComponent<{
       {({
         isOpen,
         openMenu,
+        closeMenu,
         inputValue,
         clearSelection,
         getInputProps,
@@ -322,6 +329,7 @@ export const Search: FunctionComponent<{
             }
             return acc;
           }, []);
+          results.push({ closeMenu });
           if (results.length > 0) {
             results.push({ clearLastViewed });
           }
@@ -354,6 +362,7 @@ export const Search: FunctionComponent<{
                 query: input,
                 results,
                 isBrowsing: !isOpen && document.activeElement !== inputRef.current,
+                closeMenu,
                 getMenuProps,
                 getItemProps,
                 highlightedIndex,
