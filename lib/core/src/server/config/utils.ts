@@ -41,6 +41,7 @@ export function loadEnv(
   const env: Record<string, string> = {
     NODE_ENV: process.env.NODE_ENV || defaultNodeEnv,
     NODE_PATH: process.env.NODE_PATH || '',
+    STORYBOOK: process.env.STORYBOOK || 'true',
     // This is to support CRA's public folder feature.
     // In production we set this to dot(.) to allow the browser to access these assets
     // even when deployed inside a subpath. (like in GitHub pages)
