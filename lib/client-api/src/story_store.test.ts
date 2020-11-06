@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import createChannel from '@storybook/channel-postmessage';
 import { toId } from '@storybook/csf';
 import addons, { mockChannel } from '@storybook/addons';
@@ -727,7 +728,24 @@ describe('preview.story_store', () => {
             },
           },
         }
-      `);
+      `);  
+    });
+    
+    it('adds user and default enhancers', () => {
+      const store = new StoryStore({ channel });
+      expect(store._argTypesEnhancers.length).toBe(1);
+
+      const enhancer = () => ({});
+      store.addArgTypesEnhancer(enhancer);
+      expect(store._argTypesEnhancers.length).toBe(2);
+
+      store.startConfiguring();
+      expect(store._argTypesEnhancers.length).toBe(4);
+
+      addStoryToStore(store, 'a', '1', () => 0);
+      addStoryToStore(store, 'a', '2', () => 0);
+      store.finishConfiguring();
+      expect(store._argTypesEnhancers.length).toBe(4);
     });
   });
 
