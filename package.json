@@ -108,6 +108,7 @@
     "@babel/preset-typescript": "^7.12.1",
     "@babel/runtime": "^7.12.1",
     "@emotion/snapshot-serializer": "^0.8.2",
+    "@nicolo-ribaudo/chokidar-2": "^2.1.8",
     "@storybook/eslint-config-storybook": "^2.4.0",
     "@storybook/linter-config": "^2.5.0",
     "@storybook/semver": "^7.3.2",
