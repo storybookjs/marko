@@ -61,6 +61,7 @@ const passKey = (props: any = {}) => ({ key: props.key });
 export const searching = {
   query: 'query',
   results,
+  closeMenu: () => {},
   getMenuProps: passKey,
   getItemProps: passKey,
   highlightedIndex: 0,
@@ -72,6 +73,7 @@ export const noResults = {
 export const lastViewed = {
   query: '',
   results: recents,
+  closeMenu: () => {},
   getMenuProps: passKey,
   getItemProps: passKey,
   highlightedIndex: 0,
