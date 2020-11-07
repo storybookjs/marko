@@ -1,6 +1,7 @@
 <h1>Migration</h1>
 
 - [From version 6.0.x to 6.1.0](#from-version-60x-to-610)
+  - [Single story hoisting](#single-story-hoisting)
   - [6.1 deprecations](#61-deprecations)
     - [Deprecated DLL flags](#deprecated-dll-flags)
     - [Deprecated storyFn](#deprecated-storyfn)
@@ -137,6 +138,30 @@
   - [Deprecated embedded addons](#deprecated-embedded-addons)
 
 ## From version 6.0.x to 6.1.0
+
+### Single story hoisting
+
+Stories which have **no siblings** (i.e. the component has only one story) and which name **exactly matches** the component name will now be hoisted up to replace their parent component in the sidebar. This means you can have a hierarchy like this:
+
+```
+DESIGN SYSTEM   [root]
+- Atoms         [group]
+  - Button      [component]
+    - Button    [story]
+  - Checkbox    [component]
+    - Checkbox  [story]
+```
+
+This will then be visually presented in the sidebar like this:
+
+```
+DESIGN SYSTEM   [root]
+- Atoms         [group]
+  - Button      [story]
+  - Checkbox    [story]
+```
+
+See [Naming components and hierarchy](https://storybook.js.org/docs/react/writing-stories/naming-components-and-hierarchy#single-story-hoisting) for details.
 
 ### 6.1 deprecations
 

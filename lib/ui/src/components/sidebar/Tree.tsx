@@ -1,4 +1,4 @@
-import { StoriesHash, isRoot, isStory } from '@storybook/api';
+import { Group, Story, StoriesHash, isRoot, isStory } from '@storybook/api';
 import { styled } from '@storybook/theming';
 import { Icons } from '@storybook/components';
 import { transparentize } from 'polished';
@@ -213,25 +213,59 @@ export const Tree = React.memo<{
     // Also create a map of expandable descendants for each root/orphan item, which is needed later.
     // Doing that here is a performance enhancement, as it avoids traversing the tree again later.
     const { orphansFirst, expandableDescendants } = useMemo(() => {
-      return orphanIds
-        .concat(rootIds)
-        .reduce<{ orphansFirst: string[]; expandableDescendants: Record<string, string[]> }>(
-          (acc, nodeId) => {
-            const descendantIds = getDescendantIds(data, nodeId, false);
-            acc.orphansFirst.push(nodeId, ...descendantIds);
-            acc.expandableDescendants[nodeId] = descendantIds.filter((d) => !data[d].isLeaf);
-            return acc;
-          },
-          { orphansFirst: [], expandableDescendants: {} }
-        );
+      return orphanIds.concat(rootIds).reduce(
+        (acc, nodeId) => {
+          const descendantIds = getDescendantIds(data, nodeId, false);
+          acc.orphansFirst.push(nodeId, ...descendantIds);
+          acc.expandableDescendants[nodeId] = descendantIds.filter((d) => !data[d].isLeaf);
+          return acc;
+        },
+        { orphansFirst: [] as string[], expandableDescendants: {} as Record<string, string[]> }
+      );
     }, [data, rootIds, orphanIds]);
+
+    // Create a list of component IDs which have exactly one story, which name exactly matches the component name.
+    const singleStoryComponents = useMemo(() => {
+      return orphansFirst.filter((nodeId) => {
+        const { children = [], isComponent, isLeaf, name } = data[nodeId];
+        return (
+          !isLeaf &&
+          isComponent &&
+          children.length === 1 &&
+          isStory(data[children[0]]) &&
+          data[children[0]].name === name
+        );
+      });
+    }, [data, orphansFirst]);
+
+    // Omit single-story components from the list of nodes.
+    const collapsedItems = useMemo(
+      () => orphansFirst.filter((id) => !singleStoryComponents.includes(id)),
+      [orphansFirst, singleStoryComponents]
+    );
+
+    // Rewrite the dataset to place the child story in place of the component.
+    const collapsedData = useMemo(() => {
+      return singleStoryComponents.reduce(
+        (acc, id) => {
+          const { children, parent } = data[id] as Group;
+          const [childId] = children;
+          const siblings = [...data[parent].children];
+          siblings[siblings.indexOf(id)] = childId;
+          acc[parent] = { ...data[parent], children: siblings };
+          acc[childId] = { ...data[childId], parent, depth: data[childId].depth - 1 } as Story;
+          return acc;
+        },
+        { ...data }
+      );
+    }, [data]);
 
     // Track expanded nodes, keep it in sync with props and enable keyboard shortcuts.
     const [expanded, setExpanded] = useExpanded({
       containerRef,
       isBrowsing, // only enable keyboard shortcuts when tree is visible
       refId,
-      data,
+      data: collapsedData,
       rootIds,
       highlightedItemId,
       setHighlightedItemId,
@@ -241,8 +275,8 @@ export const Tree = React.memo<{
 
     return (
       <Container ref={containerRef} hasOrphans={isMain && orphanIds.length > 0}>
-        {orphansFirst.map((itemId) => {
-          const item = data[itemId];
+        {collapsedItems.map((itemId) => {
+          const item = collapsedData[itemId];
           const id = createId(itemId, refId);
 
           if (isRoot(item)) {
@@ -267,7 +301,7 @@ export const Tree = React.memo<{
           }
 
           const isDisplayed =
-            !item.parent || getAncestorIds(data, itemId).every((a: string) => expanded[a]);
+            !item.parent || getAncestorIds(collapsedData, itemId).every((a: string) => expanded[a]);
           return (
             <Node
               key={id}
