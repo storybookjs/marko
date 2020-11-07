@@ -60,6 +60,10 @@ const ActionRow = styled(ResultRow)({
   alignItems: 'center',
 });
 
+const BackActionRow = styled(ActionRow)({
+  marginTop: 8,
+});
+
 const ActionLabel = styled.span(({ theme }) => ({
   flexGrow: 1,
   color: theme.color.mediumdark,
@@ -196,7 +200,7 @@ export const SearchResults: FunctionComponent<{
       {results.map((result: DownshiftItem, index) => {
         if (isCloseType(result)) {
           return (
-            <ActionRow
+            <BackActionRow
               {...result}
               {...getItemProps({ key: index, index, item: result })}
               isHighlighted={highlightedIndex === index}
@@ -204,7 +208,7 @@ export const SearchResults: FunctionComponent<{
               <ActionIcon icon="arrowleft" />
               <ActionLabel>Back to components</ActionLabel>
               <ActionKey>ESC</ActionKey>
-            </ActionRow>
+            </BackActionRow>
           );
         }
         if (isClearType(result)) {
