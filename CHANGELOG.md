@@ -1,3 +1,9 @@
+## 6.1.0-beta.5 (November 8, 2020)
+
+### Features
+
+* UI: Single story hoisting in sidebar ([#13039](https://github.com/storybookjs/storybook/pull/13039))
+
 ## 6.1.0-beta.4 (November 6, 2020)
 
 ### Bug Fixes
