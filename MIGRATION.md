@@ -161,19 +161,7 @@ DESIGN SYSTEM   [root]
   - Checkbox    [story]
 ```
 
-To achieve this you would have two stories files, which look something like this:
-
-```js
-// Button.stories.js
-
-export default {
-  // The last part is the component name
-  title: "Design System/Atoms/Button"
-}
-
-// This is the only named export in the file, and it matches the component name
-export const Button = ...
-```
+See [Naming components and hierarchy](https://storybook.js.org/docs/react/writing-stories/naming-components-and-hierarchy#single-story-hoisting) for details.
 
 ### 6.1 deprecations
 
