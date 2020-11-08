@@ -66,6 +66,50 @@ And here's how that gets rendered in Storybook:
 
 ![MDX page](./mdx-page.png)
 
+## Customizing ArgTypes with MDX
+
+As already mentioned [above](#mdx-flavored-csf), there's a one-to-one mapping between MDX and CSF.
+
+Based on this principle, if the Badge story included the following `ArgTypes`: 
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/badge-story-custom-argtypes.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+
+Transitioning them into MDX format is quite seamless and would only require the following change to the story:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/badge-story-custom-argtypes.mdx.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+And here's how that gets rendered in Storybook:
+
+<video autoPlay muted playsInline loop>
+  <source
+    src="custom-argTypes-mdx-optimized.mp4"
+    type="video/mp4"
+  />
+</video>
+
+<div class="aside">
+
+If you find yourself with a considerably sized <code>argTypes</code> implementation. You can extract them into a variable and pass them as a prop. 
+
+</div>
+
 ## Embedding stories
 
 Suppose you have an existing story and want to embed it into your docs. Here's how to show a story with ID some--id. Check the browser URL in Storybook v5+ to find a story's ID.
