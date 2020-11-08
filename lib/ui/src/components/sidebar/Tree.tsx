@@ -13,8 +13,8 @@ export const Action = styled.button(({ theme }) => ({
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
-  width: 21,
-  height: 21,
+  width: 20,
+  height: 20,
   margin: 0,
   padding: 0,
   outline: 0,
@@ -37,8 +37,8 @@ export const Action = styled.button(({ theme }) => ({
     borderColor: theme.color.secondary,
   },
   svg: {
-    width: 11,
-    height: 11,
+    width: 10,
+    height: 10,
   },
 }));
 
