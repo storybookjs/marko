@@ -31,12 +31,16 @@ export const plugins = [
    */
   require.resolve('@babel/plugin-proposal-optional-chaining'),
   require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
+  [
+    require.resolve('babel-plugin-polyfill-corejs3'),
+    { method: "usage-global" }
+  ]
 ];
 
 export const presets = [
   [
     require.resolve('@babel/preset-env'),
-    { shippedProposals: true, useBuiltIns: 'usage', corejs: '3' },
+    { shippedProposals: true },
   ],
   require.resolve('@babel/preset-typescript'),
 ];
