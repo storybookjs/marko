@@ -8,7 +8,7 @@ export type IZoomIFrameProps = {
   active?: boolean;
 };
 
-export default class ZoomIFrame extends Component<IZoomIFrameProps> {
+export class ZoomIFrame extends Component<IZoomIFrameProps> {
   iframe: HTMLIFrameElement = null;
 
   componentDidMount() {

@@ -38,5 +38,3 @@ export function ZoomElement({ scale, children }: ZoomProps) {
     </ZoomElementWrapper>
   );
 }
-
-export default ZoomElement;
