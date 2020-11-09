@@ -166,9 +166,12 @@ export default class StoryStore {
   startConfiguring() {
     this._configuring = true;
 
+    const safePush = (enhancer: ArgTypesEnhancer, enhancers: ArgTypesEnhancer[]) => {
+      if (!enhancers.includes(enhancer)) enhancers.push(enhancer);
+    };
     // run these at the end
-    this._argTypesEnhancers.push(inferArgTypes);
-    this._argTypesEnhancers.push(inferControls);
+    safePush(inferArgTypes, this._argTypesEnhancers);
+    safePush(inferControls, this._argTypesEnhancers);
   }
 
   storeGlobals() {
