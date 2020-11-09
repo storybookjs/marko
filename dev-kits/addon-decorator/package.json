@@ -26,7 +26,6 @@
   "dependencies": {
     "@storybook/addons": "6.1.1",
     "@storybook/client-api": "6.1.1",
-    "core-js": "^3.0.1",
     "global": "^4.4.0"
   },
   "publishConfig": {

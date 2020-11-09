@@ -33,8 +33,7 @@
     "@storybook/addons": "6.1.1",
     "@storybook/api": "6.1.1",
     "@storybook/client-api": "6.1.1",
-    "@storybook/components": "6.1.1",
-    "core-js": "^3.0.1"
+    "@storybook/components": "6.1.1"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",

@@ -31,7 +31,6 @@
     "@storybook/channels": "6.1.1",
     "@storybook/client-logger": "6.1.1",
     "@storybook/core-events": "6.1.1",
-    "core-js": "^3.0.1",
     "global": "^4.3.2",
     "qs": "^6.6.0",
     "telejson": "^5.0.2"

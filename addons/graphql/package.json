@@ -35,7 +35,6 @@
     "@storybook/api": "6.1.1",
     "@types/webpack": "^4.41.24",
     "babel-loader": "^8.0.6",
-    "core-js": "^3.0.1",
     "global": "^4.3.2",
     "graphiql": "^0.17.5",
     "graphql": "^15.0.0",

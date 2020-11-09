@@ -36,7 +36,6 @@
     "@storybook/csf": "0.0.1",
     "@types/qs": "^6.9.0",
     "@types/webpack-env": "^1.15.3",
-    "core-js": "^3.0.1",
     "global": "^4.3.2",
     "lodash": "^4.17.15",
     "memoizerific": "^1.11.3",

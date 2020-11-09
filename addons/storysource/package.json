@@ -36,7 +36,6 @@
     "@storybook/router": "6.1.1",
     "@storybook/source-loader": "6.1.1",
     "@storybook/theming": "6.1.1",
-    "core-js": "^3.0.1",
     "estraverse": "^4.2.0",
     "loader-utils": "^2.0.0",
     "prettier": "~2.0.5",
