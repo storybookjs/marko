@@ -33,7 +33,7 @@ export const plugins = [
   require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
   [
     require.resolve('babel-plugin-polyfill-corejs3'),
-    { method: "usage-global" }
+    { method: "usage-global", absoluteImports: true }
   ]
 ];
 
