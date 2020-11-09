@@ -75,6 +75,7 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-emotion": "^10.0.20",
     "babel-plugin-macros": "^2.8.0",
+    "babel-plugin-polyfill-corejs3": "^0.0.7",
     "babel-preset-minify": "^0.5.0 || 0.6.0-alpha.5",
     "better-opn": "^2.0.0",
     "boxen": "^4.1.0",
