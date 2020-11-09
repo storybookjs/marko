@@ -1,8 +1,20 @@
+## 6.1.0-beta.6 (November 9, 2020)
+
+### Bug Fixes
+
+- Angular: Fix storyData handling on module update ([#13037](https://github.com/storybookjs/storybook/pull/13037))
+- Args: Default to type 'object' when there is a null arg ([#13051](https://github.com/storybookjs/storybook/pull/13051))
+- Core: Fix duplicate argTypeEnhancers on HMR ([#13050](https://github.com/storybookjs/storybook/pull/13050))
+
+### Dependency Upgrades
+
+- Bump react-dogen-typescript-plugin to 0.6.2 ([#13052](https://github.com/storybookjs/storybook/pull/13052))
+
 ## 6.1.0-beta.5 (November 8, 2020)
 
 ### Features
 
-* UI: Single story hoisting in sidebar ([#13039](https://github.com/storybookjs/storybook/pull/13039))
+- UI: Single story hoisting in sidebar ([#13039](https://github.com/storybookjs/storybook/pull/13039))
 
 ## 6.1.0-beta.4 (November 6, 2020)
 
