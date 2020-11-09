@@ -193,7 +193,7 @@ export abstract class JsPackageManager {
 
     const buildStorybookCmd = options?.staticFolder
       ? `build-storybook -s ${options.staticFolder}`
-      : 'build-storybook';
+      : `build-storybook`;
 
     const preCommand = options.preCommand ? this.getRunCommand(options.preCommand) : undefined;
     this.addScripts({

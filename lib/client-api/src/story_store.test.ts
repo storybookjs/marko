@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import createChannel from '@storybook/channel-postmessage';
 import { toId } from '@storybook/csf';
 import addons, { mockChannel } from '@storybook/addons';
@@ -157,6 +158,26 @@ describe('preview.story_store', () => {
   });
 
   describe('args', () => {
+    it('composes component-level and story-level args, favoring story-level', () => {
+      const store = new StoryStore({ channel });
+      store.addKindMetadata('a', {
+        parameters: { args: { arg1: 1, arg2: 2, arg3: 3, arg4: { complex: 'object' } } },
+      });
+      addStoryToStore(store, 'a', '1', () => 0, {
+        args: {
+          arg1: 4,
+          arg2: undefined,
+          arg4: { other: 'object ' },
+        },
+      });
+      expect(store.getRawStory('a', '1').args).toEqual({
+        arg1: 4,
+        arg2: undefined,
+        arg3: 3,
+        arg4: { other: 'object ' },
+      });
+    });
+
     it('is initialized to the value stored in parameters.args[name] || parameters.argType[name].defaultValue', () => {
       const store = new StoryStore({ channel });
       addStoryToStore(store, 'a', '1', () => 0, {
@@ -184,6 +205,7 @@ describe('preview.story_store', () => {
 
     it('automatically infers argTypes based on args', () => {
       const store = new StoryStore({ channel });
+      store.startConfiguring();
       addStoryToStore(store, 'a', '1', () => 0, {
         args: {
           arg1: 3,
@@ -684,6 +706,48 @@ describe('preview.story_store', () => {
         expect.objectContaining({ parameters: { __isArgsStory: false, argTypes: { e: 'f' } } })
       );
       expect(store.getRawStory('a', '1').parameters.argTypes).toEqual({ e: 'f', c: 'd' });
+    });
+
+    it('automatically infers argTypes from args', () => {
+      const store = new StoryStore({ channel });
+      store.startConfiguring();
+      addStoryToStore(store, 'a', '1', () => 0, { args: { a: null, b: 'hello', c: 9 } });
+      expect(store.getRawStory('a', '1').parameters.argTypes).toMatchInlineSnapshot(`
+        Object {
+          "a": Object {
+            "name": "a",
+          },
+          "b": Object {
+            "name": "b",
+            "type": Object {
+              "name": "string",
+            },
+          },
+          "c": Object {
+            "name": "c",
+            "type": Object {
+              "name": "number",
+            },
+          },
+        }
+      `);
+    });
+
+    it('adds user and default enhancers', () => {
+      const store = new StoryStore({ channel });
+      expect(store._argTypesEnhancers.length).toBe(1);
+
+      const enhancer = () => ({});
+      store.addArgTypesEnhancer(enhancer);
+      expect(store._argTypesEnhancers.length).toBe(2);
+
+      store.startConfiguring();
+      expect(store._argTypesEnhancers.length).toBe(4);
+
+      addStoryToStore(store, 'a', '1', () => 0);
+      addStoryToStore(store, 'a', '2', () => 0);
+      store.finishConfiguring();
+      expect(store._argTypesEnhancers.length).toBe(4);
     });
   });
 

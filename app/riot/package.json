@@ -1,6 +1,6 @@
 {
   "name": "@storybook/riot",
-  "version": "6.1.0-alpha.31",
+  "version": "6.1.0-beta.5",
   "description": "Storybook for riot.js: View riot snippets in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -34,10 +34,12 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/core": "6.1.0-alpha.31",
+    "@storybook/core": "6.1.0-beta.5",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "raw-loader": "^4.0.1",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
@@ -61,7 +63,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "f45b4c6fedf0994f7950ee1661592060894d7272",
+  "gitHead": "7bd2ae048222c2cc249775a3271b5b7dbe638038",
   "typesVersions": {
     "<3.8": {
       "*": [

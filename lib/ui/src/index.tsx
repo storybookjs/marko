@@ -46,13 +46,16 @@ export const Root: FunctionComponent<RootProps> = ({ provider, history }) => (
               {({ state, api }: Combo) => {
                 const panelCount = Object.keys(api.getPanels()).length;
                 const story = api.getData(state.storyId, state.refId);
+                const isLoading = story
+                  ? !!state.refs[state.refId] && !state.refs[state.refId].ready
+                  : !state.storiesFailed && !state.storiesConfigured;
 
                 return (
                   <ThemeProvider key="theme.provider" theme={ensureTheme(state.theme)}>
                     <App
                       key="app"
                       viewMode={state.viewMode}
-                      layout={state.layout}
+                      layout={isLoading ? { ...state.layout, showPanel: false } : state.layout}
                       panelCount={panelCount}
                       docsOnly={story && story.parameters && story.parameters.docsOnly}
                     />
