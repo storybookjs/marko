@@ -719,6 +719,10 @@ describe('preview.story_store', () => {
         Object {
           "a": Object {
             "name": "a",
+            "type": Object {
+              "name": "object",
+              "value": Object {},
+            },
           },
           "b": Object {
             "name": "b",
