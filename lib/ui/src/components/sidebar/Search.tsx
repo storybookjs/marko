@@ -71,6 +71,7 @@ const SearchField = styled.div(({ theme }) => ({
 }));
 
 const Input = styled.input(({ theme }) => ({
+  '-webkit-appearance': 'none',
   height: 28,
   paddingLeft: 28,
   paddingRight: 28,
