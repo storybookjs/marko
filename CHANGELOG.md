@@ -1,3 +1,13 @@
+## 6.1.0-beta.7 (November 11, 2020)
+
+### Bug Fixes
+
+- React: Don't create a new story function on every render ([#13069](https://github.com/storybookjs/storybook/pull/13069))
+- UI: FZAix search field styling in Safari 13 ([#13070](https://github.com/storybookjs/storybook/pull/13070))
+- Addon-docs: Fix spurious warnings ([#13075](https://github.com/storybookjs/storybook/pull/13075))
+- UI: Fix Escape key handling perf ([#13073](https://github.com/storybookjs/storybook/pull/13073))
+- Storyshots: Fix compatibility for jest-preset-angular 8.3+ ([#13060](https://github.com/storybookjs/storybook/pull/13060))
+
 ## 6.1.0-beta.6 (November 9, 2020)
 
 ### Bug Fixes
