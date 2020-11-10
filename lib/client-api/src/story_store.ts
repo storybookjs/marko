@@ -77,6 +77,14 @@ const checkStorySort = (parameters: Parameters) => {
   if (options?.storySort) logger.error('The storySort option parameter can only be set globally');
 };
 
+const storyFnWarning = deprecate(
+  () => {},
+  dedent`
+  \`storyFn\` is deprecated and will be removed in Storybook 7.0.
+
+  https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-storyfn`
+);
+
 interface AllowUnsafeOption {
   allowUnsafe?: boolean;
 }
@@ -410,25 +418,20 @@ export default class StoryStore {
 
     const storyParametersWithArgTypes = { ...storyParameters, argTypes, __isArgsStory };
 
-    const storyFn: LegacyStoryFn = deprecate(
-      (runtimeContext: StoryContext) =>
-        getDecorated()({
-          ...identification,
-          ...runtimeContext,
-          // Calculate "combined" parameters at render time (NOTE: for perf we could just use combinedParameters from above?)
-          parameters: this.combineStoryParameters(storyParametersWithArgTypes, kind),
-          hooks,
-          args: _stories[id].args,
-          argTypes,
-          globals: this._globals,
-          viewMode: this._selection?.viewMode,
-        }),
-      dedent`
-        \`storyFn\` is deprecated and will be removed in Storybook 7.0.
-
-        https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-storyfn
-      `
-    );
+    const storyFn: LegacyStoryFn = (runtimeContext: StoryContext) => {
+      storyFnWarning();
+      return getDecorated()({
+        ...identification,
+        ...runtimeContext,
+        // Calculate "combined" parameters at render time (NOTE: for perf we could just use combinedParameters from above?)
+        parameters: this.combineStoryParameters(storyParametersWithArgTypes, kind),
+        hooks,
+        args: _stories[id].args,
+        argTypes,
+        globals: this._globals,
+        viewMode: this._selection?.viewMode,
+      });
+    };
 
     const unboundStoryFn: LegacyStoryFn = (context: StoryContext) => getDecorated()(context);
 
