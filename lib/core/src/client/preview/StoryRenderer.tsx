@@ -10,7 +10,7 @@ import { logger } from '@storybook/client-logger';
 import { StoryStore } from '@storybook/client-api';
 
 import { NoDocs } from './NoDocs';
-import { RenderStoryFunction, RenderContext } from './types';
+import { RenderStoryFunction, RenderContextWithoutStoryContext } from './types';
 
 // We have "changed" story if this changes
 interface RenderMetadata {
@@ -108,7 +108,7 @@ export class StoryRenderer {
 
     this.applyLayout(metadata.viewMode === 'docs' ? 'fullscreen' : layout);
 
-    const context: RenderContext = {
+    const context: RenderContextWithoutStoryContext = {
       id: storyId, // <- in case data is null, at least we'll know what we tried to render
       ...data,
       forceRender,
@@ -126,7 +126,7 @@ export class StoryRenderer {
     context,
   }: {
     metadata: RenderMetadata;
-    context: RenderContext;
+    context: RenderContextWithoutStoryContext;
   }) {
     const { forceRender, name } = context;
 
@@ -267,13 +267,18 @@ export class StoryRenderer {
     document.getElementById('root').removeAttribute('hidden');
   }
 
-  async renderStory({ context, context: { id, getDecorated } }: { context: RenderContext }) {
+  async renderStory({
+    context,
+    context: { id, getDecorated },
+  }: {
+    context: RenderContextWithoutStoryContext;
+  }) {
     if (getDecorated) {
       try {
         const { applyLoaders, unboundStoryFn } = context;
         const storyContext = await applyLoaders();
         const storyFn = () => unboundStoryFn(storyContext);
-        await this.render({ ...context, storyFn });
+        await this.render({ ...context, storyContext, storyFn });
         this.channel.emit(Events.STORY_RENDERED, id);
       } catch (err) {
         this.renderException(err);
@@ -284,7 +289,13 @@ export class StoryRenderer {
     }
   }
 
-  renderDocs({ context, storyStore }: { context: RenderContext; storyStore: StoryStore }) {
+  renderDocs({
+    context,
+    storyStore,
+  }: {
+    context: RenderContextWithoutStoryContext;
+    storyStore: StoryStore;
+  }) {
     const { kind, parameters, id } = context;
     if (id === '*' || !parameters) {
       return;
