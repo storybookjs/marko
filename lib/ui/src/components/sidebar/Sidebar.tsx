@@ -142,6 +142,8 @@ export const Sidebar: FunctionComponent<SidebarProps> = React.memo(
                     getMenuProps={getMenuProps}
                     getItemProps={getItemProps}
                     highlightedIndex={highlightedIndex}
+                    enableShortcuts={enableShortcuts}
+                    isLoading={isLoading}
                   />
                 </Swap>
               )}
