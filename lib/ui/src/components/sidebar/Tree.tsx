@@ -84,7 +84,6 @@ const Node = React.memo<NodeProps>(
           data-selected={isSelected}
           data-highlightable={isDisplayed}
           depth={isOrphan ? item.depth : item.depth - 1}
-          isSelected={isSelected}
           href={getLink(item.id, refId)}
           onClick={(event) => {
             event.preventDefault();

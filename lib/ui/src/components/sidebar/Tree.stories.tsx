@@ -26,7 +26,7 @@ export const Full = () => {
       isMain
       refId={refId}
       data={stories}
-      highlightedItemId={storyId}
+      highlightedRef={{ current: { itemId: selectedId, refId } }}
       setHighlightedItemId={log}
       selectedStoryId={selectedId}
       onSelectStoryId={setSelectedId}
@@ -52,14 +52,14 @@ const tooltipStories = Object.keys(stories).reduce((acc, key) => {
 }, {} as StoriesHash);
 
 export const SingleStoryComponent = () => {
-  const [selectedId, setSelectedId] = React.useState('tooltip-tooltipselect--tooltipselect');
+  const [selectedId, setSelectedId] = React.useState('tooltip-tooltipbuildlist--default');
   return (
     <Tree
       isBrowsing
       isMain
       refId={refId}
       data={tooltipStories}
-      highlightedItemId="tooltip-tooltipselect--tooltipselect"
+      highlightedRef={{ current: { itemId: selectedId, refId } }}
       setHighlightedItemId={log}
       selectedStoryId={selectedId}
       onSelectStoryId={setSelectedId}

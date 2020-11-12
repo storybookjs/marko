@@ -71,35 +71,30 @@ const BranchNode = styled.button<{
   },
 }));
 
-const LeafNode = styled.a<{
-  depth?: number;
-  isSelected?: boolean;
-}>(
-  ({ theme, isSelected = false }) =>
-    isSelected
-      ? {
-          color: theme.color.lightest,
-          background: theme.color.secondary,
-          fontWeight: theme.typography.weight.bold,
-          '&:hover, &:focus': { background: theme.color.secondary },
-          svg: { color: theme.color.lightest },
-        }
-      : {
-          color: theme.color.defaultText,
-          background: 'transparent',
-          '&:hover, &:focus': { background: theme.background.hoverable },
-        },
-  ({ theme, depth = 0 }) => ({
-    cursor: 'pointer',
-    display: 'flex',
-    alignItems: 'start',
-    padding: 3,
-    paddingLeft: `${18 + depth * 16}px`,
-    fontSize: `${theme.typography.size.s2 - 1}px`,
-    textDecoration: 'none',
-    '&:hover, &:focus': { outline: 'none' },
-  })
-);
+const LeafNode = styled.a<{ depth?: number }>(({ theme, depth = 0 }) => ({
+  cursor: 'pointer',
+  display: 'flex',
+  alignItems: 'start',
+  padding: 3,
+  paddingLeft: `${18 + depth * 16}px`,
+  fontSize: `${theme.typography.size.s2 - 1}px`,
+  textDecoration: 'none',
+  color: theme.color.defaultText,
+  background: 'transparent',
+  '&:hover, &:focus': {
+    outline: 'none',
+    background: theme.background.hoverable,
+  },
+  '&[data-selected="true"]': {
+    color: theme.color.lightest,
+    background: theme.color.secondary,
+    fontWeight: theme.typography.weight.bold,
+    '&:hover, &:focus': {
+      background: theme.color.secondary,
+    },
+    svg: { color: theme.color.lightest },
+  },
+}));
 
 export const Path = styled.span(({ theme }) => ({
   display: 'grid',

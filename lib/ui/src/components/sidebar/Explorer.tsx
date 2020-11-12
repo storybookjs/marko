@@ -1,9 +1,9 @@
 import React, { FunctionComponent, useRef } from 'react';
-import { Global } from '@storybook/theming';
 
 import { Ref } from './Refs';
 import { CombinedDataset, Selection } from './types';
 import { useHighlighted } from './useHighlighted';
+import { HighlightStyles } from './HighlightStyles';
 
 export interface ExplorerProps {
   isLoading: boolean;
@@ -32,25 +32,7 @@ export const Explorer: FunctionComponent<ExplorerProps> = React.memo(
         data-highlighted-ref-id={highlighted?.refId}
         data-highlighted-item-id={highlighted?.itemId}
       >
-        {highlighted && (
-          <Global
-            styles={(theme) => ({
-              [`[data-ref-id="${highlighted.refId}"][data-item-id="${highlighted.itemId}"]:not([data-selected="true"])`]: {
-                [`&[data-nodetype="component"], &[data-nodetype="group"]`]: {
-                  background: `${theme.color.secondary}22`,
-                  '&:hover, &:focus': {
-                    background: `${theme.color.secondary}22`,
-                  },
-                },
-                [`&[data-nodetype="story"], &[data-nodetype="document"]`]: {
-                  color: theme.color.defaultText,
-                  background: `${theme.color.secondary}22`,
-                  '&:hover, &:focus': { background: `${theme.color.secondary}22` },
-                },
-              },
-            })}
-          />
-        )}
+        {highlighted && <HighlightStyles {...highlighted} />}
         {dataset.entries.map(([refId, ref]) => (
           <Ref
             {...ref}
