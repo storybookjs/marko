@@ -133,7 +133,7 @@ const Node = React.memo<NodeProps>(
         isExpanded={isExpanded}
         onClick={(event) => {
           event.preventDefault();
-          setExpanded({ ids: [id], value: !isExpanded });
+          setExpanded({ ids: [item.id], value: !isExpanded });
           if (item.isComponent && !isExpanded) onSelectStoryId(item.id);
         }}
       >

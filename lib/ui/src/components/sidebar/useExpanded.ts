@@ -88,6 +88,19 @@ export const useExpanded = ({
     [setHighlightedItemId]
   );
 
+  const updateExpanded = useCallback(
+    ({ ids, value }) => {
+      setExpanded({ ids, value });
+      if (ids.length === 1) {
+        const element = containerRef.current.querySelector(
+          `[data-item-id="${ids[0]}"][data-ref-id="${refId}"]`
+        );
+        if (element) highlightElement(element);
+      }
+    },
+    [containerRef, highlightElement, refId]
+  );
+
   // Expand the whole ancestry of the currently selected story whenever it changes.
   useEffect(() => {
     setExpanded({ ids: getAncestorIds(data, selectedStoryId), value: true });
@@ -147,9 +160,9 @@ export const useExpanded = ({
 
       if (event.key === 'ArrowRight') {
         if (isExpanded === 'false') {
-          setExpanded({ ids: [highlightedItemId], value: true });
+          updateExpanded({ ids: [highlightedItemId], value: true });
         } else if (isExpanded === 'true') {
-          setExpanded({ ids: getDescendantIds(data, highlightedItemId, true), value: true });
+          updateExpanded({ ids: getDescendantIds(data, highlightedItemId, true), value: true });
         }
       }
     }, 60);
@@ -165,14 +178,6 @@ export const useExpanded = ({
     setHighlightedItemId,
     onSelectStoryId,
   ]);
-
-  const updateExpanded = useCallback(
-    ({ ids, value }) => {
-      setExpanded({ ids, value });
-      if (ids.length === 1) setHighlightedItemId(ids[0]);
-    },
-    [setHighlightedItemId]
-  );
 
   return [expanded, updateExpanded];
 };
