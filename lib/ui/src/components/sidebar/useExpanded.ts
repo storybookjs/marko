@@ -51,6 +51,8 @@ export const useExpanded = ({
   selectedStoryId,
   onSelectStoryId,
 }: ExpandedProps): [Record<string, boolean>, Dispatch<ExpandAction>] => {
+  const highlightedRef = React.useRef<string>(highlightedItemId);
+
   // Track the set of currently expanded nodes within this tree.
   // Root nodes are expanded by default (and cannot be collapsed).
   const [expanded, setExpanded] = useReducer<
@@ -77,6 +79,11 @@ export const useExpanded = ({
     [setHighlightedItemId]
   );
 
+  // Keep track of the highlighted item in a ref, to avoid recreating the event listener each time it changes.
+  useEffect(() => {
+    highlightedRef.current = highlightedItemId;
+  }, [highlightedItemId]);
+
   // Expand the whole ancestry of the currently selected story whenever it changes.
   useEffect(() => {
     setExpanded({ ids: getAncestorIds(data, selectedStoryId), value: true });
@@ -85,12 +92,14 @@ export const useExpanded = ({
   // Expand, collapse or select nodes in the tree using keyboard shortcuts.
   useEffect(() => {
     const menuElement = document.getElementById('storybook-explorer-menu');
+
+    // Even though we ignore repeated events, use throttle because IE doesn't support event.repeat.
     const navigateTree = throttle((event: KeyboardEvent) => {
-      if (!isBrowsing || !event.key || !containerRef.current || !highlightedItemId) return;
-      if (event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) return;
+      if (!isBrowsing || !event.key || !containerRef.current || !highlightedRef.current) return;
+      if (event.repeat || event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) return;
       if (!['Enter', ' ', 'ArrowLeft', 'ArrowRight'].includes(event.key)) return;
 
-      const highlightedElement = getElementByDataItemId(highlightedItemId);
+      const highlightedElement = getElementByDataItemId(highlightedRef.current);
       if (!highlightedElement || highlightedElement.getAttribute('data-ref-id') !== refId) return;
 
       const target = event.target as Element;
@@ -104,7 +113,7 @@ export const useExpanded = ({
 
       const type = highlightedElement.getAttribute('data-nodetype');
       if (['Enter', ' '].includes(event.key) && ['component', 'story', 'document'].includes(type)) {
-        onSelectStoryId(highlightedItemId);
+        onSelectStoryId(highlightedRef.current);
       }
 
       const isExpanded = highlightedElement.getAttribute('aria-expanded');
@@ -112,7 +121,7 @@ export const useExpanded = ({
       if (event.key === 'ArrowLeft') {
         if (isExpanded === 'true') {
           // The highlighted node is expanded, so we collapse it.
-          setExpanded({ ids: [highlightedItemId], value: false });
+          setExpanded({ ids: [highlightedRef.current], value: false });
           return;
         }
 
@@ -126,18 +135,18 @@ export const useExpanded = ({
 
         // The parent can't be highlighted, which means it must be a root.
         // The highlighted node is already collapsed, so we collapse its descendants.
-        setExpanded({ ids: getDescendantIds(data, highlightedItemId, true), value: false });
+        setExpanded({ ids: getDescendantIds(data, highlightedRef.current, true), value: false });
         return;
       }
 
       if (event.key === 'ArrowRight') {
         if (isExpanded === 'false') {
-          setExpanded({ ids: [highlightedItemId], value: true });
+          setExpanded({ ids: [highlightedRef.current], value: true });
         } else if (isExpanded === 'true') {
-          setExpanded({ ids: getDescendantIds(data, highlightedItemId, true), value: true });
+          setExpanded({ ids: getDescendantIds(data, highlightedRef.current, true), value: true });
         }
       }
-    }, 16);
+    }, 60);
 
     document.addEventListener('keydown', navigateTree);
     return () => document.removeEventListener('keydown', navigateTree);
@@ -146,7 +155,7 @@ export const useExpanded = ({
     isBrowsing,
     refId,
     data,
-    highlightedItemId,
+    highlightedRef,
     setHighlightedItemId,
     onSelectStoryId,
   ]);
