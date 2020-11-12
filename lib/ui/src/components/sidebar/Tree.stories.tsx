@@ -34,6 +34,33 @@ export const Full = () => {
   );
 };
 
+const singleStoryComponent = {
+  single: {
+    name: 'Single',
+    id: 'single',
+    parent: false,
+    depth: 0,
+    children: ['single--single'],
+    isComponent: true,
+    isLeaf: false,
+    isRoot: false,
+  },
+  'single--single': {
+    id: 'single--single',
+    kind: 'Single',
+    name: 'Single',
+    story: 'Single',
+    args: {},
+    argTypes: {},
+    initialArgs: {},
+    depth: 1,
+    parent: 'single',
+    isLeaf: true,
+    isComponent: false,
+    isRoot: false,
+  },
+};
+
 const tooltipStories = Object.keys(stories).reduce((acc, key) => {
   if (key === 'tooltip-tooltipselect--default') {
     acc['tooltip-tooltipselect--tooltipselect'] = {
@@ -51,15 +78,15 @@ const tooltipStories = Object.keys(stories).reduce((acc, key) => {
   return acc;
 }, {} as StoriesHash);
 
-export const SingleStoryComponent = () => {
-  const [selectedId, setSelectedId] = React.useState('tooltip-tooltipselect--tooltipselect');
+export const SingleStoryComponents = () => {
+  const [selectedId, setSelectedId] = React.useState('tooltip-tooltipbuildlist--default');
   return (
     <Tree
       isBrowsing
       isMain
       refId={refId}
-      data={tooltipStories}
-      highlightedItemId="tooltip-tooltipselect--tooltipselect"
+      data={{ ...singleStoryComponent, ...tooltipStories } as StoriesHash}
+      highlightedItemId="tooltip-tooltipbuildlist--default"
       setHighlightedItemId={log}
       selectedStoryId={selectedId}
       onSelectStoryId={setSelectedId}

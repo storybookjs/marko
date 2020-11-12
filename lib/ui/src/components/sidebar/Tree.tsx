@@ -225,7 +225,7 @@ export const Tree = React.memo<{
     }, [data, rootIds, orphanIds]);
 
     // Create a list of component IDs which have exactly one story, which name exactly matches the component name.
-    const singleStoryComponents = useMemo(() => {
+    const singleStoryComponentIds = useMemo(() => {
       return orphansFirst.filter((nodeId) => {
         const { children = [], isComponent, isLeaf, name } = data[nodeId];
         return (
@@ -239,20 +239,21 @@ export const Tree = React.memo<{
     }, [data, orphansFirst]);
 
     // Omit single-story components from the list of nodes.
-    const collapsedItems = useMemo(
-      () => orphansFirst.filter((id) => !singleStoryComponents.includes(id)),
-      [orphansFirst, singleStoryComponents]
-    );
+    const collapsedItems = useMemo(() => {
+      return orphansFirst.filter((id) => !singleStoryComponentIds.includes(id));
+    }, [orphanIds, orphansFirst, singleStoryComponentIds]);
 
     // Rewrite the dataset to place the child story in place of the component.
     const collapsedData = useMemo(() => {
-      return singleStoryComponents.reduce(
+      return singleStoryComponentIds.reduce(
         (acc, id) => {
           const { children, parent } = data[id] as Group;
           const [childId] = children;
-          const siblings = [...data[parent].children];
-          siblings[siblings.indexOf(id)] = childId;
-          acc[parent] = { ...data[parent], children: siblings };
+          if (parent) {
+            const siblings = [...data[parent].children];
+            siblings[siblings.indexOf(id)] = childId;
+            acc[parent] = { ...data[parent], children: siblings };
+          }
           acc[childId] = { ...data[childId], parent, depth: data[childId].depth - 1 } as Story;
           return acc;
         },
