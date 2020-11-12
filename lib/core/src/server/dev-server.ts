@@ -374,12 +374,16 @@ export async function storybookDevServer(options: any) {
   const [previewResult, managerResult] = await Promise.all([
     startPreview({ startTime, options, configType, outputDir }),
     startManager({ startTime, options, configType, outputDir, configDir, prebuiltDir })
-      .then((result) => {
-        if (!options.ci) openInBrowser(address);
-        return result;
-      })
+      // TODO #13083 Restore this when compiling the preview is fast enough
+      // .then((result) => {
+      //   if (!options.ci) openInBrowser(address);
+      //   return result;
+      // })
       .catch(bailPreview),
   ]);
+
+  // TODO #13083 Remove this when compiling the preview is fast enough
+  if (!options.ci) openInBrowser(address);
 
   return { ...previewResult, ...managerResult, address, networkAddress };
 }
