@@ -260,6 +260,13 @@ export const Tree = React.memo<{
       );
     }, [data]);
 
+    const ancestry = useMemo(() => {
+      return collapsedItems.reduce(
+        (acc, id) => Object.assign(acc, { [id]: getAncestorIds(collapsedData, id) }),
+        {} as { [key: string]: string[] }
+      );
+    }, [collapsedItems, collapsedData]);
+
     // Track expanded nodes, keep it in sync with props and enable keyboard shortcuts.
     const [expanded, setExpanded] = useExpanded({
       containerRef,
@@ -300,8 +307,7 @@ export const Tree = React.memo<{
             );
           }
 
-          const isDisplayed =
-            !item.parent || getAncestorIds(collapsedData, itemId).every((a: string) => expanded[a]);
+          const isDisplayed = !item.parent || ancestry[itemId].every((a: string) => expanded[a]);
           return (
             <Node
               key={id}
