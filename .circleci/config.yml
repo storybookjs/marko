@@ -41,8 +41,8 @@ jobs:
       - restore_cache:
           name: Restore Yarn cache
           keys:
-            - build-yarn-cache-v1--{{ checksum "yarn.lock" }}
-            - build-yarn-cache-v1--
+            - build-yarn-cache-v2--{{ checksum "yarn.lock" }}
+            - build-yarn-cache-v2--
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
@@ -51,7 +51,7 @@ jobs:
           command: yarn bootstrap --core
       - save_cache:
           name: Save Yarn cache
-          key: build-yarn-cache-v1--{{ checksum "yarn.lock" }}
+          key: build-yarn-cache-v2--{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
       - persist_to_workspace:
@@ -70,14 +70,14 @@ jobs:
       - restore_cache:
           name: Restore Yarn cache
           keys:
-            - install-examples-deps-yarn-cache-v1--{{ checksum "yarn.lock" }}
-            - install-examples-deps-yarn-cache-v1--
+            - install-examples-deps-yarn-cache-v2--{{ checksum "yarn.lock" }}
+            - install-examples-deps-yarn-cache-v2--
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
       - save_cache:
           name: Save Yarn cache
-          key: install-examples-deps-yarn-cache-v1--{{ checksum "yarn.lock" }}
+          key: install-examples-deps-yarn-cache-v2--{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
       - persist_to_workspace:
@@ -97,14 +97,14 @@ jobs:
       - restore_cache:
           name: Restore Yarn cache
           keys:
-            - install-e2e-deps-yarn-cache-v1--{{ checksum "yarn.lock" }}
-            - install-e2e-deps-yarn-cache-v1--
+            - install-e2e-deps-yarn-cache-v2--{{ checksum "yarn.lock" }}
+            - install-e2e-deps-yarn-cache-v2--
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
       - save_cache:
           name: Save Yarn cache
-          key: install-e2e-deps-yarn-cache-v1--{{ checksum "yarn.lock" }}
+          key: install-e2e-deps-yarn-cache-v2--{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
       - persist_to_workspace:
@@ -358,10 +358,6 @@ jobs:
     executor: sb_node
     steps:
       - checkout
-      - restore_cache:
-          name: Restore core dependencies cache
-          keys:
-            - core-dependencies-v5-{{ checksum "yarn.lock" }}
       - run:
           name: Install dependencies
           command: yarn bootstrap --install
