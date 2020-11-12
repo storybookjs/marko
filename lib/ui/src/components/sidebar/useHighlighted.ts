@@ -29,7 +29,11 @@ export const useHighlighted = ({
   isBrowsing,
   dataset,
   selected,
-}: HighlightedProps): [Highlight, Dispatch<SetStateAction<Highlight>>] => {
+}: HighlightedProps): [
+  Highlight,
+  Dispatch<SetStateAction<Highlight>>,
+  MutableRefObject<Highlight>
+] => {
   const initialHighlight = fromSelection(selected);
   const highlightedRef = useRef<Highlight>(initialHighlight);
   const [highlighted, setHighlighted] = useState<Highlight>(initialHighlight);
@@ -108,5 +112,5 @@ export const useHighlighted = ({
     return () => document.removeEventListener('keydown', navigateTree);
   }, [isLoading, isBrowsing, highlightedRef, highlightElement]);
 
-  return [highlighted, updateHighlighted];
+  return [highlighted, updateHighlighted, highlightedRef];
 };
