@@ -88,8 +88,10 @@ export const useExpanded = ({
   }, [data, selectedStoryId]);
 
   const collapseAll = useCallback(() => {
-    setExpanded({ ids: Object.keys(data), value: false });
-  }, [data]);
+    const ids = Object.keys(data).filter(id => !rootIds.includes(id));
+    setExpanded({ ids, value: false });
+  }, [data, rootIds]);
+
   const expandAll = useCallback(() => {
     setExpanded({ ids: Object.keys(data), value: true });
   }, [data]);
