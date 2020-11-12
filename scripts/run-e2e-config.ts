@@ -46,6 +46,13 @@ export const angularv9: Parameters = {
   additionalDeps: ['core-js'],
 };
 
+export const angularv10: Parameters = {
+  ...baseAngular,
+  // There is no `v10-lts` tag for now, to update as soon as one is published
+  version: 'v10',
+  additionalDeps: ['core-js'],
+};
+
 export const angular: Parameters = baseAngular;
 
 // TODO: not working yet, help needed
