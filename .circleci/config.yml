@@ -31,7 +31,7 @@ executors:
 jobs:
   build:
     executor:
-      class: large
+      class: medium
       name: sb_node
     steps:
       - checkout
@@ -63,7 +63,7 @@ jobs:
             - lib
   install-examples-deps:
     executor:
-      class: large
+      class: medium
       name: sb_node
     steps:
       - checkout
@@ -87,7 +87,7 @@ jobs:
             - node_modules
   install-e2e-deps:
     executor:
-      class: large
+      class: medium
       name: sb_node
     steps:
       - checkout
@@ -138,7 +138,7 @@ jobs:
             yarn packtracker
   examples:
     executor:
-      class: large
+      class: medium
       name: sb_node
     parallelism: 11
     steps:
@@ -155,7 +155,7 @@ jobs:
             - built-storybooks
   publish:
     executor:
-      class: large
+      class: medium
       name: sb_node
     steps:
       - checkout
@@ -170,7 +170,7 @@ jobs:
             - .verdaccio-cache
   examples-v2:
     executor:
-      class: large
+      class: medium
       name: sb_node
     working_directory: /tmp/storybook
     parallelism: 10
