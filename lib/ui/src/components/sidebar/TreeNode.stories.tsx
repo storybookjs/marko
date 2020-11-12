@@ -1,4 +1,5 @@
 import React from 'react';
+import { HighlightStyles } from './HighlightStyles';
 
 import { ComponentNode, DocumentNode, GroupNode, StoryNode } from './TreeNode';
 
@@ -48,13 +49,24 @@ export const Nested = () => (
 
 export const Selection = () => (
   <>
-    <StoryNode>Default story</StoryNode>
-    <StoryNode isSelected>Selected story</StoryNode>
-    <StoryNode isHighlighted>Highlighted story</StoryNode>
-    <StoryNode isHighlighted isSelected>
+    <HighlightStyles refId="foo" itemId="bar" />
+    <StoryNode data-ref-id="baz" data-item-id="bar" data-nodetype="story" data-selected="false">
+      Default story
+    </StoryNode>
+    <StoryNode data-ref-id="baz" data-item-id="bar" data-nodetype="story" data-selected="true">
+      Selected story
+    </StoryNode>
+    <StoryNode data-ref-id="foo" data-item-id="bar" data-nodetype="story" data-selected="false">
+      Highlighted story
+    </StoryNode>
+    <StoryNode data-ref-id="foo" data-item-id="bar" data-nodetype="story" data-selected="true">
       Highlighted + Selected story
     </StoryNode>
-    <GroupNode>Default group</GroupNode>
-    <GroupNode isHighlighted>Highlighted group</GroupNode>
+    <GroupNode data-ref-id="foo" data-item-id="baz" data-nodetype="group" data-selected="false">
+      Default group
+    </GroupNode>
+    <GroupNode data-ref-id="foo" data-item-id="bar" data-nodetype="group" data-selected="false">
+      Highlighted group
+    </GroupNode>
   </>
 );

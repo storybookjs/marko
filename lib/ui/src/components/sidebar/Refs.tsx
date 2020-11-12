@@ -1,4 +1,11 @@
-import React, { FunctionComponent, useMemo, useState, useRef, useCallback } from 'react';
+import React, {
+  FunctionComponent,
+  useMemo,
+  useState,
+  useRef,
+  useCallback,
+  MutableRefObject,
+} from 'react';
 import { useStorybookApi } from '@storybook/api';
 import { styled } from '@storybook/theming';
 import { transparentize } from 'polished';
@@ -15,7 +22,7 @@ export interface RefProps {
   isLoading: boolean;
   isBrowsing: boolean;
   selectedStoryId: string | null;
-  highlightedItemId: string | null;
+  highlightedRef: MutableRefObject<Highlight>;
   setHighlighted: (highlight: Highlight) => void;
 }
 
@@ -99,7 +106,7 @@ export const Ref: FunctionComponent<RefType & RefProps> = React.memo((props) => 
     isLoading: isLoadingMain,
     isBrowsing,
     selectedStoryId,
-    highlightedItemId,
+    highlightedRef,
     setHighlighted,
     loginUrl,
     type,
@@ -156,7 +163,7 @@ export const Ref: FunctionComponent<RefType & RefProps> = React.memo((props) => 
               data={stories}
               selectedStoryId={selectedStoryId}
               onSelectStoryId={onSelectStoryId}
-              highlightedItemId={highlightedItemId}
+              highlightedRef={highlightedRef}
               setHighlightedItemId={setHighlightedItemId}
             />
           )}

@@ -26,7 +26,7 @@ export const Full = () => {
       isMain
       refId={refId}
       data={stories}
-      highlightedItemId={storyId}
+      highlightedRef={{ current: { itemId: selectedId, refId } }}
       setHighlightedItemId={log}
       selectedStoryId={selectedId}
       onSelectStoryId={setSelectedId}
@@ -86,7 +86,7 @@ export const SingleStoryComponents = () => {
       isMain
       refId={refId}
       data={{ ...singleStoryComponent, ...tooltipStories } as StoriesHash}
-      highlightedItemId="tooltip-tooltipbuildlist--default"
+      highlightedRef={{ current: { itemId: selectedId, refId } }}
       setHighlightedItemId={log}
       selectedStoryId={selectedId}
       onSelectStoryId={setSelectedId}
