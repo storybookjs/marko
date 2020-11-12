@@ -1,3 +1,14 @@
+## 6.1.0-rc.0 (November 12, 2020)
+
+### Bug Fixes
+
+- UI: Fix kebab-case CSS property error ([#13090](https://github.com/storybookjs/storybook/pull/13090))
+- UI: Fix single story hoisting at the root ([#13089](https://github.com/storybookjs/storybook/pull/13089))
+
+### Maintenance
+
+- UI: Disable instant-on manager for now ([#13084](https://github.com/storybookjs/storybook/pull/13084))
+
 ## 6.1.0-beta.7 (November 11, 2020)
 
 ### Bug Fixes
