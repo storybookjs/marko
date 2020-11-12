@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, useEffect, useState } from 'react';
 import { Zoom } from './Zoom';
 
 export default {
@@ -20,13 +20,6 @@ const EXAMPLE_ELEMENT = (
     }}
   />
 );
-
-const style: CSSProperties = {
-  width: '500px',
-  height: '500px',
-  border: '2px solid hotpink',
-  position: 'relative',
-};
 
 const TemplateElement = (args) => <Zoom.Element {...args} />;
 
@@ -51,13 +44,29 @@ elementZoomedOut.args = {
   children: EXAMPLE_ELEMENT,
 };
 
+const style: CSSProperties = {
+  width: '500px',
+  height: '500px',
+  border: '2px solid hotpink',
+  position: 'relative',
+};
+
 const TemplateIFrame = (args) => {
   const iFrameRef = React.useRef<HTMLIFrameElement>(null);
+  const [scale, setScale] = useState(1);
+  const [loaded, hasLoaded] = useState(false);
+
+  useEffect(() => {
+    if (loaded) {
+      setScale(args.scale);
+    }
+  }, [args.scale, loaded]);
   return (
-    <Zoom.IFrame iFrameRef={iFrameRef} {...args}>
+    <Zoom.IFrame iFrameRef={iFrameRef} scale={scale} active={args.active}>
       <iframe
         id="iframe"
         title="UI Panel"
+        onLoad={() => hasLoaded(true)}
         src="/iframe.html?id=ui-panel--default&viewMode=story"
         style={style}
         ref={iFrameRef}
