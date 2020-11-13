@@ -25,7 +25,7 @@ export interface SubAPI {
   restoreAllDefaultShortcuts(): Promise<Shortcuts>;
   restoreDefaultShortcut(action: Action): Promise<KeyCollection>;
   handleKeydownEvent(event: Event): void;
-  handleShortcutFeature(feature: Action): void;
+  handleShortcutFeature(feature: Action, event?: KeyboardEvent): void;
 }
 export type KeyCollection = string[];
 
@@ -122,11 +122,11 @@ export const init: ModuleFn = ({ store, fullAPI }) => {
         shortcutMatchesShortcut(shortcut, shortcuts[feature])
       );
       if (matchedFeature) {
-        api.handleShortcutFeature(matchedFeature);
+        api.handleShortcutFeature(matchedFeature, event);
       }
     },
 
-    handleShortcutFeature(feature) {
+    handleShortcutFeature(feature, event) {
       const {
         layout: { isFullscreen, showNav, showPanel },
         ui: { enableShortcuts },
@@ -205,11 +205,13 @@ export const init: ModuleFn = ({ store, fullAPI }) => {
         }
 
         case 'nextComponent': {
+          if (event) event.preventDefault();
           fullAPI.jumpToComponent(1);
           break;
         }
 
         case 'prevComponent': {
+          if (event) event.preventDefault();
           fullAPI.jumpToComponent(-1);
           break;
         }
@@ -266,10 +268,12 @@ export const init: ModuleFn = ({ store, fullAPI }) => {
           break;
         }
         case 'collapseAll': {
+          if (event) event.preventDefault();
           fullAPI.collapseAll();
           break;
         }
         case 'expandAll': {
+          if (event) event.preventDefault();
           fullAPI.expandAll();
           break;
         }
