@@ -25,7 +25,7 @@ export interface SubAPI {
   restoreAllDefaultShortcuts(): Promise<Shortcuts>;
   restoreDefaultShortcut(action: Action): Promise<KeyCollection>;
   handleKeydownEvent(event: Event): void;
-  handleShortcutFeature(feature: Action, event: KeyboardEvent): void;
+  handleShortcutFeature(feature: Action, event?: KeyboardEvent): void;
 }
 export type KeyCollection = string[];
 
