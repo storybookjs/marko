@@ -1,44 +1,47 @@
-import { useCallback, useEffect, useState } from 'react';
+import debounce from 'lodash/debounce';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import store from 'store2';
 
 import { Selection, StoryRef } from './types';
 
-const retrieveLastViewedStoryIds = (): StoryRef[] => {
-  const items = store.get('lastViewedStoryIds');
-  if (!items || !Array.isArray(items)) return [];
-  if (!items.some((item) => typeof item === 'object' && item.storyId && item.refId)) return [];
-  return items;
-};
+const save = debounce((value) => store.set('lastViewedStoryIds', value), 1000);
 
 export const useLastViewed = (selection: Selection) => {
-  const [lastViewed, setLastViewed] = useState(retrieveLastViewedStoryIds);
+  const initialLastViewedStoryIds = useMemo((): StoryRef[] => {
+    const items = store.get('lastViewedStoryIds');
+    if (!items || !Array.isArray(items)) return [];
+    if (!items.some((item) => typeof item === 'object' && item.storyId && item.refId)) return [];
+    return items;
+  }, [store]);
+
+  const lastViewedRef = useRef(initialLastViewedStoryIds);
 
   const updateLastViewed = useCallback(
-    (story: StoryRef) =>
-      setLastViewed((state: StoryRef[]) => {
-        const index = state.findIndex(
-          ({ storyId, refId }) => storyId === story.storyId && refId === story.refId
-        );
-        if (index === 0) return state;
-        const update =
-          index === -1
-            ? [story, ...state]
-            : [story, ...state.slice(0, index), ...state.slice(index + 1)];
-        store.set('lastViewedStoryIds', update);
-        return update;
-      }),
-    []
+    (story: StoryRef) => {
+      const items = lastViewedRef.current;
+      const index = items.findIndex(
+        ({ storyId, refId }) => storyId === story.storyId && refId === story.refId
+      );
+      if (index === 0) return;
+      if (index === -1) {
+        lastViewedRef.current = [story, ...items];
+      } else {
+        lastViewedRef.current = [story, ...items.slice(0, index), ...items.slice(index + 1)];
+      }
+      save(lastViewedRef.current);
+    },
+    [lastViewedRef]
   );
-
-  const clearLastViewed = useCallback(() => {
-    const update = selection ? [selection] : [];
-    setLastViewed(update);
-    store.set('lastViewedStoryIds', update);
-  }, [selection]);
 
   useEffect(() => {
     if (selection) updateLastViewed(selection);
   }, [selection]);
 
-  return { lastViewed, clearLastViewed };
+  return {
+    getLastViewed: useCallback(() => lastViewedRef.current, [lastViewedRef]),
+    clearLastViewed: useCallback(() => {
+      lastViewedRef.current = lastViewedRef.current.slice(0, 1);
+      save(lastViewedRef.current);
+    }, [lastViewedRef]),
+  };
 };
