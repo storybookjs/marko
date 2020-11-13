@@ -1,5 +1,6 @@
 import React, { FC, useContext } from 'react';
 import { document } from 'global';
+import { Args, ArgTypes, Parameters } from '@storybook/addons';
 import { Anchor } from './Anchor';
 import { DocsContext, DocsContextProps } from './DocsContext';
 import { getDocsStories } from './utils';
@@ -12,7 +13,9 @@ interface MetaProps {
   component?: Component;
   subcomponents?: Record<string, Component>;
   decorators?: [Decorator];
-  parameters?: any;
+  parameters?: Parameters;
+  args?: Args;
+  argTypes: ArgTypes;
 }
 
 function getFirstStoryId(docsContext: DocsContextProps): string {
