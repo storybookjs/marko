@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo, FunctionComponent, ReactElement } from 'react';
+import React, { Fragment, useMemo, FunctionComponent } from 'react';
 
 import { styled } from '@storybook/theming';
 

@@ -1,4 +1,4 @@
-import React, { Fragment, FunctionComponent, useMemo, useEffect, useRef } from 'react';
+import React, { Fragment, useMemo, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import merge from '@storybook/api/dist/lib/merge';
