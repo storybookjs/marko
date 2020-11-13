@@ -1,3 +1,10 @@
+## 6.1.0-rc.1 (November 13, 2020)
+
+### Maintenance
+
+- Angular: Support Angular 11 ([#13096](https://github.com/storybookjs/storybook/pull/13096))
+- UI: Tree highlight performance ([#13095](https://github.com/storybookjs/storybook/pull/13095))
+
 ## 6.1.0-rc.0 (November 12, 2020)
 
 ### Bug Fixes
