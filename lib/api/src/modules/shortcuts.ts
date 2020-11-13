@@ -205,13 +205,13 @@ export const init: ModuleFn = ({ store, fullAPI }) => {
         }
 
         case 'nextComponent': {
-          event.preventDefault();
+          if (event) event.preventDefault();
           fullAPI.jumpToComponent(1);
           break;
         }
 
         case 'prevComponent': {
-          event.preventDefault();
+          if (event) event.preventDefault();
           fullAPI.jumpToComponent(-1);
           break;
         }
@@ -268,12 +268,12 @@ export const init: ModuleFn = ({ store, fullAPI }) => {
           break;
         }
         case 'collapseAll': {
-          event.preventDefault();
+          if (event) event.preventDefault();
           fullAPI.collapseAll();
           break;
         }
         case 'expandAll': {
-          event.preventDefault();
+          if (event) event.preventDefault();
           fullAPI.expandAll();
           break;
         }
