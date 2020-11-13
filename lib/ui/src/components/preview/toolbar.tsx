@@ -137,7 +137,7 @@ export interface ToolData {
   story: Story | Group;
 }
 
-export const ToolRes = React.memo<ToolData & RenderData>(
+export const ToolRes: FunctionComponent<ToolData & RenderData> = React.memo<ToolData & RenderData>(
   ({ api, story, tabs, isShown, location, path, viewMode }) => {
     const { left, right } = useTools(api.getElements, tabs, viewMode, story, location, path);
 
