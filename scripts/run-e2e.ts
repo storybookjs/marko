@@ -239,10 +239,10 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
       logger.log();
     }
 
-    await initStorybook(options);
+    await addRequiredDeps(options);
     logger.log();
 
-    await addRequiredDeps(options);
+    await initStorybook(options);
     logger.log();
 
     await buildStorybook(options);
