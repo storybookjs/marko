@@ -7,8 +7,8 @@
     "build": "webpack"
   },
   "dependencies": {
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3 || ^17.0.0"
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
@@ -16,6 +16,6 @@
     "@babel/preset-react": "7.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-loader": "^8.0.5",
-    "webpack": "^4.33.0"
+    "webpack": "^4.44.2"
   }
 }

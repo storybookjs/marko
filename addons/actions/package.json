@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-actions",
-  "version": "6.1.0-alpha.35",
+  "version": "6.1.0-rc.2",
   "description": "Action Logger addon for storybook",
   "keywords": [
     "storybook"
@@ -28,20 +28,18 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-alpha.35",
-    "@storybook/api": "6.1.0-alpha.35",
-    "@storybook/client-api": "6.1.0-alpha.35",
-    "@storybook/components": "6.1.0-alpha.35",
-    "@storybook/core-events": "6.1.0-alpha.35",
-    "@storybook/theming": "6.1.0-alpha.35",
+    "@storybook/addons": "6.1.0-rc.2",
+    "@storybook/api": "6.1.0-rc.2",
+    "@storybook/client-api": "6.1.0-rc.2",
+    "@storybook/components": "6.1.0-rc.2",
+    "@storybook/core-events": "6.1.0-rc.2",
+    "@storybook/theming": "6.1.0-rc.2",
     "core-js": "^3.0.1",
     "fast-deep-equal": "^3.1.1",
     "global": "^4.3.2",
     "lodash": "^4.17.15",
     "polished": "^3.4.4",
     "prop-types": "^15.7.2",
-    "react": "^16.8.3 || ^17.0.0",
-    "react-dom": "^16.8.3 || ^17.0.0",
     "react-inspector": "^5.0.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0",
@@ -51,12 +49,24 @@
   "devDependencies": {
     "@types/lodash": "^4.14.150",
     "@types/uuid": "^7.0.3",
-    "@types/webpack-env": "^1.15.2"
+    "@types/webpack-env": "^1.15.3"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4a4c98997fe9b0f791f30fd168d867423ffcf730",
+  "gitHead": "38bb07161a72720766a1e9b2c9a1661bd3d819b0",
   "typesVersions": {
     "<3.8": {
       "*": [

@@ -52,6 +52,24 @@ By default the top-level grouping will be displayed as a “root” in the UI (t
 
 We recommend naming components according to the file hierarchy.
 
+## Single story hoisting
+
+Stories which have **no siblings** (i.e. the component has only one story) and which name **exactly matches** the component name will be hoisted up to replace their parent component in the sidebar. This means you can have stories files like this:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/button-story-hoisted.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+This will then be visually presented in the sidebar like this:
+
+![Stories hierarchy with single story hoisting](./naming-hierarchy-single-story-hoisting.png)
+
 ## Sorting stories
 
 By default, stories are sorted in the order in which they were imported. This can be overridden by adding `storySort` to the `options` parameters in your `preview.js` file.

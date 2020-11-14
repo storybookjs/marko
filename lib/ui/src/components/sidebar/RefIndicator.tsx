@@ -31,8 +31,8 @@ const IndicatorPlacement = styled.aside(({ theme }) => ({
 }));
 
 const IndicatorClickTarget = styled.button(({ theme }) => ({
-  height: 21,
-  width: 21,
+  height: 20,
+  width: 20,
   padding: 0,
   margin: 0,
   display: 'flex',
@@ -56,8 +56,8 @@ const IndicatorClickTarget = styled.button(({ theme }) => ({
     borderColor: theme.color.secondary,
   },
   svg: {
-    height: 11,
-    width: 11,
+    height: 10,
+    width: 10,
     transition: 'all 150ms ease-out',
     color: 'inherit',
   },

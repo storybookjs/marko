@@ -1,25 +1,25 @@
 {
   "name": "@storybook/example-devkits",
-  "version": "6.1.0-alpha.35",
+  "version": "6.1.0-rc.2",
   "private": true,
   "scripts": {
     "build-storybook": "cross-env STORYBOOK_DISPLAY_WARNING=true DISPLAY_WARNING=true build-storybook -c ./",
-    "debug": "cross-env NODE_OPTIONS=--inspect-brk STORYBOOK_DISPLAY_WARNING=true DISPLAY_WARNING=true start-storybook -p 9011 -c ./ --no-dll",
-    "storybook": "cross-env STORYBOOK_DISPLAY_WARNING=true DISPLAY_WARNING=true start-storybook -p 9011 -c ./ --no-dll"
+    "debug": "cross-env NODE_OPTIONS=--inspect-brk STORYBOOK_DISPLAY_WARNING=true DISPLAY_WARNING=true start-storybook -p 9011 -c ./",
+    "storybook": "cross-env STORYBOOK_DISPLAY_WARNING=true DISPLAY_WARNING=true start-storybook -p 9011 -c ./"
   },
   "devDependencies": {
-    "@storybook/addon-decorator": "6.1.0-alpha.35",
-    "@storybook/addon-parameter": "6.1.0-alpha.35",
-    "@storybook/addon-preview-wrapper": "6.1.0-alpha.35",
-    "@storybook/addon-roundtrip": "6.1.0-alpha.35",
-    "@storybook/addons": "6.1.0-alpha.35",
-    "@storybook/api": "6.1.0-alpha.35",
-    "@storybook/client-api": "6.1.0-alpha.35",
-    "@storybook/components": "6.1.0-alpha.35",
-    "@storybook/core-events": "6.1.0-alpha.35",
-    "@storybook/node-logger": "6.1.0-alpha.35",
-    "@storybook/react": "6.1.0-alpha.35",
-    "@storybook/theming": "6.1.0-alpha.35",
+    "@storybook/addon-decorator": "6.1.0-rc.2",
+    "@storybook/addon-parameter": "6.1.0-rc.2",
+    "@storybook/addon-preview-wrapper": "6.1.0-rc.2",
+    "@storybook/addon-roundtrip": "6.1.0-rc.2",
+    "@storybook/addons": "6.1.0-rc.2",
+    "@storybook/api": "6.1.0-rc.2",
+    "@storybook/client-api": "6.1.0-rc.2",
+    "@storybook/components": "6.1.0-rc.2",
+    "@storybook/core-events": "6.1.0-rc.2",
+    "@storybook/node-logger": "6.1.0-rc.2",
+    "@storybook/react": "6.1.0-rc.2",
+    "@storybook/theming": "6.1.0-rc.2",
     "cors": "^2.8.5",
     "cross-env": "^7.0.0",
     "enzyme-to-json": "^3.4.1",
@@ -32,11 +32,11 @@
     "jest-emotion": "^10.0.17",
     "paths.macro": "^2.0.2",
     "prop-types": "^15.7.2",
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3 || ^17.0.0",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
     "ts-loader": "^6.2.0",
     "uuid": "^8.0.0",
-    "webpack": "^4.33.0"
+    "webpack": "^4.44.2"
   },
   "storybook": {
     "chromatic": {

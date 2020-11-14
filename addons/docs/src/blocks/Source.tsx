@@ -52,15 +52,9 @@ const getStoryContext = (storyId: StoryId, docsContext: DocsContextProps): Story
 
 const getStorySource = (storyId: StoryId, sourceContext: SourceContextProps): string => {
   const { sources } = sourceContext;
-
-  const source = sources?.[storyId];
-
-  if (!source) {
-    logger.warn(`Unable to find source for story ID '${storyId}'`);
-    return '';
-  }
-
-  return source;
+  // source rendering is async so source is unavailable at the start of the render cycle,
+  // so we fail gracefully here without warning
+  return sources?.[storyId] || '';
 };
 
 const getSnippet = (snippet: string, storyContext?: StoryContext): string => {

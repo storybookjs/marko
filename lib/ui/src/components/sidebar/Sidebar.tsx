@@ -119,7 +119,15 @@ export const Sidebar: FunctionComponent<SidebarProps> = React.memo(
               enableShortcuts={enableShortcuts}
               {...lastViewed}
             >
-              {({ query, results, isBrowsing, getMenuProps, getItemProps, highlightedIndex }) => (
+              {({
+                query,
+                results,
+                isBrowsing,
+                closeMenu,
+                getMenuProps,
+                getItemProps,
+                highlightedIndex,
+              }) => (
                 <Swap condition={isBrowsing}>
                   <Explorer
                     dataset={dataset}
@@ -130,9 +138,12 @@ export const Sidebar: FunctionComponent<SidebarProps> = React.memo(
                   <SearchResults
                     query={query}
                     results={results}
+                    closeMenu={closeMenu}
                     getMenuProps={getMenuProps}
                     getItemProps={getItemProps}
                     highlightedIndex={highlightedIndex}
+                    enableShortcuts={enableShortcuts}
+                    isLoading={isLoading}
                   />
                 </Swap>
               )}

@@ -31,7 +31,7 @@ executors:
 jobs:
   build:
     executor:
-      class: large
+      class: medium
       name: sb_node
     steps:
       - checkout
@@ -41,8 +41,8 @@ jobs:
       - restore_cache:
           name: Restore Yarn cache
           keys:
-            - build-yarn-cache-v1--{{ checksum "yarn.lock" }}
-            - build-yarn-cache-v1--
+            - build-yarn-cache-v2--{{ checksum "yarn.lock" }}
+            - build-yarn-cache-v2--
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
@@ -51,7 +51,7 @@ jobs:
           command: yarn bootstrap --core
       - save_cache:
           name: Save Yarn cache
-          key: build-yarn-cache-v1--{{ checksum "yarn.lock" }}
+          key: build-yarn-cache-v2--{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
       - persist_to_workspace:
@@ -63,21 +63,21 @@ jobs:
             - lib
   install-examples-deps:
     executor:
-      class: large
+      class: medium
       name: sb_node
     steps:
       - checkout
       - restore_cache:
           name: Restore Yarn cache
           keys:
-            - install-examples-deps-yarn-cache-v1--{{ checksum "yarn.lock" }}
-            - install-examples-deps-yarn-cache-v1--
+            - install-examples-deps-yarn-cache-v2--{{ checksum "yarn.lock" }}
+            - install-examples-deps-yarn-cache-v2--
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
       - save_cache:
           name: Save Yarn cache
-          key: install-examples-deps-yarn-cache-v1--{{ checksum "yarn.lock" }}
+          key: install-examples-deps-yarn-cache-v2--{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
       - persist_to_workspace:
@@ -87,7 +87,7 @@ jobs:
             - node_modules
   install-e2e-deps:
     executor:
-      class: large
+      class: medium
       name: sb_node
     steps:
       - checkout
@@ -97,14 +97,14 @@ jobs:
       - restore_cache:
           name: Restore Yarn cache
           keys:
-            - install-e2e-deps-yarn-cache-v1--{{ checksum "yarn.lock" }}
-            - install-e2e-deps-yarn-cache-v1--
+            - install-e2e-deps-yarn-cache-v2--{{ checksum "yarn.lock" }}
+            - install-e2e-deps-yarn-cache-v2--
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
       - save_cache:
           name: Save Yarn cache
-          key: install-e2e-deps-yarn-cache-v1--{{ checksum "yarn.lock" }}
+          key: install-e2e-deps-yarn-cache-v2--{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
       - persist_to_workspace:
@@ -138,7 +138,7 @@ jobs:
             yarn packtracker
   examples:
     executor:
-      class: large
+      class: medium
       name: sb_node
     parallelism: 11
     steps:
@@ -155,7 +155,7 @@ jobs:
             - built-storybooks
   publish:
     executor:
-      class: large
+      class: medium
       name: sb_node
     steps:
       - checkout
@@ -170,7 +170,7 @@ jobs:
             - .verdaccio-cache
   examples-v2:
     executor:
-      class: large
+      class: medium
       name: sb_node
     working_directory: /tmp/storybook
     parallelism: 10
@@ -228,38 +228,6 @@ jobs:
       - run:
           name: Run @storybook/bench on a CRA project
           command: yarn test:e2e-framework cra_bench
-      - store_artifacts:
-          path: /tmp/storybook/cypress
-          destination: cypress
-  examples-v2-angular:
-    executor:
-      class: medium
-      name: sb_node_12
-    working_directory: /tmp/storybook
-    parallelism: 2
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - run:
-          name: Running local registry
-          command: yarn local-registry --port 6000 --open
-          background: true
-      - run:
-          name: Wait for registry
-          command: yarn wait-on http://localhost:6000
-      - run:
-          name: Set registry
-          command: yarn config set registry http://localhost:6000/
-      - run:
-          name: Test local registry
-          command: yarn info @storybook/core
-      - run:
-          name: Install Cypress binary
-          command: yarn cypress install
-      - run:
-          name: Run e2e tests
-          command: yarn test:e2e-framework angular@latest angular@v9-lts
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
@@ -390,10 +358,6 @@ jobs:
     executor: sb_node
     steps:
       - checkout
-      - restore_cache:
-          name: Restore core dependencies cache
-          keys:
-            - core-dependencies-v5-{{ checksum "yarn.lock" }}
       - run:
           name: Install dependencies
           command: yarn bootstrap --install
@@ -476,9 +440,6 @@ workflows:
             - install-e2e-deps
             - build
       - examples-v2:
-          requires:
-            - publish
-      - examples-v2-angular:
           requires:
             - publish
       - examples-v2-yarn-2:

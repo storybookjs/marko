@@ -4,6 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { stories } from './mockdata.large';
 import { Search } from './Search';
 import { SearchResults } from './SearchResults';
+import { noResults } from './SearchResults.stories';
 import { DEFAULT_REF_ID } from './data';
 import { Selection } from './types';
 
@@ -31,16 +32,17 @@ export const Simple = () => <Search {...baseProps}>{() => null}</Search>;
 
 export const FilledIn = () => (
   <Search {...baseProps} initialQuery="Search query">
-    {() => null}
+    {() => <SearchResults {...noResults} />}
   </Search>
 );
 
 export const LastViewed = () => (
   <Search {...baseProps} lastViewed={lastViewed}>
-    {({ query, results, getMenuProps, getItemProps, highlightedIndex }) => (
+    {({ query, results, closeMenu, getMenuProps, getItemProps, highlightedIndex }) => (
       <SearchResults
         query={query}
         results={results}
+        closeMenu={closeMenu}
         getMenuProps={getMenuProps}
         getItemProps={getItemProps}
         highlightedIndex={highlightedIndex}

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-storyshots",
-  "version": "6.1.0-alpha.35",
+  "version": "6.1.0-rc.2",
   "description": "StoryShots is a Jest Snapshot Testing Addon for Storybook.",
   "keywords": [
     "addon",
@@ -33,9 +33,9 @@
   },
   "dependencies": {
     "@jest/transform": "^26.0.0",
-    "@storybook/addons": "6.1.0-alpha.35",
-    "@storybook/client-api": "6.1.0-alpha.35",
-    "@storybook/core": "6.1.0-alpha.35",
+    "@storybook/addons": "6.1.0-rc.2",
+    "@storybook/client-api": "6.1.0-rc.2",
+    "@storybook/core": "6.1.0-rc.2",
     "@types/glob": "^7.1.1",
     "@types/jest": "^25.1.1",
     "@types/jest-specific-snapshot": "^0.5.3",
@@ -45,16 +45,14 @@
     "global": "^4.3.2",
     "jest-specific-snapshot": "^4.0.0",
     "pretty-format": "^26.4.0",
-    "react": "^16.8.3 || ^17.0.0",
-    "react-dom": "^16.8.3 || ^17.0.0",
-    "react-test-renderer": "^16.8.3",
+    "react-test-renderer": "^16.8.0 || ^17.0.0",
     "read-pkg-up": "^7.0.0",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
-    "@storybook/addon-docs": "6.1.0-alpha.35",
-    "@storybook/react": "6.1.0-alpha.35",
+    "@storybook/addon-docs": "6.1.0-rc.2",
+    "@storybook/react": "6.1.0-rc.2",
     "babel-loader": "^8.0.6",
     "enzyme": "^3.11.0",
     "enzyme-to-json": "^3.4.1",
@@ -66,6 +64,8 @@
     "@storybook/vue": "*",
     "jest-preset-angular": "*",
     "jest-vue-preprocessor": "*",
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0",
     "vue": "*"
   },
   "peerDependenciesMeta": {
@@ -78,6 +78,12 @@
     "jest-vue-preprocessor": {
       "optional": true
     },
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    },
     "vue": {
       "optional": true
     }
@@ -85,7 +91,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4a4c98997fe9b0f791f30fd168d867423ffcf730",
+  "gitHead": "38bb07161a72720766a1e9b2c9a1661bd3d819b0",
   "typesVersions": {
     "<3.8": {
       "*": [

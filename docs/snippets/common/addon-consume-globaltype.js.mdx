@@ -13,7 +13,7 @@ const ThemePanel = props => {
       {theme ? (
         <Spaced row={3} outer={1}>
           <Title>{theme.name}</Title>
-          <p>The full theme object/p>
+          <p>The full theme object</p>
           <Source code={JSON.stringify(theme, null, 2)} language="js" copyable padded showLineNumbers />
         </Spaced>
       ) : (

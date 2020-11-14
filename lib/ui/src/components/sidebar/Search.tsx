@@ -18,6 +18,7 @@ import {
   isSearchResult,
   isExpandType,
   isClearType,
+  isCloseType,
 } from './types';
 import { searchItem } from './utils';
 
@@ -70,6 +71,7 @@ const SearchField = styled.div(({ theme }) => ({
 }));
 
 const Input = styled.input(({ theme }) => ({
+  appearance: 'none',
   height: 28,
   paddingLeft: 28,
   paddingRight: 28,
@@ -268,6 +270,11 @@ export const Search: FunctionComponent<{
             // Nothing to see anymore, so return to the tree view
             return { isOpen: false };
           }
+          if (isCloseType(changes.selectedItem)) {
+            inputRef.current.blur();
+            // Return to the tree view
+            return { isOpen: false };
+          }
           return changes;
         }
 
@@ -294,6 +301,7 @@ export const Search: FunctionComponent<{
       {({
         isOpen,
         openMenu,
+        closeMenu,
         inputValue,
         clearSelection,
         getInputProps,
@@ -322,6 +330,7 @@ export const Search: FunctionComponent<{
             }
             return acc;
           }, []);
+          results.push({ closeMenu });
           if (results.length > 0) {
             results.push({ clearLastViewed });
           }
@@ -354,6 +363,7 @@ export const Search: FunctionComponent<{
                 query: input,
                 results,
                 isBrowsing: !isOpen && document.activeElement !== inputRef.current,
+                closeMenu,
                 getMenuProps,
                 getItemProps,
                 highlightedIndex,
