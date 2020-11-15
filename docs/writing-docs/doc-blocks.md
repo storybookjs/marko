@@ -83,9 +83,9 @@ The API documentation of `ArgTypes` is detailed in a [separate section](../api/a
 | **type.required**              |                         The stories to be show, ordered by supplied name                         |
 | **description**                |                             A Markdown description for the property                              |
 | **table.type.summary**         |                                   A short version of the type                                    |
-| **table.type.detail**          |                                   A short version of the type                                    |
-| **table.defaultValue.summary** |                                   A short version of the type                                    |
-| **table.defaultValue.detail**  |                                   A short version of the type                                    |
+| **table.type.detail**          |                                   A long version of the type                                     |
+| **table.defaultValue.summary** |                                   A short version of the default value                           |
+| **table.defaultValue.detail**  |                                   A long version of the default value                            |
 | **control**                    | See [addon-controls README ](https://github.com/storybookjs/storybook/tree/next/addons/controls) |
 
 For instance:
