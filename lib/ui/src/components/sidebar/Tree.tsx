@@ -16,6 +16,7 @@ export const Action = styled.button(({ theme }) => ({
   width: 20,
   height: 20,
   margin: 0,
+  marginLeft: 'auto',
   padding: 0,
   outline: 0,
   lineHeight: 'normal',
@@ -90,6 +91,7 @@ const Node = React.memo<NodeProps>(
             onSelectStoryId(item.id);
           }}
         >
+          {item.prefix}
           {item.name}
         </LeafNode>
       );
@@ -98,7 +100,10 @@ const Node = React.memo<NodeProps>(
     if (isRoot(item)) {
       return (
         <RootNode key={id} id={id} data-ref-id={refId} data-item-id={item.id} data-nodetype="root">
-          {item.name}
+          <span>
+            {item.prefix}
+            {item.name}
+          </span>
           <Action
             type="button"
             data-action="expand-all"
@@ -136,6 +141,7 @@ const Node = React.memo<NodeProps>(
           if (item.isComponent && !isExpanded) onSelectStoryId(item.id);
         }}
       >
+        {item.prefix}
         {item.name}
       </BranchNode>
     );

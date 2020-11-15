@@ -123,7 +123,6 @@ export const Path = styled.span(({ theme }) => ({
 export const RootNode = styled.span(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'space-between',
   margin: '16px 20px 4px 20px',
   fontSize: `${theme.typography.size.s1 - 1}px`,
   fontWeight: theme.typography.weight.black,

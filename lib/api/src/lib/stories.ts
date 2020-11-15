@@ -1,3 +1,4 @@
+import React from 'react';
 import deprecate from 'util-deprecate';
 import dedent from 'ts-dedent';
 import { sanitize } from '@storybook/csf';
@@ -19,6 +20,7 @@ export interface Root {
   isComponent: false;
   isRoot: true;
   isLeaf: false;
+  prefix?: React.ReactNode;
 }
 
 export interface Group {
@@ -31,6 +33,7 @@ export interface Group {
   isComponent: boolean;
   isRoot: false;
   isLeaf: false;
+  prefix?: React.ReactNode;
   // MDX docs-only stories are "Group" type
   parameters?: {
     docsOnly?: boolean;
@@ -49,6 +52,7 @@ export interface Story {
   isComponent: boolean;
   isRoot: false;
   isLeaf: true;
+  prefix?: React.ReactNode;
   parameters?: {
     fileName: string;
     options: {
@@ -67,6 +71,7 @@ export interface StoryInput {
   refId?: string;
   kind: StoryKind;
   children: string[];
+  prefix?: React.ReactNode;
   parameters: {
     fileName: string;
     options: {
@@ -152,7 +157,7 @@ export const transformStoriesRawToStoriesHash = (
     .filter(Boolean)
     .reduce((acc, item) => {
       const { kind, parameters } = item;
-      const { showRoots } = provider.getConfig();
+      const { showRoots, storyPrefix = {} } = provider.getConfig();
 
       const setShowRoots = typeof showRoots !== 'undefined';
       if (anyKindMatchesOldHierarchySeparators && !setShowRoots) {
@@ -197,6 +202,7 @@ export const transformStoriesRawToStoriesHash = (
               isComponent: false,
               isLeaf: false,
               isRoot: true,
+              prefix: storyPrefix[id],
             };
             return soFar.concat([result]);
           }
@@ -209,6 +215,7 @@ export const transformStoriesRawToStoriesHash = (
             isComponent: false,
             isLeaf: false,
             isRoot: false,
+            prefix: storyPrefix[id],
             parameters: {
               docsOnly: parameters?.docsOnly,
               viewMode: parameters?.viewMode,
@@ -236,6 +243,7 @@ export const transformStoriesRawToStoriesHash = (
         isLeaf: true,
         isComponent: false,
         isRoot: false,
+        prefix: storyPrefix[item.id],
       };
       acc[item.id] = story;
 
