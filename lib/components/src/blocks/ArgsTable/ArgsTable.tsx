@@ -226,6 +226,8 @@ export enum ArgsTableError {
   ARGS_UNSUPPORTED = 'Args unsupported. See Args documentation for your framework.',
 }
 
+type SortType = 'ascending' | 'descending' | 'requiredFirst';
+
 export interface ArgsTableRowProps {
   rows: ArgTypes;
   args?: Args;
@@ -234,6 +236,7 @@ export interface ArgsTableRowProps {
   compact?: boolean;
   inAddonPanel?: boolean;
   initialExpandedArgs?: boolean;
+  sort?: SortType;
 }
 
 export interface ArgsTableErrorProps {
@@ -254,7 +257,7 @@ type Sections = {
   sections: Record<string, Section>;
 };
 
-const groupRows = (rows: ArgType) => {
+const groupRows = (rows: ArgType, sort: SortType) => {
   const sections: Sections = { ungrouped: [], ungroupedSubsections: {}, sections: {} };
   if (!rows) return sections;
 
@@ -278,7 +281,47 @@ const groupRows = (rows: ArgType) => {
       sections.ungrouped.push({ key, ...row });
     }
   });
-  return sections;
+
+  // apply sort
+  const sortFn = (a: ArgType, b: ArgType) => {
+    const sortFns: Record<SortType, () => number> = {
+      ascending: () => a.name.localeCompare(b.name),
+      descending: () => b.name.localeCompare(a.name),
+      requiredFirst: () => {
+        return (
+          Number(!!b.type?.required) - Number(!!a.type?.required) || a.name.localeCompare(b.name)
+        );
+      },
+    };
+    return sortFns[sort]();
+  };
+
+  const sortSubsection = (record: Record<string, Subsection>) => {
+    return Object.keys(record).reduce<Record<string, Subsection>>(
+      (acc, cur) => ({
+        ...acc,
+        [cur]: record[cur].sort(sortFn),
+      }),
+      {}
+    );
+  };
+
+  const sorted = {
+    ungrouped: sections.ungrouped.sort(sortFn),
+    ungroupedSubsections: sortSubsection(sections.ungroupedSubsections),
+    sections: Object.keys(sections.sections).reduce<Record<string, Section>>(
+      (acc, cur) => ({
+        ...acc,
+        [cur]: {
+          ungrouped: sections.sections[cur].ungrouped.sort(sortFn),
+          subsections: sortSubsection(sections.sections[cur].subsections),
+        },
+      }),
+      {}
+    ),
+  };
+
+  return sorted;
 };
 
 /**
@@ -306,9 +349,13 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
     compact,
     inAddonPanel,
     initialExpandedArgs,
+    sort = 'ascending',
   } = props as ArgsTableRowProps;
 
-  const groups = groupRows(pickBy(rows, (row) => !row?.table?.disable));
+  const groups = groupRows(
+    pickBy(rows, (row) => !row?.table?.disable),
+    sort
+  );
 
   if (
     groups.ungrouped.length === 0 &&
