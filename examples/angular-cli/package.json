@@ -29,7 +29,6 @@
     "core-js": "^3.0.1",
     "node-sass": "^4.14.0",
     "rxjs": "^6.3.3",
-    "rxjs-compat": "^6.4.0",
     "zone.js": "^0.10.2"
   },
   "devDependencies": {

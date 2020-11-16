@@ -1,6 +1,6 @@
 /* eslint-disable no-irregular-whitespace */
 import path from 'path';
-import { remove, ensureDir, pathExists, writeFile, readJSON, writeJSON } from 'fs-extra';
+import { remove, ensureDir, pathExists, writeFile, writeJSON } from 'fs-extra';
 import { prompt } from 'enquirer';
 import pLimit from 'p-limit';
 
@@ -8,8 +8,6 @@ import shell from 'shelljs';
 import program from 'commander';
 import { serve } from './utils/serve';
 import { exec } from './utils/command';
-// @ts-ignore
-import { listOfPackages } from './utils/list-packages';
 // @ts-ignore
 import { filterDataForCurrentCircleCINode } from './utils/concurrency';
 
@@ -137,30 +135,6 @@ const initStorybook = async ({ cwd, autoDetect = true, name }: Options) => {
   }
 };
 
-// Verdaccio doesn't resolve *
-// So we set resolutions manually in package.json
-const setResolutions = async ({ cwd }: Options) => {
-  logger.info(`🔒 Setting yarn resolutions`);
-
-  const packages = await listOfPackages();
-
-  const packageJsonPath = path.resolve(cwd, 'package.json');
-  const packageJson = await readJSON(packageJsonPath, { encoding: 'utf8' });
-
-  packageJson.resolutions = {
-    ...packageJson.resolutions,
-    ...packages.reduce(
-      (acc, { name, version }) => ({
-        ...acc,
-        [name]: version,
-      }),
-      {}
-    ),
-  };
-
-  await writeJSON(packageJsonPath, packageJson, { encoding: 'utf8', spaces: 2 });
-};
-
 const addRequiredDeps = async ({ cwd, additionalDeps }: Options) => {
   logger.info(`🌍 Adding needed deps & installing all deps`);
   try {
@@ -260,18 +234,15 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
     await generate({ ...options, cwd: siblingDir });
     logger.log();
 
-    await setResolutions(options);
-    logger.log();
-
     if (options.typescript) {
       await addTypescript(options);
       logger.log();
     }
 
-    await initStorybook(options);
+    await addRequiredDeps(options);
     logger.log();
 
-    await addRequiredDeps(options);
+    await initStorybook(options);
     logger.log();
 
     await buildStorybook(options);
