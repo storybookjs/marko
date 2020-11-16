@@ -1,3 +1,101 @@
+## 6.1.0-rc.3 (November 16, 2020)
+
+### Maintenance
+
+- Addon-docs: Export SourceContainer context ([#13118](https://github.com/storybookjs/storybook/pull/13118))
+- UI: Fix loading UI when EventSource isn't defined ([#13123](https://github.com/storybookjs/storybook/pull/13123))
+- Build: Remove some dependencies and improve E2E workflow ([#13115](https://github.com/storybookjs/storybook/pull/13115))
+
+## 6.1.0-rc.2 (November 13, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix Meta prop types ([#13101](https://github.com/storybookjs/storybook/pull/13101))
+- UI: preventDefault for certain keyboard shortcuts ([#13097](https://github.com/storybookjs/storybook/pull/13097))
+
+### Dependency Upgrades
+
+- Bump `@emotion/core` to 10.1.1 ([#13102](https://github.com/storybookjs/storybook/pull/13102))
+
+## 6.1.0-rc.1 (November 13, 2020)
+
+### Maintenance
+
+- Angular: Support Angular 11 ([#13096](https://github.com/storybookjs/storybook/pull/13096))
+- UI: Tree highlight performance ([#13095](https://github.com/storybookjs/storybook/pull/13095))
+
+## 6.1.0-rc.0 (November 12, 2020)
+
+### Bug Fixes
+
+- UI: Fix kebab-case CSS property error ([#13090](https://github.com/storybookjs/storybook/pull/13090))
+- UI: Fix single story hoisting at the root ([#13089](https://github.com/storybookjs/storybook/pull/13089))
+
+### Maintenance
+
+- UI: Disable instant-on manager for now ([#13084](https://github.com/storybookjs/storybook/pull/13084))
+
+## 6.1.0-beta.7 (November 11, 2020)
+
+### Bug Fixes
+
+- React: Don't create a new story function on every render ([#13069](https://github.com/storybookjs/storybook/pull/13069))
+- UI: FZAix search field styling in Safari 13 ([#13070](https://github.com/storybookjs/storybook/pull/13070))
+- Addon-docs: Fix spurious warnings ([#13075](https://github.com/storybookjs/storybook/pull/13075))
+- UI: Fix Escape key handling perf ([#13073](https://github.com/storybookjs/storybook/pull/13073))
+- Storyshots: Fix compatibility for jest-preset-angular 8.3+ ([#13060](https://github.com/storybookjs/storybook/pull/13060))
+
+## 6.1.0-beta.6 (November 9, 2020)
+
+### Bug Fixes
+
+- Angular: Fix storyData handling on module update ([#13037](https://github.com/storybookjs/storybook/pull/13037))
+- Args: Default to type 'object' when there is a null arg ([#13051](https://github.com/storybookjs/storybook/pull/13051))
+- Core: Fix duplicate argTypeEnhancers on HMR ([#13050](https://github.com/storybookjs/storybook/pull/13050))
+
+### Dependency Upgrades
+
+- Bump react-dogen-typescript-plugin to 0.6.2 ([#13052](https://github.com/storybookjs/storybook/pull/13052))
+
+## 6.1.0-beta.5 (November 8, 2020)
+
+### Features
+
+- UI: Single story hoisting in sidebar ([#13039](https://github.com/storybookjs/storybook/pull/13039))
+
+## 6.1.0-beta.4 (November 6, 2020)
+
+### Bug Fixes
+
+- UI: Fixes for Sidebar and Search ([#13027](https://github.com/storybookjs/storybook/pull/13027))
+- Core: Make sure cache is available before trying to use it ([#13012](https://github.com/storybookjs/storybook/pull/13012))
+- Core: Fix possible "write after end" exception for response stream ([#13007](https://github.com/storybookjs/storybook/pull/13007))
+
+## 6.1.0-beta.3 (November 6, 2020)
+
+### Features
+
+- Core: Add STORYBOOK environment variable ([#12997](https://github.com/storybookjs/storybook/pull/12997))
+
+### Bug Fixes
+
+- Args: Fix args inference for null values ([#13029](https://github.com/storybookjs/storybook/pull/13029))
+- Core: Dedupe default ArgTypes enhancers ([#13030](https://github.com/storybookjs/storybook/pull/13030))
+- Core: Add catch to end process ([#13018](https://github.com/storybookjs/storybook/pull/13018))
+- UI: Fix icon for addon panel orientation button ([#13026](https://github.com/storybookjs/storybook/pull/13026))
+- Addon-docs: Fix test for Angular type inference ([#13009](https://github.com/storybookjs/storybook/pull/13009))
+- CLI: Fix deprecation check ([#12981](https://github.com/storybookjs/storybook/pull/12981))
+- UI: Restrict layout styles to only apply to a rendered preview area ([#13014](https://github.com/storybookjs/storybook/pull/13014))
+
+### Maintenance
+
+- Build: Add chokidar2 for yarn dev ([#13028](https://github.com/storybookjs/storybook/pull/13028))
+- Build: Remove more enzyme ([#13005](https://github.com/storybookjs/storybook/pull/13005))
+
+### Dependency Upgrades
+
+- Bump webpack to 4.41.24 ([#13019](https://github.com/storybookjs/storybook/pull/13019))
+
 ## 6.1.0-beta.2 (November 4, 2020)
 
 ### Bug Fixes

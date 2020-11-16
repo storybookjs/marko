@@ -147,16 +147,21 @@ const useProgressReporting = async (
   }) => void = () => {};
 
   router.get('/progress', (request, response) => {
+    let closed = false;
+    const close = () => {
+      closed = true;
+      response.end();
+    };
+    response.on('close', close);
+
+    if (closed || response.writableEnded) return;
     response.setHeader('Cache-Control', 'no-cache');
     response.setHeader('Content-Type', 'text/event-stream');
     response.setHeader('Connection', 'keep-alive');
     response.flushHeaders();
 
-    const close = () => response.end();
-    response.on('close', close);
-
     reportProgress = (progress: any) => {
-      if (response.writableEnded) return;
+      if (closed || response.writableEnded) return;
       response.write(`data: ${JSON.stringify(progress)}\n\n`);
       if (progress.value === 1) close();
     };
@@ -174,8 +179,12 @@ const useProgressReporting = async (
         totalModules = total;
       }
     }
+
     if (value === 1) {
-      options.cache.set('modulesCount', totalModules);
+      if (options.cache) {
+        options.cache.set('modulesCount', totalModules);
+      }
+
       if (!progress.message) {
         progress.message = `Completed in ${printDuration(startTime)}.`;
       }
@@ -183,7 +192,7 @@ const useProgressReporting = async (
     reportProgress(progress);
   };
 
-  const modulesCount = (await options.cache.get('modulesCount')) || 1000;
+  const modulesCount = (await options.cache?.get('modulesCount')) || 1000;
   new ProgressPlugin({ handler, modulesCount }).apply(compiler);
 };
 
@@ -211,16 +220,18 @@ const startManager = async ({
       logConfig('Manager webpack config', managerConfig);
     }
 
-    if (options.managerCache) {
-      const configString = stringify(managerConfig);
-      const cachedConfig = await options.cache.get('managerConfig');
-      options.cache.set('managerConfig', configString);
-      if (configString === cachedConfig && (await pathExists(outputDir))) {
-        logger.info('=> Using cached manager');
-        managerConfig = null;
+    if (options.cache) {
+      if (options.managerCache) {
+        const configString = stringify(managerConfig);
+        const cachedConfig = await options.cache.get('managerConfig');
+        options.cache.set('managerConfig', configString);
+        if (configString === cachedConfig && (await pathExists(outputDir))) {
+          logger.info('=> Using cached manager');
+          managerConfig = null;
+        }
+      } else {
+        options.cache.remove('managerConfig');
       }
-    } else {
-      options.cache.remove('managerConfig');
     }
   }
 
@@ -363,12 +374,16 @@ export async function storybookDevServer(options: any) {
   const [previewResult, managerResult] = await Promise.all([
     startPreview({ startTime, options, configType, outputDir }),
     startManager({ startTime, options, configType, outputDir, configDir, prebuiltDir })
-      .then((result) => {
-        if (!options.ci) openInBrowser(address);
-        return result;
-      })
+      // TODO #13083 Restore this when compiling the preview is fast enough
+      // .then((result) => {
+      //   if (!options.ci) openInBrowser(address);
+      //   return result;
+      // })
       .catch(bailPreview),
   ]);
+
+  // TODO #13083 Remove this when compiling the preview is fast enough
+  if (!options.ci) openInBrowser(address);
 
   return { ...previewResult, ...managerResult, address, networkAddress };
 }

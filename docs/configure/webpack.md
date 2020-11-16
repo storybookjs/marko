@@ -50,7 +50,7 @@ yarn storybook --debug-webpack
 
 To extend the above configuration, use the `webpackFinal` field of [`.storybook/main.js`](./overview.md#configure-story-rendering).
 
-The value should export a `function`, which will receive the default config as its first argument. The second argument is an options object from Storybook, this will have information about where config came from, whether we're in production of development mode etc.
+The value should export a `function`, which will receive the default config as its first argument. The second argument is an options object from Storybook, this will have information about where config came from, whether we're in production or development mode etc.
 
 For example, here's a `.storybook/main.js` to add [Sass](https://sass-lang.com/) support:
 

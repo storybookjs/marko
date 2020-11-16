@@ -31,9 +31,10 @@ export const useLastViewed = (selection: Selection) => {
   );
 
   const clearLastViewed = useCallback(() => {
-    setLastViewed([]);
-    store.set('lastViewedStoryIds', []);
-  }, []);
+    const update = selection ? [selection] : [];
+    setLastViewed(update);
+    store.set('lastViewedStoryIds', update);
+  }, [selection]);
 
   useEffect(() => {
     if (selection) updateLastViewed(selection);

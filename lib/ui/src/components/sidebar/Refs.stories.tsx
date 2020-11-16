@@ -122,7 +122,7 @@ export const Optimized = () => (
     isLoading={false}
     isBrowsing
     selectedStoryId=""
-    highlightedItemId=""
+    highlightedRef={{ current: null }}
     setHighlighted={() => {}}
   />
 );
@@ -132,7 +132,7 @@ export const IsEmpty = () => (
     isLoading={false}
     isBrowsing
     selectedStoryId=""
-    highlightedItemId=""
+    highlightedRef={{ current: null }}
     setHighlighted={() => {}}
   />
 );
@@ -142,7 +142,7 @@ export const StartInjectedUnknown = () => (
     isLoading={false}
     isBrowsing
     selectedStoryId=""
-    highlightedItemId=""
+    highlightedRef={{ current: null }}
     setHighlighted={() => {}}
   />
 );
@@ -152,7 +152,7 @@ export const StartInjectedLoading = () => (
     isLoading={false}
     isBrowsing
     selectedStoryId=""
-    highlightedItemId=""
+    highlightedRef={{ current: null }}
     setHighlighted={() => {}}
   />
 );
@@ -162,7 +162,7 @@ export const StartInjectedReady = () => (
     isLoading={false}
     isBrowsing
     selectedStoryId=""
-    highlightedItemId=""
+    highlightedRef={{ current: null }}
     setHighlighted={() => {}}
   />
 );
@@ -172,7 +172,7 @@ export const Versions = () => (
     isLoading={false}
     isBrowsing
     selectedStoryId=""
-    highlightedItemId=""
+    highlightedRef={{ current: null }}
     setHighlighted={() => {}}
   />
 );
@@ -182,7 +182,7 @@ export const VersionsMissingCurrent = () => (
     isLoading={false}
     isBrowsing
     selectedStoryId=""
-    highlightedItemId=""
+    highlightedRef={{ current: null }}
     setHighlighted={() => {}}
   />
 );
@@ -192,7 +192,7 @@ export const Errored = () => (
     isLoading={false}
     isBrowsing
     selectedStoryId=""
-    highlightedItemId=""
+    highlightedRef={{ current: null }}
     setHighlighted={() => {}}
   />
 );
@@ -202,7 +202,7 @@ export const Auth = () => (
     isLoading={false}
     isBrowsing
     selectedStoryId=""
-    highlightedItemId=""
+    highlightedRef={{ current: null }}
     setHighlighted={() => {}}
   />
 );
@@ -212,7 +212,7 @@ export const Long = () => (
     isLoading={false}
     isBrowsing
     selectedStoryId=""
-    highlightedItemId=""
+    highlightedRef={{ current: null }}
     setHighlighted={() => {}}
   />
 );
