@@ -81,7 +81,7 @@
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
-    "@angular/core": "^9.1.0",
+    "@angular/core": "^10.2.2",
     "@babel/core": "^7.12.3",
     "@emotion/core": "^10.1.1",
     "@emotion/styled": "^10.0.23",
