@@ -79,6 +79,9 @@ const cleanDirectory = async ({ cwd }: Options): Promise<void> => {
 const configureYarn2 = async ({ cwd }: Options) => {
   const command = [
     `yarn set version berry`,
+    // See https://github.com/yarnpkg/berry/pull/2078
+    // As soon as a new version of Yarn is released remove next line
+    `yarn set version from sources --branch 2078`,
     // ⚠️ Need to set registry because Yarn 2 is not using the conf of Yarn 1
     `yarn config set npmScopes --json '{ "storybook": { "npmRegistryServer": "http://localhost:6000/" } }'`,
     // Some required magic to be able to fetch deps from local registry
@@ -86,10 +89,9 @@ const configureYarn2 = async ({ cwd }: Options) => {
     // Disable fallback mode to make sure everything is required correctly
     `yarn config set pnpFallbackMode none`,
     // Add package extensions
-    // https://github.com/casesandberg/reactcss/pull/153
-    `yarn config set "packageExtensions.reactcss@*.peerDependencies.react" "*"`,
-    // https://github.com/casesandberg/react-color/pull/746
-    `yarn config set "packageExtensions.react-color@*.peerDependencies.react" "*"`,
+    // https://github.com/facebook/create-react-app/pull/9872
+    `yarn config set "packageExtensions.react-scripts@*.peerDependencies.react" "*"`,
+    `yarn config set "packageExtensions.react-scripts@*.dependencies.@pmmmwh/react-refresh-webpack-plugin" "*"`,
   ].join(' && ');
   logger.info(`🎛 Configuring Yarn 2`);
   logger.debug(command);
