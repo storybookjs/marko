@@ -114,7 +114,7 @@ jobs:
             - node_modules
   chromatic:
     executor: sb_node
-    parallelism: 11
+    parallelism: 4
     steps:
       - checkout
       - attach_workspace:
@@ -140,7 +140,7 @@ jobs:
     executor:
       class: medium
       name: sb_node
-    parallelism: 11
+    parallelism: 4
     steps:
       - checkout
       - attach_workspace:
@@ -173,7 +173,7 @@ jobs:
       class: medium
       name: sb_node
     working_directory: /tmp/storybook
-    parallelism: 10
+    parallelism: 4
     steps:
       - checkout
       - attach_workspace:
