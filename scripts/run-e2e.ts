@@ -89,10 +89,9 @@ const configureYarn2 = async ({ cwd }: Options) => {
     // Disable fallback mode to make sure everything is required correctly
     `yarn config set pnpFallbackMode none`,
     // Add package extensions
-    // https://github.com/casesandberg/reactcss/pull/153
-    `yarn config set "packageExtensions.reactcss@*.peerDependencies.react" "*"`,
-    // https://github.com/casesandberg/react-color/pull/746
-    `yarn config set "packageExtensions.react-color@*.peerDependencies.react" "*"`,
+    // https://github.com/facebook/create-react-app/pull/9872
+    `yarn config set "packageExtensions.react-scripts@*.peerDependencies.react" "*"`,
+    `yarn config set "packageExtensions.react-scripts@*.dependencies.@pmmmwh/react-refresh-webpack-plugin" "*"`,
   ].join(' && ');
   logger.info(`🎛 Configuring Yarn 2`);
   logger.debug(command);
