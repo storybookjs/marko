@@ -1,3 +1,22 @@
+## 6.1.0-rc.3 (November 16, 2020)
+
+### Maintenance
+
+* Addon-docs: Export SourceContainer context ([#13118](https://github.com/storybookjs/storybook/pull/13118))
+* UI: Fix loading UI when EventSource isn't defined ([#13123](https://github.com/storybookjs/storybook/pull/13123))
+* Build: Remove some dependencies and improve E2E workflow ([#13115](https://github.com/storybookjs/storybook/pull/13115))
+
+## 6.1.0-rc.2 (November 13, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix Meta prop types ([#13101](https://github.com/storybookjs/storybook/pull/13101))
+- UI: preventDefault for certain keyboard shortcuts ([#13097](https://github.com/storybookjs/storybook/pull/13097))
+
+### Dependency Upgrades
+
+- Bump `@emotion/core` to 10.1.1 ([#13102](https://github.com/storybookjs/storybook/pull/13102))
+
 ## 6.1.0-rc.1 (November 13, 2020)
 
 ### Maintenance
