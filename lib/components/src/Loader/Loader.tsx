@@ -158,7 +158,8 @@ export const Loader: FunctionComponent<ComponentProps<typeof PureLoader>> = (pro
 
   useEffect(() => {
     // Don't listen for progress updates in static builds
-    if (CONFIG_TYPE !== 'DEVELOPMENT') return undefined;
+    // Event source is not defined in IE 11
+    if (CONFIG_TYPE !== 'DEVELOPMENT' || !EventSource) return undefined;
 
     const eventSource = new EventSource('/progress');
     let lastProgress: Progress;
