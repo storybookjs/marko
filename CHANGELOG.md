@@ -1,3 +1,11 @@
+## 6.1.0-rc.4 (November 17, 2020)
+
+### Maintenance
+
+- Build: Fix Yarn 2 E2E tests ([#13129](https://github.com/storybookjs/storybook/pull/13129))
+- UI: Reduce rerenders when changing the selected story ([#13107](https://github.com/storybookjs/storybook/pull/13107))
+- Build: Update example to Angular 10 ([#13048](https://github.com/storybookjs/storybook/pull/13048))
+
 ## 6.1.0-rc.3 (November 16, 2020)
 
 ### Maintenance
