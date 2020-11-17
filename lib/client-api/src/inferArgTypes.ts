@@ -22,17 +22,12 @@ const inferType = (value?: any): SBType => {
     const fieldTypes = mapValues(value, (field) => inferType(field));
     return { name: 'object', value: fieldTypes };
   }
-  return { name: 'other', value: 'unknown' };
+  return { name: 'object', value: {} };
 };
 
 export const inferArgTypes: ArgTypesEnhancer = (context) => {
   const { argTypes: userArgTypes = {}, args = {} } = context.parameters;
   if (!args) return userArgTypes;
-  const argTypes = mapValues(args, (arg) => {
-    if (arg !== null && typeof arg !== 'undefined') {
-      return { type: inferType(arg) };
-    }
-    return undefined;
-  });
+  const argTypes = mapValues(args, (arg) => ({ type: inferType(arg) }));
   return combineParameters(argTypes, userArgTypes);
 };

@@ -1,1 +1,1 @@
-{"version":"6.1.0-beta.5","info":{"plain":"### Features\n\n* UI: Single story hoisting in sidebar ([#13039](https://github.com/storybookjs/storybook/pull/13039))"}}
+{"version":"6.1.0-rc.4","info":{"plain":"### Maintenance\n\n- Build: Fix Yarn 2 E2E tests ([#13129](https://github.com/storybookjs/storybook/pull/13129))\n- UI: Reduce rerenders when changing the selected story ([#13107](https://github.com/storybookjs/storybook/pull/13107))\n- Build: Update example to Angular 10 ([#13048](https://github.com/storybookjs/storybook/pull/13048))"}}

@@ -169,83 +169,101 @@ export const SearchResults: FunctionComponent<{
   getMenuProps: ControllerStateAndHelpers<DownshiftItem>['getMenuProps'];
   getItemProps: ControllerStateAndHelpers<DownshiftItem>['getItemProps'];
   highlightedIndex: number | null;
-}> = React.memo(({ query, results, closeMenu, getMenuProps, getItemProps, highlightedIndex }) => {
-  useEffect(() => {
-    const handleEscape = (event: KeyboardEvent) => {
-      const target = event.target as Element;
-      if (target?.id === 'storybook-explorer-searchfield') return; // handled by downshift
-      closeMenu();
-    };
-
-    document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
-  }, []);
-
-  return (
-    <ResultsList {...getMenuProps()}>
-      {results.length > 0 && !query && (
-        <li>
-          <RootNode>Recently opened</RootNode>
-        </li>
-      )}
-      {results.length === 0 && query && (
-        <li>
-          <NoResults>
-            <strong>No components found</strong>
-            <br />
-            <small>Find components by name or path.</small>
-          </NoResults>
-        </li>
-      )}
-      {results.map((result: DownshiftItem, index) => {
-        if (isCloseType(result)) {
-          return (
-            <BackActionRow
-              {...result}
-              {...getItemProps({ key: index, index, item: result })}
-              isHighlighted={highlightedIndex === index}
-            >
-              <ActionIcon icon="arrowleft" />
-              <ActionLabel>Back to components</ActionLabel>
-              <ActionKey>ESC</ActionKey>
-            </BackActionRow>
-          );
+  isLoading?: boolean;
+  enableShortcuts?: boolean;
+}> = React.memo(
+  ({
+    query,
+    results,
+    closeMenu,
+    getMenuProps,
+    getItemProps,
+    highlightedIndex,
+    isLoading = false,
+    enableShortcuts = true,
+  }) => {
+    useEffect(() => {
+      const handleEscape = (event: KeyboardEvent) => {
+        if (!enableShortcuts || isLoading) return;
+        if (event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) return;
+        if (event.key === 'Escape') {
+          const target = event.target as Element;
+          if (target?.id === 'storybook-explorer-searchfield') return; // handled by downshift
+          event.preventDefault();
+          closeMenu();
         }
-        if (isClearType(result)) {
-          return (
-            <ActionRow
-              {...result}
-              {...getItemProps({ key: index, index, item: result })}
-              isHighlighted={highlightedIndex === index}
-            >
-              <ActionIcon icon="trash" />
-              <ActionLabel>Clear history</ActionLabel>
-            </ActionRow>
-          );
-        }
-        if (isExpandType(result)) {
-          return (
-            <ActionRow
-              {...result}
-              {...getItemProps({ key: index, index, item: result })}
-              isHighlighted={highlightedIndex === index}
-            >
-              <ActionIcon icon="plus" />
-              <ActionLabel>Show {result.moreCount} more results</ActionLabel>
-            </ActionRow>
-          );
-        }
+      };
 
-        const { item } = result;
-        const key = `${item.refId}::${item.id}`;
-        return (
-          <Result
-            {...result}
-            {...getItemProps({ key, index, item: result })}
-            isHighlighted={highlightedIndex === index}
-          />
-        );
-      })}
-    </ResultsList>
-  );
-});
+      document.addEventListener('keydown', handleEscape);
+      return () => document.removeEventListener('keydown', handleEscape);
+    }, [enableShortcuts, isLoading]);
+
+    return (
+      <ResultsList {...getMenuProps()}>
+        {results.length > 0 && !query && (
+          <li>
+            <RootNode>Recently opened</RootNode>
+          </li>
+        )}
+        {results.length === 0 && query && (
+          <li>
+            <NoResults>
+              <strong>No components found</strong>
+              <br />
+              <small>Find components by name or path.</small>
+            </NoResults>
+          </li>
+        )}
+        {results.map((result: DownshiftItem, index) => {
+          if (isCloseType(result)) {
+            return (
+              <BackActionRow
+                {...result}
+                {...getItemProps({ key: index, index, item: result })}
+                isHighlighted={highlightedIndex === index}
+              >
+                <ActionIcon icon="arrowleft" />
+                <ActionLabel>Back to components</ActionLabel>
+                <ActionKey>ESC</ActionKey>
+              </BackActionRow>
+            );
+          }
+          if (isClearType(result)) {
+            return (
+              <ActionRow
+                {...result}
+                {...getItemProps({ key: index, index, item: result })}
+                isHighlighted={highlightedIndex === index}
+              >
+                <ActionIcon icon="trash" />
+                <ActionLabel>Clear history</ActionLabel>
+              </ActionRow>
+            );
+          }
+          if (isExpandType(result)) {
+            return (
+              <ActionRow
+                {...result}
+                {...getItemProps({ key: index, index, item: result })}
+                isHighlighted={highlightedIndex === index}
+              >
+                <ActionIcon icon="plus" />
+                <ActionLabel>Show {result.moreCount} more results</ActionLabel>
+              </ActionRow>
+            );
+          }
+
+          const { item } = result;
+          const key = `${item.refId}::${item.id}`;
+          return (
+            <Result
+              {...result}
+              {...getItemProps({ key, index, item: result })}
+              isHighlighted={highlightedIndex === index}
+            />
+          );
+        })}
+      </ResultsList>
+    );
+  }
+);

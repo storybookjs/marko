@@ -190,6 +190,8 @@ console.log(unboundStoryFn(context));
 
 If you're not using loaders, `storyFn` will work as before. If you are, you'll need to use the new approach.
 
+> NOTE: If you're using `@storybook/addon-docs`, this deprecation warning is triggered by the Docs tab in 6.1. It's safe to ignore and we will be providing a proper fix in 6.2. You can track the issue at https://github.com/storybookjs/storybook/issues/13074.
+
 #### Deprecated onBeforeRender
 
 The `@storybook/addon-docs` previously accepted a `jsx` option called `onBeforeRender`, which was unfortunately named as it was called after the render.

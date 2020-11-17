@@ -17,33 +17,16 @@ const baseAngular: Parameters = {
   version: 'latest',
   generator: [
     `yarn add @angular/cli@{{version}} --no-lockfile --non-interactive --silent --no-progress`,
-    `yarn ng new {{name}}-{{version}} --routing=true --minimal=true --style=scss --skipInstall=true --strict`,
+    `yarn ng new {{name}}-{{version}} --routing=true --minimal=true --style=scss --skipInstall=true --strict --packageManager=npm`,
+    `cd {{name}}-{{version}}`,
+    `yarn install`,
   ].join(' && '),
 };
 
-// export const angularv6: Parameters = {
-//   ...baseAngular,
-//   version: 'v6-lts',
-//   additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
-// };
-
-// TODO: enable back when typings issues are resolved
-// export const angularv7: Parameters = {
-//   ...baseAngular,
-//   version: 'v7-lts',
-//   additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
-// };
-
-// export const angularv8: Parameters = {
-//   ...baseAngular,
-//   version: 'v8-lts',
-//   additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
-// };
-
-export const angularv9: Parameters = {
+export const angularv10: Parameters = {
   ...baseAngular,
-  version: 'v9-lts',
-  additionalDeps: ['core-js'],
+  // There is no `v10-lts` tag for now, to update as soon as one is published
+  version: 'v10',
 };
 
 export const angular: Parameters = baseAngular;
@@ -156,11 +139,13 @@ export const cra_typescript: Parameters = {
 export const sfcVue: Parameters = {
   name: 'sfcVue',
   version: 'latest',
-  generator: fromDeps('vue', 'vue-loader', 'vue-template-compiler'),
+  generator: fromDeps('vue', 'vue-loader', 'vue-template-compiler', 'webpack@webpack-4'),
   additionalDeps: [
-    'webpack@webpack-4',
     // TODO: remove when https://github.com/storybookjs/storybook/issues/11255 is solved
     'core-js',
+    // FIXME: We still have issue with react as peer/regular deps...
+    // For some details see: https://github.com/storybookjs/storybook/pull/13059/commits/8d4938bc4aef55e208a89f3547674c64ed39d3b3#r520101039
+    'react',
   ],
 };
 

@@ -2,6 +2,7 @@ import { StoriesHash } from '@storybook/api';
 import { document } from 'global';
 import throttle from 'lodash/throttle';
 import React, { Dispatch, MutableRefObject, useCallback, useEffect, useReducer } from 'react';
+import { Highlight } from './types';
 
 import { isAncestor, getAncestorIds, getDescendantIds, scrollIntoView } from './utils';
 
@@ -18,22 +19,27 @@ export interface ExpandedProps {
   refId: string;
   data: StoriesHash;
   rootIds: string[];
-  highlightedItemId: string | null;
+  highlightedRef: MutableRefObject<Highlight>;
   setHighlightedItemId: (storyId: string) => void;
   selectedStoryId: string | null;
   onSelectStoryId: (storyId: string) => void;
 }
 
 const initializeExpanded = ({
+  refId,
   data,
-  highlightedItemId,
+  highlightedRef,
   rootIds,
 }: {
+  refId: string;
   data: StoriesHash;
-  highlightedItemId: string | null;
+  highlightedRef: MutableRefObject<Highlight>;
   rootIds: string[];
 }) => {
-  const highlightedAncestors = highlightedItemId ? getAncestorIds(data, highlightedItemId) : [];
+  const highlightedAncestors =
+    highlightedRef.current?.refId === refId
+      ? getAncestorIds(data, highlightedRef.current?.itemId)
+      : [];
   return [...rootIds, ...highlightedAncestors].reduce<ExpandedState>(
     (acc, id) => Object.assign(acc, { [id]: true }),
     {}
@@ -46,7 +52,7 @@ export const useExpanded = ({
   refId,
   data,
   rootIds,
-  highlightedItemId,
+  highlightedRef,
   setHighlightedItemId,
   selectedStoryId,
   onSelectStoryId,
@@ -55,11 +61,16 @@ export const useExpanded = ({
   // Root nodes are expanded by default (and cannot be collapsed).
   const [expanded, setExpanded] = useReducer<
     React.Reducer<ExpandedState, ExpandAction>,
-    { data: StoriesHash; highlightedItemId: string | null; rootIds: string[] }
+    {
+      refId: string;
+      data: StoriesHash;
+      highlightedRef: MutableRefObject<Highlight>;
+      rootIds: string[];
+    }
   >(
     (state, { ids, value }) =>
       ids.reduce((acc, id) => Object.assign(acc, { [id]: value }), { ...state }),
-    { data, highlightedItemId, rootIds },
+    { refId, data, highlightedRef, rootIds },
     initializeExpanded
   );
 
@@ -77,6 +88,19 @@ export const useExpanded = ({
     [setHighlightedItemId]
   );
 
+  const updateExpanded = useCallback(
+    ({ ids, value }) => {
+      setExpanded({ ids, value });
+      if (ids.length === 1) {
+        const element = containerRef.current.querySelector(
+          `[data-item-id="${ids[0]}"][data-ref-id="${refId}"]`
+        );
+        if (element) highlightElement(element);
+      }
+    },
+    [containerRef, highlightElement, refId]
+  );
+
   // Expand the whole ancestry of the currently selected story whenever it changes.
   useEffect(() => {
     setExpanded({ ids: getAncestorIds(data, selectedStoryId), value: true });
@@ -85,9 +109,13 @@ export const useExpanded = ({
   // Expand, collapse or select nodes in the tree using keyboard shortcuts.
   useEffect(() => {
     const menuElement = document.getElementById('storybook-explorer-menu');
+
+    // Even though we ignore repeated events, use throttle because IE doesn't support event.repeat.
     const navigateTree = throttle((event: KeyboardEvent) => {
+      const highlightedItemId =
+        highlightedRef.current?.refId === refId && highlightedRef.current?.itemId;
       if (!isBrowsing || !event.key || !containerRef.current || !highlightedItemId) return;
-      if (event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) return;
+      if (event.repeat || event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) return;
       if (!['Enter', ' ', 'ArrowLeft', 'ArrowRight'].includes(event.key)) return;
 
       const highlightedElement = getElementByDataItemId(highlightedItemId);
@@ -132,12 +160,12 @@ export const useExpanded = ({
 
       if (event.key === 'ArrowRight') {
         if (isExpanded === 'false') {
-          setExpanded({ ids: [highlightedItemId], value: true });
+          updateExpanded({ ids: [highlightedItemId], value: true });
         } else if (isExpanded === 'true') {
-          setExpanded({ ids: getDescendantIds(data, highlightedItemId, true), value: true });
+          updateExpanded({ ids: getDescendantIds(data, highlightedItemId, true), value: true });
         }
       }
-    }, 16);
+    }, 60);
 
     document.addEventListener('keydown', navigateTree);
     return () => document.removeEventListener('keydown', navigateTree);
@@ -146,18 +174,10 @@ export const useExpanded = ({
     isBrowsing,
     refId,
     data,
-    highlightedItemId,
+    highlightedRef,
     setHighlightedItemId,
     onSelectStoryId,
   ]);
-
-  const updateExpanded = useCallback(
-    ({ ids, value }) => {
-      setExpanded({ ids, value });
-      if (ids.length === 1) setHighlightedItemId(ids[0]);
-    },
-    [setHighlightedItemId]
-  );
 
   return [expanded, updateExpanded];
 };

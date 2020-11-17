@@ -8,13 +8,27 @@ import {
   Path,
   getSystemPath,
 } from '@angular-devkit/core';
-import {
-  getCommonConfig,
-  getStylesConfig,
-} from '@angular-devkit/build-angular/src/angular-cli-files/models/webpack-configs';
 import { logger } from '@storybook/node-logger';
 
 import { RuleSetRule, Configuration } from 'webpack';
+
+// We need to dynamically require theses functions as they are not part of the public api and so their paths
+// aren't the same in all versions of Angular
+let angularWebpackConfig: {
+  getCommonConfig: (config: unknown) => Configuration;
+  getStylesConfig: (config: unknown) => Configuration;
+};
+try {
+  // First we look for webpack config according to directory structure of Angular 11
+  // eslint-disable-next-line global-require
+  angularWebpackConfig = require('@angular-devkit/build-angular/src/webpack/configs');
+} catch (e) {
+  // We fallback on directory structure of Angular 10 (and below)
+  // eslint-disable-next-line global-require
+  angularWebpackConfig = require('@angular-devkit/build-angular/src/angular-cli-files/models/webpack-configs');
+}
+
+const { getCommonConfig, getStylesConfig } = angularWebpackConfig;
 
 function isDirectory(assetPath: string) {
   try {

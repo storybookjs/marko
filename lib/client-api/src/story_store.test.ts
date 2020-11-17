@@ -424,6 +424,7 @@ describe('preview.story_store', () => {
     it('on HMR it sensibly re-initializes with memory', () => {
       const store = new StoryStore({ channel });
       addons.setChannel(channel);
+      store.startConfiguring();
       store.addGlobalMetadata({
         decorators: [],
         parameters: {
@@ -450,6 +451,7 @@ describe('preview.story_store', () => {
         arg3: { complex: { object: ['type'] } },
         arg4: 4,
       });
+      expect(store._argTypesEnhancers.length).toBe(3);
 
       // HMR
       store.startConfiguring();
@@ -470,6 +472,7 @@ describe('preview.story_store', () => {
         },
       });
       store.finishConfiguring();
+      expect(store._argTypesEnhancers.length).toBe(3);
 
       expect(store.getRawStory('a', '1').globals).toEqual({
         // You cannot remove a global arg in HMR currently, because you cannot remove the
@@ -716,6 +719,10 @@ describe('preview.story_store', () => {
         Object {
           "a": Object {
             "name": "a",
+            "type": Object {
+              "name": "object",
+              "value": Object {},
+            },
           },
           "b": Object {
             "name": "b",

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/angular",
-  "version": "6.1.0-beta.5",
+  "version": "6.1.0-rc.4",
   "description": "Storybook for Angular: Develop Angular Components in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -34,9 +34,9 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-beta.5",
-    "@storybook/core": "6.1.0-beta.5",
-    "@storybook/node-logger": "6.1.0-beta.5",
+    "@storybook/addons": "6.1.0-rc.4",
+    "@storybook/core": "6.1.0-rc.4",
+    "@storybook/node-logger": "6.1.0-rc.4",
     "@types/webpack-env": "^1.15.3",
     "autoprefixer": "^9.7.6",
     "core-js": "^3.0.1",
@@ -54,14 +54,14 @@
     "webpack": "^4.44.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.901.0",
-    "@angular-devkit/core": "^9.1.0",
-    "@angular/common": "^9.1.0",
-    "@angular/compiler": "^9.1.0",
-    "@angular/core": "^9.1.0",
-    "@angular/forms": "^9.1.0",
-    "@angular/platform-browser": "^9.1.0",
-    "@angular/platform-browser-dynamic": "^9.1.0",
+    "@angular-devkit/build-angular": "~0.1002.0",
+    "@angular-devkit/core": "^10.2.0",
+    "@angular/common": "^10.2.2",
+    "@angular/compiler": "^10.2.2",
+    "@angular/core": "^10.2.2",
+    "@angular/forms": "^10.2.2",
+    "@angular/platform-browser": "^10.2.2",
+    "@angular/platform-browser-dynamic": "^10.2.2",
     "@types/autoprefixer": "^9.4.0"
   },
   "peerDependencies": {
@@ -84,7 +84,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "7bd2ae048222c2cc249775a3271b5b7dbe638038",
+  "gitHead": "c174d7429c2593e051cc2dd1361bb28bff71f75b",
   "typesVersions": {
     "<3.8": {
       "*": [

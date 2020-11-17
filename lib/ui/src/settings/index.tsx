@@ -8,13 +8,13 @@ import { AboutPage } from './about_page';
 import { ReleaseNotesPage } from './release_notes_page';
 import { ShortcutsPage } from './shortcuts_page';
 
-const TabBarButton: FunctionComponent<{
+const TabBarButton = React.memo<{
   changeTab: (tab: string) => void;
   id: string;
   title: string;
-}> = ({ changeTab, id, title }) => (
+}>(({ changeTab, id, title }) => (
   <Location>
-    {({ navigate, path }) => {
+    {({ path }) => {
       const active = path.includes(`settings/${id}`);
       return (
         <TabButton
@@ -31,7 +31,7 @@ const TabBarButton: FunctionComponent<{
       );
     }}
   </Location>
-);
+));
 
 const Content = styled(ScrollArea)(
   {

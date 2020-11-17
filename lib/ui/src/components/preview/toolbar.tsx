@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo, FunctionComponent, ReactElement } from 'react';
+import React, { Fragment, useMemo, FunctionComponent } from 'react';
 
 import { styled } from '@storybook/theming';
 
@@ -111,32 +111,22 @@ const useTools = (
   location: PreviewProps['location'],
   path: PreviewProps['path']
 ) => {
-  const toolsFromConfig = useMemo(() => {
-    return getTools(getElements);
-  }, [getElements]);
+  const toolsFromConfig = useMemo(() => getTools(getElements), [getElements]);
+  const toolsExtraFromConfig = useMemo(() => getToolsExtra(getElements), [getElements]);
 
-  const toolsExtraFromConfig = useMemo(() => {
-    return getToolsExtra(getElements);
-  }, [getElements]);
-
-  const tools = useMemo(() => {
-    return [...defaultTools, ...toolsFromConfig];
-  }, [defaultTools, toolsFromConfig]);
-
-  const toolsExtra = useMemo(() => {
-    return [...defaultToolsExtra, ...toolsExtraFromConfig];
-  }, [defaultToolsExtra, toolsExtraFromConfig]);
+  const tools = useMemo(() => [...defaultTools, ...toolsFromConfig], [
+    defaultTools,
+    toolsFromConfig,
+  ]);
+  const toolsExtra = useMemo(() => [...defaultToolsExtra, ...toolsExtraFromConfig], [
+    defaultToolsExtra,
+    toolsExtraFromConfig,
+  ]);
 
   return useMemo(() => {
-    if (story && story.parameters) {
-      return filterTools(tools, toolsExtra, tabs, {
-        viewMode,
-        story,
-        location,
-        path,
-      });
-    }
-    return { left: tools, right: toolsExtra };
+    return story && story.parameters
+      ? filterTools(tools, toolsExtra, tabs, { viewMode, story, location, path })
+      : { left: tools, right: toolsExtra };
   }, [viewMode, story, location, path, tools, toolsExtra, tabs]);
 };
 
@@ -146,42 +136,34 @@ export interface ToolData {
   api: API;
   story: Story | Group;
 }
-export const ToolRes: FunctionComponent<ToolData & RenderData> = ({
-  api,
-  story,
-  tabs,
-  isShown,
-  location,
-  path,
-  viewMode,
-}) => {
-  const { left, right } = useTools(api.getElements, tabs, viewMode, story, location, path);
 
-  return left || right ? (
-    <Toolbar key="toolbar" shown={isShown} border>
-      <Tools key="left" list={left} />
-      <Tools key="right" list={right} />
-    </Toolbar>
-  ) : null;
-};
+export const ToolRes: FunctionComponent<ToolData & RenderData> = React.memo<ToolData & RenderData>(
+  ({ api, story, tabs, isShown, location, path, viewMode }) => {
+    const { left, right } = useTools(api.getElements, tabs, viewMode, story, location, path);
 
-export const ToolbarComp: FunctionComponent<ToolData> = (p) => (
-  <Location>{(l) => <ToolRes {...l} {...p} />}</Location>
+    return left || right ? (
+      <Toolbar key="toolbar" shown={isShown} border>
+        <Tools key="left" list={left} />
+        <Tools key="right" list={right} />
+      </Toolbar>
+    ) : null;
+  }
 );
 
-export const Tools: FunctionComponent<{
-  list: Addon[];
-}> = ({ list }) =>
-  list.filter(Boolean).reduce((acc, { render: Render, id, ...t }, index) => {
-    // @ts-ignore
-    const key = id || t.key || `f-${index}`;
-    return (
-      <Fragment key={key}>
-        {acc}
-        <Render />
-      </Fragment>
-    );
-  }, null as ReactElement);
+export const ToolbarComp = React.memo<ToolData>((props) => (
+  <Location>
+    {({ location, path, viewMode }) => <ToolRes {...props} {...{ location, path, viewMode }} />}
+  </Location>
+));
+
+export const Tools = React.memo<{ list: Addon[] }>(({ list }) => (
+  <>
+    {list.filter(Boolean).map(({ render: Render, id, ...t }, index) => (
+      // @ts-ignore
+      <Render key={id || t.key || `f-${index}`} />
+    ))}
+  </>
+));
 
 export function filterTools(
   tools: Addon[],
