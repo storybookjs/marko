@@ -1,3 +1,9 @@
+## 6.1.0-rc.5 (November 19, 2020)
+
+### Features
+
+- UI: CSS escape hatches for sidebar styling ([#13155](https://github.com/storybookjs/storybook/pull/13155))
+
 ## 6.1.0-rc.4 (November 17, 2020)
 
 ### Maintenance
