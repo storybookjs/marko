@@ -222,7 +222,9 @@ const startManager = async ({
 
     if (options.cache) {
       if (options.managerCache) {
-        const configString = stringify(managerConfig);
+        // Drop the `cache` property because it'll change as a result of writing to the cache.
+        const { cache: _, ...baseConfig } = managerConfig;
+        const configString = stringify(baseConfig);
         const cachedConfig = await options.cache.get('managerConfig');
         options.cache.set('managerConfig', configString);
         if (configString === cachedConfig && (await pathExists(outputDir))) {
@@ -230,6 +232,7 @@ const startManager = async ({
           managerConfig = null;
         }
       } else {
+        logger.info('=> Removing cached managerConfig');
         options.cache.remove('managerConfig');
       }
     }
