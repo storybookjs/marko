@@ -124,7 +124,7 @@ const Result: FunctionComponent<
   const nameMatch = matches.find((match: Match) => match.key === 'name');
   const pathMatches = matches.filter((match: Match) => match.key === 'path');
   const label = (
-    <div>
+    <div className="search-result-item--label">
       <strong>
         <Highlight match={nameMatch}>{item.name}</Highlight>
       </strong>
@@ -202,7 +202,7 @@ export const SearchResults: FunctionComponent<{
       <ResultsList {...getMenuProps()}>
         {results.length > 0 && !query && (
           <li>
-            <RootNode>Recently opened</RootNode>
+            <RootNode className="search-result-recentlyOpened">Recently opened</RootNode>
           </li>
         )}
         {results.length === 0 && query && (
@@ -221,6 +221,7 @@ export const SearchResults: FunctionComponent<{
                 {...result}
                 {...getItemProps({ key: index, index, item: result })}
                 isHighlighted={highlightedIndex === index}
+                className="search-result-back"
               >
                 <ActionIcon icon="arrowleft" />
                 <ActionLabel>Back to components</ActionLabel>
@@ -234,6 +235,7 @@ export const SearchResults: FunctionComponent<{
                 {...result}
                 {...getItemProps({ key: index, index, item: result })}
                 isHighlighted={highlightedIndex === index}
+                className="search-result-clearHistory"
               >
                 <ActionIcon icon="trash" />
                 <ActionLabel>Clear history</ActionLabel>
@@ -246,6 +248,7 @@ export const SearchResults: FunctionComponent<{
                 {...result}
                 {...getItemProps({ key: index, index, item: result })}
                 isHighlighted={highlightedIndex === index}
+                className="search-result-more"
               >
                 <ActionIcon icon="plus" />
                 <ActionLabel>Show {result.moreCount} more results</ActionLabel>
@@ -260,6 +263,7 @@ export const SearchResults: FunctionComponent<{
               {...result}
               {...getItemProps({ key, index, item: result })}
               isHighlighted={highlightedIndex === index}
+              className="search-result-item"
             />
           );
         })}

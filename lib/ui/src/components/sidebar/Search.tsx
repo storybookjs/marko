@@ -354,7 +354,10 @@ export const Search = React.memo<{
           return (
             <>
               <ScreenReaderLabel {...getLabelProps()}>Search for components</ScreenReaderLabel>
-              <SearchField {...getRootProps({ refKey: '' }, { suppressRefError: true })}>
+              <SearchField
+                {...getRootProps({ refKey: '' }, { suppressRefError: true })}
+                className="search-field"
+              >
                 <SearchIcon icon="search" />
                 <Input {...inputProps} />
                 {enableShortcuts && <FocusKey>/</FocusKey>}
