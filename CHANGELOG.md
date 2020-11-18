@@ -8,6 +8,10 @@
 
 - UI: Fix CSS for IE11 ([#13159](https://github.com/storybookjs/storybook/pull/13159))
 
+### Maintenance
+
+- Build: Update example and app to Angular 11 ([#13141](https://github.com/storybookjs/storybook/pull/13141))
+
 ## 6.1.0-rc.4 (November 17, 2020)
 
 ### Maintenance
