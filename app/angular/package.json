@@ -54,14 +54,15 @@
     "webpack": "^4.44.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.1002.0",
-    "@angular-devkit/core": "^10.2.0",
-    "@angular/common": "^10.2.2",
-    "@angular/compiler": "^10.2.2",
-    "@angular/core": "^10.2.2",
-    "@angular/forms": "^10.2.2",
-    "@angular/platform-browser": "^10.2.2",
-    "@angular/platform-browser-dynamic": "^10.2.2",
+    "@angular-devkit/build-angular": "~0.1100.1",
+    "@angular-devkit/core": "^11.0.1",
+    "@angular/common": "^11.0.0",
+    "@angular/compiler": "^11.0.0",
+    "@angular/compiler-cli": "^11.0.0",
+    "@angular/core": "^11.0.0",
+    "@angular/forms": "^11.0.0",
+    "@angular/platform-browser": "^11.0.0",
+    "@angular/platform-browser-dynamic": "^11.0.0",
     "@types/autoprefixer": "^9.4.0"
   },
   "peerDependencies": {
@@ -69,6 +70,7 @@
     "@angular-devkit/core": "^0.6.1 || >=7.0.0",
     "@angular/common": ">=6.0.0",
     "@angular/compiler": ">=6.0.0",
+    "@angular/compiler-cli": ">=6.0.0",
     "@angular/core": ">=6.0.0",
     "@angular/forms": ">=6.0.0",
     "@angular/platform-browser": ">=6.0.0",
@@ -76,7 +78,7 @@
     "@babel/core": "*",
     "rxjs": "^6.0.0",
     "typescript": "^3.4.0 || >=4.0.0",
-    "zone.js": "^0.8.29 || ^0.9.0 || ^0.10.0"
+    "zone.js": "^0.8.29 || ^0.9.0 || ^0.10.0 || ^0.11.0"
   },
   "engines": {
     "node": ">=8.0.0"
