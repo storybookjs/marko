@@ -82,7 +82,7 @@ describe('core.preview.loadCsf', () => {
     const mockedStoriesOf = clientApi.storiesOf as jest.Mock;
     expect(mockedStoriesOf).toHaveBeenCalledWith('a', true);
     const aApi = mockedStoriesOf.mock.results[0].value;
-    const extras: any = { decorators: [], args: {}, argTypes: {} };
+    const extras: any = { decorators: [], args: {}, argTypes: {}, loaders: [] };
     expect(aApi.add).toHaveBeenCalledWith('1', input.a[1], { __id: 'a--1', ...extras });
     expect(aApi.add).toHaveBeenCalledWith('2', input.a[2], { __id: 'a--2', ...extras });
 
@@ -181,6 +181,7 @@ describe('core.preview.loadCsf', () => {
       decorators: [],
       args: {},
       argTypes: {},
+      loaders: [],
     });
   });
 
@@ -264,6 +265,7 @@ describe('core.preview.loadCsf', () => {
       __id: 'a--x',
       args: { b: 1 },
       argTypes: { b: 'string' },
+      loaders: [],
     });
     expect(logger.debug).toHaveBeenCalled();
   });
@@ -295,6 +297,7 @@ describe('core.preview.loadCsf', () => {
       __id: 'a--x',
       args: { b: 1 },
       argTypes: { b: 'string' },
+      loaders: [],
     });
     expect(logger.debug).not.toHaveBeenCalled();
   });
@@ -334,6 +337,7 @@ describe('core.preview.loadCsf', () => {
       __id: 'a--x',
       args: { b: 1, c: 2 },
       argTypes: { b: 'string', c: 'number' },
+      loaders: [],
     });
     expect(logger.debug).toHaveBeenCalled();
   });

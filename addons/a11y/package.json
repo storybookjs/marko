@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-a11y",
-  "version": "6.1.0-alpha.3",
+  "version": "6.1.0-rc.4",
   "description": "a11y addon for storybook",
   "keywords": [
     "a11y",
@@ -27,47 +27,53 @@
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.5/**/*"
+    "ts3.4/**/*"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-alpha.3",
-    "@storybook/api": "6.1.0-alpha.3",
-    "@storybook/channels": "6.1.0-alpha.3",
-    "@storybook/client-api": "6.1.0-alpha.3",
-    "@storybook/client-logger": "6.1.0-alpha.3",
-    "@storybook/components": "6.1.0-alpha.3",
-    "@storybook/core-events": "6.1.0-alpha.3",
-    "@storybook/theming": "6.1.0-alpha.3",
+    "@storybook/addons": "6.1.0-rc.4",
+    "@storybook/api": "6.1.0-rc.4",
+    "@storybook/channels": "6.1.0-rc.4",
+    "@storybook/client-api": "6.1.0-rc.4",
+    "@storybook/client-logger": "6.1.0-rc.4",
+    "@storybook/components": "6.1.0-rc.4",
+    "@storybook/core-events": "6.1.0-rc.4",
+    "@storybook/theming": "6.1.0-rc.4",
     "axe-core": "^4.0.1",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "lodash": "^4.17.15",
     "react-sizeme": "^2.5.2",
-    "regenerator-runtime": "^0.13.3",
-    "ts-dedent": "^1.1.1",
+    "regenerator-runtime": "^0.13.7",
+    "ts-dedent": "^2.0.0",
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
     "@testing-library/react": "^10.0.4",
-    "@types/webpack-env": "^1.15.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "@types/webpack-env": "^1.15.3"
   },
   "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "677dc96dfcd7922bf1a6518882d4dc165d57501f",
+  "gitHead": "c174d7429c2593e051cc2dd1361bb28bff71f75b",
   "typesVersions": {
-    "<=3.5": {
+    "<3.8": {
       "*": [
-        "ts3.5/*"
+        "ts3.4/*"
       ]
     }
   }

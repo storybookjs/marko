@@ -2,6 +2,8 @@ import type ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import type { PluginOptions } from 'react-docgen-typescript-plugin';
 import { Configuration } from 'webpack';
 
+type Preset = string | { name: string };
+
 /**
  * The interface for Storybook configuration in `main.ts` files.
  */
@@ -9,9 +11,15 @@ export interface StorybookConfig {
   /**
    * Sets the addons you want to use with Storybook.
    *
-   * @example `['@storybook/addon-essentials']`
+   * @example `['@storybook/addon-essentials']` or `[{ name: '@storybook/addon-essentials', options: { backgrounds: false } }]`
    */
-  addons?: string[];
+  addons?: Array<
+    | string
+    | {
+        name: string;
+        options?: any;
+      }
+  >;
   /**
    * Tells Storybook where to find stories.
    *
@@ -36,7 +44,9 @@ export interface StorybookConfig {
  */
 export interface StorybookOptions {
   configType: 'DEVELOPMENT' | 'PRODUCTION';
+  presetsList: Preset[];
   typescriptOptions: TypescriptOptions;
+  [key: string]: any;
 }
 
 /**
@@ -46,7 +56,7 @@ export interface TypescriptOptions {
   /**
    * Enables type checking within Storybook.
    *
-   * @defalt `false`
+   * @default `false`
    */
   check: boolean;
   /**

@@ -11,9 +11,9 @@ export const imageSnapshot = (customConfig: Partial<ImageSnapshotConfig> = {}) =
   return puppeteerTest({
     ...config,
     async testBody(page, options) {
-      expect.assertions(1);
-      await beforeScreenshot(page, options);
-      const image = await page.screenshot(getScreenshotOptions(options));
+      expect.hasAssertions();
+      const element = await beforeScreenshot(page, options);
+      const image = await (element || page).screenshot(getScreenshotOptions(options));
       await afterScreenshot({ image, context: options.context });
       expect(image).toMatchImageSnapshot(getMatchOptions(options));
     },

@@ -38,7 +38,7 @@ interface Elements {
   [key: string]: Collection;
 }
 
-interface Config {
+export interface Config {
   theme?: ThemeVars;
   [key: string]: any;
 }

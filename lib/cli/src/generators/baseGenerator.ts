@@ -44,6 +44,7 @@ export async function baseGenerator(
   };
 
   // added to main.js
+  // make sure to update `canUsePrebuiltManager` in dev-server.js and build-manager-config/main.js when this list changes
   const addons = ['@storybook/addon-links', '@storybook/addon-essentials'];
   // added to package.json
   const addonPackages = [...addons, '@storybook/addon-actions'];
@@ -57,8 +58,6 @@ export async function baseGenerator(
     ...extraPackages,
     ...extraAddons,
     ...yarn2Dependencies,
-    // ⚠️ Some addons have peer deps that must be added too, like '@storybook/addon-docs' => 'react-is'
-    'react-is',
   ].filter(Boolean);
   const versionedPackages = await packageManager.getVersionedPackages(...packages);
 

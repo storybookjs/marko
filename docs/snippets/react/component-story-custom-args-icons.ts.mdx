@@ -1,0 +1,33 @@
+```ts
+// YourComponent.stories.js
+
+import React from 'react';
+
+import { Story, Meta } from '@storybook/react/types-6-0';
+
+import { YourComponent, YourComponentProps } from './your-component';
+import { IconA, IconB, IconC, IconD, IconE } from './icons';
+
+// Maps the icons to a JSON serialized object to be safely used with the argTypes
+const iconMap = { browser, tablet, mobile, user, watch };
+
+export default {
+  component: YourComponent,
+  title: 'My Story with Icons',
+  argTypes: {
+    // creates a specific argType based on the iconMap object
+    icon: {
+      control: {
+        type: 'select',
+        options: Object.keys(iconMap),
+      },
+    },
+  },
+} as Meta;
+
+const Template: Story<YourComponentProps> = ({ icon, ...rest }) => {
+  // retrieves the appropriate icon passes it as a component prop
+  const selectedIcon = iconMap[icon];
+  return <YourComponent icon={selectedIcon} />;
+};
+```

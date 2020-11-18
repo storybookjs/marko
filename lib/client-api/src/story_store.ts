@@ -5,6 +5,7 @@ import stable from 'stable';
 import mapValues from 'lodash/mapValues';
 import pick from 'lodash/pick';
 import store from 'store2';
+import deprecate from 'util-deprecate';
 
 import { Channel } from '@storybook/channels';
 import Events from '@storybook/core-events';
@@ -76,6 +77,14 @@ const checkStorySort = (parameters: Parameters) => {
   if (options?.storySort) logger.error('The storySort option parameter can only be set globally');
 };
 
+const storyFnWarning = deprecate(
+  () => {},
+  dedent`
+  \`storyFn\` is deprecated and will be removed in Storybook 7.0.
+
+  https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-storyfn`
+);
+
 interface AllowUnsafeOption {
   allowUnsafe?: boolean;
 }
@@ -127,7 +136,7 @@ export default class StoryStore {
     // We store global args in session storage. Note that when we finish
     // configuring below we will ensure we only use values here that make sense
     this._globals = store.session.get(STORAGE_KEY)?.globals || {};
-    this._globalMetadata = { parameters: {}, decorators: [] };
+    this._globalMetadata = { parameters: {}, decorators: [], loaders: [] };
     this._kinds = {};
     this._stories = {};
     this._argTypesEnhancers = [ensureArgTypes];
@@ -164,6 +173,13 @@ export default class StoryStore {
 
   startConfiguring() {
     this._configuring = true;
+
+    const safePush = (enhancer: ArgTypesEnhancer, enhancers: ArgTypesEnhancer[]) => {
+      if (!enhancers.includes(enhancer)) enhancers.push(enhancer);
+    };
+    // run these at the end
+    safePush(inferArgTypes, this._argTypesEnhancers);
+    safePush(inferControls, this._argTypesEnhancers);
   }
 
   storeGlobals() {
@@ -235,7 +251,7 @@ export default class StoryStore {
     this.pushToManager();
   }
 
-  addGlobalMetadata({ parameters, decorators }: StoryMetadata) {
+  addGlobalMetadata({ parameters = {}, decorators = [], loaders = [] }: StoryMetadata) {
     if (parameters) {
       const { args, argTypes } = parameters;
       if (args || argTypes)
@@ -248,13 +264,18 @@ export default class StoryStore {
 
     this._globalMetadata.parameters = combineParameters(globalParameters, parameters);
 
-    decorators.forEach((decorator) => {
-      if (this._globalMetadata.decorators.includes(decorator)) {
-        logger.warn('You tried to add a duplicate decorator, this is not expected', decorator);
-      } else {
-        this._globalMetadata.decorators.push(decorator);
-      }
-    });
+    function _safeAdd(items: any[], collection: any[], caption: string) {
+      items.forEach((item) => {
+        if (collection.includes(item)) {
+          logger.warn(`You tried to add a duplicate ${caption}, this is not expected`, item);
+        } else {
+          collection.push(item);
+        }
+      });
+    }
+
+    _safeAdd(decorators, this._globalMetadata.decorators, 'decorator');
+    _safeAdd(loaders, this._globalMetadata.loaders, 'loader');
   }
 
   clearGlobalDecorators() {
@@ -267,11 +288,12 @@ export default class StoryStore {
         order: Object.keys(this._kinds).length,
         parameters: {},
         decorators: [],
+        loaders: [],
       };
     }
   }
 
-  addKindMetadata(kind: string, { parameters, decorators }: StoryMetadata) {
+  addKindMetadata(kind: string, { parameters = {}, decorators = [], loaders = [] }: StoryMetadata) {
     this.ensureKind(kind);
     if (parameters) {
       checkGlobals(parameters);
@@ -280,6 +302,7 @@ export default class StoryStore {
     this._kinds[kind].parameters = combineParameters(this._kinds[kind].parameters, parameters);
 
     this._kinds[kind].decorators.push(...decorators);
+    this._kinds[kind].loaders.push(...loaders);
   }
 
   addArgTypesEnhancer(argTypesEnhancer: ArgTypesEnhancer) {
@@ -306,6 +329,7 @@ export default class StoryStore {
       storyFn: original,
       parameters: storyParameters = {},
       decorators: storyDecorators = [],
+      loaders: storyLoaders = [],
     }: AddStoryArgs,
     {
       applyDecorators,
@@ -352,6 +376,7 @@ export default class StoryStore {
       ...kindMetadata.decorators,
       ...this._globalMetadata.decorators,
     ];
+    const loaders = [...this._globalMetadata.loaders, ...kindMetadata.loaders, ...storyLoaders];
 
     const finalStoryFn = (context: StoryContext) => {
       const { passArgsFirst = true } = context.parameters;
@@ -376,9 +401,6 @@ export default class StoryStore {
     const { passArgsFirst = true } = combinedParameters;
     const __isArgsStory = passArgsFirst && original.length > 0;
 
-    // run at the end
-    this._argTypesEnhancers.push(inferArgTypes);
-    this._argTypesEnhancers.push(inferControls);
     const { argTypes = {} } = this._argTypesEnhancers.reduce(
       (accumulatedParameters: Parameters, enhancer) => ({
         ...accumulatedParameters,
@@ -396,8 +418,9 @@ export default class StoryStore {
 
     const storyParametersWithArgTypes = { ...storyParameters, argTypes, __isArgsStory };
 
-    const storyFn: LegacyStoryFn = (runtimeContext: StoryContext) =>
-      getDecorated()({
+    const storyFn: LegacyStoryFn = (runtimeContext: StoryContext) => {
+      storyFnWarning();
+      return getDecorated()({
         ...identification,
         ...runtimeContext,
         // Calculate "combined" parameters at render time (NOTE: for perf we could just use combinedParameters from above?)
@@ -406,10 +429,33 @@ export default class StoryStore {
         args: _stories[id].args,
         argTypes,
         globals: this._globals,
+        viewMode: this._selection?.viewMode,
       });
+    };
+
+    const unboundStoryFn: LegacyStoryFn = (context: StoryContext) => getDecorated()(context);
+
+    const applyLoaders = async () => {
+      const context = {
+        ...identification,
+        // Calculate "combined" parameters at render time (NOTE: for perf we could just use combinedParameters from above?)
+        parameters: this.combineStoryParameters(storyParametersWithArgTypes, kind),
+        hooks,
+        args: _stories[id].args,
+        argTypes,
+        globals: this._globals,
+        viewMode: this._selection?.viewMode,
+      };
+      const loadResults = await Promise.all(loaders.map((loader) => loader(context)));
+      const loaded = Object.assign({}, ...loadResults);
+      return { ...context, loaded };
+    };
 
     // Pull out parameters.args.$ || .argTypes.$.defaultValue into initialArgs
-    const passedArgs: Args = combinedParameters.args;
+    const passedArgs: Args = {
+      ...this._kinds[kind].parameters.args,
+      ...storyParameters.args,
+    };
     const defaultArgs: Args = Object.entries(
       argTypes as Record<string, { defaultValue: any }>
     ).reduce((acc, [arg, { defaultValue }]) => {
@@ -424,7 +470,9 @@ export default class StoryStore {
       hooks,
       getDecorated,
       getOriginal,
+      applyLoaders,
       storyFn,
+      unboundStoryFn,
 
       parameters: storyParametersWithArgTypes,
       args: initialArgs,

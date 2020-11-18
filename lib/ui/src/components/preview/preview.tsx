@@ -1,4 +1,4 @@
-import React, { Fragment, FunctionComponent, useMemo, useEffect, useRef } from 'react';
+import React, { Fragment, useMemo, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import merge from '@storybook/api/dist/lib/merge';
@@ -60,10 +60,9 @@ const createCanvas = (id: string, baseUrl = 'iframe.html', withLoader = true): A
             ...defaultWrappers,
           ]);
 
-          const isLoading = !!(
-            (!story && !(storiesFailed || storiesConfigured)) ||
-            (story && refId && refs[refId] && !refs[refId].ready)
-          );
+          const isLoading = story
+            ? !!refs[refId] && !refs[refId].ready
+            : !storiesFailed && !storiesConfigured;
 
           return (
             <ZoomConsumer>
@@ -132,7 +131,7 @@ const useTabs = (
   }, [story, canvas, ...tabsFromConfig]);
 };
 
-const Preview: FunctionComponent<PreviewProps> = (props) => {
+const Preview = React.memo<PreviewProps>((props) => {
   const {
     api,
     id: previewId,
@@ -196,7 +195,7 @@ const Preview: FunctionComponent<PreviewProps> = (props) => {
       </ZoomProvider>
     </Fragment>
   );
-};
+});
 
 export { Preview };
 

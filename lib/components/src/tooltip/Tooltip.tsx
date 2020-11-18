@@ -3,8 +3,8 @@ import memoize from 'memoizerific';
 
 import { styled, Color, lighten, darken } from '@storybook/theming';
 
-const match = memoize(1000)((requestes, actual, value, fallback = 0) =>
-  actual.split('-')[0] === requestes ? value : fallback
+const match = memoize(1000)((requests, actual, value, fallback = 0) =>
+  actual.split('-')[0] === requests ? value : fallback
 );
 
 const ArrowSpacing = 8;

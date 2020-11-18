@@ -3,7 +3,7 @@ module.exports = {
   clearMocks: true,
   moduleNameMapper: {
     // non-js files
-    '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
+    '\\.(jpg|jpeg|png|apng|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/__mocks__/fileMock.js',
     '\\.(css|scss|stylesheet)$': '<rootDir>/__mocks__/styleMock.js',
     '\\.(md)$': '<rootDir>/__mocks__/htmlMock.js',
@@ -49,6 +49,7 @@ module.exports = {
   testPathIgnorePatterns: [
     '/node_modules/',
     '/dist/',
+    '/prebuilt/',
     'addon-jest.test.js',
     '/cli/test/',
     '/examples/cra-kitchen-sink/src/*',
@@ -66,6 +67,7 @@ module.exports = {
     '/node_modules/',
     '/cli/test/',
     '/dist/',
+    '/prebuilt/',
     '/generators/',
     '/dll/',
     '/__mocks__ /',
@@ -78,7 +80,7 @@ module.exports = {
   },
   snapshotSerializers: ['jest-emotion', 'enzyme-to-json/serializer', 'jest-serializer-html'],
   coverageDirectory: 'coverage',
-  setupFilesAfterEnv: ['./scripts/jest.init.js'],
+  setupFilesAfterEnv: ['./scripts/jest.init.ts'],
   coverageReporters: ['lcov'],
   testEnvironment: 'jest-environment-jsdom-thirteen',
   setupFiles: ['raf/polyfill'],

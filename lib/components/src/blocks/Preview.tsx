@@ -213,7 +213,7 @@ const Preview: FunctionComponent<PreviewProps> = ({
         />
       )}
       <ZoomContext.Provider value={{ scale }}>
-        <Relative>
+        <Relative className="docs-story">
           <ChildrenContainer
             isColumn={isColumn || !Array.isArray(children)}
             columns={columns}

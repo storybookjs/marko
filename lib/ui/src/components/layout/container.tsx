@@ -7,6 +7,14 @@ import * as persistence from './persist';
 
 import { Draggable, Handle, DraggableData, DraggableEvent } from './draggers';
 
+const MIN_NAV_WIDTH = 200; // visually there's an additional 10px due to the canvas' left margin
+const MIN_CANVAS_WIDTH = 200; // visually it's 10px less due to the canvas' left margin
+const MIN_CANVAS_HEIGHT = 200; // visually it's 50px less due to the canvas toolbar and top margin
+const MIN_PANEL_WIDTH = 200; // visually it's 10px less due to the canvas' right margin
+const MIN_PANEL_HEIGHT = 200; // visually it's 50px less due to the panel toolbar and bottom margin
+const DEFAULT_NAV_WIDTH = 220;
+const DEFAULT_PANEL_WIDTH = 400;
+
 const Pane = styled.div<{
   border?: 'left' | 'right' | 'top' | 'bottom';
   animate?: boolean;
@@ -345,12 +353,12 @@ class Layout extends Component<LayoutProps, LayoutState> {
 
     this.state = {
       isDragging: false,
-      resizerNav: resizerNav || { x: 200, y: 0 },
+      resizerNav: resizerNav || { x: DEFAULT_NAV_WIDTH, y: 0 },
       resizerPanel:
         resizerPanel ||
         (options.panelPosition === 'bottom'
           ? { x: 0, y: Math.round(bounds.height * 0.6) }
-          : { x: bounds.width - 400, y: 0 }),
+          : { x: bounds.width - DEFAULT_PANEL_WIDTH, y: 0 }),
     };
   }
 
@@ -368,44 +376,57 @@ class Layout extends Component<LayoutProps, LayoutState> {
     const navX = resizerNav.x;
     const panelX = resizerPanel.x;
     const panelY = resizerPanel.y;
-    const minimalMainWidth = !isPanelHidden && isPanelRight ? 400 : 200;
 
     const mutation = {} as LayoutState;
 
     if (!isNavHidden) {
-      if (bounds.width - minimalMainWidth < navX) {
+      const minPanelWidth = !isPanelHidden && isPanelRight ? MIN_PANEL_WIDTH : 0;
+      const minMainWidth = MIN_CANVAS_WIDTH + minPanelWidth;
+      const maxNavX = bounds.width - minMainWidth;
+      const minNavX = MIN_NAV_WIDTH; // coordinate translates directly to width here
+      if (navX > maxNavX) {
+        // upper bound
         mutation.resizerNav = {
-          x: bounds.width - minimalMainWidth,
+          x: maxNavX,
           y: 0,
         };
-      } else if (bounds.width - minimalMainWidth < 200 || navX < 200) {
+      } else if (navX < minNavX || maxNavX < minNavX) {
+        // lower bound, supercedes upper bound if needed
         mutation.resizerNav = {
-          x: 200,
+          x: minNavX,
           y: 0,
         };
       }
     }
+
     if (isPanelRight && !isPanelHidden) {
-      if (bounds.width - 200 < panelX || panelX === 0) {
+      const maxPanelX = bounds.width - MIN_PANEL_WIDTH;
+      const minPanelX = navX + MIN_CANVAS_WIDTH;
+      if (panelX > maxPanelX || panelX === 0) {
+        // upper bound or when switching orientation
         mutation.resizerPanel = {
-          x: bounds.width - 200,
+          x: maxPanelX,
           y: 0,
         };
-      } else if (navX + 200 > panelX) {
+      } else if (panelX < minPanelX) {
+        // lower bound
         mutation.resizerPanel = {
-          x: navX + 200,
+          x: minPanelX,
           y: 0,
         };
       }
     }
 
     if (isPanelBottom && !isPanelHidden) {
-      if (bounds.height - 200 < panelY || panelY === 0) {
+      const maxPanelY = bounds.height - MIN_PANEL_HEIGHT;
+      if (panelY > maxPanelY || panelY === 0) {
+        // lower bound or when switching orientation
         mutation.resizerPanel = {
           x: 0,
           y: bounds.height - 200,
         };
       }
+      // upper bound is enforced by the Draggable's bounds
     }
 
     return mutation.resizerPanel || mutation.resizerNav ? { ...state, ...mutation } : state;
@@ -500,9 +521,12 @@ class Layout extends Component<LayoutProps, LayoutState> {
             axis="x"
             position={resizerNav}
             bounds={{
-              left: 200,
+              left: MIN_NAV_WIDTH,
               top: 0,
-              right: isPanelRight && !isPanelHidden ? panelX - 200 : bounds.width - 200,
+              right:
+                isPanelRight && !isPanelHidden
+                  ? panelX - MIN_CANVAS_WIDTH
+                  : bounds.width - MIN_CANVAS_WIDTH,
               bottom: 0,
             }}
             onStart={this.setDragNav}
@@ -521,14 +545,14 @@ class Layout extends Component<LayoutProps, LayoutState> {
               isPanelBottom
                 ? {
                     left: 0,
-                    top: 200,
+                    top: MIN_CANVAS_HEIGHT,
                     right: 0,
-                    bottom: bounds.height - 200,
+                    bottom: bounds.height - MIN_PANEL_HEIGHT,
                   }
                 : {
-                    left: isNavHidden ? 200 : navX + 200,
+                    left: isNavHidden ? MIN_CANVAS_WIDTH : navX + MIN_CANVAS_WIDTH,
                     top: 0,
-                    right: bounds.width - 200,
+                    right: bounds.width - MIN_PANEL_WIDTH,
                     bottom: 0,
                   }
             }

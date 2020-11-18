@@ -62,7 +62,9 @@ export const SUPPORTED_FRAMEWORKS: SupportedFrameworks[] = [
 
 export enum StoryFormat {
   CSF = 'csf',
+  /** @deprecated only template-csf left for some frameworks */
   CSF_TYPESCRIPT = 'csf-ts',
+  /** @deprecated only template-csf left for some frameworks */
   MDX = 'mdx',
 }
 

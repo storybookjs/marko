@@ -4,7 +4,7 @@ title: 'Doc Blocks'
 
 Doc Blocks are the building blocks of Storybook documentation pages. By default, [DocsPage](./docs-page.md) uses a combination of the blocks below to build a page for each of your components automatically.
 
-Custom [addons](../configure/storybook-addons.md) can also provide their own doc blocks.
+Custom [addons](../api/addons.md) can also provide their own doc blocks.
 
 ## ArgsTable
 
@@ -83,9 +83,9 @@ The API documentation of `ArgTypes` is detailed in a [separate section](../api/a
 | **type.required**              |                         The stories to be show, ordered by supplied name                         |
 | **description**                |                             A Markdown description for the property                              |
 | **table.type.summary**         |                                   A short version of the type                                    |
-| **table.type.detail**          |                                   A short version of the type                                    |
-| **table.defaultValue.summary** |                                   A short version of the type                                    |
-| **table.defaultValue.detail**  |                                   A short version of the type                                    |
+| **table.type.detail**          |                                   A long version of the type                                     |
+| **table.defaultValue.summary** |                                   A short version of the default value                           |
+| **table.defaultValue.detail**  |                                   A long version of the default value                            |
 | **control**                    | See [addon-controls README ](https://github.com/storybookjs/storybook/tree/next/addons/controls) |
 
 For instance:
@@ -107,7 +107,89 @@ If you find yourself writing the same definition over and over again, Storybook 
 For instance you can use:
 
 - `number`, which is shorthand for `type: {name: 'number'}`
-- `radio`, which is a shorhand for `control: {type: 'radio' }`
+- `radio`, which is a shorthand for `control: {type: 'radio' }`
+
+### Grouping
+
+One other relevant aspect of customization related to the ArgsTables is grouping.
+
+Similar argTypes can be grouped into specific categories or even subcategories.
+
+Looking at the following component:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'react/button-implementation.js.mdx',
+    'react/button-implementation.ts.mdx',
+    'angular/button-implementation.ts.mdx',
+    'vue/button-implementation.js.mdx'
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+
+Similar properties could be grouped together to allow better structuring and organization.
+
+We could use the following pattern to group them:
+
+| Field                          |                                           Category                                               |
+| :----------------------------- | :----------------------------------------------------------------------------------------------: |
+| **backgroundColor**            |                                           Colors                                                 |
+| **primary**                    |                                           Colors                                                 |
+| **label**                      |                                           Text                                                   |
+| **onClick**                    |                                           Events                                                 |
+| **size**                       |                                           Sizes                                                  |
+
+
+
+Which will result in the following story implementation:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/button-story-argtypes-with-categories.js.mdx'
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+And the following change in the Storybook UI:
+
+![button story with args grouped into categories](./button-args-grouped-categories.png)
+
+
+The formula used above can be improved even further and include subcategories.
+
+Turning the table above into:
+
+
+| Field                          |                                           Category                                               |                                            Subcategory                                        |
+| :----------------------------- | :----------------------------------------------------------------------------------------------: |:----------------------------------------------------------------------------------------------:
+| **backgroundColor**            |                                           Colors                                                 |                                            Button colors                                      |
+| **primary**                    |                                           Colors                                                 |                                            Button style                                       |
+| **label**                      |                                           Text                                                   |                                            Button contents                                    |
+| **onClick**                    |                                           Events                                                 |                                            Button Events                                      |
+| **size**                       |                                           Sizes                                                  |                                                                                               |
+
+
+Leading to the following change in the story implementation and UI:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/button-story-argtypes-with-subcategories.js.mdx'
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+![button story with args grouped into categories](./button-args-grouped-subcategories.png)
+
 
 #### MDX
 
@@ -148,6 +230,58 @@ To customize the source snippet that’s displayed for a story, set the `docs.so
 />
 
 <!-- prettier-ignore-end -->
+
+There is also a `docs.source.type` parameter that controls how source is auto-generated. Valid values include:
+
+| Value              | Description                                                                                                         |                   Support                    |
+| :----------------- | :------------------------------------------------------------------------------------------------------------------ | :------------------------------------------: |
+| **auto** (default) | Use `dynamic` snippets if the story is written using [Args](../writing-stories/args) and the framework supports it. |                     All                      |
+| **dynamic**        | Dynamically generated snippet based on the output of the story function, e.g. JSX code for react.                   | [Limited](../api/frameworks-feature-support) |
+| **code**           | Use the raw story source as written in the story file.                                                              |                     All                      |
+
+As an example, if you had the following story:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'react/button-story-default-docs-code.js.mdx',
+    'react/button-story-default-docs-code.ts.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+If you click the `Show code` button, you'll see the default behavior being applied:
+
+![button story default behavior in docs tab](./button-story-default-docs-code.png)
+
+To visualize the source as code, you'll need to include the code option in the `docs.source.type` [parameter](../writing-stories/parameters.md):
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/button-story-docs-code-type.js.mdx'
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+Which leads to the following change in the `code` shown in the `Docs` tab:
+
+<video autoPlay muted playsInline loop>
+  <source
+    src="button-story-code-doc-type-optimized.mp4"
+    type="video/mp4"
+  />
+</video>
+
+<div class="aside">
+
+The pattern described will be applied to all the stories for the component. If you need, you can apply this to individual stories for more granular cases. Read more about story-level parameters [here](../writing-stories/parameters.md#story-parameters).
+
+</div>
 
 ### MDX
 
@@ -262,6 +396,8 @@ In MDX, `Canvas` is more flexible: in addition to the DocsPage behavior, it can 
 />
 
 <!-- prettier-ignore-end -->
+
+By default, each story will display side by side (css block). You can display stories one above the other by adding `isColumn` property to the Canvas component.
 
 You can also place non-story content inside a `Canvas` block:
 

@@ -1,21 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`docs-mdx-compiler-plugin title-template-string.mdx 1`] = `
-"/* @jsx mdx */
+"/* @jsxRuntime classic */
+/* @jsx mdx */
 import { assertIsFn, AddContext } from '@storybook/addon-docs/blocks';
 
 import { Meta, Story } from '@storybook/addon-docs/blocks';
 import { titleFunction } from '../title-generators';
-
-const makeShortcode = (name) =>
-  function MDXDefaultShortcode(props) {
-    console.warn(
-      'Component ' +
-        name +
-        ' was not imported, exported, or provided by MDXProvider as global scope'
-    );
-    return <div {...props} />;
-  };
 
 const layoutProps = {};
 const MDXLayout = 'wrapper';

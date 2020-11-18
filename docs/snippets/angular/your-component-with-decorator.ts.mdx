@@ -1,0 +1,19 @@
+```ts
+// your-component.stories.ts
+
+import { Meta } from '@storybook/angular';
+
+export default {
+  component: YourComponent,
+  decorators: [
+    (storyFunc) => {
+      const story = storyFunc();
+
+      return {
+        ...story,
+        template: `<div style="margin: 3em">${story.template}</div>`,
+      };
+    },
+  ],
+} as Meta;
+```

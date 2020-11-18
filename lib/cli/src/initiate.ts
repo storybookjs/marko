@@ -79,8 +79,7 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
     logger.log();
   };
 
-  const REACT_NATIVE_DISCUSSION =
-    'https://github.com/storybookjs/react-native/blob/master/app/react-native/docs/manual-setup.md';
+  const REACT_NATIVE_REPO = 'https://github.com/storybookjs/react-native';
 
   const runGenerator: () => Promise<void> = () => {
     switch (projectType) {
@@ -96,7 +95,7 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
 
       case ProjectType.UPDATE_PACKAGE_ORGANIZATIONS:
         return updateOrganisationsGenerator(packageManager, options.parser, npmOptions)
-          .then(() => null) // commmandLog doesn't like to see output
+          .then(() => null) // commandLog doesn't like to see output
           .then(commandLog('Upgrading your project to the new Storybook packages.'))
           .then(end);
 
@@ -131,9 +130,9 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
           .then(() => {
             logger.log(chalk.red('NOTE: installation is not 100% automated.'));
             logger.log(`To quickly run Storybook, replace contents of your app entry with:\n`);
-            codeLog(["export default from './storybook';"]);
-            logger.log('\n For more in depth setup instructions, see:\n');
-            logger.log(chalk.cyan(REACT_NATIVE_DISCUSSION));
+            codeLog(["export {default} from './storybook';"]);
+            logger.log('\n For more in information, see the github readme:\n');
+            logger.log(chalk.cyan(REACT_NATIVE_REPO));
             logger.log();
           });
       }
@@ -308,5 +307,13 @@ export default function (options: CommandOptions, pkg: IPackage): Promise<void> 
   }
   done();
 
-  return installStorybook(projectType, options);
+  const cleanOptions = { ...options };
+  if (options.storyFormat === StoryFormat.MDX) {
+    logger.warn(
+      '   The MDX CLI template is deprecated. The JS and TS templates already include MDX examples!'
+    );
+    cleanOptions.storyFormat = undefined;
+  }
+
+  return installStorybook(projectType, cleanOptions);
 }

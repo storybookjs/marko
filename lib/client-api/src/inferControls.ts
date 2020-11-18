@@ -28,6 +28,9 @@ const inferControl = (argType: ArgType): any => {
       return { type: 'number' };
     case 'enum': {
       const { value } = type as SBEnumType;
+      if (value?.length <= 5) {
+        return { type: 'radio', options: value };
+      }
       return { type: 'select', options: value };
     }
     case 'function':

@@ -24,9 +24,9 @@ function load(options: StoryshotsOptions) {
   };
 }
 
-const webComponentsoader: Loader = {
+const webComponentsLoader: Loader = {
   load,
   test,
 };
 
-export default webComponentsoader;
+export default webComponentsLoader;

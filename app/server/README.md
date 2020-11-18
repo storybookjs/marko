@@ -97,7 +97,7 @@ You need to ensure the route in your server app renders the appropriate HTML whe
 
 ### Passing parameters to the server
 
-Many components are likely to be dynamic - responding to parameters that change their content or appearance. `@storybook\server` has two mechanisms for passing those parameters to the server - `params` and `args`. Parameters defined in this way are appended to the fetch url as query string parameters. The server endpoing is responsible for interpreting those parameters and vary the returned html appropriately
+Many components are likely to be dynamic - responding to parameters that change their content or appearance. `@storybook\server` has two mechanisms for passing those parameters to the server - `params` and `args`. Parameters defined in this way are appended to the fetch url as query string parameters. The server endpoint is responsible for interpreting those parameters and vary the returned html appropriately
 
 #### Constant parameters with `params`
 
@@ -131,7 +131,7 @@ Static parameters can be defined using the `params` story parameter. For example
 
 The Red and Green story HTML will be fetched from the urls `server.url/controls/button?color=red&label=Stopr` and `server.url/controls/button?color=green&label=OK`
 
-Like all story parameters server params can be defined in the default export and overriden in stories.
+Like all story parameters server params can be defined in the default export and overridden in stories.
 
 ```json
 {
@@ -276,18 +276,18 @@ To use actions, use the `parameters.actions.handles` parameter:
 }
 ```
 
-## Advanced Configuraiton
+## Advanced Configuration
 
 ### fetchStoryHtml
 
-For control over how `@storybook/server` fetches Html from the server you can provide a `fetchStoryHtml` function as a parameter. You would typically set this in `.storybook/preview.js` but it's just a regular Storybook parameter so could be overriden at the stories or story level.
+For control over how `@storybook/server` fetches Html from the server you can provide a `fetchStoryHtml` function as a parameter. You would typically set this in `.storybook/preview.js` but it's just a regular Storybook parameter so could be overridden at the stories or story level.
 
 
 ```javascript
 // .storybook/preview.js
 
 const fetchStoryHtml = async (url, path, params) => {
-  // Custom fetch impelentation
+  // Custom fetch implementation
   // ....
   return html;
 };
@@ -308,4 +308,4 @@ type FetchStoryHtmlType = (url: string, id: string, params: any) => Promise<stri
 
  * url: Server url configured by the `parameters.server.url`
  * id: Id of the story being rendered given by `parameters.server.id`
- * params: Mereged story params `parameters.server.params`and story args
+ * params: Merged story params `parameters.server.params`and story args

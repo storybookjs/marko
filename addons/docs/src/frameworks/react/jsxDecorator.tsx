@@ -7,8 +7,10 @@ import { addons, StoryContext } from '@storybook/addons';
 import { logger } from '@storybook/client-logger';
 
 import { SourceType, SNIPPET_RENDERED } from '../../shared';
+import { getDocgenSection } from '../../lib/docgen';
+import { isMemo, isForwardRef } from './lib';
 
-interface JSXOptions {
+type JSXOptions = Options & {
   /** How many wrappers to skip when rendering the jsx */
   skip?: number;
   /** Whether to show the function in the jsx tab */
@@ -21,7 +23,7 @@ interface JSXOptions {
   onBeforeRender?(dom: string): string;
   /** A function ran after a story is rendered (prefer this over `onBeforeRender`) */
   transformSource?(dom: string, context?: StoryContext): string;
-}
+};
 
 /** Run the user supplied onBeforeRender function if it exists */
 const applyBeforeRender = (domString: string, options: JSXOptions) => {
@@ -84,14 +86,30 @@ export const renderJsx = (code: React.ReactElement, options: JSXOptions) => {
     }
   }
 
-  const opts =
+  const displayNameDefaults =
     typeof options.displayName === 'string'
-      ? {
-          ...options,
-          showFunctions: true,
-          displayName: () => options.displayName,
-        }
-      : options;
+      ? { showFunctions: true, displayName: () => options.displayName }
+      : {
+          // To get exotic component names resolving properly
+          displayName: (el: any): string =>
+            el.type.displayName ||
+            getDocgenSection(el.type, 'displayName') ||
+            (el.type.name !== '_default' ? el.type.name : null) ||
+            (typeof el.type === 'function' ? 'No Display Name' : null) ||
+            (isForwardRef(el.type) ? el.type.render.name : null) ||
+            (isMemo(el.type) ? el.type.type.name : null) ||
+            el.type,
+        };
+
+  const filterDefaults = {
+    filterProps: (value: any, key: string): boolean => value !== undefined,
+  };
+
+  const opts = {
+    ...displayNameDefaults,
+    ...filterDefaults,
+    ...options,
+  };
 
   const result = React.Children.map(code, (c) => {
     // @ts-ignore FIXME: workaround react-element-to-jsx-string
@@ -115,6 +133,7 @@ const defaultOpts = {
   skip: 0,
   showFunctions: false,
   enableBeautify: true,
+  showDefaultProps: false,
 };
 
 export const skipJsxRender = (context: StoryContext) => {

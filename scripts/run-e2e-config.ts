@@ -17,34 +17,16 @@ const baseAngular: Parameters = {
   version: 'latest',
   generator: [
     `yarn add @angular/cli@{{version}} --no-lockfile --non-interactive --silent --no-progress`,
-    `npx ng new {{name}}-{{version}} --routing=true --minimal=true --style=scss --skipInstall=true --strict`,
+    `yarn ng new {{name}}-{{version}} --routing=true --minimal=true --style=scss --skipInstall=true --strict --packageManager=npm`,
+    `cd {{name}}-{{version}}`,
+    `yarn install`,
   ].join(' && '),
-  additionalDeps: ['react', 'react-dom'],
 };
 
-// export const angularv6: Parameters = {
-//   ...baseAngular,
-//   version: 'v6-lts',
-//   additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
-// };
-
-// TODO: enable back when typings issues are resolved
-// export const angularv7: Parameters = {
-//   ...baseAngular,
-//   version: 'v7-lts',
-//   additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
-// };
-
-// export const angularv8: Parameters = {
-//   ...baseAngular,
-//   version: 'v8-lts',
-//   additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
-// };
-
-export const angularv9: Parameters = {
+export const angularv10: Parameters = {
   ...baseAngular,
-  version: 'v9-lts',
-  additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
+  // There is no `v10-lts` tag for now, to update as soon as one is published
+  version: 'v10',
 };
 
 export const angular: Parameters = baseAngular;
@@ -63,7 +45,6 @@ export const html: Parameters = {
   version: 'latest',
   generator: fromDeps(),
   autoDetect: false,
-  additionalDeps: ['react', 'react-dom'],
 };
 
 // TODO: broken
@@ -95,7 +76,6 @@ export const mithril: Parameters = {
   name: 'mithril',
   version: 'latest',
   generator: fromDeps('mithril@{{version}}'),
-  additionalDeps: ['react', 'react-dom'],
 };
 
 export const preact: Parameters = {
@@ -111,7 +91,6 @@ export const rax: Parameters = {
   version: 'latest',
   // Rax versions are inconsistent 1.1.0-1 for some
   generator: fromDeps('rax', 'rax-image', 'rax-link', 'rax-text', 'rax-view'),
-  additionalDeps: ['react', 'react-dom'],
 };
 
 export const react: Parameters = {
@@ -123,7 +102,7 @@ export const react: Parameters = {
 export const react_typescript: Parameters = {
   name: 'react_typescript',
   version: 'latest',
-  generator: fromDeps('react'),
+  generator: fromDeps('react', 'react-dom'),
   typescript: true,
 };
 
@@ -137,7 +116,11 @@ export const react_typescript: Parameters = {
 export const cra: Parameters = {
   name: 'cra',
   version: 'latest',
-  generator: 'npx create-react-app@{{version}} {{name}}-{{version}}',
+  generator: [
+    'npx create-react-app@{{version}} {{name}}-{{version}}',
+    'cd {{name}}-{{version}}',
+    'echo "FAST_REFRESH=true" > .env',
+  ].join(' && '),
 };
 
 export const cra_typescript: Parameters = {
@@ -156,35 +139,38 @@ export const cra_typescript: Parameters = {
 export const sfcVue: Parameters = {
   name: 'sfcVue',
   version: 'latest',
-  generator: fromDeps('vue', 'vue-loader', 'vue-template-compiler'),
-  additionalDeps: ['react', 'react-dom'],
+  generator: fromDeps('vue', 'vue-loader', 'vue-template-compiler', 'webpack@webpack-4'),
+  additionalDeps: [
+    // TODO: remove when https://github.com/storybookjs/storybook/issues/11255 is solved
+    'core-js',
+    // FIXME: We still have issue with react as peer/regular deps...
+    // For some details see: https://github.com/storybookjs/storybook/pull/13059/commits/8d4938bc4aef55e208a89f3547674c64ed39d3b3#r520101039
+    'react',
+  ],
 };
 
 export const svelte: Parameters = {
   name: 'svelte',
   version: 'latest',
   generator: 'npx degit sveltejs/template {{name}}-{{version}}',
-  additionalDeps: ['react', 'react-dom'],
 };
 
 export const vue: Parameters = {
   name: 'vue',
   version: 'latest',
   generator: `npx @vue/cli@{{version}} create {{name}}-{{version}} --default --packageManager=yarn --no-git --force`,
-  additionalDeps: ['react', 'react-dom'],
 };
 
 export const web_components: Parameters = {
   name: 'web_components',
   version: 'latest',
   generator: fromDeps('lit-html', 'lit-element'),
-  additionalDeps: ['react', 'react-dom'],
 };
 
 export const webpack_react: Parameters = {
   name: 'webpack_react',
   version: 'latest',
-  generator: fromDeps('react', 'react-dom', 'webpack'),
+  generator: fromDeps('react', 'react-dom', 'webpack@webpack-4'),
 };
 
 export const react_in_yarn_workspace: Parameters = {

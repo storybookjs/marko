@@ -1,6 +1,6 @@
 {
   "name": "@storybook/angular",
-  "version": "6.1.0-alpha.3",
+  "version": "6.1.0-rc.4",
   "description": "Storybook for Angular: Develop Angular Components in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -28,31 +28,40 @@
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.5/**/*"
+    "ts3.4/**/*"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-alpha.3",
-    "@storybook/core": "6.1.0-alpha.3",
-    "@storybook/node-logger": "6.1.0-alpha.3",
-    "@types/webpack-env": "^1.15.2",
+    "@storybook/addons": "6.1.0-rc.4",
+    "@storybook/core": "6.1.0-rc.4",
+    "@storybook/node-logger": "6.1.0-rc.4",
+    "@types/webpack-env": "^1.15.3",
     "autoprefixer": "^9.7.6",
     "core-js": "^3.0.1",
     "fork-ts-checker-webpack-plugin": "^4.0.3",
     "global": "^4.3.2",
     "postcss-loader": "^3.0.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "regenerator-runtime": "^0.13.3",
+    "raw-loader": "^4.0.1",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "regenerator-runtime": "^0.13.7",
     "sass-loader": "^8.0.0",
     "strip-json-comments": "^3.0.1",
     "ts-loader": "^6.0.1",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
-    "webpack": "^4.43.0"
+    "webpack": "^4.44.2"
   },
   "devDependencies": {
+    "@angular-devkit/build-angular": "~0.1002.0",
+    "@angular-devkit/core": "^10.2.0",
+    "@angular/common": "^10.2.2",
+    "@angular/compiler": "^10.2.2",
+    "@angular/core": "^10.2.2",
+    "@angular/forms": "^10.2.2",
+    "@angular/platform-browser": "^10.2.2",
+    "@angular/platform-browser-dynamic": "^10.2.2",
     "@types/autoprefixer": "^9.4.0"
   },
   "peerDependencies": {
@@ -66,7 +75,7 @@
     "@angular/platform-browser-dynamic": ">=6.0.0",
     "@babel/core": "*",
     "rxjs": "^6.0.0",
-    "typescript": "^3.4.0",
+    "typescript": "^3.4.0 || >=4.0.0",
     "zone.js": "^0.8.29 || ^0.9.0 || ^0.10.0"
   },
   "engines": {
@@ -75,11 +84,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "677dc96dfcd7922bf1a6518882d4dc165d57501f",
+  "gitHead": "c174d7429c2593e051cc2dd1361bb28bff71f75b",
   "typesVersions": {
-    "<=3.5": {
+    "<3.8": {
       "*": [
-        "ts3.5/*"
+        "ts3.4/*"
       ]
     }
   }

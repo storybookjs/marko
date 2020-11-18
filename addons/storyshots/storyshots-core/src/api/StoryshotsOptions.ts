@@ -3,6 +3,24 @@ import { Stories2SnapsConverter } from '../Stories2SnapsConverter';
 import { SupportedFramework } from '../frameworks';
 import { RenderTree } from '../frameworks/Loader';
 
+export interface TestMethodOptions {
+  story: any;
+  context: any;
+  renderTree: RenderTree;
+  renderShallowTree: RenderTree;
+  stories2snapsConverter: Stories2SnapsConverter;
+  snapshotFileName: string;
+  options: any;
+}
+
+export interface StoryshotsTestMethod {
+  (args: TestMethodOptions): any;
+  beforeAll?: () => void | Promise<void>;
+  beforeEach?: () => void | Promise<void>;
+  afterAll?: () => void | Promise<void>;
+  afterEach?: () => void | Promise<void>;
+}
+
 export interface StoryshotsOptions {
   asyncJest?: boolean;
   config?: (options: any) => void;
@@ -12,7 +30,7 @@ export interface StoryshotsOptions {
   storyKindRegex?: RegExp | string;
   storyNameRegex?: RegExp | string;
   framework?: SupportedFramework;
-  test?: (story: any, context: any, renderTree: RenderTree, options?: any) => any;
+  test?: StoryshotsTestMethod;
   renderer?: Function;
   snapshotSerializers?: jest.SnapshotSerializerPlugin[];
   /**

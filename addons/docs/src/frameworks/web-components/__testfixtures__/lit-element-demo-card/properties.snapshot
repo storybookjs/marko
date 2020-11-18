@@ -24,7 +24,7 @@ Object {
     "name": "--demo-wc-card-back-color",
     "required": false,
     "table": Object {
-      "category": "css",
+      "category": "css custom properties",
       "defaultValue": Object {
         "summary": undefined,
       },
@@ -41,7 +41,7 @@ Object {
     "name": "--demo-wc-card-front-color",
     "required": false,
     "table": Object {
-      "category": "css",
+      "category": "css custom properties",
       "defaultValue": Object {
         "summary": undefined,
       },
@@ -58,7 +58,24 @@ Object {
     "name": "--demo-wc-card-header-font-size",
     "required": false,
     "table": Object {
-      "category": "css",
+      "category": "css custom properties",
+      "defaultValue": Object {
+        "summary": undefined,
+      },
+      "type": Object {
+        "summary": undefined,
+      },
+    },
+    "type": Object {
+      "name": "void",
+    },
+  },
+  "back": Object {
+    "description": "Back of the card",
+    "name": "back",
+    "required": false,
+    "table": Object {
+      "category": "css shadow parts",
       "defaultValue": Object {
         "summary": undefined,
       },
@@ -102,6 +119,23 @@ Object {
     },
     "type": Object {
       "name": "boolean",
+    },
+  },
+  "front": Object {
+    "description": "Front of the card",
+    "name": "front",
+    "required": false,
+    "table": Object {
+      "category": "css shadow parts",
+      "defaultValue": Object {
+        "summary": undefined,
+      },
+      "type": Object {
+        "summary": undefined,
+      },
+    },
+    "type": Object {
+      "name": "void",
     },
   },
   "header": Object {

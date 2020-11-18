@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import range from 'lodash/range';
+import PropTypes from 'prop-types';
 import addons, { StoryContext } from '@storybook/addons';
 import { renderJsx, jsxDecorator } from './jsxDecorator';
 import { SNIPPET_RENDERED } from '../../shared';
@@ -26,6 +27,20 @@ describe('renderJsx', () => {
     const onClick = () => console.log('onClick');
     expect(renderJsx(<div onClick={onClick}>hello</div>, {})).toMatchInlineSnapshot(`
       <div onClick={() => {}}>
+        hello
+      </div>
+    `);
+  });
+  it('undefined values', () => {
+    expect(renderJsx(<div className={undefined}>hello</div>, {})).toMatchInlineSnapshot(`
+      <div>
+        hello
+      </div>
+    `);
+  });
+  it('null values', () => {
+    expect(renderJsx(<div className={null}>hello</div>, {})).toMatchInlineSnapshot(`
+      <div className={null}>
         hello
       </div>
     `);
@@ -90,6 +105,52 @@ describe('renderJsx', () => {
           'item 19'
         ]}
        />
+    `);
+  });
+
+  it('forwardRef component', () => {
+    const MyExoticComponent = React.forwardRef(function MyExoticComponent(props: any, _ref: any) {
+      return <div>{props.children}</div>;
+    });
+
+    expect(renderJsx(<MyExoticComponent>I'm forwardRef!</MyExoticComponent>, {}))
+      .toMatchInlineSnapshot(`
+        <MyExoticComponent>
+          I'm forwardRef!
+        </MyExoticComponent>
+      `);
+  });
+
+  it('memo component', () => {
+    const MyMemoComponent = React.memo(function MyMemoComponent(props: any) {
+      return <div>{props.children}</div>;
+    });
+
+    expect(renderJsx(<MyMemoComponent>I'm memo!</MyMemoComponent>, {})).toMatchInlineSnapshot(`
+      <MyMemoComponent>
+        I'm memo!
+      </MyMemoComponent>
+    `);
+  });
+
+  it('should not add default props to string if the prop value has not changed', () => {
+    const Container = ({ className, children }: { className: string; children: string }) => {
+      return <div className={className}>{children}</div>;
+    };
+
+    Container.propTypes = {
+      children: PropTypes.string.isRequired,
+      className: PropTypes.string,
+    };
+
+    Container.defaultProps = {
+      className: 'super-container',
+    };
+
+    expect(renderJsx(<Container>yo dude</Container>, {})).toMatchInlineSnapshot(`
+      <Container className="super-container">
+        yo dude
+      </Container>
     `);
   });
 });

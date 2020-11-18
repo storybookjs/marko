@@ -51,6 +51,7 @@ For instance, suppose you have a `backgroundColor` arg on your story:
 <CodeSnippets
   paths={[
     'common/button-story-controls-red-input.js.mdx',
+    'common/button-story-controls-red-input.mdx.mdx',
   ]}
 />
 
@@ -71,6 +72,7 @@ ArgTypes can also contain arbitrary annotations which can be overridden by the u
 <CodeSnippets
   paths={[
     'common/button-story-controls-color-picker.js.mdx',
+    'common/button-story-controls-color-picker.mdx.mdx',
   ]}
 />
 
@@ -89,6 +91,7 @@ Up until now, we only used auto-generated controls based on the component we're 
 <CodeSnippets
   paths={[
     'react/table-story-fully-customize-controls.js.mdx',
+    'react/table-story-fully-customize-controls.mdx.mdx',
   ]}
 />
 
@@ -96,11 +99,40 @@ Up until now, we only used auto-generated controls based on the component we're 
 
 By default, Storybook will add controls for all args that:
 
-- It infers from the component definition [if your framework supports it](https://github.com/storybookjs/storybook/blob/next/addons/controls/README.md#framework-support).
+- It infers from the component definition [if your framework supports it](../api/frameworks-feature-support.md).
 
 - Appear in the list of args for your story.
 
 You can determine the control by using `argTypes` in each case.
+
+As they can be complex cases:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'react/component-story-custom-args-complex.js.mdx',
+    'react/component-story-custom-args-complex.ts.mdx',
+    'react/component-story-custom-args-complex.mdx.mdx'
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+
+Or even with certain types of elements, such as icons:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'react/component-story-custom-args-icons.js.mdx',
+    'react/component-story-custom-args-icons.ts.mdx',
+    'react/component-story-custom-args-icons.mdx.mdx'
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ## Configuration
 
@@ -139,13 +171,16 @@ If you need to customize a control to use a enum data type in your story, for in
 <CodeSnippets
   paths={[
     'common/widget-story-controls-enum.js.mdx',
+    'common/widget-story-controls-enum.mdx.mdx',
   ]}
 />
 
 <!-- prettier-ignore-end -->
 
 <div class="aside">
-If you don't provide a specific one, it defaults to select control type.
+If you don't provide a specific one, it defaults to:
+- a radio type for enums with 5 or less elements
+- a select control type with more than 5 elements
 </div>
 
 If you need to customize a control for a number data type in your story, you can do it like so:
@@ -155,13 +190,14 @@ If you need to customize a control for a number data type in your story, you can
 <CodeSnippets
   paths={[
     'common/gizmo-story-controls-customization.js.mdx',
+    'common/gizmo-story-controls-customization.mdx.mdx',
   ]}
 />
 
 <!-- prettier-ignore-end -->
 
 <div class="aside">
-If you don't provide a specific one, it defaults to  number control type.
+If you don't provide a specific one, it defaults to the number control type.
 </div>
 
 ### Parameters
@@ -179,7 +215,7 @@ To enable expanded mode globally, add the following to [`.storybook/preview.js`]
 <CodeSnippets
   paths={[
     'common/storybook-preview-expanded-controls.js.mdx',
-  ]}
+    ]}
 />
 
 <!-- prettier-ignore-end -->
@@ -187,6 +223,38 @@ To enable expanded mode globally, add the following to [`.storybook/preview.js`]
 And here's what the resulting UI looks like:
 
 ![Controls addon expanded](./addon-controls-expanded.png)
+
+### Disable controls for specific properties
+
+Asides from the features already documented here. Controls can also be disabled for individual properties. 
+
+Suppose you want to disable Controls for a property called `foo` in a component's story. The following example illustrates how:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/component-story-disable-controls.js.mdx',
+    'common/component-story-disable-controls.mdx.mdx'
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+Resulting in the following change in Storybook UI:
+
+<video autoPlay muted playsInline loop>
+  <source
+    src="addon-controls-disable-specific-prop.mp4"
+    type="video/mp4"
+  />
+</video>
+
+<div class="aside">
+
+ As with other Storybook properties, such as [decorators](../writing-stories/decorators.md) the same principle can also be applied at a story-level for more granular cases.
+
+</div>
 
 ## Hide NoControls warning
 

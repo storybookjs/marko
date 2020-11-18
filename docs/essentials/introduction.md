@@ -40,3 +40,27 @@ As an example, if the background addon wasn't necessary to your work, you would 
 You can use the following keys for each individual addon: `actions`, `backgrounds`, `controls`, `docs`, `viewport`, `toolbars`.
 
 </div>
+
+### Upgrading from previous versions
+
+If you're upgrading from a previous Storybook version, you will need to add the `@storybook/addon-essentials` package manually.
+
+In your terminal run the following command:
+
+```shell
+npm install --save-dev @storybook/addon-essentials
+```
+
+<div class="aside">
+  
+If you're using <a href="https://yarnpkg.com/">yarn</a>, you'll need to adjust the command accordingly.
+
+</div>
+
+Update your Storybook configuration (in `.storybook/main.js`) to include the essentials addon.
+
+```js
+module.exports = {
+  addons: ['@storybook/addon-essentials'],
+};
+```

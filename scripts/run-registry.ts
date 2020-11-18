@@ -10,6 +10,8 @@ import nodeCleanup from 'node-cleanup';
 
 import startVerdaccioServer from 'verdaccio';
 import pLimit from 'p-limit';
+// @ts-ignore
+import { maxConcurrentTasks } from './utils/concurrency';
 import { listOfPackages, Package } from './utils/list-packages';
 
 program
@@ -106,7 +108,10 @@ const currentVersion = async () => {
 };
 
 const publish = (packages: { name: string; location: string }[], url: string) => {
-  const limit = pLimit(3);
+  logger.log(`Publishing packages with a concurrency of ${maxConcurrentTasks}`);
+
+  const limit = pLimit(maxConcurrentTasks);
+  let i = 0;
 
   return Promise.all(
     packages.map(({ name, location }) =>
@@ -119,7 +124,8 @@ const publish = (packages: { name: string; location: string }[], url: string) =>
               if (e) {
                 rej(e);
               } else {
-                logger.log(`🛬 successful publish of ${name}!`);
+                i += 1;
+                logger.log(`${i}/${packages.length} 🛬 successful publish of ${name}!`);
                 res();
               }
             });
