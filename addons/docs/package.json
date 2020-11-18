@@ -81,7 +81,7 @@
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
-    "@angular/core": "^10.2.2",
+    "@angular/core": "^11.0.0",
     "@babel/core": "^7.12.3",
     "@emotion/core": "^10.1.1",
     "@emotion/styled": "^10.0.23",
@@ -112,7 +112,7 @@
     "tslib": "^2.0.0",
     "web-component-analyzer": "^1.0.3",
     "webpack": "^4.44.2",
-    "zone.js": "^0.10.2"
+    "zone.js": "^0.11.3"
   },
   "peerDependencies": {
     "@babel/core": "^7.11.5",

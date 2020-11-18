@@ -9,6 +9,12 @@ module.exports = {
     'ts-jest': {
       tsConfig: path.join(__dirname, 'src/tsconfig.spec.json'),
       stringifyContentPathRegex: '\\.html$',
+      astTransformers: {
+        before: [
+          'jest-preset-angular/build/InlineFilesTransformer',
+          'jest-preset-angular/build/StripStylesTransformer',
+        ],
+      },
     },
   },
   roots: [__dirname],
