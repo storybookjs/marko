@@ -4,6 +4,10 @@
 
 - UI: CSS escape hatches for sidebar styling ([#13155](https://github.com/storybookjs/storybook/pull/13155))
 
+### Bug Fixes
+
+- UI: Fix CSS for IE11 ([#13159](https://github.com/storybookjs/storybook/pull/13159))
+
 ## 6.1.0-rc.4 (November 17, 2020)
 
 ### Maintenance
