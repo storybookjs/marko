@@ -1,3 +1,9 @@
+## 6.1.1 (November 20, 2020)
+
+### Bug Fixes
+
+- Addon-backgrounds: Fix grid disable ([#13175](https://github.com/storybookjs/storybook/pull/13175))
+
 ## 6.1.0 (November 19, 2020)
 
 6.1 is the first in a series of performance-oriented Storybook releases. It includes:
@@ -11,7 +17,7 @@
   - Fast refresh [#12470](https://github.com/storybookjs/storybook/pull/12470) [#12535](https://github.com/storybookjs/storybook/pull/12535)
   - Strict mode [#12781](https://github.com/storybookjs/storybook/pull/12781)
 
-  6.1 contains hundreds more fixes, features, and tweaks. Browse the [changelogs](https://github.com/storybookjs/storybook/blob/next/CHANGELOG.md) matching `6.1.0-alpha.*`, `6.1.0-beta.*`, and `6.1.0-rc.*` for the full list of changes. See [Storybook 6 migration guide](https://medium.com/storybookjs/storybook-6-migration-guide-200346241bb5) to upgrade from `5.3` or earlier.
+    6.1 contains hundreds more fixes, features, and tweaks. Browse the [changelogs](https://github.com/storybookjs/storybook/blob/next/CHANGELOG.md) matching `6.1.0-alpha.*`, `6.1.0-beta.*`, and `6.1.0-rc.*` for the full list of changes. See [Storybook 6 migration guide](https://medium.com/storybookjs/storybook-6-migration-guide-200346241bb5) to upgrade from `5.3` or earlier.
 
 ## 6.1.0-rc.6 (November 19, 2020)
 
