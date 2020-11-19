@@ -1,6 +1,7 @@
 <h1>Migration</h1>
 
 - [From version 6.0.x to 6.1.0](#from-version-60x-to-610)
+  - [Addon-backgrounds preset](#addon-backgrounds-preset)
   - [Single story hoisting](#single-story-hoisting)
   - [6.1 deprecations](#61-deprecations)
     - [Deprecated DLL flags](#deprecated-dll-flags)
@@ -138,6 +139,26 @@
   - [Deprecated embedded addons](#deprecated-embedded-addons)
 
 ## From version 6.0.x to 6.1.0
+
+### Addon-backgrounds preset
+
+In 6.1 we there is an structural change in addon-backgrounds that ended up introducing an unintentional breaking change.
+
+The addon needs decorators which come in a preset. The needed preset is ignored if you import the addon like this in `main.js`:
+```js
+module.exports = {
+  stories: ['../**/*.stories.js'],
+  addons: ['@storybook/addon-backgrounds/register'],
+};
+```
+
+To fix it, just replace `@storybook/addon-backgrounds/register` with `@storybook/addon-backgrounds`:
+```js
+module.exports = {
+  stories: ['../**/*.stories.js'],
+  addons: ['@storybook/addon-backgrounds'],
+};
+```
 
 ### Single story hoisting
 
