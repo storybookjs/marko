@@ -35,9 +35,10 @@ export const plugins = [
     require.resolve('babel-plugin-polyfill-corejs3'),
     {
       method: "usage-global",
-      absoluteImports: require.resolve('core-js')
-    }
-  ]
+      absoluteImports: require.resolve('core-js'),
+      version: require('core-js/package.json').version,
+    },
+  ],
 ];
 
 export const presets = [
