@@ -1,3 +1,10 @@
+## 6.1.0-rc.6 (November 19, 2020)
+
+### Bug Fixes
+
+- Core: Fix using cached manager on the 2nd run ([#13165](https://github.com/storybookjs/storybook/pull/13165))
+- Addon-docs: Fix Preview scaling with transform instead of zoom ([#12845](https://github.com/storybookjs/storybook/pull/12845))
+
 ## 6.1.0-rc.5 (November 19, 2020)
 
 ### Features
