@@ -15,6 +15,7 @@ export { ActionBar } from './ActionBar/ActionBar';
 export { Spaced } from './spaced/Spaced';
 export { Placeholder } from './placeholder/placeholder';
 export { ScrollArea } from './ScrollArea/ScrollArea';
+export { Zoom } from './Zoom/Zoom';
 
 // Forms
 export { Button } from './Button/Button';
