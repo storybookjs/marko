@@ -4,7 +4,7 @@ export { RenderContext } from '@storybook/core';
 
 export type StoryFnServerReturnType = any;
 
-export type FetchStoryHtmlType = (url: string, id: string, params: any, globals: StoryContext) => Promise<string | Node>;
+export type FetchStoryHtmlType = (url: string, id: string, params: any, context: StoryContext) => Promise<string | Node>;
 
 export interface IStorybookStory {
   name: string;

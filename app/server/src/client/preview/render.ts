@@ -8,7 +8,7 @@ const rootElement = document.getElementById('root');
 
 const defaultFetchStoryHtml: FetchStoryHtmlType = async (url, path, params, storyContext) => {
   const fetchUrl = new URL(`${url}/${path}`);
-  fetchUrl.search = new URLSearchParams({ ...params, ...storyContext.globals }).toString();
+  fetchUrl.search = new URLSearchParams({ ...storyContext.globals, ...params }).toString();
 
   const response = await fetch(fetchUrl);
   return response.text();
