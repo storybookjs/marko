@@ -1,1 +1,1 @@
-{"version":"6.1.1","info":{"plain":"### Bug Fixes\n\n- Addon-backgrounds: Fix grid disable ([#13175](https://github.com/storybookjs/storybook/pull/13175))"}}
+{"version":"6.1.2","info":{"plain":"### Bug Fixes\n\n- Storyshots: Fix `beforeScreenshot` and `afterScreenshot` return types ([#13198](https://github.com/storybookjs/storybook/pull/13198))\n- UI: Target only IE10/IE11 for our CSS vertical centering hack ([#13192](https://github.com/storybookjs/storybook/pull/13192))"}}
