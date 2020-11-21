@@ -64,7 +64,7 @@ For example, here is how Storybook automatically adopts `create-react-app`'s con
 
 - `webpack` is applied to the preview config after it has been initialized by storybook
 - `webpackFinal` is applied to the preview config after all user presets have been applied
-- `webpackManager` is applied to the manager config
+- `managerWebpack` is applied to the manager config
 
 ### Manager entries
 
