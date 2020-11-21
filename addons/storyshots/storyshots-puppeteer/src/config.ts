@@ -39,8 +39,8 @@ export interface PuppeteerTestConfig extends CommonConfig {
 export interface ImageSnapshotConfig extends CommonConfig {
   getMatchOptions: (options: Options) => MatchImageSnapshotOptions;
   getScreenshotOptions: (options: Options) => Base64ScreenShotOptions;
-  beforeScreenshot: (page: Page, options: Options) => void | ElementHandle;
-  afterScreenshot: (options: { image: string; context: Context }) => void;
+  beforeScreenshot: (page: Page, options: Options) => Promise<void | ElementHandle>;
+  afterScreenshot: (options: { image: string; context: Context }) => Promise<void>;
 }
 
 const noop: () => undefined = () => undefined;
