@@ -25,9 +25,9 @@ const componentClass = class DynamicComponent {};
 
 type DynamicComponentType = typeof componentClass;
 
-function storyDataFactory<T>(storyData: Observable<T>) {
+function storyDataFactory<T>(data: Observable<T>) {
   return (ngZone: NgZone) => new Observable((subscriber: Subscriber<T>) => {
-    const sub = storyData.subscribe(
+    const sub = data.subscribe(
       (v: T) => { ngZone.run(() => subscriber.next(v)); },
       (err) => { ngZone.run(() => subscriber.error(err)); },
       () => { ngZone.run(() => subscriber.complete()); }
