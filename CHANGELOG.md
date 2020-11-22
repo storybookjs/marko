@@ -1,3 +1,10 @@
+## 6.1.2 (November 21, 2020)
+
+### Bug Fixes
+
+- Storyshots: Fix `beforeScreenshot` and `afterScreenshot` return types ([#13198](https://github.com/storybookjs/storybook/pull/13198))
+- UI: Target only IE10/IE11 for our CSS vertical centering hack ([#13192](https://github.com/storybookjs/storybook/pull/13192))
+
 ## 6.1.1 (November 20, 2020)
 
 ### Bug Fixes

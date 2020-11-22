@@ -1,6 +1,6 @@
 {
   "name": "@storybook/components",
-  "version": "6.1.1",
+  "version": "6.1.2",
   "description": "Core Storybook Components",
   "keywords": [
     "storybook"
@@ -29,9 +29,9 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.4.4",
-    "@storybook/client-logger": "6.1.1",
+    "@storybook/client-logger": "6.1.2",
     "@storybook/csf": "0.0.1",
-    "@storybook/theming": "6.1.1",
+    "@storybook/theming": "6.1.2",
     "@types/overlayscrollbars": "^1.9.0",
     "@types/react-color": "^3.0.1",
     "@types/react-syntax-highlighter": "11.0.4",
@@ -60,7 +60,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "3622cb7d2c4adf44a643ecba51afb39c576f4d1c",
+  "gitHead": "47d0eac6db5423648c3039e0d5c8c3bcc1d8aceb",
   "typesVersions": {
     "<3.8": {
       "*": [
