@@ -177,7 +177,7 @@ export default async ({
         ...themingPaths,
         ...storybookPaths,
         react: path.dirname(require.resolve('react/package.json')),
-        ['react-dom']: path.dirname(require.resolve('react-dom/package.json')),
+        'react-dom': path.dirname(require.resolve('react-dom/package.json')),
       },
 
       plugins: [
