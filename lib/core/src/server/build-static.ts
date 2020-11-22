@@ -106,8 +106,7 @@ async function copyAllStaticFiles(staticDir: any[] | undefined, outputDir: strin
         const [currentStaticDir, staticEndpoint] = dir.split(':').concat('/');
         const localStaticPath = path.resolve(currentStaticDir);
 
-        // @ts-ignore
-        if (await !fs.exists(localStaticPath)) {
+        if (!(await fs.pathExists(localStaticPath))) {
           logger.error(`Error: no such directory to load static files: ${localStaticPath}`);
           process.exit(-1);
         }
