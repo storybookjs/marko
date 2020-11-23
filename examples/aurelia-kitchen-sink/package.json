@@ -10,7 +10,7 @@
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && webpack --env production",
-    "build-storybook": "build-storybook -s dist",
+    "build-storybook": "yarn build && build-storybook -s dist",
     "now-build": "node ../../scripts/bootstrap --core && yarn run build-storybook --quiet",
     "start": "webpack-dev-server",
     "storybook": "start-storybook -p 9009 -s dist"
