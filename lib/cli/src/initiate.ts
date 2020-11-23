@@ -118,7 +118,7 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
                 name: 'server',
                 message:
                   'Do you want to install dependencies necessary to run Storybook server? You can manually do it later by install @storybook/react-native-server',
-                default: false,
+                initial: false,
               },
             ]) as Promise<{ server: boolean }>)
         )
