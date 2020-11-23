@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { NgModule, Type } from '@angular/core';
+import { enableProdMode, NgModule, PlatformRef, Type } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
@@ -28,7 +28,7 @@ export class RenderNgAppService {
 
   public static SELECTOR_STORYBOOK_WRAPPER = 'storybook-wrapper';
 
-  private platform = platformBrowserDynamic();
+  private platform: PlatformRef;
 
   private staticRoot = document.getElementById('root');
 
@@ -43,6 +43,15 @@ export class RenderNgAppService {
     this.staticRoot.innerHTML = '';
     this.staticRoot.appendChild(storybookWrapperElement);
 
+    if (typeof NODE_ENV === 'string' && NODE_ENV !== 'development') {
+      try {
+        enableProdMode();
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.debug(e);
+      }
+    }
+    // platform should be set after enableProdMode()
     this.platform = platformBrowserDynamic();
   }
 
