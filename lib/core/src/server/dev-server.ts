@@ -16,6 +16,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { NextHandleFunction } from 'connect';
+import { FileSystemCache } from 'file-system-cache';
 import { getMiddleware } from './utils/middleware';
 import { logConfig } from './logConfig';
 import loadConfig from './config';
@@ -196,6 +197,23 @@ const useProgressReporting = async (
   new ProgressPlugin({ handler, modulesCount }).apply(compiler);
 };
 
+const useManagerCache = async (fsc: FileSystemCache, managerConfig: webpack.Configuration) => {
+  // Drop the `cache` property because it'll change as a result of writing to the cache.
+  const { cache: _, ...baseConfig } = managerConfig;
+  const configString = stringify(baseConfig);
+  const cachedConfig = await fsc.get('managerConfig');
+  await fsc.set('managerConfig', configString);
+  return configString === cachedConfig;
+};
+
+const clearManagerCache = async (fsc: FileSystemCache) => {
+  if (fsc && fsc.fileExists('managerConfig')) {
+    await fsc.remove('managerConfig');
+    return true;
+  }
+  return false;
+};
+
 const startManager = async ({
   startTime,
   options,
@@ -222,31 +240,28 @@ const startManager = async ({
 
     if (options.cache) {
       if (options.managerCache) {
-        // Drop the `cache` property because it'll change as a result of writing to the cache.
-        const { cache: _, ...baseConfig } = managerConfig;
-        const configString = stringify(baseConfig);
-        const cachedConfig = await options.cache.get('managerConfig');
-        options.cache.set('managerConfig', configString);
-        if (configString === cachedConfig && (await pathExists(outputDir))) {
+        const [useCache, hasOutput] = await Promise.all([
+          // must run even if outputDir doesn't exist, otherwise the 2nd run won't use cache
+          useManagerCache(options.cache, managerConfig),
+          pathExists(outputDir),
+        ]);
+        if (useCache && hasOutput) {
           logger.info('=> Using cached manager');
           managerConfig = null;
         }
-      } else {
-        logger.info('=> Removing cached managerConfig');
-        options.cache.remove('managerConfig');
+      } else if (await clearManagerCache(options.cache)) {
+        logger.info('=> Cleared cached manager config');
       }
     }
   }
 
   if (!managerConfig) {
-    // FIXME: This object containing default values should match ManagerResult
-    // @ts-ignore
-    return { managerStats: {}, managerTotalTime: 0 } as ManagerResult;
+    return { managerStats: {}, managerTotalTime: [0, 0] } as ManagerResult;
   }
 
   const compiler = webpack(managerConfig);
   const middleware = webpackDevMiddleware(compiler, {
-    publicPath: managerConfig.output.publicPath,
+    publicPath: managerConfig.output?.publicPath,
     writeToDisk: true,
     watchOptions: {
       aggregateTimeout: 2000,
@@ -264,11 +279,26 @@ const startManager = async ({
     next();
   });
 
+  router.post('/runtime-error', (request, response) => {
+    if (request.body?.error) {
+      logger.error('Runtime error! Check your browser console.');
+      logger.error(request.body.error.stack || request.body.message);
+      if (request.body.origin === 'manager') clearManagerCache(options.cache);
+    }
+    response.sendStatus(200);
+  });
+
   router.use(middleware);
 
   const managerStats: Stats = await new Promise((resolve) => middleware.waitUntilValid(resolve));
-  if (!managerStats) throw new Error('no stats after building preview');
-  if (managerStats.hasErrors()) throw managerStats;
+  if (!managerStats) {
+    await clearManagerCache(options.cache);
+    throw new Error('no stats after building manager');
+  }
+  if (managerStats.hasErrors()) {
+    await clearManagerCache(options.cache);
+    throw managerStats;
+  }
   return { managerStats, managerTotalTime: process.hrtime(startTime) };
 };
 
@@ -279,9 +309,7 @@ const startPreview = async ({
   outputDir,
 }: any): Promise<PreviewResult> => {
   if (options.ignorePreview) {
-    // FIXME: This object containing default values should match PreviewResult
-    // @ts-ignore
-    return { previewStats: {}, previewTotalTime: 0 } as PreviewResult;
+    return { previewStats: {}, previewTotalTime: [0, 0] } as PreviewResult;
   }
 
   const previewConfig = await loadConfig({
@@ -342,6 +370,9 @@ export async function storybookDevServer(options: any) {
   if (typeof options.extendServer === 'function') {
     options.extendServer(server);
   }
+
+  // Used to report back any client-side (runtime) errors
+  app.use(express.json());
 
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
