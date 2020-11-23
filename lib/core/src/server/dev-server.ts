@@ -280,9 +280,11 @@ const startManager = async ({
   });
 
   router.post('/runtime-error', (request, response) => {
-    logger.error('Runtime error! Check your browser console.');
-    logger.error(request.body.error.stack || request.body.message);
-    if (request.body.origin === 'manager') clearManagerCache(options.cache);
+    if (request.body?.error) {
+      logger.error('Runtime error! Check your browser console.');
+      logger.error(request.body.error.stack || request.body.message);
+      if (request.body.origin === 'manager') clearManagerCache(options.cache);
+    }
     response.sendStatus(200);
   });
 
