@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "build-scripts build",
-    "build-storybook": "build-storybook -s public",
+    "build-storybook": "build-storybook",
     "start": "build-scripts start",
     "storybook": "start-storybook -p 9009 -s public"
   },
