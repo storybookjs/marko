@@ -1,3 +1,12 @@
+## 6.1.3 (November 23, 2020)
+
+### Bug Fixes
+
+- Core: Replace 'trash' with 'fs.remove' ([#13211](https://github.com/storybookjs/storybook/pull/13211))
+- UI: Fix overflow scrolling on layout:centered ([#13217](https://github.com/storybookjs/storybook/pull/13217))
+- CLI: Don't install babel-loader for CRA ([#13220](https://github.com/storybookjs/storybook/pull/13220))
+- Addon-docs: Fix lineheight in typeset component ([#13205](https://github.com/storybookjs/storybook/pull/13205))
+
 ## 6.1.2 (November 21, 2020)
 
 ### Bug Fixes
