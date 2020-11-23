@@ -15,6 +15,7 @@ export interface FrameworkOptions {
   staticDir?: string;
   addScripts?: boolean;
   addComponents?: boolean;
+  addBabel?: boolean;
 }
 
 export type Generator = (
@@ -29,6 +30,7 @@ const defaultOptions: FrameworkOptions = {
   staticDir: undefined,
   addScripts: true,
   addComponents: true,
+  addBabel: true,
 };
 
 export async function baseGenerator(
@@ -38,7 +40,7 @@ export async function baseGenerator(
   framework: SupportedFrameworks,
   options: FrameworkOptions = defaultOptions
 ) {
-  const { extraAddons, extraPackages, staticDir, addScripts, addComponents } = {
+  const { extraAddons, extraPackages, staticDir, addScripts, addComponents, addBabel } = {
     ...defaultOptions,
     ...options,
   };
@@ -67,7 +69,7 @@ export async function baseGenerator(
   }
 
   const packageJson = packageManager.retrievePackageJson();
-  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
+  const babelDependencies = addBabel ? await getBabelDependencies(packageManager, packageJson) : [];
   packageManager.addDependencies({ ...npmOptions, packageJson }, [
     ...versionedPackages,
     ...babelDependencies,
