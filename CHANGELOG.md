@@ -1,3 +1,9 @@
+## 6.1.4 (November 24, 2020)
+
+### Bug Fixes
+
+* Core: Clear manager cache on runtime error ([#13230](https://github.com/storybookjs/storybook/pull/13230))
+
 ## 6.1.3 (November 23, 2020)
 
 ### Bug Fixes
