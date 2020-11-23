@@ -282,8 +282,14 @@ const startManager = async ({
   router.use(middleware);
 
   const managerStats: Stats = await new Promise((resolve) => middleware.waitUntilValid(resolve));
-  if (!managerStats) throw new Error('no stats after building manager');
-  if (managerStats.hasErrors()) throw managerStats;
+  if (!managerStats) {
+    await clearManagerCache(options.cache);
+    throw new Error('no stats after building manager');
+  }
+  if (managerStats.hasErrors()) {
+    await clearManagerCache(options.cache);
+    throw managerStats;
+  }
   return { managerStats, managerTotalTime: process.hrtime(startTime) };
 };
 
