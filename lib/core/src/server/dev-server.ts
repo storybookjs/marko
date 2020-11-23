@@ -207,7 +207,7 @@ const useManagerCache = async (fsc: FileSystemCache, managerConfig: webpack.Conf
 };
 
 const clearManagerCache = async (fsc: FileSystemCache) => {
-  if (fsc.fileExists('managerConfig')) {
+  if (fsc && fsc.fileExists('managerConfig')) {
     await fsc.remove('managerConfig');
     return true;
   }
@@ -277,6 +277,13 @@ const startManager = async ({
   router.get(/\/static\/media\/.*\..*/, (request, response, next) => {
     response.set('Cache-Control', `public, max-age=31536000`);
     next();
+  });
+
+  router.post('/runtime-error', (request, response) => {
+    logger.error('Runtime error! Check your browser console.');
+    logger.error(request.body.error.stack || request.body.message);
+    if (request.body.origin === 'manager') clearManagerCache(options.cache);
+    response.sendStatus(200);
   });
 
   router.use(middleware);
@@ -361,6 +368,9 @@ export async function storybookDevServer(options: any) {
   if (typeof options.extendServer === 'function') {
     options.extendServer(server);
   }
+
+  // Used to report back any client-side (runtime) errors
+  app.use(express.json());
 
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
