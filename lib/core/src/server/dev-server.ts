@@ -85,24 +85,25 @@ async function useStatics(router: any, options: { staticDir?: string[] }) {
   if (staticDir && staticDir.length) {
     await Promise.all(
       staticDir.map(async (dir) => {
-        const [currentStaticDir, staticEndpoint] = dir.split(':').concat('/');
-        const localStaticPath = path.resolve(currentStaticDir);
+        const [dirname, location = '/'] = dir.split(':');
+        const dirpath = path.resolve(dirname);
+        const endpoint = location.startsWith('/') ? location : `/${location}`;
 
-        if (!(await pathExists(localStaticPath))) {
-          logger.error(`Error: no such directory to load static files: ${localStaticPath}`);
-          process.exit(-1);
+        if (!(await pathExists(dirpath))) {
+          logger.warn(`Failed to load static files, no such directory: ${dirpath}`);
+          logger.warn(`Check your \`-s\` or \`--static-dir\` option for start-storybook.`);
+          return;
         }
 
-        logger.info(
-          `=> Loading static files from: ${localStaticPath} and serving at ${staticEndpoint} .`
-        );
-        router.use(staticEndpoint, express.static(localStaticPath, { index: false }));
+        logger.info(`=> Loading static files from ${dirpath} and serving at ${endpoint}.`);
+        router.use(endpoint, express.static(dirpath, { index: false }));
 
-        const faviconPath = path.resolve(localStaticPath, 'favicon.ico');
-
-        if (await pathExists(faviconPath)) {
-          hasCustomFavicon = true;
-          router.use(favicon(faviconPath));
+        if (!hasCustomFavicon) {
+          const faviconPath = path.resolve(dirpath, 'favicon.ico');
+          if (await pathExists(faviconPath)) {
+            hasCustomFavicon = true;
+            router.use(favicon(faviconPath));
+          }
         }
       })
     );
