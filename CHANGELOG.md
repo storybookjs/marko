@@ -1,3 +1,9 @@
+## 6.1.5 (November 24, 2020)
+
+### Bug Fixes
+
+* Core: Resolve react and react-dom from core ([#13195](https://github.com/storybookjs/storybook/pull/13195))
+
 ## 6.1.4 (November 24, 2020)
 
 ### Bug Fixes
