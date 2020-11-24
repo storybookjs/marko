@@ -127,6 +127,7 @@
     "@types/lodash": "^4.14.150",
     "@types/node": "^14.0.10",
     "@types/node-cleanup": "^2.1.1",
+    "@types/prompts": "^2.0.0",
     "@types/semver": "^7.1.0",
     "@types/serve-static": "^1.13.3",
     "@types/shelljs": "^0.8.7",
