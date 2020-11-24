@@ -10,8 +10,6 @@ import VirtualModulePlugin from 'webpack-virtual-modules';
 import PnpWebpackPlugin from 'pnp-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
-import resolveFrom from 'resolve-from';
-
 import themingPaths from '@storybook/theming/paths';
 
 import { createBabelLoader } from './babel-loader-preview';
@@ -22,10 +20,7 @@ import { getPreviewHeadHtml, getPreviewBodyHtml } from '../utils/template';
 import { toRequireContextString } from './to-require-context';
 import { useBaseTsSupport } from '../config/useBaseTsSupport';
 
-const reactPaths: Record<string, string> = {};
-
 const storybookPaths: Record<string, string> = [
-  'addons',
   'addons',
   'api',
   'channels',
@@ -41,18 +36,11 @@ const storybookPaths: Record<string, string> = [
   (acc, sbPackage) => ({
     ...acc,
     [`@storybook/${sbPackage}`]: path.dirname(
-      resolveFrom(__dirname, `@storybook/${sbPackage}/package.json`)
+      require.resolve(`@storybook/${sbPackage}/package.json`)
     ),
   }),
   {}
 );
-
-try {
-  reactPaths.react = path.dirname(resolveFrom(process.cwd(), 'react/package.json'));
-  reactPaths['react-dom'] = path.dirname(resolveFrom(process.cwd(), 'react-dom/package.json'));
-} catch (e) {
-  //
-}
 
 export default async ({
   configDir,
@@ -188,7 +176,8 @@ export default async ({
       alias: {
         ...themingPaths,
         ...storybookPaths,
-        ...reactPaths,
+        react: path.dirname(require.resolve('react/package.json')),
+        'react-dom': path.dirname(require.resolve('react-dom/package.json')),
       },
 
       plugins: [
