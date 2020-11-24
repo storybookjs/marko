@@ -91,7 +91,7 @@ async function useStatics(router: any, options: { staticDir?: string[] }) {
 
         if (!(await pathExists(dirpath))) {
           logger.warn(`Failed to load static files, no such directory: ${dirpath}`);
-          logger.warn(`Check your \`-s\` or \`--static-dir\` option for start-storybook.`);
+          logger.warn(`You should create this directory, or omit the -s (--static-dir) option.`);
           return;
         }
 
