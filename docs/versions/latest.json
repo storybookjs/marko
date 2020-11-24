@@ -1,1 +1,1 @@
-{"version":"6.1.4","info":{"plain":"### Bug Fixes\n\n* Core: Clear manager cache on runtime error ([#13230](https://github.com/storybookjs/storybook/pull/13230))"}}
+{"version":"6.1.5","info":{"plain":"### Bug Fixes\n\n* Core: Resolve react and react-dom from core ([#13195](https://github.com/storybookjs/storybook/pull/13195))"}}
