@@ -172,6 +172,7 @@ const useProgressReporting = async (
     value = Math.max(newValue, value); // never go backwards
     const progress = { value, message: message.charAt(0).toUpperCase() + message.slice(1) };
     if (message === 'building') {
+      // arg3 undefined in webpack5
       const counts = arg3 && arg3.match(/(\d+)\/(\d+)/) || [];
       const complete = parseInt(counts[1], 10);
       const total = parseInt(counts[2], 10);
