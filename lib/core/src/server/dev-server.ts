@@ -174,7 +174,7 @@ const useProgressReporting = async (
     const progress = { value, message: message.charAt(0).toUpperCase() + message.slice(1) };
     if (message === 'building') {
       // arg3 undefined in webpack5
-      const counts = arg3 && arg3.match(/(\d+)\/(\d+)/) || [];
+      const counts = (arg3 && arg3.match(/(\d+)\/(\d+)/)) || [];
       const complete = parseInt(counts[1], 10);
       const total = parseInt(counts[2], 10);
       if (!Number.isNaN(complete) && !Number.isNaN(total)) {
@@ -240,7 +240,7 @@ const startManager = async ({
       logConfig('Manager webpack config', managerConfig);
     }
 
-    if (options.cache) {
+    if (options.cache && !options.smokeTest) {
       if (options.managerCache) {
         const [useCache, hasOutput] = await Promise.all([
           // must run even if outputDir doesn't exist, otherwise the 2nd run won't use cache
