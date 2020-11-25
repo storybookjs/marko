@@ -33,3 +33,14 @@ CustomControls.argTypes = {
 };
 
 export const NoArgs = () => <Button>no args</Button>;
+
+const hasCycle: any = {};
+hasCycle.cycle = hasCycle;
+
+export const CyclicArgs = Template.bind({});
+CyclicArgs.args = {
+  hasCycle,
+};
+CyclicArgs.parameters = {
+  chromatic: { disable: true },
+};
