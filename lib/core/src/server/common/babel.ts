@@ -34,18 +34,16 @@ export const plugins = [
   [
     require.resolve('babel-plugin-polyfill-corejs3'),
     {
-      method: "usage-global",
+      method: 'usage-global',
       absoluteImports: require.resolve('core-js'),
+      // eslint-disable-next-line global-require
       version: require('core-js/package.json').version,
     },
   ],
 ];
 
 export const presets = [
-  [
-    require.resolve('@babel/preset-env'),
-    { shippedProposals: true },
-  ],
+  [require.resolve('@babel/preset-env'), { shippedProposals: true }],
   require.resolve('@babel/preset-typescript'),
 ];
 
