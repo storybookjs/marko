@@ -17,6 +17,8 @@ import { DevCliOptions, getDevCli } from './cli';
 import { resolvePathInStorybookCache } from './utils/resolve-path-in-sb-cache';
 import { ReleaseNotesData, VersionCheck, PackageJson, LoadOptions } from './types';
 
+const { STORYBOOK_VERSION_BASE = 'https://storybook.js.org' } = process.env;
+
 const cache = Cache({
   basePath: resolvePathInStorybookCache('dev-server'),
   ns: 'storybook', // Optional. A grouping namespace for items.
@@ -45,7 +47,7 @@ const updateCheck = async (version: string): Promise<VersionCheck> => {
     // if last check was more then 24h ago
     if (time - 86400000 > fromCache.time) {
       const fromFetch: any = await Promise.race([
-        fetch(`https://storybook.js.org/versions.json?current=${version}`),
+        fetch(`${STORYBOOK_VERSION_BASE}/versions.json?current=${version}`),
         // if fetch is too slow, we won't wait for it
         new Promise((res, rej) => global.setTimeout(rej, 1500)),
       ]);

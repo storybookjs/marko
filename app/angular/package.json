@@ -1,6 +1,6 @@
 {
   "name": "@storybook/angular",
-  "version": "6.1.0-rc.2",
+  "version": "6.1.6",
   "description": "Storybook for Angular: Develop Angular Components in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -34,9 +34,9 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-rc.2",
-    "@storybook/core": "6.1.0-rc.2",
-    "@storybook/node-logger": "6.1.0-rc.2",
+    "@storybook/addons": "6.1.6",
+    "@storybook/core": "6.1.6",
+    "@storybook/node-logger": "6.1.6",
     "@types/webpack-env": "^1.15.3",
     "autoprefixer": "^9.7.6",
     "core-js": "^3.0.1",
@@ -54,14 +54,15 @@
     "webpack": "^4.44.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.901.0",
-    "@angular-devkit/core": "^9.1.0",
-    "@angular/common": "^9.1.0",
-    "@angular/compiler": "^9.1.0",
-    "@angular/core": "^9.1.0",
-    "@angular/forms": "^9.1.0",
-    "@angular/platform-browser": "^9.1.0",
-    "@angular/platform-browser-dynamic": "^9.1.0",
+    "@angular-devkit/build-angular": "~0.1100.1",
+    "@angular-devkit/core": "^11.0.1",
+    "@angular/common": "^11.0.0",
+    "@angular/compiler": "^11.0.0",
+    "@angular/compiler-cli": "^11.0.0",
+    "@angular/core": "^11.0.0",
+    "@angular/forms": "^11.0.0",
+    "@angular/platform-browser": "^11.0.0",
+    "@angular/platform-browser-dynamic": "^11.0.0",
     "@types/autoprefixer": "^9.4.0"
   },
   "peerDependencies": {
@@ -69,6 +70,7 @@
     "@angular-devkit/core": "^0.6.1 || >=7.0.0",
     "@angular/common": ">=6.0.0",
     "@angular/compiler": ">=6.0.0",
+    "@angular/compiler-cli": ">=6.0.0",
     "@angular/core": ">=6.0.0",
     "@angular/forms": ">=6.0.0",
     "@angular/platform-browser": ">=6.0.0",
@@ -76,7 +78,7 @@
     "@babel/core": "*",
     "rxjs": "^6.0.0",
     "typescript": "^3.4.0 || >=4.0.0",
-    "zone.js": "^0.8.29 || ^0.9.0 || ^0.10.0"
+    "zone.js": "^0.8.29 || ^0.9.0 || ^0.10.0 || ^0.11.0"
   },
   "engines": {
     "node": ">=8.0.0"
@@ -84,7 +86,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "38bb07161a72720766a1e9b2c9a1661bd3d819b0",
+  "gitHead": "1f89b5b967974abd3badb3b63d88303dfee4467b",
   "typesVersions": {
     "<3.8": {
       "*": [
