@@ -1,14 +1,23 @@
+## 6.1.6 (November 25, 2020)
+
+### Bug Fixes
+
+- Addon-controls: Fix ensureDocsBeforeControls support for paths ([#13204](https://github.com/storybookjs/storybook/pull/13204))
+- CLI: Add core-js to Preact generator ([#13138](https://github.com/storybookjs/storybook/pull/13138))
+- Core: Improve handling of --static-dir option ([#13245](https://github.com/storybookjs/storybook/pull/13245))
+- Core: Fix webpack5 compatibility check for ProgressPlugin ([#13239](https://github.com/storybookjs/storybook/pull/13239))
+
 ## 6.1.5 (November 24, 2020)
 
 ### Bug Fixes
 
-* Core: Resolve react and react-dom from core ([#13195](https://github.com/storybookjs/storybook/pull/13195))
+- Core: Resolve react and react-dom from core ([#13195](https://github.com/storybookjs/storybook/pull/13195))
 
 ## 6.1.4 (November 24, 2020)
 
 ### Bug Fixes
 
-* Core: Clear manager cache on runtime error ([#13230](https://github.com/storybookjs/storybook/pull/13230))
+- Core: Clear manager cache on runtime error ([#13230](https://github.com/storybookjs/storybook/pull/13230))
 
 ## 6.1.3 (November 23, 2020)
 
