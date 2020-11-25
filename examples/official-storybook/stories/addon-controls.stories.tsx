@@ -41,3 +41,6 @@ export const CyclicArgs = Template.bind({});
 CyclicArgs.args = {
   hasCycle,
 };
+CyclicArgs.parameters = {
+  chromatic: { disable: true },
+};
