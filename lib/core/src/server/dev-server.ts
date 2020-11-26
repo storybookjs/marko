@@ -281,10 +281,11 @@ const startManager = async ({
     next();
   });
 
-  router.post('/runtime-error', (request, response) => {
+  // Used to report back any client-side (runtime) errors
+  router.post('/runtime-error', express.json(), (request, response) => {
     if (request.body?.error) {
       logger.error('Runtime error! Check your browser console.');
-      logger.error(request.body.error.stack || request.body.message);
+      logger.error(request.body.error.stack || request.body.message || request.body);
       if (request.body.origin === 'manager') clearManagerCache(options.cache);
     }
     response.sendStatus(200);
@@ -372,9 +373,6 @@ export async function storybookDevServer(options: any) {
   if (typeof options.extendServer === 'function') {
     options.extendServer(server);
   }
-
-  // Used to report back any client-side (runtime) errors
-  app.use(express.json());
 
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
