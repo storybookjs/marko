@@ -19,6 +19,13 @@
   "license": "MIT",
   "main": "dist/public_api.js",
   "types": "dist/public_api.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "angular/**/*",
@@ -147,12 +154,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "1f89b5b967974abd3badb3b63d88303dfee4467b",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "1f89b5b967974abd3badb3b63d88303dfee4467b"
 }
