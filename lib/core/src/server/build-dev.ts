@@ -153,8 +153,8 @@ function outputStartupInformation(options: {
   version: string;
   address: string;
   networkAddress: string;
-  managerTotalTime: [number, number];
-  previewTotalTime: [number, number];
+  managerTotalTime?: [number, number];
+  previewTotalTime?: [number, number];
 }) {
   const {
     updateInfo,
@@ -283,10 +283,9 @@ export async function buildDevStandalone(
 
     if (options.smokeTest) {
       await outputStats(previewStats, managerStats);
-      const managerWarnings = (managerStats as any).toJson().warnings.length > 0;
-      const previewWarnings =
-        !options.ignorePreview && (previewStats as any).toJson().warnings.length > 0;
-      process.exit(managerWarnings || previewWarnings ? 1 : 0);
+      const hasManagerWarnings = managerStats && (managerStats as any).toJson().warnings.length > 0;
+      const hasPreviewWarnings = previewStats && (previewStats as any).toJson().warnings.length > 0;
+      process.exit(hasManagerWarnings || (hasPreviewWarnings && !options.ignorePreview) ? 1 : 0);
       return;
     }
 
