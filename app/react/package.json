@@ -41,7 +41,6 @@
     "@storybook/core": "6.1.6",
     "@storybook/node-logger": "6.1.6",
     "@storybook/semver": "^7.3.2",
-    "@svgr/webpack": "^5.4.0",
     "@types/webpack-env": "^1.15.3",
     "babel-plugin-add-react-displayname": "^0.0.5",
     "babel-plugin-named-asset-import": "^0.3.1",
