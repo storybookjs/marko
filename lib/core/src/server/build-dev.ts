@@ -283,8 +283,8 @@ export async function buildDevStandalone(
 
     if (options.smokeTest) {
       await outputStats(previewStats, managerStats);
-      const hasManagerWarnings = managerStats && (managerStats as any).toJson().warnings.length > 0;
-      const hasPreviewWarnings = previewStats && (previewStats as any).toJson().warnings.length > 0;
+      const hasManagerWarnings = managerStats && managerStats.toJson().warnings.length > 0;
+      const hasPreviewWarnings = previewStats && previewStats.toJson().warnings.length > 0;
       process.exit(hasManagerWarnings || (hasPreviewWarnings && !options.ignorePreview) ? 1 : 0);
       return;
     }
