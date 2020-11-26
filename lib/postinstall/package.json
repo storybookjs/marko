@@ -16,7 +16,9 @@
     "directory": "lib/postinstall"
   },
   "license": "MIT",
-  "main": "dist/index.js",
+  "sideEffects": false,
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
   "typesVersions": {
     "<3.8": {

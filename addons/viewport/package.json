@@ -16,7 +16,8 @@
     "directory": "addons/viewport"
   },
   "license": "MIT",
-  "main": "dist/preview.js",
+  "main": "dist/cjs/preview.js",
+  "module": "dist/esm/preview.js",
   "types": "dist/preview.d.ts",
   "typesVersions": {
     "<3.8": {

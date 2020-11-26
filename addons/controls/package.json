@@ -19,7 +19,8 @@
     "directory": "addons/controls"
   },
   "license": "MIT",
-  "main": "dist/register.js",
+  "main": "dist/cjs/register.js",
+  "module": "dist/esm/register.js",
   "files": [
     "dist/**/*",
     "README.md",

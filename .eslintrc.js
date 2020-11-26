@@ -37,6 +37,7 @@ module.exports = {
     {
       files: ['**/*.tsx', '**/*.ts'],
       rules: {
+        'react/require-default-props': 'off',
         'react/prop-types': 'off', // we should use types
         'no-dupe-class-members': 'off', // this is called overloads in typescript
       },

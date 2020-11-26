@@ -8,7 +8,7 @@ import merge from './merge';
 import { Provider } from '../modules/provider';
 import { ViewMode } from '../modules/addons';
 
-export { StoryId };
+export type { StoryId };
 
 export interface Root {
   id: StoryId;

@@ -17,7 +17,8 @@
     "directory": "addons/docs"
   },
   "license": "MIT",
-  "main": "dist/public_api.js",
+  "main": "dist/cjs/public_api.js",
+  "module": "dist/esm/public_api.js",
   "types": "dist/public_api.d.ts",
   "typesVersions": {
     "<3.8": {
