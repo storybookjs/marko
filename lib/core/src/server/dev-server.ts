@@ -258,7 +258,7 @@ const startManager = async ({
   }
 
   if (!managerConfig) {
-    return { managerStats: null, managerTotalTime: [0, 0] } as ManagerResult;
+    return {};
   }
 
   const compiler = webpack(managerConfig);
@@ -312,7 +312,7 @@ const startPreview = async ({
   outputDir,
 }: any): Promise<PreviewResult> => {
   if (options.ignorePreview) {
-    return { previewStats: null, previewTotalTime: [0, 0] } as PreviewResult;
+    return {};
   }
 
   const previewConfig = await loadConfig({
