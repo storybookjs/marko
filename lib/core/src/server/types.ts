@@ -94,13 +94,13 @@ export interface ReleaseNotesData {
 }
 
 export interface PreviewResult {
-  previewStats: Stats;
-  previewTotalTime: [number, number];
+  previewStats?: Stats;
+  previewTotalTime?: [number, number];
 }
 
 export interface ManagerResult {
-  managerStats: Stats;
-  managerTotalTime: [number, number];
+  managerStats?: Stats;
+  managerTotalTime?: [number, number];
 }
 
 // TODO: this is a generic interface that we can share across multiple SB packages (like @storybook/cli)
