@@ -17,6 +17,13 @@
   "license": "MIT",
   "main": "dist/index.js",
   "jsnext:main": "src/index.js",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
@@ -48,12 +55,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "1f89b5b967974abd3badb3b63d88303dfee4467b",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "1f89b5b967974abd3badb3b63d88303dfee4467b"
 }
