@@ -40,7 +40,7 @@
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js && node ./scripts/generate-sb-packages-versions.js",
-    "test": "jest test/**/*.test.js --verbose",
+    "test": "jest test/**/*.test.js",
     "postversion": "node ./scripts/generate-sb-packages-versions.js"
   },
   "dependencies": {
