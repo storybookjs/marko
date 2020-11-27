@@ -87,7 +87,7 @@ jobs:
             - node_modules
   install-e2e-deps:
     executor:
-      class: medium
+      class: small
       name: sb_node_10_browsers
     steps:
       - checkout
