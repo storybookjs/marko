@@ -39,6 +39,7 @@
     "@storybook/addons": "6.1.7",
     "@storybook/client-logger": "6.1.7",
     "@storybook/csf": "0.0.1",
+    "core-js": "^3.0.1",
     "estraverse": "^4.2.0",
     "global": "^4.3.2",
     "loader-utils": "^2.0.0",

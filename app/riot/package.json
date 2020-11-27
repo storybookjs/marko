@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "@storybook/core": "6.1.7",
+    "core-js": "^3.0.1",
     "global": "^4.3.2",
     "raw-loader": "^4.0.1",
     "react": "16.13.1",

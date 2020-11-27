@@ -36,6 +36,7 @@
     "@storybook/components": "6.1.7",
     "@storybook/node-logger": "6.1.7",
     "@storybook/theming": "6.1.7",
+    "core-js": "^3.0.1",
     "ts-dedent": "^2.0.0"
   },
   "peerDependencies": {

@@ -45,6 +45,7 @@
     "@storybook/client-api": "6.1.7",
     "@storybook/core": "6.1.7",
     "@types/webpack-env": "^1.15.3",
+    "core-js": "^3.0.1",
     "global": "^4.3.2",
     "html-loader": "^1.0.0",
     "react": "16.13.1",

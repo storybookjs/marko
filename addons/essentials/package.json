@@ -44,6 +44,7 @@
     "@storybook/addons": "6.1.7",
     "@storybook/api": "6.1.7",
     "@storybook/node-logger": "6.1.7",
+    "core-js": "^3.0.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },

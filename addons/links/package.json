@@ -42,6 +42,7 @@
     "@storybook/csf": "0.0.1",
     "@storybook/router": "6.1.7",
     "@types/qs": "^6.9.0",
+    "core-js": "^3.0.1",
     "global": "^4.3.2",
     "prop-types": "^15.7.2",
     "qs": "^6.6.0",

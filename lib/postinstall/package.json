@@ -36,6 +36,7 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
+    "core-js": "^3.0.1"
   },
   "devDependencies": {
     "@hypnosphi/jscodeshift": "^0.6.4",

@@ -43,6 +43,7 @@
     "@storybook/client-api": "6.1.7",
     "@storybook/core-events": "6.1.7",
     "@storybook/theming": "6.1.7",
+    "core-js": "^3.0.1",
     "format-json": "^1.0.3",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",

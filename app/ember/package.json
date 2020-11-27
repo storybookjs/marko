@@ -40,6 +40,7 @@
   "dependencies": {
     "@ember/test-helpers": "^1.7.0",
     "@storybook/core": "6.1.7",
+    "core-js": "^3.0.1",
     "global": "^4.3.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
