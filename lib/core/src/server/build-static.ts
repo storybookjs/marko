@@ -3,7 +3,6 @@ import fs from 'fs-extra';
 import path from 'path';
 import webpack from 'webpack';
 import shelljs from 'shelljs';
-import trash from 'trash';
 
 import { logger } from '@storybook/node-logger';
 
@@ -107,8 +106,7 @@ async function copyAllStaticFiles(staticDir: any[] | undefined, outputDir: strin
         const [currentStaticDir, staticEndpoint] = dir.split(':').concat('/');
         const localStaticPath = path.resolve(currentStaticDir);
 
-        // @ts-ignore
-        if (await !fs.exists(localStaticPath)) {
+        if (!(await fs.pathExists(localStaticPath))) {
           logger.error(`Error: no such directory to load static files: ${localStaticPath}`);
           process.exit(-1);
         }
@@ -177,7 +175,8 @@ export async function buildStaticStandalone(options: any) {
   const defaultFavIcon = require.resolve('./public/favicon.ico');
 
   logger.info(`=> Cleaning outputDir ${outputDir}`);
-  await trash(outputDir, { glob: false });
+  if (outputDir === '/') throw new Error("Won't remove directory '/'. Check your outputDir!");
+  await fs.remove(outputDir);
 
   await cpy(defaultFavIcon, outputDir);
   await copyAllStaticFiles(staticDir, outputDir);

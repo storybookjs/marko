@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-backgrounds",
-  "version": "6.1.1",
+  "version": "6.1.7",
   "description": "A storybook addon to show different backgrounds for your preview",
   "keywords": [
     "addon",
@@ -21,6 +21,13 @@
   "author": "jbaxleyiii",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
@@ -32,12 +39,12 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.1",
-    "@storybook/api": "6.1.1",
-    "@storybook/client-logger": "6.1.1",
-    "@storybook/components": "6.1.1",
-    "@storybook/core-events": "6.1.1",
-    "@storybook/theming": "6.1.1",
+    "@storybook/addons": "6.1.7",
+    "@storybook/api": "6.1.7",
+    "@storybook/client-logger": "6.1.7",
+    "@storybook/components": "6.1.7",
+    "@storybook/core-events": "6.1.7",
+    "@storybook/theming": "6.1.7",
     "global": "^4.3.2",
     "memoizerific": "^1.11.3",
     "regenerator-runtime": "^0.13.7",
@@ -62,12 +69,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "3622cb7d2c4adf44a643ecba51afb39c576f4d1c",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "303d951f9ae4aa2241c9823e1cb6edbfd50fb093"
 }

@@ -9,19 +9,25 @@
 
   .sb-show-main.sb-main-centered {
     margin: 0;
-    padding: 1rem;
     display: flex;
-    justify-content: center;
     align-items: center;
     min-height: 100vh;
+  }
+
+  .sb-show-main.sb-main-centered #root {
     box-sizing: border-box;
+    margin: auto;
+    padding: 1rem;
+    max-height: 100%; /* Hack for centering correctly in IE11 */
   }
 
   /* Vertical centering fix for IE11 */
-  .sb-show-main.sb-main-centered:after {
-    content: '';
-    min-height: inherit;
-    font-size: 0;
+  @media screen and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .sb-show-main.sb-main-centered:after {
+      content: '';
+      min-height: inherit;
+      font-size: 0;
+    }
   }
 
   .sb-show-main.sb-main-fullscreen {
@@ -105,4 +111,15 @@
     // eslint-disable-next-line no-console
     console.warn('unable to connect to top frame for connecting dev tools');
   }
+
+  window.onerror = function onerror(message, source, line, column, err) {
+    if (window.CONFIG_TYPE !== 'DEVELOPMENT') return;
+    // eslint-disable-next-line no-var, vars-on-top
+    var error = { message: err.message, name: err.name, stack: err.stack };
+    window.fetch('/runtime-error', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message, source, line, column, error, origin: 'preview' }),
+    });
+  };
 </script>

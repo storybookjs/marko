@@ -5,7 +5,7 @@ node_modules
 *.sw*
 npm-shrinkwrap.json
 dist
-ts3.5
+ts3.4
 .tern-port
 *.DS_Store
 .cache

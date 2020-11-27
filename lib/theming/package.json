@@ -1,6 +1,6 @@
 {
   "name": "@storybook/theming",
-  "version": "6.1.1",
+  "version": "6.1.7",
   "description": "Core Storybook Components",
   "keywords": [
     "storybook"
@@ -17,6 +17,13 @@
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
@@ -31,7 +38,7 @@
     "@emotion/core": "^10.1.1",
     "@emotion/is-prop-valid": "^0.8.6",
     "@emotion/styled": "^10.0.23",
-    "@storybook/client-logger": "6.1.1",
+    "@storybook/client-logger": "6.1.7",
     "deep-object-diff": "^1.1.0",
     "emotion-theming": "^10.0.19",
     "global": "^4.3.2",
@@ -47,12 +54,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "3622cb7d2c4adf44a643ecba51afb39c576f4d1c",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "303d951f9ae4aa2241c9823e1cb6edbfd50fb093"
 }
