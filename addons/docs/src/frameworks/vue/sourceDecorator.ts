@@ -123,7 +123,7 @@ export function vnodeToString(vnode: Vue.VNode): string {
 }
 
 function stringifyAttr(attrName: string, value?: any): string | null {
-  if (typeof value === 'undefined') {
+  if (typeof value === 'undefined' || typeof value === 'function') {
     return null;
   }
 

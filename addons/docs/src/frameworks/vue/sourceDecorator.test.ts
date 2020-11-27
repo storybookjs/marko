@@ -32,7 +32,7 @@ describe('vnodeToString', () => {
 
   it('attributes', () => {
     const MyComponent: ComponentOptions<any, any, any> = {
-      props: ['propA', 'propB', 'propC', 'propD'],
+      props: ['propA', 'propB', 'propC', 'propD', 'propE', 'propF', 'propG'],
       template: '<div/>',
     };
 
@@ -49,6 +49,13 @@ describe('vnodeToString', () => {
                 propD: {
                   foo: 'bar',
                 },
+                propE: true,
+                propF() {
+                  const foo = 'bar';
+
+                  return foo;
+                },
+                propG: undefined,
               },
             };
           },
@@ -56,7 +63,7 @@ describe('vnodeToString', () => {
         })
       )
     ).toMatchInlineSnapshot(
-      `<my-component :propD='{"foo":"bar"}' :propC="null" :propB="1" propA="propA"/>`
+      `<my-component propE :propD='{"foo":"bar"}' :propC="null" :propB="1" propA="propA"/>`
     );
   });
 
