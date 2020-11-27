@@ -18,7 +18,10 @@ export async function babel(config: TransformOptions, options: StorybookOptions)
 
   return {
     ...config,
-    plugins: [require.resolve('react-refresh/babel'), ...(config.plugins || [])],
+    plugins: [
+      [require.resolve('react-refresh/babel'), {}, 'storybook-react-refresh'],
+      ...(config.plugins || []),
+    ],
   };
 }
 const storybookReactDirName = path.dirname(require.resolve('@storybook/react/package.json'));
@@ -58,8 +61,16 @@ export async function webpackFinal(config: Configuration, options: StorybookOpti
   if (!fastRefreshEnabled) {
     return config;
   }
+  // matches the name of the plugin in CRA.
+  const hasReactRefresh = config.plugins.find((p) => p.constructor.name === 'ReactRefreshPlugin');
+
+  if (hasReactRefresh) {
+    logger.warn("=> React refresh is already set. You don't need to set the option");
+    return config;
+  }
 
   logger.info('=> Using React fast refresh');
+
   return {
     ...config,
     plugins: [...(config.plugins || []), new ReactRefreshWebpackPlugin()],
