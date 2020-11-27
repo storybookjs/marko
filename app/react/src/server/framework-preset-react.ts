@@ -65,7 +65,7 @@ export async function webpackFinal(config: Configuration, options: StorybookOpti
   const hasReactRefresh = config.plugins.find((p) => p.constructor.name === 'ReactRefreshPlugin');
 
   if (hasReactRefresh) {
-    logger.warn("=> React refresh is already set. You don't need do set the option");
+    logger.warn("=> React refresh is already set. You don't need to set the option");
     return config;
   }
 
