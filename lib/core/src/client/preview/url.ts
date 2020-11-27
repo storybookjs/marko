@@ -19,14 +19,15 @@ export const setPath = (selection?: StoreSelection) => {
   }
 
   const { storyId, viewMode }: { storyId: StoryId; viewMode: ViewMode } = selection;
-  const { path, selectedKind, selectedStory, ...rest } = qs.parse(document.location.search, {
+  const { search, hash } = document.location;
+  const { path, selectedKind, selectedStory, ...rest } = qs.parse(search, {
     ignoreQueryPrefix: true,
   });
   const newPath = `${document.location.pathname}?${qs.stringify({
     ...rest,
     id: storyId,
     viewMode,
-  })}`;
+  })}${hash || ''}`;
   history.replaceState({}, '', newPath);
 };
 
