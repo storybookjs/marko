@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addons",
-  "version": "6.1.7",
+  "version": "6.1.8",
   "description": "Storybook addons store",
   "keywords": [
     "storybook"
@@ -17,13 +17,6 @@
   "license": "MIT",
   "main": "dist/public_api.js",
   "types": "dist/public_api.d.ts",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  },
   "files": [
     "dist/**/*",
     "README.md",
@@ -35,12 +28,12 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/api": "6.1.7",
-    "@storybook/channels": "6.1.7",
-    "@storybook/client-logger": "6.1.7",
-    "@storybook/core-events": "6.1.7",
-    "@storybook/router": "6.1.7",
-    "@storybook/theming": "6.1.7",
+    "@storybook/api": "6.1.8",
+    "@storybook/channels": "6.1.8",
+    "@storybook/client-logger": "6.1.8",
+    "@storybook/core-events": "6.1.8",
+    "@storybook/router": "6.1.8",
+    "@storybook/theming": "6.1.8",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "regenerator-runtime": "^0.13.7"
@@ -52,5 +45,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "303d951f9ae4aa2241c9823e1cb6edbfd50fb093"
+  "gitHead": "303d951f9ae4aa2241c9823e1cb6edbfd50fb093",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  }
 }
