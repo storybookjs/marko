@@ -26,19 +26,7 @@ export const es6Transpiler: () => RuleSetRule = () => {
         loader: require.resolve('babel-loader'),
         options: {
           sourceType: 'unambiguous',
-          presets: [
-            [
-              require.resolve('@babel/preset-env'),
-              {
-                shippedProposals: true,
-                useBuiltIns: 'usage',
-                corejs: '3',
-                modules: false,
-                targets: 'defaults',
-              },
-            ],
-            require.resolve('@babel/preset-react'),
-          ],
+          presets: [require.resolve('@babel/preset-react')],
           plugins,
         },
       },
