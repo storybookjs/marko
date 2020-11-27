@@ -73,6 +73,6 @@ export async function webpackFinal(config: Configuration, options: StorybookOpti
 
   return {
     ...config,
-    plugins: [...(config.plugins || []), new ReactRefreshWebpackPlugin()],
+    plugins: [...config.plugins, new ReactRefreshWebpackPlugin()],
   };
 }

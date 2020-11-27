@@ -31,13 +31,19 @@ export const plugins = [
    */
   require.resolve('@babel/plugin-proposal-optional-chaining'),
   require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
+  [
+    require.resolve('babel-plugin-polyfill-corejs3'),
+    {
+      method: 'usage-global',
+      absoluteImports: require.resolve('core-js'),
+      // eslint-disable-next-line global-require
+      version: require('core-js/package.json').version,
+    },
+  ],
 ];
 
 export const presets = [
-  [
-    require.resolve('@babel/preset-env'),
-    { shippedProposals: true, useBuiltIns: 'usage', corejs: '3' },
-  ],
+  [require.resolve('@babel/preset-env'), { shippedProposals: true }],
   require.resolve('@babel/preset-typescript'),
 ];
 

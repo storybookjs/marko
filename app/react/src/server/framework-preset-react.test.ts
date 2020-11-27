@@ -42,8 +42,9 @@ describe('framework-preset-react', () => {
   describe('babel', () => {
     it('should return a config with fast refresh plugin when fast refresh is enabled', async () => {
       const config = await preset.babel(babelConfigMock, storybookOptions as StorybookOptions);
+      const plugins = config.plugins || [];
 
-      expect(config.plugins).toEqual([reactRefreshPath]);
+      expect(plugins[0]).toContain(reactRefreshPath);
     });
 
     it('should return unchanged config without fast refresh plugin when fast refresh is disabled', async () => {
