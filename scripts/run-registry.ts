@@ -89,19 +89,6 @@ const applyRegistriesUrl = (
   return registriesUrl(yarnUrl, npmUrl);
 };
 
-const addUser = (url: string) =>
-  new Promise((res, rej) => {
-    logger.log(`👤 add temp user to verdaccio`);
-
-    exec(`npx npm-cli-adduser -r "${url}" -a -u user -p password -e user@example.com`, (e) => {
-      if (e) {
-        rej(e);
-      } else {
-        res();
-      }
-    });
-  });
-
 const currentVersion = async () => {
   const { version } = (await import('../lerna.json')).default;
   return version;
@@ -126,7 +113,7 @@ const publish = (packages: { name: string; location: string }[], url: string) =>
               } else {
                 i += 1;
                 logger.log(`${i}/${packages.length} 🛬 successful publish of ${name}!`);
-                res();
+                res(undefined);
               }
             });
           })

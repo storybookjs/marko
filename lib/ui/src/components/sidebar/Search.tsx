@@ -5,6 +5,7 @@ import { styled } from '@storybook/theming';
 import { Icons } from '@storybook/components';
 import Downshift, { DownshiftState, StateChangeOptions } from 'downshift';
 import Fuse, { FuseOptions } from 'fuse.js';
+import { transparentize } from 'polished';
 import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 
 import { DEFAULT_REF_ID } from './data';
@@ -75,7 +76,7 @@ const Input = styled.input(({ theme }) => ({
   height: 28,
   paddingLeft: 28,
   paddingRight: 28,
-  border: `1px solid ${theme.color.mediumdark}66`,
+  border: `1px solid ${transparentize(0.6, theme.color.mediumdark)}`,
   background: 'transparent',
   borderRadius: 28,
   fontSize: `${theme.typography.size.s1}px`,
@@ -354,7 +355,10 @@ export const Search = React.memo<{
           return (
             <>
               <ScreenReaderLabel {...getLabelProps()}>Search for components</ScreenReaderLabel>
-              <SearchField {...getRootProps({ refKey: '' }, { suppressRefError: true })}>
+              <SearchField
+                {...getRootProps({ refKey: '' }, { suppressRefError: true })}
+                className="search-field"
+              >
                 <SearchIcon icon="search" />
                 <Input {...inputProps} />
                 {enableShortcuts && <FocusKey>/</FocusKey>}

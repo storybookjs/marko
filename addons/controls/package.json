@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-controls",
-  "version": "6.1.0-rc.4",
+  "version": "6.1.8",
   "description": "Controls for component properties",
   "keywords": [
     "addon",
@@ -30,12 +30,12 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-rc.4",
-    "@storybook/api": "6.1.0-rc.4",
-    "@storybook/client-api": "6.1.0-rc.4",
-    "@storybook/components": "6.1.0-rc.4",
-    "@storybook/node-logger": "6.1.0-rc.4",
-    "@storybook/theming": "6.1.0-rc.4",
+    "@storybook/addons": "6.1.8",
+    "@storybook/api": "6.1.8",
+    "@storybook/client-api": "6.1.8",
+    "@storybook/components": "6.1.8",
+    "@storybook/node-logger": "6.1.8",
+    "@storybook/theming": "6.1.8",
     "core-js": "^3.0.1",
     "ts-dedent": "^2.0.0"
   },
@@ -54,5 +54,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c174d7429c2593e051cc2dd1361bb28bff71f75b"
+  "gitHead": "6c4d0ed4beea726a121cddd365cc5258d6828be9"
 }

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-actions",
-  "version": "6.1.0-rc.4",
+  "version": "6.1.8",
   "description": "Action Logger addon for storybook",
   "keywords": [
     "storybook"
@@ -17,6 +17,13 @@
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
@@ -28,12 +35,12 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-rc.4",
-    "@storybook/api": "6.1.0-rc.4",
-    "@storybook/client-api": "6.1.0-rc.4",
-    "@storybook/components": "6.1.0-rc.4",
-    "@storybook/core-events": "6.1.0-rc.4",
-    "@storybook/theming": "6.1.0-rc.4",
+    "@storybook/addons": "6.1.8",
+    "@storybook/api": "6.1.8",
+    "@storybook/client-api": "6.1.8",
+    "@storybook/components": "6.1.8",
+    "@storybook/core-events": "6.1.8",
+    "@storybook/theming": "6.1.8",
     "core-js": "^3.0.1",
     "fast-deep-equal": "^3.1.1",
     "global": "^4.3.2",
@@ -66,12 +73,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c174d7429c2593e051cc2dd1361bb28bff71f75b",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "6c4d0ed4beea726a121cddd365cc5258d6828be9"
 }

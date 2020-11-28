@@ -30,6 +30,7 @@ const excludeList = [
   '@storybook/addon-bench',
   '@storybook/addon-console',
   '@storybook/csf',
+  '@storybook/storybook-deployer',
 ];
 export const isCorePackage = (pkg: string) =>
   pkg.startsWith('@storybook/') &&

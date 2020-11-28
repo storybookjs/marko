@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-essentials",
-  "version": "6.1.0-rc.4",
+  "version": "6.1.8",
   "description": "Curated addons to bring out the best of Storybook",
   "keywords": [
     "addon",
@@ -19,6 +19,13 @@
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
@@ -28,28 +35,28 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addon-actions": "6.1.0-rc.4",
-    "@storybook/addon-backgrounds": "6.1.0-rc.4",
-    "@storybook/addon-controls": "6.1.0-rc.4",
-    "@storybook/addon-docs": "6.1.0-rc.4",
-    "@storybook/addon-toolbars": "6.1.0-rc.4",
-    "@storybook/addon-viewport": "6.1.0-rc.4",
-    "@storybook/addons": "6.1.0-rc.4",
-    "@storybook/api": "6.1.0-rc.4",
-    "@storybook/node-logger": "6.1.0-rc.4",
+    "@storybook/addon-actions": "6.1.8",
+    "@storybook/addon-backgrounds": "6.1.8",
+    "@storybook/addon-controls": "6.1.8",
+    "@storybook/addon-docs": "6.1.8",
+    "@storybook/addon-toolbars": "6.1.8",
+    "@storybook/addon-viewport": "6.1.8",
+    "@storybook/addons": "6.1.8",
+    "@storybook/api": "6.1.8",
+    "@storybook/node-logger": "6.1.8",
     "core-js": "^3.0.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
-    "@storybook/vue": "6.1.0-rc.4",
+    "@storybook/vue": "6.1.8",
     "@types/jest": "^25.1.1",
     "@types/webpack-env": "^1.15.3"
   },
   "peerDependencies": {
     "@babel/core": "^7.9.6",
-    "@storybook/vue": "6.1.0-rc.4",
+    "@storybook/vue": "6.1.8",
     "babel-loader": "^8.0.0",
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0",
@@ -72,12 +79,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c174d7429c2593e051cc2dd1361bb28bff71f75b",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "6c4d0ed4beea726a121cddd365cc5258d6828be9"
 }

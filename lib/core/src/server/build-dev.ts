@@ -17,17 +17,17 @@ import { DevCliOptions, getDevCli } from './cli';
 import { resolvePathInStorybookCache } from './utils/resolve-path-in-sb-cache';
 import { ReleaseNotesData, VersionCheck, PackageJson, LoadOptions } from './types';
 
+const { STORYBOOK_VERSION_BASE = 'https://storybook.js.org' } = process.env;
+
 const cache = Cache({
   basePath: resolvePathInStorybookCache('dev-server'),
   ns: 'storybook', // Optional. A grouping namespace for items.
 });
 
 const writeStats = async (name: string, stats: Stats) => {
-  await fs.writeFile(
-    resolvePathInStorybookCache(`public/${name}-stats.json`),
-    JSON.stringify(stats.toJson(), null, 2),
-    'utf8'
-  );
+  const filePath = resolvePathInStorybookCache(`public/${name}-stats.json`);
+  await fs.writeFile(filePath, JSON.stringify(stats.toJson(), null, 2), 'utf8');
+  return filePath;
 };
 
 const getFreePort = (port: number) =>
@@ -45,7 +45,7 @@ const updateCheck = async (version: string): Promise<VersionCheck> => {
     // if last check was more then 24h ago
     if (time - 86400000 > fromCache.time) {
       const fromFetch: any = await Promise.race([
-        fetch(`https://storybook.js.org/versions.json?current=${version}`),
+        fetch(`${STORYBOOK_VERSION_BASE}/versions.json?current=${version}`),
         // if fetch is too slow, we won't wait for it
         new Promise((res, rej) => global.setTimeout(rej, 1500)),
       ]);
@@ -153,8 +153,8 @@ function outputStartupInformation(options: {
   version: string;
   address: string;
   networkAddress: string;
-  managerTotalTime: [number, number];
-  previewTotalTime: [number, number];
+  managerTotalTime?: [number, number];
+  previewTotalTime?: [number, number];
 }) {
   const {
     updateInfo,
@@ -220,12 +220,13 @@ function outputStartupInformation(options: {
 
 async function outputStats(previewStats: Stats, managerStats: Stats) {
   if (previewStats) {
-    await writeStats('preview', previewStats);
+    const filePath = await writeStats('preview', previewStats);
+    logger.info(`=> preview stats written to ${chalk.cyan(filePath)}`);
   }
-  await writeStats('manager', managerStats);
-  logger.info(
-    `stats written to => ${chalk.cyan(resolvePathInStorybookCache('public/[name].json'))}`
-  );
+  if (managerStats) {
+    const filePath = await writeStats('manager', managerStats);
+    logger.info(`=> manager stats written to ${chalk.cyan(filePath)}`);
+  }
 }
 
 export async function buildDevStandalone(
@@ -282,10 +283,9 @@ export async function buildDevStandalone(
 
     if (options.smokeTest) {
       await outputStats(previewStats, managerStats);
-      const managerWarnings = (managerStats as any).toJson().warnings.length > 0;
-      const previewWarnings =
-        !options.ignorePreview && (previewStats as any).toJson().warnings.length > 0;
-      process.exit(managerWarnings || previewWarnings ? 1 : 0);
+      const hasManagerWarnings = managerStats && managerStats.toJson().warnings.length > 0;
+      const hasPreviewWarnings = previewStats && previewStats.toJson().warnings.length > 0;
+      process.exit(hasManagerWarnings || (hasPreviewWarnings && !options.ignorePreview) ? 1 : 0);
       return;
     }
 
