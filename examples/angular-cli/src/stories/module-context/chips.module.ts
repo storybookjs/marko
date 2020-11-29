@@ -7,7 +7,7 @@ import { CHIP_COLOR } from './chip-color.token';
 
 @NgModule({
   imports: [CommonModule],
-  exports: [ChipsGroupComponent],
+  exports: [ChipsGroupComponent, ChipComponent],
   declarations: [ChipsGroupComponent, ChipComponent, ChipTextPipe],
   providers: [
     {
