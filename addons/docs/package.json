@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-docs",
-  "version": "6.1.8",
+  "version": "6.1.9",
   "description": "Superior documentation for your components",
   "keywords": [
     "addon",
@@ -19,13 +19,6 @@
   "license": "MIT",
   "main": "dist/public_api.js",
   "types": "dist/public_api.d.ts",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  },
   "files": [
     "dist/**/*",
     "angular/**/*",
@@ -55,18 +48,18 @@
     "@mdx-js/loader": "^1.6.19",
     "@mdx-js/mdx": "^1.6.19",
     "@mdx-js/react": "^1.6.19",
-    "@storybook/addons": "6.1.8",
-    "@storybook/api": "6.1.8",
-    "@storybook/client-api": "6.1.8",
-    "@storybook/client-logger": "6.1.8",
-    "@storybook/components": "6.1.8",
-    "@storybook/core": "6.1.8",
-    "@storybook/core-events": "6.1.8",
+    "@storybook/addons": "6.1.9",
+    "@storybook/api": "6.1.9",
+    "@storybook/client-api": "6.1.9",
+    "@storybook/client-logger": "6.1.9",
+    "@storybook/components": "6.1.9",
+    "@storybook/core": "6.1.9",
+    "@storybook/core-events": "6.1.9",
     "@storybook/csf": "0.0.1",
-    "@storybook/node-logger": "6.1.8",
-    "@storybook/postinstall": "6.1.8",
-    "@storybook/source-loader": "6.1.8",
-    "@storybook/theming": "6.1.8",
+    "@storybook/node-logger": "6.1.9",
+    "@storybook/postinstall": "6.1.9",
+    "@storybook/source-loader": "6.1.9",
+    "@storybook/theming": "6.1.9",
     "acorn": "^7.1.0",
     "acorn-jsx": "^5.1.0",
     "acorn-walk": "^7.0.0",
@@ -92,9 +85,9 @@
     "@babel/core": "^7.12.3",
     "@emotion/core": "^10.1.1",
     "@emotion/styled": "^10.0.23",
-    "@storybook/react": "6.1.8",
-    "@storybook/vue": "6.1.8",
-    "@storybook/web-components": "6.1.8",
+    "@storybook/react": "6.1.9",
+    "@storybook/vue": "6.1.9",
+    "@storybook/web-components": "6.1.9",
     "@types/cross-spawn": "^6.0.1",
     "@types/doctrine": "^0.0.3",
     "@types/enzyme": "^3.10.3",
@@ -154,5 +147,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "6c4d0ed4beea726a121cddd365cc5258d6828be9"
+  "gitHead": "6c4d0ed4beea726a121cddd365cc5258d6828be9",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  }
 }
