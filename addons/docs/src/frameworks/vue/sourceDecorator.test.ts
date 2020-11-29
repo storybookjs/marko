@@ -64,7 +64,17 @@ describe('vnodeToString', () => {
     expect(
       vnodeToString(
         getVNode({
-          template: `<button :class="['foo', null, false, 0]">Button</button>`,
+          template: `<button :class="['foo', null, false, 0, {bar: true, baz: false}]">Button</button>`,
+        })
+      )
+    ).toMatchInlineSnapshot(`<button class="foo bar">Button</button>`);
+  });
+
+  it('object dynamic class', () => {
+    expect(
+      vnodeToString(
+        getVNode({
+          template: `<button :class="{foo: true, bar: false}">Button</button>`,
         })
       )
     ).toMatchInlineSnapshot(`<button class="foo">Button</button>`);
@@ -78,16 +88,6 @@ describe('vnodeToString', () => {
         })
       )
     ).toMatchInlineSnapshot(`<button class="foo baz">Button</button>`);
-  });
-
-  it('object dynamic class', () => {
-    expect(
-      vnodeToString(
-        getVNode({
-          template: `<button :class="{foo: true, bar: false}">Button</button>`,
-        })
-      )
-    ).toMatchInlineSnapshot(`<button class="foo">Button</button>`);
   });
 
   it('attributes', () => {
