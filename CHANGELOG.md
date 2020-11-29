@@ -1,3 +1,11 @@
+## 6.1.9 (November 29, 2020)
+
+### Bug Fixes
+
+- Addon-backgrounds: Fix grid offset always using default value ([#13260](https://github.com/storybookjs/storybook/pull/13260))
+- UI: Fix keybindings on non-US keyboard layouts ([#13319](https://github.com/storybookjs/storybook/pull/13319))
+- Addon-Docs: Handle class attributes in Dynamic Source Rendering for Vue.js ([#13327](https://github.com/storybookjs/storybook/pull/13327))
+
 ## 6.1.8 (November 27, 2020)
 
 ### Bug Fixes
