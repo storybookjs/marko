@@ -76,6 +76,7 @@ export const sourceDecorator = (storyFn: any, context: StoryContext) => {
 export function vnodeToString(vnode: Vue.VNode): string {
   const attrString = [
     ...(vnode.data?.slot ? ([['slot', vnode.data.slot]] as [string, any][]) : []),
+    ['class', normalizeClassAttribute(vnode)],
     ...(vnode.componentOptions?.propsData ? Object.entries(vnode.componentOptions.propsData) : []),
     ...(vnode.data?.attrs ? Object.entries(vnode.data.attrs) : []),
   ]
@@ -120,6 +121,29 @@ export function vnodeToString(vnode: Vue.VNode): string {
   return `<${tag} ${attrString}>${vnode.componentOptions.children
     .map(vnodeToString)
     .join('')}</${tag}>`;
+}
+
+function normalizeClassAttribute(vnode: Vue.VNode): string | undefined {
+  if (!vnode.data || (!vnode.data.staticClass && !vnode.data.class)) {
+    return undefined;
+  }
+
+  let dynamicClass: readonly string[] = [];
+
+  if (typeof vnode.data.class === 'string') {
+    dynamicClass = [vnode.data.class];
+  } else if (vnode.data.class instanceof Array) {
+    dynamicClass = vnode.data.class;
+  } else if (typeof vnode.data.class === 'object') {
+    dynamicClass = Object.entries(vnode.data.class)
+      .filter(([, active]) => !!active)
+      .map(([className]) => className);
+  }
+
+  return (
+    [...(vnode.data.staticClass?.split(' ') ?? []), ...dynamicClass].filter(Boolean).join(' ') ||
+    undefined
+  );
 }
 
 function stringifyAttr(attrName: string, value?: any): string | null {

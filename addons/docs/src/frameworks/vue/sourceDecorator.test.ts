@@ -30,6 +30,66 @@ describe('vnodeToString', () => {
     ).toMatchInlineSnapshot(`<button >Button</button>`);
   });
 
+  it('static class', () => {
+    expect(
+      vnodeToString(
+        getVNode({
+          template: `<button class="foo bar">Button</button>`,
+        })
+      )
+    ).toMatchInlineSnapshot(`<button class="foo bar">Button</button>`);
+  });
+
+  it('string dynamic class', () => {
+    expect(
+      vnodeToString(
+        getVNode({
+          template: `<button :class="'foo'">Button</button>`,
+        })
+      )
+    ).toMatchInlineSnapshot(`<button class="foo">Button</button>`);
+  });
+
+  it('non-string dynamic class', () => {
+    expect(
+      vnodeToString(
+        getVNode({
+          template: `<button :class="1">Button</button>`,
+        })
+      )
+    ).toMatchInlineSnapshot(`<button >Button</button>`);
+  });
+
+  it('array dynamic class', () => {
+    expect(
+      vnodeToString(
+        getVNode({
+          template: `<button :class="['foo', null, false, 0]">Button</button>`,
+        })
+      )
+    ).toMatchInlineSnapshot(`<button class="foo">Button</button>`);
+  });
+
+  it('merge dynamic and static classes', () => {
+    expect(
+      vnodeToString(
+        getVNode({
+          template: `<button class="foo" :class="{bar: null, baz: 1}">Button</button>`,
+        })
+      )
+    ).toMatchInlineSnapshot(`<button class="foo baz">Button</button>`);
+  });
+
+  it('object dynamic class', () => {
+    expect(
+      vnodeToString(
+        getVNode({
+          template: `<button :class="{foo: true, bar: false}">Button</button>`,
+        })
+      )
+    ).toMatchInlineSnapshot(`<button class="foo">Button</button>`);
+  });
+
   it('attributes', () => {
     const MyComponent: ComponentOptions<any, any, any> = {
       props: ['propA', 'propB', 'propC', 'propD', 'propE', 'propF', 'propG'],
