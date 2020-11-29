@@ -21,6 +21,7 @@ import {
   SearchResult,
 } from './types';
 import { getLink } from './utils';
+import { matchesKeyCode, matchesModifiers } from './keybinding';
 
 const ResultsList = styled.ol({
   listStyle: 'none',
@@ -188,9 +189,8 @@ export const SearchResults: FunctionComponent<{
   }) => {
     useEffect(() => {
       const handleEscape = (event: KeyboardEvent) => {
-        if (!enableShortcuts || isLoading) return;
-        if (event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) return;
-        if (event.key === 'Escape') {
+        if (!enableShortcuts || isLoading || event.repeat) return;
+        if (matchesModifiers(false, event) && matchesKeyCode('Escape', event)) {
           const target = event.target as Element;
           if (target?.id === 'storybook-explorer-searchfield') return; // handled by downshift
           event.preventDefault();

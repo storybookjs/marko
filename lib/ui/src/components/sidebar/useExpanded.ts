@@ -2,6 +2,7 @@ import { StoriesHash } from '@storybook/api';
 import { document } from 'global';
 import throttle from 'lodash/throttle';
 import React, { Dispatch, MutableRefObject, useCallback, useEffect, useReducer } from 'react';
+import { matchesKeyCode, matchesModifiers } from './keybinding';
 import { Highlight } from './types';
 
 import { isAncestor, getAncestorIds, getDescendantIds, scrollIntoView } from './utils';
@@ -114,9 +115,14 @@ export const useExpanded = ({
     const navigateTree = throttle((event: KeyboardEvent) => {
       const highlightedItemId =
         highlightedRef.current?.refId === refId && highlightedRef.current?.itemId;
-      if (!isBrowsing || !event.key || !containerRef.current || !highlightedItemId) return;
-      if (event.repeat || event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) return;
-      if (!['Enter', ' ', 'ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+      if (!isBrowsing || !containerRef.current || !highlightedItemId || event.repeat) return;
+      if (!matchesModifiers(false, event)) return;
+
+      const isEnter = matchesKeyCode('Enter', event);
+      const isSpace = matchesKeyCode('Space', event);
+      const isArrowLeft = matchesKeyCode('ArrowLeft', event);
+      const isArrowRight = matchesKeyCode('ArrowRight', event);
+      if (!(isEnter || isSpace || isArrowLeft || isArrowRight)) return;
 
       const highlightedElement = getElementByDataItemId(highlightedItemId);
       if (!highlightedElement || highlightedElement.getAttribute('data-ref-id') !== refId) return;
@@ -124,20 +130,20 @@ export const useExpanded = ({
       const target = event.target as Element;
       if (!isAncestor(menuElement, target) && !isAncestor(target, menuElement)) return;
       if (target.hasAttribute('data-action')) {
-        if (['Enter', ' '].includes(event.key)) return;
+        if (isEnter || isSpace) return;
         (target as HTMLButtonElement).blur();
       }
 
       event.preventDefault();
 
       const type = highlightedElement.getAttribute('data-nodetype');
-      if (['Enter', ' '].includes(event.key) && ['component', 'story', 'document'].includes(type)) {
+      if ((isEnter || isSpace) && ['component', 'story', 'document'].includes(type)) {
         onSelectStoryId(highlightedItemId);
       }
 
       const isExpanded = highlightedElement.getAttribute('aria-expanded');
 
-      if (event.key === 'ArrowLeft') {
+      if (isArrowLeft) {
         if (isExpanded === 'true') {
           // The highlighted node is expanded, so we collapse it.
           setExpanded({ ids: [highlightedItemId], value: false });
@@ -158,7 +164,7 @@ export const useExpanded = ({
         return;
       }
 
-      if (event.key === 'ArrowRight') {
+      if (isArrowRight) {
         if (isExpanded === 'false') {
           updateExpanded({ ids: [highlightedItemId], value: true });
         } else if (isExpanded === 'true') {
