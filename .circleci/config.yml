@@ -44,6 +44,32 @@ executors:
 orbs:
   git-shallow-clone: guitarrapc/git-shallow-clone@2.0.3
 
+commands:
+  ensure-pr-is-labeled-with:
+    description: 'A command looking for the labels set on the PR associated to this workflow and checking it contains the label given as parameter'
+    parameters:
+      label:
+        type: string
+    steps:
+      - run:
+          name: Check if PR is labeled with "run all e2e tests"
+          command: |
+            sudo apt-get install jq
+
+            PR_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | sed "s/.*\/pull\///")
+            echo "PR_NUMBER: $PR_NUMBER"
+
+            API_GITHUB="https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
+            PR_REQUEST_URL="$API_GITHUB/pulls/$PR_NUMBER"
+            PR_RESPONSE=$(curl -H "Authorization: token $GITHUB_TOKEN_TEST_GMAISSE" "$PR_REQUEST_URL")
+
+            if [ $(echo $PR_RESPONSE | jq '.labels | map(select(.name == "<< parameters.label >>")) | length') -eq 0 ]; then
+              echo "🏁 The PR isn't labelled with '<< parameters.label >>' so this job will end at the current step."
+              circleci-agent step halt
+            else
+              echo "🚀 The PR is labelled with '<< parameters.label >>', job will continue!"
+            fi
+
 jobs:
   build:
     executor:
