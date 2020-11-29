@@ -222,8 +222,16 @@ jobs:
     working_directory: /tmp/storybook
     parallelism: 4
     steps:
-      - ensure-pr-is-labeled-with:
-          label: "run all e2e tests"
+      - when:
+          condition:
+            and:
+              - not:
+                  equal: [ master, << pipeline.git.branch >> ]
+              - not:
+                  equal: [ next, << pipeline.git.branch >> ]
+          steps:
+            - ensure-pr-is-labeled-with:
+                label: "run all e2e tests"
       - git-shallow-clone/checkout_advanced:
           clone_options: '--depth 1 --verbose'
       - attach_workspace:
