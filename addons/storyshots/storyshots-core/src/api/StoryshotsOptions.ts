@@ -11,6 +11,7 @@ export interface TestMethodOptions {
   stories2snapsConverter: Stories2SnapsConverter;
   snapshotFileName: string;
   options: any;
+  done?: () => void;
 }
 
 export interface StoryshotsTestMethod {
