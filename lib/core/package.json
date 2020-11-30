@@ -17,13 +17,6 @@
   "license": "MIT",
   "main": "dist/client/index.js",
   "types": "dist/client/index.d.ts",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  },
   "files": [
     "dist/**/*",
     "dll/**/*",
@@ -124,7 +117,6 @@
     "regenerator-runtime": "^0.13.7",
     "resolve-from": "^5.0.0",
     "serve-favicon": "^2.5.0",
-    "shelljs": "^0.8.4",
     "stable": "^0.1.8",
     "style-loader": "^1.2.1",
     "telejson": "^5.0.2",
@@ -162,5 +154,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "495a468d5eccaac706b6b8b52e9dbc5a484027a4"
+  "gitHead": "495a468d5eccaac706b6b8b52e9dbc5a484027a4",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  }
 }
