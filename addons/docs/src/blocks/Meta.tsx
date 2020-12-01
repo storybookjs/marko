@@ -15,7 +15,7 @@ interface MetaProps {
   decorators?: [Decorator];
   parameters?: Parameters;
   args?: Args;
-  argTypes: ArgTypes;
+  argTypes?: ArgTypes;
 }
 
 function getFirstStoryId(docsContext: DocsContextProps): string {
