@@ -205,7 +205,7 @@
     "ts-jest": "^26.4.4",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.3",
-    "wait-on": "^4.0.0",
+    "wait-on": "^5.2.0",
     "webpack": "^4.44.2",
     "window-size": "^1.1.1"
   },
