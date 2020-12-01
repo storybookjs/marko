@@ -76,6 +76,7 @@ export const sourceDecorator = (storyFn: any, context: StoryContext) => {
 export function vnodeToString(vnode: Vue.VNode): string {
   const attrString = [
     ...(vnode.data?.slot ? ([['slot', vnode.data.slot]] as [string, any][]) : []),
+    ['class', stringifyClassAttribute(vnode)],
     ...(vnode.componentOptions?.propsData ? Object.entries(vnode.componentOptions.propsData) : []),
     ...(vnode.data?.attrs ? Object.entries(vnode.data.attrs) : []),
   ]
@@ -122,8 +123,45 @@ export function vnodeToString(vnode: Vue.VNode): string {
     .join('')}</${tag}>`;
 }
 
+function stringifyClassAttribute(vnode: Vue.VNode): string | undefined {
+  if (!vnode.data || (!vnode.data.staticClass && !vnode.data.class)) {
+    return undefined;
+  }
+
+  return (
+    [...(vnode.data.staticClass?.split(' ') ?? []), ...normalizeClassBinding(vnode.data.class)]
+      .filter(Boolean)
+      .join(' ') || undefined
+  );
+}
+
+// https://vuejs.org/v2/guide/class-and-style.html#Binding-HTML-Classes
+function normalizeClassBinding(binding: unknown): readonly string[] {
+  if (!binding) {
+    return [];
+  }
+
+  if (typeof binding === 'string') {
+    return [binding];
+  }
+
+  if (binding instanceof Array) {
+    // To handle an object-in-array binding smartly, we use recursion
+    return binding.map(normalizeClassBinding).reduce((a, b) => [...a, ...b], []);
+  }
+
+  if (typeof binding === 'object') {
+    return Object.entries(binding)
+      .filter(([, active]) => !!active)
+      .map(([className]) => className);
+  }
+
+  // Unknown class binding
+  return [];
+}
+
 function stringifyAttr(attrName: string, value?: any): string | null {
-  if (typeof value === 'undefined') {
+  if (typeof value === 'undefined' || typeof value === 'function') {
     return null;
   }
 

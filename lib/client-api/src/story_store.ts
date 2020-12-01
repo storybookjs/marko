@@ -343,10 +343,8 @@ export default class StoryStore {
         'Cannot add a story when not configuring, see https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#story-store-immutable-outside-of-configuration'
       );
 
-    if (storyParameters) {
-      checkGlobals(storyParameters);
-      checkStorySort(storyParameters);
-    }
+    checkGlobals(storyParameters);
+    checkStorySort(storyParameters);
 
     const { _stories } = this;
 
