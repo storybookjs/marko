@@ -37,7 +37,7 @@
         source: source,
         line: line,
         column: column,
-        error: { message: err.message, name: err.name, stack: err.stack },
+        error: err && { message: err.message, name: err.name, stack: err.stack },
         origin: 'manager',
         /* eslint-enable object-shorthand */
       })
