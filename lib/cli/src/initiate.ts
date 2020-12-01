@@ -249,7 +249,6 @@ const projectTypeInquirer = async (options: { yes?: boolean }) => {
           type: 'confirm',
           name: 'manual',
           message: 'Do you want to manually choose a Storybook project type to install?',
-          default: false,
         },
       ]);
 
@@ -259,7 +258,10 @@ const projectTypeInquirer = async (options: { yes?: boolean }) => {
         type: 'list',
         name: 'manualFramework',
         message: 'Please choose a project type from the following list:',
-        choices: installableProjectTypes.map((type) => type.toUpperCase()),
+        choices: installableProjectTypes.map((type) => ({
+          title: type,
+          value: type.toUpperCase(),
+        })),
       },
     ]);
     return installStorybook(frameworkAnswer.manualFramework, options);
