@@ -78,7 +78,7 @@ describe('parseStaticDir', () => {
   });
 
   it('checks that the path exists', async () => {
-    fs.pathExists.mockReturnValueOnce(false);
+    fs.pathExists = jest.fn().mockReturnValueOnce(false);
     await expect(parseStaticDir('nonexistent')).rejects.toThrow(path.resolve('nonexistent'));
   });
 });
