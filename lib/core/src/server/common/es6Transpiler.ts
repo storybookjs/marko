@@ -13,10 +13,7 @@ export const es6Transpiler: () => RuleSetRule = () => {
         options: {
           sourceType: 'unambiguous',
           presets: [
-            [
-              require.resolve('@babel/preset-env'),
-              { shippedProposals: true, useBuiltIns: 'usage', corejs: '3' },
-            ],
+            [require.resolve('@babel/preset-env'), { shippedProposals: true }],
             require.resolve('@babel/preset-react'),
           ],
           plugins,
