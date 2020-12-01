@@ -144,7 +144,7 @@
     "chalk": "^4.0.0",
     "chromatic": "^5.0.0",
     "codecov": "^3.5.0",
-    "commander": "^5.1.0",
+    "commander": "^6.2.0",
     "concurrently": "^5.2.0",
     "core-js": "^3.0.1",
     "cross-env": "^7.0.0",

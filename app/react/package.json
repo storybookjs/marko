@@ -80,6 +80,9 @@
   "peerDependenciesMeta": {
     "@babel/core": {
       "optional": true
+    },
+    "typescript": {
+      "optional": true
     }
   },
   "engines": {

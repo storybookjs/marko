@@ -39,6 +39,7 @@ module.exports = {
       rules: {
         'react/require-default-props': 'off',
         'react/prop-types': 'off', // we should use types
+        'react/forbid-prop-types': 'off', // we should use types
         'no-dupe-class-members': 'off', // this is called overloads in typescript
       },
     },
