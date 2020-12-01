@@ -22,8 +22,8 @@ const BrandArea = styled.div(({ theme }) => ({
   '& > *': {
     maxWidth: '100%',
     height: 'auto',
-    width: 'auto',
     display: 'block',
+    flex: '1 1 auto',
   },
 }));
 
