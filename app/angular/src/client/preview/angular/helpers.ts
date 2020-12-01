@@ -26,18 +26,25 @@ const componentClass = class DynamicComponent {};
 type DynamicComponentType = typeof componentClass;
 
 function storyDataFactory<T>(data: Observable<T>) {
-  return (ngZone: NgZone) => new Observable((subscriber: Subscriber<T>) => {
-    const sub = data.subscribe(
-      (v: T) => { ngZone.run(() => subscriber.next(v)); },
-      (err) => { ngZone.run(() => subscriber.error(err)); },
-      () => { ngZone.run(() => subscriber.complete()); }
-    );
+  return (ngZone: NgZone) =>
+    new Observable((subscriber: Subscriber<T>) => {
+      const sub = data.subscribe(
+        (v: T) => {
+          ngZone.run(() => subscriber.next(v));
+        },
+        (err) => {
+          ngZone.run(() => subscriber.error(err));
+        },
+        () => {
+          ngZone.run(() => subscriber.complete());
+        }
+      );
 
-    return () => {
-      sub.unsubscribe();
-    };
-  });
-};
+      return () => {
+        sub.unsubscribe();
+      };
+    });
+}
 
 const getModule = (
   declarations: (Type<any> | any[])[],
@@ -55,8 +62,8 @@ const getModule = (
     declarations: [...declarations, ...(moduleMetadata.declarations || [])],
     imports: [BrowserModule, FormsModule, ...(moduleMetadata.imports || [])],
     providers: [
-      { provide: STORY, useFactory: storyDataFactory(storyData.asObservable()), deps: [ NgZone ] },
-      ...(moduleMetadata.providers || [])
+      { provide: STORY, useFactory: storyDataFactory(storyData.asObservable()), deps: [NgZone] },
+      ...(moduleMetadata.providers || []),
     ],
     entryComponents: [...entryComponents, ...(moduleMetadata.entryComponents || [])],
     schemas: [...(moduleMetadata.schemas || [])],

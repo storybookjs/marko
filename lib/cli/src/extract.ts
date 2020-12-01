@@ -38,12 +38,8 @@ const useLocation: (input: string) => Promise<[string, () => void]> = async (inp
 
   const port = await getPort();
 
-  return new Promise((resolve, reject) => {
-    const server = app.listen(port, (e) => {
-      if (e) {
-        reject(e);
-      }
-
+  return new Promise((resolve) => {
+    const server = app.listen(port, () => {
       const result = `http://localhost:${port}/iframe.html`;
 
       logger.info(`connecting to: ${result}`);

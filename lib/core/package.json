@@ -115,6 +115,7 @@
     "qs": "^6.6.0",
     "raw-loader": "^4.0.1",
     "react-dev-utils": "^10.0.0",
+    "read-pkg-up": "^7.0.0",
     "regenerator-runtime": "^0.13.7",
     "resolve-from": "^5.0.0",
     "serve-favicon": "^2.5.0",

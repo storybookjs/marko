@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+import uuidv4 from 'uuid-browser/v4';
 import { addons } from '@storybook/addons';
 import { EVENT_ID } from '../constants';
 import { ActionDisplay, ActionOptions, HandlerFunction } from '../models';
