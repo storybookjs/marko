@@ -1,3 +1,17 @@
+## 6.2.0-alpha.0 (December 1, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix type aliases and enum types from Angular Compodoc JSON ([#12665](https://github.com/storybookjs/storybook/pull/12665))
+- Core: Ensure node `name` does not contain leading/trailing whitespace ([#13275](https://github.com/storybookjs/storybook/pull/13275))
+- Angular: Run setProps in the NgZone ([#12382](https://github.com/storybookjs/storybook/pull/12382))
+
+### Maintenance
+
+- Core: Make @babel/core an optional peer dependency ([#13329](https://github.com/storybookjs/storybook/pull/13329))
+- Core: Replace preset-env polyfills with babel-polyfills ([#13055](https://github.com/storybookjs/storybook/pull/13055))
+- CLI: use Jest to test CLI commands and remove outdated fixtures ([#12936](https://github.com/storybookjs/storybook/pull/12936))
+
 ## 6.1.9 (November 29, 2020)
 
 ### Bug Fixes
