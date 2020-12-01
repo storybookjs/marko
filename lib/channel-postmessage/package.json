@@ -1,6 +1,6 @@
 {
   "name": "@storybook/channel-postmessage",
-  "version": "6.2.0-alpha.0",
+  "version": "6.2.0-alpha.1",
   "description": "",
   "keywords": [
     "storybook"
@@ -17,6 +17,13 @@
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
@@ -28,9 +35,9 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/channels": "6.2.0-alpha.0",
-    "@storybook/client-logger": "6.2.0-alpha.0",
-    "@storybook/core-events": "6.2.0-alpha.0",
+    "@storybook/channels": "6.2.0-alpha.1",
+    "@storybook/client-logger": "6.2.0-alpha.1",
+    "@storybook/core-events": "6.2.0-alpha.1",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "qs": "^6.6.0",
@@ -39,12 +46,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c44dc96274577a6f1c4006c88b0f9db524e821c4",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "c44dc96274577a6f1c4006c88b0f9db524e821c4"
 }

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/api",
-  "version": "6.2.0-alpha.0",
+  "version": "6.2.0-alpha.1",
   "description": "Core Storybook API & Context",
   "keywords": [
     "storybook"
@@ -16,6 +16,13 @@
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
@@ -29,13 +36,13 @@
   },
   "dependencies": {
     "@reach/router": "^1.3.3",
-    "@storybook/channels": "6.2.0-alpha.0",
-    "@storybook/client-logger": "6.2.0-alpha.0",
-    "@storybook/core-events": "6.2.0-alpha.0",
+    "@storybook/channels": "6.2.0-alpha.1",
+    "@storybook/client-logger": "6.2.0-alpha.1",
+    "@storybook/core-events": "6.2.0-alpha.1",
     "@storybook/csf": "0.0.1",
-    "@storybook/router": "6.2.0-alpha.0",
+    "@storybook/router": "6.2.0-alpha.1",
     "@storybook/semver": "^7.3.2",
-    "@storybook/theming": "6.2.0-alpha.0",
+    "@storybook/theming": "6.2.0-alpha.1",
     "@types/reach__router": "^1.3.5",
     "core-js": "^3.0.1",
     "fast-deep-equal": "^3.1.1",
@@ -61,12 +68,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c44dc96274577a6f1c4006c88b0f9db524e821c4",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "c44dc96274577a6f1c4006c88b0f9db524e821c4"
 }
