@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-cssresources",
-  "version": "6.1.9",
+  "version": "6.2.0-alpha.0",
   "description": "A storybook addon to switch between css resources at runtime for your story",
   "keywords": [
     "addon",
@@ -21,13 +21,6 @@
   "author": "nm123github",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  },
   "files": [
     "dist/**/*",
     "README.md",
@@ -39,11 +32,11 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.9",
-    "@storybook/api": "6.1.9",
-    "@storybook/components": "6.1.9",
-    "@storybook/core-events": "6.1.9",
-    "@storybook/theming": "6.1.9",
+    "@storybook/addons": "6.2.0-alpha.0",
+    "@storybook/api": "6.2.0-alpha.0",
+    "@storybook/components": "6.2.0-alpha.0",
+    "@storybook/core-events": "6.2.0-alpha.0",
+    "@storybook/theming": "6.2.0-alpha.0",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "regenerator-runtime": "^0.13.7"
@@ -66,5 +59,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "495a468d5eccaac706b6b8b52e9dbc5a484027a4"
+  "gitHead": "495a468d5eccaac706b6b8b52e9dbc5a484027a4",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  }
 }
