@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
 import React, { FunctionComponent, ChangeEvent, Validator } from 'react';
 import PropTypes from 'prop-types';
 

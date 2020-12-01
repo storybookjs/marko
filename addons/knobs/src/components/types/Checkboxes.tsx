@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
 import React, { Component, ChangeEvent, Validator } from 'react';
 import PropTypes from 'prop-types';
 import { styled } from '@storybook/theming';
