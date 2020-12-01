@@ -1,3 +1,41 @@
+## 6.2.0-alpha.0 (December 1, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix type aliases and enum types from Angular Compodoc JSON ([#12665](https://github.com/storybookjs/storybook/pull/12665))
+- Core: Ensure node `name` does not contain leading/trailing whitespace ([#13275](https://github.com/storybookjs/storybook/pull/13275))
+- Angular: Run setProps in the NgZone ([#12382](https://github.com/storybookjs/storybook/pull/12382))
+
+### Maintenance
+
+- Core: Make @babel/core an optional peer dependency ([#13329](https://github.com/storybookjs/storybook/pull/13329))
+- Core: Replace preset-env polyfills with babel-polyfills ([#13055](https://github.com/storybookjs/storybook/pull/13055))
+- CLI: use Jest to test CLI commands and remove outdated fixtures ([#12936](https://github.com/storybookjs/storybook/pull/12936))
+
+## 6.1.9 (November 29, 2020)
+
+### Bug Fixes
+
+- Addon-backgrounds: Fix grid offset always using default value ([#13260](https://github.com/storybookjs/storybook/pull/13260))
+- UI: Fix keybindings on non-US keyboard layouts ([#13319](https://github.com/storybookjs/storybook/pull/13319))
+- Addon-Docs: Handle class attributes in Dynamic Source Rendering for Vue.js ([#13327](https://github.com/storybookjs/storybook/pull/13327))
+
+## 6.1.8 (November 27, 2020)
+
+### Bug Fixes
+
+- Core: Fix preview URL dropped hashes ([#13308](https://github.com/storybookjs/storybook/pull/13308))
+- Core: Fix template script tag support ([#13271](https://github.com/storybookjs/storybook/pull/13271))
+- Addon-docs: Fix Vue source snippets for function attributes ([#13288](https://github.com/storybookjs/storybook/pull/13288))
+- Components: Fix Zoom for IE11 ([#13302](https://github.com/storybookjs/storybook/pull/13302))
+- React: Don't add FastRefresh if already enabled ([#13303](https://github.com/storybookjs/storybook/pull/13303))
+- CLI: Fix storybook-deployer upgrade warning ([#13306](https://github.com/storybookjs/storybook/pull/13306))
+
+### Maintenance
+
+- React: Expose StorybookConfig types ([#13309](https://github.com/storybookjs/storybook/pull/13309))
+- React: Fix unit tests for react preset ([#13315](https://github.com/storybookjs/storybook/pull/13315))
+
 ## 6.1.7 (November 27, 2020)
 
 ### Bug Fixes

@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Enum Types Basic 1`] = `
+<storybook-dynamic-app-root
+  cfr={[Function CodegenComponentFactoryResolver]}
+  data={[Function Object]}
+  target={[Function ViewContainerRef_]}
+>
+  <app-enums>
+    <div>
+      <div>
+        unionType: union a
+      </div>
+      <div>
+        aliasedUnionType: Type Alias 1
+      </div>
+      <div>
+        enumNumeric: 
+      </div>
+      <div>
+        enumNumericInitial: 1
+      </div>
+      <div>
+        enumStrings: PRIMARY
+      </div>
+      <div>
+        enumAlias: 
+      </div>
+    </div>
+  </app-enums>
+</storybook-dynamic-app-root>
+`;

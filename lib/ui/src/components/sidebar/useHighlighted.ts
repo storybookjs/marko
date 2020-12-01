@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import { matchesKeyCode, matchesModifiers } from './keybinding';
 
 import { CombinedDataset, Highlight, Selection } from './types';
 import { cycle, isAncestor, scrollIntoView } from './utils';
@@ -79,9 +80,12 @@ export const useHighlighted = ({
 
     let lastRequestId: number;
     const navigateTree = (event: KeyboardEvent) => {
-      if (isLoading || !isBrowsing || !event.key || !containerRef || !containerRef.current) return;
-      if (event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) return;
-      if (!['ArrowUp', 'ArrowDown'].includes(event.key)) return;
+      if (isLoading || !isBrowsing || !containerRef.current) return; // allow event.repeat
+      if (!matchesModifiers(false, event)) return;
+
+      const isArrowUp = matchesKeyCode('ArrowUp', event);
+      const isArrowDown = matchesKeyCode('ArrowDown', event);
+      if (!(isArrowUp || isArrowDown)) return;
       event.preventDefault();
 
       const requestId = window.requestAnimationFrame(() => {
@@ -100,10 +104,8 @@ export const useHighlighted = ({
             el.getAttribute('data-item-id') === highlightedRef.current?.itemId &&
             el.getAttribute('data-ref-id') === highlightedRef.current?.refId
         );
-        const nextIndex = cycle(highlightable, currentIndex, event.key === 'ArrowUp' ? -1 : 1);
-        const didRunAround =
-          (event.key === 'ArrowDown' && nextIndex === 0) ||
-          (event.key === 'ArrowUp' && nextIndex === highlightable.length - 1);
+        const nextIndex = cycle(highlightable, currentIndex, isArrowUp ? -1 : 1);
+        const didRunAround = isArrowUp ? nextIndex === highlightable.length - 1 : nextIndex === 0;
         highlightElement(highlightable[nextIndex], didRunAround);
       });
     };
