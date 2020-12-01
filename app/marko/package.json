@@ -16,13 +16,6 @@
   },
   "license": "MIT",
   "main": "dist/client/index.js",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  },
   "bin": {
     "build-storybook": "./bin/build.js",
     "start-storybook": "./bin/index.js",
@@ -61,5 +54,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c44dc96274577a6f1c4006c88b0f9db524e821c4"
+  "gitHead": "c44dc96274577a6f1c4006c88b0f9db524e821c4",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  }
 }
