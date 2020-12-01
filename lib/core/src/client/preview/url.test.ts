@@ -42,6 +42,16 @@ describe('url', () => {
         'pathname?foo=bar&id=story--id&viewMode=story'
       );
     });
+    it('should ignore + keep hashes', () => {
+      document.location.search = 'foo=bar&selectedStory=selStory&selectedKind=selKind';
+      document.location.hash = '#foobar';
+      setPath({ storyId: 'story--id', viewMode: 'story' });
+      expect(history.replaceState).toHaveBeenCalledWith(
+        {},
+        '',
+        'pathname?foo=bar&id=story--id&viewMode=story#foobar'
+      );
+    });
   });
 
   describe('parseQueryParameters', () => {

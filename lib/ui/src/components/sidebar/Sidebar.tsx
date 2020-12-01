@@ -105,7 +105,7 @@ export const Sidebar: FunctionComponent<SidebarProps> = React.memo(
     );
     const dataset = useCombination(stories, storiesConfigured, storiesFailed, refs);
     const isLoading = !dataset.hash[DEFAULT_REF_ID].ready;
-    const lastViewed = useLastViewed(selected);
+    const lastViewedProps = useLastViewed(selected);
 
     return (
       <Container className="container sidebar-container">
@@ -117,9 +117,17 @@ export const Sidebar: FunctionComponent<SidebarProps> = React.memo(
               dataset={dataset}
               isLoading={isLoading}
               enableShortcuts={enableShortcuts}
-              {...lastViewed}
+              {...lastViewedProps}
             >
-              {({ query, results, isBrowsing, getMenuProps, getItemProps, highlightedIndex }) => (
+              {({
+                query,
+                results,
+                isBrowsing,
+                closeMenu,
+                getMenuProps,
+                getItemProps,
+                highlightedIndex,
+              }) => (
                 <Swap condition={isBrowsing}>
                   <Explorer
                     dataset={dataset}
@@ -130,9 +138,12 @@ export const Sidebar: FunctionComponent<SidebarProps> = React.memo(
                   <SearchResults
                     query={query}
                     results={results}
+                    closeMenu={closeMenu}
                     getMenuProps={getMenuProps}
                     getItemProps={getItemProps}
                     highlightedIndex={highlightedIndex}
+                    enableShortcuts={enableShortcuts}
+                    isLoading={isLoading}
                   />
                 </Swap>
               )}

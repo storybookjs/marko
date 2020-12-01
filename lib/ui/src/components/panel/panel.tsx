@@ -72,7 +72,7 @@ const AddonPanel = React.memo<{
             onClick={actions.togglePosition}
             title={`Change addon orientation [${shortcutToHumanString(shortcuts.panelPosition)}]`}
           >
-            <Icons icon={panelPosition === 'bottom' ? 'bottombar' : 'sidebaralt'} />
+            <Icons icon={panelPosition === 'bottom' ? 'sidebaralt' : 'bottombar'} />
           </DesktopOnlyIconButton>
           <DesktopOnlyIconButton
             key="visibility"

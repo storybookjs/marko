@@ -12,7 +12,7 @@ export const GridSelector: FunctionComponent = memo(() => {
     grid: { disable: false },
   });
 
-  if (grid.disable) {
+  if (grid?.disable) {
     return null;
   }
 

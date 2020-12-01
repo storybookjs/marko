@@ -14,6 +14,7 @@ export * from './Preview';
 export * from './Primary';
 export * from './Props';
 export * from './Source';
+export * from './SourceContainer';
 export * from './Stories';
 export * from './Story';
 export * from './Subheading';

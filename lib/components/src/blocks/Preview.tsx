@@ -7,6 +7,7 @@ import { Source, SourceProps } from './Source';
 import { ActionBar, ActionItem } from '../ActionBar/ActionBar';
 import { Toolbar } from './Toolbar';
 import { ZoomContext } from './ZoomContext';
+import { Zoom } from '../Zoom/Zoom';
 
 export interface PreviewProps {
   isColumn?: boolean;
@@ -20,7 +21,7 @@ export interface PreviewProps {
 
 type layout = 'padded' | 'fullscreen' | 'centered';
 
-const ChildrenContainer = styled.div<PreviewProps & { zoom: number; layout: layout }>(
+const ChildrenContainer = styled.div<PreviewProps & { layout: layout }>(
   ({ isColumn, columns, layout }) => ({
     display: isColumn || !columns ? 'block' : 'flex',
     position: 'relative',
@@ -28,7 +29,7 @@ const ChildrenContainer = styled.div<PreviewProps & { zoom: number; layout: layo
     overflow: 'auto',
     flexDirection: isColumn ? 'column' : 'row',
 
-    '& > *': isColumn
+    '& .innerZoomElementWrapper > *': isColumn
       ? {
           width: layout !== 'fullscreen' ? 'calc(100% - 20px)' : '100%',
           display: 'block',
@@ -43,7 +44,7 @@ const ChildrenContainer = styled.div<PreviewProps & { zoom: number; layout: layo
       ? {
           padding: '30px 20px',
           margin: -10,
-          '& > *': {
+          '& .innerZoomElementWrapper > *': {
             width: 'auto',
             border: '10px solid transparent!important',
           },
@@ -59,13 +60,10 @@ const ChildrenContainer = styled.div<PreviewProps & { zoom: number; layout: layo
           alignItems: 'center',
         }
       : {},
-  ({ zoom = 1 }) => ({
-    '> *': {
-      zoom: 1 / zoom,
-    },
-  }),
   ({ columns }) =>
-    columns && columns > 1 ? { '> *': { minWidth: `calc(100% / ${columns} - 20px)` } } : {}
+    columns && columns > 1
+      ? { '.innerZoomElementWrapper > *': { minWidth: `calc(100% / ${columns} - 20px)` } }
+      : {}
 );
 
 const StyledSource = styled(Source)<{}>(({ theme }) => ({
@@ -217,15 +215,16 @@ const Preview: FunctionComponent<PreviewProps> = ({
           <ChildrenContainer
             isColumn={isColumn || !Array.isArray(children)}
             columns={columns}
-            zoom={scale}
             layout={layout}
           >
-            {Array.isArray(children) ? (
-              // eslint-disable-next-line react/no-array-index-key
-              children.map((child, i) => <div key={i}>{child}</div>)
-            ) : (
-              <div>{children}</div>
-            )}
+            <Zoom.Element scale={scale}>
+              {Array.isArray(children) ? (
+                // eslint-disable-next-line react/no-array-index-key
+                children.map((child, i) => <div key={i}>{child}</div>)
+              ) : (
+                <div>{children}</div>
+              )}
+            </Zoom.Element>
           </ChildrenContainer>
           <ActionBar actionItems={actionItems} />
         </Relative>

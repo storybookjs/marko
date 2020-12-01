@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-storysource",
-  "version": "6.1.0-beta.1",
+  "version": "6.2.0-alpha.0",
   "description": "Stories addon for storybook",
   "keywords": [
     "addon",
@@ -18,6 +18,13 @@
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
@@ -29,13 +36,13 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-beta.1",
-    "@storybook/api": "6.1.0-beta.1",
-    "@storybook/client-logger": "6.1.0-beta.1",
-    "@storybook/components": "6.1.0-beta.1",
-    "@storybook/router": "6.1.0-beta.1",
-    "@storybook/source-loader": "6.1.0-beta.1",
-    "@storybook/theming": "6.1.0-beta.1",
+    "@storybook/addons": "6.2.0-alpha.0",
+    "@storybook/api": "6.2.0-alpha.0",
+    "@storybook/client-logger": "6.2.0-alpha.0",
+    "@storybook/components": "6.2.0-alpha.0",
+    "@storybook/router": "6.2.0-alpha.0",
+    "@storybook/source-loader": "6.2.0-alpha.0",
+    "@storybook/theming": "6.2.0-alpha.0",
     "core-js": "^3.0.1",
     "estraverse": "^4.2.0",
     "loader-utils": "^2.0.0",
@@ -63,12 +70,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "763c233efc86849979db1c4c795035bd58f1ced9",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "c44dc96274577a6f1c4006c88b0f9db524e821c4"
 }

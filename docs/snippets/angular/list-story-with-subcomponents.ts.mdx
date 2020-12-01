@@ -1,0 +1,24 @@
+```ts
+import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { ListItemComponent } from './list-item.component';
+import { ListComponent } from './list.component';
+
+export default {
+  title: 'List',
+  component: ListComponent,
+  subcomponents: { ListItemComponent },
+} as Meta;
+
+const Template: Story<ListComponent> = (args: ListComponent) => ({
+  component: ListComponent,
+  props: args,
+  moduleMetadata: {
+    declarations: [ListComponent, ListItemComponent],
+  },
+});
+
+export const OneItem = Template.bind({});
+OneItem.args = {
+  items: [ListItemComponent],
+};
+```

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-a11y",
-  "version": "6.1.0-beta.1",
+  "version": "6.2.0-alpha.0",
   "description": "a11y addon for storybook",
   "keywords": [
     "a11y",
@@ -22,6 +22,13 @@
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
@@ -33,14 +40,14 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-beta.1",
-    "@storybook/api": "6.1.0-beta.1",
-    "@storybook/channels": "6.1.0-beta.1",
-    "@storybook/client-api": "6.1.0-beta.1",
-    "@storybook/client-logger": "6.1.0-beta.1",
-    "@storybook/components": "6.1.0-beta.1",
-    "@storybook/core-events": "6.1.0-beta.1",
-    "@storybook/theming": "6.1.0-beta.1",
+    "@storybook/addons": "6.2.0-alpha.0",
+    "@storybook/api": "6.2.0-alpha.0",
+    "@storybook/channels": "6.2.0-alpha.0",
+    "@storybook/client-api": "6.2.0-alpha.0",
+    "@storybook/client-logger": "6.2.0-alpha.0",
+    "@storybook/components": "6.2.0-alpha.0",
+    "@storybook/core-events": "6.2.0-alpha.0",
+    "@storybook/theming": "6.2.0-alpha.0",
     "axe-core": "^4.0.1",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
@@ -52,7 +59,7 @@
   },
   "devDependencies": {
     "@testing-library/react": "^10.0.4",
-    "@types/webpack-env": "^1.15.2"
+    "@types/webpack-env": "^1.15.3"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
@@ -69,12 +76,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "763c233efc86849979db1c4c795035bd58f1ced9",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "c44dc96274577a6f1c4006c88b0f9db524e821c4"
 }

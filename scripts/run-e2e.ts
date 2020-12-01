@@ -1,6 +1,6 @@
 /* eslint-disable no-irregular-whitespace */
 import path from 'path';
-import { remove, ensureDir, pathExists, writeFile, readJSON, writeJSON } from 'fs-extra';
+import { remove, ensureDir, pathExists, writeFile, writeJSON } from 'fs-extra';
 import { prompt } from 'enquirer';
 import pLimit from 'p-limit';
 
@@ -8,8 +8,6 @@ import shell from 'shelljs';
 import program from 'commander';
 import { serve } from './utils/serve';
 import { exec } from './utils/command';
-// @ts-ignore
-import { listOfPackages } from './utils/list-packages';
 // @ts-ignore
 import { filterDataForCurrentCircleCINode } from './utils/concurrency';
 
@@ -81,6 +79,9 @@ const cleanDirectory = async ({ cwd }: Options): Promise<void> => {
 const configureYarn2 = async ({ cwd }: Options) => {
   const command = [
     `yarn set version berry`,
+    // See https://github.com/yarnpkg/berry/pull/2078
+    // As soon as a new version of Yarn is released remove next line
+    `yarn set version from sources --branch 2078`,
     // ⚠️ Need to set registry because Yarn 2 is not using the conf of Yarn 1
     `yarn config set npmScopes --json '{ "storybook": { "npmRegistryServer": "http://localhost:6000/" } }'`,
     // Some required magic to be able to fetch deps from local registry
@@ -88,10 +89,9 @@ const configureYarn2 = async ({ cwd }: Options) => {
     // Disable fallback mode to make sure everything is required correctly
     `yarn config set pnpFallbackMode none`,
     // Add package extensions
-    // https://github.com/casesandberg/reactcss/pull/153
-    `yarn config set "packageExtensions.reactcss@*.peerDependencies.react" "*"`,
-    // https://github.com/casesandberg/react-color/pull/746
-    `yarn config set "packageExtensions.react-color@*.peerDependencies.react" "*"`,
+    // https://github.com/facebook/create-react-app/pull/9872
+    `yarn config set "packageExtensions.react-scripts@*.peerDependencies.react" "*"`,
+    `yarn config set "packageExtensions.react-scripts@*.dependencies.@pmmmwh/react-refresh-webpack-plugin" "*"`,
   ].join(' && ');
   logger.info(`🎛 Configuring Yarn 2`);
   logger.debug(command);
@@ -135,30 +135,6 @@ const initStorybook = async ({ cwd, autoDetect = true, name }: Options) => {
     logger.error(`🚨 Storybook initialization failed`);
     throw e;
   }
-};
-
-// Verdaccio doesn't resolve *
-// So we set resolutions manually in package.json
-const setResolutions = async ({ cwd }: Options) => {
-  logger.info(`🔒 Setting yarn resolutions`);
-
-  const packages = await listOfPackages();
-
-  const packageJsonPath = path.resolve(cwd, 'package.json');
-  const packageJson = await readJSON(packageJsonPath, { encoding: 'utf8' });
-
-  packageJson.resolutions = {
-    ...packageJson.resolutions,
-    ...packages.reduce(
-      (acc, { name, version }) => ({
-        ...acc,
-        [name]: version,
-      }),
-      {}
-    ),
-  };
-
-  await writeJSON(packageJsonPath, packageJson, { encoding: 'utf8', spaces: 2 });
 };
 
 const addRequiredDeps = async ({ cwd, additionalDeps }: Options) => {
@@ -260,18 +236,15 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
     await generate({ ...options, cwd: siblingDir });
     logger.log();
 
-    await setResolutions(options);
-    logger.log();
-
     if (options.typescript) {
       await addTypescript(options);
       logger.log();
     }
 
-    await initStorybook(options);
+    await addRequiredDeps(options);
     logger.log();
 
-    await addRequiredDeps(options);
+    await initStorybook(options);
     logger.log();
 
     await buildStorybook(options);
@@ -362,11 +335,6 @@ if (frameworkArgs.length > 0) {
   // FIXME: For now Yarn 2 E2E tests must be run by explicitly call `yarn test:e2e-framework yarn2Cra@latest`
   //   Because it is telling Yarn to use version 2
   delete e2eConfigs.yarn_2_cra;
-
-  // FIXME: Angular tests need to be explicitly run because they require Node 12.17+
-  // See https://github.com/storybookjs/storybook/issues/12735
-  delete e2eConfigs.angularv9;
-  delete e2eConfigs.angular;
 
   // CRA Bench is a special case of E2E tests, it requires Node 12 as `@storybook/bench` is using `@hapi/hapi@19.2.0`
   // which itself need Node 12.

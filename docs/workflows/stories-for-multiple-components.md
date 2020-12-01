@@ -10,6 +10,7 @@ It's useful to write stories that [render two or more components](../writing-sto
   paths={[
     'react/list-story-with-subcomponents.js.mdx',
     'react/list-story-with-subcomponents.ts.mdx',
+    'angular/list-story-with-subcomponents.ts.mdx',
   ]}
 />
 

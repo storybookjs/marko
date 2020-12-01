@@ -80,6 +80,31 @@ const App = React.memo<AppProps>(
         {content}
       </View>
     );
+  },
+  // This is the default shallowEqual implementation, but with custom behavior for the `size` prop.
+  (prevProps: any, nextProps: any) => {
+    if (Object.is(prevProps, nextProps)) return true;
+    if (typeof prevProps !== 'object' || prevProps === null) return false;
+    if (typeof nextProps !== 'object' || nextProps === null) return false;
+
+    const keysA = Object.keys(prevProps);
+    const keysB = Object.keys(nextProps);
+    if (keysA.length !== keysB.length) return false;
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const key of keysA) {
+      if (key === 'size') {
+        // SizeMe injects a new `size` object every time, even if the width/height doesn't change,
+        // so we chech that one manually.
+        if (prevProps[key].width !== nextProps[key].width) return false;
+        if (prevProps[key].height !== nextProps[key].height) return false;
+      } else {
+        if (!Object.prototype.hasOwnProperty.call(nextProps, key)) return false;
+        if (!Object.is(prevProps[key], nextProps[key])) return false;
+      }
+    }
+
+    return true;
   }
 );
 

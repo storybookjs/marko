@@ -1,6 +1,6 @@
 {
   "name": "@storybook/core",
-  "version": "6.1.0-beta.1",
+  "version": "6.2.0-alpha.0",
   "description": "Storybook framework-agnostic API",
   "keywords": [
     "storybook"
@@ -17,6 +17,13 @@
   "license": "MIT",
   "main": "dist/client/index.js",
   "types": "dist/client/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "dll/**/*",
@@ -52,20 +59,20 @@
     "@babel/preset-react": "^7.12.1",
     "@babel/preset-typescript": "^7.12.1",
     "@babel/register": "^7.12.1",
-    "@storybook/addons": "6.1.0-beta.1",
-    "@storybook/api": "6.1.0-beta.1",
-    "@storybook/channel-postmessage": "6.1.0-beta.1",
-    "@storybook/channels": "6.1.0-beta.1",
-    "@storybook/client-api": "6.1.0-beta.1",
-    "@storybook/client-logger": "6.1.0-beta.1",
-    "@storybook/components": "6.1.0-beta.1",
-    "@storybook/core-events": "6.1.0-beta.1",
+    "@storybook/addons": "6.2.0-alpha.0",
+    "@storybook/api": "6.2.0-alpha.0",
+    "@storybook/channel-postmessage": "6.2.0-alpha.0",
+    "@storybook/channels": "6.2.0-alpha.0",
+    "@storybook/client-api": "6.2.0-alpha.0",
+    "@storybook/client-logger": "6.2.0-alpha.0",
+    "@storybook/components": "6.2.0-alpha.0",
+    "@storybook/core-events": "6.2.0-alpha.0",
     "@storybook/csf": "0.0.1",
-    "@storybook/node-logger": "6.1.0-beta.1",
-    "@storybook/router": "6.1.0-beta.1",
+    "@storybook/node-logger": "6.2.0-alpha.0",
+    "@storybook/router": "6.2.0-alpha.0",
     "@storybook/semver": "^7.3.2",
-    "@storybook/theming": "6.1.0-beta.1",
-    "@storybook/ui": "6.1.0-beta.1",
+    "@storybook/theming": "6.2.0-alpha.0",
+    "@storybook/ui": "6.2.0-alpha.0",
     "@types/glob-base": "^0.3.0",
     "@types/micromatch": "^4.0.1",
     "@types/node-fetch": "^2.5.4",
@@ -75,6 +82,7 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-emotion": "^10.0.20",
     "babel-plugin-macros": "^2.8.0",
+    "babel-plugin-polyfill-corejs3": "^0.0.7",
     "babel-preset-minify": "^0.5.0 || 0.6.0-alpha.5",
     "better-opn": "^2.0.0",
     "boxen": "^4.1.0",
@@ -122,12 +130,11 @@
     "style-loader": "^1.2.1",
     "telejson": "^5.0.2",
     "terser-webpack-plugin": "^3.0.0",
-    "trash": "^6.1.1",
     "ts-dedent": "^2.0.0",
     "unfetch": "^4.1.0",
     "url-loader": "^4.0.0",
     "util-deprecate": "^1.0.2",
-    "webpack": "^4.43.0",
+    "webpack": "^4.44.2",
     "webpack-dev-middleware": "^3.7.0",
     "webpack-filter-warnings-plugin": "^1.2.1",
     "webpack-hot-middleware": "^2.25.0",
@@ -156,12 +163,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "763c233efc86849979db1c4c795035bd58f1ced9",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "c44dc96274577a6f1c4006c88b0f9db524e821c4"
 }
