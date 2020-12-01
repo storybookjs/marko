@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-events",
-  "version": "6.1.2",
+  "version": "6.2.0-alpha.1",
   "description": "Add events to your Storybook stories.",
   "keywords": [
     "addon",
@@ -20,6 +20,13 @@
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
@@ -31,11 +38,11 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.2",
-    "@storybook/api": "6.1.2",
-    "@storybook/client-api": "6.1.2",
-    "@storybook/core-events": "6.1.2",
-    "@storybook/theming": "6.1.2",
+    "@storybook/addons": "6.2.0-alpha.1",
+    "@storybook/api": "6.2.0-alpha.1",
+    "@storybook/client-api": "6.2.0-alpha.1",
+    "@storybook/core-events": "6.2.0-alpha.1",
+    "@storybook/theming": "6.2.0-alpha.1",
     "core-js": "^3.0.1",
     "format-json": "^1.0.3",
     "lodash": "^4.17.15",
@@ -62,12 +69,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "47d0eac6db5423648c3039e0d5c8c3bcc1d8aceb",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "211db5358500cb71c73d6183e86f40df1638752b"
 }

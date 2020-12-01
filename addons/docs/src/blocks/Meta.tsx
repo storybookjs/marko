@@ -15,7 +15,7 @@ interface MetaProps {
   decorators?: [Decorator];
   parameters?: Parameters;
   args?: Args;
-  argTypes: ArgTypes;
+  argTypes?: ArgTypes;
 }
 
 function getFirstStoryId(docsContext: DocsContextProps): string {
@@ -26,7 +26,6 @@ function getFirstStoryId(docsContext: DocsContextProps): string {
 
 function renderAnchor() {
   const context = useContext(DocsContext);
-  // eslint-disable-next-line react/destructuring-assignment
   const anchorId = getFirstStoryId(context) || context.id;
 
   return <Anchor storyId={anchorId} />;

@@ -1,8 +1,8 @@
 import React from 'react';
 
 // eslint-disable-next-line react/prop-types
-const Box = ({ children, display = 'block' }) => (
-  <div style={{ display, border: '2px solid #FF4785', padding: 10 }}>{children}</div>
+const Box = ({ children, display = 'block', width, height }) => (
+  <div style={{ display, border: '2px solid #FF4785', padding: 10, width, height }}>{children}</div>
 );
 
 export default {
@@ -28,6 +28,12 @@ CenteredBlock.parameters = { layout: 'centered' };
 
 export const CenteredInline = () => <Box display="inline-block">centered</Box>;
 CenteredInline.parameters = { layout: 'centered' };
+
+export const CenteredTall = () => <Box height="120vh">centered tall</Box>;
+CenteredTall.parameters = { layout: 'centered' };
+
+export const CenteredWide = () => <Box width="120vw">centered wide</Box>;
+CenteredWide.parameters = { layout: 'centered' };
 
 export const None = () => <Box>none</Box>;
 None.parameters = { layout: 'none' };

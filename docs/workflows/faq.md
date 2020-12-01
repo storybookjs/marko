@@ -115,10 +115,6 @@ For now the addons you're using in a composed Storybook will not work.
 
 We're working on overcoming this limitation, soon you'll be able to use them  as if you working with a non composed Storybook.
 
-### Why i'm getting errors with react-popper and Storybook?
-
-If you're using the `react-popper` in your own project and you're experiencing issues with Storybook. You can solve them by adding the `--no-dll` command line flag. Take a look at the [cli options page](../api/cli-options.md) to see how you can use the flag in your project.
-
 ### Which community addons are compatible with the latest version of Storybook?
 
 Starting with Storybook version 6.0 we've introduced some great features aimed at streamlining your development workflow.

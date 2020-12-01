@@ -1,3 +1,102 @@
+## 6.2.0-alpha.1 (December 1, 2020)
+
+### Bug Fixes
+
+- Addon-docs: ArgTypes optional on Meta ([#13352](https://github.com/storybookjs/storybook/pull/13352))
+- Composition: Filter out disabled refs in getAutoRefs ([#12863](https://github.com/storybookjs/storybook/pull/12863))
+- UI: Add support for expand/collapse keyboard shortcuts ([#12980](https://github.com/storybookjs/storybook/pull/12980))
+
+### Maintenance
+
+- Dependencies: Rebuild yarn.lock ([#13289](https://github.com/storybookjs/storybook/pull/13289))
+- Core: Add typescript as optional peer dependency ([#13330](https://github.com/storybookjs/storybook/pull/13330))
+
+### Dependency Upgrades
+
+- Bump wait-on from 4.0.2 to 5.2.0 ([#12835](https://github.com/storybookjs/storybook/pull/12835))
+- Bump commander from 5.1.0 to 6.2.0 ([#13148](https://github.com/storybookjs/storybook/pull/13148))
+
+## 6.2.0-alpha.0 (December 1, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix type aliases and enum types from Angular Compodoc JSON ([#12665](https://github.com/storybookjs/storybook/pull/12665))
+- Core: Ensure node `name` does not contain leading/trailing whitespace ([#13275](https://github.com/storybookjs/storybook/pull/13275))
+- Angular: Run setProps in the NgZone ([#12382](https://github.com/storybookjs/storybook/pull/12382))
+
+### Maintenance
+
+- Core: Make @babel/core an optional peer dependency ([#13329](https://github.com/storybookjs/storybook/pull/13329))
+- Core: Replace preset-env polyfills with babel-polyfills ([#13055](https://github.com/storybookjs/storybook/pull/13055))
+- CLI: use Jest to test CLI commands and remove outdated fixtures ([#12936](https://github.com/storybookjs/storybook/pull/12936))
+
+## 6.1.9 (November 29, 2020)
+
+### Bug Fixes
+
+- Addon-backgrounds: Fix grid offset always using default value ([#13260](https://github.com/storybookjs/storybook/pull/13260))
+- UI: Fix keybindings on non-US keyboard layouts ([#13319](https://github.com/storybookjs/storybook/pull/13319))
+- Addon-Docs: Handle class attributes in Dynamic Source Rendering for Vue.js ([#13327](https://github.com/storybookjs/storybook/pull/13327))
+
+## 6.1.8 (November 27, 2020)
+
+### Bug Fixes
+
+- Core: Fix preview URL dropped hashes ([#13308](https://github.com/storybookjs/storybook/pull/13308))
+- Core: Fix template script tag support ([#13271](https://github.com/storybookjs/storybook/pull/13271))
+- Addon-docs: Fix Vue source snippets for function attributes ([#13288](https://github.com/storybookjs/storybook/pull/13288))
+- Components: Fix Zoom for IE11 ([#13302](https://github.com/storybookjs/storybook/pull/13302))
+- React: Don't add FastRefresh if already enabled ([#13303](https://github.com/storybookjs/storybook/pull/13303))
+- CLI: Fix storybook-deployer upgrade warning ([#13306](https://github.com/storybookjs/storybook/pull/13306))
+
+### Maintenance
+
+- React: Expose StorybookConfig types ([#13309](https://github.com/storybookjs/storybook/pull/13309))
+- React: Fix unit tests for react preset ([#13315](https://github.com/storybookjs/storybook/pull/13315))
+
+## 6.1.7 (November 27, 2020)
+
+### Bug Fixes
+
+- CLI: Fix not printing managerTotalTime when using cached manager ([#13294](https://github.com/storybookjs/storybook/pull/13294))
+- Core: Only apply `express.json()` middleware to /runtime-error route ([#13295](https://github.com/storybookjs/storybook/pull/13295))
+- Core: Don't use prebuilt or cached manager when running smoke test ([#13266](https://github.com/storybookjs/storybook/pull/13266))
+- Core: Detect arg inference for cyclic args and warn ([#13263](https://github.com/storybookjs/storybook/pull/13263))
+
+### Dependency Upgrades
+
+- Remove unused dependency @svgr/webpack ([#13281](https://github.com/storybookjs/storybook/pull/13281))
+
+## 6.1.6 (November 25, 2020)
+
+### Bug Fixes
+
+- Addon-controls: Fix ensureDocsBeforeControls support for paths ([#13204](https://github.com/storybookjs/storybook/pull/13204))
+- CLI: Add core-js to Preact generator ([#13138](https://github.com/storybookjs/storybook/pull/13138))
+- Core: Improve handling of --static-dir option ([#13245](https://github.com/storybookjs/storybook/pull/13245))
+- Core: Fix webpack5 compatibility check for ProgressPlugin ([#13239](https://github.com/storybookjs/storybook/pull/13239))
+
+## 6.1.5 (November 24, 2020)
+
+### Bug Fixes
+
+- Core: Resolve react and react-dom from core ([#13195](https://github.com/storybookjs/storybook/pull/13195))
+
+## 6.1.4 (November 24, 2020)
+
+### Bug Fixes
+
+- Core: Clear manager cache on runtime error ([#13230](https://github.com/storybookjs/storybook/pull/13230))
+
+## 6.1.3 (November 23, 2020)
+
+### Bug Fixes
+
+- Core: Replace 'trash' with 'fs.remove' ([#13211](https://github.com/storybookjs/storybook/pull/13211))
+- UI: Fix overflow scrolling on layout:centered ([#13217](https://github.com/storybookjs/storybook/pull/13217))
+- CLI: Don't install babel-loader for CRA ([#13220](https://github.com/storybookjs/storybook/pull/13220))
+- Addon-docs: Fix lineheight in typeset component ([#13205](https://github.com/storybookjs/storybook/pull/13205))
+
 ## 6.1.2 (November 21, 2020)
 
 ### Bug Fixes

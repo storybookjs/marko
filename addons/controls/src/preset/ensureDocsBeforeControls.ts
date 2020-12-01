@@ -8,7 +8,7 @@ type Entry = string | OptionsEntry;
 const findIndex = (addon: string, addons: Entry[]) =>
   addons.findIndex((entry) => {
     const name = (entry as OptionsEntry).name || (entry as string);
-    return name && name.startsWith(addon);
+    return name && name.includes(addon);
   });
 
 const indexOfAddonOrEssentials = (addon: string, addons: Entry[]) => {

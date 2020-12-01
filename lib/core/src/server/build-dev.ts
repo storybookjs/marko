@@ -25,11 +25,9 @@ const cache = Cache({
 });
 
 const writeStats = async (name: string, stats: Stats) => {
-  await fs.writeFile(
-    resolvePathInStorybookCache(`public/${name}-stats.json`),
-    JSON.stringify(stats.toJson(), null, 2),
-    'utf8'
-  );
+  const filePath = resolvePathInStorybookCache(`public/${name}-stats.json`);
+  await fs.writeFile(filePath, JSON.stringify(stats.toJson(), null, 2), 'utf8');
+  return filePath;
 };
 
 const getFreePort = (port: number) =>
@@ -155,8 +153,8 @@ function outputStartupInformation(options: {
   version: string;
   address: string;
   networkAddress: string;
-  managerTotalTime: [number, number];
-  previewTotalTime: [number, number];
+  managerTotalTime?: [number, number];
+  previewTotalTime?: [number, number];
 }) {
   const {
     updateInfo,
@@ -222,12 +220,13 @@ function outputStartupInformation(options: {
 
 async function outputStats(previewStats: Stats, managerStats: Stats) {
   if (previewStats) {
-    await writeStats('preview', previewStats);
+    const filePath = await writeStats('preview', previewStats);
+    logger.info(`=> preview stats written to ${chalk.cyan(filePath)}`);
   }
-  await writeStats('manager', managerStats);
-  logger.info(
-    `stats written to => ${chalk.cyan(resolvePathInStorybookCache('public/[name].json'))}`
-  );
+  if (managerStats) {
+    const filePath = await writeStats('manager', managerStats);
+    logger.info(`=> manager stats written to ${chalk.cyan(filePath)}`);
+  }
 }
 
 export async function buildDevStandalone(
@@ -284,10 +283,9 @@ export async function buildDevStandalone(
 
     if (options.smokeTest) {
       await outputStats(previewStats, managerStats);
-      const managerWarnings = (managerStats as any).toJson().warnings.length > 0;
-      const previewWarnings =
-        !options.ignorePreview && (previewStats as any).toJson().warnings.length > 0;
-      process.exit(managerWarnings || previewWarnings ? 1 : 0);
+      const hasManagerWarnings = managerStats && managerStats.toJson().warnings.length > 0;
+      const hasPreviewWarnings = previewStats && previewStats.toJson().warnings.length > 0;
+      process.exit(hasManagerWarnings || (hasPreviewWarnings && !options.ignorePreview) ? 1 : 0);
       return;
     }
 

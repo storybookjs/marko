@@ -140,13 +140,6 @@ export const sfcVue: Parameters = {
   name: 'sfcVue',
   version: 'latest',
   generator: fromDeps('vue', 'vue-loader', 'vue-template-compiler', 'webpack@webpack-4'),
-  additionalDeps: [
-    // TODO: remove when https://github.com/storybookjs/storybook/issues/11255 is solved
-    'core-js',
-    // FIXME: We still have issue with react as peer/regular deps...
-    // For some details see: https://github.com/storybookjs/storybook/pull/13059/commits/8d4938bc4aef55e208a89f3547674c64ed39d3b3#r520101039
-    'react',
-  ],
 };
 
 export const svelte: Parameters = {
