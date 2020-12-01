@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-docs",
-  "version": "6.1.9",
+  "version": "6.2.0-alpha.1",
   "description": "Superior documentation for your components",
   "keywords": [
     "addon",
@@ -19,13 +19,6 @@
   "license": "MIT",
   "main": "dist/public_api.js",
   "types": "dist/public_api.d.ts",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  },
   "files": [
     "dist/**/*",
     "angular/**/*",
@@ -55,18 +48,18 @@
     "@mdx-js/loader": "^1.6.19",
     "@mdx-js/mdx": "^1.6.19",
     "@mdx-js/react": "^1.6.19",
-    "@storybook/addons": "6.1.9",
-    "@storybook/api": "6.1.9",
-    "@storybook/client-api": "6.1.9",
-    "@storybook/client-logger": "6.1.9",
-    "@storybook/components": "6.1.9",
-    "@storybook/core": "6.1.9",
-    "@storybook/core-events": "6.1.9",
+    "@storybook/addons": "6.2.0-alpha.1",
+    "@storybook/api": "6.2.0-alpha.1",
+    "@storybook/client-api": "6.2.0-alpha.1",
+    "@storybook/client-logger": "6.2.0-alpha.1",
+    "@storybook/components": "6.2.0-alpha.1",
+    "@storybook/core": "6.2.0-alpha.1",
+    "@storybook/core-events": "6.2.0-alpha.1",
     "@storybook/csf": "0.0.1",
-    "@storybook/node-logger": "6.1.9",
-    "@storybook/postinstall": "6.1.9",
-    "@storybook/source-loader": "6.1.9",
-    "@storybook/theming": "6.1.9",
+    "@storybook/node-logger": "6.2.0-alpha.1",
+    "@storybook/postinstall": "6.2.0-alpha.1",
+    "@storybook/source-loader": "6.2.0-alpha.1",
+    "@storybook/theming": "6.2.0-alpha.1",
     "acorn": "^7.1.0",
     "acorn-jsx": "^5.1.0",
     "acorn-walk": "^7.0.0",
@@ -92,9 +85,9 @@
     "@babel/core": "^7.12.3",
     "@emotion/core": "^10.1.1",
     "@emotion/styled": "^10.0.23",
-    "@storybook/react": "6.1.9",
-    "@storybook/vue": "6.1.9",
-    "@storybook/web-components": "6.1.9",
+    "@storybook/react": "6.2.0-alpha.1",
+    "@storybook/vue": "6.2.0-alpha.1",
+    "@storybook/web-components": "6.2.0-alpha.1",
     "@types/cross-spawn": "^6.0.1",
     "@types/doctrine": "^0.0.3",
     "@types/enzyme": "^3.10.3",
@@ -123,7 +116,7 @@
   },
   "peerDependencies": {
     "@babel/core": "^7.11.5",
-    "@storybook/vue": "6.1.9",
+    "@storybook/vue": "6.2.0-alpha.1",
     "babel-loader": "^8.0.0",
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0",
@@ -154,5 +147,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "495a468d5eccaac706b6b8b52e9dbc5a484027a4"
+  "gitHead": "211db5358500cb71c73d6183e86f40df1638752b",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  }
 }

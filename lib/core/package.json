@@ -1,6 +1,6 @@
 {
   "name": "@storybook/core",
-  "version": "6.1.9",
+  "version": "6.2.0-alpha.1",
   "description": "Storybook framework-agnostic API",
   "keywords": [
     "storybook"
@@ -52,20 +52,20 @@
     "@babel/preset-react": "^7.12.1",
     "@babel/preset-typescript": "^7.12.1",
     "@babel/register": "^7.12.1",
-    "@storybook/addons": "6.1.9",
-    "@storybook/api": "6.1.9",
-    "@storybook/channel-postmessage": "6.1.9",
-    "@storybook/channels": "6.1.9",
-    "@storybook/client-api": "6.1.9",
-    "@storybook/client-logger": "6.1.9",
-    "@storybook/components": "6.1.9",
-    "@storybook/core-events": "6.1.9",
+    "@storybook/addons": "6.2.0-alpha.1",
+    "@storybook/api": "6.2.0-alpha.1",
+    "@storybook/channel-postmessage": "6.2.0-alpha.1",
+    "@storybook/channels": "6.2.0-alpha.1",
+    "@storybook/client-api": "6.2.0-alpha.1",
+    "@storybook/client-logger": "6.2.0-alpha.1",
+    "@storybook/components": "6.2.0-alpha.1",
+    "@storybook/core-events": "6.2.0-alpha.1",
     "@storybook/csf": "0.0.1",
-    "@storybook/node-logger": "6.1.9",
-    "@storybook/router": "6.1.9",
+    "@storybook/node-logger": "6.2.0-alpha.1",
+    "@storybook/router": "6.2.0-alpha.1",
     "@storybook/semver": "^7.3.2",
-    "@storybook/theming": "6.1.9",
-    "@storybook/ui": "6.1.9",
+    "@storybook/theming": "6.2.0-alpha.1",
+    "@storybook/ui": "6.2.0-alpha.1",
     "@types/glob-base": "^0.3.0",
     "@types/micromatch": "^4.0.1",
     "@types/node-fetch": "^2.5.4",
@@ -75,13 +75,14 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-emotion": "^10.0.20",
     "babel-plugin-macros": "^2.8.0",
+    "babel-plugin-polyfill-corejs3": "^0.0.7",
     "babel-preset-minify": "^0.5.0 || 0.6.0-alpha.5",
     "better-opn": "^2.0.0",
     "boxen": "^4.1.0",
     "case-sensitive-paths-webpack-plugin": "^2.2.0",
     "chalk": "^4.0.0",
     "cli-table3": "0.6.0",
-    "commander": "^5.0.0",
+    "commander": "^6.2.0",
     "core-js": "^3.0.1",
     "cpy": "^8.1.1",
     "css-loader": "^3.5.3",
@@ -114,6 +115,7 @@
     "qs": "^6.6.0",
     "raw-loader": "^4.0.1",
     "react-dev-utils": "^10.0.0",
+    "read-pkg-up": "^7.0.0",
     "regenerator-runtime": "^0.13.7",
     "resolve-from": "^5.0.0",
     "serve-favicon": "^2.5.0",
@@ -151,10 +153,15 @@
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0"
   },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
+  },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "495a468d5eccaac706b6b8b52e9dbc5a484027a4",
+  "gitHead": "211db5358500cb71c73d6183e86f40df1638752b",
   "typesVersions": {
     "<3.8": {
       "*": [

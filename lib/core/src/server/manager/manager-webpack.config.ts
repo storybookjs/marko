@@ -10,6 +10,8 @@ import TerserWebpackPlugin from 'terser-webpack-plugin';
 
 import themingPaths from '@storybook/theming/paths';
 import uiPaths from '@storybook/ui/paths';
+
+import readPackage from 'read-pkg-up';
 import { getManagerHeadHtml } from '../utils/template';
 import { loadEnv } from '../config/utils';
 
@@ -17,8 +19,6 @@ import { babelLoader } from './babel-loader-manager';
 import { resolvePathInStorybookCache } from '../utils/resolve-path-in-sb-cache';
 import { es6Transpiler } from '../common/es6Transpiler';
 import { ManagerWebpackOptions } from '../types';
-
-const { version } = require('../../../package.json');
 
 export default async ({
   configDir,
@@ -39,6 +39,9 @@ export default async ({
   const refsTemplate = fse.readFileSync(path.join(__dirname, 'virtualModuleRef.template.js'), {
     encoding: 'utf8',
   });
+  const {
+    packageJson: { version },
+  } = await readPackage({ cwd: __dirname });
 
   return {
     name: 'manager',
@@ -130,6 +133,7 @@ export default async ({
     resolve: {
       extensions: ['.mjs', '.js', '.jsx', '.json', '.cjs', '.ts', '.tsx'],
       modules: ['node_modules'].concat((raw.NODE_PATH as string[]) || []),
+      mainFields: isProd ? undefined : ['browser', 'main'],
       alias: {
         ...themingPaths,
         ...uiPaths,
@@ -151,6 +155,9 @@ export default async ({
         chunks: 'all',
       },
       runtimeChunk: true,
+      sideEffects: true,
+      usedExports: true,
+      concatenateModules: true,
       minimizer: isProd
         ? [
             new TerserWebpackPlugin({
