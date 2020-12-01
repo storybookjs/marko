@@ -43,7 +43,7 @@
     "@storybook/node-logger": "6.2.0-alpha.0",
     "@storybook/semver": "^7.3.2",
     "chalk": "^4.0.0",
-    "commander": "^5.0.0",
+    "commander": "^6.2.0",
     "core-js": "^3.0.1",
     "cross-spawn": "^7.0.0",
     "envinfo": "^7.5.1",
