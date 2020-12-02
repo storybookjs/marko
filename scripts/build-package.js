@@ -53,11 +53,6 @@ function run() {
     ...packageTasks,
   };
 
-  const groups = {
-    'mode (leave unselected if you just want to build)': ['watch'],
-    packages,
-  };
-
   const main = program.version('5.0.0').option('--all', `build everything ${chalk.gray('(all)')}`);
 
   Object.keys(tasks)
