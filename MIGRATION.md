@@ -166,7 +166,7 @@ See [Naming components and hierarchy](https://storybook.js.org/docs/react/writin
 
 ### React peer dependencies
 
-Starting in 6.1, `react` and `react-dom` are required peer dependencies of `@storybook/react`, meaning that if your React project does not have dependencies on them, you need to add them. If you don't you may see errors like this:
+Starting in 6.1, `react` and `react-dom` are required peer dependencies of `@storybook/react`, meaning that if your React project does not have dependencies on them, you need to add them as `devDependencies`. If you don't you'll see errors like this:
 
 ```
 Error: Cannot find module 'react-dom/package.json'
