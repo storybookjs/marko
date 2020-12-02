@@ -18,6 +18,13 @@
   },
   "license": "MIT",
   "author": "Storybook Team",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "bin": {
     "getstorybook": "./bin/index.js",
     "sb": "./bin/index.js"
@@ -76,12 +83,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "211db5358500cb71c73d6183e86f40df1638752b",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "211db5358500cb71c73d6183e86f40df1638752b"
 }
