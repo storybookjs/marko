@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-parameter",
-  "version": "6.1.0-alpha.27",
+  "version": "6.2.0-alpha.1",
   "description": "parameter addon for storybook",
   "keywords": [
     "addon",
@@ -20,30 +20,30 @@
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "scripts": {
-    "prepare": "node ../../scripts/prepare.js"
-  },
-  "dependencies": {
-    "@storybook/addons": "6.1.0-alpha.27",
-    "@storybook/api": "6.1.0-alpha.27",
-    "@storybook/client-logger": "6.1.0-alpha.27",
-    "@storybook/components": "6.1.0-alpha.27",
-    "@storybook/core-events": "6.1.0-alpha.27",
-    "@storybook/theming": "6.1.0-alpha.27",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
-    "react": "^16.8.3",
-    "ts-dedent": "^1.1.1"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "gitHead": "0bbd3237844572f749beb5ed845be83ccbbea85a",
   "typesVersions": {
     "<3.8": {
       "*": [
         "ts3.4/*"
       ]
     }
-  }
+  },
+  "scripts": {
+    "prepare": "node ../../scripts/prepare.js"
+  },
+  "dependencies": {
+    "@storybook/addons": "6.2.0-alpha.1",
+    "@storybook/api": "6.2.0-alpha.1",
+    "@storybook/client-logger": "6.2.0-alpha.1",
+    "@storybook/components": "6.2.0-alpha.1",
+    "@storybook/core-events": "6.2.0-alpha.1",
+    "@storybook/theming": "6.2.0-alpha.1",
+    "core-js": "^3.0.1",
+    "global": "^4.3.2",
+    "react": "^16.8.0 || ^17.0.0",
+    "ts-dedent": "^2.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "211db5358500cb71c73d6183e86f40df1638752b"
 }

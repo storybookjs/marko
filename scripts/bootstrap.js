@@ -59,13 +59,13 @@ function run() {
 
   const tasks = {
     core: createTask({
-      name: `Core, Dll & Examples ${chalk.gray('(core)')}`,
+      name: `Core & Examples ${chalk.gray('(core)')}`,
       defaultValue: true,
       option: '--core',
       command: () => {
         log.info(prefix, 'yarn workspace');
       },
-      pre: ['install', 'build', 'dll'],
+      pre: ['install', 'build', 'manager'],
       order: 1,
     }),
     reset: createTask({
@@ -104,15 +104,12 @@ function run() {
       },
       order: 2,
     }),
-    dll: createTask({
-      name: `Generate DLL ${chalk.gray('(dll)')}`,
+    manager: createTask({
+      name: `Generate prebuilt manager UI ${chalk.gray('(manager)')}`,
       defaultValue: false,
-      option: '--dll',
+      option: '--manager',
       command: () => {
-        log.info(prefix, 'dll');
-        setTimeout(() => {
-          spawn('lerna run createDlls --scope "@storybook/ui" --scope "@storybook/addon-docs"');
-        }, 5000);
+        spawn('yarn build-manager');
       },
       order: 3,
     }),
@@ -148,7 +145,7 @@ function run() {
 
   const groups = {
     main: ['core'],
-    buildtasks: ['install', 'build', 'dll', 'packs'],
+    buildtasks: ['install', 'build', 'manager', 'packs'],
     devtasks: ['dev', 'registry', 'reset'],
   };
 

@@ -1,5 +1,4 @@
 ```md
-
 <!---Badge.stories.mdx --->
 
 import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
@@ -18,8 +17,8 @@ export const Template = (args) => <Badge {...args } />
 Let's define a story for our `Badge` component:
 
 <Story name="positive" args={{
-    status: 'positive', 
-    label: 'Positive' 
+  status: 'positive',
+  label: 'Positive'
 }}>
   {Template.bind({})}
 </Story>
@@ -28,8 +27,8 @@ We can drop it in a `Canvas` to get a code snippet:
 
 <Canvas>
   <Story name="negative" args={{
-      status: 'negative', 
-      label: 'Negative'
+    status: 'negative', 
+    label: 'Negative'
   }}>
     {Template.bind({})}
   </Story>
@@ -41,20 +40,20 @@ with unique URLs which is great for review and testing.
 
 <Canvas>
   <Story name="warning" args={{
-      status: warning,
-      label: 'Warning' 
+    status: warning,
+    label: 'Warning' 
   }}>
     {Template.bind({})}
   </Story>
   <Story name="neutral" args={{
-      status: 'neutral', 
-      label: 'Neutral' 
+    status: 'neutral', 
+    label: 'Neutral' 
   }}>
     {Template.bind({})}
   </Story>
   <Story name="error" args={{
-      status: 'error', 
-      label: 'Error' 
+    status: 'error', 
+    label: 'Error' 
   }}>
     {Template.bind({})}
   </Story>
@@ -64,6 +63,5 @@ with unique URLs which is great for review and testing.
   )}}>
     {Template.bind({})}
   </Story>
-</Story>
 </Canvas>
 ```

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-google-analytics",
-  "version": "6.1.0-alpha.27",
+  "version": "6.2.0-alpha.1",
   "description": "Storybook addon for google analytics",
   "keywords": [
     "addon",
@@ -20,17 +20,27 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-alpha.27",
-    "@storybook/core-events": "6.1.0-alpha.27",
+    "@storybook/addons": "6.2.0-alpha.1",
+    "@storybook/core-events": "6.2.0-alpha.1",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3",
     "react-ga": "^2.5.7",
-    "regenerator-runtime": "^0.13.3"
+    "regenerator-runtime": "^0.13.7"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "0bbd3237844572f749beb5ed845be83ccbbea85a"
+  "gitHead": "211db5358500cb71c73d6183e86f40df1638752b"
 }

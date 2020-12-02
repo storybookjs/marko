@@ -1,20 +1,20 @@
-import { StoriesHash, isRoot, isStory } from '@storybook/api';
+import { Group, Story, StoriesHash, isRoot, isStory } from '@storybook/api';
 import { styled } from '@storybook/theming';
 import { Icons } from '@storybook/components';
 import { transparentize } from 'polished';
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { MutableRefObject, useCallback, useMemo, useRef } from 'react';
 
 import { ComponentNode, DocumentNode, GroupNode, RootNode, StoryNode } from './TreeNode';
 import { useExpanded, ExpandAction } from './useExpanded';
-import { Item } from './types';
+import { Highlight, Item } from './types';
 import { createId, getAncestorIds, getDescendantIds, getLink } from './utils';
 
 export const Action = styled.button(({ theme }) => ({
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
-  width: 21,
-  height: 21,
+  width: 20,
+  height: 20,
   margin: 0,
   padding: 0,
   outline: 0,
@@ -37,8 +37,8 @@ export const Action = styled.button(({ theme }) => ({
     borderColor: theme.color.secondary,
   },
   svg: {
-    width: 11,
-    height: 11,
+    width: 10,
+    height: 10,
   },
 }));
 
@@ -48,7 +48,6 @@ interface NodeProps {
   isOrphan: boolean;
   isDisplayed: boolean;
   isSelected: boolean;
-  isHighlighted: boolean;
   isFullyExpanded?: boolean;
   isExpanded: boolean;
   setExpanded: (action: ExpandAction) => void;
@@ -63,7 +62,6 @@ const Node = React.memo<NodeProps>(
     isOrphan,
     isDisplayed,
     isSelected,
-    isHighlighted,
     isFullyExpanded,
     setFullyExpanded,
     isExpanded,
@@ -79,16 +77,14 @@ const Node = React.memo<NodeProps>(
         <LeafNode
           key={id}
           id={id}
+          className="sidebar-item"
           data-ref-id={refId}
           data-item-id={item.id}
           data-parent-id={item.parent}
           data-nodetype={item.isComponent ? 'document' : 'story'}
           data-selected={isSelected}
-          data-highlighted={isHighlighted}
           data-highlightable={isDisplayed}
           depth={isOrphan ? item.depth : item.depth - 1}
-          isSelected={isSelected}
-          isHighlighted={isHighlighted}
           href={getLink(item.id, refId)}
           onClick={(event) => {
             event.preventDefault();
@@ -102,10 +98,18 @@ const Node = React.memo<NodeProps>(
 
     if (isRoot(item)) {
       return (
-        <RootNode key={id} id={id} data-ref-id={refId} data-item-id={item.id} data-nodetype="root">
+        <RootNode
+          key={id}
+          id={id}
+          className="sidebar-subheading"
+          data-ref-id={refId}
+          data-item-id={item.id}
+          data-nodetype="root"
+        >
           {item.name}
           <Action
             type="button"
+            className="sidebar-subheading-action"
             data-action="expand-all"
             data-expanded={isFullyExpanded}
             onClick={(event) => {
@@ -124,11 +128,11 @@ const Node = React.memo<NodeProps>(
       <BranchNode
         key={id}
         id={id}
+        className="sidebar-item"
         data-ref-id={refId}
         data-item-id={item.id}
         data-parent-id={item.parent}
         data-nodetype={item.isComponent ? 'component' : 'group'}
-        data-highlighted={isHighlighted}
         data-highlightable={isDisplayed}
         aria-controls={item.children && item.children[0]}
         aria-expanded={isExpanded}
@@ -136,10 +140,9 @@ const Node = React.memo<NodeProps>(
         isComponent={item.isComponent}
         isExpandable={item.children && item.children.length > 0}
         isExpanded={isExpanded}
-        isHighlighted={isHighlighted}
         onClick={(event) => {
           event.preventDefault();
-          setExpanded({ ids: [id], value: !isExpanded });
+          setExpanded({ ids: [item.id], value: !isExpanded });
           if (item.isComponent && !isExpanded) onSelectStoryId(item.id);
         }}
       >
@@ -176,7 +179,7 @@ export const Tree = React.memo<{
   isMain: boolean;
   refId: string;
   data: StoriesHash;
-  highlightedItemId: string | null;
+  highlightedRef: MutableRefObject<Highlight>;
   setHighlightedItemId: (itemId: string) => void;
   selectedStoryId: string | null;
   onSelectStoryId: (storyId: string) => void;
@@ -186,7 +189,7 @@ export const Tree = React.memo<{
     isMain,
     refId,
     data,
-    highlightedItemId,
+    highlightedRef,
     setHighlightedItemId,
     selectedStoryId,
     onSelectStoryId,
@@ -213,27 +216,69 @@ export const Tree = React.memo<{
     // Also create a map of expandable descendants for each root/orphan item, which is needed later.
     // Doing that here is a performance enhancement, as it avoids traversing the tree again later.
     const { orphansFirst, expandableDescendants } = useMemo(() => {
-      return orphanIds
-        .concat(rootIds)
-        .reduce<{ orphansFirst: string[]; expandableDescendants: Record<string, string[]> }>(
-          (acc, nodeId) => {
-            const descendantIds = getDescendantIds(data, nodeId, false);
-            acc.orphansFirst.push(nodeId, ...descendantIds);
-            acc.expandableDescendants[nodeId] = descendantIds.filter((d) => !data[d].isLeaf);
-            return acc;
-          },
-          { orphansFirst: [], expandableDescendants: {} }
-        );
+      return orphanIds.concat(rootIds).reduce(
+        (acc, nodeId) => {
+          const descendantIds = getDescendantIds(data, nodeId, false);
+          acc.orphansFirst.push(nodeId, ...descendantIds);
+          acc.expandableDescendants[nodeId] = descendantIds.filter((d) => !data[d].isLeaf);
+          return acc;
+        },
+        { orphansFirst: [] as string[], expandableDescendants: {} as Record<string, string[]> }
+      );
     }, [data, rootIds, orphanIds]);
+
+    // Create a list of component IDs which have exactly one story, which name exactly matches the component name.
+    const singleStoryComponentIds = useMemo(() => {
+      return orphansFirst.filter((nodeId) => {
+        const { children = [], isComponent, isLeaf, name } = data[nodeId];
+        return (
+          !isLeaf &&
+          isComponent &&
+          children.length === 1 &&
+          isStory(data[children[0]]) &&
+          data[children[0]].name === name
+        );
+      });
+    }, [data, orphansFirst]);
+
+    // Omit single-story components from the list of nodes.
+    const collapsedItems = useMemo(() => {
+      return orphansFirst.filter((id) => !singleStoryComponentIds.includes(id));
+    }, [orphanIds, orphansFirst, singleStoryComponentIds]);
+
+    // Rewrite the dataset to place the child story in place of the component.
+    const collapsedData = useMemo(() => {
+      return singleStoryComponentIds.reduce(
+        (acc, id) => {
+          const { children, parent } = data[id] as Group;
+          const [childId] = children;
+          if (parent) {
+            const siblings = [...data[parent].children];
+            siblings[siblings.indexOf(id)] = childId;
+            acc[parent] = { ...data[parent], children: siblings };
+          }
+          acc[childId] = { ...data[childId], parent, depth: data[childId].depth - 1 } as Story;
+          return acc;
+        },
+        { ...data }
+      );
+    }, [data]);
+
+    const ancestry = useMemo(() => {
+      return collapsedItems.reduce(
+        (acc, id) => Object.assign(acc, { [id]: getAncestorIds(collapsedData, id) }),
+        {} as { [key: string]: string[] }
+      );
+    }, [collapsedItems, collapsedData]);
 
     // Track expanded nodes, keep it in sync with props and enable keyboard shortcuts.
     const [expanded, setExpanded] = useExpanded({
       containerRef,
       isBrowsing, // only enable keyboard shortcuts when tree is visible
       refId,
-      data,
+      data: collapsedData,
       rootIds,
-      highlightedItemId,
+      highlightedRef,
       setHighlightedItemId,
       selectedStoryId,
       onSelectStoryId,
@@ -241,8 +286,8 @@ export const Tree = React.memo<{
 
     return (
       <Container ref={containerRef} hasOrphans={isMain && orphanIds.length > 0}>
-        {orphansFirst.map((itemId) => {
-          const item = data[itemId];
+        {collapsedItems.map((itemId) => {
+          const item = collapsedData[itemId];
           const id = createId(itemId, refId);
 
           if (isRoot(item)) {
@@ -256,7 +301,6 @@ export const Tree = React.memo<{
                 isOrphan={false}
                 isDisplayed
                 isSelected={selectedStoryId === itemId}
-                isHighlighted={highlightedItemId === itemId}
                 isExpanded={!!expanded[itemId]}
                 setExpanded={setExpanded}
                 isFullyExpanded={isFullyExpanded}
@@ -266,8 +310,7 @@ export const Tree = React.memo<{
             );
           }
 
-          const isDisplayed =
-            !item.parent || getAncestorIds(data, itemId).every((a: string) => expanded[a]);
+          const isDisplayed = !item.parent || ancestry[itemId].every((a: string) => expanded[a]);
           return (
             <Node
               key={id}
@@ -276,7 +319,6 @@ export const Tree = React.memo<{
               isOrphan={orphanIds.some((oid) => itemId === oid || itemId.startsWith(`${oid}-`))}
               isDisplayed={isDisplayed}
               isSelected={selectedStoryId === itemId}
-              isHighlighted={highlightedItemId === itemId}
               isExpanded={!!expanded[itemId]}
               setExpanded={setExpanded}
               onSelectStoryId={onSelectStoryId}

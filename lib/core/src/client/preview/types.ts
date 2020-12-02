@@ -1,4 +1,4 @@
-import { RenderContext } from '@storybook/client-api';
+import { RenderContext, RenderContextWithoutStoryContext } from '@storybook/client-api';
 
 export interface PreviewError {
   message?: string;
@@ -23,7 +23,7 @@ export interface RequireContext {
 export type LoaderFunction = () => void | any[];
 export type Loadable = RequireContext | RequireContext[] | LoaderFunction;
 
-export { RenderContext };
+export { RenderContext, RenderContextWithoutStoryContext };
 
 // The function used by a framework to render story to the DOM
 export type RenderStoryFunction = (context: RenderContext) => void;

@@ -119,90 +119,100 @@ const refs: Record<string, RefType> = {
 export const Optimized = () => (
   <Ref
     {...refs.optimized}
+    isLoading={false}
     isBrowsing
     selectedStoryId=""
-    highlightedItemId=""
+    highlightedRef={{ current: null }}
     setHighlighted={() => {}}
   />
 );
 export const IsEmpty = () => (
   <Ref
     {...refs.empty}
+    isLoading={false}
     isBrowsing
     selectedStoryId=""
-    highlightedItemId=""
+    highlightedRef={{ current: null }}
     setHighlighted={() => {}}
   />
 );
 export const StartInjectedUnknown = () => (
   <Ref
     {...refs.startInjected_unknown}
+    isLoading={false}
     isBrowsing
     selectedStoryId=""
-    highlightedItemId=""
+    highlightedRef={{ current: null }}
     setHighlighted={() => {}}
   />
 );
 export const StartInjectedLoading = () => (
   <Ref
     {...refs.startInjected_loading}
+    isLoading={false}
     isBrowsing
     selectedStoryId=""
-    highlightedItemId=""
+    highlightedRef={{ current: null }}
     setHighlighted={() => {}}
   />
 );
 export const StartInjectedReady = () => (
   <Ref
     {...refs.startInjected_ready}
+    isLoading={false}
     isBrowsing
     selectedStoryId=""
-    highlightedItemId=""
+    highlightedRef={{ current: null }}
     setHighlighted={() => {}}
   />
 );
 export const Versions = () => (
   <Ref
     {...refs.versions}
+    isLoading={false}
     isBrowsing
     selectedStoryId=""
-    highlightedItemId=""
+    highlightedRef={{ current: null }}
     setHighlighted={() => {}}
   />
 );
 export const VersionsMissingCurrent = () => (
   <Ref
     {...refs.versionsMissingCurrent}
+    isLoading={false}
     isBrowsing
     selectedStoryId=""
-    highlightedItemId=""
+    highlightedRef={{ current: null }}
     setHighlighted={() => {}}
   />
 );
 export const Errored = () => (
   <Ref
     {...refs.error}
+    isLoading={false}
     isBrowsing
     selectedStoryId=""
-    highlightedItemId=""
+    highlightedRef={{ current: null }}
     setHighlighted={() => {}}
   />
 );
 export const Auth = () => (
   <Ref
     {...refs.auth}
+    isLoading={false}
     isBrowsing
     selectedStoryId=""
-    highlightedItemId=""
+    highlightedRef={{ current: null }}
     setHighlighted={() => {}}
   />
 );
 export const Long = () => (
   <Ref
     {...refs.long}
+    isLoading={false}
     isBrowsing
     selectedStoryId=""
-    highlightedItemId=""
+    highlightedRef={{ current: null }}
     setHighlighted={() => {}}
   />
 );

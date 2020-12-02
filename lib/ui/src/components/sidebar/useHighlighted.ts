@@ -1,5 +1,4 @@
-import throttle from 'lodash/throttle';
-import { document } from 'global';
+import { document, window } from 'global';
 import {
   Dispatch,
   MutableRefObject,
@@ -9,12 +8,14 @@ import {
   useRef,
   useState,
 } from 'react';
+import { matchesKeyCode, matchesModifiers } from './keybinding';
 
 import { CombinedDataset, Highlight, Selection } from './types';
 import { cycle, isAncestor, scrollIntoView } from './utils';
 
 export interface HighlightedProps {
   containerRef: MutableRefObject<HTMLElement>;
+  isLoading: boolean;
   isBrowsing: boolean;
   dataset: CombinedDataset;
   selected: Selection;
@@ -25,13 +26,26 @@ const fromSelection = (selection: Selection): Highlight =>
 
 export const useHighlighted = ({
   containerRef,
+  isLoading,
   isBrowsing,
   dataset,
   selected,
-}: HighlightedProps): [Highlight, Dispatch<SetStateAction<Highlight>>] => {
+}: HighlightedProps): [
+  Highlight,
+  Dispatch<SetStateAction<Highlight>>,
+  MutableRefObject<Highlight>
+] => {
   const initialHighlight = fromSelection(selected);
   const highlightedRef = useRef<Highlight>(initialHighlight);
   const [highlighted, setHighlighted] = useState<Highlight>(initialHighlight);
+
+  const updateHighlighted = useCallback(
+    (highlight) => {
+      highlightedRef.current = highlight;
+      setHighlighted(highlight);
+    },
+    [highlightedRef]
+  );
 
   // Sets the highlighted node and scrolls it into view, using DOM elements as reference
   const highlightElement = useCallback(
@@ -39,18 +53,16 @@ export const useHighlighted = ({
       const itemId = element.getAttribute('data-item-id');
       const refId = element.getAttribute('data-ref-id');
       if (!itemId || !refId) return;
-      highlightedRef.current = { itemId, refId };
-      setHighlighted(highlightedRef.current);
+      updateHighlighted({ itemId, refId });
       scrollIntoView(element, center);
     },
-    [highlightedRef, setHighlighted]
+    [updateHighlighted]
   );
 
   // Highlight and scroll to the selected story whenever the selection or dataset changes
   useEffect(() => {
     const highlight = fromSelection(selected);
-    setHighlighted(highlight);
-    highlightedRef.current = highlight;
+    updateHighlighted(highlight);
     if (highlight) {
       const { itemId, refId } = highlight;
       setTimeout(() => {
@@ -65,15 +77,25 @@ export const useHighlighted = ({
   // Highlight nodes up/down the tree using arrow keys
   useEffect(() => {
     const menuElement = document.getElementById('storybook-explorer-menu');
-    const navigateTree = throttle((event) => {
-      if (!isBrowsing || !event.key || !containerRef || !containerRef.current) return;
-      if (event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) return;
 
-      const target = event.target as Element;
-      if (!isAncestor(menuElement, target) && !isAncestor(target, menuElement)) return;
+    let lastRequestId: number;
+    const navigateTree = (event: KeyboardEvent) => {
+      if (isLoading || !isBrowsing || !containerRef.current) return; // allow event.repeat
+      if (!matchesModifiers(false, event)) return;
 
-      if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-        event.preventDefault();
+      const isArrowUp = matchesKeyCode('ArrowUp', event);
+      const isArrowDown = matchesKeyCode('ArrowDown', event);
+      if (!(isArrowUp || isArrowDown)) return;
+      event.preventDefault();
+
+      const requestId = window.requestAnimationFrame(() => {
+        window.cancelAnimationFrame(lastRequestId);
+        lastRequestId = requestId;
+
+        const target = event.target as Element;
+        if (!isAncestor(menuElement, target) && !isAncestor(target, menuElement)) return;
+        if (target.hasAttribute('data-action')) (target as HTMLButtonElement).blur();
+
         const highlightable = Array.from(
           containerRef.current.querySelectorAll('[data-highlightable=true]')
         );
@@ -82,17 +104,15 @@ export const useHighlighted = ({
             el.getAttribute('data-item-id') === highlightedRef.current?.itemId &&
             el.getAttribute('data-ref-id') === highlightedRef.current?.refId
         );
-        const nextIndex = cycle(highlightable, currentIndex, event.key === 'ArrowUp' ? -1 : 1);
-        const didRunAround =
-          (event.key === 'ArrowDown' && nextIndex === 0) ||
-          (event.key === 'ArrowUp' && nextIndex === highlightable.length - 1);
+        const nextIndex = cycle(highlightable, currentIndex, isArrowUp ? -1 : 1);
+        const didRunAround = isArrowUp ? nextIndex === highlightable.length - 1 : nextIndex === 0;
         highlightElement(highlightable[nextIndex], didRunAround);
-      }
-    }, 30);
+      });
+    };
 
     document.addEventListener('keydown', navigateTree);
     return () => document.removeEventListener('keydown', navigateTree);
-  }, [isBrowsing, highlightedRef, highlightElement]);
+  }, [isLoading, isBrowsing, highlightedRef, highlightElement]);
 
-  return [highlighted, setHighlighted];
+  return [highlighted, updateHighlighted, highlightedRef];
 };

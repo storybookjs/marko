@@ -48,11 +48,9 @@ function genImportStory(ast, storyDef, storyName, context) {
 
   const statements = [`export const ${storyKey} = ${story};`];
   if (storyName) {
-    // eslint-disable-next-line no-param-reassign
     context.storyNameToKey[storyName] = storyKey;
     statements.push(`${storyKey}.storyName = '${storyName}';`);
   } else {
-    // eslint-disable-next-line no-param-reassign
     context.storyNameToKey[storyKey] = storyKey;
     ast.openingElement.attributes.push({
       type: 'JSXAttribute',
@@ -200,7 +198,6 @@ function genStoryExport(ast, context) {
     statements.push(`${storyKey}.loaders = ${loaderCode};`);
   }
 
-  // eslint-disable-next-line no-param-reassign
   context.storyNameToKey[storyName] = storyKey;
 
   return {
@@ -218,7 +215,6 @@ function genCanvasExports(ast, context) {
       child.value = code;
       if (storyExport) {
         Object.assign(canvasExports, storyExport);
-        // eslint-disable-next-line no-param-reassign
         context.counter += 1;
       }
     }

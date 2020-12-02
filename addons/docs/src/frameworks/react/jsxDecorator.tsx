@@ -133,6 +133,7 @@ const defaultOpts = {
   skip: 0,
   showFunctions: false,
   enableBeautify: true,
+  showDefaultProps: false,
 };
 
 export const skipJsxRender = (context: StoryContext) => {

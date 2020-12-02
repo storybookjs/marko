@@ -1,4 +1,5 @@
 import React from 'react';
+import { StoriesHash } from '@storybook/api';
 
 import { Tree } from './Tree';
 import { stories } from './mockdata.large';
@@ -25,7 +26,67 @@ export const Full = () => {
       isMain
       refId={refId}
       data={stories}
-      highlightedItemId={storyId}
+      highlightedRef={{ current: { itemId: selectedId, refId } }}
+      setHighlightedItemId={log}
+      selectedStoryId={selectedId}
+      onSelectStoryId={setSelectedId}
+    />
+  );
+};
+
+const singleStoryComponent = {
+  single: {
+    name: 'Single',
+    id: 'single',
+    parent: false,
+    depth: 0,
+    children: ['single--single'],
+    isComponent: true,
+    isLeaf: false,
+    isRoot: false,
+  },
+  'single--single': {
+    id: 'single--single',
+    kind: 'Single',
+    name: 'Single',
+    story: 'Single',
+    args: {},
+    argTypes: {},
+    initialArgs: {},
+    depth: 1,
+    parent: 'single',
+    isLeaf: true,
+    isComponent: false,
+    isRoot: false,
+  },
+};
+
+const tooltipStories = Object.keys(stories).reduce((acc, key) => {
+  if (key === 'tooltip-tooltipselect--default') {
+    acc['tooltip-tooltipselect--tooltipselect'] = {
+      ...stories[key],
+      id: 'tooltip-tooltipselect--tooltipselect',
+      name: 'TooltipSelect',
+    };
+    return acc;
+  }
+  if (key === 'tooltip-tooltipselect') {
+    acc[key] = { ...stories[key], children: ['tooltip-tooltipselect--tooltipselect'] };
+    return acc;
+  }
+  if (key.startsWith('tooltip')) acc[key] = stories[key];
+  return acc;
+}, {} as StoriesHash);
+
+export const SingleStoryComponents = () => {
+  const [selectedId, setSelectedId] = React.useState('tooltip-tooltipbuildlist--default');
+  return (
+    <Tree
+      isBrowsing
+      isMain
+      refId={refId}
+      data={{ ...singleStoryComponent, ...tooltipStories } as StoriesHash}
+      highlightedRef={{ current: { itemId: selectedId, refId } }}
       setHighlightedItemId={log}
       selectedStoryId={selectedId}
       onSelectStoryId={setSelectedId}

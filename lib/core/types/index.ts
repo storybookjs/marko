@@ -11,9 +11,15 @@ export interface StorybookConfig {
   /**
    * Sets the addons you want to use with Storybook.
    *
-   * @example `['@storybook/addon-essentials']`
+   * @example `['@storybook/addon-essentials']` or `[{ name: '@storybook/addon-essentials', options: { backgrounds: false } }]`
    */
-  addons?: string[];
+  addons?: Array<
+    | string
+    | {
+        name: string;
+        options?: any;
+      }
+  >;
   /**
    * Tells Storybook where to find stories.
    *
@@ -50,7 +56,7 @@ export interface TypescriptOptions {
   /**
    * Enables type checking within Storybook.
    *
-   * @defalt `false`
+   * @default `false`
    */
   check: boolean;
   /**

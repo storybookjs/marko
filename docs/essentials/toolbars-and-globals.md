@@ -66,7 +66,7 @@ In your [`.storybook/preview.js`](../configure/overview.md#configure-story-rende
 
 <!-- prettier-ignore-end -->
 
-By adding the the configuration element `right`, the text will displayed on the right side in the toolbar menu, once you connect it to a decorator.
+By adding the configuration element `right`, the text will be displayed on the right side in the toolbar menu, once you connect it to a decorator.
 
 Here's a list of the configuration options available.
 
@@ -91,6 +91,7 @@ Using the example above, you can modify any story to retrieve the **Locale** `gl
 <CodeSnippets
   paths={[
     'common/my-component-story-use-globaltype.js.mdx',
+    'common/my-component-story-use-globaltype.mdx.mdx',
   ]}
 />
 

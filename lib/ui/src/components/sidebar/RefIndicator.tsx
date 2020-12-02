@@ -31,8 +31,8 @@ const IndicatorPlacement = styled.aside(({ theme }) => ({
 }));
 
 const IndicatorClickTarget = styled.button(({ theme }) => ({
-  height: 21,
-  width: 21,
+  height: 20,
+  width: 20,
   padding: 0,
   margin: 0,
   display: 'flex',
@@ -56,8 +56,8 @@ const IndicatorClickTarget = styled.button(({ theme }) => ({
     borderColor: theme.color.secondary,
   },
   svg: {
-    height: 11,
-    width: 11,
+    height: 10,
+    width: 10,
     transition: 'all 150ms ease-out',
     color: 'inherit',
   },
@@ -235,7 +235,7 @@ const ReadyMessage: FunctionComponent<{
   componentCount: number;
   leafCount: number;
 }> = ({ url, componentCount, leafCount }) => (
-  <Message href={url} target="_blank">
+  <Message href={url.replace(/\/?$/, '/index.html')} target="_blank">
     <BlueIcon icon="globe" />
     <div>
       <MessageTitle>View external Storybook</MessageTitle>
@@ -284,7 +284,7 @@ const ReadDocsMessage: FunctionComponent = () => (
 );
 
 const ErrorOccurredMessage: FunctionComponent<{ url: string }> = ({ url }) => (
-  <Message href={url} target="_blank">
+  <Message href={url.replace(/\/?$/, '/index.html')} target="_blank">
     <RedIcon icon="alert" />
     <div>
       <MessageTitle>Something went wrong</MessageTitle>
@@ -294,7 +294,7 @@ const ErrorOccurredMessage: FunctionComponent<{ url: string }> = ({ url }) => (
 );
 
 const LoadingMessage: FunctionComponent<{ url: string }> = ({ url }) => (
-  <Message href={url} target="_blank">
+  <Message href={url.replace(/\/?$/, '/index.html')} target="_blank">
     <BlueIcon icon="time" />
     <div>
       <MessageTitle>Please wait</MessageTitle>

@@ -15,6 +15,7 @@ export interface FrameworkOptions {
   staticDir?: string;
   addScripts?: boolean;
   addComponents?: boolean;
+  addBabel?: boolean;
 }
 
 export type Generator = (
@@ -29,6 +30,7 @@ const defaultOptions: FrameworkOptions = {
   staticDir: undefined,
   addScripts: true,
   addComponents: true,
+  addBabel: true,
 };
 
 export async function baseGenerator(
@@ -38,12 +40,13 @@ export async function baseGenerator(
   framework: SupportedFrameworks,
   options: FrameworkOptions = defaultOptions
 ) {
-  const { extraAddons, extraPackages, staticDir, addScripts, addComponents } = {
+  const { extraAddons, extraPackages, staticDir, addScripts, addComponents, addBabel } = {
     ...defaultOptions,
     ...options,
   };
 
   // added to main.js
+  // make sure to update `canUsePrebuiltManager` in dev-server.js and build-manager-config/main.js when this list changes
   const addons = ['@storybook/addon-links', '@storybook/addon-essentials'];
   // added to package.json
   const addonPackages = [...addons, '@storybook/addon-actions'];
@@ -57,8 +60,6 @@ export async function baseGenerator(
     ...extraPackages,
     ...extraAddons,
     ...yarn2Dependencies,
-    // ⚠️ Some addons have peer deps that must be added too, like '@storybook/addon-docs' => 'react-is'
-    'react-is',
   ].filter(Boolean);
   const versionedPackages = await packageManager.getVersionedPackages(...packages);
 
@@ -68,7 +69,7 @@ export async function baseGenerator(
   }
 
   const packageJson = packageManager.retrievePackageJson();
-  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
+  const babelDependencies = addBabel ? await getBabelDependencies(packageManager, packageJson) : [];
   packageManager.addDependencies({ ...npmOptions, packageJson }, [
     ...versionedPackages,
     ...babelDependencies,

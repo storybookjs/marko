@@ -1,9 +1,6 @@
-import window from 'global';
-import React, { Component, IframeHTMLAttributes } from 'react';
-
+import React, { IframeHTMLAttributes } from 'react';
 import { styled } from '@storybook/theming';
-
-const FIREFOX_BROWSER = 'Firefox';
+import { Zoom } from '@storybook/components';
 
 const StyledIframe = styled.iframe({
   position: 'absolute',
@@ -25,70 +22,21 @@ export interface IFrameProps {
   active: boolean;
 }
 
-export class IFrame extends Component<IFrameProps & IframeHTMLAttributes<HTMLIFrameElement>> {
-  iframe: HTMLIFrameElement = null;
-
-  componentDidMount() {
-    const { id } = this.props;
-    this.iframe = window.document.getElementById(id);
-  }
-
-  shouldComponentUpdate(nextProps: IFrameProps) {
-    const { scale, active } = this.props;
-
-    if (scale !== nextProps.scale) {
-      this.setIframeInnerZoom(nextProps.scale);
-    }
-
-    if (active !== nextProps.active) {
-      this.iframe.setAttribute('data-is-storybook', nextProps.active ? 'true' : 'false');
-    }
-
-    // this component renders an iframe, which gets updates via post-messages
-    // never update this component, it will cause the iframe to refresh
-    return false;
-  }
-
-  setIframeInnerZoom(scale: number) {
-    try {
-      if (window.navigator.userAgent.indexOf(FIREFOX_BROWSER) !== -1) {
-        Object.assign(this.iframe.contentDocument.body.style, {
-          width: `${scale * 100}%`,
-          height: `${scale * 100}%`,
-          transform: `scale(${1 / scale})`,
-          transformOrigin: 'top left',
-        });
-      } else {
-        Object.assign(this.iframe.contentDocument.body.style, {
-          zoom: 1 / scale,
-        });
-      }
-    } catch (e) {
-      this.setIframeZoom(scale);
-    }
-  }
-
-  setIframeZoom(scale: number) {
-    Object.assign(this.iframe.style, {
-      width: `${scale * 100}%`,
-      height: `${scale * 100}%`,
-      transform: `scale(${1 / scale})`,
-      transformOrigin: 'top left',
-    });
-  }
-
-  render() {
-    const { id, title, src, allowFullScreen, scale, active, ...rest } = this.props;
-    return (
+export function IFrame(props: IFrameProps & IframeHTMLAttributes<HTMLIFrameElement>) {
+  const { active, id, title, src, allowFullScreen, scale, ...rest } = props;
+  const iFrameRef = React.useRef<HTMLIFrameElement>(null);
+  return (
+    <Zoom.IFrame scale={scale} active={active} iFrameRef={iFrameRef}>
       <StyledIframe
-        onLoad={() => this.iframe.setAttribute('data-is-loaded', 'true')}
         data-is-storybook={active ? 'true' : 'false'}
+        onLoad={(e) => e.currentTarget.setAttribute('data-is-loaded', 'true')}
         id={id}
         title={title}
         src={src}
         allowFullScreen={allowFullScreen}
+        ref={iFrameRef}
         {...rest}
       />
-    );
-  }
+    </Zoom.IFrame>
+  );
 }

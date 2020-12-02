@@ -30,16 +30,22 @@ export interface Match {
   arrayIndex: number;
 }
 
+export function isCloseType(x: any): x is CloseType {
+  return !!(x && x.closeMenu);
+}
 export function isClearType(x: any): x is ClearType {
-  return !!x.clearLastViewed;
+  return !!(x && x.clearLastViewed);
 }
 export function isExpandType(x: any): x is ExpandType {
-  return !!x.showAll;
+  return !!(x && x.showAll);
 }
 export function isSearchResult(x: any): x is SearchResult {
-  return !!x.item;
+  return !!(x && x.item);
 }
 
+export interface CloseType {
+  closeMenu: () => void;
+}
 export interface ClearType {
   clearLastViewed: () => void;
 }
@@ -55,12 +61,13 @@ export type SearchItem = Item & { refId: string; path: string[] };
 export type SearchResult = Fuse.FuseResultWithMatches<SearchItem> &
   Fuse.FuseResultWithScore<SearchItem>;
 
-export type DownshiftItem = SearchResult | ExpandType | ClearType;
+export type DownshiftItem = SearchResult | ExpandType | ClearType | CloseType;
 
 export type SearchChildrenFn = (args: {
-  inputValue: string;
+  query: string;
   results: DownshiftItem[];
-  inputHasFocus: boolean;
+  isBrowsing: boolean;
+  closeMenu: (cb?: () => void) => void;
   getMenuProps: ControllerStateAndHelpers<DownshiftItem>['getMenuProps'];
   getItemProps: ControllerStateAndHelpers<DownshiftItem>['getItemProps'];
   highlightedIndex: number | null;

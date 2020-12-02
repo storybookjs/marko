@@ -105,7 +105,7 @@ export const Sidebar: FunctionComponent<SidebarProps> = React.memo(
     );
     const dataset = useCombination(stories, storiesConfigured, storiesFailed, refs);
     const isLoading = !dataset.hash[DEFAULT_REF_ID].ready;
-    const lastViewed = useLastViewed(selected);
+    const lastViewedProps = useLastViewed(selected);
 
     return (
       <Container className="container sidebar-container">
@@ -117,28 +117,33 @@ export const Sidebar: FunctionComponent<SidebarProps> = React.memo(
               dataset={dataset}
               isLoading={isLoading}
               enableShortcuts={enableShortcuts}
-              {...lastViewed}
+              {...lastViewedProps}
             >
               {({
-                inputValue,
-                inputHasFocus,
+                query,
                 results,
+                isBrowsing,
+                closeMenu,
                 getMenuProps,
                 getItemProps,
                 highlightedIndex,
               }) => (
-                <Swap condition={!!(inputHasFocus || inputValue)}>
-                  <SearchResults
-                    isSearching={!!inputValue}
-                    results={results}
-                    getMenuProps={getMenuProps}
-                    getItemProps={getItemProps}
-                    highlightedIndex={highlightedIndex}
-                  />
+                <Swap condition={isBrowsing}>
                   <Explorer
                     dataset={dataset}
                     selected={selected}
-                    isBrowsing={!inputHasFocus && !inputValue}
+                    isLoading={isLoading}
+                    isBrowsing={isBrowsing}
+                  />
+                  <SearchResults
+                    query={query}
+                    results={results}
+                    closeMenu={closeMenu}
+                    getMenuProps={getMenuProps}
+                    getItemProps={getItemProps}
+                    highlightedIndex={highlightedIndex}
+                    enableShortcuts={enableShortcuts}
+                    isLoading={isLoading}
                   />
                 </Swap>
               )}
