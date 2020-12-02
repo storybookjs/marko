@@ -98,7 +98,7 @@ Args are useful when writing stories for composite components that are assembled
 <details>
 <summary>Using args in addons</summary>
 
-If you are [writing an addon](../api/addons.md) that wants to read or update args, use the `useArgs` hook exported by `@storybook/api`:
+If you are [writing an addon](../addons/writing-addons.md) that wants to read or update args, use the `useArgs` hook exported by `@storybook/api`:
 
 <!-- prettier-ignore-start -->
 

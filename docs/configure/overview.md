@@ -12,7 +12,7 @@ Note you can change the folder that Storybook uses by setting the `-c` flag to y
 
 ## Configure your Storybook project
 
-The main configuration file is `main.js`. This file controls the behaviour of the Storybook server, and so you must restart Storybook’s process when you change it. It contains the following:
+The main configuration file is `main.js`. This file controls the behavior of the Storybook server, and so you must restart Storybook’s process when you change it. It contains the following:
 
 <!-- prettier-ignore-start -->
 
@@ -24,7 +24,7 @@ The main configuration file is `main.js`. This file controls the behaviour of th
 
 <!-- prettier-ignore-end -->
 
-The `main.js` configuration file is a [preset](../api/presets.md) and as such has a powerful interface, but the key fields within it are:
+The `main.js` configuration file is a [preset](../addons/addon-types.md) and as such has a powerful interface, but the key fields within it are:
 
 - `stories` - an array of globs that indicates the [location of your story files](#configure-story-loading), relative to `main.js`.
 - `addons` - a list of the [addons](/addons) you are using.
