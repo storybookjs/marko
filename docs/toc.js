@@ -332,7 +332,7 @@ module.exports = {
         },
         {
           pathSegment: 'writing-presets',
-          title: 'Writing presets',
+          title: 'Writing preset addons',
           type: 'link',
         },
         {
