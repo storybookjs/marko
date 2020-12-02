@@ -2,7 +2,7 @@
 title: 'Writing your own Storybook addon'
 ---
 
-One of Storybook's main features it's is robust addon ecosystem. Addons can be used to enhance your developer experience or workflows. We're going to guide you with the necessary steps to create your own first addon.
+One of Storybook's main features is it's robust addon ecosystem. Addons can be used to enhance your developer experience or workflows. We're going to guide you with the necessary steps to create your own first addon.
 
 ## The addon we're building
 
@@ -114,7 +114,16 @@ Now let’s add a panel to Storybook. Create a new directory called `src` and in
 
 <!-- prettier-ignore-end -->
 
-This is boilerplate code for any addon that adds a panel to Storybook, and there’s really not much going on here. In this case, we’re just adding a static `div` that renders when the panel is selected in Storybook’s UI.
+<div class="aside">
+Make sure to include the <code>key</code> when you register the addon. This will prevent any issues when the addon renders.
+</div> 
+
+Going over the code snippet in more detail, here's what's going to happen when Storybook starts up:
+
+- Storybook [registers](./addons-api.md#addonsregister) a new addon called `my-addon`.
+- The addon [adds]((./addons-api.md#addonsadd)) a new `panel` to the UI.
+- When the `panel` is selected it will render the static `div` content.
+
 
 ### Register the addon
 
@@ -212,7 +221,7 @@ With the example above we showed how to create a bare-bones addon. Before publis
 - A [GitHub](https://github.com/) account to host your code.
 - A [NPM](https://www.npmjs.com/) account to publish the addon.
 
-For a good template of an addon that meets the requirements above, check out [@storybook/addon-controls](https://npmjs.com/package/@storybook/addon-controls).
+For a good template of an addon that meets the requirements above, check out [storybook-addon-outline](https://www.npmjs.com/package/storybook-addon-outline).
 
 ### Next steps
 

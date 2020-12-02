@@ -12,6 +12,8 @@ This particular type of addons allows you to customize Storybook's UI. If the ad
 
 This type of UI element allows you to add your own custom <code>Panel</code> to Storybook's UI. Currently the most common use case available throughout our ecosystem. Good examples that use this type of interface are: [@storybook/actions](../essentials/actions.md) and [@storybook/a11y](https://github.com/storybookjs/storybook/tree/next/addons/a11y).
 
+![Storybook panel](./storybook-panel.png)
+
 Below is the boilerplate code that you can use in your own addon to add a `Panel` in Storybook's UI.
 
 <!-- prettier-ignore-start -->
@@ -28,6 +30,8 @@ Below is the boilerplate code that you can use in your own addon to add a `Panel
 ### Toolbars
 
 This type of UI element allows you to add <code>Toolbars</code> to Storybook's UI. Good examples that use this type of interface are: [@storybook/backgrounds](../essentials/backgrounds.md) and [storybook-addon-outline](https://github.com/chromaui/storybook-outline).
+
+![Storybook toolbar addon](./storybook-toolbar.png)
 
 Below is the boilerplate code that you can use in your own addon to add a new `Toolbar` in Storybook's UI.
 
@@ -46,6 +50,8 @@ Below is the boilerplate code that you can use in your own addon to add a new `T
 
 This type of UI element allows you to add your own custom <code>Tabs</code> to Storybook's UI. A good example that use this type of interface is the: [@storybook/addon-docs](../writing-docs/introduction.md).
 
+![Storybook tab addon](./storybook-tab.png)
+
 Below is the boilerplate code that you can use in your own addon to add a new `Tab` in Storybook's UI.
 
 <!-- prettier-ignore-start -->
@@ -63,11 +69,11 @@ Below is the boilerplate code that you can use in your own addon to add a new `T
 If want to learn more about writing your own addon and include some of these elements, read our <a href="./writing-addons">documentation</a>.
 </div>
 
-## Presets
+## Preset addons
 
-Storybook presets are grouped collections of `babel`, `webpack`, and `addons` configurations that support specific use cases for your addon. Good examples of presets are [preset-scss](https://github.com/storybookjs/presets/tree/master/packages/preset-scss) and [preset-create-react-app](https://github.com/storybookjs/presets/tree/master/packages/preset-create-react-app) maintained by Storybook.
+Storybook preset addons are grouped collections of `babel`, `webpack`, and `addons` configurations to allow integration between Storybook and other existing technologies. Good examples of preset addons are: [preset-scss](https://github.com/storybookjs/presets/tree/master/packages/preset-scss) and [preset-create-react-app](https://github.com/storybookjs/presets/tree/master/packages/preset-create-react-app) maintained by Storybook.
 
-Below is a boilerplate code that you can use while writing your own preset.
+Below is a boilerplate code that you can use while writing your own preset addon.
 
 <!-- prettier-ignore-start -->
 
@@ -80,5 +86,5 @@ Below is a boilerplate code that you can use while writing your own preset.
 <!-- prettier-ignore-end -->
 
 <div class="aside">
-If you want to learn more about writing your own preset, read our <a href="./writing-presets">documentation</a>
+If you want to learn more about writing your own preset addon, read our <a href="./writing-presets">documentation</a>
 </div>

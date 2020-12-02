@@ -36,10 +36,10 @@ This particular type of addons focuses mainly on the interface. Installing addon
 Read our <a href="./writing-addons">documentation</a> to learn more about creating addons.
 </div>
 
-#### Presets
+#### Preset addons
 
 This particular type of addons focuses on integrations. They are often used to integrate Storybook with other existing technologies. Good examples of this particular type are: [preset-scss](https://github.com/storybookjs/presets/tree/master/packages/preset-scss) and [preset-create-react-app](https://github.com/storybookjs/presets/tree/master/packages/preset-create-react-app).
 
 <div class="aside">
-Read our <a href="./writing-presets">documentation</a> to learn more about presets.
+Read our <a href="./writing-presets">documentation</a> to learn more about preset addons.
 </div>
