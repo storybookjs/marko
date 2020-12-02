@@ -23,6 +23,7 @@
     "**/*.spec.ts",
     "**/__tests__",
     "**/*.test.ts",
-    "**/FlowType*"
+    "**/FlowType*",
+    "**/setup-jest.ts"
   ]
 }
