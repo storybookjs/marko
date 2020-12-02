@@ -52,7 +52,7 @@ commands:
         type: string
     steps:
       - run:
-          name: Check if PR is labeled with "run all e2e tests"
+          name: Check if PR is labeled with "<< parameters.label >>"
           command: |
             sudo apt-get install jq
 
@@ -63,11 +63,14 @@ commands:
             PR_REQUEST_URL="$API_GITHUB/pulls/$PR_NUMBER"
             PR_RESPONSE=$(curl -H "Authorization: token $GITHUB_TOKEN_TEST_GMAISSE" "$PR_REQUEST_URL")
 
-            if [ $(echo $PR_RESPONSE | jq '.labels | map(select(.name == "<< parameters.label >>")) | length') -eq 0 ]; then
+
+            if [ $(echo $PR_RESPONSE | jq '.labels | map(select(.name == "<< parameters.label >>")) | length') -ge 1 ] ||
+               ( [ $(echo $PR_RESPONSE | jq '.labels | length') -ge 1 ] && [ "<< parameters.label >>" == "*" ])
+            then
+              echo "🚀 The PR is labelled with '<< parameters.label >>', job will continue!"
+            else
               echo "🏁 The PR isn't labelled with '<< parameters.label >>' so this job will end at the current step."
               circleci-agent step halt
-            else
-              echo "🚀 The PR is labelled with '<< parameters.label >>', job will continue!"
             fi
 
 jobs:
