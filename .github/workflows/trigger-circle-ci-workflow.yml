@@ -10,12 +10,24 @@ jobs:
     name: Run workflow with all e2e tests
     runs-on: ubuntu-latest
     steps:
+      - name: Compute and export CircleCI ref from branch/fork
+        run: |
+          export IS_PR_FROM_FORK=${{ github.event.pull_request.head.repo.fork }}
+          echo $IS_PR_FROM_FORK
+          if [ $IS_PR_FROM_FORK = true ]
+          then
+            export CIRCLE_CI_BRANCH_REF=pull/${{ github.event.pull_request.number }}/head
+          else
+            export CIRCLE_CI_BRANCH_REF=${{ github.event.pull_request.head.ref }}
+          fi
+          echo CIRCLE_CI_BRANCH_REF is $CIRCLE_CI_BRANCH_REF
+          echo "CIRCLE_CI_BRANCH_REF=$CIRCLE_CI_BRANCH_REF" >> $GITHUB_ENV
       - name: Make request to CircleCI
         run: >
           curl --request POST
           --url https://circleci.com/api/v2/project/gh/storybookjs/storybook/pipeline
           --header 'Circle-Token: '"$CIRCLE_CI_TOKEN"' '
           --header 'content-type: application/json'
-          --data '{"branch":"${{ github.event.pull_request.head.ref }}"}'
+          --data '{ "branch" : "'"$CIRCLE_CI_BRANCH_REF"'" } '
         env:
           CIRCLE_CI_TOKEN: ${{ secrets.CIRCLE_CI_TOKEN_GMAISSE_TEST }}
