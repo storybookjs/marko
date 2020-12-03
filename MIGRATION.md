@@ -1,5 +1,7 @@
 <h1>Migration</h1>
 
+- [From version 6.1.x to 6.2.0](#from-version-61x-to-620)
+  - [New Angular renderer](#new-angular-renderer)
 - [From version 6.0.x to 6.1.0](#from-version-60x-to-610)
   - [Single story hoisting](#single-story-hoisting)
   - [React peer dependencies](#react-peer-dependencies)
@@ -137,6 +139,20 @@
   - [Webpack upgrade](#webpack-upgrade)
   - [Packages renaming](#packages-renaming)
   - [Deprecated embedded addons](#deprecated-embedded-addons)
+
+## From version 6.1.x to 6.2.0
+
+### New Angular renderer
+
+We've rewritten the Angular renderer in Storybook 6.1. It's meant to be entirely backwards compatible, but if you need to use the legacy renderer it's still available via a [parameter](https://storybook.js.org/docs/react/writing-stories/parameters). To opt out of the new renderer, add the following to `.storybook/preview.ts`:
+
+```ts
+export const parameters = {
+  angularLegacyRendering: true,
+};
+```
+
+Please also file an issue if you need to opt out. We plan to remove the legacy renderer in 7.0.
 
 ## From version 6.0.x to 6.1.0
 
