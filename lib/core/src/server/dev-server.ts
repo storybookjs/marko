@@ -283,9 +283,9 @@ const startManager = async ({
 
   // Used to report back any client-side (runtime) errors
   router.post('/runtime-error', express.json(), (request, response) => {
-    if (request.body?.error) {
+    if (request.body?.error || request.body?.message) {
       logger.error('Runtime error! Check your browser console.');
-      logger.error(request.body.error.stack || request.body.message || request.body);
+      logger.error(request.body.error?.stack || request.body.message || request.body);
       if (request.body.origin === 'manager') clearManagerCache(options.cache);
     }
     response.sendStatus(200);
