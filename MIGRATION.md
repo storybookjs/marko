@@ -2,6 +2,7 @@
 
 - [From version 6.0.x to 6.1.0](#from-version-60x-to-610)
   - [Single story hoisting](#single-story-hoisting)
+  - [React peer dependencies](#react-peer-dependencies)
   - [6.1 deprecations](#61-deprecations)
     - [Deprecated DLL flags](#deprecated-dll-flags)
     - [Deprecated storyFn](#deprecated-storyfn)
@@ -162,6 +163,16 @@ DESIGN SYSTEM   [root]
 ```
 
 See [Naming components and hierarchy](https://storybook.js.org/docs/react/writing-stories/naming-components-and-hierarchy#single-story-hoisting) for details.
+
+### React peer dependencies
+
+Starting in 6.1, `react` and `react-dom` are required peer dependencies of `@storybook/react`, meaning that if your React project does not have dependencies on them, you need to add them as `devDependencies`. If you don't you'll see errors like this:
+
+```
+Error: Cannot find module 'react-dom/package.json'
+```
+
+They were also peer dependencies in earlier versions, but due to the package structure they would be installed by Storybook if they were not required by the user's project. For more discussion: https://github.com/storybookjs/storybook/issues/13269
 
 ### 6.1 deprecations
 
