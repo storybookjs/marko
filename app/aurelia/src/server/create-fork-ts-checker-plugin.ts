@@ -3,10 +3,11 @@ import { logger } from '@storybook/node-logger';
 
 import { Options } from 'ts-loader';
 
+// eslint-disable-next-line func-names
 export default function (tsLoaderOptions: Partial<Options>) {
   if (tsLoaderOptions && tsLoaderOptions.configFile) {
     return new ForkTsCheckerWebpackPlugin({
-      tsconfig: tsLoaderOptions.configFile,
+      typescript: { configFile: tsLoaderOptions.configFile },
       async: false,
     });
   }
