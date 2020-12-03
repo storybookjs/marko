@@ -5,7 +5,7 @@ title: 'Overview of Storybook addons'
 Addons extend Storybook with features and integrations that are not built into the core. Most Storybook features are implemented as addons. For instance: [documentation](../writing-docs/introduction.md), [accessibility testing](https://github.com/storybookjs/storybook/tree/master/addons/a11y), [interactive controls](../essentials/controls.md), among others.
 The [addon API](./addons-api.md) makes it easy for you to configure and customize Storybook in new ways. There are countless addons made by the community that unlock time-saving workflows.
 
-Browse our [addon gallery](/addons) to install an existing addon or as inspiration for your own addon.
+Browse our [addon catalog](/addons) to install an existing addon or as inspiration for your own addon.
 
 ## Storybook basics
 
