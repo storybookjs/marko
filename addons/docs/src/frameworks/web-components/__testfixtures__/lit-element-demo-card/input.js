@@ -151,9 +151,7 @@ export class DemoWcCard extends LitElement {
   render() {
     return html`
       <div id="front" part="front">
-        <div class="header">
-          ${this.header}
-        </div>
+        <div class="header">${this.header}</div>
         <div class="content">
           <slot></slot>
         </div>
@@ -163,9 +161,7 @@ export class DemoWcCard extends LitElement {
         </div>
       </div>
       <div id="back" part="back">
-        <div class="header">
-          ${this.header}
-        </div>
+        <div class="header">${this.header}</div>
 
         <div class="content">
           ${this.rows.length === 0

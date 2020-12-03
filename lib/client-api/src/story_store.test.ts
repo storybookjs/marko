@@ -413,7 +413,7 @@ describe('preview.story_store', () => {
       });
     });
 
-    it('it sets session storage on initialization', () => {
+    it('sets session storage on initialization', () => {
       (store2.session.set as any).mockClear();
       const store = new StoryStore({ channel });
       addStoryToStore(store, 'a', '1', () => 0);
@@ -488,7 +488,7 @@ describe('preview.story_store', () => {
       });
     });
 
-    it('it sensibly re-initializes with memory based on session storage', () => {
+    it('sensibly re-initializes with memory based on session storage', () => {
       (store2.session.get as any).mockReturnValueOnce({
         globals: {
           arg1: 'arg1',

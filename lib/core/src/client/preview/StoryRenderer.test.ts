@@ -281,9 +281,9 @@ describe('core.preview.StoryRenderer', () => {
 
       const onDocsRendered = jest.fn();
       channel.on(DOCS_RENDERED, onDocsRendered);
-      ((ReactDOM.render as unknown) as jest.Mock<
-        ReactDOM.Renderer
-      >).mockImplementationOnce((element, node, callback) => callback());
+      ((ReactDOM.render as unknown) as jest.Mock<ReactDOM.Renderer>).mockImplementationOnce(
+        (element, node, callback) => callback()
+      );
 
       addStory(storyStore, 'a', '1');
       storyStore.setSelection({ storyId: 'a--1', viewMode: 'docs' });

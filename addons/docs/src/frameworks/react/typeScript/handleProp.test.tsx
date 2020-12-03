@@ -489,13 +489,12 @@ describe('enhanceTypeScriptProp', () => {
         it(`should support inlined named React functional component with props for ${x}`, () => {
           const component = createTestComponent(null, x);
 
-          const { defaultValue } = extractPropDef(component, function InlinedFunctionalComponent({
-            foo,
-          }: {
-            foo: string;
-          }) {
-            return <div>{foo}</div>;
-          });
+          const { defaultValue } = extractPropDef(
+            component,
+            function InlinedFunctionalComponent({ foo }: { foo: string }) {
+              return <div>{foo}</div>;
+            }
+          );
 
           expect(defaultValue.summary).toBe('<InlinedFunctionalComponent />');
           expect(defaultValue.detail).toBeUndefined();
