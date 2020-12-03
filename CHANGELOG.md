@@ -1,3 +1,14 @@
+## 6.2.0-alpha.2 (December 3, 2020)
+
+### Bug Fixes
+
+* Storyshots: Fix missing `done` attribute on type definition ([#13341](https://github.com/storybookjs/storybook/pull/13341))
+* Core: Fix IE11 compatibility by using XHR and plain ES5 ([#13348](https://github.com/storybookjs/storybook/pull/13348))
+
+### Maintenance
+
+* Angular: Overhaul preview renderer ([#13215](https://github.com/storybookjs/storybook/pull/13215))
+
 ## 6.2.0-alpha.1 (December 1, 2020)
 
 ### Bug Fixes
