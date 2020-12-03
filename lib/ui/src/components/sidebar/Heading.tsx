@@ -13,7 +13,7 @@ const BrandArea = styled.div(({ theme }) => ({
   fontSize: theme.typography.size.s2,
   fontWeight: theme.typography.weight.bold,
   color: theme.color.defaultText,
-  marginRight: 40,
+  marginRight: 20,
   display: 'flex',
   width: '100%',
   alignItems: 'center',
