@@ -2,7 +2,7 @@
 title: Set up Storybook addons
 ---
 
-Storybook boasts a wide variety of addons in its ecosystem. All of them packaged as NPM modules and listed in our [addon gallery](/addons). We're going to guide you through the necessary steps to install and register Storybook addons.
+Storybook boasts a wide variety of addons in its ecosystem. All of them packaged as NPM modules and listed in our [addon catalog](/addons). We're going to guide you through the necessary steps to install and register Storybook addons.
 
 ### Using addons
 
