@@ -243,8 +243,8 @@ describe('presets', () => {
   });
 
   it('applies presets in chain', async () => {
-    const mockPresetFooExtendWebpack = jest.fn(() => ({}));
-    const mockPresetBarExtendWebpack = jest.fn(() => ({}));
+    const mockPresetFooExtendWebpack = jest.fn((...args: any[]) => ({}));
+    const mockPresetBarExtendWebpack = jest.fn((...args: any[]) => ({}));
 
     mockPreset('preset-foo', {
       webpack: mockPresetFooExtendWebpack,
@@ -291,7 +291,7 @@ describe('presets', () => {
   it('allows for presets to export presets array', async () => {
     const getPresets = jest.requireActual('./presets').default;
     const input = {};
-    const mockPresetBar = jest.fn(() => input);
+    const mockPresetBar = jest.fn((...args: any[]) => input);
 
     mockPreset('preset-foo', {
       presets: ['preset-bar'],
@@ -315,8 +315,8 @@ describe('presets', () => {
     const input = {};
     const storybookOptions = { a: 1 };
     const presetOptions = { b: 2 };
-    const mockPresetBar = jest.fn(() => input);
-    const mockPresetFoo = jest.fn(() => ['preset-bar']);
+    const mockPresetBar = jest.fn((...args: any[]) => input);
+    const mockPresetFoo = jest.fn((...args: any[]) => ['preset-bar']);
 
     mockPreset('preset-foo', {
       presets: mockPresetFoo,

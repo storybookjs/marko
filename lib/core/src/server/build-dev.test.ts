@@ -15,7 +15,7 @@ describe('getReleaseNotesData', () => {
 
   it('does not show the release notes on first build', async () => {
     const version = '4.0.0';
-    const set = jest.fn(() => Promise.resolve());
+    const set = jest.fn((...args: any[]) => Promise.resolve());
     const cache = { get: () => Promise.resolve([]), set };
 
     expect(await getReleaseNotesData(version, cache)).toEqual({
@@ -28,7 +28,7 @@ describe('getReleaseNotesData', () => {
 
   it('shows the release notes after upgrading a major version', async () => {
     const version = '4.0.0';
-    const set = jest.fn(() => Promise.resolve());
+    const set = jest.fn((...args: any[]) => Promise.resolve());
     const cache = { get: () => Promise.resolve(['3.0.0']), set };
 
     expect(await getReleaseNotesData(version, cache)).toEqual({
@@ -41,7 +41,7 @@ describe('getReleaseNotesData', () => {
 
   it('shows the release notes after upgrading a minor version', async () => {
     const version = '4.1.0';
-    const set = jest.fn(() => Promise.resolve());
+    const set = jest.fn((...args: any[]) => Promise.resolve());
     const cache = { get: () => Promise.resolve(['4.0.0']), set };
 
     expect(await getReleaseNotesData(version, cache)).toEqual({
@@ -54,7 +54,7 @@ describe('getReleaseNotesData', () => {
 
   it('transforms patch versions to the closest major.minor version', async () => {
     const version = '4.0.1';
-    const set = jest.fn(() => Promise.resolve());
+    const set = jest.fn((...args: any[]) => Promise.resolve());
     const cache = { get: () => Promise.resolve(['4.0.0']), set };
 
     expect(await getReleaseNotesData(version, cache)).toEqual({
@@ -67,7 +67,7 @@ describe('getReleaseNotesData', () => {
 
   it('does not show release notes when downgrading', async () => {
     const version = '3.0.0';
-    const set = jest.fn(() => Promise.resolve());
+    const set = jest.fn((...args: any[]) => Promise.resolve());
     const cache = { get: () => Promise.resolve(['4.0.0']), set };
 
     expect(await getReleaseNotesData(version, cache)).toEqual({
