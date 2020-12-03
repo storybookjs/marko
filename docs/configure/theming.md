@@ -98,6 +98,10 @@ Finally we'll need to import the theme into Storybook. Create a new file called 
 
 <!-- prettier-ignore-end -->
 
+<div class="aside">
+If the theme is not shown when Storybook starts, update your <code>storybook</code> scripts to include the <code>--no-manager-cache</code> flag.
+</div>
+
 Now your custom theme will replace Storybook's default theme and you'll see a similar set of changes in the UI.
 
 ![Storybook starter theme](./storybook-starter-custom-theme.png)
