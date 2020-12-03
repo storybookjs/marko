@@ -170,6 +170,7 @@ module.exports = {
 ```
 
 To fix it, just replace `@storybook/addon-backgrounds/register` with `@storybook/addon-backgrounds`:
+
 ```js
 module.exports = {
   stories: ['../**/*.stories.js'],
