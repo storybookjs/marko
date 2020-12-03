@@ -161,15 +161,13 @@ export default async ({
       minimizer: isProd
         ? [
             new TerserWebpackPlugin({
-              cache: true,
               parallel: true,
-              sourceMap: true,
               terserOptions: {
                 mangle: false,
+                sourceMap: true,
                 keep_fnames: true,
               },
-              // FIXME: `cache` isn't a known attribute
-            } as any),
+            }),
           ]
         : [],
     },
