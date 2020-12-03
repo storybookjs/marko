@@ -44,7 +44,7 @@
     "@storybook/client-api": "6.2.0-alpha.2",
     "@storybook/core": "6.2.0-alpha.2",
     "@types/glob": "^7.1.1",
-    "@types/jest": "^25.1.1",
+    "@types/jest": "^26.0.16",
     "@types/jest-specific-snapshot": "^0.5.3",
     "babel-plugin-require-context-hook": "^1.0.0",
     "core-js": "^3.0.1",

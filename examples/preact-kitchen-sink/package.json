@@ -27,11 +27,11 @@
     "@storybook/preact": "6.2.0-alpha.2",
     "@storybook/source-loader": "6.2.0-alpha.2",
     "babel-loader": "^8.0.4",
-    "cross-env": "^7.0.0",
+    "cross-env": "^7.0.3",
     "file-loader": "^6.0.0",
     "preact-render-to-json": "^3.6.6",
     "raw-loader": "^4.0.1",
-    "svg-url-loader": "^5.0.0",
+    "svg-url-loader": "^7.1.1",
     "webpack": "^4.44.2",
     "webpack-dev-server": "^3.8.2"
   },

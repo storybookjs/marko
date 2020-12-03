@@ -10,8 +10,6 @@ module.exports = {
         '**/*.test.*',
         '**/*.stories.*',
         '**/storyshots/**/stories/**',
-        'docs/src/new-components/lib/StoryLinkWrapper.js',
-        'docs/src/stories/**',
       ],
       rules: {
         '@typescript-eslint/no-empty-function': 'off',

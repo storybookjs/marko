@@ -44,15 +44,15 @@
     "@storybook/source-loader": "6.2.0-alpha.2",
     "@storybook/theming": "6.2.0-alpha.2",
     "core-js": "^3.0.1",
-    "estraverse": "^4.2.0",
+    "estraverse": "^5.2.0",
     "loader-utils": "^2.0.0",
-    "prettier": "~2.0.5",
+    "prettier": "~2.2.1",
     "prop-types": "^15.7.2",
     "react-syntax-highlighter": "^13.5.0",
     "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
-    "@types/react": "^16.9.27",
+    "@types/react": "^17.0.0",
     "@types/react-syntax-highlighter": "^11.0.4"
   },
   "peerDependencies": {
