@@ -159,7 +159,7 @@ Please also file an issue if you need to opt out. We plan to remove the legacy r
 
 ### Addon-backgrounds preset
 
-In 6.1 we there is an structural change in addon-backgrounds that ended up introducing an unintentional breaking change.
+In 6.1 we introduced an unintentional breaking change to `addon-backgrounds`.
 
 The addon needs decorators which come in a preset. The needed preset is ignored if you import the addon like this in `main.js`:
 ```js
