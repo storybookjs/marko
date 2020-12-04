@@ -1,6 +1,6 @@
 {
   "name": "@storybook/channel-postmessage",
-  "version": "6.2.0-alpha.2",
+  "version": "6.2.0-alpha.3",
   "description": "",
   "keywords": [
     "storybook"
@@ -35,9 +35,9 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/channels": "6.2.0-alpha.2",
-    "@storybook/client-logger": "6.2.0-alpha.2",
-    "@storybook/core-events": "6.2.0-alpha.2",
+    "@storybook/channels": "6.2.0-alpha.3",
+    "@storybook/client-logger": "6.2.0-alpha.3",
+    "@storybook/core-events": "6.2.0-alpha.3",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "qs": "^6.6.0",
