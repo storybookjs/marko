@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const inquirer = require('inquirer');
+const prompts = require('prompts');
 const program = require('commander');
 const childProcess = require('child_process');
 const chalk = require('chalk');
@@ -122,34 +122,34 @@ if (
     .map((key) => tasks[key].value)
     .filter(Boolean).length
 ) {
-  selection = inquirer
-    .prompt([
-      {
-        type: 'checkbox',
-        message: 'Select which tests to run',
-        name: 'todo',
-        pageSize: 18,
-        choices: Object.values(tasks)
-          .filter((key) => !key.extraParam)
-          .map((key) => ({
-            name: key.name,
-            checked: key.defaultValue,
-          }))
-          .concat(new inquirer.Separator())
-          .concat(
-            Object.keys(tasks)
-              .map((key) => tasks[key])
-              .filter((key) => key.extraParam)
-              .map((key) => ({
-                name: key.name,
-                checked: key.defaultValue,
-              }))
-          ),
-      },
-    ])
-    .then(({ todo }) =>
-      todo.map((name) => tasks[Object.keys(tasks).find((i) => tasks[i].name === name)])
-    );
+  selection = prompts([
+    {
+      type: 'multiselect',
+      message: 'Select which tests to run',
+      name: 'todo',
+      optionsPerPage: 18,
+      choices: Object.values(tasks)
+        .filter((key) => !key.extraParam)
+        .map((key) => ({
+          value: key,
+          title: key.name,
+          selected: key.defaultValue,
+        })),
+    },
+    {
+      type: 'multiselect',
+      message: 'Select extra parameters to add',
+      name: 'params',
+      optionsPerPage: 18,
+      choices: Object.values(tasks)
+        .filter((key) => key.extraParam)
+        .map((key) => ({
+          value: key,
+          title: key.name,
+          selected: key.defaultValue,
+        })),
+    },
+  ]).then(({ todo, params }) => todo.concat(params));
 } else {
   selection = Promise.resolve(
     Object.keys(tasks)
