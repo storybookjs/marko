@@ -1,3 +1,14 @@
+## 6.2.0-alpha.3 (December 4, 2020)
+
+### Bug Fixes
+
+- CLI: Fix stories path in Introduction.stories.mdx ([#13368](https://github.com/storybookjs/storybook/pull/13368))
+- UI: Fix display of custom brand image ([#13355](https://github.com/storybookjs/storybook/pull/13355))
+
+### Maintenance
+
+- CLI: Replace inquirer with prompts ([#13225](https://github.com/storybookjs/storybook/pull/13225))
+
 ## 6.1.10 (December 4, 2020)
 
 ### Bug Fixes
