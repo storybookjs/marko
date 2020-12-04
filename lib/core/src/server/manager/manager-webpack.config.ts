@@ -27,7 +27,6 @@ export default async ({
   entries,
   refs,
   outputDir,
-  cache,
   previewUrl,
   versionCheck,
   releaseNotesData,
@@ -47,16 +46,17 @@ export default async ({
     name: 'manager',
     mode: isProd ? 'production' : 'development',
     bail: isProd,
-    // FIXME: `none` is not a valid option for devtool
-    // @ts-ignore
-    devtool: 'none',
+    devtool: false,
     entry: entries,
     output: {
       path: outputDir,
       filename: '[name].[chunkhash].bundle.js',
       publicPath: '',
     },
-    cache,
+    watchOptions: {
+      aggregateTimeout: 2000,
+      ignored: /node_modules/,
+    },
     plugins: [
       refs
         ? new VirtualModulePlugin({
@@ -116,16 +116,15 @@ export default async ({
         {
           test: /\.(svg|ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\?.*)?$/,
           loader: require.resolve('file-loader'),
-          query: {
+          options: {
             name: 'static/media/[name].[hash:8].[ext]',
           },
         },
         {
           test: /\.(mp4|webm|wav|mp3|m4a|aac|oga)(\?.*)?$/,
           loader: require.resolve('url-loader'),
-          query: {
+          options: {
             limit: 10000,
-            name: 'static/media/[name].[hash:8].[ext]',
           },
         },
       ],
@@ -133,7 +132,7 @@ export default async ({
     resolve: {
       extensions: ['.mjs', '.js', '.jsx', '.json', '.cjs', '.ts', '.tsx'],
       modules: ['node_modules'].concat((raw.NODE_PATH as string[]) || []),
-      mainFields: isProd ? undefined : ['browser', 'main'],
+      mainFields: ['module', 'main'],
       alias: {
         ...themingPaths,
         ...uiPaths,
@@ -142,6 +141,7 @@ export default async ({
         // Transparently resolve packages via PnP when needed; noop otherwise
         PnpWebpackPlugin,
       ],
+      fallback: { path: false },
     },
     resolveLoader: {
       plugins: [PnpWebpackPlugin.moduleLoader(module)],

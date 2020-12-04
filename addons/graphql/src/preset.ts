@@ -12,7 +12,7 @@ export const managerWebpack = async (config: Configuration) => {
     test: /\.js$/,
     use: [
       {
-        loader: require.resolve('babel-loader'),
+        loader: require.resolve('babel-loader') as string,
         options: {
           sourceType: 'unambiguous',
           plugins: [[require.resolve('@babel/plugin-transform-classes'), { loose: true }]],

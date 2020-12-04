@@ -105,12 +105,16 @@ export default async ({
   return {
     mode: isProd ? 'production' : 'development',
     bail: isProd,
-    devtool: '#cheap-module-source-map',
+    devtool: 'cheap-module-source-map',
     entry: entries,
     output: {
       path: path.resolve(process.cwd(), outputDir),
       filename: '[name].[hash].bundle.js',
       publicPath: '',
+    },
+    watchOptions: {
+      aggregateTimeout: 10,
+      ignored: /node_modules/,
     },
     plugins: [
       Object.keys(virtualModuleMapping).length > 0
@@ -152,7 +156,7 @@ export default async ({
       isProd ? null : new WatchMissingNodeModulesPlugin(nodeModulesPaths),
       isProd ? null : new HotModuleReplacementPlugin(),
       new CaseSensitivePathsPlugin(),
-      quiet ? null : new ProgressPlugin(),
+      quiet ? null : new ProgressPlugin({}),
       new Dotenv({ silent: true }),
       shouldCheckTs ? new ForkTsCheckerWebpackPlugin(tsCheckOptions) : null,
     ].filter(Boolean),
@@ -184,6 +188,7 @@ export default async ({
         // Transparently resolve packages via PnP when needed; noop otherwise
         PnpWebpackPlugin,
       ],
+      fallback: { path: false },
     },
     resolveLoader: {
       plugins: [PnpWebpackPlugin.moduleLoader(module)],

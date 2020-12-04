@@ -4,9 +4,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "outDir": "dist",
-    "types": [
-      "webpack-env"
-    ],
+    "types": ["webpack-env", "node"],
     "rootDir": "./src",
     "resolveJsonModule": true
   }

@@ -11,11 +11,9 @@ import { stringify } from 'telejson';
 import dedent from 'ts-dedent';
 import favicon from 'serve-favicon';
 import webpack, { Compiler, ProgressPlugin, Stats } from 'webpack';
-import webpackDevMiddleware, { WebpackDevMiddleware } from 'webpack-dev-middleware';
+import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { NextHandleFunction } from 'connect';
 import { FileSystemCache } from 'file-system-cache';
 import { getMiddleware } from './utils/middleware';
 import { logConfig } from './logConfig';
@@ -29,7 +27,7 @@ const defaultFavIcon = require.resolve('./public/favicon.ico');
 
 const cache = {};
 
-let previewProcess: WebpackDevMiddleware & NextHandleFunction;
+let previewProcess: ReturnType<typeof webpackDevMiddleware>;
 let previewReject: (reason?: any) => void;
 
 const bailPreview = (e: Error) => {
@@ -262,19 +260,11 @@ const startManager = async ({
   }
 
   const compiler = webpack(managerConfig);
-  const middleware = webpackDevMiddleware(compiler, {
-    publicPath: managerConfig.output?.publicPath,
+  const middewareOptions: Parameters<typeof webpackDevMiddleware>[1] = {
+    publicPath: managerConfig.output?.publicPath as string,
     writeToDisk: true,
-    watchOptions: {
-      aggregateTimeout: 2000,
-      ignored: /node_modules/,
-    },
-    // this actually causes 0 (regular) output from wdm & webpack
-    logLevel: 'warn',
-    // @ts-ignore
-    clientLogLevel: 'warning',
-    noInfo: true,
-  });
+  };
+  const middleware = webpackDevMiddleware(compiler, middewareOptions);
 
   router.get(/\/static\/media\/.*\..*/, (request, response, next) => {
     response.set('Cache-Control', `public, max-age=31536000`);
@@ -331,21 +321,11 @@ const startPreview = async ({
   const compiler = webpack(previewConfig);
   await useProgressReporting(compiler, options, startTime);
 
-  const { publicPath } = previewConfig.output;
-  previewProcess = webpackDevMiddleware(compiler, {
-    publicPath: publicPath[0] === '/' ? publicPath.slice(1) : publicPath,
-    watchOptions: {
-      aggregateTimeout: 1,
-      ignored: /node_modules/,
-      ...(previewConfig.watchOptions || {}),
-    },
-    // this actually causes 0 (regular) output from wdm & webpack
-    logLevel: 'warn',
-    clientLogLevel: 'warning',
-    noInfo: true,
-    // @ts-ignore
-    ...previewConfig.devServer,
-  });
+  const middewareOptions: Parameters<typeof webpackDevMiddleware>[1] = {
+    publicPath: previewConfig.output?.publicPath as string,
+    writeToDisk: true,
+  };
+  previewProcess = webpackDevMiddleware(compiler, middewareOptions);
 
   router.use(previewProcess as any);
   router.use(webpackHotMiddleware(compiler));

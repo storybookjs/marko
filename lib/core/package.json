@@ -75,6 +75,7 @@
     "@storybook/ui": "6.2.0-alpha.2",
     "@types/glob-base": "^0.3.0",
     "@types/micromatch": "^4.0.1",
+    "@types/node": "^14.0.10",
     "@types/node-fetch": "^2.5.4",
     "airbnb-js-shims": "^2.2.1",
     "ansi-to-html": "^0.6.11",
@@ -135,11 +136,11 @@
     "unfetch": "^4.1.0",
     "url-loader": "^4.0.0",
     "util-deprecate": "^1.0.2",
-    "webpack": "^4.44.2",
-    "webpack-dev-middleware": "^3.7.0",
+    "webpack": "^5.9.0",
+    "webpack-dev-middleware": "^4.0.2",
     "webpack-filter-warnings-plugin": "^1.2.1",
     "webpack-hot-middleware": "^2.25.0",
-    "webpack-virtual-modules": "^0.2.2"
+    "webpack-virtual-modules": "^0.4.1"
   },
   "devDependencies": {
     "@types/case-sensitive-paths-webpack-plugin": "^2.1.4",

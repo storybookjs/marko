@@ -1,4 +1,4 @@
-import { Configuration, Module, Resolve } from 'webpack';
+import { Configuration } from 'webpack';
 
 function plugins(
   { plugins: defaultPlugins = [] }: Configuration,
@@ -8,23 +8,23 @@ function plugins(
 }
 
 function rules(
-  { rules: defaultRules = [] }: Module,
-  { rules: customRules = [] }: Module
-): Module['rules'] {
+  { rules: defaultRules = [] }: Configuration['module'],
+  { rules: customRules = [] }: Configuration['module']
+): Configuration['module']['rules'] {
   return [...defaultRules, ...customRules];
 }
 
 function extensions(
-  { extensions: defaultExtensions = [] }: Resolve,
-  { extensions: customExtensions = [] }: Resolve
-): Resolve['extensions'] {
+  { extensions: defaultExtensions = [] }: Configuration['resolve'],
+  { extensions: customExtensions = [] }: Configuration['resolve']
+): Configuration['resolve']['extensions'] {
   return [...defaultExtensions, ...customExtensions];
 }
 
 function alias(
-  { alias: defaultAlias = {} }: Resolve,
-  { alias: customAlias = {} }: Resolve
-): Resolve['alias'] {
+  { alias: defaultAlias = {} }: Configuration['resolve'],
+  { alias: customAlias = {} }: Configuration['resolve']
+): Configuration['resolve']['alias'] {
   return {
     ...defaultAlias,
     ...customAlias,

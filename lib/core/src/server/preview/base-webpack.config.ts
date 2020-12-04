@@ -73,15 +73,13 @@ export async function createDefaultWebpackConfig(
           loader: require.resolve('file-loader'),
           options: {
             name: 'static/media/[name].[hash:8].[ext]',
-            esModule: false,
           },
         },
         {
           test: /\.(mp4|webm|wav|mp3|m4a|aac|oga)(\?.*)?$/,
           loader: require.resolve('url-loader'),
-          query: {
+          options: {
             limit: 10000,
-            name: 'static/media/[name].[hash:8].[ext]',
           },
         },
       ],

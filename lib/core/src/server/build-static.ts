@@ -1,7 +1,7 @@
 import cpy from 'cpy';
 import fs from 'fs-extra';
 import path from 'path';
-import webpack from 'webpack';
+import webpack, { Configuration } from 'webpack';
 import shelljs from 'shelljs';
 
 import { logger } from '@storybook/node-logger';
@@ -12,7 +12,7 @@ import loadManagerConfig from './manager/manager-config';
 import { logConfig } from './logConfig';
 import { getPrebuiltDir } from './utils/prebuilt-manager';
 
-async function compileManager(managerConfig: any, managerStartTime: [number, number]) {
+async function compileManager(managerConfig: Configuration, managerStartTime: [number, number]) {
   logger.info('=> Compiling manager..');
 
   return new Promise((resolve, reject) => {
@@ -27,8 +27,8 @@ async function compileManager(managerConfig: any, managerStartTime: [number, num
         if (stats && (stats.hasErrors() || stats.hasWarnings())) {
           const { warnings, errors } = stats.toJson(managerConfig.stats);
 
-          errors.forEach((e) => logger.error(e));
-          warnings.forEach((e) => logger.error(e));
+          errors.forEach((e: string) => logger.error(e));
+          warnings.forEach((e: string) => logger.error(e));
         }
 
         process.exitCode = 1;
@@ -37,7 +37,7 @@ async function compileManager(managerConfig: any, managerStartTime: [number, num
       }
 
       logger.trace({ message: '=> Manager built', time: process.hrtime(managerStartTime) });
-      stats.toJson(managerConfig.stats).warnings.forEach((e) => logger.warn(e));
+      stats.toJson(managerConfig.stats).warnings.forEach((e: string) => logger.warn(e));
 
       resolve(stats);
     });
@@ -66,7 +66,7 @@ async function watchPreview(previewConfig: any) {
   });
 }
 
-async function compilePreview(previewConfig: any, previewStartTime: [number, number]) {
+async function compilePreview(previewConfig: Configuration, previewStartTime: [number, number]) {
   logger.info('=> Compiling preview..');
 
   return new Promise((resolve, reject) => {
@@ -83,15 +83,15 @@ async function compilePreview(previewConfig: any, previewStartTime: [number, num
         if (stats && (stats.hasErrors() || stats.hasWarnings())) {
           const { warnings, errors } = stats.toJson(previewConfig.stats);
 
-          errors.forEach((e) => logger.error(e));
-          warnings.forEach((e) => logger.error(e));
+          errors.forEach((e: string) => logger.error(e));
+          warnings.forEach((e: string) => logger.error(e));
           return reject(stats);
         }
       }
 
       logger.trace({ message: '=> Preview built', time: process.hrtime(previewStartTime) });
       if (stats) {
-        stats.toJson(previewConfig.stats).warnings.forEach((e) => logger.warn(e));
+        stats.toJson(previewConfig.stats).warnings.forEach((e: string) => logger.warn(e));
       }
 
       return resolve(stats);

@@ -59,8 +59,8 @@
     "react-dom": "16.13.1",
     "terser-webpack-plugin": "^5.0.3",
     "ts-loader": "^8.0.11",
-    "uuid": "^8.0.0",
-    "webpack": "^4.44.2"
+    "uuid-browser": "^3.1.0",
+    "webpack": "^5.9.0"
   },
   "peerDependencies": {
     "puppeteer": "^2.0.0 || ^3.0.0"
