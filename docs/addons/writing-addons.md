@@ -14,9 +14,7 @@ For this example we're going to build a bare-bones addon which:
 
 ### Anatomy of an addon
 
-The addon we're about to build as other existing Storybook addons will follow a common file and directory structure. Applying this pattern will enforce development good practices. 
-
-Below is a brief overview of how the addon we're about to create will look like:
+The addon we're about to build like other existing addons follows a common file and directory structure. Here's how the addon will look like when it's finished.
 
 
 | Files/Directories | Description                       |
@@ -24,22 +22,22 @@ Below is a brief overview of how the addon we're about to create will look like:
 | dist              | Transpiled directory for the addon|
 | src               | Source code for the addon         |
 | .babelrc.js       | Babel configuration               |
-| register.js       | Addon entry point                 |
+| preset.js         | Addon entry point                 |
 | package.json      | Addon metadata information        |
 | README.md         | General information for the addon |
 
 ### Get started
 
-Open a new terminal and create a new directory called `my-addon`. Inside it run `npm init` to initialize a new node project. For project's name enter `my-addon` and for entry point choose `dist/register.js`. 
+Open a new terminal and create a new directory called `my-addon`. Inside it run `npm init` to initialize a new node project. For project's name choose `my-addon` and for entry point `dist/preset.js`. 
 
-Once you've gone through the prompts your `package.json` should look like so:
+Once you've gone through the prompts your `package.json` should look like:
 
 ```json
 {
   "name": "my-addon",
   "version": "1.0.0",
   "description": "A barebones Storybook addon",
-  "main": "dist/register.js",
+  "main": "dist/preset.js",
   "files": [
     "dist/**/*",
     "README.md",
@@ -56,7 +54,7 @@ Once you've gone through the prompts your `package.json` should look like so:
 
 ### Build system
 
-We'll need to add the necessary dependencies and make some adjustments. With a terminal opened inside your addon directory issue the following commands:
+We'll need to add the necessary dependencies and make some adjustments. Run the following commands:
 
 ```shell
 # Installs React
@@ -67,11 +65,10 @@ npx -p @storybook/cli sb init
 ```
 
 <div class="aside">
-Initializing a new Storybook installation through <code>npx -p @storybook/cli sb init</code> will grant us access to the necessary Storybook packages for our addon. If you're 
-building your own standalone Storybook addon you'll need to set both React and Storybook packages as peer dependencies. Applying this change will prevent the addon from breaking Storybook in case there's different package versions available.
+Initializing Storybook adds the necessary building blocks for our addon. If you're building your own standalone Storybook addon set both React and Storybook packages as peer dependencies. It prevents the addon from breaking Storybook in case there's different versions available.
 </div>
 
-Next create a `.babelrc.js` file in the root directory with the following:
+Next, create a `.babelrc.js` file in the root directory with the following:
 
 <!-- prettier-ignore-start -->
 
@@ -93,22 +90,42 @@ Change your `package.json` and add the following script to build the addon:
 {
   "scripts": {
     "build": "babel ./src --out-dir ./dist"
-  },
+  }
 }
 ```
 <div class="aside">
 Running <code>yarn build</code> at this stage will output the code into the <code>dist</code> directory, transpiled into a ES5 module ready to be installed into any Storybook. 
 </div>
 
-### Add a panel
-
-Now let’s add a panel to Storybook. Create a new directory called `src` and inside a new file called `register.js`.
+Finally, create a new directory called `src` and inside a new file called `preset.js` with the following:
 
 <!-- prettier-ignore-start -->
 
 <CodeSnippets
   paths={[
-    'common/storybook-addon-panel-initial.js.mdx',
+    'common/my-addon-preset-implementation.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+Presets are the way addons hook into Storybook. Among other tasks they allow you to:
+
+- Add to [Storybook's UI](#add-a-panel).
+- Add to the [preview iframe](./writing-presets.md#preview-entries).
+- Modify [babel](./writing-presets.md#babel) and [webpack settings](./writing-presets.md#webpack).
+
+For this example, we'll just modify Storybook's UI.
+
+### Add a panel
+
+Now let’s add a panel to Storybook. Inside the `src` directory, create a new file called `register.js` and add the following:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/my-addon-initial-panel-state.js.mdx',
   ]}
 />
 
@@ -118,11 +135,11 @@ Now let’s add a panel to Storybook. Create a new directory called `src` and in
 Make sure to include the <code>key</code> when you register the addon. This will prevent any issues when the addon renders.
 </div> 
 
-Going over the code snippet in more detail, here's what's going to happen when Storybook starts up:
+Going over the code snippet in more detail. When Storybook starts up:
 
-- Storybook [registers](./addons-api.md#addonsregister) a new addon called `my-addon`.
-- The addon [adds]((./addons-api.md#addonsadd)) a new `panel` to the UI.
-- When the `panel` is selected it will render the static `div` content.
+- It [registers](./addons-api.md#addonsregister) the addon.
+- [Adds](./addons-api.md#addonsadd) a new `panel` titled `My Addon` to the UI.
+- When selected, the `panel` renders the static `div` content.
 
 
 ### Register the addon
@@ -169,7 +186,7 @@ The [addon API](./addons-api.md) provides hooks like this so all of that communi
 
 ### Using the addon with a story
 
-When Storybook was initialized it provided a small set of example stories that can be used to test if the addon is functioning as expected. Change your `stories/Button.stories.js` to the following:
+When Storybook was initialized it provided a small set of examples stories. Change your `Button.stories.js` to the following:
 
 <!-- prettier-ignore-start -->
 
@@ -182,8 +199,7 @@ When Storybook was initialized it provided a small set of example stories that c
 <!-- prettier-ignore-end -->
 
 
-After applying the changes to the story your Storybook UI will now yield the following:
-
+After applying the changes to the story your Storybook UI will yield the following:
 
 <video autoPlay muted playsInline loop>
   <source
@@ -192,22 +208,21 @@ After applying the changes to the story your Storybook UI will now yield the fol
   />
 </video>
 
-### Root level register.js
+### Root level preset.js
 
-Before publishing the addon, we'll need to make one additional change. In the root directory of the addon create a new file called `register.js` and add the following:
+Before publishing the addon, we'll need to make one final change. In the root directory of the addon create a new file called `preset.js` and add the following:
 
 <!-- prettier-ignore-start -->
 
 <CodeSnippets
   paths={[
-    'common/my-addon-root-level-register.js.mdx',
+    'common/my-addon-root-level-preset.js.mdx',
   ]}
 />
 
 <!-- prettier-ignore-end -->
 
-The sole purpose of making this change is to help with the registration process of the addon. By design Storybook looks for either a `preset.js` or a `register.js` file located at the root level. Omitting this file would require additional configuration from the addon consumer.
-
+Making this change helps Storybook's addon registration. By design Storybook looks for either a `preset.js` or a `register.js` file located at the root level. Omitting this file would require additional configuration from the addon consumer.
 
 ### Packaging and publishing
 
@@ -215,7 +230,7 @@ With the example above we showed how to create a bare-bones addon. Before publis
 
 - A `package.json file` with metadata about the addon.
 - Peer dependencies of `react` and `@storybook/addons`.
-- A `register.js` file at the root level written as an ES5 module.
+- A `preset.js` file at the root level written as an ES5 module.
 - A `src` directory containing the ES6 addon code.
 - A `dist` directory containing transpiled ES5 code on publish.
 - A [GitHub](https://github.com/) account to host your code.
