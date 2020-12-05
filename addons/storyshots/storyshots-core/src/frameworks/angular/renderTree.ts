@@ -15,7 +15,7 @@ function getRenderedTree(story: any) {
   const currentStory = story.render();
 
   const moduleMeta = RenderNgAppService.getNgModuleMetadata(
-    currentStory,
+    { storyFnAngular: currentStory, parameters: story.parameters },
     new BehaviorSubject(currentStory.props)
   );
 

@@ -26,6 +26,7 @@ export interface IStorybookSection {
 }
 
 export interface StoryFnAngularReturnType {
+  /** @deprecated `component` story input is deprecated, and will be removed in Storybook 7.0. */
   component?: any;
   props?: ICollection;
   propsMeta?: ICollection;

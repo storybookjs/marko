@@ -31,4 +31,5 @@ export type Story<Args = DefaultArgs> = BaseStory<Args, AngularReturnType> &
 export type Parameters = DefaultParameters & {
   /** Uses legacy angular rendering engine that use dynamic component */
   angularLegacyRendering?: boolean;
+  component: unknown;
 };

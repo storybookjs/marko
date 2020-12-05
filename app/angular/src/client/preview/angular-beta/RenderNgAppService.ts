@@ -2,11 +2,12 @@
 import { enableProdMode, NgModule, PlatformRef, Type } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
-import { StoryFn } from '@storybook/addons';
+import dedent from 'ts-dedent';
 
 import { BehaviorSubject, Subject } from 'rxjs';
+import { deprecate } from 'util';
 import { ICollection, StoryFnAngularReturnType } from '../types';
+import { Parameters } from '../types-6-0';
 import { storyPropsProvider } from './app.token';
 import { createComponentClassFromStoryComponent } from './ComponentClassFromStoryComponent';
 import { createComponentClassFromStoryTemplate } from './ComponentClassFromStoryTemplate';
@@ -30,12 +31,42 @@ export class RenderNgAppService {
   }
 
   public static getNgModuleMetadata = (
-    storyFnAngular: StoryFnAngularReturnType,
+    {
+      storyFnAngular,
+      parameters,
+    }: {
+      storyFnAngular: StoryFnAngularReturnType;
+      parameters: Parameters;
+    },
     storyProps$: Subject<ICollection>
   ): NgModule => {
-    const { component, moduleMetadata = {} } = storyFnAngular;
+    const {
+      component: storyComponent,
+      props,
+      styles,
+      template,
+      moduleMetadata = {},
+    } = storyFnAngular;
 
-    const ComponentToInject = createComponentToInject(storyFnAngular);
+    if (storyComponent) {
+      deprecate(
+        () => {},
+        dedent`\`component\` story input is deprecated, and will be removed in Storybook 7.0.
+        Instead, use \`export const default = () => ({ component: AppComponent });\`
+        or
+        \`\`\`
+        export const Primary: Story = () => ({});
+        Primary.parameters = { component: AppComponent };
+        \`\`\`
+        Read more at 
+        - https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-angular-component).
+        - https://storybook.js.org/docs/angular/writing-stories/parameters
+      `
+      )();
+    }
+    const component = storyComponent ?? parameters.component;
+
+    const ComponentToInject = createComponentToInject({ component, props, styles, template });
 
     // Look recursively (deep) if the component is not already declared by an import module
     const requiresComponentDeclaration =
@@ -95,11 +126,17 @@ export class RenderNgAppService {
    * - true render will only use the StoryFn `props' in storyProps observable that will update sotry's component/template properties. Improves performance without reloading the whole module&component if props changes
    * - false fully recharges or initializes angular module & component
    */
-  public async render(storyFn: StoryFn<StoryFnAngularReturnType>, forced: boolean) {
-    const storyObj = storyFn();
-
+  public async render({
+    storyFnAngular,
+    forced,
+    parameters,
+  }: {
+    storyFnAngular: StoryFnAngularReturnType;
+    forced: boolean;
+    parameters: Parameters;
+  }) {
     if (forced && this.storyProps$) {
-      this.storyProps$.next(storyObj.props);
+      this.storyProps$.next(storyFnAngular.props);
       return;
     }
 
@@ -107,10 +144,12 @@ export class RenderNgAppService {
     if (this.storyProps$) {
       this.storyProps$.complete();
     }
-    this.storyProps$ = new BehaviorSubject<ICollection>(storyObj.props);
+    this.storyProps$ = new BehaviorSubject<ICollection>(storyFnAngular.props);
 
     await this.platform.bootstrapModule(
-      createModuleFromMetadata(RenderNgAppService.getNgModuleMetadata(storyObj, this.storyProps$))
+      createModuleFromMetadata(
+        RenderNgAppService.getNgModuleMetadata({ storyFnAngular, parameters }, this.storyProps$)
+      )
     );
   }
 }
@@ -129,7 +168,12 @@ const createComponentToInject = ({
   styles,
   component,
   props,
-}: StoryFnAngularReturnType): Type<any> => {
+}: {
+  template: string;
+  styles: string[];
+  component: unknown;
+  props: ICollection;
+}): Type<any> => {
   // Template has priority over the component
   const isCreatingComponentFromTemplate = !!template;
 

@@ -24,5 +24,9 @@ export default function render({
     return;
   }
 
-  RenderNgAppService.getInstance().render(storyFn, forceRender);
+  RenderNgAppService.getInstance().render({
+    storyFnAngular: storyFn(),
+    parameters,
+    forced: forceRender,
+  });
 }
