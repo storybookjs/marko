@@ -218,7 +218,7 @@ jobs:
           root: .
           paths:
             - .verdaccio-cache
-  examples-v2:
+  e2e-tests:
     executor:
       class: medium
       name: sb_node_10_classic
@@ -261,7 +261,7 @@ jobs:
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
-  examples-v2-cra-bench:
+  e2e-tests-cra-bench:
     executor:
       class: medium
       name: sb_node_12_browsers
@@ -293,7 +293,7 @@ jobs:
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
-  examples-v2-yarn-2:
+  e2e-tests-yarn-2:
     executor:
       class: medium
       name: sb_node_10_classic
@@ -507,13 +507,13 @@ workflows:
           requires:
             - install-e2e-deps
             - build
-      - examples-v2:
+      - e2e-tests:
           requires:
             - publish
-      - examples-v2-yarn-2:
+      - e2e-tests-yarn-2:
           requires:
             - publish
-      - examples-v2-cra-bench:
+      - e2e-tests-cra-bench:
           requires:
             - publish
   deploy:
