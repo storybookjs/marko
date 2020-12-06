@@ -221,7 +221,7 @@ jobs:
   e2e-tests:
     executor:
       class: medium
-      name: sb_node_10_classic
+      name: sb_node_10_browsers
     working_directory: /tmp/storybook
     parallelism: 4
     steps:
@@ -296,7 +296,7 @@ jobs:
   e2e-tests-yarn-2:
     executor:
       class: medium
-      name: sb_node_10_classic
+      name: sb_node_10_browsers
     working_directory: /tmp/storybook
     steps:
       - git-shallow-clone/checkout_advanced:
