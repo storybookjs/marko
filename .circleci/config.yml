@@ -507,10 +507,9 @@ workflows:
           requires:
             - install-e2e-deps
             - build
-      # too slow/expensive. disabling for now
-      # - examples-v2:
-      #     requires:
-      #       - publish
+      - examples-v2:
+          requires:
+            - publish
       - examples-v2-yarn-2:
           requires:
             - publish
