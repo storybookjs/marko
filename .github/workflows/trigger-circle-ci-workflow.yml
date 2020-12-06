@@ -19,21 +19,3 @@ jobs:
           --data '{"branch":"${{ github.event.pull_request.head.ref }}"}'
         env:
           CIRCLE_CI_TOKEN: ${{ secrets.CIRCLE_CI_TOKEN_GMAISSE_TEST }}
-  comment-pr:
-    if: github.event.label.name == 'run all e2e tests' && github.event.pull_request.head.repo.fork == true
-    name: Add reminder as PR comment
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/github-script@v3
-        with:
-          script: |
-            const comment =  "👋🏻 @${{ github.actor }}, you just added the `run all e2e tests` label so all the next runs of CircleCI pipelines will now include the extended e2e test suite.\n\n" +
-            "As this PR is coming from a fork I was not able to trigger CircleCI automatically so if you don't want to wait for the next branch update " +
-            "you can trigger a workflow manually [here](https://app.circleci.com/pipelines/github/storybookjs/storybook?branch=pull/${{ github.event.pull_request.number }})."
-
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: comment
-            })
