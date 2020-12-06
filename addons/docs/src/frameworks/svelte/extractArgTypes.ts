@@ -1,4 +1,5 @@
 import { ArgTypes } from '@storybook/api';
+import { logger } from '@storybook/client-logger';
 
 import { ArgTypesExtractor } from '../../lib/docgen';
 
@@ -33,19 +34,23 @@ type Docgen = {
 };
 
 export const extractArgTypes: ArgTypesExtractor = (component) => {
-  // eslint-disable-next-line new-cap
-  const comp: ComponentWithDocgen = new component({ props: {} });
-  // eslint-disable-next-line no-underscore-dangle
-  const docs = comp.__docgen;
-
-  const results = createArgTypes(docs);
-
-  return results;
+  try {
+    // eslint-disable-next-line new-cap
+    const comp: ComponentWithDocgen = new component({ props: {} });
+    // eslint-disable-next-line no-underscore-dangle
+    const docgen = comp.__docgen;
+    if (docgen) {
+      return createArgTypes(docgen);
+    }
+  } catch (err) {
+    logger.log(`Error extracting argTypes: ${err}`);
+  }
+  return {};
 };
 
-export const createArgTypes = (docs: Docgen) => {
+export const createArgTypes = (docgen: Docgen) => {
   const results: ArgTypes = {};
-  docs.data.forEach((item) => {
+  docgen.data.forEach((item) => {
     results[item.name] = {
       control: { type: parseType(item.type.type) },
       name: item.name,
