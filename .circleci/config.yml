@@ -441,7 +441,7 @@ jobs:
       - run:
           name: Lint
           command: yarn lint
-  test:
+  unit-tests:
     executor: sb_node_10_browsers
     steps:
       - git-shallow-clone/checkout_advanced:
@@ -493,13 +493,13 @@ workflows:
           requires:
             - install-examples-deps
             - build
-      - test:
+      - unit-tests:
           requires:
             - install-examples-deps
             - build
       - coverage:
           requires:
-            - test
+            - unit-tests
       - chromatic:
           requires:
             - examples
