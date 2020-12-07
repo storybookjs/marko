@@ -207,6 +207,7 @@
     "typescript": "^3.9.3",
     "wait-on": "^5.2.0",
     "webpack": "^5.9.0",
+    "webpack-dev-middleware": "^4.0.2",
     "window-size": "^1.1.1"
   },
   "optionalDependencies": {

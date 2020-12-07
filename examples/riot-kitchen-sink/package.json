@@ -33,7 +33,7 @@
     "riot-tag-loader": "^2.1.0",
     "svg-url-loader": "^7.1.1",
     "webpack": "^5.9.0",
-    "webpack-dev-server": "^3.8.2"
+    "webpack-dev-server": "^3.11.0"
   },
   "storybook": {
     "chromatic": {
