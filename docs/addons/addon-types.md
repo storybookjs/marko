@@ -48,7 +48,7 @@ Use this boilerplate code to add a new `button` to Storybook's Toolbar:
 
 ### Tabs
 
-Tab addons allow you to create your own custom tabs in Storybook. For example the official [@storybook/addon-docs](../writing-docs/introduction.md) uses this pattern.
+Tab addons allow you to create your own custom tabs in Storybook. For example, the official [@storybook/addon-docs](../writing-docs/introduction.md) uses this pattern.
 
 ![Storybook tab addon](./storybook-tab.png)
 
@@ -66,7 +66,7 @@ Use this boilerplate code to add a new `Tab` to Storybook's UI:
 
 
 <div class="aside">
-If want to learn more about writing your own addon and include some of these elements, read our <a href="./writing-addons">documentation</a>.
+Learn how to write your own addon that include these UI elements <a href="./writing-addons">here</a>.
 </div>
 
 ## Preset addons
@@ -86,5 +86,5 @@ Use this boilerplate code while writing your own preset addon.
 <!-- prettier-ignore-end -->
 
 <div class="aside">
-If you want to learn more about writing your own preset addon, read our <a href="./writing-presets">documentation</a>
+Learn more about writing your own preset addon <a href="./writing-presets">here</a>.
 </div>

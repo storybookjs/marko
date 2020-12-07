@@ -1,10 +1,10 @@
 ---
-title: 'Writing your own Storybook addon'
+title: 'Write your own Storybook addon'
 ---
 
-One of Storybook's main features is it's robust addon ecosystem. Addons can be used to enhance your developer experience or workflows. We're going to guide you with the necessary steps to create your own first addon.
+One of Storybook's main features is its robust addon ecosystem. Use addons to enhance and extend your development workflow. This page shows you how to create your own addon.
 
-## The addon we're building
+## What we're building
 
 For this example we're going to build a bare-bones addon which:
 
@@ -12,9 +12,9 @@ For this example we're going to build a bare-bones addon which:
 - Retrieves a custom parameter from the stories.
 - Displays the parameter data in the panel.
 
-### Anatomy of an addon
+### Addon directory structure
 
-The addon we're about to build like other existing addons follows a common file and directory structure. Here's how the addon will look like when it's finished.
+We recommend a common addon file and directory structure for consistency.
 
 
 | Files/Directories | Description                       |
@@ -28,7 +28,7 @@ The addon we're about to build like other existing addons follows a common file 
 
 ### Get started
 
-Open a new terminal and create a new directory called `my-addon`. Inside it run `npm init` to initialize a new node project. For project's name choose `my-addon` and for entry point `dist/preset.js`. 
+Open a new terminal and create a new directory called `my-addon`. Inside it run `npm init` to initialize a new node project. For your project's name choose `my-addon` and for entry point `dist/preset.js`. 
 
 Once you've gone through the prompts your `package.json` should look like:
 
@@ -65,7 +65,7 @@ npx -p @storybook/cli sb init
 ```
 
 <div class="aside">
-Initializing Storybook adds the necessary building blocks for our addon. If you're building your own standalone Storybook addon set both React and Storybook packages as peer dependencies. It prevents the addon from breaking Storybook in case there's different versions available.
+Initializing Storybook adds the building blocks for our addon. If you're building a standalone Storybook addon, set the React and Storybook packages as peer dependencies. This prevents the addon from breaking Storybook when there are different versions available.
 </div>
 
 Next, create a `.babelrc.js` file in the root directory with the following:
@@ -81,7 +81,7 @@ Next, create a `.babelrc.js` file in the root directory with the following:
 <!-- prettier-ignore-end -->
 
 <div class="aside">
-Because the addon we're about to write will use ES6 and rely on JSX, thus we'll need to include Babel and configure it with the proper presets and options. 
+Babel configuration is required because our addon uses ES6 and JSX.
 </div>
 
 Change your `package.json` and add the following script to build the addon:
@@ -111,9 +111,9 @@ Finally, create a new directory called `src` and inside a new file called `prese
 
 Presets are the way addons hook into Storybook. Among other tasks they allow you to:
 
-- Add to [Storybook's UI](#add-a-panel).
-- Add to the [preview iframe](./writing-presets.md#preview-entries).
-- Modify [babel](./writing-presets.md#babel) and [webpack settings](./writing-presets.md#webpack).
+- Add to [Storybook's UI](#add-a-panel)
+- Add to the [preview iframe](./writing-presets.md#preview-entries)
+- Modify [babel](./writing-presets.md#babel) and [webpack settings](./writing-presets.md#webpack)
 
 For this example, we'll just modify Storybook's UI.
 
@@ -137,9 +137,9 @@ Make sure to include the <code>key</code> when you register the addon. This will
 
 Going over the code snippet in more detail. When Storybook starts up:
 
-- It [registers](./addons-api.md#addonsregister) the addon.
-- [Adds](./addons-api.md#addonsadd) a new `panel` titled `My Addon` to the UI.
-- When selected, the `panel` renders the static `div` content.
+1. It [registers](./addons-api.md#addonsregister) the addon
+2. [Adds](./addons-api.md#addonsadd) a new `panel` titled `My Addon` to the UI
+3. When selected, the `panel` renders the static `div` content
 
 
 ### Register the addon
@@ -222,27 +222,29 @@ Before publishing the addon, we'll need to make one final change. In the root di
 
 <!-- prettier-ignore-end -->
 
-Making this change helps Storybook's addon registration. By design Storybook looks for either a `preset.js` or a `register.js` file located at the root level. Omitting this file would require additional configuration from the addon consumer.
+This auto-registers the addon without any additional configuration from the user. Storybook looks for either a `preset.js` or a `register.js` file located at the root level.
 
 ### Packaging and publishing
 
-With the example above we showed how to create a bare-bones addon. Before publishing and distributing your own addon make sure you have met the following requirements:
+Now that you've seen how to create a bare-bones addon, let's see how to share it with the community. Before we begin, make sure your addon meets the following requirements:
 
-- A `package.json file` with metadata about the addon.
-- Peer dependencies of `react` and `@storybook/addons`.
-- A `preset.js` file at the root level written as an ES5 module.
-- A `src` directory containing the ES6 addon code.
-- A `dist` directory containing transpiled ES5 code on publish.
-- A [GitHub](https://github.com/) account to host your code.
-- A [NPM](https://www.npmjs.com/) account to publish the addon.
+- `package.json file` with metadata about the addon
+- Peer dependencies of `react` and `@storybook/addons`
+- `preset.js` file at the root level written as an ES5 module
+- `src` directory containing the ES6 addon code
+- `dist` directory containing transpiled ES5 code on publish
+- [GitHub](https://github.com/) account to host your code
+- [NPM](https://www.npmjs.com/) account to publish the addon
 
-For a good template of an addon that meets the requirements above, check out [storybook-addon-outline](https://www.npmjs.com/package/storybook-addon-outline).
+For example, check out [storybook-addon-outline](https://www.npmjs.com/package/storybook-addon-outline) to see a project that meets these requirements.
 
-### Next steps
+### More guides and tutorials
 
 In the previous example, we introduced the structure of an addon, but barely scratched the surface of what addons can do.
 
-To dive deeper we recommend [Learn Storybook’s “creating addons”](https://www.learnstorybook.com/intro-to-storybook/react/en/creating-addons/) tutorial. It’s an excellent walkthrough that covers the same ground as the above introduction, but goes further and leads you through the full process of creating a realistic addon. Or [how to build a Storybook addon](https://www.chromatic.com/blog/how-to-build-a-storybook-addon/) blog post that guides you through the steps of creating a standalone addon in great length.
+To dive deeper we recommend [Learn Storybook’s “creating addons”](https://www.learnstorybook.com/intro-to-storybook/react/en/creating-addons/) tutorial. It’s an excellent walkthrough that covers the same ground as the above introduction, but goes further and leads you through the full process of creating a realistic addon. 
+
+[How to build a Storybook addon](https://www.chromatic.com/blog/how-to-build-a-storybook-addon/) shows you how to create a standalone addon in great detail.
 
 ### Dev kits
 

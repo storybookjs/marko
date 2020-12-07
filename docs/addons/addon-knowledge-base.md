@@ -1,10 +1,10 @@
 ---
-title: Addons knowledge base
+title: Addon knowledge base
 ---
 
 Once you understand the basics of writing addons, there are a variety of common enhancements to make your addon better. This page details additional information about addon creation. Use it as a quick reference guide when creating your own addons. 
 
-### Disabling the addon panel
+### Disable the addon panel
 
 It’s possible to disable the addon panel for a particular story.
 
@@ -32,7 +32,7 @@ Then when adding a story, you can pass a disabled parameter.
 
 <!-- prettier-ignore-end -->
 
-### Styling your addon
+### Style your addon
 
 Storybook uses [Emotion](https://emotion.sh/docs/introduction) for styling. Alongside with a theme which you can customize!
 
@@ -79,12 +79,12 @@ Complementing the components, also included is a set of UI primitives. Use the c
 
 
 <div class="aside">
-The color pallette implemented by <code>@storybook/components</code> is a high level abstraction of the implementation of <a href="https://github.com/storybookjs/storybook/tree/next/lib/theming/src"><code>@storybook/theming</code></a> package.
+The color palette implemented by <code>@storybook/components</code> is a high-level abstraction of the <a href="https://github.com/storybookjs/storybook/tree/next/lib/theming/src"><code>@storybook/theming</code></a> package.
 </div>
 
 ### Build system
 
-When you are developing your addon as a package, you can’t use `npm link` to add it to your project. List  your addon as a local dependency into your package.json:
+When you're developing your addon as a package, you can’t use `npm link` to add it to your project. List  your addon as a local dependency into your package.json:
 
 ```json
 {
@@ -98,9 +98,9 @@ When you are developing your addon as a package, you can’t use `npm link` to a
 Run either <code>yarn</code> or <code>npm install</code> to install the addon.
 </div>
 
-### Hot module reload
+### Hot module replacement
 
-While developing your addon you can configure HMR (hot module replacement ) to reflect the changes made. 
+While developing your addon you can configure HMR (hot module replacement) to reflect the changes made. 
 
 #### Standalone Storybook addons
 
@@ -116,4 +116,6 @@ If you're developing a standalone addon, add a new script to `package.json` with
 
 #### Local Storybook addons
 
-If you're developing a local Storybook addon (an addon built on top of a existing Storybook installation) HMR (hot module replacement) should be available out of the box. If you don't see the changes being reflected, add the flag `--no-manager-cache` to the `storybook` script and restart Storybook.
+If you're developing a local Storybook addon that is built on top of an existing Storybook installation HMR (hot module replacement) is available out of the box. 
+
+If you don't see the changes being reflected, add the flag `--no-manager-cache` to the `storybook` script and restart Storybook.
