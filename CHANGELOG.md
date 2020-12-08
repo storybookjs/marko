@@ -1,3 +1,9 @@
+## 6.2.0-alpha.5 (December 8, 2020)
+
+### Bug Fixes
+
+- Core: Fix `--static-dir` with absolute path on Windows ([#13344](https://github.com/storybookjs/storybook/pull/13344))
+
 ## 6.2.0-alpha.4 (December 6, 2020)
 
 ### Bug Fixes
