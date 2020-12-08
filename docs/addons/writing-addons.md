@@ -188,7 +188,7 @@ When Storybook was initialized it provided a small set of examples stories. Chan
 
 <!-- prettier-ignore-end -->
 
-After applying the changes to the story your Storybook UI will yield the following:
+After applying the changes to the story, the Storybook UI will show the following:
 
 <video autoPlay muted playsInline loop>
   <source

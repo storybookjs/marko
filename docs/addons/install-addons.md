@@ -27,7 +27,7 @@ Next, update [`.storybook/main.js`](../configure/overview.md#configure-story-ren
 <!-- prettier-ignore-end -->
 
 <div class="aside">
-Addons can also require additional addon-specific configuration found in their respective READMEs.
+Addons may also require addon-specific configuration. Read their respective READMEs.
 </div>
 
 Now when you run Storybook the accessibility testing addon will be enabled.
@@ -77,8 +77,8 @@ Consider the following example:
 
 <!-- prettier-ignore-end -->
 
-Now, when Storybook starts up, it will update webpack's CSS loader to use modules and adjust how styling is defined.
-
 <div class="aside">
-Each preset addon has its own options documented in their READMEs.
+Preset addons may also have addon-specific configuration. Read their respective READMEs.
 </div>
+
+Now, when Storybook starts up, it will update webpack's CSS loader to use modules and adjust how styling is defined.
