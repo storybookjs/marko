@@ -11,7 +11,7 @@ import * as HeaderStories from './Header.stories';
 
 export default {
   title: 'Example/Page',
-  component: Header,
+  component: Page,
   decorators: [
     moduleMetadata({
       declarations: [Button, Header],
@@ -21,7 +21,6 @@ export default {
 } as Meta;
 
 const Template: Story<Page> = (args: Page) => ({
-  component: Page,
   props: args,
 });
 
