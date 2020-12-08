@@ -96,7 +96,7 @@ describe('RenderNgAppService', () => {
           localFunction: () => 'localFunction',
         };
 
-        const ngModule = renderNgAppService.getNgModuleMetadata(
+        const ngModule = RenderNgAppService.getNgModuleMetadata(
           { component: FooComponent, props },
           new BehaviorSubject(props)
         );
@@ -128,7 +128,7 @@ describe('RenderNgAppService', () => {
           },
         };
 
-        const ngModule = renderNgAppService.getNgModuleMetadata(
+        const ngModule = RenderNgAppService.getNgModuleMetadata(
           { component: FooComponent, props },
           new BehaviorSubject(props)
         );
@@ -149,7 +149,7 @@ describe('RenderNgAppService', () => {
         };
         const storyProps$ = new BehaviorSubject(initialProps);
 
-        const ngModule = renderNgAppService.getNgModuleMetadata(
+        const ngModule = RenderNgAppService.getNgModuleMetadata(
           { component: FooComponent, props: initialProps },
           storyProps$
         );
@@ -197,7 +197,7 @@ describe('RenderNgAppService', () => {
         };
         const storyProps$ = new BehaviorSubject(initialProps);
 
-        const ngModule = renderNgAppService.getNgModuleMetadata(
+        const ngModule = RenderNgAppService.getNgModuleMetadata(
           { component: FooComponent, props: initialProps },
           storyProps$
         );

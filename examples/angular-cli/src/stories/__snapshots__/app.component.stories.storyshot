@@ -1,10 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots App Component Component with separate template 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
+<storybook-wrapper
+  changeDetectorRef={[Function ViewRef_]}
+  storyComponentElementRef={[Function AppComponent]}
+  storyComponentViewContainerRef={[Function ViewContainerRef_]}
+  storyProps$={[Function Observable]}
+  storyPropsSubscription={[Function Subscriber]}
 >
   <storybook-app-root>
     <div
@@ -61,5 +63,5 @@ exports[`Storyshots App Component Component with separate template 1`] = `
       </li>
     </ul>
   </storybook-app-root>
-</storybook-dynamic-app-root>
+</storybook-wrapper>
 `;

@@ -1,13 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Core/Parameters passed to story 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
+<storybook-wrapper
+  changeDetectorRef={[Function ViewRef_]}
+  onClick={[Function Function]}
+  storyComponentElementRef={[Function ButtonComponent]}
+  storyComponentViewContainerRef={[Function ViewContainerRef_]}
+  storyProps$={[Function Observable]}
+  storyPropsSubscription={[Function Subscriber]}
+  text={[Function String]}
 >
   <storybook-button-component
     _nghost-a-c9=""
+    ng-reflect-text="Parameters are {
+    \\"docs\\": {
+   "
   >
     <button
       _ngcontent-a-c9=""
@@ -27,5 +34,5 @@ exports[`Storyshots Core/Parameters passed to story 1`] = `
   }
     </button>
   </storybook-button-component>
-</storybook-dynamic-app-root>
+</storybook-wrapper>
 `;

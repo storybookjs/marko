@@ -1,29 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Custom/Inheritance base button 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
+<storybook-wrapper
+  changeDetectorRef={[Function ViewRef_]}
+  label={[Function String]}
+  storyComponentElementRef={[Function BaseButtonComponent]}
+  storyComponentViewContainerRef={[Function ViewContainerRef_]}
+  storyProps$={[Function Observable]}
+  storyPropsSubscription={[Function Subscriber]}
 >
-  <storybook-base-button>
+  <storybook-base-button
+    ng-reflect-label="this is label"
+  >
     <button>
       this is label
     </button>
   </storybook-base-button>
-</storybook-dynamic-app-root>
+</storybook-wrapper>
 `;
 
 exports[`Storyshots Custom/Inheritance icon button 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
+<storybook-wrapper
+  changeDetectorRef={[Function ViewRef_]}
+  icon={[Function String]}
+  label={[Function String]}
+  storyComponentElementRef={[Function IconButtonComponent]}
+  storyComponentViewContainerRef={[Function ViewContainerRef_]}
+  storyProps$={[Function Observable]}
+  storyPropsSubscription={[Function Subscriber]}
 >
-  <storybook-icon-button>
+  <storybook-icon-button
+    ng-reflect-icon="this is icon"
+  >
     <button>
       this is label - this is icon
     </button>
   </storybook-icon-button>
-</storybook-dynamic-app-root>
+</storybook-wrapper>
 `;

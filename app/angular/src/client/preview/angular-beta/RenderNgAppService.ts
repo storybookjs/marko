@@ -20,6 +20,8 @@ import { isDeclarable } from './NgComponentAnalyzer';
 export class RenderNgAppService {
   private static instance: RenderNgAppService;
 
+  public static SELECTOR_STORYBOOK_WRAPPER = 'storybook-wrapper';
+
   public static getInstance() {
     if (!RenderNgAppService.instance) {
       RenderNgAppService.instance = new RenderNgAppService();
@@ -27,7 +29,36 @@ export class RenderNgAppService {
     return RenderNgAppService.instance;
   }
 
-  public static SELECTOR_STORYBOOK_WRAPPER = 'storybook-wrapper';
+  public static getNgModuleMetadata = (
+    storyFnAngular: StoryFnAngularReturnType,
+    storyProps$: Subject<ICollection>
+  ): NgModule => {
+    const { component, moduleMetadata = {} } = storyFnAngular;
+
+    const ComponentToInject = createComponentToInject(storyFnAngular);
+
+    // Look recursively (deep) if the component is not already declared by an import module
+    const requiresComponentDeclaration =
+      isDeclarable(component) &&
+      !isComponentAlreadyDeclaredInModules(
+        component,
+        moduleMetadata.declarations,
+        moduleMetadata.imports
+      );
+
+    return {
+      declarations: [
+        ...(requiresComponentDeclaration ? [component] : []),
+        ComponentToInject,
+        ...(moduleMetadata.declarations ?? []),
+      ],
+      imports: [BrowserModule, ...(moduleMetadata.imports ?? [])],
+      providers: [storyPropsProvider(storyProps$), ...(moduleMetadata.providers ?? [])],
+      entryComponents: [...(moduleMetadata.entryComponents ?? [])],
+      schemas: [...(moduleMetadata.schemas ?? [])],
+      bootstrap: [ComponentToInject],
+    };
+  };
 
   private platform: PlatformRef;
 
@@ -79,40 +110,9 @@ export class RenderNgAppService {
     this.storyProps$ = new BehaviorSubject<ICollection>(storyObj.props);
 
     await this.platform.bootstrapModule(
-      createModuleFromMetadata(this.getNgModuleMetadata(storyObj, this.storyProps$))
+      createModuleFromMetadata(RenderNgAppService.getNgModuleMetadata(storyObj, this.storyProps$))
     );
   }
-
-  public getNgModuleMetadata = (
-    storyFnAngular: StoryFnAngularReturnType,
-    storyProps$: Subject<ICollection>
-  ): NgModule => {
-    const { component, moduleMetadata = {} } = storyFnAngular;
-
-    const ComponentToInject = createComponentToInject(storyFnAngular);
-
-    // Look recursively (deep) if the component is not already declared by an import module
-    const requiresComponentDeclaration =
-      isDeclarable(component) &&
-      !isComponentAlreadyDeclaredInModules(
-        component,
-        moduleMetadata.declarations,
-        moduleMetadata.imports
-      );
-
-    return {
-      declarations: [
-        ...(requiresComponentDeclaration ? [component] : []),
-        ComponentToInject,
-        ...(moduleMetadata.declarations ?? []),
-      ],
-      imports: [BrowserModule, ...(moduleMetadata.imports ?? [])],
-      providers: [storyPropsProvider(storyProps$), ...(moduleMetadata.providers ?? [])],
-      entryComponents: [...(moduleMetadata.entryComponents ?? [])],
-      schemas: [...(moduleMetadata.schemas ?? [])],
-      bootstrap: [ComponentToInject],
-    };
-  };
 }
 
 const createModuleFromMetadata = (ngModule: NgModule) => {

@@ -55,10 +55,12 @@
     "react-test-renderer": "^16.8.0 || ^17.0.0",
     "read-pkg-up": "^7.0.0",
     "regenerator-runtime": "^0.13.7",
+    "rxjs": "^6.6.3",
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
     "@storybook/addon-docs": "6.2.0-alpha.5",
+    "@storybook/angular": "6.2.0-alpha.5",
     "@storybook/react": "6.2.0-alpha.5",
     "babel-loader": "^8.0.6",
     "enzyme": "^3.11.0",
@@ -68,6 +70,7 @@
     "jest-vue-preprocessor": "^1.5.0"
   },
   "peerDependencies": {
+    "@storybook/angular": "*",
     "@storybook/react": "*",
     "@storybook/vue": "*",
     "jest-preset-angular": "*",
@@ -78,6 +81,9 @@
   },
   "peerDependenciesMeta": {
     "@storybook/vue": {
+      "optional": true
+    },
+    "@storybook/angular": {
       "optional": true
     },
     "jest-preset-angular": {
