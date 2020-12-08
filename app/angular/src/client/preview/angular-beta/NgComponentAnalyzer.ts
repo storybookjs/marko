@@ -1,4 +1,4 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, Directive, Input, Output, Pipe } from '@angular/core';
 
 export type ComponentInputsOutputs = {
   inputs: {
@@ -74,6 +74,20 @@ export const getComponentInputsOutputs = (component: any): ComponentInputsOutput
   }, initialValue);
 };
 
+export const isDeclarable = (component: any): boolean => {
+  if (!component) {
+    return false;
+  }
+
+  const decoratorKey = '__annotations__';
+  const decorators: any[] = Reflect.getOwnPropertyDescriptor(component, decoratorKey)
+    ? Reflect.getOwnPropertyDescriptor(component, decoratorKey).value
+    : component[decoratorKey];
+
+  return !!(decorators || []).find(
+    (d) => d instanceof Directive || d instanceof Pipe || d instanceof Component
+  );
+};
 /**
  * Returns all component decorator properties
  * is used to get all `@Input` and `@Output` Decorator

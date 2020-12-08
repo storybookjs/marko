@@ -11,6 +11,7 @@ import { storyPropsProvider } from './app.token';
 import { createComponentClassFromStoryComponent } from './ComponentClassFromStoryComponent';
 import { createComponentClassFromStoryTemplate } from './ComponentClassFromStoryTemplate';
 import { isComponentAlreadyDeclaredInModules } from './NgModulesAnalyzer';
+import { isDeclarable } from './NgComponentAnalyzer';
 
 /**
  * Bootstrap angular application and allows to change the rendering dynamically
@@ -92,7 +93,7 @@ export class RenderNgAppService {
 
     // Look recursively (deep) if the component is not already declared by an import module
     const requiresComponentDeclaration =
-      component &&
+      isDeclarable(component) &&
       !isComponentAlreadyDeclaredInModules(
         component,
         moduleMetadata.declarations,
