@@ -69,12 +69,10 @@ function logError(type, packageJson, errorLogs) {
   );
 }
 
-const nonEsmPackages = [/storyshots/, /lib\/cli$/];
+// const nonEsmPackages = [/storyshots/, /lib\/cli$/];
 const modulePath = path.resolve('./');
 const packageJson = getPackageJson(modulePath);
-const modules =
-  (modulePath.includes('/lib/') || modulePath.includes('/addons/')) &&
-  !nonEsmPackages.some((name) => modulePath.match(name));
+const modules = true;
 
 async function prepare() {
   removeDist();

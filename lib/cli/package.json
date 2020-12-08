@@ -35,7 +35,6 @@
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.4/**/*",
     "versions.json"
   ],
   "scripts": {

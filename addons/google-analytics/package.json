@@ -6,6 +6,16 @@
     "addon",
     "storybook"
   ],
+  "main": "dist/cjs/register.js",
+  "module": "dist/esm/register.js",
+  "types": "dist/ts3.9/register.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "dist/ts3.4/*"
+      ]  
+    }  
+  },  
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/google-analytics",
   "bugs": {
     "url": "https://github.com/storybookjs/storybook/issues"

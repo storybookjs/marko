@@ -18,20 +18,19 @@
   "license": "MIT",
   "main": "dist/cjs/preview.js",
   "module": "dist/esm/preview.js",
-  "types": "dist/preview.d.ts",
+  "types": "dist/ts3.9/preview.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
-      ]
-    }
-  },
+        "dist/ts3.4/*"
+      ]  
+    }  
+  },  
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"

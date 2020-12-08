@@ -15,15 +15,13 @@
     "directory": "app/react"
   },
   "license": "MIT",
-  "main": "dist/client/index.js",
-  "types": "dist/client/index.d.ts",
+  "main": "dist/cjs/client/index.js",
+  "module": "dist/esm/client/index.js",
+  "types": "dist/ts3.9/client/index.d.ts",
   "typesVersions": {
     "<3.8": {
-      "types-6-0": [
-        "ts3.4/dist/client/preview/types-6-0.d.ts"
-      ],
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
@@ -38,8 +36,7 @@
     "types/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
@@ -63,6 +60,7 @@
     "react-dev-utils": "^11.0.1",
     "react-docgen-typescript-plugin": "^0.6.2",
     "react-refresh": "^0.8.3",
+    "read-pkg-up": "^7.0.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0",
     "webpack": "^4.44.2"

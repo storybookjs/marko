@@ -7,7 +7,7 @@ function getCommand(watch) {
   const tsc = path.join(__dirname, '..', '..', 'node_modules', '.bin', 'tsc');
   const downlevelDts = path.join(__dirname, '..', '..', 'node_modules', '.bin', 'downlevel-dts');
 
-  const args = ['--outDir ./dist', '--listEmittedFiles true'];
+  const args = ['--outDir ./dist/ts3.9', '--listEmittedFiles true'];
 
   /**
    * Only emit declarations if it does not need to be compiled with tsc
@@ -28,7 +28,7 @@ function getCommand(watch) {
     args.push('-w', '--preserveWatchOutput');
   }
 
-  return `${tsc} ${args.join(' ')} && ${downlevelDts} dist ts3.4/dist`;
+  return `${tsc} ${args.join(' ')} && ${downlevelDts} dist/ts3.9 dist/ts3.4`;
 }
 
 function handleExit(code, stderr, errorCallback) {

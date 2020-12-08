@@ -90,7 +90,7 @@ async function babelify(options = {}) {
 
   if (watch) {
     await Promise.all([
-      run({ watch, dir, silent, errorCallback }),
+      run({ watch, dir: './dist/cjs', silent, errorCallback }),
       modules ? run({ watch, dir: './dist/esm', silent, errorCallback }) : Promise.resolve(),
     ]);
   } else {

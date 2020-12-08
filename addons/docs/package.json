@@ -19,11 +19,11 @@
   "license": "MIT",
   "main": "dist/cjs/public_api.js",
   "module": "dist/esm/public_api.js",
-  "types": "dist/public_api.d.ts",
+  "types": "dist/ts3.9/public_api.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
@@ -40,7 +40,6 @@
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.4/**/*",
     "!__testfixtures__"
   ],
   "scripts": {
