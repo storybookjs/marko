@@ -1,5 +1,5 @@
 ---
-title: 'Introduction to Storybook addons'
+title: 'Introduction to addons'
 ---
 
 Addons extend Storybook with features and integrations that are not built into the core. Most Storybook features are implemented as addons. For instance: [documentation](../writing-docs/introduction.md), [accessibility testing](https://github.com/storybookjs/storybook/tree/master/addons/a11y), [interactive controls](../essentials/controls.md), among others.
@@ -16,7 +16,7 @@ The **Manager** is the UI responsible for rendering the:
 - 🔍 Search
 - 🧭 Navigation
 - 🔗 Toolbars
-- 📦 Addons 
+- 📦 Addons
 
 The **Preview** area is an `iframe` where your stories are rendered.
 
@@ -24,22 +24,18 @@ The **Preview** area is an `iframe` where your stories are rendered.
 
 Because both elements run in their own separate `iframes`, they use a communication channel to keep in synch. For example when you select a story in the Manager a event is dispatched across the channel notifying the Preview to render the story.
 
-### Anatomy of an addon
+## Anatomy of an addon
 
-Storybook addons allow you to extend what's already possible with Storybook, everything from the [interface](./addon-types.md) to the [API](./addons-api.md). Each one classified into two broader categories.
+Storybook addons allow you to extend what's already possible with Storybook, everything from the [user interface](./addon-types.md) to the [API](./addons-api.md). Each one classified into two broader categories.
 
-#### UI-based addons
+### UI-based addons
 
-This particular type of addons focuses mainly on the interface. Installing addons that fall into this category help you with your existing workflows. Good examples of this particular type are: [Controls](../essentials/controls.md), [Docs](../writing-docs/introduction.md) or the [Accessibility addon](https://github.com/storybookjs/storybook/tree/master/addons/a11y).
+[UI-based addons](./addon-types.md#ui-based-addons) focus on customizing Storybook's user interface to extend your development workflow. Examples of UI-based addons include: [Controls](../essentials/controls.md), [Docs](../writing-docs/introduction.md) and [Accessibility](https://github.com/storybookjs/storybook/tree/master/addons/a11y).
 
-<div class="aside">
-Read our <a href="./writing-addons">documentation</a> to learn more about creating addons.
-</div>
+[Learn how to write an addon »](./writing-addons)
 
-#### Preset addons
+### Preset addons
 
-This particular type of addons focuses on integrations. They are often used to integrate Storybook with other existing technologies. Good examples of this particular type are: [preset-scss](https://github.com/storybookjs/presets/tree/master/packages/preset-scss) and [preset-create-react-app](https://github.com/storybookjs/presets/tree/master/packages/preset-create-react-app).
+[Preset addons](./addon-types.md#preset-addons) help you integrate Storybook with other technologies and libraries. Examples of preset addons are: [preset-scss](https://github.com/storybookjs/presets/tree/master/packages/preset-scss) and [preset-create-react-app](https://github.com/storybookjs/presets/tree/master/packages/preset-create-react-app).
 
-<div class="aside">
-Read our <a href="./writing-presets">documentation</a> to learn more about preset addons.
-</div>
+[Learn how to write a preset addon »](./writing-presets)

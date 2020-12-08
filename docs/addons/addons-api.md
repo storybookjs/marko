@@ -1,5 +1,5 @@
 ---
-title: 'Addons API'
+title: 'Addon API'
 ---
 
 ## Core Addon API
