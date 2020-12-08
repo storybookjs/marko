@@ -1,8 +1,8 @@
 ---
-title: 'Writing your own Storybook Preset'
+title: 'Write a Storybook preset addon'
 ---
 
-[Storybook presets](./presets.md) are grouped collections of `babel`, `webpack`, and `addons` configurations that support specific use cases in Storybook, such as typescript or MDX support.
+[Storybook preset addons](./addon-types.md#preset-addons) are grouped collections of `babel`, `webpack`, and `addons` configurations that support specific use cases in Storybook, such as typescript or MDX support.
 
 This doc covers the [presets API](#presets-api) and how to use the presets mechanism for [advanced configuration](#advanced-configuration).
 
