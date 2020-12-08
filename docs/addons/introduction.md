@@ -1,5 +1,5 @@
 ---
-title: 'Introduction to Storybook addons'
+title: 'Introduction to addons'
 ---
 
 Addons extend Storybook with features and integrations that are not built into the core. Most Storybook features are implemented as addons. For instance: [documentation](../writing-docs/introduction.md), [accessibility testing](https://github.com/storybookjs/storybook/tree/master/addons/a11y), [interactive controls](../essentials/controls.md), among others.
@@ -16,7 +16,7 @@ The **Manager** is the UI responsible for rendering the:
 - 🔍 Search
 - 🧭 Navigation
 - 🔗 Toolbars
-- 📦 Addons 
+- 📦 Addons
 
 The **Preview** area is an `iframe` where your stories are rendered.
 
