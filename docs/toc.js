@@ -311,6 +311,48 @@ module.exports = {
       ],
     },
     {
+      title: '🔧 Addons',
+      pathSegment: 'addons',
+      type: 'menu',
+      children: [
+        {
+          pathSegment: 'introduction',
+          title: 'Introduction',
+          type: 'link',
+        },
+        {
+          pathSegment: 'install-addons',
+          title: 'Install addons',
+          type: 'link',
+        },
+        {
+          pathSegment: 'writing-addons',
+          title: 'Writing addons',
+          type: 'link',
+        },
+        {
+          pathSegment: 'writing-presets',
+          title: 'Writing preset addons',
+          type: 'link',
+        },
+        {
+          pathSegment: 'addon-types',
+          title: 'Storybook addon types',
+          type: 'link',
+        },
+        {
+          pathSegment: 'addon-knowledge-base',
+          title: 'Addons knowledge base',
+          type: 'link',
+        },
+        {
+          pathSegment: 'addons-api',
+          title: 'Addons API',
+          type: 'link',
+        },
+      ],
+    },
+    {
       title: '🔌 API',
       pathSegment: 'api',
       type: 'menu',
@@ -333,33 +375,6 @@ module.exports = {
             {
               pathSegment: 'argtypes',
               title: 'ArgTypes',
-              type: 'link',
-            },
-          ],
-        },
-        {
-          title: 'Addons',
-          pathSegment: '',
-          type: 'menu',
-          children: [
-            {
-              pathSegment: 'addons',
-              title: 'Introduction',
-              type: 'link',
-            },
-            {
-              pathSegment: 'presets',
-              title: 'Presets',
-              type: 'link',
-            },
-            {
-              pathSegment: 'writing-presets',
-              title: 'Writing Presets',
-              type: 'link',
-            },
-            {
-              pathSegment: 'addons-api',
-              title: 'Addons API',
               type: 'link',
             },
           ],
