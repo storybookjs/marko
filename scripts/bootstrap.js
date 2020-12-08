@@ -8,7 +8,7 @@ const { maxConcurrentTasks } = require('./utils/concurrency');
 const { checkDependenciesAndRun, spawn } = require('./utils/cli-utils');
 
 function run() {
-  const inquirer = require('inquirer');
+  const prompts = require('prompts');
   const program = require('commander');
   const chalk = require('chalk');
   const log = require('npmlog');
@@ -157,20 +157,20 @@ function run() {
     tasks[key].value = program[tasks[key].option.replace('--', '')] || program.all;
   });
 
-  const createSeparator = (input) => `- ${input}${' ---------'.substr(0, 12)}`;
+  const createSeparator = (input) => ({
+    title: `- ${input}${' ---------'.substr(0, 12)}`,
+    disabled: true,
+  });
 
   const choices = Object.values(groups)
     .map((l) =>
       l.map((key) => ({
-        name: tasks[key].name,
-        checked: tasks[key].defaultValue,
+        value: tasks[key].name,
+        title: tasks[key].name,
+        selected: tasks[key].defaultValue,
       }))
     )
-    .reduce(
-      (acc, i, k) =>
-        acc.concat(new inquirer.Separator(createSeparator(Object.keys(groups)[k]))).concat(i),
-      []
-    );
+    .reduce((acc, i, k) => acc.concat(createSeparator(Object.keys(groups)[k])).concat(i), []);
 
   let selection;
   if (
@@ -178,39 +178,37 @@ function run() {
       .map((key) => tasks[key].value)
       .filter(Boolean).length
   ) {
-    selection = inquirer
-      .prompt([
-        {
-          type: 'checkbox',
-          message: 'Select the bootstrap activities',
-          name: 'todo',
-          pageSize: Object.keys(tasks).length + Object.keys(groups).length,
-          choices,
-        },
-      ])
+    selection = prompts([
+      {
+        type: 'multiselect',
+        message: 'Select the bootstrap activities',
+        name: 'todo',
+        warn: ' ',
+        pageSize: Object.keys(tasks).length + Object.keys(groups).length,
+        choices,
+      },
+    ])
       .then(({ todo }) =>
         todo.map((name) => tasks[Object.keys(tasks).find((i) => tasks[i].name === name)])
       )
       .then((list) => {
         if (list.find((i) => i === tasks.reset)) {
-          return inquirer
-            .prompt([
-              {
-                type: 'confirm',
-                message: `${chalk.red(
-                  'DESTRUCTIVE'
-                )} deletes node_modules, files not present in git ${chalk.underline(
-                  'will get trashed'
-                )}, except for .idea and .vscode, ${chalk.cyan('Continue?')}`,
-                name: 'sure',
-              },
-            ])
-            .then(({ sure }) => {
-              if (sure) {
-                return list;
-              }
-              throw new Error('problem is between keyboard and chair');
-            });
+          return prompts([
+            {
+              type: 'confirm',
+              message: `${chalk.red(
+                'DESTRUCTIVE'
+              )} deletes node_modules, files not present in git ${chalk.underline(
+                'will get trashed'
+              )}, except for .idea and .vscode, ${chalk.cyan('Continue?')}`,
+              name: 'sure',
+            },
+          ]).then(({ sure }) => {
+            if (sure) {
+              return list;
+            }
+            throw new Error('problem is between keyboard and chair');
+          });
         }
         return list;
       });

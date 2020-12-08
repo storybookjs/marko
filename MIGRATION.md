@@ -1,7 +1,11 @@
 <h1>Migration</h1>
 
+- [From version 6.1.x to 6.2.0](#from-version-61x-to-620)
+  - [New Angular renderer](#new-angular-renderer)
 - [From version 6.0.x to 6.1.0](#from-version-60x-to-610)
+  - [Addon-backgrounds preset](#addon-backgrounds-preset)
   - [Single story hoisting](#single-story-hoisting)
+  - [React peer dependencies](#react-peer-dependencies)
   - [6.1 deprecations](#61-deprecations)
     - [Deprecated DLL flags](#deprecated-dll-flags)
     - [Deprecated storyFn](#deprecated-storyfn)
@@ -137,7 +141,42 @@
   - [Packages renaming](#packages-renaming)
   - [Deprecated embedded addons](#deprecated-embedded-addons)
 
+## From version 6.1.x to 6.2.0
+
+### New Angular renderer
+
+We've rewritten the Angular renderer in Storybook 6.1. It's meant to be entirely backwards compatible, but if you need to use the legacy renderer it's still available via a [parameter](https://storybook.js.org/docs/react/writing-stories/parameters). To opt out of the new renderer, add the following to `.storybook/preview.ts`:
+
+```ts
+export const parameters = {
+  angularLegacyRendering: true,
+};
+```
+
+Please also file an issue if you need to opt out. We plan to remove the legacy renderer in 7.0.
+
 ## From version 6.0.x to 6.1.0
+
+### Addon-backgrounds preset
+
+In 6.1 we introduced an unintentional breaking change to `addon-backgrounds`.
+
+The addon uses decorators which are set up automatically by a preset. The required preset is ignored if you register the addon in `main.js` withe the the `/register` entry point. This used to be valid in `v6.0.x` and earlier:
+```js
+module.exports = {
+  stories: ['../**/*.stories.js'],
+  addons: ['@storybook/addon-backgrounds/register'],
+};
+```
+
+To fix it, just replace `@storybook/addon-backgrounds/register` with `@storybook/addon-backgrounds`:
+
+```js
+module.exports = {
+  stories: ['../**/*.stories.js'],
+  addons: ['@storybook/addon-backgrounds'],
+};
+```
 
 ### Single story hoisting
 
@@ -162,6 +201,16 @@ DESIGN SYSTEM   [root]
 ```
 
 See [Naming components and hierarchy](https://storybook.js.org/docs/react/writing-stories/naming-components-and-hierarchy#single-story-hoisting) for details.
+
+### React peer dependencies
+
+Starting in 6.1, `react` and `react-dom` are required peer dependencies of `@storybook/react`, meaning that if your React project does not have dependencies on them, you need to add them as `devDependencies`. If you don't you'll see errors like this:
+
+```
+Error: Cannot find module 'react-dom/package.json'
+```
+
+They were also peer dependencies in earlier versions, but due to the package structure they would be installed by Storybook if they were not required by the user's project. For more discussion: https://github.com/storybookjs/storybook/issues/13269
 
 ### 6.1 deprecations
 

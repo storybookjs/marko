@@ -1,3 +1,54 @@
+## 6.2.0-alpha.5 (December 8, 2020)
+
+### Bug Fixes
+
+- Core: Fix `--static-dir` with absolute path on Windows ([#13344](https://github.com/storybookjs/storybook/pull/13344))
+
+## 6.2.0-alpha.4 (December 6, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Handle svelte docgen failures gracefully ([#13386](https://github.com/storybookjs/storybook/pull/13386))
+
+### Dependency Upgrades
+
+- Bump @ember/test-helpers from 1.7.1 to 2.1.0 ([#13143](https://github.com/storybookjs/storybook/pull/13143))
+
+## 6.2.0-alpha.3 (December 4, 2020)
+
+### Bug Fixes
+
+- CLI: Fix stories path in Introduction.stories.mdx ([#13368](https://github.com/storybookjs/storybook/pull/13368))
+- UI: Fix display of custom brand image ([#13355](https://github.com/storybookjs/storybook/pull/13355))
+
+### Maintenance
+
+- CLI: Replace inquirer with prompts ([#13225](https://github.com/storybookjs/storybook/pull/13225))
+
+## 6.1.10 (December 4, 2020)
+
+### Bug Fixes
+
+- CLI: Fix stories path in Introduction.stories.mdx ([#13368](https://github.com/storybookjs/storybook/pull/13368))
+- UI: Fix display of custom brand image ([#13355](https://github.com/storybookjs/storybook/pull/13355))
+- Storyshots: Fix missing `done` attribute on type definition ([#13341](https://github.com/storybookjs/storybook/pull/13341))
+- Addon-docs: ArgTypes optional on Meta ([#13352](https://github.com/storybookjs/storybook/pull/13352))
+
+### Dependency Upgrades
+
+- Addon-storyshots: Add React as peer dependency ([#13343](https://github.com/storybookjs/storybook/pull/13343))
+
+## 6.2.0-alpha.2 (December 3, 2020)
+
+### Bug Fixes
+
+- Storyshots: Fix missing `done` attribute on type definition ([#13341](https://github.com/storybookjs/storybook/pull/13341))
+- Core: Fix IE11 compatibility by using XHR and plain ES5 ([#13348](https://github.com/storybookjs/storybook/pull/13348))
+
+### Maintenance
+
+- Angular: Overhaul preview renderer ([#13215](https://github.com/storybookjs/storybook/pull/13215))
+
 ## 6.2.0-alpha.1 (December 1, 2020)
 
 ### Bug Fixes

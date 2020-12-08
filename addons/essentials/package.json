@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-essentials",
-  "version": "6.2.0-alpha.1",
+  "version": "6.2.0-alpha.5",
   "description": "Curated addons to bring out the best of Storybook",
   "keywords": [
     "addon",
@@ -20,6 +20,13 @@
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
@@ -29,28 +36,28 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addon-actions": "6.2.0-alpha.1",
-    "@storybook/addon-backgrounds": "6.2.0-alpha.1",
-    "@storybook/addon-controls": "6.2.0-alpha.1",
-    "@storybook/addon-docs": "6.2.0-alpha.1",
-    "@storybook/addon-toolbars": "6.2.0-alpha.1",
-    "@storybook/addon-viewport": "6.2.0-alpha.1",
-    "@storybook/addons": "6.2.0-alpha.1",
-    "@storybook/api": "6.2.0-alpha.1",
-    "@storybook/node-logger": "6.2.0-alpha.1",
+    "@storybook/addon-actions": "6.2.0-alpha.5",
+    "@storybook/addon-backgrounds": "6.2.0-alpha.5",
+    "@storybook/addon-controls": "6.2.0-alpha.5",
+    "@storybook/addon-docs": "6.2.0-alpha.5",
+    "@storybook/addon-toolbars": "6.2.0-alpha.5",
+    "@storybook/addon-viewport": "6.2.0-alpha.5",
+    "@storybook/addons": "6.2.0-alpha.5",
+    "@storybook/api": "6.2.0-alpha.5",
+    "@storybook/node-logger": "6.2.0-alpha.5",
     "core-js": "^3.0.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
-    "@storybook/vue": "6.2.0-alpha.1",
+    "@storybook/vue": "6.2.0-alpha.5",
     "@types/jest": "^25.1.1",
     "@types/webpack-env": "^1.15.3"
   },
   "peerDependencies": {
     "@babel/core": "^7.9.6",
-    "@storybook/vue": "6.2.0-alpha.1",
+    "@storybook/vue": "6.2.0-alpha.5",
     "babel-loader": "^8.0.0",
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0",
@@ -73,12 +80,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "211db5358500cb71c73d6183e86f40df1638752b",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "850a0d8b98f2ddab1cd4d652e9beac11e21a369c"
 }

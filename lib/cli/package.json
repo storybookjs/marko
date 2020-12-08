@@ -1,6 +1,6 @@
 {
   "name": "@storybook/cli",
-  "version": "6.2.0-alpha.1",
+  "version": "6.2.0-alpha.5",
   "description": "Storybook's CLI - easiest method of adding storybook to your projects",
   "keywords": [
     "cli",
@@ -18,6 +18,13 @@
   },
   "license": "MIT",
   "author": "Storybook Team",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "bin": {
     "getstorybook": "./bin/index.js",
     "sb": "./bin/index.js"
@@ -39,8 +46,8 @@
   "dependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
-    "@storybook/codemod": "6.2.0-alpha.1",
-    "@storybook/node-logger": "6.2.0-alpha.1",
+    "@storybook/codemod": "6.2.0-alpha.5",
+    "@storybook/node-logger": "6.2.0-alpha.5",
     "@storybook/semver": "^7.3.2",
     "chalk": "^4.0.0",
     "commander": "^6.2.0",
@@ -52,19 +59,20 @@
     "fs-extra": "^9.0.0",
     "get-port": "^5.1.1",
     "globby": "^11.0.0",
-    "inquirer": "^7.0.0",
     "jscodeshift": "^0.6.3",
     "json5": "^2.1.1",
     "leven": "^3.1.0",
+    "prompts": "^2.0.0",
     "puppeteer-core": "^2.0.0",
     "shelljs": "^0.8.4",
     "strip-json-comments": "^3.0.1",
     "update-notifier": "^4.0.0"
   },
   "devDependencies": {
-    "@storybook/client-api": "6.2.0-alpha.1",
+    "@storybook/client-api": "6.2.0-alpha.5",
     "@types/cross-spawn": "^6.0.1",
     "@types/inquirer": "^6.5.0",
+    "@types/prompts": "^2.0.0",
     "@types/puppeteer-core": "^2.0.0",
     "@types/semver": "^7.2.0",
     "@types/shelljs": "^0.8.7",
@@ -76,12 +84,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "211db5358500cb71c73d6183e86f40df1638752b",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "850a0d8b98f2ddab1cd4d652e9beac11e21a369c"
 }

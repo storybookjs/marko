@@ -8,7 +8,7 @@ import semver from '@storybook/semver';
 import dedent from 'ts-dedent';
 import Table from 'cli-table3';
 import prettyTime from 'pretty-hrtime';
-import inquirer from 'inquirer';
+import prompts from 'prompts';
 import detectFreePort from 'detect-port';
 
 import { Stats } from 'webpack';
@@ -255,9 +255,9 @@ export async function buildDevStandalone(
     ]);
 
     if (!options.ci && !options.smokeTest && options.port != null && port !== options.port) {
-      const { shouldChangePort } = await inquirer.prompt({
+      const { shouldChangePort } = await prompts({
         type: 'confirm',
-        default: true,
+        initial: true,
         name: 'shouldChangePort',
         message: `Port ${options.port} is not available. Would you like to run Storybook on port ${port} instead?`,
       });

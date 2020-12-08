@@ -1,8 +1,8 @@
+import chalk from 'chalk';
 import cpy from 'cpy';
 import fs from 'fs-extra';
 import path from 'path';
 import webpack from 'webpack';
-import shelljs from 'shelljs';
 
 import { logger } from '@storybook/node-logger';
 
@@ -11,6 +11,7 @@ import loadConfig from './config';
 import loadManagerConfig from './manager/manager-config';
 import { logConfig } from './logConfig';
 import { getPrebuiltDir } from './utils/prebuilt-manager';
+import { parseStaticDir } from './utils/static-files';
 
 async function compileManager(managerConfig: any, managerStartTime: [number, number]) {
   logger.info('=> Compiling manager..');
@@ -99,21 +100,24 @@ async function compilePreview(previewConfig: any, previewStartTime: [number, num
   });
 }
 
-async function copyAllStaticFiles(staticDir: any[] | undefined, outputDir: string) {
-  if (staticDir && staticDir.length) {
+async function copyAllStaticFiles(staticDirs: any[] | undefined, outputDir: string) {
+  if (staticDirs && staticDirs.length > 0) {
     await Promise.all(
-      staticDir.map(async (dir) => {
-        const [currentStaticDir, staticEndpoint] = dir.split(':').concat('/');
-        const localStaticPath = path.resolve(currentStaticDir);
+      staticDirs.map(async (dir) => {
+        try {
+          const { staticDir, staticPath, targetDir } = await parseStaticDir(dir);
+          const targetPath = path.join(outputDir, targetDir);
+          logger.info(chalk`=> Copying static files: {cyan ${staticDir}} => {cyan ${targetDir}}`);
 
-        if (!(await fs.pathExists(localStaticPath))) {
-          logger.error(`Error: no such directory to load static files: ${localStaticPath}`);
+          // Storybook's own files should not be overwritten, so we skip such files if we find them
+          const skipPaths = ['index.html', 'iframe.html'].map((f) => path.join(targetPath, f));
+          await fs.copy(staticPath, targetPath, { filter: (_, dest) => !skipPaths.includes(dest) });
+        } catch (e) {
+          logger.error(e.message);
           process.exit(-1);
         }
-        shelljs.cp('-r', `${localStaticPath}/!(index.html)`, path.join(outputDir, staticEndpoint));
       })
     );
-    logger.info(`=> Copying static files from: ${staticDir.join(', ')}`);
   }
 }
 
@@ -174,7 +178,7 @@ export async function buildStaticStandalone(options: any) {
 
   const defaultFavIcon = require.resolve('./public/favicon.ico');
 
-  logger.info(`=> Cleaning outputDir ${outputDir}`);
+  logger.info(chalk`=> Cleaning outputDir: {cyan ${outputDir}}`);
   if (outputDir === '/') throw new Error("Won't remove directory '/'. Check your outputDir!");
   await fs.remove(outputDir);
 

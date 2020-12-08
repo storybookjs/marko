@@ -64,21 +64,29 @@ Continue to read if you want to learn how to create your theme.
 
 The easiest way to customize Storybook is to generate a new theme using the `create()` function from `storybook/theming`. This function includes shorthands for the most common theme variables. Here's how to use it:
 
-First create a new file in `.storybook` called `yourTheme.js`.
-
-Next paste the code below and tweak the variables.
+Inside your `.storybook` directory, create a new file called `YourTheme.js` and add the following:
 
 <!-- prettier-ignore-start -->
 
 <CodeSnippets
   paths={[
-    'common/your-theme.js.mdx',
+    'common/storybook-theme-example-variables.ts.mdx',
   ]}
 />
 
 <!-- prettier-ignore-end -->
 
-Finally, import your theme into [`.storybook/manager.js`](./overview.md#configure-story-rendering) and add it to your Storybook parameters.
+<div class="aside">
+If you're using <code>brandImage</code> to add your own custom logo, you can use any of the most common image formats.
+</div>
+
+Above we're creating a new theme that will:
+
+-  Use Storybook's `light` theme as a baseline.
+-  Replace Storybook's logo in the sidebar with our own (defined in the brandImage variable).
+-  Add custom branding information.
+
+Finally we'll need to import the theme into Storybook. Create a new file called `manager.js` in your `.storybook` directory and add the following:
 
 <!-- prettier-ignore-start -->
 
@@ -90,19 +98,40 @@ Finally, import your theme into [`.storybook/manager.js`](./overview.md#configur
 
 <!-- prettier-ignore-end -->
 
-The `@storybook/theming` package is built using TypeScript, so this should help create a valid theme for TypeScript users. The types are part of the package itself.
+<div class="aside">
+If the theme is not shown when Storybook starts, update your <code>storybook</code> scripts to include the <code>--no-manager-cache</code> flag.
+</div>
 
-Many theme variables are optional, the `base` property is NOT. This is a perfectly valid theme:
+Now your custom theme will replace Storybook's default theme and you'll see a similar set of changes in the UI.
+
+![Storybook starter theme](./storybook-starter-custom-theme.png)
+
+Let's take a look at more complex example. Copy the code below and paste it in `.storybook/YourTheme.js`.
 
 <!-- prettier-ignore-start -->
 
 <CodeSnippets
   paths={[
-    'common/storybook-theme-example-variables.ts.mdx',
+    'common/your-theme.js.mdx',
   ]}
 />
 
 <!-- prettier-ignore-end -->
+
+Above we're updating the theme with the following changes:
+
+-  A custom color palette (defined in the `app` and `color` variables).
+-  Custom fonts (defined in the `font` and `text` variables).
+
+With the new changes introduced, the custom theme should yield a similar result.
+
+![Storybook custom theme loaded](./storybook-custom-theme.png)
+
+<div class="aside">
+Many theme variables are optional, the <code>base</code> property is <strong>NOT</strong>.
+</div>
+
+The `@storybook/theming` package is built using TypeScript, so this should help create a valid theme for TypeScript users. The types are part of the package itself.
 
 ## CSS escape hatches
 
