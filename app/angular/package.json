@@ -15,8 +15,8 @@
     "directory": "app/angular"
   },
   "license": "MIT",
-  "main": "dist/cjs/client/index.js",
-  "module": "dist/esm/client/index.js",
+  "main": "dist/ts3.9/client/index.js",
+  "module": "dist/ts3.9/client/index.js",
   "types": "dist/ts3.9/client/index.d.ts",
   "typesVersions": {
     "<3.8": {
