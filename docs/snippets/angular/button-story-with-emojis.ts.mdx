@@ -3,8 +3,12 @@
 
 import Button from './button.component';
 
-export const Primary = () => ({
+export default {
+  title: 'Components/Button',
   component: Button,
+};
+
+export const Primary = () => ({
   props: {
     label: 'Button',
     background: '#ff0',
@@ -12,7 +16,6 @@ export const Primary = () => ({
 });
 
 export const Secondary = () => ({
-  component: Button,
   props: {
     label: '😄👍😍💯',
     background: '#ff0',
@@ -20,7 +23,6 @@ export const Secondary = () => ({
 });
 
 export const Tertiary = () => ({
-  component: Button,
   props: {
     label: '📚📕📈🤓',
     background: '#ff0',

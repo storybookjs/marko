@@ -3,13 +3,14 @@
 
 import { ButtonComponent } from './button.component';
 
+export default {
+  title: 'Example/Button',
+  component: ButtonComponent,
+};
+
 // Note: To see the decorator applied to your component's stories you'll need to include the template key with the component's selector.
 
 export const Primary: Story<ButtonComponent> = () => ({
-  component: ButtonComponent,
-  moduleMetadata: {
-    declarations: [ButtonComponent],
-  },
   template: '<app-button label="Submit"></app-button>',
 });
 
