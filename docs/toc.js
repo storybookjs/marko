@@ -322,32 +322,32 @@ module.exports = {
         },
         {
           pathSegment: 'install-addons',
-          title: 'Install addons',
+          title: 'Install',
           type: 'link',
         },
         {
           pathSegment: 'writing-addons',
-          title: 'Writing addons',
+          title: 'Write',
           type: 'link',
         },
         {
           pathSegment: 'writing-presets',
-          title: 'Writing preset addons',
+          title: 'Write a preset',
           type: 'link',
         },
         {
           pathSegment: 'addon-types',
-          title: 'Storybook addon types',
+          title: 'Types of addons',
           type: 'link',
         },
         {
           pathSegment: 'addon-knowledge-base',
-          title: 'Addons knowledge base',
+          title: 'Knowledge base',
           type: 'link',
         },
         {
           pathSegment: 'addons-api',
-          title: 'Addons API',
+          title: 'Addon API',
           type: 'link',
         },
       ],

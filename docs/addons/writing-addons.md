@@ -1,5 +1,5 @@
 ---
-title: 'Write your own Storybook addon'
+title: 'Write an addon'
 ---
 
 One of Storybook's main features is its robust addon ecosystem. Use addons to enhance and extend your development workflow. This page shows you how to create your own addon.
@@ -16,19 +16,18 @@ For this example we're going to build a bare-bones addon which:
 
 We recommend a common addon file and directory structure for consistency.
 
-
-| Files/Directories | Description                       |
-|:------------------|:----------------------------------|
-| dist              | Transpiled directory for the addon|
-| src               | Source code for the addon         |
-| .babelrc.js       | Babel configuration               |
-| preset.js         | Addon entry point                 |
-| package.json      | Addon metadata information        |
-| README.md         | General information for the addon |
+| Files/Directories | Description                        |
+| :---------------- | :--------------------------------- |
+| dist              | Transpiled directory for the addon |
+| src               | Source code for the addon          |
+| .babelrc.js       | Babel configuration                |
+| preset.js         | Addon entry point                  |
+| package.json      | Addon metadata information         |
+| README.md         | General information for the addon  |
 
 ### Get started
 
-Open a new terminal and create a new directory called `my-addon`. Inside it run `npm init` to initialize a new node project. For your project's name choose `my-addon` and for entry point `dist/preset.js`. 
+Open a new terminal and create a new directory called `my-addon`. Inside it run `npm init` to initialize a new node project. For your project's name choose `my-addon` and for entry point `dist/preset.js`.
 
 Once you've gone through the prompts your `package.json` should look like:
 
@@ -38,15 +37,8 @@ Once you've gone through the prompts your `package.json` should look like:
   "version": "1.0.0",
   "description": "A barebones Storybook addon",
   "main": "dist/preset.js",
-  "files": [
-    "dist/**/*",
-    "README.md",
-    "*.js"
-  ],
-  "keywords": [
-    "storybook",
-    "addons"
-  ],
+  "files": ["dist/**/*", "README.md", "*.js"],
+  "keywords": ["storybook", "addons"],
   "author": "YourUsername",
   "license": "MIT"
 }
@@ -93,6 +85,7 @@ Change your `package.json` and add the following script to build the addon:
   }
 }
 ```
+
 <div class="aside">
 Running <code>yarn build</code> at this stage will output the code into the <code>dist</code> directory, transpiled into a ES5 module ready to be installed into any Storybook. 
 </div>
@@ -133,14 +126,13 @@ Now let’s add a panel to Storybook. Inside the `src` directory, create a new f
 
 <div class="aside">
 Make sure to include the <code>key</code> when you register the addon. This will prevent any issues when the addon renders.
-</div> 
+</div>
 
 Going over the code snippet in more detail. When Storybook starts up:
 
 1. It [registers](./addons-api.md#addonsregister) the addon
 2. [Adds](./addons-api.md#addonsadd) a new `panel` titled `My Addon` to the UI
 3. When selected, the `panel` renders the static `div` content
-
 
 ### Register the addon
 
@@ -164,7 +156,6 @@ Run `yarn storybook` and you should see something similar to:
 
 ![Storybook addon initial state](./addon-initial-state.png)
 
-
 ### Display story parameter
 
 Next, let’s replace the `MyPanel` component from above to show the parameter.
@@ -183,7 +174,6 @@ The new version is made smarter by [`useParameter`](./addons-api.md#useparameter
 
 The [addon API](./addons-api.md) provides hooks like this so all of that communication can happen behind the scenes. That means you can focus on your addon's functionality.
 
-
 ### Using the addon with a story
 
 When Storybook was initialized it provided a small set of examples stories. Change your `Button.stories.js` to the following:
@@ -198,8 +188,7 @@ When Storybook was initialized it provided a small set of examples stories. Chan
 
 <!-- prettier-ignore-end -->
 
-
-After applying the changes to the story your Storybook UI will yield the following:
+After applying the changes to the story, the Storybook UI will show the following:
 
 <video autoPlay muted playsInline loop>
   <source
@@ -242,11 +231,10 @@ For example, check out [storybook-addon-outline](https://www.npmjs.com/package/s
 
 In the previous example, we introduced the structure of an addon, but barely scratched the surface of what addons can do.
 
-To dive deeper we recommend [Learn Storybook’s “creating addons”](https://www.learnstorybook.com/intro-to-storybook/react/en/creating-addons/) tutorial. It’s an excellent walkthrough that covers the same ground as the above introduction, but goes further and leads you through the full process of creating a realistic addon. 
+To dive deeper we recommend [Learn Storybook’s “creating addons”](https://www.learnstorybook.com/intro-to-storybook/react/en/creating-addons/) tutorial. It’s an excellent walkthrough that covers the same ground as the above introduction, but goes further and leads you through the full process of creating a realistic addon.
 
 [How to build a Storybook addon](https://www.chromatic.com/blog/how-to-build-a-storybook-addon/) shows you how to create a standalone addon in great detail.
 
 ### Dev kits
 
 To help you jumpstart the addon development, the Storybook maintainers created some [`dev-kits`](https://github.com/storybookjs/storybook/tree/next/dev-kits), use them as reference when building your next addon.
-
