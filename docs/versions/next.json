@@ -1,1 +1,1 @@
-{"version":"6.2.0-alpha.4","info":{"plain":"### Bug Fixes\n\n- Addon-docs: Handle svelte docgen failures gracefully ([#13386](https://github.com/storybookjs/storybook/pull/13386))\n\n### Dependency Upgrades\n\n- Bump @ember/test-helpers from 1.7.1 to 2.1.0 ([#13143](https://github.com/storybookjs/storybook/pull/13143))"}}
+{"version":"6.2.0-alpha.5","info":{"plain":"### Bug Fixes\n\n- Core: Fix `--static-dir` with absolute path on Windows ([#13344](https://github.com/storybookjs/storybook/pull/13344))"}}
