@@ -6,7 +6,7 @@ on:
 
 jobs:
   trigger:
-    if: github.event.label.name == 'run all e2e tests' && github.event.pull_request.head.repo.fork == false
+    if: github.event.label.name == 'run e2e extended test suite' && github.event.pull_request.head.repo.fork == false
     name: Run workflow with all e2e tests
     runs-on: ubuntu-latest
     steps:
