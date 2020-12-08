@@ -18,4 +18,4 @@ jobs:
           --header 'content-type: application/json'
           --data '{"branch":"${{ github.event.pull_request.head.ref }}"}'
         env:
-          CIRCLE_CI_TOKEN: ${{ secrets.CIRCLE_CI_TOKEN_GMAISSE_TEST }}
+          CIRCLE_CI_TOKEN: ${{ secrets.CIRCLE_CI_TOKEN }}

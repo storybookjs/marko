@@ -61,7 +61,7 @@ commands:
 
             API_GITHUB="https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
             PR_REQUEST_URL="$API_GITHUB/pulls/$PR_NUMBER"
-            PR_RESPONSE=$(curl -H "Authorization: token $GITHUB_TOKEN_TEST_GMAISSE" "$PR_REQUEST_URL")
+            PR_RESPONSE=$(curl -H "Authorization: token $GITHUB_TOKEN_STORYBOOK_BOT_READ_REPO" "$PR_REQUEST_URL")
 
 
             if [ $(echo $PR_RESPONSE | jq '.labels | map(select(.name == "<< parameters.label >>")) | length') -ge 1 ] ||
