@@ -64,6 +64,7 @@
     "prompts": "^2.0.0",
     "puppeteer-core": "^2.0.0",
     "shelljs": "^0.8.4",
+    "read-pkg-up": "^7.0.1",
     "strip-json-comments": "^3.0.1",
     "update-notifier": "^4.0.0"
   },
