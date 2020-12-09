@@ -25,7 +25,7 @@ exports[`Storyshots Addon/Knobs All knobs 1`] = `
     ng-reflect-nice="true"
     ng-reflect-price="2.25"
     ng-reflect-stock="20"
-    ng-reflect-today="1484866800000"
+    ng-reflect-today="1487548800000"
   >
     <div
       ng-reflect-ng-style="[object Object]"
@@ -35,7 +35,7 @@ exports[`Storyshots Addon/Knobs All knobs 1`] = `
         My name is Jane,
       </h1>
       <h3>
-        today is Jan 20, 2017
+        today is Feb 20, 2017
       </h3>
       
       <p>

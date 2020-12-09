@@ -78,7 +78,7 @@ export const AllKnobs = () => {
   const price = number('price', 2.25);
 
   const border = color('border', 'deeppink');
-  const today = date('today', new Date('Jan 20 2017'));
+  const today = date('today', new Date(Date.UTC(2017, 1, 20)));
   const items = array('items', ['Laptop', 'Book', 'Whiskey']);
   const nice = boolean('nice', true);
   button('Arbitrary action', action('You clicked it!'));
