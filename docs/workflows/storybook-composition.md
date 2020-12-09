@@ -77,6 +77,3 @@ Once the command executes it will look for a built Storybook in the `my-built-st
 If you need to use arguments, you'll need to use both of them, or the command will not be executed properly.
 
 </div>
-
-
- 
