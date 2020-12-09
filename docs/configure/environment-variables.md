@@ -29,6 +29,34 @@ If using the environment variables as attributes or values in JavaScript, you ma
 
 </div>
 
+### Using .env files
+
+You can also use `.env` files to change Storybook's behavior in different modes. For example, if you add a `.env` file to your project with the following:
+
+```
+STORYBOOK_DATA_KEY=12345
+```
+
+Then you can access this environment variable anywhere, even within your stories:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'react/my-component-with-env-variables.js.mdx',
+    'react/my-component-with-env-variables.ts.mdx',
+    'react/my-component-with-env-variables.mdx.mdx',
+    'vue/my-component-with-env-variables.js.mdx',
+    'angular/my-component-with-env-variables.ts.mdx'
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+<div class="aside">
+You can also use specific files for specific modes. Add a <code>.env.development</code> or <code>.env.production</code> to apply different values to your environment variables.
+</div>
+
 You can also pass these environment variables when you are [building your Storybook](../workflows/publish-storybook.md) with `build-storybook`.
 
 Then they'll be hard coded to the static version of your Storybook.
