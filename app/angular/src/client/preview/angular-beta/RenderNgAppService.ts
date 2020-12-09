@@ -59,7 +59,7 @@ export class RenderNgAppService {
         Primary.parameters = { component: AppComponent };
         \`\`\`
         Read more at 
-        - https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-angular-component).
+        - https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-angular-story-component).
         - https://storybook.js.org/docs/angular/writing-stories/parameters
       `
       )();
