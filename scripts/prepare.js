@@ -69,7 +69,6 @@ function logError(type, packageJson, errorLogs) {
   );
 }
 
-// const nonEsmPackages = [/storyshots/, /lib\/cli$/];
 const modulePath = path.resolve('./');
 const packageJson = getPackageJson(modulePath);
 const modules = true;

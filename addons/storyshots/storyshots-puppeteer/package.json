@@ -16,7 +16,8 @@
     "directory": "addons/storyshots/storyshots-puppeteer"
   },
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/ts3.9/index.js",
+  "module": "dist/ts3.9/index.js",
   "types": "dist/ts3.9/index.d.ts",
   "typesVersions": {
     "<3.8": {

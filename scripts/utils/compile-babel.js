@@ -8,6 +8,9 @@ function getCommand(watch, dir) {
   if (process.cwd().includes(path.join('app', 'angular'))) {
     return '';
   }
+  if (process.cwd().includes(path.join('addons', 'storyshots'))) {
+    return '';
+  }
 
   const babel = path.join(__dirname, '..', '..', 'node_modules', '.bin', 'babel');
 
@@ -86,8 +89,6 @@ async function babelify(options = {}) {
     return;
   }
 
-  const dir = (modules && './dist/cjs') || './dist';
-
   if (watch) {
     await Promise.all([
       run({ watch, dir: './dist/cjs', silent, errorCallback }),
@@ -95,7 +96,7 @@ async function babelify(options = {}) {
     ]);
   } else {
     // cjs
-    await run({ dir, silent, errorCallback });
+    await run({ dir: './dist/cjs', silent, errorCallback });
 
     if (modules) {
       // esm

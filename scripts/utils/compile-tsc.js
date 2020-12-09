@@ -24,6 +24,10 @@ function getCommand(watch) {
     args.push('--declaration true');
   }
 
+  if (isStoryshots) {
+    args.push('--declaration true');
+  }
+
   if (watch) {
     args.push('-w', '--preserveWatchOutput');
   }
