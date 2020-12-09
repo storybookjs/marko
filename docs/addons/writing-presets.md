@@ -1,5 +1,5 @@
 ---
-title: 'Write a Storybook preset addon'
+title: 'Write a preset addon'
 ---
 
 [Storybook preset addons](./addon-types.md#preset-addons) are grouped collections of `babel`, `webpack`, and `addons` configurations that support specific use cases in Storybook, such as typescript or MDX support.
@@ -202,6 +202,5 @@ and extract the configuration to a new file `./storybook/my-preset.js`:
 />
 
 <!-- prettier-ignore-end -->
-
 
 Place your `my-preset.js` file wherever you want, if you want to share it far and wide you'll want to make it its own package.
