@@ -84,7 +84,6 @@ export const AllKnobs = () => {
   button('Arbitrary action', action('You clicked it!'));
 
   return {
-    component: AllKnobsComponent,
     props: {
       name,
       stock,
@@ -100,6 +99,9 @@ export const AllKnobs = () => {
 };
 
 AllKnobs.storyName = 'All knobs';
+AllKnobs.parameters = {
+  component: AllKnobsComponent,
+};
 
 export const XssSafety = () => ({
   template: text('Rendered string', '<img src=x onerror="alert(\'XSS Attack\')" >'),

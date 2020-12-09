@@ -3,10 +3,10 @@ import { DiComponent } from './di.component';
 
 export default {
   title: 'Custom/Dependencies',
+  component: DiComponent,
 };
 
 export const InputsAndInjectDependencies = () => ({
-  component: DiComponent,
   props: {
     title: 'Component dependencies',
   },
@@ -15,7 +15,6 @@ export const InputsAndInjectDependencies = () => ({
 InputsAndInjectDependencies.storyName = 'inputs and inject dependencies';
 
 export const InputsAndInjectDependenciesWithKnobs = () => ({
-  component: DiComponent,
   props: {
     title: text('title', 'Component dependencies'),
   },

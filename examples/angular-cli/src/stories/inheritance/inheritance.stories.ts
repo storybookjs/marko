@@ -6,7 +6,6 @@ export default {
 };
 
 export const IconButton = () => ({
-  component: IconButtonComponent,
   props: {
     icon: 'this is icon',
     label: 'this is label',
@@ -14,12 +13,17 @@ export const IconButton = () => ({
 });
 
 IconButton.storyName = 'icon button';
+IconButton.parameters = {
+  component: IconButtonComponent,
+};
 
 export const BaseButton = () => ({
-  component: BaseButtonComponent,
   props: {
     label: 'this is label',
   },
 });
 
 BaseButton.storyName = 'base button';
+BaseButton.parameters = {
+  component: BaseButtonComponent,
+};

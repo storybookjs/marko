@@ -5,7 +5,7 @@ import { CustomCvaComponent } from './custom-cva.component';
 
 export default {
   title: 'Custom/ngModel',
-
+  component: CustomCvaComponent,
   decorators: [
     moduleMetadata({
       imports: [FormsModule],
@@ -14,7 +14,6 @@ export default {
 };
 
 export const CustomControlValueAccessor = () => ({
-  component: CustomCvaComponent,
   props: {
     ngModel: 'Type anything',
     ngModelChange: action('ngModelChange'),
