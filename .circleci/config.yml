@@ -325,7 +325,7 @@ jobs:
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
-  integration-tests:
+  e2e-tests-examples:
     working_directory: /tmp/storybook
     docker:
       - image: cypress/included:4.7.0
@@ -345,7 +345,7 @@ jobs:
           command: yarn await-serve-storybooks
       - run:
           name: cypress run
-          command: yarn test:integration
+          command: yarn test:e2e-examples
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
@@ -482,7 +482,7 @@ workflows:
           requires:
             - install-examples-deps
             - build
-      - integration-tests:
+      - e2e-tests-examples:
           requires:
             - examples
       - smoke-tests:
