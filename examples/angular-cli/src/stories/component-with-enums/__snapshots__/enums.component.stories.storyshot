@@ -1,19 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Enum Types Basic 1`] = `
-<storybook-wrapper
-  aliasedUnionType={[Function String]}
-  changeDetectorRef={[Function ViewRef_]}
-  enumAlias="0"
-  enumNumeric="0"
-  enumNumericInitial={[Function Number]}
-  enumStrings={[Function String]}
-  storyComponentElementRef={[Function EnumsComponent]}
-  storyComponentViewContainerRef={[Function ViewContainerRef_]}
-  storyProps$={[Function Observable]}
-  storyPropsSubscription={[Function Subscriber]}
-  unionType={[Function String]}
->
+<storybook-wrapper>
   <app-enums
     ng-reflect-aliased-union-type="Type Alias 1"
     ng-reflect-enum-alias="0"

@@ -1,11 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots DocPipe Basic 1`] = `
-<storybook-wrapper
-  changeDetectorRef={[Function ViewRef_]}
-  storyProps$={[Function Observable]}
-  storyPropsSubscription={[Function Subscriber]}
->
+<storybook-wrapper>
   <div>
     <h1>
       DOCPIPE

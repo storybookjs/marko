@@ -36,7 +36,8 @@ function getRenderedTree(story: any) {
     const tree = TestBed.createComponent(moduleMeta.bootstrap[0] as any);
     tree.detectChanges();
 
-    return tree;
+    // Empty componentInstance remove attributes of the internal main component (<storybook-wrapper>) in snapshot
+    return { ...tree, componentInstance: {} };
   });
 }
 

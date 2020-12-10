@@ -1,13 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Addon/Jest app.component with jest tests 1`] = `
-<storybook-wrapper
-  changeDetectorRef={[Function ViewRef_]}
-  storyComponentElementRef={[Function AppComponent]}
-  storyComponentViewContainerRef={[Function ViewContainerRef_]}
-  storyProps$={[Function Observable]}
-  storyPropsSubscription={[Function Subscriber]}
->
+<storybook-wrapper>
   <storybook-app-root>
     <div
       class="hide"

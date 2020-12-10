@@ -1,14 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Button with some emoji 1`] = `
-<storybook-wrapper
-  changeDetectorRef={[Function ViewRef_]}
-  onClick={[Function Function]}
-  storyProps$={[Function Observable]}
-  storyPropsSubscription={[Function Subscriber]}
-  text={[Function String]}
->
+<storybook-wrapper>
   <storybook-button-component
+    _nghost-a-c3=""
+    ng-reflect-text="😀 😎 👍 💯"
+  >
+    <button
+      _ngcontent-a-c3=""
+    >
+      😀 😎 👍 💯
+    </button>
+  </storybook-button-component><storybook-button-component
     _nghost-a-c3=""
     ng-reflect-text="😀 😎 👍 💯"
   >
@@ -22,13 +25,7 @@ exports[`Storyshots Button with some emoji 1`] = `
 `;
 
 exports[`Storyshots Button with text 1`] = `
-<storybook-wrapper
-  changeDetectorRef={[Function ViewRef_]}
-  onClick={[Function Function]}
-  storyProps$={[Function Observable]}
-  storyPropsSubscription={[Function Subscriber]}
-  text={[Function String]}
->
+<storybook-wrapper>
   <storybook-button-component
     _nghost-a-c2=""
     ng-reflect-text="Hello Button"
@@ -43,12 +40,7 @@ exports[`Storyshots Button with text 1`] = `
 `;
 
 exports[`Storyshots Welcome to Storybook 1`] = `
-<storybook-wrapper
-  changeDetectorRef={[Function ViewRef_]}
-  showApp={[Function Function]}
-  storyProps$={[Function Observable]}
-  storyPropsSubscription={[Function Subscriber]}
->
+<storybook-wrapper>
   <storybook-welcome-component
     _nghost-a-c1=""
   >

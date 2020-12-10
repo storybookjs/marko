@@ -1,13 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Addon/Docs with some emoji 1`] = `
-<storybook-wrapper
-  changeDetectorRef={[Function ViewRef_]}
-  onClick={[Function Function]}
-  storyProps$={[Function Observable]}
-  storyPropsSubscription={[Function Subscriber]}
-  text={[Function String]}
->
+<storybook-wrapper>
   <storybook-button-component
     _nghost-a-c7=""
     ng-reflect-text="😀 😎 👍 💯"
@@ -22,13 +16,7 @@ exports[`Storyshots Addon/Docs with some emoji 1`] = `
 `;
 
 exports[`Storyshots Addon/Docs with text 1`] = `
-<storybook-wrapper
-  changeDetectorRef={[Function ViewRef_]}
-  onClick={[Function Function]}
-  storyProps$={[Function Observable]}
-  storyPropsSubscription={[Function Subscriber]}
-  text={[Function String]}
->
+<storybook-wrapper>
   <storybook-button-component
     _nghost-a-c6=""
     ng-reflect-text="Hello Button"

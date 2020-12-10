@@ -1,14 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Custom/Inheritance base button 1`] = `
-<storybook-wrapper
-  changeDetectorRef={[Function ViewRef_]}
-  label={[Function String]}
-  storyComponentElementRef={[Function BaseButtonComponent]}
-  storyComponentViewContainerRef={[Function ViewContainerRef_]}
-  storyProps$={[Function Observable]}
-  storyPropsSubscription={[Function Subscriber]}
->
+<storybook-wrapper>
   <storybook-base-button
     ng-reflect-label="this is label"
   >
@@ -20,15 +13,7 @@ exports[`Storyshots Custom/Inheritance base button 1`] = `
 `;
 
 exports[`Storyshots Custom/Inheritance icon button 1`] = `
-<storybook-wrapper
-  changeDetectorRef={[Function ViewRef_]}
-  icon={[Function String]}
-  label={[Function String]}
-  storyComponentElementRef={[Function IconButtonComponent]}
-  storyComponentViewContainerRef={[Function ViewContainerRef_]}
-  storyProps$={[Function Observable]}
-  storyPropsSubscription={[Function Subscriber]}
->
+<storybook-wrapper>
   <storybook-icon-button
     ng-reflect-icon="this is icon"
   >

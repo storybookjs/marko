@@ -1,14 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Custom/Providers Simple 1`] = `
-<storybook-wrapper
-  changeDetectorRef={[Function ViewRef_]}
-  name={[Function String]}
-  storyComponentElementRef={[Function ServiceComponent]}
-  storyComponentViewContainerRef={[Function ViewContainerRef_]}
-  storyProps$={[Function Observable]}
-  storyPropsSubscription={[Function Subscriber]}
->
+<storybook-wrapper>
   <storybook-simple-service-component
     ng-reflect-name="Static name"
   >
@@ -23,14 +16,7 @@ exports[`Storyshots Custom/Providers Simple 1`] = `
 `;
 
 exports[`Storyshots Custom/Providers With knobs 1`] = `
-<storybook-wrapper
-  changeDetectorRef={[Function ViewRef_]}
-  name={[Function String]}
-  storyComponentElementRef={[Function ServiceComponent]}
-  storyComponentViewContainerRef={[Function ViewContainerRef_]}
-  storyProps$={[Function Observable]}
-  storyPropsSubscription={[Function Subscriber]}
->
+<storybook-wrapper>
   <storybook-simple-service-component
     ng-reflect-name="Dynamic knob"
   >

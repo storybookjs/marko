@@ -1,22 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Addon/Knobs All knobs 1`] = `
-<storybook-wrapper
-  border={[Function String]}
-  changeDetectorRef={[Function ViewRef_]}
-  fruit={[Function String]}
-  items={[Function Array]}
-  name={[Function String]}
-  nice={[Function Boolean]}
-  otherFruit={[Function String]}
-  price={[Function Number]}
-  stock={[Function Number]}
-  storyComponentElementRef={[Function AllKnobsComponent]}
-  storyComponentViewContainerRef={[Function ViewContainerRef_]}
-  storyProps$={[Function Observable]}
-  storyPropsSubscription={[Function Subscriber]}
-  today={[Function Number]}
->
+<storybook-wrapper>
   <storybook-simple-knobs-component
     ng-reflect-border="deeppink"
     ng-reflect-fruit="apples"
@@ -72,14 +57,7 @@ exports[`Storyshots Addon/Knobs All knobs 1`] = `
 `;
 
 exports[`Storyshots Addon/Knobs Simple 1`] = `
-<storybook-wrapper
-  age="0"
-  changeDetectorRef={[Function ViewRef_]}
-  name={[Function String]}
-  phoneNumber={[Function String]}
-  storyProps$={[Function Observable]}
-  storyPropsSubscription={[Function Subscriber]}
->
+<storybook-wrapper>
   <h1>
      This is a template 
   </h1><storybook-simple-knobs-component
@@ -98,11 +76,7 @@ exports[`Storyshots Addon/Knobs Simple 1`] = `
 `;
 
 exports[`Storyshots Addon/Knobs XSS safety 1`] = `
-<storybook-wrapper
-  changeDetectorRef={[Function ViewRef_]}
-  storyProps$={[Function Observable]}
-  storyPropsSubscription={[Function Subscriber]}
->
+<storybook-wrapper>
   &lt;img src=x onerror="alert('XSS Attack')" &gt;
 </storybook-wrapper>
 `;

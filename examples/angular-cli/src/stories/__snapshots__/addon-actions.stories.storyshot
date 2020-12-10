@@ -1,15 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Addon/Actions Action and method 1`] = `
-<storybook-wrapper
-  changeDetectorRef={[Function ViewRef_]}
-  onClick={[Function Function]}
-  storyComponentElementRef={[Function ButtonComponent]}
-  storyComponentViewContainerRef={[Function ViewContainerRef_]}
-  storyProps$={[Function Observable]}
-  storyPropsSubscription={[Function Subscriber]}
-  text={[Function String]}
->
+<storybook-wrapper>
   <storybook-button-component
     _nghost-a-c5=""
     ng-reflect-text="Action and Method"
@@ -24,15 +16,7 @@ exports[`Storyshots Addon/Actions Action and method 1`] = `
 `;
 
 exports[`Storyshots Addon/Actions Action only 1`] = `
-<storybook-wrapper
-  changeDetectorRef={[Function ViewRef_]}
-  onClick={[Function Function]}
-  storyComponentElementRef={[Function ButtonComponent]}
-  storyComponentViewContainerRef={[Function ViewContainerRef_]}
-  storyProps$={[Function Observable]}
-  storyPropsSubscription={[Function Subscriber]}
-  text={[Function String]}
->
+<storybook-wrapper>
   <storybook-button-component
     _nghost-a-c4=""
     ng-reflect-text="Action only"

@@ -1,15 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Custom/Feature Module as Context Component with default providers 1`] = `
-<storybook-wrapper
-  changeDetectorRef={[Function ViewRef_]}
-  displayText={[Function String]}
-  removeClicked={[Function Function]}
-  storyComponentElementRef={[Function ChipComponent]}
-  storyComponentViewContainerRef={[Function ViewContainerRef_]}
-  storyProps$={[Function Observable]}
-  storyPropsSubscription={[Function Subscriber]}
->
+<storybook-wrapper>
   <storybook-chip
     ng-reflect-display-text="My Chip"
     style="background-color: rgb(238, 238, 238);"
@@ -33,15 +25,7 @@ exports[`Storyshots Custom/Feature Module as Context Component with default prov
 `;
 
 exports[`Storyshots Custom/Feature Module as Context Component with overridden provider 1`] = `
-<storybook-wrapper
-  changeDetectorRef={[Function ViewRef_]}
-  displayText={[Function String]}
-  removeClicked={[Function Function]}
-  storyComponentElementRef={[Function ChipComponent]}
-  storyComponentViewContainerRef={[Function ViewContainerRef_]}
-  storyProps$={[Function Observable]}
-  storyPropsSubscription={[Function Subscriber]}
->
+<storybook-wrapper>
   <storybook-chip
     ng-reflect-display-text="My Chip"
     style="background-color: yellow;"
@@ -65,16 +49,7 @@ exports[`Storyshots Custom/Feature Module as Context Component with overridden p
 `;
 
 exports[`Storyshots Custom/Feature Module as Context Component with self and dependencies declared in its feature module 1`] = `
-<storybook-wrapper
-  changeDetectorRef={[Function ViewRef_]}
-  chips={[Function Array]}
-  removeAllChipsClick={[Function Function]}
-  removeChipClick={[Function Function]}
-  storyComponentElementRef={[Function ChipsGroupComponent]}
-  storyComponentViewContainerRef={[Function ViewContainerRef_]}
-  storyProps$={[Function Observable]}
-  storyPropsSubscription={[Function Subscriber]}
->
+<storybook-wrapper>
   <storybook-chips-group
     ng-reflect-chips="[object Object],[object Object"
   >

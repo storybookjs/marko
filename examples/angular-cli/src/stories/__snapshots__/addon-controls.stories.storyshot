@@ -1,15 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Addon/Controls Basic 1`] = `
-<storybook-wrapper
-  changeDetectorRef={[Function ViewRef_]}
-  isDisabled="false"
-  label={[Function String]}
-  storyComponentElementRef={[Function DocButtonComponent]}
-  storyComponentViewContainerRef={[Function ViewContainerRef_]}
-  storyProps$={[Function Observable]}
-  storyPropsSubscription={[Function Subscriber]}
->
+<storybook-wrapper>
   <my-button
     ng-reflect-is-disabled="false"
     ng-reflect-label="Args test"
@@ -30,15 +22,7 @@ exports[`Storyshots Addon/Controls Basic 1`] = `
 `;
 
 exports[`Storyshots Addon/Controls Disabled 1`] = `
-<storybook-wrapper
-  changeDetectorRef={[Function ViewRef_]}
-  isDisabled={[Function Boolean]}
-  label={[Function String]}
-  storyComponentElementRef={[Function DocButtonComponent]}
-  storyComponentViewContainerRef={[Function ViewContainerRef_]}
-  storyProps$={[Function Observable]}
-  storyPropsSubscription={[Function Subscriber]}
->
+<storybook-wrapper>
   <my-button
     ng-reflect-is-disabled="true"
     ng-reflect-label="Disabled"

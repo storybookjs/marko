@@ -1,14 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Addon/Issues/12009 unknown component Basic 1`] = `
-<storybook-wrapper
-  changeDetectorRef={[Function ViewRef_]}
-  storyComponentElementRef={[Function ButtonComponent]}
-  storyComponentViewContainerRef={[Function ViewContainerRef_]}
-  storyProps$={[Function Observable]}
-  storyPropsSubscription={[Function Subscriber]}
-  text={[Function String]}
->
+<storybook-wrapper>
   <storybook-button-component
     _nghost-a-c14=""
     ng-reflect-text="Unknown component"
