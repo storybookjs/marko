@@ -14,6 +14,21 @@ import { createComponentClassFromStoryTemplate } from './ComponentClassFromStory
 import { isComponentAlreadyDeclaredInModules } from './NgModulesAnalyzer';
 import { isDeclarable } from './NgComponentAnalyzer';
 
+const deprecatedStoryComponentWarning = deprecate(
+  () => {},
+  dedent`\`component\` story input is deprecated, and will be removed in Storybook 7.0.
+        Instead, use \`export const default = () => ({ component: AppComponent });\`
+        or
+        \`\`\`
+        export const Primary: Story = () => ({});
+        Primary.parameters = { component: AppComponent };
+        \`\`\`
+        Read more at 
+        - https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-angular-story-component).
+        - https://storybook.js.org/docs/angular/writing-stories/parameters
+      `
+);
+
 /**
  * Bootstrap angular application and allows to change the rendering dynamically
  * To be used as a singleton so has to set global properties of render function
@@ -49,20 +64,7 @@ export class RenderNgAppService {
     } = storyFnAngular;
 
     if (storyComponent) {
-      deprecate(
-        () => {},
-        dedent`\`component\` story input is deprecated, and will be removed in Storybook 7.0.
-        Instead, use \`export const default = () => ({ component: AppComponent });\`
-        or
-        \`\`\`
-        export const Primary: Story = () => ({});
-        Primary.parameters = { component: AppComponent };
-        \`\`\`
-        Read more at 
-        - https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-angular-story-component).
-        - https://storybook.js.org/docs/angular/writing-stories/parameters
-      `
-      )();
+      deprecatedStoryComponentWarning();
     }
     const component = storyComponent ?? parameters.component;
 

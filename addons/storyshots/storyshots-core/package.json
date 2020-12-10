@@ -55,7 +55,6 @@
     "react-test-renderer": "^16.8.0 || ^17.0.0",
     "read-pkg-up": "^7.0.0",
     "regenerator-runtime": "^0.13.7",
-    "rxjs": "^6.6.3",
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
@@ -67,7 +66,8 @@
     "enzyme-to-json": "^3.4.1",
     "jest-emotion": "^10.0.17",
     "jest-preset-angular": "^8.3.2",
-    "jest-vue-preprocessor": "^1.5.0"
+    "jest-vue-preprocessor": "^1.5.0",
+    "rxjs": "^6.6.3"
   },
   "peerDependencies": {
     "@storybook/angular": "*",
@@ -77,7 +77,8 @@
     "jest-vue-preprocessor": "*",
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0",
-    "vue": "*"
+    "vue": "*",
+    "rxjs": "*"
   },
   "peerDependenciesMeta": {
     "@storybook/vue": {
@@ -99,6 +100,9 @@
       "optional": true
     },
     "vue": {
+      "optional": true
+    },
+    "rxjs": {
       "optional": true
     }
   },
