@@ -43,6 +43,10 @@ export default async ({
     packageJson: { version },
   } = await readPackage({ cwd: __dirname });
 
+  // @ts-ignore
+  // eslint-disable-next-line import/no-extraneous-dependencies
+  const { BundleAnalyzerPlugin } = await import('webpack-bundle-analyzer').catch(() => ({}));
+
   return {
     name: 'manager',
     mode: isProd ? 'production' : 'development',
@@ -96,6 +100,12 @@ export default async ({
         'process.env': stringified,
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       }),
+      BundleAnalyzerPlugin &&
+        new BundleAnalyzerPlugin({
+          analyzerMode: isProd ? 'static' : 'server',
+          analyzerPort: 'auto',
+          openAnalyzer: false,
+        }),
     ].filter(Boolean),
     module: {
       rules: [
