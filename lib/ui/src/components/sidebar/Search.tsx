@@ -1,10 +1,9 @@
-/* eslint-env browser */
-
 import { useStorybookApi } from '@storybook/api';
 import { styled } from '@storybook/theming';
 import { Icons } from '@storybook/components';
 import Downshift, { DownshiftState, StateChangeOptions } from 'downshift';
 import Fuse, { FuseOptions } from 'fuse.js';
+import { document } from 'global';
 import { transparentize } from 'polished';
 import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 
@@ -22,7 +21,7 @@ import {
   isCloseType,
 } from './types';
 import { searchItem } from './utils';
-import { matchesKeyCode, matchesModifiers } from './keybinding';
+import { matchesKeyCode, matchesModifiers } from '../../keybinding';
 
 const DEFAULT_MAX_SEARCH_RESULTS = 50;
 
