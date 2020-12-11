@@ -1,5 +1,4 @@
-import React from 'react';
-import { Global, Theme, CSSObject, keyframes } from '@storybook/theming';
+import { Theme, CSSObject, keyframes } from '@storybook/theming';
 
 const hsResizeObserverDummyAnimation = keyframes`0%{z-index:0}to{z-index:-1}`;
 
@@ -444,7 +443,3 @@ export const getScrollAreaStyles: (theme: Theme) => CSSObject = (theme: Theme) =
     left: -2,
   },
 });
-
-const GlobalScrollAreaStyles = () => <Global styles={getScrollAreaStyles} />;
-
-export default GlobalScrollAreaStyles;
