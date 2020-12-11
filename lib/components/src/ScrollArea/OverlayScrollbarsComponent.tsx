@@ -85,5 +85,3 @@ function mergeHostClassNames(osInstance: OverlayScrollbars, className: string) {
     host.className = `${osClassNames} ${className || ''}`;
   }
 }
-
-export default OverlayScrollbarsComponent;
