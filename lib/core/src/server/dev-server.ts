@@ -182,7 +182,7 @@ const useProgressReporting = async (
 
     if (value === 1) {
       if (options.cache) {
-        options.cache.set('modulesCount', totalModules);
+        options.cache.set('modulesCount', { modulesCount: totalModules });
       }
 
       if (!progress.message) {
@@ -192,7 +192,7 @@ const useProgressReporting = async (
     reportProgress(progress);
   };
 
-  const modulesCount = (await options.cache?.get('modulesCount')) || 1000;
+  const { modulesCount = 1000 } = (await options.cache?.get('modulesCount').catch(() => {})) || {};
   new ProgressPlugin({ handler, modulesCount }).apply(compiler);
 };
 
