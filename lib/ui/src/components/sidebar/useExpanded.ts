@@ -76,8 +76,7 @@ export const useExpanded = ({
   );
 
   const getElementByDataItemId = useCallback(
-    (id: string) =>
-      containerRef.current && containerRef.current.querySelector(`[data-item-id="${id}"]`),
+    (id: string) => containerRef.current?.querySelector(`[data-item-id="${id}"]`),
     [containerRef]
   );
 
@@ -93,7 +92,7 @@ export const useExpanded = ({
     ({ ids, value }) => {
       setExpanded({ ids, value });
       if (ids.length === 1) {
-        const element = containerRef.current.querySelector(
+        const element = containerRef.current?.querySelector(
           `[data-item-id="${ids[0]}"][data-ref-id="${refId}"]`
         );
         if (element) highlightElement(element);
