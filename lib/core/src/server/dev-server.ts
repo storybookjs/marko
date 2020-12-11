@@ -182,7 +182,7 @@ const useProgressReporting = async (
 
     if (value === 1) {
       if (options.cache) {
-        options.cache.set('modulesCount', { modulesCount: totalModules });
+        options.cache.set('modulesCount', totalModules);
       }
 
       if (!progress.message) {
@@ -192,7 +192,7 @@ const useProgressReporting = async (
     reportProgress(progress);
   };
 
-  const { modulesCount = 1000 } = (await options.cache?.get('modulesCount').catch(() => {})) || {};
+  const modulesCount = (await options.cache?.get('modulesCount').catch(() => {})) || 1000;
   new ProgressPlugin({ handler, modulesCount }).apply(compiler);
 };
 
@@ -200,7 +200,7 @@ const useManagerCache = async (fsc: FileSystemCache, managerConfig: webpack.Conf
   // Drop the `cache` property because it'll change as a result of writing to the cache.
   const { cache: _, ...baseConfig } = managerConfig;
   const configString = stringify(baseConfig);
-  const cachedConfig = await fsc.get('managerConfig');
+  const cachedConfig = await fsc.get('managerConfig').catch(() => {});
   await fsc.set('managerConfig', configString);
   return configString === cachedConfig;
 };
