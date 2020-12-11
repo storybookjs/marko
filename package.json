@@ -72,9 +72,9 @@
     "start": "yarn --cwd examples/official-storybook storybook",
     "test": "node ./scripts/test.js",
     "test:cli": "npm --prefix lib/cli run test",
-    "test:e2e": "cypress run",
-    "test:e2e-framework": "ts-node --project=./scripts/tsconfig.json ./scripts/run-e2e.ts",
-    "test:e2e-gui": "concurrently --success first --kill-others \"cypress open\" \"yarn serve-storybooks\""
+    "test:e2e-examples": "cypress run",
+    "test:e2e-examples-gui": "concurrently --success first --kill-others \"cypress open\" \"yarn serve-storybooks\"",
+    "test:e2e-framework": "ts-node --project=./scripts/tsconfig.json ./scripts/run-e2e.ts"
   },
   "husky": {
     "hooks": {
