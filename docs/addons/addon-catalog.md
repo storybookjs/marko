@@ -23,7 +23,7 @@ We rely on metadata to organize your addon in the catalog. You must add the <cod
 
 | Property      | Description                            | Example                                                                   |
 | ------------- | -------------------------------------- | ------------------------------------------------------------------------- |
-| `name`        | Addon name                             | storybook-addon-outline                                                   |
+| `name`        | Addon package name                     | storybook-addon-outline                                                   |
 | `description` | Addon description                      | Outline all elements with CSS to help with layout placement and alignment |
 | `author`      | Name of the author                     | winkerVSbecks                                                             |
 | `keywords`    | List of keywords to describe the addon | `["storybook-addons","style","debug"]`                                    |
