@@ -1,3 +1,14 @@
+## 6.1.11 (December 12, 2020)
+
+### Bug Fixes
+
+- UI: Fix null ref in sidebar ([#13423](https://github.com/storybookjs/storybook/pull/13423))
+- Addon-docs: Handle svelte docgen failures gracefully ([#13386](https://github.com/storybookjs/storybook/pull/13386))
+
+### Dependency Upgrades
+
+- Update react-popper-tooltip and @popperjs/core for react17 ([#13434](https://github.com/storybookjs/storybook/pull/13434))
+
 ## 6.2.0-alpha.6 (December 12, 2020)
 
 ### Features
