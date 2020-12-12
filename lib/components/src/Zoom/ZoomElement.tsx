@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { styled } from '@storybook/theming';
-import { browserSupportsCssZoom } from './Zoom';
+import { browserSupportsCssZoom } from './browserSupportsCssZoom';
 
 const ZoomElementWrapper = styled.div<{ scale: number; height: number }>(({ scale = 1, height }) =>
   browserSupportsCssZoom()
