@@ -6,15 +6,19 @@ title: 'Add to the addon catalog'
 The addon catalog is in <strong>beta</strong>. Please report any issues you find.
 </div>
 
-Storybook addons are listed in the [catalog](/addons) and distributed via npm. The catalog is populated by querying npm's registry for Storybook-specific metadata in `package.json`. Before we begin, check that your addon has the baseline requirements.
+Storybook addons are listed in the [catalog](/addons) and distributed via npm. The catalog is populated by querying npm's registry for Storybook-specific metadata in `package.json`.
 
-- `package.json` with [module information](writing-addons.md#get-started) and addon metadata
+Add your addon to the catalog by publishing a package that follows these requirements:
+
+- `package.json` with [module information](writing-addons.md#get-started) and [addon metadata](#addon-metadata)
 - `README.md` file with installation and configuration instructions
 - `/dist` directory containing transpiled ES5 code
 - `preset.js` file written as an ES5 module at the root level
 
 <div class="aside">
+
 Learn how to write a Storybook addon [here](./writing-addons.md).
+
 </div>
 
 ## Addon metadata
@@ -46,7 +50,7 @@ Customize your addon's appearance by adding the `storybook` property with the fo
   "version": "1.0.0",
   "description": "Outline all elements with CSS to help with layout placement and alignment",
   "author": "winkerVSbecks",
-  "keywords": ["storybook-addons", "style", "debug", "outline", "css", "layout"],
+  "keywords": ["storybook-addons", "style", "debug", "layout", "css"],
   "storybook": {
     "displayName": "Outline",
     "unsupportedFrameworks": ["Vue"],
