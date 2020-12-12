@@ -217,7 +217,7 @@ This auto-registers the addon without any additional configuration from the user
 
 Now that you've seen how to create a bare-bones addon, let's see how to share it with the community. Before we begin, make sure your addon meets the following requirements:
 
-- `package.json file` with metadata about the addon
+- `package.json` file with metadata about the addon
 - Peer dependencies of `react` and `@storybook/addons`
 - `preset.js` file at the root level written as an ES5 module
 - `src` directory containing the ES6 addon code
@@ -225,7 +225,9 @@ Now that you've seen how to create a bare-bones addon, let's see how to share it
 - [GitHub](https://github.com/) account to host your code
 - [NPM](https://www.npmjs.com/) account to publish the addon
 
-For example, check out [storybook-addon-outline](https://www.npmjs.com/package/storybook-addon-outline) to see a project that meets these requirements.
+Reference the [storybook-addon-outline](https://www.npmjs.com/package/storybook-addon-outline) to see a project that meets these requirements.
+
+Learn how to [add to the addon catalog](./addon-catalog.md).
 
 ### More guides and tutorials
 

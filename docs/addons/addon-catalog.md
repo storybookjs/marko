@@ -1,70 +1,65 @@
 ---
-title: 'Add to catalog'
+title: 'Add to the addon catalog'
 ---
 
 <div class="aside">
-The addon catalog is still in <strong>beta</strong> and we plan to release it soon. Let us know of any issues you find.
+The addon catalog is in <strong>beta</strong>. Please report any issues you find.
 </div>
 
-Storybook addons as other packages in the Javascript ecosystem are distributed via npm. Before publishing and listing your addon in the catalog, check if the following requirements are met:
+Storybook addons are listed in the [catalog](/addons) and distributed via npm. The catalog is populated by querying npm's registry for Storybook-specific metadata in `package.json`. Before we begin, check that your addon has the baseline requirements.
 
-- A `package.json` with module related information and catalog metadata
-- `README` file with instructions on how to use the addon (installation and configuration)
-- `dist` directory containing transpiled ES5 code
-- Root level `preset.js` file written as an ES5 module
+- `package.json` with [module information](writing-addons.md#get-started) and addon metadata
+- `README.md` file with installation and configuration instructions
+- `/dist` directory containing transpiled ES5 code
+- `preset.js` file written as an ES5 module at the root level
 
 <div class="aside">
-
-Learn how to write your own Storybook addon [here](./writing-addons.md).
-
+Learn how to write a Storybook addon [here](./writing-addons.md).
 </div>
 
-### Module metadata
+## Addon metadata
 
-The items mentioned above are the baseline requirements for any Storybook addon. But we rely on key pieces of information to feature the addon in the catalog:
+We rely on metadata to organize your addon in the catalog. You must add the <code>storybook-addons</code> as the first keyword, followed by your addon's category. Additional keywords will be used in search and as tags.
 
-| Property    | Description                            | Example                                                               |
-| ----------- | -------------------------------------- | --------------------------------------------------------------------- |
-| name        | Addon display name                     | My-addon                                                              |
-| description | Addon description                      | Sample description                                                    |
-| author      | Name of the author                     | Someone                                                               |
-| keywords    | List of keywords to describe the addon | `["storybook-addon","layout","debug"]`                                |
-| repository  | Addon repository                       |`{"type": "git","url": "https://github.com/someone/my-addon" }`          |
+| Property      | Description                            | Example                                                                   |
+| ------------- | -------------------------------------- | ------------------------------------------------------------------------- |
+| `name`        | Addon name                             | storybook-addon-outline                                                   |
+| `description` | Addon description                      | Outline all elements with CSS to help with layout placement and alignment |
+| `author`      | Name of the author                     | winkerVSbecks                                                             |
+| `keywords`    | List of keywords to describe the addon | `["storybook-addons","style","debug"]`                                    |
+| `repository`  | Addon repository                       | `{"type": "git","url": "https://github.com/someone/my-addon" }`           |
 
-<div class="aside">
-To get the addon listed in the catalog, add the <code>storybook-addons</code> as the first keyword, followed by an entry to categorize the addon. Including additional keywords helps with searchability. 
-</div>
+Customize your addon's appearance by adding the `storybook` property with the following fields.
 
-### Catalog metadata
-
-Along with module related information, you'll need to specify additional metadata. In your `package.json` add the `storybook` property and use the following fields:
-
-| Property              | Description                    | Example           |
-| --------------------- | ------------------------------ | ----------------- |
-| displayName           | Addon display name             | My-addon          |
-| icon                  | Custom icon for the addon      | my-addon-icon.png |
-| unsupportedFrameworks | List of unsupported frameworks | Vue               |
-| supportedFrameworks   | List of supported frameworks   | React,Angular     |
-
-For instance:
+| Property              | Description                       | Example                               |
+| --------------------- | --------------------------------- | ------------------------------------- |
+| displayName           | Display name                      | Outline                               |
+| icon                  | Link to custom icon for the addon | https://yoursite.com/outline-icon.png |
+| unsupportedFrameworks | List of unsupported frameworks    | Vue                                   |
+| supportedFrameworks   | List of supported frameworks      | React,Angular                         |
 
 ```json
 {
+  // package.json
+
+  "name": "storybook-addon-outline",
+  "version": "1.0.0",
+  "description": "Outline all elements with CSS to help with layout placement and alignment",
+  "author": "winkerVSbecks",
+  "keywords": ["storybook-addons", "style", "debug", "outline", "css", "layout"],
   "storybook": {
-    "displayName": "My-addon",
+    "displayName": "Outline",
     "unsupportedFrameworks": ["Vue"],
-    "supportedFrameworks": ["Angular", "React"],
-    "icon": "https://my-url/my-addon-icon.png"
+    "supportedFrameworks": ["React", "Angular"],
+    "icon": "https://yoursite.com/outline-icon.png"
   }
 }
 ```
 
-![Storybook addon listed](./addon-featured.png)
+The `package.json` above appears like so in the catalog.
 
-Once you publish the addon, we query npm's registry and add it to the catalog based on the available metadata.
+![Storybook addon in the catalog](./addon-display.png)
 
- <div class="aside">
+#### How long does it take for my addon to show up in the catalog?
 
-Note: There's a delay between the time you publish your addon and when its listed in the catalog. If your addon isn't showing up, open an issue on the catalog [repository](https://github.com/storybookjs/addon-gallery).
-
-</div>
+Once you publish the addon, it will appear in the catalog. There may be a delay between the time you publish your addon and when it's listed in the catalog. If your addon doesn't show up within 24 hours, [open an issue](https://github.com/storybookjs/frontpage/issues).
