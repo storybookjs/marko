@@ -8,7 +8,7 @@ The addon catalog is in <strong>beta</strong>. Please report any issues you find
 
 Storybook addons are listed in the [catalog](/addons) and distributed via npm. The catalog is populated by querying npm's registry for Storybook-specific metadata in `package.json`.
 
-Add your addon to the catalog by publishing a package that follows these requirements:
+Add your addon to the catalog by publishing an npm package that follows these requirements:
 
 - `package.json` with [module information](writing-addons.md#get-started) and [addon metadata](#addon-metadata)
 - `README.md` file with installation and configuration instructions
@@ -35,12 +35,12 @@ We rely on metadata to organize your addon in the catalog. You must add the <cod
 
 Customize your addon's appearance by adding the `storybook` property with the following fields.
 
-| Property              | Description                       | Example                               |
-| --------------------- | --------------------------------- | ------------------------------------- |
-| displayName           | Display name                      | Outline                               |
-| icon                  | Link to custom icon for the addon | https://yoursite.com/outline-icon.png |
-| unsupportedFrameworks | List of unsupported frameworks    | Vue                                   |
-| supportedFrameworks   | List of supported frameworks      | React,Angular                         |
+| Property                | Description                       | Example                               |
+| ----------------------- | --------------------------------- | ------------------------------------- |
+| `displayName`           | Display name                      | Outline                               |
+| `icon`                  | Link to custom icon for the addon | https://yoursite.com/outline-icon.png |
+| `unsupportedFrameworks` | List of unsupported frameworks    | Vue                                   |
+| `supportedFrameworks`   | List of supported frameworks      | React,Angular                         |
 
 ```json
 {
@@ -49,6 +49,10 @@ Customize your addon's appearance by adding the `storybook` property with the fo
   "name": "storybook-addon-outline",
   "version": "1.0.0",
   "description": "Outline all elements with CSS to help with layout placement and alignment",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chromaui/storybook-outline"
+  },
   "author": "winkerVSbecks",
   "keywords": ["storybook-addons", "style", "debug", "layout", "css"],
   "storybook": {
@@ -60,7 +64,7 @@ Customize your addon's appearance by adding the `storybook` property with the fo
 }
 ```
 
-The `package.json` above appears like so in the catalog.
+The `package.json` above appears like below in the catalog. See an example of a production package.json [here](https://github.com/chromaui/storybook-outline/blob/main/package.json).
 
 ![Storybook addon in the catalog](./addon-display.png)
 
