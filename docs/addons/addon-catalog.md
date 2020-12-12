@@ -3,7 +3,9 @@ title: 'Add to the addon catalog'
 ---
 
 <div class="aside">
+
 The addon catalog is in <strong>beta</strong>. Please [report any issues](https://github.com/storybookjs/frontpage/issues) you find.
+
 </div>
 
 Storybook addons are listed in the [catalog](/addons) and distributed via npm. The catalog is populated by querying npm's registry for Storybook-specific metadata in `package.json`.
@@ -17,7 +19,7 @@ Add your addon to the catalog by publishing an npm package that follows these re
 
 <div class="aside">
 
-Learn how to write a Storybook addon [here](./writing-addons.md).
+Get a refresher on how to [write a Storybook addon](./writing-addons.md).
 
 </div>
 
@@ -39,8 +41,8 @@ Customize your addon's appearance by adding the `storybook` property with the fo
 | ----------------------- | --------------------------------- | ------------------------------------- |
 | `displayName`           | Display name                      | Outline                               |
 | `icon`                  | Link to custom icon for the addon | https://yoursite.com/outline-icon.png |
-| `unsupportedFrameworks` | List of unsupported frameworks    | Vue                                   |
-| `supportedFrameworks`   | List of supported frameworks      | React,Angular                         |
+| `unsupportedFrameworks` | List of unsupported frameworks    | `["Vue"]`                             |
+| `supportedFrameworks`   | List of supported frameworks      | `["React", "Angular"]`                |
 
 ```json
 {
