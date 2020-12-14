@@ -12,6 +12,7 @@ import {
 } from '@storybook/theming';
 import { withCssResources } from '@storybook/addon-cssresources';
 import { DocsPage } from '@storybook/addon-docs/blocks';
+import { Symbols } from '@storybook/components';
 
 import addHeadWarning from './head-warning';
 
@@ -92,6 +93,7 @@ export const decorators = [
       case 'side-by-side': {
         return (
           <Fragment>
+            <Symbols icons={['folder', 'component', 'document', 'bookmarkhollow']} />
             <ThemeProvider theme={convert(themes.light)}>
               <Global styles={createReset} />
             </ThemeProvider>
@@ -111,6 +113,7 @@ export const decorators = [
       case 'stacked': {
         return (
           <Fragment>
+            <Symbols icons={['folder', 'component', 'document', 'bookmarkhollow']} />
             <ThemeProvider theme={convert(themes.light)}>
               <Global styles={createReset} />
             </ThemeProvider>
@@ -130,6 +133,7 @@ export const decorators = [
       default: {
         return (
           <ThemeProvider theme={convert(themes[theme])}>
+            <Symbols icons={['folder', 'component', 'document', 'bookmarkhollow']} />
             <Global styles={createReset} />
             <ThemedSetRoot />
             <StoryFn />
