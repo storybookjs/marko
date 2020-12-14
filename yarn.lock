@@ -4438,6 +4438,31 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
+"@types/backbone.marionette@^3.3.12":
+  version "3.3.12"
+  resolved "https://registry.yarnpkg.com/@types/backbone.marionette/-/backbone.marionette-3.3.12.tgz#f9fca0039c8d4ecc2e252c5074c0c148fd549191"
+  integrity sha512-+jJtbRQKRPoBFwsltIPNqyKXPwSQN0rDl2ZYry+ma6H4l5W+XccEOcBp9S64DqagLdJ29OTEyU/+b9o0lR0BrA==
+  dependencies:
+    "@types/backbone" "*"
+    "@types/backbone.radio" "*"
+    "@types/jquery" "*"
+    "@types/underscore" "*"
+
+"@types/backbone.radio@*":
+  version "0.8.37"
+  resolved "https://registry.yarnpkg.com/@types/backbone.radio/-/backbone.radio-0.8.37.tgz#c049db3f29dc5bb55a4b3cffcfd3ec7d9d985ec5"
+  integrity sha512-N0+9bvV/NfXBO772lsPPFtxrHNYOqm8ctwfF8eJAqbjQ/wKqzZfh/uMLCv6CBkenSWro3W1GIpRntMFSQvHQRA==
+  dependencies:
+    "@types/backbone" "*"
+
+"@types/backbone@*":
+  version "1.4.5"
+  resolved "https://registry.yarnpkg.com/@types/backbone/-/backbone-1.4.5.tgz#057d89987fb672a20b896b1df5cc802f7b87c624"
+  integrity sha512-pSqM0eryp6V3G0srBtndUd9IJmiG2BAwYLQGPDcEPMjbfbgitlrN40+Lc1rrMjNMbV5QWywe6WPmNjdqyNTyIw==
+  dependencies:
+    "@types/jquery" "*"
+    "@types/underscore" "*"
+
 "@types/body-parser@*":
   version "1.19.0"
   resolved "https://registry.yarnpkg.com/@types/body-parser/-/body-parser-1.19.0.tgz#0685b3c47eb3006ffed117cdd55164b61f80538f"
@@ -4488,6 +4513,11 @@
   integrity sha512-xiTJn3bmDh1lA8c6iVJs4ZhHw+pcmxXlJQXOB6G1oULaak8rmarIeFKI4aTJ7849dEhaO612wgIualZfbxTJwA==
   dependencies:
     "@types/node" "*"
+
+"@types/common-tags@^1.8.0":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@types/common-tags/-/common-tags-1.8.0.tgz#79d55e748d730b997be5b7fce4b74488d8b26a6b"
+  integrity sha512-htRqZr5qn8EzMelhX/Xmx142z218lLyGaeZ3YR8jlze4TATRU9huKKvuBmAJEW4LCC4pnY1N6JAm6p85fMHjhg==
 
 "@types/connect-history-api-fallback@*":
   version "1.3.3"
@@ -4789,6 +4819,13 @@
   dependencies:
     jest-diff "^25.2.1"
     pretty-format "^25.2.1"
+
+"@types/jquery@*":
+  version "3.5.5"
+  resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.5.5.tgz#2c63f47c9c8d96693d272f5453602afd8338c903"
+  integrity sha512-6RXU9Xzpc6vxNrS6FPPapN1SxSHgQ336WC6Jj/N8q30OiaBZ00l1GBgeP7usjVZPivSkGUfL1z/WW6TX989M+w==
+  dependencies:
+    "@types/sizzle" "*"
 
 "@types/js-yaml@^3.12.4":
   version "3.12.5"
@@ -5153,7 +5190,7 @@
   resolved "https://registry.yarnpkg.com/@types/sinonjs__fake-timers/-/sinonjs__fake-timers-6.0.1.tgz#681df970358c82836b42f989188d133e218c458e"
   integrity sha512-yYezQwGWty8ziyYLdZjwxyMb0CZR49h8JALHGrxjQHWlqGgc8kLdHEgWrgL0uZ29DMvEVBDnHU2Wg36zKSIUtA==
 
-"@types/sizzle@2.3.2":
+"@types/sizzle@*", "@types/sizzle@2.3.2":
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/@types/sizzle/-/sizzle-2.3.2.tgz#a811b8c18e2babab7d542b3365887ae2e4d9de47"
   integrity sha512-7EJYyKTL7tFR8+gDbB6Wwz/arpGa0Mywk1TJbNzKzHtzbwVmY4HR9WqS5VV7dsBUKQmPNr192jHr/VpBluj/hg==
@@ -5216,6 +5253,11 @@
   integrity sha512-7npvPKV+jINLu1SpSYVWG8KvyJBhBa8tmzMMdDoVc2pWUYHN8KIXlPJhjJ4LT97c4dXJA2SHL/q6ADbDriZN+Q==
   dependencies:
     source-map "^0.6.1"
+
+"@types/underscore@*":
+  version "1.10.24"
+  resolved "https://registry.yarnpkg.com/@types/underscore/-/underscore-1.10.24.tgz#dede004deed3b3f99c4db0bdb9ee21cae25befdd"
+  integrity sha512-T3NQD8hXNW2sRsSbLNjF/aBo18MyJlbw0lSpQHB/eZZtScPdexN4HSa8cByYwTw9Wy7KuOFr81mlDQcQQaZ79w==
 
 "@types/unist@*", "@types/unist@^2.0.0", "@types/unist@^2.0.2", "@types/unist@^2.0.3":
   version "2.0.3"

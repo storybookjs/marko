@@ -1,16 +1,28 @@
 import { document } from 'global';
 import { stripIndents } from 'common-tags';
-import Marionette from 'backbone.marionette';
+import Marionette, { View } from 'backbone.marionette';
 import isMarionetteRenderable from './element_check';
 
 const rootEl = document.getElementById('root');
 const rootRegion = new Marionette.Region({ el: rootEl });
 
-function render(view) {
+function render(view: View<any>) {
   rootRegion.show(view);
 }
 
-export default function renderMain({ storyFn, kind, name, showMain, showError }) {
+export default function renderMain({
+  storyFn,
+  kind,
+  name,
+  showMain,
+  showError,
+}: {
+  storyFn: any;
+  kind: string;
+  name: string;
+  showMain: () => any;
+  showError: (options: { title: string; description: string }) => void;
+}) {
   const element = storyFn();
 
   if (!element) {
