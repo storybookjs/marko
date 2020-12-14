@@ -67,12 +67,12 @@ export const useHighlighted = ({
       const { itemId, refId } = highlight;
       setTimeout(() => {
         scrollIntoView(
-          containerRef.current.querySelector(`[data-item-id="${itemId}"][data-ref-id="${refId}"]`),
+          containerRef.current?.querySelector(`[data-item-id="${itemId}"][data-ref-id="${refId}"]`),
           true // make sure it's clearly visible by centering it
         );
       }, 0);
     }
-  }, [dataset, highlightedRef, selected]);
+  }, [dataset, highlightedRef, containerRef, selected]);
 
   // Highlight nodes up/down the tree using arrow keys
   useEffect(() => {

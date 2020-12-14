@@ -87,7 +87,7 @@ export const getReleaseNotesData = async (
 ): Promise<ReleaseNotesData> => {
   let result;
   try {
-    const fromCache = await fileSystemCache.get('releaseNotesData', []);
+    const fromCache = (await fileSystemCache.get('releaseNotesData', []).catch(() => {})) || [];
     const releaseNotesVersion = getReleaseNotesVersion(currentVersionToParse);
     const versionHasNotBeenSeen = !fromCache.includes(releaseNotesVersion);
 
