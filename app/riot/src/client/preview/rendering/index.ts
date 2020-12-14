@@ -2,7 +2,7 @@ import renderCompiledButUnmounted from './compiledButUnmounted';
 import renderStringified from './stringified';
 import renderRaw from './raw';
 
-export function render(component) {
+export function render(component: any) {
   if (typeof component === 'string') {
     renderRaw(component);
     return true;

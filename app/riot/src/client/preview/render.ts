@@ -9,6 +9,12 @@ export default function renderMain({
   name,
   showMain = () => {},
   showError = () => {},
+}: {
+  storyFn: Function;
+  kind: string;
+  name: string;
+  showMain: () => any;
+  showError: (input: { title: string; description: string }) => void;
 }) {
   showMain();
   unregister('#root');

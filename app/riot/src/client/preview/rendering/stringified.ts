@@ -4,7 +4,7 @@ import compiler from 'riot-compiler';
 import { document } from 'global';
 import { alreadyCompiledMarker, getRidOfRiotNoise, setConstructor } from '../compileStageFunctions';
 
-function guessRootName(stringified) {
+function guessRootName(stringified: string) {
   const whiteSpaceLocation = stringified.indexOf(' ', stringified.indexOf('<') + 1);
   const firstWhitespace = whiteSpaceLocation === -1 ? stringified.length : whiteSpaceLocation;
   const supposedName = stringified.trim().match(/^<[^ >]+\/>$/)
@@ -17,7 +17,7 @@ function guessRootName(stringified) {
   return matchingBuiltInTag === 'HTMLUnknownElement' ? supposedName : 'root';
 }
 
-function compileText(code, rootName) {
+function compileText(code: string, rootName: string) {
   const sourceCodeEndOfHtml =
     (Math.min(code.indexOf('<style') + 1, code.indexOf('<script') + 1) || code.length + 1) - 1;
   const sourceCodeReformatted =
@@ -32,6 +32,10 @@ export default function renderStringified({
   tags,
   template = `<${(tags[0] || []).boundAs || guessRootName(tags[0] || '')}/>`,
   tagConstructor,
+}: {
+  tags: any[];
+  template: string;
+  tagConstructor: any;
 }) {
   const tag2 = tag;
   tags.forEach((input) => {

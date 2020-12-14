@@ -5252,6 +5252,11 @@
     "@types/glob" "*"
     "@types/node" "*"
 
+"@types/riot@^3.6.2":
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/@types/riot/-/riot-3.6.2.tgz#d3e0f384ffb1d718f5fd89b8a14e7d60c7f6940c"
+  integrity sha512-e/q9dwOgGXeouq1ipQMxwuukYf8lMZbhzbuvFqX4XhdQHyf6Dn4pOxwZGkXSCJ+HZ8c79fgAzpACO92MqbTi2g==
+
 "@types/selenium-webdriver@^3.0.0":
   version "3.0.17"
   resolved "https://registry.yarnpkg.com/@types/selenium-webdriver/-/selenium-webdriver-3.0.17.tgz#50bea0c3c2acc31c959c5b1e747798b3b3d06d4b"
@@ -28967,7 +28972,7 @@ riot-cli@^4.0.2:
     riot-compiler "^3.5.1"
     rollup "^0.57.1"
 
-riot-compiler@^3.5.1, riot-compiler@^3.5.2:
+riot-compiler@^3.5.1, riot-compiler@^3.5.2, riot-compiler@^3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/riot-compiler/-/riot-compiler-3.6.0.tgz#f65428cf25b940098e35ea9c8357ca91cae10280"
   integrity sha512-P2MVj0T9ox0EFPTSSHJIAaBe6/fCnKln76BtPK6ezAlBW2+qKCDzzvkj3gwFvGEG1dYUHa2jQ/O6+FZNNe8CYw==
@@ -29008,7 +29013,7 @@ riot-tmpl@^3.0.8:
   dependencies:
     eslint-config-riot "^1.0.0"
 
-riot@^3.13.0, riot@^3.3.1:
+riot@^3.13.0, riot@^3.13.2, riot@^3.3.1:
   version "3.13.2"
   resolved "https://registry.yarnpkg.com/riot/-/riot-3.13.2.tgz#3f5fb86b0d2b864bdcc959b7f86e2f4c2f696726"
   integrity sha512-L4WFJEhbTA0deDoZ1XxoVw7Tf96+xYc06aQ+4QM+IkYClD6mZ7E/9zN3Rd48uYMBvHQfHtbPvR0KEiu3pJyI2A==
