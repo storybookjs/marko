@@ -181,7 +181,7 @@ The new convention is consistent with how other frameworks and addons work in St
 
 #### New Angular renderer
 
-We've rewritten the Angular renderer in Storybook 6.2. It's meant to be entirely backwards compatible, but if you need to use the legacy renderer it's still available via a [parameter](https://storybook.js.org/docs/react/writing-stories/parameters). To opt out of the new renderer, add the following to `.storybook/preview.ts`:
+We've rewritten the Angular renderer in Storybook 6.2. It's meant to be entirely backwards compatible, but if you need to use the legacy renderer it's still available via a [parameter](https://storybook.js.org/docs/angular/writing-stories/parameters). To opt out of the new renderer, add the following to `.storybook/preview.ts`:
 
 ```ts
 export const parameters = {
