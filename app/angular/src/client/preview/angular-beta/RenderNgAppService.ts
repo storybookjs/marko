@@ -16,7 +16,7 @@ import { isDeclarable } from './NgComponentAnalyzer';
 
 const deprecatedStoryComponentWarning = deprecate(
   () => {},
-  dedent`\`component\` story input is deprecated, and will be removed in Storybook 7.0.
+  dedent`\`component\` story return value is deprecated, and will be removed in Storybook 7.0.
         Instead, use \`export const default = () => ({ component: AppComponent });\`
         or
         \`\`\`
