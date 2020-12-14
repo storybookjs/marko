@@ -144,7 +144,7 @@
 
 In 6.1 we introduced an unintentional breaking change to `addon-backgrounds`.
 
-The addon uses decorators which are set up automatically by a preset. The required preset is ignored if you register the addon in `main.js` withe the the `/register` entry point. This used to be valid in `v6.0.x` and earlier:
+The addon uses decorators which are set up automatically by a preset. The required preset is ignored if you register the addon in `main.js` with the `/register` entry point. This used to be valid in `v6.0.x` and earlier:
 ```js
 module.exports = {
   stories: ['../**/*.stories.js'],
