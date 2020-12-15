@@ -10,7 +10,6 @@ export type {
   SyntaxHighlighterProps,
   SyntaxHighlighterRendererProps,
 } from './syntaxhighlighter/syntaxhighlighter-types';
-export { createSyntaxHighlighterElement } from './syntaxhighlighter/syntaxhighlighter-types';
 export { SyntaxHighlighter } from './syntaxhighlighter/lazy-syntaxhighlighter';
 
 // UI

@@ -6,8 +6,10 @@ import {
   SyntaxHighlighter,
   SyntaxHighlighterProps,
   SyntaxHighlighterRendererProps,
-  createSyntaxHighlighterElement,
 } from '@storybook/components';
+
+// @ts-ignore
+import { createElement as createSyntaxHighlighterElement } from 'react-syntax-highlighter';
 
 import { SourceBlock, LocationsMap } from '@storybook/source-loader';
 

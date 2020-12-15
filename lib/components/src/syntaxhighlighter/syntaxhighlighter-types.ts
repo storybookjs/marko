@@ -1,8 +1,5 @@
 import React from 'react';
 
-// @ts-ignore
-export { createElement as createSyntaxHighlighterElement } from 'react-syntax-highlighter';
-
 export interface SyntaxHighlighterRendererProps {
   rows: any[];
   stylesheet: string;
