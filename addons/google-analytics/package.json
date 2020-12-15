@@ -16,6 +16,16 @@
     "directory": "addons/google-analytics"
   },
   "license": "MIT",
+  "main": "dist/cjs/register.js",
+  "module": "dist/esm/register.js",
+  "types": "dist/ts3.9/register.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "dist/ts3.4/*"
+      ]
+    }
+  },
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },

@@ -16,12 +16,13 @@
     "directory": "addons/storyshots/storyshots-puppeteer"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/ts3.9/index.js",
+  "module": "dist/ts3.9/index.js",
+  "types": "dist/ts3.9/index.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
@@ -29,8 +30,7 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../../scripts/prepare.js"

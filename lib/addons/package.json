@@ -15,12 +15,14 @@
     "directory": "lib/addons"
   },
   "license": "MIT",
-  "main": "dist/public_api.js",
-  "types": "dist/public_api.d.ts",
+  "sideEffects": false,
+  "main": "dist/cjs/public_api.js",
+  "module": "dist/esm/public_api.js",
+  "types": "dist/ts3.9/public_api.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
@@ -28,8 +30,7 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"

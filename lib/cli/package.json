@@ -35,11 +35,10 @@
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.4/**/*",
     "versions.json"
   ],
   "scripts": {
-    "prepare": "node ../../scripts/prepare.js && node ./scripts/generate-sb-packages-versions.js",
+    "prepare": "node ./scripts/generate-sb-packages-versions.js && node ../../scripts/prepare.js",
     "test": "jest test/**/*.test.js",
     "postversion": "node ./scripts/generate-sb-packages-versions.js"
   },
@@ -64,6 +63,7 @@
     "leven": "^3.1.0",
     "prompts": "^2.0.0",
     "puppeteer-core": "^2.0.0",
+    "read-pkg-up": "^7.0.1",
     "shelljs": "^0.8.4",
     "strip-json-comments": "^3.0.1",
     "update-notifier": "^4.0.0"

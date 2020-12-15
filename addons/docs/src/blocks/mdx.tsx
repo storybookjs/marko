@@ -1,8 +1,7 @@
 import React, { FC, SyntheticEvent } from 'react';
 import addons from '@storybook/addons';
-import { Source } from '@storybook/components';
 import { NAVIGATE_URL } from '@storybook/core-events';
-import { Code, components } from '@storybook/components/html';
+import { Source, Code, components } from '@storybook/components';
 import { document } from 'global';
 import { styled } from '@storybook/theming';
 import { DocsContext, DocsContextProps } from './DocsContext';

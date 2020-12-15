@@ -15,7 +15,9 @@
     "directory": "lib/codemod"
   },
   "license": "MIT",
-  "main": "dist/index.js",
+  "sideEffects": false,
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "jsnext:main": "src/index.js",
   "typesVersions": {
     "<3.8": {
@@ -29,7 +31,6 @@
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.4/**/*",
     "!__testfixtures__"
   ],
   "scripts": {

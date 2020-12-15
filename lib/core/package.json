@@ -15,12 +15,13 @@
     "directory": "lib/core"
   },
   "license": "MIT",
-  "main": "dist/client/index.js",
-  "types": "dist/client/index.d.ts",
+  "main": "dist/cjs/client/index.js",
+  "module": "dist/esm/client/index.js",
+  "types": "dist/ts3.9/client/index.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
@@ -31,8 +32,7 @@
     "!prebuilt/report.html",
     "types/**/*",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"

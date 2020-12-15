@@ -17,19 +17,19 @@
     "directory": "addons/essentials"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/ts3.9/index.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
   "files": [
     "dist/**/*",
-    "README.md",
-    "ts3.4/**/*"
+    "README.md"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
