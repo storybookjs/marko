@@ -9,6 +9,8 @@ export {
   raw,
 } from './preview';
 
+export { RenderNgAppService } from './preview/angular-beta/RenderNgAppService';
+
 export * from './preview/types-6-0';
 
 export { StoryFnAngularReturnType as IStory } from './preview/types';
