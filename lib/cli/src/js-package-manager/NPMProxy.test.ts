@@ -86,7 +86,7 @@ describe('NPM Proxy', () => {
   describe('getVersion', () => {
     it('with a Storybook package listed in versions.json it returns the version', async () => {
       // eslint-disable-next-line global-require
-      const storybookAngularVersion = require('../../versions.json')['@storybook/angular'];
+      const storybookAngularVersion = require('../versions.json')['@storybook/angular'];
       const executeCommandSpy = jest.spyOn(npmProxy, 'executeCommand').mockReturnValue('"5.3.19"');
 
       const version = await npmProxy.getVersion('@storybook/angular');

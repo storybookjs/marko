@@ -79,7 +79,7 @@ export interface ClientApiParams {
 
 export type ClientApiReturnFn<StoryFnReturnType> = (...args: any[]) => StoryApi<StoryFnReturnType>;
 
-export { StoryApi, DecoratorFunction };
+export type { StoryApi, DecoratorFunction };
 
 export interface ClientApiAddon<StoryFnReturnType = unknown> extends Addon {
   apply: (a: StoryApi<StoryFnReturnType>, b: any[]) => any;

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/core",
-  "version": "6.2.0-alpha.6",
+  "version": "6.2.0-alpha.7",
   "description": "Storybook framework-agnostic API",
   "keywords": [
     "storybook"
@@ -15,12 +15,13 @@
     "directory": "lib/core"
   },
   "license": "MIT",
-  "main": "dist/client/index.js",
-  "types": "dist/client/index.d.ts",
+  "main": "dist/cjs/client/index.js",
+  "module": "dist/esm/client/index.js",
+  "types": "dist/ts3.9/client/index.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
@@ -31,8 +32,7 @@
     "!prebuilt/report.html",
     "types/**/*",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
@@ -60,20 +60,20 @@
     "@babel/preset-react": "^7.12.1",
     "@babel/preset-typescript": "^7.12.1",
     "@babel/register": "^7.12.1",
-    "@storybook/addons": "6.2.0-alpha.6",
-    "@storybook/api": "6.2.0-alpha.6",
-    "@storybook/channel-postmessage": "6.2.0-alpha.6",
-    "@storybook/channels": "6.2.0-alpha.6",
-    "@storybook/client-api": "6.2.0-alpha.6",
-    "@storybook/client-logger": "6.2.0-alpha.6",
-    "@storybook/components": "6.2.0-alpha.6",
-    "@storybook/core-events": "6.2.0-alpha.6",
+    "@storybook/addons": "6.2.0-alpha.7",
+    "@storybook/api": "6.2.0-alpha.7",
+    "@storybook/channel-postmessage": "6.2.0-alpha.7",
+    "@storybook/channels": "6.2.0-alpha.7",
+    "@storybook/client-api": "6.2.0-alpha.7",
+    "@storybook/client-logger": "6.2.0-alpha.7",
+    "@storybook/components": "6.2.0-alpha.7",
+    "@storybook/core-events": "6.2.0-alpha.7",
     "@storybook/csf": "0.0.1",
-    "@storybook/node-logger": "6.2.0-alpha.6",
-    "@storybook/router": "6.2.0-alpha.6",
+    "@storybook/node-logger": "6.2.0-alpha.7",
+    "@storybook/router": "6.2.0-alpha.7",
     "@storybook/semver": "^7.3.2",
-    "@storybook/theming": "6.2.0-alpha.6",
-    "@storybook/ui": "6.2.0-alpha.6",
+    "@storybook/theming": "6.2.0-alpha.7",
+    "@storybook/ui": "6.2.0-alpha.7",
     "@types/glob-base": "^0.3.0",
     "@types/micromatch": "^4.0.1",
     "@types/node-fetch": "^2.5.4",
@@ -170,5 +170,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "e741f5e3af491b8515668abd5a31fb8e2c201770"
+  "gitHead": "ba05f6ae5e8062abee62675cb49dd38e5e3ce742"
 }

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-roundtrip",
-  "version": "6.2.0-alpha.6",
+  "version": "6.2.0-alpha.7",
   "description": "roundtrip addon for storybook",
   "keywords": [
     "addon",
@@ -18,26 +18,20 @@
     "directory": "dev-kit/addon-roundtrip"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  },
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/ts3.9/index.d.ts",
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.6",
-    "@storybook/api": "6.2.0-alpha.6",
-    "@storybook/client-api": "6.2.0-alpha.6",
-    "@storybook/client-logger": "6.2.0-alpha.6",
-    "@storybook/components": "6.2.0-alpha.6",
-    "@storybook/core-events": "6.2.0-alpha.6",
-    "@storybook/theming": "6.2.0-alpha.6",
+    "@storybook/addons": "6.2.0-alpha.7",
+    "@storybook/api": "6.2.0-alpha.7",
+    "@storybook/client-api": "6.2.0-alpha.7",
+    "@storybook/client-logger": "6.2.0-alpha.7",
+    "@storybook/components": "6.2.0-alpha.7",
+    "@storybook/core-events": "6.2.0-alpha.7",
+    "@storybook/theming": "6.2.0-alpha.7",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "react": "^16.8.0 || ^17.0.0",
@@ -46,5 +40,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "e741f5e3af491b8515668abd5a31fb8e2c201770"
+  "gitHead": "ba05f6ae5e8062abee62675cb49dd38e5e3ce742"
 }

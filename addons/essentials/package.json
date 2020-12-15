@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-essentials",
-  "version": "6.2.0-alpha.6",
+  "version": "6.2.0-alpha.7",
   "description": "Curated addons to bring out the best of Storybook",
   "keywords": [
     "addon",
@@ -17,46 +17,46 @@
     "directory": "addons/essentials"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/ts3.9/index.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
   "files": [
     "dist/**/*",
-    "README.md",
-    "ts3.4/**/*"
+    "README.md"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addon-actions": "6.2.0-alpha.6",
-    "@storybook/addon-backgrounds": "6.2.0-alpha.6",
-    "@storybook/addon-controls": "6.2.0-alpha.6",
-    "@storybook/addon-docs": "6.2.0-alpha.6",
-    "@storybook/addon-toolbars": "6.2.0-alpha.6",
-    "@storybook/addon-viewport": "6.2.0-alpha.6",
-    "@storybook/addons": "6.2.0-alpha.6",
-    "@storybook/api": "6.2.0-alpha.6",
-    "@storybook/node-logger": "6.2.0-alpha.6",
+    "@storybook/addon-actions": "6.2.0-alpha.7",
+    "@storybook/addon-backgrounds": "6.2.0-alpha.7",
+    "@storybook/addon-controls": "6.2.0-alpha.7",
+    "@storybook/addon-docs": "6.2.0-alpha.7",
+    "@storybook/addon-toolbars": "6.2.0-alpha.7",
+    "@storybook/addon-viewport": "6.2.0-alpha.7",
+    "@storybook/addons": "6.2.0-alpha.7",
+    "@storybook/api": "6.2.0-alpha.7",
+    "@storybook/node-logger": "6.2.0-alpha.7",
     "core-js": "^3.0.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
-    "@storybook/vue": "6.2.0-alpha.6",
+    "@storybook/vue": "6.2.0-alpha.7",
     "@types/jest": "^25.1.1",
     "@types/webpack-env": "^1.15.3"
   },
   "peerDependencies": {
     "@babel/core": "^7.9.6",
-    "@storybook/vue": "6.2.0-alpha.6",
+    "@storybook/vue": "6.2.0-alpha.7",
     "babel-loader": "^8.0.0",
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0",
@@ -79,5 +79,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "e741f5e3af491b8515668abd5a31fb8e2c201770"
+  "gitHead": "ba05f6ae5e8062abee62675cb49dd38e5e3ce742"
 }

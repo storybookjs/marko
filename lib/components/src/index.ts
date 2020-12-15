@@ -1,14 +1,17 @@
+import { createElement, ElementType } from 'react';
+import { components as rawComponents } from './typography/DocumentFormatting';
+
 export { Badge } from './Badge/Badge';
 
 // Typography
 export { Link } from './typography/link/link';
 export { DocumentWrapper } from './typography/DocumentWrapper';
-export {
-  SyntaxHighlighter,
+export type {
   SyntaxHighlighterProps,
   SyntaxHighlighterRendererProps,
-  createSyntaxHighlighterElement,
-} from './syntaxhighlighter/syntaxhighlighter';
+} from './syntaxhighlighter/syntaxhighlighter-types';
+export { createSyntaxHighlighterElement } from './syntaxhighlighter/syntaxhighlighter-types';
+export { SyntaxHighlighter } from './syntaxhighlighter/lazy-syntaxhighlighter';
 
 // UI
 export { ActionBar } from './ActionBar/ActionBar';
@@ -22,7 +25,7 @@ export { Button } from './Button/Button';
 export { Form } from './form/index';
 
 // Tooltips
-export { WithTooltip, WithTooltipPure } from './tooltip/WithTooltip';
+export { WithTooltip, WithTooltipPure } from './tooltip/lazy-WithTooltip';
 export { TooltipMessage } from './tooltip/TooltipMessage';
 export { TooltipNote } from './tooltip/TooltipNote';
 export { TooltipLinkList } from './tooltip/TooltipLinkList';
@@ -35,7 +38,8 @@ export { Bar, FlexBar } from './bar/bar';
 export { AddonPanel } from './addon-panel/addon-panel';
 
 // Graphics
-export { Icons, IconsProps } from './icon/icon';
+export type { IconsProps } from './icon/icon';
+export { Icons } from './icon/icon';
 export { StorybookLogo } from './brand/StorybookLogo';
 export { StorybookIcon } from './brand/StorybookIcon';
 
@@ -45,3 +49,15 @@ export * from './controls';
 
 // Loader
 export { Loader } from './Loader/Loader';
+
+export * from './typography/DocumentFormatting';
+
+export { rawComponents as components };
+
+const resetComponents: Record<string, ElementType> = {};
+
+Object.keys(rawComponents).forEach((key) => {
+  resetComponents[key] = (props: any) => createElement(key, props);
+});
+
+export { resetComponents };

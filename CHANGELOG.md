@@ -1,3 +1,16 @@
+## 6.2.0-alpha.7 (December 15, 2020)
+
+### Bug Fixes
+
+- CLI: Add overrides to CRA ESLint config ([#13452](https://github.com/storybookjs/storybook/pull/13452))
+
+### Maintenance
+
+- Perf: Lazy load OverlayScrollbars ([#13430](https://github.com/storybookjs/storybook/pull/13430))
+- Addon-docs: Remove unused titleFunction export ([#13457](https://github.com/storybookjs/storybook/pull/13457))
+- Perf: Distribute both ESM and CJS modules ([#13013](https://github.com/storybookjs/storybook/pull/13013))
+- Perf: Replace react-hotkeys with useEffect keybinding ([#13424](https://github.com/storybookjs/storybook/pull/13424))
+
 ## 6.1.11 (December 12, 2020)
 
 ### Bug Fixes
@@ -13,22 +26,22 @@
 
 ### Features
 
-* Main.js: Add previewHead, previewBody, managerHead presets ([#13432](https://github.com/storybookjs/storybook/pull/13432))
+- Main.js: Add previewHead, previewBody, managerHead presets ([#13432](https://github.com/storybookjs/storybook/pull/13432))
 
 ### Bug Fixes
 
-* Core: Fix `modulesCount` cache storage and retrieval ([#13431](https://github.com/storybookjs/storybook/pull/13431))
-* UI: Fix null ref in sidebar ([#13423](https://github.com/storybookjs/storybook/pull/13423))
+- Core: Fix `modulesCount` cache storage and retrieval ([#13431](https://github.com/storybookjs/storybook/pull/13431))
+- UI: Fix null ref in sidebar ([#13423](https://github.com/storybookjs/storybook/pull/13423))
 
 ### Maintenance
 
-* Components: Cleanup circular dependencies ([#13439](https://github.com/storybookjs/storybook/pull/13439))
-* Core: Generate bundle size report for prebuilt manager ([#13425](https://github.com/storybookjs/storybook/pull/13425))
-* CI: Speed up CircleCI workflows ([#13320](https://github.com/storybookjs/storybook/pull/13320))
+- Components: Cleanup circular dependencies ([#13439](https://github.com/storybookjs/storybook/pull/13439))
+- Core: Generate bundle size report for prebuilt manager ([#13425](https://github.com/storybookjs/storybook/pull/13425))
+- CI: Speed up CircleCI workflows ([#13320](https://github.com/storybookjs/storybook/pull/13320))
 
 ### Dependency Upgrades
 
-* Update react-popper-tooltip and @popperjs/core for react17 ([#13434](https://github.com/storybookjs/storybook/pull/13434))
+- Update react-popper-tooltip and @popperjs/core for react17 ([#13434](https://github.com/storybookjs/storybook/pull/13434))
 
 ## 6.2.0-alpha.5 (December 8, 2020)
 

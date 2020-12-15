@@ -81,10 +81,10 @@ When developing your own framework that is not published by storybook, you can p
 ```ts
 // my-framework/src/server/options.ts
 
-const packageJson = require('../../package.json');
+import { sync } from 'read-pkg-up';
 
 export default {
-  packageJson,
+  packageJson: sync({ cwd: __dirname }).packageJson,
   framework: 'my-framework',
   frameworkPath: '@my-framework/storybook',
   frameworkPresets: [require.resolve('./framework-preset-my-framework.js')],

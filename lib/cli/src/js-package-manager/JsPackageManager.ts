@@ -4,10 +4,9 @@ import { sync as spawnSync } from 'cross-spawn';
 import { commandLog } from '../helpers';
 import { PackageJson, PackageJsonWithDepsAndDevDeps } from './PackageJson';
 import { readPackageJson, writePackageJson } from './PackageJsonHelper';
+import storybookPackagesVersions from '../versions.json';
 
 const logger = console;
-// Cannot be `import` as it's not under TS root dir
-const storybookPackagesVersions = require('../../versions.json');
 
 export abstract class JsPackageManager {
   public abstract readonly type: 'npm' | 'yarn1' | 'yarn2';
@@ -137,9 +136,10 @@ export abstract class JsPackageManager {
   }
 
   public async getVersion(packageName: string, constraint?: string): Promise<string> {
-    let current;
+    let current: string;
 
     if (/@storybook/.test(packageName)) {
+      // @ts-ignore
       current = storybookPackagesVersions[packageName];
     }
 
@@ -199,6 +199,25 @@ export abstract class JsPackageManager {
     this.addScripts({
       storybook: [preCommand, storybookCmd].filter(Boolean).join(' && '),
       'build-storybook': [preCommand, buildStorybookCmd].filter(Boolean).join(' && '),
+    });
+  }
+
+  public addESLintConfig() {
+    const packageJson = this.retrievePackageJson();
+    writePackageJson({
+      ...packageJson,
+      eslintConfig: {
+        ...packageJson.eslintConfig,
+        overrides: [
+          ...(packageJson.eslintConfig.overrides || []),
+          {
+            files: ['**/*.stories.*'],
+            rules: {
+              'import/no-anonymous-default-export': 'off',
+            },
+          },
+        ],
+      },
     });
   }
 

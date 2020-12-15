@@ -1,6 +1,6 @@
 {
   "name": "@storybook/angular",
-  "version": "6.2.0-alpha.6",
+  "version": "6.2.0-alpha.7",
   "description": "Storybook for Angular: Develop Angular Components in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -15,12 +15,13 @@
     "directory": "app/angular"
   },
   "license": "MIT",
-  "main": "dist/client/index.js",
-  "types": "dist/client/index.d.ts",
+  "main": "dist/ts3.9/client/index.js",
+  "module": "dist/ts3.9/client/index.js",
+  "types": "dist/ts3.9/client/index.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
@@ -34,16 +35,15 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.6",
-    "@storybook/core": "6.2.0-alpha.6",
-    "@storybook/node-logger": "6.2.0-alpha.6",
+    "@storybook/addons": "6.2.0-alpha.7",
+    "@storybook/core": "6.2.0-alpha.7",
+    "@storybook/node-logger": "6.2.0-alpha.7",
     "@types/webpack-env": "^1.15.3",
     "autoprefixer": "^9.7.6",
     "core-js": "^3.0.1",
@@ -53,6 +53,7 @@
     "raw-loader": "^4.0.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "read-pkg-up": "^7.0.1",
     "regenerator-runtime": "^0.13.7",
     "sass-loader": "^8.0.0",
     "strip-json-comments": "3.1.1",
@@ -99,5 +100,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "e741f5e3af491b8515668abd5a31fb8e2c201770"
+  "gitHead": "ba05f6ae5e8062abee62675cb49dd38e5e3ce742"
 }

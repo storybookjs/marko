@@ -1,6 +1,6 @@
 {
   "name": "@storybook/client-api",
-  "version": "6.2.0-alpha.6",
+  "version": "6.2.0-alpha.7",
   "description": "Storybook Client API",
   "keywords": [
     "storybook"
@@ -15,12 +15,14 @@
     "directory": "lib/client-api"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "sideEffects": false,
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/ts3.9/index.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
@@ -28,18 +30,17 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.6",
-    "@storybook/channel-postmessage": "6.2.0-alpha.6",
-    "@storybook/channels": "6.2.0-alpha.6",
-    "@storybook/client-logger": "6.2.0-alpha.6",
-    "@storybook/core-events": "6.2.0-alpha.6",
+    "@storybook/addons": "6.2.0-alpha.7",
+    "@storybook/channel-postmessage": "6.2.0-alpha.7",
+    "@storybook/channels": "6.2.0-alpha.7",
+    "@storybook/client-logger": "6.2.0-alpha.7",
+    "@storybook/core-events": "6.2.0-alpha.7",
     "@storybook/csf": "0.0.1",
     "@types/qs": "^6.9.0",
     "@types/webpack-env": "^1.15.3",
@@ -61,5 +62,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "e741f5e3af491b8515668abd5a31fb8e2c201770"
+  "gitHead": "ba05f6ae5e8062abee62675cb49dd38e5e3ce742"
 }

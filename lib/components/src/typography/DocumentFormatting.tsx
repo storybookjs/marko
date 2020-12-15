@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { styled, CSSObject } from '@storybook/theming';
 import { window } from 'global';
 import { withReset, withMargin, headerCommon, codeCommon } from './shared';
-import { SyntaxHighlighter } from '../syntaxhighlighter/syntaxhighlighter';
+import { SyntaxHighlighter } from '../syntaxhighlighter/lazy-syntaxhighlighter';
 
 export const H1 = styled.h1<{}>(withReset, headerCommon, ({ theme }) => ({
   fontSize: `${theme.typography.size.l1}px`,

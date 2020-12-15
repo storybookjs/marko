@@ -1,5 +1,5 @@
 import React from 'react';
-import { API } from '@storybook/api';
+import { API, Story } from '@storybook/api';
 import { styled } from '@storybook/theming';
 import { Link } from '@storybook/router';
 import {
@@ -9,8 +9,7 @@ import {
   createSyntaxHighlighterElement,
 } from '@storybook/components';
 
-import { SourceBlock, LocationsMap } from '@storybook/source-loader/extract-source';
-import { Story } from '@storybook/api/dist/lib/stories';
+import { SourceBlock, LocationsMap } from '@storybook/source-loader';
 
 const StyledStoryLink = styled(Link)<{ to: string; key: string }>(({ theme }) => ({
   display: 'block',
