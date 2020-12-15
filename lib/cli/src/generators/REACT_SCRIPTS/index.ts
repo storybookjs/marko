@@ -10,6 +10,7 @@ const generator: Generator = async (packageManager, npmOptions, options) => {
     extraPackages: ['@storybook/node-logger'],
     staticDir: fs.existsSync(path.resolve('./public')) ? 'public' : undefined,
     addBabel: false,
+    addESLint: true,
   });
 };
 

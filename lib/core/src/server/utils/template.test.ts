@@ -66,7 +66,7 @@ describe('server.getPreviewBodyHtml', () => {
     });
   });
 
-  describe('when .storybook/preview-pre-body.html exists', () => {
+  describe('when .storybook/preview-body.html exists', () => {
     beforeEach(() => {
       mock({
         [`${__dirname}/../templates/base-preview-body.html`]: BASE_BODY_HTML_CONTENTS,

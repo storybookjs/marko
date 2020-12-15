@@ -59,7 +59,15 @@ export default async ({
   typescriptOptions,
 }: any) => {
   const logLevel = await presets.apply('logLevel', undefined);
-  const frameworkOptions = await presets.apply(`${framework}Options`, {}, {});
+  const frameworkOptions = await presets.apply(`${framework}Options`, {});
+  const headHtmlSnippet = await presets.apply(
+    'previewHead',
+    getPreviewHeadHtml(configDir, process.env)
+  );
+  const bodyHtmlSnippet = await presets.apply(
+    'previewBody',
+    getPreviewBodyHtml(configDir, process.env)
+  );
   const { raw, stringified } = loadEnv({ production: true });
   const babelLoader = createBabelLoader(babelOptions, framework);
   const isProd = configType === 'PRODUCTION';
@@ -139,8 +147,8 @@ export default async ({
             LOGLEVEL: logLevel,
             FRAMEWORK_OPTIONS: frameworkOptions,
           },
-          headHtmlSnippet: getPreviewHeadHtml(configDir, process.env),
-          bodyHtmlSnippet: getPreviewBodyHtml(configDir, process.env),
+          headHtmlSnippet,
+          bodyHtmlSnippet,
         }),
         minify: {
           collapseWhitespace: true,

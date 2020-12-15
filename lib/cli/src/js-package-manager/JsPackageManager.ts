@@ -202,6 +202,25 @@ export abstract class JsPackageManager {
     });
   }
 
+  public addESLintConfig() {
+    const packageJson = this.retrievePackageJson();
+    writePackageJson({
+      ...packageJson,
+      eslintConfig: {
+        ...packageJson.eslintConfig,
+        overrides: [
+          ...(packageJson.eslintConfig.overrides || []),
+          {
+            files: ['**/*.stories.*'],
+            rules: {
+              'import/no-anonymous-default-export': 'off',
+            },
+          },
+        ],
+      },
+    });
+  }
+
   public addScripts(scripts: Record<string, string>) {
     const packageJson = this.retrievePackageJson();
     writePackageJson({

@@ -21,7 +21,7 @@ import {
   SearchResult,
 } from './types';
 import { getLink } from './utils';
-import { matchesKeyCode, matchesModifiers } from './keybinding';
+import { matchesKeyCode, matchesModifiers } from '../../keybinding';
 
 const ResultsList = styled.ol({
   listStyle: 'none',
