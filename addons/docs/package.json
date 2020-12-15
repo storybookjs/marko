@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-docs",
-  "version": "6.2.0-alpha.5",
+  "version": "6.2.0-alpha.6",
   "description": "Superior documentation for your components",
   "keywords": [
     "addon",
@@ -55,18 +55,18 @@
     "@mdx-js/loader": "^1.6.19",
     "@mdx-js/mdx": "^1.6.19",
     "@mdx-js/react": "^1.6.19",
-    "@storybook/addons": "6.2.0-alpha.5",
-    "@storybook/api": "6.2.0-alpha.5",
-    "@storybook/client-api": "6.2.0-alpha.5",
-    "@storybook/client-logger": "6.2.0-alpha.5",
-    "@storybook/components": "6.2.0-alpha.5",
-    "@storybook/core": "6.2.0-alpha.5",
-    "@storybook/core-events": "6.2.0-alpha.5",
+    "@storybook/addons": "6.2.0-alpha.6",
+    "@storybook/api": "6.2.0-alpha.6",
+    "@storybook/client-api": "6.2.0-alpha.6",
+    "@storybook/client-logger": "6.2.0-alpha.6",
+    "@storybook/components": "6.2.0-alpha.6",
+    "@storybook/core": "6.2.0-alpha.6",
+    "@storybook/core-events": "6.2.0-alpha.6",
     "@storybook/csf": "0.0.1",
-    "@storybook/node-logger": "6.2.0-alpha.5",
-    "@storybook/postinstall": "6.2.0-alpha.5",
-    "@storybook/source-loader": "6.2.0-alpha.5",
-    "@storybook/theming": "6.2.0-alpha.5",
+    "@storybook/node-logger": "6.2.0-alpha.6",
+    "@storybook/postinstall": "6.2.0-alpha.6",
+    "@storybook/source-loader": "6.2.0-alpha.6",
+    "@storybook/theming": "6.2.0-alpha.6",
     "acorn": "^7.1.0",
     "acorn-jsx": "^5.1.0",
     "acorn-walk": "^7.0.0",
@@ -92,9 +92,9 @@
     "@babel/core": "^7.12.3",
     "@emotion/core": "^10.1.1",
     "@emotion/styled": "^10.0.23",
-    "@storybook/react": "6.2.0-alpha.5",
-    "@storybook/vue": "6.2.0-alpha.5",
-    "@storybook/web-components": "6.2.0-alpha.5",
+    "@storybook/react": "6.2.0-alpha.6",
+    "@storybook/vue": "6.2.0-alpha.6",
+    "@storybook/web-components": "6.2.0-alpha.6",
     "@types/cross-spawn": "^6.0.1",
     "@types/doctrine": "^0.0.3",
     "@types/enzyme": "^3.10.3",
@@ -123,7 +123,7 @@
   },
   "peerDependencies": {
     "@babel/core": "^7.11.5",
-    "@storybook/vue": "6.2.0-alpha.5",
+    "@storybook/vue": "6.2.0-alpha.6",
     "babel-loader": "^8.0.0",
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0",
@@ -154,5 +154,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "850a0d8b98f2ddab1cd4d652e9beac11e21a369c"
+  "gitHead": "e741f5e3af491b8515668abd5a31fb8e2c201770"
 }

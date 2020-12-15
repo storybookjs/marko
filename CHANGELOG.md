@@ -1,3 +1,35 @@
+## 6.1.11 (December 12, 2020)
+
+### Bug Fixes
+
+- UI: Fix null ref in sidebar ([#13423](https://github.com/storybookjs/storybook/pull/13423))
+- Addon-docs: Handle svelte docgen failures gracefully ([#13386](https://github.com/storybookjs/storybook/pull/13386))
+
+### Dependency Upgrades
+
+- Update react-popper-tooltip and @popperjs/core for react17 ([#13434](https://github.com/storybookjs/storybook/pull/13434))
+
+## 6.2.0-alpha.6 (December 12, 2020)
+
+### Features
+
+* Main.js: Add previewHead, previewBody, managerHead presets ([#13432](https://github.com/storybookjs/storybook/pull/13432))
+
+### Bug Fixes
+
+* Core: Fix `modulesCount` cache storage and retrieval ([#13431](https://github.com/storybookjs/storybook/pull/13431))
+* UI: Fix null ref in sidebar ([#13423](https://github.com/storybookjs/storybook/pull/13423))
+
+### Maintenance
+
+* Components: Cleanup circular dependencies ([#13439](https://github.com/storybookjs/storybook/pull/13439))
+* Core: Generate bundle size report for prebuilt manager ([#13425](https://github.com/storybookjs/storybook/pull/13425))
+* CI: Speed up CircleCI workflows ([#13320](https://github.com/storybookjs/storybook/pull/13320))
+
+### Dependency Upgrades
+
+* Update react-popper-tooltip and @popperjs/core for react17 ([#13434](https://github.com/storybookjs/storybook/pull/13434))
+
 ## 6.2.0-alpha.5 (December 8, 2020)
 
 ### Bug Fixes

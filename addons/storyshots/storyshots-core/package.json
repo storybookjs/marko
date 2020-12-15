@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-storyshots",
-  "version": "6.2.0-alpha.5",
+  "version": "6.2.0-alpha.6",
   "description": "StoryShots is a Jest Snapshot Testing Addon for Storybook.",
   "keywords": [
     "addon",
@@ -40,9 +40,9 @@
   },
   "dependencies": {
     "@jest/transform": "^26.0.0",
-    "@storybook/addons": "6.2.0-alpha.5",
-    "@storybook/client-api": "6.2.0-alpha.5",
-    "@storybook/core": "6.2.0-alpha.5",
+    "@storybook/addons": "6.2.0-alpha.6",
+    "@storybook/client-api": "6.2.0-alpha.6",
+    "@storybook/core": "6.2.0-alpha.6",
     "@types/glob": "^7.1.1",
     "@types/jest": "^25.1.1",
     "@types/jest-specific-snapshot": "^0.5.3",
@@ -58,8 +58,8 @@
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
-    "@storybook/addon-docs": "6.2.0-alpha.5",
-    "@storybook/react": "6.2.0-alpha.5",
+    "@storybook/addon-docs": "6.2.0-alpha.6",
+    "@storybook/react": "6.2.0-alpha.6",
     "babel-loader": "^8.0.6",
     "enzyme": "^3.11.0",
     "enzyme-to-json": "^3.4.1",
@@ -99,5 +99,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "850a0d8b98f2ddab1cd4d652e9beac11e21a369c"
+  "gitHead": "e741f5e3af491b8515668abd5a31fb8e2c201770"
 }
