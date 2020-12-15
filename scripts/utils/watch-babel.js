@@ -4,7 +4,7 @@ const { babelify } = require('./compile-babel');
 const modulePath = path.resolve('./');
 
 babelify({
-  modules: modulePath.includes('/lib/') || modulePath.includes('/addons/'),
+  modules: true,
   silent: false,
   watch: true,
   // eslint-disable-next-line no-console
