@@ -12,7 +12,6 @@ export default {
 } as Meta;
 
 export const Basic: Story = (args) => ({
-  component: EnumsComponent,
   props: args,
 });
 Basic.args = {

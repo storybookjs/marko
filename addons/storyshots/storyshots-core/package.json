@@ -59,24 +59,31 @@
   },
   "devDependencies": {
     "@storybook/addon-docs": "6.2.0-alpha.7",
+    "@storybook/angular": "6.2.0-alpha.7",
     "@storybook/react": "6.2.0-alpha.7",
     "babel-loader": "^8.0.6",
     "enzyme": "^3.11.0",
     "enzyme-to-json": "^3.4.1",
     "jest-emotion": "^10.0.17",
     "jest-preset-angular": "^8.3.2",
-    "jest-vue-preprocessor": "^1.5.0"
+    "jest-vue-preprocessor": "^1.5.0",
+    "rxjs": "^6.6.3"
   },
   "peerDependencies": {
+    "@storybook/angular": "*",
     "@storybook/react": "*",
     "@storybook/vue": "*",
     "jest-preset-angular": "*",
     "jest-vue-preprocessor": "*",
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0",
+    "rxjs": "*",
     "vue": "*"
   },
   "peerDependenciesMeta": {
+    "@storybook/angular": {
+      "optional": true
+    },
     "@storybook/vue": {
       "optional": true
     },
@@ -90,6 +97,9 @@
       "optional": true
     },
     "react-dom": {
+      "optional": true
+    },
+    "rxjs": {
       "optional": true
     },
     "vue": {

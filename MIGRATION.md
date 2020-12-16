@@ -1,7 +1,10 @@
 <h1>Migration</h1>
 
 - [From version 6.1.x to 6.2.0](#from-version-61x-to-620)
-  - [New Angular renderer](#new-angular-renderer)
+  - [6.2 Angular overhaul](#62-angular-overhaul)
+    - [New Angular storyshots format](#new-angular-storyshots-format)
+    - [Deprecated Angular story component](#deprecated-angular-story-component)
+    - [New Angular renderer](#new-angular-renderer)
 - [From version 6.0.x to 6.1.0](#from-version-60x-to-610)
   - [Addon-backgrounds preset](#addon-backgrounds-preset)
   - [Single story hoisting](#single-story-hoisting)
@@ -143,9 +146,42 @@
 
 ## From version 6.1.x to 6.2.0
 
-### New Angular renderer
+### 6.2 Angular overhaul
 
-We've rewritten the Angular renderer in Storybook 6.1. It's meant to be entirely backwards compatible, but if you need to use the legacy renderer it's still available via a [parameter](https://storybook.js.org/docs/react/writing-stories/parameters). To opt out of the new renderer, add the following to `.storybook/preview.ts`:
+#### New Angular storyshots format
+
+We've updated the Angular storyshots format in 6.2, which is technically a breaking change. Apologies to semver purists: if you're using storyshots, you'll need to [update your snapshots](https://jestjs.io/docs/en/snapshot-testing#updating-snapshots).
+
+The new format hides the implementation details of `@storybook/angular` so that we can evolve its renderer without breaking your snapshots in the future.
+
+#### Deprecated Angular story component
+
+Storybook 6.2 for Angular uses `parameters.component` as the preferred way to specify your stories' components. The previous method, in which the component was a return value of the story, has been deprecated.
+
+Consider the existing story from 6.1 or earlier:
+
+```ts
+export default { title: 'Button' };
+export const Basic = () => ({
+  component: Button,
+  props: { label: 'Label' },
+});
+```
+
+From 6.2 this should be rewritten as:
+
+```ts
+export default { title: 'Button', component: Button };
+export const Basic = () => ({
+  props: { label: 'Label' },
+});
+```
+
+The new convention is consistent with how other frameworks and addons work in Storybook. The old way will be supported until 7.0. For a full discussion see https://github.com/storybookjs/storybook/issues/8673.
+
+#### New Angular renderer
+
+We've rewritten the Angular renderer in Storybook 6.2. It's meant to be entirely backwards compatible, but if you need to use the legacy renderer it's still available via a [parameter](https://storybook.js.org/docs/angular/writing-stories/parameters). To opt out of the new renderer, add the following to `.storybook/preview.ts`:
 
 ```ts
 export const parameters = {
@@ -162,6 +198,7 @@ Please also file an issue if you need to opt out. We plan to remove the legacy r
 In 6.1 we introduced an unintentional breaking change to `addon-backgrounds`.
 
 The addon uses decorators which are set up automatically by a preset. The required preset is ignored if you register the addon in `main.js` with the `/register` entry point. This used to be valid in `v6.0.x` and earlier:
+
 ```js
 module.exports = {
   stories: ['../**/*.stories.js'],

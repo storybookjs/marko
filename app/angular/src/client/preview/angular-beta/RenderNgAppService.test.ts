@@ -4,7 +4,6 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { TestBed } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
-import { StoryFnAngularReturnType } from '../types';
 import { RenderNgAppService } from './RenderNgAppService';
 
 jest.mock('@angular/platform-browser-dynamic');
@@ -29,13 +28,14 @@ describe('RenderNgAppService', () => {
 
   describe('render', () => {
     it('should add storybook-wrapper for story template', async () => {
-      await renderNgAppService.render(
-        (): StoryFnAngularReturnType => ({
+      await renderNgAppService.render({
+        storyFnAngular: {
           template: '🦊',
           props: {},
-        }),
-        false
-      );
+        },
+        forced: false,
+        parameters: {} as any,
+      });
 
       expect(document.body.getElementsByTagName('storybook-wrapper')[0].innerHTML).toBe('🦊');
     });
@@ -44,13 +44,15 @@ describe('RenderNgAppService', () => {
       @Component({ selector: 'foo', template: '🦊' })
       class FooComponent {}
 
-      await renderNgAppService.render(
-        (): StoryFnAngularReturnType => ({
-          component: FooComponent,
+      await renderNgAppService.render({
+        storyFnAngular: {
           props: {},
-        }),
-        false
-      );
+        },
+        forced: false,
+        parameters: {
+          component: FooComponent,
+        },
+      });
 
       expect(document.body.getElementsByTagName('storybook-wrapper')[0].innerHTML).toBe(
         '<foo>🦊</foo>'
@@ -96,8 +98,8 @@ describe('RenderNgAppService', () => {
           localFunction: () => 'localFunction',
         };
 
-        const ngModule = renderNgAppService.getNgModuleMetadata(
-          { component: FooComponent, props },
+        const ngModule = RenderNgAppService.getNgModuleMetadata(
+          { storyFnAngular: { props }, parameters: { component: FooComponent } },
           new BehaviorSubject(props)
         );
 
@@ -128,8 +130,8 @@ describe('RenderNgAppService', () => {
           },
         };
 
-        const ngModule = renderNgAppService.getNgModuleMetadata(
-          { component: FooComponent, props },
+        const ngModule = RenderNgAppService.getNgModuleMetadata(
+          { storyFnAngular: { props }, parameters: { component: FooComponent } },
           new BehaviorSubject(props)
         );
 
@@ -149,8 +151,8 @@ describe('RenderNgAppService', () => {
         };
         const storyProps$ = new BehaviorSubject(initialProps);
 
-        const ngModule = renderNgAppService.getNgModuleMetadata(
-          { component: FooComponent, props: initialProps },
+        const ngModule = RenderNgAppService.getNgModuleMetadata(
+          { storyFnAngular: { props: initialProps }, parameters: { component: FooComponent } },
           storyProps$
         );
         const { fixture } = await configureTestingModule(ngModule);
@@ -197,8 +199,8 @@ describe('RenderNgAppService', () => {
         };
         const storyProps$ = new BehaviorSubject(initialProps);
 
-        const ngModule = renderNgAppService.getNgModuleMetadata(
-          { component: FooComponent, props: initialProps },
+        const ngModule = RenderNgAppService.getNgModuleMetadata(
+          { storyFnAngular: { props: initialProps }, parameters: { component: FooComponent } },
           storyProps$
         );
         const { fixture } = await configureTestingModule(ngModule);

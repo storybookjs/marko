@@ -1,12 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Enum Types Basic 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
->
-  <app-enums>
+<storybook-wrapper>
+  <app-enums
+    ng-reflect-aliased-union-type="Type Alias 1"
+    ng-reflect-enum-alias="0"
+    ng-reflect-enum-numeric="0"
+    ng-reflect-enum-numeric-initial="1"
+    ng-reflect-enum-strings="PRIMARY"
+    ng-reflect-union-type="union a"
+  >
     <div>
       <div>
         unionType: union a
@@ -15,7 +18,7 @@ exports[`Storyshots Enum Types Basic 1`] = `
         aliasedUnionType: Type Alias 1
       </div>
       <div>
-        enumNumeric: 
+        enumNumeric: 0
       </div>
       <div>
         enumNumericInitial: 1
@@ -24,9 +27,9 @@ exports[`Storyshots Enum Types Basic 1`] = `
         enumStrings: PRIMARY
       </div>
       <div>
-        enumAlias: 
+        enumAlias: 0
       </div>
     </div>
   </app-enums>
-</storybook-dynamic-app-root>
+</storybook-wrapper>
 `;

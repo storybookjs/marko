@@ -11,7 +11,6 @@ export default {
 } as Meta;
 
 const Template: Story<Button> = (args: Button) => ({
-  component: Button,
   props: args,
 });
 
