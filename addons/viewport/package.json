@@ -1,7 +1,7 @@
 {
   "name": "@storybook/addon-viewport",
   "version": "6.1.11",
-  "description": "Storybook addon to change the viewport size to mobile",
+  "description": "Build responsive components by adjusting Storybook’s viewport size and orientation",
   "keywords": [
     "addon",
     "storybook"
