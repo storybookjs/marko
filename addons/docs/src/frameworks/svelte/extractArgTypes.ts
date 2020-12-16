@@ -35,10 +35,8 @@ type Docgen = {
 
 export const extractArgTypes: ArgTypesExtractor = (component) => {
   try {
-    // eslint-disable-next-line new-cap
-    const comp: ComponentWithDocgen = new component({ props: {} });
     // eslint-disable-next-line no-underscore-dangle
-    const docgen = comp.__docgen;
+    const docgen = component.__docgen;
     if (docgen) {
       return createArgTypes(docgen);
     }

@@ -7,13 +7,14 @@ import * as path from 'path';
  * @param source raw svelte component
  */
 export default async function svelteDocgen(source: string) {
-  // get filename for source content
   // eslint-disable-next-line no-underscore-dangle
-  const file = path.basename(this._module.resource);
+  const { resource } = this._module;
 
+  // get filename for source content
+  const file = path.basename(resource);
   // set SvelteDoc options
   const options = {
-    fileContent: source,
+    filename: resource,
     version: 3,
   };
 
@@ -25,14 +26,16 @@ export default async function svelteDocgen(source: string) {
     // populate filename in docgen
     componentDoc.name = path.basename(file);
 
+    const componentName = path.parse(resource).name;
+
     docgen = `
-    export const __docgen = ${JSON.stringify(componentDoc)};
+    ${componentName}.__docgen = ${JSON.stringify(componentDoc)};
   `;
   } catch (error) {
     console.error(error);
   }
   // inject __docgen prop in svelte component
-  const output = source.replace('</script>', `${docgen}</script>`);
+  const output = source + docgen;
 
   return output;
 }
