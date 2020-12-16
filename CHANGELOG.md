@@ -1,3 +1,13 @@
+## 6.2.0-alpha.8 (December 16, 2020)
+
+### Bug Fixes
+
+- Angular: Fix `configFile: undefined` in ts-loader options ([#13382](https://github.com/storybookjs/storybook/pull/13382))
+
+### Maintenance
+
+- Angular: Deprecate the story component attribute ([#13383](https://github.com/storybookjs/storybook/pull/13383))
+
 ## 6.2.0-alpha.7 (December 15, 2020)
 
 ### Bug Fixes
