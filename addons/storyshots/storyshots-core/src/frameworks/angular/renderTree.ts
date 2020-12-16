@@ -5,7 +5,7 @@ import { TestBed } from '@angular/core/testing';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { addSerializer } from 'jest-specific-snapshot';
-import { RenderNgAppService } from '@storybook/angular';
+import { RenderNgAppService } from '@storybook/angular/renderer';
 import { BehaviorSubject } from 'rxjs';
 
 addSerializer(HTMLCommentSerializer);
