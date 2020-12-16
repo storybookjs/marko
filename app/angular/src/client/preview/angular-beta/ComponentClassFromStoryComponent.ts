@@ -13,13 +13,13 @@ import { Subscription, Subject } from 'rxjs';
 import { map, skip } from 'rxjs/operators';
 
 import { ICollection } from '../types';
-import { STORY_PROPS } from './app.token';
+import { STORY_PROPS } from './StorybookProvider';
 import {
   ComponentInputsOutputs,
   getComponentDecoratorMetadata,
   getComponentInputsOutputs,
-} from './NgComponentAnalyzer';
-import { RenderNgAppService } from './RenderNgAppService';
+} from './utils/NgComponentAnalyzer';
+import { RendererService } from './RendererService';
 
 const getNamesOfInputsOutputsDefinedInProps = (
   ngComponentInputsOutputs: ComponentInputsOutputs,
@@ -61,7 +61,7 @@ export const createComponentClassFromStoryComponent = (
   const templateOutputs = initialOutputs.map((i) => `(${i})="${i}($event)"`).join(' ');
 
   @Component({
-    selector: RenderNgAppService.SELECTOR_STORYBOOK_WRAPPER,
+    selector: RendererService.SELECTOR_STORYBOOK_WRAPPER,
     // Simulates the `component` integration in a template
     // `props` are converted into Inputs/Outputs to be added directly in the template so as the component can use them during its initailization
     // - The outputs are connected only once here

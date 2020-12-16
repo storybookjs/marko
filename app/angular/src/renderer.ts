@@ -1,1 +1,2 @@
-export { RenderNgAppService } from './client/preview/angular-beta/RenderNgAppService';
+export { RendererService } from './client/preview/angular-beta/RendererService';
+export { getStorybookModuleMetadata } from './client/preview/angular-beta/StorybookModule';

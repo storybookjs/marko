@@ -2,8 +2,8 @@ import { Inject, ChangeDetectorRef, Component, OnDestroy, OnInit, Type } from '@
 import { Subject, Subscription } from 'rxjs';
 
 import { ICollection } from '../types';
-import { STORY_PROPS } from './app.token';
-import { RenderNgAppService } from './RenderNgAppService';
+import { STORY_PROPS } from './StorybookProvider';
+import { RendererService } from './RendererService';
 
 /**
  * Wraps the story template into a component
@@ -16,7 +16,7 @@ export const createComponentClassFromStoryTemplate = (
   styles: string[]
 ): Type<any> => {
   @Component({
-    selector: RenderNgAppService.SELECTOR_STORYBOOK_WRAPPER,
+    selector: RendererService.SELECTOR_STORYBOOK_WRAPPER,
     template,
     styles,
   })
