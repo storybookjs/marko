@@ -1,7 +1,7 @@
 {
   "name": "@storybook/addon-toolbars",
   "version": "6.2.0-alpha.7",
-  "description": "Storybook toolbars addon",
+  "description": "Create your own toolbar items that control story rendering",
   "keywords": [
     "addon",
     "storybook",
