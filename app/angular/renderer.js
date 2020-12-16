@@ -1,1 +1,1 @@
-const { RenderNgAppService } = require('./dist/cjs/client/preview/angular-beta/RenderNgAppService');
+module.exports = require('./dist/cjs/renderer');
