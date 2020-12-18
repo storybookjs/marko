@@ -8,7 +8,7 @@ import {
   SyntaxHighlighterRendererProps,
 } from '@storybook/components';
 
-// @ts-ignore
+// @ts-expect-error Typedefs don't currently expose `createElement` even though it exists
 import { createElement as createSyntaxHighlighterElement } from 'react-syntax-highlighter';
 
 import { SourceBlock, LocationsMap } from '@storybook/source-loader';
