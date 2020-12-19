@@ -112,6 +112,6 @@ If you're referencing fonts or images from a local directory, you'll need to con
 
 ## Load assets and resources
 
-If you want to [link to static files](../configure/images-and-assets) in your project or stories (e.g. `/fonts/XYZ.woff`), use the `-s path/to/folder` to specify a static folder to serve from when you start up Storybook. To do so, edit the `storybook` and `build-storybook` scripts in `package.json`.
+If you want to [link to static files](../configure/images-and-assets.md) in your project or stories (e.g. `/fonts/XYZ.woff`), use the `-s path/to/folder` to specify a static folder to serve from when you start up Storybook. To do so, edit the `storybook` and `build-storybook` scripts in `package.json`.
 
 We recommend serving external resources and assets requested in your components statically with Storybook. This ensures that assets are always available to your stories.
