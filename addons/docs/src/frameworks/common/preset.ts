@@ -97,7 +97,7 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
           ],
         },
         {
-          test: /\.(stories|story).mdx$/,
+          test: /\.(stories|story)\.mdx$/,
           use: [
             {
               loader: require.resolve('babel-loader'),
@@ -114,7 +114,7 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
         },
         {
           test: /\.mdx$/,
-          exclude: /\.(stories|story).mdx$/,
+          exclude: /\.(stories|story)\.mdx$/,
           use: [
             {
               loader: require.resolve('babel-loader'),
