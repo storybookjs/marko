@@ -109,21 +109,19 @@ yarn lint
 
 It can be immensely helpful to get feedback in your editor, if you're using VsCode, you should install the `eslint` plugin and configure it with these settings:
 
-```plaintext
-"eslint.autoFixOnSave": true,
-"eslint.packageManager": "yarn",
-"eslint.options": {
-  "cache": true,
-  "cacheLocation": ".cache/eslint",
-  "extensions": [".js", ".jsx", ".mjs", ".json", ".ts", ".tsx"]
-},
-"eslint.validate": [
-  "javascript",
-  "javascriptreact",
-  {"language": "typescript", "autoFix": true },
-  {"language": "typescriptreact", "autoFix": true }
-],
-"eslint.alwaysShowStatus": true
+```json
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.packageManager": "yarn",
+  "eslint.options": {
+    "cache": true,
+    "cacheLocation": ".cache/eslint",
+    "extensions": [".js", ".jsx", ".json", ".html", ".ts", ".tsx", ".mjs"]
+  },
+  "eslint.alwaysShowStatus": true
+}
 ```
 
 This should enable auto-fix for all source files, and give linting warnings and errors within your editor.
@@ -197,7 +195,7 @@ Our script leaves the local registry running, for **as long as you keep it runni
 If you've made a change to storybook's codebase and would want this change to be reflected in your app:
 
 - Ensure the storybook packages are transpiled, by either having run `yarn dev` or `yarn bootstrap --core`.
-- Go to the terminal where the local regitry is running and press `<Enter>`. This will kick off a new publish.
+- Go to the terminal where the local registry is running and press `<Enter>`. This will kick off a new publish.
 - Run the install procedure again in your local repo, (you may need to clean out node_modules first).
 - Restart your storybook.
 
@@ -303,7 +301,7 @@ If you're working on one or a few packages, for every change that you make, you 
 - Run `yarn build <package-name>` to build that package specifically. \
   For the package name, use its short version. Example: for `@storybook/addon-docs`, run `yarn build addon-docs`.
 - Run `yarn build --all` to build everything.
-- Add `--watch` to run automatically in watch more if you are either building a selection of packages by name or building all.
+- Add `--watch` to run automatically in watch mode if you are either building a selection of packages by name or building all.
   Example: `yarn build core addon-docs --watch` or `yarn build --all --watch`.
 
 ### Working with the kitchen sink apps

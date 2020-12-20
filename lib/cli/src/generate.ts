@@ -3,14 +3,14 @@ import path from 'path';
 import chalk from 'chalk';
 import envinfo from 'envinfo';
 import leven from 'leven';
+import { sync } from 'read-pkg-up';
 import initiate from './initiate';
 import { add } from './add';
 import { migrate } from './migrate';
 import { extract } from './extract';
 import { upgrade } from './upgrade';
 
-// Cannot be `import` as it's not under TS root dir
-const pkg = require('../package.json');
+const pkg = sync({ cwd: __dirname }).packageJson;
 
 const logger = console;
 
@@ -89,8 +89,7 @@ program
     })
   );
 
-program.command('*', { noHelp: true }).action(() => {
-  const [, , invalidCmd] = process.argv;
+program.on('command:*', ([invalidCmd]) => {
   logger.error(' Invalid command: %s.\n See --help for a list of available commands.', invalidCmd);
   // eslint-disable-next-line
   const availableCommands = program.commands.map((cmd) => cmd._name);

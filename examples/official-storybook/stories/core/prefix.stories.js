@@ -1,4 +1,4 @@
-// Very simple stories to show what happens when one story's id is a prefix of anothers'
+// Very simple stories to show what happens when one story's id is a prefix of another's
 // Repro for https://github.com/storybookjs/storybook/issues/11571
 
 export default {

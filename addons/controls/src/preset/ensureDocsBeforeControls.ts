@@ -8,7 +8,7 @@ type Entry = string | OptionsEntry;
 const findIndex = (addon: string, addons: Entry[]) =>
   addons.findIndex((entry) => {
     const name = (entry as OptionsEntry).name || (entry as string);
-    return name && name.startsWith(addon);
+    return name && name.includes(addon);
   });
 
 const indexOfAddonOrEssentials = (addon: string, addons: Entry[]) => {
@@ -23,7 +23,10 @@ export const verifyDocsBeforeControls = (addons: Entry[]) => {
 };
 
 export const ensureDocsBeforeControls = (configDir: string) => {
-  const mainFile = path.join(process.cwd(), configDir, 'main');
+  const mainFile = path.isAbsolute(configDir)
+    ? path.join(configDir, 'main')
+    : path.join(process.cwd(), configDir, 'main');
+
   try {
     // eslint-disable-next-line global-require,import/no-dynamic-require
     const main = require(mainFile);
@@ -33,7 +36,7 @@ export const ensureDocsBeforeControls = (configDir: string) => {
     }
     if (!verifyDocsBeforeControls(main.addons)) {
       logger.warn(dedent`
-        Expected '@storybook/addon-docs' (or essentials) to be listed before '@storybook/addon-controls'. Check your main.js?
+        Expected '@storybook/addon-docs' to be listed before '@storybook/addon-controls' (or '@storybook/addon-essentials'). Check your main.js?
         
         https://github.com/storybookjs/storybook/issues/11442
       `);

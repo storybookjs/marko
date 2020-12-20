@@ -66,6 +66,50 @@ And here's how that gets rendered in Storybook:
 
 ![MDX page](./mdx-page.png)
 
+## Customizing ArgTypes with MDX
+
+As already mentioned [above](#mdx-flavored-csf), there's a one-to-one mapping between MDX and CSF.
+
+Based on this principle, if the Badge story included the following `ArgTypes`: 
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/badge-story-custom-argtypes.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+
+Transitioning them into MDX format is quite seamless and would only require the following change to the story:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/badge-story-custom-argtypes.mdx.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+And here's how that gets rendered in Storybook:
+
+<video autoPlay muted playsInline loop>
+  <source
+    src="custom-argTypes-mdx-optimized.mp4"
+    type="video/mp4"
+  />
+</video>
+
+<div class="aside">
+
+If you find yourself with a considerably sized <code>argTypes</code> implementation. You can extract them into a variable and pass them as a prop. 
+
+</div>
+
 ## Embedding stories
 
 Suppose you have an existing story and want to embed it into your docs. Here's how to show a story with ID some--id. Check the browser URL in Storybook v5+ to find a story's ID.
@@ -104,7 +148,7 @@ Typically, when you use Storybook MDX, you define stories in the MDX and documen
 
 If you don't define stories in your MDX, you can write MDX documentation and associate it with an existing story, or embed that MDX as its own documentation node in your Storybook's navigation.
 
-If you don't define a Meta, you can write Markdown and associate with an existing story. See ["CSF Stories with MDX Docs"](https://github.com/storybookjs/storybook/blob/master/addons/docs/docs/recipes.md#csf-stories-with-mdx-docs).
+If you don't define a Meta, you can write Markdown and associate with an existing story. See ["CSF Stories with MDX Docs"](../../addons/docs/docs/recipes.md#csf-stories-with-mdx-docs).
 
 To get a "documentation-only story", in your UI, define a `<Meta>` as you normally would, but don't define any stories. It will show up in your UI as a documentation node:
 

@@ -85,7 +85,7 @@ const deprecatedOptionsParameterWarnings: Record<string, () => void> = [
   acc[option] = deprecate(
     () => {},
     `parameters.options.${option} is deprecated and will be removed in Storybook 7.0.
-To change this setting, use \`addons.setConfig\`. See https://github.com/storybookjs/storybook/MIGRATION.md#deprecated-immutable-options-parameters
+To change this setting, use \`addons.setConfig\`. See https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-immutable-options-parameters
   `
   );
   return acc;
@@ -375,7 +375,7 @@ export const init: ModuleFn = ({
         }
 
         fullAPI.setStories(stories, error);
-        const { options } = data.globalParameters;
+        const options = fullAPI.getCurrentParameter('options');
         checkDeprecatedOptionParameters(options);
         fullAPI.setOptions(options);
       } else {

@@ -26,7 +26,7 @@ export const workingStory = () => (
   />
 );
 workingStory.parameters = {
-  chromatic: { delay: 300 },
+  chromatic: { disable: true },
 };
 
 export const missingStory = () => (

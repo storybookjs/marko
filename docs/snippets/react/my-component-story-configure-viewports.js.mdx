@@ -1,6 +1,8 @@
 ```js
 // MyComponent.stories.js
 
+import React from 'react';
+
 export default {
   title: 'Stories',
   parameters: {
@@ -14,8 +16,8 @@ export default {
   };
 };
 
-export const myStory = () => <div />;
-myStory.parameters = {
+export const MyStory = () => <div />;
+MyStory.parameters = {
   viewport: {
     defaultViewport: 'iphonex'
   },

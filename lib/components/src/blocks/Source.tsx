@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { styled, ThemeProvider, convert, themes } from '@storybook/theming';
 import { EmptyBlock } from './EmptyBlock';
 
-import { SyntaxHighlighter } from '../syntaxhighlighter/syntaxhighlighter';
+import { SyntaxHighlighter } from '../syntaxhighlighter/lazy-syntaxhighlighter';
 
 const StyledSyntaxHighlighter = styled(SyntaxHighlighter)<{}>(({ theme }) => ({
   // DocBlocks-specific styling and overrides
@@ -12,7 +12,7 @@ const StyledSyntaxHighlighter = styled(SyntaxHighlighter)<{}>(({ theme }) => ({
   borderRadius: theme.appBorderRadius,
   boxShadow:
     theme.base === 'light' ? 'rgba(0, 0, 0, 0.10) 0 1px 3px 0' : 'rgba(0, 0, 0, 0.20) 0 2px 5px 0',
-  'pre.hljs': {
+  'pre.prismjs': {
     padding: 20,
     background: 'inherit',
   },

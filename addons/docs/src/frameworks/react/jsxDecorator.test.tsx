@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import range from 'lodash/range';
+import PropTypes from 'prop-types';
 import addons, { StoryContext } from '@storybook/addons';
 import { renderJsx, jsxDecorator } from './jsxDecorator';
 import { SNIPPET_RENDERED } from '../../shared';
@@ -26,6 +27,20 @@ describe('renderJsx', () => {
     const onClick = () => console.log('onClick');
     expect(renderJsx(<div onClick={onClick}>hello</div>, {})).toMatchInlineSnapshot(`
       <div onClick={() => {}}>
+        hello
+      </div>
+    `);
+  });
+  it('undefined values', () => {
+    expect(renderJsx(<div className={undefined}>hello</div>, {})).toMatchInlineSnapshot(`
+      <div>
+        hello
+      </div>
+    `);
+  });
+  it('null values', () => {
+    expect(renderJsx(<div className={null}>hello</div>, {})).toMatchInlineSnapshot(`
+      <div className={null}>
         hello
       </div>
     `);
@@ -92,6 +107,52 @@ describe('renderJsx', () => {
        />
     `);
   });
+
+  it('forwardRef component', () => {
+    const MyExoticComponent = React.forwardRef(function MyExoticComponent(props: any, _ref: any) {
+      return <div>{props.children}</div>;
+    });
+
+    expect(renderJsx(<MyExoticComponent>I'm forwardRef!</MyExoticComponent>, {}))
+      .toMatchInlineSnapshot(`
+        <MyExoticComponent>
+          I'm forwardRef!
+        </MyExoticComponent>
+      `);
+  });
+
+  it('memo component', () => {
+    const MyMemoComponent = React.memo(function MyMemoComponent(props: any) {
+      return <div>{props.children}</div>;
+    });
+
+    expect(renderJsx(<MyMemoComponent>I'm memo!</MyMemoComponent>, {})).toMatchInlineSnapshot(`
+      <MyMemoComponent>
+        I'm memo!
+      </MyMemoComponent>
+    `);
+  });
+
+  it('should not add default props to string if the prop value has not changed', () => {
+    const Container = ({ className, children }: { className: string; children: string }) => {
+      return <div className={className}>{children}</div>;
+    };
+
+    Container.propTypes = {
+      children: PropTypes.string.isRequired,
+      className: PropTypes.string,
+    };
+
+    Container.defaultProps = {
+      className: 'super-container',
+    };
+
+    expect(renderJsx(<Container>yo dude</Container>, {})).toMatchInlineSnapshot(`
+      <Container className="super-container">
+        yo dude
+      </Container>
+    `);
+  });
 });
 
 // @ts-ignore
@@ -128,5 +189,41 @@ describe('jsxDecorator', () => {
     const context = makeContext('classic', {}, {});
     jsxDecorator(storyFn, context);
     expect(mockChannel.emit).not.toHaveBeenCalled();
+  });
+
+  // This is deprecated, but still test it
+  it('allows the snippet output to be modified by onBeforeRender', () => {
+    const storyFn = (args: any) => <div>args story</div>;
+    const onBeforeRender = (dom: string) => `<p>${dom}</p>`;
+    const jsx = { onBeforeRender };
+    const context = makeContext('args', { __isArgsStory: true, jsx }, {});
+    jsxDecorator(storyFn, context);
+    expect(mockChannel.emit).toHaveBeenCalledWith(
+      SNIPPET_RENDERED,
+      'jsx-test--args',
+      '<p><div>\n  args story\n</div></p>'
+    );
+  });
+
+  it('allows the snippet output to be modified by transformSource', () => {
+    const storyFn = (args: any) => <div>args story</div>;
+    const transformSource = (dom: string) => `<p>${dom}</p>`;
+    const jsx = { transformSource };
+    const context = makeContext('args', { __isArgsStory: true, jsx }, {});
+    jsxDecorator(storyFn, context);
+    expect(mockChannel.emit).toHaveBeenCalledWith(
+      SNIPPET_RENDERED,
+      'jsx-test--args',
+      '<p><div>\n  args story\n</div></p>'
+    );
+  });
+
+  it('provides the story context to transformSource', () => {
+    const storyFn = (args: any) => <div>args story</div>;
+    const transformSource = jest.fn();
+    const jsx = { transformSource };
+    const context = makeContext('args', { __isArgsStory: true, jsx }, {});
+    jsxDecorator(storyFn, context);
+    expect(transformSource).toHaveBeenCalledWith('<div>\n  args story\n</div>', context);
   });
 });

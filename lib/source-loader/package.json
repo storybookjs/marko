@@ -1,6 +1,6 @@
 {
   "name": "@storybook/source-loader",
-  "version": "6.0.7",
+  "version": "6.2.0-alpha.8",
   "description": "Source loader",
   "keywords": [
     "lib",
@@ -16,36 +16,45 @@
     "directory": "lib/source-loader"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "sideEffects": false,
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/ts3.9/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "dist/ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.5/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.7",
-    "@storybook/client-logger": "6.0.7",
+    "@storybook/addons": "6.2.0-alpha.8",
+    "@storybook/client-logger": "6.2.0-alpha.8",
     "@storybook/csf": "0.0.1",
     "core-js": "^3.0.1",
     "estraverse": "^4.2.0",
     "global": "^4.3.2",
     "loader-utils": "^2.0.0",
     "lodash": "^4.17.15",
-    "prettier": "^2.0.5",
-    "regenerator-runtime": "^0.13.3"
+    "prettier": "~2.0.5",
+    "regenerator-runtime": "^0.13.7",
+    "source-map": "^0.7.3"
   },
   "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2ba756b82c1ad607ba5bde77a445a481ccaaf68f"
+  "gitHead": "c04cdab92d3832a904485f0f885a7faac7ebbf93"
 }

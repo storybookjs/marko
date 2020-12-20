@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import createChannel from '@storybook/channel-postmessage';
 import { toId } from '@storybook/csf';
 import addons, { mockChannel } from '@storybook/addons';
@@ -157,6 +158,26 @@ describe('preview.story_store', () => {
   });
 
   describe('args', () => {
+    it('composes component-level and story-level args, favoring story-level', () => {
+      const store = new StoryStore({ channel });
+      store.addKindMetadata('a', {
+        parameters: { args: { arg1: 1, arg2: 2, arg3: 3, arg4: { complex: 'object' } } },
+      });
+      addStoryToStore(store, 'a', '1', () => 0, {
+        args: {
+          arg1: 4,
+          arg2: undefined,
+          arg4: { other: 'object ' },
+        },
+      });
+      expect(store.getRawStory('a', '1').args).toEqual({
+        arg1: 4,
+        arg2: undefined,
+        arg3: 3,
+        arg4: { other: 'object ' },
+      });
+    });
+
     it('is initialized to the value stored in parameters.args[name] || parameters.argType[name].defaultValue', () => {
       const store = new StoryStore({ channel });
       addStoryToStore(store, 'a', '1', () => 0, {
@@ -184,6 +205,7 @@ describe('preview.story_store', () => {
 
     it('automatically infers argTypes based on args', () => {
       const store = new StoryStore({ channel });
+      store.startConfiguring();
       addStoryToStore(store, 'a', '1', () => 0, {
         args: {
           arg1: 3,
@@ -402,6 +424,7 @@ describe('preview.story_store', () => {
     it('on HMR it sensibly re-initializes with memory', () => {
       const store = new StoryStore({ channel });
       addons.setChannel(channel);
+      store.startConfiguring();
       store.addGlobalMetadata({
         decorators: [],
         parameters: {
@@ -428,6 +451,7 @@ describe('preview.story_store', () => {
         arg3: { complex: { object: ['type'] } },
         arg4: 4,
       });
+      expect(store._argTypesEnhancers.length).toBe(3);
 
       // HMR
       store.startConfiguring();
@@ -439,7 +463,7 @@ describe('preview.story_store', () => {
           },
           globalTypes: {
             arg2: { defaultValue: 'arg2' },
-            arg3: { defautlValue: { complex: { object: ['changed'] } } },
+            arg3: { defaultValue: { complex: { object: ['changed'] } } },
             // XXX: note this currently wouldn't fail because parameters.globals.arg4 isn't cleared
             // due to #10005, see below
             arg4: {}, // has no default value set but we need to make sure we don't lose it
@@ -448,6 +472,7 @@ describe('preview.story_store', () => {
         },
       });
       store.finishConfiguring();
+      expect(store._argTypesEnhancers.length).toBe(3);
 
       expect(store.getRawStory('a', '1').globals).toEqual({
         // You cannot remove a global arg in HMR currently, because you cannot remove the
@@ -684,6 +709,52 @@ describe('preview.story_store', () => {
         expect.objectContaining({ parameters: { __isArgsStory: false, argTypes: { e: 'f' } } })
       );
       expect(store.getRawStory('a', '1').parameters.argTypes).toEqual({ e: 'f', c: 'd' });
+    });
+
+    it('automatically infers argTypes from args', () => {
+      const store = new StoryStore({ channel });
+      store.startConfiguring();
+      addStoryToStore(store, 'a', '1', () => 0, { args: { a: null, b: 'hello', c: 9 } });
+      expect(store.getRawStory('a', '1').parameters.argTypes).toMatchInlineSnapshot(`
+        Object {
+          "a": Object {
+            "name": "a",
+            "type": Object {
+              "name": "object",
+              "value": Object {},
+            },
+          },
+          "b": Object {
+            "name": "b",
+            "type": Object {
+              "name": "string",
+            },
+          },
+          "c": Object {
+            "name": "c",
+            "type": Object {
+              "name": "number",
+            },
+          },
+        }
+      `);
+    });
+
+    it('adds user and default enhancers', () => {
+      const store = new StoryStore({ channel });
+      expect(store._argTypesEnhancers.length).toBe(1);
+
+      const enhancer = () => ({});
+      store.addArgTypesEnhancer(enhancer);
+      expect(store._argTypesEnhancers.length).toBe(2);
+
+      store.startConfiguring();
+      expect(store._argTypesEnhancers.length).toBe(4);
+
+      addStoryToStore(store, 'a', '1', () => 0);
+      addStoryToStore(store, 'a', '2', () => 0);
+      store.finishConfiguring();
+      expect(store._argTypesEnhancers.length).toBe(4);
     });
   });
 

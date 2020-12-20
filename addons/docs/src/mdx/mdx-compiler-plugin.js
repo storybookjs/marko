@@ -44,15 +44,13 @@ function genAttribute(key, element) {
 function genImportStory(ast, storyDef, storyName, context) {
   const { code: story } = generate(storyDef.expression, {});
 
-  const storyKey = `${story.split('.').pop()}Story`;
+  const storyKey = `_${story.split('.').pop()}_`;
 
   const statements = [`export const ${storyKey} = ${story};`];
   if (storyName) {
-    // eslint-disable-next-line no-param-reassign
     context.storyNameToKey[storyName] = storyKey;
     statements.push(`${storyKey}.storyName = '${storyName}';`);
   } else {
-    // eslint-disable-next-line no-param-reassign
     context.storyNameToKey[storyKey] = storyKey;
     ast.openingElement.attributes.push({
       type: 'JSXAttribute',
@@ -69,6 +67,32 @@ function genImportStory(ast, storyDef, storyName, context) {
   return {
     [storyKey]: statements.join('\n'),
   };
+}
+
+function getBodyPart(bodyNode, context) {
+  const body = bodyNode.type === 'JSXExpressionContainer' ? bodyNode.expression : bodyNode;
+  let sourceBody = body;
+  if (
+    body.type === 'CallExpression' &&
+    body.callee.type === 'MemberExpression' &&
+    body.callee.object.type === 'Identifier' &&
+    body.callee.property.type === 'Identifier' &&
+    body.callee.property.name === 'bind' &&
+    (body.arguments.length === 0 ||
+      (body.arguments.length === 1 &&
+        body.arguments[0].type === 'ObjectExpression' &&
+        body.arguments[0].properties.length === 0))
+  ) {
+    const bound = body.callee.object.name;
+    const namedExport = context.namedExports[bound];
+    if (namedExport) {
+      sourceBody = namedExport;
+    }
+  }
+
+  const { code: storyCode } = generate(body, {});
+  const { code: sourceCode } = generate(sourceBody, {});
+  return { storyCode, sourceCode, body };
 }
 
 function genStoryExport(ast, context) {
@@ -96,30 +120,29 @@ function genStoryExport(ast, context) {
 
   const bodyNodes = ast.children.filter((n) => n.type !== 'JSXText');
   let storyCode = null;
+  let sourceCode = null;
   let storyVal = null;
   if (!bodyNodes.length) {
     // plain text node
     const { code } = generate(ast.children[0], {});
     storyCode = `'${code}'`;
+    sourceCode = storyCode;
     storyVal = `() => (
       ${storyCode}
     )`;
   } else {
-    const bodyParts = bodyNodes.map((bodyNode) => {
-      const body = bodyNode.type === 'JSXExpressionContainer' ? bodyNode.expression : bodyNode;
-      const { code } = generate(body, {});
-      return { code, body };
-    });
+    const bodyParts = bodyNodes.map((bodyNode) => getBodyPart(bodyNode, context));
     // if we have more than two children
     // 1. Add line breaks
     // 2. Enclose in <> ... </>
-    storyCode = bodyParts.map(({ code }) => code).join('\n');
+    storyCode = bodyParts.map(({ storyCode: code }) => code).join('\n');
+    sourceCode = bodyParts.map(({ sourceCode: code }) => code).join('\n');
     const storyReactCode = bodyParts.length > 1 ? `<>\n${storyCode}\n</>` : storyCode;
-    // keep track if an indentifier or function call
+    // keep track if an identifier or function call
     // avoid breaking change for 5.3
     const BIND_REGEX = /\.bind\(.*\)/;
-    if (bodyParts.length === 1 && BIND_REGEX.test(bodyParts[0].code)) {
-      storyVal = bodyParts[0].code;
+    if (bodyParts.length === 1 && BIND_REGEX.test(bodyParts[0].storyCode)) {
+      storyVal = bodyParts[0].storyCode;
     } else {
       switch (bodyParts.length === 1 && bodyParts[0].body.type) {
         // We don't know what type the identifier is, but this code
@@ -152,7 +175,7 @@ function genStoryExport(ast, context) {
 
   let parameters = getAttr(ast.openingElement, 'parameters');
   parameters = parameters && parameters.expression;
-  const source = jsStringEscape(storyCode);
+  const source = jsStringEscape(sourceCode);
   const sourceParam = `storySource: { source: '${source}' }`;
   if (parameters) {
     const { code: params } = generate(parameters, {});
@@ -168,7 +191,13 @@ function genStoryExport(ast, context) {
     statements.push(`${storyKey}.decorators = ${decos};`);
   }
 
-  // eslint-disable-next-line no-param-reassign
+  let loaders = getAttr(ast.openingElement, 'loaders');
+  loaders = loaders && loaders.expression;
+  if (loaders) {
+    const { code: loaderCode } = generate(loaders, {});
+    statements.push(`${storyKey}.loaders = ${loaderCode};`);
+  }
+
   context.storyNameToKey[storyName] = storyKey;
 
   return {
@@ -186,7 +215,6 @@ function genCanvasExports(ast, context) {
       child.value = code;
       if (storyExport) {
         Object.assign(canvasExports, storyExport);
-        // eslint-disable-next-line no-param-reassign
         context.counter += 1;
       }
     }
@@ -217,6 +245,7 @@ function genMeta(ast, options) {
   id = id && `'${id.value}'`;
   const parameters = genAttribute('parameters', ast.openingElement);
   const decorators = genAttribute('decorators', ast.openingElement);
+  const loaders = genAttribute('loaders', ast.openingElement);
   const component = genAttribute('component', ast.openingElement);
   const subcomponents = genAttribute('subcomponents', ast.openingElement);
   const args = genAttribute('args', ast.openingElement);
@@ -227,6 +256,7 @@ function genMeta(ast, options) {
     id,
     parameters,
     decorators,
+    loaders,
     component,
     subcomponents,
     args,
@@ -249,7 +279,17 @@ function getExports(node, counter, options) {
     if (CANVAS_REGEX.exec(value)) {
       // Canvas/Preview, possibly containing multiple stories
       const ast = parser.parseExpression(value, { plugins: ['jsx'] });
-      return { stories: genCanvasExports(ast, counter) };
+
+      const canvasExports = genCanvasExports(ast, counter);
+
+      // We're overwriting the Canvas tag here with a version that
+      // has the `name` attribute (e.g. `<Story name="..." story={...} />`)
+      // even if the user didn't provide one. We need the name attribute when
+      // we render the node at runtime.
+      const { code } = generate(ast, {});
+      // eslint-disable-next-line no-param-reassign
+      node.value = code;
+      return { stories: canvasExports };
     }
     if (META_REGEX.exec(value)) {
       const ast = parser.parseExpression(value, { plugins: ['jsx'] });
@@ -293,8 +333,48 @@ const hasStoryChild = (node) => {
   return null;
 };
 
-function extractExports(node, options) {
-  node.children.forEach((child) => {
+const getMdxSource = (children) =>
+  encodeURI(
+    children
+      .map(
+        (el) =>
+          generate(el, {
+            quotes: 'double',
+          }).code
+      )
+      .join('\n')
+  );
+
+// Parse out the named exports from a node, where the key
+// is the variable name and the value is the AST of the
+// variable declaration initializer
+const getNamedExports = (node) => {
+  const namedExports = {};
+  const ast = parser.parse(node.value, {
+    sourceType: 'module',
+    presets: ['env'],
+    plugins: ['jsx'],
+  });
+  if (ast.type === 'File' && ast.program.type === 'Program' && ast.program.body.length === 1) {
+    const exported = ast.program.body[0];
+    if (
+      exported.type === 'ExportNamedDeclaration' &&
+      exported.declaration.type === 'VariableDeclaration' &&
+      exported.declaration.declarations.length === 1
+    ) {
+      const declaration = exported.declaration.declarations[0];
+      if (declaration.type === 'VariableDeclarator' && declaration.id.type === 'Identifier') {
+        const { name } = declaration.id;
+        namedExports[name] = declaration.init;
+      }
+    }
+  }
+  return namedExports;
+};
+
+function extractExports(root, options) {
+  const namedExports = {};
+  root.children.forEach((child) => {
     if (child.type === 'jsx') {
       try {
         const ast = parser.parseExpression(child.value, { plugins: ['jsx'] });
@@ -313,16 +393,7 @@ function extractExports(node, options) {
             },
             value: {
               type: 'StringLiteral',
-              value: encodeURI(
-                ast.children
-                  .map(
-                    (el) =>
-                      generate(el, {
-                        quotes: 'double',
-                      }).code
-                  )
-                  .join('\n')
-              ),
+              value: getMdxSource(ast.children),
             },
           });
         }
@@ -343,6 +414,8 @@ function extractExports(node, options) {
          *
          */
       }
+    } else if (child.type === 'export') {
+      Object.assign(namedExports, getNamedExports(child));
     }
   });
   // we're overriding default export
@@ -352,8 +425,10 @@ function extractExports(node, options) {
   const context = {
     counter: 0,
     storyNameToKey: {},
+    root,
+    namedExports,
   };
-  node.children.forEach((n) => {
+  root.children.forEach((n) => {
     const exports = getExports(n, context, options);
     if (exports) {
       const { stories, meta } = exports;
@@ -382,7 +457,7 @@ function extractExports(node, options) {
   }
   metaExport.includeStories = JSON.stringify(includeStories);
 
-  const defaultJsx = mdxToJsx.toJSX(node, {}, { ...options, skipExport: true });
+  const defaultJsx = mdxToJsx.toJSX(root, {}, { ...options, skipExport: true });
   const fullJsx = [
     'import { assertIsFn, AddContext } from "@storybook/addon-docs/blocks";',
     defaultJsx,
@@ -398,7 +473,7 @@ function extractExports(node, options) {
 
 function createCompiler(mdxOptions) {
   return function compiler(options = {}) {
-    this.Compiler = (tree) => extractExports(tree, options, mdxOptions);
+    this.Compiler = (root) => extractExports(root, options, mdxOptions);
   };
 }
 

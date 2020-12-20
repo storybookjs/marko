@@ -1,7 +1,7 @@
 {
   "name": "@storybook/addon-storysource",
-  "version": "6.0.7",
-  "description": "Stories addon for storybook",
+  "version": "6.2.0-alpha.8",
+  "description": "View a story’s source code to see how it works and paste into your app",
   "keywords": [
     "addon",
     "storybook"
@@ -16,46 +16,59 @@
     "directory": "addons/storysource"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/ts3.9/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "dist/ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.5/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.7",
-    "@storybook/api": "6.0.7",
-    "@storybook/client-logger": "6.0.7",
-    "@storybook/components": "6.0.7",
-    "@storybook/router": "6.0.7",
-    "@storybook/source-loader": "6.0.7",
-    "@storybook/theming": "6.0.7",
+    "@storybook/addons": "6.2.0-alpha.8",
+    "@storybook/api": "6.2.0-alpha.8",
+    "@storybook/client-logger": "6.2.0-alpha.8",
+    "@storybook/components": "6.2.0-alpha.8",
+    "@storybook/router": "6.2.0-alpha.8",
+    "@storybook/source-loader": "6.2.0-alpha.8",
+    "@storybook/theming": "6.2.0-alpha.8",
     "core-js": "^3.0.1",
     "estraverse": "^4.2.0",
     "loader-utils": "^2.0.0",
-    "prettier": "^2.0.5",
+    "prettier": "~2.0.5",
     "prop-types": "^15.7.2",
-    "react": "^16.9.17",
-    "react-syntax-highlighter": "^12.2.1",
-    "regenerator-runtime": "^0.13.3"
+    "react-syntax-highlighter": "^13.5.0",
+    "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
     "@types/react": "^16.9.27",
     "@types/react-syntax-highlighter": "^11.0.4"
   },
   "peerDependencies": {
-    "@storybook/source-loader": "*",
-    "react": "*",
-    "react-dom": "*"
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2ba756b82c1ad607ba5bde77a445a481ccaaf68f"
+  "gitHead": "c04cdab92d3832a904485f0f885a7faac7ebbf93"
 }

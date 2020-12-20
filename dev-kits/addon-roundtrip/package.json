@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-roundtrip",
-  "version": "6.0.7",
+  "version": "6.2.0-alpha.8",
   "description": "roundtrip addon for storybook",
   "keywords": [
     "addon",
@@ -18,33 +18,27 @@
     "directory": "dev-kit/addon-roundtrip"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/ts3.9/index.d.ts",
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.7",
-    "@storybook/api": "6.0.7",
-    "@storybook/client-api": "6.0.7",
-    "@storybook/client-logger": "6.0.7",
-    "@storybook/components": "6.0.7",
-    "@storybook/core-events": "6.0.7",
-    "@storybook/theming": "6.0.7",
+    "@storybook/addons": "6.2.0-alpha.8",
+    "@storybook/api": "6.2.0-alpha.8",
+    "@storybook/client-api": "6.2.0-alpha.8",
+    "@storybook/client-logger": "6.2.0-alpha.8",
+    "@storybook/components": "6.2.0-alpha.8",
+    "@storybook/core-events": "6.2.0-alpha.8",
+    "@storybook/theming": "6.2.0-alpha.8",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
-    "react": "^16.8.3",
-    "ts-dedent": "^1.1.1"
+    "react": "^16.8.0 || ^17.0.0",
+    "ts-dedent": "^2.0.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2ba756b82c1ad607ba5bde77a445a481ccaaf68f",
-  "typesVersions": {
-    "<=3.5": {
-      "*": [
-        "ts3.5/*"
-      ]
-    }
-  }
+  "gitHead": "c04cdab92d3832a904485f0f885a7faac7ebbf93"
 }

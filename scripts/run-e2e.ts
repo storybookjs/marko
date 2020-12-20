@@ -1,6 +1,6 @@
 /* eslint-disable no-irregular-whitespace */
 import path from 'path';
-import { remove, ensureDir, pathExists, writeFile, readJSON, writeJSON } from 'fs-extra';
+import { remove, ensureDir, pathExists, writeFile, writeJSON } from 'fs-extra';
 import { prompt } from 'enquirer';
 import pLimit from 'p-limit';
 
@@ -9,7 +9,7 @@ import program from 'commander';
 import { serve } from './utils/serve';
 import { exec } from './utils/command';
 // @ts-ignore
-import { listOfPackages } from './utils/list-packages';
+import { filterDataForCurrentCircleCINode } from './utils/concurrency';
 
 import * as configs from './run-e2e-config';
 
@@ -79,10 +79,19 @@ const cleanDirectory = async ({ cwd }: Options): Promise<void> => {
 const configureYarn2 = async ({ cwd }: Options) => {
   const command = [
     `yarn set version berry`,
+    // See https://github.com/yarnpkg/berry/pull/2078
+    // As soon as a new version of Yarn is released remove next line
+    `yarn set version from sources --branch 2078`,
     // ⚠️ Need to set registry because Yarn 2 is not using the conf of Yarn 1
     `yarn config set npmScopes --json '{ "storybook": { "npmRegistryServer": "http://localhost:6000/" } }'`,
     // Some required magic to be able to fetch deps from local registry
     `yarn config set unsafeHttpWhitelist --json '["localhost"]'`,
+    // Disable fallback mode to make sure everything is required correctly
+    `yarn config set pnpFallbackMode none`,
+    // Add package extensions
+    // https://github.com/facebook/create-react-app/pull/9872
+    `yarn config set "packageExtensions.react-scripts@*.peerDependencies.react" "*"`,
+    `yarn config set "packageExtensions.react-scripts@*.dependencies.@pmmmwh/react-refresh-webpack-plugin" "*"`,
   ].join(' && ');
   logger.info(`🎛 Configuring Yarn 2`);
   logger.debug(command);
@@ -128,42 +137,16 @@ const initStorybook = async ({ cwd, autoDetect = true, name }: Options) => {
   }
 };
 
-// Verdaccio doesn't resolve *
-// So we set resolutions manually in package.json
-const setResolutions = async ({ cwd }: Options) => {
-  logger.info(`🔒 Setting yarn resolutions`);
-
-  const packages = await listOfPackages();
-
-  const packageJsonPath = path.resolve(cwd, 'package.json');
-  const packageJson = await readJSON(packageJsonPath, { encoding: 'utf8' });
-
-  packageJson.resolutions = {
-    ...packageJson.resolutions,
-    ...packages.reduce(
-      (acc, { name, version }) => ({
-        ...acc,
-        [name]: version,
-      }),
-      {}
-    ),
-  };
-
-  await writeJSON(packageJsonPath, packageJson, { encoding: 'utf8', spaces: 2 });
-};
-
 const addRequiredDeps = async ({ cwd, additionalDeps }: Options) => {
   logger.info(`🌍 Adding needed deps & installing all deps`);
   try {
     if (additionalDeps && additionalDeps.length > 0) {
       await exec(`yarn add -D ${additionalDeps.join(' ')}`, {
         cwd,
-        silent: true,
       });
     } else {
       await exec(`yarn install`, {
         cwd,
-        silent: true,
       });
     }
   } catch (e) {
@@ -239,6 +222,7 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
     cwd: path.join(siblingDir, `${name}-${version}`),
   };
 
+  logger.log();
   logger.info(`🏃‍♀️ Starting for ${name} ${version}`);
   logger.log();
   logger.debug(options);
@@ -252,18 +236,15 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
     await generate({ ...options, cwd: siblingDir });
     logger.log();
 
-    await setResolutions(options);
-    logger.log();
-
     if (options.typescript) {
       await addTypescript(options);
       logger.log();
     }
 
-    await initStorybook(options);
+    await addRequiredDeps(options);
     logger.log();
 
-    await addRequiredDeps(options);
+    await initStorybook(options);
     logger.log();
 
     await buildStorybook(options);
@@ -291,14 +272,19 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
 };
 
 // Run tests!
-const runE2E = (parameters: Parameters) =>
-  runTests(parameters)
+const runE2E = async (parameters: Parameters) => {
+  const { name, version } = parameters;
+  const cwd = path.join(siblingDir, `${name}-${version}`);
+  if (startWithCleanSlate) {
+    logger.log();
+    logger.info(`♻️  Starting with a clean slate, removing existing ${name} folder`);
+    await cleanDirectory({ ...parameters, cwd });
+  }
+
+  return runTests(parameters)
     .then(async () => {
       if (!process.env.CI) {
-        const { name, version } = parameters;
-        const cwd = path.join(siblingDir, `${name}-${version}`);
-
-        const { cleanup } = await prompt({
+        const { cleanup } = await prompt<{ cleanup: boolean }>({
           type: 'confirm',
           name: 'cleanup',
           message: 'Should perform cleanup?',
@@ -321,7 +307,9 @@ const runE2E = (parameters: Parameters) =>
       logger.log();
       process.exitCode = 1;
     });
+};
 
+program.option('--clean', 'Clean up existing projects before running the tests', false);
 program.option('--use-yarn-2', 'Run tests using Yarn 2 instead of Yarn 1 + npx', false);
 program.option(
   '--use-local-sb-cli',
@@ -330,7 +318,7 @@ program.option(
 );
 program.parse(process.argv);
 
-const { useYarn2, useLocalSbCli, args: frameworkArgs } = program;
+const { useYarn2, useLocalSbCli, clean: startWithCleanSlate, args: frameworkArgs } = program;
 
 const typedConfigs: { [key: string]: Parameters } = configs;
 let e2eConfigs: { [key: string]: Parameters } = {};
@@ -347,23 +335,18 @@ if (frameworkArgs.length > 0) {
   // FIXME: For now Yarn 2 E2E tests must be run by explicitly call `yarn test:e2e-framework yarn2Cra@latest`
   //   Because it is telling Yarn to use version 2
   delete e2eConfigs.yarn_2_cra;
+
+  // CRA Bench is a special case of E2E tests, it requires Node 12 as `@storybook/bench` is using `@hapi/hapi@19.2.0`
+  // which itself need Node 12.
+  delete e2eConfigs.cra_bench;
 }
 
 const perform = () => {
   const limit = pLimit(1);
   const narrowedConfigs = Object.values(e2eConfigs);
-  const nodeIndex = +process.env.CIRCLE_NODE_INDEX || 0;
-  const numberOfNodes = +process.env.CIRCLE_NODE_TOTAL || 1;
+  const list = filterDataForCurrentCircleCINode(narrowedConfigs) as Parameters[];
 
-  const list = narrowedConfigs.filter((_, index) => {
-    return index % numberOfNodes === nodeIndex;
-  });
-
-  logger.info(
-    `📑 Assigning jobs ${list
-      .map((c) => c.name)
-      .join(', ')} to node ${nodeIndex} (on ${numberOfNodes})`
-  );
+  logger.info(`📑 Will run E2E tests for:${list.map((c) => c.name).join(', ')}`);
 
   return Promise.all(list.map((config) => limit(() => runE2E(config))));
 };

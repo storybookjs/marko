@@ -20,13 +20,12 @@ export default {
 };
 
 const Template = (args: ButtonGroup) => ({
-  component :ButtonGroup,
   props: args,
 });
 
 export const Pair = Template.bind({});
 Pair.args = {
-  buttons: [ ...ButtonStories.Primary.args, ...ButtonStories.Secondary.args ],
+  buttons: [...ButtonStories.Primary.args, ...ButtonStories.Secondary.args],
   orientation: 'horizontal',
 };
 ```

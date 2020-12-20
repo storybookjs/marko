@@ -1,7 +1,9 @@
 ```js
 // List.stories.js
 
+import React from 'react';
 import { Selected, Unselected } from './ListItem.stories';
+
 export const ManyItems = (args) => (
   <List {...args}>
     <Selected {...Selected.args} />

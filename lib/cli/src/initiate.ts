@@ -1,6 +1,6 @@
 import { UpdateNotifier, IPackage } from 'update-notifier';
 import chalk from 'chalk';
-import inquirer from 'inquirer';
+import prompts from 'prompts';
 import { detect, isStorybookInstalled, detectLanguage } from './detect';
 import {
   installableProjectTypes,
@@ -10,6 +10,7 @@ import {
 } from './project_types';
 import { commandLog, codeLog, paddedLog } from './helpers';
 import angularGenerator from './generators/ANGULAR';
+import aureliaGenerator from './generators/AURELIA';
 import emberGenerator from './generators/EMBER';
 import meteorGenerator from './generators/METEOR';
 import reactGenerator from './generators/REACT';
@@ -78,8 +79,7 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
     logger.log();
   };
 
-  const REACT_NATIVE_DISCUSSION =
-    'https://github.com/storybookjs/react-native/blob/master/app/react-native/docs/manual-setup.md';
+  const REACT_NATIVE_REPO = 'https://github.com/storybookjs/react-native';
 
   const runGenerator: () => Promise<void> = () => {
     switch (projectType) {
@@ -95,7 +95,7 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
 
       case ProjectType.UPDATE_PACKAGE_ORGANIZATIONS:
         return updateOrganisationsGenerator(packageManager, options.parser, npmOptions)
-          .then(() => null) // commmandLog doesn't like to see output
+          .then(() => null) // commandLog doesn't like to see output
           .then(commandLog('Upgrading your project to the new Storybook packages.'))
           .then(end);
 
@@ -112,13 +112,13 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
       case ProjectType.REACT_NATIVE: {
         return (options.yes
           ? Promise.resolve({ server: true })
-          : (inquirer.prompt([
+          : (prompts([
               {
                 type: 'confirm',
                 name: 'server',
                 message:
                   'Do you want to install dependencies necessary to run Storybook server? You can manually do it later by install @storybook/react-native-server',
-                default: false,
+                initial: false,
               },
             ]) as Promise<{ server: boolean }>)
         )
@@ -130,9 +130,9 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
           .then(() => {
             logger.log(chalk.red('NOTE: installation is not 100% automated.'));
             logger.log(`To quickly run Storybook, replace contents of your app entry with:\n`);
-            codeLog(["export default from './storybook';"]);
-            logger.log('\n For more in depth setup instructions, see:\n');
-            logger.log(chalk.cyan(REACT_NATIVE_DISCUSSION));
+            codeLog(["export {default} from './storybook';"]);
+            logger.log('\n For more in information, see the github readme:\n');
+            logger.log(chalk.cyan(REACT_NATIVE_REPO));
             logger.log();
           });
       }
@@ -217,6 +217,11 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
           .then(commandLog('Adding Storybook support to your "Rax" app'))
           .then(end);
 
+      case ProjectType.AURELIA:
+        return aureliaGenerator(packageManager, npmOptions, generatorOptions)
+          .then(commandLog('Adding Storybook support to your "Aurelia" app'))
+          .then(end);
+
       default:
         paddedLog(`We couldn't detect your project type. (code: ${projectType})`);
         paddedLog(
@@ -239,22 +244,24 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
 const projectTypeInquirer = async (options: { yes?: boolean }) => {
   const manualAnswer = options.yes
     ? true
-    : await inquirer.prompt([
+    : await prompts([
         {
           type: 'confirm',
           name: 'manual',
           message: 'Do you want to manually choose a Storybook project type to install?',
-          default: false,
         },
       ]);
 
   if (manualAnswer !== true && manualAnswer.manual) {
-    const frameworkAnswer = await inquirer.prompt([
+    const frameworkAnswer = await prompts([
       {
         type: 'list',
         name: 'manualFramework',
         message: 'Please choose a project type from the following list:',
-        choices: installableProjectTypes.map((type) => type.toUpperCase()),
+        choices: installableProjectTypes.map((type) => ({
+          title: type,
+          value: type.toUpperCase(),
+        })),
       },
     ]);
     return installStorybook(frameworkAnswer.manualFramework, options);
@@ -302,5 +309,13 @@ export default function (options: CommandOptions, pkg: IPackage): Promise<void> 
   }
   done();
 
-  return installStorybook(projectType, options);
+  const cleanOptions = { ...options };
+  if (options.storyFormat === StoryFormat.MDX) {
+    logger.warn(
+      '   The MDX CLI template is deprecated. The JS and TS templates already include MDX examples!'
+    );
+    cleanOptions.storyFormat = undefined;
+  }
+
+  return installStorybook(projectType, cleanOptions);
 }

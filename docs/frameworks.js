@@ -72,7 +72,7 @@ module.exports = {
           unsupported: ['marko'],
         },
         {
-          name: 'query-params',
+          name: 'queryparams',
           unsupported: [],
         },
         {
@@ -110,6 +110,11 @@ module.exports = {
           path: 'writing-docs/doc-blocks#source',
         },
         {
+          name: 'Dynamic source',
+          supported: ['react'],
+          path: 'writing-docs/doc-blocks#source',
+        },
+        {
           name: 'Args Table',
           supported: ['react', 'vue', 'angular', 'html', 'ember', 'web-components'],
           path: 'writing-docs/doc-blocks#argstable',
@@ -121,7 +126,7 @@ module.exports = {
         },
         {
           name: 'Inline stories',
-          supported: ['react', 'vue', 'web-components', 'html'],
+          supported: ['react', 'vue', 'web-components', 'html', 'svelte'],
           path: 'writing-docs/doc-blocks#inline-rendering',
         },
       ],

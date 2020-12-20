@@ -13,7 +13,7 @@ const BrandArea = styled.div(({ theme }) => ({
   fontSize: theme.typography.size.s2,
   fontWeight: theme.typography.weight.bold,
   color: theme.color.defaultText,
-  marginRight: 40,
+  marginRight: 20,
   display: 'flex',
   width: '100%',
   alignItems: 'center',
@@ -22,14 +22,14 @@ const BrandArea = styled.div(({ theme }) => ({
   '& > *': {
     maxWidth: '100%',
     height: 'auto',
-    width: 'auto',
     display: 'block',
+    flex: '1 1 auto',
   },
 }));
 
 const HeadingWrapper = styled.div({
   display: 'flex',
-  alignItems: 'flex-start',
+  alignItems: 'center',
   justifyContent: 'space-between',
   position: 'relative',
 });

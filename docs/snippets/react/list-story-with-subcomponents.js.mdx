@@ -1,12 +1,13 @@
 ```js
 // List.stories.js
 
+import React from 'react';
 import List from './List';
 import ListItem from './ListItem';
 
 export default {
   component: List,
-  subcomponents: [ListItem],
+  subcomponents: { ListItem },
   title: 'List',
 };
 

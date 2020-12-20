@@ -46,7 +46,7 @@ describe('NPM Proxy', () => {
   });
 
   describe('latestVersion', () => {
-    it('without contraint it returns the latest version', async () => {
+    it('without constraint it returns the latest version', async () => {
       const executeCommandSpy = jest.spyOn(npmProxy, 'executeCommand').mockReturnValue('"5.3.19"');
 
       const version = await npmProxy.latestVersion('@storybook/addons');
@@ -60,7 +60,7 @@ describe('NPM Proxy', () => {
       expect(version).toEqual('5.3.19');
     });
 
-    it('with contraint it returns the latest version satisfying the constraint', async () => {
+    it('with constraint it returns the latest version satisfying the constraint', async () => {
       const executeCommandSpy = jest
         .spyOn(npmProxy, 'executeCommand')
         .mockReturnValue('["4.25.3","5.3.19","6.0.0-beta.23"]');
@@ -86,7 +86,7 @@ describe('NPM Proxy', () => {
   describe('getVersion', () => {
     it('with a Storybook package listed in versions.json it returns the version', async () => {
       // eslint-disable-next-line global-require
-      const storybookAngularVersion = require('../../versions.json')['@storybook/angular'];
+      const storybookAngularVersion = require('../versions.json')['@storybook/angular'];
       const executeCommandSpy = jest.spyOn(npmProxy, 'executeCommand').mockReturnValue('"5.3.19"');
 
       const version = await npmProxy.getVersion('@storybook/angular');

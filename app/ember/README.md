@@ -27,3 +27,22 @@ You can also build a [static version](https://storybook.js.org/docs/ember/workfl
 - [Basics](https://storybook.js.org/docs/ember/get-started/introduction)
 - [Configurations](https://storybook.js.org/docs/ember/configure/overview)
 - [Addons](https://storybook.js.org/docs/ember/configure/storybook-addons)
+
+## Working with polyfills
+If you need to use a polyfill that is already in use in our Ember application,
+you will need to add some options to have Storybook working with them.
+
+In this example we'll use the [named-block-polyfill](https://github.com/ember-polyfills/ember-named-blocks-polyfill).
+This example also assume that you already have the package in your `package.json`.
+
+In your `.storybook/main.js` you can add the following lines: 
+```javascript
+const namedBlockPolyfill = require('ember-named-blocks-polyfill/lib/named-blocks-polyfill-plugin');
+
+module.exports = {
+  emberOptions: {
+    polyfills: [namedBlockPolyfill],
+  },
+  [...]
+};
+```

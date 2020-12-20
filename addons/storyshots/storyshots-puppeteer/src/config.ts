@@ -1,5 +1,11 @@
 import { MatchImageSnapshotOptions } from 'jest-image-snapshot';
-import { Base64ScreenShotOptions, Browser, DirectNavigationOptions, Page } from 'puppeteer';
+import {
+  Base64ScreenShotOptions,
+  Browser,
+  DirectNavigationOptions,
+  Page,
+  ElementHandle,
+} from 'puppeteer';
 
 export interface Context {
   kind: string;
@@ -33,8 +39,8 @@ export interface PuppeteerTestConfig extends CommonConfig {
 export interface ImageSnapshotConfig extends CommonConfig {
   getMatchOptions: (options: Options) => MatchImageSnapshotOptions;
   getScreenshotOptions: (options: Options) => Base64ScreenShotOptions;
-  beforeScreenshot: (page: Page, options: Options) => void;
-  afterScreenshot: (options: { image: string; context: Context }) => void;
+  beforeScreenshot: (page: Page, options: Options) => Promise<void | ElementHandle>;
+  afterScreenshot: (options: { image: string; context: Context }) => Promise<void>;
 }
 
 const noop: () => undefined = () => undefined;

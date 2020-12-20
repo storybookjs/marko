@@ -6,6 +6,7 @@ import {
 } from '@storybook/components';
 import { StoryId } from '@storybook/api';
 import { logger } from '@storybook/client-logger';
+import { StoryContext } from '@storybook/addons';
 
 import { DocsContext, DocsContextProps } from './DocsContext';
 import { SourceContext, SourceContextProps } from './SourceContainer';
@@ -36,44 +37,54 @@ type NoneProps = CommonProps;
 
 type SourceProps = SingleSourceProps | MultiSourceProps | CodeProps | NoneProps;
 
-const getSnippet = (
-  storyId: StoryId,
-  sourceContext: SourceContextProps,
-  docsContext: DocsContextProps
-): string => {
-  const { sources } = sourceContext;
+const getStoryContext = (storyId: StoryId, docsContext: DocsContextProps): StoryContext | null => {
   const { storyStore } = docsContext;
+  const storyContext = storyStore?.fromId(storyId);
 
-  const snippet = sources && sources[storyId];
-  const data = storyStore?.fromId(storyId);
-
-  if (!data) {
+  if (!storyContext) {
     // Fallback if we can't get the story data for this story
-    logger.warn(`Unable to find source for story ID '${storyId}'`);
-    return snippet || '';
+    logger.warn(`Unable to find information for story ID '${storyId}'`);
+    return null;
   }
 
-  const { parameters } = data;
+  return storyContext;
+};
+
+const getStorySource = (storyId: StoryId, sourceContext: SourceContextProps): string => {
+  const { sources } = sourceContext;
+  // source rendering is async so source is unavailable at the start of the render cycle,
+  // so we fail gracefully here without warning
+  return sources?.[storyId] || '';
+};
+
+const getSnippet = (snippet: string, storyContext?: StoryContext): string => {
+  if (!storyContext) {
+    return snippet;
+  }
+
+  const { parameters } = storyContext;
   // eslint-disable-next-line no-underscore-dangle
   const isArgsStory = parameters.__isArgsStory;
   const type = parameters.docs?.source?.type || SourceType.AUTO;
 
   // if user has hard-coded the snippet, that takes precedence
   const userCode = parameters.docs?.source?.code;
-  if (userCode) return userCode;
+  if (userCode) {
+    return userCode;
+  }
 
   // if user has explicitly set this as dynamic, use snippet
   if (type === SourceType.DYNAMIC) {
-    return snippet || '';
+    return parameters.docs?.transformSource?.(snippet, storyContext) || snippet;
   }
 
   // if this is an args story and there's a snippet
   if (type === SourceType.AUTO && snippet && isArgsStory) {
-    return snippet;
+    return parameters.docs?.transformSource?.(snippet, storyContext) || snippet;
   }
 
   // otherwise, use the source code logic
-  const enhanced = enhanceSource(data) || data.parameters;
+  const enhanced = enhanceSource(storyContext) || parameters;
   return enhanced?.docs?.source?.code || '';
 };
 
@@ -94,7 +105,11 @@ export const getSourceProps = (
       singleProps.id === CURRENT_SELECTION || !singleProps.id ? currentId : singleProps.id;
     const targetIds = multiProps.ids || [targetId];
     source = targetIds
-      .map((storyId) => getSnippet(storyId, sourceContext, docsContext))
+      .map((storyId) => {
+        const storySource = getStorySource(storyId, sourceContext);
+        const storyContext = getStoryContext(storyId, docsContext);
+        return getSnippet(storySource, storyContext);
+      })
       .join('\n\n');
   }
   return source

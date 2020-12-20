@@ -1,4 +1,4 @@
-import { Story, Meta } from '@storybook/addon-docs/blocks';
+import { Story, Meta, Canvas } from '@storybook/addon-docs/blocks';
 import { Welcome, Button } from '@storybook/angular/demo';
 import * as MyStories from './My.stories';
 import { Other } from './Other.stories';
@@ -9,6 +9,8 @@ import { Other } from './Other.stories';
 
 <Story story={MyStories.Basic} />
 
-<Story story={Other} />
+<Canvas>
+  <Story story={Other} />
+</Canvas>
 
 <Story name="renamed" story={MyStories.Foo} />

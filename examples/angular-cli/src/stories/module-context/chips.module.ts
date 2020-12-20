@@ -7,7 +7,7 @@ import { CHIP_COLOR } from './chip-color.token';
 
 @NgModule({
   imports: [CommonModule],
-  exports: [ChipsGroupComponent],
+  exports: [ChipsGroupComponent, ChipComponent],
   declarations: [ChipsGroupComponent, ChipComponent, ChipTextPipe],
   providers: [
     {
@@ -17,7 +17,7 @@ import { CHIP_COLOR } from './chip-color.token';
   ],
 })
 export class ChipsModule {
-  public static forRoot(): ModuleWithProviders {
+  public static forRoot(): ModuleWithProviders<ChipsModule> {
     return {
       ngModule: ChipsModule,
       providers: [

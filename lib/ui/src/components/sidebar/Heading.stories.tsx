@@ -7,21 +7,11 @@ import { Heading } from './Heading';
 export default {
   component: Heading,
   title: 'UI/Sidebar/Heading',
-  decorators: [
-    (storyFn: any) => (
-      <div
-        style={{
-          maxWidth: '240px',
-        }}
-      >
-        {storyFn()}
-      </div>
-    ),
-  ],
   excludeStories: /.*Data$/,
-  parameters: {
-    layout: 'fullscreen',
-  },
+  parameters: { layout: 'fullscreen' },
+  decorators: [
+    (storyFn: any) => <div style={{ padding: '0 20px', maxWidth: '230px' }}>{storyFn()}</div>,
+  ],
 };
 
 const menuItems = [
@@ -134,6 +124,60 @@ export const customBrandImage = () => {
           title: 'My Title',
           url: 'https://example.com',
           image: 'https://via.placeholder.com/150x22',
+        },
+      }}
+    >
+      <Heading menu={menuItems} />
+    </ThemeProvider>
+  );
+};
+
+export const customBrandImageTall = () => {
+  const theme = useTheme() as Theme;
+  return (
+    <ThemeProvider
+      theme={{
+        ...theme,
+        brand: {
+          title: 'My Title',
+          url: 'https://example.com',
+          image: 'https://via.placeholder.com/100x150',
+        },
+      }}
+    >
+      <Heading menu={menuItems} />
+    </ThemeProvider>
+  );
+};
+
+export const customBrandImageUnsizedSVG = () => {
+  const theme = useTheme() as Theme;
+  return (
+    <ThemeProvider
+      theme={{
+        ...theme,
+        brand: {
+          title: 'My Title',
+          url: 'https://example.com',
+          image: 'https://s.cdpn.io/91525/potofgold.svg',
+        },
+      }}
+    >
+      <Heading menu={menuItems} />
+    </ThemeProvider>
+  );
+};
+
+export const noBrand = () => {
+  const theme = useTheme() as Theme;
+  return (
+    <ThemeProvider
+      theme={{
+        ...theme,
+        brand: {
+          title: null,
+          url: null,
+          image: null,
         },
       }}
     >

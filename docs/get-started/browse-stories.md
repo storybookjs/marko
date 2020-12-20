@@ -61,6 +61,6 @@ Addons are plugins that extend Storybook's core functionality. You can find them
   />
 </video>
 
-Storybook is extensible. Our rich ecosystem of addons helps you test, document, and optimize your stories. You can also create an addon to satisfy your workflow requirements. Read more in the [addons section](../api/addons.md).
+Storybook is extensible. Our rich ecosystem of addons helps you test, document, and optimize your stories. You can also create an addon to satisfy your workflow requirements. Read more in the [addons section](../addons/introduction.md).
 
 In the next chapter, we'll get your components rendering in Storybook so you can use it to supercharge component development.

@@ -1,0 +1,21 @@
+```js
+// Button.stories.js
+
+import Button from './Button';
+
+export default { title: 'Components/Button' };
+
+// We create a “template” of how args map to rendering
+const Template = (args, { argTypes }) => ({
+  components: { Button },
+  props: Object.keys(argTypes),
+  template: '<Button :primary="primary" :label="label" />',
+});
+
+// Each story then reuses that template
+export const Primary = Template.bind({});
+Primary.args = {
+  primary: true,
+  label: 'Primary',
+};
+```

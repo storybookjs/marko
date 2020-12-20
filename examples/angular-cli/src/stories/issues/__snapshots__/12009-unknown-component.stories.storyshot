@@ -1,19 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Addon/Issues/12009 unknown component Basic 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
->
+<storybook-wrapper>
   <storybook-button-component
-    _nghost-a-c12=""
+    _nghost-a-c14=""
+    ng-reflect-text="Unknown component"
   >
     <button
-      _ngcontent-a-c12=""
+      _ngcontent-a-c14=""
     >
       Unknown component
     </button>
   </storybook-button-component>
-</storybook-dynamic-app-root>
+</storybook-wrapper>
 `;

@@ -48,11 +48,12 @@ export class IFrame extends Component<IFrameProps> {
     const { id, title, src, allowFullScreen, scale, ...rest } = this.props;
     return (
       <iframe
-        scrolling="yes"
         id={id}
         title={title}
         src={src}
         allowFullScreen={allowFullScreen}
+        // @ts-ignore
+        loading="lazy"
         {...rest}
       />
     );

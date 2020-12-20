@@ -26,8 +26,11 @@ const excludeList = [
   '@storybook/ember-cli-storybook',
   '@storybook/semver',
   '@storybook/eslint-config-storybook',
+  '@storybook/bench',
+  '@storybook/addon-bench',
   '@storybook/addon-console',
   '@storybook/csf',
+  '@storybook/storybook-deployer',
 ];
 export const isCorePackage = (pkg: string) =>
   pkg.startsWith('@storybook/') &&

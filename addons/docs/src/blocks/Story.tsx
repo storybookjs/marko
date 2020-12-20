@@ -1,7 +1,6 @@
 import React, { FunctionComponent, ReactNode, ElementType, ComponentProps } from 'react';
 import { MDXProvider } from '@mdx-js/react';
-import { resetComponents } from '@storybook/components/html';
-import { Story as PureStory } from '@storybook/components';
+import { resetComponents, Story as PureStory } from '@storybook/components';
 import { toId, storyNameFromExport } from '@storybook/csf';
 import { CURRENT_SELECTION } from './types';
 
@@ -56,7 +55,7 @@ export const getStoryProps = (props: StoryProps, context: DocsContextProps): Pur
     return null;
   }
 
-  // prefer block props, then story parameters defined by the framework-specific settings and optionally overriden by users
+  // prefer block props, then story parameters defined by the framework-specific settings and optionally overridden by users
   const { inlineStories = false, iframeHeight = 100, prepareForInline } = docs;
   const storyIsInline = typeof inline === 'boolean' ? inline : inlineStories;
   if (storyIsInline && !prepareForInline) {

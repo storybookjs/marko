@@ -6,6 +6,7 @@ import { ServiceComponent } from './moduleMetadata/service.component';
 
 export default {
   title: 'Custom/Providers',
+  component: ServiceComponent,
   decorators: [
     moduleMetadata({
       imports: [],
@@ -17,7 +18,6 @@ export default {
 };
 
 export const Simple = () => ({
-  component: ServiceComponent,
   props: {
     name: 'Static name',
   },
@@ -29,7 +29,6 @@ export const WithKnobsStory = () => {
   const name = text('name', 'Dynamic knob');
 
   return {
-    component: ServiceComponent,
     props: {
       name,
     },

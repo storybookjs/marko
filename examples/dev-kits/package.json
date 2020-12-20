@@ -1,25 +1,25 @@
 {
   "name": "@storybook/example-devkits",
-  "version": "6.0.7",
+  "version": "6.2.0-alpha.8",
   "private": true,
   "scripts": {
     "build-storybook": "cross-env STORYBOOK_DISPLAY_WARNING=true DISPLAY_WARNING=true build-storybook -c ./",
-    "debug": "cross-env NODE_OPTIONS=--inspect-brk STORYBOOK_DISPLAY_WARNING=true DISPLAY_WARNING=true start-storybook -p 9011 -c ./ --no-dll",
-    "storybook": "cross-env STORYBOOK_DISPLAY_WARNING=true DISPLAY_WARNING=true start-storybook -p 9011 -c ./ --no-dll"
+    "debug": "cross-env NODE_OPTIONS=--inspect-brk STORYBOOK_DISPLAY_WARNING=true DISPLAY_WARNING=true start-storybook -p 9011 -c ./",
+    "storybook": "cross-env STORYBOOK_DISPLAY_WARNING=true DISPLAY_WARNING=true start-storybook -p 9011 -c ./"
   },
   "devDependencies": {
-    "@storybook/addon-decorator": "6.0.7",
-    "@storybook/addon-parameter": "6.0.7",
-    "@storybook/addon-preview-wrapper": "6.0.7",
-    "@storybook/addon-roundtrip": "6.0.7",
-    "@storybook/addons": "6.0.7",
-    "@storybook/api": "6.0.7",
-    "@storybook/client-api": "6.0.7",
-    "@storybook/components": "6.0.7",
-    "@storybook/core-events": "6.0.7",
-    "@storybook/node-logger": "6.0.7",
-    "@storybook/react": "6.0.7",
-    "@storybook/theming": "6.0.7",
+    "@storybook/addon-decorator": "6.2.0-alpha.8",
+    "@storybook/addon-parameter": "6.2.0-alpha.8",
+    "@storybook/addon-preview-wrapper": "6.2.0-alpha.8",
+    "@storybook/addon-roundtrip": "6.2.0-alpha.8",
+    "@storybook/addons": "6.2.0-alpha.8",
+    "@storybook/api": "6.2.0-alpha.8",
+    "@storybook/client-api": "6.2.0-alpha.8",
+    "@storybook/components": "6.2.0-alpha.8",
+    "@storybook/core-events": "6.2.0-alpha.8",
+    "@storybook/node-logger": "6.2.0-alpha.8",
+    "@storybook/react": "6.2.0-alpha.8",
+    "@storybook/theming": "6.2.0-alpha.8",
     "cors": "^2.8.5",
     "cross-env": "^7.0.0",
     "enzyme-to-json": "^3.4.1",
@@ -32,11 +32,11 @@
     "jest-emotion": "^10.0.17",
     "paths.macro": "^2.0.2",
     "prop-types": "^15.7.2",
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
     "ts-loader": "^6.2.0",
     "uuid": "^8.0.0",
-    "webpack": "^4.33.0"
+    "webpack": "^4.44.2"
   },
   "storybook": {
     "chromatic": {

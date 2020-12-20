@@ -23,7 +23,7 @@ The key ingredients are the [default export](https://developer.mozilla.org/en-US
 
 ### Default export
 
-The default export metadata controls how Storybook lists your stories and provides information used by addons. For example, here’s the default export for a story file `Button.stories.js`:
+The _default_ export metadata controls how Storybook lists your stories and provides information used by addons. For example, here’s the default export for a story file `Button.stories.js`:
 
 <!-- prettier-ignore-start -->
 
@@ -31,6 +31,7 @@ The default export metadata controls how Storybook lists your stories and provid
   paths={[
     'react/button-story-default-export-with-component.js.mdx',
     'react/button-story-default-export-with-component.ts.mdx',
+    'vue/button-story-default-export-with-component.js.mdx',
     'angular/button-story-default-export-with-component.ts.mdx',
   ]}
 />
@@ -39,7 +40,7 @@ The default export metadata controls how Storybook lists your stories and provid
 
 ### Defining stories
 
-Use the named exports of a CSF file to define your component’s stories. Here’s how to render `Button` in the “primary” state and export a story called `Primary`.
+Use the _named_ exports of a CSF file to define your component’s stories. We recommend you use UpperCamelCase for your story exports. Here’s how to render `Button` in the “primary” state and export a story called `Primary`.
 
 <!-- prettier-ignore-start -->
 
@@ -47,6 +48,7 @@ Use the named exports of a CSF file to define your component’s stories. Here�
   paths={[
     'react/button-story.js.mdx',
     'react/button-story.ts.mdx',
+    'vue/button-story.js.mdx',
     'angular/button-story.ts.mdx',
   ]}
 />
@@ -63,13 +65,14 @@ You can rename any particular story you need. For instance to give it a more cle
   paths={[
     'react/button-story-rename-story.js.mdx',
     'react/button-story-rename-story.ts.mdx',
+    'vue/button-story-rename-story.js.mdx',
     'angular/button-story-rename-story.ts.mdx',
   ]}
 />
 
 <!-- prettier-ignore-end -->
 
-Your story will now be show in the sidebar with the given text.
+Your story will now be shown in the sidebar with the given text.
 
 ## How to write stories
 
@@ -81,6 +84,7 @@ A story is a function that describes how to render a component. You can have mul
   paths={[
     'react/button-story-with-emojis.js.mdx',
     'react/button-story-with-emojis.ts.mdx',
+    'vue/button-story-with-emojis.js.mdx',
     'angular/button-story-with-emojis.ts.mdx',
   ]}
 />
@@ -99,6 +103,7 @@ Refine this pattern by defining a master template for a component’s stories th
   paths={[
     'react/button-story-using-args.js.mdx',
     'react/button-story-using-args.ts.mdx',
+    'vue/button-story-using-args.js.mdx',
     'angular/button-story-using-args.ts.mdx',
   ]}
 />
@@ -153,6 +158,7 @@ For instance, suppose you wanted to test your Button component against a differe
   paths={[
     'react/button-story-with-blue-args.js.mdx',
     'react/button-story-with-blue-args.ts.mdx',
+    'vue/button-story-with-blue-args.js.mdx',
     'angular/button-story-with-blue-args.ts.mdx',
   ]}
 />
@@ -175,6 +181,8 @@ A simple example is adding padding to a component’s stories. Accomplish this u
   paths={[
     'react/button-story-component-decorator.js.mdx',
     'react/button-story-component-decorator.ts.mdx',
+    'vue/button-story-component-decorator.js.mdx',
+    'angular/button-story-component-decorator.ts.mdx',
   ]}
 />
 
@@ -198,7 +206,7 @@ When building design systems or component libraries, you may have two or more co
 
 <!-- prettier-ignore-end -->
 
-In such cases, it makes sense to render something a different function for each story:
+In such cases, it makes sense to render a different function for each story:
 
 <!-- prettier-ignore-start -->
 
@@ -228,6 +236,6 @@ You can also reuse stories from the child `ListItem` in your `List` component. T
 
 <div class="aside">
 
-Note that there are disadvantages in writing stories like this as you cannot take full advantage of the args mechanism and composing args as you build more complex composite components. For more discussion, set the [multi component stories](../workflows/stories-for-multiple-components.md) workflow article.
+Note that there are disadvantages in writing stories like this as you cannot take full advantage of the args mechanism and composing args as you build more complex composite components. For more discussion, see the [multi component stories](../workflows/stories-for-multiple-components.md) workflow article.
 
 </div>

@@ -3,9 +3,9 @@ import { styled } from '@storybook/theming';
 import memoize from 'memoizerific';
 import uniq from 'lodash/uniq';
 import { PropSummaryValue } from './types';
-import { WithTooltipPure } from '../../tooltip/WithTooltip';
+import { WithTooltipPure } from '../../tooltip/lazy-WithTooltip';
 import { Icons } from '../../icon/icon';
-import { SyntaxHighlighter } from '../../syntaxhighlighter/syntaxhighlighter';
+import { SyntaxHighlighter } from '../../syntaxhighlighter/lazy-syntaxhighlighter';
 import { codeCommon } from '../../typography/shared';
 
 interface ArgValueProps {
@@ -15,6 +15,7 @@ interface ArgValueProps {
 
 interface ArgTextProps {
   text: string;
+  simple?: boolean;
 }
 
 interface ArgSummaryProps {
@@ -30,19 +31,27 @@ const Summary = styled.div<{ isExpanded?: boolean }>(({ isExpanded }) => ({
   flexWrap: 'wrap',
   alignItems: 'flex-start',
   marginBottom: '-4px',
+  minWidth: 100,
 }));
 
-const Text = styled.span<{}>(codeCommon, ({ theme }) => ({
-  flex: 0,
+const Text = styled.span<{ simple?: boolean }>(codeCommon, ({ theme, simple = false }) => ({
+  flex: '0 0 auto',
   fontFamily: theme.typography.fonts.mono,
   fontSize: theme.typography.size.s1,
   wordBreak: 'break-word',
+  whiteSpace: 'normal',
+  maxWidth: '100%',
   margin: 0,
   marginRight: '4px',
   marginBottom: '4px',
   paddingTop: '2px',
   paddingBottom: '2px',
   lineHeight: '13px',
+  ...(simple && {
+    background: 'transparent',
+    border: '0 none',
+    paddingLeft: 0,
+  }),
 }));
 
 const ExpandButton = styled.button<{}>(({ theme }) => ({
@@ -90,8 +99,8 @@ const EmptyArg = () => {
   return <span>-</span>;
 };
 
-const ArgText: FC<ArgTextProps> = ({ text }) => {
-  return <Text>{text}</Text>;
+const ArgText: FC<ArgTextProps> = ({ text, simple }) => {
+  return <Text simple={simple}>{text}</Text>;
 };
 
 const calculateDetailWidth = memoize(1000)((detail: string): string => {
@@ -129,6 +138,12 @@ const ArgSummary: FC<ArgSummaryProps> = ({ value, initialExpandedArgs }) => {
   const summaryAsString = typeof summary.toString === 'function' ? summary.toString() : summary;
 
   if (detail == null) {
+    const cannotBeSafelySplitted = /[(){}[\]<>]/.test(summaryAsString);
+
+    if (cannotBeSafelySplitted) {
+      return <ArgText text={summaryAsString} />;
+    }
+
     const summaryItems = getSummaryItems(summaryAsString);
     const itemsCount = summaryItems.length;
     const hasManyItems = itemsCount > ITEMS_BEFORE_EXPANSION;

@@ -7,9 +7,10 @@ function makeContext(input: Record<string, any>): StoryContext {
     id: 'id',
     kind: 'kind',
     name: 'name',
+    viewMode: 'story',
     parameters: {},
     ...input,
-  };
+  } as StoryContext;
 }
 
 describe('client-api.decorators', () => {

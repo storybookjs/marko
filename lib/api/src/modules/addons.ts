@@ -1,9 +1,20 @@
 import { ReactElement } from 'react';
-
 import { WindowLocation } from '@reach/router';
+import deprecate from 'util-deprecate';
+import dedent from 'ts-dedent';
+
 import { ModuleFn } from '../index';
 import { Options } from '../store';
 import { isStory } from '../lib/stories';
+
+const warnDisabledDeprecated = deprecate(
+  () => {},
+  dedent`
+    Use 'parameters.key.disable' instead of 'parameters.key.disabled'.
+    
+    https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-disabled-parameter
+  `
+);
 
 export type ViewMode = 'story' | 'info' | 'settings' | 'page' | undefined | string;
 
@@ -104,7 +115,15 @@ export const init: ModuleFn = ({ provider, store, fullAPI }) => {
       const filteredPanels: Collection = {};
       Object.entries(allPanels).forEach(([id, panel]) => {
         const { paramKey } = panel;
-        if (paramKey && parameters && parameters[paramKey] && parameters[paramKey].disabled) {
+        if (
+          paramKey &&
+          parameters &&
+          parameters[paramKey] &&
+          (parameters[paramKey].disabled || parameters[paramKey].disable)
+        ) {
+          if (parameters[paramKey].disabled) {
+            warnDisabledDeprecated();
+          }
           return;
         }
         filteredPanels[id] = panel;

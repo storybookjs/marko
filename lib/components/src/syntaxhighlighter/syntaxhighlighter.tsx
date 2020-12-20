@@ -4,26 +4,38 @@ import { styled } from '@storybook/theming';
 import { navigator, window } from 'global';
 import memoize from 'memoizerific';
 
+// @ts-ignore
 import jsx from 'react-syntax-highlighter/dist/cjs/languages/prism/jsx';
+// @ts-ignore
 import bash from 'react-syntax-highlighter/dist/cjs/languages/prism/bash';
+// @ts-ignore
 import css from 'react-syntax-highlighter/dist/cjs/languages/prism/css';
+// @ts-ignore
+import jsExtras from 'react-syntax-highlighter/dist/cjs/languages/prism/js-extras';
+// @ts-ignore
 import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json';
+// @ts-ignore
+import graphql from 'react-syntax-highlighter/dist/cjs/languages/prism/graphql';
+// @ts-ignore
 import html from 'react-syntax-highlighter/dist/cjs/languages/prism/markup';
+// @ts-ignore
 import md from 'react-syntax-highlighter/dist/cjs/languages/prism/markdown';
+// @ts-ignore
 import yml from 'react-syntax-highlighter/dist/cjs/languages/prism/yaml';
+// @ts-ignore
 import tsx from 'react-syntax-highlighter/dist/cjs/languages/prism/tsx';
+// @ts-ignore
 import typescript from 'react-syntax-highlighter/dist/cjs/languages/prism/typescript';
 
-import { PrismLight as ReactSyntaxHighlighter } from 'react-syntax-highlighter';
 // @ts-ignore
-import createElement from 'react-syntax-highlighter/dist/cjs/create-element';
+import ReactSyntaxHighlighter from 'react-syntax-highlighter/dist/cjs/prism-light';
 import { ActionBar } from '../ActionBar/ActionBar';
 import { ScrollArea } from '../ScrollArea/ScrollArea';
 
 import { formatter } from './formatter';
+import type { SyntaxHighlighterProps } from './syntaxhighlighter-types';
 
-export { createElement as createSyntaxHighlighterElement };
-
+ReactSyntaxHighlighter.registerLanguage('jsextra', jsExtras);
 ReactSyntaxHighlighter.registerLanguage('jsx', jsx);
 ReactSyntaxHighlighter.registerLanguage('json', json);
 ReactSyntaxHighlighter.registerLanguage('yml', yml);
@@ -33,6 +45,7 @@ ReactSyntaxHighlighter.registerLanguage('css', css);
 ReactSyntaxHighlighter.registerLanguage('html', html);
 ReactSyntaxHighlighter.registerLanguage('tsx', tsx);
 ReactSyntaxHighlighter.registerLanguage('typescript', typescript);
+ReactSyntaxHighlighter.registerLanguage('graphql', graphql);
 
 const themedSyntax = memoize(2)((theme) =>
   Object.entries(theme.code || {}).reduce((acc, [key, val]) => ({ ...acc, [`* .${key}`]: val }), {})
@@ -92,21 +105,6 @@ const Code = styled.code({
   opacity: 1,
 });
 
-export interface SyntaxHighlighterRendererProps {
-  rows: any[];
-  stylesheet: string;
-  useInlineStyles: boolean;
-}
-export interface SyntaxHighlighterProps {
-  language: string;
-  copyable?: boolean;
-  bordered?: boolean;
-  padded?: boolean;
-  format?: boolean;
-  className?: string;
-  renderer?: (props: SyntaxHighlighterRendererProps) => React.ReactNode;
-}
-
 export interface SyntaxHighlighterState {
   copied: boolean;
 }
@@ -114,6 +112,7 @@ export interface SyntaxHighlighterState {
 type ReactSyntaxHighlighterProps = ComponentProps<typeof ReactSyntaxHighlighter>;
 
 type Props = SyntaxHighlighterProps & ReactSyntaxHighlighterProps;
+
 export const SyntaxHighlighter: FunctionComponent<Props> = ({
   children,
   language = 'jsx',
@@ -122,15 +121,21 @@ export const SyntaxHighlighter: FunctionComponent<Props> = ({
   padded = false,
   format = true,
   className = null,
+  showLineNumbers = false,
   ...rest
 }) => {
+  if (typeof children !== 'string' || !children.trim()) {
+    return null;
+  }
+
+  const highlightableCode = format ? formatter(children) : children.trim();
   const [copied, setCopied] = useState(false);
 
   const onClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     navigator.clipboard
-      .writeText(children)
+      .writeText(highlightableCode)
       .then(() => {
         setCopied(true);
         window.setTimeout(() => setCopied(false), 1500);
@@ -138,19 +143,21 @@ export const SyntaxHighlighter: FunctionComponent<Props> = ({
       .catch(logger.error);
   };
 
-  return children ? (
+  return (
     <Wrapper bordered={bordered} padded={padded} className={className}>
       <Scroller>
         <ReactSyntaxHighlighter
           padded={padded || bordered}
           language={language}
+          showLineNumbers={showLineNumbers}
+          showInlineLineNumbers={showLineNumbers}
           useInlineStyles={false}
           PreTag={Pre}
           CodeTag={Code}
           lineNumberContainerStyle={{}}
           {...rest}
         >
-          {format ? formatter((children as string).trim()) : (children as string).trim()}
+          {highlightableCode}
         </ReactSyntaxHighlighter>
       </Scroller>
 
@@ -158,5 +165,7 @@ export const SyntaxHighlighter: FunctionComponent<Props> = ({
         <ActionBar actionItems={[{ title: copied ? 'Copied' : 'Copy', onClick }]} />
       ) : null}
     </Wrapper>
-  ) : null;
+  );
 };
+
+export default SyntaxHighlighter;

@@ -17,34 +17,16 @@ const baseAngular: Parameters = {
   version: 'latest',
   generator: [
     `yarn add @angular/cli@{{version}} --no-lockfile --non-interactive --silent --no-progress`,
-    `npx ng new {{name}}-{{version}} --routing=true --minimal=true --style=scss --skipInstall=true`,
+    `yarn ng new {{name}}-{{version}} --routing=true --minimal=true --style=scss --skipInstall=true --strict --packageManager=npm`,
+    `cd {{name}}-{{version}}`,
+    `yarn install`,
   ].join(' && '),
-  additionalDeps: ['react', 'react-dom'],
 };
 
-// export const angularv6: Parameters = {
-//   ...baseAngular,
-//   version: 'v6-lts',
-//   additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
-// };
-
-// TODO: enable back when typings issues are resolved
-// export const angularv7: Parameters = {
-//   ...baseAngular,
-//   version: 'v7-lts',
-//   additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
-// };
-
-// export const angularv8: Parameters = {
-//   ...baseAngular,
-//   version: 'v8-lts',
-//   additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
-// };
-
-export const angularv9: Parameters = {
+export const angularv10: Parameters = {
   ...baseAngular,
-  version: 'v9-lts',
-  additionalDeps: [...baseAngular.additionalDeps, 'core-js'],
+  // There is no `v10-lts` tag for now, to update as soon as one is published
+  version: 'v10',
 };
 
 export const angular: Parameters = baseAngular;
@@ -58,14 +40,12 @@ export const angular: Parameters = baseAngular;
 //   preBuildCommand: 'ember build',
 // };
 
-// TODO: Example stories used in CLI need to be updated
-// export const html: Parameters = {
-//   name: 'html',
-//   version: 'latest',
-//   generator: fromDeps(),
-//   autoDetect: false,
-//   additionalDeps: ['react', 'react-dom'],
-// };
+export const html: Parameters = {
+  name: 'html',
+  version: 'latest',
+  generator: fromDeps(),
+  autoDetect: false,
+};
 
 // TODO: broken
 // export const marionette: Parameters = {
@@ -96,7 +76,6 @@ export const mithril: Parameters = {
   name: 'mithril',
   version: 'latest',
   generator: fromDeps('mithril@{{version}}'),
-  additionalDeps: ['react', 'react-dom'],
 };
 
 export const preact: Parameters = {
@@ -112,7 +91,6 @@ export const rax: Parameters = {
   version: 'latest',
   // Rax versions are inconsistent 1.1.0-1 for some
   generator: fromDeps('rax', 'rax-image', 'rax-link', 'rax-text', 'rax-view'),
-  additionalDeps: ['react', 'react-dom'],
 };
 
 export const react: Parameters = {
@@ -124,7 +102,7 @@ export const react: Parameters = {
 export const react_typescript: Parameters = {
   name: 'react_typescript',
   version: 'latest',
-  generator: fromDeps('react'),
+  generator: fromDeps('react', 'react-dom'),
   typescript: true,
 };
 
@@ -138,7 +116,11 @@ export const react_typescript: Parameters = {
 export const cra: Parameters = {
   name: 'cra',
   version: 'latest',
-  generator: 'npx create-react-app@{{version}} {{name}}-{{version}}',
+  generator: [
+    'npx create-react-app@{{version}} {{name}}-{{version}}',
+    'cd {{name}}-{{version}}',
+    'echo "FAST_REFRESH=true" > .env',
+  ].join(' && '),
 };
 
 export const cra_typescript: Parameters = {
@@ -157,29 +139,25 @@ export const cra_typescript: Parameters = {
 export const sfcVue: Parameters = {
   name: 'sfcVue',
   version: 'latest',
-  generator: fromDeps('vue', 'vue-loader', 'vue-template-compiler'),
-  additionalDeps: ['react', 'react-dom'],
+  generator: fromDeps('vue', 'vue-loader', 'vue-template-compiler', 'webpack@webpack-4'),
 };
 
 export const svelte: Parameters = {
   name: 'svelte',
   version: 'latest',
   generator: 'npx degit sveltejs/template {{name}}-{{version}}',
-  additionalDeps: ['react', 'react-dom'],
 };
 
 export const vue: Parameters = {
   name: 'vue',
   version: 'latest',
   generator: `npx @vue/cli@{{version}} create {{name}}-{{version}} --default --packageManager=yarn --no-git --force`,
-  additionalDeps: ['react', 'react-dom'],
 };
 
 export const web_components: Parameters = {
   name: 'web_components',
   version: 'latest',
   generator: fromDeps('lit-html', 'lit-element'),
-  additionalDeps: ['react', 'react-dom'],
 };
 
 export const web_components_typescript: Parameters = {
@@ -191,7 +169,7 @@ export const web_components_typescript: Parameters = {
 export const webpack_react: Parameters = {
   name: 'webpack_react',
   version: 'latest',
-  generator: fromDeps('react', 'react-dom', 'webpack'),
+  generator: fromDeps('react', 'react-dom', 'webpack@webpack-4'),
 };
 
 export const react_in_yarn_workspace: Parameters = {
@@ -201,5 +179,16 @@ export const react_in_yarn_workspace: Parameters = {
     'cd {{name}}-{{version}}',
     'echo "{ \\"name\\": \\"workspace-root\\", \\"private\\": true, \\"workspaces\\": [] }" > package.json',
     `yarn add react react-dom --silent -W`,
+  ].join(' && '),
+};
+
+// View results at: https://datastudio.google.com/reporting/c34f64ee-400f-4d06-ad4f-5c2133e226da
+export const cra_bench: Parameters = {
+  name: 'cra_bench',
+  version: 'latest',
+  generator: [
+    'npx create-react-app@{{version}} {{name}}-{{version}}',
+    'cd {{name}}-{{version}}',
+    "npx @storybook/bench 'npx sb init' --label cra",
   ].join(' && '),
 };

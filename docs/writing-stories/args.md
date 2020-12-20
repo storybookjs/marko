@@ -6,7 +6,7 @@ A story is a component with a set of arguments (props, slots, inputs, etc). “A
 
 When an arg’s value is changed, the component re-renders, allowing you to interact with components in Storybook’s UI via addons that affect args.
 
-Learn how and why to write stories with args [here](./introduction.md#using-args) section. For details on how args work, read on.
+Learn how and why to write stories in [the introduction](./introduction.md#using-args). For details on how args work, read on.
 
 ## Args object
 
@@ -22,6 +22,7 @@ To define the args of a single story, use the `args` CSF story key:
   paths={[
     'react/button-story-with-args.js.mdx',
     'react/button-story-with-args.ts.mdx',
+    'vue/button-story-with-args.js.mdx',
     'angular/button-story-with-args.ts.mdx',
   ]}
 />
@@ -52,6 +53,7 @@ You can also define args at the component level; such args will apply to all sto
   paths={[
     'react/button-story-component-args-primary.js.mdx',
     'react/button-story-component-args-primary.ts.mdx',
+    'vue/button-story-component-args-primary.js.mdx',
     'angular/button-story-component-args-primary.ts.mdx',
   ]}
 />
@@ -86,7 +88,8 @@ Args are useful when writing stories for composite components that are assembled
   paths={[
     'react/page-story.js.mdx',
     'react/page-story.ts.mdx',
-    'angular/page-story.ts.mdx'
+    'angular/page-story.ts.mdx',
+    'vue/page-story.js.mdx'
   ]}
 />
 
@@ -95,7 +98,7 @@ Args are useful when writing stories for composite components that are assembled
 <details>
 <summary>Using args in addons</summary>
 
-If you are [writing an addon](../api/addons.md) that wants to read or update args, use the `useArgs` hook exported by `@storybook/api`:
+If you are [writing an addon](../addons/writing-addons.md) that wants to read or update args, use the `useArgs` hook exported by `@storybook/api`:
 
 <!-- prettier-ignore-start -->
 

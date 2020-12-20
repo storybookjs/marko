@@ -3,12 +3,16 @@ import React from 'react';
 import { Ref } from './Refs';
 import { standardData as standardHeaderData } from './Heading.stories';
 import { mockDataset } from './mockdata';
-import { RefType } from './RefHelpers';
+import { RefType } from './types';
 
 export default {
   component: Ref,
   title: 'UI/Sidebar/Refs',
   excludeStories: /.*Data$/,
+  parameters: { layout: 'fullscreen' },
+  decorators: [
+    (storyFn: any) => <div style={{ padding: '0 20px', maxWidth: '230px' }}>{storyFn()}</div>,
+  ],
 };
 
 const { menu } = standardHeaderData;
@@ -112,21 +116,103 @@ const refs: Record<string, RefType> = {
   },
 };
 
-export const Optimized = () => <Ref {...refs.optimized} storyId="" filter="" isHidden={false} />;
-export const IsEmpty = () => <Ref {...refs.empty} storyId="" filter="" isHidden={false} />;
+export const Optimized = () => (
+  <Ref
+    {...refs.optimized}
+    isLoading={false}
+    isBrowsing
+    selectedStoryId=""
+    highlightedRef={{ current: null }}
+    setHighlighted={() => {}}
+  />
+);
+export const IsEmpty = () => (
+  <Ref
+    {...refs.empty}
+    isLoading={false}
+    isBrowsing
+    selectedStoryId=""
+    highlightedRef={{ current: null }}
+    setHighlighted={() => {}}
+  />
+);
 export const StartInjectedUnknown = () => (
-  <Ref {...refs.startInjected_unknown} storyId="" filter="" isHidden={false} />
+  <Ref
+    {...refs.startInjected_unknown}
+    isLoading={false}
+    isBrowsing
+    selectedStoryId=""
+    highlightedRef={{ current: null }}
+    setHighlighted={() => {}}
+  />
 );
 export const StartInjectedLoading = () => (
-  <Ref {...refs.startInjected_loading} storyId="" filter="" isHidden={false} />
+  <Ref
+    {...refs.startInjected_loading}
+    isLoading={false}
+    isBrowsing
+    selectedStoryId=""
+    highlightedRef={{ current: null }}
+    setHighlighted={() => {}}
+  />
 );
 export const StartInjectedReady = () => (
-  <Ref {...refs.startInjected_ready} storyId="" filter="" isHidden={false} />
+  <Ref
+    {...refs.startInjected_ready}
+    isLoading={false}
+    isBrowsing
+    selectedStoryId=""
+    highlightedRef={{ current: null }}
+    setHighlighted={() => {}}
+  />
 );
-export const Versions = () => <Ref {...refs.versions} storyId="" filter="" isHidden={false} />;
+export const Versions = () => (
+  <Ref
+    {...refs.versions}
+    isLoading={false}
+    isBrowsing
+    selectedStoryId=""
+    highlightedRef={{ current: null }}
+    setHighlighted={() => {}}
+  />
+);
 export const VersionsMissingCurrent = () => (
-  <Ref {...refs.versionsMissingCurrent} storyId="" filter="" isHidden={false} />
+  <Ref
+    {...refs.versionsMissingCurrent}
+    isLoading={false}
+    isBrowsing
+    selectedStoryId=""
+    highlightedRef={{ current: null }}
+    setHighlighted={() => {}}
+  />
 );
-export const Errored = () => <Ref {...refs.error} storyId="" filter="" isHidden={false} />;
-export const Auth = () => <Ref {...refs.auth} storyId="" filter="" isHidden={false} />;
-export const Long = () => <Ref {...refs.long} storyId="" filter="" isHidden={false} />;
+export const Errored = () => (
+  <Ref
+    {...refs.error}
+    isLoading={false}
+    isBrowsing
+    selectedStoryId=""
+    highlightedRef={{ current: null }}
+    setHighlighted={() => {}}
+  />
+);
+export const Auth = () => (
+  <Ref
+    {...refs.auth}
+    isLoading={false}
+    isBrowsing
+    selectedStoryId=""
+    highlightedRef={{ current: null }}
+    setHighlighted={() => {}}
+  />
+);
+export const Long = () => (
+  <Ref
+    {...refs.long}
+    isLoading={false}
+    isBrowsing
+    selectedStoryId=""
+    highlightedRef={{ current: null }}
+    setHighlighted={() => {}}
+  />
+);

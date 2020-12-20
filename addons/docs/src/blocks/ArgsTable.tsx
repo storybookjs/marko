@@ -193,6 +193,11 @@ export const StoryTable: FC<
     }
 
     if (subcomponents) {
+      if (Array.isArray(subcomponents)) {
+        throw new Error(
+          `Unexpected subcomponents array. Expected an object whose keys are tab labels and whose values are components.`
+        );
+      }
       tabs = addComponentTabs(tabs, subcomponents, context, include, exclude);
     }
     return <TabbedArgsTable tabs={tabs} />;

@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { styled, CSSObject } from '@storybook/theming';
 import { window } from 'global';
 import { withReset, withMargin, headerCommon, codeCommon } from './shared';
-import { SyntaxHighlighter } from '../syntaxhighlighter/syntaxhighlighter';
+import { SyntaxHighlighter } from '../syntaxhighlighter/lazy-syntaxhighlighter';
 
 export const H1 = styled.h1<{}>(withReset, headerCommon, ({ theme }) => ({
   fontSize: `${theme.typography.size.l1}px`,
@@ -44,14 +44,14 @@ export const Pre = styled.pre<{}>(withReset, withMargin, ({ theme }) => ({
   borderRadius: 3,
   margin: '1rem 0',
 
-  '&:not(.hljs)': {
+  '&:not(.prismjs)': {
     background: 'transparent',
     border: 'none',
     borderRadius: 0,
     padding: 0,
     margin: 0,
   },
-  '& pre, &.hljs': {
+  '& pre, &.prismjs': {
     padding: 15,
     margin: 0,
     whiteSpace: 'pre-wrap',

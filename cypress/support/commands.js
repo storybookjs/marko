@@ -74,6 +74,22 @@ Cypress.Commands.add('getDocsElement', {}, () => {
     .then((storyRoot) => cy.wrap(storyRoot, { log: false }));
 });
 
+Cypress.Commands.add('getCanvasElement', {}, () => {
+  cy.log('getCanvasElement');
+  return cy
+    .get(`#storybook-preview-iframe`, { log: false })
+    .then((iframe) => cy.wrap(iframe, { log: false }));
+});
+
+Cypress.Commands.add('getCanvasBodyElement', {}, () => {
+  cy.log('getCanvasBodyElement');
+  return cy
+    .getCanvasElement()
+    .its('0.contentDocument.body', { log: false })
+    .should('not.be.empty')
+    .then((body) => cy.wrap(body, { log: false }));
+});
+
 Cypress.Commands.add('navigateToStory', (kind, name) => {
   const kindId = kind.replace(/ /g, '-').toLowerCase();
   const storyId = name.replace(/ /g, '-').toLowerCase();
@@ -82,14 +98,16 @@ Cypress.Commands.add('navigateToStory', (kind, name) => {
   cy.log(`navigateToStory ${kind} ${name}`);
 
   if (name !== 'page') {
-    // Section can be collapsed, click twice ensure expansion
-    cy.get(`#${kindId}`).click();
+    // Section might be collapsed
+    cy.get(`#${kindId}`).then(($item) => {
+      if ($item.attr('aria-expanded') === 'false') $item.click();
+    });
   }
   cy.get(storyLinkId).click();
 
   // assert url changes
   cy.url().should('include', `path=/story/${kindId}--${storyId}`);
-  cy.get(storyLinkId).should('have.class', 'selected');
+  cy.get(storyLinkId).should('have.attr', 'data-selected', 'true');
 
   // A pause is good when switching stories
   // eslint-disable-next-line cypress/no-unnecessary-waiting

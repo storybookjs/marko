@@ -1,0 +1,34 @@
+```md
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+
+import Icon from './Icon';
+import { IconA, IconB, IconC, IconD, IconE } from './icons';
+
+const iconMap = {IconA, IconB, IconC, IconD, IconE };
+
+<Meta title='Storybook with MDX and icons'/>
+
+export const Template = ({ icon, ...rest }) => {
+  const selectedIcon = iconMap[icon];
+  return <Icon icon={selectedIcon} />;
+};
+
+<Canvas>
+  <Story
+    name="My Story with MDX with Icons"
+    argTypes={{
+      icon: {
+        control: {
+          type: 'select',
+          options: Object.keys(iconMap)
+        },
+      },
+    }}
+    args={{
+      icon: IconA,
+    }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+```

@@ -1,12 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Custom/Dependencies inputs and inject dependencies 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
->
-  <storybook-di-component>
+<storybook-wrapper>
+  <storybook-di-component
+    ng-reflect-title="Component dependencies"
+  >
     <div>
       <div>
         All dependencies are defined: true
@@ -28,16 +26,14 @@ exports[`Storyshots Custom/Dependencies inputs and inject dependencies 1`] = `
       </div>
     </div>
   </storybook-di-component>
-</storybook-dynamic-app-root>
+</storybook-wrapper>
 `;
 
 exports[`Storyshots Custom/Dependencies inputs and inject dependencies with knobs 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
->
-  <storybook-di-component>
+<storybook-wrapper>
+  <storybook-di-component
+    ng-reflect-title="Component dependencies"
+  >
     <div>
       <div>
         All dependencies are defined: true
@@ -59,5 +55,5 @@ exports[`Storyshots Custom/Dependencies inputs and inject dependencies with knob
       </div>
     </div>
   </storybook-di-component>
-</storybook-dynamic-app-root>
+</storybook-wrapper>
 `;

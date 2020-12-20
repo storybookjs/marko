@@ -1,5 +1,5 @@
 import React from 'react';
-import { API } from '@storybook/api';
+import { API, Story } from '@storybook/api';
 import { styled } from '@storybook/theming';
 import { Link } from '@storybook/router';
 import {
@@ -10,7 +10,6 @@ import {
 } from '@storybook/components';
 
 import { SourceBlock, LocationsMap } from '@storybook/source-loader';
-import { Story } from '@storybook/api/dist/lib/stories';
 
 const StyledStoryLink = styled(Link)<{ to: string; key: string }>(({ theme }) => ({
   display: 'block',
@@ -87,7 +86,7 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
         node,
         stylesheet,
         useInlineStyles,
-        key: `code-segement${i}`,
+        key: `code-segment${i}`,
       })
     );
 

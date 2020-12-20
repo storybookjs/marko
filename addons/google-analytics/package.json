@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-google-analytics",
-  "version": "6.0.7",
+  "version": "6.2.0-alpha.8",
   "description": "Storybook addon for google analytics",
   "keywords": [
     "addon",
@@ -16,24 +16,41 @@
     "directory": "addons/google-analytics"
   },
   "license": "MIT",
+  "main": "dist/cjs/register.js",
+  "module": "dist/esm/register.js",
+  "types": "dist/ts3.9/register.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "dist/ts3.4/*"
+      ]
+    }
+  },
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.7",
-    "@storybook/core-events": "6.0.7",
+    "@storybook/addons": "6.2.0-alpha.8",
+    "@storybook/core-events": "6.2.0-alpha.8",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "react-ga": "^2.5.7",
-    "regenerator-runtime": "^0.13.3"
+    "regenerator-runtime": "^0.13.7"
   },
   "peerDependencies": {
-    "prop-types": "^15.6.0",
-    "react": "^15.6.2 || ^16.0",
-    "react-dom": "*"
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2ba756b82c1ad607ba5bde77a445a481ccaaf68f"
+  "gitHead": "c04cdab92d3832a904485f0f885a7faac7ebbf93"
 }

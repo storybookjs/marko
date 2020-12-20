@@ -1,104 +1,76 @@
 import 'jest-specific-snapshot';
-import { RenderTree } from './frameworks/Loader';
-import { Stories2SnapsConverter } from './Stories2SnapsConverter';
+import { StoryshotsTestMethod, TestMethodOptions } from './api/StoryshotsOptions';
 
 const isFunction = (obj: any) => !!(obj && obj.constructor && obj.call && obj.apply);
 const optionsOrCallOptions = (opts: any, story: any) => (isFunction(opts) ? opts(story) : opts);
 
-export const snapshotWithOptions = (
+type SnapshotsWithOptionsReturnType = (
+  options: Pick<TestMethodOptions, 'story' | 'context' | 'renderTree' | 'snapshotFileName'>
+) => any;
+
+export function snapshotWithOptions(
   options: { renderer?: any; serializer?: any } | Function = {}
-) => ({
-  story,
-  context,
-  renderTree,
-  snapshotFileName,
-}: {
-  story: any;
-  context: any;
-  renderTree: RenderTree;
-  snapshotFileName: string;
-}): Promise<void> | void => {
-  const result = renderTree(story, context, optionsOrCallOptions(options, story));
+): SnapshotsWithOptionsReturnType {
+  return ({ story, context, renderTree, snapshotFileName }) => {
+    const result = renderTree(story, context, optionsOrCallOptions(options, story));
 
-  function match(tree: any) {
-    let target = tree;
-    const isReact = story.parameters.framework === 'react';
+    function match(tree: any) {
+      let target = tree;
+      const isReact = story.parameters.framework === 'react';
 
-    if (isReact && typeof tree.childAt === 'function') {
-      target = tree.childAt(0);
-    }
-    if (isReact && Array.isArray(tree.children)) {
-      [target] = tree.children;
-    }
+      if (isReact && typeof tree.childAt === 'function') {
+        target = tree.childAt(0);
+      }
+      if (isReact && Array.isArray(tree.children)) {
+        [target] = tree.children;
+      }
 
-    if (snapshotFileName) {
-      expect(target).toMatchSpecificSnapshot(snapshotFileName);
-    } else {
-      expect(target).toMatchSnapshot();
+      if (snapshotFileName) {
+        expect(target).toMatchSpecificSnapshot(snapshotFileName);
+      } else {
+        expect(target).toMatchSnapshot();
+      }
+
+      if (typeof tree.unmount === 'function') {
+        tree.unmount();
+      }
     }
 
-    if (typeof tree.unmount === 'function') {
-      tree.unmount();
+    if (typeof result.then === 'function') {
+      return result.then(match);
     }
-  }
 
-  if (typeof result.then === 'function') {
-    return result.then(match);
-  }
+    return match(result);
+  };
+}
 
-  return match(result);
-};
+export function multiSnapshotWithOptions(options = {}): StoryshotsTestMethod {
+  return ({ story, context, renderTree, stories2snapsConverter }) => {
+    const snapshotFileName = stories2snapsConverter.getSnapshotFileName(context);
+    return snapshotWithOptions(options)({ story, context, renderTree, snapshotFileName });
+  };
+}
 
-export const multiSnapshotWithOptions = (options = {}) => ({
-  story,
-  context,
-  renderTree,
-  stories2snapsConverter,
-}: {
-  story: any;
-  context: any;
-  renderTree: RenderTree;
-  stories2snapsConverter: Stories2SnapsConverter;
-}) =>
-  snapshotWithOptions(options)({
-    story,
-    context,
-    renderTree,
-    snapshotFileName: stories2snapsConverter.getSnapshotFileName(context),
-  });
-
-export function shallowSnapshot({
+export const shallowSnapshot: StoryshotsTestMethod = ({
   story,
   context,
   renderShallowTree,
   options = {},
-}: {
-  story: any;
-  context: any;
-  renderShallowTree: RenderTree;
-  options: any;
-}) {
+}) => {
   const result = renderShallowTree(story, context, options);
   expect(result).toMatchSnapshot();
-}
-
-export const renderWithOptions = (options = {}) => ({
-  story,
-  context,
-  renderTree,
-}: {
-  story: any;
-  context: any;
-  renderTree: RenderTree;
-}) => {
-  const result = renderTree(story, context, options);
-
-  if (typeof result.then === 'function') {
-    return result;
-  }
-
-  return undefined;
 };
+
+export function renderWithOptions(options = {}): StoryshotsTestMethod {
+  return ({ story, context, renderTree }) => {
+    const result = renderTree(story, context, options);
+    if (typeof result.then === 'function') {
+      return result;
+    }
+
+    return undefined;
+  };
+}
 
 export const renderOnly = renderWithOptions();
 
