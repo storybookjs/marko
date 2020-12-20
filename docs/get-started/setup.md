@@ -97,14 +97,21 @@ If you have global imported styles, create a file called [`.storybook/preview.js
 </details>
 
 <details>
-  <summary>Add external CSS or fonts in the &lt;head&gt;</summary>
+  <summary>Add external CSS or webfonts in the &lt;head&gt;</summary>
 
-Alternatively if you want to inject a CSS link tag to the `<head>` directly (or some other resource like a font link), you can use [`.storybook/preview-head.html`](../configure/story-rendering.md#adding-to-&#60head&#62) to add arbitrary HTML.
+Alternatively, if you want to inject a CSS link tag to the `<head>` directly (or some other resource like a webfont link), you can use [`.storybook/preview-head.html`](../configure/story-rendering.md#adding-to-&#60head&#62) to add arbitrary HTML.
+
+</details>
+
+<details>
+  <summary>Load fonts or images from a local directory</summary>
+
+If you're referencing fonts or images from a local directory, you'll need to configure the Storybook script to [serve the static files](../configure/images-and-assets).
 
 </details>
 
 ## Load assets and resources
 
-If you want to link to static files in your project or stories (e.g. `/fonts/XYZ.woff`), use the `-s path/to/folder` to specify a static folder to serve from when you start up Storybook. To do so, edit the `storybook` and `build-storybook` scripts in `package.json`.
+If you want to [link to static files](../configure/images-and-assets.md) in your project or stories (e.g. `/fonts/XYZ.woff`), use the `-s path/to/folder` to specify a static folder to serve from when you start up Storybook. To do so, edit the `storybook` and `build-storybook` scripts in `package.json`.
 
 We recommend serving external resources and assets requested in your components statically with Storybook. This ensures that assets are always available to your stories.
