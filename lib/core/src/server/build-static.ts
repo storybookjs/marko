@@ -180,7 +180,7 @@ export async function buildStaticStandalone(options: any) {
 
   logger.info(chalk`=> Cleaning outputDir: {cyan ${outputDir}}`);
   if (outputDir === '/') throw new Error("Won't remove directory '/'. Check your outputDir!");
-  await fs.remove(outputDir);
+  await fs.emptyDir(outputDir);
 
   await cpy(defaultFavIcon, outputDir);
   await copyAllStaticFiles(staticDir, outputDir);
