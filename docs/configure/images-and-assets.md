@@ -22,7 +22,7 @@ Afterwards you can use any asset in your stories:
 
 ### Serving static files via Storybook
 
-We recommend serving static files via Storybook to ensure that your components always have the assets they need to load. This technique is recommended for assets that your component's often use like logos, fonts, and icons.
+We recommend serving static files via Storybook to ensure that your components always have the assets they need to load. This technique is recommended for assets that your components often use like logos, fonts, and icons.
 
 Configure a directory (or a list of directories) where your assets live when starting Storybook. Use the`-s` flag in your npm script like so:
 
