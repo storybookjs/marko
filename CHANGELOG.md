@@ -1,3 +1,20 @@
+## 6.2.0-alpha.9 (December 20, 2020)
+
+### Features
+
+* Web-components: Add typescript types and CLI template ([#12395](https://github.com/storybookjs/storybook/pull/12395))
+
+### Bug Fixes
+
+* Addon-docs: Fix angular without compodoc ([#13487](https://github.com/storybookjs/storybook/pull/13487))
+* Core: Use fs-extra emptyDir so build works on docker volume ([#13474](https://github.com/storybookjs/storybook/pull/13474))
+* Addon-docs: Tighten preset webpack pattern for mdx stories ([#13476](https://github.com/storybookjs/storybook/pull/13476))
+* Svelte: Statically load docgen info for svelte components ([#13466](https://github.com/storybookjs/storybook/pull/13466))
+
+### Dependency Upgrades
+
+* Bump @ember/optional-features from 1.3.0 to 2.0.0 ([#12829](https://github.com/storybookjs/storybook/pull/12829))
+
 ## 6.2.0-alpha.8 (December 16, 2020)
 
 ### Bug Fixes
