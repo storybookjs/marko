@@ -22,10 +22,6 @@ export default {
 // Note:  To see the decorator applied to your component's stories you'll need to include the template key with the component's selector.
 
 const Template: Story<ButtonComponent> = (args: ButtonComponent) => ({
-  component: ButtonComponent,
-  moduleMetadata: {
-    declarations: [ButtonComponent],
-  },
   props: args,
   template: '<app-button label="Submit"></app-button>',
 });

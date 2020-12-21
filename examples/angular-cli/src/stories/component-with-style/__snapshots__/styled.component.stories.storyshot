@@ -1,11 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Custom/styleUrls Component with styles 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
->
+<storybook-wrapper>
   <storybook-styled-component>
     <div>
       <p
@@ -25,5 +21,5 @@ exports[`Storyshots Custom/styleUrls Component with styles 1`] = `
       </p>
     </div>
   </storybook-styled-component>
-</storybook-dynamic-app-root>
+</storybook-wrapper>
 `;

@@ -1,11 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots App Component Component with separate template 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
->
+exports[`Storyshots App Component Component with fullscreen parameters 1`] = `
+<storybook-wrapper>
   <storybook-app-root>
     <div
       class="hide"
@@ -61,5 +57,5 @@ exports[`Storyshots App Component Component with separate template 1`] = `
       </li>
     </ul>
   </storybook-app-root>
-</storybook-dynamic-app-root>
+</storybook-wrapper>
 `;

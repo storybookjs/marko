@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require('../dist/server');
+require('../dist/ts3.9/server');

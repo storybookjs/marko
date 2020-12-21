@@ -1,5 +1,4 @@
 import dedent from 'ts-dedent';
-import { linkTo, hrefTo, withLinks } from './preview';
 
 let hasWarned = false;
 
@@ -15,7 +14,7 @@ export function LinkTo(): null {
   return null;
 }
 
-export { linkTo, hrefTo, withLinks };
+export { linkTo, hrefTo, withLinks, navigate } from './preview';
 
 if (module && module.hot && module.hot.decline) {
   module.hot.decline();

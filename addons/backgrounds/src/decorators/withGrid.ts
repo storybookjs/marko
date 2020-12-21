@@ -33,8 +33,8 @@ export const withGrid = (StoryFn: StoryFunction, context: StoryContext) => {
   const isLayoutPadded = parameters.layout === undefined || parameters.layout === 'padded';
   // 16px offset in the grid to account for padded layout
   const defaultOffset = isLayoutPadded ? 16 : 0;
-  const offsetX = gridParameters.offsetX || isInDocs ? 20 : defaultOffset;
-  const offsetY = gridParameters.offsetY || isInDocs ? 20 : defaultOffset;
+  const offsetX = gridParameters.offsetX ?? (isInDocs ? 20 : defaultOffset);
+  const offsetY = gridParameters.offsetY ?? (isInDocs ? 20 : defaultOffset);
 
   const gridStyles = useMemo(() => {
     const selector =

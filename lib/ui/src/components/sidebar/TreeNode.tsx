@@ -1,6 +1,7 @@
 import { styled, Color, Theme } from '@storybook/theming';
 import { Icons } from '@storybook/components';
 import { DOCS_MODE } from 'global';
+import { transparentize } from 'polished';
 import React, { FunctionComponent, ComponentProps } from 'react';
 
 export const CollapseIcon = styled.span<{ isExpanded: boolean }>(({ theme, isExpanded }) => ({
@@ -12,7 +13,7 @@ export const CollapseIcon = styled.span<{ isExpanded: boolean }>(({ theme, isExp
   marginRight: 5,
   borderTop: '3px solid transparent',
   borderBottom: '3px solid transparent',
-  borderLeft: `3px solid ${theme.color.mediumdark}99`,
+  borderLeft: `3px solid ${transparentize(0.4, theme.color.mediumdark)}`,
   transform: isExpanded ? 'rotateZ(90deg)' : 'none',
   transition: 'transform .1s ease-out',
 }));

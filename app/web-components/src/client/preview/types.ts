@@ -2,6 +2,7 @@
 import { TemplateResult, SVGTemplateResult } from 'lit-element';
 
 export { RenderContext } from '@storybook/core';
+export { Args, ArgTypes, Parameters, StoryContext } from '@storybook/addons';
 
 export type StoryFnHtmlReturnType = string | Node | TemplateResult | SVGTemplateResult;
 

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/ui",
-  "version": "6.1.0-rc.2",
+  "version": "6.2.0-alpha.9",
   "description": "Core Storybook UI",
   "keywords": [
     "storybook"
@@ -15,28 +15,37 @@
     "directory": "lib/ui"
   },
   "license": "MIT",
-  "main": "dist/index.js",
+  "sideEffects": false,
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/ts3.9/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "dist/ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
     "@emotion/core": "^10.1.1",
-    "@storybook/addons": "6.1.0-rc.2",
-    "@storybook/api": "6.1.0-rc.2",
-    "@storybook/channels": "6.1.0-rc.2",
-    "@storybook/client-logger": "6.1.0-rc.2",
-    "@storybook/components": "6.1.0-rc.2",
-    "@storybook/core-events": "6.1.0-rc.2",
-    "@storybook/router": "6.1.0-rc.2",
+    "@storybook/addons": "6.2.0-alpha.9",
+    "@storybook/api": "6.2.0-alpha.9",
+    "@storybook/channels": "6.2.0-alpha.9",
+    "@storybook/client-logger": "6.2.0-alpha.9",
+    "@storybook/components": "6.2.0-alpha.9",
+    "@storybook/core-events": "6.2.0-alpha.9",
+    "@storybook/router": "6.2.0-alpha.9",
     "@storybook/semver": "^7.3.2",
-    "@storybook/theming": "6.1.0-rc.2",
+    "@storybook/theming": "6.2.0-alpha.9",
     "@types/markdown-to-jsx": "^6.11.0",
     "copy-to-clipboard": "^3.0.8",
     "core-js": "^3.0.1",
@@ -52,7 +61,6 @@
     "qs": "^6.6.0",
     "react-draggable": "^4.0.3",
     "react-helmet-async": "^1.0.2",
-    "react-hotkeys": "2.0.0",
     "react-sizeme": "^2.6.7",
     "regenerator-runtime": "^0.13.7",
     "resolve-from": "^5.0.0",
@@ -60,9 +68,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
-    "@storybook/addon-actions": "6.1.0-rc.2",
-    "@storybook/addon-knobs": "6.1.0-rc.2",
-    "@storybook/react": "6.1.0-rc.2",
+    "@storybook/addon-actions": "6.2.0-alpha.9",
+    "@storybook/addon-knobs": "6.2.0-alpha.9",
+    "@storybook/react": "6.2.0-alpha.9",
     "@testing-library/react": "^10.0.3",
     "babel-loader": "^8.0.6",
     "chromatic": "^5.0.0",
@@ -78,12 +86,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "38bb07161a72720766a1e9b2c9a1661bd3d819b0",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "47341be6aa61d4fb38f2c0e058af32f1acb8e0a7"
 }

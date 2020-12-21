@@ -22,9 +22,9 @@ export const getPrebuiltDir = async ({
   options,
 }: {
   configDir: string;
-  options: { managerCache?: boolean };
+  options: { managerCache?: boolean; smokeTest?: boolean };
 }): Promise<string | false> => {
-  if (options.managerCache === false) return false;
+  if (options.managerCache === false || options.smokeTest) return false;
 
   const prebuiltDir = path.join(__dirname, '../../../prebuilt');
   const hasPrebuiltManager = await pathExists(path.join(prebuiltDir, 'index.html'));

@@ -58,7 +58,7 @@ describe('angular-cli_config', () => {
 
     getLeadingAngularCliProject(angularJsonWithNoBuildOptions);
 
-    const config = getAngularCliWebpackConfigOptions('/');
+    const config = getAngularCliWebpackConfigOptions('/' as Path);
     expect(config).toBeNull();
   });
 

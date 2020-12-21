@@ -9,6 +9,7 @@ storiesOf('Addon/Background', module)
     })
   )
   .addParameters({
+    component: AppComponent,
     backgrounds: {
       default: 'twitter',
       values: [
@@ -18,7 +19,6 @@ storiesOf('Addon/Background', module)
     },
   })
   .add('background component', () => ({
-    component: AppComponent,
     props: {},
   }))
   .add('background template', () => ({

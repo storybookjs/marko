@@ -1,7 +1,7 @@
 {
   "name": "@storybook/addon-a11y",
-  "version": "6.1.0-rc.2",
-  "description": "a11y addon for storybook",
+  "version": "6.2.0-alpha.9",
+  "description": "Test component compliance with web accessibility standards",
   "keywords": [
     "a11y",
     "accessibility",
@@ -20,27 +20,34 @@
     "directory": "addons/a11y"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/ts3.9/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "dist/ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-rc.2",
-    "@storybook/api": "6.1.0-rc.2",
-    "@storybook/channels": "6.1.0-rc.2",
-    "@storybook/client-api": "6.1.0-rc.2",
-    "@storybook/client-logger": "6.1.0-rc.2",
-    "@storybook/components": "6.1.0-rc.2",
-    "@storybook/core-events": "6.1.0-rc.2",
-    "@storybook/theming": "6.1.0-rc.2",
+    "@storybook/addons": "6.2.0-alpha.9",
+    "@storybook/api": "6.2.0-alpha.9",
+    "@storybook/channels": "6.2.0-alpha.9",
+    "@storybook/client-api": "6.2.0-alpha.9",
+    "@storybook/client-logger": "6.2.0-alpha.9",
+    "@storybook/components": "6.2.0-alpha.9",
+    "@storybook/core-events": "6.2.0-alpha.9",
+    "@storybook/theming": "6.2.0-alpha.9",
     "axe-core": "^4.0.1",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
@@ -69,12 +76,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "38bb07161a72720766a1e9b2c9a1661bd3d819b0",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "47341be6aa61d4fb38f2c0e058af32f1acb8e0a7"
 }
