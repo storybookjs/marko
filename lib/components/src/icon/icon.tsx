@@ -25,7 +25,11 @@ export interface SymbolsProps extends ComponentProps<typeof Svg> {
 }
 
 export const Symbols = React.memo<SymbolsProps>(({ icons: keys = Object.keys(icons) }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" style={{ position: 'absolute' }} data-chromatic="ignore">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    style={{ position: 'absolute', width: 0, height: 0 }}
+    data-chromatic="ignore"
+  >
     {keys.map((key: IconKey) => (
       <symbol id={`icon--${key}`} key={key}>
         <Path d={icons[key]} />
