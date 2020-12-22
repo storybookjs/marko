@@ -7,10 +7,10 @@ import { deprecate } from 'util';
 import { ICollection, StoryFnAngularReturnType } from '../types';
 import { Parameters } from '../types-6-0';
 import { storyPropsProvider } from './StorybookProvider';
-import { createComponentClassFromStoryComponent } from './ComponentClassFromStoryComponent';
-import { createComponentClassFromStoryTemplate } from './ComponentClassFromStoryTemplate';
 import { isComponentAlreadyDeclaredInModules } from './utils/NgModulesAnalyzer';
 import { isDeclarable } from './utils/NgComponentAnalyzer';
+import { createStorybookWrapperComponent } from './StorybookWrapperComponent';
+import { computesTemplateFromComponent } from './ComputesTemplateFromComponent';
 
 const deprecatedStoryComponentWarning = deprecate(
   () => {},
@@ -37,25 +37,22 @@ export const getStorybookModuleMetadata = (
   },
   storyProps$: Subject<ICollection>
 ): NgModule => {
-  const {
-    component: storyComponent,
-    props,
-    styles,
-    template,
-    moduleMetadata = {},
-  } = storyFnAngular;
+  const { component: storyComponent, props, styles, moduleMetadata = {} } = storyFnAngular;
+  let { template } = storyFnAngular;
 
   if (storyComponent) {
     deprecatedStoryComponentWarning();
   }
   const component = storyComponent ?? parameters.component;
 
-  const ComponentToInject = createComponentToInject({
-    component,
-    props,
-    styles,
-    template,
-  });
+  if (!template && component) {
+    template = computesTemplateFromComponent(component, props, '');
+  }
+
+  /**
+   * Create a component that wraps generated template and gives it props
+   */
+  const ComponentToInject = createStorybookWrapperComponent(template, component, styles, props);
 
   // Look recursively (deep) if the component is not already declared by an import module
   const requiresComponentDeclaration =
@@ -84,26 +81,4 @@ export const createStorybookModule = (ngModule: NgModule): Type<unknown> => {
   @NgModule(ngModule)
   class StorybookModule {}
   return StorybookModule;
-};
-
-/**
- * Create a specific component according to whether the story uses a template or a component.
- */
-const createComponentToInject = ({
-  template,
-  styles,
-  component,
-  props,
-}: {
-  template: string;
-  styles: string[];
-  component: unknown;
-  props: ICollection;
-}): Type<any> => {
-  // Template has priority over the component
-  const isCreatingComponentFromTemplate = !!template;
-
-  return isCreatingComponentFromTemplate
-    ? createComponentClassFromStoryTemplate(template, styles)
-    : createComponentClassFromStoryComponent(component, props);
 };

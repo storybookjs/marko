@@ -1,5 +1,9 @@
 /* eslint-disable no-param-reassign */
-import { NgModuleMetadata } from '../types';
+import { Type } from '@angular/core';
+import { DecoratorFunction } from '@storybook/addons';
+import { computesTemplateFromComponent } from '../angular-beta/ComputesTemplateFromComponent';
+import { isComponent } from '../angular-beta/utils/NgComponentAnalyzer';
+import { NgModuleMetadata, StoryFnAngularReturnType } from '../types';
 
 export const moduleMetadata = (metadata: Partial<NgModuleMetadata>) => (storyFn: () => any) => {
   const story = storyFn();
@@ -19,4 +23,16 @@ export const moduleMetadata = (metadata: Partial<NgModuleMetadata>) => (storyFn:
       providers: [...(metadata.providers || []), ...(storyMetadata.providers || [])],
     },
   };
+};
+
+export const componentWrapperDecorator = (
+  element: Type<unknown> | ((story: string) => string)
+): DecoratorFunction<StoryFnAngularReturnType> => (storyFn) => {
+  const story = storyFn();
+
+  const template = isComponent(element)
+    ? computesTemplateFromComponent(element, {}, story.template)
+    : element(story.template);
+
+  return { ...story, template };
 };
