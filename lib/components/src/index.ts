@@ -38,7 +38,7 @@ export { AddonPanel } from './addon-panel/addon-panel';
 
 // Graphics
 export type { IconsProps } from './icon/icon';
-export { Icons } from './icon/icon';
+export { Icons, Symbols } from './icon/icon';
 export { StorybookLogo } from './brand/StorybookLogo';
 export { StorybookIcon } from './brand/StorybookIcon';
 
