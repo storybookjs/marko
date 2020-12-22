@@ -32,7 +32,7 @@ export const Items = () => <TooltipLinkList links={fakemenu} />;
 export const Real = () => <SidebarMenu menu={fakemenu} isHighlighted />;
 
 const DoubleThemeRenderingHack = styled.div({
-  '#root > div:first-child > &': {
+  '#root > [data-side="left"] > &': {
     textAlign: 'right',
   },
 });

@@ -93,40 +93,40 @@ export const decorators = [
       case 'side-by-side': {
         return (
           <Fragment>
+            <Symbols icons={['folder', 'component', 'document', 'bookmarkhollow']} />
             <ThemeProvider theme={convert(themes.light)}>
               <Global styles={createReset} />
             </ThemeProvider>
             <ThemeProvider theme={convert(themes.light)}>
-              <ThemeBlock side="left">
+              <ThemeBlock side="left" data-side="left">
                 <StoryFn />
               </ThemeBlock>
             </ThemeProvider>
             <ThemeProvider theme={convert(themes.dark)}>
-              <ThemeBlock side="right">
+              <ThemeBlock side="right" data-side="right">
                 <StoryFn />
               </ThemeBlock>
             </ThemeProvider>
-            <Symbols icons={['folder', 'component', 'document', 'bookmarkhollow']} />
           </Fragment>
         );
       }
       case 'stacked': {
         return (
           <Fragment>
+            <Symbols icons={['folder', 'component', 'document', 'bookmarkhollow']} />
             <ThemeProvider theme={convert(themes.light)}>
               <Global styles={createReset} />
             </ThemeProvider>
             <ThemeProvider theme={convert(themes.light)}>
-              <ThemeStack side="left">
+              <ThemeStack side="left" data-side="left">
                 <StoryFn />
               </ThemeStack>
             </ThemeProvider>
             <ThemeProvider theme={convert(themes.dark)}>
-              <ThemeStack side="right">
+              <ThemeStack side="right" data-side="right">
                 <StoryFn />
               </ThemeStack>
             </ThemeProvider>
-            <Symbols icons={['folder', 'component', 'document', 'bookmarkhollow']} />
           </Fragment>
         );
       }
