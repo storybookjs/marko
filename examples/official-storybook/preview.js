@@ -93,7 +93,6 @@ export const decorators = [
       case 'side-by-side': {
         return (
           <Fragment>
-            <Symbols icons={['folder', 'component', 'document', 'bookmarkhollow']} />
             <ThemeProvider theme={convert(themes.light)}>
               <Global styles={createReset} />
             </ThemeProvider>
@@ -107,13 +106,13 @@ export const decorators = [
                 <StoryFn />
               </ThemeBlock>
             </ThemeProvider>
+            <Symbols icons={['folder', 'component', 'document', 'bookmarkhollow']} />
           </Fragment>
         );
       }
       case 'stacked': {
         return (
           <Fragment>
-            <Symbols icons={['folder', 'component', 'document', 'bookmarkhollow']} />
             <ThemeProvider theme={convert(themes.light)}>
               <Global styles={createReset} />
             </ThemeProvider>
@@ -127,6 +126,7 @@ export const decorators = [
                 <StoryFn />
               </ThemeStack>
             </ThemeProvider>
+            <Symbols icons={['folder', 'component', 'document', 'bookmarkhollow']} />
           </Fragment>
         );
       }
