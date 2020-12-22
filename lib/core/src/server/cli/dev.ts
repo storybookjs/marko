@@ -5,7 +5,7 @@ import { parseList, getEnvConfig, checkDeprecatedFlags } from './utils';
 
 export interface DevCliOptions {
   port?: number;
-  host?: number;
+  host?: string;
   staticDir?: string[];
   configDir?: string;
   https?: boolean;
