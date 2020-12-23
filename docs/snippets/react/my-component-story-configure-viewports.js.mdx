@@ -2,6 +2,7 @@
 // MyComponent.stories.js
 
 import React from 'react';
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 
 export default {
   title: 'Stories',
@@ -9,7 +10,7 @@ export default {
     // the viewports object from the Essentials addon
     viewport: {
       // the viewports you want to use
-      viewports: MINIMAL_VIEWPORTS,
+      viewports: INITIAL_VIEWPORTS,
       // your own default viewport
       defaultViewport: 'iphone6'
     },
