@@ -28,8 +28,8 @@ const defaultContext: StoryContext = {
 export const decorateStory = (storyFn: StoryFn, decorator: DecoratorFunction) => {
   return (context: StoryContext = defaultContext) =>
     decorator(
-      // You cannot override the parameters key, it is fixed
-      ({ parameters, ...innerContext }: StoryContextUpdate = {}) =>
+      // You cannot override the id, name, kind and parameters keys, they are fixed
+      ({ id, name, kind, parameters, ...innerContext }: StoryContextUpdate = {}) =>
         storyFn({ ...context, ...innerContext }),
       context
     );
