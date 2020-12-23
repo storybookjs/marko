@@ -92,6 +92,7 @@ Up until now, we only used auto-generated controls based on the component we're 
   paths={[
     'react/table-story-fully-customize-controls.js.mdx',
     'react/table-story-fully-customize-controls.mdx.mdx',
+    'vue/table-story-fully-customize-controls.js.mdx',
   ]}
 />
 
@@ -113,7 +114,8 @@ As they can be complex cases:
   paths={[
     'react/component-story-custom-args-complex.js.mdx',
     'react/component-story-custom-args-complex.ts.mdx',
-    'react/component-story-custom-args-complex.mdx.mdx'
+    'react/component-story-custom-args-complex.mdx.mdx',
+     'vue/component-story-custom-args-complex.js.mdx',
   ]}
 />
 
@@ -128,7 +130,8 @@ Or even with certain types of elements, such as icons:
   paths={[
     'react/component-story-custom-args-icons.js.mdx',
     'react/component-story-custom-args-icons.ts.mdx',
-    'react/component-story-custom-args-icons.mdx.mdx'
+    'react/component-story-custom-args-icons.mdx.mdx',
+    'vue/component-story-custom-args-icons.js.mdx',
   ]}
 />
 
