@@ -55,16 +55,20 @@ describe('client-api.decorators', () => {
     ]);
   });
 
-  it('DOES NOT merge parameter or pass through parameters key in context', () => {
+  it('DOES NOT merge core metadata or pass through core metadata keys in context', () => {
     const contexts = [];
-    const decorators = [(s, c) => contexts.push(c) && s({ parameters: { c: 'd' } })];
+    const decorators = [
+      (s, c) =>
+        contexts.push(c) &&
+        s({ parameters: { c: 'd' }, id: 'notId', kind: 'notKind', name: 'notName' }),
+    ];
     const decorated = defaultDecorateStory((c) => contexts.push(c), decorators);
 
     expect(contexts).toEqual([]);
     decorated(makeContext({ parameters: { a: 'b' } }));
     expect(contexts).toEqual([
-      expect.objectContaining({ parameters: { a: 'b' } }),
-      expect.objectContaining({ parameters: { a: 'b' } }),
+      expect.objectContaining({ parameters: { a: 'b' }, id: 'id', kind: 'kind', name: 'name' }),
+      expect.objectContaining({ parameters: { a: 'b' }, id: 'id', kind: 'kind', name: 'name' }),
     ]);
   });
 });
