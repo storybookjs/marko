@@ -255,7 +255,7 @@ const projectTypeInquirer = async (options: { yes?: boolean }) => {
   if (manualAnswer !== true && manualAnswer.manual) {
     const frameworkAnswer = await prompts([
       {
-        type: 'list',
+        type: 'select',
         name: 'manualFramework',
         message: 'Please choose a project type from the following list:',
         choices: installableProjectTypes.map((type) => ({
