@@ -1,19 +1,32 @@
+## 6.2.0-alpha.10 (December 28, 2020)
+
+### Bug Fixes
+
+- Typescript: Fix qs import in @storybook/client-api ([#13518](https://github.com/storybookjs/storybook/pull/13518))
+- CLI: Ensure --host option changes the network host ([#13521](https://github.com/storybookjs/storybook/pull/13521))
+
+### Maintenance
+
+- Perf: Reuse SVG icon paths by using symbols ([#13110](https://github.com/storybookjs/storybook/pull/13110))
+- Core: Fix typing of dev CLI options ([#13501](https://github.com/storybookjs/storybook/pull/13501))
+- Perf: Bundle only required syntax highlighter languages ([#13479](https://github.com/storybookjs/storybook/pull/13479))
+
 ## 6.2.0-alpha.9 (December 20, 2020)
 
 ### Features
 
-* Web-components: Add typescript types and CLI template ([#12395](https://github.com/storybookjs/storybook/pull/12395))
+- Web-components: Add typescript types and CLI template ([#12395](https://github.com/storybookjs/storybook/pull/12395))
 
 ### Bug Fixes
 
-* Addon-docs: Fix angular without compodoc ([#13487](https://github.com/storybookjs/storybook/pull/13487))
-* Core: Use fs-extra emptyDir so build works on docker volume ([#13474](https://github.com/storybookjs/storybook/pull/13474))
-* Addon-docs: Tighten preset webpack pattern for mdx stories ([#13476](https://github.com/storybookjs/storybook/pull/13476))
-* Svelte: Statically load docgen info for svelte components ([#13466](https://github.com/storybookjs/storybook/pull/13466))
+- Addon-docs: Fix angular without compodoc ([#13487](https://github.com/storybookjs/storybook/pull/13487))
+- Core: Use fs-extra emptyDir so build works on docker volume ([#13474](https://github.com/storybookjs/storybook/pull/13474))
+- Addon-docs: Tighten preset webpack pattern for mdx stories ([#13476](https://github.com/storybookjs/storybook/pull/13476))
+- Svelte: Statically load docgen info for svelte components ([#13466](https://github.com/storybookjs/storybook/pull/13466))
 
 ### Dependency Upgrades
 
-* Bump @ember/optional-features from 1.3.0 to 2.0.0 ([#12829](https://github.com/storybookjs/storybook/pull/12829))
+- Bump @ember/optional-features from 1.3.0 to 2.0.0 ([#12829](https://github.com/storybookjs/storybook/pull/12829))
 
 ## 6.2.0-alpha.8 (December 16, 2020)
 
