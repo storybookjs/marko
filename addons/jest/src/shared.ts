@@ -8,7 +8,7 @@ export const PANEL_ID = `${ADDON_ID}/panel`;
 export const ADD_TESTS = `${ADDON_ID}/add_tests`;
 
 interface AddonParameters extends Parameters {
-  jest?: string | string[] | { disable: true } | null;
+  jest?: string | string[] | { disabled: true };
 }
 
 export function defineJestParameters(parameters: AddonParameters): string[] | null {
