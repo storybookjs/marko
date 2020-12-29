@@ -14,8 +14,6 @@ interface AddonParameters extends Parameters {
 export function defineJestParameters(parameters: AddonParameters): string[] | null {
   const { jest, fileName: filePath } = parameters;
 
-  console.log(jest);
-
   if (typeof jest === 'string') {
     return [jest];
   }
