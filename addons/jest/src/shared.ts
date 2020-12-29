@@ -22,7 +22,7 @@ export function defineJestParameter(parameters: AddonParameters): string[] | nul
     return jest;
   }
 
-  if (jest === undefined) {
+  if (jest === undefined && filePath) {
     const fileName = filePath.split('/').pop().split('.')[0];
     return [fileName];
   }
