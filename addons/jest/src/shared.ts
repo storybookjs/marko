@@ -11,7 +11,7 @@ interface AddonParameters extends Parameters {
   jest?: string | string[] | { disabled: true };
 }
 
-export function defineJestParameters(parameters: AddonParameters): string[] | null {
+export function defineJestParameter(parameters: AddonParameters): string[] | null {
   const { jest, fileName: filePath } = parameters;
 
   if (typeof jest === 'string') {

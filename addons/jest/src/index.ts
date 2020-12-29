@@ -1,6 +1,6 @@
 import addons from '@storybook/addons';
 import { normalize, sep } from 'upath';
-import { ADD_TESTS, defineJestParameters } from './shared';
+import { ADD_TESTS, defineJestParameter } from './shared';
 
 const findTestResults = (
   testFiles: string[],
@@ -51,7 +51,7 @@ export const withTests = (userOptions: { results: any; filesExt?: string }) => {
 
   return (...args: any[]) => {
     const [storyFn, { kind, parameters = {} }] = args;
-    const testFiles = defineJestParameters(parameters);
+    const testFiles = defineJestParameter(parameters);
 
     if (testFiles !== null) {
       emitAddTests({ kind, story: storyFn, testFiles, options });
