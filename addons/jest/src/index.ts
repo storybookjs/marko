@@ -1,10 +1,6 @@
-import addons, { Parameters } from '@storybook/addons';
+import addons from '@storybook/addons';
 import { normalize, sep } from 'upath';
-import { ADD_TESTS } from './shared';
-
-interface AddonParameters extends Parameters {
-  jest?: string | string[] | { disable: true };
-}
+import { ADD_TESTS, defineJestParameters } from './shared';
 
 const findTestResults = (
   testFiles: string[],
@@ -55,18 +51,10 @@ export const withTests = (userOptions: { results: any; filesExt?: string }) => {
 
   return (...args: any[]) => {
     const [storyFn, { kind, parameters = {} }] = args;
-    let { jest: testFiles } = parameters;
+    const testFiles = defineJestParameters(parameters);
 
-    if (typeof testFiles === 'string') {
-      testFiles = [testFiles];
-    }
-
-    if (testFiles && Array.isArray(testFiles)) {
+    if (testFiles !== null) {
       emitAddTests({ kind, story: storyFn, testFiles, options });
-    } else if (testFiles === undefined) {
-      const { fileName: filePath } = parameters;
-      const fileName = filePath.split('/').pop().split('.')[0];
-      emitAddTests({ kind, story: storyFn, testFiles: [fileName], options });
     }
 
     return storyFn();
