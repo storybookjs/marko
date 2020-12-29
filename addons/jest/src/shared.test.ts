@@ -19,6 +19,10 @@ describe('defineJestParameter', () => {
   });
 
   test('returns null if disabled option is passed to jest parameter', () => {
-    expect(defineJestParameter({ jest: { disabled: true } })).toEqual(null);
+    expect(defineJestParameter({ jest: { disabled: true } })).toBeNull();
+  });
+
+  test('returns null if no filename to infer from', () => {
+    expect(defineJestParameter({})).toBeNull();
   });
 });
