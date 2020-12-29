@@ -57,12 +57,20 @@ export const withTests = (userOptions: { results: any; filesExt?: string }) => {
     const [storyFn, { kind, parameters = {} }] = args;
     let { jest: testFiles } = parameters;
 
+    if (Object.prototype.hasOwnProperty.call(testFiles, 'disabled') && testFiles.disabled) {
+      return storyFn();
+    }
+
     if (typeof testFiles === 'string') {
       testFiles = [testFiles];
     }
 
     if (testFiles && Array.isArray(testFiles)) {
       emitAddTests({ kind, story: storyFn, testFiles, options });
+    } else {
+      const { fileName: filePath } = parameters;
+      const fileName = filePath.split('/').pop().split('.')[0];
+      emitAddTests({ kind, story: storyFn, testFiles: [fileName], options });
     }
 
     return storyFn();
