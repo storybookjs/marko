@@ -1,5 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Storyshots Core / Decorators Angular Legacy Rendering 1`] = `
+<storybook-wrapper>
+  Grandparent<br /><div
+    style="margin: 3em; border:solid;"
+  >
+    Custom Decorator 
+    <div
+      style="margin: 3em"
+    >
+      Child Template
+    </div>
+  </div>
+</storybook-wrapper>
+`;
+
 exports[`Storyshots Core / Decorators With Component 1`] = `
 <storybook-wrapper>
   Grandparent<br /><div
@@ -20,45 +35,6 @@ exports[`Storyshots Core / Decorators With Component 1`] = `
        Private text: Child private text 
       <br />
     </child-component>
-  </div>
-</storybook-wrapper>
-`;
-
-exports[`Storyshots Core / Decorators With Component Decorator 1`] = `
-<storybook-wrapper>
-  Grandparent<br /><div
-    style="margin: 3em; border:solid;"
-  >
-    <parent-component>
-       Parent
-      <br />
-       Input text:  
-      <br />
-       Output : 
-      <button>
-        Click here !
-      </button>
-      <br />
-      <div
-        style="margin: 3em; border:solid;"
-      >
-        <child-component
-          ng-reflect-child-text="Child text"
-        >
-           Child
-          <br />
-           Input text: Child text 
-          <br />
-           Output : 
-          <button>
-            Click here !
-          </button>
-          <br />
-           Private text: Child private text 
-          <br />
-        </child-component>
-      </div>
-    </parent-component>
   </div>
 </storybook-wrapper>
 `;
@@ -98,6 +74,21 @@ exports[`Storyshots Core / Decorators With Component Wrapper Decorator 1`] = `
         </child-component>
       </div>
     </parent-component>
+  </div>
+</storybook-wrapper>
+`;
+
+exports[`Storyshots Core / Decorators With Custom Decorator 1`] = `
+<storybook-wrapper>
+  Grandparent<br /><div
+    style="margin: 3em; border:solid;"
+  >
+    Custom Decorator 
+    <div
+      style="margin: 3em"
+    >
+      Child Template
+    </div>
   </div>
 </storybook-wrapper>
 `;

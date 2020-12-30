@@ -45,3 +45,38 @@ WithComponentWrapperDecorator.decorators = [
   moduleMetadata({ declarations: [ParentComponent] }),
   componentWrapperDecorator(ParentComponent),
 ];
+
+export const WithCustomDecorator = (args) => ({
+  template: `Child Template`,
+  props: {
+    ...args,
+  },
+});
+WithCustomDecorator.decorators = [
+  (storyFunc) => {
+    const story = storyFunc();
+
+    return {
+      ...story,
+      template: `Custom Decorator <div style="margin: 3em">${story.template}</div>`,
+    };
+  },
+];
+
+export const AngularLegacyRendering = (args) => ({
+  template: `Child Template`,
+  props: {
+    ...args,
+  },
+});
+AngularLegacyRendering.parameters = { angularLegacyRendering: true };
+AngularLegacyRendering.decorators = [
+  (storyFunc) => {
+    const story = storyFunc();
+
+    return {
+      ...story,
+      template: `Custom Decorator <div style="margin: 3em">${story.template}</div>`,
+    };
+  },
+];
