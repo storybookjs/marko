@@ -31,13 +31,6 @@ export class RendererService {
   private storyProps$: Subject<ICollection | undefined>;
 
   constructor() {
-    // Adds DOM element that angular will use as bootstrap component
-    const storybookWrapperElement = document.createElement(
-      RendererService.SELECTOR_STORYBOOK_WRAPPER
-    );
-    this.staticRoot.innerHTML = '';
-    this.staticRoot.appendChild(storybookWrapperElement);
-
     if (typeof NODE_ENV === 'string' && NODE_ENV !== 'development') {
       try {
         enableProdMode();
@@ -79,10 +72,20 @@ export class RendererService {
     }
     this.storyProps$ = new BehaviorSubject<ICollection>(storyFnAngular.props);
 
+    this.initAngularBootstrapElement();
     await this.platform.bootstrapModule(
       createStorybookModule(
         getStorybookModuleMetadata({ storyFnAngular, parameters }, this.storyProps$)
       )
     );
+  }
+
+  initAngularBootstrapElement() {
+    // Adds DOM element that angular will use as bootstrap component
+    const storybookWrapperElement = document.createElement(
+      RendererService.SELECTOR_STORYBOOK_WRAPPER
+    );
+    this.staticRoot.innerHTML = '';
+    this.staticRoot.appendChild(storybookWrapperElement);
   }
 }
