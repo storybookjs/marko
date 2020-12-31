@@ -21,10 +21,10 @@ function fileReaderPromise(file: File) {
   });
 }
 
-const serialize = (): undefined => undefined;
-const deserialize = (): undefined => undefined;
+// const serialize = (): undefined => undefined;
+// const deserialize = (): undefined => undefined;
 
-const FilesControl: FunctionComponent<FilesControlProps> = ({ onChange, name, accept }) => (
+export const FilesControl: FunctionComponent<FilesControlProps> = ({ onChange, name, accept }) => (
   <FileInput
     type="file"
     name={name}
@@ -42,5 +42,3 @@ const FilesControl: FunctionComponent<FilesControlProps> = ({ onChange, name, ac
 FilesControl.defaultProps = {
   onChange: (value) => value,
 };
-
-export default FilesControl;
