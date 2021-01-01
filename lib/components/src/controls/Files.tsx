@@ -6,7 +6,7 @@ import { ControlProps } from './types';
 import { Form } from '../form';
 
 export interface FilesControlProps extends ControlProps<string[]> {
-  accept: string;
+  accept?: string;
 }
 
 const FileInput = styled(Form.Input)({
@@ -21,7 +21,11 @@ function fileReaderPromise(file: File) {
   });
 }
 
-export const FilesControl: FunctionComponent<FilesControlProps> = ({ onChange, name, accept }) => (
+export const FilesControl: FunctionComponent<FilesControlProps> = ({
+  onChange,
+  name,
+  accept = 'image/*',
+}) => (
   <FileInput
     type="file"
     name={name}

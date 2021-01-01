@@ -27,9 +27,9 @@ Action.args = {
   somethingElse: { a: 4 },
 };
 
-export const ImageFileControl = (args) => <img src={args.imageSrc} alt="file control" />;
+export const ImageFileControl = (args) => <img src={args.imageSrc[0]} alt="file control" />;
 ImageFileControl.args = {
-  imageSrc: 'http://placehold.it/350x150',
+  imageSrc: ['http://placehold.it/350x150'],
 };
 
 export const CustomControls = Template.bind({});
@@ -40,13 +40,13 @@ CustomControls.argTypes = {
 
 export const NoArgs = () => <Button>no args</Button>;
 
-const hasCycle: any = {};
-hasCycle.cycle = hasCycle;
+// const hasCycle: any = {};
+// hasCycle.cycle = hasCycle;
 
-export const CyclicArgs = Template.bind({});
-CyclicArgs.args = {
-  hasCycle,
-};
-CyclicArgs.parameters = {
-  chromatic: { disable: true },
-};
+// export const CyclicArgs = Template.bind({});
+// CyclicArgs.args = {
+//   hasCycle,
+// };
+// CyclicArgs.parameters = {
+//   chromatic: { disable: true },
+// };
