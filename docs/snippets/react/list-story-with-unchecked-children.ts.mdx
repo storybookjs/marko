@@ -5,7 +5,7 @@ import React from 'react';
 import { List } from './List';
 import { Unchecked } from './ListItem.stories';
 
-const Template = (args) => <List {...args} />;
+const Template: Story<ListProps> = (args) => <List {...args} />;
 
 export const OneItem = Template.bind({});
 OneItem.args = {
