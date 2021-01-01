@@ -21,9 +21,6 @@ function fileReaderPromise(file: File) {
   });
 }
 
-// const serialize = (): undefined => undefined;
-// const deserialize = (): undefined => undefined;
-
 export const FilesControl: FunctionComponent<FilesControlProps> = ({ onChange, name, accept }) => (
   <FileInput
     type="file"
@@ -31,14 +28,13 @@ export const FilesControl: FunctionComponent<FilesControlProps> = ({ onChange, n
     multiple
     onChange={(e: ChangeEvent<HTMLInputElement>) => {
       if (e.target.files) {
-        Promise.all(Array.from(e.target.files).map(fileReaderPromise)).then(onChange);
+        Promise.all(Array.from(e.target.files).map(fileReaderPromise)).then((result) => {
+          console.log('READ FILE RESULT', result);
+          onChange(result);
+        });
       }
     }}
     accept={accept}
     size="flex"
   />
 );
-
-FilesControl.defaultProps = {
-  onChange: (value) => value,
-};
