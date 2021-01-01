@@ -10,7 +10,7 @@ export interface FilesControlProps extends ControlProps<string[]> {
 }
 
 const FileInput = styled(Form.Input)({
-  paddingTop: 4,
+  paddingTop: 12,
 });
 
 function fileReaderPromise(file: File) {
