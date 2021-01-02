@@ -8,7 +8,7 @@ export default {
     children: { control: 'text', name: 'Children' },
     type: { control: 'text', name: 'Type' },
     somethingElse: { control: 'object', name: 'Something Else' },
-    imageUrls: { control: { type: 'file', accept: '.doc' }, name: 'Image Urls' },
+    imageUrls: { control: { type: 'file', accept: '.png' }, name: 'Image Urls' },
   },
 };
 
