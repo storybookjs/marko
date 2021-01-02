@@ -8,7 +8,7 @@ export default {
     children: { control: 'text', name: 'Children' },
     type: { control: 'text', name: 'Type' },
     somethingElse: { control: 'object', name: 'Something Else' },
-    imageUrls: { control: 'file', name: 'Image Urls' },
+    imageUrls: { control: { type: 'file', accept: '.doc' }, name: 'Image Urls' },
   },
 };
 
@@ -27,7 +27,7 @@ Action.args = {
   somethingElse: { a: 4 },
 };
 
-export const ImageFileControl = (args) => <img src={args.imageSrc[0]} alt="Your Example Story" />;
+export const ImageFileControl = (args) => <img src={args.imageUrls[0]} alt="Your Example Story" />;
 ImageFileControl.args = {
   imageUrls: ['http://placehold.it/350x150'],
 };
