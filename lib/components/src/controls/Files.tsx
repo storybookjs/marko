@@ -1,4 +1,3 @@
-import { FileReader } from 'global';
 import React, { ChangeEvent, FunctionComponent } from 'react';
 import { styled } from '@storybook/theming';
 import { ControlProps } from './types';
