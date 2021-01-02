@@ -10,7 +10,7 @@ export interface FilesControlProps extends ControlProps<string[]> {
 }
 
 const FileInput = styled(Form.Input)({
-  paddingTop: 12,
+  padding: 10,
 });
 
 function revokeOldUrls(urls: string[]) {
