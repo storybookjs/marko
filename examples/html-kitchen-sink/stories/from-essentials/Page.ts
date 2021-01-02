@@ -1,3 +1,5 @@
+import { document } from 'global';
+
 import './page.css';
 import { createHeader } from './Header';
 

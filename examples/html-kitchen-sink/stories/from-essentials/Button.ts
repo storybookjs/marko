@@ -1,3 +1,5 @@
+import { document } from 'global';
+
 import './button.css';
 
 export interface ButtonProps {

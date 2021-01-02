@@ -1,3 +1,5 @@
+import { document } from 'global';
+
 import './header.css';
 import { createButton } from './Button';
 
