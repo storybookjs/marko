@@ -13,11 +13,11 @@ const FileInput = styled(Form.Input)({
   paddingTop: 12,
 });
 
-function fileReaderPromise(file: File) {
-  return new Promise<string>((resolve) => {
-    const fileReader = new FileReader();
-    fileReader.onload = (e: Event) => resolve((e.currentTarget as FileReader).result as string);
-    fileReader.readAsDataURL(file);
+function revokeOldUrls(urls: string[]) {
+  urls.forEach((url) => {
+    if (url.startsWith('blob:')) {
+      URL.revokeObjectURL(url);
+    }
   });
 }
 
@@ -25,20 +25,25 @@ export const FilesControl: FunctionComponent<FilesControlProps> = ({
   onChange,
   name,
   accept = 'image/*',
-}) => (
-  <FileInput
-    type="file"
-    name={name}
-    multiple
-    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files) {
-        Promise.all(Array.from(e.target.files).map(fileReaderPromise)).then((result) => {
-          console.log('READ FILE RESULT', result);
-          onChange(result);
-        });
-      }
-    }}
-    accept={accept}
-    size="flex"
-  />
-);
+  value,
+}) => {
+  function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
+    if (!e.target.files) {
+      return;
+    }
+    const fileUrls = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
+    onChange(fileUrls);
+    revokeOldUrls(value);
+  }
+
+  return (
+    <FileInput
+      type="file"
+      name={name}
+      multiple
+      onChange={handleFileChange}
+      accept={accept}
+      size="flex"
+    />
+  );
+};
