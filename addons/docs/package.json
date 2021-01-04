@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-docs",
-  "version": "6.2.0-alpha.9",
+  "version": "6.2.0-alpha.10",
   "description": "Document component usage and properties in Markdown",
   "keywords": [
     "addon",
@@ -55,18 +55,18 @@
     "@mdx-js/loader": "^1.6.19",
     "@mdx-js/mdx": "^1.6.19",
     "@mdx-js/react": "^1.6.19",
-    "@storybook/addons": "6.2.0-alpha.9",
-    "@storybook/api": "6.2.0-alpha.9",
-    "@storybook/client-api": "6.2.0-alpha.9",
-    "@storybook/client-logger": "6.2.0-alpha.9",
-    "@storybook/components": "6.2.0-alpha.9",
-    "@storybook/core": "6.2.0-alpha.9",
-    "@storybook/core-events": "6.2.0-alpha.9",
+    "@storybook/addons": "6.2.0-alpha.10",
+    "@storybook/api": "6.2.0-alpha.10",
+    "@storybook/client-api": "6.2.0-alpha.10",
+    "@storybook/client-logger": "6.2.0-alpha.10",
+    "@storybook/components": "6.2.0-alpha.10",
+    "@storybook/core": "6.2.0-alpha.10",
+    "@storybook/core-events": "6.2.0-alpha.10",
     "@storybook/csf": "0.0.1",
-    "@storybook/node-logger": "6.2.0-alpha.9",
-    "@storybook/postinstall": "6.2.0-alpha.9",
-    "@storybook/source-loader": "6.2.0-alpha.9",
-    "@storybook/theming": "6.2.0-alpha.9",
+    "@storybook/node-logger": "6.2.0-alpha.10",
+    "@storybook/postinstall": "6.2.0-alpha.10",
+    "@storybook/source-loader": "6.2.0-alpha.10",
+    "@storybook/theming": "6.2.0-alpha.10",
     "acorn": "^7.1.0",
     "acorn-jsx": "^5.1.0",
     "acorn-walk": "^7.0.0",
@@ -92,9 +92,9 @@
     "@babel/core": "^7.12.3",
     "@emotion/core": "^10.1.1",
     "@emotion/styled": "^10.0.23",
-    "@storybook/react": "6.2.0-alpha.9",
-    "@storybook/vue": "6.2.0-alpha.9",
-    "@storybook/web-components": "6.2.0-alpha.9",
+    "@storybook/react": "6.2.0-alpha.10",
+    "@storybook/vue": "6.2.0-alpha.10",
+    "@storybook/web-components": "6.2.0-alpha.10",
     "@types/cross-spawn": "^6.0.1",
     "@types/doctrine": "^0.0.3",
     "@types/enzyme": "^3.10.3",
@@ -123,7 +123,7 @@
   },
   "peerDependencies": {
     "@babel/core": "^7.11.5",
-    "@storybook/vue": "6.2.0-alpha.9",
+    "@storybook/vue": "6.2.0-alpha.10",
     "babel-loader": "^8.0.0",
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0",
@@ -154,5 +154,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "47341be6aa61d4fb38f2c0e058af32f1acb8e0a7"
+  "gitHead": "bd7f2bbed53a0bde622977b2ed6e1addb67d5018"
 }

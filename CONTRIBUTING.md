@@ -79,25 +79,7 @@ yarn test --image
 
 Puppeteer is used to launch and grab screenshots of example pages, while jest is used to assert matching images. (just like integration tests)
 
-#### 2b. Run e2e tests for CLI
-
-If you made any changes to the `lib/cli` package, the easiest way to verify that it doesn't break anything is to run e2e tests:
-
-```sh
-yarn test --cli
-```
-
-This will run a bash script located at `lib/cli/test/run_tests.sh`. It will copy the contents of `fixtures` into a temporary `run` directory, run `getstorybook` in each of the subdirectories, and check that storybook starts successfully using `yarn storybook --smoke-test`.
-
-After that, the `run` directory content will be compared with `snapshots`. You can update the snapshots by passing an `--update` flag:
-
-```sh
-yarn test --cli --update
-```
-
-In that case, please check the git diff before committing to make sure it only contains the intended changes.
-
-#### 2c. Run Linter
+#### 2b. Run Linter
 
 We use eslint as a linter for all code (including typescript code).
 
@@ -126,7 +108,7 @@ It can be immensely helpful to get feedback in your editor, if you're using VsCo
 
 This should enable auto-fix for all source files, and give linting warnings and errors within your editor.
 
-### 2d. Run Cypress tests
+### 2c. Run Cypress tests
 
 First make sure the repo is bootstrapped.
 
