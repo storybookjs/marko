@@ -112,6 +112,7 @@ function genStoryExport(ast, context) {
   }
 
   if (storyAttr) {
+    // NOTE: Maybe we should merge parameters for imported story
     return genImportStory(ast, storyAttr, storyName, context);
   }
 
