@@ -1,6 +1,6 @@
 {
   "name": "@storybook/web-components",
-  "version": "6.1.0-rc.3",
+  "version": "6.2.0-alpha.10",
   "description": "Storybook for web-components: View web components snippets in isolation with Hot Reloading.",
   "keywords": [
     "lit-html",
@@ -17,8 +17,16 @@
     "directory": "app/web-components"
   },
   "license": "MIT",
-  "main": "dist/client/index.js",
-  "types": "dist/client/index.d.ts",
+  "main": "dist/cjs/client/index.js",
+  "module": "dist/esm/client/index.js",
+  "types": "dist/ts3.9/client/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "dist/ts3.4/*"
+      ]
+    }
+  },
   "bin": {
     "build-storybook": "./bin/build.js",
     "start-storybook": "./bin/index.js",
@@ -29,8 +37,7 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
@@ -39,15 +46,16 @@
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/plugin-syntax-import-meta": "^7.10.4",
     "@babel/preset-env": "^7.12.1",
-    "@storybook/addons": "6.1.0-rc.3",
-    "@storybook/client-api": "6.1.0-rc.3",
-    "@storybook/core": "6.1.0-rc.3",
+    "@storybook/addons": "6.2.0-alpha.10",
+    "@storybook/client-api": "6.2.0-alpha.10",
+    "@storybook/core": "6.2.0-alpha.10",
     "@types/webpack-env": "^1.15.3",
     "babel-plugin-bundled-import-meta": "^0.3.1",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "read-pkg-up": "^7.0.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
@@ -65,12 +73,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c8cd3cc9e6b21ca651e4e3d8f39123f38a28be5c",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "bd7f2bbed53a0bde622977b2ed6e1addb67d5018"
 }

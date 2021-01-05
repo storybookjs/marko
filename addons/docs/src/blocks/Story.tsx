@@ -1,7 +1,6 @@
 import React, { FunctionComponent, ReactNode, ElementType, ComponentProps } from 'react';
 import { MDXProvider } from '@mdx-js/react';
-import { resetComponents } from '@storybook/components/html';
-import { Story as PureStory } from '@storybook/components';
+import { resetComponents, Story as PureStory } from '@storybook/components';
 import { toId, storyNameFromExport } from '@storybook/csf';
 import { CURRENT_SELECTION } from './types';
 

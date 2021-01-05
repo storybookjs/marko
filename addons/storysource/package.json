@@ -1,7 +1,7 @@
 {
   "name": "@storybook/addon-storysource",
-  "version": "6.1.0-rc.3",
-  "description": "Stories addon for storybook",
+  "version": "6.2.0-alpha.10",
+  "description": "View a story’s source code to see how it works and paste into your app",
   "keywords": [
     "addon",
     "storybook"
@@ -16,26 +16,33 @@
     "directory": "addons/storysource"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/ts3.9/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "dist/ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-rc.3",
-    "@storybook/api": "6.1.0-rc.3",
-    "@storybook/client-logger": "6.1.0-rc.3",
-    "@storybook/components": "6.1.0-rc.3",
-    "@storybook/router": "6.1.0-rc.3",
-    "@storybook/source-loader": "6.1.0-rc.3",
-    "@storybook/theming": "6.1.0-rc.3",
+    "@storybook/addons": "6.2.0-alpha.10",
+    "@storybook/api": "6.2.0-alpha.10",
+    "@storybook/client-logger": "6.2.0-alpha.10",
+    "@storybook/components": "6.2.0-alpha.10",
+    "@storybook/router": "6.2.0-alpha.10",
+    "@storybook/source-loader": "6.2.0-alpha.10",
+    "@storybook/theming": "6.2.0-alpha.10",
     "core-js": "^3.0.1",
     "estraverse": "^4.2.0",
     "loader-utils": "^2.0.0",
@@ -63,12 +70,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c8cd3cc9e6b21ca651e4e3d8f39123f38a28be5c",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "bd7f2bbed53a0bde622977b2ed6e1addb67d5018"
 }

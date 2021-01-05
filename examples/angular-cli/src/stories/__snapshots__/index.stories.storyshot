@@ -1,178 +1,169 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Button with some emoji 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
->
-  <ng-component>
-    <storybook-button-component
-      _nghost-a-c3=""
-      ng-reflect-text="😀 😎 👍 💯"
+<storybook-wrapper>
+  <storybook-button-component
+    _nghost-a-c3=""
+    ng-reflect-text="😀 😎 👍 💯"
+  >
+    <button
+      _ngcontent-a-c3=""
     >
-      <button
-        _ngcontent-a-c3=""
-      >
-        😀 😎 👍 💯
-      </button>
-    </storybook-button-component>
-  </ng-component>
-</storybook-dynamic-app-root>
+      😀 😎 👍 💯
+    </button>
+  </storybook-button-component><storybook-button-component
+    _nghost-a-c3=""
+    ng-reflect-text="😀 😎 👍 💯"
+  >
+    <button
+      _ngcontent-a-c3=""
+    >
+      😀 😎 👍 💯
+    </button>
+  </storybook-button-component>
+</storybook-wrapper>
 `;
 
 exports[`Storyshots Button with text 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
->
-  <ng-component>
-    <storybook-button-component
-      _nghost-a-c2=""
-      ng-reflect-text="Hello Button"
+<storybook-wrapper>
+  <storybook-button-component
+    _nghost-a-c2=""
+    ng-reflect-text="Hello Button"
+  >
+    <button
+      _ngcontent-a-c2=""
     >
-      <button
-        _ngcontent-a-c2=""
-      >
-        Hello Button
-      </button>
-    </storybook-button-component>
-  </ng-component>
-</storybook-dynamic-app-root>
+      Hello Button
+    </button>
+  </storybook-button-component>
+</storybook-wrapper>
 `;
 
 exports[`Storyshots Welcome to Storybook 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
->
-  <ng-component>
-    <storybook-welcome-component
-      _nghost-a-c1=""
+<storybook-wrapper>
+  <storybook-welcome-component
+    _nghost-a-c1=""
+  >
+    <main
+      _ngcontent-a-c1=""
     >
-      <main
+      <h1
         _ngcontent-a-c1=""
       >
-        <h1
+        Welcome to storybook
+      </h1>
+      <p
+        _ngcontent-a-c1=""
+      >
+        This is a UI component dev environment for your app.
+      </p>
+      <p
+        _ngcontent-a-c1=""
+      >
+         We've added some basic stories inside the 
+        <span
+          _ngcontent-a-c1=""
+          class="inline-code"
+        >
+          src/stories
+        </span>
+         directory. 
+        <br
+          _ngcontent-a-c1=""
+        />
+         A story is a single state of one or more UI components. You can have as many stories as you want. 
+        <br
+          _ngcontent-a-c1=""
+        />
+         (Basically a story is like a visual test case.) 
+      </p>
+      <p
+        _ngcontent-a-c1=""
+      >
+         See these sample 
+        <a
+          _ngcontent-a-c1=""
+          role="button"
+          tabindex="0"
+        >
+          stories
+        </a>
+         for a component called 
+        <span
+          _ngcontent-a-c1=""
+          class="inline-code"
+        >
+          Button
+        </span>
+         . 
+      </p>
+      <p
+        _ngcontent-a-c1=""
+      >
+         Just like that, you can add your own components as stories. 
+        <br
+          _ngcontent-a-c1=""
+        />
+         You can also edit those components and see changes right away. 
+        <br
+          _ngcontent-a-c1=""
+        />
+         (Try editing the 
+        <span
+          _ngcontent-a-c1=""
+          class="inline-code"
+        >
+          Button
+        </span>
+         stories located at 
+        <span
+          _ngcontent-a-c1=""
+          class="inline-code"
+        >
+          src/stories/index.js
+        </span>
+        .) 
+      </p>
+      <p
+        _ngcontent-a-c1=""
+      >
+         Usually we create stories with smaller UI components in the app.
+        <br
+          _ngcontent-a-c1=""
+        />
+         Have a look at the 
+        <a
+          _ngcontent-a-c1=""
+          href="https://storybook.js.org/basics/writing-stories"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+           Writing Stories 
+        </a>
+         section in our documentation. 
+      </p>
+      <p
+        _ngcontent-a-c1=""
+        class="note"
+      >
+        <b
           _ngcontent-a-c1=""
         >
-          Welcome to storybook
-        </h1>
-        <p
+          NOTE:
+        </b>
+        <br
           _ngcontent-a-c1=""
-        >
-          This is a UI component dev environment for your app.
-        </p>
-        <p
+        />
+         Have a look at the 
+        <span
           _ngcontent-a-c1=""
+          class="inline-code"
         >
-           We've added some basic stories inside the 
-          <span
-            _ngcontent-a-c1=""
-            class="inline-code"
-          >
-            src/stories
-          </span>
-           directory. 
-          <br
-            _ngcontent-a-c1=""
-          />
-           A story is a single state of one or more UI components. You can have as many stories as you want. 
-          <br
-            _ngcontent-a-c1=""
-          />
-           (Basically a story is like a visual test case.) 
-        </p>
-        <p
-          _ngcontent-a-c1=""
-        >
-           See these sample 
-          <a
-            _ngcontent-a-c1=""
-            role="button"
-            tabindex="0"
-          >
-            stories
-          </a>
-           for a component called 
-          <span
-            _ngcontent-a-c1=""
-            class="inline-code"
-          >
-            Button
-          </span>
-           . 
-        </p>
-        <p
-          _ngcontent-a-c1=""
-        >
-           Just like that, you can add your own components as stories. 
-          <br
-            _ngcontent-a-c1=""
-          />
-           You can also edit those components and see changes right away. 
-          <br
-            _ngcontent-a-c1=""
-          />
-           (Try editing the 
-          <span
-            _ngcontent-a-c1=""
-            class="inline-code"
-          >
-            Button
-          </span>
-           stories located at 
-          <span
-            _ngcontent-a-c1=""
-            class="inline-code"
-          >
-            src/stories/index.js
-          </span>
-          .) 
-        </p>
-        <p
-          _ngcontent-a-c1=""
-        >
-           Usually we create stories with smaller UI components in the app.
-          <br
-            _ngcontent-a-c1=""
-          />
-           Have a look at the 
-          <a
-            _ngcontent-a-c1=""
-            href="https://storybook.js.org/basics/writing-stories"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-             Writing Stories 
-          </a>
-           section in our documentation. 
-        </p>
-        <p
-          _ngcontent-a-c1=""
-          class="note"
-        >
-          <b
-            _ngcontent-a-c1=""
-          >
-            NOTE:
-          </b>
-          <br
-            _ngcontent-a-c1=""
-          />
-           Have a look at the 
-          <span
-            _ngcontent-a-c1=""
-            class="inline-code"
-          >
-            .storybook/webpack.config.js
-          </span>
-           to add webpack loaders and plugins you are using in this project. 
-        </p>
-      </main>
-    </storybook-welcome-component>
-  </ng-component>
-</storybook-dynamic-app-root>
+          .storybook/webpack.config.js
+        </span>
+         to add webpack loaders and plugins you are using in this project. 
+      </p>
+    </main>
+  </storybook-welcome-component>
+</storybook-wrapper>
 `;

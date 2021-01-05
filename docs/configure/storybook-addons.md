@@ -14,7 +14,7 @@ The most obvious thing addons affect in Storybook is the UI of Storybook itself.
 
 Addons can also hook into the rendering of your story in the preview pane via injecting their own [decorators](../writing-stories/decorators.md).
 
-Finally, addons can affect the build setup of Storybook by injecting their own webpack configuration to allow the use of other tools in Storybook. Addons that do only this are often referred to as [presets](../api/presets.md).
+Finally, addons can affect the build setup of Storybook by injecting their own webpack configuration to allow the use of other tools in Storybook. Addons that do only this are often referred to as [presets](../addons/addon-types.md).
 
 ## Essential, core and community addons
 

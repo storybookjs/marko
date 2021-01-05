@@ -1,6 +1,6 @@
 {
   "name": "@storybook/rax",
-  "version": "6.1.0-rc.3",
+  "version": "6.2.0-alpha.10",
   "description": "Storybook for Rax: Develop Rax Component in isolation.",
   "keywords": [
     "rax",
@@ -16,7 +16,16 @@
     "directory": "app/rax"
   },
   "license": "MIT",
-  "main": "dist/client/index.js",
+  "main": "dist/cjs/client/index.js",
+  "module": "dist/esm/client/index.js",
+  "types": "dist/ts3.9/client/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "dist/ts3.4/*"
+      ]
+    }
+  },
   "bin": {
     "build-storybook": "./bin/build.js",
     "start-storybook": "./bin/index.js",
@@ -27,20 +36,20 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/core": "6.1.0-rc.3",
+    "@storybook/core": "6.2.0-alpha.10",
     "babel-preset-rax": "^1.0.0-beta.0",
     "core-js": "^3.0.1",
     "driver-dom": "^2.0.0",
     "global": "^4.3.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "read-pkg-up": "^7.0.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
@@ -54,12 +63,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c8cd3cc9e6b21ca651e4e3d8f39123f38a28be5c",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "bd7f2bbed53a0bde622977b2ed6e1addb67d5018"
 }

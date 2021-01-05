@@ -8,7 +8,6 @@ export default {
 } as Meta;
 
 const Template: Story = (args) => ({
-  component: Button,
   props: args,
 });
 

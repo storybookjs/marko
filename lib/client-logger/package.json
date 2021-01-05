@@ -1,6 +1,6 @@
 {
   "name": "@storybook/client-logger",
-  "version": "6.1.0-rc.3",
+  "version": "6.2.0-alpha.10",
   "description": "",
   "keywords": [
     "storybook"
@@ -15,14 +15,22 @@
     "directory": "lib/client-logger"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "sideEffects": false,
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/ts3.9/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "dist/ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
@@ -34,12 +42,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c8cd3cc9e6b21ca651e4e3d8f39123f38a28be5c",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "bd7f2bbed53a0bde622977b2ed6e1addb67d5018"
 }

@@ -1,1 +1,1 @@
-module.exports = require('../dist/frameworks/ember');
+module.exports = require('../dist/esm/frameworks/ember');

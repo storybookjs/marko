@@ -1,36 +1,14 @@
-import React, { Fragment, FunctionComponent } from 'react';
-import { styled, Global } from '@storybook/theming';
+import React, { FunctionComponent, Suspense } from 'react';
+import { styled } from '@storybook/theming';
 
-import { OverlayScrollbarsComponent } from './OverlayScrollbarsComponent';
-import { getScrollAreaStyles } from './ScrollAreaStyles';
+const GlobalScrollAreaStyles = React.lazy(() => import('./GlobalScrollAreaStyles'));
+const OverlayScrollbars = React.lazy(() => import('./OverlayScrollbars'));
 
-export interface ScrollProps {
-  horizontal?: boolean;
-  vertical?: boolean;
-  [key: string]: any;
-}
-
-const Scroll = styled(({ vertical, horizontal, ...rest }: ScrollProps) => (
-  <OverlayScrollbarsComponent options={{ scrollbars: { autoHide: 'leave' } }} {...rest} />
-))<ScrollProps>(
-  ({ vertical }) =>
-    !vertical
-      ? {
-          overflowY: 'hidden',
-        }
-      : {
-          overflowY: 'auto',
-          height: '100%',
-        },
-  ({ horizontal }) =>
-    !horizontal
-      ? {
-          overflowX: 'hidden',
-        }
-      : {
-          overflowX: 'auto',
-          width: '100%',
-        }
+const Scroller: FunctionComponent<ScrollAreaProps> = ({ horizontal, vertical, ...props }) => (
+  <Suspense fallback={<div {...props} />}>
+    <GlobalScrollAreaStyles />
+    <OverlayScrollbars options={{ scrollbars: { autoHide: 'leave' } }} {...props} />
+  </Suspense>
 );
 
 export interface ScrollAreaProps {
@@ -39,18 +17,9 @@ export interface ScrollAreaProps {
   className?: string;
 }
 
-export const ScrollArea: FunctionComponent<ScrollAreaProps> = ({
-  children,
-  vertical,
-  horizontal,
-  ...props
-}) => (
-  <Fragment>
-    <Global styles={getScrollAreaStyles} />
-    <Scroll vertical={vertical} horizontal={horizontal} {...props}>
-      {children}
-    </Scroll>
-  </Fragment>
+export const ScrollArea: FunctionComponent<ScrollAreaProps> = styled(Scroller)<ScrollAreaProps>(
+  ({ vertical }) => (!vertical ? { overflowY: 'hidden' } : { overflowY: 'auto', height: '100%' }),
+  ({ horizontal }) => (!horizontal ? { overflowX: 'hidden' } : { overflowX: 'auto', width: '100%' })
 );
 
 ScrollArea.defaultProps = {

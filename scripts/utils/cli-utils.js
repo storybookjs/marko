@@ -6,7 +6,7 @@ const logger = console;
 const checkDependenciesAndRun = (run) => {
   let cooldown = 0;
   try {
-    require('inquirer');
+    require('prompts');
     require('commander');
     require('chalk');
     require('npmlog');

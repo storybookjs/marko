@@ -11,9 +11,10 @@ import { Selection } from './types';
 const refId = DEFAULT_REF_ID;
 const data = { [refId]: { id: refId, url: '/', stories } };
 const dataset = { hash: data, entries: Object.entries(data) };
-const lastViewed = Object.values(stories)
-  .filter((item, index) => item.isComponent && index % 20 === 0)
-  .map((component) => ({ storyId: component.id, refId }));
+const getLastViewed = () =>
+  Object.values(stories)
+    .filter((item, index) => item.isComponent && index % 20 === 0)
+    .map((component) => ({ storyId: component.id, refId }));
 
 export default {
   component: Search,
@@ -25,7 +26,7 @@ export default {
 const baseProps = {
   dataset,
   clearLastViewed: action('clear'),
-  lastViewed: [] as Selection[],
+  getLastViewed: () => [] as Selection[],
 };
 
 export const Simple = () => <Search {...baseProps}>{() => null}</Search>;
@@ -37,7 +38,7 @@ export const FilledIn = () => (
 );
 
 export const LastViewed = () => (
-  <Search {...baseProps} lastViewed={lastViewed}>
+  <Search {...baseProps} getLastViewed={getLastViewed}>
     {({ query, results, closeMenu, getMenuProps, getItemProps, highlightedIndex }) => (
       <SearchResults
         query={query}

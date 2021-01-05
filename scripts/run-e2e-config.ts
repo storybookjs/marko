@@ -140,10 +140,6 @@ export const sfcVue: Parameters = {
   name: 'sfcVue',
   version: 'latest',
   generator: fromDeps('vue', 'vue-loader', 'vue-template-compiler', 'webpack@webpack-4'),
-  additionalDeps: [
-    // TODO: remove when https://github.com/storybookjs/storybook/issues/11255 is solved
-    'core-js',
-  ],
 };
 
 export const svelte: Parameters = {
@@ -162,6 +158,12 @@ export const web_components: Parameters = {
   name: 'web_components',
   version: 'latest',
   generator: fromDeps('lit-html', 'lit-element'),
+};
+
+export const web_components_typescript: Parameters = {
+  ...web_components,
+  name: 'web_components_typescript',
+  typescript: true,
 };
 
 export const webpack_react: Parameters = {

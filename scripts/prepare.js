@@ -7,9 +7,7 @@ const log = require('npmlog');
 const { babelify } = require('./utils/compile-babel');
 const { tscfy } = require('./utils/compile-tsc');
 
-function getPackageJson() {
-  const modulePath = path.resolve('./');
-
+function getPackageJson(modulePath) {
   // eslint-disable-next-line global-require,import/no-dynamic-require
   return require(path.join(modulePath, 'package.json'));
 }
@@ -71,13 +69,21 @@ function logError(type, packageJson, errorLogs) {
   );
 }
 
-const packageJson = getPackageJson();
+const modulePath = path.resolve('./');
+const packageJson = getPackageJson(modulePath);
+const modules = true;
 
-removeDist();
+async function prepare() {
+  removeDist();
 
-babelify({ errorCallback: (errorLogs) => logError('js', packageJson, errorLogs) });
-tscfy({ errorCallback: (errorLogs) => logError('ts', packageJson, errorLogs) });
+  await babelify({
+    modules,
+    errorCallback: (errorLogs) => logError('js', packageJson, errorLogs),
+  });
+  tscfy({ errorCallback: (errorLogs) => logError('ts', packageJson, errorLogs) });
 
-cleanup();
+  cleanup();
+  console.log(chalk.gray(`Built: ${chalk.bold(`${packageJson.name}@${packageJson.version}`)}`));
+}
 
-console.log(chalk.gray(`Built: ${chalk.bold(`${packageJson.name}@${packageJson.version}`)}`));
+prepare();

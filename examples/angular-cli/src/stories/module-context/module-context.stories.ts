@@ -32,40 +32,50 @@ storiesOf('Custom/Feature Module as Context', module)
         removeAllChipsClick: action('Remove all chips clicked'),
       };
       return {
-        component: ChipsGroupComponent,
         props,
       };
     },
     {
+      component: ChipsGroupComponent,
       notes: `This component includes a child component, a pipe, and a default provider, all which come from 
         the specified feature module.`,
     }
   )
-  .add('Component with default providers', () => {
-    const props: { [K in keyof ChipComponent]?: any } = {
-      displayText: text('Display Text', 'My Chip'),
-      removeClicked: action('Remove icon clicked'),
-    };
-    return {
+  .add(
+    'Component with default providers',
+    () => {
+      const props: { [K in keyof ChipComponent]?: any } = {
+        displayText: text('Display Text', 'My Chip'),
+        removeClicked: action('Remove icon clicked'),
+      };
+      return {
+        props,
+      };
+    },
+    {
       component: ChipComponent,
-      props,
-    };
-  })
-  .add('Component with overridden provider', () => {
-    const props: { [K in keyof ChipComponent]?: any } = {
-      displayText: text('Display Text', 'My Chip'),
-      removeClicked: action('Remove icon clicked'),
-    };
-    return {
+    }
+  )
+  .add(
+    'Component with overridden provider',
+    () => {
+      const props: { [K in keyof ChipComponent]?: any } = {
+        displayText: text('Display Text', 'My Chip'),
+        removeClicked: action('Remove icon clicked'),
+      };
+      return {
+        moduleMetadata: {
+          providers: [
+            {
+              provide: CHIP_COLOR,
+              useValue: 'yellow',
+            },
+          ],
+        },
+        props,
+      };
+    },
+    {
       component: ChipComponent,
-      moduleMetadata: {
-        providers: [
-          {
-            provide: CHIP_COLOR,
-            useValue: 'yellow',
-          },
-        ],
-      },
-      props,
-    };
-  });
+    }
+  );
