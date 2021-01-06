@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, NgModule, Output, Type } from '@angular
 
 import { TestBed } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
+import { ICollection } from '../types';
 import { getStorybookModuleMetadata } from './StorybookModule';
 
 describe('StorybookModule', () => {
@@ -132,7 +133,7 @@ describe('StorybookModule', () => {
         );
       });
 
-      it('should not override outputs if storyProps$ Subject emit', async () => {
+      it('should override outputs if storyProps$ Subject emit', async () => {
         let expectedOutputValue;
         let expectedOutputBindingValue;
         const initialProps = {
@@ -155,10 +156,10 @@ describe('StorybookModule', () => {
         const newProps = {
           input: 'new input',
           output: () => {
-            expectedOutputValue = 'should not be called';
+            expectedOutputValue = 'should be called';
           },
           outputBindingPropertyName: () => {
-            expectedOutputBindingValue = 'should not be called';
+            expectedOutputBindingValue = 'should be called';
           },
         };
         storyProps$.next(newProps);
@@ -168,8 +169,43 @@ describe('StorybookModule', () => {
         fixture.nativeElement.querySelector('p#outputBindingPropertyName').click();
 
         expect(fixture.nativeElement.querySelector('p#input').innerHTML).toEqual(newProps.input);
-        expect(expectedOutputValue).toEqual('outputEmitted');
-        expect(expectedOutputBindingValue).toEqual('outputEmitted');
+        expect(expectedOutputValue).toEqual('should be called');
+        expect(expectedOutputBindingValue).toEqual('should be called');
+      });
+
+      it('should change template inputs if storyProps$ Subject emit', async () => {
+        const initialProps = {
+          color: 'red',
+          input: 'input',
+        };
+        const storyProps$ = new BehaviorSubject<ICollection>(initialProps);
+
+        const ngModule = getStorybookModuleMetadata(
+          {
+            storyFnAngular: {
+              props: initialProps,
+              template: '<p [style.color]="color"><foo [input]="input"></foo></p>',
+            },
+            parameters: { component: FooComponent },
+          },
+          storyProps$
+        );
+        const { fixture } = await configureTestingModule(ngModule);
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('p').style.color).toEqual('red');
+        expect(fixture.nativeElement.querySelector('p#input').innerHTML).toEqual(
+          initialProps.input
+        );
+
+        const newProps = {
+          color: 'black',
+          input: 'new input',
+        };
+        storyProps$.next(newProps);
+        fixture.detectChanges();
+
+        expect(fixture.nativeElement.querySelector('p').style.color).toEqual('black');
+        expect(fixture.nativeElement.querySelector('p#input').innerHTML).toEqual(newProps.input);
       });
     });
   });

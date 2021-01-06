@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
 import { Type } from '@angular/core';
-import { DecoratorFunction } from '@storybook/addons';
+import { DecoratorFunction, StoryContext } from '@storybook/addons';
 import { computesTemplateFromComponent } from '../angular-beta/ComputesTemplateFromComponent';
 import { isComponent } from '../angular-beta/utils/NgComponentAnalyzer';
-import { NgModuleMetadata, StoryFnAngularReturnType } from '../types';
+import { ICollection, NgModuleMetadata, StoryFnAngularReturnType } from '../types';
 
 export const moduleMetadata = (metadata: Partial<NgModuleMetadata>) => (storyFn: () => any) => {
   const story = storyFn();
@@ -26,13 +26,26 @@ export const moduleMetadata = (metadata: Partial<NgModuleMetadata>) => (storyFn:
 };
 
 export const componentWrapperDecorator = (
-  element: Type<unknown> | ((story: string) => string)
-): DecoratorFunction<StoryFnAngularReturnType> => (storyFn) => {
+  element: Type<unknown> | ((story: string) => string),
+  props?: ICollection | ((storyContext: StoryContext) => ICollection)
+): DecoratorFunction<StoryFnAngularReturnType> => (storyFn, storyContext) => {
   const story = storyFn();
+  const currentProps = typeof props === 'function' ? (props(storyContext) as ICollection) : props;
 
   const template = isComponent(element)
-    ? computesTemplateFromComponent(element, {}, story.template)
+    ? computesTemplateFromComponent(element, currentProps ?? {}, story.template)
     : element(story.template);
 
-  return { ...story, template };
+  return {
+    ...story,
+    template,
+    ...(currentProps || story.props
+      ? {
+          props: {
+            ...currentProps,
+            ...story.props,
+          },
+        }
+      : {}),
+  };
 };

@@ -48,19 +48,30 @@ export const createStorybookWrapperComponent = (
     styles,
   })
   class StorybookWrapperComponent implements AfterViewInit, OnDestroy {
-    private storyPropsSubscription: Subscription;
+    private storyComponentPropsSubscription: Subscription;
+
+    private storyWrapperPropsSubscription: Subscription;
 
     @ViewChild(storyComponent ?? '', { static: true }) storyComponentElementRef: ElementRef;
 
     @ViewChild(storyComponent ?? '', { read: ViewContainerRef, static: true })
     storyComponentViewContainerRef: ViewContainerRef;
 
+    // eslint-disable-next-line no-useless-constructor
     constructor(
       @Inject(STORY_PROPS) private storyProps$: Subject<ICollection | undefined>,
       private changeDetectorRef: ChangeDetectorRef
-    ) {
-      // Initializes Inputs/Outputs values
-      Object.assign(this, initialProps);
+    ) {}
+
+    ngOnInit(): void {
+      // Subscribes to the observable storyProps$ to keep these properties up to date
+      this.storyWrapperPropsSubscription = this.storyProps$.subscribe((storyProps = {}) => {
+        // All props are added as component properties
+        Object.assign(this, storyProps);
+
+        this.changeDetectorRef.detectChanges();
+        this.changeDetectorRef.markForCheck();
+      });
     }
 
     ngAfterViewInit(): void {
@@ -81,7 +92,7 @@ export const createStorybookWrapperComponent = (
         this.changeDetectorRef.detectChanges();
 
         // Once target component has been initialized, the storyProps$ observable keeps target component inputs up to date
-        this.storyPropsSubscription = this.storyProps$
+        this.storyComponentPropsSubscription = this.storyProps$
           .pipe(
             skip(1),
             map((props) => {
@@ -128,8 +139,11 @@ export const createStorybookWrapperComponent = (
     }
 
     ngOnDestroy(): void {
-      if (this.storyPropsSubscription != null) {
-        this.storyPropsSubscription.unsubscribe();
+      if (this.storyComponentPropsSubscription != null) {
+        this.storyComponentPropsSubscription.unsubscribe();
+      }
+      if (this.storyWrapperPropsSubscription != null) {
+        this.storyWrapperPropsSubscription.unsubscribe();
       }
     }
   }
