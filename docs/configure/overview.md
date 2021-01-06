@@ -26,10 +26,14 @@ The main configuration file is `main.js`. This file controls the behavior of the
 
 The `main.js` configuration file is a [preset](../addons/addon-types.md) and as such has a powerful interface, but the key fields within it are:
 
-- `stories` - an array of globs that indicates the [location of your story files](#configure-story-loading), relative to `main.js`. Set the default story by placing it first in this array.
+- `stories` - an array of globs that indicates the [location of your story files](#configure-story-loading), relative to `main.js`.
 - `addons` - a list of the [addons](/addons) you are using.
 - `webpackFinal` - custom [webpack configuration](./webpack.md#extending-storybooks-webpack-config).
 - `babel` - custom [babel configuration](./babel.md).
+
+<div class="aside">
+  Tip/Note: Customize the default story by referencing it first in the `stories` array.
+</div>
 
 ## Configure story loading
 
