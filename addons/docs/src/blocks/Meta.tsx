@@ -1,13 +1,12 @@
 import React, { FC, useContext } from 'react';
 import { document } from 'global';
-import { Annotations, Args, BaseMeta } from '@storybook/addons';
+import { Args, BaseAnnotations, BaseMeta } from '@storybook/addons';
 import { Anchor } from './Anchor';
 import { DocsContext, DocsContextProps } from './DocsContext';
 import { getDocsStories } from './utils';
 import { Component } from './types';
 
-type MetaProps = BaseMeta<Component> &
-  Omit<Annotations<Args, any>, 'includeStories' | 'excludeStories'>;
+type MetaProps = BaseMeta<Component> & BaseAnnotations<Args, any>;
 
 function getFirstStoryId(docsContext: DocsContextProps): string {
   const stories = getDocsStories(docsContext);

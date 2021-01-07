@@ -163,7 +163,7 @@ export type BaseDecorators<StoryFnReturnType> = Array<
   (story: () => StoryFnReturnType, context: StoryContext) => StoryFnReturnType
 >;
 
-export interface Annotations<Args, StoryFnReturnType> {
+export interface BaseAnnotations<Args, StoryFnReturnType> {
   /**
    * Dynamic data that are provided (and possibly updated by) Storybook and its addons.
    * @see [Arg story inputs](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/formats/component-story-format/index.md#args-story-inputs)
@@ -189,7 +189,10 @@ export interface Annotations<Args, StoryFnReturnType> {
    * @see [Decorators](https://storybook.js.org/docs/addons/introduction/#1-decorators)
    */
   decorators?: BaseDecorators<StoryFnReturnType>;
+}
 
+export interface Annotations<Args, StoryFnReturnType>
+  extends BaseAnnotations<Args, StoryFnReturnType> {
   /**
    * Used to only include certain named exports as stories. Useful when you want to have non-story exports such as mock data or ignore a few stories.
    * @example

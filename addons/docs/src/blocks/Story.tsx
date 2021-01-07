@@ -2,7 +2,7 @@ import React, { FunctionComponent, ReactNode, ElementType, ComponentProps } from
 import { MDXProvider } from '@mdx-js/react';
 import { resetComponents, Story as PureStory } from '@storybook/components';
 import { toId, storyNameFromExport } from '@storybook/csf';
-import { Annotations, Args } from '@storybook/addons';
+import { Args, BaseAnnotations } from '@storybook/addons';
 import { CURRENT_SELECTION } from './types';
 
 import { DocsContext, DocsContextProps } from './DocsContext';
@@ -11,7 +11,7 @@ export const storyBlockIdFromId = (storyId: string) => `story--${storyId}`;
 
 type PureStoryProps = ComponentProps<typeof PureStory>;
 
-type CommonProps = Omit<Annotations<Args, any>, 'includeStories' | 'excludeStories'> & {
+type CommonProps = BaseAnnotations<Args, any> & {
   height?: string;
   inline?: boolean;
 };
