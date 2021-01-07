@@ -7,7 +7,7 @@ function getCommand(watch) {
   const tsc = path.join(__dirname, '..', '..', 'node_modules', '.bin', 'tsc');
   const downlevelDts = path.join(__dirname, '..', '..', 'node_modules', '.bin', 'downlevel-dts');
 
-  const args = ['--outDir ./dist/ts3.9', '--listEmittedFiles true'];
+  const args = ['--outDir ./dist/ts3.9', '--listEmittedFiles true', '--declaration true'];
 
   /**
    * Only emit declarations if it does not need to be compiled with tsc
@@ -17,15 +17,7 @@ function getCommand(watch) {
   const isAngular = process.cwd().includes(path.join('app', 'angular'));
   const isStoryshots = process.cwd().includes(path.join('addons', 'storyshots'));
   if (!isAngular && !isStoryshots) {
-    args.push('--emitDeclarationOnly --declaration true');
-  }
-
-  if (isAngular) {
-    args.push('--declaration true');
-  }
-
-  if (isStoryshots) {
-    args.push('--declaration true');
+    args.push('--emitDeclarationOnly');
   }
 
   if (watch) {
