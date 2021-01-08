@@ -71,12 +71,12 @@ const cleanDirectory = async ({ cwd }: Options): Promise<void> => {
   await remove(cwd);
   await remove(path.join(siblingDir, 'node_modules'));
 
-  if (useYarn2) {
+  if (useYarn2PnP) {
     await shell.rm('-rf', [path.join(siblingDir, '.yarn'), path.join(siblingDir, '.yarnrc.yml')]);
   }
 };
 
-const configureYarn2 = async ({ cwd }: Options) => {
+const configureYarn2PnP = async ({ cwd }: Options) => {
   const command = [
     `yarn set version berry`,
     // ⚠️ Need to set registry because Yarn 2 is not using the conf of Yarn 1
@@ -103,7 +103,7 @@ const configureYarn2 = async ({ cwd }: Options) => {
 
 const generate = async ({ cwd, name, version, generator }: Options) => {
   let command = generator.replace(/{{name}}/g, name).replace(/{{version}}/g, version);
-  if (useYarn2) {
+  if (useYarn2PnP) {
     command = command.replace(/npx/g, `yarn dlx`);
   }
 
@@ -226,8 +226,8 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
   logger.log();
 
   if (!(await prepareDirectory(options))) {
-    if (useYarn2) {
-      await configureYarn2({ ...options, cwd: siblingDir });
+    if (useYarn2PnP) {
+      await configureYarn2PnP({ ...options, cwd: siblingDir });
     }
 
     await generate({ ...options, cwd: siblingDir });
@@ -307,7 +307,7 @@ const runE2E = async (parameters: Parameters) => {
 };
 
 program.option('--clean', 'Clean up existing projects before running the tests', false);
-program.option('--use-yarn-2', 'Run tests using Yarn 2 instead of Yarn 1 + npx', false);
+program.option('--use-yarn-2-pnp', 'Run tests using Yarn 2 PnP instead of Yarn 1 + npx', false);
 program.option(
   '--use-local-sb-cli',
   'Run tests using local @storybook/cli package (⚠️ Be sure @storybook/cli is properly build as it will not be rebuild before running the tests)',
@@ -315,7 +315,7 @@ program.option(
 );
 program.parse(process.argv);
 
-const { useYarn2, useLocalSbCli, clean: startWithCleanSlate, args: frameworkArgs } = program;
+const { useYarn2PnP, useLocalSbCli, clean: startWithCleanSlate, args: frameworkArgs } = program;
 
 const typedConfigs: { [key: string]: Parameters } = configs;
 let e2eConfigs: { [key: string]: Parameters } = {};

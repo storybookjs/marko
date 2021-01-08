@@ -293,7 +293,7 @@ jobs:
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
-  e2e-tests-yarn-2:
+  e2e-tests-yarn-2-pnp:
     executor:
       class: medium
       name: sb_node_10_browsers
@@ -321,7 +321,7 @@ jobs:
           command: yarn cypress install
       - run:
           name: run e2e tests
-          command: yarn test:e2e-framework --use-yarn-2 sfcVue cra
+          command: yarn test:e2e-framework --use-yarn-2-pnp sfcVue cra
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
@@ -510,7 +510,7 @@ workflows:
       - e2e-tests:
           requires:
             - publish
-      - e2e-tests-yarn-2:
+      - e2e-tests-yarn-2-pnp:
           requires:
             - publish
       - e2e-tests-cra-bench:
