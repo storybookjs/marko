@@ -32,7 +32,7 @@ The `main.js` configuration file is a [preset](../addons/addon-types.md) and as 
 - `babel` - custom [babel configuration](./babel.md).
 
 <div class="aside">
-  Tip/Note: Customize the default story by referencing it first in the `stories` array.
+  Tip: Customize your default story by referencing it first in the `stories` array.
 </div>
 
 ## Configure story loading
