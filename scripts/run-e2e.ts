@@ -344,10 +344,6 @@ if (frameworkArgs.length > 0) {
     e2eConfigs[`${config.name}-${config.version}`] = config;
   });
 
-  // FIXME: For now Yarn 2 E2E tests must be run by explicitly call `yarn test:e2e-framework yarn2Cra@latest`
-  //   Because it is telling Yarn to use version 2
-  delete e2eConfigs.yarn_2_cra;
-
   // CRA Bench is a special case of E2E tests, it requires Node 12 as `@storybook/bench` is using `@hapi/hapi@19.2.0`
   // which itself need Node 12.
   delete e2eConfigs['cra_bench-latest'];
