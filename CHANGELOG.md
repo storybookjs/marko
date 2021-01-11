@@ -1,3 +1,10 @@
+## 6.1.12 (January 12, 2021)
+
+### Bug Fixes
+
+- Addon-docs: Fix link not working cross origin ([#13022](https://github.com/storybookjs/storybook/pull/13022))
+- Addon-docs: Resolve babel-loader from storybook/core ([#13607](https://github.com/storybookjs/storybook/pull/13607))
+
 ## 6.1.11 (December 12, 2020)
 
 ### Bug Fixes
