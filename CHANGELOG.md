@@ -1,3 +1,9 @@
+## 6.2.0-alpha.12 (January 12, 2021)
+
+### Bug Fixes
+
+* Addon-docs: Resolve babel-loader from storybook/core ([#13607](https://github.com/storybookjs/storybook/pull/13607))
+
 ## 6.2.0-alpha.11 (January 11, 2021)
 
 ### Features
