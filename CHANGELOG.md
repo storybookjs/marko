@@ -1,3 +1,20 @@
+## 6.2.0-alpha.11 (January 11, 2021)
+
+### Features
+
+* HTML: Add CSF types ([#13519](https://github.com/storybookjs/storybook/pull/13519))
+* Addon-jest: Infer parameter from story filename if not provided ([#13535](https://github.com/storybookjs/storybook/pull/13535))
+* Server: Forward globals in fetchStoryHtml ([#13158](https://github.com/storybookjs/storybook/pull/13158))
+
+### Bug Fixes
+
+* Addon-docs: Fix link not working cross origin ([#13022](https://github.com/storybookjs/storybook/pull/13022))
+* Addon-docs: Use theme text color header anchors ([#13533](https://github.com/storybookjs/storybook/pull/13533))
+
+### Maintenance
+
+* Build: remove redundant checks for TS type declaration generation ([#13567](https://github.com/storybookjs/storybook/pull/13567))
+
 ## 6.2.0-alpha.10 (December 28, 2020)
 
 ### Bug Fixes
