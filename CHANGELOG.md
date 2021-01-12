@@ -1,4 +1,4 @@
-## 6.1.13 (January 12, 2021)
+## 6.1.14 (January 12, 2021)
 
 ### Bug Fixes
 
@@ -7,6 +7,10 @@
 - Typescript: Fix qs import in @storybook/client-api ([#13518](https://github.com/storybookjs/storybook/pull/13518))
 - CLI: Ensure --host option changes the network host ([#13521](https://github.com/storybookjs/storybook/pull/13521))
 - Svelte: Statically load docgen info for svelte components ([#13466](https://github.com/storybookjs/storybook/pull/13466))
+
+## 6.1.13 (January 12, 2021)
+
+NPM publish failed
 
 ## 6.1.12 (January 12, 2021)
 
