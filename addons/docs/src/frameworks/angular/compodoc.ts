@@ -90,7 +90,10 @@ const getComponentData = (component: Component | Directive) => {
     return null;
   }
   checkValidComponentOrDirective(component);
-  const compodocJson = getCompdocJson();
+  const compodocJson = getCompodocJson();
+  if (!compodocJson) {
+    return null;
+  }
   checkValidCompodocJson(compodocJson);
   const { name } = component;
   const metadata = findComponentByName(name, compodocJson);
