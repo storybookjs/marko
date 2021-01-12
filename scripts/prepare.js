@@ -30,19 +30,18 @@ function cleanup() {
   // --copy-files option doesn't work with --ignore
   // https://github.com/babel/babel/issues/6226
   if (fs.existsSync(path.join(process.cwd(), 'dist'))) {
-    const inStoryshots = process.cwd().includes('storyshots'); // This is a helper the exclude storyshots folder from the regex
-    const files = shell.find('dist').filter((filePath) => {
+    const isInStorybookCLIPackage = process.cwd().includes(path.join('lib', 'cli'));
+    const filesToRemove = shell.find('dist').filter((filePath) => {
       // Do not remove folder
       // And do not clean anything for:
-      // - @storybook/cli/dist/generators/**/template*
-      // - @storybook/cli/dist/frameworks/*
-      // because these are the template files
-      // that will be copied to init SB on users' projects
+      // - @storybook/cli/dist/(esm|cjs)/generators/**/template*
+      // - @storybook/cli/dist/(esm|cjs)/frameworks/*
+      // because these are the template files that will be copied to init SB on users' projects
 
       if (
         fs.lstatSync(filePath).isDirectory() ||
-        /generators\/.+\/template.*/.test(filePath) ||
-        (/dist\/frameworks\/.*/.test(filePath) && !inStoryshots)
+        (isInStorybookCLIPackage &&
+          /\/(esm|cjs)\/(generators\/.+\/template|frameworks).*/.test(filePath))
       ) {
         return false;
       }
@@ -56,8 +55,8 @@ function cleanup() {
         return acc || !!filePath.match(pattern);
       }, false);
     });
-    if (files.length) {
-      shell.rm('-f', ...files);
+    if (filesToRemove.length) {
+      shell.rm('-f', ...filesToRemove);
     }
   }
 }
