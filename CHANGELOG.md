@@ -1,3 +1,13 @@
+## 6.1.13 (January 12, 2021)
+
+### Bug Fixes
+
+- Core: Use fs-extra emptyDir so build works on docker volume ([#13474](https://github.com/storybookjs/storybook/pull/13474))
+- Addon-docs: Tighten preset webpack pattern for mdx stories ([#13476](https://github.com/storybookjs/storybook/pull/13476))
+- Typescript: Fix qs import in @storybook/client-api ([#13518](https://github.com/storybookjs/storybook/pull/13518))
+- CLI: Ensure --host option changes the network host ([#13521](https://github.com/storybookjs/storybook/pull/13521))
+- Svelte: Statically load docgen info for svelte components ([#13466](https://github.com/storybookjs/storybook/pull/13466))
+
 ## 6.1.12 (January 12, 2021)
 
 ### Bug Fixes
