@@ -218,7 +218,7 @@ jobs:
           root: .
           paths:
             - .verdaccio-cache
-  e2e-tests:
+  e2e-tests-node-10:
     executor:
       class: medium
       name: sb_node_10_browsers
@@ -257,7 +257,49 @@ jobs:
           command: yarn cypress install
       - run:
           name: run e2e tests
-          command: yarn test:e2e-framework
+          command: yarn test:e2e-framework --skip preact
+      - store_artifacts:
+          path: /tmp/storybook/cypress
+          destination: cypress
+  e2e-tests-node-12:
+    executor:
+      class: medium
+      name: sb_node_12_browsers
+    working_directory: /tmp/storybook
+    steps:
+      - when:
+          condition:
+            and:
+              - not:
+                  equal: [ master, << pipeline.git.branch >> ]
+              - not:
+                  equal: [ next, << pipeline.git.branch >> ]
+          steps:
+            - ensure-pr-is-labeled-with:
+                label: "run e2e extended test suite"
+      - git-shallow-clone/checkout_advanced:
+          clone_options: '--depth 1 --verbose'
+      - attach_workspace:
+          at: .
+      - run:
+          name: Running local registry
+          command: yarn local-registry --port 6000 --open
+          background: true
+      - run:
+          name: Wait for registry
+          command: yarn wait-on http://localhost:6000
+      - run:
+          name: Set registry
+          command: yarn config set registry http://localhost:6000/
+      - run:
+          name: Test local registry
+          command: yarn info @storybook/core
+      - run:
+          name: Install Cypress binary
+          command: yarn cypress install
+      - run:
+          name: Run E2E tests
+          command: yarn test:e2e-framework preact
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
@@ -293,7 +335,7 @@ jobs:
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
-  e2e-tests-yarn-2:
+  e2e-tests-yarn-2-pnp:
     executor:
       class: medium
       name: sb_node_10_browsers
@@ -321,7 +363,7 @@ jobs:
           command: yarn cypress install
       - run:
           name: run e2e tests
-          command: yarn test:e2e-framework --use-yarn-2 sfcVue cra
+          command: yarn test:e2e-framework --use-yarn-2-pnp sfcVue cra
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
@@ -507,10 +549,13 @@ workflows:
           requires:
             - install-e2e-deps
             - build
-      - e2e-tests:
+      - e2e-tests-node-10:
           requires:
             - publish
-      - e2e-tests-yarn-2:
+      - e2e-tests-node-12:
+          requires:
+            - publish
+      - e2e-tests-yarn-2-pnp:
           requires:
             - publish
       - e2e-tests-cra-bench:
