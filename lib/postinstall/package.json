@@ -1,6 +1,6 @@
 {
   "name": "@storybook/postinstall",
-  "version": "6.1.13",
+  "version": "6.1.14",
   "description": "Storybook addons postinstall utilities",
   "keywords": [
     "api",
