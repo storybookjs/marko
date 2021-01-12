@@ -25,7 +25,7 @@ export const setCompodocJson = (compodocJson: CompodocJson) => {
 };
 
 // @ts-ignore
-export const getCompdocJson = (): CompodocJson => window.__STORYBOOK_COMPODOC_JSON__;
+export const getCompodocJson = (): CompodocJson => window.__STORYBOOK_COMPODOC_JSON__;
 
 export const checkValidComponentOrDirective = (component: Component | Directive) => {
   if (!component.name) {
