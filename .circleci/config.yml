@@ -12,7 +12,7 @@ executors:
     docker:
       - image: circleci/node:10
         environment:
-          NODE_OPTIONS: --max_old_space_size=4096
+          NODE_OPTIONS: --max_old_space_size=3076
     resource_class: <<parameters.class>>
   sb_node_10_browsers:
     parameters:
@@ -25,7 +25,7 @@ executors:
     docker:
       - image: circleci/node:10-browsers
         environment:
-          NODE_OPTIONS: --max_old_space_size=4096
+          NODE_OPTIONS: --max_old_space_size=3076
     resource_class: <<parameters.class>>
   sb_node_12_browsers:
     parameters:
@@ -38,7 +38,7 @@ executors:
     docker:
       - image: circleci/node:12-browsers
         environment:
-          NODE_OPTIONS: --max_old_space_size=4096
+          NODE_OPTIONS: --max_old_space_size=3076
     resource_class: <<parameters.class>>
 
 orbs:
@@ -76,7 +76,7 @@ commands:
 jobs:
   build:
     executor:
-      class: medium
+      class: large
       name: sb_node_10_classic
     steps:
       - git-shallow-clone/checkout_advanced:
