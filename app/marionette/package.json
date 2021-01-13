@@ -45,6 +45,8 @@
     "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
+    "@types/backbone.marionette": "^3.3.12",
+    "@types/common-tags": "^1.8.0",
     "backbone.marionette": "*"
   },
   "peerDependencies": {
