@@ -13,6 +13,7 @@ export interface ICollection {
 export interface NgStory {
   component?: any;
   props: ICollection;
+  /** @deprecated `propsMeta` story input is deprecated, and will be removed in Storybook 7.0. */
   propsMeta?: ICollection;
   moduleMetadata?: NgModuleMetadata;
   template?: string;
