@@ -1,3 +1,16 @@
+## 6.2.0-alpha.13 (January 13, 2021)
+
+### Features
+
+- Angular: Improve decorators ([#13507](https://github.com/storybookjs/storybook/pull/13507))
+
+### Maintenance
+
+- Angular: Fix flaky tests based on timezone ([#13609](https://github.com/storybookjs/storybook/pull/13609))
+- Angular: Use Nx function to read non-angularCli configs ([#13558](https://github.com/storybookjs/storybook/pull/13558))
+- Build: Move Preact E2E tests on a Node 12 executor ([#13582](https://github.com/storybookjs/storybook/pull/13582))
+- Addon-docs: Add missing types for Story doc block ([#13549](https://github.com/storybookjs/storybook/pull/13549))
+
 ## 6.1.14 (January 12, 2021)
 
 ### Bug Fixes
