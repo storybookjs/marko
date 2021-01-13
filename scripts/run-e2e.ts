@@ -1,6 +1,6 @@
 /* eslint-disable no-irregular-whitespace */
 import path from 'path';
-import { remove, ensureDir, pathExists, writeFile, readJSON, writeJSON } from 'fs-extra';
+import { remove, ensureDir, pathExists, writeFile, writeJSON } from 'fs-extra';
 import { prompt } from 'enquirer';
 import pLimit from 'p-limit';
 
@@ -8,8 +8,6 @@ import shell from 'shelljs';
 import program from 'commander';
 import { serve } from './utils/serve';
 import { exec } from './utils/command';
-// @ts-ignore
-import { listOfPackages } from './utils/list-packages';
 // @ts-ignore
 import { filterDataForCurrentCircleCINode } from './utils/concurrency';
 
@@ -73,12 +71,12 @@ const cleanDirectory = async ({ cwd }: Options): Promise<void> => {
   await remove(cwd);
   await remove(path.join(siblingDir, 'node_modules'));
 
-  if (useYarn2) {
+  if (useYarn2PnP) {
     await shell.rm('-rf', [path.join(siblingDir, '.yarn'), path.join(siblingDir, '.yarnrc.yml')]);
   }
 };
 
-const configureYarn2 = async ({ cwd }: Options) => {
+const configureYarn2PnP = async ({ cwd }: Options) => {
   const command = [
     `yarn set version berry`,
     // ⚠️ Need to set registry because Yarn 2 is not using the conf of Yarn 1
@@ -88,10 +86,9 @@ const configureYarn2 = async ({ cwd }: Options) => {
     // Disable fallback mode to make sure everything is required correctly
     `yarn config set pnpFallbackMode none`,
     // Add package extensions
-    // https://github.com/casesandberg/reactcss/pull/153
-    `yarn config set "packageExtensions.reactcss@*.peerDependencies.react" "*"`,
-    // https://github.com/casesandberg/react-color/pull/746
-    `yarn config set "packageExtensions.react-color@*.peerDependencies.react" "*"`,
+    // https://github.com/facebook/create-react-app/pull/9872
+    `yarn config set "packageExtensions.react-scripts@*.peerDependencies.react" "*"`,
+    `yarn config set "packageExtensions.react-scripts@*.dependencies.@pmmmwh/react-refresh-webpack-plugin" "*"`,
   ].join(' && ');
   logger.info(`🎛 Configuring Yarn 2`);
   logger.debug(command);
@@ -106,7 +103,7 @@ const configureYarn2 = async ({ cwd }: Options) => {
 
 const generate = async ({ cwd, name, version, generator }: Options) => {
   let command = generator.replace(/{{name}}/g, name).replace(/{{version}}/g, version);
-  if (useYarn2) {
+  if (useYarn2PnP) {
     command = command.replace(/npx/g, `yarn dlx`);
   }
 
@@ -135,30 +132,6 @@ const initStorybook = async ({ cwd, autoDetect = true, name }: Options) => {
     logger.error(`🚨 Storybook initialization failed`);
     throw e;
   }
-};
-
-// Verdaccio doesn't resolve *
-// So we set resolutions manually in package.json
-const setResolutions = async ({ cwd }: Options) => {
-  logger.info(`🔒 Setting yarn resolutions`);
-
-  const packages = await listOfPackages();
-
-  const packageJsonPath = path.resolve(cwd, 'package.json');
-  const packageJson = await readJSON(packageJsonPath, { encoding: 'utf8' });
-
-  packageJson.resolutions = {
-    ...packageJson.resolutions,
-    ...packages.reduce(
-      (acc, { name, version }) => ({
-        ...acc,
-        [name]: version,
-      }),
-      {}
-    ),
-  };
-
-  await writeJSON(packageJsonPath, packageJson, { encoding: 'utf8', spaces: 2 });
 };
 
 const addRequiredDeps = async ({ cwd, additionalDeps }: Options) => {
@@ -253,14 +226,11 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
   logger.log();
 
   if (!(await prepareDirectory(options))) {
-    if (useYarn2) {
-      await configureYarn2({ ...options, cwd: siblingDir });
+    if (useYarn2PnP) {
+      await configureYarn2PnP({ ...options, cwd: siblingDir });
     }
 
     await generate({ ...options, cwd: siblingDir });
-    logger.log();
-
-    await setResolutions(options);
     logger.log();
 
     if (options.typescript) {
@@ -268,10 +238,10 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
       logger.log();
     }
 
-    await initStorybook(options);
+    await addRequiredDeps(options);
     logger.log();
 
-    await addRequiredDeps(options);
+    await initStorybook(options);
     logger.log();
 
     await buildStorybook(options);
@@ -337,18 +307,30 @@ const runE2E = async (parameters: Parameters) => {
 };
 
 program.option('--clean', 'Clean up existing projects before running the tests', false);
-program.option('--use-yarn-2', 'Run tests using Yarn 2 instead of Yarn 1 + npx', false);
+program.option('--use-yarn-2-pnp', 'Run tests using Yarn 2 PnP instead of Yarn 1 + npx', false);
 program.option(
   '--use-local-sb-cli',
   'Run tests using local @storybook/cli package (⚠️ Be sure @storybook/cli is properly build as it will not be rebuild before running the tests)',
   false
 );
+program.option(
+  '--skip <value>',
+  'Skip a framework, can be used multiple times "--skip angular@latest --skip preact"',
+  (value, previous) => previous.concat([value]),
+  []
+);
 program.parse(process.argv);
 
-const { useYarn2, useLocalSbCli, clean: startWithCleanSlate, args: frameworkArgs } = program;
+const {
+  useYarn2PnP,
+  useLocalSbCli,
+  clean: startWithCleanSlate,
+  args: frameworkArgs,
+  skip: frameworksToSkip,
+} = program;
 
 const typedConfigs: { [key: string]: Parameters } = configs;
-let e2eConfigs: { [key: string]: Parameters } = {};
+const e2eConfigs: { [key: string]: Parameters } = {};
 
 if (frameworkArgs.length > 0) {
   // eslint-disable-next-line no-restricted-syntax
@@ -358,14 +340,22 @@ if (frameworkArgs.length > 0) {
     );
   }
 } else {
-  e2eConfigs = typedConfigs;
-  // FIXME: For now Yarn 2 E2E tests must be run by explicitly call `yarn test:e2e-framework yarn2Cra@latest`
-  //   Because it is telling Yarn to use version 2
-  delete e2eConfigs.yarn_2_cra;
+  Object.values(typedConfigs).forEach((config) => {
+    e2eConfigs[`${config.name}-${config.version}`] = config;
+  });
 
   // CRA Bench is a special case of E2E tests, it requires Node 12 as `@storybook/bench` is using `@hapi/hapi@19.2.0`
   // which itself need Node 12.
-  delete e2eConfigs.cra_bench;
+  delete e2eConfigs['cra_bench-latest'];
+}
+
+if (frameworksToSkip.length > 0) {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const [framework, version = 'latest'] of frameworksToSkip.map((arg: string) =>
+    arg.split('@')
+  )) {
+    delete e2eConfigs[`${framework}-${version}`];
+  }
 }
 
 const perform = () => {

@@ -2,11 +2,11 @@ import { action } from '@storybook/addon-actions';
 import { Button } from '@storybook/angular/demo';
 
 export default {
+  component: Button,
   title: 'Addon/Actions',
 };
 
 export const ActionOnly = () => ({
-  component: Button,
   props: {
     text: 'Action only',
     onClick: action('log 1'),
@@ -16,7 +16,6 @@ export const ActionOnly = () => ({
 ActionOnly.storyName = 'Action only';
 
 export const ActionAndMethod = () => ({
-  component: Button,
   props: {
     text: 'Action and Method',
     onClick: (e) => {

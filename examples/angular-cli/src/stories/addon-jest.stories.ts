@@ -5,6 +5,7 @@ import * as results from '../../addon-jest.testresults.json';
 
 export default {
   title: 'Addon/Jest',
+  component: AppComponent,
   decorators: [
     withTests({
       results,
@@ -14,7 +15,6 @@ export default {
 };
 
 export const AppComponentWithJestTests = () => ({
-  component: AppComponent,
   props: {},
 });
 

@@ -1,18 +1,32 @@
 import { StoryFn } from '@storybook/addons';
+import { RendererService } from './angular-beta/RendererService';
 
 import { renderNgApp } from './angular/helpers';
 import { StoryFnAngularReturnType } from './types';
+import { Parameters } from './types-6-0';
 
 // add proper types
 export default function render({
   storyFn,
   showMain,
   forceRender,
+  parameters,
 }: {
   storyFn: StoryFn<StoryFnAngularReturnType>;
   showMain: () => void;
   forceRender: boolean;
+  parameters: Parameters;
 }) {
   showMain();
-  renderNgApp(storyFn, forceRender);
+
+  if (parameters.angularLegacyRendering) {
+    renderNgApp(storyFn, forceRender);
+    return;
+  }
+
+  RendererService.getInstance().render({
+    storyFnAngular: storyFn(),
+    parameters,
+    forced: forceRender,
+  });
 }

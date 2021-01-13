@@ -1,13 +1,11 @@
 ```ts
 // my-button.component.ts
 
-import { Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'my-button',
-  template: ` <button
-    type="button"
-    [disabled]="isDisabled">
+  template: ` <button type="button" [disabled]="isDisabled">
     {{ content }}
   </button>`,
   styleUrls: ['./button.css'],

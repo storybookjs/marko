@@ -107,4 +107,4 @@ export { QueryLocation as Location };
 export { Route };
 export { queryNavigate as navigate };
 export { LocationProvider };
-export { History };
+export type { History };

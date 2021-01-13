@@ -1,7 +1,7 @@
 {
   "name": "@storybook/addon-toolbars",
-  "version": "6.1.0-rc.2",
-  "description": "Storybook toolbars addon",
+  "version": "6.2.0-alpha.13",
+  "description": "Create your own toolbar items that control story rendering",
   "keywords": [
     "addon",
     "storybook",
@@ -19,7 +19,16 @@
     "directory": "addons/toolbars"
   },
   "license": "MIT",
-  "main": "dist/register.js",
+  "main": "dist/cjs/register.js",
+  "module": "dist/esm/register.js",
+  "types": "dist/ts3.9/register.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "dist/ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
@@ -30,10 +39,10 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-rc.2",
-    "@storybook/api": "6.1.0-rc.2",
-    "@storybook/client-api": "6.1.0-rc.2",
-    "@storybook/components": "6.1.0-rc.2",
+    "@storybook/addons": "6.2.0-alpha.13",
+    "@storybook/api": "6.2.0-alpha.13",
+    "@storybook/client-api": "6.2.0-alpha.13",
+    "@storybook/components": "6.2.0-alpha.13",
     "core-js": "^3.0.1"
   },
   "peerDependencies": {
@@ -51,5 +60,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "38bb07161a72720766a1e9b2c9a1661bd3d819b0"
+  "gitHead": "9de487fa7b79cef77fd8de0d0357e8cf962dc776"
 }

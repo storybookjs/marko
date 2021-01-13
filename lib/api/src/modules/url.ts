@@ -3,6 +3,7 @@ import { queryFromLocation } from '@storybook/router';
 import { toId, sanitize } from '@storybook/csf';
 
 import { NAVIGATE_URL } from '@storybook/core-events';
+import deepEqual from 'fast-deep-equal';
 import { ModuleArgs, ModuleFn } from '../index';
 import { PanelPositions } from './layout';
 
@@ -28,6 +29,7 @@ export interface SubState {
 //     - nav: 0/1 -- show or hide the story list
 //
 //   We also support legacy URLs from storybook <5
+let prevParams: ReturnType<typeof queryFromLocation>;
 const initialUrlSupport = ({
   state: { location, path, viewMode, storyId: storyIdFromUrl },
 }: ModuleArgs) => {
@@ -46,7 +48,7 @@ const initialUrlSupport = ({
     selectedKind,
     selectedStory,
     path: queryPath,
-    ...customQueryParams
+    ...otherParams
   } = query;
 
   if (full === '1') {
@@ -88,6 +90,10 @@ const initialUrlSupport = ({
       storyId = sanitize(selectedKind);
     }
   }
+
+  // Avoid returning a new object each time if no params actually changed.
+  const customQueryParams = deepEqual(prevParams, otherParams) ? prevParams : otherParams;
+  prevParams = customQueryParams;
 
   return { viewMode, layout: addition, selectedPanel, location, path, customQueryParams, storyId };
 };
@@ -133,17 +139,17 @@ export const init: ModuleFn = ({ store, navigate, state, provider, fullAPI, ...r
     setQueryParams(input) {
       const { customQueryParams } = store.getState();
       const queryParams: QueryParams = {};
-      store.setState({
-        customQueryParams: {
-          ...customQueryParams,
-          ...Object.entries(input).reduce((acc, [key, value]) => {
-            if (value !== null) {
-              acc[key] = value;
-            }
-            return acc;
-          }, queryParams),
-        },
-      });
+      const update = {
+        ...customQueryParams,
+        ...Object.entries(input).reduce((acc, [key, value]) => {
+          if (value !== null) {
+            acc[key] = value;
+          }
+          return acc;
+        }, queryParams),
+      };
+      const equal = deepEqual(customQueryParams, update);
+      if (!equal) store.setState({ customQueryParams: update });
     },
     navigateUrl(url: string, options: NavigateOptions<{}>) {
       navigateRouter(url, options);

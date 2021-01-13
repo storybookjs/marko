@@ -9,6 +9,7 @@ import React, {
   useEffect,
 } from 'react';
 import { ControllerStateAndHelpers } from 'downshift';
+import { transparentize } from 'polished';
 
 import { ComponentNode, DocumentNode, Path, RootNode, StoryNode } from './TreeNode';
 import {
@@ -20,6 +21,7 @@ import {
   SearchResult,
 } from './types';
 import { getLink } from './utils';
+import { matchesKeyCode, matchesModifiers } from '../../keybinding';
 
 const ResultsList = styled.ol({
   listStyle: 'none',
@@ -33,8 +35,11 @@ const ResultRow = styled.li<{ isHighlighted: boolean }>(({ theme, isHighlighted 
   display: 'block',
   margin: 0,
   padding: 0,
-  background: isHighlighted ? `${theme.color.secondary}11` : 'transparent',
+  background: isHighlighted ? transparentize(0.9, theme.color.secondary) : 'transparent',
   cursor: 'pointer',
+  'a:hover, button:hover': {
+    background: 'transparent',
+  },
 }));
 
 const NoResults = styled.div(({ theme }) => ({
@@ -124,7 +129,7 @@ const Result: FunctionComponent<
   const nameMatch = matches.find((match: Match) => match.key === 'name');
   const pathMatches = matches.filter((match: Match) => match.key === 'path');
   const label = (
-    <div>
+    <div className="search-result-item--label">
       <strong>
         <Highlight match={nameMatch}>{item.name}</Highlight>
       </strong>
@@ -184,9 +189,8 @@ export const SearchResults: FunctionComponent<{
   }) => {
     useEffect(() => {
       const handleEscape = (event: KeyboardEvent) => {
-        if (!enableShortcuts || isLoading) return;
-        if (event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) return;
-        if (event.key === 'Escape') {
+        if (!enableShortcuts || isLoading || event.repeat) return;
+        if (matchesModifiers(false, event) && matchesKeyCode('Escape', event)) {
           const target = event.target as Element;
           if (target?.id === 'storybook-explorer-searchfield') return; // handled by downshift
           event.preventDefault();
@@ -202,7 +206,7 @@ export const SearchResults: FunctionComponent<{
       <ResultsList {...getMenuProps()}>
         {results.length > 0 && !query && (
           <li>
-            <RootNode>Recently opened</RootNode>
+            <RootNode className="search-result-recentlyOpened">Recently opened</RootNode>
           </li>
         )}
         {results.length === 0 && query && (
@@ -221,6 +225,7 @@ export const SearchResults: FunctionComponent<{
                 {...result}
                 {...getItemProps({ key: index, index, item: result })}
                 isHighlighted={highlightedIndex === index}
+                className="search-result-back"
               >
                 <ActionIcon icon="arrowleft" />
                 <ActionLabel>Back to components</ActionLabel>
@@ -234,6 +239,7 @@ export const SearchResults: FunctionComponent<{
                 {...result}
                 {...getItemProps({ key: index, index, item: result })}
                 isHighlighted={highlightedIndex === index}
+                className="search-result-clearHistory"
               >
                 <ActionIcon icon="trash" />
                 <ActionLabel>Clear history</ActionLabel>
@@ -246,6 +252,7 @@ export const SearchResults: FunctionComponent<{
                 {...result}
                 {...getItemProps({ key: index, index, item: result })}
                 isHighlighted={highlightedIndex === index}
+                className="search-result-more"
               >
                 <ActionIcon icon="plus" />
                 <ActionLabel>Show {result.moreCount} more results</ActionLabel>
@@ -260,6 +267,7 @@ export const SearchResults: FunctionComponent<{
               {...result}
               {...getItemProps({ key, index, item: result })}
               isHighlighted={highlightedIndex === index}
+              className="search-result-item"
             />
           );
         })}

@@ -1,12 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Custom/Feature Module as Context with forRoot Component with default providers 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
->
+<storybook-wrapper>
   <storybook-chip
+    ng-reflect-display-text="My Chip"
     style="background-color: rgb(238, 238, 238);"
   >
     <span
@@ -24,16 +21,13 @@ exports[`Storyshots Custom/Feature Module as Context with forRoot Component with
       </span>
     </div>
   </storybook-chip>
-</storybook-dynamic-app-root>
+</storybook-wrapper>
 `;
 
 exports[`Storyshots Custom/Feature Module as Context with forRoot Component with overridden provider 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
->
+<storybook-wrapper>
   <storybook-chip
+    ng-reflect-display-text="My Chip"
     style="background-color: rgb(238, 238, 238);"
   >
     <span
@@ -51,16 +45,14 @@ exports[`Storyshots Custom/Feature Module as Context with forRoot Component with
       </span>
     </div>
   </storybook-chip>
-</storybook-dynamic-app-root>
+</storybook-wrapper>
 `;
 
 exports[`Storyshots Custom/Feature Module as Context with forRoot Component with self and dependencies declared in its feature module 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
->
-  <storybook-chips-group>
+<storybook-wrapper>
+  <storybook-chips-group
+    ng-reflect-chips="[object Object],[object Object"
+  >
     
     <storybook-chip
       class="chip"
@@ -109,5 +101,5 @@ exports[`Storyshots Custom/Feature Module as Context with forRoot Component with
        Remove All 
     </div>
   </storybook-chips-group>
-</storybook-dynamic-app-root>
+</storybook-wrapper>
 `;

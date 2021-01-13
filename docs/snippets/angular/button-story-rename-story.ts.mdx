@@ -3,12 +3,16 @@
 
 import Button from './button.component';
 
-export const Primary = () => ({
+export default {
+  title: 'Components/Button',
   component: Button,
+};
+
+export const Primary = () => ({
   props: {
     label: 'Button',
   },
 });
 
-Primary.storyName='I am the primary';
+Primary.storyName = 'I am the primary';
 ```

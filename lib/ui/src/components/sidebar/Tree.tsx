@@ -78,6 +78,7 @@ const Node = React.memo<NodeProps>(
         <LeafNode
           key={id}
           id={id}
+          className="sidebar-item"
           data-ref-id={refId}
           data-item-id={item.id}
           data-parent-id={item.parent}
@@ -99,13 +100,21 @@ const Node = React.memo<NodeProps>(
 
     if (isRoot(item)) {
       return (
-        <RootNode key={id} id={id} data-ref-id={refId} data-item-id={item.id} data-nodetype="root">
+        <RootNode
+          key={id}
+          id={id}
+          className="sidebar-subheading"
+          data-ref-id={refId}
+          data-item-id={item.id}
+          data-nodetype="root"
+        >
           <span>
             {item.prefix}
             {item.name}
           </span>
           <Action
             type="button"
+            className="sidebar-subheading-action"
             data-action="expand-all"
             data-expanded={isFullyExpanded}
             onClick={(event) => {
@@ -124,6 +133,7 @@ const Node = React.memo<NodeProps>(
       <BranchNode
         key={id}
         id={id}
+        className="sidebar-item"
         data-ref-id={refId}
         data-item-id={item.id}
         data-parent-id={item.parent}

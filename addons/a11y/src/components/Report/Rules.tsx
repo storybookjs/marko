@@ -71,8 +71,8 @@ const Rule: FunctionComponent<RuleProps> = ({ rule }) => {
   }
   return (
     <SizeMe refreshMode="debounce">
-      {({ size }: { size: { width: number; height: number } }) => (
-        <Item elementWidth={size.width}>
+      {({ size }) => (
+        <Item elementWidth={size.width || 0}>
           <StyledBadge status={badgeType}>{formatSeverityText(rule.impact)}</StyledBadge>
           <Message>{rule.message}</Message>
         </Item>

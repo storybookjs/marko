@@ -47,17 +47,32 @@ function getTsConfigOptions(tsConfigPath: Path) {
 }
 
 export function getAngularCliConfig(dirToSearch: string) {
-  const possibleConfigNames = ['angular.json', 'workspace.json'];
-  const possibleConfigPaths = possibleConfigNames.map((name) => path.join(dirToSearch, name));
+  let angularCliConfig;
+  try {
+    /**
+     * Apologies for the following line
+     * If there's a better way to do it, let's do it
+     */
+    /* eslint-disable global-require */
+    angularCliConfig = require('@nrwl/workspace').readWorkspaceConfig({
+      format: 'angularCli',
+    });
+  } catch (e) {
+    const possibleConfigNames = ['angular.json', 'workspace.json'];
+    const possibleConfigPaths = possibleConfigNames.map((name) => path.join(dirToSearch, name));
 
-  const validIndex = possibleConfigPaths.findIndex((configPath) => fs.existsSync(configPath));
+    const validIndex = possibleConfigPaths.findIndex((configPath) => fs.existsSync(configPath));
 
-  if (validIndex === -1) {
-    logger.error(`Could not find angular.json using ${possibleConfigPaths[0]}`);
-    return undefined;
+    if (validIndex === -1) {
+      logger.error(`Could not find angular.json using ${possibleConfigPaths[0]}`);
+      return undefined;
+    }
+
+    angularCliConfig = JSON.parse(
+      stripJsonComments(fs.readFileSync(possibleConfigPaths[validIndex], 'utf8'))
+    );
   }
-
-  return JSON.parse(stripJsonComments(fs.readFileSync(possibleConfigPaths[validIndex], 'utf8')));
+  return angularCliConfig;
 }
 
 export function getLeadingAngularCliProject(ngCliConfig: any) {

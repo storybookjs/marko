@@ -1,17 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots DocPipe Basic 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
->
-  <ng-component>
-    <div>
-      <h1>
-        DOCPIPE
-      </h1>
-    </div>
-  </ng-component>
-</storybook-dynamic-app-root>
+<storybook-wrapper>
+  <div>
+    <h1>
+      DOCPIPE
+    </h1>
+  </div>
+</storybook-wrapper>
 `;

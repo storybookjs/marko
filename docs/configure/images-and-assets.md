@@ -1,8 +1,8 @@
 ---
-title: 'Images and assets'
+title: 'Images, fonts, and assets'
 ---
 
-Components often rely on images, videos, and other assets to render as the user expects. There are many ways to use these assets in your story files.
+Components often rely on images, videos, fonts, and other assets to render as the user expects. There are many ways to use these assets in your story files.
 
 ### Import assets into stories
 
@@ -22,7 +22,7 @@ Afterwards you can use any asset in your stories:
 
 ### Serving static files via Storybook
 
-We recommend serving static files via Storybook to ensure that your components always have the assets they need to load.
+We recommend serving static files via Storybook to ensure that your components always have the assets they need to load. This technique is recommended for assets that your components often use like logos, fonts, and icons.
 
 Configure a directory (or a list of directories) where your assets live when starting Storybook. Use the`-s` flag in your npm script like so:
 

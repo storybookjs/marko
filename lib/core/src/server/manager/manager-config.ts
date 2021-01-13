@@ -14,14 +14,20 @@ import loadCustomPresets from '../common/custom-presets';
 import { typeScriptDefaults } from '../config/defaults';
 import { Presets, PresetsOptions, Ref, StorybookConfigOptions } from '../types';
 
-export const getAutoRefs = async (options: { configDir: string }): Promise<Ref[]> => {
+export const getAutoRefs = async (
+  options: { configDir: string },
+  disabledRefs: string[] = []
+): Promise<Ref[]> => {
   const location = await findUp('package.json', { cwd: options.configDir });
   const directory = path.dirname(location);
 
   const { dependencies, devDependencies } = await fs.readJSON(location);
+  const deps = Object.keys({ ...dependencies, ...devDependencies }).filter(
+    (dep) => !disabledRefs.includes(dep)
+  );
 
   const list = await Promise.all(
-    Object.keys({ ...dependencies, ...devDependencies }).map(async (d) => {
+    deps.map(async (d) => {
       try {
         const l = resolveFrom(directory, path.join(d, 'package.json'));
 
@@ -75,8 +81,34 @@ async function getManagerWebpackConfig(
   const typescriptOptions = await presets.apply('typescript', { ...typeScriptDefaults }, options);
   const babelOptions = await presets.apply('babel', {}, { ...options, typescriptOptions });
 
-  const autoRefs = await getAutoRefs(options);
-  const definedRefs = await presets.apply('refs', undefined, options);
+  const definedRefs: Record<string, any> | undefined = await presets.apply(
+    'refs',
+    undefined,
+    options
+  );
+
+  let disabledRefs: string[] = [];
+  if (definedRefs) {
+    disabledRefs = Object.entries(definedRefs)
+      .filter(([key, value]) => {
+        const { disable, disabled } = value;
+
+        if (disable || disabled) {
+          if (disabled) {
+            deprecatedDefinedRefDisabled();
+          }
+
+          delete definedRefs[key]; // Also delete the ref that is disabled in definedRefs
+
+          return true;
+        }
+
+        return false;
+      })
+      .map((ref) => ref[0]);
+  }
+
+  const autoRefs = await getAutoRefs(options, disabledRefs);
   const entries = await presets.apply('managerEntries', [], options);
 
   const refs: Record<string, Ref> = {};
@@ -93,18 +125,7 @@ async function getManagerWebpackConfig(
   }
 
   if (definedRefs) {
-    Object.entries(definedRefs).forEach(([key, value]: [string, any]) => {
-      const { disable, disabled } = value;
-
-      if (disable || disabled) {
-        if (disabled) {
-          deprecatedDefinedRefDisabled();
-        }
-
-        delete refs[key.toLowerCase()];
-        return;
-      }
-
+    Object.entries(definedRefs).forEach(([key, value]) => {
       const url = typeof value === 'string' ? value : value.url;
       const rest =
         typeof value === 'string'

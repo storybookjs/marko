@@ -7,7 +7,6 @@ export default {
 };
 
 export const Basic = (args) => ({
-  component: DocButtonComponent,
   props: args,
 });
 Basic.args = { label: 'Args test', isDisabled: false };

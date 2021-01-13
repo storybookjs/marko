@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-knobs",
-  "version": "6.1.0-rc.2",
+  "version": "6.2.0-alpha.13",
   "description": "Storybook Addon Prop Editor Component",
   "keywords": [
     "addon",
@@ -16,26 +16,33 @@
     "directory": "addons/knobs"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/ts3.9/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "dist/ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-rc.2",
-    "@storybook/api": "6.1.0-rc.2",
-    "@storybook/channels": "6.1.0-rc.2",
-    "@storybook/client-api": "6.1.0-rc.2",
-    "@storybook/components": "6.1.0-rc.2",
-    "@storybook/core-events": "6.1.0-rc.2",
-    "@storybook/theming": "6.1.0-rc.2",
+    "@storybook/addons": "6.2.0-alpha.13",
+    "@storybook/api": "6.2.0-alpha.13",
+    "@storybook/channels": "6.2.0-alpha.13",
+    "@storybook/client-api": "6.2.0-alpha.13",
+    "@storybook/components": "6.2.0-alpha.13",
+    "@storybook/core-events": "6.2.0-alpha.13",
+    "@storybook/theming": "6.2.0-alpha.13",
     "copy-to-clipboard": "^3.0.8",
     "core-js": "^3.0.1",
     "escape-html": "^1.0.3",
@@ -73,12 +80,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "38bb07161a72720766a1e9b2c9a1661bd3d819b0",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "9de487fa7b79cef77fd8de0d0357e8cf962dc776"
 }

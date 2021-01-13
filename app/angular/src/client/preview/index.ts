@@ -4,6 +4,7 @@ import { ClientStoryApi, Loadable } from '@storybook/addons';
 
 import './globals';
 import render from './render';
+import decorateStory from './decorateStory';
 import { IStorybookSection, StoryFnAngularReturnType } from './types';
 
 const framework = 'angular';
@@ -18,7 +19,7 @@ interface ClientApi extends ClientStoryApi<StoryFnAngularReturnType> {
   load: (...args: any[]) => void;
 }
 
-const api = start(render);
+const api = start(render, { decorateStory });
 
 export const storiesOf: ClientApi['storiesOf'] = (kind, m) => {
   return (api.clientApi.storiesOf(kind, m) as ReturnType<ClientApi['storiesOf']>).addParameters({
