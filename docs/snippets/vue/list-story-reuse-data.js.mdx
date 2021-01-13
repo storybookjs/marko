@@ -17,4 +17,8 @@ export const ManyItems = (args, { argTypes }) => ({
     </list>
     `,
 });
+ManyItems.args = {
+  Selected: Selected.args.itemProperty,
+  Unselected: Unselected.args.itemProperty,
+};
 ```
