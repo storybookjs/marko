@@ -15,7 +15,8 @@ export const {
 } = clientApi;
 
 const framework = 'rax';
-export const storiesOf = (...args) => clientApi.storiesOf(...args).addParameters({ framework });
-export const configure = (...args) => coreConfigure(framework, ...args);
+export const storiesOf = (...args: any) =>
+  clientApi.storiesOf(...args).addParameters({ framework });
+export const configure = (...args: any) => coreConfigure(framework, ...args);
 
 export { forceReRender };

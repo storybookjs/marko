@@ -5123,6 +5123,14 @@
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.3.tgz#7ee330ba7caafb98090bece86a5ee44115904c2c"
   integrity sha512-ewFXqrQHlFsgc09MK5jP5iR7vumV/BYayNC6PgJO2LPe8vrnNFyjQjSppfEngITi0qvfKtzFvgKymGheFM9UOA==
 
+"@types/rax@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@types/rax/-/rax-1.0.2.tgz#1a6121244a0ad31deecdcede2651efa4ec9ead2a"
+  integrity sha512-oB3tpuFhFc4osp2brErugGbInNQs15GSmE21PXh7LVMPwUaemBTMjzGxXrzgvoW/marD9sRxPJTkf53UJpjnnA==
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^3.0.2"
+
 "@types/reach__router@^1.3.5":
   version "1.3.6"
   resolved "https://registry.yarnpkg.com/@types/reach__router/-/reach__router-1.3.6.tgz#413417ce74caab331c70ce6a03a4c825188e4709"

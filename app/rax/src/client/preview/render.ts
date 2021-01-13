@@ -12,7 +12,12 @@ export default function renderMain({
   name,
   showMain,
   showError,
-  // forceRender,
+}: {
+  storyFn: Function;
+  kind: string;
+  name: string;
+  showMain: () => any;
+  showError: (input: { title: string; description: string }) => void;
 }) {
   const Element = storyFn;
 
@@ -29,6 +34,11 @@ export default function renderMain({
 
   showMain();
 
+  // There is something miscellaneous here, for now, more precisely on L23,
+  // as we are using the storyFn directly and not calling it, so `Element` is a
+  // function but according to `createElement` types, there is no signature
+  // taking a function as input.
+  // @ts-expect-error
   render(createElement(Element), rootElement, {
     driver: DriverDOM,
   });
