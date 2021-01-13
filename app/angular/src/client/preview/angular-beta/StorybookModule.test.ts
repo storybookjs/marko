@@ -1,65 +1,12 @@
 import { Component, EventEmitter, Input, NgModule, Output, Type } from '@angular/core';
-import { platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { TestBed } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
-import { RenderNgAppService } from './RenderNgAppService';
+import { ICollection } from '../types';
+import { getStorybookModuleMetadata } from './StorybookModule';
 
-jest.mock('@angular/platform-browser-dynamic');
-
-declare const document: Document;
-describe('RenderNgAppService', () => {
-  let renderNgAppService: RenderNgAppService;
-
-  beforeEach(async () => {
-    document.body.innerHTML = '<div id="root"></div>';
-    (platformBrowserDynamic as any).mockImplementation(platformBrowserDynamicTesting);
-    renderNgAppService = new RenderNgAppService();
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it('should initialize', () => {
-    expect(renderNgAppService).toBeDefined();
-  });
-
-  describe('render', () => {
-    it('should add storybook-wrapper for story template', async () => {
-      await renderNgAppService.render({
-        storyFnAngular: {
-          template: '🦊',
-          props: {},
-        },
-        forced: false,
-        parameters: {} as any,
-      });
-
-      expect(document.body.getElementsByTagName('storybook-wrapper')[0].innerHTML).toBe('🦊');
-    });
-
-    it('should add storybook-wrapper for story component', async () => {
-      @Component({ selector: 'foo', template: '🦊' })
-      class FooComponent {}
-
-      await renderNgAppService.render({
-        storyFnAngular: {
-          props: {},
-        },
-        forced: false,
-        parameters: {
-          component: FooComponent,
-        },
-      });
-
-      expect(document.body.getElementsByTagName('storybook-wrapper')[0].innerHTML).toBe(
-        '<foo>🦊</foo>'
-      );
-    });
-  });
-  describe('getNgModuleMetadata', () => {
+describe('StorybookModule', () => {
+  describe('getStorybookModuleMetadata', () => {
     describe('with simple component', () => {
       @Component({
         selector: 'foo',
@@ -98,7 +45,7 @@ describe('RenderNgAppService', () => {
           localFunction: () => 'localFunction',
         };
 
-        const ngModule = RenderNgAppService.getNgModuleMetadata(
+        const ngModule = getStorybookModuleMetadata(
           { storyFnAngular: { props }, parameters: { component: FooComponent } },
           new BehaviorSubject(props)
         );
@@ -130,7 +77,7 @@ describe('RenderNgAppService', () => {
           },
         };
 
-        const ngModule = RenderNgAppService.getNgModuleMetadata(
+        const ngModule = getStorybookModuleMetadata(
           { storyFnAngular: { props }, parameters: { component: FooComponent } },
           new BehaviorSubject(props)
         );
@@ -151,7 +98,7 @@ describe('RenderNgAppService', () => {
         };
         const storyProps$ = new BehaviorSubject(initialProps);
 
-        const ngModule = RenderNgAppService.getNgModuleMetadata(
+        const ngModule = getStorybookModuleMetadata(
           { storyFnAngular: { props: initialProps }, parameters: { component: FooComponent } },
           storyProps$
         );
@@ -186,7 +133,7 @@ describe('RenderNgAppService', () => {
         );
       });
 
-      it('should not override outputs if storyProps$ Subject emit', async () => {
+      it('should override outputs if storyProps$ Subject emit', async () => {
         let expectedOutputValue;
         let expectedOutputBindingValue;
         const initialProps = {
@@ -199,7 +146,7 @@ describe('RenderNgAppService', () => {
         };
         const storyProps$ = new BehaviorSubject(initialProps);
 
-        const ngModule = RenderNgAppService.getNgModuleMetadata(
+        const ngModule = getStorybookModuleMetadata(
           { storyFnAngular: { props: initialProps }, parameters: { component: FooComponent } },
           storyProps$
         );
@@ -209,10 +156,10 @@ describe('RenderNgAppService', () => {
         const newProps = {
           input: 'new input',
           output: () => {
-            expectedOutputValue = 'should not be called';
+            expectedOutputValue = 'should be called';
           },
           outputBindingPropertyName: () => {
-            expectedOutputBindingValue = 'should not be called';
+            expectedOutputBindingValue = 'should be called';
           },
         };
         storyProps$.next(newProps);
@@ -222,8 +169,43 @@ describe('RenderNgAppService', () => {
         fixture.nativeElement.querySelector('p#outputBindingPropertyName').click();
 
         expect(fixture.nativeElement.querySelector('p#input').innerHTML).toEqual(newProps.input);
-        expect(expectedOutputValue).toEqual('outputEmitted');
-        expect(expectedOutputBindingValue).toEqual('outputEmitted');
+        expect(expectedOutputValue).toEqual('should be called');
+        expect(expectedOutputBindingValue).toEqual('should be called');
+      });
+
+      it('should change template inputs if storyProps$ Subject emit', async () => {
+        const initialProps = {
+          color: 'red',
+          input: 'input',
+        };
+        const storyProps$ = new BehaviorSubject<ICollection>(initialProps);
+
+        const ngModule = getStorybookModuleMetadata(
+          {
+            storyFnAngular: {
+              props: initialProps,
+              template: '<p [style.color]="color"><foo [input]="input"></foo></p>',
+            },
+            parameters: { component: FooComponent },
+          },
+          storyProps$
+        );
+        const { fixture } = await configureTestingModule(ngModule);
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('p').style.color).toEqual('red');
+        expect(fixture.nativeElement.querySelector('p#input').innerHTML).toEqual(
+          initialProps.input
+        );
+
+        const newProps = {
+          color: 'black',
+          input: 'new input',
+        };
+        storyProps$.next(newProps);
+        fixture.detectChanges();
+
+        expect(fixture.nativeElement.querySelector('p').style.color).toEqual('black');
+        expect(fixture.nativeElement.querySelector('p#input').innerHTML).toEqual(newProps.input);
       });
     });
   });

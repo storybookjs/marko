@@ -5,7 +5,7 @@ import { TestBed } from '@angular/core/testing';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { addSerializer } from 'jest-specific-snapshot';
-import { RenderNgAppService } from '@storybook/angular/renderer';
+import { getStorybookModuleMetadata } from '@storybook/angular/renderer';
 import { BehaviorSubject } from 'rxjs';
 
 addSerializer(HTMLCommentSerializer);
@@ -14,7 +14,7 @@ addSerializer(AngularSnapshotSerializer);
 function getRenderedTree(story: any) {
   const currentStory = story.render();
 
-  const moduleMeta = RenderNgAppService.getNgModuleMetadata(
+  const moduleMeta = getStorybookModuleMetadata(
     { storyFnAngular: currentStory, parameters: story.parameters },
     new BehaviorSubject(currentStory.props)
   );

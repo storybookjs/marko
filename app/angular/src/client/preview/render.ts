@@ -1,5 +1,5 @@
 import { StoryFn } from '@storybook/addons';
-import { RenderNgAppService } from './angular-beta/RenderNgAppService';
+import { RendererService } from './angular-beta/RendererService';
 
 import { renderNgApp } from './angular/helpers';
 import { StoryFnAngularReturnType } from './types';
@@ -24,7 +24,7 @@ export default function render({
     return;
   }
 
-  RenderNgAppService.getInstance().render({
+  RendererService.getInstance().render({
     storyFnAngular: storyFn(),
     parameters,
     forced: forceRender,
