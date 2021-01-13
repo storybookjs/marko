@@ -4,9 +4,9 @@ import dedent from 'ts-dedent';
 import { logger } from '@storybook/client-logger';
 
 const rootEl = document.getElementById('root');
-let activeComponent = null; // currently loaded marko component.
-let activeTemplate = null; // template for the currently loaded component.
-let activeStoryFn = null; // used to determine if we've switched stories.
+let activeComponent: any = null; // currently loaded marko component.
+let activeTemplate: any = null; // template for the currently loaded component.
+let activeStoryFn: any = null; // used to determine if we've switched stories.
 
 export default function renderMain({
   storyFn,
@@ -15,7 +15,14 @@ export default function renderMain({
   showMain,
   showError,
   parameters,
-  // forceRender,
+}: // forceRender,
+{
+  storyFn: Function;
+  kind: string;
+  name: string;
+  showMain: () => any;
+  showError: (input: { title: string; description: string }) => void;
+  parameters: any;
 }) {
   const isSameStory = activeStoryFn === storyFn;
   const config = storyFn();
