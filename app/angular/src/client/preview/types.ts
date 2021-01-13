@@ -1,9 +1,3 @@
-import { StoryFn } from '@storybook/addons';
-
-export declare const moduleMetadata: (
-  metadata: Partial<NgModuleMetadata>
-) => (storyFn: StoryFn<StoryFnAngularReturnType>) => any;
-
 export interface NgModuleMetadata {
   declarations?: any[];
   entryComponents?: any[];

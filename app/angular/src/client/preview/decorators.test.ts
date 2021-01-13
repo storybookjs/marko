@@ -1,8 +1,18 @@
-import addons, { mockChannel } from '@storybook/addons';
+import addons, { mockChannel, StoryContext } from '@storybook/addons';
 
 import { Component } from '@angular/core';
 import { moduleMetadata } from './decorators';
 import { addDecorator, storiesOf, clearDecorators, getStorybook } from '.';
+
+const defaultContext: StoryContext = {
+  id: 'unspecified',
+  name: 'unspecified',
+  kind: 'unspecified',
+  parameters: {},
+  args: {},
+  argTypes: {},
+  globals: {},
+};
 
 class MockModule {}
 class MockModuleTwo {}
@@ -15,9 +25,12 @@ describe('moduleMetadata', () => {
     const result = moduleMetadata({
       imports: [MockModule],
       providers: [MockService],
-    })(() => ({
-      component: MockComponent,
-    }));
+    })(
+      () => ({
+        component: MockComponent,
+      }),
+      defaultContext
+    );
 
     expect(result).toEqual({
       component: MockComponent,
@@ -34,13 +47,16 @@ describe('moduleMetadata', () => {
   it('should combine with individual metadata on a story', () => {
     const result = moduleMetadata({
       imports: [MockModule],
-    })(() => ({
-      component: MockComponent,
-      moduleMetadata: {
-        imports: [MockModuleTwo],
-        providers: [MockService],
-      },
-    }));
+    })(
+      () => ({
+        component: MockComponent,
+        moduleMetadata: {
+          imports: [MockModuleTwo],
+          providers: [MockService],
+        },
+      }),
+      defaultContext
+    );
 
     expect(result).toEqual({
       component: MockComponent,
@@ -55,12 +71,15 @@ describe('moduleMetadata', () => {
   });
 
   it('should return the original metadata if passed null', () => {
-    const result = moduleMetadata(null)(() => ({
-      component: MockComponent,
-      moduleMetadata: {
-        providers: [MockService],
-      },
-    }));
+    const result = moduleMetadata(null)(
+      () => ({
+        component: MockComponent,
+        moduleMetadata: {
+          providers: [MockService],
+        },
+      }),
+      defaultContext
+    );
 
     expect(result).toEqual({
       component: MockComponent,
