@@ -1,3 +1,60 @@
+## 6.2.0-alpha.13 (January 13, 2021)
+
+### Features
+
+- Angular: Improve decorators ([#13507](https://github.com/storybookjs/storybook/pull/13507))
+
+### Maintenance
+
+- Angular: Fix flaky tests based on timezone ([#13609](https://github.com/storybookjs/storybook/pull/13609))
+- Angular: Use Nx function to read non-angularCli configs ([#13558](https://github.com/storybookjs/storybook/pull/13558))
+- Build: Move Preact E2E tests on a Node 12 executor ([#13582](https://github.com/storybookjs/storybook/pull/13582))
+- Addon-docs: Add missing types for Story doc block ([#13549](https://github.com/storybookjs/storybook/pull/13549))
+
+## 6.1.14 (January 12, 2021)
+
+### Bug Fixes
+
+- Core: Use fs-extra emptyDir so build works on docker volume ([#13474](https://github.com/storybookjs/storybook/pull/13474))
+- Addon-docs: Tighten preset webpack pattern for mdx stories ([#13476](https://github.com/storybookjs/storybook/pull/13476))
+- Typescript: Fix qs import in @storybook/client-api ([#13518](https://github.com/storybookjs/storybook/pull/13518))
+- CLI: Ensure --host option changes the network host ([#13521](https://github.com/storybookjs/storybook/pull/13521))
+- Svelte: Statically load docgen info for svelte components ([#13466](https://github.com/storybookjs/storybook/pull/13466))
+
+## 6.1.13 (January 12, 2021)
+
+NPM publish failed
+
+## 6.1.12 (January 12, 2021)
+
+### Bug Fixes
+
+- Addon-docs: Fix link not working cross origin ([#13022](https://github.com/storybookjs/storybook/pull/13022))
+- Addon-docs: Resolve babel-loader from storybook/core ([#13607](https://github.com/storybookjs/storybook/pull/13607))
+
+## 6.2.0-alpha.12 (January 12, 2021)
+
+### Bug Fixes
+
+- Addon-docs: Resolve babel-loader from storybook/core ([#13607](https://github.com/storybookjs/storybook/pull/13607))
+
+## 6.2.0-alpha.11 (January 11, 2021)
+
+### Features
+
+- HTML: Add CSF types ([#13519](https://github.com/storybookjs/storybook/pull/13519))
+- Addon-jest: Infer parameter from story filename if not provided ([#13535](https://github.com/storybookjs/storybook/pull/13535))
+- Server: Forward globals in fetchStoryHtml ([#13158](https://github.com/storybookjs/storybook/pull/13158))
+
+### Bug Fixes
+
+- Addon-docs: Fix link not working cross origin ([#13022](https://github.com/storybookjs/storybook/pull/13022))
+- Addon-docs: Use theme text color header anchors ([#13533](https://github.com/storybookjs/storybook/pull/13533))
+
+### Maintenance
+
+- Build: remove redundant checks for TS type declaration generation ([#13567](https://github.com/storybookjs/storybook/pull/13567))
+
 ## 6.2.0-alpha.10 (December 28, 2020)
 
 ### Bug Fixes

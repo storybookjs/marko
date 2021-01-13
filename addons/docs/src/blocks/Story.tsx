@@ -2,6 +2,7 @@ import React, { FunctionComponent, ReactNode, ElementType, ComponentProps } from
 import { MDXProvider } from '@mdx-js/react';
 import { resetComponents, Story as PureStory } from '@storybook/components';
 import { toId, storyNameFromExport } from '@storybook/csf';
+import { Args, BaseAnnotations } from '@storybook/addons';
 import { CURRENT_SELECTION } from './types';
 
 import { DocsContext, DocsContextProps } from './DocsContext';
@@ -10,26 +11,26 @@ export const storyBlockIdFromId = (storyId: string) => `story--${storyId}`;
 
 type PureStoryProps = ComponentProps<typeof PureStory>;
 
-interface CommonProps {
+type CommonProps = BaseAnnotations<Args, any> & {
   height?: string;
   inline?: boolean;
-}
+};
 
 type StoryDefProps = {
   name: string;
   children: ReactNode;
-} & CommonProps;
+};
 
 type StoryRefProps = {
   id?: string;
-} & CommonProps;
+};
 
 type StoryImportProps = {
   name: string;
   story: ElementType;
-} & CommonProps;
+};
 
-export type StoryProps = StoryDefProps | StoryRefProps;
+export type StoryProps = (StoryDefProps | StoryRefProps | StoryImportProps) & CommonProps;
 
 export const lookupStoryId = (
   storyName: string,

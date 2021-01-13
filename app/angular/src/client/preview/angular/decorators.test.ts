@@ -1,11 +1,13 @@
 import addons, { mockChannel } from '@storybook/addons';
 
+import { Component } from '@angular/core';
 import { moduleMetadata } from './decorators';
 import { addDecorator, storiesOf, clearDecorators, getStorybook } from '..';
 
 class MockModule {}
 class MockModuleTwo {}
 class MockService {}
+@Component({})
 class MockComponent {}
 
 describe('moduleMetadata', () => {

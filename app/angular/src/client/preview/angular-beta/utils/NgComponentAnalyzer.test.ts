@@ -13,7 +13,7 @@ import {
 import { TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 
-import { getComponentInputsOutputs, isDeclarable } from './NgComponentAnalyzer';
+import { getComponentInputsOutputs, isComponent, isDeclarable } from './NgComponentAnalyzer';
 
 describe('getComponentInputsOutputs', () => {
   it('should return empty if no I/O found', () => {
@@ -135,6 +135,27 @@ describe('isDeclarable', () => {
     class FooInjectable {}
 
     expect(isDeclarable(FooInjectable)).toEqual(false);
+  });
+});
+
+describe('isComponent', () => {
+  it('should return true with a Component', () => {
+    @Component({})
+    class FooComponent {}
+
+    expect(isComponent(FooComponent)).toEqual(true);
+  });
+
+  it('should return false with simple class', () => {
+    class FooPipe {}
+
+    expect(isComponent(FooPipe)).toEqual(false);
+  });
+  it('should return false with Directive', () => {
+    @Directive()
+    class FooDirective {}
+
+    expect(isComponent(FooDirective)).toEqual(false);
   });
 });
 
