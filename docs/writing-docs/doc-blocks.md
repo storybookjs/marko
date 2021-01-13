@@ -26,7 +26,7 @@ This is extremely useful, but it can be further expanded. Additional information
     'react/button-component-with-proptypes.js.mdx',
     'react/button-component-with-proptypes.ts.mdx',
     'angular/button-component-with-proptypes.ts.mdx',
-    'vue/button-component-with-proptypes.js.mdx'
+    'vue/button-component-with-proptypes.vue.mdx'
   ]}
 />
 
@@ -125,7 +125,7 @@ Looking at the following component:
     'react/button-implementation.js.mdx',
     'react/button-implementation.ts.mdx',
     'angular/button-implementation.ts.mdx',
-    'vue/button-implementation.js.mdx'
+    'vue/button-implementation.vue.mdx'
   ]}
 />
 
