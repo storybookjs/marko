@@ -26,16 +26,16 @@ export async function createDefaultWebpackConfig(
 
   let postcssOptions = {};
   if (customPostcssConfig) {
+    // TODO: Deprecate this and utilize the natural config lookup in postcss-loader
     logger.info(`=> Using custom ${path.basename(customPostcssConfig)}`);
     postcssOptions = {
-      config: {
-        path: path.dirname(customPostcssConfig),
-      },
+      config: customPostcssConfig,
     };
   } else {
     postcssOptions = {
-      ident: 'postcss',
-      postcss: {},
+      // Additional config is merged with config, so we have it disabled currently
+      // TODO: Utilize the natural config lookup in postcss-loader
+      config: false,
       plugins: () => [
         require('postcss-flexbugs-fixes'), // eslint-disable-line global-require
         autoprefixer({
@@ -64,7 +64,7 @@ export async function createDefaultWebpackConfig(
             },
             {
               loader: require.resolve('postcss-loader'),
-              options: postcssOptions,
+              options: { postcssOptions },
             },
           ],
         },
