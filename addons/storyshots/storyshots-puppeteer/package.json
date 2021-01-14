@@ -38,15 +38,15 @@
   "dependencies": {
     "@storybook/csf": "0.0.1",
     "@storybook/node-logger": "6.2.0-alpha.14",
-    "@types/jest-image-snapshot": "^2.8.0",
-    "@wordpress/jest-puppeteer-axe": "^1.5.0",
-    "core-js": "^3.0.1",
-    "jest-image-snapshot": "^4.0.2",
+    "@types/jest-image-snapshot": "^2.12.2",
+    "@wordpress/jest-puppeteer-axe": "^1.10.0",
+    "core-js": "^3.8.2",
+    "jest-image-snapshot": "^4.3.0",
     "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
     "@storybook/csf": "0.0.1",
-    "@types/puppeteer": "^2.0.0"
+    "@types/puppeteer": "^2.1.5"
   },
   "peerDependencies": {
     "@storybook/addon-storyshots": "6.2.0-alpha.14",

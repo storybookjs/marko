@@ -7,7 +7,7 @@
     "storybook": "start-storybook -p 9007"
   },
   "dependencies": {
-    "mithril": "^1.1.6"
+    "mithril": "^1.1.7"
   },
   "devDependencies": {
     "@storybook/addon-a11y": "6.2.0-alpha.14",
@@ -21,7 +21,7 @@
     "@storybook/addons": "6.2.0-alpha.14",
     "@storybook/mithril": "6.2.0-alpha.14",
     "@storybook/source-loader": "6.2.0-alpha.14",
-    "webpack": "^4.44.2"
+    "webpack": "^4.46.0"
   },
   "storybook": {
     "chromatic": {

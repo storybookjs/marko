@@ -30,11 +30,11 @@
     "@storybook/core-events": "6.2.0-alpha.14",
     "@storybook/source-loader": "6.2.0-alpha.14",
     "@storybook/web-components": "6.2.0-alpha.14",
-    "babel-loader": "^8.0.5",
-    "eventemitter3": "^4.0.0",
+    "babel-loader": "^8.2.2",
+    "eventemitter3": "^4.0.7",
     "format-json": "^1.0.3",
-    "global": "^4.3.2",
-    "lit-element": "^2.2.1"
+    "global": "^4.4.0",
+    "lit-element": "^2.4.0"
   },
   "storybook": {
     "chromatic": {

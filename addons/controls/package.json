@@ -45,7 +45,7 @@
     "@storybook/components": "6.2.0-alpha.14",
     "@storybook/node-logger": "6.2.0-alpha.14",
     "@storybook/theming": "6.2.0-alpha.14",
-    "core-js": "^3.0.1",
+    "core-js": "^3.8.2",
     "ts-dedent": "^2.0.0"
   },
   "peerDependencies": {

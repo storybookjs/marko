@@ -42,8 +42,8 @@
     "@storybook/core-events": "6.2.0-alpha.14",
     "@storybook/router": "6.2.0-alpha.14",
     "@storybook/theming": "6.2.0-alpha.14",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
+    "core-js": "^3.8.2",
+    "global": "^4.4.0",
     "regenerator-runtime": "^0.13.7"
   },
   "peerDependencies": {

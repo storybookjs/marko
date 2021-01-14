@@ -19,7 +19,7 @@
     "test": "yarn lint"
   },
   "dependencies": {
-    "marko": "^4.18.39",
+    "marko": "^4.23.11",
     "marko-starter": "^2.1.0"
   },
   "devDependencies": {
@@ -30,8 +30,8 @@
     "@storybook/addons": "6.2.0-alpha.14",
     "@storybook/marko": "6.2.0-alpha.14",
     "@storybook/source-loader": "6.2.0-alpha.14",
-    "prettier": "~2.0.5",
-    "webpack": "^4.44.2"
+    "prettier": "~2.2.1",
+    "webpack": "^4.46.0"
   },
   "storybook": {
     "chromatic": {

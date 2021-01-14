@@ -43,7 +43,7 @@
     "@storybook/api": "6.2.0-alpha.14",
     "@storybook/client-api": "6.2.0-alpha.14",
     "@storybook/components": "6.2.0-alpha.14",
-    "core-js": "^3.0.1"
+    "core-js": "^3.8.2"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
