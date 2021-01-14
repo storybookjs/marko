@@ -78,7 +78,7 @@ import { number, text } from '@storybook/addon-knobs';
 
 export const Reflow = () => {
   const count = number('Count', 10, { min: 0, max: 100, range: true });
-  const label = number('Label', 'reflow');
+  const label = text('Label', 'reflow');
   return (
     <>
       {range(count).map((i) => (

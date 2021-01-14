@@ -37,9 +37,9 @@ storiesOf('ngrx/Store', module)
       declarations: [WithStoreComponent],
     })
   )
-  .add('With component', () => ({
+  .add('With component', () => ({}), {
     component: WithStoreComponent,
-  }))
+  })
   .add('With template', () => ({
     template: `<storybook-comp-with-store></storybook-comp-with-store>`,
   }));

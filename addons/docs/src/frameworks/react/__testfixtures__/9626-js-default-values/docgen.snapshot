@@ -1,8 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`react component properties 9626-js-default-values 1`] = `
-"import React from 'react'; // eslint-disable-next-line react/prop-types
-
+"import React from 'react';
 export const Tag = ({
   title = 'Beta'
 }) => /*#__PURE__*/React.createElement(\\"div\\", null, title);

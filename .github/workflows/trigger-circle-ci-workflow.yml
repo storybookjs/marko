@@ -1,0 +1,21 @@
+name: Trigger CircleCI workflow
+
+on:
+  pull_request:
+    types: [labeled]
+
+jobs:
+  trigger:
+    if: github.event.label.name == 'run e2e extended test suite' && github.event.pull_request.head.repo.fork == false
+    name: Run workflow with all e2e tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Make request to CircleCI
+        run: >
+          curl --request POST
+          --url https://circleci.com/api/v2/project/gh/storybookjs/storybook/pipeline
+          --header 'Circle-Token: '"$CIRCLE_CI_TOKEN"' '
+          --header 'content-type: application/json'
+          --data '{"branch":"${{ github.event.pull_request.head.ref }}"}'
+        env:
+          CIRCLE_CI_TOKEN: ${{ secrets.CIRCLE_CI_TOKEN }}

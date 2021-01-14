@@ -8,10 +8,7 @@ export default {
   },
 };
 
-export const ComponentWithSeparateTemplate = () => ({
-  component: AppComponent,
-  props: {},
-});
+export const ComponentWithSeparateTemplate = () => ({});
 
-ComponentWithSeparateTemplate.storyName = 'Component with separate template';
+ComponentWithSeparateTemplate.storyName = 'Component with fullscreen parameters';
 ComponentWithSeparateTemplate.parameters = { docs: { iframeHeight: 400 } };

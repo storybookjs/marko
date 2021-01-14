@@ -18,7 +18,6 @@ export default {
 } as Meta;
 
 const Template: Story<Header> = (args: Header) => ({
-  component: Header,
   props: args,
 });
 

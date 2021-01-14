@@ -31,4 +31,5 @@ module.exports = {
     'jest-preset-angular/build/HTMLCommentSerializer.js',
   ],
   setupFilesAfterEnv: ['./jest-config/setup.ts'],
+  testPathIgnorePatterns: ['app.component.spec.ts'],
 };

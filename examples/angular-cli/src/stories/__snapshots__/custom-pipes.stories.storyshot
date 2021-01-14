@@ -1,29 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Custom/Pipes Simple 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
->
-  <storybook-name>
+<storybook-wrapper>
+  <storybook-name
+    ng-reflect-field="foobar"
+  >
     <h1>
       CustomPipe: foobar
     </h1>
   </storybook-name>
-</storybook-dynamic-app-root>
+</storybook-wrapper>
 `;
 
 exports[`Storyshots Custom/Pipes With Knobs 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
->
-  <storybook-name>
+<storybook-wrapper>
+  <storybook-name
+    ng-reflect-field="foobar"
+  >
     <h1>
       CustomPipe: foobar
     </h1>
   </storybook-name>
-</storybook-dynamic-app-root>
+</storybook-wrapper>
 `;

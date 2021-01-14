@@ -1,5 +1,6 @@
 import { logger } from '@storybook/node-logger';
 import open from 'better-opn';
+import chalk from 'chalk';
 import express, { Express, Router } from 'express';
 import { pathExists, readFile } from 'fs-extra';
 import http from 'http';
@@ -16,12 +17,14 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { NextHandleFunction } from 'connect';
+import { FileSystemCache } from 'file-system-cache';
 import { getMiddleware } from './utils/middleware';
 import { logConfig } from './logConfig';
 import loadConfig from './config';
 import loadManagerConfig from './manager/manager-config';
 import { resolvePathInStorybookCache } from './utils/resolve-path-in-sb-cache';
 import { getPrebuiltDir } from './utils/prebuilt-manager';
+import { parseStaticDir } from './utils/static-files';
 import { ManagerResult, PreviewResult } from './types';
 
 const defaultFavIcon = require.resolve('./public/favicon.ico');
@@ -77,31 +80,27 @@ async function getServer(
 }
 
 async function useStatics(router: any, options: { staticDir?: string[] }) {
-  const { staticDir } = options;
-
   let hasCustomFavicon = false;
 
-  if (staticDir && staticDir.length) {
+  if (options.staticDir && options.staticDir.length > 0) {
     await Promise.all(
-      staticDir.map(async (dir) => {
-        const [currentStaticDir, staticEndpoint] = dir.split(':').concat('/');
-        const localStaticPath = path.resolve(currentStaticDir);
+      options.staticDir.map(async (dir) => {
+        try {
+          const { staticDir, staticPath, targetEndpoint } = await parseStaticDir(dir);
+          logger.info(
+            chalk`=> Serving static files from {cyan ${staticDir}} at {cyan ${targetEndpoint}}`
+          );
+          router.use(targetEndpoint, express.static(staticPath, { index: false }));
 
-        if (!(await pathExists(localStaticPath))) {
-          logger.error(`Error: no such directory to load static files: ${localStaticPath}`);
-          process.exit(-1);
-        }
-
-        logger.info(
-          `=> Loading static files from: ${localStaticPath} and serving at ${staticEndpoint} .`
-        );
-        router.use(staticEndpoint, express.static(localStaticPath, { index: false }));
-
-        const faviconPath = path.resolve(localStaticPath, 'favicon.ico');
-
-        if (await pathExists(faviconPath)) {
-          hasCustomFavicon = true;
-          router.use(favicon(faviconPath));
+          if (!hasCustomFavicon && targetEndpoint === '/') {
+            const faviconPath = path.join(staticPath, 'favicon.ico');
+            if (await pathExists(faviconPath)) {
+              hasCustomFavicon = true;
+              router.use(favicon(faviconPath));
+            }
+          }
+        } catch (e) {
+          logger.warn(e.message);
         }
       })
     );
@@ -171,7 +170,8 @@ const useProgressReporting = async (
     value = Math.max(newValue, value); // never go backwards
     const progress = { value, message: message.charAt(0).toUpperCase() + message.slice(1) };
     if (message === 'building') {
-      const counts = arg3.match(/(\d+)\/(\d+)/) || [];
+      // arg3 undefined in webpack5
+      const counts = (arg3 && arg3.match(/(\d+)\/(\d+)/)) || [];
       const complete = parseInt(counts[1], 10);
       const total = parseInt(counts[2], 10);
       if (!Number.isNaN(complete) && !Number.isNaN(total)) {
@@ -192,8 +192,25 @@ const useProgressReporting = async (
     reportProgress(progress);
   };
 
-  const modulesCount = (await options.cache?.get('modulesCount')) || 1000;
+  const modulesCount = (await options.cache?.get('modulesCount').catch(() => {})) || 1000;
   new ProgressPlugin({ handler, modulesCount }).apply(compiler);
+};
+
+const useManagerCache = async (fsc: FileSystemCache, managerConfig: webpack.Configuration) => {
+  // Drop the `cache` property because it'll change as a result of writing to the cache.
+  const { cache: _, ...baseConfig } = managerConfig;
+  const configString = stringify(baseConfig);
+  const cachedConfig = await fsc.get('managerConfig').catch(() => {});
+  await fsc.set('managerConfig', configString);
+  return configString === cachedConfig;
+};
+
+const clearManagerCache = async (fsc: FileSystemCache) => {
+  if (fsc && fsc.fileExists('managerConfig')) {
+    await fsc.remove('managerConfig');
+    return true;
+  }
+  return false;
 };
 
 const startManager = async ({
@@ -220,33 +237,30 @@ const startManager = async ({
       logConfig('Manager webpack config', managerConfig);
     }
 
-    if (options.cache) {
+    if (options.cache && !options.smokeTest) {
       if (options.managerCache) {
-        // Drop the `cache` property because it'll change as a result of writing to the cache.
-        const { cache: _, ...baseConfig } = managerConfig;
-        const configString = stringify(baseConfig);
-        const cachedConfig = await options.cache.get('managerConfig');
-        options.cache.set('managerConfig', configString);
-        if (configString === cachedConfig && (await pathExists(outputDir))) {
+        const [useCache, hasOutput] = await Promise.all([
+          // must run even if outputDir doesn't exist, otherwise the 2nd run won't use cache
+          useManagerCache(options.cache, managerConfig),
+          pathExists(outputDir),
+        ]);
+        if (useCache && hasOutput) {
           logger.info('=> Using cached manager');
           managerConfig = null;
         }
-      } else {
-        logger.info('=> Removing cached managerConfig');
-        options.cache.remove('managerConfig');
+      } else if (await clearManagerCache(options.cache)) {
+        logger.info('=> Cleared cached manager config');
       }
     }
   }
 
   if (!managerConfig) {
-    // FIXME: This object containing default values should match ManagerResult
-    // @ts-ignore
-    return { managerStats: {}, managerTotalTime: 0 } as ManagerResult;
+    return {};
   }
 
   const compiler = webpack(managerConfig);
   const middleware = webpackDevMiddleware(compiler, {
-    publicPath: managerConfig.output.publicPath,
+    publicPath: managerConfig.output?.publicPath,
     writeToDisk: true,
     watchOptions: {
       aggregateTimeout: 2000,
@@ -264,11 +278,27 @@ const startManager = async ({
     next();
   });
 
+  // Used to report back any client-side (runtime) errors
+  router.post('/runtime-error', express.json(), (request, response) => {
+    if (request.body?.error || request.body?.message) {
+      logger.error('Runtime error! Check your browser console.');
+      logger.error(request.body.error?.stack || request.body.message || request.body);
+      if (request.body.origin === 'manager') clearManagerCache(options.cache);
+    }
+    response.sendStatus(200);
+  });
+
   router.use(middleware);
 
   const managerStats: Stats = await new Promise((resolve) => middleware.waitUntilValid(resolve));
-  if (!managerStats) throw new Error('no stats after building preview');
-  if (managerStats.hasErrors()) throw managerStats;
+  if (!managerStats) {
+    await clearManagerCache(options.cache);
+    throw new Error('no stats after building manager');
+  }
+  if (managerStats.hasErrors()) {
+    await clearManagerCache(options.cache);
+    throw managerStats;
+  }
   return { managerStats, managerTotalTime: process.hrtime(startTime) };
 };
 
@@ -279,9 +309,7 @@ const startPreview = async ({
   outputDir,
 }: any): Promise<PreviewResult> => {
   if (options.ignorePreview) {
-    // FIXME: This object containing default values should match PreviewResult
-    // @ts-ignore
-    return { previewStats: {}, previewTotalTime: 0 } as PreviewResult;
+    return {};
   }
 
   const previewConfig = await loadConfig({
@@ -328,6 +356,13 @@ const startPreview = async ({
   return { previewStats, previewTotalTime: process.hrtime(startTime) };
 };
 
+export function getServerAddresses(port: number, host: string, proto: string) {
+  return {
+    address: `${proto}://localhost:${port}/`,
+    networkAddress: `${proto}://${host || ip.address()}:${port}/`,
+  };
+}
+
 export async function storybookDevServer(options: any) {
   const app = express();
   const server = await getServer(app, options);
@@ -357,8 +392,7 @@ export async function storybookDevServer(options: any) {
 
   const { port, host } = options;
   const proto = options.https ? 'https' : 'http';
-  const address = `${proto}://${host || 'localhost'}:${port}/`;
-  const networkAddress = `${proto}://${ip.address()}:${port}/`;
+  const { address, networkAddress } = getServerAddresses(port, host, proto);
 
   await new Promise((resolve, reject) => {
     // FIXME: Following line doesn't match TypeScript signature at all 🤔
@@ -386,7 +420,7 @@ export async function storybookDevServer(options: any) {
   ]);
 
   // TODO #13083 Remove this when compiling the preview is fast enough
-  if (!options.ci) openInBrowser(address);
+  if (!options.ci) openInBrowser(networkAddress);
 
   return { ...previewResult, ...managerResult, address, networkAddress };
 }

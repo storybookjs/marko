@@ -34,7 +34,7 @@ storiesOf('Button', module)
     },
   }))
   .add('with some emoji', () => ({
-    template: `<storybook-button-component [text]="text" (onClick)="onClick($event)"></storybook-button-component>`,
+    template: `<storybook-button-component [text]="text" (onClick)="onClick($event)"></storybook-button-component><storybook-button-component [text]="text" (onClick)="onClick($event)"></storybook-button-component>`,
     props: {
       text: '😀 😎 👍 💯',
       onClick: () => {},

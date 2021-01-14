@@ -5,6 +5,10 @@ import remarkExternalLinks from 'remark-external-links';
 // @ts-ignore
 import createCompiler from '../../mdx/mdx-compiler-plugin';
 
+const resolvedBabelLoader = require.resolve('babel-loader', {
+  paths: [require.resolve('@storybook/core')],
+});
+
 // for frameworks that are not working with react, we need to configure
 // the jsx to transpile mdx, for now there will be a flag for that
 // for more complex solutions we can find alone that we need to add '@babel/plugin-transform-react-jsx'
@@ -66,7 +70,7 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
         test: /\.md$/,
         use: [
           {
-            loader: require.resolve('babel-loader'),
+            loader: resolvedBabelLoader,
             options: createBabelOptions({ babelOptions, mdxBabelOptions, configureJSX }),
           },
           {
@@ -89,7 +93,7 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
           include: new RegExp(`node_modules\\${path.sep}acorn-jsx`),
           use: [
             {
-              loader: require.resolve('babel-loader'),
+              loader: resolvedBabelLoader,
               options: {
                 presets: [[require.resolve('@babel/preset-env'), { modules: 'commonjs' }]],
               },
@@ -97,10 +101,10 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
           ],
         },
         {
-          test: /\.(stories|story).mdx$/,
+          test: /\.(stories|story)\.mdx$/,
           use: [
             {
-              loader: require.resolve('babel-loader'),
+              loader: resolvedBabelLoader,
               options: createBabelOptions({ babelOptions, mdxBabelOptions, configureJSX }),
             },
             {
@@ -114,10 +118,10 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
         },
         {
           test: /\.mdx$/,
-          exclude: /\.(stories|story).mdx$/,
+          exclude: /\.(stories|story)\.mdx$/,
           use: [
             {
-              loader: require.resolve('babel-loader'),
+              loader: resolvedBabelLoader,
               options: createBabelOptions({ babelOptions, mdxBabelOptions, configureJSX }),
             },
             {
@@ -132,19 +136,4 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
   };
 
   return result;
-}
-
-export function managerEntries(entry: any[] = [], options: any) {
-  return [...entry, require.resolve('../../register')];
-}
-
-export function config(entry: any[] = [], options: any = {}) {
-  const { framework } = options;
-  const docsConfig = [require.resolve('./config')];
-  try {
-    docsConfig.push(require.resolve(`../${framework}/config`));
-  } catch (err) {
-    // there is no custom config for the user's framework, do nothing
-  }
-  return [...docsConfig, ...entry];
 }

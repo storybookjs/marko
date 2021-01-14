@@ -131,3 +131,57 @@ export const customBrandImage = () => {
     </ThemeProvider>
   );
 };
+
+export const customBrandImageTall = () => {
+  const theme = useTheme() as Theme;
+  return (
+    <ThemeProvider
+      theme={{
+        ...theme,
+        brand: {
+          title: 'My Title',
+          url: 'https://example.com',
+          image: 'https://via.placeholder.com/100x150',
+        },
+      }}
+    >
+      <Heading menu={menuItems} />
+    </ThemeProvider>
+  );
+};
+
+export const customBrandImageUnsizedSVG = () => {
+  const theme = useTheme() as Theme;
+  return (
+    <ThemeProvider
+      theme={{
+        ...theme,
+        brand: {
+          title: 'My Title',
+          url: 'https://example.com',
+          image: 'https://s.cdpn.io/91525/potofgold.svg',
+        },
+      }}
+    >
+      <Heading menu={menuItems} />
+    </ThemeProvider>
+  );
+};
+
+export const noBrand = () => {
+  const theme = useTheme() as Theme;
+  return (
+    <ThemeProvider
+      theme={{
+        ...theme,
+        brand: {
+          title: null,
+          url: null,
+          image: null,
+        },
+      }}
+    >
+      <Heading menu={menuItems} />
+    </ThemeProvider>
+  );
+};

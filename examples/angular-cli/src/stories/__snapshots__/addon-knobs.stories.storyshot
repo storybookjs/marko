@@ -1,12 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Addon/Knobs All knobs 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
->
-  <storybook-simple-knobs-component>
+<storybook-wrapper>
+  <storybook-simple-knobs-component
+    ng-reflect-border="deeppink"
+    ng-reflect-fruit="apples"
+    ng-reflect-items="Laptop,Book,Whiskey"
+    ng-reflect-name="Jane"
+    ng-reflect-nice="true"
+    ng-reflect-price="2.25"
+    ng-reflect-stock="20"
+    ng-reflect-today="1487548800000"
+  >
     <div
       ng-reflect-ng-style="[object Object]"
       style="border: 2px dotted deeppink; border-radius: 8px;"
@@ -15,7 +20,7 @@ exports[`Storyshots Addon/Knobs All knobs 1`] = `
         My name is Jane,
       </h1>
       <h3>
-        today is Jan 20, 2017
+        today is Feb 20, 2017
       </h3>
       
       <p>
@@ -48,42 +53,30 @@ exports[`Storyshots Addon/Knobs All knobs 1`] = `
       
     </div>
   </storybook-simple-knobs-component>
-</storybook-dynamic-app-root>
+</storybook-wrapper>
 `;
 
 exports[`Storyshots Addon/Knobs Simple 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
->
-  <ng-component>
-    <h1>
-       This is a template 
-    </h1>
-    <storybook-simple-knobs-component
-      ng-reflect-name="John Doe"
-      ng-reflect-phone-number="555-55-55"
-    >
-      <div>
-        I am John Doe and I'm  years old.
-      </div>
-      <div>
-        Phone Number: 555-55-55
-      </div>
-    </storybook-simple-knobs-component>
-  </ng-component>
-</storybook-dynamic-app-root>
+<storybook-wrapper>
+  <h1>
+     This is a template 
+  </h1><storybook-simple-knobs-component
+    ng-reflect-age="0"
+    ng-reflect-name="John Doe"
+    ng-reflect-phone-number="555-55-55"
+  >
+    <div>
+      I am John Doe and I'm 0 years old.
+    </div>
+    <div>
+      Phone Number: 555-55-55
+    </div>
+  </storybook-simple-knobs-component>
+</storybook-wrapper>
 `;
 
 exports[`Storyshots Addon/Knobs XSS safety 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
->
-  <ng-component>
-    &lt;img src=x onerror="alert('XSS Attack')" &gt;
-  </ng-component>
-</storybook-dynamic-app-root>
+<storybook-wrapper>
+  &lt;img src=x onerror="alert('XSS Attack')" &gt;
+</storybook-wrapper>
 `;

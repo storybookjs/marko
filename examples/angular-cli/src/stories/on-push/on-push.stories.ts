@@ -4,10 +4,10 @@ import { OnPushBoxComponent } from './on-push-box.component';
 export default {
   title: 'Core/OnPush',
   decorators: [withKnobs],
+  component: OnPushBoxComponent,
 };
 
 export const ClassSpecifiedComponentWithOnPushAndKnobs = () => ({
-  component: OnPushBoxComponent,
   props: {
     word: text('Word', 'OnPush'),
     bgColor: color('Box color', '#FFF000'),

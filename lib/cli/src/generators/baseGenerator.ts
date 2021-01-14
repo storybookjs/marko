@@ -15,6 +15,8 @@ export interface FrameworkOptions {
   staticDir?: string;
   addScripts?: boolean;
   addComponents?: boolean;
+  addBabel?: boolean;
+  addESLint?: boolean;
 }
 
 export type Generator = (
@@ -29,6 +31,8 @@ const defaultOptions: FrameworkOptions = {
   staticDir: undefined,
   addScripts: true,
   addComponents: true,
+  addBabel: true,
+  addESLint: false,
 };
 
 export async function baseGenerator(
@@ -38,7 +42,15 @@ export async function baseGenerator(
   framework: SupportedFrameworks,
   options: FrameworkOptions = defaultOptions
 ) {
-  const { extraAddons, extraPackages, staticDir, addScripts, addComponents } = {
+  const {
+    extraAddons,
+    extraPackages,
+    staticDir,
+    addScripts,
+    addComponents,
+    addBabel,
+    addESLint,
+  } = {
     ...defaultOptions,
     ...options,
   };
@@ -67,7 +79,7 @@ export async function baseGenerator(
   }
 
   const packageJson = packageManager.retrievePackageJson();
-  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
+  const babelDependencies = addBabel ? await getBabelDependencies(packageManager, packageJson) : [];
   packageManager.addDependencies({ ...npmOptions, packageJson }, [
     ...versionedPackages,
     ...babelDependencies,
@@ -78,5 +90,9 @@ export async function baseGenerator(
       port: 6006,
       staticFolder: staticDir,
     });
+  }
+
+  if (addESLint) {
+    packageManager.addESLintConfig();
   }
 }

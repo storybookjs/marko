@@ -1,10 +1,9 @@
-/* eslint-env browser */
-
 import { useStorybookApi } from '@storybook/api';
 import { styled } from '@storybook/theming';
 import { Icons } from '@storybook/components';
 import Downshift, { DownshiftState, StateChangeOptions } from 'downshift';
 import Fuse, { FuseOptions } from 'fuse.js';
+import { document } from 'global';
 import { transparentize } from 'polished';
 import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 
@@ -22,6 +21,7 @@ import {
   isCloseType,
 } from './types';
 import { searchItem } from './utils';
+import { matchesKeyCode, matchesModifiers } from '../../keybinding';
 
 const DEFAULT_MAX_SEARCH_RESULTS = 50;
 
@@ -175,9 +175,13 @@ export const Search = React.memo<{
 
     useEffect(() => {
       const focusSearch = (event: KeyboardEvent) => {
-        if (!enableShortcuts || isLoading || !inputRef.current) return;
-        if (event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) return;
-        if (event.key === '/' && inputRef.current !== document.activeElement) {
+        if (!enableShortcuts || isLoading || event.repeat) return;
+        if (!inputRef.current || inputRef.current === document.activeElement) return;
+        if (
+          // Shift is required to type `/` on some keyboard layouts
+          matchesModifiers({ ctrl: false, alt: false, meta: false }, event) &&
+          matchesKeyCode('Slash', event)
+        ) {
           inputRef.current.focus();
           event.preventDefault();
         }
