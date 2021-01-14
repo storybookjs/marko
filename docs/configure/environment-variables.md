@@ -60,3 +60,19 @@ You can also use specific files for specific modes. Add a <code>.env.development
 You can also pass these environment variables when you are [building your Storybook](../workflows/publish-storybook.md) with `build-storybook`.
 
 Then they'll be hard coded to the static version of your Storybook.
+
+### Using environment variables to choose the browser
+
+Storybook allows you to choose the browser you want to preview your stories. Either through an `.env` file entry or directly in your `storybook` script.
+
+The table below lists the available options:
+
+| Browser  | Example              |
+|----------|----------------------|
+| Safari   | `BROWSER="safari"`   |
+| Firefox  | `BROWSER="firefox"`  |
+| Chromium | `BROWSER="chromium"` |
+
+<div class="aside">
+Note: By default Storybook will open a new Chrome window as part of its startup process. If you don't have Chrome installed, make sure to include one of the following options, or set your default browser accordingly.
+</div>
