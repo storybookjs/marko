@@ -1,3 +1,16 @@
+## 6.2.0-alpha.14 (January 14, 2021)
+
+### Bug Fixes
+
+- CLI: Fix sb init prompt when framework type is undetected ([#13520](https://github.com/storybookjs/storybook/pull/13520))
+
+### Maintenance
+
+- Rax: Migrate to TS ([#13450](https://github.com/storybookjs/storybook/pull/13450))
+- Riot: Migrate to TS ([#13447](https://github.com/storybookjs/storybook/pull/13447))
+- Marionette: Migrate to TS ([#13448](https://github.com/storybookjs/storybook/pull/13448))
+- Marko: Migrate to TS ([#13449](https://github.com/storybookjs/storybook/pull/13449))
+
 ## 6.2.0-alpha.13 (January 13, 2021)
 
 ### Features
