@@ -82,7 +82,7 @@ export const INITIAL_VIEWPORTS: ViewportMap = {
     type: 'mobile',
   },
   iphone12promax: {
-    name: 'iphone 12 Pro Max',
+    name: 'iPhone 12 Pro Max',
     styles: {
       height: '926px',
       width: '428px',
