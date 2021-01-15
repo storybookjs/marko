@@ -50,7 +50,7 @@
     "fork-ts-checker-webpack-plugin": "^4.1.6",
     "global": "^4.4.0",
     "postcss": "^7.0.35",
-    "postcss-loader": "^4.1.0",
+    "postcss-loader": "npm:@phated/postcss-loader@4.2.0-phated.1",
     "raw-loader": "^4.0.2",
     "react": "16.14.0",
     "react-dom": "16.14.0",
