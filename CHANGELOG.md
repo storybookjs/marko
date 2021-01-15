@@ -1,3 +1,19 @@
+## 6.2.0-alpha.15 (January 15, 2021)
+
+### Features
+
+- Addon-actions: Normalize args ([#13624](https://github.com/storybookjs/storybook/pull/13624))
+- Addon-viewport: Add viewports of the latest iPhones ([#13176](https://github.com/storybookjs/storybook/pull/13176))
+
+### Maintenance
+
+- Maintenance: Configure Renovate ([#13641](https://github.com/storybookjs/storybook/pull/13641))
+
+### Dependency Upgrades
+
+- Dependencies: 6.2 non-breaking package upgrades ([#13631](https://github.com/storybookjs/storybook/pull/13631))
+- Dependencies: Update postcss-loader to ^4.1.0 ([#13640](https://github.com/storybookjs/storybook/pull/13640))
+
 ## 6.2.0-alpha.14 (January 14, 2021)
 
 ### Bug Fixes
