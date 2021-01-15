@@ -229,8 +229,7 @@
   },
   "pr-log": {
     "skipLabels": [
-      "cleanup",
-      "doc-dependencies:update"
+      "cleanup"
     ],
     "validLabels": [
       [
@@ -252,10 +251,6 @@
       [
         "maintenance",
         "Maintenance"
-      ],
-      [
-        "dependencies:update",
-        "Dependency Upgrades"
       ],
       [
         "dependencies",
