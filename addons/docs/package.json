@@ -92,6 +92,7 @@
     "@babel/core": "^7.12.10",
     "@emotion/core": "^10.1.1",
     "@emotion/styled": "^10.0.27",
+    "@storybook/angular": "6.2.0-alpha.18",
     "@storybook/react": "6.2.0-alpha.18",
     "@storybook/vue": "6.2.0-alpha.18",
     "@storybook/web-components": "6.2.0-alpha.18",
@@ -123,6 +124,7 @@
   },
   "peerDependencies": {
     "@babel/core": "^7.11.5",
+    "@storybook/angular": "6.2.0-alpha.18",
     "@storybook/vue": "6.2.0-alpha.18",
     "babel-loader": "^8.0.0",
     "react": "^16.8.0 || ^17.0.0",
@@ -132,6 +134,9 @@
     "webpack": ">=4"
   },
   "peerDependenciesMeta": {
+    "@storybook/angular": {
+      "optional": true
+    },
     "@storybook/vue": {
       "optional": true
     },

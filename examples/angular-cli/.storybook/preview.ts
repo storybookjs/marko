@@ -1,5 +1,6 @@
-import { addParameters, addDecorator } from '@storybook/angular';
+import { addParameters } from '@storybook/angular';
 import { setCompodocJson } from '@storybook/addon-docs/angular';
+import { prepareForInline } from '@storybook/addon-docs/angular/inline';
 import addCssWarning from '../src/cssWarning';
 
 // @ts-ignore
@@ -18,7 +19,7 @@ addCssWarning();
 
 addParameters({
   docs: {
-    // inlineStories: true,
-    iframeHeight: '60px',
+    inlineStories: true,
+    prepareForInline,
   },
 });

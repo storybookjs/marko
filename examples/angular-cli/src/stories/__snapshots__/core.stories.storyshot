@@ -13,7 +13,7 @@ exports[`Storyshots Core/Parameters passed to story 1`] = `
     >
       Parameters are {
     "docs": {
-      "iframeHeight": "60px"
+      "inlineStories": true
     },
     "globalParameter": "globalParameter",
     "framework": "angular",
