@@ -24,7 +24,6 @@ This document will document some of the processes that members of the documentat
 | components | |
 | core | |
 | decorators | |
-| dependencies:update | |
 | dependencies | |
 | discussion | |
 | do not merge | |
