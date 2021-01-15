@@ -48,18 +48,18 @@
     "@storybook/components": "6.2.0-alpha.14",
     "@storybook/core-events": "6.2.0-alpha.14",
     "@storybook/theming": "6.2.0-alpha.14",
-    "axe-core": "^4.0.1",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
-    "lodash": "^4.17.15",
-    "react-sizeme": "^2.5.2",
+    "axe-core": "^4.1.1",
+    "core-js": "^3.8.2",
+    "global": "^4.4.0",
+    "lodash": "^4.17.20",
+    "react-sizeme": "^2.6.12",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0",
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
-    "@testing-library/react": "^10.0.4",
-    "@types/webpack-env": "^1.15.3"
+    "@testing-library/react": "^10.4.9",
+    "@types/webpack-env": "^1.16.0"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",

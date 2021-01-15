@@ -7,8 +7,8 @@
   },
   "devDependencies": {
     "@storybook/react": "6.2.0-alpha.14",
-    "parcel": "^1.12.3",
-    "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "parcel": "^1.12.4",
+    "react": "16.14.0",
+    "react-dom": "16.14.0"
   }
 }

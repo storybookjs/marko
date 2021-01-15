@@ -43,17 +43,17 @@
     "@storybook/router": "6.2.0-alpha.14",
     "@storybook/source-loader": "6.2.0-alpha.14",
     "@storybook/theming": "6.2.0-alpha.14",
-    "core-js": "^3.0.1",
-    "estraverse": "^4.2.0",
+    "core-js": "^3.8.2",
+    "estraverse": "^4.3.0",
     "loader-utils": "^2.0.0",
-    "prettier": "~2.0.5",
+    "prettier": "~2.2.1",
     "prop-types": "^15.7.2",
-    "react-syntax-highlighter": "^13.5.0",
+    "react-syntax-highlighter": "^13.5.3",
     "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
-    "@types/react": "^16.9.27",
-    "@types/react-syntax-highlighter": "^11.0.4"
+    "@types/react": "^16.14.2",
+    "@types/react-syntax-highlighter": "^11.0.5"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
