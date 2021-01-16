@@ -1,6 +1,6 @@
 {
   "name": "svelte-example",
-  "version": "6.2.0-alpha.15",
+  "version": "6.2.0-alpha.16",
   "private": true,
   "scripts": {
     "build-storybook": "build-storybook -s public",
@@ -10,19 +10,19 @@
     "global": "^4.4.0"
   },
   "devDependencies": {
-    "@storybook/addon-a11y": "6.2.0-alpha.15",
-    "@storybook/addon-actions": "6.2.0-alpha.15",
-    "@storybook/addon-backgrounds": "6.2.0-alpha.15",
-    "@storybook/addon-controls": "6.2.0-alpha.15",
-    "@storybook/addon-docs": "6.2.0-alpha.15",
-    "@storybook/addon-knobs": "6.2.0-alpha.15",
-    "@storybook/addon-links": "6.2.0-alpha.15",
-    "@storybook/addon-storyshots": "6.2.0-alpha.15",
-    "@storybook/addon-storysource": "6.2.0-alpha.15",
-    "@storybook/addon-viewport": "6.2.0-alpha.15",
-    "@storybook/addons": "6.2.0-alpha.15",
-    "@storybook/source-loader": "6.2.0-alpha.15",
-    "@storybook/svelte": "6.2.0-alpha.15"
+    "@storybook/addon-a11y": "6.2.0-alpha.16",
+    "@storybook/addon-actions": "6.2.0-alpha.16",
+    "@storybook/addon-backgrounds": "6.2.0-alpha.16",
+    "@storybook/addon-controls": "6.2.0-alpha.16",
+    "@storybook/addon-docs": "6.2.0-alpha.16",
+    "@storybook/addon-knobs": "6.2.0-alpha.16",
+    "@storybook/addon-links": "6.2.0-alpha.16",
+    "@storybook/addon-storyshots": "6.2.0-alpha.16",
+    "@storybook/addon-storysource": "6.2.0-alpha.16",
+    "@storybook/addon-viewport": "6.2.0-alpha.16",
+    "@storybook/addons": "6.2.0-alpha.16",
+    "@storybook/source-loader": "6.2.0-alpha.16",
+    "@storybook/svelte": "6.2.0-alpha.16"
   },
   "storybook": {
     "chromatic": {
