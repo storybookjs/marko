@@ -71,7 +71,6 @@
   "devDependencies": {
     "@storybook/client-api": "6.2.0-alpha.15",
     "@types/cross-spawn": "^6.0.2",
-    "@types/inquirer": "^6.5.0",
     "@types/prompts": "^2.0.9",
     "@types/puppeteer-core": "^2.1.0",
     "@types/semver": "^7.3.4",
