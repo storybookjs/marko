@@ -1,3 +1,10 @@
+## 6.2.0-alpha.16 (January 16, 2021)
+
+### Dependency Upgrades
+
+- Dependencies: Remove inquirer types ([#13651](https://github.com/storybookjs/storybook/pull/13651))
+- Dependencies: Swap postcss-loader for fork version ([#13655](https://github.com/storybookjs/storybook/pull/13655))
+
 ## 6.2.0-alpha.15 (January 15, 2021)
 
 ### Features
