@@ -1,0 +1,18 @@
+```js
+// .storybook/preview.js
+
+import MarginDecorator from './MarginDecorator.svelte';
+
+export const decorators = [(storyFn) => {
+    const story = storyFun();
+
+    return {
+      Component: MarginDecorator,
+      props: {
+        child: story.Component,
+        props: story.props
+      }
+    }
+  }];
+
+```
