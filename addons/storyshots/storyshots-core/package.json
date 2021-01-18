@@ -4,7 +4,8 @@
   "description": "Take a code snapshot of every story automatically with Jest",
   "keywords": [
     "addon",
-    "storybook"
+    "storybook",
+    "test"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/storyshots/storyshots-core",
   "bugs": {
@@ -109,5 +110,14 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2cc64efa1dcb90b72806d4c88c295f38dd92e427"
+  "gitHead": "2cc64efa1dcb90b72806d4c88c295f38dd92e427",
+  "storybook": {
+    "displayName": "Storyshots",
+    "icon": "https://user-images.githubusercontent.com/263385/101991676-48cdf300-3c7c-11eb-8aa1-944dab6ab29b.png",
+    "unsupportedFrameworks": [
+      "ember",
+      "mithril",
+      "marko"
+    ]
+  }
 }

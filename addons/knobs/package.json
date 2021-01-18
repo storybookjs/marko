@@ -1,10 +1,11 @@
 {
   "name": "@storybook/addon-knobs",
   "version": "6.2.0-alpha.16",
-  "description": "Storybook Addon Prop Editor Component",
+  "description": "Edit props dynamically. Made for Storybook 5.X. Use Controls addon instead for 6.0+.",
   "keywords": [
     "addon",
-    "storybook"
+    "storybook",
+    "test"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/knobs",
   "bugs": {
@@ -80,5 +81,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2cc64efa1dcb90b72806d4c88c295f38dd92e427"
+  "gitHead": "2cc64efa1dcb90b72806d4c88c295f38dd92e427",
+  "storybook": {
+    "displayName": "Knobs",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
+  }
 }

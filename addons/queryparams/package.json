@@ -5,7 +5,8 @@
   "keywords": [
     "addon",
     "query",
-    "storybook"
+    "storybook",
+    "data-state"
   ],
   "homepage": "https://github.com/storybookjs/storybook#readme",
   "bugs": {
@@ -67,5 +68,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2cc64efa1dcb90b72806d4c88c295f38dd92e427"
+  "gitHead": "2cc64efa1dcb90b72806d4c88c295f38dd92e427",
+  "storybook": {
+    "displayName": "Query params",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
+  }
 }

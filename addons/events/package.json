@@ -1,12 +1,13 @@
 {
   "name": "@storybook/addon-events",
   "version": "6.2.0-alpha.16",
-  "description": "Add events to your Storybook stories.",
+  "description": "Add events to your Storybook stories",
   "keywords": [
     "addon",
     "events",
     "react",
-    "storybook"
+    "storybook",
+    "data-state"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/events",
   "bugs": {
@@ -69,5 +70,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2cc64efa1dcb90b72806d4c88c295f38dd92e427"
+  "gitHead": "2cc64efa1dcb90b72806d4c88c295f38dd92e427",
+  "storybook": {
+    "displayName": "Events",
+    "unsupportedFrameworks": [
+      "react-native",
+      "svelte",
+      "riot"
+    ]
+  }
 }

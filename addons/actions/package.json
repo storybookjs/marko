@@ -3,7 +3,9 @@
   "version": "6.2.0-alpha.16",
   "description": "Get UI feedback when an action is performed on an interactive element",
   "keywords": [
-    "storybook"
+    "storybook",
+    "essentials",
+    "data-state"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/actions",
   "bugs": {
@@ -72,5 +74,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2cc64efa1dcb90b72806d4c88c295f38dd92e427"
+  "gitHead": "2cc64efa1dcb90b72806d4c88c295f38dd92e427",
+  "storybook": {
+    "displayName": "Actions",
+    "unsupportedFrameworks": [
+      "react-native"
+    ],
+    "icon": "https://user-images.githubusercontent.com/263385/101991666-479cc600-3c7c-11eb-837b-be4e5ffa1bb8.png"
+  }
 }

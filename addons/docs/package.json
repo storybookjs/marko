@@ -5,7 +5,10 @@
   "keywords": [
     "addon",
     "notes",
-    "storybook"
+    "documentation",
+    "storybook",
+    "essentials",
+    "organize"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/docs",
   "bugs": {
@@ -154,5 +157,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2cc64efa1dcb90b72806d4c88c295f38dd92e427"
+  "gitHead": "2cc64efa1dcb90b72806d4c88c295f38dd92e427",
+  "storybook": {
+    "displayName": "Docs",
+    "icon": "https://user-images.githubusercontent.com/263385/101991672-48355c80-3c7c-11eb-82d9-95fa12438f64.png",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
+  }
 }
