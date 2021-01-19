@@ -22,6 +22,7 @@
     "@storybook/addon-jest": "6.2.0-alpha.16",
     "@storybook/addon-knobs": "6.2.0-alpha.16",
     "@storybook/addon-links": "6.2.0-alpha.16",
+    "@storybook/addon-postcss": "^2.0.0",
     "@storybook/addon-storyshots": "6.2.0-alpha.16",
     "@storybook/addon-storysource": "6.2.0-alpha.16",
     "@storybook/addon-viewport": "6.2.0-alpha.16",
@@ -31,9 +32,11 @@
     "@storybook/core-events": "6.2.0-alpha.16",
     "@storybook/html": "6.2.0-alpha.16",
     "@storybook/source-loader": "6.2.0-alpha.16",
+    "autoprefixer": "^10.0.1",
     "eventemitter3": "^4.0.7",
     "format-json": "^1.0.3",
     "global": "^4.4.0",
+    "postcss": "^8.2.4",
     "postcss-color-rebeccapurple": "^6.0.0"
   },
   "storybook": {
