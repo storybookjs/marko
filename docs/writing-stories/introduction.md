@@ -4,7 +4,7 @@ title: 'How to write stories'
 
 A story captures the rendered state of a UI component. It’s a function that returns a component’s state given a set of arguments.
 
-Storybook uses the generic term arguments (args for short) when talking about React’s `props`, Vue’s `slots`, Angular’s `@input`, and other similar concepts.
+Storybook uses the generic term arguments (args for short) when talking about React’s `props`, Vue’s `props`, Angular’s `@Input`, and other similar concepts.
 
 ## Where to put stories
 
