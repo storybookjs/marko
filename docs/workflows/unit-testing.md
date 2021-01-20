@@ -15,6 +15,7 @@ Here is an example of how you can use it in a testing library:
 <CodeSnippets
   paths={[
     'react/button-test.js.mdx',
+    'vue/button-test.js.mdx'
   ]}
 />
 

@@ -121,6 +121,7 @@ What’s more, you can import args to reuse when writing stories for other compo
     'react/button-group-story.js.mdx',
     'react/button-group-story.ts.mdx',
     'angular/button-group-story.ts.mdx',
+    'vue/button-group-story.js.mdx'
   ]}
 />
 
@@ -200,7 +201,8 @@ When building design systems or component libraries, you may have two or more co
   paths={[
     'react/list-story-starter.js.mdx',
     'react/list-story-starter.ts.mdx',
-    'angular/list-story-starter.ts.mdx'
+    'angular/list-story-starter.ts.mdx',
+    'vue/list-story-starter.js.mdx'
   ]}
 />
 
@@ -214,7 +216,8 @@ In such cases, it makes sense to render a different function for each story:
   paths={[
     'react/list-story-expanded.js.mdx',
     'react/list-story-expanded.ts.mdx',
-    'angular/list-story-expanded.ts.mdx'
+    'angular/list-story-expanded.ts.mdx',
+    'vue/list-story-expanded.js.mdx'
   ]}
 />
 
@@ -228,7 +231,8 @@ You can also reuse stories from the child `ListItem` in your `List` component. T
   paths={[
     'react/list-story-reuse-data.js.mdx',
     'react/list-story-reuse-data.ts.mdx',
-    'angular/list-story-reuse-data.ts.mdx'
+    'angular/list-story-reuse-data.ts.mdx',
+    'vue/list-story-reuse-data.js.mdx'
   ]}
 />
 
