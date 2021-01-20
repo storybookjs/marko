@@ -98,7 +98,6 @@ We can also set a decorator for **all stories** via the `decorators` export of y
 <CodeSnippets
   paths={[
     'react/storybook-preview-global-decorator.js.mdx',
-    'react/storybook-preview-global-decorator.ts.mdx',
     'vue/storybook-preview-global-decorator.js.mdx',
     'angular/storybook-preview-global-decorator.ts.mdx',
   ]}
