@@ -475,46 +475,6 @@ export const Tree = React.memo<{
             />
           );
         })}
-        {/* <h5>Old one</h5>
-        {collapsedItems.map((itemId) => {
-          const item = collapsedData[itemId];
-          const id = createId(itemId, refId);
-
-          if (isRoot(item)) {
-            const descendants = expandableDescendants[item.id];
-            const isFullyExpanded = descendants.every((d: string) => expanded[d]);
-            return (
-              <Root
-                key={id}
-                item={item}
-                refId={refId}
-                isOrphan={false}
-                isDisplayed
-                isSelected={selectedStoryId === itemId}
-                isExpanded={!!expanded[itemId]}
-                setExpanded={setExpanded}
-                isFullyExpanded={isFullyExpanded}
-                expandableDescendants={descendants}
-                onSelectStoryId={onSelectStoryId}
-              />
-            );
-          }
-
-          const isDisplayed = !item.parent || ancestry[itemId].every((a: string) => expanded[a]);
-          return (
-            <Node
-              key={id}
-              item={item}
-              refId={refId}
-              isOrphan={orphanIds.some((oid) => itemId === oid || itemId.startsWith(`${oid}-`))}
-              isDisplayed={isDisplayed}
-              isSelected={selectedStoryId === itemId}
-              isExpanded={!!expanded[itemId]}
-              setExpanded={setExpanded}
-              onSelectStoryId={onSelectStoryId}
-            />
-          );
-        })} */}
       </Container>
     );
   }
