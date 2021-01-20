@@ -13,7 +13,7 @@ export const Template = (args) => <MyOtherComponent {...args} />
     <Story 
       name="A MDX story using environment variables inside a .env file" 
       args={{
-        propertyA:process.env.STORYBOOK_DATA_KEY}}
+        propertyA: process.env.STORYBOOK_DATA_KEY}}
       >
       {Template.bind({})}
     </Story>
