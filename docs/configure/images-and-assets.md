@@ -15,6 +15,7 @@ Afterwards you can use any asset in your stories:
 <CodeSnippets
   paths={[
     'react/component-story-static-asset-with-import.js.mdx',
+    'vue/component-story-static-asset-with-import.js.mdx'
   ]}
 />
 
@@ -41,6 +42,7 @@ Here `./public` is your static directory. Now use it in a component or story lik
 <CodeSnippets
   paths={[
     'react/component-story-static-asset-without-import.js.mdx',
+    'vue/component-story-static-asset-without-import.js.mdx',
   ]}
 />
 
@@ -65,6 +67,7 @@ Upload your files to an online CDN and reference them. In this example we’re u
 <CodeSnippets
   paths={[
     'react/component-story-static-asset-cdn.js.mdx',
+    'vue/component-story-static-asset-cdn.js.mdx',
   ]}
 />
 
