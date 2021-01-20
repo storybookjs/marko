@@ -15,4 +15,5 @@ addons.setConfig({
       hidden: true,
     },
   },
+  initialRootsCollapsed: ['other'],
 });

@@ -2,9 +2,16 @@ import { Group, Story, StoriesHash, isRoot, isStory } from '@storybook/api';
 import { styled } from '@storybook/theming';
 import { Icons } from '@storybook/components';
 import { transparentize } from 'polished';
-import React, { MutableRefObject, useCallback, useMemo, useRef } from 'react';
+import React, { MutableRefObject, useCallback, useMemo, useRef, useEffect } from 'react';
 
-import { ComponentNode, DocumentNode, GroupNode, RootNode, StoryNode } from './TreeNode';
+import {
+  ComponentNode,
+  DocumentNode,
+  GroupNode,
+  RootNode,
+  StoryNode,
+  CollapseIcon,
+} from './TreeNode';
 import { useExpanded, ExpandAction } from './useExpanded';
 import { Highlight, Item } from './types';
 import { createId, getAncestorIds, getDescendantIds, getLink } from './utils';
@@ -16,6 +23,7 @@ export const Action = styled.button(({ theme }) => ({
   width: 20,
   height: 20,
   margin: 0,
+  marginLeft: 'auto',
   padding: 0,
   outline: 0,
   lineHeight: 'normal',
@@ -42,6 +50,47 @@ export const Action = styled.button(({ theme }) => ({
   },
 }));
 
+const CollapseButton = styled.button(({ theme }) => ({
+  // Reset button
+  background: 'transparent',
+  border: 'none',
+  outline: 'none',
+  boxSizing: 'content-box',
+  cursor: 'pointer',
+  position: 'relative',
+  textAlign: 'left',
+  lineHeight: 'normal',
+  font: 'inherit',
+  color: 'inherit',
+  letterSpacing: 'inherit',
+  textTransform: 'inherit',
+
+  display: 'flex',
+  flex: 1,
+  padding: 3,
+  paddingLeft: 1,
+  paddingRight: 12,
+  margin: 0,
+  marginLeft: -20,
+  overflow: 'hidden',
+
+  'span:first-of-type': {
+    marginTop: 5,
+  },
+
+  '&:focus': {
+    borderColor: theme.color.secondary,
+    'span:first-of-type': {
+      borderLeftColor: theme.color.secondary,
+    },
+  },
+}));
+
+type DisplayableNode = {
+  id: string;
+  children?: string[];
+};
+
 interface NodeProps {
   item: Item;
   refId: string;
@@ -53,6 +102,8 @@ interface NodeProps {
   setExpanded: (action: ExpandAction) => void;
   setFullyExpanded?: () => void;
   onSelectStoryId: (itemId: string) => void;
+  sectionCollapsed?: boolean;
+  toggleSectionCollapse?: (id: string) => void;
 }
 
 const Node = React.memo<NodeProps>(
@@ -67,6 +118,8 @@ const Node = React.memo<NodeProps>(
     isExpanded,
     setExpanded,
     onSelectStoryId,
+    sectionCollapsed,
+    toggleSectionCollapse,
   }) => {
     if (!isDisplayed) return null;
 
@@ -106,7 +159,16 @@ const Node = React.memo<NodeProps>(
           data-item-id={item.id}
           data-nodetype="root"
         >
-          {item.name}
+          <CollapseButton
+            type="button"
+            onClick={(event) => {
+              event.preventDefault();
+              toggleSectionCollapse?.(id);
+            }}
+          >
+            <CollapseIcon isExpanded={!sectionCollapsed} />
+            {item.name}
+          </CollapseButton>
           <Action
             type="button"
             className="sidebar-subheading-action"
@@ -153,14 +215,27 @@ const Node = React.memo<NodeProps>(
 );
 
 const Root = React.memo<NodeProps & { expandableDescendants: string[] }>(
-  ({ setExpanded, isFullyExpanded, expandableDescendants, ...props }) => {
-    const setFullyExpanded = useCallback(
-      () => setExpanded({ ids: expandableDescendants, value: !isFullyExpanded }),
-      [setExpanded, isFullyExpanded, expandableDescendants]
-    );
+  ({
+    item,
+    setExpanded,
+    isFullyExpanded,
+    expandableDescendants,
+    sectionCollapsed,
+    toggleSectionCollapse,
+    ...props
+  }) => {
+    const setFullyExpanded = useCallback(() => {
+      setExpanded({ ids: expandableDescendants, value: !isFullyExpanded });
+      if (sectionCollapsed) {
+        toggleSectionCollapse?.(item.id);
+      }
+    }, [setExpanded, isFullyExpanded, expandableDescendants]);
     return (
       <Node
         {...props}
+        item={item}
+        sectionCollapsed={sectionCollapsed}
+        toggleSectionCollapse={toggleSectionCollapse}
         setExpanded={setExpanded}
         isFullyExpanded={isFullyExpanded}
         setFullyExpanded={setFullyExpanded}
@@ -172,6 +247,11 @@ const Root = React.memo<NodeProps & { expandableDescendants: string[] }>(
 const Container = styled.div<{ hasOrphans: boolean }>((props) => ({
   marginTop: props.hasOrphans ? 20 : 0,
   marginBottom: 20,
+}));
+
+const Section = styled.div<{ expanded: boolean }>(({ expanded }) => ({
+  height: expanded ? 'auto' : 0,
+  overflow: expanded ? 'visible' : 'hidden',
 }));
 
 export const Tree = React.memo<{
@@ -197,16 +277,20 @@ export const Tree = React.memo<{
     const containerRef = useRef<HTMLDivElement>(null);
 
     // Find top-level nodes and group them so we can hoist any orphans and expand any roots.
-    const [rootIds, orphanIds] = useMemo(
+    const [rootIds, orphanIds, defaultCollapsedRootIds] = useMemo(
       () =>
-        Object.keys(data).reduce<[string[], string[]]>(
+        Object.keys(data).reduce<[string[], string[], string[]]>(
           (acc, id) => {
             const item = data[id];
-            if (isRoot(item)) acc[0].push(id);
-            else if (!item.parent) acc[1].push(id);
+            if (isRoot(item)) {
+              acc[0].push(id);
+              if (item.defaultCollapsed) {
+                acc[2].push(id);
+              }
+            } else if (!item.parent) acc[1].push(id);
             return acc;
           },
-          [[], []]
+          [[], [], []]
         ),
       [data]
     );
@@ -284,8 +368,114 @@ export const Tree = React.memo<{
       onSelectStoryId,
     });
 
+    /**
+     * Build the array for
+     *  Single Story
+     *  Root
+     *    Story1
+     *    Story2
+     */
+    const itemsDisplayed = useMemo(() => {
+      return collapsedItems.reduce<DisplayableNode[]>((acc, itemId) => {
+        const item = collapsedData[itemId];
+        const latestRoot = acc.pop();
+        if (latestRoot && isRoot(collapsedData[latestRoot.id]) && !isRoot(item)) {
+          acc.push({
+            ...latestRoot,
+            children: [...latestRoot.children, itemId],
+          });
+        } else {
+          // an orphan or a root, we add the latest one back
+          if (latestRoot) {
+            acc.push(latestRoot);
+          }
+          acc.push({ id: itemId, children: [] });
+        }
+        return acc;
+      }, []);
+    }, [collapsedItems, collapsedData]);
+
+    const [sectionCollapsed, setSectionCollapsed] = React.useState<string[]>(
+      defaultCollapsedRootIds
+    );
+    useEffect(() => setSectionCollapsed(defaultCollapsedRootIds), [defaultCollapsedRootIds]);
+    const handleSectionToggle = useCallback((id: string) => {
+      setSectionCollapsed((prev) =>
+        prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+      );
+    }, []);
+
     return (
       <Container ref={containerRef} hasOrphans={isMain && orphanIds.length > 0}>
+        {itemsDisplayed.map((itemDisplay) => {
+          const item = collapsedData[itemDisplay.id];
+
+          const id = createId(itemDisplay.id, refId);
+
+          if (isRoot(item)) {
+            const descendants = expandableDescendants[item.id];
+            const isFullyExpanded = descendants.every((d: string) => expanded[d]);
+            const collapsed = sectionCollapsed.includes(id);
+            return (
+              <>
+                <Root
+                  key={id}
+                  item={item}
+                  refId={refId}
+                  isOrphan={false}
+                  isDisplayed
+                  isSelected={selectedStoryId === item.id}
+                  isExpanded={!!expanded[item.id]}
+                  setExpanded={setExpanded}
+                  isFullyExpanded={isFullyExpanded}
+                  expandableDescendants={descendants}
+                  onSelectStoryId={onSelectStoryId}
+                  sectionCollapsed={collapsed}
+                  toggleSectionCollapse={handleSectionToggle}
+                />
+                <Section expanded={!collapsed}>
+                  {itemDisplay.children?.map((childId) => {
+                    const child = collapsedData[childId] as Group | Story;
+
+                    const isDisplayed =
+                      !child.parent || ancestry[childId].every((a: string) => expanded[a]);
+                    return (
+                      <Node
+                        key={createId(childId, refId)}
+                        item={child}
+                        refId={refId}
+                        isOrphan={orphanIds.some(
+                          (oid) => childId === oid || childId.startsWith(`${oid}-`)
+                        )}
+                        isDisplayed={isDisplayed}
+                        isSelected={selectedStoryId === childId}
+                        isExpanded={!!expanded[childId]}
+                        setExpanded={setExpanded}
+                        onSelectStoryId={onSelectStoryId}
+                      />
+                    );
+                  })}
+                </Section>
+              </>
+            );
+          }
+
+          const isDisplayed = !item.parent || ancestry[item.id].every((a: string) => expanded[a]);
+          return (
+            <Node
+              key={id}
+              item={item}
+              refId={refId}
+              isOrphan={orphanIds.some((oid) => item.id === oid || item.id.startsWith(`${oid}-`))}
+              isDisplayed={isDisplayed}
+              isSelected={selectedStoryId === item.id}
+              isExpanded={!!expanded[item.id]}
+              setExpanded={setExpanded}
+              onSelectStoryId={onSelectStoryId}
+            />
+          );
+        })}
+        {/* <h5>Old one</h5>
         {collapsedItems.map((itemId) => {
           const item = collapsedData[itemId];
           const id = createId(itemId, refId);
@@ -324,7 +514,7 @@ export const Tree = React.memo<{
               onSelectStoryId={onSelectStoryId}
             />
           );
-        })}
+        })} */}
       </Container>
     );
   }
