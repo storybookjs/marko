@@ -47,7 +47,17 @@ export const MenuButton = styled(Button)<MenuButtonProps>(({ highlighted, theme 
   padding: 7,
   '&:focus': {
     background: theme.barBg,
-    boxShadow: `${theme.color.secondary} 0 0 0 1px inset`,
+    boxShadow: 'none',
+  },
+  '&:focus:before': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    borderRadius: '100%',
+    border: `1px solid ${theme.color.secondary}`,
   },
 
   ...(highlighted && {
