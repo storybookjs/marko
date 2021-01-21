@@ -15,6 +15,26 @@ exports[`Storyshots Core/Parameters passed to story 1`] = `
     "docs": {
       "inlineStories": true
     },
+    "globalTypes": {
+      "theme": {
+        "name": "Theme",
+        "description": "Global theme for components",
+        "defaultValue": "light",
+        "toolbar": {
+          "icon": "paintbrush",
+          "items": [
+            {
+              "value": "light",
+              "title": "Light theme"
+            },
+            {
+              "value": "dark",
+              "title": "Dark theme"
+            }
+          ]
+        }
+      }
+    },
     "globalParameter": "globalParameter",
     "framework": "angular",
     "chapterParameter": "chapterParameter",
