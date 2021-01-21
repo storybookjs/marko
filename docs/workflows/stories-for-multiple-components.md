@@ -57,6 +57,7 @@ One way we improve that situation is by pulling the rendered subcomponent out in
 <CodeSnippets
   paths={[
     'react/list-story-with-unchecked-children.js.mdx',
+    'react/list-story-with-unchecked-children.ts.mdx',
   ]}
 />
 
