@@ -36,9 +36,8 @@ function getTsConfigOptions(tsConfigPath: Path) {
 
   const tsConfig = JSON.parse(stripJsonComments(fs.readFileSync(tsConfigPath, 'utf8')));
 
-  const { baseUrl } = tsConfig.compilerOptions as CompilerOptions;
-
-  if (baseUrl) {
+  if (tsConfig.compilerOptions && tsConfig.compilerOptions.baseUrl) {
+    const { baseUrl } = tsConfig.compilerOptions as CompilerOptions;
     const tsConfigDirName = path.dirname(tsConfigPath);
     basicOptions.options.baseUrl = path.resolve(tsConfigDirName, baseUrl);
   }
