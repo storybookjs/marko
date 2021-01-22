@@ -1,0 +1,51 @@
+```js
+// YourComponent.stories.js
+
+import YourComponent from './YourComponent.svelte';
+import MarginDecorator from './MarginDecorator.svelte';
+
+export default {
+  component: YourComponent,
+  decorators:  [(storyFn) => {
+    const story = storyFun();
+
+    return {
+      Component: MarginDecorator,
+      props: {
+        child: story.Component,
+        props: story.props
+      }
+    }
+  }]
+};
+
+// Your templates and stories here. 
+// Don't forget to use the component you're testing and not the MarginDecorator component
+
+```
+
+```html
+<!-- MarginDecorator.svelte -->
+
+<!-- 
+  Read the Svelte documentation for special elements here: 
+  https://svelte.dev/tutorial/svelte-component 
+-->
+
+<script>
+  // the component used in the story.
+  export let child;
+  // the props inherited from the component's story
+  export let props = {};
+</script>
+
+<div>
+  <svelte:component this={child} {...props}/>
+</div>
+
+<style>
+  div { 
+    margin: 3em;
+  }
+</style>
+```
