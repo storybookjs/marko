@@ -50,3 +50,46 @@ CyclicArgs.args = {
 CyclicArgs.parameters = {
   chromatic: { disable: true },
 };
+
+export const FilteredWithInclude = Template.bind({});
+FilteredWithInclude.parameters = {
+  controls: {
+    include: ['Children'],
+  },
+};
+
+export const FilteredWithIncludeRegex = Template.bind({});
+FilteredWithIncludeRegex.args = {
+  helloWorld: 1,
+  helloPlanet: 1,
+  byeWorld: 1,
+};
+FilteredWithIncludeRegex.parameters = {
+  controls: {
+    include: /hello*/,
+  },
+};
+
+export const FilteredWithExclude = Template.bind({});
+FilteredWithExclude.args = {
+  helloWorld: 1,
+  helloPlanet: 1,
+  byeWorld: 1,
+};
+FilteredWithExclude.parameters = {
+  controls: {
+    exclude: ['helloPlanet', 'helloWorld'],
+  },
+};
+
+export const FilteredWithExcludeRegex = Template.bind({});
+FilteredWithExcludeRegex.args = {
+  helloWorld: 1,
+  helloPlanet: 1,
+  byeWorld: 1,
+};
+FilteredWithExcludeRegex.parameters = {
+  controls: {
+    exclude: /hello*/,
+  },
+};
