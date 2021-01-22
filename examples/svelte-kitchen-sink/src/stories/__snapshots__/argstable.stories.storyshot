@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Args Table Args Table 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <pre>
+    {}
+  </pre>
+   
+  <div />
+   
+  <div />
+   
+   
+</section>
+`;
