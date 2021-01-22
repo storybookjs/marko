@@ -140,7 +140,10 @@ export function getAngularCliWebpackConfigOptions(dirToSearch: Path) {
     supportES2015: false,
     buildOptions: {
       sourceMap: false,
-      optimization: {},
+      optimization: {
+        styles: true,
+        scripts: true,
+      },
       ...projectOptions,
       assets: normalizedAssets,
       budgets,
