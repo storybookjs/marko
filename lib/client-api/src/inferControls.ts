@@ -3,20 +3,24 @@ import { ArgType } from '@storybook/addons';
 import { SBEnumType, ArgTypesEnhancer } from './types';
 import { combineParameters } from './parameters';
 
-const inferControl = (argType: ArgType, name: string): any => {
+type ControlsMatchers = {
+  date: RegExp;
+  color: RegExp;
+};
+
+const inferControl = (argType: ArgType, name: string, matchers: ControlsMatchers): any => {
   const { type } = argType;
   if (!type) {
-    // console.log('no sbtype', { argType });
     return null;
   }
 
   // args that end with background or color e.g. iconColor
-  if (/(background|color)$/i.test(name)) {
+  if (matchers.color && matchers.color.test(name)) {
     return { type: 'color' };
   }
 
   // args that end with date e.g. purchaseDate
-  if (/date$/i.test(name)) {
+  if (matchers.date && matchers.date.test(name)) {
     return { type: 'date' };
   }
 
@@ -54,10 +58,14 @@ const inferControl = (argType: ArgType, name: string): any => {
 };
 
 export const inferControls: ArgTypesEnhancer = (context) => {
-  const { __isArgsStory, argTypes } = context.parameters;
+  const {
+    __isArgsStory,
+    argTypes,
+    controls: { matchers = {} },
+  } = context.parameters;
   if (!__isArgsStory) return argTypes;
   const withControls = mapValues(argTypes, (argType, name) => {
-    const control = argType && argType.type && inferControl(argType, name);
+    const control = argType && argType.type && inferControl(argType, name, matchers);
     return control ? { control } : undefined;
   });
   return combineParameters(withControls, argTypes);
