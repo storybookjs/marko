@@ -30,6 +30,8 @@ export class RendererService {
   // Observable to change the properties dynamically without reloading angular module&component
   private storyProps$: Subject<ICollection | undefined>;
 
+  private previousStoryFnAngular: StoryFnAngularReturnType = {};
+
   constructor() {
     if (typeof NODE_ENV === 'string' && NODE_ENV !== 'development') {
       try {
@@ -61,8 +63,9 @@ export class RendererService {
     forced: boolean;
     parameters: Parameters;
   }) {
-    if (forced && this.storyProps$) {
+    if (!this.fullRendererRequired(storyFnAngular, forced)) {
       this.storyProps$.next(storyFnAngular.props);
+
       return;
     }
 
@@ -87,5 +90,15 @@ export class RendererService {
     );
     this.staticRoot.innerHTML = '';
     this.staticRoot.appendChild(storybookWrapperElement);
+  }
+
+  private fullRendererRequired(storyFnAngular: StoryFnAngularReturnType, forced: boolean) {
+    const { previousStoryFnAngular } = this;
+    this.previousStoryFnAngular = storyFnAngular;
+
+    const hasChangedTemplate =
+      !!storyFnAngular?.template && previousStoryFnAngular?.template !== storyFnAngular.template;
+
+    return !forced || !this.storyProps$ || hasChangedTemplate;
   }
 }

@@ -1,11 +1,13 @@
 /* eslint-disable no-param-reassign */
 import { Type } from '@angular/core';
 import { DecoratorFunction, StoryContext } from '@storybook/addons';
-import { computesTemplateFromComponent } from '../angular-beta/ComputesTemplateFromComponent';
-import { isComponent } from '../angular-beta/utils/NgComponentAnalyzer';
-import { ICollection, NgModuleMetadata, StoryFnAngularReturnType } from '../types';
+import { computesTemplateFromComponent } from './angular-beta/ComputesTemplateFromComponent';
+import { isComponent } from './angular-beta/utils/NgComponentAnalyzer';
+import { ICollection, NgModuleMetadata, StoryFnAngularReturnType } from './types';
 
-export const moduleMetadata = (metadata: Partial<NgModuleMetadata>) => (storyFn: () => any) => {
+export const moduleMetadata = (
+  metadata: Partial<NgModuleMetadata>
+): DecoratorFunction<StoryFnAngularReturnType> => (storyFn) => {
   const story = storyFn();
   const storyMetadata = story.moduleMetadata || {};
   metadata = metadata || {};
