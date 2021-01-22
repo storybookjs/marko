@@ -2,38 +2,55 @@ import autoprefixer from 'autoprefixer';
 import findUp from 'find-up';
 import path from 'path';
 import { logger } from '@storybook/node-logger';
+import deprecate from 'util-deprecate';
+import dedent from 'ts-dedent';
 
-// TODO(blaine): Deprecate this for the addon-postcss
-// Deprecating this will be a good way to cover all of the implicit usage of postcss-loader
-async function getPostcssOptions() {
-  const postcssConfigFiles = [
-    '.postcssrc',
-    '.postcssrc.json',
-    '.postcssrc.yml',
-    '.postcssrc.js',
-    'postcss.config.js',
-  ];
-  const customPostcssConfig = await findUp(postcssConfigFiles);
-
-  if (customPostcssConfig) {
-    // TODO(blaine): Deprecate this and utilize the natural config lookup in postcss-loader
-    logger.info(`=> Using custom ${path.basename(customPostcssConfig)}`);
-    return {
-      config: customPostcssConfig,
-    };
-  }
-  return {
+const warnImplicitPostcssPlugins = deprecate(
+  () => ({
     // Additional config is merged with config, so we have it disabled currently
-    // TODO(blaine): Utilize the natural config lookup in postcss-loader
     config: false,
-    plugins: () => [
+    plugins: [
       require('postcss-flexbugs-fixes'), // eslint-disable-line global-require
       autoprefixer({
         flexbox: 'no-2009',
       }),
     ],
-  };
-}
+  }),
+  dedent`
+    Default PostCSS plugins are deprecated. When switching to '@storybook/addon-postcss',
+    you will need to add your own plugins, such as 'postcss-flexbugs-fixes' and 'autoprefixer'.
+
+    See https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-default-postcss-plugins for details.
+  `
+);
+
+const warnGetPostcssOptions = deprecate(
+  async () => {
+    const postcssConfigFiles = [
+      '.postcssrc',
+      '.postcssrc.json',
+      '.postcssrc.yml',
+      '.postcssrc.js',
+      'postcss.config.js',
+    ];
+    // This is done naturally by newer postcss-loader (through cosmiconfig)
+    const customPostcssConfig = await findUp(postcssConfigFiles);
+
+    if (customPostcssConfig) {
+      logger.info(`=> Using custom ${path.basename(customPostcssConfig)}`);
+      return {
+        config: customPostcssConfig,
+      };
+    }
+    return warnImplicitPostcssPlugins;
+  },
+  dedent`
+    Relying on the implicit PostCSS loader is deprecated and will be removed in Storybook 7.0.
+    If you need PostCSS, include '@storybook/addon-postcss' in your '.storybook/main.js' file.
+
+    See https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-implicit-postcss-loader for details.
+  `
+);
 
 export async function createDefaultWebpackConfig(
   storybookBaseConfig: any,
@@ -47,8 +64,6 @@ export async function createDefaultWebpackConfig(
     return storybookBaseConfig;
   }
 
-  // This pattern covers @storybook/addons-postcss and
-  // /storybook/addons/postcss (for local development)
   const hasPostcssAddon = options.presetsList.some((preset) =>
     /@storybook(\/|\\)addon-postcss/.test(preset.name || preset)
   );
@@ -60,6 +75,10 @@ export async function createDefaultWebpackConfig(
       test: /\.css$/,
       sideEffects: true,
       use: [
+        // TODO(blaine): Decide if we want to keep style-loader & css-loader in core
+        // Trying to apply style-loader or css-loader to files that already have been
+        // processed by them causes webpack to crash, so no one else can add similar
+        // loader configurations to the `.css` extension.
         require.resolve('style-loader'),
         {
           loader: require.resolve('css-loader'),
@@ -70,7 +89,7 @@ export async function createDefaultWebpackConfig(
         {
           loader: require.resolve('postcss-loader'),
           options: {
-            postcssOptions: await getPostcssOptions(),
+            postcssOptions: await warnGetPostcssOptions(),
           },
         },
       ],
