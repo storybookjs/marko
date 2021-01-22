@@ -12,6 +12,14 @@ module.exports = {
     '@storybook/addon-jest',
     '@storybook/addon-knobs',
     '@storybook/addon-links',
+    {
+      name: '@storybook/addon-postcss',
+      options: {
+        postcssLoaderOptions: {
+          implementation: require('postcss'), // eslint-disable-line global-require
+        },
+      },
+    },
     '@storybook/addon-storysource',
     '@storybook/addon-viewport',
   ],
