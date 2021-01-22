@@ -1,3 +1,17 @@
+## 6.2.0-alpha.18 (January 22, 2021)
+
+### Bug Fixes
+
+- Svelte: Fix duplicate story preview ([#13663](https://github.com/storybookjs/storybook/pull/13663))
+
+### Maintenance
+
+- Angular: Add Angular 11.1 support ([#13704](https://github.com/storybookjs/storybook/pull/13704))
+
+### Dependency Upgrades
+
+- Bump @types/reach\_\_router version ([#13703](https://github.com/storybookjs/storybook/pull/13703))
+
 ## 6.2.0-alpha.17 (January 22, 2021)
 
 ### Features
