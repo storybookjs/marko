@@ -37,10 +37,21 @@
          */
         dispatch('change', "some value");
     }
+
+    $: preview = {
+        string,
+        number,
+        fun,
+        unionstr,
+        unionnumeric,
+        union,
+        required,
+        unknown,
+    }
     
 </script>
 
-<pre on:click={onClick}>{JSON.stringify($$props, null, '  ')}</pre>
+<pre on:click={onClick}>{JSON.stringify(preview, null, '  ')}</pre>
 
 <!-- 
     User has clicked this element
