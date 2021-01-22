@@ -19,12 +19,12 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "@angular/common": "^11.0.9",
-    "@angular/compiler": "^11.0.9",
-    "@angular/core": "^11.0.9",
-    "@angular/forms": "^11.0.9",
-    "@angular/platform-browser": "^11.0.9",
-    "@angular/platform-browser-dynamic": "^11.0.9",
+    "@angular/common": "^11.1.0",
+    "@angular/compiler": "^11.1.0",
+    "@angular/core": "^11.1.0",
+    "@angular/forms": "^11.1.0",
+    "@angular/platform-browser": "^11.1.0",
+    "@angular/platform-browser-dynamic": "^11.1.0",
     "@ngrx/store": "^10.1.2",
     "core-js": "^3.8.2",
     "node-sass": "^4.14.1",
@@ -32,10 +32,10 @@
     "zone.js": "^0.11.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.1100.1",
-    "@angular-devkit/core": "^11.0.6",
-    "@angular/cli": "^11.0.6",
-    "@angular/compiler-cli": "^11.0.9",
+    "@angular-devkit/build-angular": "~0.1101.0",
+    "@angular-devkit/core": "^11.1.0",
+    "@angular/cli": "^11.1.0",
+    "@angular/compiler-cli": "^11.1.0",
     "@compodoc/compodoc": "^1.1.11",
     "@storybook/addon-a11y": "6.2.0-alpha.17",
     "@storybook/addon-actions": "6.2.0-alpha.17",
