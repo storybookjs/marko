@@ -1,3 +1,25 @@
+## 6.2.0-alpha.17 (January 22, 2021)
+
+### Features
+
+* Addon-docs: Add dynamic snippet support for Svelte ([#13653](https://github.com/storybookjs/storybook/pull/13653))
+* Svelte: Add Slots and Events to the generated ArgsTable ([#13660](https://github.com/storybookjs/storybook/pull/13660))
+* Core: Deprecate default postcss config, recommend addon-postcss ([#13669](https://github.com/storybookjs/storybook/pull/13669))
+
+### Bug Fixes
+
+* Angular: Force re-render if template change ([#13638](https://github.com/storybookjs/storybook/pull/13638))
+* Angular: Properly handle empty tsconfig compilerOptions ([#13596](https://github.com/storybookjs/storybook/pull/13596))
+
+### Maintenance
+
+* Core: Throw an error for invalid story format ([#13673](https://github.com/storybookjs/storybook/pull/13673))
+* Build: Ensure consistency of Chromatic snapshots of Zoom stories ([#13676](https://github.com/storybookjs/storybook/pull/13676))
+
+### Dependency Upgrades
+
+* Dependencies: Swap back to upstream postcss-loader ([#13698](https://github.com/storybookjs/storybook/pull/13698))
+
 ## 6.2.0-alpha.16 (January 16, 2021)
 
 ### Dependency Upgrades
