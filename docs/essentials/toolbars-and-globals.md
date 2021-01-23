@@ -66,6 +66,12 @@ In your [`.storybook/preview.js`](../configure/overview.md#configure-story-rende
 
 <!-- prettier-ignore-end -->
 
+<div class="aside">
+
+The <code>icon</code> element used in the examples loads the icons from the <code>@storybook/components</code> package. See [here](../workflows/faq.md#what-icons-are-available-for-my-toolbar-or-my-addon) the list of available icons that you can use.
+
+</div>
+
 By adding the configuration element `right`, the text will be displayed on the right side in the toolbar menu, once you connect it to a decorator.
 
 Here's a list of the configuration options available.

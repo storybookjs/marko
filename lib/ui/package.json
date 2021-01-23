@@ -1,6 +1,6 @@
 {
   "name": "@storybook/ui",
-  "version": "6.2.0-alpha.8",
+  "version": "6.2.0-alpha.18",
   "description": "Core Storybook UI",
   "keywords": [
     "storybook"
@@ -37,47 +37,47 @@
   },
   "dependencies": {
     "@emotion/core": "^10.1.1",
-    "@storybook/addons": "6.2.0-alpha.8",
-    "@storybook/api": "6.2.0-alpha.8",
-    "@storybook/channels": "6.2.0-alpha.8",
-    "@storybook/client-logger": "6.2.0-alpha.8",
-    "@storybook/components": "6.2.0-alpha.8",
-    "@storybook/core-events": "6.2.0-alpha.8",
-    "@storybook/router": "6.2.0-alpha.8",
+    "@storybook/addons": "6.2.0-alpha.18",
+    "@storybook/api": "6.2.0-alpha.18",
+    "@storybook/channels": "6.2.0-alpha.18",
+    "@storybook/client-logger": "6.2.0-alpha.18",
+    "@storybook/components": "6.2.0-alpha.18",
+    "@storybook/core-events": "6.2.0-alpha.18",
+    "@storybook/router": "6.2.0-alpha.18",
     "@storybook/semver": "^7.3.2",
-    "@storybook/theming": "6.2.0-alpha.8",
-    "@types/markdown-to-jsx": "^6.11.0",
-    "copy-to-clipboard": "^3.0.8",
-    "core-js": "^3.0.1",
-    "core-js-pure": "^3.0.1",
-    "downshift": "^6.0.6",
-    "emotion-theming": "^10.0.19",
+    "@storybook/theming": "6.2.0-alpha.18",
+    "@types/markdown-to-jsx": "^6.11.3",
+    "copy-to-clipboard": "^3.3.1",
+    "core-js": "^3.8.2",
+    "core-js-pure": "^3.8.2",
+    "downshift": "^6.0.15",
+    "emotion-theming": "^10.0.27",
     "fuse.js": "^3.6.1",
-    "global": "^4.3.2",
-    "lodash": "^4.17.15",
+    "global": "^4.4.0",
+    "lodash": "^4.17.20",
     "markdown-to-jsx": "^6.11.4",
     "memoizerific": "^1.11.3",
-    "polished": "^3.4.4",
-    "qs": "^6.6.0",
-    "react-draggable": "^4.0.3",
-    "react-helmet-async": "^1.0.2",
-    "react-sizeme": "^2.6.7",
+    "polished": "^3.6.7",
+    "qs": "^6.9.5",
+    "react-draggable": "^4.4.3",
+    "react-helmet-async": "^1.0.7",
+    "react-sizeme": "^2.6.12",
     "regenerator-runtime": "^0.13.7",
     "resolve-from": "^5.0.0",
-    "store2": "^2.7.1"
+    "store2": "^2.12.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.3",
-    "@storybook/addon-actions": "6.2.0-alpha.8",
-    "@storybook/addon-knobs": "6.2.0-alpha.8",
-    "@storybook/react": "6.2.0-alpha.8",
-    "@testing-library/react": "^10.0.3",
-    "babel-loader": "^8.0.6",
-    "chromatic": "^5.0.0",
+    "@babel/core": "^7.12.10",
+    "@storybook/addon-actions": "6.2.0-alpha.18",
+    "@storybook/addon-knobs": "6.2.0-alpha.18",
+    "@storybook/react": "6.2.0-alpha.18",
+    "@testing-library/react": "^10.4.9",
+    "babel-loader": "^8.2.2",
+    "chromatic": "^5.6.0",
     "enzyme": "^3.11.0",
     "flush-promises": "^1.0.2",
-    "terser-webpack-plugin": "^3.0.0",
-    "webpack": "^4.44.2"
+    "terser-webpack-plugin": "^3.1.0",
+    "webpack": "^4.46.0"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
@@ -86,5 +86,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c04cdab92d3832a904485f0f885a7faac7ebbf93"
+  "gitHead": "ed19e4b88b0fbc36d10379149b7c98194254897e"
 }

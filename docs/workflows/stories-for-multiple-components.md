@@ -11,6 +11,7 @@ It's useful to write stories that [render two or more components](../writing-sto
     'react/list-story-with-subcomponents.js.mdx',
     'react/list-story-with-subcomponents.ts.mdx',
     'angular/list-story-with-subcomponents.ts.mdx',
+    'vue/list-story-with-sub-components.js.mdx'
   ]}
 />
 
@@ -37,6 +38,7 @@ The simplest change we can make to the above is to reuse the stories of the `Lis
   paths={[
     'react/list-story-unchecked.js.mdx',
     'react/list-story-unchecked.ts.mdx',
+    'vue/list-story-unchecked.js.mdx'
   ]}
 />
 
@@ -55,6 +57,7 @@ One way we improve that situation is by pulling the rendered subcomponent out in
 <CodeSnippets
   paths={[
     'react/list-story-with-unchecked-children.js.mdx',
+    'react/list-story-with-unchecked-children.ts.mdx',
   ]}
 />
 
@@ -77,7 +80,8 @@ Another option that is more “data”-based is to create a special “story-gen
 <CodeSnippets
   paths={[
     'react/list-story-template.js.mdx',
-    'react/list-story-template.ts.mdx'
+    'react/list-story-template.ts.mdx',
+    'vue/list-story-template.js.mdx'
   ]}
 />
 

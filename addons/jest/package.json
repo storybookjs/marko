@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-jest",
-  "version": "6.2.0-alpha.8",
+  "version": "6.2.0-alpha.18",
   "description": "React storybook addon that show component jest report",
   "keywords": [
     "addon",
@@ -42,19 +42,19 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.8",
-    "@storybook/api": "6.2.0-alpha.8",
-    "@storybook/components": "6.2.0-alpha.8",
-    "@storybook/core-events": "6.2.0-alpha.8",
-    "@storybook/theming": "6.2.0-alpha.8",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
-    "react-sizeme": "^2.5.2",
+    "@storybook/addons": "6.2.0-alpha.18",
+    "@storybook/api": "6.2.0-alpha.18",
+    "@storybook/components": "6.2.0-alpha.18",
+    "@storybook/core-events": "6.2.0-alpha.18",
+    "@storybook/theming": "6.2.0-alpha.18",
+    "core-js": "^3.8.2",
+    "global": "^4.4.0",
+    "react-sizeme": "^2.6.12",
     "regenerator-runtime": "^0.13.7",
-    "upath": "^1.1.0"
+    "upath": "^1.2.0"
   },
   "devDependencies": {
-    "@types/webpack-env": "^1.15.3"
+    "@types/webpack-env": "^1.16.0"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
@@ -71,5 +71,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c04cdab92d3832a904485f0f885a7faac7ebbf93"
+  "gitHead": "ed19e4b88b0fbc36d10379149b7c98194254897e"
 }

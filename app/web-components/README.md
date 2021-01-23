@@ -52,9 +52,9 @@ if (module.hot) {
 
 # Setup es6/7 dependencies
 
-By default storybook only works with precompiled es5 code but as most web components themselves and their libs are distributed as es7 you will need to manually mark those packages as "needs transpilation".
+By default storybook only works with precompiled ES5 code but as most web components themselves and their libs are distributed as ES2017 you will need to manually mark those packages as "needs transpilation".
 
-For example if you have a library called `my-library` which is in es7 then you can add it like so
+For example if you have a library called `my-library` which is in ES2017 then you can add it like so
 
 ```js
 // .storybook/main.js

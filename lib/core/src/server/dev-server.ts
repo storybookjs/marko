@@ -356,6 +356,13 @@ const startPreview = async ({
   return { previewStats, previewTotalTime: process.hrtime(startTime) };
 };
 
+export function getServerAddresses(port: number, host: string, proto: string) {
+  return {
+    address: `${proto}://localhost:${port}/`,
+    networkAddress: `${proto}://${host || ip.address()}:${port}/`,
+  };
+}
+
 export async function storybookDevServer(options: any) {
   const app = express();
   const server = await getServer(app, options);
@@ -385,8 +392,7 @@ export async function storybookDevServer(options: any) {
 
   const { port, host } = options;
   const proto = options.https ? 'https' : 'http';
-  const address = `${proto}://${host || 'localhost'}:${port}/`;
-  const networkAddress = `${proto}://${ip.address()}:${port}/`;
+  const { address, networkAddress } = getServerAddresses(port, host, proto);
 
   await new Promise((resolve, reject) => {
     // FIXME: Following line doesn't match TypeScript signature at all 🤔
@@ -414,7 +420,7 @@ export async function storybookDevServer(options: any) {
   ]);
 
   // TODO #13083 Remove this when compiling the preview is fast enough
-  if (!options.ci) openInBrowser(address);
+  if (!options.ci) openInBrowser(networkAddress);
 
   return { ...previewResult, ...managerResult, address, networkAddress };
 }

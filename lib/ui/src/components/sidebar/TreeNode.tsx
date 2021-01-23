@@ -42,9 +42,9 @@ const TypeIcon = styled(Icons)(
     marginRight: 5,
     flex: '0 0 auto',
   },
-  ({ theme, icon }) => {
+  ({ theme, icon, symbol = icon }) => {
     const colors = theme.base === 'dark' ? iconColors.dark : iconColors.light;
-    const color = colors[icon as keyof typeof colors];
+    const color = colors[symbol as keyof typeof colors];
     return { color: isColor(theme, color) ? theme.color[color] : color };
   }
 );
@@ -140,7 +140,7 @@ export const GroupNode: FunctionComponent<
 > = React.memo(({ children, isExpanded = false, isExpandable = false, ...props }) => (
   <BranchNode isExpandable={isExpandable} tabIndex={-1} {...props}>
     {isExpandable ? <CollapseIcon isExpanded={isExpanded} /> : null}
-    <TypeIcon icon="folder" color="primary" />
+    <TypeIcon symbol="folder" color="primary" />
     {children}
   </BranchNode>
 ));
@@ -149,7 +149,7 @@ export const ComponentNode: FunctionComponent<ComponentProps<typeof BranchNode>>
   ({ theme, children, isExpanded, isExpandable, ...props }) => (
     <BranchNode isExpandable={isExpandable} tabIndex={-1} {...props}>
       {isExpandable && <CollapseIcon isExpanded={isExpanded} />}
-      <TypeIcon icon="component" color="secondary" />
+      <TypeIcon symbol="component" color="secondary" />
       {children}
     </BranchNode>
   )
@@ -158,7 +158,7 @@ export const ComponentNode: FunctionComponent<ComponentProps<typeof BranchNode>>
 export const DocumentNode: FunctionComponent<ComponentProps<typeof LeafNode>> = React.memo(
   ({ theme, children, ...props }) => (
     <LeafNode tabIndex={-1} {...props}>
-      <TypeIcon icon="document" />
+      <TypeIcon symbol="document" />
       {children}
     </LeafNode>
   )
@@ -167,7 +167,7 @@ export const DocumentNode: FunctionComponent<ComponentProps<typeof LeafNode>> = 
 export const StoryNode: FunctionComponent<ComponentProps<typeof LeafNode>> = React.memo(
   ({ theme, children, ...props }) => (
     <LeafNode tabIndex={-1} {...props}>
-      <TypeIcon icon="bookmarkhollow" />
+      <TypeIcon symbol="bookmarkhollow" />
       {children}
     </LeafNode>
   )

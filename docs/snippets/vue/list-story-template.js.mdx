@@ -1,0 +1,33 @@
+```js
+// List.stories.js
+
+import List from './List.vue';
+import ListItem from './ListItem.vue';
+import { Unchecked } from './ListItem.stories';
+
+const ListTemplate = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { List, ListItem },
+  template: `
+    <List v-bind="$props">
+        <div v-for="item in items" :key="item.someString">
+            <ListItem v-bind="$props"/>
+        </div>
+    </List>
+    `,
+});
+
+export const Empty = ListTemplate.bind({});
+EmptyListTemplate.args = {
+  items: [],
+};
+
+export const OneItem = ListTemplate.bind({});
+OneItem.args = {
+  items: [
+    {
+      ...Unchecked.args,
+    },
+  ],
+};
+```

@@ -10,7 +10,6 @@ export type {
   SyntaxHighlighterProps,
   SyntaxHighlighterRendererProps,
 } from './syntaxhighlighter/syntaxhighlighter-types';
-export { createSyntaxHighlighterElement } from './syntaxhighlighter/syntaxhighlighter-types';
 export { SyntaxHighlighter } from './syntaxhighlighter/lazy-syntaxhighlighter';
 
 // UI
@@ -39,7 +38,7 @@ export { AddonPanel } from './addon-panel/addon-panel';
 
 // Graphics
 export type { IconsProps } from './icon/icon';
-export { Icons } from './icon/icon';
+export { Icons, Symbols } from './icon/icon';
 export { StorybookLogo } from './brand/StorybookLogo';
 export { StorybookIcon } from './brand/StorybookIcon';
 
