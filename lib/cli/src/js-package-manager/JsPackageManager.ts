@@ -209,7 +209,7 @@ export abstract class JsPackageManager {
       eslintConfig: {
         ...packageJson.eslintConfig,
         overrides: [
-          ...(packageJson.eslintConfig.overrides || []),
+          ...(packageJson.eslintConfig?.overrides || []),
           {
             files: ['**/*.stories.*'],
             rules: {
