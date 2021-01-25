@@ -73,7 +73,7 @@
     "vue-template-compiler": "^2.6.8"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.13.0"
   },
   "publishConfig": {
     "access": "public"
