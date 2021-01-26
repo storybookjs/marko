@@ -1,0 +1,23 @@
+```js
+// YourComponent.stories.js
+
+import { YourComponent } from './YourComponent';
+
+// This default export determines where your story goes in the story list
+export default {
+  title: 'YourComponent',
+  component: YourComponent,
+};
+
+const Template = (args) => ({
+  components: { YourComponent },
+  props: { args },
+  template: '<YourComponent v-bind="$props"/>',
+});
+
+export const FirstStory = Template.bind({});
+
+FirstStory.args = {
+  /* the args you need here will depend on your component */
+};
+```
