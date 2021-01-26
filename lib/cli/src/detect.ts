@@ -12,13 +12,31 @@ import {
 import { getBowerJson } from './helpers';
 import { PackageJson, readPackageJson } from './js-package-manager';
 
-const hasDependency = (packageJson: PackageJson, name: string) => {
-  return !!packageJson.dependencies?.[name] || !!packageJson.devDependencies?.[name];
+const hasDependency = (
+  packageJson: PackageJson,
+  name: string,
+  matcher?: (version: string) => boolean
+) => {
+  const version = packageJson.dependencies?.[name] || packageJson.devDependencies?.[name];
+  if (version && typeof matcher === 'function') {
+    return matcher(version);
+  }
+  return !!version;
 };
 
-const hasPeerDependency = (packageJson: PackageJson, name: string) => {
-  return !!packageJson.peerDependencies?.[name];
+const hasPeerDependency = (
+  packageJson: PackageJson,
+  name: string,
+  matcher?: (version: string) => boolean
+) => {
+  const version = packageJson.peerDependencies?.[name];
+  if (version && typeof matcher === 'function') {
+    return matcher(version);
+  }
+  return !!version;
 };
+
+type SearchTuple = [string, (version: string) => boolean | undefined];
 
 const getFrameworkPreset = (
   packageJson: PackageJson,
@@ -32,12 +50,32 @@ const getFrameworkPreset = (
 
   const { preset, files, dependencies, peerDependencies, matcherFunction } = framework;
 
-  if (Array.isArray(dependencies) && dependencies.length > 0) {
-    matcher.dependencies = dependencies.map((name) => hasDependency(packageJson, name));
+  let dependencySearches = [] as SearchTuple[];
+  if (Array.isArray(dependencies)) {
+    dependencySearches = dependencies.map((name) => [name, undefined]);
+  } else if (typeof dependencies === 'object') {
+    dependencySearches = Object.entries(dependencies);
   }
 
-  if (Array.isArray(peerDependencies) && peerDependencies.length > 0) {
-    matcher.peerDependencies = peerDependencies.map((name) => hasPeerDependency(packageJson, name));
+  // Must check the length so the `[false]` isn't overwritten if `{ dependencies: [] }`
+  if (dependencySearches.length > 0) {
+    matcher.dependencies = dependencySearches.map(([name, matchFn]) =>
+      hasDependency(packageJson, name, matchFn)
+    );
+  }
+
+  let peerDependencySearches = [] as SearchTuple[];
+  if (Array.isArray(peerDependencies)) {
+    peerDependencySearches = peerDependencies.map((name) => [name, undefined]);
+  } else if (typeof peerDependencies === 'object') {
+    peerDependencySearches = Object.entries(peerDependencies);
+  }
+
+  // Must check the length so the `[false]` isn't overwritten if `{ peerDependencies: [] }`
+  if (peerDependencySearches.length > 0) {
+    matcher.peerDependencies = peerDependencySearches.map(([name, matchFn]) =>
+      hasPeerDependency(packageJson, name, matchFn)
+    );
   }
 
   if (Array.isArray(files) && files.length > 0) {

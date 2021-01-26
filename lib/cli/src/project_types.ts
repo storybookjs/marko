@@ -1,3 +1,5 @@
+import { lt } from '@storybook/semver';
+
 // Should match @storybook/<framework>
 export type SupportedFrameworks =
   | 'react'
@@ -82,8 +84,8 @@ export type TemplateMatcher = {
 export type TemplateConfiguration = {
   preset: ProjectType;
   /** will be checked both against dependencies and devDependencies */
-  dependencies?: string[];
-  peerDependencies?: string[];
+  dependencies?: string[] | { [dependency: string]: (version: string) => boolean };
+  peerDependencies?: string[] | { [dependency: string]: (version: string) => boolean };
   files?: string[];
   matcherFunction: (matcher: TemplateMatcher) => boolean;
 };
@@ -112,7 +114,12 @@ export const supportedTemplates: TemplateConfiguration[] = [
   },
   {
     preset: ProjectType.VUE,
-    dependencies: ['vue', 'nuxt'],
+    // The Vue template only works with Vue or Nuxt under v3
+    // In a future update, a new Vue3 template will be added
+    dependencies: {
+      vue: (version) => lt(version, '3.0.0'),
+      nuxt: (version) => lt(version, '3.0.0'),
+    },
     matcherFunction: ({ dependencies }) => {
       return dependencies.some(Boolean);
     },
