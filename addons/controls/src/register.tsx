@@ -2,7 +2,7 @@ import React from 'react';
 import addons, { types } from '@storybook/addons';
 import { AddonPanel } from '@storybook/components';
 import { API, useArgTypes } from '@storybook/api';
-import { ControlsPanel } from './components/ControlsPanel';
+import { ControlsPanel } from './ControlsPanel';
 import { ADDON_ID, PARAM_KEY } from './constants';
 
 addons.register(ADDON_ID, (api: API) => {

@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { ArgsTable, NoControlsWarning } from '@storybook/components';
 import { useArgs, useArgTypes, useParameter } from '@storybook/api';
 
-import { PARAM_KEY } from '../constants';
+import { PARAM_KEY } from './constants';
 
 interface ControlsParameters {
   expanded?: boolean;
