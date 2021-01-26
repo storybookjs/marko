@@ -29,7 +29,13 @@ export function readFileAsJson(jsonPath: string, allowComments?: boolean) {
 
   const fileContent = fs.readFileSync(filePath, 'utf8');
   const jsonContent = allowComments ? stripJsonComments(fileContent) : fileContent;
-  return JSON.parse(jsonContent);
+
+  try {
+    return JSON.parse(jsonContent);
+  } catch(e) {
+    throw new Error('Invalid json on file: ' + filePath);
+  }
+
 }
 
 export const writeFileAsJson = (jsonPath: string, content: unknown) => {
