@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "@emotion/core": "^10.1.1",
+    "@hypnosphi/react-sizeme": "^2.6.13",
     "@storybook/addons": "6.2.0-alpha.18",
     "@storybook/api": "6.2.0-alpha.18",
     "@storybook/channels": "6.2.0-alpha.18",
@@ -61,7 +62,6 @@
     "qs": "^6.9.5",
     "react-draggable": "^4.4.3",
     "react-helmet-async": "^1.0.7",
-    "react-sizeme": "^2.6.12",
     "regenerator-runtime": "^0.13.7",
     "resolve-from": "^5.0.0",
     "store2": "^2.12.0"
