@@ -12,7 +12,7 @@ export default {
   title: 'List',
 } as Meta;
 
-export const Empty = Story<ListProps> = (args) => <List {...args} />;;
+export const Empty: Story<ListProps> = (args) => <List {...args} />;
 
 export const OneItem = (args) => (
   <List {...args}>
