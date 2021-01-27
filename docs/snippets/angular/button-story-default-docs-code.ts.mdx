@@ -1,0 +1,37 @@
+```ts
+// Button.stories.ts
+
+import { Story, Meta } from '@storybook/angular/types-6-0';
+import Button from './button.component';
+
+export default {
+  title: 'Button',
+  component: Button,
+  argTypes: {
+    backgroundColor: { control: 'color' }
+  }
+} as Meta;
+
+// some function to demonstrate the behavior
+const someFunction = (someValue: string) => {
+  return `i am a ${someValue}`;
+};
+
+export const ExampleStory: Story<ComplexCase> = (args: ComplexCase) => {
+  const { label } = args;
+  // assigns the function result to a variable and pass it as a prop into the component
+  const functionResult = someFunction(label);
+  return {
+    component: ComplexCase,
+    props: {
+      ...args,
+      label:functionResult
+    },
+  };
+};
+ExampleStory.args = {
+  primary: true,
+  size: 'small',
+  label: 'button',
+};
+```
