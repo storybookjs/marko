@@ -1,4 +1,4 @@
-import { lt } from '@storybook/semver';
+import { lt, gte } from '@storybook/semver';
 
 // Should match @storybook/<framework>
 export type SupportedFrameworks =
@@ -21,6 +21,7 @@ export type SupportedFrameworks =
 
 export enum ProjectType {
   UNDETECTED = 'UNDETECTED',
+  UNSUPPORTED = 'UNSUPPORTED',
   REACT_SCRIPTS = 'REACT_SCRIPTS',
   METEOR = 'METEOR',
   REACT = 'REACT',
@@ -241,8 +242,25 @@ export const supportedTemplates: TemplateConfiguration[] = [
   },
 ];
 
+// A TemplateConfiguration that matches unsupported frameworks
+// Framework matchers can be added to this object to give
+// users an "Unsupported framework" message
+export const unsupportedTemplate: TemplateConfiguration = {
+  preset: ProjectType.UNSUPPORTED,
+  dependencies: {
+    // TODO(blaine): Remove when we support Vue 3
+    vue: (version) => version === 'next' || gte(version, '3.0.0'),
+    // TODO(blaine): Remove when we support Vue 3
+    nuxt: (version) => gte(version, '3.0.0'),
+  },
+  matcherFunction: ({ dependencies }) => {
+    return dependencies.some(Boolean);
+  },
+};
+
 const notInstallableProjectTypes: ProjectType[] = [
   ProjectType.UNDETECTED,
+  ProjectType.UNSUPPORTED,
   ProjectType.ALREADY_HAS_STORYBOOK,
   ProjectType.UPDATE_PACKAGE_ORGANIZATIONS,
 ];

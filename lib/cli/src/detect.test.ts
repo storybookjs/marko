@@ -316,23 +316,23 @@ describe('Detect', () => {
     });
 
     // TODO(blaine): Remove once Vue3 is supported
-    it(`UNDETECTED for Vue framework above version 3.0.0`, () => {
+    it(`UNSUPPORTED for Vue framework above version 3.0.0`, () => {
       const result = detectFrameworkPreset({
         dependencies: {
           vue: '3.0.0',
         },
       });
-      expect(result).toBe(ProjectType.UNDETECTED);
+      expect(result).toBe(ProjectType.UNSUPPORTED);
     });
 
     // TODO(blaine): Remove once Nuxt3 is supported
-    it(`UNDETECTED for Nuxt framework above version 3.0.0`, () => {
+    it(`UNSUPPORTED for Nuxt framework above version 3.0.0`, () => {
       const result = detectFrameworkPreset({
         dependencies: {
           nuxt: '3.0.0',
         },
       });
-      expect(result).toBe(ProjectType.UNDETECTED);
+      expect(result).toBe(ProjectType.UNSUPPORTED);
     });
 
     // TODO: The mocking in this test causes tests after it to fail

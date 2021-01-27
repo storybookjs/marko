@@ -8,6 +8,7 @@ import {
   SupportedLanguage,
   TemplateConfiguration,
   TemplateMatcher,
+  unsupportedTemplate,
 } from './project_types';
 import { getBowerJson } from './helpers';
 import { PackageJson, readPackageJson } from './js-package-manager';
@@ -86,7 +87,7 @@ const getFrameworkPreset = (
 };
 
 export function detectFrameworkPreset(packageJson = {}) {
-  const result = supportedTemplates.find((framework) => {
+  const result = [...supportedTemplates, unsupportedTemplate].find((framework) => {
     return getFrameworkPreset(packageJson, framework) !== null;
   });
 
