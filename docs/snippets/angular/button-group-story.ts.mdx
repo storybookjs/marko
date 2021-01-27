@@ -14,18 +14,18 @@ export default {
   decorators: [
     moduleMetadata({
       declarations: [Button],
-      imports: [CommonModule]
-    })
+      imports: [CommonModule],
+    }),
   ],
 };
 
 const Template = (args: ButtonGroup) => ({
-  props: args
+  props: args,
 });
 
 export const Pair = Template.bind({});
 Pair.args = {
-  buttons:[{...ButtonStories.Primary.args},{...ButtonStories.Secondary.args}],
-  orientation: 'horizontal'
+  buttons: [{...ButtonStories.Primary.args} ,{...ButtonStories.Secondary.args}],
+  orientation: 'horizontal',
 };
 ```

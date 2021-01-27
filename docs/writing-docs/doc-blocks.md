@@ -243,7 +243,7 @@ As an example, if you had the following story:
     'react/button-story-default-docs-code.js.mdx',
     'react/button-story-default-docs-code.ts.mdx',
     'vue/button-story-default-docs-code.js.mdx',
-    'angular/button-story-default-docs-code.ts.mdx'
+    'angular/button-story-default-docs-code.ts.mdx',
   ]}
 />
 

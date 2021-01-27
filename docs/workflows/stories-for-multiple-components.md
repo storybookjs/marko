@@ -39,7 +39,7 @@ The simplest change we can make to the above is to reuse the stories of the `Lis
     'react/list-story-unchecked.js.mdx',
     'react/list-story-unchecked.ts.mdx',
     'vue/list-story-unchecked.js.mdx',
-    'angular/list-story-unchecked.ts.mdx'
+    'angular/list-story-unchecked.ts.mdx',
   ]}
 />
 
@@ -83,7 +83,7 @@ Another option that is more “data”-based is to create a special “story-gen
     'react/list-story-template.js.mdx',
     'react/list-story-template.ts.mdx',
     'vue/list-story-template.js.mdx',
-    'angular/list-story-template.ts.mdx'
+    'angular/list-story-template.ts.mdx',
   ]}
 />
 

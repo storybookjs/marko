@@ -39,7 +39,7 @@ The above story definition can be further improved to take advantage of [Storybo
     'react/button-story-with-args.js.mdx',
     'react/button-story-with-args.ts.mdx',
     'vue/button-story-with-args.js.mdx',
-    'angular/button-story-with-args.ts.mdx'
+    'angular/button-story-with-args.ts.mdx',
   ]}
 />
 
