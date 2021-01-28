@@ -222,6 +222,17 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
           .then(commandLog('Adding Storybook support to your "Aurelia" app'))
           .then(end);
 
+      case ProjectType.UNSUPPORTED:
+        paddedLog(`We detected a project type that we don't support yet.`);
+        paddedLog(
+          `If you'd like your framework to be supported, please let use know about it at https://github.com/storybookjs/storybook/issues`
+        );
+
+        // Add a new line for the clear visibility.
+        logger.log();
+
+        return Promise.resolve();
+
       default:
         paddedLog(`We couldn't detect your project type. (code: ${projectType})`);
         paddedLog(

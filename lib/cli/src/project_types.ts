@@ -1,3 +1,5 @@
+import { lt, gte } from '@storybook/semver';
+
 // Should match @storybook/<framework>
 export type SupportedFrameworks =
   | 'react'
@@ -19,6 +21,7 @@ export type SupportedFrameworks =
 
 export enum ProjectType {
   UNDETECTED = 'UNDETECTED',
+  UNSUPPORTED = 'UNSUPPORTED',
   REACT_SCRIPTS = 'REACT_SCRIPTS',
   METEOR = 'METEOR',
   REACT = 'REACT',
@@ -82,8 +85,8 @@ export type TemplateMatcher = {
 export type TemplateConfiguration = {
   preset: ProjectType;
   /** will be checked both against dependencies and devDependencies */
-  dependencies?: string[];
-  peerDependencies?: string[];
+  dependencies?: string[] | { [dependency: string]: (version: string) => boolean };
+  peerDependencies?: string[] | { [dependency: string]: (version: string) => boolean };
   files?: string[];
   matcherFunction: (matcher: TemplateMatcher) => boolean;
 };
@@ -112,7 +115,12 @@ export const supportedTemplates: TemplateConfiguration[] = [
   },
   {
     preset: ProjectType.VUE,
-    dependencies: ['vue', 'nuxt'],
+    // The Vue template only works with Vue or Nuxt under v3
+    // In a future update, a new Vue3 template will be added
+    dependencies: {
+      vue: (version) => lt(version, '3.0.0'),
+      nuxt: (version) => lt(version, '3.0.0'),
+    },
     matcherFunction: ({ dependencies }) => {
       return dependencies.some(Boolean);
     },
@@ -234,8 +242,25 @@ export const supportedTemplates: TemplateConfiguration[] = [
   },
 ];
 
+// A TemplateConfiguration that matches unsupported frameworks
+// Framework matchers can be added to this object to give
+// users an "Unsupported framework" message
+export const unsupportedTemplate: TemplateConfiguration = {
+  preset: ProjectType.UNSUPPORTED,
+  dependencies: {
+    // TODO(blaine): Remove when we support Vue 3
+    vue: (version) => version === 'next' || gte(version, '3.0.0'),
+    // TODO(blaine): Remove when we support Vue 3
+    nuxt: (version) => gte(version, '3.0.0'),
+  },
+  matcherFunction: ({ dependencies }) => {
+    return dependencies.some(Boolean);
+  },
+};
+
 const notInstallableProjectTypes: ProjectType[] = [
   ProjectType.UNDETECTED,
+  ProjectType.UNSUPPORTED,
   ProjectType.ALREADY_HAS_STORYBOOK,
   ProjectType.UPDATE_PACKAGE_ORGANIZATIONS,
 ];
