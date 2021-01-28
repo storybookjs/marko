@@ -58,7 +58,7 @@
     "webpack": "^4.44.2"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.13.0"
   },
   "publishConfig": {
     "access": "public"
