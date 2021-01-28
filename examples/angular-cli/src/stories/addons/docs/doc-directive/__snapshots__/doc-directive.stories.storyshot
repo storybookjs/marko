@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots DocDirective Basic 1`] = `
+exports[`Storyshots Addon/Docs/DocDirective Basic 1`] = `
 <storybook-wrapper>
   <div
     docdirective=""

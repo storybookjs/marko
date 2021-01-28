@@ -1,9 +1,8 @@
 import { DocButtonComponent } from './doc-button.component';
 
 export default {
-  title: 'DocButton',
+  title: 'Addon/Docs/DocButton',
   component: DocButtonComponent,
-  parameters: { docs: { iframeHeight: 120 } },
 };
 
 export const Basic = (args) => ({
