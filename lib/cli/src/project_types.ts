@@ -1,4 +1,14 @@
-import { lt, gte } from '@storybook/semver';
+import { validRange, minVersion } from '@storybook/semver';
+
+function ltMajor(versionRange: string, major: number) {
+  // Uses validRange to avoid a throw from minVersion if an invalid range gets passed
+  return validRange(versionRange) && minVersion(versionRange).major < major;
+}
+
+function eqMajor(versionRange: string, major: number) {
+  // Uses validRange to avoid a throw from minVersion if an invalid range gets passed
+  return validRange(versionRange) && minVersion(versionRange).major === major;
+}
 
 // Should match @storybook/<framework>
 export type SupportedFrameworks =
@@ -118,8 +128,8 @@ export const supportedTemplates: TemplateConfiguration[] = [
     // The Vue template only works with Vue or Nuxt under v3
     // In a future update, a new Vue3 template will be added
     dependencies: {
-      vue: (version) => lt(version, '3.0.0'),
-      nuxt: (version) => lt(version, '3.0.0'),
+      vue: (versionRange) => ltMajor(versionRange, 3),
+      nuxt: (versionRange) => ltMajor(versionRange, 3),
     },
     matcherFunction: ({ dependencies }) => {
       return dependencies.some(Boolean);
@@ -249,9 +259,9 @@ export const unsupportedTemplate: TemplateConfiguration = {
   preset: ProjectType.UNSUPPORTED,
   dependencies: {
     // TODO(blaine): Remove when we support Vue 3
-    vue: (version) => version === 'next' || gte(version, '3.0.0'),
+    vue: (versionRange) => versionRange === 'next' || eqMajor(versionRange, 3),
     // TODO(blaine): Remove when we support Vue 3
-    nuxt: (version) => gte(version, '3.0.0'),
+    nuxt: (versionRange) => eqMajor(versionRange, 3),
   },
   matcherFunction: ({ dependencies }) => {
     return dependencies.some(Boolean);
