@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { Story, Meta } from '@storybook/react';
-import { ButtonGroup,ButtonGroupProps } from '../ButtonGroup';
+import { ButtonGroup, ButtonGroupProps } from '../ButtonGroup';
 import * as ButtonStories from './Button.stories';
 
 export default {
@@ -15,7 +15,7 @@ const Template: Story<ButtonGroupProps> = (args) => <ButtonGroup {...args} />;
 
 export const Pair = Template.bind({});
 Pair.args = {
-  buttons: [ ...ButtonStories.Primary.args, ...ButtonStories.Secondary.args ],
+  buttons: [{ ...ButtonStories.Primary.args }, { ...ButtonStories.Secondary.args }],
   orientation: 'horizontal',
 };
 ```
