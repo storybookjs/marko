@@ -32,10 +32,10 @@ export function readFileAsJson(jsonPath: string, allowComments?: boolean) {
 
   try {
     return JSON.parse(jsonContent);
-  } catch(e) {
-    throw new Error('Invalid json on file: ' + filePath);
+  } catch (e) {
+    console.error(chalk.red(`Invalid json on file: ${filePath}`));
+    throw e;
   }
-
 }
 
 export const writeFileAsJson = (jsonPath: string, content: unknown) => {
