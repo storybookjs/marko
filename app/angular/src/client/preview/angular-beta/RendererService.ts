@@ -23,12 +23,14 @@ export class RendererService {
     return RendererService.instance;
   }
 
-  private platform: PlatformRef;
+  public platform: PlatformRef;
 
   private staticRoot = document.getElementById('root');
 
   // Observable to change the properties dynamically without reloading angular module&component
   private storyProps$: Subject<ICollection | undefined>;
+
+  private previousStoryFnAngular: StoryFnAngularReturnType = {};
 
   constructor() {
     if (typeof NODE_ENV === 'string' && NODE_ENV !== 'development') {
@@ -41,6 +43,7 @@ export class RendererService {
     }
     // platform should be set after enableProdMode()
     this.platform = platformBrowserDynamic();
+    this.initAngularBootstrapElement();
   }
 
   /**
@@ -61,8 +64,9 @@ export class RendererService {
     forced: boolean;
     parameters: Parameters;
   }) {
-    if (forced && this.storyProps$) {
+    if (!this.fullRendererRequired(storyFnAngular, forced)) {
       this.storyProps$.next(storyFnAngular.props);
+
       return;
     }
 
@@ -80,12 +84,22 @@ export class RendererService {
     );
   }
 
-  initAngularBootstrapElement() {
+  private initAngularBootstrapElement() {
     // Adds DOM element that angular will use as bootstrap component
     const storybookWrapperElement = document.createElement(
       RendererService.SELECTOR_STORYBOOK_WRAPPER
     );
     this.staticRoot.innerHTML = '';
     this.staticRoot.appendChild(storybookWrapperElement);
+  }
+
+  private fullRendererRequired(storyFnAngular: StoryFnAngularReturnType, forced: boolean) {
+    const { previousStoryFnAngular } = this;
+    this.previousStoryFnAngular = storyFnAngular;
+
+    const hasChangedTemplate =
+      !!storyFnAngular?.template && previousStoryFnAngular?.template !== storyFnAngular.template;
+
+    return !forced || !this.storyProps$ || hasChangedTemplate;
   }
 }

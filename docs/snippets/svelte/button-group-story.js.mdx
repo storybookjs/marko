@@ -1,0 +1,25 @@
+```js
+// ButtonGroup.stories.js
+
+import ButtonGroup from '../ButtonGroup.svelte';
+import * as ButtonStories from './Button.stories';
+
+export default {
+  title: 'ButtonGroup',
+  component: ButtonGroup,
+}
+
+const Template = (args) => ({
+  Component: ButtonGroup,
+  props: args,
+ });
+
+export const Pair = Template.bind({});
+Pair.args = {
+  buttons: [
+    { ...ButtonStories.Primary.args },
+    { ...ButtonStories.Secondary.args }
+  ],
+  orientation: 'horizontal',
+};
+```

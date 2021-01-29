@@ -6,3 +6,12 @@
 .green-color {
   color: $color;
 }
+
+.light-theme {
+  background-color: white;
+}
+
+.dark-theme {
+  background-color: rgb(75, 75, 75);
+  color: white;
+}

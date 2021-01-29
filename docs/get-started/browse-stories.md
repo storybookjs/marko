@@ -15,7 +15,17 @@ A `*.stories.js` file defines all the stories for a component. Each story has a 
   />
 </video>
 
-Navigate between stories by clicking on them in the sidebar or use keyboard shortcuts (for instance use opt/alt + ◀️ ▶️). Try the sidebar search to find a story by name.
+
+Navigate between stories by clicking on them in the sidebar. Try the sidebar search to find a story by name. 
+
+Or use keyboard shortcuts. Click on the Storybook's menu to see the list of shortcuts available.
+
+<video autoPlay muted playsInline loop>
+  <source
+    src="storybook-keyboard-shortcuts-optimized.mp4"
+    type="video/mp4"
+  />
+</video>
 
 ## Toolbar
 

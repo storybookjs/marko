@@ -128,6 +128,7 @@ We're actively working in providing a better way to address this situation, but 
 With the release of version 6.0, we also updated our documentation as well. That doesn't mean that the old documentation was removed, we kept it to help you with your Storybook migration process. Use the content from the table below in conjunction with our <a href="https://github.com/storybookjs/storybook/blob/next/MIGRATION.md">migration guide</a> .
 
 We're only covering version 5.3 and 5.0 as they were important milestones for Storybook. If you want to go back in time a little more you'll have to check the specific release in the monorepo.
+
 | Section          | Page                                       | Current Location                                                                   | Version 5.3 location                                                                                                                                                                                                                                                 | Version 5.0 location                                                                                                                                     |
 |------------------|--------------------------------------------|------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Get Started      | Install                                    | [See current documentation](../get-started/install.md)                             | [See versioned documentation](https://github.com/storybookjs/storybook/tree/release/5.3/docs/src/pages/guides/quick-start-guide)                                                                                                                                     | [See versioned documentation](https://github.com/storybookjs/storybook/tree/release/5.0/docs/src/pages/guides/quick-start-guide)                         |
@@ -182,4 +183,59 @@ We're only covering version 5.3 and 5.0 as they were important milestones for St
 
 <div class="aside">
 With the release of version 5.3 we've updated how you can write your stories to a more compact and easier way. It doesn't mean that the <code>storiesOf</code> format has been removed. For the time being we're still supporting it and we have documentation for it. But be advised that this is bound to change in the future.
+</div>
+
+### What icons are available for my toolbar or my addon?
+
+With the [`@storybook/components`](https://www.npmjs.com/package/@storybook/components) package you get a set of icons that you can use to customize your own UI. Use the table below as a reference while writing your own addon or defining your own Storybook global types.
+
+| accessibility  | accessibilityalt | add          | admin        | alert         |
+|----------------|------------------|--------------|--------------|---------------|
+| arrowdown      | arrowleft        | arrowleftalt | arrowright   | arrowrightalt |
+| arrowup        | back             | basket       | batchaccept  | batchdeny     |
+| beaker         | bell             | bitbucket    | book         | bookmark      |
+| bookmarkhollow | bottombar        | box          | branch       | browser       |
+| button         | calendar         | camera       | category     | certificate   |
+| check          | chevrondown      | chromatic    | circle       | circlehollow  |
+| close          | closeAlt         | cog          | collapse     | comment       |
+| commit         | compass          | component    | contrast     | copy          |
+| cpu            | credit           | cross        | dashboard    | database      |
+| delete         | discord          | docchart     | doclist      | document      |
+| download       | edit             | ellipsis     | email        | expand        |
+| expandalt      | eye              | eyeclose     | facebook     | facehappy     |
+| faceneutral    | facesad          | filter       | flag         | folder        |
+| form           | gdrive           | github       | gitlab       | globe         |
+| google         | graphbar         | graphline    | graphql      | grid          |
+| grow           | heart            | hearthollow  | home         | hourglass     |
+| info           | key              | lightning    | lightningoff | link          |
+| listunordered  | location         | lock         | markup       | medium        |
+| memory         | menu             | merge        | mirror       | mobile        |
+| nut            | outbox           | outline      | paintbrush   | paperclip     |
+| paragraph      | phone            | photo        | pin          | play          |
+| plus           | power            | print        | proceed      | profile       |
+| pullrequest    | question         | redirect     | redux        | reply         |
+| repository     | requestchange    | rss          | search       | share         |
+| sharealt       | shield           | sidebar      | sidebaralt   | speaker       |
+| star           | starhollow       | stop         | structure    | subtract      |
+| support        | switchalt        | sync         | tablet       | thumbsup      |
+| time           | timer            | transfer     | trash        | twitter       |
+| undo           | unfold           | unlock       | upload       | user          |
+| useradd        | useralt          | users        | video        | watch         |
+| wrench         | youtube          | zoom         | zoomout      | zoomreset     |
+
+Go through this [story](https://5a375b97f4b14f0020b0cda3-wbeulgbetj.chromatic.com/?path=/story/basics-icon--labels) to see how the icons look like.
+
+
+### I see a "No Preview" error with a Storybook production build
+
+If you're using the `serve` package to verify your production build of Storybook you'll get that error. It relates how `serve` handles rewrites. For instance `/iframe.html` is rewritten into `/iframe` and you'll get that error.
+
+We recommend that you use [http-server](https://www.npmjs.com/package/http-server) instead and use the following command to preview Storybook:
+
+```shell
+npx http-server storybook-static
+```
+
+<div class="aside">
+If you don't want to run the command above frequently. Add <code>http-server</code> as a development dependency and create a new script to preview your production build of Storybook.
 </div>

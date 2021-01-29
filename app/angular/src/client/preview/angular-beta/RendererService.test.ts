@@ -56,5 +56,60 @@ describe('RendererService', () => {
         '<foo>🦊</foo>'
       );
     });
+
+    describe('when forced=true', () => {
+      beforeEach(async () => {
+        // Init first render
+        await rendererService.render({
+          storyFnAngular: {
+            template: '{{ logo }}: {{ name }}',
+            props: {
+              logo: '🦊',
+              name: 'Fox',
+            },
+          },
+          forced: true,
+          parameters: {} as any,
+        });
+      });
+
+      it('should be rendered a first time', async () => {
+        expect(document.body.getElementsByTagName('storybook-wrapper')[0].innerHTML).toBe(
+          '🦊: Fox'
+        );
+      });
+
+      it('should not be re-rendered', async () => {
+        // only props change
+        await rendererService.render({
+          storyFnAngular: {
+            props: {
+              logo: '👾',
+            },
+          },
+          forced: true,
+          parameters: {} as any,
+        });
+
+        expect(document.body.getElementsByTagName('storybook-wrapper')[0].innerHTML).toBe(
+          '👾: Fox'
+        );
+      });
+
+      it('should be re-rendered when template change', async () => {
+        await rendererService.render({
+          storyFnAngular: {
+            template: '{{ beer }}',
+            props: {
+              beer: '🍺',
+            },
+          },
+          forced: true,
+          parameters: {} as any,
+        });
+
+        expect(document.body.getElementsByTagName('storybook-wrapper')[0].innerHTML).toBe('🍺');
+      });
+    });
   });
 });
