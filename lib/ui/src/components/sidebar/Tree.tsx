@@ -102,8 +102,6 @@ interface NodeProps {
   setExpanded: (action: ExpandAction) => void;
   setFullyExpanded?: () => void;
   onSelectStoryId: (itemId: string) => void;
-  sectionCollapsed?: boolean;
-  toggleSectionCollapse?: (id: string) => void;
 }
 
 const Node = React.memo<NodeProps>(
@@ -118,8 +116,6 @@ const Node = React.memo<NodeProps>(
     isExpanded,
     setExpanded,
     onSelectStoryId,
-    sectionCollapsed,
-    toggleSectionCollapse,
   }) => {
     if (!isDisplayed) return null;
 
@@ -158,15 +154,17 @@ const Node = React.memo<NodeProps>(
           data-ref-id={refId}
           data-item-id={item.id}
           data-nodetype="root"
+          data-highlightable
+          aria-expanded={isExpanded}
         >
           <CollapseButton
             type="button"
             onClick={(event) => {
               event.preventDefault();
-              toggleSectionCollapse?.(id);
+              setExpanded({ ids: [item.id], value: !isExpanded });
             }}
           >
-            <CollapseIcon isExpanded={!sectionCollapsed} />
+            <CollapseIcon isExpanded={isExpanded} />
             {item.name}
           </CollapseButton>
           <Action
@@ -215,27 +213,17 @@ const Node = React.memo<NodeProps>(
 );
 
 const Root = React.memo<NodeProps & { expandableDescendants: string[] }>(
-  ({
-    item,
-    setExpanded,
-    isFullyExpanded,
-    expandableDescendants,
-    sectionCollapsed,
-    toggleSectionCollapse,
-    ...props
-  }) => {
+  ({ item, setExpanded, isFullyExpanded, expandableDescendants, ...props }) => {
     const setFullyExpanded = useCallback(() => {
-      setExpanded({ ids: expandableDescendants, value: !isFullyExpanded });
-      if (sectionCollapsed) {
-        toggleSectionCollapse?.(item.id);
-      }
-    }, [setExpanded, isFullyExpanded, expandableDescendants]);
+      setExpanded({
+        ids: [!isFullyExpanded && item.id, ...expandableDescendants].filter(Boolean),
+        value: !isFullyExpanded,
+      });
+    }, [setExpanded, isFullyExpanded, expandableDescendants, item.id]);
     return (
       <Node
         {...props}
         item={item}
-        sectionCollapsed={sectionCollapsed}
-        toggleSectionCollapse={toggleSectionCollapse}
         setExpanded={setExpanded}
         isFullyExpanded={isFullyExpanded}
         setFullyExpanded={setFullyExpanded}
@@ -415,7 +403,6 @@ export const Tree = React.memo<{
           if (isRoot(item)) {
             const descendants = expandableDescendants[item.id];
             const isFullyExpanded = descendants.every((d: string) => expanded[d]);
-            const collapsed = sectionCollapsed.includes(id);
             return (
               <>
                 <Root
@@ -430,10 +417,8 @@ export const Tree = React.memo<{
                   isFullyExpanded={isFullyExpanded}
                   expandableDescendants={descendants}
                   onSelectStoryId={onSelectStoryId}
-                  sectionCollapsed={collapsed}
-                  toggleSectionCollapse={handleSectionToggle}
                 />
-                <Section expanded={!collapsed}>
+                <Section expanded={!!expanded[id]}>
                   {itemDisplay.children?.map((childId) => {
                     const child = collapsedData[childId] as Group | Story;
 

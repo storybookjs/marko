@@ -9,7 +9,7 @@ export const HighlightStyles: FunctionComponent<Highlight> = ({ refId, itemId })
       const background = transparentize(0.85, color.secondary);
       return {
         [`[data-ref-id="${refId}"][data-item-id="${itemId}"]:not([data-selected="true"])`]: {
-          [`&[data-nodetype="component"], &[data-nodetype="group"]`]: {
+          [`&[data-nodetype="root"], &[data-nodetype="component"], &[data-nodetype="group"]`]: {
             background,
             '&:hover, &:focus': { background },
           },
