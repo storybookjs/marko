@@ -354,6 +354,7 @@ export const Tree = React.memo<{
       setHighlightedItemId,
       selectedStoryId,
       onSelectStoryId,
+      defaultCollapsedRootIds,
     });
 
     /**
@@ -382,16 +383,6 @@ export const Tree = React.memo<{
         return acc;
       }, []);
     }, [collapsedItems, collapsedData]);
-
-    const [sectionCollapsed, setSectionCollapsed] = React.useState<string[]>(
-      defaultCollapsedRootIds
-    );
-    useEffect(() => setSectionCollapsed(defaultCollapsedRootIds), [defaultCollapsedRootIds]);
-    const handleSectionToggle = useCallback((id: string) => {
-      setSectionCollapsed((prev) =>
-        prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
-      );
-    }, []);
 
     return (
       <Container ref={containerRef} hasOrphans={isMain && orphanIds.length > 0}>

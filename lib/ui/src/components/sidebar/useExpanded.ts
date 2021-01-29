@@ -25,6 +25,7 @@ export interface ExpandedProps {
   setHighlightedItemId: (storyId: string) => void;
   selectedStoryId: string | null;
   onSelectStoryId: (storyId: string) => void;
+  defaultCollapsedRootIds?: string[];
 }
 
 const initializeExpanded = ({
@@ -32,18 +33,20 @@ const initializeExpanded = ({
   data,
   highlightedRef,
   rootIds,
+  defaultCollapsedRootIds,
 }: {
   refId: string;
   data: StoriesHash;
   highlightedRef: MutableRefObject<Highlight>;
   rootIds: string[];
+  defaultCollapsedRootIds: string[];
 }) => {
   const highlightedAncestors =
     highlightedRef.current?.refId === refId
       ? getAncestorIds(data, highlightedRef.current?.itemId)
       : [];
   return [...rootIds, ...highlightedAncestors].reduce<ExpandedState>(
-    (acc, id) => Object.assign(acc, { [id]: true }),
+    (acc, id) => Object.assign(acc, { [id]: !defaultCollapsedRootIds.includes(id) }),
     {}
   );
 };
@@ -60,11 +63,12 @@ export const useExpanded = ({
   setHighlightedItemId,
   selectedStoryId,
   onSelectStoryId,
+  defaultCollapsedRootIds,
 }: ExpandedProps): [Record<string, boolean>, Dispatch<ExpandAction>] => {
   const api = useStorybookApi();
 
   // Track the set of currently expanded nodes within this tree.
-  // Root nodes are expanded by default (and cannot be collapsed).
+  // Root nodes are expanded by default.
   const [expanded, setExpanded] = useReducer<
     React.Reducer<ExpandedState, ExpandAction>,
     {
@@ -72,11 +76,12 @@ export const useExpanded = ({
       data: StoriesHash;
       highlightedRef: MutableRefObject<Highlight>;
       rootIds: string[];
+      defaultCollapsedRootIds: string[];
     }
   >(
     (state, { ids, value }) =>
       ids.reduce((acc, id) => Object.assign(acc, { [id]: value }), { ...state }),
-    { refId, data, highlightedRef, rootIds },
+    { refId, data, highlightedRef, rootIds, defaultCollapsedRootIds },
     initializeExpanded
   );
 
