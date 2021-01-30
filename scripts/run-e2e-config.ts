@@ -154,6 +154,12 @@ export const vue: Parameters = {
   generator: `npx @vue/cli@{{version}} create {{name}}-{{version}} --default --packageManager=yarn --no-git --force`,
 };
 
+export const vue3: Parameters = {
+  name: 'vue3',
+  version: 'next',
+  generator: `npx @vue/cli@{{version}} create {{name}}-{{version}} --default --packageManager=yarn --no-git --force`,
+};
+
 export const web_components: Parameters = {
   name: 'web_components',
   version: 'latest',
