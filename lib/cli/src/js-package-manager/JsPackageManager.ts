@@ -8,6 +8,18 @@ import storybookPackagesVersions from '../versions.json';
 
 const logger = console;
 
+function getPackageDetails(pkg: string): [string, string?] {
+  const idx = pkg.lastIndexOf('@');
+  // If the only `@` is the first character, it is a scoped package
+  // If it isn't in the string, it will be -1
+  if (idx <= 0) {
+    return [pkg, undefined];
+  }
+  const packageName = pkg.slice(0, idx);
+  const packageVersion = pkg.slice(idx + 1);
+  return [packageName, packageVersion];
+}
+
 export abstract class JsPackageManager {
   public abstract readonly type: 'npm' | 'yarn1' | 'yarn2';
 
@@ -81,10 +93,7 @@ export abstract class JsPackageManager {
       const { packageJson } = options;
 
       const dependenciesMap = dependencies.reduce((acc, dep) => {
-        const idx = dep.lastIndexOf('@');
-        const packageName = dep.slice(0, idx);
-        const packageVersion = dep.slice(idx + 1);
-
+        const [packageName, packageVersion] = getPackageDetails(dep);
         return { ...acc, [packageName]: packageVersion };
       }, {});
 
@@ -115,13 +124,14 @@ export abstract class JsPackageManager {
   /**
    * Return an array of strings matching following format: `<package_name>@<package_latest_version>`
    *
-   * @param packageNames
+   * @param packages
    */
-  public getVersionedPackages(...packageNames: string[]): Promise<string[]> {
+  public getVersionedPackages(...packages: string[]): Promise<string[]> {
     return Promise.all(
-      packageNames.map(
-        async (packageName) => `${packageName}@${await this.getVersion(packageName)}`
-      )
+      packages.map(async (pkg) => {
+        const [packageName, packageVersion] = getPackageDetails(pkg);
+        return `${packageName}@${await this.getVersion(packageName, packageVersion)}`;
+      })
     );
   }
 
