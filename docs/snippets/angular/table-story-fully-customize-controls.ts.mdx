@@ -6,15 +6,15 @@ const TableStory: Story<TableComponent> = (args: TableComponent) => ({
   props: args,
   template: `
     <table>
-        <tbody>
-            <tr *ngFor="let row of data; let i=index">
-                <td *ngFor="let col of row; let j=index">
-                    {{data[i][j]}}
-                </td>
-            </tr>
-        </tbody>
+      <tbody>
+        <tr *ngFor="let row of data; let i=index">
+          <td *ngFor="let col of row; let j=index">
+            {{data[i][j]}}
+          </td>
+        </tr>
+      </tbody>
     </table>
-    `
+    `,
 });
 
 export const Numeric = TableStory.bind({});

@@ -1,7 +1,8 @@
 ```ts
-// YourComponent.stories.ts
+// Icon.stories.ts
 
 import { Story, Meta } from '@storybook/angular/types-6-0';
+
 import Icon from './icon.component';
 
 import { IconA, IconB, IconC, IconD, IconE } from './icons';
@@ -11,7 +12,7 @@ const iconMap = { IconA, IconB, IconC, IconD, IconE };
 
 export default {
   title: 'My Story with Icons',
-  component: YourComponent,
+  component: Icon,
   argTypes: {
     icon: {
       control: {
