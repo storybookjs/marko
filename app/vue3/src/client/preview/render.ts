@@ -16,7 +16,8 @@ export const storybookApp = createApp({
 
   setup() {
     return () => {
-      if (!activeStoryComponent.value) throw new Error('TODO: No Vue3 story');
+      if (!activeStoryComponent.value)
+        throw new Error('No Vue 3 Story available. Was it set correctly?');
       return h(activeStoryComponent.value, activeProps.value);
     };
   },
