@@ -1,5 +1,5 @@
 import { extractArgTypes } from './extractArgTypes';
-import { extractComponentDescription } from '../../lib/docgen';
+import { extractComponentDescription } from './extractComponentDescription';
 import { prepareForInline } from './prepareForInline';
 import { sourceDecorator } from './sourceDecorator';
 
