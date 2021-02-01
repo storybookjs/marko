@@ -413,14 +413,14 @@ export async function storybookDevServer(options: any) {
     startManager({ startTime, options, configType, outputDir, configDir, prebuiltDir })
       // TODO #13083 Restore this when compiling the preview is fast enough
       // .then((result) => {
-      //   if (!options.ci) openInBrowser(address);
+      //   if (!options.ci && !options.smokeTest) openInBrowser(address);
       //   return result;
       // })
       .catch(bailPreview),
   ]);
 
   // TODO #13083 Remove this when compiling the preview is fast enough
-  if (!options.ci) openInBrowser(networkAddress);
+  if (!options.ci && !options.smokeTest) openInBrowser(networkAddress);
 
   return { ...previewResult, ...managerResult, address, networkAddress };
 }
