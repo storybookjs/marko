@@ -92,8 +92,7 @@ const Node = React.memo<NodeProps>(
             onSelectStoryId(item.id);
           }}
         >
-          {item.prefix}
-          {item.name}
+          {item.storyLabel || item.name}
         </LeafNode>
       );
     }
@@ -108,10 +107,7 @@ const Node = React.memo<NodeProps>(
           data-item-id={item.id}
           data-nodetype="root"
         >
-          <span>
-            {item.prefix}
-            {item.name}
-          </span>
+          <span>{item.storyLabel || item.name}</span>
           <Action
             type="button"
             className="sidebar-subheading-action"
@@ -151,8 +147,7 @@ const Node = React.memo<NodeProps>(
           if (item.isComponent && !isExpanded) onSelectStoryId(item.id);
         }}
       >
-        {item.prefix}
-        {item.name}
+        {item.storyLabel || item.name}
       </BranchNode>
     );
   }

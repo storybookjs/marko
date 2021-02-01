@@ -26,10 +26,35 @@ addons.setConfig({
       hidden: true,
     },
   },
-  storyPrefix: {
-    addons: <PrefixIcon icon="power" />,
-    'addons-a11y': <PrefixIcon icon="certificate" />,
-    'addons-a11y-basebutton': <PrefixIcon icon="calendar" />,
-    'addons-a11y-basebutton--default': <PrefixIcon icon="star" />,
+  sidebar: {
+    storyLabel: ({ id, name }) => {
+      const map = {
+        addons: (
+          <>
+            <PrefixIcon icon="power" />
+            {name}
+          </>
+        ),
+        'addons-a11y': (
+          <>
+            <PrefixIcon icon="certificate" />
+            {name}
+          </>
+        ),
+        'addons-a11y-basebutton': (
+          <>
+            <PrefixIcon icon="calendar" />
+            {name}
+          </>
+        ),
+        'addons-a11y-basebutton--default': (
+          <>
+            <PrefixIcon icon="star" />
+            {name}
+          </>
+        ),
+      };
+      return map[id];
+    },
   },
 });

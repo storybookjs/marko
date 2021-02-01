@@ -20,7 +20,7 @@ export interface Root {
   isComponent: false;
   isRoot: true;
   isLeaf: false;
-  prefix?: React.ReactNode;
+  storyLabel?: React.ReactNode;
 }
 
 export interface Group {
@@ -33,7 +33,7 @@ export interface Group {
   isComponent: boolean;
   isRoot: false;
   isLeaf: false;
-  prefix?: React.ReactNode;
+  storyLabel?: React.ReactNode;
   // MDX docs-only stories are "Group" type
   parameters?: {
     docsOnly?: boolean;
@@ -52,7 +52,7 @@ export interface Story {
   isComponent: boolean;
   isRoot: false;
   isLeaf: true;
-  prefix?: React.ReactNode;
+  storyLabel?: React.ReactNode;
   parameters?: {
     fileName: string;
     options: {
@@ -71,7 +71,6 @@ export interface StoryInput {
   refId?: string;
   kind: StoryKind;
   children: string[];
-  prefix?: React.ReactNode;
   parameters: {
     fileName: string;
     options: {
@@ -137,6 +136,15 @@ export const denormalizeStoryParameters = ({
   }));
 };
 
+// The client call can return undefined, let's return something by default
+const storyLabelSafe = (
+  item: Root | Group | Story,
+  fn?: (item: Root | Group | Story) => React.ReactNode
+) => {
+  const fnResult = fn(item);
+  return fnResult || item.name;
+};
+
 export const transformStoriesRawToStoriesHash = (
   input: StoriesRaw,
   { provider }: { provider: Provider }
@@ -146,7 +154,7 @@ export const transformStoriesRawToStoriesHash = (
 
   const storiesHashOutOfOrder = values.reduce((acc, item) => {
     const { kind, parameters } = item;
-    const { showRoots, storyPrefix = {} } = provider.getConfig();
+    const { showRoots, sidebar = {} } = provider.getConfig();
 
     const setShowRoots = typeof showRoots !== 'undefined';
     if (usesOldHierarchySeparator && !setShowRoots) {
@@ -171,7 +179,7 @@ export const transformStoriesRawToStoriesHash = (
       }
 
       if (root.length && index === 0) {
-        list.push({
+        const rootElement: Root = {
           id,
           name,
           depth: index,
@@ -179,10 +187,10 @@ export const transformStoriesRawToStoriesHash = (
           isComponent: false,
           isLeaf: false,
           isRoot: true,
-          prefix: storyPrefix[id],
-        });
+        };
+        list.push({ ...rootElement, storyLabel: sidebar.storyLabel?.(rootElement) });
       } else {
-        list.push({
+        const groupElement: Group = {
           id,
           name,
           parent,
@@ -191,11 +199,14 @@ export const transformStoriesRawToStoriesHash = (
           isComponent: false,
           isLeaf: false,
           isRoot: false,
-          prefix: storyPrefix[id],
           parameters: {
             docsOnly: parameters?.docsOnly,
             viewMode: parameters?.viewMode,
           },
+        };
+        list.push({
+          ...groupElement,
+          storyLabel: sidebar.storyLabel?.(groupElement),
         });
       }
 
@@ -221,9 +232,8 @@ export const transformStoriesRawToStoriesHash = (
       isLeaf: true,
       isComponent: false,
       isRoot: false,
-      prefix: storyPrefix[item.id],
     };
-    acc[item.id] = story;
+    acc[item.id] = { ...story, storyLabel: sidebar.storyLabel?.(story) };
 
     return acc;
   }, {} as StoriesHash);
