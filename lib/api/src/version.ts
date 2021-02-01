@@ -1,5 +1,4 @@
 /* eslint-disable import/no-extraneous-dependencies */
-// @ts-ignore
 import preval from 'preval.macro';
 
 export const version = preval`
