@@ -33,7 +33,7 @@ export function readFileAsJson(jsonPath: string, allowComments?: boolean) {
   try {
     return JSON.parse(jsonContent);
   } catch (e) {
-    console.error(chalk.red(`Invalid json on file: ${filePath}`));
+    logger.error(chalk.red(`Invalid json in file: ${filePath}`));
     throw e;
   }
 }
