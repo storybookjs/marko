@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots DocButton Basic 1`] = `
+exports[`Storyshots Addon/Docs/DocButton Basic 1`] = `
 <storybook-wrapper>
   <my-button
     ng-reflect-is-disabled="false"

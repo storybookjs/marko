@@ -59,7 +59,7 @@ Use the _named_ exports of a CSF file to define your component’s stories. We r
 
 ### Rename stories
 
-You can rename any particular story you need. For instance to give it a more clearer name. Here's how you can change the name of the `Primary` story:
+You can rename any particular story you need. For instance to give it a clearer name. Here's how you can change the name of the `Primary` story:
 
 <!-- prettier-ignore-start -->
 

@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots DocInjectable Basic 1`] = `
+exports[`Storyshots Addon/Docs/DocPipe Basic 1`] = `
 <storybook-wrapper>
   <div>
     <h1>
-      DocInjectable
+      DOCPIPE
     </h1>
   </div>
 </storybook-wrapper>

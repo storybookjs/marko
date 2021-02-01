@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-storyshots",
-  "version": "6.2.0-alpha.18",
+  "version": "6.2.0-alpha.19",
   "description": "Take a code snapshot of every story automatically with Jest",
   "keywords": [
     "addon",
@@ -40,9 +40,9 @@
   },
   "dependencies": {
     "@jest/transform": "^26.6.2",
-    "@storybook/addons": "6.2.0-alpha.18",
-    "@storybook/client-api": "6.2.0-alpha.18",
-    "@storybook/core": "6.2.0-alpha.18",
+    "@storybook/addons": "6.2.0-alpha.19",
+    "@storybook/client-api": "6.2.0-alpha.19",
+    "@storybook/core": "6.2.0-alpha.19",
     "@types/glob": "^7.1.3",
     "@types/jest": "^25.2.3",
     "@types/jest-specific-snapshot": "^0.5.3",
@@ -58,9 +58,9 @@
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
-    "@storybook/addon-docs": "6.2.0-alpha.18",
-    "@storybook/angular": "6.2.0-alpha.18",
-    "@storybook/react": "6.2.0-alpha.18",
+    "@storybook/addon-docs": "6.2.0-alpha.19",
+    "@storybook/angular": "6.2.0-alpha.19",
+    "@storybook/react": "6.2.0-alpha.19",
     "babel-loader": "^8.2.2",
     "enzyme": "^3.11.0",
     "enzyme-to-json": "^3.6.1",
@@ -109,5 +109,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "ed19e4b88b0fbc36d10379149b7c98194254897e"
+  "gitHead": "2a8f070c0c3ba56dc820cb04e96d9bf3f47a6a23"
 }

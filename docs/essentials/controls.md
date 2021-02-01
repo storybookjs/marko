@@ -253,6 +253,15 @@ Resulting in the following change in Storybook UI:
   />
 </video>
 
+The previous example also removed the prop documentation from the table. In some cases this is fine, however sometimes you might want to still render the prop documentation but without a control. The following example illustrates how:
+
+<CodeSnippets
+  paths={[
+    'common/component-story-disable-controls-alt.js.mdx',
+    'common/component-story-disable-controls-alt.mdx.mdx'
+  ]}
+/>
+
 <div class="aside">
 
  As with other Storybook properties, such as [decorators](../writing-stories/decorators.md) the same principle can also be applied at a story-level for more granular cases.
