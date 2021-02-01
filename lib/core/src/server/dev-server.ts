@@ -237,18 +237,18 @@ const startManager = async ({
       logConfig('Manager webpack config', managerConfig);
     }
 
-    if (options.cache && !options.smokeTest) {
+    if (options.cache) {
       if (options.managerCache) {
         const [useCache, hasOutput] = await Promise.all([
           // must run even if outputDir doesn't exist, otherwise the 2nd run won't use cache
           useManagerCache(options.cache, managerConfig),
           pathExists(outputDir),
         ]);
-        if (useCache && hasOutput) {
+        if (useCache && hasOutput && !options.smokeTest) {
           logger.info('=> Using cached manager');
           managerConfig = null;
         }
-      } else if (await clearManagerCache(options.cache)) {
+      } else if (!options.smokeTest && (await clearManagerCache(options.cache))) {
         logger.info('=> Cleared cached manager config');
       }
     }
