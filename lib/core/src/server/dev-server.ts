@@ -237,18 +237,18 @@ const startManager = async ({
       logConfig('Manager webpack config', managerConfig);
     }
 
-    if (options.cache && !options.smokeTest) {
+    if (options.cache) {
       if (options.managerCache) {
         const [useCache, hasOutput] = await Promise.all([
           // must run even if outputDir doesn't exist, otherwise the 2nd run won't use cache
           useManagerCache(options.cache, managerConfig),
           pathExists(outputDir),
         ]);
-        if (useCache && hasOutput) {
+        if (useCache && hasOutput && !options.smokeTest) {
           logger.info('=> Using cached manager');
           managerConfig = null;
         }
-      } else if (await clearManagerCache(options.cache)) {
+      } else if (!options.smokeTest && (await clearManagerCache(options.cache))) {
         logger.info('=> Cleared cached manager config');
       }
     }
@@ -413,14 +413,14 @@ export async function storybookDevServer(options: any) {
     startManager({ startTime, options, configType, outputDir, configDir, prebuiltDir })
       // TODO #13083 Restore this when compiling the preview is fast enough
       // .then((result) => {
-      //   if (!options.ci) openInBrowser(address);
+      //   if (!options.ci && !options.smokeTest) openInBrowser(address);
       //   return result;
       // })
       .catch(bailPreview),
   ]);
 
   // TODO #13083 Remove this when compiling the preview is fast enough
-  if (!options.ci) openInBrowser(networkAddress);
+  if (!options.ci && !options.smokeTest) openInBrowser(networkAddress);
 
   return { ...previewResult, ...managerResult, address, networkAddress };
 }
