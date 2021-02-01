@@ -82,7 +82,8 @@
     "react-dom": "^16.8.0 || ^17.0.0",
     "rxjs": "*",
     "vue": "*",
-    "vue-jest": "*"
+    "vue-jest": "*",
+    "svelte": "*"
   },
   "peerDependenciesMeta": {
     "@storybook/angular": {
