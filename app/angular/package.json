@@ -1,6 +1,6 @@
 {
   "name": "@storybook/angular",
-  "version": "6.2.0-alpha.18",
+  "version": "6.2.0-alpha.19",
   "description": "Storybook for Angular: Develop Angular Components in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -41,9 +41,9 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.18",
-    "@storybook/core": "6.2.0-alpha.18",
-    "@storybook/node-logger": "6.2.0-alpha.18",
+    "@storybook/addons": "6.2.0-alpha.19",
+    "@storybook/core": "6.2.0-alpha.19",
+    "@storybook/node-logger": "6.2.0-alpha.19",
     "@types/webpack-env": "^1.16.0",
     "autoprefixer": "^9.8.6",
     "core-js": "^3.8.2",
@@ -71,12 +71,14 @@
     "@angular/compiler": "^11.1.0",
     "@angular/compiler-cli": "^11.1.0",
     "@angular/core": "^11.1.0",
+    "@angular/elements": "^11.1.0",
     "@angular/forms": "^11.1.0",
     "@angular/platform-browser": "^11.1.0",
     "@angular/platform-browser-dynamic": "^11.1.0",
     "@nrwl/workspace": "^11.1.5",
     "@types/autoprefixer": "^9.7.2",
     "@types/jest": "^25.2.3",
+    "@webcomponents/custom-elements": "^1.4.3",
     "jest": "^26.6.3",
     "jest-preset-angular": "^8.3.2",
     "ts-jest": "^26.4.4"
@@ -88,25 +90,33 @@
     "@angular/compiler": ">=6.0.0",
     "@angular/compiler-cli": ">=6.0.0",
     "@angular/core": ">=6.0.0",
+    "@angular/elements": ">=6.0.0",
     "@angular/forms": ">=6.0.0",
     "@angular/platform-browser": ">=6.0.0",
     "@angular/platform-browser-dynamic": ">=6.0.0",
     "@babel/core": "*",
     "@nrwl/workspace": ">=11.1.0",
+    "@webcomponents/custom-elements": ">=1.4.3",
     "rxjs": "^6.0.0",
     "typescript": "^3.4.0 || >=4.0.0",
     "zone.js": "^0.8.29 || ^0.9.0 || ^0.10.0 || ^0.11.0"
   },
   "peerDependenciesMeta": {
+    "@angular/elements": {
+      "optional": true
+    },
     "@nrwl/workspace": {
+      "optional": true
+    },
+    "@webcomponents/custom-elements": {
       "optional": true
     }
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.13.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "ed19e4b88b0fbc36d10379149b7c98194254897e"
+  "gitHead": "2a8f070c0c3ba56dc820cb04e96d9bf3f47a6a23"
 }

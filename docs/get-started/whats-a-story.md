@@ -18,6 +18,7 @@ Let’s start with the `Button` component. A story is a function that describes 
     'react/button-story.ts.mdx',
     'react/button-story.mdx.mdx',
     'angular/button-story.ts.mdx',
+    'vue/button-story.js.mdx',
     'svelte/button-story.js.mdx',
     'svelte/button-story.mdx.mdx',
   ]}
@@ -31,19 +32,17 @@ View the rendered `Button` by clicking on it in the Storybook sidebar.
 
 The above story definition can be further improved to take advantage of [Storybook’s “args”](../writing-stories/args.md) concept. Args describes the arguments to Button in a machine readable way. This unlocks Storybook’s superpower of altering and composing arguments dynamically.
 
-```js
-// We create a “template” of how args map to rendering
+<!-- prettier-ignore-start -->
 
-const Template = (args) => <Button {...args} />;
+<CodeSnippets
+  paths={[
+    'react/button-story-with-args.js.mdx',
+    'react/button-story-with-args.ts.mdx',
+    'vue/button-story-with-args.js.mdx'
+  ]}
+/>
 
-// Each story then reuses that template
-export const Primary = Template.bind({});
-
-Primary.args = {
-  primary: true,
-  label: 'Button',
-};
-```
+<!-- prettier-ignore-end -->
 
 ![Button story with args](./example-button-args.png)
 

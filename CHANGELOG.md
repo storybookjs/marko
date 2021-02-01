@@ -1,3 +1,20 @@
+## 6.2.0-alpha.19 (January 29, 2021)
+
+### Features
+
+- Addon-docs/Angular: Inline rendering support with angular-elements ([#13525](https://github.com/storybookjs/storybook/pull/13525))
+- CLI: Add version matcher functions for framework detection ([#13738](https://github.com/storybookjs/storybook/pull/13738))
+
+### Bug Fixes
+
+- CLI: Fix handling of version ranges in dependency checks ([#13759](https://github.com/storybookjs/storybook/pull/13759))
+
+### Maintenance
+
+- Build: Enable deepscan in workspace ([#13716](https://github.com/storybookjs/storybook/pull/13716))
+- Chore: Increase node version minimums to 10.13 ([#13725](https://github.com/storybookjs/storybook/pull/13725))
+- Fixes smoke-test on svelte-kitchen-sink ([#13705](https://github.com/storybookjs/storybook/pull/13705))
+
 ## 6.1.15 (January 22, 2021)
 
 ### Bug Fixes
