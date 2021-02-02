@@ -108,7 +108,7 @@ const publish = (packages: { name: string; location: string }[], url: string) =>
         () =>
           new Promise((res, rej) => {
             logger.log(`🛫 publishing ${name} (${location})`);
-            const command = `cd ${location} && npm publish --registry ${url} --force --access restricted`;
+            const command = `cd ${location} && npm publish --registry ${url} --force --access restricted --ignore-scripts`;
             exec(command, (e) => {
               if (e) {
                 rej(e);
