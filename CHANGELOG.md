@@ -1,3 +1,10 @@
+## 6.1.16 (February 2, 2021)
+
+### Bug Fixes
+
+- Addon-docs/Svelte: Fix component name in docgen-loader ([#13760](https://github.com/storybookjs/storybook/pull/13760))
+- UI: Fix copy to clipboard for insecure deployments ([#13777](https://github.com/storybookjs/storybook/pull/13777))
+
 ## 6.2.0-alpha.20 (February 2, 2021)
 
 ### Features
