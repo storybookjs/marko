@@ -19,6 +19,7 @@ import reactScriptsGenerator from './generators/REACT_SCRIPTS';
 import sfcVueGenerator from './generators/SFC_VUE';
 import updateOrganisationsGenerator from './generators/UPDATE_PACKAGE_ORGANIZATIONS';
 import vueGenerator from './generators/VUE';
+import vue3Generator from './generators/VUE3';
 import webpackReactGenerator from './generators/WEBPACK_REACT';
 import mithrilGenerator from './generators/MITHRIL';
 import marionetteGenerator from './generators/MARIONETTE';
@@ -160,6 +161,11 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
       case ProjectType.VUE:
         return vueGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding Storybook support to your "Vue" app'))
+          .then(end);
+
+      case ProjectType.VUE3:
+        return vue3Generator(packageManager, npmOptions, generatorOptions)
+          .then(commandLog('Adding Storybook support to your "Vue 3" app'))
           .then(end);
 
       case ProjectType.ANGULAR:
