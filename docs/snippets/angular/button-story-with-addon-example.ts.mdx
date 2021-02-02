@@ -1,6 +1,8 @@
 ```ts
 // Button.stories.ts
 
+import { Meta } from '@storybook/angular/types-6-0';
+
 import Button from './button.component';
 
 export default {
@@ -11,5 +13,5 @@ export default {
       data: 'this data is passed to the addon',
     },
   },
-};
+} as Meta;
 ```

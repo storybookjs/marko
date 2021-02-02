@@ -1,4 +1,6 @@
 ```ts
+// List.stories.ts
+
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { ListItemComponent } from './list-item.component';
 import { ListComponent } from './list.component';
@@ -9,7 +11,7 @@ export default {
   subcomponents: { ListItemComponent },
 } as Meta;
 
-const Template: Story<ListComponent> = (args: ListComponent) => ({
+const Template: Story<ListComponent> = (args) => ({
   props: args,
   moduleMetadata: {
     declarations: [ListComponent, ListItemComponent],
