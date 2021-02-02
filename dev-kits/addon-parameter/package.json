@@ -38,7 +38,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "ecd471c96b1ef2e8f8b7a07a137f391bb445bda9",
+  "gitHead": "af79329c2171b7cef7a0de9e946b993af3f78e2c",
   "typesVersions": {
     "<3.8": {
       "*": [
