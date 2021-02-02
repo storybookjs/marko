@@ -93,6 +93,7 @@ Up until now, we only used auto-generated controls based on the component we're 
     'react/table-story-fully-customize-controls.js.mdx',
     'react/table-story-fully-customize-controls.mdx.mdx',
     'vue/table-story-fully-customize-controls.js.mdx',
+    'angular/table-story-fully-customize-controls.ts.mdx',
   ]}
 />
 
@@ -116,6 +117,7 @@ As they can be complex cases:
     'react/component-story-custom-args-complex.ts.mdx',
     'react/component-story-custom-args-complex.mdx.mdx',
      'vue/component-story-custom-args-complex.js.mdx',
+     'angular/component-story-custom-args-complex.ts.mdx',
   ]}
 />
 
@@ -132,6 +134,7 @@ Or even with certain types of elements, such as icons:
     'react/component-story-custom-args-icons.ts.mdx',
     'react/component-story-custom-args-icons.mdx.mdx',
     'vue/component-story-custom-args-icons.js.mdx',
+    'angular/component-story-custom-args-icons.ts.mdx',
   ]}
 />
 

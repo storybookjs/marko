@@ -15,6 +15,7 @@ export type SupportedFrameworks =
   | 'react'
   | 'react-native'
   | 'vue'
+  | 'vue3'
   | 'angular'
   | 'mithril'
   | 'riot'
@@ -39,6 +40,7 @@ export enum ProjectType {
   REACT_PROJECT = 'REACT_PROJECT',
   WEBPACK_REACT = 'WEBPACK_REACT',
   VUE = 'VUE',
+  VUE3 = 'VUE3',
   SFC_VUE = 'SFC_VUE',
   ANGULAR = 'ANGULAR',
   EMBER = 'EMBER',
@@ -60,6 +62,7 @@ export const SUPPORTED_FRAMEWORKS: SupportedFrameworks[] = [
   'react',
   'react-native',
   'vue',
+  'vue3',
   'angular',
   'mithril',
   'riot',
@@ -125,11 +128,20 @@ export const supportedTemplates: TemplateConfiguration[] = [
   },
   {
     preset: ProjectType.VUE,
-    // The Vue template only works with Vue or Nuxt under v3
-    // In a future update, a new Vue3 template will be added
+    // This Vue template only works with Vue or Nuxt under v3
     dependencies: {
       vue: (versionRange) => ltMajor(versionRange, 3),
       nuxt: (versionRange) => ltMajor(versionRange, 3),
+    },
+    matcherFunction: ({ dependencies }) => {
+      return dependencies.some(Boolean);
+    },
+  },
+  {
+    preset: ProjectType.VUE3,
+    dependencies: {
+      // This Vue template works with Vue 3
+      vue: (versionRange) => versionRange === 'next' || eqMajor(versionRange, 3),
     },
     matcherFunction: ({ dependencies }) => {
       return dependencies.some(Boolean);
@@ -258,9 +270,7 @@ export const supportedTemplates: TemplateConfiguration[] = [
 export const unsupportedTemplate: TemplateConfiguration = {
   preset: ProjectType.UNSUPPORTED,
   dependencies: {
-    // TODO(blaine): Remove when we support Vue 3
-    vue: (versionRange) => versionRange === 'next' || eqMajor(versionRange, 3),
-    // TODO(blaine): Remove when we support Vue 3
+    // TODO(blaine): Remove when we support Nuxt 3
     nuxt: (versionRange) => eqMajor(versionRange, 3),
   },
   matcherFunction: ({ dependencies }) => {

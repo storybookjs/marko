@@ -38,7 +38,8 @@ When you are building screens in this way, it is typical that the inputs of a co
   paths={[
     'react/simple-page-implementation.js.mdx',
     'react/simple-page-implementation.ts.mdx',
-    'vue/simple-page-implementation.vue.mdx'
+    'vue/simple-page-implementation.vue.mdx',
+    'angular/simple-page-implementation.ts.mdx',
   ]}
 />
 
@@ -52,7 +53,8 @@ In such cases it is natural to use [args composition](../writing-stories/args.md
   paths={[
     'react/page-story-with-args-composition.js.mdx',
     'react/page-story-with-args-composition.ts.mdx',
-    'vue/page-story-with-args-composition.js.mdx'
+    'vue/page-story-with-args-composition.js.mdx',
+    'angular/page-story-with-args-composition.ts.mdx',
   ]}
 />
 
@@ -131,7 +133,8 @@ Once that configuration is complete, we can set the mock values in a specific st
 <CodeSnippets
   paths={[
     'react/app-story-with-mock.js.mdx',
-    'vue/app-story-with-mock.js.mdx'
+    'vue/app-story-with-mock.js.mdx',
+    'angular/app-story-with-mock.ts.mdx',
   ]}
 />
 
