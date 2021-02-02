@@ -63,7 +63,6 @@ Use [decorators](../writing-stories/decorators.md) to “wrap” every story in 
   paths={[
     'react/storybook-preview-with-styled-components-decorator.js.mdx',
     'vue/storybook-preview-with-styled-components-decorator.js.mdx',
-    'angular/storybook-preview-with-styled-components-decorator.ts.mdx'
   ]}
 />
 
