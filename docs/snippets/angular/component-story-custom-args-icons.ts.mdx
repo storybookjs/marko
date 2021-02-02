@@ -23,7 +23,7 @@ export default {
   },
 } as Meta;
 
-const Template: Story<Icon> = (args: Icon) => {
+const Template: Story<Icon> = (args) => {
   // retrieves the appropriate icon passes it as a component prop
   const { icon } = args;
   const selectedIcon = iconMap[icon];

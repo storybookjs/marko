@@ -26,7 +26,7 @@ export const Empty: Story<List> = (args: List) => ({
   template: `<app-list></<app-list>`,
 });
 
-export const OneItem: Story<List> = (args: List) => ({
+export const OneItem: Story<List> = (args) => ({
   props: args,
   template: `
     <app-list>
@@ -34,7 +34,7 @@ export const OneItem: Story<List> = (args: List) => ({
     </<app-list>`,
 });
 
-export const ManyItems: Story<List> = (args: List) => ({
+export const ManyItems: Story<List> = (args) => ({
   props: args,
   template: `
     <app-list>
