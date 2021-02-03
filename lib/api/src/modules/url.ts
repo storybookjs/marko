@@ -1,11 +1,19 @@
 import { navigate as navigateRouter, NavigateOptions } from '@reach/router';
-import { queryFromLocation } from '@storybook/router';
+import {
+  NAVIGATE_URL,
+  STORY_ARGS_UPDATED,
+  SET_STORIES,
+  SET_CURRENT_STORY,
+} from '@storybook/core-events';
+import { queryFromLocation, navigate as queryNavigate } from '@storybook/router';
 import { toId, sanitize } from '@storybook/csf';
 
-import { NAVIGATE_URL } from '@storybook/core-events';
 import deepEqual from 'fast-deep-equal';
+import { parse, stringify } from 'qs';
 import { ModuleArgs, ModuleFn } from '../index';
 import { PanelPositions } from './layout';
+import { isStory } from '../lib/stories';
+import type { Story } from '../lib/stories';
 
 interface Additions {
   isFullscreen?: boolean;
@@ -19,6 +27,26 @@ interface Additions {
 export interface SubState {
   customQueryParams: QueryParams;
 }
+
+const argsParseOptions = {
+  allowDots: true,
+  delimiter: ';',
+};
+
+const parseArgs = (argsString: string) =>
+  parse(
+    argsString
+      .split(';')
+      .map((part) => part.replace(':', '='))
+      .join(';'),
+    argsParseOptions
+  );
+
+const stringifyArgs = (args: Story['args']) =>
+  stringify(args, { ...argsParseOptions, encode: false })
+    .split(';')
+    .map((part) => part.replace('=', ':'))
+    .join(';');
 
 // Initialize the state based on the URL.
 // NOTE:
@@ -117,24 +145,13 @@ export interface SubAPI {
 
 export const init: ModuleFn = ({ store, navigate, state, provider, fullAPI, ...rest }) => {
   const api: SubAPI = {
-    getQueryParam: (key) => {
+    getQueryParam(key) {
       const { customQueryParams } = store.getState();
-      if (customQueryParams) {
-        return customQueryParams[key];
-      }
-      return undefined;
+      return customQueryParams ? customQueryParams[key] : undefined;
     },
-    getUrlState: () => {
-      const { path, viewMode, storyId, url, customQueryParams } = store.getState();
-      const queryParams = customQueryParams;
-
-      return {
-        queryParams,
-        path,
-        viewMode,
-        storyId,
-        url,
-      };
+    getUrlState() {
+      const { path, customQueryParams, storyId, url, viewMode } = store.getState();
+      return { path, queryParams: customQueryParams, storyId, url, viewMode };
     },
     setQueryParams(input) {
       const { customQueryParams } = store.getState();
@@ -159,6 +176,47 @@ export const init: ModuleFn = ({ store, navigate, state, provider, fullAPI, ...r
   const initModule = () => {
     fullAPI.on(NAVIGATE_URL, (url: string, options: { [k: string]: any }) => {
       fullAPI.navigateUrl(url, options);
+    });
+
+    const initialArgs: Record<string, Story['args']> = {};
+
+    // Track initial args for the currently selected story
+    fullAPI.on(SET_STORIES, () => {
+      const data = fullAPI.getCurrentStoryData();
+      const storyArgs = isStory(data) ? data.args : undefined;
+      initialArgs[data.id] = storyArgs;
+
+      const queryArgs = api.getQueryParam('args') || '';
+      const args = parseArgs(queryArgs);
+      // map args to types of storyArgs
+      fullAPI.updateStoryArgs(data as Story, storyArgs ? { ...storyArgs, ...args } : args);
+    });
+
+    // Update initial args when switching stories
+    fullAPI.on(SET_CURRENT_STORY, () => {
+      const data = fullAPI.getCurrentStoryData();
+      const storyArgs = isStory(data) ? data.args : undefined;
+      initialArgs[data.id] = initialArgs[data.id] || storyArgs;
+
+      const customizedArgs = Object.entries(storyArgs || {}).reduce((acc, [key, value]) => {
+        if (!deepEqual(value, initialArgs[data.id][key])) acc[key] = value;
+        return acc;
+      }, {} as Story['args']);
+      const argsString = stringifyArgs(customizedArgs);
+      const argsParam = argsString.length ? `&args=${argsString}` : '';
+      queryNavigate(`${fullAPI.getUrlState().path}${argsParam}`, { replace: true });
+    });
+
+    // Update the URL to reflect the args when they change
+    // Do not include any args that are in their initial state
+    fullAPI.on(STORY_ARGS_UPDATED, ({ storyId, args }) => {
+      const customizedArgs = Object.entries(args).reduce((acc, [key, value]) => {
+        if (!deepEqual(value, initialArgs[storyId][key])) acc[key] = value;
+        return acc;
+      }, {} as Story['args']);
+      const argsString = stringifyArgs(customizedArgs);
+      const argsParam = argsString.length ? `&args=${argsString}` : '';
+      queryNavigate(`${fullAPI.getUrlState().path}${argsParam}`, { replace: true });
     });
 
     if (fullAPI.showReleaseNotesOnLaunch()) {
