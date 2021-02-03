@@ -69,7 +69,7 @@
     "publish:next": "npm run publish:latest -- --npm-tag=next",
     "run-chromatics": "node -r esm ./scripts/run-chromatics.js",
     "serve-storybooks": "http-server ./built-storybooks -p 8001",
-    "start": "yarn --cwd examples/official-storybook storybook",
+    "start": "yarn --cwd examples/official-storybook storybook --no-manager-cache",
     "test": "node ./scripts/test.js",
     "test:cli": "npm --prefix lib/cli run test",
     "test:e2e-examples": "cypress run",
