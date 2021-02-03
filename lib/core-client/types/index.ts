@@ -1,6 +1,6 @@
 import type ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import type { PluginOptions } from 'react-docgen-typescript-plugin';
-import { Configuration } from 'webpack';
+import type { Configuration } from 'webpack';
 
 type Preset = string | { name: string };
 
@@ -73,7 +73,7 @@ export interface TypescriptOptions {
    * Configures `react-docgen-typescript-plugin`
    *
    * @default
-   * @see https://github.com/storybookjs/storybook/blob/next/lib/server-webpack5/src/config/defaults.js#L4-L6
+   * @see https://github.com/storybookjs/storybook/blob/next/lib/core/src/server/config/defaults.js#L4-L6
    */
   reactDocgenTypescriptOptions: PluginOptions;
 }
