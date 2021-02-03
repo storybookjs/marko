@@ -8,6 +8,11 @@
     "src/**/*"
   ],
   "exclude": [
-    "src/**.test.ts"
+    "src/**/*.test.*",
+    "src/**/tests/**/*",
+    "src/**/__tests__/**/*",
+    "src/**/*.stories.*",
+    "src/**/*.mockdata.*",
+    "src/**/__testfixtures__/**"
   ]
 }
