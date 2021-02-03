@@ -73,7 +73,7 @@ export default async ({
   const isProd = configType === 'PRODUCTION';
   const entryTemplate = await fse.readFile(
     // TODO ANDREW maybe something simpler
-    path.join(__dirname, '../../../esm/server/preview', 'virtualModuleEntry.template.js'),
+    path.join(__dirname, '../../esm/preview', 'virtualModuleEntry.template.js'),
     {
       encoding: 'utf8',
     }

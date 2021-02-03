@@ -1,4 +1,4 @@
-const { buildStaticStandalone } = require('../lib/core/dist/cjs/server/build-static');
+const { buildStaticStandalone } = require('../lib/server-webpack5/dist/cjs/build-static');
 
 process.env.NODE_ENV = 'production';
 

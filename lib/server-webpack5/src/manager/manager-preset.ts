@@ -14,7 +14,7 @@ export async function managerEntries(
   installedAddons: string[],
   options: { managerEntry: string; configDir: string }
 ): Promise<string[]> {
-  const { managerEntry = '../../client/manager' } = options;
+  const { managerEntry = '@storybook/core/dist/esm/manager' } = options;
   const entries = [require.resolve('../common/polyfills')];
 
   if (installedAddons && installedAddons.length) {

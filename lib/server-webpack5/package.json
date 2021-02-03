@@ -1,5 +1,5 @@
 {
-  "name": "@storybook/core",
+  "name": "@storybook/server-webpack5",
   "version": "6.2.0-alpha.20",
   "description": "Storybook framework-agnostic API",
   "keywords": [
@@ -28,8 +28,6 @@
   "files": [
     "dist/**/*",
     "dll/**/*",
-    "prebuilt/**/*",
-    "!prebuilt/report.html",
     "types/**/*",
     "*.js",
     "*.d.ts"
@@ -72,7 +70,6 @@
     "@storybook/node-logger": "6.2.0-alpha.20",
     "@storybook/router": "6.2.0-alpha.20",
     "@storybook/semver": "^7.3.2",
-    "@storybook/server-webpack5": "6.2.0-alpha.20",
     "@storybook/theming": "6.2.0-alpha.20",
     "@storybook/ui": "6.2.0-alpha.20",
     "@types/glob-base": "^0.3.0",
