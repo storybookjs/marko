@@ -23,7 +23,7 @@ export interface RequireContext {
 export type LoaderFunction = () => void | any[];
 export type Loadable = RequireContext | RequireContext[] | LoaderFunction;
 
-export { RenderContext, RenderContextWithoutStoryContext };
+export type { RenderContext, RenderContextWithoutStoryContext };
 
 // The function used by a framework to render story to the DOM
 export type RenderStoryFunction = (context: RenderContext) => void;

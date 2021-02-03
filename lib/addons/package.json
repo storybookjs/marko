@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addons",
-  "version": "6.2.0-alpha.2",
+  "version": "6.2.0-alpha.20",
   "description": "Storybook addons store",
   "keywords": [
     "storybook"
@@ -15,12 +15,14 @@
     "directory": "lib/addons"
   },
   "license": "MIT",
-  "main": "dist/public_api.js",
-  "types": "dist/public_api.d.ts",
+  "sideEffects": false,
+  "main": "dist/cjs/public_api.js",
+  "module": "dist/esm/public_api.js",
+  "types": "dist/ts3.9/public_api.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
@@ -28,21 +30,20 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/api": "6.2.0-alpha.2",
-    "@storybook/channels": "6.2.0-alpha.2",
-    "@storybook/client-logger": "6.2.0-alpha.2",
-    "@storybook/core-events": "6.2.0-alpha.2",
-    "@storybook/router": "6.2.0-alpha.2",
-    "@storybook/theming": "6.2.0-alpha.2",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
+    "@storybook/api": "6.2.0-alpha.20",
+    "@storybook/channels": "6.2.0-alpha.20",
+    "@storybook/client-logger": "6.2.0-alpha.20",
+    "@storybook/core-events": "6.2.0-alpha.20",
+    "@storybook/router": "6.2.0-alpha.20",
+    "@storybook/theming": "6.2.0-alpha.20",
+    "core-js": "^3.8.2",
+    "global": "^4.4.0",
     "regenerator-runtime": "^0.13.7"
   },
   "peerDependencies": {
@@ -52,5 +53,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "1b9dcaec9bd853c813b9f9001d00bdb89c742e66"
+  "gitHead": "20db16edcd0c76c54f0d80970a288ec94ebd19e6"
 }

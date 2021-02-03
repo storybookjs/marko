@@ -1,6 +1,8 @@
 ```ts
 // Button.stories.ts
 
+import { Meta } from '@storybook/angular/types-6-0';
+
 import Button from './button.component';
 
 export default {
@@ -9,10 +11,10 @@ export default {
   parameters: {
     backgrounds: {
       values: [
-         { name: 'red', value: '#f00', },
-         { name: 'green', value: '#0f0', },
+        { name: 'red', value: '#f00' },
+        { name: 'green', value: '#0f0' },
       ],
-    }
-  }
-};
+    },
+  },
+} as Meta;
 ```

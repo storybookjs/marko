@@ -41,7 +41,9 @@ export function webpack(
             {
               loader: require.resolve('postcss-loader'),
               options: {
-                plugins: [autoprefixer()],
+                postcssOptions: {
+                  plugins: [autoprefixer()],
+                },
               },
             },
             { loader: require.resolve('sass-loader') },

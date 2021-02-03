@@ -1,6 +1,6 @@
 {
   "name": "@storybook/marko",
-  "version": "6.2.0-alpha.2",
+  "version": "6.2.0-alpha.20",
   "description": "Storybook for Marko: Develop Marko Component in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -15,11 +15,13 @@
     "directory": "app/marko"
   },
   "license": "MIT",
-  "main": "dist/client/index.js",
+  "main": "dist/cjs/client/index.js",
+  "module": "dist/esm/client/index.js",
+  "types": "dist/ts3.9/client/index.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
@@ -33,20 +35,21 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@marko/webpack": "^6.2.8",
-    "@storybook/client-logger": "6.2.0-alpha.2",
-    "@storybook/core": "6.2.0-alpha.2",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
+    "@marko/webpack": "^7.0.0",
+    "@storybook/client-logger": "6.2.0-alpha.20",
+    "@storybook/core": "6.2.0-alpha.20",
+    "@types/webpack-env": "^1.16.0",
+    "core-js": "^3.8.2",
+    "global": "^4.4.0",
+    "react": "16.14.0",
+    "react-dom": "16.14.0",
+    "read-pkg-up": "^7.0.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
@@ -56,10 +59,10 @@
     "webpack": "*"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.13.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "1b9dcaec9bd853c813b9f9001d00bdb89c742e66"
+  "gitHead": "20db16edcd0c76c54f0d80970a288ec94ebd19e6"
 }

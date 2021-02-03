@@ -3,7 +3,7 @@ import { STORIES_COLLAPSE_ALL, STORIES_EXPAND_ALL } from '@storybook/core-events
 import { document } from 'global';
 import throttle from 'lodash/throttle';
 import React, { Dispatch, MutableRefObject, useCallback, useEffect, useReducer } from 'react';
-import { matchesKeyCode, matchesModifiers } from './keybinding';
+import { matchesKeyCode, matchesModifiers } from '../../keybinding';
 import { Highlight } from './types';
 
 import { isAncestor, getAncestorIds, getDescendantIds, scrollIntoView } from './utils';
@@ -81,8 +81,7 @@ export const useExpanded = ({
   );
 
   const getElementByDataItemId = useCallback(
-    (id: string) =>
-      containerRef.current && containerRef.current.querySelector(`[data-item-id="${id}"]`),
+    (id: string) => containerRef.current?.querySelector(`[data-item-id="${id}"]`),
     [containerRef]
   );
 
@@ -98,7 +97,7 @@ export const useExpanded = ({
     ({ ids, value }) => {
       setExpanded({ ids, value });
       if (ids.length === 1) {
-        const element = containerRef.current.querySelector(
+        const element = containerRef.current?.querySelector(
           `[data-item-id="${ids[0]}"][data-ref-id="${refId}"]`
         );
         if (element) highlightElement(element);

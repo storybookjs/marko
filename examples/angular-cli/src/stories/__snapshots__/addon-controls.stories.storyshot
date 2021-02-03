@@ -1,12 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Addon/Controls Basic 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
->
-  <my-button>
+<storybook-wrapper>
+  <my-button
+    ng-reflect-is-disabled="false"
+    ng-reflect-label="Args test"
+  >
     <button
       class="btn-secondary btn-medium"
       ng-reflect-ng-class="btn-secondary,btn-medium"
@@ -19,16 +18,15 @@ exports[`Storyshots Addon/Controls Basic 1`] = `
   
     </button>
   </my-button>
-</storybook-dynamic-app-root>
+</storybook-wrapper>
 `;
 
 exports[`Storyshots Addon/Controls Disabled 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
->
-  <my-button>
+<storybook-wrapper>
+  <my-button
+    ng-reflect-is-disabled="true"
+    ng-reflect-label="Disabled"
+  >
     <button
       class="btn-secondary btn-medium"
       disabled=""
@@ -42,5 +40,5 @@ exports[`Storyshots Addon/Controls Disabled 1`] = `
   
     </button>
   </my-button>
-</storybook-dynamic-app-root>
+</storybook-wrapper>
 `;

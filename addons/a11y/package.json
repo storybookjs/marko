@@ -1,7 +1,7 @@
 {
   "name": "@storybook/addon-a11y",
-  "version": "6.2.0-alpha.2",
-  "description": "a11y addon for storybook",
+  "version": "6.2.0-alpha.20",
+  "description": "Test component compliance with web accessibility standards",
   "keywords": [
     "a11y",
     "accessibility",
@@ -20,12 +20,13 @@
     "directory": "addons/a11y"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/ts3.9/index.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
@@ -33,33 +34,32 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.2",
-    "@storybook/api": "6.2.0-alpha.2",
-    "@storybook/channels": "6.2.0-alpha.2",
-    "@storybook/client-api": "6.2.0-alpha.2",
-    "@storybook/client-logger": "6.2.0-alpha.2",
-    "@storybook/components": "6.2.0-alpha.2",
-    "@storybook/core-events": "6.2.0-alpha.2",
-    "@storybook/theming": "6.2.0-alpha.2",
-    "axe-core": "^4.0.1",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
-    "lodash": "^4.17.15",
-    "react-sizeme": "^2.5.2",
+    "@storybook/addons": "6.2.0-alpha.20",
+    "@storybook/api": "6.2.0-alpha.20",
+    "@storybook/channels": "6.2.0-alpha.20",
+    "@storybook/client-api": "6.2.0-alpha.20",
+    "@storybook/client-logger": "6.2.0-alpha.20",
+    "@storybook/components": "6.2.0-alpha.20",
+    "@storybook/core-events": "6.2.0-alpha.20",
+    "@storybook/theming": "6.2.0-alpha.20",
+    "axe-core": "^4.1.1",
+    "core-js": "^3.8.2",
+    "global": "^4.4.0",
+    "lodash": "^4.17.20",
+    "react-sizeme": "^2.6.12",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0",
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
     "@testing-library/react": "^11.2.2",
-    "@types/webpack-env": "^1.15.3"
+    "@types/webpack-env": "^1.16.0"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
@@ -76,5 +76,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "1b9dcaec9bd853c813b9f9001d00bdb89c742e66"
+  "gitHead": "20db16edcd0c76c54f0d80970a288ec94ebd19e6"
 }

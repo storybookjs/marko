@@ -1,0 +1,43 @@
+```js
+// YourComponent.stories.js
+
+import YourComponent from './YourComponent.vue';
+
+export default {
+  title: 'A complex case with a function',
+  component: YourComponent,
+  // creates specific argTypes with options
+  argTypes: {
+    propertyA: {
+      control: {
+        type: 'select',
+        options: ['Item One', 'Item Two', 'Item Three']
+      }
+    },
+    propertyB: {
+      control: {
+        type: 'select',
+        options: ['Another Item One', 'Another Item Two', 'Another Item Three']
+      }
+    }
+  },
+};
+
+// a function to apply some computations
+const someFunction = (valuePropertyA, valuePropertyB) => {
+  // makes some computations and returns something
+};
+
+const Template = (args, { argTypes }) => {
+  const { propertyA, propertyB } = args;
+
+  const someFunctionResult = someFunction(propertyA, propertyB);
+
+  args.someProperty = someFunctionResult;
+  return {
+    components: { YourComponent },
+    props: Object.keys(argTypes),
+    template: `<YourComponent v-bind="$props" />`
+  };
+};
+```

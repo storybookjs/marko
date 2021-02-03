@@ -1,6 +1,6 @@
 {
   "name": "@storybook/core-events",
-  "version": "6.2.0-alpha.2",
+  "version": "6.2.0-alpha.20",
   "description": "Event names used in storybook core",
   "keywords": [
     "storybook"
@@ -15,12 +15,14 @@
     "directory": "lib/core-events"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "sideEffects": false,
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/ts3.9/index.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
@@ -28,17 +30,16 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "core-js": "^3.0.1"
+    "core-js": "^3.8.2"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "1b9dcaec9bd853c813b9f9001d00bdb89c742e66"
+  "gitHead": "20db16edcd0c76c54f0d80970a288ec94ebd19e6"
 }

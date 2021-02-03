@@ -1,20 +1,39 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Core/Parameters passed to story 1`] = `
-<storybook-dynamic-app-root
-  cfr={[Function CodegenComponentFactoryResolver]}
-  data={[Function Object]}
-  target={[Function ViewContainerRef_]}
->
+<storybook-wrapper>
   <storybook-button-component
-    _nghost-a-c9=""
+    _nghost-a-c11=""
+    ng-reflect-text="Parameters are {
+    \\"docs\\": {
+   "
   >
     <button
-      _ngcontent-a-c9=""
+      _ngcontent-a-c11=""
     >
       Parameters are {
     "docs": {
-      "iframeHeight": "60px"
+      "inlineStories": true
+    },
+    "globalTypes": {
+      "theme": {
+        "name": "Theme",
+        "description": "Global theme for components",
+        "defaultValue": "light",
+        "toolbar": {
+          "icon": "paintbrush",
+          "items": [
+            {
+              "value": "light",
+              "title": "Light theme"
+            },
+            {
+              "value": "dark",
+              "title": "Dark theme"
+            }
+          ]
+        }
+      }
     },
     "globalParameter": "globalParameter",
     "framework": "angular",
@@ -27,5 +46,5 @@ exports[`Storyshots Core/Parameters passed to story 1`] = `
   }
     </button>
   </storybook-button-component>
-</storybook-dynamic-app-root>
+</storybook-wrapper>
 `;

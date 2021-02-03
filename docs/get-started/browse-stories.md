@@ -15,7 +15,17 @@ A `*.stories.js` file defines all the stories for a component. Each story has a 
   />
 </video>
 
-Navigate between stories by clicking on them in the sidebar or use keyboard shortcuts (for instance use opt/alt + ◀️ ▶️). Try the sidebar search to find a story by name.
+
+Navigate between stories by clicking on them in the sidebar. Try the sidebar search to find a story by name. 
+
+Or use keyboard shortcuts. Click on the Storybook's menu to see the list of shortcuts available.
+
+<video autoPlay muted playsInline loop>
+  <source
+    src="storybook-keyboard-shortcuts-optimized.mp4"
+    type="video/mp4"
+  />
+</video>
 
 ## Toolbar
 
@@ -61,6 +71,6 @@ Addons are plugins that extend Storybook's core functionality. You can find them
   />
 </video>
 
-Storybook is extensible. Our rich ecosystem of addons helps you test, document, and optimize your stories. You can also create an addon to satisfy your workflow requirements. Read more in the [addons section](../api/addons.md).
+Storybook is extensible. Our rich ecosystem of addons helps you test, document, and optimize your stories. You can also create an addon to satisfy your workflow requirements. Read more in the [addons section](../addons/introduction.md).
 
 In the next chapter, we'll get your components rendering in Storybook so you can use it to supercharge component development.

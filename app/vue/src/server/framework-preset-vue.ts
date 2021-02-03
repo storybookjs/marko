@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import VueLoaderPlugin from 'vue-loader/lib/plugin';
-import { Configuration } from 'webpack';
+import type { Configuration } from 'webpack';
 
 export function webpack(config: Configuration) {
   config.plugins.push(new VueLoaderPlugin());

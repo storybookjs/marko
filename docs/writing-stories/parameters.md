@@ -11,7 +11,7 @@ For example, let’s customize the backgrounds addon via a parameter. We’ll us
 We can set a parameter for a single story with the `parameters` key on a CSF export:
 
 ```js
-// Button.story.js
+// Button.stories.js | Button.stories.ts
 
 export const Primary = Template.bind({});
 Primary.args = {
@@ -33,9 +33,9 @@ Primary.parameters = {
 We can set the parameters for all stories of a component using the `parameters` key on the default CSF export:
 
 ```js
-// Button.story.js
+// Button.stories.js | Button.stories.ts
 
-import Button from './';
+import Button from './Button';
 
 export default {
   title: 'Button',
@@ -79,4 +79,4 @@ The way the global, component and story parameters are combined is:
 
 The merging of parameters is important. It means it is possible to override a single specific sub-parameter on a per-story basis but still retain the majority of the parameters defined globally.
 
-If you are defining an API that relies on parameters (e.g. an [**addon**](../api/addons.md)) it is a good idea to take this behavior into account.
+If you are defining an API that relies on parameters (e.g. an [**addon**](../addons/introduction.md)) it is a good idea to take this behavior into account.

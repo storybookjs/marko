@@ -1,7 +1,7 @@
 {
   "name": "@storybook/addon-controls",
-  "version": "6.2.0-alpha.2",
-  "description": "Controls for component properties",
+  "version": "6.2.0-alpha.20",
+  "description": "Interact with component inputs dynamically in the Storybook UI",
   "keywords": [
     "addon",
     "storybook",
@@ -19,7 +19,16 @@
     "directory": "addons/controls"
   },
   "license": "MIT",
-  "main": "dist/register.js",
+  "main": "dist/cjs/register.js",
+  "module": "dist/esm/register.js",
+  "types": "dist/ts3.9/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "dist/ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
@@ -30,13 +39,13 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.2",
-    "@storybook/api": "6.2.0-alpha.2",
-    "@storybook/client-api": "6.2.0-alpha.2",
-    "@storybook/components": "6.2.0-alpha.2",
-    "@storybook/node-logger": "6.2.0-alpha.2",
-    "@storybook/theming": "6.2.0-alpha.2",
-    "core-js": "^3.0.1",
+    "@storybook/addons": "6.2.0-alpha.20",
+    "@storybook/api": "6.2.0-alpha.20",
+    "@storybook/client-api": "6.2.0-alpha.20",
+    "@storybook/components": "6.2.0-alpha.20",
+    "@storybook/node-logger": "6.2.0-alpha.20",
+    "@storybook/theming": "6.2.0-alpha.20",
+    "core-js": "^3.8.2",
     "ts-dedent": "^2.0.0"
   },
   "peerDependencies": {
@@ -54,5 +63,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "1b9dcaec9bd853c813b9f9001d00bdb89c742e66"
+  "gitHead": "20db16edcd0c76c54f0d80970a288ec94ebd19e6"
 }

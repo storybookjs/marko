@@ -4,7 +4,7 @@ title: 'Doc Blocks'
 
 Doc Blocks are the building blocks of Storybook documentation pages. By default, [DocsPage](./docs-page.md) uses a combination of the blocks below to build a page for each of your components automatically.
 
-Custom [addons](../api/addons.md) can also provide their own doc blocks.
+Custom [addons](../addons/writing-addons.md) can also provide their own doc blocks.
 
 ## ArgsTable
 
@@ -25,7 +25,9 @@ This is extremely useful, but it can be further expanded. Additional information
   paths={[
     'react/button-component-with-proptypes.js.mdx',
     'react/button-component-with-proptypes.ts.mdx',
-    'angular/button-component-with-proptypes.ts.mdx'
+    'angular/button-component-with-proptypes.ts.mdx',
+    'vue/button-component-with-proptypes.vue.mdx',
+    'svelte/button-component-with-proptypes.js.mdx',
   ]}
 />
 
@@ -124,7 +126,7 @@ Looking at the following component:
     'react/button-implementation.js.mdx',
     'react/button-implementation.ts.mdx',
     'angular/button-implementation.ts.mdx',
-    'vue/button-implementation.js.mdx'
+    'vue/button-implementation.vue.mdx'
   ]}
 />
 
@@ -240,6 +242,8 @@ As an example, if you had the following story:
   paths={[
     'react/button-story-default-docs-code.js.mdx',
     'react/button-story-default-docs-code.ts.mdx',
+    'vue/button-story-default-docs-code.js.mdx',
+    'angular/button-story-default-docs-code.ts.mdx',
   ]}
 />
 

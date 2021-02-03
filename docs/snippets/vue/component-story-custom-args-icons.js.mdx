@@ -1,0 +1,36 @@
+```js
+// YourComponent.stories.js
+
+import YourComponent from "./YourComponent.vue";
+
+import { IconA, IconB, IconC, IconD, IconE } from './icons';
+
+// Maps the icons to a JSON serializable object to be safely used with the argTypes
+const iconMap = {IconA, IconB, IconC, IconD, IconE };
+
+export default {
+  title: 'My Story with Icons',
+  component: YourComponent,
+  argTypes: {
+    icon: {
+      control: {
+        type: 'select',
+        options: Object.keys(iconMap)
+      }
+    }
+  },
+};
+
+const Template = (args, { argTypes }) => {
+  // retrieves the appropriate icon passes it as a component prop
+  const oldArgs = args;
+  const { icon } = oldArgs;
+  const selectedIcon = iconMap[icon];
+  args.icon = selectedIcon;
+  return {
+    props: Object.keys(argTypes),
+    components: { Icon },
+    template: '<YourComponent v-bind="$props"/>'
+  };
+};
+```

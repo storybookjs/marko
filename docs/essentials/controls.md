@@ -92,6 +92,8 @@ Up until now, we only used auto-generated controls based on the component we're 
   paths={[
     'react/table-story-fully-customize-controls.js.mdx',
     'react/table-story-fully-customize-controls.mdx.mdx',
+    'vue/table-story-fully-customize-controls.js.mdx',
+    'angular/table-story-fully-customize-controls.ts.mdx',
   ]}
 />
 
@@ -113,7 +115,9 @@ As they can be complex cases:
   paths={[
     'react/component-story-custom-args-complex.js.mdx',
     'react/component-story-custom-args-complex.ts.mdx',
-    'react/component-story-custom-args-complex.mdx.mdx'
+    'react/component-story-custom-args-complex.mdx.mdx',
+     'vue/component-story-custom-args-complex.js.mdx',
+     'angular/component-story-custom-args-complex.ts.mdx',
   ]}
 />
 
@@ -128,7 +132,9 @@ Or even with certain types of elements, such as icons:
   paths={[
     'react/component-story-custom-args-icons.js.mdx',
     'react/component-story-custom-args-icons.ts.mdx',
-    'react/component-story-custom-args-icons.mdx.mdx'
+    'react/component-story-custom-args-icons.mdx.mdx',
+    'vue/component-story-custom-args-icons.js.mdx',
+    'angular/component-story-custom-args-icons.ts.mdx',
   ]}
 />
 
@@ -249,6 +255,15 @@ Resulting in the following change in Storybook UI:
     type="video/mp4"
   />
 </video>
+
+The previous example also removed the prop documentation from the table. In some cases this is fine, however sometimes you might want to still render the prop documentation but without a control. The following example illustrates how:
+
+<CodeSnippets
+  paths={[
+    'common/component-story-disable-controls-alt.js.mdx',
+    'common/component-story-disable-controls-alt.mdx.mdx'
+  ]}
+/>
 
 <div class="aside">
 

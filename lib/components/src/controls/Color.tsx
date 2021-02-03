@@ -74,3 +74,5 @@ export const ColorControl: FC<ColorProps> = ({
     </ColorButton>
   );
 };
+
+export default ColorControl;

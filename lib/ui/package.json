@@ -1,6 +1,6 @@
 {
   "name": "@storybook/ui",
-  "version": "6.2.0-alpha.2",
+  "version": "6.2.0-alpha.20",
   "description": "Core Storybook UI",
   "keywords": [
     "storybook"
@@ -15,11 +15,14 @@
     "directory": "lib/ui"
   },
   "license": "MIT",
-  "main": "dist/index.js",
+  "sideEffects": false,
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/ts3.9/index.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
@@ -27,56 +30,54 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
     "@emotion/core": "^10.1.1",
-    "@storybook/addons": "6.2.0-alpha.2",
-    "@storybook/api": "6.2.0-alpha.2",
-    "@storybook/channels": "6.2.0-alpha.2",
-    "@storybook/client-logger": "6.2.0-alpha.2",
-    "@storybook/components": "6.2.0-alpha.2",
-    "@storybook/core-events": "6.2.0-alpha.2",
-    "@storybook/router": "6.2.0-alpha.2",
+    "@storybook/addons": "6.2.0-alpha.20",
+    "@storybook/api": "6.2.0-alpha.20",
+    "@storybook/channels": "6.2.0-alpha.20",
+    "@storybook/client-logger": "6.2.0-alpha.20",
+    "@storybook/components": "6.2.0-alpha.20",
+    "@storybook/core-events": "6.2.0-alpha.20",
+    "@storybook/router": "6.2.0-alpha.20",
     "@storybook/semver": "^7.3.2",
-    "@storybook/theming": "6.2.0-alpha.2",
-    "@types/markdown-to-jsx": "^6.11.0",
-    "copy-to-clipboard": "^3.0.8",
-    "core-js": "^3.0.1",
-    "core-js-pure": "^3.0.1",
-    "downshift": "^6.0.6",
-    "emotion-theming": "^10.0.19",
+    "@storybook/theming": "6.2.0-alpha.20",
+    "@types/markdown-to-jsx": "^6.11.3",
+    "copy-to-clipboard": "^3.3.1",
+    "core-js": "^3.8.2",
+    "core-js-pure": "^3.8.2",
+    "downshift": "^6.0.15",
+    "emotion-theming": "^10.0.27",
     "fuse.js": "^3.6.1",
-    "global": "^4.3.2",
-    "lodash": "^4.17.15",
-    "markdown-to-jsx": "^7.1.0",
+    "global": "^4.4.0",
+    "lodash": "^4.17.20",
+    "markdown-to-jsx": "^6.11.4",
     "memoizerific": "^1.11.3",
     "polished": "^4.0.5",
-    "qs": "^6.6.0",
-    "react-draggable": "^4.0.3",
-    "react-helmet-async": "^1.0.2",
-    "react-hotkeys": "2.0.0",
-    "react-sizeme": "^2.6.7",
+    "qs": "^6.9.5",
+    "react-draggable": "^4.4.3",
+    "react-helmet-async": "^1.0.7",
+    "react-sizeme": "^2.6.12",
     "regenerator-runtime": "^0.13.7",
     "resolve-from": "^5.0.0",
-    "store2": "^2.7.1"
+    "store2": "^2.12.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.3",
-    "@storybook/addon-actions": "6.2.0-alpha.2",
-    "@storybook/addon-knobs": "6.2.0-alpha.2",
-    "@storybook/react": "6.2.0-alpha.2",
     "@testing-library/react": "^11.2.2",
-    "babel-loader": "^8.0.6",
-    "chromatic": "^5.0.0",
-    "enzyme": "^3.11.0",
-    "flush-promises": "^1.0.2",
     "terser-webpack-plugin": "^5.0.3",
-    "webpack": "^5.9.0"
+    "webpack": "^5.9.0",
+    "@babel/core": "^7.12.10",
+    "@storybook/addon-actions": "6.2.0-alpha.20",
+    "@storybook/addon-knobs": "6.2.0-alpha.20",
+    "@storybook/react": "6.2.0-alpha.20",
+    "babel-loader": "^8.2.2",
+    "chromatic": "^5.6.0",
+    "enzyme": "^3.11.0",
+    "flush-promises": "^1.0.2"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
@@ -85,5 +86,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "1b9dcaec9bd853c813b9f9001d00bdb89c742e66"
+  "gitHead": "20db16edcd0c76c54f0d80970a288ec94ebd19e6"
 }

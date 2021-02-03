@@ -1,6 +1,6 @@
 {
   "name": "cra-react15",
-  "version": "6.2.0-alpha.2",
+  "version": "6.2.0-alpha.20",
   "private": true,
   "scripts": {
     "build": "react-scripts build",
@@ -12,17 +12,17 @@
   },
   "dependencies": {
     "babel-loader": "8.2.2",
-    "global": "^4.3.2",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "react-scripts": "3.0.1"
+    "global": "^4.4.0",
+    "react": "^15.7.0",
+    "react-dom": "^15.7.0",
+    "react-scripts": "3.4.4"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "6.2.0-alpha.2",
-    "@storybook/addon-links": "6.2.0-alpha.2",
-    "@storybook/addons": "6.2.0-alpha.2",
-    "@storybook/react": "6.2.0-alpha.2",
-    "@storybook/theming": "6.2.0-alpha.2",
+    "@storybook/addon-actions": "6.2.0-alpha.20",
+    "@storybook/addon-links": "6.2.0-alpha.20",
+    "@storybook/addons": "6.2.0-alpha.20",
+    "@storybook/react": "6.2.0-alpha.20",
+    "@storybook/theming": "6.2.0-alpha.20",
     "babel-core": "6",
     "babel-runtime": "6"
   },

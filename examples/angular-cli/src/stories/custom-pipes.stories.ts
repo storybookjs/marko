@@ -6,6 +6,7 @@ import { CustomPipePipe } from './moduleMetadata/custom.pipe';
 
 export default {
   title: 'Custom/Pipes',
+  component: NameComponent,
   decorators: [
     moduleMetadata({
       imports: [],
@@ -17,7 +18,6 @@ export default {
 };
 
 export const Simple = () => ({
-  component: NameComponent,
   props: {
     field: 'foobar',
   },
@@ -26,7 +26,6 @@ export const Simple = () => ({
 Simple.storyName = 'Simple';
 
 export const WithKnobsStory = () => ({
-  component: NameComponent,
   props: {
     field: text('field', 'foobar'),
   },

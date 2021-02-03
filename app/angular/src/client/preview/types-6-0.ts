@@ -4,10 +4,11 @@ import {
   BaseMeta,
   BaseStory,
   Parameters as DefaultParameters,
+  StoryContext as DefaultStoryContext,
 } from '@storybook/addons';
 import { StoryFnAngularReturnType } from './types';
 
-export { Args, ArgTypes, StoryContext } from '@storybook/addons';
+export { Args, ArgTypes } from '@storybook/addons';
 
 type AngularComponent = any;
 type AngularReturnType = StoryFnAngularReturnType;
@@ -31,4 +32,7 @@ export type Story<Args = DefaultArgs> = BaseStory<Args, AngularReturnType> &
 export type Parameters = DefaultParameters & {
   /** Uses legacy angular rendering engine that use dynamic component */
   angularLegacyRendering?: boolean;
+  component: unknown;
 };
+
+export type StoryContext = DefaultStoryContext & { parameters: Parameters };

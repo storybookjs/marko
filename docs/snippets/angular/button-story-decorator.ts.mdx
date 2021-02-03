@@ -1,26 +1,30 @@
 ```ts
 // button.stories.ts
 
-import { ButtonComponent } from './button.component';
+import { Meta, Story, componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 
-// Note: To see the decorator applied to your component's stories you'll need to include the template key with the component's selector.
+import { ButtonComponent } from './button.component';
+import { ParentComponent } from './parent.component'; // ParentComponent contains ng-content
+
+export default {
+  title: 'Example/Button',
+  component: ButtonComponent,
+} as Meta;
 
 export const Primary: Story<ButtonComponent> = () => ({
-  component: ButtonComponent,
-  moduleMetadata: {
-    declarations: [ButtonComponent],
-  },
   template: '<app-button label="Submit"></app-button>',
 });
-
 Primary.decorators = [
-  (storyFunc) => {
-    const story = storyFunc();
+  componentWrapperDecorator((story) => `<div style="margin: 3em">${story}</div>`),
+];
 
-    return {
-      ...story,
-      template: `<div style="margin: 3em">${story.template}</div>`,
-    };
-  },
+export const InsideParent: Story<ButtonComponent> = () => ({
+  template: '<app-button label="Submit"></app-button>',
+});
+InsideParent.decorators = [
+  moduleMetadata({
+    declarations: [ParentComponent],
+  }),
+  componentWrapperDecorator(ParentComponent),
 ];
 ```

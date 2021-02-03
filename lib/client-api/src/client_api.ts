@@ -206,6 +206,12 @@ export default class ClientApi {
         throw new Error(`Invalid or missing storyName provided for a "${kind}" story.`);
       }
 
+      if (typeof storyFn !== 'function') {
+        throw new Error(
+          `Cannot load story "${storyName}" in "${kind}" due to invalid format. Storybook expected a function but received ${typeof storyFn} instead.`
+        );
+      }
+
       if (!this._noStoryModuleAddMethodHotDispose && m && m.hot && m.hot.dispose) {
         m.hot.dispose(() => {
           const { _storyStore } = this;

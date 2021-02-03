@@ -1,6 +1,6 @@
 {
   "name": "@storybook/react",
-  "version": "6.2.0-alpha.2",
+  "version": "6.2.0-alpha.20",
   "description": "Storybook for React: Develop React Component in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -15,15 +15,13 @@
     "directory": "app/react"
   },
   "license": "MIT",
-  "main": "dist/client/index.js",
-  "types": "dist/client/index.d.ts",
+  "main": "dist/cjs/client/index.js",
+  "module": "dist/esm/client/index.js",
+  "types": "dist/ts3.9/client/index.d.ts",
   "typesVersions": {
     "<3.8": {
-      "types-6-0": [
-        "ts3.4/dist/client/preview/types-6-0.d.ts"
-      ],
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
@@ -38,39 +36,39 @@
     "types/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
     "@babel/preset-flow": "^7.12.1",
-    "@babel/preset-react": "^7.12.1",
+    "@babel/preset-react": "^7.12.10",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.2",
-    "@storybook/addons": "6.2.0-alpha.2",
-    "@storybook/core": "6.2.0-alpha.2",
-    "@storybook/node-logger": "6.2.0-alpha.2",
+    "@storybook/addons": "6.2.0-alpha.20",
+    "@storybook/core": "6.2.0-alpha.20",
+    "@storybook/node-logger": "6.2.0-alpha.20",
     "@storybook/semver": "^7.3.2",
-    "@types/webpack-env": "^1.15.3",
+    "@types/webpack-env": "^1.16.0",
     "babel-plugin-add-react-displayname": "^0.0.5",
     "babel-plugin-named-asset-import": "^0.3.1",
     "babel-plugin-react-docgen": "^4.2.1",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
-    "lodash": "^4.17.15",
+    "core-js": "^3.8.2",
+    "global": "^4.4.0",
+    "lodash": "^4.17.20",
     "prop-types": "^15.7.2",
-    "react-dev-utils": "^10.0.0",
+    "react-dev-utils": "^11.0.1",
     "react-docgen-typescript-plugin": "^0.6.2",
     "react-refresh": "^0.8.3",
+    "read-pkg-up": "^7.0.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0",
     "webpack": "^5.9.0"
   },
   "devDependencies": {
-    "@storybook/client-api": "6.2.0-alpha.2",
-    "@types/node": "^14.0.10",
-    "@types/webpack": "^4.41.24"
+    "@storybook/client-api": "6.2.0-alpha.20",
+    "@types/node": "^14.14.20",
+    "@types/prompts": "^2.0.9"
   },
   "peerDependencies": {
     "@babel/core": "^7.11.5",
@@ -86,10 +84,10 @@
     }
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.13.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "1b9dcaec9bd853c813b9f9001d00bdb89c742e66"
+  "gitHead": "20db16edcd0c76c54f0d80970a288ec94ebd19e6"
 }

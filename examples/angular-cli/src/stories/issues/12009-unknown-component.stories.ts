@@ -4,11 +4,9 @@ import { Button } from '@storybook/angular/demo';
 export default {
   title: 'Addon/Issues/12009 unknown component',
   component: Button,
-  parameters: { docs: { iframeHeight: 120 } },
 } as Meta;
 
 const Template: Story = (args) => ({
-  component: Button,
   props: args,
 });
 
