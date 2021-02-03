@@ -1,6 +1,6 @@
 import type ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import type { PluginOptions } from 'react-docgen-typescript-plugin';
-import { Configuration } from 'webpack';
+import type { Configuration } from 'webpack';
 
 type Preset = string | { name: string };
 
