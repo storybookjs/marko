@@ -152,7 +152,6 @@ export default async ({
         // Transparently resolve packages via PnP when needed; noop otherwise
         PnpWebpackPlugin,
       ],
-      fallback: { path: false },
     },
     resolveLoader: {
       plugins: [PnpWebpackPlugin.moduleLoader(module)],

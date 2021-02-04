@@ -35,7 +35,7 @@
     "*.d.ts"
   ],
   "scripts": {
-    "prepare": "echo 'nothing to prepare'"
+    "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
     "@storybook/addons": "6.2.0-alpha.20",
