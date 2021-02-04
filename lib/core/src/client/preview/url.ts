@@ -23,12 +23,12 @@ export const setPath = (selection?: StoreSelection) => {
   const { path, selectedKind, selectedStory, ...rest } = qs.parse(search, {
     ignoreQueryPrefix: true,
   });
-  const newPath = `${document.location.pathname}?${qs.stringify({
-    ...rest,
-    id: storyId,
-    viewMode,
-  })}${hash || ''}`;
-  history.replaceState({}, '', newPath);
+  const query = qs.stringify(
+    { ...rest, id: storyId, viewMode },
+    { encode: false, addQueryPrefix: true }
+  );
+
+  history.replaceState({}, '', `${document.location.pathname}${query}${hash}`);
 };
 
 export const parseQueryParameters = (search: string) => {
