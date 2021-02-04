@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-a11y",
-  "version": "6.1.16",
+  "version": "6.1.17",
   "description": "Test component compliance with web accessibility standards",
   "keywords": [
     "a11y",
@@ -33,14 +33,14 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.16",
-    "@storybook/api": "6.1.16",
-    "@storybook/channels": "6.1.16",
-    "@storybook/client-api": "6.1.16",
-    "@storybook/client-logger": "6.1.16",
-    "@storybook/components": "6.1.16",
-    "@storybook/core-events": "6.1.16",
-    "@storybook/theming": "6.1.16",
+    "@storybook/addons": "6.1.17",
+    "@storybook/api": "6.1.17",
+    "@storybook/channels": "6.1.17",
+    "@storybook/client-api": "6.1.17",
+    "@storybook/client-logger": "6.1.17",
+    "@storybook/components": "6.1.17",
+    "@storybook/core-events": "6.1.17",
+    "@storybook/theming": "6.1.17",
     "axe-core": "^4.0.1",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
