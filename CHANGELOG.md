@@ -1,3 +1,9 @@
+## 6.1.17 (February 4, 2021)
+
+### Bug Fixes
+
+* CLI: Fix opening localhost in browser by default ([#13812](https://github.com/storybookjs/storybook/pull/13812))
+
 ## 6.1.16 (February 2, 2021)
 
 ### Bug Fixes
