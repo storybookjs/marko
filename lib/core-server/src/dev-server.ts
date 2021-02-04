@@ -214,7 +214,10 @@ const startManager = async ({
       outputDir,
       configDir,
       cache,
-      corePresets: [require.resolve('./manager/manager-preset.js')],
+      corePresets: [
+        require.resolve('./common/common-preset.js'),
+        require.resolve('./manager/manager-preset.js'),
+      ],
       ...options,
     });
 
@@ -335,7 +338,7 @@ export async function storybookDevServer(options: any) {
     configType,
     outputDir,
     cache,
-    corePresets: previewBuilder.corePresets,
+    corePresets: [require.resolve('./common/common-preset.js'), ...previewBuilder.corePresets],
     overridePresets: previewBuilder.overridePresets,
     ...options,
   });

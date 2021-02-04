@@ -20,5 +20,3 @@ export const entries = async (_: unknown, options: any) => {
 
   return result;
 };
-
-export * from '../common/common-preset';

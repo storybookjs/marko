@@ -29,5 +29,3 @@ export async function managerEntries(
   entries.push(require.resolve(managerEntry));
   return entries;
 }
-
-export * from '../common/common-preset';
