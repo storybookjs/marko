@@ -1,5 +1,5 @@
 {
-  "name": "@storybook/server-webpack4",
+  "name": "@storybook/builder-webpack4",
   "version": "6.2.0-alpha.20",
   "description": "Storybook framework-agnostic API",
   "keywords": [

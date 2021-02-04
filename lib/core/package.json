@@ -57,17 +57,17 @@
     "util-deprecate": "^1.0.2"
   },
   "peerDependencies": {
-    "@storybook/server-webpack4": "6.2.0-alpha.20",
-    "@storybook/server-webpack5": "6.2.0-alpha.20",
+    "@storybook/builder-webpack4": "6.2.0-alpha.20",
+    "@storybook/builder-webpack5": "6.2.0-alpha.20",
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0",
     "webpack": "*"
   },
   "peerDependenciesMeta": {
-    "@storybook/server-webpack4": {
+    "@storybook/builder-webpack4": {
       "optional": true
     },
-    "@storybook/server-webpack5": {
+    "@storybook/builder-webpack5": {
       "optional": true
     },
     "typescript": {
