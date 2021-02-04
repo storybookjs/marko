@@ -1,101 +1,34 @@
 import { logger } from '@storybook/node-logger';
 import open from 'better-opn';
-import chalk from 'chalk';
-import express, { Express, Router } from 'express';
-import { pathExists, readFile } from 'fs-extra';
-import http from 'http';
-import https from 'https';
-import ip from 'ip';
+import express, { Router } from 'express';
+import { pathExists } from 'fs-extra';
 import path from 'path';
 import prettyTime from 'pretty-hrtime';
 import dedent from 'ts-dedent';
-import favicon from 'serve-favicon';
 import webpack, { Stats } from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import Cache from 'file-system-cache';
 
 import * as previewBuilder from '@storybook/builder-webpack4';
 import { getMiddleware } from './utils/middleware';
-import { logConfig } from './utils/logConfig';
+import { logConfig } from './utils/log-config';
 import loadManagerConfig from './manager/manager-config';
 import { resolvePathInStorybookCache } from './utils/resolve-path-in-sb-cache';
 import { getPrebuiltDir } from './utils/prebuilt-manager';
-import { parseStaticDir } from './utils/static-files';
 import { ManagerResult } from './types';
-import loadConfig from './previewConfig';
+import loadConfig from './preview-config';
 import { useManagerCache, clearManagerCache } from './utils/manager-cache';
 import { useProgressReporting } from './utils/progress-reporting';
+import { getServerAddresses } from './utils/server-address';
+import { getServer } from './utils/server-init';
+import { useStatics } from './utils/server-statics';
 
-const defaultFavIcon = require.resolve('./public/favicon.ico');
+export const defaultFavIcon = require.resolve('./public/favicon.ico');
 
 const cache = Cache({
   basePath: resolvePathInStorybookCache('dev-server'),
   ns: 'storybook', // Optional. A grouping namespace for items.
 });
-
-async function getServer(
-  app: Express,
-  options: {
-    https?: boolean;
-    sslCert?: string;
-    sslKey?: string;
-    sslCa?: string[];
-  }
-) {
-  if (!options.https) {
-    return http.createServer(app);
-  }
-
-  if (!options.sslCert) {
-    logger.error('Error: --ssl-cert is required with --https');
-    process.exit(-1);
-  }
-
-  if (!options.sslKey) {
-    logger.error('Error: --ssl-key is required with --https');
-    process.exit(-1);
-  }
-
-  const sslOptions = {
-    ca: await Promise.all((options.sslCa || []).map((ca) => readFile(ca, 'utf-8'))),
-    cert: await readFile(options.sslCert, 'utf-8'),
-    key: await readFile(options.sslKey, 'utf-8'),
-  };
-
-  return https.createServer(sslOptions, app);
-}
-
-async function useStatics(router: any, options: { staticDir?: string[] }) {
-  let hasCustomFavicon = false;
-
-  if (options.staticDir && options.staticDir.length > 0) {
-    await Promise.all(
-      options.staticDir.map(async (dir) => {
-        try {
-          const { staticDir, staticPath, targetEndpoint } = await parseStaticDir(dir);
-          logger.info(
-            chalk`=> Serving static files from {cyan ${staticDir}} at {cyan ${targetEndpoint}}`
-          );
-          router.use(targetEndpoint, express.static(staticPath, { index: false }));
-
-          if (!hasCustomFavicon && targetEndpoint === '/') {
-            const faviconPath = path.join(staticPath, 'favicon.ico');
-            if (await pathExists(faviconPath)) {
-              hasCustomFavicon = true;
-              router.use(favicon(faviconPath));
-            }
-          }
-        } catch (e) {
-          logger.warn(e.message);
-        }
-      })
-    );
-  }
-
-  if (!hasCustomFavicon) {
-    router.use(favicon(defaultFavIcon));
-  }
-}
 
 function openInBrowser(address: string) {
   try {
@@ -201,13 +134,6 @@ const startManager = async ({
   }
   return { managerStats, managerTotalTime: process.hrtime(startTime) };
 };
-
-export function getServerAddresses(port: number, host: string, proto: string) {
-  return {
-    address: `${proto}://localhost:${port}/`,
-    networkAddress: `${proto}://${host || ip.address()}:${port}/`,
-  };
-}
 
 export async function storybookDevServer(options: any) {
   const app = express();

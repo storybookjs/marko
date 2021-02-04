@@ -1,5 +1,5 @@
 import { Configuration } from 'webpack';
-import { mergeConfigs } from './merge-webpack-config';
+import { mergeConfigs } from '../merge-webpack-config';
 
 const config: Configuration = {
   devtool: 'source-map',

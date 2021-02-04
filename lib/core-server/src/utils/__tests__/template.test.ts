@@ -1,5 +1,5 @@
 import mock from 'mock-fs';
-import { getPreviewHeadTemplate, getPreviewBodyTemplate } from './template';
+import { getPreviewHeadTemplate, getPreviewBodyTemplate } from '../template';
 
 const HEAD_HTML_CONTENTS = '<script>console.log("custom script!");</script>';
 const BASE_HTML_CONTENTS = '<script>console.log("base script!");</script>';

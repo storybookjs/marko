@@ -3,13 +3,12 @@ import { Configuration } from 'webpack';
 import loadPresets from './presets';
 import loadCustomPresets from './common/custom-presets';
 import { PresetConfig, Presets, PresetsOptions, StorybookConfigOptions } from './types';
-import { typeScriptDefaults } from './manager/typeScriptDefaults';
 
 async function getPreviewWebpackConfig(
   options: StorybookConfigOptions & { presets: Presets },
   presets: Presets
 ): Promise<Configuration> {
-  const typescriptOptions = await presets.apply('typescript', { ...typeScriptDefaults }, options);
+  const typescriptOptions = await presets.apply('typescript', {}, options);
   const babelOptions = await presets.apply('babel', {}, { ...options, typescriptOptions });
   const entries = await presets.apply('entries', [], options);
   const stories = await presets.apply('stories', [], options);

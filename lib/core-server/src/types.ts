@@ -1,6 +1,5 @@
 import { Configuration, Stats } from 'webpack';
 import { TransformOptions } from '@babel/core';
-import { typeScriptDefaults } from './manager/typeScriptDefaults';
 
 /**
  * ⚠️ This file contains internal WIP types they MUST NOT be exported outside this package for now!
@@ -21,10 +20,20 @@ export interface ManagerWebpackOptions {
   presets: any;
 }
 
+interface TypescriptConfig {
+  check: boolean;
+  reactDocgen: string;
+  reactDocgenTypescriptOptions: {
+    shouldExtractLiteralValuesFromEnum: boolean;
+    shouldRemoveUndefinedFromOptional: boolean;
+    propFilter: (prop: any) => boolean;
+  };
+}
+
 export interface Presets {
   apply(
     extension: 'typescript',
-    config: typeof typeScriptDefaults,
+    config: TypescriptConfig,
     args: StorybookConfigOptions & { presets: Presets }
   ): Promise<TransformOptions>;
   apply(extension: 'babel', config: {}, args: any): Promise<TransformOptions>;

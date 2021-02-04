@@ -30,3 +30,14 @@ export const previewMainTemplate = () => getPreviewMainTemplate();
 export const managerMainTemplate = () => getManagerMainTemplate();
 
 export const previewEntries = () => [require.resolve('./polyfills'), require.resolve('./globals')];
+
+export const typescript = () => ({
+  check: false,
+  // 'react-docgen' faster but produces lower quality typescript results
+  reactDocgen: 'react-docgen-typescript',
+  reactDocgenTypescriptOptions: {
+    shouldExtractLiteralValuesFromEnum: true,
+    shouldRemoveUndefinedFromOptional: true,
+    propFilter: (prop: any) => (prop.parent ? !/node_modules/.test(prop.parent.fileName) : true),
+  },
+});

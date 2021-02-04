@@ -7,9 +7,9 @@ import webpack, { Configuration } from 'webpack';
 import { logger } from '@storybook/node-logger';
 
 import { getProdCli } from './cli';
-import loadConfig from './previewConfig';
+import loadConfig from './preview-config';
 import loadManagerConfig from './manager/manager-config';
-import { logConfig } from './logConfig';
+import { logConfig } from './utils/log-config';
 import { getPrebuiltDir } from './utils/prebuilt-manager';
 import { parseStaticDir } from './utils/static-files';
 

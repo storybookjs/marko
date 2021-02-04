@@ -1,6 +1,6 @@
 import fs from 'fs-extra';
 import path from 'path';
-import { parseStaticDir } from './static-files';
+import { parseStaticDir } from '../server-statics';
 
 fs.pathExists = jest.fn().mockReturnValue(true);
 

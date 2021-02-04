@@ -1,5 +1,5 @@
 import mock from 'mock-fs';
-import { getInterpretedFile } from './interpret-files';
+import { getInterpretedFile } from '../interpret-files';
 
 describe('interpret-files', () => {
   it('will interpret file as file.ts when it exists in fs', () => {

@@ -17,7 +17,7 @@ import { DevCliOptions, getDevCli } from './cli';
 import { resolvePathInStorybookCache } from './utils/resolve-path-in-sb-cache';
 import { VersionCheck, PackageJson, LoadOptions } from './types';
 import { getReleaseNotesData, getReleaseNotesFailedState } from './utils/release-notes';
-import { outputStats } from './utils/outputStats';
+import { outputStats } from './utils/output-stats';
 
 const { STORYBOOK_VERSION_BASE = 'https://storybook.js.org' } = process.env;
 

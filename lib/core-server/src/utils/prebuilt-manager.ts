@@ -4,7 +4,7 @@ import path from 'path';
 import { getAutoRefs } from '../manager/manager-config';
 import { getInterpretedFile } from './interpret-files';
 import { loadManagerOrAddonsFile } from './load-manager-or-addons-file';
-import { serverRequire } from './server-require';
+import { serverRequire } from './interpret-require';
 
 // Addons automatically installed when running `sb init` (see baseGenerator.ts)
 export const DEFAULT_ADDONS = ['@storybook/addon-links', '@storybook/addon-essentials'];

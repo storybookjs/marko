@@ -1,5 +1,5 @@
 import path from 'path';
-import { serverRequire } from './server-require';
+import { serverRequire } from './interpret-require';
 
 const webpackConfigs = ['webpack.config', 'webpackfile'];
 

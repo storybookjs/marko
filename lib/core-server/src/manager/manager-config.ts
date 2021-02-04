@@ -12,7 +12,6 @@ import { Configuration } from 'webpack';
 import loadPresets from '../presets';
 import loadCustomPresets from '../common/custom-presets';
 import { Presets, PresetsOptions, Ref, StorybookConfigOptions } from '../types';
-import { typeScriptDefaults } from './typeScriptDefaults';
 
 export const getAutoRefs = async (
   options: { configDir: string },
@@ -78,7 +77,7 @@ async function getManagerWebpackConfig(
   options: StorybookConfigOptions & { presets: Presets },
   presets: Presets
 ): Promise<Configuration> {
-  const typescriptOptions = await presets.apply('typescript', { ...typeScriptDefaults }, options);
+  const typescriptOptions = await presets.apply('typescript', {}, options);
   const babelOptions = await presets.apply('babel', {}, { ...options, typescriptOptions });
 
   const definedRefs: Record<string, any> | undefined = await presets.apply(

@@ -1,5 +1,5 @@
 import path from 'path';
-import { serverRequire, serverResolve } from '../utils/server-require';
+import { serverRequire, serverResolve } from '../utils/interpret-require';
 import validateConfigurationFiles from '../utils/validate-configuration-files';
 import { PresetConfig } from '../types';
 
