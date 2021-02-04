@@ -28,3 +28,5 @@ export const previewBodyTemplate = (base: any, { configDir }: { configDir: strin
 export const previewMainTemplate = () => getPreviewMainTemplate();
 
 export const managerMainTemplate = () => getManagerMainTemplate();
+
+export const previewEntries = () => [require.resolve('./polyfills'), require.resolve('./globals')];
