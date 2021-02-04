@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC } from 'react';
 import { ArgsTable, NoControlsWarning } from '@storybook/components';
 import { useArgs, useArgTypes, useParameter } from '@storybook/api';
 
@@ -18,12 +18,8 @@ export const ControlsPanel: FC = () => {
     {}
   );
 
-  const hasControls = useMemo(() => Object.values(rows).some((arg) => arg?.control), [rows]);
-  const showWarning = useMemo(() => !(hasControls && isArgsStory) && !hideNoControlsWarning, [
-    hasControls,
-    isArgsStory,
-    hideNoControlsWarning,
-  ]);
+  const hasControls = Object.values(rows).some((arg) => arg?.control);
+  const showWarning = !(hasControls && isArgsStory) && !hideNoControlsWarning;
 
   return (
     <>
