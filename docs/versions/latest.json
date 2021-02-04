@@ -1,1 +1,1 @@
-{"version":"6.1.16","info":{"plain":"### Bug Fixes\n\n- Addon-docs/Svelte: Fix component name in docgen-loader ([#13760](https://github.com/storybookjs/storybook/pull/13760))\n- UI: Fix copy to clipboard for insecure deployments ([#13777](https://github.com/storybookjs/storybook/pull/13777))"}}
+{"version":"6.1.17","info":{"plain":"### Bug Fixes\n\n* CLI: Fix opening localhost in browser by default ([#13812](https://github.com/storybookjs/storybook/pull/13812))"}}
