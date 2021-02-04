@@ -1,5 +1,5 @@
-import { includePaths } from '../common/utils';
 import { useBaseTsSupport } from '../config/useBaseTsSupport';
+import { getProjectRoot } from '../utils/paths';
 
 export const createBabelLoader = (options: any, framework: string) => ({
   test: useBaseTsSupport(framework) ? /\.(mjs|tsx?|jsx?)$/ : /\.(mjs|jsx?)$/,
@@ -9,6 +9,6 @@ export const createBabelLoader = (options: any, framework: string) => ({
       options,
     },
   ],
-  include: includePaths,
+  include: [getProjectRoot()],
   exclude: /node_modules/,
 });

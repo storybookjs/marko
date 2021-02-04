@@ -10,7 +10,7 @@ export const sortEntries = (entries: string[]) => {
   const isGeneratedConfig = /(?:preview|config)\..+-generated-config-entry/;
 
   return stable(entries.slice(0), (a, b) => {
-    // We need to ensure that all parameters and decorators that are added by preview entrypoints added by addons happen before any configure() calls executed by the user's preview.js (or config.js), or by main.js:stories.
+    // We need to ensure that all parameters and decorators that are added by preview entry-points added by addons happen before any configure() calls executed by the user's preview.js (or config.js), or by main.js:stories.
     // As those addons will create generated entries, this means we need to ensure all generated entries come before all other entries (generated or otherwise).
 
     switch (true) {

@@ -1,7 +1,7 @@
 import path from 'path';
 import findUp from 'find-up';
 
-const projectRoot = () => {
+export const getProjectRoot = () => {
   let result;
   try {
     result = result || path.join(findUp.sync('.git', { type: 'directory' }), '..');
@@ -22,7 +22,6 @@ const projectRoot = () => {
   return result || process.cwd();
 };
 
-export const includePaths = [projectRoot()];
 export const nodeModulesPaths = path.resolve('./node_modules');
 export const nodePathsToArray = (nodePath: string) =>
   nodePath
