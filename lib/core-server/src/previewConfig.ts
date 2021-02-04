@@ -2,8 +2,8 @@ import { logger } from '@storybook/node-logger';
 import { Configuration } from 'webpack';
 import loadPresets from './presets';
 import loadCustomPresets from './common/custom-presets';
-import { typeScriptDefaults } from './builder/config/defaults';
 import { PresetConfig, Presets, PresetsOptions, StorybookConfigOptions } from './types';
+import { typeScriptDefaults } from './manager/typeScriptDefaults';
 
 async function getPreviewWebpackConfig(
   options: StorybookConfigOptions & { presets: Presets },

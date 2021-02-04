@@ -1,6 +1,6 @@
 import { RuleSetRule } from 'webpack';
-import { includePaths } from '../builder/config/utils';
 import { plugins, presets } from '../common/babel';
+import { includePaths } from '../common/utils';
 
 export const babelLoader: () => RuleSetRule = () => ({
   test: /\.(mjs|tsx?|jsx?)$/,

@@ -15,12 +15,12 @@ import FilterWarningsPlugin from 'webpack-filter-warnings-plugin';
 import themingPaths from '@storybook/theming/paths';
 
 import { createBabelLoader } from './babel-loader-preview';
-import { es6Transpiler } from '../common/es6Transpiler';
 
-import { nodeModulesPaths, loadEnv } from '../config/utils';
-import { getPreviewHeadHtml, getPreviewBodyHtml } from '../utils/template';
 import { toRequireContextString } from './to-require-context';
 import { useBaseTsSupport } from '../config/useBaseTsSupport';
+import { getPreviewBodyHtml, getPreviewHeadHtml } from '../template';
+import { loadEnv, nodeModulesPaths } from '../common/utils';
+import { es6Transpiler } from '../common/es6Transpiler';
 
 const storybookPaths: Record<string, string> = [
   'addons',
@@ -71,13 +71,10 @@ export default async ({
   const { raw, stringified } = loadEnv({ production: true });
   const babelLoader = createBabelLoader(babelOptions, framework);
   const isProd = configType === 'PRODUCTION';
-  const entryTemplate = await fse.readFile(
-    // TODO ANDREW maybe something simpler
-    path.join(__dirname, '../../esm/preview', 'virtualModuleEntry.template.js'),
-    {
-      encoding: 'utf8',
-    }
-  );
+  // TODO FIX ME - does this need to be ESM?
+  const entryTemplate = await fse.readFile(path.join(__dirname, 'virtualModuleEntry.template.js'), {
+    encoding: 'utf8',
+  });
   const storyTemplate = await fse.readFile(path.join(__dirname, 'virtualModuleStory.template.js'), {
     encoding: 'utf8',
   });

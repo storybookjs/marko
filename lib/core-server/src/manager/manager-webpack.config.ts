@@ -13,12 +13,12 @@ import uiPaths from '@storybook/ui/paths';
 
 import readPackage from 'read-pkg-up';
 import { getManagerHeadHtml } from '../utils/template';
-import { loadEnv } from '../builder/config/utils';
 
 import { babelLoader } from './babel-loader-manager';
 import { resolvePathInStorybookCache } from '../utils/resolve-path-in-sb-cache';
 import { es6Transpiler } from '../common/es6Transpiler';
 import { ManagerWebpackOptions } from '../types';
+import { loadEnv } from '../common/utils';
 
 export default async ({
   configDir,

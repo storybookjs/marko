@@ -15,6 +15,7 @@ import webpack, { Compiler, ProgressPlugin, Stats } from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import Cache, { FileSystemCache } from 'file-system-cache';
 
+import * as previewBuilder from '@storybook/builder-webpack5';
 import { getMiddleware } from './utils/middleware';
 import { logConfig } from './logConfig';
 import loadManagerConfig from './manager/manager-config';
@@ -22,7 +23,6 @@ import { resolvePathInStorybookCache } from './utils/resolve-path-in-sb-cache';
 import { getPrebuiltDir } from './utils/prebuilt-manager';
 import { parseStaticDir } from './utils/static-files';
 import { ManagerResult } from './types';
-import * as previewBuilder from './builder/builder';
 import loadConfig from './previewConfig';
 
 const defaultFavIcon = require.resolve('./public/favicon.ico');

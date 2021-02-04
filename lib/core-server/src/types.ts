@@ -1,6 +1,6 @@
 import { Configuration, Stats } from 'webpack';
 import { TransformOptions } from '@babel/core';
-import { typeScriptDefaults } from './builder/config/defaults';
+import { typeScriptDefaults } from './manager/typeScriptDefaults';
 
 /**
  * ⚠️ This file contains internal WIP types they MUST NOT be exported outside this package for now!
