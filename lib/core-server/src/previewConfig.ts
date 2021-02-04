@@ -35,6 +35,7 @@ export function filterPresetsConfig(presetsConfig: PresetConfig[]): PresetConfig
     return !/@storybook[\\\\/]preset-typescript/.test(presetName);
   });
 }
+
 const loadConfig: (
   options: PresetsOptions & StorybookConfigOptions
 ) => Promise<Configuration> = async (options: PresetsOptions & StorybookConfigOptions) => {

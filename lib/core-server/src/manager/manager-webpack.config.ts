@@ -18,7 +18,7 @@ import { babelLoader } from './babel-loader-manager';
 import { resolvePathInStorybookCache } from '../utils/resolve-path-in-sb-cache';
 import { es6Transpiler } from '../common/es6Transpiler';
 import { ManagerWebpackOptions } from '../types';
-import { loadEnv } from '../common/utils';
+import { loadEnv } from '../utils/envs';
 
 export default async ({
   configDir,

@@ -15,7 +15,9 @@ import { Stats } from 'webpack';
 import { storybookDevServer } from './dev-server';
 import { DevCliOptions, getDevCli } from './cli';
 import { resolvePathInStorybookCache } from './utils/resolve-path-in-sb-cache';
-import { ReleaseNotesData, VersionCheck, PackageJson, LoadOptions } from './types';
+import { VersionCheck, PackageJson, LoadOptions } from './types';
+import { getReleaseNotesData, getReleaseNotesFailedState } from './utils/release-notes';
+import { outputStats } from './utils/outputStats';
 
 const { STORYBOOK_VERSION_BASE = 'https://storybook.js.org' } = process.env;
 
@@ -24,7 +26,7 @@ const cache = Cache({
   ns: 'storybook', // Optional. A grouping namespace for items.
 });
 
-const writeStats = async (name: string, stats: Stats) => {
+export const writeStats = async (name: string, stats: Stats) => {
   const filePath = resolvePathInStorybookCache(`public/${name}-stats.json`);
   await fs.writeFile(filePath, JSON.stringify(stats.toJson(), null, 2), 'utf8');
   return filePath;
@@ -57,69 +59,6 @@ const updateCheck = async (version: string): Promise<VersionCheck> => {
     }
   } catch (error) {
     result = { success: false, error, time };
-  }
-  return result;
-};
-
-// We only expect to have release notes available for major and minor releases.
-// For this reason, we convert the actual version of the build here so that
-// every place that relies on this data can reference the version of the
-// release notes that we expect to use.
-const getReleaseNotesVersion = (version: string): string => {
-  const { major, minor } = semver.parse(version);
-  const { version: releaseNotesVersion } = semver.coerce(`${major}.${minor}`);
-  return releaseNotesVersion;
-};
-
-const getReleaseNotesFailedState = (version: string) => {
-  return {
-    success: false,
-    currentVersion: getReleaseNotesVersion(version),
-    showOnFirstLaunch: false,
-  };
-};
-
-export const RELEASE_NOTES_CACHE_KEY = 'releaseNotesData';
-
-export const getReleaseNotesData = async (
-  currentVersionToParse: string,
-  fileSystemCache: any
-): Promise<ReleaseNotesData> => {
-  let result;
-  try {
-    const fromCache = (await fileSystemCache.get('releaseNotesData', []).catch(() => {})) || [];
-    const releaseNotesVersion = getReleaseNotesVersion(currentVersionToParse);
-    const versionHasNotBeenSeen = !fromCache.includes(releaseNotesVersion);
-
-    if (versionHasNotBeenSeen) {
-      await fileSystemCache.set('releaseNotesData', [...fromCache, releaseNotesVersion]);
-    }
-
-    const sortedHistory = semver.sort(fromCache);
-    const highestVersionSeenInThePast = sortedHistory.slice(-1)[0];
-
-    let isUpgrading = false;
-    let isMajorOrMinorDiff = false;
-
-    if (highestVersionSeenInThePast) {
-      isUpgrading = semver.gt(releaseNotesVersion, highestVersionSeenInThePast);
-      const versionDiff = semver.diff(releaseNotesVersion, highestVersionSeenInThePast);
-      isMajorOrMinorDiff = versionDiff === 'major' || versionDiff === 'minor';
-    }
-
-    result = {
-      success: true,
-      showOnFirstLaunch:
-        versionHasNotBeenSeen &&
-        // Only show the release notes if this is not the first time Storybook
-        // has been built.
-        !!highestVersionSeenInThePast &&
-        isUpgrading &&
-        isMajorOrMinorDiff,
-      currentVersion: releaseNotesVersion,
-    };
-  } catch (e) {
-    result = getReleaseNotesFailedState(currentVersionToParse);
   }
   return result;
 };
@@ -216,17 +155,6 @@ function outputStartupInformation(options: {
       { borderStyle: 'round', padding: 1, borderColor: '#F1618C' } as any
     )
   );
-}
-
-async function outputStats(previewStats: Stats, managerStats: Stats) {
-  if (previewStats) {
-    const filePath = await writeStats('preview', previewStats);
-    logger.info(`=> preview stats written to ${chalk.cyan(filePath)}`);
-  }
-  if (managerStats) {
-    const filePath = await writeStats('manager', managerStats);
-    logger.info(`=> manager stats written to ${chalk.cyan(filePath)}`);
-  }
 }
 
 export async function buildDevStandalone(

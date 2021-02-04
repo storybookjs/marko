@@ -8,22 +8,23 @@ import https from 'https';
 import ip from 'ip';
 import path from 'path';
 import prettyTime from 'pretty-hrtime';
-import { stringify } from 'telejson';
 import dedent from 'ts-dedent';
 import favicon from 'serve-favicon';
-import webpack, { Compiler, ProgressPlugin, Stats } from 'webpack';
+import webpack, { Stats } from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
-import Cache, { FileSystemCache } from 'file-system-cache';
+import Cache from 'file-system-cache';
 
 import * as previewBuilder from '@storybook/builder-webpack4';
 import { getMiddleware } from './utils/middleware';
-import { logConfig } from './logConfig';
+import { logConfig } from './utils/logConfig';
 import loadManagerConfig from './manager/manager-config';
 import { resolvePathInStorybookCache } from './utils/resolve-path-in-sb-cache';
 import { getPrebuiltDir } from './utils/prebuilt-manager';
 import { parseStaticDir } from './utils/static-files';
 import { ManagerResult } from './types';
 import loadConfig from './previewConfig';
+import { useManagerCache, clearManagerCache } from './utils/manager-cache';
+import { useProgressReporting } from './utils/progress-reporting';
 
 const defaultFavIcon = require.resolve('./public/favicon.ico');
 
@@ -111,92 +112,11 @@ function openInBrowser(address: string) {
 // @ts-ignore
 export const router: Router = new Router();
 
-const printDuration = (startTime: [number, number]) =>
+export const printDuration = (startTime: [number, number]) =>
   prettyTime(process.hrtime(startTime))
     .replace(' ms', ' milliseconds')
     .replace(' s', ' seconds')
     .replace(' m', ' minutes');
-
-const renamedUseProgressReporting = async (
-  compiler: Compiler,
-  options: any,
-  startTime: [number, number]
-) => {
-  let value = 0;
-  let totalModules: number;
-  let reportProgress: (progress?: {
-    value?: number;
-    message: string;
-    modules?: any;
-  }) => void = () => {};
-
-  router.get('/progress', (request, response) => {
-    let closed = false;
-    const close = () => {
-      closed = true;
-      response.end();
-    };
-    response.on('close', close);
-
-    if (closed || response.writableEnded) return;
-    response.setHeader('Cache-Control', 'no-cache');
-    response.setHeader('Content-Type', 'text/event-stream');
-    response.setHeader('Connection', 'keep-alive');
-    response.flushHeaders();
-
-    reportProgress = (progress: any) => {
-      if (closed || response.writableEnded) return;
-      response.write(`data: ${JSON.stringify(progress)}\n\n`);
-      if (progress.value === 1) close();
-    };
-  });
-
-  const handler = (newValue: number, message: string, arg3: any) => {
-    value = Math.max(newValue, value); // never go backwards
-    const progress = { value, message: message.charAt(0).toUpperCase() + message.slice(1) };
-    if (message === 'building') {
-      // arg3 undefined in webpack5
-      const counts = (arg3 && arg3.match(/(\d+)\/(\d+)/)) || [];
-      const complete = parseInt(counts[1], 10);
-      const total = parseInt(counts[2], 10);
-      if (!Number.isNaN(complete) && !Number.isNaN(total)) {
-        (progress as any).modules = { complete, total };
-        totalModules = total;
-      }
-    }
-
-    if (value === 1) {
-      if (options.cache) {
-        options.cache.set('modulesCount', totalModules);
-      }
-
-      if (!progress.message) {
-        progress.message = `Completed in ${printDuration(startTime)}.`;
-      }
-    }
-    reportProgress(progress);
-  };
-
-  const modulesCount = (await options.cache?.get('modulesCount').catch(() => {})) || 1000;
-  new ProgressPlugin({ handler, modulesCount }).apply(compiler);
-};
-
-const useManagerCache = async (fsc: FileSystemCache, managerConfig: webpack.Configuration) => {
-  // Drop the `cache` property because it'll change as a result of writing to the cache.
-  const { cache: _, ...baseConfig } = managerConfig;
-  const configString = stringify(baseConfig);
-  const cachedConfig = await fsc.get('managerConfig').catch(() => {});
-  await fsc.set('managerConfig', configString);
-  return configString === cachedConfig;
-};
-
-const clearManagerCache = async (fsc: FileSystemCache) => {
-  if (fsc && fsc.fileExists('managerConfig')) {
-    await fsc.remove('managerConfig');
-    return true;
-  }
-  return false;
-};
 
 const startManager = async ({
   startTime,
@@ -320,10 +240,10 @@ export async function storybookDevServer(options: any) {
   const proto = options.https ? 'https' : 'http';
   const { address, networkAddress } = getServerAddresses(port, host, proto);
 
-  await new Promise((resolve, reject) => {
-    // FIXME: Following line doesn't match TypeScript signature at all 🤔
-    // @ts-ignore
-    server.listen({ port, host }, (error: Error) => (error ? reject(error) : resolve()));
+  await new Promise<void>((resolve, reject) => {
+    server.listen({ port, host }, () => {
+      resolve();
+    });
   });
 
   const prebuiltDir = await getPrebuiltDir({ configDir, options });
@@ -349,7 +269,7 @@ export async function storybookDevServer(options: any) {
       options,
       configType,
       outputDir,
-      useProgressReporting: renamedUseProgressReporting,
+      useProgressReporting,
       router,
       config: previewConfig,
     }),
@@ -360,7 +280,6 @@ export async function storybookDevServer(options: any) {
       outputDir,
       configDir,
       prebuiltDir,
-      useProgressReporting: renamedUseProgressReporting,
     })
       // TODO #13083 Restore this when compiling the preview is fast enough
       // .then((result) => {

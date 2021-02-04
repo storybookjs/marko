@@ -1,38 +1,8 @@
-import path from 'path';
 import { getEnvironment } from 'lazy-universal-dotenv';
-import findUp from 'find-up';
-
-const projectRoot = () => {
-  let result;
-  try {
-    result = result || path.join(findUp.sync('.git', { type: 'directory' }), '..');
-  } catch (e) {
-    //
-  }
-  try {
-    result = result || path.join(findUp.sync('.svn', { type: 'directory' }), '..');
-  } catch (e) {
-    //
-  }
-  try {
-    result = result || __dirname.split('node_modules')[0];
-  } catch (e) {
-    //
-  }
-
-  return result || process.cwd();
-};
-
-export const includePaths = [projectRoot()];
-export const nodeModulesPaths = path.resolve('./node_modules');
-
-const nodePathsToArray = (nodePath: string) =>
-  nodePath
-    .split(process.platform === 'win32' ? ';' : ':')
-    .filter(Boolean)
-    .map((p) => path.resolve('./', p));
+import { nodePathsToArray } from './paths';
 
 // Load environment variables starts with STORYBOOK_ to the client side.
+
 export function loadEnv(
   options: { production?: boolean } = {}
 ): { stringified: Record<string, string>; raw: Record<string, object> } {
