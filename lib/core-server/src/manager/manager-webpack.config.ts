@@ -12,7 +12,7 @@ import themingPaths from '@storybook/theming/paths';
 import uiPaths from '@storybook/ui/paths';
 
 import readPackage from 'read-pkg-up';
-import { getManagerHeadHtml } from '../utils/template';
+import { getManagerHeadTemplate } from '../utils/template';
 
 import { babelLoader } from './babel-loader-manager';
 import { resolvePathInStorybookCache } from '../utils/resolve-path-in-sb-cache';
@@ -36,7 +36,7 @@ export default async ({
   const logLevel = await presets.apply('logLevel', undefined);
   const headHtmlSnippet = await presets.apply(
     'managerHead',
-    getManagerHeadHtml(configDir, process.env)
+    getManagerHeadTemplate(configDir, process.env)
   );
   const isProd = configType === 'PRODUCTION';
   const refsTemplate = fse.readFileSync(path.join(__dirname, 'virtualModuleRef.template.js'), {

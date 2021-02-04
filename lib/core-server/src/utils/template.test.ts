@@ -1,5 +1,5 @@
 import mock from 'mock-fs';
-import { getPreviewHeadHtml, getPreviewBodyHtml } from './template';
+import { getPreviewHeadTemplate, getPreviewBodyTemplate } from './template';
 
 const HEAD_HTML_CONTENTS = '<script>console.log("custom script!");</script>';
 const BASE_HTML_CONTENTS = '<script>console.log("base script!");</script>';
@@ -21,7 +21,7 @@ describe('server.getPreviewHeadHtml', () => {
     });
 
     it('return an empty string', () => {
-      const result = getPreviewHeadHtml('./config');
+      const result = getPreviewHeadTemplate('./config');
       expect(result).toEqual(BASE_HTML_CONTENTS);
     });
   });
@@ -41,7 +41,7 @@ describe('server.getPreviewHeadHtml', () => {
     });
 
     it('return the contents of the file', () => {
-      const result = getPreviewHeadHtml('./config');
+      const result = getPreviewHeadTemplate('./config');
       expect(result).toEqual(BASE_HTML_CONTENTS + HEAD_HTML_CONTENTS);
     });
   });
@@ -61,7 +61,7 @@ describe('server.getPreviewBodyHtml', () => {
     });
 
     it('return an empty string', () => {
-      const result = getPreviewBodyHtml('./config');
+      const result = getPreviewBodyTemplate('./config');
       expect(result).toEqual(BASE_BODY_HTML_CONTENTS);
     });
   });
@@ -81,7 +81,7 @@ describe('server.getPreviewBodyHtml', () => {
     });
 
     it('return the contents of the file', () => {
-      const result = getPreviewBodyHtml('./config');
+      const result = getPreviewBodyTemplate('./config');
       expect(result).toEqual(BODY_HTML_CONTENTS + BASE_BODY_HTML_CONTENTS);
     });
   });

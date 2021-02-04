@@ -18,7 +18,6 @@ import { createBabelLoader } from './babel-loader-preview';
 
 import { toRequireContextString } from './to-require-context';
 import { useBaseTsSupport } from '../config/useBaseTsSupport';
-import { getPreviewBodyHtml, getPreviewHeadHtml } from '../template';
 import { loadEnv, nodeModulesPaths } from '../common/utils';
 import { es6Transpiler } from '../common/es6Transpiler';
 
@@ -60,14 +59,11 @@ export default async ({
 }: any) => {
   const logLevel = await presets.apply('logLevel', undefined);
   const frameworkOptions = await presets.apply(`${framework}Options`, {});
-  const headHtmlSnippet = await presets.apply(
-    'previewHead',
-    getPreviewHeadHtml(configDir, process.env)
-  );
-  const bodyHtmlSnippet = await presets.apply(
-    'previewBody',
-    getPreviewBodyHtml(configDir, process.env)
-  );
+
+  const headHtmlSnippet = await presets.apply('previewHeadTemplate');
+  const bodyHtmlSnippet = await presets.apply('previewBodyTemplate');
+  const template = await presets.apply('previewMainTemplate');
+
   const { raw, stringified } = loadEnv({ production: true });
   const babelLoader = createBabelLoader(babelOptions, framework);
   const isProd = configType === 'PRODUCTION';
@@ -159,7 +155,7 @@ export default async ({
           removeStyleLinkTypeAttributes: true,
           useShortDoctype: true,
         },
-        template: require.resolve(`../templates/index.ejs`),
+        template,
       }),
       new DefinePlugin({
         'process.env': stringified,

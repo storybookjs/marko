@@ -4,7 +4,10 @@ import fs from 'fs';
 const interpolate = (string: string, data: Record<string, string> = {}) =>
   Object.entries(data).reduce((acc, [k, v]) => acc.replace(new RegExp(`%${k}%`, 'g'), v), string);
 
-export function getPreviewBodyHtml(configDirPath: string, interpolations?: Record<string, string>) {
+export function getPreviewBodyTemplate(
+  configDirPath: string,
+  interpolations?: Record<string, string>
+) {
   const base = fs.readFileSync(
     path.resolve(__dirname, '../templates/base-preview-body.html'),
     'utf8'
@@ -20,7 +23,10 @@ export function getPreviewBodyHtml(configDirPath: string, interpolations?: Recor
   return interpolate(result, interpolations);
 }
 
-export function getPreviewHeadHtml(configDirPath: string, interpolations?: Record<string, string>) {
+export function getPreviewHeadTemplate(
+  configDirPath: string,
+  interpolations?: Record<string, string>
+) {
   const base = fs.readFileSync(
     path.resolve(__dirname, '../templates/base-preview-head.html'),
     'utf8'
@@ -36,7 +42,10 @@ export function getPreviewHeadHtml(configDirPath: string, interpolations?: Recor
   return interpolate(result, interpolations);
 }
 
-export function getManagerHeadHtml(configDirPath: string, interpolations: Record<string, string>) {
+export function getManagerHeadTemplate(
+  configDirPath: string,
+  interpolations: Record<string, string>
+) {
   const base = fs.readFileSync(
     path.resolve(__dirname, '../templates/base-manager-head.html'),
     'utf8'
@@ -50,4 +59,12 @@ export function getManagerHeadHtml(configDirPath: string, interpolations: Record
   }
 
   return interpolate(result, interpolations);
+}
+
+export function getManagerMainTemplate() {
+  return require.resolve(`../templates/index.ejs`);
+}
+
+export function getPreviewMainTemplate() {
+  return require.resolve(`../templates/index.ejs`);
 }
