@@ -31,7 +31,7 @@
 // };
 
 const caller = (name: string) => (...args: any[]) => {
-  require('@storybook/builder-webpack4')[name](...args);
+  require('@storybook/core-server')[name](...args);
 };
 
 module.exports = {
