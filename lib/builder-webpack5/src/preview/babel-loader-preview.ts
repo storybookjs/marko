@@ -1,4 +1,4 @@
-import { useBaseTsSupport } from '../config/useBaseTsSupport';
+import { useBaseTsSupport } from '../utils/useBaseTsSupport';
 import { getProjectRoot } from '../utils/paths';
 
 export const createBabelLoader = (options: any, framework: string) => ({
