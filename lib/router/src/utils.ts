@@ -31,6 +31,22 @@ export const parsePath: (path: string | undefined) => StoryData = memoize(1000)(
   }
 );
 
+interface Args {
+  [key: string]: any;
+}
+
+const argsParseOptions = { allowDots: true, delimiter: ';' };
+
+export const parseArgs = (argsString: string): Args => {
+  const parts = argsString.split(';').map((part) => part.replace(':', '='));
+  return qs.parse(parts.join(';'), argsParseOptions);
+};
+
+export const stringifyArgs = (args: Args) => {
+  const parts = qs.stringify(args, { ...argsParseOptions, encode: false }).split(';');
+  return parts.map((part: string) => part.replace('=', ':')).join(';');
+};
+
 interface Query {
   [key: string]: any;
 }

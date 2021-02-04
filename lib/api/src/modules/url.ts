@@ -5,11 +5,15 @@ import {
   SET_STORIES,
   SET_CURRENT_STORY,
 } from '@storybook/core-events';
-import { queryFromLocation, navigate as queryNavigate } from '@storybook/router';
+import {
+  queryFromLocation,
+  navigate as queryNavigate,
+  parseArgs,
+  stringifyArgs,
+} from '@storybook/router';
 import { toId, sanitize } from '@storybook/csf';
-
 import deepEqual from 'fast-deep-equal';
-import { parse, stringify } from 'qs';
+
 import { ModuleArgs, ModuleFn } from '../index';
 import { PanelPositions } from './layout';
 import { isStory } from '../lib/stories';
@@ -27,26 +31,6 @@ interface Additions {
 export interface SubState {
   customQueryParams: QueryParams;
 }
-
-const argsParseOptions = {
-  allowDots: true,
-  delimiter: ';',
-};
-
-const parseArgs = (argsString: string) =>
-  parse(
-    argsString
-      .split(';')
-      .map((part) => part.replace(':', '='))
-      .join(';'),
-    argsParseOptions
-  );
-
-const stringifyArgs = (args: Story['args']) =>
-  stringify(args, { ...argsParseOptions, encode: false })
-    .split(';')
-    .map((part) => part.replace('=', ':'))
-    .join(';');
 
 // Initialize the state based on the URL.
 // NOTE:
