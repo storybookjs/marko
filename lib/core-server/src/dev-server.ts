@@ -15,7 +15,7 @@ import webpack, { Compiler, ProgressPlugin, Stats } from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import Cache, { FileSystemCache } from 'file-system-cache';
 
-import * as previewBuilder from '@storybook/builder-webpack5';
+import * as previewBuilder from '@storybook/builder-webpack4';
 import { getMiddleware } from './utils/middleware';
 import { logConfig } from './logConfig';
 import loadManagerConfig from './manager/manager-config';

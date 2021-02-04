@@ -1,4 +1,4 @@
-import { includePaths } from '../config/utils';
+import { includePaths } from '../common/utils';
 import { useBaseTsSupport } from '../config/useBaseTsSupport';
 
 export const createBabelLoader = (options: any, framework: string) => ({

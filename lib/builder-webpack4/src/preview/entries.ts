@@ -35,7 +35,7 @@ const getMainConfigs = (options: { configDir: string }) => {
 export async function createPreviewEntry(options: { configDir: string; presets: any }) {
   const { configDir, presets } = options;
   const entries = [
-    require.resolve('../common/polyfills'),
+    require.resolve('./polyfills'),
     require.resolve('./globals'),
     path.resolve(path.join(configDir, 'storybook-init-framework-entry.js')),
   ];
