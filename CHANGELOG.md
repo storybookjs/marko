@@ -1,13 +1,19 @@
+## 6.1.17 (February 4, 2021)
+
+### Bug Fixes
+
+- CLI: Fix opening localhost in browser by default ([#13812](https://github.com/storybookjs/storybook/pull/13812))
+
 ## 6.2.0-alpha.21 (February 4, 2021)
 
 ### Features
 
-* Addon-docs: Add support for Vue 3 ([#13809](https://github.com/storybookjs/storybook/pull/13809))
+- Addon-docs: Add support for Vue 3 ([#13809](https://github.com/storybookjs/storybook/pull/13809))
 
 ### Maintenance
 
-* Build: Exclude all test and story files from transpilation ([#13714](https://github.com/storybookjs/storybook/pull/13714))
-* Build: Generate version file with preval macro ([#13715](https://github.com/storybookjs/storybook/pull/13715))
+- Build: Exclude all test and story files from transpilation ([#13714](https://github.com/storybookjs/storybook/pull/13714))
+- Build: Generate version file with preval macro ([#13715](https://github.com/storybookjs/storybook/pull/13715))
 
 ## 6.1.16 (February 2, 2021)
 
