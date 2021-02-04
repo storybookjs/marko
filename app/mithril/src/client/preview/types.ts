@@ -1,6 +1,6 @@
 import m from 'mithril';
 
-export { RenderContext } from '@storybook/core';
+export type { RenderContext } from '@storybook/core';
 
 export interface IStorybookStory {
   name: string;
