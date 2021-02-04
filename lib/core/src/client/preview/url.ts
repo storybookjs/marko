@@ -2,7 +2,7 @@ import { history, document } from 'global';
 import qs from 'qs';
 import deprecate from 'util-deprecate';
 import { StoreSelectionSpecifier, StoreSelection } from '@storybook/client-api';
-import { StoryId, ViewMode } from '@storybook/addons';
+import { Args, StoryId, ViewMode } from '@storybook/addons';
 
 export function pathToId(path: string) {
   const match = (path || '').match(/^\/story\/(.+)/);
@@ -60,8 +60,16 @@ const deprecatedLegacyQuery = deprecate(
 Use \`id=$storyId\` instead. 
 See https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-url-structure`
 );
-export const getSelectionSpecifierFromPath: () => StoreSelectionSpecifier = () => {
+
+// Lifted from @storybook/router utils
+const parseArgs = (argsString: string): Args => {
+  const parts = argsString.split(';').map((part) => part.replace(':', '='));
+  return qs.parse(parts.join(';'), { allowDots: true, delimiter: ';' });
+};
+
+export const getSelectionSpecifierFromPath: () => StoreSelectionSpecifier & { args: Args } = () => {
   const query = qs.parse(document.location.search, { ignoreQueryPrefix: true });
+  const args = typeof query.args === 'string' ? parseArgs(query.args) : undefined;
 
   let viewMode = getFirstString(query.viewMode) as ViewMode;
   if (typeof viewMode !== 'string' || !viewMode.match(/docs|story/)) {
@@ -72,7 +80,7 @@ export const getSelectionSpecifierFromPath: () => StoreSelectionSpecifier = () =
   const storyId = path ? pathToId(path) : getFirstString(query.id);
 
   if (storyId) {
-    return { storySpecifier: storyId, viewMode };
+    return { storySpecifier: storyId, args, viewMode };
   }
 
   // Legacy URL format
@@ -81,7 +89,7 @@ export const getSelectionSpecifierFromPath: () => StoreSelectionSpecifier = () =
 
   if (kind && name) {
     deprecatedLegacyQuery();
-    return { storySpecifier: { kind, name }, viewMode };
+    return { storySpecifier: { kind, name }, args, viewMode };
   }
   return null;
 };
