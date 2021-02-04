@@ -18,8 +18,9 @@ import { createBabelLoader } from './babel-loader-preview';
 
 import { toRequireContextString } from './to-require-context';
 import { useBaseTsSupport } from '../config/useBaseTsSupport';
-import { loadEnv, nodeModulesPaths } from '../utils/utils';
 import { es6Transpiler } from '../utils/es6Transpiler';
+import { loadEnv } from '../utils/envs';
+import { nodeModulesPaths } from '../utils/paths';
 
 const storybookPaths: Record<string, string> = [
   'addons',

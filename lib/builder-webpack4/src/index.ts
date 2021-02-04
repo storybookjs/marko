@@ -2,7 +2,7 @@ import webpack, { Stats } from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { logger } from '@storybook/node-logger';
-import { logConfig } from './logger';
+import { logConfig } from './utils/logger';
 import { PreviewResult } from './types';
 
 let previewProcess: ReturnType<typeof webpackDevMiddleware>;
