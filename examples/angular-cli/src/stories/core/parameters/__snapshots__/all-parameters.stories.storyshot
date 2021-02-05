@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Core/Parameters passed to story 1`] = `
+exports[`Storyshots Core / Parameters / All parameters All parameters passed to story 1`] = `
 <storybook-wrapper>
   <storybook-button-component
     _nghost-a-c14=""
@@ -48,7 +48,7 @@ exports[`Storyshots Core/Parameters passed to story 1`] = `
     "args": {},
     "argTypes": {},
     "storyParameter": "storyParameter",
-    "__id": "core-parameters--passed-to-story",
+    "__id": "core-parameters-all-parameters--passed-to-story",
     "__isArgsStory": true
   }
     </button>

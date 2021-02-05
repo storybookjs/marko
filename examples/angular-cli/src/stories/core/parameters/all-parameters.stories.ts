@@ -9,7 +9,7 @@ const storyParameter = 'storyParameter';
 addParameters({ globalParameter });
 
 export default {
-  title: 'Core/Parameters',
+  title: 'Core / Parameters / All parameters',
   parameters: {
     chapterParameter,
   },
@@ -23,5 +23,5 @@ export const PassedToStory: Story = (_args, { parameters: { fileName, ...paramet
   },
 });
 
-PassedToStory.storyName = 'passed to story';
+PassedToStory.storyName = 'All parameters passed to story';
 PassedToStory.parameters = { storyParameter };
