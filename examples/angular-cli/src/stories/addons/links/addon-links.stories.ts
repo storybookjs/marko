@@ -3,7 +3,7 @@ import { Button } from '@storybook/angular/demo';
 
 export default {
   component: Button,
-  title: 'Addon/Links',
+  title: 'Addons/Links',
 };
 
 export const ButtonWithLinkToAnotherStory = () => ({
