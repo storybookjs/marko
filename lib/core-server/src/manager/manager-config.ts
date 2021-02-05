@@ -9,10 +9,10 @@ import dedent from 'ts-dedent';
 import { logger } from '@storybook/node-logger';
 
 import { Configuration } from 'webpack';
-import { Ref, StorybookConfigOptions } from '../types';
+import { Ref, Options } from '../types';
 
 export const getAutoRefs = async (
-  options: { configDir: string },
+  options: Options,
   disabledRefs: string[] = []
 ): Promise<Ref[]> => {
   const location = await findUp('package.json', { cwd: options.configDir });
@@ -71,9 +71,7 @@ const deprecatedDefinedRefDisabled = deprecate(
   `
 );
 
-export async function getManagerWebpackConfig(
-  options: StorybookConfigOptions
-): Promise<Configuration> {
+export async function getManagerWebpackConfig(options: Options): Promise<Configuration> {
   const { presets } = options;
   const typescriptOptions = await presets.apply('typescript', {}, options);
   const babelOptions = await presets.apply('babel', {}, { ...options, typescriptOptions });

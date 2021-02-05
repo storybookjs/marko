@@ -1,35 +1,13 @@
 import program, { CommanderStatic } from 'commander';
 import chalk from 'chalk';
 import { logger } from '@storybook/node-logger';
+import { CLIOptions } from '@storybook/core-common';
 import { parseList, getEnvConfig, checkDeprecatedFlags } from './utils';
-
-export interface DevCliOptions {
-  port?: number;
-  host?: string;
-  staticDir?: string[];
-  configDir?: string;
-  https?: boolean;
-  sslCa?: string[];
-  sslCert?: string;
-  sslKey?: string;
-  smokeTest?: boolean;
-  ci?: boolean;
-  loglevel?: string;
-  quiet?: boolean;
-  versionUpdates?: boolean;
-  releaseNotes?: boolean;
-  dll?: boolean;
-  docs?: boolean;
-  docsDll?: boolean;
-  uiDll?: boolean;
-  debugWebpack?: boolean;
-  previewUrl?: string;
-}
 
 export async function getDevCli(packageJson: {
   version: string;
   name: string;
-}): Promise<CommanderStatic & DevCliOptions> {
+}): Promise<CommanderStatic & CLIOptions> {
   process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
   program
@@ -98,6 +76,6 @@ export async function getDevCli(packageJson: {
     program.port = parseInt(program.port, 10);
   }
 
-  checkDeprecatedFlags(program as DevCliOptions);
+  checkDeprecatedFlags(program as CLIOptions);
   return { ...program };
 }

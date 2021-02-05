@@ -10,7 +10,6 @@ import {
   logConfig,
   getInterpretedFile,
   serverRequire,
-  resolvePathInStorybookCache,
   loadAllPresets,
 } from '@storybook/core-common';
 import { getProdCli } from './cli';
@@ -223,11 +222,15 @@ export async function buildStaticStandalone(options: any) {
     presets,
   };
 
-  const prebuiltDir = await getPrebuiltDir({ configDir, options });
+  const prebuiltDir = await getPrebuiltDir(options);
   if (prebuiltDir) {
     await cpy('**', outputDir, { cwd: prebuiltDir, parents: true });
   } else {
-    await buildManager(configType, outputDir, configDir, options);
+    // await managerBuilder.build({
+    //   startTime,
+    //   options: fullOptions,
+    //   useProgressReporting,
+    // });
   }
 
   if (options.managerOnly) {
@@ -236,12 +239,11 @@ export async function buildStaticStandalone(options: any) {
     // const previewConfig = await getPreviewWebpackConfig(fullOptions);
     const startTime = process.hrtime();
 
-    // await previewBuilder.build({
-    //   startTime,
-    //   options: fullOptions,
-    //   useProgressReporting,
-    //   config: previewConfig,
-    // });
+    await previewBuilder.build({
+      startTime,
+      options: fullOptions,
+      useProgressReporting,
+    });
   }
 
   logger.info(`=> Output directory: ${outputDir}`);

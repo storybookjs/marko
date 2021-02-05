@@ -1,25 +1,12 @@
 import { Configuration, Stats } from 'webpack';
 import { TransformOptions } from '@babel/core';
 import { Router } from 'express';
+import { FileSystemCache } from 'file-system-cache';
+import { Server } from 'http';
 
 /**
  * ⚠️ This file contains internal WIP types they MUST NOT be exported outside this package for now!
  */
-export interface ManagerWebpackOptions {
-  configDir: any;
-  configType?: string;
-  docsMode?: boolean;
-  entries: string[];
-  refs: Record<string, Ref>;
-  uiDll: boolean;
-  dll: boolean;
-  outputDir?: string;
-  cache: boolean;
-  previewUrl?: string;
-  versionCheck: VersionCheck;
-  releaseNotesData: ReleaseNotesData;
-  presets: any;
-}
 
 interface TypescriptConfig {
   check: boolean;
@@ -39,7 +26,7 @@ export interface Presets {
   apply(
     extension: 'typescript',
     config: TypescriptConfig,
-    args: StorybookConfigOptions & { presets: Presets }
+    args: Options & { presets: Presets }
   ): Promise<TransformOptions>;
   apply(extension: 'babel', config: {}, args: any): Promise<TransformOptions>;
   apply(extension: 'entries', config: [], args: any): Promise<unknown>;
@@ -55,24 +42,15 @@ export interface Presets {
   apply(
     extension: 'managerWebpack',
     config: {},
-    args: { babelOptions?: TransformOptions } & ManagerWebpackOptions
+    args: Options & { babelOptions?: TransformOptions } & ManagerWebpackOptions
   ): Promise<Configuration>;
-  apply(extension: string, config: unknown, args: unknown): Promise<unknown>;
+  apply<T extends unknown>(extension: string, config?: T, args?: unknown): Promise<T>;
 }
 
 export interface LoadedPreset {
   name: string;
   preset: any;
   options: any;
-}
-
-export interface StorybookConfigOptions {
-  configType: 'DEVELOPMENT' | 'PRODUCTION';
-  outputDir?: string;
-  configDir: string;
-  cache?: any;
-  framework: string;
-  presets?: Presets;
 }
 
 export interface PresetsOptions {
@@ -128,12 +106,60 @@ export interface LoadOptions {
   packageJson: PackageJson;
   framework: string;
   frameworkPresets: string[];
+  extendServer?: (server: Server) => void;
 }
 
+export interface ManagerWebpackOptions {
+  entries: string[];
+  refs: Record<string, Ref>;
+}
+
+export interface CLIOptions {
+  port?: number;
+  ignorePreview?: boolean;
+  host?: string;
+  staticDir?: string[];
+  configDir?: string;
+  https?: boolean;
+  sslCa?: string[];
+  sslCert?: string;
+  sslKey?: string;
+  smokeTest?: boolean;
+  managerCache?: boolean;
+  ci?: boolean;
+  loglevel?: string;
+  quiet?: boolean;
+  versionUpdates?: boolean;
+  releaseNotes?: boolean;
+  dll?: boolean;
+  docs?: boolean;
+  docsDll?: boolean;
+  uiDll?: boolean;
+  debugWebpack?: boolean;
+  previewUrl?: string;
+  outputDir?: string;
+}
+
+export interface RenamedOptions {
+  configType: 'DEVELOPMENT' | 'PRODUCTION';
+  ignorePreview: boolean;
+  cache: FileSystemCache;
+  configDir: string;
+  docsMode: boolean;
+  versionCheck?: VersionCheck;
+  releaseNotesData?: ReleaseNotesData;
+}
+
+export interface StorybookConfigOptions {
+  presets?: Presets;
+}
+
+export type Options = LoadOptions & StorybookConfigOptions & CLIOptions & RenamedOptions;
+
 export interface Builder<Config> {
-  getConfig: (options: StorybookConfigOptions) => Promise<Config>;
+  getConfig: (options: Options) => Promise<Config>;
   start: (args: {
-    options: StorybookConfigOptions;
+    options: Options;
     startTime: ReturnType<typeof process.hrtime>;
     useProgressReporting: any;
     router: Router;
@@ -143,7 +169,7 @@ export interface Builder<Config> {
     bail: (e?: Error) => Promise<void>;
   }>;
   build: (arg: {
-    options: StorybookConfigOptions;
+    options: Options;
     startTime: ReturnType<typeof process.hrtime>;
     useProgressReporting: any;
   }) => Promise<void>;

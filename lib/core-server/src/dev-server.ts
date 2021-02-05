@@ -7,26 +7,27 @@ import {
   resolvePathInStorybookCache,
   serverRequire,
   loadAllPresets,
+  CLIOptions,
+  LoadOptions,
+  Options,
+  RenamedOptions,
 } from '@storybook/core-common';
-import { getMiddleware } from './utils/middleware';
-import { getManagerWebpackConfig } from './manager/manager-config';
 
-import { getPrebuiltDir } from './utils/prebuilt-manager';
+import { getMiddleware } from './utils/middleware';
 import { getServerAddresses } from './utils/server-address';
 import { getServer } from './utils/server-init';
 import { useStatics } from './utils/server-statics';
-import { startManager } from './startManager';
+
+import * as managerBuilder from './manager/builder';
 
 import { useProgressReporting } from './utils/progress-reporting';
 import { cache } from './utils/cache';
 import { openInBrowser } from './utils/open-in-browser';
 
-export const defaultFavIcon = require.resolve('./public/favicon.ico');
-
 // @ts-ignore
 export const router: Router = new Router();
 
-export async function storybookDevServer(options: any) {
+export async function storybookDevServer(options: CLIOptions & LoadOptions & RenamedOptions) {
   const app = express();
   const server = await getServer(app, options);
 
@@ -34,7 +35,6 @@ export async function storybookDevServer(options: any) {
   const outputDir = options.smokeTest
     ? resolvePathInStorybookCache('public')
     : path.resolve(options.outputDir || resolvePathInStorybookCache('public'));
-  const configType = 'DEVELOPMENT';
   const startTime = process.hrtime();
 
   if (typeof options.extendServer === 'function') {
@@ -63,18 +63,12 @@ export async function storybookDevServer(options: any) {
     });
   });
 
-  const prebuiltDir = await getPrebuiltDir({ configDir, options });
-
-  // Manager static files
-  router.use('/', express.static(prebuiltDir || outputDir));
-
   const { core } = serverRequire(getInterpretedFile(path.resolve(configDir, 'main')));
   const builder = core?.builder || 'webpack4';
 
   const previewBuilder = await import(`@storybook/builder-${builder}`);
 
   const presets = loadAllPresets({
-    configType,
     outputDir,
     cache,
     corePresets: [
@@ -87,8 +81,7 @@ export async function storybookDevServer(options: any) {
     ...options,
   });
 
-  const fullOptions = {
-    configType,
+  const fullOptions: Options = {
     outputDir,
     cache,
     ...options,
@@ -99,11 +92,10 @@ export async function storybookDevServer(options: any) {
   // Start the server (and open the browser) as soon as the manager is ready.
   // Bail if the manager fails, but continue if the preview fails.
   // FIXME: parallelize this!!!
-  const managerConfig = !prebuiltDir ? await getManagerWebpackConfig(fullOptions) : null;
 
   if (options.debugWebpack) {
-    logConfig('Preview webpack config', await previewBuilder.getConfig(options));
-    logConfig('Manager webpack config', managerConfig);
+    logConfig('Preview webpack config', await previewBuilder.getConfig(fullOptions));
+    logConfig('Manager webpack config', await managerBuilder.getConfig(fullOptions));
   }
 
   const preview = options.ignorePreview
@@ -115,13 +107,16 @@ export async function storybookDevServer(options: any) {
         router,
       });
 
+  const manager = managerBuilder.start({
+    startTime,
+    options: fullOptions,
+    useProgressReporting,
+    router,
+  });
+
   const [previewResult, managerResult] = await Promise.all([
     preview,
-    startManager({
-      startTime,
-      options: fullOptions,
-      config: managerConfig,
-    })
+    manager
       // TODO #13083 Restore this when compiling the preview is fast enough
       // .then((result) => {
       //   if (!options.ci && !options.smokeTest) openInBrowser(address);

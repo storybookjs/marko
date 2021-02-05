@@ -2,7 +2,14 @@ import dedent from 'ts-dedent';
 import { join } from 'path';
 import { logger } from '@storybook/node-logger';
 import resolveFrom from 'resolve-from';
-import { LoadedPreset, PresetConfig, Presets, StorybookConfigOptions } from './types';
+import {
+  CLIOptions,
+  LoadedPreset,
+  LoadOptions,
+  PresetConfig,
+  Presets,
+  RenamedOptions,
+} from './types';
 import { loadCustomPresets } from './utils/load-custom-presets';
 
 const isObject = (val: unknown): val is Record<string, any> =>
@@ -19,7 +26,7 @@ export function filterPresetsConfig(presetsConfig: PresetConfig[]): PresetConfig
 function resolvePresetFunction<T = any>(
   input: T[] | Function,
   presetOptions: any,
-  storybookOptions: StorybookConfigOptions
+  storybookOptions: InterPresetOptions
 ): T[] {
   if (isFunction(input)) {
     return input({ ...storybookOptions, ...presetOptions });
@@ -89,7 +96,7 @@ export const resolveAddonName = (configDir: string, name: string) => {
   };
 };
 
-const map = ({ configDir }: { configDir: string }) => (item: any) => {
+const map = ({ configDir }: InterPresetOptions) => (item: any) => {
   try {
     if (isObject(item)) {
       const { name } = resolveAddonName(configDir, item.name);
@@ -135,7 +142,7 @@ function getContent(input: any) {
 export function loadPreset(
   input: PresetConfig,
   level: number,
-  storybookOptions: StorybookConfigOptions
+  storybookOptions: InterPresetOptions
 ): LoadedPreset[] {
   try {
     // @ts-ignores
@@ -195,7 +202,7 @@ export function loadPreset(
 function loadPresets(
   presets: PresetConfig[],
   level: number,
-  storybookOptions: StorybookConfigOptions
+  storybookOptions: InterPresetOptions
 ): LoadedPreset[] {
   if (!presets || !Array.isArray(presets) || !presets.length) {
     return [];
@@ -216,7 +223,7 @@ function applyPresets(
   extension: string,
   config: any,
   args: any,
-  storybookOptions: StorybookConfigOptions
+  storybookOptions: InterPresetOptions
 ): Promise<any> {
   const presetResult = new Promise((resolve) => resolve(config));
 
@@ -255,11 +262,9 @@ function applyPresets(
   }, presetResult);
 }
 
-export function getPresets(
-  presets: PresetConfig[],
-  // @ts-ignore
-  storybookOptions: StorybookConfigOptions = {}
-): Presets {
+type InterPresetOptions = Omit<CLIOptions & LoadOptions & RenamedOptions, 'frameworkPresets'>;
+
+export function getPresets(presets: PresetConfig[], storybookOptions: InterPresetOptions): Presets {
   const loadedPresets: LoadedPreset[] = loadPresets(presets, 0, storybookOptions);
 
   return {
@@ -268,7 +273,15 @@ export function getPresets(
   };
 }
 
-export function loadAllPresets(options: any) {
+export function loadAllPresets(
+  options: CLIOptions &
+    LoadOptions &
+    RenamedOptions & {
+      corePresets: string[];
+      overridePresets: string[];
+      frameworkPresets: string[];
+    }
+) {
   const { corePresets = [], frameworkPresets = [], overridePresets = [], ...restOptions } = options;
 
   const presetsConfig: PresetConfig[] = [

@@ -9,3 +9,5 @@ export default {
   ConfigApi,
   StoryStore,
 };
+
+export { start, toId, ClientApi, ConfigApi, StoryStore };

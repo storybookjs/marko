@@ -1,12 +1,20 @@
-const serverUtils = require('@storybook/core-common/dist/cjs/utils/template');
-const buildStatic = require('./build-static');
-const buildDev = require('./build-dev');
+import {
+  getPreviewHeadTemplate,
+  getManagerHeadTemplate,
+  getManagerMainTemplate,
+  getPreviewBodyTemplate,
+  getPreviewMainTemplate,
+} from '@storybook/core-common';
 
-const managerPreset = require.resolve('./presets/manager-preset');
-
-module.exports = {
-  managerPreset,
-  ...buildStatic,
-  ...buildDev,
-  ...serverUtils,
+export {
+  getPreviewHeadTemplate,
+  getManagerHeadTemplate,
+  getManagerMainTemplate,
+  getPreviewBodyTemplate,
+  getPreviewMainTemplate,
 };
+
+export * from './build-static';
+export * from './build-dev';
+
+export const managerPreset = require.resolve('./presets/manager-preset');

@@ -1,11 +1,10 @@
 import { Configuration } from 'webpack';
-import { loadManagerOrAddonsFile } from '@storybook/core-common';
+import { loadManagerOrAddonsFile, ManagerWebpackOptions, Options } from '@storybook/core-common';
 import createDevConfig from '../manager/manager-webpack.config';
-import { ManagerWebpackOptions } from '../types';
 
 export async function managerWebpack(
   _: Configuration,
-  options: ManagerWebpackOptions
+  options: Options & ManagerWebpackOptions
 ): Promise<Configuration> {
   return createDevConfig(options);
 }

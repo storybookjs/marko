@@ -17,10 +17,12 @@ import {
   loadEnv,
   es6Transpiler,
   getManagerHeadTemplate,
+  getManagerMainTemplate,
+  Options,
+  ManagerWebpackOptions,
 } from '@storybook/core-common';
 
 import { babelLoader } from './babel-loader-manager';
-import { ManagerWebpackOptions } from '../types';
 
 export default async ({
   configDir,
@@ -33,10 +35,10 @@ export default async ({
   versionCheck,
   releaseNotesData,
   presets,
-}: ManagerWebpackOptions): Promise<Configuration> => {
+}: Options & ManagerWebpackOptions): Promise<Configuration> => {
   const { raw, stringified } = loadEnv();
   const logLevel = await presets.apply('logLevel', undefined);
-  const template = await presets.apply('managerMainTemplate');
+  const template = await presets.apply('managerMainTemplate', getManagerMainTemplate());
 
   const headHtmlSnippet = await presets.apply(
     'managerHead',

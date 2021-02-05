@@ -2,33 +2,18 @@ import webpack, { Stats, Configuration } from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import { logger } from '@storybook/node-logger';
 import { Builder } from '@storybook/core-common';
+import { pathExists } from 'fs-extra';
+import express from 'express';
+import { getManagerWebpackConfig } from './manager-config';
+import { clearManagerCache, useManagerCache } from '../utils/manager-cache';
+import { getPrebuiltDir } from '../utils/prebuilt-manager';
 
 let compilation: ReturnType<typeof webpackDevMiddleware>;
 let reject: (reason?: any) => void;
 
 type WebpackBuilder = Builder<Configuration>;
 
-export const getConfig: WebpackBuilder['getConfig'] = async (options) => {
-  const { presets } = options;
-  const typescriptOptions = await presets.apply('typescript', {}, options);
-  const babelOptions = await presets.apply('babel', {}, { ...options, typescriptOptions });
-  const entries = await presets.apply('entries', [], options);
-  const stories = await presets.apply('stories', [], options);
-  const frameworkOptions = await presets.apply(`${options.framework}Options`, {}, options);
-
-  return presets.apply(
-    'managerWebpack',
-    {},
-    {
-      ...options,
-      babelOptions,
-      entries,
-      stories,
-      typescriptOptions,
-      [`${options.framework}Options`]: frameworkOptions,
-    }
-  );
-};
+export const getConfig: WebpackBuilder['getConfig'] = getManagerWebpackConfig;
 
 export const start: WebpackBuilder['start'] = async ({
   startTime,
@@ -36,7 +21,28 @@ export const start: WebpackBuilder['start'] = async ({
   useProgressReporting,
   router,
 }) => {
+  const prebuiltDir = await getPrebuiltDir(options);
   const config = await getConfig(options);
+
+  if (options.cache) {
+    if (options.managerCache) {
+      const [useCache, hasOutput] = await Promise.all([
+        // must run even if outputDir doesn't exist, otherwise the 2nd run won't use cache
+        useManagerCache(options.cache, config),
+        pathExists(options.outputDir),
+      ]);
+      if (useCache && hasOutput && !options.smokeTest) {
+        logger.info('=> Using cached manager');
+        // Manager static files
+        router.use('/', express.static(prebuiltDir || options.outputDir));
+
+        return { stats: null, totalTime: process.hrtime(startTime), bail };
+      }
+    } else if (!options.smokeTest && (await clearManagerCache(options.cache))) {
+      logger.info('=> Cleared cached manager config');
+    }
+  }
+
   const compiler = webpack(config);
 
   await useProgressReporting(compiler, options, startTime);

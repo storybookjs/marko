@@ -21,7 +21,7 @@ export const startManager = async ({ startTime, options, config }: any): Promise
       ]);
       if (useCache && hasOutput && !options.smokeTest) {
         logger.info('=> Using cached manager');
-        return {};
+        return null;
       }
     } else if (!options.smokeTest && (await clearManagerCache(options.cache))) {
       logger.info('=> Cleared cached manager config');

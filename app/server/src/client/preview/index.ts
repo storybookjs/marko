@@ -30,7 +30,8 @@ export const {
   addParameters,
   clearDecorators,
   setAddon,
-  forceReRender,
   getStorybook,
   raw,
 } = api.clientApi;
+
+export const { forceReRender } = api;

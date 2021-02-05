@@ -11,7 +11,6 @@ export * from './utils/load-custom-webpack-config';
 export * from './utils/load-manager-or-addons-file';
 export * from './utils/load-preview-or-config-file';
 export * from './utils/log-config';
-export * from './utils/manager-cache';
 export * from './utils/merge-webpack-config';
 export * from './utils/paths';
 export * from './utils/progress-reporting';

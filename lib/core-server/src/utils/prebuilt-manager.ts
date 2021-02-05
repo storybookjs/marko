@@ -1,7 +1,12 @@
 import { logger } from '@storybook/node-logger';
 import { pathExists } from 'fs-extra';
 import path from 'path';
-import { getInterpretedFile, loadManagerOrAddonsFile, serverRequire } from '@storybook/core-common';
+import {
+  getInterpretedFile,
+  loadManagerOrAddonsFile,
+  serverRequire,
+  Options,
+} from '@storybook/core-common';
 
 import { getAutoRefs } from '../manager/manager-config';
 
@@ -16,14 +21,9 @@ export const IGNORED_ADDONS = [
   ...DEFAULT_ADDONS,
 ];
 
-export const getPrebuiltDir = async ({
-  configDir,
-  options,
-}: {
-  configDir: string;
-  options: { managerCache?: boolean; smokeTest?: boolean };
-}): Promise<string | false> => {
-  if (options.managerCache === false || options.smokeTest) return false;
+export const getPrebuiltDir = async (options: Options): Promise<string | false> => {
+  const { configDir, smokeTest, managerCache } = options;
+  if (managerCache === false || smokeTest) return false;
 
   const prebuiltDir = path.join(__dirname, '../../../prebuilt');
   const hasPrebuiltManager = await pathExists(path.join(prebuiltDir, 'index.html'));
@@ -41,7 +41,7 @@ export const getPrebuiltDir = async ({
   if (addons.some((addon: string) => !IGNORED_ADDONS.includes(addon))) return false;
 
   // Auto refs will not be listed in the config, so we have to verify there aren't any
-  const autoRefs = await getAutoRefs({ configDir });
+  const autoRefs = await getAutoRefs(options);
   if (autoRefs.length > 0) return false;
 
   logger.info('=> Using prebuilt manager');

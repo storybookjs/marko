@@ -1,10 +1,10 @@
 import { logger, instance as npmLog } from '@storybook/node-logger';
+import { CLIOptions, PackageJson, LoadOptions, RenamedOptions } from '@storybook/core-common';
 import dedent from 'ts-dedent';
 import prompts from 'prompts';
 
 import { storybookDevServer } from './dev-server';
-import { DevCliOptions, getDevCli } from './cli';
-import { PackageJson, LoadOptions } from './types';
+import { getDevCli } from './cli';
 import { getReleaseNotesData, getReleaseNotesFailedState } from './utils/release-notes';
 import { outputStats } from './utils/output-stats';
 import { outputStartupInformation } from './utils/output-startup-information';
@@ -12,22 +12,13 @@ import { updateCheck } from './utils/update-check';
 import { cache } from './utils/cache';
 import { getServerPort } from './utils/server-address';
 
-export async function buildDevStandalone(
-  options: DevCliOptions &
-    LoadOptions & {
-      packageJson: PackageJson;
-      ignorePreview: boolean;
-      docsMode: boolean;
-      configDir: string;
-      cache: any;
-    }
-) {
+export async function buildDevStandalone(options: CLIOptions & LoadOptions & RenamedOptions) {
   try {
     const { packageJson, versionUpdates, releaseNotes } = options;
     const { version } = packageJson;
 
     // updateInfo and releaseNotesData are cached, so this is typically pretty fast
-    const [port, updateInfo, releaseNotesData] = await Promise.all([
+    const [port, versionCheck, releaseNotesData] = await Promise.all([
       getServerPort(options.port),
       versionUpdates
         ? updateCheck(version)
@@ -49,10 +40,9 @@ export async function buildDevStandalone(
 
     /* eslint-disable no-param-reassign */
     options.port = port;
-    // @ts-ignore
-    options.versionCheck = updateInfo;
-    // @ts-ignore
+    options.versionCheck = versionCheck;
     options.releaseNotesData = releaseNotesData;
+    options.configType = 'DEVELOPMENT';
     /* eslint-enable no-param-reassign */
 
     const { address, networkAddress, managerResult, previewResult } = await storybookDevServer(
@@ -71,7 +61,7 @@ export async function buildDevStandalone(
     }
 
     outputStartupInformation({
-      updateInfo,
+      updateInfo: versionCheck,
       version,
       address,
       networkAddress,
@@ -122,6 +112,7 @@ export async function buildDev({
     ...loadOptions,
     packageJson,
     configDir: (loadOptions as any).configDir || cliOptions.configDir || './.storybook',
+    configType: 'DEVELOPMENT',
     ignorePreview: !!cliOptions.previewUrl,
     docsMode: !!cliOptions.docs,
     cache,

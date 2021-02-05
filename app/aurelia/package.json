@@ -37,6 +37,7 @@
     "@aurelia/webpack-loader": "^0.7.0",
     "@storybook/addon-knobs": "6.2.0-alpha.20",
     "@storybook/addons": "6.2.0-alpha.20",
+    "@storybook/core-common": "6.2.0-alpha.20",
     "@storybook/core": "6.2.0-alpha.20",
     "@storybook/node-logger": "6.2.0-alpha.20",
     "fork-ts-checker-webpack-plugin": "^6.0.4",

@@ -45,6 +45,7 @@
     "@babel/plugin-transform-react-jsx": "^7.12.12",
     "@storybook/addons": "6.2.0-alpha.20",
     "@storybook/core": "6.2.0-alpha.20",
+    "@storybook/core-common": "6.2.0-alpha.20",
     "@types/mithril": "^2.0.6",
     "@types/webpack-env": "^1.16.0",
     "core-js": "^3.8.2",
