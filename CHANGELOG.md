@@ -1,3 +1,9 @@
+## 6.2.0-alpha.23 (February 5, 2021)
+
+### Bug Fixes
+
+* Addon-docs/Vue3: Resolve vue3 package for addon-docs preset ([#13819](https://github.com/storybookjs/storybook/pull/13819))
+
 ## 6.2.0-alpha.22 (February 5, 2021)
 
 ### Bug Fixes
