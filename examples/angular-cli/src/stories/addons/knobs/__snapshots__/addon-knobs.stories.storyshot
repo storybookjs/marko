@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Addon/Knobs All knobs 1`] = `
+exports[`Storyshots Addons/Knobs All knobs 1`] = `
 <storybook-wrapper>
   <storybook-simple-knobs-component
     ng-reflect-border="deeppink"
@@ -56,7 +56,7 @@ exports[`Storyshots Addon/Knobs All knobs 1`] = `
 </storybook-wrapper>
 `;
 
-exports[`Storyshots Addon/Knobs Simple 1`] = `
+exports[`Storyshots Addons/Knobs Simple 1`] = `
 <storybook-wrapper>
   <h1>
      This is a template 
@@ -75,7 +75,7 @@ exports[`Storyshots Addon/Knobs Simple 1`] = `
 </storybook-wrapper>
 `;
 
-exports[`Storyshots Addon/Knobs XSS safety 1`] = `
+exports[`Storyshots Addons/Knobs XSS safety 1`] = `
 <storybook-wrapper>
   &lt;img src=x onerror="alert('XSS Attack')" &gt;
 </storybook-wrapper>
