@@ -3,11 +3,11 @@
 exports[`Storyshots Addons/Actions Action and method 1`] = `
 <storybook-wrapper>
   <storybook-button-component
-    _nghost-a-c5=""
+    _nghost-a-c7=""
     ng-reflect-text="Action and Method"
   >
     <button
-      _ngcontent-a-c5=""
+      _ngcontent-a-c7=""
     >
       Action and Method
     </button>
@@ -18,11 +18,11 @@ exports[`Storyshots Addons/Actions Action and method 1`] = `
 exports[`Storyshots Addons/Actions Action only 1`] = `
 <storybook-wrapper>
   <storybook-button-component
-    _nghost-a-c4=""
+    _nghost-a-c6=""
     ng-reflect-text="Action only"
   >
     <button
-      _ngcontent-a-c4=""
+      _ngcontent-a-c6=""
     >
       Action only
     </button>
