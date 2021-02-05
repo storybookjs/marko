@@ -1,7 +1,7 @@
 export function webpackFinal(webpackConfig: any = {}, options: any = {}) {
   webpackConfig.module.rules.push({
     test: /\.vue$/,
-    loader: require.resolve('vue-docgen-loader', { paths: [require.resolve('@storybook/vue')] }),
+    loader: require.resolve('vue-docgen-loader', { paths: [require.resolve('@storybook/vue3')] }),
     enforce: 'post',
     options: {
       docgenOptions: {
