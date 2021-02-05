@@ -61,30 +61,37 @@
     "@storybook/addon-docs": "6.2.0-alpha.23",
     "@storybook/angular": "6.2.0-alpha.23",
     "@storybook/react": "6.2.0-alpha.23",
+    "@storybook/vue3": "6.2.0-alpha.23",
     "babel-loader": "^8.2.2",
     "enzyme": "^3.11.0",
     "enzyme-to-json": "^3.6.1",
     "jest-emotion": "^10.0.32",
     "jest-preset-angular": "^8.3.2",
     "jest-vue-preprocessor": "^1.7.1",
-    "rxjs": "^6.6.3"
+    "rxjs": "^6.6.3",
+    "vue-jest": "^5.0.0-alpha.8"
   },
   "peerDependencies": {
     "@storybook/angular": "*",
     "@storybook/react": "*",
     "@storybook/vue": "*",
+    "@storybook/vue3": "*",
     "jest-preset-angular": "*",
     "jest-vue-preprocessor": "*",
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0",
     "rxjs": "*",
-    "vue": "*"
+    "vue": "*",
+    "vue-jest": "*"
   },
   "peerDependenciesMeta": {
     "@storybook/angular": {
       "optional": true
     },
     "@storybook/vue": {
+      "optional": true
+    },
+    "@storybook/vue3": {
       "optional": true
     },
     "jest-preset-angular": {
@@ -103,6 +110,9 @@
       "optional": true
     },
     "vue": {
+      "optional": true
+    },
+    "vue-jest": {
       "optional": true
     }
   },
