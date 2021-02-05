@@ -1,8 +1,8 @@
 import { moduleMetadata, storiesOf } from '@storybook/angular';
 import { Button } from '@storybook/angular/demo';
-import { AppComponent } from '../app/app.component';
+import { AppComponent } from '../../../app/app.component';
 
-storiesOf('Addon/Background', module)
+storiesOf('Addons/Backgrounds', module)
   .addDecorator(
     moduleMetadata({
       declarations: [Button],
