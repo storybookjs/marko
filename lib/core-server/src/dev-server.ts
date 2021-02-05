@@ -6,18 +6,23 @@ import prettyTime from 'pretty-hrtime';
 import dedent from 'ts-dedent';
 import Cache from 'file-system-cache';
 
-import * as previewBuilder from '@storybook/builder-webpack4';
+import {
+  getInterpretedFile,
+  logConfig,
+  resolvePathInStorybookCache,
+  serverRequire,
+} from '@storybook/core-common';
 import { getMiddleware } from './utils/middleware';
 import { getManagerWebpackConfig } from './manager/manager-config';
-import { resolvePathInStorybookCache } from './utils/resolve-path-in-sb-cache';
+
 import { getPrebuiltDir } from './utils/prebuilt-manager';
-import { getPreviewWebpackConfig } from './preview-config';
 import { loadAllPresets } from './presets';
-import { useProgressReporting } from './utils/progress-reporting';
 import { getServerAddresses } from './utils/server-address';
 import { getServer } from './utils/server-init';
 import { useStatics } from './utils/server-statics';
 import { startManager } from './startManager';
+
+import { useProgressReporting } from './utils/progress-reporting';
 
 export const defaultFavIcon = require.resolve('./public/favicon.ico');
 
@@ -89,13 +94,18 @@ export async function storybookDevServer(options: any) {
   // Manager static files
   router.use('/', express.static(prebuiltDir || outputDir));
 
+  const { core } = serverRequire(getInterpretedFile(path.resolve(configDir, 'main')));
+  const builder = core?.builder || 'webpack4';
+
+  const previewBuilder = await import(`@storybook/builder-${builder}`);
+
   const presets = loadAllPresets({
     configType,
     outputDir,
     cache,
     corePresets: [
-      require.resolve('./common/common-preset.js'),
-      require.resolve('./manager/manager-preset.js'),
+      require.resolve('./presets/common-preset.js'),
+      require.resolve('./presets/manager-preset.js'),
       ...previewBuilder.corePresets,
     ],
     overridePresets: previewBuilder.overridePresets,
@@ -114,18 +124,24 @@ export async function storybookDevServer(options: any) {
   // Start the server (and open the browser) as soon as the manager is ready.
   // Bail if the manager fails, but continue if the preview fails.
   // FIXME: parallelize this!!!
-  const previewConfig = await getPreviewWebpackConfig(fullOptions);
-  // this is pretty slow (???)
   const managerConfig = !prebuiltDir ? await getManagerWebpackConfig(fullOptions) : null;
 
+  if (options.debugWebpack) {
+    logConfig('Preview webpack config', await previewBuilder.getConfig(options));
+    logConfig('Manager webpack config', managerConfig);
+  }
+
+  const preview = options.ignorePreview
+    ? Promise.resolve()
+    : previewBuilder.start({
+        startTime,
+        options: fullOptions,
+        useProgressReporting,
+        router,
+      });
+
   const [previewResult, managerResult] = await Promise.all([
-    previewBuilder.start({
-      startTime,
-      options: fullOptions,
-      useProgressReporting,
-      router,
-      config: previewConfig,
-    }),
+    preview,
     startManager({
       startTime,
       options: fullOptions,

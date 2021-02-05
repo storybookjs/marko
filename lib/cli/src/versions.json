@@ -35,6 +35,7 @@
   "@storybook/components": "6.2.0-alpha.20",
   "@storybook/core": "6.2.0-alpha.20",
   "@storybook/core-client": "6.2.0-alpha.20",
+  "@storybook/core-common": "6.2.0-alpha.20",
   "@storybook/core-events": "6.2.0-alpha.20",
   "@storybook/core-server": "6.2.0-alpha.20",
   "@storybook/ember": "6.2.0-alpha.20",

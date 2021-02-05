@@ -3,15 +3,29 @@ import cpy from 'cpy';
 import fs from 'fs-extra';
 import path from 'path';
 import webpack, { Configuration } from 'webpack';
+import Cache from 'file-system-cache';
 
 import { logger } from '@storybook/node-logger';
 
+import {
+  logConfig,
+  getInterpretedFile,
+  serverRequire,
+  resolvePathInStorybookCache,
+} from '@storybook/core-common';
 import { getProdCli } from './cli';
 // import loadConfig from './preview-config';
 // import loadManagerConfig from './manager/manager-config';
-import { logConfig } from './utils/log-config';
 import { getPrebuiltDir } from './utils/prebuilt-manager';
 import { parseStaticDir } from './utils/server-statics';
+import { loadAllPresets } from './presets';
+import { getPreviewWebpackConfig } from './preview-config';
+import { useProgressReporting } from './utils/progress-reporting';
+
+const cache = Cache({
+  basePath: resolvePathInStorybookCache('dev-server'),
+  ns: 'storybook', // Optional. A grouping namespace for items.
+});
 
 async function compileManager(managerConfig: Configuration, managerStartTime: [number, number]) {
   logger.info('=> Compiling manager..');
@@ -132,7 +146,7 @@ async function buildManager(configType: any, outputDir: string, configDir: strin
   //   configType,
   //   outputDir,
   //   configDir,
-  //   corePresets: [require.resolve('./manager/manager-preset.js')],
+  //   corePresets: [require.resolve('./presets/manager-preset.js')],
   // });
 
   if (options.debugWebpack) {
@@ -155,8 +169,8 @@ async function buildPreview(configType: any, outputDir: string, packageJson: any
   //   configType,
   //   outputDir,
   //   packageJson,
-  //   corePresets: [require.resolve('./preview/preview-preset.js')],
-  //   overridePresets: [require.resolve('./preview/custom-webpack-preset.js')],
+  //   corePresets: [require.resolve('./presets/preview-preset.js')],
+  //   overridePresets: [require.resolve('./presets/custom-webpack-preset.js')],
   // });
 
   if (debugWebpack) {
@@ -187,6 +201,32 @@ export async function buildStaticStandalone(options: any) {
   await cpy(defaultFavIcon, outputDir);
   await copyAllStaticFiles(staticDir, outputDir);
 
+  const { core } = serverRequire(getInterpretedFile(path.resolve(configDir, 'main')));
+  const builder = core?.builder || 'webpack4';
+
+  const previewBuilder = await import(`@storybook/builder-${builder}`);
+
+  const presets = loadAllPresets({
+    configType,
+    outputDir,
+    cache,
+    corePresets: [
+      require.resolve('./presets/common-preset.js'),
+      require.resolve('./presets/manager-preset.js'),
+      ...previewBuilder.corePresets,
+    ],
+    overridePresets: previewBuilder.overridePresets,
+    ...options,
+  });
+
+  const fullOptions = {
+    configType,
+    outputDir,
+    cache,
+    ...options,
+    presets,
+  };
+
   const prebuiltDir = await getPrebuiltDir({ configDir, options });
   if (prebuiltDir) {
     await cpy('**', outputDir, { cwd: prebuiltDir, parents: true });
@@ -197,7 +237,15 @@ export async function buildStaticStandalone(options: any) {
   if (options.managerOnly) {
     logger.info(`=> Not building preview`);
   } else {
-    await buildPreview(configType, outputDir, packageJson, options);
+    const previewConfig = await getPreviewWebpackConfig(fullOptions);
+    const startTime = process.hrtime();
+
+    await previewBuilder.build({
+      startTime,
+      options: fullOptions,
+      useProgressReporting,
+      config: previewConfig,
+    });
   }
 
   logger.info(`=> Output directory: ${outputDir}`);

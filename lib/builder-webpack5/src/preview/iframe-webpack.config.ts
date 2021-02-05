@@ -14,14 +14,16 @@ import FilterWarningsPlugin from 'webpack-filter-warnings-plugin';
 
 import themingPaths from '@storybook/theming/paths';
 
+import {
+  toRequireContextString,
+  es6Transpiler,
+  loadEnv,
+  nodeModulesPaths,
+  interpolate,
+} from '@storybook/core-common';
 import { createBabelLoader } from './babel-loader-preview';
 
-import { toRequireContextString } from './to-require-context';
-import { useBaseTsSupport } from '../utils/useBaseTsSupport';
-import { es6Transpiler } from '../utils/es6Transpiler';
-import { loadEnv } from '../utils/envs';
-import { nodeModulesPaths } from '../utils/paths';
-import { interpolate } from '../utils/interpolate';
+import { useBaseTsSupport } from './useBaseTsSupport';
 
 const storybookPaths: Record<string, string> = [
   'addons',

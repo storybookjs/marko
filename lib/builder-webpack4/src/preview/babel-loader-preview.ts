@@ -1,5 +1,5 @@
-import { useBaseTsSupport } from '../utils/useBaseTsSupport';
-import { getProjectRoot } from '../utils/paths';
+import { getProjectRoot } from '@storybook/core-common';
+import { useBaseTsSupport } from './useBaseTsSupport';
 
 export const createBabelLoader = (options: any, framework: string) => ({
   test: useBaseTsSupport(framework) ? /\.(mjs|tsx?|jsx?)$/ : /\.(mjs|jsx?)$/,

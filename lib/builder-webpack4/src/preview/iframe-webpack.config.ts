@@ -14,14 +14,16 @@ import FilterWarningsPlugin from 'webpack-filter-warnings-plugin';
 
 import themingPaths from '@storybook/theming/paths';
 
+import {
+  toRequireContextString,
+  loadEnv,
+  es6Transpiler,
+  interpolate,
+  nodeModulesPaths,
+} from '@storybook/core-common';
 import { createBabelLoader } from './babel-loader-preview';
 
-import { toRequireContextString } from './to-require-context';
-import { useBaseTsSupport } from '../utils/useBaseTsSupport';
-import { loadEnv } from '../utils/envs';
-import { nodeModulesPaths } from '../utils/paths';
-import { es6Transpiler } from '../utils/es6Transpiler';
-import { interpolate } from '../utils/interpolate';
+import { useBaseTsSupport } from './useBaseTsSupport';
 
 const storybookPaths: Record<string, string> = [
   'addons',
@@ -66,6 +68,7 @@ export default async ({
   const bodyHtmlSnippet = await presets.apply('previewBodyTemplate');
   const template = await presets.apply('previewMainTemplate');
 
+  // TODO: envs should come rom presets
   const { raw, stringified } = loadEnv({ production: true });
   const babelLoader = createBabelLoader(babelOptions, framework);
   const isProd = configType === 'PRODUCTION';

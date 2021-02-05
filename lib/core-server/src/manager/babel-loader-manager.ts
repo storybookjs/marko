@@ -1,6 +1,7 @@
 import { RuleSetRule } from 'webpack';
-import { plugins, presets } from '../common/babel';
-import { includePaths } from '../utils/paths';
+import { getProjectRoot, babelConfig } from '@storybook/core-common';
+
+const { plugins, presets } = babelConfig();
 
 export const babelLoader: () => RuleSetRule = () => ({
   test: /\.(mjs|tsx?|jsx?)$/,
@@ -19,6 +20,6 @@ export const babelLoader: () => RuleSetRule = () => ({
       },
     },
   ],
-  include: includePaths,
+  include: [getProjectRoot()],
   exclude: [/node_modules/, /dist/],
 });

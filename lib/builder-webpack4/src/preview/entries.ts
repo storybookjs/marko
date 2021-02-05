@@ -3,7 +3,7 @@ import { logger } from '@storybook/node-logger';
 import stable from 'stable';
 import dedent from 'ts-dedent';
 import glob from 'glob-promise';
-import { loadPreviewOrConfigFile } from '../utils/load-preview-or-config-file';
+import { loadPreviewOrConfigFile } from '@storybook/core-common';
 
 export const sortEntries = (entries: string[]) => {
   const isGenerated = /generated-(config|other)-entry/;

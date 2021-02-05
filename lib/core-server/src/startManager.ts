@@ -3,7 +3,6 @@ import express from 'express';
 import { pathExists } from 'fs-extra';
 import webpack, { Stats } from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
-import { logConfig } from './utils/log-config';
 import { ManagerResult } from './types';
 import { useManagerCache, clearManagerCache } from './utils/manager-cache';
 import { router } from './dev-server';
@@ -11,10 +10,6 @@ import { router } from './dev-server';
 export const startManager = async ({ startTime, options, config }: any): Promise<ManagerResult> => {
   if (!config) {
     return {};
-  }
-
-  if (options.debugWebpack) {
-    logConfig('Manager webpack config', config);
   }
 
   if (options.cache) {

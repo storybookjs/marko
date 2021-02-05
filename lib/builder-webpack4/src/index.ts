@@ -1,29 +1,46 @@
-import webpack, { Stats } from 'webpack';
+import webpack, { Stats, Configuration } from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { logger } from '@storybook/node-logger';
-import { logConfig } from './utils/logger';
-import { PreviewResult } from './types';
+import { PreviewResult, StorybookConfigOptions } from './types';
 
 let previewProcess: ReturnType<typeof webpackDevMiddleware>;
 let previewReject: (reason?: any) => void;
+
+export async function getConfig(options: StorybookConfigOptions): Promise<Configuration> {
+  const { presets } = options;
+  const typescriptOptions = await presets.apply('typescript', {}, options);
+  const babelOptions = await presets.apply('babel', {}, { ...options, typescriptOptions });
+  const entries = await presets.apply('entries', [], options);
+  const stories = await presets.apply('stories', [], options);
+  const frameworkOptions = await presets.apply(`${options.framework}Options`, {}, options);
+
+  return presets.apply(
+    'webpack',
+    {},
+    {
+      ...options,
+      babelOptions,
+      entries,
+      stories,
+      typescriptOptions,
+      [`${options.framework}Options`]: frameworkOptions,
+    }
+  );
+}
 
 export const start = async ({
   startTime,
   options,
   useProgressReporting,
   router,
-  config: previewConfig,
 }: any): Promise<PreviewResult> => {
-  if (options.ignorePreview) {
-    return {};
-  }
+  const previewConfig = await getConfig(options);
 
-  if (options.debugWebpack) {
-    logConfig('Preview webpack config', previewConfig);
-  }
+  console.log({ previewConfig });
 
   const compiler = webpack(previewConfig);
+
   await useProgressReporting(compiler, options, startTime);
 
   const middlewareOptions: Parameters<typeof webpackDevMiddleware>[1] = {
@@ -39,9 +56,18 @@ export const start = async ({
     previewProcess.waitUntilValid(resolve);
     previewReject = reject;
   });
-  if (!previewStats) throw new Error('no stats after building preview');
-  if (previewStats.hasErrors()) throw previewStats;
-  return { previewStats, previewTotalTime: process.hrtime(startTime) };
+  if (!previewStats) {
+    throw new Error('no stats after building preview');
+  }
+  if (previewStats.hasErrors()) {
+    throw previewStats;
+  }
+
+  return {
+    bail,
+    previewStats,
+    previewTotalTime: process.hrtime(startTime),
+  };
 };
 
 export const bail = (e: Error) => {
@@ -57,5 +83,9 @@ export const bail = (e: Error) => {
   throw e;
 };
 
-export const corePresets = [require.resolve('./preview/preview-preset.js')];
-export const overridePresets = [require.resolve('./preview/custom-webpack-preset.js')];
+export const build = async () => {
+  console.log('TODO');
+};
+
+export const corePresets = [require.resolve('./presets/preview-preset.js')];
+export const overridePresets = [require.resolve('./presets/custom-webpack-preset.js')];

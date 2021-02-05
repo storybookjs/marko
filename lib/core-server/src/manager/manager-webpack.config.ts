@@ -12,13 +12,15 @@ import themingPaths from '@storybook/theming/paths';
 import uiPaths from '@storybook/ui/paths';
 
 import readPackage from 'read-pkg-up';
-import { getManagerHeadTemplate } from '../utils/template';
+import {
+  resolvePathInStorybookCache,
+  loadEnv,
+  es6Transpiler,
+  getManagerHeadTemplate,
+} from '@storybook/core-common';
 
 import { babelLoader } from './babel-loader-manager';
-import { resolvePathInStorybookCache } from '../utils/resolve-path-in-sb-cache';
-import { es6Transpiler } from '../common/es6Transpiler';
 import { ManagerWebpackOptions } from '../types';
-import { loadEnv } from '../utils/envs';
 
 export default async ({
   configDir,
@@ -34,6 +36,8 @@ export default async ({
 }: ManagerWebpackOptions): Promise<Configuration> => {
   const { raw, stringified } = loadEnv();
   const logLevel = await presets.apply('logLevel', undefined);
+  const template = await presets.apply('managerMainTemplate');
+
   const headHtmlSnippet = await presets.apply(
     'managerHead',
     getManagerHeadTemplate(configDir, process.env)
@@ -95,7 +99,7 @@ export default async ({
           },
           headHtmlSnippet,
         }),
-        template: require.resolve(`../templates/index.ejs`),
+        template,
       }),
       new CaseSensitivePathsPlugin(),
       new Dotenv({ silent: true }),

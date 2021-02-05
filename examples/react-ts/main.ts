@@ -24,4 +24,7 @@ module.exports = {
       propFilter: (prop) => ['label', 'disabled'].includes(prop.name),
     },
   },
+  core: {
+    builder: 'webpack5',
+  },
 } as StorybookConfig;

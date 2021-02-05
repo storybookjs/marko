@@ -1,9 +1,10 @@
 import { logger } from '@storybook/node-logger';
 import { pathExists } from 'fs-extra';
 import path from 'path';
-import { getInterpretedFile, loadManagerOrAddonsFile, serverRequire } from '@storybook/core-common';
-
-import { getAutoRefs } from '../manager/manager-config';
+// import { getAutoRefs } from '../manager/manager-config';
+import { getInterpretedFile } from './interpret-files';
+import { loadManagerOrAddonsFile } from './load-manager-or-addons-file';
+import { serverRequire } from './interpret-require';
 
 // Addons automatically installed when running `sb init` (see baseGenerator.ts)
 export const DEFAULT_ADDONS = ['@storybook/addon-links', '@storybook/addon-essentials'];
@@ -41,8 +42,9 @@ export const getPrebuiltDir = async ({
   if (addons.some((addon: string) => !IGNORED_ADDONS.includes(addon))) return false;
 
   // Auto refs will not be listed in the config, so we have to verify there aren't any
-  const autoRefs = await getAutoRefs({ configDir });
-  if (autoRefs.length > 0) return false;
+  // TODO FIX ME
+  // const autoRefs = await getAutoRefs({ configDir });
+  // if (autoRefs.length > 0) return false;
 
   logger.info('=> Using prebuilt manager');
   return prebuiltDir;

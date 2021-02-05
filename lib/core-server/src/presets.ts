@@ -3,11 +3,18 @@ import { join } from 'path';
 import { logger } from '@storybook/node-logger';
 import resolveFrom from 'resolve-from';
 import { LoadedPreset, PresetConfig, Presets, StorybookConfigOptions } from './types';
-import loadCustomPresets from './common/custom-presets';
+import loadCustomPresets from './presets/custom-presets';
 
 const isObject = (val: unknown): val is Record<string, any> =>
   val != null && typeof val === 'object' && Array.isArray(val) === false;
 const isFunction = (val: unknown): val is Function => typeof val === 'function';
+
+export function filterPresetsConfig(presetsConfig: PresetConfig[]): PresetConfig[] {
+  return presetsConfig.filter((preset) => {
+    const presetName = typeof preset === 'string' ? preset : preset.name;
+    return !/@storybook[\\\\/]preset-typescript/.test(presetName);
+  });
+}
 
 function resolvePresetFunction<T = any>(
   input: T[] | Function,
@@ -263,19 +270,12 @@ function getPresets(
 
 export default getPresets;
 
-function filterPresetsConfig(presetsConfig: PresetConfig[]): PresetConfig[] {
-  return presetsConfig.filter((preset) => {
-    const presetName = typeof preset === 'string' ? preset : preset.name;
-    return !/@storybook[\\\\/]preset-typescript/.test(presetName);
-  });
-}
-
 export function loadAllPresets(options: any) {
   const { corePresets = [], frameworkPresets = [], overridePresets = [], ...restOptions } = options;
 
   const presetsConfig: PresetConfig[] = [
     ...corePresets,
-    require.resolve('./common/babel-cache-preset'),
+    require.resolve('./presets/babel-cache-preset'),
     ...frameworkPresets,
     ...loadCustomPresets(options),
     ...overridePresets,
