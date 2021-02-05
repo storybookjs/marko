@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Core/OnPush Class-specified component with OnPush and Knobs 1`] = `
+exports[`Storyshots Other/OnPush Class-specified component with OnPush and Knobs 1`] = `
 <storybook-wrapper>
   <storybook-on-push-box
     ng-reflect-bg-color="#FFF000"
