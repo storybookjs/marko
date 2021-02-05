@@ -1,10 +1,11 @@
+/* eslint-disable import/extensions, import/no-unresolved */
 import { withTests } from '@storybook/addon-jest';
 
-import { AppComponent } from '../app/app.component';
-import * as results from '../../addon-jest.testresults.json';
+import { AppComponent } from '../../../app/app.component';
+import * as results from '../../../../addon-jest.testresults.json';
 
 export default {
-  title: 'Addon/Jest',
+  title: 'Addons/Jest',
   component: AppComponent,
   decorators: [
     withTests({

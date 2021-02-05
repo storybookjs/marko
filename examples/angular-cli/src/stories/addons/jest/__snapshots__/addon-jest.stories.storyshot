@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Addon/Jest app.component with jest tests 1`] = `
+exports[`Storyshots Addons/Jest app.component with jest tests 1`] = `
 <storybook-wrapper>
   <storybook-app-root>
     <div
