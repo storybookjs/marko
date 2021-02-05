@@ -3,7 +3,7 @@ import { Button } from '@storybook/angular/demo';
 
 export default {
   component: Button,
-  title: 'Addon/Actions',
+  title: 'Addons/Actions',
 };
 
 export const ActionOnly = () => ({
