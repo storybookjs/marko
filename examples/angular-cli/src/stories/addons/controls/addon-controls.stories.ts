@@ -1,8 +1,8 @@
-import { Meta, Story } from '@storybook/angular/types-6-0';
-import { DocButtonComponent, ISomeInterface } from './addons/docs/doc-button/doc-button.component';
+import { Story, Meta } from '@storybook/angular';
+import { DocButtonComponent, ISomeInterface } from '../docs/doc-button/doc-button.component';
 
 export default {
-  title: 'Addon/Controls',
+  title: 'Addons/Controls',
   component: DocButtonComponent,
 } as Meta;
 
