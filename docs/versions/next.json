@@ -1,1 +1,1 @@
-{"version":"6.2.0-alpha.22","info":{"plain":"### Bug Fixes\n\n- CLI: Fix opening localhost in browser by default ([#13812](https://github.com/storybookjs/storybook/pull/13812))"}}
+{"version":"6.2.0-alpha.23","info":{"plain":"### Bug Fixes\n\n* Addon-docs/Vue3: Resolve vue3 package for addon-docs preset ([#13819](https://github.com/storybookjs/storybook/pull/13819))"}}
