@@ -9,9 +9,7 @@ import dedent from 'ts-dedent';
 import { logger } from '@storybook/node-logger';
 
 import { Configuration } from 'webpack';
-import loadPresets from '../presets';
-import loadCustomPresets from '../common/custom-presets';
-import { Presets, PresetsOptions, Ref, StorybookConfigOptions } from '../types';
+import { Ref, StorybookConfigOptions } from '../types';
 
 export const getAutoRefs = async (
   options: { configDir: string },
@@ -73,10 +71,10 @@ const deprecatedDefinedRefDisabled = deprecate(
   `
 );
 
-async function getManagerWebpackConfig(
-  options: StorybookConfigOptions & { presets: Presets },
-  presets: Presets
+export async function getManagerWebpackConfig(
+  options: StorybookConfigOptions
 ): Promise<Configuration> {
+  const { presets } = options;
   const typescriptOptions = await presets.apply('typescript', {}, options);
   const babelOptions = await presets.apply('babel', {}, { ...options, typescriptOptions });
 
@@ -154,23 +152,3 @@ async function getManagerWebpackConfig(
 
   return presets.apply('managerWebpack', {}, { ...options, babelOptions, entries, refs });
 }
-
-const loadConfig: (
-  options: PresetsOptions & StorybookConfigOptions
-) => Promise<Configuration> = async (options: PresetsOptions & StorybookConfigOptions) => {
-  const { corePresets = [], frameworkPresets = [], overridePresets = [], ...restOptions } = options;
-
-  const presetsConfig = [
-    ...corePresets,
-    require.resolve('../common/babel-cache-preset.js'),
-    ...frameworkPresets,
-    ...loadCustomPresets(options),
-    ...overridePresets,
-  ];
-
-  const presets = loadPresets(presetsConfig, restOptions);
-
-  return getManagerWebpackConfig({ ...restOptions, presets }, presets);
-};
-
-export default loadConfig;

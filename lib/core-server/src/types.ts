@@ -66,6 +66,7 @@ export interface StorybookConfigOptions {
   configDir: string;
   cache?: any;
   framework: string;
+  presets?: Presets;
 }
 
 export interface PresetsOptions {

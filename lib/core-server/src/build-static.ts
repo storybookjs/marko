@@ -7,8 +7,8 @@ import webpack, { Configuration } from 'webpack';
 import { logger } from '@storybook/node-logger';
 
 import { getProdCli } from './cli';
-import loadConfig from './preview-config';
-import loadManagerConfig from './manager/manager-config';
+// import loadConfig from './preview-config';
+// import loadManagerConfig from './manager/manager-config';
 import { logConfig } from './utils/log-config';
 import { getPrebuiltDir } from './utils/prebuilt-manager';
 import { parseStaticDir } from './utils/server-statics';
@@ -126,13 +126,14 @@ async function buildManager(configType: any, outputDir: string, configDir: strin
   const managerStartTime = process.hrtime();
 
   logger.info('=> Loading manager config..');
-  const managerConfig = await loadManagerConfig({
-    ...options,
-    configType,
-    outputDir,
-    configDir,
-    corePresets: [require.resolve('./manager/manager-preset.js')],
-  });
+  const managerConfig = null as any;
+  //  await loadManagerConfig({
+  //   ...options,
+  //   configType,
+  //   outputDir,
+  //   configDir,
+  //   corePresets: [require.resolve('./manager/manager-preset.js')],
+  // });
 
   if (options.debugWebpack) {
     logConfig('Manager webpack config', managerConfig);
@@ -148,14 +149,15 @@ async function buildPreview(configType: any, outputDir: string, packageJson: any
   const previewStartTime = process.hrtime();
 
   logger.info('=> Loading preview config..');
-  const previewConfig = await loadConfig({
-    ...options,
-    configType,
-    outputDir,
-    packageJson,
-    corePresets: [require.resolve('./preview/preview-preset.js')],
-    overridePresets: [require.resolve('./preview/custom-webpack-preset.js')],
-  });
+  const previewConfig = null as any;
+  // await loadConfig({
+  //   ...options,
+  //   configType,
+  //   outputDir,
+  //   packageJson,
+  //   corePresets: [require.resolve('./preview/preview-preset.js')],
+  //   overridePresets: [require.resolve('./preview/custom-webpack-preset.js')],
+  // });
 
   if (debugWebpack) {
     logConfig('Preview webpack config', previewConfig);
