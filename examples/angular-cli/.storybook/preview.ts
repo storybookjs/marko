@@ -22,6 +22,11 @@ addParameters({
     inlineStories: true,
     prepareForInline,
   },
+  options: {
+    storySort: {
+      order: ['Welcome'],
+    },
+  },
 });
 
 export const globalTypes = {

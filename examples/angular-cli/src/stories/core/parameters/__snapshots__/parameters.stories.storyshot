@@ -3,17 +3,24 @@
 exports[`Storyshots Core/Parameters passed to story 1`] = `
 <storybook-wrapper>
   <storybook-button-component
-    _nghost-a-c17=""
+    _nghost-a-c14=""
     ng-reflect-text="Parameters are {
     \\"docs\\": {
    "
   >
     <button
-      _ngcontent-a-c17=""
+      _ngcontent-a-c14=""
     >
       Parameters are {
     "docs": {
       "inlineStories": true
+    },
+    "options": {
+      "storySort": {
+        "order": [
+          "Welcome"
+        ]
+      }
     },
     "globalTypes": {
       "theme": {

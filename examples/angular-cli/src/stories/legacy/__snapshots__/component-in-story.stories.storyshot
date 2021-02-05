@@ -3,11 +3,11 @@
 exports[`Storyshots Legacy / Component in Story Basic 1`] = `
 <storybook-wrapper>
   <storybook-button-component
-    _nghost-a-c19=""
+    _nghost-a-c16=""
     ng-reflect-text="Hello Button"
   >
     <button
-      _ngcontent-a-c19=""
+      _ngcontent-a-c16=""
     >
       Hello Button
     </button>
