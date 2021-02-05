@@ -1,5 +1,6 @@
 import { Configuration, Stats } from 'webpack';
 import { TransformOptions } from '@babel/core';
+import { Router } from 'express';
 
 /**
  * ⚠️ This file contains internal WIP types they MUST NOT be exported outside this package for now!
@@ -108,14 +109,9 @@ export interface ReleaseNotesData {
   showOnFirstLaunch: boolean;
 }
 
-export interface PreviewResult {
-  previewStats?: Stats;
-  previewTotalTime?: [number, number];
-}
-
-export interface ManagerResult {
-  managerStats?: Stats;
-  managerTotalTime?: [number, number];
+export interface BuilderResult {
+  stats?: Stats;
+  totalTime?: ReturnType<typeof process.hrtime>;
 }
 
 // TODO: this is a generic interface that we can share across multiple SB packages (like @storybook/cli)
@@ -132,4 +128,24 @@ export interface LoadOptions {
   packageJson: PackageJson;
   framework: string;
   frameworkPresets: string[];
+}
+
+export interface Builder<Config> {
+  getConfig: (options: StorybookConfigOptions) => Promise<Config>;
+  start: (args: {
+    options: StorybookConfigOptions;
+    startTime: ReturnType<typeof process.hrtime>;
+    useProgressReporting: any;
+    router: Router;
+  }) => Promise<{
+    stats: Stats;
+    totalTime: ReturnType<typeof process.hrtime>;
+    bail: (e?: Error) => Promise<void>;
+  }>;
+  build: (arg: {
+    options: StorybookConfigOptions;
+    startTime: ReturnType<typeof process.hrtime>;
+    useProgressReporting: any;
+  }) => Promise<void>;
+  bail: (e?: Error) => Promise<void>;
 }

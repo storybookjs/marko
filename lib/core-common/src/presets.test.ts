@@ -43,7 +43,7 @@ jest.mock('resolve-from', () => (l: any, name: string) => {
 
 describe('presets', () => {
   it('does not throw when there is no preset file', async () => {
-    const getPresets = jest.requireActual('./presets').default;
+    const { getPresets } = jest.requireActual('./presets');
     let presets;
 
     async function testPresets() {
@@ -58,7 +58,7 @@ describe('presets', () => {
   });
 
   it('does not throw when presets are empty', async () => {
-    const getPresets = jest.requireActual('./presets').default;
+    const { getPresets } = jest.requireActual('./presets');
     const presets = wrapPreset(getPresets([]));
 
     async function testPresets() {
@@ -70,7 +70,7 @@ describe('presets', () => {
   });
 
   it('does not throw when preset can not be loaded', async () => {
-    const getPresets = jest.requireActual('./presets').default;
+    const { getPresets } = jest.requireActual('./presets');
     const presets = wrapPreset(getPresets(['preset-foo']));
 
     async function testPresets() {
@@ -103,7 +103,7 @@ describe('presets', () => {
       foo: (exec: string[], options: any) => exec.concat(`valar ${options.custom}`),
     });
 
-    const getPresets = jest.requireActual('./presets').default;
+    const { getPresets } = jest.requireActual('./presets');
     const presets = getPresets(['preset-foo', 'preset-got', 'preset-bar']);
 
     const result = await presets.apply('foo', []);
@@ -123,7 +123,7 @@ describe('presets', () => {
       babel: mockPresetBarExtendBabel,
     });
 
-    const getPresets = jest.requireActual('./presets').default;
+    const { getPresets } = jest.requireActual('./presets');
     const presets = wrapPreset(getPresets(['preset-foo', 'preset-bar'], {}));
 
     async function testPresets() {
@@ -149,7 +149,7 @@ describe('presets', () => {
       babel: mockPresetBarExtendBabel,
     });
 
-    const getPresets = jest.requireActual('./presets').default;
+    const { getPresets } = jest.requireActual('./presets');
     const presets = wrapPreset(getPresets([{ name: 'preset-foo' }, { name: 'preset-bar' }]));
 
     async function testPresets() {
@@ -175,7 +175,7 @@ describe('presets', () => {
       babel: mockPresetBarExtendBabel,
     });
 
-    const getPresets = jest.requireActual('./presets').default;
+    const { getPresets } = jest.requireActual('./presets');
     const presets = wrapPreset(
       getPresets([
         { name: 'preset-foo', options: { foo: 1 } },
@@ -212,7 +212,7 @@ describe('presets', () => {
       babel: mockPresetBarExtendBabel,
     });
 
-    const getPresets = jest.requireActual('./presets').default;
+    const { getPresets } = jest.requireActual('./presets');
     const presets = wrapPreset(
       getPresets([
         'preset-foo',
@@ -254,7 +254,7 @@ describe('presets', () => {
       webpack: mockPresetBarExtendWebpack,
     });
 
-    const getPresets = jest.requireActual('./presets').default;
+    const { getPresets } = jest.requireActual('./presets');
     const presets = wrapPreset(
       getPresets([
         'preset-foo',
@@ -289,7 +289,7 @@ describe('presets', () => {
   });
 
   it('allows for presets to export presets array', async () => {
-    const getPresets = jest.requireActual('./presets').default;
+    const { getPresets } = jest.requireActual('./presets');
     const input = {};
     const mockPresetBar = jest.fn((...args: any[]) => input);
 
@@ -311,7 +311,7 @@ describe('presets', () => {
   });
 
   it('allows for presets to export presets fn', async () => {
-    const getPresets = jest.requireActual('./presets').default;
+    const { getPresets } = jest.requireActual('./presets');
     const input = {};
     const storybookOptions = { a: 1 };
     const presetOptions = { b: 2 };

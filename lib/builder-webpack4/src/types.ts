@@ -5,8 +5,3 @@ export interface PreviewResult {
   previewTotalTime?: [number, number];
   bail: any;
 }
-
-export interface StorybookConfigOptions {
-  // todo
-  [key: string]: any;
-}

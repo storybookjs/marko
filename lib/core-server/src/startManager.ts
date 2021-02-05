@@ -3,11 +3,11 @@ import express from 'express';
 import { pathExists } from 'fs-extra';
 import webpack, { Stats } from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
-import { ManagerResult } from './types';
+import { BuilderResult } from './types';
 import { useManagerCache, clearManagerCache } from './utils/manager-cache';
 import { router } from './dev-server';
 
-export const startManager = async ({ startTime, options, config }: any): Promise<ManagerResult> => {
+export const startManager = async ({ startTime, options, config }: any): Promise<BuilderResult> => {
   if (!config) {
     return {};
   }
@@ -52,14 +52,14 @@ export const startManager = async ({ startTime, options, config }: any): Promise
 
   router.use(middleware);
 
-  const managerStats: Stats = await new Promise((resolve) => middleware.waitUntilValid(resolve));
-  if (!managerStats) {
+  const stats: Stats = await new Promise((resolve) => middleware.waitUntilValid(resolve));
+  if (!stats) {
     await clearManagerCache(options.cache);
     throw new Error('no stats after building manager');
   }
-  if (managerStats.hasErrors()) {
+  if (stats.hasErrors()) {
     await clearManagerCache(options.cache);
-    throw managerStats;
+    throw stats;
   }
-  return { managerStats, managerTotalTime: process.hrtime(startTime) };
+  return { stats, totalTime: process.hrtime(startTime) };
 };

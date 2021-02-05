@@ -1,4 +1,4 @@
-import { filterPresetsConfig } from './config';
+import { filterPresetsConfig } from './presets';
 
 describe('filterPresetsConfig', () => {
   it('string config', () => {

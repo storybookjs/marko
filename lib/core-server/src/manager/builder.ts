@@ -1,6 +1,5 @@
 import webpack, { Stats, Configuration } from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
 import { logger } from '@storybook/node-logger';
 import { Builder } from '@storybook/core-common';
 
@@ -18,7 +17,7 @@ export const getConfig: WebpackBuilder['getConfig'] = async (options) => {
   const frameworkOptions = await presets.apply(`${options.framework}Options`, {}, options);
 
   return presets.apply(
-    'webpack',
+    'managerWebpack',
     {},
     {
       ...options,
@@ -50,7 +49,6 @@ export const start: WebpackBuilder['start'] = async ({
   compilation = webpackDevMiddleware(compiler, middlewareOptions);
 
   router.use(compilation);
-  router.use(webpackHotMiddleware(compiler));
 
   const stats = await new Promise<Stats>((ready, stop) => {
     compilation.waitUntilValid(ready);

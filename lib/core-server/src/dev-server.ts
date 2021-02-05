@@ -1,56 +1,30 @@
-import { logger } from '@storybook/node-logger';
-import open from 'better-opn';
 import express, { Router } from 'express';
 import path from 'path';
-import prettyTime from 'pretty-hrtime';
-import dedent from 'ts-dedent';
-import Cache from 'file-system-cache';
 
 import {
   getInterpretedFile,
   logConfig,
   resolvePathInStorybookCache,
   serverRequire,
+  loadAllPresets,
 } from '@storybook/core-common';
 import { getMiddleware } from './utils/middleware';
 import { getManagerWebpackConfig } from './manager/manager-config';
 
 import { getPrebuiltDir } from './utils/prebuilt-manager';
-import { loadAllPresets } from './presets';
 import { getServerAddresses } from './utils/server-address';
 import { getServer } from './utils/server-init';
 import { useStatics } from './utils/server-statics';
 import { startManager } from './startManager';
 
 import { useProgressReporting } from './utils/progress-reporting';
+import { cache } from './utils/cache';
+import { openInBrowser } from './utils/open-in-browser';
 
 export const defaultFavIcon = require.resolve('./public/favicon.ico');
 
-const cache = Cache({
-  basePath: resolvePathInStorybookCache('dev-server'),
-  ns: 'storybook', // Optional. A grouping namespace for items.
-});
-
-function openInBrowser(address: string) {
-  try {
-    open(address);
-  } catch (error) {
-    logger.error(dedent`
-      Could not open ${address} inside a browser. If you're running this command inside a
-      docker container or on a CI, you need to pass the '--ci' flag to prevent opening a
-      browser by default.
-    `);
-  }
-}
-
 // @ts-ignore
 export const router: Router = new Router();
-
-export const printDuration = (startTime: [number, number]) =>
-  prettyTime(process.hrtime(startTime))
-    .replace(' ms', ' milliseconds')
-    .replace(' s', ' seconds')
-    .replace(' m', ' minutes');
 
 export async function storybookDevServer(options: any) {
   const app = express();
@@ -107,6 +81,7 @@ export async function storybookDevServer(options: any) {
       require.resolve('./presets/common-preset.js'),
       require.resolve('./presets/manager-preset.js'),
       ...previewBuilder.corePresets,
+      require.resolve('./presets/babel-cache-preset'),
     ],
     overridePresets: previewBuilder.overridePresets,
     ...options,
@@ -158,5 +133,5 @@ export async function storybookDevServer(options: any) {
   // TODO #13083 Remove this when compiling the preview is fast enough
   if (!options.ci && !options.smokeTest) openInBrowser(networkAddress);
 
-  return { ...previewResult, ...managerResult, address, networkAddress };
+  return { previewResult, managerResult, address, networkAddress };
 }

@@ -2,12 +2,14 @@ import webpack, { Stats, Configuration } from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { logger } from '@storybook/node-logger';
-import { PreviewResult, StorybookConfigOptions } from './types';
+import { Builder } from '@storybook/core-common';
 
-let previewProcess: ReturnType<typeof webpackDevMiddleware>;
-let previewReject: (reason?: any) => void;
+let compilation: ReturnType<typeof webpackDevMiddleware>;
+let reject: (reason?: any) => void;
 
-export async function getConfig(options: StorybookConfigOptions): Promise<Configuration> {
+type WebpackBuilder = Builder<Configuration>;
+
+export const getConfig: WebpackBuilder['getConfig'] = async (options) => {
   const { presets } = options;
   const typescriptOptions = await presets.apply('typescript', {}, options);
   const babelOptions = await presets.apply('babel', {}, { ...options, typescriptOptions });
@@ -27,54 +29,56 @@ export async function getConfig(options: StorybookConfigOptions): Promise<Config
       [`${options.framework}Options`]: frameworkOptions,
     }
   );
-}
+};
 
-export const start = async ({
+export const start: WebpackBuilder['start'] = async ({
   startTime,
   options,
   useProgressReporting,
   router,
-}: any): Promise<PreviewResult> => {
-  const previewConfig = await getConfig(options);
-
-  console.log({ previewConfig });
-
-  const compiler = webpack(previewConfig);
+}) => {
+  const config = await getConfig(options);
+  const compiler = webpack(config);
 
   await useProgressReporting(compiler, options, startTime);
 
   const middlewareOptions: Parameters<typeof webpackDevMiddleware>[1] = {
-    publicPath: previewConfig.output?.publicPath as string,
+    publicPath: config.output?.publicPath as string,
     writeToDisk: true,
   };
-  previewProcess = webpackDevMiddleware(compiler, middlewareOptions);
 
-  router.use(previewProcess as any);
+  compilation = webpackDevMiddleware(compiler, middlewareOptions);
+
+  router.use(compilation);
   router.use(webpackHotMiddleware(compiler));
 
-  const previewStats: Stats = await new Promise((resolve, reject) => {
-    previewProcess.waitUntilValid(resolve);
-    previewReject = reject;
+  const stats = await new Promise<Stats>((ready, stop) => {
+    compilation.waitUntilValid(ready);
+    reject = stop;
   });
-  if (!previewStats) {
+
+  if (!stats) {
     throw new Error('no stats after building preview');
   }
-  if (previewStats.hasErrors()) {
-    throw previewStats;
+
+  if (stats.hasErrors()) {
+    throw stats;
   }
 
   return {
     bail,
-    previewStats,
-    previewTotalTime: process.hrtime(startTime),
+    stats,
+    totalTime: process.hrtime(startTime),
   };
 };
 
-export const bail = (e: Error) => {
-  if (previewReject) previewReject();
-  if (previewProcess) {
+export const bail: WebpackBuilder['bail'] = (e: Error) => {
+  if (reject) {
+    reject();
+  }
+  if (process) {
     try {
-      previewProcess.close();
+      compilation.close();
       logger.warn('Force closed preview build');
     } catch (err) {
       logger.warn('Unable to close preview build!');
@@ -83,7 +87,7 @@ export const bail = (e: Error) => {
   throw e;
 };
 
-export const build = async () => {
+export const build: WebpackBuilder['build'] = async (options) => {
   console.log('TODO');
 };
 

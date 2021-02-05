@@ -3,7 +3,6 @@ import cpy from 'cpy';
 import fs from 'fs-extra';
 import path from 'path';
 import webpack, { Configuration } from 'webpack';
-import Cache from 'file-system-cache';
 
 import { logger } from '@storybook/node-logger';
 
@@ -12,20 +11,16 @@ import {
   getInterpretedFile,
   serverRequire,
   resolvePathInStorybookCache,
+  loadAllPresets,
 } from '@storybook/core-common';
 import { getProdCli } from './cli';
 // import loadConfig from './preview-config';
 // import loadManagerConfig from './manager/manager-config';
 import { getPrebuiltDir } from './utils/prebuilt-manager';
 import { parseStaticDir } from './utils/server-statics';
-import { loadAllPresets } from './presets';
-import { getPreviewWebpackConfig } from './preview-config';
+// import { getPreviewWebpackConfig } from './preview-config';
 import { useProgressReporting } from './utils/progress-reporting';
-
-const cache = Cache({
-  basePath: resolvePathInStorybookCache('dev-server'),
-  ns: 'storybook', // Optional. A grouping namespace for items.
-});
+import { cache } from './utils/cache';
 
 async function compileManager(managerConfig: Configuration, managerStartTime: [number, number]) {
   logger.info('=> Compiling manager..');
@@ -214,6 +209,7 @@ export async function buildStaticStandalone(options: any) {
       require.resolve('./presets/common-preset.js'),
       require.resolve('./presets/manager-preset.js'),
       ...previewBuilder.corePresets,
+      require.resolve('./presets/babel-cache-preset'),
     ],
     overridePresets: previewBuilder.overridePresets,
     ...options,
@@ -237,15 +233,15 @@ export async function buildStaticStandalone(options: any) {
   if (options.managerOnly) {
     logger.info(`=> Not building preview`);
   } else {
-    const previewConfig = await getPreviewWebpackConfig(fullOptions);
+    // const previewConfig = await getPreviewWebpackConfig(fullOptions);
     const startTime = process.hrtime();
 
-    await previewBuilder.build({
-      startTime,
-      options: fullOptions,
-      useProgressReporting,
-      config: previewConfig,
-    });
+    // await previewBuilder.build({
+    //   startTime,
+    //   options: fullOptions,
+    //   useProgressReporting,
+    //   config: previewConfig,
+    // });
   }
 
   logger.info(`=> Output directory: ${outputDir}`);

@@ -3,7 +3,7 @@ import { join } from 'path';
 import { logger } from '@storybook/node-logger';
 import resolveFrom from 'resolve-from';
 import { LoadedPreset, PresetConfig, Presets, StorybookConfigOptions } from './types';
-import loadCustomPresets from './presets/custom-presets';
+import { loadCustomPresets } from './utils/load-custom-presets';
 
 const isObject = (val: unknown): val is Record<string, any> =>
   val != null && typeof val === 'object' && Array.isArray(val) === false;
@@ -255,7 +255,7 @@ function applyPresets(
   }, presetResult);
 }
 
-function getPresets(
+export function getPresets(
   presets: PresetConfig[],
   // @ts-ignore
   storybookOptions: StorybookConfigOptions = {}
@@ -268,14 +268,11 @@ function getPresets(
   };
 }
 
-export default getPresets;
-
 export function loadAllPresets(options: any) {
   const { corePresets = [], frameworkPresets = [], overridePresets = [], ...restOptions } = options;
 
   const presetsConfig: PresetConfig[] = [
     ...corePresets,
-    require.resolve('./presets/babel-cache-preset'),
     ...frameworkPresets,
     ...loadCustomPresets(options),
     ...overridePresets,

@@ -1,7 +1,10 @@
 import chalk from 'chalk';
 import { logger } from '@storybook/node-logger';
 import { Stats } from 'webpack';
-import { writeStats } from '../build-dev';
+
+import fs from 'fs-extra';
+
+import { resolvePathInStorybookCache } from '@storybook/core-common';
 
 export async function outputStats(previewStats: Stats, managerStats: Stats) {
   if (previewStats) {
@@ -13,3 +16,9 @@ export async function outputStats(previewStats: Stats, managerStats: Stats) {
     logger.info(`=> manager stats written to ${chalk.cyan(filePath)}`);
   }
 }
+
+export const writeStats = async (name: string, stats: Stats) => {
+  const filePath = resolvePathInStorybookCache(`public/${name}-stats.json`);
+  await fs.writeFile(filePath, JSON.stringify(stats.toJson(), null, 2), 'utf8');
+  return filePath;
+};

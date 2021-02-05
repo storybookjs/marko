@@ -6,13 +6,10 @@ import {
   PresetsOptions,
   PresetConfig,
   Ref,
-  PreviewResult,
-  ManagerResult,
   PackageJson,
   LoadOptions,
+  BuilderResult,
 } from '@storybook/core-common';
-
-// TODO: ManagerResult & PreviewResults should be 1 type
 
 export {
   Presets,
@@ -22,8 +19,7 @@ export {
   PresetsOptions,
   PresetConfig,
   Ref,
-  PreviewResult,
-  ManagerResult,
+  BuilderResult,
   PackageJson,
   LoadOptions,
 };

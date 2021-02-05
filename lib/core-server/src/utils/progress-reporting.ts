@@ -1,5 +1,6 @@
 import { Compiler, ProgressPlugin } from 'webpack';
-import { router, printDuration } from '../dev-server';
+import { router } from '../dev-server';
+import { printDuration } from './print-duration';
 
 export const useProgressReporting = async (
   compiler: Compiler,
