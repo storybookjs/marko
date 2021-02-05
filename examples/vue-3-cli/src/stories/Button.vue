@@ -2,7 +2,7 @@
   <button type="button" :class="classes" @click="onClick" :style="style">{{ label }}</button>
 </template>
 
-<script>
+<script lang="typescript">
 import './button.css';
 import { reactive, computed } from 'vue';
 
@@ -32,7 +32,7 @@ export default {
 
   emits: ['click'],
 
-  setup(props, { emit }) {
+  setup(props: any, { emit }: any) {
     props = reactive(props);
     return {
       classes: computed(() => ({

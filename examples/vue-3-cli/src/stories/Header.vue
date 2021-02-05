@@ -29,7 +29,7 @@
   </header>
 </template>
 
-<script>
+<script lang="typescript">
 import './header.css';
 import MyButton from './Button.vue';
 
