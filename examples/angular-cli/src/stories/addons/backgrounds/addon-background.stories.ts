@@ -1,15 +1,10 @@
-import { moduleMetadata, storiesOf } from '@storybook/angular';
+import { Story, Meta } from '@storybook/angular';
 import { Button } from '@storybook/angular/demo';
-import { AppComponent } from '../../../app/app.component';
 
-storiesOf('Addons/Backgrounds', module)
-  .addDecorator(
-    moduleMetadata({
-      declarations: [Button],
-    })
-  )
-  .addParameters({
-    component: AppComponent,
+export default {
+  title: 'Addons / Backgrounds',
+  component: Button,
+  parameters: {
     backgrounds: {
       default: 'twitter',
       values: [
@@ -17,17 +12,27 @@ storiesOf('Addons/Backgrounds', module)
         { name: 'facebook', value: '#3b5998' },
       ],
     },
-  })
-  .add('background component', () => ({
-    props: {},
-  }))
-  .add('background template', () => ({
-    template: `<storybook-button-component [text]="text" (onClick)="onClick($event)"></storybook-button-component>`,
-    props: {
-      text: 'Hello Button',
-      onClick: (event: Event) => {
-        console.log('some bindings work');
-        console.log(event);
-      },
-    },
-  }));
+  },
+} as Meta;
+
+export const WithComponent: Story = () => ({
+  props: { text: 'Button' },
+});
+
+export const WithTemplate: Story = () => ({
+  template: `<storybook-button-component [text]="text" (onClick)="onClick($event)"></storybook-button-component>`,
+  props: { text: 'Button' },
+});
+
+export const Overridden = () => ({
+  props: { text: 'This one should have different backgrounds' },
+});
+Overridden.parameters = {
+  backgrounds: {
+    default: 'pink',
+    values: [
+      { name: 'pink', value: 'hotpink' },
+      { name: 'blue', value: 'deepskyblue' },
+    ],
+  },
+};

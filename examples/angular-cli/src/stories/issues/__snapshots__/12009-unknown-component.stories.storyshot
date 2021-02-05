@@ -3,11 +3,11 @@
 exports[`Storyshots Addon/Issues/12009 unknown component Basic 1`] = `
 <storybook-wrapper>
   <storybook-button-component
-    _nghost-a-c20=""
+    _nghost-a-c22=""
     ng-reflect-text="Unknown component"
   >
     <button
-      _ngcontent-a-c20=""
+      _ngcontent-a-c22=""
     >
       Unknown component
     </button>
