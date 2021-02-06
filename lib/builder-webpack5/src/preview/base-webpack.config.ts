@@ -2,8 +2,10 @@ import autoprefixer from 'autoprefixer';
 import findUp from 'find-up';
 import path from 'path';
 import { logger } from '@storybook/node-logger';
+import { Options } from '@storybook/core-common';
 import deprecate from 'util-deprecate';
 import dedent from 'ts-dedent';
+import { Configuration } from 'webpack';
 
 const warnImplicitPostcssPlugins = deprecate(
   () => ({
@@ -53,19 +55,21 @@ const warnGetPostcssOptions = deprecate(
 );
 
 export async function createDefaultWebpackConfig(
-  storybookBaseConfig: any,
-  options: { presetsList: any[] }
+  storybookBaseConfig: Configuration,
+  options: Options
 ) {
   if (
     options.presetsList.some((preset) =>
-      /@storybook(\/|\\)preset-create-react-app/.test(preset.name || preset)
+      /@storybook(\/|\\)preset-create-react-app/.test(
+        typeof preset === 'string' ? preset : preset.name
+      )
     )
   ) {
     return storybookBaseConfig;
   }
 
   const hasPostcssAddon = options.presetsList.some((preset) =>
-    /@storybook(\/|\\)addon-postcss/.test(preset.name || preset)
+    /@storybook(\/|\\)addon-postcss/.test(typeof preset === 'string' ? preset : preset.name)
   );
 
   let cssLoaders = {};

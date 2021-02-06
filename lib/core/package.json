@@ -38,31 +38,13 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.20",
-    "@storybook/channel-postmessage": "6.2.0-alpha.20",
-    "@storybook/client-api": "6.2.0-alpha.20",
-    "@storybook/client-logger": "6.2.0-alpha.20",
     "@storybook/core-client": "6.2.0-alpha.20",
-    "@storybook/core-events": "6.2.0-alpha.20",
     "@storybook/core-server": "6.2.0-alpha.20",
-    "@storybook/csf": "0.0.1",
-    "@storybook/ui": "6.2.0-alpha.20",
-    "ansi-to-html": "^0.6.11",
-    "core-js": "^3.8.2",
-    "fork-ts-checker-webpack-plugin": "^6.0.4",
-    "global": "^4.4.0",
-    "qs": "^6.9.5",
-    "regenerator-runtime": "^0.13.7",
-    "ts-dedent": "^2.0.0",
-    "unfetch": "^4.2.0",
-    "util-deprecate": "^1.0.2"
+    "fork-ts-checker-webpack-plugin": "^6.0.4"
   },
   "peerDependencies": {
     "@storybook/builder-webpack4": "6.2.0-alpha.20",
-    "@storybook/builder-webpack5": "6.2.0-alpha.20",
-    "react": "^16.8.0 || ^17.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0",
-    "webpack": "*"
+    "@storybook/builder-webpack5": "6.2.0-alpha.20"
   },
   "peerDependenciesMeta": {
     "@storybook/builder-webpack4": {

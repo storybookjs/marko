@@ -155,6 +155,7 @@ export interface BuilderOptions {
 
 export interface StorybookConfigOptions {
   presets: Presets;
+  presetsList: PresetConfig[];
 }
 
 export type Options = LoadOptions & StorybookConfigOptions & CLIOptions & BuilderOptions;

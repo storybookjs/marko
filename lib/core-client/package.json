@@ -44,7 +44,6 @@
     "@storybook/client-logger": "6.2.0-alpha.20",
     "@storybook/core-events": "6.2.0-alpha.20",
     "@storybook/csf": "0.0.1",
-    "@storybook/builder-webpack5": "6.2.0-alpha.20",
     "@storybook/ui": "6.2.0-alpha.20",
     "ansi-to-html": "^0.6.11",
     "core-js": "^3.8.2",
