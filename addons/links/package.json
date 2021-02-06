@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-links",
-  "version": "6.2.0-alpha.23",
+  "version": "6.2.0-alpha.24",
   "description": "Link stories together to build demos and prototypes with your UI components",
   "keywords": [
     "addon",
@@ -36,11 +36,11 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.23",
-    "@storybook/client-logger": "6.2.0-alpha.23",
-    "@storybook/core-events": "6.2.0-alpha.23",
+    "@storybook/addons": "6.2.0-alpha.24",
+    "@storybook/client-logger": "6.2.0-alpha.24",
+    "@storybook/core-events": "6.2.0-alpha.24",
     "@storybook/csf": "0.0.1",
-    "@storybook/router": "6.2.0-alpha.23",
+    "@storybook/router": "6.2.0-alpha.24",
     "@types/qs": "^6.9.5",
     "core-js": "^3.8.2",
     "global": "^4.4.0",
