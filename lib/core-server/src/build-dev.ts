@@ -1,5 +1,5 @@
 import { logger, instance as npmLog } from '@storybook/node-logger';
-import { CLIOptions, PackageJson, LoadOptions, RenamedOptions } from '@storybook/core-common';
+import { CLIOptions, LoadOptions, RenamedOptions } from '@storybook/core-common';
 import dedent from 'ts-dedent';
 import prompts from 'prompts';
 
@@ -101,10 +101,7 @@ export async function buildDevStandalone(options: CLIOptions & LoadOptions & Ren
   }
 }
 
-export async function buildDev({
-  packageJson,
-  ...loadOptions
-}: { packageJson: PackageJson } & LoadOptions) {
+export async function buildDev({ packageJson, ...loadOptions }: LoadOptions) {
   const cliOptions = await getDevCli(packageJson);
 
   await buildDevStandalone({

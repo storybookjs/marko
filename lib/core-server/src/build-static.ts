@@ -11,15 +11,17 @@ import {
   getInterpretedFile,
   serverRequire,
   loadAllPresets,
+  LoadOptions,
+  CLIOptions,
+  RenamedOptions,
 } from '@storybook/core-common';
+import * as managerBuilder from './manager/builder';
+
 import { getProdCli } from './cli';
-// import loadConfig from './preview-config';
-// import loadManagerConfig from './manager/manager-config';
 import { getPrebuiltDir } from './utils/prebuilt-manager';
-import { parseStaticDir } from './utils/server-statics';
-// import { getPreviewWebpackConfig } from './preview-config';
 import { useProgressReporting } from './utils/progress-reporting';
 import { cache } from './utils/cache';
+import { copyAllStaticFiles } from './utils/copy-all-static-files';
 
 async function compileManager(managerConfig: Configuration, managerStartTime: [number, number]) {
   logger.info('=> Compiling manager..');
@@ -108,27 +110,6 @@ async function compilePreview(previewConfig: Configuration, previewStartTime: [n
   });
 }
 
-async function copyAllStaticFiles(staticDirs: any[] | undefined, outputDir: string) {
-  if (staticDirs && staticDirs.length > 0) {
-    await Promise.all(
-      staticDirs.map(async (dir) => {
-        try {
-          const { staticDir, staticPath, targetDir } = await parseStaticDir(dir);
-          const targetPath = path.join(outputDir, targetDir);
-          logger.info(chalk`=> Copying static files: {cyan ${staticDir}} => {cyan ${targetDir}}`);
-
-          // Storybook's own files should not be overwritten, so we skip such files if we find them
-          const skipPaths = ['index.html', 'iframe.html'].map((f) => path.join(targetPath, f));
-          await fs.copy(staticPath, targetPath, { filter: (_, dest) => !skipPaths.includes(dest) });
-        } catch (e) {
-          logger.error(e.message);
-          process.exit(-1);
-        }
-      })
-    );
-  }
-}
-
 async function buildManager(configType: any, outputDir: string, configDir: string, options: any) {
   logger.info('=> Building manager..');
   const managerStartTime = process.hrtime();
@@ -178,22 +159,25 @@ async function buildPreview(configType: any, outputDir: string, packageJson: any
   return compilePreview(previewConfig, previewStartTime);
 }
 
-export async function buildStaticStandalone(options: any) {
+export async function buildStaticStandalone(options: CLIOptions & LoadOptions & RenamedOptions) {
   const { staticDir, configDir, packageJson } = options;
 
-  const configType = 'PRODUCTION';
-  const outputDir = path.isAbsolute(options.outputDir)
+  /* eslint-disable no-param-reassign */
+  options.outputDir = path.isAbsolute(options.outputDir)
     ? options.outputDir
     : path.join(process.cwd(), options.outputDir);
+  /* eslint-enable no-param-reassign */
 
   const defaultFavIcon = require.resolve('./public/favicon.ico');
 
-  logger.info(chalk`=> Cleaning outputDir: {cyan ${outputDir}}`);
-  if (outputDir === '/') throw new Error("Won't remove directory '/'. Check your outputDir!");
-  await fs.emptyDir(outputDir);
+  logger.info(chalk`=> Cleaning outputDir: {cyan ${options.outputDir}}`);
+  if (options.outputDir === '/') {
+    throw new Error("Won't remove directory '/'. Check your outputDir!");
+  }
+  await fs.emptyDir(options.outputDir);
 
-  await cpy(defaultFavIcon, outputDir);
-  await copyAllStaticFiles(staticDir, outputDir);
+  await cpy(defaultFavIcon, options.outputDir);
+  await copyAllStaticFiles(staticDir, options.outputDir);
 
   const { core } = serverRequire(getInterpretedFile(path.resolve(configDir, 'main')));
   const builder = core?.builder || 'webpack4';
@@ -201,9 +185,6 @@ export async function buildStaticStandalone(options: any) {
   const previewBuilder = await import(`@storybook/builder-${builder}`);
 
   const presets = loadAllPresets({
-    configType,
-    outputDir,
-    cache,
     corePresets: [
       require.resolve('./presets/common-preset.js'),
       require.resolve('./presets/manager-preset.js'),
@@ -215,28 +196,25 @@ export async function buildStaticStandalone(options: any) {
   });
 
   const fullOptions = {
-    configType,
-    outputDir,
-    cache,
     ...options,
     presets,
   };
 
   const prebuiltDir = await getPrebuiltDir(options);
   if (prebuiltDir) {
-    await cpy('**', outputDir, { cwd: prebuiltDir, parents: true });
+    await cpy('**', options.outputDir, { cwd: prebuiltDir, parents: true });
   } else {
-    // await managerBuilder.build({
-    //   startTime,
-    //   options: fullOptions,
-    //   useProgressReporting,
-    // });
+    const startTime = process.hrtime();
+    await managerBuilder.build({
+      startTime,
+      options: fullOptions,
+      useProgressReporting,
+    });
   }
 
   if (options.managerOnly) {
     logger.info(`=> Not building preview`);
   } else {
-    // const previewConfig = await getPreviewWebpackConfig(fullOptions);
     const startTime = process.hrtime();
 
     await previewBuilder.build({
@@ -246,20 +224,22 @@ export async function buildStaticStandalone(options: any) {
     });
   }
 
-  logger.info(`=> Output directory: ${outputDir}`);
+  logger.info(`=> Output directory: ${options.outputDir}`);
 }
 
-export function buildStatic({ packageJson, ...loadOptions }: any) {
-  const cliOptions = getProdCli(packageJson);
+export async function buildStatic({ packageJson, ...loadOptions }: LoadOptions) {
+  const cliOptions = await getProdCli(packageJson);
 
   return buildStaticStandalone({
     ...cliOptions,
     ...loadOptions,
     packageJson,
-    configDir: loadOptions.configDir || cliOptions.configDir || './.storybook',
+    configDir: cliOptions.configDir || './.storybook',
     outputDir: loadOptions.outputDir || cliOptions.outputDir || './storybook-static',
     ignorePreview: !!cliOptions.previewUrl,
     docsMode: !!cliOptions.docs,
+    configType: 'PRODUCTION',
+    cache,
   }).catch((e) => {
     logger.error(e);
     process.exit(1);

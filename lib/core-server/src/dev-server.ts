@@ -21,21 +21,22 @@ import { useStatics } from './utils/server-statics';
 import * as managerBuilder from './manager/builder';
 
 import { useProgressReporting } from './utils/progress-reporting';
-import { cache } from './utils/cache';
 import { openInBrowser } from './utils/open-in-browser';
 
 // @ts-ignore
 export const router: Router = new Router();
 
 export async function storybookDevServer(options: CLIOptions & LoadOptions & RenamedOptions) {
+  const startTime = process.hrtime();
   const app = express();
   const server = await getServer(app, options);
 
-  const configDir = path.resolve(options.configDir);
-  const outputDir = options.smokeTest
+  // eslint-disable-next-line no-param-reassign
+  options.configDir = path.resolve(options.configDir);
+  // eslint-disable-next-line no-param-reassign
+  options.outputDir = options.smokeTest
     ? resolvePathInStorybookCache('public')
     : path.resolve(options.outputDir || resolvePathInStorybookCache('public'));
-  const startTime = process.hrtime();
 
   if (typeof options.extendServer === 'function') {
     options.extendServer(server);
@@ -50,7 +51,7 @@ export async function storybookDevServer(options: CLIOptions & LoadOptions & Ren
   // User's own static files
   await useStatics(router, options);
 
-  getMiddleware(configDir)(router);
+  getMiddleware(options.configDir)(router);
   app.use(router);
 
   const { port, host } = options;
@@ -63,14 +64,12 @@ export async function storybookDevServer(options: CLIOptions & LoadOptions & Ren
     });
   });
 
-  const { core } = serverRequire(getInterpretedFile(path.resolve(configDir, 'main')));
+  const { core } = serverRequire(getInterpretedFile(path.resolve(options.configDir, 'main')));
   const builder = core?.builder || 'webpack4';
 
   const previewBuilder = await import(`@storybook/builder-${builder}`);
 
   const presets = loadAllPresets({
-    outputDir,
-    cache,
     corePresets: [
       require.resolve('./presets/common-preset.js'),
       require.resolve('./presets/manager-preset.js'),
@@ -82,8 +81,6 @@ export async function storybookDevServer(options: CLIOptions & LoadOptions & Ren
   });
 
   const fullOptions: Options = {
-    outputDir,
-    cache,
     ...options,
     presets,
   };

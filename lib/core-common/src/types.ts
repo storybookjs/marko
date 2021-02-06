@@ -106,6 +106,7 @@ export interface LoadOptions {
   packageJson: PackageJson;
   framework: string;
   frameworkPresets: string[];
+  outputDir?: string;
   extendServer?: (server: Server) => void;
 }
 
@@ -116,7 +117,9 @@ export interface ManagerWebpackOptions {
 
 export interface CLIOptions {
   port?: number;
+  managerOnly?: boolean;
   ignorePreview?: boolean;
+  previewUrl?: string;
   host?: string;
   staticDir?: string[];
   configDir?: string;
@@ -136,7 +139,6 @@ export interface CLIOptions {
   docsDll?: boolean;
   uiDll?: boolean;
   debugWebpack?: boolean;
-  previewUrl?: string;
   outputDir?: string;
 }
 
