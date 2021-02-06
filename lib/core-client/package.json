@@ -47,7 +47,6 @@
     "@storybook/ui": "6.2.0-alpha.20",
     "ansi-to-html": "^0.6.11",
     "core-js": "^3.8.2",
-    "fork-ts-checker-webpack-plugin": "^6.0.4",
     "global": "^4.4.0",
     "qs": "^6.9.5",
     "regenerator-runtime": "^0.13.7",
