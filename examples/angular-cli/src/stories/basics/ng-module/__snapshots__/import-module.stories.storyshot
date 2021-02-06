@@ -1,15 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Custom/Feature Module as Context Component with default providers 1`] = `
+exports[`Storyshots Basics / NgModule / Module with multiple component Chip 1`] = `
 <storybook-wrapper>
   <storybook-chip
-    ng-reflect-display-text="My Chip"
+    ng-reflect-display-text="Chip"
     style="background-color: rgb(238, 238, 238);"
   >
     <span
       class="text"
     >
-      My Chíp
+      Chíp
     </span>
     <div
       class="remove"
@@ -24,31 +24,7 @@ exports[`Storyshots Custom/Feature Module as Context Component with default prov
 </storybook-wrapper>
 `;
 
-exports[`Storyshots Custom/Feature Module as Context Component with overridden provider 1`] = `
-<storybook-wrapper>
-  <storybook-chip
-    ng-reflect-display-text="My Chip"
-    style="background-color: yellow;"
-  >
-    <span
-      class="text"
-    >
-      My Chíp
-    </span>
-    <div
-      class="remove"
-    >
-      <span
-        class="x"
-      >
-        ✕
-      </span>
-    </div>
-  </storybook-chip>
-</storybook-wrapper>
-`;
-
-exports[`Storyshots Custom/Feature Module as Context Component with self and dependencies declared in its feature module 1`] = `
+exports[`Storyshots Basics / NgModule / Module with multiple component Chips Group 1`] = `
 <storybook-wrapper>
   <storybook-chips-group
     ng-reflect-chips="[object Object],[object Object"

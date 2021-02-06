@@ -23,7 +23,7 @@ export class ChipsModule {
       providers: [
         {
           provide: CHIP_COLOR,
-          useValue: '#eeeeee',
+          useValue: '#ff5454',
         },
       ],
     };

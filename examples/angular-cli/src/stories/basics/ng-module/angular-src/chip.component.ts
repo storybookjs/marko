@@ -1,12 +1,4 @@
-import {
-  Component,
-  Input,
-  ChangeDetectionStrategy,
-  Output,
-  EventEmitter,
-  Inject,
-  HostBinding,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, HostBinding } from '@angular/core';
 import { CHIP_COLOR } from './chip-color.token';
 
 @Component({
