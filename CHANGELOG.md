@@ -1,3 +1,13 @@
+## 6.2.0-alpha.24 (February 6, 2021)
+
+### Features
+
+* Addon-storyshots: Add support for Vue 3 ([#13828](https://github.com/storybookjs/storybook/pull/13828))
+
+### Maintenance
+
+* CLI: only kill other processes on fail ([#13822](https://github.com/storybookjs/storybook/pull/13822))
+
 ## 6.2.0-alpha.23 (February 5, 2021)
 
 ### Bug Fixes
