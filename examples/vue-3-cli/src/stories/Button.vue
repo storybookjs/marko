@@ -32,7 +32,8 @@ export default {
 
   emits: ['click'],
 
-  setup(props: any, { emit }: any) {
+  // @ts-ignore
+  setup(props, { emit }) {
     props = reactive(props);
     return {
       classes: computed(() => ({
