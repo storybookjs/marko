@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Basics / ModuleMetadata / In stories Individual 1 1`] = `
+exports[`Storyshots Core / ModuleMetadata / In stories Individual 1 1`] = `
 <storybook-wrapper>
   <storybook-simple-token-component
     ng-reflect-name="Prop Name"
@@ -24,7 +24,7 @@ exports[`Storyshots Basics / ModuleMetadata / In stories Individual 1 1`] = `
 </storybook-wrapper>
 `;
 
-exports[`Storyshots Basics / ModuleMetadata / In stories Individual 2 1`] = `
+exports[`Storyshots Core / ModuleMetadata / In stories Individual 2 1`] = `
 <storybook-wrapper>
   <storybook-simple-token-component>
     <h3>

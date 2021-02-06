@@ -3,11 +3,11 @@
 exports[`Storyshots Core / Parameters / Layout Centered 1`] = `
 <storybook-wrapper>
   <storybook-button-component
-    _nghost-a-c19=""
+    _nghost-a-c15=""
     ng-reflect-text="Button"
   >
     <button
-      _ngcontent-a-c19=""
+      _ngcontent-a-c15=""
     >
       Button
     </button>
@@ -16,6 +16,41 @@ exports[`Storyshots Core / Parameters / Layout Centered 1`] = `
 `;
 
 exports[`Storyshots Core / Parameters / Layout Default 1`] = `
+<storybook-wrapper>
+  <storybook-button-component
+    _nghost-a-c13=""
+    ng-reflect-text="Button"
+  >
+    <button
+      _ngcontent-a-c13=""
+    >
+      Button
+    </button>
+  </storybook-button-component>
+</storybook-wrapper>
+`;
+
+exports[`Storyshots Core / Parameters / Layout Fullscreen 1`] = `
+<storybook-wrapper>
+  <div
+    style="background-color: yellow;"
+  >
+    <storybook-button-component
+      _nghost-a-c14=""
+      ng-reflect-text="Button"
+      text="Button"
+    >
+      <button
+        _ngcontent-a-c14=""
+      >
+        Button
+      </button>
+    </storybook-button-component>
+  </div>
+</storybook-wrapper>
+`;
+
+exports[`Storyshots Core / Parameters / Layout None 1`] = `
 <storybook-wrapper>
   <storybook-button-component
     _nghost-a-c17=""
@@ -30,49 +65,14 @@ exports[`Storyshots Core / Parameters / Layout Default 1`] = `
 </storybook-wrapper>
 `;
 
-exports[`Storyshots Core / Parameters / Layout Fullscreen 1`] = `
-<storybook-wrapper>
-  <div
-    style="background-color: yellow;"
-  >
-    <storybook-button-component
-      _nghost-a-c18=""
-      ng-reflect-text="Button"
-      text="Button"
-    >
-      <button
-        _ngcontent-a-c18=""
-      >
-        Button
-      </button>
-    </storybook-button-component>
-  </div>
-</storybook-wrapper>
-`;
-
-exports[`Storyshots Core / Parameters / Layout None 1`] = `
-<storybook-wrapper>
-  <storybook-button-component
-    _nghost-a-c21=""
-    ng-reflect-text="Button"
-  >
-    <button
-      _ngcontent-a-c21=""
-    >
-      Button
-    </button>
-  </storybook-button-component>
-</storybook-wrapper>
-`;
-
 exports[`Storyshots Core / Parameters / Layout Padded 1`] = `
 <storybook-wrapper>
   <storybook-button-component
-    _nghost-a-c20=""
+    _nghost-a-c16=""
     ng-reflect-text="Button"
   >
     <button
-      _ngcontent-a-c20=""
+      _ngcontent-a-c16=""
     >
       Button
     </button>

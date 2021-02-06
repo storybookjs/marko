@@ -1,9 +1,9 @@
-import { moduleMetadata } from '@storybook/angular';
+import { moduleMetadata, Meta, Story } from '@storybook/angular';
 import { TokenComponent, ITEMS, DEFAULT_NAME } from './angular-src/token.component';
 import { CustomPipePipe } from './angular-src/custom.pipe';
 
 export default {
-  title: 'Basics / ModuleMetadata / Merge default and story',
+  title: 'Core / ModuleMetadata / Merge default and story',
   decorators: [
     moduleMetadata({
       declarations: [TokenComponent],
@@ -19,9 +19,9 @@ export default {
       ],
     }),
   ],
-};
+} as Meta;
 
-export const MergeWithDefaultModuleMetadata = () => ({
+export const MergeWithDefaultModuleMetadata: Story = () => ({
   template: `<storybook-simple-token-component [name]="name | customPipe"></storybook-simple-token-component>`,
   props: {
     name: 'Prop Name',

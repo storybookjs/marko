@@ -4,7 +4,7 @@ import { withKnobs, text } from '@storybook/addon-knobs';
 import { Button } from '@storybook/angular/demo';
 
 export default {
-  title: 'Basics / Story host styles',
+  title: 'Core / Story host styles',
   decorators: [
     moduleMetadata({
       declarations: [Button],

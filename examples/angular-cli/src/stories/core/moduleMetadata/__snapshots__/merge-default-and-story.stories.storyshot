@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Basics / ModuleMetadata / Merge default and story Merge with default ModuleMetadata 1`] = `
+exports[`Storyshots Core / ModuleMetadata / Merge default and story Merge with default ModuleMetadata 1`] = `
 <storybook-wrapper>
   <storybook-simple-token-component
     ng-reflect-name="CustomPipe: Prop Name"
