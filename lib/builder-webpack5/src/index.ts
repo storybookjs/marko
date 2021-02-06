@@ -91,8 +91,6 @@ export const build: WebpackBuilder['build'] = async ({ options, startTime }) => 
   logger.info('=> Compiling preview..');
   const config = await getConfig(options);
 
-  console.dir(config, { depth: Infinity });
-
   return new Promise((succeed, fail) => {
     webpack(config).run((error, stats) => {
       if (error || !stats || stats.hasErrors()) {
