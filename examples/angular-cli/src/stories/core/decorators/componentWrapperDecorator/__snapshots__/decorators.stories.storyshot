@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Core / Decorators Angular Legacy Rendering 1`] = `
+exports[`Storyshots Core / Decorators / ComponentWrapperDecorator Angular Legacy Rendering 1`] = `
 <storybook-wrapper>
   Grandparent<br /><div
     style="margin: 3em; border:solid;"
@@ -15,7 +15,7 @@ exports[`Storyshots Core / Decorators Angular Legacy Rendering 1`] = `
 </storybook-wrapper>
 `;
 
-exports[`Storyshots Core / Decorators With Component 1`] = `
+exports[`Storyshots Core / Decorators / ComponentWrapperDecorator With Component 1`] = `
 <storybook-wrapper>
   Grandparent<br /><div
     style="margin: 3em; border:solid;"
@@ -39,7 +39,7 @@ exports[`Storyshots Core / Decorators With Component 1`] = `
 </storybook-wrapper>
 `;
 
-exports[`Storyshots Core / Decorators With Component Wrapper Decorator 1`] = `
+exports[`Storyshots Core / Decorators / ComponentWrapperDecorator With Component Wrapper Decorator 1`] = `
 <storybook-wrapper>
   Grandparent<br /><div
     style="margin: 3em; border:solid;"
@@ -78,7 +78,7 @@ exports[`Storyshots Core / Decorators With Component Wrapper Decorator 1`] = `
 </storybook-wrapper>
 `;
 
-exports[`Storyshots Core / Decorators With Component Wrapper Decorator And Args 1`] = `
+exports[`Storyshots Core / Decorators / ComponentWrapperDecorator With Component Wrapper Decorator And Args 1`] = `
 <storybook-wrapper>
   Grandparent<br /><div
     style="margin: 3em; border:solid;"
@@ -117,7 +117,7 @@ exports[`Storyshots Core / Decorators With Component Wrapper Decorator And Args 
 </storybook-wrapper>
 `;
 
-exports[`Storyshots Core / Decorators With Component Wrapper Decorator And Props 1`] = `
+exports[`Storyshots Core / Decorators / ComponentWrapperDecorator With Component Wrapper Decorator And Props 1`] = `
 <storybook-wrapper>
   Grandparent<br /><div
     style="margin: 3em; border:solid;"
@@ -158,7 +158,7 @@ exports[`Storyshots Core / Decorators With Component Wrapper Decorator And Props
 </storybook-wrapper>
 `;
 
-exports[`Storyshots Core / Decorators With Custom Decorator 1`] = `
+exports[`Storyshots Core / Decorators / ComponentWrapperDecorator With Custom Decorator 1`] = `
 <storybook-wrapper>
   Grandparent<br /><div
     style="margin: 3em; border:solid;"
@@ -173,7 +173,7 @@ exports[`Storyshots Core / Decorators With Custom Decorator 1`] = `
 </storybook-wrapper>
 `;
 
-exports[`Storyshots Core / Decorators With Legacy Component 1`] = `
+exports[`Storyshots Core / Decorators / ComponentWrapperDecorator With Legacy Component 1`] = `
 <storybook-wrapper>
   Grandparent<br /><div
     style="margin: 3em; border:solid;"
@@ -197,7 +197,7 @@ exports[`Storyshots Core / Decorators With Legacy Component 1`] = `
 </storybook-wrapper>
 `;
 
-exports[`Storyshots Core / Decorators With Template 1`] = `
+exports[`Storyshots Core / Decorators / ComponentWrapperDecorator With Template 1`] = `
 <storybook-wrapper>
   Grandparent<br /><div
     style="margin: 3em; border:solid;"

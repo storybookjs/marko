@@ -1,7 +1,7 @@
 import { componentWrapperDecorator, Meta } from '@storybook/angular';
 
 export default {
-  title: 'Core / Theme Decorators',
+  title: 'Core / Decorators / Theme Decorators',
   decorators: [
     componentWrapperDecorator(
       (story) => `<div [class]="myTheme">${story}</div>`,

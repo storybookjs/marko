@@ -5,7 +5,7 @@ import ChildComponent from './child.component';
 import ParentComponent from './parent.component';
 
 export default {
-  title: 'Core / Decorators',
+  title: 'Core / Decorators / ComponentWrapperDecorator',
   component: ChildComponent,
   decorators: [
     componentWrapperDecorator(
