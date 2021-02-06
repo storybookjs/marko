@@ -3,8 +3,8 @@ import chalk from 'chalk';
 import { colors } from '@storybook/node-logger';
 import semver from '@storybook/semver';
 import dedent from 'ts-dedent';
+import { VersionCheck } from '@storybook/core-common';
 import { cache } from './cache';
-import { VersionCheck } from '../types';
 
 const { STORYBOOK_VERSION_BASE = 'https://storybook.js.org' } = process.env;
 

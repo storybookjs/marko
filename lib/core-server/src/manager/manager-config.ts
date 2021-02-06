@@ -9,7 +9,7 @@ import dedent from 'ts-dedent';
 import { logger } from '@storybook/node-logger';
 
 import { Configuration } from 'webpack';
-import { Ref, Options } from '../types';
+import { Ref, Options } from '@storybook/core-common';
 
 export const getAutoRefs = async (
   options: Options,

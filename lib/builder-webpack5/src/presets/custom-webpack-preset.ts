@@ -1,6 +1,6 @@
 import { logger } from '@storybook/node-logger';
 import { loadCustomWebpackConfig, Options } from '@storybook/core-common';
-import { Configuration } from 'webpack';
+import type { Configuration } from 'webpack';
 import deprecate from 'util-deprecate';
 import dedent from 'ts-dedent';
 import { createDefaultWebpackConfig } from '../preview/base-webpack.config';

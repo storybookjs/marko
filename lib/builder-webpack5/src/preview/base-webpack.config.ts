@@ -2,10 +2,10 @@ import autoprefixer from 'autoprefixer';
 import findUp from 'find-up';
 import path from 'path';
 import { logger } from '@storybook/node-logger';
-import { Options } from '@storybook/core-common';
+import type { Options } from '@storybook/core-common';
 import deprecate from 'util-deprecate';
 import dedent from 'ts-dedent';
-import { Configuration } from 'webpack';
+import type { Configuration } from 'webpack';
 
 const warnImplicitPostcssPlugins = deprecate(
   () => ({
@@ -57,7 +57,7 @@ const warnGetPostcssOptions = deprecate(
 export async function createDefaultWebpackConfig(
   storybookBaseConfig: Configuration,
   options: Options
-) {
+): Promise<Configuration> {
   if (
     options.presetsList.some((preset) =>
       /@storybook(\/|\\)preset-create-react-app/.test(
