@@ -1,6 +1,6 @@
 import path from 'path';
 import fse from 'fs-extra';
-import { DefinePlugin, HotModuleReplacementPlugin, ProgressPlugin } from 'webpack';
+import { Configuration, DefinePlugin, HotModuleReplacementPlugin, ProgressPlugin } from 'webpack';
 import Dotenv from 'dotenv-webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
@@ -60,7 +60,7 @@ export default async ({
   frameworkPath,
   presets,
   typescriptOptions,
-}: any) => {
+}: any): Promise<Configuration> => {
   const logLevel = await presets.apply('logLevel', undefined);
   const frameworkOptions = await presets.apply(`${framework}Options`, {});
 
@@ -189,7 +189,7 @@ export default async ({
     resolve: {
       extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx', '.json', '.cjs'],
       modules: ['node_modules'].concat((raw.NODE_PATH as string[]) || []),
-      mainFields: isProd ? undefined : ['browser', 'main'],
+      mainFields: ['browser', 'main'],
       alias: {
         ...themingPaths,
         ...storybookPaths,

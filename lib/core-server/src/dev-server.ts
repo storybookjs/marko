@@ -1,17 +1,6 @@
 import express, { Router } from 'express';
-import path from 'path';
 
-import {
-  getInterpretedFile,
-  logConfig,
-  resolvePathInStorybookCache,
-  serverRequire,
-  loadAllPresets,
-  CLIOptions,
-  LoadOptions,
-  Options,
-  RenamedOptions,
-} from '@storybook/core-common';
+import { logConfig, Options } from '@storybook/core-common';
 
 import { getMiddleware } from './utils/middleware';
 import { getServerAddresses } from './utils/server-address';
@@ -22,21 +11,15 @@ import * as managerBuilder from './manager/builder';
 
 import { useProgressReporting } from './utils/progress-reporting';
 import { openInBrowser } from './utils/open-in-browser';
+import { getPreviewBuilder } from './utils/get-preview-builder';
 
 // @ts-ignore
 export const router: Router = new Router();
 
-export async function storybookDevServer(options: CLIOptions & LoadOptions & RenamedOptions) {
+export async function storybookDevServer(options: Options) {
   const startTime = process.hrtime();
   const app = express();
   const server = await getServer(app, options);
-
-  // eslint-disable-next-line no-param-reassign
-  options.configDir = path.resolve(options.configDir);
-  // eslint-disable-next-line no-param-reassign
-  options.outputDir = options.smokeTest
-    ? resolvePathInStorybookCache('public')
-    : path.resolve(options.outputDir || resolvePathInStorybookCache('public'));
 
   if (typeof options.extendServer === 'function') {
     options.extendServer(server);
@@ -64,49 +47,25 @@ export async function storybookDevServer(options: CLIOptions & LoadOptions & Ren
     });
   });
 
-  const { core } = serverRequire(getInterpretedFile(path.resolve(options.configDir, 'main')));
-  const builder = core?.builder || 'webpack4';
-
-  const previewBuilder = await import(`@storybook/builder-${builder}`);
-
-  const presets = loadAllPresets({
-    corePresets: [
-      require.resolve('./presets/common-preset.js'),
-      require.resolve('./presets/manager-preset.js'),
-      ...previewBuilder.corePresets,
-      require.resolve('./presets/babel-cache-preset'),
-    ],
-    overridePresets: previewBuilder.overridePresets,
-    ...options,
-  });
-
-  const fullOptions: Options = {
-    ...options,
-    presets,
-  };
-
-  // Build the manager and preview in parallel.
-  // Start the server (and open the browser) as soon as the manager is ready.
-  // Bail if the manager fails, but continue if the preview fails.
-  // FIXME: parallelize this!!!
+  const previewBuilder = await getPreviewBuilder(options.configDir);
 
   if (options.debugWebpack) {
-    logConfig('Preview webpack config', await previewBuilder.getConfig(fullOptions));
-    logConfig('Manager webpack config', await managerBuilder.getConfig(fullOptions));
+    logConfig('Preview webpack config', await previewBuilder.getConfig(options));
+    logConfig('Manager webpack config', await managerBuilder.getConfig(options));
   }
 
   const preview = options.ignorePreview
     ? Promise.resolve()
     : previewBuilder.start({
         startTime,
-        options: fullOptions,
+        options,
         useProgressReporting,
         router,
       });
 
   const manager = managerBuilder.start({
     startTime,
-    options: fullOptions,
+    options,
     useProgressReporting,
     router,
   });

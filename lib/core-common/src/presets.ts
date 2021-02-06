@@ -8,7 +8,7 @@ import {
   LoadOptions,
   PresetConfig,
   Presets,
-  RenamedOptions,
+  BuilderOptions,
 } from './types';
 import { loadCustomPresets } from './utils/load-custom-presets';
 
@@ -262,7 +262,7 @@ function applyPresets(
   }, presetResult);
 }
 
-type InterPresetOptions = Omit<CLIOptions & LoadOptions & RenamedOptions, 'frameworkPresets'>;
+type InterPresetOptions = Omit<CLIOptions & LoadOptions & BuilderOptions, 'frameworkPresets'>;
 
 export function getPresets(presets: PresetConfig[], storybookOptions: InterPresetOptions): Presets {
   const loadedPresets: LoadedPreset[] = loadPresets(presets, 0, storybookOptions);
@@ -276,7 +276,7 @@ export function getPresets(presets: PresetConfig[], storybookOptions: InterPrese
 export function loadAllPresets(
   options: CLIOptions &
     LoadOptions &
-    RenamedOptions & {
+    BuilderOptions & {
       corePresets: string[];
       overridePresets: string[];
       frameworkPresets: string[];

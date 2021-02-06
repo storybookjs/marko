@@ -107,6 +107,7 @@ export interface LoadOptions {
   framework: string;
   frameworkPresets: string[];
   outputDir?: string;
+  configDir?: string;
   extendServer?: (server: Server) => void;
 }
 
@@ -142,7 +143,7 @@ export interface CLIOptions {
   outputDir?: string;
 }
 
-export interface RenamedOptions {
+export interface BuilderOptions {
   configType: 'DEVELOPMENT' | 'PRODUCTION';
   ignorePreview: boolean;
   cache: FileSystemCache;
@@ -153,10 +154,10 @@ export interface RenamedOptions {
 }
 
 export interface StorybookConfigOptions {
-  presets?: Presets;
+  presets: Presets;
 }
 
-export type Options = LoadOptions & StorybookConfigOptions & CLIOptions & RenamedOptions;
+export type Options = LoadOptions & StorybookConfigOptions & CLIOptions & BuilderOptions;
 
 export interface Builder<Config> {
   getConfig: (options: Options) => Promise<Config>;

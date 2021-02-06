@@ -91,9 +91,38 @@ export const bail: WebpackBuilder['bail'] = (e: Error) => {
   throw e;
 };
 
-export const build: WebpackBuilder['build'] = async (options) => {
-  console.log('TODO');
+export const build: WebpackBuilder['build'] = async ({ options, startTime }) => {
+  logger.info('=> Compiling manager..');
+  const config = await getConfig(options);
+
+  return new Promise((succeed, fail) => {
+    webpack(config).run((error, stats) => {
+      if (error || !stats || stats.hasErrors()) {
+        logger.error('=> Failed to build the manager');
+
+        if (error) {
+          logger.error(error.message);
+        }
+
+        if (stats && (stats.hasErrors() || stats.hasWarnings())) {
+          const { warnings, errors } = stats.toJson(config.stats);
+
+          errors.forEach((e: string) => logger.error(e));
+          warnings.forEach((e: string) => logger.error(e));
+        }
+
+        process.exitCode = 1;
+        fail(error || stats);
+        return;
+      }
+
+      logger.trace({ message: '=> Manager built', time: process.hrtime(startTime) });
+      stats.toJson(config.stats).warnings.forEach((e: string) => logger.warn(e));
+
+      succeed();
+    });
+  });
 };
 
-export const corePresets = [require.resolve('./presets/preview-preset.js')];
-export const overridePresets = [require.resolve('./presets/custom-webpack-preset.js')];
+export const corePresets: string[] = [];
+export const overridePresets: string[] = [];

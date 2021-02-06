@@ -7,7 +7,7 @@ import favicon from 'serve-favicon';
 
 import dedent from 'ts-dedent';
 
-const defaultFavIcon = require.resolve('./public/favicon.ico');
+const defaultFavIcon = require.resolve('../public/favicon.ico');
 
 export async function useStatics(router: any, options: { staticDir?: string[] }) {
   let hasCustomFavicon = false;
