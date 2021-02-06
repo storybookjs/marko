@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Custom/ngModel custom ControlValueAccessor 1`] = `
+exports[`Storyshots Basics / Angular forms / ControlValueAccessor Simple input 1`] = `
 <storybook-wrapper>
   <storybook-custom-cva-component>
     <div>
