@@ -3,7 +3,7 @@ const { buildStaticStandalone } = require('../lib/core-server/dist/cjs/build-sta
 process.env.NODE_ENV = 'production';
 
 buildStaticStandalone({
-  managerOnly: true,
+  ignorePreview: true,
   outputDir: './lib/core/prebuilt',
   configDir: './scripts/build-manager-config',
 });

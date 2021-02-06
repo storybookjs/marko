@@ -108,6 +108,7 @@ export interface LoadOptions {
   frameworkPresets: string[];
   outputDir?: string;
   configDir?: string;
+  ignorePreview?: boolean;
   extendServer?: (server: Server) => void;
 }
 
@@ -118,7 +119,6 @@ export interface ManagerWebpackOptions {
 
 export interface CLIOptions {
   port?: number;
-  managerOnly?: boolean;
   ignorePreview?: boolean;
   previewUrl?: string;
   host?: string;
