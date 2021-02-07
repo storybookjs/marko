@@ -50,9 +50,9 @@ const startVerdaccio = (port: number) => {
       setTimeout(() => {
         if (!resolved) {
           resolved = true;
-          rej(new Error(`TIMEOUT - verdaccio didn't start within 60s`));
+          rej(new Error(`TIMEOUT - verdaccio didn't start within 10s`));
         }
-      }, 60000);
+      }, 10000);
     }),
   ]);
 };
