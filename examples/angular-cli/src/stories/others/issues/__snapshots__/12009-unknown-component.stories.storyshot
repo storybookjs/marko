@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Addon/Issues/12009 unknown component Basic 1`] = `
+exports[`Storyshots Others / Issues / 12009 unknown component Basic 1`] = `
 <storybook-wrapper>
   <storybook-button-component
-    _nghost-a-c22=""
+    _nghost-a-c23=""
     ng-reflect-text="Unknown component"
   >
     <button
-      _ngcontent-a-c22=""
+      _ngcontent-a-c23=""
     >
       Unknown component
     </button>

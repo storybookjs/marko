@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots ngrx/Store With component 1`] = `
+exports[`Storyshots Others / NgRx / Store With component 1`] = `
 <storybook-wrapper>
   <storybook-comp-with-store>
     <div>
@@ -10,7 +10,7 @@ exports[`Storyshots ngrx/Store With component 1`] = `
 </storybook-wrapper>
 `;
 
-exports[`Storyshots ngrx/Store With template 1`] = `
+exports[`Storyshots Others / NgRx / Store With template 1`] = `
 <storybook-wrapper>
   <storybook-comp-with-store>
     <div>
