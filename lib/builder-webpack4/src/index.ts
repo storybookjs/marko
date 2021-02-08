@@ -1,4 +1,6 @@
-import webpack, { Stats, Configuration } from 'webpack';
+import webpackReal from 'webpack';
+// @ts-ignore
+import webpack4, { Stats, Configuration } from '@types/webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { logger } from '@storybook/node-logger';
@@ -7,7 +9,9 @@ import { Builder } from '@storybook/core-common';
 let compilation: ReturnType<typeof webpackDevMiddleware>;
 let reject: (reason?: any) => void;
 
-type WebpackBuilder = Builder<Configuration>;
+type WebpackBuilder = Builder<Configuration, Stats>;
+
+const webpack = (webpackReal as any) as typeof webpack4;
 
 export const getConfig: WebpackBuilder['getConfig'] = async (options) => {
   const { presets } = options;
@@ -28,7 +32,7 @@ export const getConfig: WebpackBuilder['getConfig'] = async (options) => {
       typescriptOptions,
       [`${options.framework}Options`]: frameworkOptions,
     }
-  );
+  ) as Configuration;
 };
 
 export const start: WebpackBuilder['start'] = async ({
@@ -52,8 +56,12 @@ export const start: WebpackBuilder['start'] = async ({
   router.use(compilation);
   router.use(webpackHotMiddleware(compiler));
 
+  const waitUntilValid = compilation.waitUntilValid.bind(compilation) as (
+    callback: (stats?: Stats) => void
+  ) => void;
+
   const stats = await new Promise<Stats>((ready, stop) => {
-    compilation.waitUntilValid(ready);
+    waitUntilValid(ready);
     reject = stop;
   });
 

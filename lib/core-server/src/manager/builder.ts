@@ -11,7 +11,7 @@ import { getPrebuiltDir } from '../utils/prebuilt-manager';
 let compilation: ReturnType<typeof webpackDevMiddleware>;
 let reject: (reason?: any) => void;
 
-type WebpackBuilder = Builder<Configuration>;
+type WebpackBuilder = Builder<Configuration, Stats>;
 
 export const getConfig: WebpackBuilder['getConfig'] = getManagerWebpackConfig;
 
@@ -94,6 +94,7 @@ export const bail: WebpackBuilder['bail'] = (e: Error) => {
 export const build: WebpackBuilder['build'] = async ({ options, startTime }) => {
   logger.info('=> Compiling manager..');
   const config = await getConfig(options);
+  const statsOptions = typeof config.stats === 'boolean' ? 'minimal' : config.stats;
 
   return new Promise((succeed, fail) => {
     webpack(config).run((error, stats) => {
@@ -105,10 +106,10 @@ export const build: WebpackBuilder['build'] = async ({ options, startTime }) => 
         }
 
         if (stats && (stats.hasErrors() || stats.hasWarnings())) {
-          const { warnings, errors } = stats.toJson(config.stats);
+          const { warnings, errors } = stats.toJson(statsOptions);
 
-          errors.forEach((e: string) => logger.error(e));
-          warnings.forEach((e: string) => logger.error(e));
+          errors.forEach((e) => logger.error(e.message));
+          warnings.forEach((e) => logger.error(e.message));
         }
 
         process.exitCode = 1;
@@ -117,7 +118,7 @@ export const build: WebpackBuilder['build'] = async ({ options, startTime }) => 
       }
 
       logger.trace({ message: '=> Manager built', time: process.hrtime(startTime) });
-      stats.toJson(config.stats).warnings.forEach((e: string) => logger.warn(e));
+      stats.toJson(statsOptions).warnings.forEach((e) => logger.warn(e.message));
 
       succeed();
     });
