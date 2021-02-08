@@ -6,8 +6,10 @@ export default {
   component: MyPage,
 };
 
-const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
+// If your props are optional and don't always exist in argTypes,
+// you can specify them explicitly as you normally specify props
+const Template = () => ({
+  props: ['user'],
   components: { MyPage },
   template: '<my-page :user="user" />',
 });
@@ -18,6 +20,4 @@ LoggedIn.args = {
 };
 
 export const LoggedOut = Template.bind({});
-LoggedOut.args = {
-  ...HeaderStories.LoggedOut.args,
-};
+LoggedOut.args = {};

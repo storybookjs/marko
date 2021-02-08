@@ -1,10 +1,1 @@
-/* eslint-disable import/no-extraneous-dependencies */
-import preval from 'preval.macro';
-
-export const version = preval`
-  const fs = require('fs-extra');
-  const path = require('path');
-  const { version } = require(path.join(__dirname, '..', 'package.json'));
-
-  module.exports = version;
-` as string;
+export const version = '6.2.0-alpha.24';

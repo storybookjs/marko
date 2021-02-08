@@ -58,7 +58,7 @@
   </article>
 </template>
 
-<script>
+<script lang="typescript">
 import './page.css';
 import MyHeader from './Header.vue';
 
@@ -70,6 +70,7 @@ export default {
   props: {
     user: {
       type: Object,
+      required: false,
     },
   },
 
