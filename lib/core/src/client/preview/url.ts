@@ -4,6 +4,8 @@ import deprecate from 'util-deprecate';
 import { StoreSelectionSpecifier, StoreSelection } from '@storybook/client-api';
 import { Args, StoryId, ViewMode } from '@storybook/addons';
 
+import { parseArgsParam } from './parseArgsParam';
+
 export function pathToId(path: string) {
   const match = (path || '').match(/^\/story\/(.+)/);
   if (!match) {
@@ -61,15 +63,9 @@ Use \`id=$storyId\` instead.
 See https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-url-structure`
 );
 
-// Lifted from @storybook/router utils
-const parseArgs = (argsString: string): Args => {
-  const parts = argsString.split(';').map((part) => part.replace(':', '='));
-  return qs.parse(parts.join(';'), { allowDots: true, delimiter: ';' });
-};
-
 export const getSelectionSpecifierFromPath: () => StoreSelectionSpecifier & { args: Args } = () => {
   const query = qs.parse(document.location.search, { ignoreQueryPrefix: true });
-  const args = typeof query.args === 'string' ? parseArgs(query.args) : undefined;
+  const args = typeof query.args === 'string' ? parseArgsParam(query.args) : undefined;
 
   let viewMode = getFirstString(query.viewMode) as ViewMode;
   if (typeof viewMode !== 'string' || !viewMode.match(/docs|story/)) {

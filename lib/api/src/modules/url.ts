@@ -5,7 +5,7 @@ import {
   SET_STORIES,
   SET_CURRENT_STORY,
 } from '@storybook/core-events';
-import { queryFromLocation, navigate as queryNavigate, stringifyArgs } from '@storybook/router';
+import { queryFromLocation, navigate as queryNavigate, buildArgsParam } from '@storybook/router';
 import { toId, sanitize } from '@storybook/csf';
 import deepEqual from 'fast-deep-equal';
 
@@ -161,7 +161,7 @@ export const init: ModuleFn = ({ store, navigate, state, provider, fullAPI, ...r
         if (!deepEqual(value, initialArgs[storyId][key])) acc[key] = value;
         return acc;
       }, {} as Story['args']);
-      const argsString = stringifyArgs(customizedArgs);
+      const argsString = buildArgsParam(customizedArgs);
       const argsParam = argsString.length ? `&args=${argsString}` : '';
       queryNavigate(`${fullAPI.getUrlState().path}${argsParam}`, { replace: true });
       api.setQueryParams({ args: argsString });
