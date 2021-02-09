@@ -2,6 +2,8 @@ import path from 'path';
 import fse from 'fs-extra';
 import { DefinePlugin, HotModuleReplacementPlugin, ProgressPlugin } from 'webpack';
 import Dotenv from 'dotenv-webpack';
+// @ts-ignore
+import { Configuration, RuleSetRule } from '@types/webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import WatchMissingNodeModulesPlugin from 'react-dev-utils/WatchMissingNodeModulesPlugin';
@@ -20,6 +22,7 @@ import {
   es6Transpiler,
   interpolate,
   nodeModulesPaths,
+  Options,
 } from '@storybook/core-common';
 import { createBabelLoader } from './babel-loader-preview';
 
@@ -60,13 +63,13 @@ export default async ({
   frameworkPath,
   presets,
   typescriptOptions,
-}: any) => {
+}: Options & Record<string, any>): Promise<Configuration> => {
   const logLevel = await presets.apply('logLevel', undefined);
   const frameworkOptions = await presets.apply(`${framework}Options`, {});
 
   const headHtmlSnippet = await presets.apply('previewHeadTemplate');
   const bodyHtmlSnippet = await presets.apply('previewBodyTemplate');
-  const template = await presets.apply('previewMainTemplate');
+  const template = await presets.apply<string>('previewMainTemplate');
 
   // TODO: envs should come rom presets
   const { raw, stringified } = loadEnv({ production: true });
@@ -176,7 +179,7 @@ export default async ({
     module: {
       rules: [
         babelLoader,
-        es6Transpiler(),
+        es6Transpiler() as RuleSetRule,
         {
           test: /\.md$/,
           use: [
