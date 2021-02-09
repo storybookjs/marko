@@ -57,9 +57,11 @@ const options = {
 };
 
 const ROOT = process.cwd();
+const NODE_MODULES = /.*node_modules/g;
 const cleanRoots = (obj): any => {
   if (!obj) return obj;
-  if (typeof obj === 'string') return obj.replace(ROOT, 'ROOT');
+  if (typeof obj === 'string')
+    return obj.replace(ROOT, 'ROOT').replace(NODE_MODULES, 'NODE_MODULES');
   if (Array.isArray(obj)) return obj.map(cleanRoots);
   if (obj instanceof RegExp) return cleanRoots(obj.toString());
   if (typeof obj === 'object') {
