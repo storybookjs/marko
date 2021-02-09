@@ -17,6 +17,9 @@ module.exports = {
       },
     },
   ],
+  core: {
+    builder: 'webpack4',
+  },
   typescript: {
     check: true,
     checkOptions: {},

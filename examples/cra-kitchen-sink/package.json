@@ -20,6 +20,7 @@
   "devDependencies": {
     "@storybook/addon-a11y": "6.2.0-alpha.24",
     "@storybook/addon-actions": "6.2.0-alpha.24",
+    "@storybook/builder-webpack4": "6.2.0-alpha.24",
     "@storybook/addon-backgrounds": "6.2.0-alpha.24",
     "@storybook/addon-docs": "6.2.0-alpha.24",
     "@storybook/addon-events": "6.2.0-alpha.24",

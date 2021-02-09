@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@storybook/addon-a11y": "6.2.0-alpha.24",
+    "@storybook/builder-webpack4": "6.2.0-alpha.24",
     "@storybook/addon-actions": "6.2.0-alpha.24",
     "@storybook/addon-docs": "6.2.0-alpha.24",
     "@storybook/addon-knobs": "6.2.0-alpha.24",
@@ -48,7 +49,8 @@
     "enzyme-to-json": "^3.6.1",
     "fork-ts-checker-webpack-plugin": "^6.0.4",
     "react-moment-proptypes": "^1.7.0",
-    "ts-node": "^9.1.0"
+    "ts-node": "^9.1.0",
+    "webpack": "4"
   },
   "storybook": {
     "chromatic": {

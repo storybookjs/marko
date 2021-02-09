@@ -31,5 +31,8 @@ module.exports = {
     '@storybook/addon-graphql',
     '@storybook/addon-queryparams',
   ],
+  core: {
+    builder: 'webpack5',
+  },
   logLevel: 'debug',
 } as StorybookConfig;

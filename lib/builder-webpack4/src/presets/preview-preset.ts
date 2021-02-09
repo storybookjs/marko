@@ -1,9 +1,9 @@
 import webpackConfig from '../preview/iframe-webpack.config';
 import { createPreviewEntry } from '../preview/entries';
 
-export const webpack = async (_: unknown, options: any) => webpackConfig(options);
+export const webpack = async (_: any, options: any) => webpackConfig(options);
 
-export const entries = async (_: unknown, options: any) => {
+export const entries = async (_: any, options: any) => {
   let result: string[] = [];
 
   result = result.concat(await createPreviewEntry(options));

@@ -19,12 +19,14 @@
   },
   "devDependencies": {
     "@storybook/addon-actions": "6.2.0-alpha.24",
+    "@storybook/builder-webpack4": "6.2.0-alpha.24",
     "@storybook/addon-links": "6.2.0-alpha.24",
     "@storybook/addons": "6.2.0-alpha.24",
     "@storybook/react": "6.2.0-alpha.24",
     "@storybook/theming": "6.2.0-alpha.24",
     "babel-core": "6",
-    "babel-runtime": "6"
+    "babel-runtime": "6",
+    "webpack": "4"
   },
   "storybook": {
     "chromatic": {
