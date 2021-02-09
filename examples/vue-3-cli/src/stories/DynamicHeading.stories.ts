@@ -9,6 +9,16 @@ export default {
     // Number type is detected, but we still want to constrain the range from 1-6
     level: { control: { min: 1, max: 6 } },
   },
+  decorators: [
+    (storyFn) => {
+      // Call the `storyFn` to receive a component that Vue can render
+      const story = storyFn();
+      // Vue 3 "Functional" component as decorator
+      return () => {
+        return h('div', { style: 'border: 2px solid red' }, h(story));
+      };
+    },
+  ],
 } as Meta;
 
 /*
@@ -26,6 +36,26 @@ export const One = Template.bind({});
 One.args = {
   level: 1,
 };
+One.decorators = [
+  // Vue 3 "ComponentOptions" component as decorator
+  () => ({
+    // The `story` component is always injected into a decorator
+    template: '<div :style="{ color: activeColor }"><story /></div>',
+    data() {
+      // Story Args can be accessed on `this.props`
+      switch (this.props.level) {
+        case 1:
+          return { activeColor: 'purple' };
+        case 2:
+          return { activeColor: 'green' };
+        case 3:
+          return { activeColor: 'blue' };
+        default:
+          return { activeColor: 'unset' };
+      }
+    },
+  }),
+];
 
 export const Two = Template.bind({});
 Two.args = {
