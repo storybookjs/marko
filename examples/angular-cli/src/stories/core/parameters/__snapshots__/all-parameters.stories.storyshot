@@ -18,7 +18,10 @@ exports[`Storyshots Core / Parameters / All parameters All parameters passed to 
     "options": {
       "storySort": {
         "order": [
-          "Welcome"
+          "Welcome",
+          "Core ",
+          "Addons ",
+          "Basics "
         ]
       }
     },

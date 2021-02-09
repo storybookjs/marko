@@ -24,7 +24,7 @@ addParameters({
   },
   options: {
     storySort: {
-      order: ['Welcome'],
+      order: ['Welcome', 'Core ', 'Addons ', 'Basics '],
     },
   },
 });
