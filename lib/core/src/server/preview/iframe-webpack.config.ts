@@ -71,13 +71,9 @@ export default async ({
   const { raw, stringified } = loadEnv({ production: true });
   const babelLoader = createBabelLoader(babelOptions, framework);
   const isProd = configType === 'PRODUCTION';
-  const entryTemplate = await fse.readFile(
-    // TODO ANDREW maybe something simpler
-    path.join(__dirname, '../../../esm/server/preview', 'virtualModuleEntry.template.js'),
-    {
-      encoding: 'utf8',
-    }
-  );
+  const entryTemplate = await fse.readFile(path.join(__dirname, 'virtualModuleEntry.template.js'), {
+    encoding: 'utf8',
+  });
   const storyTemplate = await fse.readFile(path.join(__dirname, 'virtualModuleStory.template.js'), {
     encoding: 'utf8',
   });
@@ -116,6 +112,7 @@ export default async ({
   const tsCheckOptions = typescriptOptions.checkOptions || {};
 
   return {
+    name: 'preview',
     mode: isProd ? 'production' : 'development',
     bail: isProd,
     devtool: '#cheap-module-source-map',

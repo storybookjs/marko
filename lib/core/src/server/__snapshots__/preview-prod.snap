@@ -1,0 +1,523 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`core presets production mode 1`] = `
+Object {
+  "entry": Array [
+    "ROOT/lib/core/src/server/common/polyfills.ts",
+    "ROOT/lib/core/src/server/preview/globals.ts",
+    "ROOT/examples/react-ts/storybook-init-framework-entry.js",
+    "ROOT/addons/docs/dist/esm/frameworks/common/config.js-generated-other-entry.js",
+    "ROOT/addons/docs/dist/esm/frameworks/react/config.js-generated-other-entry.js",
+    "ROOT/addons/actions/dist/esm/preset/addDecorator.js-generated-other-entry.js",
+    "ROOT/addons/actions/dist/esm/preset/addArgs.js-generated-other-entry.js",
+    "ROOT/addons/backgrounds/dist/esm/preset/addDecorator.js-generated-other-entry.js",
+    "ROOT/addons/backgrounds/dist/esm/preset/addParameter.js-generated-other-entry.js",
+    "ROOT/examples/react-ts/generated-stories-entry.js",
+  ],
+  "module": Object {
+    "rules": Array [
+      Object {
+        "exclude": "/node_modules/",
+        "include": Array [
+          "ROOT",
+        ],
+        "test": "/\\\\.(mjs|tsx?|jsx?)$/",
+        "use": Array [
+          Object {
+            "loader": "ROOT/node_modules/babel-loader/lib/index.js",
+            "options": Object {
+              "cacheDirectory": "ROOT/node_modules/.cache/storybook/babel",
+              "overrides": Array [
+                Object {
+                  "plugins": Array [
+                    Array [
+                      "ROOT/node_modules/babel-plugin-react-docgen/lib/index.js",
+                      Object {
+                        "DOC_GEN_COLLECTION_NAME": "STORYBOOK_REACT_CLASSES",
+                      },
+                    ],
+                  ],
+                  "test": "/\\\\.(mjs|jsx?)$/",
+                },
+              ],
+              "plugins": Array [
+                "ROOT/node_modules/@babel/plugin-transform-shorthand-properties/lib/index.js",
+                "ROOT/lib/core/node_modules/@babel/plugin-transform-block-scoping/lib/index.js",
+                Array [
+                  "ROOT/node_modules/@babel/plugin-proposal-decorators/lib/index.js",
+                  Object {
+                    "legacy": true,
+                  },
+                ],
+                Array [
+                  "ROOT/node_modules/@babel/plugin-proposal-class-properties/lib/index.js",
+                  Object {
+                    "loose": true,
+                  },
+                ],
+                Array [
+                  "ROOT/node_modules/@babel/plugin-proposal-private-methods/lib/index.js",
+                  Object {
+                    "loose": true,
+                  },
+                ],
+                "ROOT/node_modules/@babel/plugin-proposal-export-default-from/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-syntax-dynamic-import/lib/index.js",
+                Array [
+                  "ROOT/node_modules/@babel/plugin-proposal-object-rest-spread/lib/index.js",
+                  Object {
+                    "loose": true,
+                    "useBuiltIns": true,
+                  },
+                ],
+                "ROOT/node_modules/@babel/plugin-transform-classes/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-transform-arrow-functions/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-transform-parameters/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-transform-destructuring/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-transform-spread/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-transform-for-of/lib/index.js",
+                "ROOT/node_modules/babel-plugin-macros/dist/index.js",
+                "ROOT/node_modules/@babel/plugin-proposal-optional-chaining/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-proposal-nullish-coalescing-operator/lib/index.js",
+                Array [
+                  "ROOT/node_modules/babel-plugin-polyfill-corejs3/lib/index.js",
+                  Object {
+                    "absoluteImports": "ROOT/node_modules/core-js/index.js",
+                    "method": "usage-global",
+                    "version": "3.8.2",
+                  },
+                ],
+                Array [
+                  "ROOT/node_modules/babel-plugin-emotion/dist/babel-plugin-emotion.cjs.js",
+                  Object {
+                    "autoLabel": true,
+                    "sourceMap": true,
+                  },
+                ],
+                "ROOT/node_modules/babel-plugin-add-react-displayname/index.js",
+              ],
+              "presets": Array [
+                Array [
+                  "ROOT/node_modules/@babel/preset-env/lib/index.js",
+                  Object {
+                    "shippedProposals": true,
+                  },
+                ],
+                "ROOT/node_modules/@babel/preset-typescript/lib/index.js",
+                Array [
+                  "ROOT/node_modules/@babel/preset-react/lib/index.js",
+                  Object {
+                    "runtime": "automatic",
+                  },
+                ],
+                "ROOT/node_modules/@babel/preset-flow/lib/index.js",
+              ],
+              "sourceType": "unambiguous",
+            },
+          },
+        ],
+      },
+      Object {
+        "include": [Function],
+        "test": "/\\\\.js$/",
+        "use": Array [
+          Object {
+            "loader": "ROOT/node_modules/babel-loader/lib/index.js",
+            "options": Object {
+              "plugins": Array [
+                "ROOT/node_modules/@babel/plugin-transform-shorthand-properties/lib/index.js",
+                "ROOT/lib/core/node_modules/@babel/plugin-transform-block-scoping/lib/index.js",
+                Array [
+                  "ROOT/node_modules/@babel/plugin-proposal-decorators/lib/index.js",
+                  Object {
+                    "legacy": true,
+                  },
+                ],
+                Array [
+                  "ROOT/node_modules/@babel/plugin-proposal-class-properties/lib/index.js",
+                  Object {
+                    "loose": true,
+                  },
+                ],
+                Array [
+                  "ROOT/node_modules/@babel/plugin-proposal-private-methods/lib/index.js",
+                  Object {
+                    "loose": true,
+                  },
+                ],
+                "ROOT/node_modules/@babel/plugin-proposal-export-default-from/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-syntax-dynamic-import/lib/index.js",
+                Array [
+                  "ROOT/node_modules/@babel/plugin-proposal-object-rest-spread/lib/index.js",
+                  Object {
+                    "loose": true,
+                    "useBuiltIns": true,
+                  },
+                ],
+                "ROOT/node_modules/@babel/plugin-transform-classes/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-transform-arrow-functions/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-transform-parameters/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-transform-destructuring/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-transform-spread/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-transform-for-of/lib/index.js",
+                "ROOT/node_modules/babel-plugin-macros/dist/index.js",
+                "ROOT/node_modules/@babel/plugin-proposal-optional-chaining/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-proposal-nullish-coalescing-operator/lib/index.js",
+                Array [
+                  "ROOT/node_modules/babel-plugin-polyfill-corejs3/lib/index.js",
+                  Object {
+                    "absoluteImports": "ROOT/node_modules/core-js/index.js",
+                    "method": "usage-global",
+                    "version": "3.8.2",
+                  },
+                ],
+              ],
+              "presets": Array [
+                Array [
+                  "ROOT/node_modules/@babel/preset-env/lib/index.js",
+                  Object {
+                    "modules": false,
+                    "shippedProposals": true,
+                    "targets": "defaults",
+                  },
+                ],
+                "ROOT/node_modules/@babel/preset-react/lib/index.js",
+              ],
+              "sourceType": "unambiguous",
+            },
+          },
+        ],
+      },
+      Object {
+        "test": "/\\\\.md$/",
+        "use": Array [
+          Object {
+            "loader": "ROOT/node_modules/raw-loader/dist/cjs.js",
+          },
+        ],
+      },
+      Object {
+        "enforce": "pre",
+        "test": Array [
+          "/\\\\.stories\\\\.(jsx?$|tsx?$)/",
+        ],
+        "use": Array [
+          Object {
+            "loader": "ROOT/lib/source-loader/dist/cjs/index.js",
+            "options": undefined,
+          },
+        ],
+      },
+      Object {
+        "include": "/node_modules\\\\/acorn-jsx/",
+        "test": "/\\\\.js$/",
+        "use": Array [
+          Object {
+            "loader": "ROOT/node_modules/babel-loader/lib/index.js",
+            "options": Object {
+              "presets": Array [
+                Array [
+                  "ROOT/node_modules/@babel/preset-env/lib/index.js",
+                  Object {
+                    "modules": "commonjs",
+                  },
+                ],
+              ],
+            },
+          },
+        ],
+      },
+      Object {
+        "test": "/\\\\.(stories|story)\\\\.mdx$/",
+        "use": Array [
+          Object {
+            "loader": "ROOT/node_modules/babel-loader/lib/index.js",
+            "options": Object {
+              "babelrc": false,
+              "cacheDirectory": "ROOT/node_modules/.cache/storybook/babel",
+              "configFile": false,
+              "overrides": Array [
+                Object {
+                  "plugins": Array [
+                    Array [
+                      "ROOT/node_modules/babel-plugin-react-docgen/lib/index.js",
+                      Object {
+                        "DOC_GEN_COLLECTION_NAME": "STORYBOOK_REACT_CLASSES",
+                      },
+                    ],
+                  ],
+                  "test": "/\\\\.(mjs|jsx?)$/",
+                },
+              ],
+              "plugins": Array [
+                "ROOT/node_modules/@babel/plugin-transform-shorthand-properties/lib/index.js",
+                "ROOT/lib/core/node_modules/@babel/plugin-transform-block-scoping/lib/index.js",
+                Array [
+                  "ROOT/node_modules/@babel/plugin-proposal-decorators/lib/index.js",
+                  Object {
+                    "legacy": true,
+                  },
+                ],
+                Array [
+                  "ROOT/node_modules/@babel/plugin-proposal-class-properties/lib/index.js",
+                  Object {
+                    "loose": true,
+                  },
+                ],
+                Array [
+                  "ROOT/node_modules/@babel/plugin-proposal-private-methods/lib/index.js",
+                  Object {
+                    "loose": true,
+                  },
+                ],
+                "ROOT/node_modules/@babel/plugin-proposal-export-default-from/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-syntax-dynamic-import/lib/index.js",
+                Array [
+                  "ROOT/node_modules/@babel/plugin-proposal-object-rest-spread/lib/index.js",
+                  Object {
+                    "loose": true,
+                    "useBuiltIns": true,
+                  },
+                ],
+                "ROOT/node_modules/@babel/plugin-transform-classes/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-transform-arrow-functions/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-transform-parameters/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-transform-destructuring/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-transform-spread/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-transform-for-of/lib/index.js",
+                "ROOT/node_modules/babel-plugin-macros/dist/index.js",
+                "ROOT/node_modules/@babel/plugin-proposal-optional-chaining/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-proposal-nullish-coalescing-operator/lib/index.js",
+                Array [
+                  "ROOT/node_modules/babel-plugin-polyfill-corejs3/lib/index.js",
+                  Object {
+                    "absoluteImports": "ROOT/node_modules/core-js/index.js",
+                    "method": "usage-global",
+                    "version": "3.8.2",
+                  },
+                ],
+                Array [
+                  "ROOT/node_modules/babel-plugin-emotion/dist/babel-plugin-emotion.cjs.js",
+                  Object {
+                    "autoLabel": true,
+                    "sourceMap": true,
+                  },
+                ],
+                "ROOT/node_modules/babel-plugin-add-react-displayname/index.js",
+                Array [
+                  "ROOT/addons/docs/node_modules/@babel/plugin-transform-react-jsx/lib/index.js",
+                  Object {
+                    "pragma": "React.createElement",
+                    "pragmaFrag": "React.Fragment",
+                  },
+                ],
+              ],
+              "presets": Array [
+                Array [
+                  "ROOT/node_modules/@babel/preset-env/lib/index.js",
+                  Object {
+                    "shippedProposals": true,
+                  },
+                ],
+                "ROOT/node_modules/@babel/preset-typescript/lib/index.js",
+                Array [
+                  "ROOT/node_modules/@babel/preset-react/lib/index.js",
+                  Object {
+                    "runtime": "automatic",
+                  },
+                ],
+                "ROOT/node_modules/@babel/preset-flow/lib/index.js",
+              ],
+              "sourceType": "unambiguous",
+            },
+          },
+          Object {
+            "loader": "ROOT/node_modules/@mdx-js/loader/index.js",
+            "options": Object {
+              "compilers": Array [
+                [Function],
+              ],
+              "remarkPlugins": Array [
+                [Function],
+                [Function],
+              ],
+            },
+          },
+        ],
+      },
+      Object {
+        "exclude": "/\\\\.(stories|story)\\\\.mdx$/",
+        "test": "/\\\\.mdx$/",
+        "use": Array [
+          Object {
+            "loader": "ROOT/node_modules/babel-loader/lib/index.js",
+            "options": Object {
+              "babelrc": false,
+              "cacheDirectory": "ROOT/node_modules/.cache/storybook/babel",
+              "configFile": false,
+              "overrides": Array [
+                Object {
+                  "plugins": Array [
+                    Array [
+                      "ROOT/node_modules/babel-plugin-react-docgen/lib/index.js",
+                      Object {
+                        "DOC_GEN_COLLECTION_NAME": "STORYBOOK_REACT_CLASSES",
+                      },
+                    ],
+                  ],
+                  "test": "/\\\\.(mjs|jsx?)$/",
+                },
+              ],
+              "plugins": Array [
+                "ROOT/node_modules/@babel/plugin-transform-shorthand-properties/lib/index.js",
+                "ROOT/lib/core/node_modules/@babel/plugin-transform-block-scoping/lib/index.js",
+                Array [
+                  "ROOT/node_modules/@babel/plugin-proposal-decorators/lib/index.js",
+                  Object {
+                    "legacy": true,
+                  },
+                ],
+                Array [
+                  "ROOT/node_modules/@babel/plugin-proposal-class-properties/lib/index.js",
+                  Object {
+                    "loose": true,
+                  },
+                ],
+                Array [
+                  "ROOT/node_modules/@babel/plugin-proposal-private-methods/lib/index.js",
+                  Object {
+                    "loose": true,
+                  },
+                ],
+                "ROOT/node_modules/@babel/plugin-proposal-export-default-from/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-syntax-dynamic-import/lib/index.js",
+                Array [
+                  "ROOT/node_modules/@babel/plugin-proposal-object-rest-spread/lib/index.js",
+                  Object {
+                    "loose": true,
+                    "useBuiltIns": true,
+                  },
+                ],
+                "ROOT/node_modules/@babel/plugin-transform-classes/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-transform-arrow-functions/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-transform-parameters/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-transform-destructuring/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-transform-spread/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-transform-for-of/lib/index.js",
+                "ROOT/node_modules/babel-plugin-macros/dist/index.js",
+                "ROOT/node_modules/@babel/plugin-proposal-optional-chaining/lib/index.js",
+                "ROOT/node_modules/@babel/plugin-proposal-nullish-coalescing-operator/lib/index.js",
+                Array [
+                  "ROOT/node_modules/babel-plugin-polyfill-corejs3/lib/index.js",
+                  Object {
+                    "absoluteImports": "ROOT/node_modules/core-js/index.js",
+                    "method": "usage-global",
+                    "version": "3.8.2",
+                  },
+                ],
+                Array [
+                  "ROOT/node_modules/babel-plugin-emotion/dist/babel-plugin-emotion.cjs.js",
+                  Object {
+                    "autoLabel": true,
+                    "sourceMap": true,
+                  },
+                ],
+                "ROOT/node_modules/babel-plugin-add-react-displayname/index.js",
+                Array [
+                  "ROOT/addons/docs/node_modules/@babel/plugin-transform-react-jsx/lib/index.js",
+                  Object {
+                    "pragma": "React.createElement",
+                    "pragmaFrag": "React.Fragment",
+                  },
+                ],
+              ],
+              "presets": Array [
+                Array [
+                  "ROOT/node_modules/@babel/preset-env/lib/index.js",
+                  Object {
+                    "shippedProposals": true,
+                  },
+                ],
+                "ROOT/node_modules/@babel/preset-typescript/lib/index.js",
+                Array [
+                  "ROOT/node_modules/@babel/preset-react/lib/index.js",
+                  Object {
+                    "runtime": "automatic",
+                  },
+                ],
+                "ROOT/node_modules/@babel/preset-flow/lib/index.js",
+              ],
+              "sourceType": "unambiguous",
+            },
+          },
+          Object {
+            "loader": "ROOT/node_modules/@mdx-js/loader/index.js",
+            "options": Object {
+              "remarkPlugins": Array [
+                [Function],
+                [Function],
+              ],
+            },
+          },
+        ],
+      },
+      Object {
+        "enforce": "pre",
+        "loader": "ROOT/lib/source-loader/dist/cjs/index.js",
+        "options": Object {
+          "injectStoryParameters": false,
+          "inspectLocalDependencies": true,
+          "parser": "typescript",
+        },
+        "test": "/\\\\.(stories|story)\\\\.[tj]sx?$/",
+      },
+      Object {
+        "sideEffects": true,
+        "test": "/\\\\.css$/",
+        "use": Array [
+          "ROOT/lib/core/node_modules/style-loader/dist/cjs.js",
+          Object {
+            "loader": "ROOT/node_modules/css-loader/dist/cjs.js",
+            "options": Object {
+              "importLoaders": 1,
+            },
+          },
+          Object {
+            "loader": "ROOT/lib/core/node_modules/postcss-loader/dist/cjs.js",
+            "options": Object {
+              "postcssOptions": [Function],
+            },
+          },
+        ],
+      },
+      Object {
+        "loader": "ROOT/lib/core/node_modules/file-loader/dist/cjs.js",
+        "options": Object {
+          "esModule": false,
+          "name": "static/media/[name].[hash:8].[ext]",
+        },
+        "test": "/\\\\.(svg|ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\\\\?.*)?$/",
+      },
+      Object {
+        "loader": "ROOT/lib/core/node_modules/url-loader/dist/cjs.js",
+        "query": Object {
+          "limit": 10000,
+          "name": "static/media/[name].[hash:8].[ext]",
+        },
+        "test": "/\\\\.(mp4|webm|wav|mp3|m4a|aac|oga)(\\\\?.*)?$/",
+      },
+    ],
+  },
+  "plugins": Array [
+    "FilterWarningsPlugin",
+    "VirtualModulesPlugin",
+    "HtmlWebpackPlugin",
+    "DefinePlugin",
+    "CaseSensitivePathsPlugin",
+    "ProgressPlugin",
+    "DefinePlugin",
+    "ForkTsCheckerWebpackPlugin",
+    "DocgenPlugin",
+  ],
+}
+`;
