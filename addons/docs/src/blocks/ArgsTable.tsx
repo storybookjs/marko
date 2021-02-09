@@ -170,9 +170,11 @@ export const StoryTable: FC<
     }
     storyArgTypes = filterArgTypes(storyArgTypes, include, exclude);
 
+    const mainLabel = getComponentName(component) || 'Story';
+
     // eslint-disable-next-line prefer-const
     let [args, updateArgs, resetArgs] = useArgs(storyId, storyStore);
-    let tabs = { Story: { rows: storyArgTypes, args, updateArgs, resetArgs } } as Record<
+    let tabs = { [mainLabel]: { rows: storyArgTypes, args, updateArgs, resetArgs } } as Record<
       string,
       PureArgsTableProps
     >;
@@ -188,7 +190,6 @@ export const StoryTable: FC<
     }
 
     if (component && (!storyHasArgsWithControls || showComponent)) {
-      const mainLabel = getComponentName(component);
       tabs = addComponentTabs(tabs, { [mainLabel]: component }, context, include, exclude);
     }
 
