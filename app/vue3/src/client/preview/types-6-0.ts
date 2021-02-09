@@ -21,3 +21,5 @@ export type Meta<Args = DefaultArgs> = BaseMeta<VueComponent> & Annotations<Args
  */
 export type Story<Args = DefaultArgs> = BaseStory<Args, VueReturnType> &
   Annotations<Args, VueReturnType>;
+
+export type Decorators = Story['decorators'];
