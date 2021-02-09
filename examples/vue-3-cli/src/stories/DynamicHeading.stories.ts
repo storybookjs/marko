@@ -1,4 +1,4 @@
-import { Story } from '@storybook/vue3';
+import { Story, Meta } from '@storybook/vue3';
 import { FunctionalComponent, h } from 'vue';
 import DynamicHeading, { Props } from './DynamicHeading';
 
@@ -9,7 +9,7 @@ export default {
     // Number type is detected, but we still want to constrain the range from 1-6
     level: { control: { min: 1, max: 6 } },
   },
-};
+} as Meta;
 
 /*
   You can return a Vue 3 functional component from a Story.
