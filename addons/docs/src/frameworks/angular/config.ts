@@ -8,6 +8,7 @@ export const parameters = {
     extractComponentDescription,
     source: {
       type: SourceType.DYNAMIC,
+      language: 'html',
     },
   },
 };
