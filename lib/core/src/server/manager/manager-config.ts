@@ -163,7 +163,7 @@ const loadConfig: (
 
   const presetsConfig = [
     ...corePresets,
-    require.resolve('../common/babel-cache-preset.js'),
+    require.resolve(`../common/babel-cache-preset`),
     ...frameworkPresets,
     ...loadCustomPresets(options),
     ...overridePresets,
