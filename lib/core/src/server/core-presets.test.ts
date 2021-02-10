@@ -1,6 +1,6 @@
 import 'jest-specific-snapshot';
 import path from 'path';
-import webpack, { Configuration, Stats } from 'webpack';
+import webpack, { Configuration } from 'webpack';
 import Cache from 'file-system-cache';
 
 import { buildDevStandalone } from './build-dev';
