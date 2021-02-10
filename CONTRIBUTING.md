@@ -52,7 +52,9 @@ yarn test
 
 The options for running tests can be selected from the cli or be passed to `yarn test` with specific parameters. Available modes include `--watch`, `--coverage`, and `--runInBand`, which will respectively run tests in watch mode, output code coverage, and run selected test suites serially in the current process.
 
-You can use the `--update` flag to update snapshots or screenshots as needed.
+You can use the `--update` flag (or `jest -u`) to update snapshots or screenshots as needed.
+ 
+> NOTE: on Windows, remember to make sure git config `core.autocrlf` is set to false, in order to not override EOL in snapshots ( `git config --global core.autocrlf false` to set it globally). It is also recommended to run tests from WSL2 to avoid errors with unix-style paths.
 
 You can also pick suites from CLI. Suites available are listed below.
 
