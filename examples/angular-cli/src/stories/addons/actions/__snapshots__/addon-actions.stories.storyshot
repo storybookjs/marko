@@ -1,30 +1,53 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Addons/Actions Action and method 1`] = `
+exports[`Storyshots Addons/Actions Component Output with ArgsTypes 1`] = `
 <storybook-wrapper>
   <storybook-button-component
-    _nghost-a-c3=""
-    ng-reflect-text="Action and Method"
+    _nghost-a-c4=""
+    ng-reflect-text="Button 🥁"
   >
     <button
-      _ngcontent-a-c3=""
+      _ngcontent-a-c4=""
     >
-      Action and Method
+      Button 🥁
     </button>
   </storybook-button-component>
 </storybook-wrapper>
 `;
 
-exports[`Storyshots Addons/Actions Action only 1`] = `
+exports[`Storyshots Addons/Actions Component Output with EventEmitter 1`] = `
 <storybook-wrapper>
   <storybook-button-component
     _nghost-a-c2=""
-    ng-reflect-text="Action only"
+    ng-reflect-text="Button 🥁"
   >
     <button
       _ngcontent-a-c2=""
     >
-      Action only
+      Button 🥁
+    </button>
+  </storybook-button-component>
+</storybook-wrapper>
+`;
+
+exports[`Storyshots Addons/Actions Story with template 1`] = `
+<storybook-wrapper>
+  <button>
+    Button
+  </button>
+</storybook-wrapper>
+`;
+
+exports[`Storyshots Addons/Actions Use action in method 1`] = `
+<storybook-wrapper>
+  <storybook-button-component
+    _nghost-a-c3=""
+    ng-reflect-text="Button 🥁"
+  >
+    <button
+      _ngcontent-a-c3=""
+    >
+      Button 🥁
     </button>
   </storybook-button-component>
 </storybook-wrapper>
