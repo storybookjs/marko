@@ -7,17 +7,7 @@ import MarginDecorator from './MarginDecorator.svelte';
 export default {
   title: "Button",
   component: Button,
-  decorators:  [(storyFn) => {
-    const story = storyFun();
-
-    return {
-      Component: MarginDecorator,
-      props: {
-        child: story.Component,
-        props: story.props,
-      },
-    }
-  }]
+  decorators:  [() => MarginDecorator],
 };
 
 // Your templates and stories here. 
@@ -28,20 +18,8 @@ export default {
 ```html
 <!-- MarginDecorator.svelte -->
 
-<!-- 
-  Read the Svelte documentation for special elements here: 
-  https://svelte.dev/tutorial/svelte-component 
--->
-
-<script>
-  // the component used in the story.
-  export let child;
-  // the props inherited from the component's story
-  export let props = {};
-</script>
-
 <div>
-  <svelte:component this={child} {...props}/>
+  <slot/>
 </div>
 
 <style>
