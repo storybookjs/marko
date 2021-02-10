@@ -7,7 +7,7 @@ export default {
   component: DynamicHeading,
   argTypes: {
     // Number type is detected, but we still want to constrain the range from 1-6
-    level: { control: { min: 1, max: 6 } },
+    level: { control: { type: 'range', min: 1, max: 6 } },
   },
   decorators: [
     (storyFn) => {
