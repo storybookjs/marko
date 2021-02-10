@@ -3,7 +3,6 @@ import path from 'path';
 import webpack, { Configuration, Stats } from 'webpack';
 import Cache from 'file-system-cache';
 
-import { Config } from 'html-webpack-plugin';
 import { buildDevStandalone } from './build-dev';
 import { buildStaticStandalone } from './build-static';
 import { resolvePathInStorybookCache } from './utils/resolve-path-in-sb-cache';
@@ -36,6 +35,11 @@ jest.mock('webpack', () => {
     ...actualWebpack,
   };
 });
+
+jest.mock('http', () => ({
+  ...jest.requireActual('http'),
+  createServer: () => ({ listen: (_options, cb) => cb() }),
+}));
 
 const cache = Cache({
   basePath: resolvePathInStorybookCache('dev-server'),
@@ -82,7 +86,7 @@ const prepareSnap = (fn: any, name): Pick<Configuration, 'module' | 'entry' | 'p
   return cleanRoots({ module, entry, plugins: plugins.map((p) => p.constructor.name) });
 };
 
-const snap = (name: string) => `__snapshots__/${name}.snap`;
+const snap = (name: string) => `__snapshots__/${name}`;
 
 describe('core presets', () => {
   beforeEach(() => {
