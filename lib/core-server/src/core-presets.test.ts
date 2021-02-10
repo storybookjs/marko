@@ -2,11 +2,12 @@ import 'jest-specific-snapshot';
 import path from 'path';
 import webpack, { Configuration } from 'webpack';
 import Cache from 'file-system-cache';
+import { resolvePathInStorybookCache } from '@storybook/core-common';
 
 import { buildDevStandalone } from './build-dev';
 import { buildStaticStandalone } from './build-static';
-import { resolvePathInStorybookCache } from './utils/resolve-path-in-sb-cache';
-import reactOptions from '../../../../app/react/src/server/options';
+
+import reactOptions from '../../../app/react/src/server/options';
 
 const TIMEOUT = 10000;
 
@@ -54,7 +55,7 @@ const options = {
   managerOnly, // production
   docsMode: false,
   cache,
-  configDir: path.resolve(`${__dirname}/../../../../examples/react-ts`),
+  configDir: path.resolve(`${__dirname}/../../../examples/react-ts`),
   outputDir: `${__dirname}/storybook-static`, // production
   ci: true,
   managerCache: false,

@@ -45,8 +45,8 @@ export async function buildStaticStandalone(options: CLIOptions & LoadOptions & 
 
   const presets = loadAllPresets({
     corePresets: [
-      require.resolve('./presets/common-preset.js'),
-      require.resolve('./presets/manager-preset.js'),
+      require.resolve('./presets/common-preset'),
+      require.resolve('./presets/manager-preset'),
       ...previewBuilder.corePresets,
       require.resolve('./presets/babel-cache-preset'),
     ],
