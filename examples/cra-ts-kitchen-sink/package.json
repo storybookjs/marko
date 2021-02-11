@@ -1,6 +1,6 @@
 {
   "name": "cra-ts-kitchen-sink",
-  "version": "6.2.0-alpha.24",
+  "version": "6.2.0-alpha.25",
   "private": true,
   "scripts": {
     "build": "react-scripts build",
@@ -34,14 +34,14 @@
     "typescript": "^3.9.7"
   },
   "devDependencies": {
-    "@storybook/addon-a11y": "6.2.0-alpha.24",
-    "@storybook/addon-actions": "6.2.0-alpha.24",
-    "@storybook/addon-docs": "6.2.0-alpha.24",
-    "@storybook/addon-knobs": "6.2.0-alpha.24",
-    "@storybook/addon-links": "6.2.0-alpha.24",
-    "@storybook/addons": "6.2.0-alpha.24",
+    "@storybook/addon-a11y": "6.2.0-alpha.25",
+    "@storybook/addon-actions": "6.2.0-alpha.25",
+    "@storybook/addon-docs": "6.2.0-alpha.25",
+    "@storybook/addon-knobs": "6.2.0-alpha.25",
+    "@storybook/addon-links": "6.2.0-alpha.25",
+    "@storybook/addons": "6.2.0-alpha.25",
     "@storybook/preset-create-react-app": "^3.1.5",
-    "@storybook/react": "6.2.0-alpha.24",
+    "@storybook/react": "6.2.0-alpha.25",
     "@types/enzyme": "^3.10.8",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
