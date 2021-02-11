@@ -21,7 +21,7 @@ export const setPath = (selection?: StoreSelection) => {
   }
 
   const { storyId, viewMode }: { storyId: StoryId; viewMode: ViewMode } = selection;
-  const { search, hash } = document.location;
+  const { search = '', hash = '' } = document.location;
   const { path, selectedKind, selectedStory, ...rest } = qs.parse(search, {
     ignoreQueryPrefix: true,
   });
