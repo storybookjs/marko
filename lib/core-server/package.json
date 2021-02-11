@@ -1,6 +1,6 @@
 {
   "name": "@storybook/core-server",
-  "version": "6.2.0-alpha.24",
+  "version": "6.2.0-alpha.25",
   "description": "Storybook framework-agnostic API",
   "keywords": [
     "storybook"
@@ -38,12 +38,12 @@
   "dependencies": {
     "@babel/core": "^7.12.10",
     "@babel/preset-react": "^7.12.10",
-    "@storybook/addons": "6.2.0-alpha.24",
-    "@storybook/core-common": "6.2.0-alpha.24",
-    "@storybook/node-logger": "6.2.0-alpha.24",
+    "@storybook/addons": "6.2.0-alpha.25",
+    "@storybook/core-common": "6.2.0-alpha.25",
+    "@storybook/node-logger": "6.2.0-alpha.25",
     "@storybook/semver": "^7.3.2",
-    "@storybook/theming": "6.2.0-alpha.24",
-    "@storybook/ui": "6.2.0-alpha.24",
+    "@storybook/theming": "6.2.0-alpha.25",
+    "@storybook/ui": "6.2.0-alpha.25",
     "@types/node": "^14.0.10",
     "@types/node-fetch": "^2.5.7",
     "airbnb-js-shims": "^2.2.1",
