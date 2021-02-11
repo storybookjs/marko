@@ -61,6 +61,7 @@
     "@storybook/addon-docs": "6.2.0-alpha.24",
     "@storybook/angular": "6.2.0-alpha.24",
     "@storybook/react": "6.2.0-alpha.24",
+    "@storybook/vue": "6.2.0-alpha.24",
     "babel-loader": "^8.2.2",
     "enzyme": "^3.11.0",
     "enzyme-to-json": "^3.6.1",

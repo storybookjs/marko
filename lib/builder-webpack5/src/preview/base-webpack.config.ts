@@ -1,58 +1,6 @@
-import autoprefixer from 'autoprefixer';
-import findUp from 'find-up';
-import path from 'path';
 import { logger } from '@storybook/node-logger';
 import type { Options } from '@storybook/core-common';
-import deprecate from 'util-deprecate';
-import dedent from 'ts-dedent';
 import type { Configuration } from 'webpack';
-
-const warnImplicitPostcssPlugins = deprecate(
-  () => ({
-    // Additional config is merged with config, so we have it disabled currently
-    config: false,
-    plugins: [
-      require('postcss-flexbugs-fixes'), // eslint-disable-line global-require
-      autoprefixer({
-        flexbox: 'no-2009',
-      }),
-    ],
-  }),
-  dedent`
-    Default PostCSS plugins are deprecated. When switching to '@storybook/addon-postcss',
-    you will need to add your own plugins, such as 'postcss-flexbugs-fixes' and 'autoprefixer'.
-
-    See https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-default-postcss-plugins for details.
-  `
-);
-
-const warnGetPostcssOptions = deprecate(
-  async () => {
-    const postcssConfigFiles = [
-      '.postcssrc',
-      '.postcssrc.json',
-      '.postcssrc.yml',
-      '.postcssrc.js',
-      'postcss.config.js',
-    ];
-    // This is done naturally by newer postcss-loader (through cosmiconfig)
-    const customPostcssConfig = await findUp(postcssConfigFiles);
-
-    if (customPostcssConfig) {
-      logger.info(`=> Using custom ${path.basename(customPostcssConfig)}`);
-      return {
-        config: customPostcssConfig,
-      };
-    }
-    return warnImplicitPostcssPlugins;
-  },
-  dedent`
-    Relying on the implicit PostCSS loader is deprecated and will be removed in Storybook 7.0.
-    If you need PostCSS, include '@storybook/addon-postcss' in your '.storybook/main.js' file.
-
-    See https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-implicit-postcss-loader for details.
-  `
-);
 
 export async function createDefaultWebpackConfig(
   storybookBaseConfig: Configuration,
@@ -88,12 +36,6 @@ export async function createDefaultWebpackConfig(
           loader: require.resolve('css-loader'),
           options: {
             importLoaders: 1,
-          },
-        },
-        {
-          loader: require.resolve('postcss-loader'),
-          options: {
-            postcssOptions: await warnGetPostcssOptions(),
           },
         },
       ],
