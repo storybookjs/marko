@@ -117,6 +117,7 @@ export default async ({
   const tsCheckOptions = typescriptOptions.checkOptions || {};
 
   return {
+    name: 'preview',
     mode: isProd ? 'production' : 'development',
     bail: isProd,
     devtool: 'cheap-module-source-map',
