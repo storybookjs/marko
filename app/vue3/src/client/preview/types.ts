@@ -7,7 +7,7 @@ export interface ShowErrorArgs {
   description: string;
 }
 
-export type StoryFnVueReturnType = ConcreteComponent;
+export type StoryFnVueReturnType = ConcreteComponent<any>;
 
 export interface IStorybookStory {
   name: string;

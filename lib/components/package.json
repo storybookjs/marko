@@ -19,6 +19,13 @@
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/ts3.9/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "dist/ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
@@ -61,12 +68,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "20db16edcd0c76c54f0d80970a288ec94ebd19e6",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "dist/ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "d4ff49b2dee7c5a3c50e992832bd0ae4d3e52e41"
 }

@@ -22,6 +22,13 @@
     "getstorybook": "./bin/index.js",
     "sb": "./bin/index.js"
   },
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "bin/**/*",
     "dist/**/*",
@@ -80,12 +87,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "20db16edcd0c76c54f0d80970a288ec94ebd19e6",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "d4ff49b2dee7c5a3c50e992832bd0ae4d3e52e41"
 }

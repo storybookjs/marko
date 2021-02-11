@@ -62,6 +62,7 @@
     "@storybook/angular": "6.2.0-alpha.25",
     "@storybook/react": "6.2.0-alpha.25",
     "@storybook/vue": "6.2.0-alpha.25",
+    "@storybook/vue3": "6.2.0-alpha.25",
     "babel-loader": "^8.2.2",
     "enzyme": "^3.11.0",
     "enzyme-to-json": "^3.6.1",
@@ -79,7 +80,9 @@
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0",
     "rxjs": "*",
-    "vue": "*"
+    "svelte": "*",
+    "vue": "*",
+    "vue-jest": "*"
   },
   "peerDependenciesMeta": {
     "@storybook/angular": {
@@ -110,5 +113,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "20db16edcd0c76c54f0d80970a288ec94ebd19e6"
+  "gitHead": "d4ff49b2dee7c5a3c50e992832bd0ae4d3e52e41"
 }

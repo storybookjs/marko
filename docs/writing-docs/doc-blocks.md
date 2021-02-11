@@ -214,7 +214,7 @@ Storybook Docs displays a story’s source code using the `Source` block. The sn
 
 In DocsPage, the `Source` block appears automatically within each story’s [Canvas](#canvas) block.
 
-To customize the source snippet that’s displayed for a story, set the `docs.source.code` parameter:
+To customize the source snippet that’s displayed for a story, set the `docs.source.code` and optionally the `docs.source.language` parameters:
 
 <!-- prettier-ignore-start -->
 

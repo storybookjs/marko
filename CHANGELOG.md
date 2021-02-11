@@ -1,18 +1,36 @@
+## 6.2.0-alpha.25 (February 11, 2021)
+
+### Features
+
+- Addon-docs: Configure syntax highlighter language by story parameter ([#13869](https://github.com/storybookjs/storybook/pull/13869))
+- Svelte: Improved decorators ([#13785](https://github.com/storybookjs/storybook/pull/13785))
+- Addon-docs/Angular: Add dynamic source snippets ([#13740](https://github.com/storybookjs/storybook/pull/13740))
+
+### Bug Fixes
+
+- Vue 3: Fix decorators and add more examples ([#13855](https://github.com/storybookjs/storybook/pull/13855))
+- Storyshots: Support main.js usage ([#13842](https://github.com/storybookjs/storybook/pull/13842))
+
+### Maintenance
+
+- Core: Add tests for the preset behavior of core ([#13846](https://github.com/storybookjs/storybook/pull/13846))
+- Upgrade to danger-js@main ([#13857](https://github.com/storybookjs/storybook/pull/13857))
+
 ## 6.2.0-alpha.24 (February 6, 2021)
 
 ### Features
 
-* Addon-storyshots: Add support for Vue 3 ([#13828](https://github.com/storybookjs/storybook/pull/13828))
+- Addon-storyshots: Add support for Vue 3 ([#13828](https://github.com/storybookjs/storybook/pull/13828))
 
 ### Maintenance
 
-* CLI: only kill other processes on fail ([#13822](https://github.com/storybookjs/storybook/pull/13822))
+- CLI: only kill other processes on fail ([#13822](https://github.com/storybookjs/storybook/pull/13822))
 
 ## 6.2.0-alpha.23 (February 5, 2021)
 
 ### Bug Fixes
 
-* Addon-docs/Vue3: Resolve vue3 package for addon-docs preset ([#13819](https://github.com/storybookjs/storybook/pull/13819))
+- Addon-docs/Vue3: Resolve vue3 package for addon-docs preset ([#13819](https://github.com/storybookjs/storybook/pull/13819))
 
 ## 6.2.0-alpha.22 (February 5, 2021)
 
