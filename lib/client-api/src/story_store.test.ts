@@ -878,6 +878,19 @@ describe('preview.story_store', () => {
       });
     });
 
+    describe('with args', () => {
+      it('overrides args on the story', () => {
+        const store = new StoryStore({ channel });
+        const args = { b: 'two', c: 'three' };
+        const argTypes = { a: { defaultValue: 1 }, b: { defaultValue: 2 } };
+        store.setSelectionSpecifier({ storySpecifier: 'a--1', viewMode: 'story', args });
+        addStoryToStore(store, 'a', '1', () => 0, { argTypes });
+        store.finishConfiguring();
+
+        expect(store._stories['a--1'].args).toEqual({ a: 1, ...args });
+      });
+    });
+
     describe('if you use no specifier', () => {
       it('selects nothing', () => {
         const store = new StoryStore({ channel });
