@@ -3,7 +3,10 @@ import { Args } from '@storybook/addons';
 
 const JS_IDENTIFIER_REGEXP = /^[A-Z_$][0-9A-Z_$]*$/i;
 const EXTENDED_ALPHANUM_REGEXP = /^[0-9A-Z _-]*$/i;
-const QS_OPTIONS = { allowDots: true, delimiter: ';' };
+const QS_OPTIONS = {
+  delimiter: ';', // we're parsing a single query param
+  allowDots: true, // objects are encoded using dot notation
+};
 
 // Keep this in sync with validateArgs in @storybook/router
 const validateArgs = (key: any, value: any): boolean => {

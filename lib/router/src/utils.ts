@@ -37,7 +37,13 @@ interface Args {
 
 const JS_IDENTIFIER_REGEXP = /^[A-Z_$][0-9A-Z_$]*$/i;
 const EXTENDED_ALPHANUM_REGEXP = /^[0-9A-Z _-]*$/i;
-const QS_OPTIONS = { allowDots: true, delimiter: ';', encode: false, arrayFormat: 'brackets' };
+const QS_OPTIONS = {
+  encode: false, // we handle URL encoding ourselves
+  delimiter: ';', // we don't actually create multiple query params
+  allowDots: true, // encode objects using dot notation: obj.key=val
+  arrayFormat: 'brackets', // encode arrays using brackets without indices: arr[]=one&arr[]=two
+  format: 'RFC1738', // encode spaces using the + sign
+};
 
 // Keep this in sync with validateArgs in @storybook/core
 const validateArgs = (key: any, value: any): boolean => {
