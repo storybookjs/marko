@@ -4571,10 +4571,10 @@
     npmlog "^4.1.2"
     pretty-hrtime "^1.0.3"
 
-"@storybook/preset-create-react-app@^3.1.5":
-  version "3.1.5"
-  resolved "https://registry.yarnpkg.com/@storybook/preset-create-react-app/-/preset-create-react-app-3.1.5.tgz#af46c9d64c384980d458fe99c10dcbaa623f93fd"
-  integrity sha512-tzYcCRD5j22/HoDZ1tvsKaVnzyd4qqTE9sn3cx56Reb0XHcm4XkvG87jx0NvBGPCZrsThyBAtB3+XNxoFbI+9Q==
+"@storybook/preset-create-react-app@^3.1.6-alpha.0":
+  version "3.1.6-alpha.0"
+  resolved "https://registry.yarnpkg.com/@storybook/preset-create-react-app/-/preset-create-react-app-3.1.6-alpha.0.tgz#6b4518f72507c543fb7c4e5ad3e2aa297fd1179b"
+  integrity sha512-ZsKU/SN3ty0qghFnkQI0QfLlDxFqv96Q9NizwLZRFJfU9qcCEM1KC+KpsRkfSAkpGsmkga2KjZNDM0bgyXAMPQ==
   dependencies:
     "@types/babel__core" "^7.1.7"
     "@types/webpack" "^4.41.13"
