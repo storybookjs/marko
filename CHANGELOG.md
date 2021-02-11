@@ -1,3 +1,88 @@
+## 6.2.0-alpha.25 (February 11, 2021)
+
+### Features
+
+- Addon-docs: Configure syntax highlighter language by story parameter ([#13869](https://github.com/storybookjs/storybook/pull/13869))
+- Svelte: Improved decorators ([#13785](https://github.com/storybookjs/storybook/pull/13785))
+- Addon-docs/Angular: Add dynamic source snippets ([#13740](https://github.com/storybookjs/storybook/pull/13740))
+
+### Bug Fixes
+
+- Vue 3: Fix decorators and add more examples ([#13855](https://github.com/storybookjs/storybook/pull/13855))
+- Storyshots: Support main.js usage ([#13842](https://github.com/storybookjs/storybook/pull/13842))
+
+### Maintenance
+
+- Core: Add tests for the preset behavior of core ([#13846](https://github.com/storybookjs/storybook/pull/13846))
+- Upgrade to danger-js@main ([#13857](https://github.com/storybookjs/storybook/pull/13857))
+
+## 6.2.0-alpha.24 (February 6, 2021)
+
+### Features
+
+- Addon-storyshots: Add support for Vue 3 ([#13828](https://github.com/storybookjs/storybook/pull/13828))
+
+### Maintenance
+
+- CLI: only kill other processes on fail ([#13822](https://github.com/storybookjs/storybook/pull/13822))
+
+## 6.2.0-alpha.23 (February 5, 2021)
+
+### Bug Fixes
+
+- Addon-docs/Vue3: Resolve vue3 package for addon-docs preset ([#13819](https://github.com/storybookjs/storybook/pull/13819))
+
+## 6.2.0-alpha.22 (February 5, 2021)
+
+### Bug Fixes
+
+- CLI: Fix opening localhost in browser by default ([#13812](https://github.com/storybookjs/storybook/pull/13812))
+
+## 6.1.17 (February 4, 2021)
+
+### Bug Fixes
+
+- CLI: Fix opening localhost in browser by default ([#13812](https://github.com/storybookjs/storybook/pull/13812))
+
+## 6.2.0-alpha.21 (February 4, 2021)
+
+### Features
+
+- Addon-docs: Add support for Vue 3 ([#13809](https://github.com/storybookjs/storybook/pull/13809))
+
+### Maintenance
+
+- Build: Exclude all test and story files from transpilation ([#13714](https://github.com/storybookjs/storybook/pull/13714))
+- Build: Generate version file with preval macro ([#13715](https://github.com/storybookjs/storybook/pull/13715))
+
+## 6.1.16 (February 2, 2021)
+
+### Bug Fixes
+
+- Addon-docs/Svelte: Fix component name in docgen-loader ([#13760](https://github.com/storybookjs/storybook/pull/13760))
+- UI: Fix copy to clipboard for insecure deployments ([#13777](https://github.com/storybookjs/storybook/pull/13777))
+
+## 6.2.0-alpha.20 (February 2, 2021)
+
+### Features
+
+- Vue: Add Vue 3 support ([#13775](https://github.com/storybookjs/storybook/pull/13775))
+- CLI: Add try/catch on readFileAsJson to improve error message ([#13730](https://github.com/storybookjs/storybook/pull/13730))
+- Core: Generate manager cache in smoke test, but don't use/clear any cache ([#13784](https://github.com/storybookjs/storybook/pull/13784))
+
+### Bug Fixes
+
+- Addon-docs/Svelte: Fix component name in docgen-loader ([#13760](https://github.com/storybookjs/storybook/pull/13760))
+- Addon-docs/Svelte: Fix component description ([#13659](https://github.com/storybookjs/storybook/pull/13659))
+- UI: Fix copy to clipboard for insecure deployments ([#13777](https://github.com/storybookjs/storybook/pull/13777))
+
+### Maintenance
+
+- CLI: Handle package versions in package strings for generators ([#13774](https://github.com/storybookjs/storybook/pull/13774))
+- Build: Do not recompile packages in publish step of the CI ([#13786](https://github.com/storybookjs/storybook/pull/13786))
+- CI: Remove generic cache key from Circle CI ([#13787](https://github.com/storybookjs/storybook/pull/13787))
+- CI: Upgrade cache GH Action & remove fallback caches ([#13752](https://github.com/storybookjs/storybook/pull/13752))
+
 ## 6.2.0-alpha.19 (January 29, 2021)
 
 ### Features

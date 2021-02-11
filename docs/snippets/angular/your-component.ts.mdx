@@ -1,6 +1,7 @@
 ```ts
-// YourComponent.stories.tsx
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+// YourComponent.stories.ts
+
+import { Meta, Story } from '@storybook/angular';
 
 import { YourComponent } from './your.component';
 
@@ -11,6 +12,7 @@ export default {
 } as Meta;
 
 const Template: Story<YourComponent> = (args) => ({
+  component: YourComponent,
   props: args,
 });
 

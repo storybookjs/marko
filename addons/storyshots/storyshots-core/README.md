@@ -210,6 +210,29 @@ module.exports = {
 };
 ```
 
+### Configure Jest for Vue 3
+
+StoryShots addon for Vue is dependent on [vue-jest v5](https://www.npmjs.com/package/vue-jest/v/5.0.0-alpha.8), but
+[doesn't](#deps-issue) install it, so you need to install it separately.
+
+```sh
+yarn add vue-jest@5.0.0-alpha.8
+```
+
+If you already use Jest for testing your vue app - probably you already have the needed jest configuration.
+Anyway you can add these lines to your jest config:
+
+```js
+module.exports = {
+  transform: {
+    '^.+\\.jsx?$': 'babel-jest',
+    '.*\\.(vue)$': '<rootDir>/node_modules/vue-jest',
+  },
+  transformIgnorePatterns: ['/node_modules/(?!(@storybook/.*\\.vue$))'],
+  moduleFileExtensions: ['vue', 'js', 'jsx', 'json', 'node'],
+};
+```
+
 ### Configure Jest for Preact
 
 StoryShots addon for Preact is dependent on [preact-render-to-json](https://github.com/nathancahill/preact-render-to-json), but

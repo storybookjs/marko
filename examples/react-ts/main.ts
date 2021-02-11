@@ -16,6 +16,7 @@ module.exports = {
         },
       },
     },
+    '@storybook/addon-storyshots',
   ],
   typescript: {
     check: true,

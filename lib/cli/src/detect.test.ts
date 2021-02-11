@@ -53,6 +53,27 @@ const MOCK_FRAMEWORK_FILES = [
     },
   },
   {
+    name: ProjectType.VUE3,
+    files: {
+      'package.json': {
+        dependencies: {
+          vue: '^3.0.0',
+        },
+      },
+    },
+  },
+  {
+    name: ProjectType.VUE3,
+    files: {
+      'package.json': {
+        dependencies: {
+          // Testing the `next` tag too
+          vue: 'next',
+        },
+      },
+    },
+  },
+  {
     name: ProjectType.EMBER,
     files: {
       'package.json': {
@@ -313,16 +334,6 @@ describe('Detect', () => {
     it(`UNDETECTED for unknown frameworks`, () => {
       const result = detectFrameworkPreset();
       expect(result).toBe(ProjectType.UNDETECTED);
-    });
-
-    // TODO(blaine): Remove once Vue3 is supported
-    it(`UNSUPPORTED for Vue framework above version 3.0.0`, () => {
-      const result = detectFrameworkPreset({
-        dependencies: {
-          vue: '3.0.0',
-        },
-      });
-      expect(result).toBe(ProjectType.UNSUPPORTED);
     });
 
     // TODO(blaine): Remove once Nuxt3 is supported

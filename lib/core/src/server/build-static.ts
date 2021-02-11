@@ -131,7 +131,7 @@ async function buildManager(configType: any, outputDir: string, configDir: strin
     configType,
     outputDir,
     configDir,
-    corePresets: [require.resolve('./manager/manager-preset.js')],
+    corePresets: [require.resolve('./manager/manager-preset')],
   });
 
   if (options.debugWebpack) {
@@ -153,8 +153,8 @@ async function buildPreview(configType: any, outputDir: string, packageJson: any
     configType,
     outputDir,
     packageJson,
-    corePresets: [require.resolve('./preview/preview-preset.js')],
-    overridePresets: [require.resolve('./preview/custom-webpack-preset.js')],
+    corePresets: [require.resolve('./preview/preview-preset')],
+    overridePresets: [require.resolve('./preview/custom-webpack-preset')],
   });
 
   if (debugWebpack) {

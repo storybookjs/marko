@@ -33,6 +33,22 @@ Object {
       "name": "void",
     },
   },
+  "accent": Object {
+    "defaultValue": undefined,
+    "description": "<p>Specify the accent-type of the button </p>
+",
+    "name": "accent",
+    "table": Object {
+      "category": "inputs",
+      "type": Object {
+        "required": true,
+        "summary": "ButtonAccent",
+      },
+    },
+    "type": Object {
+      "name": "object",
+    },
+  },
   "appearance": Object {
     "defaultValue": "secondary",
     "description": "<p>Appearance style of the button. </p>
@@ -268,6 +284,22 @@ Object {
       "type": Object {
         "required": true,
         "summary": "ButtonSize",
+      },
+    },
+    "type": Object {
+      "name": "object",
+    },
+  },
+  "someDataObject": Object {
+    "defaultValue": undefined,
+    "description": "<p>Specifies some arbitrary object </p>
+",
+    "name": "someDataObject",
+    "table": Object {
+      "category": "inputs",
+      "type": Object {
+        "required": true,
+        "summary": "ISomeInterface",
       },
     },
     "type": Object {
