@@ -1,4 +1,5 @@
-import { ConcreteComponent, Component, App, defineComponent, h } from 'vue';
+import type { ConcreteComponent, Component, ComponentOptions, App } from 'vue';
+import { h } from 'vue';
 import { start } from '@storybook/core/client';
 import {
   ClientStoryApi,
@@ -15,6 +16,16 @@ import render, { storybookApp } from './render';
 
 const PROPS = 'STORYBOOK_PROPS';
 
+/*
+  This normalizes a functional component into a render method in ComponentOptions.
+
+  The concept is taken from Vue 3's `defineComponent` but changed from creating a `setup`
+  method on the ComponentOptions so end-users don't need to specify a "thunk" as a decorator.
+ */
+function normalizeFunctionalComponent(options: ConcreteComponent): ComponentOptions {
+  return typeof options === 'function' ? { render: options, name: options.name } : options;
+}
+
 function prepare(story: StoryFnVueReturnType, innerStory?: ConcreteComponent): Component | null {
   if (story == null) {
     return null;
@@ -22,7 +33,8 @@ function prepare(story: StoryFnVueReturnType, innerStory?: ConcreteComponent): C
 
   if (innerStory) {
     return {
-      extends: story,
+      // Normalize so we can always spread an object
+      ...normalizeFunctionalComponent(story),
       components: { story: innerStory },
       props: innerStory.props,
       inject: {
@@ -39,7 +51,7 @@ function prepare(story: StoryFnVueReturnType, innerStory?: ConcreteComponent): C
     };
   }
 
-  return defineComponent({
+  return {
     props: story.props,
     inject: {
       props: {
@@ -50,7 +62,7 @@ function prepare(story: StoryFnVueReturnType, innerStory?: ConcreteComponent): C
     render() {
       return h(story, this.props || this.$props);
     },
-  });
+  };
 }
 
 const defaultContext: StoryContext = {
