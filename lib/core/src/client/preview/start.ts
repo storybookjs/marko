@@ -68,16 +68,6 @@ export default function start(
     const selectionSpecifier = getSelectionSpecifierFromPath();
     if (selectionSpecifier) {
       storyStore.setSelectionSpecifier(selectionSpecifier);
-
-      const { args, storySpecifier } = selectionSpecifier;
-      if (args && typeof storySpecifier === 'string') {
-        channel.on(Events.SET_STORIES, () => {
-          channel.emit(Events.UPDATE_STORY_ARGS, {
-            storyId: storySpecifier,
-            updatedArgs: args,
-          });
-        });
-      }
     }
 
     channel.on(Events.CURRENT_STORY_WAS_SET, setPath);

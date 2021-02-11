@@ -63,7 +63,7 @@ Use \`id=$storyId\` instead.
 See https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-url-structure`
 );
 
-export const getSelectionSpecifierFromPath: () => StoreSelectionSpecifier & { args: Args } = () => {
+export const getSelectionSpecifierFromPath: () => StoreSelectionSpecifier = () => {
   const query = qs.parse(document.location.search, { ignoreQueryPrefix: true });
   const args = typeof query.args === 'string' ? parseArgsParam(query.args) : undefined;
 
