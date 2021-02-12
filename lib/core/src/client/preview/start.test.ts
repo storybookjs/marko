@@ -20,7 +20,7 @@ jest.mock('global', () => ({
     getElementById: jest.fn().mockReturnValue({}),
     body: { classList: { add: jest.fn(), remove: jest.fn() }, style: {} },
     documentElement: {},
-    location: { search: '?id=kind--story' },
+    location: { search: '?id=kind--story&args=b:two;c:three' },
   },
 }));
 
@@ -73,6 +73,22 @@ it('calls render when you add a story', async () => {
 
   await sleep(0);
   expect(render).toHaveBeenCalledWith(expect.objectContaining({ kind: 'kind', name: 'story' }));
+});
+
+it('uses args from URL param when rendering story', async () => {
+  const render = jest.fn();
+  const argTypes = { a: { defaultValue: 1 }, b: { defaultValue: 2 } };
+
+  const { clientApi, configApi } = start(render);
+
+  configApi.configure(() => {
+    clientApi.storiesOf('kind', {} as NodeModule).add('story', () => {}, { argTypes });
+  }, {} as NodeModule);
+
+  await sleep(0);
+  expect(render).toHaveBeenCalledWith(
+    expect.objectContaining({ kind: 'kind', name: 'story', args: { a: 1, b: 'two', c: 'three' } })
+  );
 });
 
 it('emits an exception and shows error when your story throws', async () => {
