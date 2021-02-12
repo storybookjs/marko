@@ -8,6 +8,7 @@ export default {
     children: { control: 'text', name: 'Children' },
     type: { control: 'text', name: 'Type' },
     somethingElse: { control: 'object', name: 'Something Else' },
+    imageUrls: { control: { type: 'file', accept: '.png' }, name: 'Image Urls' },
   },
 };
 
@@ -24,6 +25,11 @@ Action.args = {
   children: 'hmmm',
   type: 'action',
   somethingElse: { a: 4 },
+};
+
+export const ImageFileControl = (args) => <img src={args.imageUrls[0]} alt="Your Example Story" />;
+ImageFileControl.args = {
+  imageUrls: ['http://placehold.it/350x150'],
 };
 
 export const CustomControls = Template.bind({});

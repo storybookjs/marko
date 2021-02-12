@@ -123,7 +123,6 @@ As they can be complex cases:
 
 <!-- prettier-ignore-end -->
 
-
 Or even with certain types of elements, such as icons:
 
 <!-- prettier-ignore-start -->
@@ -156,6 +155,7 @@ Here is the full list of available controls you can use:
 | Data Type   | Control Type | Description                                                    |    Options     |
 | :---------- | :----------: | :------------------------------------------------------------- | :------------: |
 | **array**   |    array     | serialize array into a comma-separated string inside a textbox |   separator    |
+|             |     file     | a file input that gives you a array of urls                    |     accept     |
 | **boolean** |   boolean    | checkbox input                                                 |       -        |
 | **number**  |    number    | a numeric text box input                                       | min, max, step |
 |             |    range     | a range slider input                                           | min, max, step |
@@ -232,7 +232,7 @@ And here's what the resulting UI looks like:
 
 ### Disable controls for specific properties
 
-Asides from the features already documented here. Controls can also be disabled for individual properties. 
+Asides from the features already documented here. Controls can also be disabled for individual properties.
 
 Suppose you want to disable Controls for a property called `foo` in a component's story. The following example illustrates how:
 
@@ -267,7 +267,7 @@ The previous example also removed the prop documentation from the table. In some
 
 <div class="aside">
 
- As with other Storybook properties, such as [decorators](../writing-stories/decorators.md) the same principle can also be applied at a story-level for more granular cases.
+As with other Storybook properties, such as [decorators](../writing-stories/decorators.md) the same principle can also be applied at a story-level for more granular cases.
 
 </div>
 
