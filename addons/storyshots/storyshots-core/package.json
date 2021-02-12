@@ -58,6 +58,8 @@
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
+    "@angular/core": "^11.2.0",
+    "@angular/platform-browser-dynamic": "^11.2.0",
     "@storybook/addon-docs": "6.2.0-alpha.25",
     "@storybook/angular": "6.2.0-alpha.25",
     "@storybook/react": "6.2.0-alpha.25",
@@ -72,6 +74,8 @@
     "vue-jest": "^5.0.0-alpha.8"
   },
   "peerDependencies": {
+    "@angular/core": ">=6.0.0",
+    "@angular/platform-browser-dynamic": ">=6.0.0",
     "@storybook/angular": "*",
     "@storybook/react": "*",
     "@storybook/vue": "*",
@@ -86,6 +90,12 @@
     "vue-jest": "*"
   },
   "peerDependenciesMeta": {
+    "@angular/core": {
+      "optional": true
+    },
+    "@angular/platform-browser-dynamic": {
+      "optional": true
+    },
     "@storybook/angular": {
       "optional": true
     },
