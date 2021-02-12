@@ -2,7 +2,7 @@ import { history, document } from 'global';
 import qs from 'qs';
 import deprecate from 'util-deprecate';
 import { StoreSelectionSpecifier, StoreSelection } from '@storybook/client-api';
-import { Args, StoryId, ViewMode } from '@storybook/addons';
+import { StoryId, ViewMode } from '@storybook/addons';
 
 import { parseArgsParam } from './parseArgsParam';
 
