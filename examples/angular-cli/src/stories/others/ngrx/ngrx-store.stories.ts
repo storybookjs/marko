@@ -1,6 +1,7 @@
 import { Store, StoreModule } from '@ngrx/store';
-import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { Component } from '@angular/core';
+
+import { Meta, moduleMetadata, Story } from '@storybook/angular';
 
 @Component({
   selector: 'storybook-comp-with-store',
@@ -18,8 +19,9 @@ class WithStoreComponent {
   }
 }
 
-storiesOf('Others / NgRx / Store', module)
-  .addDecorator(
+export default {
+  title: 'Others / NgRx / Store',
+  decorators: [
     moduleMetadata({
       imports: [
         StoreModule.forRoot(
@@ -35,11 +37,14 @@ storiesOf('Others / NgRx / Store', module)
         ),
       ],
       declarations: [WithStoreComponent],
-    })
-  )
-  .add('With component', () => ({}), {
-    component: WithStoreComponent,
-  })
-  .add('With template', () => ({
-    template: `<storybook-comp-with-store></storybook-comp-with-store>`,
-  }));
+    }),
+  ],
+} as Meta;
+
+export const WithComponent: Story = () => ({
+  component: WithStoreComponent,
+});
+
+export const WithTemaplte: Story = () => ({
+  template: `<storybook-comp-with-store></storybook-comp-with-store>`,
+});
