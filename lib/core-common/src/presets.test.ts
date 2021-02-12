@@ -104,7 +104,7 @@ describe('presets', () => {
     });
 
     const { getPresets } = jest.requireActual('./presets');
-    const presets = getPresets(['preset-foo', 'preset-got', 'preset-bar']);
+    const presets = getPresets(['preset-foo', 'preset-got', 'preset-bar'], {});
 
     const result = await presets.apply('foo', []);
 
@@ -150,7 +150,7 @@ describe('presets', () => {
     });
 
     const { getPresets } = jest.requireActual('./presets');
-    const presets = wrapPreset(getPresets([{ name: 'preset-foo' }, { name: 'preset-bar' }]));
+    const presets = wrapPreset(getPresets([{ name: 'preset-foo' }, { name: 'preset-bar' }], {}));
 
     async function testPresets() {
       await presets.webpack();
@@ -177,10 +177,13 @@ describe('presets', () => {
 
     const { getPresets } = jest.requireActual('./presets');
     const presets = wrapPreset(
-      getPresets([
-        { name: 'preset-foo', options: { foo: 1 } },
-        { name: 'preset-bar', options: { bar: 'a' } },
-      ])
+      getPresets(
+        [
+          { name: 'preset-foo', options: { foo: 1 } },
+          { name: 'preset-bar', options: { bar: 'a' } },
+        ],
+        {}
+      )
     );
 
     async function testPresets() {
@@ -214,15 +217,18 @@ describe('presets', () => {
 
     const { getPresets } = jest.requireActual('./presets');
     const presets = wrapPreset(
-      getPresets([
-        'preset-foo',
-        {
-          name: 'preset-bar',
-          options: {
-            bar: 'a',
+      getPresets(
+        [
+          'preset-foo',
+          {
+            name: 'preset-bar',
+            options: {
+              bar: 'a',
+            },
           },
-        },
-      ])
+        ],
+        {}
+      )
     );
 
     async function testPresets() {
@@ -256,19 +262,22 @@ describe('presets', () => {
 
     const { getPresets } = jest.requireActual('./presets');
     const presets = wrapPreset(
-      getPresets([
-        'preset-foo',
-        {
-          name: 'preset-bar',
-          options: {
-            bar: 'a',
-            presetsList: expect.arrayContaining([
-              expect.objectContaining({ name: 'preset-foo' }),
-              expect.objectContaining({ name: 'preset-bar' }),
-            ]),
+      getPresets(
+        [
+          'preset-foo',
+          {
+            name: 'preset-bar',
+            options: {
+              bar: 'a',
+              presetsList: expect.arrayContaining([
+                expect.objectContaining({ name: 'preset-foo' }),
+                expect.objectContaining({ name: 'preset-bar' }),
+              ]),
+            },
           },
-        },
-      ])
+        ],
+        {}
+      )
     );
 
     async function testPresets() {
@@ -301,7 +310,7 @@ describe('presets', () => {
       bar: mockPresetBar,
     });
 
-    const presets = getPresets(['preset-foo']);
+    const presets = getPresets(['preset-foo'], {});
 
     const output = await presets.apply('bar');
 
