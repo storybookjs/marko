@@ -49,6 +49,7 @@
     "react-inspector": "^5.1.0",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0",
+    "polished": "^4.0.5",
     "util-deprecate": "^1.0.2",
     "uuid-browser": "^3.1.0"
   },
