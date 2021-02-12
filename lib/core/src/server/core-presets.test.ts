@@ -88,7 +88,7 @@ const prepareSnap = (fn: any, name): Pick<Configuration, 'module' | 'entry' | 'p
 
 const snap = (name: string) => `__snapshots__/${name}`;
 
-describe('core presets', () => {
+describe('manager', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     cache.clear();
@@ -101,9 +101,6 @@ describe('core presets', () => {
 
       const managerConfig = prepareSnap(webpack, 'manager');
       expect(managerConfig).toMatchSpecificSnapshot(snap('manager-dev'));
-
-      const previewConfig = prepareSnap(webpack, 'preview');
-      expect(previewConfig).toMatchSpecificSnapshot(snap('preview-dev'));
     },
     TIMEOUT
   );
@@ -115,6 +112,32 @@ describe('core presets', () => {
 
       const managerConfig = prepareSnap(webpack, 'manager');
       expect(managerConfig).toMatchSpecificSnapshot(snap('manager-prod'));
+    },
+    TIMEOUT
+  );
+});
+
+describe('preview', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    cache.clear();
+  });
+  it(
+    'dev mode',
+    async () => {
+      const result = await buildDevStandalone(options);
+      expect(webpack).toHaveBeenCalled();
+
+      const previewConfig = prepareSnap(webpack, 'preview');
+      expect(previewConfig).toMatchSpecificSnapshot(snap('preview-dev'));
+    },
+    TIMEOUT
+  );
+  it(
+    'production mode',
+    async () => {
+      const result = await buildStaticStandalone(options);
+      expect(webpack).toHaveBeenCalled();
 
       const previewConfig = prepareSnap(webpack, 'preview');
       expect(previewConfig).toMatchSpecificSnapshot(snap('preview-prod'));

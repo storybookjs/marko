@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`core presets production mode 1`] = `
+exports[`manager production mode 1`] = `
 Object {
   "entry": Array [
     "ROOT/lib/core/src/server/common/polyfills.ts",
