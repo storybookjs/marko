@@ -45,7 +45,7 @@
       "lib/*",
       "lib/cli/test/run/*"
     ],
-    "nohoist": ["webpack", "*-webpack-*", "**/*-webpack-*"]
+    "nohoist": ["examples/cra-*/webpack", "examples/cra-*/*-webpack*", "examples/cra-*/react-scripts"]
   },
   "scripts": {
     "await-serve-storybooks": "wait-on http://localhost:8001",
