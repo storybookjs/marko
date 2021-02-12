@@ -60,26 +60,10 @@ You can also pick suites from CLI. Suites available are listed below.
 
 ##### Core & Examples Tests
 
-`yarn test --core`
+`yarn test`
 
 This option executes tests from `<rootdir>/app/react`, `<rootdir>/app/vue`, and `<rootdir>/lib`.
 Before the tests are run, the project must be bootstrapped with core. You can accomplish this with `yarn bootstrap --core`
-
-##### CRA-kitchen-sink - Image snapshots using Storyshots
-
-`yarn test --image`
-
-This option executes tests from `<rootdir>/examples/official-storybook`
-In order for the image snapshots to be correctly generated, you must have a static build of the storybook up-to-date :
-
-```sh
-cd examples/official-storybook
-yarn build-storybook
-cd ../..
-yarn test --image
-```
-
-Puppeteer is used to launch and grab screenshots of example pages, while jest is used to assert matching images. (just like integration tests)
 
 #### 2b. Run Linter
 
@@ -264,7 +248,7 @@ If you run into trouble here, make sure your node, npm, and **_yarn_** are on th
 2.  `git clone https://github.com/storybookjs/storybook.git` _bonus_: use your own fork for this step
 3.  `cd storybook`
 4.  `yarn bootstrap --core`
-5.  `yarn test --core`
+5.  `yarn test`
 6.  `yarn dev` _You must have this running for your changes to show up_
 
 > NOTE: on windows you may need to run `yarn` before `yarn bootstrap` (between steps 3 and 4).
