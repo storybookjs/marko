@@ -1,4 +1,3 @@
-import { withKnobs, text } from '@storybook/addon-knobs';
 import { DiComponent } from './di.component';
 
 export default {
@@ -14,11 +13,13 @@ export const InputsAndInjectDependencies = () => ({
 
 InputsAndInjectDependencies.storyName = 'inputs and inject dependencies';
 
-export const InputsAndInjectDependenciesWithKnobs = () => ({
-  props: {
-    title: text('title', 'Component dependencies'),
-  },
+export const InputsAndInjectDependenciesWithArgs = (args) => ({
+  props: args,
 });
-
-InputsAndInjectDependenciesWithKnobs.storyName = 'inputs and inject dependencies with knobs';
-InputsAndInjectDependenciesWithKnobs.decorators = [withKnobs];
+InputsAndInjectDependenciesWithArgs.storyName = 'inputs and inject dependencies with args';
+InputsAndInjectDependenciesWithArgs.argTypes = {
+  title: { control: 'text' },
+};
+InputsAndInjectDependenciesWithArgs.args = {
+  title: 'Component dependencies',
+};

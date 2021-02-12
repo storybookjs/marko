@@ -1,5 +1,4 @@
-import { moduleMetadata } from '@storybook/angular';
-import { withKnobs, text } from '@storybook/addon-knobs';
+import { Meta, moduleMetadata, Story } from '@storybook/angular';
 
 import { CustomPipePipe } from './custom.pipe';
 import { WithPipeComponent } from './with-pipe.component';
@@ -12,9 +11,9 @@ export default {
       declarations: [CustomPipePipe],
     }),
   ],
-};
+} as Meta;
 
-export const Simple = () => ({
+export const Simple: Story = () => ({
   props: {
     field: 'foobar',
   },
@@ -22,11 +21,13 @@ export const Simple = () => ({
 
 Simple.storyName = 'Simple';
 
-export const WithKnobsStory = () => ({
-  props: {
-    field: text('field', 'foobar'),
-  },
+export const WithArgsStory: Story = (args) => ({
+  props: args,
 });
-
-WithKnobsStory.storyName = 'With Knobs';
-WithKnobsStory.decorators = [withKnobs];
+WithArgsStory.storyName = 'With args';
+WithArgsStory.argTypes = {
+  field: { control: 'text' },
+};
+WithArgsStory.args = {
+  field: 'Foo Bar',
+};

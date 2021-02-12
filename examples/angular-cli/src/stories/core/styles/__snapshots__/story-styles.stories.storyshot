@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Core / Story host styles With Knobs 1`] = `
+exports[`Storyshots Core / Story host styles With Args 1`] = `
 <storybook-wrapper>
   <storybook-button-component
     _ngcontent-a-c21=""

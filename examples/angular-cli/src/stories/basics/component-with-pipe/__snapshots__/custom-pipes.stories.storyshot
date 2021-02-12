@@ -12,13 +12,13 @@ exports[`Storyshots Basics / Component with / Pipes Simple 1`] = `
 </storybook-wrapper>
 `;
 
-exports[`Storyshots Basics / Component with / Pipes With Knobs 1`] = `
+exports[`Storyshots Basics / Component with / Pipes With args 1`] = `
 <storybook-wrapper>
   <storybook-with-pipe
-    ng-reflect-field="foobar"
+    ng-reflect-field="Foo Bar"
   >
     <h1>
-      CustomPipe: foobar
+      CustomPipe: Foo Bar
     </h1>
   </storybook-with-pipe>
 </storybook-wrapper>

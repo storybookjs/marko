@@ -1,6 +1,5 @@
-import { moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, text } from '@storybook/addon-knobs';
 import { Button } from '@storybook/angular/demo';
 
 export default {
@@ -10,7 +9,7 @@ export default {
       declarations: [Button],
     }),
   ],
-};
+} as Meta;
 
 export const TemplateStory: Story = () => ({
   template: `<storybook-button-component [text]="text" (onClick)="onClick($event)"></storybook-button-component>`,
@@ -27,15 +26,11 @@ export const TemplateStory: Story = () => ({
     `,
   ],
 });
-
 TemplateStory.storyName = 'With story template';
 
-export const WithKnobsStory = () => ({
+export const WithArgsStory: Story = (args) => ({
   template: `<storybook-button-component [text]="text" (onClick)="onClick($event)"></storybook-button-component>`,
-  props: {
-    text: text('text', 'Button with custom styles'),
-    onClick: action('log'),
-  },
+  props: args,
   styles: [
     `
   storybook-button-component {
@@ -45,6 +40,11 @@ export const WithKnobsStory = () => ({
 `,
   ],
 });
-
-WithKnobsStory.storyName = 'With Knobs';
-WithKnobsStory.decorators = [withKnobs];
+WithArgsStory.storyName = 'With Args';
+WithArgsStory.argTypes = {
+  text: { control: 'text' },
+  onClick: { action: 'On click' },
+};
+WithArgsStory.args = {
+  text: 'Button with custom styles',
+};

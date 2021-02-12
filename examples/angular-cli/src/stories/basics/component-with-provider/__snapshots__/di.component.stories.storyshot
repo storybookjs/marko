@@ -29,7 +29,7 @@ exports[`Storyshots Basics / Component with / Provider inputs and inject depende
 </storybook-wrapper>
 `;
 
-exports[`Storyshots Basics / Component with / Provider inputs and inject dependencies with knobs 1`] = `
+exports[`Storyshots Basics / Component with / Provider inputs and inject dependencies with args 1`] = `
 <storybook-wrapper>
   <storybook-di-component
     ng-reflect-title="Component dependencies"

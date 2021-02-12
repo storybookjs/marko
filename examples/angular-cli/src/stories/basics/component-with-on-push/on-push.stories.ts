@@ -1,18 +1,21 @@
-import { withKnobs, text, color } from '@storybook/addon-knobs';
+import { Meta, Story } from '@storybook/angular';
 import { OnPushBoxComponent } from './on-push-box.component';
 
 export default {
   title: 'Basics / Component with / OnPush strategy',
-  decorators: [withKnobs],
   component: OnPushBoxComponent,
-};
-
-export const ClassSpecifiedComponentWithOnPushAndKnobs = () => ({
-  props: {
-    word: text('Word', 'OnPush'),
-    bgColor: color('Box color', '#FFF000'),
+  argTypes: {
+    word: { control: 'text' },
+    bgColor: { control: 'color' },
   },
-});
+  args: {
+    word: 'The text',
+    bgColor: '#FFF000',
+  },
+} as Meta;
 
-ClassSpecifiedComponentWithOnPushAndKnobs.storyName =
-  'Class-specified component with OnPush and Knobs';
+export const ClassSpecifiedComponentWithOnPushAndArgs: Story = (args) => ({
+  props: args,
+});
+ClassSpecifiedComponentWithOnPushAndArgs.storyName =
+  'Class-specified component with OnPush and Args';
