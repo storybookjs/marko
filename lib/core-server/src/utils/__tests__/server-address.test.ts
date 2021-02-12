@@ -1,5 +1,5 @@
 import ip from 'ip';
-import { getServerAddresses } from './dev-server';
+import { getServerAddresses } from '../server-address';
 
 jest.mock('ip');
 const mockedIp = ip as jest.Mocked<typeof ip>;

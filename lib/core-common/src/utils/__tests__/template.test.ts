@@ -11,7 +11,7 @@ describe('server.getPreviewHeadHtml', () => {
   describe('when .storybook/preview-head.html does not exist', () => {
     beforeEach(() => {
       mock({
-        [`${__dirname}/../templates/base-preview-head.html`]: BASE_HTML_CONTENTS,
+        [`${__dirname}/../../templates/base-preview-head.html`]: BASE_HTML_CONTENTS,
         config: {},
       });
     });
@@ -29,7 +29,7 @@ describe('server.getPreviewHeadHtml', () => {
   describe('when .storybook/preview-head.html exists', () => {
     beforeEach(() => {
       mock({
-        [`${__dirname}/../templates/base-preview-head.html`]: BASE_HTML_CONTENTS,
+        [`${__dirname}/../../templates/base-preview-head.html`]: BASE_HTML_CONTENTS,
         config: {
           'preview-head.html': HEAD_HTML_CONTENTS,
         },
@@ -51,7 +51,7 @@ describe('server.getPreviewBodyHtml', () => {
   describe('when .storybook/preview-body.html does not exist', () => {
     beforeEach(() => {
       mock({
-        [`${__dirname}/../templates/base-preview-body.html`]: BASE_BODY_HTML_CONTENTS,
+        [`${__dirname}/../../templates/base-preview-body.html`]: BASE_BODY_HTML_CONTENTS,
         config: {},
       });
     });
@@ -69,7 +69,7 @@ describe('server.getPreviewBodyHtml', () => {
   describe('when .storybook/preview-body.html exists', () => {
     beforeEach(() => {
       mock({
-        [`${__dirname}/../templates/base-preview-body.html`]: BASE_BODY_HTML_CONTENTS,
+        [`${__dirname}/../../templates/base-preview-body.html`]: BASE_BODY_HTML_CONTENTS,
         config: {
           'preview-body.html': BODY_HTML_CONTENTS,
         },
