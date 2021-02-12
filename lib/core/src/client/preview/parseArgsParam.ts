@@ -1,8 +1,7 @@
 import qs from 'qs';
 import { Args } from '@storybook/addons';
 
-const JS_IDENTIFIER_REGEXP = /^[A-Z_$][0-9A-Z_$]*$/i;
-const EXTENDED_ALPHANUM_REGEXP = /^[0-9A-Z _-]*$/i;
+const VALIDATION_REGEXP = /^[a-zA-Z0-9 _-]+$/;
 const QS_OPTIONS = {
   delimiter: ';', // we're parsing a single query param
   allowDots: true, // objects are encoded using dot notation
@@ -11,8 +10,8 @@ const QS_OPTIONS = {
 // Keep this in sync with validateArgs in @storybook/router
 const validateArgs = (key: any, value: any): boolean => {
   if (!key || !value) return false;
-  if (!JS_IDENTIFIER_REGEXP.test(key)) return false;
-  if (typeof value === 'string') return EXTENDED_ALPHANUM_REGEXP.test(value);
+  if (!VALIDATION_REGEXP.test(key)) return false;
+  if (typeof value === 'string') return VALIDATION_REGEXP.test(value);
   if (Array.isArray(value)) return value.every((v) => validateArgs(key, v));
   return Object.entries(value).every(([k, v]) => validateArgs(k, v));
 };

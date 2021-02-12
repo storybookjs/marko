@@ -67,22 +67,20 @@ describe('parseArgsParam', () => {
   });
 
   describe('key sanitization', () => {
-    it("omits keys that aren't valid JS 1.5 identifiers", () => {
+    it("omits keys that aren't in the extended alphanumeric set", () => {
       expect(parseArgsParam('a`b:val')).toEqual({});
       expect(parseArgsParam('a~b:val')).toEqual({});
       expect(parseArgsParam('a!b:val')).toEqual({});
       expect(parseArgsParam('a@b:val')).toEqual({});
       expect(parseArgsParam('a#b:val')).toEqual({});
+      expect(parseArgsParam('a$b:val')).toEqual({});
       expect(parseArgsParam('a%b:val')).toEqual({});
       expect(parseArgsParam('a^b:val')).toEqual({});
       expect(parseArgsParam('a&b:val')).toEqual({});
       expect(parseArgsParam('a*b:val')).toEqual({});
       expect(parseArgsParam('a(b:val')).toEqual({});
       expect(parseArgsParam('a)b:val')).toEqual({});
-      expect(parseArgsParam('a-b:val')).toEqual({});
       expect(parseArgsParam('a=b:val')).toEqual({});
-      expect(parseArgsParam('a+b:val')).toEqual({});
-      expect(parseArgsParam('1b:val')).toEqual({});
       expect(parseArgsParam('"b":val')).toEqual({});
       expect(parseArgsParam('a/b:val')).toEqual({});
       expect(parseArgsParam('a\\b:val')).toEqual({});
@@ -97,10 +95,13 @@ describe('parseArgsParam', () => {
       expect(parseArgsParam('a,b:val')).toEqual({});
     });
 
-    it('allows keys that are valid JS 1.5 identifiers', () => {
+    it('allows keys that are in the extended alphanumeric set', () => {
+      expect(parseArgsParam(' key :val')).toEqual({ ' key ': 'val' });
+      expect(parseArgsParam('+key+:val')).toEqual({ ' key ': 'val' });
+      expect(parseArgsParam('-key-:val')).toEqual({ '-key-': 'val' });
       expect(parseArgsParam('_key_:val')).toEqual({ _key_: 'val' });
-      expect(parseArgsParam('$key$:val')).toEqual({ $key$: 'val' });
       expect(parseArgsParam('KEY123:val')).toEqual({ KEY123: 'val' });
+      expect(parseArgsParam('1:val')).toEqual({ '1': 'val' });
     });
 
     it('also applies to nested object keys', () => {
@@ -150,9 +151,11 @@ describe('parseArgsParam', () => {
 
     it('allows values that are in the extended alphanumeric set', () => {
       expect(parseArgsParam('key: val ')).toEqual({ key: ' val ' });
+      expect(parseArgsParam('key:+val+')).toEqual({ key: ' val ' });
       expect(parseArgsParam('key:_val_')).toEqual({ key: '_val_' });
       expect(parseArgsParam('key:-val-')).toEqual({ key: '-val-' });
       expect(parseArgsParam('key:VAL123')).toEqual({ key: 'VAL123' });
+      expect(parseArgsParam('key:1')).toEqual({ key: '1' });
     });
 
     it('also applies to nested object and array values', () => {
