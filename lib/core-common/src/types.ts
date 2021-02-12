@@ -146,7 +146,7 @@ export interface CLIOptions {
 }
 
 export interface BuilderOptions {
-  configType: 'DEVELOPMENT' | 'PRODUCTION';
+  configType?: 'DEVELOPMENT' | 'PRODUCTION';
   ignorePreview: boolean;
   cache: FileSystemCache;
   configDir: string;

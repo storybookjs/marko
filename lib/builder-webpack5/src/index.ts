@@ -31,6 +31,10 @@ export const getConfig: WebpackBuilder['getConfig'] = async (options) => {
   );
 };
 
+export const executor = {
+  get: webpack,
+};
+
 export const start: WebpackBuilder['start'] = async ({
   startTime,
   options,
@@ -38,7 +42,20 @@ export const start: WebpackBuilder['start'] = async ({
   router,
 }) => {
   const config = await getConfig(options);
-  const compiler = webpack(config);
+  const compiler = executor.get(config);
+  if (!compiler) {
+    const err = `${config.name}: missing webpack compiler at runtime!`;
+    logger.error(err);
+    return {
+      bail,
+      totalTime: process.hrtime(startTime),
+      stats: ({
+        hasErrors: () => true,
+        hasWarngins: () => false,
+        toJson: () => ({ warnings: [] as any[], errors: [err] }),
+      } as any) as Stats,
+    };
+  }
 
   await useProgressReporting(compiler, options, startTime);
 

@@ -15,6 +15,10 @@ type WebpackBuilder = Builder<Configuration, Stats>;
 
 export const getConfig: WebpackBuilder['getConfig'] = getManagerWebpackConfig;
 
+export const executor = {
+  get: webpack,
+};
+
 export const start: WebpackBuilder['start'] = async ({
   startTime,
   options,
@@ -43,7 +47,19 @@ export const start: WebpackBuilder['start'] = async ({
     }
   }
 
-  const compiler = webpack(config);
+  const compiler = executor.get(config);
+  if (!compiler) {
+    const err = `${config.name}: missing webpack compiler at runtime!`;
+    return {
+      bail,
+      totalTime: process.hrtime(startTime),
+      stats: ({
+        hasErrors: () => true,
+        hasWarnings: () => false,
+        toJson: () => ({ warnings: [] as any[], errors: [err] }),
+      } as any) as Stats,
+    };
+  }
 
   await useProgressReporting(compiler, options, startTime);
 
@@ -97,7 +113,7 @@ export const build: WebpackBuilder['build'] = async ({ options, startTime }) => 
   const statsOptions = typeof config.stats === 'boolean' ? 'minimal' : config.stats;
 
   return new Promise((succeed, fail) => {
-    webpack(config).run((error, stats) => {
+    executor.get(config).run((error, stats) => {
       if (error || !stats || stats.hasErrors()) {
         logger.error('=> Failed to build the manager');
 

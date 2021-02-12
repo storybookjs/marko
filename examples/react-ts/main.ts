@@ -26,6 +26,6 @@ module.exports = {
     },
   },
   core: {
-    builder: 'webpack5',
+    builder: 'webpack4',
   },
 } as StorybookConfig;
