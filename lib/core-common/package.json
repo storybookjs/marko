@@ -59,7 +59,6 @@
     "@storybook/node-logger": "6.2.0-alpha.25",
     "@types/node": "^14.0.10",
     "babel-loader": "^8.2.2",
-    "babel-plugin-emotion": "^10.0.33",
     "babel-plugin-macros": "^3.0.1",
     "babel-plugin-polyfill-corejs3": "^0.1.0",
     "chalk": "^4.1.0",

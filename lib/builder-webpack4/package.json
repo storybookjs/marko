@@ -72,7 +72,6 @@
     "airbnb-js-shims": "^2.2.1",
     "autoprefixer": "^9.8.6",
     "babel-loader": "^8.2.2",
-    "babel-plugin-emotion": "^10.0.33",
     "babel-plugin-macros": "^2.8.0",
     "babel-plugin-polyfill-corejs3": "^0.1.0",
     "better-opn": "^2.1.1",
