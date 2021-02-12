@@ -78,6 +78,9 @@ const cleanRoots = (obj): any => {
   if (typeof obj === 'object') {
     return Object.fromEntries(
       Object.entries(obj).map(([key, val]) => {
+        if (key === 'version' && typeof val === 'string') {
+          return [key, '*'];
+        }
         return [key, cleanRoots(val)];
       })
     );

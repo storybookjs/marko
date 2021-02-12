@@ -73,7 +73,7 @@ Object {
                   Object {
                     "absoluteImports": "NODE_MODULES/core-js/index.js",
                     "method": "usage-global",
-                    "version": "3.8.2",
+                    "version": "*",
                   },
                 ],
                 "NODE_MODULES/@babel/plugin-transform-template-literals/lib/index.js",
@@ -144,7 +144,7 @@ Object {
                   Object {
                     "absoluteImports": "NODE_MODULES/core-js/index.js",
                     "method": "usage-global",
-                    "version": "3.8.2",
+                    "version": "*",
                   },
                 ],
               ],
