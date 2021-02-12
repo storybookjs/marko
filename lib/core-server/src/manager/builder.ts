@@ -40,7 +40,7 @@ export const start: WebpackBuilder['start'] = async ({
         // Manager static files
         router.use('/', express.static(prebuiltDir || options.outputDir));
 
-        return { stats: null, totalTime: process.hrtime(startTime), bail };
+        return;
       }
     } else if (!options.smokeTest && (await clearManagerCache(options.cache))) {
       logger.info('=> Cleared cached manager config');
@@ -48,17 +48,11 @@ export const start: WebpackBuilder['start'] = async ({
   }
 
   const compiler = executor.get(config);
+
   if (!compiler) {
     const err = `${config.name}: missing webpack compiler at runtime!`;
-    return {
-      bail,
-      totalTime: process.hrtime(startTime),
-      stats: ({
-        hasErrors: () => true,
-        hasWarnings: () => false,
-        toJson: () => ({ warnings: [] as any[], errors: [err] }),
-      } as any) as Stats,
-    };
+    logger.error(err);
+    return;
   }
 
   await useProgressReporting(compiler, options, startTime);
@@ -81,10 +75,7 @@ export const start: WebpackBuilder['start'] = async ({
     throw new Error('no stats after building preview');
   }
 
-  if (stats.hasErrors()) {
-    throw stats;
-  }
-
+  // eslint-disable-next-line consistent-return
   return {
     bail,
     stats,
@@ -112,8 +103,15 @@ export const build: WebpackBuilder['build'] = async ({ options, startTime }) => 
   const config = await getConfig(options);
   const statsOptions = typeof config.stats === 'boolean' ? 'minimal' : config.stats;
 
-  return new Promise((succeed, fail) => {
-    executor.get(config).run((error, stats) => {
+  const compiler = executor.get(config);
+  if (!compiler) {
+    const err = `${config.name}: missing webpack compiler at runtime!`;
+    logger.error(err);
+    return;
+  }
+
+  await new Promise<void>((succeed, fail) => {
+    compiler.run((error, stats) => {
       if (error || !stats || stats.hasErrors()) {
         logger.error('=> Failed to build the manager');
 
@@ -130,16 +128,15 @@ export const build: WebpackBuilder['build'] = async ({ options, startTime }) => 
 
         process.exitCode = 1;
         fail(error || stats);
-        return;
+      } else {
+        logger.trace({ message: '=> Manager built', time: process.hrtime(startTime) });
+        stats.toJson(statsOptions).warnings.forEach((e) => logger.warn(e.message));
+
+        succeed();
       }
-
-      logger.trace({ message: '=> Manager built', time: process.hrtime(startTime) });
-      stats.toJson(statsOptions).warnings.forEach((e) => logger.warn(e.message));
-
-      succeed();
     });
   });
 };
 
-export const corePresets: string[] = [];
-export const overridePresets: string[] = [];
+export const corePresets: WebpackBuilder['corePresets'] = [];
+export const overridePresets: WebpackBuilder['overridePresets'] = [];

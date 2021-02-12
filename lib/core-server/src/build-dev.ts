@@ -79,10 +79,17 @@ export async function buildDevStandalone(options: CLIOptions & LoadOptions & Bui
     fullOptions
   );
 
-  const { stats: previewStats, totalTime: previewTotalTime } = previewResult;
-  const { stats: managerStats, totalTime: managerTotalTime } = managerResult;
+  // @ts-ignore
+  const previewTotalTime = previewResult?.totalTime;
+  // @ts-ignore
+  const managerTotalTime = managerResult?.totalTime;
 
   if (options.smokeTest) {
+    // @ts-ignore
+    const previewStats = previewResult?.stats;
+    // @ts-ignore
+    const managerStats = managerResult?.stats;
+
     await outputStats(previewStats, managerStats);
     const hasManagerWarnings = managerStats && managerStats.toJson().warnings.length > 0;
     const hasPreviewWarnings = previewStats && previewStats.toJson().warnings.length > 0;

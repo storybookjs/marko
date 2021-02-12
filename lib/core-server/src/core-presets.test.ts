@@ -11,8 +11,6 @@ import { buildStaticStandalone } from './build-static';
 
 import reactOptions from '../../../app/react/src/server/options';
 
-const TIMEOUT = 10000;
-
 jest.mock('@storybook/builder-webpack5', () => {
   const actualBuilder = jest.requireActual('@storybook/builder-webpack5');
   // MUTATION! we couldn't mock webpack5, so we added a level of indirection instead
@@ -34,9 +32,20 @@ jest.mock('./manager/builder', () => {
   return actualBuilder;
 });
 
+jest.mock('cpy', () => () => Promise.resolve());
 jest.mock('http', () => ({
   ...jest.requireActual('http'),
   createServer: () => ({ listen: (_options, cb) => cb() }),
+}));
+jest.mock('@storybook/node-logger', () => ({
+  logger: {
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+  },
+}));
+jest.mock('./utils/output-startup-information', () => ({
+  outputStartupInformation: jest.fn(),
 }));
 
 const cache = Cache({
@@ -86,35 +95,40 @@ const prepareSnap = (fn: any, name): Pick<Configuration, 'module' | 'entry' | 'p
 
 const snap = (name: string) => `__snapshots__/${name}`;
 
-describe('core presets', () => {
+describe('manager', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     cache.clear();
   });
-  it(
-    'dev mode',
-    async () => {
-      const result = await buildDevStandalone(options);
+  it('dev mode', async () => {
+    await buildDevStandalone({ ...options, ignorePreview: true });
 
-      // const managerConfig = prepareSnap(managerExecutor.get, 'manager');
-      // expect(managerConfig).toMatchSpecificSnapshot(snap('manager-dev'));
+    const managerConfig = prepareSnap(managerExecutor.get, 'manager');
+    expect(managerConfig).toMatchSpecificSnapshot(snap('manager-dev'));
+  });
+  it('production mode', async () => {
+    await buildStaticStandalone({ ...options, ignorePreview: true });
 
-      const previewConfig = prepareSnap(previewExecutor.get, 'preview');
-      expect(previewConfig).toMatchSpecificSnapshot(snap('preview-dev'));
-    },
-    TIMEOUT
-  );
-  // it.skip(
-  //   'production mode',
-  //   async () => {
-  //     const result = await buildStaticStandalone(options);
+    const managerConfig = prepareSnap(managerExecutor.get, 'manager');
+    expect(managerConfig).toMatchSpecificSnapshot(snap('manager-prod'));
+  });
+});
 
-  //     const managerConfig = prepareSnap(executor, 'manager');
-  //     expect(managerConfig).toMatchSpecificSnapshot(snap('manager-prod'));
+describe('preview', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    cache.clear();
+  });
+  it('dev mode', async () => {
+    await buildDevStandalone({ ...options, managerCache: true });
 
-  //     const previewConfig = prepareSnap(executor, 'preview');
-  //     expect(previewConfig).toMatchSpecificSnapshot(snap('preview-prod'));
-  //   },
-  //   TIMEOUT
-  // );
+    const previewConfig = prepareSnap(previewExecutor.get, 'preview');
+    expect(previewConfig).toMatchSpecificSnapshot(snap('preview-dev'));
+  });
+  it('production mode', async () => {
+    await buildStaticStandalone({ ...options, managerCache: true });
+
+    const previewConfig = prepareSnap(previewExecutor.get, 'preview');
+    expect(previewConfig).toMatchSpecificSnapshot(snap('preview-prod'));
+  });
 });

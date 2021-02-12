@@ -11,6 +11,7 @@ import {
   CLIOptions,
   BuilderOptions,
   Options,
+  Builder,
 } from '@storybook/core-common';
 import * as managerBuilder from './manager/builder';
 
@@ -41,7 +42,7 @@ export async function buildStaticStandalone(options: CLIOptions & LoadOptions & 
   await cpy(defaultFavIcon, options.outputDir);
   await copyAllStaticFiles(options.staticDir, options.outputDir);
 
-  const previewBuilder = await getPreviewBuilder(options.configDir);
+  const previewBuilder: Builder<unknown, unknown> = await getPreviewBuilder(options.configDir);
 
   const presets = loadAllPresets({
     corePresets: [
@@ -63,7 +64,7 @@ export async function buildStaticStandalone(options: CLIOptions & LoadOptions & 
 
   const startTime = process.hrtime();
   const manager = prebuiltDir
-    ? cpy('**', options.outputDir, { cwd: prebuiltDir, parents: true })
+    ? cpy('**', options.outputDir, { cwd: prebuiltDir, parents: true }).then(() => {})
     : managerBuilder.build({
         startTime,
         options: fullOptions,

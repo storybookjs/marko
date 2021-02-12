@@ -51,9 +51,6 @@ export const babelConfig: () => TransformOptions = () => {
   return {
     sourceType: 'unambiguous',
     presets: [...presets],
-    plugins: [
-      ...plugins,
-      [require.resolve('babel-plugin-emotion'), { sourceMap: true, autoLabel: true }],
-    ],
+    plugins: [...plugins],
   };
 };

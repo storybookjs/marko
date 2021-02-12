@@ -1,6 +1,6 @@
 import express, { Router } from 'express';
 
-import { logConfig, Options } from '@storybook/core-common';
+import { Builder, logConfig, Options } from '@storybook/core-common';
 
 import { getMiddleware } from './utils/middleware';
 import { getServerAddresses } from './utils/server-address';
@@ -47,7 +47,7 @@ export async function storybookDevServer(options: Options) {
     });
   });
 
-  const previewBuilder = await getPreviewBuilder(options.configDir);
+  const previewBuilder: Builder<unknown, unknown> = await getPreviewBuilder(options.configDir);
 
   if (options.debugWebpack) {
     logConfig('Preview webpack config', await previewBuilder.getConfig(options));

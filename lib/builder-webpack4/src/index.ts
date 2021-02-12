@@ -116,8 +116,15 @@ export const build: WebpackBuilder['build'] = async ({ options, startTime }) => 
   logger.info('=> Compiling preview..');
   const config = await getConfig(options);
 
-  return new Promise((succeed, fail) => {
-    executor.get(config).run((error, stats) => {
+  const compiler = executor.get(config);
+  if (!compiler) {
+    const err = `${config.name}: missing webpack compiler at runtime!`;
+    logger.error(err);
+    return;
+  }
+
+  await new Promise<void>((succeed, fail) => {
+    compiler.run((error, stats) => {
       if (error || !stats || stats.hasErrors()) {
         logger.error('=> Failed to build the preview');
         process.exitCode = 1;

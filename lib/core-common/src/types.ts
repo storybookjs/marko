@@ -169,7 +169,7 @@ export interface Builder<Config, Stats> {
     startTime: ReturnType<typeof process.hrtime>;
     useProgressReporting: any;
     router: Router;
-  }) => Promise<{
+  }) => Promise<void | {
     stats: Stats;
     totalTime: ReturnType<typeof process.hrtime>;
     bail: (e?: Error) => Promise<void>;
@@ -180,6 +180,8 @@ export interface Builder<Config, Stats> {
     useProgressReporting: any;
   }) => Promise<void>;
   bail: (e?: Error) => Promise<void>;
+  corePresets?: string[];
+  overridePresets?: string[];
 }
 
 /**
