@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Configuration } from 'webpack';
 
 const path = require('path');
