@@ -127,6 +127,7 @@
     "@babel/core": "^7.11.5",
     "@storybook/angular": "6.2.0-alpha.25",
     "@storybook/vue": "6.2.0-alpha.25",
+    "@storybook/vue3": "6.2.0-alpha.25",
     "babel-loader": "^8.0.0",
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0",
@@ -139,6 +140,9 @@
       "optional": true
     },
     "@storybook/vue": {
+      "optional": true
+    },
+    "@storybook/vue3": {
       "optional": true
     },
     "react": {
