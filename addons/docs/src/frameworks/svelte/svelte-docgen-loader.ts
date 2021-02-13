@@ -1,6 +1,9 @@
 import svelteDoc from 'sveltedoc-parser';
 import dedent from 'ts-dedent';
 import * as path from 'path';
+import * as fs from 'fs';
+import { getOptions } from 'loader-utils';
+import { preprocess } from 'svelte/compiler';
 
 // From https://github.com/sveltejs/svelte/blob/8db3e8d0297e052556f0b6dde310ef6e197b8d18/src/compiler/compile/utils/get_name_from_filename.ts
 // Copied because it is not exported from the compiler
@@ -40,12 +43,25 @@ function getNameFromFilename(filename: string) {
 export default async function svelteDocgen(source: string) {
   // eslint-disable-next-line no-underscore-dangle
   const { resource } = this._module;
+  const svelteOptions: any = { ...getOptions(this) };
 
-  // get filename for source content
-  const file = path.basename(resource);
+  const { preprocess: preprocessOptions, logDocgen = false } = svelteOptions;
+
+  let docOptions;
+  if (preprocessOptions) {
+    const src = fs.readFileSync(resource).toString();
+
+    const { code: fileContent } = await preprocess(src, preprocessOptions);
+    docOptions = {
+      fileContent,
+    };
+  } else {
+    docOptions = { filename: resource };
+  }
+
   // set SvelteDoc options
   const options = {
-    filename: resource,
+    ...docOptions,
     version: 3,
   };
 
@@ -53,6 +69,9 @@ export default async function svelteDocgen(source: string) {
 
   try {
     const componentDoc = await svelteDoc.parse(options);
+
+    // get filename for source content
+    const file = path.basename(resource);
 
     // populate filename in docgen
     componentDoc.name = path.basename(file);
@@ -64,7 +83,9 @@ export default async function svelteDocgen(source: string) {
               ${componentName}.__docgen = ${JSON.stringify(componentDoc)};
               `;
   } catch (error) {
-    console.error(error);
+    if (logDocgen) {
+      console.error(error);
+    }
   }
   // inject __docgen prop in svelte component
   const output = source + docgen;

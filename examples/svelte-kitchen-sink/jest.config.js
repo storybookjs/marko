@@ -5,7 +5,7 @@ module.exports = {
   roots: [__dirname],
   transform: {
     ...config.transform,
-    '.*\\.(svelte)$': '<rootDir>/scripts/utils/jest-transform-svelte',
+    '.*\\.(svelte)$': ['svelte-jester', { preprocess: require.resolve('./svelte.config.js') }],
   },
   moduleNameMapper: {
     '!!raw-loader!.*': '<rootDir>/__mocks__/fileMock.js',
