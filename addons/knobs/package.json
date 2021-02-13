@@ -1,7 +1,7 @@
 {
   "name": "@storybook/addon-knobs",
-  "version": "6.2.0-alpha.16",
-  "description": "Edit props dynamically. Made for Storybook 5.X. Use Controls addon instead for 6.0+.",
+  "version": "6.2.0-alpha.26",
+  "description": "Storybook addon prop editor component",
   "keywords": [
     "addon",
     "storybook",
@@ -37,13 +37,13 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.16",
-    "@storybook/api": "6.2.0-alpha.16",
-    "@storybook/channels": "6.2.0-alpha.16",
-    "@storybook/client-api": "6.2.0-alpha.16",
-    "@storybook/components": "6.2.0-alpha.16",
-    "@storybook/core-events": "6.2.0-alpha.16",
-    "@storybook/theming": "6.2.0-alpha.16",
+    "@storybook/addons": "6.2.0-alpha.26",
+    "@storybook/api": "6.2.0-alpha.26",
+    "@storybook/channels": "6.2.0-alpha.26",
+    "@storybook/client-api": "6.2.0-alpha.26",
+    "@storybook/components": "6.2.0-alpha.26",
+    "@storybook/core-events": "6.2.0-alpha.26",
+    "@storybook/theming": "6.2.0-alpha.26",
     "copy-to-clipboard": "^3.3.1",
     "core-js": "^3.8.2",
     "escape-html": "^1.0.3",
@@ -81,7 +81,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2cc64efa1dcb90b72806d4c88c295f38dd92e427",
+  "gitHead": "dc281516a86ed63016caa2861f32f59d642adac7",
   "storybook": {
     "displayName": "Knobs",
     "unsupportedFrameworks": [

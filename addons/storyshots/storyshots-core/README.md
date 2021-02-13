@@ -210,6 +210,29 @@ module.exports = {
 };
 ```
 
+### Configure Jest for Vue 3
+
+StoryShots addon for Vue is dependent on [vue-jest v5](https://www.npmjs.com/package/vue-jest/v/5.0.0-alpha.8), but
+[doesn't](#deps-issue) install it, so you need to install it separately.
+
+```sh
+yarn add vue-jest@5.0.0-alpha.8
+```
+
+If you already use Jest for testing your vue app - probably you already have the needed jest configuration.
+Anyway you can add these lines to your jest config:
+
+```js
+module.exports = {
+  transform: {
+    '^.+\\.jsx?$': 'babel-jest',
+    '.*\\.(vue)$': '<rootDir>/node_modules/vue-jest',
+  },
+  transformIgnorePatterns: ['/node_modules/(?!(@storybook/.*\\.vue$))'],
+  moduleFileExtensions: ['vue', 'js', 'jsx', 'json', 'node'],
+};
+```
+
 ### Configure Jest for Preact
 
 StoryShots addon for Preact is dependent on [preact-render-to-json](https://github.com/nathancahill/preact-render-to-json), but
@@ -294,6 +317,42 @@ initStoryshots({
   })),
 });
 ```
+
+### Using a custom renderer
+
+By design, [`react-test-renderer` doesn't use a browser environment or JSDOM](https://github.com/facebook/react/issues/20589). Because of this difference, some stories might render in your browser, but not in Storyshots. If you encounter this problem, you may want to switch for an higher level renderer such as `mount` from Enzyme or `render` from React Testing Library.
+
+#### Example with React Testing Library
+
+```js
+import initStoryshots from "@storybook/addon-storyshots";
+import { render } from "@testing-library/react";
+
+const reactTestingLibrarySerializer = {
+  print: (val, serialize, indent) => serialize(val.container.firstChild),
+  test: val => val && val.hasOwnProperty("container")
+};
+
+initStoryshots({
+  renderer: render,
+  snapshotSerializers: [reactTestingLibrarySerializer]
+});
+
+```
+
+#### Example with Enzyme
+
+```js
+import initStoryshots from '@storybook/addon-storyshots';
+import { mount } from 'enzyme';
+
+initStoryshots({
+  renderer: mount,
+});
+```
+
+If you are using enzyme, you need to make sure jest knows how to serialize rendered components.
+For that, you can pass an enzyme-compatible snapshotSerializer (like [enzyme-to-json](https://github.com/adriantoine/enzyme-to-json), [jest-serializer-enzyme](https://github.com/rogeliog/jest-serializer-enzyme) etc.) with the `snapshotSerializer` option (see below).
 
 ### StoryShots for async rendered components
 
@@ -551,17 +610,6 @@ This may be necessary if you want to use React features that are not supported b
 such as **ref** or **Portals**.
 Note that setting `test` overrides `renderer`.
 
-```js
-import initStoryshots from '@storybook/addon-storyshots';
-import { mount } from 'enzyme';
-
-initStoryshots({
-  renderer: mount,
-});
-```
-
-If you are using enzyme, you need to make sure jest knows how to serialize rendered components.
-For that, you can pass an enzyme-compatible snapshotSerializer (like [enzyme-to-json](https://github.com/adriantoine/enzyme-to-json), [jest-serializer-enzyme](https://github.com/rogeliog/jest-serializer-enzyme) etc.) with the `snapshotSerializer` option (see below).
 
 ### `snapshotSerializers`
 

@@ -1,3 +1,173 @@
+## 6.2.0-alpha.26 (February 13, 2021)
+
+### Features
+
+- Addon-controls: Files control ([#13544](https://github.com/storybookjs/storybook/pull/13544))
+- UI: Add a 'main' role to the Main component for a11y ([#13827](https://github.com/storybookjs/storybook/pull/13827))
+
+### Bug Fixes
+
+- Addon-docs/Vue3: Attach app context from preview to inline stories ([#13894](https://github.com/storybookjs/storybook/pull/13894))
+- UI: Fix theming for focused search bar ([#13895](https://github.com/storybookjs/storybook/pull/13895))
+
+### Maintenance
+
+- Build: Move all the `yarn install` in the `build` CI job ([#13872](https://github.com/storybookjs/storybook/pull/13872))
+- Build: Rework `test` NPM script ([#13871](https://github.com/storybookjs/storybook/pull/13871))
+
+## 6.2.0-alpha.25 (February 11, 2021)
+
+### Features
+
+- Addon-docs: Configure syntax highlighter language by story parameter ([#13869](https://github.com/storybookjs/storybook/pull/13869))
+- Svelte: Improved decorators ([#13785](https://github.com/storybookjs/storybook/pull/13785))
+- Addon-docs/Angular: Add dynamic source snippets ([#13740](https://github.com/storybookjs/storybook/pull/13740))
+
+### Bug Fixes
+
+- Vue 3: Fix decorators and add more examples ([#13855](https://github.com/storybookjs/storybook/pull/13855))
+- Storyshots: Support main.js usage ([#13842](https://github.com/storybookjs/storybook/pull/13842))
+
+### Maintenance
+
+- Core: Add tests for the preset behavior of core ([#13846](https://github.com/storybookjs/storybook/pull/13846))
+- Upgrade to danger-js@main ([#13857](https://github.com/storybookjs/storybook/pull/13857))
+
+## 6.2.0-alpha.24 (February 6, 2021)
+
+### Features
+
+- Addon-storyshots: Add support for Vue 3 ([#13828](https://github.com/storybookjs/storybook/pull/13828))
+
+### Maintenance
+
+- CLI: only kill other processes on fail ([#13822](https://github.com/storybookjs/storybook/pull/13822))
+
+## 6.2.0-alpha.23 (February 5, 2021)
+
+### Bug Fixes
+
+- Addon-docs/Vue3: Resolve vue3 package for addon-docs preset ([#13819](https://github.com/storybookjs/storybook/pull/13819))
+
+## 6.2.0-alpha.22 (February 5, 2021)
+
+### Bug Fixes
+
+- CLI: Fix opening localhost in browser by default ([#13812](https://github.com/storybookjs/storybook/pull/13812))
+
+## 6.1.17 (February 4, 2021)
+
+### Bug Fixes
+
+- CLI: Fix opening localhost in browser by default ([#13812](https://github.com/storybookjs/storybook/pull/13812))
+
+## 6.2.0-alpha.21 (February 4, 2021)
+
+### Features
+
+- Addon-docs: Add support for Vue 3 ([#13809](https://github.com/storybookjs/storybook/pull/13809))
+
+### Maintenance
+
+- Build: Exclude all test and story files from transpilation ([#13714](https://github.com/storybookjs/storybook/pull/13714))
+- Build: Generate version file with preval macro ([#13715](https://github.com/storybookjs/storybook/pull/13715))
+
+## 6.1.16 (February 2, 2021)
+
+### Bug Fixes
+
+- Addon-docs/Svelte: Fix component name in docgen-loader ([#13760](https://github.com/storybookjs/storybook/pull/13760))
+- UI: Fix copy to clipboard for insecure deployments ([#13777](https://github.com/storybookjs/storybook/pull/13777))
+
+## 6.2.0-alpha.20 (February 2, 2021)
+
+### Features
+
+- Vue: Add Vue 3 support ([#13775](https://github.com/storybookjs/storybook/pull/13775))
+- CLI: Add try/catch on readFileAsJson to improve error message ([#13730](https://github.com/storybookjs/storybook/pull/13730))
+- Core: Generate manager cache in smoke test, but don't use/clear any cache ([#13784](https://github.com/storybookjs/storybook/pull/13784))
+
+### Bug Fixes
+
+- Addon-docs/Svelte: Fix component name in docgen-loader ([#13760](https://github.com/storybookjs/storybook/pull/13760))
+- Addon-docs/Svelte: Fix component description ([#13659](https://github.com/storybookjs/storybook/pull/13659))
+- UI: Fix copy to clipboard for insecure deployments ([#13777](https://github.com/storybookjs/storybook/pull/13777))
+
+### Maintenance
+
+- CLI: Handle package versions in package strings for generators ([#13774](https://github.com/storybookjs/storybook/pull/13774))
+- Build: Do not recompile packages in publish step of the CI ([#13786](https://github.com/storybookjs/storybook/pull/13786))
+- CI: Remove generic cache key from Circle CI ([#13787](https://github.com/storybookjs/storybook/pull/13787))
+- CI: Upgrade cache GH Action & remove fallback caches ([#13752](https://github.com/storybookjs/storybook/pull/13752))
+
+## 6.2.0-alpha.19 (January 29, 2021)
+
+### Features
+
+- Addon-docs/Angular: Inline rendering support with angular-elements ([#13525](https://github.com/storybookjs/storybook/pull/13525))
+- CLI: Add version matcher functions for framework detection ([#13738](https://github.com/storybookjs/storybook/pull/13738))
+
+### Bug Fixes
+
+- CLI: Fix handling of version ranges in dependency checks ([#13759](https://github.com/storybookjs/storybook/pull/13759))
+
+### Maintenance
+
+- Build: Enable deepscan in workspace ([#13716](https://github.com/storybookjs/storybook/pull/13716))
+- Chore: Increase node version minimums to 10.13 ([#13725](https://github.com/storybookjs/storybook/pull/13725))
+- Fixes smoke-test on svelte-kitchen-sink ([#13705](https://github.com/storybookjs/storybook/pull/13705))
+
+## 6.1.15 (January 22, 2021)
+
+### Bug Fixes
+
+- Svelte: Fix duplicate story preview ([#13663](https://github.com/storybookjs/storybook/pull/13663))
+- Angular: Properly handle empty tsconfig compilerOptions ([#13596](https://github.com/storybookjs/storybook/pull/13596))
+
+### Maintenance
+
+- Angular: Use Nx function to read non-angularCli configs ([#13558](https://github.com/storybookjs/storybook/pull/13558))
+
+### Dependency Upgrades
+
+- Bump @types/reach\_\_router version ([#13703](https://github.com/storybookjs/storybook/pull/13703))
+
+## 6.2.0-alpha.18 (January 22, 2021)
+
+### Bug Fixes
+
+- Svelte: Fix duplicate story preview ([#13663](https://github.com/storybookjs/storybook/pull/13663))
+
+### Maintenance
+
+- Angular: Add Angular 11.1 support ([#13704](https://github.com/storybookjs/storybook/pull/13704))
+
+### Dependency Upgrades
+
+- Bump @types/reach\_\_router version ([#13703](https://github.com/storybookjs/storybook/pull/13703))
+
+## 6.2.0-alpha.17 (January 22, 2021)
+
+### Features
+
+- Addon-docs/Svelte: Add dynamic snippet support ([#13653](https://github.com/storybookjs/storybook/pull/13653))
+- Addon-docs/Svelte: Add Slots and Events to the generated ArgsTable ([#13660](https://github.com/storybookjs/storybook/pull/13660))
+
+### Bug Fixes
+
+- Angular: Force re-render if template change ([#13638](https://github.com/storybookjs/storybook/pull/13638))
+- Angular: Properly handle empty tsconfig compilerOptions ([#13596](https://github.com/storybookjs/storybook/pull/13596))
+
+### Maintenance
+
+- Core: Deprecate default postcss config, recommend addon-postcss ([#13669](https://github.com/storybookjs/storybook/pull/13669))
+- Core: Throw an error for invalid story format ([#13673](https://github.com/storybookjs/storybook/pull/13673))
+- Build: Ensure consistency of Chromatic snapshots of Zoom stories ([#13676](https://github.com/storybookjs/storybook/pull/13676))
+
+### Dependency Upgrades
+
+- Dependencies: Swap back to upstream postcss-loader ([#13698](https://github.com/storybookjs/storybook/pull/13698))
+
 ## 6.2.0-alpha.16 (January 16, 2021)
 
 ### Dependency Upgrades

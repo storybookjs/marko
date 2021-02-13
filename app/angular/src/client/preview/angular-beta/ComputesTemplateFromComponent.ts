@@ -1,4 +1,5 @@
 import { Type } from '@angular/core';
+import { ArgType, ArgTypes } from '@storybook/api';
 import { ICollection } from '../types';
 import {
   ComponentInputsOutputs,
@@ -25,7 +26,7 @@ const separateInputsOutputsAttributes = (
 };
 
 /**
- * Converted a component into a template with inputs/outputs present in initial props
+ * Converts a component into a template with inputs/outputs present in initial props
  * @param component
  * @param initialProps
  * @param innerTemplate
@@ -51,4 +52,69 @@ export const computesTemplateFromComponent = (
       : '';
 
   return `<${ngComponentMetadata.selector}${templateInputs}${templateOutputs}>${innerTemplate}</${ngComponentMetadata.selector}>`;
+};
+
+const createAngularInputProperty = ({
+  propertyName,
+  value,
+  argType,
+}: {
+  propertyName: string;
+  value: any;
+  argType?: ArgType;
+}) => {
+  const { name: type = null, summary = null } = argType?.type || {};
+  let templateValue = type === 'enum' && !!summary ? `${summary}.${value}` : value;
+
+  const actualType = type === 'enum' && summary ? 'enum' : typeof value;
+  const requiresBrackets = ['object', 'any', 'boolean', 'enum', 'number'].includes(actualType);
+
+  if (typeof value === 'object') {
+    templateValue = propertyName;
+  }
+
+  return `${requiresBrackets ? '[' : ''}${propertyName}${
+    requiresBrackets ? ']' : ''
+  }="${templateValue}"`;
+};
+
+/**
+ * Converts a component into a template with inputs/outputs present in initial props
+ * @param component
+ * @param initialProps
+ * @param innerTemplate
+ */
+export const computesTemplateSourceFromComponent = (
+  component: Type<unknown>,
+  initialProps?: ICollection,
+  argTypes?: ArgTypes
+) => {
+  const ngComponentMetadata = getComponentDecoratorMetadata(component);
+  if (!ngComponentMetadata) {
+    return null;
+  }
+  const ngComponentInputsOutputs = getComponentInputsOutputs(component);
+  const { inputs: initialInputs, outputs: initialOutputs } = separateInputsOutputsAttributes(
+    ngComponentInputsOutputs,
+    initialProps
+  );
+
+  const templateInputs =
+    initialInputs.length > 0
+      ? ` ${initialInputs
+          .map((propertyName) =>
+            createAngularInputProperty({
+              propertyName,
+              value: initialProps[propertyName],
+              argType: argTypes?.[propertyName],
+            })
+          )
+          .join(' ')}`
+      : '';
+  const templateOutputs =
+    initialOutputs.length > 0
+      ? ` ${initialOutputs.map((i) => `(${i})="${i}($event)"`).join(' ')}`
+      : '';
+
+  return `<${ngComponentMetadata.selector}${templateInputs}${templateOutputs}></${ngComponentMetadata.selector}>`;
 };

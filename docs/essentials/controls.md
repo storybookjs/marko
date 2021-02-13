@@ -92,6 +92,8 @@ Up until now, we only used auto-generated controls based on the component we're 
   paths={[
     'react/table-story-fully-customize-controls.js.mdx',
     'react/table-story-fully-customize-controls.mdx.mdx',
+    'vue/table-story-fully-customize-controls.js.mdx',
+    'angular/table-story-fully-customize-controls.ts.mdx',
   ]}
 />
 
@@ -113,12 +115,13 @@ As they can be complex cases:
   paths={[
     'react/component-story-custom-args-complex.js.mdx',
     'react/component-story-custom-args-complex.ts.mdx',
-    'react/component-story-custom-args-complex.mdx.mdx'
+    'react/component-story-custom-args-complex.mdx.mdx',
+     'vue/component-story-custom-args-complex.js.mdx',
+     'angular/component-story-custom-args-complex.ts.mdx',
   ]}
 />
 
 <!-- prettier-ignore-end -->
-
 
 Or even with certain types of elements, such as icons:
 
@@ -128,7 +131,9 @@ Or even with certain types of elements, such as icons:
   paths={[
     'react/component-story-custom-args-icons.js.mdx',
     'react/component-story-custom-args-icons.ts.mdx',
-    'react/component-story-custom-args-icons.mdx.mdx'
+    'react/component-story-custom-args-icons.mdx.mdx',
+    'vue/component-story-custom-args-icons.js.mdx',
+    'angular/component-story-custom-args-icons.ts.mdx',
   ]}
 />
 
@@ -150,6 +155,7 @@ Here is the full list of available controls you can use:
 | Data Type   | Control Type | Description                                                    |    Options     |
 | :---------- | :----------: | :------------------------------------------------------------- | :------------: |
 | **array**   |    array     | serialize array into a comma-separated string inside a textbox |   separator    |
+|             |     file     | a file input that gives you a array of urls                    |     accept     |
 | **boolean** |   boolean    | checkbox input                                                 |       -        |
 | **number**  |    number    | a numeric text box input                                       | min, max, step |
 |             |    range     | a range slider input                                           | min, max, step |
@@ -226,7 +232,7 @@ And here's what the resulting UI looks like:
 
 ### Disable controls for specific properties
 
-Asides from the features already documented here. Controls can also be disabled for individual properties. 
+Asides from the features already documented here. Controls can also be disabled for individual properties.
 
 Suppose you want to disable Controls for a property called `foo` in a component's story. The following example illustrates how:
 
@@ -250,9 +256,18 @@ Resulting in the following change in Storybook UI:
   />
 </video>
 
+The previous example also removed the prop documentation from the table. In some cases this is fine, however sometimes you might want to still render the prop documentation but without a control. The following example illustrates how:
+
+<CodeSnippets
+  paths={[
+    'common/component-story-disable-controls-alt.js.mdx',
+    'common/component-story-disable-controls-alt.mdx.mdx'
+  ]}
+/>
+
 <div class="aside">
 
- As with other Storybook properties, such as [decorators](../writing-stories/decorators.md) the same principle can also be applied at a story-level for more granular cases.
+As with other Storybook properties, such as [decorators](../writing-stories/decorators.md) the same principle can also be applied at a story-level for more granular cases.
 
 </div>
 

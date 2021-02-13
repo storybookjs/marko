@@ -1,14 +1,19 @@
 ```ts
 // List.stories.ts
 
-import * as ListItemStories from './ListItem.stories';
+import { Selected, Unselected } from './ListItem.stories';
 
-export const ManyItems = Template.bind({});
-ManyItems.args = {
-  items: [
-    ...ListItemStories.Selected.args,
-    ...ListItemStories.Unselected.args,
-    ...ListItemStoriesUnselected.args,
-  ],
+export const ManyItems: Story<List> = (args) => ({
+  props: args,
+  template: `
+    <app-list>
+      <app-listitem [itemProperty]="Selected"></app-listitem>
+      <app-listitem [itemProperty]="Unselected"></app-listitemm>
+      <app-listitem[itemProperty]="Unselected"></app-listitem>
+    </app-list>`,
+});
+ManyItems.args= {
+  Selected: Selected.args.itemProperty,
+  Unselected: Unselected.args.itemProperty,
 };
 ```

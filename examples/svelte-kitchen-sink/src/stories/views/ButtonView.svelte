@@ -1,9 +1,10 @@
 <script>
-  import Button from '../../components/Button.svelte';
-
   /**
    * @component Button View
+   * @wrapper
    */
+  import Button from '../../components/Button.svelte';
+
 
   /**
    * Rounds the button
@@ -17,6 +18,7 @@
 
   /**
    * Button text
+   * @slot
    */
   export let text = 'You clicked';
 

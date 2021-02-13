@@ -5,6 +5,9 @@
     - [New Angular storyshots format](#new-angular-storyshots-format)
     - [Deprecated Angular story component](#deprecated-angular-story-component)
     - [New Angular renderer](#new-angular-renderer)
+  - [6.2 deprecations](#62-deprecations)
+    - [Deprecated implicit postcss loader](#deprecated-implicit-postcss-loader)
+    - [Deprecated default PostCSS plugins](#deprecated-default-postcss-plugins)
 - [From version 6.0.x to 6.1.0](#from-version-60x-to-610)
   - [Addon-backgrounds preset](#addon-backgrounds-preset)
   - [Single story hoisting](#single-story-hoisting)
@@ -190,6 +193,37 @@ export const parameters = {
 ```
 
 Please also file an issue if you need to opt out. We plan to remove the legacy renderer in 7.0.
+
+### 6.2 Deprecations
+
+#### Deprecated implicit PostCSS loader
+
+Previously, `@storybook/core` would automatically add the `postcss-loader` to your preview. This caused issues for consumers when PostCSS upgraded to v8 and tools, like Autoprefixer and Tailwind, starting requiring the new version. Implictly adding `postcss-loader` will be removed in Storybook 7.0.
+
+Instead of continuing to include PostCSS inside the core library, it has been moved to [`@storybook/addon-postcss`](https://github.com/storybookjs/addon-postcss). This addon provides more fine-grained customization and will be upgraded more flexibly to track PostCSS upgrades.
+
+If you require PostCSS support, please install `@storybook/addon-postcss` in your project, add it to your list of addons inside `.storybook/main.js`, and configure a `postcss.config.js` file.
+
+Further information is available at https://github.com/storybookjs/storybook/issues/12668 and https://github.com/storybookjs/storybook/pull/13669.
+
+#### Deprecated default PostCSS plugins
+
+When relying on the [implicit PostCSS loader](#deprecated-implicit-postcss-loader), it would also add [autoprefixer v9](https://www.npmjs.com/package/autoprefixer/v/9.8.6) and [postcss-flexbugs-fixes v4](https://www.npmjs.com/package/postcss-flexbugs-fixes/v/4.2.1) plugins to the `postcss-loader` configuration when you didn't have a PostCSS config file (such as `postcss.config.js`) within your project.
+
+They will no longer be applied when switching to `@storybook/addon-postcss` and the implicit PostCSS features will be removed in Storybook 7.0.
+
+If you depend upon these plugins being applied, install them and create a `postcss.config.js` file within your project that contains:
+
+```js
+module.exports = {
+  plugins: [
+    require('postcss-flexbugs-fixes'),
+    require('autoprefixer')({
+      flexbox: 'no-2009',
+    }),
+  ]
+}
+```
 
 ## From version 6.0.x to 6.1.0
 
