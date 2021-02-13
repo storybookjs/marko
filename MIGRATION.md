@@ -145,6 +145,7 @@
 In 6.1 we introduced an unintentional breaking change to `addon-backgrounds`.
 
 The addon uses decorators which are set up automatically by a preset. The required preset is ignored if you register the addon in `main.js` with the `/register` entry point. This used to be valid in `v6.0.x` and earlier:
+
 ```js
 module.exports = {
   stories: ['../**/*.stories.js'],
@@ -842,13 +843,13 @@ We've deprecated the following in 6.0: `addon-info`, `addon-notes`, `addon-conte
 
 The info/notes addons have been replaced by [addon-docs](https://github.com/storybookjs/storybook/tree/next/addons/docs). We've documented a migration in the [docs recipes](https://github.com/storybookjs/storybook/blob/next/addons/docs/docs/recipes.md#migrating-from-notesinfo-addons).
 
-Both addons are still widely used, and their source code is still available in the [deprecated-addons repo](https://github.com/storybookjs/deprecated-addons). We're looking for maintainers for both addons. If you're interested, please get in touch on [our Discord](https://discordapp.com/invite/UUt2PJb).
+Both addons are still widely used, and their source code is still available in the [deprecated-addons repo](https://github.com/storybookjs/deprecated-addons). We're looking for maintainers for both addons. If you're interested, please get in touch on [our Discord](https://discord.gg/storybook).
 
 #### Deprecated addon-contexts
 
 The contexts addon has been replaced by [addon-toolbars](https://github.com/storybookjs/storybook/blob/next/addons/toolbars), which is simpler, more ergonomic, and compatible with all Storybook frameworks.
 
-The addon's source code is still available in the [deprecated-addons repo](https://github.com/storybookjs/deprecated-addons). If you're interested in maintaining it, please get in touch on [our Discord](https://discordapp.com/invite/UUt2PJb).
+The addon's source code is still available in the [deprecated-addons repo](https://github.com/storybookjs/deprecated-addons). If you're interested in maintaining it, please get in touch on [our Discord](https://discord.gg/storybook).
 
 #### Removed addon-centered
 
@@ -867,7 +868,7 @@ Other possible values are: `padded` (default) and `fullscreen`.
 
 #### Deprecated polymer
 
-We've deprecated `@storybook/polymer` and are focusing on `@storybook/web-components`. If you use Polymer and are interested in maintaining it, please get in touch on [our Discord](https://discordapp.com/invite/UUt2PJb).
+We've deprecated `@storybook/polymer` and are focusing on `@storybook/web-components`. If you use Polymer and are interested in maintaining it, please get in touch on [our Discord](https://discord.gg/storybook).
 
 #### Deprecated immutable options parameters
 
