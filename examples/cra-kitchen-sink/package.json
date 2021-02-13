@@ -29,6 +29,7 @@
     "@storybook/addon-storyshots": "6.2.0-alpha.26",
     "@storybook/addons": "6.2.0-alpha.26",
     "@storybook/client-logger": "6.2.0-alpha.26",
+    "@storybook/preset-create-react-app": "^3.1.6-alpha.0",
     "@storybook/react": "6.2.0-alpha.26",
     "@storybook/theming": "6.2.0-alpha.26",
     "react-scripts": "^3.4.4"
