@@ -44,43 +44,65 @@ By default, Storybook will choose a control for each arg based on the initial va
 
 <!-- prettier-ignore-end -->
 
-For instance, suppose you have a `backgroundColor` arg on your story:
+For instance, suppose you have a `variant` arg on your story that should be `primary` or `secondary`:
 
 <!-- prettier-ignore-start -->
 
 <CodeSnippets
   paths={[
-    'common/button-story-controls-red-input.js.mdx',
-    'common/button-story-controls-red-input.mdx.mdx',
+    'common/button-story-controls-primary-variant.js.mdx',
+    'common/button-story-controls-primary-variant.mdx.mdx',
   ]}
 />
 
 <!-- prettier-ignore-end -->
 
-By default, Storybook will render a free text input for the `backgroundColor` arg:
+By default, Storybook will render a free text input for the `variant` arg:
 
-![Essential addon Controls using a string](./addon-controls-args-background-string.png)
+![Essential addon Controls using a string](addon-controls-args-variant-string.png)
 
-This works as long as you type a valid string into the auto-generated text control, but it's not the best UI for picking a color. Let’s replace it with Storybook’s color picker component.
 
-We can specify which controls get used by declaring a custom [argType](../api/argtypes.md) for the `backgroundColor` property. ArgTypes encode basic metadata for args, such as name, description, defaultValue for an arg. These get automatically filled in by Storybook Docs.
+This works as long as you type a valid string into the auto-generated text control, but it's not the best UI for our scenario, given that the component only accepts `primary` or `secondary` as variants. Let’s replace it with Storybook’s radio component.
 
-ArgTypes can also contain arbitrary annotations which can be overridden by the user. Since `backgroundColor` is a property of the component, let's put that annotation on the default export.
+We can specify which controls get used by declaring a custom [argType](../api/argtypes.md) for the `variant` property. ArgTypes encode basic metadata for args, such as name, description, defaultValue for an arg. These get automatically filled in by Storybook Docs.
+
+ArgTypes can also contain arbitrary annotations which can be overridden by the user. Since `variant` is a property of the component, let's put that annotation on the default export.
 
 <!-- prettier-ignore-start -->
 
 <CodeSnippets
   paths={[
-    'common/button-story-controls-color-picker.js.mdx',
-    'common/button-story-controls-color-picker.mdx.mdx',
+    'common/button-story-controls-radio-group.js.mdx',
+    'common/button-story-controls-radio-group.mdx.mdx',
   ]}
 />
 
 <!-- prettier-ignore-end -->
 
-This replaces the input with a color picker for a more intuitive developer experience.
+This replaces the input with a radio group for a more intuitive experience.
 
-![Essential Control addon with a color picker](./addon-controls-args-background-color.png)
+![Essential Control addon with a radio group](addon-controls-args-variant-optimized.png)
+
+## Custom control type matchers
+
+For a few types, Controls will automatically infer them by using [regex](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp). You can change the matchers for a regex that suits you better.
+
+| Data Type   | Default regex | Description |
+| :---------- | :----------: | :--------------------------------------------------------------------- |
+| **color**   | `/(background\|color)$/i` | will display a color picker UI for the args that match it |
+| **date**    | `/Date$/`                 | will display a date picker UI for the args that match it  |
+
+
+To do so, use the `matchers` property in `controls` parameter:
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'storybook-addon-controls-custom-matchers.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ## Fully custom args
 
