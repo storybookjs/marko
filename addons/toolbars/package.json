@@ -7,7 +7,9 @@
     "storybook",
     "theming",
     "i18n",
-    "internationalization"
+    "internationalization",
+    "test",
+    "essentials"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/next/addons/toolbars",
   "bugs": {
@@ -60,5 +62,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "dc281516a86ed63016caa2861f32f59d642adac7"
+  "gitHead": "dc281516a86ed63016caa2861f32f59d642adac7",
+  "storybook": {
+    "displayName": "Toolbars",
+    "icon": "https://user-images.githubusercontent.com/263385/101991677-48cdf300-3c7c-11eb-93b4-19b0e3366959.png",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
+  }
 }
