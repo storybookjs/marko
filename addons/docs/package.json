@@ -157,6 +157,9 @@
     "react-dom": {
       "optional": true
     },
+    "svelte": {
+      "optional": true
+    },
     "sveltedoc-parser": {
       "optional": true
     },
