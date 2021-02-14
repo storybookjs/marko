@@ -2,6 +2,7 @@ import mapValues from 'lodash/mapValues';
 import { ArgType } from '@storybook/addons';
 import { SBEnumType, ArgTypesEnhancer } from './types';
 import { combineParameters } from './parameters';
+import { filterArgTypes } from './filterArgTypes';
 
 const inferControl = (argType: ArgType): any => {
   const { type } = argType;
@@ -43,11 +44,15 @@ const inferControl = (argType: ArgType): any => {
 };
 
 export const inferControls: ArgTypesEnhancer = (context) => {
-  const { __isArgsStory, argTypes } = context.parameters;
+  const { __isArgsStory, argTypes, controls: controlsConfig = {} } = context.parameters;
   if (!__isArgsStory) return argTypes;
-  const withControls = mapValues(argTypes, (argType) => {
+
+  const filteredArgTypes = filterArgTypes(argTypes, controlsConfig.include, controlsConfig.exclude);
+
+  const withControls = mapValues(filteredArgTypes, (argType) => {
     const control = argType && argType.type && inferControl(argType);
     return control ? { control } : undefined;
   });
-  return combineParameters(withControls, argTypes);
+
+  return combineParameters(withControls, filteredArgTypes);
 };
