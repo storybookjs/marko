@@ -10,6 +10,7 @@ export default {
     somethingElse: { control: 'object', name: 'Something Else' },
     imageUrls: { control: { type: 'file', accept: '.png' }, name: 'Image Urls' },
   },
+  parameters: { chromatic: { disable: true } },
 };
 
 const Template = (args) => <Button {...args} />;
@@ -19,6 +20,7 @@ Basic.args = {
   children: 'basic',
   somethingElse: { a: 2 },
 };
+Basic.parameters = { chromatic: { disable: false } };
 
 export const Action = Template.bind({});
 Action.args = {
