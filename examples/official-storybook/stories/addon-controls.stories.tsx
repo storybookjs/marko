@@ -53,6 +53,32 @@ CyclicArgs.parameters = {
   chromatic: { disable: true },
 };
 
+export const CustomControlMatchers = Template.bind({});
+CustomControlMatchers.parameters = {
+  controls: {
+    matchers: {
+      date: /whateverIwant/,
+    },
+  },
+};
+CustomControlMatchers.args = {
+  whateverIwant: '10/10/2020',
+};
+
+export const WithDisabledCustomControlMatchers = Template.bind({});
+WithDisabledCustomControlMatchers.parameters = {
+  controls: {
+    matchers: {
+      date: null,
+      color: null,
+    },
+  },
+};
+WithDisabledCustomControlMatchers.args = {
+  purchaseDate: '10/10/2020',
+  backgroundColor: '#BADA55',
+};
+
 export const FilteredWithInclude = Template.bind({});
 FilteredWithInclude.parameters = {
   controls: {
