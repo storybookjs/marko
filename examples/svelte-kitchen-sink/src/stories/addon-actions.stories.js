@@ -1,6 +1,5 @@
 import { action } from '@storybook/addon-actions';
 
-import ButtonView from './views/ButtonView.svelte';
 import Button from '../components/Button.svelte';
 
 export default {

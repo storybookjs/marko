@@ -4,6 +4,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { getOptions } from 'loader-utils';
 import { preprocess } from 'svelte/compiler';
+import { logger } from '@storybook/node-logger';
 
 // From https://github.com/sveltejs/svelte/blob/8db3e8d0297e052556f0b6dde310ef6e197b8d18/src/compiler/compile/utils/get_name_from_filename.ts
 // Copied because it is not exported from the compiler
@@ -84,7 +85,7 @@ export default async function svelteDocgen(source: string) {
               `;
   } catch (error) {
     if (logDocgen) {
-      console.error(error);
+      logger.error(error);
     }
   }
   // inject __docgen prop in svelte component
