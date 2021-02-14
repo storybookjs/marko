@@ -1,6 +1,13 @@
 import { Configuration } from 'webpack'; // eslint-disable-line
+import type { StorybookOptions } from '@storybook/core/types';
 
-export function webpack(config: Configuration) {
+export async function webpack(config: Configuration, options: StorybookOptions) {
+  const { preprocess = undefined, loader = {} } = await options.presets.apply(
+    'svelteOptions',
+    {},
+    options
+  );
+
   return {
     ...config,
     module: {
@@ -10,7 +17,7 @@ export function webpack(config: Configuration) {
         {
           test: /\.(svelte|html)$/,
           loader: require.resolve('svelte-loader'),
-          options: {},
+          options: { preprocess, ...loader },
         },
       ],
     },
