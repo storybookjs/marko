@@ -13,7 +13,8 @@ import { simulatePageLoad, simulateDOMContentLoaded } from './simulate-pageload'
 
 import { getQueryParams, getQueryParam } from './queryparams';
 
-import { filterArgTypes, PropDescriptor } from './filterArgTypes';
+import { filterArgTypes } from './filterArgTypes';
+import type { PropDescriptor } from './filterArgTypes';
 
 export * from './hooks';
 export * from './types';
