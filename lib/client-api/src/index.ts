@@ -14,13 +14,14 @@ import { simulatePageLoad, simulateDOMContentLoaded } from './simulate-pageload'
 import { getQueryParams, getQueryParam } from './queryparams';
 
 import { filterArgTypes } from './filterArgTypes';
-import type { PropDescriptor } from './filterArgTypes';
 
 export * from './hooks';
 export * from './types';
 export * from './parameters';
 // FIXME: for react-argtypes.stories; remove on refactor
 export * from './inferControls';
+
+export type { PropDescriptor } from './filterArgTypes';
 
 export {
   addArgTypesEnhancer,
@@ -35,7 +36,6 @@ export {
   getQueryParam,
   getQueryParams,
   pathToId,
-  PropDescriptor,
   simulateDOMContentLoaded,
   simulatePageLoad,
   StoryStore,
