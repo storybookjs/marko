@@ -11,6 +11,13 @@
 - Add catalog metadata to the addons ([#13666](https://github.com/storybookjs/storybook/pull/13666))
 - Misc: Clean TS config and bump `@storybook/preset-create-react-app` ([#13878](https://github.com/storybookjs/storybook/pull/13878))
 
+## 6.1.18 (February 15, 2021)
+
+### Bug Fixes
+
+- UI: Fix theming for focused search bar ([#13895](https://github.com/storybookjs/storybook/pull/13895))
+- Storyshots: Support main.js usage ([#13842](https://github.com/storybookjs/storybook/pull/13842))
+
 ## 6.2.0-alpha.26 (February 13, 2021)
 
 ### Features
