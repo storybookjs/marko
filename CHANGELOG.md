@@ -1,3 +1,16 @@
+## 6.2.0-alpha.27 (February 15, 2021)
+
+### Features
+
+- Addon-controls: Infer color and date controls ([#13675](https://github.com/storybookjs/storybook/pull/13675))
+- Svelte: Support TypeScript and preprocessors ([#13900](https://github.com/storybookjs/storybook/pull/13900))
+- Addon-controls: Add include/exclude configuration options ([#13898](https://github.com/storybookjs/storybook/pull/13898))
+
+### Maintenance
+
+- Add catalog metadata to the addons ([#13666](https://github.com/storybookjs/storybook/pull/13666))
+- Misc: Clean TS config and bump `@storybook/preset-create-react-app` ([#13878](https://github.com/storybookjs/storybook/pull/13878))
+
 ## 6.2.0-alpha.26 (February 13, 2021)
 
 ### Features
