@@ -25,7 +25,7 @@
     <img src="https://img.shields.io/github/license/storybookjs/storybook.svg" alt="License" />
   </a>
   <br/>
-  <a href="https://discord.gg/sMFvFsG">
+  <a href="https://discord.gg/storybook">
     <img src="https://img.shields.io/badge/discord-join-7289DA.svg?logo=discord&longCache=true&style=flat" />
   </a>
   <a href="https://storybook.js.org/community/">
@@ -86,7 +86,7 @@ Storybook comes with a lot of [addons](https://storybook.js.org/docs/react/confi
 
 ### Community
 
-For additional help, join us [in our Discord](https://discord.gg/sMFvFsG) or [Slack (legacy)](https://now-examples-slackin-rrirkqohko.now.sh/).
+For additional help, join us [in our Discord](https://discord.gg/storybook) or [Slack (legacy)](https://now-examples-slackin-rrirkqohko.now.sh/).
 
 ## Projects
 
@@ -168,7 +168,7 @@ If you're looking for material to use in your presentation about storybook, like
 
 - Tweeting via [@storybookjs](https://twitter.com/storybookjs)
 - Blogging at [Medium](https://medium.com/storybookjs)
-- Chatting on [Discord](https://discord.gg/sMFvFsG)
+- Chatting on [Discord](https://discord.gg/storybook)
 - Chatting (legacy) on [Slack](https://now-examples-slackin-rrirkqohko.now.sh/)
 - Streaming saved at [Youtube](https://www.youtube.com/channel/UCr7Quur3eIyA_oe8FNYexfg)
 
@@ -178,12 +178,12 @@ We welcome contributions to Storybook!
 
 - 📥 Pull requests and 🌟 Stars are always welcome.
 - Read our [contributing guide](CONTRIBUTING.md) to get started,
-  or find us on [Discord](https://discord.gg/sMFvFsG), we will take the time to guide you
+  or find us on [Discord](https://discord.gg/storybook), we will take the time to guide you
 
 Looking for a first issue to tackle?
 
 - We tag issues with [![Good First Issue](https://img.shields.io/github/issues/storybookjs/storybook/good%20first%20issue.svg)](https://github.com/storybookjs/storybook/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22) when we think they are well suited for people who are new to the codebase or OSS in general.
-- [Talk to us](https://discord.gg/sMFvFsG), we'll find something to suits your skills and learning interest.
+- [Talk to us](https://discord.gg/storybook), we'll find something to suits your skills and learning interest.
 
 ### Development scripts
 

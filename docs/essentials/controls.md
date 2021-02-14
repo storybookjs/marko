@@ -254,7 +254,7 @@ And here's what the resulting UI looks like:
 
 ### Disable controls for specific properties
 
-Asides from the features already documented here. Controls can also be disabled for individual properties.
+Aside from the features already documented here, Controls can also be disabled for individual properties.
 
 Suppose you want to disable Controls for a property called `foo` in a component's story. The following example illustrates how:
 
@@ -281,10 +281,10 @@ Resulting in the following change in Storybook UI:
 The previous example also removed the prop documentation from the table. In some cases this is fine, however sometimes you might want to still render the prop documentation but without a control. The following example illustrates how:
 
 <CodeSnippets
-  paths={[
-    'common/component-story-disable-controls-alt.js.mdx',
-    'common/component-story-disable-controls-alt.mdx.mdx'
-  ]}
+paths={[
+'common/component-story-disable-controls-alt.js.mdx',
+'common/component-story-disable-controls-alt.mdx.mdx'
+]}
 />
 
 <div class="aside">
@@ -303,6 +303,25 @@ If you don't plan to handle the control args inside your Story, you can remove t
   paths={[
     'common/button-story-hide-nocontrols-warning.js.mdx',
   ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+## Filtering controls
+
+In some cases, you may want to either only present a few controls in the controls panel, or present all controls except a small set.
+
+To make this possible, you can use optional `include` and `exclude` configuration fields in the `controls` parameter, which can be set to either an array of strings, or a regular expression.
+
+Consider the following story snippets:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+paths={[
+'common/component-story-disable-controls-regex.js.mdx',
+'common/component-story-disable-controls-regex.mdx.mdx'
+]}
 />
 
 <!-- prettier-ignore-end -->

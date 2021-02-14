@@ -13,26 +13,29 @@ import { simulatePageLoad, simulateDOMContentLoaded } from './simulate-pageload'
 
 import { getQueryParams, getQueryParam } from './queryparams';
 
+import { filterArgTypes, PropDescriptor } from './filterArgTypes';
+
 export * from './hooks';
 export * from './types';
 export * from './parameters';
-
 // FIXME: for react-argtypes.stories; remove on refactor
 export * from './inferControls';
 
 export {
-  ClientApi,
-  addDecorator,
-  addParameters,
-  addLoader,
   addArgTypesEnhancer,
+  addDecorator,
+  addLoader,
+  addParameters,
+  ClientApi,
   combineParameters,
-  StoryStore,
   ConfigApi,
   defaultDecorateStory,
-  pathToId,
-  getQueryParams,
+  filterArgTypes,
   getQueryParam,
-  simulatePageLoad,
+  getQueryParams,
+  pathToId,
+  PropDescriptor,
   simulateDOMContentLoaded,
+  simulatePageLoad,
+  StoryStore,
 };

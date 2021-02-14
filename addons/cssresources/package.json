@@ -6,7 +6,8 @@
     "addon",
     "cssresources",
     "react",
-    "storybook"
+    "storybook",
+    "style"
   ],
   "homepage": "https://storybook.js.org",
   "bugs": {
@@ -66,5 +67,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "dc281516a86ed63016caa2861f32f59d642adac7"
+  "gitHead": "dc281516a86ed63016caa2861f32f59d642adac7",
+  "storybook": {
+    "displayName": "CSS Resources",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
+  }
 }

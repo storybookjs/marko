@@ -2,6 +2,7 @@ import mapValues from 'lodash/mapValues';
 import { ArgType } from '@storybook/addons';
 import { SBEnumType, ArgTypesEnhancer } from './types';
 import { combineParameters } from './parameters';
+import { filterArgTypes } from './filterArgTypes';
 
 type ControlsMatchers = {
   date: RegExp;
@@ -61,12 +62,15 @@ export const inferControls: ArgTypesEnhancer = (context) => {
   const {
     __isArgsStory,
     argTypes,
-    controls: { matchers = {} },
+    controls: { include = null, exclude = null, matchers = {} } = {},
   } = context.parameters;
   if (!__isArgsStory) return argTypes;
-  const withControls = mapValues(argTypes, (argType, name) => {
-    const control = argType && argType.type && inferControl(argType, name, matchers);
+
+  const filteredArgTypes = filterArgTypes(argTypes, include, exclude);
+  const withControls = mapValues(filteredArgTypes, (argType, name) => {
+    const control = argType?.type && inferControl(argType, name, matchers);
     return control ? { control } : undefined;
   });
-  return combineParameters(withControls, argTypes);
+
+  return combineParameters(withControls, filteredArgTypes);
 };
