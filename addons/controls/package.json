@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-controls",
-  "version": "6.1.17",
+  "version": "6.1.18",
   "description": "Interact with component inputs dynamically in the Storybook UI",
   "keywords": [
     "addon",
@@ -30,12 +30,12 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.17",
-    "@storybook/api": "6.1.17",
-    "@storybook/client-api": "6.1.17",
-    "@storybook/components": "6.1.17",
-    "@storybook/node-logger": "6.1.17",
-    "@storybook/theming": "6.1.17",
+    "@storybook/addons": "6.1.18",
+    "@storybook/api": "6.1.18",
+    "@storybook/client-api": "6.1.18",
+    "@storybook/components": "6.1.18",
+    "@storybook/node-logger": "6.1.18",
+    "@storybook/theming": "6.1.18",
     "core-js": "^3.0.1",
     "ts-dedent": "^2.0.0"
   },
