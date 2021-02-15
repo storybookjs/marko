@@ -3,8 +3,8 @@
 exports[`manager dev mode 1`] = `
 Object {
   "entry": Array [
-    "ROOT/lib/core/src/server/common/polyfills.ts",
-    "ROOT/lib/core/src/client/manager/index.ts",
+    "ROOT/lib/core-server/src/globals/polyfills.ts",
+    "ROOT/lib/core-client/dist/esm/manager/index.js",
     "ROOT/addons/actions/dist/esm/register.js",
     "ROOT/addons/backgrounds/dist/esm/register.js",
     "ROOT/addons/viewport/dist/esm/register.js",
@@ -178,14 +178,14 @@ Object {
       },
       Object {
         "loader": "NODE_MODULES/file-loader/dist/cjs.js",
-        "query": Object {
+        "options": Object {
           "name": "static/media/[name].[hash:8].[ext]",
         },
         "test": "/\\\\.(svg|ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\\\\?.*)?$/",
       },
       Object {
         "loader": "NODE_MODULES/url-loader/dist/cjs.js",
-        "query": Object {
+        "options": Object {
           "limit": 10000,
           "name": "static/media/[name].[hash:8].[ext]",
         },

@@ -3,8 +3,8 @@
 exports[`preview production mode 1`] = `
 Object {
   "entry": Array [
-    "ROOT/lib/core/src/server/common/polyfills.ts",
-    "ROOT/lib/core/src/server/preview/globals.ts",
+    "ROOT/lib/core-server/src/globals/polyfills.ts",
+    "ROOT/lib/core-server/src/globals/globals.ts",
     "ROOT/examples/react-ts/storybook-init-framework-entry.js",
     "ROOT/addons/docs/dist/esm/frameworks/common/config.js-generated-other-entry.js",
     "ROOT/addons/docs/dist/esm/frameworks/react/config.js-generated-other-entry.js",
@@ -86,13 +86,6 @@ Object {
                     "absoluteImports": "NODE_MODULES/core-js/index.js",
                     "method": "usage-global",
                     "version": "*",
-                  },
-                ],
-                Array [
-                  "NODE_MODULES/babel-plugin-emotion/dist/babel-plugin-emotion.cjs.js",
-                  Object {
-                    "autoLabel": true,
-                    "sourceMap": true,
                   },
                 ],
                 "NODE_MODULES/babel-plugin-add-react-displayname/index.js",
@@ -297,13 +290,6 @@ Object {
                     "version": "*",
                   },
                 ],
-                Array [
-                  "NODE_MODULES/babel-plugin-emotion/dist/babel-plugin-emotion.cjs.js",
-                  Object {
-                    "autoLabel": true,
-                    "sourceMap": true,
-                  },
-                ],
                 "NODE_MODULES/babel-plugin-add-react-displayname/index.js",
                 Array [
                   "NODE_MODULES/@babel/plugin-transform-react-jsx/lib/index.js",
@@ -416,13 +402,6 @@ Object {
                     "version": "*",
                   },
                 ],
-                Array [
-                  "NODE_MODULES/babel-plugin-emotion/dist/babel-plugin-emotion.cjs.js",
-                  Object {
-                    "autoLabel": true,
-                    "sourceMap": true,
-                  },
-                ],
                 "NODE_MODULES/babel-plugin-add-react-displayname/index.js",
                 Array [
                   "NODE_MODULES/@babel/plugin-transform-react-jsx/lib/index.js",
@@ -494,14 +473,13 @@ Object {
       Object {
         "loader": "NODE_MODULES/file-loader/dist/cjs.js",
         "options": Object {
-          "esModule": false,
           "name": "static/media/[name].[hash:8].[ext]",
         },
         "test": "/\\\\.(svg|ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\\\\?.*)?$/",
       },
       Object {
         "loader": "NODE_MODULES/url-loader/dist/cjs.js",
-        "query": Object {
+        "options": Object {
           "limit": 10000,
           "name": "static/media/[name].[hash:8].[ext]",
         },
