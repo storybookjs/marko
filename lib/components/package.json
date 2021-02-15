@@ -55,6 +55,7 @@
     "react-popper-tooltip": "^3.1.1",
     "react-syntax-highlighter": "^13.5.3",
     "react-textarea-autosize": "^8.3.0",
+    "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
