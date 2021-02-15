@@ -20,7 +20,7 @@ jest.mock('global', () => ({
     getElementById: jest.fn().mockReturnValue({}),
     body: { classList: { add: jest.fn(), remove: jest.fn() }, style: {} },
     documentElement: {},
-    location: { search: '?id=kind--story&args=b:two;c:three' },
+    location: { search: '?id=kind--story&args=a:2;b:two;c:true' },
   },
 }));
 
@@ -77,7 +77,11 @@ it('calls render when you add a story', async () => {
 
 it('uses args from URL param when rendering story', async () => {
   const render = jest.fn();
-  const argTypes = { a: { defaultValue: 1 }, b: { defaultValue: 2 } };
+  const argTypes = {
+    a: { type: { name: 'number' }, defaultValue: 1 },
+    b: { type: { name: 'number' }, defaultValue: 1 },
+    c: { type: { name: 'boolean' } },
+  };
 
   const { clientApi, configApi } = start(render);
 
@@ -87,7 +91,7 @@ it('uses args from URL param when rendering story', async () => {
 
   await sleep(0);
   expect(render).toHaveBeenCalledWith(
-    expect.objectContaining({ kind: 'kind', name: 'story', args: { a: 1, b: 'two', c: 'three' } })
+    expect.objectContaining({ kind: 'kind', name: 'story', args: { a: 2, b: NaN, c: true } })
   );
 });
 

@@ -1,5 +1,9 @@
 import { buildArgsParam, getMatch, parsePath } from './utils';
 
+jest.mock('@storybook/client-logger', () => ({
+  once: { warn: jest.fn() },
+}));
+
 describe('getMatch', () => {
   it('gets startsWithTarget match', () => {
     const output = getMatch('/foo/bar', '/foo', true);
@@ -85,7 +89,7 @@ describe('buildArgsParam', () => {
 
   it('builds booleans', () => {
     const param = buildArgsParam({ yes: true, no: false });
-    expect(param).toEqual('yes:1;no:0');
+    expect(param).toEqual('yes:true;no:false');
   });
 
   it('builds arrays', () => {

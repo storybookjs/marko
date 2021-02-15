@@ -1,5 +1,9 @@
 import { parseArgsParam } from './parseArgsParam';
 
+jest.mock('@storybook/client-logger', () => ({
+  once: { warn: jest.fn() },
+}));
+
 describe('parseArgsParam', () => {
   it('parses a simple key-value pair', () => {
     const args = parseArgsParam('key:val');
