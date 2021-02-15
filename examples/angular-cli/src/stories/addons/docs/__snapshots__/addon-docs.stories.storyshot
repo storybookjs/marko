@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Addon/Docs with some emoji 1`] = `
+exports[`Storyshots Addons/Docs with some emoji 1`] = `
 <storybook-wrapper>
   <storybook-button-component
-    _nghost-a-c8=""
+    _nghost-a-c9=""
     ng-reflect-text="😀 😎 👍 💯"
   >
     <button
-      _ngcontent-a-c8=""
+      _ngcontent-a-c9=""
     >
       😀 😎 👍 💯
     </button>
@@ -15,14 +15,14 @@ exports[`Storyshots Addon/Docs with some emoji 1`] = `
 </storybook-wrapper>
 `;
 
-exports[`Storyshots Addon/Docs with text 1`] = `
+exports[`Storyshots Addons/Docs with text 1`] = `
 <storybook-wrapper>
   <storybook-button-component
-    _nghost-a-c7=""
+    _nghost-a-c8=""
     ng-reflect-text="Hello Button"
   >
     <button
-      _ngcontent-a-c7=""
+      _ngcontent-a-c8=""
     >
       Hello Button
     </button>

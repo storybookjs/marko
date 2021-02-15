@@ -1,7 +1,7 @@
 import { DocPipe } from './doc-pipe.pipe';
 
 export default {
-  title: 'Addon/Docs/DocPipe',
+  title: 'Addons/Docs/DocPipe',
   component: DocPipe,
   parameters: {
     controls: { hideNoControlsWarning: true },

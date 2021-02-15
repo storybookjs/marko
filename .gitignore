@@ -32,3 +32,4 @@ cypress/screenshots
 examples/ember-cli/ember-output
 .verdaccio-cache
 tsconfig.tsbuildinfo
+examples/angular-cli/addon-jest.testresults.json
