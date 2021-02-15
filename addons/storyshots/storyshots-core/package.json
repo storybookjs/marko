@@ -4,7 +4,8 @@
   "description": "Take a code snapshot of every story automatically with Jest",
   "keywords": [
     "addon",
-    "storybook"
+    "storybook",
+    "test"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/storyshots/storyshots-core",
   "bugs": {
@@ -59,6 +60,8 @@
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
+    "@angular/core": "^11.2.0",
+    "@angular/platform-browser-dynamic": "^11.2.0",
     "@storybook/addon-docs": "6.2.0-alpha.28",
     "@storybook/angular": "6.2.0-alpha.28",
     "@storybook/react": "6.2.0-alpha.28",
@@ -73,6 +76,8 @@
     "rxjs": "^6.6.3"
   },
   "peerDependencies": {
+    "@angular/core": ">=6.0.0",
+    "@angular/platform-browser-dynamic": ">=6.0.0",
     "@storybook/angular": "*",
     "@storybook/react": "*",
     "@storybook/vue": "*",
@@ -86,6 +91,12 @@
     "vue-jest": "*"
   },
   "peerDependenciesMeta": {
+    "@angular/core": {
+      "optional": true
+    },
+    "@angular/platform-browser-dynamic": {
+      "optional": true
+    },
     "@storybook/angular": {
       "optional": true
     },
@@ -114,5 +125,14 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "d4ff49b2dee7c5a3c50e992832bd0ae4d3e52e41"
+  "gitHead": "899ca0824d698925edcc519c7afc7408f7b1ab46",
+  "storybook": {
+    "displayName": "Storyshots",
+    "icon": "https://user-images.githubusercontent.com/263385/101991676-48cdf300-3c7c-11eb-8aa1-944dab6ab29b.png",
+    "unsupportedFrameworks": [
+      "ember",
+      "mithril",
+      "marko"
+    ]
+  }
 }

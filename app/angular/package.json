@@ -42,10 +42,10 @@
   },
   "dependencies": {
     "@storybook/addons": "6.2.0-alpha.28",
+    "@storybook/api": "^6.2.0-alpha.24",
     "@storybook/core": "6.2.0-alpha.28",
     "@storybook/core-common": "6.2.0-alpha.28",
     "@storybook/node-logger": "6.2.0-alpha.28",
-    "@storybook/api": "^6.2.0-alpha.24",
     "@types/webpack-env": "^1.16.0",
     "autoprefixer": "^9.8.6",
     "core-js": "^3.8.2",
@@ -67,16 +67,16 @@
     "webpack": "^5.9.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.1101.0",
-    "@angular-devkit/core": "^11.1.0",
-    "@angular/common": "^11.1.0",
-    "@angular/compiler": "^11.1.0",
-    "@angular/compiler-cli": "^11.1.0",
-    "@angular/core": "^11.1.0",
-    "@angular/elements": "^11.1.0",
-    "@angular/forms": "^11.1.0",
-    "@angular/platform-browser": "^11.1.0",
-    "@angular/platform-browser-dynamic": "^11.1.0",
+    "@angular-devkit/build-angular": "~0.1102.0",
+    "@angular-devkit/core": "^11.2.0",
+    "@angular/common": "^11.2.0",
+    "@angular/compiler": "^11.2.0",
+    "@angular/compiler-cli": "^11.2.0",
+    "@angular/core": "^11.2.0",
+    "@angular/elements": "^11.2.0",
+    "@angular/forms": "^11.2.0",
+    "@angular/platform-browser": "^11.2.0",
+    "@angular/platform-browser-dynamic": "^11.2.0",
     "@nrwl/workspace": "^11.1.5",
     "@types/autoprefixer": "^9.7.2",
     "@types/jest": "^26.0.16",
@@ -120,5 +120,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "d4ff49b2dee7c5a3c50e992832bd0ae4d3e52e41"
+  "gitHead": "899ca0824d698925edcc519c7afc7408f7b1ab46"
 }

@@ -41,7 +41,7 @@
     "@storybook/addon-knobs": "6.2.0-alpha.28",
     "@storybook/addon-links": "6.2.0-alpha.28",
     "@storybook/addons": "6.2.0-alpha.28",
-    "@storybook/preset-create-react-app": "^3.1.5",
+    "@storybook/preset-create-react-app": "^3.1.6-alpha.0",
     "@storybook/react": "6.2.0-alpha.28",
     "@types/enzyme": "^3.10.8",
     "enzyme": "^3.11.0",

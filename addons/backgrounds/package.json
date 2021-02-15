@@ -6,7 +6,9 @@
     "addon",
     "background",
     "react",
-    "storybook"
+    "storybook",
+    "essentials",
+    "design"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/backgrounds",
   "bugs": {
@@ -70,5 +72,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "d4ff49b2dee7c5a3c50e992832bd0ae4d3e52e41"
+  "gitHead": "899ca0824d698925edcc519c7afc7408f7b1ab46",
+  "storybook": {
+    "displayName": "Backgrounds",
+    "icon": "https://user-images.githubusercontent.com/263385/101991667-479cc600-3c7c-11eb-96d3-410e936252e7.png",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
+  }
 }

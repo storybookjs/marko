@@ -6,7 +6,8 @@
     "addon",
     "events",
     "react",
-    "storybook"
+    "storybook",
+    "data-state"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/events",
   "bugs": {
@@ -69,5 +70,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "d4ff49b2dee7c5a3c50e992832bd0ae4d3e52e41"
+  "gitHead": "899ca0824d698925edcc519c7afc7408f7b1ab46",
+  "storybook": {
+    "displayName": "Events",
+    "unsupportedFrameworks": [
+      "react-native",
+      "svelte",
+      "riot"
+    ]
+  }
 }

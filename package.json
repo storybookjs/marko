@@ -33,7 +33,6 @@
     "type": "git",
     "url": "https://github.com/storybookjs/storybook.git"
   },
-
   "workspaces": {
     "packages": [
       "addons/*",
@@ -45,7 +44,11 @@
       "lib/*",
       "lib/cli/test/run/*"
     ],
-    "nohoist": ["examples/cra-*/webpack", "examples/cra-*/*-webpack*", "examples/cra-*/react-scripts"]
+    "nohoist": [
+      "examples/cra-*/webpack",
+      "examples/cra-*/*-webpack*",
+      "examples/cra-*/react-scripts"
+    ]
   },
   "scripts": {
     "await-serve-storybooks": "wait-on http://localhost:8001",

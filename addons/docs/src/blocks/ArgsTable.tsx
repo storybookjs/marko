@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import React, { FC, useContext, useEffect, useState, useCallback } from 'react';
 import mapValues from 'lodash/mapValues';
-import pickBy from 'lodash/pickBy';
 import {
   ArgsTable as PureArgsTable,
   ArgsTableProps as PureArgsTableProps,
@@ -10,7 +9,8 @@ import {
   TabbedArgsTable,
 } from '@storybook/components';
 import { Args } from '@storybook/addons';
-import { StoryStore } from '@storybook/client-api';
+import { StoryStore, filterArgTypes } from '@storybook/client-api';
+import type { PropDescriptor } from '@storybook/client-api';
 import Events from '@storybook/core-events';
 
 import { DocsContext, DocsContextProps } from './DocsContext';
@@ -18,8 +18,6 @@ import { Component, CURRENT_SELECTION, PRIMARY_STORY } from './types';
 import { getComponentName, getDocsStories } from './utils';
 import { ArgTypesExtractor } from '../lib/docgen/types';
 import { lookupStoryId } from './Story';
-
-type PropDescriptor = string[] | RegExp;
 
 interface BaseProps {
   include?: PropDescriptor;
@@ -71,22 +69,6 @@ const useArgs = (
     [storyId]
   );
   return [args, updateArgs, resetArgs];
-};
-
-const matches = (name: string, descriptor: PropDescriptor) =>
-  Array.isArray(descriptor) ? descriptor.includes(name) : name.match(descriptor);
-
-const filterArgTypes = (argTypes: ArgTypes, include?: PropDescriptor, exclude?: PropDescriptor) => {
-  if (!include && !exclude) {
-    return argTypes;
-  }
-  return (
-    argTypes &&
-    pickBy(argTypes, (argType, key) => {
-      const name = argType.name || key;
-      return (!include || matches(name, include)) && (!exclude || !matches(name, exclude));
-    })
-  );
 };
 
 export const extractComponentArgTypes = (

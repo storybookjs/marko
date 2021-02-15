@@ -8,7 +8,8 @@
     "addon",
     "storybook",
     "valid",
-    "verify"
+    "verify",
+    "test"
   ],
   "homepage": "https://github.com/storybookjs/storybook#readme",
   "bugs": {
@@ -76,5 +77,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "d4ff49b2dee7c5a3c50e992832bd0ae4d3e52e41"
+  "gitHead": "899ca0824d698925edcc519c7afc7408f7b1ab46",
+  "storybook": {
+    "displayName": "Accessibility",
+    "icon": "https://user-images.githubusercontent.com/263385/101991665-47042f80-3c7c-11eb-8f00-64b5a18f498a.png",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
+  }
 }

@@ -5,7 +5,10 @@
   "keywords": [
     "addon",
     "notes",
-    "storybook"
+    "documentation",
+    "storybook",
+    "essentials",
+    "organize"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/docs",
   "bugs": {
@@ -77,6 +80,7 @@
     "global": "^4.4.0",
     "html-tags": "^3.1.0",
     "js-string-escape": "^1.0.1",
+    "loader-utils": "^2.0.0",
     "lodash": "^4.17.20",
     "prettier": "~2.2.1",
     "prop-types": "^15.7.2",
@@ -88,7 +92,7 @@
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
-    "@angular/core": "^11.0.9",
+    "@angular/core": "^11.2.0",
     "@babel/core": "^7.12.10",
     "@emotion/core": "^10.1.1",
     "@emotion/styled": "^10.0.27",
@@ -101,6 +105,7 @@
     "@types/enzyme": "^3.10.8",
     "@types/estree": "^0.0.44",
     "@types/jest": "^26.0.16",
+    "@types/loader-utils": "^2.0.0",
     "@types/prop-types": "^15.7.3",
     "@types/tmp": "^0.2.0",
     "@types/util-deprecate": "^1.0.0",
@@ -127,9 +132,11 @@
     "@babel/core": "^7.11.5",
     "@storybook/angular": "6.2.0-alpha.28",
     "@storybook/vue": "6.2.0-alpha.28",
+    "@storybook/vue3": "6.2.0-alpha.28",
     "babel-loader": "^8.0.0",
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0",
+    "svelte": "^3.31.2",
     "sveltedoc-parser": "^3.0.4",
     "vue": "^2.6.10 || ^3.0.0",
     "webpack": "*"
@@ -141,10 +148,16 @@
     "@storybook/vue": {
       "optional": true
     },
+    "@storybook/vue3": {
+      "optional": true
+    },
     "react": {
       "optional": true
     },
     "react-dom": {
+      "optional": true
+    },
+    "svelte": {
       "optional": true
     },
     "sveltedoc-parser": {
@@ -160,5 +173,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "d4ff49b2dee7c5a3c50e992832bd0ae4d3e52e41"
+  "gitHead": "899ca0824d698925edcc519c7afc7408f7b1ab46",
+  "storybook": {
+    "displayName": "Docs",
+    "icon": "https://user-images.githubusercontent.com/263385/101991672-48355c80-3c7c-11eb-82d9-95fa12438f64.png",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
+  }
 }

@@ -4,7 +4,8 @@
   "description": "Storybook addon to display the GraphiQL IDE",
   "keywords": [
     "addon",
-    "storybook"
+    "storybook",
+    "data-state"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/graphql",
   "bugs": {
@@ -64,5 +65,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "d4ff49b2dee7c5a3c50e992832bd0ae4d3e52e41"
+  "gitHead": "899ca0824d698925edcc519c7afc7408f7b1ab46",
+  "storybook": {
+    "displayName": "GraphiQL IDE",
+    "icon": "https://pbs.twimg.com/profile_images/618131103509909504/VQLBJ0TR_400x400.png",
+    "supportedFrameworks": [
+      "react",
+      "angular"
+    ]
+  }
 }

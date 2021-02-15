@@ -1,3 +1,51 @@
+## 6.2.0-alpha.28 (February 15, 2021)
+
+### Bug Fixes
+
+- Addon-actions: Change to override default values ([#13912](https://github.com/storybookjs/storybook/pull/13912))
+- CLI: Add safe check for eslint overrides ([#13717](https://github.com/storybookjs/storybook/pull/13717))
+
+### Maintenance
+
+- CLI: Don't try to add packages that are already installed ([#13876](https://github.com/storybookjs/storybook/pull/13876))
+
+## 6.2.0-alpha.27 (February 15, 2021)
+
+### Features
+
+- Addon-controls: Infer color and date controls ([#13675](https://github.com/storybookjs/storybook/pull/13675))
+- Svelte: Support TypeScript and preprocessors ([#13900](https://github.com/storybookjs/storybook/pull/13900))
+- Addon-controls: Add include/exclude configuration options ([#13898](https://github.com/storybookjs/storybook/pull/13898))
+
+### Maintenance
+
+- Add catalog metadata to the addons ([#13666](https://github.com/storybookjs/storybook/pull/13666))
+- Misc: Clean TS config and bump `@storybook/preset-create-react-app` ([#13878](https://github.com/storybookjs/storybook/pull/13878))
+
+## 6.1.18 (February 15, 2021)
+
+### Bug Fixes
+
+- UI: Fix theming for focused search bar ([#13895](https://github.com/storybookjs/storybook/pull/13895))
+- Storyshots: Support main.js usage ([#13842](https://github.com/storybookjs/storybook/pull/13842))
+
+## 6.2.0-alpha.26 (February 13, 2021)
+
+### Features
+
+- Addon-controls: Files control ([#13544](https://github.com/storybookjs/storybook/pull/13544))
+- UI: Add a 'main' role to the Main component for a11y ([#13827](https://github.com/storybookjs/storybook/pull/13827))
+
+### Bug Fixes
+
+- Addon-docs/Vue3: Attach app context from preview to inline stories ([#13894](https://github.com/storybookjs/storybook/pull/13894))
+- UI: Fix theming for focused search bar ([#13895](https://github.com/storybookjs/storybook/pull/13895))
+
+### Maintenance
+
+- Build: Move all the `yarn install` in the `build` CI job ([#13872](https://github.com/storybookjs/storybook/pull/13872))
+- Build: Rework `test` NPM script ([#13871](https://github.com/storybookjs/storybook/pull/13871))
+
 ## 6.2.0-alpha.25 (February 11, 2021)
 
 ### Features

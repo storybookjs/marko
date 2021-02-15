@@ -4,7 +4,9 @@
   "description": "Build responsive components by adjusting Storybook’s viewport size and orientation",
   "keywords": [
     "addon",
-    "storybook"
+    "storybook",
+    "style",
+    "essentials"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/viewport",
   "bugs": {
@@ -63,5 +65,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "d4ff49b2dee7c5a3c50e992832bd0ae4d3e52e41"
+  "gitHead": "899ca0824d698925edcc519c7afc7408f7b1ab46",
+  "storybook": {
+    "displayName": "Viewport",
+    "icon": "https://user-images.githubusercontent.com/263385/101991678-48cdf300-3c7c-11eb-9764-f8af293c1b28.png",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
+  }
 }

@@ -4,7 +4,8 @@
   "description": "View a story’s source code to see how it works and paste into your app",
   "keywords": [
     "addon",
-    "storybook"
+    "storybook",
+    "code"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/storysource",
   "bugs": {
@@ -70,5 +71,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "d4ff49b2dee7c5a3c50e992832bd0ae4d3e52e41"
+  "gitHead": "899ca0824d698925edcc519c7afc7408f7b1ab46",
+  "storybook": {
+    "displayName": "Storysource",
+    "icon": "https://user-images.githubusercontent.com/263385/101991675-48cdf300-3c7c-11eb-9400-58de5ac6daa7.png",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
+  }
 }
