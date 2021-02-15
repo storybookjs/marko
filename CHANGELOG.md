@@ -1,3 +1,14 @@
+## 6.2.0-alpha.28 (February 15, 2021)
+
+### Bug Fixes
+
+- Addon-actions: Change to override default values ([#13912](https://github.com/storybookjs/storybook/pull/13912))
+- CLI: Add safe check for eslint overrides ([#13717](https://github.com/storybookjs/storybook/pull/13717))
+
+### Maintenance
+
+- CLI: Don't try to add packages that are already installed ([#13876](https://github.com/storybookjs/storybook/pull/13876))
+
 ## 6.2.0-alpha.27 (February 15, 2021)
 
 ### Features
