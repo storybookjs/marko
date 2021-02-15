@@ -1,10 +1,5 @@
 import { navigate as navigateRouter, NavigateOptions } from '@reach/router';
-import {
-  NAVIGATE_URL,
-  STORY_ARGS_UPDATED,
-  SET_STORIES,
-  SET_CURRENT_STORY,
-} from '@storybook/core-events';
+import { NAVIGATE_URL, STORY_ARGS_UPDATED, SET_CURRENT_STORY } from '@storybook/core-events';
 import { queryFromLocation, navigate as queryNavigate, buildArgsParam } from '@storybook/router';
 import { toId, sanitize } from '@storybook/csf';
 import deepEqual from 'fast-deep-equal';
@@ -153,13 +148,12 @@ export const init: ModuleFn = ({ store, navigate, state, provider, fullAPI, ...r
   };
 
   const initModule = () => {
-    const initialArgs: Record<string, Story['args']> = {};
-
-    // Sets the args param to include any args that don't have their initial value
-    const updateArgsParam = ({ storyId, args }: { storyId: string; args?: Story['args'] }) => {
+    // Sets `args` parameter in URL, omitting any args that have their initial value or cannot be unserialized safely.
+    const updateArgsParam = (args?: Story['args']) => {
+      const currentStory = fullAPI.getCurrentStoryData();
+      const initialArgs = (isStory(currentStory) && currentStory.initialArgs) || {};
       const customizedArgs = Object.entries(args || {}).reduce((acc, [key, value]) => {
-        if (!deepEqual(value, initialArgs[storyId][key])) acc[key] = value;
-        return acc;
+        return deepEqual(value, initialArgs[key]) ? acc : Object.assign(acc, { [key]: value });
       }, {} as Story['args']);
       const argsString = buildArgsParam(customizedArgs);
       const argsParam = argsString.length ? `&args=${argsString}` : '';
@@ -167,28 +161,12 @@ export const init: ModuleFn = ({ store, navigate, state, provider, fullAPI, ...r
       api.setQueryParams({ args: argsString });
     };
 
+    fullAPI.on(SET_CURRENT_STORY, () => updateArgsParam());
+    fullAPI.on(STORY_ARGS_UPDATED, ({ args }) => updateArgsParam(args));
+
     fullAPI.on(NAVIGATE_URL, (url: string, options: { [k: string]: any }) => {
       fullAPI.navigateUrl(url, options);
     });
-
-    // Track initial args for the currently selected story
-    fullAPI.on(SET_STORIES, () => {
-      const data = fullAPI.getCurrentStoryData();
-      const storyArgs = isStory(data) ? data.args : undefined;
-      initialArgs[data.id] = storyArgs;
-    });
-
-    // Update URL with args for the selected story
-    // Set initial args if we haven't visited this story before
-    fullAPI.on(SET_CURRENT_STORY, () => {
-      const data = fullAPI.getCurrentStoryData();
-      const args = isStory(data) ? data.args : undefined;
-      initialArgs[data.id] = initialArgs[data.id] || args;
-      updateArgsParam({ storyId: data.id, args });
-    });
-
-    // Update the URL to reflect the args when they change
-    fullAPI.on(STORY_ARGS_UPDATED, updateArgsParam);
 
     if (fullAPI.showReleaseNotesOnLaunch()) {
       navigate('/settings/release-notes');

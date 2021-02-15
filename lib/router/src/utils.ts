@@ -1,5 +1,6 @@
 import qs from 'qs';
 import memoize from 'memoizerific';
+import { once } from '@storybook/client-logger';
 
 export interface StoryData {
   viewMode?: string;
@@ -35,7 +36,16 @@ interface Args {
   [key: string]: any;
 }
 
-const VALIDATION_REGEXP = /^[a-zA-Z0-9 _-]+$/;
+// Keep this in sync with validateArgs in @storybook/core
+const VALIDATION_REGEXP = /^[a-zA-Z0-9 _-]*$/;
+const validateArgs = (key = '', value: any = ''): boolean => {
+  if (key === null || value === null) return false;
+  if (key === '' || !VALIDATION_REGEXP.test(key)) return false;
+  if (typeof value === 'string') return VALIDATION_REGEXP.test(value);
+  if (Array.isArray(value)) return value.every((v) => validateArgs(key, v));
+  return Object.entries(value).every(([k, v]) => validateArgs(k, v));
+};
+
 const QS_OPTIONS = {
   encode: false, // we handle URL encoding ourselves
   delimiter: ';', // we don't actually create multiple query params
@@ -43,21 +53,14 @@ const QS_OPTIONS = {
   arrayFormat: 'brackets', // encode arrays using brackets without indices: arr[]=one&arr[]=two
   format: 'RFC1738', // encode spaces using the + sign
 };
-
-// Keep this in sync with validateArgs in @storybook/core
-const validateArgs = (key: any, value: any): boolean => {
-  if (!key || !value) return false;
-  if (!VALIDATION_REGEXP.test(key)) return false;
-  if (typeof value === 'string') return VALIDATION_REGEXP.test(value);
-  if (Array.isArray(value)) return value.every((v) => validateArgs(key, v));
-  return Object.entries(value).every(([k, v]) => validateArgs(k, v));
-};
-
 export const buildArgsParam = (args: Args) => {
-  const object = Object.entries(args).reduce(
-    (acc, [key, value]) => (validateArgs(key, value) ? Object.assign(acc, { [key]: value }) : acc),
-    {} as Args
-  );
+  const object = Object.entries(args).reduce((acc, [key, value]) => {
+    if (validateArgs(key, value)) return Object.assign(acc, { [key]: value });
+    once.warn(
+      'Some args cannot be safely serialized to the URL. See https://storybook.js.org/docs/react/writing-stories/args#setting-args-through-the-url'
+    );
+    return acc;
+  }, {} as Args);
   const parts = qs.stringify(object, QS_OPTIONS).split(';');
   return parts.map((part: string) => part.replace('=', ':')).join(';');
 };

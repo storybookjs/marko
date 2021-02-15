@@ -83,6 +83,11 @@ describe('buildArgsParam', () => {
     expect(param).toEqual('one:1;two:2;three:3');
   });
 
+  it('builds booleans', () => {
+    const param = buildArgsParam({ yes: true, no: false });
+    expect(param).toEqual('yes:1;no:0');
+  });
+
   it('builds arrays', () => {
     const param = buildArgsParam({ arr: ['1', '2', '3'] });
     expect(param).toEqual('arr[]:1;arr[]:2;arr[]:3');

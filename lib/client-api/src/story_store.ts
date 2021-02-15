@@ -39,6 +39,7 @@ import { combineParameters } from './parameters';
 import { ensureArgTypes } from './ensureArgTypes';
 import { inferArgTypes } from './inferArgTypes';
 import { inferControls } from './inferControls';
+import { mapArgsToTypes } from './mapArgsToTypes';
 
 interface StoryOptions {
   includeDocsOnly?: boolean;
@@ -238,7 +239,10 @@ export default class StoryStore {
       }
 
       if (foundStory) {
-        if (args && foundStory.args) Object.assign(foundStory.args, args);
+        if (args && foundStory.args) {
+          const mappedUrlArgs = mapArgsToTypes(args, foundStory.argTypes);
+          foundStory.args = combineParameters(foundStory.args, mappedUrlArgs);
+        }
         this.setSelection({ storyId: foundStory.id, viewMode });
         this._channel.emit(Events.STORY_SPECIFIED, { storyId: foundStory.id, viewMode });
       }
