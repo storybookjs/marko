@@ -228,7 +228,9 @@ export default async ({
                 mangle: false,
                 keep_fnames: true,
               },
-            }),
+              // It looks like the types from `@types/terser-webpack-plugin` are not matching the latest version of
+              // Webpack yet
+            }) as any,
           ]
         : [],
     },

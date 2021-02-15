@@ -15,9 +15,10 @@ jobs:
       uses: actions/cache@v2
       with:
         path: node_modules
-        key: build-v2-${{ hashFiles('**/yarn.lock') }}
+        key: yarn-2-cache-v1-${{ hashFiles('**/yarn.lock') }}
     - name: install, bootstrap
       run: |
+        yarn install --immutable
         yarn bootstrap --core
     - name: test
       run: |

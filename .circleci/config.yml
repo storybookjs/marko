@@ -84,18 +84,18 @@ jobs:
       - restore_cache:
           name: Restore Yarn cache
           keys:
-            - build-yarn-cache-v4--{{ checksum "yarn.lock" }}
+            - build-yarn-2-cache-v1--{{ checksum "yarn.lock" }}
       - run:
           name: Install dependencies
-          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+          command: yarn install --immutable
       - run:
           name: Bootstrap
           command: yarn bootstrap --core
       - save_cache:
           name: Save Yarn cache
-          key: build-yarn-cache-v4--{{ checksum "yarn.lock" }}
+          key: build-yarn-2-cache-v1--{{ checksum "yarn.lock" }}
           paths:
-            - ~/.cache/yarn
+            - ~/.yarn/berry/cache
       - persist_to_workspace:
           root: .
           paths:
@@ -195,16 +195,16 @@ jobs:
           command: yarn wait-on http://localhost:6000
       - run:
           name: set registry
-          command: yarn config set registry http://localhost:6000/
+          command: yarn config set npmRegistryServer http://localhost:6000/
       - run:
           name: test local registry
-          command: yarn info @storybook/core
+          command: yarn npm info @storybook/core
       - run:
           name: Install Cypress binary
           command: yarn cypress install
       - run:
           name: run e2e tests
-          command: yarn test:e2e-framework --skip preact
+          command: yarn test:e2e-framework --clean --skip preact
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
@@ -237,10 +237,10 @@ jobs:
           command: yarn wait-on http://localhost:6000
       - run:
           name: Set registry
-          command: yarn config set registry http://localhost:6000/
+          command: yarn config set npmRegistryServer http://localhost:6000/
       - run:
           name: Test local registry
-          command: yarn info @storybook/core
+          command: yarn npm info @storybook/core
       - run:
           name: Install Cypress binary
           command: yarn cypress install
@@ -269,10 +269,10 @@ jobs:
           command: yarn wait-on http://localhost:6000
       - run:
           name: Set registry
-          command: yarn config set registry http://localhost:6000/
+          command: yarn config set npmRegistryServer http://localhost:6000/
       - run:
           name: Test local registry
-          command: yarn info @storybook/core
+          command: yarn npm info @storybook/core
       - run:
           name: Install Cypress binary
           command: yarn cypress install
@@ -301,10 +301,10 @@ jobs:
           command: yarn wait-on http://localhost:6000
       - run:
           name: set registry
-          command: yarn config set registry http://localhost:6000/
+          command: yarn config set npmRegistryServer http://localhost:6000/
       - run:
           name: test local registry
-          command: yarn info @storybook/core
+          command: yarn npm info @storybook/core
       - run:
           name: Install Cypress binary
           command: yarn cypress install
@@ -414,7 +414,7 @@ jobs:
           clone_options: '--depth 1 --verbose'
       - run:
           name: Install dependencies
-          command: yarn bootstrap --install
+          command: yarn install --immutable
       - run:
           name: Trigger build
           command: ./scripts/build-frontpage.js
