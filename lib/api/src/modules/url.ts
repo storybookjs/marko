@@ -152,10 +152,7 @@ export const init: ModuleFn = ({ store, navigate, state, provider, fullAPI, ...r
     const updateArgsParam = (args?: Story['args']) => {
       const currentStory = fullAPI.getCurrentStoryData();
       const initialArgs = (isStory(currentStory) && currentStory.initialArgs) || {};
-      const customizedArgs = Object.entries(args || {}).reduce((acc, [key, value]) => {
-        return deepEqual(value, initialArgs[key]) ? acc : Object.assign(acc, { [key]: value });
-      }, {} as Story['args']);
-      const argsString = buildArgsParam(customizedArgs);
+      const argsString = buildArgsParam(initialArgs, args);
       const argsParam = argsString.length ? `&args=${argsString}` : '';
       queryNavigate(`${fullAPI.getUrlState().path}${argsParam}`, { replace: true });
       api.setQueryParams({ args: argsString });

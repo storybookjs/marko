@@ -15,13 +15,14 @@ const validateArgs = (key = '', value: any = ''): boolean => {
 const QS_OPTIONS = {
   delimiter: ';', // we're parsing a single query param
   allowDots: true, // objects are encoded using dot notation
+  allowSparse: true, // arrays will be merged on top of their initial value
 };
 export const parseArgsParam = (argsString: string): Args => {
   const parts = argsString.split(';').map((part) => part.replace('=', '~').replace(':', '='));
   return Object.entries(qs.parse(parts.join(';'), QS_OPTIONS)).reduce((acc, [key, value]) => {
     if (validateArgs(key, value)) return Object.assign(acc, { [key]: value });
     once.warn(
-      'Cannot safely apply some args from the URL. See https://storybook.js.org/docs/react/writing-stories/args#setting-args-through-the-url'
+      'Omitted potentially unsafe URL args.\n\nMore info: https://storybook.js.org/docs/react/writing-stories/args#setting-args-through-the-url'
     );
     return acc;
   }, {} as Args);
