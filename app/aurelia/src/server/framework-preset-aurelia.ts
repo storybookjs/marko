@@ -1,4 +1,4 @@
-import { Configuration } from 'webpack';
+import { Configuration, WebpackPluginInstance } from 'webpack';
 import createForkTsCheckerInstance from './create-fork-ts-checker-plugin';
 import getTsLoaderOptions from './ts_config';
 
@@ -57,7 +57,7 @@ export function webpack(
 
   config.resolve.extensions.push('.ts', '.js');
 
-  config.plugins.push(createForkTsCheckerInstance(getTsLoaderOptions(configDir)));
+  config.plugins.push(createForkTsCheckerInstance(getTsLoaderOptions(configDir)) as any as WebpackPluginInstance);
 
   return config;
 }

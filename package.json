@@ -45,9 +45,14 @@
       "lib/cli/test/run/*"
     ],
     "nohoist": [
-      "examples/cra-*/webpack",
-      "examples/cra-*/*-webpack*",
-      "examples/cra-*/react-scripts"
+      "**/react-scripts",
+      "**/webpack-dev-middleware",
+      "**/webpack-hot-middleware",
+      "cra-*/webpack",
+      "cra-*/*-webpack*",
+      "cra-*/react-scripts",
+      "aurelia-kitchen-sink/webpack",
+      "aurelia-kitchen-sink/*-webpack*"
     ]
   },
   "scripts": {
@@ -140,6 +145,7 @@
     "@types/serve-static": "^1.13.8",
     "@types/shelljs": "^0.8.7",
     "@types/webpack-env": "^1.16.0",
+    "@types/webpack-dev-middleware": "^3.7.3",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.3",
@@ -215,8 +221,8 @@
     "ts-node": "^9.1.0",
     "typescript": "^3.9.7",
     "wait-on": "^5.2.1",
-    "webpack": "^5.21.2",
-    "webpack-dev-middleware": "^4.0.2",
+    "webpack": "4",
+    "webpack-dev-middleware": "^3.7.3",
     "window-size": "^1.1.1"
   },
   "optionalDependencies": {

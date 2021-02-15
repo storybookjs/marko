@@ -15,12 +15,12 @@
     "prop-types": "^15.7.2",
     "react": "16.14.0",
     "react-dom": "16.14.0",
-    "react-lifecycles-compat": "^3.0.4"
+    "react-lifecycles-compat": "^3.0.4",
+    "react-scripts": "^4.0.2"
   },
   "devDependencies": {
     "@storybook/addon-a11y": "6.2.0-alpha.28",
     "@storybook/addon-actions": "6.2.0-alpha.28",
-    "@storybook/builder-webpack4": "6.2.0-alpha.28",
     "@storybook/addon-backgrounds": "6.2.0-alpha.28",
     "@storybook/addon-docs": "6.2.0-alpha.28",
     "@storybook/addon-events": "6.2.0-alpha.28",
@@ -29,11 +29,13 @@
     "@storybook/addon-links": "6.2.0-alpha.28",
     "@storybook/addon-storyshots": "6.2.0-alpha.28",
     "@storybook/addons": "6.2.0-alpha.28",
+    "@storybook/builder-webpack4": "6.2.0-alpha.28",
     "@storybook/client-logger": "6.2.0-alpha.28",
     "@storybook/preset-create-react-app": "^3.1.6-alpha.0",
     "@storybook/react": "6.2.0-alpha.28",
     "@storybook/theming": "6.2.0-alpha.28",
-    "react-scripts": "^3.4.4"
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
+    "webpack": "4"
   },
   "storybook": {
     "chromatic": {
