@@ -50,6 +50,7 @@ CyclicArgs.args = {
   hasCycle,
 };
 CyclicArgs.parameters = {
+  docs: { disable: true },
   chromatic: { disable: true },
 };
 
