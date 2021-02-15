@@ -15,7 +15,6 @@ const validateArgs = (key = '', value: any = ''): boolean => {
 const QS_OPTIONS = {
   delimiter: ';', // we're parsing a single query param
   allowDots: true, // objects are encoded using dot notation
-  allowSparse: true, // arrays will be merged on top of their initial value
 };
 export const parseArgsParam = (argsString: string): Args => {
   const parts = argsString.split(';').map((part) => part.replace('=', '~').replace(':', '='));
