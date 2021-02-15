@@ -123,6 +123,10 @@ export default async ({
       filename: '[name].[hash].bundle.js',
       publicPath: '',
     },
+    stats: {
+      preset: 'none',
+      logging: 'error'
+    },
     watchOptions: {
       aggregateTimeout: 10,
       ignored: /node_modules/,

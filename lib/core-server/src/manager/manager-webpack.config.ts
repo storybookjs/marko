@@ -71,6 +71,10 @@ export default async ({
       aggregateTimeout: 2000,
       ignored: /node_modules/,
     },
+    stats: {
+      preset: 'none',
+      logging: 'error'
+    },
     plugins: [
       refs
         ? new VirtualModulePlugin({

@@ -122,6 +122,7 @@ export default async ({
     bail: isProd,
     devtool: 'cheap-module-source-map',
     entry: entries,
+    stats: 'errors-only',
     output: {
       path: path.resolve(process.cwd(), outputDir),
       filename: '[name].[hash].bundle.js',
