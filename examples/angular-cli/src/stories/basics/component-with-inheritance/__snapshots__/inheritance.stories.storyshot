@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Basics / Component with / Inheritance base button 1`] = `
+exports[`Storyshots Basics / Component / With Inheritance base button 1`] = `
 <storybook-wrapper>
   <storybook-base-button
     ng-reflect-label="this is label"
@@ -12,7 +12,7 @@ exports[`Storyshots Basics / Component with / Inheritance base button 1`] = `
 </storybook-wrapper>
 `;
 
-exports[`Storyshots Basics / Component with / Inheritance icon button 1`] = `
+exports[`Storyshots Basics / Component / With Inheritance icon button 1`] = `
 <storybook-wrapper>
   <storybook-icon-button
     ng-reflect-icon="this is icon"

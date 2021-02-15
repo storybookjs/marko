@@ -2,7 +2,7 @@ import { Meta, Story } from '@storybook/angular';
 import { OnPushBoxComponent } from './on-push-box.component';
 
 export default {
-  title: 'Basics / Component with / OnPush strategy',
+  title: 'Basics / Component / With OnPush strategy',
   component: OnPushBoxComponent,
   argTypes: {
     word: { control: 'text' },

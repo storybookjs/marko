@@ -4,7 +4,7 @@ import { CustomPipePipe } from './custom.pipe';
 import { WithPipeComponent } from './with-pipe.component';
 
 export default {
-  title: 'Basics / Component with / Pipes',
+  title: 'Basics / Component / With Pipes',
   component: WithPipeComponent,
   decorators: [
     moduleMetadata({

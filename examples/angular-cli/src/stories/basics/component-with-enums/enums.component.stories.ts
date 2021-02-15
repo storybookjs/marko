@@ -7,7 +7,7 @@ import {
 } from './enums.component';
 
 export default {
-  title: 'Basics / Component with / Enum Types',
+  title: 'Basics / Component / With Enum Types',
   component: EnumsComponent,
 } as Meta;
 

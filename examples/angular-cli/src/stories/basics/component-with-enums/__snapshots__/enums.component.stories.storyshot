@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Basics / Component with / Enum Types Basic 1`] = `
+exports[`Storyshots Basics / Component / With Enum Types Basic 1`] = `
 <storybook-wrapper>
   <app-enums
     ng-reflect-aliased-union-type="Type Alias 1"

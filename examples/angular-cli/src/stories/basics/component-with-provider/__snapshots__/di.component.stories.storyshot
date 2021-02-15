@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Basics / Component with / Provider inputs and inject dependencies 1`] = `
+exports[`Storyshots Basics / Component / With Provider inputs and inject dependencies 1`] = `
 <storybook-wrapper>
   <storybook-di-component
     ng-reflect-title="Component dependencies"
@@ -29,7 +29,7 @@ exports[`Storyshots Basics / Component with / Provider inputs and inject depende
 </storybook-wrapper>
 `;
 
-exports[`Storyshots Basics / Component with / Provider inputs and inject dependencies with args 1`] = `
+exports[`Storyshots Basics / Component / With Provider inputs and inject dependencies with args 1`] = `
 <storybook-wrapper>
   <storybook-di-component
     ng-reflect-title="Component dependencies"

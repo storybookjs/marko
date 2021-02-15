@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Basics / Component with / StyleUrls Component with styles 1`] = `
+exports[`Storyshots Basics / Component / With StyleUrls Component with styles 1`] = `
 <storybook-wrapper>
   <storybook-styled-component>
     <div>

@@ -1,7 +1,7 @@
 import { DiComponent } from './di.component';
 
 export default {
-  title: 'Basics / Component with / Provider',
+  title: 'Basics / Component / With Provider',
   component: DiComponent,
 };
 

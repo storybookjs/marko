@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Basics / Component with / ng-content Default 1`] = `
+exports[`Storyshots Basics / Component / With ng-content Default 1`] = `
 <storybook-wrapper>
   <storybook-with-ng-content>
     <div
@@ -14,7 +14,7 @@ exports[`Storyshots Basics / Component with / ng-content Default 1`] = `
 </storybook-wrapper>
 `;
 
-exports[`Storyshots Basics / Component with / ng-content With Dynamic Content And Args 1`] = `
+exports[`Storyshots Basics / Component / With ng-content With Dynamic Content And Args 1`] = `
 <storybook-wrapper>
   <storybook-with-ng-content>
     <div

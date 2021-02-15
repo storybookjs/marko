@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Basics / Component with / Pipes Simple 1`] = `
+exports[`Storyshots Basics / Component / With Pipes Simple 1`] = `
 <storybook-wrapper>
   <storybook-with-pipe
     ng-reflect-field="foobar"
@@ -12,7 +12,7 @@ exports[`Storyshots Basics / Component with / Pipes Simple 1`] = `
 </storybook-wrapper>
 `;
 
-exports[`Storyshots Basics / Component with / Pipes With args 1`] = `
+exports[`Storyshots Basics / Component / With Pipes With args 1`] = `
 <storybook-wrapper>
   <storybook-with-pipe
     ng-reflect-field="Foo Bar"
