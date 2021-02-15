@@ -12,7 +12,7 @@ import { Server } from 'http';
 
 export interface TypescriptConfig {
   check: boolean;
-  reactDocgen: string;
+  reactDocgen: false | string;
   reactDocgenTypescriptOptions: {
     shouldExtractLiteralValuesFromEnum: boolean;
     shouldRemoveUndefinedFromOptional: boolean;
