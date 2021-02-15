@@ -7,7 +7,7 @@ import { Options } from 'ts-loader';
 export default function (tsLoaderOptions: Partial<Options>) {
   if (tsLoaderOptions && tsLoaderOptions.configFile) {
     return new ForkTsCheckerWebpackPlugin({
-      typescript: tsLoaderOptions.configFile,
+      tsconfig: tsLoaderOptions.configFile,
       async: false,
     });
   }
