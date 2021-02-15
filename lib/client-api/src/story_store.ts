@@ -33,13 +33,13 @@ import {
   StoreSelectionSpecifier,
   StoreSelection,
 } from './types';
+import { mapArgsToTypes } from './args';
 import { HooksContext } from './hooks';
 import { storySort } from './storySort';
 import { combineParameters } from './parameters';
 import { ensureArgTypes } from './ensureArgTypes';
 import { inferArgTypes } from './inferArgTypes';
 import { inferControls } from './inferControls';
-import { mapArgsToTypes } from './mapArgsToTypes';
 
 interface StoryOptions {
   includeDocsOnly?: boolean;

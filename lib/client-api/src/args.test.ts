@@ -1,4 +1,4 @@
-import { mapArgsToTypes } from './mapArgsToTypes';
+import { mapArgsToTypes } from './args';
 
 const stringType = { name: 'string' };
 const numberType = { name: 'number' };
