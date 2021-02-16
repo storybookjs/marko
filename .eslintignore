@@ -7,7 +7,7 @@ docs/public
 storybook-static
 built-storybooks
 lib/cli/test
-lib/core/prebuilt
+lib/core-server/prebuilt
 lib/codemod/src/transforms/__testfixtures__
 scripts/storage
 *.bundle.js

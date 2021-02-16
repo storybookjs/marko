@@ -53,8 +53,7 @@ export default async ({
   } = await readPackage({ cwd: __dirname });
 
   // @ts-ignore
-  // eslint-disable-next-line import/no-extraneous-dependencies
-  const { BundleAnalyzerPlugin } = await import('webpack-bundle-analyzer').catch(() => ({}));
+  // const { BundleAnalyzerPlugin } = await import('webpack-bundle-analyzer').catch(() => ({}));
 
   return {
     name: 'manager',
@@ -73,7 +72,7 @@ export default async ({
     },
     stats: {
       preset: 'none',
-      logging: 'error'
+      logging: 'error',
     },
     plugins: [
       refs

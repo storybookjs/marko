@@ -4,6 +4,6 @@ process.env.NODE_ENV = 'production';
 
 buildStaticStandalone({
   ignorePreview: true,
-  outputDir: './lib/core/prebuilt',
+  outputDir: './lib/core-server/prebuilt',
   configDir: './scripts/build-manager-config',
 });

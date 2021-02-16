@@ -57,7 +57,9 @@ export function webpack(
 
   config.resolve.extensions.push('.ts', '.js');
 
-  config.plugins.push(createForkTsCheckerInstance(getTsLoaderOptions(configDir)) as any as WebpackPluginInstance);
+  config.plugins.push(
+    (createForkTsCheckerInstance(getTsLoaderOptions(configDir)) as any) as WebpackPluginInstance
+  );
 
   return config;
 }

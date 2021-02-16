@@ -23,7 +23,6 @@ integration/__image_snapshots__/__diff_output__
 /examples/cra-kitchen-sink/src/__image_snapshots__/__diff_output__/
 lib/*.jar
 lib/**/dll
-lib/core/prebuilt
 /false
 /addons/docs/common/config-*
 built-storybooks
@@ -32,3 +31,4 @@ cypress/screenshots
 examples/ember-cli/ember-output
 .verdaccio-cache
 tsconfig.tsbuildinfo
+lib/core-server/prebuilt
