@@ -32,3 +32,4 @@ examples/ember-cli/ember-output
 .verdaccio-cache
 tsconfig.tsbuildinfo
 lib/core-server/prebuilt
+examples/angular-cli/addon-jest.testresults.json

@@ -183,6 +183,7 @@ export const Search = React.memo<{
           matchesKeyCode('Slash', event)
         ) {
           inputRef.current.focus();
+          inputRef.current.select();
           event.preventDefault();
         }
       };
