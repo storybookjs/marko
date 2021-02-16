@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "@storybook/addons": "6.2.0-alpha.28",
-    "@storybook/api": "^6.2.0-alpha.24",
+    "@storybook/api": "^6.2.0-alpha.28",
     "@storybook/core": "6.2.0-alpha.28",
     "@storybook/core-common": "6.2.0-alpha.28",
     "@storybook/node-logger": "6.2.0-alpha.28",
