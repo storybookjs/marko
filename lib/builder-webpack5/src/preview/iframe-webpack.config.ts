@@ -125,7 +125,7 @@ export default async ({
     },
     stats: {
       preset: 'none',
-      logging: 'error'
+      logging: 'error',
     },
     watchOptions: {
       aggregateTimeout: 10,
@@ -180,7 +180,7 @@ export default async ({
     module: {
       rules: [
         babelLoader,
-        es6Transpiler(),
+        es6Transpiler() as any,
         {
           test: /\.md$/,
           use: [

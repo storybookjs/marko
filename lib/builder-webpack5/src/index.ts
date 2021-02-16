@@ -28,7 +28,7 @@ export const getConfig: WebpackBuilder['getConfig'] = async (options) => {
       typescriptOptions,
       [`${options.framework}Options`]: frameworkOptions,
     }
-  );
+  ) as any;
 };
 
 export const executor = {
@@ -67,7 +67,7 @@ export const start: WebpackBuilder['start'] = async ({
   compilation = webpackDevMiddleware(compiler, middlewareOptions);
 
   router.use(compilation);
-  router.use(webpackHotMiddleware(compiler));
+  router.use(webpackHotMiddleware(compiler as any));
 
   const stats = await new Promise<Stats>((ready, stop) => {
     compilation.waitUntilValid(ready);

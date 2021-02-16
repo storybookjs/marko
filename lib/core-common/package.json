@@ -77,7 +77,7 @@
     "resolve-from": "^5.0.0",
     "ts-dedent": "^2.0.0",
     "util-deprecate": "^1.0.2",
-    "webpack": "^5.9.0"
+    "webpack": "4"
   },
   "devDependencies": {
     "@types/interpret": "^1.1.1",

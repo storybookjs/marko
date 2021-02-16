@@ -32,7 +32,7 @@ module.exports = {
     '@storybook/addon-queryparams',
   ],
   core: {
-    builder: 'webpack5',
+    builder: 'webpack4',
   },
   logLevel: 'debug',
 } as StorybookConfig;

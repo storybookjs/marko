@@ -148,5 +148,5 @@ export async function getManagerWebpackConfig(options: Options): Promise<Configu
     );
   }
 
-  return presets.apply('managerWebpack', {}, { ...options, babelOptions, entries, refs });
+  return presets.apply('managerWebpack', {}, { ...options, babelOptions, entries, refs }) as any;
 }

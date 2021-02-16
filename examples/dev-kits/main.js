@@ -13,6 +13,6 @@ module.exports = {
     cra: 'https://next--storybookjs.netlify.app/cra-ts-kitchen-sink',
   },
   core: {
-    builder: 'webpack5',
+    builder: 'webpack4',
   },
 };

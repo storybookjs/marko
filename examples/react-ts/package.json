@@ -11,13 +11,12 @@
     "@storybook/addon-controls": "6.2.0-alpha.28",
     "@storybook/addon-essentials": "6.2.0-alpha.28",
     "@storybook/react": "6.2.0-alpha.28",
-    "@storybook/builder-webpack5": "6.2.0-alpha.28",
     "@types/react": "^16.14.2",
     "@types/react-dom": "^16.9.10",
     "prop-types": "15.7.2",
     "react": "16.14.0",
     "react-dom": "16.14.0",
     "typescript": "^3.9.7",
-    "webpack": "^5.9.0"
+    "webpack": "4"
   }
 }

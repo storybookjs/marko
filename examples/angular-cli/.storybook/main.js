@@ -14,6 +14,6 @@ module.exports = {
     '@storybook/addon-toolbars',
   ],
   core: {
-    builder: 'webpack5',
+    builder: 'webpack4',
   },
 };

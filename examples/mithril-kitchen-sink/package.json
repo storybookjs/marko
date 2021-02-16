@@ -21,7 +21,7 @@
     "@storybook/addons": "6.2.0-alpha.28",
     "@storybook/mithril": "6.2.0-alpha.28",
     "@storybook/source-loader": "6.2.0-alpha.28",
-    "webpack": "^5.9.0"
+    "webpack": "4"
   },
   "storybook": {
     "chromatic": {

@@ -74,7 +74,7 @@
     "enzyme": "^3.11.0",
     "flush-promises": "^1.0.2",
     "terser-webpack-plugin": "^5.0.3",
-    "webpack": "^5.9.0"
+    "webpack": "4"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",

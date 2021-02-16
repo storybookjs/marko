@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "@packtracker/webpack-plugin": "^2.3.0",
+    "@pmmmwh/react-refresh-webpack-plugin":"^0.4.3",
     "@storybook/addon-a11y": "6.2.0-alpha.28",
     "@storybook/addon-actions": "6.2.0-alpha.28",
     "@storybook/addon-backgrounds": "6.2.0-alpha.28",
@@ -61,7 +62,7 @@
     "ts-loader": "^8.0.14",
     "uuid": "^8.3.2",
     "uuid-browser": "^3.1.0",
-    "webpack": "^5.9.0"
+    "webpack": "4"
   },
   "peerDependencies": {
     "puppeteer": "^2.0.0 || ^3.0.0"

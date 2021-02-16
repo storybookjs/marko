@@ -1,6 +1,6 @@
 import path from 'path';
 import fse from 'fs-extra';
-import { DefinePlugin, Configuration } from 'webpack';
+import { DefinePlugin, Configuration, WebpackPluginInstance } from 'webpack';
 import Dotenv from 'dotenv-webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
@@ -76,12 +76,12 @@ export default async ({
     },
     plugins: [
       refs
-        ? new VirtualModulePlugin({
+        ? ((new VirtualModulePlugin({
             [path.resolve(path.join(configDir, `generated-refs.js`))]: refsTemplate.replace(
               `'{{refs}}'`,
               JSON.stringify(refs)
             ),
-          })
+          }) as any) as WebpackPluginInstance)
         : null,
       new HtmlWebpackPlugin({
         filename: `index.html`,
@@ -105,14 +105,14 @@ export default async ({
           headHtmlSnippet,
         }),
         template,
-      }),
-      new CaseSensitivePathsPlugin(),
-      new Dotenv({ silent: true }),
+      }) as WebpackPluginInstance,
+      (new CaseSensitivePathsPlugin() as any) as WebpackPluginInstance,
+      (new Dotenv({ silent: true }) as any) as WebpackPluginInstance,
       // graphql sources check process variable
       new DefinePlugin({
         'process.env': stringified,
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-      }),
+      }) as WebpackPluginInstance,
       // isProd &&
       //   BundleAnalyzerPlugin &&
       //   new BundleAnalyzerPlugin({ analyzerMode: 'static', openAnalyzer: false }),
@@ -120,7 +120,7 @@ export default async ({
     module: {
       rules: [
         babelLoader(),
-        es6Transpiler(),
+        es6Transpiler() as any,
         {
           test: /\.css$/,
           use: [

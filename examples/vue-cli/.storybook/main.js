@@ -8,6 +8,6 @@ module.exports = {
     '@storybook/preset-scss',
   ],
   core: {
-    builder: 'webpack5',
+    builder: 'webpack4',
   },
 };
