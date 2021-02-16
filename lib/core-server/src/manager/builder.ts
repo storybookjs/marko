@@ -129,9 +129,10 @@ export const build: WebpackBuilder['build'] = async ({ options, startTime }) => 
         process.exitCode = 1;
         fail(error || stats);
       } else {
-        logger.trace({ message: '=> Manager built', time: process.hrtime(startTime) });
-        stats.toJson(statsOptions).warnings.forEach((e) => logger.warn(e.message));
-
+          logger.trace({ message: '=> Manager built', time: process.hrtime(startTime) });
+          const statsData = stats.toJson(typeof statsOptions === 'string' ? statsOptions : {...statsOptions, warnings: true})
+          statsData?.warnings?.forEach((e) => logger.warn(e.message));
+          
         succeed();
       }
     });

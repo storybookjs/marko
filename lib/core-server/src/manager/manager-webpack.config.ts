@@ -114,9 +114,9 @@ export default async ({
         'process.env': stringified,
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       }),
-      isProd &&
-        BundleAnalyzerPlugin &&
-        new BundleAnalyzerPlugin({ analyzerMode: 'static', openAnalyzer: false }),
+      // isProd &&
+      //   BundleAnalyzerPlugin &&
+      //   new BundleAnalyzerPlugin({ analyzerMode: 'static', openAnalyzer: false }),
     ].filter(Boolean),
     module: {
       rules: [

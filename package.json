@@ -47,7 +47,13 @@
     "nohoist": [
       "**/react-scripts",
       "**/webpack-dev-middleware",
+      "**/webpack-virtual-modules",
+      "**/case-sensitive-paths-webpack-plugin",
+      "**/pnp-webpack-plugin",
+      "**/terser-webpack-plugin",
+      "**/dotenv-webpack",
       "**/webpack-hot-middleware",
+      "core-server/webpack",
       "cra-*/webpack",
       "cra-*/*-webpack*",
       "cra-*/react-scripts",
