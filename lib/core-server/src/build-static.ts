@@ -89,7 +89,7 @@ export async function buildStaticStandalone(options: CLIOptions & LoadOptions & 
 }
 
 export async function buildStatic({ packageJson, ...loadOptions }: LoadOptions) {
-  const cliOptions = await getProdCli(packageJson);
+  const cliOptions = getProdCli(packageJson);
 
   try {
     await buildStaticStandalone({
