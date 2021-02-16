@@ -1,17 +1,31 @@
 import React from 'react';
 
 export interface HelloProps {
-  title: string;
-  foo: boolean;
-  bar?: string[];
+  numberSet: number;
+  numberUnset?: number;
+  stringSet: string;
+  stringUnset?: string;
+  booleanSet: boolean;
+  booleanUnset?: boolean;
+  arraySet: string[];
+  arrayUnset?: string[];
+  objectSet: Record<string, string>;
+  objectUnset: Record<string, string>;
+  reference: any;
 }
 
-const Hello = ({ title }: HelloProps) => {
-  return <div className="hello">Hello Component {title}</div>;
+const Hello = (props: HelloProps) => {
+  return <div className="hello">Hello Component</div>;
 };
 
 Hello.defaultProps = {
-  title: 'this is the default :)',
+  numberSet: 1,
+  stringSet: 'stringSet',
+  booleanSet: false,
+  arraySet: ['array', 'set'],
+  objectSet: { object: 'set' },
+  // eslint-disable-next-line no-undef
+  reference: window,
 };
 
 export const component = Hello;

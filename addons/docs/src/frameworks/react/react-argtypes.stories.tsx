@@ -9,6 +9,7 @@ import { extractArgTypes } from './extractArgTypes';
 import { Component } from '../../blocks';
 
 const argsTableProps = (component: Component) => {
+  window.log = true;
   const argTypes = extractArgTypes(component);
   const parameters = { __isArgsStory: true, argTypes };
   const rows = inferControls(({ parameters } as unknown) as StoryContext);
@@ -32,8 +33,16 @@ const ArgsStory = ({ component }: any) => {
         <tbody>
           {Object.entries(args).map(([key, val]) => (
             <tr key={key}>
-              <td>{key}</td>
-              <td>{JSON.stringify(val, null, 2)}</td>
+              <td>
+                <code>{key}</code>
+              </td>
+              <td>
+                {typeof val !== 'undefined' ? (
+                  <code>{JSON.stringify(val, null, 2)}</code>
+                ) : (
+                  <code style={{ backgroundColor: '#eee' }}>undefined</code>
+                )}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -99,6 +108,7 @@ const issuesFixtures = [
   '8428-js-static-prop-types',
   '9764-ts-extend-props',
   '9922-ts-component-props',
+  '12071-js-propTypes-default-values',
 ];
 
 const issuesStories = storiesOf('ArgTypes/Issues', module);
