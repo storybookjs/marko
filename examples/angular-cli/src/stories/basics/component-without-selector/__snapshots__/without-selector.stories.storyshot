@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Basics / Component / without selector Simple Component 1`] = `
+<storybook-wrapper>
+  <ng-component>
+    My name in color : 
+    <div
+      style="color: rgb(30, 136, 229);"
+    >
+      Joe Bar
+    </div>
+  </ng-component>
+</storybook-wrapper>
+`;
+
+exports[`Storyshots Basics / Component / without selector With Custom Ng Component Outlet Wrapper 1`] = `
+<storybook-wrapper>
+  <without-selector-wrapper
+    ng-reflect-color="green"
+    ng-reflect-component-outlet="function WithoutSelectorCompon"
+    ng-reflect-name="Dixie Normous"
+  >
+    
+    <ng-component>
+      My name in color : 
+      <div
+        style="color: green;"
+      >
+        Dixie Normous
+      </div>
+      Ng-content : Inspired by 
+      https://angular.io/api/common/NgComponentOutlet
+    </ng-component>
+  </without-selector-wrapper>
+</storybook-wrapper>
+`;
+
+exports[`Storyshots Basics / Component / without selector With Injection Token And Args 1`] = `
+<storybook-wrapper>
+  <ng-component>
+    My name in color : 
+    <div
+      style="color: red;"
+    >
+      Dixie Normous
+    </div>
+  </ng-component>
+</storybook-wrapper>
+`;
