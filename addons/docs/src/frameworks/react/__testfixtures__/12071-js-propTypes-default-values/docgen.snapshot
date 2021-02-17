@@ -1,112 +1,45 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`react component properties 9626-js-default-values 1`] = `
-"import React from 'react'; // eslint-disable-next-line react/prop-types
-
-export const Tag = ({
-  title = 'Beta'
-}) => /*#__PURE__*/React.createElement(\\"div\\", null, title);
-export const component = Tag;
-Tag.__docgenInfo = {
-  \\"description\\": \\"\\",
-  \\"methods\\": [],
-  \\"displayName\\": \\"Tag\\",
-  \\"props\\": {
-    \\"title\\": {
-      \\"defaultValue\\": {
-        \\"value\\": \\"'Beta'\\",
-        \\"computed\\": false
-      },
-      \\"required\\": false
-    }
-  }
-};"
-`;
-
-exports[`react component properties 9626-js-default-values copy 1`] = `
-"/* eslint-disable react/prop-types */
-import React from 'react';
-export const Tag = ({
-  numberSet = 1,
-  numberUnset,
-  // Note this does *not* get detected
-  stringSet = 'stringSet',
-  booleanSet = false,
-  arraySet = ['array', 'set'],
-  objectSet = {
-    object: 'set'
-  },
-  // eslint-disable-next-line no-undef
-  reference = window
-}) => /*#__PURE__*/React.createElement(\\"div\\", null, \\"Tag\\");
-export const component = Tag;
-Tag.__docgenInfo = {
-  \\"description\\": \\"\\",
-  \\"methods\\": [],
-  \\"displayName\\": \\"Tag\\",
-  \\"props\\": {
-    \\"numberSet\\": {
-      \\"defaultValue\\": {
-        \\"value\\": \\"1\\",
-        \\"computed\\": false
-      },
-      \\"required\\": false
-    },
-    \\"stringSet\\": {
-      \\"defaultValue\\": {
-        \\"value\\": \\"'stringSet'\\",
-        \\"computed\\": false
-      },
-      \\"required\\": false
-    },
-    \\"booleanSet\\": {
-      \\"defaultValue\\": {
-        \\"value\\": \\"false\\",
-        \\"computed\\": false
-      },
-      \\"required\\": false
-    },
-    \\"arraySet\\": {
-      \\"defaultValue\\": {
-        \\"value\\": \\"['array', 'set']\\",
-        \\"computed\\": false
-      },
-      \\"required\\": false
-    },
-    \\"objectSet\\": {
-      \\"defaultValue\\": {
-        \\"value\\": \\"{ object: 'set' }\\",
-        \\"computed\\": false
-      },
-      \\"required\\": false
-    },
-    \\"reference\\": {
-      \\"defaultValue\\": {
-        \\"value\\": \\"window\\",
-        \\"computed\\": true
-      },
-      \\"required\\": false
-    }
-  }
-};"
-`;
-
 exports[`react component properties 12071-js-propTypes-default-values 1`] = `
-"/* eslint-disable react/prop-types */
-import React from 'react';
+"import React from 'react';
+import PropTypes from 'prop-types';
+import { imported } from './imported';
+const local = 'local-value';
 export const Tag = ({
   numberSet = 1,
-  numberUnset,
-  // Note this does *not* get detected
   stringSet = 'stringSet',
   booleanSet = false,
   arraySet = ['array', 'set'],
   objectSet = {
     object: 'set'
   },
-  // eslint-disable-next-line no-undef
-  reference = window
+  functionSet = () => 'foo',
+  dateSet = new Date(),
+  localReference = local,
+  importedReference = imported,
+  globalReference = Date,
+  stringGlobalName = 'top'
 }) => /*#__PURE__*/React.createElement(\\"div\\", null, \\"Tag\\");
+Tag.propTypes = {
+  numberSet: PropTypes.number.isRequired,
+  numberUnset: PropTypes.number,
+  stringSet: PropTypes.string.isRequired,
+  stringUnset: PropTypes.string,
+  booleanSet: PropTypes.bool.isRequired,
+  booleanUnset: PropTypes.bool,
+  arraySet: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  arrayUnset: PropTypes.arrayOf(PropTypes.string.isRequired),
+  objectSet: PropTypes.shape({}).isRequired,
+  objectUnset: PropTypes.shape({}),
+  functionSet: PropTypes.func.isRequired,
+  functionUnset: PropTypes.func,
+  dateSet: PropTypes.instanceOf(Date).isRequired,
+  dateUnset: PropTypes.instanceOf(Date),
+  localReference: PropTypes.string.isRequired,
+  importedReference: PropTypes.string.isRequired,
+  globalReference: PropTypes.any.isRequired,
+  stringGlobalName: PropTypes.string.isRequired
+};
 export const component = Tag;
 Tag.__docgenInfo = {
   \\"description\\": \\"\\",
@@ -118,42 +51,180 @@ Tag.__docgenInfo = {
         \\"value\\": \\"1\\",
         \\"computed\\": false
       },
-      \\"required\\": false
+      \\"type\\": {
+        \\"name\\": \\"number\\"
+      },
+      \\"required\\": false,
+      \\"description\\": \\"\\"
     },
     \\"stringSet\\": {
       \\"defaultValue\\": {
         \\"value\\": \\"'stringSet'\\",
         \\"computed\\": false
       },
-      \\"required\\": false
+      \\"type\\": {
+        \\"name\\": \\"string\\"
+      },
+      \\"required\\": false,
+      \\"description\\": \\"\\"
     },
     \\"booleanSet\\": {
       \\"defaultValue\\": {
         \\"value\\": \\"false\\",
         \\"computed\\": false
       },
-      \\"required\\": false
+      \\"type\\": {
+        \\"name\\": \\"bool\\"
+      },
+      \\"required\\": false,
+      \\"description\\": \\"\\"
     },
     \\"arraySet\\": {
       \\"defaultValue\\": {
         \\"value\\": \\"['array', 'set']\\",
         \\"computed\\": false
       },
-      \\"required\\": false
+      \\"type\\": {
+        \\"name\\": \\"arrayOf\\",
+        \\"value\\": {
+          \\"name\\": \\"string\\"
+        }
+      },
+      \\"required\\": false,
+      \\"description\\": \\"\\"
     },
     \\"objectSet\\": {
       \\"defaultValue\\": {
         \\"value\\": \\"{ object: 'set' }\\",
         \\"computed\\": false
       },
-      \\"required\\": false
+      \\"type\\": {
+        \\"name\\": \\"shape\\",
+        \\"value\\": {}
+      },
+      \\"required\\": false,
+      \\"description\\": \\"\\"
     },
-    \\"reference\\": {
+    \\"functionSet\\": {
       \\"defaultValue\\": {
-        \\"value\\": \\"window\\",
+        \\"value\\": \\"() => 'foo'\\",
+        \\"computed\\": false
+      },
+      \\"type\\": {
+        \\"name\\": \\"func\\"
+      },
+      \\"required\\": false,
+      \\"description\\": \\"\\"
+    },
+    \\"dateSet\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"new Date()\\",
+        \\"computed\\": false
+      },
+      \\"type\\": {
+        \\"name\\": \\"instanceOf\\",
+        \\"value\\": \\"Date\\"
+      },
+      \\"required\\": false,
+      \\"description\\": \\"\\"
+    },
+    \\"localReference\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"'local-value'\\",
+        \\"computed\\": false
+      },
+      \\"type\\": {
+        \\"name\\": \\"string\\"
+      },
+      \\"required\\": false,
+      \\"description\\": \\"\\"
+    },
+    \\"importedReference\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"imported\\",
         \\"computed\\": true
       },
-      \\"required\\": false
+      \\"type\\": {
+        \\"name\\": \\"string\\"
+      },
+      \\"required\\": false,
+      \\"description\\": \\"\\"
+    },
+    \\"globalReference\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"Date\\",
+        \\"computed\\": true
+      },
+      \\"type\\": {
+        \\"name\\": \\"any\\"
+      },
+      \\"required\\": false,
+      \\"description\\": \\"\\"
+    },
+    \\"stringGlobalName\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"'top'\\",
+        \\"computed\\": false
+      },
+      \\"type\\": {
+        \\"name\\": \\"string\\"
+      },
+      \\"required\\": false,
+      \\"description\\": \\"\\"
+    },
+    \\"numberUnset\\": {
+      \\"type\\": {
+        \\"name\\": \\"number\\"
+      },
+      \\"required\\": false,
+      \\"description\\": \\"\\"
+    },
+    \\"stringUnset\\": {
+      \\"type\\": {
+        \\"name\\": \\"string\\"
+      },
+      \\"required\\": false,
+      \\"description\\": \\"\\"
+    },
+    \\"booleanUnset\\": {
+      \\"type\\": {
+        \\"name\\": \\"bool\\"
+      },
+      \\"required\\": false,
+      \\"description\\": \\"\\"
+    },
+    \\"arrayUnset\\": {
+      \\"type\\": {
+        \\"name\\": \\"arrayOf\\",
+        \\"value\\": {
+          \\"name\\": \\"string\\"
+        }
+      },
+      \\"required\\": false,
+      \\"description\\": \\"\\"
+    },
+    \\"objectUnset\\": {
+      \\"type\\": {
+        \\"name\\": \\"shape\\",
+        \\"value\\": {}
+      },
+      \\"required\\": false,
+      \\"description\\": \\"\\"
+    },
+    \\"functionUnset\\": {
+      \\"type\\": {
+        \\"name\\": \\"func\\"
+      },
+      \\"required\\": false,
+      \\"description\\": \\"\\"
+    },
+    \\"dateUnset\\": {
+      \\"type\\": {
+        \\"name\\": \\"instanceOf\\",
+        \\"value\\": \\"Date\\"
+      },
+      \\"required\\": false,
+      \\"description\\": \\"\\"
     }
   }
 };"

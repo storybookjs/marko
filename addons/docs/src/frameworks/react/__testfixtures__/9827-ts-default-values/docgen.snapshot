@@ -2,17 +2,29 @@
 
 exports[`react component properties 9827-ts-default-values 1`] = `
 "import React from 'react';
+import { imported } from './imported';
+const local = 'local-value';
 
-const Hello = ({
-  title
-}) => {
+const Hello = props => {
   return /*#__PURE__*/React.createElement(\\"div\\", {
     className: \\"hello\\"
-  }, \\"Hello Component \\", title);
+  }, \\"Hello Component\\");
 };
 
 Hello.defaultProps = {
-  title: 'this is the default :)'
+  numberSet: 1,
+  stringSet: 'stringSet',
+  booleanSet: false,
+  arraySet: ['array', 'set'],
+  objectSet: {
+    object: 'set'
+  },
+  functionSet: () => 'foo',
+  dateSet: new Date(),
+  localReference: local,
+  importedReference: imported,
+  globalReference: Date,
+  stringGlobalName: 'top'
 };
 export const component = Hello;
 Hello.__docgenInfo = {
@@ -20,9 +32,20 @@ Hello.__docgenInfo = {
   \\"methods\\": [],
   \\"displayName\\": \\"Hello\\",
   \\"props\\": {
-    \\"title\\": {
+    \\"numberSet\\": {
       \\"defaultValue\\": {
-        \\"value\\": \\"'this is the default :)'\\",
+        \\"value\\": \\"1\\",
+        \\"computed\\": false
+      },
+      \\"required\\": false,
+      \\"tsType\\": {
+        \\"name\\": \\"number\\"
+      },
+      \\"description\\": \\"\\"
+    },
+    \\"stringSet\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"'stringSet'\\",
         \\"computed\\": false
       },
       \\"required\\": false,
@@ -31,14 +54,22 @@ Hello.__docgenInfo = {
       },
       \\"description\\": \\"\\"
     },
-    \\"foo\\": {
-      \\"required\\": true,
+    \\"booleanSet\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"false\\",
+        \\"computed\\": false
+      },
+      \\"required\\": false,
       \\"tsType\\": {
         \\"name\\": \\"boolean\\"
       },
       \\"description\\": \\"\\"
     },
-    \\"bar\\": {
+    \\"arraySet\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"['array', 'set']\\",
+        \\"computed\\": false
+      },
       \\"required\\": false,
       \\"tsType\\": {
         \\"name\\": \\"Array\\",
@@ -46,6 +77,164 @@ Hello.__docgenInfo = {
           \\"name\\": \\"string\\"
         }],
         \\"raw\\": \\"string[]\\"
+      },
+      \\"description\\": \\"\\"
+    },
+    \\"objectSet\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"{ object: 'set' }\\",
+        \\"computed\\": false
+      },
+      \\"required\\": false,
+      \\"tsType\\": {
+        \\"name\\": \\"Record\\",
+        \\"elements\\": [{
+          \\"name\\": \\"string\\"
+        }, {
+          \\"name\\": \\"string\\"
+        }],
+        \\"raw\\": \\"Record<string, string>\\"
+      },
+      \\"description\\": \\"\\"
+    },
+    \\"functionSet\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"() => 'foo'\\",
+        \\"computed\\": false
+      },
+      \\"required\\": false,
+      \\"tsType\\": {
+        \\"name\\": \\"signature\\",
+        \\"type\\": \\"function\\",
+        \\"raw\\": \\"() => string\\",
+        \\"signature\\": {
+          \\"arguments\\": [],
+          \\"return\\": {
+            \\"name\\": \\"string\\"
+          }
+        }
+      },
+      \\"description\\": \\"\\"
+    },
+    \\"dateSet\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"new Date()\\",
+        \\"computed\\": false
+      },
+      \\"required\\": false,
+      \\"tsType\\": {
+        \\"name\\": \\"Date\\"
+      },
+      \\"description\\": \\"\\"
+    },
+    \\"localReference\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"'local-value'\\",
+        \\"computed\\": false
+      },
+      \\"required\\": false,
+      \\"tsType\\": {
+        \\"name\\": \\"string\\"
+      },
+      \\"description\\": \\"\\"
+    },
+    \\"importedReference\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"imported\\",
+        \\"computed\\": true
+      },
+      \\"required\\": false,
+      \\"tsType\\": {
+        \\"name\\": \\"string\\"
+      },
+      \\"description\\": \\"\\"
+    },
+    \\"globalReference\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"Date\\",
+        \\"computed\\": true
+      },
+      \\"required\\": false,
+      \\"tsType\\": {
+        \\"name\\": \\"any\\"
+      },
+      \\"description\\": \\"\\"
+    },
+    \\"stringGlobalName\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"'top'\\",
+        \\"computed\\": false
+      },
+      \\"required\\": false,
+      \\"tsType\\": {
+        \\"name\\": \\"string\\"
+      },
+      \\"description\\": \\"\\"
+    },
+    \\"numberUnset\\": {
+      \\"required\\": false,
+      \\"tsType\\": {
+        \\"name\\": \\"number\\"
+      },
+      \\"description\\": \\"\\"
+    },
+    \\"stringUnset\\": {
+      \\"required\\": false,
+      \\"tsType\\": {
+        \\"name\\": \\"string\\"
+      },
+      \\"description\\": \\"\\"
+    },
+    \\"booleanUnset\\": {
+      \\"required\\": false,
+      \\"tsType\\": {
+        \\"name\\": \\"boolean\\"
+      },
+      \\"description\\": \\"\\"
+    },
+    \\"arrayUnset\\": {
+      \\"required\\": false,
+      \\"tsType\\": {
+        \\"name\\": \\"Array\\",
+        \\"elements\\": [{
+          \\"name\\": \\"string\\"
+        }],
+        \\"raw\\": \\"string[]\\"
+      },
+      \\"description\\": \\"\\"
+    },
+    \\"objectUnset\\": {
+      \\"required\\": true,
+      \\"tsType\\": {
+        \\"name\\": \\"Record\\",
+        \\"elements\\": [{
+          \\"name\\": \\"string\\"
+        }, {
+          \\"name\\": \\"string\\"
+        }],
+        \\"raw\\": \\"Record<string, string>\\"
+      },
+      \\"description\\": \\"\\"
+    },
+    \\"functionUnset\\": {
+      \\"required\\": false,
+      \\"tsType\\": {
+        \\"name\\": \\"signature\\",
+        \\"type\\": \\"function\\",
+        \\"raw\\": \\"() => string\\",
+        \\"signature\\": {
+          \\"arguments\\": [],
+          \\"return\\": {
+            \\"name\\": \\"string\\"
+          }
+        }
+      },
+      \\"description\\": \\"\\"
+    },
+    \\"dateUnset\\": {
+      \\"required\\": false,
+      \\"tsType\\": {
+        \\"name\\": \\"Date\\"
       },
       \\"description\\": \\"\\"
     }
