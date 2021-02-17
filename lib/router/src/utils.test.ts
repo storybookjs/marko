@@ -138,17 +138,19 @@ describe('buildArgsParam', () => {
       expect(param).toEqual('obj.two:2');
     });
 
-    it('omits unchanged array values (yielding sparse arrays)', () => {
-      const param = buildArgsParam({ arr: [1, 2, 3] }, { arr: [1, 3, 4] });
-      expect(param).toEqual('arr[1]:3;arr[2]:4');
-    });
+    // TODO reintroduce sparse arrays when a new version of `qs` is released
+    // @see https://github.com/ljharb/qs/issues/396
+    // it('omits unchanged array values (yielding sparse arrays)', () => {
+    //   const param = buildArgsParam({ arr: [1, 2, 3] }, { arr: [1, 3, 4] });
+    //   expect(param).toEqual('arr[1]:3;arr[2]:4');
+    // });
 
-    it('omits nested unchanged object properties and array values', () => {
-      const param = buildArgsParam(
-        { obj: { nested: [{ one: 1 }, { two: 2 }] } },
-        { obj: { nested: [{ one: 1 }, { two: 2, three: 3 }] } }
-      );
-      expect(param).toEqual('obj.nested[1].three:3');
-    });
+    // it('omits nested unchanged object properties and array values', () => {
+    //   const param = buildArgsParam(
+    //     { obj: { nested: [{ one: 1 }, { two: 2 }] } },
+    //     { obj: { nested: [{ one: 1 }, { two: 2, three: 3 }] } }
+    //   );
+    //   expect(param).toEqual('obj.nested[1].three:3');
+    // });
   });
 });
