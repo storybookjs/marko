@@ -9,12 +9,23 @@ import { extractArgTypes } from './extractArgTypes';
 import { Component } from '../../blocks';
 
 const argsTableProps = (component: Component) => {
-  window.log = true;
   const argTypes = extractArgTypes(component);
   const parameters = { __isArgsStory: true, argTypes };
   const rows = inferControls(({ parameters } as unknown) as StoryContext);
   return { rows };
 };
+
+function FormatArg({ arg }) {
+  if (typeof arg !== 'undefined') {
+    try {
+      return <code>{JSON.stringify(arg, null, 2)}</code>;
+    } catch (err) {
+      return <code style={{ backgroundColor: '#eee' }}>{arg.toString()}</code>;
+    }
+  }
+
+  return <code style={{ backgroundColor: '#eee' }}>undefined</code>;
+}
 
 const ArgsStory = ({ component }: any) => {
   const { rows } = argsTableProps(component);
@@ -37,11 +48,7 @@ const ArgsStory = ({ component }: any) => {
                 <code>{key}</code>
               </td>
               <td>
-                {typeof val !== 'undefined' ? (
-                  <code>{JSON.stringify(val, null, 2)}</code>
-                ) : (
-                  <code style={{ backgroundColor: '#eee' }}>undefined</code>
-                )}
+                <FormatArg arg={val} />
               </td>
             </tr>
           ))}

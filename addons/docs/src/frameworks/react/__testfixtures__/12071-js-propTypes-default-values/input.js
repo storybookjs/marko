@@ -1,14 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { imported } from './imported';
+
+const local = 'local-value';
+
 export const Tag = ({
   numberSet = 1,
   stringSet = 'stringSet',
   booleanSet = false,
   arraySet = ['array', 'set'],
   objectSet = { object: 'set' },
-  // eslint-disable-next-line no-undef
-  reference = window,
+  functionSet = () => 'foo',
+  dateSet = new Date(),
+  localReference = local,
+  importedReference = imported,
+  globalReference = Date,
 }) => <div>Tag</div>;
 
 Tag.propTypes = {
@@ -22,7 +29,13 @@ Tag.propTypes = {
   arrayUnset: PropTypes.arrayOf(PropTypes.string.isRequired),
   objectSet: PropTypes.shape({}).isRequired,
   objectUnset: PropTypes.shape({}),
-  reference: PropTypes.any.isRequired,
+  functionSet: PropTypes.func.isRequired,
+  functionUnset: PropTypes.func,
+  dateSet: PropTypes.instanceOf(Date).isRequired,
+  dateUnset: PropTypes.instanceOf(Date),
+  localReference: PropTypes.string.isRequired,
+  importedReference: PropTypes.string.isRequired,
+  globalReference: PropTypes.any.isRequired,
 };
 
 export const component = Tag;

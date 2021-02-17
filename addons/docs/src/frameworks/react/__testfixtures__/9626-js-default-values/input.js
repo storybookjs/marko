@@ -2,6 +2,10 @@
 
 import React from 'react';
 
+import { imported } from './imported';
+
+const local = 'local-value';
+
 export const Tag = ({
   numberSet = 1,
   numberUnset, // Note this does *not* get detected
@@ -9,7 +13,10 @@ export const Tag = ({
   booleanSet = false,
   arraySet = ['array', 'set'],
   objectSet = { object: 'set' },
-  // eslint-disable-next-line no-undef
-  reference = window,
+  functionSet = () => 'foo',
+  dateSet = new Date(),
+  localReference = local,
+  importedReference = imported,
+  globalReference = Date,
 }) => <div>Tag</div>;
 export const component = Tag;

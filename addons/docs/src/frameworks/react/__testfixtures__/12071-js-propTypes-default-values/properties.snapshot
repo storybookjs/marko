@@ -1,0 +1,191 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`react component properties 9626-js-default-values 1`] = `
+Object {
+  "rows": Array [
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "'Beta'",
+      },
+      "description": undefined,
+      "name": "title",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "unknown",
+      },
+    },
+  ],
+}
+`;
+
+exports[`react component properties 9626-js-default-values copy 1`] = `
+Object {
+  "rows": Array [
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "1",
+      },
+      "description": undefined,
+      "name": "numberSet",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "unknown",
+      },
+    },
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "'stringSet'",
+      },
+      "description": undefined,
+      "name": "stringSet",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "unknown",
+      },
+    },
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "false",
+      },
+      "description": undefined,
+      "name": "booleanSet",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "unknown",
+      },
+    },
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "['array', 'set']",
+      },
+      "description": undefined,
+      "name": "arraySet",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "unknown",
+      },
+    },
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "{ object: 'set' }",
+      },
+      "description": undefined,
+      "name": "objectSet",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "unknown",
+      },
+    },
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "window",
+      },
+      "description": undefined,
+      "name": "reference",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "unknown",
+      },
+    },
+  ],
+}
+`;
+
+exports[`react component properties 12071-js-propTypes-default-values 1`] = `
+Object {
+  "rows": Array [
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "1",
+      },
+      "description": undefined,
+      "name": "numberSet",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "unknown",
+      },
+    },
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "'stringSet'",
+      },
+      "description": undefined,
+      "name": "stringSet",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "unknown",
+      },
+    },
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "false",
+      },
+      "description": undefined,
+      "name": "booleanSet",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "unknown",
+      },
+    },
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "['array', 'set']",
+      },
+      "description": undefined,
+      "name": "arraySet",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "unknown",
+      },
+    },
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "{ object: 'set' }",
+      },
+      "description": undefined,
+      "name": "objectSet",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "unknown",
+      },
+    },
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "window",
+      },
+      "description": undefined,
+      "name": "reference",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "unknown",
+      },
+    },
+  ],
+}
+`;

@@ -1,5 +1,9 @@
 import React from 'react';
 
+import { imported } from './imported';
+
+const local = 'local-value';
+
 export interface HelloProps {
   numberSet: number;
   numberUnset?: number;
@@ -11,7 +15,13 @@ export interface HelloProps {
   arrayUnset?: string[];
   objectSet: Record<string, string>;
   objectUnset: Record<string, string>;
-  reference: any;
+  functionSet: () => string;
+  functionUnset?: () => string;
+  dateSet: Date;
+  dateUnset?: Date;
+  localReference: string;
+  importedReference: string;
+  globalReference: any;
 }
 
 const Hello = (props: HelloProps) => {
@@ -24,8 +34,11 @@ Hello.defaultProps = {
   booleanSet: false,
   arraySet: ['array', 'set'],
   objectSet: { object: 'set' },
-  // eslint-disable-next-line no-undef
-  reference: window,
+  functionSet: () => 'foo',
+  dateSet: new Date(),
+  localReference: local,
+  importedReference: imported,
+  globalReference: Date,
 };
 
 export const component = Hello;
