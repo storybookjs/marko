@@ -37,6 +37,13 @@ export function webpackFinal(config: Configuration, { typescriptOptions }: Story
 
   return {
     ...config,
-    plugins: [...config.plugins, new ReactDocgenTypescriptPlugin(reactDocgenTypescriptOptions)],
+    plugins: [
+      ...config.plugins,
+      new ReactDocgenTypescriptPlugin({
+        ...reactDocgenTypescriptOptions,
+        // We *need* this set so that RDT returns default values in the same format as react-docgen
+        savePropValueAsString: true,
+      }),
+    ],
   };
 }
