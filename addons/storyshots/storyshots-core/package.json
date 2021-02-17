@@ -73,7 +73,8 @@
     "jest-emotion": "^10.0.32",
     "jest-preset-angular": "^8.3.2",
     "jest-vue-preprocessor": "^1.7.1",
-    "rxjs": "^6.6.3"
+    "rxjs": "^6.6.3",
+    "vue-jest": "^5.0.0-alpha.8"
   },
   "peerDependencies": {
     "@angular/core": ">=6.0.0",
@@ -81,6 +82,7 @@
     "@storybook/angular": "*",
     "@storybook/react": "*",
     "@storybook/vue": "*",
+    "@storybook/vue3": "*",
     "jest-preset-angular": "*",
     "jest-vue-preprocessor": "*",
     "react": "^16.8.0 || ^17.0.0",
@@ -101,6 +103,9 @@
       "optional": true
     },
     "@storybook/vue": {
+      "optional": true
+    },
+    "@storybook/vue3": {
       "optional": true
     },
     "jest-preset-angular": {
