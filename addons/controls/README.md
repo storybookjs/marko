@@ -121,7 +121,7 @@ export default {
   title: 'Button',
   argTypes: {
     label: { control: 'text' },
-    borderWidth: { control: { type: 'number', min: 0, max: 10 }},
+    borderWidth: { control: { type: 'number', min: 0, max: 10 } },
   },
 };
 
