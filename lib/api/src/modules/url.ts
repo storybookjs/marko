@@ -3,6 +3,7 @@ import { NAVIGATE_URL, STORY_ARGS_UPDATED, SET_CURRENT_STORY } from '@storybook/
 import { queryFromLocation, navigate as queryNavigate, buildArgsParam } from '@storybook/router';
 import { toId, sanitize } from '@storybook/csf';
 import deepEqual from 'fast-deep-equal';
+import { window } from 'global';
 
 import { ModuleArgs, ModuleFn } from '../index';
 import { PanelPositions } from './layout';
@@ -159,7 +160,17 @@ export const init: ModuleFn = ({ store, navigate, state, provider, fullAPI, ...r
     };
 
     fullAPI.on(SET_CURRENT_STORY, () => updateArgsParam());
-    fullAPI.on(STORY_ARGS_UPDATED, ({ args }) => updateArgsParam(args));
+
+    let handleOrId: any;
+    fullAPI.on(STORY_ARGS_UPDATED, ({ args }) => {
+      if ('requestIdleCallback' in window) {
+        if (handleOrId) window.cancelIdleCallback(handleOrId);
+        handleOrId = window.requestIdleCallback(() => updateArgsParam(args), { timeout: 1000 });
+      } else {
+        if (handleOrId) clearTimeout(handleOrId);
+        setTimeout(updateArgsParam, 100, args);
+      }
+    });
 
     fullAPI.on(NAVIGATE_URL, (url: string, options: { [k: string]: any }) => {
       fullAPI.navigateUrl(url, options);
