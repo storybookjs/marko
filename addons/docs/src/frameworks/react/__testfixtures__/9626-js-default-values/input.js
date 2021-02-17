@@ -18,5 +18,6 @@ export const Tag = ({
   localReference = local,
   importedReference = imported,
   globalReference = Date,
+  stringGlobalName = 'top',
 }) => <div>Tag</div>;
 export const component = Tag;

@@ -16,6 +16,7 @@ export const Tag = ({
   localReference = local,
   importedReference = imported,
   globalReference = Date,
+  stringGlobalName = 'top',
 }) => <div>Tag</div>;
 
 Tag.propTypes = {
@@ -36,6 +37,7 @@ Tag.propTypes = {
   localReference: PropTypes.string.isRequired,
   importedReference: PropTypes.string.isRequired,
   globalReference: PropTypes.any.isRequired,
+  stringGlobalName: PropTypes.string.isRequired,
 };
 
 export const component = Tag;

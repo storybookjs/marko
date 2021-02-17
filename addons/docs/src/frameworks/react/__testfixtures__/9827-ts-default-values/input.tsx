@@ -22,6 +22,7 @@ export interface HelloProps {
   localReference: string;
   importedReference: string;
   globalReference: any;
+  stringGlobalName: string;
 }
 
 const Hello = (props: HelloProps) => {
@@ -39,6 +40,7 @@ Hello.defaultProps = {
   localReference: local,
   importedReference: imported,
   globalReference: Date,
+  stringGlobalName: 'top',
 };
 
 export const component = Hello;
