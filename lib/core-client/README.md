@@ -1,14 +1,12 @@
-# Storybook Core
+# Storybook Core-Client
 
-This package contains common data structures and bootstrapping capabilities
-used among the different frameworks
-(React, RN, Vue, Ember, Angular, etc).
+This package contains browser-side functionality shared amongst all the frameworks (React, RN, Vue, Ember, Angular, etc).
 
 ## Preview
 
-The files in `src/client/preview` alongside the `@storybook/client-api` package form the "API" of the preview (iframe) side of Storybook. Here is a brief overview of the architecture:
+The files in `src/preview` alongside the `@storybook/client-api` package form the "API" of the preview (iframe) side of Storybook. Here is a brief overview of the architecture:
 
-Each framework (e.g. `@storybook/react` / `@storybook/angular` / et al.) initializes the preview by calling into `src/client/preview/start.ts`, passing a `render` function that will be used to render stories.
+Each framework (e.g. `@storybook/react` / `@storybook/angular` / et al.) initializes the preview by calling into `src/preview/start.ts`, passing a `render` function that will be used to render stories.
 
 The `start` module initializes all the submodules:
 
