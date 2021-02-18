@@ -1,6 +1,6 @@
 {
   "name": "@storybook/core",
-  "version": "6.2.0-alpha.28",
+  "version": "6.2.0-alpha.29",
   "description": "Storybook framework-agnostic API",
   "keywords": [
     "storybook"
@@ -60,20 +60,20 @@
     "@babel/preset-react": "^7.12.10",
     "@babel/preset-typescript": "^7.12.7",
     "@babel/register": "^7.12.10",
-    "@storybook/addons": "6.2.0-alpha.28",
-    "@storybook/api": "6.2.0-alpha.28",
-    "@storybook/channel-postmessage": "6.2.0-alpha.28",
-    "@storybook/channels": "6.2.0-alpha.28",
-    "@storybook/client-api": "6.2.0-alpha.28",
-    "@storybook/client-logger": "6.2.0-alpha.28",
-    "@storybook/components": "6.2.0-alpha.28",
-    "@storybook/core-events": "6.2.0-alpha.28",
+    "@storybook/addons": "6.2.0-alpha.29",
+    "@storybook/api": "6.2.0-alpha.29",
+    "@storybook/channel-postmessage": "6.2.0-alpha.29",
+    "@storybook/channels": "6.2.0-alpha.29",
+    "@storybook/client-api": "6.2.0-alpha.29",
+    "@storybook/client-logger": "6.2.0-alpha.29",
+    "@storybook/components": "6.2.0-alpha.29",
+    "@storybook/core-events": "6.2.0-alpha.29",
     "@storybook/csf": "0.0.1",
-    "@storybook/node-logger": "6.2.0-alpha.28",
-    "@storybook/router": "6.2.0-alpha.28",
+    "@storybook/node-logger": "6.2.0-alpha.29",
+    "@storybook/router": "6.2.0-alpha.29",
     "@storybook/semver": "^7.3.2",
-    "@storybook/theming": "6.2.0-alpha.28",
-    "@storybook/ui": "6.2.0-alpha.28",
+    "@storybook/theming": "6.2.0-alpha.29",
+    "@storybook/ui": "6.2.0-alpha.29",
     "@types/glob-base": "^0.3.0",
     "@types/micromatch": "^4.0.1",
     "@types/node-fetch": "^2.5.7",
@@ -171,5 +171,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "899ca0824d698925edcc519c7afc7408f7b1ab46"
+  "gitHead": "66dbae1b4f46f0a654cca2a32410f4654ca48821"
 }

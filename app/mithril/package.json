@@ -1,6 +1,6 @@
 {
   "name": "@storybook/mithril",
-  "version": "6.2.0-alpha.28",
+  "version": "6.2.0-alpha.29",
   "description": "Storybook for Mithril: Develop Mithril Component in isolation.",
   "keywords": [
     "storybook"
@@ -43,8 +43,8 @@
   "dependencies": {
     "@babel/core": "^7.12.10",
     "@babel/plugin-transform-react-jsx": "^7.12.12",
-    "@storybook/addons": "6.2.0-alpha.28",
-    "@storybook/core": "6.2.0-alpha.28",
+    "@storybook/addons": "6.2.0-alpha.29",
+    "@storybook/core": "6.2.0-alpha.29",
     "@types/mithril": "^2.0.6",
     "@types/webpack-env": "^1.16.0",
     "core-js": "^3.8.2",
@@ -68,5 +68,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "899ca0824d698925edcc519c7afc7408f7b1ab46"
+  "gitHead": "66dbae1b4f46f0a654cca2a32410f4654ca48821"
 }
