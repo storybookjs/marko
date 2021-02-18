@@ -3,8 +3,8 @@
 exports[`cra-ts-essentials preview production mode 1`] = `
 Object {
   "entry": Array [
-    "ROOT/lib/core/src/server/common/polyfills.ts",
-    "ROOT/lib/core/src/server/preview/globals.ts",
+    "ROOT/lib/core-server/src/globals/polyfills.ts",
+    "ROOT/lib/core-server/src/globals/globals.ts",
     "ROOT/examples/cra-ts-essentials/.storybook/storybook-init-framework-entry.js",
     "ROOT/addons/docs/dist/esm/frameworks/common/config.js-generated-other-entry.js",
     "ROOT/addons/docs/dist/esm/frameworks/react/config.js-generated-other-entry.js",

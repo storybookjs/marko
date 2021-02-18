@@ -3,8 +3,8 @@
 exports[`vue-3-cli preview production mode 1`] = `
 Object {
   "entry": Array [
-    "ROOT/lib/core/src/server/common/polyfills.ts",
-    "ROOT/lib/core/src/server/preview/globals.ts",
+    "ROOT/lib/core-server/src/globals/polyfills.ts",
+    "ROOT/lib/core-server/src/globals/globals.ts",
     "ROOT/examples/vue-3-cli/.storybook/storybook-init-framework-entry.js",
     "ROOT/addons/docs/dist/esm/frameworks/common/config.js-generated-other-entry.js",
     "ROOT/addons/docs/dist/esm/frameworks/react/config.js-generated-other-entry.js",
@@ -101,14 +101,7 @@ Object {
                   Object {
                     "absoluteImports": "NODE_MODULES/core-js/index.js",
                     "method": "usage-global",
-                    "version": "3.8.2",
-                  },
-                ],
-                Array [
-                  "NODE_MODULES/babel-plugin-emotion/dist/babel-plugin-emotion.cjs.js",
-                  Object {
-                    "autoLabel": true,
-                    "sourceMap": true,
+                    "version": "*",
                   },
                 ],
                 "NODE_MODULES/babel-plugin-add-react-displayname/index.js",
@@ -185,7 +178,7 @@ Object {
                   Object {
                     "absoluteImports": "NODE_MODULES/core-js/index.js",
                     "method": "usage-global",
-                    "version": "3.8.2",
+                    "version": "*",
                   },
                 ],
               ],
@@ -298,14 +291,7 @@ Object {
                   Object {
                     "absoluteImports": "NODE_MODULES/core-js/index.js",
                     "method": "usage-global",
-                    "version": "3.8.2",
-                  },
-                ],
-                Array [
-                  "NODE_MODULES/babel-plugin-emotion/dist/babel-plugin-emotion.cjs.js",
-                  Object {
-                    "autoLabel": true,
-                    "sourceMap": true,
+                    "version": "*",
                   },
                 ],
                 "NODE_MODULES/babel-plugin-add-react-displayname/index.js",
@@ -417,14 +403,7 @@ Object {
                   Object {
                     "absoluteImports": "NODE_MODULES/core-js/index.js",
                     "method": "usage-global",
-                    "version": "3.8.2",
-                  },
-                ],
-                Array [
-                  "NODE_MODULES/babel-plugin-emotion/dist/babel-plugin-emotion.cjs.js",
-                  Object {
-                    "autoLabel": true,
-                    "sourceMap": true,
+                    "version": "*",
                   },
                 ],
                 "NODE_MODULES/babel-plugin-add-react-displayname/index.js",
@@ -497,14 +476,13 @@ Object {
       Object {
         "loader": "NODE_MODULES/file-loader/dist/cjs.js",
         "options": Object {
-          "esModule": false,
           "name": "static/media/[name].[hash:8].[ext]",
         },
         "test": "/\\\\.(svg|ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\\\\?.*)?$/",
       },
       Object {
         "loader": "NODE_MODULES/url-loader/dist/cjs.js",
-        "query": Object {
+        "options": Object {
           "limit": 10000,
           "name": "static/media/[name].[hash:8].[ext]",
         },

@@ -1,44 +1,51 @@
 import 'jest-specific-snapshot';
 import path from 'path';
-import webpack, { Configuration } from 'webpack';
+import { Configuration } from 'webpack';
 import Cache from 'file-system-cache';
+import { resolvePathInStorybookCache } from '@storybook/core-common';
+import { executor as previewExecutor } from '@storybook/builder-webpack4';
+import { executor as managerExecutor } from './manager/builder';
 
 import { buildDevStandalone } from './build-dev';
 import { buildStaticStandalone } from './build-static';
-import { resolvePathInStorybookCache } from './utils/resolve-path-in-sb-cache';
-import reactOptions from '../../../../app/react/src/server/options';
 
-const TIMEOUT = 10000;
+import reactOptions from '../../../app/react/src/server/options';
 
-const mockStats = {
-  hasErrors: () => false,
-  hasWarnings: () => false,
-  toJson: () => ({ warnings: [], errors: [] }),
-};
-const webpackStub = (cb) => {
-  return cb(null, mockStats);
-};
-const middlewareStub = (_req, _resp, next) => next();
-middlewareStub.waitUntilValid = (cb) => cb(mockStats);
-jest.mock('webpack-hot-middleware', () => () => middlewareStub);
-jest.mock('webpack-dev-middleware', () => () => middlewareStub);
-jest.mock('webpack', () => {
-  const actualWebpack = jest.requireActual('webpack');
-  return {
-    __esModule: true, // this property makes it work
-    default: jest.fn((...args) => {
-      const compiler = actualWebpack(...args);
-      compiler.watch = jest.fn(webpackStub);
-      compiler.run = jest.fn(webpackStub);
-      return compiler;
-    }),
-    ...actualWebpack,
-  };
+jest.mock('@storybook/builder-webpack5', () => {
+  const actualBuilder = jest.requireActual('@storybook/builder-webpack5');
+  // MUTATION! we couldn't mock webpack5, so we added a level of indirection instead
+  actualBuilder.executor.get = jest.fn();
+  return actualBuilder;
 });
 
+jest.mock('@storybook/builder-webpack4', () => {
+  const actualBuilder = jest.requireActual('@storybook/builder-webpack4');
+  // MUTATION! we couldn't mock webpack5, so we added a level of indirection instead
+  actualBuilder.executor.get = jest.fn();
+  return actualBuilder;
+});
+
+jest.mock('./manager/builder', () => {
+  const actualBuilder = jest.requireActual('./manager/builder');
+  // MUTATION!
+  actualBuilder.executor.get = jest.fn();
+  return actualBuilder;
+});
+
+jest.mock('cpy', () => () => Promise.resolve());
 jest.mock('http', () => ({
   ...jest.requireActual('http'),
   createServer: () => ({ listen: (_options, cb) => cb() }),
+}));
+jest.mock('@storybook/node-logger', () => ({
+  logger: {
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+  },
+}));
+jest.mock('./utils/output-startup-information', () => ({
+  outputStartupInformation: jest.fn(),
 }));
 
 const cache = Cache({
@@ -54,6 +61,7 @@ const baseOptions = {
   managerOnly, // production
   docsMode: false,
   cache,
+  configDir: path.resolve(`${__dirname}/../../../examples/react-ts`),
   outputDir: `${__dirname}/storybook-static`, // production
   ci: true,
   managerCache: false,
@@ -70,6 +78,9 @@ const cleanRoots = (obj): any => {
   if (typeof obj === 'object') {
     return Object.fromEntries(
       Object.entries(obj).map(([key, val]) => {
+        if (key === 'version' && typeof val === 'string') {
+          return [key, '*'];
+        }
         return [key, cleanRoots(val)];
       })
     );
@@ -98,7 +109,7 @@ describe.each([
 ])('%s', (example) => {
   const options = {
     ...baseOptions,
-    configDir: path.resolve(`${__dirname}/../../../../examples/${example}/.storybook`),
+    configDir: path.resolve(`${__dirname}/../../../examples/${example}/.storybook`),
   };
 
   describe('manager', () => {
@@ -106,28 +117,18 @@ describe.each([
       jest.clearAllMocks();
       cache.clear();
     });
-    it(
-      'dev mode',
-      async () => {
-        const result = await buildDevStandalone(options);
-        expect(webpack).toHaveBeenCalled();
+    it('dev mode', async () => {
+      await buildDevStandalone({ ...options, ignorePreview: true });
 
-        const managerConfig = prepareSnap(webpack, 'manager');
-        expect(managerConfig).toMatchSpecificSnapshot(snap(`${example}_manager-dev`));
-      },
-      TIMEOUT
-    );
-    it(
-      'production mode',
-      async () => {
-        const result = await buildStaticStandalone(options);
-        expect(webpack).toHaveBeenCalled();
+      const managerConfig = prepareSnap(managerExecutor.get, 'manager');
+      expect(managerConfig).toMatchSpecificSnapshot(snap(`${example}_manager-dev`));
+    });
+    it('production mode', async () => {
+      await buildStaticStandalone({ ...options, ignorePreview: true });
 
-        const managerConfig = prepareSnap(webpack, 'manager');
-        expect(managerConfig).toMatchSpecificSnapshot(snap(`${example}_manager-prod`));
-      },
-      TIMEOUT
-    );
+      const managerConfig = prepareSnap(managerExecutor.get, 'manager');
+      expect(managerConfig).toMatchSpecificSnapshot(snap(`${example}_manager-prod`));
+    });
   });
 
   describe('preview', () => {
@@ -135,27 +136,17 @@ describe.each([
       jest.clearAllMocks();
       cache.clear();
     });
-    it(
-      'dev mode',
-      async () => {
-        const result = await buildDevStandalone(options);
-        expect(webpack).toHaveBeenCalled();
+    it('dev mode', async () => {
+      await buildDevStandalone({ ...options, managerCache: true });
 
-        const previewConfig = prepareSnap(webpack, 'preview');
-        expect(previewConfig).toMatchSpecificSnapshot(snap(`${example}_preview-dev`));
-      },
-      TIMEOUT
-    );
-    it(
-      'production mode',
-      async () => {
-        const result = await buildStaticStandalone(options);
-        expect(webpack).toHaveBeenCalled();
+      const previewConfig = prepareSnap(previewExecutor.get, 'preview');
+      expect(previewConfig).toMatchSpecificSnapshot(snap(`${example}_preview-dev`));
+    });
+    it('production mode', async () => {
+      await buildStaticStandalone({ ...options, managerCache: true });
 
-        const previewConfig = prepareSnap(webpack, 'preview');
-        expect(previewConfig).toMatchSpecificSnapshot(snap(`${example}_preview-prod`));
-      },
-      TIMEOUT
-    );
+      const previewConfig = prepareSnap(previewExecutor.get, 'preview');
+      expect(previewConfig).toMatchSpecificSnapshot(snap(`${example}_preview-prod`));
+    });
   });
 });

@@ -3,8 +3,8 @@
 exports[`web-components-kitchen-sink manager production mode 1`] = `
 Object {
   "entry": Array [
-    "ROOT/lib/core/src/server/common/polyfills.ts",
-    "ROOT/lib/core/src/client/manager/index.ts",
+    "ROOT/lib/core-server/src/globals/polyfills.ts",
+    "ROOT/lib/core-client/dist/esm/manager/index.js",
     "ROOT/addons/docs/dist/esm/register.js",
     "ROOT/addons/controls/dist/esm/register.js",
     "ROOT/addons/a11y/dist/esm/register.js",
@@ -23,7 +23,8 @@ Object {
     "devtool",
     "entry",
     "output",
-    "cache",
+    "watchOptions",
+    "stats",
     "plugins",
     "module",
     "resolve",
@@ -91,7 +92,7 @@ Object {
                   Object {
                     "absoluteImports": "NODE_MODULES/core-js/index.js",
                     "method": "usage-global",
-                    "version": "3.8.2",
+                    "version": "*",
                   },
                 ],
                 "NODE_MODULES/@babel/plugin-transform-template-literals/lib/index.js",
@@ -162,7 +163,7 @@ Object {
                   Object {
                     "absoluteImports": "NODE_MODULES/core-js/index.js",
                     "method": "usage-global",
-                    "version": "3.8.2",
+                    "version": "*",
                   },
                 ],
               ],
@@ -196,14 +197,14 @@ Object {
       },
       Object {
         "loader": "NODE_MODULES/file-loader/dist/cjs.js",
-        "query": Object {
+        "options": Object {
           "name": "static/media/[name].[hash:8].[ext]",
         },
         "test": "/\\\\.(svg|ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\\\\?.*)?$/",
       },
       Object {
         "loader": "NODE_MODULES/url-loader/dist/cjs.js",
-        "query": Object {
+        "options": Object {
           "limit": 10000,
           "name": "static/media/[name].[hash:8].[ext]",
         },
@@ -217,7 +218,6 @@ Object {
     "CaseSensitivePathsPlugin",
     "DefinePlugin",
     "DefinePlugin",
-    "BundleAnalyzerPlugin",
   ],
 }
 `;
