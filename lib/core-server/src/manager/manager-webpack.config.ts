@@ -83,7 +83,7 @@ export default async ({
             ),
           }) as any) as WebpackPluginInstance)
         : null,
-      new HtmlWebpackPlugin({
+      (new HtmlWebpackPlugin({
         filename: `index.html`,
         // FIXME: `none` isn't a known option
         chunksSortMode: 'none' as any,
@@ -105,7 +105,7 @@ export default async ({
           headHtmlSnippet,
         }),
         template,
-      }) as WebpackPluginInstance,
+      }) as any) as WebpackPluginInstance,
       (new CaseSensitivePathsPlugin() as any) as WebpackPluginInstance,
       (new Dotenv({ silent: true }) as any) as WebpackPluginInstance,
       // graphql sources check process variable
