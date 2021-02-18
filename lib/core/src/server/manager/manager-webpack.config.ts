@@ -35,6 +35,10 @@ export default async ({
 }: ManagerWebpackOptions): Promise<Configuration> => {
   const { raw, stringified } = loadEnv();
   const logLevel = await presets.apply('logLevel', undefined);
+  const headHtmlSnippet = await presets.apply(
+    'managerHead',
+    getManagerHeadHtml(configDir, process.env)
+  );
   const isProd = configType === 'PRODUCTION';
   const refsTemplate = fse.readFileSync(path.join(__dirname, 'virtualModuleRef.template.js'), {
     encoding: 'utf8',
@@ -42,6 +46,10 @@ export default async ({
   const {
     packageJson: { version },
   } = await readPackage({ cwd: __dirname });
+
+  // @ts-ignore
+  // eslint-disable-next-line import/no-extraneous-dependencies
+  const { BundleAnalyzerPlugin } = await import('webpack-bundle-analyzer').catch(() => ({}));
 
   return {
     name: 'manager',
@@ -85,7 +93,7 @@ export default async ({
             DOCS_MODE: docsMode, // global docs mode
             PREVIEW_URL: previewUrl, // global preview URL
           },
-          headHtmlSnippet: getManagerHeadHtml(configDir, process.env),
+          headHtmlSnippet,
         }),
         template: require.resolve(`../templates/index.ejs`),
       }),
@@ -96,6 +104,9 @@ export default async ({
         'process.env': stringified,
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       }),
+      isProd &&
+        BundleAnalyzerPlugin &&
+        new BundleAnalyzerPlugin({ analyzerMode: 'static', openAnalyzer: false }),
     ].filter(Boolean),
     module: {
       rules: [

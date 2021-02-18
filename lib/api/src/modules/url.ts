@@ -1,11 +1,14 @@
 import { navigate as navigateRouter, NavigateOptions } from '@reach/router';
-import { queryFromLocation } from '@storybook/router';
+import { NAVIGATE_URL, STORY_ARGS_UPDATED, SET_CURRENT_STORY } from '@storybook/core-events';
+import { queryFromLocation, navigate as queryNavigate, buildArgsParam } from '@storybook/router';
 import { toId, sanitize } from '@storybook/csf';
-
-import { NAVIGATE_URL } from '@storybook/core-events';
 import deepEqual from 'fast-deep-equal';
+import { window } from 'global';
+
 import { ModuleArgs, ModuleFn } from '../index';
 import { PanelPositions } from './layout';
+import { isStory } from '../lib/stories';
+import type { Story } from '../lib/stories';
 
 interface Additions {
   isFullscreen?: boolean;
@@ -117,24 +120,13 @@ export interface SubAPI {
 
 export const init: ModuleFn = ({ store, navigate, state, provider, fullAPI, ...rest }) => {
   const api: SubAPI = {
-    getQueryParam: (key) => {
+    getQueryParam(key) {
       const { customQueryParams } = store.getState();
-      if (customQueryParams) {
-        return customQueryParams[key];
-      }
-      return undefined;
+      return customQueryParams ? customQueryParams[key] : undefined;
     },
-    getUrlState: () => {
-      const { path, viewMode, storyId, url, customQueryParams } = store.getState();
-      const queryParams = customQueryParams;
-
-      return {
-        queryParams,
-        path,
-        viewMode,
-        storyId,
-        url,
-      };
+    getUrlState() {
+      const { path, customQueryParams, storyId, url, viewMode } = store.getState();
+      return { path, queryParams: customQueryParams, storyId, url, viewMode };
     },
     setQueryParams(input) {
       const { customQueryParams } = store.getState();
@@ -157,6 +149,29 @@ export const init: ModuleFn = ({ store, navigate, state, provider, fullAPI, ...r
   };
 
   const initModule = () => {
+    // Sets `args` parameter in URL, omitting any args that have their initial value or cannot be unserialized safely.
+    const updateArgsParam = (args?: Story['args']) => {
+      const currentStory = fullAPI.getCurrentStoryData();
+      const initialArgs = (isStory(currentStory) && currentStory.initialArgs) || {};
+      const argsString = buildArgsParam(initialArgs, args);
+      const argsParam = argsString.length ? `&args=${argsString}` : '';
+      queryNavigate(`${fullAPI.getUrlState().path}${argsParam}`, { replace: true });
+      api.setQueryParams({ args: argsString });
+    };
+
+    fullAPI.on(SET_CURRENT_STORY, () => updateArgsParam());
+
+    let handleOrId: any;
+    fullAPI.on(STORY_ARGS_UPDATED, ({ args }) => {
+      if ('requestIdleCallback' in window) {
+        if (handleOrId) window.cancelIdleCallback(handleOrId);
+        handleOrId = window.requestIdleCallback(() => updateArgsParam(args), { timeout: 1000 });
+      } else {
+        if (handleOrId) clearTimeout(handleOrId);
+        setTimeout(updateArgsParam, 100, args);
+      }
+    });
+
     fullAPI.on(NAVIGATE_URL, (url: string, options: { [k: string]: any }) => {
       fullAPI.navigateUrl(url, options);
     });

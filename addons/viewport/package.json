@@ -1,10 +1,12 @@
 {
   "name": "@storybook/addon-viewport",
-  "version": "6.2.0-alpha.1",
-  "description": "Storybook addon to change the viewport size to mobile",
+  "version": "6.2.0-alpha.28",
+  "description": "Build responsive components by adjusting Storybook’s viewport size and orientation",
   "keywords": [
     "addon",
-    "storybook"
+    "storybook",
+    "style",
+    "essentials"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/viewport",
   "bugs": {
@@ -16,12 +18,13 @@
     "directory": "addons/viewport"
   },
   "license": "MIT",
-  "main": "dist/preview.js",
-  "types": "dist/preview.d.ts",
+  "main": "dist/cjs/preview.js",
+  "module": "dist/esm/preview.js",
+  "types": "dist/ts3.9/preview.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
@@ -29,21 +32,20 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.1",
-    "@storybook/api": "6.2.0-alpha.1",
-    "@storybook/client-logger": "6.2.0-alpha.1",
-    "@storybook/components": "6.2.0-alpha.1",
-    "@storybook/core-events": "6.2.0-alpha.1",
-    "@storybook/theming": "6.2.0-alpha.1",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
+    "@storybook/addons": "6.2.0-alpha.28",
+    "@storybook/api": "6.2.0-alpha.28",
+    "@storybook/client-logger": "6.2.0-alpha.28",
+    "@storybook/components": "6.2.0-alpha.28",
+    "@storybook/core-events": "6.2.0-alpha.28",
+    "@storybook/theming": "6.2.0-alpha.28",
+    "core-js": "^3.8.2",
+    "global": "^4.4.0",
     "memoizerific": "^1.11.3",
     "prop-types": "^15.7.2",
     "regenerator-runtime": "^0.13.7"
@@ -63,5 +65,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "211db5358500cb71c73d6183e86f40df1638752b"
+  "gitHead": "899ca0824d698925edcc519c7afc7408f7b1ab46",
+  "storybook": {
+    "displayName": "Viewport",
+    "icon": "https://user-images.githubusercontent.com/263385/101991678-48cdf300-3c7c-11eb-9764-f8af293c1b28.png",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
+  }
 }

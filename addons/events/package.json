@@ -1,12 +1,13 @@
 {
   "name": "@storybook/addon-events",
-  "version": "6.2.0-alpha.1",
+  "version": "6.2.0-alpha.28",
   "description": "Add events to your Storybook stories.",
   "keywords": [
     "addon",
     "events",
     "react",
-    "storybook"
+    "storybook",
+    "data-state"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/events",
   "bugs": {
@@ -18,12 +19,13 @@
     "directory": "addons/events"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/ts3.9/index.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
@@ -31,28 +33,27 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.1",
-    "@storybook/api": "6.2.0-alpha.1",
-    "@storybook/client-api": "6.2.0-alpha.1",
-    "@storybook/core-events": "6.2.0-alpha.1",
-    "@storybook/theming": "6.2.0-alpha.1",
-    "core-js": "^3.0.1",
+    "@storybook/addons": "6.2.0-alpha.28",
+    "@storybook/api": "6.2.0-alpha.28",
+    "@storybook/client-api": "6.2.0-alpha.28",
+    "@storybook/core-events": "6.2.0-alpha.28",
+    "@storybook/theming": "6.2.0-alpha.28",
+    "core-js": "^3.8.2",
     "format-json": "^1.0.3",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.20",
     "prop-types": "^15.7.2",
     "react-lifecycles-compat": "^3.0.4",
-    "react-textarea-autosize": "^8.1.1",
+    "react-textarea-autosize": "^8.3.0",
     "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
-    "@types/webpack-env": "^1.15.3"
+    "@types/webpack-env": "^1.16.0"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
@@ -69,5 +70,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "211db5358500cb71c73d6183e86f40df1638752b"
+  "gitHead": "899ca0824d698925edcc519c7afc7408f7b1ab46",
+  "storybook": {
+    "displayName": "Events",
+    "unsupportedFrameworks": [
+      "react-native",
+      "svelte",
+      "riot"
+    ]
+  }
 }

@@ -52,52 +52,20 @@ yarn test
 
 The options for running tests can be selected from the cli or be passed to `yarn test` with specific parameters. Available modes include `--watch`, `--coverage`, and `--runInBand`, which will respectively run tests in watch mode, output code coverage, and run selected test suites serially in the current process.
 
-You can use the `--update` flag to update snapshots or screenshots as needed.
+You can use the `--update` flag (or `jest -u`) to update snapshots or screenshots as needed.
+
+> NOTE: on Windows, remember to make sure git config `core.autocrlf` is set to false, in order to not override EOL in snapshots ( `git config --global core.autocrlf false` to set it globally). It is also recommended to run tests from WSL2 to avoid errors with unix-style paths.
 
 You can also pick suites from CLI. Suites available are listed below.
 
 ##### Core & Examples Tests
 
-`yarn test --core`
+`yarn test`
 
 This option executes tests from `<rootdir>/app/react`, `<rootdir>/app/vue`, and `<rootdir>/lib`.
 Before the tests are run, the project must be bootstrapped with core. You can accomplish this with `yarn bootstrap --core`
 
-##### CRA-kitchen-sink - Image snapshots using Storyshots
-
-`yarn test --image`
-
-This option executes tests from `<rootdir>/examples/official-storybook`
-In order for the image snapshots to be correctly generated, you must have a static build of the storybook up-to-date :
-
-```sh
-cd examples/official-storybook
-yarn build-storybook
-cd ../..
-yarn test --image
-```
-
-Puppeteer is used to launch and grab screenshots of example pages, while jest is used to assert matching images. (just like integration tests)
-
-#### 2b. Run e2e tests for CLI
-
-If you made any changes to the `lib/cli` package, the easiest way to verify that it doesn't break anything is to run e2e tests:
-
-```sh
-yarn test --cli
-```
-
-This will run a bash script located at `lib/cli/test/run_tests.sh`. It will copy the contents of `fixtures` into a temporary `run` directory, run `getstorybook` in each of the subdirectories, and check that storybook starts successfully using `yarn storybook --smoke-test`.
-
-After that, the `run` directory content will be compared with `snapshots`. You can update the snapshots by passing an `--update` flag:
-
-```sh
-yarn test --cli --update
-```
-
-In that case, please check the git diff before committing to make sure it only contains the intended changes.
-
-#### 2c. Run Linter
+#### 2b. Run Linter
 
 We use eslint as a linter for all code (including typescript code).
 
@@ -126,7 +94,7 @@ It can be immensely helpful to get feedback in your editor, if you're using VsCo
 
 This should enable auto-fix for all source files, and give linting warnings and errors within your editor.
 
-### 2d. Run Cypress tests
+### 2c. Run Cypress tests
 
 First make sure the repo is bootstrapped.
 
@@ -215,7 +183,7 @@ When creating new unit test files, the tests should adhere to a particular folde
 
 We welcome all contributions. There are many ways you can help us. This is few of those ways:
 
-Before you submit a new PR, make sure you run `yarn test`. Do not submit a PR if tests are failing. If you need any help, the best way is to [join the discord server and ask in the maintenance channel](https://discord.gg/sMFvFsG).
+Before you submit a new PR, make sure you run `yarn test`. Do not submit a PR if tests are failing. If you need any help, the best way is to [join the discord server and ask in the maintenance channel](https://discord.gg/storybook).
 
 ### Reviewing PRs
 
@@ -280,7 +248,7 @@ If you run into trouble here, make sure your node, npm, and **_yarn_** are on th
 2.  `git clone https://github.com/storybookjs/storybook.git` _bonus_: use your own fork for this step
 3.  `cd storybook`
 4.  `yarn bootstrap --core`
-5.  `yarn test --core`
+5.  `yarn test`
 6.  `yarn dev` _You must have this running for your changes to show up_
 
 > NOTE: on windows you may need to run `yarn` before `yarn bootstrap` (between steps 3 and 4).

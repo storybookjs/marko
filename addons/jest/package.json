@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-jest",
-  "version": "6.2.0-alpha.1",
+  "version": "6.2.0-alpha.28",
   "description": "React storybook addon that show component jest report",
   "keywords": [
     "addon",
@@ -9,7 +9,8 @@
     "report",
     "results",
     "storybook",
-    "unit-testing"
+    "unit-testing",
+    "test"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/jest",
   "bugs": {
@@ -22,12 +23,13 @@
   },
   "license": "MIT",
   "author": "Renaud Tertrais <renaud.tertrais@gmail.com> (https://github.com/renaudtertrais)",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/ts3.9/index.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
@@ -35,26 +37,25 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.1",
-    "@storybook/api": "6.2.0-alpha.1",
-    "@storybook/components": "6.2.0-alpha.1",
-    "@storybook/core-events": "6.2.0-alpha.1",
-    "@storybook/theming": "6.2.0-alpha.1",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
-    "react-sizeme": "^2.5.2",
+    "@storybook/addons": "6.2.0-alpha.28",
+    "@storybook/api": "6.2.0-alpha.28",
+    "@storybook/components": "6.2.0-alpha.28",
+    "@storybook/core-events": "6.2.0-alpha.28",
+    "@storybook/theming": "6.2.0-alpha.28",
+    "core-js": "^3.8.2",
+    "global": "^4.4.0",
+    "react-sizeme": "^2.6.12",
     "regenerator-runtime": "^0.13.7",
-    "upath": "^1.1.0"
+    "upath": "^1.2.0"
   },
   "devDependencies": {
-    "@types/webpack-env": "^1.15.3"
+    "@types/webpack-env": "^1.16.0"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
@@ -71,5 +72,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "211db5358500cb71c73d6183e86f40df1638752b"
+  "gitHead": "899ca0824d698925edcc519c7afc7408f7b1ab46",
+  "storybook": {
+    "displayName": "Jest",
+    "icon": "https://pbs.twimg.com/profile_images/821713465245102080/mMtKIMax_400x400.jpg",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
+  }
 }

@@ -9,6 +9,9 @@ export default {
       control: { type: 'range', min: 0.2, max: 30, step: 0.02 },
     },
   },
+  parameters: {
+    chromatic: { delay: 500, diffThreshold: 0.2 },
+  },
 };
 const EXAMPLE_ELEMENT = (
   <div

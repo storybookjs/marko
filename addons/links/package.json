@@ -1,10 +1,11 @@
 {
   "name": "@storybook/addon-links",
-  "version": "6.2.0-alpha.1",
-  "description": "Story Links addon for storybook",
+  "version": "6.2.0-alpha.28",
+  "description": "Link stories together to build demos and prototypes with your UI components",
   "keywords": [
     "addon",
-    "storybook"
+    "storybook",
+    "organize"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/links",
   "bugs": {
@@ -16,12 +17,13 @@
     "directory": "addons/links"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/ts3.9/index.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
@@ -29,28 +31,27 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.1",
-    "@storybook/client-logger": "6.2.0-alpha.1",
-    "@storybook/core-events": "6.2.0-alpha.1",
+    "@storybook/addons": "6.2.0-alpha.28",
+    "@storybook/client-logger": "6.2.0-alpha.28",
+    "@storybook/core-events": "6.2.0-alpha.28",
     "@storybook/csf": "0.0.1",
-    "@storybook/router": "6.2.0-alpha.1",
-    "@types/qs": "^6.9.0",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
+    "@storybook/router": "6.2.0-alpha.28",
+    "@types/qs": "^6.9.5",
+    "core-js": "^3.8.2",
+    "global": "^4.4.0",
     "prop-types": "^15.7.2",
-    "qs": "^6.6.0",
+    "qs": "^6.9.5",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
-    "@types/webpack-env": "^1.15.3"
+    "@types/webpack-env": "^1.16.0"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
@@ -67,5 +68,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "211db5358500cb71c73d6183e86f40df1638752b"
+  "gitHead": "899ca0824d698925edcc519c7afc7408f7b1ab46",
+  "storybook": {
+    "displayName": "Links",
+    "icon": "https://user-images.githubusercontent.com/263385/101991673-48355c80-3c7c-11eb-9b6e-b627c96a75f6.png",
+    "unsupportedFrameworks": [
+      "marko",
+      "react-native"
+    ]
+  }
 }

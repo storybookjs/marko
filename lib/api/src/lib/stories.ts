@@ -8,7 +8,7 @@ import merge from './merge';
 import { Provider } from '../modules/provider';
 import { ViewMode } from '../modules/addons';
 
-export { StoryId };
+export type { StoryId };
 
 export interface Root {
   id: StoryId;
@@ -59,6 +59,7 @@ export interface Story {
     [parameterName: string]: any;
   };
   args: Args;
+  initialArgs: Args;
 }
 
 export interface StoryInput {
@@ -78,6 +79,7 @@ export interface StoryInput {
   };
   isLeaf: boolean;
   args: Args;
+  initialArgs: Args;
 }
 
 export interface StoriesHash {

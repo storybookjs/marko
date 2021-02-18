@@ -3,7 +3,12 @@
   "compilerOptions": {
     "rootDir": "./src"
   },
-  "include": [
-    "src/**/*.ts"
+  "exclude": [
+    "src/**/*.test.*",
+    "src/**/tests/**/*",
+    "src/**/__tests__/**/*",
+    "src/**/*.stories.*",
+    "src/**/*.mockdata.*",
+    "src/**/__testfixtures__/**"
   ]
 }

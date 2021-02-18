@@ -1,8 +1,13 @@
+const sveltePreprocess = require('svelte-preprocess');
+
 const path = require('path');
 
 module.exports = {
   stories: ['../src/stories/**/*.stories.*'],
   logLevel: 'debug',
+  svelteOptions: {
+    preprocess: sveltePreprocess(),
+  },
   addons: [
     '@storybook/addon-storysource',
     '@storybook/addon-actions',

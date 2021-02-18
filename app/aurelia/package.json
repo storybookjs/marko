@@ -1,6 +1,6 @@
 {
   "name": "@storybook/aurelia",
-  "version": "6.2.0-alpha.1",
+  "version": "6.2.0-alpha.28",
   "description": "Storybook for Aurelia: Develop Aurelia Components in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -15,8 +15,16 @@
     "directory": "app/aurelia"
   },
   "license": "MIT",
-  "main": "dist/client/index.js",
-  "types": "dist/client/index.d.ts",
+  "main": "dist/cjs/client/index.js",
+  "module": "dist/esm/client/index.js",
+  "types": "dist/ts3.9/client/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "dist/ts3.4/*"
+      ]
+    }
+  },
   "bin": {
     "build-storybook": "./bin/build.js",
     "start-storybook": "./bin/index.js",
@@ -27,32 +35,33 @@
   },
   "dependencies": {
     "@aurelia/webpack-loader": "^0.7.0",
-    "@storybook/addon-knobs": "6.2.0-alpha.1",
-    "@storybook/addons": "6.2.0-alpha.1",
-    "@storybook/core": "6.2.0-alpha.1",
-    "@storybook/node-logger": "6.2.0-alpha.1",
-    "fork-ts-checker-webpack-plugin": "^4.0.3",
-    "global": "^4.3.2",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "ts-loader": "^6.0.1",
-    "url-loader": "^4.1.0",
-    "webpack": "^4.44.2"
+    "@storybook/addon-knobs": "6.2.0-alpha.28",
+    "@storybook/addons": "6.2.0-alpha.28",
+    "@storybook/core": "6.2.0-alpha.28",
+    "@storybook/node-logger": "6.2.0-alpha.28",
+    "fork-ts-checker-webpack-plugin": "^4.1.6",
+    "global": "^4.4.0",
+    "react": "16.14.0",
+    "react-dom": "16.14.0",
+    "read-pkg-up": "^7.0.1",
+    "ts-loader": "^6.2.2",
+    "url-loader": "^4.1.1",
+    "webpack": "^4.46.0"
   },
   "devDependencies": {
-    "@types/node": "^14.0.10",
-    "@types/webpack-env": "^1.15.1",
+    "@types/node": "^14.14.20",
+    "@types/webpack-env": "^1.16.0",
     "aurelia": "^0.7.0",
-    "css-loader": "^3.0.0",
-    "file-loader": "^4.2.0",
-    "html-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.6.0",
+    "file-loader": "^4.3.0",
+    "html-webpack-plugin": "^3.2.0",
     "htmlhint": "^0.11.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.14.1",
     "rimraf": "^3.0.2",
-    "sass-loader": "^8.0.0",
+    "sass-loader": "^8.0.2",
     "style-loader": "^0.23.0",
-    "typescript": "^3.9.3",
-    "webpack": "^4.44.2"
+    "typescript": "^3.9.7",
+    "webpack": "^4.46.0"
   },
   "peerDependencies": {
     "aurelia": "*"
@@ -60,5 +69,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "211db5358500cb71c73d6183e86f40df1638752b"
+  "gitHead": "899ca0824d698925edcc519c7afc7408f7b1ab46"
 }

@@ -5,6 +5,7 @@ import {
   BooleanControl,
   ColorControl,
   DateControl,
+  FilesControl,
   NumberControl,
   ObjectControl,
   OptionsControl,
@@ -72,6 +73,8 @@ export const ArgControl: FC<ArgControlProps> = ({ row, arg, updateArgs }) => {
       return <RangeControl {...props} {...control} />;
     case 'text':
       return <TextControl {...props} {...control} />;
+    case 'file':
+      return <FilesControl {...props} {...control} />;
     default:
       return <NoControl />;
   }

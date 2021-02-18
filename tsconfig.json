@@ -8,7 +8,6 @@
     "emitDecoratorMetadata": true,
     "jsx": "react",
     "module": "commonjs",
-    "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -23,6 +22,7 @@
     "**/*.spec.ts",
     "**/__tests__",
     "**/*.test.ts",
-    "**/FlowType*"
+    "**/FlowType*",
+    "**/setup-jest.ts"
   ]
 }

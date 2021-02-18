@@ -1,6 +1,6 @@
 {
   "name": "@storybook/router",
-  "version": "6.2.0-alpha.1",
+  "version": "6.2.0-alpha.28",
   "description": "Core Storybook Router",
   "keywords": [
     "storybook"
@@ -15,12 +15,14 @@
     "directory": "lib/router"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "sideEffects": false,
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/ts3.9/index.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
@@ -28,19 +30,20 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@reach/router": "^1.3.3",
-    "@types/reach__router": "^1.3.5",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
+    "@reach/router": "^1.3.4",
+    "@storybook/client-logger": "6.2.0-alpha.25",
+    "@types/reach__router": "^1.3.7",
+    "core-js": "^3.8.2",
+    "fast-deep-equal": "^3.1.3",
+    "global": "^4.4.0",
     "memoizerific": "^1.11.3",
-    "qs": "^6.6.0"
+    "qs": "^6.9.5"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
@@ -49,5 +52,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "211db5358500cb71c73d6183e86f40df1638752b"
+  "gitHead": "899ca0824d698925edcc519c7afc7408f7b1ab46"
 }

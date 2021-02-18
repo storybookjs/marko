@@ -62,7 +62,7 @@ export interface SubAPI {
   ) => Story['parameters'] | any;
   getCurrentParameter<S>(parameterName?: ParameterName): S;
   updateStoryArgs(story: Story, newArgs: Args): void;
-  resetStoryArgs: (story: Story, argNames?: [string]) => void;
+  resetStoryArgs: (story: Story, argNames?: string[]) => void;
   findLeafStoryId(StoriesHash: StoriesHash, storyId: StoryId): StoryId;
 }
 
@@ -329,27 +329,30 @@ export const init: ModuleFn = ({
   const initModule = () => {
     // On initial load, the local iframe will select the first story (or other "selection specifier")
     // and emit STORY_SPECIFIED with the id. We need to ensure we respond to this change.
-    fullAPI.on(STORY_SPECIFIED, function handler({
-      storyId,
-      viewMode,
-    }: {
-      storyId: string;
-      viewMode: ViewMode;
-      [k: string]: any;
-    }) {
-      const { sourceType } = getEventMetadata(this, fullAPI);
+    fullAPI.on(
+      STORY_SPECIFIED,
+      function handler({
+        storyId,
+        viewMode,
+      }: {
+        storyId: string;
+        viewMode: ViewMode;
+        [k: string]: any;
+      }) {
+        const { sourceType } = getEventMetadata(this, fullAPI);
 
-      if (fullAPI.isSettingsScreenActive()) return;
+        if (fullAPI.isSettingsScreenActive()) return;
 
-      if (sourceType === 'local') {
-        // Special case -- if we are already at the story being specified (i.e. the user started at a given story),
-        // we don't need to change URL. See https://github.com/storybookjs/storybook/issues/11677
-        const state = store.getState();
-        if (state.storyId !== storyId || state.viewMode !== viewMode) {
-          navigate(`/${viewMode}/${storyId}`);
+        if (sourceType === 'local') {
+          // Special case -- if we are already at the story being specified (i.e. the user started at a given story),
+          // we don't need to change URL. See https://github.com/storybookjs/storybook/issues/11677
+          const state = store.getState();
+          if (state.storyId !== storyId || state.viewMode !== viewMode) {
+            navigate(`/${viewMode}/${storyId}`);
+          }
         }
       }
-    });
+    );
 
     fullAPI.on(STORY_CHANGED, function handler() {
       const { sourceType } = getEventMetadata(this, fullAPI);
@@ -383,43 +386,43 @@ export const init: ModuleFn = ({
       }
     });
 
-    fullAPI.on(SELECT_STORY, function handler({
-      kind,
-      story,
-      ...rest
-    }: {
-      kind: string;
-      story: string;
-      viewMode: ViewMode;
-    }) {
-      const { ref } = getEventMetadata(this, fullAPI);
+    fullAPI.on(
+      SELECT_STORY,
+      function handler({
+        kind,
+        story,
+        ...rest
+      }: {
+        kind: string;
+        story: string;
+        viewMode: ViewMode;
+      }) {
+        const { ref } = getEventMetadata(this, fullAPI);
 
-      if (!ref) {
-        fullAPI.selectStory(kind, story, rest);
-      } else {
-        fullAPI.selectStory(kind, story, { ...rest, ref: ref.id });
+        if (!ref) {
+          fullAPI.selectStory(kind, story, rest);
+        } else {
+          fullAPI.selectStory(kind, story, { ...rest, ref: ref.id });
+        }
       }
-    });
+    );
 
-    fullAPI.on(STORY_ARGS_UPDATED, function handleStoryArgsUpdated({
-      storyId,
-      args,
-    }: {
-      storyId: StoryId;
-      args: Args;
-    }) {
-      const { ref } = getEventMetadata(this, fullAPI);
+    fullAPI.on(
+      STORY_ARGS_UPDATED,
+      function handleStoryArgsUpdated({ storyId, args }: { storyId: StoryId; args: Args }) {
+        const { ref } = getEventMetadata(this, fullAPI);
 
-      if (!ref) {
-        const { storiesHash } = store.getState();
-        (storiesHash[storyId] as Story).args = args;
-        store.setState({ storiesHash });
-      } else {
-        const { id: refId, stories } = ref;
-        (stories[storyId] as Story).args = args;
-        fullAPI.updateRef(refId, { stories });
+        if (!ref) {
+          const { storiesHash } = store.getState();
+          (storiesHash[storyId] as Story).args = args;
+          store.setState({ storiesHash });
+        } else {
+          const { id: refId, stories } = ref;
+          (stories[storyId] as Story).args = args;
+          fullAPI.updateRef(refId, { stories });
+        }
       }
-    });
+    );
   };
 
   return {

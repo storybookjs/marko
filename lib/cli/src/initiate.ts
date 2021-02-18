@@ -1,6 +1,6 @@
 import { UpdateNotifier, IPackage } from 'update-notifier';
 import chalk from 'chalk';
-import inquirer from 'inquirer';
+import prompts from 'prompts';
 import { detect, isStorybookInstalled, detectLanguage } from './detect';
 import {
   installableProjectTypes,
@@ -19,6 +19,7 @@ import reactScriptsGenerator from './generators/REACT_SCRIPTS';
 import sfcVueGenerator from './generators/SFC_VUE';
 import updateOrganisationsGenerator from './generators/UPDATE_PACKAGE_ORGANIZATIONS';
 import vueGenerator from './generators/VUE';
+import vue3Generator from './generators/VUE3';
 import webpackReactGenerator from './generators/WEBPACK_REACT';
 import mithrilGenerator from './generators/MITHRIL';
 import marionetteGenerator from './generators/MARIONETTE';
@@ -112,13 +113,13 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
       case ProjectType.REACT_NATIVE: {
         return (options.yes
           ? Promise.resolve({ server: true })
-          : (inquirer.prompt([
+          : (prompts([
               {
                 type: 'confirm',
                 name: 'server',
                 message:
                   'Do you want to install dependencies necessary to run Storybook server? You can manually do it later by install @storybook/react-native-server',
-                default: false,
+                initial: false,
               },
             ]) as Promise<{ server: boolean }>)
         )
@@ -160,6 +161,11 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
       case ProjectType.VUE:
         return vueGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding Storybook support to your "Vue" app'))
+          .then(end);
+
+      case ProjectType.VUE3:
+        return vue3Generator(packageManager, npmOptions, generatorOptions)
+          .then(commandLog('Adding Storybook support to your "Vue 3" app'))
           .then(end);
 
       case ProjectType.ANGULAR:
@@ -222,6 +228,17 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
           .then(commandLog('Adding Storybook support to your "Aurelia" app'))
           .then(end);
 
+      case ProjectType.UNSUPPORTED:
+        paddedLog(`We detected a project type that we don't support yet.`);
+        paddedLog(
+          `If you'd like your framework to be supported, please let use know about it at https://github.com/storybookjs/storybook/issues`
+        );
+
+        // Add a new line for the clear visibility.
+        logger.log();
+
+        return Promise.resolve();
+
       default:
         paddedLog(`We couldn't detect your project type. (code: ${projectType})`);
         paddedLog(
@@ -244,22 +261,24 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
 const projectTypeInquirer = async (options: { yes?: boolean }) => {
   const manualAnswer = options.yes
     ? true
-    : await inquirer.prompt([
+    : await prompts([
         {
           type: 'confirm',
           name: 'manual',
           message: 'Do you want to manually choose a Storybook project type to install?',
-          default: false,
         },
       ]);
 
   if (manualAnswer !== true && manualAnswer.manual) {
-    const frameworkAnswer = await inquirer.prompt([
+    const frameworkAnswer = await prompts([
       {
-        type: 'list',
+        type: 'select',
         name: 'manualFramework',
         message: 'Please choose a project type from the following list:',
-        choices: installableProjectTypes.map((type) => type.toUpperCase()),
+        choices: installableProjectTypes.map((type) => ({
+          title: type,
+          value: type.toUpperCase(),
+        })),
       },
     ]);
     return installStorybook(frameworkAnswer.manualFramework, options);
