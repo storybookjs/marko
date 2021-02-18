@@ -1,20 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`preview dev mode 1`] = `
+exports[`html-kitchen-sink preview production mode 1`] = `
 Object {
   "entry": Array [
-    "ROOT/lib/core-server/src/globals/polyfills.ts",
-    "ROOT/lib/core-server/src/globals/globals.ts",
-    "ROOT/examples/react-ts/storybook-init-framework-entry.js",
+    "ROOT/lib/core/src/server/common/polyfills.ts",
+    "ROOT/lib/core/src/server/preview/globals.ts",
+    "ROOT/examples/html-kitchen-sink/.storybook/storybook-init-framework-entry.js",
     "ROOT/addons/docs/dist/esm/frameworks/common/config.js-generated-other-entry.js",
     "ROOT/addons/docs/dist/esm/frameworks/react/config.js-generated-other-entry.js",
+    "ROOT/addons/a11y/dist/esm/a11yRunner.js-generated-other-entry.js",
+    "ROOT/addons/a11y/dist/esm/a11yHighlight.js-generated-other-entry.js",
     "ROOT/addons/actions/dist/esm/preset/addDecorator.js-generated-other-entry.js",
     "ROOT/addons/actions/dist/esm/preset/addArgs.js-generated-other-entry.js",
     "ROOT/addons/backgrounds/dist/esm/preset/addDecorator.js-generated-other-entry.js",
     "ROOT/addons/backgrounds/dist/esm/preset/addParameter.js-generated-other-entry.js",
     "ROOT/addons/controls/dist/esm/preset/addParameter.js-generated-other-entry.js",
-    "ROOT/examples/react-ts/generated-stories-entry.js",
-    "NODE_MODULES/webpack-hot-middleware/client.js?reload=true&quiet=false&noInfo=undefined",
+    "ROOT/addons/knobs/dist/esm/preset/addDecorator.js-generated-other-entry.js",
+    "ROOT/addons/links/dist/esm/preset/addDecorator.js-generated-other-entry.js",
+    "ROOT/examples/html-kitchen-sink/.storybook/preview.js-generated-config-entry.js",
+    "ROOT/examples/html-kitchen-sink/.storybook/generated-stories-entry.js",
+  ],
+  "keys": Array [
+    "name",
+    "mode",
+    "bail",
+    "devtool",
+    "entry",
+    "output",
+    "plugins",
+    "module",
+    "resolve",
+    "resolveLoader",
+    "optimization",
+    "performance",
   ],
   "module": Object {
     "rules": Array [
@@ -86,7 +104,14 @@ Object {
                   Object {
                     "absoluteImports": "NODE_MODULES/core-js/index.js",
                     "method": "usage-global",
-                    "version": "*",
+                    "version": "3.8.2",
+                  },
+                ],
+                Array [
+                  "NODE_MODULES/babel-plugin-emotion/dist/babel-plugin-emotion.cjs.js",
+                  Object {
+                    "autoLabel": true,
+                    "sourceMap": true,
                   },
                 ],
                 "NODE_MODULES/babel-plugin-add-react-displayname/index.js",
@@ -163,7 +188,7 @@ Object {
                   Object {
                     "absoluteImports": "NODE_MODULES/core-js/index.js",
                     "method": "usage-global",
-                    "version": "*",
+                    "version": "3.8.2",
                   },
                 ],
               ],
@@ -188,18 +213,6 @@ Object {
         "use": Array [
           Object {
             "loader": "NODE_MODULES/raw-loader/dist/cjs.js",
-          },
-        ],
-      },
-      Object {
-        "enforce": "pre",
-        "test": Array [
-          "/\\\\.stories\\\\.(jsx?$|tsx?$)/",
-        ],
-        "use": Array [
-          Object {
-            "loader": "ROOT/lib/source-loader/dist/cjs/index.js",
-            "options": undefined,
           },
         ],
       },
@@ -288,7 +301,14 @@ Object {
                   Object {
                     "absoluteImports": "NODE_MODULES/core-js/index.js",
                     "method": "usage-global",
-                    "version": "*",
+                    "version": "3.8.2",
+                  },
+                ],
+                Array [
+                  "NODE_MODULES/babel-plugin-emotion/dist/babel-plugin-emotion.cjs.js",
+                  Object {
+                    "autoLabel": true,
+                    "sourceMap": true,
                   },
                 ],
                 "NODE_MODULES/babel-plugin-add-react-displayname/index.js",
@@ -400,7 +420,14 @@ Object {
                   Object {
                     "absoluteImports": "NODE_MODULES/core-js/index.js",
                     "method": "usage-global",
-                    "version": "*",
+                    "version": "3.8.2",
+                  },
+                ],
+                Array [
+                  "NODE_MODULES/babel-plugin-emotion/dist/babel-plugin-emotion.cjs.js",
+                  Object {
+                    "autoLabel": true,
+                    "sourceMap": true,
                   },
                 ],
                 "NODE_MODULES/babel-plugin-add-react-displayname/index.js",
@@ -446,9 +473,8 @@ Object {
         "enforce": "pre",
         "loader": "ROOT/lib/source-loader/dist/cjs/index.js",
         "options": Object {
-          "injectStoryParameters": false,
+          "injectStoryParameters": true,
           "inspectLocalDependencies": true,
-          "parser": "typescript",
         },
         "test": "/\\\\.(stories|story)\\\\.[tj]sx?$/",
       },
@@ -456,31 +482,46 @@ Object {
         "sideEffects": true,
         "test": "/\\\\.css$/",
         "use": Array [
-          "NODE_MODULES/style-loader/dist/cjs.js",
+          Object {
+            "loader": "NODE_MODULES/style-loader/dist/cjs.js",
+            "options": undefined,
+          },
           Object {
             "loader": "NODE_MODULES/css-loader/dist/cjs.js",
-            "options": Object {
-              "importLoaders": 1,
-            },
+            "options": undefined,
           },
           Object {
             "loader": "NODE_MODULES/postcss-loader/dist/cjs.js",
             "options": Object {
-              "postcssOptions": [Function],
+              "implementation": [Function],
             },
           },
         ],
       },
       Object {
+        "enforce": "pre",
+        "test": Array [
+          "/\\\\.stories\\\\.(jsx?$|tsx?$)/",
+        ],
+        "use": Array [
+          Object {
+            "loader": "ROOT/lib/source-loader/dist/cjs/index.js",
+            "options": undefined,
+          },
+        ],
+      },
+      Object {},
+      Object {
         "loader": "NODE_MODULES/file-loader/dist/cjs.js",
         "options": Object {
+          "esModule": false,
           "name": "static/media/[name].[hash:8].[ext]",
         },
         "test": "/\\\\.(svg|ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\\\\?.*)?$/",
       },
       Object {
         "loader": "NODE_MODULES/url-loader/dist/cjs.js",
-        "options": Object {
+        "query": Object {
           "limit": 10000,
           "name": "static/media/[name].[hash:8].[ext]",
         },
@@ -493,12 +534,9 @@ Object {
     "VirtualModulesPlugin",
     "HtmlWebpackPlugin",
     "DefinePlugin",
-    "WatchMissingNodeModulesPlugin",
-    "HotModuleReplacementPlugin",
     "CaseSensitivePathsPlugin",
     "ProgressPlugin",
     "DefinePlugin",
-    "ForkTsCheckerWebpackPlugin",
     "DocgenPlugin",
   ],
 }

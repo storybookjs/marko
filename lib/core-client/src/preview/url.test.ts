@@ -89,5 +89,13 @@ describe('url', () => {
         viewMode: 'story',
       });
     });
+    it('should parse args', () => {
+      document.location.search = '?id=story--id&args=obj.key:val';
+      expect(getSelectionSpecifierFromPath()).toEqual({
+        storySpecifier: 'story--id',
+        viewMode: 'story',
+        args: { obj: { key: 'val' } },
+      });
+    });
   });
 });

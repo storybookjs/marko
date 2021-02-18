@@ -23,6 +23,7 @@ export const mockDataset: MockDataSet = {
       parent: '2',
       kind: '',
       args: {},
+      initialArgs: {},
     },
     '2-22': {
       isRoot: false,
@@ -34,6 +35,7 @@ export const mockDataset: MockDataSet = {
       parent: '2',
       kind: '',
       args: {},
+      initialArgs: {},
     },
     '1': {
       isRoot: true,
@@ -74,6 +76,7 @@ export const mockDataset: MockDataSet = {
       name: 'GrandChild A1.1',
       kind: '',
       args: {},
+      initialArgs: {},
     },
     '1-12-122': {
       isRoot: false,
@@ -85,6 +88,7 @@ export const mockDataset: MockDataSet = {
       name: 'GrandChild A1.2',
       kind: '',
       args: {},
+      initialArgs: {},
     },
     '3': {
       isRoot: true,
@@ -105,6 +109,7 @@ export const mockDataset: MockDataSet = {
       parent: '3',
       kind: '',
       args: {},
+      initialArgs: {},
     },
     '3-32': {
       isRoot: false,
@@ -126,6 +131,7 @@ export const mockDataset: MockDataSet = {
       parent: '3-32',
       kind: '',
       args: {},
+      initialArgs: {},
     },
     '3-32-322': {
       isRoot: false,
@@ -137,6 +143,7 @@ export const mockDataset: MockDataSet = {
       parent: '3-32',
       kind: '',
       args: {},
+      initialArgs: {},
     },
   },
   noRoot: {
@@ -168,6 +175,7 @@ export const mockDataset: MockDataSet = {
       parent: '1',
       kind: '',
       args: {},
+      initialArgs: {},
     },
     '1-12-121': {
       id: '1-12-121',
@@ -179,6 +187,7 @@ export const mockDataset: MockDataSet = {
       parent: '1-12',
       kind: '',
       args: {},
+      initialArgs: {},
     },
     '1-12-122': {
       id: '1-12-122',
@@ -190,6 +199,7 @@ export const mockDataset: MockDataSet = {
       parent: '1-12',
       kind: '',
       args: {},
+      initialArgs: {},
     },
     '1-12': {
       id: '1-12',
@@ -211,6 +221,7 @@ export const mockDataset: MockDataSet = {
       parent: '2',
       kind: '',
       args: {},
+      initialArgs: {},
     },
     '2-22': {
       id: '2-22',
@@ -222,6 +233,7 @@ export const mockDataset: MockDataSet = {
       parent: '2',
       kind: '',
       args: {},
+      initialArgs: {},
     },
   },
 };

@@ -1,3 +1,20 @@
+## 6.2.0-alpha.29 (February 18, 2021)
+
+### Features
+
+- Core: Sync args state to URL ([#13803](https://github.com/storybookjs/storybook/pull/13803))
+- UI: Select search input value on / ([#13884](https://github.com/storybookjs/storybook/pull/13884))
+
+### Bug Fixes
+
+- Components: Add missing `regenerator-runtime` dependency ([#13916](https://github.com/storybookjs/storybook/pull/13916))
+
+### Maintenance
+
+- Core: Load middleware.cjs if it exists ([#13592](https://github.com/storybookjs/storybook/pull/13592))
+- Build: Ensure consistency of Chromatic snapshots of Zoom stories ([#13932](https://github.com/storybookjs/storybook/pull/13932))
+- Angular: Clean and improve angular-cli examples ([#13886](https://github.com/storybookjs/storybook/pull/13886))
+
 ## 6.2.0-alpha.28 (February 15, 2021)
 
 ### Bug Fixes

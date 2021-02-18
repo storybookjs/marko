@@ -4,6 +4,8 @@ import deprecate from 'util-deprecate';
 import { StoreSelectionSpecifier, StoreSelection } from '@storybook/client-api';
 import { StoryId, ViewMode } from '@storybook/addons';
 
+import { parseArgsParam } from './parseArgsParam';
+
 export function pathToId(path: string) {
   const match = (path || '').match(/^\/story\/(.+)/);
   if (!match) {
@@ -19,16 +21,16 @@ export const setPath = (selection?: StoreSelection) => {
   }
 
   const { storyId, viewMode }: { storyId: StoryId; viewMode: ViewMode } = selection;
-  const { search, hash } = document.location;
+  const { search = '', hash = '' } = document.location;
   const { path, selectedKind, selectedStory, ...rest } = qs.parse(search, {
     ignoreQueryPrefix: true,
   });
-  const newPath = `${document.location.pathname}?${qs.stringify({
-    ...rest,
-    id: storyId,
-    viewMode,
-  })}${hash || ''}`;
-  history.replaceState({}, '', newPath);
+  const query = qs.stringify(
+    { ...rest, id: storyId, viewMode },
+    { encode: false, addQueryPrefix: true }
+  );
+
+  history.replaceState({}, '', `${document.location.pathname}${query}${hash}`);
 };
 
 export const parseQueryParameters = (search: string) => {
@@ -60,8 +62,10 @@ const deprecatedLegacyQuery = deprecate(
 Use \`id=$storyId\` instead. 
 See https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-url-structure`
 );
+
 export const getSelectionSpecifierFromPath: () => StoreSelectionSpecifier = () => {
   const query = qs.parse(document.location.search, { ignoreQueryPrefix: true });
+  const args = typeof query.args === 'string' ? parseArgsParam(query.args) : undefined;
 
   let viewMode = getFirstString(query.viewMode) as ViewMode;
   if (typeof viewMode !== 'string' || !viewMode.match(/docs|story/)) {
@@ -72,7 +76,7 @@ export const getSelectionSpecifierFromPath: () => StoreSelectionSpecifier = () =
   const storyId = path ? pathToId(path) : getFirstString(query.id);
 
   if (storyId) {
-    return { storySpecifier: storyId, viewMode };
+    return { storySpecifier: storyId, args, viewMode };
   }
 
   // Legacy URL format
@@ -81,7 +85,7 @@ export const getSelectionSpecifierFromPath: () => StoreSelectionSpecifier = () =
 
   if (kind && name) {
     deprecatedLegacyQuery();
-    return { storySpecifier: { kind, name }, viewMode };
+    return { storySpecifier: { kind, name }, args, viewMode };
   }
   return null;
 };
