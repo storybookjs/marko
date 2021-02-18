@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { ArgsTable, NoControlsWarning } from '@storybook/components';
 import { useArgs, useArgTypes, useParameter } from '@storybook/api';
 
-import { PARAM_KEY } from '../constants';
+import { PARAM_KEY } from './constants';
 
 interface ControlsParameters {
   expanded?: boolean;
@@ -17,10 +17,13 @@ export const ControlsPanel: FC = () => {
     PARAM_KEY,
     {}
   );
-  const hasControls = Object.values(rows).filter((argType) => !!argType?.control).length > 0;
+
+  const hasControls = Object.values(rows).some((arg) => arg?.control);
+  const showWarning = !(hasControls && isArgsStory) && !hideNoControlsWarning;
+
   return (
     <>
-      {(hasControls && isArgsStory) || hideNoControlsWarning ? null : <NoControlsWarning />}
+      {showWarning && <NoControlsWarning />}
       <ArgsTable
         {...{
           compact: !expanded && hasControls,

@@ -1,18 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`manager production mode 1`] = `
+exports[`web-components-kitchen-sink manager dev mode 1`] = `
 Object {
   "entry": Array [
     "ROOT/lib/core-server/src/globals/polyfills.ts",
     "ROOT/lib/core-client/dist/esm/manager/index.js",
+    "ROOT/addons/docs/dist/esm/register.js",
+    "ROOT/addons/controls/dist/esm/register.js",
+    "ROOT/addons/a11y/dist/esm/register.js",
     "ROOT/addons/actions/dist/esm/register.js",
     "ROOT/addons/backgrounds/dist/esm/register.js",
-    "ROOT/addons/viewport/dist/esm/register.js",
-    "ROOT/addons/toolbars/dist/esm/register.js",
-    "ROOT/addons/controls/dist/esm/register.js",
+    "ROOT/addons/knobs/dist/esm/register.js",
+    "ROOT/addons/links/dist/esm/register.js",
     "ROOT/addons/storysource/dist/esm/register.js",
-    "ROOT/addons/docs/dist/esm/register.js",
-    "ROOT/examples/react-ts/generated-refs.js",
+    "ROOT/addons/viewport/dist/esm/register.js",
+    "ROOT/examples/web-components-kitchen-sink/.storybook/generated-refs.js",
+  ],
+  "keys": Array [
+    "name",
+    "mode",
+    "bail",
+    "devtool",
+    "entry",
+    "output",
+    "watchOptions",
+    "stats",
+    "plugins",
+    "module",
+    "resolve",
+    "resolveLoader",
+    "recordsPath",
+    "performance",
+    "optimization",
   ],
   "module": Object {
     "rules": Array [

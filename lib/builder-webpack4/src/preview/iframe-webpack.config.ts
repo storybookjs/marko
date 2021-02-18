@@ -122,16 +122,16 @@ export default async ({
     bail: isProd,
     devtool: 'cheap-module-source-map',
     entry: entries,
-    stats: 'errors-only',
+    // stats: 'errors-only',
     output: {
       path: path.resolve(process.cwd(), outputDir),
       filename: '[name].[hash].bundle.js',
       publicPath: '',
     },
-    watchOptions: {
-      aggregateTimeout: 10,
-      ignored: /node_modules/,
-    },
+    // watchOptions: {
+    //   aggregateTimeout: 10,
+    //   ignored: /node_modules/,
+    // },
     plugins: [
       new FilterWarningsPlugin({
         exclude: /export '\S+' was not found in 'global'/,

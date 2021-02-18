@@ -54,7 +54,7 @@ const cache = Cache({
 });
 
 const managerOnly = false;
-const options = {
+const baseOptions = {
   ...reactOptions,
   ignorePreview: managerOnly,
   // FIXME: this should just be ignorePreview everywhere
@@ -91,47 +91,62 @@ const cleanRoots = (obj): any => {
 const prepareSnap = (fn: any, name): Pick<Configuration, 'module' | 'entry' | 'plugins'> => {
   const call = fn.mock.calls.find((c) => c[0].name === name);
   if (!call) return null;
+
+  const keys = Object.keys(call[0]);
   const { module, entry, plugins } = call[0];
 
-  return cleanRoots({ module, entry, plugins: plugins.map((p) => p.constructor.name) });
+  return cleanRoots({ keys, module, entry, plugins: plugins.map((p) => p.constructor.name) });
 };
 
 const snap = (name: string) => `__snapshots__/${name}`;
 
-describe('manager', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-    cache.clear();
-  });
-  it('dev mode', async () => {
-    await buildDevStandalone({ ...options, ignorePreview: true });
+describe.each([
+  ['cra-ts-essentials'],
+  ['vue-3-cli'],
+  ['angular-cli'],
+  ['web-components-kitchen-sink'],
+  ['html-kitchen-sink'],
+])('%s', (example) => {
+  const options = {
+    ...baseOptions,
+    configDir: path.resolve(`${__dirname}/../../../examples/${example}/.storybook`),
+  };
 
-    const managerConfig = prepareSnap(managerExecutor.get, 'manager');
-    expect(managerConfig).toMatchSpecificSnapshot(snap('manager-dev'));
-  });
-  it('production mode', async () => {
-    await buildStaticStandalone({ ...options, ignorePreview: true });
+  describe('manager', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+      cache.clear();
+    });
+    it('dev mode', async () => {
+      await buildDevStandalone({ ...options, ignorePreview: true });
 
-    const managerConfig = prepareSnap(managerExecutor.get, 'manager');
-    expect(managerConfig).toMatchSpecificSnapshot(snap('manager-prod'));
-  });
-});
+      const managerConfig = prepareSnap(managerExecutor.get, 'manager');
+      expect(managerConfig).toMatchSpecificSnapshot(snap(`${example}_manager-dev`));
+    });
+    it('production mode', async () => {
+      await buildStaticStandalone({ ...options, ignorePreview: true });
 
-describe('preview', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-    cache.clear();
+      const managerConfig = prepareSnap(managerExecutor.get, 'manager');
+      expect(managerConfig).toMatchSpecificSnapshot(snap(`${example}_manager-prod`));
+    });
   });
-  it('dev mode', async () => {
-    await buildDevStandalone({ ...options, managerCache: true });
 
-    const previewConfig = prepareSnap(previewExecutor.get, 'preview');
-    expect(previewConfig).toMatchSpecificSnapshot(snap('preview-dev'));
-  });
-  it('production mode', async () => {
-    await buildStaticStandalone({ ...options, managerCache: true });
+  describe('preview', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+      cache.clear();
+    });
+    it('dev mode', async () => {
+      await buildDevStandalone({ ...options, managerCache: true });
 
-    const previewConfig = prepareSnap(previewExecutor.get, 'preview');
-    expect(previewConfig).toMatchSpecificSnapshot(snap('preview-prod'));
+      const previewConfig = prepareSnap(previewExecutor.get, 'preview');
+      expect(previewConfig).toMatchSpecificSnapshot(snap(`${example}_preview-dev`));
+    });
+    it('production mode', async () => {
+      await buildStaticStandalone({ ...options, managerCache: true });
+
+      const previewConfig = prepareSnap(previewExecutor.get, 'preview');
+      expect(previewConfig).toMatchSpecificSnapshot(snap(`${example}_preview-prod`));
+    });
   });
 });
