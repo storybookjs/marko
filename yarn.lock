@@ -4498,14 +4498,6 @@
     postcss-loader "^4.2.0"
     style-loader "^1.3.0"
 
-"@storybook/client-logger@6.2.0-alpha.25":
-  version "6.2.0-alpha.25"
-  resolved "https://registry.yarnpkg.com/@storybook/client-logger/-/client-logger-6.2.0-alpha.25.tgz#d546589d475ff3cfdca56b300d6151ec82d75f1b"
-  integrity sha512-Uvgupc7hK5sY/f1v69ppUWQZdWa89BvqWN8/6EYguTt3biBiZIQ2QkX2DmK4YdO3Urw+6RQOz9yCWT8mSwQRiA==
-  dependencies:
-    core-js "^3.8.2"
-    global "^4.4.0"
-
 "@storybook/csf@0.0.1":
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@storybook/csf/-/csf-0.0.1.tgz#95901507dc02f0bc6f9ac8ee1983e2fc5bb98ce6"
