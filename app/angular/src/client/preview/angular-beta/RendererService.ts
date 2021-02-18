@@ -35,15 +35,13 @@ export class RendererService {
   constructor() {
     if (typeof NODE_ENV === 'string' && NODE_ENV !== 'development') {
       try {
+        // platform should be set after enableProdMode()
         enableProdMode();
       } catch (e) {
         // eslint-disable-next-line no-console
         console.debug(e);
       }
     }
-    // platform should be set after enableProdMode()
-    this.platform = platformBrowserDynamic();
-    this.initAngularBootstrapElement();
   }
 
   /**
@@ -76,15 +74,32 @@ export class RendererService {
     }
     this.storyProps$ = new BehaviorSubject<ICollection>(storyFnAngular.props);
 
-    this.initAngularBootstrapElement();
-    await this.platform.bootstrapModule(
+    await this.newPlatformBrowserDynamic().bootstrapModule(
       createStorybookModule(
         getStorybookModuleMetadata({ storyFnAngular, parameters }, this.storyProps$)
       )
     );
   }
 
-  private initAngularBootstrapElement() {
+  public newPlatformBrowserDynamic() {
+    // Before creating a new platform, we destroy the previous one cleanly.
+    this.destroyPlatformBrowserDynamic();
+
+    this.initAngularRootElement();
+    this.platform = platformBrowserDynamic();
+
+    return this.platform;
+  }
+
+  public destroyPlatformBrowserDynamic() {
+    if (this.platform && !this.platform.destroyed) {
+      // Destroys the current Angular platform and all Angular applications on the page.
+      // So call each angular ngOnDestroy and avoid memory leaks
+      this.platform.destroy();
+    }
+  }
+
+  private initAngularRootElement() {
     // Adds DOM element that angular will use as bootstrap component
     const storybookWrapperElement = document.createElement(
       RendererService.SELECTOR_STORYBOOK_WRAPPER
