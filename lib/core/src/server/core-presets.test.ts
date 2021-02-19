@@ -8,7 +8,6 @@ import { buildStaticStandalone } from './build-static';
 import { resolvePathInStorybookCache } from './utils/resolve-path-in-sb-cache';
 import reactOptions from '../../../../app/react/src/server/options';
 import vue3Options from '../../../../app/vue3/src/server/options';
-import angularOptions from '../../../../app/angular/src/server/options';
 import htmlOptions from '../../../../app/html/src/server/options';
 import webComponentsOptions from '../../../../app/web-components/src/server/options';
 
@@ -95,7 +94,6 @@ const snap = (name: string) => `__snapshots__/${name}`;
 describe.each([
   ['cra-ts-essentials', reactOptions],
   ['vue-3-cli', vue3Options],
-  ['angular-cli', angularOptions],
   ['web-components-kitchen-sink', webComponentsOptions],
   ['html-kitchen-sink', htmlOptions],
 ])('%s', (example, frameworkOptions) => {
