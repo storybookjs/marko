@@ -58,7 +58,9 @@ declare module 'react-editable-json-tree' {
     cancelButtonElement?: JSX.Element;
     buttonElement?: JSX.Element;
     editButtonElement?: JSX.Element;
-
+    plusMenuElement?: JSX.Element;
+    minusMenuElement?: JSX.Element;
+    inputElement?: JSX.Element | ((usage: string, keyPath: string[], deep: number, key: string, value: any, dataType: string) => JSX.Element);
   }
   export const JsonTree: React.FC<JsonTreeProps>;
 }

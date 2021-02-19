@@ -1,111 +1,170 @@
-import React, { useCallback, useMemo } from 'react';
+import { window } from 'global';
+import React, { SyntheticEvent, useCallback, useMemo } from 'react';
 import { styled, useTheme, Theme } from '@storybook/theming';
 
 import { JsonTree, JsonTreeProps } from 'react-editable-json-tree';
 import type { ControlProps, ObjectValue, ObjectConfig } from './types';
+import { Icons } from '../icon/icon';
 
-const Wrapper = styled.label({
+const Wrapper = styled.label(({ theme }) => ({
   display: 'flex',
-});
+
+  '.rejt-value-node, .rejt-object-node > .rejt-collapsed, .rejt-array-node > .rejt-collapsed, .rejt-object-node > .rejt-not-collapsed > span, .rejt-array-node > .rejt-not-collapsed > span': {
+    '& > svg': {
+      opacity: 0,
+      transition: 'opacity 0.2s',
+    },
+  },
+  '.rejt-value-node:hover, .rejt-object-node:hover > .rejt-collapsed, .rejt-array-node:hover > .rejt-collapsed, .rejt-object-node:hover > .rejt-not-collapsed > span, .rejt-array-node:hover > .rejt-not-collapsed > span': {
+    '& > svg': {
+      opacity: 1,
+    },
+  },
+  '.rejt-edit-form button': {
+    display: 'none',
+  },
+  '.rejt-add-value-node': {
+    display: 'inline-flex',
+    alignItems: 'center',
+    marginLeft: 12,
+  },
+  '.rejt-plus-menu': {
+    marginLeft: 8,
+  },
+  '.rejt-object-node > span > *': {
+    position: 'relative',
+    zIndex: 2,
+  },
+  '.rejt-object-node, .rejt-array-node': {
+    position: 'relative',
+  },
+  '.rejt-object-node > span:first-child::after, .rejt-array-node > span:first-child::after, .rejt-collapsed::before, .rejt-not-collapsed::before': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    display: 'block',
+    width: '100%',
+    marginLeft: '-1rem',
+    padding: '0 4px 0 1rem',
+    height: 20,
+  },
+  '.rejt-collapsed::before, .rejt-not-collapsed::before': {
+    zIndex: 1,
+    background: 'transparent',
+    borderRadius: 4,
+    transition: 'background 0.2s',
+    pointerEvents: 'none',
+    opacity: 0.1,
+  },
+  '.rejt-object-node:hover, .rejt-array-node:hover': {
+    '& > .rejt-collapsed::before, & > .rejt-not-collapsed::before': {
+      background: theme.color.secondary,
+    },
+  },
+  '.rejt-collapsed::after, .rejt-not-collapsed::after': {
+    content: '""',
+    position: 'absolute',
+    display: 'inline-block',
+    pointerEvents: 'none',
+    width: 0,
+    height: 0,
+  },
+  '.rejt-collapsed::after': {
+    left: -8,
+    top: 7,
+    borderTop: '3px solid transparent',
+    borderBottom: '3px solid transparent',
+    borderLeft: '3px solid rgba(153,153,153,0.6)',
+  },
+  '.rejt-not-collapsed::after': {
+    left: -10,
+    top: 9,
+    borderTop: '3px solid rgba(153,153,153,0.6)',
+    borderLeft: '3px solid transparent',
+    borderRight: '3px solid transparent',
+  },
+  '.rejt-value': {
+    display: 'inline-block',
+    border: '1px solid transparent',
+    borderRadius: 4,
+    margin: '1px 0',
+    padding: '1px 5px',
+    cursor: 'text',
+    color: theme.color.ultraviolet,
+  },
+  '.rejt-value-node:hover > .rejt-value': {
+    borderColor: theme.color.border,
+  },
+}));
+
+const Button = styled.button<{ primary?: boolean }>(({ theme, primary }) => ({
+  border: 0,
+  height: 24,
+  margin: 1,
+  borderRadius: 4,
+  background: primary ? theme.color.secondary : 'transparent',
+  color: primary ? theme.color.lightest : theme.color.defaultText,
+  fontWeight: primary ? 'bold' : 'normal',
+  cursor: 'pointer',
+  order: primary ? 'initial' : 9,
+}));
+
+const ActionIcon = styled(Icons)(({ theme, icon }) => ({
+  display: 'inline-block',
+  verticalAlign: 'middle',
+  width: 15,
+  height: 15,
+  padding: 3,
+  marginLeft: 5,
+  cursor: 'pointer',
+  color: theme.color.mediumdark,
+  '&:hover': {
+    color: icon === 'subtract' ? theme.color.negative : theme.color.ancillary,
+  },
+  'svg + &': {
+    marginLeft: 0,
+  },
+}));
+
+const Input = styled.input(({ theme, placeholder }) => ({
+  outline: 0,
+  margin: '1px 0',
+  padding: '1px 5px',
+  border: `1px solid ${theme.color.secondary}`,
+  borderRadius: 4,
+  lineHeight: '20px',
+  width: placeholder === 'Key' ? 100 : 150,
+}));
+
+const ENTER_EVENT = { bubbles: true, cancelable: true, key: 'Enter', code: 'Enter', keyCode: 13 };
+const dispatchEnterKey = (event: SyntheticEvent<HTMLInputElement>) => {
+  event.currentTarget.dispatchEvent(new window.KeyboardEvent('keydown', ENTER_EVENT));
+};
+const selectValue = (event: SyntheticEvent<HTMLInputElement>) => {
+  event.currentTarget.select();
+};
 
 export type ObjectProps = ControlProps<ObjectValue> &
   ObjectConfig & {
     theme: any; // TODO: is there a type for this?
   };
 
-const getCustomStyleFunction: (theme: Theme) => JsonTreeProps['getStyle'] = (theme) => (
-  keyName,
-  data,
-  keyPath,
-  deep,
-  dataType
-) => {
-  const DEFAULT_FONT_SIZE = '13px';
-  const DEFAULT_LINE_HEIGHT = '18px';
-  const DEFAULT_PLUS_COLOR = theme.color.ancillary;
-  const DEFAULT_MINUS_COLOR = theme.color.negative;
-  const DEFAULT_TEXT_COLOR = theme.color.defaultText;
-  const DEFAULT_COLLAPSED_COLOR = theme.color.dark;
-  const DEFAULT_KEY_COLOR = theme.color.secondary; // Bright to invite clicking
-
-  // Based on default styles provided by the library
-  // https://github.com/oxyno-zeta/react-editable-json-tree/blob/master/src/utils/styles.js
-  const objectStyle = {
-    minus: {
-      color: DEFAULT_MINUS_COLOR,
-    },
-    plus: {
-      color: DEFAULT_PLUS_COLOR,
-    },
-    collapsed: {
-      color: DEFAULT_COLLAPSED_COLOR,
-    },
-    delimiter: {},
-    ul: {
-      padding: '0px',
-      margin: '0 0 0 25px',
-      listStyle: 'none',
-    },
-    name: {
-      color: DEFAULT_KEY_COLOR,
-      fontSize: DEFAULT_FONT_SIZE,
-      lineHeight: DEFAULT_LINE_HEIGHT,
-    },
-    addForm: {},
-  };
-  const arrayStyle = {
-    minus: {
-      color: DEFAULT_MINUS_COLOR,
-    },
-    plus: {
-      color: DEFAULT_PLUS_COLOR,
-    },
-    collapsed: {
-      color: DEFAULT_COLLAPSED_COLOR,
-    },
-    delimiter: {},
-    ul: {
-      padding: '0px',
-      margin: '0 0 0 25px',
-      listStyle: 'none',
-    },
-    name: {
-      color: DEFAULT_TEXT_COLOR,
-      fontSize: DEFAULT_FONT_SIZE,
-      lineHeight: DEFAULT_LINE_HEIGHT,
-    },
-    addForm: {},
-  };
-  const valueStyle = {
-    minus: {
-      color: DEFAULT_MINUS_COLOR,
-    },
-    editForm: {},
-    value: {
-      color: theme.color.ultraviolet, // something colorful that invites clicking
-      fontSize: DEFAULT_FONT_SIZE,
-      lineHeight: DEFAULT_LINE_HEIGHT,
-    },
-    li: {
-      minHeight: '22px',
-      lineHeight: '22px',
-      outline: '0px',
-    },
-    name: {
-      color: DEFAULT_KEY_COLOR,
-    },
-  };
-
-  switch (dataType) {
-    case 'Object':
-    case 'Error':
-      return objectStyle;
-    case 'Array':
-      return arrayStyle;
-    default:
-      return valueStyle;
-  }
-};
+const getCustomStyleFunction: (theme: Theme) => JsonTreeProps['getStyle'] = (theme) => () => ({
+  name: {
+    color: theme.color.secondary,
+  },
+  collapsed: {
+    color: theme.color.dark,
+  },
+  ul: {
+    listStyle: 'none',
+    margin: '0 0 0 1rem',
+    padding: 0,
+  },
+  li: {
+    outline: 0,
+  },
+});
 
 export const ObjectControl: React.FC<ObjectProps> = ({ name, value = {}, onChange }) => {
   const handleChange = useCallback(
@@ -126,8 +185,18 @@ export const ObjectControl: React.FC<ObjectProps> = ({ name, value = {}, onChang
         onFullyUpdate={handleChange}
         rootName="root"
         getStyle={customStyleFunction}
-        cancelButtonElement={<button type="submit">cancel</button>}
-        editButtonElement={<button type="submit">edit</button>}
+        cancelButtonElement={<Button type="button">Cancel</Button>}
+        editButtonElement={<Button type="submit">Save</Button>}
+        addButtonElement={
+          <Button type="submit" primary>
+            Save
+          </Button>
+        }
+        plusMenuElement={<ActionIcon icon="add" />}
+        minusMenuElement={<ActionIcon icon="subtract" />}
+        inputElement={(_, __, deep) =>
+          deep === -1 ? <Input /> : <Input onFocus={selectValue} onBlur={dispatchEnterKey} />
+        }
       />
     </Wrapper>
   );
