@@ -7,7 +7,7 @@ Object {
     "ROOT/lib/core-server/src/globals/globals.ts",
     "ROOT/examples/vue-3-cli/.storybook/storybook-init-framework-entry.js",
     "ROOT/addons/docs/dist/esm/frameworks/common/config.js-generated-other-entry.js",
-    "ROOT/addons/docs/dist/esm/frameworks/react/config.js-generated-other-entry.js",
+    "ROOT/addons/docs/dist/esm/frameworks/vue3/config.js-generated-other-entry.js",
     "ROOT/addons/links/dist/esm/preset/addDecorator.js-generated-other-entry.js",
     "ROOT/addons/controls/dist/esm/preset/addParameter.js-generated-other-entry.js",
     "ROOT/addons/actions/dist/esm/preset/addDecorator.js-generated-other-entry.js",
@@ -44,19 +44,6 @@ Object {
             "loader": "NODE_MODULES/babel-loader/lib/index.js",
             "options": Object {
               "cacheDirectory": "NODE_MODULES/.cache/storybook/babel",
-              "overrides": Array [
-                Object {
-                  "plugins": Array [
-                    Array [
-                      "NODE_MODULES/babel-plugin-react-docgen/lib/index.js",
-                      Object {
-                        "DOC_GEN_COLLECTION_NAME": "STORYBOOK_REACT_CLASSES",
-                      },
-                    ],
-                  ],
-                  "test": "/\\\\.(mjs|jsx?)$/",
-                },
-              ],
               "plugins": Array [
                 "NODE_MODULES/@babel/plugin-transform-shorthand-properties/lib/index.js",
                 "NODE_MODULES/@babel/plugin-transform-block-scoping/lib/index.js",
@@ -104,7 +91,6 @@ Object {
                     "version": "*",
                   },
                 ],
-                "NODE_MODULES/babel-plugin-add-react-displayname/index.js",
               ],
               "presets": Array [
                 Array [
@@ -114,13 +100,6 @@ Object {
                   },
                 ],
                 "NODE_MODULES/@babel/preset-typescript/lib/index.js",
-                Array [
-                  "NODE_MODULES/@babel/preset-react/lib/index.js",
-                  Object {
-                    "runtime": "automatic",
-                  },
-                ],
-                "NODE_MODULES/@babel/preset-flow/lib/index.js",
               ],
               "sourceType": "unambiguous",
             },
@@ -207,6 +186,25 @@ Object {
         ],
       },
       Object {
+        "loader": "NODE_MODULES/vue-loader/dist/index.js",
+        "options": Object {},
+        "test": "/\\\\.vue$/",
+      },
+      Object {
+        "test": "/\\\\.tsx?$/",
+        "use": Array [
+          Object {
+            "loader": "NODE_MODULES/ts-loader/index.js",
+            "options": Object {
+              "appendTsSuffixTo": Array [
+                "/\\\\.vue$/",
+              ],
+              "transpileOnly": true,
+            },
+          },
+        ],
+      },
+      Object {
         "include": "NODE_MODULES\\\\/acorn-jsx/",
         "test": "/\\\\.js$/",
         "use": Array [
@@ -234,19 +232,6 @@ Object {
               "babelrc": false,
               "cacheDirectory": "NODE_MODULES/.cache/storybook/babel",
               "configFile": false,
-              "overrides": Array [
-                Object {
-                  "plugins": Array [
-                    Array [
-                      "NODE_MODULES/babel-plugin-react-docgen/lib/index.js",
-                      Object {
-                        "DOC_GEN_COLLECTION_NAME": "STORYBOOK_REACT_CLASSES",
-                      },
-                    ],
-                  ],
-                  "test": "/\\\\.(mjs|jsx?)$/",
-                },
-              ],
               "plugins": Array [
                 "NODE_MODULES/@babel/plugin-transform-shorthand-properties/lib/index.js",
                 "NODE_MODULES/@babel/plugin-transform-block-scoping/lib/index.js",
@@ -294,7 +279,6 @@ Object {
                     "version": "*",
                   },
                 ],
-                "NODE_MODULES/babel-plugin-add-react-displayname/index.js",
                 Array [
                   "NODE_MODULES/@babel/plugin-transform-react-jsx/lib/index.js",
                   Object {
@@ -311,13 +295,6 @@ Object {
                   },
                 ],
                 "NODE_MODULES/@babel/preset-typescript/lib/index.js",
-                Array [
-                  "NODE_MODULES/@babel/preset-react/lib/index.js",
-                  Object {
-                    "runtime": "automatic",
-                  },
-                ],
-                "NODE_MODULES/@babel/preset-flow/lib/index.js",
               ],
               "sourceType": "unambiguous",
             },
@@ -346,19 +323,6 @@ Object {
               "babelrc": false,
               "cacheDirectory": "NODE_MODULES/.cache/storybook/babel",
               "configFile": false,
-              "overrides": Array [
-                Object {
-                  "plugins": Array [
-                    Array [
-                      "NODE_MODULES/babel-plugin-react-docgen/lib/index.js",
-                      Object {
-                        "DOC_GEN_COLLECTION_NAME": "STORYBOOK_REACT_CLASSES",
-                      },
-                    ],
-                  ],
-                  "test": "/\\\\.(mjs|jsx?)$/",
-                },
-              ],
               "plugins": Array [
                 "NODE_MODULES/@babel/plugin-transform-shorthand-properties/lib/index.js",
                 "NODE_MODULES/@babel/plugin-transform-block-scoping/lib/index.js",
@@ -406,7 +370,6 @@ Object {
                     "version": "*",
                   },
                 ],
-                "NODE_MODULES/babel-plugin-add-react-displayname/index.js",
                 Array [
                   "NODE_MODULES/@babel/plugin-transform-react-jsx/lib/index.js",
                   Object {
@@ -423,13 +386,6 @@ Object {
                   },
                 ],
                 "NODE_MODULES/@babel/preset-typescript/lib/index.js",
-                Array [
-                  "NODE_MODULES/@babel/preset-react/lib/index.js",
-                  Object {
-                    "runtime": "automatic",
-                  },
-                ],
-                "NODE_MODULES/@babel/preset-flow/lib/index.js",
               ],
               "sourceType": "unambiguous",
             },
@@ -488,6 +444,34 @@ Object {
         },
         "test": "/\\\\.(mp4|webm|wav|mp3|m4a|aac|oga)(\\\\?.*)?$/",
       },
+      Object {
+        "enforce": "post",
+        "loader": "NODE_MODULES/vue-docgen-loader/lib/index.js",
+        "options": Object {
+          "docgenOptions": Object {
+            "alias": Object {
+              "@emotion/core": "NODE_MODULES/@emotion/core",
+              "@emotion/styled": "NODE_MODULES/@emotion/styled",
+              "@storybook/addons": "ROOT/lib/addons",
+              "@storybook/api": "ROOT/lib/api",
+              "@storybook/channel-postmessage": "ROOT/lib/channel-postmessage",
+              "@storybook/channels": "ROOT/lib/channels",
+              "@storybook/client-api": "ROOT/lib/client-api",
+              "@storybook/client-logger": "ROOT/lib/client-logger",
+              "@storybook/components": "ROOT/lib/components",
+              "@storybook/core-events": "ROOT/lib/core-events",
+              "@storybook/router": "ROOT/lib/router",
+              "@storybook/semver": "NODE_MODULES/@storybook/semver",
+              "@storybook/theming": "ROOT/lib/theming",
+              "emotion-theming": "NODE_MODULES/emotion-theming",
+              "react": "NODE_MODULES/react",
+              "react-dom": "NODE_MODULES/react-dom",
+              "vue$": "NODE_MODULES/vue/dist/vue.esm-bundler.js",
+            },
+          },
+        },
+        "test": "/\\\\.vue$/",
+      },
     ],
   },
   "plugins": Array [
@@ -498,7 +482,8 @@ Object {
     "CaseSensitivePathsPlugin",
     "ProgressPlugin",
     "DefinePlugin",
-    "DocgenPlugin",
+    "VueLoaderPlugin",
+    "DefinePlugin",
   ],
 }
 `;
