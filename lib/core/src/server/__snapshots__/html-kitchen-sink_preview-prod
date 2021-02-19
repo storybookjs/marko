@@ -7,7 +7,7 @@ Object {
     "ROOT/lib/core/src/server/preview/globals.ts",
     "ROOT/examples/html-kitchen-sink/.storybook/storybook-init-framework-entry.js",
     "ROOT/addons/docs/dist/esm/frameworks/common/config.js-generated-other-entry.js",
-    "ROOT/addons/docs/dist/esm/frameworks/react/config.js-generated-other-entry.js",
+    "ROOT/addons/docs/dist/esm/frameworks/html/config.js-generated-other-entry.js",
     "ROOT/addons/a11y/dist/esm/a11yRunner.js-generated-other-entry.js",
     "ROOT/addons/a11y/dist/esm/a11yHighlight.js-generated-other-entry.js",
     "ROOT/addons/actions/dist/esm/preset/addDecorator.js-generated-other-entry.js",
@@ -47,19 +47,6 @@ Object {
             "loader": "NODE_MODULES/babel-loader/lib/index.js",
             "options": Object {
               "cacheDirectory": "NODE_MODULES/.cache/storybook/babel",
-              "overrides": Array [
-                Object {
-                  "plugins": Array [
-                    Array [
-                      "NODE_MODULES/babel-plugin-react-docgen/lib/index.js",
-                      Object {
-                        "DOC_GEN_COLLECTION_NAME": "STORYBOOK_REACT_CLASSES",
-                      },
-                    ],
-                  ],
-                  "test": "/\\\\.(mjs|jsx?)$/",
-                },
-              ],
               "plugins": Array [
                 "NODE_MODULES/@babel/plugin-transform-shorthand-properties/lib/index.js",
                 "NODE_MODULES/@babel/plugin-transform-block-scoping/lib/index.js",
@@ -114,7 +101,6 @@ Object {
                     "sourceMap": true,
                   },
                 ],
-                "NODE_MODULES/babel-plugin-add-react-displayname/index.js",
               ],
               "presets": Array [
                 Array [
@@ -124,13 +110,6 @@ Object {
                   },
                 ],
                 "NODE_MODULES/@babel/preset-typescript/lib/index.js",
-                Array [
-                  "NODE_MODULES/@babel/preset-react/lib/index.js",
-                  Object {
-                    "runtime": "automatic",
-                  },
-                ],
-                "NODE_MODULES/@babel/preset-flow/lib/index.js",
               ],
               "sourceType": "unambiguous",
             },
@@ -217,6 +196,14 @@ Object {
         ],
       },
       Object {
+        "test": "/\\\\.html$/",
+        "use": Array [
+          Object {
+            "loader": "NODE_MODULES/html-loader/dist/cjs.js",
+          },
+        ],
+      },
+      Object {
         "include": "NODE_MODULES\\\\/acorn-jsx/",
         "test": "/\\\\.js$/",
         "use": Array [
@@ -244,19 +231,6 @@ Object {
               "babelrc": false,
               "cacheDirectory": "NODE_MODULES/.cache/storybook/babel",
               "configFile": false,
-              "overrides": Array [
-                Object {
-                  "plugins": Array [
-                    Array [
-                      "NODE_MODULES/babel-plugin-react-docgen/lib/index.js",
-                      Object {
-                        "DOC_GEN_COLLECTION_NAME": "STORYBOOK_REACT_CLASSES",
-                      },
-                    ],
-                  ],
-                  "test": "/\\\\.(mjs|jsx?)$/",
-                },
-              ],
               "plugins": Array [
                 "NODE_MODULES/@babel/plugin-transform-shorthand-properties/lib/index.js",
                 "NODE_MODULES/@babel/plugin-transform-block-scoping/lib/index.js",
@@ -311,7 +285,6 @@ Object {
                     "sourceMap": true,
                   },
                 ],
-                "NODE_MODULES/babel-plugin-add-react-displayname/index.js",
                 Array [
                   "NODE_MODULES/@babel/plugin-transform-react-jsx/lib/index.js",
                   Object {
@@ -328,13 +301,6 @@ Object {
                   },
                 ],
                 "NODE_MODULES/@babel/preset-typescript/lib/index.js",
-                Array [
-                  "NODE_MODULES/@babel/preset-react/lib/index.js",
-                  Object {
-                    "runtime": "automatic",
-                  },
-                ],
-                "NODE_MODULES/@babel/preset-flow/lib/index.js",
               ],
               "sourceType": "unambiguous",
             },
@@ -363,19 +329,6 @@ Object {
               "babelrc": false,
               "cacheDirectory": "NODE_MODULES/.cache/storybook/babel",
               "configFile": false,
-              "overrides": Array [
-                Object {
-                  "plugins": Array [
-                    Array [
-                      "NODE_MODULES/babel-plugin-react-docgen/lib/index.js",
-                      Object {
-                        "DOC_GEN_COLLECTION_NAME": "STORYBOOK_REACT_CLASSES",
-                      },
-                    ],
-                  ],
-                  "test": "/\\\\.(mjs|jsx?)$/",
-                },
-              ],
               "plugins": Array [
                 "NODE_MODULES/@babel/plugin-transform-shorthand-properties/lib/index.js",
                 "NODE_MODULES/@babel/plugin-transform-block-scoping/lib/index.js",
@@ -430,7 +383,6 @@ Object {
                     "sourceMap": true,
                   },
                 ],
-                "NODE_MODULES/babel-plugin-add-react-displayname/index.js",
                 Array [
                   "NODE_MODULES/@babel/plugin-transform-react-jsx/lib/index.js",
                   Object {
@@ -447,13 +399,6 @@ Object {
                   },
                 ],
                 "NODE_MODULES/@babel/preset-typescript/lib/index.js",
-                Array [
-                  "NODE_MODULES/@babel/preset-react/lib/index.js",
-                  Object {
-                    "runtime": "automatic",
-                  },
-                ],
-                "NODE_MODULES/@babel/preset-flow/lib/index.js",
               ],
               "sourceType": "unambiguous",
             },
@@ -537,7 +482,6 @@ Object {
     "CaseSensitivePathsPlugin",
     "ProgressPlugin",
     "DefinePlugin",
-    "DocgenPlugin",
   ],
 }
 `;
