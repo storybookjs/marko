@@ -26,10 +26,16 @@ const Wrapper = styled.label(({ theme }) => ({
   '.rejt-add-value-node': {
     display: 'inline-flex',
     alignItems: 'center',
-    marginLeft: 12,
+  },
+  '.rejt-name': {
+    lineHeight: '22px',
+  },
+  '.rejt-not-collapsed-delimiter': {
+    marginRight: 5,
+    lineHeight: '22px',
   },
   '.rejt-plus-menu': {
-    marginLeft: 8,
+    marginLeft: 2,
   },
   '.rejt-object-node > span > *': {
     position: 'relative',
@@ -46,7 +52,7 @@ const Wrapper = styled.label(({ theme }) => ({
     width: '100%',
     marginLeft: '-1rem',
     padding: '0 4px 0 1rem',
-    height: 20,
+    height: 22,
   },
   '.rejt-collapsed::before, .rejt-not-collapsed::before': {
     zIndex: 1,
@@ -71,14 +77,14 @@ const Wrapper = styled.label(({ theme }) => ({
   },
   '.rejt-collapsed::after': {
     left: -8,
-    top: 7,
+    top: 8,
     borderTop: '3px solid transparent',
     borderBottom: '3px solid transparent',
     borderLeft: '3px solid rgba(153,153,153,0.6)',
   },
   '.rejt-not-collapsed::after': {
     left: -10,
-    top: 9,
+    top: 10,
     borderTop: '3px solid rgba(153,153,153,0.6)',
     borderLeft: '3px solid transparent',
     borderRight: '3px solid transparent',
@@ -88,7 +94,7 @@ const Wrapper = styled.label(({ theme }) => ({
     border: '1px solid transparent',
     borderRadius: 4,
     margin: '1px 0',
-    padding: '1px 5px',
+    padding: '0 4px',
     cursor: 'text',
     color: theme.color.ultraviolet,
   },
@@ -99,7 +105,7 @@ const Wrapper = styled.label(({ theme }) => ({
 
 const Button = styled.button<{ primary?: boolean }>(({ theme, primary }) => ({
   border: 0,
-  height: 24,
+  height: 20,
   margin: 1,
   borderRadius: 4,
   background: primary ? theme.color.secondary : 'transparent',
@@ -128,12 +134,12 @@ const ActionIcon = styled(Icons)(({ theme, icon }) => ({
 
 const Input = styled.input(({ theme, placeholder }) => ({
   outline: 0,
-  margin: '1px 0',
-  padding: '1px 5px',
+  margin: placeholder ? '0 1px' : '1px 0',
+  padding: placeholder ? '2px 4px' : '3px 4px',
   border: `1px solid ${theme.color.secondary}`,
   borderRadius: 4,
-  lineHeight: '20px',
-  width: placeholder === 'Key' ? 100 : 150,
+  lineHeight: '14px',
+  width: placeholder === 'Key' ? 80 : 120,
 }));
 
 const ENTER_EVENT = { bubbles: true, cancelable: true, key: 'Enter', code: 'Enter', keyCode: 13 };
@@ -194,8 +200,8 @@ export const ObjectControl: React.FC<ObjectProps> = ({ name, value = {}, onChang
         }
         plusMenuElement={<ActionIcon icon="add" />}
         minusMenuElement={<ActionIcon icon="subtract" />}
-        inputElement={(_, __, deep) =>
-          deep === -1 ? <Input /> : <Input onFocus={selectValue} onBlur={dispatchEnterKey} />
+        inputElement={(_, __, ___, key) =>
+          key ? <Input onFocus={selectValue} onBlur={dispatchEnterKey} /> : <Input />
         }
       />
     </Wrapper>
