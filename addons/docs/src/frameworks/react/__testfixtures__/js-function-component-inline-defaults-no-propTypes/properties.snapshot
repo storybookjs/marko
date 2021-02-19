@@ -1,22 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`react component properties ts-function-component 1`] = `
+exports[`react component properties js-function-component-inline-defaults-no-propTypes 1`] = `
 Object {
   "rows": Array [
     Object {
       "defaultValue": Object {
         "detail": undefined,
-        "summary": "true",
+        "summary": "1",
       },
-      "description": "Is primary?",
-      "name": "primary",
+      "description": undefined,
+      "name": "numberOptional",
       "required": false,
-      "sbType": Object {
-        "name": "boolean",
-      },
       "type": Object {
         "detail": undefined,
-        "summary": "boolean",
+        "summary": "unknown",
+      },
+    },
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "'stringOptional'",
+      },
+      "description": undefined,
+      "name": "stringOptional",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "unknown",
       },
     },
     Object {
@@ -24,29 +34,116 @@ Object {
         "detail": undefined,
         "summary": "false",
       },
-      "description": "default is false",
-      "name": "secondary",
+      "description": undefined,
+      "name": "booleanOptional",
       "required": false,
-      "sbType": Object {
-        "name": "boolean",
-      },
       "type": Object {
         "detail": undefined,
-        "summary": "boolean",
+        "summary": "unknown",
       },
     },
     Object {
-      "defaultValue": null,
-      "description": "Simple click handler",
-      "name": "onClick",
-      "required": false,
-      "sbType": Object {
-        "name": "function",
-        "raw": "() => void",
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "['array', 'optional']",
       },
+      "description": undefined,
+      "name": "arrayOptional",
+      "required": false,
       "type": Object {
         "detail": undefined,
-        "summary": "signature",
+        "summary": "unknown",
+      },
+    },
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "{ object: 'optional' }",
+      },
+      "description": undefined,
+      "name": "objectOptional",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "unknown",
+      },
+    },
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "() => 'foo'",
+      },
+      "description": undefined,
+      "name": "functionOptional",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "unknown",
+      },
+    },
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "new Date()",
+      },
+      "description": undefined,
+      "name": "dateOptional",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "unknown",
+      },
+    },
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "'local-value'",
+      },
+      "description": undefined,
+      "name": "localReference",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "unknown",
+      },
+    },
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "imported",
+      },
+      "description": undefined,
+      "name": "importedReference",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "unknown",
+      },
+    },
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "Date",
+      },
+      "description": undefined,
+      "name": "globalReference",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "unknown",
+      },
+    },
+    Object {
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "'top'",
+      },
+      "description": undefined,
+      "name": "stringGlobalName",
+      "required": false,
+      "type": Object {
+        "detail": undefined,
+        "summary": "unknown",
       },
     },
   ],

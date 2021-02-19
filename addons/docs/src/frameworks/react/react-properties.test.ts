@@ -8,6 +8,8 @@ import requireFromString from 'require-from-string';
 import { extractProps } from './extractProps';
 import { normalizeNewlines } from '../../lib/utils';
 
+// jest.mock('../imported', () => () => ({ imported: 'imported-value' }), { virtual: true });
+
 // File hierarchy:
 // __testfixtures__ / some-test-case / input.*
 const inputRegExp = /^input\..*$/;
@@ -57,7 +59,7 @@ describe('react component properties', () => {
           const docgenModule = transformToModule(docgenPretty);
 
           // snapshot the output of component-properties/react
-          const { component } = requireFromString(docgenModule);
+          const { component } = requireFromString(docgenModule, inputPath);
           const properties = extractProps(component);
           expect(properties).toMatchSpecificSnapshot(path.join(testDir, 'properties.snapshot'));
         });

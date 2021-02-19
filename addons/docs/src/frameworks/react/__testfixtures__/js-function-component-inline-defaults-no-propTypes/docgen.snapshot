@@ -1,63 +1,123 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`react component properties ts-function-component 1`] = `
-"import React from 'react';
-
+exports[`react component properties js-function-component-inline-defaults-no-propTypes 1`] = `
+"/* eslint-disable react/prop-types */
+import React from 'react';
+import { imported } from '../imported';
+const local = 'local-value';
 /**
- * The world's most _basic_ button
+ * A component that renders its props
  */
-export const Button = ({
-  onClick
-}) => /*#__PURE__*/React.createElement(\\"button\\", {
-  onClick: onClick,
-  type: \\"button\\"
-}, \\"hello\\");
-Button.defaultProps = {
-  primary: true,
-  secondary: false
-};
-export const component = Button;
-Button.__docgenInfo = {
-  \\"description\\": \\"The world's most _basic_ button\\",
+
+export const PropsWriter = ({
+  numberOptional = 1,
+  stringOptional = 'stringOptional',
+  booleanOptional = false,
+  arrayOptional = ['array', 'optional'],
+  objectOptional = {
+    object: 'optional'
+  },
+  functionOptional = () => 'foo',
+  dateOptional = new Date(),
+  localReference = local,
+  importedReference = imported,
+  globalReference = Date,
+  stringGlobalName = 'top'
+}) => /*#__PURE__*/React.createElement(\\"pre\\", null, JSON.stringify({
+  numberOptional,
+  stringOptional,
+  booleanOptional,
+  arrayOptional,
+  objectOptional,
+  functionOptional,
+  dateOptional,
+  localReference,
+  importedReference,
+  globalReference,
+  stringGlobalName
+}));
+export const component = PropsWriter;
+PropsWriter.__docgenInfo = {
+  \\"description\\": \\"A component that renders its props\\",
   \\"methods\\": [],
-  \\"displayName\\": \\"Button\\",
+  \\"displayName\\": \\"PropsWriter\\",
   \\"props\\": {
-    \\"primary\\": {
+    \\"numberOptional\\": {
       \\"defaultValue\\": {
-        \\"value\\": \\"true\\",
+        \\"value\\": \\"1\\",
         \\"computed\\": false
       },
-      \\"required\\": false,
-      \\"tsType\\": {
-        \\"name\\": \\"boolean\\"
-      },
-      \\"description\\": \\"Is primary?\\"
+      \\"required\\": false
     },
-    \\"secondary\\": {
+    \\"stringOptional\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"'stringOptional'\\",
+        \\"computed\\": false
+      },
+      \\"required\\": false
+    },
+    \\"booleanOptional\\": {
       \\"defaultValue\\": {
         \\"value\\": \\"false\\",
         \\"computed\\": false
       },
-      \\"required\\": false,
-      \\"tsType\\": {
-        \\"name\\": \\"boolean\\"
-      },
-      \\"description\\": \\"default is false\\"
+      \\"required\\": false
     },
-    \\"onClick\\": {
-      \\"required\\": false,
-      \\"tsType\\": {
-        \\"name\\": \\"signature\\",
-        \\"type\\": \\"function\\",
-        \\"raw\\": \\"() => void\\",
-        \\"signature\\": {
-          \\"arguments\\": [],
-          \\"return\\": {
-            \\"name\\": \\"void\\"
-          }
-        }
+    \\"arrayOptional\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"['array', 'optional']\\",
+        \\"computed\\": false
       },
-      \\"description\\": \\"Simple click handler\\"
+      \\"required\\": false
+    },
+    \\"objectOptional\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"{ object: 'optional' }\\",
+        \\"computed\\": false
+      },
+      \\"required\\": false
+    },
+    \\"functionOptional\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"() => 'foo'\\",
+        \\"computed\\": false
+      },
+      \\"required\\": false
+    },
+    \\"dateOptional\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"new Date()\\",
+        \\"computed\\": false
+      },
+      \\"required\\": false
+    },
+    \\"localReference\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"'local-value'\\",
+        \\"computed\\": false
+      },
+      \\"required\\": false
+    },
+    \\"importedReference\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"imported\\",
+        \\"computed\\": true
+      },
+      \\"required\\": false
+    },
+    \\"globalReference\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"Date\\",
+        \\"computed\\": true
+      },
+      \\"required\\": false
+    },
+    \\"stringGlobalName\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"'top'\\",
+        \\"computed\\": false
+      },
+      \\"required\\": false
     }
   }
 };"
