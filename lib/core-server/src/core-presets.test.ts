@@ -88,12 +88,18 @@ const cleanRoots = (obj): any => {
   return obj;
 };
 
-const prepareSnap = (fn: any, name): Pick<Configuration, 'module' | 'entry' | 'plugins'> => {
+const getConfig = (fn: any, name): Configuration | null => {
   const call = fn.mock.calls.find((c) => c[0].name === name);
   if (!call) return null;
+  return call[0];
+};
 
-  const keys = Object.keys(call[0]);
-  const { module, entry, plugins } = call[0];
+const prepareSnap = (fn: any, name): Pick<Configuration, 'module' | 'entry' | 'plugins'> => {
+  const config = getConfig(fn, name);
+  if (!config) return null;
+
+  const keys = Object.keys(config);
+  const { module, entry, plugins } = config;
 
   return cleanRoots({ keys, module, entry, plugins: plugins.map((p) => p.constructor.name) });
 };
@@ -107,16 +113,17 @@ describe.each([
   ['web-components-kitchen-sink'],
   ['html-kitchen-sink'],
 ])('%s', (example) => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    cache.clear();
+  });
+
   const options = {
     ...baseOptions,
     configDir: path.resolve(`${__dirname}/../../../examples/${example}/.storybook`),
   };
 
   describe('manager', () => {
-    beforeEach(() => {
-      jest.clearAllMocks();
-      cache.clear();
-    });
     it('dev mode', async () => {
       await buildDevStandalone({ ...options, ignorePreview: true });
 
@@ -132,10 +139,6 @@ describe.each([
   });
 
   describe('preview', () => {
-    beforeEach(() => {
-      jest.clearAllMocks();
-      cache.clear();
-    });
     it('dev mode', async () => {
       await buildDevStandalone({ ...options, managerCache: true });
 
@@ -148,5 +151,23 @@ describe.each([
       const previewConfig = prepareSnap(previewExecutor.get, 'preview');
       expect(previewConfig).toMatchSpecificSnapshot(snap(`${example}_preview-prod`));
     });
+  });
+});
+
+describe('dev cli flags', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    cache.clear();
+  });
+
+  it('--quiet', async () => {
+    const options = {
+      ...baseOptions,
+      quiet: true,
+    };
+    await buildDevStandalone(options);
+    const { plugins } = getConfig(previewExecutor.get, 'preview');
+
+    expect(plugins.find((p) => p.constructor.name === 'ProgressPlugin')).toBeFalsy();
   });
 });
