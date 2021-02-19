@@ -111,7 +111,7 @@ Object {
     Object {
       "defaultValue": Object {
         "detail": undefined,
-        "summary": "new Date()",
+        "summary": "new Date('20 Jan 1983')",
       },
       "description": "",
       "name": "dateOptional",

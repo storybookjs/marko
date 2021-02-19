@@ -46,7 +46,7 @@ PropsWriter.defaultProps = {
     object: 'optional'
   },
   functionOptional: () => 'foo',
-  dateOptional: new Date(),
+  dateOptional: new Date('20 Jan 1983'),
   localReference: local,
   importedReference: imported,
   globalReference: Date,
@@ -130,7 +130,7 @@ PropsWriter.__docgenInfo = {
     },
     \\"dateOptional\\": {
       \\"defaultValue\\": {
-        \\"value\\": \\"new Date()\\",
+        \\"value\\": \\"new Date('20 Jan 1983')\\",
         \\"computed\\": false
       },
       \\"type\\": {

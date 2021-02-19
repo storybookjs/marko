@@ -38,7 +38,7 @@ export const PropsWriter: React.FC<PropsWriterProps> = ({
   arrayOptional = ['array', 'optional'],
   objectOptional = { object: 'optional' },
   functionOptional = () => 'foo',
-  dateOptional = new Date(),
+  dateOptional = new Date('20 Jan 1983'),
   localReference = local,
   importedReference = imported,
   globalReference = Date,
