@@ -91,7 +91,11 @@ proptypesFixtures.forEach((fixture) => {
 
 const issuesFixtures = [
   'js-class-component',
+  'js-function-component',
+  'js-function-component-inline-defaults',
+  'js-function-component-inline-defaults-no-propTypes',
   'ts-function-component',
+  'ts-function-component-inline-defaults',
   '9399-js-proptypes-shape',
   '8663-js-styled-components',
   '9626-js-default-values',
@@ -115,7 +119,6 @@ const issuesFixtures = [
   '8428-js-static-prop-types',
   '9764-ts-extend-props',
   '9922-ts-component-props',
-  '12071-js-propTypes-default-values',
 ];
 
 const issuesStories = storiesOf('ArgTypes/Issues', module);

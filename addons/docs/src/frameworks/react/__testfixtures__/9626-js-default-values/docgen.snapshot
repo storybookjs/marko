@@ -1,106 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`react component properties 9626-js-default-values 1`] = `
-"/* eslint-disable react/prop-types */
-import React from 'react';
-import { imported } from './imported';
-const local = 'local-value';
+"import React from 'react'; // eslint-disable-next-line react/prop-types
+
 export const Tag = ({
-  numberSet = 1,
-  numberUnset,
-  // Note this does *not* get detected
-  stringSet = 'stringSet',
-  booleanSet = false,
-  arraySet = ['array', 'set'],
-  objectSet = {
-    object: 'set'
-  },
-  functionSet = () => 'foo',
-  dateSet = new Date(),
-  localReference = local,
-  importedReference = imported,
-  globalReference = Date,
-  stringGlobalName = 'top'
-}) => /*#__PURE__*/React.createElement(\\"div\\", null, \\"Tag\\");
+  title = 'Beta'
+}) => /*#__PURE__*/React.createElement(\\"div\\", null, title);
 export const component = Tag;
 Tag.__docgenInfo = {
   \\"description\\": \\"\\",
   \\"methods\\": [],
   \\"displayName\\": \\"Tag\\",
   \\"props\\": {
-    \\"numberSet\\": {
+    \\"title\\": {
       \\"defaultValue\\": {
-        \\"value\\": \\"1\\",
-        \\"computed\\": false
-      },
-      \\"required\\": false
-    },
-    \\"stringSet\\": {
-      \\"defaultValue\\": {
-        \\"value\\": \\"'stringSet'\\",
-        \\"computed\\": false
-      },
-      \\"required\\": false
-    },
-    \\"booleanSet\\": {
-      \\"defaultValue\\": {
-        \\"value\\": \\"false\\",
-        \\"computed\\": false
-      },
-      \\"required\\": false
-    },
-    \\"arraySet\\": {
-      \\"defaultValue\\": {
-        \\"value\\": \\"['array', 'set']\\",
-        \\"computed\\": false
-      },
-      \\"required\\": false
-    },
-    \\"objectSet\\": {
-      \\"defaultValue\\": {
-        \\"value\\": \\"{ object: 'set' }\\",
-        \\"computed\\": false
-      },
-      \\"required\\": false
-    },
-    \\"functionSet\\": {
-      \\"defaultValue\\": {
-        \\"value\\": \\"() => 'foo'\\",
-        \\"computed\\": false
-      },
-      \\"required\\": false
-    },
-    \\"dateSet\\": {
-      \\"defaultValue\\": {
-        \\"value\\": \\"new Date()\\",
-        \\"computed\\": false
-      },
-      \\"required\\": false
-    },
-    \\"localReference\\": {
-      \\"defaultValue\\": {
-        \\"value\\": \\"'local-value'\\",
-        \\"computed\\": false
-      },
-      \\"required\\": false
-    },
-    \\"importedReference\\": {
-      \\"defaultValue\\": {
-        \\"value\\": \\"imported\\",
-        \\"computed\\": true
-      },
-      \\"required\\": false
-    },
-    \\"globalReference\\": {
-      \\"defaultValue\\": {
-        \\"value\\": \\"Date\\",
-        \\"computed\\": true
-      },
-      \\"required\\": false
-    },
-    \\"stringGlobalName\\": {
-      \\"defaultValue\\": {
-        \\"value\\": \\"'top'\\",
+        \\"value\\": \\"'Beta'\\",
         \\"computed\\": false
       },
       \\"required\\": false
