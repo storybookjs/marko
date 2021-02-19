@@ -41,5 +41,7 @@ export const typescript = () => ({
     shouldExtractLiteralValuesFromEnum: true,
     shouldRemoveUndefinedFromOptional: true,
     propFilter: (prop: any) => (prop.parent ? !/node_modules/.test(prop.parent.fileName) : true),
+    // NOTE: this default cannot be changed
+    savePropValueAsString: true,
   },
 });

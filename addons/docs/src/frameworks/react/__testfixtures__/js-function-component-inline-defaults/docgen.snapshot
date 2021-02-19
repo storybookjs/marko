@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`react component properties js-class-component 1`] = `
+exports[`react component properties js-function-component-inline-defaults 1`] = `
 "import React from 'react';
 import PropTypes from 'prop-types';
 import { imported } from '../imported';
@@ -8,15 +8,34 @@ const local = 'local-value';
 /**
  * A component that renders its props
  */
-// eslint-disable-next-line react/prefer-stateless-function
 
-class PropsWriter extends React.Component {
-  render() {
-    return /*#__PURE__*/React.createElement(\\"pre\\", null, JSON.stringify(this.props));
-  }
-
-}
-
+export const PropsWriter = ({
+  numberOptional = 1,
+  stringOptional = 'stringOptional',
+  booleanOptional = false,
+  arrayOptional = ['array', 'optional'],
+  objectOptional = {
+    object: 'optional'
+  },
+  functionOptional = () => 'foo',
+  dateOptional = new Date('20 Jan 1983'),
+  localReference = local,
+  importedReference = imported,
+  globalReference = Date,
+  stringGlobalName = 'top'
+}) => /*#__PURE__*/React.createElement(\\"pre\\", null, JSON.stringify({
+  numberOptional,
+  stringOptional,
+  booleanOptional,
+  arrayOptional,
+  objectOptional,
+  functionOptional,
+  dateOptional,
+  localReference,
+  importedReference,
+  globalReference,
+  stringGlobalName
+}));
 PropsWriter.propTypes = {
   numberRequired: PropTypes.number.isRequired,
   numberOptional: PropTypes.number,
@@ -36,21 +55,6 @@ PropsWriter.propTypes = {
   importedReference: PropTypes.string,
   globalReference: PropTypes.any,
   stringGlobalName: PropTypes.string
-};
-PropsWriter.defaultProps = {
-  numberOptional: 1,
-  stringOptional: 'stringOptional',
-  booleanOptional: false,
-  arrayOptional: ['array', 'optional'],
-  objectOptional: {
-    object: 'optional'
-  },
-  functionOptional: () => 'foo',
-  dateOptional: new Date('20 Jan 1983'),
-  localReference: local,
-  importedReference: imported,
-  globalReference: Date,
-  stringGlobalName: 'top'
 };
 export const component = PropsWriter;
 PropsWriter.__docgenInfo = {

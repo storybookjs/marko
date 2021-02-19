@@ -8,12 +8,35 @@ const local = 'local-value';
 /**
  * A component that renders its props
  */
-// eslint-disable-next-line react/prefer-stateless-function
-class PropsWriter extends React.Component {
-  render() {
-    return <pre>{JSON.stringify(this.props)}</pre>;
-  }
-}
+export const PropsWriter = ({
+  numberOptional = 1,
+  stringOptional = 'stringOptional',
+  booleanOptional = false,
+  arrayOptional = ['array', 'optional'],
+  objectOptional = { object: 'optional' },
+  functionOptional = () => 'foo',
+  dateOptional = new Date('20 Jan 1983'),
+  localReference = local,
+  importedReference = imported,
+  globalReference = Date,
+  stringGlobalName = 'top',
+}) => (
+  <pre>
+    {JSON.stringify({
+      numberOptional,
+      stringOptional,
+      booleanOptional,
+      arrayOptional,
+      objectOptional,
+      functionOptional,
+      dateOptional,
+      localReference,
+      importedReference,
+      globalReference,
+      stringGlobalName,
+    })}
+  </pre>
+);
 
 PropsWriter.propTypes = {
   numberRequired: PropTypes.number.isRequired,
@@ -34,20 +57,6 @@ PropsWriter.propTypes = {
   importedReference: PropTypes.string,
   globalReference: PropTypes.any,
   stringGlobalName: PropTypes.string,
-};
-
-PropsWriter.defaultProps = {
-  numberOptional: 1,
-  stringOptional: 'stringOptional',
-  booleanOptional: false,
-  arrayOptional: ['array', 'optional'],
-  objectOptional: { object: 'optional' },
-  functionOptional: () => 'foo',
-  dateOptional: new Date('20 Jan 1983'),
-  localReference: local,
-  importedReference: imported,
-  globalReference: Date,
-  stringGlobalName: 'top',
 };
 
 export const component = PropsWriter;

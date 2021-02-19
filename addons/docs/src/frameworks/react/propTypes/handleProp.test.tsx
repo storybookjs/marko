@@ -1173,7 +1173,6 @@ describe('enhancePropTypesProp', () => {
 
     describe('fromRawDefaultProp', () => {
       [
-        { type: 'string', defaultProp: 'foo' },
         { type: 'number', defaultProp: 1 },
         { type: 'boolean', defaultProp: true },
         { type: 'symbol', defaultProp: Symbol('hey!') },
@@ -1186,6 +1185,15 @@ describe('enhancePropTypesProp', () => {
           expect(defaultValue.summary).toBe(x.defaultProp.toString());
           expect(defaultValue.detail).toBeUndefined();
         });
+      });
+
+      it('should support strings', () => {
+        const component = createTestComponent(null);
+
+        const { defaultValue } = extractPropDef(component, 'foo');
+
+        expect(defaultValue.summary).toBe('"foo"');
+        expect(defaultValue.detail).toBeUndefined();
       });
 
       it('should support array of primitives', () => {

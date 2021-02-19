@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`react component properties js-class-component 1`] = `
+exports[`react component properties js-function-component 1`] = `
 Object {
   "rows": Array [
     Object {
