@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`react component properties js-class-component 1`] = `
+exports[`react component properties js-function-component 1`] = `
 "import React from 'react';
 import PropTypes from 'prop-types';
 import { imported } from '../imported';
@@ -8,15 +8,8 @@ const local = 'local-value';
 /**
  * A component that renders its props
  */
-// eslint-disable-next-line react/prefer-stateless-function
 
-class PropsWriter extends React.Component {
-  render() {
-    return /*#__PURE__*/React.createElement(\\"pre\\", null, JSON.stringify(this.props));
-  }
-
-}
-
+export const PropsWriter = props => /*#__PURE__*/React.createElement(\\"pre\\", null, JSON.stringify(props));
 PropsWriter.propTypes = {
   numberRequired: PropTypes.number.isRequired,
   numberOptional: PropTypes.number,

@@ -8,12 +8,7 @@ const local = 'local-value';
 /**
  * A component that renders its props
  */
-// eslint-disable-next-line react/prefer-stateless-function
-class PropsWriter extends React.Component {
-  render() {
-    return <pre>{JSON.stringify(this.props)}</pre>;
-  }
-}
+export const PropsWriter = (props) => <pre>{JSON.stringify(props)}</pre>;
 
 PropsWriter.propTypes = {
   numberRequired: PropTypes.number.isRequired,

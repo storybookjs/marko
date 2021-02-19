@@ -1,21 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`react component properties js-class-component 1`] = `
+exports[`react component properties ts-function-component-inline-defaults 1`] = `
 Object {
   "rows": Array [
-    Object {
-      "defaultValue": null,
-      "description": "",
-      "name": "numberRequired",
-      "required": true,
-      "sbType": Object {
-        "name": "number",
-      },
-      "type": Object {
-        "detail": undefined,
-        "summary": "number",
-      },
-    },
     Object {
       "defaultValue": Object {
         "detail": undefined,
@@ -30,19 +17,6 @@ Object {
       "type": Object {
         "detail": undefined,
         "summary": "number",
-      },
-    },
-    Object {
-      "defaultValue": null,
-      "description": "",
-      "name": "stringRequired",
-      "required": true,
-      "sbType": Object {
-        "name": "string",
-      },
-      "type": Object {
-        "detail": undefined,
-        "summary": "string",
       },
     },
     Object {
@@ -62,19 +36,6 @@ Object {
       },
     },
     Object {
-      "defaultValue": null,
-      "description": "",
-      "name": "booleanRequired",
-      "required": true,
-      "sbType": Object {
-        "name": "boolean",
-      },
-      "type": Object {
-        "detail": undefined,
-        "summary": "bool",
-      },
-    },
-    Object {
       "defaultValue": Object {
         "detail": undefined,
         "summary": "false",
@@ -87,23 +48,7 @@ Object {
       },
       "type": Object {
         "detail": undefined,
-        "summary": "bool",
-      },
-    },
-    Object {
-      "defaultValue": null,
-      "description": "",
-      "name": "arrayRequired",
-      "required": true,
-      "sbType": Object {
-        "name": "array",
-        "value": Object {
-          "name": "string",
-        },
-      },
-      "type": Object {
-        "detail": undefined,
-        "summary": "string[]",
+        "summary": "boolean",
       },
     },
     Object {
@@ -116,27 +61,16 @@ Object {
       "required": false,
       "sbType": Object {
         "name": "array",
-        "value": Object {
-          "name": "string",
-        },
+        "raw": "string[]",
+        "value": Array [
+          Object {
+            "name": "string",
+          },
+        ],
       },
       "type": Object {
         "detail": undefined,
-        "summary": "string[]",
-      },
-    },
-    Object {
-      "defaultValue": null,
-      "description": "",
-      "name": "objectRequired",
-      "required": true,
-      "sbType": Object {
-        "name": "object",
-        "value": Object {},
-      },
-      "type": Object {
-        "detail": undefined,
-        "summary": "{ }",
+        "summary": "Array",
       },
     },
     Object {
@@ -148,25 +82,13 @@ Object {
       "name": "objectOptional",
       "required": false,
       "sbType": Object {
-        "name": "object",
-        "value": Object {},
+        "name": "other",
+        "raw": "Record<string, string>",
+        "value": "Record",
       },
       "type": Object {
         "detail": undefined,
-        "summary": "{ }",
-      },
-    },
-    Object {
-      "defaultValue": null,
-      "description": "",
-      "name": "functionRequired",
-      "required": true,
-      "sbType": Object {
-        "name": "function",
-      },
-      "type": Object {
-        "detail": undefined,
-        "summary": "func",
+        "summary": "Record",
       },
     },
     Object {
@@ -179,24 +101,11 @@ Object {
       "required": false,
       "sbType": Object {
         "name": "function",
+        "raw": "() => string",
       },
       "type": Object {
         "detail": undefined,
-        "summary": "func",
-      },
-    },
-    Object {
-      "defaultValue": null,
-      "description": "",
-      "name": "dateRequired",
-      "required": true,
-      "sbType": Object {
-        "name": "other",
-        "value": "instanceOf(Date)",
-      },
-      "type": Object {
-        "detail": undefined,
-        "summary": "Date",
+        "summary": "signature",
       },
     },
     Object {
@@ -209,7 +118,7 @@ Object {
       "required": false,
       "sbType": Object {
         "name": "other",
-        "value": "instanceOf(Date)",
+        "value": "Date",
       },
       "type": Object {
         "detail": undefined,
@@ -279,6 +188,107 @@ Object {
       "type": Object {
         "detail": undefined,
         "summary": "string",
+      },
+    },
+    Object {
+      "defaultValue": null,
+      "description": "Description",
+      "name": "numberRequired",
+      "required": true,
+      "sbType": Object {
+        "name": "number",
+      },
+      "type": Object {
+        "detail": undefined,
+        "summary": "number",
+      },
+    },
+    Object {
+      "defaultValue": null,
+      "description": "",
+      "name": "stringRequired",
+      "required": true,
+      "sbType": Object {
+        "name": "string",
+      },
+      "type": Object {
+        "detail": undefined,
+        "summary": "string",
+      },
+    },
+    Object {
+      "defaultValue": null,
+      "description": "",
+      "name": "booleanRequired",
+      "required": true,
+      "sbType": Object {
+        "name": "boolean",
+      },
+      "type": Object {
+        "detail": undefined,
+        "summary": "boolean",
+      },
+    },
+    Object {
+      "defaultValue": null,
+      "description": "",
+      "name": "arrayRequired",
+      "required": true,
+      "sbType": Object {
+        "name": "array",
+        "raw": "string[]",
+        "value": Array [
+          Object {
+            "name": "string",
+          },
+        ],
+      },
+      "type": Object {
+        "detail": undefined,
+        "summary": "Array",
+      },
+    },
+    Object {
+      "defaultValue": null,
+      "description": "",
+      "name": "objectRequired",
+      "required": true,
+      "sbType": Object {
+        "name": "other",
+        "raw": "Record<string, string>",
+        "value": "Record",
+      },
+      "type": Object {
+        "detail": undefined,
+        "summary": "Record",
+      },
+    },
+    Object {
+      "defaultValue": null,
+      "description": "",
+      "name": "functionRequired",
+      "required": true,
+      "sbType": Object {
+        "name": "function",
+        "raw": "() => string",
+      },
+      "type": Object {
+        "detail": undefined,
+        "summary": "signature",
+      },
+    },
+    Object {
+      "defaultValue": null,
+      "description": "",
+      "name": "dateRequired",
+      "required": true,
+      "sbType": Object {
+        "name": "other",
+        "value": "Date",
+      },
+      "type": Object {
+        "detail": undefined,
+        "summary": "Date",
       },
     },
   ],

@@ -1,57 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`react component properties js-class-component 1`] = `
+exports[`react component properties ts-function-component-inline-defaults 1`] = `
 "import React from 'react';
-import PropTypes from 'prop-types';
 import { imported } from '../imported';
 const local = 'local-value';
+
 /**
  * A component that renders its props
  */
-// eslint-disable-next-line react/prefer-stateless-function
-
-class PropsWriter extends React.Component {
-  render() {
-    return /*#__PURE__*/React.createElement(\\"pre\\", null, JSON.stringify(this.props));
-  }
-
-}
-
-PropsWriter.propTypes = {
-  numberRequired: PropTypes.number.isRequired,
-  numberOptional: PropTypes.number,
-  stringRequired: PropTypes.string.isRequired,
-  stringOptional: PropTypes.string,
-  booleanRequired: PropTypes.bool.isRequired,
-  booleanOptional: PropTypes.bool,
-  arrayRequired: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  arrayOptional: PropTypes.arrayOf(PropTypes.string.isRequired),
-  objectRequired: PropTypes.shape({}).isRequired,
-  objectOptional: PropTypes.shape({}),
-  functionRequired: PropTypes.func.isRequired,
-  functionOptional: PropTypes.func,
-  dateRequired: PropTypes.instanceOf(Date).isRequired,
-  dateOptional: PropTypes.instanceOf(Date),
-  localReference: PropTypes.string,
-  importedReference: PropTypes.string,
-  globalReference: PropTypes.any,
-  stringGlobalName: PropTypes.string
-};
-PropsWriter.defaultProps = {
-  numberOptional: 1,
-  stringOptional: 'stringOptional',
-  booleanOptional: false,
-  arrayOptional: ['array', 'optional'],
-  objectOptional: {
+export const PropsWriter = ({
+  numberOptional = 1,
+  stringOptional = 'stringOptional',
+  booleanOptional = false,
+  arrayOptional = ['array', 'optional'],
+  objectOptional = {
     object: 'optional'
   },
-  functionOptional: () => 'foo',
-  dateOptional: new Date('20 Jan 1983'),
-  localReference: local,
-  importedReference: imported,
-  globalReference: Date,
-  stringGlobalName: 'top'
-};
+  functionOptional = () => 'foo',
+  dateOptional = new Date('20 Jan 1983'),
+  localReference = local,
+  importedReference = imported,
+  globalReference = Date,
+  stringGlobalName = 'top'
+}) => /*#__PURE__*/React.createElement(\\"pre\\", null, JSON.stringify({
+  numberOptional,
+  stringOptional,
+  booleanOptional,
+  arrayOptional,
+  objectOptional,
+  functionOptional,
+  dateOptional,
+  localReference,
+  importedReference,
+  globalReference,
+  stringGlobalName
+}));
 export const component = PropsWriter;
 PropsWriter.__docgenInfo = {
   \\"description\\": \\"A component that renders its props\\",
@@ -63,10 +46,10 @@ PropsWriter.__docgenInfo = {
         \\"value\\": \\"1\\",
         \\"computed\\": false
       },
-      \\"type\\": {
+      \\"required\\": false,
+      \\"tsType\\": {
         \\"name\\": \\"number\\"
       },
-      \\"required\\": false,
       \\"description\\": \\"\\"
     },
     \\"stringOptional\\": {
@@ -74,10 +57,10 @@ PropsWriter.__docgenInfo = {
         \\"value\\": \\"'stringOptional'\\",
         \\"computed\\": false
       },
-      \\"type\\": {
+      \\"required\\": false,
+      \\"tsType\\": {
         \\"name\\": \\"string\\"
       },
-      \\"required\\": false,
       \\"description\\": \\"\\"
     },
     \\"booleanOptional\\": {
@@ -85,10 +68,10 @@ PropsWriter.__docgenInfo = {
         \\"value\\": \\"false\\",
         \\"computed\\": false
       },
-      \\"type\\": {
-        \\"name\\": \\"bool\\"
-      },
       \\"required\\": false,
+      \\"tsType\\": {
+        \\"name\\": \\"boolean\\"
+      },
       \\"description\\": \\"\\"
     },
     \\"arrayOptional\\": {
@@ -96,13 +79,14 @@ PropsWriter.__docgenInfo = {
         \\"value\\": \\"['array', 'optional']\\",
         \\"computed\\": false
       },
-      \\"type\\": {
-        \\"name\\": \\"arrayOf\\",
-        \\"value\\": {
-          \\"name\\": \\"string\\"
-        }
-      },
       \\"required\\": false,
+      \\"tsType\\": {
+        \\"name\\": \\"Array\\",
+        \\"elements\\": [{
+          \\"name\\": \\"string\\"
+        }],
+        \\"raw\\": \\"string[]\\"
+      },
       \\"description\\": \\"\\"
     },
     \\"objectOptional\\": {
@@ -110,11 +94,16 @@ PropsWriter.__docgenInfo = {
         \\"value\\": \\"{ object: 'optional' }\\",
         \\"computed\\": false
       },
-      \\"type\\": {
-        \\"name\\": \\"shape\\",
-        \\"value\\": {}
-      },
       \\"required\\": false,
+      \\"tsType\\": {
+        \\"name\\": \\"Record\\",
+        \\"elements\\": [{
+          \\"name\\": \\"string\\"
+        }, {
+          \\"name\\": \\"string\\"
+        }],
+        \\"raw\\": \\"Record<string, string>\\"
+      },
       \\"description\\": \\"\\"
     },
     \\"functionOptional\\": {
@@ -122,10 +111,18 @@ PropsWriter.__docgenInfo = {
         \\"value\\": \\"() => 'foo'\\",
         \\"computed\\": false
       },
-      \\"type\\": {
-        \\"name\\": \\"func\\"
-      },
       \\"required\\": false,
+      \\"tsType\\": {
+        \\"name\\": \\"signature\\",
+        \\"type\\": \\"function\\",
+        \\"raw\\": \\"() => string\\",
+        \\"signature\\": {
+          \\"arguments\\": [],
+          \\"return\\": {
+            \\"name\\": \\"string\\"
+          }
+        }
+      },
       \\"description\\": \\"\\"
     },
     \\"dateOptional\\": {
@@ -133,11 +130,10 @@ PropsWriter.__docgenInfo = {
         \\"value\\": \\"new Date('20 Jan 1983')\\",
         \\"computed\\": false
       },
-      \\"type\\": {
-        \\"name\\": \\"instanceOf\\",
-        \\"value\\": \\"Date\\"
-      },
       \\"required\\": false,
+      \\"tsType\\": {
+        \\"name\\": \\"Date\\"
+      },
       \\"description\\": \\"\\"
     },
     \\"localReference\\": {
@@ -145,10 +141,10 @@ PropsWriter.__docgenInfo = {
         \\"value\\": \\"'local-value'\\",
         \\"computed\\": false
       },
-      \\"type\\": {
+      \\"required\\": false,
+      \\"tsType\\": {
         \\"name\\": \\"string\\"
       },
-      \\"required\\": false,
       \\"description\\": \\"\\"
     },
     \\"importedReference\\": {
@@ -156,10 +152,10 @@ PropsWriter.__docgenInfo = {
         \\"value\\": \\"imported\\",
         \\"computed\\": true
       },
-      \\"type\\": {
+      \\"required\\": false,
+      \\"tsType\\": {
         \\"name\\": \\"string\\"
       },
-      \\"required\\": false,
       \\"description\\": \\"\\"
     },
     \\"globalReference\\": {
@@ -167,10 +163,10 @@ PropsWriter.__docgenInfo = {
         \\"value\\": \\"Date\\",
         \\"computed\\": true
       },
-      \\"type\\": {
+      \\"required\\": false,
+      \\"tsType\\": {
         \\"name\\": \\"any\\"
       },
-      \\"required\\": false,
       \\"description\\": \\"\\"
     },
     \\"stringGlobalName\\": {
@@ -178,64 +174,77 @@ PropsWriter.__docgenInfo = {
         \\"value\\": \\"'top'\\",
         \\"computed\\": false
       },
-      \\"type\\": {
+      \\"required\\": false,
+      \\"tsType\\": {
         \\"name\\": \\"string\\"
       },
-      \\"required\\": false,
       \\"description\\": \\"\\"
     },
     \\"numberRequired\\": {
-      \\"type\\": {
+      \\"required\\": true,
+      \\"tsType\\": {
         \\"name\\": \\"number\\"
       },
-      \\"required\\": true,
-      \\"description\\": \\"\\"
+      \\"description\\": \\"Description\\"
     },
     \\"stringRequired\\": {
-      \\"type\\": {
+      \\"required\\": true,
+      \\"tsType\\": {
         \\"name\\": \\"string\\"
       },
-      \\"required\\": true,
       \\"description\\": \\"\\"
     },
     \\"booleanRequired\\": {
-      \\"type\\": {
-        \\"name\\": \\"bool\\"
-      },
       \\"required\\": true,
+      \\"tsType\\": {
+        \\"name\\": \\"boolean\\"
+      },
       \\"description\\": \\"\\"
     },
     \\"arrayRequired\\": {
-      \\"type\\": {
-        \\"name\\": \\"arrayOf\\",
-        \\"value\\": {
-          \\"name\\": \\"string\\"
-        }
-      },
       \\"required\\": true,
+      \\"tsType\\": {
+        \\"name\\": \\"Array\\",
+        \\"elements\\": [{
+          \\"name\\": \\"string\\"
+        }],
+        \\"raw\\": \\"string[]\\"
+      },
       \\"description\\": \\"\\"
     },
     \\"objectRequired\\": {
-      \\"type\\": {
-        \\"name\\": \\"shape\\",
-        \\"value\\": {}
-      },
       \\"required\\": true,
+      \\"tsType\\": {
+        \\"name\\": \\"Record\\",
+        \\"elements\\": [{
+          \\"name\\": \\"string\\"
+        }, {
+          \\"name\\": \\"string\\"
+        }],
+        \\"raw\\": \\"Record<string, string>\\"
+      },
       \\"description\\": \\"\\"
     },
     \\"functionRequired\\": {
-      \\"type\\": {
-        \\"name\\": \\"func\\"
-      },
       \\"required\\": true,
+      \\"tsType\\": {
+        \\"name\\": \\"signature\\",
+        \\"type\\": \\"function\\",
+        \\"raw\\": \\"() => string\\",
+        \\"signature\\": {
+          \\"arguments\\": [],
+          \\"return\\": {
+            \\"name\\": \\"string\\"
+          }
+        }
+      },
       \\"description\\": \\"\\"
     },
     \\"dateRequired\\": {
-      \\"type\\": {
-        \\"name\\": \\"instanceOf\\",
-        \\"value\\": \\"Date\\"
-      },
       \\"required\\": true,
+      \\"tsType\\": {
+        \\"name\\": \\"Date\\"
+      },
       \\"description\\": \\"\\"
     }
   }

@@ -31,22 +31,34 @@ interface PropsWriterProps {
 /**
  * A component that renders its props
  */
-export const PropsWriter: React.FC<PropsWriterProps> = (props: PropsWriterProps) => (
-  <pre>{JSON.stringify(props)}</pre>
+export const PropsWriter: React.FC<PropsWriterProps> = ({
+  numberOptional = 1,
+  stringOptional = 'stringOptional',
+  booleanOptional = false,
+  arrayOptional = ['array', 'optional'],
+  objectOptional = { object: 'optional' },
+  functionOptional = () => 'foo',
+  dateOptional = new Date('20 Jan 1983'),
+  localReference = local,
+  importedReference = imported,
+  globalReference = Date,
+  stringGlobalName = 'top',
+}: PropsWriterProps) => (
+  <pre>
+    {JSON.stringify({
+      numberOptional,
+      stringOptional,
+      booleanOptional,
+      arrayOptional,
+      objectOptional,
+      functionOptional,
+      dateOptional,
+      localReference,
+      importedReference,
+      globalReference,
+      stringGlobalName,
+    })}
+  </pre>
 );
-
-PropsWriter.defaultProps = {
-  numberOptional: 1,
-  stringOptional: 'stringOptional',
-  booleanOptional: false,
-  arrayOptional: ['array', 'optional'],
-  objectOptional: { object: 'optional' },
-  functionOptional: () => 'foo',
-  dateOptional: new Date('20 Jan 1983'),
-  localReference: local,
-  importedReference: imported,
-  globalReference: Date,
-  stringGlobalName: 'top',
-};
 
 export const component = PropsWriter;

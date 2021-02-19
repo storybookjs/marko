@@ -15,6 +15,18 @@ const argsTableProps = (component: Component) => {
   return { rows };
 };
 
+function FormatArg({ arg }) {
+  if (typeof arg !== 'undefined') {
+    try {
+      return <code>{JSON.stringify(arg, null, 2)}</code>;
+    } catch (err) {
+      return <code style={{ backgroundColor: '#eee' }}>{arg.toString()}</code>;
+    }
+  }
+
+  return <code style={{ backgroundColor: '#eee' }}>undefined</code>;
+}
+
 const ArgsStory = ({ component }: any) => {
   const { rows } = argsTableProps(component);
   const initialArgs = mapValues(rows, (argType) => argType.defaultValue) as Args;
@@ -32,8 +44,12 @@ const ArgsStory = ({ component }: any) => {
         <tbody>
           {Object.entries(args).map(([key, val]) => (
             <tr key={key}>
-              <td>{key}</td>
-              <td>{JSON.stringify(val, null, 2)}</td>
+              <td>
+                <code>{key}</code>
+              </td>
+              <td>
+                <FormatArg arg={val} />
+              </td>
             </tr>
           ))}
         </tbody>
@@ -75,7 +91,11 @@ proptypesFixtures.forEach((fixture) => {
 
 const issuesFixtures = [
   'js-class-component',
+  'js-function-component',
+  'js-function-component-inline-defaults',
+  'js-function-component-inline-defaults-no-propTypes',
   'ts-function-component',
+  'ts-function-component-inline-defaults',
   '9399-js-proptypes-shape',
   '8663-js-styled-components',
   '9626-js-default-values',
