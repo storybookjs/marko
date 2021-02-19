@@ -3913,25 +3913,29 @@
     "@babel/runtime" "^7.7.7"
     self-closing-tags "^1.0.1"
 
-"@marko/babel-utils@5.1.1":
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/@marko/babel-utils/-/babel-utils-5.1.1.tgz#2cde44af3784abed7017bbb8a5580da17ffabebc"
-  integrity sha512-LHQ2uxoMVKQE91TM01iwmUJu7ZVNhs02Bb8cnIlRs2Ks2Syea5rVYIBzC3W3g5fhWhBU2Fpj0LiA64M8kP4rbA==
+"@marko/babel-utils@^5.0.0-next.50":
+  version "5.1.10"
+  resolved "https://registry.yarnpkg.com/@marko/babel-utils/-/babel-utils-5.1.10.tgz#65b59e5d6a711790afc970200220ac13ec6fa2ee"
+  integrity sha512-lR7DzEbll0siZtkH8VP8lIwqV5PzpYS/J7ixnhyOxVjTejdNizA3J4gPG4skoGxvfD5hQh5k/znpL0lbLpP5Qw==
   dependencies:
     "@babel/runtime" "^7.7.7"
     "@marko/babel-types" "^5.1.1"
     jsesc "^2.5.2"
 
-"@marko/webpack@^7.0.0":
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/@marko/webpack/-/webpack-7.1.0.tgz#0b84fc5cb64a98e8b8183bfe487c6981ff85b5d6"
-  integrity sha512-Y7hf9MglALKOGH5beIn/olIpyREUAOXNYGyxdyza90emzqMGNVZEvIY+PjrgQl8ZSLDydn4/+4Xq5tlcdeXdHQ==
+"@marko/webpack@^6.2.10":
+  version "6.2.10"
+  resolved "https://registry.yarnpkg.com/@marko/webpack/-/webpack-6.2.10.tgz#9ada9b0ebc3a158fbd081201807807ad3a441502"
+  integrity sha512-3rGr3rFQK5pPY26M7l42F11tMPNFYL/C6FaoekT2L4MahXBLt7KKAwX2kHTFjMXS+cJFujWjxfrF2DETwzPdCA==
   dependencies:
-    "@marko/babel-utils" "5.1.1"
+    "@marko/babel-utils" "^5.0.0-next.50"
+    base-x "^3.0.7"
+    concat-with-sourcemaps "^1.1.0"
     escape-string-regexp "^4.0.0"
-    loader-utils "^2.0.0"
-    sort-keys "^4.2.0"
-    tslib "^2.1.0"
+    lasso-modules-client "^2.0.5"
+    loader-utils "^1.4.0"
+    sort-keys "^4.0.0"
+    tslib "^1.10.0"
+    webpack-virtual-modules "^0.2.1"
 
 "@mdx-js/loader@^1.6.22":
   version "1.6.22"
@@ -8882,6 +8886,13 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
+base-x@^3.0.7:
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/base-x/-/base-x-3.0.8.tgz#1e1106c2537f0162e8b52474a557ebb09000018d"
+  integrity sha512-Rl/1AWP4J/zRrk54hhlxH4drNxPJXYUaKffODVI53/dAsV4t9fBxyxYKAVPU1XBHxYwOWP9h9H0hM2MVw4YfJA==
+  dependencies:
+    safe-buffer "^5.0.1"
+
 base64-arraybuffer@0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/base64-arraybuffer/-/base64-arraybuffer-0.1.4.tgz#9818c79e059b1355f97e0428a017c838e90ba812"
@@ -11341,6 +11352,13 @@ concat-stream@^2.0.0:
     inherits "^2.0.3"
     readable-stream "^3.0.2"
     typedarray "^0.0.6"
+
+concat-with-sourcemaps@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/concat-with-sourcemaps/-/concat-with-sourcemaps-1.1.0.tgz#d4ea93f05ae25790951b99e7b3b09e3908a4082e"
+  integrity sha512-4gEjHJFT9e+2W/77h/DS5SGUgwDaOwprX8L/gl5+3ixnzkVJJsZWDSelmN3Oilw3LNDZjZV0yqH1hLG3k6nghg==
+  dependencies:
+    source-map "^0.6.1"
 
 concurrently@^5.3.0:
   version "5.3.0"
@@ -30452,7 +30470,7 @@ sort-keys@^2.0.0:
   dependencies:
     is-plain-obj "^1.0.0"
 
-sort-keys@^4.2.0:
+sort-keys@^4.0.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/sort-keys/-/sort-keys-4.2.0.tgz#6b7638cee42c506fff8c1cecde7376d21315be18"
   integrity sha512-aUYIEU/UviqPgc8mHR6IW1EGxkAXpeRETYcrzg8cLAvUPZcpAlleSXHV2mY7G12GphSH6Gzv+4MMVSSkbdteHg==
@@ -34287,7 +34305,7 @@ webpack-subresource-integrity@1.5.2:
   dependencies:
     webpack-sources "^1.3.0"
 
-webpack-virtual-modules@^0.2.2:
+webpack-virtual-modules@^0.2.1, webpack-virtual-modules@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/webpack-virtual-modules/-/webpack-virtual-modules-0.2.2.tgz#20863dc3cb6bb2104729fff951fbe14b18bd0299"
   integrity sha512-kDUmfm3BZrei0y+1NTHJInejzxfhtU8eDj2M7OKb2IWrPFAeO1SOH2KuQ68MSZu9IGEHcxbkKKR1v18FrUSOmA==
