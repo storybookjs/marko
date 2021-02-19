@@ -156,20 +156,27 @@ describe.each([
   });
 });
 
+const progressPlugin = (config) =>
+  config.plugins.find((p) => p.constructor.name === 'ProgressPlugin');
+
 describe('dev cli flags', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     cache.clear();
   });
 
-  it('--quiet', async () => {
-    const options = {
-      ...baseOptions,
-      quiet: true,
-    };
-    await buildDevStandalone(options);
-    const { plugins } = getConfig(previewExecutor.get, 'preview');
+  const cliOptions = { ...reactOptions, ...baseOptions };
 
-    expect(plugins.find((p) => p.constructor.name === 'ProgressPlugin')).toBeFalsy();
+  it('baseline', async () => {
+    await buildDevStandalone(cliOptions);
+    const config = getConfig(previewExecutor.get, 'preview');
+    expect(progressPlugin(config)).toBeTruthy();
+  });
+
+  it('--quiet', async () => {
+    const options = { ...cliOptions, quiet: true };
+    await buildDevStandalone(options);
+    const config = getConfig(previewExecutor.get, 'preview');
+    expect(progressPlugin(config)).toBeFalsy();
   });
 });
