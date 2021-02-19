@@ -7,6 +7,9 @@ import { buildDevStandalone } from './build-dev';
 import { buildStaticStandalone } from './build-static';
 import { resolvePathInStorybookCache } from './utils/resolve-path-in-sb-cache';
 import reactOptions from '../../../../app/react/src/server/options';
+import vue3Options from '../../../../app/vue3/src/server/options';
+import htmlOptions from '../../../../app/html/src/server/options';
+import webComponentsOptions from '../../../../app/web-components/src/server/options';
 
 const TIMEOUT = 10000;
 
@@ -48,7 +51,6 @@ const cache = Cache({
 
 const managerOnly = false;
 const baseOptions = {
-  ...reactOptions,
   ignorePreview: managerOnly,
   // FIXME: this should just be ignorePreview everywhere
   managerOnly, // production
@@ -90,13 +92,13 @@ const prepareSnap = (fn: any, name): Pick<Configuration, 'module' | 'entry' | 'p
 const snap = (name: string) => `__snapshots__/${name}`;
 
 describe.each([
-  ['cra-ts-essentials'],
-  ['vue-3-cli'],
-  ['angular-cli'],
-  ['web-components-kitchen-sink'],
-  ['html-kitchen-sink'],
-])('%s', (example) => {
+  ['cra-ts-essentials', reactOptions],
+  ['vue-3-cli', vue3Options],
+  ['web-components-kitchen-sink', webComponentsOptions],
+  ['html-kitchen-sink', htmlOptions],
+])('%s', (example, frameworkOptions) => {
   const options = {
+    ...frameworkOptions,
     ...baseOptions,
     configDir: path.resolve(`${__dirname}/../../../../examples/${example}/.storybook`),
   };
