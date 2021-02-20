@@ -172,6 +172,10 @@ export async function buildStaticStandalone(options: any) {
   const { staticDir, configDir, packageJson } = options;
 
   const configType = 'PRODUCTION';
+
+  if (options.outputDir === '')
+    throw new Error("Won't remove current directory. Check your outputDir!");
+
   const outputDir = path.isAbsolute(options.outputDir)
     ? options.outputDir
     : path.join(process.cwd(), options.outputDir);
