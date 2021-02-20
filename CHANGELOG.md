@@ -1,3 +1,16 @@
+## 6.2.0-alpha.31 (February 20, 2021)
+
+### Features
+
+- Angular: Support angular components without selector ([#13939](https://github.com/storybookjs/storybook/pull/13939))
+- Preact: Add CSF types ([#13963](https://github.com/storybookjs/storybook/pull/13963))
+
+### Bug Fixes
+
+- Addon-docs: Fix ArgsTable tab renamed to `Story` when using args ([#13845](https://github.com/storybookjs/storybook/pull/13845))
+- Angular: Correctly destroy angular application between each render ([#13956](https://github.com/storybookjs/storybook/pull/13956))
+- Webpack5: Fix warnings display in build-storybook ([#13975](https://github.com/storybookjs/storybook/pull/13975))
+
 ## 6.2.0-alpha.30 (February 20, 2021)
 
 ### Features
