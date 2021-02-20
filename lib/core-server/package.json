@@ -101,10 +101,14 @@
     "webpack-bundle-analyzer": "^4.3.0"
   },
   "peerDependencies": {
+    "@storybook/builder-webpack5": "6.2.0-alpha.29",
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0"
   },
   "peerDependenciesMeta": {
+    "@storybook/builder-webpack5": {
+      "optional": true
+    },
     "typescript": {
       "optional": true
     }
