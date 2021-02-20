@@ -130,9 +130,9 @@
   },
   "peerDependencies": {
     "@babel/core": "^7.11.5",
-    "@storybook/angular": "6.2.0-alpha.29",
-    "@storybook/vue": "6.2.0-alpha.29",
-    "@storybook/vue3": "6.2.0-alpha.29",
+    "@storybook/angular": "6.2.0-alpha.30",
+    "@storybook/vue": "6.2.0-alpha.30",
+    "@storybook/vue3": "6.2.0-alpha.30",
     "babel-loader": "^8.0.0",
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0",
