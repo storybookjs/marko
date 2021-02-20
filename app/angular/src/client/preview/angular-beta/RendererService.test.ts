@@ -111,5 +111,33 @@ describe('RendererService', () => {
         expect(document.body.getElementsByTagName('storybook-wrapper')[0].innerHTML).toBe('🍺');
       });
     });
+
+    it('should properly destroy angular platform between each render', async () => {
+      let countDestroy = 0;
+
+      await rendererService.render({
+        storyFnAngular: {
+          template: '🦊',
+          props: {},
+        },
+        forced: false,
+        parameters: {} as any,
+      });
+
+      rendererService.platform.onDestroy(() => {
+        countDestroy += 1;
+      });
+
+      await rendererService.render({
+        storyFnAngular: {
+          template: '🐻',
+          props: {},
+        },
+        forced: false,
+        parameters: {} as any,
+      });
+
+      expect(countDestroy).toEqual(1);
+    });
   });
 });
